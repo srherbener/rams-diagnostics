@@ -22,6 +22,8 @@ module GfileTypes
   integer, parameter :: MaxCoords=1000
   integer, parameter :: MaxVars=50
   integer, parameter :: InUnit=8
+  integer, parameter :: BinRecFactor=4
+  
 
   type GradsDataDescription
     character (len=MaxString) :: DataFile
@@ -47,7 +49,6 @@ end module GfileTypes
 program main
   use GfileTypes
 
-  integer, parameter :: BinRecFactor=4
   integer, parameter :: LargeString=512
   integer, parameter :: MediumString=256
   integer, parameter :: LittleString=128
@@ -126,13 +127,13 @@ program main
   write (*,*) ''
 
   write (*,*) 'Locations of variables in GRADS data (file number, var number):'
-  write (*,*) '  w (vertical velocity): (', Wloc%Fnum, ', ', Wloc%Vnum, ')'
-  write (*,*) '  press (pressure): (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
-  write (*,*) '  ', trim(VarToAvg), ': (', VarLoc%Fnum, ', ', VarLoc%Vnum, ')'
+  write (*,'(a20,i3,a2,i3,a1)') 'w: (', Wloc%Fnum, ', ', Wloc%Vnum, ')'
+  write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
+  write (*,'(a17,a3,i3,a2,i3,a1)') trim(VarToAvg), ': (', VarLoc%Fnum, ', ', VarLoc%Vnum, ')'
   write (*,*) ''
 
-  ! Allocate the data array and read in the data from the GRADS data files
-  allocate (W(1:Nx,1:Ny,1:Nz,1:Nt),Press(1:Nx,1:Ny,1:Nz,1:Nt), Avar(1:Nx,1:Ny,1:Nz,1:Nt),STAT=Ierror)
+  ! Allocate the data arrays and read in the data from the GRADS data files
+  allocate (W(1:Nx,1:Ny,1:Nz,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), Avar(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
   if (Ierror .ne. 0) then
     write (*,*) 'ERROR: Data array memory allocation failed'
     stop
@@ -145,6 +146,10 @@ program main
     stop
   end if
 
+  ! Read in the data for the vars using the description and location information
+  call ReadGradsData(GdataDescrip, 'w', Wloc, W)
+  call ReadGradsData(GdataDescrip, 'press', PressLoc, Press)
+  call ReadGradsData(GdataDescrip, VarToAvg, VarLoc, Avar)
 
 !   ! Set up the output files, GRADS format (two files)
 !   CoutUnit = 8
@@ -610,4 +615,121 @@ subroutine CheckDataDescrip(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, Wloc, P
   if (BadData) then
     stop
   end if
+end subroutine
+
+!********************************************************************
+! ReadGradsData()
+!
+! This routine will use the information in GdataDescrip and VarLoc to
+! locate the data for the var in the GRADS data files. This data will
+! then be loaded into the VarData array.
+!
+
+subroutine ReadGradsData(GdataDescrip, VarName, VarLoc, VarData)
+  use GfileTypes
+
+  type (GradsDataDescription), dimension(*) :: GdataDescrip
+  character (len=*) :: Varname
+  type (GradsVarLocation) :: VarLoc
+  real, dimension(1:Nx,1:Ny,1:Nz,1:Nt) :: VarData
+
+  integer Nx, Ny, Nz, Nt, Nvars, VarNum
+  character (len=MaxString) :: DataFile
+  integer RecLen, Ierror
+  ! i -> x, j -> y, k -> z, l -> t
+  integer ix,iy,iz,it
+  integer RecNum
+  integer NumRecs
+
+  Nx = GdataDescrip(VarLoc%Fnum)%nx
+  Ny = GdataDescrip(VarLoc%Fnum)%ny
+  Nz = GdataDescrip(VarLoc%Fnum)%nz
+  Nt = GdataDescrip(VarLoc%Fnum)%nt
+  Nvars = GdataDescrip(VarLoc%Fnum)%nvars
+  VarNum = VarLoc%Vnum
+
+  ! Each record is a horizontal slice so it has Nx * Ny elements in it
+  ! of BinRecFactor size
+  RecLen = Nx * Ny * BinRecFactor
+
+  DataFile = GdataDescrip(VarLoc%Fnum)%DataFile
+  open (unit=InUnit, file=DataFile, form='unformatted', access='direct', &
+        recl=RecLen, status='old', action='read', iostat=Ierror)
+  if (Ierror .ne. 0) then
+    write (*,*) 'ERROR: Cannot open GRADS data file: ', trim(DataFile)
+    stop
+  end if
+ 
+  ! The data file contains Nx * Ny * Nz * Nt * Nvars total elements
+  ! One record is Nx * Ny elements so the number of records is
+  ! Nz * Nt * Nvars
+  ! The data records are organized with Z changing fastest, then variable,
+  ! then time the slowest. Eg. Nz = 2, Nvars =3, Nt = 4,
+  !
+  !   Record  Z_level  Variable Time
+  !     1       1         1      1
+  !     2       2         1      1
+  !     3       1         2      1
+  !     4       2         2      1
+  !     5       1         3      1
+  !     6       2         3      1
+  !
+  !     7       1         1      2
+  !     8       2         1      2
+  !     9       1         2      2
+  !    10       2         2      2
+  !    11       1         3      2
+  !    12       2         3      2
+  !
+  !    13       1         1      3
+  !    14       2         1      3
+  !    15       1         2      3
+  !    16       2         2      3
+  !    17       1         3      3
+  !    18       2         3      3
+  !
+  !    19       1         1      4
+  !    20       2         1      4
+  !    21       1         2      4
+  !    22       2         2      4
+  !    23       1         3      4
+  !    24       2         3      4
+
+  NumRecs = Nz * Nt * Nvars
+
+  write (*,*) 'Reading GRADS data file: ', trim(DataFile)
+  write (*,*) '  Var: ', trim(VarName)
+  write (*,*) '  X points:          ', Nx
+  write (*,*) '  Y points:          ', Ny
+  write (*,*) '  Z points:          ', Nz
+  write (*,*) '  T points:          ', Nt
+  write (*,*) '  Number of Vars:    ', Nvars
+  write (*,*) '  Record length:     ', RecLen
+  write (*,*) '  Number of records: ', NumRecs
+  write (*,*) ''
+
+  ! Need to derive the correct record number in the file
+  ! from the it and iz values. it cycles by Nz*Nvars records.
+  ! Within each it cycle, Nz*(VarNum-1) is the offset from the
+  ! start of the cycle to the VarNum position. The formula
+  ! becomes:
+  !
+  !  RecNum = (it-1)*(Nz*Nvars) + (Nz*(VarNum-1)) + iz
+  
+  do it = 1, Nt
+    do iz = 1, Nz
+      RecNum = (it-1)*(Nz*Nvars) + (Nz*(VarNum-1)) + iz
+if ((it .le. 4) .or. (it .ge. 71)) then
+  write (*,*) 'Reading: ', trim(VarName), '; it,iz,RecNum: ', it, iz, RecNum
+end if
+      read(unit=InUnit, rec=RecNum, iostat=Ierror) ((VarData(ix,iy,iz,it), ix = 1, Nx), iy = 1, Ny)
+      if (Ierror .ne. 0) then
+        stop
+      end if
+    end do   
+  end do 
+
+  close (unit=InUnit, status='keep')
+
+  return
 end subroutine
