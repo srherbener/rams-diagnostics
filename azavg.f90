@@ -139,17 +139,17 @@ program main
     stop
   end if
 
+  ! Read in the data for the vars using the description and location information
+  call ReadGradsData(GdataDescrip, 'w', Wloc, W, Nx, Ny, Nz, Nt)
+  call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
+  call ReadGradsData(GdataDescrip, VarToAvg, VarLoc, Avar, Nx, Ny, Nz, Nt)
+
   ! Clean up
   deallocate (W, Press, Avar, STAT=Ierror)
   if (Ierror .ne. 0) then
     write (*,*) 'ERROR: Data array memory de-allocation failed'
     stop
   end if
-
-  ! Read in the data for the vars using the description and location information
-  call ReadGradsData(GdataDescrip, 'w', Wloc, W)
-  call ReadGradsData(GdataDescrip, 'press', PressLoc, Press)
-  call ReadGradsData(GdataDescrip, VarToAvg, VarLoc, Avar)
 
 !   ! Set up the output files, GRADS format (two files)
 !   CoutUnit = 8
@@ -625,26 +625,22 @@ end subroutine
 ! then be loaded into the VarData array.
 !
 
-subroutine ReadGradsData(GdataDescrip, VarName, VarLoc, VarData)
+subroutine ReadGradsData(GdataDescrip, VarName, VarLoc, VarData, Nx, Ny, Nz, Nt)
   use GfileTypes
 
   type (GradsDataDescription), dimension(*) :: GdataDescrip
   character (len=*) :: Varname
   type (GradsVarLocation) :: VarLoc
   real, dimension(1:Nx,1:Ny,1:Nz,1:Nt) :: VarData
+  integer Nx, Ny, Nz, Nt
 
-  integer Nx, Ny, Nz, Nt, Nvars, VarNum
+  integer Nvars, VarNum
   character (len=MaxString) :: DataFile
   integer RecLen, Ierror
-  ! i -> x, j -> y, k -> z, l -> t
   integer ix,iy,iz,it
   integer RecNum
   integer NumRecs
 
-  Nx = GdataDescrip(VarLoc%Fnum)%nx
-  Ny = GdataDescrip(VarLoc%Fnum)%ny
-  Nz = GdataDescrip(VarLoc%Fnum)%nz
-  Nt = GdataDescrip(VarLoc%Fnum)%nt
   Nvars = GdataDescrip(VarLoc%Fnum)%nvars
   VarNum = VarLoc%Vnum
 
@@ -711,23 +707,25 @@ subroutine ReadGradsData(GdataDescrip, VarName, VarLoc, VarData)
   ! Need to derive the correct record number in the file
   ! from the it and iz values. it cycles by Nz*Nvars records.
   ! Within each it cycle, Nz*(VarNum-1) is the offset from the
-  ! start of the cycle to the VarNum position. The formula
-  ! becomes:
+  ! start of the cycle to the VarNum position.
+  ! The formula becomes:
   !
   !  RecNum = (it-1)*(Nz*Nvars) + (Nz*(VarNum-1)) + iz
   
+  NumRecs = 0
   do it = 1, Nt
     do iz = 1, Nz
       RecNum = (it-1)*(Nz*Nvars) + (Nz*(VarNum-1)) + iz
-if ((it .le. 4) .or. (it .ge. 71)) then
-  write (*,*) 'Reading: ', trim(VarName), '; it,iz,RecNum: ', it, iz, RecNum
-end if
-      read(unit=InUnit, rec=RecNum, iostat=Ierror) ((VarData(ix,iy,iz,it), ix = 1, Nx), iy = 1, Ny)
-      if (Ierror .ne. 0) then
-        stop
+      read(unit=InUnit, rec=RecNum) ((VarData(ix,iy,iz,it), ix = 1, Nx), iy = 1, Ny)
+
+      NumRecs = NumRecs + 1
+      if (modulo(NumRecs,100) .eq. 0) then
+        write (*,*) '  Reading: ', trim(VarName), ': ', NumRecs
       end if
     end do   
   end do 
+  write (*,*) '  Total records read: ', NumRecs
+  write (*,*) ''
 
   close (unit=InUnit, status='keep')
 
