@@ -8,7 +8,7 @@ DEST = $(HOME)/bin
 BINS = $(DEST)/azavg
 
 F_COMP = pgf90
-F_OPTS =
+F_COMP_OPTS = -O2
 INCLUDES =
 
 LOADER = pgf90
