@@ -22,12 +22,12 @@ module GfileTypes
   integer, parameter :: MaxCoords=1000
   integer, parameter :: MaxVars=50
   integer, parameter :: InUnit=8
+  integer, parameter :: OutUnit=10
   integer, parameter :: BinRecFactor=4
   
-
   type GradsDataDescription
     character (len=MaxString) :: DataFile
-    real UndefVal
+    real :: UndefVal
     real, dimension(1:MaxCoords) :: Xcoords
     real, dimension(1:MaxCoords) :: Ycoords
     real, dimension(1:MaxCoords) :: Zcoords
@@ -44,6 +44,22 @@ module GfileTypes
     integer :: Fnum
     integer :: Vnum
   end type GradsVarLocation
+
+  type GradsOutDescription
+    character (len=MaxString) :: CtlFile
+    character (len=MaxString) :: DataFile
+    character (len=MaxString) :: Title
+    character (len=MaxString) :: VarName
+    real :: UndefVal
+    real :: Xstart, Xinc
+    real :: Ystart, Yinc
+    real, dimension(1:MaxCoords) :: Zcoords
+    character (len=MaxString) :: Tstart, Tinc
+    integer :: nx
+    integer :: ny
+    integer :: nz
+    integer :: nt
+  end type GradsOutDescription
 end module GfileTypes
 
 program main
@@ -64,6 +80,7 @@ program main
 
   type (GradsDataDescription), dimension(1:MaxFiles) :: GdataDescrip
   integer Nx, Ny, Nz, Nt, Nvars
+  type (GradsOutDescription) :: GoutDescrip
 
   ! Data arrays: need one for w (vertical velocity), press (pressure)
   ! and the var we are doing the averaging on
@@ -71,26 +88,11 @@ program main
   ! The *Loc vars hold the locations of w, press, var in the GRADS
   ! data files: the first index is the file number, the second index is the
   ! var number
-  real, dimension(:,:,:,:), allocatable :: W, Press, Avar
+  real, dimension(:,:,:,:), allocatable :: W, Press, Avar, AzAvg
   type (GradsVarLocation) :: Wloc, PressLoc, VarLoc
 
-  ! Index vars for the grid data
-  !   i -> x -> longitude
-  !   j -> y -> latitude
-  !   k -> z -> vertical levels
-  !   l -> var -> gridded variables
-  !   m -> t -> time
-  integer i, j, k, l, m
+  integer i
   integer Ierror
-
-!  integer DoutUnit, CoutUnit
-!  character *128 DoutFile, CoutFile
-!  integer OutRecLen
-!  integer i,j,k,nt
-!  real Xstart, Xinc, Ystart, Yinc, Zstart, Zinc
-!  character *20 Tstart, Tinc
-!  real OutData(1:MaxI,1:MaxJ,1:MaxK,1:MaxT)
-!  real UndefVal;
 
   ! Get the command line arguments
   call GetMyArgs(Infiles, OfileBase, NumRbands, VarToAvg)
@@ -141,8 +143,52 @@ program main
 
   ! Read in the data for the vars using the description and location information
   call ReadGradsData(GdataDescrip, 'w', Wloc, W, Nx, Ny, Nz, Nt)
-  call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
-  call ReadGradsData(GdataDescrip, VarToAvg, VarLoc, Avar, Nx, Ny, Nz, Nt)
+!  call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
+!  call ReadGradsData(GdataDescrip, VarToAvg, VarLoc, Avar, Nx, Ny, Nz, Nt)
+
+  ! Try a dummy operation to test the output routine
+  write (*,*) 'TEST: allocating output array'
+  allocate (AzAvg(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
+  if (Ierror .ne. 0) then
+    write (*,*) 'ERROR: Ouput data array memory allocation failed'
+    stop
+  end if
+
+  ! reverse the z levels in the w data
+  write (*,*) 'TEST: filling output array'
+  do it = 1, Nt
+    write (*,*) '  Timestep: ', it
+    do iz = 1, Nz
+      do iy = 1, Ny
+        do ix = 1, Nx
+          AzAvg(ix,iy,iz,it) = W(ix,iy,Nz-iz+1,it)
+        end do
+      end do
+    end do
+  end do
+  write (*,*) ''
+ 
+  ! Write out the results in GRADS format
+  GoutDescrip%CtlFile = trim(OfileBase) // '.ctl'
+  GoutDescrip%DataFile = trim(OfileBase) // '.gra'
+  GoutDescrip%Title = 'TEST: Reversed Levels for W'
+  GoutDescrip%UndefVal = GdataDescrip(1)%UndefVal
+  GoutDescrip%nx = Nx
+  GoutDescrip%ny = Ny
+  GoutDescrip%nz = Nz
+  GoutDescrip%nt = Nt
+  GoutDescrip%Xstart = GdataDescrip(1)%Xcoords(1)
+  GoutDescrip%Xinc = GdataDescrip(1)%Xcoords(2) - GdataDescrip(1)%Xcoords(1)
+  GoutDescrip%Ystart = GdataDescrip(1)%Ycoords(1)
+  GoutDescrip%Yinc = GdataDescrip(1)%Ycoords(2) - GdataDescrip(1)%Ycoords(1)
+  GoutDescrip%VarName = trim(VarToAvg) // '_azavg'
+  do iz = 1, Nz
+    GoutDescrip%Zcoords(iz) = GdataDescrip(1)%Zcoords(iz)
+  end do
+  GoutDescrip%Tstart = '00:00Z24aug1998'
+  GoutDescrip%Tinc = '01mn'
+
+  call WriteGrads(GoutDescrip, AzAvg, Nx, Ny, Nz, Nt)
 
   ! Clean up
   deallocate (W, Press, Avar, STAT=Ierror)
@@ -150,59 +196,6 @@ program main
     write (*,*) 'ERROR: Data array memory de-allocation failed'
     stop
   end if
-
-!   ! Set up the output files, GRADS format (two files)
-!   CoutUnit = 8
-!   CoutFile = '/home/sherbener/projects/grads/udf/data/testGfile.ctl' 
-!   DoutUnit = 10
-!   DoutFile = '/home/sherbener/projects/grads/udf/data/testGfile.dat'
-! 
-!   OutRecLen = MaxI * MaxJ * RecFactor
-!   open (CoutUnit, file=CoutFile, form='formatted')
-!   open (DoutUnit, file=DoutFile, form='unformatted', access='direct', recl=OutRecLen)
-! 
-!   !******************************************************************
-!   ! Try building a known function and see if get the right picture
-!   ! in GRADS. In the binary data file, the order of changing indexes
-!   ! go lon, lat, lev, time which are i, j, k, t respectively. These
-!   ! correspond to x, y, z, t in the plots.
-! 
-!   ! Try a 2D plot x-y planes
-! 
-!   ! Control
-!   UndefVal = 1.0e30
-!   Xstart = 1.0
-!   Xinc = 1.0
-!   Ystart = 1.0
-!   Yinc = 1.0
-!   Zstart = 1.0
-!   Zinc = 1.0
-!   Tstart = '00:00Z01jan2000'
-!   Tinc = '1hr'
-! 
-!   write (CoutUnit, '(a,a)')       'DSET ', DoutFile
-!   write (CoutUnit, '(a)')         'TITLE  1D plot example'
-!   write (CoutUnit, '(a,g)')       'UNDEF ', UndefVal
-!   write (CoutUnit, '(a)')         'OPTIONS  little_endian'
-!   write (CoutUnit, '(a,i,a,g,g)') 'XDEF ', MaxI, ' LINEAR ', Xstart, Xinc
-!   write (CoutUnit, '(a,i,a,g,g)') 'YDEF ', MaxJ, ' LINEAR ', Ystart, Yinc
-!   write (CoutUnit, '(a,i,a,g,g)') 'ZDEF ', MaxK, ' LINEAR ', Zstart, Zinc
-!   write (CoutUnit, '(a,i,a,g,g)') 'TDEF ', MaxT, ' LINEAR ', Tstart, Tinc
-!   write (CoutUnit, '(a)')         'VARS 1 '
-!   write (CoutUnit, '(a,i,a)')     'f ', MaxK, ' 99 Test 1D data'
-!   write (CoutUnit, '(a)')         'ENDVARS'
-! 
-!   ! Data
-!   do j = 1, MaxJ
-!     do i = 1, MaxI
-!       do nt = 1, MaxT
-!         OutData(i,j,1,nt) = real(i * (j+nt))
-!       end do
-!     end do
-!   end do
-!   do nt = 1, MaxT
-!     write (DoutUnit, rec=nt) ((OutData(i,j,1,nt), i = 1, MaxI), j = 1, MaxJ)
-!   end do
 
   stop
 end
@@ -728,6 +721,87 @@ subroutine ReadGradsData(GdataDescrip, VarName, VarLoc, VarData, Nx, Ny, Nz, Nt)
   write (*,*) ''
 
   close (unit=InUnit, status='keep')
+
+  return
+end subroutine
+
+!**************************************************************************
+! WriteGrads()
+!
+! This routine will write out the given data array into the GRADS (input)
+! format. This creates two files: 
+!   control file - contains description of the data in the data file
+!   data file - raw binary values in the data array
+!
+
+subroutine WriteGrads(GoutDescrip, AzAvg, Nx, Ny, Nz, Nt)
+  use GfileTypes
+
+  type (GradsOutDescription) :: GoutDescrip
+  real, dimension(1:Nx,1:Ny,1:Nz,1:Nt) :: AzAvg
+  integer :: Nx, Ny, Nz, Nt
+
+  integer :: OutRecLen
+  integer :: RecNum
+  integer :: Ierror
+  integer :: ix
+  integer :: iy
+  integer :: iz
+  integer :: it
+
+  write (*,*) 'Writing out result in GRADS format:'
+  write (*,*) '  Control file: ', trim(GoutDescrip%CtlFile)
+  write (*,*) '  Data file:    ', trim(GoutDescrip%DataFile)
+  write (*,*) '  Total number of data points: ', &
+              GoutDescrip%nx * GoutDescrip%ny * GoutDescrip%nz * GoutDescrip%nt
+  write (*,*) ''
+
+  ! Control (data description) file
+  open (OutUnit, file=GoutDescrip%CtlFile, form='formatted', action='write', iostat=Ierror)
+  if (Ierror .ne. 0) then
+    write (*,*) 'ERROR: cannot open output GRADS control file for writing: ', trim(GoutDescrip%CtlFile)
+    stop
+  end if
+
+  write (OutUnit, '(a,a)')          'DSET ', trim(GoutDescrip%DataFile)
+  write (OutUnit, '(a,a)')          'TITLE ', trim(GoutDescrip%Title)
+  write (OutUnit, '(a,g)')          'UNDEF ', GoutDescrip%UndefVal
+  write (OutUnit, '(a)')            'OPTIONS  little_endian'
+  write (OutUnit, '(a,i,a,g,g)')    'XDEF ', GoutDescrip%nx, ' LINEAR ', GoutDescrip%Xstart, GoutDescrip%Xinc
+  write (OutUnit, '(a,i,a,g,g)')    'YDEF ', GoutDescrip%ny, ' LINEAR ', GoutDescrip%Ystart, GoutDescrip%Yinc
+  write (OutUnit, '(a,i,a,(g))')    'ZDEF ', GoutDescrip%nz, ' LEVELS ', &
+                                    (GoutDescrip%Zcoords(iz), iz = 1, GoutDescrip%nz)
+  write (OutUnit, '(a,i,a,a,5x,a)') 'TDEF ', GoutDescrip%nt, ' LINEAR ', &
+                                    trim(GoutDescrip%Tstart), trim(GoutDescrip%Tinc)
+  write (OutUnit, '(a)')            'VARS 1 '
+  write (OutUnit, '(a,i,a)')        trim(GoutDescrip%VarName) , GoutDescrip%Nz, ' 99 Azimuthal Averaged Data'
+  write (OutUnit, '(a)')            'ENDVARS'
+
+  close (OutUnit, status='keep')
+
+  ! Data file
+  ! dimensions from fastest changing to slowest changing are: x, y, z, t
+  ! One record is a single horizontal slice -> (nx * ny) data points
+  OutRecLen = Nx * Ny * BinRecFactor
+  open (OutUnit, file=GoutDescrip%DataFile, form='unformatted', access='direct', &
+        recl=OutRecLen, action='write', iostat=Ierror)
+  if (Ierror .ne. 0) then
+    write (*,*) 'ERROR: cannot open output GRADS data file for writing: ', trim(GoutDescrip%DataFile)
+    stop
+  end if
+
+  RecNum = 1
+  do it = 1, GoutDescrip%nt
+    do iz = 1, GoutDescrip%nz
+      if (modulo(RecNum,100) .eq. 0) then
+        write (*,*) '  Writing: ', trim(GoutDescrip%VarName), ': ', RecNum
+      end if
+      write (OutUnit, rec=RecNum) ((AzAvg(ix,iy,iz,it), ix = 1, GoutDescrip%nx), iy = 1, GoutDescrip%ny)
+      RecNum = RecNum + 1
+    end do
+  end do
+
+  close (OutUnit, status='keep')
 
   return
 end subroutine
