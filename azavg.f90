@@ -64,6 +64,7 @@ end module GfileTypes
 
 program main
   use GfileTypes
+  implicit none
 
   integer, parameter :: LargeString=512
   integer, parameter :: MediumString=256
@@ -76,10 +77,10 @@ program main
   character (len=LittleString) :: VarToAvg
 
   character (len=MediumString), dimension(1:MaxFiles) :: GradsCtlFiles
-  integer Nfiles
+  integer :: Nfiles
 
   type (GradsDataDescription), dimension(1:MaxFiles) :: GdataDescrip
-  integer Nx, Ny, Nz, Nt, Nvars
+  integer :: Nx, Ny, Nz, Nt, Nvars
   type (GradsOutDescription) :: GoutDescrip
 
   ! Data arrays: need one for w (vertical velocity), press (pressure)
@@ -91,8 +92,12 @@ program main
   real, dimension(:,:,:,:), allocatable :: W, Press, Avar, AzAvg
   type (GradsVarLocation) :: Wloc, PressLoc, VarLoc
 
-  integer i
-  integer Ierror
+  integer :: i
+  integer :: Ierror
+
+  integer :: ix, iy, iz, it
+  integer :: ixStmCtr, iyStmCtr
+  real :: MinP
 
   ! Get the command line arguments
   call GetMyArgs(Infiles, OfileBase, NumRbands, VarToAvg)
@@ -143,8 +148,8 @@ program main
 
   ! Read in the data for the vars using the description and location information
   call ReadGradsData(GdataDescrip, 'w', Wloc, W, Nx, Ny, Nz, Nt)
-!  call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
-!  call ReadGradsData(GdataDescrip, VarToAvg, VarLoc, Avar, Nx, Ny, Nz, Nt)
+  call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
+  call ReadGradsData(GdataDescrip, VarToAvg, VarLoc, Avar, Nx, Ny, Nz, Nt)
 
   ! Try a dummy operation to test the output routine
   write (*,*) 'TEST: allocating output array'
@@ -157,11 +162,12 @@ program main
   ! reverse the z levels in the w data
   write (*,*) 'TEST: filling output array'
   do it = 1, Nt
-    write (*,*) '  Timestep: ', it
+    call FindStormCenter(Press, Nx, Ny, Nz, Nt, it, ixStmCtr, iyStmCtr, MinP)
+    write (*,*) '  Timestep: (it, ixStmCtr, iyStmCtr, MinP): ', it, ixStmCtr, iyStmCtr, MinP
     do iz = 1, Nz
       do iy = 1, Ny
         do ix = 1, Nx
-          AzAvg(ix,iy,iz,it) = W(ix,iy,Nz-iz+1,it)
+          AzAvg(ix,iy,iz,it) = Press(ix,iy,iz,it)
         end do
       end do
     end do
@@ -191,7 +197,7 @@ program main
   call WriteGrads(GoutDescrip, AzAvg, Nx, Ny, Nz, Nt)
 
   ! Clean up
-  deallocate (W, Press, Avar, STAT=Ierror)
+  deallocate (W, Press, Avar, stat=Ierror)
   if (Ierror .ne. 0) then
     write (*,*) 'ERROR: Data array memory de-allocation failed'
     stop
@@ -211,11 +217,12 @@ end
 !
 
 subroutine GetMyArgs(Infiles, OfileBase, NumRbands, VarToAvg)
+  implicit none
 
   integer NumRbands
   character (len=*) :: Infiles, OfileBase, VarToAvg
 
-  integer iarg
+  integer iargc
   character (len=128) :: arg
 
   if (iargc() .ne. 4) then
@@ -257,6 +264,7 @@ end subroutine
 !  6. description of what the items are
 
 subroutine String2List(InString, Separator, OutList, MaxItems, NumItems, ItemType)
+  implicit none
 
   character (len=*) InString
   character Separator
@@ -340,8 +348,8 @@ end subroutine
 !
 
 subroutine  ReadGradsCtlFile(GradsCtlFile, GdataDescrip)
-
   use GfileTypes
+  implicit none
 
   integer, parameter :: MaxLine = 1000
   integer, parameter :: MaxFields = 100
@@ -374,11 +382,11 @@ subroutine  ReadGradsCtlFile(GradsCtlFile, GdataDescrip)
     if ((InFields(1) .eq. 'dset') .or. (InFields(1) .eq. 'DSET')) then
       if (InFields(2)(1:1) .eq. '^') then
         !replace the '^' with the directory portion of input control file
-        if (index(GradsCtlFile, '/', .TRUE.) .eq. 0) then
+        if (index(GradsCtlFile, '/', .true.) .eq. 0) then
           ! no leading path
           GfileDir = ''
         else
-          GfileDir = GradsCtlFile(1:index(GradsCtlFile, '/', .TRUE.))
+          GfileDir = GradsCtlFile(1:index(GradsCtlFile, '/', .true.))
         end if
         ! Make sure to use trim(), without it the first string GfileDir fills up the
         ! GdataDescrip%DataFile string since these are both declared to be the same length
@@ -435,6 +443,7 @@ end subroutine
 !
 
 subroutine GenCoords(InFields, Nfields, Coords, Ncoords, MaxCoords, GenDmyCoords)
+  implicit none
 
   character (len=*), dimension(*) :: InFields
   integer Nfields
@@ -485,6 +494,7 @@ end subroutine
 !
 
 subroutine  GetVarNames(InUnit, VarNames, Nvars, MaxLine, MaxFields)
+  implicit none
 
   integer InUnit
   character (len=*), dimension(*) :: VarNames
@@ -525,8 +535,8 @@ end subroutine
 !
 
 subroutine CheckDataDescrip(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, Wloc, PressLoc, VarLoc, VarName)
-
   use GfileTypes
+  implicit none
 
   type (GradsDataDescription), dimension(*) :: GdataDescrip
   integer Nx, Ny, Nz, Nt, Nfiles
@@ -545,7 +555,7 @@ subroutine CheckDataDescrip(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, Wloc, P
   VarLoc%Fnum = 0
   VarLoc%Vnum = 0
 
-  BadData = .FALSE.
+  BadData = .false.
   do i = 1, Nfiles
     if (i .eq. 1) then
       Nx = GdataDescrip(i)%nx
@@ -557,19 +567,19 @@ subroutine CheckDataDescrip(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, Wloc, P
     else
       if (GdataDescrip(i)%nx .ne. Nx) then
         write (*,*) 'ERROR: number of x points in GRADS control files do not match'
-        BadData = .TRUE.
+        BadData = .true.
       end if
       if (GdataDescrip(i)%ny .ne. Ny) then
         write (*,*) 'ERROR: number of y points in GRADS control files do not match'
-        BadData = .TRUE.
+        BadData = .true.
       end if
       if (GdataDescrip(i)%nz .ne. Nz) then
         write (*,*) 'ERROR: number of z points in GRADS control files do not match'
-        BadData = .TRUE.
+        BadData = .true.
       end if
       if (GdataDescrip(i)%nt .ne. Nt) then
         write (*,*) 'ERROR: number of t points in GRADS control files do not match'
-        BadData = .TRUE.
+        BadData = .true.
       end if
 
       Nvars = Nvars + GdataDescrip(i)%nvars
@@ -594,15 +604,15 @@ subroutine CheckDataDescrip(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, Wloc, P
   ! Check to see if you got all three vars (w, press, var)
   if (Wloc%Fnum .eq. 0) then
     write (*,*) 'ERROR: cannot find grid var "w" in the GRADS data files'
-    BadData = .TRUE.
+    BadData = .true.
   end if
   if (PressLoc%Fnum .eq. 0) then
     write (*,*) 'ERROR: cannot find grid var "press" in the GRADS data files'
-    BadData = .TRUE.
+    BadData = .true.
   end if
   if (VarLoc%Fnum .eq. 0) then
     write (*,*) 'ERROR: cannot find grid var "', trim(VarName), '" in the GRADS data files'
-    BadData = .TRUE.
+    BadData = .true.
   end if
 
   if (BadData) then
@@ -620,9 +630,10 @@ end subroutine
 
 subroutine ReadGradsData(GdataDescrip, VarName, VarLoc, VarData, Nx, Ny, Nz, Nt)
   use GfileTypes
+  implicit none
 
   type (GradsDataDescription), dimension(*) :: GdataDescrip
-  character (len=*) :: Varname
+  character (len=*) :: VarName
   type (GradsVarLocation) :: VarLoc
   real, dimension(1:Nx,1:Ny,1:Nz,1:Nt) :: VarData
   integer Nx, Ny, Nz, Nt
@@ -736,6 +747,7 @@ end subroutine
 
 subroutine WriteGrads(GoutDescrip, AzAvg, Nx, Ny, Nz, Nt)
   use GfileTypes
+  implicit none
 
   type (GradsOutDescription) :: GoutDescrip
   real, dimension(1:Nx,1:Ny,1:Nz,1:Nt) :: AzAvg
@@ -774,7 +786,7 @@ subroutine WriteGrads(GoutDescrip, AzAvg, Nx, Ny, Nz, Nt)
   write (OutUnit, '(a,i,a,a,5x,a)') 'TDEF ', GoutDescrip%nt, ' LINEAR ', &
                                     trim(GoutDescrip%Tstart), trim(GoutDescrip%Tinc)
   write (OutUnit, '(a)')            'VARS 1 '
-  write (OutUnit, '(a,i,a)')        trim(GoutDescrip%VarName) , GoutDescrip%Nz, ' 99 Azimuthal Averaged Data'
+  write (OutUnit, '(a,i,a)')        trim(GoutDescrip%VarName) , GoutDescrip%nz, ' 99 Azimuthal Averaged Data'
   write (OutUnit, '(a)')            'ENDVARS'
 
   close (OutUnit, status='keep')
@@ -803,5 +815,45 @@ subroutine WriteGrads(GoutDescrip, AzAvg, Nx, Ny, Nz, Nt)
 
   close (OutUnit, status='keep')
 
+  return
+end subroutine
+
+!**********************************************************************
+! FindStormCenter
+!
+! This routine will locate the storm center using the simple hueristic
+! of the center being where the minimum surface pressure exists.
+!
+! Argument it holds the time step that you want to analyze. (iStmCtr, jStmCtr)
+! hold the grid position of the minumum pressure value on the first vertical
+! level (iz = 1).
+!
+
+subroutine FindStormCenter(Press, Nx, Ny, Nz, Nt, iTime, ixStmCtr, iyStmCtr, MinP)
+  implicit none
+
+  real, dimension(1:Nx,1:Ny,1:Nz,1:Nt) :: Press
+  integer :: Nx, Ny, Nz, Nt
+  integer :: iTime, ixStmCtr, iyStmCtr
+  real :: MinP
+
+  integer :: ix, iy, iz, it
+
+  iz = 1
+  it = iTime
+  MinP = 1e10 ! ridiculously large pressure
+  ixStmCtr = 0
+  iyStmCtr = 0
+  
+  do ix = 1, Nx
+    do iy = 1, Ny
+      if (Press(ix,iy,iz,it) .lt. MinP) then
+        MinP = Press(ix,iy,iz,it)
+        ixStmCtr = ix
+        iyStmCtr = iy
+      end if
+    end do
+  end do
+  
   return
 end subroutine
