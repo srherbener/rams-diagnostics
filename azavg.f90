@@ -72,6 +72,7 @@ program main
   integer, parameter :: MaxFiles=10
 
   integer NumRbands
+  real :: Wthreshold
   character (len=LargeString) :: Infiles
   character (len=MediumString) :: OfileBase
   character (len=LittleString) :: VarToAvg
@@ -100,7 +101,7 @@ program main
   real :: MinP
 
   ! Get the command line arguments
-  call GetMyArgs(Infiles, OfileBase, NumRbands, VarToAvg)
+  call GetMyArgs(Infiles, OfileBase, NumRbands, Wthreshold, VarToAvg)
   call String2List(Infiles, ':', GradsCtlFiles, MaxFiles, Nfiles, 'input files')
 
   write (*,*) 'Calculating azimuthal average for RAMS data:'
@@ -108,8 +109,9 @@ program main
   do i = 1, Nfiles
     write (*,*) '  ', i, ': ', trim(GradsCtlFiles(i))
   end do
-  write (*,*) '  Output file base name: ', trim(OfileBase)
+  write (*,*) '  Output file base name:  ', trim(OfileBase)
   write (*,*) '  Number of radial bands: ', NumRbands
+  write (*,*) '  W threshold :           ', Wthreshold
   write (*,*) '  RAMS variable that is being averaged: ', trim(VarToAvg)
   write (*,*) ''
 
@@ -159,7 +161,7 @@ program main
     stop
   end if
 
-  ! reverse the z levels in the w data
+  ! Try masking with the w data
   write (*,*) 'TEST: filling output array'
   do it = 1, Nt
     call FindStormCenter(Press, Nx, Ny, Nz, Nt, it, ixStmCtr, iyStmCtr, MinP)
@@ -167,7 +169,14 @@ program main
     do iz = 1, Nz
       do iy = 1, Ny
         do ix = 1, Nx
-          AzAvg(ix,iy,iz,it) = Press(ix,iy,iz,it)
+          if (W(ix,iy,iz,it) .ge. Wthreshold) then
+            AzAvg(ix,iy,iz,it) = 1.0
+          else
+            AzAvg(ix,iy,iz,it) = 0.0
+          end if
+          if ((ix .eq. ixStmCtr) .and. (iy .eq. iyStmCtr)) then
+            AzAvg(ix,iy,iz,it) = 2.0
+          end if
         end do
       end do
     end do
@@ -216,22 +225,24 @@ end
 !   VarToAvg - RAMS variable to do the averaging on
 !
 
-subroutine GetMyArgs(Infiles, OfileBase, NumRbands, VarToAvg)
+subroutine GetMyArgs(Infiles, OfileBase, NumRbands, Wthreshold, VarToAvg)
   implicit none
 
-  integer NumRbands
+  integer :: NumRbands
+  real :: Wthreshold
   character (len=*) :: Infiles, OfileBase, VarToAvg
 
-  integer iargc
+  integer :: iargc
   character (len=128) :: arg
 
-  if (iargc() .ne. 4) then
-    write (*,*) 'ERROR: must supply exactly 4 arguments'
+  if (iargc() .ne. 5) then
+    write (*,*) 'ERROR: must supply exactly 5 arguments'
     write (*,*) ''
-    write (*,*) 'USAGE: azavg <in_data_files> <out_data_file> <num_radial_bands> <var_to_average>'
+    write (*,*) 'USAGE: azavg <in_data_files> <out_data_file> <num_radial_bands> <w_threshold> <var_to_average>'
     write (*,*) '        <in_data_files>: GRADS format, control file, colon separated list'
     write (*,*) '        <out_data_file>: GRADS format, this programe will tag on .ctl, .dat suffixes'
     write (*,*) '        <num_radial_bands>: number of bands to split data into'
+    write (*,*) '        <w_threshold>: only take values of the variable where w is greater than or equal to this number'
     write (*,*) '        <var_to_average>: name of RAMS variable to do the averaging on'
     write (*,*) ''
     stop
@@ -243,7 +254,10 @@ subroutine GetMyArgs(Infiles, OfileBase, NumRbands, VarToAvg)
   call getarg(3, arg)       !this is a string
   read (arg, '(i)') NumRbands !convert to integer
 
-  call getarg(4, VarToAvg)
+  call getarg(4, arg)
+  read (arg, '(f)') Wthreshold
+
+  call getarg(5, VarToAvg)
 
   return
 end subroutine
