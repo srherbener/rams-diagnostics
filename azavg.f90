@@ -33,6 +33,7 @@ module GfileTypes
     real, dimension(1:MaxCoords) :: Zcoords
     real, dimension(1:MaxCoords) :: Tcoords
     character (len=MaxString), dimension(1:MaxVars) :: VarNames
+    character (len=MaxString) :: Tstart, Tinc
     integer :: nx
     integer :: ny
     integer :: nz
@@ -97,8 +98,8 @@ program main
   integer :: Ierror
 
   integer :: ix, iy, iz, it
-  integer :: ixStmCtr, iyStmCtr
-  real :: MinP
+
+  real :: DeltaX, DeltaY, RadialDist, RbandInc
 
   ! Get the command line arguments
   call GetMyArgs(Infiles, OfileBase, NumRbands, Wthreshold, VarToAvg)
@@ -141,6 +142,22 @@ program main
   write (*,'(a17,a3,i3,a2,i3,a1)') trim(VarToAvg), ': (', VarLoc%Fnum, ', ', VarLoc%Vnum, ')'
   write (*,*) ''
 
+  ! Figure out how big to make each radial band. Assume that the storm center stays near the center of
+  ! the grid domain. Take the diagonal distance of the domain, cut it in half and then break this up
+  ! into NumRbands sections of equal length.
+
+  DeltaX = GdataDescrip(1)%Xcoords(Nx) - GdataDescrip(1)%Xcoords(1)
+  DeltaY = GdataDescrip(1)%Ycoords(Ny) - GdataDescrip(1)%Ycoords(1)
+  RadialDist = sqrt(DeltaX*DeltaX + DeltaY*DeltaY) / 2.0
+  RbandInc = RadialDist / real(NumRbands)
+
+  write (*,*) 'Radial band information:'
+  write (*,*) '  Delta x of domain:     ', DeltaX
+  write (*,*) '  Delta y of domain:     ', DeltaY
+  write (*,*) '  Radial distance:       ', RadialDist
+  write (*,*) '  Radial band increment: ', RbandInc
+  write (*,*) ''
+
   ! Allocate the data arrays and read in the data from the GRADS data files
   allocate (W(1:Nx,1:Ny,1:Nz,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), Avar(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
   if (Ierror .ne. 0) then
@@ -153,60 +170,26 @@ program main
   call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
   call ReadGradsData(GdataDescrip, VarToAvg, VarLoc, Avar, Nx, Ny, Nz, Nt)
 
-  ! Try a dummy operation to test the output routine
-  write (*,*) 'TEST: allocating output array'
-  allocate (AzAvg(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
+  ! Allocate the output array and compute the azimuthal averaging
+  allocate (AzAvg(1:NumRbands,1:1,1:Nz,1:Nt), stat=Ierror)
   if (Ierror .ne. 0) then
     write (*,*) 'ERROR: Ouput data array memory allocation failed'
     stop
   end if
 
-  ! Try masking with the w data
-  write (*,*) 'TEST: filling output array'
-  do it = 1, Nt
-    call FindStormCenter(Press, Nx, Ny, Nz, Nt, it, ixStmCtr, iyStmCtr, MinP)
-    write (*,*) '  Timestep: (it, ixStmCtr, iyStmCtr, MinP): ', it, ixStmCtr, iyStmCtr, MinP
-    do iz = 1, Nz
-      do iy = 1, Ny
-        do ix = 1, Nx
-          if (W(ix,iy,iz,it) .ge. Wthreshold) then
-            AzAvg(ix,iy,iz,it) = 1.0
-          else
-            AzAvg(ix,iy,iz,it) = 0.0
-          end if
-          if ((ix .eq. ixStmCtr) .and. (iy .eq. iyStmCtr)) then
-            AzAvg(ix,iy,iz,it) = 2.0
-          end if
-        end do
-      end do
-    end do
-  end do
-  write (*,*) ''
- 
-  ! Write out the results in GRADS format
-  GoutDescrip%CtlFile = trim(OfileBase) // '.ctl'
-  GoutDescrip%DataFile = trim(OfileBase) // '.gra'
-  GoutDescrip%Title = 'TEST: Reversed Levels for W'
-  GoutDescrip%UndefVal = GdataDescrip(1)%UndefVal
-  GoutDescrip%nx = Nx
-  GoutDescrip%ny = Ny
-  GoutDescrip%nz = Nz
-  GoutDescrip%nt = Nt
-  GoutDescrip%Xstart = GdataDescrip(1)%Xcoords(1)
-  GoutDescrip%Xinc = GdataDescrip(1)%Xcoords(2) - GdataDescrip(1)%Xcoords(1)
-  GoutDescrip%Ystart = GdataDescrip(1)%Ycoords(1)
-  GoutDescrip%Yinc = GdataDescrip(1)%Ycoords(2) - GdataDescrip(1)%Ycoords(1)
-  GoutDescrip%VarName = trim(VarToAvg) // '_azavg'
-  do iz = 1, Nz
-    GoutDescrip%Zcoords(iz) = GdataDescrip(1)%Zcoords(iz)
-  end do
-  GoutDescrip%Tstart = '00:00Z24aug1998'
-  GoutDescrip%Tinc = '01mn'
+  ! Do the averageing. Note that you can pick any index in GdataDescrip below since this data
+  ! has been (superficially) checked out to be consistent.
+  call AzimuthalAverage(Nx, Ny, Nz, Nt, NumRbands, W, Press, Avar, AzAvg, &
+          GdataDescrip(1)%Xcoords, GdataDescrip(1)%Ycoords, RadialDist, RbandInc, Wthreshold)
 
-  call WriteGrads(GoutDescrip, AzAvg, Nx, Ny, Nz, Nt)
+  call BuildGoutDescrip(NumRbands, 1, Nz, Nt, AzAvg, OfileBase, GdataDescrip(1)%UndefVal, VarToAvg, &
+          0.0, RbandInc, 0.0, 1.0, GdataDescrip(1)%Zcoords, GdataDescrip(1)%Tstart, &
+          GdataDescrip(1)%Tinc, GoutDescrip)
+
+  call WriteGrads(GoutDescrip, AzAvg)
 
   ! Clean up
-  deallocate (W, Press, Avar, stat=Ierror)
+  deallocate (W, Press, Avar, AzAvg, stat=Ierror)
   if (Ierror .ne. 0) then
     write (*,*) 'ERROR: Data array memory de-allocation failed'
     stop
@@ -422,6 +405,8 @@ subroutine  ReadGradsCtlFile(GradsCtlFile, GdataDescrip)
               call GenCoords(InFields, Nfields, GdataDescrip%Zcoords, GdataDescrip%nz, MaxCoords, 0)
             else
               if ((InFields(1) .eq. 'tdef') .or. (InFields(1) .eq. 'TDEF')) then
+                GdataDescrip%Tstart = InFields(4)
+                GdataDescrip%Tinc   = InFields(5)
                 call GenCoords(InFields, Nfields, GdataDescrip%Tcoords, GdataDescrip%nt, MaxCoords, 1)
               else
                 if ((InFields(1) .eq. 'vars') .or. (InFields(1) .eq. 'VARS')) then
@@ -759,12 +744,12 @@ end subroutine
 !   data file - raw binary values in the data array
 !
 
-subroutine WriteGrads(GoutDescrip, AzAvg, Nx, Ny, Nz, Nt)
+subroutine WriteGrads(GoutDescrip, AzAvg)
   use GfileTypes
   implicit none
 
   type (GradsOutDescription) :: GoutDescrip
-  real, dimension(1:Nx,1:Ny,1:Nz,1:Nt) :: AzAvg
+  real, dimension(1:GoutDescrip%nx,1:GoutDescrip%ny,1:GoutDescrip%nz,1:GoutDescrip%nt) :: AzAvg
   integer :: Nx, Ny, Nz, Nt
 
   integer :: OutRecLen
@@ -783,7 +768,7 @@ subroutine WriteGrads(GoutDescrip, AzAvg, Nx, Ny, Nz, Nt)
   write (*,*) ''
 
   ! Control (data description) file
-  open (OutUnit, file=GoutDescrip%CtlFile, form='formatted', action='write', iostat=Ierror)
+  open (OutUnit, file=GoutDescrip%CtlFile, form='formatted', action='write', status='replace', iostat=Ierror)
   if (Ierror .ne. 0) then
     write (*,*) 'ERROR: cannot open output GRADS control file for writing: ', trim(GoutDescrip%CtlFile)
     stop
@@ -795,7 +780,7 @@ subroutine WriteGrads(GoutDescrip, AzAvg, Nx, Ny, Nz, Nt)
   write (OutUnit, '(a)')            'OPTIONS  little_endian'
   write (OutUnit, '(a,i,a,g,g)')    'XDEF ', GoutDescrip%nx, ' LINEAR ', GoutDescrip%Xstart, GoutDescrip%Xinc
   write (OutUnit, '(a,i,a,g,g)')    'YDEF ', GoutDescrip%ny, ' LINEAR ', GoutDescrip%Ystart, GoutDescrip%Yinc
-  write (OutUnit, '(a,i,a,(g))')    'ZDEF ', GoutDescrip%nz, ' LEVELS ', &
+  write (OutUnit, '(a,i,a,100g')    'ZDEF ', GoutDescrip%nz, ' LEVELS ', &
                                     (GoutDescrip%Zcoords(iz), iz = 1, GoutDescrip%nz)
   write (OutUnit, '(a,i,a,a,5x,a)') 'TDEF ', GoutDescrip%nt, ' LINEAR ', &
                                     trim(GoutDescrip%Tstart), trim(GoutDescrip%Tinc)
@@ -808,9 +793,9 @@ subroutine WriteGrads(GoutDescrip, AzAvg, Nx, Ny, Nz, Nt)
   ! Data file
   ! dimensions from fastest changing to slowest changing are: x, y, z, t
   ! One record is a single horizontal slice -> (nx * ny) data points
-  OutRecLen = Nx * Ny * BinRecFactor
+  OutRecLen = GoutDescrip%nx * GoutDescrip%ny * BinRecFactor
   open (OutUnit, file=GoutDescrip%DataFile, form='unformatted', access='direct', &
-        recl=OutRecLen, action='write', iostat=Ierror)
+        recl=OutRecLen, action='write', status='replace', iostat=Ierror)
   if (Ierror .ne. 0) then
     write (*,*) 'ERROR: cannot open output GRADS data file for writing: ', trim(GoutDescrip%DataFile)
     stop
@@ -869,5 +854,143 @@ subroutine FindStormCenter(Press, Nx, Ny, Nz, Nt, iTime, ixStmCtr, iyStmCtr, Min
     end do
   end do
   
+  return
+end subroutine
+
+!*************************************************************************
+! AzimuthalAverage
+!
+! This routine will do the azimuthal averaging. It will create a 4-D array
+! for its output (to keep GRADS write routine consistent/general) even though it
+! really is 3-D data (radial band, z level, time). It will put the radial bands 
+! in the x dimension and make the y dimension 1 long.
+!
+! This routine will step though each z and t value and compute the azimuthal
+! average of the x-y plane at each of these points. Then it will store that
+! in the output array so that you get azimuthal averaging for every original
+! z and t point.
+!
+
+subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, NumRbands, W, Press, Avar, AzAvg, &
+          Xcoords, Ycoords, RadialDist, RbandInc, Wthreshold)
+
+  implicit none
+
+  integer :: Nx, Ny, Nz, Nt, NumRbands
+  real, dimension(1:Nx,1:Ny,1:Nz,1:Nt) :: W, Press, Avar
+  real, dimension(1:NumRbands,1:1,1:Nz,1:Nt) :: AzAvg
+  real, dimension(1:Nx) :: Xcoords
+  real, dimension(1:Ny) :: Ycoords
+  real :: RadialDist, RbandInc, Wthreshold
+
+  integer :: ix, iy, iz, it, ixStmCtr, iyStmCtr
+  real :: MinP
+  real, dimension(1:NumRbands) :: Rcounts
+  integer :: ir, iRband
+  real :: DeltaX, DeltaY, Radius
+
+  ! Mask the input data (Avar) with the W data, ie if the corresponding
+  ! W data is >= to the Wthreshold use the Avar data in the averaging;
+  ! otherwise skip the Avar data
+  !
+  ! The storm center is taken to be the min pressure location of the
+  ! x-y plane on the surface (iz .eq. 1)
+
+  write (*,*) 'Averaging Data:'
+
+  do it = 1, Nt
+    call FindStormCenter(Press, Nx, Ny, Nz, Nt, it, ixStmCtr, iyStmCtr, MinP)
+    if (modulo(it,10) .eq. 0) then
+    write (*,*) '  Timestep: ', it
+    write (*,'(a,i3,a,i3,a,g,a,g,a)') '    Storm Center: (', ixStmCtr, ', ', iyStmCtr, ') --> (', &
+          Xcoords(ixStmCtr), ', ', Ycoords(iyStmCtr), ')'
+    write (*,*) '    Minimum Pressue: ', MinP
+    end if
+    do iz = 1, Nz
+
+      ! For the averaging
+      do ir = 1, NumRbands
+        Rcounts(ir) = 0.0
+        AzAvg(ir, 1, Nz, Nt) = 0.0
+      end do
+
+      ! Get the averages for this x-y plane
+      do iy = 1, Ny
+        do ix = 1, Nx
+          ! Only keep the points where W meets the threshold
+          if (W(ix,iy,iz,it) .ge. Wthreshold) then
+             DeltaX = Xcoords(ix)-Xcoords(ixStmCtr)
+             DeltaY = Ycoords(iy)-Ycoords(iyStmCtr)
+             Radius = sqrt(DeltaX*DeltaX + DeltaY*DeltaY)
+             iRband = int(Radius / RbandInc) + 1
+             ! iRband will go from 0 to n, but n might extend beyond the last radial
+             ! band due to approximations made in deriving RbandInc
+             if (iRband .gt. NumRbands) then
+               iRband = NumRbands
+             end if
+
+             AzAvg(iRband, 1, iz, it) = AzAvg(iRband, 1, iz, it) + Avar(ix, iy, iz, it)
+             Rcounts(iRband) = Rcounts(iRband) + 1.0
+          end if
+        end do
+      end do
+
+      do ir = 1, NumRbands
+        ! if we didn't put anything into an AzAvg slot then it should be zero from
+        ! from the intialization above, and we can keep it that way for the result.
+        if (Rcounts(ir) .ne. 0.0) then
+          AzAvg(ir, 1, iz, it) = AzAvg(ir, 1, iz, it) / Rcounts(ir)
+        end if
+      end do
+
+    end do
+  end do
+  write (*,*) ''
+
+  return
+end subroutine
+
+!******************************************************************************
+! BuildGoutDescrip()
+!
+! This routine will fill in the GoutDescrip record for the AzAvg data. This
+! record is used for creating the GRADS control file.
+!
+
+subroutine BuildGoutDescrip(Nx, Ny, Nz, Nt, AzAvg, OfileBase, UndefVal, VarName, &
+          Xstart, Xinc, Ystart, Yinc, Zcoords, Tstart, Tinc, GoutDescrip)
+
+  use GfileTypes
+  implicit none
+
+  integer :: Nx, Ny, Nz, Nt
+  real, dimension(1:Nx,1:Ny,1:Nz,1:Nt) :: AzAvg
+  character (len=*) :: OfileBase, VarName
+  real :: UndefVal, Xstart, Xinc, Ystart, Yinc
+  real, dimension(1:Nz) :: Zcoords
+  character (len=*) :: Tstart, Tinc
+  type (GradsOutDescription) :: GoutDescrip
+
+  integer :: iz
+
+  GoutDescrip%CtlFile = trim(OfileBase) // '.ctl'
+  GoutDescrip%DataFile = trim(OfileBase) // '.gra'
+  GoutDescrip%Title = 'Azimuthal Averaged: ' // trim(VarName)
+  GoutDescrip%UndefVal = UndefVal
+  GoutDescrip%nx = Nx
+  GoutDescrip%ny = Ny
+  GoutDescrip%nz = Nz
+  GoutDescrip%nt = Nt
+  GoutDescrip%Xstart = Xstart
+  GoutDescrip%Xinc = Xinc
+  GoutDescrip%Ystart = Ystart
+  GoutDescrip%Yinc = Yinc
+  GoutDescrip%VarName = trim(VarName) // '_azavg'
+  do iz = 1, Nz
+    GoutDescrip%Zcoords(iz) = Zcoords(iz)
+  end do
+  GoutDescrip%Tstart = Tstart
+  GoutDescrip%Tinc = Tinc
+
   return
 end subroutine
