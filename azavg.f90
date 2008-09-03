@@ -77,6 +77,7 @@ program main
   character (len=LargeString) :: Infiles
   character (len=MediumString) :: OfileBase
   character (len=LittleString) :: VarToAvg
+  logical :: DoHorizVel, DoTangential
 
   character (len=MediumString), dimension(1:MaxFiles) :: GradsCtlFiles
   integer :: Nfiles
@@ -91,8 +92,10 @@ program main
   ! The *Loc vars hold the locations of w, press, var in the GRADS
   ! data files: the first index is the file number, the second index is the
   ! var number
-  real, dimension(:,:,:,:), allocatable :: W, Press, Avar, AzAvg
-  type (GradsVarLocation) :: Wloc, PressLoc, VarLoc
+  real, dimension(:,:,:,:), allocatable :: U, V, W, Press, Avar, AzAvg
+  integer, dimension(:), allocatable :: StmIx, StmIy
+  real, dimension(:), allocatable :: MinP
+  type (GradsVarLocation) :: Wloc, Uloc, Vloc, PressLoc, VarLoc
 
   integer :: i
   integer :: Ierror
@@ -102,7 +105,7 @@ program main
   real :: DeltaX, DeltaY, RadialDist, RbandInc
 
   ! Get the command line arguments
-  call GetMyArgs(Infiles, OfileBase, NumRbands, Wthreshold, VarToAvg)
+  call GetMyArgs(Infiles, OfileBase, NumRbands, Wthreshold, VarToAvg, DoHorizVel, DoTangential)
   call String2List(Infiles, ':', GradsCtlFiles, MaxFiles, Nfiles, 'input files')
 
   write (*,*) 'Calculating azimuthal average for RAMS data:'
@@ -113,7 +116,15 @@ program main
   write (*,*) '  Output file base name:  ', trim(OfileBase)
   write (*,*) '  Number of radial bands: ', NumRbands
   write (*,*) '  W threshold :           ', Wthreshold
-  write (*,*) '  RAMS variable that is being averaged: ', trim(VarToAvg)
+  if (DoHorizVel) then
+    if (DoTangential) then
+      write (*,*) '  RAMS variable that is being averaged: Tangential Horizontal Velocity'
+    else
+      write (*,*) '  RAMS variable that is being averaged: Radial Horizontal Velocity'
+    end if
+  else
+    write (*,*) '  RAMS variable that is being averaged: ', trim(VarToAvg)
+  end if
   write (*,*) ''
 
   ! Read the GRADS data description files and collect the information about the data
@@ -124,7 +135,7 @@ program main
   end do
   write (*,*) ''
 
-  call CheckDataDescrip(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, Wloc, PressLoc, VarLoc, VarToAvg)
+  call CheckDataDescrip(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, Uloc, Vloc, Wloc, PressLoc, VarLoc, VarToAvg, DoHorizVel)
 
   write (*,*) 'Gridded data information:'
   write (*,*) '  Number of x (longitude) points:          ', Nx
@@ -139,7 +150,12 @@ program main
   write (*,*) 'Locations of variables in GRADS data (file number, var number):'
   write (*,'(a20,i3,a2,i3,a1)') 'w: (', Wloc%Fnum, ', ', Wloc%Vnum, ')'
   write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
-  write (*,'(a17,a3,i3,a2,i3,a1)') trim(VarToAvg), ': (', VarLoc%Fnum, ', ', VarLoc%Vnum, ')'
+  if (DoHorizVel) then
+    write (*,'(a20,i3,a2,i3,a1)') 'speed - u: (', Uloc%Fnum, ', ', Uloc%Vnum, ')'
+    write (*,'(a20,i3,a2,i3,a1)') 'speed - v: (', Vloc%Fnum, ', ', Vloc%Vnum, ')'
+  else
+    write (*,'(a17,a3,i3,a2,i3,a1)') trim(VarToAvg), ': (', VarLoc%Fnum, ', ', VarLoc%Vnum, ')'
+  end if
   write (*,*) ''
 
   ! Figure out how big to make each radial band. Assume that the storm center stays near the center of
@@ -159,7 +175,9 @@ program main
   write (*,*) ''
 
   ! Allocate the data arrays and read in the data from the GRADS data files
-  allocate (W(1:Nx,1:Ny,1:Nz,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), Avar(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
+  allocate (U(1:Nx,1:Ny,1:Nz,1:Nt), V(1:Nx,1:Ny,1:Nz,1:Nt), W(1:Nx,1:Ny,1:Nz,1:Nt), &
+            Press(1:Nx,1:Ny,1:Nz,1:Nt), Avar(1:Nx,1:Ny,1:Nz,1:Nt), &
+            StmIx(1:Nt), StmIy(1:Nt), MinP(1:Nt), stat=Ierror)
   if (Ierror .ne. 0) then
     write (*,*) 'ERROR: Data array memory allocation failed'
     stop
@@ -168,7 +186,15 @@ program main
   ! Read in the data for the vars using the description and location information
   call ReadGradsData(GdataDescrip, 'w', Wloc, W, Nx, Ny, Nz, Nt)
   call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
-  call ReadGradsData(GdataDescrip, VarToAvg, VarLoc, Avar, Nx, Ny, Nz, Nt)
+  call RecordStormCenter(Nx, Ny, Nz, Nt, Press, StmIx, StmIy, MinP)
+  if (DoHorizVel) then
+    call ReadGradsData(GdataDescrip, 'u', Uloc, U, Nx, Ny, Nz, Nt)
+    call ReadGradsData(GdataDescrip, 'v', Vloc, V, Nx, Ny, Nz, Nt)
+    call ConvertHorizVelocity(Nx, Ny, Nz, Nt, U, V, StmIx, StmIy, &
+                    GdataDescrip(1)%Xcoords, GdataDescrip(1)%Ycoords, Avar, DoTangential)
+  else
+    call ReadGradsData(GdataDescrip, VarToAvg, VarLoc, Avar, Nx, Ny, Nz, Nt)
+  end if
 
   ! Allocate the output array and compute the azimuthal averaging
   allocate (AzAvg(1:NumRbands,1:1,1:Nz,1:Nt), stat=Ierror)
@@ -179,7 +205,7 @@ program main
 
   ! Do the averageing. Note that you can pick any index in GdataDescrip below since this data
   ! has been (superficially) checked out to be consistent.
-  call AzimuthalAverage(Nx, Ny, Nz, Nt, NumRbands, W, Press, Avar, AzAvg, &
+  call AzimuthalAverage(Nx, Ny, Nz, Nt, NumRbands, W, StmIx, StmIy, MinP, Avar, AzAvg, &
           GdataDescrip(1)%Xcoords, GdataDescrip(1)%Ycoords, RadialDist, RbandInc, Wthreshold)
 
   call BuildGoutDescrip(NumRbands, 1, Nz, Nt, AzAvg, OfileBase, GdataDescrip(1)%UndefVal, VarToAvg, &
@@ -189,7 +215,7 @@ program main
   call WriteGrads(GoutDescrip, AzAvg)
 
   ! Clean up
-  deallocate (W, Press, Avar, AzAvg, stat=Ierror)
+  deallocate (U, V, W, Press, Avar, StmIx, StmIy, MinP, AzAvg, stat=Ierror)
   if (Ierror .ne. 0) then
     write (*,*) 'ERROR: Data array memory de-allocation failed'
     stop
@@ -208,12 +234,13 @@ end
 !   VarToAvg - RAMS variable to do the averaging on
 !
 
-subroutine GetMyArgs(Infiles, OfileBase, NumRbands, Wthreshold, VarToAvg)
+subroutine GetMyArgs(Infiles, OfileBase, NumRbands, Wthreshold, VarToAvg, DoHorizVel, DoTangential)
   implicit none
 
   integer :: NumRbands
   real :: Wthreshold
   character (len=*) :: Infiles, OfileBase, VarToAvg
+  logical :: DoHorizVel, DoTangential
 
   integer :: iargc
   character (len=128) :: arg
@@ -241,6 +268,18 @@ subroutine GetMyArgs(Infiles, OfileBase, NumRbands, Wthreshold, VarToAvg)
   read (arg, '(f)') Wthreshold
 
   call getarg(5, VarToAvg)
+  if (VarToAvg == 'speed_t') then
+    DoHorizVel = .true.
+    DoTangential = .true.
+  else
+    if (VarToAvg == 'speed_r') then
+      DoHorizVel = .true.
+      DoTangential = .false.
+    else
+      DoHorizVel = .false.
+      DoTangential = .false.
+    end if
+  end if
 
   return
 end subroutine
@@ -533,20 +572,26 @@ end subroutine
 ! in Nvars.
 !
 
-subroutine CheckDataDescrip(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, Wloc, PressLoc, VarLoc, VarName)
+subroutine CheckDataDescrip(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, Uloc, Vloc, Wloc, &
+           PressLoc, VarLoc, VarName, DoHorizVel)
   use GfileTypes
   implicit none
 
   type (GradsDataDescription), dimension(*) :: GdataDescrip
   integer Nx, Ny, Nz, Nt, Nfiles
   integer Nvars
-  type (GradsVarLocation) :: Wloc, PressLoc, VarLoc
+  type (GradsVarLocation) :: Uloc, Vloc, Wloc, PressLoc, VarLoc
   character (len=*) :: VarName
+  logical :: DoHorizVel
 
   ! i -> file number, j -> var number
   integer i, j
   logical BadData
 
+  Uloc%Fnum = 0
+  Uloc%Vnum = 0
+  Vloc%Fnum = 0
+  Vloc%Vnum = 0
   Wloc%Fnum = 0
   Wloc%Vnum = 0
   PressLoc%Fnum = 0
@@ -585,6 +630,14 @@ subroutine CheckDataDescrip(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, Wloc, P
     end if
 
     do j =1, GdataDescrip(i)%nvars
+      if (GdataDescrip(i)%VarNames(j) .eq. 'u') then
+        Uloc%Fnum = i
+        Uloc%Vnum = j
+      end if
+      if (GdataDescrip(i)%VarNames(j) .eq. 'v') then
+        Vloc%Fnum = i
+        Vloc%Vnum = j
+      end if
       if (GdataDescrip(i)%VarNames(j) .eq. 'w') then
         Wloc%Fnum = i
         Wloc%Vnum = j
@@ -609,9 +662,20 @@ subroutine CheckDataDescrip(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, Wloc, P
     write (*,*) 'ERROR: cannot find grid var "press" in the GRADS data files'
     BadData = .true.
   end if
-  if (VarLoc%Fnum .eq. 0) then
-    write (*,*) 'ERROR: cannot find grid var "', trim(VarName), '" in the GRADS data files'
-    BadData = .true.
+  if (DoHorizVel) then
+    if (Uloc%Fnum .eq. 0) then
+      write (*,*) 'ERROR: cannot find grid var "u" in the GRADS data files'
+      BadData = .true.
+    end if
+    if (Vloc%Fnum .eq. 0) then
+      write (*,*) 'ERROR: cannot find grid var "v" in the GRADS data files'
+      BadData = .true.
+    end if
+  else
+    if (VarLoc%Fnum .eq. 0) then
+      write (*,*) 'ERROR: cannot find grid var "', trim(VarName), '" in the GRADS data files'
+      BadData = .true.
+    end if
   end if
 
   if (BadData) then
@@ -818,6 +882,29 @@ subroutine WriteGrads(GoutDescrip, AzAvg)
 end subroutine
 
 !**********************************************************************
+! RecordStormCenter()
+!
+! This routine will record the storm center for each time step
+!
+
+subroutine RecordStormCenter(Nx, Ny, Nz, Nt, Press, StmIx, StmIy, MinP)
+  implicit none
+
+  integer :: Nx, Ny, Nz, Nt
+  real, dimension(1:Nx,1:Ny,1:Nz,1:Nt) :: Press
+  integer, dimension(1:Nt) :: StmIx, StmIy
+  real, dimension(1:Nt) :: MinP
+
+  integer it
+
+  do it = 1, Nt
+    call FindStormCenter(Press, Nx, Ny, Nz, Nt, it, StmIx(it), StmIy(it), MinP(it))
+  end do
+
+  return
+end subroutine
+
+!**********************************************************************
 ! FindStormCenter
 !
 ! This routine will locate the storm center using the simple hueristic
@@ -871,20 +958,21 @@ end subroutine
 ! z and t point.
 !
 
-subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, NumRbands, W, Press, Avar, AzAvg, &
+subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, NumRbands, W, StmIx, StmIy, MinP, Avar, AzAvg, &
           Xcoords, Ycoords, RadialDist, RbandInc, Wthreshold)
 
   implicit none
 
   integer :: Nx, Ny, Nz, Nt, NumRbands
-  real, dimension(1:Nx,1:Ny,1:Nz,1:Nt) :: W, Press, Avar
+  real, dimension(1:Nx,1:Ny,1:Nz,1:Nt) :: W, Avar
   real, dimension(1:NumRbands,1:1,1:Nz,1:Nt) :: AzAvg
+  integer, dimension(1:Nt) :: StmIx, StmIy
+  real, dimension(1:Nt) :: MinP
   real, dimension(1:Nx) :: Xcoords
   real, dimension(1:Ny) :: Ycoords
   real :: RadialDist, RbandInc, Wthreshold
 
-  integer :: ix, iy, iz, it, ixStmCtr, iyStmCtr
-  real :: MinP
+  integer :: ix, iy, iz, it
   real, dimension(1:NumRbands) :: Rcounts
   integer :: ir, iRband
   real :: DeltaX, DeltaY, Radius
@@ -899,12 +987,11 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, NumRbands, W, Press, Avar, AzAvg, &
   write (*,*) 'Averaging Data:'
 
   do it = 1, Nt
-    call FindStormCenter(Press, Nx, Ny, Nz, Nt, it, ixStmCtr, iyStmCtr, MinP)
     if (modulo(it,10) .eq. 0) then
     write (*,*) '  Timestep: ', it
-    write (*,'(a,i3,a,i3,a,g,a,g,a)') '    Storm Center: (', ixStmCtr, ', ', iyStmCtr, ') --> (', &
-          Xcoords(ixStmCtr), ', ', Ycoords(iyStmCtr), ')'
-    write (*,*) '    Minimum Pressue: ', MinP
+    write (*,'(a,i3,a,i3,a,g,a,g,a)') '    Storm Center: (', StmIx(it), ', ', StmIy(it), ') --> (', &
+          Xcoords(StmIx(it)), ', ', Ycoords(StmIy(it)), ')'
+    write (*,*) '    Minimum Pressue: ', MinP(it)
     end if
     do iz = 1, Nz
 
@@ -919,8 +1006,8 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, NumRbands, W, Press, Avar, AzAvg, &
         do ix = 1, Nx
           ! Only keep the points where W meets the threshold
           if (W(ix,iy,iz,it) .ge. Wthreshold) then
-             DeltaX = Xcoords(ix)-Xcoords(ixStmCtr)
-             DeltaY = Ycoords(iy)-Ycoords(iyStmCtr)
+             DeltaX = Xcoords(ix)-Xcoords(StmIx(it))
+             DeltaY = Ycoords(iy)-Ycoords(StmIy(it))
              Radius = sqrt(DeltaX*DeltaX + DeltaY*DeltaY)
              iRband = int(Radius / RbandInc) + 1
              ! iRband will go from 0 to n, but n might extend beyond the last radial
@@ -992,5 +1079,37 @@ subroutine BuildGoutDescrip(Nx, Ny, Nz, Nt, AzAvg, OfileBase, UndefVal, VarName,
   GoutDescrip%Tstart = Tstart
   GoutDescrip%Tinc = Tinc
 
+  return
+end subroutine
+
+!*******************************************************************************
+! ConvertHorizVelocity()
+!
+! This routine will convert the horizontal velocity vectors (described in U and V)
+! into tangential or radial components given the storm center location.
+!
+
+subroutine ConvertHorizVelocity(Nx, Ny, Nz, Nt, U, V, StmIx, StmIy, Xcoords, Ycoords, Avar, DoTangential)
+  implicit none
+
+  integer :: Nx, Ny, Nz, Nt
+  real, dimension(1:Nx,1:Ny,1:Nz,1:Nt) :: U, V, Avar
+  integer, dimension(1:Nt) :: StmIx, StmIy
+  real, dimension(1:Nx) :: Xcoords
+  real, dimension(1:Ny) :: Ycoords
+  logical :: DoTangential
+
+  integer :: ix, iy, iz, it
+
+  do it = 1, Nt
+    do iz = 1, Nz
+      do iy = 1, Ny
+        do ix = 1, Nx
+          Avar(ix,iy,iz,it) = U(ix,iy,iz,it)
+        end do
+      end do
+    end do
+  end do
+  
   return
 end subroutine
