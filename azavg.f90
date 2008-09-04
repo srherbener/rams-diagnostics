@@ -1100,12 +1100,35 @@ subroutine ConvertHorizVelocity(Nx, Ny, Nz, Nt, U, V, StmIx, StmIy, Xcoords, Yco
   logical :: DoTangential
 
   integer :: ix, iy, iz, it
-
+  real :: StmX, StmY         ! x,y location relative to the storm center
+  real :: Theta, Phi, Alpha  ! angle values, in radians
+  real :: WindMag, WindX, WindY
+  
   do it = 1, Nt
     do iz = 1, Nz
       do iy = 1, Ny
+        StmY = Ycoords(iy) - Ycoords(StmIy(it))
         do ix = 1, Nx
-          Avar(ix,iy,iz,it) = U(ix,iy,iz,it)
+          StmX = Xcoords(ix) - Xcoords(StmIx(it))
+
+          WindX = U(ix,iy,iz,it)
+          WindY = V(ix,iy,iz,it)
+
+          Theta = atan2(StmY, StmX) ! Angle of radius line from horizontal
+          Phi = atan2(WindY, WindX) ! Angle of wind vector from horizontal
+          Alpha = Phi - Theta       ! Angle of wind vector from raduis line
+                                    !    radius line is the line from storm center through
+                                    !    the point (StmX, StmY)
+
+          WindMag = sqrt(WindX**2 + WindY**2)
+          
+          if (DoTangential) then
+            ! Tangential wind
+            Avar(ix,iy,iz,it) = WindMag * sin(Alpha)
+          else
+            ! Radial wind
+            Avar(ix,iy,iz,it) = WindMag * cos(Alpha)
+          end if
         end do
       end do
     end do
