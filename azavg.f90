@@ -94,7 +94,7 @@ program main
   ! var number
   real, dimension(:,:,:,:), allocatable :: U, V, W, Press, Avar, AzAvg
   integer, dimension(:), allocatable :: StmIx, StmIy
-  real, dimension(:), allocatable :: MinP
+  real, dimension(:), allocatable :: MinP, Xcoords, Ycoords
   type (GradsVarLocation) :: Wloc, Uloc, Vloc, PressLoc, VarLoc
 
   integer :: i
@@ -158,12 +158,31 @@ program main
   end if
   write (*,*) ''
 
+  ! Allocate the data arrays and read in the data from the GRADS data files
+  allocate (U(1:Nx,1:Ny,1:Nz,1:Nt), V(1:Nx,1:Ny,1:Nz,1:Nt), W(1:Nx,1:Ny,1:Nz,1:Nt), &
+            Press(1:Nx,1:Ny,1:Nz,1:Nt), Avar(1:Nx,1:Ny,1:Nz,1:Nt), &
+            StmIx(1:Nt), StmIy(1:Nt), MinP(1:Nt), Xcoords(1:Nx), Ycoords(1:Ny), stat=Ierror)
+  if (Ierror .ne. 0) then
+    write (*,*) 'ERROR: Data array memory allocation failed'
+    stop
+  end if
+
+  ! Convert the GRADS grid coordinates from longitude, latitude to flat plane (x and y).
+  call ConvertGridCoords(Nx, Ny, GdataDescrip(1), Xcoords, Ycoords)
+
+  write (*,*) 'Horzontal Grid Coordinate Info:'
+  write (*,*) '  X Range (min lon, max lon) --> (min x, max x): '
+  write (*,*) '    ', GdataDescrip(1)%Xcoords(1), GdataDescrip(1)%Xcoords(Nx), Xcoords(1), Xcoords(Nx)
+  write (*,*) '  Y Range: '
+  write (*,*) '    ', GdataDescrip(1)%Ycoords(1), GdataDescrip(1)%Ycoords(Ny), Ycoords(1), Ycoords(Ny)
+  write (*,*) ''
+
   ! Figure out how big to make each radial band. Assume that the storm center stays near the center of
   ! the grid domain. Take the diagonal distance of the domain, cut it in half and then break this up
   ! into NumRbands sections of equal length.
 
-  DeltaX = GdataDescrip(1)%Xcoords(Nx) - GdataDescrip(1)%Xcoords(1)
-  DeltaY = GdataDescrip(1)%Ycoords(Ny) - GdataDescrip(1)%Ycoords(1)
+  DeltaX = Xcoords(Nx) - Xcoords(1)
+  DeltaY = Ycoords(Ny) - Ycoords(1)
   RadialDist = sqrt(DeltaX*DeltaX + DeltaY*DeltaY) / 2.0
   RbandInc = RadialDist / real(NumRbands)
 
@@ -174,15 +193,6 @@ program main
   write (*,*) '  Radial band increment: ', RbandInc
   write (*,*) ''
 
-  ! Allocate the data arrays and read in the data from the GRADS data files
-  allocate (U(1:Nx,1:Ny,1:Nz,1:Nt), V(1:Nx,1:Ny,1:Nz,1:Nt), W(1:Nx,1:Ny,1:Nz,1:Nt), &
-            Press(1:Nx,1:Ny,1:Nz,1:Nt), Avar(1:Nx,1:Ny,1:Nz,1:Nt), &
-            StmIx(1:Nt), StmIy(1:Nt), MinP(1:Nt), stat=Ierror)
-  if (Ierror .ne. 0) then
-    write (*,*) 'ERROR: Data array memory allocation failed'
-    stop
-  end if
-
   ! Read in the data for the vars using the description and location information
   call ReadGradsData(GdataDescrip, 'w', Wloc, W, Nx, Ny, Nz, Nt)
   call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
@@ -191,7 +201,7 @@ program main
     call ReadGradsData(GdataDescrip, 'u', Uloc, U, Nx, Ny, Nz, Nt)
     call ReadGradsData(GdataDescrip, 'v', Vloc, V, Nx, Ny, Nz, Nt)
     call ConvertHorizVelocity(Nx, Ny, Nz, Nt, U, V, StmIx, StmIy, &
-                    GdataDescrip(1)%Xcoords, GdataDescrip(1)%Ycoords, Avar, DoTangential)
+                    Xcoords, Ycoords, Avar, DoTangential)
   else
     call ReadGradsData(GdataDescrip, VarToAvg, VarLoc, Avar, Nx, Ny, Nz, Nt)
   end if
@@ -206,7 +216,7 @@ program main
   ! Do the averageing. Note that you can pick any index in GdataDescrip below since this data
   ! has been (superficially) checked out to be consistent.
   call AzimuthalAverage(Nx, Ny, Nz, Nt, NumRbands, W, StmIx, StmIy, MinP, Avar, AzAvg, &
-          GdataDescrip(1)%Xcoords, GdataDescrip(1)%Ycoords, RadialDist, RbandInc, Wthreshold)
+          Xcoords, Ycoords, RadialDist, RbandInc, Wthreshold)
 
   call BuildGoutDescrip(NumRbands, 1, Nz, Nt, AzAvg, OfileBase, GdataDescrip(1)%UndefVal, VarToAvg, &
           0.0, RbandInc, 0.0, 1.0, GdataDescrip(1)%Zcoords, GdataDescrip(1)%Tstart, &
@@ -1134,5 +1144,85 @@ subroutine ConvertHorizVelocity(Nx, Ny, Nz, Nt, U, V, StmIx, StmIy, Xcoords, Yco
     end do
   end do
   
+  return
+end subroutine
+
+!******************************************************************
+! ConvertGridCoords()
+!
+! This routine will convert the longitude, latitude angle values
+! in the input GRADS grid to a flat plane (x and y length values)
+!
+subroutine ConvertGridCoords(Nx, Ny, GdataDescrip , Xcoords, Ycoords)
+  use GfileTypes
+  implicit none
+
+  real, parameter :: RadiusEarth = 6378.1  ! km
+  real, parameter :: PI = 3.14159
+
+  integer :: Nx, Ny
+  type (GradsDataDescription) :: GdataDescrip
+  real, dimension(1:Nx) :: Xcoords
+  real, dimension(1:Ny) :: Ycoords
+
+  integer :: ix, iy
+  real :: ConvDeg2Rad;
+  real :: DeltaX, DeltaY
+  real :: DeltaT, DeltaP  ! Theta is longitude angle, Phi is latitude angle, radians
+  real :: RadiusX
+  real :: PhiN, Phi1, Phi2, Theta1, Theta2
+
+  ! The Xcoords in the GdataDescrip structure are longitude angles in degrees
+  ! The Ycoords in the GdataDescrip structure are latitude angles in degrees
+  !
+  ! To convert, figure out what DeltaX and DeltaY are according to the longitude, latitude
+  ! angles. Call the lower left point of the grid (0,0) and just add in the delta values to
+  ! get the remaining coordinate values. Put the x,y values in km.
+  !
+  ! Technically, the DeltaX values change for each unique latitude angle since DeltaX depends
+  ! on the arm perpendicular to the axis of rotation of the Earth (not the center of Earth).
+  ! However, since the storms are near the equator this arm doesn't change much in length.
+  ! Approximate the spherical surface with a rectangle using the delta x that is an average
+  ! of the deltax you find at the southernmost latidute and northernmost latitude. This will
+  ! greatly simplify the code by allowing the use of just one list of x coordinates for the 
+  ! entire grid.
+  !
+  !   DeltaX = (RadiusEarth * cos(Phi)) * DeltaTheta
+  !   DeltaY = RadiusEarth * DeltaPhi
+  !   angle values are in radians
+
+  ! write a warning if the grid is located far away from the equator
+
+  if (abs(GdataDescrip%Ycoords(Ny)) .gt. 23.0) then
+    write (*,*) 'Warning: extent of grid goes outside tropics, this code assumes grid is near equator'
+    write (*,*) ''
+  end if
+
+  ! convert to radians
+  ConvDeg2Rad = (2.0 * PI) / 360.0
+  Theta1 = GdataDescrip%Xcoords(1) * ConvDeg2Rad
+  Theta2 = GdataDescrip%Xcoords(2) * ConvDeg2Rad
+
+  Phi1 = GdataDescrip%Ycoords(1) * ConvDeg2Rad
+  Phi2 = GdataDescrip%Ycoords(2) * ConvDeg2Rad
+  PhiN = GdataDescrip%Ycoords(Ny) * ConvDeg2Rad
+
+  DeltaT = Theta2 - Theta1
+  DeltaP = Phi2 - Phi1
+
+  ! average of the arms at south lat and north lat
+  RadiusX = (RadiusEarth * 0.5) * (cos(Phi1) + cos(PhiN))
+  DeltaX = RadiusX * DeltaT
+  DeltaY = RadiusEarth * DeltaP
+
+  ! DeltaX and DeltaY are in units of RadiusEarth (km for now)
+  do ix = 1, Nx
+    Xcoords(ix) = real(ix - 1) * DeltaX
+  end do
+
+  do iy = 1, Ny
+    Ycoords(iy) = real(iy - 1) * DeltaY
+  end do
+
   return
 end subroutine
