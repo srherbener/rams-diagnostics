@@ -103,6 +103,7 @@ program main
   integer :: ix, iy, iz, it
 
   real :: DeltaX, DeltaY, RadialDist, RbandInc
+  real :: TestData, TestGridX, TestGridY
 
   ! Get the command line arguments
   call GetMyArgs(Infiles, OfileBase, NumRbands, Wthreshold, VarToAvg, DoHorizVel, DoTangential)
@@ -127,90 +128,173 @@ program main
   end if
   write (*,*) ''
 
-  ! Read the GRADS data description files and collect the information about the data
+  if (trim(VarToAvg) /= 'test') then
+    ! Not running a test so grab the data from GRADS input files and perform the averaging.
 
-  do i = 1, Nfiles
-    write (*,*) 'Reading GRADS Control File: ', trim(GradsCtlFiles(i))
-    call ReadGradsCtlFile(GradsCtlFiles(i), GdataDescrip(i))
-  end do
-  write (*,*) ''
-
-  call CheckDataDescrip(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, Uloc, Vloc, Wloc, PressLoc, VarLoc, VarToAvg, DoHorizVel)
-
-  write (*,*) 'Gridded data information:'
-  write (*,*) '  Number of x (longitude) points:          ', Nx
-  write (*,*) '  Number of y (latitude) points:           ', Ny
-  write (*,*) '  Number of z (vertical level) points:     ', Nz
-  write (*,*) '  Number of t (time) points:               ', Nt
-  write (*,*) '  Total number of grid variables:          ', Nvars
-  write (*,*) ''
-  write (*,*) '  Number of data values per grid variable: ', Nx*Ny*Nz*Nt
-  write (*,*) ''
-
-  write (*,*) 'Locations of variables in GRADS data (file number, var number):'
-  write (*,'(a20,i3,a2,i3,a1)') 'w: (', Wloc%Fnum, ', ', Wloc%Vnum, ')'
-  write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
-  if (DoHorizVel) then
-    write (*,'(a20,i3,a2,i3,a1)') 'speed - u: (', Uloc%Fnum, ', ', Uloc%Vnum, ')'
-    write (*,'(a20,i3,a2,i3,a1)') 'speed - v: (', Vloc%Fnum, ', ', Vloc%Vnum, ')'
+    ! Read the GRADS data description files and collect the information about the data
+    do i = 1, Nfiles
+      write (*,*) 'Reading GRADS Control File: ', trim(GradsCtlFiles(i))
+      call ReadGradsCtlFile(GradsCtlFiles(i), GdataDescrip(i))
+    end do
+    write (*,*) ''
+  
+    call CheckDataDescrip(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, Uloc, Vloc, Wloc, PressLoc, VarLoc, VarToAvg, DoHorizVel)
+  
+    write (*,*) 'Gridded data information:'
+    write (*,*) '  Number of x (longitude) points:          ', Nx
+    write (*,*) '  Number of y (latitude) points:           ', Ny
+    write (*,*) '  Number of z (vertical level) points:     ', Nz
+    write (*,*) '  Number of t (time) points:               ', Nt
+    write (*,*) '  Total number of grid variables:          ', Nvars
+    write (*,*) ''
+    write (*,*) '  Number of data values per grid variable: ', Nx*Ny*Nz*Nt
+    write (*,*) ''
+  
+    write (*,*) 'Locations of variables in GRADS data (file number, var number):'
+    write (*,'(a20,i3,a2,i3,a1)') 'w: (', Wloc%Fnum, ', ', Wloc%Vnum, ')'
+    write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
+    if (DoHorizVel) then
+      write (*,'(a20,i3,a2,i3,a1)') 'speed - u: (', Uloc%Fnum, ', ', Uloc%Vnum, ')'
+      write (*,'(a20,i3,a2,i3,a1)') 'speed - v: (', Vloc%Fnum, ', ', Vloc%Vnum, ')'
+    else
+      write (*,'(a17,a3,i3,a2,i3,a1)') trim(VarToAvg), ': (', VarLoc%Fnum, ', ', VarLoc%Vnum, ')'
+    end if
+    write (*,*) ''
+  
+    ! Allocate the data arrays and read in the data from the GRADS data files
+    allocate (U(1:Nx,1:Ny,1:Nz,1:Nt), V(1:Nx,1:Ny,1:Nz,1:Nt), W(1:Nx,1:Ny,1:Nz,1:Nt), &
+              Press(1:Nx,1:Ny,1:Nz,1:Nt), Avar(1:Nx,1:Ny,1:Nz,1:Nt), &
+              StmIx(1:Nt), StmIy(1:Nt), MinP(1:Nt), Xcoords(1:Nx), Ycoords(1:Ny), stat=Ierror)
+    if (Ierror .ne. 0) then
+      write (*,*) 'ERROR: Data array memory allocation failed'
+      stop
+    end if
+  
+    ! Convert the GRADS grid coordinates from longitude, latitude to flat plane (x and y).
+    call ConvertGridCoords(Nx, Ny, GdataDescrip(1), Xcoords, Ycoords)
+  
+    write (*,*) 'Horzontal Grid Coordinate Info:'
+    write (*,*) '  X Range (min lon, max lon) --> (min x, max x): '
+    write (*,*) '    ', GdataDescrip(1)%Xcoords(1), GdataDescrip(1)%Xcoords(Nx), Xcoords(1), Xcoords(Nx)
+    write (*,*) '  Y Range: '
+    write (*,*) '    ', GdataDescrip(1)%Ycoords(1), GdataDescrip(1)%Ycoords(Ny), Ycoords(1), Ycoords(Ny)
+    write (*,*) ''
+  
+    ! Figure out how big to make each radial band. Assume that the storm center stays near the center of
+    ! the grid domain. Take the diagonal distance of the domain, cut it in half and then break this up
+    ! into NumRbands sections of equal length.
+  
+    DeltaX = Xcoords(Nx) - Xcoords(1)
+    DeltaY = Ycoords(Ny) - Ycoords(1)
+    RadialDist = sqrt(DeltaX*DeltaX + DeltaY*DeltaY) / 2.0
+    RbandInc = RadialDist / real(NumRbands)
+  
+    write (*,*) 'Radial band information:'
+    write (*,*) '  Delta x of domain:     ', DeltaX
+    write (*,*) '  Delta y of domain:     ', DeltaY
+    write (*,*) '  Radial distance:       ', RadialDist
+    write (*,*) '  Radial band increment: ', RbandInc
+    write (*,*) ''
+  
+    ! Read in the data for the vars using the description and location information
+    call ReadGradsData(GdataDescrip, 'w', Wloc, W, Nx, Ny, Nz, Nt)
+    call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
+    call RecordStormCenter(Nx, Ny, Nz, Nt, Press, StmIx, StmIy, MinP)
+    if (DoHorizVel) then
+      call ReadGradsData(GdataDescrip, 'u', Uloc, U, Nx, Ny, Nz, Nt)
+      call ReadGradsData(GdataDescrip, 'v', Vloc, V, Nx, Ny, Nz, Nt)
+      call ConvertHorizVelocity(Nx, Ny, Nz, Nt, U, V, StmIx, StmIy, &
+                      Xcoords, Ycoords, Avar, DoTangential)
+    else
+      call ReadGradsData(GdataDescrip, VarToAvg, VarLoc, Avar, Nx, Ny, Nz, Nt)
+    end if
+  
+    ! Allocate the output array and compute the azimuthal averaging
+    allocate (AzAvg(1:NumRbands,1:1,1:Nz,1:Nt), stat=Ierror)
+    if (Ierror .ne. 0) then
+      write (*,*) 'ERROR: Ouput data array memory allocation failed'
+      stop
+    end if
   else
-    write (*,'(a17,a3,i3,a2,i3,a1)') trim(VarToAvg), ': (', VarLoc%Fnum, ', ', VarLoc%Vnum, ')'
-  end if
-  write (*,*) ''
+    ! Performing a test, load up the variables with data that will produce a known result and
+    ! finish out the program (averaging and output).
 
-  ! Allocate the data arrays and read in the data from the GRADS data files
-  allocate (U(1:Nx,1:Ny,1:Nz,1:Nt), V(1:Nx,1:Ny,1:Nz,1:Nt), W(1:Nx,1:Ny,1:Nz,1:Nt), &
-            Press(1:Nx,1:Ny,1:Nz,1:Nt), Avar(1:Nx,1:Ny,1:Nz,1:Nt), &
-            StmIx(1:Nt), StmIy(1:Nt), MinP(1:Nt), Xcoords(1:Nx), Ycoords(1:Ny), stat=Ierror)
-  if (Ierror .ne. 0) then
-    write (*,*) 'ERROR: Data array memory allocation failed'
-    stop
-  end if
+    ! Create one horizontal slice, 100 x 100 tiles, one z level, 5 time points.
+    !   Make the x,y increments 1km
+    ! Move the storm center around a little bit but keep it near the center.
+    ! Make 10 radial bands, 
 
-  ! Convert the GRADS grid coordinates from longitude, latitude to flat plane (x and y).
-  call ConvertGridCoords(Nx, Ny, GdataDescrip(1), Xcoords, Ycoords)
+    Nx = 101
+    Ny = 101
+    Nz = 1
+    Nt = 5
 
-  write (*,*) 'Horzontal Grid Coordinate Info:'
-  write (*,*) '  X Range (min lon, max lon) --> (min x, max x): '
-  write (*,*) '    ', GdataDescrip(1)%Xcoords(1), GdataDescrip(1)%Xcoords(Nx), Xcoords(1), Xcoords(Nx)
-  write (*,*) '  Y Range: '
-  write (*,*) '    ', GdataDescrip(1)%Ycoords(1), GdataDescrip(1)%Ycoords(Ny), Ycoords(1), Ycoords(Ny)
-  write (*,*) ''
+    NumRbands = 10
+    TestGridX = 100.0
+    TestGridY = 100.0
 
-  ! Figure out how big to make each radial band. Assume that the storm center stays near the center of
-  ! the grid domain. Take the diagonal distance of the domain, cut it in half and then break this up
-  ! into NumRbands sections of equal length.
+    allocate (U(1:Nx,1:Ny,1:Nz,1:Nt), V(1:Nx,1:Ny,1:Nz,1:Nt), W(1:Nx,1:Ny,1:Nz,1:Nt), &
+              Press(1:Nx,1:Ny,1:Nz,1:Nt), Avar(1:Nx,1:Ny,1:Nz,1:Nt), &
+              StmIx(1:Nt), StmIy(1:Nt), MinP(1:Nt), Xcoords(1:Nx), Ycoords(1:Ny), stat=Ierror)
+    if (Ierror .ne. 0) then
+      write (*,*) 'ERROR: TEST: Data array memory allocation failed'
+      stop
+    end if
+    allocate (AzAvg(1:NumRbands,1:1,1:Nz,1:Nt), stat=Ierror)
+    if (Ierror .ne. 0) then
+      write (*,*) 'ERROR: Ouput data array memory allocation failed'
+      stop
+    end if
 
-  DeltaX = Xcoords(Nx) - Xcoords(1)
-  DeltaY = Ycoords(Ny) - Ycoords(1)
-  RadialDist = sqrt(DeltaX*DeltaX + DeltaY*DeltaY) / 2.0
-  RbandInc = RadialDist / real(NumRbands)
+    RadialDist = sqrt(TestGridX*TestGridX + TestGridY*TestGridY) / 2.0
+    RbandInc = RadialDist / real(NumRbands)
 
-  write (*,*) 'Radial band information:'
-  write (*,*) '  Delta x of domain:     ', DeltaX
-  write (*,*) '  Delta y of domain:     ', DeltaY
-  write (*,*) '  Radial distance:       ', RadialDist
-  write (*,*) '  Radial band increment: ', RbandInc
-  write (*,*) ''
+    ! load up the coordinates
+    DeltaX = TestGridX / real(Nx - 1)
+    DeltaY = TestGridY / real(Ny - 1)
+    do ix = 1, Nx
+      Xcoords(ix) = real(ix-1) * DeltaX
+    end do
+    do iy = 1, Ny
+      Ycoords(iy) = real(iy-1) * DeltaY
+    end do
+    do iz = 1, Nz
+      GdataDescrip(1)%Zcoords(iz) = iz
+    end do
+    GdataDescrip(1)%Tstart = '00:00Z24aug1998'
+    GdataDescrip(1)%Tinc =  '01mn'
 
-  ! Read in the data for the vars using the description and location information
-  call ReadGradsData(GdataDescrip, 'w', Wloc, W, Nx, Ny, Nz, Nt)
-  call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
-  call RecordStormCenter(Nx, Ny, Nz, Nt, Press, StmIx, StmIy, MinP)
-  if (DoHorizVel) then
-    call ReadGradsData(GdataDescrip, 'u', Uloc, U, Nx, Ny, Nz, Nt)
-    call ReadGradsData(GdataDescrip, 'v', Vloc, V, Nx, Ny, Nz, Nt)
-    call ConvertHorizVelocity(Nx, Ny, Nz, Nt, U, V, StmIx, StmIy, &
-                    Xcoords, Ycoords, Avar, DoTangential)
-  else
-    call ReadGradsData(GdataDescrip, VarToAvg, VarLoc, Avar, Nx, Ny, Nz, Nt)
-  end if
+    ! Undefined value
+    GdataDescrip(1)%UndefVal = 10.0e30
 
-  ! Allocate the output array and compute the azimuthal averaging
-  allocate (AzAvg(1:NumRbands,1:1,1:Nz,1:Nt), stat=Ierror)
-  if (Ierror .ne. 0) then
-    write (*,*) 'ERROR: Ouput data array memory allocation failed'
-    stop
+    do it = 1, Nt
+      do iz = 1, Nz
+        do iy = 1, Ny
+          do ix = 1, Nx
+
+            ! Storm center drifts from roughly the center of the grid
+            StmIx(it) = int(Nx/2) + it
+            StmIy(it) = int(Ny/2) - it
+            MinP(it) = 980.0 - real(it)  ! Just make it up, it's only used in diagnostic msg
+                                         ! in AzimuthalAverage().
+
+            ! Fill up W with the it value so you can see if screening works with different
+            ! Wthreshold values
+            W(ix,iy,iz,it) = real(it)
+
+            ! Make the data match the radial band number after the averaging takes place.
+            !   int(sqrt(DeltaX*DeltaX + DeltaY*DeltaY) / RbandInc) + 1) gives you the radial band number
+            !   just multiply it by it so you see increasing slope for successive time steps
+            DeltaX = Xcoords(StmIx(it)) - Xcoords(ix)
+            DeltaY = Ycoords(StmIy(it)) - Ycoords(iy)
+            Avar(ix,iy,iz,it) = real((int(sqrt(DeltaX*DeltaX + DeltaY*DeltaY) / RbandInc) + 1) * it)
+
+          end do 
+        end do 
+      end do 
+    end do 
+
+
   end if
 
   ! Do the averageing. Note that you can pick any index in GdataDescrip below since this data
@@ -1020,7 +1104,7 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, NumRbands, W, StmIx, StmIy, MinP, Av
              DeltaY = Ycoords(iy)-Ycoords(StmIy(it))
              Radius = sqrt(DeltaX*DeltaX + DeltaY*DeltaY)
              iRband = int(Radius / RbandInc) + 1
-             ! iRband will go from 0 to n, but n might extend beyond the last radial
+             ! iRband will go from 1 to n, but n might extend beyond the last radial
              ! band due to approximations made in deriving RbandInc
              if (iRband .gt. NumRbands) then
                iRband = NumRbands
