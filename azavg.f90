@@ -300,7 +300,7 @@ program main
   ! Do the averageing. Note that you can pick any index in GdataDescrip below since this data
   ! has been (superficially) checked out to be consistent.
   call AzimuthalAverage(Nx, Ny, Nz, Nt, NumRbands, W, StmIx, StmIy, MinP, Avar, AzAvg, &
-          Xcoords, Ycoords, RadialDist, RbandInc, Wthreshold)
+          Xcoords, Ycoords, RadialDist, RbandInc, Wthreshold, GdataDescrip(1)%UndefVal)
 
   call BuildGoutDescrip(NumRbands, 1, Nz, Nt, AzAvg, OfileBase, GdataDescrip(1)%UndefVal, VarToAvg, &
           0.0, RbandInc, 0.0, 1.0, GdataDescrip(1)%Zcoords, GdataDescrip(1)%Tstart, &
@@ -1053,7 +1053,7 @@ end subroutine
 !
 
 subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, NumRbands, W, StmIx, StmIy, MinP, Avar, AzAvg, &
-          Xcoords, Ycoords, RadialDist, RbandInc, Wthreshold)
+          Xcoords, Ycoords, RadialDist, RbandInc, Wthreshold, UndefVal)
 
   implicit none
 
@@ -1064,7 +1064,7 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, NumRbands, W, StmIx, StmIy, MinP, Av
   real, dimension(1:Nt) :: MinP
   real, dimension(1:Nx) :: Xcoords
   real, dimension(1:Ny) :: Ycoords
-  real :: RadialDist, RbandInc, Wthreshold
+  real :: RadialDist, RbandInc, Wthreshold, UndefVal
 
   integer :: ix, iy, iz, it
   real, dimension(1:NumRbands) :: Rcounts
@@ -1099,7 +1099,7 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, NumRbands, W, StmIx, StmIy, MinP, Av
       do iy = 1, Ny
         do ix = 1, Nx
           ! Only keep the points where W meets the threshold
-          if (W(ix,iy,iz,it) .ge. Wthreshold) then
+          if ((W(ix,iy,iz,it) .ge. Wthreshold) .and. (Avar(ix,iy,iz,it) .ne. UndefVal)) then
              DeltaX = Xcoords(ix)-Xcoords(StmIx(it))
              DeltaY = Ycoords(iy)-Ycoords(StmIy(it))
              Radius = sqrt(DeltaX*DeltaX + DeltaY*DeltaY)
