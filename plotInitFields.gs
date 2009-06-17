@@ -21,6 +21,7 @@ cent_lat = 15.0
 cent_lon = -40.0
 
 title_sp = "Surface pressure [mb], 36 hrs"
+title_hwind = "Surface horizontal wind [m/s], 36 hrs"
 title_w = "w [m/s], 1000m, 36 hrs"
 title_ccn = "CCN concentration [#/cc], 2500m, 36 hrs"
 
@@ -45,6 +46,19 @@ title_ccn = "CCN concentration [#/cc], 2500m, 36 hrs"
 'draw title 'title_sp
 'printim press_sfc.gif'
 
+* surface pressure plot at last time point
+'set dfile 1'
+'set grads off'
+'set lon -41.0 -39.0'
+'set lat 14.0 16.0'
+'set lev 0'
+'set t 'last_t
+'set gxout stream'
+'clear'
+'d u;v'
+'draw title 'title_hwind
+'printim hwind_sfc.gif'
+
 * w at 1000m
 'set dfile 1'
 'set grads off'
@@ -65,7 +79,7 @@ title_ccn = "CCN concentration [#/cc], 2500m, 36 hrs"
 'set lat 14.0 16.0'
 'set lev 2500'
 'set t 'last_t
-'set gxout shaded'
+'set gxout contour'
 'clear'
 'd ccnconcen'
 'draw title 'title_ccn
