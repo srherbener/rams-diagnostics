@@ -7,6 +7,9 @@
 DEST = $(HOME)/bin
 BINS = $(DEST)/azavg
 
+HEADERS = gDataTypes.h
+OBJS = gdata.o azavg.o
+
 F_COMP = pgf90
 #F_COMP_OPTS = -Mupcase -O2 -Ktrap=fp
 F_COMP_OPTS = -Mupcase -g -Ktrap=fp
@@ -22,12 +25,12 @@ LIBS =
 
 all: $(BINS)
 
-$(DEST)/azavg: azavg.o
-	$(LOADER) -o $(DEST)/azavg azavg.o $(LOADER_OPTS) $(LIBS)
+$(DEST)/azavg: $(OBJS)
+	$(LOADER) -o $(DEST)/azavg $(OBJS) $(LOADER_OPTS) $(LIBS)
 
-.f90.o:
+.f90.o: $(HEADERS)
 	$(F_COMP) $(F_COMP_OPTS) $(INCLUDES) -c $(<)
 
 clean:
-	rm -f *.o
+	rm -f $(OBJS)
 	rm -f $(BINS)
