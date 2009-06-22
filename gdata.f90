@@ -397,6 +397,92 @@ subroutine CheckDataDescrip(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, Uloc, V
   end if
 end subroutine
 
+!*************************************************************************
+! CheckDataDescrip_CI()
+!
+! This routine will check the consistency of the data description obtained
+! from the GRADS control files. The number of x, y, z, t points should match
+! in all files. Also, the total number of variables are calculated and returned
+! in Nvars.
+!
+
+subroutine CheckDataDescrip_CI(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, &
+           DensLoc, VarLoc, VarName)
+  use GfileTypes
+  implicit none
+
+  type (GradsDataDescription), dimension(*) :: GdataDescrip
+  integer Nx, Ny, Nz, Nt, Nfiles
+  integer Nvars
+  type (GradsVarLocation) :: DensLoc, VarLoc
+  character (len=*) :: VarName
+
+  ! i -> file number, j -> var number
+  integer i, j
+  logical BadData
+
+  DensLoc%Fnum = 0
+  DensLoc%Vnum = 0
+  VarLoc%Fnum = 0
+  VarLoc%Vnum = 0
+
+  BadData = .false.
+  do i = 1, Nfiles
+    if (i .eq. 1) then
+      Nx = GdataDescrip(i)%nx
+      Ny = GdataDescrip(i)%ny
+      Nz = GdataDescrip(i)%nz
+      Nt = GdataDescrip(i)%nt
+   
+      Nvars = GdataDescrip(i)%nvars
+    else
+      if (GdataDescrip(i)%nx .ne. Nx) then
+        write (*,*) 'ERROR: number of x points in GRADS control files do not match'
+        BadData = .true.
+      end if
+      if (GdataDescrip(i)%ny .ne. Ny) then
+        write (*,*) 'ERROR: number of y points in GRADS control files do not match'
+        BadData = .true.
+      end if
+      if (GdataDescrip(i)%nz .ne. Nz) then
+        write (*,*) 'ERROR: number of z points in GRADS control files do not match'
+        BadData = .true.
+      end if
+      if (GdataDescrip(i)%nt .ne. Nt) then
+        write (*,*) 'ERROR: number of t points in GRADS control files do not match'
+        BadData = .true.
+      end if
+
+      Nvars = Nvars + GdataDescrip(i)%nvars
+    end if
+
+    do j =1, GdataDescrip(i)%nvars
+      if (GdataDescrip(i)%VarNames(j) .eq. 'dn0') then
+        DensLoc%Fnum = i
+        DensLoc%Vnum = j
+      end if
+      if (GdataDescrip(i)%VarNames(j) .eq. VarName) then
+        VarLoc%Fnum = i
+        VarLoc%Vnum = j
+      end if
+    end do
+  end do
+
+  ! Check to see if you got all vars (dn0, var)
+  if (DensLoc%Fnum .eq. 0) then
+    write (*,*) 'ERROR: cannot find grid var "dn0" in the GRADS data files'
+    BadData = .true.
+  end if
+  if (VarLoc%Fnum .eq. 0) then
+    write (*,*) 'ERROR: cannot find grid var "', trim(VarName), '" in the GRADS data files'
+    BadData = .true.
+  end if
+
+  if (BadData) then
+    stop
+  end if
+end subroutine
+
 !********************************************************************
 ! ReadGradsData()
 !
@@ -509,6 +595,52 @@ subroutine ReadGradsData(GdataDescrip, VarName, VarLoc, VarData, Nx, Ny, Nz, Nt)
   write (*,*) ''
 
   close (unit=InUnit, status='keep')
+
+  return
+end subroutine
+
+!******************************************************************************
+! BuildGoutDescrip()
+!
+! This routine will fill in the GoutDescrip record for the AzAvg data. This
+! record is used for creating the GRADS control file.
+!
+
+subroutine BuildGoutDescrip(Nx, Ny, Nz, Nt, AzAvg, OfileBase, UndefVal, VarName, &
+          Xstart, Xinc, Ystart, Yinc, Zcoords, Tstart, Tinc, GoutDescrip, Diagnostic)
+
+  use GfileTypes
+  implicit none
+
+  integer :: Nx, Ny, Nz, Nt
+  real, dimension(1:Nx,1:Ny,1:Nz,1:Nt) :: AzAvg
+  character (len=*) :: OfileBase, VarName
+  real :: UndefVal, Xstart, Xinc, Ystart, Yinc
+  real, dimension(1:Nz) :: Zcoords
+  character (len=*) :: Tstart, Tinc
+  type (GradsOutDescription) :: GoutDescrip
+  character (len=*) :: Diagnostic
+
+  integer :: iz
+
+  GoutDescrip%CtlFile = trim(OfileBase) // '.ctl'
+  GoutDescrip%DataFile = trim(OfileBase) // '.gra'
+  GoutDescrip%Title = 'Diagnostic: ' // trim(Diagnostic)
+  GoutDescrip%UndefVal = UndefVal
+  GoutDescrip%nx = Nx
+  GoutDescrip%ny = Ny
+  GoutDescrip%nz = Nz
+  GoutDescrip%nt = Nt
+  GoutDescrip%Xstart = Xstart
+  GoutDescrip%Xinc = Xinc
+  GoutDescrip%Ystart = Ystart
+  GoutDescrip%Yinc = Yinc
+  GoutDescrip%VarName = trim(VarName) // '_' // trim(Diagnostic)
+  do iz = 1, Nz
+    GoutDescrip%Zcoords(iz) = Zcoords(iz)
+  end do
+  GoutDescrip%Tstart = Tstart
+  GoutDescrip%Tinc = Tinc
 
   return
 end subroutine

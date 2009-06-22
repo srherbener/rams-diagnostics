@@ -260,7 +260,7 @@ program main
 
   call BuildGoutDescrip(NumRbands, 1, Nz, Nt, AzAvg, OfileBase, GdataDescrip(1)%UndefVal, VarToAvg, &
           0.0, RbandInc, 0.0, 1.0, GdataDescrip(1)%Zcoords, GdataDescrip(1)%Tstart, &
-          GdataDescrip(1)%Tinc, GoutDescrip)
+          GdataDescrip(1)%Tinc, GoutDescrip, 'azavg')
 
   call WriteGrads(GoutDescrip, AzAvg)
 
@@ -486,51 +486,6 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, NumRbands, W, StmIx, StmIy, MinP, Av
     end do
   end do
   write (*,*) ''
-
-  return
-end subroutine
-
-!******************************************************************************
-! BuildGoutDescrip()
-!
-! This routine will fill in the GoutDescrip record for the AzAvg data. This
-! record is used for creating the GRADS control file.
-!
-
-subroutine BuildGoutDescrip(Nx, Ny, Nz, Nt, AzAvg, OfileBase, UndefVal, VarName, &
-          Xstart, Xinc, Ystart, Yinc, Zcoords, Tstart, Tinc, GoutDescrip)
-
-  use GfileTypes
-  implicit none
-
-  integer :: Nx, Ny, Nz, Nt
-  real, dimension(1:Nx,1:Ny,1:Nz,1:Nt) :: AzAvg
-  character (len=*) :: OfileBase, VarName
-  real :: UndefVal, Xstart, Xinc, Ystart, Yinc
-  real, dimension(1:Nz) :: Zcoords
-  character (len=*) :: Tstart, Tinc
-  type (GradsOutDescription) :: GoutDescrip
-
-  integer :: iz
-
-  GoutDescrip%CtlFile = trim(OfileBase) // '.ctl'
-  GoutDescrip%DataFile = trim(OfileBase) // '.gra'
-  GoutDescrip%Title = 'Azimuthal Averaged: ' // trim(VarName)
-  GoutDescrip%UndefVal = UndefVal
-  GoutDescrip%nx = Nx
-  GoutDescrip%ny = Ny
-  GoutDescrip%nz = Nz
-  GoutDescrip%nt = Nt
-  GoutDescrip%Xstart = Xstart
-  GoutDescrip%Xinc = Xinc
-  GoutDescrip%Ystart = Ystart
-  GoutDescrip%Yinc = Yinc
-  GoutDescrip%VarName = trim(VarName) // '_azavg'
-  do iz = 1, Nz
-    GoutDescrip%Zcoords(iz) = Zcoords(iz)
-  end do
-  GoutDescrip%Tstart = Tstart
-  GoutDescrip%Tinc = Tinc
 
   return
 end subroutine
