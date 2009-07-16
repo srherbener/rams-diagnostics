@@ -36,7 +36,7 @@ $(DEST)/colint: gdata.o colint.o
 $(DEST)/sfcwind: gdata.o sfcwind.o
 	$(LOADER) -o $(DEST)/sfcwind gdata.o sfcwind.o $(LOADER_OPTS) $(LIBS)
 
-$(DEST)/sfcwind: gdata.o vslice.o
+$(DEST)/vslice: gdata.o vslice.o
 	$(LOADER) -o $(DEST)/vslice gdata.o vslice.o $(LOADER_OPTS) $(LIBS)
 
 .f90.o: $(HEADERS)
