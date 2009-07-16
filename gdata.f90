@@ -483,6 +483,91 @@ subroutine CheckDataDescrip_CI(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, &
   end if
 end subroutine
 
+!*************************************************************************
+! CheckDataDescrip_SW()
+!
+! This routine will check the consistency of the data description obtained
+! from the GRADS control files. The number of x, y, z, t points should match
+! in all files. Also, the total number of variables are calculated and returned
+! in Nvars.
+!
+
+subroutine CheckDataDescrip_SW(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, &
+           Uloc, Vloc)
+  use GfileTypes
+  implicit none
+
+  type (GradsDataDescription), dimension(*) :: GdataDescrip
+  integer Nx, Ny, Nz, Nt, Nfiles
+  integer Nvars
+  type (GradsVarLocation) :: Uloc, Vloc
+
+  ! i -> file number, j -> var number
+  integer i, j
+  logical BadData
+
+  Uloc%Fnum = 0
+  Uloc%Vnum = 0
+  Vloc%Fnum = 0
+  Vloc%Vnum = 0
+
+  BadData = .false.
+  do i = 1, Nfiles
+    if (i .eq. 1) then
+      Nx = GdataDescrip(i)%nx
+      Ny = GdataDescrip(i)%ny
+      Nz = GdataDescrip(i)%nz
+      Nt = GdataDescrip(i)%nt
+   
+      Nvars = GdataDescrip(i)%nvars
+    else
+      if (GdataDescrip(i)%nx .ne. Nx) then
+        write (*,*) 'ERROR: number of x points in GRADS control files do not match'
+        BadData = .true.
+      end if
+      if (GdataDescrip(i)%ny .ne. Ny) then
+        write (*,*) 'ERROR: number of y points in GRADS control files do not match'
+        BadData = .true.
+      end if
+      if (GdataDescrip(i)%nz .ne. Nz) then
+        write (*,*) 'ERROR: number of z points in GRADS control files do not match'
+        BadData = .true.
+      end if
+      if (GdataDescrip(i)%nt .ne. Nt) then
+        write (*,*) 'ERROR: number of t points in GRADS control files do not match'
+        BadData = .true.
+      end if
+
+      Nvars = Nvars + GdataDescrip(i)%nvars
+    end if
+
+    do j =1, GdataDescrip(i)%nvars
+      if (GdataDescrip(i)%VarNames(j) .eq. 'u') then
+        Uloc%Fnum = i
+        Uloc%Vnum = j
+      end if
+      if (GdataDescrip(i)%VarNames(j) .eq. 'v') then
+        Vloc%Fnum = i
+        Vloc%Vnum = j
+      end if
+    end do
+  end do
+
+  ! Check to see if you got all vars (dn0, var)
+  if (Uloc%Fnum .eq. 0) then
+    write (*,*) 'ERROR: cannot find grid var "u" in the GRADS data files'
+    BadData = .true.
+  end if
+  if (Vloc%Fnum .eq. 0) then
+    write (*,*) 'ERROR: cannot find grid var "v" in the GRADS data files'
+    BadData = .true.
+  end if
+
+  if (BadData) then
+    stop
+  end if
+end subroutine
+
 !********************************************************************
 ! ReadGradsData()
 !
