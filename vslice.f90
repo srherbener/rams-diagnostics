@@ -117,7 +117,7 @@ program main
   Xstart = 1.0
   Xinc = 1.0
   call BuildGoutDescrip(NumPoints, 1, Nz, Nt, VarSlice, OfileBase, GdataDescrip(1)%UndefVal, &
-          VarToSlice, Xstart, Xinc, 0.0, 0.0, GdataDescrip(1)%Zcoords, &
+          VarToSlice, Xstart, Xinc, 0.0, 1.0, GdataDescrip(1)%Zcoords, &
           GdataDescrip(1)%Tstart, GdataDescrip(1)%Tinc, GoutDescrip, 'vslice')
 
   call WriteGrads(GoutDescrip, VarSlice)
