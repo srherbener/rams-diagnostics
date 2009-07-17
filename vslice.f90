@@ -94,7 +94,7 @@ program main
   write (*,*) ''
 
   ! Allocate the data arrays and read in the data from the GRADS data files
-  allocate (Var(1:Nx, 1:Ny, 1:Nz, 1:Nt), VarSlice(1:Nx, 1:1, 1:Nz, 1:Nt), &
+  allocate (Var(1:Nx, 1:Ny, 1:Nz, 1:Nt), VarSlice(1:NumPoints, 1:1, 1:Nz, 1:Nt), &
             Xcoords(1:NumPoints), Ycoords(1:NumPoints), stat=Ierror)
   if (Ierror .ne. 0) then
     write (*,*) 'ERROR: Data array memory allocation failed'
@@ -106,16 +106,17 @@ program main
 
   ! Divide up the vslice line segment
   call DivideLineSegment(ix1, iy1, ix2, iy2, NumPoints, Xcoords, Ycoords)
-!  do i = 1, NumPoints
-!    write (*,*) 'DEBUG: (i,x,y): ', i, Xcoords(i), Ycoords(i)
-!  end do
+!do i = 1, NumPoints
+!  write (*,*) 'DEBUG: (i,x,y): ', i, Xcoords(i), Ycoords(i)
+!end do
 
   ! Cut out the vertical slice
+  call CreateVslice(NumPoints, Nx, Ny, Nz, Nt, Var, VarSlice, Xcoords, Ycoords)
 
   ! Write out the slice in GRADS format
-  Xstart = GdataDescrip(1)%Xcoords(1)
-  Xinc = GdataDescrip(1)%Xcoords(2) - Xstart
-  call BuildGoutDescrip(Nx, 1, Nz, Nt, VarSlice, OfileBase, GdataDescrip(1)%UndefVal, &
+  Xstart = 1.0
+  Xinc = 1.0
+  call BuildGoutDescrip(NumPoints, 1, Nz, Nt, VarSlice, OfileBase, GdataDescrip(1)%UndefVal, &
           VarToSlice, Xstart, Xinc, 0.0, 0.0, GdataDescrip(1)%Zcoords, &
           GdataDescrip(1)%Tstart, GdataDescrip(1)%Tinc, GoutDescrip, 'vslice')
 
@@ -236,3 +237,107 @@ subroutine DivideLineSegment(ix1, iy1, ix2, iy2, NumPoints, Xcoords, Ycoords)
 
   return
 end subroutine
+
+!**************************************************************************
+! CreateSlice()
+!
+! This routine will cut out the slice from the GRADS data.
+!
+subroutine CreateVslice(NumPoints, Nx, Ny, Nz, Nt, Var, VarSlice, Xcoords, Ycoords)
+
+  implicit none
+
+  real ::  BilinInterp
+
+  integer :: NumPoints, Nx, Ny, Nz, Nt
+  real, dimension(1:Nx,1:Ny,1:Nz,1:Nt) :: Var
+  real, dimension(1:NumPoints,1:1,1:Nz,1:Nt) :: VarSlice
+  real, dimension(1:NumPoints) :: Xcoords, Ycoords
+
+  integer ix, iy, iz, it, ip
+
+  do it = 1, Nt
+    do iz = 1, Nz
+      ! Go through the x,y pairs (Xcoords,Ycoords) and interpolate
+      ! from the original data (Var)
+      do ip = 1, NumPoints
+        VarSlice(ip,1,iz,it) = BilinInterp(NumPoints,Nx,Ny,Nz,Nt,Var,Xcoords(ip),Ycoords(ip),iz,it)
+!write(*,*) 'DEBUG(CV): (ip,iz,it,bi) ', ip,iz,it,VarSlice(ip,1,iz,it)
+      end do
+    end do
+  end do
+
+  return
+end subroutine
+
+!******************************************************************************
+! BilinInterp()
+!
+! This function performs a bilinear interpolation of the horizontal data (specified
+! by iz,it setting) given the grid coordinates in x,y
+!
+
+real function BilinInterp(NumPoints,Nx,Ny,Nz,Nt,Var,x,y,Izloc,Itloc)
+
+  implicit none
+
+  integer :: NumPoints, Nx, Ny, Nz, Nt, Izloc, Itloc
+  real, dimension(1:Nx,1:Ny,1:Nz,1:Nt) :: Var
+  real, dimension(1:NumPoints,1:1,1:Nz,1:Nt) :: VarSlice
+  real :: x, y
+
+  integer :: ix1, iy1, ix2, iy2
+  real :: f1, f2, f3, f4, Xprop, Yprop
+
+  ! Read x and y out of Xcoords, Ycoords - these will be in grid coordinates, so
+  ! find the four surrounding (integer) coordinates that will index into Var.
+
+  ix1 = int(x)
+  iy1 = int(y)
+
+  ! If ix1 is at the end of the Var array (equal to Nx) then set ix2 equal to ix1
+  ! which effectively extends the boundary value of Var to the right. Ditto for iy2.
+  ! Code before the call to this routine forces the endpoints in Xcoords, Ycoords
+  ! to match exactly on grid points in Var. This will prevent ix1, iy1 from going too
+  ! low in value (to the left or below the grid in Var), but not prevent ix2, iy2 from
+  ! going too high (to the right or above the grid in Var).
+  ix2 = ix1 + 1
+  if (ix2 .gt. Nx) then
+    ix2 = ix1
+  endif
+  iy2 = iy1 + 1
+  if (iy2 .gt. Ny) then
+    iy2 = iy1
+  endif
+
+  ! Grab f1 .. f4 starting at the lower left of the box (defined by ix1,iy2 ix2,iy2)
+  ! and moving around counter clockwise.
+  f1 = Var(ix1,iy1,Izloc,Itloc)
+  f2 = Var(ix2,iy1,Izloc,Itloc)
+  f3 = Var(ix2,iy2,Izloc,Itloc)
+  f4 = Var(ix1,iy2,Izloc,Itloc)
+
+  ! Find the proportion of x between ix1 and ix2, ditto for y.
+  ! If ix1 equals ix2, then set Xprop to zero.
+
+  if (ix1 .ne. ix2) then
+    Xprop = (x - float(ix1)) / float(ix2 - ix1)
+  else
+    Xprop = 0.0
+  endif
+  if (iy1 .ne. iy2) then
+    Yprop = (y - float(iy1)) / float(iy2 - iy1)
+  else
+    Yprop = 0.0
+  endif
+
+!write (*,*) 'DEBUG(BI): (x,y,ix1,iy1,ix2,iy2,f1,f2,f3,f4): ', x, y, ix1, iy1, ix2, iy2, f1, f2, f3, f4
+
+  ! Do the interpolation of the point between the four points from Var (f1 .. f4)
+  BilinInterp = (((1.0-Xprop) * (1.0-Yprop) * f1) + &
+                 (Xprop       * (1.0-Yprop) * f2) + &
+                 (Xprop       * Yprop       * f3) + &
+                 ((1.0-Xprop) * Yprop       * f4))
+
+  return
+end function
