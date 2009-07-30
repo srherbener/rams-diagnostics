@@ -12,6 +12,7 @@
 *   6 --> GCCN
 *   7 --> CCN
 *   8 --> Theta-e
+*   9 --> T (deg C)
 
 function main(args)
 
@@ -22,6 +23,10 @@ function main(args)
   timeStep = subwrd(args, 5)
   pFile    = subwrd(args, 6)
 
+* convert timestep number to hours
+  timeStr = 36.0 + ((timeStep - 1.0) * 0.5)
+  timeStr = timeStr' hrs'
+
 * set up variable names, titles, etc. according to varNum
   if (varNum = 1)
 *   vertical velocity
@@ -29,63 +34,80 @@ function main(args)
     gVar = 'w_azavg'
     gClevs = '-2.0 -1.5 -1.0 -0.5 0.0 0.5 1.0 1.5 2.0 2.5 3.0 3.5 4.0'
     gCcols = '   9   14    4   11   5  13   3  10   7  12   8   2   6'
-    gTitle = gExp': AZ: w (m/s), 'gCase', t 'timeStep
+    gTitle = gExp': AZ: w (m/s), 'gCase', t 'timeStr
+    zTop = 16000
   endif
   if (varNum = 2)
 *   horiz velocity - tangential
     varName = 'speed_t'
     gVar = 'speed_t_azavg'
-    gClevs = '-30.0 -20.0 -10.0 0.0 10.0 20.0 30.0 40.0 50.0 60.0 70.0 80.0 90.0'
-    gCcols = '9    14     4  11    5   13    3   10    7   12    8    2  6'
-    gTitle = gExp': AZ: spd_t (m/s), 'gCase', t 'timeStep
+    gClevs = '10.0 15.0 20.0 25.0 30.0 35.0 40.0 45.0 50.0 55.0 60.0 65.0 70.0'
+    gCcols = '   9   14    4   11    5   13    3   10    7   12    8    2    6'
+    gTitle = gExp': AZ: spd_t (m/s), 'gCase', t 'timeStr
+    zTop = 16000
   endif
   if (varNum = 3)
 *   horiz velocity - radial
     varName = 'speed_r'
     gVar = 'speed_r_azavg'
-    gClevs = '-30.0 -25.0 -20.0 -15.0 -10.0 -5.0 0.0 5.0 10.0 15.0 20.0 25.0 30.0'
-    gCcols = '9    14     4    11     5   13   3  10    7   12    8    2    6'
-    gTitle = gExp': AZ: spd_r (m/s), 'gCase', t 'timeStep
+    gClevs = '-18.0 -15.0 -12.0 -9.0 -6.0 -3.0 0.0 3.0 6.0 9.0 12.0 15.0 18.0'
+    gCcols = '    9    14     4   11    5   13   3  10   7  12    8    2    6'
+    gTitle = gExp': AZ: spd_r (m/s), 'gCase', t 'timeStr
+    zTop = 16000
   endif
   if (varNum = 4)
 *   liquid water content
     varName = 'liquid'
     gVar = 'liquid_azavg'
     gClevs = '0.0 0.4 0.8 1.2 1.6 2.0 2.4 2.8 3.2 3.6 4.0 4.4 4.8'
-    gCcols = '9  14   4  11   5  13   3  10   7  12   8   2   6'
-    gTitle = gExp': AZ: LWC (g/kg), 'gCase', t 'timeStep
+    gCcols = '  9  14   4  11   5  13   3  10   7  12   8   2   6'
+    gTitle = gExp': AZ: LWC (g/kg), 'gCase', t 'timeStr
+    zTop = 10000
   endif
   if (varNum = 5)
 *   ice content
     varName = 'ice'
     gVar = 'ice_azavg'
     gClevs = '0.0 0.2 0.4 0.6 0.8 1.0 1.2 1.4 1.6 1.8 2.0 2.2 2.4'
-    gCcols = '9  14   4  11   5  13   3  10   7  12   8   2   6'
-    gTitle = gExp': AZ: ice (g/kg), 'gCase', t 'timeStep
+    gCcols = '  9  14   4  11   5  13   3  10   7  12   8   2   6'
+    gTitle = gExp': AZ: ice (g/kg), 'gCase', t 'timeStr
+    zTop = 16000
   endif
   if (varNum = 6)
 *   GCCN
     varName = 'gccnconcen'
     gVar = 'gccnconcen_azav'
-    gClevs = '0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2'
-    gCcols = '9  14   4  11   5  13   3  10   7  12   8   2   6'
-    gTitle = gExp': AZ: GCCN (#/cc), 'gCase', t 'timeStep
+    gClevs = '0.00001 0.0001 0.001 0.01 0.0 0.2 0.4 0.6 0.8 1.0 1.2 1.4 1.6'
+    gCcols = '      9     14     4   11   5  13   3  10   7  12   8   2   6'
+    gTitle = gExp': AZ: GCCN (#/cc), 'gCase', t 'timeStr
+    zTop = 16000
   endif
   if (varNum = 7)
 *   CCN
     varName = 'ccnconcen'
     gVar = 'ccnconcen_azavg'
     gClevs = '0.0 50.0 100.0 150.0 200.0 300.0 400.0 500.0 1000.0 1500.0 2000.0 2500.0 3000.0'
-    gCcols = '9    14     4     11      5     13      3     10      7     12      8      2      6'
-    gTitle = gExp': AZ: CCN (#/cc), 'gCase', t 'timeStep
+    gCcols = '  9   14     4    11     5    13     3    10      7     12      8      2      6'
+    gTitle = gExp': AZ: CCN (#/cc), 'gCase', t 'timeStr
+    zTop = 16000
   endif
   if (varNum = 8)
 *   Thetae
     varName = 'thetae'
     gVar = 'thetae_azavg'
-    gClevs = '300.0 310.0 320.0 330.0 340.0 350.0 360.0 370.0 380.0 390.0 400.0 410.0 420.0'
-    gCcols = '9    14     4    11     5    13     3    10     7    12     8     2     6'
-    gTitle = gExp': AZ: Theta-e (K), 'gCase', t 'timeStep
+    gClevs = '346.0 348.0 350.0 352.0 354.0 356.0 358.0 360.0 362.0 364.0 366.0 368.0 370.0'
+    gCcols = '    9    14     4    11     5    13     3    10     7    12     8     2     6'
+    gTitle = gExp': AZ: Theta-e (K), 'gCase', t 'timeStr
+    zTop = 2000
+  endif
+  if (varNum = 9)
+*   Thetae
+    varName = 'tempc'
+    gVar = 'tempc_azavg'
+    gClevs = '16.0 18.0 20.0 21.0 22.0 22.5 23.0 23.5 24.0 24.5 25.0 25.5 26.0'
+    gCcols = '   9   14    4   11    5   13    3   10    7   12    8    2    6'
+    gTitle = gExp': AZ: T (C), 'gCase', t 'timeStr
+    zTop = 2000
   endif
 
   gcFile = gDir'/'gCase'_'varName'.ctl'
@@ -97,13 +119,13 @@ function main(args)
   say '  Experiment = 'gExp
   say '  GRADS control file = 'gcFile
   say '  Variable number = 'varNum' --> 'varName
-  say '  Timestep = 'timeStep
+  say '  Timestep = 'timeStep' --> 'timeStr
   say '  Output plot (GIF) file = 'pFile
 
   'reinit'
   'clear'
   'open 'gcFile
-  'set lev 0 16000'
+  'set lev 0 'zTop
   'set t 'timeStep
   'set gxout contour'
   'set clevs 'gClevs
