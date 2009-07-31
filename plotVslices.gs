@@ -13,6 +13,7 @@
 *   7 --> CCN
 *   8 --> Theta-e
 *   9 --> T (deg C)
+*  10 --> cloud water content
 
 function main(args)
 
@@ -107,6 +108,15 @@ function main(args)
     gClevs = '16.0 18.0 20.0 21.0 22.0 22.5 23.0 23.5 24.0 24.5 25.0 25.5 26.0'
     gCcols = '   9   14    4   11    5   13    3   10    7   12    8    2    6'
     gTitle = gExp': AZ: T (C), 'gCase', t 'timeStr
+    zTop = 2000
+  endif
+  if (varNum = 10)
+*   relative humidity
+    varName = 'relhum'
+    gVar = 'relhum_azavg'
+    gClevs = '10.0 20.0 30.0 40.0 50.0 55.0 60.0 70.0 75.0 80.0 85.0 90.0 95.0'
+    gCcols = '  9  14   4  11   5  13   3  10   7  12   8   2   6'
+    gTitle = gExp': AZ: RH (%), 'gCase', t 'timeStr
     zTop = 2000
   endif
 
