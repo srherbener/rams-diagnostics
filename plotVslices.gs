@@ -114,8 +114,8 @@ function main(args)
 *   relative humidity
     varName = 'relhum'
     gVar = 'relhum_azavg'
-    gClevs = '10.0 20.0 30.0 40.0 50.0 55.0 60.0 70.0 75.0 80.0 85.0 90.0 95.0'
-    gCcols = '  9  14   4  11   5  13   3  10   7  12   8   2   6'
+    gClevs = '75.0 80.0 82.0 84.0 86.0 88.0 90.0 92.0 94.0 96.0 97.0 98.0 99.0'
+    gCcols = '   9   14    4   11    5   13    3   10    7   12    8    2    6'
     gTitle = gExp': AZ: RH (%), 'gCase', t 'timeStr
     zTop = 2000
   endif
