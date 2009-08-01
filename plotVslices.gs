@@ -119,6 +119,15 @@ function main(args)
     gTitle = gExp': AZ: RH (%), 'gCase', t 'timeStr
     zTop = 2000
   endif
+  if (varNum = 11)
+*   pressure
+    varName = 'press'
+    gVar = 'press_azavg'
+    gClevs = '740.0 760.0 780.0 800.0 820.0 840.0 860.0 880.0 900.0 920.0 940.0 960.0 980.0'
+    gCcols = '    9    14     4    11     5    13     3    10     7    12     8     2     6'
+    gTitle = gExp': AZ: Pressure (mb), 'gCase', t 'timeStr
+    zTop = 2000
+  endif
 
   gcFile = gDir'/'gCase'_'varName'.ctl'
 
