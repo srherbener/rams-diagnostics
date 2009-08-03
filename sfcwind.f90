@@ -3,6 +3,11 @@
 !
 ! This program will read in GRADS data from a RAMS simulation, and
 ! generate the column integrated value of a given variable.
+! Friction at the real surface in the simulation will tend to slow
+! down the wind speed which tend to make all the storms look
+! similar (dampens out the structure of the wind speed vs radius). To
+! help mitigate that effect, take the wind speeds from the second z level
+! instead of the first.
 !
 ! Args
 !   1. input GRADS file names (control files, colon separated list)
@@ -104,10 +109,11 @@ program main
 
   ! Generate a surface wind magnitude each time step
   !   mag = sqrt (u**2 + v**2)
+  iz = 2 ! use second level to help avoid damping from surface friction
   do it = 1, Nt
     do ix = 1, Nx
       do iy = 1, Ny
-        SfcWind(ix,iy,1,it) = sqrt(U(ix,iy,1,it)**2 + V(ix,iy,1,it)**2)
+        SfcWind(ix,iy,1,it) = sqrt(U(ix,iy,iz,it)**2 + V(ix,iy,iz,it)**2)
       enddo
     enddo
   enddo
