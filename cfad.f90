@@ -54,7 +54,7 @@ program main
   real, dimension(:), allocatable :: MinP, Xcoords, Ycoords
   type (GradsVarLocation) :: Uloc, Vloc, PressLoc, VarLoc
   integer :: NumBins, ib, iBinCenter
-  real :: BinInc, BinStart
+  real :: BinInc, BinStart, BinFilterMin, BinFilterMax
   real, dimension(:), allocatable :: BinVals
 
   integer :: i
@@ -67,7 +67,8 @@ program main
   integer :: iTestRband, iTestCount
 
   ! Get the command line arguments
-  call GetMyArgs(Infiles, OfileBase, NumRbands, VarName, DoHorizVel, DoTangential)
+  call GetMyArgs(Infiles, OfileBase, NumRbands, BinFilterMin, BinFilterMax, VarName, &
+                 DoHorizVel, DoTangential)
   call String2List(Infiles, ':', GradsCtlFiles, MaxFiles, Nfiles, 'input files')
 
   write (*,*) 'Calculating azimuthal average for RAMS data:'
@@ -186,6 +187,8 @@ program main
     write (*,*) '  Number of bins: ', NumBins
     write (*,*) '  Bin start value: ', BinStart
     write (*,*) '  Bin increment value: ', BinInc
+    write (*,*) '  Bin filter min: ', BinFilterMin
+    write (*,*) '  Bin filter max: ', BinFilterMax
     do ib = 1, NumBins
       write (*,*) '    ', ib, ' --> ', BinVals(ib)
     end do
@@ -257,6 +260,9 @@ program main
       BinVals(ib) = BinVals(ib-1) + BinInc
     end do
 
+    BinFilterMin = -10.0 ! pick range where all data will fall outside
+    BinFilterMax = -10.0 ! of - ie, shut off the filtering for the test case
+
     RadialDist = sqrt(TestGridX*TestGridX + TestGridY*TestGridY) / 2.0
     RbandInc = RadialDist / real(NumRbands)
 
@@ -316,8 +322,9 @@ program main
   !    z -> levels
   !    t -> time
 
-  call BuildCfad(Nx, Ny, Nz, Nt, NumRbands, NumBins, iBinCenter, StmIx, StmIy, MinP, Avar, Cfad, &
-          Xcoords, Ycoords, RadialDist, RbandInc, BinVals, GdataDescrip(1)%UndefVal)
+  call BuildCfad(Nx, Ny, Nz, Nt, NumRbands, NumBins, iBinCenter, BinFilterMin, BinFilterMax, &
+          StmIx, StmIy, MinP, Avar, Cfad, Xcoords, Ycoords, RadialDist, RbandInc, BinVals, &
+          GdataDescrip(1)%UndefVal)
 
   call BuildGoutDescrip(NumRbands, NumBins, Nz, Nt, Cfad, OfileBase, GdataDescrip(1)%UndefVal, VarName, &
           0.0, RbandInc, BinStart, BinInc, GdataDescrip(1)%Zcoords, GdataDescrip(1)%Tstart, &
@@ -345,23 +352,27 @@ end
 !   VarName - RAMS variable to do the averaging on
 !
 
-subroutine GetMyArgs(Infiles, OfileBase, NumRbands, VarName, DoHorizVel, DoTangential)
+subroutine GetMyArgs(Infiles, OfileBase, NumRbands, BinFilterMin, BinFilterMax, &
+                     VarName, DoHorizVel, DoTangential)
   implicit none
 
   integer :: NumRbands
+  real :: BinFilterMin, BinFilterMax
   character (len=*) :: Infiles, OfileBase, VarName
   logical :: DoHorizVel, DoTangential
 
   integer :: iargc
   character (len=128) :: arg
 
-  if (iargc() .ne. 4) then
-    write (*,*) 'ERROR: must supply exactly 5 arguments'
+  if (iargc() .ne. 6) then
+    write (*,*) 'ERROR: must supply exactly 6 arguments'
     write (*,*) ''
     write (*,*) 'USAGE: azavg <in_data_files> <out_data_file> <num_radial_bands> <w_threshold> <var_to_average>'
     write (*,*) '        <in_data_files>: GRADS format, control file, colon separated list'
     write (*,*) '        <out_data_file>: GRADS format, this programe will tag on .ctl, .dat suffixes'
     write (*,*) '        <num_radial_bands>: number of bands to split data into'
+    write (*,*) '        <bin_filter_min>: min value (left end) of interval for filtering data'
+    write (*,*) '        <bin_filter_max>: max value (right end) of interval for filtering data'
     write (*,*) '        <var_to_analyze>: name of RAMS variable to do the analysis on'
     write (*,*) ''
     stop
@@ -373,7 +384,18 @@ subroutine GetMyArgs(Infiles, OfileBase, NumRbands, VarName, DoHorizVel, DoTange
   call getarg(3, arg)       !this is a string
   read (arg, '(i)') NumRbands !convert to integer
 
-  call getarg(4, VarName)
+  call getarg(4, arg)       !this is a string
+  read (arg, '(f)') BinFilterMin !convert to real
+
+  call getarg(5, arg)       !this is a string
+  read (arg, '(f)') BinFilterMax !convert to real
+
+  if (BinFilterMin .ge. BinFilterMax) then
+    write (*,*) 'ERROR: must specify <bin_filter_min> to be less than <bin_filter_max>'
+    stop
+  endif
+
+  call getarg(6, VarName)
   if (VarName == 'speed_t') then
     DoHorizVel = .true.
     DoTangential = .true.
@@ -397,8 +419,9 @@ end subroutine
 ! the histogram binning within each radial band.
 !
 
-subroutine BuildCfad(Nx, Ny, Nz, Nt, NumRbands, NumBins, iBinCenter, StmIx, StmIy, MinP, Avar, Cfad, &
-          Xcoords, Ycoords, RadialDist, RbandInc, BinVals, UndefVal)
+subroutine BuildCfad(Nx, Ny, Nz, Nt, NumRbands, NumBins, iBinCenter, BinFilterMin, &
+          BinFilterMax, StmIx, StmIy, MinP, Avar, Cfad, Xcoords, Ycoords, RadialDist, &
+          RbandInc, BinVals, UndefVal)
 
   integer :: Nx, Ny, Nz, Nt, NumRbands, NumBins, iBinCenter
   real, dimension(1:Nx,1:Ny,1:Nz,1:Nt) :: Avar
@@ -408,7 +431,7 @@ subroutine BuildCfad(Nx, Ny, Nz, Nt, NumRbands, NumBins, iBinCenter, StmIx, StmI
   real, dimension(1:Nx) :: Xcoords
   real, dimension(1:Ny) :: Ycoords
   real, dimension(1:NumBins) :: BinVals
-  real :: UndefVal
+  real :: BinFilterMin, BinFilterMax, UndefVal
 
   integer :: ix, iy, iz, it, ib, ir
   real :: DeltaX, DeltaY, Radius, BinTotal
@@ -439,10 +462,11 @@ subroutine BuildCfad(Nx, Ny, Nz, Nt, NumRbands, NumBins, iBinCenter, StmIx, StmI
     do iz = 1, Nz
       do iy = 1, Ny
         do ix = 1, Nx
-          ! Throw out undefined data points, and those near zero. The filter for
-          ! points near zero is to keep the zero data points from "hiding" the moving air.
-          ! This is pretty specific to w.
-          if ((Avar(ix,iy,iz,it) .ne. UndefVal) .and. (abs(Avar(ix,iy,iz,it)) .gt. 1.0e-1)) then
+          ! Throw out undefined data points, and those falling inbetween BinFilterMin
+          ! and BinFilterMax
+          if ((Avar(ix,iy,iz,it) .ne. UndefVal) .and. &
+              ((Avar(ix,iy,iz,it) .lt. BinFilterMin) .or. &
+               (Avar(ix,iy,iz,it) .gt. BinFilterMax))) then
              ! find the radial band for this data point
              DeltaX = Xcoords(ix)-Xcoords(StmIx(it))
              DeltaY = Ycoords(iy)-Ycoords(StmIy(it))
@@ -504,7 +528,7 @@ subroutine BuildCfad(Nx, Ny, Nz, Nt, NumRbands, NumBins, iBinCenter, StmIx, StmI
              endif
              
              Cfad(iRband, iBin, iz, it) = Cfad(iRband, iBin, iz, it) + 1.0
-          end if
+          endif
         end do
       end do
     end do
