@@ -95,7 +95,7 @@ end subroutine
 !
 
 subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, NumRbands, W, StmIx, StmIy, MinP, Avar, AzAvg, &
-          Xcoords, Ycoords, RadialDist, RbandInc, Wthreshold, UndefVal)
+          Xcoords, Ycoords, RadialDist, RbandInc, WfilterMin, WfilterMax, UndefVal)
 
   implicit none
 
@@ -106,7 +106,7 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, NumRbands, W, StmIx, StmIy, MinP, Av
   real, dimension(1:Nt) :: MinP
   real, dimension(1:Nx) :: Xcoords
   real, dimension(1:Ny) :: Ycoords
-  real :: RadialDist, RbandInc, Wthreshold, UndefVal
+  real :: RadialDist, RbandInc, WfilterMin, WfilterMax, UndefVal
 
   integer :: ix, iy, iz, it
   real, dimension(1:NumRbands) :: Rcounts
@@ -114,8 +114,8 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, NumRbands, W, StmIx, StmIy, MinP, Av
   real :: DeltaX, DeltaY, Radius
 
   ! Mask the input data (Avar) with the W data, ie if the corresponding
-  ! W data is >= to the Wthreshold use the Avar data in the averaging;
-  ! otherwise skip the Avar data
+  ! W data is outside the interval defined by WfilterMin, WfilterMax,
+  ! use the Avar data in the averaging; otherwise skip the Avar data
   !
   ! The storm center is taken to be the min pressure location of the
   ! x-y plane on the surface (iz .eq. 1)
@@ -140,8 +140,10 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, NumRbands, W, StmIx, StmIy, MinP, Av
       ! Get the averages for this x-y plane
       do iy = 1, Ny
         do ix = 1, Nx
-          ! Only keep the points where W meets the threshold
-          if ((W(ix,iy,iz,it) .ge. Wthreshold) .and. (Avar(ix,iy,iz,it) .ne. UndefVal)) then
+          ! Only keep the points where W is outside the filter interval
+          if (((W(ix,iy,iz,it) .gt. WfilterMax) .or. &
+               (W(ix,iy,iz,it) .lt. WfilterMin)) .and. &
+              (Avar(ix,iy,iz,it) .ne. UndefVal)) then
              DeltaX = Xcoords(ix)-Xcoords(StmIx(it))
              DeltaY = Ycoords(iy)-Ycoords(StmIy(it))
              Radius = sqrt(DeltaX*DeltaX + DeltaY*DeltaY)
@@ -154,6 +156,8 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, NumRbands, W, StmIx, StmIy, MinP, Av
 
              AzAvg(iRband, 1, iz, it) = AzAvg(iRband, 1, iz, it) + Avar(ix, iy, iz, it)
              Rcounts(iRband) = Rcounts(iRband) + 1.0
+else
+write (*,*) 'DEBUG: skipping data: W, wmin, wmax: ', W(ix,iy,iz,it), WfilterMin, WfilterMax
           end if
         end do
       end do

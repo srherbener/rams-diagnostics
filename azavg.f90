@@ -29,7 +29,7 @@ program main
   integer, parameter :: MaxFiles=10
 
   integer NumRbands
-  real :: Wthreshold
+  real :: WfilterMin, WfilterMax
   character (len=LargeString) :: Infiles
   character (len=MediumString) :: OfileBase
   character (len=LittleString) :: VarToAvg
@@ -62,7 +62,7 @@ program main
   real :: TestData, TestGridX, TestGridY
 
   ! Get the command line arguments
-  call GetMyArgs(Infiles, OfileBase, NumRbands, Wthreshold, VarToAvg, DoHorizVel, DoTangential)
+  call GetMyArgs(Infiles, OfileBase, NumRbands, WfilterMin, WfilterMax, VarToAvg, DoHorizVel, DoTangential)
   call String2List(Infiles, ':', GradsCtlFiles, MaxFiles, Nfiles, 'input files')
 
   write (*,*) 'Calculating azimuthal average for RAMS data:'
@@ -72,7 +72,7 @@ program main
   end do
   write (*,*) '  Output file base name:  ', trim(OfileBase)
   write (*,*) '  Number of radial bands: ', NumRbands
-  write (*,*) '  W threshold :           ', Wthreshold
+  write (*,*) '  W filter interval :     ', WfilterMin, WfilterMax
   if (DoHorizVel) then
     if (DoTangential) then
       write (*,*) '  RAMS variable that is being averaged: Tangential Horizontal Velocity'
@@ -235,7 +235,7 @@ program main
                                          ! in AzimuthalAverage().
 
             ! Fill up W with the it value so you can see if screening works with different
-            ! Wthreshold values
+            ! WfilterMin, WfilterMax values
             W(ix,iy,iz,it) = real(it)
 
             ! Make the data match the radial band number after the averaging takes place.
@@ -256,7 +256,7 @@ program main
   ! Do the averageing. Note that you can pick any index in GdataDescrip below since this data
   ! has been (superficially) checked out to be consistent.
   call AzimuthalAverage(Nx, Ny, Nz, Nt, NumRbands, W, StmIx, StmIy, MinP, Avar, AzAvg, &
-          Xcoords, Ycoords, RadialDist, RbandInc, Wthreshold, GdataDescrip(1)%UndefVal)
+          Xcoords, Ycoords, RadialDist, RbandInc, WfilterMin, WfilterMax, GdataDescrip(1)%UndefVal)
 
   call BuildGoutDescrip(NumRbands, 1, Nz, Nt, AzAvg, OfileBase, GdataDescrip(1)%UndefVal, VarToAvg, &
           0.0, RbandInc, 0.0, 1.0, GdataDescrip(1)%Zcoords, GdataDescrip(1)%Tstart, &
@@ -284,25 +284,26 @@ end
 !   VarToAvg - RAMS variable to do the averaging on
 !
 
-subroutine GetMyArgs(Infiles, OfileBase, NumRbands, Wthreshold, VarToAvg, DoHorizVel, DoTangential)
+subroutine GetMyArgs(Infiles, OfileBase, NumRbands, WfilterMin, WfilterMax, VarToAvg, DoHorizVel, DoTangential)
   implicit none
 
   integer :: NumRbands
-  real :: Wthreshold
+  real :: WfilterMin, WfilterMax
   character (len=*) :: Infiles, OfileBase, VarToAvg
   logical :: DoHorizVel, DoTangential
 
   integer :: iargc
   character (len=128) :: arg
 
-  if (iargc() .ne. 5) then
-    write (*,*) 'ERROR: must supply exactly 5 arguments'
+  if (iargc() .ne. 6) then
+    write (*,*) 'ERROR: must supply exactly 6 arguments'
     write (*,*) ''
     write (*,*) 'USAGE: azavg <in_data_files> <out_data_file> <num_radial_bands> <w_threshold> <var_to_average>'
     write (*,*) '        <in_data_files>: GRADS format, control file, colon separated list'
     write (*,*) '        <out_data_file>: GRADS format, this programe will tag on .ctl, .dat suffixes'
     write (*,*) '        <num_radial_bands>: number of bands to split data into'
-    write (*,*) '        <w_threshold>: only take values of the variable where w is greater than or equal to this number'
+    write (*,*) '        <w_filter_min>: min (left end) of interval used to filter out data'
+    write (*,*) '        <w_filter_max>: max (right end) of interval used to filter out data'
     write (*,*) '        <var_to_average>: name of RAMS variable to do the averaging on'
     write (*,*) ''
     stop
@@ -315,9 +316,16 @@ subroutine GetMyArgs(Infiles, OfileBase, NumRbands, Wthreshold, VarToAvg, DoHori
   read (arg, '(i)') NumRbands !convert to integer
 
   call getarg(4, arg)
-  read (arg, '(f)') Wthreshold
+  read (arg, '(f)') WfilterMin
 
-  call getarg(5, VarToAvg)
+  call getarg(5, arg)
+  read (arg, '(f)') WfilterMax
+  if (WfilterMin .ge. WfilterMax) then
+    write (*,*) 'ERROR: must specify <w_filter_min> to be less than <w_filter_max>'
+    stop
+  endif
+
+  call getarg(6, VarToAvg)
   if (VarToAvg == 'speed_t') then
     DoHorizVel = .true.
     DoTangential = .true.
