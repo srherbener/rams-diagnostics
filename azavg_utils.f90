@@ -156,8 +156,6 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, NumRbands, W, StmIx, StmIy, MinP, Av
 
              AzAvg(iRband, 1, iz, it) = AzAvg(iRband, 1, iz, it) + Avar(ix, iy, iz, it)
              Rcounts(iRband) = Rcounts(iRband) + 1.0
-else
-write (*,*) 'DEBUG: skipping data: W, wmin, wmax: ', W(ix,iy,iz,it), WfilterMin, WfilterMax
           end if
         end do
       end do
