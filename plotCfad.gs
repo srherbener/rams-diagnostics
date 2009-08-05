@@ -21,7 +21,7 @@ function main(args)
   timeStr = timeStr' hrs'
 
 * convert rband to radius value
-  numRbands = 10
+  numRbands = 6
   totalRadius = 210.0
   rbandInc = totalRadius / numRbands
   rbandStart = (rBand - 1) * rbandInc
@@ -32,7 +32,7 @@ function main(args)
 *   vertical velocity
     varName = 'w'
     gVar = 'w_cfad'
-    gClevs = '0.0 5.0 10.0 15.0 20.0 25.0 30.0 35.0 40.0 45.0 50.0 55.0 60.0'
+    gClevs = '0.0 2.0 4.0 6.0 8.0 10.0 15.0 20.0 25.0 30.0 35.0 40.0 50.0'
     gCcols = '  9  14    4   11    5   13    3   10    7   12    8    2    6'
     gTitle = gExp': CFAD: w (%), 'gCase', r: 'rbandStart'-'rbandEnd' km, t: 'timeStr
     zTop = 10000
