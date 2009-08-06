@@ -112,6 +112,8 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, NumRbands, W, StmIx, StmIy, MinP, Av
   real, dimension(1:NumRbands) :: Rcounts
   integer :: ir, iRband
   real :: DeltaX, DeltaY, Radius
+  real, dimension(1:Nx,1:Ny,1:Nt) :: WmaxVals, WminVals
+  real :: Wmax, Wmin
 
   ! Mask the input data (Avar) with the W data, ie if the corresponding
   ! W data is outside the interval defined by WfilterMin, WfilterMax,
@@ -119,6 +121,31 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, NumRbands, W, StmIx, StmIy, MinP, Av
   !
   ! The storm center is taken to be the min pressure location of the
   ! x-y plane on the surface (iz .eq. 1)
+
+  ! We want to filter where convection is likely taking place. Approximating
+  ! this by filtering on larger w values. However, the larger w values won't
+  ! persist through the entire vertical column. Handle this by finding the 
+  ! min and max w at each time step in each column - and use these values
+  ! to do the filtering.
+
+  do it = 1, Nt
+    do ix = 1, Nx
+      do iy = 1, Ny
+        Wmax = W(ix,iy,1,it)
+        Wmin = W(ix,iy,1,it)
+        do iz = 2, Nz
+          if (W(ix,iy,iz,it) .gt. Wmax) then
+            Wmax = W(ix,iy,iz,it)
+          end if
+          if (W(ix,iy,iz,it) .lt. Wmin) then
+            Wmin = W(ix,iy,iz,it)
+          end if
+        end do
+        WmaxVals(ix,iy,it) = Wmax
+        WminVals(ix,iy,it) = Wmin
+      end do
+    end do
+  end do
 
   write (*,*) 'Averaging Data:'
 
@@ -134,15 +161,15 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, NumRbands, W, StmIx, StmIy, MinP, Av
       ! For the averaging
       do ir = 1, NumRbands
         Rcounts(ir) = 0.0
-        AzAvg(ir, 1, Nz, Nt) = 0.0
+        AzAvg(ir, 1, iz, it) = 0.0
       end do
 
       ! Get the averages for this x-y plane
       do iy = 1, Ny
         do ix = 1, Nx
-          ! Only keep the points where W is outside the filter interval
-          if (((W(ix,iy,iz,it) .gt. WfilterMax) .or. &
-               (W(ix,iy,iz,it) .lt. WfilterMin)) .and. &
+          ! Only keep the points where W max or W min are outside the filter interval
+          if (((WmaxVals(ix,iy,it) .gt. WfilterMax) .or. &
+               (WminVals(ix,iy,it) .lt. WfilterMin)) .and. &
               (Avar(ix,iy,iz,it) .ne. UndefVal)) then
              DeltaX = Xcoords(ix)-Xcoords(StmIx(it))
              DeltaY = Ycoords(iy)-Ycoords(StmIy(it))
