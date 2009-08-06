@@ -53,7 +53,7 @@ program main
   integer :: Ierror
 
   integer :: ix, iy, iz, it
-  logical :: SuperCooled
+  logical :: SuperCooled, WarmRain
 
   ! Get the command line argument
   call GetMyArgs(Infiles, OfileBase, VarToInt)
@@ -63,6 +63,14 @@ program main
   else
     SuperCooled = .false.
   end if
+
+  if (VarToInt .eq. 'liquid_w') then
+    WarmRain = .true.
+    VarToInt = 'liquid'
+  else
+    WarmRain = .false.
+  end if
+
   call String2List(Infiles, ':', GradsCtlFiles, MaxFiles, Nfiles, 'input files')
 
   write (*,*) 'Calculating column integration for RAMS data:'
@@ -74,6 +82,9 @@ program main
   write (*,*) '  RAMS variable that is being integrated: ', trim(VarToInt)
   if (SuperCooled) then
     write (*,*) '    Applying tempc filter for supercooled liquid' 
+  end if
+  if (WarmRain) then
+    write (*,*) '    Applying tempc filter for warm rain liquid' 
   end if
   write (*,*) ''
 
@@ -146,8 +157,15 @@ program main
                 (ColVar(ix,iy,iz,it) * Dens(ix,iy,iz,it) * (ZmHeights(iz) - ZmHeights(iz-1)))
             end if
           else
-            ColInt(ix,iy,1,it) = ColInt(ix,iy,1,it) + &
-              (ColVar(ix,iy,iz,it) * Dens(ix,iy,iz,it) * (ZmHeights(iz) - ZmHeights(iz-1)))
+            if (WarmRain) then
+              if (TempC(ix,iy,iz,it) .gt. 0.0) then
+                ColInt(ix,iy,1,it) = ColInt(ix,iy,1,it) + &
+                  (ColVar(ix,iy,iz,it) * Dens(ix,iy,iz,it) * (ZmHeights(iz) - ZmHeights(iz-1)))
+              end if
+            else
+              ColInt(ix,iy,1,it) = ColInt(ix,iy,1,it) + &
+                (ColVar(ix,iy,iz,it) * Dens(ix,iy,iz,it) * (ZmHeights(iz) - ZmHeights(iz-1)))
+            end if
           end if
         enddo
       enddo
