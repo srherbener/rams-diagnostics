@@ -9,6 +9,7 @@
 *   3 --> GCCN
 *   4 --> CCN
 *   5 --> surface wind
+*   6 --> column integrated supercooled liquid
 
 function main(args)
 
@@ -30,7 +31,7 @@ function main(args)
     gVar = 'liquid_colint'
     gClevs = '80.0 100.0 200.0 400.0 600.0 800.0 1000.0 2000.0 4000.0 6000.0 8000.0 10000.0 20000.0'
     gCcols = '   9    14     4    11     5    13      3     10      7     12      8       2       6'
-    gTitle = gExp': Column integrated liquid (g/m**2), 'gCase', t 'timeStr
+    gTitle = gExp': LWP (g/m**2), 'gCase', t 'timeStr
   endif
   if (varNum = 2)
 *   column integrated ice
@@ -63,6 +64,14 @@ function main(args)
     gClevs = '10.0 15.0 20.0 25.0 30.0 35.0 40.0 45.0 50.0 55.0 60.0 65.0 70.0'
     gCcols = '   9   14    4   11    5   13    3   10    7   12    8    2    6'
     gTitle = gExp': Surface wind speed (m/s), 'gCase', t 'timeStr
+  endif
+  if (varNum = 6)
+*   column integrated supercooled liquid
+    varName = 'cint_liq_sc'
+    gVar = 'liquid_colint'
+    gClevs = '6.0 8.0 10.0 20.0 40.0 60.0 80.0 100.0 200.0 400.0 600.0 800.0 1000.0'
+    gCcols = '  9  14    4   11    5   13    3    10     7    12     8     2      6'
+    gTitle = gExp': Supercooled LWP (g/m**2), 'gCase', t 'timeStr
   endif
 
   gcFile = gDir'/'varName'_'gCase'.ctl'
