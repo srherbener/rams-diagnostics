@@ -407,14 +407,14 @@ end subroutine
 !
 
 subroutine CheckDataDescrip_CI(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, &
-           DensLoc, VarLoc, VarName)
+           DensLoc, TempLoc, VarLoc, VarName)
   use GfileTypes
   implicit none
 
   type (GradsDataDescription), dimension(*) :: GdataDescrip
   integer Nx, Ny, Nz, Nt, Nfiles
   integer Nvars
-  type (GradsVarLocation) :: DensLoc, VarLoc
+  type (GradsVarLocation) :: DensLoc, TempLoc, VarLoc
   character (len=*) :: VarName
 
   ! i -> file number, j -> var number
@@ -423,6 +423,8 @@ subroutine CheckDataDescrip_CI(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, &
 
   DensLoc%Fnum = 0
   DensLoc%Vnum = 0
+  TempLoc%Fnum = 0
+  TempLoc%Vnum = 0
   VarLoc%Fnum = 0
   VarLoc%Vnum = 0
 
@@ -461,6 +463,10 @@ subroutine CheckDataDescrip_CI(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, &
         DensLoc%Fnum = i
         DensLoc%Vnum = j
       end if
+      if (GdataDescrip(i)%VarNames(j) .eq. 'tempc') then
+        TempLoc%Fnum = i
+        TempLoc%Vnum = j
+      end if
       if (GdataDescrip(i)%VarNames(j) .eq. VarName) then
         VarLoc%Fnum = i
         VarLoc%Vnum = j
@@ -471,6 +477,10 @@ subroutine CheckDataDescrip_CI(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, &
   ! Check to see if you got all vars (dn0, var)
   if (DensLoc%Fnum .eq. 0) then
     write (*,*) 'ERROR: cannot find grid var "dn0" in the GRADS data files'
+    BadData = .true.
+  end if
+  if (TempLoc%Fnum .eq. 0) then
+    write (*,*) 'ERROR: cannot find grid var "tempc" in the GRADS data files'
     BadData = .true.
   end if
   if (VarLoc%Fnum .eq. 0) then
