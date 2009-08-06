@@ -188,10 +188,13 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, NumRbands, W, StmIx, StmIy, MinP, Av
       end do
 
       do ir = 1, NumRbands
-        ! if we didn't put anything into an AzAvg slot then it should be zero from
-        ! from the intialization above, and we can keep it that way for the result.
+        ! If we didn't put anything into an AzAvg slot then set it
+        ! to the undefined value so the data isn't biased by trying to chose
+        ! a default value.
         if (Rcounts(ir) .ne. 0.0) then
           AzAvg(ir, 1, iz, it) = AzAvg(ir, 1, iz, it) / Rcounts(ir)
+        else
+          AzAvg(ir, 1, iz, it) = UndefVal
         end if
       end do
 
