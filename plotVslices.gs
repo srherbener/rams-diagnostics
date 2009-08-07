@@ -33,7 +33,7 @@ function main(args)
 *   vertical velocity
     varName = 'w'
     gVar = 'w_azavg'
-    gClevs = '-2.0 -1.5 -1.0 -0.5 0.0 0.5 1.0 1.5 2.0 2.5 3.0 3.5 4.0'
+    gClevs = '-1.5 -1.0 -0.5 0.0 0.5 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5'
     gCcols = '   9   14    4   11   5  13   3  10   7  12   8   2   6'
     gTitle = gExp': AZ: w (m/s), 'gCase', t 'timeStr
     zTop = 16000
@@ -96,7 +96,7 @@ function main(args)
 *   Thetae
     varName = 'thetae'
     gVar = 'thetae_azavg'
-    gClevs = '346.0 348.0 350.0 352.0 354.0 356.0 358.0 360.0 362.0 364.0 366.0 368.0 370.0'
+    gClevs = '348.0 350.0 352.0 354.0 356.0 358.0 360.0 362.0 364.0 366.0 368.0 370.0 372.0'
     gCcols = '    9    14     4    11     5    13     3    10     7    12     8     2     6'
     gTitle = gExp': AZ: Theta-e (K), 'gCase', t 'timeStr
     zTop = 2000
@@ -105,7 +105,7 @@ function main(args)
 *   Thetae
     varName = 'tempc'
     gVar = 'tempc_azavg'
-    gClevs = '16.0 18.0 20.0 21.0 22.0 22.5 23.0 23.5 24.0 24.5 25.0 25.5 26.0'
+    gClevs = '18.0 20.0 21.0 22.0 22.5 23.0 23.5 24.0 24.5 25.0 25.5 26.0 26.5'
     gCcols = '   9   14    4   11    5   13    3   10    7   12    8    2    6'
     gTitle = gExp': AZ: T (C), 'gCase', t 'timeStr
     zTop = 2000
@@ -114,7 +114,7 @@ function main(args)
 *   relative humidity
     varName = 'relhum'
     gVar = 'relhum_azavg'
-    gClevs = '75.0 80.0 82.0 84.0 86.0 88.0 90.0 92.0 94.0 96.0 97.0 98.0 99.0'
+    gClevs = '80.0 82.0 84.0 86.0 88.0 90.0 92.0 94.0 96.0 97.0 98.0 99.0 100.0'
     gCcols = '   9   14    4   11    5   13    3   10    7   12    8    2    6'
     gTitle = gExp': AZ: RH (%), 'gCase', t 'timeStr
     zTop = 2000
@@ -141,21 +141,28 @@ function main(args)
   say '  Timestep = 'timeStep' --> 'timeStr
   say '  Output plot (GIF) file = 'pFile
 
+* The normal plot area in landscape is:
+*     X: 1.5 to 10.5
+*     Y: 1 to 8
+* Need to push up the bottom of the plot to make room
+* for the colorbar, so use parea to reset Y: 2 to 8
   'reinit'
   'clear'
   'open 'gcFile
   'set lev 0 'zTop
   'set t 'timeStep
-  'set gxout contour'
+  'set gxout shaded'
   'set clevs 'gClevs
   'set ccols 'gCcols
   'set xlab %.1f'
+  'set grads off'
+  'set parea 1.5 10.5 2 8'
   'd 'gVar
   'draw title 'gTitle
   'draw xlab 'xTitle
   'draw ylab 'yTitle
+  'cbarn 1.0 0'
   'printim 'pFile' white'
 
-*  'cbarn'
 
 return
