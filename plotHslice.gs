@@ -10,7 +10,9 @@
 *   4 --> CCN
 *   5 --> surface wind
 *   6 --> column integrated supercooled liquid
-*   6 --> column integrated warm rain liquid
+*   7 --> column integrated warm rain liquid
+*   8 --> tangential wind
+*   9 --> radial wind
 
 function main(args)
 
@@ -22,7 +24,11 @@ function main(args)
   pFile    = subwrd(args, 6)
 
 * convert timestep number to hours
-  timeStr = 36.0 + ((timeStep - 1.0) * 0.5)
+  if (gCase = 'INIT')
+    timeStr = timeStep - 1.0
+  else
+    timeStr = 36.0 + ((timeStep - 1.0) * 0.5)
+  endif
   timeStr = timeStr' hrs'
 
 * set up variable names, titles, etc. according to varNum
@@ -82,6 +88,22 @@ function main(args)
     gCcols = '  9  14    4   11    5   13    3    10     7    12     8     2      6'
     gTitle = gExp': Warm LWP (g/m**2), 'gCase', t 'timeStr
   endif
+  if (varNum = 8)
+*   surface tangential wind
+    varName = 'storm_winds_tan'
+    gVar = 'wind_speed_t'
+    gClevs = '5.0 10.0 15.0 20.0 25.0 30.0 35.0 40.0 45.0 50.0 55.0 60.0 65.0'
+    gCcols = '  9  14    4   11    5   13    3    10     7    12     8     2      6'
+    gTitle = gExp': Tan Wind Speed (m/s), 'gCase', t 'timeStr
+  endif
+  if (varNum = 9)
+*   surface radial wind
+    varName = 'storm_winds_rad'
+    gVar = 'wind_speed_r'
+    gClevs = '-18.0 -15.0 -12.0 -9.0 -6.0 -3.0 0.0 3.0 6.0 9.0 12.0 15.0 18.0'
+    gCcols = '  9  14    4   11    5   13    3    10     7    12     8     2      6'
+    gTitle = gExp': Rad Wind Speed (m/s), 'gCase', t 'timeStr
+  endif
 
   gcFile = gDir'/'varName'_'gCase'.ctl'
 
@@ -99,6 +121,13 @@ function main(args)
   'clear'
   'open 'gcFile
   'set t 'timeStep
+  if ((varNum = 8) | (varNum = 9))
+    'set z 1'
+  endif
+  if (gCase = 'INIT')
+    'set lon -41 -39'
+    'set lat 14 16'
+  endif
   'set gxout shaded'
   'set clevs 'gClevs
   'set ccols 'gCcols
