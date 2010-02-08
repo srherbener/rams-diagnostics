@@ -10,7 +10,9 @@ BINS = $(DEST)/azavg \
        $(DEST)/colint \
        $(DEST)/sfcwind \
        $(DEST)/hslice \
-       $(DEST)/vslice
+       $(DEST)/vslice \
+       $(DEST)/tr_winds \
+       $(DEST)/PDF_pools_allexps
 
 HEADERS = gDataTypes.h
 
@@ -46,6 +48,12 @@ $(DEST)/hslice: gdata.o hslice.o
 
 $(DEST)/vslice: gdata.o vslice.o
 	$(LOADER) -o $(DEST)/vslice gdata.o vslice.o $(LOADER_OPTS) $(LIBS)
+
+$(DEST)/tr_winds: gdata.o azavg_utils.o tr_winds.o
+	$(LOADER) -o $(DEST)/tr_winds gdata.o azavg_utils.o tr_winds.o $(LOADER_OPTS) $(LIBS)
+
+$(DEST)/PDF_pools_allexps: PDF_pools_allexps.o
+	$(LOADER) -o $(DEST)/PDF_pools_allexps PDF_pools_allexps.o $(LOADER_OPTS) $(LIBS)
 
 .f90.o: $(HEADERS)
 	$(F_COMP) $(F_COMP_OPTS) $(INCLUDES) -c $(<)
