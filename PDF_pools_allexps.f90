@@ -114,7 +114,7 @@ enddo !exp
 !*************
 !
 print*,'******************************************************************' 
-Do it=1, nt
+do it=1, nt
    !print*, it, tcmed(it,2)-tcmed(it,1), tcmed(it,3)-tcmed(it,1), tcmed(it,4)-tcmed(it,1)
 enddo
 !
@@ -369,9 +369,9 @@ k = ncat
 goto 5678
 !
 ! --------------------------------------------------------------------------------------------------
-OPEN(1,FILE= 'cld_a.txt',STATUS='UNKNOWN')
-123      Format( F9.4,F9.4,F9.4)
-OPEN(24,FILE='cld_a.gra',STATUS='UNKNOWN',FORM='UNFORMATTED')
+open(unit=11,file='cld_a.txt',status='REPLACE')
+123      format(f9.4,f9.4,f9.4)
+open(unit=12,file='cld_a.gra',status='REPLACE',form='UNFORMATTED')
 !----------------------------------------------------------------------------------------------------
 !                                 displays  every deltacourser cells (0.1 km2)
        print*,'******************************************************************'
@@ -401,14 +401,14 @@ do k=icellmin,400, deltacoarser
 
 
 
-                write(1,123)(k+deltacoarser-1)*delta_xy*delta_xy,percentage, accum
+                write(11,123)(k+deltacoarser-1)*delta_xy*delta_xy,percentage, accum
 
-                WRITE(24) percentage
-                WRITE(24) accum
+                write(12) percentage
+                write(12) accum
 
       endif
 enddo
-CLOSE(24)  
+close(24)  
 
 5678 return 
 end
