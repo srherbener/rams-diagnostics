@@ -31,25 +31,25 @@ LIBS =
 
 all: $(BINS)
 
-$(DEST)/azavg: gdata.o azavg_utils.o azavg.o
+$(DEST)/azavg: azavg.o gdata.o azavg_utils.o
 	$(LOADER) -o $(DEST)/azavg gdata.o azavg_utils.o azavg.o $(LOADER_OPTS) $(LIBS)
 
-$(DEST)/cfad: gdata.o  azavg_utils.o cfad.o
+$(DEST)/cfad: cfad.o gdata.o azavg_utils.o
 	$(LOADER) -o $(DEST)/cfad gdata.o azavg_utils.o cfad.o $(LOADER_OPTS) $(LIBS)
 
-$(DEST)/colint: gdata.o colint.o
+$(DEST)/colint: colint.o gdata.o
 	$(LOADER) -o $(DEST)/colint gdata.o colint.o $(LOADER_OPTS) $(LIBS)
 
-$(DEST)/sfcwind: gdata.o sfcwind.o
+$(DEST)/sfcwind: sfcwind.o gdata.o
 	$(LOADER) -o $(DEST)/sfcwind gdata.o sfcwind.o $(LOADER_OPTS) $(LIBS)
 
-$(DEST)/hslice: gdata.o hslice.o
+$(DEST)/hslice: hslice.o gdata.o
 	$(LOADER) -o $(DEST)/hslice gdata.o hslice.o $(LOADER_OPTS) $(LIBS)
 
-$(DEST)/vslice: gdata.o vslice.o
+$(DEST)/vslice: vslice.o gdata.o
 	$(LOADER) -o $(DEST)/vslice gdata.o vslice.o $(LOADER_OPTS) $(LIBS)
 
-$(DEST)/tr_winds: gdata.o azavg_utils.o tr_winds.o
+$(DEST)/tr_winds: tr_winds.o gdata.o azavg_utils.o
 	$(LOADER) -o $(DEST)/tr_winds gdata.o azavg_utils.o tr_winds.o $(LOADER_OPTS) $(LIBS)
 
 $(DEST)/PDF_pools_allexps: PDF_pools_allexps.o
