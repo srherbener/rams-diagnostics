@@ -1,12 +1,12 @@
 implicit none
 !********************************************************************
-integer,  parameter :: n_exp = 9
+integer,  parameter :: n_exp = 5
 !
 !
 real, parameter :: delta_temp= 4.5
 !
 !********************************************************************
-integer,  parameter :: nt = 37
+integer,  parameter :: nt = 25
 integer,  parameter :: nx = 207 
 integer,  parameter :: ny = 201  
 integer,  parameter :: nz = 39 
@@ -36,24 +36,20 @@ print*
 do i_exp=1, n_exp
 !*************
 !
-if (i_exp==1)  file_in1 = '/media/disk/DHS/temp/00.gra'
-if (i_exp==2)  file_in1 = '/media/disk/DHS/temp/36a.8000.gra'
-if (i_exp==3)  file_in1 = '/media/disk/DHS/temp/36b.8000.gra'
-if (i_exp==4)  file_in1 = '/media/disk/DHS/temp/42b.8000.gra'
-if (i_exp==5)  file_in1 = '/media/disk/DHS/temp/39b.8000.gra'
-if (i_exp==6)  file_in1 = '/media/disk/DHS/temp/36ab.8000.gra'
-if (i_exp==7)  file_in1 = '/media/disk/DHS/temp/42ab.8000.gra'
-if (i_exp==8) file_in1 = '/media/disk/DHS/temp/39ab.8000.gra'
-if (i_exp==9)  file_in1 = '/media/disk/DHS/temp/39b.6000.gra'
+if (i_exp==1)  file_in1 = './TC_SEED_C0050/GRADS/grads2TC_SEED_C0050-AS-1998-08-22-120000-g3.gra'
+if (i_exp==1)  file_in1 = './TC_SEED_C0200/GRADS/grads2TC_SEED_C0200-AS-1998-08-22-120000-g3.gra'
+if (i_exp==1)  file_in1 = './TC_SEED_C0500/GRADS/grads2TC_SEED_C0500-AS-1998-08-22-120000-g3.gra'
+if (i_exp==1)  file_in1 = './TC_SEED_C1000/GRADS/grads2TC_SEED_C1000-AS-1998-08-22-120000-g3.gra'
+if (i_exp==1)  file_in1 = './TC_SEED_C1500/GRADS/grads2TC_SEED_C1500-AS-1998-08-22-120000-g3.gra'
 
 
 !
 !
-open (unit=1,file=file_in1 ,status='old',form='unformatted',access='direct',recl=3*nz*nx*ny*4)
+open (unit=1,file=file_in1 ,status='old',form='unformatted',access='direct',recl=4*nz*nx*ny*4)
 diff_max =0.
 do it =1 , nt
-       open (unit=1,file=file_in1 ,status='old',form='unformatted',access='direct',recl=3*nz*nx*ny*4)
-       read(1, rec=it) ((((var3(i,j,k,ivar),i=1,nx),j=1,ny),k=1,nz), ivar=1,3)
+       open (unit=1,file=file_in1 ,status='old',form='unformatted',access='direct',recl=4*nz*nx*ny*4)
+       read(1, rec=it) ((((var3(i,j,k,ivar),i=1,nx),j=1,ny),k=1,nz), ivar=1,4)
        !
        ! tcmed = ?
        !
