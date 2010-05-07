@@ -102,7 +102,7 @@ function main(args)
     zTop = 2000
   endif
   if (varNum = 9)
-*   Thetae
+*   Temp (deg C)
     varName = 'tempc'
     gVar = 'tempc_azavg'
     gClevs = '18.0 20.0 21.0 22.0 22.5 23.0 23.5 24.0 24.5 25.0 25.5 26.0 26.5'
@@ -127,6 +127,36 @@ function main(args)
     gCcols = '    9    14     4    11     5    13     3    10     7    12     8     2     6'
     gTitle = gExp': AZ: Pressure (mb), 'gCase', t 'timeStr
     zTop = 2000
+  endif
+  if (varNum = 12)
+*   cloud water content
+    varName = 'cloud'
+    gVar = 'cloud_azavg'
+    gClevs = '0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2'
+    gCcols = '  9  14   4  11   5  13   3  10   7  12   8   2   6'
+    gTitle = gExp': AZ: CWC (g/kg), 'gCase', t 'timeStr
+    zTop = 10000
+  endif
+  if (varNum = 13)
+*   cloud droplet number concentration
+    varName = 'cloudconcen_cm3'
+    gVar = 'cloudconcen_cm3'
+*     gClevs = '0.0 200.0 400.0 600.0 800.0 1000.0 1200.0 1400.0 1600.0 1800.0 2000.0 2200.0 2400.0'
+    gClevs = '0.0 20.00 40.00 60.00 80.00 100.00 120.00 140.00 160.00 180.00 200.00 220.00 240.00'
+    gCcols = '  9  14   4  11   5  13   3  10   7  12   8   2   6'
+    gTitle = gExp': AZ: Cloud Droplet Number (#/cc), 'gCase', t 'timeStr
+*    zTop = 10000
+    zTop = 4000
+  endif
+  if (varNum = 14)
+*   cloud2 droplet number concentration
+    varName = 'cloud2concen_cm'
+    gVar = 'cloud2concen_cm'
+    gClevs = '0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2'
+    gCcols = '  9  14   4  11   5  13   3  10   7  12   8   2   6'
+    gTitle = gExp': AZ: Cloud2 Droplet Number (#/cc), 'gCase', t 'timeStr
+*     zTop = 10000
+    zTop = 4000
   endif
 
   gcFile = gDir'/'gCase'_'varName'.ctl'
