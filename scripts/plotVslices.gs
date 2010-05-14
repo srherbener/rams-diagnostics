@@ -25,7 +25,11 @@ function main(args)
   pFile    = subwrd(args, 6)
 
 * convert timestep number to hours
-  timeStr = 36.0 + ((timeStep - 1.0) * 0.5)
+  if (gCase = 'C0100')
+    timeStr = 36.0 + (timeStep - 1.0)
+  else
+    timeStr = 36.0 + ((timeStep - 1.0) * 0.5)
+  endif
   timeStr = timeStr' hrs'
 
 * set up variable names, titles, etc. according to varNum
@@ -159,7 +163,7 @@ function main(args)
     zTop = 4000
   endif
 
-  gcFile = gDir'/'gCase'_'varName'.ctl'
+  gcFile = gDir'/TC_SEED_'gCase'_'varName'.ctl'
 
   xTitle = 'Radius (km)'
   yTitle = 'Height (m)'

@@ -27,7 +27,11 @@ function main(args)
   if (gCase = 'INIT')
     timeStr = timeStep - 1.0
   else
-    timeStr = 36.0 + ((timeStep - 1.0) * 0.5)
+    if (gCase = 'C0100')
+      timeStr = 36.0 + (timeStep - 1.0)
+    else
+      timeStr = 36.0 + ((timeStep - 1.0) * 0.5)
+    endif
   endif
   timeStr = timeStr' hrs'
 
