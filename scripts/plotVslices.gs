@@ -17,20 +17,18 @@
 
 function main(args)
 
-  gExp     = subwrd(args, 1)
-  gDir     = subwrd(args, 2)
-  gCase    = subwrd(args, 3)
-  varNum   = subwrd(args, 4)
-  timeStep = subwrd(args, 5)
-  pFile    = subwrd(args, 6)
+  gExp      = subwrd(args, 1)
+  gDir      = subwrd(args, 2)
+  gCase     = subwrd(args, 3)
+  varNum    = subwrd(args, 4)
+  startTime = subwrd(args, 5)
+  timeInc   = subwrd(args, 6)
+  plotTime  = subwrd(args, 7)
+  pFile     = subwrd(args, 8)
 
-* convert timestep number to hours
-  if (gCase = 'C0100')
-    timeStr = 36.0 + (timeStep - 1.0)
-  else
-    timeStr = 36.0 + ((timeStep - 1.0) * 0.5)
-  endif
-  timeStr = timeStr' hrs'
+* convert plotTime (in hrs) to a timeStep number 
+  timeStep = ((plotTime - startTime) / timeInc) + 1
+  timeStr = plotTime' hrs'
 
 * set up variable names, titles, etc. according to varNum
   if (varNum = 1)
@@ -172,7 +170,7 @@ function main(args)
   say '  Experiment = 'gExp
   say '  GRADS control file = 'gcFile
   say '  Variable number = 'varNum' --> 'varName
-  say '  Timestep = 'timeStep' --> 'timeStr
+  say '  Timestep = 'timeStr' --> 'timeStep
   say '  Output plot (GIF) file = 'pFile
 
 * The normal plot area in landscape is:
