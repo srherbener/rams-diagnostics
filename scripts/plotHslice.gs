@@ -102,6 +102,14 @@ function main(args)
     gCcols = '  9  14    4   11    5   13    3    10     7    12     8     2      6'
     gTitle = gExp': Rad Wind Speed (m/s), 'gCase', t 'timeStr
   endif
+  if (varNum = 10)
+*   surface temp (deg C)
+    varName = 'hslice_sfc_tempc'
+    gVar = 'tempc_hslice'
+    gClevs = '20.0 21.0 22.0 23.0 24.0 25.0 26.0 27.0 28.0 29.0 30.0 31.0 32.0'
+    gCcols = '  9  14    4   11    5   13    3    10     7    12     8     2      6'
+    gTitle = gExp': Sfc Temperature (deg C), 'gCase', t 'timeStr
+  endif
 
   gcFile = gDir'/'varName'_'gCase'.ctl'
 

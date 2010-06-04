@@ -1,12 +1,12 @@
 implicit none
 !********************************************************************
-integer,  parameter :: n_exp = 5
+integer,  parameter :: n_exp = 3
 !
 !
 real, parameter :: delta_temp= 4.5
 !
 !********************************************************************
-integer,  parameter :: nt = 25
+integer,  parameter :: nt = 73
 integer,  parameter :: nx = 207 
 integer,  parameter :: ny = 201  
 integer,  parameter :: nz = 39 
@@ -14,8 +14,9 @@ real,  parameter :: dx = 1500.,  dy = 1500.
 !
 integer :: i, j, k, i_exp, it, ivar
 real , dimension(nx,ny,nz,3) :: var3
+real , dimension(nx,ny,nz,4) :: var4
 !
-character*70 :: file_in5,file_in1,file_in2,file_in3,file_in4,file_out1,file_out !
+character*256 :: file_in5,file_in1,file_in2,file_in3,file_in4,file_out1,file_out !
 !
 !====> PROPIAS
 real , dimension(nx,ny,nt) :: var
@@ -36,11 +37,9 @@ print*
 do i_exp=1, n_exp
 !*************
 !
-if (i_exp==1)  file_in1 = './TC_SEED_C0050/GRADS/grads2TC_SEED_C0050-AS-1998-08-22-120000-g3.gra'
-if (i_exp==1)  file_in1 = './TC_SEED_C0200/GRADS/grads2TC_SEED_C0200-AS-1998-08-22-120000-g3.gra'
-if (i_exp==1)  file_in1 = './TC_SEED_C0500/GRADS/grads2TC_SEED_C0500-AS-1998-08-22-120000-g3.gra'
-if (i_exp==1)  file_in1 = './TC_SEED_C1000/GRADS/grads2TC_SEED_C1000-AS-1998-08-22-120000-g3.gra'
-if (i_exp==1)  file_in1 = './TC_SEED_C1500/GRADS/grads2TC_SEED_C1500-AS-1998-08-22-120000-g3.gra'
+if (i_exp==1)  file_in1 = './SA0SC0/GRADS/grads2-SA0SC0-AS-1998-08-22-120000-g3.gra'
+if (i_exp==2)  file_in1 = './SA1SC0/GRADS/grads2-SA1SC0-AS-1998-08-22-120000-g3.gra'
+if (i_exp==3)  file_in1 = './SA0SC1/GRADS/grads2-SA0SC1-AS-1998-08-22-120000-g3.gra'
 
 
 !
@@ -49,14 +48,14 @@ open (unit=1,file=file_in1 ,status='old',form='unformatted',access='direct',recl
 diff_max =0.
 do it =1 , nt
        open (unit=1,file=file_in1 ,status='old',form='unformatted',access='direct',recl=4*nz*nx*ny*4)
-       read(1, rec=it) ((((var3(i,j,k,ivar),i=1,nx),j=1,ny),k=1,nz), ivar=1,4)
+       read(1, rec=it) ((((var4(i,j,k,ivar),i=1,nx),j=1,ny),k=1,nz), ivar=1,4)
        !
        ! tcmed = ?
        !
        tcmed(it,i_exp) = 0.
        do i=1, nx 
        do j=1, ny
-           tcmed(it,i_exp) = tcmed(it,i_exp) + var3(i,j,1,1)
+           tcmed(it,i_exp) = tcmed(it,i_exp) + var4(i,j,1,1)
        enddo
        enddo
        tcmed(it,i_exp) = tcmed(it,i_exp)/real(nx*ny) 
@@ -66,11 +65,11 @@ do it =1 , nt
        do i=1, nx 
        do j=1, ny
            !
-           if ((var3(i,j,1,1) - tcmed(it,i_exp))< -delta_temp) then  !<--- relative to each experiment's ave 
+           if ((var4(i,j,1,1) - tcmed(it,i_exp))< -delta_temp) then  !<--- relative to each experiment's ave 
 !!!!!!!!!!!if ((var3(i,j,1,1) - tcmed(it,1))< -delta_temp) then      !<--- relative to control's ave 
 
                 var(i,j,it) = 1.
-                diff_max=min (diff_max,(var3(i,j,1,1) - tcmed(it,i_exp))    )
+                diff_max=min (diff_max,(var4(i,j,1,1) - tcmed(it,i_exp))    )
            else
                 var(i,j,it) = 0.
            endif
@@ -97,7 +96,7 @@ enddo ! time
        do i=1, nx 
        do j=1, ny
             if (mask_big(i,j)==1.) then
-                  g_med = g_med + var3(i,j,1,1)
+                  g_med = g_med + var4(i,j,1,1)
                   aux1 = aux1 + 1.
             endif
        enddo
