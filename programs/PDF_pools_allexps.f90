@@ -3,56 +3,32 @@ use GfileTypes
 
 implicit none
 !********************************************************************
-integer,  parameter :: n_exp = 3
-!
 !
 real, parameter :: delta_temp= 4.5
 !
 !********************************************************************
-integer,  parameter :: nt = 73
-integer,  parameter :: nx = 207 
-integer,  parameter :: ny = 201  
-integer,  parameter :: nz = 39 
-real,  parameter :: dx = 1500.,  dy = 1500.
 !
 integer, parameter :: MAX_STR_LEN = 256
 integer, parameter :: MAX_NUM_EXP = 25
 
 integer :: iargc, Ierror
 integer :: Nexp, Nt, Nx, Ny, Nz, Nvars
+integer :: i, j, k, i_exp, it
+integer :: t_big
 
 character (len=MAX_STR_LEN) :: ConfigFile
 character (len=MAX_STR_LEN) :: TempcVar
 character (len=MAX_STR_LEN), dimension(1:MAX_NUM_EXP) :: GradsControlFiles
 
 real, dimension(:,:,:,:), allocatable :: TempcData
+real :: a_med, a_max, g_med, diff_max, aux1
+real, dimension(:,:,:), allocatable :: var
+real, dimension(:,:), allocatable :: tcmed
+real, dimension(:), allocatable :: aux
+real, dimension(:,:), allocatable ::  mask_big
 
 type (GradsDataDescription), dimension(1:MAX_NUM_EXP) :: GdataDescrip
 type (GradsVarLocation) :: TempcLoc
-
-
-!
-integer :: i, j, k, i_exp, it, ivar
-real , dimension(nx,ny,nz,3) :: var3
-real , dimension(nx,ny,nz,4) :: var4
-!
-character (len=MAX_STR_LEN) :: file_in5,file_in1,file_in2,file_in3,file_in4,file_out1,file_out !
-!
-!====> PROPIAS
-real , dimension(nx,ny,nt) :: var
-real :: a_med, a_max, g_med, diff_max, aux1
-real, dimension(nt,n_exp) :: tcmed
-real, dimension(n_exp) :: aux
-real , dimension(nx,ny) ::  mask_big
-integer :: t_big
-!
-!********************************************************************
-print*
-print*
-print*
-print*
-print*
-print*
 
 !********************************************************************
 ! Read in arugumets and configuration.
@@ -105,9 +81,13 @@ write (*,*) ''
 
 do i_exp=1, Nexp
 
+  write (*,*) 'Experiment: ', i_exp
+  write (*,*) ''
   write (*,*) 'Reading GRADS control file: ', trim(GradsControlFiles(i_exp))
+  flush(6)
   call ReadGradsCtlFile(GradsControlFiles(i_exp), GdataDescrip(1))
   write (*,*) ''
+  flush(6)
   call CheckDataDescrip_VS(GdataDescrip, 1, Nx, Ny, Nz, Nt, Nvars, TempcLoc, TempcVar)
   write (*,*) ''
 
@@ -124,105 +104,105 @@ do i_exp=1, Nexp
   write (*,'(a20,i3,a2,i3,a1)') 'tempc: (', TempcLoc%Fnum, ', ', TempcLoc%Vnum, ')'
   write (*,*) ''
 
+  write (*,*) 'Allocating data array'
+  flush(6)
   allocate (TempcData(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
   if (Ierror .ne. 0) then
     write (*,*) 'ERROR: Data array allocation failed'
     stop
   endif
 
-  call ReadGradsData(GdataDescrip, TempcVar, TempcLoc, TempcData, Nx, Ny, Nz, Nt)
+  ! if on the first experiment, then allocate the "other" arrays
+  ! this assumes that the gridded data has the same x,y,z,t dimensions
+  if (i_exp .eq. 1) then
+    write (*,*) 'Allocating auxillary arrays'
+    flush(6)
+    allocate (var(1:Nx,1:Ny,1:Nt), tcmed(1:Nt,1:Nexp), aux(1:Nexp), mask_big(1:Nx,1:Ny), stat=Ierror) 
+    if (Ierror .ne. 0) then
+      write (*,*) 'ERROR: Auxillary array allocation failed'
+      stop
+    endif
+  endif
 
+  call ReadGradsData(GdataDescrip, TempcVar, TempcLoc, TempcData, Nx, Ny, Nz, Nt)
+ 
+  ! At this point TempcData contains the temperature for one whole
+  ! experirmental run - all x,y,z,t values. We want just the surface temp
+  ! at each time step -> set k=1 for this loop.
+
+  ! Mean sfc temp
+  k = 1
+  diff_max =0.
+  do it = 1, Nt
+    tcmed(it,i_exp) = 0.
+    do i=1, Nx 
+      do j=1, Ny
+        tcmed(it,i_exp) = tcmed(it,i_exp) + TempcData(i,j,k,it)
+      enddo
+    enddo
+    tcmed(it,i_exp) = tcmed(it,i_exp)/real(Nx*Ny) 
+
+    ! Mark cold pools. var() holds an image of the cold pools, like pixels, you get a 1 where the
+    ! temp is colder than the mean temp by delta_temp degrees C, otherwise you get a 0.
+    do i=1, Nx 
+      do j=1, Ny
+        if ((TempcData(i,j,k,it) - tcmed(it,i_exp))< -delta_temp) then
+          var(i,j,it) = 1.
+          diff_max=min (diff_max,(TempcData(i,j,k,it) - tcmed(it,i_exp))    )
+        else
+          var(i,j,it) = 0.
+        endif
+      enddo
+    enddo
+  enddo ! it = 1, Nt
+
+  ! Calculate the PDF. i_exp =1 is the control experiment
+  ! The call to PDF_a is:
+  !>>> PDF_a(nx, ny, ntimes, delta_xy, var, ntinit, ntend, icellmin, a_med, a_max, mask_big,t_big) <<<    
+  !
+  if (i_exp ==1) then
+    print*,'******************************************************************' 
+    print*, '              results for DT=', delta_temp
+  endif
+  !
+  print*,'******************************************************************' 
+  print*, trim(GradsControlFiles(i_exp))
+  !
+  call PDF_a(Nx, Ny, Nt, 1.5, var, 1, Nt, 4, a_med, a_max, mask_big, t_big)  
+  !
+  ! This code looks like it produces data that is not used
+  ! Development of this code must be in progress at this point
+  aux1=0
+  g_med = 0.
+  do i=1, Nx 
+    do j=1, Ny
+      if (mask_big(i,j)==1.) then
+        g_med = g_med + TempcData(i,j,k,Nt)  !<--- this is on last time step from loop above
+                                             !     is this really what we want?
+        aux1 = aux1 + 1.
+      endif
+    enddo
+  enddo
+  g_med = g_med/aux1
+  !
+  print*,i_exp, a_med, a_max, t_big
 
   deallocate (TempcData, stat=Ierror)
   if (Ierror .ne. 0) then
     write (*,*) 'ERROR: Data array memory de-allocation failed'
     stop
   endif
-enddo
+enddo  ! i_exp = 1, Nexp
 
-stop  ! DEBUG
-!*************
-do i_exp=1, n_exp
-!*************
-!
-if (i_exp==1)  file_in1 = './SA0SC0/GRADS/grads2-SA0SC0-AS-1998-08-22-120000-g3.gra'
-if (i_exp==2)  file_in1 = './SA1SC0/GRADS/grads2-SA1SC0-AS-1998-08-22-120000-g3.gra'
-if (i_exp==3)  file_in1 = './SA0SC1/GRADS/grads2-SA0SC1-AS-1998-08-22-120000-g3.gra'
-
-
-!
-!
-open (unit=1,file=file_in1 ,status='old',form='unformatted',access='direct',recl=4*nz*nx*ny*4)
-diff_max =0.
-do it =1 , nt
-       open (unit=1,file=file_in1 ,status='old',form='unformatted',access='direct',recl=4*nz*nx*ny*4)
-       read(1, rec=it) ((((var4(i,j,k,ivar),i=1,nx),j=1,ny),k=1,nz), ivar=1,4)
-       !
-       ! tcmed = ?
-       !
-       tcmed(it,i_exp) = 0.
-       do i=1, nx 
-       do j=1, ny
-           tcmed(it,i_exp) = tcmed(it,i_exp) + var4(i,j,1,1)
-       enddo
-       enddo
-       tcmed(it,i_exp) = tcmed(it,i_exp)/real(nx*ny) 
-       !
-       ! anomaly = ?
-       !
-       do i=1, nx 
-       do j=1, ny
-           !
-           if ((var4(i,j,1,1) - tcmed(it,i_exp))< -delta_temp) then  !<--- relative to each experiment's ave 
-!!!!!!!!!!!if ((var3(i,j,1,1) - tcmed(it,1))< -delta_temp) then      !<--- relative to control's ave 
-
-                var(i,j,it) = 1.
-                diff_max=min (diff_max,(var4(i,j,1,1) - tcmed(it,i_exp))    )
-           else
-                var(i,j,it) = 0.
-           endif
-           !
-       enddo
-       enddo
-!
-enddo ! time
-       !
-       !>>> PDF_a(nx, ny, ntimes, delta_xy, var, ntinit, ntend, icellmin, a_med, a_max, mask_big,t_big) <<<    
-       !
-       if (i_exp ==1) then
-       print*,'******************************************************************' 
-       print*, '              results for DT=', delta_temp
-       endif
-       !
-       print*,'******************************************************************' 
-       print*, file_in1
-       !
-       call PDF_a(nx, ny,   nt,    1.5,      var,   1,     nt,      4,    a_med, a_max, mask_big,t_big)  
-       !
-       aux1=0
-       g_med = 0.
-       do i=1, nx 
-       do j=1, ny
-            if (mask_big(i,j)==1.) then
-                  g_med = g_med + var4(i,j,1,1)
-                  aux1 = aux1 + 1.
-            endif
-       enddo
-       enddo
-       g_med = g_med/aux1
-       !
-       print*,i_exp, a_med, a_max, t_big
-!*************
-enddo !exp
 !*************
 !
 print*,'******************************************************************' 
-do it=1, nt
+do it=1, Nt
    !print*, it, tcmed(it,2)-tcmed(it,1), tcmed(it,3)-tcmed(it,1), tcmed(it,4)-tcmed(it,1)
 enddo
 !
 !
-do i=1, n_exp
+do i=1, Nexp
     aux(i)=0.
     do it=13, 37
        aux(i) = aux(i) + tcmed(it,i)
@@ -230,6 +210,13 @@ do i=1, n_exp
     aux(i)=aux(i)/24.
     print*, i,  aux(i)-aux(1)
 enddo
+
+! clean up
+deallocate (var, tcmed, aux, mask_big, stat=Ierror) 
+if (Ierror .ne. 0) then
+  write (*,*) 'ERROR: Auxillary array memory de-allocation failed'
+  stop
+endif
 !!
 end
 !########################################################################################
