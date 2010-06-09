@@ -1,3 +1,6 @@
+include 'gDataTypes.h'
+use GfileTypes
+
 implicit none
 !********************************************************************
 integer,  parameter :: n_exp = 3
@@ -12,11 +15,28 @@ integer,  parameter :: ny = 201
 integer,  parameter :: nz = 39 
 real,  parameter :: dx = 1500.,  dy = 1500.
 !
+integer, parameter :: MAX_STR_LEN = 256
+integer, parameter :: MAX_NUM_EXP = 25
+
+integer :: iargc, Ierror
+integer :: Nexp, Nt, Nx, Ny, Nz, Nvars
+
+character (len=MAX_STR_LEN) :: ConfigFile
+character (len=MAX_STR_LEN) :: TempcVar
+character (len=MAX_STR_LEN), dimension(1:MAX_NUM_EXP) :: GradsControlFiles
+
+real, dimension(:,:,:,:), allocatable :: TempcData
+
+type (GradsDataDescription), dimension(1:MAX_NUM_EXP) :: GdataDescrip
+type (GradsVarLocation) :: TempcLoc
+
+
+!
 integer :: i, j, k, i_exp, it, ivar
 real , dimension(nx,ny,nz,3) :: var3
 real , dimension(nx,ny,nz,4) :: var4
 !
-character*256 :: file_in5,file_in1,file_in2,file_in3,file_in4,file_out1,file_out !
+character (len=MAX_STR_LEN) :: file_in5,file_in1,file_in2,file_in3,file_in4,file_out1,file_out !
 !
 !====> PROPIAS
 real , dimension(nx,ny,nt) :: var
@@ -33,6 +53,94 @@ print*
 print*
 print*
 print*
+
+!********************************************************************
+! Read in arugumets and configuration.
+!********************************************************************
+
+if (iargc() .ne. 1) then
+  write (*,*) 'ERROR: must supply exactly one argument'
+  write (*,*) ''
+  write (*,*) 'Usage PDF_pools_allexps <config_file>'
+  write (*,*) '   <config_file>: file containing description of input data, format:'
+  write (*,*) '                  <n_exp>'
+  write (*,*) '                  <var_name>'
+  write (*,*) '                  <GRADS control file> <-- first one is control'
+  write (*,*) '                  <GRADS control file>'
+  write (*,*) '                  ...'
+  stop
+endif
+
+call getarg(1, ConfigFile)
+
+write (*,*) 'Reading configuration file: ', trim(ConfigFile)
+open (unit=10, file=ConfigFile, status='old', form='formatted')
+read (10,'(i)') Nexp
+read (10,'(a)') TempcVar
+if (Nexp .gt. MAX_NUM_EXP) then
+  write (*,*) 'ERROR: Number of experiments, ', Nexp, ', exceeds maximum allowed, ', MAX_NUM_EXP
+  stop
+else
+  do i_exp=1, Nexp
+    read(10,'(a)') GradsControlFiles(i_exp)
+  enddo
+endif
+
+write (*,*) 'PDF pools all experiments:'
+write (*,*) '  Number of experiments: ', Nexp
+write (*,*) '  Variable name: ', trim(TempcVar)
+write (*,*) '  GRADS control files:'
+do i_exp=1, Nexp
+  write (*,*) '    ', trim(GradsControlFiles(i_exp))
+enddo
+write (*,*) ''
+
+!********************************************************
+! For each experiment:
+!    Read in the surface temperature data
+!    Calculate the mean temperature at each time step
+!    Mark the cold pools at each time step
+!    Calculate the PDF of cold pools at each time step
+!********************************************************
+
+do i_exp=1, Nexp
+
+  write (*,*) 'Reading GRADS control file: ', trim(GradsControlFiles(i_exp))
+  call ReadGradsCtlFile(GradsControlFiles(i_exp), GdataDescrip(1))
+  write (*,*) ''
+  call CheckDataDescrip_VS(GdataDescrip, 1, Nx, Ny, Nz, Nt, Nvars, TempcLoc, TempcVar)
+  write (*,*) ''
+
+  write (*,*) 'Gridded data information:'
+  write (*,*) '  Number of x (longitude) points:      ', Nx
+  write (*,*) '  Number of y (latitude) points:       ', Ny
+  write (*,*) '  Number of z (vertical level) points: ', Nz
+  write (*,*) '  Number of t (time) points:           ', Nt
+  write (*,*) '  Total number of grid variables       ', Nvars
+  write (*,*) ''
+  write (*,*) 'Number of data values per grid variable: ', Nx*Ny*Nz*Nt
+  write (*,*) ''
+  write (*,*) 'Location of tempc variable in GRADS data file (file number, var number):'
+  write (*,'(a20,i3,a2,i3,a1)') 'tempc: (', TempcLoc%Fnum, ', ', TempcLoc%Vnum, ')'
+  write (*,*) ''
+
+  allocate (TempcData(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
+  if (Ierror .ne. 0) then
+    write (*,*) 'ERROR: Data array allocation failed'
+    stop
+  endif
+
+  call ReadGradsData(GdataDescrip, TempcVar, TempcLoc, TempcData, Nx, Ny, Nz, Nt)
+
+
+  deallocate (TempcData, stat=Ierror)
+  if (Ierror .ne. 0) then
+    write (*,*) 'ERROR: Data array memory de-allocation failed'
+    stop
+  endif
+enddo
+
+stop  ! DEBUG
 !*************
 do i_exp=1, n_exp
 !*************

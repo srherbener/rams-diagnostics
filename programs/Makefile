@@ -52,8 +52,8 @@ $(DEST)/vslice: vslice.o gdata.o
 $(DEST)/tr_winds: tr_winds.o gdata.o azavg_utils.o
 	$(LOADER) -o $(DEST)/tr_winds gdata.o azavg_utils.o tr_winds.o $(LOADER_OPTS) $(LIBS)
 
-$(DEST)/PDF_pools_allexps: PDF_pools_allexps.o
-	$(LOADER) -o $(DEST)/PDF_pools_allexps PDF_pools_allexps.o $(LOADER_OPTS) $(LIBS)
+$(DEST)/PDF_pools_allexps: PDF_pools_allexps.o gdata.o
+	$(LOADER) -o $(DEST)/PDF_pools_allexps gdata.o PDF_pools_allexps.o $(LOADER_OPTS) $(LIBS)
 
 .f90.o: $(HEADERS)
 	$(F_COMP) $(F_COMP_OPTS) $(INCLUDES) -c $(<)
