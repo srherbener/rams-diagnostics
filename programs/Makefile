@@ -12,7 +12,8 @@ BINS = $(DEST)/azavg \
        $(DEST)/hslice \
        $(DEST)/vslice \
        $(DEST)/tr_winds \
-       $(DEST)/PDF_pools_allexps
+       $(DEST)/PDF_pools_allexps \
+       $(DEST)/prueba39
 
 HEADERS = gDataTypes.h
 
@@ -54,6 +55,9 @@ $(DEST)/tr_winds: tr_winds.o gdata.o azavg_utils.o
 
 $(DEST)/PDF_pools_allexps: PDF_pools_allexps.o gdata.o
 	$(LOADER) -o $(DEST)/PDF_pools_allexps gdata.o PDF_pools_allexps.o $(LOADER_OPTS) $(LIBS)
+
+$(DEST)/prueba39: prueba39.o
+	$(LOADER) -o $(DEST)/prueba39 prueba39.o $(LOADER_OPTS) $(LIBS)
 
 .f90.o: $(HEADERS)
 	$(F_COMP) $(F_COMP_OPTS) $(INCLUDES) -c $(<)

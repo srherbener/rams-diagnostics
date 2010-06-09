@@ -272,7 +272,7 @@ enddo
 !
 do i=1, nx 
 do j=1, ny
-      if (cinta(i,j)==1.) THEN
+      if (cinta(i,j)==1.) then
           do k=1, nz-1
               v_scmax(it,i_exp,1) = v_scmax(it,i_exp,1) + 0.001 * qsc(i,j,k)*densi(i,j,k)*dx*dy* (hdata(k+1)-hdata(k))
               v_iamax(it,i_exp,1) = v_iamax(it,i_exp,1) + 0.001 * qia(i,j,k)*densi(i,j,k)*dx*dy* (hdata(k+1)-hdata(k))
@@ -281,7 +281,7 @@ do j=1, ny
           enddo
       endif
       !
-      if (afuera(i,j)==1.) THEN
+      if (afuera(i,j)==1.) then
           do k=1, nz-1
               v_scmax(it,i_exp,2) = v_scmax(it,i_exp,2) + 0.001 * qsc(i,j,k)*densi(i,j,k)*dx*dy* (hdata(k+1)-hdata(k))
               v_iamax(it,i_exp,2) = v_iamax(it,i_exp,2) + 0.001 * qia(i,j,k)*densi(i,j,k)*dx*dy* (hdata(k+1)-hdata(k))
@@ -291,7 +291,7 @@ do j=1, ny
       endif
       !
 
-      if (todo(i,j)==1.) THEN
+      if (todo(i,j)==1.) then
           !
           aux4=0.
           !
@@ -304,7 +304,7 @@ do j=1, ny
               v_rmax(it,i_exp,3) = v_rmax(it,i_exp,3) + 0.001 * qr(i,j,k)*densi(i,j,k)*dx*dy* (hdata(k+1)-hdata(k))
               v_hmax(it,i_exp,3) = v_hmax(it,i_exp,3) + 0.001 * qh(i,j,k)*densi(i,j,k)*dx*dy* (hdata(k+1)-hdata(k))
           enddo
-          sclwp(it,i_exp,3)= max( sclwp(it,i_exp,3),AUX4)  
+          sclwp(it,i_exp,3)= max( sclwp(it,i_exp,3),aux4)  
       endif
       !
 enddo
@@ -381,19 +381,19 @@ if (it==i_end)  close (3)
 !*********************************************************************************************
 !
 ! ----------------------------------------------------
-IF (it==i_start) open (UNIT=4,file=FILE_IN4,status='old',form='UNFORMATTED',access='direct',recl=2*ny*nx*4)
+if (it==i_start) open (unit=4,file=file_in4,status='old',form='UNFORMATTED',access='direct',recl=2*ny*nx*4)
 !! ----------------------------------------------------
 !
 ncount1= 0.
 ncount2= 0.
 ncount3= 0.
 !
-READ(4, rec=it) (((VAR2(i,j,ivar),I=1,nx),J=1,ny), ivar=1,2)
+read(4, rec=it) (((var2(i,j,ivar),i=1,nx),j=1,ny), ivar=1,2)
 !
 do i=1, nx
 do j=1, ny
-    acum(i,j,it)= VAR2(i,j,1)
-    rate(i,j,it)= VAR2(i,j,2)
+    acum(i,j,it)= var2(i,j,1)
+    rate(i,j,it)= var2(i,j,2)
     !
     if (cinta(i,j) ==1.) then
        maxrat(it,i_exp,1)=max(maxrat(it,i_exp,1),rate(i,j,it))
@@ -552,7 +552,7 @@ if (i_exp==4)  file_out = '39b_8.gra'
 if (i_exp==5)  file_out = '39b_12.gra'
 if (i_exp==6)  file_out = '39b_16.gra'
 !
- open(UNIT=i_exp,file=file_out,status='unknown',form='UNFORMATTED', access='sequential',position='append')
+ open(unit=i_exp,file=file_out,status='unknown',form='UNFORMATTED', access='sequential',position='append')
   do it= i_start, i_end
      !
      i_cond = 3 
