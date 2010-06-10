@@ -18,17 +18,21 @@ integer :: iargc, Ierror
 integer :: Nexp, Nt, Nx, Ny, Nz, Nvars
 integer :: i, j, k, i_exp, it
 integer :: t_big
+integer :: Tend
+integer :: itd, TdIncr 
 
 character (len=MAX_STR_LEN) :: ConfigFile
 character (len=MAX_STR_LEN) :: TempcVar
 character (len=MAX_STR_LEN), dimension(1:MAX_NUM_EXP) :: GradsControlFiles
 
 real, dimension(:,:,:,:), allocatable :: TempcData
-real :: a_med, a_max, g_med, diff_max, aux1
 real, dimension(1:MAX_X_DIM,1:MAX_Y_DIM) ::  mask_big
 real, dimension(1:MAX_X_DIM,1:MAX_Y_DIM,1:MAX_TIME_STEPS) :: var
 real, dimension(1:MAX_TIME_STEPS,1:MAX_NUM_EXP) :: tcmed
 real, dimension(1:MAX_NUM_EXP) :: aux
+real, dimension(1:MAX_NUM_EXP) :: GradsStartTimes, GradsTimeIncrs
+real :: a_med, a_max, g_med, diff_max, aux1
+real :: StartTime, TimeIncr, EndTime
 
 type (GradsDataDescription), dimension(1:MAX_NUM_EXP) :: GdataDescrip
 type (GradsVarLocation) :: TempcLoc
@@ -56,21 +60,31 @@ write (0,*) 'Reading configuration file: ', trim(ConfigFile)
 open (unit=10, file=ConfigFile, status='old', form='formatted')
 read (10,'(i)') Nexp
 read (10,'(a)') TempcVar
+read (10,'(f)') StartTime
+read (10,'(f)') TimeIncr
+read (10,'(f)') EndTime
 if (Nexp .gt. MAX_NUM_EXP) then
   write (0,*) 'ERROR: Number of experiments, ', Nexp, ', exceeds maximum allowed, ', MAX_NUM_EXP
   stop
 else
   do i_exp=1, Nexp
     read(10,'(a)') GradsControlFiles(i_exp)
+    read(10,'(f)') GradsStartTimes(i_exp)
+    read(10,'(f)') GradsTimeIncrs(i_exp)
   enddo
 endif
 
 write (0,*) 'PDF pools all experiments:'
 write (0,*) '  Number of experiments: ', Nexp
 write (0,*) '  Variable name: ', trim(TempcVar)
+write (0,*) '  Start time: ', StartTime
+write (0,*) '  Time increment: ', TimeIncr
+write (0,*) '  End time: ', EndTime
 write (0,*) '  GRADS control files:'
 do i_exp=1, Nexp
   write (0,*) '    ', trim(GradsControlFiles(i_exp))
+  write (0,*) '      Start Time: ', GradsStartTimes(i_exp)
+  write (0,*) '      Time Increment: ', GradsTimeIncrs(i_exp)
 enddo
 write (0,*) ''
 
@@ -116,15 +130,24 @@ do i_exp=1, Nexp
   ! At this point TempcData contains the temperature for one whole
   ! experirmental run - all x,y,z,t values. We want just the surface temp
   ! at each time step -> set k=1 for this loop.
+  !
+  ! Want the index to tcmed and var to start at 1 and increment by 1. Figure out
+  ! what the ending index (Tend) is given the start,end,increment from the config file
+  ! Figure out the start (place in itd) and increment (TdIncr) for stepping through TempcData array.
 
-  ! Mean sfc temp
   k = 1
   diff_max =0.
-  do it = 1, Nt
+  Tend = int((EndTime - StartTime)/TimeIncr) + 1
+  itd = int(StartTime - GradsStartTimes(i_exp)) + 1
+  TdIncr = int(TimeIncr/GradsTimeIncrs(i_exp))
+  write (0,*) 'Procesing temperature data:'
+  do it = 1, Tend
+    write (0,*) '  Time data index: ', itd, ' --> time index: ', it
+    ! Mean sfc temp
     tcmed(it,i_exp) = 0.
     do i=1, Nx 
       do j=1, Ny
-        tcmed(it,i_exp) = tcmed(it,i_exp) + TempcData(i,j,k,it)
+        tcmed(it,i_exp) = tcmed(it,i_exp) + TempcData(i,j,k,itd)
       enddo
     enddo
     tcmed(it,i_exp) = tcmed(it,i_exp)/real(Nx*Ny) 
@@ -133,15 +156,18 @@ do i_exp=1, Nexp
     ! temp is colder than the mean temp by delta_temp degrees C, otherwise you get a 0.
     do i=1, Nx 
       do j=1, Ny
-        if ((TempcData(i,j,k,it) - tcmed(it,i_exp))< -delta_temp) then
+        if ((TempcData(i,j,k,itd) - tcmed(it,i_exp))< -delta_temp) then
           var(i,j,it) = 1.
-          diff_max=min (diff_max,(TempcData(i,j,k,it) - tcmed(it,i_exp))    )
+          diff_max=min (diff_max,(TempcData(i,j,k,itd) - tcmed(it,i_exp))    )
         else
           var(i,j,it) = 0.
         endif
       enddo
     enddo
+
+    itd = itd + TdIncr
   enddo ! it = 1, Nt
+  write (0,*) ''
 
   ! Calculate the PDF. i_exp =1 is the control experiment
   ! The call to PDF_a is:
@@ -155,7 +181,7 @@ do i_exp=1, Nexp
   print*,'******************************************************************' 
   print*, trim(GradsControlFiles(i_exp))
   !
-  call PDF_a(MAX_X_DIM, MAX_Y_DIM, MAX_TIME_STEPS, Nx, Ny, Nt, 1.5, var, 1, Nt, 4, a_med, a_max, mask_big, t_big)  
+  call PDF_a(MAX_X_DIM, MAX_Y_DIM, MAX_TIME_STEPS, Nx, Ny, Nt, 1.5, var, 1, Tend, 4, a_med, a_max, mask_big, t_big)  
   !
   ! This code looks like it produces data that is not used
   ! Development of this code must be in progress at this point
@@ -164,7 +190,7 @@ do i_exp=1, Nexp
   do i=1, Nx 
     do j=1, Ny
       if (mask_big(i,j)==1.) then
-        g_med = g_med + TempcData(i,j,k,Nt)  !<--- this is on last time step from loop above
+        g_med = g_med + TempcData(i,j,k,itd-TdIncr)  !<--- this is on last time step from loop above
                                              !     is this really what we want?
         aux1 = aux1 + 1.
       endif
@@ -416,7 +442,9 @@ a_med = 0.
 do k=icellmin, ncat
    a_med= a_med + dist(k) * bin(k)
 enddo
-a_med= a_med/ntot_groups
+if (ntot_groups .ne. 0.0) then
+  a_med= a_med/ntot_groups
+endif
 !
 !---> convert dist to a density fuction
 do k=icellmin, ncat
@@ -426,7 +454,11 @@ enddo
 !---> PDF
 s_dist=0.
 do k=icellmin, ncat
+  if (ntot_groups .ne. 0.0) then
    pdf(k)= dist(k)/ntot_groups
+  else
+   pdf(k)= dist(k)
+  endif
 enddo
 !
 !---> Maximum area
