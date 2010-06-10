@@ -10,6 +10,9 @@ real, parameter :: delta_temp= 4.5
 !
 integer, parameter :: MAX_STR_LEN = 256
 integer, parameter :: MAX_NUM_EXP = 25
+integer, parameter :: MAX_TIME_STEPS = 500
+integer, parameter :: MAX_X_DIM = 500
+integer, parameter :: MAX_Y_DIM = 500
 
 integer :: iargc, Ierror
 integer :: Nexp, Nt, Nx, Ny, Nz, Nvars
@@ -22,10 +25,10 @@ character (len=MAX_STR_LEN), dimension(1:MAX_NUM_EXP) :: GradsControlFiles
 
 real, dimension(:,:,:,:), allocatable :: TempcData
 real :: a_med, a_max, g_med, diff_max, aux1
-real, dimension(:,:,:), allocatable :: var
-real, dimension(:,:), allocatable :: tcmed
-real, dimension(:), allocatable :: aux
-real, dimension(:,:), allocatable ::  mask_big
+real, dimension(1:MAX_X_DIM,1:MAX_Y_DIM) ::  mask_big
+real, dimension(1:MAX_X_DIM,1:MAX_Y_DIM,1:MAX_TIME_STEPS) :: var
+real, dimension(1:MAX_TIME_STEPS,1:MAX_NUM_EXP) :: tcmed
+real, dimension(1:MAX_NUM_EXP) :: aux
 
 type (GradsDataDescription), dimension(1:MAX_NUM_EXP) :: GdataDescrip
 type (GradsVarLocation) :: TempcLoc
@@ -35,26 +38,26 @@ type (GradsVarLocation) :: TempcLoc
 !********************************************************************
 
 if (iargc() .ne. 1) then
-  write (*,*) 'ERROR: must supply exactly one argument'
-  write (*,*) ''
-  write (*,*) 'Usage PDF_pools_allexps <config_file>'
-  write (*,*) '   <config_file>: file containing description of input data, format:'
-  write (*,*) '                  <n_exp>'
-  write (*,*) '                  <var_name>'
-  write (*,*) '                  <GRADS control file> <-- first one is control'
-  write (*,*) '                  <GRADS control file>'
-  write (*,*) '                  ...'
+  write (0,*) 'ERROR: must supply exactly one argument'
+  write (0,*) ''
+  write (0,*) 'Usage PDF_pools_allexps <config_file>'
+  write (0,*) '   <config_file>: file containing description of input data, format:'
+  write (0,*) '                  <n_exp>'
+  write (0,*) '                  <var_name>'
+  write (0,*) '                  <GRADS control file> <-- first one is control'
+  write (0,*) '                  <GRADS control file>'
+  write (0,*) '                  ...'
   stop
 endif
 
 call getarg(1, ConfigFile)
 
-write (*,*) 'Reading configuration file: ', trim(ConfigFile)
+write (0,*) 'Reading configuration file: ', trim(ConfigFile)
 open (unit=10, file=ConfigFile, status='old', form='formatted')
 read (10,'(i)') Nexp
 read (10,'(a)') TempcVar
 if (Nexp .gt. MAX_NUM_EXP) then
-  write (*,*) 'ERROR: Number of experiments, ', Nexp, ', exceeds maximum allowed, ', MAX_NUM_EXP
+  write (0,*) 'ERROR: Number of experiments, ', Nexp, ', exceeds maximum allowed, ', MAX_NUM_EXP
   stop
 else
   do i_exp=1, Nexp
@@ -62,14 +65,14 @@ else
   enddo
 endif
 
-write (*,*) 'PDF pools all experiments:'
-write (*,*) '  Number of experiments: ', Nexp
-write (*,*) '  Variable name: ', trim(TempcVar)
-write (*,*) '  GRADS control files:'
+write (0,*) 'PDF pools all experiments:'
+write (0,*) '  Number of experiments: ', Nexp
+write (0,*) '  Variable name: ', trim(TempcVar)
+write (0,*) '  GRADS control files:'
 do i_exp=1, Nexp
-  write (*,*) '    ', trim(GradsControlFiles(i_exp))
+  write (0,*) '    ', trim(GradsControlFiles(i_exp))
 enddo
-write (*,*) ''
+write (0,*) ''
 
 !********************************************************
 ! For each experiment:
@@ -81,47 +84,31 @@ write (*,*) ''
 
 do i_exp=1, Nexp
 
-  write (*,*) 'Experiment: ', i_exp
-  write (*,*) ''
-  write (*,*) 'Reading GRADS control file: ', trim(GradsControlFiles(i_exp))
-  flush(6)
+  write (0,*) 'Experiment: ', i_exp
+  write (0,*) ''
+  write (0,*) 'Reading GRADS control file: ', trim(GradsControlFiles(i_exp))
   call ReadGradsCtlFile(GradsControlFiles(i_exp), GdataDescrip(1))
-  write (*,*) ''
-  flush(6)
+  write (0,*) ''
   call CheckDataDescrip_VS(GdataDescrip, 1, Nx, Ny, Nz, Nt, Nvars, TempcLoc, TempcVar)
-  write (*,*) ''
+  write (0,*) ''
 
-  write (*,*) 'Gridded data information:'
-  write (*,*) '  Number of x (longitude) points:      ', Nx
-  write (*,*) '  Number of y (latitude) points:       ', Ny
-  write (*,*) '  Number of z (vertical level) points: ', Nz
-  write (*,*) '  Number of t (time) points:           ', Nt
-  write (*,*) '  Total number of grid variables       ', Nvars
-  write (*,*) ''
-  write (*,*) 'Number of data values per grid variable: ', Nx*Ny*Nz*Nt
-  write (*,*) ''
-  write (*,*) 'Location of tempc variable in GRADS data file (file number, var number):'
-  write (*,'(a20,i3,a2,i3,a1)') 'tempc: (', TempcLoc%Fnum, ', ', TempcLoc%Vnum, ')'
-  write (*,*) ''
+  write (0,*) 'Gridded data information:'
+  write (0,*) '  Number of x (longitude) points:      ', Nx
+  write (0,*) '  Number of y (latitude) points:       ', Ny
+  write (0,*) '  Number of z (vertical level) points: ', Nz
+  write (0,*) '  Number of t (time) points:           ', Nt
+  write (0,*) '  Total number of grid variables       ', Nvars
+  write (0,*) ''
+  write (0,*) 'Number of data values per grid variable: ', Nx*Ny*Nz*Nt
+  write (0,*) ''
+  write (0,*) 'Location of tempc variable in GRADS data file (file number, var number):'
+  write (0,'(a20,i3,a2,i3,a1)') 'tempc: (', TempcLoc%Fnum, ', ', TempcLoc%Vnum, ')'
+  write (0,*) ''
 
-  write (*,*) 'Allocating data array'
-  flush(6)
   allocate (TempcData(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
   if (Ierror .ne. 0) then
-    write (*,*) 'ERROR: Data array allocation failed'
+    write (0,*) 'ERROR: Data array allocation failed'
     stop
-  endif
-
-  ! if on the first experiment, then allocate the "other" arrays
-  ! this assumes that the gridded data has the same x,y,z,t dimensions
-  if (i_exp .eq. 1) then
-    write (*,*) 'Allocating auxillary arrays'
-    flush(6)
-    allocate (var(1:Nx,1:Ny,1:Nt), tcmed(1:Nt,1:Nexp), aux(1:Nexp), mask_big(1:Nx,1:Ny), stat=Ierror) 
-    if (Ierror .ne. 0) then
-      write (*,*) 'ERROR: Auxillary array allocation failed'
-      stop
-    endif
   endif
 
   call ReadGradsData(GdataDescrip, TempcVar, TempcLoc, TempcData, Nx, Ny, Nz, Nt)
@@ -168,7 +155,7 @@ do i_exp=1, Nexp
   print*,'******************************************************************' 
   print*, trim(GradsControlFiles(i_exp))
   !
-  call PDF_a(Nx, Ny, Nt, 1.5, var, 1, Nt, 4, a_med, a_max, mask_big, t_big)  
+  call PDF_a(MAX_X_DIM, MAX_Y_DIM, MAX_TIME_STEPS, Nx, Ny, Nt, 1.5, var, 1, Nt, 4, a_med, a_max, mask_big, t_big)  
   !
   ! This code looks like it produces data that is not used
   ! Development of this code must be in progress at this point
@@ -189,7 +176,7 @@ do i_exp=1, Nexp
 
   deallocate (TempcData, stat=Ierror)
   if (Ierror .ne. 0) then
-    write (*,*) 'ERROR: Data array memory de-allocation failed'
+    write (0,*) 'ERROR: Data array memory de-allocation failed'
     stop
   endif
 enddo  ! i_exp = 1, Nexp
@@ -211,23 +198,19 @@ do i=1, Nexp
     print*, i,  aux(i)-aux(1)
 enddo
 
-! clean up
-deallocate (var, tcmed, aux, mask_big, stat=Ierror) 
-if (Ierror .ne. 0) then
-  write (*,*) 'ERROR: Auxillary array memory de-allocation failed'
-  stop
-endif
 !!
 end
 !########################################################################################
 !########################################################################################
-subroutine PDF_a(nx, ny, ntimes, delta_xy, var, ntinit, ntend, icellmin, a_med, a_max, mask_big,t_big)  
+subroutine PDF_a(max_x_dim, max_y_dim, max_time_steps, nx, ny, ntimes, delta_xy, var, ntinit, ntend, icellmin, a_med, a_max, mask_big,t_big)  
 implicit none
 integer :: nx, ny, ntimes,ntinit, ntend, icellmin,t_big
-real , dimension(nx,ny,ntimes) :: var
+integer :: max_x_dim, max_y_dim, max_time_steps
+real , dimension(max_x_dim,max_y_dim,max_time_steps) :: var
 real :: delta_xy
 !
-real, dimension(nx,ny) :: group, mask_big           ! cell state and mask_big for biggest group
+real, dimension(max_x_dim,max_y_dim) :: mask_big
+real, dimension(nx,ny) :: group                 ! cell state and mask_big for biggest group
 integer  ncount                                 ! count of cells of any group
 integer  ncell                                  ! number of center cells checked 
 integer  ncount_max

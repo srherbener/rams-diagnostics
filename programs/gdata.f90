@@ -60,7 +60,7 @@ subroutine String2List(InString, Separator, OutList, MaxItems, NumItems, ItemTyp
         if (NumItems .le. MaxItems) then
           OutList(NumItems) = InString(StrStart:StrEnd)
         else
-          write (*,*) 'ERROR: Maximum number of ', ItemType, ' (', MaxItems, ') exceeded'
+          write (0,*) 'ERROR: Maximum number of ', ItemType, ' (', MaxItems, ') exceeded'
           stop
         end if
       end if
@@ -79,7 +79,7 @@ subroutine String2List(InString, Separator, OutList, MaxItems, NumItems, ItemTyp
     if (NumItems .le. MaxItems) then
       OutList(NumItems) = InString(StrStart:StrEnd)
     else
-      write (*,*) 'ERROR: Maximum number of ', ItemType, ' (', MaxItems, ') exceeded'
+      write (0,*) 'ERROR: Maximum number of ', ItemType, ' (', MaxItems, ') exceeded'
       stop
     end if
   end if
@@ -117,7 +117,7 @@ subroutine  ReadGradsCtlFile(GradsCtlFile, GdataDescrip)
   open(unit=InUnit, file=GradsCtlFile, form='formatted', &
        status='old', action='read', iostat=InError)
   if (InError .ne. 0) then
-    write (*,*) 'ERROR: cannot open GRADS control file: ', trim(GradsCtlFile)
+    write (0,*) 'ERROR: cannot open GRADS control file: ', trim(GradsCtlFile)
     stop
   end if
 
@@ -165,7 +165,7 @@ subroutine  ReadGradsCtlFile(GradsCtlFile, GdataDescrip)
                 if ((InFields(1) .eq. 'vars') .or. (InFields(1) .eq. 'VARS')) then
                   read (InFields(2), '(i)') GdataDescrip%nvars
                   if (GdataDescrip%nvars .gt. MaxVars) then
-                    write (*,*) 'ERROR: Maximum number of variables (', MaxVars, &
+                    write (0,*) 'ERROR: Maximum number of variables (', MaxVars, &
                                 ') exceeded in GRADS control file specs'
                     stop
                   end if
@@ -207,7 +207,7 @@ subroutine GenCoords(InFields, Nfields, Coords, Ncoords, MaxCoords, GenDmyCoords
 
   read (InFields(2), '(i)') Ncoords 
   if (Ncoords .gt. MaxCoords) then
-    write (*,*) 'ERROR: Maximum number of coordinates (', MaxCoords, ') exceeded in GRADS control file specs'
+    write (0,*) 'ERROR: Maximum number of coordinates (', MaxCoords, ') exceeded in GRADS control file specs'
     stop
   end if
 
@@ -264,7 +264,7 @@ subroutine  GetVarNames(InUnit, VarNames, Nvars, MaxLine, MaxFields)
   do i = 1, Nvars
     read (unit=InUnit, fmt='(a)', iostat=InError) InLine
     if (InError .ne. 0) then
-      write (*,*) 'ERROR: Reached end of GRADS control file before reading in all (', &
+      write (0,*) 'ERROR: Reached end of GRADS control file before reading in all (', &
                   Nvars, ') variable names'
       stop
     end if
@@ -324,19 +324,19 @@ subroutine CheckDataDescrip(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, Uloc, V
       Nvars = GdataDescrip(i)%nvars
     else
       if (GdataDescrip(i)%nx .ne. Nx) then
-        write (*,*) 'ERROR: number of x points in GRADS control files do not match'
+        write (0,*) 'ERROR: number of x points in GRADS control files do not match'
         BadData = .true.
       end if
       if (GdataDescrip(i)%ny .ne. Ny) then
-        write (*,*) 'ERROR: number of y points in GRADS control files do not match'
+        write (0,*) 'ERROR: number of y points in GRADS control files do not match'
         BadData = .true.
       end if
       if (GdataDescrip(i)%nz .ne. Nz) then
-        write (*,*) 'ERROR: number of z points in GRADS control files do not match'
+        write (0,*) 'ERROR: number of z points in GRADS control files do not match'
         BadData = .true.
       end if
       if (GdataDescrip(i)%nt .ne. Nt) then
-        write (*,*) 'ERROR: number of t points in GRADS control files do not match'
+        write (0,*) 'ERROR: number of t points in GRADS control files do not match'
         BadData = .true.
       end if
 
@@ -369,25 +369,25 @@ subroutine CheckDataDescrip(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, Uloc, V
 
   ! Check to see if you got all three vars (w, press, var)
   if (Wloc%Fnum .eq. 0) then
-    write (*,*) 'ERROR: cannot find grid var "w" in the GRADS data files'
+    write (0,*) 'ERROR: cannot find grid var "w" in the GRADS data files'
     BadData = .true.
   end if
   if (PressLoc%Fnum .eq. 0) then
-    write (*,*) 'ERROR: cannot find grid var "press" in the GRADS data files'
+    write (0,*) 'ERROR: cannot find grid var "press" in the GRADS data files'
     BadData = .true.
   end if
   if (DoHorizVel) then
     if (Uloc%Fnum .eq. 0) then
-      write (*,*) 'ERROR: cannot find grid var "u" in the GRADS data files'
+      write (0,*) 'ERROR: cannot find grid var "u" in the GRADS data files'
       BadData = .true.
     end if
     if (Vloc%Fnum .eq. 0) then
-      write (*,*) 'ERROR: cannot find grid var "v" in the GRADS data files'
+      write (0,*) 'ERROR: cannot find grid var "v" in the GRADS data files'
       BadData = .true.
     end if
   else
     if (VarLoc%Fnum .eq. 0) then
-      write (*,*) 'ERROR: cannot find grid var "', trim(VarName), '" in the GRADS data files'
+      write (0,*) 'ERROR: cannot find grid var "', trim(VarName), '" in the GRADS data files'
       BadData = .true.
     end if
   end if
@@ -439,19 +439,19 @@ subroutine CheckDataDescrip_CI(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, &
       Nvars = GdataDescrip(i)%nvars
     else
       if (GdataDescrip(i)%nx .ne. Nx) then
-        write (*,*) 'ERROR: number of x points in GRADS control files do not match'
+        write (0,*) 'ERROR: number of x points in GRADS control files do not match'
         BadData = .true.
       end if
       if (GdataDescrip(i)%ny .ne. Ny) then
-        write (*,*) 'ERROR: number of y points in GRADS control files do not match'
+        write (0,*) 'ERROR: number of y points in GRADS control files do not match'
         BadData = .true.
       end if
       if (GdataDescrip(i)%nz .ne. Nz) then
-        write (*,*) 'ERROR: number of z points in GRADS control files do not match'
+        write (0,*) 'ERROR: number of z points in GRADS control files do not match'
         BadData = .true.
       end if
       if (GdataDescrip(i)%nt .ne. Nt) then
-        write (*,*) 'ERROR: number of t points in GRADS control files do not match'
+        write (0,*) 'ERROR: number of t points in GRADS control files do not match'
         BadData = .true.
       end if
 
@@ -476,15 +476,15 @@ subroutine CheckDataDescrip_CI(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, &
 
   ! Check to see if you got all vars (dn0, var)
   if (DensLoc%Fnum .eq. 0) then
-    write (*,*) 'ERROR: cannot find grid var "dn0" in the GRADS data files'
+    write (0,*) 'ERROR: cannot find grid var "dn0" in the GRADS data files'
     BadData = .true.
   end if
   if (TempLoc%Fnum .eq. 0) then
-    write (*,*) 'ERROR: cannot find grid var "tempc" in the GRADS data files'
+    write (0,*) 'ERROR: cannot find grid var "tempc" in the GRADS data files'
     BadData = .true.
   end if
   if (VarLoc%Fnum .eq. 0) then
-    write (*,*) 'ERROR: cannot find grid var "', trim(VarName), '" in the GRADS data files'
+    write (0,*) 'ERROR: cannot find grid var "', trim(VarName), '" in the GRADS data files'
     BadData = .true.
   end if
 
@@ -531,19 +531,19 @@ subroutine CheckDataDescrip_VS(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, &
       Nvars = GdataDescrip(i)%nvars
     else
       if (GdataDescrip(i)%nx .ne. Nx) then
-        write (*,*) 'ERROR: number of x points in GRADS control files do not match'
+        write (0,*) 'ERROR: number of x points in GRADS control files do not match'
         BadData = .true.
       end if
       if (GdataDescrip(i)%ny .ne. Ny) then
-        write (*,*) 'ERROR: number of y points in GRADS control files do not match'
+        write (0,*) 'ERROR: number of y points in GRADS control files do not match'
         BadData = .true.
       end if
       if (GdataDescrip(i)%nz .ne. Nz) then
-        write (*,*) 'ERROR: number of z points in GRADS control files do not match'
+        write (0,*) 'ERROR: number of z points in GRADS control files do not match'
         BadData = .true.
       end if
       if (GdataDescrip(i)%nt .ne. Nt) then
-        write (*,*) 'ERROR: number of t points in GRADS control files do not match'
+        write (0,*) 'ERROR: number of t points in GRADS control files do not match'
         BadData = .true.
       end if
 
@@ -560,7 +560,7 @@ subroutine CheckDataDescrip_VS(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, &
 
   ! Check to see if you got all vars (dn0, var)
   if (VarLoc%Fnum .eq. 0) then
-    write (*,*) 'ERROR: cannot find grid var "', trim(VarName), '" in the GRADS data files'
+    write (0,*) 'ERROR: cannot find grid var "', trim(VarName), '" in the GRADS data files'
     BadData = .true.
   end if
 
@@ -608,19 +608,19 @@ subroutine CheckDataDescrip_SW(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, &
       Nvars = GdataDescrip(i)%nvars
     else
       if (GdataDescrip(i)%nx .ne. Nx) then
-        write (*,*) 'ERROR: number of x points in GRADS control files do not match'
+        write (0,*) 'ERROR: number of x points in GRADS control files do not match'
         BadData = .true.
       end if
       if (GdataDescrip(i)%ny .ne. Ny) then
-        write (*,*) 'ERROR: number of y points in GRADS control files do not match'
+        write (0,*) 'ERROR: number of y points in GRADS control files do not match'
         BadData = .true.
       end if
       if (GdataDescrip(i)%nz .ne. Nz) then
-        write (*,*) 'ERROR: number of z points in GRADS control files do not match'
+        write (0,*) 'ERROR: number of z points in GRADS control files do not match'
         BadData = .true.
       end if
       if (GdataDescrip(i)%nt .ne. Nt) then
-        write (*,*) 'ERROR: number of t points in GRADS control files do not match'
+        write (0,*) 'ERROR: number of t points in GRADS control files do not match'
         BadData = .true.
       end if
 
@@ -641,11 +641,11 @@ subroutine CheckDataDescrip_SW(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, &
 
   ! Check to see if you got all vars (dn0, var)
   if (Uloc%Fnum .eq. 0) then
-    write (*,*) 'ERROR: cannot find grid var "u" in the GRADS data files'
+    write (0,*) 'ERROR: cannot find grid var "u" in the GRADS data files'
     BadData = .true.
   end if
   if (Vloc%Fnum .eq. 0) then
-    write (*,*) 'ERROR: cannot find grid var "v" in the GRADS data files'
+    write (0,*) 'ERROR: cannot find grid var "v" in the GRADS data files'
     BadData = .true.
   end if
 
@@ -695,19 +695,19 @@ subroutine CheckDataDescrip_TR(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, &
       Nvars = GdataDescrip(i)%nvars
     else
       if (GdataDescrip(i)%nx .ne. Nx) then
-        write (*,*) 'ERROR: number of x points in GRADS control files do not match'
+        write (0,*) 'ERROR: number of x points in GRADS control files do not match'
         BadData = .true.
       end if
       if (GdataDescrip(i)%ny .ne. Ny) then
-        write (*,*) 'ERROR: number of y points in GRADS control files do not match'
+        write (0,*) 'ERROR: number of y points in GRADS control files do not match'
         BadData = .true.
       end if
       if (GdataDescrip(i)%nz .ne. Nz) then
-        write (*,*) 'ERROR: number of z points in GRADS control files do not match'
+        write (0,*) 'ERROR: number of z points in GRADS control files do not match'
         BadData = .true.
       end if
       if (GdataDescrip(i)%nt .ne. Nt) then
-        write (*,*) 'ERROR: number of t points in GRADS control files do not match'
+        write (0,*) 'ERROR: number of t points in GRADS control files do not match'
         BadData = .true.
       end if
 
@@ -732,15 +732,15 @@ subroutine CheckDataDescrip_TR(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, &
 
   ! Check to see if you got all vars (dn0, var)
   if (Ploc%Fnum .eq. 0) then
-    write (*,*) 'ERROR: cannot find grid var "press" in the GRADS data files'
+    write (0,*) 'ERROR: cannot find grid var "press" in the GRADS data files'
     BadData = .true.
   end if
   if (Uloc%Fnum .eq. 0) then
-    write (*,*) 'ERROR: cannot find grid var "u" in the GRADS data files'
+    write (0,*) 'ERROR: cannot find grid var "u" in the GRADS data files'
     BadData = .true.
   end if
   if (Vloc%Fnum .eq. 0) then
-    write (*,*) 'ERROR: cannot find grid var "v" in the GRADS data files'
+    write (0,*) 'ERROR: cannot find grid var "v" in the GRADS data files'
     BadData = .true.
   end if
 
@@ -785,7 +785,7 @@ subroutine ReadGradsData(GdataDescrip, VarName, VarLoc, VarData, Nx, Ny, Nz, Nt)
   open (unit=InUnit, file=DataFile, form='unformatted', access='direct', &
         recl=RecLen, status='old', action='read', iostat=Ierror)
   if (Ierror .ne. 0) then
-    write (*,*) 'ERROR: Cannot open GRADS data file: ', trim(DataFile)
+    write (0,*) 'ERROR: Cannot open GRADS data file: ', trim(DataFile)
     stop
   end if
  
@@ -826,16 +826,16 @@ subroutine ReadGradsData(GdataDescrip, VarName, VarLoc, VarData, Nx, Ny, Nz, Nt)
 
   NumRecs = Nz * Nt * Nvars
 
-  write (*,*) 'Reading GRADS data file: ', trim(DataFile)
-  write (*,*) '  Var: ', trim(VarName)
-  write (*,*) '  X points:          ', Nx
-  write (*,*) '  Y points:          ', Ny
-  write (*,*) '  Z points:          ', Nz
-  write (*,*) '  T points:          ', Nt
-  write (*,*) '  Number of Vars:    ', Nvars
-  write (*,*) '  Record length:     ', RecLen
-  write (*,*) '  Number of records: ', NumRecs
-  write (*,*) ''
+  write (0,*) 'Reading GRADS data file: ', trim(DataFile)
+  write (0,*) '  Var: ', trim(VarName)
+  write (0,*) '  X points:          ', Nx
+  write (0,*) '  Y points:          ', Ny
+  write (0,*) '  Z points:          ', Nz
+  write (0,*) '  T points:          ', Nt
+  write (0,*) '  Number of Vars:    ', Nvars
+  write (0,*) '  Record length:     ', RecLen
+  write (0,*) '  Number of records: ', NumRecs
+  write (0,*) ''
 
   ! Need to derive the correct record number in the file
   ! from the it and iz values. it cycles by Nz*Nvars records.
@@ -853,12 +853,12 @@ subroutine ReadGradsData(GdataDescrip, VarName, VarLoc, VarData, Nx, Ny, Nz, Nt)
 
       NumRecs = NumRecs + 1
       if (modulo(NumRecs,100) .eq. 0) then
-        write (*,*) '  Reading: ', trim(VarName), ': ', NumRecs
+        write (0,*) '  Reading: ', trim(VarName), ': ', NumRecs
       end if
     end do   
   end do 
-  write (*,*) '  Total records read: ', NumRecs
-  write (*,*) ''
+  write (0,*) '  Total records read: ', NumRecs
+  write (0,*) ''
 
   close (unit=InUnit, status='keep')
 
@@ -936,17 +936,17 @@ subroutine WriteGrads(GoutDescrip, AzAvg)
   integer :: iz
   integer :: it
 
-  write (*,*) 'Writing out result in GRADS format:'
-  write (*,*) '  Control file: ', trim(GoutDescrip%CtlFile)
-  write (*,*) '  Data file:    ', trim(GoutDescrip%DataFile)
-  write (*,*) '  Total number of data points: ', &
+  write (0,*) 'Writing out result in GRADS format:'
+  write (0,*) '  Control file: ', trim(GoutDescrip%CtlFile)
+  write (0,*) '  Data file:    ', trim(GoutDescrip%DataFile)
+  write (0,*) '  Total number of data points: ', &
               GoutDescrip%nx * GoutDescrip%ny * GoutDescrip%nz * GoutDescrip%nt
-  write (*,*) ''
+  write (0,*) ''
 
   ! Control (data description) file
   open (OutUnit, file=GoutDescrip%CtlFile, form='formatted', action='write', status='replace', iostat=Ierror)
   if (Ierror .ne. 0) then
-    write (*,*) 'ERROR: cannot open output GRADS control file for writing: ', trim(GoutDescrip%CtlFile)
+    write (0,*) 'ERROR: cannot open output GRADS control file for writing: ', trim(GoutDescrip%CtlFile)
     stop
   end if
 
@@ -973,7 +973,7 @@ subroutine WriteGrads(GoutDescrip, AzAvg)
   open (OutUnit, file=GoutDescrip%DataFile, form='unformatted', access='direct', &
         recl=OutRecLen, action='write', status='replace', iostat=Ierror)
   if (Ierror .ne. 0) then
-    write (*,*) 'ERROR: cannot open output GRADS data file for writing: ', trim(GoutDescrip%DataFile)
+    write (0,*) 'ERROR: cannot open output GRADS data file for writing: ', trim(GoutDescrip%DataFile)
     stop
   end if
 
@@ -981,7 +981,7 @@ subroutine WriteGrads(GoutDescrip, AzAvg)
   do it = 1, GoutDescrip%nt
     do iz = 1, GoutDescrip%nz
       if (modulo(RecNum,100) .eq. 0) then
-        write (*,*) '  Writing: ', trim(GoutDescrip%VarName), ': ', RecNum
+        write (0,*) '  Writing: ', trim(GoutDescrip%VarName), ': ', RecNum
       end if
       write (OutUnit, rec=RecNum) ((AzAvg(ix,iy,iz,it), ix = 1, GoutDescrip%nx), iy = 1, GoutDescrip%ny)
       RecNum = RecNum + 1
