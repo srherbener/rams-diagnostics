@@ -143,8 +143,7 @@ function main(args)
 *   cloud droplet number concentration
     varName = 'cloudconcen_cm3'
     gVar = 'cloudconcen_cm3'
-*     gClevs = '0.0 200.0 400.0 600.0 800.0 1000.0 1200.0 1400.0 1600.0 1800.0 2000.0 2200.0 2400.0'
-    gClevs = '0.0 20.00 40.00 60.00 80.00 100.00 120.00 140.00 160.00 180.00 200.00 220.00 240.00'
+    gClevs = '0.0 5.00 10.00 15.00 20.00 25.00 30.00 35.00 40.00 45.00 50.00 55.00 60.00'
     gCcols = '  9  14   4  11   5  13   3  10   7  12   8   2   6'
     gTitle = gExp': AZ: Cloud Droplet Number (#/cc), 'gCase', t 'timeStr
 *    zTop = 10000
