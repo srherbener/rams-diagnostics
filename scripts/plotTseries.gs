@@ -30,29 +30,37 @@ function main(args)
 *   supercooled cloud droplet mass
     varName = 'ts_sc_cloud'
     gVar = 'sc_cloud_test'
-    gTitle = gExp': Total supercooled cloud droplet mass (g), 'gCase
+    gTitle = gExp': Total supercooled cloud droplet mass, 'gCase
     yTitle = 'SC Cloud Mass (g)'
+    yMin = 4.0e13
+    yMax = 7.0e13
   endif
   if (varNum = 2)
 *   supercooled cloud droplet mean diameter
     varName = 'ts_sc_cloud_diam'
     gVar = 'sc_cloud_diam_t'
-    gTitle = gExp': Mean supercooled cloud droplet diameter (um), 'gCase
+    gTitle = gExp': Mean supercooled droplet diameter, 'gCase
     yTitle = 'SC Cloud Mean Diameter (um)'
+    yMin = 30
+    yMax = 40
   endif
   if (varNum = 3)
 *   total precip rate
     varName = 'ts_precipr'
     gVar = 'precipr_test'
-    gTitle = gExp': Total precip rate (kg/hr), 'gCase
+    gTitle = gExp': Total precip rate, 'gCase
     yTitle = 'Precip Rate (kg/hr)'
+    yMin =  3.0e11
+    yMax = 10.0e11
   endif
   if (varNum = 4)
 *   vertical velocity
     varName = 'ts_sc_w'
     gVar = 'sc_w_test'
-    gTitle = gExp': Average w (m/s), in supercooled cloud region, 'gCase
+    gTitle = gExp': Average w in supercooled cloud region, 'gCase
     yTitle = 'Average w (m/s)'
+    yMin = 0.0
+    yMax = 1.5
   endif
 
   gcFile = gDir'/'varName'_'gCase'.ctl'
@@ -73,6 +81,7 @@ function main(args)
   'open 'gcFile
   'set t 'gTstart' 'gTend
   'set grads off'
+  'set yaxis 'yMin' 'yMax
   'd smth9('gVar')'
   'draw title 'gTitle
   'draw xlab 'xTitle
