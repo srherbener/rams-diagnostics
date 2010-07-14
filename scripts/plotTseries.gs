@@ -57,7 +57,7 @@ function main(args)
 
   gcFile = gDir'/'varName'_'gCase'.ctl'
 
-  xTitle = 'Time (hr)'
+  xTitle = 'Time'
 
   say 'Plotting time series of given variable:'
   say '  Experiment = 'gExp
