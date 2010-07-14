@@ -9,7 +9,8 @@ SCRIPTS = $(DEST)/cbarn.gs \
           $(DEST)/plotInitFields.gs \
           $(DEST)/plotRadialWind.gs \
           $(DEST)/plotTestCcnFields.gs \
-          $(DEST)/plotVslices.gs
+          $(DEST)/plotVslices.gs \
+          $(DEST)/plotTseries.gs
 
 #
 # Targets
@@ -37,4 +38,7 @@ $(DEST)/plotTestCcnFields.gs: plotTestCcnFields.gs
 
 $(DEST)/plotVslices.gs: plotVslices.gs
 	cp plotVslices.gs $(DEST)/plotVslices.gs
+
+$(DEST)/plotTseries.gs: plotTseries.gs
+	cp plotTseries.gs $(DEST)/plotTseries.gs
 
