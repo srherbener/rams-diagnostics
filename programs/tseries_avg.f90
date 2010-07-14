@@ -382,8 +382,10 @@ subroutine DoPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, PrecipR, TsAvg)
       end do
     end do
 
-    ! At this point TsAvg(1,1,1,it) holds kg/hr/m**2, multiply by grid cell horizontal area. Note this assumes
-    ! each grid cell has the same horizontal area.
+    ! At this point TsAvg(1,1,1,it) holds mm/hr, multiply by grid cell horizontal area.
+    ! Note this assumes each grid cell has the same horizontal area. What this does
+    ! is convert mm/hr to kg/hr when assuming that the density of water is 1000kg/m**3.
+    !   mm/hr * m**2 * 1000 kg/m**3 * 0.001 m/mm -> kg/hr
 
     TsAvg(1,1,1,it) = TsAvg(1,1,1,it) * DeltaX * DeltaY
   end do
