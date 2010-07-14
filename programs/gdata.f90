@@ -749,6 +749,85 @@ subroutine CheckDataDescrip_TR(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, &
   end if
 end subroutine
 
+!*************************************************************************
+! CheckDataDescripOneVar()
+!
+! This routine will check the consistency of the data description obtained
+! from the GRADS control files. The number of x, y, z, t points should match
+! in all files. Also, the total number of variables are calculated and returned
+! in Nvars.
+!
+! This routein will check one variable at a time, so it needs to be called
+! multiple times for multiple variables.
+!
+
+subroutine CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, VarLoc, VarName)
+  use GfileTypes
+  implicit none
+
+  type (GradsDataDescription), dimension(*) :: GdataDescrip
+  integer Nx, Ny, Nz, Nt, Nfiles
+  integer Nvars
+  type (GradsVarLocation) :: VarLoc
+  character (len=*) :: VarName
+  logical :: DoHorizVel
+
+  ! i -> file number, j -> var number
+  integer i, j
+  logical BadData
+
+  VarLoc%Fnum = 0
+  VarLoc%Vnum = 0
+
+  BadData = .false.
+  do i = 1, Nfiles
+    if (i .eq. 1) then
+      Nx = GdataDescrip(i)%nx
+      Ny = GdataDescrip(i)%ny
+      Nz = GdataDescrip(i)%nz
+      Nt = GdataDescrip(i)%nt
+   
+      Nvars = GdataDescrip(i)%nvars
+    else
+      if (GdataDescrip(i)%nx .ne. Nx) then
+        write (0,*) 'ERROR: number of x points in GRADS control files do not match'
+        BadData = .true.
+      end if
+      if (GdataDescrip(i)%ny .ne. Ny) then
+        write (0,*) 'ERROR: number of y points in GRADS control files do not match'
+        BadData = .true.
+      end if
+      if (GdataDescrip(i)%nz .ne. Nz) then
+        write (0,*) 'ERROR: number of z points in GRADS control files do not match'
+        BadData = .true.
+      end if
+      if (GdataDescrip(i)%nt .ne. Nt) then
+        write (0,*) 'ERROR: number of t points in GRADS control files do not match'
+        BadData = .true.
+      end if
+
+      Nvars = Nvars + GdataDescrip(i)%nvars
+    end if
+
+    do j =1, GdataDescrip(i)%nvars
+      if (GdataDescrip(i)%VarNames(j) .eq. VarName) then
+        VarLoc%Fnum = i
+        VarLoc%Vnum = j
+      end if
+    end do
+  end do
+
+  ! Check to see if you got the variable
+  if (VarLoc%Fnum .eq. 0) then
+    write (0,*) 'ERROR: cannot find grid var "', trim(VarName), '" in the GRADS data files'
+    BadData = .true.
+  end if
+
+  if (BadData) then
+    stop
+  end if
+end subroutine
+
 !********************************************************************
 ! ReadGradsData()
 !
@@ -956,7 +1035,7 @@ subroutine WriteGrads(GoutDescrip, AzAvg)
   write (OutUnit, '(a)')            'OPTIONS  little_endian'
   write (OutUnit, '(a,i,a,g,g)')    'XDEF ', GoutDescrip%nx, ' LINEAR ', GoutDescrip%Xstart, GoutDescrip%Xinc
   write (OutUnit, '(a,i,a,g,g)')    'YDEF ', GoutDescrip%ny, ' LINEAR ', GoutDescrip%Ystart, GoutDescrip%Yinc
-  write (OutUnit, '(a,i,a,100g')    'ZDEF ', GoutDescrip%nz, ' LEVELS ', &
+  write (OutUnit, '(a,i,a,100g)')   'ZDEF ', GoutDescrip%nz, ' LEVELS ', &
                                     (GoutDescrip%Zcoords(iz), iz = 1, GoutDescrip%nz)
   write (OutUnit, '(a,i,a,a,5x,a)') 'TDEF ', GoutDescrip%nt, ' LINEAR ', &
                                     trim(GoutDescrip%Tstart), trim(GoutDescrip%Tinc)
@@ -989,6 +1068,43 @@ subroutine WriteGrads(GoutDescrip, AzAvg)
   end do
 
   close (OutUnit, status='keep')
+
+  return
+end subroutine
+
+!***********************************************************************
+! SetZmHeights()
+!
+! This routine will set the Zm heights which are used for defining
+! the layer thicknesses in the column integration calculations.
+! Zm grid points are the heights at the vector data points (whereas Zt
+! are the heights of the scalar data points) - staggered grid scheme in RAMS.
+! Zm heights are defined by the RAMSIN vars: DELTAZ, DZRAT, DZMAX.
+!
+
+subroutine SetZmHeights(Nz, ZmHeights)
+  implicit none
+
+  real, dimension(0:Nz) :: ZmHeights
+  real :: DeltaZ, DzRat, DzMax
+  integer :: Nz, iz
+
+  ! all the simulations are using the same z scheme so for now just
+  ! use the settings
+  ! WARNING: this needs to change is the z scheme in the simulations changes
+
+  DeltaZ = 300.0
+  DzRat = 1.065
+  DzMax = 1000.0
+
+  ZmHeights(0) = 0.0
+  do iz = 1, Nz
+    ZmHeights(iz) = ZmHeights(iz - 1) + DeltaZ
+    DeltaZ = DeltaZ * DzRat
+    if (DeltaZ .ge. DzMax) then
+      DeltaZ = DzMax
+    endif
+  enddo
 
   return
 end subroutine
