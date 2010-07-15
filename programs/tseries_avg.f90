@@ -48,8 +48,8 @@ program main
   ! The *Loc vars hold the locations of cloud, tempc, precipr in the GRADS
   ! data files: the first index is the file number, the second index is the
   ! var number
-  real, dimension(:,:,:,:), allocatable :: Cloud, TempC, Dens, PrecipR, W, CloudDiam, TsAvg
-  type (GradsVarLocation) :: CloudLoc, TempcLoc, DensLoc, WLoc, CloudDiamLoc, PreciprLoc
+  real, dimension(:,:,:,:), allocatable :: Cloud, TempC, Dens, PrecipR, W, CloudDiam, CconcAz, TsAvg
+  type (GradsVarLocation) :: CloudLoc, TempcLoc, DensLoc, WLoc, CloudDiamLoc, CconcAzLoc, PreciprLoc
 
   integer :: i
   integer :: Ierror
@@ -97,6 +97,10 @@ program main
           call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, TempcLoc, 'tempc')
           call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CloudLoc, 'cloud')
           call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CloudDiamLoc, 'cloud_d')
+        else
+          if (AvgFunc .eq. 'ew_cloud') then
+            call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CconcAzLoc, 'cloudconcen_cm3_azavg')
+          end if
         end if
       end if
     end if
@@ -180,6 +184,20 @@ program main
           call ReadGradsData(GdataDescrip, 'tempc', TempcLoc, TempC, Nx, Ny, Nz, Nt)
           call ReadGradsData(GdataDescrip, 'cloud', CloudLoc, Cloud, Nx, Ny, Nz, Nt)
           call ReadGradsData(GdataDescrip, 'cloud_d', CloudDiamLoc, CloudDiam, Nx, Ny, Nz, Nt)
+        else
+          if (AvgFunc .eq. 'ew_cloud') then
+            write (*,'(a20,i3,a2,i3,a1)') 'cloudconcen_cm3: (', CconcAzLoc%Fnum, ', ', CconcAzLoc%Vnum, ')'
+    
+            ! Allocate the data arrays and read in the data from the GRADS data files
+            allocate (CconcAz(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
+            if (Ierror .ne. 0) then
+              write (*,*) 'ERROR: Data array memory allocation failed'
+              stop
+            end if
+  
+            ! Read in the data for the vars using the description and location information
+            call ReadGradsData(GdataDescrip, 'cloudconcen_cm3', CconcAzLoc, CconcAz, Nx, Ny, Nz, Nt)
+          end if
         end if
       end if
     end if
@@ -206,6 +224,10 @@ program main
       else
         if (AvgFunc .eq. 'sc_cloud_diam') then
           call DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, Cloud, TempC, CloudDiam, TsAvg)
+        else
+          if (AvgFunc .eq. 'ew_cloud') then
+            call DoEwCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, CconcAz, TsAvg)
+          end if
         end if
       end if
     end if
@@ -264,6 +286,7 @@ subroutine GetMyArgs(Infiles, OfileBase, AvgFunc, DeltaX, DeltaY, ScThreshold)
     write (*,*) '                                 for selecting w - if supercooled cloud mixing ratio is'
     write (*,*) '                                 >= sc_threshold, then include w in average calculation'
     write (*,*) '            sc_cloud_diam -> total supercooled cloud droplet mean diameter'
+    write (*,*) '            ew_cloud -> average cloud droplet concentration near eyewall region'
     write (*,*) '        <delta_x>: delta X of grid'
     write (*,*) '        <delta_y>: delta Y of grid'
     write (*,*) ''
@@ -290,12 +313,14 @@ subroutine GetMyArgs(Infiles, OfileBase, AvgFunc, DeltaX, DeltaY, ScThreshold)
 
 
   if ((AvgFunc .ne. 'sc_cloud') .and. (AvgFunc .ne. 'precipr') .and. &
-      (AvgFunc .ne. 'sc_w') .and. (AvgFunc .ne. 'sc_cloud_diam')) then
+      (AvgFunc .ne. 'sc_w') .and. (AvgFunc .ne. 'sc_cloud_diam') .and. &
+      (AvgFunc .ne. 'ew_cloud')) then
     write (*,*) 'ERROR: <averaging_function> must be one of:'
     write (*,*) '          sc_cloud'
     write (*,*) '          precipr'
     write (*,*) '          sc_w'
     write (*,*) '          sc_cloud_diam'
+    write (*,*) '          ew_cloud'
   end if
 
   return
@@ -480,6 +505,66 @@ subroutine DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, Cloud, TempC, CloudDiam
       write (*,*) 'WARNING: no data points selected for time step: ', it
     else
       TsAvg(1,1,1,it) = SumQD / SumQ
+    end if
+  end do
+end subroutine
+
+!************************************************************************************
+! DoEwCloud()
+!
+! This subroutine will do the average cloud droplet concentration near the eyewall
+! region.
+
+subroutine DoEwCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, CconcAz, TsAvg)
+  implicit none
+
+  integer :: Nx, Ny, Nz, Nt
+  real :: DeltaX, DeltaY
+  real, dimension(1:Nx, 1:Ny, 1:Nz, 1:Nt) :: CconcAz
+  real, dimension(1:1, 1:1, 1:1, 1:Nt) :: TsAvg
+
+  integer ix,iy,iz,it
+  integer ixStart, ixEnd, izStart, izEnd
+  integer NumPoints
+  real SumCloudConc
+
+  ! Calculate the average cloud droplet concentration near the eyewall region.
+  ! 
+  ! The data is already an azimuthal average at different radii from the storm center.
+  !
+  ! Call "near the eyewall" roughly from radius 10km to radius 30km. In the data,
+  ! the x axis is the radius with x = 1 being 0km, and the distance between each
+  ! x value being 4.15km. Using x = 4 to x = 8 gives roughly what we want (these
+  ! correspond to radius = 12.45km to radius = 29.05km).
+  !
+  ! Call the cloud base to be between 1000m and 1200m. The z level corresponding to
+  ! that is z = 4 which is 1138m. Cover from surface to the cloud base level. This
+  ! results in using z = 1 to z = 4.
+
+  ixStart = 6
+  ixEnd = 8
+
+  izStart = 1
+  izEnd = 4
+
+  do it = 1, Nt
+    SumCloudConc = 0.0
+    NumPoints = 0
+
+    do ix = ixStart, ixEnd
+      do iy = 1, Ny
+        do iz = izStart, izEnd
+           SumCloudConc = SumCloudConc + CconcAz(ix,iy,iz,it)
+           NumPoints = NumPoints + 1
+        end do
+      end do
+    end do
+
+    if (NumPoints .eq. 0) then
+      TsAvg(1,1,1,it) = 0.0
+      write (*,*) 'WARNING: no data points selected for time step: ', it
+    else
+      TsAvg(1,1,1,it) = SumCloudConc / float(NumPoints)
     end if
   end do
 end subroutine

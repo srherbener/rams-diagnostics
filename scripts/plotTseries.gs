@@ -8,6 +8,7 @@
 *   2 --> supercooled cloud droplet diameters
 *   3 --> precip rate
 *   4 --> vertical velocity in supercooled cloud regions
+*   5 --> average cloud droplet concentration near the eyewall region
 
 function main(args)
 
@@ -61,6 +62,15 @@ function main(args)
     yTitle = 'Average w (m/s)'
     yMin = 0.0
     yMax = 1.5
+  endif
+  if (varNum = 5)
+*   eyewall clound droplet concentration
+    varName = 'ts_cconc_az'
+    gVar = 'ew_cloud_test'
+    gTitle = gExp': Average cloud droplet conc. near eyewall, 'gCase
+    yTitle = 'Average N (#/cc)'
+    yMin = 0.0
+    yMax = 1000.0
   endif
 
   gcFile = gDir'/'varName'_'gCase'.ctl'
