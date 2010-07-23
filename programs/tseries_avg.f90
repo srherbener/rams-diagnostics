@@ -34,10 +34,12 @@ program main
 
   character (len=MediumString), dimension(1:MaxFiles) :: GradsCtlFiles
   integer :: Nfiles
+  integer, dimension(:), allocatable :: StmIx, StmIy
 
-  real :: DeltaX, DeltaY, ScThreshold
+  real :: DeltaX, DeltaY, ScThreshold, MinRadius, MaxRadius
   real, dimension(:), allocatable :: ZmHeights
   real, dimension(1:1) :: DummyZcoords
+  real, dimension(:), allocatable :: MinP, Xcoords, Ycoords
 
   type (GradsDataDescription), dimension(1:MaxFiles) :: GdataDescrip
   integer :: Nx, Ny, Nz, Nt, Nvars
@@ -48,8 +50,8 @@ program main
   ! The *Loc vars hold the locations of cloud, tempc, precipr in the GRADS
   ! data files: the first index is the file number, the second index is the
   ! var number
-  real, dimension(:,:,:,:), allocatable :: Cloud, TempC, Dens, PrecipR, W, CloudDiam, CconcAz, TsAvg
-  type (GradsVarLocation) :: CloudLoc, TempcLoc, DensLoc, WLoc, CloudDiamLoc, CconcAzLoc, PreciprLoc
+  real, dimension(:,:,:,:), allocatable :: Cloud, TempC, Dens, PrecipR, W, CloudDiam, CconcAz, Press, TsAvg
+  type (GradsVarLocation) :: CloudLoc, TempcLoc, DensLoc, WLoc, CloudDiamLoc, CconcAzLoc, PreciprLoc, PressLoc
 
   integer :: i
   integer :: Ierror
@@ -57,7 +59,7 @@ program main
   integer :: ix, iy, iz, it
 
   ! Get the command line arguments
-  call GetMyArgs(Infiles, OfileBase, AvgFunc, DeltaX, DeltaY, ScThreshold)
+  call GetMyArgs(Infiles, OfileBase, AvgFunc, ScThreshold, MinRadius, MaxRadius)
   call String2List(Infiles, ':', GradsCtlFiles, MaxFiles, Nfiles, 'input files')
 
   write (*,*) 'Time seris of average for RAMS data:'
@@ -67,9 +69,9 @@ program main
   end do
   write (*,*) '  Output file base name:  ', trim(OfileBase)
   write (*,*) '  Averaging function: ', trim(AvgFunc)
-  write (*,*) '  Grid delta x: ', DeltaX
-  write (*,*) '  Grid delta y: ', DeltaY
   write (*,*) '  Supercooled cloud droplet threshold (for sc_w function): ', ScThreshold
+  write (*,*) '  Minimum radius (for functions that select radial bands): ', MinRadius
+  write (*,*) '  Maximum radius (for functions that select radial bands): ', MaxRadius
   write (*,*) ''
 
   ! Read the GRADS data description files and collect the information about the data
@@ -100,11 +102,28 @@ program main
         else
           if (AvgFunc .eq. 'ew_cloud') then
             call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CconcAzLoc, 'cloudconcen_cm3_azavg')
+          else
+            if (AvgFunc .eq. 'rb_precipr') then
+              call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PreciprLoc, 'precipr')
+              call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
+            end if
           end if
         end if
       end if
     end if
   end if
+
+  ! Calculate the x,y coordinates (in km) for doing selection by radius from storm center.
+  ! Also for setting DeltaX and DeltaY (in m)
+  allocate (Xcoords(1:Nx), Ycoords(1:Ny), stat=Ierror)
+  if (Ierror .ne. 0) then
+    write (*,*) 'ERROR: Data array memory allocation failed'
+    stop
+  end if
+  call ConvertGridCoords(Nx, Ny, GdataDescrip(1), Xcoords, Ycoords)
+
+  DeltaX = (Xcoords(2) - Xcoords(1)) * 1000.0
+  DeltaY = (Ycoords(2) - Ycoords(1)) * 1000.0
 
   ! Read in the GRADS variable data
   write (*,*) 'Gridded data information:'
@@ -115,6 +134,9 @@ program main
   write (*,*) '  Total number of grid variables:          ', Nvars
   write (*,*) ''
   write (*,*) '  Number of data values per grid variable: ', Nx*Ny*Nz*Nt
+  write (*,*) ''
+  write (*,*) '  Grid delta x: ', DeltaX
+  write (*,*) '  Grid delta y: ', DeltaY
   write (*,*) ''
 
   write (*,*) 'Locations of variables in GRADS data (file number, var number):'
@@ -140,14 +162,16 @@ program main
       write (*,'(a20,i3,a2,i3,a1)') 'precipr: (', PreciprLoc%Fnum, ', ', PreciprLoc%Vnum, ')'
 
       ! Allocate the data arrays and read in the data from the GRADS data files
-      allocate (PrecipR(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
+      ! precipr is 2D variable -> Nz = 1
+      allocate (PrecipR(1:Nx,1:Ny,1:1,1:Nt), stat=Ierror)
       if (Ierror .ne. 0) then
         write (*,*) 'ERROR: Data array memory allocation failed'
         stop
       end if
 
       ! Read in the data for the vars using the description and location information
-      call ReadGradsData(GdataDescrip, 'precipr', PreciprLoc, PrecipR, Nx, Ny, Nz, Nt)
+      ! precipr is 2D variable -> Nz = 1
+      call ReadGradsData(GdataDescrip, 'precipr', PreciprLoc, PrecipR, Nx, Ny, 1, Nt)
     else
       if (AvgFunc .eq. 'sc_w') then
         write (*,'(a20,i3,a2,i3,a1)') 'tempc: (', TempcLoc%Fnum, ', ', TempcLoc%Vnum, ')'
@@ -197,6 +221,34 @@ program main
   
             ! Read in the data for the vars using the description and location information
             call ReadGradsData(GdataDescrip, 'cloudconcen_cm3', CconcAzLoc, CconcAz, Nx, Ny, Nz, Nt)
+          else
+            if (AvgFunc .eq. 'rb_precipr') then
+              write (*,'(a20,i3,a2,i3,a1)') 'precipr: (', PreciprLoc%Fnum, ', ', PreciprLoc%Vnum, ')'
+              write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
+      
+              ! Allocate the data arrays and read in the data from the GRADS data files
+              ! PrecipR is a 2D variable --> Nz = 1
+              allocate (PrecipR(1:Nx,1:Ny,1:1,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), &
+                        StmIx(1:Nt), StmIy(1:Nt), MinP(1:Nt), stat=Ierror)
+              if (Ierror .ne. 0) then
+                write (*,*) 'ERROR: Data array memory allocation failed'
+                stop
+              end if
+    
+              ! Read in the data for the vars using the description and location information
+              ! PrecipR is a 2D variable --> Nz = 1
+              call ReadGradsData(GdataDescrip, 'precipr', PreciprLoc, PrecipR, Nx, Ny, 1, Nt)
+              call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
+
+              ! Generate the storm center for all time steps
+              call RecordStormCenter(Nx, Ny, Nz, Nt, Press, StmIx, StmIy, MinP)
+
+              write (*,*) 'Horizontal grid info:'
+              write (*,*) '  X range (min lon, max lon) --> (min x, max x): '
+              write (*,*) '    ', GdataDescrip(1)%Xcoords(1), GdataDescrip(1)%Xcoords(Nx), Xcoords(1), Xcoords(Nx)
+              write (*,*) '  Y range (min lat, max lat) --> (min y, max y): '
+              write (*,*) '    ', GdataDescrip(1)%Ycoords(1), GdataDescrip(1)%Ycoords(Ny), Ycoords(1), Ycoords(Ny)
+            end if
           end if
         end if
       end if
@@ -227,6 +279,10 @@ program main
         else
           if (AvgFunc .eq. 'ew_cloud') then
             call DoEwCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, CconcAz, TsAvg)
+          else
+            if (AvgFunc .eq. 'rb_precipr') then
+              call DoRbPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, MinP, Xcoords, Ycoords, PrecipR, TsAvg)
+            end if
           end if
         end if
       end if
@@ -259,21 +315,21 @@ end
 !   AvgFunc - averaging function selection
 !
 
-subroutine GetMyArgs(Infiles, OfileBase, AvgFunc, DeltaX, DeltaY, ScThreshold)
+subroutine GetMyArgs(Infiles, OfileBase, AvgFunc, ScThreshold, MinRadius, MaxRadius)
   implicit none
 
-  integer, parameter :: MAX_ITEMS = 3
+  integer, parameter :: MAX_ITEMS = 5
 
   character (len=*) :: Infiles, OfileBase, AvgFunc
-  real :: DeltaX, DeltaY, ScThreshold
+  real :: ScThreshold, MinRadius, MaxRadius
 
   integer :: iargc
   character (len=128) :: arg
   character (len=128), dimension(1:MAX_ITEMS) :: ArgList
   integer :: Nitems
 
-  if (iargc() .ne. 5) then
-    write (*,*) 'ERROR: must supply exactly 5 arguments'
+  if (iargc() .ne. 3) then
+    write (*,*) 'ERROR: must supply exactly 3 arguments'
     write (*,*) ''
     write (*,*) 'USAGE: azavg <in_data_files> <out_data_file> <averaging_function>'
     write (*,*) '        <in_data_files>: GRADS format, control file, colon separated list'
@@ -287,8 +343,10 @@ subroutine GetMyArgs(Infiles, OfileBase, AvgFunc, DeltaX, DeltaY, ScThreshold)
     write (*,*) '                                 >= sc_threshold, then include w in average calculation'
     write (*,*) '            sc_cloud_diam -> total supercooled cloud droplet mean diameter'
     write (*,*) '            ew_cloud -> average cloud droplet concentration near eyewall region'
-    write (*,*) '        <delta_x>: delta X of grid'
-    write (*,*) '        <delta_y>: delta Y of grid'
+    write (*,*) '            rb_precipr:min_radius:max_radius -> total precip rate in rainband region'
+    write (*,*) '                                                (min_radius,max_radius) defines the distances'
+    write (*,*) '                                                from the storm center that contain the rainbands'
+    write (*,*) '                                                min_radius, max_radius are in km'
     write (*,*) ''
     stop
   end if
@@ -304,23 +362,24 @@ subroutine GetMyArgs(Infiles, OfileBase, AvgFunc, DeltaX, DeltaY, ScThreshold)
   else
     ScThreshold = 0.0
   end if
-
-  call getarg(4, arg)
-  read (arg, '(f)') DeltaX
-
-  call getarg(5, arg)
-  read (arg, '(f)') DeltaY
-
+  if (AvgFunc .eq. 'rb_precipr') then
+    read(ArgList(2), '(f)') MinRadius
+    read(ArgList(3), '(f)') MaxRadius
+  else
+    MinRadius = 0.0
+    MaxRadius = 0.0
+  end if
 
   if ((AvgFunc .ne. 'sc_cloud') .and. (AvgFunc .ne. 'precipr') .and. &
       (AvgFunc .ne. 'sc_w') .and. (AvgFunc .ne. 'sc_cloud_diam') .and. &
-      (AvgFunc .ne. 'ew_cloud')) then
+      (AvgFunc .ne. 'ew_cloud') .and. (AvgFunc .ne. 'rb_precipr')) then
     write (*,*) 'ERROR: <averaging_function> must be one of:'
     write (*,*) '          sc_cloud'
     write (*,*) '          precipr'
     write (*,*) '          sc_w'
     write (*,*) '          sc_cloud_diam'
     write (*,*) '          ew_cloud'
+    write (*,*) '          rb_precipr'
   end if
 
   return
@@ -389,7 +448,8 @@ subroutine DoPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, PrecipR, TsAvg)
 
   integer :: Nx, Ny, Nz, Nt
   real :: DeltaX, DeltaY
-  real, dimension(1:Nx, 1:Ny, 1:Nz, 1:Nt) :: PrecipR
+  ! PrecipR is 2D variable -> Nz = 1
+  real, dimension(1:Nx, 1:Ny, 1:1, 1:Nt) :: PrecipR
   real, dimension(1:1, 1:1, 1:1, 1:Nt) :: TsAvg
 
   integer :: ix,iy,iz,it
@@ -401,9 +461,7 @@ subroutine DoPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, PrecipR, TsAvg)
 
     do ix = 1, Nx
       do iy = 1, Ny
-        do iz = 1, Nz
-          TsAvg(1,1,1,it) = TsAvg(1,1,1,it) + PrecipR(ix,iy,iz,it)
-        end do
+        TsAvg(1,1,1,it) = TsAvg(1,1,1,it) + PrecipR(ix,iy,1,it)
       end do
     end do
 
@@ -566,5 +624,71 @@ subroutine DoEwCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, CconcAz, TsAvg)
     else
       TsAvg(1,1,1,it) = SumCloudConc / float(NumPoints)
     end if
+  end do
+end subroutine
+
+!************************************************************************************
+! DoRbPrecipR()
+!
+! This subroutine will do the average cloud droplet concentration near the eyewall
+! region.
+
+subroutine DoRbPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, MinP, Xcoords, Ycoords, PrecipR, TsAvg)
+  implicit none
+
+  integer :: Nx, Ny, Nz, Nt
+  real :: DeltaX, DeltaY, MinRadius, MaxRadius
+  integer, dimension(1:Nt) :: StmIx, StmIy
+  real, dimension(1:Nt) :: MinP
+  real, dimension(1:Nx) :: Xcoords
+  real, dimension(1:Ny) :: Ycoords
+  ! PrecipR is 2D var
+  real, dimension(1:Nx, 1:Ny, 1:1, 1:Nt) :: PrecipR
+  real, dimension(1:1, 1:1, 1:1, 1:Nt) :: TsAvg
+
+  integer :: ix,iy,iz,it
+  integer :: NumPoints
+  real :: SumPrecip
+  real :: dX, dY, Radius
+
+  ! Call "rainband region" roughly from radius 40km on out. In the data,
+  ! the x axis is the radius with x = 1 being 0km, and the distance between each
+  ! x value being 4.15km. Using x >= 9 gives roughly what we want (this
+  ! corresponds to radius >= 32.35km)
+
+  do it = 1, Nt
+    write (*,*) 'Timestep: ', it
+    write (*,'(a,i3,a,i3,a,g,a,g,a)') '  Storm Center: (', StmIx(it), ', ', StmIy(it), &
+       ') --> (', Xcoords(StmIx(it)), ', ', Ycoords(StmIy(it)), ')'
+    write (*,*) '  Minumum pressure: ', MinP(it)
+
+    SumPrecip = 0.0
+    NumPoints = 0
+
+    do ix = 1, Nx
+      do iy = 1, Ny
+         dX = Xcoords(ix) - Xcoords(StmIx(it))
+         dY = Ycoords(ix) - Ycoords(StmIx(it))
+         Radius = sqrt(dX*dX + dY*dY)
+
+         if ((Radius .ge. MinRadius) .and. (Radius .le. MaxRadius)) then
+           SumPrecip = SumPrecip + PrecipR(ix,iy,1,it)
+           NumPoints = NumPoints + 1
+         end if
+      end do
+    end do
+
+    if (NumPoints .eq. 0) then
+      TsAvg(1,1,1,it) = 0.0
+      write (*,*) '  WARNING: no data points selected for this time step'
+    else
+      ! At this point TsAvg(1,1,1,it) holds mm/hr, multiply by grid cell horizontal area.
+      ! Note this assumes each grid cell has the same horizontal area. What this does
+      ! is convert mm/hr to kg/hr when assuming that the density of water is 1000kg/m**3.
+      !   mm/hr * m**2 * 1000 kg/m**3 * 0.001 m/mm -> kg/hr
+      TsAvg(1,1,1,it) = (SumPrecip / float(NumPoints)) * DeltaX * DeltaY
+      write (*,*) '  Number of points selected: ', NumPoints
+    end if
+    write (*,*) ''
   end do
 end subroutine

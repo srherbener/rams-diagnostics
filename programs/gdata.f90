@@ -774,17 +774,18 @@ subroutine CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, V
 
   ! i -> file number, j -> var number
   integer i, j
-  logical BadData
+  logical BadData, GotNz
 
   VarLoc%Fnum = 0
   VarLoc%Vnum = 0
 
   BadData = .false.
+  GotNz = .false.
   do i = 1, Nfiles
+    ! Make sure nx, ny and nt for all vars (2D and 3D) match
     if (i .eq. 1) then
       Nx = GdataDescrip(i)%nx
       Ny = GdataDescrip(i)%ny
-      Nz = GdataDescrip(i)%nz
       Nt = GdataDescrip(i)%nt
    
       Nvars = GdataDescrip(i)%nvars
@@ -797,16 +798,26 @@ subroutine CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, V
         write (0,*) 'ERROR: number of y points in GRADS control files do not match'
         BadData = .true.
       end if
-      if (GdataDescrip(i)%nz .ne. Nz) then
-        write (0,*) 'ERROR: number of z points in GRADS control files do not match'
-        BadData = .true.
-      end if
       if (GdataDescrip(i)%nt .ne. Nt) then
         write (0,*) 'ERROR: number of t points in GRADS control files do not match'
         BadData = .true.
       end if
 
       Nvars = Nvars + GdataDescrip(i)%nvars
+    end if
+
+    ! allow for a 2D var (nz eq 1), but make sure all 3D vars have matching nz
+    if (GotNz) then
+      if ((GdataDescrip(i)%nz .ne. 1) .and. (GdataDescrip(i)%nz .ne. Nz)) then
+        write (0,*) 'ERROR: number of z points in GRADS control files do not match'
+        BadData = .true.
+      end if
+    else
+      ! grab the first nz that is not equal to 1 (first 3D var)
+      if ((GdataDescrip(i)%nz .ne. 1) .and. (.not. GotNz)) then
+        Nz = GdataDescrip(i)%nz
+        GotNz = .true.
+      end if
     end if
 
     do j =1, GdataDescrip(i)%nvars
@@ -816,6 +827,12 @@ subroutine CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, V
       end if
     end do
   end do
+
+  ! If the entire list was 2D variables, then the code above will have not recorded an
+  ! Nz value (GotNz is still .false.). Set Nz to '1' in this case
+  if (.not. GotNz) then
+    Nz = 1
+  end if
 
   ! Check to see if you got the variable
   if (VarLoc%Fnum .eq. 0) then

@@ -72,6 +72,15 @@ function main(args)
     yMin = 0.0
     yMax = 1000.0
   endif
+  if (varNum = 6)
+*   rainband precip rate
+    varName = 'ts_precipr_az'
+    gVar = 'rb_precipr_test'
+    gTitle = gExp': Rainband precip rate, 'gCase
+    yTitle = 'Precip Rate (kg/hr)'
+    yMin = 3.0e11
+    yMax = 10.0e11
+  endif
 
   gcFile = gDir'/'varName'_'gCase'.ctl'
 
