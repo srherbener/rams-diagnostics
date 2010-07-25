@@ -74,12 +74,12 @@ function main(args)
   endif
   if (varNum = 6)
 *   rainband precip rate
-    varName = 'ts_precipr_az'
+    varName = 'ts_rb_precipr'
     gVar = 'rb_precipr_test'
     gTitle = gExp': Rainband precip rate, 'gCase
     yTitle = 'Precip Rate (kg/hr)'
-    yMin = 3.0e11
-    yMax = 10.0e11
+    yMin = 0.0
+    yMax = 2.0e7
   endif
 
   gcFile = gDir'/'varName'_'gCase'.ctl'
@@ -101,7 +101,7 @@ function main(args)
   'set t 'gTstart' 'gTend
   'set grads off'
   'set yaxis 'yMin' 'yMax
-  'd smth9('gVar')'
+  'd smth9(smth9(smth9(smth9('gVar'))))'
   'draw title 'gTitle
   'draw xlab 'xTitle
   'draw ylab 'yTitle
