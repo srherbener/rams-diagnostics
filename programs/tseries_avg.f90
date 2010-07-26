@@ -274,19 +274,19 @@ program main
   ! call the averaging function
 
   if (AvgFunc .eq. 'sc_cloud') then
-    call DoScCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, Cloud, TempC, Dens, TsAvg)
+    call DoScCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, Cloud, TempC, Dens, TsAvg)
   else
     if (AvgFunc .eq. 'precipr') then
-      call DoRbPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, MinP, Xcoords, Ycoords, PrecipR, TsAvg)
+      call DoPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, PrecipR, TsAvg)
     else
       if (AvgFunc .eq. 'sc_w') then
-        call DoScW(Nx, Ny, Nz, Nt, DeltaX, DeltaY, ScThreshold, Cloud, TempC, W, TsAvg)
+        call DoScW(Nx, Ny, Nz, Nt, DeltaX, DeltaY, ScThreshold, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, Cloud, TempC, W, TsAvg)
       else
         if (AvgFunc .eq. 'sc_cloud_diam') then
-          call DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, Cloud, TempC, CloudDiam, TsAvg)
+          call DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, Cloud, TempC, CloudDiam, TsAvg)
         else
           if (AvgFunc .eq. 'ew_cloud') then
-            call DoEwCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, CconcAz, TsAvg)
+            call DoEwCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, CconcAz, TsAvg)
           end if
         end if
       end if
@@ -404,16 +404,20 @@ end subroutine
 ! averaging.
 !
 
-subroutine DoScCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, Cloud, TempC, Dens, TsAvg)
+subroutine DoScCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, Cloud, TempC, Dens, TsAvg)
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
-  real :: DeltaX, DeltaY
+  real :: DeltaX, DeltaY, MinRadius, MaxRadius
   real, dimension(1:Nx, 1:Ny, 1:Nz, 1:Nt) :: Cloud, TempC, Dens
   real, dimension(1:1, 1:1, 1:1, 1:Nt) :: TsAvg
+  integer, dimension(1:Nt) :: StmIx, StmIy
+  real, dimension(1:Nx) :: Xcoords
+  real, dimension(1:Ny) :: Ycoords
 
   real, dimension(0:Nz) :: ZmHeights
   integer :: ix, iy, iz, it
+  real :: dX, dY, Radius
 
   call SetZmHeights (Nz, ZmHeights)
 
@@ -427,60 +431,29 @@ subroutine DoScCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, Cloud, TempC, Dens, TsAvg)
   ! The layer thickness for layer k is: ZmHeights(k) - ZmHeights(k-1)
 
   do it = 1, Nt
-    ! Sum up the cloud droplet mass over the whole domain. Only include the
+    ! Sum up the cloud droplet mass over the specified radial band. Only include the
     ! grid points where tempc is 0 or less (supercooled)
 
     TsAvg(1,1,1,it) = 0.0
 
     do ix = 1, Nx
       do iy = 1, Ny
-        do iz = 1, Nz
-          if (TempC(ix,iy,iz,it) .le. 0.0) then
-            TsAvg(1,1,1,it) = TsAvg(1,1,1,it) + (Cloud(ix,iy,iz,it) * Dens(ix,iy,iz,it) * (ZmHeights(iz)-ZmHeights(iz-1)))
-          end if
-        end do
+        dX = Xcoords(ix) - Xcoords(StmIx(it))
+        dY = Ycoords(ix) - Ycoords(StmIx(it))
+        Radius = sqrt(dX*dX + dY*dY)
+
+        if ((Radius .ge. MinRadius) .and. (Radius .le. MaxRadius)) then
+          do iz = 1, Nz
+            if (TempC(ix,iy,iz,it) .le. 0.0) then
+              TsAvg(1,1,1,it) = TsAvg(1,1,1,it) + (Cloud(ix,iy,iz,it) * Dens(ix,iy,iz,it) * (ZmHeights(iz)-ZmHeights(iz-1)))
+            end if
+          end do
+        end if
       end do
     end do
 
     ! At this point TsAvg(1,1,1,it) holds g/m**2, multiply by grid cell horizontal area. Note this assumes
     ! each grid cell has the same horizontal area.
-
-    TsAvg(1,1,1,it) = TsAvg(1,1,1,it) * DeltaX * DeltaY
-  end do
-end subroutine
-
-!************************************************************************************
-! DoPrecipR()
-!
-! This subroutine will sum up the total surface precipitation.
-!
-
-subroutine DoPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, PrecipR, TsAvg)
-  implicit none
-
-  integer :: Nx, Ny, Nz, Nt
-  real :: DeltaX, DeltaY
-  ! PrecipR is 2D variable -> Nz = 1
-  real, dimension(1:Nx, 1:Ny, 1:1, 1:Nt) :: PrecipR
-  real, dimension(1:1, 1:1, 1:1, 1:Nt) :: TsAvg
-
-  integer :: ix,iy,iz,it
-
-  do it = 1, Nt
-    ! Sum up the precipitation rate over the whole domain.
-
-    TsAvg(1,1,1,it) = 0.0
-
-    do ix = 1, Nx
-      do iy = 1, Ny
-        TsAvg(1,1,1,it) = TsAvg(1,1,1,it) + PrecipR(ix,iy,1,it)
-      end do
-    end do
-
-    ! At this point TsAvg(1,1,1,it) holds mm/hr, multiply by grid cell horizontal area.
-    ! Note this assumes each grid cell has the same horizontal area. What this does
-    ! is convert mm/hr to kg/hr when assuming that the density of water is 1000kg/m**3.
-    !   mm/hr * m**2 * 1000 kg/m**3 * 0.001 m/mm -> kg/hr
 
     TsAvg(1,1,1,it) = TsAvg(1,1,1,it) * DeltaX * DeltaY
   end do
@@ -493,15 +466,19 @@ end subroutine
 ! cloud droplet regions.
 !
 
-subroutine DoScW(Nx, Ny, Nz, Nt, DeltaX, DeltaY, ScThreshold, Cloud, TempC, W, TsAvg)
+subroutine DoScW(Nx, Ny, Nz, Nt, DeltaX, DeltaY, ScThreshold, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, Cloud, TempC, W, TsAvg)
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
-  real :: DeltaX, DeltaY, ScThreshold
+  real :: DeltaX, DeltaY, ScThreshold, MinRadius, MaxRadius
   real, dimension(1:Nx, 1:Ny, 1:Nz, 1:Nt) :: Cloud, TempC, W
   real, dimension(1:1, 1:1, 1:1, 1:Nt) :: TsAvg
+  integer, dimension(1:Nt) :: StmIx, StmIy
+  real, dimension(1:Nx) :: Xcoords
+  real, dimension(1:Ny) :: Ycoords
 
   integer ix,iy,iz,it, NumPoints
+  real :: dX, dY, Radius
 
   do it = 1, Nt
     ! Average w over regions where significant amounts supercooled cloud droplets exists
@@ -511,14 +488,20 @@ subroutine DoScW(Nx, Ny, Nz, Nt, DeltaX, DeltaY, ScThreshold, Cloud, TempC, W, T
 
     do ix = 1, Nx
       do iy = 1, Ny
-        do iz = 1, Nz
-          if (TempC(ix,iy,iz,it) .le. 0.0) then
-            if (Cloud(ix,iy,iz,it) .ge. ScThreshold) then
-              TsAvg(1,1,1,it) = TsAvg(1,1,1,it) + W(ix,iy,iz,it)
-              NumPoints = NumPoints + 1
+        dX = Xcoords(ix) - Xcoords(StmIx(it))
+        dY = Ycoords(ix) - Ycoords(StmIx(it))
+        Radius = sqrt(dX*dX + dY*dY)
+
+        if ((Radius .ge. MinRadius) .and. (Radius .le. MaxRadius)) then
+          do iz = 1, Nz
+            if (TempC(ix,iy,iz,it) .le. 0.0) then
+              if (Cloud(ix,iy,iz,it) .ge. ScThreshold) then
+                TsAvg(1,1,1,it) = TsAvg(1,1,1,it) + W(ix,iy,iz,it)
+                NumPoints = NumPoints + 1
+              end if
             end if
-          end if
-        end do
+          end do
+        end if
       end do
     end do
 
@@ -539,16 +522,20 @@ end subroutine
 ! This subroutine will do the average vertical velocity in significant supercooled
 ! cloud droplet regions.
 
-subroutine DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, Cloud, TempC, CloudDiam, TsAvg)
+subroutine DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, Cloud, TempC, CloudDiam, TsAvg)
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
-  real :: DeltaX, DeltaY
+  real :: DeltaX, DeltaY, MinRadius, MaxRadius
   real, dimension(1:Nx, 1:Ny, 1:Nz, 1:Nt) :: Cloud, TempC, CloudDiam
   real, dimension(1:1, 1:1, 1:1, 1:Nt) :: TsAvg
+  integer, dimension(1:Nt) :: StmIx, StmIy
+  real, dimension(1:Nx) :: Xcoords
+  real, dimension(1:Ny) :: Ycoords
 
   integer ix,iy,iz,it
   real SumQ, SumQD
+  real :: dX, dY, Radius
 
   do it = 1, Nt
     ! Calculate a mass-weighted mean diameter for supercooled cloud droplets.
@@ -561,12 +548,18 @@ subroutine DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, Cloud, TempC, CloudDiam
 
     do ix = 1, Nx
       do iy = 1, Ny
-        do iz = 1, Nz
-          if (TempC(ix,iy,iz,it) .le. 0.0) then
-             SumQD = SumQD + (Cloud(ix,iy,iz,it) * CloudDiam(ix,iy,iz,it))
-             SumQ = SumQ + Cloud(ix,iy,iz,it)
-          end if
-        end do
+        dX = Xcoords(ix) - Xcoords(StmIx(it))
+        dY = Ycoords(ix) - Ycoords(StmIx(it))
+        Radius = sqrt(dX*dX + dY*dY)
+
+        if ((Radius .ge. MinRadius) .and. (Radius .le. MaxRadius)) then
+          do iz = 1, Nz
+            if (TempC(ix,iy,iz,it) .le. 0.0) then
+               SumQD = SumQD + (Cloud(ix,iy,iz,it) * CloudDiam(ix,iy,iz,it))
+               SumQ = SumQ + Cloud(ix,iy,iz,it)
+            end if
+          end do
+        end if
       end do
     end do
 
@@ -585,34 +578,30 @@ end subroutine
 ! This subroutine will do the average cloud droplet concentration near the eyewall
 ! region.
 
-subroutine DoEwCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, CconcAz, TsAvg)
+subroutine DoEwCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, CconcAz, TsAvg)
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
-  real :: DeltaX, DeltaY
+  real :: DeltaX, DeltaY, MinRadius, MaxRadius
   real, dimension(1:Nx, 1:Ny, 1:Nz, 1:Nt) :: CconcAz
   real, dimension(1:1, 1:1, 1:1, 1:Nt) :: TsAvg
+  integer, dimension(1:Nt) :: StmIx, StmIy
+  real, dimension(1:Nx) :: Xcoords
+  real, dimension(1:Ny) :: Ycoords
 
   integer ix,iy,iz,it
-  integer ixStart, ixEnd, izStart, izEnd
+  integer izStart, izEnd
   integer NumPoints
   real SumCloudConc
+  real :: dX, dY, Radius
 
   ! Calculate the average cloud droplet concentration near the eyewall region.
   ! 
   ! The data is already an azimuthal average at different radii from the storm center.
   !
-  ! Call "near the eyewall" roughly from radius 10km to radius 30km. In the data,
-  ! the x axis is the radius with x = 1 being 0km, and the distance between each
-  ! x value being 4.15km. Using x = 4 to x = 8 gives roughly what we want (these
-  ! correspond to radius = 12.45km to radius = 29.05km).
-  !
   ! Call the cloud base to be between 1000m and 1200m. The z level corresponding to
   ! that is z = 4 which is 1138m. Cover from surface to the cloud base level. This
   ! results in using z = 1 to z = 4.
-
-  ixStart = 6
-  ixEnd = 8
 
   izStart = 1
   izEnd = 4
@@ -621,12 +610,18 @@ subroutine DoEwCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, CconcAz, TsAvg)
     SumCloudConc = 0.0
     NumPoints = 0
 
-    do ix = ixStart, ixEnd
+    do ix = 1, Nx
       do iy = 1, Ny
-        do iz = izStart, izEnd
-           SumCloudConc = SumCloudConc + CconcAz(ix,iy,iz,it)
-           NumPoints = NumPoints + 1
-        end do
+        dX = Xcoords(ix) - Xcoords(StmIx(it))
+        dY = Ycoords(ix) - Ycoords(StmIx(it))
+        Radius = sqrt(dX*dX + dY*dY)
+
+        if ((Radius .ge. MinRadius) .and. (Radius .le. MaxRadius)) then
+          do iz = izStart, izEnd
+             SumCloudConc = SumCloudConc + CconcAz(ix,iy,iz,it)
+             NumPoints = NumPoints + 1
+          end do
+        end if
       end do
     end do
 
@@ -640,18 +635,17 @@ subroutine DoEwCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, CconcAz, TsAvg)
 end subroutine
 
 !************************************************************************************
-! DoRbPrecipR()
+! DoPrecipR()
 !
 ! This subroutine will do the average cloud droplet concentration near the eyewall
 ! region.
 
-subroutine DoRbPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, MinP, Xcoords, Ycoords, PrecipR, TsAvg)
+subroutine DoPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, PrecipR, TsAvg)
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
   real :: DeltaX, DeltaY, MinRadius, MaxRadius
   integer, dimension(1:Nt) :: StmIx, StmIy
-  real, dimension(1:Nt) :: MinP
   real, dimension(1:Nx) :: Xcoords
   real, dimension(1:Ny) :: Ycoords
   ! PrecipR is 2D var
