@@ -373,14 +373,13 @@ subroutine GetMyArgs(Infiles, OfileBase, AvgFunc, ScThreshold, MinRadius, MaxRad
 
   if ((AvgFunc .ne. 'sc_cloud') .and. (AvgFunc .ne. 'precipr') .and. &
       (AvgFunc .ne. 'sc_w') .and. (AvgFunc .ne. 'sc_cloud_diam') .and. &
-      (AvgFunc .ne. 'ew_cloud') .and. (AvgFunc .ne. 'rb_precipr')) then
+      (AvgFunc .ne. 'ew_cloud')) then
     write (*,*) 'ERROR: <averaging_function> must be one of:'
     write (*,*) '          sc_cloud'
     write (*,*) '          precipr'
     write (*,*) '          sc_w'
     write (*,*) '          sc_cloud_diam'
     write (*,*) '          ew_cloud'
-    write (*,*) '          rb_precipr'
     write (*,*) ''
     BadArgs = .true.
   end if
