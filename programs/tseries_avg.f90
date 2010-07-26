@@ -80,33 +80,34 @@ program main
     call ReadGradsCtlFile(GradsCtlFiles(i), GdataDescrip(i))
   end do
   write (*,*) ''
+  flush(6)
 
   ! Check the data description for consistency and locate the variables in the GRADS control files
   if (AvgFunc .eq. 'sc_cloud') then
     call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, TempcLoc, 'tempc')
     call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, DensLoc, 'dn0')
     call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CloudLoc, 'cloud')
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
   else
     if (AvgFunc .eq. 'precipr') then
       call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PreciprLoc, 'precipr')
+      call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
     else
       if (AvgFunc .eq. 'sc_w') then
         call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, TempcLoc, 'tempc')
         call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CloudLoc, 'cloud')
         call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, WLoc, 'w')
+        call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
       else
         if (AvgFunc .eq. 'sc_cloud_diam') then
           call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, TempcLoc, 'tempc')
           call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CloudLoc, 'cloud')
           call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CloudDiamLoc, 'cloud_d')
+          call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
         else
           if (AvgFunc .eq. 'ew_cloud') then
             call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CconcAzLoc, 'cloudconcen_cm3_azavg')
-          else
-            if (AvgFunc .eq. 'rb_precipr') then
-              call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PreciprLoc, 'precipr')
-              call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
-            end if
+            call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
           end if
         end if
       end if
@@ -120,10 +121,17 @@ program main
     write (*,*) 'ERROR: Data array memory allocation failed'
     stop
   end if
+
   call ConvertGridCoords(Nx, Ny, GdataDescrip(1), Xcoords, Ycoords)
 
   DeltaX = (Xcoords(2) - Xcoords(1)) * 1000.0
   DeltaY = (Ycoords(2) - Ycoords(1)) * 1000.0
+
+  write (*,*) 'Horizontal grid info:'
+  write (*,*) '  X range (min lon, max lon) --> (min x, max x): '
+  write (*,*) '    ', GdataDescrip(1)%Xcoords(1), GdataDescrip(1)%Xcoords(Nx), Xcoords(1), Xcoords(Nx)
+  write (*,*) '  Y range (min lat, max lat) --> (min y, max y): '
+  write (*,*) '    ', GdataDescrip(1)%Ycoords(1), GdataDescrip(1)%Ycoords(Ny), Ycoords(1), Ycoords(Ny)
 
   ! Read in the GRADS variable data
   write (*,*) 'Gridded data information:'
@@ -144,10 +152,11 @@ program main
     write (*,'(a20,i3,a2,i3,a1)') 'tempc: (', TempcLoc%Fnum, ', ', TempcLoc%Vnum, ')'
     write (*,'(a20,i3,a2,i3,a1)') 'dn0: (', DensLoc%Fnum, ', ', DensLoc%Vnum, ')'
     write (*,'(a20,i3,a2,i3,a1)') 'cloud: (', CloudLoc%Fnum, ', ', CloudLoc%Vnum, ')'
+    write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
 
     ! Allocate the data arrays and read in the data from the GRADS data files
     allocate (TempC(1:Nx,1:Ny,1:Nz,1:Nt), Dens(1:Nx,1:Ny,1:Nz,1:Nt), &
-              Cloud(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
+              Cloud(1:Nx,1:Ny,1:Nz,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
     if (Ierror .ne. 0) then
       write (*,*) 'ERROR: Data array memory allocation failed'
       stop
@@ -157,13 +166,15 @@ program main
     call ReadGradsData(GdataDescrip, 'tempc', TempcLoc, TempC, Nx, Ny, Nz, Nt)
     call ReadGradsData(GdataDescrip, 'dn0', DensLoc, Dens, Nx, Ny, Nz, Nt)
     call ReadGradsData(GdataDescrip, 'cloud', CloudLoc, Cloud, Nx, Ny, Nz, Nt)
+    call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
   else
     if (AvgFunc .eq. 'precipr') then
       write (*,'(a20,i3,a2,i3,a1)') 'precipr: (', PreciprLoc%Fnum, ', ', PreciprLoc%Vnum, ')'
+      write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
 
       ! Allocate the data arrays and read in the data from the GRADS data files
       ! precipr is 2D variable -> Nz = 1
-      allocate (PrecipR(1:Nx,1:Ny,1:1,1:Nt), stat=Ierror)
+      allocate (PrecipR(1:Nx,1:Ny,1:1,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
       if (Ierror .ne. 0) then
         write (*,*) 'ERROR: Data array memory allocation failed'
         stop
@@ -172,15 +183,17 @@ program main
       ! Read in the data for the vars using the description and location information
       ! precipr is 2D variable -> Nz = 1
       call ReadGradsData(GdataDescrip, 'precipr', PreciprLoc, PrecipR, Nx, Ny, 1, Nt)
+      call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
     else
       if (AvgFunc .eq. 'sc_w') then
         write (*,'(a20,i3,a2,i3,a1)') 'tempc: (', TempcLoc%Fnum, ', ', TempcLoc%Vnum, ')'
         write (*,'(a20,i3,a2,i3,a1)') 'cloud: (', CloudLoc%Fnum, ', ', CloudLoc%Vnum, ')'
         write (*,'(a20,i3,a2,i3,a1)') 'w: (', WLoc%Fnum, ', ', WLoc%Vnum, ')'
+        write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
 
         ! Allocate the data arrays and read in the data from the GRADS data files
         allocate (TempC(1:Nx,1:Ny,1:Nz,1:Nt), W(1:Nx,1:Ny,1:Nz,1:Nt), &
-                  Cloud(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
+                  Cloud(1:Nx,1:Ny,1:Nz,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
         if (Ierror .ne. 0) then
           write (*,*) 'ERROR: Data array memory allocation failed'
           stop
@@ -190,15 +203,17 @@ program main
         call ReadGradsData(GdataDescrip, 'tempc', TempcLoc, TempC, Nx, Ny, Nz, Nt)
         call ReadGradsData(GdataDescrip, 'w', WLoc, W, Nx, Ny, Nz, Nt)
         call ReadGradsData(GdataDescrip, 'cloud', CloudLoc, Cloud, Nx, Ny, Nz, Nt)
+        call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
       else
         if (AvgFunc .eq. 'sc_cloud_diam') then
           write (*,'(a20,i3,a2,i3,a1)') 'tempc: (', TempcLoc%Fnum, ', ', TempcLoc%Vnum, ')'
           write (*,'(a20,i3,a2,i3,a1)') 'cloud: (', CloudLoc%Fnum, ', ', CloudLoc%Vnum, ')'
           write (*,'(a20,i3,a2,i3,a1)') 'cloud_d: (', CloudDiamLoc%Fnum, ', ', CloudDiamLoc%Vnum, ')'
+          write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
   
           ! Allocate the data arrays and read in the data from the GRADS data files
           allocate (TempC(1:Nx,1:Ny,1:Nz,1:Nt), CloudDiam(1:Nx,1:Ny,1:Nz,1:Nt), &
-                    Cloud(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
+                    Cloud(1:Nx,1:Ny,1:Nz,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
           if (Ierror .ne. 0) then
             write (*,*) 'ERROR: Data array memory allocation failed'
             stop
@@ -208,12 +223,14 @@ program main
           call ReadGradsData(GdataDescrip, 'tempc', TempcLoc, TempC, Nx, Ny, Nz, Nt)
           call ReadGradsData(GdataDescrip, 'cloud', CloudLoc, Cloud, Nx, Ny, Nz, Nt)
           call ReadGradsData(GdataDescrip, 'cloud_d', CloudDiamLoc, CloudDiam, Nx, Ny, Nz, Nt)
+          call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
         else
           if (AvgFunc .eq. 'ew_cloud') then
             write (*,'(a20,i3,a2,i3,a1)') 'cloudconcen_cm3: (', CconcAzLoc%Fnum, ', ', CconcAzLoc%Vnum, ')'
+            write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
     
             ! Allocate the data arrays and read in the data from the GRADS data files
-            allocate (CconcAz(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
+            allocate (CconcAz(1:Nx,1:Ny,1:Nz,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
             if (Ierror .ne. 0) then
               write (*,*) 'ERROR: Data array memory allocation failed'
               stop
@@ -221,47 +238,38 @@ program main
   
             ! Read in the data for the vars using the description and location information
             call ReadGradsData(GdataDescrip, 'cloudconcen_cm3', CconcAzLoc, CconcAz, Nx, Ny, Nz, Nt)
-          else
-            if (AvgFunc .eq. 'rb_precipr') then
-              write (*,'(a20,i3,a2,i3,a1)') 'precipr: (', PreciprLoc%Fnum, ', ', PreciprLoc%Vnum, ')'
-              write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
-      
-              ! Allocate the data arrays and read in the data from the GRADS data files
-              ! PrecipR is a 2D variable --> Nz = 1
-              allocate (PrecipR(1:Nx,1:Ny,1:1,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), &
-                        StmIx(1:Nt), StmIy(1:Nt), MinP(1:Nt), stat=Ierror)
-              if (Ierror .ne. 0) then
-                write (*,*) 'ERROR: Data array memory allocation failed'
-                stop
-              end if
-    
-              ! Read in the data for the vars using the description and location information
-              ! PrecipR is a 2D variable --> Nz = 1
-              call ReadGradsData(GdataDescrip, 'precipr', PreciprLoc, PrecipR, Nx, Ny, 1, Nt)
-              call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
-
-              ! Generate the storm center for all time steps
-              call RecordStormCenter(Nx, Ny, Nz, Nt, Press, StmIx, StmIy, MinP)
-
-              write (*,*) 'Horizontal grid info:'
-              write (*,*) '  X range (min lon, max lon) --> (min x, max x): '
-              write (*,*) '    ', GdataDescrip(1)%Xcoords(1), GdataDescrip(1)%Xcoords(Nx), Xcoords(1), Xcoords(Nx)
-              write (*,*) '  Y range (min lat, max lat) --> (min y, max y): '
-              write (*,*) '    ', GdataDescrip(1)%Ycoords(1), GdataDescrip(1)%Ycoords(Ny), Ycoords(1), Ycoords(Ny)
-            end if
+            call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
           end if
         end if
       end if
     end if
   end if
   write (*,*) ''
+  flush(6)
 
-  ! Allocate the output array and compute the azimuthal averaging
+  ! Allocate the output array and do the averaging
   allocate (TsAvg(1:1,1:1,1:1,1:Nt), stat=Ierror)
   if (Ierror .ne. 0) then
     write (*,*) 'ERROR: Ouput data array memory allocation failed'
     stop
   end if
+
+  ! Generate the storm center for all time steps
+  allocate (StmIx(1:Nt), StmIy(1:Nt), MinP(1:Nt), stat=Ierror)
+  if (Ierror .ne. 0) then
+    write (*,*) 'ERROR: Ouput data array memory allocation failed'
+    stop
+  end if
+  call RecordStormCenter(Nx, Ny, Nz, Nt, Press, StmIx, StmIy, MinP)
+
+  do it = 1, Nt
+    write (*,*) 'Timestep: ', it
+    write (*,'(a,i3,a,i3,a,g,a,g,a)') '  Storm Center: (', StmIx(it), ', ', StmIy(it), &
+       ') --> (', Xcoords(StmIx(it)), ', ', Ycoords(StmIy(it)), ')'
+    write (*,*) '  Minumum pressure: ', MinP(it)
+  end do
+  write (*,*) ''
+  flush(6)
 
   ! call the averaging function
 
@@ -269,7 +277,7 @@ program main
     call DoScCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, Cloud, TempC, Dens, TsAvg)
   else
     if (AvgFunc .eq. 'precipr') then
-      call DoPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, PrecipR, TsAvg)
+      call DoRbPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, MinP, Xcoords, Ycoords, PrecipR, TsAvg)
     else
       if (AvgFunc .eq. 'sc_w') then
         call DoScW(Nx, Ny, Nz, Nt, DeltaX, DeltaY, ScThreshold, Cloud, TempC, W, TsAvg)
@@ -279,10 +287,6 @@ program main
         else
           if (AvgFunc .eq. 'ew_cloud') then
             call DoEwCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, CconcAz, TsAvg)
-          else
-            if (AvgFunc .eq. 'rb_precipr') then
-              call DoRbPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, MinP, Xcoords, Ycoords, PrecipR, TsAvg)
-            end if
           end if
         end if
       end if
@@ -295,13 +299,6 @@ program main
           GdataDescrip(1)%Tinc, GoutDescrip, 'test')
 
   call WriteGrads(GoutDescrip, TsAvg)
-
-!  ! Clean up
-!  deallocate (U, V, W, Press, Avar, StmIx, StmIy, MinP, AzAvg, stat=Ierror)
-!  if (Ierror .ne. 0) then
-!    write (*,*) 'ERROR: Data array memory de-allocation failed'
-!    stop
-!  end if
 
   stop
 end
@@ -328,8 +325,10 @@ subroutine GetMyArgs(Infiles, OfileBase, AvgFunc, ScThreshold, MinRadius, MaxRad
   character (len=128), dimension(1:MAX_ITEMS) :: ArgList
   integer :: Nitems
 
-  if (iargc() .ne. 3) then
-    write (*,*) 'ERROR: must supply exactly 3 arguments'
+  logical :: BadArgs
+
+  if (iargc() .ne. 5) then
+    write (*,*) 'ERROR: must supply exactly 5 arguments'
     write (*,*) ''
     write (*,*) 'USAGE: azavg <in_data_files> <out_data_file> <averaging_function>'
     write (*,*) '        <in_data_files>: GRADS format, control file, colon separated list'
@@ -343,10 +342,11 @@ subroutine GetMyArgs(Infiles, OfileBase, AvgFunc, ScThreshold, MinRadius, MaxRad
     write (*,*) '                                 >= sc_threshold, then include w in average calculation'
     write (*,*) '            sc_cloud_diam -> total supercooled cloud droplet mean diameter'
     write (*,*) '            ew_cloud -> average cloud droplet concentration near eyewall region'
-    write (*,*) '            rb_precipr:min_radius:max_radius -> total precip rate in rainband region'
-    write (*,*) '                                                (min_radius,max_radius) defines the distances'
-    write (*,*) '                                                from the storm center that contain the rainbands'
-    write (*,*) '                                                min_radius, max_radius are in km'
+    write (*,*) '        <min_radius> -> for selecting radial bands, this defines inner boundary'
+    write (*,*) '        <max_radius> -> for selecting radial bands, this defines outer boundary'
+    write (*,*) '                        NOTE: for radial band selection, you must supply the GRADS'
+    write (*,*) '                        data file for pressure. The location of minimum pressure is'
+    write (*,*) '                        being used to identify the storm center.'
     write (*,*) ''
     stop
   end if
@@ -362,13 +362,14 @@ subroutine GetMyArgs(Infiles, OfileBase, AvgFunc, ScThreshold, MinRadius, MaxRad
   else
     ScThreshold = 0.0
   end if
-  if (AvgFunc .eq. 'rb_precipr') then
-    read(ArgList(2), '(f)') MinRadius
-    read(ArgList(3), '(f)') MaxRadius
-  else
-    MinRadius = 0.0
-    MaxRadius = 0.0
-  end if
+
+  call getarg(4, arg)
+  read(arg, '(f)') MinRadius
+
+  call getarg(5, arg)
+  read(arg, '(f)') MaxRadius
+
+  BadArgs = .false.
 
   if ((AvgFunc .ne. 'sc_cloud') .and. (AvgFunc .ne. 'precipr') .and. &
       (AvgFunc .ne. 'sc_w') .and. (AvgFunc .ne. 'sc_cloud_diam') .and. &
@@ -380,6 +381,18 @@ subroutine GetMyArgs(Infiles, OfileBase, AvgFunc, ScThreshold, MinRadius, MaxRad
     write (*,*) '          sc_cloud_diam'
     write (*,*) '          ew_cloud'
     write (*,*) '          rb_precipr'
+    write (*,*) ''
+    BadArgs = .true.
+  end if
+
+  if ((MinRadius < 0.0) .or. (MaxRadius < 0.0) .or. (MaxRadius <= MinRadius)) then
+    write (*,*) 'ERROR: <min_radius> and <max_radius> must be >= 0.0, and <max_radius> must be > <min_radius>'
+    write (*,*) ''
+    BadArgs = .true.
+  end if
+
+  if (BadArgs) then
+    stop
   end if
 
   return
@@ -657,11 +670,6 @@ subroutine DoRbPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, Stm
   ! corresponds to radius >= 32.35km)
 
   do it = 1, Nt
-    write (*,*) 'Timestep: ', it
-    write (*,'(a,i3,a,i3,a,g,a,g,a)') '  Storm Center: (', StmIx(it), ', ', StmIy(it), &
-       ') --> (', Xcoords(StmIx(it)), ', ', Ycoords(StmIy(it)), ')'
-    write (*,*) '  Minumum pressure: ', MinP(it)
-
     SumPrecip = 0.0
     NumPoints = 0
 
@@ -687,8 +695,9 @@ subroutine DoRbPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, Stm
       ! is convert mm/hr to kg/hr when assuming that the density of water is 1000kg/m**3.
       !   mm/hr * m**2 * 1000 kg/m**3 * 0.001 m/mm -> kg/hr
       TsAvg(1,1,1,it) = (SumPrecip / float(NumPoints)) * DeltaX * DeltaY
-      write (*,*) '  Number of points selected: ', NumPoints
+      write (*,*) 'Precip: Timestep:', it, ', Number of points selected: ', NumPoints
     end if
     write (*,*) ''
+    flush(6)
   end do
 end subroutine

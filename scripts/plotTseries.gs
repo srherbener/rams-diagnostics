@@ -49,10 +49,10 @@ function main(args)
 *   total precip rate
     varName = 'ts_precipr'
     gVar = 'precipr_test'
-    gTitle = gExp': Total precip rate, 'gCase
+    gTitle = gExp': Precipitation rate, 'gCase
     yTitle = 'Precip Rate (kg/hr)'
-    yMin =  3.0e11
-    yMax = 10.0e11
+    yMin = 0.0
+    yMax = 2.0e7
   endif
   if (varNum = 4)
 *   vertical velocity
@@ -71,15 +71,6 @@ function main(args)
     yTitle = 'Average N (#/cc)'
     yMin = 0.0
     yMax = 1000.0
-  endif
-  if (varNum = 6)
-*   rainband precip rate
-    varName = 'ts_rb_precipr'
-    gVar = 'rb_precipr_test'
-    gTitle = gExp': Rainband precip rate, 'gCase
-    yTitle = 'Precip Rate (kg/hr)'
-    yMin = 0.0
-    yMax = 2.0e7
   endif
 
   gcFile = gDir'/'varName'_'gCase'.ctl'
