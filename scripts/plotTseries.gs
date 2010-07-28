@@ -65,7 +65,7 @@ function main(args)
   endif
   if (varNum = 5)
 *   eyewall clound droplet concentration
-    varName = 'ts_cconc_az'
+    varName = 'ts_ew_cloud'
     gVar = 'ew_cloud_test'
     gTitle = gExp': Average cloud droplet conc. near eyewall, 'gCase
     yTitle = 'Average N (#/cc)'
