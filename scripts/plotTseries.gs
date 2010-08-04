@@ -56,12 +56,12 @@ function main(args)
   endif
   if (varNum = 4)
 *   vertical velocity
-    varName = 'ts_sc_w'
-    gVar = 'sc_w_test'
-    gTitle = gExp': Average w in supercooled cloud region, 'gCase
+    varName = 'ts_w_up'
+    gVar = 'w_up_test'
+    gTitle = gExp': Average w in updraft regions, 'gCase
     yTitle = 'Average w (m/s)'
     yMin = 0.0
-    yMax = 1.5
+    yMax = 6.0
   endif
   if (varNum = 5)
 *   eyewall clound droplet concentration
