@@ -160,7 +160,7 @@ function main(args)
     zTop = 4000
   endif
 
-  gcFile = gDir'/'gCase'_'varName'.ctl'
+  gcFile = gDir'/'varName'_'gCase'.ctl'
 
   xTitle = 'Radius (km)'
   yTitle = 'Height (m)'
