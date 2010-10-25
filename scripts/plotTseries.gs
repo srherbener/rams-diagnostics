@@ -20,7 +20,9 @@ function main(args)
   timeInc     = subwrd(args, 6)
   plotTstart  = subwrd(args, 7)
   plotTend    = subwrd(args, 8)
-  pFile       = subwrd(args, 9)
+  yMin        = subwrd(args, 9)
+  yMax        = subwrd(args, 10)
+  pFile       = subwrd(args, 11)
 
 * convert plot times (in hrs) to a time step number 
   gTstart = ((plotTstart - startTime) / timeInc) + 1
@@ -33,8 +35,6 @@ function main(args)
     gVar = 'sc_cloud_test'
     gTitle = gExp': Total supercooled cloud droplet mass, 'gCase
     yTitle = 'SC Cloud Mass (g)'
-    yMin = 4.0e13
-    yMax = 7.0e13
   endif
   if (varNum = 2)
 *   supercooled cloud droplet mean diameter
@@ -42,8 +42,6 @@ function main(args)
     gVar = 'sc_cloud_diam_t'
     gTitle = gExp': Mean supercooled droplet diameter, 'gCase
     yTitle = 'SC Cloud Mean Diameter (um)'
-    yMin = 30
-    yMax = 40
   endif
   if (varNum = 3)
 *   total precip rate
@@ -51,8 +49,6 @@ function main(args)
     gVar = 'precipr_test'
     gTitle = gExp': Precipitation rate, 'gCase
     yTitle = 'Precip Rate (kg/hr)'
-    yMin = 0.0
-    yMax = 2.0e7
   endif
   if (varNum = 4)
 *   vertical velocity
@@ -60,8 +56,6 @@ function main(args)
     gVar = 'w_up_test'
     gTitle = gExp': Average w in updraft regions, 'gCase
     yTitle = 'Average w (m/s)'
-    yMin = 0.0
-    yMax = 6.0
   endif
   if (varNum = 5)
 *   eyewall clound droplet concentration
@@ -69,8 +63,6 @@ function main(args)
     gVar = 'ew_cloud_test'
     gTitle = gExp': Average cloud droplet conc. near eyewall, 'gCase
     yTitle = 'Average N (#/cc)'
-    yMin = 0.0
-    yMax = 1000.0
   endif
 
   gcFile = gDir'/'varName'_'gCase'.ctl'
@@ -82,6 +74,8 @@ function main(args)
   say '  GRADS control file = 'gcFile
   say '  Start time = 'plotTstart'(hr) --> 'gTstart
   say '  End time = 'plotTend'(hr) --> 'gTend
+  say '  Ymin = 'yMin
+  say '  Ymax = 'yMax
   say '  Variable number = 'varNum' --> 'varName
   say '  Output plot (GIF) file = 'pFile
 
@@ -91,7 +85,7 @@ function main(args)
   'open 'gcFile
   'set t 'gTstart' 'gTend
   'set grads off'
-  'set yaxis 'yMin' 'yMax
+  'set vrange 'yMin' 'yMax
   'd smth9(smth9(smth9(smth9('gVar'))))'
   'draw title 'gTitle
   'draw xlab 'xTitle
