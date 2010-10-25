@@ -14,6 +14,7 @@ BINS = $(DEST)/azavg \
        $(DEST)/tr_winds \
        $(DEST)/PDF_pools_allexps \
        $(DEST)/prueba39 \
+       $(DEST)/join_gdata \
        $(DEST)/tseries_avg
 
 HEADERS = gDataTypes.h
@@ -59,6 +60,9 @@ $(DEST)/PDF_pools_allexps: PDF_pools_allexps.o gdata.o
 
 $(DEST)/prueba39: prueba39.o
 	$(LOADER) -o $(DEST)/prueba39 prueba39.o $(LOADER_OPTS) $(LIBS)
+
+$(DEST)/join_gdata: join_gdata.o gdata.o
+	$(LOADER) -o $(DEST)/join_gdata gdata.o join_gdata.o $(LOADER_OPTS) $(LIBS)
 
 $(DEST)/tseries_avg: tseries_avg.o gdata.o azavg_utils.o
 	$(LOADER) -o $(DEST)/tseries_avg gdata.o azavg_utils.o tseries_avg.o $(LOADER_OPTS) $(LIBS)
