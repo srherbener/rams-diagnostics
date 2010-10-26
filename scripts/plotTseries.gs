@@ -32,7 +32,7 @@ function main(args)
   if (varNum = 1)
 *   supercooled cloud droplet mass
     varName = 'ts_sc_cloud'
-    gVar = 'sc_cloud_test'
+    gVar = 'sc_cloud_test_j'
     gTitle = gExp': Total supercooled cloud droplet mass, 'gCase
     yTitle = 'SC Cloud Mass (g)'
   endif
@@ -46,21 +46,21 @@ function main(args)
   if (varNum = 3)
 *   total precip rate
     varName = 'ts_precipr'
-    gVar = 'precipr_test'
+    gVar = 'precipr_test_jo'
     gTitle = gExp': Precipitation rate, 'gCase
     yTitle = 'Precip Rate (kg/hr)'
   endif
   if (varNum = 4)
 *   vertical velocity
     varName = 'ts_w_up'
-    gVar = 'w_up_test'
+    gVar = 'w_up_test_join'
     gTitle = gExp': Average w in updraft regions, 'gCase
     yTitle = 'Average w (m/s)'
   endif
   if (varNum = 5)
 *   eyewall clound droplet concentration
     varName = 'ts_ew_cloud'
-    gVar = 'ew_cloud_test'
+    gVar = 'ew_cloud_test_j'
     gTitle = gExp': Average cloud droplet conc. near eyewall, 'gCase
     yTitle = 'Average N (#/cc)'
   endif

@@ -34,18 +34,19 @@ program main
   integer :: Nx, Ny, Nz, Nt, Nvars
   type (GradsOutDescription) :: GoutDescrip
 
-  ! Data arrays: cloud, tempc, precipr
-  ! Dims: x, y, z, t
-  ! The *Loc vars hold the locations of cloud, tempc, precipr in the GRADS
-  ! data files: the first index is the file number, the second index is the
-  ! var number
-  real, dimension(:,:,:,:), allocatable :: VarData, OutData
+  ! Data arrays
+  ! OutData dims: x, y, z, t
+  ! VarData dims: x, y, z, t
+  real, dimension(:,:,:,:), allocatable :: OutData, VarData
   type (GradsVarLocation), dimension(1:MaxFiles) :: VarLocs
 
   integer :: i
   integer :: Ierror
 
   integer :: ix, iy, iz, it
+  integer :: outTime
+  
+  real :: Xstart, Xinc, Ystart, Yinc
 
   ! Get the command line arguments
   call GetMyArgs(Infiles, OfileBase, VarName)
@@ -69,80 +70,76 @@ program main
 
   ! Check the data description for consistency and locate the variables in the GRADS control files
   call CheckDataDescripJoin(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, VarLocs, VarName)
+  do i = 1, Nfiles
+    write (*,*) 'Variable location for file: ', trim(GradsCtlFiles(i))
+    write (*,*) '  Fnum: ', VarLocs(i)%Fnum
+    write (*,*) '  Vnum: ', VarLocs(i)%Vnum
+  end do
+  write (*,*) 'Variable dimensions after joining files:'
+  write (*,*) '  Nx: ', Nx
+  write (*,*) '  Ny: ', Ny
+  write (*,*) '  Nz: ', Nz
+  write (*,*) '  Nt: ', Nt
+  write (*,*) ''
+  flush(6)
 
+  !Read in the data and copy into the output array as you go
+  allocate (OutData(1:Nx,1:Ny,1:Ny,1:Nt), stat=Ierror)
+  if (Ierror .ne. 0) then
+    write (*,*) 'ERROR: Data array memory allocation failed'
+    stop
+  end if
 
+  outTime = 0
+  do i = 1, Nfiles
+    allocate(VarData(1:GdataDescrip(i)%nx,1:GdataDescrip(i)%ny,1:GdataDescrip(i)%nz, &
+             1:GdataDescrip(i)%nt), stat=Ierror)
+    if (Ierror .ne. 0) then
+      write (*,*) 'ERROR: VarData array memory allocation failed'
+      stop
+    end if
 
-!     if (AvgFunc .eq. 'precipr') then
-!       write (*,'(a20,i3,a2,i3,a1)') 'precipr: (', PreciprLoc%Fnum, ', ', PreciprLoc%Vnum, ')'
-!       write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
-! 
-!       ! Allocate the data arrays and read in the data from the GRADS data files
-!       ! precipr is 2D variable -> Nz = 1
-!       allocate (PrecipR(1:Nx,1:Ny,1:1,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
-!       if (Ierror .ne. 0) then
-!         write (*,*) 'ERROR: Data array memory allocation failed'
-!         stop
-!       end if
-! 
-!       ! Read in the data for the vars using the description and location information
-!       ! precipr is 2D variable -> Nz = 1
-!       call ReadGradsData(GdataDescrip, 'precipr', PreciprLoc, PrecipR, Nx, Ny, 1, Nt)
-!       call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
-!   write (*,*) ''
-!   flush(6)
-! 
-!   ! Allocate the output array and do the averaging
-!   allocate (TsAvg(1:1,1:1,1:1,1:Nt), stat=Ierror)
-!   if (Ierror .ne. 0) then
-!     write (*,*) 'ERROR: Ouput data array memory allocation failed'
-!     stop
-!   end if
-! 
-!   ! Generate the storm center for all time steps
-!   allocate (StmIx(1:Nt), StmIy(1:Nt), MinP(1:Nt), stat=Ierror)
-!   if (Ierror .ne. 0) then
-!     write (*,*) 'ERROR: Ouput data array memory allocation failed'
-!     stop
-!   end if
-!   call RecordStormCenter(Nx, Ny, Nz, Nt, Press, StmIx, StmIy, MinP)
-! 
-!   do it = 1, Nt
-!     write (*,*) 'Timestep: ', it
-!     write (*,'(a,i3,a,i3,a,g,a,g,a)') '  Storm Center: (', StmIx(it), ', ', StmIy(it), &
-!        ') --> (', Xcoords(StmIx(it)), ', ', Ycoords(StmIy(it)), ')'
-!     write (*,*) '  Minumum pressure: ', MinP(it)
-!   end do
-!   write (*,*) ''
-!   flush(6)
-! 
-!   ! call the averaging function
-! 
-!   if (AvgFunc .eq. 'sc_cloud') then
-!     call DoScCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, Cloud, TempC, Dens, TsAvg)
-!   else
-!     if (AvgFunc .eq. 'precipr') then
-!       call DoPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, PrecipR, TsAvg)
-!     else
-!       if (AvgFunc .eq. 'w_up') then
-!         call DoWup(Nx, Ny, Nz, Nt, DeltaX, DeltaY, Wthreshold, MinLevel, MaxLevel, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, W, TsAvg)
-!       else
-!         if (AvgFunc .eq. 'sc_cloud_diam') then
-!           call DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, Cloud, TempC, CloudDiam, TsAvg)
-!         else
-!           if (AvgFunc .eq. 'ew_cloud') then
-!             call DoEwCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinLevel, MaxLevel, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, CloudConc, TsAvg)
-!           end if
-!         end if
-!       end if
-!     end if
-!   end if
-! 
-!   DummyZcoords(1) = 0.0
-!   call BuildGoutDescrip(1, 1, 1, Nt, TsAvg, OfileBase, GdataDescrip(1)%UndefVal, AvgFunc, &
-!           0.0, 1.0, 0.0, 1.0, DummyZcoords, GdataDescrip(1)%Tstart, &
-!           GdataDescrip(1)%Tinc, GoutDescrip, 'test')
-! 
-!   call WriteGrads(GoutDescrip, TsAvg)
+    call ReadGradsData(GdataDescrip, VarName, VarLocs(i), VarData, GdataDescrip(i)%nx, &
+         GdataDescrip(i)%ny, GdataDescrip(i)%nz, GdataDescrip(i)%nt)
+    
+    do it = 1, GdataDescrip(i)%nt
+      outTime = outTime + 1
+      do iz = 1, GdataDescrip(i)%nz
+        do iy = 1, GdataDescrip(i)%ny
+          do ix = 1, GdataDescrip(i)%nx
+            OutData(ix,iy,iz,outTime) = VarData(ix,iy,iz,it)
+          end do
+        end do
+      end do
+    end do
+
+    deallocate (VarData, stat=Ierror)
+    if (Ierror .ne. 0) then
+      write (*,*) 'ERROR: VarData array memory de-allocation failed'
+      stop
+    end if
+  end do
+
+  !Write out the joined data
+
+  Xstart = GdataDescrip(1)%Xcoords(1)
+  if (Nx .gt. 1) then
+    Xinc = GdataDescrip(1)%Xcoords(2)-GdataDescrip(1)%Xcoords(1)
+  else
+    Xinc = 1.0
+  end if
+  Ystart = GdataDescrip(1)%Ycoords(1)
+  if (Nx .gt. 1) then
+    Yinc = GdataDescrip(1)%Ycoords(2)-GdataDescrip(1)%Ycoords(1)
+  else
+    Yinc = 1.0
+  end if
+
+  call BuildGoutDescrip(Nx, Ny, Nz, Nt, OutData, OfileBase, GdataDescrip(1)%UndefVal, VarName, &
+          Xstart, Xinc, Ystart, Yinc, GdataDescrip(1)%Zcoords, GdataDescrip(1)%Tstart, &
+          GdataDescrip(1)%Tinc, GoutDescrip, 'join')
+
+  call WriteGrads(GoutDescrip, OutData)
 
   stop
 end
