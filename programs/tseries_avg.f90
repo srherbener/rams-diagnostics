@@ -576,25 +576,66 @@ subroutine DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, S
 
   integer ix,iy,iz,it, NumPoints
   real SumQ, SumQD
+  real MaxQ, Climit, SumD
   logical :: InsideRadialBand
 
   do it = 1, Nt
-    ! Calculate a mass-weighted mean diameter for supercooled cloud droplets.
-    ! 
-    !    Mean diameter (TsAvg value) = Sum(cloud * cloud_d) / Sum(cloud)
-    !    where cloud and cloud_d are only included in the sum when tempc is <= 0
+!     ! Calculate a mass-weighted mean diameter for supercooled cloud droplets.
+!     ! 
+!     !    Mean diameter (TsAvg value) = Sum(cloud * cloud_d) / Sum(cloud)
+!     !    where cloud and cloud_d are only included in the sum when tempc is <= 0
+! 
+!     SumQD = 0.0
+!     SumQ = 0.0
+!     NumPoints = 0
+! 
+!     do ix = 1, Nx
+!       do iy = 1, Ny
+!         if (InsideRadialBand(Nx, Ny, Nt, ix, iy, it, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords)) then
+!           do iz = 1, Nz
+!             if (TempC(ix,iy,iz,it) .le. 0.0) then
+!                SumQD = SumQD + (Cloud(ix,iy,iz,it) * CloudDiam(ix,iy,iz,it))
+!                SumQ = SumQ + Cloud(ix,iy,iz,it)
+!                NumPoints = NumPoints + 1
+!             end if
+!           end do
+!         end if
+!       end do
+!     end do
+! 
+!     if (SumQ .eq. 0.0) then
+!       TsAvg(1,1,1,it) = 0.0
+!       write (*,*) 'WARNING: no data points selected for time step: ', it
+!     else
+!       TsAvg(1,1,1,it) = SumQD / SumQ
+!       write (*,*) 'ScCloudDiam: Timestep:', it, ', Number of points selected: ', NumPoints
+!     end if
 
-    SumQD = 0.0
-    SumQ = 0.0
-    NumPoints = 0
-
+    ! Find the max Q (mass) value and use it to filter data - select data points if
+    ! the Q is within 20% of the max Q (.8 to 1.0). Then form the average of the diameters
+    ! of the selected points.
+    MaxQ = 0
     do ix = 1, Nx
       do iy = 1, Ny
         if (InsideRadialBand(Nx, Ny, Nt, ix, iy, it, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords)) then
           do iz = 1, Nz
-            if (TempC(ix,iy,iz,it) .le. 0.0) then
-               SumQD = SumQD + (Cloud(ix,iy,iz,it) * CloudDiam(ix,iy,iz,it))
-               SumQ = SumQ + Cloud(ix,iy,iz,it)
+            if (Cloud(ix,iy,iz,it) .gt. MaxQ) then
+               MaxQ = Cloud(ix,iy,iz,it)
+            end if
+          end do
+        end if
+      end do
+    end do
+    Climit = 0.8*MaxQ
+    
+    SumD = 0.0
+    NumPoints = 0
+    do ix = 1, Nx
+      do iy = 1, Ny
+        if (InsideRadialBand(Nx, Ny, Nt, ix, iy, it, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords)) then
+          do iz = 1, Nz
+            if ((TempC(ix,iy,iz,it) .le. 0.0) .and. (Cloud(ix,iy,iz,it) .ge. Climit)) then
+               SumD = SumD + CloudDiam(ix,iy,iz,it)
                NumPoints = NumPoints + 1
             end if
           end do
@@ -602,13 +643,14 @@ subroutine DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, S
       end do
     end do
 
-    if (SumQ .eq. 0.0) then
+    if (NumPoints .eq. 0) then
       TsAvg(1,1,1,it) = 0.0
       write (*,*) 'WARNING: no data points selected for time step: ', it
     else
-      TsAvg(1,1,1,it) = SumQD / SumQ
-      write (*,*) 'ScCloudDiam: Timestep:', it, ', Number of points selected: ', NumPoints
+      TsAvg(1,1,1,it) = SumD / float(NumPoints)
+      write (*,*) 'ScCloudDiam: Ts:', it, ', NumPoints: ', NumPoints, 'MaxQ: ', MaxQ, 'Climit: ', Climit
     end if
+
   end do
 end subroutine
 
