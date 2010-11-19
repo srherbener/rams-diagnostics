@@ -84,7 +84,7 @@ program main
   flush(6)
 
   !Read in the data and copy into the output array as you go
-  allocate (OutData(1:Nx,1:Ny,1:Ny,1:Nt), stat=Ierror)
+  allocate (OutData(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
   if (Ierror .ne. 0) then
     write (*,*) 'ERROR: Data array memory allocation failed'
     stop
@@ -129,7 +129,7 @@ program main
     Xinc = 1.0
   end if
   Ystart = GdataDescrip(1)%Ycoords(1)
-  if (Nx .gt. 1) then
+  if (Ny .gt. 1) then
     Yinc = GdataDescrip(1)%Ycoords(2)-GdataDescrip(1)%Ycoords(1)
   else
     Yinc = 1.0
