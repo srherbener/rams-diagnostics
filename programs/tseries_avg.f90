@@ -50,8 +50,8 @@ program main
   ! The *Loc vars hold the locations of cloud, tempc, precipr in the GRADS
   ! data files: the first index is the file number, the second index is the
   ! var number
-  real, dimension(:,:,:,:), allocatable :: Cloud, TempC, Dens, PrecipR, W, CloudDiam, CloudConc, Press, TsAvg
-  type (GradsVarLocation) :: CloudLoc, TempcLoc, DensLoc, WLoc, CloudDiamLoc, CloudConcLoc, PreciprLoc, PressLoc
+  real, dimension(:,:,:,:), allocatable :: Cloud, TempC, Dens, PrecipR, W, CloudDiam, CloudConc, Press, CintLiq, TsAvg
+  type (GradsVarLocation) :: CloudLoc, TempcLoc, DensLoc, WLoc, CloudDiamLoc, CloudConcLoc, PreciprLoc, PressLoc, CintLiqLoc
 
   integer :: i
   integer :: Ierror
@@ -90,6 +90,7 @@ program main
     call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, DensLoc, 'dn0')
     call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CloudLoc, 'cloud')
     call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CintLiqLoc, 'liquid_colint')
   else
     if (AvgFunc .eq. 'precipr') then
       call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PreciprLoc, 'precipr')
@@ -104,6 +105,7 @@ program main
           call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CloudLoc, 'cloud')
           call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CloudDiamLoc, 'cloud_d')
           call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
+          call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CintLiqLoc, 'liquid_colint')
         else
           if (AvgFunc .eq. 'ew_cloud') then
             call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CloudConcLoc, 'cloud_cm3')
@@ -156,7 +158,8 @@ program main
 
     ! Allocate the data arrays and read in the data from the GRADS data files
     allocate (TempC(1:Nx,1:Ny,1:Nz,1:Nt), Dens(1:Nx,1:Ny,1:Nz,1:Nt), &
-              Cloud(1:Nx,1:Ny,1:Nz,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
+              Cloud(1:Nx,1:Ny,1:Nz,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), &
+              CintLiq(1:Nx,1:Ny,1:1,1:Nt), stat=Ierror)
     if (Ierror .ne. 0) then
       write (*,*) 'ERROR: Data array memory allocation failed'
       stop
@@ -167,6 +170,7 @@ program main
     call ReadGradsData(GdataDescrip, 'dn0', DensLoc, Dens, Nx, Ny, Nz, Nt)
     call ReadGradsData(GdataDescrip, 'cloud', CloudLoc, Cloud, Nx, Ny, Nz, Nt)
     call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
+    call ReadGradsData(GdataDescrip, 'liquid_colint', CintLiqLoc, CintLiq, Nx, Ny, 1, Nt)
   else
     if (AvgFunc .eq. 'precipr') then
       write (*,'(a20,i3,a2,i3,a1)') 'precipr: (', PreciprLoc%Fnum, ', ', PreciprLoc%Vnum, ')'
@@ -205,10 +209,12 @@ program main
           write (*,'(a20,i3,a2,i3,a1)') 'cloud: (', CloudLoc%Fnum, ', ', CloudLoc%Vnum, ')'
           write (*,'(a20,i3,a2,i3,a1)') 'cloud_d: (', CloudDiamLoc%Fnum, ', ', CloudDiamLoc%Vnum, ')'
           write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
+          write (*,'(a20,i3,a2,i3,a1)') 'liquid_colint: (', CintLiqLoc%Fnum, ', ', CintLiqLoc%Vnum, ')'
   
           ! Allocate the data arrays and read in the data from the GRADS data files
           allocate (TempC(1:Nx,1:Ny,1:Nz,1:Nt), CloudDiam(1:Nx,1:Ny,1:Nz,1:Nt), &
-                    Cloud(1:Nx,1:Ny,1:Nz,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
+                    Cloud(1:Nx,1:Ny,1:Nz,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), &
+                    CintLiq(1:Nx,1:Ny,1:1,1:Nt), stat=Ierror)
           if (Ierror .ne. 0) then
             write (*,*) 'ERROR: Data array memory allocation failed'
             stop
@@ -219,6 +225,7 @@ program main
           call ReadGradsData(GdataDescrip, 'cloud', CloudLoc, Cloud, Nx, Ny, Nz, Nt)
           call ReadGradsData(GdataDescrip, 'cloud_d', CloudDiamLoc, CloudDiam, Nx, Ny, Nz, Nt)
           call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
+          call ReadGradsData(GdataDescrip, 'liquid_colint', CintLiqLoc, CintLiq, Nx, Ny, 1, Nt)
         else
           if (AvgFunc .eq. 'ew_cloud') then
             write (*,'(a20,i3,a2,i3,a1)') 'cloudconcen_cm3: (', CloudConcLoc%Fnum, ', ', CloudConcLoc%Vnum, ')'
@@ -269,7 +276,7 @@ program main
   ! call the averaging function
 
   if (AvgFunc .eq. 'sc_cloud') then
-    call DoScCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, Cloud, TempC, Dens, TsAvg)
+    call DoScCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, Cloud, TempC, Dens, CintLiq, TsAvg)
   else
     if (AvgFunc .eq. 'precipr') then
       call DoPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, PrecipR, TsAvg)
@@ -278,7 +285,7 @@ program main
         call DoWup(Nx, Ny, Nz, Nt, DeltaX, DeltaY, Wthreshold, MinLevel, MaxLevel, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, W, TsAvg)
       else
         if (AvgFunc .eq. 'sc_cloud_diam') then
-          call DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, Cloud, TempC, CloudDiam, TsAvg)
+          call DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, Cloud, TempC, CloudDiam, CintLiq, TsAvg)
         else
           if (AvgFunc .eq. 'ew_cloud') then
             call DoEwCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinLevel, MaxLevel, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, CloudConc, TsAvg)
@@ -447,12 +454,13 @@ end function
 ! averaging.
 !
 
-subroutine DoScCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, Cloud, TempC, Dens, TsAvg)
+subroutine DoScCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, Cloud, TempC, Dens, CintLiq, TsAvg)
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
   real :: DeltaX, DeltaY, MinRadius, MaxRadius
   real, dimension(1:Nx, 1:Ny, 1:Nz, 1:Nt) :: Cloud, TempC, Dens
+  real, dimension(1:Nx, 1:Ny, 1:1, 1:Nt) :: CintLiq
   real, dimension(1:1, 1:1, 1:1, 1:Nt) :: TsAvg
   integer, dimension(1:Nt) :: StmIx, StmIy
   real, dimension(1:Nx) :: Xcoords
@@ -482,7 +490,7 @@ subroutine DoScCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx
 
     do ix = 1, Nx
       do iy = 1, Ny
-        if (InsideRadialBand(Nx, Ny, Nt, ix, iy, it, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords)) then
+        if ((InsideRadialBand(Nx, Ny, Nt, ix, iy, it, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords))  .and. (CintLiq(ix,iy,1,it) .ge. 5000.0)) then
           do iz = 1, Nz
             if (TempC(ix,iy,iz,it) .le. 0.0) then
               TsAvg(1,1,1,it) = TsAvg(1,1,1,it) + (Cloud(ix,iy,iz,it) * Dens(ix,iy,iz,it) * (ZmHeights(iz)-ZmHeights(iz-1)))
@@ -563,12 +571,13 @@ end subroutine
 ! This subroutine will do the average vertical velocity in significant supercooled
 ! cloud droplet regions.
 
-subroutine DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, Cloud, TempC, CloudDiam, TsAvg)
+subroutine DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, Cloud, TempC, CloudDiam, CintLiq, TsAvg)
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
   real :: DeltaX, DeltaY, MinRadius, MaxRadius
   real, dimension(1:Nx, 1:Ny, 1:Nz, 1:Nt) :: Cloud, TempC, CloudDiam
+  real, dimension(1:Nx, 1:Ny, 1:1, 1:Nt) :: CintLiq
   real, dimension(1:1, 1:1, 1:1, 1:Nt) :: TsAvg
   integer, dimension(1:Nt) :: StmIx, StmIy
   real, dimension(1:Nx) :: Xcoords
@@ -612,7 +621,7 @@ subroutine DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, S
 !     end if
 
     ! Find the max Q (mass) value and use it to filter data - select data points if
-    ! the Q is within 20% of the max Q (.8 to 1.0). Then form the average of the diameters
+    ! the Q is within 20% of the max Q (.2 to 1.0). Then form the average of the diameters
     ! of the selected points.
     MaxQ = 0
     do ix = 1, Nx
@@ -626,15 +635,21 @@ subroutine DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, S
         end if
       end do
     end do
-    Climit = 0.8*MaxQ
+    Climit = 0.3*MaxQ
     
+    SumQD = 0.0
+    SumQ = 0.0
     SumD = 0.0
     NumPoints = 0
     do ix = 1, Nx
       do iy = 1, Ny
+!        if ((InsideRadialBand(Nx, Ny, Nt, ix, iy, it, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords)) .and. (CintLiq(ix,iy,1,it) .ge. 5000.0)) then
         if (InsideRadialBand(Nx, Ny, Nt, ix, iy, it, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords)) then
           do iz = 1, Nz
-            if ((TempC(ix,iy,iz,it) .le. 0.0) .and. (Cloud(ix,iy,iz,it) .ge. Climit)) then
+!            if ((TempC(ix,iy,iz,it) .le. 0.0) .and. (Cloud(ix,iy,iz,it) .ge. Climit)) then
+            if (TempC(ix,iy,iz,it) .le. 0.0) then
+               SumQD = SumQD + (Cloud(ix,iy,iz,it) * CloudDiam(ix,iy,iz,it))
+               SumQ = SumQ + Cloud(ix,iy,iz,it)
                SumD = SumD + CloudDiam(ix,iy,iz,it)
                NumPoints = NumPoints + 1
             end if
@@ -643,13 +658,21 @@ subroutine DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, S
       end do
     end do
 
-    if (NumPoints .eq. 0) then
-      TsAvg(1,1,1,it) = 0.0
-      write (*,*) 'WARNING: no data points selected for time step: ', it
-    else
-      TsAvg(1,1,1,it) = SumD / float(NumPoints)
-      write (*,*) 'ScCloudDiam: Ts:', it, ', NumPoints: ', NumPoints, 'MaxQ: ', MaxQ, 'Climit: ', Climit
-    end if
+!    if (NumPoints .eq. 0) then
+!      TsAvg(1,1,1,it) = 0.0
+!      write (*,*) 'WARNING: no data points selected for time step: ', it
+!    else
+!      TsAvg(1,1,1,it) = SumD / float(NumPoints)
+!      write (*,*) 'ScCloudDiam: Ts:', it, ', NumPoints: ', NumPoints, 'MaxQ: ', MaxQ, 'Climit: ', Climit
+!    end if
+
+     if (SumQ .eq. 0.0) then
+       TsAvg(1,1,1,it) = 0.0
+       write (*,*) 'WARNING: no data points selected for time step: ', it
+     else
+       TsAvg(1,1,1,it) = SumQD / SumQ
+       write (*,*) 'ScCloudDiam: Ts:', it, ', NumPoints: ', NumPoints, 'MaxQ: ', MaxQ, 'Climit: ', Climit
+     end if
 
   end do
 end subroutine
