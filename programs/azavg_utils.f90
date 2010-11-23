@@ -339,3 +339,44 @@ subroutine ConvertGridCoords(Nx, Ny, GdataDescrip , Xcoords, Ycoords)
 
   return
 end subroutine
+
+!*****************************************************************************
+! InsideCylVol()
+!
+! This function will see if a given grid location falls within a cylindrical
+! volume relative to the storm center.
+!
+
+logical function InsideCylVol(Nx, Ny, Nz, Nt, Ix, Iy, Iz, It, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ,  StmIx, StmIy, Xcoords, Ycoords, Zcoords)
+  implicit none
+
+  real, parameter :: PI = 3.141592654
+
+  integer :: Nx, Ny, Nz, Nt, Ix, Iy, Iz, It
+  real :: MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ
+  integer, dimension(1:Nt) :: StmIx, StmIy
+  real, dimension(1:Nx) :: Xcoords
+  real, dimension(1:Ny) :: Ycoords
+  real, dimension(1:Nz) :: Zcoords
+
+  real :: dX, dY, Radius, Phi, Z
+
+  dX = Xcoords(Ix) - Xcoords(StmIx(It))
+  dY = Ycoords(Iy) - Ycoords(StmIy(It))
+  Radius = sqrt(dX*dX + dY*dY)
+  ! atan2 returns a value in radians between -PI and +PI
+  ! convert to value between 0 and 2*PI
+  Phi = atan2(dY, dX)
+  if (Phi .lt. 0.0) then
+    Phi = Phi + (2.0 * PI)
+  end if
+  Z = Zcoords(Iz)
+
+  InsideCylVol = .false.
+  if (((Radius .ge. MinR) .and. (Radius .le. MaxR)) .and. &
+      ((Phi .ge. MinPhi) .and. (Phi .le. MaxPhi)) .and. &
+      ((Z .ge. MinZ) .and. (Z .le. MaxZ))) then
+    InsideCylVol = .true.
+  end if
+  return
+end function

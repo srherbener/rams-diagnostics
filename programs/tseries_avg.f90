@@ -33,13 +33,14 @@ program main
   character (len=LittleString) :: AvgFunc
 
   character (len=MediumString), dimension(1:MaxFiles) :: GradsCtlFiles
-  integer :: Nfiles, MinLevel, MaxLevel
+  integer :: Nfiles
   integer, dimension(:), allocatable :: StmIx, StmIy
 
-  real :: DeltaX, DeltaY, Wthreshold, MinRadius, MaxRadius
+  real :: DeltaX, DeltaY, Wthreshold, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, CilThresh
+  real :: Xstart, Xinc, Ystart, Yinc
   real, dimension(:), allocatable :: ZmHeights
   real, dimension(1:1) :: DummyZcoords
-  real, dimension(:), allocatable :: MinP, Xcoords, Ycoords
+  real, dimension(:), allocatable :: MinP, Xcoords, Ycoords, Zcoords
 
   type (GradsDataDescription), dimension(1:MaxFiles) :: GdataDescrip
   integer :: Nx, Ny, Nz, Nt, Nvars
@@ -50,7 +51,7 @@ program main
   ! The *Loc vars hold the locations of cloud, tempc, precipr in the GRADS
   ! data files: the first index is the file number, the second index is the
   ! var number
-  real, dimension(:,:,:,:), allocatable :: Cloud, TempC, Dens, PrecipR, W, CloudDiam, CloudConc, Press, CintLiq, TsAvg
+  real, dimension(:,:,:,:), allocatable :: Cloud, TempC, Dens, PrecipR, W, CloudDiam, CloudConc, Press, CintLiq, TsAvg, TestSelect
   type (GradsVarLocation) :: CloudLoc, TempcLoc, DensLoc, WLoc, CloudDiamLoc, CloudConcLoc, PreciprLoc, PressLoc, CintLiqLoc
 
   integer :: i
@@ -59,7 +60,7 @@ program main
   integer :: ix, iy, iz, it
 
   ! Get the command line arguments
-  call GetMyArgs(Infiles, OfileBase, AvgFunc, Wthreshold, MinLevel, MaxLevel, MinRadius, MaxRadius)
+  call GetMyArgs(Infiles, OfileBase, AvgFunc, Wthreshold, CilThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ)
   call String2List(Infiles, ':', GradsCtlFiles, MaxFiles, Nfiles, 'input files')
 
   write (*,*) 'Time seris of average for RAMS data:'
@@ -69,12 +70,17 @@ program main
   end do
   write (*,*) '  Output file base name:  ', trim(OfileBase)
   write (*,*) '  Averaging function: ', trim(AvgFunc)
-  write (*,*) '  Minimum radius: ', MinRadius
-  write (*,*) '  Maximum radius: ', MaxRadius
-  write (*,*) '  Minimum level (for functions using level selection): ', MinLevel
-  write (*,*) '  Maximum level (for functions using level selection): ', MaxLevel
-  write (*,*) '  W threshold (for w_up function): ', Wthreshold
+  write (*,*) '  Data selection specs: '
+  write (*,*) '    Minimum radius: ', MinR
+  write (*,*) '    Maximum radius: ', MaxR
+  write (*,*) '    Minimum angle: ', MinPhi
+  write (*,*) '    Maximum angle: ', MaxPhi
+  write (*,*) '    Minimum height: ', MinZ
+  write (*,*) '    Maximum height: ', MaxZ
+  write (*,*) '    W threshold: ', Wthreshold
+  write (*,*) '    Column integrated liquid threshold: ', CilThresh
   write (*,*) ''
+  flush(6)
 
   ! Read the GRADS data description files and collect the information about the data
   do i = 1, Nfiles
@@ -110,6 +116,10 @@ program main
           if (AvgFunc .eq. 'ew_cloud') then
             call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CloudConcLoc, 'cloud_cm3')
             call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
+          else
+            if (AvgFunc .eq. 'test_cvs') then
+              call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
+            end if
           end if
         end if
       end if
@@ -118,13 +128,18 @@ program main
 
   ! Calculate the x,y coordinates (in km) for doing selection by radius from storm center.
   ! Also for setting DeltaX and DeltaY (in m)
-  allocate (Xcoords(1:Nx), Ycoords(1:Ny), stat=Ierror)
+  allocate (Xcoords(1:Nx), Ycoords(1:Ny), Zcoords(1:Nz), stat=Ierror)
   if (Ierror .ne. 0) then
     write (*,*) 'ERROR: Data array memory allocation failed'
     stop
   end if
 
   call ConvertGridCoords(Nx, Ny, GdataDescrip(1), Xcoords, Ycoords)
+  ! Using pressure for all averaging function, get the z coords from
+  ! the description of the pressure variable
+  do iz = 1, Nz
+    Zcoords(iz) = GdataDescrip(PressLoc%Fnum)%Zcoords(iz)
+  end do
 
   DeltaX = (Xcoords(2) - Xcoords(1)) * 1000.0
   DeltaY = (Ycoords(2) - Ycoords(1)) * 1000.0
@@ -134,6 +149,13 @@ program main
   write (*,*) '    ', GdataDescrip(1)%Xcoords(1), GdataDescrip(1)%Xcoords(Nx), Xcoords(1), Xcoords(Nx)
   write (*,*) '  Y range (min lat, max lat) --> (min y, max y): '
   write (*,*) '    ', GdataDescrip(1)%Ycoords(1), GdataDescrip(1)%Ycoords(Ny), Ycoords(1), Ycoords(Ny)
+  write (*,*) ''
+  write (*,*) 'Vertical grid info:'
+  do iz = 1, Nz
+    write (*,*) '  ', iz, ' --> ', Zcoords(iz)
+  end do
+  write (*,*) ''
+  flush(6)
 
   ! Read in the GRADS variable data
   write (*,*) 'Gridded data information:'
@@ -148,6 +170,7 @@ program main
   write (*,*) '  Grid delta x: ', DeltaX
   write (*,*) '  Grid delta y: ', DeltaY
   write (*,*) ''
+  flush(6)
 
   write (*,*) 'Locations of variables in GRADS data (file number, var number):'
   if (AvgFunc .eq. 'sc_cloud') then
@@ -241,6 +264,19 @@ program main
             ! Read in the data for the vars using the description and location information
             call ReadGradsData(GdataDescrip, 'cloud_cm3', CloudConcLoc, CloudConc, Nx, Ny, Nz, Nt)
             call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
+          else
+            if (AvgFunc .eq. 'test_cvs') then
+              write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
+              ! Allocate the data arrays and read in the data from the GRADS data files
+              allocate (Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
+              if (Ierror .ne. 0) then
+                write (*,*) 'ERROR: Data array memory allocation failed'
+                stop
+              end if
+  
+              ! Read in the data for the vars using the description and location information
+              call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
+            end if
           end if
         end if
       end if
@@ -250,10 +286,18 @@ program main
   flush(6)
 
   ! Allocate the output array and do the averaging
-  allocate (TsAvg(1:1,1:1,1:1,1:Nt), stat=Ierror)
-  if (Ierror .ne. 0) then
-    write (*,*) 'ERROR: Ouput data array memory allocation failed'
-    stop
+  if (AvgFunc .eq. 'test_cvs') then
+    allocate (TestSelect(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
+    if (Ierror .ne. 0) then
+      write (*,*) 'ERROR: Ouput data array memory allocation failed'
+      stop
+    end if
+  else
+    allocate (TsAvg(1:1,1:1,1:1,1:Nt), stat=Ierror)
+    if (Ierror .ne. 0) then
+      write (*,*) 'ERROR: Ouput data array memory allocation failed'
+      stop
+    end if
   end if
 
   ! Generate the storm center for all time steps
@@ -276,31 +320,50 @@ program main
   ! call the averaging function
 
   if (AvgFunc .eq. 'sc_cloud') then
-    call DoScCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, Cloud, TempC, Dens, CintLiq, TsAvg)
+    call DoScCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, Cloud, TempC, Dens, CintLiq, TsAvg)
   else
     if (AvgFunc .eq. 'precipr') then
-      call DoPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, PrecipR, TsAvg)
+      call DoPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, PrecipR, TsAvg)
     else
       if (AvgFunc .eq. 'w_up') then
-        call DoWup(Nx, Ny, Nz, Nt, DeltaX, DeltaY, Wthreshold, MinLevel, MaxLevel, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, W, TsAvg)
+        call DoWup(Nx, Ny, Nz, Nt, DeltaX, DeltaY, Wthreshold, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, W, TsAvg)
       else
         if (AvgFunc .eq. 'sc_cloud_diam') then
-          call DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, Cloud, TempC, CloudDiam, CintLiq, TsAvg)
+          call DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, Cloud, TempC, CloudDiam, CintLiq, TsAvg)
         else
           if (AvgFunc .eq. 'ew_cloud') then
-            call DoEwCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinLevel, MaxLevel, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, CloudConc, TsAvg)
+            call DoEwCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CloudConc, TsAvg)
+          else
+            if (AvgFunc .eq. 'test_cvs') then
+              call DoTestCvs(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, TestSelect)
+            end if
           end if
         end if
       end if
     end if
   end if
 
-  DummyZcoords(1) = 0.0
-  call BuildGoutDescrip(1, 1, 1, Nt, TsAvg, OfileBase, GdataDescrip(1)%UndefVal, AvgFunc, &
-          0.0, 1.0, 0.0, 1.0, DummyZcoords, GdataDescrip(1)%Tstart, &
-          GdataDescrip(1)%Tinc, GoutDescrip, 'test')
-
-  call WriteGrads(GoutDescrip, TsAvg)
+  if (AvgFunc .eq. 'test_cvs') then
+    Xstart = GdataDescrip(PressLoc%Fnum)%Xcoords(1)
+    Xinc = GdataDescrip(PressLoc%Fnum)%Xcoords(2) - GdataDescrip(PressLoc%Fnum)%Xcoords(1)
+    Ystart = GdataDescrip(PressLoc%Fnum)%Ycoords(1)
+    Yinc = GdataDescrip(PressLoc%Fnum)%Ycoords(2) - GdataDescrip(PressLoc%Fnum)%Ycoords(1)
+    call BuildGoutDescrip(Nx, Ny, Nz, Nt, TestSelect, OfileBase, &
+           GdataDescrip(PressLoc%Fnum)%UndefVal, AvgFunc, Xstart, Xinc, Ystart, Yinc, &
+           GdataDescrip(PressLoc%Fnum)%Zcoords, GdataDescrip(PressLoc%Fnum)%Tstart, &
+           GdataDescrip(PressLoc%Fnum)%Tinc, GoutDescrip, 'ts')
+    call WriteGrads(GoutDescrip, TestSelect)
+  else
+    DummyZcoords(1) = 0.0
+    Xstart = 0.0
+    Xinc = 1.0
+    Ystart = 0.0
+    Yinc = 1.0
+    call BuildGoutDescrip(1, 1, 1, Nt, TsAvg, OfileBase, GdataDescrip(1)%UndefVal, &
+           AvgFunc, Xstart, Xinc, Ystart, Yinc, DummyZcoords, GdataDescrip(1)%Tstart, &
+           GdataDescrip(1)%Tinc, GoutDescrip, 'ts')
+    call WriteGrads(GoutDescrip, TsAvg)
+  end if
 
   stop
 end
@@ -314,43 +377,39 @@ end
 !   AvgFunc - averaging function selection
 !
 
-subroutine GetMyArgs(Infiles, OfileBase, AvgFunc, Wthreshold, MinLevel, MaxLevel, MinRadius, MaxRadius)
+subroutine GetMyArgs(Infiles, OfileBase, AvgFunc, Wthreshold, CilThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ)
   implicit none
 
-  integer, parameter :: MAX_ITEMS = 5
-
   character (len=*) :: Infiles, OfileBase, AvgFunc
-  real :: Wthreshold, MinRadius, MaxRadius
-  integer :: MinLevel, MaxLevel
+  real :: Wthreshold, CilThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ
 
   integer :: iargc
   character (len=128) :: arg
-  character (len=128), dimension(1:MAX_ITEMS) :: ArgList
   integer :: Nitems
 
   logical :: BadArgs
 
-  if (iargc() .ne. 5) then
-    write (*,*) 'ERROR: must supply exactly 5 arguments'
+  if (iargc() .ne. 11) then
+    write (*,*) 'ERROR: must supply exactly 11 arguments'
     write (*,*) ''
-    write (*,*) 'USAGE: azavg <in_data_files> <out_data_file> <averaging_function>'
+    write (*,*) 'USAGE: azavg <in_data_files> <out_data_file> <averaging_function> <w_threshold> <min_r> <max_r> <min_phi> <max_phi> <min_z> <max_z>'
     write (*,*) '        <in_data_files>: GRADS format, control file, colon separated list'
-    write (*,*) '        <out_data_file>: GRADS format, this programe will tag on .ctl, .dat suffixes'
+    write (*,*) '        <out_data_file>: GRADS format, this program will tag on .ctl, .dat suffixes'
     write (*,*) '        <averaging_function>: averaging function to use on input data'
     write (*,*) '            sc_cloud -> total supercooled cloud droplets'
     write (*,*) '            precipr -> total precipitation rate'
-    write (*,*) '            w_up:<min_level>:<max_level>:<w_threshold> -> average w in regions of significant updrafts'
+    write (*,*) '            w_up -> average w in regions of significant updrafts'
     write (*,*) '            sc_cloud_diam -> total supercooled cloud droplet mean diameter'
-    write (*,*) '            ew_cloud:<min_level>:<max_level> -> average cloud droplet concentration near eyewall region'
-    write (*,*) '            Parameters:'
-    write (*,*) '              <min_level>:<max_level> are for selecting the z levels. Use integers'
-    write (*,*) '                (ie, the k values for the levels)'
-    write (*,*) '              <w_threshold> is value to filter data, ie use data when w >= <w_threshold>'
-    write (*,*) '        <min_radius> -> for selecting radial bands, this defines inner boundary'
-    write (*,*) '        <max_radius> -> for selecting radial bands, this defines outer boundary'
-    write (*,*) '                        NOTE: for radial band selection, you must supply the GRADS'
-    write (*,*) '                        data file for pressure. The location of minimum pressure is'
-    write (*,*) '                        being used to identify the storm center.'
+    write (*,*) '            ew_cloud -> average cloud droplet concentration near eyewall region'
+    write (*,*) '            test_cvs -> test the cylindrical volume selection scheme'
+    write (*,*) ''
+    write (*,*) '        The following args are used to select data'
+    write (*,*) '          <w_threshold>: select data where w is >= <w_threshold>'
+    write (*,*) '          <cil_threshold>: select data where column integrated liquid is >= <cil_thresh>'
+    write (*,*) '          Select data inside cylindrical (r,phi,z) volume:'
+    write (*,*) '            <min_r> <max_r> (in km)'
+    write (*,*) '            <max_phi> <max_phi> (in radians)'
+    write (*,*) '            <min_z> <max_z> (in m)'
     write (*,*) ''
     stop
   end if
@@ -358,55 +417,64 @@ subroutine GetMyArgs(Infiles, OfileBase, AvgFunc, Wthreshold, MinLevel, MaxLevel
   call getarg(1, Infiles)
   call getarg(2, OfileBase)
 
-  call getarg(3, arg)
-  call String2List(arg, ':', ArgList, MAX_ITEMS, Nitems, 'avg function arguments')
-  AvgFunc = ArgList(1)
-  if (AvgFunc .eq. 'w_up') then
-    read(ArgList(2), '(i)') MinLevel
-    read(ArgList(3), '(i)') MaxLevel
-    read(ArgList(4), '(f)') Wthreshold
-  else
-    if (AvgFunc .eq. 'ew_cloud') then
-      read(ArgList(2), '(i)') MinLevel
-      read(ArgList(3), '(i)') MaxLevel
-      Wthreshold = 0.0
-    else
-      MinLevel = 0
-      MaxLevel = 0
-      Wthreshold = 0.0
-    end if
-  end if
+  call getarg(3, AvgFunc)
 
   call getarg(4, arg)
-  read(arg, '(f)') MinRadius
+  read(arg, '(f)') Wthreshold
 
   call getarg(5, arg)
-  read(arg, '(f)') MaxRadius
+  read(arg, '(f)') CilThresh
+
+  call getarg(6, arg)
+  read(arg, '(f)') MinR
+
+  call getarg(7, arg)
+  read(arg, '(f)') MaxR
+
+  call getarg(8, arg)
+  read(arg, '(f)') MinPhi
+
+  call getarg(9, arg)
+  read(arg, '(f)') MaxPhi
+
+  call getarg(10, arg)
+  read(arg, '(f)') MinZ
+
+  call getarg(11, arg)
+  read(arg, '(f)') MaxZ
 
   BadArgs = .false.
 
   if ((AvgFunc .ne. 'sc_cloud') .and. (AvgFunc .ne. 'precipr') .and. &
       (AvgFunc .ne. 'w_up') .and. (AvgFunc .ne. 'sc_cloud_diam') .and. &
-      (AvgFunc .ne. 'ew_cloud')) then
+      (AvgFunc .ne. 'ew_cloud') .and. (AvgFunc .ne. 'test_cvs')) then
     write (*,*) 'ERROR: <averaging_function> must be one of:'
     write (*,*) '          sc_cloud'
     write (*,*) '          precipr'
     write (*,*) '          w_up'
     write (*,*) '          sc_cloud_diam'
     write (*,*) '          ew_cloud'
+    write (*,*) '          test_cvs'
     write (*,*) ''
     BadArgs = .true.
   end if
 
-  if ((MinRadius .lt. 0.0) .or. (MaxRadius .lt. 0.0) .or. (MaxRadius .le. MinRadius)) then
-    write (*,*) 'ERROR: <min_radius> and <max_radius> must be >= 0.0, and <max_radius> must be > <min_radius>'
+  if ((MinR .lt. 0.0) .or. (MaxR .lt. 0.0) .or. (MaxR .le. MinR)) then
+    write (*,*) 'ERROR: <min_r> and <max_r> must be >= 0.0, and <max_r> must be > <min_r>'
     write (*,*) ''
     BadArgs = .true.
   end if
 
-  if (MaxLevel < MinLevel) then
-    write (*,*) 'ERROR: <max_level> >=  <min_level>'
+  if ((MinPhi .lt. 0.0) .or. (MaxPhi .lt. 0.0) .or. (MaxPhi .le. MinPhi)) then
+    write (*,*) 'ERROR: <min_phi> and <max_phi> must be >= 0.0, and <max_phi> must be > <min_phi>'
     write (*,*) ''
+    BadArgs = .true.
+  end if
+
+  if ((MinZ .lt. 0.0) .or. (MaxZ .lt. 0.0) .or. (MaxZ .le. MinZ)) then
+    write (*,*) 'ERROR: <min_z> and <max_z> must be >= 0.0, and <max_z> must be > <min_z>'
+    write (*,*) ''
+    BadArgs = .true.
   end if
 
   if (BadArgs) then
@@ -417,58 +485,28 @@ subroutine GetMyArgs(Infiles, OfileBase, AvgFunc, Wthreshold, MinLevel, MaxLevel
 end subroutine
 
 !*****************************************************************************
-! InsideRadialBand()
-!
-! This function will compare a given grid location with the storm center
-! and a given radial band from that storm center. It will return true if the
-! given location falls inside the given radial band.
-!
-
-logical function InsideRadialBand(Nx, Ny, Nt, Ix, Iy, It, Rmin, Rmax, StmIx, StmIy, Xcoords, Ycoords)
-  implicit none
-
-  integer :: Nx, Ny, Nt, Ix, Iy, It
-  real :: Rmin, Rmax
-  integer, dimension(1:Nt) :: StmIx, StmIy
-  real, dimension(1:Nx) :: Xcoords
-  real, dimension(1:Ny) :: Ycoords
-
-  real :: dX, dY, Radius
-
-  dX = Xcoords(Ix) - Xcoords(StmIx(It))
-  dY = Ycoords(Iy) - Ycoords(StmIy(It))
-  Radius = sqrt(dX*dX + dY*dY)
-
-  if ((Radius .ge. Rmin) .and. (Radius .le. Rmax)) then
-    InsideRadialBand = .true.
-  else
-    InsideRadialBand = .false.
-  end if
-  return
-end function
-
-!*****************************************************************************
 ! DoScCloud()
 !
 ! This subroutine will perform the supercooled cloud droplet time series
 ! averaging.
 !
 
-subroutine DoScCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, Cloud, TempC, Dens, CintLiq, TsAvg)
+subroutine DoScCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, Cloud, TempC, Dens, CintLiq, TsAvg)
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
-  real :: DeltaX, DeltaY, MinRadius, MaxRadius
+  real :: DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, CilThresh
   real, dimension(1:Nx, 1:Ny, 1:Nz, 1:Nt) :: Cloud, TempC, Dens
   real, dimension(1:Nx, 1:Ny, 1:1, 1:Nt) :: CintLiq
   real, dimension(1:1, 1:1, 1:1, 1:Nt) :: TsAvg
   integer, dimension(1:Nt) :: StmIx, StmIy
   real, dimension(1:Nx) :: Xcoords
   real, dimension(1:Ny) :: Ycoords
+  real, dimension(1:Nz) :: Zcoords
 
   real, dimension(0:Nz) :: ZmHeights
   integer :: ix, iy, iz, it, NumPoints
-  logical :: InsideRadialBand
+  logical :: InsideCylVol
 
   call SetZmHeights (Nz, ZmHeights)
 
@@ -490,14 +528,14 @@ subroutine DoScCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx
 
     do ix = 1, Nx
       do iy = 1, Ny
-        if ((InsideRadialBand(Nx, Ny, Nt, ix, iy, it, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords))  .and. (CintLiq(ix,iy,1,it) .ge. 5000.0)) then
-          do iz = 1, Nz
+        do iz = 1, Nz
+          if ((InsideCylVol(Nx, Ny, Nz, Nt, ix, iy, iz, it, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords))  .and. (CintLiq(ix,iy,1,it) .ge. CilThresh)) then
             if (TempC(ix,iy,iz,it) .le. 0.0) then
               TsAvg(1,1,1,it) = TsAvg(1,1,1,it) + (Cloud(ix,iy,iz,it) * Dens(ix,iy,iz,it) * (ZmHeights(iz)-ZmHeights(iz-1)))
               NumPoints = NumPoints + 1
             end if
-          end do
-        end if
+          end if
+        end do
       end do
     end do
 
@@ -520,19 +558,20 @@ end subroutine
 ! updrafts.
 !
 
-subroutine DoWup(Nx, Ny, Nz, Nt, DeltaX, DeltaY, Wthreshold, MinLevel, MaxLevel, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, W, TsAvg)
+subroutine DoWup(Nx, Ny, Nz, Nt, DeltaX, DeltaY, Wthreshold, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, W, TsAvg)
   implicit none
 
-  integer :: Nx, Ny, Nz, Nt, MinLevel, MaxLevel
-  real :: DeltaX, DeltaY, Wthreshold, MinRadius, MaxRadius
+  integer :: Nx, Ny, Nz, Nt
+  real :: DeltaX, DeltaY, Wthreshold, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ
   real, dimension(1:Nx, 1:Ny, 1:Nz, 1:Nt) :: W
   real, dimension(1:1, 1:1, 1:1, 1:Nt) :: TsAvg
   integer, dimension(1:Nt) :: StmIx, StmIy
   real, dimension(1:Nx) :: Xcoords
   real, dimension(1:Ny) :: Ycoords
+  real, dimension(1:Nz) :: Zcoords
 
   integer ix,iy,iz,it, NumPoints
-  logical :: InsideRadialBand
+  logical :: InsideCylVol
 
   do it = 1, Nt
     ! Average w over regions where significant updrafts occur
@@ -542,14 +581,14 @@ subroutine DoWup(Nx, Ny, Nz, Nt, DeltaX, DeltaY, Wthreshold, MinLevel, MaxLevel,
 
     do ix = 1, Nx
       do iy = 1, Ny
-        if (InsideRadialBand(Nx, Ny, Nt, ix, iy, it, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords)) then
-          do iz = MinLevel, MaxLevel
+        do iz = 1, Nz
+          if (InsideCylVol(Nx, Ny, Nz, Nt, ix, iy, iz, it, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords)) then
             if (W(ix,iy,iz,it) .ge. Wthreshold) then
               TsAvg(1,1,1,it) = TsAvg(1,1,1,it) + W(ix,iy,iz,it)
               NumPoints = NumPoints + 1
             end if
-          end do
-        end if
+          end if
+        end do
       end do
     end do
 
@@ -571,22 +610,23 @@ end subroutine
 ! This subroutine will do the average vertical velocity in significant supercooled
 ! cloud droplet regions.
 
-subroutine DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, Cloud, TempC, CloudDiam, CintLiq, TsAvg)
+subroutine DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, Cloud, TempC, CloudDiam, CintLiq, TsAvg)
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
-  real :: DeltaX, DeltaY, MinRadius, MaxRadius
+  real :: DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ
   real, dimension(1:Nx, 1:Ny, 1:Nz, 1:Nt) :: Cloud, TempC, CloudDiam
   real, dimension(1:Nx, 1:Ny, 1:1, 1:Nt) :: CintLiq
   real, dimension(1:1, 1:1, 1:1, 1:Nt) :: TsAvg
   integer, dimension(1:Nt) :: StmIx, StmIy
   real, dimension(1:Nx) :: Xcoords
   real, dimension(1:Ny) :: Ycoords
+  real, dimension(1:Nz) :: Zcoords
 
   integer ix,iy,iz,it, NumPoints
   real SumQ, SumQD
   real MaxQ, Climit, SumD
-  logical :: InsideRadialBand
+  logical :: InsideCylVol
 
   do it = 1, Nt
 !     ! Calculate a mass-weighted mean diameter for supercooled cloud droplets.
@@ -600,15 +640,15 @@ subroutine DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, S
 ! 
 !     do ix = 1, Nx
 !       do iy = 1, Ny
-!         if (InsideRadialBand(Nx, Ny, Nt, ix, iy, it, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords)) then
-!           do iz = 1, Nz
+!         do iz = 1, Nz
+!           if (InsideCylVol(Nx, Ny, Nz, Nt, ix, iy, iz, it, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords)) then
 !             if (TempC(ix,iy,iz,it) .le. 0.0) then
 !                SumQD = SumQD + (Cloud(ix,iy,iz,it) * CloudDiam(ix,iy,iz,it))
 !                SumQ = SumQ + Cloud(ix,iy,iz,it)
 !                NumPoints = NumPoints + 1
 !             end if
-!           end do
-!         end if
+!           end if
+!         end do
 !       end do
 !     end do
 ! 
@@ -626,13 +666,13 @@ subroutine DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, S
     MaxQ = 0
     do ix = 1, Nx
       do iy = 1, Ny
-        if (InsideRadialBand(Nx, Ny, Nt, ix, iy, it, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords)) then
-          do iz = 1, Nz
+        do iz = 1, Nz
+          if (InsideCylVol(Nx, Ny, Nz, Nt, ix, iy, iz, it, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords)) then
             if (Cloud(ix,iy,iz,it) .gt. MaxQ) then
                MaxQ = Cloud(ix,iy,iz,it)
             end if
-          end do
-        end if
+          end if
+        end do
       end do
     end do
     Climit = 0.3*MaxQ
@@ -643,9 +683,9 @@ subroutine DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, S
     NumPoints = 0
     do ix = 1, Nx
       do iy = 1, Ny
-!        if ((InsideRadialBand(Nx, Ny, Nt, ix, iy, it, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords)) .and. (CintLiq(ix,iy,1,it) .ge. 5000.0)) then
-        if (InsideRadialBand(Nx, Ny, Nt, ix, iy, it, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords)) then
-          do iz = 1, Nz
+        do iz = 1, Nz
+!        if ((InsideCylVol(Nx, Ny, Nz, Nt, ix, iy, iz, it, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords)) .and. (CintLiq(ix,iy,1,it) .ge. 5000.0)) then
+          if (InsideCylVol(Nx, Ny, Nz, Nt, ix, iy, iz, it, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords)) then
 !            if ((TempC(ix,iy,iz,it) .le. 0.0) .and. (Cloud(ix,iy,iz,it) .ge. Climit)) then
             if (TempC(ix,iy,iz,it) .le. 0.0) then
                SumQD = SumQD + (Cloud(ix,iy,iz,it) * CloudDiam(ix,iy,iz,it))
@@ -653,8 +693,8 @@ subroutine DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, S
                SumD = SumD + CloudDiam(ix,iy,iz,it)
                NumPoints = NumPoints + 1
             end if
-          end do
-        end if
+          end if
+        end do
       end do
     end do
 
@@ -683,21 +723,22 @@ end subroutine
 ! This subroutine will do the average cloud droplet concentration near the eyewall
 ! region.
 
-subroutine DoEwCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinLevel, MaxLevel, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, CloudConc, TsAvg)
+subroutine DoEwCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CloudConc, TsAvg)
   implicit none
 
-  integer :: Nx, Ny, Nz, Nt, MinLevel, MaxLevel
-  real :: DeltaX, DeltaY, MinRadius, MaxRadius
+  integer :: Nx, Ny, Nz, Nt
+  real :: DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ
   real, dimension(1:Nx, 1:Ny, 1:Nz, 1:Nt) :: CloudConc
   real, dimension(1:1, 1:1, 1:1, 1:Nt) :: TsAvg
   integer, dimension(1:Nt) :: StmIx, StmIy
   real, dimension(1:Nx) :: Xcoords
   real, dimension(1:Ny) :: Ycoords
+  real, dimension(1:Nz) :: Zcoords
 
   integer ix,iy,iz,it
   integer NumPoints
   real SumCloudConc
-  logical :: InsideRadialBand
+  logical :: InsideCylVol
 
   ! Calculate the average cloud droplet concentration near the eyewall region.
   ! 
@@ -711,12 +752,12 @@ subroutine DoEwCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinLevel, MaxLevel, MinRadi
 
     do ix = 1, Nx
       do iy = 1, Ny
-        if (InsideRadialBand(Nx, Ny, Nt, ix, iy, it, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords)) then
-          do iz = MinLevel, MaxLevel
-             SumCloudConc = SumCloudConc + CloudConc(ix,iy,iz,it)
-          end do
-          NumPoints = NumPoints + 1
-        end if
+        do iz = 1, Nz
+          if (InsideCylVol(Nx, Ny, Nz, Nt, ix, iy, iz, it, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords)) then
+            SumCloudConc = SumCloudConc + CloudConc(ix,iy,iz,it)
+            NumPoints = NumPoints + 1
+          end if
+        end do
       end do
     end do
 
@@ -736,14 +777,15 @@ end subroutine
 ! This subroutine will do the average cloud droplet concentration near the eyewall
 ! region.
 
-subroutine DoPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords, PrecipR, TsAvg)
+subroutine DoPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, PrecipR, TsAvg)
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
-  real :: DeltaX, DeltaY, MinRadius, MaxRadius
+  real :: DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ
   integer, dimension(1:Nt) :: StmIx, StmIy
   real, dimension(1:Nx) :: Xcoords
   real, dimension(1:Ny) :: Ycoords
+  real, dimension(1:Nz) :: Zcoords
   ! PrecipR is 2D var
   real, dimension(1:Nx, 1:Ny, 1:1, 1:Nt) :: PrecipR
   real, dimension(1:1, 1:1, 1:1, 1:Nt) :: TsAvg
@@ -751,7 +793,7 @@ subroutine DoPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx
   integer :: ix,iy,iz,it
   integer :: NumPoints
   real :: SumPrecip
-  logical :: InsideRadialBand
+  logical :: InsideCylVol
 
   do it = 1, Nt
     SumPrecip = 0.0
@@ -759,7 +801,7 @@ subroutine DoPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx
 
     do ix = 1, Nx
       do iy = 1, Ny
-        if (InsideRadialBand(Nx, Ny, Nt, ix, iy, it, MinRadius, MaxRadius, StmIx, StmIy, Xcoords, Ycoords)) then
+        if (InsideCylVol(Nx, Ny, Nz, Nt, ix, iy, 1, it, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords)) then
           SumPrecip = SumPrecip + PrecipR(ix,iy,1,it)
           NumPoints = NumPoints + 1
         end if
@@ -779,5 +821,48 @@ subroutine DoPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinRadius, MaxRadius, StmIx
     end if
     write (*,*) ''
     flush(6)
+  end do
+end subroutine
+
+!************************************************************************************
+! DoTestCvs()
+!
+! This subroutine will perform a test on the cylindrical volume selection routine.
+! Just runs through the entire grid and outputs a '1' when selection occurs otherwise
+! outputs a '0'. Then view the result in grads and see if selection is correct.
+
+subroutine DoTestCvs(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, TestSelect)
+  implicit none
+
+  integer :: Nx, Ny, Nz, Nt
+  real :: DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ
+  real, dimension(1:Nx, 1:Ny, 1:Nz, 1:Nt) :: TestSelect
+  integer, dimension(1:Nt) :: StmIx, StmIy
+  real, dimension(1:Nx) :: Xcoords
+  real, dimension(1:Ny) :: Ycoords
+  real, dimension(1:Nz) :: Zcoords
+
+  integer ix,iy,iz,it
+  integer NumPoints
+  logical :: InsideCylVol
+
+  write (*,*) 'Testing cylindrical volume selection:'
+  do it = 1, Nt
+    NumPoints = 0
+    do ix = 1, Nx
+      do iy = 1, Ny
+        do iz = 1, Nz
+          if (InsideCylVol(Nx, Ny, Nz, Nt, ix, iy, iz, it, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords)) then
+            TestSelect(ix,iy,iz,it) = 1.0
+            NumPoints = NumPoints + 1
+          else
+            TestSelect(ix,iy,iz,it) = 0.0
+          end if
+        end do
+      end do
+    end do
+    ! mark the storm center
+    TestSelect(StmIx(it), StmIy(it), iz, it) = 2.0
+    write (*,*) '  Timestep, Number of points selected: ', it, NumPoints
   end do
 end subroutine
