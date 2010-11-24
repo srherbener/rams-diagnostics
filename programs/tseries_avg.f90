@@ -101,6 +101,7 @@ program main
     if (AvgFunc .eq. 'precipr') then
       call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PreciprLoc, 'precipr')
       call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
+      call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CintLiqLoc, 'liquid_colint')
     else
       if (AvgFunc .eq. 'w_up') then
         call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, WLoc, 'w')
@@ -178,6 +179,7 @@ program main
     write (*,'(a20,i3,a2,i3,a1)') 'dn0: (', DensLoc%Fnum, ', ', DensLoc%Vnum, ')'
     write (*,'(a20,i3,a2,i3,a1)') 'cloud: (', CloudLoc%Fnum, ', ', CloudLoc%Vnum, ')'
     write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
+    write (*,'(a20,i3,a2,i3,a1)') 'liquid_colint: (', CintLiqLoc%Fnum, ', ', CintLiqLoc%Vnum, ')'
 
     ! Allocate the data arrays and read in the data from the GRADS data files
     allocate (TempC(1:Nx,1:Ny,1:Nz,1:Nt), Dens(1:Nx,1:Ny,1:Nz,1:Nt), &
@@ -198,10 +200,12 @@ program main
     if (AvgFunc .eq. 'precipr') then
       write (*,'(a20,i3,a2,i3,a1)') 'precipr: (', PreciprLoc%Fnum, ', ', PreciprLoc%Vnum, ')'
       write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
+      write (*,'(a20,i3,a2,i3,a1)') 'liquid_colint: (', CintLiqLoc%Fnum, ', ', CintLiqLoc%Vnum, ')'
 
       ! Allocate the data arrays and read in the data from the GRADS data files
       ! precipr is 2D variable -> Nz = 1
-      allocate (PrecipR(1:Nx,1:Ny,1:1,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
+      allocate (PrecipR(1:Nx,1:Ny,1:1,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), &
+                CintLiq(1:Nx,1:Ny,1:1,1:Nt), stat=Ierror)
       if (Ierror .ne. 0) then
         write (*,*) 'ERROR: Data array memory allocation failed'
         stop
@@ -211,6 +215,7 @@ program main
       ! precipr is 2D variable -> Nz = 1
       call ReadGradsData(GdataDescrip, 'precipr', PreciprLoc, PrecipR, Nx, Ny, 1, Nt)
       call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
+      call ReadGradsData(GdataDescrip, 'liquid_colint', CintLiqLoc, CintLiq, Nx, Ny, 1, Nt)
     else
       if (AvgFunc .eq. 'w_up') then
         write (*,'(a20,i3,a2,i3,a1)') 'w: (', WLoc%Fnum, ', ', WLoc%Vnum, ')'
@@ -323,7 +328,7 @@ program main
     call DoScCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, Cloud, TempC, Dens, CintLiq, TsAvg)
   else
     if (AvgFunc .eq. 'precipr') then
-      call DoPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, PrecipR, TsAvg)
+      call DoPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, PrecipR, CintLiq, TsAvg)
     else
       if (AvgFunc .eq. 'w_up') then
         call DoWup(Nx, Ny, Nz, Nt, DeltaX, DeltaY, Wthreshold, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, W, TsAvg)
@@ -777,17 +782,18 @@ end subroutine
 ! This subroutine will do the average cloud droplet concentration near the eyewall
 ! region.
 
-subroutine DoPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, PrecipR, TsAvg)
+subroutine DoPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, PrecipR, CintLiq, TsAvg)
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
-  real :: DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ
+  real :: DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, CilThresh
   integer, dimension(1:Nt) :: StmIx, StmIy
   real, dimension(1:Nx) :: Xcoords
   real, dimension(1:Ny) :: Ycoords
   real, dimension(1:Nz) :: Zcoords
   ! PrecipR is 2D var
   real, dimension(1:Nx, 1:Ny, 1:1, 1:Nt) :: PrecipR
+  real, dimension(1:Nx, 1:Ny, 1:1, 1:Nt) :: CintLiq
   real, dimension(1:1, 1:1, 1:1, 1:Nt) :: TsAvg
 
   integer :: ix,iy,iz,it
@@ -801,7 +807,7 @@ subroutine DoPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi,
 
     do ix = 1, Nx
       do iy = 1, Ny
-        if (InsideCylVol(Nx, Ny, Nz, Nt, ix, iy, 1, it, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords)) then
+        if (InsideCylVol(Nx, Ny, Nz, Nt, ix, iy, 1, it, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords) .and. (CintLiq(ix,iy,1,it) .ge. CilThresh)) then
           SumPrecip = SumPrecip + PrecipR(ix,iy,1,it)
           NumPoints = NumPoints + 1
         end if
