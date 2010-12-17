@@ -334,7 +334,7 @@ program main
         call DoWup(Nx, Ny, Nz, Nt, DeltaX, DeltaY, Wthreshold, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, W, TsAvg)
       else
         if (AvgFunc .eq. 'sc_cloud_diam') then
-          call DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, Cloud, TempC, CloudDiam, CintLiq, TsAvg)
+          call DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, Cloud, TempC, CloudDiam, CintLiq, TsAvg)
         else
           if (AvgFunc .eq. 'ew_cloud') then
             call DoEwCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CloudConc, TsAvg)
@@ -615,11 +615,11 @@ end subroutine
 ! This subroutine will do the average vertical velocity in significant supercooled
 ! cloud droplet regions.
 
-subroutine DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, Cloud, TempC, CloudDiam, CintLiq, TsAvg)
+subroutine DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, Cloud, TempC, CloudDiam, CintLiq, TsAvg)
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
-  real :: DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ
+  real :: DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, CilThresh
   real, dimension(1:Nx, 1:Ny, 1:Nz, 1:Nt) :: Cloud, TempC, CloudDiam
   real, dimension(1:Nx, 1:Ny, 1:1, 1:Nt) :: CintLiq
   real, dimension(1:1, 1:1, 1:1, 1:Nt) :: TsAvg
@@ -689,9 +689,7 @@ subroutine DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, Max
     do ix = 1, Nx
       do iy = 1, Ny
         do iz = 1, Nz
-!        if ((InsideCylVol(Nx, Ny, Nz, Nt, ix, iy, iz, it, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords)) .and. (CintLiq(ix,iy,1,it) .ge. 5000.0)) then
-          if (InsideCylVol(Nx, Ny, Nz, Nt, ix, iy, iz, it, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords)) then
-!            if ((TempC(ix,iy,iz,it) .le. 0.0) .and. (Cloud(ix,iy,iz,it) .ge. Climit)) then
+          if ((InsideCylVol(Nx, Ny, Nz, Nt, ix, iy, iz, it, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords)) .and. (CintLiq(ix,iy,1,it) .ge. CilThresh)) then
             if (TempC(ix,iy,iz,it) .le. 0.0) then
                SumQD = SumQD + (Cloud(ix,iy,iz,it) * CloudDiam(ix,iy,iz,it))
                SumQ = SumQ + Cloud(ix,iy,iz,it)
