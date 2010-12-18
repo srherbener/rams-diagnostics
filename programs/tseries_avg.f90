@@ -32,12 +32,15 @@ program main
   character (len=MediumString) :: OfileBase
   character (len=LittleString) :: AvgFunc
 
+  logical :: DoRates
+
   character (len=MediumString), dimension(1:MaxFiles) :: GradsCtlFiles
   integer :: Nfiles
   integer, dimension(:), allocatable :: StmIx, StmIy
 
-  real :: DeltaX, DeltaY, Wthreshold, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, CilThresh
+  real :: DeltaX, DeltaY, DeltaT, Wthreshold, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, CilThresh
   real :: Xstart, Xinc, Ystart, Yinc
+  real :: ConvertTinc
   real, dimension(:), allocatable :: ZmHeights
   real, dimension(1:1) :: DummyZcoords
   real, dimension(:), allocatable :: MinP, Xcoords, Ycoords, Zcoords
@@ -51,7 +54,7 @@ program main
   ! The *Loc vars hold the locations of cloud, tempc, precipr in the GRADS
   ! data files: the first index is the file number, the second index is the
   ! var number
-  real, dimension(:,:,:,:), allocatable :: Cloud, TempC, Dens, PrecipR, W, CloudDiam, CloudConc, Press, CintLiq, TsAvg, TestSelect
+  real, dimension(:,:,:,:), allocatable :: Cloud, TempC, Dens, PrecipR, W, CloudDiam, CloudConc, Press, CintLiq, TsAvg, TestSelect, Rates
   type (GradsVarLocation) :: CloudLoc, TempcLoc, DensLoc, WLoc, CloudDiamLoc, CloudConcLoc, PreciprLoc, PressLoc, CintLiqLoc
 
   integer :: i
@@ -60,7 +63,7 @@ program main
   integer :: ix, iy, iz, it
 
   ! Get the command line arguments
-  call GetMyArgs(Infiles, OfileBase, AvgFunc, Wthreshold, CilThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ)
+  call GetMyArgs(Infiles, OfileBase, AvgFunc, DoRates, Wthreshold, CilThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ)
   call String2List(Infiles, ':', GradsCtlFiles, MaxFiles, Nfiles, 'input files')
 
   write (*,*) 'Time seris of average for RAMS data:'
@@ -70,6 +73,7 @@ program main
   end do
   write (*,*) '  Output file base name:  ', trim(OfileBase)
   write (*,*) '  Averaging function: ', trim(AvgFunc)
+  write (*,*) '  Do rates?: ', DoRates
   write (*,*) '  Data selection specs: '
   write (*,*) '    Minimum radius: ', MinR
   write (*,*) '    Maximum radius: ', MaxR
@@ -145,6 +149,9 @@ program main
   DeltaX = (Xcoords(2) - Xcoords(1)) * 1000.0
   DeltaY = (Ycoords(2) - Ycoords(1)) * 1000.0
 
+  ! Convert string time increment to seconds
+  DeltaT = ConvertTinc(GdataDescrip(1)%Tinc)
+
   write (*,*) 'Horizontal grid info:'
   write (*,*) '  X range (min lon, max lon) --> (min x, max x): '
   write (*,*) '    ', GdataDescrip(1)%Xcoords(1), GdataDescrip(1)%Xcoords(Nx), Xcoords(1), Xcoords(Nx)
@@ -170,6 +177,7 @@ program main
   write (*,*) ''
   write (*,*) '  Grid delta x: ', DeltaX
   write (*,*) '  Grid delta y: ', DeltaY
+  write (*,*) '  Time increment: ', trim(GdataDescrip(1)%Tinc), ' --> ', DeltaT
   write (*,*) ''
   flush(6)
 
@@ -348,6 +356,28 @@ program main
     end if
   end if
 
+  ! Convert to rates (derivative wrt time) if requested
+  if (DoRates .eq. .true.) then
+    write (*,*) 'Converting average data to rates'
+    write (*,*) ''
+
+    if (AvgFunc .eq. 'test_cvs') then
+      write (*,*) 'WARNING: Skipping conversion due to selection of test function'
+      write (*,*) ''
+    else
+      allocate (Rates(1:1,1:1,1:1,1:Nt-2), stat=Ierror)
+      if (Ierror .ne. 0) then
+        write (*,*) 'ERROR: Ouput rates data array memory allocation failed'
+        stop
+      end if
+
+      ! Doing the derivative with a difference method which will reduce
+      ! the number of time points by two.
+      call CalcRates(1, 1, 1, Nt, DeltaT, TsAvg, Rates)
+      Nt = Nt - 2
+    end if
+  end if
+
   if (AvgFunc .eq. 'test_cvs') then
     Xstart = GdataDescrip(PressLoc%Fnum)%Xcoords(1)
     Xinc = GdataDescrip(PressLoc%Fnum)%Xcoords(2) - GdataDescrip(PressLoc%Fnum)%Xcoords(1)
@@ -364,10 +394,17 @@ program main
     Xinc = 1.0
     Ystart = 0.0
     Yinc = 1.0
-    call BuildGoutDescrip(1, 1, 1, Nt, TsAvg, OfileBase, GdataDescrip(1)%UndefVal, &
+    if (DoRates .eq. .true.) then
+      call BuildGoutDescrip(1, 1, 1, Nt, Rates, OfileBase, GdataDescrip(1)%UndefVal, &
+           AvgFunc, Xstart, Xinc, Ystart, Yinc, DummyZcoords, GdataDescrip(1)%Tstart, &
+           GdataDescrip(1)%Tinc, GoutDescrip, 'dt')
+      call WriteGrads(GoutDescrip, Rates)
+    else
+      call BuildGoutDescrip(1, 1, 1, Nt, TsAvg, OfileBase, GdataDescrip(1)%UndefVal, &
            AvgFunc, Xstart, Xinc, Ystart, Yinc, DummyZcoords, GdataDescrip(1)%Tstart, &
            GdataDescrip(1)%Tinc, GoutDescrip, 'ts')
-    call WriteGrads(GoutDescrip, TsAvg)
+      call WriteGrads(GoutDescrip, TsAvg)
+    end if
   end if
 
   stop
@@ -382,11 +419,12 @@ end
 !   AvgFunc - averaging function selection
 !
 
-subroutine GetMyArgs(Infiles, OfileBase, AvgFunc, Wthreshold, CilThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ)
+subroutine GetMyArgs(Infiles, OfileBase, AvgFunc, DoRates, Wthreshold, CilThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ)
   implicit none
 
   character (len=*) :: Infiles, OfileBase, AvgFunc
   real :: Wthreshold, CilThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ
+  logical :: DoRates
 
   integer :: iargc
   character (len=128) :: arg
@@ -394,10 +432,10 @@ subroutine GetMyArgs(Infiles, OfileBase, AvgFunc, Wthreshold, CilThresh, MinR, M
 
   logical :: BadArgs
 
-  if (iargc() .ne. 11) then
-    write (*,*) 'ERROR: must supply exactly 11 arguments'
+  if (iargc() .ne. 12) then
+    write (*,*) 'ERROR: must supply exactly 12 arguments'
     write (*,*) ''
-    write (*,*) 'USAGE: azavg <in_data_files> <out_data_file> <averaging_function> <w_threshold> <min_r> <max_r> <min_phi> <max_phi> <min_z> <max_z>'
+    write (*,*) 'USAGE: azavg <in_data_files> <out_data_file> <averaging_function> <do_rates_flag> <w_threshold> <min_r> <max_r> <min_phi> <max_phi> <min_z> <max_z>'
     write (*,*) '        <in_data_files>: GRADS format, control file, colon separated list'
     write (*,*) '        <out_data_file>: GRADS format, this program will tag on .ctl, .dat suffixes'
     write (*,*) '        <averaging_function>: averaging function to use on input data'
@@ -407,6 +445,10 @@ subroutine GetMyArgs(Infiles, OfileBase, AvgFunc, Wthreshold, CilThresh, MinR, M
     write (*,*) '            sc_cloud_diam -> total supercooled cloud droplet mean diameter'
     write (*,*) '            ew_cloud -> average cloud droplet concentration near eyewall region'
     write (*,*) '            test_cvs -> test the cylindrical volume selection scheme'
+    write (*,*) ''
+    write (*,*) '        <do_rates_flag>: use "rates" or "no_rates"'
+    write (*,*) '            "rates" -> output deriviative wrt time'
+    write (*,*) '            "no_rates" -> output averaged data as is'
     write (*,*) ''
     write (*,*) '        The following args are used to select data'
     write (*,*) '          <w_threshold>: select data where w is >= <w_threshold>'
@@ -425,27 +467,34 @@ subroutine GetMyArgs(Infiles, OfileBase, AvgFunc, Wthreshold, CilThresh, MinR, M
   call getarg(3, AvgFunc)
 
   call getarg(4, arg)
-  read(arg, '(f)') Wthreshold
+  if (arg .eq. 'rates') then
+    DoRates = .true.
+  else
+    DoRates = .false.
+  end if
 
   call getarg(5, arg)
-  read(arg, '(f)') CilThresh
+  read(arg, '(f)') Wthreshold
 
   call getarg(6, arg)
-  read(arg, '(f)') MinR
+  read(arg, '(f)') CilThresh
 
   call getarg(7, arg)
-  read(arg, '(f)') MaxR
+  read(arg, '(f)') MinR
 
   call getarg(8, arg)
-  read(arg, '(f)') MinPhi
+  read(arg, '(f)') MaxR
 
   call getarg(9, arg)
-  read(arg, '(f)') MaxPhi
+  read(arg, '(f)') MinPhi
 
   call getarg(10, arg)
-  read(arg, '(f)') MinZ
+  read(arg, '(f)') MaxPhi
 
   call getarg(11, arg)
+  read(arg, '(f)') MinZ
+
+  call getarg(12, arg)
   read(arg, '(f)') MaxZ
 
   BadArgs = .false.
@@ -868,5 +917,84 @@ subroutine DoTestCvs(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi,
     ! mark the storm center
     TestSelect(StmIx(it), StmIy(it), iz, it) = 2.0
     write (*,*) '  Timestep, Number of points selected: ', it, NumPoints
+  end do
+end subroutine
+
+!******************************************************************************
+! ConvertTinc()
+!
+! This function will convert the time increment spec'd in the GRAD control
+! file into a number of seconds.
+!
+
+real function ConvertTinc(Tinc)
+  implicit none
+
+  character (len=*) :: Tinc
+
+  character (len=128) :: Tval, Tunits, Tfmt
+  integer :: i, Uloc, Tlen, Itval
+  
+  ! Walk through the Tinc string. Concatenate the numbers onto Tval and
+  ! the alaph characters onto Tunits. This algorithm assumes that GRADS
+  ! will use a format like <numeric_value><units> for Tinc where <units>
+  ! is a string like 'hr' or 'mn'.
+  Uloc = 0
+  Tlen = len_trim(Tinc)
+  do i = 1, Tlen
+    if ((Tinc(i:i) .ge. 'A') .and. (Tinc(i:i) .le. 'z')) then
+      if (Uloc .eq. 0) then
+        ! the first alpha character is the beginning of the spec for units
+        Uloc = i
+      end if
+    end if
+  end do
+
+  write (Tfmt, '(a,i2.2,a,i2.2,a)') '(a', (Uloc-1), 'a' , ((Tlen-Uloc)+1), ')'
+  read (Tinc, Tfmt) Tval, Tunits
+
+  read(Tval, '(i)') Itval
+  if (Tunits .eq. 'hr') then
+    ConvertTinc = float(Itval) * 3600.0
+  else
+    if (Tunits .eq. 'mn') then
+      ConvertTinc = float(Itval) * 60.0
+    else
+      ConvertTinc = float(Itval)
+    end if
+  end if
+  return
+end function
+
+!******************************************************************************
+! CalcRates()
+!
+! This routine will calculate time derivatives of the input data using
+! a centered difference method.
+!
+
+subroutine CalcRates(Nx, Ny, Nz, Nt, DeltaT, TsAvg, Rates)
+  implicit none
+
+  integer Nx, Ny, Nz, Nt
+  real, dimension(1:Nx, 1:Ny, 1:Nz, 1:Nt) :: TsAvg 
+  real, dimension(1:Nx, 1:Ny, 1:Nz, 1:Nt-2) :: Rates 
+  real :: DeltaT
+
+  real :: f1, f2
+  integer :: ix, iy, iz, it
+
+  ! use a centered difference, uses points at t-1, t and t+1
+  do ix = 1, Nx
+    do iy = 1, Ny
+      do iz = 1, Nz
+        do it = 2, Nt-1
+          f1 = (TsAvg(1,1,1,it) + TsAvg(1,1,1,it-1)) / 2.0
+          f2 = (TsAvg(1,1,1,it+1) + TsAvg(1,1,1,it)) / 2.0
+
+          Rates(1,1,1,it-1) = (f2 - f1) / DeltaT
+        end do
+      end do
+    end do
   end do
 end subroutine
