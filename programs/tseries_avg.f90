@@ -28,14 +28,13 @@ program main
   integer, parameter :: LittleString=128
   integer, parameter :: MaxFiles=10
 
-  character (len=LargeString) :: Infiles
-  character (len=MediumString) :: OfileBase
+  character (len=LargeString) :: Infiles, Outfiles
   character (len=LittleString) :: AvgFunc
 
   logical :: DoRates
 
-  character (len=MediumString), dimension(1:MaxFiles) :: GradsCtlFiles
-  integer :: Nfiles
+  character (len=MediumString), dimension(1:MaxFiles) :: GradsCtlFiles, OfileBases
+  integer :: Nfiles, Nofiles
   integer, dimension(:), allocatable :: StmIx, StmIy
 
   real :: DeltaX, DeltaY, DeltaT, Wthreshold, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, CilThresh
@@ -63,15 +62,17 @@ program main
   integer :: ix, iy, iz, it
 
   ! Get the command line arguments
-  call GetMyArgs(Infiles, OfileBase, AvgFunc, DoRates, Wthreshold, CilThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ)
+  call GetMyArgs(Infiles, Outfiles, AvgFunc, DoRates, Wthreshold, CilThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ)
   call String2List(Infiles, ':', GradsCtlFiles, MaxFiles, Nfiles, 'input files')
+  call String2List(Outfiles, ':', OfileBases, MaxFiles, Nofiles, 'output files')
 
   write (*,*) 'Time seris of average for RAMS data:'
   write (*,*) '  GRADS input control files:'
   do i = 1, Nfiles
     write (*,*) '  ', i, ': ', trim(GradsCtlFiles(i))
   end do
-  write (*,*) '  Output file base name:  ', trim(OfileBase)
+  write (*,*) '  Output file base name:  ', trim(OfileBases(1))
+  write (*,*) '  Output rates file base name:  ', trim(OfileBases(2))
   write (*,*) '  Averaging function: ', trim(AvgFunc)
   write (*,*) '  Do rates?: ', DoRates
   write (*,*) '  Data selection specs: '
@@ -374,7 +375,6 @@ program main
       ! Doing the derivative with a difference method which will reduce
       ! the number of time points by two.
       call CalcRates(1, 1, 1, Nt, DeltaT, TsAvg, Rates)
-      Nt = Nt - 2
     end if
   end if
 
@@ -383,7 +383,7 @@ program main
     Xinc = GdataDescrip(PressLoc%Fnum)%Xcoords(2) - GdataDescrip(PressLoc%Fnum)%Xcoords(1)
     Ystart = GdataDescrip(PressLoc%Fnum)%Ycoords(1)
     Yinc = GdataDescrip(PressLoc%Fnum)%Ycoords(2) - GdataDescrip(PressLoc%Fnum)%Ycoords(1)
-    call BuildGoutDescrip(Nx, Ny, Nz, Nt, TestSelect, OfileBase, &
+    call BuildGoutDescrip(Nx, Ny, Nz, Nt, TestSelect, OfileBases(1), &
            GdataDescrip(PressLoc%Fnum)%UndefVal, AvgFunc, Xstart, Xinc, Ystart, Yinc, &
            GdataDescrip(PressLoc%Fnum)%Zcoords, GdataDescrip(PressLoc%Fnum)%Tstart, &
            GdataDescrip(PressLoc%Fnum)%Tinc, GoutDescrip, 'ts')
@@ -394,16 +394,15 @@ program main
     Xinc = 1.0
     Ystart = 0.0
     Yinc = 1.0
+    call BuildGoutDescrip(1, 1, 1, Nt, TsAvg, OfileBases(1), GdataDescrip(1)%UndefVal, &
+         AvgFunc, Xstart, Xinc, Ystart, Yinc, DummyZcoords, GdataDescrip(1)%Tstart, &
+         GdataDescrip(1)%Tinc, GoutDescrip, 'ts')
+    call WriteGrads(GoutDescrip, TsAvg)
     if (DoRates .eq. .true.) then
-      call BuildGoutDescrip(1, 1, 1, Nt, Rates, OfileBase, GdataDescrip(1)%UndefVal, &
+      call BuildGoutDescrip(1, 1, 1, Nt-2, Rates, OfileBases(2), GdataDescrip(1)%UndefVal, &
            AvgFunc, Xstart, Xinc, Ystart, Yinc, DummyZcoords, GdataDescrip(1)%Tstart, &
            GdataDescrip(1)%Tinc, GoutDescrip, 'dt')
       call WriteGrads(GoutDescrip, Rates)
-    else
-      call BuildGoutDescrip(1, 1, 1, Nt, TsAvg, OfileBase, GdataDescrip(1)%UndefVal, &
-           AvgFunc, Xstart, Xinc, Ystart, Yinc, DummyZcoords, GdataDescrip(1)%Tstart, &
-           GdataDescrip(1)%Tinc, GoutDescrip, 'ts')
-      call WriteGrads(GoutDescrip, TsAvg)
     end if
   end if
 
@@ -415,14 +414,14 @@ end
 !
 ! This routine will read in the following command line arguments
 !   Infiles - input GRADS file
-!   OfileBase - output GRADS file, base name for two files
+!   Outfiles - output GRADS file, base name for two files
 !   AvgFunc - averaging function selection
 !
 
-subroutine GetMyArgs(Infiles, OfileBase, AvgFunc, DoRates, Wthreshold, CilThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ)
+subroutine GetMyArgs(Infiles, Outfiles, AvgFunc, DoRates, Wthreshold, CilThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ)
   implicit none
 
-  character (len=*) :: Infiles, OfileBase, AvgFunc
+  character (len=*) :: Infiles, Outfiles, AvgFunc
   real :: Wthreshold, CilThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ
   logical :: DoRates
 
@@ -435,9 +434,9 @@ subroutine GetMyArgs(Infiles, OfileBase, AvgFunc, DoRates, Wthreshold, CilThresh
   if (iargc() .ne. 12) then
     write (*,*) 'ERROR: must supply exactly 12 arguments'
     write (*,*) ''
-    write (*,*) 'USAGE: azavg <in_data_files> <out_data_file> <averaging_function> <do_rates_flag> <w_threshold> <min_r> <max_r> <min_phi> <max_phi> <min_z> <max_z>'
+    write (*,*) 'USAGE: azavg <in_data_files> <out_data_files> <averaging_function> <do_rates_flag> <w_threshold> <cli_threshold> <min_r> <max_r> <min_phi> <max_phi> <min_z> <max_z>'
     write (*,*) '        <in_data_files>: GRADS format, control file, colon separated list'
-    write (*,*) '        <out_data_file>: GRADS format, this program will tag on .ctl, .dat suffixes'
+    write (*,*) '        <out_data_file>: GRADS format, colon seprated list, data + rates names, this program will tag on .ctl, .dat suffixes'
     write (*,*) '        <averaging_function>: averaging function to use on input data'
     write (*,*) '            sc_cloud -> total supercooled cloud droplets'
     write (*,*) '            precipr -> total precipitation rate'
@@ -447,8 +446,8 @@ subroutine GetMyArgs(Infiles, OfileBase, AvgFunc, DoRates, Wthreshold, CilThresh
     write (*,*) '            test_cvs -> test the cylindrical volume selection scheme'
     write (*,*) ''
     write (*,*) '        <do_rates_flag>: use "rates" or "no_rates"'
-    write (*,*) '            "rates" -> output deriviative wrt time'
-    write (*,*) '            "no_rates" -> output averaged data as is'
+    write (*,*) '            "rates" -> output averaged data plus deriviative wrt time data'
+    write (*,*) '            "no_rates" -> output averaged data only'
     write (*,*) ''
     write (*,*) '        The following args are used to select data'
     write (*,*) '          <w_threshold>: select data where w is >= <w_threshold>'
@@ -462,7 +461,7 @@ subroutine GetMyArgs(Infiles, OfileBase, AvgFunc, DoRates, Wthreshold, CilThresh
   end if
 
   call getarg(1, Infiles)
-  call getarg(2, OfileBase)
+  call getarg(2, Outfiles)
 
   call getarg(3, AvgFunc)
 
