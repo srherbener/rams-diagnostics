@@ -78,8 +78,8 @@ function main(args)
   endif
   if (varNum = 6)
 *   GCCN
-    varName = 'gccnconcen'
-    gVar = 'gccnconcen_azav'
+    varName = 'gccnconc'
+    gVar = 'gccnconc_azavg_'
     gClevs = '0.00001 0.0001 0.001 0.01 0.0 0.2 0.4 0.6 0.8 1.0 1.2 1.4 1.6'
     gCcols = '      9     14     4   11   5  13   3  10   7  12   8   2   6'
     gTitle = gExp': AZ: GCCN (#/cc), 'gCase', t 'timeStr
@@ -141,8 +141,8 @@ function main(args)
   endif
   if (varNum = 13)
 *   cloud droplet number concentration
-    varName = 'cloudconcen_cm3'
-    gVar = 'cloudconcen_cm3'
+    varName = 'cloud_cm3'
+    gVar = 'cloud_cm3_azavg'
     gClevs = '0.0 5.00 10.00 15.00 20.00 25.00 30.00 35.00 40.00 45.00 50.00 55.00 60.00'
     gCcols = '  9  14   4  11   5  13   3  10   7  12   8   2   6'
     gTitle = gExp': AZ: Cloud Droplet Number (#/cc), 'gCase', t 'timeStr
@@ -151,8 +151,8 @@ function main(args)
   endif
   if (varNum = 14)
 *   cloud2 droplet number concentration
-    varName = 'cloud2concen_cm'
-    gVar = 'cloud2concen_cm'
+    varName = 'cloud2_cm'
+    gVar = 'cloud2_cm_azavg'
     gClevs = '0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2'
     gCcols = '  9  14   4  11   5  13   3  10   7  12   8   2   6'
     gTitle = gExp': AZ: Cloud2 Droplet Number (#/cc), 'gCase', t 'timeStr
