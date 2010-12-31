@@ -32,7 +32,7 @@ function main(args)
   if (varNum = 1)
 *   supercooled cloud droplet mass
     varName = 'ts_sc_cloud'
-    gVar = 'sc_cloud_ts'
+    gVar = 'sc_cloud_ts_joi'
     gTitle = gExp': Total supercooled cloud droplet mass, 'gCase
     yTitle = 'SC Cloud Mass (g)'
     avgLen = 4
@@ -48,7 +48,7 @@ function main(args)
   if (varNum = 3)
 *   total precip rate
     varName = 'ts_precipr'
-    gVar = 'precipr_ts'
+    gVar = 'precipr_ts_join'
     gTitle = gExp': Precipitation rate, 'gCase
     yTitle = 'Precip Rate (kg/hr)'
     avgLen = 4
@@ -56,7 +56,7 @@ function main(args)
   if (varNum = 4)
 *   vertical velocity
     varName = 'ts_w_up'
-    gVar = 'w_up_ts'
+    gVar = 'w_up_ts_join'
     gTitle = gExp': Average w in updraft regions, 'gCase
     yTitle = 'Average w (m/s)'
     avgLen = 4
@@ -64,7 +64,7 @@ function main(args)
   if (varNum = 5)
 *   eyewall clound droplet concentration
     varName = 'ts_ew_cloud'
-    gVar = 'ew_cloud_ts'
+    gVar = 'ew_cloud_ts_joi'
     gTitle = gExp': Average cloud droplet conc. near eyewall, 'gCase
     yTitle = 'Average N (#/cc)'
     avgLen = 4
@@ -72,7 +72,7 @@ function main(args)
   if (varNum = 6)
 *   supercooled cloud droplet mass, rates
     varName = 'ts_sc_cloud_rates'
-    gVar = 'sc_cloud_dt'
+    gVar = 'sc_cloud_dt_joi'
     gTitle = gExp': Total supercooled cloud droplet mass dt, 'gCase
     yTitle = 'SC Cloud Mass Rate (g/s)'
     avgLen = 4
@@ -88,7 +88,7 @@ function main(args)
   if (varNum = 8)
 *   total precip rate, rates
     varName = 'ts_precipr_rates'
-    gVar = 'precipr_dt'
+    gVar = 'precipr_dt_join'
     gTitle = gExp': Precipitation rate dt, 'gCase
     yTitle = 'Precip Rate Rates (kg/hr/s)'
     avgLen = 4
@@ -96,7 +96,7 @@ function main(args)
   if (varNum = 9)
 *   vertical velocity, rates
     varName = 'ts_w_up_rates'
-    gVar = 'w_up_dt'
+    gVar = 'w_up_dt_join'
     gTitle = gExp': Average w in updraft regions dt, 'gCase
     yTitle = 'Average w (m/s/s)'
     avgLen = 4
@@ -104,7 +104,7 @@ function main(args)
   if (varNum = 10)
 *   eyewall clound droplet concentration, rates
     varName = 'ts_ew_cloud_rates'
-    gVar = 'ew_cloud_dt'
+    gVar = 'ew_cloud_dt_joi'
     gTitle = gExp': Average cloud droplet conc. near eyewall dt, 'gCase
     yTitle = 'Average N (#/cc/s)'
     avgLen = 4
