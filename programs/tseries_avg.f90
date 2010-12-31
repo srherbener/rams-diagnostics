@@ -31,7 +31,7 @@ program main
   character (len=LargeString) :: Infiles, Outfiles
   character (len=LittleString) :: AvgFunc
 
-  logical :: DoRates
+  logical :: DoRates, DoSc
 
   character (len=MediumString), dimension(1:MaxFiles) :: GradsCtlFiles, OfileBases
   integer :: Nfiles, Nofiles
@@ -66,6 +66,11 @@ program main
   call String2List(Infiles, ':', GradsCtlFiles, MaxFiles, Nfiles, 'input files')
   call String2List(Outfiles, ':', OfileBases, MaxFiles, Nofiles, 'output files')
 
+  DoSc = .true.
+  if ((AvgFunc .eq. 'wr_cloud') .or. (AvgFunc .eq. 'wr_cloud_diam')) then
+    DoSc = .false.
+  end if
+
   write (*,*) 'Time seris of average for RAMS data:'
   write (*,*) '  GRADS input control files:'
   do i = 1, Nfiles
@@ -75,6 +80,7 @@ program main
   write (*,*) '  Output rates file base name:  ', trim(OfileBases(2))
   write (*,*) '  Averaging function: ', trim(AvgFunc)
   write (*,*) '  Do rates?: ', DoRates
+  write (*,*) '  Do supercoooled?: ', DoSc
   write (*,*) '  Data selection specs: '
   write (*,*) '    Minimum radius: ', MinR
   write (*,*) '    Maximum radius: ', MaxR
@@ -96,7 +102,7 @@ program main
   flush(6)
 
   ! Check the data description for consistency and locate the variables in the GRADS control files
-  if (AvgFunc .eq. 'sc_cloud') then
+  if ((AvgFunc .eq. 'sc_cloud') .or. (AvgFunc .eq. 'wr_cloud')) then
     call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, TempcLoc, 'tempc')
     call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, DensLoc, 'dn0')
     call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CloudLoc, 'cloud')
@@ -112,7 +118,7 @@ program main
         call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, WLoc, 'w')
         call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
       else
-        if (AvgFunc .eq. 'sc_cloud_diam') then
+        if ((AvgFunc .eq. 'sc_cloud_diam') .or. (AvgFunc .eq. 'wr_cloud_diam')) then
           call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, TempcLoc, 'tempc')
           call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CloudLoc, 'cloud')
           call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CloudDiamLoc, 'cloud_d')
@@ -183,7 +189,7 @@ program main
   flush(6)
 
   write (*,*) 'Locations of variables in GRADS data (file number, var number):'
-  if (AvgFunc .eq. 'sc_cloud') then
+  if ((AvgFunc .eq. 'sc_cloud') .or. (AvgFunc .eq. 'wr_cloud')) then
     write (*,'(a20,i3,a2,i3,a1)') 'tempc: (', TempcLoc%Fnum, ', ', TempcLoc%Vnum, ')'
     write (*,'(a20,i3,a2,i3,a1)') 'dn0: (', DensLoc%Fnum, ', ', DensLoc%Vnum, ')'
     write (*,'(a20,i3,a2,i3,a1)') 'cloud: (', CloudLoc%Fnum, ', ', CloudLoc%Vnum, ')'
@@ -241,7 +247,7 @@ program main
         call ReadGradsData(GdataDescrip, 'w', WLoc, W, Nx, Ny, Nz, Nt)
         call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
       else
-        if (AvgFunc .eq. 'sc_cloud_diam') then
+        if ((AvgFunc .eq. 'sc_cloud_diam') .or. (AvgFunc .eq. 'wr_cloud_diam')) then
           write (*,'(a20,i3,a2,i3,a1)') 'tempc: (', TempcLoc%Fnum, ', ', TempcLoc%Vnum, ')'
           write (*,'(a20,i3,a2,i3,a1)') 'cloud: (', CloudLoc%Fnum, ', ', CloudLoc%Vnum, ')'
           write (*,'(a20,i3,a2,i3,a1)') 'cloud_d: (', CloudDiamLoc%Fnum, ', ', CloudDiamLoc%Vnum, ')'
@@ -333,8 +339,8 @@ program main
 
   ! call the averaging function
 
-  if (AvgFunc .eq. 'sc_cloud') then
-    call DoScCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, Cloud, TempC, Dens, CintLiq, TsAvg)
+  if ((AvgFunc .eq. 'sc_cloud') .or. (AvgFunc .eq. 'wr_cloud')) then
+    call DoCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, DoSc, Cloud, TempC, Dens, CintLiq, TsAvg)
   else
     if (AvgFunc .eq. 'precipr') then
       call DoPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, PrecipR, CintLiq, TsAvg)
@@ -342,8 +348,8 @@ program main
       if (AvgFunc .eq. 'w_up') then
         call DoWup(Nx, Ny, Nz, Nt, DeltaX, DeltaY, Wthreshold, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, W, TsAvg)
       else
-        if (AvgFunc .eq. 'sc_cloud_diam') then
-          call DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, Cloud, TempC, CloudDiam, CintLiq, TsAvg)
+        if ((AvgFunc .eq. 'sc_cloud_diam') .or. (AvgFunc .eq. 'wr_cloud_diam')) then
+          call DoCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, DoSc, Cloud, TempC, CloudDiam, CintLiq, TsAvg)
         else
           if (AvgFunc .eq. 'ew_cloud') then
             call DoEwCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CloudConc, TsAvg)
@@ -443,6 +449,8 @@ subroutine GetMyArgs(Infiles, Outfiles, AvgFunc, DoRates, Wthreshold, CilThresh,
     write (*,*) '            w_up -> average w in regions of significant updrafts'
     write (*,*) '            sc_cloud_diam -> total supercooled cloud droplet mean diameter'
     write (*,*) '            ew_cloud -> average cloud droplet concentration near eyewall region'
+    write (*,*) '            wr_cloud -> total warm rain cloud droplets'
+    write (*,*) '            wr_cloud_diam -> total warm rain cloud droplet mean diameter'
     write (*,*) '            test_cvs -> test the cylindrical volume selection scheme'
     write (*,*) ''
     write (*,*) '        <do_rates_flag>: use "rates" or "no_rates"'
@@ -500,6 +508,7 @@ subroutine GetMyArgs(Infiles, Outfiles, AvgFunc, DoRates, Wthreshold, CilThresh,
 
   if ((AvgFunc .ne. 'sc_cloud') .and. (AvgFunc .ne. 'precipr') .and. &
       (AvgFunc .ne. 'w_up') .and. (AvgFunc .ne. 'sc_cloud_diam') .and. &
+      (AvgFunc .ne. 'wr_cloud') .and. (AvgFunc .ne. 'wr_cloud_diam') .and. &
       (AvgFunc .ne. 'ew_cloud') .and. (AvgFunc .ne. 'test_cvs')) then
     write (*,*) 'ERROR: <averaging_function> must be one of:'
     write (*,*) '          sc_cloud'
@@ -507,6 +516,8 @@ subroutine GetMyArgs(Infiles, Outfiles, AvgFunc, DoRates, Wthreshold, CilThresh,
     write (*,*) '          w_up'
     write (*,*) '          sc_cloud_diam'
     write (*,*) '          ew_cloud'
+    write (*,*) '          wr_cloud'
+    write (*,*) '          wr_cloud_diam'
     write (*,*) '          test_cvs'
     write (*,*) ''
     BadArgs = .true.
@@ -538,16 +549,17 @@ subroutine GetMyArgs(Infiles, Outfiles, AvgFunc, DoRates, Wthreshold, CilThresh,
 end subroutine
 
 !*****************************************************************************
-! DoScCloud()
+! DoCloud()
 !
-! This subroutine will perform the supercooled cloud droplet time series
-! averaging.
+! This subroutine will perform the cloud droplet total mass time series
+! averaging. Can select between supercooled or warm rain droplets.
 !
 
-subroutine DoScCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, Cloud, TempC, Dens, CintLiq, TsAvg)
+subroutine DoCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, DoSc, Cloud, TempC, Dens, CintLiq, TsAvg)
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
+  logical :: DoSc
   real :: DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, CilThresh
   real, dimension(1:Nx, 1:Ny, 1:Nz, 1:Nt) :: Cloud, TempC, Dens
   real, dimension(1:Nx, 1:Ny, 1:1, 1:Nt) :: CintLiq
@@ -583,9 +595,16 @@ subroutine DoScCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi,
       do iy = 1, Ny
         do iz = 1, Nz
           if ((InsideCylVol(Nx, Ny, Nz, Nt, ix, iy, iz, it, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords))  .and. (CintLiq(ix,iy,1,it) .ge. CilThresh)) then
-            if (TempC(ix,iy,iz,it) .le. 0.0) then
-              TsAvg(1,1,1,it) = TsAvg(1,1,1,it) + (Cloud(ix,iy,iz,it) * Dens(ix,iy,iz,it) * (ZmHeights(iz)-ZmHeights(iz-1)))
-              NumPoints = NumPoints + 1
+            if (DoSc) then
+              if (TempC(ix,iy,iz,it) .le. 0.0) then
+                TsAvg(1,1,1,it) = TsAvg(1,1,1,it) + (Cloud(ix,iy,iz,it) * Dens(ix,iy,iz,it) * (ZmHeights(iz)-ZmHeights(iz-1)))
+                NumPoints = NumPoints + 1
+              end if
+            else
+              if (TempC(ix,iy,iz,it) .gt. 0.0) then
+                TsAvg(1,1,1,it) = TsAvg(1,1,1,it) + (Cloud(ix,iy,iz,it) * Dens(ix,iy,iz,it) * (ZmHeights(iz)-ZmHeights(iz-1)))
+                NumPoints = NumPoints + 1
+              end if
             end if
           end if
         end do
@@ -658,15 +677,16 @@ end subroutine
 
 
 !************************************************************************************
-! DoScCloudDiam()
+! DoCloudDiam()
 !
-! This subroutine will do the average vertical velocity in significant supercooled
-! cloud droplet regions.
+! This routine will calculate an averaged cloud droplet diameter. Can select between
+! warm rain droplets or supercooled droplets.
 
-subroutine DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, Cloud, TempC, CloudDiam, CintLiq, TsAvg)
+subroutine DoCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, DoSc, Cloud, TempC, CloudDiam, CintLiq, TsAvg)
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
+  logical :: DoSc
   real :: DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, CilThresh
   real, dimension(1:Nx, 1:Ny, 1:Nz, 1:Nt) :: Cloud, TempC, CloudDiam
   real, dimension(1:Nx, 1:Ny, 1:1, 1:Nt) :: CintLiq
@@ -716,19 +736,19 @@ subroutine DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, Max
     ! Find the max Q (mass) value and use it to filter data - select data points if
     ! the Q is within 20% of the max Q (.2 to 1.0). Then form the average of the diameters
     ! of the selected points.
-    MaxQ = 0
-    do ix = 1, Nx
-      do iy = 1, Ny
-        do iz = 1, Nz
-          if (InsideCylVol(Nx, Ny, Nz, Nt, ix, iy, iz, it, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords)) then
-            if (Cloud(ix,iy,iz,it) .gt. MaxQ) then
-               MaxQ = Cloud(ix,iy,iz,it)
-            end if
-          end if
-        end do
-      end do
-    end do
-    Climit = 0.3*MaxQ
+!    MaxQ = 0
+!    do ix = 1, Nx
+!      do iy = 1, Ny
+!        do iz = 1, Nz
+!          if (InsideCylVol(Nx, Ny, Nz, Nt, ix, iy, iz, it, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords)) then
+!            if (Cloud(ix,iy,iz,it) .gt. MaxQ) then
+!               MaxQ = Cloud(ix,iy,iz,it)
+!            end if
+!          end if
+!        end do
+!      end do
+!    end do
+!    Climit = 0.3*MaxQ
     
     SumQD = 0.0
     SumQ = 0.0
@@ -738,11 +758,20 @@ subroutine DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, Max
       do iy = 1, Ny
         do iz = 1, Nz
           if ((InsideCylVol(Nx, Ny, Nz, Nt, ix, iy, iz, it, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords)) .and. (CintLiq(ix,iy,1,it) .ge. CilThresh)) then
-            if (TempC(ix,iy,iz,it) .le. 0.0) then
-               SumQD = SumQD + (Cloud(ix,iy,iz,it) * CloudDiam(ix,iy,iz,it))
-               SumQ = SumQ + Cloud(ix,iy,iz,it)
-               SumD = SumD + CloudDiam(ix,iy,iz,it)
-               NumPoints = NumPoints + 1
+            if (DoSc) then
+              if (TempC(ix,iy,iz,it) .le. 0.0) then
+                 SumQD = SumQD + (Cloud(ix,iy,iz,it) * CloudDiam(ix,iy,iz,it))
+                 SumQ = SumQ + Cloud(ix,iy,iz,it)
+                 SumD = SumD + CloudDiam(ix,iy,iz,it)
+                 NumPoints = NumPoints + 1
+              end if
+            else
+              if (TempC(ix,iy,iz,it) .gt. 0.0) then
+                 SumQD = SumQD + (Cloud(ix,iy,iz,it) * CloudDiam(ix,iy,iz,it))
+                 SumQ = SumQ + Cloud(ix,iy,iz,it)
+                 SumD = SumD + CloudDiam(ix,iy,iz,it)
+                 NumPoints = NumPoints + 1
+              end if
             end if
           end if
         end do
@@ -762,7 +791,7 @@ subroutine DoScCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, Max
        write (*,*) 'WARNING: no data points selected for time step: ', it
      else
        TsAvg(1,1,1,it) = SumQD / SumQ
-       write (*,*) 'ScCloudDiam: Ts:', it, ', NumPoints: ', NumPoints, 'MaxQ: ', MaxQ, 'Climit: ', Climit
+       write (*,*) 'ScCloudDiam: Ts:', it, ', NumPoints: ', NumPoints
      end if
 
   end do
