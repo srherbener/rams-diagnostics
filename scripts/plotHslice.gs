@@ -33,7 +33,7 @@ function main(args)
   if (varNum = 1)
 *   column integrated liquid
     varName = 'cint_liq'
-    gVar = 'liquid_colint'
+    gVar = 'liquid_colint_j'
     gClevs = '200.0 400.0 600.0 800.0 1000.0 2000.0 4000.0 6000.0 8000.0 10000.0 20000.0 40000.0 60000.0'
     gCcols = '   9    14     4    11     5    13      3     10      7     12      8       2       6'
     gTitle = gExp': LWP (g/m**2), 'gCase', t 'timeStr
@@ -41,7 +41,7 @@ function main(args)
   if (varNum = 2)
 *   column integrated ice
     varName = 'cint_ice'
-    gVar = 'ice_colint'
+    gVar = 'ice_colint_join'
     gClevs = '10.0 20.0 40.0 60.0 80.0 100.0 200.0 400.0 600.0 800.0 1000.0 2000.0 4000.0'
     gCcols = '  9  14    4   11    5   13    3    10     7    12     8     2      6'
     gTitle = gExp': Column integrated ice (g/m**2), 'gCase', t 'timeStr
@@ -49,7 +49,7 @@ function main(args)
   if (varNum = 3)
 *   GCCN
     varName = 'hslice_2334_gccn'
-    gVar = 'gccnconcen_hsli'
+    gVar = 'gccnconc_hslice'
     gClevs = '0.00001 0.0001 0.001 0.01 0.0 0.2 0.4 0.6 0.8 1.0 1.2 1.4 1.6'
     gCcols = '      9     14     4   11   5  13   3  10   7  12   8   2   6'
     gTitle = gExp': GCCN (#/cc), z=2300m, 'gCase', t 'timeStr
@@ -65,7 +65,7 @@ function main(args)
   if (varNum = 5)
 *   surface wind
     varName = 'sfc_wind'
-    gVar = 'sfcwind_mag'
+    gVar = 'sfcwind_mag_joi'
     gClevs = '15.0 20.0 25.0 30.0 35.0 40.0 45.0 50.0 55.0 60.0 65.0 70.0 75.0'
     gCcols = '   9   14    4   11    5   13    3   10    7   12    8    2    6'
     gTitle = gExp': Surface wind speed (m/s), 'gCase', t 'timeStr
@@ -73,7 +73,7 @@ function main(args)
   if (varNum = 6)
 *   column integrated supercooled liquid
     varName = 'cint_liq_sc'
-    gVar = 'liquid_colint'
+    gVar = 'liquid_colint_j'
     gClevs = '10.0 20.0 40.0 60.0 80.0 100.0 200.0 400.0 600.0 800.0 1000.0 2000.0 4000.0'
     gCcols = '  9  14    4   11    5   13    3    10     7    12     8     2      6'
     gTitle = gExp': Supercooled LWP (g/m**2), 'gCase', t 'timeStr
@@ -81,7 +81,7 @@ function main(args)
   if (varNum = 7)
 *   column integrated warm liquid
     varName = 'cint_liq_wr'
-    gVar = 'liquid_colint'
+    gVar = 'liquid_colint_j'
     gClevs = '200.0 400.0 600.0 800.0 1000.0 2000.0 4000.0 6000.0 8000.0 10000.0 20000.0 40000.0 60000.0'
     gCcols = '  9  14    4   11    5   13    3    10     7    12     8     2      6'
     gTitle = gExp': Warm LWP (g/m**2), 'gCase', t 'timeStr
@@ -89,7 +89,7 @@ function main(args)
   if (varNum = 8)
 *   surface tangential wind
     varName = 'storm_winds_tan'
-    gVar = 'wind_speed_t'
+    gVar = 'wind_speed_t_jo'
     gClevs = '5.0 10.0 15.0 20.0 25.0 30.0 35.0 40.0 45.0 50.0 55.0 60.0 65.0'
     gCcols = '  9  14    4   11    5   13    3    10     7    12     8     2      6'
     gTitle = gExp': Tan Wind Speed (m/s), 'gCase', t 'timeStr
@@ -97,7 +97,7 @@ function main(args)
   if (varNum = 9)
 *   surface radial wind
     varName = 'storm_winds_rad'
-    gVar = 'wind_speed_r'
+    gVar = 'wind_speed_r_jo'
     gClevs = '-18.0 -15.0 -12.0 -9.0 -6.0 -3.0 0.0 3.0 6.0 9.0 12.0 15.0 18.0'
     gCcols = '  9  14    4   11    5   13    3    10     7    12     8     2      6'
     gTitle = gExp': Rad Wind Speed (m/s), 'gCase', t 'timeStr
@@ -105,7 +105,7 @@ function main(args)
   if (varNum = 10)
 *   surface temp (deg C)
     varName = 'hslice_sfc_tempc'
-    gVar = 'tempc_hslice'
+    gVar = 'tempc_hslice_jo'
     gClevs = '20.0 21.0 22.0 23.0 24.0 25.0 26.0 27.0 28.0 29.0 30.0 31.0 32.0'
     gCcols = '  9  14    4   11    5   13    3    10     7    12     8     2      6'
     gTitle = gExp': Sfc Temperature (deg C), 'gCase', t 'timeStr
