@@ -110,6 +110,14 @@ function main(args)
     gCcols = '  9  14    4   11    5   13    3    10     7    12     8     2      6'
     gTitle = gExp': Sfc Temperature (deg C), 'gCase', t 'timeStr
   endif
+  if (varNum = 11)
+*   surface thetae (K)
+    varName = 'hslice_sfc_thetae'
+    gVar = 'thetae_hslice_j'
+    gClevs = '330.0 335.0 340.0 345.0 350.0 355.0 360.0 365.0 370.0 375.0 380.0 385.0 390.0'
+    gCcols = '  9  14    4   11    5   13    3    10     7    12     8     2      6'
+    gTitle = gExp': Sfc Theta-e (K), 'gCase', t 'timeStr
+  endif
 
   gcFile = gDir'/'varName'_'gCase'.ctl'
 
