@@ -113,7 +113,7 @@ function main(args)
 *   total kinetic energy
     varName = 'ts_horiz_ke'
     gVar = 'horiz_ke_ts_joi'
-    gTitle = gExp': Total kinetic energy in lower levels, 'gCase
+    gTitle = gExp': Total kinetic energy, 'gCase
     yTitle = 'Total KE (J)'
     avgLen = 4
   endif
