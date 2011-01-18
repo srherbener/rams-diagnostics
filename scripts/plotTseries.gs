@@ -109,6 +109,14 @@ function main(args)
     yTitle = 'Average N (#/cc/s)'
     avgLen = 4
   endif
+  if (varNum = 11)
+*   total kinetic energy
+    varName = 'ts_horiz_ke'
+    gVar = 'horiz_ke_ts_joi'
+    gTitle = gExp': Total kinetic energy in lower levels, 'gCase
+    yTitle = 'Total KE (J)'
+    avgLen = 4
+  endif
 
   gcFile = gDir'/'varName'_'gCase'.ctl'
 
