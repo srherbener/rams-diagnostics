@@ -53,8 +53,8 @@ program main
   ! The *Loc vars hold the locations of cloud, tempc, precipr in the GRADS
   ! data files: the first index is the file number, the second index is the
   ! var number
-  real, dimension(:,:,:,:), allocatable :: Cloud, TempC, Dens, PrecipR, W, CloudDiam, CloudConc, Press, CintLiq, TsAvg, TestSelect, Rates
-  type (GradsVarLocation) :: CloudLoc, TempcLoc, DensLoc, WLoc, CloudDiamLoc, CloudConcLoc, PreciprLoc, PressLoc, CintLiqLoc
+  real, dimension(:,:,:,:), allocatable :: Cloud, TempC, Dens, PrecipR, U, V, W, CloudDiam, CloudConc, Press, CintLiq, TsAvg, TestSelect, Rates
+  type (GradsVarLocation) :: CloudLoc, TempcLoc, DensLoc, ULoc, VLoc, WLoc, CloudDiamLoc, CloudConcLoc, PreciprLoc, PressLoc, CintLiqLoc
 
   integer :: i
   integer :: Ierror
@@ -129,8 +129,15 @@ program main
             call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CloudConcLoc, 'cloud_cm3')
             call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
           else
-            if (AvgFunc .eq. 'test_cvs') then
+            if (AvgFunc .eq. 'horiz_ke') then
+              call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, ULoc, 'u')
+              call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, VLoc, 'v')
+              call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, DensLoc, 'dn0')
               call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
+            else
+              if (AvgFunc .eq. 'test_cvs') then
+                call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
+              end if
             end if
           end if
         end if
@@ -285,17 +292,39 @@ program main
             call ReadGradsData(GdataDescrip, 'cloud_cm3', CloudConcLoc, CloudConc, Nx, Ny, Nz, Nt)
             call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
           else
-            if (AvgFunc .eq. 'test_cvs') then
+            if (AvgFunc .eq. 'horiz_ke') then
+              write (*,'(a20,i3,a2,i3,a1)') 'u: (', ULoc%Fnum, ', ', ULoc%Vnum, ')'
+              write (*,'(a20,i3,a2,i3,a1)') 'v: (', VLoc%Fnum, ', ', VLoc%Vnum, ')'
+              write (*,'(a20,i3,a2,i3,a1)') 'dn0: (', DensLoc%Fnum, ', ', DensLoc%Vnum, ')'
               write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
+
               ! Allocate the data arrays and read in the data from the GRADS data files
-              allocate (Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
+              allocate (U(1:Nx,1:Ny,1:Nz,1:Nt), V(1:Nx,1:Ny,1:Nz,1:Nt), &
+                        Dens(1:Nx,1:Ny,1:Nz,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), &
+                        stat=Ierror)
               if (Ierror .ne. 0) then
                 write (*,*) 'ERROR: Data array memory allocation failed'
                 stop
               end if
-  
+
               ! Read in the data for the vars using the description and location information
+              call ReadGradsData(GdataDescrip, 'u', ULoc, U, Nx, Ny, Nz, Nt)
+              call ReadGradsData(GdataDescrip, 'v', VLoc, V, Nx, Ny, Nz, Nt)
+              call ReadGradsData(GdataDescrip, 'dn0', DensLoc, Dens, Nx, Ny, Nz, Nt)
               call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
+            else
+              if (AvgFunc .eq. 'test_cvs') then
+                write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
+                ! Allocate the data arrays and read in the data from the GRADS data files
+                allocate (Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
+                if (Ierror .ne. 0) then
+                  write (*,*) 'ERROR: Data array memory allocation failed'
+                  stop
+                end if
+  
+                ! Read in the data for the vars using the description and location information
+                call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
+              end if
             end if
           end if
         end if
@@ -354,8 +383,12 @@ program main
           if (AvgFunc .eq. 'ew_cloud') then
             call DoEwCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CloudConc, TsAvg)
           else
-            if (AvgFunc .eq. 'test_cvs') then
-              call DoTestCvs(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, TestSelect)
+            if (AvgFunc .eq. 'horiz_ke') then
+              call DoHorizKe(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, U, V, Dens, TsAvg)
+            else
+              if (AvgFunc .eq. 'test_cvs') then
+                call DoTestCvs(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, TestSelect)
+              end if
             end if
           end if
         end if
@@ -451,6 +484,7 @@ subroutine GetMyArgs(Infiles, Outfiles, AvgFunc, DoRates, Wthreshold, CilThresh,
     write (*,*) '            ew_cloud -> average cloud droplet concentration near eyewall region'
     write (*,*) '            wr_cloud -> total warm rain cloud droplets'
     write (*,*) '            wr_cloud_diam -> total warm rain cloud droplet mean diameter'
+    write (*,*) '            horiz_ke -> total kinetic energy form horizontal winds'
     write (*,*) '            test_cvs -> test the cylindrical volume selection scheme'
     write (*,*) ''
     write (*,*) '        <do_rates_flag>: use "rates" or "no_rates"'
@@ -509,7 +543,8 @@ subroutine GetMyArgs(Infiles, Outfiles, AvgFunc, DoRates, Wthreshold, CilThresh,
   if ((AvgFunc .ne. 'sc_cloud') .and. (AvgFunc .ne. 'precipr') .and. &
       (AvgFunc .ne. 'w_up') .and. (AvgFunc .ne. 'sc_cloud_diam') .and. &
       (AvgFunc .ne. 'wr_cloud') .and. (AvgFunc .ne. 'wr_cloud_diam') .and. &
-      (AvgFunc .ne. 'ew_cloud') .and. (AvgFunc .ne. 'test_cvs')) then
+      (AvgFunc .ne. 'ew_cloud') .and. (AvgFunc .ne. 'horiz_ke') .and. &
+      (AvgFunc .ne. 'test_cvs')) then
     write (*,*) 'ERROR: <averaging_function> must be one of:'
     write (*,*) '          sc_cloud'
     write (*,*) '          precipr'
@@ -518,6 +553,7 @@ subroutine GetMyArgs(Infiles, Outfiles, AvgFunc, DoRates, Wthreshold, CilThresh,
     write (*,*) '          ew_cloud'
     write (*,*) '          wr_cloud'
     write (*,*) '          wr_cloud_diam'
+    write (*,*) '          horiz_ke'
     write (*,*) '          test_cvs'
     write (*,*) ''
     BadArgs = .true.
@@ -903,6 +939,67 @@ subroutine DoPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi,
     write (*,*) ''
     flush(6)
   end do
+end subroutine
+
+!**************************************************************************************
+! DoHorizKe()
+!
+! This routine will calculate the total kinetic energy over the given cylindrical
+! volume. Do not want average since we want the size of the storm reflected in
+! this diagnostic.
+
+subroutine DoHorizKe(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, U, V, Dens, TsAvg)
+  implicit none
+
+  integer :: Nx, Ny, Nz, Nt
+  real :: DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ
+  real, dimension(1:Nx, 1:Ny, 1:Nz, 1:Nt) :: U, V, Dens
+  real, dimension(1:1, 1:1, 1:1, 1:Nt) :: TsAvg
+  integer, dimension(1:Nt) :: StmIx, StmIy
+  real, dimension(1:Nx) :: Xcoords
+  real, dimension(1:Ny) :: Ycoords
+  real, dimension(1:Nz) :: Zcoords
+
+  integer ix,iy,iz,it
+  integer NumPoints
+  real SumKe, CurrKe, LevThickness
+  logical :: InsideCylVol
+
+  ! KE is 1/2 * m * v^2
+  !   - calculate this a every point inside the defined cylindrical volume
+  !   - get m by density * volume
+  !   - v^2 is based on horiz velocity so is equal to U^2 + V^2
+  !
+  ! Zcoords are technically the center points of the levels in the RAMS simulation. Since we don't have
+  ! the level definition from the RAMS runs here, just use the difference from the i+1st z coord minus the
+  ! ith z coord to approzimate the ith level thickness. This will be close enough for the measurement.
+
+  do it = 1, Nt
+    SumKe = 0.0
+    NumPoints = 0
+
+    do ix = 1, Nx
+      do iy = 1, Ny
+        do iz = 1, Nz
+          if (InsideCylVol(Nx, Ny, Nz, Nt, ix, iy, iz, it, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords)) then
+            if (iz .eq. Nz) then
+              ! Use the level below for this case (since no level above)
+              LevThickness = Zcoords(iz) - Zcoords(iz-1)
+            else
+              LevThickness = Zcoords(iz+1) - Zcoords(iz)
+            end if
+            CurrKe = 0.5 * DeltaX * DeltaY * LevThickness * Dens(ix,iy,iz,it) * (U(ix,iy,iz,it)**2 + V(ix,iy,iz,it)**2)
+            SumKe = SumKe + CurrKe
+            NumPoints = NumPoints + 1
+          end if
+        end do
+      end do
+    end do
+
+    TsAvg(1,1,1,it) = SumKe;
+    write (*,*) 'HorizKe: Timestep:', it, ', Number of points selected: ', NumPoints
+  end do
+  
 end subroutine
 
 !************************************************************************************
