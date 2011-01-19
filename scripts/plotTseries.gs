@@ -117,6 +117,14 @@ function main(args)
     yTitle = 'Total KE (J)'
     avgLen = 4
   endif
+  if (varNum = 12)
+*   storm intensity metric
+    varName = 'ts_storm_int'
+    gVar = 'storm_int_ts_jo'
+    gTitle = gExp': Storm intensity metric, 'gCase
+    yTitle = 'Intensity'
+    avgLen = 4
+  endif
 
   gcFile = gDir'/'varName'_'gCase'.ctl'
 
