@@ -135,8 +135,14 @@ program main
               call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, DensLoc, 'dn0')
               call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
             else
-              if (AvgFunc .eq. 'test_cvs') then
+              if (AvgFunc .eq. 'storm_int') then
+                call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, ULoc, 'u')
+                call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, VLoc, 'v')
                 call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
+              else
+                if (AvgFunc .eq. 'test_cvs') then
+                  call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
+                end if
               end if
             end if
           end if
@@ -313,17 +319,36 @@ program main
               call ReadGradsData(GdataDescrip, 'dn0', DensLoc, Dens, Nx, Ny, Nz, Nt)
               call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
             else
-              if (AvgFunc .eq. 'test_cvs') then
+              if (AvgFunc .eq. 'storm_int') then
+                write (*,'(a20,i3,a2,i3,a1)') 'u: (', ULoc%Fnum, ', ', ULoc%Vnum, ')'
+                write (*,'(a20,i3,a2,i3,a1)') 'v: (', VLoc%Fnum, ', ', VLoc%Vnum, ')'
                 write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
+  
                 ! Allocate the data arrays and read in the data from the GRADS data files
-                allocate (Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
+                allocate (U(1:Nx,1:Ny,1:Nz,1:Nt), V(1:Nx,1:Ny,1:Nz,1:Nt), &
+                          Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
                 if (Ierror .ne. 0) then
                   write (*,*) 'ERROR: Data array memory allocation failed'
                   stop
                 end if
   
                 ! Read in the data for the vars using the description and location information
+                call ReadGradsData(GdataDescrip, 'u', ULoc, U, Nx, Ny, Nz, Nt)
+                call ReadGradsData(GdataDescrip, 'v', VLoc, V, Nx, Ny, Nz, Nt)
                 call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
+              else
+                if (AvgFunc .eq. 'test_cvs') then
+                  write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
+                  ! Allocate the data arrays and read in the data from the GRADS data files
+                  allocate (Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
+                  if (Ierror .ne. 0) then
+                    write (*,*) 'ERROR: Data array memory allocation failed'
+                    stop
+                  end if
+    
+                  ! Read in the data for the vars using the description and location information
+                  call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
+                end if
               end if
             end if
           end if
@@ -386,8 +411,12 @@ program main
             if (AvgFunc .eq. 'horiz_ke') then
               call DoHorizKe(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, U, V, Dens, TsAvg)
             else
-              if (AvgFunc .eq. 'test_cvs') then
-                call DoTestCvs(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, TestSelect)
+              if (AvgFunc .eq. 'storm_int') then
+                call DoStormInt(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, U, V, TsAvg)
+              else
+                if (AvgFunc .eq. 'test_cvs') then
+                  call DoTestCvs(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, TestSelect)
+                end if
               end if
             end if
           end if
@@ -485,6 +514,7 @@ subroutine GetMyArgs(Infiles, Outfiles, AvgFunc, DoRates, Wthreshold, CilThresh,
     write (*,*) '            wr_cloud -> total warm rain cloud droplets'
     write (*,*) '            wr_cloud_diam -> total warm rain cloud droplet mean diameter'
     write (*,*) '            horiz_ke -> total kinetic energy form horizontal winds'
+    write (*,*) '            storm_int -> storm intensity metric from horizontal wind speeds'
     write (*,*) '            test_cvs -> test the cylindrical volume selection scheme'
     write (*,*) ''
     write (*,*) '        <do_rates_flag>: use "rates" or "no_rates"'
@@ -544,7 +574,7 @@ subroutine GetMyArgs(Infiles, Outfiles, AvgFunc, DoRates, Wthreshold, CilThresh,
       (AvgFunc .ne. 'w_up') .and. (AvgFunc .ne. 'sc_cloud_diam') .and. &
       (AvgFunc .ne. 'wr_cloud') .and. (AvgFunc .ne. 'wr_cloud_diam') .and. &
       (AvgFunc .ne. 'ew_cloud') .and. (AvgFunc .ne. 'horiz_ke') .and. &
-      (AvgFunc .ne. 'test_cvs')) then
+      (AvgFunc .ne. 'storm_int') .and. (AvgFunc .ne. 'test_cvs')) then
     write (*,*) 'ERROR: <averaging_function> must be one of:'
     write (*,*) '          sc_cloud'
     write (*,*) '          precipr'
@@ -554,6 +584,7 @@ subroutine GetMyArgs(Infiles, Outfiles, AvgFunc, DoRates, Wthreshold, CilThresh,
     write (*,*) '          wr_cloud'
     write (*,*) '          wr_cloud_diam'
     write (*,*) '          horiz_ke'
+    write (*,*) '          storm_int'
     write (*,*) '          test_cvs'
     write (*,*) ''
     BadArgs = .true.
@@ -998,6 +1029,100 @@ subroutine DoHorizKe(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi,
 
     TsAvg(1,1,1,it) = SumKe;
     write (*,*) 'HorizKe: Timestep:', it, ', Number of points selected: ', NumPoints
+  end do
+  
+end subroutine
+
+!**************************************************************************************
+! DoStormInt()
+!
+! This routine will calculate a storm intensity metric based on the horizontal wind
+! speeds. The metric is based on the hurricane categories from the Saffir-Simpson
+! and their associated wind speeds.
+!
+!  convert the surface wind data into weighted coverage data
+!  run through each time point and each x,y location of the sfc wind data
+!  weight each count by the Saffir-Simpson category number
+!
+!   Wind speed   Weight
+!    <  33 m/s -> 0  (not hurricane force)
+!    33-42 m/s -> 1  (Category 1 hurricane)
+!    43-49 m/s -> 2  (etc.)
+!    50-58 m/s -> 3
+!    59-69 m/s -> 4
+!    >= 70 m/s -> 5
+!
+
+subroutine DoStormInt(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, U, V, TsAvg)
+  implicit none
+
+  integer :: Nx, Ny, Nz, Nt
+  real :: DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ
+  real, dimension(1:Nx, 1:Ny, 1:Nz, 1:Nt) :: U, V
+  real, dimension(1:1, 1:1, 1:1, 1:Nt) :: TsAvg
+  integer, dimension(1:Nt) :: StmIx, StmIy
+  real, dimension(1:Nx) :: Xcoords
+  real, dimension(1:Ny) :: Ycoords
+  real, dimension(1:Nz) :: Zcoords
+
+  integer ix,iy,iz,it
+  integer nCat0, nCat1, nCat2, nCat3, nCat4, nCat5, NumPoints
+  real Wspeed, SiMetric
+  logical :: InsideCylVol
+
+  do it = 1, Nt
+    nCat0 = 0
+    nCat1 = 0
+    nCat2 = 0
+    nCat3 = 0
+    nCat4 = 0
+    nCat5 = 0
+
+    do ix = 1, Nx
+      do iy = 1, Ny
+        do iz = 1, Nz
+          if (InsideCylVol(Nx, Ny, Nz, Nt, ix, iy, iz, it, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords)) then
+            ! Count up the number of grid points with wind speeds fitting each of the
+            ! Saffir-Simpson categories. Then form the metric by weighting each category
+            ! count.
+            Wspeed = sqrt(U(ix,iy,iz,it)**2 + V(ix,iy,iz,it)**2)
+            if (Wspeed .ge. 70.0) then
+              nCat5 = nCat5 + 1
+            else
+              if (Wspeed .ge. 59.0) then
+                nCat4 = nCat4 + 1
+              else
+                if (Wspeed .ge. 50.0) then
+                  nCat3 = nCat3 + 1
+                else
+                  if (Wspeed .ge. 43.0) then
+                    nCat2 = nCat2 + 1
+                  else
+                    if (Wspeed .ge. 33.0) then
+                      nCat1 = nCat1 + 1
+                    else
+                      nCat0 = nCat0 + 1
+                    end if
+                  end if
+                end if
+              end if
+            end if
+          end if
+        end do
+      end do
+    end do
+
+    !Linear weighting
+    NumPoints = nCat0 + nCat1 + nCat2 + nCat3 + nCat4 + nCat5
+    SiMetric = float(nCat1) + (float(nCat2)*2.0) + (float(nCat3)*3.0) + (float(nCat4)*4.0) + (float(nCat5)*5.0)
+
+    if (NumPoints .eq. 0) then
+      TsAvg(1,1,1,it) = 0.0
+      write (*,*) 'WARNING: no data points selected for time step: ', it
+    else
+      TsAvg(1,1,1,it) = SiMetric / float(NumPoints)
+      write (*,*) 'StormInt: Timestep:', it, ', Number of points selected: ', NumPoints
+    end if
   end do
   
 end subroutine
