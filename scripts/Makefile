@@ -4,6 +4,7 @@
 
 DEST = $(HOME)/grads
 SCRIPTS = $(DEST)/cbarn.gs \
+          $(DEST)/cbarline.gs \
           $(DEST)/plotCfad.gs \
           $(DEST)/plotHslice.gs \
           $(DEST)/plotInitFields.gs \
@@ -20,6 +21,9 @@ all: $(SCRIPTS)
 
 $(DEST)/cbarn.gs: cbarn.gs
 	cp cbarn.gs $(DEST)/cbarn.gs
+
+$(DEST)/cbarline.gs: cbarline.gs
+	cp cbarline.gs $(DEST)/cbarline.gs
 
 $(DEST)/plotCfad.gs: plotCfad.gs
 	cp plotCfad.gs $(DEST)/plotCfad.gs
