@@ -53,8 +53,8 @@ program main
   ! The *Loc vars hold the locations of cloud, tempc, precipr in the GRADS
   ! data files: the first index is the file number, the second index is the
   ! var number
-  real, dimension(:,:,:,:), allocatable :: Cloud, TempC, Dens, PrecipR, U, V, W, CloudDiam, CloudConc, Press, CintLiq, TsAvg, TestSelect, Rates
-  type (GradsVarLocation) :: CloudLoc, TempcLoc, DensLoc, ULoc, VLoc, WLoc, CloudDiamLoc, CloudConcLoc, PreciprLoc, PressLoc, CintLiqLoc
+  real, dimension(:,:,:,:), allocatable :: Cloud, TempC, Dens, PrecipR, U, V, W, CcnConc, CloudDiam, CloudConc, Press, CintLiq, TsAvg, TestSelect, Rates
+  type (GradsVarLocation) :: CloudLoc, TempcLoc, DensLoc, ULoc, VLoc, WLoc, CcnLoc, CloudDiamLoc, CloudConcLoc, PreciprLoc, PressLoc, CintLiqLoc
 
   integer :: i
   integer :: Ierror
@@ -140,8 +140,13 @@ program main
                 call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, VLoc, 'v')
                 call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
               else
-                if (AvgFunc .eq. 'test_cvs') then
+                if (AvgFunc .eq. 'ccnconc') then
+                  call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CcnLoc, 'ccnconcen')
                   call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
+                else
+                  if (AvgFunc .eq. 'test_cvs') then
+                    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
+                  end if
                 end if
               end if
             end if
@@ -337,17 +342,33 @@ program main
                 call ReadGradsData(GdataDescrip, 'v', VLoc, V, Nx, Ny, Nz, Nt)
                 call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
               else
-                if (AvgFunc .eq. 'test_cvs') then
+                if (AvgFunc .eq. 'ccnconc') then
+                  write (*,'(a20,i3,a2,i3,a1)') 'ccnconcen: (', CcnLoc%Fnum, ', ', CcnLoc%Vnum, ')'
                   write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
+
                   ! Allocate the data arrays and read in the data from the GRADS data files
-                  allocate (Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
+                  allocate (CcnConc(1:Nx,1:Ny,1:Nz,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
                   if (Ierror .ne. 0) then
                     write (*,*) 'ERROR: Data array memory allocation failed'
                     stop
                   end if
-    
+
                   ! Read in the data for the vars using the description and location information
+                  call ReadGradsData(GdataDescrip, 'ccnconcen', CcnLoc, CcnConc, Nx, Ny, Nz, Nt)
                   call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
+                else
+                  if (AvgFunc .eq. 'test_cvs') then
+                    write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
+                    ! Allocate the data arrays and read in the data from the GRADS data files
+                    allocate (Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
+                    if (Ierror .ne. 0) then
+                      write (*,*) 'ERROR: Data array memory allocation failed'
+                      stop
+                    end if
+      
+                    ! Read in the data for the vars using the description and location information
+                    call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
+                  end if
                 end if
               end if
             end if
@@ -414,8 +435,12 @@ program main
               if (AvgFunc .eq. 'storm_int') then
                 call DoStormInt(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, U, V, TsAvg)
               else
-                if (AvgFunc .eq. 'test_cvs') then
-                  call DoTestCvs(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, TestSelect)
+                if (AvgFunc .eq. 'ccnconc') then
+                  call DoCcnConc(Nx, Ny, Nz, Nt, DeltaX, DeltaY, Wthreshold, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CcnConc, TsAvg)
+                else
+                  if (AvgFunc .eq. 'test_cvs') then
+                    call DoTestCvs(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, TestSelect)
+                  end if
                 end if
               end if
             end if
@@ -509,6 +534,7 @@ subroutine GetMyArgs(Infiles, Outfiles, AvgFunc, DoRates, Wthreshold, CilThresh,
     write (*,*) '            sc_cloud -> total supercooled cloud droplets'
     write (*,*) '            precipr -> total precipitation rate'
     write (*,*) '            w_up -> average w in regions of significant updrafts'
+    write (*,*) '            ccnconc -> average ccn concentration'
     write (*,*) '            sc_cloud_diam -> total supercooled cloud droplet mean diameter'
     write (*,*) '            ew_cloud -> average cloud droplet concentration near eyewall region'
     write (*,*) '            wr_cloud -> total warm rain cloud droplets'
@@ -574,11 +600,13 @@ subroutine GetMyArgs(Infiles, Outfiles, AvgFunc, DoRates, Wthreshold, CilThresh,
       (AvgFunc .ne. 'w_up') .and. (AvgFunc .ne. 'sc_cloud_diam') .and. &
       (AvgFunc .ne. 'wr_cloud') .and. (AvgFunc .ne. 'wr_cloud_diam') .and. &
       (AvgFunc .ne. 'ew_cloud') .and. (AvgFunc .ne. 'horiz_ke') .and. &
-      (AvgFunc .ne. 'storm_int') .and. (AvgFunc .ne. 'test_cvs')) then
+      (AvgFunc .ne. 'storm_int') .and. (AvgFunc .ne. 'test_cvs') .and. &
+      (AvgFunc .ne. 'ccnconc')) then
     write (*,*) 'ERROR: <averaging_function> must be one of:'
     write (*,*) '          sc_cloud'
     write (*,*) '          precipr'
     write (*,*) '          w_up'
+    write (*,*) '          ccnconc'
     write (*,*) '          sc_cloud_diam'
     write (*,*) '          ew_cloud'
     write (*,*) '          wr_cloud'
@@ -1125,6 +1153,55 @@ subroutine DoStormInt(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi
     end if
   end do
   
+end subroutine
+
+!************************************************************************************
+! DoCcnConc()
+!
+! This subroutine will do the average CCN concentration.
+!
+
+subroutine DoCcnConc(Nx, Ny, Nz, Nt, DeltaX, DeltaY, Wthreshold, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CcnConc, TsAvg)
+  implicit none
+
+  integer :: Nx, Ny, Nz, Nt
+  real :: DeltaX, DeltaY, Wthreshold, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ
+  real, dimension(1:Nx, 1:Ny, 1:Nz, 1:Nt) :: CcnConc
+  real, dimension(1:1, 1:1, 1:1, 1:Nt) :: TsAvg
+  integer, dimension(1:Nt) :: StmIx, StmIy
+  real, dimension(1:Nx) :: Xcoords
+  real, dimension(1:Ny) :: Ycoords
+  real, dimension(1:Nz) :: Zcoords
+
+  integer ix,iy,iz,it, NumPoints
+  logical :: InsideCylVol
+
+  do it = 1, Nt
+    ! Average w over regions where significant updrafts occur
+
+    TsAvg(1,1,1,it) = 0.0
+    NumPoints = 0
+
+    do ix = 1, Nx
+      do iy = 1, Ny
+        do iz = 1, Nz
+          if (InsideCylVol(Nx, Ny, Nz, Nt, ix, iy, iz, it, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords)) then
+            TsAvg(1,1,1,it) = TsAvg(1,1,1,it) + CcnConc(ix,iy,iz,it)
+            NumPoints = NumPoints + 1
+          end if
+        end do
+      end do
+    end do
+
+    if (NumPoints .eq. 0) then
+      TsAvg(1,1,1,it) = 0.0
+      write (*,*) 'WARNING: no data points selected for time step: ', it
+    else
+      TsAvg(1,1,1,it) = TsAvg(1,1,1,it) / float(NumPoints)
+      write (*,*) 'Wup: Timestep:', it, ', Number of points selected: ', NumPoints
+    end if
+  end do
+
 end subroutine
 
 !************************************************************************************
