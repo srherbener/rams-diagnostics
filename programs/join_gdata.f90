@@ -169,7 +169,7 @@ subroutine GetMyArgs(Infiles, OfileBase, VarName)
   if (iargc() .ne. 3) then
     write (*,*) 'ERROR: must supply exactly 3 arguments'
     write (*,*) ''
-    write (*,*) 'USAGE: azavg <in_data_files> <out_data_file> <averaging_function>'
+    write (*,*) 'USAGE: azavg <in_data_files> <out_data_file> <variable_name>'
     write (*,*) '        <in_data_files>: GRADS format, control file, colon separated list'
     write (*,*) '        <out_data_file>: GRADS format, this program will tag on .ctl, .gra suffixes'
     write (*,*) '        <variable_name>: GRADS variable name, this program will look for this variable in all of the <in_data_files>'
