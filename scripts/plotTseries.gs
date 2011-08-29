@@ -125,6 +125,22 @@ function main(args)
     yTitle = 'Intensity'
     avgLen = 4
   endif
+  if (varNum = 13)
+*   average ccn concentration
+    varName = 'ts_ccn_concen'
+    gVar = 'ccnconc_ts_join'
+    gTitle = gExp': Avg CCN concentration, 'gCase
+    yTitle = 'Avg CCN Conc (#/cc)'
+    avgLen = 1
+  endif
+  if (varNum = 14)
+*   average ccn concentration rates
+    varName = 'ts_ccn_concen_rates'
+    gVar = 'ccnconc_dt_join'
+    gTitle = gExp': Avg CCN concentration, dt, 'gCase
+    yTitle = 'Avg CCN Conc Rates (#/cc/s)'
+    avgLen = 1
+  endif
 
   gcFile = gDir'/'varName'_'gCase'.ctl'
 
