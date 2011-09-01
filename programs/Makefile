@@ -16,6 +16,7 @@ BINS = $(DEST)/azavg \
        $(DEST)/prueba39 \
        $(DEST)/join_gdata \
        $(DEST)/double_pts \
+       $(DEST)/mkTemplate \
        $(DEST)/tseries_avg
 
 HEADERS = gDataTypes.h
@@ -70,6 +71,9 @@ $(DEST)/double_pts: double_pts.o gdata.o
 
 $(DEST)/tseries_avg: tseries_avg.o gdata.o azavg_utils.o
 	$(LOADER) -o $(DEST)/tseries_avg gdata.o azavg_utils.o tseries_avg.o $(LOADER_OPTS) $(LIBS)
+
+$(DEST)/mkTemplate: mkTemplate.o gdata.o
+	$(LOADER) -o $(DEST)/mkTemplate gdata.o mkTemplate.o $(LOADER_OPTS) $(LIBS)
 
 .f90.o: $(HEADERS)
 	$(F_COMP) $(F_COMP_OPTS) $(INCLUDES) -c $(<)
