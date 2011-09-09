@@ -67,7 +67,8 @@ program main
   call String2List(Outfiles, ':', OfileBases, MaxFiles, Nofiles, 'output files')
 
   DoSc = .true.
-  if ((AvgFunc .eq. 'wr_cloud') .or. (AvgFunc .eq. 'wr_cloud_diam')) then
+  if ((AvgFunc .eq. 'wr_cloud') .or. (AvgFunc .eq. 'wr_cloud_diam') .or. &
+      (AvgFunc .eq. 'wr_cloud2') .or. (AvgFunc .eq. 'wr_cloud2_diam')) then
     DoSc = .false.
   end if
 
@@ -108,52 +109,51 @@ program main
     call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CloudLoc, 'cloud')
     call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
     call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CintLiqLoc, 'liquid_colint')
-  else
-    if (AvgFunc .eq. 'precipr') then
-      call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PreciprLoc, 'precipr')
-      call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
-      call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CintLiqLoc, 'liquid_colint')
-    else
-      if (AvgFunc .eq. 'w_up') then
-        call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, WLoc, 'w')
-        call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
-      else
-        if ((AvgFunc .eq. 'sc_cloud_diam') .or. (AvgFunc .eq. 'wr_cloud_diam')) then
-          call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, TempcLoc, 'tempc')
-          call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CloudLoc, 'cloud')
-          call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CloudDiamLoc, 'cloud_d')
-          call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
-          call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CintLiqLoc, 'liquid_colint')
-        else
-          if (AvgFunc .eq. 'ew_cloud') then
-            call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CloudConcLoc, 'cloud_cm3')
-            call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
-          else
-            if (AvgFunc .eq. 'horiz_ke') then
-              call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, ULoc, 'u')
-              call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, VLoc, 'v')
-              call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, DensLoc, 'dn0')
-              call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
-            else
-              if (AvgFunc .eq. 'storm_int') then
-                call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, ULoc, 'u')
-                call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, VLoc, 'v')
-                call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
-              else
-                if (AvgFunc .eq. 'ccnconc') then
-                  call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CcnLoc, 'ccnconcen')
-                  call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
-                else
-                  if (AvgFunc .eq. 'test_cvs') then
-                    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
-                  end if
-                end if
-              end if
-            end if
-          end if
-        end if
-      end if
-    end if
+  else if ((AvgFunc .eq. 'sc_cloud2') .or. (AvgFunc .eq. 'wr_cloud2')) then
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, TempcLoc, 'tempc')
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, DensLoc, 'dn0')
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CloudLoc, 'cloud2')
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CintLiqLoc, 'liquid_colint')
+  else if (AvgFunc .eq. 'precipr') then
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PreciprLoc, 'precipr')
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CintLiqLoc, 'liquid_colint')
+  else if (AvgFunc .eq. 'w_up') then
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, WLoc, 'w')
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
+  else if ((AvgFunc .eq. 'sc_cloud_diam') .or. (AvgFunc .eq. 'wr_cloud_diam')) then
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, TempcLoc, 'tempc')
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CloudLoc, 'cloud')
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CloudDiamLoc, 'cloud_d')
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CintLiqLoc, 'liquid_colint')
+  else if ((AvgFunc .eq. 'sc_cloud2_diam') .or. (AvgFunc .eq. 'wr_cloud2_diam')) then
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, TempcLoc, 'tempc')
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CloudLoc, 'cloud2')
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CloudDiamLoc, 'cloud2diam')
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CintLiqLoc, 'liquid_colint')
+  else if (AvgFunc .eq. 'ew_cloud') then
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CloudConcLoc, 'cloud_cm3')
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
+  else if (AvgFunc .eq. 'ew_cloud2') then
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CloudConcLoc, 'cloud2_cm')
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
+  else if (AvgFunc .eq. 'horiz_ke') then
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, ULoc, 'u')
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, VLoc, 'v')
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, DensLoc, 'dn0')
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
+  else if (AvgFunc .eq. 'storm_int') then
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, ULoc, 'u')
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, VLoc, 'v')
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
+  else if (AvgFunc .eq. 'ccnconc') then
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CcnLoc, 'ccnconcen')
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
+  else if (AvgFunc .eq. 'test_cvs') then
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
   end if
 
   ! Calculate the x,y coordinates (in km) for doing selection by radius from storm center.
@@ -229,154 +229,197 @@ program main
     call ReadGradsData(GdataDescrip, 'cloud', CloudLoc, Cloud, Nx, Ny, Nz, Nt)
     call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
     call ReadGradsData(GdataDescrip, 'liquid_colint', CintLiqLoc, CintLiq, Nx, Ny, 1, Nt)
-  else
-    if (AvgFunc .eq. 'precipr') then
-      write (*,'(a20,i3,a2,i3,a1)') 'precipr: (', PreciprLoc%Fnum, ', ', PreciprLoc%Vnum, ')'
-      write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
-      write (*,'(a20,i3,a2,i3,a1)') 'liquid_colint: (', CintLiqLoc%Fnum, ', ', CintLiqLoc%Vnum, ')'
+  else if ((AvgFunc .eq. 'sc_cloud2') .or. (AvgFunc .eq. 'wr_cloud2')) then
+    write (*,'(a20,i3,a2,i3,a1)') 'tempc: (', TempcLoc%Fnum, ', ', TempcLoc%Vnum, ')'
+    write (*,'(a20,i3,a2,i3,a1)') 'dn0: (', DensLoc%Fnum, ', ', DensLoc%Vnum, ')'
+    write (*,'(a20,i3,a2,i3,a1)') 'cloud2: (', CloudLoc%Fnum, ', ', CloudLoc%Vnum, ')'
+    write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
+    write (*,'(a20,i3,a2,i3,a1)') 'liquid_colint: (', CintLiqLoc%Fnum, ', ', CintLiqLoc%Vnum, ')'
 
-      ! Allocate the data arrays and read in the data from the GRADS data files
-      ! precipr is 2D variable -> Nz = 1
-      allocate (PrecipR(1:Nx,1:Ny,1:1,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), &
-                CintLiq(1:Nx,1:Ny,1:1,1:Nt), stat=Ierror)
-      if (Ierror .ne. 0) then
-        write (*,*) 'ERROR: Data array memory allocation failed'
-        stop
-      end if
-
-      ! Read in the data for the vars using the description and location information
-      ! precipr is 2D variable -> Nz = 1
-      call ReadGradsData(GdataDescrip, 'precipr', PreciprLoc, PrecipR, Nx, Ny, 1, Nt)
-      call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
-      call ReadGradsData(GdataDescrip, 'liquid_colint', CintLiqLoc, CintLiq, Nx, Ny, 1, Nt)
-    else
-      if (AvgFunc .eq. 'w_up') then
-        write (*,'(a20,i3,a2,i3,a1)') 'w: (', WLoc%Fnum, ', ', WLoc%Vnum, ')'
-        write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
-
-        ! Allocate the data arrays and read in the data from the GRADS data files
-        allocate (W(1:Nx,1:Ny,1:Nz,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
-        if (Ierror .ne. 0) then
-          write (*,*) 'ERROR: Data array memory allocation failed'
-          stop
-        end if
-
-        ! Read in the data for the vars using the description and location information
-        call ReadGradsData(GdataDescrip, 'w', WLoc, W, Nx, Ny, Nz, Nt)
-        call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
-      else
-        if ((AvgFunc .eq. 'sc_cloud_diam') .or. (AvgFunc .eq. 'wr_cloud_diam')) then
-          write (*,'(a20,i3,a2,i3,a1)') 'tempc: (', TempcLoc%Fnum, ', ', TempcLoc%Vnum, ')'
-          write (*,'(a20,i3,a2,i3,a1)') 'cloud: (', CloudLoc%Fnum, ', ', CloudLoc%Vnum, ')'
-          write (*,'(a20,i3,a2,i3,a1)') 'cloud_d: (', CloudDiamLoc%Fnum, ', ', CloudDiamLoc%Vnum, ')'
-          write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
-          write (*,'(a20,i3,a2,i3,a1)') 'liquid_colint: (', CintLiqLoc%Fnum, ', ', CintLiqLoc%Vnum, ')'
-  
-          ! Allocate the data arrays and read in the data from the GRADS data files
-          allocate (TempC(1:Nx,1:Ny,1:Nz,1:Nt), CloudDiam(1:Nx,1:Ny,1:Nz,1:Nt), &
-                    Cloud(1:Nx,1:Ny,1:Nz,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), &
-                    CintLiq(1:Nx,1:Ny,1:1,1:Nt), stat=Ierror)
-          if (Ierror .ne. 0) then
-            write (*,*) 'ERROR: Data array memory allocation failed'
-            stop
-          end if
-
-          ! Read in the data for the vars using the description and location information
-          call ReadGradsData(GdataDescrip, 'tempc', TempcLoc, TempC, Nx, Ny, Nz, Nt)
-          call ReadGradsData(GdataDescrip, 'cloud', CloudLoc, Cloud, Nx, Ny, Nz, Nt)
-          call ReadGradsData(GdataDescrip, 'cloud_d', CloudDiamLoc, CloudDiam, Nx, Ny, Nz, Nt)
-          call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
-          call ReadGradsData(GdataDescrip, 'liquid_colint', CintLiqLoc, CintLiq, Nx, Ny, 1, Nt)
-        else
-          if (AvgFunc .eq. 'ew_cloud') then
-            write (*,'(a20,i3,a2,i3,a1)') 'cloudconcen_cm3: (', CloudConcLoc%Fnum, ', ', CloudConcLoc%Vnum, ')'
-            write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
-    
-            ! Allocate the data arrays and read in the data from the GRADS data files
-            allocate (CloudConc(1:Nx,1:Ny,1:Nz,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
-            if (Ierror .ne. 0) then
-              write (*,*) 'ERROR: Data array memory allocation failed'
-              stop
-            end if
-  
-            ! Read in the data for the vars using the description and location information
-            call ReadGradsData(GdataDescrip, 'cloud_cm3', CloudConcLoc, CloudConc, Nx, Ny, Nz, Nt)
-            call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
-          else
-            if (AvgFunc .eq. 'horiz_ke') then
-              write (*,'(a20,i3,a2,i3,a1)') 'u: (', ULoc%Fnum, ', ', ULoc%Vnum, ')'
-              write (*,'(a20,i3,a2,i3,a1)') 'v: (', VLoc%Fnum, ', ', VLoc%Vnum, ')'
-              write (*,'(a20,i3,a2,i3,a1)') 'dn0: (', DensLoc%Fnum, ', ', DensLoc%Vnum, ')'
-              write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
-
-              ! Allocate the data arrays and read in the data from the GRADS data files
-              allocate (U(1:Nx,1:Ny,1:Nz,1:Nt), V(1:Nx,1:Ny,1:Nz,1:Nt), &
-                        Dens(1:Nx,1:Ny,1:Nz,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), &
-                        stat=Ierror)
-              if (Ierror .ne. 0) then
-                write (*,*) 'ERROR: Data array memory allocation failed'
-                stop
-              end if
-
-              ! Read in the data for the vars using the description and location information
-              call ReadGradsData(GdataDescrip, 'u', ULoc, U, Nx, Ny, Nz, Nt)
-              call ReadGradsData(GdataDescrip, 'v', VLoc, V, Nx, Ny, Nz, Nt)
-              call ReadGradsData(GdataDescrip, 'dn0', DensLoc, Dens, Nx, Ny, Nz, Nt)
-              call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
-            else
-              if (AvgFunc .eq. 'storm_int') then
-                write (*,'(a20,i3,a2,i3,a1)') 'u: (', ULoc%Fnum, ', ', ULoc%Vnum, ')'
-                write (*,'(a20,i3,a2,i3,a1)') 'v: (', VLoc%Fnum, ', ', VLoc%Vnum, ')'
-                write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
-  
-                ! Allocate the data arrays and read in the data from the GRADS data files
-                allocate (U(1:Nx,1:Ny,1:Nz,1:Nt), V(1:Nx,1:Ny,1:Nz,1:Nt), &
-                          Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
-                if (Ierror .ne. 0) then
-                  write (*,*) 'ERROR: Data array memory allocation failed'
-                  stop
-                end if
-  
-                ! Read in the data for the vars using the description and location information
-                call ReadGradsData(GdataDescrip, 'u', ULoc, U, Nx, Ny, Nz, Nt)
-                call ReadGradsData(GdataDescrip, 'v', VLoc, V, Nx, Ny, Nz, Nt)
-                call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
-              else
-                if (AvgFunc .eq. 'ccnconc') then
-                  write (*,'(a20,i3,a2,i3,a1)') 'ccnconcen: (', CcnLoc%Fnum, ', ', CcnLoc%Vnum, ')'
-                  write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
-
-                  ! Allocate the data arrays and read in the data from the GRADS data files
-                  allocate (CcnConc(1:Nx,1:Ny,1:Nz,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
-                  if (Ierror .ne. 0) then
-                    write (*,*) 'ERROR: Data array memory allocation failed'
-                    stop
-                  end if
-
-                  ! Read in the data for the vars using the description and location information
-                  call ReadGradsData(GdataDescrip, 'ccnconcen', CcnLoc, CcnConc, Nx, Ny, Nz, Nt)
-                  call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
-                else
-                  if (AvgFunc .eq. 'test_cvs') then
-                    write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
-                    ! Allocate the data arrays and read in the data from the GRADS data files
-                    allocate (Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
-                    if (Ierror .ne. 0) then
-                      write (*,*) 'ERROR: Data array memory allocation failed'
-                      stop
-                    end if
-      
-                    ! Read in the data for the vars using the description and location information
-                    call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
-                  end if
-                end if
-              end if
-            end if
-          end if
-        end if
-      end if
+    ! Allocate the data arrays and read in the data from the GRADS data files
+    allocate (TempC(1:Nx,1:Ny,1:Nz,1:Nt), Dens(1:Nx,1:Ny,1:Nz,1:Nt), &
+              Cloud(1:Nx,1:Ny,1:Nz,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), &
+              CintLiq(1:Nx,1:Ny,1:1,1:Nt), stat=Ierror)
+    if (Ierror .ne. 0) then
+      write (*,*) 'ERROR: Data array memory allocation failed'
+      stop
     end if
+
+    ! Read in the data for the vars using the description and location information
+    call ReadGradsData(GdataDescrip, 'tempc', TempcLoc, TempC, Nx, Ny, Nz, Nt)
+    call ReadGradsData(GdataDescrip, 'dn0', DensLoc, Dens, Nx, Ny, Nz, Nt)
+    call ReadGradsData(GdataDescrip, 'cloud2', CloudLoc, Cloud, Nx, Ny, Nz, Nt)
+    call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
+    call ReadGradsData(GdataDescrip, 'liquid_colint', CintLiqLoc, CintLiq, Nx, Ny, 1, Nt)
+  else if (AvgFunc .eq. 'precipr') then
+    write (*,'(a20,i3,a2,i3,a1)') 'precipr: (', PreciprLoc%Fnum, ', ', PreciprLoc%Vnum, ')'
+    write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
+    write (*,'(a20,i3,a2,i3,a1)') 'liquid_colint: (', CintLiqLoc%Fnum, ', ', CintLiqLoc%Vnum, ')'
+
+    ! Allocate the data arrays and read in the data from the GRADS data files
+    ! precipr is 2D variable -> Nz = 1
+    allocate (PrecipR(1:Nx,1:Ny,1:1,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), &
+              CintLiq(1:Nx,1:Ny,1:1,1:Nt), stat=Ierror)
+    if (Ierror .ne. 0) then
+      write (*,*) 'ERROR: Data array memory allocation failed'
+      stop
+    end if
+
+    ! Read in the data for the vars using the description and location information
+    ! precipr is 2D variable -> Nz = 1
+    call ReadGradsData(GdataDescrip, 'precipr', PreciprLoc, PrecipR, Nx, Ny, 1, Nt)
+    call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
+    call ReadGradsData(GdataDescrip, 'liquid_colint', CintLiqLoc, CintLiq, Nx, Ny, 1, Nt)
+  else if (AvgFunc .eq. 'w_up') then
+    write (*,'(a20,i3,a2,i3,a1)') 'w: (', WLoc%Fnum, ', ', WLoc%Vnum, ')'
+    write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
+
+    ! Allocate the data arrays and read in the data from the GRADS data files
+    allocate (W(1:Nx,1:Ny,1:Nz,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
+    if (Ierror .ne. 0) then
+      write (*,*) 'ERROR: Data array memory allocation failed'
+      stop
+    end if
+
+    ! Read in the data for the vars using the description and location information
+    call ReadGradsData(GdataDescrip, 'w', WLoc, W, Nx, Ny, Nz, Nt)
+    call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
+  else if ((AvgFunc .eq. 'sc_cloud_diam') .or. (AvgFunc .eq. 'wr_cloud_diam')) then
+    write (*,'(a20,i3,a2,i3,a1)') 'tempc: (', TempcLoc%Fnum, ', ', TempcLoc%Vnum, ')'
+    write (*,'(a20,i3,a2,i3,a1)') 'cloud: (', CloudLoc%Fnum, ', ', CloudLoc%Vnum, ')'
+    write (*,'(a20,i3,a2,i3,a1)') 'cloud_d: (', CloudDiamLoc%Fnum, ', ', CloudDiamLoc%Vnum, ')'
+    write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
+    write (*,'(a20,i3,a2,i3,a1)') 'liquid_colint: (', CintLiqLoc%Fnum, ', ', CintLiqLoc%Vnum, ')'
+  
+    ! Allocate the data arrays and read in the data from the GRADS data files
+    allocate (TempC(1:Nx,1:Ny,1:Nz,1:Nt), CloudDiam(1:Nx,1:Ny,1:Nz,1:Nt), &
+              Cloud(1:Nx,1:Ny,1:Nz,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), &
+              CintLiq(1:Nx,1:Ny,1:1,1:Nt), stat=Ierror)
+    if (Ierror .ne. 0) then
+      write (*,*) 'ERROR: Data array memory allocation failed'
+      stop
+    end if
+
+    ! Read in the data for the vars using the description and location information
+    call ReadGradsData(GdataDescrip, 'tempc', TempcLoc, TempC, Nx, Ny, Nz, Nt)
+    call ReadGradsData(GdataDescrip, 'cloud', CloudLoc, Cloud, Nx, Ny, Nz, Nt)
+    call ReadGradsData(GdataDescrip, 'cloud_d', CloudDiamLoc, CloudDiam, Nx, Ny, Nz, Nt)
+    call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
+    call ReadGradsData(GdataDescrip, 'liquid_colint', CintLiqLoc, CintLiq, Nx, Ny, 1, Nt)
+  else if ((AvgFunc .eq. 'sc_cloud2_diam') .or. (AvgFunc .eq. 'wr_cloud2_diam')) then
+    write (*,'(a20,i3,a2,i3,a1)') 'tempc: (', TempcLoc%Fnum, ', ', TempcLoc%Vnum, ')'
+    write (*,'(a20,i3,a2,i3,a1)') 'cloud2: (', CloudLoc%Fnum, ', ', CloudLoc%Vnum, ')'
+    write (*,'(a20,i3,a2,i3,a1)') 'cloud2diam: (', CloudDiamLoc%Fnum, ', ', CloudDiamLoc%Vnum, ')'
+    write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
+    write (*,'(a20,i3,a2,i3,a1)') 'liquid_colint: (', CintLiqLoc%Fnum, ', ', CintLiqLoc%Vnum, ')'
+  
+    ! Allocate the data arrays and read in the data from the GRADS data files
+    allocate (TempC(1:Nx,1:Ny,1:Nz,1:Nt), CloudDiam(1:Nx,1:Ny,1:Nz,1:Nt), &
+              Cloud(1:Nx,1:Ny,1:Nz,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), &
+              CintLiq(1:Nx,1:Ny,1:1,1:Nt), stat=Ierror)
+    if (Ierror .ne. 0) then
+      write (*,*) 'ERROR: Data array memory allocation failed'
+      stop
+    end if
+
+    ! Read in the data for the vars using the description and location information
+    call ReadGradsData(GdataDescrip, 'tempc', TempcLoc, TempC, Nx, Ny, Nz, Nt)
+    call ReadGradsData(GdataDescrip, 'cloud2', CloudLoc, Cloud, Nx, Ny, Nz, Nt)
+    call ReadGradsData(GdataDescrip, 'cloud2diam', CloudDiamLoc, CloudDiam, Nx, Ny, Nz, Nt)
+    call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
+    call ReadGradsData(GdataDescrip, 'liquid_colint', CintLiqLoc, CintLiq, Nx, Ny, 1, Nt)
+  else if (AvgFunc .eq. 'ew_cloud') then
+    write (*,'(a20,i3,a2,i3,a1)') 'cloud_cm3: (', CloudConcLoc%Fnum, ', ', CloudConcLoc%Vnum, ')'
+    write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
+    
+    ! Allocate the data arrays and read in the data from the GRADS data files
+    allocate (CloudConc(1:Nx,1:Ny,1:Nz,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
+    if (Ierror .ne. 0) then
+      write (*,*) 'ERROR: Data array memory allocation failed'
+      stop
+    end if
+  
+    ! Read in the data for the vars using the description and location information
+    call ReadGradsData(GdataDescrip, 'cloud_cm3', CloudConcLoc, CloudConc, Nx, Ny, Nz, Nt)
+    call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
+  else if (AvgFunc .eq. 'ew_cloud2') then
+    write (*,'(a20,i3,a2,i3,a1)') 'cloud2_cm: (', CloudConcLoc%Fnum, ', ', CloudConcLoc%Vnum, ')'
+    write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
+    
+    ! Allocate the data arrays and read in the data from the GRADS data files
+    allocate (CloudConc(1:Nx,1:Ny,1:Nz,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
+    if (Ierror .ne. 0) then
+      write (*,*) 'ERROR: Data array memory allocation failed'
+      stop
+    end if
+  
+    ! Read in the data for the vars using the description and location information
+    call ReadGradsData(GdataDescrip, 'cloud2_cm', CloudConcLoc, CloudConc, Nx, Ny, Nz, Nt)
+    call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
+  else if (AvgFunc .eq. 'horiz_ke') then
+    write (*,'(a20,i3,a2,i3,a1)') 'u: (', ULoc%Fnum, ', ', ULoc%Vnum, ')'
+    write (*,'(a20,i3,a2,i3,a1)') 'v: (', VLoc%Fnum, ', ', VLoc%Vnum, ')'
+    write (*,'(a20,i3,a2,i3,a1)') 'dn0: (', DensLoc%Fnum, ', ', DensLoc%Vnum, ')'
+    write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
+
+    ! Allocate the data arrays and read in the data from the GRADS data files
+    allocate (U(1:Nx,1:Ny,1:Nz,1:Nt), V(1:Nx,1:Ny,1:Nz,1:Nt), &
+              Dens(1:Nx,1:Ny,1:Nz,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), &
+              stat=Ierror)
+    if (Ierror .ne. 0) then
+      write (*,*) 'ERROR: Data array memory allocation failed'
+      stop
+    end if
+
+    ! Read in the data for the vars using the description and location information
+    call ReadGradsData(GdataDescrip, 'u', ULoc, U, Nx, Ny, Nz, Nt)
+    call ReadGradsData(GdataDescrip, 'v', VLoc, V, Nx, Ny, Nz, Nt)
+    call ReadGradsData(GdataDescrip, 'dn0', DensLoc, Dens, Nx, Ny, Nz, Nt)
+    call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
+  else if (AvgFunc .eq. 'storm_int') then
+    write (*,'(a20,i3,a2,i3,a1)') 'u: (', ULoc%Fnum, ', ', ULoc%Vnum, ')'
+    write (*,'(a20,i3,a2,i3,a1)') 'v: (', VLoc%Fnum, ', ', VLoc%Vnum, ')'
+    write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
+  
+    ! Allocate the data arrays and read in the data from the GRADS data files
+    allocate (U(1:Nx,1:Ny,1:Nz,1:Nt), V(1:Nx,1:Ny,1:Nz,1:Nt), &
+              Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
+    if (Ierror .ne. 0) then
+      write (*,*) 'ERROR: Data array memory allocation failed'
+      stop
+    end if
+  
+    ! Read in the data for the vars using the description and location information
+    call ReadGradsData(GdataDescrip, 'u', ULoc, U, Nx, Ny, Nz, Nt)
+    call ReadGradsData(GdataDescrip, 'v', VLoc, V, Nx, Ny, Nz, Nt)
+    call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
+  else if (AvgFunc .eq. 'ccnconc') then
+    write (*,'(a20,i3,a2,i3,a1)') 'ccnconcen: (', CcnLoc%Fnum, ', ', CcnLoc%Vnum, ')'
+    write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
+
+    ! Allocate the data arrays and read in the data from the GRADS data files
+    allocate (CcnConc(1:Nx,1:Ny,1:Nz,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
+    if (Ierror .ne. 0) then
+      write (*,*) 'ERROR: Data array memory allocation failed'
+      stop
+    end if
+
+    ! Read in the data for the vars using the description and location information
+    call ReadGradsData(GdataDescrip, 'ccnconcen', CcnLoc, CcnConc, Nx, Ny, Nz, Nt)
+    call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
+  else if (AvgFunc .eq. 'test_cvs') then
+    write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
+    ! Allocate the data arrays and read in the data from the GRADS data files
+    allocate (Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
+    if (Ierror .ne. 0) then
+      write (*,*) 'ERROR: Data array memory allocation failed'
+      stop
+    end if
+      
+    ! Read in the data for the vars using the description and location information
+    call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
   end if
+
   write (*,*) ''
   flush(6)
 
@@ -416,38 +459,28 @@ program main
 
   if ((AvgFunc .eq. 'sc_cloud') .or. (AvgFunc .eq. 'wr_cloud')) then
     call DoCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, DoSc, Cloud, TempC, Dens, CintLiq, TsAvg)
-  else
-    if (AvgFunc .eq. 'precipr') then
-      call DoPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, PrecipR, CintLiq, TsAvg)
-    else
-      if (AvgFunc .eq. 'w_up') then
-        call DoWup(Nx, Ny, Nz, Nt, DeltaX, DeltaY, Wthreshold, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, W, TsAvg)
-      else
-        if ((AvgFunc .eq. 'sc_cloud_diam') .or. (AvgFunc .eq. 'wr_cloud_diam')) then
-          call DoCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, DoSc, Cloud, TempC, CloudDiam, CintLiq, TsAvg)
-        else
-          if (AvgFunc .eq. 'ew_cloud') then
-            call DoEwCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CloudConc, TsAvg)
-          else
-            if (AvgFunc .eq. 'horiz_ke') then
-              call DoHorizKe(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, U, V, Dens, TsAvg)
-            else
-              if (AvgFunc .eq. 'storm_int') then
-                call DoStormInt(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, U, V, TsAvg)
-              else
-                if (AvgFunc .eq. 'ccnconc') then
-                  call DoCcnConc(Nx, Ny, Nz, Nt, DeltaX, DeltaY, Wthreshold, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CcnConc, TsAvg)
-                else
-                  if (AvgFunc .eq. 'test_cvs') then
-                    call DoTestCvs(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, TestSelect)
-                  end if
-                end if
-              end if
-            end if
-          end if
-        end if
-      end if
-    end if
+  else if ((AvgFunc .eq. 'sc_cloud2') .or. (AvgFunc .eq. 'wr_cloud2')) then
+    call DoCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, DoSc, Cloud, TempC, Dens, CintLiq, TsAvg)
+  else if (AvgFunc .eq. 'precipr') then
+    call DoPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, PrecipR, CintLiq, TsAvg)
+  else if (AvgFunc .eq. 'w_up') then
+    call DoWup(Nx, Ny, Nz, Nt, DeltaX, DeltaY, Wthreshold, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, W, TsAvg)
+  else if ((AvgFunc .eq. 'sc_cloud_diam') .or. (AvgFunc .eq. 'wr_cloud_diam')) then
+    call DoCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, DoSc, Cloud, TempC, CloudDiam, CintLiq, TsAvg)
+  else if ((AvgFunc .eq. 'sc_cloud2_diam') .or. (AvgFunc .eq. 'wr_cloud2_diam')) then
+    call DoCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, DoSc, Cloud, TempC, CloudDiam, CintLiq, TsAvg)
+  else if (AvgFunc .eq. 'ew_cloud') then
+    call DoEwCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CloudConc, TsAvg)
+  else if (AvgFunc .eq. 'ew_cloud2') then
+    call DoEwCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CloudConc, TsAvg)
+  else if (AvgFunc .eq. 'horiz_ke') then
+    call DoHorizKe(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, U, V, Dens, TsAvg)
+  else if (AvgFunc .eq. 'storm_int') then
+    call DoStormInt(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, U, V, TsAvg)
+  else if (AvgFunc .eq. 'ccnconc') then
+    call DoCcnConc(Nx, Ny, Nz, Nt, DeltaX, DeltaY, Wthreshold, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CcnConc, TsAvg)
+  else if (AvgFunc .eq. 'test_cvs') then
+    call DoTestCvs(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, TestSelect)
   end if
 
   ! Convert to rates (derivative wrt time) if requested
@@ -532,13 +565,18 @@ subroutine GetMyArgs(Infiles, Outfiles, AvgFunc, DoRates, Wthreshold, CilThresh,
     write (*,*) '        <out_data_file>: GRADS format, colon seprated list, data + rates names, this program will tag on .ctl, .dat suffixes'
     write (*,*) '        <averaging_function>: averaging function to use on input data'
     write (*,*) '            sc_cloud -> total supercooled cloud droplets'
+    write (*,*) '            wr_cloud -> total warm rain cloud droplets'
+    write (*,*) '            sc_cloud2 -> total supercooled cloud2 droplets'
+    write (*,*) '            wr_cloud2 -> total warm rain cloud2 droplets'
     write (*,*) '            precipr -> total precipitation rate'
     write (*,*) '            w_up -> average w in regions of significant updrafts'
     write (*,*) '            ccnconc -> average ccn concentration'
     write (*,*) '            sc_cloud_diam -> total supercooled cloud droplet mean diameter'
-    write (*,*) '            ew_cloud -> average cloud droplet concentration near eyewall region'
-    write (*,*) '            wr_cloud -> total warm rain cloud droplets'
     write (*,*) '            wr_cloud_diam -> total warm rain cloud droplet mean diameter'
+    write (*,*) '            sc_cloud2_diam -> total supercooled cloud2 droplet mean diameter'
+    write (*,*) '            wr_cloud2_diam -> total warm rain cloud2 droplet mean diameter'
+    write (*,*) '            ew_cloud -> average cloud droplet concentration near eyewall region'
+    write (*,*) '            ew_cloud2 -> average cloud2 droplet concentration near eyewall region'
     write (*,*) '            horiz_ke -> total kinetic energy form horizontal winds'
     write (*,*) '            storm_int -> storm intensity metric from horizontal wind speeds'
     write (*,*) '            test_cvs -> test the cylindrical volume selection scheme'
@@ -596,21 +634,28 @@ subroutine GetMyArgs(Infiles, Outfiles, AvgFunc, DoRates, Wthreshold, CilThresh,
 
   BadArgs = .false.
 
-  if ((AvgFunc .ne. 'sc_cloud') .and. (AvgFunc .ne. 'precipr') .and. &
-      (AvgFunc .ne. 'w_up') .and. (AvgFunc .ne. 'sc_cloud_diam') .and. &
-      (AvgFunc .ne. 'wr_cloud') .and. (AvgFunc .ne. 'wr_cloud_diam') .and. &
-      (AvgFunc .ne. 'ew_cloud') .and. (AvgFunc .ne. 'horiz_ke') .and. &
-      (AvgFunc .ne. 'storm_int') .and. (AvgFunc .ne. 'test_cvs') .and. &
-      (AvgFunc .ne. 'ccnconc')) then
+  if ((AvgFunc .ne. 'sc_cloud')       .and. (AvgFunc .ne. 'precipr')        .and. &
+      (AvgFunc .ne. 'w_up')           .and. (AvgFunc .ne. 'sc_cloud_diam')  .and. &
+      (AvgFunc .ne. 'wr_cloud')       .and. (AvgFunc .ne. 'wr_cloud_diam')  .and. &
+      (AvgFunc .ne. 'ew_cloud')       .and. (AvgFunc .ne. 'horiz_ke')       .and. &
+      (AvgFunc .ne. 'storm_int')      .and. (AvgFunc .ne. 'test_cvs')       .and. &
+      (AvgFunc .ne. 'ccnconc')        .and. (AvgFunc .ne. 'sc_cloud2')      .and. &
+      (AvgFunc .ne. 'wr_cloud2')      .and. (AvgFunc .ne. 'sc_cloud2_diam') .and. &
+      (AvgFunc .ne. 'wr_cloud2_diam') .and. (AvgFunc .ne. 'ew_cloud2')) then
     write (*,*) 'ERROR: <averaging_function> must be one of:'
     write (*,*) '          sc_cloud'
+    write (*,*) '          wr_cloud'
+    write (*,*) '          sc_cloud2'
+    write (*,*) '          wr_cloud2'
     write (*,*) '          precipr'
     write (*,*) '          w_up'
     write (*,*) '          ccnconc'
     write (*,*) '          sc_cloud_diam'
-    write (*,*) '          ew_cloud'
-    write (*,*) '          wr_cloud'
     write (*,*) '          wr_cloud_diam'
+    write (*,*) '          sc_cloud2_diam'
+    write (*,*) '          wr_cloud2_diam'
+    write (*,*) '          ew_cloud'
+    write (*,*) '          ew_cloud2'
     write (*,*) '          horiz_ke'
     write (*,*) '          storm_int'
     write (*,*) '          test_cvs'
