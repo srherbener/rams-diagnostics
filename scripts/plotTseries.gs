@@ -141,6 +141,86 @@ function main(args)
     yTitle = 'Avg CCN Conc Rates (#/cc/s)'
     avgLen = 1
   endif
+  if (varNum = 15)
+*   warm cloud droplet mass
+    varName = 'ts_wr_cloud'
+    gVar = 'wr_cloud_ts_joi'
+    gTitle = gExp': Total warm cloud droplet mass, 'gCase
+    yTitle = 'Warm Cloud Mass (g)'
+    avgLen = 4
+  endif
+  if (varNum = 16)
+*   warm cloud droplet mass, rates
+    varName = 'ts_wr_cloud_rates'
+    gVar = 'wr_cloud_dt_joi'
+    gTitle = gExp': Total warm cloud droplet mass dt, 'gCase
+    yTitle = 'Warm Cloud Mass Rate (g/s)'
+    avgLen = 4
+  endif
+  if (varNum = 17)
+*   warm cloud droplet mean diameter
+    varName = 'ts_wr_cloud_diam'
+    gVar = 'wr_cloud_diam_t'
+    gTitle = gExp': Mean warm droplet diameter, 'gCase
+    yTitle = 'Warm Cloud Mean Diameter (um)'
+    avgLen = 4
+  endif
+  if (varNum = 18)
+*   warm cloud droplet mean diameter, rates
+    varName = 'ts_wr_cloud_diam_rates'
+    gVar = 'wr_cloud_diam_d'
+    gTitle = gExp': Mean warm droplet diameter dt, 'gCase
+    yTitle = 'Warm Cloud Mean Diameter Rates (um/s)'
+    avgLen = 4
+  endif
+  if (varNum = 19)
+*   warm cloud2 droplet mass
+    varName = 'ts_wr_cloud2'
+    gVar = 'wr_cloud2_ts_jo'
+    gTitle = gExp': Total warm cloud2 droplet mass, 'gCase
+    yTitle = 'Warm Cloud2 Mass (g)'
+    avgLen = 4
+  endif
+  if (varNum = 20)
+*   warm cloud2 droplet mass, rates
+    varName = 'ts_wr_cloud2_rates'
+    gVar = 'wr_cloud2_dt_jo'
+    gTitle = gExp': Total warm cloud2 droplet mass dt, 'gCase
+    yTitle = 'Warm Cloud2 Mass Rate (g/s)'
+    avgLen = 4
+  endif
+  if (varNum = 21)
+*   warm cloud2 droplet mean diameter
+    varName = 'ts_wr_cloud2_diam'
+    gVar = 'wr_cloud2_diam_'
+    gTitle = gExp': Mean warm droplet diameter, 'gCase
+    yTitle = 'Warm Cloud2 Mean Diameter (um)'
+    avgLen = 4
+  endif
+  if (varNum = 22)
+*   warm cloud2 droplet mean diameter, rates
+    varName = 'ts_wr_cloud2_diam_rates'
+    gVar = 'wr_cloud2_diam_'
+    gTitle = gExp': Mean warm droplet diameter dt, 'gCase
+    yTitle = 'Warm Cloud2 Mean Diameter Rates (um/s)'
+    avgLen = 4
+  endif
+  if (varNum = 23)
+*   eyewall cloud2 droplet concentration
+    varName = 'ts_ew_cloud2'
+    gVar = 'ew_cloud2_ts_jo'
+    gTitle = gExp': Average cloud2 droplet conc. near eyewall, 'gCase
+    yTitle = 'Average N (#/cc)'
+    avgLen = 4
+  endif
+  if (varNum = 24)
+*   eyewall cloud2 droplet concentration, rates
+    varName = 'ts_ew_cloud2_rates'
+    gVar = 'ew_cloud2_dt_jo'
+    gTitle = gExp': Average cloud2 droplet conc. near eyewall dt, 'gCase
+    yTitle = 'Average N (#/cc/s)'
+    avgLen = 4
+  endif
 
   gcFile = gDir'/'varName'_'gCase'.ctl'
 
