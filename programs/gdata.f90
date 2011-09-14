@@ -997,7 +997,7 @@ subroutine BuildGoutDescrip(Nx, Ny, Nz, Nt, AzAvg, OfileBase, UndefVal, VarName,
   GoutDescrip%Xinc = Xinc
   GoutDescrip%Ystart = Ystart
   GoutDescrip%Yinc = Yinc
-  GoutDescrip%VarName = trim(VarName) // '_' // trim(Diagnostic)
+  GoutDescrip%VarName = trim(VarName)
   do iz = 1, Nz
     GoutDescrip%Zcoords(iz) = Zcoords(iz)
   end do
@@ -1057,7 +1057,7 @@ subroutine WriteGrads(GoutDescrip, AzAvg)
   write (OutUnit, '(a,i,a,a,5x,a)') 'TDEF ', GoutDescrip%nt, ' LINEAR ', &
                                     trim(GoutDescrip%Tstart), trim(GoutDescrip%Tinc)
   write (OutUnit, '(a)')            'VARS 1 '
-  write (OutUnit, '(a,i,a)')        trim(GoutDescrip%VarName) , GoutDescrip%nz, ' 99 Azimuthal Averaged Data'
+  write (OutUnit, '(a,i,a)')        trim(GoutDescrip%VarName) , GoutDescrip%nz, ' 99 Diagnostic'
   write (OutUnit, '(a)')            'ENDVARS'
 
   close (OutUnit, status='keep')
