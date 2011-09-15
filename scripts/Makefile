@@ -14,13 +14,17 @@ G_SCRIPTS = $(G_DEST)/cbarn.gs \
             $(G_DEST)/plotTseries.gs
 
 B_DEST = $(HOME)/bin
-B_SCRIPTS = $(B_DEST)/run_azavg
+B_SCRIPTS = $(B_DEST)/run_azavg \
+            $(B_DEST)/run_diags
+
+M_DEST = $(HOME)/etc/perl
+M_PACKAGES = $(M_DEST)/DiagUtils.pm
 
 #
 # Targets
 #
 
-all: $(G_SCRIPTS) $(B_SCRIPTS)
+all: $(G_SCRIPTS) $(B_SCRIPTS) $(M_PACKAGES)
 
 $(G_DEST)/cbarn.gs: cbarn.gs
 	cp cbarn.gs $(G_DEST)/cbarn.gs
@@ -52,3 +56,10 @@ $(G_DEST)/plotTseries.gs: plotTseries.gs
 
 $(B_DEST)/run_azavg: run_azavg
 	cp run_azavg $(B_DEST)/run_azavg
+
+$(B_DEST)/run_diags: run_diags
+	cp run_diags $(B_DEST)/run_diags
+
+
+$(M_DEST)/DiagUtils.pm: DiagUtils.pm
+	cp DiagUtils.pm $(M_DEST)/DiagUtils.pm

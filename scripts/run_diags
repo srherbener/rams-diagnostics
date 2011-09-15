@@ -1,0 +1,121 @@
+#!/usr/bin/env perl
+#
+# Script to run various diagnostics
+#
+
+BEGIN { push(@INC, "$ENV{HOME}/etc/perl"); }
+
+use strict;
+use File::Basename;
+use DiagUtils;
+
+#################################################################
+# SUBROUTINES
+#################################################################
+
+#################################################################
+# MAIN
+#################################################################
+
+my $ConfigFile;
+
+my $Cases;
+my $TimeDirs;
+my $Vars;
+my $AzavgDiags; 
+
+my $Case;
+my $Tdir;
+
+$ConfigFile = $ARGV[0];
+
+print "ConfigFile: $ConfigFile\n";
+
+# read in info from the config file
+($Cases, $TimeDirs, $Vars, $AzavgDiags) = &DiagUtils::ReadConfigFile($ConfigFile);
+
+# walk through the cases and time dirs and submit the diagnostics
+foreach $Case (sort(keys(%$Cases)))
+  {
+  foreach $Tdir (sort(keys(%$TimeDirs)))
+    {
+      print "***************************************************************\n";
+#      print "Running diagnostic: $Diag\n";
+      print "  Case: $Case\n";
+      print "  Time Directory: $Tdir\n";
+#      print "  Diagnostic: $Adiag\n";
+#      print "    Number Radial Bands: $Nbands\n";
+#      print "    W Filter Min: $Wmin\n";
+#      print "    W Filter Max: $Wmax\n";
+#      print "  Input File List: $InFiles\n";
+#      print "  Output File Prefix: $OutFiles\n";
+    }
+  }
+
+
+### Cases="SA0SC0 SA0SC1 SA1SC0 SA1SC1 SA0SC0_NR SA0SC1_NR SA10SC0 SA10SC1"
+### Tdirs="T1 T2"
+### NW2SE="1:201:207:1"  # grid3 coords from NW corner to SE corner
+### Npts="300" # roughly the grid resolution, sqrt(201**2 + 207**2) -> ~290
+### Zlevel=7 # closest lev (2334.544) to 2500m which is vertical center of injected CCN
+### NumRbands=6  # number of radial bands for the cfad dataset build
+### BinFilterMin="-1.0"
+### BinFilterMax="1.0"
+### 
+### for case in $Cases
+### do
+###   for Tdir in $Tdirs
+###   do
+###     # each var is in a separate file that starts with the var name
+###   
+###     u_file="${case}/GRADS/${Tdir}/u-${case}-AS-1998-08-22-120000-g3.ctl"
+###     v_file="${case}/GRADS/${Tdir}/v-${case}-AS-1998-08-22-120000-g3.ctl"
+###     p_file="${case}/GRADS/${Tdir}/press-${case}-AS-1998-08-22-120000-g3.ctl"
+###     dens_file="${case}/GRADS/${Tdir}/dn0-${case}-AS-1998-08-22-120000-g3.ctl"
+###     liq_file="${case}/GRADS/${Tdir}/liquid-${case}-AS-1998-08-22-120000-g3.ctl"
+###     ice_file="${case}/GRADS/${Tdir}/ice-${case}-AS-1998-08-22-120000-g3.ctl"
+###     ccn_file="${case}/GRADS/${Tdir}/ccn_concen-${case}-AS-1998-08-22-120000-g3.ctl"
+###     gccn_file="${case}/GRADS/${Tdir}/gccn_concen-${case}-AS-1998-08-22-120000-g3.ctl"
+###     temp_file="${case}/GRADS/${Tdir}/tempc-${case}-AS-1998-08-22-120000-g3.ctl"
+###   
+###     # Generate
+###     #  column integration of liquid
+###     #  column integration of ice
+###     #  surface wind speeds
+###     #  vertical slices (NW to SE) of:
+###     #    thetae
+###     #    gccn
+###     #    ccn
+###     #    liquid (see where supercooled water is)
+###     # horizontal slices (z = 7, lev = 2334.544)
+###     #    gccn
+###     #    ccn
+###   
+###     # column integration needs density (dn0) and the variable to integrate (ice, liquid)
+###     # surface wind speed needs horizontal winds (u, v)
+###     # vertical slice needs only the variable to extract (thetae, gccnconcen, ccnconcen)
+###     # horizontal slice needs only the variable to extract (thetae, gccnconcen, ccnconcen)
+###   
+###     colint ${dens_file}:${temp_file}:${liq_file} GRADS/${Tdir}/cint_liq_${case} liquid
+###     colint ${dens_file}:${temp_file}:${ice_file} GRADS/${Tdir}/cint_ice_${case} ice
+###   
+###     sfcwind ${u_file}:${v_file} GRADS/${Tdir}/sfc_wind_${case}
+### ###   
+### ###   # storm moves off center -> these aren't valid since they don't intersect storm center
+### ###   #  vslice ${gf2} GRADS/${Tdir}/vslice_nw2se_thetae_${case} thetae     ${NW2SE} ${Npts}
+### ###   #  vslice ${gf4} GRADS/${Tdir}/vslice_nw2se_gccn_${case}   gccnconcen ${NW2SE} ${Npts}
+### ###   #  vslice ${gf4} GRADS/${Tdir}/vslice_nw2se_ccn_${case}    ccnconcen  ${NW2SE} ${Npts}
+### ###   #  vslice ${gf3} GRADS/${Tdir}/vslice_nw2se_liq_${case}    liquid     ${NW2SE} ${Npts}
+### ###   
+###     hslice ${gccn_file} GRADS/${Tdir}/hslice_2334_gccn_${case}   gccnconc   ${Zlevel}
+###     hslice ${ccn_file}  GRADS/${Tdir}/hslice_2334_ccn_${case}    ccnconcen  ${Zlevel}
+###     hslice ${temp_file}  GRADS/${Tdir}/hslice_sfc_tempc_${case}   tempc      1
+###   
+### ###     cfad ${gf1} GRADS/${Tdir}/cfad_w_${case} ${NumRbands} ${BinFilterMin} ${BinFilterMax} w
+###   
+###     colint ${dens_file}:${temp_file}:${liq_file} GRADS/${Tdir}/cint_liq_sc_${case} liquid_s
+###     colint ${dens_file}:${temp_file}:${liq_file} GRADS/${Tdir}/cint_liq_wr_${case} liquid_w
+###   
+###     tr_winds ${p_file}:${u_file}:${v_file} GRADS/${Tdir}/storm_winds_tan_${case} GRADS/${Tdir}/storm_winds_rad_${case}
+###   done
+### done

@@ -19,8 +19,11 @@
 #   <WfilterMax> is the upper limit on the w filter (take data points with w > WfilterMax>
 #
 
+BEGIN { push(@INC, "$ENV{HOME}/etc/perl"); }
+
 use strict;
 use File::Basename;
+use DiagUtils;
 
 #######################################################################
 # SUBROUTINES
@@ -112,9 +115,13 @@ sub AppendGradsVarFile
 #######################################################################
 # MAIN
 #######################################################################
-my %Cases;
-my %TimeDirs;
-my %AzavgDiags;
+
+my $ConfigFile;
+
+my $Cases;
+my $TimeDirs;
+my $Vars;
+my $AzavgDiags;
 
 my @f;
 my $Case;
@@ -129,33 +136,14 @@ my $OutFiles;
 my @SysArgs;
 my $OutDir;
 
-undef(%Cases);
-undef(%TimeDirs);
-undef(%AzavgDiags);
+$ConfigFile = $ARGV[0];
 
-while (<>)
-  {
-  @f = split(' ');
-
-  if ($f[0] eq "Case:")
-    {
-    $Cases{$f[1]} = 1;
-    }
-  elsif ($f[0] eq "TimeDir:")
-    {
-    $TimeDirs{$f[1]} = 1;
-    }
-  elsif ($f[0] eq "Azavg:")
-    {
-    $AzavgDiags{$f[1]}{NBANDS} = $f[2];
-    $AzavgDiags{$f[1]}{WMIN} = $f[3];
-    $AzavgDiags{$f[1]}{WMAX} = $f[4];
-    }
-  }
+# read in info from the config file
+($Cases, $TimeDirs, $Vars, $AzavgDiags) = &DiagUtils::ReadConfigFile($ConfigFile);
 
 # make sure at least one of each of cases, time_directories and diagnostics has
 # been specified
-if ((! defined(%Cases)) || (! defined(%TimeDirs)) || (! defined(%AzavgDiags)))
+if ((! defined(%$Cases)) || (! defined(%$TimeDirs)) || (! defined(%$AzavgDiags)))
   {
   print STDERR "ERROR: must specify at least one of each of case, time directory and diagnostic\n";
   exit 1;
@@ -166,15 +154,15 @@ if ((! defined(%Cases)) || (! defined(%TimeDirs)) || (! defined(%AzavgDiags)))
 # control file.
 #
 # Walk through all combinations of cases, time directories, and diagnostics.
-foreach $Case (sort(keys(%Cases)))
+foreach $Case (sort(keys(%$Cases)))
   {
-  foreach $Tdir (sort(keys(%TimeDirs)))
+  foreach $Tdir (sort(keys(%$TimeDirs)))
     {
-    foreach $Adiag (sort(keys(%AzavgDiags)))
+    foreach $Adiag (sort(keys(%$AzavgDiags)))
       {
-      $Nbands = $AzavgDiags{$Adiag}{NBANDS};
-      $Wmin = $AzavgDiags{$Adiag}{WMIN};
-      $Wmax = $AzavgDiags{$Adiag}{WMAX};
+      $Nbands = $$AzavgDiags{$Adiag}{NBANDS};
+      $Wmin = $$AzavgDiags{$Adiag}{WMIN};
+      $Wmax = $$AzavgDiags{$Adiag}{WMAX};
 
       ($InFiles,$OutFiles) = &CreateFileLists($Case, $Tdir, $Adiag);
 
