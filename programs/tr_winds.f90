@@ -135,13 +135,13 @@ program main
   ! Write the tangential wind values
   call BuildGoutDescrip(Nx, Ny, Nz, Nt, Tang, OfileBaseTan, GdataDescrip(1)%UndefVal, VarName, &
           Xstart, Xinc, Ystart, Yinc, GdataDescrip(1)%Zcoords, GdataDescrip(1)%Tstart, &
-          GdataDescrip(1)%Tinc, GoutDescrip, 't')
+          GdataDescrip(1)%Tinc, GoutDescrip, 'tan_winds')
   call WriteGrads(GoutDescrip, Tang)
 
   ! Write the radial wind values
   call BuildGoutDescrip(Nx, Ny, Nz, Nt, Rad, OfileBaseRad, GdataDescrip(1)%UndefVal, VarName, &
           Xstart, Xinc, Ystart, Yinc, GdataDescrip(1)%Zcoords, GdataDescrip(1)%Tstart, &
-          GdataDescrip(1)%Tinc, GoutDescrip, 'r')
+          GdataDescrip(1)%Tinc, GoutDescrip, 'rad_winds')
   call WriteGrads(GoutDescrip, Rad)
 
   ! Clean up
