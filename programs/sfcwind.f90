@@ -125,7 +125,7 @@ program main
   Yinc = GdataDescrip(1)%Ycoords(2) - Ystart
   call BuildGoutDescrip(Nx, Ny, 1, Nt, SfcWind, OfileBase, GdataDescrip(1)%UndefVal, &
           'sfcwind', Xstart, Xinc, Ystart, Yinc, DummyZcoords, &
-          GdataDescrip(1)%Tstart, GdataDescrip(1)%Tinc, GoutDescrip, 'mag')
+          GdataDescrip(1)%Tstart, GdataDescrip(1)%Tinc, GoutDescrip, 'sfc_wind')
 
   call WriteGrads(GoutDescrip, SfcWind)
 
