@@ -23,32 +23,37 @@ my $Cases;
 my $TimeDirs;
 my $Vars;
 my $AzavgDiags; 
+my $Diags;
 
 my $Case;
 my $Tdir;
+my $Diag;
+my $Gvar;
 
 $ConfigFile = $ARGV[0];
 
 print "ConfigFile: $ConfigFile\n";
 
 # read in info from the config file
-($Cases, $TimeDirs, $Vars, $AzavgDiags) = &DiagUtils::ReadConfigFile($ConfigFile);
+($Cases, $TimeDirs, $Vars, $AzavgDiags, $Diags) = &DiagUtils::ReadConfigFile($ConfigFile);
 
 # walk through the cases and time dirs and submit the diagnostics
 foreach $Case (sort(keys(%$Cases)))
   {
   foreach $Tdir (sort(keys(%$TimeDirs)))
     {
-      print "***************************************************************\n";
-#      print "Running diagnostic: $Diag\n";
-      print "  Case: $Case\n";
-      print "  Time Directory: $Tdir\n";
-#      print "  Diagnostic: $Adiag\n";
-#      print "    Number Radial Bands: $Nbands\n";
-#      print "    W Filter Min: $Wmin\n";
-#      print "    W Filter Max: $Wmax\n";
-#      print "  Input File List: $InFiles\n";
-#      print "  Output File Prefix: $OutFiles\n";
+    foreach $Diag (sort(keys(%$Diags)))
+      {
+      foreach $Gvar (sort(keys(%{ $$Diags{$Diag} })))
+        {
+        print "***************************************************************\n";
+        print "Running diagnostic: $Diag\n";
+        print "  Grads Variable: $Gvar\n";
+        print "  Case: $Case\n";
+        print "  Time Directory: $Tdir\n";
+        print "  Diagnostic Argument List: @{$$Diags{$Diag}{$Gvar}}\n";
+        }
+      }
     }
   }
 
