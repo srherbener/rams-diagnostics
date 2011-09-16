@@ -14,6 +14,54 @@ use DiagUtils;
 #################################################################
 
 #################################################################
+# BuildDiagArgs()
+#
+# This routine will build the argument list for $Diag
+#
+sub BuildDiagArgList
+  {
+  my ($Diag, $Case, $Tdir, $Gvar, $Args) = @_;
+
+  my @DiagArgs;
+
+  my $Var;
+  my $DiagVar;
+  my @InGvars;
+  my $InFile;
+  my $InFiles;
+  my $OutBase;
+
+  undef (@DiagArgs);
+
+  if ($Diag eq "colint")
+    {
+    # colint <InFiles> <OutFileBase> <Var>
+    # $@Args --> <Var>,  followed by list of input grads vars
+    #
+    # Use $Gvar, $Case, $Tdir to form <OutBase>
+    # Use list of input grads vars to form <InFiles>
+    ($DiagVar, @InGvars) = @$Args;
+
+    $InFiles = "";
+    foreach $Var (@InGvars) 
+      {
+      $InFiles = &DiagUtils::AppendGradsVarFile($InFiles, $Case, $Tdir, $Var);
+      }
+
+    $OutBase = "GRADS/" . $Tdir . "/" . $Gvar . "_" . $Case;
+
+    @DiagArgs = ( $InFiles, $OutBase, $DiagVar );
+    }
+  else
+   {
+   print "WARNING: BuildDiagArgList: unrecognized diagnostic: $Diag\n";
+   print "WARNING: skipping diagnostic\n";
+   }
+
+
+  return (\@DiagArgs);
+  }
+#################################################################
 # MAIN
 #################################################################
 
@@ -29,6 +77,11 @@ my $Case;
 my $Tdir;
 my $Diag;
 my $Gvar;
+my @Args;
+my $DiagArgs;
+my $Gfile;
+
+my @SysArgs;
 
 $ConfigFile = $ARGV[0];
 
@@ -46,12 +99,18 @@ foreach $Case (sort(keys(%$Cases)))
       {
       foreach $Gvar (sort(keys(%{ $$Diags{$Diag} })))
         {
+        @Args =  @{$$Diags{$Diag}{$Gvar}};
+
         print "***************************************************************\n";
         print "Running diagnostic: $Diag\n";
         print "  Grads Variable: $Gvar\n";
         print "  Case: $Case\n";
         print "  Time Directory: $Tdir\n";
-        print "  Diagnostic Argument List: @{$$Diags{$Diag}{$Gvar}}\n";
+        print "  Diagnostic Argument List: @Args\n";
+
+        ($DiagArgs) = &BuildDiagArgList($Diag, $Case, $Tdir, $Gvar, \@Args);
+print "Debug: DiagArgs: @$DiagArgs\n";
+
         }
       }
     }

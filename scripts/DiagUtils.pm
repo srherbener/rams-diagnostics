@@ -1,6 +1,7 @@
 package DiagUtils;
 
 use strict;
+use File::Glob ':glob';
 
 ###############################################################################
 # ReadConfigFile()
@@ -59,6 +60,64 @@ sub ReadConfigFile
   close(CONFIG);
 
   return(\%Cases, \%TimeDirs, \%Vars, \%AzavgDiags, \%Diags);
+  }
+
+#######################################################################
+# AppendGradsVarFile()
+#
+# This routine will take the case, time dir, and diagnostic name
+# and create the file lists (input and output) needed for azavg.
+#
+sub AppendGradsVarFile
+  {
+  my ($InFiles, $Case, $Tdir, $Var) = @_;
+
+  my $InFileList;
+
+  my $InFile;
+  my @f;
+
+  # append the new file name to the list
+  ($InFile) = &FindGradsControlFile($Case, $Tdir, $Var);
+  $InFileList = $InFiles;
+  if ($InFileList eq "")
+    {
+    $InFileList = $InFile;
+    }
+  else
+    {
+    $InFileList = $InFileList . ":" . $InFile;
+    }
+ 
+  return $InFileList;
+  }
+
+###############################################################################
+# FindGradsControlFile()
+#
+# This routine will take in a case, time dir and var name and return the
+# path to the corresponding GRADS control file
+#
+
+sub FindGradsControlFile
+  {
+  my ($Case, $Tdir, $Var) = @_;
+
+  my $Gfile;
+  my @f;
+
+  # Assume that we will match (with bsd_glob) just the control file --> take
+  # the first entry in the array that is returned from bsd_glob. 
+  # Also assume that the GRADS control file we are looking for is one of
+  # the "single variable" files where its name is of the form:
+  #
+  #    <variable>-<date_string>-<grid_number>.ctl
+  $Gfile = $Case . "/GRADS/" . $Tdir . "/" . $Var . "-*.ctl";
+  @f = bsd_glob($Gfile);
+
+  $Gfile = $f[0];
+
+  return ($Gfile);
   }
 
 1;
