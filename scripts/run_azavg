@@ -51,16 +51,16 @@ sub CreateFileLists
   # If the diagnostic is either of 'w' or 'press', then don't append
   # the $Adiag name on since we've already added 'w' and 'press' to the list.
   $InFiles = "";
-  $InFiles = &AppendGradsVarFile($InFiles, $Case, $Tdir, "w");
-  $InFiles = &AppendGradsVarFile($InFiles, $Case, $Tdir, "press");
+  $InFiles = &DiagUtils::AppendGradsVarFile($InFiles, $Case, $Tdir, "w");
+  $InFiles = &DiagUtils::AppendGradsVarFile($InFiles, $Case, $Tdir, "press");
   if (($Adiag eq 'speed_t') || ($Adiag eq 'speed_r'))
     {
-    $InFiles = &AppendGradsVarFile($InFiles, $Case, $Tdir, "u");
-    $InFiles = &AppendGradsVarFile($InFiles, $Case, $Tdir, "v");
+    $InFiles = &DiagUtils::AppendGradsVarFile($InFiles, $Case, $Tdir, "u");
+    $InFiles = &DiagUtils::AppendGradsVarFile($InFiles, $Case, $Tdir, "v");
     }
   elsif (($Adiag ne "w") && ($Adiag ne "press"))
     {
-    $InFiles = &AppendGradsVarFile($InFiles, $Case, $Tdir, $Adiag);
+    $InFiles = &DiagUtils::AppendGradsVarFile($InFiles, $Case, $Tdir, $Adiag);
     }
   
   # OutFiles is actually a prefix that gets ".ctl" and ".gra" appended to it
@@ -68,48 +68,6 @@ sub CreateFileLists
   $OutFiles = "AzAveragedData/" . ${Tdir} . "/" . ${Adiag} . "_" . ${Case};
 
   return ($InFiles, $OutFiles);
-  }
-
-#######################################################################
-# AppendGradsVarFile()
-#
-# This routine will take the case, time dir, and diagnostic name
-# and create the file lists (input and output) needed for azavg.
-#
-sub AppendGradsVarFile
-  {
-  my ($InFiles, $Case, $Tdir, $Var) = @_;
-
-  my $InFileList;
-
-  my $InFile;
-  my @f;
-
-  # use ls to find the complete file name
-  $InFile = "";
-  open (LS, "/bin/ls $Case/GRADS/$Tdir/$Var-*.ctl |") or die "Cannot execute ls: $!";
-  while (<LS>)
-    {
-    if (/\.ctl/)
-      {
-      @f = split(' ');
-      $InFile = $f[0];
-      }
-    }
-  close(LS);
-
-  # append the new file name to the list
-  $InFileList = $InFiles;
-  if ($InFileList eq "")
-    {
-    $InFileList = $InFile;
-    }
-  else
-    {
-    $InFileList = $InFileList . ":" . $InFile;
-    }
- 
-  return $InFileList;
   }
 
 #######################################################################
