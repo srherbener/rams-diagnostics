@@ -30,6 +30,9 @@ sub BuildDiagArgList
   my $InFile;
   my $InFiles;
   my $OutBase;
+  my $OutBaseTan;
+  my $OutBaseRad;
+  my $GvarRwinds;
 
   undef (@DiagArgs);
 
@@ -51,6 +54,48 @@ sub BuildDiagArgList
     $OutBase = "GRADS/" . $Tdir . "/" . $Gvar . "_" . $Case;
 
     @DiagArgs = ( $InFiles, $OutBase, $DiagVar );
+    }
+  elsif ($Diag eq "sfcwind")
+    {
+    # sfcwind <InFiles> <OutFileBase>
+    # $@Args --> list of input grads vars
+    #
+    # Use $Gvar, $Case, $Tdir to form <OutBase>
+    # Use list of input grads vars to form <InFiles>
+ 
+    @InGvars = @$Args;
+
+    $InFiles = "";
+    foreach $Var (@InGvars)
+      {
+      $InFiles = &DiagUtils::AppendGradsVarFile($InFiles, $Case, $Tdir, $Var);
+      }
+
+    $OutBase = "GRADS/" . $Tdir . "/" . $Gvar . "_" . $Case;
+
+    @DiagArgs = ( $InFiles, $OutBase );
+    }
+  elsif ($Diag eq "tr_winds")
+    {
+    # tr_winds <InFiles> <OutFileBaseTanWinds> <OutFilesBaseRadWinds>
+    # $@Args --> radial winds GRADS var, list of input grads vars
+    # $Gva holds tangential winds GRADS var
+    #
+    # Use $Gvar, $Case, $Tdir to form <OutBase>
+    # Use list of input grads vars to form <InFiles>
+ 
+    ($GvarRwinds, @InGvars) = @$Args;
+
+    $InFiles = "";
+    foreach $Var (@InGvars)
+      {
+      $InFiles = &DiagUtils::AppendGradsVarFile($InFiles, $Case, $Tdir, $Var);
+      }
+
+    $OutBaseTan = "GRADS/" . $Tdir . "/" . $Gvar . "_" . $Case;
+    $OutBaseRad = "GRADS/" . $Tdir . "/" . $GvarRwinds . "_" . $Case;
+
+    @DiagArgs = ( $InFiles, $OutBaseTan, $OutBaseRad );
     }
   else
    {
@@ -82,6 +127,7 @@ my $DiagArgs;
 my $Gfile;
 
 my @SysArgs;
+my $OutDir;
 
 $ConfigFile = $ARGV[0];
 
@@ -108,9 +154,20 @@ foreach $Case (sort(keys(%$Cases)))
         print "  Time Directory: $Tdir\n";
         print "  Diagnostic Argument List: @Args\n";
 
+        # The second argument is always a path to an output GRADS file, so use
+        # this to determine if the output directory needs to be built.
         ($DiagArgs) = &BuildDiagArgList($Diag, $Case, $Tdir, $Gvar, \@Args);
-print "Debug: DiagArgs: @$DiagArgs\n";
 
+        $OutDir = dirname($$DiagArgs[1]);
+        if (! -d $OutDir)
+          {
+          @SysArgs = ("mkdir", "-p", $OutDir);
+          system(@SysArgs);
+          }
+
+        @SysArgs = ($Diag, @$DiagArgs);
+        print "  Command: @SysArgs\n";
+        system(@SysArgs);
         }
       }
     }
