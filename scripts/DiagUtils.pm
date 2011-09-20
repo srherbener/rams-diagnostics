@@ -120,4 +120,39 @@ sub FindGradsControlFile
   return ($Gfile);
   }
 
+#####################################################################################
+# FixGradsControlFile()
+#
+# This routine will "fix" the given GRADS control file by:
+#   1. replacing the path in the DSET command with just the file name so that
+#      the control/data file pair will be portable
+#   2. replacing the revu variable name with the given variable name
+#
+sub FixGradsControlFile
+  {
+  my ($GradsControlFile, $GradsDir, $Gvar, $Var) = @_; 
+
+  my $BackupFile;
+  my @SysArgs;
+
+  print "Fixing GRADS control file: $GradsControlFile\n";
+
+  $BackupFile = $GradsControlFile . ".bak";
+  @SysArgs = ("mv", $GradsControlFile, $BackupFile);
+  system(@SysArgs);
+
+  open(BACKUP, $BackupFile) or die "Cannot open $BackupFile for reading: $!";
+  open(G_CTRL, ">$GradsControlFile") or die "Cannot open $GradsControlFile for writing: $!";
+  while (<BACKUP>)
+    {   
+    s/$GradsDir\///;
+    s/\b$Gvar\b/$Var/;
+    print G_CTRL;
+    }   
+  close(BACKUP);
+  close(G_CTRL);
+
+  return;
+  }
+
 1;
