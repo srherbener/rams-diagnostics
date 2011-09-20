@@ -130,10 +130,13 @@ sub FindGradsControlFile
 #
 sub FixGradsControlFile
   {
-  my ($GradsControlFile, $GradsDir, $Gvar, $Var) = @_; 
+  my ($GradsControlFile, $GradsDir, $Var) = @_; 
 
   my $BackupFile;
   my @SysArgs;
+
+  my @f;
+  my $NextOne;
 
   print "Fixing GRADS control file: $GradsControlFile\n";
 
@@ -143,10 +146,27 @@ sub FixGradsControlFile
 
   open(BACKUP, $BackupFile) or die "Cannot open $BackupFile for reading: $!";
   open(G_CTRL, ">$GradsControlFile") or die "Cannot open $GradsControlFile for writing: $!";
+
+  # assume that there is only one variable, so look for the vars keyword and make the
+  # change on the next line (following the "vars" line)
+  $NextOne = 0;
   while (<BACKUP>)
     {   
-    s/$GradsDir\///;
-    s/\b$Gvar\b/$Var/;
+    if (/^[Dd][Ss][Ee][Tt]/)
+      {
+      s/$GradsDir\///;
+      }
+    elsif (/^[Vv][Aa][Rr][Ss]/)
+      {
+      $NextOne = 1;
+      }
+    elsif ($NextOne == 1)
+      {
+      @f = split(' ');
+      s/\b$f[0]\b/$Var/;
+      $NextOne = 0;
+      }
+
     print G_CTRL;
     }   
   close(BACKUP);
