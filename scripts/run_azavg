@@ -40,7 +40,7 @@ sub CreateFileLists
   my ($Case, $Tdir, $Adiag) = @_;
   
   my $InFiles;
-  my $OutFiles;
+  my $OutFilePrefix;
 
   # InFiles is a colon separated list that specifies all the required input
   # GRADS files. All diagnostics need the variables 'w' and 'press' so that
@@ -63,11 +63,12 @@ sub CreateFileLists
     $InFiles = &DiagUtils::AppendGradsVarFile($InFiles, $Case, $Tdir, $Adiag);
     }
   
-  # OutFiles is actually a prefix that gets ".ctl" and ".gra" appended to it
-  # to form the output GRADS control and data files.
-  $OutFiles = "AzAveragedData/" . ${Tdir} . "/" . ${Adiag} . "_" . ${Case};
+  # OutFilePrefix is the whole path to the output GRADS file without the ".ctl" and ".gra"
+  # suffix. azavg will use OutFilePrefix to form both the GRADS control (.ctl) and GRADS
+  # data (.gra) files.
+  $OutFilePrefix = "AzAveragedData/" . ${Tdir} . "/" . ${Adiag} . "_" . ${Case};
 
-  return ($InFiles, $OutFiles);
+  return ($InFiles, $OutFilePrefix);
   }
 
 #######################################################################
@@ -90,10 +91,11 @@ my $Nbands;
 my $Wmin;
 my $Wmax;
 my $InFiles;
-my $OutFiles;
+my $OutFilePrefix;
 
 my @SysArgs;
 my $OutDir;
+my $GradsControlFile;
 
 $ConfigFile = $ARGV[0];
 
@@ -123,7 +125,7 @@ foreach $Case (sort(keys(%$Cases)))
       $Wmin = $$AzavgDiags{$Adiag}{WMIN};
       $Wmax = $$AzavgDiags{$Adiag}{WMAX};
 
-      ($InFiles,$OutFiles) = &CreateFileLists($Case, $Tdir, $Adiag);
+      ($InFiles,$OutFilePrefix) = &CreateFileLists($Case, $Tdir, $Adiag);
 
       print "***************************************************************\n";
       print "Running azavg:\n";
@@ -134,18 +136,22 @@ foreach $Case (sort(keys(%$Cases)))
       print "    W Filter Min: $Wmin\n";
       print "    W Filter Max: $Wmax\n";
       print "  Input File List: $InFiles\n";
-      print "  Output File Prefix: $OutFiles\n";
+      print "  Output File Prefix: $OutFilePrefix\n";
 
       # run azavg, make sure the output directory exists
-      $OutDir = dirname($OutFiles);
+      $OutDir = dirname($OutFilePrefix);
       if (! -d $OutDir)
         {
         @SysArgs = ("mkdir", "-p", $OutDir);
         system(@SysArgs);
         }
 
-      @SysArgs = ("azavg", $InFiles, $OutFiles, $Nbands, $Wmin, $Wmax, $Adiag);
+      @SysArgs = ("azavg", $InFiles, $OutFilePrefix, $Nbands, $Wmin, $Wmax, $Adiag);
       system(@SysArgs);
+
+      # fix paths and var names in the GRADS control file
+      ($GradsControlFile) = &DiagUtils::FindGradsControlFile($OutFilePrefix);
+      &DiagUtils::FixGradsControlFile($GradsControlFile, $OutDir, $Adiag);
       }
     }
   }

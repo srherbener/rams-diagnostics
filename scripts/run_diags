@@ -145,6 +145,7 @@ my $Gfile;
 
 my @SysArgs;
 my $OutDir;
+my $GradsControlFile;
 
 $ConfigFile = $ARGV[0];
 
@@ -175,6 +176,7 @@ foreach $Case (sort(keys(%$Cases)))
         # this to determine if the output directory needs to be built.
         ($DiagArgs) = &BuildDiagArgList($Diag, $Case, $Tdir, $Gvar, \@Args);
 
+        # output GRADS file prefix is in $$DiagArgs[1]
         $OutDir = dirname($$DiagArgs[1]);
         if (! -d $OutDir)
           {
@@ -185,6 +187,10 @@ foreach $Case (sort(keys(%$Cases)))
         @SysArgs = ($Diag, @$DiagArgs);
         print "  Command: @SysArgs\n";
         system(@SysArgs);
+
+        # fix paths and var names in the output GRADS control file
+        ($GradsControlFile) = &DiagUtils::FindGradsControlFile($$DiagArgs[1]);
+        &DiagUtils::FixGradsControlFile($GradsControlFile, $OutDir, $Gvar);
         }
       }
     }

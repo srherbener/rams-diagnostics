@@ -43,8 +43,7 @@ sub ReadConfigFile
     elsif ($f[0] eq "Var:")
       {
       $Vars{$f[1]}{REVU_VAR} = $f[2];
-      $Vars{$f[1]}{GRADS_VAR} = $f[3];
-      $Vars{$f[1]}{T_SUFFIX} = $f[4];
+      $Vars{$f[1]}{T_SUFFIX} = $f[3];
       }
     elsif ($f[0] eq "Azavg:")
       {
@@ -76,9 +75,11 @@ sub AppendGradsVarFile
 
   my $InFile;
   my @f;
+  my $FilePrefix;
 
   # append the new file name to the list
-  ($InFile) = &FindGradsControlFile($Case, $Tdir, $Var);
+  $FilePrefix = $Case . "/GRADS/" . $Tdir . "/" . $Var . "-*";
+  ($InFile) = &FindGradsControlFile($FilePrefix);
   $InFileList = $InFiles;
   if ($InFileList eq "")
     {
@@ -101,7 +102,7 @@ sub AppendGradsVarFile
 
 sub FindGradsControlFile
   {
-  my ($Case, $Tdir, $Var) = @_;
+  my ($FilePrefix) = @_;
 
   my $Gfile;
   my @f;
@@ -112,7 +113,7 @@ sub FindGradsControlFile
   # the "single variable" files where its name is of the form:
   #
   #    <variable>-<date_string>-<grid_number>.ctl
-  $Gfile = $Case . "/GRADS/" . $Tdir . "/" . $Var . "-*.ctl";
+  $Gfile = $FilePrefix . ".ctl";
   @f = bsd_glob($Gfile);
 
   $Gfile = $f[0];

@@ -1046,7 +1046,7 @@ subroutine WriteGrads(GoutDescrip, AzAvg)
     stop
   end if
 
-  write (OutUnit, '(a,a)')          'DSET ', trim(GoutDescrip%DataFile)
+  write (OutUnit, '(a,a)')          'DSET ^./', trim(GoutDescrip%DataFile)
   write (OutUnit, '(a,a)')          'TITLE ', trim(GoutDescrip%Title)
   write (OutUnit, '(a,g)')          'UNDEF ', GoutDescrip%UndefVal
   write (OutUnit, '(a)')            'OPTIONS  little_endian'
