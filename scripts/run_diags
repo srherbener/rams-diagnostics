@@ -96,7 +96,7 @@ sub BuildDiagArgList
     {
     # tr_winds <InFiles> <OutFileBaseTanWinds> <OutFilesBaseRadWinds>
     # $@Args --> radial winds GRADS var, list of input grads vars
-    # $Gva holds tangential winds GRADS var
+    # $Gvar holds tangential winds GRADS var
     #
     # Use $Gvar, $Case, $Tdir to form <OutBase>
     # Use list of input grads vars to form <InFiles>
@@ -146,6 +146,10 @@ my $Gfile;
 my @SysArgs;
 my $OutDir;
 my $GradsControlFile;
+my $JoinInFiles;
+my $JoinOutPrefix;
+my $JoinInFiles2;
+my $JoinOutPrefix2;
 
 $ConfigFile = $ARGV[0];
 
@@ -157,11 +161,16 @@ print "ConfigFile: $ConfigFile\n";
 # walk through the cases and time dirs and submit the diagnostics
 foreach $Case (sort(keys(%$Cases)))
   {
-  foreach $Tdir (sort(keys(%$TimeDirs)))
+  foreach $Diag (sort(keys(%$Diags)))
     {
-    foreach $Diag (sort(keys(%$Diags)))
+    foreach $Gvar (sort(keys(%{ $$Diags{$Diag} })))
       {
-      foreach $Gvar (sort(keys(%{ $$Diags{$Diag} })))
+      $JoinInFiles = "";
+      $JoinInFiles2 = ""; # use the for radial winds with the "tr_winds" diagnostic
+
+      # run through each time directory generating the current diagnostic, and
+      # then join these files into the main file (above the time directories)
+      foreach $Tdir (sort(keys(%$TimeDirs)))
         {
         @Args =  @{$$Diags{$Diag}{$Gvar}};
 
@@ -191,6 +200,65 @@ foreach $Case (sort(keys(%$Cases)))
         # fix paths and var names in the output GRADS control file
         ($GradsControlFile) = &DiagUtils::FindGradsControlFile($$DiagArgs[1]);
         &DiagUtils::FixGradsControlFile($GradsControlFile, $OutDir, $Gvar);
+
+        # record the input file for the upcoming join
+        if ($JoinInFiles eq "")
+          {
+          $JoinInFiles = $GradsControlFile;
+          }
+        else
+          {
+          $JoinInFiles = $JoinInFiles . ":" . $GradsControlFile;
+          }
+
+        # repeat fix paths and recording of the input files for the upcoming join
+        # if we are doing "tr_winds" (this diagnostic has two output GRADS file sets)
+        if ($Diag eq "tr_winds")
+          {
+          ($GradsControlFile) = &DiagUtils::FindGradsControlFile($$DiagArgs[2]);
+          &DiagUtils::FixGradsControlFile($GradsControlFile, $OutDir, $Args[0]);
+
+          if ($JoinInFiles2 eq "")
+            {
+            $JoinInFiles2 = $GradsControlFile;
+            }
+          else
+            {
+            $JoinInFiles2 = $JoinInFiles2 . ":" . $GradsControlFile;
+            }
+          }
+        }
+
+      $JoinOutPrefix = "GRADS/" . $Gvar . "_" . $Case;
+      @SysArgs = ("join_gdata", $JoinInFiles, $JoinOutPrefix, $Gvar);
+      print "***************************************************\n";
+      print " Joining GRADS data:\n";
+      print "   Input Files: $JoinInFiles\n";
+      print "   Output File Prefix: $JoinOutPrefix\n";
+      print "   GRADS Variable: $Gvar\n";
+      system(@SysArgs);
+
+      # fix paths and var names
+      $OutDir = dirname($JoinOutPrefix);
+      ($GradsControlFile) = &DiagUtils::FindGradsControlFile($JoinOutPrefix);
+      &DiagUtils::FixGradsControlFile($GradsControlFile, $OutDir, $Gvar);
+
+      # repeat for radial winds GRADS files if running "tr_winds"
+      if ($Diag eq "tr_winds")
+        {
+        $JoinOutPrefix2 = "GRADS/" . $Args[0] . "_" . $Case;
+        @SysArgs = ("join_gdata", $JoinInFiles2, $JoinOutPrefix2, $Args[0]);
+        print "***************************************************\n";
+        print " Joining GRADS data:\n";
+        print "   Input Files: $JoinInFiles2\n";
+        print "   Output File Prefix: $JoinOutPrefix2\n";
+        print "   GRADS Variable: $Args[0]\n";
+        system(@SysArgs);
+
+        # fix paths and var names
+        $OutDir = dirname($JoinOutPrefix2);
+        ($GradsControlFile) = &DiagUtils::FindGradsControlFile($JoinOutPrefix2);
+        &DiagUtils::FixGradsControlFile($GradsControlFile, $OutDir, $Args[0]);
         }
       }
     }

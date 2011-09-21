@@ -96,6 +96,8 @@ my $OutFilePrefix;
 my @SysArgs;
 my $OutDir;
 my $GradsControlFile;
+my $JoinInFiles;
+my $JoinOutPrefix;
 
 $ConfigFile = $ARGV[0];
 
@@ -117,14 +119,18 @@ if ((! defined(%$Cases)) || (! defined(%$TimeDirs)) || (! defined(%$AzavgDiags))
 # Walk through all combinations of cases, time directories, and diagnostics.
 foreach $Case (sort(keys(%$Cases)))
   {
-  foreach $Tdir (sort(keys(%$TimeDirs)))
+  foreach $Adiag (sort(keys(%$AzavgDiags)))
     {
-    foreach $Adiag (sort(keys(%$AzavgDiags)))
-      {
-      $Nbands = $$AzavgDiags{$Adiag}{NBANDS};
-      $Wmin = $$AzavgDiags{$Adiag}{WMIN};
-      $Wmax = $$AzavgDiags{$Adiag}{WMAX};
+    $JoinInFiles = "";
 
+    $Nbands = $$AzavgDiags{$Adiag}{NBANDS};
+    $Wmin = $$AzavgDiags{$Adiag}{WMIN};
+    $Wmax = $$AzavgDiags{$Adiag}{WMAX};
+
+    # run through each time directory generating the current diagnostic, and
+    # then join these files into the main file (above the time directories)
+    foreach $Tdir (sort(keys(%$TimeDirs)))
+      {
       ($InFiles,$OutFilePrefix) = &CreateFileLists($Case, $Tdir, $Adiag);
 
       print "***************************************************************\n";
@@ -152,7 +158,31 @@ foreach $Case (sort(keys(%$Cases)))
       # fix paths and var names in the GRADS control file
       ($GradsControlFile) = &DiagUtils::FindGradsControlFile($OutFilePrefix);
       &DiagUtils::FixGradsControlFile($GradsControlFile, $OutDir, $Adiag);
+
+      # record the input file for the upcoming join
+      if ($JoinInFiles eq "")
+        {
+        $JoinInFiles = $GradsControlFile;
+        }
+      else
+        {
+        $JoinInFiles = $JoinInFiles . ":" . $GradsControlFile;
+        }
       }
+
+    $JoinOutPrefix = "AzAveragedData/" . ${Adiag} . "_" . ${Case};
+    @SysArgs = ("join_gdata", $JoinInFiles, $JoinOutPrefix, $Adiag);
+    print "***************************************************\n";
+    print " Joining GRADS data:\n";
+    print "   Input Files: $JoinInFiles\n";
+    print "   Output File Prefix: $JoinOutPrefix\n";
+    print "   GRADS Variable: $Adiag\n";
+    system(@SysArgs);
+
+    # fix paths and var names
+    $OutDir = dirname($JoinOutPrefix);
+    ($GradsControlFile) = &DiagUtils::FindGradsControlFile($JoinOutPrefix);
+    &DiagUtils::FixGradsControlFile($GradsControlFile, $OutDir, $Adiag);
     }
   }
 
