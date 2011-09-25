@@ -78,7 +78,15 @@ sub AppendGradsVarFile
   my $FilePrefix;
 
   # append the new file name to the list
-  $FilePrefix = $Case . "/GRADS/" . $Tdir . "/" . $Var . "-*";
+  if ($Var eq "cint_liq")
+    {
+    $FilePrefix = "GRADS/" . $Tdir . "/" . $Var . "_" . $Case . "*";
+    }
+  else
+    {
+    $FilePrefix = $Case . "/GRADS/" . $Tdir . "/" . $Var . "-*";
+    }
+
   ($InFile) = &FindGradsControlFile($FilePrefix);
   $InFileList = $InFiles;
   if ($InFileList eq "")
