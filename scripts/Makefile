@@ -15,7 +15,8 @@ G_SCRIPTS = $(G_DEST)/cbarn.gs \
 
 B_DEST = $(HOME)/bin
 B_SCRIPTS = $(B_DEST)/run_azavg \
-            $(B_DEST)/run_diags
+            $(B_DEST)/run_diags \
+            $(B_DEST)/gen_grads_az_plots
 
 M_DEST = $(HOME)/etc/perl
 M_PACKAGES = $(M_DEST)/DiagUtils.pm
@@ -59,6 +60,9 @@ $(B_DEST)/run_azavg: run_azavg
 
 $(B_DEST)/run_diags: run_diags
 	cp run_diags $(B_DEST)/run_diags
+
+$(B_DEST)/gen_grads_az_plots: gen_grads_az_plots
+	cp gen_grads_az_plots $(B_DEST)/gen_grads_az_plots
 
 
 $(M_DEST)/DiagUtils.pm: DiagUtils.pm
