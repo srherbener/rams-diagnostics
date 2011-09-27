@@ -1,141 +1,47 @@
-#!/usr/bin/env bash
+#!/usr/bin/env perl
 #
 # script to run grads to generate az avg data plots
 #
 
-export GASCRP="$HOME/grads"
+BEGIN { push(@INC, "$ENV{HOME}/etc/perl"); }
 
-Cases="TC_SEED_C0100 TC_SEED_C1000 TC_SEED_C8000 TC_SEED_NG_C0100 TC_SEED_NG_C1000 TC_SEED_NG_C8000"
+use strict;
+use DiagUtils;
 
-Vars="w speed_t speed_r liquid ice gccn_conc ccn_conc theta_e tempc press cloud_cm3 cloud2_cm3"
+###########################################################################
+# SUBROUTINES
+###########################################################################
 
-Times="48 60 72 84 96 108 120"
+###########################################################################
+# MAIN
+###########################################################################
 
-Exp="TC42"
-Dir="AzAveragedData"
-Pdir="plots/AzAveragedData"
-if [ ! -d $Pdir ]
-then
-  mkdir -p $Pdir
-fi
+my $Gvar;
+my $Gfile;
+my $TimeStep;
+my $Ztop;
+my $Ccols;
+my $Clevs;
+my $Ptitle;
+my $Xtitle;
+my $Ytitle;
+my $Pfile;
 
-StartTime=42
-TimeInc=1.0
 
-Xtitle="Radius (km)"
-Ytitle="Height (m)"
+$Gvar="speed_t";
+$Gfile="AzAveragedData/speed_t_TC_SEED_C0100.ctl";
 
-# GRADS contour colors - rainbow
-Ccols="9 14 4 11 5 13 3 10 7 12 8 2 6"
+$TimeStep=7;
+$Ccols="9 14 4 11 5 13 3 10 7 12 8 2 6";
+$Clevs="10.0 15.0 20.0 25.0 30.0 35.0 40.0 45.0 50.0 55.0 60.0 65.0 70.0";
+$Ztop=16000;
 
-for Case in ${Cases}
-do
-  for Var in ${Vars}
-  do
-    # set up plot parameters according to variable
-    case $Var in 
-      w)
-        Title="${Exp}: AZ: w (m/s), ${Case}"
-        Clevs="-1.5 -1.0 -0.5 0.0 0.5 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5"
-        Ztop=16000
-        ;;
-      speed_t)
-        Title="${Exp}: AZ: spd_t (m/s), ${Case}"
-        Clevs="10.0 15.0 20.0 25.0 30.0 35.0 40.0 45.0 50.0 55.0 60.0 65.0 70.0"
-        Ztop=16000
-        ;;
-      speed_r)
-        Title="${Exp}: AZ: spd_r (m/s), ${Case}"
-        Clevs="-18.0 -15.0 -12.0 -9.0 -6.0 -3.0 0.0 3.0 6.0 9.0 12.0 15.0 18.0"
-        ZTop=16000
-        ;;
-      liquid)
-        Title="${Exp}: AZ: LWC (g/kg), ${Case}"
-        Clevs="0.0 0.4 0.8 1.2 1.6 2.0 2.4 2.8 3.2 3.6 4.0 4.4 4.8"
-        Ztop=10000
-        ;;
-      ice)
-        Title="${Exp}: AZ: ice (g/kg), ${Case}"
-        Clevs="0.0 0.2 0.4 0.6 0.8 1.0 1.2 1.4 1.6 1.8 2.0 2.2 2.4"
-        Ztop=16000
-        ;;
-      gccn_conc)
-        Title="${Exp}: AZ: GCCN (#/cc), ${Case}"
-        Clevs="0.00001 0.0001 0.001 0.01 0.0 0.2 0.4 0.6 0.8 1.0 1.2 1.4 1.6"
-        Ztop=16000
-        ;;
-      ccn_conc)
-        Title="${Exp}: AZ: CCN (#/cc), ${Case}"
-        Clevs="0.0 50.0 100.0 150.0 200.0 300.0 400.0 500.0 1000.0 1500.0 2000.0 2500.0 3000.0"
-        Ztop=16000
-        ;;
-      theta_e)
-        Title="${Exp}: AZ: Theta-e (K), ${Case}"
-        Clevs="348.0 350.0 352.0 354.0 356.0 358.0 360.0 362.0 364.0 366.0 368.0 370.0 372.0"
-        Ztop=2000
-        ;;
-      tempc)
-        Title="${Exp}: AZ: T (C), ${Case}"
-        Clevs="18.0 20.0 21.0 22.0 22.5 23.0 23.5 24.0 24.5 25.0 25.5 26.0 26.5"
-        Ztop=2000
-        ;;
-      press)
-        Title="${Exp}: AZ: Pressure (mb), ${Case}"
-        Clevs="740.0 760.0 780.0 800.0 820.0 840.0 860.0 880.0 900.0 920.0 940.0 960.0 980.0"
-        Ztop=2000
-        ;;
-      cloud_cm3)
-        Title="${Exp}: AZ: Cloud Droplet Number (#/cc), ${Case}"
-        Clevs="0.0 5.00 10.00 15.00 20.00 25.00 30.00 35.00 40.00 45.00 50.00 55.00 60.00"
-        Ztop= 4000
-        ;;
-      cloud2_cm3)
-        Title="${Exp}: AZ: Cloud2 Droplet Number (#/cc), ${Case}"
-        Clevs="0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2"
-        Ztop=4000
-        ;;
-    esac
+$Ptitle="TC42: AZ: spd_t (m/s), TC_SEED_C0100, t 48 hrs";
+$Xtitle="Radius (km)";
+$Ytitle="Height (m)";
 
-    for Time in ${Times}
-    do
-      if (( Time >= StartTime ))
-      then
-        Gfile="${Dir}/${Var}_${Case}.ctl"
-        Pfile="${Pdir}/${Var}_${Case}_${Time}.gif"
-        Ptitle="${Title}, t ${Time} hrs"
-        TimeStep=$(perl -e "{print (int(($Time - $StartTime) / $TimeInc) + 1)}")
-        echo "*** $Var $Case $Time $Pfile ***"
+$Pfile="plots/AzAveragedData/speed_t_TC_SEED_C0100_48.gif";
 
-        # temp grads script file
-        Gscript="$(mktemp /tmp/grads_cmds.XXXXXXXXXX)"
+&DiagUtils::PlotGradsVslice($Gvar,$Gfile,$TimeStep,$Ztop,$Ccols,$Clevs,$Ptitle,$Xtitle,$Ytitle,$Pfile);
 
-        {
-        echo "'reinit'"
-        echo "'clear'"
-        echo "'open ${Gfile}'"
-        echo "'set lev 0 ${Ztop}'"
-        echo "'set t ${TimeStep}'"
-        echo "'set gxout shaded'"
-        echo "'set clevs ${Clevs}'"
-        echo "'set ccols ${Ccols}'"
-        echo "'set xlab %.1f'"
-        echo "'set grads off'"
-        echo "'set parea 1.5 10.5 2 8'"
-        echo "'d ${Var}'"
-        echo "'draw title ${Ptitle}'"
-        echo "'draw xlab ${Xtitle}'"
-        echo "'draw ylab ${Ytitle}'"
-        echo "'cbarn 1.0 0'"
-        echo "'printim ${Pfile} white'"
-        } > $Gscript
-
-        grads -l -b <<EOF
-$Gscript
-EOF
-
-        # clean up
-        rm $Gscript
-      fi
-    done
-  done
-done
+exit 0;

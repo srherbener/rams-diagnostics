@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+#
+# script to run grads to generate a vertical slice plot
+# y-axis of plot is Z (height)
+#
+# Args
+#   1. Gvar      - grads var to plot
+#   2. Gfile     - grads control file containing Gvar
+#   3. TimeStep  - time step to plot
+#   4. Ztop      - top level (z goes from 0 to Ztop --> height is y-axis of plot)
+#   5. Ccols     - countour colors (space separated list)
+#   6. Clevs     - countour levels (space separated list)
+#   7. Ptitle    - main title of plot
+#   8. Xtitle    - x-axis label
+#   9. Ytitle    - y-axis label
+#  10. Pfile     - output plot file
+#
+
+Gvar=$1
+Gfile=$2
+TimeStep=$3
+Ztop=$4
+Ccols=$5
+Clevs=$6
+Ptitle=$7
+Xtitle=$8
+Ytitle=$9
+Pfile=${10}
+
+export GASCRP="$HOME/grads"
+
+# temp grads script file
+Gscript="$(mktemp /tmp/grads_cmds.XXXXXXXXXX)"
+
+{
+echo "'reinit'"
+echo "'clear'"
+echo "'open ${Gfile}'"
+echo "'set lev 0 ${Ztop}'"
+echo "'set t ${TimeStep}'"
+echo "'set gxout shaded'"
+echo "'set clevs ${Clevs}'"
+echo "'set ccols ${Ccols}'"
+echo "'set xlab %.1f'"
+echo "'set grads off'"
+echo "'set parea 1.5 10.5 2 8'"
+echo "'d ${Gvar}'"
+echo "'draw title ${Ptitle}'"
+echo "'draw xlab ${Xtitle}'"
+echo "'draw ylab ${Ytitle}'"
+echo "'cbarn 1.0 0'"
+echo "'printim ${Pfile} white'"
+} > $Gscript
+
+grads -l -b <<EOF
+$Gscript
+EOF
+
+# clean up
+rm $Gscript

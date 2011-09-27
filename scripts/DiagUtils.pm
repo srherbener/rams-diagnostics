@@ -2,6 +2,7 @@ package DiagUtils;
 
 use strict;
 use File::Glob ':glob';
+use File::Temp qw/ :mktemp  /;
 
 ###############################################################################
 # ReadConfigFile()
@@ -180,6 +181,53 @@ sub FixGradsControlFile
     }   
   close(BACKUP);
   close(G_CTRL);
+
+  return;
+  }
+
+#####################################################################################
+# PlotGradsVslice()
+#
+# This routine will run grads and create a plot, vertical slice through the data,
+# using the specs given in the arguments.
+#
+
+sub PlotGradsVslice
+  {
+  my ($Gvar, $Gfile, $TimeStep, $Ztop, $Ccols, $Clevs, $Ptitle, $Xtitle, $Ytitle, $Pfile) = @_;
+
+  my $GscriptName;
+  my $GscriptFh;
+
+  # mkstemp opens the file
+  ($GscriptFh, $GscriptName) = mkstemp( "/tmp/gcmds.XXXXXXXX" );
+  print $GscriptFh "export GASCRP=\"\$HOME/grads\"\n";
+  print $GscriptFh "grads -l -b <<EOF\n";
+  print $GscriptFh "reinit\n";
+  print $GscriptFh "clear\n";
+  print $GscriptFh "open $Gfile\n";
+  print $GscriptFh "set lev 0 $Ztop\n";
+  print $GscriptFh "set t $TimeStep\n";
+  print $GscriptFh "set gxout shaded\n";
+  print $GscriptFh "set clevs $Clevs\n";
+  print $GscriptFh "set ccols $Ccols\n";
+  print $GscriptFh "set xlab %.1f\n";
+  print $GscriptFh "set grads off\n";
+  print $GscriptFh "set parea 1.5 10.5 2 8\n";
+  print $GscriptFh "d $Gvar\n";
+  print $GscriptFh "draw title $Ptitle\n";
+  print $GscriptFh "draw xlab $Xtitle\n";
+  print $GscriptFh "draw ylab $Ytitle\n";
+  print $GscriptFh "cbarn 1.0 0\n";
+  print $GscriptFh "printim $Pfile white\n";
+  print $GscriptFh "EOF\n";
+  close($GscriptFh);
+
+  system ("cat", $GscriptName);
+  system ("chmod", "+x", $GscriptName);
+  system ("sh", "-c", $GscriptName);
+ 
+  unlink $GscriptName or warn "PlotGradsVslice: could not unlink $GscriptName: $!";
 
   return;
   }
