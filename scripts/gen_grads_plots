@@ -1,0 +1,279 @@
+#!/usr/bin/env perl
+#
+# script to run grads to generate data plots using GRADS
+#
+
+BEGIN { push(@INC, "$ENV{HOME}/etc/perl"); }
+
+use strict;
+use DiagUtils;
+
+###########################################################################
+# SUBROUTINES
+###########################################################################
+
+###########################################################################
+# SetGradsPlotParams()
+#
+# This routine will set plotting parameters (contour colors, levels,
+# axis labeling, etc.) according to which kind of plot we are doing and
+# the particular variable, case, etc. we are working on.
+#
+sub SetGradsPlotParams
+  {
+  my ($Ptype, $Gvar, $Gexp, $Case, $StartTime, $TimeInc, $Ptime, $Dir, $Pdir) = @_;
+
+  my $Clevs;
+  my $Ccols;
+  my $Ptitle;
+  my $Xtitle;
+  my $Ytitle;
+  my $TimeStep;
+  my $Ztop;
+  my $Gfile;
+  my $Pfile;
+
+  $TimeStep = int(($Ptime - $StartTime) / $TimeInc) + 1;
+
+  if ($Ptype eq "AZ")
+    {
+    $Ccols = "9 14 4 11 5 13 3 10 7 12 8 2 6";
+    $Xtitle = "Radius (km)";
+    $Ytitle = "Height (m)";
+    $Gfile = $Dir . "/" . $Gvar . "_" . $Case . ".ctl";
+    $Pfile = $Pdir . "/" . $Gvar . "_" . $Case . "_" . $Ptime . ".gif";
+
+    if ($Gvar eq "w")
+      {
+      $Clevs = "-1.5 -1.0 -0.5 0.0 0.5 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5";
+      $Ptitle = $Gexp . ": AZ: w (m/s), " . $Case . ", t " . $Ptime . " hrs";
+      $Ztop = 16000;
+      }
+    elsif ($Gvar eq "speed_t")
+      {
+      $Clevs = "10.0 15.0 20.0 25.0 30.0 35.0 40.0 45.0 50.0 55.0 60.0 65.0 70.0";
+      $Ptitle = $Gexp . ": AZ: spd_t (m/s), " . $Case . ", t " . $Ptime . " hrs";
+      $Ztop = 16000;
+      }
+    elsif ($Gvar eq "speed_r")
+      {
+      $Clevs = "-18.0 -15.0 -12.0 -9.0 -6.0 -3.0 0.0 3.0 6.0 9.0 12.0 15.0 18.0";
+      $Ptitle = $Gexp . ": AZ: spd_r (m/s), " . $Case . ", t " . $Ptime . " hrs";
+      $Ztop = 16000;
+      }
+    elsif ($Gvar eq "liquid")
+      {
+      $Clevs = "0.0 0.4 0.8 1.2 1.6 2.0 2.4 2.8 3.2 3.6 4.0 4.4 4.8";
+      $Ptitle = $Gexp . ": AZ: LWC (g/kg), " . $Case . ", t " . $Ptime . " hrs";
+      $Ztop = 10000;
+      }
+    elsif ($Gvar eq "ice")
+      {
+      $Clevs = "0.0 0.2 0.4 0.6 0.8 1.0 1.2 1.4 1.6 1.8 2.0 2.2 2.4";
+      $Ptitle = $Gexp . ": AZ: ice (g/kg), " . $Case . ", t " . $Ptime . " hrs";
+      $Ztop = 16000;
+      }
+    elsif ($Gvar eq "gccn_conc")
+      {
+      $Clevs = "0.00001 0.0001 0.001 0.01 0.0 0.2 0.4 0.6 0.8 1.0 1.2 1.4 1.6";
+      $Ptitle = $Gexp . ": AZ: GCCN (#/cc), " . $Case . ", t " . $Ptime . " hrs";
+      $Ztop = 16000;
+      }
+    elsif ($Gvar eq "ccn_conc")
+      {
+      $Clevs = "0.0 50.0 100.0 150.0 200.0 300.0 400.0 500.0 1000.0 1500.0 2000.0 2500.0 3000.0";
+      $Ptitle = $Gexp . ": AZ: CCN (#/cc), " . $Case . ", t " . $Ptime . " hrs";
+      $Ztop = 16000;
+      }
+    elsif ($Gvar eq "theta_e")
+      {
+      $Clevs = "348.0 350.0 352.0 354.0 356.0 358.0 360.0 362.0 364.0 366.0 368.0 370.0 372.0";
+      $Ptitle = $Gexp . ": AZ: Theta-e (K), " . $Case . ", t " . $Ptime . " hrs";
+      $Ztop = 2000;
+      }
+    elsif ($Gvar eq "tempc")
+      {
+      $Clevs = "18.0 20.0 21.0 22.0 22.5 23.0 23.5 24.0 24.5 25.0 25.5 26.0 26.5";
+      $Ptitle = $Gexp . ": AZ: T (C), " . $Case . ", t " . $Ptime . " hrs";
+      $Ztop = 2000;
+      }
+    elsif ($Gvar eq "press")
+      {
+      $Clevs = "740.0 760.0 780.0 800.0 820.0 840.0 860.0 880.0 900.0 920.0 940.0 960.0 980.0";
+      $Ptitle = $Gexp . ": AZ: Pressure (mb), " . $Case . ", t " . $Ptime . " hrs";
+      $Ztop = 2000;
+      }
+    elsif ($Gvar eq "cloud_cm3")
+      {
+      $Clevs = "0.0 5.00 10.00 15.00 20.00 25.00 30.00 35.00 40.00 45.00 50.00 55.00 60.00";
+      $Ptitle = $Gexp . ": AZ: Cloud Droplet Number (#/cc), " . $Case . ", t " . $Ptime . " hrs";
+      $Ztop = 4000;
+      }
+    elsif ($Gvar eq "cloud2_cm3")
+      {
+      $Clevs = "0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2";
+      $Ptitle = $Gexp . ": AZ: Cloud2 Droplet Number (#/cc), " . $Case . ", t " . $Ptime . " hrs";
+      $Ztop = 4000;
+      }
+    }
+  elsif ($Ptype eq "HS")
+    {
+    $Ztop = 0; # set to something, this is not used for HS plot types
+    $Ccols = "9 14 4 11 5 13 3 10 7 12 8 2 6";
+    $Xtitle = "Longitude";
+    $Ytitle = "Latitude";
+    $Gfile = $Dir . "/" . $Gvar . "_" . $Case . ".ctl";
+    $Pfile = $Pdir . "/" . $Gvar . "_" . $Case . "_" . $Ptime . ".gif";
+
+    if ($Gvar eq "cint_liq")
+      {
+      $Clevs = "200.0 400.0 600.0 800.0 1000.0 2000.0 4000.0 6000.0 8000.0 10000.0 20000.0 40000.0 60000.0";
+      $Ptitle = $Gexp . ": LWP (g/m**2), " . $Case . ", t " . $Ptime . " hrs";
+      }
+    elsif ($Gvar eq "cint_ice")
+      {
+      $Clevs = "10.0 20.0 40.0 60.0 80.0 100.0 200.0 400.0 600.0 800.0 1000.0 2000.0 4000.0";
+      $Ptitle = $Gexp . ": Column integrated ice (g/m**2), " . $Case . ", t " . $Ptime . " hrs";
+      }
+    elsif ($Gvar eq "gccn_z7")
+      {
+      $Clevs = "0.00001 0.0001 0.001 0.01 0.0 0.2 0.4 0.6 0.8 1.0 1.2 1.4 1.6";
+      $Ptitle = $Gexp . ": GCCN (#/cc), z=2300m, " . $Case . ", t " . $Ptime . " hrs";
+      }
+    elsif ($Gvar eq "ccn_z7")
+      {
+      $Clevs = "20.0 40.0 60.0 80.0 100.0 200.0 400.0 600.0 800.0 1000.0 2000.0 4000.0 6000.0";
+      $Ptitle = $Gexp . ": CCN (#/cc), z=2300m, " . $Case . ", t " . $Ptime . " hrs";
+      }
+    elsif ($Gvar eq "sfc_wind")
+      {
+      $Clevs = "15.0 20.0 25.0 30.0 35.0 40.0 45.0 50.0 55.0 60.0 65.0 70.0 75.0";
+      $Ptitle = $Gexp . ": Surface wind speed (m/s), " . $Case . ", t " . $Ptime . " hrs";
+      }
+    elsif ($Gvar eq "cint_liq_sc")
+      {
+      $Clevs = "10.0 20.0 40.0 60.0 80.0 100.0 200.0 400.0 600.0 800.0 1000.0 2000.0 4000.0";
+      $Ptitle = $Gexp . ": Supercooled LWP (g/m**2), " . $Case . ", t " . $Ptime . " hrs";
+      }
+    elsif ($Gvar eq "cint_liq_wr")
+      {
+      $Clevs = "200.0 400.0 600.0 800.0 1000.0 2000.0 4000.0 6000.0 8000.0 10000.0 20000.0 40000.0 60000.0";
+      $Ptitle = $Gexp . ": Warm LWP (g/m**2), " . $Case . ", t " . $Ptime . " hrs";
+      }
+    elsif ($Gvar eq "tempc_sfc")
+      {
+      $Clevs = "20.0 21.0 22.0 23.0 24.0 25.0 26.0 27.0 28.0 29.0 30.0 31.0 32.0";
+      $Ptitle = $Gexp . ": Sfc Temperature (deg C), " . $Case . ", t " . $Ptime . " hrs";
+      }
+    }
+    
+  return ($Clevs, $Ccols, $Ptitle, $Xtitle, $Ytitle, $TimeStep, $Ztop, $Gfile, $Pfile);
+  }
+
+###########################################################################
+# MAIN
+###########################################################################
+
+my $ConfigFile;
+
+my $Cases;
+my $TimeDirs;
+my $Vars;
+my $AzavgDiags; 
+my $Diags;
+my $Plots;
+
+my $Gexp;
+my $Case;
+my $Ptime;
+my $StartTime;
+my $TimeInc;
+my $Ptype;
+my @Gvars;
+my @Ptimes;
+my @Ptypes;
+my %Gdirs;
+my $Gdir;
+my $Pdir;
+
+my $Gvar;
+my $Gfile;
+my $TimeStep;
+my $Ztop;
+my $Ccols;
+my $Clevs;
+my $Ptitle;
+my $Xtitle;
+my $Ytitle;
+my $Pfile;
+
+$ConfigFile = $ARGV[0];
+#@Ptypes = ("AZ", "HS", "TS");
+@Ptypes = ("HS");
+
+%Gdirs = (
+  "AZ" => {
+          DIR => "AzAveragedData",
+          PDIR => "plots/AzAveragedData",
+          },
+  "HS" => {
+          DIR => "GRADS",
+          PDIR => "plots/HsliceData",
+          },
+  "TS" => {
+          DIR => "GRADS",
+          PDIR => "plots/Misc",
+          },
+  );
+
+print "ConfigFile: $ConfigFile\n\n";
+
+# read in info from the config file
+($Cases, $TimeDirs, $Vars, $AzavgDiags, $Diags, $Plots) = &DiagUtils::ReadConfigFile($ConfigFile);
+
+$Gexp = $$Plots{EXP};
+$StartTime = $$Plots{STIME};
+$TimeInc = $$Plots{TINC};
+@Ptimes = ( @{ $$Plots{TIMES} } );
+
+print "Experiment: $Gexp\n";
+print "Start Time: $StartTime\n";
+print "End Time: $TimeInc\n";
+print "Plot Times: @Ptimes\n";
+
+foreach $Ptype (@Ptypes)
+  {
+  @Gvars = ( @{ $$Plots{$Ptype}{VARS} } );
+  $Gdir = $Gdirs{$Ptype}{DIR};
+  $Pdir = $Gdirs{$Ptype}{PDIR};
+  if (! -d $Pdir)
+    {
+    system( "mkdir", "-p", $Pdir);
+    }
+
+  foreach $Case (sort(keys(%$Cases)))
+    {
+    foreach $Gvar (@Gvars)
+      {
+      foreach $Ptime (@Ptimes)
+        {
+        ($Clevs, $Ccols, $Ptitle, $Xtitle, $Ytitle, $TimeStep, $Ztop, $Gfile, $Pfile) =
+            &SetGradsPlotParams($Ptype, $Gvar, $Gexp, $Case, $StartTime, $TimeInc, $Ptime,
+                                $Gdir, $Pdir);
+     
+        if ($Ptype eq "AZ")
+          {
+          &DiagUtils::PlotGradsVslice($Gvar, $Gfile, $TimeStep, $Ztop,
+            $Ccols, $Clevs, $Ptitle, $Xtitle, $Ytitle, $Pfile);
+          }
+        elsif ($Ptype eq "HS")
+          {
+          &DiagUtils::PlotGradsHslice($Gvar, $Gfile, $TimeStep,
+            $Ccols, $Clevs, $Ptitle, $Xtitle, $Ytitle, $Pfile);
+          }
+        }
+      }
+    }
+  }
+
+exit 0;

@@ -57,19 +57,27 @@ sub ReadConfigFile
       {
       $Diags{$f[1]}{$f[2]} = [ @f[3..$#f] ];
       }
-    elsif ($f[0] eq "AzPlotExp:")
+    elsif ($f[0] eq "PlotExp:")
       {
-      $Plots{AZ}{EXP}   = $f[1];
-      $Plots{AZ}{STIME} = $f[2];
-      $Plots{AZ}{TINC}  = $f[3];
+      $Plots{EXP}   = $f[1];
+      $Plots{STIME} = $f[2];
+      $Plots{TINC}  = $f[3];
       }
-    elsif ($f[0] eq "AzPlotTimes:")
+    elsif ($f[0] eq "PlotTimes:")
       {
-      $Plots{AZ}{TIMES}  = [ @f[1..$#f] ];
+      $Plots{TIMES}  = [ @f[1..$#f] ];
       }
     elsif ($f[0] eq "AzPlotVars:")
       {
-      $Plots{AZ}{VARS}  = [ @f[1..$#f] ];
+      $Plots{"AZ"}{VARS}  = [ @f[1..$#f] ];
+      }
+    elsif ($f[0] eq "HsPlotVars:")
+      {
+      $Plots{"HS"}{VARS}  = [ @f[1..$#f] ];
+      }
+    elsif ($f[0] eq "TsPlotVars:")
+      {
+      $Plots{"TS"}{VARS}  = [ @f[1..$#f] ];
       }
     }
   close(CONFIG);
@@ -242,6 +250,49 @@ sub PlotGradsVslice
   system ("bash" , "-c", $GscriptName);
  
   unlink $GscriptName or warn "PlotGradsVslice: could not unlink $GscriptName: $!";
+
+  return;
+  }
+
+#####################################################################################
+# PlotGradsHslice()
+#
+# This routine will run grads and create a plot, horizontal slice through the data,
+# using the specs given in the arguments.
+#
+
+sub PlotGradsHslice
+  {
+  my ($Gvar, $Gfile, $TimeStep, $Ccols, $Clevs, $Ptitle, $Xtitle, $Ytitle, $Pfile) = @_;
+
+  my $GscriptName;
+  my $GscriptFh;
+
+  # mkstemp opens the file
+  ($GscriptFh, $GscriptName) = mkstemp( "/tmp/gcmds.XXXXXXXX" );
+  print $GscriptFh "export GASCRP=\"\$HOME/grads\"\n";
+  print $GscriptFh "grads -l -b <<EOF\n";
+  print $GscriptFh "reinit\n";
+  print $GscriptFh "clear\n";
+  print $GscriptFh "open $Gfile\n";
+  print $GscriptFh "set t $TimeStep\n";
+  print $GscriptFh "set gxout shaded\n";
+  print $GscriptFh "set clevs $Clevs\n";
+  print $GscriptFh "set ccols $Ccols\n";
+  print $GscriptFh "set grads off\n";
+  print $GscriptFh "d $Gvar\n";
+  print $GscriptFh "draw title $Ptitle\n";
+  print $GscriptFh "draw xlab $Xtitle\n";
+  print $GscriptFh "draw ylab $Ytitle\n";
+  print $GscriptFh "cbarn 1.0 1\n";
+  print $GscriptFh "printim $Pfile white\n";
+  print $GscriptFh "EOF\n";
+  close($GscriptFh);
+
+  system ("chmod", "+x", $GscriptName);
+  system ("bash" , "-c", $GscriptName);
+ 
+  unlink $GscriptName or warn "PlotGradsHslice: could not unlink $GscriptName: $!";
 
   return;
   }
