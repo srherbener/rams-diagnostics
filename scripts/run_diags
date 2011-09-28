@@ -183,6 +183,7 @@ my $TimeDirs;
 my $Vars;
 my $AzavgDiags; 
 my $Diags;
+my $Plots;
 
 my $Case;
 my $Tdir;
@@ -206,7 +207,7 @@ $ConfigFile = $ARGV[0];
 print "ConfigFile: $ConfigFile\n";
 
 # read in info from the config file
-($Cases, $TimeDirs, $Vars, $AzavgDiags, $Diags) = &DiagUtils::ReadConfigFile($ConfigFile);
+($Cases, $TimeDirs, $Vars, $AzavgDiags, $Diags, $Plots) = &DiagUtils::ReadConfigFile($ConfigFile);
 
 # walk through the cases and time dirs and submit the diagnostics
 foreach $Case (sort(keys(%$Cases)))

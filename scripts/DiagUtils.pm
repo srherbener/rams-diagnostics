@@ -20,6 +20,7 @@ sub ReadConfigFile
   my %Vars;
   my %AzavgDiags;
   my %Diags;
+  my %Plots;
 
   my @f;
 
@@ -56,10 +57,24 @@ sub ReadConfigFile
       {
       $Diags{$f[1]}{$f[2]} = [ @f[3..$#f] ];
       }
+    elsif ($f[0] eq "AzPlotExp:")
+      {
+      $Plots{AZ}{EXP}   = $f[1];
+      $Plots{AZ}{STIME} = $f[2];
+      $Plots{AZ}{TINC}  = $f[3];
+      }
+    elsif ($f[0] eq "AzPlotTimes:")
+      {
+      $Plots{AZ}{TIMES}  = [ @f[1..$#f] ];
+      }
+    elsif ($f[0] eq "AzPlotVars:")
+      {
+      $Plots{AZ}{VARS}  = [ @f[1..$#f] ];
+      }
     }
   close(CONFIG);
 
-  return(\%Cases, \%TimeDirs, \%Vars, \%AzavgDiags, \%Diags);
+  return(\%Cases, \%TimeDirs, \%Vars, \%AzavgDiags, \%Diags, \%Plots);
   }
 
 #######################################################################
@@ -223,9 +238,8 @@ sub PlotGradsVslice
   print $GscriptFh "EOF\n";
   close($GscriptFh);
 
-  system ("cat", $GscriptName);
   system ("chmod", "+x", $GscriptName);
-  system ("sh", "-c", $GscriptName);
+  system ("bash" , "-c", $GscriptName);
  
   unlink $GscriptName or warn "PlotGradsVslice: could not unlink $GscriptName: $!";
 

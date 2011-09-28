@@ -82,6 +82,7 @@ my $TimeDirs;
 my $Vars;
 my $AzavgDiags;
 my $Diags;
+my $Plots;
 
 my @f;
 my $Case;
@@ -102,7 +103,7 @@ my $JoinOutPrefix;
 $ConfigFile = $ARGV[0];
 
 # read in info from the config file
-($Cases, $TimeDirs, $Vars, $AzavgDiags, $Diags) = &DiagUtils::ReadConfigFile($ConfigFile);
+($Cases, $TimeDirs, $Vars, $AzavgDiags, $Diags, $Plots) = &DiagUtils::ReadConfigFile($ConfigFile);
 
 # make sure at least one of each of cases, time_directories and diagnostics has
 # been specified
