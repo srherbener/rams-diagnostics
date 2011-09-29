@@ -21,7 +21,7 @@ use DiagUtils;
 #
 sub SetGradsPlotParams
   {
-  my ($Ptype, $Gvar, $Gexp, $Case, $StartTime, $TimeInc, $Ptime, $Dir, $Pdir) = @_;
+  my ($Ptype, $Gvar, $Gexp, $Case, $StartTime, $TimeInc, $Ptime, $Ptstart, $Ptend, $Dir, $Pdir) = @_;
 
   my $Clevs;
   my $Ccols;
@@ -29,11 +29,18 @@ sub SetGradsPlotParams
   my $Xtitle;
   my $Ytitle;
   my $TimeStep;
+  my $TstepStart;
+  my $TstepEnd;
+  my $TavgLen;
+  my $Ymin;
+  my $Ymax;
   my $Ztop;
   my $Gfile;
   my $Pfile;
 
   $TimeStep = int(($Ptime - $StartTime) / $TimeInc) + 1;
+  $TstepStart = (($Ptstart - $StartTime) / $TimeInc) + 1;
+  $TstepEnd = (($Ptend - $StartTime) / $TimeInc) + 1;
 
   if ($Ptype eq "AZ")
     {
@@ -166,8 +173,207 @@ sub SetGradsPlotParams
       $Ptitle = $Gexp . ": Sfc Temperature (deg C), " . $Case . ", t " . $Ptime . " hrs";
       }
     }
+  elsif ($Ptype eq "TS")
+    {
+    $Xtitle = "Time";
+    $Gfile = $Dir . "/" . $Gvar . "_" . $Case . ".ctl";
+    $Pfile = $Pdir . "/" . $Gvar . "_" . $Case . ".gif";
+
+    if ($Gvar eq "ts_sc_cloud")
+      {
+      $Ptitle = $Gexp . ": Total supercooled cloud droplet mass, " . $Case;
+      $Ytitle = "SC Cloud Mass (g)";
+      $TavgLen = 4;
+      $Ymin = 0.0;
+      $Ymax = 7.0e13;
+      }
+    elsif ($Gvar eq "ts_wr_cloud")
+      {
+      $Ptitle = $Gexp . ": Total warm cloud droplet mass, " . $Case;
+      $Ytitle = "Warm Cloud Mass (g)";
+      $TavgLen = 4;
+      $Ymin = 0.0;
+      $Ymax = 5.0e13;
+      }
+    elsif ($Gvar eq "ts_ew_cloud")
+      {
+      $Ptitle = $Gexp . ": Average cloud droplet conc. near eyewall, " . $Case;
+      $Ytitle = "Average N (#/cc)";
+      $TavgLen = 4;
+      $Ymin = 0.0;
+      $Ymax = 270.0;
+      }
+    elsif ($Gvar eq "ts_wr_cloud2")
+      {
+      $Ptitle = $Gexp . ": Total warm cloud2 droplet mass, " . $Case;
+      $Ytitle = "Warm Cloud2 Mass (g)";
+      $TavgLen = 4;
+      $Ymin = 0.0;
+      $Ymax = 3.5e12;
+      }
+    elsif ($Gvar eq "ts_ew_cloud2")
+      {
+      $Ptitle = $Gexp . ": Average cloud2 droplet conc. near eyewall, " . $Case;
+      $Ytitle = "Average N (#/cc)";
+      $TavgLen = 4;
+      $Ymin = 0.0;
+      $Ymax = 0.05;
+      }
+    elsif ($Gvar eq "ts_sc_cloud_d")
+      {
+      $Ptitle = $Gexp . ": Mean supercooled droplet diameter, " . $Case;
+      $Ytitle = "SC Cloud Mean Diameter (um)";
+      $TavgLen = 4;
+      $Ymin = 0.0;
+      $Ymax = 40.0;
+      }
+    elsif ($Gvar eq "ts_wr_cloud_d")
+      {
+      $Ptitle = $Gexp . ": Mean warm droplet diameter, " . $Case;
+      $Ytitle = "Warm Cloud Mean Diameter (um)";
+      $TavgLen = 4;
+      $Ymin = 0.0;
+      $Ymax = 40.0;
+      }
+    elsif ($Gvar eq "ts_wr_cloud2_d")
+      {
+      $Ptitle = $Gexp . ": Mean warm droplet diameter, " . $Case;
+      $Ytitle = "Warm Cloud2 Mean Diameter (um)";
+      $TavgLen = 4;
+      $Ymin = 50.0;
+      $Ymax = 100.0;
+      }
+    elsif ($Gvar eq "ts_precipr")
+      {
+      $Ptitle = $Gexp . ": Precipitation rate, " . $Case;
+      $Ytitle = "Precip Rate (kg/hr)";
+      $TavgLen = 4;
+      $Ymin = 0.0;
+      $Ymax = 2.0e7;
+      }
+    elsif ($Gvar eq "ts_w_up")
+      {
+      $Ptitle = $Gexp . ": Average w in updraft regions, " . $Case;
+      $Ytitle = "Average w (m/s)";
+      $TavgLen = 4;
+      $Ymin = 0.0;
+      $Ymax = 6.0;
+      }
+    elsif ($Gvar eq "ts_ccn_conc")
+      {
+      $Ptitle = $Gexp . ": Avg CCN concentration, " . $Case;
+      $Ytitle = "Avg CCN Conc (#/cc)";
+      $TavgLen = 1;
+      $Ymin = 0.0;
+      $Ymax = 0.8;
+      }
+    elsif ($Gvar eq "ts_horiz_ke")
+      {
+      $Ptitle = $Gexp . ": Total kinetic energy, " . $Case;
+      $Ytitle = "Total KE (J)";
+      $TavgLen = 4;
+      $Ymin = 1.0e16;
+      $Ymax = 2.0e17;
+      }
+    elsif ($Gvar eq "ts_storm_int")
+      {
+      $Ptitle = $Gexp . ": Storm intensity metric, " . $Case;
+      $Ytitle = "Intensity";
+      $TavgLen = 4;
+      $Ymin = 0.0;
+      $Ymax = 0.8;
+      }
+    elsif ($Gvar eq "ts_sc_cloud_dt")
+      {
+      $Ptitle = $Gexp . ": Total supercooled cloud droplet mass dt, " . $Case;
+      $Ytitle = "SC Cloud Mass Rate (g/s)";
+      $TavgLen = 4;
+      $Ymin = -1.2e9;
+      $Ymax = 1.2e9;
+      }
+    elsif ($Gvar eq "ts_wr_cloud_dt")
+      {
+      $Ptitle = $Gexp . ": Total warm cloud droplet mass dt, " . $Case;
+      $Ytitle = "Warm Cloud Mass Rate (g/s)";
+      $TavgLen = 4;
+      $Ymin = -3.0e9;
+      $Ymax = 3.0e9;
+      }
+    elsif ($Gvar eq "ts_ew_cloud_dt")
+      {
+      $Ptitle = $Gexp . ": Average cloud droplet conc. near eyewall dt, " . $Case;
+      $Ytitle = "Average N (#/cc/s)";
+      $TavgLen = 4;
+      $Ymin = -5e-4;
+      $Ymax = 5e-4;
+      }
+    elsif ($Gvar eq "ts_wr_cloud2_dt")
+      {
+      $Ptitle = $Gexp . ": Total warm cloud2 droplet mass dt, " . $Case;
+      $Ytitle = "Warm Cloud2 Mass Rate (g/s)";
+      $TavgLen = 4;
+      $Ymin = -1.0e8;
+      $Ymax = 1.0e8;
+      }
+    elsif ($Gvar eq "ts_ew_cloud2_dt")
+      {
+      $Ptitle = $Gexp . ": Average cloud2 droplet conc. near eyewall dt, " . $Case;
+      $Ytitle = "Average N (#/cc/s)";
+      $TavgLen = 4;
+      $Ymin = -5e-6;
+      $Ymax = 5e-6;
+      }
+    elsif ($Gvar eq "ts_sc_cloud_d_dt")
+      {
+      $Ptitle = $Gexp . ": Mean supercooled droplet diameter dt, " . $Case;
+      $Ytitle = "SC Cloud Mean Diameter Rates (um/s)";
+      $TavgLen = 4;
+      $Ymin = -0.001;
+      $Ymax = 0.001;
+      }
+    elsif ($Gvar eq "ts_wr_cloud_d_dt")
+      {
+      $Ptitle = $Gexp . ": Mean warm droplet diameter dt, " . $Case;
+      $Ytitle = "Warm Cloud Mean Diameter Rates (um/s)";
+      $TavgLen = 4;
+      $Ymin = -0.001;
+      $Ymax = 0.001;
+      }
+    elsif ($Gvar eq "ts_wr_cloud2_d_dt")
+      {
+      $Ptitle = $Gexp . ": Mean warm droplet diameter dt, " . $Case;
+      $Ytitle = "Warm Cloud2 Mean Diameter Rates (um/s)";
+      $TavgLen = 4;
+      $Ymin = -0.001;
+      $Ymax = 0.001;
+      }
+    elsif ($Gvar eq "ts_precipr_dt")
+      {
+      $Ptitle = $Gexp . ": Precipitation rate dt, " . $Case;
+      $Ytitle = "Precip Rate Rates (kg/hr/s)";
+      $TavgLen = 4;
+      $Ymin = -500.0;
+      $Ymax = 500.0;
+      }
+    elsif ($Gvar eq "ts_w_up_dt")
+      {
+      $Ptitle = $Gexp . ": Average w in updraft regions dt, " . $Case;
+      $Ytitle = "Average w (m/s/s)";
+      $TavgLen = 4;
+      $Ymin = -0.0001;
+      $Ymax = 0.0001;
+      }
+    elsif ($Gvar eq "ts_ccn_conc_dt")
+      {
+      $Ptitle = $Gexp . ": Avg CCN concentration, dt, " . $Case;
+      $Ytitle = "Avg CCN Conc Rates (#/cc/s)";
+      $TavgLen = 1;
+      $Ymin = 0.0;
+      $Ymax = 0.8;
+      }
+    }
     
-  return ($Clevs, $Ccols, $Ptitle, $Xtitle, $Ytitle, $TimeStep, $Ztop, $Gfile, $Pfile);
+  return ($Clevs, $Ccols, $Ptitle, $Xtitle, $Ytitle, $TimeStep, $TstepStart, $TstepEnd, $TavgLen, $Ymin, $Ymax, $Ztop, $Gfile, $Pfile);
   }
 
 ###########################################################################
@@ -186,6 +392,8 @@ my $Plots;
 my $Gexp;
 my $Case;
 my $Ptime;
+my $Ptstart;
+my $Ptend;
 my $StartTime;
 my $TimeInc;
 my $Ptype;
@@ -199,17 +407,22 @@ my $Pdir;
 my $Gvar;
 my $Gfile;
 my $TimeStep;
+my $TstepStart;
+my $TstepEnd;
+my $TavgLen;
 my $Ztop;
 my $Ccols;
 my $Clevs;
 my $Ptitle;
 my $Xtitle;
 my $Ytitle;
+my $Ymin;
+my $Ymax;
 my $Pfile;
 
 $ConfigFile = $ARGV[0];
 #@Ptypes = ("AZ", "HS", "TS");
-@Ptypes = ("HS");
+@Ptypes = ("TS");
 
 %Gdirs = (
   "AZ" => {
@@ -235,6 +448,7 @@ $Gexp = $$Plots{EXP};
 $StartTime = $$Plots{STIME};
 $TimeInc = $$Plots{TINC};
 @Ptimes = ( @{ $$Plots{TIMES} } );
+$Ptstart = $$Plots{PTSTART};
 
 print "Experiment: $Gexp\n";
 print "Start Time: $StartTime\n";
@@ -255,22 +469,45 @@ foreach $Ptype (@Ptypes)
     {
     foreach $Gvar (@Gvars)
       {
-      foreach $Ptime (@Ptimes)
+      if (($Ptype eq "AZ") || ($Ptype eq "HS"))
         {
-        ($Clevs, $Ccols, $Ptitle, $Xtitle, $Ytitle, $TimeStep, $Ztop, $Gfile, $Pfile) =
+        foreach $Ptime (@Ptimes)
+          {
+          ($Clevs, $Ccols, $Ptitle, $Xtitle, $Ytitle, $TimeStep, $TstepStart, $TstepEnd, $TavgLen, $Ymin, $Ymax, $Ztop, $Gfile, $Pfile) =
+              &SetGradsPlotParams($Ptype, $Gvar, $Gexp, $Case, $StartTime, $TimeInc, $Ptime,
+                                  $Ptstart, $Ptend,$Gdir, $Pdir);
+
+          if ($Ptype eq "AZ")
+            {
+            &DiagUtils::PlotGradsVslice($Gvar, $Gfile, $TimeStep, $Ztop,
+              $Ccols, $Clevs, $Ptitle, $Xtitle, $Ytitle, $Pfile);
+            }
+          elsif ($Ptype eq "HS")
+            {
+            &DiagUtils::PlotGradsHslice($Gvar, $Gfile, $TimeStep,
+              $Ccols, $Clevs, $Ptitle, $Xtitle, $Ytitle, $Pfile);
+            }
+          }
+        }
+      elsif ($Ptype eq "TS")
+        {
+        $Ptime = 0;
+        if ($Gvar =~ /_dt$/)
+          {
+          # "rates" data - comes up one shorter than non rates data
+          $Ptend = $$Plots{PTEND} - 1;
+          }
+        else
+          {
+          $Ptend = $$Plots{PTEND};
+          }
+
+        ($Clevs, $Ccols, $Ptitle, $Xtitle, $Ytitle, $TimeStep, $TstepStart, $TstepEnd, $TavgLen, $Ymin, $Ymax, $Ztop, $Gfile, $Pfile) =
             &SetGradsPlotParams($Ptype, $Gvar, $Gexp, $Case, $StartTime, $TimeInc, $Ptime,
-                                $Gdir, $Pdir);
-     
-        if ($Ptype eq "AZ")
-          {
-          &DiagUtils::PlotGradsVslice($Gvar, $Gfile, $TimeStep, $Ztop,
-            $Ccols, $Clevs, $Ptitle, $Xtitle, $Ytitle, $Pfile);
-          }
-        elsif ($Ptype eq "HS")
-          {
-          &DiagUtils::PlotGradsHslice($Gvar, $Gfile, $TimeStep,
-            $Ccols, $Clevs, $Ptitle, $Xtitle, $Ytitle, $Pfile);
-          }
+                                $Ptstart, $Ptend, $Gdir, $Pdir);
+
+        &DiagUtils::PlotGradsTseries($Gvar, $Gfile, $TstepStart, $TstepEnd, $TavgLen,
+          $Ymin, $Ymax, $Ptitle, $Xtitle, $Ytitle, $Pfile);
         }
       }
     }

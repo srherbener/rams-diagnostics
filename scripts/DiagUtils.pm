@@ -59,9 +59,11 @@ sub ReadConfigFile
       }
     elsif ($f[0] eq "PlotExp:")
       {
-      $Plots{EXP}   = $f[1];
-      $Plots{STIME} = $f[2];
-      $Plots{TINC}  = $f[3];
+      $Plots{EXP}      = $f[1];
+      $Plots{STIME}    = $f[2];
+      $Plots{TINC}     = $f[3];
+      $Plots{PTSTART}  = $f[4];
+      $Plots{PTEND}    = $f[5];
       }
     elsif ($f[0] eq "PlotTimes:")
       {
@@ -297,4 +299,49 @@ sub PlotGradsHslice
   return;
   }
 
+#####################################################################################
+# PlotGradsTseries()
+#
+# This routine will run grads and create a plot, horizontal slice through the data,
+# using the specs given in the arguments.
+#
+
+sub PlotGradsTseries
+  {
+  my ($Gvar, $Gfile, $TstepStart, $TstepEnd, $TavgLen, $Ymin, $Ymax,
+      $Ptitle, $Xtitle, $Ytitle, $Pfile) = @_;
+
+  my $GscriptName;
+  my $GscriptFh;
+  my $T1;
+  my $T2;
+
+  $T1 = $TstepStart + $TavgLen;
+  $T2 = $TstepEnd - $TavgLen;
+
+  # mkstemp opens the file
+  ($GscriptFh, $GscriptName) = mkstemp( "/tmp/gcmds.XXXXXXXX" );
+  print $GscriptFh "export GASCRP=\"\$HOME/grads\"\n";
+  print $GscriptFh "grads -l -b <<EOF\n";
+  print $GscriptFh "reinit\n";
+  print $GscriptFh "clear\n";
+  print $GscriptFh "open $Gfile\n";
+  print $GscriptFh "set t $T1 $T2\n";
+  print $GscriptFh "set grads off\n";
+  print $GscriptFh "set vrange $Ymin $Ymax\n";
+  print $GscriptFh "d tloop(ave($Gvar,t-$TavgLen,t+$TavgLen))\n";
+  print $GscriptFh "draw title $Ptitle\n";
+  print $GscriptFh "draw xlab $Xtitle\n";
+  print $GscriptFh "draw ylab $Ytitle\n";
+  print $GscriptFh "printim $Pfile white\n";
+  print $GscriptFh "EOF\n";
+  close($GscriptFh);
+
+  system ("chmod", "+x", $GscriptName);
+  system ("bash" , "-c", $GscriptName);
+ 
+  unlink $GscriptName or warn "PlotGradsTslice: could not unlink $GscriptName: $!";
+
+  return;
+  }
 1;
