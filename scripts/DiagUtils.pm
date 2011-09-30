@@ -69,17 +69,21 @@ sub ReadConfigFile
       {
       $Plots{TIMES}  = [ @f[1..$#f] ];
       }
-    elsif ($f[0] eq "AzPlotVars:")
+    elsif ($f[0] eq "AzPlotVar:")
       {
-      $Plots{"AZ"}{VARS}  = [ @f[1..$#f] ];
+      $Plots{"AZ"}{VARS}{$f[1]}{ZBOT} = $f[2];
+      $Plots{"AZ"}{VARS}{$f[1]}{ZTOP} = $f[3];
       }
-    elsif ($f[0] eq "HsPlotVars:")
+    elsif ($f[0] eq "HsPlotVar:")
       {
-      $Plots{"HS"}{VARS}  = [ @f[1..$#f] ];
+      # set a dummy value just to get the variable names into the keys
+      $Plots{"HS"}{VARS}{$f[1]} = 1;
       }
-    elsif ($f[0] eq "TsPlotVars:")
+    elsif ($f[0] eq "TsPlotVar:")
       {
-      $Plots{"TS"}{VARS}  = [ @f[1..$#f] ];
+      $Plots{"TS"}{VARS}{$f[1]}{TAVGLEN} = $f[2];
+      $Plots{"TS"}{VARS}{$f[1]}{YMIN}    = $f[3];
+      $Plots{"TS"}{VARS}{$f[1]}{YMAX}    = $f[4];
       }
     }
   close(CONFIG);
@@ -219,7 +223,7 @@ sub FixGradsControlFile
 
 sub PlotGradsVslice
   {
-  my ($Gvar, $Gfile, $TimeStep, $Ztop, $Ccols, $Clevs, $Ptitle, $Xtitle, $Ytitle, $Pfile) = @_;
+  my ($Gvar, $Gfile, $TimeStep, $Z1, $Z2, $Ccols, $Clevs, $Ptitle, $Xtitle, $Ytitle, $Pfile) = @_;
 
   my $GscriptName;
   my $GscriptFh;
@@ -235,7 +239,7 @@ sub PlotGradsVslice
   print $GscriptFh "reinit\n";
   print $GscriptFh "clear\n";
   print $GscriptFh "open $Gfile\n";
-  print $GscriptFh "set lev 0 $Ztop\n";
+  print $GscriptFh "set lev $Z1 $Z2\n";
   print $GscriptFh "set t $TimeStep\n";
   print $GscriptFh "set gxout shaded\n";
   print $GscriptFh "set clevs $Clevs\n";
