@@ -224,6 +224,10 @@ sub PlotGradsVslice
   my $GscriptName;
   my $GscriptFh;
 
+  my $Var15; # GRADS truncates the variable names to 15 characters
+
+  $Var15 = substr($Gvar, 0, 15); # copy the first 15 characters
+
   # mkstemp opens the file
   ($GscriptFh, $GscriptName) = mkstemp( "/tmp/gcmds.XXXXXXXX" );
   print $GscriptFh "export GASCRP=\"\$HOME/grads\"\n";
@@ -239,7 +243,7 @@ sub PlotGradsVslice
   print $GscriptFh "set xlab %.1f\n";
   print $GscriptFh "set grads off\n";
   print $GscriptFh "set parea 1.5 10.5 2 8\n";
-  print $GscriptFh "d $Gvar\n";
+  print $GscriptFh "d $Var15\n";
   print $GscriptFh "draw title $Ptitle\n";
   print $GscriptFh "draw xlab $Xtitle\n";
   print $GscriptFh "draw ylab $Ytitle\n";
@@ -270,6 +274,10 @@ sub PlotGradsHslice
   my $GscriptName;
   my $GscriptFh;
 
+  my $Var15; # GRADS truncates the variable names to 15 characters
+
+  $Var15 = substr($Gvar, 0, 15); # copy the first 15 characters
+
   # mkstemp opens the file
   ($GscriptFh, $GscriptName) = mkstemp( "/tmp/gcmds.XXXXXXXX" );
   print $GscriptFh "export GASCRP=\"\$HOME/grads\"\n";
@@ -282,7 +290,7 @@ sub PlotGradsHslice
   print $GscriptFh "set clevs $Clevs\n";
   print $GscriptFh "set ccols $Ccols\n";
   print $GscriptFh "set grads off\n";
-  print $GscriptFh "d $Gvar\n";
+  print $GscriptFh "d $Var15\n";
   print $GscriptFh "draw title $Ptitle\n";
   print $GscriptFh "draw xlab $Xtitle\n";
   print $GscriptFh "draw ylab $Ytitle\n";
@@ -315,9 +323,12 @@ sub PlotGradsTseries
   my $GscriptFh;
   my $T1;
   my $T2;
+  my $Var15; # GRADS truncates the variable names to 15 characters
 
   $T1 = $TstepStart + $TavgLen;
   $T2 = $TstepEnd - $TavgLen;
+
+  $Var15 = substr($Gvar, 0, 15); # copy the first 15 characters
 
   # mkstemp opens the file
   ($GscriptFh, $GscriptName) = mkstemp( "/tmp/gcmds.XXXXXXXX" );
@@ -329,7 +340,7 @@ sub PlotGradsTseries
   print $GscriptFh "set t $T1 $T2\n";
   print $GscriptFh "set grads off\n";
   print $GscriptFh "set vrange $Ymin $Ymax\n";
-  print $GscriptFh "d tloop(ave($Gvar,t-$TavgLen,t+$TavgLen))\n";
+  print $GscriptFh "d tloop(ave($Var15,t-$TavgLen,t+$TavgLen))\n";
   print $GscriptFh "draw title $Ptitle\n";
   print $GscriptFh "draw xlab $Xtitle\n";
   print $GscriptFh "draw ylab $Ytitle\n";
