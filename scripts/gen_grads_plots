@@ -458,27 +458,29 @@ foreach $Ptype (@Ptypes)
     {
     foreach $PfileCase (sort(keys(%{ $$Plots{"TSM"} })))
       {
-      $Gvar    = $$Plots{"TSM"}{$PfileCase}{GVAR};
-      $Xlgd    = $$Plots{"TSM"}{$PfileCase}{XLGD};
-      $Ylgd    = $$Plots{"TSM"}{$PfileCase}{YLGD};
-
-      # look up specs in "TS" section
-      # note this section depends on $Gvar being defined with a TsPlotVar: line
-      # in the diagnostic config file
-      $TavgLen = $$Plots{"TS"}{VARS}{$Gvar}{TAVGLEN};
-      $Ymin    = $$Plots{"TS"}{VARS}{$Gvar}{YMIN};
-      $Ymax    = $$Plots{"TS"}{VARS}{$Gvar}{YMAX};
-      @$CaseList = ( @{ $$Plots{"TSM"}{$PfileCase}{CASES} } );
-
-      $Ptime = 0;
-      $Ptend = $$Plots{PTEND};
-
-      ($Clevs, $Ccols, $Ptitle, $Xtitle, $Ytitle, $TimeStep, $TstepStart, $TstepEnd, $Gfiles, $Pfile) =
-          &SetGradsPlotParams($Ptype, $Gvar, $Gexp, $CaseList, $StartTime, $TimeInc, $Ptime,
-                              $Ptstart, $Ptend, $Gdir, $Pdir, $PfileCase);
-
-      &DiagUtils::PlotGradsTseries($Gvar, $Gfiles, $CaseList, $TstepStart, $TstepEnd, $TavgLen,
-          $Ymin, $Ymax, $Ptitle, $Xtitle, $Ytitle, $Xlgd, $Ylgd, $Pfile);
+      foreach $Gvar (sort(keys(%{ $$Plots{"TSM"}{$PfileCase} })))
+        {
+        $Xlgd    = $$Plots{"TSM"}{$PfileCase}{$Gvar}{XLGD};
+        $Ylgd    = $$Plots{"TSM"}{$PfileCase}{$Gvar}{YLGD};
+  
+        # look up specs in "TS" section
+        # note this section depends on $Gvar being defined with a TsPlotVar: line
+        # in the diagnostic config file
+        $TavgLen = $$Plots{"TS"}{VARS}{$Gvar}{TAVGLEN};
+        $Ymin    = $$Plots{"TS"}{VARS}{$Gvar}{YMIN};
+        $Ymax    = $$Plots{"TS"}{VARS}{$Gvar}{YMAX};
+        @$CaseList = ( @{ $$Plots{"TSM"}{$PfileCase}{$Gvar}{CASES} } );
+  
+        $Ptime = 0;
+        $Ptend = $$Plots{PTEND};
+  
+        ($Clevs, $Ccols, $Ptitle, $Xtitle, $Ytitle, $TimeStep, $TstepStart, $TstepEnd, $Gfiles, $Pfile) =
+            &SetGradsPlotParams($Ptype, $Gvar, $Gexp, $CaseList, $StartTime, $TimeInc, $Ptime,
+                                $Ptstart, $Ptend, $Gdir, $Pdir, $PfileCase);
+  
+        &DiagUtils::PlotGradsTseries($Gvar, $Gfiles, $CaseList, $TstepStart, $TstepEnd, $TavgLen,
+            $Ymin, $Ymax, $Ptitle, $Xtitle, $Ytitle, $Xlgd, $Ylgd, $Pfile);
+        }
       }
     }
   }

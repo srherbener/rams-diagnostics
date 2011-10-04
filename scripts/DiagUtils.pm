@@ -87,10 +87,9 @@ sub ReadConfigFile
       }
     elsif ($f[0] eq "TsMplot:")
       {
-      $Plots{"TSM"}{$f[1]}{GVAR}  = $f[2];
-      $Plots{"TSM"}{$f[1]}{XLGD}  = $f[3];
-      $Plots{"TSM"}{$f[1]}{YLGD}  = $f[4];
-      $Plots{"TSM"}{$f[1]}{CASES} = [ @f[5..$#f] ];
+      $Plots{"TSM"}{$f[1]}{$f[2]}{XLGD}  = $f[3];
+      $Plots{"TSM"}{$f[1]}{$f[2]}{YLGD}  = $f[4];
+      $Plots{"TSM"}{$f[1]}{$f[2]}{CASES} = [ @f[5..$#f] ];
       }
     }
   close(CONFIG);
