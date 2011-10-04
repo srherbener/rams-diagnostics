@@ -85,6 +85,13 @@ sub ReadConfigFile
       $Plots{"TS"}{VARS}{$f[1]}{YMIN}    = $f[3];
       $Plots{"TS"}{VARS}{$f[1]}{YMAX}    = $f[4];
       }
+    elsif ($f[0] eq "TsMplot:")
+      {
+      $Plots{"TSM"}{$f[1]}{GVAR}  = $f[2];
+      $Plots{"TSM"}{$f[1]}{XLGD}  = $f[3];
+      $Plots{"TSM"}{$f[1]}{YLGD}  = $f[4];
+      $Plots{"TSM"}{$f[1]}{CASES} = [ @f[5..$#f] ];
+      }
     }
   close(CONFIG);
 
@@ -320,19 +327,23 @@ sub PlotGradsHslice
 
 sub PlotGradsTseries
   {
-  my ($Gvar, $Gfile, $TstepStart, $TstepEnd, $TavgLen, $Ymin, $Ymax,
-      $Ptitle, $Xtitle, $Ytitle, $Pfile) = @_;
+  my ($Gvar, $Gfiles, $CaseList, $TstepStart, $TstepEnd, $TavgLen, $Ymin, $Ymax,
+      $Ptitle, $Xtitle, $Ytitle, $Xlgd, $Ylgd, $Pfile) = @_;
 
   my $GscriptName;
   my $GscriptFh;
   my $T1;
   my $T2;
   my $Var15; # GRADS truncates the variable names to 15 characters
+  my $i;
+  my $ip1;
+  my $CaseString;
 
   $T1 = $TstepStart + $TavgLen;
   $T2 = $TstepEnd - $TavgLen;
 
   $Var15 = substr($Gvar, 0, 15); # copy the first 15 characters
+  $CaseString = '"' . $$CaseList[0] . '"';
 
   # mkstemp opens the file
   ($GscriptFh, $GscriptName) = mkstemp( "/tmp/gcmds.XXXXXXXX" );
@@ -340,7 +351,7 @@ sub PlotGradsTseries
   print $GscriptFh "grads -l -b <<EOF\n";
   print $GscriptFh "reinit\n";
   print $GscriptFh "clear\n";
-  print $GscriptFh "open $Gfile\n";
+  print $GscriptFh "open $$Gfiles[0]\n";
   print $GscriptFh "set t $T1 $T2\n";
   print $GscriptFh "set grads off\n";
   print $GscriptFh "set vrange $Ymin $Ymax\n";
@@ -348,6 +359,18 @@ sub PlotGradsTseries
   print $GscriptFh "draw title $Ptitle\n";
   print $GscriptFh "draw xlab $Xtitle\n";
   print $GscriptFh "draw ylab $Ytitle\n";
+  foreach $i (1..$#$Gfiles)
+    {
+    $ip1 = $i + 1;
+    print $GscriptFh "open $$Gfiles[$i]\n";
+    print $GscriptFh "set dfile $ip1\n";
+    print $GscriptFh "d tloop(ave($Var15,t-$TavgLen,t+$TavgLen))\n";
+    $CaseString = $CaseString . ' "' . $$CaseList[$i] . '"';
+    }
+  if ($#$Gfiles > 0)
+    {
+    print $GscriptFh "cbarline -x $Xlgd -y $Ylgd -t $CaseString\n";
+    }
   print $GscriptFh "printim $Pfile white\n";
   print $GscriptFh "EOF\n";
   close($GscriptFh);
@@ -359,4 +382,5 @@ sub PlotGradsTseries
 
   return;
   }
+
 1;
