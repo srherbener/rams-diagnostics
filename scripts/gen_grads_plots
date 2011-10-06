@@ -351,7 +351,6 @@ my $CaseList;
 my $PfileCase;
 
 $ConfigFile = $ARGV[0];
-@Ptypes = ("AZ", "HS", "TS", "TSM");
 
 %Gdirs = (
   "AZ" => {
@@ -381,12 +380,15 @@ $Gexp = $$Plots{EXP};
 $StartTime = $$Plots{STIME};
 $TimeInc = $$Plots{TINC};
 @Ptimes = ( @{ $$Plots{TIMES} } );
+@Ptypes = ( @{ $$Plots{TYPES} } );
 $Ptstart = $$Plots{PTSTART};
 
 print "Experiment: $Gexp\n";
 print "Start Time: $StartTime\n";
 print "End Time: $TimeInc\n";
 print "Plot Times: @Ptimes\n";
+print "Plot Types: @Ptypes\n";
+print "\n";
 
 foreach $Ptype (@Ptypes)
   {

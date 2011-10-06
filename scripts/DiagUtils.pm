@@ -69,6 +69,10 @@ sub ReadConfigFile
       {
       $Plots{TIMES}  = [ @f[1..$#f] ];
       }
+    elsif ($f[0] eq "PlotTypes:")
+      {
+      $Plots{TYPES}  = [ @f[1..$#f] ];
+      }
     elsif ($f[0] eq "AzPlotVar:")
       {
       $Plots{"AZ"}{VARS}{$f[1]}{ZBOT} = $f[2];
