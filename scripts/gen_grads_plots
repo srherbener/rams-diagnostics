@@ -177,9 +177,19 @@ sub SetGradsPlotParams
       $Ptitle = $Gexp . ": Total supercooled cloud droplet mass";
       $Ytitle = "SC Cloud Mass (g)";
       }
+    elsif ($Gvar eq "ts_csc_cloud")
+      {
+      $Ptitle = $Gexp . ": Total supercooled cloud droplet mass, storm core";
+      $Ytitle = "SC Cloud Mass (g)";
+      }
     elsif ($Gvar eq "ts_wr_cloud")
       {
       $Ptitle = $Gexp . ": Total warm cloud droplet mass";
+      $Ytitle = "Warm Cloud Mass (g)";
+      }
+    elsif ($Gvar eq "ts_cwr_cloud")
+      {
+      $Ptitle = $Gexp . ": Total warm cloud droplet mass, storm core";
       $Ytitle = "Warm Cloud Mass (g)";
       }
     elsif ($Gvar eq "ts_ew_cloud")
@@ -187,9 +197,19 @@ sub SetGradsPlotParams
       $Ptitle = $Gexp . ": Average cloud droplet conc. near eyewall";
       $Ytitle = "Average N (#/cc)";
       }
+    elsif ($Gvar eq "ts_ew_cloud2")
+      {
+      $Ptitle = $Gexp . ": Average cloud2 droplet conc. near eyewall";
+      $Ytitle = "Average N (#/cc)";
+      }
     elsif ($Gvar eq "ts_wr_cloud2")
       {
       $Ptitle = $Gexp . ": Total warm cloud2 droplet mass";
+      $Ytitle = "Warm Cloud2 Mass (g)";
+      }
+    elsif ($Gvar eq "ts_cwr_cloud2")
+      {
+      $Ptitle = $Gexp . ": Total warm cloud2 droplet mass, storm core";
       $Ytitle = "Warm Cloud2 Mass (g)";
       }
     elsif ($Gvar eq "ts_ew_cloud2")
@@ -202,14 +222,29 @@ sub SetGradsPlotParams
       $Ptitle = $Gexp . ": Mean supercooled droplet diameter";
       $Ytitle = "SC Cloud Mean Diameter (um)";
       }
+    elsif ($Gvar eq "ts_csc_cloud_d")
+      {
+      $Ptitle = $Gexp . ": Mean supercooled droplet diameter, storm core";
+      $Ytitle = "SC Cloud Mean Diameter (um)";
+      }
     elsif ($Gvar eq "ts_wr_cloud_d")
       {
       $Ptitle = $Gexp . ": Mean warm droplet diameter";
       $Ytitle = "Warm Cloud Mean Diameter (um)";
       }
+    elsif ($Gvar eq "ts_cwr_cloud_d")
+      {
+      $Ptitle = $Gexp . ": Mean warm droplet diameter, storm core";
+      $Ytitle = "Warm Cloud Mean Diameter (um)";
+      }
     elsif ($Gvar eq "ts_wr_cloud2_d")
       {
       $Ptitle = $Gexp . ": Mean warm droplet diameter";
+      $Ytitle = "Warm Cloud2 Mean Diameter (um)";
+      }
+    elsif ($Gvar eq "ts_cwr_cloud2_d")
+      {
+      $Ptitle = $Gexp . ": Mean warm droplet diameter, storm core";
       $Ytitle = "Warm Cloud2 Mean Diameter (um)";
       }
     elsif ($Gvar eq "ts_precipr")
