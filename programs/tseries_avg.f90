@@ -67,8 +67,12 @@ program main
   call String2List(Outfiles, ':', OfileBases, MaxFiles, Nofiles, 'output files')
 
   DoSc = .true.
-  if ((AvgFunc .eq. 'wr_cloud') .or. (AvgFunc .eq. 'wr_cloud_diam') .or. &
-      (AvgFunc .eq. 'wr_cloud2') .or. (AvgFunc .eq. 'wr_cloud2_diam')) then
+  if ((AvgFunc .eq. 'wr_cloud') .or. &
+      (AvgFunc .eq. 'wr_cloud_diam') .or. &
+      (AvgFunc .eq. 'wr_cloud_conc') .or. &
+      (AvgFunc .eq. 'wr_cloud2') .or. &
+      (AvgFunc .eq. 'wr_cloud2_diam') .or. &
+      (AvgFunc .eq. 'wr_cloud2_conc')) then
     DoSc = .false.
   end if
 
@@ -134,10 +138,12 @@ program main
     call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CloudDiamLoc, 'cloud2_d')
     call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
     call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CintLiqLoc, 'cint_liq')
-  else if (AvgFunc .eq. 'ew_cloud') then
+  else if ((AvgFunc .eq. 'sc_cloud_conc') .or. (AvgFunc .eq. 'wr_cloud_conc')) then
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, TempcLoc, 'tempc')
     call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CloudConcLoc, 'cloud_cm3')
     call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
-  else if (AvgFunc .eq. 'ew_cloud2') then
+  else if ((AvgFunc .eq. 'sc_cloud2_conc') .or. (AvgFunc .eq. 'wr_cloud2_conc')) then
+    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, TempcLoc, 'tempc')
     call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CloudConcLoc, 'cloud2_cm3')
     call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
   else if (AvgFunc .eq. 'horiz_ke') then
@@ -328,32 +334,38 @@ program main
     call ReadGradsData(GdataDescrip, 'cloud2_d', CloudDiamLoc, CloudDiam, Nx, Ny, Nz, Nt)
     call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
     call ReadGradsData(GdataDescrip, 'cint_liq', CintLiqLoc, CintLiq, Nx, Ny, 1, Nt)
-  else if (AvgFunc .eq. 'ew_cloud') then
+  else if ((AvgFunc .eq. 'sc_cloud_conc') .or. (AvgFunc .eq. 'wr_cloud_conc')) then
+    write (*,'(a20,i3,a2,i3,a1)') 'tempc: (', TempcLoc%Fnum, ', ', TempcLoc%Vnum, ')'
     write (*,'(a20,i3,a2,i3,a1)') 'cloud_cm3: (', CloudConcLoc%Fnum, ', ', CloudConcLoc%Vnum, ')'
     write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
     
     ! Allocate the data arrays and read in the data from the GRADS data files
-    allocate (CloudConc(1:Nx,1:Ny,1:Nz,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
+    allocate (TempC(1:Nx,1:Ny,1:Nz,1:Nt), CloudConc(1:Nx,1:Ny,1:Nz,1:Nt), &
+              Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
     if (Ierror .ne. 0) then
       write (*,*) 'ERROR: Data array memory allocation failed'
       stop
     end if
   
     ! Read in the data for the vars using the description and location information
+    call ReadGradsData(GdataDescrip, 'tempc', TempcLoc, TempC, Nx, Ny, Nz, Nt)
     call ReadGradsData(GdataDescrip, 'cloud_cm3', CloudConcLoc, CloudConc, Nx, Ny, Nz, Nt)
     call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
-  else if (AvgFunc .eq. 'ew_cloud2') then
+  else if ((AvgFunc .eq. 'sc_cloud2_conc') .or. (AvgFunc .eq. 'wr_cloud2_conc')) then
+    write (*,'(a20,i3,a2,i3,a1)') 'tempc: (', TempcLoc%Fnum, ', ', TempcLoc%Vnum, ')'
     write (*,'(a20,i3,a2,i3,a1)') 'cloud2_cm3: (', CloudConcLoc%Fnum, ', ', CloudConcLoc%Vnum, ')'
     write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
     
     ! Allocate the data arrays and read in the data from the GRADS data files
-    allocate (CloudConc(1:Nx,1:Ny,1:Nz,1:Nt), Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
+    allocate (TempC(1:Nx,1:Ny,1:Nz,1:Nt), CloudConc(1:Nx,1:Ny,1:Nz,1:Nt), &
+              Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
     if (Ierror .ne. 0) then
       write (*,*) 'ERROR: Data array memory allocation failed'
       stop
     end if
   
     ! Read in the data for the vars using the description and location information
+    call ReadGradsData(GdataDescrip, 'tempc', TempcLoc, TempC, Nx, Ny, Nz, Nt)
     call ReadGradsData(GdataDescrip, 'cloud2_cm3', CloudConcLoc, CloudConc, Nx, Ny, Nz, Nt)
     call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
   else if (AvgFunc .eq. 'horiz_ke') then
@@ -469,10 +481,10 @@ program main
     call DoCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, DoSc, Cloud, TempC, CloudDiam, CintLiq, TsAvg)
   else if ((AvgFunc .eq. 'sc_cloud2_diam') .or. (AvgFunc .eq. 'wr_cloud2_diam')) then
     call DoCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, DoSc, Cloud, TempC, CloudDiam, CintLiq, TsAvg)
-  else if (AvgFunc .eq. 'ew_cloud') then
-    call DoEwCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CloudConc, TsAvg)
-  else if (AvgFunc .eq. 'ew_cloud2') then
-    call DoEwCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CloudConc, TsAvg)
+  else if ((AvgFunc .eq. 'sc_cloud_conc') .or. (AvgFunc .eq. 'wr_cloud_conc')) then
+    call DoCloudConc(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, DoSc, TempC, CloudConc, TsAvg)
+  else if ((AvgFunc .eq. 'sc_cloud2_conc') .or. (AvgFunc .eq. 'wr_cloud2_conc')) then
+    call DoCloudConc(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, DoSc, TempC, CloudConc, TsAvg)
   else if (AvgFunc .eq. 'horiz_ke') then
     call DoHorizKe(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, U, V, Dens, TsAvg)
   else if (AvgFunc .eq. 'storm_int') then
@@ -564,19 +576,21 @@ subroutine GetMyArgs(Infiles, Outfiles, AvgFunc, DoRates, Wthreshold, CilThresh,
     write (*,*) '        <in_data_files>: GRADS format, control file, colon separated list'
     write (*,*) '        <out_data_file>: GRADS format, colon seprated list, data + rates names, this program will tag on .ctl, .dat suffixes'
     write (*,*) '        <averaging_function>: averaging function to use on input data'
-    write (*,*) '            sc_cloud -> total supercooled cloud droplets'
-    write (*,*) '            wr_cloud -> total warm rain cloud droplets'
-    write (*,*) '            sc_cloud2 -> total supercooled cloud2 droplets'
-    write (*,*) '            wr_cloud2 -> total warm rain cloud2 droplets'
+    write (*,*) '            sc_cloud -> total supercooled cloud mass'
+    write (*,*) '            sc_cloud_diam -> total supercooled cloud droplet mean diameter'
+    write (*,*) '            sc_cloud_conc -> average supercooled cloud droplet concentration'
+    write (*,*) '            wr_cloud -> total warm rain cloud mass'
+    write (*,*) '            wr_cloud_diam -> total warm rain cloud droplet mean diameter'
+    write (*,*) '            wr_cloud_conc -> average warm rain cloud droplet concentration'
+    write (*,*) '            sc_cloud2 -> total supercooled cloud2 mass'
+    write (*,*) '            sc_cloud2_diam -> total supercooled cloud2 droplet mean diameter'
+    write (*,*) '            sc_cloud2_conc -> average supercooled cloud2 droplet concentration'
+    write (*,*) '            wr_cloud2 -> total warm rain cloud2 mass'
+    write (*,*) '            wr_cloud2_diam -> total warm rain cloud2 droplet mean diameter'
+    write (*,*) '            wr_cloud2_conc -> average warm rain cloud2 droplet concentration'
     write (*,*) '            precipr -> total precipitation rate'
     write (*,*) '            w_up -> average w in regions of significant updrafts'
     write (*,*) '            ccnconc -> average ccn concentration'
-    write (*,*) '            sc_cloud_diam -> total supercooled cloud droplet mean diameter'
-    write (*,*) '            wr_cloud_diam -> total warm rain cloud droplet mean diameter'
-    write (*,*) '            sc_cloud2_diam -> total supercooled cloud2 droplet mean diameter'
-    write (*,*) '            wr_cloud2_diam -> total warm rain cloud2 droplet mean diameter'
-    write (*,*) '            ew_cloud -> average cloud droplet concentration near eyewall region'
-    write (*,*) '            ew_cloud2 -> average cloud2 droplet concentration near eyewall region'
     write (*,*) '            horiz_ke -> total kinetic energy form horizontal winds'
     write (*,*) '            storm_int -> storm intensity metric from horizontal wind speeds'
     write (*,*) '            test_cvs -> test the cylindrical volume selection scheme'
@@ -634,28 +648,40 @@ subroutine GetMyArgs(Infiles, Outfiles, AvgFunc, DoRates, Wthreshold, CilThresh,
 
   BadArgs = .false.
 
-  if ((AvgFunc .ne. 'sc_cloud')       .and. (AvgFunc .ne. 'precipr')        .and. &
-      (AvgFunc .ne. 'w_up')           .and. (AvgFunc .ne. 'sc_cloud_diam')  .and. &
-      (AvgFunc .ne. 'wr_cloud')       .and. (AvgFunc .ne. 'wr_cloud_diam')  .and. &
-      (AvgFunc .ne. 'ew_cloud')       .and. (AvgFunc .ne. 'horiz_ke')       .and. &
-      (AvgFunc .ne. 'storm_int')      .and. (AvgFunc .ne. 'test_cvs')       .and. &
-      (AvgFunc .ne. 'ccnconc')        .and. (AvgFunc .ne. 'sc_cloud2')      .and. &
-      (AvgFunc .ne. 'wr_cloud2')      .and. (AvgFunc .ne. 'sc_cloud2_diam') .and. &
-      (AvgFunc .ne. 'wr_cloud2_diam') .and. (AvgFunc .ne. 'ew_cloud2')) then
+  if ((AvgFunc .ne. 'sc_cloud')       .and. &
+      (AvgFunc .ne. 'sc_cloud_diam')  .and. &
+      (AvgFunc .ne. 'sc_cloud_conc')  .and. &
+      (AvgFunc .ne. 'wr_cloud')       .and. &
+      (AvgFunc .ne. 'wr_cloud_diam')  .and. &
+      (AvgFunc .ne. 'wr_cloud_conc')  .and. &
+      (AvgFunc .ne. 'sc_cloud2')      .and. &
+      (AvgFunc .ne. 'sc_cloud2_diam') .and. &
+      (AvgFunc .ne. 'sc_cloud2_conc') .and. &
+      (AvgFunc .ne. 'wr_cloud2')      .and. &
+      (AvgFunc .ne. 'wr_cloud2_diam') .and. &
+      (AvgFunc .ne. 'wr_cloud2_conc') .and. &
+      (AvgFunc .ne. 'precipr')        .and. &
+      (AvgFunc .ne. 'w_up')           .and. &
+      (AvgFunc .ne. 'horiz_ke')       .and. &
+      (AvgFunc .ne. 'storm_int')      .and. &
+      (AvgFunc .ne. 'ccnconc')        .and. &
+      (AvgFunc .ne. 'test_cvs'))       then
     write (*,*) 'ERROR: <averaging_function> must be one of:'
     write (*,*) '          sc_cloud'
+    write (*,*) '          sc_cloud_diam'
+    write (*,*) '          sc_cloud_conc'
     write (*,*) '          wr_cloud'
+    write (*,*) '          wr_cloud_diam'
+    write (*,*) '          wr_cloud_conc'
     write (*,*) '          sc_cloud2'
+    write (*,*) '          sc_cloud2_diam'
+    write (*,*) '          sc_cloud2_conc'
     write (*,*) '          wr_cloud2'
+    write (*,*) '          wr_cloud2_diam'
+    write (*,*) '          wr_cloud2_conc'
     write (*,*) '          precipr'
     write (*,*) '          w_up'
     write (*,*) '          ccnconc'
-    write (*,*) '          sc_cloud_diam'
-    write (*,*) '          wr_cloud_diam'
-    write (*,*) '          sc_cloud2_diam'
-    write (*,*) '          wr_cloud2_diam'
-    write (*,*) '          ew_cloud'
-    write (*,*) '          ew_cloud2'
     write (*,*) '          horiz_ke'
     write (*,*) '          storm_int'
     write (*,*) '          test_cvs'
@@ -938,22 +964,22 @@ subroutine DoCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPh
 end subroutine
 
 !************************************************************************************
-! DoEwCloud()
+! DoCloudConc()
 !
-! This subroutine will do the average cloud droplet concentration near the eyewall
-! region.
+! This subroutine will do the average cloud droplet concentration
 
-subroutine DoEwCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CloudConc, TsAvg)
+subroutine DoCloudConc(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, DoSc, TempC, CloudConc, TsAvg)
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
   real :: DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ
-  real, dimension(1:Nx, 1:Ny, 1:Nz, 1:Nt) :: CloudConc
+  real, dimension(1:Nx, 1:Ny, 1:Nz, 1:Nt) :: CloudConc, TempC
   real, dimension(1:1, 1:1, 1:1, 1:Nt) :: TsAvg
   integer, dimension(1:Nt) :: StmIx, StmIy
   real, dimension(1:Nx) :: Xcoords
   real, dimension(1:Ny) :: Ycoords
   real, dimension(1:Nz) :: Zcoords
+  logical :: DoSc
 
   integer ix,iy,iz,it
   integer NumPoints
@@ -974,8 +1000,17 @@ subroutine DoEwCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi,
       do iy = 1, Ny
         do iz = 1, Nz
           if (InsideCylVol(Nx, Ny, Nz, Nt, ix, iy, iz, it, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords)) then
-            SumCloudConc = SumCloudConc + CloudConc(ix,iy,iz,it)
-            NumPoints = NumPoints + 1
+            if (DoSc) then
+              if (TempC(ix,iy,iz,it) .le. 0.0) then
+                SumCloudConc = SumCloudConc + CloudConc(ix,iy,iz,it)
+                NumPoints = NumPoints + 1
+              end if
+            else
+              if (TempC(ix,iy,iz,it) .gt. 0.0) then
+                SumCloudConc = SumCloudConc + CloudConc(ix,iy,iz,it)
+                NumPoints = NumPoints + 1
+              end if
+            end if
           end if
         end do
       end do
@@ -986,7 +1021,7 @@ subroutine DoEwCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi,
       write (*,*) 'WARNING: no data points selected for time step: ', it
     else
       TsAvg(1,1,1,it) = SumCloudConc / float(NumPoints)
-      write (*,*) 'EwCloud: Timestep:', it, ', Number of points selected: ', NumPoints
+      write (*,*) 'CloudConc: Timestep:', it, ', Number of points selected: ', NumPoints
     end if
   end do
 end subroutine

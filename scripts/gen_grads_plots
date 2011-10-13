@@ -141,6 +141,16 @@ sub SetGradsPlotParams
       $Clevs = "20.0 40.0 60.0 80.0 100.0 200.0 400.0 600.0 800.0 1000.0 2000.0 4000.0 6000.0";
       $Ptitle = $Gexp . ": CCN (#/cc), z=2300m, " . $Case . ", t " . $Ptime . " hrs";
       }
+    elsif ($Gvar eq "gccn_z1")
+      {
+      $Clevs = "0.00001 0.0001 0.001 0.01 0.0 0.2 0.4 0.6 0.8 1.0 1.2 1.4 1.6";
+      $Ptitle = $Gexp . ": GCCN (#/cc), z=150m, " . $Case . ", t " . $Ptime . " hrs";
+      }
+    elsif ($Gvar eq "ccn_z1")
+      {
+      $Clevs = "20.0 40.0 60.0 80.0 100.0 200.0 400.0 600.0 800.0 1000.0 2000.0 4000.0 6000.0";
+      $Ptitle = $Gexp . ": CCN (#/cc), z=150m, " . $Case . ", t " . $Ptime . " hrs";
+      }
     elsif ($Gvar eq "sfc_wind")
       {
       $Clevs = "15.0 20.0 25.0 30.0 35.0 40.0 45.0 50.0 55.0 60.0 65.0 70.0 75.0";
@@ -192,6 +202,11 @@ sub SetGradsPlotParams
       $Ptitle = $Gexp . ": Total warm cloud droplet mass, storm core";
       $Ytitle = "Warm Cloud Mass (g)";
       }
+    elsif ($Gvar eq "ts_cwr_cloud_conc")
+      {
+      $Ptitle = $Gexp . ": Total warm cloud droplet conc., storm core";
+      $Ytitle = "Warm Cloud N (#/cc)";
+      }
     elsif ($Gvar eq "ts_ew_cloud")
       {
       $Ptitle = $Gexp . ": Average cloud droplet conc. near eyewall";
@@ -211,6 +226,11 @@ sub SetGradsPlotParams
       {
       $Ptitle = $Gexp . ": Total warm cloud2 droplet mass, storm core";
       $Ytitle = "Warm Cloud2 Mass (g)";
+      }
+    elsif ($Gvar eq "ts_cwr_cloud2_conc")
+      {
+      $Ptitle = $Gexp . ": Total warm cloud2 droplet conc., storm core";
+      $Ytitle = "Warm Cloud2 N (#/cc)";
       }
     elsif ($Gvar eq "ts_ew_cloud2")
       {
