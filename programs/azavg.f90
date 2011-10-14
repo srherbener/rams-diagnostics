@@ -55,6 +55,8 @@ program main
 
   integer :: i
   integer :: Ierror
+  integer :: VarNz
+  logical :: VarIs2d
 
   integer :: ix, iy, iz, it
 
@@ -62,7 +64,7 @@ program main
   real :: TestData, TestGridX, TestGridY
 
   ! Get the command line arguments
-  call GetMyArgs(Infiles, OfileBase, NumRbands, WfilterMin, WfilterMax, VarToAvg, DoHorizVel, DoTangential)
+  call GetMyArgs(Infiles, OfileBase, NumRbands, WfilterMin, WfilterMax, VarToAvg, DoHorizVel, DoTangential, VarIs2d)
   call String2List(Infiles, ':', GradsCtlFiles, MaxFiles, Nfiles, 'input files')
 
   write (*,*) 'Calculating azimuthal average for RAMS data:'
@@ -82,6 +84,11 @@ program main
   else
     write (*,*) '  RAMS variable that is being averaged: ', trim(VarToAvg)
   end if
+  if (VarIs2d) then
+    write (*,*) '    Variable contains 2D data'
+  else
+    write (*,*) '    Variable contains 3D data'
+  end if
   write (*,*) ''
 
   if (trim(VarToAvg) /= 'test') then
@@ -94,14 +101,29 @@ program main
     end do
     write (*,*) ''
   
-    call CheckDataDescrip(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, Uloc, Vloc, Wloc, PressLoc, VarLoc, VarToAvg, DoHorizVel)
+    if (VarIs2d) then
+      call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, Wloc, 'w')
+      call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
+      call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, VarLoc, 'precipr')
+    else
+      call CheckDataDescrip(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, Uloc, Vloc, Wloc, PressLoc, VarLoc, VarToAvg, DoHorizVel)
+    endif
+
+    ! At this point, Nz has been set to the number of z levels in the 3D vars (w, press, etc)
+    ! if we are doing a 2D var, then we need to make Avar and AzVar have one z level
+    if (VarIs2d) then
+      VarNz = 1
+    else
+      VarNz = Nz
+    end if
   
     write (*,*) 'Gridded data information:'
-    write (*,*) '  Number of x (longitude) points:          ', Nx
-    write (*,*) '  Number of y (latitude) points:           ', Ny
-    write (*,*) '  Number of z (vertical level) points:     ', Nz
-    write (*,*) '  Number of t (time) points:               ', Nt
-    write (*,*) '  Total number of grid variables:          ', Nvars
+    write (*,*) '  Number of x (longitude) points:            ', Nx
+    write (*,*) '  Number of y (latitude) points:             ', Ny
+    write (*,*) '  Number of z (vertical level) points (3D):  ', Nz
+    write (*,*) '  Number of z (vertical level) points (var): ', VarNz
+    write (*,*) '  Number of t (time) points:                 ', Nt
+    write (*,*) '  Total number of grid variables:            ', Nvars
     write (*,*) ''
     write (*,*) '  Number of data values per grid variable: ', Nx*Ny*Nz*Nt
     write (*,*) ''
@@ -119,7 +141,7 @@ program main
   
     ! Allocate the data arrays and read in the data from the GRADS data files
     allocate (U(1:Nx,1:Ny,1:Nz,1:Nt), V(1:Nx,1:Ny,1:Nz,1:Nt), W(1:Nx,1:Ny,1:Nz,1:Nt), &
-              Press(1:Nx,1:Ny,1:Nz,1:Nt), Avar(1:Nx,1:Ny,1:Nz,1:Nt), &
+              Press(1:Nx,1:Ny,1:Nz,1:Nt), Avar(1:Nx,1:Ny,1:VarNz,1:Nt), &
               StmIx(1:Nt), StmIy(1:Nt), MinP(1:Nt), Xcoords(1:Nx), Ycoords(1:Ny), stat=Ierror)
     if (Ierror .ne. 0) then
       write (*,*) 'ERROR: Data array memory allocation failed'
@@ -162,11 +184,11 @@ program main
       call ConvertHorizVelocity(Nx, Ny, Nz, Nt, U, V, StmIx, StmIy, &
                       Xcoords, Ycoords, Avar, DoTangential)
     else
-      call ReadGradsData(GdataDescrip, VarToAvg, VarLoc, Avar, Nx, Ny, Nz, Nt)
+      call ReadGradsData(GdataDescrip, VarToAvg, VarLoc, Avar, Nx, Ny, VarNz, Nt)
     end if
   
     ! Allocate the output array and compute the azimuthal averaging
-    allocate (AzAvg(1:NumRbands,1:1,1:Nz,1:Nt), stat=Ierror)
+    allocate (AzAvg(1:NumRbands,1:1,1:VarNz,1:Nt), stat=Ierror)
     if (Ierror .ne. 0) then
       write (*,*) 'ERROR: Ouput data array memory allocation failed'
       stop
@@ -183,14 +205,18 @@ program main
     Nx = 101
     Ny = 101
     Nz = 1
+    VarNz = 1
     Nt = 5
+
+    VarLoc%Fnum = 1
+    VarLoc%Vnum = 1
 
     NumRbands = 10
     TestGridX = 100.0
     TestGridY = 100.0
 
     allocate (U(1:Nx,1:Ny,1:Nz,1:Nt), V(1:Nx,1:Ny,1:Nz,1:Nt), W(1:Nx,1:Ny,1:Nz,1:Nt), &
-              Press(1:Nx,1:Ny,1:Nz,1:Nt), Avar(1:Nx,1:Ny,1:Nz,1:Nt), &
+              Press(1:Nx,1:Ny,1:Nz,1:Nt), Avar(1:Nx,1:Ny,1:VarNz,1:Nt), &
               StmIx(1:Nt), StmIy(1:Nt), MinP(1:Nt), Xcoords(1:Nx), Ycoords(1:Ny), stat=Ierror)
     if (Ierror .ne. 0) then
       write (*,*) 'ERROR: TEST: Data array memory allocation failed'
@@ -255,12 +281,12 @@ program main
 
   ! Do the averageing. Note that you can pick any index in GdataDescrip below since this data
   ! has been (superficially) checked out to be consistent.
-  call AzimuthalAverage(Nx, Ny, Nz, Nt, NumRbands, W, StmIx, StmIy, MinP, Avar, AzAvg, &
-          Xcoords, Ycoords, RadialDist, RbandInc, WfilterMin, WfilterMax, GdataDescrip(1)%UndefVal)
+  call AzimuthalAverage(Nx, Ny, Nz, Nt, VarNz, NumRbands, W, StmIx, StmIy, MinP, Avar, AzAvg, &
+          Xcoords, Ycoords, RadialDist, RbandInc, WfilterMin, WfilterMax, GdataDescrip(VarLoc%Fnum)%UndefVal)
 
-  call BuildGoutDescrip(NumRbands, 1, Nz, Nt, AzAvg, OfileBase, GdataDescrip(1)%UndefVal, VarToAvg, &
-          0.0, RbandInc, 0.0, 1.0, GdataDescrip(1)%Zcoords, GdataDescrip(1)%Tstart, &
-          GdataDescrip(1)%Tinc, GoutDescrip, 'azavg')
+  call BuildGoutDescrip(NumRbands, 1, VarNz, Nt, AzAvg, OfileBase, GdataDescrip(VarLoc%Fnum)%UndefVal, VarToAvg, &
+          0.0, RbandInc, 0.0, 1.0, GdataDescrip(VarLoc%Fnum)%Zcoords, GdataDescrip(VarLoc%Fnum)%Tstart, &
+          GdataDescrip(VarLoc%Fnum)%Tinc, GoutDescrip, 'azavg')
 
   call WriteGrads(GoutDescrip, AzAvg)
 
@@ -284,19 +310,19 @@ end
 !   VarToAvg - RAMS variable to do the averaging on
 !
 
-subroutine GetMyArgs(Infiles, OfileBase, NumRbands, WfilterMin, WfilterMax, VarToAvg, DoHorizVel, DoTangential)
+subroutine GetMyArgs(Infiles, OfileBase, NumRbands, WfilterMin, WfilterMax, VarToAvg, DoHorizVel, DoTangential, VarIs2d)
   implicit none
 
   integer :: NumRbands
   real :: WfilterMin, WfilterMax
   character (len=*) :: Infiles, OfileBase, VarToAvg
-  logical :: DoHorizVel, DoTangential
+  logical :: DoHorizVel, DoTangential, VarIs2d
 
   integer :: iargc
   character (len=128) :: arg
 
-  if (iargc() .ne. 6) then
-    write (*,*) 'ERROR: must supply exactly 6 arguments'
+  if (iargc() .ne. 7) then
+    write (*,*) 'ERROR: must supply exactly 7 arguments'
     write (*,*) ''
     write (*,*) 'USAGE: azavg <in_data_files> <out_data_file> <num_radial_bands> <w_threshold> <var_to_average>'
     write (*,*) '        <in_data_files>: GRADS format, control file, colon separated list'
@@ -305,6 +331,8 @@ subroutine GetMyArgs(Infiles, OfileBase, NumRbands, WfilterMin, WfilterMax, VarT
     write (*,*) '        <w_filter_min>: min (left end) of interval used to filter out data'
     write (*,*) '        <w_filter_max>: max (right end) of interval used to filter out data'
     write (*,*) '        <var_to_average>: name of RAMS variable to do the averaging on'
+    write (*,*) '        <dim_of_var>: indicates if <var_to_average> is 2d or 3d'
+    write (*,*) '           <dim_of_var> must be either "2d" or "3d"'
     write (*,*) ''
     stop
   end if
@@ -337,6 +365,16 @@ subroutine GetMyArgs(Infiles, OfileBase, NumRbands, WfilterMin, WfilterMax, VarT
       DoHorizVel = .false.
       DoTangential = .false.
     end if
+  end if
+
+  call getarg(7, arg)
+  if (arg .eq. '2d') then
+    VarIs2d = .true.
+  else if (arg .eq. '3d') then
+    VarIs2d = .false.
+  else
+    write (*,*) 'ERROR: must use either "2d" or "3d" for <dim_of_var> argument'
+    stop
   end if
 
   return

@@ -94,14 +94,15 @@ end subroutine
 ! z and t point.
 !
 
-subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, NumRbands, W, StmIx, StmIy, MinP, Avar, AzAvg, &
+subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, VarNz, NumRbands, W, StmIx, StmIy, MinP, Avar, AzAvg, &
           Xcoords, Ycoords, RadialDist, RbandInc, WfilterMin, WfilterMax, UndefVal)
 
   implicit none
 
-  integer :: Nx, Ny, Nz, Nt, NumRbands
-  real, dimension(1:Nx,1:Ny,1:Nz,1:Nt) :: W, Avar
-  real, dimension(1:NumRbands,1:1,1:Nz,1:Nt) :: AzAvg
+  integer :: Nx, Ny, Nz, Nt, VarNz, NumRbands
+  real, dimension(1:Nx,1:Ny,1:Nz,1:Nt) :: W
+  real, dimension(1:Nx,1:Ny,1:VarNz,1:Nt) :: Avar
+  real, dimension(1:NumRbands,1:1,1:VarNz,1:Nt) :: AzAvg
   integer, dimension(1:Nt) :: StmIx, StmIy
   real, dimension(1:Nt) :: MinP
   real, dimension(1:Nx) :: Xcoords
@@ -156,7 +157,7 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, NumRbands, W, StmIx, StmIy, MinP, Av
           Xcoords(StmIx(it)), ', ', Ycoords(StmIy(it)), ')'
     write (*,*) '    Minimum Pressue: ', MinP(it)
     end if
-    do iz = 1, Nz
+    do iz = 1, VarNz
 
       ! For the averaging
       do ir = 1, NumRbands
