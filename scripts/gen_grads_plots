@@ -272,6 +272,11 @@ sub SetGradsPlotParams
       $Ptitle = $Gexp . ": Precipitation rate";
       $Ytitle = "Precip Rate (kg/hr)";
       }
+    elsif ($Gvar eq "ts_c_precipr")
+      {
+      $Ptitle = $Gexp . ": Precipitation rate, storm core";
+      $Ytitle = "Precip Rate (kg/hr)";
+      }
     elsif ($Gvar eq "ts_w_up")
       {
       $Ptitle = $Gexp . ": Average w in updraft regions";
