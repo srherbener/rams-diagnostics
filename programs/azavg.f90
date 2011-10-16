@@ -55,6 +55,7 @@ program main
 
   integer :: i
   integer :: Ierror
+  integer :: Fnum
   integer :: VarNz
   logical :: VarIs2d
 
@@ -104,7 +105,7 @@ program main
     if (VarIs2d) then
       call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, Wloc, 'w')
       call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
-      call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, VarLoc, 'precipr')
+      call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, VarLoc, VarToAvg)
     else
       call CheckDataDescrip(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, Uloc, Vloc, Wloc, PressLoc, VarLoc, VarToAvg, DoHorizVel)
     endif
@@ -208,9 +209,6 @@ program main
     VarNz = 1
     Nt = 5
 
-    VarLoc%Fnum = 1
-    VarLoc%Vnum = 1
-
     NumRbands = 10
     TestGridX = 100.0
     TestGridY = 100.0
@@ -281,12 +279,23 @@ program main
 
   ! Do the averageing. Note that you can pick any index in GdataDescrip below since this data
   ! has been (superficially) checked out to be consistent.
+  ! For the lookup of UndefVal, Zccores, Tstart, Tinc below, want to use the description from the
+  ! variable you are averaging. There are two exceptions to this:
+  !   If doing a test, GdataDecrip has been loaded up artificially using Fnum 1.
+  !   If doing horizontal wind speed, VarLoc never got set, instead Uloc and Vloc were used.
+  if (DoHorizVel) then
+    Fnum = Uloc%Fnum
+  else if (VarToAvg .eq. 'test') then
+    Fnum = 1
+  else
+    Fnum = VarLoc%Fnum
+  end if
   call AzimuthalAverage(Nx, Ny, Nz, Nt, VarNz, NumRbands, W, StmIx, StmIy, MinP, Avar, AzAvg, &
-          Xcoords, Ycoords, RadialDist, RbandInc, WfilterMin, WfilterMax, GdataDescrip(VarLoc%Fnum)%UndefVal)
+          Xcoords, Ycoords, RadialDist, RbandInc, WfilterMin, WfilterMax, GdataDescrip(Fnum)%UndefVal)
 
-  call BuildGoutDescrip(NumRbands, 1, VarNz, Nt, AzAvg, OfileBase, GdataDescrip(VarLoc%Fnum)%UndefVal, VarToAvg, &
-          0.0, RbandInc, 0.0, 1.0, GdataDescrip(VarLoc%Fnum)%Zcoords, GdataDescrip(VarLoc%Fnum)%Tstart, &
-          GdataDescrip(VarLoc%Fnum)%Tinc, GoutDescrip, 'azavg')
+  call BuildGoutDescrip(NumRbands, 1, VarNz, Nt, AzAvg, OfileBase, GdataDescrip(Fnum)%UndefVal, VarToAvg, &
+          0.0, RbandInc, 0.0, 1.0, GdataDescrip(Fnum)%Zcoords, GdataDescrip(Fnum)%Tstart, &
+          GdataDescrip(Fnum)%Tinc, GoutDescrip, 'azavg')
 
   call WriteGrads(GoutDescrip, AzAvg)
 

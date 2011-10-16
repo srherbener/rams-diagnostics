@@ -88,6 +88,7 @@ my @f;
 my $Case;
 my $Tdir;
 my $Adiag;
+my $VarDim;
 my $Nbands;
 my $Wmin;
 my $Wmax;
@@ -124,6 +125,7 @@ foreach $Case (sort(keys(%$Cases)))
     {
     $JoinInFiles = "";
 
+    $VarDim = $$AzavgDiags{$Adiag}{DIM};
     $Nbands = $$AzavgDiags{$Adiag}{NBANDS};
     $Wmin = $$AzavgDiags{$Adiag}{WMIN};
     $Wmax = $$AzavgDiags{$Adiag}{WMAX};
@@ -139,6 +141,7 @@ foreach $Case (sort(keys(%$Cases)))
       print "  Case: $Case\n";
       print "  Time Directory: $Tdir\n";
       print "  Diagnostic: $Adiag\n";
+      print "    Variable Dimension: $VarDim\n";
       print "    Number Radial Bands: $Nbands\n";
       print "    W Filter Min: $Wmin\n";
       print "    W Filter Max: $Wmax\n";
@@ -153,7 +156,7 @@ foreach $Case (sort(keys(%$Cases)))
         system(@SysArgs);
         }
 
-      @SysArgs = ("azavg", $InFiles, $OutFilePrefix, $Nbands, $Wmin, $Wmax, $Adiag);
+      @SysArgs = ("azavg", $InFiles, $OutFilePrefix, $Nbands, $Wmin, $Wmax, $Adiag, $VarDim);
       system(@SysArgs);
 
       # fix paths and var names in the GRADS control file
