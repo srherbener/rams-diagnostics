@@ -21,8 +21,8 @@ use DiagUtils;
 #
 sub SetGradsPlotParams
   {
-  my ($Ptype, $Gvar, $Gexp, $CaseList, $StartTime, $TimeInc, $Ptime, $Ptstart, $Ptend,
-      $Dir, $Pdir, $PfileCase) = @_;
+  my ($Ptype, $Gvar, $Gexp, $CaseList, $AzType, $StartTime, $TimeInc,
+      $Ptime, $Ptstart, $Ptend, $Dir, $Pdir, $PfileCase) = @_;
 
   my $Clevs;
   my $Ccols;
@@ -47,9 +47,17 @@ sub SetGradsPlotParams
     $Case = $$CaseList[0];
     $Ccols = "9 14 4 11 5 13 3 10 7 12 8 2 6";
     $Xtitle = "Radius (km)";
-    $Ytitle = "Height (m)";
+    if ($AzType eq "vslice")
+      {
+      $Ytitle = "Height (m)";
+      $Pfile = $Pdir . "/" . $Gvar . "_" . $PfileCase . "_" . $Ptime . ".gif";
+      }
+    elsif ($AzType eq "hovmol")
+      {
+      $Ytitle = "Time";
+      $Pfile = $Pdir . "/" . $Gvar . "_" . $PfileCase . ".gif";
+      }
     $$Gfiles[0] = $Dir . "/" . $Gvar . "_" . $Case . ".ctl";
-    $Pfile = $Pdir . "/" . $Gvar . "_" . $PfileCase . "_" . $Ptime . ".gif";
 
     if ($Gvar eq "w")
       {
@@ -110,6 +118,11 @@ sub SetGradsPlotParams
       {
       $Clevs = "0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2";
       $Ptitle = $Gexp . ": AZ: Cloud2 Droplet Number (#/cc), " . $Case . ", t " . $Ptime . " hrs";
+      }
+    elsif ($Gvar eq "precipr")
+      {
+      $Clevs = "0.0 15.0 30.0 45.0 60.0 75.0 90.0 105.0 120.0 135.0 150.0 165.0 180.0";
+      $Ptitle = $Gexp . ": AZ: Precipitation Rate (mm/hr), " . $Case
       }
     }
   elsif ($Ptype eq "HS")
@@ -388,6 +401,7 @@ my @Ptypes;
 my %Gdirs;
 my $Gdir;
 my $Pdir;
+my $AzType;
 
 my $Gvar;
 my $Gfiles;
@@ -395,15 +409,13 @@ my $TimeStep;
 my $TstepStart;
 my $TstepEnd;
 my $TavgLen;
-my $Z1;
-my $Z2;
 my $Ccols;
 my $Clevs;
 my $Ptitle;
 my $Xtitle;
 my $Ytitle;
-my $Ymin;
-my $Ymax;
+my $Pymin;
+my $Pymax;
 my $Pfile;
 my $Xlgd;
 my $Ylgd;
@@ -445,7 +457,7 @@ $Ptstart = $$Plots{PTSTART};
 
 print "Experiment: $Gexp\n";
 print "Start Time: $StartTime\n";
-print "End Time: $TimeInc\n";
+print "Time Inc: $TimeInc\n";
 print "Plot Times: @Ptimes\n";
 print "Plot Types: @Ptypes\n";
 print "\n";
@@ -467,26 +479,51 @@ foreach $Ptype (@Ptypes)
       $PfileCase = $Case;
       foreach $Gvar (sort(keys(%{ $$Plots{$Ptype}{VARS} })))
         {
-        if (($Ptype eq "AZ") || ($Ptype eq "HS"))
+        if ($Ptype eq "AZ")
+          {
+          $Ptend  = $$Plots{PTEND};
+          $AzType = $$Plots{$Ptype}{VARS}{$Gvar}{PTYPE};
+          if ($AzType eq "vslice")
+            {
+            $Pymin  = $$Plots{$Ptype}{VARS}{$Gvar}{PYMIN};
+            $Pymax  = $$Plots{$Ptype}{VARS}{$Gvar}{PYMAX};
+            foreach $Ptime (@Ptimes)
+              {
+              ($Clevs, $Ccols, $Ptitle, $Xtitle, $Ytitle,
+               $TimeStep, $TstepStart, $TstepEnd, $Gfiles, $Pfile) =
+               &SetGradsPlotParams($Ptype, $Gvar, $Gexp, $CaseList, $AzType,
+                                   $StartTime, $TimeInc, $Ptime,
+                                   $Ptstart, $Ptend, $Gdir, $Pdir, $PfileCase);
+              &DiagUtils::PlotGradsVslice($Gvar, $$Gfiles[0], $TimeStep, $Pymin, $Pymax,
+                $Ccols, $Clevs, $Ptitle, $Xtitle, $Ytitle, $Pfile);
+              }
+            }
+          elsif ($AzType eq "hovmol")
+            {
+print "DEBUG: hovmol --> $TstepStart, $TstepEnd\n";
+            $Ptime = 0;
+            ($Clevs, $Ccols, $Ptitle, $Xtitle, $Ytitle,
+             $TimeStep, $TstepStart, $TstepEnd, $Gfiles, $Pfile) =
+             &SetGradsPlotParams($Ptype, $Gvar, $Gexp, $CaseList, $AzType,
+                                 $StartTime, $TimeInc, $Ptime,
+                                 $Ptstart, $Ptend, $Gdir, $Pdir, $PfileCase);
+            &DiagUtils::PlotGradsHovmol($Gvar, $$Gfiles[0], $TstepStart, $TstepEnd,
+               $Ccols, $Clevs, $Ptitle, $Xtitle, $Ytitle, $Pfile);
+            }
+          }
+        elsif ($Ptype eq "HS")
           {
           foreach $Ptime (@Ptimes)
             {
-            ($Clevs, $Ccols, $Ptitle, $Xtitle, $Ytitle, $TimeStep, $TstepStart, $TstepEnd, $Gfiles, $Pfile) =
-                &SetGradsPlotParams($Ptype, $Gvar, $Gexp, $CaseList, $StartTime, $TimeInc, $Ptime,
-                                    $Ptstart, $Ptend,$Gdir, $Pdir, $PfileCase);
-  
-            if ($Ptype eq "AZ")
-              {
-              $Z1 = $$Plots{$Ptype}{VARS}{$Gvar}{ZBOT};
-              $Z2 = $$Plots{$Ptype}{VARS}{$Gvar}{ZTOP};
-              &DiagUtils::PlotGradsVslice($Gvar, $$Gfiles[0], $TimeStep, $Z1, $Z2,
-                $Ccols, $Clevs, $Ptitle, $Xtitle, $Ytitle, $Pfile);
-              }
-            elsif ($Ptype eq "HS")
-              {
+              $Ptend  = $$Plots{PTEND};
+              $AzType = "";
+              ($Clevs, $Ccols, $Ptitle, $Xtitle, $Ytitle, $TimeStep,
+               $TstepStart, $TstepEnd, $Gfiles, $Pfile) =
+               &SetGradsPlotParams($Ptype, $Gvar, $Gexp, $CaseList, $AzType,
+                                   $StartTime, $TimeInc, $Ptime,
+                                   $Ptstart, $Ptend, $Gdir, $Pdir, $PfileCase);
               &DiagUtils::PlotGradsHslice($Gvar, $$Gfiles[0], $TimeStep,
                 $Ccols, $Clevs, $Ptitle, $Xtitle, $Ytitle, $Pfile);
-              }
             }
           }
         elsif ($Ptype eq "TS")
@@ -503,15 +540,18 @@ foreach $Ptype (@Ptypes)
             $Ptend = $$Plots{PTEND};
             }
   
-          ($Clevs, $Ccols, $Ptitle, $Xtitle, $Ytitle, $TimeStep, $TstepStart, $TstepEnd, $Gfiles, $Pfile) =
-              &SetGradsPlotParams($Ptype, $Gvar, $Gexp, $CaseList, $StartTime, $TimeInc, $Ptime,
-                                  $Ptstart, $Ptend, $Gdir, $Pdir, $PfileCase);
+          $AzType = "";
+          ($Clevs, $Ccols, $Ptitle, $Xtitle, $Ytitle, $TimeStep,
+           $TstepStart, $TstepEnd, $Gfiles, $Pfile) =
+           &SetGradsPlotParams($Ptype, $Gvar, $Gexp, $CaseList, $AzType,
+                               $StartTime, $TimeInc, $Ptime,
+                               $Ptstart, $Ptend, $Gdir, $Pdir, $PfileCase);
   
           $TavgLen = $$Plots{$Ptype}{VARS}{$Gvar}{TAVGLEN};
-          $Ymin    = $$Plots{$Ptype}{VARS}{$Gvar}{YMIN};
-          $Ymax    = $$Plots{$Ptype}{VARS}{$Gvar}{YMAX};
+          $Pymin    = $$Plots{$Ptype}{VARS}{$Gvar}{PYMIN};
+          $Pymax    = $$Plots{$Ptype}{VARS}{$Gvar}{PYMAX};
           &DiagUtils::PlotGradsTseries($Gvar, $Gfiles, $CaseList, $TstepStart, $TstepEnd, $TavgLen,
-            $Ymin, $Ymax, $Ptitle, $Xtitle, $Ytitle, $Xlgd, $Ylgd, $Pfile);
+            $Pymin, $Pymax, $Ptitle, $Xtitle, $Ytitle, $Xlgd, $Ylgd, $Pfile);
           }
         }
       }
@@ -529,19 +569,22 @@ foreach $Ptype (@Ptypes)
         # note this section depends on $Gvar being defined with a TsPlotVar: line
         # in the diagnostic config file
         $TavgLen = $$Plots{"TS"}{VARS}{$Gvar}{TAVGLEN};
-        $Ymin    = $$Plots{"TS"}{VARS}{$Gvar}{YMIN};
-        $Ymax    = $$Plots{"TS"}{VARS}{$Gvar}{YMAX};
+        $Pymin    = $$Plots{"TS"}{VARS}{$Gvar}{PYMIN};
+        $Pymax    = $$Plots{"TS"}{VARS}{$Gvar}{PYMAX};
         @$CaseList = ( @{ $$Plots{"TSM"}{$PfileCase}{$Gvar}{CASES} } );
   
         $Ptime = 0;
         $Ptend = $$Plots{PTEND};
   
-        ($Clevs, $Ccols, $Ptitle, $Xtitle, $Ytitle, $TimeStep, $TstepStart, $TstepEnd, $Gfiles, $Pfile) =
-            &SetGradsPlotParams($Ptype, $Gvar, $Gexp, $CaseList, $StartTime, $TimeInc, $Ptime,
-                                $Ptstart, $Ptend, $Gdir, $Pdir, $PfileCase);
+        $AzType = "";
+        ($Clevs, $Ccols, $Ptitle, $Xtitle, $Ytitle, $TimeStep,
+         $TstepStart, $TstepEnd, $Gfiles, $Pfile) =
+         &SetGradsPlotParams($Ptype, $Gvar, $Gexp, $CaseList, $AzType,
+                             $StartTime, $TimeInc, $Ptime,
+                             $Ptstart, $Ptend, $Gdir, $Pdir, $PfileCase);
   
         &DiagUtils::PlotGradsTseries($Gvar, $Gfiles, $CaseList, $TstepStart, $TstepEnd, $TavgLen,
-            $Ymin, $Ymax, $Ptitle, $Xtitle, $Ytitle, $Xlgd, $Ylgd, $Pfile);
+            $Pymin, $Pymax, $Ptitle, $Xtitle, $Ytitle, $Xlgd, $Ylgd, $Pfile);
         }
       }
     }

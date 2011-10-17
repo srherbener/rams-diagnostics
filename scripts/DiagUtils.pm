@@ -76,8 +76,9 @@ sub ReadConfigFile
       }
     elsif ($f[0] eq "AzPlotVar:")
       {
-      $Plots{"AZ"}{VARS}{$f[1]}{ZBOT} = $f[2];
-      $Plots{"AZ"}{VARS}{$f[1]}{ZTOP} = $f[3];
+      $Plots{"AZ"}{VARS}{$f[1]}{PTYPE} = $f[2];
+      $Plots{"AZ"}{VARS}{$f[1]}{PYMIN} = $f[3];
+      $Plots{"AZ"}{VARS}{$f[1]}{PYMAX} = $f[4];
       }
     elsif ($f[0] eq "HsPlotVar:")
       {
@@ -87,8 +88,8 @@ sub ReadConfigFile
     elsif ($f[0] eq "TsPlotVar:")
       {
       $Plots{"TS"}{VARS}{$f[1]}{TAVGLEN} = $f[2];
-      $Plots{"TS"}{VARS}{$f[1]}{YMIN}    = $f[3];
-      $Plots{"TS"}{VARS}{$f[1]}{YMAX}    = $f[4];
+      $Plots{"TS"}{VARS}{$f[1]}{PYMIN}    = $f[3];
+      $Plots{"TS"}{VARS}{$f[1]}{PYMAX}    = $f[4];
       }
     elsif ($f[0] eq "TsMplot:")
       {
@@ -383,6 +384,56 @@ sub PlotGradsTseries
   system ("bash" , "-c", $GscriptName);
  
   unlink $GscriptName or warn "PlotGradsTslice: could not unlink $GscriptName: $!";
+
+  return;
+  }
+
+#####################################################################################
+# PlotGradsHovmol()
+#
+# This routine will run grads and create a plot, vertical slice through the data,
+# using the specs given in the arguments.
+#
+
+sub PlotGradsHovmol
+  {
+  my ($Gvar, $Gfile, $TstepStart, $TstepEnd, $Ccols, $Clevs,
+      $Ptitle, $Xtitle, $Ytitle, $Pfile) = @_;
+
+  my $GscriptName;
+  my $GscriptFh;
+
+  my $Var15; # GRADS truncates the variable names to 15 characters
+
+  $Var15 = substr($Gvar, 0, 15); # copy the first 15 characters
+
+  # mkstemp opens the file
+  ($GscriptFh, $GscriptName) = mkstemp( "/tmp/gcmds.XXXXXXXX" );
+  print $GscriptFh "export GASCRP=\"\$HOME/grads\"\n";
+  print $GscriptFh "grads -l -b <<EOF\n";
+  print $GscriptFh "reinit\n";
+  print $GscriptFh "clear\n";
+  print $GscriptFh "open $Gfile\n";
+  print $GscriptFh "set t $TstepStart $TstepEnd\n";
+  print $GscriptFh "set gxout shaded\n";
+  print $GscriptFh "set clevs $Clevs\n";
+  print $GscriptFh "set ccols $Ccols\n";
+  print $GscriptFh "set xlab %.1f\n";
+  print $GscriptFh "set grads off\n";
+  print $GscriptFh "set parea 1.5 10.5 2 8\n";
+  print $GscriptFh "d $Var15\n";
+  print $GscriptFh "draw title $Ptitle\n";
+  print $GscriptFh "draw xlab $Xtitle\n";
+  print $GscriptFh "draw ylab $Ytitle\n";
+  print $GscriptFh "cbarn 1.0 0\n";
+  print $GscriptFh "printim $Pfile white\n";
+  print $GscriptFh "EOF\n";
+  close($GscriptFh);
+
+  system ("chmod", "+x", $GscriptName);
+  system ("bash" , "-c", $GscriptName);
+ 
+  unlink $GscriptName or warn "PlotGradsHovmol: could not unlink $GscriptName: $!";
 
   return;
   }
