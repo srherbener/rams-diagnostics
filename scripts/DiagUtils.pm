@@ -120,7 +120,7 @@ sub AppendGradsVarFile
   my $FilePrefix;
 
   # append the new file name to the list
-  if ($Var eq "cint_liq")
+  if (($Var eq "cint_liq") || ($Var eq "cint_liq_sc") || ($Var eq "cint_liq_wr"))
     {
     $FilePrefix = "GRADS/" . $Tdir . "/" . $Var . "_" . $Case . "*";
     }
