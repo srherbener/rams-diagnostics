@@ -71,7 +71,7 @@ foreach $Case (sort(keys(%$Cases)))
     $AccumTime = 1;
     printf OFILE "%15s %15s %15s %15s %15s %15s\n\n",
       "Timestep", "Z", "Min", "Max", "Mean", "StdDev";
-    foreach $Tdir (sort { $a <=> $b } (keys(%$TimeDirs)))
+    foreach $Tdir (sort(keys(%$TimeDirs)))
       {
       $GfilePrefix = $Case . "/GRADS/" . $Tdir . "/" . $Gvar . "-*";
       ($Gfile) = &DiagUtils::FindGradsControlFile($GfilePrefix);
@@ -79,7 +79,7 @@ foreach $Case (sort(keys(%$Cases)))
 
       print "  Processing: $Gfile\n";
 
-      foreach $Time (sort(keys(%$Gstats)))
+      foreach $Time (sort { $a <=> $b } (keys(%$Gstats)))
         {
         foreach $Zlev (sort { $a <=> $b } (keys(%{ $$Gstats{$Time} })))
           {
