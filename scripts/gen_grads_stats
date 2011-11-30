@@ -1,0 +1,102 @@
+#!/usr/bin/env perl
+#
+# script to run grads to generate data plots using GRADS
+#
+
+BEGIN { push(@INC, "$ENV{HOME}/etc/perl"); }
+
+use strict;
+use DiagUtils;
+
+###########################################################################
+# SUBROUTINES
+###########################################################################
+
+###########################################################################
+# MAIN
+###########################################################################
+
+my $ConfigFile;
+my $Gvar;
+
+my $Cases;
+my $TimeDirs;
+my $Vars;
+my $AzavgDiags; 
+my $Diags;
+my $Plots;
+
+my $Case;
+my $Tdir;
+my $GfilePrefix;
+my $Gfile;
+my $OutFile;
+my $OutDir;
+my @SysArgs;
+my $Gstats; # ref to hash
+my $Time;
+my $Zlev;
+my $AccumTime;
+
+$ConfigFile = $ARGV[0];
+print "ConfigFile: $ConfigFile\n\n";
+
+# read in info from the config file
+($Cases, $TimeDirs, $Vars, $AzavgDiags, $Diags, $Plots) = &DiagUtils::ReadConfigFile($ConfigFile);
+
+# make sure the output directory exists
+$OutDir = "gstats";
+if (! -d $OutDir)
+  {
+  @SysArgs = ("mkdir", "-p", $OutDir);
+  system(@SysArgs);
+  }
+
+# Put all time directories under each Case,Var combination into a
+# unique output file
+# This assumes that 'sort' will put the time directories in the
+# proper order
+foreach $Case (sort(keys(%$Cases)))
+  {
+  foreach $Gvar (sort(keys(%$Vars)))
+    {
+    $OutFile = $OutDir . "/" . $Gvar . "_" . $Case . ".gstats";
+    open(OFILE, "> $OutFile") or die "Cannot open GRADS stats file $OutFile for writing: $!";
+
+    print "Generating stats:\n";
+    print "  GRADS Var: $Gvar\n";
+    print "  Case: $Case\n";
+    print "  Output File: $OutFile\n";
+
+    $AccumTime = 1;
+    printf OFILE "%15s %15s %15s %15s %15s %15s\n\n",
+      "Timestep", "Z", "Min", "Max", "Mean", "StdDev";
+    foreach $Tdir (sort { $a <=> $b } (keys(%$TimeDirs)))
+      {
+      $GfilePrefix = $Case . "/GRADS/" . $Tdir . "/" . $Gvar . "-*";
+      ($Gfile) = &DiagUtils::FindGradsControlFile($GfilePrefix);
+      ($Gstats) = &DiagUtils::GetGradsStats($Gfile, $Gvar);
+
+      print "  Processing: $Gfile\n";
+
+      foreach $Time (sort(keys(%$Gstats)))
+        {
+        foreach $Zlev (sort { $a <=> $b } (keys(%{ $$Gstats{$Time} })))
+          {
+          printf OFILE "%15d %15d %15.5f %15.5f %15.5f %15.5f\n",
+            $AccumTime,
+            $Zlev,
+            $$Gstats{$Time}{$Zlev}{MIN},
+            $$Gstats{$Time}{$Zlev}{MAX},
+            $$Gstats{$Time}{$Zlev}{MEAN},
+            $$Gstats{$Time}{$Zlev}{STD_DEV};
+          }
+        $AccumTime = $AccumTime + 1;
+        }
+      }
+    close(OFILE);
+    print "\n";
+    }
+  }
+
+exit 0;

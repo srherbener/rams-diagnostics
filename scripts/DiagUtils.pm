@@ -438,4 +438,96 @@ sub PlotGradsHovmol
   return;
   }
 
+#####################################################################################
+# GetGradsStats()
+#
+# This routine will run grads and load stats for a given variable in a given
+# GRADS file into a hash that gets returned to the caller.
+#
+
+sub GetGradsStats
+  {
+  my ($Gfile, $Gvar) = @_;
+
+  my %Gstats;
+
+  my $GscriptName;
+  my $GscriptFh;
+  my $Cmd;
+  my @f;
+  my $Time;
+  my $Zlev;
+  my $Min;
+  my $Max;
+  my $Mean;
+  my $StdDev;
+
+  my $Var15; # GRADS truncates the variable names to 15 characters
+
+  $Var15 = substr($Gvar, 0, 15); # copy the first 15 characters
+  undef(%Gstats);
+
+  # mkstemp opens the file
+  ($GscriptFh, $GscriptName) = mkstemp( "/tmp/gcmds.XXXXXXXX" );
+  print $GscriptFh "export GASCRP=\"\$HOME/grads\"\n";
+  print $GscriptFh "grads -l -b <<EOF\n";
+  print $GscriptFh "reinit\n";
+  print $GscriptFh "clear\n";
+  print $GscriptFh "dumpStats $Gfile $Var15\n";
+  print $GscriptFh "EOF\n";
+  close($GscriptFh);
+
+  system ("chmod", "+x", $GscriptName);
+
+  # run dumpStats (GRADS script) and collect output in %Gstats
+  # look for output like this:
+  #   Stats:
+  #     t: 1
+  #     z: 1
+  #     Min: 0
+  #     Max: 1.41709
+  #     Mean: 0.161222
+  #     StdDev: 0.154379
+
+  $Cmd = "bash -c $GscriptName";
+  open (STATS, "$Cmd |") or die "GetGradsStats: cannot run command: $Cmd: $!";
+  while (<STATS>)
+    {
+    @f = split(' ');
+    if ($f[0] eq "t:")
+      {
+      $Time = $f[1];
+      }
+    elsif ($f[0] eq "z:")
+      {
+      $Zlev = $f[1];
+      }
+    elsif ($f[0] eq "Min:")
+      {
+      $Min = $f[1];
+      }
+    elsif ($f[0] eq "Max:")
+      {
+      $Max = $f[1];
+      }
+    elsif ($f[0] eq "Mean:")
+      {
+      $Mean = $f[1];
+      }
+    elsif ($f[0] eq "StdDev:")
+      {
+      $StdDev = $f[1];
+      $Gstats{$Time}{$Zlev}{MIN} = $Min;
+      $Gstats{$Time}{$Zlev}{MAX} = $Max;
+      $Gstats{$Time}{$Zlev}{MEAN} = $Mean;
+      $Gstats{$Time}{$Zlev}{STD_DEV} = $StdDev;
+      }
+    }
+  close(STATS);
+ 
+  unlink $GscriptName or warn "GetGradsStats: could not unlink $GscriptName: $!";
+
+  return (\%Gstats);
+  }
+
 1;

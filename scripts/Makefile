@@ -5,6 +5,7 @@
 G_DEST = $(HOME)/grads
 G_SCRIPTS = $(G_DEST)/cbarn.gs \
             $(G_DEST)/cbarline.gs \
+            $(G_DEST)/dumpStats.gs \
             $(G_DEST)/plotCfad.gs \
             $(G_DEST)/plotHslice.gs \
             $(G_DEST)/plotInitFields.gs \
@@ -17,6 +18,7 @@ B_DEST = $(HOME)/bin
 B_SCRIPTS = $(B_DEST)/run_azavg \
             $(B_DEST)/run_diags \
             $(B_DEST)/gen_grads_plots \
+            $(B_DEST)/gen_grads_stats \
             $(B_DEST)/plot_grads_vslice
 
 M_DEST = $(HOME)/etc/perl
@@ -33,6 +35,9 @@ $(G_DEST)/cbarn.gs: cbarn.gs
 
 $(G_DEST)/cbarline.gs: cbarline.gs
 	cp cbarline.gs $(G_DEST)/cbarline.gs
+
+$(G_DEST)/dumpStats.gs: dumpStats.gs
+	cp dumpStats.gs $(G_DEST)/dumpStats.gs
 
 $(G_DEST)/plotCfad.gs: plotCfad.gs
 	cp plotCfad.gs $(G_DEST)/plotCfad.gs
@@ -64,6 +69,9 @@ $(B_DEST)/run_diags: run_diags
 
 $(B_DEST)/gen_grads_plots: gen_grads_plots
 	cp gen_grads_plots $(B_DEST)/gen_grads_plots
+
+$(B_DEST)/gen_grads_stats: gen_grads_stats
+	cp gen_grads_stats $(B_DEST)/gen_grads_stats
 
 $(B_DEST)/plot_grads_vslice: plot_grads_vslice
 	cp plot_grads_vslice $(B_DEST)/plot_grads_vslice
