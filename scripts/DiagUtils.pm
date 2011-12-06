@@ -256,6 +256,8 @@ sub PlotGradsVslice
   print $GscriptFh "set gxout shaded\n";
   print $GscriptFh "set clevs $Clevs\n";
   print $GscriptFh "set ccols $Ccols\n";
+  print $GscriptFh "set xlopts 1 4 0.2\n";
+  print $GscriptFh "set ylopts 1 4 0.2\n";
   print $GscriptFh "set xlab %.1f\n";
   print $GscriptFh "set grads off\n";
   print $GscriptFh "set parea 1.5 10.5 2 8\n";
@@ -305,6 +307,8 @@ sub PlotGradsHslice
   print $GscriptFh "set gxout shaded\n";
   print $GscriptFh "set clevs $Clevs\n";
   print $GscriptFh "set ccols $Ccols\n";
+  print $GscriptFh "set xlopts 1 4 0.2\n";
+  print $GscriptFh "set ylopts 1 4 0.2\n";
   print $GscriptFh "set grads off\n";
   print $GscriptFh "d $Var15\n";
   print $GscriptFh "draw title $Ptitle\n";
@@ -358,6 +362,8 @@ sub PlotGradsTseries
   print $GscriptFh "clear\n";
   print $GscriptFh "open $$Gfiles[0]\n";
   print $GscriptFh "set t $T1 $T2\n";
+  print $GscriptFh "set xlopts 1 4 0.2\n";
+  print $GscriptFh "set ylopts 1 4 0.2\n";
   print $GscriptFh "set grads off\n";
   print $GscriptFh "set vrange $Ymin $Ymax\n";
   print $GscriptFh "d tloop(ave($Var15,t-$TavgLen,t+$TavgLen))\n";
@@ -418,6 +424,8 @@ sub PlotGradsHovmol
   print $GscriptFh "set gxout shaded\n";
   print $GscriptFh "set clevs $Clevs\n";
   print $GscriptFh "set ccols $Ccols\n";
+  print $GscriptFh "set xlopts 1 4 0.2\n";
+  print $GscriptFh "set ylopts 1 4 0.2\n";
   print $GscriptFh "set xlab %.1f\n";
   print $GscriptFh "set grads off\n";
   print $GscriptFh "set parea 1.5 10.5 2 8\n";
