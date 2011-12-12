@@ -160,6 +160,11 @@ sub SetGradsPlotParams
       $Clevs = "10.0 20.0 40.0 60.0 80.0 100.0 200.0 400.0 600.0 800.0 1000.0 2000.0 4000.0";
       $Ptitle = $Gexp . ": Column integrated ice (g/m**2), " . $Case . ", t " . $Ptime . " hrs";
       }
+    elsif ($Gvar eq "cint_vap")
+      {
+      $Clevs = "10000.0 17000.0 24000.0 31000.0 38000.0 45000.0 52000.0 59000.0 66000.0 73000.0 80000.0 87000.0 94000.0";
+      $Ptitle = $Gexp . ": Column integrated vapor (g/m**2), " . $Case . ", t " . $Ptime . " hrs";
+      }
     elsif ($Gvar eq "gccn_z7")
       {
       $Clevs = "0.00001 0.0001 0.001 0.01 0.0 0.2 0.4 0.6 0.8 1.0 1.2 1.4 1.6";
