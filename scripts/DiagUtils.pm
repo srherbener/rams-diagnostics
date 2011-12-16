@@ -246,7 +246,7 @@ sub PlotGradsVslice
 
   # mkstemp opens the file
   ($GscriptFh, $GscriptName) = mkstemp( "/tmp/gcmds.XXXXXXXX" );
-  print $GscriptFh "export GASCRP=\"\$HOME/grads\"\n";
+  print $GscriptFh "export GASCRP=\"\$HOME/etc/grads\"\n";
   print $GscriptFh "grads -l -b <<EOF\n";
   print $GscriptFh "reinit\n";
   print $GscriptFh "clear\n";
@@ -298,7 +298,7 @@ sub PlotGradsHslice
 
   # mkstemp opens the file
   ($GscriptFh, $GscriptName) = mkstemp( "/tmp/gcmds.XXXXXXXX" );
-  print $GscriptFh "export GASCRP=\"\$HOME/grads\"\n";
+  print $GscriptFh "export GASCRP=\"\$HOME/etc/grads\"\n";
   print $GscriptFh "grads -l -b <<EOF\n";
   print $GscriptFh "reinit\n";
   print $GscriptFh "clear\n";
@@ -356,7 +356,7 @@ sub PlotGradsTseries
 
   # mkstemp opens the file
   ($GscriptFh, $GscriptName) = mkstemp( "/tmp/gcmds.XXXXXXXX" );
-  print $GscriptFh "export GASCRP=\"\$HOME/grads\"\n";
+  print $GscriptFh "export GASCRP=\"\$HOME/etc/grads\"\n";
   print $GscriptFh "grads -l -b <<EOF\n";
   print $GscriptFh "reinit\n";
   print $GscriptFh "clear\n";
@@ -415,7 +415,7 @@ sub PlotGradsHovmol
 
   # mkstemp opens the file
   ($GscriptFh, $GscriptName) = mkstemp( "/tmp/gcmds.XXXXXXXX" );
-  print $GscriptFh "export GASCRP=\"\$HOME/grads\"\n";
+  print $GscriptFh "export GASCRP=\"\$HOME/etc/grads\"\n";
   print $GscriptFh "grads -l -b <<EOF\n";
   print $GscriptFh "reinit\n";
   print $GscriptFh "clear\n";
@@ -477,7 +477,7 @@ sub GetGradsStats
 
   # mkstemp opens the file
   ($GscriptFh, $GscriptName) = mkstemp( "/tmp/gcmds.XXXXXXXX" );
-  print $GscriptFh "export GASCRP=\"\$HOME/grads\"\n";
+  print $GscriptFh "export GASCRP=\"\$HOME/etc/grads\"\n";
   print $GscriptFh "grads -l -b <<EOF\n";
   print $GscriptFh "reinit\n";
   print $GscriptFh "clear\n";

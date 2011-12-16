@@ -2,7 +2,7 @@
 # Config
 #
 
-G_DEST = $(HOME)/grads
+G_DEST = $(HOME)/etc/grads
 G_SCRIPTS = $(G_DEST)/cbarn.gs \
             $(G_DEST)/cbarline.gs \
             $(G_DEST)/dumpStats.gs \

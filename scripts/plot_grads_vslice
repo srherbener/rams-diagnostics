@@ -27,7 +27,7 @@ Xtitle=$8
 Ytitle=$9
 Pfile=${10}
 
-export GASCRP="$HOME/grads"
+export GASCRP="$HOME/etc/grads"
 
 # temp grads script file
 Gscript="$(mktemp /tmp/grads_cmds.XXXXXXXXXX)"
