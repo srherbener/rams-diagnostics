@@ -133,21 +133,31 @@ end
 !   VarName - RAMS variable to do the column integration on
 !
 
-subroutine GetMyArgs(Infiles, OfileBase, VarName)
+subroutine GetMyArgs(Infiles, OfileBase, VarName, Nbins, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ)
   implicit none
 
   character (len=*) :: Infiles, OfileBase, VarName
+  integer :: Nbins, MinZ, MaxZ
+  real :: MinR, MaxR, MinPhi, MaxPhi
 
   integer :: iargc
   character (len=128) :: arg
 
-  if (iargc() .ne. 3) then
-    write (*,*) 'ERROR: must supply exactly 3 arguments'
+  if (iargc() .ne. 10) then
+    write (*,*) 'ERROR: must supply exactly 10 arguments'
     write (*,*) ''
-    write (*,*) 'USAGE: densf <in_data_files> <out_data_file> <var>'
+    write (*,*) 'USAGE: densf <in_data_files> <out_data_file> <var> <nbins> <min_r> <max_r> <min_phi> <max_phi> <min_z> <max_z>'
     write (*,*) '        <in_data_files>: GRADS format, control file, colon separated list'
     write (*,*) '        <out_data_file>: GRADS format, this programe will tag on .ctl, .dat suffixes'
     write (*,*) '        <var>: name of GRADS variable to do the density function calculation on'
+    write (*,*) '        <nbins>: number of bins to split up the data into'
+    write (*,*) ''
+    write (*,*) '        The following args are used to select data'
+    write (*,*) '          Select data inside cylindrical (r,phi,z) volume:'
+    write (*,*) '            <min_r> <max_r> (in km)'
+    write (*,*) '            <max_phi> <max_phi> (in radians)'
+    write (*,*) '            <min_z> <max_z> (in m)'
+
     write (*,*) ''
     stop
   end if
