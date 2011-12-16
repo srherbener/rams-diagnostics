@@ -8,6 +8,7 @@ DEST = $(HOME)/bin
 BINS = $(DEST)/azavg \
        $(DEST)/cfad \
        $(DEST)/colint \
+       $(DEST)/densf \
        $(DEST)/sfcwind \
        $(DEST)/hslice \
        $(DEST)/vslice \
@@ -22,8 +23,8 @@ BINS = $(DEST)/azavg \
 HEADERS = gDataTypes.h
 
 F_COMP = pgf90
-#F_COMP_OPTS = -Mupcase -O2 -Ktrap=fp
-F_COMP_OPTS = -Mupcase -g -Ktrap=fp
+#F_COMP_OPTS = -tp px-64 -pc 64 -Mupcase -O2 -Ktrap=fp
+F_COMP_OPTS = -tp px-64 -pc 64 -Mupcase -g -Ktrap=fp
 INCLUDES =
 
 LOADER = pgf90
@@ -44,6 +45,9 @@ $(DEST)/cfad: cfad.o gdata.o azavg_utils.o
 
 $(DEST)/colint: colint.o gdata.o
 	$(LOADER) -o $(DEST)/colint gdata.o colint.o $(LOADER_OPTS) $(LIBS)
+
+$(DEST)/densf: densf.o gdata.o
+	$(LOADER) -o $(DEST)/densf gdata.o densf.o $(LOADER_OPTS) $(LIBS)
 
 $(DEST)/sfcwind: sfcwind.o gdata.o
 	$(LOADER) -o $(DEST)/sfcwind gdata.o sfcwind.o $(LOADER_OPTS) $(LIBS)
@@ -80,4 +84,5 @@ $(DEST)/mkTemplate: mkTemplate.o gdata.o
 
 clean:
 	rm -f *.o
+	rm -f *.mod
 	rm -f $(BINS)
