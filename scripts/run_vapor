@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+. $HOME/projects/diagnostics/downloads/vapor/vapor-2.0.2-Linux_i386/bin/vapor-setup.leewave
+
+vaporgui $@
