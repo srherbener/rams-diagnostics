@@ -1,0 +1,1 @@
+enscript --columns=1 --fancy-header --landscape $1
