@@ -108,7 +108,7 @@ $ConfigFile = $ARGV[0];
 
 # make sure at least one of each of cases, time_directories and diagnostics has
 # been specified
-if ((! defined(%$Cases)) || (! defined(%$TimeDirs)) || (! defined(%$AzavgDiags)))
+if ((! (%$Cases)) || (! (%$TimeDirs)) || (! (%$AzavgDiags)))
   {
   print STDERR "ERROR: must specify at least one of each of case, time directory and diagnostic\n";
   exit 1;
