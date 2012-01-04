@@ -80,6 +80,10 @@ sub ReadConfigFile
       $Plots{"AZ"}{VARS}{$f[1]}{PYMIN} = $f[3];
       $Plots{"AZ"}{VARS}{$f[1]}{PYMAX} = $f[4];
       }
+    elsif ($f[0] eq "DensPlotVar:")
+      {
+      $Plots{"DENS"}{VARS}{$f[1]}{PTYPE} = $f[2];
+      }
     elsif ($f[0] eq "HsPlotVar:")
       {
       # set a dummy value just to get the variable names into the keys

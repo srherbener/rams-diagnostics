@@ -397,7 +397,22 @@ sub SetGradsPlotParams
       $Ptitle = $Ptitle . ", " . $$CaseList[0];
       }
     }
-    
+  elsif ($Ptype eq "DENS")
+    {
+    $Case = $$CaseList[0];
+    $Ccols = "9 14 4 11 5 13 3 10 7 12 8 2 6";
+    $$Gfiles[0] = $Dir . "/" . $Gvar . "_" . $Case . ".ctl";
+
+    if ($Gvar eq "hist_pcprate")
+      {
+      $Clevs = "0.0 0.5 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0 5.5 6.0";
+      $Ptitle = $Gexp . ": Log(N) Histogram, " . $Case;
+      $Xtitle = "Precipitation Rate (mm/hr)";
+      $Ytitle = "Time";
+      $Pfile = $Pdir . "/" . $Gvar . "_" . $PfileCase . "_" . $Ptime . ".gif";
+      }
+    }
+
   return ($Clevs, $Ccols, $Ptitle, $Xtitle, $Ytitle, $TimeStep, $TstepStart, $TstepEnd, $Gfiles, $Pfile);
   }
 
@@ -428,6 +443,7 @@ my %Gdirs;
 my $Gdir;
 my $Pdir;
 my $AzType;
+my $DensType;
 
 my $Gvar;
 my $Gfiles;
@@ -467,6 +483,10 @@ $ConfigFile = $ARGV[0];
            DIR => "GRADS",
            PDIR => "plots/Misc",
            },
+  "DENS" => {
+           DIR => "GRADS",
+           PDIR => "plots/Misc",
+           },
   );
 
 print "ConfigFile: $ConfigFile\n\n";
@@ -497,7 +517,7 @@ foreach $Ptype (@Ptypes)
     system( "mkdir", "-p", $Pdir);
     }
 
-  if (($Ptype eq "AZ") || ($Ptype eq "HS") || ($Ptype eq "TS"))
+  if (($Ptype eq "AZ") || ($Ptype eq "DENS") || ($Ptype eq "HS") || ($Ptype eq "TS"))
     {
     foreach $Case (sort(keys(%$Cases)))
       {
@@ -526,11 +546,27 @@ foreach $Ptype (@Ptypes)
             }
           elsif ($AzType eq "hovmol")
             {
-print "DEBUG: hovmol --> $TstepStart, $TstepEnd\n";
             $Ptime = 0;
             ($Clevs, $Ccols, $Ptitle, $Xtitle, $Ytitle,
              $TimeStep, $TstepStart, $TstepEnd, $Gfiles, $Pfile) =
              &SetGradsPlotParams($Ptype, $Gvar, $Gexp, $CaseList, $AzType,
+                                 $StartTime, $TimeInc, $Ptime,
+                                 $Ptstart, $Ptend, $Gdir, $Pdir, $PfileCase);
+            &DiagUtils::PlotGradsHovmol($Gvar, $$Gfiles[0], $TstepStart, $TstepEnd,
+               $Ccols, $Clevs, $Ptitle, $Xtitle, $Ytitle, $Pfile);
+            }
+          }
+        elsif ($Ptype eq "DENS")
+          {
+          $Ptend  = $$Plots{PTEND};
+          $DensType = $$Plots{$Ptype}{VARS}{$Gvar}{PTYPE};
+
+          if ($DensType eq "hovmol")
+            {
+            $Ptime = 0;
+            ($Clevs, $Ccols, $Ptitle, $Xtitle, $Ytitle,
+             $TimeStep, $TstepStart, $TstepEnd, $Gfiles, $Pfile) =
+             &SetGradsPlotParams($Ptype, $Gvar, $Gexp, $CaseList, $DensType,
                                  $StartTime, $TimeInc, $Ptime,
                                  $Ptstart, $Ptend, $Gdir, $Pdir, $PfileCase);
             &DiagUtils::PlotGradsHovmol($Gvar, $$Gfiles[0], $TstepStart, $TstepEnd,
