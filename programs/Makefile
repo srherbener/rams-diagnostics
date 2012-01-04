@@ -9,6 +9,7 @@ BINS = $(DEST)/azavg \
        $(DEST)/cfad \
        $(DEST)/colint \
        $(DEST)/densf \
+       $(DEST)/ghist \
        $(DEST)/sfcwind \
        $(DEST)/hslice \
        $(DEST)/vslice \
@@ -48,6 +49,9 @@ $(DEST)/colint: colint.o gdata.o
 
 $(DEST)/densf: densf.o gdata.o
 	$(LOADER) -o $(DEST)/densf gdata.o densf.o $(LOADER_OPTS) $(LIBS)
+
+$(DEST)/ghist: ghist.o gdata.o
+	$(LOADER) -o $(DEST)/ghist gdata.o ghist.o $(LOADER_OPTS) $(LIBS)
 
 $(DEST)/sfcwind: sfcwind.o gdata.o
 	$(LOADER) -o $(DEST)/sfcwind gdata.o sfcwind.o $(LOADER_OPTS) $(LIBS)

@@ -46,6 +46,10 @@ sub BuildDiagArgList
   my $PhiMax;
   my $Zmin;
   my $Zmax;
+  my $Scale;
+  my $NumBins;
+  my $BinStart;
+  my $BinSize;
   my @SysArgs;
 
   undef (@DiagArgs);
@@ -162,6 +166,27 @@ sub BuildDiagArgList
     $OutBase = $OutBase . ":" . $OutBaseRates;
     @DiagArgs = ( $InFiles, $OutBase, $TsDiag, "rates", $Wlim, $CILlim,
                   $Rmin, $Rmax, $PhiMin, $PhiMax, $Zmin, $Zmax );
+    }
+  elsif ($Diag eq "ghist")
+    {
+    # ghist <InFiles> <OutFilesBase> <Gvar> <Scale> <NumBins> <BinStart> <BinSize>
+    #
+    # $@Args --> <DiagVar> <Scale> <NumBins> <BinStart> <BinSize>, list of GRADS input vars
+    #
+    # Use $Gvar, $Case, $Tdir to form <OutFilesBase>
+    # Use list of input grads vars to form <InFiles>
+ 
+    ($DiagVar, $Scale, $NumBins, $BinStart, $BinSize, @InGvars) = @$Args;
+
+    $InFiles = "";
+    foreach $Var (@InGvars)
+      {
+      $InFiles = &DiagUtils::AppendGradsVarFile($InFiles, $Case, $Tdir, $Var);
+      }
+
+    $OutBase = $OutDir . "/" . $Gvar . "_" . $Case;
+
+    @DiagArgs = ( $InFiles, $OutBase, $DiagVar, $Scale, $NumBins, $BinStart, $BinSize );
     }
   else
    {
