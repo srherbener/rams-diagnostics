@@ -18,7 +18,8 @@
 !
 
 program main
-  use gdata_mod
+  use gdata_utils
+  use azavg_utils
   implicit none
 
   integer, parameter :: LargeString=512
@@ -56,7 +57,7 @@ program main
 
   integer :: ix, iy, iz, it
 
-  logical :: SelectThisPoint, InsideCylVol
+  logical :: SelectThisPoint
 
   ! Get the command line arguments
   call GetMyArgs(Infiles, OfileBase, LargeString, DoCylVol, DoCold, DoWarm, DoVertVel, DoAbsVertVel, DoLwp, MinW, MaxW, LwpThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ)

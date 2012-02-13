@@ -19,7 +19,8 @@
 !
 
 program main
-  use gdata_mod
+  use gdata_utils
+  use azavg_utils
   implicit none
 
   integer, parameter :: LargeString=512

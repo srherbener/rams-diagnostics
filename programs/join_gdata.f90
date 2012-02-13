@@ -13,7 +13,7 @@
 !
 
 program main
-  use gdata_mod
+  use gdata_utils
   implicit none
 
   integer, parameter :: LargeString=512
@@ -195,7 +195,7 @@ end subroutine
 !
 
 subroutine CheckDataDescripJoin(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, VarLocs, VarName)
-  use gdata_mod
+  use gdata_utils
   implicit none
 
   type (GradsDataDescription), dimension(*) :: GdataDescrip

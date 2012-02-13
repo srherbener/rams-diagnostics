@@ -18,7 +18,8 @@
 !
 
 program main
-  use gdata_mod
+  use gdata_utils
+  use azavg_utils
   implicit none
 
   integer, parameter :: LargeString=512
@@ -720,7 +721,8 @@ end subroutine
 !
 
 subroutine DoCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, DoSc, Cloud, TempC, Dens, CintLiq, TsAvg)
-  use gdata_mod
+  use gdata_utils
+  use azavg_utils
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
@@ -736,7 +738,6 @@ subroutine DoCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, M
 
   real, dimension(0:Nz) :: ZmHeights
   integer :: ix, iy, iz, it, NumPoints
-  logical :: InsideCylVol
 
   call SetZmHeights (Nz, ZmHeights)
 
@@ -796,6 +797,7 @@ end subroutine
 !
 
 subroutine DoWup(Nx, Ny, Nz, Nt, DeltaX, DeltaY, Wthreshold, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, W, TsAvg)
+  use azavg_utils
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
@@ -808,7 +810,6 @@ subroutine DoWup(Nx, Ny, Nz, Nt, DeltaX, DeltaY, Wthreshold, MinR, MaxR, MinPhi,
   real, dimension(1:Nz) :: Zcoords
 
   integer ix,iy,iz,it, NumPoints
-  logical :: InsideCylVol
 
   do it = 1, Nt
     ! Average w over regions where significant updrafts occur
@@ -848,6 +849,7 @@ end subroutine
 ! warm rain droplets or supercooled droplets.
 
 subroutine DoCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, DoSc, Cloud, TempC, CloudDiam, CintLiq, TsAvg)
+  use azavg_utils
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
@@ -864,7 +866,6 @@ subroutine DoCloudDiam(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPh
   integer ix,iy,iz,it, NumPoints
   real SumQ, SumQD
   real MaxQ, Climit, SumD
-  logical :: InsideCylVol
 
   do it = 1, Nt
 !     ! Calculate a mass-weighted mean diameter for supercooled cloud droplets.
@@ -968,6 +969,7 @@ end subroutine
 ! This subroutine will do the average cloud droplet concentration
 
 subroutine DoCloudConc(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, DoSc, TempC, CloudConc, TsAvg)
+  use azavg_utils
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
@@ -983,7 +985,6 @@ subroutine DoCloudConc(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPh
   integer ix,iy,iz,it
   integer NumPoints
   real SumCloudConc
-  logical :: InsideCylVol
 
   ! Calculate the average cloud droplet concentration near the eyewall region.
   ! 
@@ -1032,6 +1033,7 @@ end subroutine
 ! region.
 
 subroutine DoPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, PrecipR, CintLiq, TsAvg)
+  use azavg_utils
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
@@ -1048,7 +1050,6 @@ subroutine DoPrecipR(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi,
   integer :: ix,iy,iz,it
   integer :: NumPoints
   real :: SumPrecip
-  logical :: InsideCylVol
 
   do it = 1, Nt
     SumPrecip = 0.0
@@ -1087,6 +1088,7 @@ end subroutine
 ! this diagnostic.
 
 subroutine DoHorizKe(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, U, V, Dens, TsAvg)
+  use azavg_utils
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
@@ -1101,7 +1103,6 @@ subroutine DoHorizKe(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi,
   integer ix,iy,iz,it
   integer NumPoints
   real SumKe, CurrKe, LevThickness
-  logical :: InsideCylVol
 
   ! KE is 1/2 * m * v^2
   !   - calculate this a every point inside the defined cylindrical volume
@@ -1161,6 +1162,7 @@ end subroutine
 !
 
 subroutine DoStormInt(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, U, V, TsAvg)
+  use azavg_utils
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
@@ -1175,7 +1177,6 @@ subroutine DoStormInt(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi
   integer ix,iy,iz,it
   integer nCat0, nCat1, nCat2, nCat3, nCat4, nCat5, NumPoints
   real Wspeed, SiMetric
-  logical :: InsideCylVol
 
   do it = 1, Nt
     nCat0 = 0
@@ -1241,6 +1242,7 @@ end subroutine
 !
 
 subroutine DoCcnConc(Nx, Ny, Nz, Nt, DeltaX, DeltaY, Wthreshold, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CcnConc, TsAvg)
+  use azavg_utils
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
@@ -1253,7 +1255,6 @@ subroutine DoCcnConc(Nx, Ny, Nz, Nt, DeltaX, DeltaY, Wthreshold, MinR, MaxR, Min
   real, dimension(1:Nz) :: Zcoords
 
   integer ix,iy,iz,it, NumPoints
-  logical :: InsideCylVol
 
   do it = 1, Nt
     ! Average w over regions where significant updrafts occur
@@ -1291,6 +1292,7 @@ end subroutine
 ! outputs a '0'. Then view the result in grads and see if selection is correct.
 
 subroutine DoTestCvs(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, TestSelect)
+  use azavg_utils
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
@@ -1303,7 +1305,6 @@ subroutine DoTestCvs(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi,
 
   integer ix,iy,iz,it
   integer NumPoints
-  logical :: InsideCylVol
 
   write (*,*) 'Testing cylindrical volume selection:'
   do it = 1, Nt

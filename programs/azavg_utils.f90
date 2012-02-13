@@ -1,3 +1,13 @@
+module azavg_utils
+!*********************************************************
+! DATA
+!*********************************************************
+
+contains
+!*********************************************************
+! SUBROUTINES
+!*********************************************************
+
 !***************************************************************
 ! Utilities for the azimuthial averaging and CFAD code.
 !
@@ -268,7 +278,7 @@ end subroutine
 ! in the input GRADS grid to a flat plane (x and y length values)
 !
 subroutine ConvertGridCoords(Nx, Ny, GdataDescrip , Xcoords, Ycoords)
-  use gdata_mod
+  use gdata_utils
   implicit none
 
   real, parameter :: RadiusEarth = 6378.1  ! km
@@ -381,3 +391,5 @@ logical function InsideCylVol(Nx, Ny, Nz, Nt, Ix, Iy, Iz, It, MinR, MaxR, MinPhi
   end if
   return
 end function
+
+end module azavg_utils

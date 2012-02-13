@@ -2,7 +2,7 @@
 ! Data types for GRADS data routines
 !
 
-module gdata_mod
+module gdata_utils
 !**********************************************************
 ! DATA
 !**********************************************************
@@ -1174,4 +1174,4 @@ subroutine SetZmHeights(Nz, ZmHeights)
   return
 end subroutine
 
-end module gdata_mod
+end module gdata_utils

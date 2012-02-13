@@ -17,7 +17,7 @@
 !
 
 program main
-  use gdata_mod
+  use gdata_utils
   implicit none
 
   integer, parameter :: LargeString=512
@@ -142,7 +142,7 @@ end
 !
 
 subroutine GetMyArgs(Infiles, OfileBase, VarToSlice, ix1, iy1, ix2, iy2, NumPoints)
-  use gdata_mod
+  use gdata_utils
   implicit none
 
   integer, parameter :: NumReqCoords=4

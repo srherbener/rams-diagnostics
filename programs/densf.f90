@@ -18,7 +18,7 @@
 !
 
 program main
-  use gdata_mod
+  use gdata_utils
   implicit none
 
   integer, parameter :: LargeString=512
