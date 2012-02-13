@@ -2,7 +2,7 @@
 # Config
 #
 
-.SUFFIXES: .f90 .o
+.SUFFIXES: .f90 .mod .o
 
 DEST = $(HOME)/bin
 BINS = $(DEST)/azavg \
@@ -21,8 +21,6 @@ BINS = $(DEST)/azavg \
        $(DEST)/double_pts \
        $(DEST)/mkTemplate \
        $(DEST)/tseries_avg
-
-HEADERS = gDataTypes.h
 
 F_COMP = pgf90
 #F_COMP_OPTS = -tp px-64 -pc 64 -Mupcase -O2 -Ktrap=fp
@@ -87,8 +85,29 @@ $(DEST)/tseries_avg: tseries_avg.o gdata.o azavg_utils.o
 $(DEST)/mkTemplate: mkTemplate.o gdata.o
 	$(LOADER) -o $(DEST)/mkTemplate gdata.o mkTemplate.o $(LOADER_OPTS) $(LIBS)
 
-.f90.o: $(HEADERS)
+.f90.o:
 	$(F_COMP) $(F_COMP_OPTS) $(INCLUDES) -c $(<)
+
+.f90.mod:
+	$(F_COMP) $(F_COMP_OPTS) $(INCLUDES) -c $(<)
+
+azavg.o: azavg.f90 GfileTypes.mod
+azavg_utils.o: azavg_utils.f90 GfileTypes.mod
+cfad.o: cfad.f90 GfileTypes.mod
+colint.o: colint.f90 GfileTypes.mod
+densf.o: densf.f90 GfileTypes.mod
+double_pts.o: double_pts.f90 GfileTypes.mod
+gdata.o: gdata.f90 GfileTypes.mod
+gfilter.o: gfilter.f90 GfileTypes.mod
+ghist.o: ghist.f90 GfileTypes.mod
+hslice.o: hslice.f90 GfileTypes.mod
+join_gdata.o: join_gdata.f90 GfileTypes.mod
+mkTemplate.o: mkTemplate.f90 GfileTypes.mod
+PDF_pools_allexps.o: PDF_pools_allexps.f90 GfileTypes.mod
+sfcwind.o: sfcwind.f90 GfileTypes.mod
+tr_winds.o: tr_winds.f90 GfileTypes.mod
+tseries_avg.o: tseries_avg.f90 GfileTypes.mod
+vslice.o: vslice.f90 GfileTypes.mod
 
 clean:
 	rm -f *.o

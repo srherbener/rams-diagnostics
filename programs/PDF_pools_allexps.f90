@@ -1,4 +1,3 @@
-include 'gDataTypes.h'
 use GfileTypes
 
 implicit none

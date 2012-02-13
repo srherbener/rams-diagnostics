@@ -20,8 +20,6 @@
 !   file is the control file and the other is the binary data.
 !
 
-include 'gDataTypes.h'
-
 program main
   use GfileTypes
   implicit none
