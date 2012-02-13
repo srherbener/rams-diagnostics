@@ -13,7 +13,7 @@
 !
 
 program main
-  use GfileTypes
+  use gdata_mod
   implicit none
 
   integer, parameter :: LargeString=512
@@ -218,7 +218,7 @@ end subroutine
 !
 
 subroutine CheckDataDescripDouble(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, VarLocs, VarName)
-  use GfileTypes
+  use gdata_mod
   implicit none
 
   type (GradsDataDescription), dimension(*) :: GdataDescrip

@@ -18,7 +18,7 @@
 !
 
 program main
-  use GfileTypes
+  use gdata_mod
   implicit none
 
   integer, parameter :: LargeString=512
@@ -720,6 +720,7 @@ end subroutine
 !
 
 subroutine DoCloud(Nx, Ny, Nz, Nt, DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, DoSc, Cloud, TempC, Dens, CintLiq, TsAvg)
+  use gdata_mod
   implicit none
 
   integer :: Nx, Ny, Nz, Nt

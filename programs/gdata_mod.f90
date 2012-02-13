@@ -1,3 +1,61 @@
+!***************************************************************
+! Data types for GRADS data routines
+!
+
+module gdata_mod
+!**********************************************************
+! DATA
+!**********************************************************
+
+  integer, parameter :: MaxString=256
+  integer, parameter :: MaxCoords=1000
+  integer, parameter :: MaxVars=50
+  integer, parameter :: InUnit=8
+  integer, parameter :: OutUnit=10
+  integer, parameter :: BinRecFactor=4
+  
+  type GradsDataDescription
+    character (len=MaxString) :: DataFile
+    real :: UndefVal
+    real, dimension(1:MaxCoords) :: Xcoords
+    real, dimension(1:MaxCoords) :: Ycoords
+    real, dimension(1:MaxCoords) :: Zcoords
+    real, dimension(1:MaxCoords) :: Tcoords
+    character (len=MaxString), dimension(1:MaxVars) :: VarNames
+    character (len=MaxString) :: Tstart, Tinc
+    integer :: nx
+    integer :: ny
+    integer :: nz
+    integer :: nt
+    integer :: nvars
+  end type GradsDataDescription
+
+  type GradsVarLocation
+    integer :: Fnum
+    integer :: Vnum
+  end type GradsVarLocation
+
+  type GradsOutDescription
+    character (len=MaxString) :: CtlFile
+    character (len=MaxString) :: DataFile
+    character (len=MaxString) :: Title
+    character (len=MaxString) :: VarName
+    real :: UndefVal
+    real :: Xstart, Xinc
+    real :: Ystart, Yinc
+    real, dimension(1:MaxCoords) :: Zcoords
+    character (len=MaxString) :: Tstart, Tinc
+    integer :: nx
+    integer :: ny
+    integer :: nz
+    integer :: nt
+  end type GradsOutDescription
+
+contains
+!**********************************************************
+! SUBROUTINES
+!**********************************************************
+
 !***********************************************************
 ! String2List()
 !
@@ -98,7 +156,6 @@ end subroutine
 !
 
 subroutine  ReadGradsCtlFile(GradsCtlFile, GdataDescrip)
-  use GfileTypes
   implicit none
 
   integer, parameter :: MaxLine = 1000
@@ -288,7 +345,6 @@ end subroutine
 
 subroutine CheckDataDescrip(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, Uloc, Vloc, Wloc, &
            PressLoc, VarLoc, VarName, DoHorizVel)
-  use GfileTypes
   implicit none
 
   type (GradsDataDescription), dimension(*) :: GdataDescrip
@@ -408,7 +464,6 @@ end subroutine
 
 subroutine CheckDataDescrip_CI(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, &
            DensLoc, TempLoc, VarLoc, VarName)
-  use GfileTypes
   implicit none
 
   type (GradsDataDescription), dimension(*) :: GdataDescrip
@@ -504,7 +559,6 @@ end subroutine
 
 subroutine CheckDataDescrip_VS(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, &
            VarLoc, VarName)
-  use GfileTypes
   implicit none
 
   type (GradsDataDescription), dimension(*) :: GdataDescrip
@@ -580,7 +634,6 @@ end subroutine
 
 subroutine CheckDataDescrip_SW(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, &
            Uloc, Vloc)
-  use GfileTypes
   implicit none
 
   type (GradsDataDescription), dimension(*) :: GdataDescrip
@@ -665,7 +718,6 @@ end subroutine
 
 subroutine CheckDataDescrip_TR(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, &
            Ploc, Uloc, Vloc)
-  use GfileTypes
   implicit none
 
   type (GradsDataDescription), dimension(*) :: GdataDescrip
@@ -762,7 +814,6 @@ end subroutine
 !
 
 subroutine CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, VarLoc, VarName)
-  use GfileTypes
   implicit none
 
   type (GradsDataDescription), dimension(*) :: GdataDescrip
@@ -854,7 +905,6 @@ end subroutine
 !
 
 subroutine ReadGradsData(GdataDescrip, VarName, VarLoc, VarData, Nx, Ny, Nz, Nt)
-  use GfileTypes
   implicit none
 
   type (GradsDataDescription), dimension(*) :: GdataDescrip
@@ -971,7 +1021,6 @@ end subroutine
 subroutine BuildGoutDescrip(Nx, Ny, Nz, Nt, AzAvg, OfileBase, UndefVal, VarName, &
           Xstart, Xinc, Ystart, Yinc, Zcoords, Tstart, Tinc, GoutDescrip, Diagnostic)
 
-  use GfileTypes
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
@@ -1017,7 +1066,6 @@ end subroutine
 !
 
 subroutine WriteGrads(GoutDescrip, AzAvg)
-  use GfileTypes
   implicit none
 
   type (GradsOutDescription) :: GoutDescrip
@@ -1125,3 +1173,5 @@ subroutine SetZmHeights(Nz, ZmHeights)
 
   return
 end subroutine
+
+end module gdata_mod

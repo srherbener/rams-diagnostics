@@ -17,7 +17,7 @@
 !
 
 program main
-  use GfileTypes
+  use gdata_mod
   implicit none
 
   integer, parameter :: LargeString=512

@@ -268,7 +268,7 @@ end subroutine
 ! in the input GRADS grid to a flat plane (x and y length values)
 !
 subroutine ConvertGridCoords(Nx, Ny, GdataDescrip , Xcoords, Ycoords)
-  use GfileTypes
+  use gdata_mod
   implicit none
 
   real, parameter :: RadiusEarth = 6378.1  ! km
