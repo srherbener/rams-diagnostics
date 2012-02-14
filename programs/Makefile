@@ -91,21 +91,10 @@ $(DEST)/mkTemplate: mkTemplate.o gdata_utils.o
 .f90.mod:
 	$(F_COMP) $(F_COMP_OPTS) $(INCLUDES) -c $(<)
 
-azavg.o: azavg.f90 gdata_utils.mod azavg_utils.mod
-cfad.o: cfad.f90 gdata_utils.mod azavg_utils.mod
-colint.o: colint.f90 gdata_utils.mod
-densf.o: densf.f90 gdata_utils.mod
-double_pts.o: double_pts.f90 gdata_utils.mod
-gfilter.o: gfilter.f90 gdata_utils.mod azavg_utils.mod
-ghist.o: ghist.f90 gdata_utils.mod
-hslice.o: hslice.f90 gdata_utils.mod
-join_gdata.o: join_gdata.f90 gdata_utils.mod
-mkTemplate.o: mkTemplate.f90 gdata_utils.mod
-PDF_pools_allexps.o: PDF_pools_allexps.f90 gdata_utils.mod
-sfcwind.o: sfcwind.f90 gdata_utils.mod
-tr_winds.o: tr_winds.f90 gdata_utils.mod azavg_utils.mod
-tseries_avg.o: tseries_avg.f90 gdata_utils.mod azavg_utils.mod
-vslice.o: vslice.f90 gdata_utils.mod
+include ./deps.mk
+
+depend:
+	makedepf90 -m "%f.mod" *.f90 > deps.mk
 
 clean:
 	rm -f *.o

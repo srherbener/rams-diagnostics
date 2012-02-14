@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+#
+# Shell script to run the make process which consists of two steps:
+#  make depend
+#  make all
+#
+#  'make depend' creates the deps.mk file which puts in all the dependencies of all the .o files.
+#  these can include .mod and .f90 files
+
+
+make depend
+make all
