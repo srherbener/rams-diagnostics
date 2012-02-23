@@ -35,7 +35,7 @@ program main
   integer :: Nx, Ny, Nz, Nt, Nvars, Nbins
   type (GradsOutDescription) :: GoutDescrip
   real :: BinStart, BinSize
-  logical :: DoLogScale
+  logical :: DoLogScale, DoLinScale, DoFaScale
 
   ! Data arrays: need one for dn0 (density) and the var we are doing the
   ! column integration on
@@ -47,14 +47,14 @@ program main
   real :: Xstart, Xinc, Ystart, Yinc
   type (GradsVarLocation) :: VarLoc
 
-  integer :: i
+  integer :: i, Nhoriz
   integer :: Ierror
 
   integer :: ix, iy, iz, it, ib
   logical :: SuperCooled, WarmRain
 
   ! Get the command line argument
-  call GetMyArgs(Infiles, OfileBase, VarName, DoLogScale, Nbins, BinStart, BinSize)
+  call GetMyArgs(Infiles, OfileBase, VarName, DoLogScale, DoLinScale, DoFaScale, Nbins, BinStart, BinSize)
   call String2List(Infiles, ':', GradsCtlFiles, MaxFiles, Nfiles, 'input files')
 
   write (*,*) 'Building histograms for GRADS data:'
@@ -118,6 +118,7 @@ program main
   ! This formula doesn't check to see if x will fit in one of the defined bins meaning that
   ! an index (ib value) can fall outside the defined bins. Check for this and just snap an
   ! ib value < 1 to 1 and an ib value > Nbins to Nbins.
+  Nhoriz = Nx * Ny
   do it = 1, Nt
     do iz = 1, Nz
 
@@ -142,12 +143,19 @@ program main
         enddo
       enddo
 
-     ! convert the counts to logarithmic scale
+     ! apply scaling, if linear scaling just leave counts as is
      if (DoLogScale) then
+       ! convert the counts to logarithmic scale
        do ib = 1, Nbins
          if (Hist(ib,1,iz,it) .gt. 0.0) then
            Hist(ib,1,iz,it) = log10(Hist(ib,1,iz,it))
          endif
+       enddo
+     else if (DoFaScale) then
+       ! scale counts by fractional area of entire domain
+       ! divide counts by total number of horiz grid points (assume uniform sized grid cells)
+       do ib = 1, Nbins
+         Hist(ib,1,iz,it) = Hist(ib,1,iz,it) / float(Nhoriz)
        enddo
      endif
 
@@ -183,16 +191,18 @@ end
 !   VarName - RAMS variable to do the column integration on
 !
 
-subroutine GetMyArgs(Infiles, OfileBase, VarName, DoLogScale, Nbins, BinStart, BinSize)
+subroutine GetMyArgs(Infiles, OfileBase, VarName, DoLogScale, DoLinScale, DoFaScale, Nbins, BinStart, BinSize)
   implicit none
 
   character (len=*) :: Infiles, OfileBase, VarName
   integer :: Nbins
   real :: BinStart, BinSize
-  logical :: DoLogScale
+  logical :: DoLogScale, DoLinScale, DoFaScale
 
   integer :: iargc
   character (len=128) :: arg
+
+  logical :: BadArgs
 
   if (iargc() .ne. 7) then
     write (*,*) 'ERROR: must supply exactly 7 arguments'
@@ -201,13 +211,18 @@ subroutine GetMyArgs(Infiles, OfileBase, VarName, DoLogScale, Nbins, BinStart, B
     write (*,*) '        <in_data_files>: GRADS format, control file, colon separated list'
     write (*,*) '        <out_data_file>: GRADS format, this programe will tag on .ctl, .dat suffixes'
     write (*,*) '        <var_to_integrate>: name of RAMS variable to do the integration on'
-    write (*,*) '        <scale>: scale for counts - "log" or "linear"'
+    write (*,*) '        <scale>: scale for counts - "log", "linear", or "frac_area"'
     write (*,*) '        <number_of_bins>: number of bins to build into the histograms'
     write (*,*) '        <bin_start>: starting value of first bin'
     write (*,*) '        <bin_size>: size of bin (bins are uniform sizes)'
     write (*,*) ''
     stop
   end if
+
+  BadArgs = .false.
+  DoLogScale = .false.
+  DoLinScale = .false.
+  DoFaScale = .false.
 
   call getarg(1, Infiles)
 
@@ -218,8 +233,13 @@ subroutine GetMyArgs(Infiles, OfileBase, VarName, DoLogScale, Nbins, BinStart, B
   call getarg(4, arg)
   if (arg .eq. 'log') then
     DoLogScale = .true.
+  else if (arg .eq. 'linear') then
+    DoLinScale = .true.
+  else if (arg .eq. 'frac_area') then
+    DoFaScale = .true.
   else
-    DoLogScale = .false.
+    write (*,*) 'ERROR: must choose one of "log", "linear", or "frac_area" for <scale> argument'
+    BadArgs = .true.
   endif
 
   call getarg(5, arg)
@@ -230,6 +250,10 @@ subroutine GetMyArgs(Infiles, OfileBase, VarName, DoLogScale, Nbins, BinStart, B
 
   call getarg(7, arg)
   read (arg, '(f)') BinSize
+
+  if (BadArgs) then
+    stop
+  end if
 
   return
 end subroutine
