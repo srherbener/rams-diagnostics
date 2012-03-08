@@ -47,6 +47,8 @@ sub BuildDiagArgList
   my $Zmin;
   my $Zmax;
   my $Scale;
+  my $DataMin;
+  my $DataMax;
   my $NumBins;
   my $BinStart;
   my $BinSize;
@@ -169,14 +171,14 @@ sub BuildDiagArgList
     }
   elsif ($Diag eq "ghist")
     {
-    # ghist <InFiles> <OutFilesBase> <Gvar> <Scale> <NumBins> <BinStart> <BinSize>
+    # ghist <InFiles> <OutFilesBase> <Gvar> <Scale> <DataMin> <DataMax> <NumBins> <BinStart> <BinSize>
     #
-    # $@Args --> <DiagVar> <Scale> <NumBins> <BinStart> <BinSize>, list of GRADS input vars
+    # $@Args --> <DiagVar> <Scale> <DataMin> <DataMax> <NumBins> <BinStart> <BinSize>, list of GRADS input vars
     #
     # Use $Gvar, $Case, $Tdir to form <OutFilesBase>
     # Use list of input grads vars to form <InFiles>
  
-    ($DiagVar, $Scale, $NumBins, $BinStart, $BinSize, @InGvars) = @$Args;
+    ($DiagVar, $Scale, $DataMin, $DataMax, $NumBins, $BinStart, $BinSize, @InGvars) = @$Args;
 
     $InFiles = "";
     foreach $Var (@InGvars)
@@ -186,7 +188,7 @@ sub BuildDiagArgList
 
     $OutBase = $OutDir . "/" . $Gvar . "_" . $Case;
 
-    @DiagArgs = ( $InFiles, $OutBase, $DiagVar, $Scale, $NumBins, $BinStart, $BinSize );
+    @DiagArgs = ( $InFiles, $OutBase, $DiagVar, $Scale, $DataMin, $DataMax, $NumBins, $BinStart, $BinSize );
     }
   else
    {

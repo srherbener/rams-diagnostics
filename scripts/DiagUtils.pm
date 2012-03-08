@@ -429,8 +429,8 @@ sub PlotGradsHovmol
   print $GscriptFh "set clevs $Clevs\n";
   print $GscriptFh "set ccols $Ccols\n";
   print $GscriptFh "set xlopts 1 4 0.2\n";
-  print $GscriptFh "set ylopts 1 4 0.2\n";
-  print $GscriptFh "set xlab %.1f\n";
+  print $GscriptFh "set ylopts 1 4 0.11\n";
+  print $GscriptFh "set xlab %.3f\n";
   print $GscriptFh "set grads off\n";
   print $GscriptFh "set parea 1.5 10.5 2 8\n";
   print $GscriptFh "d $Var15\n";

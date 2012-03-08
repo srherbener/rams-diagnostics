@@ -405,10 +405,23 @@ sub SetGradsPlotParams
     $Ccols = "9 14 4 11 5 13 3 10 7 12 8 2 6";
     $$Gfiles[0] = $Dir . "/" . $Gvar . "_" . $Case . ".ctl";
 
-    if ($Gvar eq "hist_pcprate")
+    if (($Gvar eq "hst_prate_l") || ($Gvar eq "hst_prate_m") || ($Gvar eq "hst_prate_h"))
       {
-      $Clevs = "0.0 0.5 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0 5.5 6.0";
-      $Ptitle = $Gexp . ": Log(N) Histogram, " . $Case;
+      if ($Gvar eq "hst_prate_l")
+        {
+        $Clevs = "0.000 0.004 0.008 0.012 0.016 0.020 0.024 0.028 0.032 0.036 0.040 0.044 0.048";
+        $Ptitle = $Gexp . ": FA Histogram, light precip, " . $Case;
+        }
+      elsif ($Gvar eq "hst_prate_m")
+        {
+        $Clevs = "0.000 0.004 0.008 0.012 0.016 0.020 0.024 0.028 0.032 0.036 0.040 0.044 0.048";
+        $Ptitle = $Gexp . ": FA Histogram, med precip, " . $Case;
+        }
+      elsif ($Gvar eq "hst_prate_h")
+        {
+        $Clevs = "0.000 0.001 0.002 0.003 0.004 0.005 0.006 0.007 0.008 0.009 0.010 0.011 0.012";
+        $Ptitle = $Gexp . ": FA Histogram, heavy precip, " . $Case;
+        }
       $Xtitle = "Precipitation Rate (mm/hr)";
       $Ytitle = "Time";
       $Pfile = $Pdir . "/" . $Gvar . "_" . $PfileCase . "_" . $Ptime . ".gif";

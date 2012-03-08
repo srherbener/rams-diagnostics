@@ -34,7 +34,7 @@ program main
   type (GradsDataDescription), dimension(1:MaxFiles) :: GdataDescrip
   integer :: Nx, Ny, Nz, Nt, Nvars, Nbins
   type (GradsOutDescription) :: GoutDescrip
-  real :: BinStart, BinSize
+  real :: BinStart, BinSize, DataMin, DataMax
   logical :: DoLogScale, DoLinScale, DoFaScale
 
   ! Data arrays: need one for dn0 (density) and the var we are doing the
@@ -54,7 +54,8 @@ program main
   logical :: SuperCooled, WarmRain
 
   ! Get the command line argument
-  call GetMyArgs(Infiles, OfileBase, VarName, DoLogScale, DoLinScale, DoFaScale, Nbins, BinStart, BinSize)
+  call GetMyArgs(Infiles, OfileBase, VarName, DoLogScale, DoLinScale, DoFaScale, DataMin, DataMax, &
+                     Nbins, BinStart, BinSize)
   call String2List(Infiles, ':', GradsCtlFiles, MaxFiles, Nfiles, 'input files')
 
   write (*,*) 'Building histograms for GRADS data:'
@@ -65,6 +66,10 @@ program main
   write (*,*) '  Output file base name:  ', trim(OfileBase)
   write (*,*) '  GRADS variable that is being analyzed: ', trim(VarName)
   write (*,*) '  DoLogScale: ', DoLogScale
+  write (*,*) '  DoLinScale: ', DoLinScale
+  write (*,*) '  DoFaScale: ', DoFaScale
+  write (*,*) '  DataMin: ', DataMin
+  write (*,*) '  DataMax: ', DataMax
   write (*,*) '  Number of bins: ', Nbins
   write (*,*) '  Bin start (lower end of first bin): ', BinStart
   write (*,*) '  Bin size: ', BinSize
@@ -139,7 +144,9 @@ program main
             ib = Nbins
           endif
 
-          Hist(ib,1,iz,it) = Hist(ib,1,iz,it) + 1.0
+          if ((Var(ix,iy,iz,it) .ge. DataMin) .and. (Var(ix,iy,iz,it) .le. DataMax)) then
+            Hist(ib,1,iz,it) = Hist(ib,1,iz,it) + 1.0
+          endif
         enddo
       enddo
 
@@ -191,12 +198,13 @@ end
 !   VarName - RAMS variable to do the column integration on
 !
 
-subroutine GetMyArgs(Infiles, OfileBase, VarName, DoLogScale, DoLinScale, DoFaScale, Nbins, BinStart, BinSize)
+subroutine GetMyArgs(Infiles, OfileBase, VarName, DoLogScale, DoLinScale, DoFaScale, DataMin, DataMax, &
+                     Nbins, BinStart, BinSize)
   implicit none
 
   character (len=*) :: Infiles, OfileBase, VarName
   integer :: Nbins
-  real :: BinStart, BinSize
+  real :: BinStart, BinSize, DataMin, DataMax
   logical :: DoLogScale, DoLinScale, DoFaScale
 
   integer :: iargc
@@ -204,14 +212,15 @@ subroutine GetMyArgs(Infiles, OfileBase, VarName, DoLogScale, DoLinScale, DoFaSc
 
   logical :: BadArgs
 
-  if (iargc() .ne. 7) then
-    write (*,*) 'ERROR: must supply exactly 7 arguments'
+  if (iargc() .ne. 9) then
+    write (*,*) 'ERROR: must supply exactly 9 arguments'
     write (*,*) ''
-    write (*,*) 'USAGE: column <in_data_files> <out_data_file> <var_to_integrate> <scale> <number_of_bins> <bin_start> <bin_size>'
+    write (*,*) 'USAGE: column <in_data_files> <out_data_file> <var_to_integrate> <scale> <data_min> <data_max> <number_of_bins> <bin_start> <bin_size>'
     write (*,*) '        <in_data_files>: GRADS format, control file, colon separated list'
     write (*,*) '        <out_data_file>: GRADS format, this programe will tag on .ctl, .dat suffixes'
     write (*,*) '        <var_to_integrate>: name of RAMS variable to do the integration on'
     write (*,*) '        <scale>: scale for counts - "log", "linear", or "frac_area"'
+    write (*,*) '        <data_min> <data_max>: toss out data outside this range'
     write (*,*) '        <number_of_bins>: number of bins to build into the histograms'
     write (*,*) '        <bin_start>: starting value of first bin'
     write (*,*) '        <bin_size>: size of bin (bins are uniform sizes)'
@@ -219,10 +228,10 @@ subroutine GetMyArgs(Infiles, OfileBase, VarName, DoLogScale, DoLinScale, DoFaSc
     stop
   end if
 
-  BadArgs = .false.
+  BadArgs    = .false.
   DoLogScale = .false.
   DoLinScale = .false.
-  DoFaScale = .false.
+  DoFaScale  = .false.
 
   call getarg(1, Infiles)
 
@@ -243,12 +252,22 @@ subroutine GetMyArgs(Infiles, OfileBase, VarName, DoLogScale, DoLinScale, DoFaSc
   endif
 
   call getarg(5, arg)
-  read (arg, '(i)') Nbins
+  read (arg, '(f)') DataMin
 
   call getarg(6, arg)
-  read (arg, '(f)') BinStart
+  read (arg, '(f)') DataMax
+  if (DataMax <= DataMin) then
+    write (*,*) 'ERROR: <data_max> must be greater than <data_min>'
+    BadArgs = 'true'
+  endif
 
   call getarg(7, arg)
+  read (arg, '(i)') Nbins
+
+  call getarg(8, arg)
+  read (arg, '(f)') BinStart
+
+  call getarg(9, arg)
   read (arg, '(f)') BinSize
 
   if (BadArgs) then
