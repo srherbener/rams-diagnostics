@@ -17,23 +17,40 @@ module gdata_utils
   type GradsDataDescription
     character (len=MaxString) :: DataFile
     real :: UndefVal
-    real, dimension(1:MaxCoords) :: Xcoords
-    real, dimension(1:MaxCoords) :: Ycoords
-    real, dimension(1:MaxCoords) :: Zcoords
-    real, dimension(1:MaxCoords) :: Tcoords
-    character (len=MaxString), dimension(1:MaxVars) :: VarNames
+    real :: Xstart, Xinc
+    real :: Ystart, Yinc
+    real, dimension(1:MaxCoords) :: Zlevels
     character (len=MaxString) :: Tstart, Tinc
-    integer :: nx
-    integer :: ny
-    integer :: nz
-    integer :: nt
-    integer :: nvars
+    character (len=MaxString), dimension(1:MaxVars) :: VarNames
+    integer, dimension(1:MaxVars) :: VarNz
+    integer :: Nx
+    integer :: Ny
+    integer :: Nz
+    integer :: Nt
+    integer :: Nvars
   end type GradsDataDescription
 
-  type GradsVarLocation
+  type GradsVar
+    ! Fnum, Vnum define where the variable description lives within
+    !   the set of input GRADS control files
+    !
+    !   Fnum - File Number
+    !   Vnum - Variable Number
+    character (len=MaxString) :: Vname
+    integer :: Nx
+    integer :: Ny
+    integer :: Nz
+    integer :: Nt
+    real, dimension(:), allocatable :: Xcoords
+    real, dimension(:), allocatable :: Ycoords
+    real, dimension(:), allocatable :: Zcoords
+    real, dimension(:), allocatable :: Tcoords
     integer :: Fnum
     integer :: Vnum
-  end type GradsVarLocation
+    character (len=MaxString) :: Tstart, Tinc
+    character (len=MaxString) :: DataFile
+    real, dimension(:,:,:,:), allocatable :: Vdata
+  end type GradsVar
 
   type GradsOutDescription
     character (len=MaxString) :: CtlFile
@@ -43,12 +60,12 @@ module gdata_utils
     real :: UndefVal
     real :: Xstart, Xinc
     real :: Ystart, Yinc
-    real, dimension(1:MaxCoords) :: Zcoords
+    real, dimension(1:MaxCoords) :: Zlevels
     character (len=MaxString) :: Tstart, Tinc
-    integer :: nx
-    integer :: ny
-    integer :: nz
-    integer :: nt
+    integer :: Nx
+    integer :: Ny
+    integer :: Nz
+    integer :: Nt
   end type GradsOutDescription
 
 contains
@@ -155,7 +172,7 @@ end subroutine
 !   2. Grads data description
 !
 
-subroutine  ReadGradsCtlFile(GradsCtlFile, GdataDescrip)
+subroutine  ReadGradsCtlFile(GradsCtlFile, GdataDescrip, MaxCoords)
   implicit none
 
   integer, parameter :: MaxLine = 1000
@@ -163,11 +180,13 @@ subroutine  ReadGradsCtlFile(GradsCtlFile, GdataDescrip)
 
   character (len=*) :: GradsCtlFile
   type (GradsDataDescription) GdataDescrip
+  integer :: MaxCoords
 
-  integer InError
-  character (len=MaxLine) InLine
+  integer :: InError
+  character (len=MaxLine) :: InLine
   character (len=MaxLine), dimension(1:MaxFields) :: InFields
-  integer Nfields
+  integer :: i
+  integer :: Nfields
 
   character (len=MaxString) :: GfileDir
 
@@ -204,109 +223,59 @@ subroutine  ReadGradsCtlFile(GradsCtlFile, GdataDescrip)
     else
       if ((InFields(1) .eq. 'undef') .or. (InFields(1) .eq. 'UNDEF')) then
         read (InFields(2), '(f)') GdataDescrip%UndefVal
-      else
-        if ((InFields(1) .eq. 'xdef') .or. (InFields(1) .eq. 'XDEF')) then
-          call GenCoords(InFields, Nfields, GdataDescrip%Xcoords, GdataDescrip%nx, MaxCoords, 0)
-        else
-          if ((InFields(1) .eq. 'ydef') .or. (InFields(1) .eq. 'YDEF')) then
-            call GenCoords(InFields, Nfields, GdataDescrip%Ycoords, GdataDescrip%ny, MaxCoords, 0)
-          else
-            if ((InFields(1) .eq. 'zdef') .or. (InFields(1) .eq. 'ZDEF')) then
-              call GenCoords(InFields, Nfields, GdataDescrip%Zcoords, GdataDescrip%nz, MaxCoords, 0)
-            else
-              if ((InFields(1) .eq. 'tdef') .or. (InFields(1) .eq. 'TDEF')) then
-                GdataDescrip%Tstart = InFields(4)
-                GdataDescrip%Tinc   = InFields(5)
-                call GenCoords(InFields, Nfields, GdataDescrip%Tcoords, GdataDescrip%nt, MaxCoords, 1)
-              else
-                if ((InFields(1) .eq. 'vars') .or. (InFields(1) .eq. 'VARS')) then
-                  read (InFields(2), '(i)') GdataDescrip%nvars
-                  if (GdataDescrip%nvars .gt. MaxVars) then
-                    write (0,*) 'ERROR: Maximum number of variables (', MaxVars, &
-                                ') exceeded in GRADS control file specs'
-                    stop
-                  end if
-                  call GetVarNames(InUnit, GdataDescrip%VarNames, GdataDescrip%nvars, MaxLine, MaxFields)
-                end if
-              end if
-            end if
-          end if
-        end if
-      end if
-    end if
-  end do
+      else if ((InFields(1) .eq. 'xdef') .or. (InFields(1) .eq. 'XDEF')) then
+        read (InFields(2), '(i)') GdataDescrip%Nx 
+        read (InFields(4), '(f)') GdataDescrip%Xstart
+        read (InFields(5), '(f)') GdataDescrip%Xinc
+      else if ((InFields(1) .eq. 'ydef') .or. (InFields(1) .eq. 'YDEF')) then
+        read (InFields(2), '(i)') GdataDescrip%Ny 
+        read (InFields(4), '(f)') GdataDescrip%Ystart
+        read (InFields(5), '(f)') GdataDescrip%Yinc
+      else if ((InFields(1) .eq. 'zdef') .or. (InFields(1) .eq. 'ZDEF')) then
+        read (InFields(2), '(i)') GdataDescrip%Nz
+        do i = 1, GdataDescrip%Nz
+          read(InFields(i+3), '(f)') GdataDescrip%Zlevels(i)
+        enddo
+      else if ((InFields(1) .eq. 'tdef') .or. (InFields(1) .eq. 'TDEF')) then
+        read (InFields(2), '(i)') GdataDescrip%Nt
+        GdataDescrip%Tstart = InFields(4)
+        GdataDescrip%Tinc   = InFields(5)
+      else if ((InFields(1) .eq. 'vars') .or. (InFields(1) .eq. 'VARS')) then
+        read (InFields(2), '(i)') GdataDescrip%Nvars
+        if (GdataDescrip%Nvars .gt. MaxVars) then
+          write (0,*) 'ERROR: Maximum number of variables (', MaxVars, &
+                      ') exceeded in GRADS control file specs'
+          stop
+        endif
+        call GetVarInfo(InUnit, GdataDescrip%VarNames, GdataDescrip%VarNz, GdataDescrip%Nvars, MaxLine, MaxFields)
+      endif
+    endif
+  enddo
 
   close(unit=InUnit, status='keep')
 
-  return
-end subroutine
-
-!*****************************************************************
-! GenCoords()
-!
-! This routine will read in the dimension data from the given
-! string (which is an input line from the GRADS control file); and
-! generate the coordinate values for that dimension.
-!
-! This should be one of the xdef, ydef, zdef, tdef specs.
-!
-
-subroutine GenCoords(InFields, Nfields, Coords, Ncoords, MaxCoords, GenDmyCoords)
-  implicit none
-
-  character (len=*), dimension(*) :: InFields
-  integer Nfields
-  real Coords(*)
-  integer Ncoords, MaxCoords, GenDmyCoords
-
-  real Xstart, Xincr
-  integer i
-
-  read (InFields(2), '(i)') Ncoords 
-  if (Ncoords .gt. MaxCoords) then
-    write (0,*) 'ERROR: Maximum number of coordinates (', MaxCoords, ') exceeded in GRADS control file specs'
+  if ((GdataDescrip%Nx .gt. MaxCoords) .or. (GdataDescrip%Ny .gt. MaxCoords) .or. &
+      (GdataDescrip%Nz .gt. MaxCoords) .or. (GdataDescrip%Nt .gt. MaxCoords)) then
+    write (0,*) 'ERROR: Maximum number of coordinates (', MaxCoords, ') exceeded in GRADS control file: ', trim(GradsCtlFile)
     stop
-  end if
-
-  if (GenDmyCoords .ne. 1) then
-    ! read in the real coordinate values
-    if ((InFields(3) .eq. 'linear') .or. (InFields(3) .eq. 'LINEAR')) then
-      read (InFields(4), '(f)') Xstart
-      read (InFields(5), '(f)') Xincr
-
-      do i = 1, Ncoords
-        Coords(i) = Xstart + (real(i - 1) * Xincr)
-      end do
-
-    else
-      if ((InFields(3) .eq. 'levels') .or. (InFields(3) .eq. 'LEVELS')) then
-        do i = 1, Ncoords
-          read(InFields(i+3), '(f)') Coords(i)
-        end do
-      end if
-    end if
-  else
-    ! Generate dummy coordinate values
-    do i = 1, Ncoords
-      Coords(i) = real(i)
-    end do
   end if
 
   return
 end subroutine
 
 !*****************************************************************************
-! GetVarNames()
+! GetVarInfo()
 !
-! This routine will read Nvars lines from the file given by InUnit, and record
-! the names of the variables found in the VarNames array.
-!
+! This routine will read Nvars lines from the file (GRADS control file) given
+! by InUnit, and record the names and number of Z levels of the variables
+! listed in the file.
 
-subroutine  GetVarNames(InUnit, VarNames, Nvars, MaxLine, MaxFields)
+subroutine  GetVarInfo(InUnit, VarNames, VarNz, Nvars, MaxLine, MaxFields)
   implicit none
 
   integer InUnit
-  character (len=*), dimension(*) :: VarNames
+  character (len=*), dimension(1:Nvars) :: VarNames
+  integer, dimension(1:Nvars) :: VarNz
   integer Nvars
   integer MaxLine
   integer MaxFields
@@ -329,609 +298,237 @@ subroutine  GetVarNames(InUnit, VarNames, Nvars, MaxLine, MaxFields)
     call String2List(InLine, ' ', InFields, MaxFields, Nfields, 'control file fields')
 
     VarNames(i) = InFields(1)
+    read(InFields(2), '(i)') VarNz(i)
   end do
 
   return
 end subroutine
 
-!*************************************************************************
-! CheckDataDescrip()
+!**********************************************************************
+! InitGvarFromGdescrip()
 !
-! This routine will check the consistency of the data description obtained
-! from the GRADS control files. The number of x, y, z, t points should match
-! in all files. Also, the total number of variables are calculated and returned
-! in Nvars.
-!
+! This routine will find the GRADS variable description in the set of
+! GRADS control file information. Once found the variable description
+! is used to fill in all of the data into the GRADS variable except
+! for the actual 3D or 2D data field which is deferred so that all
+! of the GRADS variables can be checked for consistency before trying
+! to read in the data field (can be time consuming).
 
-subroutine CheckDataDescrip(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, Uloc, Vloc, Wloc, &
-           PressLoc, VarLoc, VarName, DoHorizVel)
+subroutine InitGvarFromGdescrip(Nf, GdataDescrip, Gvar, Vname)
   implicit none
 
-  type (GradsDataDescription), dimension(*) :: GdataDescrip
-  integer Nx, Ny, Nz, Nt, Nfiles
-  integer Nvars
-  type (GradsVarLocation) :: Uloc, Vloc, Wloc, PressLoc, VarLoc
-  character (len=*) :: VarName
-  logical :: DoHorizVel
+  integer :: Nf
+  type (GradsDataDescription), dimension(1:Nf) :: GdataDescrip
+  type (GradsVar) :: Gvar
+  character (len=*) :: Vname
 
   ! i -> file number, j -> var number
-  integer i, j
-  logical BadData
+  integer :: i, j
+  integer :: Ierror
 
-  Uloc%Fnum = 0
-  Uloc%Vnum = 0
-  Vloc%Fnum = 0
-  Vloc%Vnum = 0
-  Wloc%Fnum = 0
-  Wloc%Vnum = 0
-  PressLoc%Fnum = 0
-  PressLoc%Vnum = 0
-  VarLoc%Fnum = 0
-  VarLoc%Vnum = 0
+  Gvar%Fnum = 0
+  Gvar%Vnum = 0
 
-  BadData = .false.
-  do i = 1, Nfiles
-    if (i .eq. 1) then
-      Nx = GdataDescrip(i)%nx
-      Ny = GdataDescrip(i)%ny
-      Nz = GdataDescrip(i)%nz
-      Nt = GdataDescrip(i)%nt
-   
-      Nvars = GdataDescrip(i)%nvars
-    else
-      if (GdataDescrip(i)%nx .ne. Nx) then
-        write (0,*) 'ERROR: number of x points in GRADS control files do not match'
-        BadData = .true.
-      end if
-      if (GdataDescrip(i)%ny .ne. Ny) then
-        write (0,*) 'ERROR: number of y points in GRADS control files do not match'
-        BadData = .true.
-      end if
-      if (GdataDescrip(i)%nz .ne. Nz) then
-        write (0,*) 'ERROR: number of z points in GRADS control files do not match'
-        BadData = .true.
-      end if
-      if (GdataDescrip(i)%nt .ne. Nt) then
-        write (0,*) 'ERROR: number of t points in GRADS control files do not match'
-        BadData = .true.
-      end if
+  do i = 1, Nf
+    do j =1, GdataDescrip(i)%Nvars
+      if (GdataDescrip(i)%VarNames(j) .eq. Vname) then
+        Gvar%Fnum = i
+        Gvar%Vnum = j
+      endif
+    enddo
+  enddo
 
-      Nvars = Nvars + GdataDescrip(i)%nvars
-    end if
+  ! If we found the variable, then fill in the dimensions, coordinate data, and allocate
+  ! the space for the data.
+  if (Gvar%Fnum .gt. 0) then
+    Gvar%Vname = Vname
+    Gvar%Tstart = GdataDescrip(Gvar%Fnum)%Tstart
+    Gvar%Tinc = GdataDescrip(Gvar%Fnum)%Tinc
+    Gvar%DataFile = GdataDescrip(Gvar%Fnum)%DataFile
 
-    do j =1, GdataDescrip(i)%nvars
-      if (GdataDescrip(i)%VarNames(j) .eq. 'u') then
-        Uloc%Fnum = i
-        Uloc%Vnum = j
-      end if
-      if (GdataDescrip(i)%VarNames(j) .eq. 'v') then
-        Vloc%Fnum = i
-        Vloc%Vnum = j
-      end if
-      if (GdataDescrip(i)%VarNames(j) .eq. 'w') then
-        Wloc%Fnum = i
-        Wloc%Vnum = j
-      end if
-      if (GdataDescrip(i)%VarNames(j) .eq. 'press') then
-        PressLoc%Fnum = i
-        PressLoc%Vnum = j
-      end if
-      if (GdataDescrip(i)%VarNames(j) .eq. VarName) then
-        VarLoc%Fnum = i
-        VarLoc%Vnum = j
-      end if
-    end do
-  end do
+    Gvar%Nx = GdataDescrip(Gvar%Fnum)%Nx;
+    Gvar%Ny = GdataDescrip(Gvar%Fnum)%Ny;
+    Gvar%Nz = GdataDescrip(Gvar%Fnum)%Nz;
+    Gvar%Nt = GdataDescrip(Gvar%Fnum)%Nt;
 
-  ! Check to see if you got all three vars (w, press, var)
-  if (Wloc%Fnum .eq. 0) then
-    write (0,*) 'ERROR: cannot find grid var "w" in the GRADS data files'
-    BadData = .true.
-  end if
-  if (PressLoc%Fnum .eq. 0) then
-    write (0,*) 'ERROR: cannot find grid var "press" in the GRADS data files'
-    BadData = .true.
-  end if
-  if (DoHorizVel) then
-    if (Uloc%Fnum .eq. 0) then
-      write (0,*) 'ERROR: cannot find grid var "u" in the GRADS data files'
-      BadData = .true.
-    end if
-    if (Vloc%Fnum .eq. 0) then
-      write (0,*) 'ERROR: cannot find grid var "v" in the GRADS data files'
-      BadData = .true.
-    end if
+    allocate(Gvar%Xcoords(1:Gvar%Nx), Gvar%Ycoords(1:Gvar%Ny), &
+             Gvar%Zcoords(1:Gvar%Nz), Gvar%Tcoords(1:Gvar%Nt), &
+             Gvar%Vdata(1:Gvar%Nt,1:Gvar%Nz,1:Gvar%Nx,1:Gvar%Ny), stat=Ierror)
+    if (Ierror .ne. 0) then
+      write (*,*) 'ERROR: Data array memory allocation failed'
+      stop
+    endif
+
+    ! fill in the coordinate arrays
+    do i = 1, Gvar%Nx
+      Gvar%Xcoords(i) = GdataDescrip(Gvar%Fnum)%Xstart + (real(i - 1) * GdataDescrip(Gvar%Fnum)%Xinc)
+    enddo
+    do i = 1, Gvar%Ny
+      Gvar%Ycoords(i) = GdataDescrip(Gvar%Fnum)%Ystart + (real(i - 1) * GdataDescrip(Gvar%Fnum)%Yinc)
+    enddo
+    do i = 1, Gvar%Nz
+      Gvar%Zcoords(i) = GdataDescrip(Gvar%Fnum)%Zlevels(i)
+    enddo
+    do i = 1, Gvar%Nt
+      Gvar%Tcoords(i) = real(i)
+    enddo
   else
-    if (VarLoc%Fnum .eq. 0) then
-      write (0,*) 'ERROR: cannot find grid var "', trim(VarName), '" in the GRADS data files'
-      BadData = .true.
-    end if
-  end if
-
-  if (BadData) then
+    write (0,*) 'ERROR: cannot find grid var "', trim(Vname), '" in the GRADS data files'
     stop
-  end if
+  endif
+
+  return
 end subroutine
 
-!*************************************************************************
-! CheckDataDescrip_CI()
+!**********************************************************************
+! InitGvarFromGvar()
 !
-! This routine will check the consistency of the data description obtained
-! from the GRADS control files. The number of x, y, z, t points should match
-! in all files. Also, the total number of variables are calculated and returned
-! in Nvars.
-!
+! This routine will copy the set up from GvarSrc into GvarDes.
+! All of the data is filled into the GRADS variable except
+! for the actual 3D or 2D data field which is deferred so that all
+! of the GRADS variables can be checked for consistency before trying
+! to read in the data field (can be time consuming).
 
-subroutine CheckDataDescrip_CI(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, &
-           DensLoc, TempLoc, VarLoc, VarName)
+subroutine InitGvarFromGvar(GvarSrc, GvarDest, Vname)
   implicit none
 
-  type (GradsDataDescription), dimension(*) :: GdataDescrip
-  integer Nx, Ny, Nz, Nt, Nfiles
-  integer Nvars
-  type (GradsVarLocation) :: DensLoc, TempLoc, VarLoc
-  character (len=*) :: VarName
+  type (GradsVar) :: GvarSrc, GvarDest
+  character (len=*) :: Vname
 
-  ! i -> file number, j -> var number
-  integer i, j
-  logical BadData
+  integer :: i
+  integer :: Ierror
 
-  DensLoc%Fnum = 0
-  DensLoc%Vnum = 0
-  TempLoc%Fnum = 0
-  TempLoc%Vnum = 0
-  VarLoc%Fnum = 0
-  VarLoc%Vnum = 0
+  GvarDest%Fnum = 0
+  GvarDest%Vnum = 0
 
-  BadData = .false.
-  do i = 1, Nfiles
-    if (i .eq. 1) then
-      Nx = GdataDescrip(i)%nx
-      Ny = GdataDescrip(i)%ny
-      Nz = GdataDescrip(i)%nz
-      Nt = GdataDescrip(i)%nt
-   
-      Nvars = GdataDescrip(i)%nvars
-    else
-      if (GdataDescrip(i)%nx .ne. Nx) then
-        write (0,*) 'ERROR: number of x points in GRADS control files do not match'
-        BadData = .true.
-      end if
-      if (GdataDescrip(i)%ny .ne. Ny) then
-        write (0,*) 'ERROR: number of y points in GRADS control files do not match'
-        BadData = .true.
-      end if
-      if (GdataDescrip(i)%nz .ne. Nz) then
-        write (0,*) 'ERROR: number of z points in GRADS control files do not match'
-        BadData = .true.
-      end if
-      if (GdataDescrip(i)%nt .ne. Nt) then
-        write (0,*) 'ERROR: number of t points in GRADS control files do not match'
-        BadData = .true.
-      end if
+  GvarDest%Vname = Vname
+  GvarDest%Tstart = GvarSrc%Tstart
+  GvarDest%Tinc = GvarSrc%Tinc
+  GvarDest%DataFile = '<NONE>'
 
-      Nvars = Nvars + GdataDescrip(i)%nvars
-    end if
+  GvarDest%Nx = GvarSrc%Nx;
+  GvarDest%Ny = GvarSrc%Ny;
+  GvarDest%Nz = GvarSrc%Nz;
+  GvarDest%Nt = GvarSrc%Nt;
 
-    do j =1, GdataDescrip(i)%nvars
-      if (GdataDescrip(i)%VarNames(j) .eq. 'dn0') then
-        DensLoc%Fnum = i
-        DensLoc%Vnum = j
-      end if
-      if (GdataDescrip(i)%VarNames(j) .eq. 'tempc') then
-        TempLoc%Fnum = i
-        TempLoc%Vnum = j
-      end if
-      if (GdataDescrip(i)%VarNames(j) .eq. VarName) then
-        VarLoc%Fnum = i
-        VarLoc%Vnum = j
-      end if
-    end do
-  end do
-
-  ! Check to see if you got all vars (dn0, var)
-  if (DensLoc%Fnum .eq. 0) then
-    write (0,*) 'ERROR: cannot find grid var "dn0" in the GRADS data files'
-    BadData = .true.
-  end if
-  if (TempLoc%Fnum .eq. 0) then
-    write (0,*) 'ERROR: cannot find grid var "tempc" in the GRADS data files'
-    BadData = .true.
-  end if
-  if (VarLoc%Fnum .eq. 0) then
-    write (0,*) 'ERROR: cannot find grid var "', trim(VarName), '" in the GRADS data files'
-    BadData = .true.
-  end if
-
-  if (BadData) then
+  allocate(GvarDest%Xcoords(1:GvarDest%Nx), GvarDest%Ycoords(1:GvarDest%Ny), &
+           GvarDest%Zcoords(1:GvarDest%Nz), GvarDest%Tcoords(1:GvarDest%Nt), &
+           GvarDest%Vdata(1:GvarDest%Nt,1:GvarDest%Nz,1:GvarDest%Nx,1:GvarDest%Ny), stat=Ierror)
+  if (Ierror .ne. 0) then
+    write (*,*) 'ERROR: Data array memory allocation failed'
     stop
-  end if
+  endif
+
+  ! fill in the coordinate arrays
+  do i = 1, GvarDest%Nx
+    GvarDest%Xcoords(i) = GvarSrc%Xcoords(i)
+  enddo
+  do i = 1, GvarDest%Ny
+    GvarDest%Ycoords(i) = GvarSrc%Ycoords(i)
+  enddo
+  do i = 1, GvarDest%Nz
+    GvarDest%Zcoords(i) = GvarSrc%Zcoords(i)
+  enddo
+  do i = 1, GvarDest%Nt
+    GvarDest%Tcoords(i) = GvarSrc%Tcoords(i)
+  enddo
+
+  return
 end subroutine
 
-!*************************************************************************
-! CheckDataDescrip_VS()
+!***********************************************************************
+! GvarDimsMatch()
 !
-! This routine will check the consistency of the data description obtained
-! from the GRADS control files. The number of x, y, z, t points should match
-! in all files. Also, the total number of variables are calculated and returned
-! in Nvars.
-!
+! This function will return true/false according to whether or not the
+! dimensions of the two given GRADS variables match. When the variables
+! are 3D then x, y, z, and t dimensions are checked. If one of the variables
+! is 2D then only x, y, and t dimensions are checked.
 
-subroutine CheckDataDescrip_VS(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, &
-           VarLoc, VarName)
+logical function GvarDimsMatch(Gvar1, Gvar2, Is2D)
   implicit none
 
-  type (GradsDataDescription), dimension(*) :: GdataDescrip
-  integer Nx, Ny, Nz, Nt, Nfiles
-  integer Nvars
-  type (GradsVarLocation) :: VarLoc
-  character (len=*) :: VarName
+  type (GradsVar) :: Gvar1, Gvar2
+  logical :: Is2D
 
-  ! i -> file number, j -> var number
-  integer i, j
-  logical BadData
+  logical :: GcoordsMatch
 
-  VarLoc%Fnum = 0
-  VarLoc%Vnum = 0
+  if (Is2D) then
+    ! 2D var: check that the first entry in the Z coordinates match
+    GvarDimsMatch = GcoordsMatch(Gvar1%Xcoords, Gvar1%Nx, Gvar2%Xcoords, Gvar2%Nx) .and. &
+                    GcoordsMatch(Gvar1%Ycoords, Gvar1%Ny, Gvar2%Ycoords, Gvar2%Ny) .and. &
+                    GcoordsMatch(Gvar1%Zcoords, 1,        Gvar2%Zcoords, 1       ) .and. &
+                    GcoordsMatch(Gvar1%Tcoords, Gvar1%Nt, Gvar2%Tcoords, Gvar2%Nt)
+  else
+    ! 3D var: check that all entries in the X coordinates match
+    GvarDimsMatch = GcoordsMatch(Gvar1%Xcoords, Gvar1%Nx, Gvar2%Xcoords, Gvar2%Nx) .and. &
+                    GcoordsMatch(Gvar1%Ycoords, Gvar1%Ny, Gvar2%Ycoords, Gvar2%Ny) .and. &
+                    GcoordsMatch(Gvar1%Zcoords, Gvar1%Nz, Gvar2%Zcoords, Gvar2%Nz) .and. &
+                    GcoordsMatch(Gvar1%Tcoords, Gvar1%Nt, Gvar2%Tcoords, Gvar2%Nt)
+  endif
 
-  BadData = .false.
-  do i = 1, Nfiles
-    if (i .eq. 1) then
-      Nx = GdataDescrip(i)%nx
-      Ny = GdataDescrip(i)%ny
-      Nz = GdataDescrip(i)%nz
-      Nt = GdataDescrip(i)%nt
-   
-      Nvars = GdataDescrip(i)%nvars
-    else
-      if (GdataDescrip(i)%nx .ne. Nx) then
-        write (0,*) 'ERROR: number of x points in GRADS control files do not match'
-        BadData = .true.
-      end if
-      if (GdataDescrip(i)%ny .ne. Ny) then
-        write (0,*) 'ERROR: number of y points in GRADS control files do not match'
-        BadData = .true.
-      end if
-      if (GdataDescrip(i)%nz .ne. Nz) then
-        write (0,*) 'ERROR: number of z points in GRADS control files do not match'
-        BadData = .true.
-      end if
-      if (GdataDescrip(i)%nt .ne. Nt) then
-        write (0,*) 'ERROR: number of t points in GRADS control files do not match'
-        BadData = .true.
-      end if
+  return
+end function
 
-      Nvars = Nvars + GdataDescrip(i)%nvars
-    end if
-
-    do j =1, GdataDescrip(i)%nvars
-      if (GdataDescrip(i)%VarNames(j) .eq. VarName) then
-        VarLoc%Fnum = i
-        VarLoc%Vnum = j
-      end if
-    end do
-  end do
-
-  ! Check to see if you got all vars (dn0, var)
-  if (VarLoc%Fnum .eq. 0) then
-    write (0,*) 'ERROR: cannot find grid var "', trim(VarName), '" in the GRADS data files'
-    BadData = .true.
-  end if
-
-  if (BadData) then
-    stop
-  end if
-end subroutine
-
-!*************************************************************************
-! CheckDataDescrip_SW()
+!***********************************************************************
+! GcoodsMatch()
 !
-! This routine will check the consistency of the data description obtained
-! from the GRADS control files. The number of x, y, z, t points should match
-! in all files. Also, the total number of variables are calculated and returned
-! in Nvars.
-!
+! This function will return true/false according to whether or not the
+! coordinate values in the two given arrays match.
 
-subroutine CheckDataDescrip_SW(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, &
-           Uloc, Vloc)
+logical function GcoordsMatch(Coords1, Nc1, Coords2, Nc2)
   implicit none
 
-  type (GradsDataDescription), dimension(*) :: GdataDescrip
-  integer Nx, Ny, Nz, Nt, Nfiles
-  integer Nvars
-  type (GradsVarLocation) :: Uloc, Vloc
+  integer :: Nc1, Nc2
+  real, dimension(1:Nc1) :: Coords1
+  real, dimension(1:Nc2) :: Coords2
 
-  ! i -> file number, j -> var number
-  integer i, j
-  logical BadData
+  integer :: i
 
-  Uloc%Fnum = 0
-  Uloc%Vnum = 0
-  Vloc%Fnum = 0
-  Vloc%Vnum = 0
+  if (Nc1 .eq. Nc2) then
+    ! lengths of arrays match
+    ! check if entries in the arrays match
+    GcoordsMatch = .true.
+    do i = 1, Nc1
+      if (abs(Coords1(i)-Coords2(i)) .gt. 1.0e-6) then
+        GcoordsMatch = .false.
+        exit
+      endif
+    enddo
+  else
+    ! lengths of arrays do not match
+    GcoordsMatch = .false.
+  endif
 
-  BadData = .false.
-  do i = 1, Nfiles
-    if (i .eq. 1) then
-      Nx = GdataDescrip(i)%nx
-      Ny = GdataDescrip(i)%ny
-      Nz = GdataDescrip(i)%nz
-      Nt = GdataDescrip(i)%nt
-   
-      Nvars = GdataDescrip(i)%nvars
-    else
-      if (GdataDescrip(i)%nx .ne. Nx) then
-        write (0,*) 'ERROR: number of x points in GRADS control files do not match'
-        BadData = .true.
-      end if
-      if (GdataDescrip(i)%ny .ne. Ny) then
-        write (0,*) 'ERROR: number of y points in GRADS control files do not match'
-        BadData = .true.
-      end if
-      if (GdataDescrip(i)%nz .ne. Nz) then
-        write (0,*) 'ERROR: number of z points in GRADS control files do not match'
-        BadData = .true.
-      end if
-      if (GdataDescrip(i)%nt .ne. Nt) then
-        write (0,*) 'ERROR: number of t points in GRADS control files do not match'
-        BadData = .true.
-      end if
-
-      Nvars = Nvars + GdataDescrip(i)%nvars
-    end if
-
-    do j =1, GdataDescrip(i)%nvars
-      if (GdataDescrip(i)%VarNames(j) .eq. 'u') then
-        Uloc%Fnum = i
-        Uloc%Vnum = j
-      end if
-      if (GdataDescrip(i)%VarNames(j) .eq. 'v') then
-        Vloc%Fnum = i
-        Vloc%Vnum = j
-      end if
-    end do
-  end do
-
-  ! Check to see if you got all vars (dn0, var)
-  if (Uloc%Fnum .eq. 0) then
-    write (0,*) 'ERROR: cannot find grid var "u" in the GRADS data files'
-    BadData = .true.
-  end if
-  if (Vloc%Fnum .eq. 0) then
-    write (0,*) 'ERROR: cannot find grid var "v" in the GRADS data files'
-    BadData = .true.
-  end if
-
-  if (BadData) then
-    stop
-  end if
-end subroutine
-
-!*************************************************************************
-! CheckDataDescrip_TR()
-!
-! This routine will check the consistency of the data description obtained
-! from the GRADS control files. The number of x, y, z, t points should match
-! in all files. Also, the total number of variables are calculated and returned
-! in Nvars.
-!
-
-subroutine CheckDataDescrip_TR(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, &
-           Ploc, Uloc, Vloc)
-  implicit none
-
-  type (GradsDataDescription), dimension(*) :: GdataDescrip
-  integer Nx, Ny, Nz, Nt, Nfiles
-  integer Nvars
-  type (GradsVarLocation) :: Ploc, Uloc, Vloc
-
-  ! i -> file number, j -> var number
-  integer i, j
-  logical BadData
-
-  Ploc%Fnum = 0
-  Ploc%Vnum = 0
-  Uloc%Fnum = 0
-  Uloc%Vnum = 0
-  Vloc%Fnum = 0
-  Vloc%Vnum = 0
-
-  BadData = .false.
-  do i = 1, Nfiles
-    if (i .eq. 1) then
-      Nx = GdataDescrip(i)%nx
-      Ny = GdataDescrip(i)%ny
-      Nz = GdataDescrip(i)%nz
-      Nt = GdataDescrip(i)%nt
-   
-      Nvars = GdataDescrip(i)%nvars
-    else
-      if (GdataDescrip(i)%nx .ne. Nx) then
-        write (0,*) 'ERROR: number of x points in GRADS control files do not match'
-        BadData = .true.
-      end if
-      if (GdataDescrip(i)%ny .ne. Ny) then
-        write (0,*) 'ERROR: number of y points in GRADS control files do not match'
-        BadData = .true.
-      end if
-      if (GdataDescrip(i)%nz .ne. Nz) then
-        write (0,*) 'ERROR: number of z points in GRADS control files do not match'
-        BadData = .true.
-      end if
-      if (GdataDescrip(i)%nt .ne. Nt) then
-        write (0,*) 'ERROR: number of t points in GRADS control files do not match'
-        BadData = .true.
-      end if
-
-      Nvars = Nvars + GdataDescrip(i)%nvars
-    end if
-
-    do j =1, GdataDescrip(i)%nvars
-      if (GdataDescrip(i)%VarNames(j) .eq. 'press') then
-        Ploc%Fnum = i
-        Ploc%Vnum = j
-      end if
-      if (GdataDescrip(i)%VarNames(j) .eq. 'u') then
-        Uloc%Fnum = i
-        Uloc%Vnum = j
-      end if
-      if (GdataDescrip(i)%VarNames(j) .eq. 'v') then
-        Vloc%Fnum = i
-        Vloc%Vnum = j
-      end if
-    end do
-  end do
-
-  ! Check to see if you got all vars (dn0, var)
-  if (Ploc%Fnum .eq. 0) then
-    write (0,*) 'ERROR: cannot find grid var "press" in the GRADS data files'
-    BadData = .true.
-  end if
-  if (Uloc%Fnum .eq. 0) then
-    write (0,*) 'ERROR: cannot find grid var "u" in the GRADS data files'
-    BadData = .true.
-  end if
-  if (Vloc%Fnum .eq. 0) then
-    write (0,*) 'ERROR: cannot find grid var "v" in the GRADS data files'
-    BadData = .true.
-  end if
-
-  if (BadData) then
-    stop
-  end if
-end subroutine
-
-!*************************************************************************
-! CheckDataDescripOneVar()
-!
-! This routine will check the consistency of the data description obtained
-! from the GRADS control files. The number of x, y, z, t points should match
-! in all files. Also, the total number of variables are calculated and returned
-! in Nvars.
-!
-! This routein will check one variable at a time, so it needs to be called
-! multiple times for multiple variables.
-!
-
-subroutine CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, VarLoc, VarName)
-  implicit none
-
-  type (GradsDataDescription), dimension(*) :: GdataDescrip
-  integer Nx, Ny, Nz, Nt, Nfiles
-  integer Nvars
-  type (GradsVarLocation) :: VarLoc
-  character (len=*) :: VarName
-  logical :: DoHorizVel
-
-  ! i -> file number, j -> var number
-  integer i, j
-  logical BadData, GotNz
-
-  VarLoc%Fnum = 0
-  VarLoc%Vnum = 0
-
-  BadData = .false.
-  GotNz = .false.
-  do i = 1, Nfiles
-    ! Make sure nx, ny and nt for all vars (2D and 3D) match
-    if (i .eq. 1) then
-      Nx = GdataDescrip(i)%nx
-      Ny = GdataDescrip(i)%ny
-      Nt = GdataDescrip(i)%nt
-   
-      Nvars = GdataDescrip(i)%nvars
-    else
-      if (GdataDescrip(i)%nx .ne. Nx) then
-        write (0,*) 'ERROR: number of x points in GRADS control files do not match'
-        BadData = .true.
-      end if
-      if (GdataDescrip(i)%ny .ne. Ny) then
-        write (0,*) 'ERROR: number of y points in GRADS control files do not match'
-        BadData = .true.
-      end if
-      if (GdataDescrip(i)%nt .ne. Nt) then
-        write (0,*) 'ERROR: number of t points in GRADS control files do not match'
-        BadData = .true.
-      end if
-
-      Nvars = Nvars + GdataDescrip(i)%nvars
-    end if
-
-    ! allow for a 2D var (nz eq 1), but make sure all 3D vars have matching nz
-    if (GotNz) then
-      if ((GdataDescrip(i)%nz .ne. 1) .and. (GdataDescrip(i)%nz .ne. Nz)) then
-        write (0,*) 'ERROR: number of z points in GRADS control files do not match'
-        BadData = .true.
-      end if
-    else
-      ! grab the first nz that is not equal to 1 (first 3D var)
-      if ((GdataDescrip(i)%nz .ne. 1) .and. (.not. GotNz)) then
-        Nz = GdataDescrip(i)%nz
-        GotNz = .true.
-      end if
-    end if
-
-    do j =1, GdataDescrip(i)%nvars
-      if (GdataDescrip(i)%VarNames(j) .eq. VarName) then
-        VarLoc%Fnum = i
-        VarLoc%Vnum = j
-      end if
-    end do
-  end do
-
-  ! If the entire list was 2D variables, then the code above will have not recorded an
-  ! Nz value (GotNz is still .false.). Set Nz to '1' in this case
-  if (.not. GotNz) then
-    Nz = 1
-  end if
-
-  ! Check to see if you got the variable
-  if (VarLoc%Fnum .eq. 0) then
-    write (0,*) 'ERROR: cannot find grid var "', trim(VarName), '" in the GRADS data files'
-    BadData = .true.
-  end if
-
-  if (BadData) then
-    stop
-  end if
-end subroutine
+  return
+end function
 
 !********************************************************************
 ! ReadGradsData()
 !
-! This routine will use the information in GdataDescrip and VarLoc to
-! locate the data for the var in the GRADS data files. This data will
-! then be loaded into the VarData array.
+! This routine will use the information in GradsVar to locate the
+! data for the var in the GRADS data files. This data will then be
+! loaded into the Vdata array.
 !
 
-subroutine ReadGradsData(GdataDescrip, VarName, VarLoc, VarData, Nx, Ny, Nz, Nt)
+subroutine ReadGradsData(GdataDescrip, Gvar)
   implicit none
 
-  type (GradsDataDescription), dimension(*) :: GdataDescrip
-  character (len=*) :: VarName
-  type (GradsVarLocation) :: VarLoc
-  real, dimension(1:Nx,1:Ny,1:Nz,1:Nt) :: VarData
-  integer Nx, Ny, Nz, Nt
+  type (GradsDataDescription) :: GdataDescrip
+  type (GradsVar) :: Gvar
 
-  integer Nvars, VarNum
-  character (len=MaxString) :: DataFile
   integer RecLen, Ierror
   integer ix,iy,iz,it
   integer RecNum
   integer NumRecs
 
-  Nvars = GdataDescrip(VarLoc%Fnum)%nvars
-  VarNum = VarLoc%Vnum
-
   ! Each record is a horizontal slice so it has Nx * Ny elements in it
   ! of BinRecFactor size
-  RecLen = Nx * Ny * BinRecFactor
+  RecLen = Gvar%Nx * Gvar%Ny * BinRecFactor
 
-  DataFile = GdataDescrip(VarLoc%Fnum)%DataFile
-  open (unit=InUnit, file=DataFile, form='unformatted', access='direct', &
+  open (unit=InUnit, file=GdataDescrip%DataFile, form='unformatted', access='direct', &
         recl=RecLen, status='old', action='read', iostat=Ierror)
   if (Ierror .ne. 0) then
-    write (0,*) 'ERROR: Cannot open GRADS data file: ', trim(DataFile)
+    write (0,*) 'ERROR: Cannot open GRADS data file: ', trim(GdataDescrip%DataFile)
     stop
   end if
  
@@ -970,36 +567,36 @@ subroutine ReadGradsData(GdataDescrip, VarName, VarLoc, VarData, Nx, Ny, Nz, Nt)
   !    23       1         3      4
   !    24       2         3      4
 
-  NumRecs = Nz * Nt * Nvars
+  NumRecs = Gvar%Nz * Gvar%Nt * GdataDescrip%Nvars
 
-  write (0,*) 'Reading GRADS data file: ', trim(DataFile)
-  write (0,*) '  Var: ', trim(VarName)
-  write (0,*) '  X points:          ', Nx
-  write (0,*) '  Y points:          ', Ny
-  write (0,*) '  Z points:          ', Nz
-  write (0,*) '  T points:          ', Nt
-  write (0,*) '  Number of Vars:    ', Nvars
+  write (0,*) 'Reading GRADS data file: ', trim(GdataDescrip%DataFile)
+  write (0,*) '  Var: ', trim(Gvar%Vname)
+  write (0,*) '  X points:          ', Gvar%Nx
+  write (0,*) '  Y points:          ', Gvar%Ny
+  write (0,*) '  Z points:          ', Gvar%Nz
+  write (0,*) '  T points:          ', Gvar%Nt
+  write (0,*) '  Number of Vars:    ', GdataDescrip%Nvars
   write (0,*) '  Record length:     ', RecLen
   write (0,*) '  Number of records: ', NumRecs
   write (0,*) ''
 
   ! Need to derive the correct record number in the file
   ! from the it and iz values. it cycles by Nz*Nvars records.
-  ! Within each it cycle, Nz*(VarNum-1) is the offset from the
-  ! start of the cycle to the VarNum position.
+  ! Within each it cycle, Nz*(Vnum-1) is the offset from the
+  ! start of the cycle to the Vnum position.
   ! The formula becomes:
   !
-  !  RecNum = (it-1)*(Nz*Nvars) + (Nz*(VarNum-1)) + iz
+  !  RecNum = (it-1)*(Nz*Nvars) + (Nz*(Vnum-1)) + iz
   
   NumRecs = 0
-  do it = 1, Nt
-    do iz = 1, Nz
-      RecNum = (it-1)*(Nz*Nvars) + (Nz*(VarNum-1)) + iz
-      read(unit=InUnit, rec=RecNum) ((VarData(ix,iy,iz,it), ix = 1, Nx), iy = 1, Ny)
+  do it = 1, Gvar%Nt
+    do iz = 1, Gvar%Nz
+      RecNum = (it-1)*(Gvar%Nz*GdataDescrip%Nvars) + (Gvar%Nz*(Gvar%Vnum-1)) + iz
+      read(unit=InUnit, rec=RecNum) ((Gvar%Vdata(it,iz,ix,iy), ix = 1, Gvar%Nx), iy = 1, Gvar%Ny)
 
       NumRecs = NumRecs + 1
       if (modulo(NumRecs,100) .eq. 0) then
-        write (0,*) '  Reading: ', trim(VarName), ': ', NumRecs
+        write (0,*) '  Reading: ', trim(Gvar%Vname), ': ', NumRecs
       end if
     end do   
   end do 
@@ -1019,7 +616,7 @@ end subroutine
 !
 
 subroutine BuildGoutDescrip(Nx, Ny, Nz, Nt, AzAvg, OfileBase, UndefVal, VarName, &
-          Xstart, Xinc, Ystart, Yinc, Zcoords, Tstart, Tinc, GoutDescrip, Diagnostic)
+          Xstart, Xinc, Ystart, Yinc, Zlevels, Tstart, Tinc, GoutDescrip, Diagnostic)
 
   implicit none
 
@@ -1027,7 +624,7 @@ subroutine BuildGoutDescrip(Nx, Ny, Nz, Nt, AzAvg, OfileBase, UndefVal, VarName,
   real, dimension(1:Nx,1:Ny,1:Nz,1:Nt) :: AzAvg
   character (len=*) :: OfileBase, VarName
   real :: UndefVal, Xstart, Xinc, Ystart, Yinc
-  real, dimension(1:Nz) :: Zcoords
+  real, dimension(1:Nz) :: Zlevels
   character (len=*) :: Tstart, Tinc
   type (GradsOutDescription) :: GoutDescrip
   character (len=*) :: Diagnostic
@@ -1038,17 +635,17 @@ subroutine BuildGoutDescrip(Nx, Ny, Nz, Nt, AzAvg, OfileBase, UndefVal, VarName,
   GoutDescrip%DataFile = trim(OfileBase) // '.gra'
   GoutDescrip%Title = 'Diagnostic: ' // trim(Diagnostic)
   GoutDescrip%UndefVal = UndefVal
-  GoutDescrip%nx = Nx
-  GoutDescrip%ny = Ny
-  GoutDescrip%nz = Nz
-  GoutDescrip%nt = Nt
+  GoutDescrip%Nx = Nx
+  GoutDescrip%Ny = Ny
+  GoutDescrip%Nz = Nz
+  GoutDescrip%Nt = Nt
   GoutDescrip%Xstart = Xstart
   GoutDescrip%Xinc = Xinc
   GoutDescrip%Ystart = Ystart
   GoutDescrip%Yinc = Yinc
   GoutDescrip%VarName = trim(VarName)
   do iz = 1, Nz
-    GoutDescrip%Zcoords(iz) = Zcoords(iz)
+    GoutDescrip%Zlevels(iz) = Zlevels(iz)
   end do
   GoutDescrip%Tstart = Tstart
   GoutDescrip%Tinc = Tinc
@@ -1069,7 +666,7 @@ subroutine WriteGrads(GoutDescrip, AzAvg)
   implicit none
 
   type (GradsOutDescription) :: GoutDescrip
-  real, dimension(1:GoutDescrip%nx,1:GoutDescrip%ny,1:GoutDescrip%nz,1:GoutDescrip%nt) :: AzAvg
+  real, dimension(1:GoutDescrip%Nx,1:GoutDescrip%Ny,1:GoutDescrip%Nz,1:GoutDescrip%Nt) :: AzAvg
   integer :: Nx, Ny, Nz, Nt
 
   integer :: OutRecLen
@@ -1084,7 +681,7 @@ subroutine WriteGrads(GoutDescrip, AzAvg)
   write (0,*) '  Control file: ', trim(GoutDescrip%CtlFile)
   write (0,*) '  Data file:    ', trim(GoutDescrip%DataFile)
   write (0,*) '  Total number of data points: ', &
-              GoutDescrip%nx * GoutDescrip%ny * GoutDescrip%nz * GoutDescrip%nt
+              GoutDescrip%Nx * GoutDescrip%Ny * GoutDescrip%Nz * GoutDescrip%Nt
   write (0,*) ''
 
   ! Control (data description) file
@@ -1098,14 +695,14 @@ subroutine WriteGrads(GoutDescrip, AzAvg)
   write (OutUnit, '(a,a)')          'TITLE ', trim(GoutDescrip%Title)
   write (OutUnit, '(a,g)')          'UNDEF ', GoutDescrip%UndefVal
   write (OutUnit, '(a)')            'OPTIONS  little_endian'
-  write (OutUnit, '(a,i,a,g,g)')    'XDEF ', GoutDescrip%nx, ' LINEAR ', GoutDescrip%Xstart, GoutDescrip%Xinc
-  write (OutUnit, '(a,i,a,g,g)')    'YDEF ', GoutDescrip%ny, ' LINEAR ', GoutDescrip%Ystart, GoutDescrip%Yinc
-  write (OutUnit, '(a,i,a,100g)')   'ZDEF ', GoutDescrip%nz, ' LEVELS ', &
-                                    (GoutDescrip%Zcoords(iz), iz = 1, GoutDescrip%nz)
-  write (OutUnit, '(a,i,a,a,5x,a)') 'TDEF ', GoutDescrip%nt, ' LINEAR ', &
+  write (OutUnit, '(a,i,a,g,g)')    'XDEF ', GoutDescrip%Nx, ' LINEAR ', GoutDescrip%Xstart, GoutDescrip%Xinc
+  write (OutUnit, '(a,i,a,g,g)')    'YDEF ', GoutDescrip%Ny, ' LINEAR ', GoutDescrip%Ystart, GoutDescrip%Yinc
+  write (OutUnit, '(a,i,a,100g)')   'ZDEF ', GoutDescrip%Nz, ' LEVELS ', &
+                                    (GoutDescrip%Zlevels(iz), iz = 1, GoutDescrip%Nz)
+  write (OutUnit, '(a,i,a,a,5x,a)') 'TDEF ', GoutDescrip%Nt, ' LINEAR ', &
                                     trim(GoutDescrip%Tstart), trim(GoutDescrip%Tinc)
   write (OutUnit, '(a)')            'VARS 1 '
-  write (OutUnit, '(a,i,a)')        trim(GoutDescrip%VarName) , GoutDescrip%nz, ' 99 Diagnostic'
+  write (OutUnit, '(a,i,a)')        trim(GoutDescrip%VarName) , GoutDescrip%Nz, ' 99 Diagnostic'
   write (OutUnit, '(a)')            'ENDVARS'
 
   close (OutUnit, status='keep')
@@ -1113,7 +710,7 @@ subroutine WriteGrads(GoutDescrip, AzAvg)
   ! Data file
   ! dimensions from fastest changing to slowest changing are: x, y, z, t
   ! One record is a single horizontal slice -> (nx * ny) data points
-  OutRecLen = GoutDescrip%nx * GoutDescrip%ny * BinRecFactor
+  OutRecLen = GoutDescrip%Nx * GoutDescrip%Ny * BinRecFactor
   open (OutUnit, file=GoutDescrip%DataFile, form='unformatted', access='direct', &
         recl=OutRecLen, action='write', status='replace', iostat=Ierror)
   if (Ierror .ne. 0) then
@@ -1122,12 +719,12 @@ subroutine WriteGrads(GoutDescrip, AzAvg)
   end if
 
   RecNum = 1
-  do it = 1, GoutDescrip%nt
-    do iz = 1, GoutDescrip%nz
+  do it = 1, GoutDescrip%Nt
+    do iz = 1, GoutDescrip%Nz
       if (modulo(RecNum,100) .eq. 0) then
         write (0,*) '  Writing: ', trim(GoutDescrip%VarName), ': ', RecNum
       end if
-      write (OutUnit, rec=RecNum) ((AzAvg(ix,iy,iz,it), ix = 1, GoutDescrip%nx), iy = 1, GoutDescrip%ny)
+      write (OutUnit, rec=RecNum) ((AzAvg(ix,iy,iz,it), ix = 1, GoutDescrip%Nx), iy = 1, GoutDescrip%Ny)
       RecNum = RecNum + 1
     end do
   end do

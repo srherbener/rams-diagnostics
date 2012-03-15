@@ -37,7 +37,7 @@ subroutine RecordStormCenter(Nx, Ny, Nz, Nt, Press, StmIx, StmIy, MinP)
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
-  real, dimension(1:Nx,1:Ny,1:Nz,1:Nt) :: Press
+  real, dimension(1:Nt,1:Nz,1:Nx,1:Ny) :: Press
   integer, dimension(1:Nt) :: StmIx, StmIy
   real, dimension(1:Nt) :: MinP
 
@@ -64,7 +64,7 @@ end subroutine
 subroutine FindStormCenter(Press, Nx, Ny, Nz, Nt, iTime, ixStmCtr, iyStmCtr, MinP)
   implicit none
 
-  real, dimension(1:Nx,1:Ny,1:Nz,1:Nt) :: Press
+  real, dimension(1:Nt,1:Nz,1:Nx,1:Ny) :: Press
   integer :: Nx, Ny, Nz, Nt
   integer :: iTime, ixStmCtr, iyStmCtr
   real :: MinP
@@ -79,8 +79,8 @@ subroutine FindStormCenter(Press, Nx, Ny, Nz, Nt, iTime, ixStmCtr, iyStmCtr, Min
   
   do ix = 1, Nx
     do iy = 1, Ny
-      if (Press(ix,iy,iz,it) .lt. MinP) then
-        MinP = Press(ix,iy,iz,it)
+      if (Press(it,iz,ix,iy) .lt. MinP) then
+        MinP = Press(it,iz,ix,iy)
         ixStmCtr = ix
         iyStmCtr = iy
       end if
@@ -277,7 +277,7 @@ end subroutine
 ! This routine will convert the longitude, latitude angle values
 ! in the input GRADS grid to a flat plane (x and y length values)
 !
-subroutine ConvertGridCoords(Nx, Ny, GdataDescrip , Xcoords, Ycoords)
+subroutine ConvertGridCoords(Nx, Ny, GridXcoords, GridYcoords , Xcoords, Ycoords)
   use gdata_utils
   implicit none
 
@@ -285,9 +285,8 @@ subroutine ConvertGridCoords(Nx, Ny, GdataDescrip , Xcoords, Ycoords)
   real, parameter :: PI = 3.14159
 
   integer :: Nx, Ny
-  type (GradsDataDescription) :: GdataDescrip
-  real, dimension(1:Nx) :: Xcoords
-  real, dimension(1:Ny) :: Ycoords
+  real, dimension(1:Nx) :: Xcoords, GridXcoords
+  real, dimension(1:Ny) :: Ycoords, GridYcoords
 
   integer :: ix, iy
   real :: ConvDeg2Rad;
@@ -296,8 +295,8 @@ subroutine ConvertGridCoords(Nx, Ny, GdataDescrip , Xcoords, Ycoords)
   real :: RadiusX
   real :: PhiN, Phi1, Phi2, Theta1, Theta2
 
-  ! The Xcoords in the GdataDescrip structure are longitude angles in degrees
-  ! The Ycoords in the GdataDescrip structure are latitude angles in degrees
+  ! The Xcoords in the GridXcoords structure are longitude angles in degrees
+  ! The Ycoords in the GridYcoords structure are latitude angles in degrees
   !
   ! To convert, figure out what DeltaX and DeltaY are according to the longitude, latitude
   ! angles. Call the lower left point of the grid (0,0) and just add in the delta values to
@@ -317,19 +316,19 @@ subroutine ConvertGridCoords(Nx, Ny, GdataDescrip , Xcoords, Ycoords)
 
   ! write a warning if the grid is located far away from the equator
 
-  if (abs(GdataDescrip%Ycoords(Ny)) .gt. 23.0) then
+  if (abs(GridYcoords(Ny)) .gt. 23.0) then
     write (*,*) 'Warning: extent of grid goes outside tropics, this code assumes grid is near equator'
     write (*,*) ''
   end if
 
   ! convert to radians
   ConvDeg2Rad = (2.0 * PI) / 360.0
-  Theta1 = GdataDescrip%Xcoords(1) * ConvDeg2Rad
-  Theta2 = GdataDescrip%Xcoords(2) * ConvDeg2Rad
+  Theta1 = GridXcoords(1) * ConvDeg2Rad
+  Theta2 = GridXcoords(2) * ConvDeg2Rad
 
-  Phi1 = GdataDescrip%Ycoords(1) * ConvDeg2Rad
-  Phi2 = GdataDescrip%Ycoords(2) * ConvDeg2Rad
-  PhiN = GdataDescrip%Ycoords(Ny) * ConvDeg2Rad
+  Phi1 = GridYcoords(1) * ConvDeg2Rad
+  Phi2 = GridYcoords(2) * ConvDeg2Rad
+  PhiN = GridYcoords(Ny) * ConvDeg2Rad
 
   DeltaT = Theta2 - Theta1
   DeltaP = Phi2 - Phi1
