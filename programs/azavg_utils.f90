@@ -33,18 +33,25 @@ contains
 ! This routine will record the storm center for each time step
 !
 
-subroutine RecordStormCenter(Nx, Ny, Nz, Nt, Press, StmIx, StmIy, MinP)
+subroutine RecordStormCenter(Press, StmIx, StmIy, MinP)
+  use gdata_utils
   implicit none
 
-  integer :: Nx, Ny, Nz, Nt
-  real, dimension(1:Nt,1:Nz,1:Nx,1:Ny) :: Press
-  integer, dimension(1:Nt) :: StmIx, StmIy
-  real, dimension(1:Nt) :: MinP
+  type (GradsVar) :: Press
+  integer, dimension(:), allocatable :: StmIx, StmIy
+  real, dimension(:), allocatable :: MinP
 
-  integer it
+  integer :: it
+  integer :: Ierror
 
-  do it = 1, Nt
-    call FindStormCenter(Press, Nx, Ny, Nz, Nt, it, StmIx(it), StmIy(it), MinP(it))
+  allocate (StmIx(1:Press%Nt), StmIy(1:Press%Nt), MinP(1:Press%Nt), stat=Ierror)
+  if (Ierror .ne. 0) then
+    write (*,*) 'ERROR: StmIx, StmIy, MinP data array memory allocation failed'
+    stop
+  end if
+
+  do it = 1, Press%Nt
+    call FindStormCenter(Press, it, StmIx(it), StmIy(it), MinP(it))
   end do
 
   return
@@ -61,11 +68,11 @@ end subroutine
 ! level (iz = 1).
 !
 
-subroutine FindStormCenter(Press, Nx, Ny, Nz, Nt, iTime, ixStmCtr, iyStmCtr, MinP)
+subroutine FindStormCenter(Press, iTime, ixStmCtr, iyStmCtr, MinP)
+  use gdata_utils
   implicit none
 
-  real, dimension(1:Nt,1:Nz,1:Nx,1:Ny) :: Press
-  integer :: Nx, Ny, Nz, Nt
+  type (GradsVar) :: Press
   integer :: iTime, ixStmCtr, iyStmCtr
   real :: MinP
 
@@ -77,10 +84,10 @@ subroutine FindStormCenter(Press, Nx, Ny, Nz, Nt, iTime, ixStmCtr, iyStmCtr, Min
   ixStmCtr = 0
   iyStmCtr = 0
   
-  do ix = 1, Nx
-    do iy = 1, Ny
-      if (Press(it,iz,ix,iy) .lt. MinP) then
-        MinP = Press(it,iz,ix,iy)
+  do ix = 1, Press%Nx
+    do iy = 1, Press%Ny
+      if (Press%Vdata(it,iz,ix,iy) .lt. MinP) then
+        MinP = Press%Vdata(it,iz,ix,iy)
         ixStmCtr = ix
         iyStmCtr = iy
       end if
@@ -275,28 +282,28 @@ end subroutine
 ! ConvertGridCoords()
 !
 ! This routine will convert the longitude, latitude angle values
-! in the input GRADS grid to a flat plane (x and y length values)
+! in the input GRADS var to a flat plane (x and y length values)
 !
-subroutine ConvertGridCoords(Nx, Ny, GridXcoords, GridYcoords , Xcoords, Ycoords)
+subroutine ConvertGridCoords(Gvar, Xcoords, Ycoords)
   use gdata_utils
   implicit none
 
   real, parameter :: RadiusEarth = 6378.1  ! km
   real, parameter :: PI = 3.14159
 
-  integer :: Nx, Ny
-  real, dimension(1:Nx) :: Xcoords, GridXcoords
-  real, dimension(1:Ny) :: Ycoords, GridYcoords
+  type (GradsVar) :: Gvar
+  real, dimension(:), allocatable :: Xcoords, Ycoords
 
   integer :: ix, iy
+  integer :: Ierror
   real :: ConvDeg2Rad;
   real :: DeltaX, DeltaY
   real :: DeltaT, DeltaP  ! Theta is longitude angle, Phi is latitude angle, radians
   real :: RadiusX
   real :: PhiN, Phi1, Phi2, Theta1, Theta2
 
-  ! The Xcoords in the GridXcoords structure are longitude angles in degrees
-  ! The Ycoords in the GridYcoords structure are latitude angles in degrees
+  ! The Xcoords in the Gvar structure are longitude angles in degrees
+  ! The Ycoords in the Gvar structure are latitude angles in degrees
   !
   ! To convert, figure out what DeltaX and DeltaY are according to the longitude, latitude
   ! angles. Call the lower left point of the grid (0,0) and just add in the delta values to
@@ -313,22 +320,26 @@ subroutine ConvertGridCoords(Nx, Ny, GridXcoords, GridYcoords , Xcoords, Ycoords
   !   DeltaX = (RadiusEarth * cos(Phi)) * DeltaTheta
   !   DeltaY = RadiusEarth * DeltaPhi
   !   angle values are in radians
+  allocate (Xcoords(1:Gvar%Nx), Ycoords(1:Gvar%Ny), stat=Ierror)
+  if (Ierror .ne. 0) then
+    write (*,*) 'ERROR: Xcoords, Ycoords data array memory allocation failed'
+    stop
+  end if
 
   ! write a warning if the grid is located far away from the equator
-
-  if (abs(GridYcoords(Ny)) .gt. 23.0) then
+  if (abs(Gvar%Ycoords(Gvar%Ny)) .gt. 23.0) then
     write (*,*) 'Warning: extent of grid goes outside tropics, this code assumes grid is near equator'
     write (*,*) ''
   end if
 
   ! convert to radians
   ConvDeg2Rad = (2.0 * PI) / 360.0
-  Theta1 = GridXcoords(1) * ConvDeg2Rad
-  Theta2 = GridXcoords(2) * ConvDeg2Rad
+  Theta1 = Gvar%Xcoords(1) * ConvDeg2Rad
+  Theta2 = Gvar%Xcoords(2) * ConvDeg2Rad
 
-  Phi1 = GridYcoords(1) * ConvDeg2Rad
-  Phi2 = GridYcoords(2) * ConvDeg2Rad
-  PhiN = GridYcoords(Ny) * ConvDeg2Rad
+  Phi1 = Gvar%Ycoords(1) * ConvDeg2Rad
+  Phi2 = Gvar%Ycoords(2) * ConvDeg2Rad
+  PhiN = Gvar%Ycoords(Gvar%Ny) * ConvDeg2Rad
 
   DeltaT = Theta2 - Theta1
   DeltaP = Phi2 - Phi1
@@ -339,11 +350,11 @@ subroutine ConvertGridCoords(Nx, Ny, GridXcoords, GridYcoords , Xcoords, Ycoords
   DeltaY = RadiusEarth * DeltaP
 
   ! DeltaX and DeltaY are in units of RadiusEarth (km for now)
-  do ix = 1, Nx
+  do ix = 1, Gvar%Nx
     Xcoords(ix) = real(ix - 1) * DeltaX
   end do
 
-  do iy = 1, Ny
+  do iy = 1, Gvar%Ny
     Ycoords(iy) = real(iy - 1) * DeltaY
   end do
 

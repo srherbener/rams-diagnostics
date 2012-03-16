@@ -10,6 +10,7 @@ module gdata_utils
   integer, parameter :: MaxString=256
   integer, parameter :: MaxCoords=1000
   integer, parameter :: MaxVars=50
+  integer, parameter :: MaxFiles=10
   integer, parameter :: InUnit=8
   integer, parameter :: OutUnit=10
   integer, parameter :: BinRecFactor=4
@@ -30,6 +31,12 @@ module gdata_utils
     integer :: Nvars
   end type GradsDataDescription
 
+  type GradsControlFiles
+    integer :: Nfiles
+    character (len=MaxString), dimension(1:MaxFiles) :: Fnames
+    type (GradsDataDescription), dimension(1:MaxFiles) :: DataDscrs
+  end type GradsControlFiles
+
   type GradsVar
     ! Fnum, Vnum define where the variable description lives within
     !   the set of input GRADS control files
@@ -47,8 +54,6 @@ module gdata_utils
     real, dimension(:), allocatable :: Tcoords
     integer :: Fnum
     integer :: Vnum
-    character (len=MaxString) :: Tstart, Tinc
-    character (len=MaxString) :: DataFile
     real, dimension(:,:,:,:), allocatable :: Vdata
   end type GradsVar
 
@@ -163,102 +168,100 @@ subroutine String2List(InString, Separator, OutList, MaxItems, NumItems, ItemTyp
 end subroutine
 
 !**********************************************************
-! ReadGradsCtlFile()
+! ReadGradsCtlFiles()
 !
 ! This routine will read in the GRADS control files
-!
-! Args
-!   1. Name of grads control file
-!   2. Grads data description
-!
 
-subroutine  ReadGradsCtlFile(GradsCtlFile, GdataDescrip, MaxCoords)
+subroutine  ReadGradsCtlFiles(GctlFiles)
   implicit none
 
   integer, parameter :: MaxLine = 1000
   integer, parameter :: MaxFields = 100
 
-  character (len=*) :: GradsCtlFile
-  type (GradsDataDescription) GdataDescrip
-  integer :: MaxCoords
+  type (GradsControlFiles) :: GctlFiles
 
   integer :: InError
   character (len=MaxLine) :: InLine
   character (len=MaxLine), dimension(1:MaxFields) :: InFields
-  integer :: i
+  integer :: i, iz
   integer :: Nfields
 
   character (len=MaxString) :: GfileDir
 
-  open(unit=InUnit, file=GradsCtlFile, form='formatted', &
-       status='old', action='read', iostat=InError)
-  if (InError .ne. 0) then
-    write (0,*) 'ERROR: cannot open GRADS control file: ', trim(GradsCtlFile)
-    stop
-  end if
+  do i = 1, GctlFiles%Nfiles
+    write (*,*) 'Reading GRADS Control File: ', trim(GctlFiles%Fnames(i))
 
-  InError = 0
-  do
-    read (unit=InUnit, fmt='(a)', iostat=InError) InLine
-    if (InError .ne. 0) exit
-
-    ! split the line into a list of fields separated by white space
-    call String2List(InLine, ' ', InFields, MaxFields, Nfields, 'control file fields')
-
-    if ((InFields(1) .eq. 'dset') .or. (InFields(1) .eq. 'DSET')) then
-      if (InFields(2)(1:1) .eq. '^') then
-        !replace the '^' with the directory portion of input control file
-        if (index(GradsCtlFile, '/', .true.) .eq. 0) then
-          ! no leading path
-          GfileDir = ''
+    open(unit=InUnit, file=GctlFiles%Fnames(i), form='formatted', &
+         status='old', action='read', iostat=InError)
+    if (InError .ne. 0) then
+      write (0,*) 'ERROR: cannot open GRADS control file: ', trim(GctlFiles%Fnames(i))
+      stop
+    end if
+  
+    InError = 0
+    do
+      read (unit=InUnit, fmt='(a)', iostat=InError) InLine
+      if (InError .ne. 0) exit
+  
+      ! split the line into a list of fields separated by white space
+      call String2List(InLine, ' ', InFields, MaxFields, Nfields, 'control file fields')
+  
+      if ((InFields(1) .eq. 'dset') .or. (InFields(1) .eq. 'DSET')) then
+        if (InFields(2)(1:1) .eq. '^') then
+          !replace the '^' with the directory portion of input control file
+          if (index(GctlFiles%Fnames(i), '/', .true.) .eq. 0) then
+            ! no leading path
+            GfileDir = ''
+          else
+            GfileDir = GctlFiles%Fnames(i)(1:index(GctlFiles%Fnames(i), '/', .true.))
+          end if
+          ! Make sure to use trim(), without it the first string GfileDir fills up the
+          ! GctlFiles%DataDscrs(i)%DataFile string since these are both declared to be the same length
+          GctlFiles%DataDscrs(i)%DataFile = trim(GfileDir) // trim(InFields(2)(2:len(InFields(2))))
         else
-          GfileDir = GradsCtlFile(1:index(GradsCtlFile, '/', .true.))
+          GctlFiles%DataDscrs(i)%DataFile = InFields(2)
         end if
-        ! Make sure to use trim(), without it the first string GfileDir fills up the
-        ! GdataDescrip%DataFile string since these are both declared to be the same length
-        GdataDescrip%DataFile = trim(GfileDir) // trim(InFields(2)(2:len(InFields(2))))
       else
-        GdataDescrip%DataFile = InFields(2)
-      end if
-    else
-      if ((InFields(1) .eq. 'undef') .or. (InFields(1) .eq. 'UNDEF')) then
-        read (InFields(2), '(f)') GdataDescrip%UndefVal
-      else if ((InFields(1) .eq. 'xdef') .or. (InFields(1) .eq. 'XDEF')) then
-        read (InFields(2), '(i)') GdataDescrip%Nx 
-        read (InFields(4), '(f)') GdataDescrip%Xstart
-        read (InFields(5), '(f)') GdataDescrip%Xinc
-      else if ((InFields(1) .eq. 'ydef') .or. (InFields(1) .eq. 'YDEF')) then
-        read (InFields(2), '(i)') GdataDescrip%Ny 
-        read (InFields(4), '(f)') GdataDescrip%Ystart
-        read (InFields(5), '(f)') GdataDescrip%Yinc
-      else if ((InFields(1) .eq. 'zdef') .or. (InFields(1) .eq. 'ZDEF')) then
-        read (InFields(2), '(i)') GdataDescrip%Nz
-        do i = 1, GdataDescrip%Nz
-          read(InFields(i+3), '(f)') GdataDescrip%Zlevels(i)
-        enddo
-      else if ((InFields(1) .eq. 'tdef') .or. (InFields(1) .eq. 'TDEF')) then
-        read (InFields(2), '(i)') GdataDescrip%Nt
-        GdataDescrip%Tstart = InFields(4)
-        GdataDescrip%Tinc   = InFields(5)
-      else if ((InFields(1) .eq. 'vars') .or. (InFields(1) .eq. 'VARS')) then
-        read (InFields(2), '(i)') GdataDescrip%Nvars
-        if (GdataDescrip%Nvars .gt. MaxVars) then
-          write (0,*) 'ERROR: Maximum number of variables (', MaxVars, &
-                      ') exceeded in GRADS control file specs'
-          stop
+        if ((InFields(1) .eq. 'undef') .or. (InFields(1) .eq. 'UNDEF')) then
+          read (InFields(2), '(f)') GctlFiles%DataDscrs(i)%UndefVal
+        else if ((InFields(1) .eq. 'xdef') .or. (InFields(1) .eq. 'XDEF')) then
+          read (InFields(2), '(i)') GctlFiles%DataDscrs(i)%Nx 
+          read (InFields(4), '(f)') GctlFiles%DataDscrs(i)%Xstart
+          read (InFields(5), '(f)') GctlFiles%DataDscrs(i)%Xinc
+        else if ((InFields(1) .eq. 'ydef') .or. (InFields(1) .eq. 'YDEF')) then
+          read (InFields(2), '(i)') GctlFiles%DataDscrs(i)%Ny 
+          read (InFields(4), '(f)') GctlFiles%DataDscrs(i)%Ystart
+          read (InFields(5), '(f)') GctlFiles%DataDscrs(i)%Yinc
+        else if ((InFields(1) .eq. 'zdef') .or. (InFields(1) .eq. 'ZDEF')) then
+          read (InFields(2), '(i)') GctlFiles%DataDscrs(i)%Nz
+          do iz = 1, GctlFiles%DataDscrs(i)%Nz
+            read(InFields(iz+3), '(f)') GctlFiles%DataDscrs(i)%Zlevels(iz)
+          enddo
+        else if ((InFields(1) .eq. 'tdef') .or. (InFields(1) .eq. 'TDEF')) then
+          read (InFields(2), '(i)') GctlFiles%DataDscrs(i)%Nt
+          GctlFiles%DataDscrs(i)%Tstart = InFields(4)
+          GctlFiles%DataDscrs(i)%Tinc   = InFields(5)
+        else if ((InFields(1) .eq. 'vars') .or. (InFields(1) .eq. 'VARS')) then
+          read (InFields(2), '(i)') GctlFiles%DataDscrs(i)%Nvars
+          if (GctlFiles%DataDscrs(i)%Nvars .gt. MaxVars) then
+            write (0,*) 'ERROR: Maximum number of variables (', MaxVars, &
+                        ') exceeded in GRADS control file specs'
+            stop
+          endif
+          call GetVarInfo(InUnit, GctlFiles%DataDscrs(i)%VarNames, GctlFiles%DataDscrs(i)%VarNz, GctlFiles%DataDscrs(i)%Nvars, MaxLine, MaxFields)
         endif
-        call GetVarInfo(InUnit, GdataDescrip%VarNames, GdataDescrip%VarNz, GdataDescrip%Nvars, MaxLine, MaxFields)
       endif
+    enddo
+  
+    close(unit=InUnit, status='keep')
+  
+    if ((GctlFiles%DataDscrs(i)%Nx .gt. MaxCoords) .or. (GctlFiles%DataDscrs(i)%Ny .gt. MaxCoords) .or. &
+        (GctlFiles%DataDscrs(i)%Nz .gt. MaxCoords) .or. (GctlFiles%DataDscrs(i)%Nt .gt. MaxCoords)) then
+      write (0,*) 'ERROR: Maximum number of coordinates (', MaxCoords, ') exceeded in GRADS control file: ', trim(GctlFiles%Fnames(i))
+      stop
     endif
   enddo
-
-  close(unit=InUnit, status='keep')
-
-  if ((GdataDescrip%Nx .gt. MaxCoords) .or. (GdataDescrip%Ny .gt. MaxCoords) .or. &
-      (GdataDescrip%Nz .gt. MaxCoords) .or. (GdataDescrip%Nt .gt. MaxCoords)) then
-    write (0,*) 'ERROR: Maximum number of coordinates (', MaxCoords, ') exceeded in GRADS control file: ', trim(GradsCtlFile)
-    stop
-  end if
+  write (*,*) ''
 
   return
 end subroutine
@@ -314,11 +317,10 @@ end subroutine
 ! of the GRADS variables can be checked for consistency before trying
 ! to read in the data field (can be time consuming).
 
-subroutine InitGvarFromGdescrip(Nf, GdataDescrip, Gvar, Vname)
+subroutine InitGvarFromGdescrip(GctlFiles, Gvar, Vname)
   implicit none
 
-  integer :: Nf
-  type (GradsDataDescription), dimension(1:Nf) :: GdataDescrip
+  type (GradsControlFiles) :: GctlFiles
   type (GradsVar) :: Gvar
   character (len=*) :: Vname
 
@@ -329,9 +331,9 @@ subroutine InitGvarFromGdescrip(Nf, GdataDescrip, Gvar, Vname)
   Gvar%Fnum = 0
   Gvar%Vnum = 0
 
-  do i = 1, Nf
-    do j =1, GdataDescrip(i)%Nvars
-      if (GdataDescrip(i)%VarNames(j) .eq. Vname) then
+  do i = 1, GctlFiles%Nfiles
+    do j =1, GctlFiles%DataDscrs(i)%Nvars
+      if (GctlFiles%DataDscrs(i)%VarNames(j) .eq. Vname) then
         Gvar%Fnum = i
         Gvar%Vnum = j
       endif
@@ -342,14 +344,11 @@ subroutine InitGvarFromGdescrip(Nf, GdataDescrip, Gvar, Vname)
   ! the space for the data.
   if (Gvar%Fnum .gt. 0) then
     Gvar%Vname = Vname
-    Gvar%Tstart = GdataDescrip(Gvar%Fnum)%Tstart
-    Gvar%Tinc = GdataDescrip(Gvar%Fnum)%Tinc
-    Gvar%DataFile = GdataDescrip(Gvar%Fnum)%DataFile
 
-    Gvar%Nx = GdataDescrip(Gvar%Fnum)%Nx;
-    Gvar%Ny = GdataDescrip(Gvar%Fnum)%Ny;
-    Gvar%Nz = GdataDescrip(Gvar%Fnum)%Nz;
-    Gvar%Nt = GdataDescrip(Gvar%Fnum)%Nt;
+    Gvar%Nx = GctlFiles%DataDscrs(Gvar%Fnum)%Nx;
+    Gvar%Ny = GctlFiles%DataDscrs(Gvar%Fnum)%Ny;
+    Gvar%Nz = GctlFiles%DataDscrs(Gvar%Fnum)%Nz;
+    Gvar%Nt = GctlFiles%DataDscrs(Gvar%Fnum)%Nt;
 
     allocate(Gvar%Xcoords(1:Gvar%Nx), Gvar%Ycoords(1:Gvar%Ny), &
              Gvar%Zcoords(1:Gvar%Nz), Gvar%Tcoords(1:Gvar%Nt), &
@@ -361,13 +360,13 @@ subroutine InitGvarFromGdescrip(Nf, GdataDescrip, Gvar, Vname)
 
     ! fill in the coordinate arrays
     do i = 1, Gvar%Nx
-      Gvar%Xcoords(i) = GdataDescrip(Gvar%Fnum)%Xstart + (real(i - 1) * GdataDescrip(Gvar%Fnum)%Xinc)
+      Gvar%Xcoords(i) = GctlFiles%DataDscrs(Gvar%Fnum)%Xstart + (real(i - 1) * GctlFiles%DataDscrs(Gvar%Fnum)%Xinc)
     enddo
     do i = 1, Gvar%Ny
-      Gvar%Ycoords(i) = GdataDescrip(Gvar%Fnum)%Ystart + (real(i - 1) * GdataDescrip(Gvar%Fnum)%Yinc)
+      Gvar%Ycoords(i) = GctlFiles%DataDscrs(Gvar%Fnum)%Ystart + (real(i - 1) * GctlFiles%DataDscrs(Gvar%Fnum)%Yinc)
     enddo
     do i = 1, Gvar%Nz
-      Gvar%Zcoords(i) = GdataDescrip(Gvar%Fnum)%Zlevels(i)
+      Gvar%Zcoords(i) = GctlFiles%DataDscrs(Gvar%Fnum)%Zlevels(i)
     enddo
     do i = 1, Gvar%Nt
       Gvar%Tcoords(i) = real(i)
@@ -402,9 +401,6 @@ subroutine InitGvarFromGvar(GvarSrc, GvarDest, Vname)
   GvarDest%Vnum = 0
 
   GvarDest%Vname = Vname
-  GvarDest%Tstart = GvarSrc%Tstart
-  GvarDest%Tinc = GvarSrc%Tinc
-  GvarDest%DataFile = '<NONE>'
 
   GvarDest%Nx = GvarSrc%Nx;
   GvarDest%Ny = GvarSrc%Ny;
@@ -510,21 +506,23 @@ end function
 ! loaded into the Vdata array.
 !
 
-subroutine ReadGradsData(GdataDescrip, Gvar)
+subroutine ReadGradsData(GctlFiles, Gvar)
   implicit none
 
-  type (GradsDataDescription) :: GdataDescrip
+  type (GradsControlFiles) :: GctlFiles
   type (GradsVar) :: Gvar
 
   integer RecLen, Ierror
   integer ix,iy,iz,it
   integer RecNum
   integer NumRecs
+  type (GradsDataDescription) :: GdataDescrip
 
   ! Each record is a horizontal slice so it has Nx * Ny elements in it
   ! of BinRecFactor size
   RecLen = Gvar%Nx * Gvar%Ny * BinRecFactor
 
+  GdataDescrip = GctlFiles%DataDscrs(Gvar%Fnum)
   open (unit=InUnit, file=GdataDescrip%DataFile, form='unformatted', access='direct', &
         recl=RecLen, status='old', action='read', iostat=Ierror)
   if (Ierror .ne. 0) then

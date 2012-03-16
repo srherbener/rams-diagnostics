@@ -25,7 +25,6 @@ program main
   integer, parameter :: LargeString=512
   integer, parameter :: MediumString=256
   integer, parameter :: LittleString=128
-  integer, parameter :: MaxFiles=10
 
   integer NumRbands
   real :: WfilterMin, WfilterMax
@@ -34,10 +33,7 @@ program main
   character (len=LittleString) :: VarToAvg
   logical :: DoHorizVel, DoTangential
 
-  character (len=MediumString), dimension(1:MaxFiles) :: GradsCtlFiles
-  integer :: Nfiles
-
-  type (GradsDataDescription), dimension(1:MaxFiles) :: GdataDescrip
+  type (GradsControlFiles) :: GctlFiles
   type (GradsOutDescription) :: GoutDescrip
 
   ! Data arrays: need one for w (vertical velocity), press (pressure)
@@ -63,12 +59,12 @@ program main
 
   ! Get the command line arguments
   call GetMyArgs(Infiles, OfileBase, NumRbands, WfilterMin, WfilterMax, VarToAvg, DoHorizVel, DoTangential, VarIs2d)
-  call String2List(Infiles, ':', GradsCtlFiles, MaxFiles, Nfiles, 'input files')
+  call String2List(Infiles, ':', GctlFiles%Fnames, MaxFiles, GctlFiles%Nfiles, 'input files')
 
   write (*,*) 'Calculating azimuthal average for RAMS data:'
   write (*,*) '  GRADS input control files:'
-  do i = 1, Nfiles
-    write (*,*) '  ', i, ': ', trim(GradsCtlFiles(i))
+  do i = 1, GctlFiles%Nfiles
+    write (*,*) '  ', i, ': ', trim(GctlFiles%Fnames(i))
   end do
   write (*,*) '  Output file base name:  ', trim(OfileBase)
   write (*,*) '  Number of radial bands: ', NumRbands
@@ -93,11 +89,7 @@ program main
     ! Not running a test so grab the data from GRADS input files and perform the averaging.
 
     ! Read the GRADS data description files and collect the information about the data
-    do i = 1, Nfiles
-      write (*,*) 'Reading GRADS Control File: ', trim(GradsCtlFiles(i))
-      call ReadGradsCtlFile(GradsCtlFiles(i), GdataDescrip(i), MaxCoords)
-    end do
-    write (*,*) ''
+    call ReadGradsCtlFiles(GctlFiles)
 
     ! Initialize the GRADS vars - this loads up the GradsVar structure except for the actual
     ! data. Reading in the data is deferred until later after we know everything is okay with
@@ -106,17 +98,17 @@ program main
     ! Always use w (filtering) and press (find storm center).
     ! If doing horizontal velocity, ie VarToAvg is 'speed_t' or 'speed_r', set up U and V
     ! otherwise set up the variable named in VarToAvg
-    call InitGvarFromGdescrip(Nfiles, GdataDescrip, W, 'w')
-    call InitGvarFromGdescrip(Nfiles, GdataDescrip, Press, 'press')
+    call InitGvarFromGdescrip(GctlFiles, W, 'w')
+    call InitGvarFromGdescrip(GctlFiles, Press, 'press')
     if (DoHorizVel) then
-      call InitGvarFromGdescrip(Nfiles, GdataDescrip, U, 'u')
-      call InitGvarFromGdescrip(Nfiles, GdataDescrip, V, 'v')
+      call InitGvarFromGdescrip(GctlFiles, U, 'u')
+      call InitGvarFromGdescrip(GctlFiles, V, 'v')
       ! In this case Avar gets built from U and V instead of getting
       ! read in directly from a GRADS data file. In this case initialize
       ! Avar from data in U.
       call InitGvarFromGvar(U, Avar, VarToAvg)
     else
-      call InitGvarFromGdescrip(Nfiles, GdataDescrip, Avar, VarToAvg)
+      call InitGvarFromGdescrip(GctlFiles, Avar, VarToAvg)
     endif
 
     ! check that the variable dimensions (size and coordinate values) match up, if this
@@ -136,6 +128,8 @@ program main
       endif
     endif
  
+    ! Always read in W so use it to report Nx, Ny, Nz, Nt. At this point we have verified
+    ! that Nx, Ny, Nz, Nt are consitent for all the variables.
     write (*,*) 'Gridded data information:'
     write (*,*) '  Number of x (longitude) points:            ', W%Nx
     write (*,*) '  Number of y (latitude) points:             ', W%Ny
@@ -158,13 +152,10 @@ program main
     write (*,*) ''
 
     ! Convert the GRADS grid coordinates from longitude, latitude to flat plane (x and y).
-    ! Always have W which has been checked to match up with all other vars so use W for this call
-    allocate (Xcoords(1:W%Nx), Ycoords(1:W%Nx), stat=Ierror)
-    if (Ierror .ne. 0) then
-      write (*,*) 'ERROR: Xcoords, Ycoords data array memory allocation failed'
-      stop
-    end if
-    call ConvertGridCoords(W%Nx, W%Ny, W%Xcoords, W%Ycoords, Xcoords, Ycoords)
+    ! Always have W which has been verified to be consistent with all other vars
+    ! so use W for this call
+    ! Xcoords, Ycoords are in units of km
+    call ConvertGridCoords(W, Xcoords, Ycoords)
   
     write (*,*) 'Horzontal Grid Coordinate Info:'
     write (*,*) '  X Range (min lon, max lon) --> (min x, max x): '
@@ -173,9 +164,9 @@ program main
     write (*,*) '    ', W%Ycoords(1), W%Ycoords(W%Ny), Ycoords(1), Ycoords(W%Ny)
     write (*,*) ''
   
-    ! Figure out how big to make each radial band. Assume that the storm center stays near the center of
-    ! the grid domain. Take the diagonal distance of the domain, cut it in half and then break this up
-    ! into NumRbands sections of equal length.
+    ! Figure out how big to make each radial band. Assume that the storm center stays near
+    ! the center of the grid domain. Take the diagonal distance of the domain, cut it in
+    ! half and then break this up into NumRbands sections of equal length.
   
     DeltaX = Xcoords(W%Nx) - Xcoords(1)
     DeltaY = Ycoords(W%Ny) - Ycoords(1)
@@ -190,14 +181,9 @@ program main
     write (*,*) ''
   
     ! Read in the data for the vars using the description and location information
-    call ReadGradsData(GdataDescrip(W%Fnum), W)
-    call ReadGradsData(GdataDescrip(Press%Fnum), Press)
-    allocate (StmIx(1:W%Nt), StmIy(1:W%Nt), MinP(1:W%Nt), stat=Ierror)
-    if (Ierror .ne. 0) then
-      write (*,*) 'ERROR: StmIx, StmIy, MinP data array memory allocation failed'
-      stop
-    end if
-    call RecordStormCenter(Press%Nx, Press%Ny, Press%Nz, Press%Nt, Press%Vdata, StmIx, StmIy, MinP)
+    call ReadGradsData(GctlFiles, W)
+    call ReadGradsData(GctlFiles, Press)
+    call RecordStormCenter(Press, StmIx, StmIy, MinP)
 !    if (DoHorizVel) then
 !      call ReadGradsData(GdataDescrip, 'u', Uloc, U, Nx, Ny, Nz, Nt)
 !      call ReadGradsData(GdataDescrip, 'v', Vloc, V, Nx, Ny, Nz, Nt)
