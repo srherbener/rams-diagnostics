@@ -18,10 +18,13 @@ module gdata_utils
   type GradsDataDescription
     character (len=MaxString) :: DataFile
     real :: UndefVal
-    real :: Xstart, Xinc
-    real :: Ystart, Yinc
+    real :: Xstart
+    real :: Xinc
+    real :: Ystart
+    real :: Yinc
     real, dimension(1:MaxCoords) :: Zlevels
-    character (len=MaxString) :: Tstart, Tinc
+    character (len=MaxString) :: Tstart
+    character (len=MaxString) :: Tinc
     character (len=MaxString), dimension(1:MaxVars) :: VarNames
     integer, dimension(1:MaxVars) :: VarNz
     integer :: Nx
@@ -38,11 +41,6 @@ module gdata_utils
   end type GradsControlFiles
 
   type GradsVar
-    ! Fnum, Vnum define where the variable description lives within
-    !   the set of input GRADS control files
-    !
-    !   Fnum - File Number
-    !   Vnum - Variable Number
     character (len=MaxString) :: Vname
     integer :: Nx
     integer :: Ny
@@ -52,9 +50,24 @@ module gdata_utils
     real, dimension(:), allocatable :: Ycoords
     real, dimension(:), allocatable :: Zcoords
     real, dimension(:), allocatable :: Tcoords
-    integer :: Fnum
-    integer :: Vnum
     real, dimension(:,:,:,:), allocatable :: Vdata
+    ! Followin vars are for use by grads input
+    ! routines. Vnum is the variable number (index)
+    ! within the grads data file (DataFile)
+    character (len=MaxString) :: DataFile
+    integer :: Vnum
+    integer :: Nvars
+    ! Following vars are carried along for use by
+    ! grads output routines. This is done since not
+    ! all vars of this type are associated with an
+    ! input control file.
+    real :: Xstart
+    real :: Xinc
+    real :: Ystart
+    real :: Yinc
+    character (len=MaxString) :: Tstart
+    character (len=MaxString) :: Tinc
+    real :: UndefVal
   end type GradsVar
 
   type GradsOutDescription
@@ -63,10 +76,13 @@ module gdata_utils
     character (len=MaxString) :: Title
     character (len=MaxString) :: VarName
     real :: UndefVal
-    real :: Xstart, Xinc
-    real :: Ystart, Yinc
+    real :: Xstart
+    real :: Xinc
+    real :: Ystart
+    real :: Yinc
     real, dimension(1:MaxCoords) :: Zlevels
-    character (len=MaxString) :: Tstart, Tinc
+    character (len=MaxString) :: Tstart
+    character (len=MaxString) :: Tinc
     integer :: Nx
     integer :: Ny
     integer :: Nz
@@ -326,51 +342,31 @@ subroutine InitGvarFromGdescrip(GctlFiles, Gvar, Vname)
 
   ! i -> file number, j -> var number
   integer :: i, j
-  integer :: Ierror
+  integer :: Fnum, Vnum
 
-  Gvar%Fnum = 0
-  Gvar%Vnum = 0
+  Fnum = 0
+  Vnum = 0
 
   do i = 1, GctlFiles%Nfiles
     do j =1, GctlFiles%DataDscrs(i)%Nvars
       if (GctlFiles%DataDscrs(i)%VarNames(j) .eq. Vname) then
-        Gvar%Fnum = i
-        Gvar%Vnum = j
+        Fnum = i
+        Vnum = j
       endif
     enddo
   enddo
 
   ! If we found the variable, then fill in the dimensions, coordinate data, and allocate
   ! the space for the data.
-  if (Gvar%Fnum .gt. 0) then
-    Gvar%Vname = Vname
-
-    Gvar%Nx = GctlFiles%DataDscrs(Gvar%Fnum)%Nx;
-    Gvar%Ny = GctlFiles%DataDscrs(Gvar%Fnum)%Ny;
-    Gvar%Nz = GctlFiles%DataDscrs(Gvar%Fnum)%Nz;
-    Gvar%Nt = GctlFiles%DataDscrs(Gvar%Fnum)%Nt;
-
-    allocate(Gvar%Xcoords(1:Gvar%Nx), Gvar%Ycoords(1:Gvar%Ny), &
-             Gvar%Zcoords(1:Gvar%Nz), Gvar%Tcoords(1:Gvar%Nt), &
-             Gvar%Vdata(1:Gvar%Nt,1:Gvar%Nz,1:Gvar%Nx,1:Gvar%Ny), stat=Ierror)
-    if (Ierror .ne. 0) then
-      write (*,*) 'ERROR: Data array memory allocation failed'
-      stop
-    endif
-
-    ! fill in the coordinate arrays
-    do i = 1, Gvar%Nx
-      Gvar%Xcoords(i) = GctlFiles%DataDscrs(Gvar%Fnum)%Xstart + (real(i - 1) * GctlFiles%DataDscrs(Gvar%Fnum)%Xinc)
-    enddo
-    do i = 1, Gvar%Ny
-      Gvar%Ycoords(i) = GctlFiles%DataDscrs(Gvar%Fnum)%Ystart + (real(i - 1) * GctlFiles%DataDscrs(Gvar%Fnum)%Yinc)
-    enddo
-    do i = 1, Gvar%Nz
-      Gvar%Zcoords(i) = GctlFiles%DataDscrs(Gvar%Fnum)%Zlevels(i)
-    enddo
-    do i = 1, Gvar%Nt
-      Gvar%Tcoords(i) = real(i)
-    enddo
+  if (Fnum .gt. 0) then
+    call InitGradsVar(Gvar, Vname, GctlFiles%DataDscrs(Fnum)%Nx, GctlFiles%DataDscrs(Fnum)%Ny, &
+                      GctlFiles%DataDscrs(Fnum)%Nz, GctlFiles%DataDscrs(Fnum)%Nt, &
+                      GctlFiles%DataDscrs(Fnum)%Xstart, GctlFiles%DataDscrs(Fnum)%Xinc, &
+                      GctlFiles%DataDscrs(Fnum)%Ystart, GctlFiles%DataDscrs(Fnum)%Yinc, &
+                      GctlFiles%DataDscrs(Fnum)%Zlevels, &
+                      GctlFiles%DataDscrs(Fnum)%Tstart, GctlFiles%DataDscrs(Fnum)%Tinc, &
+                      GctlFiles%DataDscrs(Fnum)%UndefVal, &
+                      GctlFiles%DataDscrs(Fnum)%DataFile, Vnum, GctlFiles%DataDscrs(Fnum)%Nvars)
   else
     write (0,*) 'ERROR: cannot find grid var "', trim(Vname), '" in the GRADS data files'
     stop
@@ -383,10 +379,7 @@ end subroutine
 ! InitGvarFromGvar()
 !
 ! This routine will copy the set up from GvarSrc into GvarDes.
-! All of the data is filled into the GRADS variable except
-! for the actual 3D or 2D data field which is deferred so that all
-! of the GRADS variables can be checked for consistency before trying
-! to read in the data field (can be time consuming).
+! Pretty light weight but makes for convenient use from the caller.
 
 subroutine InitGvarFromGvar(GvarSrc, GvarDest, Vname)
   implicit none
@@ -394,39 +387,88 @@ subroutine InitGvarFromGvar(GvarSrc, GvarDest, Vname)
   type (GradsVar) :: GvarSrc, GvarDest
   character (len=*) :: Vname
 
+  ! Since there is no input GRADS data file associated with this new variable, set the
+  ! DataFile, Vnum and Nvars specs to '<NONE>', 0 and 0 respectively
+  call InitGradsVar(GvarDest, Vname, GvarSrc%Nx, GvarSrc%Ny, GvarSrc%Nz, GvarSrc%Nt, &
+                    GvarSrc%Xstart, GvarSrc%Xinc, GvarSrc%Ystart, GvarSrc%Yinc, &
+                    GvarSrc%Zcoords, GvarSrc%Tstart, GvarSrc%Tinc, &
+                    GvarSrc%UndefVal, '<NONE>', 0, 0)
+
+  return
+end subroutine
+
+!*******************************************************************
+! InitGradsVar()
+!
+! Generic routine to initialize a GradsVar type.
+! All members are filled in except for Vdata which will get filled
+! in by various means (read from GRADS data file, convert u,v data
+! to tangential wind, etc.) so for now just allocate the space for Vdata.
+subroutine InitGradsVar(Gvar, Vname, Nx, Ny, Nz, Nt, Xstart, Xinc, Ystart, Yinc, Zcoords, &
+                        Tstart, Tinc, UndefVal, DataFile, Vnum, Nvars)
+  implicit none
+
+  type (GradsVar) :: Gvar
+  character (len=*) :: Vname
+  integer :: Nx
+  integer :: Ny
+  integer :: Nz
+  integer :: Nt
+  real :: Xstart
+  real :: Xinc
+  real :: Ystart
+  real :: Yinc
+  real, dimension(1:Nz) :: Zcoords
+  character (len=*) :: Tstart
+  character (len=*) :: Tinc
+  real :: UndefVal
+  character (len=*) :: DataFile
+  integer :: Vnum
+  integer :: Nvars
+
   integer :: i
   integer :: Ierror
 
-  GvarDest%Fnum = 0
-  GvarDest%Vnum = 0
+  ! Copy in specs, allocate the coord and data arrays, fill in the coord array using
+  ! the specs
+  Gvar%Vname = Vname
+  
+  Gvar%Nx = Nx
+  Gvar%Ny = Ny
+  Gvar%Nz = Nz
+  Gvar%Nt = Nt
 
-  GvarDest%Vname = Vname
+  Gvar%Xstart = Xstart
+  Gvar%Xinc = Xinc
+  Gvar%Ystart = Ystart
+  Gvar%Yinc = Yinc
+  Gvar%Tstart = Tstart
+  Gvar%Tinc = Tinc
+  Gvar%UndefVal = UndefVal
 
-  GvarDest%Nx = GvarSrc%Nx;
-  GvarDest%Ny = GvarSrc%Ny;
-  GvarDest%Nz = GvarSrc%Nz;
-  GvarDest%Nt = GvarSrc%Nt;
+  Gvar%DataFile = DataFile
+  Gvar%Vnum = Vnum
+  Gvar%Nvars = Nvars
 
-  allocate(GvarDest%Xcoords(1:GvarDest%Nx), GvarDest%Ycoords(1:GvarDest%Ny), &
-           GvarDest%Zcoords(1:GvarDest%Nz), GvarDest%Tcoords(1:GvarDest%Nt), &
-           GvarDest%Vdata(1:GvarDest%Nt,1:GvarDest%Nz,1:GvarDest%Nx,1:GvarDest%Ny), stat=Ierror)
+  allocate(Gvar%Xcoords(1:Nx), Gvar%Ycoords(1:Ny), Gvar%Zcoords(1:Nz), Gvar%Tcoords(1:Nt), &
+           Gvar%Vdata(1:Nt,1:Nz,1:Nx,1:Ny), stat=Ierror)
   if (Ierror .ne. 0) then
-    write (*,*) 'ERROR: Data array memory allocation failed'
+    write (*,*) 'ERROR: Coordinate, data array memory allocation failed'
     stop
   endif
 
   ! fill in the coordinate arrays
-  do i = 1, GvarDest%Nx
-    GvarDest%Xcoords(i) = GvarSrc%Xcoords(i)
+  do i = 1, Nx
+    Gvar%Xcoords(i) = Xstart + (real(i - 1) * Xinc)
   enddo
-  do i = 1, GvarDest%Ny
-    GvarDest%Ycoords(i) = GvarSrc%Ycoords(i)
+  do i = 1, Ny
+    Gvar%Ycoords(i) = Ystart + (real(i - 1) * Yinc)
   enddo
-  do i = 1, GvarDest%Nz
-    GvarDest%Zcoords(i) = GvarSrc%Zcoords(i)
+  do i = 1, Nz
+    Gvar%Zcoords(i) = Zcoords(i)
   enddo
-  do i = 1, GvarDest%Nt
-    GvarDest%Tcoords(i) = GvarSrc%Tcoords(i)
+  do i = 1, Nt
+    Gvar%Tcoords(i) = real(i)
   enddo
 
   return
@@ -506,27 +548,24 @@ end function
 ! loaded into the Vdata array.
 !
 
-subroutine ReadGradsData(GctlFiles, Gvar)
+subroutine ReadGradsData(Gvar)
   implicit none
 
-  type (GradsControlFiles) :: GctlFiles
   type (GradsVar) :: Gvar
 
   integer RecLen, Ierror
   integer ix,iy,iz,it
   integer RecNum
   integer NumRecs
-  type (GradsDataDescription) :: GdataDescrip
 
   ! Each record is a horizontal slice so it has Nx * Ny elements in it
   ! of BinRecFactor size
   RecLen = Gvar%Nx * Gvar%Ny * BinRecFactor
 
-  GdataDescrip = GctlFiles%DataDscrs(Gvar%Fnum)
-  open (unit=InUnit, file=GdataDescrip%DataFile, form='unformatted', access='direct', &
+  open (unit=InUnit, file=Gvar%DataFile, form='unformatted', access='direct', &
         recl=RecLen, status='old', action='read', iostat=Ierror)
   if (Ierror .ne. 0) then
-    write (0,*) 'ERROR: Cannot open GRADS data file: ', trim(GdataDescrip%DataFile)
+    write (0,*) 'ERROR: Cannot open GRADS data file: ', trim(Gvar%DataFile)
     stop
   end if
  
@@ -565,15 +604,15 @@ subroutine ReadGradsData(GctlFiles, Gvar)
   !    23       1         3      4
   !    24       2         3      4
 
-  NumRecs = Gvar%Nz * Gvar%Nt * GdataDescrip%Nvars
+  NumRecs = Gvar%Nz * Gvar%Nt * Gvar%Nvars
 
-  write (0,*) 'Reading GRADS data file: ', trim(GdataDescrip%DataFile)
+  write (0,*) 'Reading GRADS data file: ', trim(Gvar%DataFile)
   write (0,*) '  Var: ', trim(Gvar%Vname)
   write (0,*) '  X points:          ', Gvar%Nx
   write (0,*) '  Y points:          ', Gvar%Ny
   write (0,*) '  Z points:          ', Gvar%Nz
   write (0,*) '  T points:          ', Gvar%Nt
-  write (0,*) '  Number of Vars:    ', GdataDescrip%Nvars
+  write (0,*) '  Number of Vars:    ', Gvar%Nvars
   write (0,*) '  Record length:     ', RecLen
   write (0,*) '  Number of records: ', NumRecs
   write (0,*) ''
@@ -589,7 +628,7 @@ subroutine ReadGradsData(GctlFiles, Gvar)
   NumRecs = 0
   do it = 1, Gvar%Nt
     do iz = 1, Gvar%Nz
-      RecNum = (it-1)*(Gvar%Nz*GdataDescrip%Nvars) + (Gvar%Nz*(Gvar%Vnum-1)) + iz
+      RecNum = (it-1)*(Gvar%Nz*Gvar%Nvars) + (Gvar%Nz*(Gvar%Vnum-1)) + iz
       read(unit=InUnit, rec=RecNum) ((Gvar%Vdata(it,iz,ix,iy), ix = 1, Gvar%Nx), iy = 1, Gvar%Ny)
 
       NumRecs = NumRecs + 1

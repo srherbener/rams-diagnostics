@@ -47,9 +47,6 @@ program main
   real, dimension(:), allocatable :: MinP, Xcoords, Ycoords
 
   integer :: i
-  integer :: Ierror
-  integer :: Fnum
-  integer :: VarNz
   logical :: VarIs2d
 
   integer :: ix, iy, iz, it
@@ -140,14 +137,14 @@ program main
     write (*,*) '  Number of data values per grid variable: ', W%Nx*W%Ny*W%Nz*W%Nt
     write (*,*) ''
   
-    write (*,*) 'Locations of variables in GRADS data (file number, var number):'
-    write (*,'(a20,i3,a2,i3,a1)') 'w: (', W%Fnum, ', ', W%Vnum, ')'
-    write (*,'(a20,i3,a2,i3,a1)') 'press: (', Press%Fnum, ', ', Press%Vnum, ')'
+    write (*,*) 'Locations of variables in GRADS data (file, var number):'
+    write (*,'(a20,a,a2,i3,a1)') 'w: (', trim(W%DataFile), ', ', W%Vnum, ')'
+    write (*,'(a20,a,a2,i3,a1)') 'press: (', trim(Press%DataFile), ', ', Press%Vnum, ')'
     if (DoHorizVel) then
-      write (*,'(a20,i3,a2,i3,a1)') 'speed - u: (', U%Fnum, ', ', U%Vnum, ')'
-      write (*,'(a20,i3,a2,i3,a1)') 'speed - v: (', V%Fnum, ', ', V%Vnum, ')'
+      write (*,'(a20,a,a2,i3,a1)') 'speed - u: (', trim(U%DataFile), ', ', U%Vnum, ')'
+      write (*,'(a20,a,a2,i3,a1)') 'speed - v: (', trim(V%DataFile), ', ', V%Vnum, ')'
     else
-      write (*,'(a17,a3,i3,a2,i3,a1)') trim(VarToAvg), ': (', Avar%Fnum, ', ', Avar%Vnum, ')'
+      write (*,'(a17,a3,a,a2,i3,a1)') trim(VarToAvg), ': (', trim(Avar%DataFile), ', ', Avar%Vnum, ')'
     end if
     write (*,*) ''
 
@@ -181,40 +178,32 @@ program main
     write (*,*) ''
   
     ! Read in the data for the vars using the description and location information
-    call ReadGradsData(GctlFiles, W)
-    call ReadGradsData(GctlFiles, Press)
+    call ReadGradsData(W)
+    call ReadGradsData(Press)
     call RecordStormCenter(Press, StmIx, StmIy, MinP)
-!    if (DoHorizVel) then
-!      call ReadGradsData(GdataDescrip, 'u', Uloc, U, Nx, Ny, Nz, Nt)
-!      call ReadGradsData(GdataDescrip, 'v', Vloc, V, Nx, Ny, Nz, Nt)
-!      call ConvertHorizVelocity(Nx, Ny, Nz, Nt, U, V, StmIx, StmIy, &
-!                      Xcoords, Ycoords, Avar, DoTangential)
-!    else
-!      call ReadGradsData(GdataDescrip, VarToAvg, VarLoc, Avar, Nx, Ny, VarNz, Nt)
-!    end if
-!  
-!    ! Allocate the output array and compute the azimuthal averaging
-!    allocate (AzAvg(1:NumRbands,1:1,1:VarNz,1:Nt), stat=Ierror)
-!    if (Ierror .ne. 0) then
-!      write (*,*) 'ERROR: Ouput data array memory allocation failed'
-!      stop
-!    end if
-!  else
-!    ! Performing a test, load up the variables with data that will produce a known result and
-!    ! finish out the program (averaging and output).
-!
-!    ! Create one horizontal slice, 100 x 100 tiles, one z level, 5 time points.
-!    !   Make the x,y increments 1km
-!    ! Move the storm center around a little bit but keep it near the center.
-!    ! Make 10 radial bands, 
-!
+    if (DoHorizVel) then
+      call ReadGradsData(U)
+      call ReadGradsData(V)
+      call ConvertHorizVelocity(U, V, StmIx, StmIy, Xcoords, Ycoords, Avar, DoTangential)
+    else
+      call ReadGradsData(Avar)
+    end if
+  else
+    ! Performing a test, load up the variables with data that will produce a known result and
+    ! finish out the program (averaging and output).
+
+    ! Create one horizontal slice, 100 x 100 tiles, one z level, 5 time points.
+    !   Make the x,y increments 1km
+    ! Move the storm center around a little bit but keep it near the center.
+    ! Make 10 radial bands, 
+
 !    Nx = 101
 !    Ny = 101
 !    Nz = 1
 !    VarNz = 1
 !    Nt = 5
 !
-!    NumRbands = 10
+    NumRbands = 10
 !    TestGridX = 100.0
 !    TestGridY = 100.0
 !
@@ -280,36 +269,23 @@ program main
 !    end do 
 !
 !
-!  end if
-!
-!  ! Do the averageing. Note that you can pick any index in GdataDescrip below since this data
-!  ! has been (superficially) checked out to be consistent.
-!  ! For the lookup of UndefVal, Zccores, Tstart, Tinc below, want to use the description from the
-!  ! variable you are averaging. There are two exceptions to this:
-!  !   If doing a test, GdataDecrip has been loaded up artificially using Fnum 1.
-!  !   If doing horizontal wind speed, VarLoc never got set, instead Uloc and Vloc were used.
-!  if (DoHorizVel) then
-!    Fnum = Uloc%Fnum
-!  else if (VarToAvg .eq. 'test') then
-!    Fnum = 1
-!  else
-!    Fnum = VarLoc%Fnum
-!  end if
-!  call AzimuthalAverage(Nx, Ny, Nz, Nt, VarNz, NumRbands, W, StmIx, StmIy, MinP, Avar, AzAvg, &
-!          Xcoords, Ycoords, RadialDist, RbandInc, WfilterMin, WfilterMax, GdataDescrip(Fnum)%UndefVal)
-!
-!  call BuildGoutDescrip(NumRbands, 1, VarNz, Nt, AzAvg, OfileBase, GdataDescrip(Fnum)%UndefVal, VarToAvg, &
-!          0.0, RbandInc, 0.0, 1.0, GdataDescrip(Fnum)%Zlevels, GdataDescrip(Fnum)%Tstart, &
-!          GdataDescrip(Fnum)%Tinc, GoutDescrip, 'azavg')
-!
-!  call WriteGrads(GoutDescrip, AzAvg)
-!
-!  ! Clean up
-!  deallocate (U, V, W, Press, Avar, StmIx, StmIy, MinP, AzAvg, stat=Ierror)
-!  if (Ierror .ne. 0) then
-!    write (*,*) 'ERROR: Data array memory de-allocation failed'
-!    stop
-  endif
+  end if
+
+  
+  ! Initialize the output GRADS var: AzAvg
+  call InitGradsVar(AzAvg, VarToAvg, NumRbands, 1, Avar%Nz, Avar%Nt, &
+                    0.0, RbandInc, 0.0, 1.0, Avar%Zcoords, Avar%Tstart, Avar%Tinc, &
+                    Avar%UndefVal, '<NONE>', 0, 0)
+
+  ! Do the averageing.
+!   call AzimuthalAverage(Nx, Ny, Nz, Nt, VarNz, NumRbands, W, StmIx, StmIy, MinP, Avar, AzAvg, &
+!           Xcoords, Ycoords, RadialDist, RbandInc, WfilterMin, WfilterMax, GdataDescrip(Fnum)%UndefVal)
+
+!   call BuildGoutDescrip(NumRbands, 1, VarNz, Nt, AzAvg, OfileBase, GdataDescrip(Fnum)%UndefVal, VarToAvg, &
+!           0.0, RbandInc, 0.0, 1.0, GdataDescrip(Fnum)%Zlevels, GdataDescrip(Fnum)%Tstart, &
+!           GdataDescrip(Fnum)%Tinc, GoutDescrip, 'azavg')
+! 
+!   call WriteGrads(GoutDescrip, AzAvg)
 
   stop
 end
