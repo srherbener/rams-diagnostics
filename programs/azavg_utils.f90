@@ -97,129 +97,130 @@ subroutine FindStormCenter(Press, iTime, ixStmCtr, iyStmCtr, MinP)
   return
 end subroutine
 
-!!! !*************************************************************************
-!!! ! AzimuthalAverage
-!!! !
-!!! ! This routine will do the azimuthal averaging. It will create a 4-D array
-!!! ! for its output (to keep GRADS write routine consistent/general) even though it
-!!! ! really is 3-D data (radial band, z level, time). It will put the radial bands 
-!!! ! in the x dimension and make the y dimension 1 long.
-!!! !
-!!! ! This routine will step though each z and t value and compute the azimuthal
-!!! ! average of the x-y plane at each of these points. Then it will store that
-!!! ! in the output array so that you get azimuthal averaging for every original
-!!! ! z and t point.
-!!! !
-!!! 
-!!! subroutine AzimuthalAverage(NumRbands, W, StmIx, StmIy, MinP, Avar, AzAvg, &
-!!!           Xcoords, Ycoords, RadialDist, RbandInc, WfilterMin, WfilterMax, UndefVal)
-!!! 
-!!!   implicit none
-!!! 
-!!!   integer :: NumRbands
-!!!   type (GradsVar) :: W, Avar, AzAvg
-!!!   integer, dimension(1:Nt) :: StmIx, StmIy
-!!!   real, dimension(1:Nt) :: MinP
-!!!   real, dimension(1:Nx) :: Xcoords
-!!!   real, dimension(1:Ny) :: Ycoords
-!!!   real :: RadialDist, RbandInc, WfilterMin, WfilterMax, UndefVal
-!!! 
-!!!   integer :: ix, iy, iz, it
-!!!   real, dimension(1:NumRbands) :: Rcounts
-!!!   integer :: ir, iRband
-!!!   real :: DeltaX, DeltaY, Radius
-!!!   real, dimension(1:Nx,1:Ny,1:Nt) :: WmaxVals, WminVals
-!!!   real :: Wmax, Wmin
-!!! 
-!!!   ! Mask the input data (Avar) with the W data, ie if the corresponding
-!!!   ! W data is outside the interval defined by WfilterMin, WfilterMax,
-!!!   ! use the Avar data in the averaging; otherwise skip the Avar data
-!!!   !
-!!!   ! The storm center is taken to be the min pressure location of the
-!!!   ! x-y plane on the surface (iz .eq. 1)
-!!! 
-!!!   ! We want to filter where convection is likely taking place. Approximating
-!!!   ! this by filtering on larger w values. However, the larger w values won't
-!!!   ! persist through the entire vertical column. Handle this by finding the 
-!!!   ! min and max w at each time step in each column - and use these values
-!!!   ! to do the filtering.
-!!! 
-!!!   do it = 1, Nt
-!!!     do ix = 1, Nx
-!!!       do iy = 1, Ny
-!!!         Wmax = W(ix,iy,1,it)
-!!!         Wmin = W(ix,iy,1,it)
-!!!         do iz = 2, Nz
-!!!           if (W(ix,iy,iz,it) .gt. Wmax) then
-!!!             Wmax = W(ix,iy,iz,it)
-!!!           end if
-!!!           if (W(ix,iy,iz,it) .lt. Wmin) then
-!!!             Wmin = W(ix,iy,iz,it)
-!!!           end if
-!!!         end do
-!!!         WmaxVals(ix,iy,it) = Wmax
-!!!         WminVals(ix,iy,it) = Wmin
-!!!       end do
-!!!     end do
-!!!   end do
-!!! 
-!!!   write (*,*) 'Averaging Data:'
-!!! 
-!!!   do it = 1, Nt
-!!!     if (modulo(it,10) .eq. 0) then
-!!!     write (*,*) '  Timestep: ', it
-!!!     write (*,'(a,i3,a,i3,a,g,a,g,a)') '    Storm Center: (', StmIx(it), ', ', StmIy(it), ') --> (', &
-!!!           Xcoords(StmIx(it)), ', ', Ycoords(StmIy(it)), ')'
-!!!     write (*,*) '    Minimum Pressue: ', MinP(it)
-!!!     end if
-!!!     do iz = 1, VarNz
-!!! 
-!!!       ! For the averaging
-!!!       do ir = 1, NumRbands
-!!!         Rcounts(ir) = 0.0
-!!!         AzAvg(ir, 1, iz, it) = 0.0
-!!!       end do
-!!! 
-!!!       ! Get the averages for this x-y plane
-!!!       do iy = 1, Ny
-!!!         do ix = 1, Nx
-!!!           ! Only keep the points where W max or W min are outside the filter interval
-!!!           if (((WmaxVals(ix,iy,it) .gt. WfilterMax) .or. &
-!!!                (WminVals(ix,iy,it) .lt. WfilterMin)) .and. &
-!!!               (Avar(ix,iy,iz,it) .ne. UndefVal)) then
-!!!              DeltaX = Xcoords(ix)-Xcoords(StmIx(it))
-!!!              DeltaY = Ycoords(iy)-Ycoords(StmIy(it))
-!!!              Radius = sqrt(DeltaX*DeltaX + DeltaY*DeltaY)
-!!!              iRband = int(Radius / RbandInc) + 1
-!!!              ! iRband will go from 1 to n, but n might extend beyond the last radial
-!!!              ! band due to approximations made in deriving RbandInc
-!!!              if (iRband .gt. NumRbands) then
-!!!                iRband = NumRbands
-!!!              end if
-!!! 
-!!!              AzAvg(iRband, 1, iz, it) = AzAvg(iRband, 1, iz, it) + Avar(ix, iy, iz, it)
-!!!              Rcounts(iRband) = Rcounts(iRband) + 1.0
-!!!           end if
-!!!         end do
-!!!       end do
-!!! 
-!!!       do ir = 1, NumRbands
-!!!         ! If we didn't put anything into an AzAvg slot then set it
-!!!         ! to the undefined value so the data isn't biased by trying to chose
-!!!         ! a default value.
-!!!         if (Rcounts(ir) .ne. 0.0) then
-!!!           AzAvg(ir, 1, iz, it) = AzAvg(ir, 1, iz, it) / Rcounts(ir)
-!!!         else
-!!!           AzAvg(ir, 1, iz, it) = UndefVal
-!!!         end if
-!!!       end do
-!!! 
-!!!     end do
-!!!   end do
-!!!   write (*,*) ''
-!!! 
-!!!   return
-!!! end subroutine
+!*************************************************************************
+! AzimuthalAverage
+!
+! This routine will do the azimuthal averaging. It will create a 4-D array
+! for its output (to keep GRADS write routine consistent/general) even though it
+! really is 3-D data (radial band, z level, time). It will put the radial bands 
+! in the x dimension and make the y dimension 1 long.
+!
+! This routine will step though each z and t value and compute the azimuthal
+! average of the x-y plane at each of these points. Then it will store that
+! in the output array so that you get azimuthal averaging for every original
+! z and t point.
+!
+
+subroutine AzimuthalAverage(NumRbands, W, StmIx, StmIy, MinP, Avar, AzAvg, &
+          Xcoords, Ycoords, RadialDist, RbandInc, WfilterMin, WfilterMax, UndefVal)
+
+  use gdata_utils
+  implicit none
+
+  integer :: NumRbands
+  type (GradsVar) :: W, Avar, AzAvg
+  integer, dimension(1:W%Nt) :: StmIx, StmIy
+  real, dimension(1:W%Nt) :: MinP
+  real, dimension(1:W%Nx) :: Xcoords
+  real, dimension(1:W%Ny) :: Ycoords
+  real :: RadialDist, RbandInc, WfilterMin, WfilterMax, UndefVal
+
+  integer :: ix, iy, iz, it
+  real, dimension(1:NumRbands) :: Rcounts
+  integer :: ir, iRband
+  real :: DeltaX, DeltaY, Radius
+  real, dimension(1:W%Nt,1:W%Nx,1:W%Ny) :: WmaxVals, WminVals
+  real :: Wmax, Wmin
+
+  ! Mask the input data (Avar) with the W data, ie if the corresponding
+  ! W data is outside the interval defined by WfilterMin, WfilterMax,
+  ! use the Avar data in the averaging; otherwise skip the Avar data
+  !
+  ! The storm center is taken to be the min pressure location of the
+  ! x-y plane on the surface (iz .eq. 1)
+
+  ! We want to filter where convection is likely taking place. Approximating
+  ! this by filtering on larger w values. However, the larger w values won't
+  ! persist through the entire vertical column. Handle this by finding the 
+  ! min and max w at each time step in each column - and use these values
+  ! to do the filtering.
+
+  do it = 1, W%Nt
+    do ix = 1, W%Nx
+      do iy = 1, W%Ny
+        Wmax = W%Vdata(it,1,ix,iy)
+        Wmin = W%Vdata(it,1,ix,iy)
+        do iz = 2, W%Nz
+          if (W%Vdata(it,iz,ix,iy) .gt. Wmax) then
+            Wmax = W%Vdata(it,iz,ix,iy)
+          end if
+          if (W%Vdata(it,iz,ix,iy) .lt. Wmin) then
+            Wmin = W%Vdata(it,iz,ix,iy)
+          end if
+        end do
+        WmaxVals(it,ix,iy) = Wmax
+        WminVals(it,ix,iy) = Wmin
+      end do
+    end do
+  end do
+
+  write (*,*) 'Averaging Data:'
+
+  do it = 1, W%Nt
+    if (modulo(it,10) .eq. 0) then
+    write (*,*) '  Timestep: ', it
+    write (*,'(a,i3,a,i3,a,g,a,g,a)') '    Storm Center: (', StmIx(it), ', ', StmIy(it), ') --> (', &
+          Xcoords(StmIx(it)), ', ', Ycoords(StmIy(it)), ')'
+    write (*,*) '    Minimum Pressue: ', MinP(it)
+    end if
+    do iz = 1, Avar%Nz
+
+      ! For the averaging
+      do ir = 1, NumRbands
+        Rcounts(ir) = 0.0
+        AzAvg%Vdata(it, iz, ir, 1) = 0.0
+      end do
+
+      ! Get the averages for this x-y plane
+      do iy = 1, W%Ny
+        do ix = 1, W%Nx
+          ! Only keep the points where W max or W min are outside the filter interval
+          if (((WmaxVals(it,ix,iy) .gt. WfilterMax) .or. &
+               (WminVals(it,ix,iy) .lt. WfilterMin)) .and. &
+              (Avar%Vdata(it,iz,ix,iy) .ne. UndefVal)) then
+             DeltaX = Xcoords(ix)-Xcoords(StmIx(it))
+             DeltaY = Ycoords(iy)-Ycoords(StmIy(it))
+             Radius = sqrt(DeltaX*DeltaX + DeltaY*DeltaY)
+             iRband = int(Radius / RbandInc) + 1
+             ! iRband will go from 1 to n, but n might extend beyond the last radial
+             ! band due to approximations made in deriving RbandInc
+             if (iRband .gt. NumRbands) then
+               iRband = NumRbands
+             end if
+
+             AzAvg%Vdata(it,iz,iRband,1) = AzAvg%Vdata(it,iz,iRband,1) + Avar%Vdata(it,iz,ix,iy)
+             Rcounts(iRband) = Rcounts(iRband) + 1.0
+          end if
+        end do
+      end do
+
+      do ir = 1, NumRbands
+        ! If we didn't put anything into an AzAvg slot then set it
+        ! to the undefined value so the data isn't biased by trying to chose
+        ! a default value.
+        if (Rcounts(ir) .ne. 0.0) then
+          AzAvg%Vdata(it,iz,ir,1) = AzAvg%Vdata(it,iz,ir,1) / Rcounts(ir)
+        else
+          AzAvg%Vdata(it,iz,ir,1) = UndefVal
+        end if
+      end do
+
+    end do
+  end do
+  write (*,*) ''
+
+  return
+end subroutine
 
 !*******************************************************************************
 ! ConvertHorizVelocity()

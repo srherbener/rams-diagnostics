@@ -34,7 +34,6 @@ program main
   logical :: DoHorizVel, DoTangential
 
   type (GradsControlFiles) :: GctlFiles
-  type (GradsOutDescription) :: GoutDescrip
 
   ! Data arrays: need one for w (vertical velocity), press (pressure)
   ! and the var we are doing the averaging on
@@ -50,9 +49,11 @@ program main
   logical :: VarIs2d
 
   integer :: ix, iy, iz, it
+  integer :: Nx, Ny, Nz, Nt, VarNz
 
   real :: DeltaX, DeltaY, RadialDist, RbandInc
   real :: TestData, TestGridX, TestGridY
+  real, dimension(1:MaxCoords) :: TestZcoords
 
   ! Get the command line arguments
   call GetMyArgs(Infiles, OfileBase, NumRbands, WfilterMin, WfilterMax, VarToAvg, DoHorizVel, DoTangential, VarIs2d)
@@ -125,16 +126,22 @@ program main
       endif
     endif
  
-    ! Always read in W so use it to report Nx, Ny, Nz, Nt. At this point we have verified
+    ! Always read in W so use it to record Nx, Ny, Nz, Nt. At this point we have verified
     ! that Nx, Ny, Nz, Nt are consitent for all the variables.
+    Nx = W%Nx
+    Ny = W%Ny
+    Nz = W%Nz
+    Nt = W%Nt
+    VarNz = Avar%Nz
+
     write (*,*) 'Gridded data information:'
-    write (*,*) '  Number of x (longitude) points:            ', W%Nx
-    write (*,*) '  Number of y (latitude) points:             ', W%Ny
-    write (*,*) '  Number of z (vertical level) points (3D):  ', W%Nz
-    write (*,*) '  Number of z (vertical level) points (var): ', Avar%Nz
-    write (*,*) '  Number of t (time) points:                 ', W%Nt
+    write (*,*) '  Number of x (longitude) points:            ', Nx
+    write (*,*) '  Number of y (latitude) points:             ', Ny
+    write (*,*) '  Number of z (vertical level) points (3D):  ', Nz
+    write (*,*) '  Number of z (vertical level) points (var): ', VarNz
+    write (*,*) '  Number of t (time) points:                 ', Nt
     write (*,*) ''
-    write (*,*) '  Number of data values per grid variable: ', W%Nx*W%Ny*W%Nz*W%Nt
+    write (*,*) '  Number of data values per grid variable: ', Nx*Ny*Nz*Nt
     write (*,*) ''
   
     write (*,*) 'Locations of variables in GRADS data (file, var number):'
@@ -156,17 +163,17 @@ program main
   
     write (*,*) 'Horzontal Grid Coordinate Info:'
     write (*,*) '  X Range (min lon, max lon) --> (min x, max x): '
-    write (*,*) '    ', W%Xcoords(1), W%Xcoords(W%Nx), Xcoords(1), Xcoords(W%Nx)
+    write (*,*) '    ', W%Xcoords(1), W%Xcoords(W%Nx), Xcoords(1), Xcoords(Nx)
     write (*,*) '  Y Range: '
-    write (*,*) '    ', W%Ycoords(1), W%Ycoords(W%Ny), Ycoords(1), Ycoords(W%Ny)
+    write (*,*) '    ', W%Ycoords(1), W%Ycoords(W%Ny), Ycoords(1), Ycoords(Ny)
     write (*,*) ''
   
     ! Figure out how big to make each radial band. Assume that the storm center stays near
     ! the center of the grid domain. Take the diagonal distance of the domain, cut it in
     ! half and then break this up into NumRbands sections of equal length.
   
-    DeltaX = Xcoords(W%Nx) - Xcoords(1)
-    DeltaY = Ycoords(W%Ny) - Ycoords(1)
+    DeltaX = Xcoords(Nx) - Xcoords(1)
+    DeltaY = Ycoords(Ny) - Ycoords(1)
     RadialDist = sqrt(DeltaX*DeltaX + DeltaY*DeltaY) / 2.0
     RbandInc = RadialDist / real(NumRbands)
   
@@ -197,95 +204,80 @@ program main
     ! Move the storm center around a little bit but keep it near the center.
     ! Make 10 radial bands, 
 
-!    Nx = 101
-!    Ny = 101
-!    Nz = 1
-!    VarNz = 1
-!    Nt = 5
-!
-    NumRbands = 10
-!    TestGridX = 100.0
-!    TestGridY = 100.0
-!
-!    allocate (U(1:Nx,1:Ny,1:Nz,1:Nt), V(1:Nx,1:Ny,1:Nz,1:Nt), W(1:Nx,1:Ny,1:Nz,1:Nt), &
-!              Press(1:Nx,1:Ny,1:Nz,1:Nt), Avar(1:Nx,1:Ny,1:VarNz,1:Nt), &
-!              StmIx(1:Nt), StmIy(1:Nt), MinP(1:Nt), Xcoords(1:Nx), Ycoords(1:Ny), stat=Ierror)
-!    if (Ierror .ne. 0) then
-!      write (*,*) 'ERROR: TEST: Data array memory allocation failed'
-!      stop
-!    end if
-!    allocate (AzAvg(1:NumRbands,1:1,1:Nz,1:Nt), stat=Ierror)
-!    if (Ierror .ne. 0) then
-!      write (*,*) 'ERROR: Ouput data array memory allocation failed'
-!      stop
-!    end if
-!
-!    RadialDist = sqrt(TestGridX*TestGridX + TestGridY*TestGridY) / 2.0
-!    RbandInc = RadialDist / real(NumRbands)
-!
-!    ! load up the coordinates
-!    DeltaX = TestGridX / real(Nx - 1)
-!    DeltaY = TestGridY / real(Ny - 1)
-!    do ix = 1, Nx
-!      Xcoords(ix) = real(ix-1) * DeltaX
-!    end do
-!    do iy = 1, Ny
-!      Ycoords(iy) = real(iy-1) * DeltaY
-!    end do
-!    do iz = 1, Nz
-!      GdataDescrip(1)%Zlevels(iz) = iz
-!    end do
-!    GdataDescrip(1)%Tstart = '00:00Z24aug1998'
-!    GdataDescrip(1)%Tinc =  '01mn'
-!
-!    ! Undefined value
-!    GdataDescrip(1)%UndefVal = 10.0e30
-!
-!    do it = 1, Nt
-!      do iz = 1, Nz
-!        do iy = 1, Ny
-!          do ix = 1, Nx
-!
-!            ! Storm center drifts from roughly the center of the grid
-!            StmIx(it) = int(Nx/2) + it
-!            StmIy(it) = int(Ny/2) - it
-!            MinP(it) = 980.0 - real(it)  ! Just make it up, it's only used in diagnostic msg
-!                                         ! in AzimuthalAverage().
-!
-!            ! Fill up W with the it value so you can see if screening works with different
-!            ! WfilterMin, WfilterMax values
-!            W(ix,iy,iz,it) = real(it)
-!
-!            ! Make the data match the radial band number after the averaging takes place.
-!            !   int(sqrt(DeltaX*DeltaX + DeltaY*DeltaY) / RbandInc) + 1) gives you the radial band number
-!            !   just multiply it by it so you see increasing slope for successive time steps
-!            DeltaX = Xcoords(StmIx(it)) - Xcoords(ix)
-!            DeltaY = Ycoords(StmIy(it)) - Ycoords(iy)
-!            Avar(ix,iy,iz,it) = real((int(sqrt(DeltaX*DeltaX + DeltaY*DeltaY) / RbandInc) + 1) * it)
-!
-!          end do 
-!        end do 
-!      end do 
-!    end do 
-!
-!
-  end if
+    Nx = 101
+    Ny = 101
+    Nz = 1
+    VarNz = 1
+    Nt = 5
 
+    NumRbands = 10
+    TestGridX = 100.0
+    TestGridY = 100.0
+
+    RadialDist = sqrt(TestGridX*TestGridX + TestGridY*TestGridY) / 2.0
+    RbandInc = RadialDist / real(NumRbands)
+
+    ! load up the coordinates
+    allocate (Xcoords(1:Nx), Ycoords(1:Ny))
+    DeltaX = TestGridX / real(Nx - 1)
+    DeltaY = TestGridY / real(Ny - 1)
+    do ix = 1, Nx
+      Xcoords(ix) = real(ix-1) * DeltaX
+    end do
+    do iy = 1, Ny
+      Ycoords(iy) = real(iy-1) * DeltaY
+    end do
+    do iz = 1, Nz
+      TestZcoords(iz) = real(iz)
+    end do
+
+    call InitGradsVar(W, 'w', Nx, Ny, Nz, Nt, 0.0, DeltaX, 0.0, DeltaY, TestZcoords, &
+                      '00:00Z24aug1998', '01mn', 10.0e30, '<NONE>', 0, 0)
+    call InitGradsVar(Avar, VarToAvg, Nx, Ny, Nz, Nt, 0.0, DeltaX, 0.0, DeltaY, TestZcoords, &
+                      '00:00Z24aug1998', '01mn', 10.0e30, '<NONE>', 0, 0)
+
+    allocate (StmIx(1:Nt), StmIy(1:Nt), MinP(1:Nt))
+
+    do it = 1, Nt
+      do iz = 1, Nz
+        do iy = 1, Ny
+          do ix = 1, Nx
+
+            ! Storm center drifts from roughly the center of the grid
+            StmIx(it) = int(Nx/2) + it
+            StmIy(it) = int(Ny/2) - it
+            MinP(it) = 980.0 - real(it)  ! Just make it up, it's only used in diagnostic msg
+                                         ! in AzimuthalAverage().
+
+            ! Fill up W with the it value so you can see if screening works with different
+            ! WfilterMin, WfilterMax values
+            W%Vdata(iz,it,ix,iy) = real(it)
+
+            ! Make the data match the radial band number after the averaging takes place.
+            !   int(sqrt(DeltaX*DeltaX + DeltaY*DeltaY) / RbandInc) + 1) gives you the radial band number
+            !   just multiply it by the variable "it" so you see increasing slope for
+            ! successive time steps
+            DeltaX = Xcoords(StmIx(it)) - Xcoords(ix)
+            DeltaY = Ycoords(StmIy(it)) - Ycoords(iy)
+            Avar%Vdata(it,iz,ix,iy) = real((int(sqrt(DeltaX*DeltaX + DeltaY*DeltaY) / RbandInc) + 1) * it)
+
+          end do 
+        end do 
+      end do 
+    end do 
+
+  end if
   
   ! Initialize the output GRADS var: AzAvg
   call InitGradsVar(AzAvg, VarToAvg, NumRbands, 1, Avar%Nz, Avar%Nt, &
                     0.0, RbandInc, 0.0, 1.0, Avar%Zcoords, Avar%Tstart, Avar%Tinc, &
                     Avar%UndefVal, '<NONE>', 0, 0)
 
-  ! Do the averageing.
-!   call AzimuthalAverage(Nx, Ny, Nz, Nt, VarNz, NumRbands, W, StmIx, StmIy, MinP, Avar, AzAvg, &
-!           Xcoords, Ycoords, RadialDist, RbandInc, WfilterMin, WfilterMax, GdataDescrip(Fnum)%UndefVal)
+  ! Do the averageing and write the result into GRADS files
+  call AzimuthalAverage(NumRbands, W, StmIx, StmIy, MinP, Avar, AzAvg, &
+          Xcoords, Ycoords, RadialDist, RbandInc, WfilterMin, WfilterMax, Avar%UndefVal)
 
-!   call BuildGoutDescrip(NumRbands, 1, VarNz, Nt, AzAvg, OfileBase, GdataDescrip(Fnum)%UndefVal, VarToAvg, &
-!           0.0, RbandInc, 0.0, 1.0, GdataDescrip(Fnum)%Zlevels, GdataDescrip(Fnum)%Tstart, &
-!           GdataDescrip(Fnum)%Tinc, GoutDescrip, 'azavg')
-! 
-!   call WriteGrads(GoutDescrip, AzAvg)
+  call WriteGrads(AzAvg, OfileBase, 'azavg')
 
   stop
 end

@@ -70,25 +70,6 @@ module gdata_utils
     real :: UndefVal
   end type GradsVar
 
-  type GradsOutDescription
-    character (len=MaxString) :: CtlFile
-    character (len=MaxString) :: DataFile
-    character (len=MaxString) :: Title
-    character (len=MaxString) :: VarName
-    real :: UndefVal
-    real :: Xstart
-    real :: Xinc
-    real :: Ystart
-    real :: Yinc
-    real, dimension(1:MaxCoords) :: Zlevels
-    character (len=MaxString) :: Tstart
-    character (len=MaxString) :: Tinc
-    integer :: Nx
-    integer :: Ny
-    integer :: Nz
-    integer :: Nt
-  end type GradsOutDescription
-
 contains
 !**********************************************************
 ! SUBROUTINES
@@ -645,51 +626,6 @@ subroutine ReadGradsData(Gvar)
   return
 end subroutine
 
-!******************************************************************************
-! BuildGoutDescrip()
-!
-! This routine will fill in the GoutDescrip record for the AzAvg data. This
-! record is used for creating the GRADS control file.
-!
-
-subroutine BuildGoutDescrip(Nx, Ny, Nz, Nt, AzAvg, OfileBase, UndefVal, VarName, &
-          Xstart, Xinc, Ystart, Yinc, Zlevels, Tstart, Tinc, GoutDescrip, Diagnostic)
-
-  implicit none
-
-  integer :: Nx, Ny, Nz, Nt
-  real, dimension(1:Nx,1:Ny,1:Nz,1:Nt) :: AzAvg
-  character (len=*) :: OfileBase, VarName
-  real :: UndefVal, Xstart, Xinc, Ystart, Yinc
-  real, dimension(1:Nz) :: Zlevels
-  character (len=*) :: Tstart, Tinc
-  type (GradsOutDescription) :: GoutDescrip
-  character (len=*) :: Diagnostic
-
-  integer :: iz
-
-  GoutDescrip%CtlFile = trim(OfileBase) // '.ctl'
-  GoutDescrip%DataFile = trim(OfileBase) // '.gra'
-  GoutDescrip%Title = 'Diagnostic: ' // trim(Diagnostic)
-  GoutDescrip%UndefVal = UndefVal
-  GoutDescrip%Nx = Nx
-  GoutDescrip%Ny = Ny
-  GoutDescrip%Nz = Nz
-  GoutDescrip%Nt = Nt
-  GoutDescrip%Xstart = Xstart
-  GoutDescrip%Xinc = Xinc
-  GoutDescrip%Ystart = Ystart
-  GoutDescrip%Yinc = Yinc
-  GoutDescrip%VarName = trim(VarName)
-  do iz = 1, Nz
-    GoutDescrip%Zlevels(iz) = Zlevels(iz)
-  end do
-  GoutDescrip%Tstart = Tstart
-  GoutDescrip%Tinc = Tinc
-
-  return
-end subroutine
-
 !**************************************************************************
 ! WriteGrads()
 !
@@ -699,12 +635,12 @@ end subroutine
 !   data file - raw binary values in the data array
 !
 
-subroutine WriteGrads(GoutDescrip, AzAvg)
+subroutine WriteGrads(Gvar, OfileBase, Diagnostic)
   implicit none
 
-  type (GradsOutDescription) :: GoutDescrip
-  real, dimension(1:GoutDescrip%Nx,1:GoutDescrip%Ny,1:GoutDescrip%Nz,1:GoutDescrip%Nt) :: AzAvg
-  integer :: Nx, Ny, Nz, Nt
+  type (GradsVar) :: Gvar
+  character (len=*) :: OfileBase
+  character (len=*) :: Diagnostic
 
   integer :: OutRecLen
   integer :: RecNum
@@ -714,32 +650,40 @@ subroutine WriteGrads(GoutDescrip, AzAvg)
   integer :: iz
   integer :: it
 
+  character (len=MaxString) :: CtlFile
+  character (len=MaxString) :: DataFile
+  character (len=MaxString) :: Title
+
+  CtlFile = trim(OfileBase) // '.ctl'
+  DataFile = trim(OfileBase) // '.gra'
+  Title = 'Diagnostic: ' // trim(Diagnostic)
+
   write (0,*) 'Writing out result in GRADS format:'
-  write (0,*) '  Control file: ', trim(GoutDescrip%CtlFile)
-  write (0,*) '  Data file:    ', trim(GoutDescrip%DataFile)
+  write (0,*) '  Control file: ', trim(CtlFile)
+  write (0,*) '  Data file:    ', trim(DataFile)
   write (0,*) '  Total number of data points: ', &
-              GoutDescrip%Nx * GoutDescrip%Ny * GoutDescrip%Nz * GoutDescrip%Nt
+              Gvar%Nx * Gvar%Ny * Gvar%Nz * Gvar%Nt
   write (0,*) ''
 
   ! Control (data description) file
-  open (OutUnit, file=GoutDescrip%CtlFile, form='formatted', action='write', status='replace', iostat=Ierror)
+  open (OutUnit, file=CtlFile, form='formatted', action='write', status='replace', iostat=Ierror)
   if (Ierror .ne. 0) then
-    write (0,*) 'ERROR: cannot open output GRADS control file for writing: ', trim(GoutDescrip%CtlFile)
+    write (0,*) 'ERROR: cannot open output GRADS control file for writing: ', trim(CtlFile)
     stop
   end if
 
-  write (OutUnit, '(a,a)')          'DSET ^./', trim(GoutDescrip%DataFile)
-  write (OutUnit, '(a,a)')          'TITLE ', trim(GoutDescrip%Title)
-  write (OutUnit, '(a,g)')          'UNDEF ', GoutDescrip%UndefVal
+  write (OutUnit, '(a,a)')          'DSET ^./', trim(DataFile)
+  write (OutUnit, '(a,a)')          'TITLE ', trim(Title)
+  write (OutUnit, '(a,g)')          'UNDEF ', Gvar%UndefVal
   write (OutUnit, '(a)')            'OPTIONS  little_endian'
-  write (OutUnit, '(a,i,a,g,g)')    'XDEF ', GoutDescrip%Nx, ' LINEAR ', GoutDescrip%Xstart, GoutDescrip%Xinc
-  write (OutUnit, '(a,i,a,g,g)')    'YDEF ', GoutDescrip%Ny, ' LINEAR ', GoutDescrip%Ystart, GoutDescrip%Yinc
-  write (OutUnit, '(a,i,a,100g)')   'ZDEF ', GoutDescrip%Nz, ' LEVELS ', &
-                                    (GoutDescrip%Zlevels(iz), iz = 1, GoutDescrip%Nz)
-  write (OutUnit, '(a,i,a,a,5x,a)') 'TDEF ', GoutDescrip%Nt, ' LINEAR ', &
-                                    trim(GoutDescrip%Tstart), trim(GoutDescrip%Tinc)
+  write (OutUnit, '(a,i,a,g,g)')    'XDEF ', Gvar%Nx, ' LINEAR ', Gvar%Xstart, Gvar%Xinc
+  write (OutUnit, '(a,i,a,g,g)')    'YDEF ', Gvar%Ny, ' LINEAR ', Gvar%Ystart, Gvar%Yinc
+  write (OutUnit, '(a,i,a,100g)')   'ZDEF ', Gvar%Nz, ' LEVELS ', &
+                                    (Gvar%Zcoords(iz), iz = 1, Gvar%Nz)
+  write (OutUnit, '(a,i,a,a,5x,a)') 'TDEF ', Gvar%Nt, ' LINEAR ', &
+                                    trim(Gvar%Tstart), trim(Gvar%Tinc)
   write (OutUnit, '(a)')            'VARS 1 '
-  write (OutUnit, '(a,i,a)')        trim(GoutDescrip%VarName) , GoutDescrip%Nz, ' 99 Diagnostic'
+  write (OutUnit, '(a,i,a)')        trim(Gvar%Vname) , Gvar%Nz, ' 99 Diagnostic'
   write (OutUnit, '(a)')            'ENDVARS'
 
   close (OutUnit, status='keep')
@@ -747,21 +691,21 @@ subroutine WriteGrads(GoutDescrip, AzAvg)
   ! Data file
   ! dimensions from fastest changing to slowest changing are: x, y, z, t
   ! One record is a single horizontal slice -> (nx * ny) data points
-  OutRecLen = GoutDescrip%Nx * GoutDescrip%Ny * BinRecFactor
-  open (OutUnit, file=GoutDescrip%DataFile, form='unformatted', access='direct', &
+  OutRecLen = Gvar%Nx * Gvar%Ny * BinRecFactor
+  open (OutUnit, file=DataFile, form='unformatted', access='direct', &
         recl=OutRecLen, action='write', status='replace', iostat=Ierror)
   if (Ierror .ne. 0) then
-    write (0,*) 'ERROR: cannot open output GRADS data file for writing: ', trim(GoutDescrip%DataFile)
+    write (0,*) 'ERROR: cannot open output GRADS data file for writing: ', trim(DataFile)
     stop
   end if
 
   RecNum = 1
-  do it = 1, GoutDescrip%Nt
-    do iz = 1, GoutDescrip%Nz
+  do it = 1, Gvar%Nt
+    do iz = 1, Gvar%Nz
       if (modulo(RecNum,100) .eq. 0) then
-        write (0,*) '  Writing: ', trim(GoutDescrip%VarName), ': ', RecNum
+        write (0,*) '  Writing: ', trim(Gvar%Vname), ': ', RecNum
       end if
-      write (OutUnit, rec=RecNum) ((AzAvg(ix,iy,iz,it), ix = 1, GoutDescrip%Nx), iy = 1, GoutDescrip%Ny)
+      write (OutUnit, rec=RecNum) ((Gvar%Vdata(it,iz,ix,iy), ix = 1, Gvar%Nx), iy = 1, Gvar%Ny)
       RecNum = RecNum + 1
     end do
   end do
