@@ -26,7 +26,6 @@ program main
   integer, parameter :: LargeString=512
   integer, parameter :: MediumString=256
   integer, parameter :: LittleString=128
-  integer, parameter :: MaxFiles=10
 
   integer NumRbands
   real :: Wthreshold
@@ -35,12 +34,9 @@ program main
   character (len=LittleString) :: VarName
   logical :: DoHorizVel, DoTangential
 
-  character (len=MediumString), dimension(1:MaxFiles) :: GradsCtlFiles
-  integer :: Nfiles
+  type (GradsControlFiles) :: GctlFiles
 
-  type (GradsDataDescription), dimension(1:MaxFiles) :: GdataDescrip
-  integer :: Nx, Ny, Nz, Nt, Nvars
-  type (GradsOutDescription) :: GoutDescrip
+  integer :: Nx, Ny, Nz, Nt
 
   ! Data arrays: need one for w (vertical velocity), press (pressure)
   ! and the var we are doing the averaging on
@@ -48,32 +44,31 @@ program main
   ! The *Loc vars hold the locations of w, press, var in the GRADS
   ! data files: the first index is the file number, the second index is the
   ! var number
-  real, dimension(:,:,:,:), allocatable :: U, V, Press, Avar, Cfad
+  type (GradsVar) :: U, V, Press, Avar, Cfad
   integer, dimension(:), allocatable :: StmIx, StmIy
   real, dimension(:), allocatable :: MinP, Xcoords, Ycoords
-  type (GradsVarLocation) :: Uloc, Vloc, PressLoc, VarLoc
   integer :: NumBins, ib, iBinCenter
   real :: BinInc, BinStart, BinFilterMin, BinFilterMax
   real, dimension(:), allocatable :: BinVals
 
   integer :: i
-  integer :: Ierror
 
   integer :: ix, iy, iz, it
 
   real :: DeltaX, DeltaY, RadialDist, RbandInc
   real :: TestData, TestGridX, TestGridY
   integer :: iTestRband, iTestCount
+  real, dimension(1:MaxCoords) :: TestZcoords
 
   ! Get the command line arguments
   call GetMyArgs(Infiles, OfileBase, NumRbands, BinFilterMin, BinFilterMax, VarName, &
                  DoHorizVel, DoTangential)
-  call String2List(Infiles, ':', GradsCtlFiles, MaxFiles, Nfiles, 'input files')
+  call String2List(Infiles, ':', GctlFiles%Fnames, MaxFiles, GctlFiles%Nfiles, 'input files')
 
   write (*,*) 'Calculating azimuthal average for RAMS data:'
   write (*,*) '  GRADS input control files:'
-  do i = 1, Nfiles
-    write (*,*) '  ', i, ': ', trim(GradsCtlFiles(i))
+  do i = 1, GctlFiles%Nfiles
+    write (*,*) '  ', i, ': ', trim(GctlFiles%Fnames(i))
   end do
   write (*,*) '  Output file base name:  ', trim(OfileBase)
   write (*,*) '  Number of radial bands: ', NumRbands
@@ -92,52 +87,74 @@ program main
     ! Not running a test so grab the data from GRADS input files and perform the averaging.
 
     ! Read the GRADS data description files and collect the information about the data
-    do i = 1, Nfiles
-      write (*,*) 'Reading GRADS Control File: ', trim(GradsCtlFiles(i))
-      call ReadGradsCtlFile(GradsCtlFiles(i), GdataDescrip(i))
-    end do
-    write (*,*) ''
+    call ReadGradsCtlFiles(GctlFiles)
+
+    ! Initialize the GRADS vars
+    call InitGvarFromGdescrip(GctlFiles, Press, 'press')
+    if (DoHorizVel) then
+      call InitGvarFromGdescrip(GctlFiles, U, 'u')
+      call InitGvarFromGdescrip(GctlFiles, V, 'v')
+      ! In this case, Avar gets built from U and V instead of getting
+      ! read in directly from a GRADS data file. In this case initialize
+      ! Avar from data in U
+      call InitGvarFromGvar(U, Avar, VarName)
+    else
+      call InitGvarFromGdescrip(GctlFiles, Avar, VarName)
+    endif
   
-    call CheckDataDescrip_VS(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, VarLoc, VarName)
-    call CheckDataDescrip_VS(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
+    ! check that the variable dimensions (size and coordinate values) match up, if this
+    ! isn't true, then the subsequent anlysis will be bogus
+    !
+    ! third arg of GvarDimsMatch() is true if one of the vars is 2D, else false
+    if (DoHorizVel) then
+      if (.not. (GvarDimsMatch(Press, U, .false.) .and. GvarDimsMatch(Press, V, .false.))) then
+        write (*,*) 'ERROR: dimensions of u, v, and press do not match'
+        stop
+      endif
+    else
+      if (.not. (GvarDimsMatch(Press, Avar, .false.))) then
+        write (*,*) 'ERROR: dimensions of press, and ', trim(VarName), ' do not match'
+        stop
+      endif
+    endif
+ 
+    ! Always read in Press so use it to record Nx, Ny, Nz, Nt. At this point we have verified
+    ! that Nx, Ny, Nz, Nt are consitent for all the variables.
+    Nx = Press%Nx
+    Ny = Press%Ny
+    Nz = Press%Nz
+    Nt = Press%Nt
   
     write (*,*) 'Gridded data information:'
     write (*,*) '  Number of x (longitude) points:          ', Nx
     write (*,*) '  Number of y (latitude) points:           ', Ny
     write (*,*) '  Number of z (vertical level) points:     ', Nz
     write (*,*) '  Number of t (time) points:               ', Nt
-    write (*,*) '  Total number of grid variables:          ', Nvars
     write (*,*) ''
     write (*,*) '  Number of data values per grid variable: ', Nx*Ny*Nz*Nt
     write (*,*) ''
   
-    write (*,*) 'Locations of variables in GRADS data (file number, var number):'
+    write (*,*) 'Locations of variables in GRADS data (file, var number):'
+    write (*,'(a20,a,a2,i3,a1)') 'press: (', trim(Press%DataFile), ', ', Press%Vnum, ')'
     if (DoHorizVel) then
-      write (*,'(a20,i3,a2,i3,a1)') 'speed - u: (', Uloc%Fnum, ', ', Uloc%Vnum, ')'
-      write (*,'(a20,i3,a2,i3,a1)') 'speed - v: (', Vloc%Fnum, ', ', Vloc%Vnum, ')'
+      write (*,'(a20,a,a2,i3,a1)') 'speed - u: (', trim(U%DataFile), ', ', U%Vnum, ')'
+      write (*,'(a20,a,a2,i3,a1)') 'speed - v: (', trim(V%DataFile), ', ', V%Vnum, ')'
     else
-      write (*,'(a17,a3,i3,a2,i3,a1)') trim(VarName), ': (', VarLoc%Fnum, ', ', VarLoc%Vnum, ')'
+      write (*,'(a17,a3,a,a2,i3,a1)') trim(VarName), ': (', trim(Avar%DataFile), ', ', Avar%Vnum, ')'
     end if
-    write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
     write (*,*) ''
   
-    ! Allocate the data arrays and read in the data from the GRADS data files
-    allocate (U(1:Nx,1:Ny,1:Nz,1:Nt), V(1:Nx,1:Ny,1:Nz,1:Nt), &
-              Press(1:Nx,1:Ny,1:Nz,1:Nt), Avar(1:Nx,1:Ny,1:Nz,1:Nt), &
-              StmIx(1:Nt), StmIy(1:Nt), MinP(1:Nt), Xcoords(1:Nx), Ycoords(1:Ny), stat=Ierror)
-    if (Ierror .ne. 0) then
-      write (*,*) 'ERROR: Data array memory allocation failed'
-      stop
-    end if
-  
     ! Convert the GRADS grid coordinates from longitude, latitude to flat plane (x and y).
-    call ConvertGridCoords(Nx, Ny, GdataDescrip(1), Xcoords, Ycoords)
+    ! Always have Press which has been verified to be consistent with all other vars
+    ! so use Press for this call
+    ! Xcoords, Ycoords are in units of km
+    call ConvertGridCoords(Press, Xcoords, Ycoords)
   
     write (*,*) 'Horzontal Grid Coordinate Info:'
     write (*,*) '  X Range (min lon, max lon) --> (min x, max x): '
-    write (*,*) '    ', GdataDescrip(1)%Xcoords(1), GdataDescrip(1)%Xcoords(Nx), Xcoords(1), Xcoords(Nx)
+    write (*,*) '    ', Press%Xcoords(1), Press%Xcoords(Nx), Xcoords(1), Xcoords(Nx)
     write (*,*) '  Y Range: '
-    write (*,*) '    ', GdataDescrip(1)%Ycoords(1), GdataDescrip(1)%Ycoords(Ny), Ycoords(1), Ycoords(Ny)
+    write (*,*) '    ', Press%Ycoords(1), Press%Ycoords(Ny), Ycoords(1), Ycoords(Ny)
     write (*,*) ''
   
     ! Figure out how big to make each radial band. Assume that the storm center stays near the center of
@@ -171,11 +188,7 @@ program main
       stop
     endif
   
-    allocate (BinVals(1:NumBins), stat=Ierror)
-    if (Ierror .ne. 0) then
-      write (*,*) 'ERROR: Ouput data array memory allocation failed'
-      stop
-    end if
+    allocate (BinVals(1:NumBins))
 
     BinVals(1) = BinStart
     do ib = 2, NumBins
@@ -194,22 +207,14 @@ program main
     write (*,*) ''
 
     ! Read in the data for the vars using the description and location information
-    call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
-    call RecordStormCenter(Nx, Ny, Nz, Nt, Press, StmIx, StmIy, MinP)
+    call ReadGradsData(Press)
+    call RecordStormCenter(Press, StmIx, StmIy, MinP)
     if (DoHorizVel) then
-      call ReadGradsData(GdataDescrip, 'u', Uloc, U, Nx, Ny, Nz, Nt)
-      call ReadGradsData(GdataDescrip, 'v', Vloc, V, Nx, Ny, Nz, Nt)
-      call ConvertHorizVelocity(Nx, Ny, Nz, Nt, U, V, StmIx, StmIy, &
-                      Xcoords, Ycoords, Avar, DoTangential)
+      call ReadGradsData(U)
+      call ReadGradsData(V)
+      call ConvertHorizVelocity(U, V, StmIx, StmIy, Xcoords, Ycoords, Avar, DoTangential)
     else
-      call ReadGradsData(GdataDescrip, VarName, VarLoc, Avar, Nx, Ny, Nz, Nt)
-    end if
-  
-    ! Allocate the output array and compute the azimuthal averaging
-    allocate (Cfad(1:NumRbands,1:NumBins,1:Nz,1:Nt), stat=Ierror)
-    if (Ierror .ne. 0) then
-      write (*,*) 'ERROR: Ouput data array memory allocation failed'
-      stop
+      call ReadGradsData(Avar)
     end if
   else
     ! Performing a test, load up the variables with data that will produce a known result and
@@ -234,25 +239,7 @@ program main
     BinInc = 1.0
     iBinCenter = 2
 
-    allocate (U(1:Nx,1:Ny,1:Nz,1:Nt), V(1:Nx,1:Ny,1:Nz,1:Nt), &
-              Press(1:Nx,1:Ny,1:Nz,1:Nt), Avar(1:Nx,1:Ny,1:Nz,1:Nt), &
-              StmIx(1:Nt), StmIy(1:Nt), MinP(1:Nt), Xcoords(1:Nx), Ycoords(1:Ny), stat=Ierror)
-    if (Ierror .ne. 0) then
-      write (*,*) 'ERROR: TEST: Data array memory allocation failed'
-      stop
-    end if
-
-    allocate (Cfad(1:NumRbands,1:NumBins,1:Nz,1:Nt), stat=Ierror)
-    if (Ierror .ne. 0) then
-      write (*,*) 'ERROR: Ouput data array memory allocation failed'
-      stop
-    end if
-
-    allocate (BinVals(1:NumBins), stat=Ierror)
-    if (Ierror .ne. 0) then
-      write (*,*) 'ERROR: Ouput data array memory allocation failed'
-      stop
-    end if
+    allocate (BinVals(1:NumBins))
 
     BinVals(1) = BinStart
     do ib = 2, NumBins
@@ -275,13 +262,13 @@ program main
       Ycoords(iy) = real(iy-1) * DeltaY
     end do
     do iz = 1, Nz
-      GdataDescrip(1)%Zcoords(iz) = iz
+      TestZcoords(iz) = real(iz)
     end do
-    GdataDescrip(1)%Tstart = '00:00Z24aug1998'
-    GdataDescrip(1)%Tinc =  '01mn'
 
-    ! Undefined value
-    GdataDescrip(1)%UndefVal = 10.0e30
+    call InitGradsVar(Avar, VarName, Nx, Ny, Nz, Nt, 0.0, DeltaX, 0.0, DeltaY, TestZcoords, &
+                      '00:00Z24aug1998', '01mn', 10.0e30, '<NONE>', 0, 0)
+
+    allocate(StmIx(1:Nt), StmIy(1:Nt), MinP(1:Nt))
 
     iTestCount = 1
     do it = 1, Nt
@@ -303,7 +290,7 @@ program main
             iTestRband = int(sqrt(DeltaX*DeltaX + DeltaY*DeltaY) / RbandInc) + 1
             !TestData = real(iTestRband)
             TestData = real(mod(iTestCount,5))
-            Avar(ix,iy,iz,it) = TestData
+            Avar%Vdata(it,iz,ix,iy) = TestData
             iTestCount = iTestCount + 1
           end do 
         end do 
@@ -312,31 +299,23 @@ program main
 
 
   end if
+  
+  ! Allocate the output array and compute the azimuthal averaging
+  call InitGradsVar(Cfad, VarName, NumRbands, NumBins, Avar%Nz, Avar%Nt, &
+                    0.0, RbandInc, BinStart, BinInc, Avar%Zcoords, Avar%Tstart, Avar%Tinc, &
+                    Avar%UndefVal, '<NONE>', 0, 0)
 
-  ! Do the binning. Note that you can pick any index in GdataDescrip below since this data
-  ! has been (superficially) checked out to be consistent.
+  ! Do the binning.
   ! The output array, Cfad has the dimensions:
+  !    t -> time
+  !    z -> levels
   !    x -> radial bands
   !    y -> histogram bins
-  !    z -> levels
-  !    t -> time
 
-  call BuildCfad(Nx, Ny, Nz, Nt, NumRbands, NumBins, iBinCenter, BinFilterMin, BinFilterMax, &
-          StmIx, StmIy, MinP, Avar, Cfad, Xcoords, Ycoords, RadialDist, RbandInc, BinVals, &
-          GdataDescrip(1)%UndefVal)
+  call BuildCfad(NumRbands, NumBins, iBinCenter, BinFilterMin, BinFilterMax, &
+          StmIx, StmIy, MinP, Avar, Cfad, Xcoords, Ycoords, RadialDist, RbandInc, BinVals)
 
-  call BuildGoutDescrip(NumRbands, NumBins, Nz, Nt, Cfad, OfileBase, GdataDescrip(1)%UndefVal, VarName, &
-          0.0, RbandInc, BinStart, BinInc, GdataDescrip(1)%Zcoords, GdataDescrip(1)%Tstart, &
-          GdataDescrip(1)%Tinc, GoutDescrip, 'cfad')
-
-  call WriteGrads(GoutDescrip, Cfad)
-
-  ! Clean up
-  deallocate (U, V, Press, Avar, StmIx, StmIy, MinP, Cfad, BinVals, stat=Ierror)
-  if (Ierror .ne. 0) then
-    write (*,*) 'ERROR: Data array memory de-allocation failed'
-    stop
-  end if
+  call WriteGrads(Cfad, OfileBase, 'cfad')
 
   stop
 end
@@ -366,7 +345,7 @@ subroutine GetMyArgs(Infiles, OfileBase, NumRbands, BinFilterMin, BinFilterMax, 
   if (iargc() .ne. 6) then
     write (*,*) 'ERROR: must supply exactly 6 arguments'
     write (*,*) ''
-    write (*,*) 'USAGE: azavg <in_data_files> <out_data_file> <num_radial_bands> <w_threshold> <var_to_average>'
+    write (*,*) 'USAGE: azavg <in_data_files> <out_data_file> <num_radial_bands> <bin_filter_min> <bin_filter_max> <var_to_average>'
     write (*,*) '        <in_data_files>: GRADS format, control file, colon separated list'
     write (*,*) '        <out_data_file>: GRADS format, this programe will tag on .ctl, .dat suffixes'
     write (*,*) '        <num_radial_bands>: number of bands to split data into'
@@ -418,19 +397,21 @@ end subroutine
 ! the histogram binning within each radial band.
 !
 
-subroutine BuildCfad(Nx, Ny, Nz, Nt, NumRbands, NumBins, iBinCenter, BinFilterMin, &
+subroutine BuildCfad(NumRbands, NumBins, iBinCenter, BinFilterMin, &
           BinFilterMax, StmIx, StmIy, MinP, Avar, Cfad, Xcoords, Ycoords, RadialDist, &
-          RbandInc, BinVals, UndefVal)
+          RbandInc, BinVals)
 
-  integer :: Nx, Ny, Nz, Nt, NumRbands, NumBins, iBinCenter
-  real, dimension(1:Nx,1:Ny,1:Nz,1:Nt) :: Avar
-  real, dimension(1:NumRbands,1:NumBins,1:Nz,1:Nt) :: Cfad
-  integer, dimension(1:Nt) :: StmIx, StmIy
-  real, dimension(1:Nt) :: MinP
-  real, dimension(1:Nx) :: Xcoords
-  real, dimension(1:Ny) :: Ycoords
+  use gdata_utils
+  implicit none
+
+  integer :: NumRbands, NumBins, iBinCenter
+  type (GradsVar) :: Avar, Cfad
+  integer, dimension(1:Avar%Nt) :: StmIx, StmIy
+  real, dimension(1:Avar%Nt) :: MinP
+  real, dimension(1:Avar%Nx) :: Xcoords
+  real, dimension(1:Avar%Ny) :: Ycoords
   real, dimension(1:NumBins) :: BinVals
-  real :: BinFilterMin, BinFilterMax, UndefVal
+  real :: BinFilterMin, BinFilterMax, RadialDist, RbandInc
 
   integer :: ix, iy, iz, it, ib, ir
   real :: DeltaX, DeltaY, Radius, BinTotal
@@ -439,9 +420,9 @@ subroutine BuildCfad(Nx, Ny, Nz, Nt, NumRbands, NumBins, iBinCenter, BinFilterMi
   ! initialize the counts
   do ir = 1, NumRbands
     do ib = 1, NumBins
-      do iz = 1, Nz
-        do it = 1, Nt
-          Cfad(ir, ib, iz, it) = 0.0;
+      do iz = 1, Avar%Nz
+        do it = 1, Avar%Nt
+          Cfad%Vdata(it, iz, ir, ib) = 0.0;
         end do 
       end do 
     end do 
@@ -450,7 +431,7 @@ subroutine BuildCfad(Nx, Ny, Nz, Nt, NumRbands, NumBins, iBinCenter, BinFilterMi
   ! create the histogram data
   write (*,*) 'Binning Data:'
 
-  do it = 1, Nt
+  do it = 1, Avar%Nt
     if (modulo(it,10) .eq. 0) then
       write (*,*) '  Timestep: ', it
       write (*,'(a,i3,a,i3,a,g,a,g,a)') '    Storm Center: (', StmIx(it), ', ', StmIy(it), ') --> (', &
@@ -458,14 +439,15 @@ subroutine BuildCfad(Nx, Ny, Nz, Nt, NumRbands, NumBins, iBinCenter, BinFilterMi
       write (*,*) '    Minimum Pressue: ', MinP(it)
     end if
 
-    do iz = 1, Nz
-      do iy = 1, Ny
-        do ix = 1, Nx
+    do iz = 1, Avar%Nz
+      do iy = 1, Avar%Ny
+        do ix = 1, Avar%Nx
           ! Throw out undefined data points, and those falling inbetween BinFilterMin
-          ! and BinFilterMax
-          if ((Avar(ix,iy,iz,it) .ne. UndefVal) .and. &
-              ((Avar(ix,iy,iz,it) .lt. BinFilterMin) .or. &
-               (Avar(ix,iy,iz,it) .gt. BinFilterMax))) then
+          ! and BinFilterMax (which is specific to processing w - intereseted in the
+          ! greater abs values)
+          if ((Avar%Vdata(it,iz,ix,iy) .ne. Avar%UndefVal) .and. &
+              ((Avar%Vdata(it,iz,ix,iy) .lt. BinFilterMin) .or. &
+               (Avar%Vdata(it,iz,ix,iy) .gt. BinFilterMax))) then
              ! find the radial band for this data point
              DeltaX = Xcoords(ix)-Xcoords(StmIx(it))
              DeltaY = Ycoords(iy)-Ycoords(StmIy(it))
@@ -488,18 +470,18 @@ subroutine BuildCfad(Nx, Ny, Nz, Nt, NumRbands, NumBins, iBinCenter, BinFilterMi
              do ib = 1, NumBins
                ! on the bin center
                if (ib .eq. iBinCenter) then
-                 if ((Avar(ix,iy,iz,it) .gt. BinVals(ib-1)) .and. (Avar(ix,iy,iz,it) .lt. BinVals(ib+1))) then
+                 if ((Avar%Vdata(it,iz,ix,iy) .gt. BinVals(ib-1)) .and. (Avar%Vdata(it,iz,ix,iy) .lt. BinVals(ib+1))) then
                    iBin = ib
                  endif
                endif 
 
                ! to the left of the center bin
                if (ib .lt. iBinCenter) then
-                 if (Avar(ix,iy,iz,it) .le. BinVals(ib)) then
+                 if (Avar%Vdata(it,iz,ix,iy) .le. BinVals(ib)) then
                    if (ib .eq. 1) then
                      iBin = ib
                    else
-                     if (Avar(ix,iy,iz,it) .gt. BinVals(ib-1)) then
+                     if (Avar%Vdata(it,iz,ix,iy) .gt. BinVals(ib-1)) then
                        iBin = ib
                      endif
                    endif
@@ -508,11 +490,11 @@ subroutine BuildCfad(Nx, Ny, Nz, Nt, NumRbands, NumBins, iBinCenter, BinFilterMi
 
                ! to the right of the center bin
                if (ib .gt. iBinCenter) then
-                 if (Avar(ix,iy,iz,it) .ge. BinVals(ib)) then
+                 if (Avar%Vdata(it,iz,ix,iy) .ge. BinVals(ib)) then
                    if (ib .eq. NumBins) then
                      iBin = ib
                    else
-                     if (Avar(ix,iy,iz,it) .lt. BinVals(ib+1)) then
+                     if (Avar%Vdata(it,iz,ix,iy) .lt. BinVals(ib+1)) then
                        iBin = ib
                      endif
                    endif
@@ -522,11 +504,11 @@ subroutine BuildCfad(Nx, Ny, Nz, Nt, NumRbands, NumBins, iBinCenter, BinFilterMi
 
              if (iBin .eq. 0) then
                write (*,*) 'ERROR: did not find a bin for data at location:'
-               write (*,*) '  ', ix, iy, iz, it
+               write (*,*) 'ERROR:   it, iz, ix, iy: ', it, iz, ix, iy
                stop
              endif
              
-             Cfad(iRband, iBin, iz, it) = Cfad(iRband, iBin, iz, it) + 1.0
+             Cfad%Vdata(it, iz, iRband, iBin) = Cfad%Vdata(it, iz, iRband, iBin) + 1.0
           endif
         end do
       end do
@@ -535,20 +517,20 @@ subroutine BuildCfad(Nx, Ny, Nz, Nt, NumRbands, NumBins, iBinCenter, BinFilterMi
 
   ! Have counts in Cfad now. Convert these to % numbers.
 
-  do it = 1, Nt
-    do iz = 1, Nz
+  do it = 1, Avar%Nt
+    do iz = 1, Avar%Nz
       do ir = 1, NumRbands
         ! sum up counts in all the bins
         BinTotal = 0.0
         do ib = 1, NumBins
-          BinTotal = BinTotal + Cfad(ir, ib, iz, it)
+          BinTotal = BinTotal + Cfad%Vdata(it, iz, ir, ib)
         end do
         ! convert entries to per cent values
         do ib = 1, NumBins
           ! If we selected out all data points, then the bin total will
           ! be zero. In this case, leave the zeros in the Cfad array.
           if (BinTotal .ne. 0.0) then
-            Cfad(ir, ib, iz, it) = (Cfad(ir, ib, iz, it) / BinTotal) * 100.0
+            Cfad%Vdata(it, iz, ir, ib) = (Cfad%Vdata(it, iz, ir, ib) / BinTotal) * 100.0
           endif
         end do
       end do
