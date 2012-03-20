@@ -22,18 +22,14 @@ program main
   integer, parameter :: LargeString=512
   integer, parameter :: MediumString=256
   integer, parameter :: LittleString=128
-  integer, parameter :: MaxFiles=10
 
   character (len=LargeString) :: Infiles
   character (len=MediumString) :: OfileBase
   character (len=LittleString) :: VarName
 
-  character (len=MediumString), dimension(1:MaxFiles) :: GradsCtlFiles
-  integer :: Nfiles
+  type (GradsControlFiles) :: GctlFiles
 
-  type (GradsDataDescription), dimension(1:MaxFiles) :: GdataDescrip
-  integer :: Nx, Ny, Nz, Nt, Nvars, Nbins
-  type (GradsOutDescription) :: GoutDescrip
+  integer :: Nx, Ny, Nz, Nt, Nbins
   real :: BinStart, BinSize, DataMin, DataMax
   logical :: DoLogScale, DoLinScale, DoFaScale
 
@@ -43,12 +39,10 @@ program main
   ! The *Loc vars hold the locations of w, press, var in the GRADS
   ! data files: the first index is the file number, the second index is the
   ! var number
-  real, dimension(:,:,:,:), allocatable :: Var, Hist
+  type (GradsVar) :: Gvar, Hist
   real :: Xstart, Xinc, Ystart, Yinc
-  type (GradsVarLocation) :: VarLoc
 
   integer :: i, Nhoriz
-  integer :: Ierror
 
   integer :: ix, iy, iz, it, ib
   logical :: SuperCooled, WarmRain
@@ -56,12 +50,12 @@ program main
   ! Get the command line argument
   call GetMyArgs(Infiles, OfileBase, VarName, DoLogScale, DoLinScale, DoFaScale, DataMin, DataMax, &
                      Nbins, BinStart, BinSize)
-  call String2List(Infiles, ':', GradsCtlFiles, MaxFiles, Nfiles, 'input files')
+  call String2List(Infiles, ':', GctlFiles%Fnames, MaxFiles, GctlFiles%Nfiles, 'input files')
 
   write (*,*) 'Building histograms for GRADS data:'
   write (*,*) '  GRADS input control files:'
-  do i = 1, Nfiles
-    write (*,*) '  ', i, ': ', trim(GradsCtlFiles(i))
+  do i = 1, GctlFiles%Nfiles
+    write (*,*) '  ', i, ': ', trim(GctlFiles%Fnames(i))
   end do
   write (*,*) '  Output file base name:  ', trim(OfileBase)
   write (*,*) '  GRADS variable that is being analyzed: ', trim(VarName)
@@ -78,39 +72,31 @@ program main
 
 
   ! Read the GRADS data description files and collect the information about the data
-  do i = 1, Nfiles
-    write (*,*) 'Reading GRADS Control File: ', trim(GradsCtlFiles(i))
-    call ReadGradsCtlFile(GradsCtlFiles(i), GdataDescrip(i))
-  end do
-  write (*,*) ''
-  flush(6)
+  call ReadGradsCtlFiles(GctlFiles)
 
-  call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, VarLoc, VarName)
+  call InitGvarFromGdescrip(GctlFiles, Gvar, VarName)
 
   write (*,*) 'Gridded data information:'
-  write (*,*) '  Number of x (longitude) points:          ', Nx
-  write (*,*) '  Number of y (latitude) points:           ', Ny
-  write (*,*) '  Number of z (vertical level) points:     ', Nz
-  write (*,*) '  Number of t (time) points:               ', Nt
-  write (*,*) '  Total number of grid variables:          ', Nvars
+  write (*,*) '  Number of x (longitude) points:          ', Gvar%Nx
+  write (*,*) '  Number of y (latitude) points:           ', Gvar%Ny
+  write (*,*) '  Number of z (vertical level) points:     ', Gvar%Nz
+  write (*,*) '  Number of t (time) points:               ', Gvar%Nt
   write (*,*) ''
-  write (*,*) '  Number of data values per grid variable: ', Nx*Ny*Nz*Nt
+  write (*,*) '  Number of data values per grid variable: ', Gvar%Nx*Gvar%Ny*Gvar%Nz*Gvar%Nt
   write (*,*) ''
 
-  write (*,*) 'Location of variable in GRADS data (file number, var number):'
-  write (*,'(a17,a3,i3,a2,i3,a1)') trim(VarName), ': (', VarLoc%Fnum, ', ', VarLoc%Vnum, ')'
+  write (*,*) 'Locations of variables in GRADS data (file, var number):'
+  write (*,'(a17,a3,a,a2,i3,a1)') trim(VarName), ': (', trim(Gvar%DataFile), ', ', Gvar%Vnum, ')'
   write (*,*) ''
   flush(6)
 
-  ! Allocate the data arrays and read in the data from the GRADS data files
-  allocate (Var(1:Nx,1:Ny,1:Nz,1:Nt), Hist(1:Nbins, 1:1, 1:Nz, 1:Nt), stat=Ierror)
-  if (Ierror .ne. 0) then
-    write (*,*) 'ERROR: Data array memory allocation failed'
-    stop
-  end if
-
   ! Read in the data for the vars using the description and location information
-  call ReadGradsData(GdataDescrip, VarName, VarLoc, Var, Nx, Ny, Nz, Nt)
+  call ReadGradsData(Gvar)
+
+  ! Initialize the output var
+  call InitGradsVar(Hist, VarName, Nbins, 1, Gvar%Nz, Gvar%Nt, &
+                    BinStart, BinSize, 0.0, 1.0, Gvar%Zcoords, Gvar%Tstart, Gvar%Tinc, &
+                    Gvar%UndefVal, '<NONE>', 0, 0)
 
   ! Generate a histogram based on the entire horizontal domain for each t and z combination
   !     Bin       Range
@@ -123,20 +109,20 @@ program main
   ! This formula doesn't check to see if x will fit in one of the defined bins meaning that
   ! an index (ib value) can fall outside the defined bins. Check for this and just snap an
   ! ib value < 1 to 1 and an ib value > Nbins to Nbins.
-  Nhoriz = Nx * Ny
-  do it = 1, Nt
-    do iz = 1, Nz
+  Nhoriz = Gvar%Nx * Gvar%Ny
+  do it = 1, Gvar%Nt
+    do iz = 1, Gvar%Nz
 
       ! zero out the bin counts
       do ib = 1, Nbins
-        Hist(ib,1,iz,it) = 0.0
+        Hist%Vdata(it,iz,ib,1) = 0.0
       enddo
 
       ! walk through the entire horizontal domain and count up the occurrances of each bin value
-      do ix = 1, Nx
-        do iy = 1, Ny
+      do ix = 1, Gvar%Nx
+        do iy = 1, Gvar%Ny
           ! figure out which bin to place the current var value
-          ib = int((Var(ix,iy,iz,it) - BinStart)/BinSize) + 1
+          ib = int((Gvar%Vdata(it,iz,ix,iy) - BinStart)/BinSize) + 1
           if (ib .lt. 1) then
             ib = 1
           endif
@@ -144,8 +130,8 @@ program main
             ib = Nbins
           endif
 
-          if ((Var(ix,iy,iz,it) .ge. DataMin) .and. (Var(ix,iy,iz,it) .le. DataMax)) then
-            Hist(ib,1,iz,it) = Hist(ib,1,iz,it) + 1.0
+          if ((Gvar%Vdata(it,iz,ix,iy) .ge. DataMin) .and. (Gvar%Vdata(it,iz,ix,iy) .le. DataMax)) then
+            Hist%Vdata(it,iz,ib,1) = Hist%Vdata(it,iz,ib,1) + 1.0
           endif
         enddo
       enddo
@@ -154,37 +140,22 @@ program main
      if (DoLogScale) then
        ! convert the counts to logarithmic scale
        do ib = 1, Nbins
-         if (Hist(ib,1,iz,it) .gt. 0.0) then
-           Hist(ib,1,iz,it) = log10(Hist(ib,1,iz,it))
+         if (Hist%Vdata(it,iz,ib,1) .gt. 0.0) then
+           Hist%Vdata(it,iz,ib,1) = log10(Hist%Vdata(it,iz,ib,1))
          endif
        enddo
      else if (DoFaScale) then
        ! scale counts by fractional area of entire domain
        ! divide counts by total number of horiz grid points (assume uniform sized grid cells)
        do ib = 1, Nbins
-         Hist(ib,1,iz,it) = Hist(ib,1,iz,it) / float(Nhoriz)
+         Hist%Vdata(it,iz,ib,1) = Hist%Vdata(it,iz,ib,1) / float(Nhoriz)
        enddo
      endif
 
     enddo
   enddo
 
-  Xstart = BinStart
-  Xinc = BinSize
-  Ystart = 0.0
-  Yinc = 1.0
-  call BuildGoutDescrip(Nbins, 1, Nz, Nt, Hist, OfileBase, GdataDescrip(1)%UndefVal, &
-          VarName, Xstart, Xinc, Ystart, Yinc, GdataDescrip(1)%Zcoords, &
-          GdataDescrip(1)%Tstart, GdataDescrip(1)%Tinc, GoutDescrip, 'hist')
-
-  call WriteGrads(GoutDescrip, Hist)
-
-  ! Clean up
-  deallocate (Var, Hist, stat=Ierror)
-  if (Ierror .ne. 0) then
-    write (*,*) 'ERROR: Data array memory de-allocation failed'
-    stop
-  end if
+  call WriteGrads(Hist, OfileBase, 'hist')
 
   stop
 end
