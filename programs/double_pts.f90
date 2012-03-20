@@ -19,75 +19,59 @@ program main
   integer, parameter :: LargeString=512
   integer, parameter :: MediumString=256
   integer, parameter :: LittleString=128
-  integer, parameter :: MaxFiles=10
 
   character (len=MediumString) :: OfileBase
   character (len=LittleString) :: VarName
 
-  character (len=MediumString), dimension(1:MaxFiles) :: GradsCtlFiles
+  type (GradsControlFiles) :: GctlFiles
   integer :: MinLevel, MaxLevel
 
-  type (GradsDataDescription), dimension(1:MaxFiles) :: GdataDescrip
-  integer :: Nx, Ny, Nz, Nt, Nvars
-  type (GradsOutDescription) :: GoutDescrip
-
   ! Data arrays
-  ! OutData dims: x, y, z, t
-  ! VarData dims: x, y, z, t
-  real, dimension(:,:,:,:), allocatable :: OutData, VarData
-  type (GradsVarLocation), dimension(1:MaxFiles) :: VarLocs
+  ! OutVar dims: t, z, x, y
+  ! InVar dims: t, z, x, y
+  type (GradsVar) :: OutVar, InVar
 
   integer :: i
-  integer :: Ierror
 
   integer :: ix, iy, iz, it
-  integer :: outTime
+  integer :: OutTime
+  integer :: OutNt
   
-  real :: Xstart, Xinc, Ystart, Yinc
-
   ! Get the command line arguments
-  call GetMyArgs(GradsCtlFiles(1), OfileBase, VarName)
+  call GetMyArgs(GctlFiles%Fnames(1), OfileBase, VarName)
+  GctlFiles%Nfiles = 1
 
-  write (*,*) 'Joining GRADS data:'
-  write (*,*) '  GRADS input control file:', trim(GradsCtlFiles(1))
-  write (*,*) '  GRADS variable:', trim(VarName)
+  write (*,*) 'Doubling points in the GRADS data:'
+  write (*,*) '  GRADS input control file: ', trim(GctlFiles%Fnames(1))
+  write (*,*) '  GRADS variable: ', trim(VarName)
   write (*,*) ''
+  flush(6)
 
   ! Read the GRADS data description file and collect the information about the data
-  write (*,*) 'Reading GRADS Control File: ', trim(GradsCtlFiles(1))
-  call ReadGradsCtlFile(GradsCtlFiles(1), GdataDescrip(1))
+  call ReadGradsCtlFiles(GctlFiles)
+
+  call InitGvarFromGdescrip(GctlFiles, InVar, VarName)
+  OutNt = (2*InVar%Nt) - 1  ! will be insterting Nt-1 new points inbetween the existing Nt points
+
+  write (*,*) 'Locations of variables in GRADS data (file, var number):'
+  write (*,'(a17,a3,a,a2,i3,a1)') trim(VarName), ': (', trim(InVar%DataFile), ', ', InVar%Vnum, ')'
   write (*,*) ''
   flush(6)
 
-  ! Check the data description for consistency and locate the variables in the GRADS control files
-  call CheckDataDescripDouble(GdataDescrip, 1, Nx, Ny, Nz, Nt, Nvars, VarLocs, VarName)
-  write (*,*) 'Variable location for file: ', trim(GradsCtlFiles(1))
-  write (*,*) '  Fnum: ', VarLocs(1)%Fnum
-  write (*,*) '  Vnum: ', VarLocs(1)%Vnum
   write (*,*) 'Variable dimensions (after doubling time points):'
-  write (*,*) '  Nx: ', Nx
-  write (*,*) '  Ny: ', Ny
-  write (*,*) '  Nz: ', Nz
-  write (*,*) '  Nt: ', Nt
+  write (*,*) '  Nx: ', InVar%Nx
+  write (*,*) '  Ny: ', InVar%Ny
+  write (*,*) '  Nz: ', InVar%Nz
+  write (*,*) '  Nt: ', InVar%Nt
+  write (*,*) '  Output Nt: ', OutNt
   write (*,*) ''
   flush(6)
 
-  !Read in the data and copy into the output array as you go
-  allocate (OutData(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
-  if (Ierror .ne. 0) then
-    write (*,*) 'ERROR: Data array memory allocation failed'
-    stop
-  end if
+  call InitGradsVar(OutVar, VarName, InVar%Nx, InVar%Ny, InVar%Nz, OutNt, &
+                    InVar%Xstart, InVar%Xinc, InVar%Ystart, InVar%Yinc, InVar%Zcoords, &
+                    InVar%Tstart, InVar%Tinc, InVar%UndefVal, '<NONE>', 0, 0)
 
-  allocate(VarData(1:GdataDescrip(1)%nx,1:GdataDescrip(1)%ny,1:GdataDescrip(1)%nz, &
-           1:GdataDescrip(1)%nt), stat=Ierror)
-  if (Ierror .ne. 0) then
-    write (*,*) 'ERROR: VarData array memory allocation failed'
-    stop
-  end if
-
-  call ReadGradsData(GdataDescrip, VarName, VarLocs(1), VarData, GdataDescrip(1)%nx, &
-       GdataDescrip(1)%ny, GdataDescrip(1)%nz, GdataDescrip(1)%nt)
+  call ReadGradsData(InVar)
 
   ! Not quite doubling points, instead we are filling in new time points in
   ! between all the existing points in the input data (so if there are n
@@ -115,52 +99,27 @@ program main
   !          into the previous output time step
   !        - place data at current intput time step to current output time step
 
-  do it = 1, GdataDescrip(1)%nt
+  do it = 1, InVar%Nt
     if (it .eq. 1) then
-      outTime = 1
+      OutTime = 1
     else
-      outTime = outTime + 2
+      OutTime = OutTime + 2
     end if
-    do iz = 1, GdataDescrip(1)%nz
-      do iy = 1, GdataDescrip(1)%ny
-        do ix = 1, GdataDescrip(1)%nx
+    do iz = 1, InVar%Nz
+      do iy = 1, InVar%Ny
+        do ix = 1, InVar%Nx
           if (it .eq. 1) then
-            OutData(ix,iy,iz,outTime) = VarData(ix,iy,iz,it)
+            OutVar%Vdata(OutTime,iz,ix,iy) = InVar%Vdata(it,iz,ix,iy)
           else
-            OutData(ix,iy,iz,(outTime-1)) = (VarData(ix,iy,iz,it) + VarData(ix,iy,iz,(it-1))) / 2.0
-            OutData(ix,iy,iz,outTime) = VarData(ix,iy,iz,it)
+            OutVar%Vdata((OutTime-1),iz,ix,iy) = (InVar%Vdata(it,iz,ix,iy) + InVar%Vdata((it-1),iz,ix,iy)) / 2.0
+            OutVar%Vdata(OutTime,iz,ix,iy) = InVar%Vdata(it,iz,ix,iy)
           end if
         end do
       end do
     end do
   end do
 
-  deallocate (VarData, stat=Ierror)
-  if (Ierror .ne. 0) then
-    write (*,*) 'ERROR: VarData array memory de-allocation failed'
-    stop
-  end if
-
-  !Write out the new data
-
-  Xstart = GdataDescrip(1)%Xcoords(1)
-  if (Nx .gt. 1) then
-    Xinc = GdataDescrip(1)%Xcoords(2)-GdataDescrip(1)%Xcoords(1)
-  else
-    Xinc = 1.0
-  end if
-  Ystart = GdataDescrip(1)%Ycoords(1)
-  if (Ny .gt. 1) then
-    Yinc = GdataDescrip(1)%Ycoords(2)-GdataDescrip(1)%Ycoords(1)
-  else
-    Yinc = 1.0
-  end if
-
-  call BuildGoutDescrip(Nx, Ny, Nz, Nt, OutData, OfileBase, GdataDescrip(1)%UndefVal, VarName, &
-          Xstart, Xinc, Ystart, Yinc, GdataDescrip(1)%Zcoords, GdataDescrip(1)%Tstart, &
-          GdataDescrip(1)%Tinc, GoutDescrip, 'dpts')
-
-  call WriteGrads(GoutDescrip, OutData)
+  call WriteGrads(OutVar, VarName, 'dpts')
 
   stop
 end
@@ -205,103 +164,3 @@ subroutine GetMyArgs(Infile, OfileBase, VarName)
   return
 end subroutine
 
-!*************************************************************************
-! CheckDataDescripDouble()
-!
-! This routine will check the consistency of the data description obtained
-! from the GRADS control files. The number of x, y, z, t points should match
-! in all files. Also, the total number of variables are calculated and returned
-! in Nvars.
-!
-! This routein will check one variable at a time, so it needs to be called
-! multiple times for multiple variables.
-!
-
-subroutine CheckDataDescripDouble(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, VarLocs, VarName)
-  use gdata_utils
-  implicit none
-
-  type (GradsDataDescription), dimension(*) :: GdataDescrip
-  integer Nx, Ny, Nz, Nt, Nfiles
-  integer Nvars
-  type (GradsVarLocation), dimension(*) :: VarLocs
-  character (len=*) :: VarName
-  logical :: DoHorizVel
-
-  ! i -> file number, j -> var number
-  integer i, j
-  logical BadData, GotNz
-
-  BadData = .false.
-  GotNz = .false.
-  do i = 1, Nfiles
-    VarLocs(i)%Fnum = 0
-    VarLocs(i)%Vnum = 0
-
-    ! Make sure nx, ny and for all vars (2D and 3D) match
-    if (i .eq. 1) then
-      Nx = GdataDescrip(i)%nx
-      Ny = GdataDescrip(i)%ny
-      Nt = GdataDescrip(i)%nt
-   
-      Nvars = GdataDescrip(i)%nvars
-    else
-      if (GdataDescrip(i)%nx .ne. Nx) then
-        write (0,*) 'ERROR: number of x points in GRADS control files do not match'
-        BadData = .true.
-      end if
-      if (GdataDescrip(i)%ny .ne. Ny) then
-        write (0,*) 'ERROR: number of y points in GRADS control files do not match'
-        BadData = .true.
-      end if
-
-      Nt = Nt + GdataDescrip(i)%nt
-      Nvars = Nvars + GdataDescrip(i)%nvars
-    end if
-
-    ! allow for a 2D var (nz eq 1), but make sure all 3D vars have matching nz
-    if (GotNz) then
-      if ((GdataDescrip(i)%nz .ne. 1) .and. (GdataDescrip(i)%nz .ne. Nz)) then
-        write (0,*) 'ERROR: number of z points in GRADS control files do not match'
-        BadData = .true.
-      end if
-    else
-      ! grab the first nz that is not equal to 1 (first 3D var)
-      if ((GdataDescrip(i)%nz .ne. 1) .and. (.not. GotNz)) then
-        Nz = GdataDescrip(i)%nz
-        GotNz = .true.
-      end if
-    end if
-
-    ! Record the location of the given variable in each of the files
-    do j =1, GdataDescrip(i)%nvars
-      if (GdataDescrip(i)%VarNames(j) .eq. VarName) then
-        VarLocs(i)%Fnum = i
-        VarLocs(i)%Vnum = j
-      end if
-    end do
-  end do
-
-  ! If the entire list was 2D variables, then the code above will have not recorded an
-  ! Nz value (GotNz is still .false.). Set Nz to '1' in this case
-  if (.not. GotNz) then
-    Nz = 1
-  end if
-
-  ! Make Nt be the total time steps (after doubling the time steps)
-  ! Actually adding Nt-1 time steps which fit in between the existing
-  ! intput time steps.
-  Nt = (2*Nt) - 1
-
-  ! Check to see if you got the variable
-  do i = 1, Nfiles
-    if (VarLocs(i)%Fnum .eq. 0) then
-      write (0,*) 'ERROR: cannot find grid var "', trim(VarName), '" in the GRADS data file number:', i
-      BadData = .true.
-    end if
-  end do
-
-  if (BadData) then
-    stop
-  end if
-end subroutine
