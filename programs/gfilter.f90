@@ -25,48 +25,42 @@ program main
   integer, parameter :: LargeString=512
   integer, parameter :: MediumString=256
   integer, parameter :: LittleString=128
-  integer, parameter :: MaxFiles=10
 
   character (len=LargeString) :: Infiles, OfileBase
 
   logical :: DoCylVol, DoCold, DoWarm, DoVertVel, DoAbsVertVel, DoLwp
 
-  character (len=MediumString), dimension(1:MaxFiles) :: GradsCtlFiles
-  integer :: Nfiles
+  type (GradsControlFiles) :: GctlFiles
   integer, dimension(:), allocatable :: StmIx, StmIy
 
   real :: DeltaX, DeltaY, MinW, MaxW, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, LwpThresh
   real :: Xstart, Xinc, Ystart, Yinc
   real, dimension(:), allocatable :: MinP, Xcoords, Ycoords, Zcoords
 
-  type (GradsDataDescription), dimension(1:MaxFiles) :: GdataDescrip
-  integer :: Nx, Ny, Nz, Nt, Nvars
-  type (GradsOutDescription) :: GoutDescrip
-
   ! Data arrays: cloud, tempc, precipr
   ! Dims: x, y, z, t
   ! The *Loc vars hold the locations of cloud, tempc, precipr in the GRADS
   ! data files: the first index is the file number, the second index is the
   ! var number
-  real, dimension(:,:,:,:), allocatable :: W, Press, TempC, CintLiq, OutFilter
-  type (GradsVarLocation) :: WLoc, PressLoc, TempcLoc, CintLiqLoc
+  type (GradsVar) :: W, Press, TempC, CintLiq, OutFilter
 
   integer :: i
-  integer :: Ierror
   integer :: ZcoordLoc
 
   integer :: ix, iy, iz, it
+  integer :: Nx, Ny, Nz, Nt
+  real :: MinLon, MaxLon, MinLat, MaxLat
 
   logical :: SelectThisPoint
 
   ! Get the command line arguments
   call GetMyArgs(Infiles, OfileBase, LargeString, DoCylVol, DoCold, DoWarm, DoVertVel, DoAbsVertVel, DoLwp, MinW, MaxW, LwpThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ)
-  call String2List(Infiles, ':', GradsCtlFiles, MaxFiles, Nfiles, 'input files')
+  call String2List(Infiles, ':', GctlFiles%Fnames, MaxFiles, GctlFiles%Nfiles, 'input files')
 
   write (*,*) 'Creating GRADS data filter:'
   write (*,*) '  GRADS input control files:'
-  do i = 1, Nfiles
-    write (*,*) '  ', i, ': ', trim(GradsCtlFiles(i))
+  do i = 1, GctlFiles%Nfiles
+    write (*,*) '  ', i, ': ', trim(GctlFiles%Fnames(i))
   end do
   write (*,*) '  Output file base name:  ', trim(OfileBase)
   write (*,*) '  Data selection specs: '
@@ -103,75 +97,102 @@ program main
   flush(6)
 
   ! Read the GRADS data description files and collect the information about the data
-  do i = 1, Nfiles
-    write (*,*) 'Reading GRADS Control File: ', trim(GradsCtlFiles(i))
-    call ReadGradsCtlFile(GradsCtlFiles(i), GdataDescrip(i))
-  end do
-  write (*,*) ''
-  flush(6)
+  call ReadGradsCtlFiles(GctlFiles)
 
   ! See if we have access to all of the required GRADS variables
-  ! These checks also set Nx, Ny, Nz, Nt, Nvars for the following code section
   !
   ! Note that press, tempc, w are 3d variables and cint_liq is a 2d variable (only one
-  ! z level). CheckDataDescripOneVar() will make sure that Nz gets set to the 3d variable's
-  ! number of z levels even though the call using cint_liq is last. If cint_liq is the only
-  ! variable being read in, then Nz will be set to one.
+  ! z level).
   if (DoCylVol) then
     ! Need pressure (to find the storm center)
-    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, PressLoc, 'press')
-  end if
+    call InitGvarFromGdescrip(GctlFiles, Press, 'press')
+  endif
   if (DoWarm .or. DoCold) then
     ! Need temperature (in deg. C)
-    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, TempcLoc, 'tempc')
-  end if
+    call InitGvarFromGdescrip(GctlFiles, TempC, 'tempc')
+  endif
   if (DoVertVel .or. DoAbsVertVel) then
     ! Need vertical velocity
-    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, WLoc, 'w')
-  end if
+    call InitGvarFromGdescrip(GctlFiles, W, 'w')
+  endif
   if (DoLwp) then
     ! Need column integrated liquid water
-    call CheckDataDescripOneVar(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, CintLiqLoc, 'cint_liq')
-  end if
+    call InitGvarFromGdescrip(GctlFiles, CintLiq, 'cint_liq')
+  endif
 
-  ! Calculate the x,y coordinates (in km) for doing selection by radius from storm center.
-  ! Also for setting DeltaX and DeltaY (in m)
-  ! Note that we want to access a 3d variable in GdataDescrip() if one exists in order
-  ! to get the correct list of Zcoords. Look at what's in GdataDescrip() and point ZcoordLoc
-  ! to an appropriate variable.
-  allocate (Xcoords(1:Nx), Ycoords(1:Ny), Zcoords(1:Nz), stat=Ierror)
-  if (Ierror .ne. 0) then
-    write (*,*) 'ERROR: Data array memory allocation failed'
-    stop
-  end if
+  ! If we got to here all the required variables are available. Check to see if they have consistent
+  ! dimensions.
+  ! Use 3D values for Nx, Ny, Nz, Nt if any 3D variable is being used. If column integreated
+  ! liquid is the only variable being used, then set Nx, Ny, Nz, Nt to the 2D values (from col. int. liq.)
+  if (DoCylVol) then
+    ! check consistency of dimensions of the variables
+    if (DoWarm .or. DoCold) then
+      ! using Tempc, check that it is consistent with Press
+      if (.not. (GvarDimsMatch(Press, TempC, .false.))) then
+        write (*,*) 'ERROR: dimensions of press and tempc do not match'
+        stop
+      endif
+    endif
+    if (DoVertVel .or. DoAbsVertVel) then
+      ! using W, check that it is consistent with Press
+      if (.not. (GvarDimsMatch(Press, W, .false.))) then
+        write (*,*) 'ERROR: dimensions of press and w do not match'
+        stop
+      endif
+    endif
+    if (DoLwp) then
+      ! using CintLiq, check that it is consistent with Press
+      if (.not. (GvarDimsMatch(Press, CintLiq, .true.))) then
+        write (*,*) 'ERROR: dimensions of press and cint_liq do not match'
+        stop
+      endif
+    endif
 
-  ZcoordLoc = -1
-  if (DoCylVol .or. DoWarm .or. DoCold .or. DoVertVel .or. DoAbsVertVel) then
-     ! just grab the first one that exists
-     if (DoCylVol) then
-       ZcoordLoc = PressLoc%Fnum
-     else if (DoWarm .or. DoCold) then
-       ZcoordLoc = TempcLoc%Fnum
-     else if (DoVertVel .or. DoAbsVertVel) then
-       ZcoordLoc = WLoc%Fnum
-     end if
+    ! Variables are consistent, record the dimensions and coordinates for later
+    call SetOutDimsCoords(Press, Nx, Ny, Nz, Nt, Xcoords, Ycoords, Zcoords, MinLon, MaxLon, MinLat, MaxLat)
+  else if (DoWarm .or. DoCold) then
+    ! check consistency of dimensions of the variables
+    if (DoVertVel .or. DoAbsVertVel) then
+      ! using W, check that it is consistent with TempC
+      if (.not. (GvarDimsMatch(TempC, W, .false.))) then
+        write (*,*) 'ERROR: dimensions of tempc and w do not match'
+        stop
+      endif
+    endif
+    if (DoLwp) then
+      ! using CintLiq, check that it is consistent with TempC
+      if (.not. (GvarDimsMatch(TempC, CintLiq, .true.))) then
+        write (*,*) 'ERROR: dimensions of tempc and cint_liq do not match'
+        stop
+      endif
+    endif
+
+    ! Variables are consistent, record the dimensions and coordinates for later
+    call SetOutDimsCoords(TempC, Nx, Ny, Nz, Nt, Xcoords, Ycoords, Zcoords, MinLon, MaxLon, MinLat, MaxLat)
+  else if (DoVertVel .or. DoAbsVertVel) then
+    if (DoLwp) then
+      ! using CintLiq, check that it is consistent with W
+      if (.not. (GvarDimsMatch(W, CintLiq, .true.))) then
+        write (*,*) 'ERROR: dimensions of w and cint_liq do not match'
+        stop
+      endif
+    endif
+
+    ! Variables are consistent, record the dimensions and coordinates for later
+    call SetOutDimsCoords(W, Nx, Ny, Nz, Nt, Xcoords, Ycoords, Zcoords, MinLon, MaxLon, MinLat, MaxLat)
   else
-    ZcoordLoc = CintLiqLoc%Fnum
-  end if
-
-  call ConvertGridCoords(Nx, Ny, GdataDescrip(1), Xcoords, Ycoords)
-  do iz = 1, Nz
-    Zcoords(iz) = GdataDescrip(ZcoordLoc)%Zcoords(iz)
-  end do
+    ! only using column integrated liquid, record the dimensions and coordinates for later
+    call SetOutDimsCoords(CintLiq, Nx, Ny, Nz, Nt, Xcoords, Ycoords, Zcoords, MinLon, MaxLon, MinLat, MaxLat)
+  endif
 
   DeltaX = (Xcoords(2) - Xcoords(1)) * 1000.0
   DeltaY = (Ycoords(2) - Ycoords(1)) * 1000.0
 
   write (*,*) 'Horizontal grid info:'
   write (*,*) '  X range (min lon, max lon) --> (min x, max x): '
-  write (*,*) '    ', GdataDescrip(1)%Xcoords(1), GdataDescrip(1)%Xcoords(Nx), Xcoords(1), Xcoords(Nx)
+  write (*,*) '    ', MinLon, MaxLon, Xcoords(1), Xcoords(Nx)
   write (*,*) '  Y range (min lat, max lat) --> (min y, max y): '
-  write (*,*) '    ', GdataDescrip(1)%Ycoords(1), GdataDescrip(1)%Ycoords(Ny), Ycoords(1), Ycoords(Ny)
+  write (*,*) '    ', MinLat, MaxLat, Ycoords(1), Ycoords(Ny)
   write (*,*) ''
   write (*,*) 'Vertical grid info:'
   do iz = 1, Nz
@@ -186,7 +207,6 @@ program main
   write (*,*) '  Number of y (latitude) points:           ', Ny
   write (*,*) '  Number of z (vertical level) points:     ', Nz
   write (*,*) '  Number of t (time) points:               ', Nt
-  write (*,*) '  Total number of grid variables:          ', Nvars
   write (*,*) ''
   write (*,*) '  Number of data values per grid variable: ', Nx*Ny*Nz*Nt
   write (*,*) ''
@@ -197,69 +217,49 @@ program main
 
   write (*,*) 'Locations of variables in GRADS data (file number, var number):'
   if (DoCylVol) then
-    write (*,'(a20,i3,a2,i3,a1)') 'press: (', PressLoc%Fnum, ', ', PressLoc%Vnum, ')'
+    write (*,'(a20,a,a2,i3,a1)') 'press: (', trim(Press%DataFile), ', ', Press%Vnum, ')'
   end if
   if (DoWarm .or. DoCold) then
-    write (*,'(a20,i3,a2,i3,a1)') 'tempc: (', TempcLoc%Fnum, ', ', TempcLoc%Vnum, ')'
+    write (*,'(a20,a,a2,i3,a1)') 'tempc: (', trim(TempC%DataFile), ', ', TempC%Vnum, ')'
   end if
   if (DoVertVel .or. DoAbsVertVel) then
-    write (*,'(a20,i3,a2,i3,a1)') 'w: (', WLoc%Fnum, ', ', WLoc%Vnum, ')'
+    write (*,'(a20,a,a2,i3,a1)') 'w: (', trim(W%DataFile), ', ', W%Vnum, ')'
   end if
   if (DoLwp) then
-    write (*,'(a20,i3,a2,i3,a1)') 'cint_liq: (', CintLiqLoc%Fnum, ', ', CintLiqLoc%Vnum, ')'
+    write (*,'(a20,a,a2,i3,a1)') 'cint_liq: (', trim(CintLiq%DataFile), ', ', CintLiq%Vnum, ')'
   end if
   write (*,*) ''
 
   if (DoCylVol) then
-    allocate (Press(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
-    if (Ierror .ne. 0) then
-      write (*,*) 'ERROR: Data array memory allocation failed'
-      stop
-    end if
-    call ReadGradsData(GdataDescrip, 'press', PressLoc, Press, Nx, Ny, Nz, Nt)
+    call ReadGradsData(Press)
   end if
   if (DoWarm .or. DoCold) then
-    allocate (TempC(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
-    if (Ierror .ne. 0) then
-      write (*,*) 'ERROR: Data array memory allocation failed'
-      stop
-    end if
-    call ReadGradsData(GdataDescrip, 'tempc', TempcLoc, TempC, Nx, Ny, Nz, Nt)
+    call ReadGradsData(TempC)
   end if
   if (DoVertVel .or. DoAbsVertVel) then
-    allocate (W(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
-    if (Ierror .ne. 0) then
-      write (*,*) 'ERROR: Data array memory allocation failed'
-      stop
-    end if
-    call ReadGradsData(GdataDescrip, 'w', WLoc, W, Nx, Ny, Nz, Nt)
+    call ReadGradsData(W)
   end if
   if (DoLwp) then
-    allocate (CintLiq(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
-    if (Ierror .ne. 0) then
-      write (*,*) 'ERROR: Data array memory allocation failed'
-      stop
-    end if
-    call ReadGradsData(GdataDescrip, 'cint_liq', CintLiqLoc, CintLiq, Nx, Ny, 1, Nt)
+    call ReadGradsData(CintLiq)
   end if
   write (*,*) ''
   flush(6)
 
   ! Allocate the output array and create the filter
-  allocate (OutFilter(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
-  if (Ierror .ne. 0) then
-    write (*,*) 'ERROR: Ouput data array memory allocation failed'
-    stop
-  end if
+  if (DoCylVol) then
+    call InitGvarFromGvar(Press, OutFilter, 'gfilter')
+  else if (DoWarm .or. DoCold) then
+    call InitGvarFromGvar(TempC, OutFilter, 'gfilter')
+  else if (DoVertVel .or. DoAbsVertVel) then
+    call InitGvarFromGvar(W, OutFilter, 'gfilter')
+  else if (DoLwp) then
+    call InitGvarFromGvar(CintLiq, OutFilter, 'gfilter')
+  endif
 
   if (DoCylVol) then
     ! Generate the storm center for all time steps
-    allocate (StmIx(1:Nt), StmIy(1:Nt), MinP(1:Nt), stat=Ierror)
-    if (Ierror .ne. 0) then
-      write (*,*) 'ERROR: Ouput data array memory allocation failed'
-      stop
-    end if
-    call RecordStormCenter(Nx, Ny, Nz, Nt, Press, StmIx, StmIy, MinP)
+    allocate (StmIx(1:Nt), StmIy(1:Nt), MinP(1:Nt))
+    call RecordStormCenter(Press, StmIx, StmIy, MinP)
   
     do it = 1, Nt
       write (*,*) 'Timestep: ', it
@@ -283,25 +283,25 @@ program main
                   MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords) 
           end if
           if (DoCold) then
-            SelectThisPoint = SelectThisPoint .and. (TempC(ix,iy,iz,it) .le. 0.0)
+            SelectThisPoint = SelectThisPoint .and. (TempC%Vdata(it,iz,ix,iy) .le. 0.0)
           end if
           if (DoWarm) then
-            SelectThisPoint = SelectThisPoint .and. (TempC(ix,iy,iz,it) .gt. 0.0)
+            SelectThisPoint = SelectThisPoint .and. (TempC%Vdata(it,iz,ix,iy) .gt. 0.0)
           end if
           if (DoVertVel) then
-            SelectThisPoint = SelectThisPoint .and. ((W(ix,iy,iz,it) .ge. MinW) .and. (W(ix,iy,iz,it) .le. MaxW))
+            SelectThisPoint = SelectThisPoint .and. ((W%Vdata(it,iz,ix,iy) .ge. MinW) .and. (W%Vdata(it,iz,ix,iy) .le. MaxW))
           end if
           if (DoAbsVertVel) then
-            SelectThisPoint = SelectThisPoint .and. ((abs(W(ix,iy,iz,it)) .ge. MinW) .and. (abs(W(ix,iy,iz,it)) .le. MaxW))
+            SelectThisPoint = SelectThisPoint .and. ((abs(W%Vdata(it,iz,ix,iy)) .ge. MinW) .and. (abs(W%Vdata(it,iz,ix,iy)) .le. MaxW))
           end if
           if (DoLwp) then
-            SelectThisPoint = SelectThisPoint .and. (CintLiq(ix,iy,1,it) .ge. LwpThresh)
+            SelectThisPoint = SelectThisPoint .and. (CintLiq%Vdata(ix,iy,1,it) .ge. LwpThresh)
           end if
 
           if (SelectThisPoint) then
-            OutFilter(ix,iy,iz,it) = 1.0
+            OutFilter%Vdata(it,iz,ix,iy) = 1.0
           else
-            OutFilter(ix,iy,iz,it) = 0.0
+            OutFilter%Vdata(it,iz,ix,iy) = 0.0
           end if
         end do
       end do
@@ -309,54 +309,17 @@ program main
   end do
 
   ! Write out the output filter
-  Xstart = GdataDescrip(1)%Xcoords(1)
-  Xinc = GdataDescrip(1)%Xcoords(2)-GdataDescrip(1)%Xcoords(1)
-  Ystart = GdataDescrip(1)%Ycoords(1)
-  Yinc = GdataDescrip(1)%Ycoords(2)-GdataDescrip(1)%Ycoords(1)
-
-  call BuildGoutDescrip(Nx, Ny, Nz, Nt, OutFilter, OfileBase, GdataDescrip(1)%UndefVal, 'gfilter', &
-          Xstart, Xinc, Ystart, Yinc, GdataDescrip(ZcoordLoc)%Zcoords, GdataDescrip(1)%Tstart, &
-          GdataDescrip(1)%Tinc, GoutDescrip, 'gfilter')
-
-  call WriteGrads(GoutDescrip, OutFilter)
-
-  ! Clean up
-  deallocate (Xcoords, Ycoords, Zcoords, OutFilter, stat=Ierror)
-  if (Ierror .ne. 0) then
-    write (*,*) 'ERROR: Data array memory de-allocation failed'
-    stop
-  end if
-  if (DoCylVol) then
-    deallocate (Press, StmIx, StmIy, MinP, stat=Ierror)
-    if (Ierror .ne. 0) then
-      write (*,*) 'ERROR: Data array memory de-allocation failed'
-      stop
-    end if
-  end if
-  if (DoWarm .or. DoCold) then
-    deallocate (TempC, stat=Ierror)
-    if (Ierror .ne. 0) then
-      write (*,*) 'ERROR: Data array memory de-allocation failed'
-      stop
-    end if
-  end if
-  if (DoVertVel .or. DoAbsVertVel) then
-    deallocate (W, stat=Ierror)
-    if (Ierror .ne. 0) then
-      write (*,*) 'ERROR: Data array memory de-allocation failed'
-      stop
-    end if
-  end if
-  if (DoLwp) then
-    deallocate (CintLiq, stat=Ierror)
-    if (Ierror .ne. 0) then
-      write (*,*) 'ERROR: Data array memory de-allocation failed'
-      stop
-    end if
-  end if
+  call WriteGrads(OutFilter, OfileBase, 'gfilter')
 
   stop
-end
+
+contains
+!**********************************************************************
+! Subroutines go here. Want these contained within the main program
+! so that the interfaces to these subroutine are 'explicit' (ie, like
+! ANSI C external declarations). This is needed to get the passing
+! of allocatable arrays working properly.
+!**********************************************************************
 
 !**********************************************************************
 ! GetMyArgs()
@@ -586,3 +549,43 @@ subroutine GetMyArgs(Infiles, OfileBase, StringSize, DoCylVol, DoCold, DoWarm, D
 
   return
 end subroutine
+
+
+!**********************************************************************
+! SetOutDimsCoords()
+!
+! This routine will set the coordinate and dimension data 
+
+subroutine SetOutDimsCoords(Gvar, Nx, Ny, Nz, Nt, Xcoords, Ycoords, Zcoords, MinLon, MaxLon, MinLat, MaxLat)
+  use gdata_utils
+  use azavg_utils
+  implicit none
+
+  type (GradsVar) :: Gvar
+  integer :: Nx, Ny, Nz, Nt
+  real, dimension(:), allocatable :: Xcoords, Ycoords, Zcoords
+  real ::  MinLon, MaxLon, MinLat, MaxLat
+
+  integer :: iz
+
+  Nx = Gvar%Nx
+  Ny = Gvar%Ny
+  Nz = Gvar%Nz
+  Nt = Gvar%Nt
+
+  MinLon = Gvar%Xcoords(1)
+  MaxLon = Gvar%Xcoords(Gvar%Nx)
+  MinLat = Gvar%Ycoords(1)
+  MaxLat = Gvar%Ycoords(Gvar%Ny)
+
+  ! Calculate the x,y coordinates (in km) for doing selection by radius from storm center.
+  call ConvertGridCoords(Gvar, Xcoords, Ycoords)
+  allocate (Zcoords(1:Nz))
+  do iz = 1, Nz
+      Zcoords(iz) = Gvar%Zcoords(iz)
+  enddo
+
+  return
+end subroutine
+
+end program main

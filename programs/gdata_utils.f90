@@ -472,13 +472,12 @@ logical function GvarDimsMatch(Gvar1, Gvar2, Is2D)
   logical :: GcoordsMatch
 
   if (Is2D) then
-    ! 2D var: check that the first entry in the Z coordinates match
+    ! 2D var: check all dims except Z
     GvarDimsMatch = GcoordsMatch(Gvar1%Xcoords, Gvar1%Nx, Gvar2%Xcoords, Gvar2%Nx) .and. &
                     GcoordsMatch(Gvar1%Ycoords, Gvar1%Ny, Gvar2%Ycoords, Gvar2%Ny) .and. &
-                    GcoordsMatch(Gvar1%Zcoords, 1,        Gvar2%Zcoords, 1       ) .and. &
                     GcoordsMatch(Gvar1%Tcoords, Gvar1%Nt, Gvar2%Tcoords, Gvar2%Nt)
   else
-    ! 3D var: check that all entries in the X coordinates match
+    ! 3D var: check all dims
     GvarDimsMatch = GcoordsMatch(Gvar1%Xcoords, Gvar1%Nx, Gvar2%Xcoords, Gvar2%Nx) .and. &
                     GcoordsMatch(Gvar1%Ycoords, Gvar1%Ny, Gvar2%Ycoords, Gvar2%Ny) .and. &
                     GcoordsMatch(Gvar1%Zcoords, Gvar1%Nz, Gvar2%Zcoords, Gvar2%Nz) .and. &
@@ -501,6 +500,8 @@ logical function GcoordsMatch(Coords1, Nc1, Coords2, Nc2)
   real, dimension(1:Nc1) :: Coords1
   real, dimension(1:Nc2) :: Coords2
 
+  real, parameter :: Epslon = 0.001
+
   integer :: i
 
   if (Nc1 .eq. Nc2) then
@@ -508,7 +509,7 @@ logical function GcoordsMatch(Coords1, Nc1, Coords2, Nc2)
     ! check if entries in the arrays match
     GcoordsMatch = .true.
     do i = 1, Nc1
-      if (abs(Coords1(i)-Coords2(i)) .gt. 1.0e-6) then
+      if (abs((Coords1(i)-Coords2(i))/Coords1(i)) .gt. Epslon) then
         GcoordsMatch = .false.
         exit
       endif

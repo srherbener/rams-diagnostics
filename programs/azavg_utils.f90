@@ -326,7 +326,7 @@ subroutine ConvertGridCoords(Gvar, Xcoords, Ycoords)
   end if
 
   ! write a warning if the grid is located far away from the equator
-  if (abs(Gvar%Ycoords(Gvar%Ny)) .gt. 23.0) then
+  if ((abs(Gvar%Ycoords(Gvar%Ny)) .gt. 23.0) .or. (abs(Gvar%Ycoords(1)) .gt. 23.0)) then
     write (*,*) 'Warning: extent of grid goes outside tropics, this code assumes grid is near equator'
     write (*,*) ''
   end if
