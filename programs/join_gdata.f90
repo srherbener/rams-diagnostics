@@ -19,59 +19,89 @@ program main
   integer, parameter :: LargeString=512
   integer, parameter :: MediumString=256
   integer, parameter :: LittleString=128
-  integer, parameter :: MaxFiles=10
 
   character (len=LargeString) :: Infiles
   character (len=MediumString) :: OfileBase
   character (len=LittleString) :: VarName
 
-  character (len=MediumString), dimension(1:MaxFiles) :: GradsCtlFiles
-  integer :: Nfiles, MinLevel, MaxLevel
+  type (GradsControlFiles), dimension(1:MaxFiles) :: GctlFiles
+  integer :: MinLevel, MaxLevel
+  character (len=MediumString), dimension(1:MaxFiles) :: InFileList
+  integer :: Nfiles
 
-  type (GradsDataDescription), dimension(1:MaxFiles) :: GdataDescrip
-  integer :: Nx, Ny, Nz, Nt, Nvars
-  type (GradsOutDescription) :: GoutDescrip
+  integer :: Nx, Ny, Nz, Nt
 
   ! Data arrays
-  ! OutData dims: x, y, z, t
-  ! VarData dims: x, y, z, t
-  real, dimension(:,:,:,:), allocatable :: OutData, VarData
-  type (GradsVarLocation), dimension(1:MaxFiles) :: VarLocs
+  ! OutVar dims: t, z, x, y
+  ! Invars, array where each element has a data array with dims: t, z, x, y
+  type (GradsVar), dimension(1:MaxFiles) :: InVars
+  type (GradsVar) :: OutVar
 
   integer :: i
-  integer :: Ierror
 
   integer :: ix, iy, iz, it
-  integer :: outTime
+  integer :: OutTime
   
   real :: Xstart, Xinc, Ystart, Yinc
+  logical :: BadData
 
   ! Get the command line arguments
   call GetMyArgs(Infiles, OfileBase, VarName)
-  call String2List(Infiles, ':', GradsCtlFiles, MaxFiles, Nfiles, 'input files')
+  call String2List(Infiles, ':', InFileList, MaxFiles, Nfiles, 'input files')
 
   write (*,*) 'Joining GRADS data:'
   write (*,*) '  GRADS input control files:'
   do i = 1, Nfiles
-    write (*,*) '  ', i, ': ', trim(GradsCtlFiles(i))
+    write (*,*) '  ', i, ': ', trim(InFileList(i))
   end do
   write (*,*) '  GRADS variable:', trim(VarName)
   write (*,*) ''
 
-  ! Read the GRADS data description files and collect the information about the data
+  ! For this function we need to locate the variable in every input file since
+  ! we want to join these together. Use arrayed versions of the GradsControlFiles type
+  ! and GradVar type. Walk though each individual input file given and collect the variable
+  ! information from just that particular file. Store each result in the elements of the
+  ! arrayed versions of GradsControlFiles and GradsVar types.
   do i = 1, Nfiles
-    write (*,*) 'Reading GRADS Control File: ', trim(GradsCtlFiles(i))
-    call ReadGradsCtlFile(GradsCtlFiles(i), GdataDescrip(i))
-  end do
-  write (*,*) ''
-  flush(6)
+    GctlFiles(i)%Fnames(1) = InFileList(i)
+    GctlFiles(i)%Nfiles = 1
+    call ReadGradsCtlFiles(GctlFiles(i))
+    call InitGvarFromGdescrip(GctlFiles(i), InVars(i), VarName)
 
-  ! Check the data description for consistency and locate the variables in the GRADS control files
-  call CheckDataDescripJoin(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, VarLocs, VarName)
+    ! Do some dimension checking
+    if (i .eq. 1) then
+      Nx = InVars(i)%Nx
+      Ny = InVars(i)%Ny
+      Nz = InVars(i)%Nz
+      Nt = InVars(i)%Nt
+    else
+      BadData = .false.
+      if (Nx .ne. InVars(i)%Nx) then
+        write (*,*) 'ERROR: number of x points in GRADS control files do not match'
+        BadData = .true.
+      endif
+      if (Ny .ne. InVars(i)%Ny) then
+        write (*,*) 'ERROR: number of y points in GRADS control files do not match'
+        BadData = .true.
+      endif
+      if (Nz .ne. InVars(i)%Nz) then
+        write (*,*) 'ERROR: number of z points in GRADS control files do not match'
+        BadData = .true.
+      endif
+      if (BadData) then
+        write (*,*) 'ERROR:  Control file: ', trim(InFileList(i))
+        stop
+      endif
+
+      ! Accumulate the number of time steps so we know how many time steps will exist
+      ! in the output data
+      Nt = Nt + InVars(i)%Nt
+    endif
+  enddo
+
+  write (*,*) 'Locations of variables in GRADS data (file, var number):'
   do i = 1, Nfiles
-    write (*,*) 'Variable location for file: ', trim(GradsCtlFiles(i))
-    write (*,*) '  Fnum: ', VarLocs(i)%Fnum
-    write (*,*) '  Vnum: ', VarLocs(i)%Vnum
+    write (*,'(a17,a3,a,a2,i3,a1)') trim(VarName), ': (', trim(InVars(i)%DataFile), ', ', InVars(i)%Vnum, ')'
   end do
   write (*,*) 'Variable dimensions after joining files:'
   write (*,*) '  Nx: ', Nx
@@ -81,63 +111,33 @@ program main
   write (*,*) ''
   flush(6)
 
-  !Read in the data and copy into the output array as you go
-  allocate (OutData(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
-  if (Ierror .ne. 0) then
-    write (*,*) 'ERROR: Data array memory allocation failed'
-    stop
-  end if
+  ! Initialize the output variable, go through the list of input variables and read
+  ! in their data and append it to the output variable
+  ! We have verified that the x, y, z dimensions of the input data in all GRADS input
+  ! files match so it's okay use InVars(1) as a representative.
+  call InitGradsVar(OutVar, VarName, Nx, Ny, Nz, Nt, &
+                    InVars(1)%Xstart, InVars(1)%Xinc, InVars(1)%Ystart, InVars(1)%Yinc, &
+                    InVars(1)%Zcoords, InVars(1)%Tstart, InVars(1)%Tinc, &
+                    InVars(1)%UndefVal, '<NONE>', 0, 0)
 
-  outTime = 0
+  OutTime = 0
   do i = 1, Nfiles
-    allocate(VarData(1:GdataDescrip(i)%nx,1:GdataDescrip(i)%ny,1:GdataDescrip(i)%nz, &
-             1:GdataDescrip(i)%nt), stat=Ierror)
-    if (Ierror .ne. 0) then
-      write (*,*) 'ERROR: VarData array memory allocation failed'
-      stop
-    end if
-
-    call ReadGradsData(GdataDescrip, VarName, VarLocs(i), VarData, GdataDescrip(i)%nx, &
-         GdataDescrip(i)%ny, GdataDescrip(i)%nz, GdataDescrip(i)%nt)
+    call ReadGradsData(InVars(i))
     
-    do it = 1, GdataDescrip(i)%nt
-      outTime = outTime + 1
-      do iz = 1, GdataDescrip(i)%nz
-        do iy = 1, GdataDescrip(i)%ny
-          do ix = 1, GdataDescrip(i)%nx
-            OutData(ix,iy,iz,outTime) = VarData(ix,iy,iz,it)
+    do it = 1, InVars(i)%Nt
+      OutTime = OutTime + 1
+      do iz = 1, InVars(i)%Nz
+        do ix = 1, InVars(i)%Nx
+          do iy = 1, InVars(i)%Ny
+            OutVar%Vdata(OutTime,iz,ix,iy) = InVars(i)%Vdata(it,iz,ix,iy)
           end do
         end do
       end do
     end do
-
-    deallocate (VarData, stat=Ierror)
-    if (Ierror .ne. 0) then
-      write (*,*) 'ERROR: VarData array memory de-allocation failed'
-      stop
-    end if
   end do
 
   !Write out the joined data
-
-  Xstart = GdataDescrip(1)%Xcoords(1)
-  if (Nx .gt. 1) then
-    Xinc = GdataDescrip(1)%Xcoords(2)-GdataDescrip(1)%Xcoords(1)
-  else
-    Xinc = 1.0
-  end if
-  Ystart = GdataDescrip(1)%Ycoords(1)
-  if (Ny .gt. 1) then
-    Yinc = GdataDescrip(1)%Ycoords(2)-GdataDescrip(1)%Ycoords(1)
-  else
-    Yinc = 1.0
-  end if
-
-  call BuildGoutDescrip(Nx, Ny, Nz, Nt, OutData, OfileBase, GdataDescrip(1)%UndefVal, VarName, &
-          Xstart, Xinc, Ystart, Yinc, GdataDescrip(1)%Zcoords, GdataDescrip(1)%Tstart, &
-          GdataDescrip(1)%Tinc, GoutDescrip, 'join')
-
-  call WriteGrads(GoutDescrip, OutData)
+  call WriteGrads(OutVar, OfileBase, 'join')
 
   stop
 end
@@ -180,101 +180,4 @@ subroutine GetMyArgs(Infiles, OfileBase, VarName)
   call getarg(3, VarName)
 
   return
-end subroutine
-
-!*************************************************************************
-! CheckDataDescripJoin()
-!
-! This routine will check the consistency of the data description obtained
-! from the GRADS control files. The number of x, y, z, t points should match
-! in all files. Also, the total number of variables are calculated and returned
-! in Nvars.
-!
-! This routein will check one variable at a time, so it needs to be called
-! multiple times for multiple variables.
-!
-
-subroutine CheckDataDescripJoin(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, VarLocs, VarName)
-  use gdata_utils
-  implicit none
-
-  type (GradsDataDescription), dimension(*) :: GdataDescrip
-  integer Nx, Ny, Nz, Nt, Nfiles
-  integer Nvars
-  type (GradsVarLocation), dimension(*) :: VarLocs
-  character (len=*) :: VarName
-  logical :: DoHorizVel
-
-  ! i -> file number, j -> var number
-  integer i, j
-  logical BadData, GotNz
-
-  BadData = .false.
-  GotNz = .false.
-  ! Make Nt be the total time steps (after joining the data)
-  do i = 1, Nfiles
-    VarLocs(i)%Fnum = 0
-    VarLocs(i)%Vnum = 0
-
-    ! Make sure nx, ny and for all vars (2D and 3D) match
-    if (i .eq. 1) then
-      Nx = GdataDescrip(i)%nx
-      Ny = GdataDescrip(i)%ny
-      Nt = GdataDescrip(i)%nt
-   
-      Nvars = GdataDescrip(i)%nvars
-    else
-      if (GdataDescrip(i)%nx .ne. Nx) then
-        write (0,*) 'ERROR: number of x points in GRADS control files do not match'
-        BadData = .true.
-      end if
-      if (GdataDescrip(i)%ny .ne. Ny) then
-        write (0,*) 'ERROR: number of y points in GRADS control files do not match'
-        BadData = .true.
-      end if
-
-      Nt = Nt + GdataDescrip(i)%nt
-      Nvars = Nvars + GdataDescrip(i)%nvars
-    end if
-
-    ! allow for a 2D var (nz eq 1), but make sure all 3D vars have matching nz
-    if (GotNz) then
-      if ((GdataDescrip(i)%nz .ne. 1) .and. (GdataDescrip(i)%nz .ne. Nz)) then
-        write (0,*) 'ERROR: number of z points in GRADS control files do not match'
-        BadData = .true.
-      end if
-    else
-      ! grab the first nz that is not equal to 1 (first 3D var)
-      if ((GdataDescrip(i)%nz .ne. 1) .and. (.not. GotNz)) then
-        Nz = GdataDescrip(i)%nz
-        GotNz = .true.
-      end if
-    end if
-
-    ! Record the location of the given variable in each of the files
-    do j =1, GdataDescrip(i)%nvars
-      if (GdataDescrip(i)%VarNames(j) .eq. VarName) then
-        VarLocs(i)%Fnum = i
-        VarLocs(i)%Vnum = j
-      end if
-    end do
-  end do
-
-  ! If the entire list was 2D variables, then the code above will have not recorded an
-  ! Nz value (GotNz is still .false.). Set Nz to '1' in this case
-  if (.not. GotNz) then
-    Nz = 1
-  end if
-
-  ! Check to see if you got the variable
-  do i = 1, Nfiles
-    if (VarLocs(i)%Fnum .eq. 0) then
-      write (0,*) 'ERROR: cannot find grid var "', trim(VarName), '" in the GRADS data file number:', i
-      BadData = .true.
-    end if
-  end do
-
-  if (BadData) then
-    stop
-  end if
 end subroutine
