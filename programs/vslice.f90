@@ -23,43 +23,35 @@ program main
   integer, parameter :: LargeString=512
   integer, parameter :: MediumString=256
   integer, parameter :: LittleString=128
-  integer, parameter :: MaxFiles=10
 
   character (len=LargeString) :: Infiles
   character (len=MediumString) :: OfileBase
   character (len=LittleString) :: VarToSlice
 
-  character (len=MediumString), dimension(1:MaxFiles) :: GradsCtlFiles
-  integer :: Nfiles
-
-  type (GradsDataDescription), dimension(1:MaxFiles) :: GdataDescrip
-  integer :: Nx, Ny, Nz, Nt, Nvars
-  type (GradsOutDescription) :: GoutDescrip
+  type (GradsControlFiles) :: GctlFiles
 
   ! Data arrays: need one the var we are doing the slice on
   ! Dims: x, y, z, t
   ! The *Loc vars hold the locations of the var in the GRADS input files
   ! data files: the first index is the file number, the second index is the
   ! var number
-  real, dimension(:,:,:,:), allocatable :: Var, VarSlice
+  type (GradsVar) :: Gvar, VarSlice
   real, dimension(:), allocatable :: Xcoords, Ycoords
   real :: Xstart, Xinc, Zstart, Zinc
-  type (GradsVarLocation) :: VarLoc
 
   integer :: i
-  integer :: Ierror
 
   integer :: ix, iy, iz, it
   integer :: ix1, ix2, iy1, iy2, NumPoints
 
   ! Get the command line argument
   call GetMyArgs(Infiles, OfileBase, VarToSlice, ix1, iy1, ix2, iy2, NumPoints)
-  call String2List(Infiles, ':', GradsCtlFiles, MaxFiles, Nfiles, 'input files')
+  call String2List(Infiles, ':', GctlFiles%Fnames, MaxFiles, GctlFiles%Nfiles, 'input files')
 
   write (*,*) 'Extracting vertical slice of data out of GRADS data:'
   write (*,*) '  GRADS input control files:'
-  do i = 1, Nfiles
-    write (*,*) '  ', i, ': ', trim(GradsCtlFiles(i))
+  do i = 1, GctlFiles%Nfiles
+    write (*,*) '  ', i, ': ', trim(GctlFiles%Fnames(i))
   end do
   write (*,*) '  Output file base name: ', trim(OfileBase)
   write (*,*) '  Variable that is being extracted: ', trim(VarToSlice)
@@ -69,63 +61,42 @@ program main
   write (*,*) ''
 
   ! Read the GRADS data description files and collect the information about the data
-  do i = 1, Nfiles
-    write (*,*) 'Reading GRADS Control File: ', trim(GradsCtlFiles(i))
-    call ReadGradsCtlFile(GradsCtlFiles(i), GdataDescrip(i))
-  end do
-  write (*,*) ''
+  call ReadGradsCtlFiles(GctlFiles)
 
-  call CheckDataDescrip_VS(GdataDescrip, Nfiles, Nx, Ny, Nz, Nt, Nvars, VarLoc, VarToSlice)
+  call InitGvarFromGdescrip(GctlFiles, Gvar, VarToSlice)
 
   write (*,*) 'Gridded data information:'
-  write (*,*) '  Number of x (longitude) points:          ', Nx
-  write (*,*) '  Number of y (latitude) points:           ', Ny
-  write (*,*) '  Number of z (vertical level) points:     ', Nz
-  write (*,*) '  Number of t (time) points:               ', Nt
-  write (*,*) '  Total number of grid variables:          ', Nvars
+  write (*,*) '  Number of x (longitude) points:          ', Gvar%Nx
+  write (*,*) '  Number of y (latitude) points:           ', Gvar%Ny
+  write (*,*) '  Number of z (vertical level) points:     ', Gvar%Nz
+  write (*,*) '  Number of t (time) points:               ', Gvar%Nt
   write (*,*) ''
-  write (*,*) '  Number of data values per grid variable: ', Nx*Ny*Nz*Nt
-  write (*,*) ''
-
-  write (*,*) 'Locations of variables in GRADS data (file number, var number):'
-  write (*,'(a20,i3,a2,i3,a1)') 'v: (', VarLoc%Fnum, ', ', VarLoc%Vnum, ')'
+  write (*,*) '  Number of data values per grid variable: ', Gvar%Nx*Gvar%Ny*Gvar%Nz*Gvar%Nt
   write (*,*) ''
 
-  ! Allocate the data arrays and read in the data from the GRADS data files
-  allocate (Var(1:Nx, 1:Ny, 1:Nz, 1:Nt), VarSlice(1:NumPoints, 1:1, 1:Nz, 1:Nt), &
-            Xcoords(1:NumPoints), Ycoords(1:NumPoints), stat=Ierror)
-  if (Ierror .ne. 0) then
-    write (*,*) 'ERROR: Data array memory allocation failed'
-    stop
-  end if
+  write (*,*) 'Locations of variables in GRADS data (file, var number):'
+  write (*,'(a17,a3,a,a2,i3,a1)') trim(VarToSlice), ': (', trim(Gvar%DataFile), ', ', Gvar%Vnum, ')'
+  write (*,*) ''
+
 
   ! Read in the data for the vars using the description and location information
-  call ReadGradsData(GdataDescrip, VarToSlice, VarLoc, Var, Nx, Ny, Nz, Nt)
+  call ReadGradsData(Gvar)
 
   ! Divide up the vslice line segment
+  allocate(Xcoords(1:NumPoints), Ycoords(1:NumPoints))
   call DivideLineSegment(ix1, iy1, ix2, iy2, NumPoints, Xcoords, Ycoords)
 !do i = 1, NumPoints
 !  write (*,*) 'DEBUG: (i,x,y): ', i, Xcoords(i), Ycoords(i)
 !end do
 
   ! Cut out the vertical slice
-  call CreateVslice(NumPoints, Nx, Ny, Nz, Nt, Var, VarSlice, Xcoords, Ycoords)
+  call InitGradsVar(VarSlice, VarToSlice, NumPoints, 1, Gvar%Nz, Gvar%Nt, &
+                    1.0, 1.0, 0.0, 1.0, Gvar%Zcoords, Gvar%Tstart, Gvar%Tinc, &
+                    Gvar%UndefVal, '<NONE>', 0, 0)
+  call CreateVslice(NumPoints, Gvar, VarSlice, Xcoords, Ycoords)
 
   ! Write out the slice in GRADS format
-  Xstart = 1.0
-  Xinc = 1.0
-  call BuildGoutDescrip(NumPoints, 1, Nz, Nt, VarSlice, OfileBase, GdataDescrip(1)%UndefVal, &
-          VarToSlice, Xstart, Xinc, 0.0, 1.0, GdataDescrip(1)%Zcoords, &
-          GdataDescrip(1)%Tstart, GdataDescrip(1)%Tinc, GoutDescrip, 'vslice')
-
-  call WriteGrads(GoutDescrip, VarSlice)
-
-  ! Clean up
-  deallocate (Var, VarSlice, Xcoords, Ycoords, stat=Ierror)
-  if (Ierror .ne. 0) then
-    write (*,*) 'ERROR: Data array memory de-allocation failed'
-    stop
-  end if
+  call WriteGrads(VarSlice, OfileBase, 'vslice')
 
   stop
 end
@@ -157,9 +128,9 @@ subroutine GetMyArgs(Infiles, OfileBase, VarToSlice, ix1, iy1, ix2, iy2, NumPoin
   character (len=128) :: arg
 
   if (iargc() .ne. 5) then
-    write (*,*) 'ERROR: must supply exactly 4 arguments'
+    write (*,*) 'ERROR: must supply exactly 5 arguments'
     write (*,*) ''
-    write (*,*) 'USAGE: sfcwind <in_data_files> <out_data_file> <variable> <coords>'
+    write (*,*) 'USAGE: vslice <in_data_files> <out_data_file> <variable> <coords>'
     write (*,*) '        <in_data_files>: GRADS format, control file, colon separated list'
     write (*,*) '        <out_data_file>: GRADS format, this programe will tag on .ctl, .dat suffixes'
     write (*,*) '        <variable>: name of variable that will be sliced out of data'
@@ -242,26 +213,25 @@ end subroutine
 !
 ! This routine will cut out the slice from the GRADS data.
 !
-subroutine CreateVslice(NumPoints, Nx, Ny, Nz, Nt, Var, VarSlice, Xcoords, Ycoords)
-
+subroutine CreateVslice(NumPoints, Gvar, VarSlice, Xcoords, Ycoords)
+  use gdata_utils
   implicit none
 
   real ::  BilinInterp
 
-  integer :: NumPoints, Nx, Ny, Nz, Nt
-  real, dimension(1:Nx,1:Ny,1:Nz,1:Nt) :: Var
-  real, dimension(1:NumPoints,1:1,1:Nz,1:Nt) :: VarSlice
+  integer :: NumPoints
+  type (GradsVar) :: Gvar, VarSlice
   real, dimension(1:NumPoints) :: Xcoords, Ycoords
 
   integer ix, iy, iz, it, ip
 
-  do it = 1, Nt
-    do iz = 1, Nz
+  do it = 1, Gvar%Nt
+    do iz = 1, Gvar%Nz
       ! Go through the x,y pairs (Xcoords,Ycoords) and interpolate
-      ! from the original data (Var)
+      ! from the original data (Gvar)
       do ip = 1, NumPoints
-        VarSlice(ip,1,iz,it) = BilinInterp(NumPoints,Nx,Ny,Nz,Nt,Var,Xcoords(ip),Ycoords(ip),iz,it)
-!write(*,*) 'DEBUG(CV): (ip,iz,it,bi) ', ip,iz,it,VarSlice(ip,1,iz,it)
+        VarSlice%Vdata(it,iz,ip,1) = BilinInterp(NumPoints,Gvar,Xcoords(ip),Ycoords(ip),iz,it)
+!write(*,*) 'DEBUG(CV): (ip,iz,it,bi) ', ip,iz,it,VarSlice(it,iz,ip,1)
       end do
     end do
   end do
@@ -276,13 +246,12 @@ end subroutine
 ! by iz,it setting) given the grid coordinates in x,y
 !
 
-real function BilinInterp(NumPoints,Nx,Ny,Nz,Nt,Var,x,y,Izloc,Itloc)
-
+real function BilinInterp(NumPoints,Gvar,x,y,Izloc,Itloc)
+  use gdata_utils
   implicit none
 
-  integer :: NumPoints, Nx, Ny, Nz, Nt, Izloc, Itloc
-  real, dimension(1:Nx,1:Ny,1:Nz,1:Nt) :: Var
-  real, dimension(1:NumPoints,1:1,1:Nz,1:Nt) :: VarSlice
+  integer :: NumPoints, Izloc, Itloc
+  type (GradsVar) :: Gvar
   real :: x, y
 
   integer :: ix1, iy1, ix2, iy2
@@ -301,20 +270,20 @@ real function BilinInterp(NumPoints,Nx,Ny,Nz,Nt,Var,x,y,Izloc,Itloc)
   ! low in value (to the left or below the grid in Var), but not prevent ix2, iy2 from
   ! going too high (to the right or above the grid in Var).
   ix2 = ix1 + 1
-  if (ix2 .gt. Nx) then
+  if (ix2 .gt. Gvar%Nx) then
     ix2 = ix1
   endif
   iy2 = iy1 + 1
-  if (iy2 .gt. Ny) then
+  if (iy2 .gt. Gvar%Ny) then
     iy2 = iy1
   endif
 
   ! Grab f1 .. f4 starting at the lower left of the box (defined by ix1,iy2 ix2,iy2)
   ! and moving around counter clockwise.
-  f1 = Var(ix1,iy1,Izloc,Itloc)
-  f2 = Var(ix2,iy1,Izloc,Itloc)
-  f3 = Var(ix2,iy2,Izloc,Itloc)
-  f4 = Var(ix1,iy2,Izloc,Itloc)
+  f1 = Gvar%Vdata(Itloc,Izloc,ix1,iy1)
+  f2 = Gvar%Vdata(Itloc,Izloc,ix2,iy1)
+  f3 = Gvar%Vdata(Itloc,Izloc,ix2,iy2)
+  f4 = Gvar%Vdata(Itloc,Izloc,ix1,iy2)
 
   ! Find the proportion of x between ix1 and ix2, ditto for y.
   ! If ix1 equals ix2, then set Xprop to zero.
