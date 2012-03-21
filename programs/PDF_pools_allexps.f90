@@ -14,7 +14,7 @@ integer, parameter :: MAX_X_DIM = 500
 integer, parameter :: MAX_Y_DIM = 500
 
 integer :: iargc, Ierror
-integer :: Nexp, Nt, Nx, Ny, Nz, Nvars
+integer :: Nexp
 integer :: i, j, k, i_exp, it
 integer :: t_big
 integer :: Tend
@@ -22,9 +22,10 @@ integer :: itd, TdIncr
 
 character (len=MAX_STR_LEN) :: ConfigFile
 character (len=MAX_STR_LEN) :: TempcVar
-character (len=MAX_STR_LEN), dimension(1:MAX_NUM_EXP) :: GradsControlFiles
+character (len=MAX_STR_LEN), dimension(1:MAX_NUM_EXP) :: InFiles
+type (GradsControlFiles), dimension(1:MAX_NUM_EXP) :: GctlFiles
 
-real, dimension(:,:,:,:), allocatable :: TempcData
+type (GradsVar), dimension(1:MAX_NUM_EXP) :: TempcData
 real, dimension(1:MAX_X_DIM,1:MAX_Y_DIM) ::  mask_big
 real, dimension(1:MAX_X_DIM,1:MAX_Y_DIM,1:MAX_TIME_STEPS) :: var
 real, dimension(1:MAX_TIME_STEPS,1:MAX_NUM_EXP) :: tcmed
@@ -32,9 +33,6 @@ real, dimension(1:MAX_NUM_EXP) :: aux
 real, dimension(1:MAX_NUM_EXP) :: GradsStartTimes, GradsTimeIncrs
 real :: a_med, a_max, g_med, diff_max, aux1
 real :: StartTime, TimeIncr, EndTime
-
-type (GradsDataDescription), dimension(1:MAX_NUM_EXP) :: GdataDescrip
-type (GradsVarLocation) :: TempcLoc
 
 !********************************************************************
 ! Read in arugumets and configuration.
@@ -67,7 +65,8 @@ if (Nexp .gt. MAX_NUM_EXP) then
   stop
 else
   do i_exp=1, Nexp
-    read(10,'(a)') GradsControlFiles(i_exp)
+    read(10,'(a)') GctlFiles(i_exp)%Fnames(1)
+    GctlFiles(i_exp)%Nfiles = 1
     read(10,'(f)') GradsStartTimes(i_exp)
     read(10,'(f)') GradsTimeIncrs(i_exp)
   enddo
@@ -81,7 +80,7 @@ write (0,*) '  Time increment: ', TimeIncr
 write (0,*) '  End time: ', EndTime
 write (0,*) '  GRADS control files:'
 do i_exp=1, Nexp
-  write (0,*) '    ', trim(GradsControlFiles(i_exp))
+  write (0,*) '    ', trim(GctlFiles(i_exp)%Fnames(1))
   write (0,*) '      Start Time: ', GradsStartTimes(i_exp)
   write (0,*) '      Time Increment: ', GradsTimeIncrs(i_exp)
 enddo
@@ -99,40 +98,33 @@ do i_exp=1, Nexp
 
   write (0,*) 'Experiment: ', i_exp
   write (0,*) ''
-  write (0,*) 'Reading GRADS control file: ', trim(GradsControlFiles(i_exp))
-  call ReadGradsCtlFile(GradsControlFiles(i_exp), GdataDescrip(1))
+  write (0,*) 'Reading GRADS control file: ', trim(GctlFiles(i_exp)%Fnames(1))
+  call ReadGradsCtlFiles(GctlFiles(i_exp))
   write (0,*) ''
-  call CheckDataDescrip_VS(GdataDescrip, 1, Nx, Ny, Nz, Nt, Nvars, TempcLoc, TempcVar)
+  call InitGvarFromGdescrip(GctlFiles(i_exp), TempcData(i_exp), TempcVar)
   write (0,*) ''
 
   write (0,*) 'Gridded data information:'
-  write (0,*) '  Number of x (longitude) points:      ', Nx
-  write (0,*) '  Number of y (latitude) points:       ', Ny
-  write (0,*) '  Number of z (vertical level) points: ', Nz
-  write (0,*) '  Number of t (time) points:           ', Nt
-  write (0,*) '  Total number of grid variables       ', Nvars
+  write (0,*) '  Number of x (longitude) points:      ', TempcData(i_exp)%Nx
+  write (0,*) '  Number of y (latitude) points:       ', TempcData(i_exp)%Ny
+  write (0,*) '  Number of z (vertical level) points: ', TempcData(i_exp)%Nz
+  write (0,*) '  Number of t (time) points:           ', TempcData(i_exp)%Nt
   write (0,*) ''
-  write (0,*) 'Number of data values per grid variable: ', Nx*Ny*Nz*Nt
+  write (0,*) 'Number of data values per grid variable: ', TempcData(i_exp)%Nx*TempcData(i_exp)%Ny*TempcData(i_exp)%Nz*TempcData(i_exp)%Nt
   write (0,*) ''
-  write (0,*) 'Location of tempc variable in GRADS data file (file number, var number):'
-  write (0,'(a20,i3,a2,i3,a1)') 'tempc: (', TempcLoc%Fnum, ', ', TempcLoc%Vnum, ')'
+  write (0,*) 'Locations of variables in GRADS data (file, var number):'
+  write (0,'(a17,a3,a,a2,i3,a1)') trim(TempcVar), ': (', trim(TempcData(i_exp)%DataFile), ', ', TempcData(i_exp)%Vnum, ')'
   write (0,*) ''
 
-  allocate (TempcData(1:Nx,1:Ny,1:Nz,1:Nt), stat=Ierror)
-  if (Ierror .ne. 0) then
-    write (0,*) 'ERROR: Data array allocation failed'
-    stop
-  endif
-
-  call ReadGradsData(GdataDescrip, TempcVar, TempcLoc, TempcData, Nx, Ny, Nz, Nt)
+  call ReadGradsData(TempcData(i_exp))
  
-  ! At this point TempcData contains the temperature for one whole
+  ! At this point TempcData(i_exp) contains the temperature for one whole
   ! experirmental run - all x,y,z,t values. We want just the surface temp
   ! at each time step -> set k=1 for this loop.
   !
   ! Want the index to tcmed and var to start at 1 and increment by 1. Figure out
   ! what the ending index (Tend) is given the start,end,increment from the config file
-  ! Figure out the start (place in itd) and increment (TdIncr) for stepping through TempcData array.
+  ! Figure out the start (place in itd) and increment (TdIncr) for stepping through TempcData(i_exp) array.
 
   k = 1
   diff_max =0.
@@ -144,20 +136,20 @@ do i_exp=1, Nexp
     write (0,*) '  Time data index: ', itd, ' --> time index: ', it
     ! Mean sfc temp
     tcmed(it,i_exp) = 0.
-    do i=1, Nx 
-      do j=1, Ny
-        tcmed(it,i_exp) = tcmed(it,i_exp) + TempcData(i,j,k,itd)
+    do i=1, TempcData(i_exp)%Nx 
+      do j=1, TempcData(i_exp)%Ny
+        tcmed(it,i_exp) = tcmed(it,i_exp) + TempcData(i_exp)%Vdata(itd,k,i,j)
       enddo
     enddo
-    tcmed(it,i_exp) = tcmed(it,i_exp)/real(Nx*Ny) 
+    tcmed(it,i_exp) = tcmed(it,i_exp)/real(TempcData(i_exp)%Nx*TempcData(i_exp)%Ny) 
 
     ! Mark cold pools. var() holds an image of the cold pools, like pixels, you get a 1 where the
     ! temp is colder than the mean temp by delta_temp degrees C, otherwise you get a 0.
-    do i=1, Nx 
-      do j=1, Ny
-        if ((TempcData(i,j,k,itd) - tcmed(it,i_exp))< -delta_temp) then
+    do i=1, TempcData(i_exp)%Nx 
+      do j=1, TempcData(i_exp)%Ny
+        if ((TempcData(i_exp)%Vdata(itd,k,i,j) - tcmed(it,i_exp))< -delta_temp) then
           var(i,j,it) = 1.
-          diff_max=min (diff_max,(TempcData(i,j,k,itd) - tcmed(it,i_exp))    )
+          diff_max=min (diff_max,(TempcData(i_exp)%Vdata(itd,k,i,j) - tcmed(it,i_exp))    )
         else
           var(i,j,it) = 0.
         endif
@@ -178,18 +170,18 @@ do i_exp=1, Nexp
   endif
   !
   print*,'******************************************************************' 
-  print*, trim(GradsControlFiles(i_exp))
+  print*, trim(InFiles(i_exp))
   !
-  call PDF_a(MAX_X_DIM, MAX_Y_DIM, MAX_TIME_STEPS, Nx, Ny, Nt, 1.5, var, 1, Tend, 4, a_med, a_max, mask_big, t_big)  
+  call PDF_a(MAX_X_DIM, MAX_Y_DIM, MAX_TIME_STEPS, TempcData(i_exp)%Nx, TempcData(i_exp)%Ny, TempcData(i_exp)%Nt, 1.5, var, 1, Tend, 4, a_med, a_max, mask_big, t_big)  
   !
   ! This code looks like it produces data that is not used
   ! Development of this code must be in progress at this point
   aux1=0
   g_med = 0.
-  do i=1, Nx 
-    do j=1, Ny
+  do i=1, TempcData(i_exp)%Nx 
+    do j=1, TempcData(i_exp)%Ny
       if (mask_big(i,j)==1.) then
-        g_med = g_med + TempcData(i,j,k,itd-TdIncr)  !<--- this is on last time step from loop above
+        g_med = g_med + TempcData(i_exp)%Vdata(itd-TdIncr,k,i,j)  !<--- this is on last time step from loop above
                                              !     is this really what we want?
         aux1 = aux1 + 1.
       endif
@@ -199,17 +191,12 @@ do i_exp=1, Nexp
   !
   print*,i_exp, a_med, a_max, t_big
 
-  deallocate (TempcData, stat=Ierror)
-  if (Ierror .ne. 0) then
-    write (0,*) 'ERROR: Data array memory de-allocation failed'
-    stop
-  endif
 enddo  ! i_exp = 1, Nexp
 
 !*************
 !
 print*,'******************************************************************' 
-do it=1, Nt
+do it=1, TempcData(i_exp)%Nt
    !print*, it, tcmed(it,2)-tcmed(it,1), tcmed(it,3)-tcmed(it,1), tcmed(it,4)-tcmed(it,1)
 enddo
 !
