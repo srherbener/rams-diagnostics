@@ -194,8 +194,7 @@ program main
     call InitGvarFromGdescrip(GctlFiles, U,     'u')
     call InitGvarFromGdescrip(GctlFiles, V,     'v')
 
-    if (.not. (GvarDimsMatch(Press, TempC, .false.) .and. GvarDimsMatch(Press, U, .false.) .and. &
-               GvarDimsMatch(Press, V, .false.))) then
+    if (.not. (GvarDimsMatch(Press, U, .false.) .and. GvarDimsMatch(Press, V, .false.))) then
       write (*,*) 'ERROR: dimensions of press, u and v do not match'
       stop
     endif
