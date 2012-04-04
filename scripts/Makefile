@@ -11,6 +11,7 @@ G_SCRIPTS = $(G_DEST)/cbarn.gs \
             $(G_DEST)/plotInitFields.gs \
             $(G_DEST)/plotRadialWind.gs \
             $(G_DEST)/plotTestCcnFields.gs \
+            $(G_DEST)/dumpVar2d.gs \
             $(G_DEST)/plotVslices.gs \
             $(G_DEST)/plotTseries.gs
 
@@ -53,6 +54,9 @@ $(G_DEST)/plotRadialWind.gs: plotRadialWind.gs
 
 $(G_DEST)/plotTestCcnFields.gs: plotTestCcnFields.gs
 	cp plotTestCcnFields.gs $(G_DEST)/plotTestCcnFields.gs
+
+$(G_DEST)/dumpVar2d.gs: dumpVar2d.gs
+	cp dumpVar2d.gs $(G_DEST)/dumpVar2d.gs
 
 $(G_DEST)/plotVslices.gs: plotVslices.gs
 	cp plotVslices.gs $(G_DEST)/plotVslices.gs

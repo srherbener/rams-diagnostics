@@ -115,10 +115,10 @@ sub SetGradsPlotParams
       $Clevs = "0.0 5.00 10.00 15.00 20.00 25.00 30.00 35.00 40.00 45.00 50.00 55.00 60.00";
       $Ptitle = $Gexp . ": AZ: Cloud Droplet Number (#/cc), " . $Case . ", t " . $Ptime . " hrs";
       }
-    elsif ($Gvar eq "cloud2_cm3")
+    elsif (($Gvar eq "cloud2_cm3") || ($Gvar eq "drizzle_cm3"))
       {
       $Clevs = "0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2";
-      $Ptitle = $Gexp . ": AZ: Cloud2 Droplet Number (#/cc), " . $Case . ", t " . $Ptime . " hrs";
+      $Ptitle = $Gexp . ": AZ: Drizzle Droplet Number (#/cc), " . $Case . ", t " . $Ptime . " hrs";
       }
     elsif ($Gvar eq "precipr")
       {
