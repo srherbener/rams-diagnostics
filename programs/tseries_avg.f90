@@ -48,7 +48,7 @@ program main
   ! The *Loc vars hold the locations of cloud, tempc, precipr in the GRADS
   ! data files: the first index is the file number, the second index is the
   ! var number
-  type (GradsVar) :: Cloud, TempC, Dens, PrecipR, U, V, W, CcnConc, CloudDiam, CloudConc, Press, CintLiq, TsAvg, TestSelect, Rates 
+  type (GradsVar) :: Cloud, TempC, Dens, PrecipR, U, V, W, CcnConc, CloudDiam, CloudConc, Press, CintLiq, AzWind, TsAvg, TestSelect, Rates 
 
   integer :: i
 
@@ -198,6 +198,8 @@ program main
       write (*,*) 'ERROR: dimensions of press, u and v do not match'
       stop
     endif
+  else if (AvgFunc .eq. 'max_azwind') then
+    call InitGvarFromGdescrip(GctlFiles, AzWind, 'speed_t')
   else if (AvgFunc .eq. 'ccnconc') then
     call InitGvarFromGdescrip(GctlFiles, Press,   'press')
     call InitGvarFromGdescrip(GctlFiles, CcnConc, 'ccn_conc')
@@ -212,45 +214,64 @@ program main
 
   ! Calculate the x,y coordinates (in km) for doing selection by radius from storm center.
   ! Always have Press, so use it for the coordinate calculations
-  call ConvertGridCoords(Press, Xcoords, Ycoords)
-  allocate (Zcoords(1:Press%Nz))
-  do iz = 1, Press%Nz
-      Zcoords(iz) = Press%Zcoords(iz)
-  enddo
+  if (AvgFunc .eq. 'max_azwind') then
+    ! Convert string time increment to seconds
+    DeltaT = ConvertTinc(AzWind%Tinc)
+  else
+    call ConvertGridCoords(Press, Xcoords, Ycoords)
+    allocate (Zcoords(1:Press%Nz))
+    do iz = 1, Press%Nz
+        Zcoords(iz) = Press%Zcoords(iz)
+    enddo
+  
+    DeltaX = (Xcoords(2) - Xcoords(1)) * 1000.0
+    DeltaY = (Ycoords(2) - Ycoords(1)) * 1000.0
+  
+    ! Convert string time increment to seconds
+    DeltaT = ConvertTinc(Press%Tinc)
+  
+    write (*,*) 'Horizontal grid info:'
+    write (*,*) '  X range (min lon, max lon) --> (min x, max x): '
+    write (*,*) '    ', Press%Xcoords(1), Press%Xcoords(Press%Nx), Xcoords(1), Xcoords(Press%Nx)
+    write (*,*) '  Y range (min lat, max lat) --> (min y, max y): '
+    write (*,*) '    ', Press%Ycoords(1), Press%Ycoords(Press%Ny), Ycoords(1), Ycoords(Press%Ny)
+    write (*,*) ''
+    write (*,*) 'Vertical grid info:'
+    do iz = 1, Press%Nz
+      write (*,*) '  ', iz, ' --> ', Zcoords(iz)
+    end do
+    write (*,*) ''
+    flush(6)
+  endif
 
-  DeltaX = (Xcoords(2) - Xcoords(1)) * 1000.0
-  DeltaY = (Ycoords(2) - Ycoords(1)) * 1000.0
-
-  ! Convert string time increment to seconds
-  DeltaT = ConvertTinc(Press%Tinc)
-
-  write (*,*) 'Horizontal grid info:'
-  write (*,*) '  X range (min lon, max lon) --> (min x, max x): '
-  write (*,*) '    ', Press%Xcoords(1), Press%Xcoords(Press%Nx), Xcoords(1), Xcoords(Press%Nx)
-  write (*,*) '  Y range (min lat, max lat) --> (min y, max y): '
-  write (*,*) '    ', Press%Ycoords(1), Press%Ycoords(Press%Ny), Ycoords(1), Ycoords(Press%Ny)
-  write (*,*) ''
-  write (*,*) 'Vertical grid info:'
-  do iz = 1, Press%Nz
-    write (*,*) '  ', iz, ' --> ', Zcoords(iz)
-  end do
-  write (*,*) ''
-  flush(6)
-
-  ! Read in the GRADS variable data
-  write (*,*) 'Gridded data information:'
-  write (*,*) '  Number of x (longitude) points:          ', Press%Nx
-  write (*,*) '  Number of y (latitude) points:           ', Press%Ny
-  write (*,*) '  Number of z (vertical level) points:     ', Press%Nz
-  write (*,*) '  Number of t (time) points:               ', Press%Nt
-  write (*,*) ''
-  write (*,*) '  Number of data values per grid variable: ', Press%Nx*Press%Ny*Press%Nz*Press%Nt
-  write (*,*) ''
-  write (*,*) '  Grid delta x: ', DeltaX
-  write (*,*) '  Grid delta y: ', DeltaY
-  write (*,*) '  Time increment: ', trim(Press%Tinc), ' --> ', DeltaT
-  write (*,*) ''
-  flush(6)
+  if (AvgFunc .eq. 'max_azwind') then
+    write (*,*) 'Gridded data information:'
+    write (*,*) '  Number of x (longitude) points:          ', AzWind%Nx
+    write (*,*) '  Number of y (latitude) points:           ', AzWind%Ny
+    write (*,*) '  Number of z (vertical level) points:     ', AzWind%Nz
+    write (*,*) '  Number of t (time) points:               ', AzWind%Nt
+    write (*,*) ''
+    write (*,*) '  Number of data values per grid variable: ', AzWind%Nx*AzWind%Ny*AzWind%Nz*AzWind%Nt
+    write (*,*) ''
+    write (*,*) '  Time increment: ', trim(AzWind%Tinc), ' --> ', DeltaT
+    write (*,*) ''
+    flush(6)
+  else
+    ! Read in the GRADS variable data
+    write (*,*) 'Gridded data information:'
+    write (*,*) '  Number of x (longitude) points:          ', Press%Nx
+    write (*,*) '  Number of y (latitude) points:           ', Press%Ny
+    write (*,*) '  Number of z (vertical level) points:     ', Press%Nz
+    write (*,*) '  Number of t (time) points:               ', Press%Nt
+    write (*,*) ''
+    write (*,*) '  Number of data values per grid variable: ', Press%Nx*Press%Ny*Press%Nz*Press%Nt
+    write (*,*) ''
+    write (*,*) '  Grid delta x: ', DeltaX
+    write (*,*) '  Grid delta y: ', DeltaY
+    write (*,*) '  Time increment: ', trim(Press%Tinc), ' --> ', DeltaT
+    write (*,*) ''
+    flush(6)
+  endif
 
   write (*,*) 'Locations of variables in GRADS data (file, var number):'
   if ((AvgFunc .eq. 'sc_cloud') .or. (AvgFunc .eq. 'wr_cloud')) then
@@ -346,9 +367,12 @@ program main
     write (*,'(a20,a,a2,i3,a1)') 'u: (', trim(U%DataFile), ', ', U%Vnum, ')'
     write (*,'(a20,a,a2,i3,a1)') 'v: (', trim(V%DataFile), ', ', V%Vnum, ')'
 
-    call ReadGradsData(Press)
     call ReadGradsData(U)
     call ReadGradsData(V)
+  else if (AvgFunc .eq. 'max_azwind') then
+    write (*,'(a20,a,a2,i3,a1)') 'speed_t: (', trim(AzWind%DataFile), ', ', AzWind%Vnum, ')'
+
+    call ReadGradsData(AzWind)
   else if (AvgFunc .eq. 'ccnconc') then
     write (*,'(a20,a,a2,i3,a1)') 'press: (', trim(Press%DataFile), ', ', Press%Vnum, ')'
     write (*,'(a20,a,a2,i3,a1)') 'ccn_conc: (', trim(CcnConc%DataFile), ', ', CcnConc%Vnum, ')'
@@ -372,27 +396,41 @@ program main
                       Press%UndefVal, '<NONE>', 0, 0)
   else
     DummyZcoords(1) = 0.0
-    call InitGradsVar(TsAvg, AvgFunc, 1, 1, 1, Press%Nt, &
+    if (AvgFunc .eq. 'max_azwind') then
+      call InitGradsVar(TsAvg, AvgFunc, 1, 1, 1, AzWind%Nt, &
+                      0.0, 1.0, 0.0, 1.0, DummyZcoords, AzWind%Tstart, AzWind%Tinc, &
+                      AzWind%UndefVal, '<NONE>', 0, 0)
+    else
+      call InitGradsVar(TsAvg, AvgFunc, 1, 1, 1, Press%Nt, &
                       0.0, 1.0, 0.0, 1.0, DummyZcoords, Press%Tstart, Press%Tinc, &
                       Press%UndefVal, '<NONE>', 0, 0)
+    endif
     if (DoRates .eq. .true.) then
-      call InitGradsVar(Rates, AvgFunc, 1, 1, 1, Press%Nt-2, &
+      if (AvgFunc .eq. 'max_azwind') then
+        call InitGradsVar(Rates, AvgFunc, 1, 1, 1, AzWind%Nt-2, &
+                        0.0, 1.0, 0.0, 1.0, DummyZcoords, AzWind%Tstart, AzWind%Tinc, &
+                        AzWind%UndefVal, '<NONE>', 0, 0)
+      else
+        call InitGradsVar(Rates, AvgFunc, 1, 1, 1, Press%Nt-2, &
                         0.0, 1.0, 0.0, 1.0, DummyZcoords, Press%Tstart, Press%Tinc, &
                         Press%UndefVal, '<NONE>', 0, 0)
+      endif
     endif
   end if
 
   ! Generate the storm center for all time steps
-  call RecordStormCenter(Press, StmIx, StmIy, MinP)
+  if (AvgFunc .ne. 'max_azwind') then
+    call RecordStormCenter(Press, StmIx, StmIy, MinP)
 
-  do it = 1, Press%Nt
-    write (*,*) 'Timestep: ', it
-    write (*,'(a,i3,a,i3,a,g,a,g,a)') '  Storm Center: (', StmIx(it), ', ', StmIy(it), &
-       ') --> (', Xcoords(StmIx(it)), ', ', Ycoords(StmIy(it)), ')'
-    write (*,*) '  Minumum pressure: ', MinP(it)
-  end do
-  write (*,*) ''
-  flush(6)
+    do it = 1, Press%Nt
+      write (*,*) 'Timestep: ', it
+      write (*,'(a,i3,a,i3,a,g,a,g,a)') '  Storm Center: (', StmIx(it), ', ', StmIy(it), &
+         ') --> (', Xcoords(StmIx(it)), ', ', Ycoords(StmIy(it)), ')'
+      write (*,*) '  Minumum pressure: ', MinP(it)
+    end do
+    write (*,*) ''
+    flush(6)
+  endif
 
   ! call the averaging function
 
@@ -416,6 +454,8 @@ program main
     call DoHorizKe(DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, U, V, Dens, TsAvg)
   else if (AvgFunc .eq. 'storm_int') then
     call DoStormInt(DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, U, V, TsAvg)
+  else if (AvgFunc .eq. 'max_azwind') then
+    call DoMaxAzWind(AzWind, TsAvg)
   else if (AvgFunc .eq. 'ccnconc') then
     call DoCcnConc(DeltaX, DeltaY, Wthreshold, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CcnConc, TsAvg)
   else if (AvgFunc .eq. 'test_cvs') then
@@ -495,6 +535,7 @@ subroutine GetMyArgs(Infiles, Outfiles, AvgFunc, DoRates, Wthreshold, CilThresh,
     write (*,*) '            ccnconc -> average ccn concentration'
     write (*,*) '            horiz_ke -> total kinetic energy form horizontal winds'
     write (*,*) '            storm_int -> storm intensity metric from horizontal wind speeds'
+    write (*,*) '            max_azwind -> max value of azimuthially averaged wind'
     write (*,*) '            test_cvs -> test the cylindrical volume selection scheme'
     write (*,*) ''
     write (*,*) '        <do_rates_flag>: use "rates" or "no_rates"'
@@ -566,6 +607,7 @@ subroutine GetMyArgs(Infiles, Outfiles, AvgFunc, DoRates, Wthreshold, CilThresh,
       (AvgFunc .ne. 'w_up')           .and. &
       (AvgFunc .ne. 'horiz_ke')       .and. &
       (AvgFunc .ne. 'storm_int')      .and. &
+      (AvgFunc .ne. 'max_azwind')     .and. &
       (AvgFunc .ne. 'ccnconc')        .and. &
       (AvgFunc .ne. 'test_cvs'))       then
     write (*,*) 'ERROR: <averaging_function> must be one of:'
@@ -586,6 +628,7 @@ subroutine GetMyArgs(Infiles, Outfiles, AvgFunc, DoRates, Wthreshold, CilThresh,
     write (*,*) '          ccnconc'
     write (*,*) '          horiz_ke'
     write (*,*) '          storm_int'
+    write (*,*) '          max_azwind'
     write (*,*) '          test_cvs'
     write (*,*) ''
     BadArgs = .true.
@@ -1125,6 +1168,35 @@ subroutine DoCcnConc(DeltaX, DeltaY, Wthreshold, MinR, MaxR, MinPhi, MaxPhi, Min
     end if
   end do
 
+end subroutine
+
+!************************************************************************************
+! DoMaxAzWind()
+!
+! This subroutine will simply find the maximum wind speed in AzWind and copy that
+! to TsAvg.
+subroutine DoMaxAzWind(AzWind, TsAvg)
+  use gdata_utils
+  implicit none
+
+  type (GradsVar) :: AzWind, TsAvg
+
+  integer :: ix,iy,iz,it
+
+  do it = 1, AzWind%Nt
+    TsAvg%Vdata(it,1,1,1) = 0.0
+    do iz = 1, AzWind%Nz
+      do ix = 1, AzWind%Nx
+        do iy = 1, AzWind%Ny
+          if (AzWind%Vdata(it,iz,ix,iy) .gt. TsAvg%Vdata(it,1,1,1)) then
+            TsAvg%Vdata(it,1,1,1) = AzWind%Vdata(it,iz,ix,iy)
+          endif
+        end do
+      end do
+    end do
+  end do
+
+  return
 end subroutine
 
 !************************************************************************************
