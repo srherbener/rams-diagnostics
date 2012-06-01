@@ -1,4 +1,4 @@
-% Script to create rainfall intensity PDF
+% Script to create rainfall intensity histograms
 %
 
 clear;
@@ -7,13 +7,51 @@ clear;
 %
 % After reading in, the dimensions will be (x,y,t)
 
-h5file = '/Users/steveherbener/Downloads/PCPRR.h5';
-PCPRR = hdf5read(h5file, '/PCPRR');
+Exps = [ 'z.atex250m.100km.ccn0050.sst298',
+'z.atex250m.100km.ccn0050.sst303',
+'z.atex250m.100km.ccn0100.sst298',
+'z.atex250m.100km.ccn0100.sst303',
+'z.atex250m.100km.ccn0200.sst298',
+'z.atex250m.100km.ccn0200.sst303',
+'z.atex250m.100km.ccn0400.sst298',
+'z.atex250m.100km.ccn0400.sst303',
+'z.atex250m.100km.ccn0800.sst298',
+'z.atex250m.100km.ccn0800.sst303',
+'z.atex250m.100km.ccn1200.sst298',
+'z.atex250m.100km.ccn1200.sst303',
+'z.atex250m.100km.ccn1600.sst298',
+'z.atex250m.100km.ccn1600.sst303' ];
 
-% Generate PDF for PCPRR
-Bins = [0.001, 0.01, 0.1, 1, 10, 100 ];
-RrHists = GenHist2d(PCPRR, Bins, min(Bins), max(Bins));
+Bins_l = (0.01:0.01:0.1);
+Bins_m = (0.1:0.1:1);
+Bins_h = (1:1:20);
 
-% Save the histograms
-hdf5write('PCPRR.hist.h5', '/Hists', RrHists);
-hdf5write('PCPRR.hist.h5', '/Bins', Bins, 'WriteMode', 'append');
+Scale = 'FA';
+
+% Rain rate is in the REVU var PCPRR
+for i = 1:size(Exps,1)
+  h5_fin = sprintf('REVU/%s/PCPRR.h5',Exps(i,:));
+  h5_fout = sprintf('DIAG/%s/PCPRR.hist.h5',Exps(i,:));
+  fprintf('Generating Histograms:\n');
+  fprintf('  Input file: %s\n',h5_fin);
+  fprintf('  Output file: %s\n', h5_fout);
+  fprintf('\n');
+
+  % Read in rain rate data
+  PCPRR = hdf5read(h5_fin, '/PCPRR');
+
+  % Generate histograms for PCPRR
+  Hists_l = GenHist2d(PCPRR, Bins_l, min(Bins_l), max(Bins_l), Scale);
+  Hists_m = GenHist2d(PCPRR, Bins_m, min(Bins_m), max(Bins_m), Scale);
+  Hists_h = GenHist2d(PCPRR, Bins_h, min(Bins_h), max(Bins_h), Scale);
+
+  % Save the histograms
+  hdf5write(h5_fout, '/Hists_l', Hists_l);
+  hdf5write(h5_fout, '/Bins_l', Bins_l, 'WriteMode', 'append');
+
+  hdf5write(h5_fout, '/Hists_m', Hists_m, 'WriteMode', 'append');
+  hdf5write(h5_fout, '/Bins_m', Bins_m, 'WriteMode', 'append');
+
+  hdf5write(h5_fout, '/Hists_h', Hists_h, 'WriteMode', 'append');
+  hdf5write(h5_fout, '/Bins_h', Bins_h, 'WriteMode', 'append');
+end

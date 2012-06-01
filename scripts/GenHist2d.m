@@ -1,4 +1,4 @@
-function [ Hists ] = GenHist2d( Var, Bins, Hmin, Hmax )
+function [ Hists ] = GenHist2d( Var, Bins, Hmin, Hmax, Scale )
 %GenHist2d create histograms of 2D field
 %   This routine will create histograms of the series of 2D fields given
 %   by Var. It is assumed that Var has 3 dimensions organized as (x,y,t).
@@ -17,9 +17,13 @@ function [ Hists ] = GenHist2d( Var, Bins, Hmin, Hmax )
 %   The arguments Hmin, Hmax define a range for selecting items out of Var
 %   where only the elements in Var that fall inside the range Hmin, Hmax
 %   will be counted for the output histogram.
+%
+%   The argument Scale defines how to scale the resulting histograms.
+%      'FA' --> fractional area
 
 [ Nx, Ny, Nt ] = size(Var);
 Nbins = length(Bins);
+Npts = Nx * Ny;
 
 Hists = zeros(Nbins, Nt); % preallocate to help speed up things
 
@@ -37,6 +41,9 @@ for i = 1:Nt
     Hists(:,i) = H;
 end
 
+if (Scale == 'FA')
+  Hists = Hists / Npts;
+end
 
 end
 
