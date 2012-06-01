@@ -26,8 +26,6 @@ Bins_l = (0.01:0.01:0.1);
 Bins_m = (0.1:0.1:1);
 Bins_h = (1:1:20);
 
-Scale = 'FA';
-
 % Rain rate is in the REVU var PCPRR
 for i = 1:size(Exps,1)
   h5_fin = sprintf('REVU/%s/PCPRR.h5',Exps(i,:));
@@ -40,10 +38,14 @@ for i = 1:size(Exps,1)
   % Read in rain rate data
   PCPRR = hdf5read(h5_fin, '/PCPRR');
 
+  % Record number of points in horzontal domain
+  [ Nx, Ny, Nt ] = size(PCPRR); 
+  Npts = Nx * Ny;
+
   % Generate histograms for PCPRR
-  Hists_l = GenHist2d(PCPRR, Bins_l, min(Bins_l), max(Bins_l), Scale);
-  Hists_m = GenHist2d(PCPRR, Bins_m, min(Bins_m), max(Bins_m), Scale);
-  Hists_h = GenHist2d(PCPRR, Bins_h, min(Bins_h), max(Bins_h), Scale);
+  Hists_l = GenHist2d(PCPRR, Bins_l, min(Bins_l), max(Bins_l));
+  Hists_m = GenHist2d(PCPRR, Bins_m, min(Bins_m), max(Bins_m));
+  Hists_h = GenHist2d(PCPRR, Bins_h, min(Bins_h), max(Bins_h));
 
   % Save the histograms
   hdf5write(h5_fout, '/Hists_l', Hists_l);
@@ -54,4 +56,6 @@ for i = 1:size(Exps,1)
 
   hdf5write(h5_fout, '/Hists_h', Hists_h, 'WriteMode', 'append');
   hdf5write(h5_fout, '/Bins_h', Bins_h, 'WriteMode', 'append');
+
+  hdf5write(h5_fout, '/Npts', Npts, 'WriteMode', 'append');
 end
