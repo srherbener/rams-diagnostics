@@ -22,7 +22,8 @@ Exps = [ 'z.atex250m.100km.ccn0050.sst298',
 'z.atex250m.100km.ccn1600.sst298',
 'z.atex250m.100km.ccn1600.sst303' ];
 
-Bins = [ (0.01:0.01:0.1 ) (0.2:0.1:1) (2:1:20) ];
+%Bins = [ (0.01:0.01:0.1 ) (0.2:0.1:1) (2:1:20) ];
+Bins = (0.1:0.1:20);
 
 % Rain rate is in the REVU var PCPRR
 for i = 1:size(Exps,1)
