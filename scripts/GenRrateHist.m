@@ -22,9 +22,7 @@ Exps = [ 'z.atex250m.100km.ccn0050.sst298',
 'z.atex250m.100km.ccn1600.sst298',
 'z.atex250m.100km.ccn1600.sst303' ];
 
-Bins_l = (0.01:0.01:0.1);
-Bins_m = (0.1:0.1:1);
-Bins_h = (1:1:20);
+Bins = [ (0.01:0.01:0.1 ) (0.2:0.1:1) (2:1:20) ];
 
 % Rain rate is in the REVU var PCPRR
 for i = 1:size(Exps,1)
@@ -43,19 +41,10 @@ for i = 1:size(Exps,1)
   Npts = Nx * Ny;
 
   % Generate histograms for PCPRR
-  Hists_l = GenHist2d(PCPRR, Bins_l, min(Bins_l), max(Bins_l));
-  Hists_m = GenHist2d(PCPRR, Bins_m, min(Bins_m), max(Bins_m));
-  Hists_h = GenHist2d(PCPRR, Bins_h, min(Bins_h), max(Bins_h));
+  Hists = GenHist2d(PCPRR, Bins, min(Bins), max(Bins));
 
   % Save the histograms
-  hdf5write(h5_fout, '/Hists_l', Hists_l);
-  hdf5write(h5_fout, '/Bins_l', Bins_l, 'WriteMode', 'append');
-
-  hdf5write(h5_fout, '/Hists_m', Hists_m, 'WriteMode', 'append');
-  hdf5write(h5_fout, '/Bins_m', Bins_m, 'WriteMode', 'append');
-
-  hdf5write(h5_fout, '/Hists_h', Hists_h, 'WriteMode', 'append');
-  hdf5write(h5_fout, '/Bins_h', Bins_h, 'WriteMode', 'append');
-
+  hdf5write(h5_fout, '/Hists', Hists);
+  hdf5write(h5_fout, '/Bins', Bins, 'WriteMode', 'append');
   hdf5write(h5_fout, '/Npts', Npts, 'WriteMode', 'append');
 end
