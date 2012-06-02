@@ -7,6 +7,7 @@ SCRIPTS = $(DEST)/GenHist2d.m \
           $(DEST)/GenRrateHist.m \
           $(DEST)/PlotHist2d.m \
           $(DEST)/PlotRrateHist.m \
+          $(DEST)/ExtractSample.m \
 
 
 #
@@ -26,4 +27,7 @@ $(DEST)/PlotHist2d.m: PlotHist2d.m
 
 $(DEST)/PlotRrateHist.m: PlotRrateHist.m
 	cp PlotRrateHist.m $(DEST)/PlotRrateHist.m
+
+$(DEST)/ExtractSample.m: ExtractSample.m
+	cp ExtractSample.m $(DEST)/ExtractSample.m
 
