@@ -28,6 +28,17 @@ h5_fout = sprintf('DIAG/SampleData.h5');
 hdf5write(h5_fout, '/Tstep', Tstep);
 hdf5write(h5_fout, '/Time',Tstring, 'WriteMode', 'append');
 
+% Copy the lat and lon values into the output file
+h5_grid_fin = 'REVU/grid_info.h5';
+Lat = hdf5read(h5_grid_fin, '/lat');
+Lon = hdf5read(h5_grid_fin, '/lon');
+hdf5write(h5_fout, '/Lat', Lat, 'WriteMode', 'append');
+hdf5write(h5_fout, '/Lon', Lon, 'WriteMode', 'append');
+
+% Write out the CCN and SST values
+hdf5write(h5_fout, '/CcnConcen', CCN, 'WriteMode', 'append');
+hdf5write(h5_fout, '/Sst', SST, 'WriteMode', 'append');
+
 % Rain rate is in the REVU var PCPRR
 for i = 1:size(Exps,1)
   Exp = char(Exps(i));
