@@ -8,6 +8,11 @@ SCRIPTS = $(DEST)/GenHist2d.m \
           $(DEST)/PlotHist2d.m \
           $(DEST)/PlotRrateHist.m \
           $(DEST)/ExtractSample.m \
+          $(DEST)/MergeHists.m \
+          $(DEST)/PlotHistSet.m \
+          $(DEST)/PlotHists.m \
+          $(DEST)/PlotSampleData.m \
+          $(DEST)/PlotMultiPanelSample.m \
 
 
 #
@@ -30,4 +35,19 @@ $(DEST)/PlotRrateHist.m: PlotRrateHist.m
 
 $(DEST)/ExtractSample.m: ExtractSample.m
 	cp ExtractSample.m $(DEST)/ExtractSample.m
+
+$(DEST)/MergeHists.m: MergeHists.m
+	cp MergeHists.m $(DEST)/MergeHists.m
+
+$(DEST)/PlotHistSet.m: PlotHistSet.m
+	cp PlotHistSet.m $(DEST)/PlotHistSet.m
+
+$(DEST)/PlotHists.m: PlotHists.m
+	cp PlotHists.m $(DEST)/PlotHists.m
+
+$(DEST)/PlotSampleData.m: PlotSampleData.m
+	cp PlotSampleData.m $(DEST)/PlotSampleData.m
+
+$(DEST)/PlotMultiPanelSample.m: PlotMultiPanelSample.m
+	cp PlotMultiPanelSample.m $(DEST)/PlotMultiPanelSample.m
 
