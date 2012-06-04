@@ -22,13 +22,15 @@ Fig = figure;
 % subsequent plots). Plot the first hist outside the loop, issue a "hold
 % on" and then plot the remainder hists.
 
-semilogy(Bins(:,1), Hists(:,1)/Npts(1), char(Lstyles(1)), 'LineWidth', 2);
+EndBin = 29; % just take the lower rain rates: 0 - 2.9 mm/hr
+
+semilogy(Bins(1:EndBin,1), Hists(1:EndBin,1)/Npts(1), char(Lstyles(1)), 'LineWidth', 2);
 set (gca, 'FontSize', 20);
 hold on;
 Ltext(1) = { sprintf('CCN: %d/cc', Ccn(1)) };
 
 for i = 2:size(Hists,2) % each column is a separate histogram
-    semilogy(Bins(:,i), Hists(:,i)/Npts(i), char(Lstyles(i)),'LineWidth', 2);
+    semilogy(Bins(1:EndBin,i), Hists(1:EndBin,i)/Npts(i), char(Lstyles(i)),'LineWidth', 2);
     Ltext(i) = { sprintf('CCN: %d/cc', Ccn(i)) };
 end
 
