@@ -73,12 +73,26 @@ end
 
 % color map and contour levels for PCPRR
 CmapPCPRR = colormap('cool');
-CmapPCPRR(1,:) = [ 1 1 1 ];  % change the zero value to white
-ClevsPCPRR = (0:0.1:2);
+CmapPCPRR(1,:) = [ 1 1 1 ];  % change the min value to white
+%ClevsPCPRR = (0:0.1:1);
+ClevsPCPRR = [ (0:0.2:1.0) (1.3:0.3:2.8) 3.2 4.4 5 6 7 8 9 10 ];
 PtitlePCPRR = sprintf('Precipitation Rate (mm/hr)');
-close;
+
+% color map and contour levels for CLOUDTOP_TEMPC
+CmapCLOUDTOP_TEMPC = colormap('cool');
+CmapCLOUDTOP_TEMPC(1,:) = [ 1 1 1 ];  % change the min value to white
+ClevsCLOUDTOP_TEMPC = [ (0:1:10) (12:2:20) ];
+PtitleCLOUDTOP_TEMPC = sprintf('Cloud Top Temperature (degrees C)');
+
+% color map and contour levels for VERTINT_COND
+CmapVERTINT_COND = colormap('cool');
+CmapVERTINT_COND(1,:) = [ 1 1 1 ];  % change the min value to white
+ClevsVERTINT_COND = [ (0:0.2:1.0) (1.3:0.3:2.8) (3.2:0.4:4.8) 5.4 5.8 6.2 ];
+PtitleVERTINT_COND = sprintf('Vertically Integrated Condensate (mm)');
+
+close; % issuing the colomap command opens a figure
 
 
 PlotMultiPanelSample(PCPRR,Lon,Lat,CCN,SST, CmapPCPRR, ClevsPCPRR, PtitlePCPRR, 'DIAG/PCPRR.sample.jpg');
-%PlotMultiPanelSample(CLOUDTOP_TEMPC,Lon,Lat,CCN,SST,'DIAG/CLOUDTOP_TEMPC.sample.jpg');
-%PlotMultiPanelSample(VERTINT_COND,Lon,Lat,CCN,SST,'DIAG/VERTINT_COND.sample.jpg');
+PlotMultiPanelSample(CLOUDTOP_TEMPC,Lon,Lat,CCN,SST, CmapCLOUDTOP_TEMPC, ClevsCLOUDTOP_TEMPC, PtitleCLOUDTOP_TEMPC, 'DIAG/CLOUDTOP_TEMPC.sample.jpg');
+PlotMultiPanelSample(VERTINT_COND,Lon,Lat,CCN,SST, CmapVERTINT_COND, ClevsVERTINT_COND, PtitleVERTINT_COND, 'DIAG/VERTINT_COND.sample.jpg');
