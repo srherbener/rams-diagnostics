@@ -47,7 +47,7 @@ Fsize = 18;
 subplot(6,2, [ 1 2 ]);
 axis off;
 text(0.5,0.5,Ptitle,'HorizontalAlignment', 'center', ...
-  'VerticalAlignment', 'middle', 'FontSize', 20);
+  'VerticalAlignment', 'middle', 'FontSize', 24);
 
 for i = 1:4
     subplot(6,2,squeeze(Sregion(i,:)));
