@@ -71,6 +71,14 @@ end
 % Plot the sample data - 4 panel plots each one showing one variable with
 % all CCN, SST combinations.
 
-PlotMultiPanelSample(PCPRR,Lon,Lat,CCN,SST,'DIAG/PCPRR.sample.jpg');
-PlotMultiPanelSample(CLOUDTOP_TEMPC,Lon,Lat,CCN,SST,'DIAG/CLOUDTOP_TEMPC.sample.jpg');
-PlotMultiPanelSample(VERTINT_COND,Lon,Lat,CCN,SST,'DIAG/VERTINT_COND.sample.jpg');
+% color map and contour levels for PCPRR
+CmapPCPRR = colormap('cool');
+CmapPCPRR(1,:) = [ 1 1 1 ];  % change the zero value to white
+ClevsPCPRR = (0:0.1:2);
+PtitlePCPRR = sprintf('Precipitation Rate (mm/hr)');
+close;
+
+
+PlotMultiPanelSample(PCPRR,Lon,Lat,CCN,SST, CmapPCPRR, ClevsPCPRR, PtitlePCPRR, 'DIAG/PCPRR.sample.jpg');
+%PlotMultiPanelSample(CLOUDTOP_TEMPC,Lon,Lat,CCN,SST,'DIAG/CLOUDTOP_TEMPC.sample.jpg');
+%PlotMultiPanelSample(VERTINT_COND,Lon,Lat,CCN,SST,'DIAG/VERTINT_COND.sample.jpg');
