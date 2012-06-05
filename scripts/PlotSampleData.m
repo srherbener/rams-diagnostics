@@ -20,6 +20,8 @@ clear;
 % and SST values.
 h5_fin = 'DIAG/SampleData.h5';
 
+Tstep = hdf5read(h5_fin,'/Tstep');
+
 CCN = hdf5read(h5_fin,'/CcnConcen');
 SST = hdf5read(h5_fin,'/Sst');
 Ns = length(CCN);
@@ -39,6 +41,8 @@ Lon = Lon2D(:,1);
 Nx = length(Lon);
 Ny = length(Lat);
 
+SimTime = (Tstep - 1) / 12; % 5 min per time step, so divide by 12 to get hours
+StimeStr = sprintf('Simulation Time = %d hrs', SimTime);
 
 PCPRR = zeros(Ns,Nx,Ny);
 CLOUDTOP_TEMPC = zeros(Ns,Nx,Ny);
@@ -72,27 +76,35 @@ end
 % all CCN, SST combinations.
 
 % color map and contour levels for PCPRR
-CmapPCPRR = colormap('cool');
+CmapPCPRR = colormap('jet');
 CmapPCPRR(1,:) = [ 1 1 1 ];  % change the min value to white
-%ClevsPCPRR = (0:0.1:1);
-ClevsPCPRR = [ (0:0.2:1.0) (1.3:0.3:2.8) 3.2 4.4 5 6 7 8 9 10 ];
-PtitlePCPRR = sprintf('Precipitation Rate (mm/hr)');
+ClevsPCPRR = (0:0.05:2);
+%ClevsPCPRR = [ (0:0.2:1.0) (1.3:0.3:2.8) 3.2 4.4 5 6 7 8 9 10 ];
+%ClevsPCPRR = [ 0 0.001 0.01 0.1 1.0 10 ];
+PtitlePCPRR = sprintf('Precipitation Rate (mm/hr)\n%s', StimeStr);
 
 % color map and contour levels for CLOUDTOP_TEMPC
-CmapCLOUDTOP_TEMPC = colormap('cool');
-CmapCLOUDTOP_TEMPC(1,:) = [ 1 1 1 ];  % change the min value to white
-ClevsCLOUDTOP_TEMPC = [ (0:1:10) (12:2:20) ];
-PtitleCLOUDTOP_TEMPC = sprintf('Cloud Top Temperature (degrees C)');
+CmapCLOUDTOP_TEMPC = colormap('gray');
+%CmapCLOUDTOP_TEMPC(1,:) = [ 1 1 1 ];  % change the min value to white
+%ClevsCLOUDTOP_TEMPC = [ (0:1:10) (12:2:20) ];
+ClevsCLOUDTOP_TEMPC = (0:0.5:20);
+PtitleCLOUDTOP_TEMPC = sprintf('Cloud Top Temperature (degrees C)\n%s', StimeStr);
 
 % color map and contour levels for VERTINT_COND
-CmapVERTINT_COND = colormap('cool');
+CmapVERTINT_COND = colormap('jet');
 CmapVERTINT_COND(1,:) = [ 1 1 1 ];  % change the min value to white
-ClevsVERTINT_COND = [ (0:0.2:1.0) (1.3:0.3:2.8) (3.2:0.4:4.8) 5.4 5.8 6.2 ];
-PtitleVERTINT_COND = sprintf('Vertically Integrated Condensate (mm)');
+ClevsVERTINT_COND = (0:0.05:2);
+%ClevsVERTINT_COND = [ (0:0.2:1.0) (1.3:0.3:2.8) (3.2:0.4:4.8) 5.4 5.8 6.2 ];
+%ClevsVERTINT_COND = [ 0 0.001 0.01 0.1 1 10 ];
+PtitleVERTINT_COND = sprintf('Vertically Integrated Condensate (mm)\n%s', StimeStr);
 
 close; % issuing the colomap command opens a figure
 
 
 PlotMultiPanelSample(PCPRR,Lon,Lat,CCN,SST, CmapPCPRR, ClevsPCPRR, PtitlePCPRR, 'DIAG/PCPRR.sample.jpg');
-PlotMultiPanelSample(CLOUDTOP_TEMPC,Lon,Lat,CCN,SST, CmapCLOUDTOP_TEMPC, ClevsCLOUDTOP_TEMPC, PtitleCLOUDTOP_TEMPC, 'DIAG/CLOUDTOP_TEMPC.sample.jpg');
 PlotMultiPanelSample(VERTINT_COND,Lon,Lat,CCN,SST, CmapVERTINT_COND, ClevsVERTINT_COND, PtitleVERTINT_COND, 'DIAG/VERTINT_COND.sample.jpg');
+
+% REVU placed a very cold temperature (-248.31 deg C) in where there are no
+% clouds. Change these to NaN to denote missing data (no clouds).
+CLOUDTOP_TEMPC(CLOUDTOP_TEMPC <= 0) = NaN;
+PlotMultiPanelSample(CLOUDTOP_TEMPC,Lon,Lat,CCN,SST, CmapCLOUDTOP_TEMPC, ClevsCLOUDTOP_TEMPC, PtitleCLOUDTOP_TEMPC, 'DIAG/CLOUDTOP_TEMPC.sample.jpg');

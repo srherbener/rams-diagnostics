@@ -51,12 +51,12 @@ text(0.5,0.5,Ptitle,'HorizontalAlignment', 'center', ...
 
 for i = 1:4
     subplot(6,2,squeeze(Sregion(i,:)));
-    contourf(Lon,Lat,squeeze(Var(i,:,:)),Clevs);
+    contourf(Lon,Lat,squeeze(Var(i,:,:)),Clevs), shading flat;
     set(gca, 'FontSize', Fsize);
     set(gca,'XtickLabel', [ ] );
     set(gca,'YtickLabel', [ ] );
     if (i == 3 || i == 4)
-      Xlab = sprintf('SST: %d',Sst(i));
+      Xlab = sprintf('SST: %d K',Sst(i));
       xlabel(Xlab);
     end
     if (i == 1 || i == 3)
