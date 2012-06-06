@@ -15,6 +15,8 @@ SCRIPTS = $(DEST)/GenHist2d.m \
           $(DEST)/PlotMultiPanelSample.m \
           $(DEST)/GenTimeSeries.m \
           $(DEST)/RatioAvg2d.m \
+          $(DEST)/PlotTimeSeries.m \
+          $(DEST)/PlotTseriesSet.m \
 
 
 #
@@ -58,4 +60,10 @@ $(DEST)/GenTimeSeries.m: GenTimeSeries.m
 
 $(DEST)/RatioAvg2d.m: RatioAvg2d.m
 	cp RatioAvg2d.m $(DEST)/RatioAvg2d.m
+
+$(DEST)/PlotTimeSeries.m: PlotTimeSeries.m
+	cp PlotTimeSeries.m $(DEST)/PlotTimeSeries.m
+
+$(DEST)/PlotTseriesSet.m: PlotTseriesSet.m
+	cp PlotTseriesSet.m $(DEST)/PlotTseriesSet.m
 
