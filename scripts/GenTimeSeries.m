@@ -46,7 +46,16 @@ for i = 1:size(Exps,1)
   CLOUD = hdf5read(h5_fin_cloud, '/VERTINT_CLOUD');
 
   % LWP time series is simply average of domain at each time step
-  [ AVG_LWP ] = GenTseriesAvg2d(LWP);
+  %
+  % This turns out to be quite simple to calculate. The matlab mean() function
+  % will calculate averages along a specified dimension in a multidimensional
+  % array. mean() can be used to first generate means along the columns of each
+  % 2D field, then to average these columns into a single number for each time
+  % step.
+  %
+  % squeeze() is used to elimnate the degenerate dimension (size = 1).
+
+  AVG_LWP = squeeze(mean(mean(LWP,1),2));
 
   % ratio of rain to cloud can be computed two ways:
   %   1. An average of the ratios of each element in the 2D fields
@@ -54,8 +63,12 @@ for i = 1:size(Exps,1)
   %
   % Do both and save them in the output file
 
-  AVG_R2C = GenTseriesAvg2d(RAIN ./ CLOUD); % average of ratios
-  RAVG2CAVG = GenTseriesAvg2d(RAIN) ./ GenTseriesAvg2d(CLOUD); % ratio of averages
+  Nt = size(RAIN,3);
+  AVG_R2C = zeros(1,Nt);
+  RAVG2CAVG = zeros(1,Nt);
+  for i = 1:Nt
+    [ AVG_R2C(i), RAVG2CAVG(i) ] = RatioAvg2d(RAIN(:,:,i), CLOUD(:,:,i));
+  end
 
   % Save the histograms
   hdf5write(h5_fout, '/AvgLWP', AVG_LWP);

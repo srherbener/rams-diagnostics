@@ -15,7 +15,7 @@ SCRIPTS = $(DEST)/GenHist2d.m \
           $(DEST)/PlotMultiPanelSample.m \
           $(DEST)/GenTimeSeries.m \
           $(DEST)/GenTseriesAvg2d.m \
-          $(DEST)/GenRatioTsAvg2d.m \
+          $(DEST)/RatioAvg2d.m \
 
 
 #
@@ -60,6 +60,6 @@ $(DEST)/GenTimeSeries.m: GenTimeSeries.m
 $(DEST)/GenTseriesAvg2d.m: GenTseriesAvg2d.m
 	cp GenTseriesAvg2d.m $(DEST)/GenTseriesAvg2d.m
 
-$(DEST)/GenRatioTsAvg2d.m: GenRatioTsAvg2d.m
-	cp GenRatioTsAvg2d.m $(DEST)/GenRatioTsAvg2d.m
+$(DEST)/RatioAvg2d.m: RatioAvg2d.m
+	cp RatioAvg2d.m $(DEST)/RatioAvg2d.m
 
