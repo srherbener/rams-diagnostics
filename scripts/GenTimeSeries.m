@@ -56,6 +56,8 @@ for i = 1:size(Exps,1)
   % squeeze() is used to elimnate the degenerate dimension (size = 1).
 
   AVG_LWP = squeeze(mean(mean(LWP,1),2));
+  AVG_CLOUD = squeeze(mean(mean(CLOUD,1),2));
+  AVG_RAIN = squeeze(mean(mean(RAIN,1),2));
 
   % ratio of rain to cloud can be computed two ways:
   %   1. An average of the ratios of each element in the 2D fields
@@ -72,6 +74,8 @@ for i = 1:size(Exps,1)
 
   % Save the histograms
   hdf5write(h5_fout, '/AvgLWP', AVG_LWP);
+  hdf5write(h5_fout, '/AvgCloud', AVG_CLOUD, 'WriteMode', 'append');
+  hdf5write(h5_fout, '/AvgRain', AVG_RAIN, 'WriteMode', 'append');
   hdf5write(h5_fout, '/Avg_RainToCloud', AVG_R2C, 'WriteMode', 'append');
   hdf5write(h5_fout, '/RainAvgToCloudAvg', RAVG2CAVG, 'WriteMode', 'append');
 end

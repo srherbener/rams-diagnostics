@@ -1,4 +1,4 @@
-function [ ] = PlotTseriesSet( Ts, Ccn, Ptitle, Ylabel, Lstyles, LegLoc, OutFile )
+function [ ] = PlotTseriesSet( Ts, Ccn, Sst, Ptitle, Ylim, Ylabel, Lstyles, LegLoc, OutFile )
 %PlotTseriesSet Plot a set of time series on the same panel
 %   This function will take data contained in Ts and plot them on a single
 %   panel.
@@ -19,6 +19,7 @@ Fig = figure;
 
 Times = (0:size(Ts,1)-1);
 Lwidth = 2;
+FontSz = 20;
 
 % Show hours on the Time axis
 %   Tick marks are too close when showing every hour, so show every 5 hours
@@ -31,16 +32,19 @@ XtickVals = (XtickLocs - 1) / 12;
 % on" and then plot the remainder hists.
 
 plot(Times, Ts(:,1), char(Lstyles(1)), 'LineWidth', Lwidth);
-set(gca, 'FontSize', 20);
+set(gca, 'FontSize', FontSz);
 set(gca, 'XTick', XtickLocs);
 set(gca, 'XTickLabel', XtickVals);
+ylim(Ylim);
 
 hold on;
 
+%Ltext(1) = { sprintf('SST: %dK, CCN: %d/cc', Sst(1), Ccn(1)) };
 Ltext(1) = { sprintf('CCN: %d/cc', Ccn(1)) };
 
 for i = 2:size(Ts,2) % each column is a separate time series
     plot(Times, Ts(:,i), char(Lstyles(i)),'LineWidth', Lwidth);
+    %Ltext(i) = { sprintf('SST: %dK, CCN: %d/cc', Sst(i), Ccn(i)) };
     Ltext(i) = { sprintf('CCN: %d/cc', Ccn(i)) };
 end
 
