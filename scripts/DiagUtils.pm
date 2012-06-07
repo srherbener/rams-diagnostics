@@ -128,6 +128,10 @@ sub AppendGradsVarFile
     {
     $FilePrefix = "GRADS/" . $Tdir . "/" . $Var . "_" . $Case . "*";
     }
+  elsif ($Var eq "speed_t")
+    {
+    $FilePrefix = "AzAveragedData/" . $Tdir . "/" . $Var . "_" . $Case . "*";
+    }
   else
     {
     $FilePrefix = $Case . "/GRADS/" . $Tdir . "/" . $Var . "-*";
