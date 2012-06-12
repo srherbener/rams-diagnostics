@@ -3,7 +3,7 @@
 #
 
 # Change RHDF5_HOME depending on where you loaded this package
-RHDF5_HOME = /Users/steve/rhdf5
+RHDF5_HOME = /Users/steve/src/rhdf5
 
 # Change HDF5_INCS to the location hdf5 is loaded on your machine.
 # This should match what is being set in your RAMS and REVU
