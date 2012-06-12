@@ -72,6 +72,7 @@ subroutine rhdf5_open_file(fname,facc,fdelete,fid)
   integer :: fdelete
   integer :: fid
 
+  character (len=HDF5_MAX_STRING) :: command
   integer :: hdferr
   logical :: exists
 
@@ -111,7 +112,8 @@ subroutine rhdf5_open_file(fname,facc,fdelete,fid)
          print*, 'ERROR: rhdf5_open_file: File exists when delete flag is set to zero: ', trim(fname)
          stop 'rhdf5_open_file: File exists'
       else
-         call usystem('rm -f '//trim(fname)//char(0))
+         command = 'rm -f '//trim(fname)//char(0)
+         call system(trim(command))
          call rh5f_create(trim(fname)//char(0), 1, fid, hdferr)
       endif
     endif

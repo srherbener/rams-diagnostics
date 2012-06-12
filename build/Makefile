@@ -5,6 +5,10 @@
 # Change RHDF5_HOME depending on where you loaded this package
 RHDF5_HOME = /Users/steve/src/rhdf5
 
+# Install directory should be set to where you want to install
+# the resulting library and module files.
+RHDF5_INSTALL_DIR = /Users/steve/etc/rhdf5
+
 # Change HDF5_INCS to the location hdf5 is loaded on your machine.
 # This should match what is being set in your RAMS and REVU
 # configuration (include.mk.*, etc.).
@@ -20,10 +24,6 @@ CMACH = PC_LINUX1
 # Compiler configuration. These should match what is being set
 # in your RAMS and REVU configuration.
 INCLUDES = -I$(HDF5_INCS)
-
-# Install directory should be set to where you want to install
-# the resulting library and module files.
-RHDF5_INSTALL_DIR = /Users/steve/etc/rhdf5
 
 F_COMP = pgf90
 F_OPTS = -Munroll -Mnoframe -O2 -pc 64 -tp x64 -Mfree -fastsse -time

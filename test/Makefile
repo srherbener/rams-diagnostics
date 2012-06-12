@@ -1,66 +1,53 @@
 #
-# Config
+# Makefile to build rhdf5_utils tests
 #
 
-BIN_DIR = $(HOME)/bin
+# Location of results of building the RHDF5 library (ie, running
+# make in the 'build' directory of this package
+RHDF5_LIBS = -L/Users/steve/etc/rhdf5 -lrhdf5_utils
+RHDF5_INCS = -I/Users/steve/etc/rhdf5
 
-$H
+# HDF5 library
+HDF5_LIBS=-L/Users/steve/hdf5-1.8.6-macosx64-static/lib -lhdf5 -lsz -lz -lm
 
-INCLUDES = -I/Users/steve/hdf5-1.8.6-macosx64-static/include
-
-OBJS = $(ARC)(rhdf5_f2c.o) \
-       $(ARC)(rhdf5_utils.o)
-
-ARC = librhdf5_utils.a
+# Compiler configuration. These should match what is being set
+# in your RAMS and REVU configuration.
+INCLUDES = $(RHDF5_INCS)
 
 F_COMP = pgf90
 F_OPTS = -Munroll -Mnoframe -O2 -pc 64 -tp x64 -Mfree -fastsse -time
 F_COMMAND = $(F_COMP) -c $(F_OPTS) $(INCLUDES)
 
 C_COMP = gcc
-C_OPTS = -O3 -DUNDERSCORE -DLITTLE -D$(CMACH)
+C_OPTS = -O3 -DUNDERSCORE -DLITTLE $(HDF5_DEFS)
 C_COMMAND = $(C_COMP) -c $(C_OPTS) $(INCLUDES)
 
-ARCHIVE = ar rs
+LOADER = pgf90
+LOADER_OPTS=-v -ldl -lc -lgcc_eh -lpthread -lsz
+LOADER_LIBS = $(RHDF5_LIBS) $(HDF5_LIBS)
+
+# Executables for testing the RHDF5 library.
+#  test_cwrite - Doesn't really test the RHDF5 code, but does give a
+#                sense of how fast ~1G of data can be written to disk.
+#
+#  testh5 - Tests with know array contents so one can see how the data
+#           gets organized on disk in the HDF5 file.
+#           Also does a timed test for roughly 1G of data.
 
 #
 # Targets
 #
 
-all: $(DEST_ARC) $(DEST_MOD)
+all: test_cwrite testh5
 
-$(DEST_ARC): $(ARC)
-	cp $(ARC) $(DEST_ARC)
+test_cwrite: test_cwrite.c
+	$(C_COMP) -o test_cwrite test_cwrite.c
+	rm -f test_cwrite.o
 
-$(DEST_MOD): $(MOD)
-	cp $(MOD) $(DEST_MOD)
-
-$(ARC): $(OBJS)
+testh5: testh5.f90
+	$(F_COMMAND) testh5.f90
+	$(LOADER) -o testh5 testh5.o $(LOADER_OPTS) $(LOADER_LIBS)
+	rm -f testh5.o
 
 clean:
-	rm -f *.a
 	rm -f *.o
-	rm -f *.mod
-
-#
-# Rules
-#
-
-.SUFFIXES: .f90 .c .o .a
-
-# f90 rule.
-
-.f90.a:
-	@echo ""
-	$(F_COMMAND) $<
-	$(ARCHIVE) $@ $(<F:.f90=.o)
-	rm -f $(<F:.f90=.o)
-
-# c rule.
-
-.c.a:
-	@echo ""
-	$(C_COMMAND) $<
-	$(ARCHIVE) $@ $(<F:.c=.o)
-	rm -f $(<F:.c=.o)
-
