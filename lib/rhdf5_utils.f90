@@ -1,0 +1,573 @@
+!
+! Copyright (C) 1991-2004  ; All Rights Reserved ; ATMET, LLC
+! 
+! This file is free software; you can redistribute it and/or modify it under the
+! terms of the GNU General Public License as published by the Free Software 
+! Foundation; either version 2 of the License, or (at your option) any later version.
+! 
+! This software is distributed in the hope that it will be useful, but WITHOUT ANY 
+! WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+! PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+!
+! You should have received a copy of the GNU General Public License along with this 
+! program; if not, write to the Free Software Foundation, Inc., 
+! 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+!======================================================================================
+!############################# Change Log ##################################
+! 2.2.0
+!###########################################################################
+
+Module rhdf5_utils
+
+integer, parameter :: HDF5_MAX_STRING = 128
+integer, parameter :: HDF5_MAX_DIMS = 10
+
+Contains
+
+!********************************************************************************
+! Routines for HDF5 REVU IO
+!********************************************************************************
+
+!*******************************************************************
+! rhdf5_open_file()
+!
+! This routine will open an HDF5 file specified by the fname, facc, fdelete
+! arguments, and pass back the file id number in the fid argument.
+!
+!  facc: 'R'  --> read
+!        'RW' --> read/write
+!        'W'  --> write
+!
+!  fdelete: 0 --> do not delete if file exists
+!           1 --> delete if opening in write mode
+!
+! If read mode
+!    file exists --> open (rh5f_open)
+!    file does not exist --> error
+!
+! If read/write mode
+!    file exists --> open (rh5f_open)
+!    file does not exist --> error
+!
+! If write mode
+!    file exists:
+!      fdelete flag is 1 --> truncate file (rh5f_create)
+!      fdelete fla0 is 0 --> error
+!    file does not exists --> create (rh5f_create)
+!
+! For the 'f_flgs' argument to rh5f_open and rh5f_create routines
+! (f_flgs is 2nd argument to both routines)
+!   If calling rh5f_open:
+!      read only  --> set f_flgs to 1
+!      read/write --> set f_flgs to 2
+!   If calling rh5f_create
+!      truncate the file if file exists --> set f_flgs to 1
+!      fail if file exists              --> set f_flgs to 2
+!
+subroutine rhdf5_open_file(fname,facc,fdelete,fid)
+  implicit none
+
+  character (len=HDF5_MAX_STRING) :: fname
+  character (len=HDF5_MAX_STRING) :: facc
+  integer :: fdelete
+  integer :: fid
+
+  integer :: hdferr
+  logical :: exists
+
+  ! Check for existence of HDF5 file.
+  inquire(file=trim(fname),exist=exists)
+
+  ! Create a new file or open an existing file.
+  if (trim(facc) .eq. 'R') then
+    ! read only mode
+    if (.not.exists) then
+      print*, 'ERROR: rhdf5_open_file: HDF5 file does not exist: ', trim(fname)
+      stop 'rhdf5_open_file: File does not exist'
+    else
+      call rh5f_open(trim(fname)//char(0), 1, fid, hdferr)
+      if (hdferr < 0) then
+        print*,'ERROR: rhdf5_open_file: Cannot open HDF5 file in read mode: ', trim(fname)
+        stop 'rhdf5_open_file: Cannot open file'
+      endif
+    endif
+  elseif (trim(facc) .eq. 'RW') then
+    ! read/write mode
+    if (.not.exists) then
+      print*, 'ERROR: rhdf5_open_file: HDF5 file does not exist: ', trim(fname)
+      stop 'rhdf5_open_file: File does not exist'
+    else
+      call rh5f_open(trim(fname)//char(0), 2, fid, hdferr)
+      if (hdferr < 0) then
+        print*, 'ERROR: rhdf5_open_file: Cannot open HDF5 file in read/write mode: ', trim(fname)
+        stop 'rhdf5_open_file: Cannot open file'
+      endif
+    endif
+  elseif (trim(facc) .eq. 'W') then
+    if (.not.exists) then
+      call rh5f_create(trim(fname)//char(0), 2, fid, hdferr)
+    else
+      if(fdelete .eq. 0) then
+         print*, 'ERROR: rhdf5_open_file: File exists when delete flag is set to zero: ', trim(fname)
+         stop 'rhdf5_open_file: File exists'
+      else
+         call usystem('rm -f '//trim(fname)//char(0))
+         call rh5f_create(trim(fname)//char(0), 1, fid, hdferr)
+      endif
+    endif
+    if(hdferr < 0) then
+      print*, 'ERROR: rhdf5_open_file: Cannot create HDF5 file in write mode:',hdferr
+      stop 'rhdf5_open_file: Cannot create file'
+    endif
+  endif
+
+  return
+end subroutine rhdf5_open_file
+
+!*****************************************************************
+! rhdf5_close_file()
+!
+! This routine will close the hdf5 file.
+subroutine rhdf5_close_file(fid)
+  implicit none
+
+  integer :: fid
+
+  integer :: hdferr
+
+  call rh5f_close(fid, hdferr)
+
+  return
+end subroutine rhdf5_close_file
+
+!********************************************************************
+! rhdf5_write_variable()
+!
+! This routine will create and populate the dataset and attributes
+! for an hdf5 file variable.
+!
+! We are going through the C interface since the HDF5 Fortran interface does not work with the
+! pgf90 compiler. This interface will store the array data in row major fashion (first dimension
+! changes the slowest when deteriming the linear storage order for the array data) whereas Fortran
+! stores array data in column major fashion (first dimension changes the fastest).
+!
+! The data coming into this routine is ordered (x,y,z) and is in column major fashion.
+!
+! This routine will handle two styles of variable storage.
+!   1. Store the variable once as is. This is intended for grid information such as lat/lon/levels values.
+!      It is not necessary to store the same thing over for each time step, just once when setting up
+!      the grid for the first time. Setting the itstep argument to zero denotes this type of variable.
+!      This variable will be stored with fixed dimensions in the HDF5 file.
+!
+!   2. Store the variable each time step. This is intended for RAMS variable (2D or 3D field) storage
+!      where for each time step a version of the field is stored. The storage will be optimized toward
+!      reading out the variable in a time step by time step fashion. This routine will allow for an
+!      unlimited number of time steps as it will create the HDF5 dataset with the time dimension
+!      having an unlimited max dimension. Along with this HDF5 chunking will be used so that we don't have
+!      to preallocate contiguous file space for all time steps before we start writing in data. Making
+!      the chunk size match the size of the data coming into this routine (x,y,z) will allow for writing
+!      each time step's data into one chunk (which is a contiguous file space). Because of this scheme, we
+!      want time to be the slowest changing dimension which makes it so that for each time step only one
+!      chunk needs to be read out of the file to get the (x,y,z) data. Note that if time was not the slowest
+!      changing dimension, then multiple chunks would have to read out of the file in order to fill in one
+!      time step's (x,y,z) data.
+!
+! Since we want to make t the slowest changing dimension (first dimension due to the
+! C interface with the row major array storage) just tagging on the (x,y,z) data that
+! came into this routine would make for an awkward storage in the HDF5 file, where you
+! are taking memory containing (x,y,z) in column major order and writing that out to
+! the HDF5 file as if it were row major order.
+!
+! MATLAB and IDL use a clever trick to deal with this issue. Leave the linear storage alone,
+! and simply tell the C HDF5 write routine that the dimensions for (x,y,z) go in the reverse order.
+! This automatically changes the perspective on the linear storage to row major and the data in the
+! HDF5 file will be consistent. That is, the value at a given x,y,z location will remain at that
+! location in the file making it possible for a C routine, using row major order, to read in the
+! data and have it match what was written out by this routine.
+!
+! For example if the data coming in has (x,y,z) with dimension sizes (4,3,2) then send the data as
+! is to the C hdf5 write routine, but tell that routine that the order of the data is now (z,y,x) 
+! with dimension sizes (2,3,4).
+!
+! If attaching time as a variable always place it first in the variable order. It is the slowest
+! changing variable so placing it first is consistent with row major ordering.
+!
+! Note that sdata is an array of strings where each string gets cast into a C style string
+! terminated with a null byte. cdata on the other hand gets cast into a character array with
+! a fixed length (HDF5_MAX_STRING).
+!
+subroutine rhdf5_write_variable(id, vname, ndims, itstep, dims, units, descrip, dimnames, &
+  rdata, idata, sdata, ssize, cdata)
+  implicit none
+
+  integer :: id
+  character (len=*) :: vname
+  integer :: ndims
+  integer :: itstep
+  integer, dimension(ndims) :: dims
+  character (len=*) :: units
+  character (len=*) :: descrip
+  character (len=HDF5_MAX_STRING), dimension(ndims) :: dimnames
+  real, dimension(*), optional :: rdata
+  integer, dimension(*), optional :: idata
+  character (len=*), dimension(*), optional :: sdata
+  character (len=*), optional :: cdata
+  integer, optional :: ssize
+
+  integer :: hdferr
+  integer :: dtype
+  integer :: dsetid
+  integer :: deflvl
+  integer :: dset_ndims
+  integer, dimension(ndims+1) :: dset_dims 
+  integer :: i
+  integer, dimension(ndims+1) :: ext_dims
+  integer, dimension(ndims+1) :: chunk_dims
+  character (len=HDF5_MAX_STRING) :: dnstring
+  character (len=HDF5_MAX_STRING) :: arrayorg
+  integer :: dsize
+  integer :: idummy   ! to get the size of an integer
+  real :: rdummy      ! to get the size of a real
+  character :: cdummy ! to get the size of a character
+
+  ! Check for valid argument values
+  if (itstep .lt. 0) then
+    print*,'ERROR: hdf5_write_variable: itstep argument must be >= zero'
+    stop 'hdf5_write_variable: bad variable write'
+  endif
+
+  if (present(sdata)) then
+    dtype = 1 ! string
+    if (.not.present(ssize)) then
+      print*,'ERROR: hdf5_write_variable: must use "ssize" argument when using "sdata" argument'
+      stop 'hdf5_write_variable: bad variable write'
+    endif
+    dsize = ssize
+  elseif (present(idata)) then
+    dtype = 2 ! integer
+    dsize = sizeof(idummy)
+  elseif (present(rdata)) then
+    dtype = 3 ! float
+    dsize = sizeof(rdummy)
+  elseif (present(cdata)) then
+    dtype = 4 ! character (array)
+    dsize = sizeof(cdummy)
+  else
+    print*,'ERROR: hdf5_write_variable: must use one of the "rdata", "idata", "sdata" arguments'
+    stop 'hdf5_write_variable: bad variable write'
+  endif
+
+  ! If ndims is zero then the data coming in is time data. This is okay as long as itstep is not zero
+  ! as well (which would mean that there is no data to write). Print a warning and return if ndims
+  ! and itstep are both zero.
+  if ((ndims .eq. 0) .and. (itstep .eq. 0)) then
+    print*,'WARNING: hdf5_write_variable: Both ndims and itstep are zero, skipping write for variable: ', trim(vname)
+    return
+  endif
+
+  ! Array organization is always row major for now
+  arrayorg = 'row major'
+
+  ! Figure out what the "real" dimensions for the data will be. Takes into account that the x,y,z
+  ! dimensions need to be reversed for row major ordering
+  call rhdf5_build_dims_for_write(itstep, ndims, dims, dimnames, &
+    dset_ndims, dset_dims, ext_dims, chunk_dims, dnstring)
+  call rhdf5_adjust_chunk_sizes(dset_ndims, chunk_dims, dsize)
+
+  ! write out the data
+  !deflvl = 6
+  deflvl = 1
+  if (present(sdata)) then
+    ! Use the original ndims and dims values for the call to rhd5_add_null_bytes(). Since
+    ! this routine treats the sdata array as a 1D array with a total number of elements
+    ! given by the product of the sizes in dims, it doesn't matter what order the dimension
+    ! sizes are listed in dims. We also want to use dims and ndims since they describe what
+    ! is in sdata.
+    !
+    call rhdf5_add_null_bytes(sdata, ssize, ndims, dims)
+    call rh5d_setup_and_write(id, trim(vname)//char(0), dtype, ssize, dset_ndims, dset_dims, ext_dims, &
+      chunk_dims, deflvl, dsetid, sdata, hdferr)
+  elseif (present(idata)) then
+    call rh5d_setup_and_write(id, trim(vname)//char(0), dtype, 0, dset_ndims, dset_dims, ext_dims, &
+      chunk_dims, deflvl, dsetid, idata, hdferr)
+  elseif (present(rdata)) then
+    call rh5d_setup_and_write(id, trim(vname)//char(0), dtype, 0, dset_ndims, dset_dims, ext_dims, &
+      chunk_dims, deflvl, dsetid, rdata, hdferr)
+  elseif (present(cdata)) then
+    call rh5d_setup_and_write(id, trim(vname)//char(0), dtype, 0, dset_ndims, dset_dims, ext_dims, &
+      chunk_dims, deflvl, dsetid, cdata, hdferr)
+  endif
+  if (hdferr .ne. 0) then
+    print*,'ERROR: hdf5_write_variable: cannot write data for variable: ',trim(vname)
+    stop 'hdf5_write_variable: bad variable write'
+  endif
+
+  ! write out the attributes
+  call rh5a_write_anyscalar(dsetid, 'Units'//char(0),       trim(units)//char(0),    1, hdferr)
+  call rh5a_write_anyscalar(dsetid, 'Description'//char(0), trim(descrip)//char(0),  1, hdferr)
+  call rh5a_write_anyscalar(dsetid, 'ArrayOrg'//char(0),    trim(arrayorg)//char(0), 1, hdferr)
+  call rh5a_write_anyscalar(dsetid, 'DimNames'//char(0),    trim(dnstring)//char(0), 1, hdferr)
+  if (trim(vname) .eq. 'time') then
+    ! helper attribute for ncdump
+    call rh5a_write_anyscalar(dsetid, 'C_format'//char(0), '%c'//char(0), 1, hdferr)
+  endif
+
+  ! close the dataset
+  call rh5d_close(dsetid, hdferr);
+
+  return
+end subroutine rhdf5_write_variable
+
+!*****************************************************************************
+! rhdf5_build_dims_for_write()
+!
+! This routine will figure out the dimensions we want for the upcoming write.
+!
+! If itstep is > 0, then the time dimension will be tagged onto the front of
+! dims creating one extra dimension to the data.
+!
+! ext_dims gets set to show which dimensions, if any, are extendable (only
+! extending time dimension for now).
+!
+! chunk_dims shows how to organize chunking in the HDF5 file.
+!
+subroutine rhdf5_build_dims_for_write(itstep, ndims, dims, dimnames, &
+  dset_ndims, dset_dims, ext_dims, chunk_dims, dnstring)
+
+  implicit none
+
+  integer :: itstep, ndims
+  integer, dimension(ndims) :: dims
+  character (len=HDF5_MAX_STRING), dimension(ndims) :: dimnames
+  integer :: dset_ndims
+  integer, dimension(ndims+1) :: dset_dims, ext_dims, chunk_dims
+  character (len=HDF5_MAX_STRING) :: dnstring
+
+  integer :: i, irev
+  integer :: dummy_int
+  real :: dummy_real
+  character :: dummy_char
+
+  ! The array ext_dims holds a 1 (extendable) or 0 (not extendable) to mark which,
+  ! if any, dimensions of the variable are to be extendable. For now we just want
+  ! the time dimension, if it exists, to be extendable.
+  !
+  ! The array chunk_dims holds a description of how big to make the chunks in the HDF file. We want
+  ! one chunk per time step. Always make the chunk size match the size of the field (set the individual
+  ! chunk sizes to the size of the dimensions of the field). If the variable has a time dimension
+  ! set the corresponding chunk_size for the time dimension (first dimension) to one which keep the
+  ! overall chunk size matching the size of the field.
+  !
+  ! Always place time as the first dimension. Then reverse the order of the field dimensions which
+  ! will automatically make the data appear to be row major ordered.
+  !
+  if (itstep .eq. 0) then
+    dset_ndims = ndims
+    do i = 1, ndims
+      ! reverse the ordering
+      irev = (ndims - i) + 1
+      dset_dims(irev) = dims(i)
+      ext_dims(irev) = 0
+      chunk_dims(irev) = dims(i)
+      if (i .eq. 1) then
+        dnstring = trim(dimnames(irev))
+      else
+        dnstring = trim(dnstring) // ' ' // trim(dimnames(irev))
+      endif
+    enddo
+  elseif (itstep .gt. 0) then
+    dset_ndims = ndims + 1
+    dset_dims(1) = itstep
+    ext_dims(1) = 1
+    chunk_dims(1) = 1
+    dnstring = 't'
+    do i = 1, ndims
+      ! reverse the ordering, time is in the first slot
+      ! so shift this up by one
+      irev = (ndims - i) + 2
+      dset_dims(irev) = dims(i)
+      ext_dims(irev) = 0
+      chunk_dims(irev) = dims(i)
+      ! note that the dimnames array is not to be shifted
+      dnstring = trim(dnstring) // ' ' // trim(dimnames(irev-1))
+    enddo
+  endif
+
+  return
+end subroutine rhdf5_build_dims_for_write
+
+!********************************************************************
+! rhdf5_adjust_chunk_sizes()
+!
+! This routine will attempt to keep the chunk size at optimal
+! values for the dataset.
+!
+! First of all, the HDF5 interface uses a default chunk cache (hash
+! table) with 521 entries where each entry is 1MB in size. For small
+! datasets (data buffer for each write under 512KB) there is no
+! need to change the chunk sizes since they default to the data
+! dimension sizes making the entire data buffer one chunk.
+!
+! For large datasets (data buffer for each write > 512KB) diffferent
+! sources have different recommendations for the optimal chunk size.
+! The HDF5 documentation recommendation is: < 512KB. They 
+! all agree that the thing that really matters is the access order.
+!
+! Since we are just streaming out the data time step by time step
+! with no subset selection, we need to make the chunks fit in a
+! contiguous line through the memory. We also would like to make
+! all the chunks add up to the total data buffer size without
+! any extra padding so that we keep the file size at a minimum.
+! Should be able to accomplish this by dividing up each dimension
+! starting with the first (slowest changing) dimension into smaller
+! pieces (that don't leave any remainder) until the chunk size is
+! at the right size. For exmaple if you have 4-byte data organized as
+! (20, 50, 1000), 4 million bytes, then allow the chunk size
+! (2, 50, 1000), 400 thousand bytes, but don't allow (3, 50, 1000),
+! 600 thousand bytes (closer to 512KB) since 3 does not divide into
+! 20 evenly resulting in unused space in the dataset.
+! 
+subroutine rhdf5_adjust_chunk_sizes(ndims, chunk_dims, dsize)
+  implicit none
+  integer, parameter :: KB_512 = 524288
+
+  integer :: ndims, dsize
+  integer, dimension(ndims) :: chunk_dims
+
+  integer :: i, chunk_size, new_dim, shrink
+  integer :: rhdf5_find_even_divisor
+
+  chunk_size = dsize
+  do i = 1, ndims
+    chunk_size = chunk_size * chunk_dims(i)
+  enddo
+
+  ! only adjust if the default chunk size is greater than 512KB
+  if (chunk_size .gt. KB_512) then
+    shrink = ceiling(float(chunk_size) / float(KB_512))
+
+    ! shrink is the factor that we want to reduce the chunk size by,
+    ! but we want the actual reduction to be an even divisor of the
+    ! given chunk dimensions so that the chunks fit over the data
+    ! exactly with no wasted space.
+    !
+    ! Walk through the chunk dimensions. Keep setting the current
+    ! chunk dimension to 1 (and dividing the shrink factor by that
+    ! dimension) while the shrink factor remains larger than that
+    ! dimension. As soon as the dimension is greater than the shrink
+    ! factor, divide up the dimension with the nearest even divisor
+    ! less than the current dimension divided by the shrink factor.
+    !
+    ! The intent of this algorithm is to yield exact fitting tiles
+    ! (chunks) over the data that have their size as close to 512KB
+    ! as possible without going over 512KB.
+    do i = 1, ndims
+      if (shrink .gt. chunk_dims(i)) then
+        shrink = ceiling(float(shrink) / float(chunk_dims(i)))
+        chunk_dims(i) = 1
+      elseif (shrink .gt. 1) then
+        new_dim = floor(float(chunk_dims(i))/float(shrink))
+        chunk_dims(i) = rhdf5_find_even_divisor(chunk_dims(i), new_dim)
+        shrink = 1
+      endif
+    enddo
+  endif
+
+  return
+end subroutine rhdf5_adjust_chunk_sizes
+
+!********************************************************************
+! rhdf5_add_null_bytes()
+!
+! This routine will walk through the sdata array adding null bytes
+! to the ends of all the strings.
+subroutine rhdf5_add_null_bytes(sdata,ssize,ndims,dims)
+  implicit none
+
+  integer :: ndims, ssize
+  integer, dimension(*) :: dims
+  character (len=ssize), dimension(*) :: sdata
+
+  integer :: i, ntot
+
+  ! No matter what the dimensions of sdata really are, the strings are all lined up in contiguous
+  ! memory, each one spaced apart by ssize bytes. Therefore we can treat sdata as a 1D array
+  ! of strings with length ssize, and just step through as many strings as the actual dimensions
+  ! dicatate.
+  ntot = 1
+  do i = 1, ndims
+    ntot = ntot * dims(i)
+  enddo
+
+  do i = 1, ntot
+    sdata(i) = trim(sdata(i)) // char(0)
+  enddo
+
+  return
+end subroutine rhdf5_add_null_bytes
+
+!********************************************************************
+! rhdf5_find_even_divisor()
+!
+! This function will find the nearest divisor of num which is
+! <= div that divides num evenly.
+!
+integer function rhdf5_find_even_divisor(num, div)
+  implicit none
+
+  integer :: num, div
+
+  integer :: i
+
+  rhdf5_find_even_divisor = 1
+  do i = div, 1, -1
+    if (mod(num, i) .eq. 0) then
+      rhdf5_find_even_divisor = i
+      exit
+    endif
+  enddo
+
+  return
+end function rhdf5_find_even_divisor
+
+!********************************************************************
+! rhdf5_write_attribute()
+!
+! This routine will create and populate an attribute for an hdf5 file group.
+!
+subroutine rhdf5_write_attribute(id, aname, cval, ival, rval)
+  implicit none
+
+  integer :: id
+  character (len=*) :: aname
+  character (len=*), optional :: cval
+  integer, optional :: ival
+  real, optional :: rval
+
+  integer :: hdferr
+
+  ! Figure out the type
+  !    type codes for rh5a_write_anyscalar are:
+  !      1 - string
+  !      2 - integer
+  !      3 - real
+  if (present(cval)) then
+    call rh5a_write_anyscalar(id, trim(aname)//char(0), trim(cval)//char(0), 1, hdferr)
+  elseif (present(ival)) then
+    call rh5a_write_anyscalar(id, trim(aname)//char(0), ival, 2, hdferr)
+  elseif (present(rval)) then
+    call rh5a_write_anyscalar(id, trim(aname)//char(0), rval, 3, hdferr)
+  else
+    print*,'ERROR: hdf5_write_attribute: must use one of the arguments cval, ival or rval'
+    stop 'hdf5_write_attribute: bad argument assignment'
+  endif
+
+  if (hdferr .ne. 0) then
+    print*,'ERROR: hdf5_write_attribute: cannot write attribute: ',trim(aname)
+    stop 'hdf5_write_attribute: bad attribute write'
+  endif
+
+  return
+end subroutine rhdf5_write_attribute
+
+end module
