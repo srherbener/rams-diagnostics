@@ -2,14 +2,9 @@
 # Config
 #
 
-CMACH = PC_LINUX1
+BIN_DIR = $(HOME)/bin
 
-LIB_DIR = $(HOME)/etc/rhdf5/lib
-MOD_DIR = $(HOME)/etc/rhdf5/mod
-ARC = librhdf5_utils.a
-MOD = rhdf5_utils.mod
-DEST_ARC = $(LIB_DIR)/$(ARC)
-DEST_MOD = $(MOD_DIR)/$(MOD)
+$H
 
 INCLUDES = -I/Users/steve/hdf5-1.8.6-macosx64-static/include
 
