@@ -2,6 +2,8 @@
 # Config
 #
 
+CMACH = PC_LINUX1
+
 LIB_DIR = $(HOME)/etc/rhdf5/lib
 MOD_DIR = $(HOME)/etc/rhdf5/mod
 ARC = librhdf5_utils.a
@@ -21,7 +23,7 @@ F_OPTS = -Munroll -Mnoframe -O2 -pc 64 -tp x64 -Mfree -fastsse -time
 F_COMMAND = $(F_COMP) -c $(F_OPTS) $(INCLUDES)
 
 C_COMP = gcc
-C_OPTS = -O3 -DUNDERSCORE -DLITTLE
+C_OPTS = -O3 -DUNDERSCORE -DLITTLE -D$(CMACH)
 C_COMMAND = $(C_COMP) -c $(C_OPTS) $(INCLUDES)
 
 ARCHIVE = ar rs
