@@ -4,8 +4,13 @@
 
 # Location of results of building the RHDF5 library (ie, running
 # make in the 'build' directory of this package
-RHDF5_LIBS = -L/Users/steve/etc/rhdf5 -lrhdf5_utils
-RHDF5_INCS = -I/Users/steve/etc/rhdf5
+RHDF5_DIR = /Users/steve/etc/rhdf5
+RHDF5_BASE = rhdf5_utils
+RHDF5_LIBS = -L$(RHDF5_DIR) -l$(RHDF5_BASE)
+RHDF5_INCS = -I$(RHDF5_DIR)
+
+RHDF5_LIB_FILE = $(RHDF5_DIR)/lib$(RHDF5_BASE).a
+RHDF5_MOD_FILE = $(RHDF5_DIR)/$(RHDF5_BASE).mod
 
 # HDF5 library
 HDF5_LIBS=-L/Users/steve/hdf5-1.8.6-macosx64-static/lib -lhdf5 -lsz -lz -lm
@@ -44,7 +49,7 @@ test_cwrite: test_cwrite.c
 	$(C_COMP) -o test_cwrite test_cwrite.c
 	rm -f test_cwrite.o
 
-testh5: testh5.f90
+testh5: testh5.f90 $(RHDF5_LIB_FILE) $(RHDF5_MOD_FILE)
 	$(F_COMMAND) testh5.f90
 	$(LOADER) -o testh5 testh5.o $(LOADER_OPTS) $(LOADER_LIBS)
 	rm -f testh5.o

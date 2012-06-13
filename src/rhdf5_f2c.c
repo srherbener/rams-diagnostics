@@ -396,6 +396,10 @@ else
   // write and free up resources
   *hdferr = H5Dwrite(*dsetid, mtypid, H5S_ALL, H5S_ALL, H5P_DEFAULT, data);
 
+  if (*dtype == 1)
+    {
+    H5Tclose(mtypid);
+    }
   H5Pclose(dcplid);
   H5Sclose(mspcid);
   }
