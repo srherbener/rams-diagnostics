@@ -784,40 +784,44 @@ return(mtype);
 //
 void rf2c_get_mem_type(hid_t typid, int *type, int *size)
   {
-  H5T_class_t type_class;
+  // First check the class to see if this is a string type
+  // since string type is not a "native" type. All the other
+  // types (integer, float, char) are native types which can
+  // checked using H5Tequal. H5Tequal returns positive value
+  // for "true", zero for "false" and negative value for "error".
 
-  type_class = H5Tget_class(typid);
-  *size = H5Tget_size(typid);
-
-  switch(type_class)
+  if (H5Tget_class(typid) == H5T_STRING)
     {
-    case H5T_STRING:
-      *type = RHDF5_TYPE_STRING;
-      break;
+    *type = RHDF5_TYPE_STRING;
+    }
+  else
+    {
+    // Not a string type so check the native types
+    //
+    // Check the character types first since they are a subset of
+    // the integer types.
 
-    case H5T_INTEGER:
-      // Both integer and char are stored as integer class, however the char type
-      // is a 1-byte integer and the integer type is 4 bytes so the size can be used
-      // to distinguish between the two
-      if (*size == 1)
-        {
-        *type = RHDF5_TYPE_CHAR;
-        }
-      else
-        {
-        *type = RHDF5_TYPE_INTEGER;
-        }
-      break;
-
-    case H5T_FLOAT:
+    if ((H5Tequal(typid, H5T_NATIVE_UCHAR) > 0) || (H5Tequal(typid, H5T_NATIVE_SCHAR) > 0))
+      {
+      *type = RHDF5_TYPE_CHAR;
+      }
+    else if (H5Tequal(typid, H5T_NATIVE_INT) > 0)
+      {
+      *type = RHDF5_TYPE_INTEGER;
+      }
+    else if (H5Tequal(typid, H5T_NATIVE_FLOAT) > 0)
+      {
       *type = RHDF5_TYPE_FLOAT;
-      break;
-
-    default:
+      }
+    else
+      {
       // unrecognized type
       *type = -1;
-      break;
+      }
     }
+
+  // grab the size of this type
+  *size = H5Tget_size(typid);
 
   return;
   }
