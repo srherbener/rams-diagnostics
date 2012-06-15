@@ -654,12 +654,6 @@ subroutine rhdf5_read_variable(id, vname, ndims, dims, units, descrip, dimnames,
   call rhdf5_c2f_string(stemp, dnstring, RHDF5_MAX_STRING)
   call rhdf5_read_dim_name_string(ndims, dimnames, dnstring)
 
-print*, 'DEBUG: dimnames: '
-do i = 1, ndims
-  print*, 'DEBUG:  i, dimnames(i): ', i, trim(dimnames(i))
-enddo
-
-
   ! If arrayorg is "row major" then reverse the dimensions
   if (trim(arrayorg) .eq. 'row major') then
     call rhdf5_reverse_dims(ndims, dims, dimnames)

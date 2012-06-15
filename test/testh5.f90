@@ -141,19 +141,20 @@ program testh5
 
     print*, 'Reading IntData:'
     call rhdf5_read_variable(rh5_file,'IntData', ndims, dims, units, descrip, dimnames, idata=Iarray)
-    call DumpVarInfo(ndims, dims, units, descrip, dimnames, ssize)
+    call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
 
     print*, 'Reading RealData:'
     call rhdf5_read_variable(rh5_file,'RealData', ndims, dims, units, descrip, dimnames, rdata=Rarray)
-    call DumpVarInfo(ndims, dims, units, descrip, dimnames, ssize)
+    call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
 
     print*, 'Reading StringData:'
     call rhdf5_read_variable(rh5_file,'StringData', ndims, dims, units, descrip, dimnames, sdata=Sarray, ssize=ssize)
-    call DumpVarInfo(ndims, dims, units, descrip, dimnames, ssize)
+    call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
+    print*, '  ssize: ', ssize
 
     print*, 'Reading CharData:'
     call rhdf5_read_variable(rh5_file,'CharData', ndims, dims, units, descrip, dimnames, cdata=Carray)
-    call DumpVarInfo(ndims, dims, units, descrip, dimnames, ssize)
+    call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
 
     print*, '3D Data Arrays:'
     print*, ''
@@ -243,19 +244,20 @@ program testh5
 
     print*, 'Reading IntData:'
     call rhdf5_read_variable(rh5_file,'IntData', ndims, dims, units, descrip, dimnames, idata=Iarray)
-    call DumpVarInfo(ndims, dims, units, descrip, dimnames, ssize)
+    call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
 
     print*, 'Reading RealData:'
     call rhdf5_read_variable(rh5_file,'RealData', ndims, dims, units, descrip, dimnames, rdata=Rarray)
-    call DumpVarInfo(ndims, dims, units, descrip, dimnames, ssize)
+    call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
 
     print*, 'Reading StringData:'
     call rhdf5_read_variable(rh5_file,'StringData', ndims, dims, units, descrip, dimnames, sdata=Sarray, ssize=ssize)
-    call DumpVarInfo(ndims, dims, units, descrip, dimnames, ssize)
+    call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
+    print*, '  ssize: ', ssize
 
     print*, 'Reading CharData:'
     call rhdf5_read_variable(rh5_file,'CharData', ndims, dims, units, descrip, dimnames, cdata=Carray)
-    call DumpVarInfo(ndims, dims, units, descrip, dimnames, ssize)
+    call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
 
     print*, '3D Data Arrays:'
     print*, ''
