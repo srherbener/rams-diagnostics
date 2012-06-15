@@ -19,8 +19,17 @@
 
 Module rhdf5_utils
 
-integer, parameter :: HDF5_MAX_STRING = 128
-integer, parameter :: HDF5_MAX_DIMS = 10
+! max limits for arrays, strings, etc, keep these in sync with like named
+! defines in rhdf5_f2c.c
+integer, parameter :: RHDF5_MAX_STRING = 128
+integer, parameter :: RHDF5_MAX_DIMS   =  10
+
+! integer coding for HDF5 types, keep these in sync with like named defines
+! in rhdf5_f2c.c
+integer, parameter :: RHDF5_TYPE_STRING  = 0
+integer, parameter :: RHDF5_TYPE_INTEGER = 1
+integer, parameter :: RHDF5_TYPE_FLOAT   = 2
+integer, parameter :: RHDF5_TYPE_CHAR    = 3
 
 Contains
 
@@ -67,12 +76,12 @@ Contains
 subroutine rhdf5_open_file(fname,facc,fdelete,fid)
   implicit none
 
-  character (len=HDF5_MAX_STRING) :: fname
-  character (len=HDF5_MAX_STRING) :: facc
+  character (len=RHDF5_MAX_STRING) :: fname
+  character (len=RHDF5_MAX_STRING) :: facc
   integer :: fdelete
   integer :: fid
 
-  character (len=HDF5_MAX_STRING) :: command
+  character (len=RHDF5_MAX_STRING) :: command
   integer :: hdferr
   logical :: exists
 
@@ -196,7 +205,7 @@ end subroutine rhdf5_close_file
 !
 ! Note that sdata is an array of strings where each string gets cast into a C style string
 ! terminated with a null byte. cdata on the other hand gets cast into a character array with
-! a fixed length (HDF5_MAX_STRING).
+! a fixed length (RHDF5_MAX_STRING).
 !
 subroutine rhdf5_write_variable(id, vname, ndims, itstep, dims, units, descrip, dimnames, &
   rdata, idata, sdata, ssize, cdata)
@@ -209,7 +218,7 @@ subroutine rhdf5_write_variable(id, vname, ndims, itstep, dims, units, descrip, 
   integer, dimension(ndims) :: dims
   character (len=*) :: units
   character (len=*) :: descrip
-  character (len=HDF5_MAX_STRING), dimension(ndims) :: dimnames
+  character (len=RHDF5_MAX_STRING), dimension(ndims) :: dimnames
   real, dimension(*), optional :: rdata
   integer, dimension(*), optional :: idata
   character (len=*), dimension(*), optional :: sdata
@@ -225,8 +234,8 @@ subroutine rhdf5_write_variable(id, vname, ndims, itstep, dims, units, descrip, 
   integer :: i
   integer, dimension(ndims+1) :: ext_dims
   integer, dimension(ndims+1) :: chunk_dims
-  character (len=HDF5_MAX_STRING) :: dnstring
-  character (len=HDF5_MAX_STRING) :: arrayorg
+  character (len=RHDF5_MAX_STRING) :: dnstring
+  character (len=RHDF5_MAX_STRING) :: arrayorg
   integer :: dsize
   integer :: idummy   ! to get the size of an integer
   real :: rdummy      ! to get the size of a real
@@ -239,20 +248,20 @@ subroutine rhdf5_write_variable(id, vname, ndims, itstep, dims, units, descrip, 
   endif
 
   if (present(sdata)) then
-    dtype = 1 ! string
+    dtype = RHDF5_TYPE_STRING
     if (.not.present(ssize)) then
       print*,'ERROR: hdf5_write_variable: must use "ssize" argument when using "sdata" argument'
       stop 'hdf5_write_variable: bad variable write'
     endif
     dsize = ssize
   elseif (present(idata)) then
-    dtype = 2 ! integer
+    dtype = RHDF5_TYPE_INTEGER
     dsize = sizeof(idummy)
   elseif (present(rdata)) then
-    dtype = 3 ! float
+    dtype = RHDF5_TYPE_FLOAT
     dsize = sizeof(rdummy)
   elseif (present(cdata)) then
-    dtype = 4 ! character (array)
+    dtype = RHDF5_TYPE_CHAR
     dsize = sizeof(cdummy)
   else
     print*,'ERROR: hdf5_write_variable: must use one of the "rdata", "idata", "sdata" arguments'
@@ -305,13 +314,17 @@ subroutine rhdf5_write_variable(id, vname, ndims, itstep, dims, units, descrip, 
   endif
 
   ! write out the attributes
-  call rh5a_write_anyscalar(dsetid, 'Units'//char(0),       trim(units)//char(0),    1, hdferr)
-  call rh5a_write_anyscalar(dsetid, 'Description'//char(0), trim(descrip)//char(0),  1, hdferr)
-  call rh5a_write_anyscalar(dsetid, 'ArrayOrg'//char(0),    trim(arrayorg)//char(0), 1, hdferr)
-  call rh5a_write_anyscalar(dsetid, 'DimNames'//char(0),    trim(dnstring)//char(0), 1, hdferr)
+  call rh5a_write_anyscalar(dsetid, 'Units'//char(0),       trim(units)//char(0), &
+    RHDF5_TYPE_STRING, hdferr)
+  call rh5a_write_anyscalar(dsetid, 'Description'//char(0), trim(descrip)//char(0), &
+    RHDF5_TYPE_STRING, hdferr)
+  call rh5a_write_anyscalar(dsetid, 'ArrayOrg'//char(0),    trim(arrayorg)//char(0), &
+    RHDF5_TYPE_STRING, hdferr)
+  call rh5a_write_anyscalar(dsetid, 'DimNames'//char(0),    trim(dnstring)//char(0), &
+    RHDF5_TYPE_STRING, hdferr)
   if (trim(vname) .eq. 'time') then
     ! helper attribute for ncdump
-    call rh5a_write_anyscalar(dsetid, 'C_format'//char(0), '%c'//char(0), 1, hdferr)
+    call rh5a_write_anyscalar(dsetid, 'C_format'//char(0), '%c'//char(0), RHDF5_TYPE_STRING, hdferr)
   endif
 
   ! close the dataset
@@ -340,10 +353,10 @@ subroutine rhdf5_build_dims_for_write(itstep, ndims, dims, dimnames, &
 
   integer :: itstep, ndims
   integer, dimension(ndims) :: dims
-  character (len=HDF5_MAX_STRING), dimension(ndims) :: dimnames
+  character (len=RHDF5_MAX_STRING), dimension(ndims) :: dimnames
   integer :: dset_ndims
   integer, dimension(ndims+1) :: dset_dims, ext_dims, chunk_dims
-  character (len=HDF5_MAX_STRING) :: dnstring
+  character (len=RHDF5_MAX_STRING) :: dnstring
 
   integer :: i, irev
   integer :: dummy_int
@@ -554,11 +567,11 @@ subroutine rhdf5_write_attribute(id, aname, cval, ival, rval)
   !      2 - integer
   !      3 - real
   if (present(cval)) then
-    call rh5a_write_anyscalar(id, trim(aname)//char(0), trim(cval)//char(0), 1, hdferr)
+    call rh5a_write_anyscalar(id, trim(aname)//char(0), trim(cval)//char(0), RHDF5_TYPE_STRING, hdferr)
   elseif (present(ival)) then
-    call rh5a_write_anyscalar(id, trim(aname)//char(0), ival, 2, hdferr)
+    call rh5a_write_anyscalar(id, trim(aname)//char(0), ival, RHDF5_TYPE_INTEGER, hdferr)
   elseif (present(rval)) then
-    call rh5a_write_anyscalar(id, trim(aname)//char(0), rval, 3, hdferr)
+    call rh5a_write_anyscalar(id, trim(aname)//char(0), rval, RHDF5_TYPE_FLOAT, hdferr)
   else
     print*,'ERROR: hdf5_write_attribute: must use one of the arguments cval, ival or rval'
     stop 'hdf5_write_attribute: bad argument assignment'
@@ -571,5 +584,225 @@ subroutine rhdf5_write_attribute(id, aname, cval, ival, rval)
 
   return
 end subroutine rhdf5_write_attribute
+
+!********************************************************************
+! rhdf5_read_variable()
+!
+! This routine read the dataset and attributes for an hdf5 file variable.
+!
+!
+! Note that sdata is an array of strings where each string gets cast into a C style string
+! terminated with a null byte. cdata on the other hand gets cast into a character array with
+! a fixed length (RHDF5_MAX_STRING).
+!
+subroutine rhdf5_read_variable(id, vname, ndims, dims, units, descrip, dimnames, &
+  rdata, idata, sdata, ssize, cdata)
+  implicit none
+
+  integer :: id
+  character (len=*) :: vname
+  integer :: ndims
+  integer, dimension(ndims) :: dims
+  character (len=*) :: units
+  character (len=*) :: descrip
+  character (len=RHDF5_MAX_STRING), dimension(ndims) :: dimnames
+  real, dimension(*), optional :: rdata
+  integer, dimension(*), optional :: idata
+  character (len=*), dimension(*), optional :: sdata
+  integer, optional :: ssize
+  character (len=*), optional :: cdata
+
+  integer :: hdferr
+  integer :: dsetid
+  integer :: i
+  character (len=RHDF5_MAX_STRING) :: dnstring
+  character (len=RHDF5_MAX_STRING) :: arrayorg
+  character (len=RHDF5_MAX_STRING) :: stemp
+  integer :: dsize
+
+  ! read the data
+  if (present(sdata)) then
+    call rh5d_setup_and_read(id, trim(vname)//char(0), RHDF5_TYPE_STRING, ssize, &
+      ndims, dims, dsetid, sdata, hdferr)
+    call rhdf5_convert_c2f_strings(sdata,ssize,ndims,dims)
+  elseif (present(idata)) then
+    call rh5d_setup_and_read(id, trim(vname)//char(0), RHDF5_TYPE_INTEGER, dsize, &
+      ndims, dims, dsetid, idata, hdferr)
+  elseif (present(rdata)) then
+    call rh5d_setup_and_read(id, trim(vname)//char(0), RHDF5_TYPE_FLOAT, dsize, &
+      ndims, dims, dsetid, rdata, hdferr)
+  elseif (present(cdata)) then
+    call rh5d_setup_and_read(id, trim(vname)//char(0), RHDF5_TYPE_CHAR, dsize, &
+      ndims, dims, dsetid, cdata, hdferr)
+  else
+    print*,'ERROR: hdf5_read_variable: must use one of the "rdata", "idata", "sdata" arguments'
+    stop 'hdf5_read_variable: bad variable read'
+  endif
+  if (hdferr .ne. 0) then
+    print*,'ERROR: hdf5_read_variable: cannot read data for variable: ',trim(vname)
+    stop 'hdf5_read_variable: bad variable read'
+  endif
+
+  ! read the attributes
+  call rh5a_read_anyscalar(dsetid, 'Units'//char(0),       stemp, RHDF5_TYPE_STRING, hdferr)
+  call rhdf5_c2f_string(stemp, units, RHDF5_MAX_STRING)
+  call rh5a_read_anyscalar(dsetid, 'Description'//char(0), stemp, RHDF5_TYPE_STRING, hdferr)
+  call rhdf5_c2f_string(stemp, descrip, RHDF5_MAX_STRING)
+  call rh5a_read_anyscalar(dsetid, 'ArrayOrg'//char(0),    stemp, RHDF5_TYPE_STRING, hdferr)
+  call rhdf5_c2f_string(stemp, arrayorg, RHDF5_MAX_STRING)
+  call rh5a_read_anyscalar(dsetid, 'DimNames'//char(0),    stemp, RHDF5_TYPE_STRING, hdferr)
+  call rhdf5_c2f_string(stemp, dnstring, RHDF5_MAX_STRING)
+  call rhdf5_read_dim_name_string(ndims, dimnames, dnstring)
+
+print*, 'DEBUG: dimnames: '
+do i = 1, ndims
+  print*, 'DEBUG:  i, dimnames(i): ', i, trim(dimnames(i))
+enddo
+
+
+  ! If arrayorg is "row major" then reverse the dimensions
+  if (trim(arrayorg) .eq. 'row major') then
+    call rhdf5_reverse_dims(ndims, dims, dimnames)
+  endif
+
+  ! close the dataset
+  call rh5d_close(dsetid, hdferr);
+
+  return
+end subroutine rhdf5_read_variable
+
+!********************************************************************
+! rhdf5_convert_c2f_strings()
+!
+! This routine will walk through the sdata and convert the C strings
+! (null terminated) to FORTRAN strings.
+subroutine rhdf5_convert_c2f_strings(sdata,ssize,ndims,dims)
+  implicit none
+
+  integer :: ndims, ssize
+  integer, dimension(*) :: dims
+  character (len=ssize), dimension(*) :: sdata
+
+  integer :: i, ntot
+  character (len=ssize) :: stemp
+
+  ! No matter what the dimensions of sdata really are, the strings are all lined up in contiguous
+  ! memory, each one spaced apart by ssize bytes. Therefore we can treat sdata as a 1D array
+  ! of strings with length ssize, and just step through as many strings as the actual dimensions
+  ! dicatate.
+  ntot = 1
+  do i = 1, ndims
+    ntot = ntot * dims(i)
+  enddo
+
+  do i = 1, ntot
+    call rhdf5_c2f_string(sdata(i), stemp, ssize)
+    sdata(i) = stemp
+  enddo
+
+  return
+end subroutine rhdf5_convert_c2f_strings
+
+!***********************************************************************
+! rhdf5_c2f_string()
+!
+! This routine will convert the C style string (null terminated) in
+! cstring and convert it to a FORTRAN style string in fstring.
+
+subroutine rhdf5_c2f_string(cstring, fstring, ssize)
+  implicit none
+
+  character (len=ssize) :: cstring, fstring
+  integer :: ssize
+
+  integer :: i
+  integer :: null_pos
+
+  do i = 1, ssize
+    if (ichar(cstring(i:i)) .eq. 0) then
+      null_pos = i
+      exit
+    endif
+  enddo
+
+  if (null_pos .gt. 1) then
+    fstring = cstring(1:null_pos-1)
+  else
+    fstring = ''
+  endif
+
+  return
+end subroutine rhdf5_c2f_string
+
+
+!***********************************************************************
+! rhdf5_c2f_string()
+!
+! This routine will reverse the dimensions and dimension names. This is
+! intended to be used for reading HDF5 files with row major storage.
+!
+subroutine rhdf5_reverse_dims(ndims, dims, dimnames)
+  implicit none
+
+  integer :: ndims
+  integer, dimension(ndims) :: dims
+  character (len=RHDF5_MAX_STRING), dimension(ndims) :: dimnames
+
+  integer :: i
+  integer :: irev
+  integer, dimension(ndims) :: temp_dims
+  character (len=RHDF5_MAX_STRING), dimension(ndims) :: temp_dimnames
+
+  ! copy dims into temp_dims in reverse order
+  ! then copy temp_dims back into dims
+  do i = 1, ndims
+    irev = (ndims - i) + 1
+    temp_dims(irev) = dims(i)
+    temp_dimnames(irev) = trim(dimnames(i))
+  enddo
+
+  do i = 1, ndims
+    dims(i) = temp_dims(i)
+    dimnames(i) = trim(temp_dimnames(i))
+  enddo
+
+  return
+end subroutine rhdf5_reverse_dims
+
+!***********************************************************************
+! rhdf5_read_dim_name_string()
+!
+! This routine will read the dimension name string (dnstring) and load
+! up the entries in the dimnames array. The different names in dnstring
+! are space separated.
+!
+subroutine rhdf5_read_dim_name_string(ndims, dimnames, dnstring)
+  implicit none
+
+  integer :: ndims
+  character (len=RHDF5_MAX_STRING), dimension(ndims) :: dimnames
+  character (len=RHDF5_MAX_STRING) :: dnstring
+
+  integer :: i
+  integer :: j
+
+  ! initialize dimnames to null strings
+  do j = 1, ndims
+    dimnames(j) = ''
+  enddo
+
+  j = 1 ! index into dimnames
+  do i = 1, len_trim(dnstring)
+    if (dnstring(i:i) .ne. ' ') then
+       ! keep appending dnstring(i) to dimnames(j)
+       dimnames(j) = trim(dimnames(j)) // dnstring(i:i)
+    else
+       ! hit a space, bump j to next entry
+       j = j + 1
+    endif
+  enddo
+
+  return
+end subroutine rhdf5_read_dim_name_string
 
 end module

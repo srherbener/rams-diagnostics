@@ -27,6 +27,29 @@
 #include <string.h>
 #include "hdf5.h"
 
+// Limits for arrays, strings, etc. Need to keep these in sync with like
+// named parameters in rhdf5_utils.f90
+#define RHDF5_MAX_STRING 128
+#define RHDF5_MAX_DIMS    10
+
+// Integer coding for HDF5 types. Need to keep these in sync with like named
+// parameters in rhdf5_utils.f90
+// These codes need to start with zero and be contiguous (0..n with no gaps)
+// for the rhdf5_type_names array. Make sure the entries in rhdf5_type_names
+// are consistent with the type numbers.
+#define RHDF5_NUM_TYPES     4
+
+#define RHDF5_TYPE_STRING   0
+#define RHDF5_TYPE_INTEGER  1
+#define RHDF5_TYPE_FLOAT    2
+#define RHDF5_TYPE_CHAR     3
+
+char *rhdf5_type_names[RHDF5_NUM_TYPES] = { "STRING", "INTEGER", "FLOAT", "CHAR" };
+
+// Prototypes for internal routines
+void rf2c_get_mem_type(hid_t typid, int *type, int *size);
+hid_t rf2c_set_mem_type(int dtype, int ssize);
+
 ////////////////////////////////////////////////////////////////////////////
 // Routines for HDF5 REVU IO. 
 ////////////////////////////////////////////////////////////////////////////
@@ -192,13 +215,13 @@ void rh5d_setup_and_write(int *id, char *name, int *dtype, int *ssize,
 {
 int i;
 int cur_ndims;
-hsize_t cur_dims[10] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-hsize_t max_dims[10] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-hsize_t new_dims[10] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-hsize_t mem_dims[10] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-hsize_t chunk_sizes[10] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-hsize_t hs_count[10] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-hsize_t hs_start[10] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+hsize_t cur_dims[RHDF5_MAX_DIMS]    = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+hsize_t max_dims[RHDF5_MAX_DIMS]    = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+hsize_t new_dims[RHDF5_MAX_DIMS]    = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+hsize_t mem_dims[RHDF5_MAX_DIMS]    = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+hsize_t chunk_sizes[RHDF5_MAX_DIMS] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+hsize_t hs_count[RHDF5_MAX_DIMS]    = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+hsize_t hs_start[RHDF5_MAX_DIMS]    = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 hid_t mtypid;
 hid_t mspcid;
 hid_t fspcid;
@@ -210,7 +233,7 @@ hid_t dcplid;
 mtypid = rf2c_set_mem_type(*dtype, *ssize);
 if (mtypid < 0)
   {
-  printf("ERROR: rh5d_setup_append: unrecognized dtype: %d\n", *dtype);
+  printf("ERROR: rh5d_setup_and_write: unrecognized dtype: %d\n", *dtype);
   *hdferr = -1;
   return;
   }
@@ -236,7 +259,7 @@ if (H5Lexists(*id, name, H5P_DEFAULT))
   fspcid = H5Dget_space(*dsetid);
   if (fspcid < 0)
     {
-    printf("ERROR: rh5d_setup_append: Cannot get file space id from dataset\n");
+    printf("ERROR: rh5d_setup_and_write: Cannot get file space id from dataset\n");
     *hdferr = -1;
     return;
     }
@@ -245,7 +268,7 @@ if (H5Lexists(*id, name, H5P_DEFAULT))
   
   if (cur_ndims != *ndims)
     {
-    printf("ERROR: rh5d_setup_append: number of dimensions in dataset (%d) does not match specified number of dimensions (ndims): %d\n",cur_ndims, *ndims);
+    printf("ERROR: rh5d_setup_and_write: number of dimensions in dataset (%d) does not match specified number of dimensions (ndims): %d\n",cur_ndims, *ndims);
     *hdferr = -1;
     return;
     }
@@ -263,7 +286,7 @@ if (H5Lexists(*id, name, H5P_DEFAULT))
   
       if (new_dims[i] < cur_dims[i])
         {
-        printf("ERROR: rh5d_setup_append: Shrinking an extendible dimension is not supported\n");
+        printf("ERROR: rh5d_setup_and_write: Shrinking an extendible dimension is not supported\n");
         printf("ERROR:   Current dimension number: %d, Current dimension size: %d\n", i+1, (int) cur_dims[i]);
         printf("ERROR:   New dimension number:     %d, New dimension size:     %d\n", i+1, (int) new_dims[i]);
         *hdferr = -1;
@@ -309,7 +332,7 @@ if (H5Lexists(*id, name, H5P_DEFAULT))
   // write and free up resources
   *hdferr = H5Dwrite(*dsetid, mtypid, mspcid, fspcid, H5P_DEFAULT, data);
 
-  if (*dtype == 1)
+  if (*dtype == RHDF5_TYPE_STRING)
     {
     H5Tclose(mtypid);
     }
@@ -396,7 +419,7 @@ else
   // write and free up resources
   *hdferr = H5Dwrite(*dsetid, mtypid, H5S_ALL, H5S_ALL, H5P_DEFAULT, data);
 
-  if (*dtype == 1)
+  if (*dtype == RHDF5_TYPE_STRING)
     {
     H5Tclose(mtypid);
     }
@@ -411,6 +434,94 @@ return;
 void rh5d_write(int *dsetid, int *mtypid, int *mspcid, int *fspcid, int *xfplid, void *data, int *hdferr)
   {
   *hdferr = H5Dwrite(*dsetid, *mtypid, *mspcid, *fspcid, *xfplid, data);
+
+  return;
+  }
+
+//**********************************************************************
+// rh5d_setup_and_read()
+//
+// This routine will open the dataset given by id (file id) and name, and
+// read the dataset into the buffer "data". It will also return the
+// dimensions (ndims and dims).
+//
+// The dataset is left open so that the caller can retrieve attributes
+// so it is up to the caller to close the dataset.
+//
+void rh5d_setup_and_read(int *id, char *name, int *dtype, int *dsize, int *ndims, int *dims,
+   int *dsetid, void *data, int *hdferr)
+  {
+  hid_t fspcid;
+  hid_t dtypid;
+  hsize_t dset_dims[RHDF5_MAX_DIMS];
+  int i;
+  int req_type;
+  int mtype;
+  
+  *hdferr = 0;
+  
+  // First open the dataset
+#ifdef H5_USE_16_API
+  // 1.6 API
+  *dsetid = H5Dopen(*id, name);
+#else
+  // 1.8 API
+  *dsetid = H5Dopen(*id, name, H5P_DEFAULT);
+#endif
+  if (*dsetid < 0)
+    {
+    *hdferr = -1;
+    return;
+    }
+
+  // Get the information about the dimensions
+  // Need to read dimension sizes, from H5Sget_simple_extent_dims, into
+  // an (hsize_t *) type since it's length is different than (int *) type.
+  fspcid = H5Dget_space(*dsetid);
+  *ndims = H5Sget_simple_extent_dims(fspcid, dset_dims, NULL);
+  for (i=0; i<*ndims; i++)
+    {
+    dims[i] = dset_dims[i];
+    }
+
+  H5Sclose(fspcid);
+  if (*ndims < 0)
+    {
+    *hdferr = -1;
+    return;
+    }
+
+  // Get the information about the data type
+  dtypid = H5Dget_type(*dsetid);
+  if (dtypid < 0)
+    {
+    *hdferr = -1;
+    return;
+    }
+
+  rf2c_get_mem_type(dtypid, &mtype, dsize);
+  if (mtype < 0)
+    {
+    *hdferr = -1;
+    return;
+    }
+  if (*dtype != mtype)
+    {
+    printf("ERROR: rh5a_setup_and_read: Data type requested by caller does not match type in file\n");
+    printf("ERROR:   Data name: %s\n", name);
+    printf("ERROR:   Requested attribute type: %s\n", rhdf5_type_names[*dtype]);
+    printf("ERROR:   Data type found in HDF5 file: %s\n", rhdf5_type_names[mtype]);
+    *hdferr = -1;
+    return;
+    }
+
+  // read the dataset, clean up and return
+  *hdferr = H5Dread(*dsetid, dtypid, H5S_ALL, H5S_ALL, H5P_DEFAULT, data);
+
+  if (*dtype == RHDF5_TYPE_STRING)
+    {
+    H5Tclose(dtypid);
+    }
 
   return;
   }
@@ -458,106 +569,164 @@ return;
 //**********************************************************
 // rh5a_write_anyscalar()
 //
-// interface to external FORTRAN caller
+// This routine will write a scalar attribute into the HDF5 file, given the object
+// id and attribute name.
+//
+// value is a void pointer so the caller can use any type (char, int, float for now).
+// vtype is used to denote what type value is. The encoding for vtype is contained
+// in the the defines: RHDF5_TYPE_* (see top of this file).
+// 
 void rh5a_write_anyscalar(int *id, char *name, void *value, int *vtype, int *hdferr)
-{
-// value is a void pointer so the caller can use any type (char, int, float for now). vtype
-// is used to denote what type value is. The encoding for vtype is:
-//   1 -> C style string
-//   2 -> integer
-//   3 -> float
-
-hid_t a_id, amem_id, atype;
-htri_t attr_exists;
-int ssize;
-
-*hdferr = 0;
-
-// Set up memory type
-if (*vtype == 1)
   {
-  ssize = strlen(value) + 1;
-  }
-else
-  {
-  ssize = 0;
-  }
-
-atype = rf2c_set_mem_type(*vtype, ssize);
-
-if (atype < 0)
-  {
-  printf("ERROR: rh5a_write_anyscalar: unrecognized vtype: %d\n", *vtype);
-  *hdferr = -1;
-  return;
-  }
-
-if (*hdferr == 0)
-  {
-  // got a recognized type so keep going
-
-  attr_exists = H5Aexists(*id,name);
-
-  if (attr_exists)
+  hid_t a_id, amem_id, atype;
+  htri_t attr_exists;
+  int ssize;
+  
+  *hdferr = 0;
+  
+  // Set up memory type
+  if (*vtype == RHDF5_TYPE_STRING)
     {
-    // attribute exists already --> update mode
-
-    a_id = H5Aopen(*id, name, H5P_DEFAULT);
+    ssize = strlen(value) + 1;
     }
   else
     {
-    // attribute does not exist --> create mode
-
-    // scalar dataspace to hold the string for the file write
-    amem_id = H5Screate(H5S_SCALAR);
+    ssize = 0;
+    }
   
-    // create the attribute and save the result for returning the status in hdferr
-    // set hdferr here since we will be closing the a_id pointer at the end
-#ifdef H5_USE_16_API
-    // 1.6 API
-    // 5th arg is attribute creation property list (must be H5P_DEFAULT as of 4/19/12)
-    a_id = H5Acreate(*id, name, atype, amem_id, H5P_DEFAULT);
-#else
-    // 1.8 API
-    // 5th arg is attribute creation property list (must be H5P_DEFAULT as of 4/19/12)
-    // 6th arg is attribute access property list (must be H5P_DEFAULT as of 4/19/12)
-    a_id = H5Acreate(*id, name, atype, amem_id, H5P_DEFAULT, H5P_DEFAULT);
-#endif
-    }
-
-  if (a_id < 0)
+  atype = rf2c_set_mem_type(*vtype, ssize);
+  
+  if (atype < 0)
     {
-    *hdferr = a_id;
+    printf("ERROR: rh5a_write_anyscalar: unrecognized vtype: %d\n", *vtype);
+    *hdferr = -1;
+    return;
     }
-
-  // If we have an error don't attempt the write, but do continue on to
-  // the close statments.
-
+  
   if (*hdferr == 0)
     {
-    // The third arg to H5Awrite is a pointer to the data. value is that already,
-    // but this does put the onus on the caller to make sure that value is really
-    // pointing to the type that matches what's in vtype
-    H5Awrite(a_id, atype, value);
+    // got a recognized type so keep going
+  
+    attr_exists = H5Aexists(*id,name);
+  
+    if (attr_exists)
+      {
+      // attribute exists already --> update mode
+  
+      a_id = H5Aopen(*id, name, H5P_DEFAULT);
+      }
+    else
+      {
+      // attribute does not exist --> create mode
+  
+      // scalar dataspace to hold the string for the file write
+      amem_id = H5Screate(H5S_SCALAR);
+    
+      // create the attribute and save the result for returning the status in hdferr
+      // set hdferr here since we will be closing the a_id pointer at the end
+  #ifdef H5_USE_16_API
+      // 1.6 API
+      // 5th arg is attribute creation property list (must be H5P_DEFAULT as of 4/19/12)
+      a_id = H5Acreate(*id, name, atype, amem_id, H5P_DEFAULT);
+  #else
+      // 1.8 API
+      // 5th arg is attribute creation property list (must be H5P_DEFAULT as of 4/19/12)
+      // 6th arg is attribute access property list (must be H5P_DEFAULT as of 4/19/12)
+      a_id = H5Acreate(*id, name, atype, amem_id, H5P_DEFAULT, H5P_DEFAULT);
+  #endif
+      }
+  
+    if (a_id < 0)
+      {
+      *hdferr = a_id;
+      }
+  
+    // If we have an error don't attempt the write, but do continue on to
+    // the close statments.
+  
+    if (*hdferr == 0)
+      {
+      // The third arg to H5Awrite is a pointer to the data. value is that already,
+      // but this does put the onus on the caller to make sure that value is really
+      // pointing to the type that matches what's in vtype
+      H5Awrite(a_id, atype, value);
+      }
+  
+    // clean up the attribute related pointers
+    if (*vtype == RHDF5_TYPE_STRING)
+      {
+      // Only call the close when using the string type (which is a complex structure)
+      H5Tclose(atype);
+      }
+    if (attr_exists == 0)
+      {
+      // if created the attribute, then close the memory space id
+      H5Sclose(amem_id);
+      }
+    H5Aclose(a_id);
     }
-
-  // clean up the attribute related pointers
-  if (*vtype == 1)
-    {
-    // Only call the close when using the string type (which is a complex structure)
-    H5Tclose(atype);
-    }
-  if (attr_exists == 0)
-    {
-    // if created the attribute, then close the memory space id
-    H5Sclose(amem_id);
-    }
-  H5Aclose(a_id);
+  
+  return;
   }
 
-return;
-}
+//**********************************************************************
+// rh5a_read_anyscalar()
+//
+// This routine will read in the attribute given by the object id and
+// name. The caller requests a certain type (arg: dtype) and that is checked
+// against the type found in the hdf5 file.
+//
+void rh5a_read_anyscalar(int *dsetid, char *name,  void *value, int *vtype, int *hdferr)
+  {
+  hid_t attrid;
+  hid_t atypid;
+  int atype;
+  int asize;
+  
+  *hdferr = 0;
+  
+  // First open the attribute
+  attrid = H5Aopen(*dsetid, name, H5P_DEFAULT);
+  if (attrid < 0)
+    {
+    *hdferr = -1;
+    return;
+    }
 
+  // Get the information about the data type
+  atypid = H5Aget_type(attrid);
+  if (atypid < 0)
+    {
+    *hdferr = -1;
+    return;
+    }
+  rf2c_get_mem_type(atypid, &atype, &asize);
+  if (atype < 0)
+    {
+    *hdferr = -1;
+    return;
+    }
+  if (atype != *vtype)
+    {
+    printf("ERROR: rh5a_read_anyscalar: Attribute type requested by caller does not match type in file\n");
+    printf("ERROR:   Attribute naame: %s\n", name);
+    printf("ERROR:   Requested attribute type: %s\n", rhdf5_type_names[*vtype]);
+    printf("ERROR:   Attribute type found in HDF5 file: %s\n", rhdf5_type_names[atype]);
+    *hdferr = -1;
+    return;
+    }
+
+  // read the dataset, clean up and return
+  *hdferr = H5Aread(attrid, atypid, value);
+
+  if (*vtype == RHDF5_TYPE_STRING)
+    {
+    H5Tclose(atypid);
+    }
+  H5Aclose(attrid);
+
+  return;
+  }
 
 //////////// INTERNAL ROUTINES //////////////////
 
@@ -575,7 +744,7 @@ hid_t mtype;
 
 switch (dtype)
   { 
-  case 1:
+  case RHDF5_TYPE_STRING:
     // define type for the string
     // C style string, null byte terminated, size taken from input argument ssize
     mtype = H5Tcopy(H5T_C_S1);
@@ -583,17 +752,17 @@ switch (dtype)
     H5Tset_strpad(mtype, H5T_STR_NULLTERM);
     break;
 
-  case 2:
+  case RHDF5_TYPE_INTEGER:
     // integer
     mtype = H5T_NATIVE_INT;
     break;
 
-  case 3:
+  case RHDF5_TYPE_FLOAT:
     // float
     mtype = H5T_NATIVE_FLOAT;
     break;
 
-  case 4:
+  case RHDF5_TYPE_CHAR:
     // char
     mtype = H5T_NATIVE_UCHAR;
     break;
@@ -606,3 +775,49 @@ switch (dtype)
 
 return(mtype);
 }
+
+//*******************************************************************
+// rf2c_get_mem_type()
+//
+// This routine finds and translates the HDF5 type to
+// the integer coded memory type.
+//
+void rf2c_get_mem_type(hid_t typid, int *type, int *size)
+  {
+  H5T_class_t type_class;
+
+  type_class = H5Tget_class(typid);
+  *size = H5Tget_size(typid);
+
+  switch(type_class)
+    {
+    case H5T_STRING:
+      *type = RHDF5_TYPE_STRING;
+      break;
+
+    case H5T_INTEGER:
+      // Both integer and char are stored as integer class, however the char type
+      // is a 1-byte integer and the integer type is 4 bytes so the size can be used
+      // to distinguish between the two
+      if (*size == 1)
+        {
+        *type = RHDF5_TYPE_CHAR;
+        }
+      else
+        {
+        *type = RHDF5_TYPE_INTEGER;
+        }
+      break;
+
+    case H5T_FLOAT:
+      *type = RHDF5_TYPE_FLOAT;
+      break;
+
+    default:
+      // unrecognized type
+      *type = -1;
+      break;
+    }
+
+  return;
+  }

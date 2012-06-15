@@ -31,11 +31,13 @@
 #define rh5d_open            rh5d_open_
 #define rh5d_write           rh5d_write_
 #define rh5d_setup_and_write rh5d_setup_and_write_
+#define rh5d_setup_and_read  rh5d_setup_and_read_
 #define rh5d_close           rh5d_close_
 #define rh5t_close           rh5t_close_
 #define rh5s_close           rh5s_close_
 #define rh5p_close           rh5p_close_
 #define rh5a_write_anyscalar rh5a_write_anyscalar_
+#define rh5a_read_anyscalar  rh5a_read_anyscalar_
 
 #endif
 
@@ -51,11 +53,13 @@
 #define rh5d_open            RH5D_OPEN
 #define rh5d_write           RH5D_WRITE
 #define rh5d_setup_and_write RH5D_SETUP_AND_WRITE
+#define rh5d_setup_and_read  RH5D_SETUP_AND_READ
 #define rh5d_close           RH5D_CLOSE
 #define rh5t_close           RH5T_CLOSE
 #define rh5s_close           RH5S_CLOSE
 #define rh5p_close           RH5P_CLOSE
 #define rh5a_write_anyscalar RH5A_WRITE_ANYSCALAR
+#define rh5a_read_anyscalar  RH5A_READ_ANYSCALAR
 
 #endif
 
