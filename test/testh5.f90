@@ -41,6 +41,7 @@ program testh5
   integer :: TestNum
   real :: tstart, tend, ttot
   character (len=128) :: Vname
+  integer :: tot_elems
 
   type (Rhdf5Var) :: Vin
   type (Rhdf5Var) :: Vout
@@ -149,20 +150,32 @@ program testh5
     call rhdf5_open_file(rh5_file_name, rh5_file_acc, 0, rh5_file)
 
     print*, 'Reading IntData:'
-    call rhdf5_read_variable(rh5_file,'IntData', ndims, dims, units, descrip, dimnames, idata=InIarray)
+    call rhdf5_read_variable_init(rh5_file,'IntData', ndims, dims, units, descrip, dimnames)
+    call CalcTotElems(ndims,dims,tot_elems)
+    allocate(InIarray(tot_elems))
+    call rhdf5_read_variable(rh5_file,'IntData', ndims, dims, idata=InIarray)
     call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
 
     print*, 'Reading RealData:'
-    call rhdf5_read_variable(rh5_file,'RealData', ndims, dims, units, descrip, dimnames, rdata=InRarray)
+    call rhdf5_read_variable_init(rh5_file,'RealData', ndims, dims, units, descrip, dimnames)
+    call CalcTotElems(ndims,dims,tot_elems)
+    allocate(InRarray(tot_elems))
+    call rhdf5_read_variable(rh5_file,'RealData', ndims, dims, rdata=InRarray)
     call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
 
     print*, 'Reading StringData:'
-    call rhdf5_read_variable(rh5_file,'StringData', ndims, dims, units, descrip, dimnames, sdata=InSarray, ssize=ssize)
+    call rhdf5_read_variable_init(rh5_file,'StringData', ndims, dims, units, descrip, dimnames)
+    call CalcTotElems(ndims,dims,tot_elems)
+    allocate(InSarray(tot_elems))
+    call rhdf5_read_variable(rh5_file,'StringData', ndims, dims, sdata=InSarray, ssize=ssize)
     call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
     print*, '  ssize: ', ssize
 
     print*, 'Reading CharData:'
-    call rhdf5_read_variable(rh5_file,'CharData', ndims, dims, units, descrip, dimnames, cdata=InCarray)
+    call rhdf5_read_variable_init(rh5_file,'CharData', ndims, dims, units, descrip, dimnames)
+    call CalcTotElems(ndims,dims,tot_elems)
+    allocate(InCarray(tot_elems))
+    call rhdf5_read_variable(rh5_file,'CharData', ndims, dims, cdata=InCarray)
     call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
 
 
@@ -231,20 +244,32 @@ program testh5
     call rhdf5_open_file(rh5_file_name, rh5_file_acc, 0, rh5_file)
 
     print*, 'Reading IntData:'
-    call rhdf5_read_variable(rh5_file,'IntData', ndims, dims, units, descrip, dimnames, idata=InIarray)
+    call rhdf5_read_variable_init(rh5_file,'IntData', ndims, dims, units, descrip, dimnames)
+    call CalcTotElems(ndims,dims,tot_elems)
+    allocate(InIarray(tot_elems))
+    call rhdf5_read_variable(rh5_file,'IntData', ndims, dims, idata=InIarray)
     call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
 
     print*, 'Reading RealData:'
-    call rhdf5_read_variable(rh5_file,'RealData', ndims, dims, units, descrip, dimnames, rdata=InRarray)
+    call rhdf5_read_variable_init(rh5_file,'RealData', ndims, dims, units, descrip, dimnames)
+    call CalcTotElems(ndims,dims,tot_elems)
+    allocate(InRarray(tot_elems))
+    call rhdf5_read_variable(rh5_file,'RealData', ndims, dims, rdata=InRarray)
     call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
 
     print*, 'Reading StringData:'
-    call rhdf5_read_variable(rh5_file,'StringData', ndims, dims, units, descrip, dimnames, sdata=InSarray, ssize=ssize)
+    call rhdf5_read_variable_init(rh5_file,'StringData', ndims, dims, units, descrip, dimnames)
+    call CalcTotElems(ndims,dims,tot_elems)
+    allocate(InSarray(tot_elems))
+    call rhdf5_read_variable(rh5_file,'StringData', ndims, dims, sdata=InSarray, ssize=ssize)
     call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
     print*, '  ssize: ', ssize
 
     print*, 'Reading CharData:'
-    call rhdf5_read_variable(rh5_file,'CharData', ndims, dims, units, descrip, dimnames, cdata=InCarray)
+    call rhdf5_read_variable_init(rh5_file,'CharData', ndims, dims, units, descrip, dimnames)
+    call CalcTotElems(ndims,dims,tot_elems)
+    allocate(InCarray(tot_elems))
+    call rhdf5_read_variable(rh5_file,'CharData', ndims, dims, cdata=InCarray)
     call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
 
 
@@ -282,10 +307,14 @@ program testh5
     call rhdf5_write(fname, Vin)
 
     Vout%vname = 'hvar'
+    call rhdf5_read_init(fname, Vout)
+    call CalcTotElems(Vout%ndims,Vout%dims,tot_elems)
+    allocate(Vout%vdata(tot_elems))
     call rhdf5_read(fname, Vout)
 
     print*, 'Reading file: ', trim(fname), ', Vout:'
     call DumpRhdf5Var(Vout)
+    deallocate(Vout%vdata)
  
   endif
 
@@ -423,6 +452,23 @@ subroutine DumpRhdf5Var(rvar)
   return
 end subroutine DumpRhdf5Var
 
+!********************************************
+subroutine CalcTotElems(ndims,dims,tot_elems)
+  implicit none
+
+  integer :: ndims
+  integer, dimension(ndims) :: dims
+  integer :: tot_elems
+
+  integer :: i
+
+  tot_elems = 1
+  do i = 1, ndims
+    tot_elems = tot_elems * dims(i)
+  enddo
+
+  return
+end subroutine CalcTotElems
 !********************************************
 subroutine DumpLinearStorage(A,N)
   implicit none

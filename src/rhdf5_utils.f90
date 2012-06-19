@@ -53,13 +53,42 @@ Contains
 !********************************************************************************
 
 !**************************************************************
+! rhdf5_read_init()
+!
+! This routine will locate the given variable in the given HDF5 file
+! and read in information about the variable to prepare for a
+! subsequent read.
+!
+! Splitting up the read into two pieces allows the caller to
+! quickly get size information about variables without having
+! to read in all the data. One purpose for this is get the
+! dimensions so that the data buffer can be allocated.
+! 
+subroutine rhdf5_read_init(fname, rvar)
+  implicit none
+
+  character (len=RHDF5_MAX_STRING) :: fname
+  type (Rhdf5Var) :: rvar
+
+  integer :: fileid
+  character (len=RHDF5_MAX_STRING):: facc
+
+  facc = 'R'
+  call rhdf5_open_file(fname, facc, 0, fileid)
+
+  call rhdf5_read_variable_init(fileid, rvar%vname, rvar%ndims, rvar%dims, rvar%units, &
+    rvar%descrip, rvar%dimnames)
+
+  call rhdf5_close_file(fileid)
+  return
+end subroutine rhdf5_read_init
+
+!**************************************************************
 ! rhdf5_read()
 !
 ! This routine will read the given variable out of the given HDF5 file.
-! This routine will allocate the memory for the Vdata element in the Rhdf5Var
-! structure. It is up to the caller to deallocate this memory.
-! The caller must set the Vname element in the Rhdf5Var structure before
-! calling this routine.
+!
+! The caller is responsible for allocating the memory for the data buffer.
 ! 
 subroutine rhdf5_read(fname, rvar)
   implicit none
@@ -68,14 +97,12 @@ subroutine rhdf5_read(fname, rvar)
   type (Rhdf5Var) :: rvar
 
   integer :: fileid
-  integer :: tot_elems
   character (len=RHDF5_MAX_STRING):: facc
 
   facc = 'R'
   call rhdf5_open_file(fname, facc, 0, fileid)
 
-  call rhdf5_read_variable(fileid, rvar%vname, rvar%ndims, rvar%dims, rvar%units, &
-    rvar%descrip, rvar%dimnames, rdata=rvar%vdata)
+  call rhdf5_read_variable(fileid, rvar%vname, rvar%ndims, rvar%dims, rdata=rvar%vdata)
 
   call rhdf5_close_file(fileid)
   return
@@ -661,18 +688,13 @@ subroutine rhdf5_write_attribute(id, aname, cval, ival, rval)
 end subroutine rhdf5_write_attribute
 
 !********************************************************************
-! rhdf5_read_variable()
+! rhdf5_read_variable_init()
 !
-! This routine read the dataset and attributes for an hdf5 file variable.
+! This routine read the dimension and attribute info for an hdf5 file variable.
 !
-! This routine will allocate space for the variable data buffer.
+! This routine needs to be called before hdf5_read_variable().
 !
-! Note that sdata is an array of strings where each string gets cast into a C style string
-! terminated with a null byte. cdata on the other hand gets cast into a character array with
-! a fixed length (RHDF5_MAX_STRING).
-!
-subroutine rhdf5_read_variable(id, vname, ndims, dims, units, descrip, dimnames, &
-  rdata, idata, sdata, ssize, cdata)
+subroutine rhdf5_read_variable_init(id, vname, ndims, dims, units, descrip, dimnames)
   implicit none
 
   integer :: id
@@ -682,55 +704,24 @@ subroutine rhdf5_read_variable(id, vname, ndims, dims, units, descrip, dimnames,
   character (len=*) :: units
   character (len=*) :: descrip
   character (len=RHDF5_MAX_STRING), dimension(ndims) :: dimnames
-  real, dimension(:), optional, allocatable :: rdata
-  integer, dimension(:), optional, allocatable :: idata
-  character (len=*), dimension(:), optional, allocatable :: sdata
-  integer, optional :: ssize
-  character, dimension(:), optional, allocatable :: cdata
 
   integer :: hdferr
   integer :: dsetid
-  integer :: i
   character (len=RHDF5_MAX_STRING) :: dnstring
   character (len=RHDF5_MAX_STRING) :: arrayorg
   character (len=RHDF5_MAX_STRING) :: stemp
-  integer :: dsize
-  integer :: tot_elems
 
-  ! get the dimensions, figure out the total number of elements, allocate the data buffer
-  ! memory and read in the data.
-  call rh5d_read_setup(id, trim(vname)//char(0), dsetid, ndims, dims, hdferr)
+  ! open dataset
+  call rh5d_open(id, trim(vname)//char(0), dsetid, hdferr)
   if (hdferr .ne. 0) then
-    print*,'ERROR: hdf5_read_variable: cannot obtain dimension information for variable: ',trim(vname)
+    print*,'ERROR: hdf5_read_variable_init: cannot open dataset for variable: ',trim(vname)
     stop 'hdf5_read_variable: bad variable read'
   endif
 
-  ! total number of elements
-  tot_elems = 1
-  do i = 1, ndims
-    tot_elems = tot_elems * dims(i)
-  enddo
-
-  ! read the data
-  if (present(sdata)) then
-    allocate(sdata(tot_elems))
-    call rh5d_read(dsetid, RHDF5_TYPE_STRING, ssize, sdata, hdferr)
-    call rhdf5_convert_c2f_strings(sdata,ssize,ndims,dims)
-  elseif (present(idata)) then
-    allocate(idata(tot_elems))
-    call rh5d_read(dsetid, RHDF5_TYPE_INTEGER, dsize, idata, hdferr)
-  elseif (present(rdata)) then
-    allocate(rdata(tot_elems))
-    call rh5d_read(dsetid, RHDF5_TYPE_FLOAT, dsize, rdata, hdferr)
-  elseif (present(cdata)) then
-    allocate(cdata(tot_elems))
-    call rh5d_read(dsetid, RHDF5_TYPE_CHAR, dsize, cdata, hdferr)
-  else
-    print*,'ERROR: hdf5_read_variable: must use one of the "rdata", "idata", "sdata" arguments'
-    stop 'hdf5_read_variable: bad variable read'
-  endif
+  ! dimensions
+  call rh5d_read_get_dims(dsetid, ndims, dims, hdferr)
   if (hdferr .ne. 0) then
-    print*,'ERROR: hdf5_read_variable: cannot read data for variable: ',trim(vname)
+    print*,'ERROR: hdf5_read_variable_init: cannot obtain dimension information for variable: ',trim(vname)
     stop 'hdf5_read_variable: bad variable read'
   endif
 
@@ -748,6 +739,69 @@ subroutine rhdf5_read_variable(id, vname, ndims, dims, units, descrip, dimnames,
   ! If arrayorg is "row major" then reverse the dimensions
   if (trim(arrayorg) .eq. 'row major') then
     call rhdf5_reverse_dims(ndims, dims, dimnames)
+  endif
+
+  ! close the dataset
+  call rh5d_close(dsetid, hdferr);
+
+  return
+end subroutine rhdf5_read_variable_init
+
+!********************************************************************
+! rhdf5_read_variable()
+!
+! This routine read the dataset for an hdf5 file variable.
+!
+! The caller is responsible for allocating the memory for the data buffer.
+!
+! Note that sdata is an array of strings where each string gets cast into a C style string
+! terminated with a null byte. cdata on the other hand gets cast into a character array with
+! a fixed length (RHDF5_MAX_STRING).
+!
+subroutine rhdf5_read_variable(id, vname, ndims, dims, rdata, idata, sdata, ssize, cdata)
+  implicit none
+
+  integer :: id
+  character (len=*) :: vname
+  integer :: ndims
+  integer, dimension(ndims) :: dims
+  real, dimension(:), optional, allocatable :: rdata
+  integer, dimension(:), optional, allocatable :: idata
+  character (len=*), dimension(:), optional, allocatable :: sdata
+  integer, optional :: ssize
+  character, dimension(:), optional, allocatable :: cdata
+
+  integer :: hdferr
+  integer :: dsetid
+  character (len=RHDF5_MAX_STRING) :: dnstring
+  character (len=RHDF5_MAX_STRING) :: arrayorg
+  character (len=RHDF5_MAX_STRING) :: stemp
+  integer :: dsize
+
+  ! open dataset
+  call rh5d_open(id, trim(vname)//char(0), dsetid, hdferr)
+  if (hdferr .ne. 0) then
+    print*,'ERROR: hdf5_read_variable: cannot open dataset for variable: ',trim(vname)
+    stop 'hdf5_read_variable: bad variable read'
+  endif
+
+  ! read the data
+  if (present(sdata)) then
+    call rh5d_read(dsetid, RHDF5_TYPE_STRING, ssize, sdata, hdferr)
+    call rhdf5_convert_c2f_strings(sdata,ssize,ndims,dims)
+  elseif (present(idata)) then
+    call rh5d_read(dsetid, RHDF5_TYPE_INTEGER, dsize, idata, hdferr)
+  elseif (present(rdata)) then
+    call rh5d_read(dsetid, RHDF5_TYPE_FLOAT, dsize, rdata, hdferr)
+  elseif (present(cdata)) then
+    call rh5d_read(dsetid, RHDF5_TYPE_CHAR, dsize, cdata, hdferr)
+  else
+    print*,'ERROR: hdf5_read_variable: must use one of the "rdata", "idata", "sdata" arguments'
+    stop 'hdf5_read_variable: bad variable read'
+  endif
+  if (hdferr .ne. 0) then
+    print*,'ERROR: hdf5_read_variable: cannot read data for variable: ',trim(vname)
+    stop 'hdf5_read_variable: bad variable read'
   endif
 
   ! close the dataset

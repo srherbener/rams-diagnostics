@@ -439,7 +439,7 @@ void rh5d_write(int *dsetid, int *mtypid, int *mspcid, int *fspcid, int *xfplid,
   }
 
 //**********************************************************************
-// rh5d_read_setup()
+// rh5d_read_get_dims()
 //
 // This routine will open the dataset given by id (file id) and name, 
 // read in and return the dimension information.
@@ -447,7 +447,7 @@ void rh5d_write(int *dsetid, int *mtypid, int *mspcid, int *fspcid, int *xfplid,
 // The dataset is left open so that the caller can read the data and
 // retrieve attributes so it is up to the caller to close the dataset.
 //
-void rh5d_read_setup(int *id, char *name, int *dsetid, int *ndims, int *dims, int *hdferr)
+void rh5d_read_get_dims(int *dsetid, int *ndims, int *dims, int *hdferr)
   {
   hid_t fspcid;
   hid_t dtypid;
@@ -456,20 +456,6 @@ void rh5d_read_setup(int *id, char *name, int *dsetid, int *ndims, int *dims, in
 
   *hdferr = 0;
   
-  // First open the dataset
-#ifdef H5_USE_16_API
-  // 1.6 API
-  *dsetid = H5Dopen(*id, name);
-#else
-  // 1.8 API
-  *dsetid = H5Dopen(*id, name, H5P_DEFAULT);
-#endif
-  if (*dsetid < 0)
-    {
-    *hdferr = -1;
-    return;
-    }
-
   // Get the information about the dimensions
   // Need to read dimension sizes, from H5Sget_simple_extent_dims, into
   // an (hsize_t *) type since it's length is different than (int *) type.
