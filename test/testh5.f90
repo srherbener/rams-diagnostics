@@ -42,6 +42,10 @@ program testh5
   real :: tstart, tend, ttot
   character (len=128) :: Vname
 
+  type (Rhdf5Var) :: Vin
+  type (Rhdf5Var) :: Vout
+  character (len=128) :: fname
+
   call GetArgs(TestNum)
 
   if (TestNum .eq. 1) then
@@ -161,20 +165,8 @@ program testh5
     call rhdf5_read_variable(rh5_file,'CharData', ndims, dims, units, descrip, dimnames, cdata=InCarray)
     call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
 
-    print*, '3D Data Arrays:'
-    print*, ''
-    write(*,'(a5,a10,a10,a20)') 'i', 'Iarray', 'Rarray', 'Sarray'
-    do i = 1, Nx*Ny*Nz
-      write(*,'(i5,i10,f10.2,a20)') i, InIarray(i), InRarray(i), trim(InSarray(i))
-    enddo
-    print*, ''
 
-    print*, 'Char Data Arrays:'
-    write(*,'(a5,a10)') 'i', 'Carray'
-    do i = 1, ssize
-      write(*,'(i5,a20)') i , InCarray(i)
-    enddo
-    print*, ''
+    call DumpVarData(Nx,Ny,Nz,ssize,InIarray,InRarray,InSarray,InCarray)
 
     deallocate(InIarray)
     deallocate(InRarray)
@@ -255,20 +247,8 @@ program testh5
     call rhdf5_read_variable(rh5_file,'CharData', ndims, dims, units, descrip, dimnames, cdata=InCarray)
     call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
 
-    print*, '3D Data Arrays:'
-    print*, ''
-    write(*,'(a5,a10,a10,a20)') 'i', 'Iarray', 'Rarray', 'Sarray'
-    do i = 1, Nx*Ny*Nz
-      write(*,'(i5,i10,f10.2,a20)') i, InIarray(i), InRarray(i), trim(InSarray(i))
-    enddo
-    print*, ''
 
-    print*, 'Char Data Arrays:'
-    write(*,'(a5,a10)') 'i', 'Carray'
-    do i = 1, ssize
-      write(*,'(i5,a20)') i , InCarray(i)
-    enddo
-    print*, ''
+    call DumpVarData(Nx,Ny,Nz,ssize,InIarray,InRarray,InSarray,InCarray)
 
     deallocate(InIarray)
     deallocate(InRarray)
@@ -276,6 +256,37 @@ program testh5
     deallocate(InCarray)
 
     call rhdf5_close_file(rh5_file)
+
+  elseif (TestNum .eq. 5) then
+    Vin%vname = 'hvar'
+    Vin%ndims = 3
+    Vin%dims(1) = Nx
+    Vin%dims(2) = Ny
+    Vin%dims(3) = Nz
+    Vin%units = 'test_hv'
+    Vin%descrip = ' test_hv_real'
+    Vin%dimnames(1) = 'x'
+    Vin%dimnames(2) = 'y'
+    Vin%dimnames(3) = 'z'
+    allocate(Vin%vdata(Nx*Ny*Nz))
+    do i = 1, Nx*Ny*Nz
+      Vin%vdata(i) = float(i)
+    enddo
+
+    fname = 'test_hwr.h5'
+
+    print*, 'Writing file: ', trim(fname), ', Vin:'
+    call DumpRhdf5Var(Vin)
+
+
+    call rhdf5_write(fname, Vin)
+
+    Vout%vname = 'hvar'
+    call rhdf5_read(fname, Vout)
+
+    print*, 'Reading file: ', trim(fname), ', Vout:'
+    call DumpRhdf5Var(Vout)
+ 
   endif
 
 end program testh5
@@ -297,14 +308,15 @@ subroutine GetArgs(TestNum)
      print*, '                   2 --> run big file write test to check performance'
      print*, '                   3 --> read test'
      print*, '                   4 --> write then read test'
+     print*, '                   5 --> high level write then high level read test'
      print*, ''
    stop
   endif
 
   call getarg(1, arg)
   read(arg,'(i)') TestNum
-  if ((TestNum .lt. 1) .and. (TestNum .gt. 4)) then
-    print*, 'ERROR: <test_num> must be integer between 1 and 4'
+  if ((TestNum .lt. 1) .and. (TestNum .gt. 5)) then
+    print*, 'ERROR: <test_num> must be integer between 1 and 5'
     stop 'GetArgs'
   endif
 
@@ -340,6 +352,76 @@ subroutine DumpVarInfo(ndims, dims, units, descrip, dimnames, ssize)
 
   return
 end subroutine DumpVarInfo
+
+!**************************************************
+subroutine DumpVarData(Nx,Ny,Nz,ssize,Iarray,Rarray,Sarray,Carray)
+
+  integer :: ssize
+  integer, dimension(Nx,Ny,Nz) :: Iarray
+  real, dimension(Nx,Ny,Nz) :: Rarray
+  character (len=ssize), dimension(Nx,Ny,Nz) :: Sarray
+  character, dimension(ssize) :: Carray
+
+  integer ix, iy, iz, i
+
+  print*, '3D Data Arrays:'
+  print*, ''
+  write(*,'(a5,a5,a5,a10,a10,a20)') 'ix', 'iy', 'iz', 'Iarray', 'Rarray', 'Sarray'
+  do iz = 1, Nz
+    do iy = 1, Ny
+      do ix = 1, Nx
+        write(*,'(i5,i5,i5,i10,f10.2,a20)') ix, iy, iz, &
+          Iarray(ix,iy,iz), Rarray(ix,iy,iz), trim(Sarray(ix,iy,iz))
+      enddo
+    enddo
+  enddo
+  print*, ''
+
+  print*, 'Char Data Arrays:'
+  write(*,'(a5,a10)') 'i', 'Carray'
+  do i = 1, ssize
+    write(*,'(i5,a20)') i , Carray(i)
+  enddo
+  print*, ''
+
+  return
+end subroutine DumpVarData
+
+!**************************************************
+subroutine DumpRhdf5Var(rvar)
+  use rhdf5_utils
+  implicit none
+
+  type (Rhdf5Var) :: rvar
+
+  integer :: i
+  integer :: tot_elems
+
+  tot_elems = 1
+  do i = 1, rvar%ndims
+    tot_elems = tot_elems * rvar%dims(i)
+  enddo
+
+
+  print*, 'RHDF5 Var:'
+  print*, '  vname: ', trim(rvar%vname)
+  print*, ''
+  print*, '  ndims: ', rvar%ndims
+  do i = 1, rvar%ndims
+    write(*,'(i10,i10,a10)') i, rvar%dims(i), trim(rvar%dimnames(i))
+  enddo
+  print*, ''
+  print*, '  units: ', trim(rvar%units)
+  print*, '  descrip: ', trim(rvar%descrip)
+  print*, ''
+  print*, '  data:'
+  do i = 1, tot_elems
+    write(*,'(i10,f10.2)') i, rvar%vdata(i)
+  enddo
+  print*, ''
+
+  return
+end subroutine DumpRhdf5Var
 
 !********************************************
 subroutine DumpLinearStorage(A,N)

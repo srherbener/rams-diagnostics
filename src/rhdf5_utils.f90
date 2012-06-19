@@ -87,7 +87,7 @@ end subroutine rhdf5_read
 ! This routine will write the given variable out of the given HDF5 file.
 ! The caller must set all of the elements in the Rhdf5Var structure before
 ! calling this routine.
-subroutine rhdf5_write
+subroutine rhdf5_write(fname, rvar)
   implicit none
 
   character (len=RHDF5_MAX_STRING) :: fname
