@@ -264,7 +264,7 @@ program testh5
     Vin%dims(2) = Ny
     Vin%dims(3) = Nz
     Vin%units = 'test_hv'
-    Vin%descrip = ' test_hv_real'
+    Vin%descrip = 'test_hv_real'
     Vin%dimnames(1) = 'x'
     Vin%dimnames(2) = 'y'
     Vin%dimnames(3) = 'z'
