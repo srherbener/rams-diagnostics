@@ -439,25 +439,21 @@ void rh5d_write(int *dsetid, int *mtypid, int *mspcid, int *fspcid, int *xfplid,
   }
 
 //**********************************************************************
-// rh5d_setup_and_read()
+// rh5d_read_setup()
 //
-// This routine will open the dataset given by id (file id) and name, and
-// read the dataset into the buffer "data". It will also return the
-// dimensions (ndims and dims).
+// This routine will open the dataset given by id (file id) and name, 
+// read in and return the dimension information.
 //
-// The dataset is left open so that the caller can retrieve attributes
-// so it is up to the caller to close the dataset.
+// The dataset is left open so that the caller can read the data and
+// retrieve attributes so it is up to the caller to close the dataset.
 //
-void rh5d_setup_and_read(int *id, char *name, int *dtype, int *dsize, int *ndims, int *dims,
-   int *dsetid, void *data, int *hdferr)
+void rh5d_read_setup(int *id, char *name, int *dsetid, int *ndims, int *dims, int *hdferr)
   {
   hid_t fspcid;
   hid_t dtypid;
   hsize_t dset_dims[RHDF5_MAX_DIMS];
   int i;
-  int req_type;
-  int mtype;
-  
+
   *hdferr = 0;
   
   // First open the dataset
@@ -488,9 +484,29 @@ void rh5d_setup_and_read(int *id, char *name, int *dtype, int *dsize, int *ndims
   if (*ndims < 0)
     {
     *hdferr = -1;
-    return;
     }
 
+  return;
+  }
+
+//**********************************************************************
+// rh5d_read()
+//
+// This routine will open the dataset given by id (file id) and name, and
+// read the dataset into the buffer "data".
+//
+// The dataset is left open so that the caller can retrieve attributes
+// so it is up to the caller to close the dataset.
+//
+void rh5d_read(int *dsetid, int *dtype, int *dsize, void *data, int *hdferr)
+  {
+  hid_t dtypid;
+  hsize_t dset_dims[RHDF5_MAX_DIMS];
+  int i;
+  int mtype;
+  
+  *hdferr = 0;
+  
   // Get the information about the data type
   dtypid = H5Dget_type(*dsetid);
   if (dtypid < 0)
@@ -508,7 +524,6 @@ void rh5d_setup_and_read(int *id, char *name, int *dtype, int *dsize, int *ndims
   if (*dtype != mtype)
     {
     printf("ERROR: rh5a_setup_and_read: Data type requested by caller does not match type in file\n");
-    printf("ERROR:   Data name: %s\n", name);
     printf("ERROR:   Requested attribute type: %s\n", rhdf5_type_names[*dtype]);
     printf("ERROR:   Data type found in HDF5 file: %s\n", rhdf5_type_names[mtype]);
     *hdferr = -1;

@@ -31,10 +31,85 @@ integer, parameter :: RHDF5_TYPE_INTEGER = 1
 integer, parameter :: RHDF5_TYPE_FLOAT   = 2
 integer, parameter :: RHDF5_TYPE_CHAR    = 3
 
+! structure to hold variable information
+type Rhdf5Var
+  character (len=RHDF5_MAX_STRING) :: vname
+  integer :: ndims
+  integer, dimension(RHDF5_MAX_DIMS) :: dims
+  character (len=RHDF5_MAX_STRING) :: units
+  character (len=RHDF5_MAX_STRING) :: descrip
+  character (len=RHDF5_MAX_STRING), dimension(RHDF5_MAX_DIMS) :: dimnames
+  real, dimension(:), allocatable :: vdata
+end type Rhdf5Var
+
 Contains
 
 !********************************************************************************
 ! Routines for HDF5 REVU IO
+!********************************************************************************
+
+!********************************************************************************
+! High level routines
+!********************************************************************************
+
+!**************************************************************
+! rhdf5_read()
+!
+! This routine will read the given variable out of the given HDF5 file.
+! This routine will allocate the memory for the Vdata element in the Rhdf5Var
+! structure. It is up to the caller to deallocate this memory.
+! The caller must set the Vname element in the Rhdf5Var structure before
+! calling this routine.
+! 
+subroutine rhdf5_read(fname, rvar)
+  implicit none
+
+  character (len=RHDF5_MAX_STRING) :: fname
+  type (Rhdf5Var) :: rvar
+
+  integer :: fileid
+  integer :: tot_elems
+  character (len=RHDF5_MAX_STRING):: facc
+
+  facc = 'R'
+  call rhdf5_open_file(fname, facc, 0, fileid)
+
+  call rhdf5_read_variable(fileid, rvar%vname, rvar%ndims, rvar%dims, rvar%units, &
+    rvar%descrip, rvar%dimnames, rdata=rvar%vdata)
+
+  call rhdf5_close_file(fileid)
+  return
+end subroutine rhdf5_read
+
+!**************************************************************
+! rhdf5_write()
+!
+! This routine will write the given variable out of the given HDF5 file.
+! The caller must set all of the elements in the Rhdf5Var structure before
+! calling this routine.
+subroutine rhdf5_write
+  implicit none
+
+  character (len=RHDF5_MAX_STRING) :: fname
+  type (Rhdf5Var) :: rvar
+
+  integer :: fileid
+  character (len=RHDF5_MAX_STRING):: facc
+
+  facc = 'W'
+  call rhdf5_open_file(fname, facc, 1, fileid)
+
+  ! Fourth arg is 'itstep' (time step) which is used for writing into an extendable
+  ! dimension. We already have the complete data (no need to extend) so set this to zero.
+  call rhdf5_write_variable(fileid, rvar%vname, rvar%ndims, 0, rvar%dims, rvar%units, &
+    rvar%descrip, rvar%dimnames, rdata=rvar%vdata)
+
+  call rhdf5_close_file(fileid)
+  return
+end subroutine rhdf5_write
+
+!********************************************************************************
+! Low level routines
 !********************************************************************************
 
 !*******************************************************************
@@ -590,6 +665,7 @@ end subroutine rhdf5_write_attribute
 !
 ! This routine read the dataset and attributes for an hdf5 file variable.
 !
+! This routine will allocate space for the variable data buffer.
 !
 ! Note that sdata is an array of strings where each string gets cast into a C style string
 ! terminated with a null byte. cdata on the other hand gets cast into a character array with
@@ -606,11 +682,11 @@ subroutine rhdf5_read_variable(id, vname, ndims, dims, units, descrip, dimnames,
   character (len=*) :: units
   character (len=*) :: descrip
   character (len=RHDF5_MAX_STRING), dimension(ndims) :: dimnames
-  real, dimension(*), optional :: rdata
-  integer, dimension(*), optional :: idata
-  character (len=*), dimension(*), optional :: sdata
+  real, dimension(:), optional, allocatable :: rdata
+  integer, dimension(:), optional, allocatable :: idata
+  character (len=*), dimension(:), optional, allocatable :: sdata
   integer, optional :: ssize
-  character (len=*), optional :: cdata
+  character, dimension(:), optional, allocatable :: cdata
 
   integer :: hdferr
   integer :: dsetid
@@ -619,21 +695,36 @@ subroutine rhdf5_read_variable(id, vname, ndims, dims, units, descrip, dimnames,
   character (len=RHDF5_MAX_STRING) :: arrayorg
   character (len=RHDF5_MAX_STRING) :: stemp
   integer :: dsize
+  integer :: tot_elems
+
+  ! get the dimensions, figure out the total number of elements, allocate the data buffer
+  ! memory and read in the data.
+  call rh5d_read_setup(id, trim(vname)//char(0), dsetid, ndims, dims, hdferr)
+  if (hdferr .ne. 0) then
+    print*,'ERROR: hdf5_read_variable: cannot obtain dimension information for variable: ',trim(vname)
+    stop 'hdf5_read_variable: bad variable read'
+  endif
+
+  ! total number of elements
+  tot_elems = 1
+  do i = 1, ndims
+    tot_elems = tot_elems * dims(i)
+  enddo
 
   ! read the data
   if (present(sdata)) then
-    call rh5d_setup_and_read(id, trim(vname)//char(0), RHDF5_TYPE_STRING, ssize, &
-      ndims, dims, dsetid, sdata, hdferr)
+    allocate(sdata(tot_elems))
+    call rh5d_read(dsetid, RHDF5_TYPE_STRING, ssize, sdata, hdferr)
     call rhdf5_convert_c2f_strings(sdata,ssize,ndims,dims)
   elseif (present(idata)) then
-    call rh5d_setup_and_read(id, trim(vname)//char(0), RHDF5_TYPE_INTEGER, dsize, &
-      ndims, dims, dsetid, idata, hdferr)
+    allocate(idata(tot_elems))
+    call rh5d_read(dsetid, RHDF5_TYPE_INTEGER, dsize, idata, hdferr)
   elseif (present(rdata)) then
-    call rh5d_setup_and_read(id, trim(vname)//char(0), RHDF5_TYPE_FLOAT, dsize, &
-      ndims, dims, dsetid, rdata, hdferr)
+    allocate(rdata(tot_elems))
+    call rh5d_read(dsetid, RHDF5_TYPE_FLOAT, dsize, rdata, hdferr)
   elseif (present(cdata)) then
-    call rh5d_setup_and_read(id, trim(vname)//char(0), RHDF5_TYPE_CHAR, dsize, &
-      ndims, dims, dsetid, cdata, hdferr)
+    allocate(cdata(tot_elems))
+    call rh5d_read(dsetid, RHDF5_TYPE_CHAR, dsize, cdata, hdferr)
   else
     print*,'ERROR: hdf5_read_variable: must use one of the "rdata", "idata", "sdata" arguments'
     stop 'hdf5_read_variable: bad variable read'
@@ -706,8 +797,9 @@ end subroutine rhdf5_convert_c2f_strings
 subroutine rhdf5_c2f_string(cstring, fstring, ssize)
   implicit none
 
-  character (len=ssize) :: cstring, fstring
   integer :: ssize
+  character (len=ssize) :: cstring
+  character (len=ssize) :: fstring
 
   integer :: i
   integer :: null_pos

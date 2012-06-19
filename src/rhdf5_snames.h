@@ -31,7 +31,8 @@
 #define rh5d_open            rh5d_open_
 #define rh5d_write           rh5d_write_
 #define rh5d_setup_and_write rh5d_setup_and_write_
-#define rh5d_setup_and_read  rh5d_setup_and_read_
+#define rh5d_read_setup      rh5d_read_setup_
+#define rh5d_read            rh5d_read_
 #define rh5d_close           rh5d_close_
 #define rh5t_close           rh5t_close_
 #define rh5s_close           rh5s_close_
@@ -53,7 +54,8 @@
 #define rh5d_open            RH5D_OPEN
 #define rh5d_write           RH5D_WRITE
 #define rh5d_setup_and_write RH5D_SETUP_AND_WRITE
-#define rh5d_setup_and_read  RH5D_SETUP_AND_READ
+#define rh5d_read_setup      RH5D_READ_SETUP
+#define rh5d_read            RH5D_READ
 #define rh5d_close           RH5D_CLOSE
 #define rh5t_close           RH5T_CLOSE
 #define rh5s_close           RH5S_CLOSE

@@ -24,6 +24,11 @@ program testh5
   real, dimension(Nx,Ny,Nz) :: Rarray
   character (len=ssize), dimension(Nx,Ny,Nz) :: Sarray
   character (len=ssize) :: Carray
+
+  integer, dimension(:), allocatable :: InIarray
+  real, dimension(:), allocatable :: InRarray
+  character (len=ssize), dimension(:), allocatable :: InSarray
+  character, dimension(:), allocatable :: InCarray
  
   integer :: i, ix, iy, iz
   integer, dimension(3) :: dims
@@ -140,38 +145,41 @@ program testh5
     call rhdf5_open_file(rh5_file_name, rh5_file_acc, 0, rh5_file)
 
     print*, 'Reading IntData:'
-    call rhdf5_read_variable(rh5_file,'IntData', ndims, dims, units, descrip, dimnames, idata=Iarray)
+    call rhdf5_read_variable(rh5_file,'IntData', ndims, dims, units, descrip, dimnames, idata=InIarray)
     call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
 
     print*, 'Reading RealData:'
-    call rhdf5_read_variable(rh5_file,'RealData', ndims, dims, units, descrip, dimnames, rdata=Rarray)
+    call rhdf5_read_variable(rh5_file,'RealData', ndims, dims, units, descrip, dimnames, rdata=InRarray)
     call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
 
     print*, 'Reading StringData:'
-    call rhdf5_read_variable(rh5_file,'StringData', ndims, dims, units, descrip, dimnames, sdata=Sarray, ssize=ssize)
+    call rhdf5_read_variable(rh5_file,'StringData', ndims, dims, units, descrip, dimnames, sdata=InSarray, ssize=ssize)
     call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
     print*, '  ssize: ', ssize
 
     print*, 'Reading CharData:'
-    call rhdf5_read_variable(rh5_file,'CharData', ndims, dims, units, descrip, dimnames, cdata=Carray)
+    call rhdf5_read_variable(rh5_file,'CharData', ndims, dims, units, descrip, dimnames, cdata=InCarray)
     call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
 
     print*, '3D Data Arrays:'
     print*, ''
-    write(*,'(a5,a5,a5,a10,a10,a20)') 'ix', 'iy', 'iz', 'Iarray', 'Rarray', 'Sarray'
-    do iz = 1, Nz
-      do iy = 1, Ny
-        do ix = 1, Nx
-          write(*,'(i5,i5,i5,i10,f10.2,a20)') ix, iy, iz, &
-            Iarray(ix,iy,iz), Rarray(ix,iy,iz), trim(Sarray(ix,iy,iz))
-        enddo
-      enddo
+    write(*,'(a5,a10,a10,a20)') 'i', 'Iarray', 'Rarray', 'Sarray'
+    do i = 1, Nx*Ny*Nz
+      write(*,'(i5,i10,f10.2,a20)') i, InIarray(i), InRarray(i), trim(InSarray(i))
     enddo
     print*, ''
 
     print*, 'Char Data Arrays:'
-    write(*,'(a2,a20)') '  ', Carray
+    write(*,'(a5,a10)') 'i', 'Carray'
+    do i = 1, ssize
+      write(*,'(i5,a20)') i , InCarray(i)
+    enddo
     print*, ''
+
+    deallocate(InIarray)
+    deallocate(InRarray)
+    deallocate(InSarray)
+    deallocate(InCarray)
 
     call rhdf5_close_file(rh5_file)
 
@@ -216,18 +224,6 @@ program testh5
 
     ! now try reading
     ! blank out the arrays
-    do iz = 1,Nz
-      do iy = 1,Ny
-        do ix = 1,Nx
-          Iarray(ix,iy,iz) = -1
-          Rarray(ix,iy,iz) = -1.0
-          write(Sarray(ix,iy,iz), '(a5)') 'EMPTY'
-          i = i + 1
-        enddo
-      enddo
-    enddo
-    write(Carray, '(a5)') 'EMPTY'
-
     ndims = -1
     dims(1) = -1
     dims(2) = -1
@@ -243,38 +239,41 @@ program testh5
     call rhdf5_open_file(rh5_file_name, rh5_file_acc, 0, rh5_file)
 
     print*, 'Reading IntData:'
-    call rhdf5_read_variable(rh5_file,'IntData', ndims, dims, units, descrip, dimnames, idata=Iarray)
+    call rhdf5_read_variable(rh5_file,'IntData', ndims, dims, units, descrip, dimnames, idata=InIarray)
     call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
 
     print*, 'Reading RealData:'
-    call rhdf5_read_variable(rh5_file,'RealData', ndims, dims, units, descrip, dimnames, rdata=Rarray)
+    call rhdf5_read_variable(rh5_file,'RealData', ndims, dims, units, descrip, dimnames, rdata=InRarray)
     call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
 
     print*, 'Reading StringData:'
-    call rhdf5_read_variable(rh5_file,'StringData', ndims, dims, units, descrip, dimnames, sdata=Sarray, ssize=ssize)
+    call rhdf5_read_variable(rh5_file,'StringData', ndims, dims, units, descrip, dimnames, sdata=InSarray, ssize=ssize)
     call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
     print*, '  ssize: ', ssize
 
     print*, 'Reading CharData:'
-    call rhdf5_read_variable(rh5_file,'CharData', ndims, dims, units, descrip, dimnames, cdata=Carray)
+    call rhdf5_read_variable(rh5_file,'CharData', ndims, dims, units, descrip, dimnames, cdata=InCarray)
     call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
 
     print*, '3D Data Arrays:'
     print*, ''
-    write(*,'(a5,a5,a5,a10,a10,a20)') 'ix', 'iy', 'iz', 'Iarray', 'Rarray', 'Sarray'
-    do iz = 1, Nz
-      do iy = 1, Ny
-        do ix = 1, Nx
-          write(*,'(i5,i5,i5,i10,f10.2,a20)') ix, iy, iz, &
-            Iarray(ix,iy,iz), Rarray(ix,iy,iz), trim(Sarray(ix,iy,iz))
-        enddo
-      enddo
+    write(*,'(a5,a10,a10,a20)') 'i', 'Iarray', 'Rarray', 'Sarray'
+    do i = 1, Nx*Ny*Nz
+      write(*,'(i5,i10,f10.2,a20)') i, InIarray(i), InRarray(i), trim(InSarray(i))
     enddo
     print*, ''
 
     print*, 'Char Data Arrays:'
-    write(*,'(a2,a20)') '  ', Carray
+    write(*,'(a5,a10)') 'i', 'Carray'
+    do i = 1, ssize
+      write(*,'(i5,a20)') i , InCarray(i)
+    enddo
     print*, ''
+
+    deallocate(InIarray)
+    deallocate(InRarray)
+    deallocate(InSarray)
+    deallocate(InCarray)
 
     call rhdf5_close_file(rh5_file)
   endif
