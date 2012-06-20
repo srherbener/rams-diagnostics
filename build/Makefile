@@ -1,0 +1,72 @@
+#
+# Config
+#
+
+.SUFFIXES: .f90 .mod .o
+
+AZAVG_HOME = $(HOME)/src/diagnostics/azavg
+
+# Location of results of building the RHDF5 library (ie, running
+# make in the 'build' directory of this package
+RHDF5_DIR = $(HOME)/etc/rhdf5
+RHDF5_BASE = rhdf5_utils
+RHDF5_LIBS = -L$(RHDF5_DIR) -l$(RHDF5_BASE)
+RHDF5_INCS = -I$(RHDF5_DIR)
+
+RHDF5_LIB_FILE = $(RHDF5_DIR)/lib$(RHDF5_BASE).a
+RHDF5_MOD_FILE = $(RHDF5_DIR)/$(RHDF5_BASE).mod
+
+# HDF5 library
+HDF5_LIBS=-L$(HOME)/hdf5-1.8.6-macosx64-static/lib -lhdf5 -lsz -lz -lm
+
+# Compiler configuration. These should match what is being set
+# in your RAMS and REVU configuration.
+INCLUDES = $(RHDF5_INCS)
+
+F_COMP = pgf90
+F_OPTS = -Munroll -Mnoframe -O2 -pc 64 -tp x64 -Mfree -fastsse -time
+F_COMMAND = $(F_COMP) -c $(F_OPTS) $(INCLUDES)
+
+LOADER = pgf90
+LOADER_OPTS=-v -ldl -lc -lgcc_eh -lpthread -lsz
+LOADER_LIBS = $(RHDF5_LIBS) $(HDF5_LIBS)
+
+
+
+DEST = $(HOME)/bin
+BINS = $(DEST)/azavg
+SRC_DIR = $(AZAVG_HOME)/src
+
+#
+# Targets
+#
+
+all: $(BINS)
+
+$(DEST)/azavg: azavg_utils.o revu_utils.o azavg.o
+	$(LOADER) -o $(DEST)/azavg azavg_utils.o revu_utils.o azavg.o $(LOADER_OPTS) $(LOADER_LIBS)
+
+azavg.o: $(SRC_DIR)/azavg.f90 $(RHDF5_LIB_FILE) $(RHDF5_MOD_FILE)
+	$(F_COMMAND) $(<)
+
+azavg_utils.o: $(SRC_DIR)/azavg_utils.f90
+	$(F_COMMAND) $(<)
+
+revu_utils.o: $(SRC_DIR)/revu_utils.f90
+	$(F_COMMAND) $(<)
+
+.f90.o:
+	$(F_COMP) $(F_COMP_OPTS) $(INCLUDES) -c $(<)
+
+.f90.mod:
+	$(F_COMP) $(F_COMP_OPTS) $(INCLUDES) -c $(<)
+
+#include ./deps.mk
+
+depend:
+	makedepf90 -m "%f.mod" -I $(SRC_DIR) -I $(RHDF5_INCS) $(SRC_DIR)/*.f90 > deps.mk
+
+clean:
+	rm -f *.o
+	rm -f *.mod
+	rm -f $(BINS)
