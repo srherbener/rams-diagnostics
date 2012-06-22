@@ -5,22 +5,22 @@
 .SUFFIXES: .f90 .mod .o
 
 DEST = $(HOME)/bin
-BINS = $(DEST)/azavg \
+BINS = $(DEST)/azavg_grads \
        $(DEST)/cfad \
-       $(DEST)/colint \
+       $(DEST)/colint_grads \
        $(DEST)/densf \
        $(DEST)/ghist \
        $(DEST)/gfilter \
-       $(DEST)/sfcwind \
-       $(DEST)/hslice \
+       $(DEST)/sfcwind_grads \
+       $(DEST)/hslice_grads \
        $(DEST)/vslice \
-       $(DEST)/tr_winds \
+       $(DEST)/tr_winds_grads \
        $(DEST)/PDF_pools_allexps \
        $(DEST)/prueba39 \
        $(DEST)/join_gdata \
        $(DEST)/double_pts \
        $(DEST)/mkTemplate \
-       $(DEST)/tseries_avg
+       $(DEST)/tseries_avg_grads
 
 F_COMP = pgf90
 #F_COMP_OPTS = -tp px-64 -pc 64 -Mupcase -O2 -Ktrap=fp
@@ -37,14 +37,14 @@ LIBS =
 
 all: $(BINS)
 
-$(DEST)/azavg: azavg.o gdata_utils.o azavg_utils.o
-	$(LOADER) -o $(DEST)/azavg gdata_utils.o azavg_utils.o azavg.o $(LOADER_OPTS) $(LIBS)
+$(DEST)/azavg_grads: azavg.o gdata_utils.o azavg_utils.o
+	$(LOADER) -o $(DEST)/azavg_grads gdata_utils.o azavg_utils.o azavg.o $(LOADER_OPTS) $(LIBS)
 
 $(DEST)/cfad: cfad.o gdata_utils.o azavg_utils.o
 	$(LOADER) -o $(DEST)/cfad gdata_utils.o azavg_utils.o cfad.o $(LOADER_OPTS) $(LIBS)
 
-$(DEST)/colint: colint.o gdata_utils.o
-	$(LOADER) -o $(DEST)/colint gdata_utils.o colint.o $(LOADER_OPTS) $(LIBS)
+$(DEST)/colint_grads: colint.o gdata_utils.o
+	$(LOADER) -o $(DEST)/colint_grads gdata_utils.o colint.o $(LOADER_OPTS) $(LIBS)
 
 $(DEST)/densf: densf.o gdata_utils.o
 	$(LOADER) -o $(DEST)/densf gdata_utils.o densf.o $(LOADER_OPTS) $(LIBS)
@@ -55,17 +55,17 @@ $(DEST)/ghist: ghist.o gdata_utils.o
 $(DEST)/gfilter: gfilter.o gdata_utils.o azavg_utils.o
 	$(LOADER) -o $(DEST)/gfilter gdata_utils.o azavg_utils.o gfilter.o $(LOADER_OPTS) $(LIBS)
 
-$(DEST)/sfcwind: sfcwind.o gdata_utils.o
-	$(LOADER) -o $(DEST)/sfcwind gdata_utils.o sfcwind.o $(LOADER_OPTS) $(LIBS)
+$(DEST)/sfcwind_grads: sfcwind.o gdata_utils.o
+	$(LOADER) -o $(DEST)/sfcwind_grads gdata_utils.o sfcwind.o $(LOADER_OPTS) $(LIBS)
 
-$(DEST)/hslice: hslice.o gdata_utils.o
-	$(LOADER) -o $(DEST)/hslice gdata_utils.o hslice.o $(LOADER_OPTS) $(LIBS)
+$(DEST)/hslice_grads: hslice.o gdata_utils.o
+	$(LOADER) -o $(DEST)/hslice_grads gdata_utils.o hslice.o $(LOADER_OPTS) $(LIBS)
 
 $(DEST)/vslice: vslice.o gdata_utils.o
 	$(LOADER) -o $(DEST)/vslice gdata_utils.o vslice.o $(LOADER_OPTS) $(LIBS)
 
-$(DEST)/tr_winds: tr_winds.o gdata_utils.o azavg_utils.o
-	$(LOADER) -o $(DEST)/tr_winds gdata_utils.o azavg_utils.o tr_winds.o $(LOADER_OPTS) $(LIBS)
+$(DEST)/tr_winds_grads: tr_winds.o gdata_utils.o azavg_utils.o
+	$(LOADER) -o $(DEST)/tr_winds_grads gdata_utils.o azavg_utils.o tr_winds.o $(LOADER_OPTS) $(LIBS)
 
 $(DEST)/PDF_pools_allexps: PDF_pools_allexps.o gdata_utils.o
 	$(LOADER) -o $(DEST)/PDF_pools_allexps gdata_utils.o PDF_pools_allexps.o $(LOADER_OPTS) $(LIBS)
@@ -79,8 +79,8 @@ $(DEST)/join_gdata: join_gdata.o gdata_utils.o
 $(DEST)/double_pts: double_pts.o gdata_utils.o
 	$(LOADER) -o $(DEST)/double_pts gdata_utils.o double_pts.o $(LOADER_OPTS) $(LIBS)
 
-$(DEST)/tseries_avg: tseries_avg.o gdata_utils.o azavg_utils.o
-	$(LOADER) -o $(DEST)/tseries_avg gdata_utils.o azavg_utils.o tseries_avg.o $(LOADER_OPTS) $(LIBS)
+$(DEST)/tseries_avg_grads: tseries_avg.o gdata_utils.o azavg_utils.o
+	$(LOADER) -o $(DEST)/tseries_avg_grads gdata_utils.o azavg_utils.o tseries_avg.o $(LOADER_OPTS) $(LIBS)
 
 $(DEST)/mkTemplate: mkTemplate.o gdata_utils.o
 	$(LOADER) -o $(DEST)/mkTemplate gdata_utils.o mkTemplate.o $(LOADER_OPTS) $(LIBS)

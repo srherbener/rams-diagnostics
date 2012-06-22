@@ -16,8 +16,8 @@ G_SCRIPTS = $(G_DEST)/cbarn.gs \
             $(G_DEST)/plotTseries.gs
 
 B_DEST = $(HOME)/bin
-B_SCRIPTS = $(B_DEST)/run_azavg \
-            $(B_DEST)/run_diags \
+B_SCRIPTS = $(B_DEST)/run_azavg_grads \
+            $(B_DEST)/run_diags_grads \
             $(B_DEST)/gen_grads_plots \
             $(B_DEST)/gen_grads_stats \
             $(B_DEST)/plot_grads_vslice
@@ -65,11 +65,11 @@ $(G_DEST)/plotTseries.gs: plotTseries.gs
 	cp plotTseries.gs $(G_DEST)/plotTseries.gs
 
 
-$(B_DEST)/run_azavg: run_azavg
-	cp run_azavg $(B_DEST)/run_azavg
+$(B_DEST)/run_azavg_grads: run_azavg_grads
+	cp run_azavg_grads $(B_DEST)/run_azavg_grads
 
-$(B_DEST)/run_diags: run_diags
-	cp run_diags $(B_DEST)/run_diags
+$(B_DEST)/run_diags_grads: run_diags_grads
+	cp run_diags_grads $(B_DEST)/run_diags_grads
 
 $(B_DEST)/gen_grads_plots: gen_grads_plots
 	cp gen_grads_plots $(B_DEST)/gen_grads_plots
