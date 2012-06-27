@@ -1,0 +1,193 @@
+#!/usr/bin/env perl
+#
+# Script to run azavg on the set of diagnostics specified in the config file
+#
+# The config file defines the cases, time dirs and diagnostics that are to be run. Format
+# for lines in the config file are:
+#   Case: <CaseName>
+#   TimeDir: <Dir> <TimeSpec>
+#   Azavg: <Diagnostic> <Nbands> <wfilterMin> <WfilterMax>
+#
+#   <CaseName> corresponds to the simulation name such as TC_SEED_C0100 or SA0SC0.
+#
+#   <Dir> is a subdirectory of the <CaseName>/GRADS directory where the GRADS files live
+#   <TimeSpec> is the revu time spec (in the TVAR(1) spec)
+#
+#   <Diagnositc> is the name of the azavg function
+#   <Nbands> is the number of radial bands to divide the space into
+#   <WfilterMin> is the lower limit on the w filter (take data points with w < WfilterMin>
+#   <WfilterMax> is the upper limit on the w filter (take data points with w > WfilterMax>
+#
+
+BEGIN { push(@INC, "$ENV{HOME}/etc/perl"); }
+
+use strict;
+use File::Basename;
+use DiagUtils;
+
+#######################################################################
+# SUBROUTINES
+#######################################################################
+
+#######################################################################
+# CreateFileLists()
+#
+# This routine will take the case, time dir, and diagnostic name
+# and create the file lists (input and output) needed for azavg.
+#
+sub CreateFileLists
+  {
+  my ($Case, $Tdir, $Adiag) = @_;
+  
+  my $InFiles;
+  my $OutFilePrefix;
+
+  # InFiles is a colon separated list that specifies all the required input
+  # GRADS files. All diagnostics need the variables 'w' and 'press' so that
+  # filtering can be done, and the storm center (from sfc pressure) can be
+  # found. The diagnostic name matches the variable name you want except
+  # for the diagnostics 'speed_t' and 'speed_r' which both require 'u' and
+  # 'v' data.
+  # If the diagnostic is either of 'w' or 'press', then don't append
+  # the $Adiag name on since we've already added 'w' and 'press' to the list.
+  $InFiles = "";
+  $InFiles = &DiagUtils::AppendGradsVarFile($InFiles, $Case, $Tdir, "w");
+  $InFiles = &DiagUtils::AppendGradsVarFile($InFiles, $Case, $Tdir, "press");
+  if (($Adiag eq 'speed_t') || ($Adiag eq 'speed_r'))
+    {
+    $InFiles = &DiagUtils::AppendGradsVarFile($InFiles, $Case, $Tdir, "u");
+    $InFiles = &DiagUtils::AppendGradsVarFile($InFiles, $Case, $Tdir, "v");
+    }
+  elsif (($Adiag ne "w") && ($Adiag ne "press"))
+    {
+    $InFiles = &DiagUtils::AppendGradsVarFile($InFiles, $Case, $Tdir, $Adiag);
+    }
+  
+  # OutFilePrefix is the whole path to the output GRADS file without the ".ctl" and ".gra"
+  # suffix. azavg will use OutFilePrefix to form both the GRADS control (.ctl) and GRADS
+  # data (.gra) files.
+  $OutFilePrefix = "AzAveragedData/" . ${Tdir} . "/" . ${Adiag} . "_" . ${Case};
+
+  return ($InFiles, $OutFilePrefix);
+  }
+
+#######################################################################
+# MAIN
+#######################################################################
+
+my $ConfigFile;
+
+my $Cases;
+my $TimeDirs;
+my $Vars;
+my $AzavgDiags;
+my $Diags;
+my $Plots;
+
+my @f;
+my $Case;
+my $Tdir;
+my $Adiag;
+my $VarDim;
+my $Nbands;
+my $Wmin;
+my $Wmax;
+my $InFiles;
+my $OutFilePrefix;
+
+my @SysArgs;
+my $OutDir;
+my $GradsControlFile;
+my $JoinInFiles;
+my $JoinOutPrefix;
+
+$ConfigFile = $ARGV[0];
+
+# read in info from the config file
+($Cases, $TimeDirs, $Vars, $AzavgDiags, $Diags, $Plots) = &DiagUtils::ReadConfigFile($ConfigFile);
+
+# make sure at least one of each of cases, time_directories and diagnostics has
+# been specified
+if ((! (%$Cases)) || (! (%$TimeDirs)) || (! (%$AzavgDiags)))
+  {
+  print STDERR "ERROR: must specify at least one of each of case, time directory and diagnostic\n";
+  exit 1;
+  }
+
+# In all cases, except 'speed_t' and 'speed_r', <Diagnostic> matches the name of the
+# variable that you want to average. Also, the variable name matches the prefix of the GRADS
+# control file.
+#
+# Walk through all combinations of cases, time directories, and diagnostics.
+foreach $Case (sort(keys(%$Cases)))
+  {
+  foreach $Adiag (sort(keys(%$AzavgDiags)))
+    {
+    $JoinInFiles = "";
+
+    $VarDim = $$AzavgDiags{$Adiag}{DIM};
+    $Nbands = $$AzavgDiags{$Adiag}{NBANDS};
+    $Wmin = $$AzavgDiags{$Adiag}{WMIN};
+    $Wmax = $$AzavgDiags{$Adiag}{WMAX};
+
+    # run through each time directory generating the current diagnostic, and
+    # then join these files into the main file (above the time directories)
+    foreach $Tdir (sort(keys(%$TimeDirs)))
+      {
+      ($InFiles,$OutFilePrefix) = &CreateFileLists($Case, $Tdir, $Adiag);
+
+      print "***************************************************************\n";
+      print "Running azavg:\n";
+      print "  Case: $Case\n";
+      print "  Time Directory: $Tdir\n";
+      print "  Diagnostic: $Adiag\n";
+      print "    Variable Dimension: $VarDim\n";
+      print "    Number Radial Bands: $Nbands\n";
+      print "    W Filter Min: $Wmin\n";
+      print "    W Filter Max: $Wmax\n";
+      print "  Input File List: $InFiles\n";
+      print "  Output File Prefix: $OutFilePrefix\n";
+
+      # run azavg, make sure the output directory exists
+      $OutDir = dirname($OutFilePrefix);
+      if (! -d $OutDir)
+        {
+        @SysArgs = ("mkdir", "-p", $OutDir);
+        system(@SysArgs);
+        }
+
+      @SysArgs = ("azavg", $InFiles, $OutFilePrefix, $Nbands, $Wmin, $Wmax, $Adiag, $VarDim);
+      system(@SysArgs);
+
+      # fix paths and var names in the GRADS control file
+      ($GradsControlFile) = &DiagUtils::FindGradsControlFile($OutFilePrefix);
+      &DiagUtils::FixGradsControlFile($GradsControlFile, $OutDir, $Adiag);
+
+      # record the input file for the upcoming join
+      if ($JoinInFiles eq "")
+        {
+        $JoinInFiles = $GradsControlFile;
+        }
+      else
+        {
+        $JoinInFiles = $JoinInFiles . ":" . $GradsControlFile;
+        }
+      }
+
+    $JoinOutPrefix = "AzAveragedData/" . ${Adiag} . "_" . ${Case};
+    @SysArgs = ("join_gdata", $JoinInFiles, $JoinOutPrefix, $Adiag);
+    print "***************************************************\n";
+    print " Joining GRADS data:\n";
+    print "   Input Files: $JoinInFiles\n";
+    print "   Output File Prefix: $JoinOutPrefix\n";
+    print "   GRADS Variable: $Adiag\n";
+    system(@SysArgs);
+
+    # fix paths and var names
+    $OutDir = dirname($JoinOutPrefix);
+    ($GradsControlFile) = &DiagUtils::FindGradsControlFile($JoinOutPrefix);
+    &DiagUtils::FixGradsControlFile($GradsControlFile, $OutDir, $Adiag);
+    }
+  }
+
+exit 0;

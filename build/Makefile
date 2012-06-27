@@ -37,11 +37,13 @@ DEST = $(HOME)/bin
 BINS = $(DEST)/azavg
 SRC_DIR = $(AZAVG_HOME)/src
 
+SCRIPTS = $(DEST)/run_azavg
+
 #
 # Targets
 #
 
-all: $(BINS)
+all: $(BINS) $(SCRIPTS)
 
 $(DEST)/azavg: azavg_utils.o revu_utils.o azavg.o
 	$(LOADER) -o $(DEST)/azavg azavg_utils.o revu_utils.o azavg.o $(LOADER_OPTS) $(LOADER_LIBS)
@@ -54,6 +56,9 @@ azavg_utils.o: $(SRC_DIR)/azavg_utils.f90
 
 revu_utils.o: $(SRC_DIR)/revu_utils.f90
 	$(F_COMMAND) $(<)
+
+$(DEST)/run_azavg: $(SRC_DIR)/run_azavg
+	cp $(SRC_DIR)/run_azavg $(DEST)/run_azavg
 
 .f90.o:
 	$(F_COMP) $(F_COMP_OPTS) $(INCLUDES) -c $(<)
