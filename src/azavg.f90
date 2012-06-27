@@ -102,8 +102,8 @@ program azavg
     W%vname = 'w'
     call rhdf5_read_init(Wfile, W)
 
-    PressFile = trim(InDir) // '/press' // trim(InSuffix)
-    Press%vname = 'press'
+    PressFile = trim(InDir) // '/sea_press' // trim(InSuffix)
+    Press%vname = 'sea_press'
     call rhdf5_read_init(PressFile, Press)
 
     if (DoHorizVel) then
@@ -216,7 +216,7 @@ program azavg
     write (*,*) 'Reading variable: press'
     write (*,*) '  HDF5 file: ', trim(PressFile)
     write (*,*) ''
-    allocate(Press%vdata(Nx*Ny*Nz*Nt))
+    allocate(Press%vdata(Nx*Ny*Nt)) ! using sea_press which is 2d
     call rhdf5_read(PressFile, Press)
 
     allocate(StmIx(Nt))
@@ -369,9 +369,9 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, NumRbands, MaxRadius, WfilterMin,
     write (*,*) '        <in_suffix>: suffix on input file names'
     write (*,*) '        <out_file>: name of output file, HDF5 format'
     write (*,*) '        <num_radial_bands>: number of bands to split data into'
-    write (*,*) '        <max_radius>: maximum radius from storm center'
-    write (*,*) '        <w_filter_min>: min (left end) of interval used to filter out data'
-    write (*,*) '        <w_filter_max>: max (right end) of interval used to filter out data'
+    write (*,*) '        <max_radius>: maximum radius from storm center in km'
+    write (*,*) '        <w_filter_min>: min (left end) of interval used to filter out data in m/s'
+    write (*,*) '        <w_filter_max>: max (right end) of interval used to filter out data in m/s'
     write (*,*) '        <var_to_average>: name of variable to do the averaging on'
     write (*,*) '        <revu_var_name>: name of variable in the REVU file'
     write (*,*) '        <dim_of_var>: indicates if <var_to_average> is 2d or 3d'

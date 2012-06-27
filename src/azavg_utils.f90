@@ -22,7 +22,7 @@ subroutine RecordStormCenter(Nx, Ny, Nz, Nt, Press, StmIx, StmIy, MinP)
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
-  real, dimension(Nx,Ny,Nz,Nt) :: Press
+  real, dimension(Nx,Ny,Nt) :: Press
   integer, dimension(Nt) :: StmIx, StmIy
   real, dimension(Nt) :: MinP
 
@@ -50,13 +50,12 @@ subroutine FindStormCenter(Nx, Ny, Nz, Nt, Press, iTime, ixStmCtr, iyStmCtr, Min
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
-  real, dimension(Nx,Ny,Nz,Nt) :: Press
+  real, dimension(Nx,Ny,Nt) :: Press
   integer :: iTime, ixStmCtr, iyStmCtr
   real :: MinP
 
-  integer :: ix, iy, iz, it
+  integer :: ix, iy, it
 
-  iz = 2 ! level 2 is first one above surface
   it = iTime
   MinP = 1e10 ! ridiculously large pressure
   ixStmCtr = 0
@@ -64,8 +63,8 @@ subroutine FindStormCenter(Nx, Ny, Nz, Nt, Press, iTime, ixStmCtr, iyStmCtr, Min
 
   do ix = 1, Nx
     do iy = 1, Ny
-      if (Press(ix,iy,iz,it) .lt. MinP) then
-        MinP = Press(ix,iy,iz,it)
+      if (Press(ix,iy,it) .lt. MinP) then
+        MinP = Press(ix,iy,it)
         ixStmCtr = ix
         iyStmCtr = iy
       end if
