@@ -19,8 +19,7 @@
 
 program azavg
   use rhdf5_utils
-  use azavg_utils
-  use revu_utils
+  use diag_utils
 
   implicit none
 
@@ -213,7 +212,7 @@ program azavg
     allocate(W%vdata(Nx*Ny*Nz*Nt))
     call rhdf5_read(Wfile, W)
 
-    write (*,*) 'Reading variable: press'
+    write (*,*) 'Reading variable: sea_press'
     write (*,*) '  HDF5 file: ', trim(PressFile)
     write (*,*) ''
     allocate(Press%vdata(Nx*Ny*Nt)) ! using sea_press which is 2d

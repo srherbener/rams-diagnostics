@@ -16,12 +16,21 @@ RHDF5_INCS = -I$(RHDF5_DIR)
 RHDF5_LIB_FILE = $(RHDF5_DIR)/lib$(RHDF5_BASE).a
 RHDF5_MOD_FILE = $(RHDF5_DIR)/$(RHDF5_BASE).mod
 
+# diagnostics utilities library
+DIAG_DIR = $(HOME)/etc/diag
+DIAG_BASE = diag_utils
+DIAG_LIBS = -L$(DIAG_DIR) -l$(DIAG_BASE)
+DIAG_INCS = -I$(DIAG_DIR)
+
+DIAG_LIB_FILE = $(DIAG_DIR)/lib$(DIAG_BASE).a
+DIAG_MOD_FILE = $(DIAG_DIR)/$(DIAG_BASE).mod
+
 # HDF5 library
 HDF5_LIBS=-L$(HOME)/hdf5-1.8.6-macosx64-static/lib -lhdf5 -lsz -lz -lm
 
 # Compiler configuration. These should match what is being set
 # in your RAMS and REVU configuration.
-INCLUDES = $(RHDF5_INCS)
+INCLUDES = $(RHDF5_INCS) $(DIAG_INCS)
 
 F_COMP = pgf90
 F_OPTS = -Munroll -Mnoframe -O2 -pc 64 -tp x64 -Mfree -fastsse -time
@@ -29,7 +38,7 @@ F_COMMAND = $(F_COMP) -c $(F_OPTS) $(INCLUDES)
 
 LOADER = pgf90
 LOADER_OPTS=-v -ldl -lc -lgcc_eh -lpthread -lsz
-LOADER_LIBS = $(RHDF5_LIBS) $(HDF5_LIBS)
+LOADER_LIBS = $(RHDF5_LIBS) $(HDF5_LIBS) $(DIAG_LIBS)
 
 
 
@@ -45,16 +54,10 @@ SCRIPTS = $(DEST)/run_azavg
 
 all: $(BINS) $(SCRIPTS)
 
-$(DEST)/azavg: azavg_utils.o revu_utils.o azavg.o
-	$(LOADER) -o $(DEST)/azavg azavg_utils.o revu_utils.o azavg.o $(LOADER_OPTS) $(LOADER_LIBS)
+$(DEST)/azavg: azavg.o
+	$(LOADER) -o $(DEST)/azavg azavg.o $(LOADER_OPTS) $(LOADER_LIBS)
 
 azavg.o: $(SRC_DIR)/azavg.f90 $(RHDF5_LIB_FILE) $(RHDF5_MOD_FILE)
-	$(F_COMMAND) $(<)
-
-azavg_utils.o: $(SRC_DIR)/azavg_utils.f90
-	$(F_COMMAND) $(<)
-
-revu_utils.o: $(SRC_DIR)/revu_utils.f90
 	$(F_COMMAND) $(<)
 
 $(DEST)/run_azavg: $(SRC_DIR)/run_azavg
