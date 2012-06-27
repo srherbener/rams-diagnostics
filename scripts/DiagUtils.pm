@@ -51,8 +51,9 @@ sub ReadConfigFile
       {
       $AzavgDiags{$f[1]}{DIM}    = $f[2];
       $AzavgDiags{$f[1]}{NBANDS} = $f[3];
-      $AzavgDiags{$f[1]}{WMIN}   = $f[4];
-      $AzavgDiags{$f[1]}{WMAX}   = $f[5];
+      $AzavgDiags{$f[1]}{RMAX}   = $f[4];
+      $AzavgDiags{$f[1]}{WMIN}   = $f[5];
+      $AzavgDiags{$f[1]}{WMAX}   = $f[6];
       }
     elsif ($f[0] eq "Diag:")
       {
