@@ -60,14 +60,6 @@ program join_hdata
     InVars(i)%vname = VarName
     call rhdf5_read_init(InFileList(i), InVars(i))
 
-print*, 'DEBUG: InVars, i :', i
-print*, 'DEBUG:   ndims : ', InVars(i)%ndims
-print*, 'DEBUG:    dims(1): ', InVars(i)%dims(1)
-print*, 'DEBUG:    dims(2): ', InVars(i)%dims(2)
-print*, 'DEBUG:    dims(3): ', InVars(i)%dims(3)
-print*, 'DEBUG:    dims(4): ', InVars(i)%dims(4)
-flush(6)
-
     ! Do some dimension checking
     ! Assume that the variable dimension orders are:
     !   1D: x, t
@@ -167,8 +159,6 @@ flush(6)
   OutVar%dims(Invars(1)%ndims) = Nt
   OutVar%units = Invars(1)%units
   OutVar%descrip = Invars(1)%descrip
-print*, 'DEBUG: OutVar: ', OutVar
-flush(6)
 
   allocate(OutVar%vdata(Nx*Ny*Nz*Nt))
 
