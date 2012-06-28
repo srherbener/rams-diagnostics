@@ -190,8 +190,7 @@ foreach $Case (sort(keys(%$Cases)))
     print "   Input Files: $JoinInFiles\n";
     print "   Output File: $JoinOutFile\n";
     print "   GRADS Variable: $Adiag\n";
-print "DEBUG: SysArgs: ", join(',', @SysArgs), "\n";
-#    system(@SysArgs);
+    system(@SysArgs);
 
     }
   }
