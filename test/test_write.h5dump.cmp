@@ -19,18 +19,6 @@ GROUP "/" {
          (0): "row major"
          }
       }
-      ATTRIBUTE "Description" {
-         DATATYPE  H5T_STRING {
-               STRSIZE 5;
-               STRPAD H5T_STR_NULLTERM;
-               CSET H5T_CSET_ASCII;
-               CTYPE H5T_C_S1;
-            }
-         DATASPACE  SCALAR
-         DATA {
-         (0): "test"
-         }
-      }
       ATTRIBUTE "DimNames" {
          DATATYPE  H5T_STRING {
                STRSIZE 4;
@@ -43,7 +31,19 @@ GROUP "/" {
          (0): "y x"
          }
       }
-      ATTRIBUTE "Units" {
+      ATTRIBUTE "long_name" {
+         DATATYPE  H5T_STRING {
+               STRSIZE 5;
+               STRPAD H5T_STR_NULLTERM;
+               CSET H5T_CSET_ASCII;
+               CTYPE H5T_C_S1;
+            }
+         DATASPACE  SCALAR
+         DATA {
+         (0): "test"
+         }
+      }
+      ATTRIBUTE "units" {
          DATATYPE  H5T_STRING {
                STRSIZE 5;
                STRPAD H5T_STR_NULLTERM;
@@ -77,18 +77,6 @@ GROUP "/" {
          (0): "row major"
          }
       }
-      ATTRIBUTE "Description" {
-         DATATYPE  H5T_STRING {
-               STRSIZE 5;
-               STRPAD H5T_STR_NULLTERM;
-               CSET H5T_CSET_ASCII;
-               CTYPE H5T_C_S1;
-            }
-         DATASPACE  SCALAR
-         DATA {
-         (0): "test"
-         }
-      }
       ATTRIBUTE "DimNames" {
          DATATYPE  H5T_STRING {
                STRSIZE 6;
@@ -101,7 +89,19 @@ GROUP "/" {
          (0): "z y x"
          }
       }
-      ATTRIBUTE "Units" {
+      ATTRIBUTE "long_name" {
+         DATATYPE  H5T_STRING {
+               STRSIZE 5;
+               STRPAD H5T_STR_NULLTERM;
+               CSET H5T_CSET_ASCII;
+               CTYPE H5T_C_S1;
+            }
+         DATASPACE  SCALAR
+         DATA {
+         (0): "test"
+         }
+      }
+      ATTRIBUTE "units" {
          DATATYPE  H5T_STRING {
                STRSIZE 5;
                STRPAD H5T_STR_NULLTERM;
@@ -143,18 +143,6 @@ GROUP "/" {
          (0): "row major"
          }
       }
-      ATTRIBUTE "Description" {
-         DATATYPE  H5T_STRING {
-               STRSIZE 5;
-               STRPAD H5T_STR_NULLTERM;
-               CSET H5T_CSET_ASCII;
-               CTYPE H5T_C_S1;
-            }
-         DATASPACE  SCALAR
-         DATA {
-         (0): "test"
-         }
-      }
       ATTRIBUTE "DimNames" {
          DATATYPE  H5T_STRING {
                STRSIZE 8;
@@ -167,7 +155,19 @@ GROUP "/" {
          (0): "t z y x"
          }
       }
-      ATTRIBUTE "Units" {
+      ATTRIBUTE "long_name" {
+         DATATYPE  H5T_STRING {
+               STRSIZE 5;
+               STRPAD H5T_STR_NULLTERM;
+               CSET H5T_CSET_ASCII;
+               CTYPE H5T_C_S1;
+            }
+         DATASPACE  SCALAR
+         DATA {
+         (0): "test"
+         }
+      }
+      ATTRIBUTE "units" {
          DATATYPE  H5T_STRING {
                STRSIZE 5;
                STRPAD H5T_STR_NULLTERM;

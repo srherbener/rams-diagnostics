@@ -416,9 +416,9 @@ subroutine rhdf5_write_variable(id, vname, ndims, itstep, dims, units, descrip, 
   endif
 
   ! write out the attributes
-  call rh5a_write_anyscalar(dsetid, 'Units'//char(0),       trim(units)//char(0), &
+  call rh5a_write_anyscalar(dsetid, 'units'//char(0),       trim(units)//char(0), &
     RHDF5_TYPE_STRING, hdferr)
-  call rh5a_write_anyscalar(dsetid, 'Description'//char(0), trim(descrip)//char(0), &
+  call rh5a_write_anyscalar(dsetid, 'long_name'//char(0), trim(descrip)//char(0), &
     RHDF5_TYPE_STRING, hdferr)
   call rh5a_write_anyscalar(dsetid, 'ArrayOrg'//char(0),    trim(arrayorg)//char(0), &
     RHDF5_TYPE_STRING, hdferr)
@@ -430,7 +430,7 @@ subroutine rhdf5_write_variable(id, vname, ndims, itstep, dims, units, descrip, 
   endif
 
   ! close the dataset
-  call rh5d_close(dsetid, hdferr);
+  call rh5d_close(dsetid, hdferr)
 
   return
 end subroutine rhdf5_write_variable
@@ -700,10 +700,10 @@ subroutine rhdf5_read_variable_init(id, vname, ndims, dims, units, descrip, dimn
   integer :: id
   character (len=*) :: vname
   integer :: ndims
-  integer, dimension(ndims) :: dims
-  character (len=*) :: units
-  character (len=*) :: descrip
-  character (len=RHDF5_MAX_STRING), dimension(ndims) :: dimnames
+  integer, dimension(RHDF5_MAX_DIMS) :: dims
+  character (len=RHDF5_MAX_STRING) :: units
+  character (len=RHDF5_MAX_STRING) :: descrip
+  character (len=RHDF5_MAX_STRING), dimension(RHDF5_MAX_DIMS) :: dimnames
 
   integer :: hdferr
   integer :: dsetid
@@ -726,9 +726,9 @@ subroutine rhdf5_read_variable_init(id, vname, ndims, dims, units, descrip, dimn
   endif
 
   ! read the attributes
-  call rh5a_read_anyscalar(dsetid, 'Units'//char(0),       stemp, RHDF5_TYPE_STRING, hdferr)
+  call rh5a_read_anyscalar(dsetid, 'units'//char(0),       stemp, RHDF5_TYPE_STRING, hdferr)
   call rhdf5_c2f_string(stemp, units, RHDF5_MAX_STRING)
-  call rh5a_read_anyscalar(dsetid, 'Description'//char(0), stemp, RHDF5_TYPE_STRING, hdferr)
+  call rh5a_read_anyscalar(dsetid, 'long_name'//char(0), stemp, RHDF5_TYPE_STRING, hdferr)
   call rhdf5_c2f_string(stemp, descrip, RHDF5_MAX_STRING)
   call rh5a_read_anyscalar(dsetid, 'ArrayOrg'//char(0),    stemp, RHDF5_TYPE_STRING, hdferr)
   call rhdf5_c2f_string(stemp, arrayorg, RHDF5_MAX_STRING)
@@ -742,7 +742,7 @@ subroutine rhdf5_read_variable_init(id, vname, ndims, dims, units, descrip, dimn
   endif
 
   ! close the dataset
-  call rh5d_close(dsetid, hdferr);
+  call rh5d_close(dsetid, hdferr)
 
   return
 end subroutine rhdf5_read_variable_init
@@ -805,7 +805,7 @@ subroutine rhdf5_read_variable(id, vname, ndims, dims, rdata, idata, sdata, ssiz
   endif
 
   ! close the dataset
-  call rh5d_close(dsetid, hdferr);
+  call rh5d_close(dsetid, hdferr)
 
   return
 end subroutine rhdf5_read_variable
@@ -944,5 +944,91 @@ subroutine rhdf5_read_dim_name_string(ndims, dimnames, dnstring)
 
   return
 end subroutine rhdf5_read_dim_name_string
+
+!***********************************************************************
+! rhdf5_attach_dimspecs_to_var()
+!
+! This routine will attach dimensions specs to the given variable. This
+! is done via the HDF5 dimension scaling feature, and the purpose of
+! doing the attachment is so that GRADS can read in the resulting
+! HDF5 file directly without the use of a descriptor file.
+!
+subroutine rhdf5_attach_dimspecs_to_var(fileid, vname)
+  implicit none
+
+  integer :: fileid
+  character (len=*) :: vname
+
+  integer :: i
+  integer :: ndims
+  integer, dimension(RHDF5_MAX_DIMS) :: dims
+  character (len=RHDF5_MAX_STRING) :: units
+  character (len=RHDF5_MAX_STRING) :: descrip
+  character (len=RHDF5_MAX_STRING), dimension(RHDF5_MAX_DIMS) :: dimnames
+
+  integer :: hdferr
+  integer :: dsetid
+  integer :: dsclid
+  character (len=RHDF5_MAX_STRING) :: dnstring
+  character (len=RHDF5_MAX_STRING) :: stemp
+  character (len=RHDF5_MAX_STRING) :: coord_name
+
+  ! open dataset
+  call rh5d_open(fileid, trim(vname)//char(0), dsetid, hdferr)
+  if (hdferr .ne. 0) then
+    print*,'ERROR: hdf5_attach_dimspecs_to_var: cannot open dataset for variable: ',trim(vname)
+    stop 'hdf5_attach_dimspecs_to_var: bad variable read'
+  endif
+
+  ! dimensions
+  call rh5d_read_get_dims(dsetid, ndims, dims, hdferr)
+  if (hdferr .ne. 0) then
+    print*,'ERROR: hdf5_attach_dimspecs_to_var: cannot obtain dimension information for variable: ',trim(vname)
+    stop 'hdf5_attach_dimspecs_to_var: bad variable read'
+  endif
+
+  ! read the DimNames attribute
+  call rh5a_read_anyscalar(dsetid, 'DimNames'//char(0),    stemp, RHDF5_TYPE_STRING, hdferr)
+  call rhdf5_c2f_string(stemp, dnstring, RHDF5_MAX_STRING)
+  call rhdf5_read_dim_name_string(ndims, dimnames, dnstring)
+
+  ! There is no need to reverse the dimensions since we are going immediately back
+  ! into the C interface to do the dimension scale attach.
+  !
+  ! Assume that the coordinate information is stored in datasets with names
+  ! that reflect the dimension names as shown below:
+  !     dim name            dataset name with coordinates
+  !       x                     x_coords
+  !       y                     y_coords
+  !       z                     z_coords
+  !       t                     t_coords
+
+  do i = 1, ndims
+    coord_name = trim(dimnames(i)) // '_coords'
+
+    call rh5d_open(fileid, trim(coord_name)//char(0), dsclid, hdferr)
+    if (hdferr .ne. 0) then
+      print*,'ERROR: hdf5_attach_dimspecs_to_var: cannot open dataset for coordinates: ',trim(coord_name)
+      stop 'hdf5_attach_dimspecs_to_var: bad variable read'
+    endif
+
+    ! do the attach, C indices start with zero so send (i-1) to this routine
+    call rh5ds_attach_scale(dsetid, dsclid, i-1, hdferr)
+    if (hdferr .ne. 0) then
+      print*,'ERROR: hdf5_attach_dimspecs_to_var: cannot attach coordinate data to variable:'
+      print*,'ERROR:  Variable dataset: ',trim(vname)
+      print*,'ERROR:  Coordinate dataset: ',trim(coord_name)
+      stop 'hdf5_attach_dimspecs_to_var: bad variable attach'
+    endif
+
+    call rh5d_close(dsclid, hdferr)
+  enddo
+
+
+  ! close the dataset
+  call rh5d_close(dsetid, hdferr)
+
+  return
+end subroutine rhdf5_attach_dimspecs_to_var
 
 end module

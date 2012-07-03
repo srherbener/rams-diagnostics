@@ -13,7 +13,7 @@ RHDF5_LIB_FILE = $(RHDF5_DIR)/lib$(RHDF5_BASE).a
 RHDF5_MOD_FILE = $(RHDF5_DIR)/$(RHDF5_BASE).mod
 
 # HDF5 library
-HDF5_LIBS=-L/Users/steve/hdf5-1.8.6-macosx64-static/lib -lhdf5 -lsz -lz -lm
+HDF5_LIBS=-L/Users/steve/hdf5-1.8.6-macosx64-static/lib -lhdf5 -lhdf5_hl -lsz -lz -lm
 
 # Compiler configuration. These should match what is being set
 # in your RAMS and REVU configuration.
