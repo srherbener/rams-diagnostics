@@ -26,7 +26,7 @@ DIAG_LIB_FILE = $(DIAG_DIR)/lib$(DIAG_BASE).a
 DIAG_MOD_FILE = $(DIAG_DIR)/$(DIAG_BASE).mod
 
 # HDF5 library
-HDF5_LIBS=-L$(HOME)/hdf5-1.8.6-macosx64-static/lib -lhdf5 -lsz -lz -lm
+HDF5_LIBS=-L$(HOME)/hdf5-1.8.6-macosx64-static/lib -lhdf5 -lhdf5_hl -lsz -lz -lm
 
 # Compiler configuration. These should match what is being set
 # in your RAMS and REVU configuration.
