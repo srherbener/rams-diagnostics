@@ -89,7 +89,7 @@ end subroutine
 !
 
 subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, AvarNz, NumRbands, W, StmIx, StmIy, MinP, Avar, AzAvg, &
-          Xcoords, Ycoords, RadialDist, RbandInc, WfilterMin, WfilterMax, UndefVal)
+          Xcoords, Ycoords, MaxRadius, RbandInc, WfilterMin, WfilterMax, UndefVal)
 
   use rhdf5_utils
   implicit none
@@ -104,7 +104,7 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, AvarNz, NumRbands, W, StmIx, StmIy, 
   real, dimension(Nt) :: MinP
   real, dimension(Nx) :: Xcoords
   real, dimension(Ny) :: Ycoords
-  real :: RadialDist, RbandInc, WfilterMin, WfilterMax, UndefVal
+  real :: MaxRadius, RbandInc, WfilterMin, WfilterMax, UndefVal
 
   integer :: ix, iy, iz, it
   real, dimension(NumRbands) :: Rcounts
@@ -148,12 +148,12 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, AvarNz, NumRbands, W, StmIx, StmIy, 
   write (*,*) 'Averaging Data:'
 
   do it = 1, Nt
-    if (modulo(it,10) .eq. 0) then
-    write (*,*) '  Timestep: ', it
-    write (*,'(a,i3,a,i3,a,g,a,g,a)') '    Storm Center: (', StmIx(it), ', ', StmIy(it), ') --> (', &
+    !if (modulo(it,10) .eq. 0) then
+      write (*,*) '  Timestep: ', it
+      write (*,'(a,i3,a,i3,a,g,a,g,a)') '    Storm Center: (', StmIx(it), ', ', StmIy(it), ') --> (', &
           Xcoords(StmIx(it)), ', ', Ycoords(StmIy(it)), ')'
-    write (*,*) '    Minimum Pressue: ', MinP(it)
-    end if
+      write (*,*) '    Minimum Pressue: ', MinP(it)
+    !endif
     do iz = 1, AvarNz
       ! For the averaging
       do ir = 1, NumRbands
@@ -179,8 +179,11 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, AvarNz, NumRbands, W, StmIx, StmIy, 
                iRband = NumRbands
              end if
 
-             AzAvg(iRband,iz,it) = AzAvg(iRband,iz,it) + Avar(ix,iy,iz,it)
-             Rcounts(iRband) = Rcounts(iRband) + 1.0
+             ! only keep data inside MaxRadius
+             if (Radius .le. MaxRadius) then
+               AzAvg(iRband,iz,it) = AzAvg(iRband,iz,it) + Avar(ix,iy,iz,it)
+               Rcounts(iRband) = Rcounts(iRband) + 1.0
+             endif
           end if
         end do
       end do
