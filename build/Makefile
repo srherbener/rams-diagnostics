@@ -3,11 +3,11 @@
 #
 
 # Change RHDF5_HOME depending on where you loaded this package
-RHDF5_HOME = $HOME/src/rhdf5
+RHDF5_HOME = $(HOME)/src/rhdf5
 
 # Install directory should be set to where you want to install
 # the resulting library and module files.
-RHDF5_INSTALL_DIR = $HOME/etc/rhdf5
+RHDF5_INSTALL_DIR = $(HOME)/etc/rhdf5
 
 # Change HDF5_INCS to the location hdf5 is loaded on your machine.
 # This should match what is being set in your RAMS and REVU
@@ -15,7 +15,7 @@ RHDF5_INSTALL_DIR = $HOME/etc/rhdf5
 #
 # Uncomment HDF5_DEFS below to use the older (1.6) HDF5 API
 #HDF5_DEFS=-DH5_USE_16_API
-HDF5_INCS=$HOME/hdf5-1.8.6-macosx64-static/include
+HDF5_INCS=$(HOME)/hdf5-1.8.6-macosx64-static/include
 
 # Change CMACH to match platform you will compile on. This should
 # match the CMACH setting in your RAMS and REVU configuration.
