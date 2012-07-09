@@ -45,7 +45,7 @@ program azavg
   ! data files: the first index is the file number, the second index is the
   ! var number
 
-  type (Rhdf5Var) :: U, V, W, Press, Avar, Aavg
+  type (Rhdf5Var) :: U, V, W, Press, Avar, Aavg, Rcoords, Zcoords, Tcoords, Dcoords
   character (len=MediumString) :: Ufile, Vfile, Wfile, PressFile, AvarFile, AavgFile
   integer, dimension(:), allocatable :: StmIx, StmIy
   real, dimension(:), allocatable :: MinP, Lon, Lat, Xcoords, Ycoords
@@ -94,6 +94,7 @@ program azavg
     ! Read the variable information from the HDF5 files and check for consistency.
     !
     ! Always use w (filtering) and press (find storm center).
+    !
     ! If doing horizontal velocity, ie VarToAvg is 'speed_t' or 'speed_r', set up U and V
     ! otherwise set up the variable named in VarToAvg
     !
@@ -109,6 +110,11 @@ program azavg
       Ufile = trim(InDir) // '/u' // trim(InSuffix)
       U%vname = 'u'
       call rhdf5_read_init(Ufile, U)
+
+      Zcoords%vname = 'z_coords'
+      call rhdf5_read_init(Ufile, Zcoords)
+      Tcoords%vname = 't_coords'
+      call rhdf5_read_init(Ufile, Tcoords)
 
       Vfile = trim(InDir) // '/v' // trim(InSuffix)
       V%vname = 'v'
@@ -129,6 +135,11 @@ program azavg
       AvarFile = trim(InDir) // '/' // trim(VarToAvg) // trim(InSuffix)
       Avar%vname = trim(RevuVar)
       call rhdf5_read_init(AvarFile, Avar)
+
+      Zcoords%vname = 'z_coords'
+      call rhdf5_read_init(AvarFile, Zcoords)
+      Tcoords%vname = 't_coords'
+      call rhdf5_read_init(AvarFile, Tcoords)
     endif
 
     ! check that the variable dimensions (size and coordinate values) match up, if this
@@ -197,6 +208,17 @@ program azavg
     DeltaX = Xcoords(Nx) - Xcoords(1)
     DeltaY = Ycoords(Ny) - Ycoords(1)
     RbandInc = MaxRadius / real(NumRbands)
+
+    Rcoords%vname = 'r_coords'
+    Rcoords%ndims = 1
+    Rcoords%dims(1) = NumRbands
+    Rcoords%dimnames(1) = 'r'
+    Rcoords%units = 'meter'
+    Rcoords%descrip = 'radius'
+    allocate (Rcoords%vdata(NumRbands))
+    do ix = 1, NumRbands
+      Rcoords%vdata(ix) = real(ix) * RbandInc * 1000.0
+    enddo
   
     write (*,*) 'Radial band information:'
     write (*,*) '  Delta x of domain:     ', DeltaX
@@ -230,6 +252,11 @@ program azavg
       allocate(U%vdata(Nx*Ny*Nz*Nt))
       call rhdf5_read(Ufile, U)
 
+      allocate(Zcoords%vdata(Nz))
+      call rhdf5_read(Ufile, Zcoords)
+      allocate(Tcoords%vdata(Nt))
+      call rhdf5_read(Ufile, Tcoords)
+
       write (*,*) 'Reading variable: v'
       write (*,*) '  HDF5 file: ', trim(Vfile)
       write (*,*) ''
@@ -245,6 +272,11 @@ program azavg
       write (*,*) ''
       allocate(Avar%vdata(Nx*Ny*VarNz*Nt))
       call rhdf5_read(AvarFile, Avar)
+
+      allocate(Zcoords%vdata(VarNz))
+      call rhdf5_read(AvarFile, Zcoords)
+      allocate(Tcoords%vdata(Nt))
+      call rhdf5_read(AvarFile, Tcoords)
     end if
 
   else
@@ -263,6 +295,27 @@ program azavg
     Nt = 5
 
     allocate (W%vdata(Nx*Ny*Nz*Nt))
+
+    Zcoords%ndims = 1
+    Zcoords%dims(1) = VarNz
+    Zcoords%dimnames(1) = 'z'
+    Zcoords%units = 'meter'
+    Zcoords%descrip = 'height'
+    allocate (Zcoords%vdata(VarNz))
+    do iz = 1, VarNz
+      Zcoords%vdata(iz) = real(iz)
+    enddo
+
+    Tcoords%ndims = 1
+    Tcoords%dims(1) = Nt
+    Tcoords%dimnames(1) = 't'
+    Tcoords%units = 'second'
+    Tcoords%descrip = 'seconds since 1970-01-01 00:00:00 00:00'
+    allocate (Tcoords%vdata(Nt))
+    do it = 1, Nt
+      Tcoords%vdata(it) = real(it)
+    enddo
+
     allocate (Avar%vdata(Nx*Ny*VarNz*Nt))
     Avar%units = 'test'
     allocate (StmIx(Nt), StmIy(Nt), MinP(Nt))
@@ -275,6 +328,17 @@ program azavg
     MaxRadius = sqrt(TestGridX*TestGridX + TestGridY*TestGridY) / 2.0
     RbandInc = MaxRadius / real(NumRbands)
 
+    Rcoords%vname = 'r_coords'
+    Rcoords%ndims = 1
+    Rcoords%dims(1) = NumRbands
+    Rcoords%dimnames(1) = 'r'
+    Rcoords%units = 'meter'
+    Rcoords%descrip = 'radius'
+    allocate (Rcoords%vdata(NumRbands))
+    do ix = 1, NumRbands
+      Rcoords%vdata(ix) = real(ix) * 5.0 * 1000.0
+    enddo
+
     ! load up the coordinates
     DeltaX = TestGridX / real(Nx - 1)
     DeltaY = TestGridY / real(Ny - 1)
@@ -284,7 +348,6 @@ program azavg
     do iy = 1, Ny
       Ycoords(iy) = real(iy-1) * DeltaY
     end do
-
 
     do it = 1, Nt
       ! Storm center drifts from roughly the center of the grid
@@ -317,15 +380,17 @@ program azavg
     enddo 
   endif
   
-  ! Do the averaging and write the result into GRADS files
+  ! Do the averaging and write the result into an HDF5 file
   Aavg%vname = trim(VarToAvg)
-  Aavg%ndims = 3
+  Aavg%ndims = 4
   Aavg%dims(1) = NumRbands
   Aavg%dims(2) = VarNz
-  Aavg%dims(3) = Nt
+  Aavg%dims(3) = 1  ! dummy - need to fill in x axis for GRADS sake
+  Aavg%dims(4) = Nt
   Aavg%dimnames(1) = 'r'
   Aavg%dimnames(2) = 'z'
-  Aavg%dimnames(3) = 't'
+  Aavg%dimnames(3) = 'd'
+  Aavg%dimnames(4) = 't'
   Aavg%units = Avar%units 
   Aavg%descrip = 'azimuthally averaged ' // trim(VarToAvg) 
   allocate(Aavg%vdata(NumRbands*VarNz*Nt))
@@ -333,9 +398,37 @@ program azavg
   call AzimuthalAverage(Nx, Ny, Nz, Nt, VarNz, NumRbands, W%vdata, StmIx, StmIy, MinP, &
     Avar%vdata, Aavg%vdata, Xcoords, Ycoords, MaxRadius, RbandInc, WfilterMin, WfilterMax, UndefVal)
 
+  ! third arg to rhdf5_write is "append" flag:
+  !   0 - create new file
+  !   1 - append to existing file
   write (*,*) 'Writing HDF5 output: ', trim(OutFile)
   write (*,*) ''
-  call rhdf5_write(OutFile, Aavg)
+  call rhdf5_write(OutFile, Aavg, 0)
+
+  ! write out the coordinate data
+  ! need to create a dummy y coordinate to keep grads happy
+  Dcoords%vname = 'd_coords'
+  Dcoords%ndims = 1
+  Dcoords%dims(1) = 1
+  Dcoords%dimnames(1) = 'd'
+  Dcoords%units = 'meter'
+  Dcoords%descrip = 'dummy coordinates'
+  allocate (Dcoords%vdata(1))
+  Dcoords%vdata(1) = 0.0
+  
+  call rhdf5_write(OutFile, Rcoords, 1)
+  call rhdf5_write(OutFile, Zcoords, 1)
+  call rhdf5_write(OutFile, Dcoords, 1)
+  call rhdf5_write(OutFile, Tcoords, 1)
+
+  ! set up four (x,y,z,t) dimensions for use by GRADS
+  call rhdf5_set_dimension(OutFile, Rcoords, 'x')
+  call rhdf5_set_dimension(OutFile, Zcoords, 'y')
+  call rhdf5_set_dimension(OutFile, Dcoords, 'z')
+  call rhdf5_set_dimension(OutFile, Tcoords, 't')
+
+  ! attach the dimension specs to the output variable
+  call rhdf5_attach_dimensions(OutFile, Aavg)
 
   stop
 
