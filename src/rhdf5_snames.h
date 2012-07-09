@@ -40,6 +40,7 @@
 #define rh5a_write_anyscalar rh5a_write_anyscalar_
 #define rh5a_read_anyscalar  rh5a_read_anyscalar_
 #define rh5ds_attach_scale   rh5ds_attach_scale_
+#define rh5ds_set_scale      rh5ds_set_scale_
 
 #endif
 
@@ -64,6 +65,7 @@
 #define rh5a_write_anyscalar RH5A_WRITE_ANYSCALAR
 #define rh5a_read_anyscalar  RH5A_READ_ANYSCALAR
 #define rh5ds_attach_scale   RH5DS_ATTACH_SCALE
+#define rh5ds_set_scale      RH5DS_SET_SCALE
 
 #endif
 

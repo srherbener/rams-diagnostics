@@ -731,6 +731,13 @@ void rh5a_read_anyscalar(int *dsetid, char *name,  void *value, int *vtype, int 
 
 //////////////////// DIMENSION SCALE ROUTINES ////////////////////
 
+void rh5ds_set_scale(int *dsetid, char *dimname, int *hdferr)
+  {
+  *hdferr = H5DSset_scale(*dsetid, dimname);
+
+  return;
+  }
+
 void rh5ds_attach_scale(int *dsetid, int *dsclid, int *index, int *hdferr)
   {
   *hdferr = H5DSattach_scale(*dsetid, *dsclid, *index);

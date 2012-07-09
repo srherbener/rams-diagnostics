@@ -114,16 +114,21 @@ end subroutine rhdf5_read
 ! This routine will write the given variable out of the given HDF5 file.
 ! The caller must set all of the elements in the Rhdf5Var structure before
 ! calling this routine.
-subroutine rhdf5_write(fname, rvar)
+subroutine rhdf5_write(fname, rvar, append)
   implicit none
 
   character (len=RHDF5_MAX_STRING) :: fname
   type (Rhdf5Var) :: rvar
+  integer :: append
 
   integer :: fileid
   character (len=RHDF5_MAX_STRING):: facc
 
-  facc = 'W'
+  if (append .eq. 1) then
+    facc = 'RW'
+  else
+    facc = 'W'
+  endif
   call rhdf5_open_file(fname, facc, 1, fileid)
 
   ! Fourth arg is 'itstep' (time step) which is used for writing into an extendable
@@ -134,6 +139,132 @@ subroutine rhdf5_write(fname, rvar)
   call rhdf5_close_file(fileid)
   return
 end subroutine rhdf5_write
+
+!**************************************************************
+! rhdf5_set_dimension()
+!
+! This routine will set up a given variable as a "dimension"
+! for GRADS. In the HDF5 lingo, this routine will set the
+! dimension scale on the given variable.
+!
+! The value in dname will be set in a new attribute on
+! the given variable called "axis" of which GRADS uses
+! to figure out which dimension this variable represents.
+! (Analagous to the [XYZT]DEF statements in the GRADS
+! descriptor file.) Because of this, dname must be one
+! of 'x', 'y', 'z', and 't'.
+!
+subroutine rhdf5_set_dimension(fname, rvar, dname)
+  implicit none
+
+  character (len=*) :: fname
+  character (len=*) :: dname
+  type (Rhdf5Var) :: rvar
+
+  integer :: fileid
+  character (len=RHDF5_MAX_STRING):: facc
+
+  facc = 'RW'
+  call rhdf5_open_file(fname, facc, 1, fileid)
+
+  call rhdf5_set_var_to_dim(fileid, rvar%vname, dname)
+
+  call rhdf5_close_file(fileid)
+  return
+end subroutine rhdf5_set_dimension
+
+!**************************************************************
+! rhdf5_attach_dimensions()
+!
+! This routine will attach the dimension specs to the given
+! variable. The code assumes that for each dimension in rvar,
+! there exists a dataset in the file that contains the coordinate
+! values for that dimension. The name of the coordinate variable
+! is given by the suffix "_coords" appended to the dimension name. 
+!
+! Example:
+!  If the variable is U and it has dimensions (x,y,z,t), ie.
+!  dimnames contains the strings: "x", "y", "z" and "t", then
+!  the followind datasets will be expected in the file for
+!  attachement:
+!    x_coords
+!    y_coords
+!    z_coords
+!    t_coords
+!
+subroutine rhdf5_attach_dimensions(fname, rvar)
+  implicit none
+
+  character (len=*) :: fname
+  type (Rhdf5Var) :: rvar
+
+  integer :: fileid
+  character (len=RHDF5_MAX_STRING):: facc
+
+  facc = 'RW'
+  call rhdf5_open_file(fname, facc, 1, fileid)
+
+  call rhdf5_attach_dims_to_var(fileid, rvar%vname)
+
+  call rhdf5_close_file(fileid)
+  return
+end subroutine rhdf5_attach_dimensions
+
+!********************************************************************
+! rhdf5_write_attribute()
+!
+! This routine will create and populate an attribute for an hdf5 file group.
+!
+subroutine rhdf5_write_attribute(fname, vname, aname, cval, ival, rval)
+  implicit none
+
+  character (len=*) :: fname
+  character (len=*) :: vname
+  character (len=*) :: aname
+  character (len=*), optional :: cval
+  integer, optional :: ival
+  real, optional :: rval
+
+  integer :: fileid
+  integer :: dsetid
+  character (len=RHDF5_MAX_STRING):: facc
+  integer :: hdferr
+
+  facc = 'RW'
+  call rhdf5_open_file(fname, facc, 1, fileid)
+
+  call rh5d_open(fileid, trim(vname)//char(0), dsetid, hdferr)
+  if (hdferr .ne. 0) then
+    print*,'ERROR: hdf5_write_attribute: cannot open dataset for variable: ',trim(vname)
+    stop 'hdf5_write_attribute: variable open error'
+  endif
+
+  ! Figure out the type
+  !    type codes for rh5a_write_anyscalar are:
+  !      1 - string
+  !      2 - integer
+  !      3 - real
+  if (present(cval)) then
+    call rh5a_write_anyscalar(dsetid, trim(aname)//char(0), trim(cval)//char(0), RHDF5_TYPE_STRING, hdferr)
+  elseif (present(ival)) then
+    call rh5a_write_anyscalar(dsetid, trim(aname)//char(0), ival, RHDF5_TYPE_INTEGER, hdferr)
+  elseif (present(rval)) then
+    call rh5a_write_anyscalar(dsetid, trim(aname)//char(0), rval, RHDF5_TYPE_FLOAT, hdferr)
+  else
+    print*,'ERROR: hdf5_write_attribute: must use one of the arguments cval, ival or rval'
+    stop 'hdf5_write_attribute: bad argument assignment'
+  endif
+
+  if (hdferr .ne. 0) then
+    print*,'ERROR: hdf5_write_attribute: cannot write attribute: ',trim(aname)
+    stop 'hdf5_write_attribute: bad attribute write'
+  endif
+
+  call rh5d_close(dsetid, hdferr)
+  call rhdf5_close_file(fileid)
+
+  return
+end subroutine rhdf5_write_attribute
 
 !********************************************************************************
 ! Low level routines
@@ -648,46 +779,6 @@ integer function rhdf5_find_even_divisor(num, div)
 end function rhdf5_find_even_divisor
 
 !********************************************************************
-! rhdf5_write_attribute()
-!
-! This routine will create and populate an attribute for an hdf5 file group.
-!
-subroutine rhdf5_write_attribute(id, aname, cval, ival, rval)
-  implicit none
-
-  integer :: id
-  character (len=*) :: aname
-  character (len=*), optional :: cval
-  integer, optional :: ival
-  real, optional :: rval
-
-  integer :: hdferr
-
-  ! Figure out the type
-  !    type codes for rh5a_write_anyscalar are:
-  !      1 - string
-  !      2 - integer
-  !      3 - real
-  if (present(cval)) then
-    call rh5a_write_anyscalar(id, trim(aname)//char(0), trim(cval)//char(0), RHDF5_TYPE_STRING, hdferr)
-  elseif (present(ival)) then
-    call rh5a_write_anyscalar(id, trim(aname)//char(0), ival, RHDF5_TYPE_INTEGER, hdferr)
-  elseif (present(rval)) then
-    call rh5a_write_anyscalar(id, trim(aname)//char(0), rval, RHDF5_TYPE_FLOAT, hdferr)
-  else
-    print*,'ERROR: hdf5_write_attribute: must use one of the arguments cval, ival or rval'
-    stop 'hdf5_write_attribute: bad argument assignment'
-  endif
-
-  if (hdferr .ne. 0) then
-    print*,'ERROR: hdf5_write_attribute: cannot write attribute: ',trim(aname)
-    stop 'hdf5_write_attribute: bad attribute write'
-  endif
-
-  return
-end subroutine rhdf5_write_attribute
-
-!********************************************************************
 ! rhdf5_read_variable_init()
 !
 ! This routine read the dimension and attribute info for an hdf5 file variable.
@@ -946,14 +1037,56 @@ subroutine rhdf5_read_dim_name_string(ndims, dimnames, dnstring)
 end subroutine rhdf5_read_dim_name_string
 
 !***********************************************************************
-! rhdf5_attach_dimspecs_to_var()
+! rhdf5_set_var_to_dim()
+!
+! This routine will set a "dimension scale" on the given variable so that
+! variable can be used as dimensions coordinate values in the hdf5 file.
+!
+subroutine rhdf5_set_var_to_dim(fileid, vname, dname)
+  implicit none
+
+  integer :: fileid
+  character (len=*) :: vname
+  character (len=*) :: dname
+
+  integer :: hdferr
+  integer :: dsetid
+
+  call rh5d_open(fileid, trim(vname)//char(0), dsetid, hdferr)
+  if (hdferr .ne. 0) then
+    print*,'ERROR: hdf5_set_var_to_dim: cannot open dataset for variable: ',trim(vname)
+    stop 'hdf5_set_var_to_dim: bad variable read'
+  endif
+
+  ! set the scale on the variable
+  ! add a new attribute "axis" to the variable for GRADS
+  call rh5ds_set_scale(dsetid, trim(dname)//char(0), hdferr)
+  if (hdferr .ne. 0) then
+    print*,'ERROR: hdf5_set_var_to_dim: cannot set coordinate variable to a dimension'
+    stop 'hdf5_set_var_to_dim: bad variable set dimension'
+  endif
+
+  call rh5a_write_anyscalar(dsetid, 'axis'//char(0), trim(dname)//char(0), RHDF5_TYPE_STRING, hdferr)
+  if (hdferr .ne. 0) then
+    print*,'ERROR: hdf5_set_var_to_dim: cannot add "axis" attribute to variable: ', trim(vname)
+    stop 'hdf5_set_var_to_dim: bad variable set dimension'
+  endif
+
+  ! close the dataset
+  call rh5d_close(dsetid, hdferr)
+
+  return
+end subroutine rhdf5_set_var_to_dim
+
+!***********************************************************************
+! rhdf5_attach_dims_to_var()
 !
 ! This routine will attach dimensions specs to the given variable. This
 ! is done via the HDF5 dimension scaling feature, and the purpose of
 ! doing the attachment is so that GRADS can read in the resulting
 ! HDF5 file directly without the use of a descriptor file.
 !
-subroutine rhdf5_attach_dimspecs_to_var(fileid, vname)
+subroutine rhdf5_attach_dims_to_var(fileid, vname)
   implicit none
 
   integer :: fileid
@@ -976,15 +1109,15 @@ subroutine rhdf5_attach_dimspecs_to_var(fileid, vname)
   ! open dataset
   call rh5d_open(fileid, trim(vname)//char(0), dsetid, hdferr)
   if (hdferr .ne. 0) then
-    print*,'ERROR: hdf5_attach_dimspecs_to_var: cannot open dataset for variable: ',trim(vname)
-    stop 'hdf5_attach_dimspecs_to_var: bad variable read'
+    print*,'ERROR: hdf5_attach_dims_to_var: cannot open dataset for variable: ',trim(vname)
+    stop 'hdf5_attach_dims_to_var: bad variable read'
   endif
 
   ! dimensions
   call rh5d_read_get_dims(dsetid, ndims, dims, hdferr)
   if (hdferr .ne. 0) then
-    print*,'ERROR: hdf5_attach_dimspecs_to_var: cannot obtain dimension information for variable: ',trim(vname)
-    stop 'hdf5_attach_dimspecs_to_var: bad variable read'
+    print*,'ERROR: hdf5_attach_dims_to_var: cannot obtain dimension information for variable: ',trim(vname)
+    stop 'hdf5_attach_dims_to_var: bad variable read'
   endif
 
   ! read the DimNames attribute
@@ -1002,23 +1135,24 @@ subroutine rhdf5_attach_dimspecs_to_var(fileid, vname)
   !       y                     y_coords
   !       z                     z_coords
   !       t                     t_coords
+  !      <n>                    <n>_coords  (in general)
 
   do i = 1, ndims
     coord_name = trim(dimnames(i)) // '_coords'
 
     call rh5d_open(fileid, trim(coord_name)//char(0), dsclid, hdferr)
     if (hdferr .ne. 0) then
-      print*,'ERROR: hdf5_attach_dimspecs_to_var: cannot open dataset for coordinates: ',trim(coord_name)
-      stop 'hdf5_attach_dimspecs_to_var: bad variable read'
+      print*,'ERROR: hdf5_attach_dims_to_var: cannot open dataset for coordinates: ',trim(coord_name)
+      stop 'hdf5_attach_dims_to_var: bad variable read'
     endif
 
     ! do the attach, C indices start with zero so send (i-1) to this routine
     call rh5ds_attach_scale(dsetid, dsclid, i-1, hdferr)
     if (hdferr .ne. 0) then
-      print*,'ERROR: hdf5_attach_dimspecs_to_var: cannot attach coordinate data to variable:'
+      print*,'ERROR: hdf5_attach_dims_to_var: cannot attach coordinate data to variable:'
       print*,'ERROR:  Variable dataset: ',trim(vname)
       print*,'ERROR:  Coordinate dataset: ',trim(coord_name)
-      stop 'hdf5_attach_dimspecs_to_var: bad variable attach'
+      stop 'hdf5_attach_dims_to_var: bad variable attach'
     endif
 
     call rh5d_close(dsclid, hdferr)
@@ -1029,6 +1163,6 @@ subroutine rhdf5_attach_dimspecs_to_var(fileid, vname)
   call rh5d_close(dsetid, hdferr)
 
   return
-end subroutine rhdf5_attach_dimspecs_to_var
+end subroutine rhdf5_attach_dims_to_var
 
 end module
