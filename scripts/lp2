@@ -1,1 +1,1 @@
-enscript --columns=2 --fancy-header --landscape $1
+enscript --columns=2 --fancy-header --landscape -DDuplex:true $1
