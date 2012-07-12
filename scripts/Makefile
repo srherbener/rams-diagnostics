@@ -14,7 +14,10 @@ SCRIPTS = $(DEST)/GenHist2d.m \
           $(DEST)/PlotSampleData.m \
           $(DEST)/PlotMultiPanelSample.m \
           $(DEST)/GenTimeSeries.m \
+          $(DEST)/GenDomTimAvgProfs.m \
+          $(DEST)/DomainTimeAvgProfile.m \
           $(DEST)/RatioAvg2d.m \
+          $(DEST)/ReadConfig.m \
           $(DEST)/PlotTimeSeries.m \
           $(DEST)/PlotTseriesSet.m \
 
@@ -58,8 +61,17 @@ $(DEST)/PlotMultiPanelSample.m: PlotMultiPanelSample.m
 $(DEST)/GenTimeSeries.m: GenTimeSeries.m
 	cp GenTimeSeries.m $(DEST)/GenTimeSeries.m
 
+$(DEST)/GenDomTimAvgProfs.m: GenDomTimAvgProfs.m
+	cp GenDomTimAvgProfs.m $(DEST)/GenDomTimAvgProfs.m
+
+$(DEST)/DomainTimeAvgProfile.m: DomainTimeAvgProfile.m
+	cp DomainTimeAvgProfile.m $(DEST)/DomainTimeAvgProfile.m
+
 $(DEST)/RatioAvg2d.m: RatioAvg2d.m
 	cp RatioAvg2d.m $(DEST)/RatioAvg2d.m
+
+$(DEST)/ReadConfig.m: ReadConfig.m
+	cp ReadConfig.m $(DEST)/ReadConfig.m
 
 $(DEST)/PlotTimeSeries.m: PlotTimeSeries.m
 	cp PlotTimeSeries.m $(DEST)/PlotTimeSeries.m
