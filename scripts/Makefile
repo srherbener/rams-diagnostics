@@ -20,6 +20,8 @@ SCRIPTS = $(DEST)/GenHist2d.m \
           $(DEST)/ReadConfig.m \
           $(DEST)/PlotTimeSeries.m \
           $(DEST)/PlotTseriesSet.m \
+          $(DEST)/PlotProfSet.m \
+          $(DEST)/GenProfPlots.m \
 
 
 #
@@ -78,4 +80,10 @@ $(DEST)/PlotTimeSeries.m: PlotTimeSeries.m
 
 $(DEST)/PlotTseriesSet.m: PlotTseriesSet.m
 	cp PlotTseriesSet.m $(DEST)/PlotTseriesSet.m
+
+$(DEST)/PlotProfSet.m: PlotProfSet.m
+	cp PlotProfSet.m $(DEST)/PlotProfSet.m
+
+$(DEST)/GenProfPlots.m: GenProfPlots.m
+	cp GenProfPlots.m $(DEST)/GenProfPlots.m
 

@@ -38,6 +38,11 @@ for i_exp = 1:length(Exps)
 
     % Read in data for the variable from this time directory
     Vdata = hdf5read(Hfile, Hvar);
+    Zcoords = hdf5read(Hfile, '/z_coords');
+
+    % Trim off the lateral boundaries since these are set to zeros
+    %  Vdata is (x,y,z,t)
+    Vdata = Vdata(2:end-1,2:end-1,:,:);
 
     % Find the average for this piece
     [ AvgProf ] = DomainTimeAvgProfile(Vdata);
@@ -58,5 +63,6 @@ for i_exp = 1:length(Exps)
   Hdset = sprintf('/%s',Var);
   fprintf('    Writing HDF5 file: %s\n', Hfile);
   hdf5write(Hfile, Hdset, TotAvgProf);
+  hdf5write(Hfile, '/z_coords', Zcoords, 'WriteMode', 'append');
   fprintf('\n');
 end
