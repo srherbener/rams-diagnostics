@@ -19,9 +19,10 @@ Ns = length(SST);
 Nc = length(CCN);
 
 Xlabel = 'Latent Heat Difference (K)';
+XlabelND = 'Latent Heat (K)';
 Zlabel = 'Height (m)';
 
-X = (-0.5:.1:0.5);
+X = (-0.6:.1:0.6);
 
 % Create the output directory if it doesn't exist
 OutDir = 'PLOTS';
@@ -53,6 +54,7 @@ for i = 1:Ns
     LHV(j,:) = squeeze(mean(LHV_DOMAVG,2)); % time average
 
     % subtract off the control profile
+    LHV_NODIFF(j,:) = LHV(j,Z1:Z2);
     LHV_DIFF(j,:) = LHV(j,Z1:Z2) - CNTL_LHV(Z1:Z2);
 
     % generate the legend text
@@ -61,7 +63,9 @@ for i = 1:Ns
   fprintf('\n');
 
   % plot it
-  OutFile = sprintf('%s/lh_vapt_S%03d.jpg', OutDir, SST(i));
+  OutFile = sprintf('%s/lh_vapt_diff_S%03d.jpg', OutDir, SST(i));
+  OutFileND = sprintf('%s/lh_vapt_nodiff_S%03d.jpg', OutDir, SST(i));
   fprintf('  Saving plot in file: %s\n\n', OutFile);
   PlotProfSet(X, Z, LHV_DIFF, Xlabel, Zlabel, Ptitle, Lcolors, LegText, 'NorthEast', OutFile);
+  PlotProfSet(X, Z, LHV_NODIFF, XlabelND, Zlabel, Ptitle, Lcolors, LegText, 'NorthEast', OutFileND);
 end

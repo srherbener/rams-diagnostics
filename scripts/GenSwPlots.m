@@ -19,7 +19,7 @@ CNTL_CCN = 50;
 Ns = length(SST);
 Nc = length(CCN);
 
-YlimTS = [ -200 200 ];
+YlimTS = [ -150 150 ];
 YlabTS = 'Radiative Flux (W/m^2)';
 
 Times = (0:5/60:36); % 36 hrs in 5 min increments
@@ -38,6 +38,13 @@ Z = size(CNTL_SWUP_DOMAVG,1) - 1;  % top level is all zeros (boundary)
 CNTL_SWUP = squeeze(CNTL_SWUP_DOMAVG(Z,:));
 
 % Each set: all CCN levels for a single given SST
+%  Below: i is the index into SST values
+%         j is the index into CCN values
+%
+% For the time, domain averages place these numbers in a matrix with different
+% SST values on the rows and different CCN values on the columns. This will facilitate
+% drawing a bar graph with the different CCN values for a given SST grouped together.
+k = 0;
 for i = 1:Ns
   fprintf('Generating plot for SST = %d\n', SST(i));
   Ptitle = sprintf('SW Forcing Difference: Top of Model, SST = %d', SST(i));
@@ -47,7 +54,7 @@ for i = 1:Ns
     Hfile = sprintf('DIAGS/swup_tdavg_ATEX_C%04d_S%03d.h5',CCN(j),SST(i));
     fprintf('  Reading HDF5 file: %s\n', Hfile);
     SWUP_DOMAVG = hdf5read(Hfile, '/swup');
-    SWUP(j,:) = squeeze(SWUP_DOMAVG(Z,:)); % time series
+    SWUP(j,:) = squeeze(SWUP_DOMAVG(Z,:)); % time series using avarages on level Z
 
     % subtract off the control series
     SWUP_DIFF(j,:) = SWUP(j,:) - CNTL_SWUP;
@@ -57,8 +64,32 @@ for i = 1:Ns
   end
   fprintf('\n');
 
+  % Compute the time average of the data in SWUP
+  %   SWUP: rows are CCN value, columns are time so we just want to take the
+  %   average of each row.
+  SWUP_TDAVG(i,:) = mean(SWUP,2);
+  Xtext(i) = { sprintf('SST: %dK', SST(i)) };
+
   % plot it
   OutFile = sprintf('%s/swup_S%03d.jpg', OutDir, SST(i));
   fprintf('  Saving plot in file: %s\n\n', OutFile);
   PlotTseriesSet2( Times, SWUP_DIFF, Ptitle, YlimTS, YlabTS, Lcolors, LegText, LegLocs(i), OutFile )
 end
+
+% Plot a bar graph showing the relationship of the time,domain averaged top-of-model SW
+% Note that LegText is already set to what we need from the time series plots above
+fprintf('Generating bar chart for time domain averaged SW\n');
+Fig = figure;
+
+bar(SWUP_TDAVG);
+title('SW Forcing: Top of Model');
+set(gca, 'XtickLabel', Xtext);
+ylabel(YlabTS);
+legend(LegText);
+legend boxoff;
+
+Pfile = 'PLOTS/swup_tdavg.jpg';
+fprintf('  Saving bar chart in: %s\n', Pfile);
+saveas(Fig,Pfile);
+close(Fig);
+fprintf('\n');
