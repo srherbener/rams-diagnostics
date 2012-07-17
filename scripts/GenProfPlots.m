@@ -21,7 +21,7 @@ Nc = length(CCN);
 Xlabel = 'Latent Heat Difference (K)';
 Zlabel = 'Height (m)';
 
-X = (-0.6:.1:0.6);
+X = (-0.5:.1:0.5);
 
 % Create the output directory if it doesn't exist
 OutDir = 'PLOTS';
@@ -32,7 +32,8 @@ end
 % read in the control profile
 Hfile = sprintf('DIAGS/lh_vapt_tdavg_ATEX_C%04d_S%03d.h5',CNTL_CCN,CNTL_SST);
 fprintf('Reading control HDF5 file: %s\n\n', Hfile);
-CNTL_LHV = hdf5read(Hfile, '/lh_vapt')';
+CNTL_LHV_DOMAVG = hdf5read(Hfile, '/lh_vapt');
+CNTL_LHV = squeeze(mean(CNTL_LHV_DOMAVG,2))'; % time average
 Zall = hdf5read(Hfile, '/z_coords')'; % Z should be same in all files
 
 Z1 = 2;
