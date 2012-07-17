@@ -18,10 +18,10 @@ CNTL_CCN = 50;
 Ns = length(SST);
 Nc = length(CCN);
 
-Xlabel = 'Latent Heat (Difference from control, K)';
+Xlabel = 'Latent Heat Difference (K)';
 Zlabel = 'Height (m)';
 
-X = (-0.5:.1:0.5);
+X = (-0.6:.1:0.6);
 
 % Create the output directory if it doesn't exist
 OutDir = 'PLOTS';
@@ -36,7 +36,7 @@ CNTL_LHV = hdf5read(Hfile, '/lh_vapt')';
 Zall = hdf5read(Hfile, '/z_coords')'; % Z should be same in all files
 
 Z1 = 2;
-Z2 = length(Zall);
+Z2 = length(Zall) - 15; % each level is 100m, this chops off the top 1500m
 Z = Zall(Z1:Z2);
 
 % Each set: all CCN levels for a single given SST
@@ -48,7 +48,8 @@ for i = 1:Ns
   for j = 1:Nc
     Hfile = sprintf('DIAGS/lh_vapt_tdavg_ATEX_C%04d_S%03d.h5',CCN(j),SST(i));
     fprintf('  Reading HDF5 file: %s\n', Hfile);
-    LHV(j,:) = hdf5read(Hfile, '/lh_vapt');
+    LHV_DOMAVG = hdf5read(Hfile, '/lh_vapt');
+    LHV(j,:) = squeeze(mean(LHV_DOMAVG,2)); % time average
 
     % subtract off the control profile
     LHV_DIFF(j,:) = LHV(j,Z1:Z2) - CNTL_LHV(Z1:Z2);
