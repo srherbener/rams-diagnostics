@@ -82,9 +82,11 @@ fprintf('Generating bar chart for time domain averaged SW\n');
 Fig = figure;
 
 bar(SWUP_TDAVG);
+set(gca, 'FontSize', 20);
 title('SW Forcing: Top of Model');
 set(gca, 'XtickLabel', Xtext);
 ylabel(YlabTS);
+ylim([ 0 150 ]);
 legend(LegText);
 legend boxoff;
 
