@@ -34,6 +34,7 @@ title(Ptitle);
 xlabel(Xlabel);
 ylabel(Zlabel);
 legend(LegText, 'Location', LegLoc);
+legend boxoff;
 
 saveas(Fig, OutFile);
 

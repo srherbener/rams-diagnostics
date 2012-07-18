@@ -20,6 +20,7 @@ Ns = length(SST);
 Nc = length(CCN);
 
 YlimTS = [ -150 150 ];
+% For no diff plots: YlimTS = [ 0 300 ];
 YlabTS = 'Radiative Flux (W/m^2)';
 
 Times = (0:5/60:36); % 36 hrs in 5 min increments
@@ -47,7 +48,7 @@ CNTL_SWUP = squeeze(CNTL_SWUP_DOMAVG(Z,:));
 k = 0;
 for i = 1:Ns
   fprintf('Generating plot for SST = %d\n', SST(i));
-  Ptitle = sprintf('SW Forcing Difference: Top of Model, SST = %d', SST(i));
+  Ptitle = sprintf('Upward SW Flux Difference, Top of Model, SST: %dK', SST(i));
 
   % collect the latent heat data
   for j = 1:Nc
@@ -73,7 +74,8 @@ for i = 1:Ns
   % plot it
   OutFile = sprintf('%s/swup_S%03d.jpg', OutDir, SST(i));
   fprintf('  Saving plot in file: %s\n\n', OutFile);
-  PlotTseriesSet2( Times, SWUP_DIFF, Ptitle, YlimTS, YlabTS, Lcolors, LegText, LegLocs(i), OutFile )
+  PlotTseriesSet2( Times, SWUP_DIFF, Ptitle, YlimTS, YlabTS, Lcolors, LegText, LegLocs(i), OutFile );
+  % No diffs: PlotTseriesSet2( Times, SWUP, Ptitle, YlimTS, YlabTS, Lcolors, LegText, LegLocs(i), OutFile );
 end
 
 % Plot a bar graph showing the relationship of the time,domain averaged top-of-model SW
@@ -83,7 +85,7 @@ Fig = figure;
 
 bar(SWUP_TDAVG);
 set(gca, 'FontSize', 20);
-title('SW Forcing: Top of Model');
+title('Upward SW Flux: Top of Model');
 set(gca, 'XtickLabel', Xtext);
 ylabel(YlabTS);
 ylim([ 0 150 ]);

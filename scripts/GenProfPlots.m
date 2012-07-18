@@ -18,11 +18,11 @@ CNTL_CCN = 50;
 Ns = length(SST);
 Nc = length(CCN);
 
-Xlabel = 'Latent Heat Difference (K)';
-XlabelND = 'Latent Heat (K)';
+Xlabel = 'Latent Heating Rate Difference (K/hr)';
+XlabelND = 'Latent Heating Rate (K/hr)';
 Zlabel = 'Height (m)';
 
-X = (-0.6:.1:0.6);
+X = (-8:.5:8);
 
 % Create the output directory if it doesn't exist
 OutDir = 'PLOTS';
@@ -44,7 +44,7 @@ Z = Zall(Z1:Z2);
 % Each set: all CCN levels for a single given SST
 for i = 1:Ns
   fprintf('Generating plot for SST = %d\n', SST(i));
-  Ptitle = sprintf('Latent Heat of Vaporization: SST = %d', SST(i));
+  Ptitle = sprintf('Latent Heating Rate, SST: %dK', SST(i));
 
   % collect the latent heat data
   for j = 1:Nc
@@ -61,6 +61,11 @@ for i = 1:Ns
     LegText(j) = { sprintf('CCN: %d/cc', CCN(j)) };
   end
   fprintf('\n');
+  
+  % LHV_DIFF, LHV_NODIFF have rates in units of K per 5min, multiply all
+  % numbers by 12 to convert to K per hour (60min).
+  LHV_NODIFF = LHV_NODIFF .* 12;
+  LHV_DIFF = LHV_DIFF .* 12;
 
   % plot it
   OutFile = sprintf('%s/lh_vapt_diff_S%03d.jpg', OutDir, SST(i));
