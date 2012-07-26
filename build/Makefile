@@ -7,7 +7,7 @@ DIAG_UTILS_HOME = $(HOME)/src/diagnostics/utils
 
 # Install directory should be set to where you want to install
 # the resulting library and module files.
-DIAG_UTILS_INSTALL_DIR = $(HOME)/etc/diag
+DIAG_UTILS_INSTALL_DIR = $(HOME)/etc/fortran
 
 # Location of results of building the RHDF5 library (ie, running
 # make in the 'build' directory of this package
