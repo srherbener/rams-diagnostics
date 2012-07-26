@@ -8,7 +8,7 @@ JHDATA_HOME = $(HOME)/src/diagnostics/join_hdata
 
 # Location of results of building the RHDF5 library (ie, running
 # make in the 'build' directory of this package
-RHDF5_DIR = $(HOME)/etc/rhdf5
+RHDF5_DIR = $(HOME)/etc/fortran
 RHDF5_BASE = rhdf5_utils
 RHDF5_LIBS = -L$(RHDF5_DIR) -l$(RHDF5_BASE)
 RHDF5_INCS = -I$(RHDF5_DIR)
@@ -17,7 +17,7 @@ RHDF5_LIB_FILE = $(RHDF5_DIR)/lib$(RHDF5_BASE).a
 RHDF5_MOD_FILE = $(RHDF5_DIR)/$(RHDF5_BASE).mod
 
 # diagnostics utilities library
-DIAG_DIR = $(HOME)/etc/diag
+DIAG_DIR = $(HOME)/etc/fortran
 DIAG_BASE = diag_utils
 DIAG_LIBS = -L$(DIAG_DIR) -l$(DIAG_BASE)
 DIAG_INCS = -I$(DIAG_DIR)
