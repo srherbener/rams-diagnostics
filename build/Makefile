@@ -7,7 +7,7 @@ RHDF5_HOME = $(HOME)/src/rhdf5
 
 # Install directory should be set to where you want to install
 # the resulting library and module files.
-RHDF5_INSTALL_DIR = $(HOME)/etc/rhdf5
+RHDF5_INSTALL_DIR = $(HOME)/etc/fortran
 
 # Change HDF5_INCS to the location hdf5 is loaded on your machine.
 # This should match what is being set in your RAMS and REVU
