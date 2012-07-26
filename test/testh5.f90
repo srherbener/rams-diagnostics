@@ -304,7 +304,7 @@ program testh5
     call DumpRhdf5Var(Vin)
 
 
-    call rhdf5_write(fname, Vin)
+    call rhdf5_write(fname, Vin, 0)
 
     Vout%vname = 'hvar'
     call rhdf5_read_init(fname, Vout)
