@@ -45,10 +45,10 @@ program azavg
   ! data files: the first index is the file number, the second index is the
   ! var number
 
-  type (Rhdf5Var) :: U, V, W, Press, Avar, Aavg, Rcoords, Zcoords, Tcoords, Dcoords
+  type (Rhdf5Var) :: U, V, W, Press, Avar, Aavg, Rcoords, Zcoords, Tcoords, Dcoords, Lon, Lat
   character (len=MediumString) :: Ufile, Vfile, Wfile, PressFile, AvarFile, AavgFile
   integer, dimension(:), allocatable :: StmIx, StmIy
-  real, dimension(:), allocatable :: MinP, Lon, Lat, Xcoords, Ycoords
+  real, dimension(:), allocatable :: MinP, Xcoords, Ycoords
 
   integer :: i
   logical :: VarIs2d
@@ -184,9 +184,15 @@ program azavg
     write (*,*) ''
 
     ! Read in the longitude and latitude values, use the W file
-    allocate(Lon(Nx))
-    allocate(Lat(Ny))
-    call GetLonLat(Nx, Ny, Lon, Lat, Wfile)
+    Lon%vname = 'x_coords'
+    call rhdf5_read_init(Wfile, Lon)
+    allocate(Lon%vdata(Nx))
+    call rhdf5_read(Wfile, Lon)
+    
+    Lat%vname = 'y_coords'
+    call rhdf5_read_init(Wfile, Lat)
+    allocate(Lat%vdata(Ny))
+    call rhdf5_read(Wfile, Lat)
 
     ! Convert the GRADS grid coordinates from longitude, latitude to flat plane (x and y).
     ! Always have W which has been verified to be consistent with all other vars
@@ -194,13 +200,13 @@ program azavg
     ! Xcoords, Ycoords are in units of km
     allocate(Xcoords(Nx))
     allocate(Ycoords(Ny))
-    call ConvertGridCoords(Nx, Ny, Nz, Nt, Lon, Lat, Xcoords, Ycoords)
+    call ConvertGridCoords(Nx, Ny, Nz, Nt, Lon%vdata, Lat%vdata, Xcoords, Ycoords)
 
     write (*,*) 'Horzontal Grid Coordinate Info:'
     write (*,*) '  X Range (min lon, max lon) --> (min x, max x): '
-    write (*,*) '    ', Lon(1), Lon(Nx), Xcoords(1), Xcoords(Nx)
+    write (*,*) '    ', Lon%vdata(1), Lon%vdata(Nx), Xcoords(1), Xcoords(Nx)
     write (*,*) '  Y Range (min lat, max lat) --> (min y, max y): '
-    write (*,*) '    ', Lat(1), Lat(Ny), Ycoords(1), Ycoords(Ny)
+    write (*,*) '    ', Lat%vdata(1), Lat%vdata(Ny), Ycoords(1), Ycoords(Ny)
     write (*,*) ''
   
     ! Figure out how big to make each radial band. Assume that the storm center stays near
