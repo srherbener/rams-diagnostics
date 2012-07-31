@@ -383,69 +383,6 @@ logical function InsideCylVol(Nx, Ny, Nz, Nt, Ix, Iy, Iz, It, MinR, MaxR, MinPhi
 end function
 
 !***********************************************************
-! GetLonLat()
-!
-! This routine will read in longitude and latitude values
-! from the given HDF5 file. The file organization is:
-!
-!   Longitude values:
-!     Dataset name: x_coords
-!     2D data, longitude values at every horizontal grid cell
-!
-!   Latitude values:
-!     Dataset name: y_coords
-!     2D data, latitude values at every horizontal grid cell
-!
-! Returns two 1D arrays contating representative longitude and
-! latitude values. The first row in the longitude 2D array and
-! the first column in the latitude 2D array will be used for
-! the output 1D arrays
-!
-subroutine GetLonLat(Nx, Ny, Lon, Lat, Hfile)
-  use rhdf5_utils
-  implicit none
-
-  integer :: Nx, Ny
-  real, dimension(Nx) :: Lon
-  real, dimension(Ny) :: Lat
-  character (len=*) :: Hfile
-
-  type (Rhdf5Var) :: Lon2D, Lat2D
-  integer :: i, i2d
-
-  ! Read in the longitude and latitude values
-  Lon2D%vname = 'x_coords'
-  call rhdf5_read_init(Hfile, Lon2D)
-  allocate(Lon2D%vdata(Nx*Ny))
-  call rhdf5_read(Hfile, Lon2D)
-        
-  Lat2D%vname = 'y_coords'
-  call rhdf5_read_init(Hfile, Lat2D)
-  allocate(Lat2D%vdata(Nx*Ny))
-  call rhdf5_read(Hfile, Lat2D)
-
-  ! Pick off the first row for Lon and first column
-  ! for Lat
-  do i = 1, Nx
-    ! First row is located in the first n entries
-    Lon(i) = Lon2D%vdata(i)
-  enddo
-
-  do i = 1, Ny
-    ! First column is located starting with first
-    ! entry and all subsequent entries spaced Nx apart
-    i2d = ((i-1) * Nx) + 1
-    Lat(i) = Lat2D%vdata(i2d)
-  enddo
-
-  ! Clean up
-  deallocate(Lon2D%vdata)
-  deallocate(Lat2D%vdata)
-
-  return
-end subroutine GetLonLat
-
-!***********************************************************
 ! String2List()
 !
 ! This routine will split the input string (colon separated list)
