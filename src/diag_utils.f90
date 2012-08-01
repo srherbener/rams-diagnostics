@@ -523,4 +523,55 @@ logical function DimsMatch(Var1, Var2)
   return
 end function DimsMatch
 
+!******************************************************************
+! MultiDimLookup()
+!
+! This function will take the 1D array of real and look up a value
+! as if that array were either 2D or 3D field.
+!
+real function MultiDimLookup(Nx, Ny, Nz, Nt, ix, iy, iz, it, Var2d, Var3d)
+  implicit none
+
+  integer :: Nx, Ny, Nz, Nt, ix, iy, iz, it
+  real, dimension(Nx,Ny,Nt), optional :: Var2d
+  real, dimension(Nx,Ny,Nz,Nt), optional :: Var3d
+
+  if (present(Var2d)) then
+    MultiDimLookup = Var2d(ix,iy,it)
+  else if (present(Var3d)) then
+    MultiDimLookup = Var3d(ix,iy,iz,it)
+  else
+    print*, 'ERROR: MultiDimLookup: must use one of the optional arguments: Var2d or Var3d'
+    stop 'MultiDimLookup: missing argument'
+  endif
+
+  return
+end function MultiDimLookup
+
+!******************************************************************
+! MultiDimAssign()
+!
+! This subroutine will take the 1D array of real and look up a value
+! as if that array were either 2D or 3D field.
+!
+subroutine MultiDimAssign(Nx, Ny, Nz, Nt, ix, iy, iz, it, Val, Var2d, Var3d)
+  implicit none
+
+  integer :: Nx, Ny, Nz, Nt, ix, iy, iz, it
+  real :: Val
+  real, dimension(Nx,Ny,Nt), optional :: Var2d
+  real, dimension(Nx,Ny,Nz,Nt), optional :: Var3d
+
+  if (present(Var2d)) then
+    Var2d(ix,iy,it) = Val
+  else if (present(Var3d)) then
+    Var3d(ix,iy,iz,it) = Val
+  else
+    print*, 'ERROR: MultiDimAssign: must use one of the optional arguments: Var2d or Var3d'
+    stop 'MultiDimAssign: missing argument'
+  endif
+
+  return
+end subroutine MultiDimAssign
+
 end module diag_utils
