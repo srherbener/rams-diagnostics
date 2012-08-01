@@ -174,7 +174,6 @@ program join_hdata
   do i = 1, Ndims-1
     Coords(i)%vname = Cnames(i)
     call rhdf5_read_init(InFileList(1), Coords(i))
-    allocate (Coords(i)%vdata(Coords(i)%dims(1)))
     call rhdf5_read(InFileList(1), Coords(i))
   enddo
 
@@ -205,7 +204,6 @@ program join_hdata
   itout = 0
   do i = 1, Nfiles
     ! append the variable data
-    allocate(InVars(i)%vdata(InSizes(i)))
     call rhdf5_read(InFileList(i), InVars(i))
     
     do iin = 1, InSizes(i)
@@ -218,7 +216,6 @@ program join_hdata
     ! append the 't' coordinate variable data
     InTcoords%vname = Cnames(Ndims)
     call rhdf5_read_init(InFileList(i), InTcoords)
-    allocate(InTcoords%vdata(InTcoords%dims(1)))
     call rhdf5_read(InFileList(i), InTcoords)
 
     do itin = 1, InTcoords%dims(1)
