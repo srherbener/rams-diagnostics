@@ -186,12 +186,10 @@ program azavg
     ! Read in the longitude and latitude values, use the W file
     Lon%vname = 'x_coords'
     call rhdf5_read_init(Wfile, Lon)
-    allocate(Lon%vdata(Nx))
     call rhdf5_read(Wfile, Lon)
     
     Lat%vname = 'y_coords'
     call rhdf5_read_init(Wfile, Lat)
-    allocate(Lat%vdata(Ny))
     call rhdf5_read(Wfile, Lat)
 
     ! Convert the GRADS grid coordinates from longitude, latitude to flat plane (x and y).
@@ -237,13 +235,11 @@ program azavg
     write (*,*) 'Reading variable: w'
     write (*,*) '  HDF5 file: ', trim(Wfile)
     write (*,*) ''
-    allocate(W%vdata(Nx*Ny*Nz*Nt))
     call rhdf5_read(Wfile, W)
 
     write (*,*) 'Reading variable: sea_press'
     write (*,*) '  HDF5 file: ', trim(PressFile)
     write (*,*) ''
-    allocate(Press%vdata(Nx*Ny*Nt)) ! using sea_press which is 2d
     call rhdf5_read(PressFile, Press)
 
     allocate(StmIx(Nt))
@@ -255,18 +251,14 @@ program azavg
       write (*,*) 'Reading variable: u'
       write (*,*) '  HDF5 file: ', trim(Ufile)
       write (*,*) ''
-      allocate(U%vdata(Nx*Ny*Nz*Nt))
       call rhdf5_read(Ufile, U)
 
-      allocate(Zcoords%vdata(Nz))
       call rhdf5_read(Ufile, Zcoords)
-      allocate(Tcoords%vdata(Nt))
       call rhdf5_read(Ufile, Tcoords)
 
       write (*,*) 'Reading variable: v'
       write (*,*) '  HDF5 file: ', trim(Vfile)
       write (*,*) ''
-      allocate(V%vdata(Nx*Ny*Nz*Nt))
       call rhdf5_read(Vfile, V)
 
       allocate(Avar%vdata(Nx*Ny*VarNz*Nt))
@@ -276,12 +268,9 @@ program azavg
       write (*,*) 'Reading variable: ', trim(VarToAvg)
       write (*,*) '  HDF5 file: ', trim(AvarFile)
       write (*,*) ''
-      allocate(Avar%vdata(Nx*Ny*VarNz*Nt))
       call rhdf5_read(AvarFile, Avar)
 
-      allocate(Zcoords%vdata(VarNz))
       call rhdf5_read(AvarFile, Zcoords)
-      allocate(Tcoords%vdata(Nt))
       call rhdf5_read(AvarFile, Tcoords)
     end if
 
