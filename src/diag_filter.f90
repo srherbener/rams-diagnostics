@@ -31,7 +31,7 @@ program diag_filter
 
   real :: DeltaX, DeltaY, MinW, MaxW, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, CwpThresh
   real :: Xstart, Xinc, Ystart, Yinc
-  real, dimension(:), allocatable :: MinP, XcoordsKm, YcoordsKm
+  real, dimension(:), allocatable :: XcoordsKm, YcoordsKm
 
   ! Data arrays: cloud, tempc, precipr
   ! Dims: x, y, z, t
@@ -39,6 +39,7 @@ program diag_filter
   ! data files: the first index is the file number, the second index is the
   ! var number
   type (Rhdf5Var) :: W, Press, TempC, Cwp, OutFilter, Xcoords, Ycoords, Zcoords, Tcoords
+  type (Rhdf5Var) :: MinP, StormX, StormY
   character (len=MediumString) :: Wfile, PressFile, TempFile, CwpFile
 
   integer :: i
@@ -213,14 +214,40 @@ program diag_filter
 
   if (DoCylVol) then
     ! Generate the storm center for all time steps
-    allocate (StmIx(1:Nt), StmIy(1:Nt), MinP(1:Nt))
-    call RecordStormCenter(Nx, Ny, Nz, Nt, Press%vdata, StmIx, StmIy, MinP)
+    MinP%vname = 'min_press'
+    MinP%ndims = 1
+    MinP%dims(1) = Nt
+    MinP%dimnames(1) = 't'
+    MinP%units = 'mb'
+    MinP%descrip = 'minimum SLP of storm'
+    allocate(MinP%vdata(Nt))
+    allocate (StmIx(1:Nt), StmIy(1:Nt))
+    call RecordStormCenter(Nx, Ny, Nz, Nt, Press%vdata, StmIx, StmIy, MinP%vdata)
+
+    StormX%vname = 'min_press_xloc'
+    StormX%ndims = 1
+    StormX%dims(1) = Nt
+    StormX%dimnames(1) = 't'
+    StormX%units = 'deg lon'
+    StormX%descrip = 'longitude location of minimum SLP of storm'
+    allocate(StormX%vdata(Nt))
+    
+    StormY%vname = 'min_press_yloc'
+    StormY%ndims = 1
+    StormY%dims(1) = Nt
+    StormY%dimnames(1) = 't'
+    StormY%units = 'deg lat'
+    StormY%descrip = 'latitude location of minimum SLP of storm'
+    allocate(StormY%vdata(Nt))
   
     do it = 1, Nt
       write (*,*) 'Timestep: ', it
       write (*,'(a,i3,a,i3,a,g,a,g,a)') '  Storm Center: (', StmIx(it), ', ', StmIy(it), &
          ') --> (', XcoordsKm(StmIx(it)), ', ', YcoordsKm(StmIy(it)), ')'
-      write (*,*) '  Minumum pressure: ', MinP(it)
+      write (*,*) '  Minumum pressure: ', MinP%vdata(it)
+
+      StormX%vdata(it) = Xcoords%vdata(StmIx(it))
+      StormY%vdata(it) = Ycoords%vdata(StmIy(it))
     end do
     write (*,*) ''
     flush(6)
@@ -270,12 +297,20 @@ program diag_filter
     end do
   end do
 
+  ! write out the filter data
   ! third arg to rhdf5_write is "append" flag:
   !   0 - create new file
   !   1 - append to existing file
   write (*,*) 'Writing HDF5 output: ', trim(OutFile)
   write (*,*) ''
   call rhdf5_write(OutFile, OutFilter, 0)
+
+  ! write out the location of the minimum pressure and the minimum pressure values
+  if (DoCylVol) then
+    call rhdf5_write(OutFile, MinP, 1)
+    call rhdf5_write(OutFile, StormX, 1)
+    call rhdf5_write(OutFile, StormY, 1)
+  endif
 
   ! write out the coordinate data
   call rhdf5_write(OutFile, Xcoords, 1)
@@ -291,6 +326,11 @@ program diag_filter
 
   ! attach the dimension specs to the output variable
   call rhdf5_attach_dimensions(OutFile, OutFilter)
+  if (DoCylVol) then
+    call rhdf5_attach_dimensions(OutFile, MinP)
+    call rhdf5_attach_dimensions(OutFile, StormX)
+    call rhdf5_attach_dimensions(OutFile, StormY)
+  endif
 
   stop
 
