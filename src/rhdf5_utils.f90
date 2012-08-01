@@ -88,7 +88,9 @@ end subroutine rhdf5_read_init
 !
 ! This routine will read the given variable out of the given HDF5 file.
 !
-! The caller is responsible for allocating the memory for the data buffer.
+! The allocation for the memory buffer (vdata) is done here, the caller
+! is responsible for deallocating this memory when done with the
+! variable.
 ! 
 subroutine rhdf5_read(fname, rvar)
   implicit none
@@ -98,6 +100,16 @@ subroutine rhdf5_read(fname, rvar)
 
   integer :: fileid
   character (len=RHDF5_MAX_STRING):: facc
+  integer :: i, nelem
+
+  ! Calculate the number of elements needed for the variable data
+  ! based on the dimensions of that variable.
+  nelem = 1
+  do i = 1, rvar%ndims
+    nelem = nelem * rvar%dims(i)
+  enddo
+
+  allocate(rvar%vdata(nelem))
 
   facc = 'R'
   call rhdf5_open_file(fname, facc, 0, fileid)
