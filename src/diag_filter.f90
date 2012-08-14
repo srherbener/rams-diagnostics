@@ -215,20 +215,25 @@ program diag_filter
   allocate(OutFilter%vdata(Nx*Ny*Nz*Nt))
 
   if (DoCylVol) then
-    ! save the radius of every point in the filter 3d field
+    ! save the radius of every point in the horizontal domain
     Radius%vname = 'radius'
-    Radius%ndims = 4
+    Radius%ndims = 3
     Radius%dims(1) = Nx
     Radius%dims(2) = Ny
-    Radius%dims(3) = Nz
-    Radius%dims(4) = Nt
+    Radius%dims(3) = Nt
     Radius%dimnames(1) = 'x'
     Radius%dimnames(2) = 'y'
-    Radius%dimnames(3) = 'z'
-    Radius%dimnames(4) = 't'
+    Radius%dimnames(3) = 't'
     Radius%units = 'km'
     Radius%descrip = 'radius from storm center'
-    allocate(Radius%vdata(Nx*Ny*Nz*Nt))
+    allocate(Radius%vdata(Nx*Ny*Nt))
+    do it = 1, Nt
+      do iy = 1, Ny
+        do ix = 1, Nx
+          call MultiDimAssign(Nx, Ny, Nz, Nt, ix, iy, iz, it, 0.0, Var2d=Radius%vdata)
+        enddo
+      enddo
+    enddo
 
     ! Generate the storm center for all time steps
     MinP%vname = 'min_press'
@@ -309,13 +314,11 @@ program diag_filter
             call MultiDimAssign(Nx, Ny, Nz, Nt, ix, iy, iz, it, 1.0, Var3d=OutFilter%vdata)
             if (DoCylVol) then
               ! save the radius value for the auxillary data file
-              call MultiDimAssign(Nx, Ny, Nz, Nt, ix, iy, iz, it, Rval, Var3d=Radius%vdata)
+              ! note that this re-writes the same horizontal radius values for each z level
+              call MultiDimAssign(Nx, Ny, Nz, Nt, ix, iy, iz, it, Rval, Var2d=Radius%vdata)
             endif
           else
             call MultiDimAssign(Nx, Ny, Nz, Nt, ix, iy, iz, it, 0.0, Var3d=OutFilter%vdata)
-            if (DoCylVol) then
-              call MultiDimAssign(Nx, Ny, Nz, Nt, ix, iy, iz, it, 0.0, Var3d=Radius%vdata)
-            endif
           end if
         end do
       end do
