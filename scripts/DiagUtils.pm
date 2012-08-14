@@ -19,6 +19,7 @@ sub ReadConfigFile
   my %TimeDirs;
   my %Vars;
   my %AzavgDiags;
+  my %FilterSpecs;
   my %Diags;
   my %Plots;
 
@@ -28,6 +29,9 @@ sub ReadConfigFile
   undef(%TimeDirs);
   undef(%Vars);
   undef(%AzavgDiags);
+  undef(%FilterSpecs);
+  undef(%Diags);
+  undef(%Plots);
 
   open(CONFIG, "$ConfigFile") or die "Cannot open '$ConfigFile' for reading: $!";
   while (<CONFIG>)
@@ -54,6 +58,10 @@ sub ReadConfigFile
       $AzavgDiags{$f[1]}{RMAX}   = $f[4];
       $AzavgDiags{$f[1]}{WMIN}   = $f[5];
       $AzavgDiags{$f[1]}{WMAX}   = $f[6];
+      }
+    elsif ($f[0] eq "Filter:")
+      {
+      $FilterSpecs{$f[1]} = [ @f[2..$#f] ];
       }
     elsif ($f[0] eq "Diag:")
       {
@@ -105,7 +113,7 @@ sub ReadConfigFile
     }
   close(CONFIG);
 
-  return(\%Cases, \%TimeDirs, \%Vars, \%AzavgDiags, \%Diags, \%Plots);
+  return(\%Cases, \%TimeDirs, \%Vars, \%AzavgDiags, \%FilterSpecs, \%Diags, \%Plots);
   }
 
 #######################################################################
