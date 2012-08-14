@@ -23,7 +23,7 @@ program diag_filter
   integer, parameter :: MediumString=256
   integer, parameter :: LittleString=128
 
-  character (len=LargeString) :: InDir, InSuffix, OutFile
+  character (len=LargeString) :: InDir, InSuffix, OutFile, AuxFile
 
   logical :: DoCylVol, DoCold, DoWarm, DoVertVel, DoAbsVertVel, DoCwp
 
@@ -39,7 +39,8 @@ program diag_filter
   ! data files: the first index is the file number, the second index is the
   ! var number
   type (Rhdf5Var) :: W, Press, TempC, Cwp, OutFilter, Xcoords, Ycoords, Zcoords, Tcoords
-  type (Rhdf5Var) :: MinP, StormX, StormY
+  type (Rhdf5Var) :: MinP, StormX, StormY, Radius
+  real :: Rval, Pval, Zval
   character (len=MediumString) :: Wfile, PressFile, TempFile, CwpFile
 
   integer :: i
@@ -51,7 +52,7 @@ program diag_filter
   logical :: SelectThisPoint
 
   ! Get the command line arguments
-  call GetMyArgs(InDir, InSuffix, OutFile, LargeString, DoCylVol, DoCold, DoWarm, DoVertVel, DoAbsVertVel, DoCwp, MinW, MaxW, CwpThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ)
+  call GetMyArgs(InDir, InSuffix, OutFile, LargeString, DoCylVol, DoCold, DoWarm, DoVertVel, DoAbsVertVel, DoCwp, MinW, MaxW, CwpThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, AuxFile)
 
   write (*,*) 'Creating HDF5 data filter:'
   write (*,*) '  Input directory: ', trim(InDir)
@@ -66,6 +67,7 @@ program diag_filter
     write (*,*) '      Maximum angle: ', MaxPhi
     write (*,*) '      Minimum height: ', MinZ
     write (*,*) '      Maximum height: ', MaxZ
+    write (*,*) '      Auxillary file: ', trim(AuxFile)
   endif
   if (DoCold) then
     write (*,*) '    Cold (T <= 0 deg C)'
@@ -213,6 +215,21 @@ program diag_filter
   allocate(OutFilter%vdata(Nx*Ny*Nz*Nt))
 
   if (DoCylVol) then
+    ! save the radius of every point in the filter 3d field
+    Radius%vname = 'radius'
+    Radius%ndims = 4
+    Radius%dims(1) = Nx
+    Radius%dims(2) = Ny
+    Radius%dims(3) = Nz
+    Radius%dims(4) = Nt
+    Radius%dimnames(1) = 'x'
+    Radius%dimnames(2) = 'y'
+    Radius%dimnames(3) = 'z'
+    Radius%dimnames(4) = 't'
+    Radius%units = 'km'
+    Radius%descrip = 'radius from storm center'
+    allocate(Radius%vdata(Nx*Ny*Nz*Nt))
+
     ! Generate the storm center for all time steps
     MinP%vname = 'min_press'
     MinP%ndims = 1
@@ -262,7 +279,8 @@ program diag_filter
           SelectThisPoint = .true.
           if (DoCylVol) then
             SelectThisPoint = SelectThisPoint .and. InsideCylVol(Nx, Ny, Nz, Nt, ix, iy, iz, it, &
-                  MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, XcoordsKm, YcoordsKm, Zcoords%vdata) 
+                  MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, &
+                  XcoordsKm, YcoordsKm, Zcoords%vdata, Rval, Pval, Zval) 
           end if
           if (DoCold) then
             SelectThisPoint = SelectThisPoint .and. &
@@ -289,8 +307,15 @@ program diag_filter
 
           if (SelectThisPoint) then
             call MultiDimAssign(Nx, Ny, Nz, Nt, ix, iy, iz, it, 1.0, Var3d=OutFilter%vdata)
+            if (DoCylVol) then
+              ! save the radius value for the auxillary data file
+              call MultiDimAssign(Nx, Ny, Nz, Nt, ix, iy, iz, it, Rval, Var3d=Radius%vdata)
+            endif
           else
             call MultiDimAssign(Nx, Ny, Nz, Nt, ix, iy, iz, it, 0.0, Var3d=OutFilter%vdata)
+            if (DoCylVol) then
+              call MultiDimAssign(Nx, Ny, Nz, Nt, ix, iy, iz, it, 0.0, Var3d=Radius%vdata)
+            endif
           end if
         end do
       end do
@@ -304,13 +329,6 @@ program diag_filter
   write (*,*) 'Writing HDF5 output: ', trim(OutFile)
   write (*,*) ''
   call rhdf5_write(OutFile, OutFilter, 0)
-
-  ! write out the location of the minimum pressure and the minimum pressure values
-  if (DoCylVol) then
-    call rhdf5_write(OutFile, MinP, 1)
-    call rhdf5_write(OutFile, StormX, 1)
-    call rhdf5_write(OutFile, StormY, 1)
-  endif
 
   ! write out the coordinate data
   call rhdf5_write(OutFile, Xcoords, 1)
@@ -326,10 +344,28 @@ program diag_filter
 
   ! attach the dimension specs to the output variable
   call rhdf5_attach_dimensions(OutFile, OutFilter)
+
+  ! Create the auxillary file if doing cylindrical volume filtering
   if (DoCylVol) then
-    call rhdf5_attach_dimensions(OutFile, MinP)
-    call rhdf5_attach_dimensions(OutFile, StormX)
-    call rhdf5_attach_dimensions(OutFile, StormY)
+    write (*,*) 'Writing auxillary HDF5 output: ', trim(AuxFile)
+    write (*,*) ''
+    ! vars
+    call rhdf5_write(AuxFile, MinP, 0)
+    call rhdf5_write(AuxFile, StormX, 1)
+    call rhdf5_write(AuxFile, StormY, 1)
+    call rhdf5_write(AuxFile, Radius, 1)
+
+    ! dims
+    call rhdf5_write(AuxFile, Xcoords, 1)
+    call rhdf5_write(AuxFile, Ycoords, 1)
+    call rhdf5_write(AuxFile, Zcoords, 1)
+    call rhdf5_write(AuxFile, Tcoords, 1)
+
+    ! attach dims
+    call rhdf5_attach_dimensions(AuxFile, MinP)
+    call rhdf5_attach_dimensions(AuxFile, StormX)
+    call rhdf5_attach_dimensions(AuxFile, StormY)
+    call rhdf5_attach_dimensions(AuxFile, Radius)
   endif
 
   stop
@@ -346,10 +382,10 @@ contains
 ! GetMyArgs()
 !
 
-subroutine GetMyArgs(InDir, InSuffix, OutFile, StringSize, DoCylVol, DoCold, DoWarm, DoVertVel, DoAbsVertVel, DoCwp, MinW, MaxW, CwpThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ)
+subroutine GetMyArgs(InDir, InSuffix, OutFile, StringSize, DoCylVol, DoCold, DoWarm, DoVertVel, DoAbsVertVel, DoCwp, MinW, MaxW, CwpThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, AuxFile)
   implicit none
 
-  character (len=*) :: InDir, InSuffix, OutFile
+  character (len=*) :: InDir, InSuffix, OutFile, AuxFile
   integer :: StringSize
   real :: MinW, MaxW, CwpThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ
   logical :: DoCylVol, DoCold, DoWarm, DoVertVel, DoAbsVertVel, DoCwp
@@ -378,6 +414,7 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, StringSize, DoCylVol, DoCold, DoW
   MaxPhi    = -1.0
   MinZ      = -1.0
   MaxZ      = -1.0
+  AuxFile = ''
 
   ! walk through the list of arguments
   !   see the USAGE string at the end of this routine
@@ -409,8 +446,8 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, StringSize, DoCylVol, DoCold, DoW
       if (FilterFunc .eq. 'cylvol') then
         DoCylVol = .true.
 
-        if ((i+5) .gt. Nargs) then
-          write (*,*) 'ERROR: not enough arguments (6) left to fully specify the clyvol <filter_spec>'
+        if ((i+6) .gt. Nargs) then
+          write (*,*) 'ERROR: not enough arguments (7) left to fully specify the clyvol <filter_spec>'
           BadArgs = .true.
         else
           ! have enough args
@@ -426,7 +463,8 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, StringSize, DoCylVol, DoCold, DoW
           read(Arg, '(f)') MinZ
           call getarg(i+5, Arg)
           read(Arg, '(f)') MaxZ
-          i = i + 6
+          call getarg(i+6, AuxFile)
+          i = i + 7
     
           if ((MinR .lt. 0.0) .or. (MaxR .lt. 0.0) .or. (MaxR .le. MinR)) then
             write (*,*) 'ERROR: <min_r> and <max_r> must be >= 0.0, and <max_r> must be > <min_r>'
@@ -545,11 +583,15 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, StringSize, DoCylVol, DoCold, DoW
     write (*,*) '        <filter_spec>: <filter> <filter_args>'
     write (*,*) ''
     write (*,*) '        <filter> <filter_args>:'
-    write (*,*) '            cylvol <min_r> <max_r> <min_phi> <max_phi> <min_z> <max_z>'
+    write (*,*) '            cylvol <min_r> <max_r> <min_phi> <max_phi> <min_z> <max_z> <aux_file>'
     write (*,*) '                Select data within a cylindrical (r,phi,z) volume centered on the storm center'
     write (*,*) '                  <min_r> <max_r> (in km)'
     write (*,*) '                  <max_phi> <max_phi> (in radians)'
     write (*,*) '                  <min_z> <max_z> (in m)'
+    write (*,*) ''
+    write (*,*) '                  <aux_file>: name of file to dump auxillary data into (r,phi,z for'
+    write (*,*) '                              each point in field, plus storm center location and'
+    write (*,*) '                              min pressure'
     write (*,*) '            cold'
     write (*,*) '                Select data within regions where T <= 0 deg C'
     write (*,*) '            warm'
