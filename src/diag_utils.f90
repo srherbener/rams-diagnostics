@@ -348,7 +348,7 @@ end subroutine
 ! volume relative to the storm center.
 !
 
-logical function InsideCylVol(Nx, Ny, Nz, Nt, Ix, Iy, Iz, It, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ,  StmIx, StmIy, Xcoords, Ycoords, Zcoords)
+logical function InsideCylVol(Nx, Ny, Nz, Nt, Ix, Iy, Iz, It, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ,  StmIx, StmIy, Xcoords, Ycoords, Zcoords, Radius, Phi, Z)
   implicit none
 
   real, parameter :: PI = 3.141592654
@@ -359,8 +359,9 @@ logical function InsideCylVol(Nx, Ny, Nz, Nt, Ix, Iy, Iz, It, MinR, MaxR, MinPhi
   real, dimension(1:Nx) :: Xcoords
   real, dimension(1:Ny) :: Ycoords
   real, dimension(1:Nz) :: Zcoords
+  real :: Radius, Phi, Z
 
-  real :: dX, dY, Radius, Phi, Z
+  real :: dX, dY
 
   dX = Xcoords(Ix) - Xcoords(StmIx(It))
   dY = Ycoords(Iy) - Ycoords(StmIy(It))
