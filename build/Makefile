@@ -46,7 +46,7 @@ DEST = $(HOME)/bin
 BINS = $(DEST)/diag_filter
 SRC_DIR = $(DFILT_HOME)/src
 
-SCRIPTS =
+SCRIPTS = $(DEST)/run_diag_filter
 
 #
 # Targets
@@ -59,6 +59,9 @@ $(DEST)/diag_filter: diag_filter.o
 
 diag_filter.o: $(SRC_DIR)/diag_filter.f90 $(RHDF5_LIB_FILE) $(RHDF5_MOD_FILE) $(DIAG_LIB_FILE) $(DIAG_MOD_FILE)
 	$(F_COMMAND) $(<)
+
+$(DEST)/run_diag_filter: $(SRC_DIR)/run_diag_filter
+	cp $(SRC_DIR)/run_diag_filter $(DEST)/run_diag_filter
 
 .f90.o:
 	$(F_COMP) $(F_COMP_OPTS) $(INCLUDES) -c $(<)
