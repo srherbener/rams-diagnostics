@@ -39,6 +39,7 @@ sub CreateFileNames
   my $InDir;
   my $InFileSuffix;
   my $OutFile;
+  my $AuxFile;
 
   my $Pattern;
   my @f;
@@ -61,8 +62,9 @@ sub CreateFileNames
   $InFileSuffix =~ s/.*\/w-/-/;
   
   $OutFile = "FILTERS/" . ${Tdir} . "/" . ${Fname} . "_" . ${Case} . ".h5";
+  $AuxFile = "FILTERS/" . ${Tdir} . "/" . ${Fname} . "_aux_" . ${Case} . ".h5";
 
-  return ($InDir, $InFileSuffix, $OutFile);
+  return ($InDir, $InFileSuffix, $OutFile, $AuxFile);
   }
 
 #######################################################################
@@ -92,6 +94,7 @@ my $Wmax;
 my $InDir;
 my $InFileSuffix;
 my $OutFile;
+my $AuxFile;
 
 my @SysArgs;
 my $OutDir;
@@ -127,7 +130,7 @@ foreach $Case (sort(keys(%$Cases)))
     # then join these files into the main file (above the time directories)
     foreach $Tdir (sort(keys(%$TimeDirs)))
       {
-      ($InDir,$InFileSuffix,$OutFile) = &CreateFileNames($Case, $Tdir, $Fname);
+      ($InDir,$InFileSuffix,$OutFile,$AuxFile) = &CreateFileNames($Case, $Tdir, $Fname);
 
       print "***************************************************************\n";
       print "Running diag_filter:\n";
@@ -137,6 +140,7 @@ foreach $Case (sort(keys(%$Cases)))
       print "  Input File Directory: $InDir\n";
       print "  Input File Suffix: $InFileSuffix\n";
       print "  Output File: $OutFile\n";
+      print "  Auxillary Output File: $AuxFile\n";
 
       # run diag_filter, make sure the output directory exists
       $OutDir = dirname($OutFile);
@@ -147,6 +151,10 @@ foreach $Case (sort(keys(%$Cases)))
         }
 
       @SysArgs = ("diag_filter", $InDir, $InFileSuffix, $OutFile, @Fspecs);
+      if ($Fspecs[0] eq "cylvol")
+        {
+        push(@SysArgs, $AuxFile);
+        }
       system(@SysArgs);
       }
     }
