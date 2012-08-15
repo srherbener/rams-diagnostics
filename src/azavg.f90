@@ -226,10 +226,10 @@ program azavg
     DeltaY = Ycoords(Ny) - Ycoords(1)
     RbandInc = MaxRadius / real(NumRbands)
 
-    Rcoords%vname = 'r_coords'
+    Rcoords%vname = 'x_coords'
     Rcoords%ndims = 1
     Rcoords%dims(1) = NumRbands
-    Rcoords%dimnames(1) = 'r'
+    Rcoords%dimnames(1) = 'x'
     Rcoords%units = 'degrees_east'
     Rcoords%descrip = 'radius in meters'
     allocate (Rcoords%vdata(NumRbands))
@@ -318,7 +318,7 @@ program azavg
     Zcoords%dims(1) = VarNz
     Zcoords%dimnames(1) = 'z'
     Zcoords%units = 'meter'
-    Zcoords%descrip = 'height'
+    Zcoords%descrip = 'sigma-z'
     allocate (Zcoords%vdata(VarNz))
     do iz = 1, VarNz
       Zcoords%vdata(iz) = real(iz)
@@ -346,10 +346,10 @@ program azavg
     MaxRadius = sqrt(TestGridX*TestGridX + TestGridY*TestGridY) / 2.0
     RbandInc = MaxRadius / real(NumRbands)
 
-    Rcoords%vname = 'r_coords'
+    Rcoords%vname = 'x_coords'
     Rcoords%ndims = 1
     Rcoords%dims(1) = NumRbands
-    Rcoords%dimnames(1) = 'r'
+    Rcoords%dimnames(1) = 'x'
     Rcoords%units = 'degrees_east'
     Rcoords%descrip = 'radius in meters'
     allocate (Rcoords%vdata(NumRbands))
@@ -402,12 +402,12 @@ program azavg
   Aavg%vname = trim(VarToAvg)
   Aavg%ndims = 4
   Aavg%dims(1) = NumRbands
-  Aavg%dims(2) = VarNz
-  Aavg%dims(3) = 1  ! dummy - need to fill in x axis for GRADS sake
+  Aavg%dims(2) = 1
+  Aavg%dims(3) = VarNz
   Aavg%dims(4) = Nt
-  Aavg%dimnames(1) = 'r'
-  Aavg%dimnames(2) = 'z'
-  Aavg%dimnames(3) = 'd'
+  Aavg%dimnames(1) = 'x'
+  Aavg%dimnames(2) = 'y'
+  Aavg%dimnames(3) = 'z'
   Aavg%dimnames(4) = 't'
   Aavg%units = Avar%units 
   Aavg%descrip = 'azimuthally averaged ' // trim(VarToAvg) 
@@ -425,10 +425,10 @@ program azavg
 
   ! write out the coordinate data
   ! need to create a dummy y coordinate to keep grads happy
-  Dcoords%vname = 'd_coords'
+  Dcoords%vname = 'y_coords'
   Dcoords%ndims = 1
   Dcoords%dims(1) = 1
-  Dcoords%dimnames(1) = 'd'
+  Dcoords%dimnames(1) = 'y'
   Dcoords%units = 'degrees_north'
   Dcoords%descrip = 'dummy coordinates'
   allocate (Dcoords%vdata(1))
