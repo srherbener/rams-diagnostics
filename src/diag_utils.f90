@@ -88,8 +88,8 @@ end subroutine
 ! z and t point.
 !
 
-subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, AvarNz, NumRbands, W, StmIx, StmIy, MinP, Avar, AzAvg, &
-          Xcoords, Ycoords, MaxRadius, RbandInc, WfilterMin, WfilterMax, UndefVal)
+subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, AvarNz, NumRbands, Avar, AzAvg, &
+  RbandInc, Filter, Radius, UndefVal)
 
   use rhdf5_utils
   implicit none
@@ -97,63 +97,24 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, AvarNz, NumRbands, W, StmIx, StmIy, 
   integer :: Nx, Ny, Nz, Nt
   integer :: AvarNz
   integer :: NumRbands
-  real, dimension(Nx,Ny,Nz,Nt) :: W
   real, dimension(Nx,Ny,AvarNz,Nt) :: Avar
   real, dimension(NumRbands,AvarNz,Nt) :: AzAvg
-  integer, dimension(Nt) :: StmIx, StmIy
-  real, dimension(Nt) :: MinP
-  real, dimension(Nx) :: Xcoords
-  real, dimension(Ny) :: Ycoords
-  real :: MaxRadius, RbandInc, WfilterMin, WfilterMax, UndefVal
+  real, dimension(Nx,Ny,Nz,Nt) :: Filter
+  real, dimension(Nx,Ny,Nt) :: Radius
+  real :: RbandInc, UndefVal
 
   integer :: ix, iy, iz, it
   real, dimension(NumRbands) :: Rcounts
   integer :: ir, iRband
-  real :: DeltaX, DeltaY, Radius
-  real, dimension(Nx,Ny,Nt) :: WmaxVals, WminVals
-  real :: Wmax, Wmin
 
-  ! Mask the input data (Avar) with the W data, ie if the corresponding
-  ! W data is outside the interval defined by WfilterMin, WfilterMax,
-  ! use the Avar data in the averaging; otherwise skip the Avar data
+  ! Mask the input data (Avar) with the Filter data, ie if the corresponding
   !
   ! The storm center is taken to be the min pressure location of the
   ! x-y plane on the surface (iz .eq. 1)
 
-  ! We want to filter where convection is likely taking place. Approximating
-  ! this by filtering on larger w values. However, the larger w values won't
-  ! persist through the entire vertical column. Handle this by finding the 
-  ! min and max w at each time step in each column - and use these values
-  ! to do the filtering.
-
-  do it = 1, Nt
-    do ix = 1, Nx
-      do iy = 1, Ny
-        Wmax = W(ix,iy,1,it)
-        Wmin = W(ix,iy,1,it)
-        do iz = 2, Nz
-          if (W(ix,iy,iz,it) .gt. Wmax) then
-            Wmax = W(ix,iy,iz,it)
-          end if
-          if (W(ix,iy,iz,it) .lt. Wmin) then
-            Wmin = W(ix,iy,iz,it)
-          end if
-        end do
-        WmaxVals(ix,iy,it) = Wmax
-        WminVals(ix,iy,it) = Wmin
-      end do
-    end do
-  end do
-
   write (*,*) 'Averaging Data:'
 
   do it = 1, Nt
-    !if (modulo(it,10) .eq. 0) then
-      write (*,*) '  Timestep: ', it
-      write (*,'(a,i3,a,i3,a,g,a,g,a)') '    Storm Center: (', StmIx(it), ', ', StmIy(it), ') --> (', &
-          Xcoords(StmIx(it)), ', ', Ycoords(StmIy(it)), ')'
-      write (*,*) '    Minimum Pressue: ', MinP(it)
-    !endif
     do iz = 1, AvarNz
       ! For the averaging
       do ir = 1, NumRbands
@@ -164,26 +125,17 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, AvarNz, NumRbands, W, StmIx, StmIy, 
       ! Get the averages for this x-y plane
       do iy = 1, Ny
         do ix = 1, Nx
-          ! Only keep the points where W max or W min are outside the filter interval
-          if (((WmaxVals(ix,iy,it) .gt. WfilterMax) .or. &
-               (WminVals(ix,iy,it) .lt. WfilterMin)) .and. &
-              (Avar(ix,iy,iz,it) .ne. UndefVal)) then
-
-             DeltaX = Xcoords(ix)-Xcoords(StmIx(it))
-             DeltaY = Ycoords(iy)-Ycoords(StmIy(it))
-             Radius = sqrt(DeltaX*DeltaX + DeltaY*DeltaY)
-             iRband = int(Radius / RbandInc) + 1
+          ! Only keep the points where Filter is equal to 1
+          if ((anint(Filter(ix,iy,iz,it)) .eq. 1.0) .and. (Avar(ix,iy,iz,it) .ne. UndefVal)) then
+             iRband = int(Radius(ix,iy,it) / RbandInc) + 1
              ! iRband will go from 1 to n, but n might extend beyond the last radial
              ! band due to approximations made in deriving RbandInc
              if (iRband .gt. NumRbands) then
                iRband = NumRbands
              end if
 
-             ! only keep data inside MaxRadius
-             if (Radius .le. MaxRadius) then
-               AzAvg(iRband,iz,it) = AzAvg(iRband,iz,it) + Avar(ix,iy,iz,it)
-               Rcounts(iRband) = Rcounts(iRband) + 1.0
-             endif
+             AzAvg(iRband,iz,it) = AzAvg(iRband,iz,it) + Avar(ix,iy,iz,it)
+             Rcounts(iRband) = Rcounts(iRband) + 1.0
           end if
         end do
       end do
@@ -213,12 +165,12 @@ end subroutine
 ! into tangential or radial components given the storm center location.
 !
 
-subroutine ConvertHorizVelocity(Nx, Ny, Nz, Nt, U, V, StmIx, StmIy, Xcoords, Ycoords, Avar, DoTangential)
+subroutine ConvertHorizVelocity(Nx, Ny, Nz, Nt, U, V, StormX, StormY, Xcoords, Ycoords, Avar, DoTangential)
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
   real, dimension(Nx,Ny,Nz,Nt) :: U, V, Avar
-  integer, dimension(Nt) :: StmIx, StmIy
+  real, dimension(Nt) :: StormX, StormY
   real, dimension(Nx) :: Xcoords
   real, dimension(Ny) :: Ycoords
   logical :: DoTangential
@@ -231,9 +183,9 @@ subroutine ConvertHorizVelocity(Nx, Ny, Nz, Nt, U, V, StmIx, StmIy, Xcoords, Yco
   do it = 1, Nt
     do iz = 1, Nz
       do iy = 1, Ny
-        StmY = Ycoords(iy) - Ycoords(StmIy(it))
+        StmY = Ycoords(iy) - StormY(it)
         do ix = 1, Nx
-          StmX = Xcoords(ix) - Xcoords(StmIx(it))
+          StmX = Xcoords(ix) - StormX(it)
 
           WindX = U(ix,iy,iz,it)
           WindY = V(ix,iy,iz,it)
@@ -574,5 +526,105 @@ subroutine MultiDimAssign(Nx, Ny, Nz, Nt, ix, iy, iz, it, Val, Var2d, Var3d)
 
   return
 end subroutine MultiDimAssign
+
+!******************************************************************
+! CreateFilter()
+!
+! This subroutine will take the list of filter files and perform
+! a logical intersection of the filters contained within these files.
+!
+subroutine CreateFilter(Nfiles, FilterFiles, Filter)
+  use rhdf5_utils
+  implicit none
+
+  integer :: Nfiles
+  character (len=*), dimension(Nfiles) :: FilterFiles
+  type (Rhdf5Var) :: Filter, CurFilter
+
+  integer :: i, ielem, Nelem
+
+  ! read the first file into Filter directly, then if more files are in
+  ! the list, do a logical intersection with these and what is in Filter
+  Filter%vname = 'filter'
+  call rhdf5_read_init(FilterFiles(1), Filter)
+  call rhdf5_read(FilterFiles(1), Filter)
+
+  ! figure out how many elements exist in Fitler and assume that
+  ! all the filter files have the same number
+  Nelem = 1
+  do i = 1, Filter%ndims
+    Nelem = Nelem * Filter%dims(i)
+  enddo
+
+  do i = 2, Nfiles
+    CurFilter%vname = 'filter'
+    call rhdf5_read_init(FilterFiles(i), CurFilter)
+    call rhdf5_read(FilterFiles(i), CurFilter)
+
+    ! filters are all 1's and 0's so use multiplication to do the logical intersection
+    do ielem = 1, Nelem
+      Filter%vdata(ielem) = Filter%vdata(ielem) * CurFilter%vdata(ielem)
+    enddo
+
+    deallocate(CurFilter%vdata)
+  enddo
+
+  return
+end subroutine CreateFilter
+
+!******************************************************************
+! ConvertStormCenter()
+!
+! This subroutine will take the Lat/Lon values for the storm center
+! and convert them to km values according to the lon/x and lat/y
+! data.
+!
+! This routine is not very efficient so it relies on Nx, Ny and Nt
+! remaining small.
+!
+subroutine ConvertStormCenter(Nx, Ny, Nt, Lon, Xcoords, StormLon, StormX, &
+      Lat, Ycoords, StormLat, StormY)
+  implicit none
+
+  integer :: Nx, Ny, Nt
+  real, dimension(Nx) :: Lon, Xcoords
+  real, dimension(Ny) :: Lat, Ycoords
+  real, dimension(Nt) :: StormLon, StormX, StormLat, StormY
+
+  integer :: ix, iy, it
+
+  do it = 1, Nt
+    StormX(it) = Xcoords(FindIndex(Nx, Lon, StormLon(it)))
+    StormY(it) = Ycoords(FindIndex(Ny, Lat, StormLat(it)))
+  enddo
+
+  return
+end subroutine ConvertStormCenter
+
+!*****************************************************************
+! FindIndex()
+!
+! This function returns the index in the Coords array where Val
+! is located. This function assumes that Val exists in Coords.
+!
+integer function FindIndex(N, Coords, Val)
+  implicit none
+
+  integer :: N
+  real, dimension(N) :: Coords
+  real :: Val
+
+  integer :: i
+
+  FindIndex = 0
+  do i = 1, N
+    if (Coords(i) .eq. Val) then
+      FindIndex = i
+      exit
+    endif
+  enddo
+
+  return
+end function FindIndex
 
 end module diag_utils
