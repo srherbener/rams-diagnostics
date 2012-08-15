@@ -230,8 +230,8 @@ program azavg
     Rcoords%ndims = 1
     Rcoords%dims(1) = NumRbands
     Rcoords%dimnames(1) = 'r'
-    Rcoords%units = 'meter'
-    Rcoords%descrip = 'radius'
+    Rcoords%units = 'degrees_east'
+    Rcoords%descrip = 'radius in meters'
     allocate (Rcoords%vdata(NumRbands))
     do ix = 1, NumRbands
       Rcoords%vdata(ix) = real(ix) * RbandInc * 1000.0
@@ -350,8 +350,8 @@ program azavg
     Rcoords%ndims = 1
     Rcoords%dims(1) = NumRbands
     Rcoords%dimnames(1) = 'r'
-    Rcoords%units = 'meter'
-    Rcoords%descrip = 'radius'
+    Rcoords%units = 'degrees_east'
+    Rcoords%descrip = 'radius in meters'
     allocate (Rcoords%vdata(NumRbands))
     do ix = 1, NumRbands
       Rcoords%vdata(ix) = real(ix) * 5.0 * 1000.0
@@ -429,20 +429,20 @@ program azavg
   Dcoords%ndims = 1
   Dcoords%dims(1) = 1
   Dcoords%dimnames(1) = 'd'
-  Dcoords%units = 'meter'
+  Dcoords%units = 'degrees_north'
   Dcoords%descrip = 'dummy coordinates'
   allocate (Dcoords%vdata(1))
   Dcoords%vdata(1) = 0.0
   
   call rhdf5_write(OutFile, Rcoords, 1)
-  call rhdf5_write(OutFile, Zcoords, 1)
   call rhdf5_write(OutFile, Dcoords, 1)
+  call rhdf5_write(OutFile, Zcoords, 1)
   call rhdf5_write(OutFile, Tcoords, 1)
 
   ! set up four (x,y,z,t) dimensions for use by GRADS
   call rhdf5_set_dimension(OutFile, Rcoords, 'x')
-  call rhdf5_set_dimension(OutFile, Zcoords, 'y')
-  call rhdf5_set_dimension(OutFile, Dcoords, 'z')
+  call rhdf5_set_dimension(OutFile, Dcoords, 'y')
+  call rhdf5_set_dimension(OutFile, Zcoords, 'z')
   call rhdf5_set_dimension(OutFile, Tcoords, 't')
 
   ! attach the dimension specs to the output variable

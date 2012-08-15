@@ -37,11 +37,13 @@ use DiagUtils;
 #
 sub CreateFileNames
   {
-  my ($Case, $Tdir, $Adiag) = @_;
+  my ($Case, $Tdir, $Adiag, $Fprefix) = @_;
   
   my $InDir;
   my $InFileSuffix;
   my $OutFile;
+  my $FilterFile;
+  my $RadiusFile;
 
   my $Pattern;
   my @f;
@@ -64,8 +66,10 @@ sub CreateFileNames
   $InFileSuffix =~ s/.*\/w-/-/;
   
   $OutFile = "AzAveragedData/" . ${Tdir} . "/" . ${Adiag} . "_" . ${Case} . ".h5";
+  $FilterFile = "FILTERS/" . ${Tdir} . "/" . ${Fprefix} . "_" . ${Case} . ".h5";
+  $RadiusFile = "FILTERS/" . ${Tdir} . "/" . ${Fprefix} . "_aux_" . ${Case} . ".h5";
 
-  return ($InDir, $InFileSuffix, $OutFile);
+  return ($InDir, $InFileSuffix, $OutFile, $FilterFile, $RadiusFile);
   }
 
 #######################################################################
@@ -86,14 +90,14 @@ my $Case;
 my $Tdir;
 my $Adiag;
 my $RevuVar;
-my $MaxRadius;
 my $VarDim;
 my $Nbands;
-my $Wmin;
-my $Wmax;
+my $Fprefix;
 my $InDir;
 my $InFileSuffix;
 my $OutFile;
+my $FilterFile;
+my $RadiusFile;
 
 my @SysArgs;
 my $OutDir;
@@ -127,9 +131,7 @@ foreach $Case (sort(keys(%$Cases)))
 
     $VarDim = $$AzavgDiags{$Adiag}{DIM};
     $Nbands = $$AzavgDiags{$Adiag}{NBANDS};
-    $MaxRadius = $$AzavgDiags{$Adiag}{RMAX};
-    $Wmin = $$AzavgDiags{$Adiag}{WMIN};
-    $Wmax = $$AzavgDiags{$Adiag}{WMAX};
+    $Fprefix = $$AzavgDiags{$Adiag}{FILTER};
     if (($Adiag eq "speed_t") || ($Adiag eq "speed_r"))
       {
       # use a dummy name, azavg will ignore $RevuVar when doing 'speed_t' or 'speed_r'
@@ -144,7 +146,8 @@ foreach $Case (sort(keys(%$Cases)))
     # then join these files into the main file (above the time directories)
     foreach $Tdir (sort(keys(%$TimeDirs)))
       {
-      ($InDir,$InFileSuffix,$OutFile) = &CreateFileNames($Case, $Tdir, $Adiag);
+      ($InDir,$InFileSuffix,$OutFile,$FilterFile,$RadiusFile) =
+          &CreateFileNames($Case, $Tdir, $Adiag,$Fprefix);
 
       print "***************************************************************\n";
       print "Running azavg:\n";
@@ -153,9 +156,8 @@ foreach $Case (sort(keys(%$Cases)))
       print "  Diagnostic: $Adiag\n";
       print "    Variable Dimension: $VarDim\n";
       print "    Number Radial Bands: $Nbands\n";
-      print "    Maximum Radius: $MaxRadius\n";
-      print "    W Filter Min: $Wmin\n";
-      print "    W Filter Max: $Wmax\n";
+      print "    Filter File Name: $FilterFile\n";
+      print "    Radius File Name: $RadiusFile\n";
       print "    Revu Variable Name: $RevuVar\n";
       print "  Input File Directory: $InDir\n";
       print "  Input File Suffix: $InFileSuffix\n";
@@ -169,7 +171,7 @@ foreach $Case (sort(keys(%$Cases)))
         system(@SysArgs);
         }
 
-      @SysArgs = ("azavg", $InDir, $InFileSuffix, $OutFile, $Nbands, $MaxRadius, $Wmin, $Wmax, $Adiag, $RevuVar, $VarDim);
+      @SysArgs = ("azavg", $InDir, $InFileSuffix, $OutFile, $FilterFile, $RadiusFile, $Nbands, $Adiag, $RevuVar, $VarDim);
       system(@SysArgs);
 
       # record the input file for the upcoming join
