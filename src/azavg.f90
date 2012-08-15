@@ -35,6 +35,8 @@ program azavg
   character (len=MediumString) :: InDir
   character (len=MediumString) :: InSuffix
   character (len=MediumString) :: OutFile
+  character (len=MediumString) :: FilterFile
+  character (len=MediumString) :: RadiusFile
   character (len=LittleString) :: VarToAvg, RevuVar
   logical :: DoHorizVel, DoTangential
 
@@ -45,10 +47,11 @@ program azavg
   ! data files: the first index is the file number, the second index is the
   ! var number
 
-  type (Rhdf5Var) :: U, V, W, Press, Avar, Aavg, Rcoords, Zcoords, Tcoords, Dcoords, Lon, Lat
-  character (len=MediumString) :: Ufile, Vfile, Wfile, PressFile, AvarFile, AavgFile
+  type (Rhdf5Var) :: U, V, Avar, Aavg, Rcoords, Zcoords, Tcoords, Dcoords, Lon, Lat
+  type (Rhdf5Var) :: Filter, Radius, StormLon, StormLat
+  character (len=MediumString) :: Ufile, Vfile, AvarFile, AavgFile
   integer, dimension(:), allocatable :: StmIx, StmIy
-  real, dimension(:), allocatable :: MinP, Xcoords, Ycoords
+  real, dimension(:), allocatable :: MinP, Xcoords, Ycoords, StormX, StormY
 
   integer :: i
   logical :: VarIs2d
@@ -60,16 +63,16 @@ program azavg
   real :: TestData, TestGridX, TestGridY
 
   ! Get the command line arguments
-  call GetMyArgs(InDir, InSuffix, OutFile, NumRbands, MaxRadius, WfilterMin, WfilterMax, VarToAvg, &
+  call GetMyArgs(InDir, InSuffix, OutFile, FilterFile, RadiusFile, NumRbands, VarToAvg, &
     RevuVar, DoHorizVel, DoTangential, VarIs2d)
 
   write (*,*) 'Calculating azimuthal average for RAMS data:'
   write (*,*) '  Input directory: ', trim(InDir)
   write (*,*) '  Input file name suffix: ', trim(InSuffix)
   write (*,*) '  Output file name:  ', trim(OutFile)
+  write (*,*) '  Filter file name: ', trim(FilterFile)
+  write (*,*) '  Radius file name:  ', trim(RadiusFile)
   write (*,*) '  Number of radial bands: ', NumRbands
-  write (*,*) '  Maximum radius: ', MaxRadius
-  write (*,*) '  W filter interval :     ', WfilterMin, WfilterMax
   if (DoHorizVel) then
     if (DoTangential) then
       write (*,*) '  RAMS variable that is being averaged: Tangential Horizontal Velocity'
@@ -87,24 +90,22 @@ program azavg
   end if
   write (*,*) ''
 
-
   if (trim(VarToAvg) /= 'test') then
     ! Not running a test so grab the data from HDF5 input files and perform the averaging.
 
     ! Read the variable information from the HDF5 files and check for consistency.
     !
-    ! Always use w (filtering) and press (find storm center).
+    ! Always use filter and radius files
     !
     ! If doing horizontal velocity, ie VarToAvg is 'speed_t' or 'speed_r', set up U and V
     ! otherwise set up the variable named in VarToAvg
     !
-    Wfile = trim(InDir) // '/w' // trim(InSuffix)
-    W%vname = 'w'
-    call rhdf5_read_init(Wfile, W)
 
-    PressFile = trim(InDir) // '/sea_press' // trim(InSuffix)
-    Press%vname = 'sea_press'
-    call rhdf5_read_init(PressFile, Press)
+    Filter%vname = 'filter'
+    call rhdf5_read_init(FilterFile, Filter)
+
+    Radius%vname = 'radius'
+    call rhdf5_read_init(RadiusFile, Radius)
 
     if (DoHorizVel) then
       Ufile = trim(InDir) // '/u' // trim(InSuffix)
@@ -113,8 +114,6 @@ program azavg
 
       Zcoords%vname = 'z_coords'
       call rhdf5_read_init(Ufile, Zcoords)
-      Tcoords%vname = 't_coords'
-      call rhdf5_read_init(Ufile, Tcoords)
 
       Vfile = trim(InDir) // '/v' // trim(InSuffix)
       V%vname = 'v'
@@ -138,8 +137,6 @@ program azavg
 
       Zcoords%vname = 'z_coords'
       call rhdf5_read_init(AvarFile, Zcoords)
-      Tcoords%vname = 't_coords'
-      call rhdf5_read_init(AvarFile, Tcoords)
     endif
 
     ! check that the variable dimensions (size and coordinate values) match up, if this
@@ -147,24 +144,24 @@ program azavg
     !
     ! third arg of GvarDimsMatch() is true if one of the vars is 2D, else false
     if (DoHorizVel) then
-      if (.not. (DimsMatch(W, U) .and. DimsMatch(W, V) .and. &
-                 DimsMatch(W, Press))) then
-        write (*,*) 'ERROR: dimensions of u, v, w, and press do not match'
+      if (.not. (DimsMatch(Filter, U) .and. DimsMatch(Filter, V) .and. &
+                 DimsMatch(Filter, Radius))) then
+        write (*,*) 'ERROR: dimensions of u, v, filter, and radius do not match'
         stop
       endif
     else
-      if (.not. (DimsMatch(W, Press) .and. DimsMatch(W, Avar))) then
-        write (*,*) 'ERROR: dimensions of w, press, and ', trim(VarToAvg), ' do not match'
+      if (.not. (DimsMatch(Filter, Radius) .and. DimsMatch(Filter, Avar))) then
+        write (*,*) 'ERROR: dimensions of filter, radius, and ', trim(VarToAvg), ' do not match'
         stop
       endif
     endif
  
-    ! Always read in W so use it to record Nx, Ny, Nz, Nt. At this point we have verified
+    ! Always read in Filter so use it to record Nx, Ny, Nz, Nt. At this point we have verified
     ! that Nx, Ny, Nz, Nt are consitent for all the variables.
-    Nx = W%dims(1)
-    Ny = W%dims(2)
-    Nz = W%dims(3)
-    Nt = W%dims(4)
+    Nx = Filter%dims(1)
+    Ny = Filter%dims(2)
+    Nz = Filter%dims(3)
+    Nt = Filter%dims(4)
     if (Avar%ndims .eq. 4) then
       VarNz = Avar%dims(3)
     else
@@ -183,18 +180,27 @@ program azavg
   
     write (*,*) ''
 
-    ! Read in the longitude and latitude values, use the W file
+    ! Read in the longitude and latitude values, use the Filter file
     Lon%vname = 'x_coords'
-    call rhdf5_read_init(Wfile, Lon)
-    call rhdf5_read(Wfile, Lon)
+    call rhdf5_read_init(FilterFile, Lon)
+    call rhdf5_read(FilterFile, Lon)
     
     Lat%vname = 'y_coords'
-    call rhdf5_read_init(Wfile, Lat)
-    call rhdf5_read(Wfile, Lat)
+    call rhdf5_read_init(FilterFile, Lat)
+    call rhdf5_read(FilterFile, Lat)
+
+    ! Get the time values
+    Tcoords%vname = 't_coords'
+    call rhdf5_read_init(FilterFile, Tcoords)
+    call rhdf5_read(FilterFile, Tcoords)
+
+    ! read in the radius data
+    write (*,*) 'Reading variable: radius'
+    write (*,*) '  HDF5 file: ', trim(RadiusFile)
+    write (*,*) ''
+    call rhdf5_read(RadiusFile, Radius)
 
     ! Convert the GRADS grid coordinates from longitude, latitude to flat plane (x and y).
-    ! Always have W which has been verified to be consistent with all other vars
-    ! so use W for this call
     ! Xcoords, Ycoords are in units of km
     allocate(Xcoords(Nx))
     allocate(Ycoords(Ny))
@@ -209,6 +215,13 @@ program azavg
   
     ! Figure out how big to make each radial band. Assume that the storm center stays near
     ! the center of the grid domain.
+    MaxRadius = 0.0
+    do i = 1, Nt*Ny*Nx
+      if (Radius%vdata(i) .gt. MaxRadius) then
+        MaxRadius = Radius%vdata(i)
+      endif
+    enddo
+    MaxRadius = anint(MaxRadius)  ! round to nearest integer
     DeltaX = Xcoords(Nx) - Xcoords(1)
     DeltaY = Ycoords(Ny) - Ycoords(1)
     RbandInc = MaxRadius / real(NumRbands)
@@ -231,21 +244,33 @@ program azavg
     write (*,*) '  Radial band increment: ', RbandInc
     write (*,*) ''
   
+    ! StormLon and StormLat are in the RadiusFile
+    StormLon%vname = 'min_press_xloc'
+    call rhdf5_read_init(RadiusFile, StormLon)
+    call rhdf5_read(RadiusFile, StormLon)
+
+    StormLat%vname = 'min_press_yloc'
+    call rhdf5_read_init(RadiusFile, StormLat)
+    call rhdf5_read(RadiusFile, StormLat)
+
+    ! Convert the lat/lon values to x/y values
+    allocate(StormX(Nt))
+    allocate(StormY(Nt))
+    call ConvertStormCenter(Nx, Ny, Nt, Lon%vdata, Xcoords, StormLon%vdata, StormX, &
+      Lat%vdata, Ycoords, StormLat%vdata, StormY)
+
+    ! Dump out the storm center locations
+    write (*,*) 'Storm center:'
+    do it = 1, Nt
+      write (*,'(a,5f15.4)') '  time, lat, lon, x, y: ', Tcoords%vdata(it), StormLon%vdata(it), StormLat%vdata(it), StormX(it), StormY(it)
+    enddo
+    write (*,*) ''
+
     ! Read in the data for the vars
-    write (*,*) 'Reading variable: w'
-    write (*,*) '  HDF5 file: ', trim(Wfile)
+    write (*,*) 'Reading variable: filter'
+    write (*,*) '  HDF5 file: ', trim(FilterFile)
     write (*,*) ''
-    call rhdf5_read(Wfile, W)
-
-    write (*,*) 'Reading variable: sea_press'
-    write (*,*) '  HDF5 file: ', trim(PressFile)
-    write (*,*) ''
-    call rhdf5_read(PressFile, Press)
-
-    allocate(StmIx(Nt))
-    allocate(StmIy(Nt))
-    allocate(MinP(Nt))
-    call RecordStormCenter(Nx, Ny, Nz, Nt, Press%vdata, StmIx, StmIy, MinP)
+    call rhdf5_read(FilterFile, Filter)
 
     if (DoHorizVel) then
       write (*,*) 'Reading variable: u'
@@ -254,7 +279,6 @@ program azavg
       call rhdf5_read(Ufile, U)
 
       call rhdf5_read(Ufile, Zcoords)
-      call rhdf5_read(Ufile, Tcoords)
 
       write (*,*) 'Reading variable: v'
       write (*,*) '  HDF5 file: ', trim(Vfile)
@@ -262,7 +286,7 @@ program azavg
       call rhdf5_read(Vfile, V)
 
       allocate(Avar%vdata(Nx*Ny*VarNz*Nt))
-      call ConvertHorizVelocity(Nx, Ny, VarNz, Nt, U%vdata, V%vdata, StmIx, StmIy, &
+      call ConvertHorizVelocity(Nx, Ny, VarNz, Nt, U%vdata, V%vdata, StormX, StormY, &
         Xcoords, Ycoords, Avar%vdata, DoTangential)
     else
       write (*,*) 'Reading variable: ', trim(VarToAvg)
@@ -271,7 +295,6 @@ program azavg
       call rhdf5_read(AvarFile, Avar)
 
       call rhdf5_read(AvarFile, Zcoords)
-      call rhdf5_read(AvarFile, Tcoords)
     end if
 
   else
@@ -289,7 +312,7 @@ program azavg
     VarNz = Nz
     Nt = 5
 
-    allocate (W%vdata(Nx*Ny*Nz*Nt))
+!    allocate (W%vdata(Nx*Ny*Nz*Nt))
 
     Zcoords%ndims = 1
     Zcoords%dims(1) = VarNz
@@ -359,7 +382,7 @@ program azavg
 
             ! Fill up W with the it value so you can see if screening works with different
             ! WfilterMin, WfilterMax values
-            W%vdata(ilin) = real(it)
+!            W%vdata(ilin) = real(it)
 
             ! Make the data match the radial band number after the averaging takes place.
             !   int(sqrt(DeltaX*DeltaX + DeltaY*DeltaY) / RbandInc) + 1) gives you the radial band number
@@ -390,8 +413,8 @@ program azavg
   Aavg%descrip = 'azimuthally averaged ' // trim(VarToAvg) 
   allocate(Aavg%vdata(NumRbands*VarNz*Nt))
 
-  call AzimuthalAverage(Nx, Ny, Nz, Nt, VarNz, NumRbands, W%vdata, StmIx, StmIy, MinP, &
-    Avar%vdata, Aavg%vdata, Xcoords, Ycoords, MaxRadius, RbandInc, WfilterMin, WfilterMax, UndefVal)
+  call AzimuthalAverage(Nx, Ny, Nz, Nt, VarNz, NumRbands, Avar%vdata, Aavg%vdata, &
+    RbandInc, Filter%vdata, Radius%vdata, UndefVal)
 
   ! third arg to rhdf5_write is "append" flag:
   !   0 - create new file
@@ -435,30 +458,28 @@ Contains
 ! This routine will read in the command line arguments
 !
 
-subroutine GetMyArgs(InDir, InSuffix, OutFile, NumRbands, MaxRadius, WfilterMin, WfilterMax, &
-  VarToAvg, RevuVar, DoHorizVel, DoTangential, VarIs2d)
+subroutine GetMyArgs(InDir, InSuffix, OutFile, FilterFile, RadiusFile, NumRbands, VarToAvg, &
+    RevuVar, DoHorizVel, DoTangential, VarIs2d)
 
   implicit none
 
   integer :: NumRbands
-  real :: MaxRadius, WfilterMin, WfilterMax
-  character (len=*) :: InDir, InSuffix, OutFile, VarToAvg, RevuVar
+  character (len=*) :: InDir, InSuffix, OutFile, FilterFile, RadiusFile, VarToAvg, RevuVar
   logical :: DoHorizVel, DoTangential, VarIs2d
 
   integer :: iargc
   character (len=128) :: arg
 
-  if (iargc() .ne. 10) then
-    write (*,*) 'ERROR: must supply exactly 10 arguments'
+  if (iargc() .ne. 9) then
+    write (*,*) 'ERROR: must supply exactly 9 arguments'
     write (*,*) ''
-    write (*,*) 'USAGE: azavg <in_dir> <in_suffix> <out_data_file> <num_radial_bands> <max_radius> <w_fliter_min> <w_filter_max> <var_to_average> <dim_of_var>'
+    write (*,*) 'USAGE: azavg <in_dir> <in_suffix> <out_data_file> <filter_file> <radius_file> <num_radial_bands> <var_to_average> <revu_var_name> <dim_of_var>'
     write (*,*) '        <in_dir>: directory where input files live'
     write (*,*) '        <in_suffix>: suffix on input file names'
     write (*,*) '        <out_file>: name of output file, HDF5 format'
+    write (*,*) '        <filter_file_list>: file containing the filter mask'
+    write (*,*) '        <radius_file>: name of file containing radius information, HDF5 format'
     write (*,*) '        <num_radial_bands>: number of bands to split data into'
-    write (*,*) '        <max_radius>: maximum radius from storm center in km'
-    write (*,*) '        <w_filter_min>: min (left end) of interval used to filter out data in m/s'
-    write (*,*) '        <w_filter_max>: max (right end) of interval used to filter out data in m/s'
     write (*,*) '        <var_to_average>: name of variable to do the averaging on'
     write (*,*) '        <revu_var_name>: name of variable in the REVU file'
     write (*,*) '        <dim_of_var>: indicates if <var_to_average> is 2d or 3d'
@@ -470,24 +491,13 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, NumRbands, MaxRadius, WfilterMin,
   call getarg(1, InDir)
   call getarg(2, InSuffix)
   call getarg(3, OutFile)
+  call getarg(4, FilterFile)
+  call getarg(5, RadiusFile)
 
-  call getarg(4, arg)       !this is a string
+  call getarg(6, arg)       !this is a string
   read (arg, '(i)') NumRbands !convert to integer
 
-  call getarg(5, arg)
-  read (arg, '(f)') MaxRadius
-
-  call getarg(6, arg)
-  read (arg, '(f)') WfilterMin
-
-  call getarg(7, arg)
-  read (arg, '(f)') WfilterMax
-  if (WfilterMin .ge. WfilterMax) then
-    write (*,*) 'ERROR: must specify <w_filter_min> to be less than <w_filter_max>'
-    stop
-  endif
-
-  call getarg(8, VarToAvg)
+  call getarg(7, VarToAvg)
   if (VarToAvg == 'speed_t') then
     DoHorizVel = .true.
     DoTangential = .true.
@@ -501,9 +511,9 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, NumRbands, MaxRadius, WfilterMin,
     end if
   end if
 
-  call getarg(9, RevuVar)
+  call getarg(8, RevuVar)
 
-  call getarg(10, arg)
+  call getarg(9, arg)
   if (arg .eq. '2d') then
     VarIs2d = .true.
   else if (arg .eq. '3d') then
