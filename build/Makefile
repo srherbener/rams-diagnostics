@@ -46,8 +46,7 @@ DEST = $(HOME)/bin
 BINS = $(DEST)/tsavg
 SRC_DIR = $(AZAVG_HOME)/src
 
-#SCRIPTS = $(DEST)/run_tsavg
-SCRIPTS = 
+SCRIPTS = $(DEST)/run_tsavg
 
 #
 # Targets
