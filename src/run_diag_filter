@@ -77,6 +77,7 @@ my $Cases;
 my $TimeDirs;
 my $Vars;
 my $AzavgDiags;
+my $TsavgDiags;
 my $FilterSpecs;
 my $Diags;
 my $Plots;
@@ -103,7 +104,7 @@ my @Fspecs;
 $ConfigFile = $ARGV[0];
 
 # read in info from the config file
-($Cases, $TimeDirs, $Vars, $AzavgDiags, $FilterSpecs, $Diags, $Plots) = &DiagUtils::ReadConfigFile($ConfigFile);
+($Cases, $TimeDirs, $Vars, $AzavgDiags, $TsavgDiags, $FilterSpecs, $Diags, $Plots) = &DiagUtils::ReadConfigFile($ConfigFile);
 
 # make sure at least one of each of cases, time_directories and diagnostics has
 # been specified
