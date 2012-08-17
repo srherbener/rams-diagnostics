@@ -19,12 +19,14 @@ SCRIPTS = $(DEST)/GenHist2d.m \
           $(DEST)/DomainTimeAvgProfile.m \
           $(DEST)/RatioAvg2d.m \
           $(DEST)/ReadConfig.m \
+          $(DEST)/ReadAzavgVar.m \
           $(DEST)/PlotTimeSeries.m \
           $(DEST)/PlotTseriesSet.m \
           $(DEST)/PlotTseriesSet2.m \
           $(DEST)/PlotProfSet.m \
           $(DEST)/GenProfPlots.m \
           $(DEST)/GenSwPlots.m \
+          $(DEST)/GenTsPlots.m \
 
 
 #
@@ -81,6 +83,9 @@ $(DEST)/RatioAvg2d.m: RatioAvg2d.m
 $(DEST)/ReadConfig.m: ReadConfig.m
 	cp ReadConfig.m $(DEST)/ReadConfig.m
 
+$(DEST)/ReadAzavgVar.m: ReadAzavgVar.m
+	cp ReadAzavgVar.m $(DEST)/ReadAzavgVar.m
+
 $(DEST)/PlotTimeSeries.m: PlotTimeSeries.m
 	cp PlotTimeSeries.m $(DEST)/PlotTimeSeries.m
 
@@ -99,3 +104,5 @@ $(DEST)/GenProfPlots.m: GenProfPlots.m
 $(DEST)/GenSwPlots.m: GenSwPlots.m
 	cp GenSwPlots.m $(DEST)/GenSwPlots.m
 
+$(DEST)/GenTsPlots.m: GenTsPlots.m
+	cp GenTsPlots.m $(DEST)/GenTsPlots.m

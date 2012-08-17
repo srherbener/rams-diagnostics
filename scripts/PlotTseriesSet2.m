@@ -30,7 +30,7 @@ ylim(Ylim);
 
 hold on;
 
-for i = 2:Nts % each column is a separate time series
+for i = 2:Nts % each row is a separate time series
     plot(Times, Ts(i,:), 'Color', char(Lcolors(i)),'LineWidth', Lwidth);
 end
 
