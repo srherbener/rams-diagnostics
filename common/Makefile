@@ -5,6 +5,7 @@
 DEST = $(HOME)/etc/matlab
 
 SCRIPTS = $(DEST)/ReadConfig.m \
+          $(DEST)/ReadAzavgVar.m \
           $(DEST)/PlotTseriesSet.m
 
 #
