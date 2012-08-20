@@ -6,7 +6,7 @@ clear;
 %   1 - max azwind
 %   2 - horiz KE
 %   3 - storm intensity
-Ptype = 3;
+Ptype = 1;
 
 Tdir = 'TsAveragedData';
 Pdir = 'plots';
@@ -77,15 +77,7 @@ for iexp = 1:length(Exps)
     end
     
     % smooth with a running mean of length 'Flen'
-    TsSmooth = filtfilt(ones(1,Flen)/Flen,1,double(TS))';
-    
-    TSlen = length(TsSmooth);
-    if (TSlen ~= Tlen)
-        % fill with nans at the end
-        TsSmooth = [ TsSmooth nan(1,Tlen-TSlen) ];
-    end
-    
-    TsAll(iexp,:) = TsSmooth;
+    [ TsAll(iexp,:) ] = SmoothFillTseries(TS, Tlen, Flen);
     
     % Create legend text, the non-control experiment names have the CCN
     % concentration built into their names.
