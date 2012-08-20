@@ -7,13 +7,12 @@ function [ OutTs ] = SmoothFillTseries( InTs, TsLen, FilterLen )
 %
 
 % smooth with a running mean of length 'Flen'
-% make into a row vector (transpose operator at end of line)
-OutTs = filtfilt(ones(1,FilterLen)/FilterLen,1,double(InTs))';
+OutTs = filtfilt(ones(1,FilterLen)/FilterLen,1,double(InTs));
    
 InTsLen = length(InTs);
 if (InTsLen ~= TsLen)
     % fill with nans at the end
-    OutTs = [ OutTs nan(1,TsLen-InTsLen) ];
+    OutTs(InTsLen+1:TsLen) = nan;
 end
 
 end
