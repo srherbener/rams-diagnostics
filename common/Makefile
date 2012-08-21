@@ -8,7 +8,8 @@ SCRIPTS = $(DEST)/ReadConfig.m \
           $(DEST)/ReadAzavgVar.m \
           $(DEST)/SmoothFillTseries.m \
           $(DEST)/PlotTseriesSet.m \
-          $(DEST)/Plot2dSet.m
+          $(DEST)/Plot2dSet.m \
+          $(DEST)/Xyzt2EofArray.m
 
 #
 # Targets
