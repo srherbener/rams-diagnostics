@@ -110,15 +110,16 @@ ThetaE_C2000 = TE_CNTL - TE_C2000;
 %%% saveas(FigEofT, 'EOF_Temp.jpg');
 %%% 
 
-FigEofTE_C0100 = figure;
+FigEofTeC0100 = figure;
 subplot(2,1,1);
-Plot2dMap(FigEofTE_C0100,Radii,Heights,EOF_TE_C0100(:,1)','Radius (km)', 'Height (m)', 'Theta-e Difference EOF1: C0100');
+Plot2dMap(FigEofTeC0100,Radii,Heights,EOF_TE_C0100(:,1)','Radius (km)', 'Height (m)', 'Theta-e Difference EOF1: C0100');
 subplot(2,1,2);
 plot(PC_TE_C0100(:,1)');
-title('Theta-e Difference PC1');
+title('Theta-e Difference PC1: C0100');
 xlabel('Timestep');
 ylabel('Theta-e (K)');
-saveas(FigEofThetaE, 'EOF_ThetaE_C0100.jpg');
+saveas(FigEofTeC0100, 'plots/EOF_ThetaE_C0100.jpg');
+close(FigEofTeC0100);
 
 %%% 
 %%% FigEofCcn = figure;
