@@ -100,6 +100,8 @@ my $AuxFile;
 my @SysArgs;
 my $OutDir;
 my @Fspecs;
+my $Cind;
+my $Aind;
 
 $ConfigFile = $ARGV[0];
 
@@ -142,6 +144,7 @@ foreach $Case (sort(keys(%$Cases)))
       print "  Input File Suffix: $InFileSuffix\n";
       print "  Output File: $OutFile\n";
       print "  Auxillary Output File: $AuxFile\n";
+      print "\n";
 
       # run diag_filter, make sure the output directory exists
       $OutDir = dirname($OutFile);
@@ -152,10 +155,21 @@ foreach $Case (sort(keys(%$Cases)))
         }
 
       @SysArgs = ("diag_filter", $InDir, $InFileSuffix, $OutFile, @Fspecs);
-      if ($Fspecs[0] eq "cylvol")
+      # Find the index of where cylvol exists within the list of arguments.
+      # If cylvol is in the list, insert the aux file name at the end of
+      # the cylvol specs.
+      foreach $Cind (0..$#Fspecs)
         {
-        push(@SysArgs, $AuxFile);
+        if ($SysArgs[$Cind] eq "cylvol")
+          {
+          # insert the aux file name into the arg list right after the 6th
+          # item past "cylvol"
+          $Aind = $Cind + 7;
+          splice(@SysArgs, $Aind, 0, $AuxFile);
+          last;
+          }
         }
+      print "Running: ", join(" ",@SysArgs), "\n\n";
       system(@SysArgs);
       }
     }
