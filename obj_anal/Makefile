@@ -15,6 +15,7 @@ SCRIPTS = $(DEST)/CompositeEiTemp.m \
           $(DEST)/EofNan.m \
           $(DEST)/GenCoherence.m \
           $(DEST)/GenCrossSpectrum.m \
+          $(DEST)/GenPlotEigSpectrum.m \
           $(DEST)/GenPowerSpectrum.m \
           $(DEST)/GenRnoiseSpectrum.m \
           $(DEST)/GenSampleStats.m \
@@ -28,6 +29,7 @@ SCRIPTS = $(DEST)/CompositeEiTemp.m \
           $(DEST)/MatMultNan.m \
           $(DEST)/MeanNan.m \
           $(DEST)/NormCols.m \
+          $(DEST)/Plot2dEofPc.m \
           $(DEST)/Plot2dMap.m \
           $(DEST)/PlotPowerSpectrum.m \
           $(DEST)/PlotWorldDataMap.m \

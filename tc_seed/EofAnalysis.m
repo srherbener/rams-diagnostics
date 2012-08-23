@@ -24,6 +24,12 @@
 clear;
 
 % Read in the HDF5 data --> (x,y,z,t)
+H5_CCN_CNTL  = hdf5read('AzAveragedData/ccn_conc_TCS_CNTL.h5','ccn_conc');
+H5_CCN_C0100 = hdf5read('AzAveragedData/ccn_conc_TCS_GN_C0100.h5','ccn_conc');
+H5_CCN_C0500 = hdf5read('AzAveragedData/ccn_conc_TCS_GN_C0500.h5','ccn_conc');
+H5_CCN_C1000 = hdf5read('AzAveragedData/ccn_conc_TCS_GN_C1000.h5','ccn_conc');
+H5_CCN_C2000 = hdf5read('AzAveragedData/ccn_conc_TCS_GN_C2000.h5','ccn_conc');
+
 H5_TE_CNTL  = hdf5read('AzAveragedData/theta_e_TCS_CNTL.h5','theta_e');
 H5_TE_C0100 = hdf5read('AzAveragedData/theta_e_TCS_GN_C0100.h5','theta_e');
 H5_TE_C0500 = hdf5read('AzAveragedData/theta_e_TCS_GN_C0500.h5','theta_e');
@@ -35,18 +41,20 @@ H5_ZCOORDS = hdf5read('AzAveragedData/theta_e_TCS_CNTL.h5', 'z_coords');
 
 % Figure out the selection of the (x,y,z,t) data
 [ Nx, Ny, Nz, Nt ] = size(H5_TE_CNTL);
-X1 = 1;
+X1 = 4; % exclude the 4km and 8km radius points --> exclude warm core
 X2 = Nx;
 Y1 = 1;
 Y2 = Ny;
 Z1 = find(H5_ZCOORDS > 0, 1);           % look at low level theta_e
-Z2 = find(H5_ZCOORDS < 2000, 1, 'last');
+Z2 = find(H5_ZCOORDS < 1000, 1, 'last');
+CCN_Z2 = find(H5_ZCOORDS < 10000, 1, 'last');
 T1 = 1;
 T2 = Nt;
 
 % Coordinate values for the plots
-Radii = H5_XCOORDS(X1:X2);
+Radii = H5_XCOORDS(X1:X2) / 1000; % convert from m to km
 Heights = H5_ZCOORDS(Z1:Z2);
+CCN_Heights = H5_ZCOORDS(Z1:CCN_Z2);
 
 % Convert to the 2D format that EOF analysis wants --> (t, A)
 TE_CNTL  = Xyzt2EofArray(H5_TE_CNTL, X1, X2, Y1, Y2, Z1, Z2, T1, T2);
@@ -55,12 +63,42 @@ TE_C0500 = Xyzt2EofArray(H5_TE_C0500, X1, X2, Y1, Y2, Z1, Z2, T1, T2);
 TE_C1000 = Xyzt2EofArray(H5_TE_C1000, X1, X2, Y1, Y2, Z1, Z2, T1, T2);
 TE_C2000 = Xyzt2EofArray(H5_TE_C2000, X1, X2, Y1, Y2, Z1, Z2, T1, T2);
 
-% Form the difference between the control and experiments and run the
+CCN_CNTL  = Xyzt2EofArray(H5_CCN_CNTL, X1, X2, Y1, Y2, Z1, CCN_Z2, T1, T2);
+CCN_C0100 = Xyzt2EofArray(H5_CCN_C0100, X1, X2, Y1, Y2, Z1, CCN_Z2, T1, T2);
+CCN_C0500 = Xyzt2EofArray(H5_CCN_C0500, X1, X2, Y1, Y2, Z1, CCN_Z2, T1, T2);
+CCN_C1000 = Xyzt2EofArray(H5_CCN_C1000, X1, X2, Y1, Y2, Z1, CCN_Z2, T1, T2);
+CCN_C2000 = Xyzt2EofArray(H5_CCN_C2000, X1, X2, Y1, Y2, Z1, CCN_Z2, T1, T2);
+
+% convert the undefined value (-999) to nan
+TE_CNTL(TE_CNTL == -999) = nan;
+TE_C0100(TE_C0100 == -999) = nan;
+TE_C0500(TE_C0500 == -999) = nan;
+TE_C1000(TE_C1000 == -999) = nan;
+TE_C2000(TE_C2000 == -999) = nan;
+
+CCN_CNTL(CCN_CNTL == -999) = nan;
+CCN_C0100(CCN_C0100 == -999) = nan;
+CCN_C0500(CCN_C0500 == -999) = nan;
+CCN_C1000(CCN_C1000 == -999) = nan;
+CCN_C2000(CCN_C2000 == -999) = nan;
+
+% Form the difference between the experiments and the control, and run the
 % anlysis on the variance of the differences.
-ThetaE_C0100 = TE_CNTL - TE_C0100;
-ThetaE_C0500 = TE_CNTL - TE_C0500;
-ThetaE_C1000 = TE_CNTL - TE_C1000;
-ThetaE_C2000 = TE_CNTL - TE_C2000;
+ThetaE_C0100 = TE_C0100 - TE_CNTL;
+ThetaE_C0500 = TE_C0500 - TE_CNTL;
+ThetaE_C1000 = TE_C1000 - TE_CNTL;
+ThetaE_C2000 = TE_C2000 - TE_CNTL;
+
+Ccn_C0100 = CCN_C0100 - CCN_CNTL;
+Ccn_C0500 = CCN_C0500 - CCN_CNTL;
+Ccn_C1000 = CCN_C1000 - CCN_CNTL;
+Ccn_C2000 = CCN_C2000 - CCN_CNTL;
+
+% This might be bogus
+Ccn_C0100(isnan(Ccn_C0100)) = 0;
+Ccn_C0500(isnan(Ccn_C0500)) = 0;
+Ccn_C1000(isnan(Ccn_C1000)) = 0;
+Ccn_C2000(isnan(Ccn_C2000)) = 0;
 
 % Run EOF on the temperature and theta_e data
 [ EOF_TE_C0100, PC_TE_C0100, EV_TE_C0100 ] = EofNan(ThetaE_C0100,1);
@@ -68,18 +106,11 @@ ThetaE_C2000 = TE_CNTL - TE_C2000;
 [ EOF_TE_C1000, PC_TE_C1000, EV_TE_C1000 ] = EofNan(ThetaE_C1000,1);
 [ EOF_TE_C2000, PC_TE_C2000, EV_TE_C2000 ] = EofNan(ThetaE_C2000,1);
 
+[ EOF_CCN_C0100, PC_CCN_C0100, EV_CCN_C0100 ] = EofNan(Ccn_C0100,1);
+[ EOF_CCN_C0500, PC_CCN_C0500, EV_CCN_C0500 ] = EofNan(Ccn_C0500,1);
+[ EOF_CCN_C1000, PC_CCN_C1000, EV_CCN_C1000 ] = EofNan(Ccn_C1000,1);
+[ EOF_CCN_C2000, PC_CCN_C2000, EV_CCN_C2000 ] = EofNan(Ccn_C2000,1);
 
-%%% % Form eigenvalue spectra
-%%% % Use N* = 10 (guessing for now)
-%%% Nstar = 10;
-%%% %[ Lambdas_T_C100, VarExpl_T_C100, Err_T_C100 ] = EigenSpectrum(EV_T_C100, Nstar);
-%%% %[ Lambdas_ThetaE_C100, VarExpl_ThetaE_C100, Err_ThetaE_C100 ] = EigenSpectrum(EV_ThetaE_C100, Nstar);
-%%% %[ Lambdas_T_C8000, VarExpl_T_C8000, Err_T_C8000 ] = EigenSpectrum(EV_T_C8000, Nstar);
-%%% %[ Lambdas_ThetaE_C8000, VarExpl_ThetaE_C8000, Err_ThetaE_C8000 ] = EigenSpectrum(EV_ThetaE_C8000, Nstar);
-%%% [ Lambda_T, VarExpl_T, Err_T ] = EigenSpectrum(EV_T, Nstar);
-%%% [ Lambda_ThetaE, VarExpl_ThetaE, Err_ThetaE ] = EigenSpectrum(EV_ThetaE, Nstar);
-%%% [ Lambda_CCN, VarExpl_CCN, Err_CCN ] = EigenSpectrum(EV_CCN, Nstar);
-%%% 
 %%% % Sweep lag correlations between PCs of temp and theta-e versus the storm
 %%% % intensity metric.
 %%% Lags = (1:50);
@@ -99,60 +130,35 @@ ThetaE_C2000 = TE_CNTL - TE_C2000;
 %%% legend('CCN concentration: 100/cc', 'CCN concentration: 8000/cc', 'Difference (100/cc case - 8000/cc case)', 'Location', 'NorthWest');
 %%% saveas(FigSi, 'SI_C100_C800.jpg');
 %%% 
-%%% FigEofT = figure;
-%%% subplot(2,1,1);
-%%% Plot2dMap(FigEofT,Radii,Heights,EOF_T(:,1)','Radius (km)', 'Height (m)', 'Temperature Difference EOF1');
-%%% subplot(2,1,2);
-%%% plot(PC_T(:,1)');
-%%% title('Temperature Difference PC1');
-%%% xlabel('Timestep');
-%%% ylabel('Temperature (\circC)');
-%%% saveas(FigEofT, 'EOF_Temp.jpg');
-%%% 
 
-FigEofTeC0100 = figure;
-subplot(2,1,1);
-Plot2dMap(FigEofTeC0100,Radii,Heights,EOF_TE_C0100(:,1)','Radius (km)', 'Height (m)', 'Theta-e Difference EOF1: C0100');
-subplot(2,1,2);
-plot(PC_TE_C0100(:,1)');
-title('Theta-e Difference PC1: C0100');
-xlabel('Timestep');
-ylabel('Theta-e (K)');
-saveas(FigEofTeC0100, 'plots/EOF_ThetaE_C0100.jpg');
-close(FigEofTeC0100);
+% THETA-E
+EofNum = 1;
+Plot2dEofPc(EOF_TE_C0100, PC_TE_C0100, EofNum, Radii, Heights, 'Theta-e Difference', 'C0100', 'Radius (km)', 'Height (m)', 'Theta-e (K)', 'plots/EOF_ThetaE_C0100.jpg')
+Plot2dEofPc(EOF_TE_C0500, PC_TE_C0500, EofNum, Radii, Heights, 'Theta-e Difference', 'C0500', 'Radius (km)', 'Height (m)', 'Theta-e (K)', 'plots/EOF_ThetaE_C0500.jpg')
+Plot2dEofPc(EOF_TE_C1000, PC_TE_C1000, EofNum, Radii, Heights, 'Theta-e Difference', 'C1000', 'Radius (km)', 'Height (m)', 'Theta-e (K)', 'plots/EOF_ThetaE_C1000.jpg')
+Plot2dEofPc(EOF_TE_C2000, PC_TE_C2000, EofNum, Radii, Heights, 'Theta-e Difference', 'C2000', 'Radius (km)', 'Height (m)', 'Theta-e (K)', 'plots/EOF_ThetaE_C2000.jpg')
 
-%%% 
-%%% FigEofCcn = figure;
-%%% subplot(2,1,1);
-%%% Plot2dMap(FigEofCcn,Radii,Heights,EOF_CCN(:,1)','Radius (km)', 'Height (m)', 'CCN Concentration Difference EOF1');
-%%% subplot(2,1,2);
-%%% plot(PC_CCN(:,1)');
-%%% title('CCN Concentration Difference PC1');
-%%% xlabel('Timestep');
-%%% ylabel('CCN Concentration (#/cc)');
-%%% saveas(FigEofCcn, 'EOF_CCN.jpg');
-%%% 
-%%% FigEsT = figure;
-%%% errorbar(VarExpl_T(1:10), Err_T(1:10)); % just show the first 10
-%%% title('First 10 Eigenvalues of Temperature Difference covariance (% Variance Explained)');
-%%% xlabel('Eigenvalue number');
-%%% ylabel('% Variance Explained');
-%%% saveas(FigEsT, 'ES_Temp.jpg');
-%%% 
-%%% FigEsThetaE = figure;
-%%% errorbar(VarExpl_ThetaE(1:10), Err_ThetaE(1:10)); % just show the first 10
-%%% title('First 10 Eigenvalues of Theta-e Difference covariance (% Variance Explained)');
-%%% xlabel('Eigenvalue number');
-%%% ylabel('% Variance Explained');
-%%% saveas(FigEsThetaE, 'ES_ThetaE.jpg');
-%%% 
-%%% FigEsCcn = figure;
-%%% errorbar(VarExpl_CCN(1:10), Err_CCN(1:10)); % just show the first 10
-%%% title('First 10 Eigenvalues of CCN Concentration Difference covariance (% Variance Explained)');
-%%% xlabel('Eigenvalue number');
-%%% ylabel('% Variance Explained');
-%%% saveas(FigEsCcn, 'ES_CCN.jpg');
-%%% 
+% CCN
+Plot2dEofPc(EOF_CCN_C0100, PC_CCN_C0100, EofNum, Radii, CCN_Heights, 'CCN Concentration Difference', 'C0100', 'Radius (km)', 'Height (m)', 'CCN Concentration (#/cc)', 'plots/EOF_CCN_C0100.jpg')
+Plot2dEofPc(EOF_CCN_C0500, PC_CCN_C0500, EofNum, Radii, CCN_Heights, 'CCN Concentration Difference', 'C0500', 'Radius (km)', 'Height (m)', 'CCN Concentration (#/cc)', 'plots/EOF_CCN_C0500.jpg')
+Plot2dEofPc(EOF_CCN_C1000, PC_CCN_C1000, EofNum, Radii, CCN_Heights, 'CCN Concentration Difference', 'C1000', 'Radius (km)', 'Height (m)', 'CCN Concentration (#/cc)', 'plots/EOF_CCN_C1000.jpg')
+Plot2dEofPc(EOF_CCN_C2000, PC_CCN_C2000, EofNum, Radii, CCN_Heights, 'CCN Concentration Difference', 'C2000', 'Radius (km)', 'Height (m)', 'CCN Concentration (#/cc)', 'plots/EOF_CCN_C2000.jpg')
+
+% Generate and plot Eigenvalue spectra
+% Use N* = 20 (timestep == 1hr, 121 time steps --> ~6hr to get rid of persistence)
+Nstar = 20;
+NumEv = 10;
+
+GenPlotEigSpectrum(EV_TE_C0100, Nstar, NumEv, 'Theta-e Difference', 'C0100', 'plots/ES_TE_C0100.jpg')
+GenPlotEigSpectrum(EV_TE_C0500, Nstar, NumEv, 'Theta-e Difference', 'C0500', 'plots/ES_TE_C0500.jpg')
+GenPlotEigSpectrum(EV_TE_C1000, Nstar, NumEv, 'Theta-e Difference', 'C1000', 'plots/ES_TE_C1000.jpg')
+GenPlotEigSpectrum(EV_TE_C2000, Nstar, NumEv, 'Theta-e Difference', 'C2000', 'plots/ES_TE_C2000.jpg')
+
+GenPlotEigSpectrum(EV_CCN_C0100, Nstar, NumEv, 'CCN Concentration Difference', 'C0100', 'plots/ES_CCN_C0100.jpg')
+GenPlotEigSpectrum(EV_CCN_C0500, Nstar, NumEv, 'CCN Concentration Difference', 'C0500', 'plots/ES_CCN_C0500.jpg')
+GenPlotEigSpectrum(EV_CCN_C1000, Nstar, NumEv, 'CCN Concentration Difference', 'C1000', 'plots/ES_CCN_C1000.jpg')
+GenPlotEigSpectrum(EV_CCN_C2000, Nstar, NumEv, 'CCN Concentration Difference', 'C2000', 'plots/ES_CCN_C2000.jpg')
+
 %%% FigLagCorT = figure;
 %%% plot(Lags,LagCors_T);
 %%% title('Lag Correlations: Temperature Difference vs Storm Intensity Difference');
