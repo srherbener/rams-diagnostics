@@ -74,8 +74,7 @@ for i = 1:Ns
   % plot it
   OutFile = sprintf('%s/swup_S%03d.jpg', OutDir, SST(i));
   fprintf('  Saving plot in file: %s\n\n', OutFile);
-  PlotTseriesSet2( Times, SWUP_DIFF, Ptitle, YlimTS, YlabTS, Lcolors, LegText, LegLocs(i), OutFile );
-  % No diffs: PlotTseriesSet2( Times, SWUP, Ptitle, YlimTS, YlabTS, Lcolors, LegText, LegLocs(i), OutFile );
+  PlotTseriesSet( Times, SWUP_DIFF, Ptitle, YlimTS, YlabTS, Lcolors, LegText, LegLocs(i), OutFile );
 end
 
 % Plot a bar graph showing the relationship of the time,domain averaged top-of-model SW
