@@ -41,12 +41,12 @@ H5_ZCOORDS = hdf5read('AzAveragedData/theta_e_TCS_CNTL.h5', 'z_coords');
 
 % Figure out the selection of the (x,y,z,t) data
 [ Nx, Ny, Nz, Nt ] = size(H5_TE_CNTL);
-X1 = 4; % exclude the 4km and 8km radius points --> exclude warm core
+X1 = 4; % exclude the 4km, 8km, 12km radius points --> exclude warm core
 X2 = Nx;
 Y1 = 1;
 Y2 = Ny;
 Z1 = find(H5_ZCOORDS > 0, 1);           % look at low level theta_e
-Z2 = find(H5_ZCOORDS < 1000, 1, 'last');
+Z2 = find(H5_ZCOORDS < 4000, 1, 'last');
 CCN_Z2 = find(H5_ZCOORDS < 10000, 1, 'last');
 T1 = 1;
 T2 = Nt;
@@ -133,16 +133,33 @@ Ccn_C2000(isnan(Ccn_C2000)) = 0;
 
 % THETA-E
 EofNum = 1;
-Plot2dEofPc(EOF_TE_C0100, PC_TE_C0100, EofNum, Radii, Heights, 'Theta-e Difference', 'C0100', 'Radius (km)', 'Height (m)', 'Theta-e (K)', 'plots/EOF_ThetaE_C0100.jpg')
-Plot2dEofPc(EOF_TE_C0500, PC_TE_C0500, EofNum, Radii, Heights, 'Theta-e Difference', 'C0500', 'Radius (km)', 'Height (m)', 'Theta-e (K)', 'plots/EOF_ThetaE_C0500.jpg')
-Plot2dEofPc(EOF_TE_C1000, PC_TE_C1000, EofNum, Radii, Heights, 'Theta-e Difference', 'C1000', 'Radius (km)', 'Height (m)', 'Theta-e (K)', 'plots/EOF_ThetaE_C1000.jpg')
-Plot2dEofPc(EOF_TE_C2000, PC_TE_C2000, EofNum, Radii, Heights, 'Theta-e Difference', 'C2000', 'Radius (km)', 'Height (m)', 'Theta-e (K)', 'plots/EOF_ThetaE_C2000.jpg')
+
+Clim = 0.05;
+Cinc = Clim / 20;
+Clevs = (-Clim:Cinc:Clim);
+Cbounds = [ -Clim Clim ];
+
+CCN_Clim = 0.1;
+CCN_Cinc = CCN_Clim / 40;
+CCN_Clevs = (-CCN_Clim:CCN_Cinc:CCN_Clim);
+CCN_Cbounds = [ -CCN_Clim CCN_Clim ];
+
+% Look at lower levels in the Theta-E EOF data
+% Needed to include 0 - 10000m to get statistical significance of the first EOF, but all
+% interesting activity with Theta-E is near the surface.
+EZ = find(Heights < 1200, 1, 'last');
+EP = length(Radii) * EZ;
+
+Plot2dEofPc(EOF_TE_C0100(1:EP,:), PC_TE_C0100, EofNum, Radii, Heights(1:EZ), Clevs, Cbounds, 'Theta-e Difference', 'C0100', 'Radius (km)', 'Height (m)', 'Theta-e (K)', 'plots/EOF_ThetaE_C0100.jpg')
+Plot2dEofPc(EOF_TE_C0500(1:EP,:), PC_TE_C0500, EofNum, Radii, Heights(1:EZ), Clevs, Cbounds, 'Theta-e Difference', 'C0500', 'Radius (km)', 'Height (m)', 'Theta-e (K)', 'plots/EOF_ThetaE_C0500.jpg')
+Plot2dEofPc(EOF_TE_C1000(1:EP,:), PC_TE_C1000, EofNum, Radii, Heights(1:EZ), Clevs, Cbounds, 'Theta-e Difference', 'C1000', 'Radius (km)', 'Height (m)', 'Theta-e (K)', 'plots/EOF_ThetaE_C1000.jpg')
+Plot2dEofPc(EOF_TE_C2000(1:EP,:), PC_TE_C2000, EofNum, Radii, Heights(1:EZ), Clevs, Cbounds, 'Theta-e Difference', 'C2000', 'Radius (km)', 'Height (m)', 'Theta-e (K)', 'plots/EOF_ThetaE_C2000.jpg')
 
 % CCN
-Plot2dEofPc(EOF_CCN_C0100, PC_CCN_C0100, EofNum, Radii, CCN_Heights, 'CCN Concentration Difference', 'C0100', 'Radius (km)', 'Height (m)', 'CCN Concentration (#/cc)', 'plots/EOF_CCN_C0100.jpg')
-Plot2dEofPc(EOF_CCN_C0500, PC_CCN_C0500, EofNum, Radii, CCN_Heights, 'CCN Concentration Difference', 'C0500', 'Radius (km)', 'Height (m)', 'CCN Concentration (#/cc)', 'plots/EOF_CCN_C0500.jpg')
-Plot2dEofPc(EOF_CCN_C1000, PC_CCN_C1000, EofNum, Radii, CCN_Heights, 'CCN Concentration Difference', 'C1000', 'Radius (km)', 'Height (m)', 'CCN Concentration (#/cc)', 'plots/EOF_CCN_C1000.jpg')
-Plot2dEofPc(EOF_CCN_C2000, PC_CCN_C2000, EofNum, Radii, CCN_Heights, 'CCN Concentration Difference', 'C2000', 'Radius (km)', 'Height (m)', 'CCN Concentration (#/cc)', 'plots/EOF_CCN_C2000.jpg')
+Plot2dEofPc(EOF_CCN_C0100, PC_CCN_C0100, EofNum, Radii, CCN_Heights, CCN_Clevs, CCN_Cbounds, 'CCN Concentration Difference', 'C0100', 'Radius (km)', 'Height (m)', 'CCN Concentration (#/cc)', 'plots/EOF_CCN_C0100.jpg')
+Plot2dEofPc(EOF_CCN_C0500, PC_CCN_C0500, EofNum, Radii, CCN_Heights, CCN_Clevs, CCN_Cbounds, 'CCN Concentration Difference', 'C0500', 'Radius (km)', 'Height (m)', 'CCN Concentration (#/cc)', 'plots/EOF_CCN_C0500.jpg')
+Plot2dEofPc(EOF_CCN_C1000, PC_CCN_C1000, EofNum, Radii, CCN_Heights, CCN_Clevs, CCN_Cbounds, 'CCN Concentration Difference', 'C1000', 'Radius (km)', 'Height (m)', 'CCN Concentration (#/cc)', 'plots/EOF_CCN_C1000.jpg')
+Plot2dEofPc(EOF_CCN_C2000, PC_CCN_C2000, EofNum, Radii, CCN_Heights, CCN_Clevs, CCN_Cbounds, 'CCN Concentration Difference', 'C2000', 'Radius (km)', 'Height (m)', 'CCN Concentration (#/cc)', 'plots/EOF_CCN_C2000.jpg')
 
 % Generate and plot Eigenvalue spectra
 % Use N* = 20 (timestep == 1hr, 121 time steps --> ~6hr to get rid of persistence)

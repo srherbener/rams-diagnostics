@@ -1,4 +1,4 @@
-function [ ] = Plot2dMap( Fig, X, Y, Z, Xlab, Ylab, Ptitle )
+function [ ] = Plot2dMap( Fig, X, Y, Z, Clevs, Cbounds, Xlab, Ylab, Ptitle )
 %Plot2dMap Create a countour plot of the 2D data given in vector Z.
 %   This function will extract the 2D data given in selected columns of
 %   D, convert the column data to 2D data and creat contour plots of that
@@ -20,11 +20,8 @@ Ncols = length(X);
 % Find the largest absolute value of the entries in Dmap for setting the
 % colormap axis. Want to center this about zero so that blue represents
 % negative values and red represents positive values.
-Clim = max(abs(Z)) * 1.1;  % need the range to be slightly
-                            % larger than the actual data
-Cbounds = [ -Clim Clim ];
 
-contourf(X,Y,Create2dMap(Z,Nrows,Ncols));
+contourf(X,Y,Create2dMap(Z,Nrows,Ncols),Clevs);
 shading flat;
 title(Ptitle);
 xlabel(Xlab);
