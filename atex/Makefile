@@ -6,7 +6,6 @@ DEST = $(HOME)/etc/matlab/atex
 
 SCRIPTS = $(DEST)/GenProfPlots.m \
           $(DEST)/GenSwPlots.m \
-          $(DEST)/PlotProfSet.m \
           $(DEST)/SetPath.m
 
 #
