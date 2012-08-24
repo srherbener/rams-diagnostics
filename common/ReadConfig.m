@@ -1,26 +1,26 @@
-function [ Exps, Tdirs ] = ReadConfig ( Cfile )
+function [ Cases, Tdirs ] = ReadConfig ( Cfile )
 %ReadConfig read diagnostic configuration file for a set of simulations
 %
-% This function will read a simple configuration file for processing
+% This function will configuration file for processing
 % a set of experimental simulation runs.
 %
 % The config file has the format:
-%    Exp: <directory>
-%    Tdir: <directory>
+%    Case: <directory>
+%    TimeDir: <directory>
 %
-% Exp: and Tdir: define all of the directories where hdf5 files live
+% Case: and TimeDir: define all of the directories where hdf5 files live
 % 
-% Exp: defines separate experiments (simulations)
+% Case: defines separate experiments (simulations)
 %
-% Tdir: defines multiple directories under a single experiment where
+% TimeDir: defines multiple directories under a single experiment where
 %       hdf5 files live
 %
 % If you have
-%   Exp: RUN1
-%   Exp: RUN2
-%   Exp: RUN3
-%   Tdir: T1
-%   Tdir: T2
+%   Case: RUN1
+%   Case: RUN2
+%   Case: RUN3
+%   TimeDir: T1
+%   TimeDir: T2
 %
 % then the directories where the hdf5 files live are:
 %
@@ -37,24 +37,30 @@ function [ Exps, Tdirs ] = ReadConfig ( Cfile )
 %     RUN3/HDF5/T2
 %
 
-% read in the key, data pairs in the config file
+% Read in entire file and place into a character array.
+fid = fopen(char(Cfile));
+InFile = textscan(fid, '%s', 'Delimiter', '\n'); % read in the entire line
+fclose(fid);
 
-[ ckey, cdata ] = textread(char(Cfile), '%s %s');
+% Convert to char array, entire file is in first element of InFile.
+InLines = char(InFile{1});
 
-% for now understand only Exp: and Tdir: keys
+% for now understand only Case: and TimeDir: keys
 % read through entire list of key,data pairs and
-%   place the Exp: data values into Exps array
-%   place the Tdir: data values into Tdirs array
+%   place the Case: data values into Cases array
+%   place the TimeDir: data values into Tdirs array
 
-i_exp = 0;
+i_case = 0;
 i_tdir = 0;
-for i = 1:length(ckey)
-  if (strcmp(ckey(i),'Exp:'))
-    i_exp = i_exp + 1;
-    Exps(i_exp) = cdata(i);
-  else if (strcmp(ckey(i),'Tdir:'))
+for i = 1:length(InLines)
+  [ Fields ] = Line2Fields(InLines(i,:), ' ');
+
+  if (strcmp(Fields{1},'Case:'))
+    i_case = i_case + 1;
+    Cases{i_case} = Fields{2};
+  else if (strcmp(Fields{1},'TimeDir:'))
     i_tdir = i_tdir + 1;
-    Tdirs(i_tdir) = cdata(i);
+    Tdirs{i_tdir} = Fields{2};
   end
 end
 

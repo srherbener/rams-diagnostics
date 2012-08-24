@@ -4,7 +4,8 @@
 
 DEST = $(HOME)/etc/matlab
 
-SCRIPTS = $(DEST)/ReadConfig.m \
+SCRIPTS = $(DEST)/Line2Fields.m \
+          $(DEST)/ReadConfig.m \
           $(DEST)/ReadAzavgVar.m \
           $(DEST)/SmoothFillTseries.m \
           $(DEST)/PlotProfSet.m \
