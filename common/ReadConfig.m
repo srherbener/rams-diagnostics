@@ -1,4 +1,4 @@
-function [ Cases, Tdirs ] = ReadConfig ( Cfile )
+function [ Cases, Tdirs, Pexp ] = ReadConfig ( Cfile )
 %ReadConfig read diagnostic configuration file for a set of simulations
 %
 % This function will configuration file for processing
@@ -61,6 +61,11 @@ for i = 1:length(InLines)
   else if (strcmp(Fields{1},'TimeDir:'))
     i_tdir = i_tdir + 1;
     Tdirs{i_tdir} = Fields{2};
+  else if (strcmp(Fields{1},'PlotExp:'))
+    Pexp{1} = Fields{2};
+    Pexp{2} = sscanf(Fields{3}, '%d');;
+    Pexp{3} = sscanf(Fields{4}, '%d');;
+  end
   end
 end
 
