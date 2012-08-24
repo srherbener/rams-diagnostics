@@ -2,6 +2,11 @@
 
 clear;
 
+[ Cases, Tdirs, Pexp ] = ReadConfig('DiagConfig');
+
+Pname = Pexp{1};
+Tstart = Pexp{2};
+Tend = Pexp{3};
 
 Tdir = 'TsAveragedData';
 Pdir = 'plots';
@@ -17,7 +22,7 @@ LegLoc = 'NorthWest';
 
 Flen = 5;
 
-Times = (24:144);
+Times = (Tstart:Tend);
 Tlen = length(Times);
 
 Lcolors = { 'k' 'm' 'b' 'c' 'g' 'y' 'r' };
@@ -28,27 +33,23 @@ if (exist(Pdir, 'dir') ~= 7)
     mkdir(Pdir);
 end
 
-% Read the config file to get the structure of how the data is laid out in
-% the file system.
-[ Exps, Tdirs ] = ReadConfig('Config');
-
-for iexp = 1:length(Exps)
-    KeFile = sprintf('%s/%s_%s.h5', Tdir, KeVar, char(Exps(iexp)));
+for icase = 1:length(Cases)
+    KeFile = sprintf('%s/%s_%s.h5', Tdir, KeVar, Cases{icase});
     fprintf('Reading HDF5 file: %s\n', KeFile);
     [ KE, Rcoords, Zcoords, Tcoords ] = ReadAzavgVar(KeFile, KeVar);
-    [ KeAll(iexp,:) ] = SmoothFillTseries(squeeze(KE), Tlen, Flen);
+    [ KeAll(icase,:) ] = SmoothFillTseries(squeeze(KE), Tlen, Flen);
     
-    VtFile = sprintf('%s/%s_%s.h5', Tdir, VtVar, char(Exps(iexp)));
+    VtFile = sprintf('%s/%s_%s.h5', Tdir, VtVar, Cases{icase});
     fprintf('Reading HDF5 file: %s\n', VtFile);
     [ VT, Rcoords, Zcoords, Tcoords ] = ReadAzavgVar(VtFile, VtVar);
-    [ VtAll(iexp,:) ] = SmoothFillTseries(squeeze(VT), Tlen, Flen);
+    [ VtAll(icase,:) ] = SmoothFillTseries(squeeze(VT), Tlen, Flen);
     
-    % Create legend text, the non-control experiment names have the CCN
+    % Create legend text, the non-control case names have the CCN
     % concentration built into their names.
-    if (strcmp(char(Exps(iexp)),'TCS_CNTL'))
-        LegText(iexp) = { 'CONTROL' };
+    if (strcmp(Cases{icase},'TCS_CNTL'))
+        LegText(icase) = { 'CONTROL' };
     else
-        LegText(iexp) = { sprintf('CCN: %d/cc', sscanf(char(Exps(iexp)),'TCS_GN_C%d')) };
+        LegText(icase) = { sprintf('CCN: %d/cc', sscanf(Cases{icase},'TCS_GN_C%d')) };
     end
 end
 
