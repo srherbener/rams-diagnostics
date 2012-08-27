@@ -14,7 +14,7 @@ Pdir = 'plots';
 KeVar = 'horiz_ke';
 VtVar = 'max_azwind';
 
-Ptitle = 'Kinetic Energy vs Maximum Vt';
+Ptitle = sprintf('%: Kinetic Energy vs Maximum Vt', Pname);
 Xlabel = 'Wind Speed (m/s)';
 Ylabel = 'KE (J)';
 OutFile = sprintf('%s/KeVt.jpg', Pdir);

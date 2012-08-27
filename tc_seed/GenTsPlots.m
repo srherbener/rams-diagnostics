@@ -28,7 +28,7 @@ for Ptype = 1:3
     switch Ptype
         case 1
             Var = 'max_azwind';
-            Ptitle = 'Maximum Azimuthally Averaged Tangential Wind Speed';
+            Ptitle = sprintf('%s: Maximum Azimuthally Averaged Tangential Wind Speed', Pname);
             Ylim = [ 0 80 ];
             Ylabel = 'Wind Speed (m/s)';
             OutFile = sprintf('%s/MaxTanWind.jpg', Pdir);
@@ -36,7 +36,7 @@ for Ptype = 1:3
             TsType = 'verbatim';
         case 2
             Var = 'horiz_ke';
-            Ptitle = 'Total Horizontal Kinetic Energy';
+            Ptitle = sprintf('%s: Total Horizontal Kinetic Energy', Pname);
             Ylim = [ 0 3.5e11 ];
             Ylabel = 'KE (J)';
             OutFile = sprintf('%s/HorizKE.jpg', Pdir);
@@ -44,7 +44,7 @@ for Ptype = 1:3
             TsType = 'verbatim';
         case 3
             Var = 'storm_int';
-            Ptitle = 'Storm Intensity Metric';
+            Ptitle = sprintf('%s: Storm Intensity Metric', Pname);
             Ylim = [ 0 0.08 ];
             Ylabel = 'Metric';
             OutFile = sprintf('%s/StormInt.jpg', Pdir);
