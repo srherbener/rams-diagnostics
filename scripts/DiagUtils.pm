@@ -58,7 +58,6 @@ sub ReadConfigFile
       $AzavgDiags{$f[1]}{DIM}       = $f[2];
       $AzavgDiags{$f[1]}{NBANDS}    = $f[3];
       $AzavgDiags{$f[1]}{FILTER}    = $f[4];
-      $AzavgDiags{$f[1]}{OFILEBASE} = $f[5];
       }
     elsif ($f[0] eq "Tsavg:")
       {
