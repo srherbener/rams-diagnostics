@@ -37,7 +37,7 @@ use DiagUtils;
 #
 sub CreateFileNames
   {
-  my ($Case, $Tdir, $Adiag, $Fprefix) = @_;
+  my ($Case, $Tdir, $OfileBase, $Fprefix) = @_;
   
   my $InDir;
   my $InFileSuffix;
@@ -65,7 +65,7 @@ sub CreateFileNames
   $InFileSuffix = $f[0];
   $InFileSuffix =~ s/.*\/w-/-/;
   
-  $OutFile = "AzAveragedData/" . ${Tdir} . "/" . ${Adiag} . "_" . ${Case} . ".h5";
+  $OutFile = "AzAveragedData/" . ${Tdir} . "/" . ${OfileBase} . "_" . ${Case} . ".h5";
   $FilterFile = "FILTERS/" . ${Tdir} . "/" . ${Fprefix} . "_" . ${Case} . ".h5";
   $RadiusFile = "FILTERS/" . ${Tdir} . "/" . ${Fprefix} . "_aux_" . ${Case} . ".h5";
 
@@ -89,6 +89,7 @@ my @f;
 my $Case;
 my $Tdir;
 my $Adiag;
+my $OfileBase;
 my $RevuVar;
 my $VarDim;
 my $Nbands;
@@ -132,6 +133,7 @@ foreach $Case (sort(keys(%$Cases)))
     $VarDim = $$AzavgDiags{$Adiag}{DIM};
     $Nbands = $$AzavgDiags{$Adiag}{NBANDS};
     $Fprefix = $$AzavgDiags{$Adiag}{FILTER};
+    $OfileBase = $$AzavgDiags{$Adiag}{OFILEBASE};
     if (($Adiag eq "speed_t") || ($Adiag eq "speed_r"))
       {
       # use a dummy name, azavg will ignore $RevuVar when doing 'speed_t' or 'speed_r'
@@ -147,7 +149,7 @@ foreach $Case (sort(keys(%$Cases)))
     foreach $Tdir (sort(keys(%$TimeDirs)))
       {
       ($InDir,$InFileSuffix,$OutFile,$FilterFile,$RadiusFile) =
-          &CreateFileNames($Case, $Tdir, $Adiag,$Fprefix);
+          &CreateFileNames($Case, $Tdir, $OfileBase,$Fprefix);
 
       print "***************************************************************\n";
       print "Running azavg:\n";
