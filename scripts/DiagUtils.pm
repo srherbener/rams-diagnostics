@@ -19,6 +19,7 @@ sub ReadConfigFile
   my %TimeDirs;
   my %Vars;
   my %AzavgDiags;
+  my %TsavgDiags;
   my %FilterSpecs;
   my %Diags;
   my %Plots;
@@ -29,6 +30,7 @@ sub ReadConfigFile
   undef(%TimeDirs);
   undef(%Vars);
   undef(%AzavgDiags);
+  undef(%TsavgDiags);
   undef(%FilterSpecs);
   undef(%Diags);
   undef(%Plots);
@@ -53,11 +55,14 @@ sub ReadConfigFile
       }
     elsif ($f[0] eq "Azavg:")
       {
-      $AzavgDiags{$f[1]}{DIM}    = $f[2];
-      $AzavgDiags{$f[1]}{NBANDS} = $f[3];
-      $AzavgDiags{$f[1]}{RMAX}   = $f[4];
-      $AzavgDiags{$f[1]}{WMIN}   = $f[5];
-      $AzavgDiags{$f[1]}{WMAX}   = $f[6];
+      $AzavgDiags{$f[1]}{DIM}       = $f[2];
+      $AzavgDiags{$f[1]}{NBANDS}    = $f[3];
+      $AzavgDiags{$f[1]}{FILTER}    = $f[4];
+      $AzavgDiags{$f[1]}{OFILEBASE} = $f[5];
+      }
+    elsif ($f[0] eq "Tsavg:")
+      {
+      $TsavgDiags{$f[1]}{FILTER} = $f[2];
       }
     elsif ($f[0] eq "Filter:")
       {
@@ -113,7 +118,7 @@ sub ReadConfigFile
     }
   close(CONFIG);
 
-  return(\%Cases, \%TimeDirs, \%Vars, \%AzavgDiags, \%FilterSpecs, \%Diags, \%Plots);
+  return(\%Cases, \%TimeDirs, \%Vars, \%AzavgDiags, \%TsavgDiags, \%FilterSpecs, \%Diags, \%Plots);
   }
 
 #######################################################################
