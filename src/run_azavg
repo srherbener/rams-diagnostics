@@ -37,7 +37,7 @@ use DiagUtils;
 #
 sub CreateFileNames
   {
-  my ($Case, $Tdir, $OfileBase, $Fprefix) = @_;
+  my ($Case, $Tdir, $Adiag, $Fprefix) = @_;
   
   my $InDir;
   my $InFileSuffix;
@@ -65,7 +65,7 @@ sub CreateFileNames
   $InFileSuffix = $f[0];
   $InFileSuffix =~ s/.*\/w-/-/;
   
-  $OutFile = "AzAveragedData/" . ${Tdir} . "/" . ${OfileBase} . "_" . ${Case} . ".h5";
+  $OutFile = "AzAveragedData/" . ${Tdir} . "/" . ${Adiag} . "_" . ${Case} . ".h5";
   $FilterFile = "FILTERS/" . ${Tdir} . "/" . ${Fprefix} . "_" . ${Case} . ".h5";
   $RadiusFile = "FILTERS/" . ${Tdir} . "/" . ${Fprefix} . "_aux_" . ${Case} . ".h5";
 
@@ -89,7 +89,7 @@ my @f;
 my $Case;
 my $Tdir;
 my $Adiag;
-my $OfileBase;
+my $Avar;
 my $RevuVar;
 my $VarDim;
 my $Nbands;
@@ -130,18 +130,19 @@ foreach $Case (sort(keys(%$Cases)))
     {
     $JoinInFiles = "";
 
+    $Avar = $$AzavgDiags{$Adiag}{VAR};
     $VarDim = $$AzavgDiags{$Adiag}{DIM};
     $Nbands = $$AzavgDiags{$Adiag}{NBANDS};
     $Fprefix = $$AzavgDiags{$Adiag}{FILTER};
-    $OfileBase = $$AzavgDiags{$Adiag}{OFILEBASE};
-    if (($Adiag eq "speed_t") || ($Adiag eq "speed_r"))
+
+    if (($Avar eq "speed_t") || ($Avar eq "speed_r"))
       {
-      # use a dummy name, azavg will ignore $RevuVar when doing 'speed_t' or 'speed_r'
+      # won't have a corresponding name in %$Vars
       $RevuVar = "HorizSpeed";
       }
     else
       {
-      $RevuVar = $$Vars{$Adiag}{REVU_VAR};
+      $RevuVar = $$Vars{$Avar}{REVU_VAR};
       }
 
     # run through each time directory generating the current diagnostic, and
@@ -149,13 +150,13 @@ foreach $Case (sort(keys(%$Cases)))
     foreach $Tdir (sort(keys(%$TimeDirs)))
       {
       ($InDir,$InFileSuffix,$OutFile,$FilterFile,$RadiusFile) =
-          &CreateFileNames($Case, $Tdir, $OfileBase,$Fprefix);
+          &CreateFileNames($Case, $Tdir, $Adiag,$Fprefix);
 
       print "***************************************************************\n";
       print "Running azavg:\n";
       print "  Case: $Case\n";
       print "  Time Directory: $Tdir\n";
-      print "  Diagnostic: $Adiag\n";
+      print "  Variable: $Avar\n";
       print "    Variable Dimension: $VarDim\n";
       print "    Number Radial Bands: $Nbands\n";
       print "    Filter File Name: $FilterFile\n";
@@ -173,7 +174,7 @@ foreach $Case (sort(keys(%$Cases)))
         system(@SysArgs);
         }
 
-      @SysArgs = ("azavg", $InDir, $InFileSuffix, $OutFile, $FilterFile, $RadiusFile, $Nbands, $Adiag, $RevuVar, $VarDim);
+      @SysArgs = ("azavg", $InDir, $InFileSuffix, $OutFile, $FilterFile, $RadiusFile, $Nbands, $Avar, $RevuVar, $VarDim);
       system(@SysArgs);
 
       # record the input file for the upcoming join
@@ -188,12 +189,12 @@ foreach $Case (sort(keys(%$Cases)))
         }
       }
 
-    @SysArgs = ("join_hdata", $JoinInFiles, $JoinOutFile, $Adiag);
+    @SysArgs = ("join_hdata", $JoinInFiles, $JoinOutFile, $Avar);
     print "***************************************************\n";
     print " Joining HDF5 data:\n";
     print "   Input Files: $JoinInFiles\n";
     print "   Output File: $JoinOutFile\n";
-    print "   GRADS Variable: $Adiag\n";
+    print "   GRADS Variable: $Avar\n";
     system(@SysArgs);
 
     }
