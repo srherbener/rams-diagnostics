@@ -45,38 +45,25 @@ fclose(fid);
 % Convert to char array, entire file is in first element of InFile.
 InLines = char(InFile{1});
 
-% for now understand only Case: and TimeDir: keys
-% read through entire list of key,data pairs and
-%   place the Case: data values into Cases array
-%   place the TimeDir: data values into Tdirs array
-
-% need to declare these as cell arrays before entering the
-% following for loop
-Cases = cell(1);
-Tdirs = cell(1);
-Pexp = cell(1);
-
+% Grab keywords and their data and load into structs
 i_case = 0;
 i_tdir = 0;
 for i = 1:length(InLines)
+  % Convert a line to a list of space separated fields
   [ Fields ] = Line2Fields(InLines(i,:), ' ');
 
   if (strcmp(Fields{1},'Case:'))
     i_case = i_case + 1;
-    Cases{i_case} = Fields{2};
+    Cdata.Cases{i_case} = Fields{2};
   else if (strcmp(Fields{1},'TimeDir:'))
     i_tdir = i_tdir + 1;
-    Tdirs{i_tdir} = Fields{2};
+    Cdata.Tdirs{i_tdir} = Fields{2};
   else if (strcmp(Fields{1},'PlotExp:'))
-    Pexp{1} = Fields{2};
-    Pexp{2} = sscanf(Fields{3}, '%d');;
-    Pexp{3} = sscanf(Fields{4}, '%d');;
+    Cdata.Pexp.Ename  = Fields{2};
+    Cdata.Pexp.Tstart = sscanf(Fields{3}, '%d');;
+    Cdata.Pexp.Tend   = sscanf(Fields{4}, '%d');;
   end
   end
 end
-
-% Now plug in the cell arrays with the config info into a
-% struct for returning.
-Cdata = struct('Cases', { Cases }, 'Tdirs', { Tdirs }, 'Pexp', { Pexp });
 
 end

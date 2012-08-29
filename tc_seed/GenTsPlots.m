@@ -6,9 +6,9 @@ clear;
 % the file system.
 [ Config ] = ReadConfig('DiagConfig');
     
-Pname = Config.Pexp{1};
-Tstart = Config.Pexp{2};
-Tend = Config.Pexp{3};
+Pname = Config.Pexp.Ename;
+Tstart = Config.Pexp.Tstart;
+Tend = Config.Pexp.Tend;
 
 Tdir = 'TsAveragedData';
 Pdir = 'plots';
