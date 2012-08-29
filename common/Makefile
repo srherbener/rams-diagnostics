@@ -4,7 +4,8 @@
 
 DEST = $(HOME)/etc/matlab
 
-SCRIPTS = $(DEST)/Line2Fields.m \
+SCRIPTS = $(DEST)/GenAzavgDiffEof.m \
+          $(DEST)/Line2Fields.m \
           $(DEST)/ReadConfig.m \
           $(DEST)/ReadAzavgVar.m \
           $(DEST)/SmoothFillTseries.m \
