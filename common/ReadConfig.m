@@ -52,17 +52,30 @@ for i = 1:length(InLines)
   % Convert a line to a list of space separated fields
   [ Fields ] = Line2Fields(InLines(i,:), ' ');
 
-  if (strcmp(Fields{1},'Case:'))
-    i_case = i_case + 1;
-    Cdata.Cases{i_case} = Fields{2};
-  else if (strcmp(Fields{1},'TimeDir:'))
-    i_tdir = i_tdir + 1;
-    Cdata.Tdirs{i_tdir} = Fields{2};
-  else if (strcmp(Fields{1},'PlotExp:'))
-    Cdata.Pexp.Ename  = Fields{2};
-    Cdata.Pexp.Tstart = sscanf(Fields{3}, '%d');;
-    Cdata.Pexp.Tend   = sscanf(Fields{4}, '%d');;
-  end
+%  if (strcmp(Fields{1},'Case:'))
+%    i_case = i_case + 1;
+%    Cdata.Cases{i_case} = Fields{2};
+%  else if (strcmp(Fields{1},'TimeDir:'))
+%    i_tdir = i_tdir + 1;
+%    Cdata.Tdirs{i_tdir} = Fields{2};
+%  else if (strcmp(Fields{1},'PlotExp:'))
+%    Cdata.Pexp.Ename  = Fields{2};
+%    Cdata.Pexp.Tstart = sscanf(Fields{3}, '%d');;
+%    Cdata.Pexp.Tend   = sscanf(Fields{4}, '%d');;
+%  end
+%  end
+
+  switch Fields{1}
+    case 'Case:'
+      i_case = i_case + 1;
+      Cdata.Cases{i_case} = Fields{2};
+    case 'TimeDir:'
+      i_tdir = i_tdir + 1;
+      Cdata.Tdirs{i_tdir} = Fields{2};
+    case 'PlotExp:'
+      Cdata.Pexp.Ename  = Fields{2};
+      Cdata.Pexp.Tstart = sscanf(Fields{3}, '%d');;
+      Cdata.Pexp.Tend   = sscanf(Fields{4}, '%d');;
   end
 end
 
