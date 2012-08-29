@@ -8,6 +8,7 @@ SCRIPTS = $(DEST)/AzavgDiffEof.m \
           $(DEST)/Line2Fields.m \
           $(DEST)/ReadConfig.m \
           $(DEST)/ReadAzavgVar.m \
+          $(DEST)/RunAzavgDiffEof.m \
           $(DEST)/SmoothFillTseries.m \
           $(DEST)/PlotProfSet.m \
           $(DEST)/PlotTseriesSet.m \

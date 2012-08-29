@@ -1,5 +1,5 @@
-function [ Cases, Tdirs, Pexp ] = ReadConfig ( Cfile )
-%ReadConfig read diagnostic configuration file for a set of simulations
+function [ Cdata ] = ReadConfig ( Cfile )
+% ReadConfig read diagnostic configuration file for a set of simulations
 %
 % This function will configuration file for processing
 % a set of experimental simulation runs.
@@ -50,6 +50,12 @@ InLines = char(InFile{1});
 %   place the Case: data values into Cases array
 %   place the TimeDir: data values into Tdirs array
 
+% need to declare these as cell arrays before entering the
+% following for loop
+Cases = cell(1);
+Tdirs = cell(1);
+Pexp = cell(1);
+
 i_case = 0;
 i_tdir = 0;
 for i = 1:length(InLines)
@@ -68,5 +74,9 @@ for i = 1:length(InLines)
   end
   end
 end
+
+% Now plug in the cell arrays with the config info into a
+% struct for returning.
+Cdata = struct('Cases', { Cases }, 'Tdirs', { Tdirs }, 'Pexp', { Pexp });
 
 end

@@ -4,11 +4,11 @@ clear;
 
 % Read the config file to get the structure of how the data is laid out in
 % the file system.
-[ Cases, Tdirs, Pexp ] = ReadConfig('DiagConfig');
+[ Config ] = ReadConfig('DiagConfig');
     
-Pname = Pexp{1};
-Tstart = Pexp{2};
-Tend = Pexp{3};
+Pname = Config.Pexp{1};
+Tstart = Config.Pexp{2};
+Tend = Config.Pexp{3};
 
 Tdir = 'TsAveragedData';
 Pdir = 'plots';
@@ -60,8 +60,8 @@ for Ptype = 1:3
         mkdir(Pdir);
     end
     
-    for icase = 1:length(Cases)
-        Hfile = sprintf('%s/%s_%s.h5', Tdir, Var, Cases{icase});
+    for icase = 1:length(Config.Cases)
+        Hfile = sprintf('%s/%s_%s.h5', Tdir, Var, Config.Cases{icase});
         fprintf('Reading HDF5 file: %s\n', Hfile);
         [ Hvar, Rcoords, Zcoords, Tcoords ] = ReadAzavgVar(Hfile, Var);
         
@@ -83,10 +83,10 @@ for Ptype = 1:3
         
         % Create legend text, the non-control experiment names have the CCN
         % concentration built into their names.
-        if (strcmp(Cases{icase},'TCS_CNTL'))
+        if (strcmp(Config.Cases{icase},'TCS_CNTL'))
             LegText(icase) = { 'CONTROL' };
         else
-            LegText(icase) = { sprintf('CCN: %d/cc', sscanf(Cases{icase},'TCS_GN_C%d')) };
+            LegText(icase) = { sprintf('CCN: %d/cc', sscanf(Config.Cases{icase},'TCS_GN_C%d')) };
         end
     end
     
