@@ -4,7 +4,7 @@
 
 DEST = $(HOME)/etc/matlab
 
-SCRIPTS = $(DEST)/GenAzavgDiffEof.m \
+SCRIPTS = $(DEST)/AzavgDiffEof.m \
           $(DEST)/Line2Fields.m \
           $(DEST)/ReadConfig.m \
           $(DEST)/ReadAzavgVar.m \
