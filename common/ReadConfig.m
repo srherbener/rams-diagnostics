@@ -50,6 +50,7 @@ i_case = 0;
 i_tdir = 0;
 i_aeof = 0;
 i_aeofplot = 0;
+i_tsplot = 0;
 for i = 1:length(InLines)
   % Convert a line to a list of space separated fields
   [ Fields ] = Line2Fields(InLines(i,:), ' ');
@@ -62,6 +63,10 @@ for i = 1:length(InLines)
       Cdata.TsavgDir = Fields{2};
     case 'PlotDir:'
       Cdata.PlotDir = Fields{2};
+    case 'EofDir:'
+      Cdata.EofDir = Fields{2};
+    case 'ControlCase:'
+      Cdata.ControlCase = Fields{2};
     case 'UndefVal:'
       Cdata.UndefVal = sscanf(Fields{2}, '%f');
     case 'Case:'
@@ -71,6 +76,9 @@ for i = 1:length(InLines)
     case 'TimeDir:'
       i_tdir = i_tdir + 1;
       Cdata.Tdirs{i_tdir} = Fields{2};
+    case 'AzavgEofConfig:'
+      Cdata.AzavgEofConfig.NumEv    = sscanf(Fields{2}, '%d');
+      Cdata.AzavgEofConfig.Nstar    = sscanf(Fields{3}, '%d');
     case 'AzavgEof:'
       i_aeof = i_aeof + 1;
       Cdata.AzavgEof(i_aeof).Var  = Fields{2};
@@ -80,15 +88,19 @@ for i = 1:length(InLines)
       Cdata.AzavgEof(i_aeof).Zmax = sscanf(Fields{6}, '%f');
       Cdata.AzavgEof(i_aeof).Tmin = sscanf(Fields{7}, '%f');
       Cdata.AzavgEof(i_aeof).Tmax = sscanf(Fields{8}, '%f');
-    case 'AzavgEofConfig:'
-      Cdata.AzavgEofConfig.Dir      = Fields{2};
-      Cdata.AzavgEofConfig.Control  = Fields{3};
-      Cdata.AzavgEofConfig.NumEv    = sscanf(Fields{4}, '%d');
-      Cdata.AzavgEofConfig.Nstar    = sscanf(Fields{5}, '%d');
     case 'PlotExp:'
       Cdata.Pexp.Ename  = Fields{2};
       Cdata.Pexp.Tstart = sscanf(Fields{3}, '%d');
       Cdata.Pexp.Tend   = sscanf(Fields{4}, '%d');
+    case 'TsavgPlot:'
+      i_tsplot = i_tsplot + 1;
+      Cdata.TsavgPlots(i_tsplot).Var    = Fields{2};
+      Cdata.TsavgPlots(i_tsplot).Name   = Fields{3};
+      Cdata.TsavgPlots(i_tsplot).Units  = Fields{4};
+      Cdata.TsavgPlots(i_tsplot).Title  = Fields{5};
+      Cdata.TsavgPlots(i_tsplot).LegLoc = Fields{6};
+      Cdata.TsavgPlots(i_tsplot).Ymin   = sscanf(Fields{7},  '%f');
+      Cdata.TsavgPlots(i_tsplot).Ymax   = sscanf(Fields{8},  '%f');
     case 'AzavgEofPlot:'
       i_aeofplot = i_aeofplot + 1;
       Cdata.AzavgEofPlots(i_aeofplot).Var   = Fields{2};

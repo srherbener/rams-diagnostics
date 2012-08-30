@@ -4,8 +4,7 @@
 
 DEST = $(HOME)/etc/matlab/tc_seed
 
-SCRIPTS = $(DEST)/GenKeVtPlots.m \
-          $(DEST)/EofAnalysis.m \
+SCRIPTS = $(DEST)/EofAnalysis.m \
           $(DEST)/SetPath.m
 
 #

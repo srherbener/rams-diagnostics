@@ -8,6 +8,8 @@ function [ ] = GenAdiffEofPlots( ConfigFile )
 % Read in the config data
 [ Config ] = ReadConfig(ConfigFile);
 
+EofDir = Config.EofDir;
+ControlCase = Config.ControlCase;
 NumEv = Config.AzavgEofConfig.NumEv;
 
 for icase = 1:length(Config.Cases)
@@ -15,7 +17,7 @@ for icase = 1:length(Config.Cases)
   Pcase = Config.Cases(icase).Pname;
   for ieof = 1: length(Config.AzavgEofPlots)
     % Don't run if the case matches the control
-    if (~strcmp(Case, Config.AzavgEofConfig.Control))
+    if (~strcmp(Case, ControlCase))
 
       Var = Config.AzavgEofPlots(ieof).Var;
       Vname = Config.AzavgEofPlots(ieof).Name;
@@ -42,7 +44,7 @@ for icase = 1:length(Config.Cases)
       fprintf('    Zmax: %.2f\n', Zmax);
       fprintf('\n');
   
-      InFile = sprintf('%s/%s_%s.h5', Config.AzavgEofConfig.Dir, Var, Case);
+      InFile = sprintf('%s/%s_%s.h5', EofDir, Var, Case);
       EofOutFile = sprintf('%s/EOF_%s_%s.jpg', Config.PlotDir, Var, Case);
       EsOutFile = sprintf('%s/ES_%s_%s.jpg', Config.PlotDir, Var, Case);
   

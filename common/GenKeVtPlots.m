@@ -8,8 +8,9 @@ Pname = Config.Pexp.Ename;
 Tstart = Config.Pexp.Tstart;
 Tend = Config.Pexp.Tend;
 
-Tdir = 'TsAveragedData';
-Pdir = 'plots';
+Tdir = Config.TsavgDir;
+Pdir = Config.PlotDir;
+ControlCase = Config.ControlCase;
 
 KeVar = 'horiz_ke';
 VtVar = 'max_azwind';
@@ -34,23 +35,20 @@ if (exist(Pdir, 'dir') ~= 7)
 end
 
 for icase = 1:length(Config.Cases)
-    KeFile = sprintf('%s/%s_%s.h5', Tdir, KeVar, Config.Cases{icase});
+    Case = Config.Cases(icase).Cname;
+    Pcase = Config.Cases(icase).Pname;
+
+    KeFile = sprintf('%s/%s_%s.h5', Tdir, KeVar, Case);
     fprintf('Reading HDF5 file: %s\n', KeFile);
     [ KE, Rcoords, Zcoords, Tcoords ] = ReadAzavgVar(KeFile, KeVar);
     [ KeAll(icase,:) ] = SmoothFillTseries(squeeze(KE), Tlen, Flen);
     
-    VtFile = sprintf('%s/%s_%s.h5', Tdir, VtVar, Config.Cases{icase});
+    VtFile = sprintf('%s/%s_%s.h5', Tdir, VtVar, Case);
     fprintf('Reading HDF5 file: %s\n', VtFile);
     [ VT, Rcoords, Zcoords, Tcoords ] = ReadAzavgVar(VtFile, VtVar);
     [ VtAll(icase,:) ] = SmoothFillTseries(squeeze(VT), Tlen, Flen);
     
-    % Create legend text, the non-control case names have the CCN
-    % concentration built into their names.
-    if (strcmp(Config.Cases{icase},'TCS_CNTL'))
-        LegText(icase) = { 'CONTROL' };
-    else
-        LegText(icase) = { sprintf('CCN: %d/cc', sscanf(Config.Cases{icase},'TCS_GN_C%d')) };
-    end
+    LegText(icase) = { Pcase };
 end
 
 Plot2dSet( VtAll, KeAll, Ptitle, Xlabel, Ylabel, Lcolors, LegText, LegLoc, OutFile );

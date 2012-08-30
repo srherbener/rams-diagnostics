@@ -18,38 +18,15 @@ Tlen = length(Times);
 
 Lcolors = { 'k' 'm' 'b' 'c' 'g' 'y' 'r' };
 
+% Find and replace underscores in Ptitle, Ylabel with blank spaces
+for iplot = 1:length(Config.TsavgPlots)
+    Var = Config.TsavgPlots(iplot).Var;
 
-% Ptype values:
-%   1 - max azwind
-%   2 - horiz KE
-%   3 - storm intensity
-for Ptype = 1:3
-    switch Ptype
-        case 1
-            Var = 'max_azwind';
-            Ptitle = sprintf('%s: Maximum Azimuthally Averaged Tangential Wind Speed', Pname);
-            Ylim = [ 0 80 ];
-            Ylabel = 'Wind Speed (m/s)';
-            OutFile = sprintf('%s/MaxTanWind.jpg', Pdir);
-            LegLoc = 'SouthEast';
-        case 2
-            Var = 'horiz_ke';
-            Ptitle = sprintf('%s: Total Horizontal Kinetic Energy', Pname);
-            Ylim = [ 0 3.5e11 ];
-            Ylabel = 'KE (J)';
-            OutFile = sprintf('%s/HorizKE.jpg', Pdir);
-            LegLoc = 'NorthWest';
-        case 3
-            Var = 'storm_int';
-            Ptitle = sprintf('%s: Storm Intensity Metric', Pname);
-            Ylim = [ 0 0.08 ];
-            Ylabel = 'Metric';
-            OutFile = sprintf('%s/StormInt.jpg', Pdir);
-            LegLoc = 'NorthWest';
-        otherwise
-            fprintf('WARNING: Unrecongnized Ptype');
-    end
-    
+    Ptitle = regexprep(sprintf('%s: %s', Pname, Config.TsavgPlots(iplot).Title), '_', ' ');
+    LegLoc = Config.TsavgPlots(iplot).LegLoc;
+    Ylim = [ Config.TsavgPlots(iplot).Ymin Config.TsavgPlots(iplot).Ymax ];
+    Ylabel = regexprep(sprintf('%s (%s)', Config.TsavgPlots(iplot).Name, Config.TsavgPlots(iplot).Units), '_', ' ');
+    OutFile = sprintf('%s/TS_%s.jpg', Pdir, Var);
     
     % make sure output directory exists
     if (exist(Pdir, 'dir') ~= 7)

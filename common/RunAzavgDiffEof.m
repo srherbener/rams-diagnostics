@@ -8,16 +8,19 @@ function [ ] = RunAzavgDiffEof( ConfigFile )
 % Read in the config data
 [ Config ] = ReadConfig(ConfigFile);
 
+EofDir = Config.EofDir;
+ControlCase = Config.ControlCase;
+
 for icase = 1:length(Config.Cases)
   Case = Config.Cases(icase).Cname;
   for ieof = 1: length(Config.AzavgEof)
     % Don't run if the case matches the control
-    if (~strcmp(Case, Config.AzavgEofConfig.Control))
+    if (~strcmp(Case, ControlCase))
       fprintf('***********************************************************************\n');
       fprintf('Running azavg EOF: \n');
       fprintf('  Variable: %s\n', Config.AzavgEof(ieof).Var);
       fprintf('  Case: %s\n', Case);
-      fprintf('  Control: %s\n', Config.AzavgEofConfig.Control);
+      fprintf('  Control: %s\n', ControlCase);
       fprintf('  Data selection:\n');
       fprintf('    Rmin: %.2f\n', Config.AzavgEof(ieof).Rmin);
       fprintf('    Rmax: %.2f\n', Config.AzavgEof(ieof).Rmax);
@@ -31,8 +34,8 @@ for icase = 1:length(Config.Cases)
 
       Vname = Config.AzavgEof(ieof).Var;
       InFile1 = sprintf('%s/%s_%s.h5', Config.AzavgDir, Vname, Case);
-      InFile2 = sprintf('%s/%s_%s.h5', Config.AzavgDir, Vname, Config.AzavgEofConfig.Control);
-      OutFile = sprintf('%s/%s_%s.h5', Config.AzavgEofConfig.Dir, Vname, Case);
+      InFile2 = sprintf('%s/%s_%s.h5', Config.AzavgDir, Vname, ControlCase);
+      OutFile = sprintf('%s/%s_%s.h5', EofDir, Vname, Case);
 
       SelectData = [ Config.AzavgEof(ieof).Rmin Config.AzavgEof(ieof).Rmax Config.AzavgEof(ieof).Zmin Config.AzavgEof(ieof).Zmax Config.AzavgEof(ieof).Tmin Config.AzavgEof(ieof).Tmax ];
 
