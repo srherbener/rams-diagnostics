@@ -83,7 +83,8 @@ for i = 1:length(InLines)
     case 'AzavgEofConfig:'
       Cdata.AzavgEofConfig.Dir      = Fields{2};
       Cdata.AzavgEofConfig.Control  = Fields{3};
-      Cdata.AzavgEofConfig.Nstar    = sscanf(Fields{4}, '%d');
+      Cdata.AzavgEofConfig.NumEv    = sscanf(Fields{4}, '%d');
+      Cdata.AzavgEofConfig.Nstar    = sscanf(Fields{5}, '%d');
     case 'PlotExp:'
       Cdata.Pexp.Ename  = Fields{2};
       Cdata.Pexp.Tstart = sscanf(Fields{3}, '%d');

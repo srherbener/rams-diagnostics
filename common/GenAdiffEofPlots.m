@@ -8,6 +8,8 @@ function [ ] = GenAdiffEofPlots( ConfigFile )
 % Read in the config data
 [ Config ] = ReadConfig(ConfigFile);
 
+NumEv = Config.AzavgEofConfig.NumEv;
+
 for icase = 1:length(Config.Cases)
   Case = Config.Cases(icase).Cname;
   Pcase = Config.Cases(icase).Pname;
@@ -49,7 +51,7 @@ for icase = 1:length(Config.Cases)
       Clevs = (-Clim:Cinc:Clim);
       Cbounds = [ -Clim Clim ];
   
-      AdiffEofPlot(InFile, EofOutFile, EsOutFile, Vname, Vunits, Pcase, EofNum, SelectData, Clevs, Cbounds);
+      AdiffEofPlot(InFile, EofOutFile, EsOutFile, Vname, Vunits, Pcase, EofNum, NumEv, SelectData, Clevs, Cbounds);
   
       fprintf('\n');
     end

@@ -1,10 +1,8 @@
-function [ ] = AdiffEofPlot(InFile, EofOutFile, EsOutFile, Vname, Vunits, Pcase, EofNum, SelectData, Clevs, Cbounds)
+function [ ] = AdiffEofPlot(InFile, EofOutFile, EsOutFile, Vname, Vunits, Pcase, EofNum, NumEv, SelectData, Clevs, Cbounds)
 % AdiffEofPlot plot an EOF/PC pair that was creaged by Azavg difference EOF routine.
 %
 % This function will take the EOF/PC data from Infile and plot the EOF/PC pair
 % corresponding to EofNum.
-
-NumEv = 10;
 
 % Read in the HDF5 data
 fprintf('Reading EOF data from HDF5 file: %s\n', InFile);
