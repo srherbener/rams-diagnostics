@@ -1,17 +1,16 @@
-% script to plot time series of max/min/mean values
-
-clear;
+function [ ] = GenTsPlots(ConfigFile)
+% GenTsPlots generate time series plots
 
 % Read the config file to get the structure of how the data is laid out in
 % the file system.
-[ Config ] = ReadConfig('DiagConfig');
+[ Config ] = ReadConfig(ConfigFile);
     
 Pname = Config.Pexp.Ename;
 Tstart = Config.Pexp.Tstart;
 Tend = Config.Pexp.Tend;
 
-Tdir = 'TsAveragedData';
-Pdir = 'plots';
+Tdir = Config.TsavgDir;
+Pdir = Config.PlotDir;
 
 Flen = 5;
 Times = (Tstart:Tend);
@@ -33,7 +32,6 @@ for Ptype = 1:3
             Ylabel = 'Wind Speed (m/s)';
             OutFile = sprintf('%s/MaxTanWind.jpg', Pdir);
             LegLoc = 'SouthEast';
-            TsType = 'verbatim';
         case 2
             Var = 'horiz_ke';
             Ptitle = sprintf('%s: Total Horizontal Kinetic Energy', Pname);
@@ -41,7 +39,6 @@ for Ptype = 1:3
             Ylabel = 'KE (J)';
             OutFile = sprintf('%s/HorizKE.jpg', Pdir);
             LegLoc = 'NorthWest';
-            TsType = 'verbatim';
         case 3
             Var = 'storm_int';
             Ptitle = sprintf('%s: Storm Intensity Metric', Pname);
@@ -49,7 +46,6 @@ for Ptype = 1:3
             Ylabel = 'Metric';
             OutFile = sprintf('%s/StormInt.jpg', Pdir);
             LegLoc = 'NorthWest';
-            TsType = 'verbatim';
         otherwise
             fprintf('WARNING: Unrecongnized Ptype');
     end
@@ -61,34 +57,19 @@ for Ptype = 1:3
     end
     
     for icase = 1:length(Config.Cases)
-        Hfile = sprintf('%s/%s_%s.h5', Tdir, Var, Config.Cases{icase});
+        Case = Config.Cases(icase).Cname;
+
+        Hfile = sprintf('%s/%s_%s.h5', Tdir, Var, Case);
         fprintf('Reading HDF5 file: %s\n', Hfile);
         [ Hvar, Rcoords, Zcoords, Tcoords ] = ReadAzavgVar(Hfile, Var);
-        
-        switch TsType
-            case 'min'
-                TS = squeeze(min(min(Hvar,[],1),[],2))';
-            case 'max'
-                TS = squeeze(max(max(Hvar,[],1),[],2))';
-            case 'mean'
-                TS = squeeze(mean(mean(Hvar,1),2))';
-            case 'verbatim'
-                TS = squeeze(Hvar);
-            otherwise
-                fprintf('WARNING: Unexpected time series type: %s, skipping plot.\n', TsType);
-        end
+        TS = squeeze(Hvar);
         
         % smooth with a running mean of length 'Flen'
         [ TsAll(icase,:) ] = SmoothFillTseries(TS, Tlen, Flen);
         
-        % Create legend text, the non-control experiment names have the CCN
-        % concentration built into their names.
-        if (strcmp(Config.Cases{icase},'TCS_CNTL'))
-            LegText(icase) = { 'CONTROL' };
-        else
-            LegText(icase) = { sprintf('CCN: %d/cc', sscanf(Config.Cases{icase},'TCS_GN_C%d')) };
-        end
+        LegText(icase) = { Config.Cases(icase).Pname };
     end
     
     PlotTseriesSet( Times, TsAll, Ptitle, Ylim, Ylabel, Lcolors, LegText, LegLoc, OutFile );
+    fprintf('\n');
 end
