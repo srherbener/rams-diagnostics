@@ -48,22 +48,11 @@ InLines = char(InFile{1});
 % Grab keywords and their data and load into structs
 i_case = 0;
 i_tdir = 0;
+i_aeof = 0;
 for i = 1:length(InLines)
   % Convert a line to a list of space separated fields
   [ Fields ] = Line2Fields(InLines(i,:), ' ');
 
-%  if (strcmp(Fields{1},'Case:'))
-%    i_case = i_case + 1;
-%    Cdata.Cases{i_case} = Fields{2};
-%  else if (strcmp(Fields{1},'TimeDir:'))
-%    i_tdir = i_tdir + 1;
-%    Cdata.Tdirs{i_tdir} = Fields{2};
-%  else if (strcmp(Fields{1},'PlotExp:'))
-%    Cdata.Pexp.Ename  = Fields{2};
-%    Cdata.Pexp.Tstart = sscanf(Fields{3}, '%d');;
-%    Cdata.Pexp.Tend   = sscanf(Fields{4}, '%d');;
-%  end
-%  end
 
   switch Fields{1}
     case 'Case:'
@@ -74,8 +63,19 @@ for i = 1:length(InLines)
       Cdata.Tdirs{i_tdir} = Fields{2};
     case 'PlotExp:'
       Cdata.Pexp.Ename  = Fields{2};
-      Cdata.Pexp.Tstart = sscanf(Fields{3}, '%d');;
-      Cdata.Pexp.Tend   = sscanf(Fields{4}, '%d');;
+      Cdata.Pexp.Tstart = sscanf(Fields{3}, '%d');
+      Cdata.Pexp.Tend   = sscanf(Fields{4}, '%d');
+    case 'AzavgDir:'
+      Cdata.AzavgDir = Fields{2};
+    case 'TsavgDir:'
+      Cdata.TsavgDir = Fields{2};
+    case 'AzavgEof:'
+      i_aeof = i_aeof + 1;
+      Cdata.AzavgEof(i_aeof).Var  = Fields{2};
+      Cdata.AzavgEof(i_aeof).Rmin = sscanf(Fields{3}, '%f');
+      Cdata.AzavgEof(i_aeof).Rmax = sscanf(Fields{4}, '%f');
+      Cdata.AzavgEof(i_aeof).Zmin = sscanf(Fields{5}, '%f');
+      Cdata.AzavgEof(i_aeof).Zmax = sscanf(Fields{6}, '%f');
   end
 end
 
