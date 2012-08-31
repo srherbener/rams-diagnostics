@@ -28,7 +28,7 @@ use DiagUtils;
 # CreateFileNames()
 #
 # This routine will take the case, time dir, and diagnostic name
-# and create the file lists (input and output) needed for diag_filter.
+# and create the file lists (input and output) needed for tsavg.
 #
 sub CreateFileNames
   {
@@ -138,7 +138,7 @@ foreach $Case (sort(keys(%$Cases)))
       ($InDir,$InFileSuffix,$OutFile,$FilterFile) = &CreateFileNames($Case, $Tdir, $Dname, $FfilePrefix);
 
       print "***************************************************************\n";
-      print "Running diag_filter:\n";
+      print "Running tsavg:\n";
       print "  Case: $Case\n";
       print "  Time Directory: $Tdir\n";
       print "  Tsavg Diagnostic: $Dname\n";
@@ -147,7 +147,7 @@ foreach $Case (sort(keys(%$Cases)))
       print "  Filter File: $FilterFile\n";
       print "  Output File: $OutFile\n";
 
-      # run diag_filter, make sure the output directory exists
+      # run tsavg, make sure the output directory exists
       $OutDir = dirname($OutFile);
       if (! -d $OutDir)
         {
