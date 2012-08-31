@@ -32,7 +32,7 @@ use DiagUtils;
 #
 sub CreateFileNames
   {
-  my ($Case, $Tdir, $Dname, $FfilePrefix, $AzavgDir, $TsavgDir, $FilterDir) = @_;
+  my ($Case, $Tdir, $Dname, $FfilePrefix, $AzavgDir, $TsavgDir, $FilterDir, $RevuDir) = @_;
   
   my $InDir;
   my $InFileSuffix;
@@ -58,7 +58,7 @@ sub CreateFileNames
     }
   else
     {
-    $InDir = $Case . "/HDF5/" . $Tdir;
+    $InDir = $Case . "/" . $RevuDir . "/" . $Tdir;
     # Use the w input file as a sample for finding the input file suffix.
     $Pattern = $InDir . "/w-*.h5";
     @f = glob($Pattern);
@@ -86,6 +86,7 @@ my %TsavgDiags;
 my $AzavgDir;
 my $TsavgDir;
 my $FilterDir;
+my $RevuDir;
 
 my @f;
 my $Case;
@@ -120,6 +121,7 @@ $ConfigFile = $ARGV[0];
 $AzavgDir = $$Config{AZAVG_DIR};
 $TsavgDir = $$Config{TSAVG_DIR};
 $FilterDir = $$Config{FILTER_DIR};
+$RevuDir = $$Config{REVU_DIR};
 
 # make sure at least one of each of cases, time_directories and diagnostics has
 # been specified
@@ -144,7 +146,7 @@ foreach $Case (sort(keys(%Cases)))
     foreach $Tdir (sort(keys(%TimeDirs)))
       {
       ($InDir,$InFileSuffix,$OutFile,$FilterFile) =
-          &CreateFileNames($Case, $Tdir, $Dname, $FfilePrefix, $AzavgDir, $TsavgDir, $FilterDir);
+          &CreateFileNames($Case, $Tdir, $Dname, $FfilePrefix, $AzavgDir, $TsavgDir, $FilterDir, $RevuDir);
 
       print "***************************************************************\n";
       print "Running tsavg:\n";
