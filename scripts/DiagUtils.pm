@@ -28,6 +28,14 @@ sub ReadConfigFile
       {
       $Config{CASES}{$f[1]} = 1;
       }
+    elsif ($f[0] eq "RamsDir:")
+      {
+      $Config{RAMS_DIR} = $f[1];
+      }
+    elsif ($f[0] eq "RevuDir:")
+      {
+      $Config{REVU_DIR} = $f[1];
+      }
     elsif ($f[0] eq "AzavgDir:")
       {
       $Config{AZAVG_DIR} = $f[1];
