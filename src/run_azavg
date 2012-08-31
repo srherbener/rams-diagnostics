@@ -37,7 +37,7 @@ use DiagUtils;
 #
 sub CreateFileNames
   {
-  my ($Case, $Tdir, $Adiag, $Fprefix) = @_;
+  my ($Case, $Tdir, $Adiag, $Fprefix, $AzavgDir, $FilterDir) = @_;
   
   my $InDir;
   my $InFileSuffix;
@@ -65,9 +65,9 @@ sub CreateFileNames
   $InFileSuffix = $f[0];
   $InFileSuffix =~ s/.*\/w-/-/;
   
-  $OutFile = "AzAveragedData/" . ${Tdir} . "/" . ${Adiag} . "_" . ${Case} . ".h5";
-  $FilterFile = "FILTERS/" . ${Tdir} . "/" . ${Fprefix} . "_" . ${Case} . ".h5";
-  $RadiusFile = "FILTERS/" . ${Tdir} . "/" . ${Fprefix} . "_aux_" . ${Case} . ".h5";
+  $OutFile = $AzavgDir . "/" . ${Tdir} . "/" . ${Adiag} . "_" . ${Case} . ".h5";
+  $FilterFile = $FilterDir . "/" . ${Tdir} . "/" . ${Fprefix} . "_" . ${Case} . ".h5";
+  $RadiusFile = $FilterDir . "/" . ${Tdir} . "/" . ${Fprefix} . "_aux_" . ${Case} . ".h5";
 
   return ($InDir, $InFileSuffix, $OutFile, $FilterFile, $RadiusFile);
   }
@@ -77,13 +77,14 @@ sub CreateFileNames
 #######################################################################
 
 my $ConfigFile;
+my $Config;
 
-my $Cases;
-my $TimeDirs;
-my $Vars;
-my $AzavgDiags;
-my $Diags;
-my $Plots;
+my %Cases;
+my %TimeDirs;
+my %Vars;
+my %AzavgDiags;
+my $AzavgDir;
+my $FilterDir;
 
 my @f;
 my $Case;
@@ -109,11 +110,17 @@ my $JoinOutFile;
 $ConfigFile = $ARGV[0];
 
 # read in info from the config file
-($Cases, $TimeDirs, $Vars, $AzavgDiags, $Diags, $Plots) = &DiagUtils::ReadConfigFile($ConfigFile);
+($Config) = &DiagUtils::ReadConfigFile($ConfigFile);
+%Cases      = %{ $$Config{CASES} };
+%TimeDirs   = %{ $$Config{TIM_DIRS} };
+%Vars       = %{ $$Config{VARS} };
+%AzavgDiags = %{ $$Config{AZAVG_DIAGS} };
+$AzavgDir = $$Config{AZAVG_DIR};
+$FilterDir = $$Config{FILTER_DIR};
 
 # make sure at least one of each of cases, time_directories and diagnostics has
 # been specified
-if ((! (%$Cases)) || (! (%$TimeDirs)) || (! (%$AzavgDiags)))
+if ((! (%Cases)) || (! (%TimeDirs)) || (! (%AzavgDiags)))
   {
   print STDERR "ERROR: must specify at least one of each of case, time directory and diagnostic\n";
   exit 1;
@@ -124,33 +131,33 @@ if ((! (%$Cases)) || (! (%$TimeDirs)) || (! (%$AzavgDiags)))
 # control file.
 #
 # Walk through all combinations of cases, time directories, and diagnostics.
-foreach $Case (sort(keys(%$Cases)))
+foreach $Case (sort(keys(%Cases)))
   {
-  foreach $Adiag (sort(keys(%$AzavgDiags)))
+  foreach $Adiag (sort(keys(%AzavgDiags)))
     {
     $JoinInFiles = "";
 
-    $Avar = $$AzavgDiags{$Adiag}{VAR};
-    $VarDim = $$AzavgDiags{$Adiag}{DIM};
-    $Nbands = $$AzavgDiags{$Adiag}{NBANDS};
-    $Fprefix = $$AzavgDiags{$Adiag}{FILTER};
+    $Avar = $AzavgDiags{$Adiag}{VAR};
+    $VarDim = $AzavgDiags{$Adiag}{DIM};
+    $Nbands = $AzavgDiags{$Adiag}{NBANDS};
+    $Fprefix = $AzavgDiags{$Adiag}{FILTER};
 
     if (($Avar eq "speed_t") || ($Avar eq "speed_r"))
       {
-      # won't have a corresponding name in %$Vars
+      # won't have a corresponding name in %Vars
       $RevuVar = "HorizSpeed";
       }
     else
       {
-      $RevuVar = $$Vars{$Avar}{REVU_VAR};
+      $RevuVar = $Vars{$Avar}{REVU_VAR};
       }
 
     # run through each time directory generating the current diagnostic, and
     # then join these files into the main file (above the time directories)
-    foreach $Tdir (sort(keys(%$TimeDirs)))
+    foreach $Tdir (sort(keys(%TimeDirs)))
       {
       ($InDir,$InFileSuffix,$OutFile,$FilterFile,$RadiusFile) =
-          &CreateFileNames($Case, $Tdir, $Adiag,$Fprefix);
+          &CreateFileNames($Case, $Tdir, $Adiag,$Fprefix, $AzavgDir, $FilterDir);
 
       print "***************************************************************\n";
       print "Running azavg:\n";
@@ -181,7 +188,7 @@ foreach $Case (sort(keys(%$Cases)))
       if ($JoinInFiles eq "")
         {
         $JoinInFiles = $OutFile;
-        $JoinOutFile = "AzAveragedData/" . basename($OutFile);
+        $JoinOutFile = $AzavgDir . "/" . basename($OutFile);
         }
       else
         {
