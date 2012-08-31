@@ -22,8 +22,8 @@ B_SCRIPTS = $(B_DEST)/run_azavg_grads \
             $(B_DEST)/gen_grads_stats \
             $(B_DEST)/plot_grads_vslice
 
-M_DEST = $(HOME)/etc/perl
-M_PACKAGES = $(M_DEST)/DiagUtils.pm
+M_DEST = $(HOME)/etc/perl_grads
+#M_PACKAGES = $(M_DEST)/DiagUtils.pm
 
 #
 # Targets
