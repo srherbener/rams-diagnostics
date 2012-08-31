@@ -6,7 +6,7 @@
 # for lines in the config file are:
 #   Case: <CaseName>
 #   TimeDir: <Dir> <TimeSpec>
-#   Dfilt: <FilterSpecs>
+#   Dfilt: <Filters>
 #
 #   <CaseName> corresponds to the simulation name such as TC_SEED_C0100 or SA0SC0.
 #
@@ -34,7 +34,7 @@ use DiagUtils;
 #
 sub CreateFileNames
   {
-  my ($Case, $Tdir, $Fname) = @_;
+  my ($Case, $Tdir, $Fname, $FilterDir) = @_;
   
   my $InDir;
   my $InFileSuffix;
@@ -61,8 +61,8 @@ sub CreateFileNames
   $InFileSuffix = $f[0];
   $InFileSuffix =~ s/.*\/w-/-/;
   
-  $OutFile = "FILTERS/" . ${Tdir} . "/" . ${Fname} . "_" . ${Case} . ".h5";
-  $AuxFile = "FILTERS/" . ${Tdir} . "/" . ${Fname} . "_aux_" . ${Case} . ".h5";
+  $OutFile = $FilterDir . "/" . ${Tdir} . "/" . ${Fname} . "_" . ${Case} . ".h5";
+  $AuxFile = $FilterDir . "/" . ${Tdir} . "/" . ${Fname} . "_aux_" . ${Case} . ".h5";
 
   return ($InDir, $InFileSuffix, $OutFile, $AuxFile);
   }
@@ -72,15 +72,12 @@ sub CreateFileNames
 #######################################################################
 
 my $ConfigFile;
+my $Config;
 
-my $Cases;
-my $TimeDirs;
-my $Vars;
-my $AzavgDiags;
-my $TsavgDiags;
-my $FilterSpecs;
-my $Diags;
-my $Plots;
+my %Cases;
+my %TimeDirs;
+my %Filters;
+my $FilterDir;
 
 my @f;
 my $Case;
@@ -106,11 +103,15 @@ my $Aind;
 $ConfigFile = $ARGV[0];
 
 # read in info from the config file
-($Cases, $TimeDirs, $Vars, $AzavgDiags, $TsavgDiags, $FilterSpecs, $Diags, $Plots) = &DiagUtils::ReadConfigFile($ConfigFile);
+($Config) = &DiagUtils::ReadConfigFile($ConfigFile);
+%Cases    = %{ $$Config{CASES} };
+%TimeDirs = %{ $$Config{TIM_DIRS} };
+%Filters  = %{ $$Config{FILTERS} };
+$FilterDir = $$Config{FILTER_DIR};
 
 # make sure at least one of each of cases, time_directories and diagnostics has
 # been specified
-if ((! (%$Cases)) || (! (%$TimeDirs)) || (! (%$FilterSpecs)))
+if ((! (%Cases)) || (! (%TimeDirs)) || (! (%Filters)))
   {
   print STDERR "ERROR: must specify at least one of each of case, time directory and diagnostic\n";
   exit 1;
@@ -121,19 +122,19 @@ if ((! (%$Cases)) || (! (%$TimeDirs)) || (! (%$FilterSpecs)))
 # control file.
 #
 # Walk through all combinations of cases, time directories, and diagnostics.
-foreach $Case (sort(keys(%$Cases)))
+foreach $Case (sort(keys(%Cases)))
   {
-  foreach $Fname (sort(keys(%$FilterSpecs)))
+  foreach $Fname (sort(keys(%Filters)))
     {
     # the lengths of the argument lists vary according to which filter is selected
     # so the ReadConfigFile routine just places the arguments in a list
-    @Fspecs = @{ $$FilterSpecs{$Fname} };
+    @Fspecs = @{ $Filters{$Fname} };
 
     # run through each time directory generating the current diagnostic, and
     # then join these files into the main file (above the time directories)
-    foreach $Tdir (sort(keys(%$TimeDirs)))
+    foreach $Tdir (sort(keys(%TimeDirs)))
       {
-      ($InDir,$InFileSuffix,$OutFile,$AuxFile) = &CreateFileNames($Case, $Tdir, $Fname);
+      ($InDir,$InFileSuffix,$OutFile,$AuxFile) = &CreateFileNames($Case, $Tdir, $Fname, $FilterDir);
 
       print "***************************************************************\n";
       print "Running diag_filter:\n";
