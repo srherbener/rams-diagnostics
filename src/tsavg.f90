@@ -26,10 +26,10 @@ program tsavg
 
   ! Data arrays
   ! Dims: x, y, z, t
-  type (Rhdf5Var) :: U, V, AzWind, Dens, Filter, TserAvg
+  type (Rhdf5Var) :: U, V, AzWind, Speed10m, Dens, Filter, TserAvg
   type (Rhdf5Var) :: Xcoords, Ycoords, Zcoords, Tcoords
   type (Rhdf5Var) :: VarLon, VarLat, VarZcoords
-  character (len=MediumString) :: Ufile, Vfile, AzWindFile, DensFile
+  character (len=MediumString) :: Ufile, Vfile, AzWindFile, Speed10mFile, DensFile
   character (len=LittleString) :: Units
 
   integer :: ix, iy, iz, it
@@ -93,16 +93,15 @@ program tsavg
         stop
       endif
     else if (AvgFunc .eq. 'storm_int') then
-      Ufile = trim(InDir) // '/u' // trim(InSuffix)
-      U%vname = 'u'
-      call rhdf5_read_init(Ufile, U)
+      Speed10mFile = trim(InDir) // '/speed10m' // trim(InSuffix)
+      Speed10m%vname = 'speed10m'
+      call rhdf5_read_init(Speed10mFile, Speed10m)
+
+      ! speed10m is a 2D variable
+      Nz = 1
   
-      Vfile = trim(InDir) // '/v' // trim(InSuffix)
-      V%vname = 'v'
-      call rhdf5_read_init(Vfile, V)
-  
-      if (.not. (DimsMatch(Filter, U) .and. DimsMatch(Filter, V))) then
-        write (*,*) 'ERROR: dimensions of filter, u and v do not match'
+      if (.not. (DimsMatch(Filter, Speed10m))) then
+        write (*,*) 'ERROR: dimensions of filter and speed10m do not match'
         stop
       endif
     endif
@@ -159,15 +158,10 @@ program tsavg
 
       Units = 'Joules'
     else if (AvgFunc .eq. 'storm_int') then
-      write (*,*) 'Reading variable: u'
-      write (*,*) '  HDF5 file: ', trim(Ufile)
+      write (*,*) 'Reading variable: speed10m'
+      write (*,*) '  HDF5 file: ', trim(Speed10mFile)
       write (*,*) ''
-      call rhdf5_read(Ufile, U)
-
-      write (*,*) 'Reading variable: v'
-      write (*,*) '  HDF5 file: ', trim(Vfile)
-      write (*,*) ''
-      call rhdf5_read(Vfile, V)
+      call rhdf5_read(Speed10mFile, Speed10m)
 
       Units = 'int'
     endif
@@ -232,7 +226,7 @@ program tsavg
     write (*,*) ''
     flush(6)
   else if (AvgFunc .eq. 'storm_int') then
-    call DoStormInt(Nx, Ny, Nz, Nt, U%vdata, V%vdata, Filter%vdata, TserAvg%vdata)
+    call DoStormInt(Nx, Ny, Nz, Nt, Speed10m%vdata, Filter%vdata, TserAvg%vdata)
   endif
 
   ! Create dummy coordinates (for GRADS sake) and write out the
@@ -461,11 +455,12 @@ end subroutine DoHorizKe
 !    >= 70 m/s -> 5
 !
 
-subroutine DoStormInt(Nx, Ny, Nz, Nt, U, V, Filter, TserAvg)
+subroutine DoStormInt(Nx, Ny, Nz, Nt, Speed10m, Filter, TserAvg)
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
-  real, dimension(Nx,Ny,Nz,Nt) :: U, V, Filter
+  real, dimension(Nx,Ny,Nz,Nt) :: Filter
+  real, dimension(Nx,Ny,Nt) :: Speed10m
   real, dimension(Nt) :: TserAvg
 
   integer ix,iy,iz,it
@@ -487,7 +482,7 @@ subroutine DoStormInt(Nx, Ny, Nz, Nt, U, V, Filter, TserAvg)
             ! Count up the number of grid points with wind speeds fitting each of the
             ! Saffir-Simpson categories. Then form the metric by weighting each category
             ! count.
-            Wspeed = sqrt(U(ix,iy,iz,it)**2 + V(ix,iy,iz,it)**2)
+            Wspeed = Speed10m(ix,iy,it)
             if (Wspeed .ge. 70.0) then
               nCat5 = nCat5 + 1
             else if (Wspeed .ge. 59.0) then
