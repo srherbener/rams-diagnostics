@@ -34,7 +34,7 @@ use DiagUtils;
 #
 sub CreateFileNames
   {
-  my ($Case, $Tdir, $Fname, $FilterDir) = @_;
+  my ($Case, $Tdir, $Fname, $FilterDir, $RevuDir) = @_;
   
   my $InDir;
   my $InFileSuffix;
@@ -53,7 +53,7 @@ sub CreateFileNames
   #
   # OutFile is simply the whole path to the output file.
   #
-  $InDir = $Case . "/HDF5/" . $Tdir;
+  $InDir = $Case . "/" . $RevuDir . "/" . $Tdir;
 
   # Use the w input file as a sample for finding the input file suffix.
   $Pattern = $InDir . "/w-*.h5";
@@ -78,6 +78,7 @@ my %Cases;
 my %TimeDirs;
 my %Filters;
 my $FilterDir;
+my $RevuDir;
 
 my @f;
 my $Case;
@@ -108,6 +109,7 @@ $ConfigFile = $ARGV[0];
 %TimeDirs = %{ $$Config{TIM_DIRS} };
 %Filters  = %{ $$Config{FILTERS} };
 $FilterDir = $$Config{FILTER_DIR};
+$RevuDir = $$Config{REVU_DIR};
 
 # make sure at least one of each of cases, time_directories and diagnostics has
 # been specified
@@ -134,7 +136,7 @@ foreach $Case (sort(keys(%Cases)))
     # then join these files into the main file (above the time directories)
     foreach $Tdir (sort(keys(%TimeDirs)))
       {
-      ($InDir,$InFileSuffix,$OutFile,$AuxFile) = &CreateFileNames($Case, $Tdir, $Fname, $FilterDir);
+      ($InDir,$InFileSuffix,$OutFile,$AuxFile) = &CreateFileNames($Case, $Tdir, $Fname, $FilterDir, $RevuDir);
 
       print "***************************************************************\n";
       print "Running diag_filter:\n";
