@@ -45,8 +45,8 @@ for icase = 1:length(Config.Cases)
       fprintf('\n');
   
       InFile = sprintf('%s/%s_%s.h5', EofDir, Var, Case);
-      EofOutFile = sprintf('%s/EOF_%s_%s.jpg', Config.PlotDir, Var, Case);
-      EsOutFile = sprintf('%s/ES_%s_%s.jpg', Config.PlotDir, Var, Case);
+      EofOutFile = sprintf('%s/EOF%d_%s_%s.jpg', Config.PlotDir, EofNum, Var, Case);
+      EsOutFile = sprintf('%s/ES%d_%s_%s.jpg', Config.PlotDir, EofNum, Var, Case);
   
       SelectData = [ Rmin Rmax Zmin Zmax ];
   

@@ -4,8 +4,7 @@
 
 DEST = $(HOME)/etc/matlab/tc_seed
 
-SCRIPTS = $(DEST)/EofAnalysis.m \
-          $(DEST)/SetPath.m
+SCRIPTS = $(DEST)/SetPath.m
 
 #
 # Targets
