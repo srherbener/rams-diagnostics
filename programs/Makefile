@@ -6,7 +6,7 @@
 
 DEST = $(HOME)/bin
 BINS = $(DEST)/azavg_grads \
-       $(DEST)/cfad \
+       $(DEST)/cfad_grads \
        $(DEST)/colint_grads \
        $(DEST)/densf \
        $(DEST)/ghist \
@@ -40,8 +40,8 @@ all: $(BINS)
 $(DEST)/azavg_grads: azavg.o gdata_utils.o azavg_utils.o
 	$(LOADER) -o $(DEST)/azavg_grads gdata_utils.o azavg_utils.o azavg.o $(LOADER_OPTS) $(LIBS)
 
-$(DEST)/cfad: cfad.o gdata_utils.o azavg_utils.o
-	$(LOADER) -o $(DEST)/cfad gdata_utils.o azavg_utils.o cfad.o $(LOADER_OPTS) $(LIBS)
+$(DEST)/cfad_grads: cfad.o gdata_utils.o azavg_utils.o
+	$(LOADER) -o $(DEST)/cfad_grads gdata_utils.o azavg_utils.o cfad.o $(LOADER_OPTS) $(LIBS)
 
 $(DEST)/colint_grads: colint.o gdata_utils.o
 	$(LOADER) -o $(DEST)/colint_grads gdata_utils.o colint.o $(LOADER_OPTS) $(LIBS)
