@@ -91,7 +91,6 @@ end subroutine
 subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, AvarNz, NumRbands, Avar, AzAvg, &
   RbandInc, Filter, Radius, UndefVal)
 
-  use rhdf5_utils
   implicit none
 
   integer :: Nx, Ny, Nz, Nt
@@ -155,6 +154,140 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, AvarNz, NumRbands, Avar, AzAvg, &
   end do
   write (*,*) ''
 
+  return
+end subroutine
+
+
+!*****************************************************************************
+! BuildCfad()
+!
+! This routine will sort data points out into radial bands and then do 
+! the histogram binning within each radial band.
+!
+
+subroutine BuildCfad(Nx, Ny, Nz, Nt, NumRbands, NumBins, Avar, Cfad, &
+   RbandInc, BinVals, Filter, Radius, UndefVal)
+
+  implicit none
+
+  integer :: Nx, Ny, Nz, Nt, NumRbands, NumBins, iBinCenter
+  real, dimension(Nx,Ny,Nz,Nt) :: Avar, Filter
+  real, dimension(Nx,Ny,Nt) :: Radius
+  real, dimension(NumRbands,NumBins,Nz,Nt) :: Cfad
+  real, dimension(NumBins) :: BinVals
+  real :: RbandInc, UndefVal
+
+  integer :: ix, iy, iz, it, ib, ir
+  real :: DeltaX, DeltaY, BinTotal
+  integer :: iRband, iBin
+
+  ! initialize the counts
+  do ir = 1, NumRbands
+    do ib = 1, NumBins
+      do iz = 1, Nz
+        do it = 1, Nt
+          Cfad(ir,ib,iz,it) = 0.0;
+        end do 
+      end do 
+    end do 
+  end do 
+
+  ! create the histogram data
+  write (*,*) 'Binning Data:'
+
+  do it = 1, Nt
+    do iz = 1, Nz
+      do iy = 1, Ny
+        do ix = 1, Nx
+          ! Throw out undefined data points, and those screened out by Filter
+          if ((anint(Filter(ix,iy,iz,it)) .eq. 1.0) .and. (Avar(ix,iy,iz,it) .ne. UndefVal)) then
+             ! find the radial band for this data point
+             iRband = int(Radius(ix,iy,it) / RbandInc) + 1
+             ! iRband will go from 1 to n, but n might extend beyond the last radial
+             ! band due to approximations made in deriving RbandInc
+             if (iRband .gt. NumRbands) then
+               iRband = NumRbands
+             end if
+
+             ! Find the bin for this data point, iBinCenter has the index (for BinVals) that
+             ! is the "center point" of this bin. This means that numbers between
+             ! BinVals(iBinCenter-1) and BinVals(iBinCenter+1) go in this bin; indexes
+             ! less than iBinCenter hold numbers between BinVals(iBinCenter) and BinVals(iBinCenter-1)
+             ! and indecies greater than iBinCenter hold numbers between BinVals(iBinCenter) and
+             ! BinVals(iBinCenter+1).
+             ! This code assumes that the bin center is not on the ends of the BinVals array.
+             iBin = 0
+             do ib = 1, NumBins
+               ! on the bin center
+               if (ib .eq. iBinCenter) then
+                 if ((Avar(ix,iy,iz,it) .gt. BinVals(ib-1)) .and. (Avar(ix,iy,iz,it) .lt. BinVals(ib+1))) then
+                   iBin = ib
+                 endif
+               endif 
+
+               ! to the left of the center bin
+               if (ib .lt. iBinCenter) then
+                 if (Avar(ix,iy,iz,it) .le. BinVals(ib)) then
+                   if (ib .eq. 1) then
+                     iBin = ib
+                   else
+                     if (Avar(ix,iy,iz,it) .gt. BinVals(ib-1)) then
+                       iBin = ib
+                     endif
+                   endif
+                 endif
+               endif 
+
+               ! to the right of the center bin
+               if (ib .gt. iBinCenter) then
+                 if (Avar(ix,iy,iz,it) .ge. BinVals(ib)) then
+                   if (ib .eq. NumBins) then
+                     iBin = ib
+                   else
+                     if (Avar(ix,iy,iz,it) .lt. BinVals(ib+1)) then
+                       iBin = ib
+                     endif
+                   endif
+                 endif
+               endif 
+             end do
+
+             if (iBin .eq. 0) then
+               write (*,*) 'ERROR: did not find a bin for data at location:'
+               write (*,*) 'ERROR:   it, iz, ix, iy: ', it, iz, ix, iy
+               stop
+             endif
+             
+             Cfad(iRband,iBin,iz,it) = Cfad(iRband,iBin,iz,it) + 1.0
+          endif
+        end do
+      end do
+    end do
+  end do
+
+  ! Have counts in Cfad now. Convert these to % numbers.
+
+  do it = 1, Nt
+    do iz = 1, Nz
+      do ir = 1, NumRbands
+        ! sum up counts in all the bins
+        BinTotal = 0.0
+        do ib = 1, NumBins
+          BinTotal = BinTotal + Cfad(ir,ib,iz,it)
+        end do
+        ! convert entries to per cent values
+        do ib = 1, NumBins
+          ! If we selected out all data points, then the bin total will
+          ! be zero. In this case, leave the zeros in the Cfad array.
+          if (BinTotal .ne. 0.0) then
+            Cfad(ir,ib,iz,it) = (Cfad(ir,ib,iz,it) / BinTotal) * 100.0
+          endif
+        end do
+      end do
+    end do
+  end do
+
+  write (*,*) ''
   return
 end subroutine
 
