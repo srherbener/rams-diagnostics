@@ -170,7 +170,7 @@ subroutine BuildCfad(Nx, Ny, Nz, Nt, NumRbands, NumBins, Avar, Cfad, &
 
   implicit none
 
-  integer :: Nx, Ny, Nz, Nt, NumRbands, NumBins, iBinCenter
+  integer :: Nx, Ny, Nz, Nt, NumRbands, NumBins
   real, dimension(Nx,Ny,Nz,Nt) :: Avar, Filter
   real, dimension(Nx,Ny,Nt) :: Radius
   real, dimension(NumRbands,NumBins,Nz,Nt) :: Cfad
@@ -180,6 +180,7 @@ subroutine BuildCfad(Nx, Ny, Nz, Nt, NumRbands, NumBins, Avar, Cfad, &
   integer :: ix, iy, iz, it, ib, ir
   real :: DeltaX, DeltaY, BinTotal
   integer :: iRband, iBin
+  real, dimension(NumBins-1) :: BinEdges
 
   ! initialize the counts
   do ir = 1, NumRbands
@@ -192,7 +193,13 @@ subroutine BuildCfad(Nx, Ny, Nz, Nt, NumRbands, NumBins, Avar, Cfad, &
     end do 
   end do 
 
-  ! create the histogram data
+  ! Create the points halfway in between the points given in BinVals. Use
+  ! these half-way points as the boundaries between the bins.
+  do ib = 1, NumBins-1
+    BinEdges(ib) = (BinVals(ib) + BinVals(ib+1)) / 2.0
+  enddo
+
+  ! create the CFAD data
   write (*,*) 'Binning Data:'
 
   do it = 1, Nt
@@ -209,55 +216,27 @@ subroutine BuildCfad(Nx, Ny, Nz, Nt, NumRbands, NumBins, Avar, Cfad, &
                iRband = NumRbands
              end if
 
-             ! Find the bin for this data point, iBinCenter has the index (for BinVals) that
-             ! is the "center point" of this bin. This means that numbers between
-             ! BinVals(iBinCenter-1) and BinVals(iBinCenter+1) go in this bin; indexes
-             ! less than iBinCenter hold numbers between BinVals(iBinCenter) and BinVals(iBinCenter-1)
-             ! and indecies greater than iBinCenter hold numbers between BinVals(iBinCenter) and
-             ! BinVals(iBinCenter+1).
-             ! This code assumes that the bin center is not on the ends of the BinVals array.
+             ! Find the bin for this data point. Use the values in BinEdges to decide which
+             ! bin a value belongs in. Note that BinEdges(1) has the boundary between bins
+             ! 1 and 2, BinEdges(2) has the boundary between bins 2 and 3, etc.
              iBin = 0
              do ib = 1, NumBins
-               ! on the bin center
-               if (ib .eq. iBinCenter) then
-                 if ((Avar(ix,iy,iz,it) .gt. BinVals(ib-1)) .and. (Avar(ix,iy,iz,it) .lt. BinVals(ib+1))) then
+               if (ib .lt. NumBins) then
+                 if (Avar(ix,iy,iz,it) .lt. BinEdges(ib)) then
                    iBin = ib
+                   exit
                  endif
-               endif 
-
-               ! to the left of the center bin
-               if (ib .lt. iBinCenter) then
-                 if (Avar(ix,iy,iz,it) .le. BinVals(ib)) then
-                   if (ib .eq. 1) then
-                     iBin = ib
-                   else
-                     if (Avar(ix,iy,iz,it) .gt. BinVals(ib-1)) then
-                       iBin = ib
-                     endif
-                   endif
-                 endif
-               endif 
-
-               ! to the right of the center bin
-               if (ib .gt. iBinCenter) then
-                 if (Avar(ix,iy,iz,it) .ge. BinVals(ib)) then
-                   if (ib .eq. NumBins) then
-                     iBin = ib
-                   else
-                     if (Avar(ix,iy,iz,it) .lt. BinVals(ib+1)) then
-                       iBin = ib
-                     endif
-                   endif
-                 endif
-               endif 
-             end do
+               else
+                 iBin = ib
+               endif
+             enddo
 
              if (iBin .eq. 0) then
                write (*,*) 'ERROR: did not find a bin for data at location:'
-               write (*,*) 'ERROR:   it, iz, ix, iy: ', it, iz, ix, iy
+               write (*,*) 'ERROR:   ix, iy, iz, it: ', ix, iy, iz, it
                stop
              endif
-             
+
              Cfad(iRband,iBin,iz,it) = Cfad(iRband,iBin,iz,it) + 1.0
           endif
         end do
