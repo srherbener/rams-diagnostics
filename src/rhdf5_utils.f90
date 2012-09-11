@@ -61,8 +61,7 @@ Contains
 !
 ! Splitting up the read into two pieces allows the caller to
 ! quickly get size information about variables without having
-! to read in all the data. One purpose for this is get the
-! dimensions so that the data buffer can be allocated.
+! to read in all the data.
 ! 
 subroutine rhdf5_read_init(fname, rvar)
   implicit none
@@ -76,7 +75,7 @@ subroutine rhdf5_read_init(fname, rvar)
   facc = 'R'
   call rhdf5_open_file(fname, facc, 0, fileid)
 
-  call rhdf5_read_variable_init(fileid, rvar%vname, rvar%ndims, rvar%dims, rvar%units, &
+  call rhdf5_read_variable_init(fileid, rvar%vname, rvar%ndims, 0, rvar%dims, rvar%units, &
     rvar%descrip, rvar%dimnames)
 
   call rhdf5_close_file(fileid)
@@ -100,21 +99,13 @@ subroutine rhdf5_read(fname, rvar)
 
   integer :: fileid
   character (len=RHDF5_MAX_STRING):: facc
-  integer :: i, nelem
-
-  ! Calculate the number of elements needed for the variable data
-  ! based on the dimensions of that variable.
-  nelem = 1
-  do i = 1, rvar%ndims
-    nelem = nelem * rvar%dims(i)
-  enddo
-
-  allocate(rvar%vdata(nelem))
 
   facc = 'R'
   call rhdf5_open_file(fname, facc, 0, fileid)
 
-  call rhdf5_read_variable(fileid, rvar%vname, rvar%ndims, rvar%dims, rdata=rvar%vdata)
+  ! 4th argument is itstep which if is equal to zero then the entire dataset
+  ! (all time steps) are to be read in one call
+  call rhdf5_read_variable(fileid, rvar%vname, rvar%ndims, 0, rvar%dims, rdata=rvar%vdata)
 
   call rhdf5_close_file(fileid)
   return
@@ -797,10 +788,25 @@ end function rhdf5_find_even_divisor
 !
 ! This routine needs to be called before hdf5_read_variable().
 !
-subroutine rhdf5_read_variable_init(id, vname, ndims, dims, units, descrip, dimnames)
+! itstep is used to select a particular time step from the file dataset
+! to be loaded into the data buffer.
+!
+!   itstep == 0 -> read the entire file dataset
+!   itstep > 0 -> read the itstep-th time step
+!
+! When itstep is > zero (selecting a particular time step), then reduce the dimensions
+! of the data buffer by one. Say we have a 3D field with multiple time steps, and itstep
+! is set to 4. Then the file dataset has (x,y,z,t) and we will have just read that
+! description into the var after the calls to get the dimensions and dimension names.
+! We want the data buffer and description of that data to be (x,y,z) since we will
+! be reading just one time step of the file dataset, so at this point chop off the
+! time dimension from the descriptions.
+!
+subroutine rhdf5_read_variable_init(id, vname, ndims, itstep, dims, units, descrip, dimnames)
   implicit none
 
   integer :: id
+  integer :: itstep
   character (len=*) :: vname
   integer :: ndims
   integer, dimension(RHDF5_MAX_DIMS) :: dims
@@ -844,6 +850,14 @@ subroutine rhdf5_read_variable_init(id, vname, ndims, dims, units, descrip, dimn
     call rhdf5_reverse_dims(ndims, dims, dimnames)
   endif
 
+  ! If itstep > 0, then chop off the time dimension (which will be the last
+  ! dimension at this point)
+  if (itstep .gt. 0) then
+    dims(ndims) = 0
+    dimnames(ndims) = ''
+    ndims = ndims - 1
+  endif
+
   ! close the dataset
   call rh5d_close(dsetid, hdferr)
 
@@ -861,10 +875,21 @@ end subroutine rhdf5_read_variable_init
 ! terminated with a null byte. cdata on the other hand gets cast into a character array with
 ! a fixed length (RHDF5_MAX_STRING).
 !
-subroutine rhdf5_read_variable(id, vname, ndims, dims, rdata, idata, sdata, ssize, cdata)
+! itstep says to read a particular time step from the file dataset into the data buffer. 
+! It is assumed that when itstep is > zero then there is one more dimentsion in the dataset
+! than in the data buffer. Eg. if the data buffer is (x,y,z), then the dataset in the file
+! is (x,y,z,t).
+! 
+!    itstep .eq. 0 --> no selection of time step, read the entire file dataset into
+!                      the data buffer.
+!    itstep > 0 --> read the itsetp-th time step from the file dataset into the
+!                   data buffer.
+!
+subroutine rhdf5_read_variable(id, vname, ndims, itstep, dims, rdata, idata, sdata, ssize, cdata)
   implicit none
 
   integer :: id
+  integer :: itstep
   character (len=*) :: vname
   integer :: ndims
   integer, dimension(ndims) :: dims
@@ -876,10 +901,78 @@ subroutine rhdf5_read_variable(id, vname, ndims, dims, rdata, idata, sdata, ssiz
 
   integer :: hdferr
   integer :: dsetid
+  integer, dimension(ndims+1) :: counts, offset
+  integer, dimension(ndims) :: md_dims
   character (len=RHDF5_MAX_STRING) :: dnstring
   character (len=RHDF5_MAX_STRING) :: arrayorg
   character (len=RHDF5_MAX_STRING) :: stemp
   integer :: dsize
+  integer :: i, irev
+  integer :: nelem
+  integer :: fd_ndims, md_ndims
+
+  ! Calculate the number of elements needed for the variable data
+  ! based on the dimensions of that variable.
+  nelem = 1
+  do i = 1, ndims
+    nelem = nelem * dims(i)
+  enddo
+
+  ! Calculate the offset and count values for the hyperslab selection. We
+  ! want to select all of the field for either all time steps or just one
+  ! particular time step. The dimensions at the C code level will be reversed
+  ! from the FORTRAN level so a 3D field will be stored in the file dataset
+  ! as (t,z,y,x). If we are reading a 3D field as an example, then:
+  !
+  !   itstep == 0 --> offset = 0, 0, 0, 0
+  !                   counts = Nt, Nz, Ny, Nx
+  !
+  !   itstep > 0  --> offset = itstep-1, 0, 0, 0
+  !                   counts = 1, Nz, Ny, Nx
+  !
+  ! Note that time step 'itstep' is equal to 'itstep' in FORTRAN but
+  ! equal to 'itstep-1' in C since C arrays start with zero instead of one.
+  !
+  ! counts and offset are relative to the file dataset, so if itstep is zero
+  ! then the ndims passed into this routine matches the number of dimensions
+  ! in the file dataset, otherwise ndims is one less than the number of
+  ! dimensions in the file dataset. 
+  !
+
+  ! set up controls for accessing the file
+  if (itstep .eq. 0) then
+    ! read all of the time steps
+    ! ndims matches what's in the file
+    ! set offset to all zeros
+    ! set counts to all dimension sizes
+    fd_ndims = ndims
+    do i = 1, fd_ndims
+      irev = (fd_ndims + 1) - i
+      offset(irev) = 0
+      counts(irev) = dims(i)
+    enddo
+  else
+    ! read one of the time steps
+    ! ndims is one less than what's in the file
+    ! set first offset, time, to (itstep-1), the rest to all zeros
+    ! set first count, time, to 1, teh rest to corresponding dimension sizes
+    fd_ndims = ndims+1
+    offset(1) = itstep - 1
+    counts(1) = 1
+    do i = 2, fd_ndims
+      irev = (fd_ndims + 1) - i
+      offset(i) = 0
+      counts(i) = dims(irev)
+    enddo
+  endif
+
+  ! set up controls for accessing the data buffer
+  ! need to reverse the dimensions for the data buffer
+  md_ndims = ndims
+  do i = 1, md_ndims
+    irev = (md_ndims + 1) - i
+    md_dims(i) = dims(irev)
+  enddo
 
   ! open dataset
   call rh5d_open(id, trim(vname)//char(0), dsetid, hdferr)
@@ -890,14 +983,18 @@ subroutine rhdf5_read_variable(id, vname, ndims, dims, rdata, idata, sdata, ssiz
 
   ! read the data
   if (present(sdata)) then
-    call rh5d_read(dsetid, RHDF5_TYPE_STRING, ssize, sdata, hdferr)
+    allocate(sdata(nelem*ssize))
+    call rh5d_read(dsetid, RHDF5_TYPE_STRING, md_ndims, md_dims, fd_ndims, offset, counts, ssize, sdata, hdferr)
     call rhdf5_convert_c2f_strings(sdata,ssize,ndims,dims)
   elseif (present(idata)) then
-    call rh5d_read(dsetid, RHDF5_TYPE_INTEGER, dsize, idata, hdferr)
+    allocate(idata(nelem))
+    call rh5d_read(dsetid, RHDF5_TYPE_INTEGER, md_ndims, md_dims, fd_ndims, offset, counts, dsize, idata, hdferr)
   elseif (present(rdata)) then
-    call rh5d_read(dsetid, RHDF5_TYPE_FLOAT, dsize, rdata, hdferr)
+    allocate(rdata(nelem))
+    call rh5d_read(dsetid, RHDF5_TYPE_FLOAT, md_ndims, md_dims, fd_ndims, offset, counts, dsize, rdata, hdferr)
   elseif (present(cdata)) then
-    call rh5d_read(dsetid, RHDF5_TYPE_CHAR, dsize, cdata, hdferr)
+    allocate(cdata(nelem))
+    call rh5d_read(dsetid, RHDF5_TYPE_CHAR, md_ndims, md_dims, fd_ndims, offset, counts, dsize, cdata, hdferr)
   else
     print*,'ERROR: hdf5_read_variable: must use one of the "rdata", "idata", "sdata" arguments'
     stop 'hdf5_read_variable: bad variable read'
@@ -979,7 +1076,7 @@ end subroutine rhdf5_c2f_string
 
 
 !***********************************************************************
-! rhdf5_c2f_string()
+! rhdf5_reverse_dims()
 !
 ! This routine will reverse the dimensions and dimension names. This is
 ! intended to be used for reading HDF5 files with row major storage.

@@ -7,6 +7,7 @@ program testh5
   integer, parameter :: Nx = 3
   integer, parameter :: Ny = 2
   integer, parameter :: Nz = 2
+  integer, parameter :: Nt = 4
   integer, parameter :: BigNx = 3000
   !integer, parameter :: BigNx = 6
   integer, parameter :: BigNy = 200
@@ -30,7 +31,7 @@ program testh5
   character (len=ssize), dimension(:), allocatable :: InSarray
   character, dimension(:), allocatable :: InCarray
  
-  integer :: i, ix, iy, iz
+  integer :: i, ix, iy, iz, it
   integer, dimension(3) :: dims
   integer :: ndims
   integer :: rh5_file
@@ -150,32 +151,24 @@ program testh5
     call rhdf5_open_file(rh5_file_name, rh5_file_acc, 0, rh5_file)
 
     print*, 'Reading IntData:'
-    call rhdf5_read_variable_init(rh5_file,'IntData', ndims, dims, units, descrip, dimnames)
-    call CalcTotElems(ndims,dims,tot_elems)
-    allocate(InIarray(tot_elems))
-    call rhdf5_read_variable(rh5_file,'IntData', ndims, dims, idata=InIarray)
+    call rhdf5_read_variable_init(rh5_file,'IntData', ndims, 0, dims, units, descrip, dimnames)
+    call rhdf5_read_variable(rh5_file,'IntData', ndims, 0, dims, idata=InIarray)
     call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
 
     print*, 'Reading RealData:'
-    call rhdf5_read_variable_init(rh5_file,'RealData', ndims, dims, units, descrip, dimnames)
-    call CalcTotElems(ndims,dims,tot_elems)
-    allocate(InRarray(tot_elems))
-    call rhdf5_read_variable(rh5_file,'RealData', ndims, dims, rdata=InRarray)
+    call rhdf5_read_variable_init(rh5_file,'RealData', ndims, 0, dims, units, descrip, dimnames)
+    call rhdf5_read_variable(rh5_file,'RealData', ndims, 0, dims, rdata=InRarray)
     call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
 
     print*, 'Reading StringData:'
-    call rhdf5_read_variable_init(rh5_file,'StringData', ndims, dims, units, descrip, dimnames)
-    call CalcTotElems(ndims,dims,tot_elems)
-    allocate(InSarray(tot_elems))
-    call rhdf5_read_variable(rh5_file,'StringData', ndims, dims, sdata=InSarray, ssize=ssize)
+    call rhdf5_read_variable_init(rh5_file,'StringData', ndims, 0, dims, units, descrip, dimnames)
+    call rhdf5_read_variable(rh5_file,'StringData', ndims, 0, dims, sdata=InSarray, ssize=ssize)
     call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
     print*, '  ssize: ', ssize
 
     print*, 'Reading CharData:'
-    call rhdf5_read_variable_init(rh5_file,'CharData', ndims, dims, units, descrip, dimnames)
-    call CalcTotElems(ndims,dims,tot_elems)
-    allocate(InCarray(tot_elems))
-    call rhdf5_read_variable(rh5_file,'CharData', ndims, dims, cdata=InCarray)
+    call rhdf5_read_variable_init(rh5_file,'CharData', ndims, 0, dims, units, descrip, dimnames)
+    call rhdf5_read_variable(rh5_file,'CharData', ndims, 0, dims, cdata=InCarray)
     call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
 
 
@@ -244,32 +237,24 @@ program testh5
     call rhdf5_open_file(rh5_file_name, rh5_file_acc, 0, rh5_file)
 
     print*, 'Reading IntData:'
-    call rhdf5_read_variable_init(rh5_file,'IntData', ndims, dims, units, descrip, dimnames)
-    call CalcTotElems(ndims,dims,tot_elems)
-    allocate(InIarray(tot_elems))
-    call rhdf5_read_variable(rh5_file,'IntData', ndims, dims, idata=InIarray)
+    call rhdf5_read_variable_init(rh5_file,'IntData', ndims, 0, dims, units, descrip, dimnames)
+    call rhdf5_read_variable(rh5_file,'IntData', ndims, 0, dims, idata=InIarray)
     call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
 
     print*, 'Reading RealData:'
-    call rhdf5_read_variable_init(rh5_file,'RealData', ndims, dims, units, descrip, dimnames)
-    call CalcTotElems(ndims,dims,tot_elems)
-    allocate(InRarray(tot_elems))
-    call rhdf5_read_variable(rh5_file,'RealData', ndims, dims, rdata=InRarray)
+    call rhdf5_read_variable_init(rh5_file,'RealData', ndims, 0, dims, units, descrip, dimnames)
+    call rhdf5_read_variable(rh5_file,'RealData', ndims, 0, dims, rdata=InRarray)
     call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
 
     print*, 'Reading StringData:'
-    call rhdf5_read_variable_init(rh5_file,'StringData', ndims, dims, units, descrip, dimnames)
-    call CalcTotElems(ndims,dims,tot_elems)
-    allocate(InSarray(tot_elems))
-    call rhdf5_read_variable(rh5_file,'StringData', ndims, dims, sdata=InSarray, ssize=ssize)
+    call rhdf5_read_variable_init(rh5_file,'StringData', ndims, 0, dims, units, descrip, dimnames)
+    call rhdf5_read_variable(rh5_file,'StringData', ndims, 0, dims, sdata=InSarray, ssize=ssize)
     call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
     print*, '  ssize: ', ssize
 
     print*, 'Reading CharData:'
-    call rhdf5_read_variable_init(rh5_file,'CharData', ndims, dims, units, descrip, dimnames)
-    call CalcTotElems(ndims,dims,tot_elems)
-    allocate(InCarray(tot_elems))
-    call rhdf5_read_variable(rh5_file,'CharData', ndims, dims, cdata=InCarray)
+    call rhdf5_read_variable_init(rh5_file,'CharData', ndims, 0, dims, units, descrip, dimnames)
+    call rhdf5_read_variable(rh5_file,'CharData', ndims, 0, dims, cdata=InCarray)
     call DumpVarInfo(ndims, dims, units, descrip, dimnames, RHDF5_MAX_STRING)
 
 
@@ -308,14 +293,76 @@ program testh5
 
     Vout%vname = 'hvar'
     call rhdf5_read_init(fname, Vout)
-    call CalcTotElems(Vout%ndims,Vout%dims,tot_elems)
-    allocate(Vout%vdata(tot_elems))
     call rhdf5_read(fname, Vout)
 
     print*, 'Reading file: ', trim(fname), ', Vout:'
     call DumpRhdf5Var(Vout)
     deallocate(Vout%vdata)
  
+  elseif (TestNum .eq. 6) then
+    Vin%vname = 'hvar'
+    Vin%ndims = 3
+    Vin%dims(1) = Nx
+    Vin%dims(2) = Ny
+    Vin%dims(3) = Nz
+    Vin%units = 'test_hv'
+    Vin%descrip = 'test_hv_real'
+    Vin%dimnames(1) = 'x'
+    Vin%dimnames(2) = 'y'
+    Vin%dimnames(3) = 'z'
+    allocate(Vin%vdata(Nx*Ny*Nz))
+
+
+    rh5_file_name = 'test_read_ts.h5'
+    print*, 'Writing file: ', trim(rh5_file_name), ', Vin:'
+    rh5_file_acc = 'W'
+    call rhdf5_open_file(rh5_file_name, rh5_file_acc, 1, rh5_file)
+
+    do it = 1, Nt
+      print*, '  ****** Time step *******: ', it
+
+      do i = 1, Nx*Ny*Nz
+        Vin%vdata(i) = float(it) * float(i)
+      enddo
+
+      print*, '  Contents of Vin:'
+      call DumpRhdf5Var(Vin)
+      print*, ''
+
+      ! Fourth arg is 'itstep' (time step) which is used for writing into an extendable
+      ! dimension.
+      call rhdf5_write_variable(rh5_file, Vin%vname, Vin%ndims, it, Vin%dims, Vin%units, &
+        Vin%descrip, Vin%dimnames, rdata=Vin%vdata)
+    enddo
+
+    call rhdf5_close_file(rh5_file)
+
+    ! try reading entire dataset in one shot
+    print*, 'Reading file, all time steps at once: ', trim(rh5_file_name), ', Vout:'
+    Vout%vname = 'hvar'
+    call rhdf5_read_init(rh5_file_name, Vout)
+    call rhdf5_read(rh5_file_name, Vout)
+
+    call DumpRhdf5Var(Vout)
+    deallocate(Vout%vdata)
+ 
+    ! try reading dataset one time step at a time
+    print*, 'Reading file, one time step at a time: ', trim(rh5_file_name)
+
+    rh5_file_acc = 'R'
+    call rhdf5_open_file(rh5_file_name, rh5_file_acc, 0, rh5_file)
+
+    Vout%vname = 'hvar'
+    do it = 1, Nt
+      print*, '  ****** Time step *******: ', it
+      call rhdf5_read_variable_init(rh5_file, Vout%vname, Vout%ndims, it, Vout%dims, &
+        Vout%units, Vout%descrip, Vout%dimnames)
+
+      call rhdf5_read_variable(rh5_file, Vout%vname, Vout%ndims, it, Vout%dims, rdata=Vout%vdata)
+      call DumpRhdf5Var(Vout)
+      deallocate(Vout%vdata)
+    enddo
+
   endif
 
 end program testh5

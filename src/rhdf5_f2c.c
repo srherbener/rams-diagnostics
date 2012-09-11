@@ -484,10 +484,16 @@ void rh5d_read_get_dims(int *dsetid, int *ndims, int *dims, int *hdferr)
 // The dataset is left open so that the caller can retrieve attributes
 // so it is up to the caller to close the dataset.
 //
-void rh5d_read(int *dsetid, int *dtype, int *dsize, void *data, int *hdferr)
+void rh5d_read(int *dsetid, int *dtype, int *ms_ndims, int *ms_dims, int *fs_ndims, int *fs_offset, int *fs_counts, int *dsize, void *data, int *hdferr)
   {
   hid_t dtypid;
-  hsize_t dset_dims[RHDF5_MAX_DIMS];
+  hsize_t hs_file_counts[RHDF5_MAX_DIMS] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+  hsize_t hs_file_offset[RHDF5_MAX_DIMS] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+  hsize_t hs_mem_dims[RHDF5_MAX_DIMS]   = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+  hsize_t hs_mem_counts[RHDF5_MAX_DIMS] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+  hsize_t hs_mem_offset[RHDF5_MAX_DIMS] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+  hid_t file_dspace;
+  hid_t mem_dspace;
   int i;
   int mtype;
   
@@ -516,8 +522,41 @@ void rh5d_read(int *dsetid, int *dtype, int *dsize, void *data, int *hdferr)
     return;
     }
 
+  // set up the hyperslab selection
+  // copy counts and offsets - the hdf5 interface doesn't like the argument integer pointer types
+  // for some reason
+  for (i=0; i<*fs_ndims; i++)
+    {
+    hs_file_counts[i] = fs_counts[i];
+    hs_file_offset[i] = fs_offset[i];
+    }
+
+  // get the file data space
+  file_dspace = H5Dget_space(*dsetid);
+
+  // file data space selection (hyperslab)
+  *hdferr = H5Sselect_hyperslab(file_dspace, H5S_SELECT_SET, hs_file_offset, NULL, hs_file_counts, NULL);
+  if (*hdferr != 0)
+    {
+    return;
+    }
+
+  // memory data space selection (all)
+  for (i=0; i<*ms_ndims; i++)
+    {
+    hs_mem_dims[i] = ms_dims[i];
+    hs_mem_offset[i] = 0;
+    hs_mem_counts[i] = ms_dims[i];
+    }
+  mem_dspace = H5Screate_simple(*ms_ndims, hs_mem_dims, NULL);
+  *hdferr = H5Sselect_hyperslab(mem_dspace, H5S_SELECT_SET, hs_mem_offset, NULL, hs_mem_counts, NULL);
+  if (*hdferr != 0)
+    {
+    return;
+    }
+
   // read the dataset, clean up and return
-  *hdferr = H5Dread(*dsetid, dtypid, H5S_ALL, H5S_ALL, H5P_DEFAULT, data);
+  *hdferr = H5Dread(*dsetid, dtypid, mem_dspace, file_dspace, H5P_DEFAULT, data);
 
   if (*dtype == RHDF5_TYPE_STRING)
     {
