@@ -22,24 +22,25 @@ program join_hdata
   character (len=LittleString) :: VarName
 
   character (len=MediumString), dimension(MaxFiles) :: InFileList
-  integer :: Nfiles
+  integer :: Nfiles, Nt
+  integer, dimension(MaxFiles) :: Ntsteps
 
-  integer, dimension(MaxFiles) :: InSizes
-  integer :: Nx, Ny, Nz, Nt
-  integer :: InNx, InNy, InNz, InNt
+  integer :: rh5_file, rh5_out_file
+  character (len=RHDF5_MAX_STRING) :: rh5_file_acc
 
   ! Data arrays
-  ! OutVar dims: x, y, z, t
   ! Invars, array where each element has a data array with dims: x, y, z, t
-  type (Rhdf5Var), dimension(MaxFiles) :: InVars
   type (Rhdf5Var), dimension(RHDF5_MAX_DIMS) :: Coords
   type (Rhdf5Var) :: InTcoords
-  type (Rhdf5Var) :: OutVar
 
-  integer :: i, iin, iout, itin, itout
-  integer :: Ndims
+  integer :: i, id, it, itin, iout, itout
+  integer :: ndims
+  integer, dimension(RHDF5_MAX_DIMS) :: dims, check_dims
+  integer :: InSize
+  real, dimension(:), allocatable :: VarData
+  character (len=RHDF5_MAX_STRING) :: units, descrip
+  character (len=RHDF5_MAX_STRING), dimension(RHDF5_MAX_DIMS) :: dimnames
   character (len=LittleString), dimension(RHDF5_MAX_DIMS) :: Cnames
-  character (len=LittleString), dimension(RHDF5_MAX_DIMS) :: GradsCnames
   
   real :: Xstart, Xinc, Ystart, Yinc
   logical :: BadData
@@ -62,8 +63,14 @@ program join_hdata
   ! information from just that particular file. Store each result in the elements of the
   ! arrayed versions of GradsControlFiles and GradsVar types.
   do i = 1, Nfiles
-    InVars(i)%vname = VarName
-    call rhdf5_read_init(InFileList(i), InVars(i))
+    ! Read the file meta-data
+    rh5_file_acc = 'R'
+    call rhdf5_open_file(InFileList(i), rh5_file_acc, 0, rh5_file)
+    call rhdf5_read_variable_init(rh5_file, VarName, ndims, 0, dims, units, descrip, dimnames)
+    call rhdf5_close_file(rh5_file)
+
+    ! record the number of times steps for each input file
+    Ntsteps(i) = dims(ndims)
 
     ! Do some dimension checking
     ! Assume that the variable dimension orders are:
@@ -82,167 +89,137 @@ program join_hdata
     !
     ! Then use the recorded dimensions for figuring the size of the output variable.
 
-    if (InVars(i)%ndims .eq. 2) then
-      ! 1D data plus time
-      InNx = InVars(i)%dims(1)
-      InNy = 1 ! use one so that the total number of elements gets calculated correctly
-      InNz = 1
-      InNt = InVars(i)%dims(2)
-    elseif (InVars(i)%ndims .eq. 3) then
-      ! 2D data plus time
-      InNx = InVars(i)%dims(1)
-      InNy = InVars(i)%dims(2)
-      InNz = 1 ! use one so that the total number of elements gets calculated correctly
-      InNt = InVars(i)%dims(3)
-    else
-      ! 3D data plus time
-      InNx = InVars(i)%dims(1)
-      InNy = InVars(i)%dims(2)
-      InNz = InVars(i)%dims(3)
-      InNt = InVars(i)%dims(4)
-    endif
-
-    InSizes(i) = InNx * InNy * InNz * InNt
-
     if (i .eq. 1) then
       ! if first variable, then record the dimensions for comparing
-      ! and initialze the coordinate datasets
-      Nx = InNx
-      Ny = InNy
-      Nz = InNz
-      Nt = InNt
+      ! and figure out the size of the spatial field data
+      InSize = 1
+      do id = 1, ndims-1
+        InSize = InSize * dims(id)
+        check_dims(id) = dims(id)
+      enddo
+      Nt = dims(ndims)
     else
       ! if not first variable
       !   compare all but the time dimensions (since these can change)
-      !     unused dimensions (Nz for 2D data for example) will always be set to 1 and
-      !     will compare okay
-      !   accumulate the number of time steps
-      !
       BadData = .false.
-      if (Nx .ne. InNx) then
-        write (*,*) 'ERROR: number of x points in GRADS control files do not match'
-        BadData = .true.
-      endif
-      if (Ny .ne. InNy) then
-        write (*,*) 'ERROR: number of y points in GRADS control files do not match'
-        BadData = .true.
-      endif
-      if (Nz .ne. InNz) then
-        write (*,*) 'ERROR: number of z points in GRADS control files do not match'
-        BadData = .true.
-      endif
+      do id = 1, ndims - 1
+        if (dims(id) .ne. check_dims(id)) then
+          write (*,*) 'ERROR: dimensions in the input files do not match:'
+          write (*,*) 'ERROR:   input file with mis-match: ', trim(InFileList(i))
+          write (*,*) 'ERROR:   dimension number with mis-match: ', id
+          write (*,*) 'ERROR:   this file dimension size: ', dims(id)
+          write (*,*) 'ERROR:   first file dimension size: ', check_dims(id)
+          BadData = .true.
+        endif
+      enddo
+
       if (BadData) then
-        write (*,*) 'ERROR:  Control file: ', trim(InFileList(i))
+        write (*,*) 'ERROR:  Input file: ', trim(InFileList(i))
         stop
       endif
 
-      ! Accumulate the number of time steps so we know how many time steps will exist
-      ! in the output data
-      Nt = Nt + InNt
+      ! calculate total number of time steps
+      Nt = Nt + dims(ndims)
     endif
   enddo
 
-  Ndims = InVars(1)%ndims
-
-  write (*,*) 'Variable dimensions after joining files:'
-  write (*,*) '  Ndims: ', Ndims
-  write (*,*) '  Nx: ', Nx
-  write (*,*) '  Ny: ', Ny
-  write (*,*) '  Nz: ', Nz
-  write (*,*) '  Nt: ', Nt
+  write (*,*) 'Variable information:'
+  write (*,*) '  Variable name: ', trim(VarName)
+  write (*,*) '  Variable units: ', trim(units)
+  write (*,*) '  Variable description: ', trim(descrip)
+  write (*,*) '  Number of dimensions: ', ndims-1
+  write (*,*) '  Dimension sizes:'
+  do id = 1, ndims-1
+    write (*,*) '    ', trim(dimnames(id)), ': ', dims(id)
+  enddo
+  write (*,*) 'Number of time steps per input file:'
+  do i = 1, Nfiles
+    write (*,*) '    File number: ', i, ': ', Ntsteps(i)
+  enddo
+  write (*,*) ''
+  write (*,*) 'Total number of time steps: ', Nt
   write (*,*) ''
   flush(6)
 
   ! Generate the names of the dimension coordinate variables
-  do i = 1, Ndims
-    Cnames(i) = trim(InVars(1)%dimnames(i)) // '_coords'
-    if (i .eq. 1) then
-      GradsCnames(i) = 'x'
-    else if (i .eq. 2) then
-      GradsCnames(i) = 'y'
-    else if (i .eq. 3) then
-      GradsCnames(i) = 'z'
-    else
-      GradsCnames(i) = 't'
-    endif
+  do i = 1, ndims
+    Cnames(i) = trim(dimnames(i)) // '_coords'
   enddo 
-  ! the last dimension is always 't'
-  GradsCnames(Ndims) = 't'
 
   ! Read in all but the last dimension from the first input file
   !   Last dimension is 't' which will be handled below
-  do i = 1, Ndims-1
+  do i = 1, ndims-1
     Coords(i)%vname = Cnames(i)
     call rhdf5_read_init(InFileList(1), Coords(i))
     call rhdf5_read(InFileList(1), Coords(i))
   enddo
 
-  ! Initialize the output variable, go through the list of input variables and read
-  ! in their data and append it to the output variable
-  ! We have verified that the x, y, z dimensions of the input data in all HDF5 input
-  ! files match so it's okay use InVars(1) as a representative.
-  !
-  OutVar%vname = VarName
-  OutVar%ndims = InVars(1)%ndims
-  OutVar%dims = InVars(1)%dims
-  OutVar%dimnames = InVars(1)%dimnames
-  ! The last dimension size will be wrong since we copied it from InVars(1). It needs
-  ! to be replaced with Nt.
-  OutVar%dims(Invars(1)%ndims) = Nt
-  OutVar%units = Invars(1)%units
-  OutVar%descrip = Invars(1)%descrip
-  allocate(OutVar%vdata(Nx*Ny*Nz*Nt))
-
   ! Set up the 't' coordinate variable based on contents of first input file
   ! except make the size equal to Nt
-  Coords(Ndims)%vname = Cnames(Ndims)
-  call rhdf5_read_init(InFileList(1), Coords(Ndims))
-  Coords(Ndims)%dims(1) = Nt
-  allocate (Coords(Ndims)%vdata(Nt))
+  Coords(ndims)%vname = Cnames(ndims)
+  call rhdf5_read_init(InFileList(1), Coords(ndims))
+  Coords(ndims)%dims(1) = Nt
+  allocate (Coords(ndims)%vdata(Nt))
 
+  ! Copy the input data fields and t coordinates to the output
   iout = 0
   itout = 0
+  rh5_file_acc = 'W'
+  call rhdf5_open_file(OutFile, rh5_file_acc, 1, rh5_out_file)
+
   do i = 1, Nfiles
     ! append the variable data
-    call rhdf5_read(InFileList(i), InVars(i))
-    
-    do iin = 1, InSizes(i)
-      iout = iout + 1
-      OutVar%vdata(iout) = InVars(i)%vdata(iin)
-    end do
+    rh5_file_acc = 'R'
+    call rhdf5_open_file(InFileList(i), rh5_file_acc, 0, rh5_file)
+    do it = 1, Ntsteps(i)
+      call rhdf5_read_variable(rh5_file, VarName, ndims-1, it, dims, rdata=VarData)
 
-    deallocate(InVars(i)%vdata)
+      ! copy to the next time step in the output file
+      iout = iout + 1
+      call rhdf5_write_variable(rh5_out_file, VarName, ndims-1, iout, dims, &
+        units, descrip, dimnames, rdata=VarData)
+
+      if (modulo(iout,100) .eq. 0) then
+        write (*,*) 'Working: Number of time steps transferred so far: ', iout
+      endif
+
+      deallocate(VarData)
+    enddo
+    call rhdf5_close_file(rh5_file);
 
     ! append the 't' coordinate variable data
-    InTcoords%vname = Cnames(Ndims)
+    InTcoords%vname = Cnames(ndims)
     call rhdf5_read_init(InFileList(i), InTcoords)
     call rhdf5_read(InFileList(i), InTcoords)
 
     do itin = 1, InTcoords%dims(1)
       itout = itout + 1
-      Coords(Ndims)%vdata(itout) = InTcoords%vdata(itin)
+      Coords(ndims)%vdata(itout) = InTcoords%vdata(itin)
     enddo
 
     deallocate(InTcoords%vdata)
-    
   end do
 
-  !Write out the joined data
-  call rhdf5_write(OutFile, OutVar, 0)
+  call rhdf5_close_file(rh5_out_file);
+  write (*,*) 'Finished: Total number of time steps transferred: ', iout
+  write (*,*) ''
 
   ! Write out the coordinate data and mark as such
   ! variable
-  do i = 1, Ndims
+  do i = 1, ndims
     call rhdf5_write(OutFile, Coords(i), 1)
-    call rhdf5_set_dimension(OutFile, Coords(i), GradsCnames(i))
+    call rhdf5_set_dimension(OutFile, Coords(i), dimnames(i))
   enddo
 
   ! attach the coordinates to the output variable
-  call rhdf5_attach_dimensions(OutFile, OutVar)
+  !call rhdf5_attach_dimensions(OutFile, OutVar)
+  !deallocate(OutVar%vdata)
+  rh5_file_acc = 'RW' 
+  call rhdf5_open_file(OutFile, rh5_file_acc, 1, rh5_out_file)
+  call rhdf5_attach_dims_to_var(rh5_out_file, VarName)
+  call rhdf5_close_file(rh5_out_file)
 
-  deallocate(OutVar%vdata)
-!  deallocate(InTcoords)
-  do i = 1, Ndims
+  do i = 1, ndims
     deallocate(Coords(i)%vdata)
   enddo
 
