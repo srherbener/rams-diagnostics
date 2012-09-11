@@ -26,16 +26,24 @@ program tsavg
 
   ! Data arrays
   ! Dims: x, y, z, t
-  type (Rhdf5Var) :: U, V, AzWind, Speed10m, Dens, Filter, TserAvg
-  type (Rhdf5Var) :: Xcoords, Ycoords, Zcoords, Tcoords
-  type (Rhdf5Var) :: VarLon, VarLat, VarZcoords
-  character (len=MediumString) :: Ufile, Vfile, AzWindFile, Speed10mFile, DensFile
-  character (len=LittleString) :: Units
+  type (Rhdf5Var) :: InXcoords, InYcoords, InZcoords, InTcoords
+  type (Rhdf5Var) :: OutXcoords, OutYcoords, OutZcoords
+  real, dimension(:), allocatable :: U, V, AzWind, Speed10m, Dens, Filter, TserAvg
+  character (len=MediumString) :: Ufile, Vfile, AzWindFile, Speed10mFile, DensFile, InCoordFile
+  character (len=LittleString) :: Uvname, Vvname, AzWindVname, Speed10mVname, DensVname, FilterVname, OutVname
+  character (len=LittleString) :: rh5f_facc
+  integer :: InNdims, OutNdims, FilterNdims
+  integer, dimension(RHDF5_MAX_DIMS) :: InDims, OutDims, FilterDims
+  character (len=RHDF5_MAX_STRING) :: InUnits, InDescrip, OutUnits, OutDescrip, FilterUnits, FilterDescrip
+  character (len=RHDF5_MAX_STRING), dimension(RHDF5_MAX_DIMS) :: InDimnames, OutDimnames, FilterDimnames
 
-  integer :: ix, iy, iz, it
+  integer :: rh5f_azwind, rh5f_u, rh5f_v, rh5f_speed10m, rh5f_dens, rh5f_filter, rh5f_out
+
+  integer :: id, ix, iy, iz, it
   integer :: Nx, Ny, Nz, Nt
   real :: DeltaX, DeltaY
-  real, dimension(:), allocatable :: VarXcoords, VarYcoords
+  real, dimension(:), allocatable :: InXcoordsKm, InYcoordsKm
+  logical :: BadDims
 
   ! Get the command line arguments
   call GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile)
@@ -49,6 +57,25 @@ program tsavg
   write (*,*) ''
   flush(6)
 
+  ! set up file and variable names
+  AzWindFile = trim(InDir) // '/speed_t' // trim(InSuffix)
+  AzWIndVname = 'speed_t'
+
+  ! FilterFile is set by command line arguments
+  FilterVname = 'filter'
+
+  DensFile = trim(InDir) // '/dn0' // trim(InSuffix)
+  DensVname = 'dn0'
+
+  Ufile = trim(InDir) // '/u' // trim(InSuffix)
+  Uvname = 'u'
+
+  Vfile = trim(InDir) // '/v' // trim(InSuffix)
+  Vvname = 'v'
+
+  Speed10mFile = trim(InDir) // '/speed10m' // trim(InSuffix)
+  Speed10mVname = 'speed10m'
+
   ! Check that the dimensions are consistent between the variables needed for
   ! the selected averaging function.
   !
@@ -56,230 +83,350 @@ program tsavg
   ! applied by the azavg program (which created the azwind data). All other functions
   ! need the filter data.
   !
-  if (AvgFunc .eq. 'max_azwind') then
-    AzWindFile = trim(InDir) // '/speed_t' // trim(InSuffix)
-    AzWind%vname = 'speed_t'
-    call rhdf5_read_init(AzWindFile, AzWind)
+  ! Expect 3D vars to be: (x,y,z,t)
+  !        2D vars to be: (x,y,t)
+  !
 
-    Nx = AzWind%dims(1)
-    Ny = AzWind%dims(2)
-    Nz = AzWind%dims(3)
-    Nt = AzWind%dims(4)
+  ! Set FilterNdims to one here. This will result with FilterNdims being equal to zero (since
+  ! we need to chop of the time dimension to read the filter time step by time step) when we
+  ! are not using a filter. When using a filter, FilterNdims will get set by what's contained
+  ! in FilterFile.
+  FilterNdims = 1
+  if (AvgFunc .eq. 'max_azwind') then
+    rh5f_facc = 'R'
+    call rhdf5_open_file(AzWindFile, rh5f_facc, 0, rh5f_azwind)
+    call rhdf5_read_variable_init(rh5f_azwind, AzWindVname, InNdims, 0, InDims, InUnits, InDescrip, InDimnames)
+    call rhdf5_close_file(rh5f_azwind)
+
+    Nx = InDims(1)
+    Ny = InDims(2)
+    Nz = InDims(3)
+    Nt = InDims(4)
   else
     ! Read in the filter and use it to check against all the other variables
-    Filter%vname = 'filter'
-    call rhdf5_read_init(FilterFile, Filter)
+    rh5f_facc = 'R'
+    call rhdf5_open_file(FilterFile, rh5f_facc, 0, rh5f_filter)
+    call rhdf5_read_variable_init(rh5f_filter, FilterVname, FilterNdims, 0, FilterDims, FilterUnits, FilterDescrip, FilterDimnames)
+    call rhdf5_close_file(rh5f_filter)
   
-    Nx = Filter%dims(1)
-    Ny = Filter%dims(2)
-    Nz = Filter%dims(3)
-    Nt = Filter%dims(4)
+    Nx = FilterDims(1)
+    Ny = FilterDims(2)
+    Nz = FilterDims(3)
+    Nt = FilterDims(4)
 
+    BadDims = .false.
     if (AvgFunc .eq. 'horiz_ke') then
-      DensFile = trim(InDir) // '/dn0' // trim(InSuffix)
-      Dens%vname = 'dn0'
-      call rhdf5_read_init(DensFile, Dens)
+      rh5f_facc = 'R'
+      call rhdf5_open_file(DensFile, rh5f_facc, 0, rh5f_dens)
+      call rhdf5_read_variable_init(rh5f_dens, DensVname, InNdims, 0, InDims, InUnits, InDescrip, InDimnames)
+      call rhdf5_close_file(rh5f_dens)
+      BadDims = BadDims .or. ((InDims(1) .ne. Nx) .or. (InDims(2) .ne. Ny) .or. (InDims(4).ne. Nt))
   
-      Ufile = trim(InDir) // '/u' // trim(InSuffix)
-      U%vname = 'u'
-      call rhdf5_read_init(Ufile, U)
+      rh5f_facc = 'R'
+      call rhdf5_open_file(Ufile, rh5f_facc, 0, rh5f_u)
+      call rhdf5_read_variable_init(rh5f_u, Uvname, InNdims, 0, InDims, InUnits, InDescrip, InDimnames)
+      call rhdf5_close_file(rh5f_u)
+      BadDims = BadDims .or. ((InDims(1) .ne. Nx) .or. (InDims(2) .ne. Ny) .or. (InDims(4).ne. Nt))
   
-      Vfile = trim(InDir) // '/v' // trim(InSuffix)
-      V%vname = 'v'
-      call rhdf5_read_init(Vfile, V)
+      rh5f_facc = 'R'
+      call rhdf5_open_file(Vfile, rh5f_facc, 0, rh5f_v)
+      call rhdf5_read_variable_init(rh5f_v, Vvname, InNdims, 0, InDims, InUnits, InDescrip, InDimnames)
+      call rhdf5_close_file(rh5f_v)
+      BadDims = BadDims .or. ((InDims(1) .ne. Nx) .or. (InDims(2) .ne. Ny) .or. (InDims(4).ne. Nt))
 
-      if (.not. (DimsMatch(Filter, Dens) .and. DimsMatch(Filter, U) .and. DimsMatch(Filter, V))) then
+      if (BadDims) then
         write (*,*) 'ERROR: dimensions of filter, dn0, u and v do not match'
         stop
       endif
     else if (AvgFunc .eq. 'storm_int') then
-      Speed10mFile = trim(InDir) // '/speed10m' // trim(InSuffix)
-      Speed10m%vname = 'speed10m'
-      call rhdf5_read_init(Speed10mFile, Speed10m)
-
       ! speed10m is a 2D variable
+      rh5f_facc = 'R'
+      call rhdf5_open_file(Speed10mFile, rh5f_facc, 0, rh5f_speed10m)
+      call rhdf5_read_variable_init(rh5f_speed10m, Speed10mVname, InNdims, 0, InDims, InUnits, InDescrip, InDimnames)
+      call rhdf5_close_file(rh5f_speed10m)
+      BadDims = BadDims .or. ((InDims(1) .ne. Nx) .or. (InDims(2) .ne. Ny) .or. (InDims(3).ne. Nt))
+
       Nz = 1
   
-      if (.not. (DimsMatch(Filter, Speed10m))) then
+      if (BadDims) then
         write (*,*) 'ERROR: dimensions of filter and speed10m do not match'
         stop
       endif
     endif
   endif
 
-  ! Report the dimensions
-  write (*,*) 'Gridded data information:'
-  write (*,*) '  Number of x (longitude) points:          ', Nx
-  write (*,*) '  Number of y (latitude) points:           ', Ny
-  write (*,*) '  Number of z (vertical level) points:     ', Nz
-  write (*,*) '  Number of t (time) points:               ', Nt
-  write (*,*) ''
-  write (*,*) '  Number of data values per grid variable: ', Nx*Ny*Nz*Nt
-  write (*,*) ''
-  flush(6)
+  ! Set up the dimensions for reading in the input field data, one time step per read. 
+  ! In other words, remove the time dimension from the input dimensions since we will 
+  ! be incrementing through every time step in a loop. The time dimension is always the
+  ! last dimension so what this boils down to is to decrement InNdims by one.
+  InNdims = InNdims - 1
+  FilterNdims = FilterNdims - 1
 
-  ! Read in the field data, plus the t coordinates
-  if (AvgFunc .eq. 'max_azwind') then
-    write (*,*) 'Reading variable: speed_t'
-    write (*,*) '  HDF5 file: ', trim(AzWindFile)
-    write (*,*) ''
-    call rhdf5_read(AzWindFile, AzWind)
-
-    Tcoords%vname = 't_coords'
-    call rhdf5_read_init(AzWindFile, Tcoords)
-    call rhdf5_read(AzWindFile, Tcoords)
-
-    Units = "m/s"
-  else
-    write (*,*) 'Reading variable: filter'
-    write (*,*) '  HDF5 file: ', trim(FilterFile)
-    write (*,*) ''
-    call rhdf5_read(FilterFile, Filter)
-
-    Tcoords%vname = 't_coords'
-    call rhdf5_read_init(FilterFile, Tcoords)
-    call rhdf5_read(FilterFile, Tcoords)
-
-    if (AvgFunc .eq. 'horiz_ke') then
-      write (*,*) 'Reading variable: dn0'
-      write (*,*) '  HDF5 file: ', trim(DensFile)
-      write (*,*) ''
-      call rhdf5_read(DensFile, Dens)
-
-      write (*,*) 'Reading variable: u'
-      write (*,*) '  HDF5 file: ', trim(Ufile)
-      write (*,*) ''
-      call rhdf5_read(Ufile, U)
-
-      write (*,*) 'Reading variable: v'
-      write (*,*) '  HDF5 file: ', trim(Vfile)
-      write (*,*) ''
-      call rhdf5_read(Vfile, V)
-
-      Units = 'Joules'
-    else if (AvgFunc .eq. 'storm_int') then
-      write (*,*) 'Reading variable: speed10m'
-      write (*,*) '  HDF5 file: ', trim(Speed10mFile)
-      write (*,*) ''
-      call rhdf5_read(Speed10mFile, Speed10m)
-
-      Units = 'int'
-    endif
-  endif
-
-  write (*,*) ''
-  flush(6)
-
-  ! Allocate the output array and do the averaging
-  TserAvg%vname = trim(AvgFunc)
-  TserAvg%ndims = 4 
-  TserAvg%dims(1) = 1
-  TserAvg%dims(2) = 1
-  TserAvg%dims(3) = 1
-  TserAvg%dims(4) = Nt
-  TserAvg%dimnames(1) = 'x' 
-  TserAvg%dimnames(2) = 'y' 
-  TserAvg%dimnames(3) = 'z' 
-  TserAvg%dimnames(4) = 't' 
-  TserAvg%units = Units
-  TserAvg%descrip = 'time series averaged ' // trim(AvgFunc) 
-  allocate(TserAvg%vdata(Nt))
+  ! Set up the dimensions for the output and allocate the output data array. Always
+  ! set up as if the output were 3D. This is done so that the output file can
+  ! be read into GRADS which expects 3D variables. Always have (x,y,z) for the
+  ! dimension names, but set the sizes of the dimensions according to the averaging
+  ! function asked for.
+  OutVname = trim(AvgFunc)
+  OutDescrip = 'time series averaged ' // trim(AvgFunc) 
+  OutNdims = 3 
+  OutDimnames(1) = 'x' 
+  OutDimnames(2) = 'y' 
+  OutDimnames(3) = 'z' 
 
   if (AvgFunc .eq. 'max_azwind') then
-    call DoMaxAzWind(Nx, Ny, Nz, Nt, AzWind%vdata, UndefVal, TserAvg%vdata)
+    ! single point result
+    OutDims(1) = 1
+    OutDims(2) = 1
+    OutDims(3) = 1
+    OutUnits = 'm/s'
   else if (AvgFunc .eq. 'horiz_ke') then
-    ! Need to get delta for x and y (in meters) and the z heights (in meters)
-    ! for DoHorizKe to be able to calculate volume * density -> mass
-    VarLon%vname = 'x_coords'
-    call rhdf5_read_init(DensFile, VarLon)
-    call rhdf5_read(DensFile, VarLon)
-
-    VarLat%vname = 'y_coords'
-    call rhdf5_read_init(DensFile, VarLat)
-    call rhdf5_read(DensFile, VarLat)
-
-    allocate(VarXcoords(Nx))
-    allocate(VarYcoords(Ny))
-    call ConvertGridCoords(Nx, Ny, Nz, Nt, VarLon%vdata, VarLat%vdata, VarXcoords, VarYcoords)
-
-    DeltaX = VarXcoords(2) - VarXcoords(1)
-    DeltaY = VarYcoords(2) - VarYcoords(1)
-
-    VarZcoords%vname = 'z_coords'
-    call rhdf5_read_init(DensFile, VarZcoords)
-    call rhdf5_read(DensFile, VarZcoords)
-
-    write (*,*) 'Horizontal grid info:'
-    write (*,*) '  X range (min lon, max lon) --> (min x, max x): '
-    write (*,*) '    ', VarLon%vdata(1), VarLon%vdata(Nx), VarXcoords(1), VarXcoords(Nx)
-    write (*,*) '  Y range (min lat, max lat) --> (min y, max y): '
-    write (*,*) '    ', VarLat%vdata(1), VarLat%vdata(Ny), VarYcoords(1), VarYcoords(Ny)
-    write (*,*) ''
-    write (*,*) 'Vertical grid info:'
-    do iz = 1, Nz
-      write (*,*) '  ', iz, ' --> ', VarZcoords%vdata(iz)
-    end do
-    write (*,*) ''
-    flush(6)
-
-    call DoHorizKe(Nx, Ny, Nz, Nt, Dens%vdata, U%vdata, V%vdata, Filter%vdata, DeltaX, DeltaY, VarZcoords%vdata, TserAvg%vdata)
-    write (*,*) ''
-    flush(6)
+    ! single point result
+    OutDims(1) = 1
+    OutDims(2) = 1
+    OutDims(3) = 1
+    OutUnits = 'Joules'
   else if (AvgFunc .eq. 'storm_int') then
-    call DoStormInt(Nx, Ny, Nz, Nt, Speed10m%vdata, Filter%vdata, TserAvg%vdata)
+    ! single point result
+    OutDims(1) = 1
+    OutDims(2) = 1
+    OutDims(3) = 1
+    OutUnits = 'int'
   endif
 
+  allocate(TserAvg(OutDims(1)*OutDims(2)*OutDims(3)))
+
+  ! Report the dimensions
+  write (*,*) 'Input variable information:'
+  write (*,*) '  Number of dimensions: ', InNdims
+  write (*,*) '  Dimension sizes:'
+  do id = 1, InNdims
+    write (*,*), '    ', trim(InDimnames(id)), ': ', InDims(id)
+  enddo
+  write (*,*) ''
+  if (FilterNdims .gt. 0) then
+    write (*,*) 'Filter variable information:'
+    write (*,*) '  Number of dimensions: ', FilterNdims
+    write (*,*) '  Dimension sizes:'
+    do id = 1, FilterNdims
+      write (*,*), '    ', trim(FilterDimnames(id)), ': ', FilterDims(id)
+    enddo
+    write (*,*) ''
+  endif
+  write (*,*) 'Output variable information:'
+  write (*,*) '  Name: ', trim(OutVname)
+  write (*,*) '  Units: ', trim(OutUnits)
+  write (*,*) '  Description: ', trim(OutDescrip)
+  write (*,*) '  Number of dimensions: ', OutNdims
+  write (*,*) '  Dimension sizes:'
+  do id = 1, OutNdims
+    write (*,*), '    ', trim(OutDimnames(id)), ': ', OutDims(id)
+  enddo
+  write (*,*) ''
+  write (*,*) '  Number of time steps: ', Nt
+  write (*,*) '  Number of time steps: ', Nt
+  write (*,*) ''
+  flush(6)
+
+  ! Read in the input coordinates
+  if (AvgFunc .eq. 'max_azwind') then
+    InCoordFile = trim(AzWindFile)
+  else if (AvgFunc .eq. 'horiz_ke') then
+    InCoordFile = trim(DensFile)
+  else if (AvgFunc .eq. 'storm_int') then
+    InCoordFile = trim(Speed10mFile)
+  endif
+
+  InXcoords%vname = 'x_coords'
+  call rhdf5_read_init(InCoordFile, InXcoords)
+  call rhdf5_read(InCoordFile, InXcoords)
+
+  InYcoords%vname = 'y_coords'
+  call rhdf5_read_init(InCoordFile, InYcoords)
+  call rhdf5_read(InCoordFile, InYcoords)
+
+  if (AvgFunc .eq. 'storm_int') then
+    ! fake it for the storm intensity metric
+    InZcoords%vname = 'z_coords'
+    InZcoords%ndims = 1
+    InZcoords%dims(1) = 1
+    InZcoords%dimnames(1) = 'z'
+    InZcoords%units = 'meter'
+    InZcoords%descrip = 'sigma-z'
+    allocate(InZcoords%vdata(1))
+    InZcoords%vdata(1) = 10.0
+  else
+    InZcoords%vname = 'z_coords'
+    call rhdf5_read_init(InCoordFile, InZcoords)
+    call rhdf5_read(InCoordFile, InZcoords)
+  endif
+
+  InTcoords%vname = 't_coords'
+  call rhdf5_read_init(InCoordFile, InTcoords)
+  call rhdf5_read(InCoordFile, InTcoords)
+
+  ! Need to get delta for x and y (in meters) and the z heights (in meters)
+  ! for DoHorizKe to be able to calculate volume * density -> mass
+  allocate(InXcoordsKm(Nx))
+  allocate(InYcoordsKm(Ny))
+  if (AvgFunc .eq. 'max_azwind') then
+    ! x,y coords are in meters, convert to km
+    do ix = 1, Nx
+      InXcoordsKm(ix) = InXcoords%vdata(ix) / 1000.0
+    enddo
+    do iy = 1, Ny
+      InYcoordsKm(iy) = InYcoords%vdata(iy) / 1000.0
+    enddo
+  else
+    ! x,y coords are in degrees lon,lat respectively
+    call ConvertGridCoords(Nx, Ny, Nz, Nt, InXcoords%vdata, InYcoords%vdata, InXcoordsKm, InYcoordsKm)
+  endif
+
+  DeltaX = InXcoordsKm(2) - InXcoordsKm(1)
+  DeltaY = InYcoordsKm(2) - InYcoordsKm(1)
+
+  write (*,*) 'Horizontal grid info:'
+  write (*,*) '  X range (min lon, max lon) --> (min x, max x): '
+  write (*,*) '    ', InXcoords%vdata(1), InXcoords%vdata(Nx), InXcoordsKm(1), InXcoordsKm(Nx)
+  write (*,*) '  Y range (min lat, max lat) --> (min y, max y): '
+  write (*,*) '    ', InYcoords%vdata(1), InYcoords%vdata(Ny), InYcoordsKm(1), InYcoordsKm(Ny)
+  write (*,*) ''
+  write (*,*) 'Vertical grid info:'
+  do iz = 1, Nz
+    write (*,*) '  ', iz, ' --> ', InZcoords%vdata(iz)
+  end do
+  write (*,*) ''
+  flush(6)
+
+  ! Prepare the output coordinates
+  !
   ! Create dummy coordinates (for GRADS sake) and write out the
   ! time series as a 4D var, (x,y,z,t), where x, y and z have
   ! dimension size of 1.
-  Xcoords%vname = 'x_coords'
-  Xcoords%ndims = 1
-  Xcoords%dims(1) = 1
-  Xcoords%dimnames(1) = 'x'
-  Xcoords%units = 'degrees_east'
-  Xcoords%descrip = 'longitude'
-  allocate(Xcoords%vdata(1))
-  Xcoords%vdata(1) = 1.0
+  OutXcoords%vname = 'x_coords'
+  OutXcoords%ndims = 1
+  OutXcoords%dims(1) = 1
+  OutXcoords%dimnames(1) = 'x'
+  OutXcoords%units = 'degrees_east'
+  OutXcoords%descrip = 'longitude'
+  allocate(OutXcoords%vdata(1))
+  OutXcoords%vdata(1) = 1.0
   
-  Ycoords%vname = 'y_coords'
-  Ycoords%ndims = 1
-  Ycoords%dims(1) = 1
-  Ycoords%dimnames(1) = 'y'
-  Ycoords%units = 'degrees_north'
-  Ycoords%descrip = 'latitude'
-  allocate(Ycoords%vdata(1))
-  Ycoords%vdata(1) = 1.0
+  OutYcoords%vname = 'y_coords'
+  OutYcoords%ndims = 1
+  OutYcoords%dims(1) = 1
+  OutYcoords%dimnames(1) = 'y'
+  OutYcoords%units = 'degrees_north'
+  OutYcoords%descrip = 'latitude'
+  allocate(OutYcoords%vdata(1))
+  OutYcoords%vdata(1) = 1.0
   
-  Zcoords%vname = 'z_coords'
-  Zcoords%ndims = 1
-  Zcoords%dims(1) = 1
-  Zcoords%dimnames(1) = 'z'
-  Zcoords%units = 'meter'
-  Zcoords%descrip = 'sigma-z'
-  allocate(Zcoords%vdata(1))
-  Zcoords%vdata(1) = 1.0
+  OutZcoords%vname = 'z_coords'
+  OutZcoords%ndims = 1
+  OutZcoords%dims(1) = 1
+  OutZcoords%dimnames(1) = 'z'
+  OutZcoords%units = 'meter'
+  OutZcoords%descrip = 'sigma-z'
+  allocate(OutZcoords%vdata(1))
+  OutZcoords%vdata(1) = 1.0
 
-  ! third arg to rhdf5_write is "append" flag:
-  !   0 - create new file
-  !   1 - append to existing file
-  write (*,*) 'Writing HDF5 output: ', trim(OutFile)
+  ! Perform the averaging function.
+  rh5f_facc = 'W'
+  call rhdf5_open_file(OutFile, rh5f_facc, 1, rh5f_out)
+
+  if (AvgFunc .eq. 'max_azwind') then
+    rh5f_facc = 'R'
+    call rhdf5_open_file(AzWindFile, rh5f_facc, 1, rh5f_azwind)
+
+    do it = 1, Nt 
+      call rhdf5_read_variable(rh5f_azwind, AzWindVname, InNdims, it, InDims, rdata=AzWind)
+
+      call DoMaxAzWind(Nx, Ny, Nz, AzWind, UndefVal, TserAvg(1))
+      deallocate(AzWind)
+
+      call rhdf5_write_variable(rh5f_out, OutVname, OutNdims, it, OutDims, &
+         OutUnits, OutDescrip, OutDimnames, rdata=TserAvg)
+
+      if (modulo(it,100) .eq. 0) then
+        write (*,*) 'Working: Number of time steps processed so far: ', it
+      endif
+    enddo
+    call rhdf5_close_file(rh5f_azwind)
+  else if (AvgFunc .eq. 'horiz_ke') then
+    rh5f_facc = 'R'
+    call rhdf5_open_file(DensFile, rh5f_facc, 1, rh5f_dens)
+    call rhdf5_open_file(Ufile, rh5f_facc, 1, rh5f_u)
+    call rhdf5_open_file(Vfile, rh5f_facc, 1, rh5f_v)
+    call rhdf5_open_file(FilterFile, rh5f_facc, 1, rh5f_filter)
+
+    do it = 1, Nt 
+      call rhdf5_read_variable(rh5f_dens, DensVname, InNdims, it, InDims, rdata=Dens)
+      call rhdf5_read_variable(rh5f_u, Uvname, InNdims, it, InDims, rdata=U)
+      call rhdf5_read_variable(rh5f_v, Vvname, InNdims, it, InDims, rdata=V)
+      call rhdf5_read_variable(rh5f_filter, FilterVname, FilterNdims, it, FilterDims, rdata=Filter)
+
+      call DoHorizKe(Nx, Ny, Nz, Dens, U, V, Filter, DeltaX, DeltaY, InZcoords%vdata, TserAvg(1))
+      deallocate(Dens)
+      deallocate(U)
+      deallocate(V)
+      deallocate(Filter)
+
+      call rhdf5_write_variable(rh5f_out, OutVname, OutNdims, it, OutDims, &
+         OutUnits, OutDescrip, OutDimnames, rdata=TserAvg)
+
+      if (modulo(it,100) .eq. 0) then
+        write (*,*) 'Working: Number of time steps processed so far: ', it
+      endif
+    enddo
+    call rhdf5_close_file(rh5f_dens)
+    call rhdf5_close_file(rh5f_u)
+    call rhdf5_close_file(rh5f_v)
+    call rhdf5_close_file(rh5f_filter)
+  else if (AvgFunc .eq. 'storm_int') then
+    rh5f_facc = 'R'
+    call rhdf5_open_file(Speed10mFile, rh5f_facc, 1, rh5f_speed10m)
+    call rhdf5_open_file(FilterFile, rh5f_facc, 1, rh5f_filter)
+
+    do it = 1, Nt 
+      call rhdf5_read_variable(rh5f_speed10m, Speed10mVname, InNdims, it, InDims, rdata=Speed10m)
+      call rhdf5_read_variable(rh5f_filter, FilterVname, FilterNdims, it, FilterDims, rdata=Filter)
+
+      call DoStormInt(Nx, Ny, Nz, Speed10m, Filter, TserAvg(1))
+      deallocate(Speed10m)
+      deallocate(Filter)
+
+      call rhdf5_write_variable(rh5f_out, OutVname, OutNdims, it, OutDims, &
+         OutUnits, OutDescrip, OutDimnames, rdata=TserAvg)
+
+      if (modulo(it,100) .eq. 0) then
+        write (*,*) 'Working: Number of time steps processed so far: ', it
+      endif
+    enddo
+    call rhdf5_close_file(rh5f_speed10m)
+    call rhdf5_close_file(rh5f_filter)
+  endif
+  call rhdf5_close_file(rh5f_out)
+  write (*,*) 'Finished: Total number of time steps processed: ', it
   write (*,*) ''
-  call rhdf5_write(OutFile, TserAvg, 0)
 
+  ! Finish off output file
   ! write out the coordinate data
-  call rhdf5_write(OutFile, Xcoords, 1)
-  call rhdf5_write(OutFile, Ycoords, 1)
-  call rhdf5_write(OutFile, Zcoords, 1)
-  call rhdf5_write(OutFile, Tcoords, 1)
+  call rhdf5_write(OutFile, OutXcoords, 1)
+  call rhdf5_write(OutFile, OutYcoords, 1)
+  call rhdf5_write(OutFile, OutZcoords, 1)
+  call rhdf5_write(OutFile, InTcoords, 1)
 
   ! set up four (x,y,z,t) dimensions for use by GRADS
-  call rhdf5_set_dimension(OutFile, Xcoords, 'x')
-  call rhdf5_set_dimension(OutFile, Ycoords, 'y')
-  call rhdf5_set_dimension(OutFile, Zcoords, 'z')
-  call rhdf5_set_dimension(OutFile, Tcoords, 't')
+  call rhdf5_set_dimension(OutFile, OutXcoords, 'x')
+  call rhdf5_set_dimension(OutFile, OutYcoords, 'y')
+  call rhdf5_set_dimension(OutFile, OutZcoords, 'z')
+  call rhdf5_set_dimension(OutFile, InTcoords, 't')
 
   ! attach the dimension specs to the output variable
-  call rhdf5_attach_dimensions(OutFile, TserAvg)
+  rh5f_facc = 'RW'
+  call rhdf5_open_file(OutFile, rh5f_facc, 1, rh5f_out)
+  call rhdf5_attach_dims_to_var(rh5f_out, OutVname)
+  call rhdf5_close_file(rh5f_out)
   
   stop
 
@@ -350,27 +497,25 @@ end subroutine GetMyArgs
 !
 ! This subroutine will simply find the maximum wind speed in AzWind and copy that
 ! to TserAvg.
-subroutine DoMaxAzWind(Nx, Ny, Nz, Nt, AzWind, UndefVal, TserAvg)
+subroutine DoMaxAzWind(Nx, Ny, Nz, AzWind, UndefVal, AzWindMax)
   implicit none
 
-  integer :: Nx, Ny, Nz, Nt
-  real, dimension(Nx,Ny,Nz,Nt) :: AzWind
+  integer :: Nx, Ny, Nz
+  real, dimension(Nx,Ny,Nz) :: AzWind
   real :: UndefVal
-  real, dimension(Nt) :: TserAvg
+  real :: AzWindMax
 
-  integer :: ix,iy,iz,it
+  integer :: ix,iy,iz
 
-  ! dimension order is: x,y,z,t
+  ! dimension order is: x,y,z
 
-  do it = 1, Nt
-    TserAvg(it) = 0.0
-    do iz = 1, Nz
-      do iy = 1, Ny
-        do ix = 1, Nx
-          if ((AzWind(ix,iy,iz,it) .gt. TserAvg(it)) .and. (AzWind(ix,iy,iz,it) .ne. UndefVal)) then
-            TserAvg(it) = AzWind(ix,iy,iz,it)
-          endif
-        end do
+  AzWindMax = 0.0
+  do iz = 1, Nz
+    do iy = 1, Ny
+      do ix = 1, Nx
+        if ((AzWind(ix,iy,iz) .gt. AzWindMax) .and. (AzWind(ix,iy,iz) .ne. UndefVal)) then
+          AzWindMax = AzWind(ix,iy,iz)
+        endif
       end do
     end do
   end do
@@ -385,16 +530,16 @@ end subroutine DoMaxAzWind
 ! volume. Do not want average since we want the size of the storm reflected in
 ! this diagnostic.
 
-subroutine DoHorizKe(Nx, Ny, Nz, Nt, Dens, U, V, Filter, DeltaX, DeltaY, Zcoords, TserAvg)
+subroutine DoHorizKe(Nx, Ny, Nz, Dens, U, V, Filter, DeltaX, DeltaY, Zcoords, TserAvg)
   implicit none
 
-  integer :: Nx, Ny, Nz, Nt
-  real, dimension(Nx,Ny,Nz,Nt) :: Dens, U, V, Filter
+  integer :: Nx, Ny, Nz
+  real, dimension(Nx,Ny,Nz) :: Dens, U, V, Filter
   real :: DeltaX, DeltaY
   real, dimension(Nz) :: Zcoords
-  real, dimension(Nt) :: TserAvg
+  real :: TserAvg
 
-  integer ix,iy,iz,it
+  integer ix,iy,iz
   integer NumPoints
   real SumKe, CurrKe, LevThickness
 
@@ -407,32 +552,30 @@ subroutine DoHorizKe(Nx, Ny, Nz, Nt, Dens, U, V, Filter, DeltaX, DeltaY, Zcoords
   ! the level definition from the RAMS runs here, just use the difference from the i+1st z coord minus the
   ! ith z coord to approzimate the ith level thickness. This will be close enough for the measurement.
 
-  do it = 1, Nt
-    SumKe = 0.0
-    NumPoints = 0
+  SumKe = 0.0
+  NumPoints = 0
 
-    do iz = 1, Nz
-      do iy = 1, Ny
-        do ix = 1, Nx
-          if (anint(Filter(ix,iy,iz,it)) .eq. 1.0) then
-            if (iz .eq. Nz) then
-              ! Use the level below for this case (since no level above)
-              LevThickness = Zcoords(iz) - Zcoords(iz-1)
-            else
-              LevThickness = Zcoords(iz+1) - Zcoords(iz)
-            end if
-            CurrKe = 0.5 * DeltaX * DeltaY * LevThickness * Dens(ix,iy,iz,it) * (U(ix,iy,iz,it)**2 + V(ix,iy,iz,it)**2)
-            SumKe = SumKe + CurrKe
-            NumPoints = NumPoints + 1
-          endif
-        enddo
+  do iz = 1, Nz
+    do iy = 1, Ny
+      do ix = 1, Nx
+        if (anint(Filter(ix,iy,iz)) .eq. 1.0) then
+          if (iz .eq. Nz) then
+            ! Use the level below for this case (since no level above)
+            LevThickness = Zcoords(iz) - Zcoords(iz-1)
+          else
+            LevThickness = Zcoords(iz+1) - Zcoords(iz)
+          end if
+          CurrKe = 0.5 * DeltaX * DeltaY * LevThickness * Dens(ix,iy,iz) * (U(ix,iy,iz)**2 + V(ix,iy,iz)**2)
+          SumKe = SumKe + CurrKe
+          NumPoints = NumPoints + 1
+        endif
       enddo
     enddo
+  enddo
 
-    TserAvg(it) = SumKe;
-    write (*,*) 'HorizKe: Timestep:', it, ', Number of points selected: ', NumPoints
-  end do
+  TserAvg = SumKe;
   
+  return
 end subroutine DoHorizKe
 
 !**************************************************************************************
@@ -455,65 +598,62 @@ end subroutine DoHorizKe
 !    >= 70 m/s -> 5
 !
 
-subroutine DoStormInt(Nx, Ny, Nz, Nt, Speed10m, Filter, TserAvg)
+subroutine DoStormInt(Nx, Ny, Nz, Speed10m, Filter, TserAvg)
   implicit none
 
-  integer :: Nx, Ny, Nz, Nt
-  real, dimension(Nx,Ny,Nz,Nt) :: Filter
-  real, dimension(Nx,Ny,Nt) :: Speed10m
-  real, dimension(Nt) :: TserAvg
+  integer :: Nx, Ny, Nz
+  real, dimension(Nx,Ny,Nz) :: Filter
+  real, dimension(Nx,Ny) :: Speed10m
+  real :: TserAvg
 
-  integer ix,iy,iz,it
+  integer ix,iy,iz
   integer nCat0, nCat1, nCat2, nCat3, nCat4, nCat5, NumPoints
   real Wspeed, SiMetric
 
-  do it = 1, Nt
-    nCat0 = 0
-    nCat1 = 0
-    nCat2 = 0
-    nCat3 = 0
-    nCat4 = 0
-    nCat5 = 0
+  nCat0 = 0
+  nCat1 = 0
+  nCat2 = 0
+  nCat3 = 0
+  nCat4 = 0
+  nCat5 = 0
 
-    do iz = 1, Nz
-      do iy = 1, Ny
-        do ix = 1, Nx
-          if (anint(Filter(ix,iy,iz,it)) .eq. 1.0) then
-            ! Count up the number of grid points with wind speeds fitting each of the
-            ! Saffir-Simpson categories. Then form the metric by weighting each category
-            ! count.
-            Wspeed = Speed10m(ix,iy,it)
-            if (Wspeed .ge. 70.0) then
-              nCat5 = nCat5 + 1
-            else if (Wspeed .ge. 59.0) then
-              nCat4 = nCat4 + 1
-            else if (Wspeed .ge. 50.0) then
-              nCat3 = nCat3 + 1
-            else if (Wspeed .ge. 43.0) then
-              nCat2 = nCat2 + 1
-            else if (Wspeed .ge. 33.0) then
-              nCat1 = nCat1 + 1
-            else
-              nCat0 = nCat0 + 1
-            endif
-          endif
-        enddo
-      enddo
+  iz = 2 ! use next to bottom layer in the filter
+
+  do iy = 1, Ny
+    do ix = 1, Nx
+      if (anint(Filter(ix,iy,iz)) .eq. 1.0) then
+        ! Count up the number of grid points with wind speeds fitting each of the
+        ! Saffir-Simpson categories. Then form the metric by weighting each category
+        ! count.
+        Wspeed = Speed10m(ix,iy)
+        if (Wspeed .ge. 70.0) then
+          nCat5 = nCat5 + 1
+        else if (Wspeed .ge. 59.0) then
+          nCat4 = nCat4 + 1
+        else if (Wspeed .ge. 50.0) then
+          nCat3 = nCat3 + 1
+        else if (Wspeed .ge. 43.0) then
+          nCat2 = nCat2 + 1
+        else if (Wspeed .ge. 33.0) then
+          nCat1 = nCat1 + 1
+        else
+          nCat0 = nCat0 + 1
+        endif
+      endif
     enddo
+  enddo
 
-    !Linear weighting
-    NumPoints = nCat0 + nCat1 + nCat2 + nCat3 + nCat4 + nCat5
-    SiMetric = float(nCat1) + (float(nCat2)*2.0) + (float(nCat3)*3.0) + (float(nCat4)*4.0) + (float(nCat5)*5.0)
+  !Linear weighting
+  NumPoints = nCat0 + nCat1 + nCat2 + nCat3 + nCat4 + nCat5
+  SiMetric = float(nCat1) + (float(nCat2)*2.0) + (float(nCat3)*3.0) + (float(nCat4)*4.0) + (float(nCat5)*5.0)
 
-    if (NumPoints .eq. 0) then
-      TserAvg(it) = 0.0
-      write (*,*) 'WARNING: no data points selected for time step: ', it
-    else
-      TserAvg(it) = SiMetric / float(NumPoints)
-      write (*,*) 'StormInt: Timestep:', it, ', Number of points selected: ', NumPoints
-    end if
-  end do
+  if (NumPoints .eq. 0) then
+    TserAvg = 0.0
+  else
+    TserAvg = SiMetric / float(NumPoints)
+  end if
   
+  return
 end subroutine DoStormInt
 
 
