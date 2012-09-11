@@ -19,24 +19,30 @@
 !###########################################################################
 */
 
-// Using these C wrapper routines to be able to utilize the C API for HDF5. Unfortunately,
-// the fortran .mod files that came with our installation of HDF5 do not work with the
-// pgf90 compiler.
+/*
+ * Using these C wrapper routines to be able to utilize the C API for HDF5. Unfortunately,
+ * the fortran .mod files that came with our installation of HDF5 do not work with the
+ * pgf90 compiler.
+ */
 
 #include "rhdf5_snames.h"
 #include <string.h>
 #include "hdf5.h"
 
-// Limits for arrays, strings, etc. Need to keep these in sync with like
-// named parameters in rhdf5_utils.f90
+/*
+ * Limits for arrays, strings, etc. Need to keep these in sync with like
+ * named parameters in rhdf5_utils.f90
+*/
 #define RHDF5_MAX_STRING 128
 #define RHDF5_MAX_DIMS    10
 
-// Integer coding for HDF5 types. Need to keep these in sync with like named
-// parameters in rhdf5_utils.f90
-// These codes need to start with zero and be contiguous (0..n with no gaps)
-// for the rhdf5_type_names array. Make sure the entries in rhdf5_type_names
-// are consistent with the type numbers.
+/*
+ * Integer coding for HDF5 types. Need to keep these in sync with like named
+ * parameters in rhdf5_utils.f90
+ * These codes need to start with zero and be contiguous (0..n with no gaps)
+ * for the rhdf5_type_names array. Make sure the entries in rhdf5_type_names
+ * are consistent with the type numbers.
+ */
 #define RHDF5_NUM_TYPES     4
 
 #define RHDF5_TYPE_STRING   0
@@ -46,15 +52,17 @@
 
 char *rhdf5_type_names[RHDF5_NUM_TYPES] = { "STRING", "INTEGER", "FLOAT", "CHAR" };
 
-// Prototypes for internal routines
+/*
+ * Prototypes for internal routines
+ */
 void rf2c_get_mem_type(hid_t typid, int *type, int *size);
 hid_t rf2c_set_mem_type(int dtype, int ssize);
 
-////////////////////////////////////////////////////////////////////////////
-// Routines for HDF5 REVU IO. 
-////////////////////////////////////////////////////////////////////////////
+/*
+ * Routines for HDF5 REVU IO. 
+ */
 
-///////////// FILE ROUTINES //////////////////////////
+/**************** FILE ROUTINES *********************/
 void rh5f_open(char *fname, int *f_flgs, int *fileid, int *hdferr)
 {
 unsigned flags;
@@ -105,20 +113,24 @@ void rh5f_close(int *fileid, int *hdferr)
 return;
 }
 
-////////////////// GROUP ROUTINES ////////////////
+/******************* GROUP ROUTINES *******************/
 
 void rh5g_create(int *id, char *name, int *gid, int *hdferr)
 {
 
 #ifdef H5_USE_16_API
-// 1.6 API
-// 3rd arg is size hint
+/*
+ * 1.6 API
+ * 3rd arg is size hint
+ */
 *gid = H5Gcreate(*id, name, 0);
 #else
-// 1.8 API
-// 3rd arg is link creation property list
-// 4th arg is group creation property list
-// 5th art is group access property list (must be H5P_DEFAULT as of 4/19/12)
+/*
+ * 1.8 API
+ * 3rd arg is link creation property list
+ * 4th arg is group creation property list
+ * 5th art is group access property list (must be H5P_DEFAULT as of 4/19/12)
+ */
 *gid = H5Gcreate(*id, name, H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT);
 #endif
 
@@ -138,11 +150,15 @@ void rh5g_open(int *id, char *name, int *gid, int *hdferr)
 {
 
 #ifdef H5_USE_16_API
-// 1.6 API
+/*
+ * 1.6 API
+ */
 *gid = H5Gopen(*id, name);
 #else
-// 1.8 API
-// 3rd arg is group access property list
+/*
+ * 1.8 API
+ * 3rd arg is group access property list
+ */
 *gid = H5Gopen(*id, name, H5P_DEFAULT);
 #endif
 
@@ -166,28 +182,36 @@ void rh5g_close(int *grpid, int *hdferr)
 return;
 }
 
-////////////// LINK (GROUP, DATASET, etc) ROUTINES ///////////////
+/************** LINK (GROUP, DATASET, etc) ROUTINES ***********************/
 
 void rh5l_exists(int *id, char *name, int *exists)
 {
 
-// Third arg is "link access property list id"
+/*
+ * Third arg is "link access property list id"
+ */
 *exists = H5Lexists(*id, name, H5P_DEFAULT);
 
 return;
 }
 
-////////////// DATASET ROUTINES ////////////////
+/****************** DATASET ROUTINES ******************/
 
 void rh5d_open(int *id, char *name, int *dsetid, int *hdferr)
 {
 
-// Open the existing dataset
+/*
+ * Open the existing dataset
+ */
 #ifdef H5_USE_16_API
-// 1.6 API
+/*
+ * 1.6 API
+ */
 *dsetid = H5Dopen(*id, name);
 #else
-// 1.8 API
+/*
+ * 1.8 API
+ */
 *dsetid = H5Dopen(*id, name, H5P_DEFAULT);
 #endif
 
@@ -203,12 +227,13 @@ else
 return;
 }
 
-//**********************************************************************
-// rh5d_setup_and_write()
-//
-// This routine will either create or extend a dataset and then
-// perform the write into that dataset.
-//
+/***********************************************************************
+ * rh5d_setup_and_write()
+ *
+ * This routine will either create or extend a dataset and then
+ * perform the write into that dataset.
+ *
+ */
 void rh5d_setup_and_write(int *id, char *name, int *dtype, int *ssize,
    int *ndims, int *dims, int *ext_dims, int *chunk_dims,
    int *deflvl, int *dsetid, void *data, int *hdferr)
@@ -229,7 +254,9 @@ hid_t dcplid;
 
 *hdferr = 0;
 
-// set the memory type (translate integer code in dtype to HDF5 type)
+/*
+ * set the memory type (translate integer code in dtype to HDF5 type)
+ */
 mtypid = rf2c_set_mem_type(*dtype, *ssize);
 if (mtypid < 0)
   {
@@ -238,24 +265,34 @@ if (mtypid < 0)
   return;
   }
 
-// Check to see if the dataset exists aleady. If so extend it and do
-// the write. If not, then create it and do the write.
+/*
+ * Check to see if the dataset exists aleady. If so extend it and do
+ * the write. If not, then create it and do the write.
+ */
 if (H5Lexists(*id, name, H5P_DEFAULT))
   {
-  // dataset exists --> extend and write
-  //
-  // Open the existing dataset
+  /*
+   * dataset exists --> extend and write
+   *
+   * Open the existing dataset
+   */
 #ifdef H5_USE_16_API
-  // 1.6 API
+  /*
+   * 1.6 API
+   */
   *dsetid = H5Dopen(*id, name);
 #else
-  // 1.8 API
+  /*
+   * 1.8 API
+   */
   *dsetid = H5Dopen(*id, name, H5P_DEFAULT);
 #endif
 
-  // Get the currently existing dimension information from the dataset
-  // Close the dataspce after grabbing the current dimension information
-  // since we need to reopen the dataspace after extending the dataset.
+  /*
+   * Get the currently existing dimension information from the dataset
+   * Close the dataspce after grabbing the current dimension information
+   * since we need to reopen the dataspace after extending the dataset.
+   */
   fspcid = H5Dget_space(*dsetid);
   if (fspcid < 0)
     {
@@ -273,16 +310,18 @@ if (H5Lexists(*id, name, H5P_DEFAULT))
     return;
     }
   
-  // Get the new dimension information from the input arguments
+  /*
+   * Get the new dimension information from the input arguments
+   */
   for (i = 0; i<*ndims; i++)
     {
     new_dims[i] = dims[i];
-    hs_count[i] = cur_dims[i];  // hs_* vars are for the hyperslab selection later on
+    hs_count[i] = cur_dims[i];  /* hs_* vars are for the hyperslab selection later on */
     hs_start[i] = 0;
     if (ext_dims[i] == 1)
       {
-      mem_dims[i] = 1; // this is the dimension we are extended and assume for now
-                       // that we are extending by just one element
+      mem_dims[i] = 1; /* this is the dimension we are extended and assume for now */
+                       /* that we are extending by just one element                */
   
       if (new_dims[i] < cur_dims[i])
         {
@@ -299,14 +338,18 @@ if (H5Lexists(*id, name, H5P_DEFAULT))
       }
     }
   
-  // Create a memory dataspace to control the selection from the data buffer (input arg "data")
-  // We are assuming that the entries in the data buffer are organized so that the dimension
-  // that we are extending is a size of one so if we set up the memory space with that in mind
-  // the selection will happen automatically without the need to apply any selection mechanism
-  // on the memory space.
+  /*
+   * Create a memory dataspace to control the selection from the data buffer (input arg "data")
+   * We are assuming that the entries in the data buffer are organized so that the dimension
+   * that we are extending is a size of one so if we set up the memory space with that in mind
+   * the selection will happen automatically without the need to apply any selection mechanism
+   * on the memory space.
+   */
   mspcid = H5Screate_simple(cur_ndims, mem_dims, NULL);
   
-  // Extend the dataset and re-open the dataspace
+  /*
+   * Extend the dataset and re-open the dataspace
+   */
   H5Dset_extent(*dsetid, new_dims);
   fspcid = H5Dget_space(*dsetid);
   
@@ -316,11 +359,13 @@ if (H5Lexists(*id, name, H5P_DEFAULT))
     return;
     }
   
-  // Create a hyperslab to select just the region where the new data will be stored
-  // into the file. That is, we are appending the new data just after the end of the
-  // existing data so select out the existing data. To do this first select the entire
-  // dataspace (extended) and subtract out the dataspace prior to the extension. The
-  // select operator H5S_SELECT_NOTB is used to do the subtraction.
+  /*
+   * Create a hyperslab to select just the region where the new data will be stored
+   * into the file. That is, we are appending the new data just after the end of the
+   * existing data so select out the existing data. To do this first select the entire
+   * dataspace (extended) and subtract out the dataspace prior to the extension. The
+   * select operator H5S_SELECT_NOTB is used to do the subtraction.
+   */
   H5Sselect_all(fspcid);
   *hdferr = H5Sselect_hyperslab(fspcid, H5S_SELECT_NOTB, hs_start, NULL, hs_count, NULL);
   
@@ -329,7 +374,9 @@ if (H5Lexists(*id, name, H5P_DEFAULT))
     return;
     }
 
-  // write and free up resources
+  /*
+   * write and free up resources
+   */
   *hdferr = H5Dwrite(*dsetid, mtypid, mspcid, fspcid, H5P_DEFAULT, data);
 
   if (*dtype == RHDF5_TYPE_STRING)
@@ -341,16 +388,18 @@ if (H5Lexists(*id, name, H5P_DEFAULT))
   }
 else
   {
-  // dataset does not exist --> create and write
-  //
-  // H5Screate_simple wants all of the elements of the dims and maxdims arrays (2nd, 3rd args)
-  // to be set to a non-zero value, even the elements that are not being used (since they
-  // are beyond what ndims specifies). Copy the used contents of dims (the first ndims entries)
-  // into an internal array which is initialized to all 1's so that the caller doesn't need
-  // to bother with this detail.
-  //
-  // H5Pset_chunk wants elements not used in the chunk size array (2nd arg) to be set to
-  // zero and the used elements set to non-zero values.
+  /*
+   * dataset does not exist --> create and write
+   *
+   * H5Screate_simple wants all of the elements of the dims and maxdims arrays (2nd, 3rd args)
+   * to be set to a non-zero value, even the elements that are not being used (since they
+   * are beyond what ndims specifies). Copy the used contents of dims (the first ndims entries)
+   * into an internal array which is initialized to all 1's so that the caller doesn't need
+   * to bother with this detail.
+   *
+   * H5Pset_chunk wants elements not used in the chunk size array (2nd arg) to be set to
+   * zero and the used elements set to non-zero values.
+   */
   for (i=0 ; i<*ndims; i++)
     {
     cur_dims[i] = dims[i];
@@ -365,7 +414,9 @@ else
     chunk_sizes[i] = chunk_dims[i];
     }
   
-  // create the file dataspace
+  /*
+   * create the file dataspace
+   */
   mspcid = H5Screate_simple(*ndims, cur_dims, max_dims);
   if (mspcid < 0)
     {
@@ -374,10 +425,10 @@ else
     return;
     }
   
-  // create the dataset
-  // dataset creation properties
-  //
-  
+  /*
+   * create the dataset
+   * dataset creation properties
+   */
   dcplid = H5Pcreate(H5P_DATASET_CREATE);
   if (dcplid < 0)
     {
@@ -386,27 +437,32 @@ else
     return;
     }
   
-  // Set up for data compression
-  //   enable chunking of data
-  //   enable shuffling of data
-  //   enable deflation (compression) of data
-  //
+  /*
+   * Set up for data compression
+   *   enable chunking of data
+   *   enable shuffling of data
+   *   enable deflation (compression) of data
+   */
   H5Pset_chunk(dcplid, *ndims, chunk_sizes);
   H5Pset_shuffle(dcplid);
   H5Pset_deflate(dcplid, *deflvl);
   
-  // dataset creation properties have been successfully built
-  
-  // dataset
+  /*
+   * dataset
+   */
 #ifdef H5_USE_16_API
-  // 1.6 API
-  // 3rd arg is type of the data elements - always using float for now
+  /*
+   * 1.6 API
+   * 3rd arg is type of the data elements - always using float for now
+   */
   *dsetid = H5Dcreate(*id, name, mtypid, mspcid, dcplid);
 #else
-  // 1.8 API
-  // 3rd arg is type of the data elements - always using float for now
-  // 5th arg is the link creation property list (eg, automatically build intermediate groups)
-  // 7th arg is the data access property list
+  /*
+   * 1.8 API
+   * 3rd arg is type of the data elements - always using float for now
+   * 5th arg is the link creation property list (eg, automatically build intermediate groups)
+   * 7th arg is the data access property list
+   */
   *dsetid = H5Dcreate(*id, name, mtypid, mspcid, H5P_DEFAULT, dcplid, H5P_DEFAULT);
 #endif
   if (*dsetid < 0)
@@ -416,7 +472,9 @@ else
     return;
     }
   
-  // write and free up resources
+  /*
+   * write and free up resources
+   */
   *hdferr = H5Dwrite(*dsetid, mtypid, H5S_ALL, H5S_ALL, H5P_DEFAULT, data);
 
   if (*dtype == RHDF5_TYPE_STRING)
@@ -430,7 +488,7 @@ else
 return;
 }
 
-//**********************************************************************
+/**********************************************************************/
 void rh5d_write(int *dsetid, int *mtypid, int *mspcid, int *fspcid, int *xfplid, void *data, int *hdferr)
   {
   *hdferr = H5Dwrite(*dsetid, *mtypid, *mspcid, *fspcid, *xfplid, data);
@@ -438,15 +496,16 @@ void rh5d_write(int *dsetid, int *mtypid, int *mspcid, int *fspcid, int *xfplid,
   return;
   }
 
-//**********************************************************************
-// rh5d_read_get_dims()
-//
-// This routine will open the dataset given by id (file id) and name, 
-// read in and return the dimension information.
-//
-// The dataset is left open so that the caller can read the data and
-// retrieve attributes so it is up to the caller to close the dataset.
-//
+/***********************************************************************
+ * rh5d_read_get_dims()
+ *
+ * This routine will open the dataset given by id (file id) and name, 
+ * read in and return the dimension information.
+ *
+ * The dataset is left open so that the caller can read the data and
+ * retrieve attributes so it is up to the caller to close the dataset.
+ *
+ */
 void rh5d_read_get_dims(int *dsetid, int *ndims, int *dims, int *hdferr)
   {
   hid_t fspcid;
@@ -456,9 +515,11 @@ void rh5d_read_get_dims(int *dsetid, int *ndims, int *dims, int *hdferr)
 
   *hdferr = 0;
   
-  // Get the information about the dimensions
-  // Need to read dimension sizes, from H5Sget_simple_extent_dims, into
-  // an (hsize_t *) type since it's length is different than (int *) type.
+  /*
+   * Get the information about the dimensions
+   * Need to read dimension sizes, from H5Sget_simple_extent_dims, into
+   * an (hsize_t *) type since it's length is different than (int *) type.
+   */
   fspcid = H5Dget_space(*dsetid);
   *ndims = H5Sget_simple_extent_dims(fspcid, dset_dims, NULL);
   for (i=0; i<*ndims; i++)
@@ -475,15 +536,16 @@ void rh5d_read_get_dims(int *dsetid, int *ndims, int *dims, int *hdferr)
   return;
   }
 
-//**********************************************************************
-// rh5d_read()
-//
-// This routine will open the dataset given by id (file id) and name, and
-// read the dataset into the buffer "data".
-//
-// The dataset is left open so that the caller can retrieve attributes
-// so it is up to the caller to close the dataset.
-//
+/**********************************************************************
+ * rh5d_read()
+ *
+ * This routine will open the dataset given by id (file id) and name, and
+ * read the dataset into the buffer "data".
+ *
+ * The dataset is left open so that the caller can retrieve attributes
+ * so it is up to the caller to close the dataset.
+ *
+ */
 void rh5d_read(int *dsetid, int *dtype, int *ms_ndims, int *ms_dims, int *fs_ndims, int *fs_offset, int *fs_counts, int *dsize, void *data, int *hdferr)
   {
   hid_t dtypid;
@@ -499,7 +561,9 @@ void rh5d_read(int *dsetid, int *dtype, int *ms_ndims, int *ms_dims, int *fs_ndi
   
   *hdferr = 0;
   
-  // Get the information about the data type
+  /*
+   * Get the information about the data type
+   */
   dtypid = H5Dget_type(*dsetid);
   if (dtypid < 0)
     {
@@ -522,26 +586,34 @@ void rh5d_read(int *dsetid, int *dtype, int *ms_ndims, int *ms_dims, int *fs_ndi
     return;
     }
 
-  // set up the hyperslab selection
-  // copy counts and offsets - the hdf5 interface doesn't like the argument integer pointer types
-  // for some reason
+  /*
+   * set up the hyperslab selection
+   * copy counts and offsets - the hdf5 interface doesn't like the argument integer pointer types
+   * for some reason
+   */
   for (i=0; i<*fs_ndims; i++)
     {
     hs_file_counts[i] = fs_counts[i];
     hs_file_offset[i] = fs_offset[i];
     }
 
-  // get the file data space
+  /*
+   * get the file data space
+   */
   file_dspace = H5Dget_space(*dsetid);
 
-  // file data space selection (hyperslab)
+  /*
+   * file data space selection (hyperslab)
+   */
   *hdferr = H5Sselect_hyperslab(file_dspace, H5S_SELECT_SET, hs_file_offset, NULL, hs_file_counts, NULL);
   if (*hdferr != 0)
     {
     return;
     }
 
-  // memory data space selection (all)
+  /*
+   * memory data space selection (all)
+   */
   for (i=0; i<*ms_ndims; i++)
     {
     hs_mem_dims[i] = ms_dims[i];
@@ -555,7 +627,9 @@ void rh5d_read(int *dsetid, int *dtype, int *ms_ndims, int *ms_dims, int *fs_ndi
     return;
     }
 
-  // read the dataset, clean up and return
+  /*
+   * read the dataset, clean up and return
+   */
   *hdferr = H5Dread(*dsetid, dtypid, mem_dspace, file_dspace, H5P_DEFAULT, data);
 
   if (*dtype == RHDF5_TYPE_STRING)
@@ -566,7 +640,7 @@ void rh5d_read(int *dsetid, int *dtype, int *ms_ndims, int *ms_dims, int *fs_ndi
   return;
   }
 
-//**********************************************************************
+/**********************************************************************/
 void rh5d_close(int *dsetid, int *hdferr)
 {
 *hdferr = H5Dclose(*dsetid);
@@ -574,9 +648,9 @@ void rh5d_close(int *dsetid, int *hdferr)
 return;
 }
 
-//////////////////// DATASPACE ROUTINES ////////////////////
+/******************* DATASPACE ROUTINES *******************/
 
-//**********************************************************
+/**********************************************************/
 void rh5s_close(int *dspcid, int *hdferr)
 {
 *hdferr = H5Sclose(*dspcid);
@@ -584,9 +658,9 @@ void rh5s_close(int *dspcid, int *hdferr)
 return;
 }
 
-//////////////////// PROPERTY ROUTINES ////////////////////
+/******************* PROPERTY ROUTINES *******************/
 
-//**********************************************************
+/**********************************************************/
 void rh5p_close(int *propid, int *hdferr)
 {
 *hdferr = H5Pclose(*propid);
@@ -594,9 +668,9 @@ void rh5p_close(int *propid, int *hdferr)
 return;
 }
 
-//////////////////// DATATYPE ROUTINES ////////////////////
+/****************** DATATYPE ROUTINES ******************/
 
-//**********************************************************
+/**********************************************************/
 void rh5t_close(int *dtypid, int *hdferr)
 {
 *hdferr = H5Tclose(*dtypid);
@@ -604,18 +678,19 @@ void rh5t_close(int *dtypid, int *hdferr)
 return;
 }
 
-//////////////////// ATTRIBUTE ROUTINES ////////////////////
+/******************* ATTRIBUTE ROUTINES *******************/
 
-//**********************************************************
-// rh5a_write_anyscalar()
-//
-// This routine will write a scalar attribute into the HDF5 file, given the object
-// id and attribute name.
-//
-// value is a void pointer so the caller can use any type (char, int, float for now).
-// vtype is used to denote what type value is. The encoding for vtype is contained
-// in the the defines: RHDF5_TYPE_* (see top of this file).
-// 
+/**********************************************************/
+/* rh5a_write_anyscalar()
+ *
+ * This routine will write a scalar attribute into the HDF5 file, given the object
+ * id and attribute name.
+ *
+ * value is a void pointer so the caller can use any type (char, int, float for now).
+ * vtype is used to denote what type value is. The encoding for vtype is contained
+ * in the the defines: RHDF5_TYPE_* (see top of this file).
+ * 
+ */
 void rh5a_write_anyscalar(int *id, char *name, void *value, int *vtype, int *hdferr)
   {
   hid_t a_id, amem_id, atype;
@@ -624,7 +699,9 @@ void rh5a_write_anyscalar(int *id, char *name, void *value, int *vtype, int *hdf
   
   *hdferr = 0;
   
-  // Set up memory type
+  /*
+   * Set up memory type
+   */
   if (*vtype == RHDF5_TYPE_STRING)
     {
     ssize = strlen(value) + 1;
@@ -645,33 +722,46 @@ void rh5a_write_anyscalar(int *id, char *name, void *value, int *vtype, int *hdf
   
   if (*hdferr == 0)
     {
-    // got a recognized type so keep going
+    /*
+     * got a recognized type so keep going
+     */
   
     attr_exists = H5Aexists(*id,name);
   
     if (attr_exists)
       {
-      // attribute exists already --> update mode
+      /*
+       * attribute exists already --> update mode
+       */
   
       a_id = H5Aopen(*id, name, H5P_DEFAULT);
       }
     else
       {
-      // attribute does not exist --> create mode
-  
-      // scalar dataspace to hold the string for the file write
+      /*
+       * attribute does not exist --> create mode
+       *
+       *
+       * scalar dataspace to hold the string for the file write
+       */
       amem_id = H5Screate(H5S_SCALAR);
     
-      // create the attribute and save the result for returning the status in hdferr
-      // set hdferr here since we will be closing the a_id pointer at the end
+      /*
+       * create the attribute and save the result for returning the status in hdferr
+       * set hdferr here since we will be closing the a_id pointer at the end
+       */
   #ifdef H5_USE_16_API
-      // 1.6 API
-      // 5th arg is attribute creation property list (must be H5P_DEFAULT as of 4/19/12)
+      /*
+       * 1.6 API
+       * 5th arg is attribute creation property list (must be H5P_DEFAULT as of 4/19/12)
+       */
       a_id = H5Acreate(*id, name, atype, amem_id, H5P_DEFAULT);
   #else
-      // 1.8 API
-      // 5th arg is attribute creation property list (must be H5P_DEFAULT as of 4/19/12)
-      // 6th arg is attribute access property list (must be H5P_DEFAULT as of 4/19/12)
+      /*
+       * 1.8 API
+       * 5th arg is attribute creation property list (must be H5P_DEFAULT as of 4/19/12)
+       * 6th arg is attribute access property list (must be H5P_DEFAULT as of 4/19/12)
+       */
       a_id = H5Acreate(*id, name, atype, amem_id, H5P_DEFAULT, H5P_DEFAULT);
   #endif
       }
@@ -681,26 +771,36 @@ void rh5a_write_anyscalar(int *id, char *name, void *value, int *vtype, int *hdf
       *hdferr = a_id;
       }
   
-    // If we have an error don't attempt the write, but do continue on to
-    // the close statments.
+    /*
+     * If we have an error don't attempt the write, but do continue on to
+     * the close statments.
+     */
   
     if (*hdferr == 0)
       {
-      // The third arg to H5Awrite is a pointer to the data. value is that already,
-      // but this does put the onus on the caller to make sure that value is really
-      // pointing to the type that matches what's in vtype
+      /*
+       * The third arg to H5Awrite is a pointer to the data. value is that already,
+       * but this does put the onus on the caller to make sure that value is really
+       * pointing to the type that matches what's in vtype
+       */
       H5Awrite(a_id, atype, value);
       }
   
-    // clean up the attribute related pointers
+    /*
+     * clean up the attribute related pointers
+     */
     if (*vtype == RHDF5_TYPE_STRING)
       {
-      // Only call the close when using the string type (which is a complex structure)
+      /*
+       * Only call the close when using the string type (which is a complex structure)
+       */
       H5Tclose(atype);
       }
     if (attr_exists == 0)
       {
-      // if created the attribute, then close the memory space id
+      /*
+       * if created the attribute, then close the memory space id
+       */
       H5Sclose(amem_id);
       }
     H5Aclose(a_id);
@@ -709,13 +809,13 @@ void rh5a_write_anyscalar(int *id, char *name, void *value, int *vtype, int *hdf
   return;
   }
 
-//**********************************************************************
-// rh5a_read_anyscalar()
-//
-// This routine will read in the attribute given by the object id and
-// name. The caller requests a certain type (arg: dtype) and that is checked
-// against the type found in the hdf5 file.
-//
+/***********************************************************************
+ * rh5a_read_anyscalar()
+ *
+ * This routine will read in the attribute given by the object id and
+ * name. The caller requests a certain type (arg: dtype) and that is checked
+ * against the type found in the hdf5 file.
+ */
 void rh5a_read_anyscalar(int *dsetid, char *name,  void *value, int *vtype, int *hdferr)
   {
   hid_t attrid;
@@ -725,7 +825,9 @@ void rh5a_read_anyscalar(int *dsetid, char *name,  void *value, int *vtype, int 
   
   *hdferr = 0;
   
-  // First open the attribute
+  /*
+   * First open the attribute
+   */
   attrid = H5Aopen(*dsetid, name, H5P_DEFAULT);
   if (attrid < 0)
     {
@@ -733,7 +835,9 @@ void rh5a_read_anyscalar(int *dsetid, char *name,  void *value, int *vtype, int 
     return;
     }
 
-  // Get the information about the data type
+  /*
+   * Get the information about the data type
+   */
   atypid = H5Aget_type(attrid);
   if (atypid < 0)
     {
@@ -756,7 +860,9 @@ void rh5a_read_anyscalar(int *dsetid, char *name,  void *value, int *vtype, int 
     return;
     }
 
-  // read the dataset, clean up and return
+  /*
+   * read the dataset, clean up and return
+   */
   *hdferr = H5Aread(attrid, atypid, value);
 
   if (*vtype == RHDF5_TYPE_STRING)
@@ -768,7 +874,7 @@ void rh5a_read_anyscalar(int *dsetid, char *name,  void *value, int *vtype, int 
   return;
   }
 
-//////////////////// DIMENSION SCALE ROUTINES ////////////////////
+/*************** DIMENSION SCALE ROUTINES ***************/
 
 void rh5ds_set_scale(int *dsetid, char *dimname, int *hdferr)
   {
@@ -784,15 +890,16 @@ void rh5ds_attach_scale(int *dsetid, int *dsclid, int *index, int *hdferr)
   return;
   }
 
-//////////// INTERNAL ROUTINES //////////////////
+/*************** INTERNAL ROUTINES ***************/
 
-//*******************************************************************
-// rf2c_set_mem_type()
-//
-// This routine translates the integer coded memory type to the
-// corresponding HDF5 type.
-//
-// Note that ssize input argument is only used for string types.
+/*******************************************************************
+ * rf2c_set_mem_type()
+ *
+ * This routine translates the integer coded memory type to the
+ * corresponding HDF5 type.
+ *
+ * Note that ssize input argument is only used for string types.
+ */
 
 hid_t rf2c_set_mem_type(int dtype, int ssize)
 {
@@ -801,30 +908,40 @@ hid_t mtype;
 switch (dtype)
   { 
   case RHDF5_TYPE_STRING:
-    // define type for the string
-    // C style string, null byte terminated, size taken from input argument ssize
+    /*
+     * define type for the string
+     * C style string, null byte terminated, size taken from input argument ssize
+     */
     mtype = H5Tcopy(H5T_C_S1);
     H5Tset_size(mtype, ssize);
     H5Tset_strpad(mtype, H5T_STR_NULLTERM);
     break;
 
   case RHDF5_TYPE_INTEGER:
-    // integer
+    /*
+     * integer
+     */
     mtype = H5T_NATIVE_INT;
     break;
 
   case RHDF5_TYPE_FLOAT:
-    // float
+    /*
+     * float
+     */
     mtype = H5T_NATIVE_FLOAT;
     break;
 
   case RHDF5_TYPE_CHAR:
-    // char
+    /*
+     * char
+     */
     mtype = H5T_NATIVE_UCHAR;
     break;
 
   default:
-    // unrecognized type, send back -1 to inform caller
+    /*
+     * unrecognized type, send back -1 to inform caller
+     */
     mtype = -1;
     break;
   }
@@ -832,19 +949,21 @@ switch (dtype)
 return(mtype);
 }
 
-//*******************************************************************
-// rf2c_get_mem_type()
-//
-// This routine finds and translates the HDF5 type to
-// the integer coded memory type.
-//
+/*******************************************************************
+ * rf2c_get_mem_type()
+ *
+ * This routine finds and translates the HDF5 type to
+ * the integer coded memory type.
+ */
 void rf2c_get_mem_type(hid_t typid, int *type, int *size)
   {
-  // First check the class to see if this is a string type
-  // since string type is not a "native" type. All the other
-  // types (integer, float, char) are native types which can
-  // checked using H5Tequal. H5Tequal returns positive value
-  // for "true", zero for "false" and negative value for "error".
+  /*
+   * First check the class to see if this is a string type
+   * since string type is not a "native" type. All the other
+   * types (integer, float, char) are native types which can
+   * checked using H5Tequal. H5Tequal returns positive value
+   * for "true", zero for "false" and negative value for "error".
+   */
 
   if (H5Tget_class(typid) == H5T_STRING)
     {
@@ -852,10 +971,12 @@ void rf2c_get_mem_type(hid_t typid, int *type, int *size)
     }
   else
     {
-    // Not a string type so check the native types
-    //
-    // Check the character types first since they are a subset of
-    // the integer types.
+    /*
+     * Not a string type so check the native types
+     *
+     * Check the character types first since they are a subset of
+     * the integer types.
+     */
 
     if ((H5Tequal(typid, H5T_NATIVE_UCHAR) > 0) || (H5Tequal(typid, H5T_NATIVE_SCHAR) > 0))
       {
@@ -871,12 +992,16 @@ void rf2c_get_mem_type(hid_t typid, int *type, int *size)
       }
     else
       {
-      // unrecognized type
+      /*
+       * unrecognized type
+       */
       *type = -1;
       }
     }
 
-  // grab the size of this type
+  /*
+   * grab the size of this type
+   */
   *size = H5Tget_size(typid);
 
   return;
