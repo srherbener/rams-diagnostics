@@ -15,7 +15,7 @@ program tsavg
   integer, parameter :: LargeString  = 512
   integer, parameter :: MediumString = 256
   integer, parameter :: LittleString = 128
-  integer, parameter :: MaxArgFields = 10
+  integer, parameter :: MaxArgFields = 20
 
   real, parameter :: UndefVal = -999.0
 
@@ -32,19 +32,23 @@ program tsavg
   ! Dims: x, y, z, t
   type (Rhdf5Var) :: InXcoords, InYcoords, InZcoords, InTcoords
   type (Rhdf5Var) :: OutXcoords, OutYcoords, OutZcoords
-  real, dimension(:), allocatable :: U, V, AzWind, Speed10m, Dens, HdaVar, Filter, TserAvg
-  character (len=MediumString) :: Ufile, Vfile, AzWindFile, Speed10mFile, DensFile, HdaFile, InCoordFile
+  real, dimension(:), allocatable :: U, V, AzWind, Speed10m, Dens, Var, Filter, TserAvg
+  character (len=MediumString) :: Ufile, Vfile, AzWindFile, Speed10mFile, DensFile, VarFile, InCoordFile
   character (len=LittleString) :: Uvname, Vvname, AzWindVname, Speed10mVname, DensVname
-  character (len=LittleString) :: HdaVname, HdaFprefix, FilterVname, OutVname
+  character (len=LittleString) :: VarName, VarFprefix, FilterVname, OutVname
   character (len=LittleString) :: rh5f_facc
   integer :: InNdims, OutNdims, FilterNdims
   integer, dimension(RHDF5_MAX_DIMS) :: InDims, OutDims, FilterDims
   character (len=RHDF5_MAX_STRING) :: InUnits, InDescrip, OutUnits, OutDescrip, FilterUnits, FilterDescrip
   character (len=RHDF5_MAX_STRING), dimension(RHDF5_MAX_DIMS) :: InDimnames, OutDimnames, FilterDimnames
+  
+  integer :: NumBins
+  real :: BinStart, BinInc
+  real, dimension(:), allocatable :: Bins
 
   integer :: rh5f_azwind, rh5f_u, rh5f_v, rh5f_speed10m, rh5f_dens, rh5f_hda, rh5f_filter, rh5f_out
 
-  integer :: id, ix, iy, iz, it
+  integer :: id, ib, ix, iy, iz, it
   integer :: Nx, Ny, Nz, Nt
   real :: DeltaX, DeltaY
   real, dimension(:), allocatable :: InXcoordsKm, InYcoordsKm
@@ -62,12 +66,38 @@ program tsavg
       !    3       prefix for the REVU file name
       !    4       dimensionality of variable
       AvgFunc    = trim(ArgList(1))
-      HdaVname   = trim(ArgList(2))
-      HdaFprefix = trim(ArgList(3))
-      HdaFile    = trim(InDir) // '/' //trim(HdaFprefix) // trim(InSuffix)
+      VarName   = trim(ArgList(2))
+      VarFprefix = trim(ArgList(3))
+      VarFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
       VarDim     = trim(ArgList(4))
     else
       write (*,*) 'ERROR: average function hda requires four fields: hda:<var>:<file>:<dim>'
+      stop
+    endif
+  endif
+
+  if (AvgFunc(1:5) .eq. 'hist:') then
+    call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'hist spec')
+    if (Nfields .eq. 7) then
+      ! got the right amount of fields
+      !   field    value
+      !    1       'hda'
+      !    2       name of variable inside the REVU file
+      !    3       prefix for the REVU file name
+      !    4       dimensionality of variable
+      !    5       number of bins
+      !    6       bin start
+      !    7       bin increment
+      AvgFunc    = trim(ArgList(1))
+      VarName    = trim(ArgList(2))
+      VarFprefix = trim(ArgList(3))
+      VarFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
+      VarDim     = trim(ArgList(4))
+      read(ArgList(5), '(i)') NumBins
+      read(ArgList(6), '(f)') BinStart
+      read(ArgList(7), '(f)') BinInc
+    else
+      write (*,*) 'ERROR: average function hist requires seven fields: hist:<var>:<file>:<dim>:<num_bins>:<bin_start>:<bin_inc>'
       stop
     endif
   endif
@@ -78,9 +108,17 @@ program tsavg
   write (*,*) '  Output file:  ', trim(OutFile)
   write (*,*) '  Averaging function: ', trim(AvgFunc)
   if (AvgFunc .eq. 'hda') then
-    write (*,*) '    Variable name: ', trim(HdaVname)
-    write (*,*) '    File name: ', trim(HdaFile)
+    write (*,*) '    Variable name: ', trim(VarName)
+    write (*,*) '    File name: ', trim(VarFile)
     write (*,*) '    Dimensionality: ', trim(VarDim)
+  else if (AvgFunc .eq. 'hist') then
+    write (*,*) '    Variable name: ', trim(VarName)
+    write (*,*) '    File name: ', trim(VarFile)
+    write (*,*) '    Dimensionality: ', trim(VarDim)
+    write (*,*) '    Binning specs:'
+    write (*,*) '      Number of bins: ', NumBins
+    write (*,*) '      Bins start at: ', BinStart
+    write (*,*) '      Delta between bins: ', BinInc
   endif
   write (*,*) '  Filter file: ', trim(FilterFile)
   write (*,*) ''
@@ -131,10 +169,10 @@ program tsavg
     Ny = InDims(2)
     Nz = InDims(3)
     Nt = InDims(4)
-  else if (AvgFunc .eq. 'hda') then
+  else if ((AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist')) then
     rh5f_facc = 'R'
-    call rhdf5_open_file(HdaFile, rh5f_facc, 0, rh5f_hda)
-    call rhdf5_read_variable_init(rh5f_hda, HdaVname, InNdims, 0, InDims, InUnits, InDescrip, InDimnames)
+    call rhdf5_open_file(VarFile, rh5f_facc, 0, rh5f_hda)
+    call rhdf5_read_variable_init(rh5f_hda, VarName, InNdims, 0, InDims, InUnits, InDescrip, InDimnames)
     call rhdf5_close_file(rh5f_hda)
 
     if (VarDim .eq. '2d') then
@@ -213,10 +251,9 @@ program tsavg
   ! be read into GRADS which expects 3D variables. Always have (x,y,z) for the
   ! dimension names, but set the sizes of the dimensions according to the averaging
   ! function asked for.
-  if (AvgFunc .eq. 'hda') then
-    OutVname = 'hda_' // trim(HdaFprefix)
-  else
-    OutVname = trim(AvgFunc)
+  OutVname = trim(AvgFunc)
+  if ((AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist')) then
+    OutVname = trim(OutVname) // '_' // trim(VarFprefix)
   endif
   OutDescrip = 'time series averaged ' // trim(AvgFunc) 
   OutNdims = 3 
@@ -235,6 +272,12 @@ program tsavg
     OutDims(1) = 1
     OutDims(2) = 1
     OutDims(3) = Nz
+    OutUnits = InUnits
+  else if (AvgFunc .eq. 'hist') then
+    ! put bin values in the x dimension
+    OutDims(1) = NumBins
+    OutDims(2) = 1
+    OutDims(3) = 1
     OutUnits = InUnits
   else if (AvgFunc .eq. 'horiz_ke') then
     ! single point result
@@ -288,8 +331,8 @@ program tsavg
     InCoordFile = trim(AzWindFile)
   else if (AvgFunc .eq. 'horiz_ke') then
     InCoordFile = trim(DensFile)
-  else if (AvgFunc .eq. 'hda') then
-    InCoordFile = trim(HdaFile)
+  else if ((AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist')) then
+    InCoordFile = trim(VarFile)
   else if (AvgFunc .eq. 'storm_int') then
     InCoordFile = trim(Speed10mFile)
   endif
@@ -355,37 +398,62 @@ program tsavg
   write (*,*) ''
   flush(6)
 
+  ! If doing histogram, calculate the bin values
+  if (AvgFunc .eq. 'hist') then
+    allocate(Bins(NumBins))
+    Bins(1) = BinStart
+    do ib = 2, NumBins
+      Bins(ib) = Bins(ib-1) + BinInc
+    enddo
+  endif
+
   ! Prepare the output coordinates
   !
   ! Create dummy coordinates (for GRADS sake) and write out the
-  ! time series as a 4D var, (x,y,z,t), where x, y and z have
-  ! dimension size of 1.
+  ! time series as a 4D var, (x,y,z,t) regardless of how many
+  ! true dimensions exist in the output.
   OutXcoords%vname = 'x_coords'
   OutXcoords%ndims = 1
-  OutXcoords%dims(1) = 1
   OutXcoords%dimnames(1) = 'x'
   OutXcoords%units = 'degrees_east'
   OutXcoords%descrip = 'longitude'
-  allocate(OutXcoords%vdata(1))
-  OutXcoords%vdata(1) = 1.0
+  if (AvgFunc .eq. 'hist') then
+    OutXcoords%dims(1) = NumBins
+    allocate(OutXcoords%vdata(NumBins))
+    do ib = 1, NumBins
+      OutXcoords%vdata(ib) = Bins(ib)
+    enddo
+  else
+    OutXcoords%dims(1) = 1
+    allocate(OutXcoords%vdata(1))
+    OutXcoords%vdata(1) = 1.0
+  endif
   
   OutYcoords%vname = 'y_coords'
   OutYcoords%ndims = 1
-  OutYcoords%dims(1) = 1
   OutYcoords%dimnames(1) = 'y'
   OutYcoords%units = 'degrees_north'
   OutYcoords%descrip = 'latitude'
+  OutYcoords%dims(1) = 1
   allocate(OutYcoords%vdata(1))
   OutYcoords%vdata(1) = 1.0
   
   OutZcoords%vname = 'z_coords'
   OutZcoords%ndims = 1
-  OutZcoords%dims(1) = 1
   OutZcoords%dimnames(1) = 'z'
   OutZcoords%units = 'meter'
   OutZcoords%descrip = 'sigma-z'
-  allocate(OutZcoords%vdata(1))
-  OutZcoords%vdata(1) = 1.0
+  if (AvgFunc .eq. 'hda') then
+    OutZcoords%dims(1) = Nz
+    allocate(OutZcoords%vdata(Nz))
+    do iz = 1, Nz
+      OutZcoords%vdata(iz) = InZcoords%vdata(iz)
+    enddo
+  else
+    OutZcoords%dims(1) = 1
+    allocate(OutZcoords%vdata(1))
+    OutZcoords%vdata(1) = 1.0
+  endif
 
   ! Perform the averaging function.
   rh5f_facc = 'W'
@@ -441,13 +509,31 @@ program tsavg
     call rhdf5_close_file(rh5f_filter)
   else if (AvgFunc .eq. 'hda') then
     rh5f_facc = 'R'
-    call rhdf5_open_file(HdaFile, rh5f_facc, 1, rh5f_hda)
+    call rhdf5_open_file(VarFile, rh5f_facc, 1, rh5f_hda)
 
     do it = 1, Nt 
-      call rhdf5_read_variable(rh5f_hda, HdaVname, InNdims, it, InDims, rdata=HdaVar)
+      call rhdf5_read_variable(rh5f_hda, VarName, InNdims, it, InDims, rdata=Var)
 
-      call DoHdaAvg(Nx, Ny, Nz, HdaVar, TserAvg)
-      deallocate(HdaVar)
+      call DoHda(Nx, Ny, Nz, Var, TserAvg)
+      deallocate(Var)
+
+      call rhdf5_write_variable(rh5f_out, OutVname, OutNdims, it, OutDims, &
+         OutUnits, OutDescrip, OutDimnames, rdata=TserAvg)
+
+      if (modulo(it,100) .eq. 0) then
+        write (*,*) 'Working: Number of time steps processed so far: ', it
+      endif
+    enddo
+    call rhdf5_close_file(rh5f_hda)
+  else if (AvgFunc .eq. 'hist') then
+    rh5f_facc = 'R'
+    call rhdf5_open_file(VarFile, rh5f_facc, 1, rh5f_hda)
+
+    do it = 1, Nt 
+      call rhdf5_read_variable(rh5f_hda, VarName, InNdims, it, InDims, rdata=Var)
+
+      call DoHist(Nx, Ny, Nz, NumBins, Var, Bins, TserAvg)
+      deallocate(Var)
 
       call rhdf5_write_variable(rh5f_out, OutVname, OutNdims, it, OutDims, &
          OutUnits, OutDescrip, OutDimnames, rdata=TserAvg)
@@ -544,6 +630,11 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile)
     write (*,*) '              <var>: revu var name inside the file'
     write (*,*) '              <file>: prefix for the revu file'
     write (*,*) '              <dim>: dimensionality of variable, either "2d" or "3d"'
+    write (*,*) '            hist:<var>:<file>:<dim>:<num_bins>:<bin_start>:<bin_inc>'
+    write (*,*) '              <var>,<file>,<dim> same as for hda'
+    write (*,*) '              <num_bins>: number of bins'
+    write (*,*) '              <bin_start>: starting value for bins'
+    write (*,*) '              <bin_inc>: delta between bins'
     write (*,*) '        <filter_file>: file containing the filter mask'
     stop
   end if
@@ -558,11 +649,13 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile)
 
   if ((AvgFunc .ne. 'horiz_ke')       .and. &
       (AvgFunc(1:4) .ne. 'hda:')  .and. &
+      (AvgFunc(1:5) .ne. 'hist:')  .and. &
       (AvgFunc .ne. 'storm_int')  .and. &
       (AvgFunc .ne. 'max_azwind')) then
     write (*,*) 'ERROR: <avg_function> must be one of:'
     write (*,*) '          horiz_ke'
     write (*,*) '          hda:<var>:<file>:<dim>'
+    write (*,*) '          hist:<var>:<file>:<dim>:<num_bins>:<bin_start>:<bin_inc>'
     write (*,*) '          storm_int'
     write (*,*) '          max_azwind'
     write (*,*) ''
@@ -663,15 +756,15 @@ subroutine DoHorizKe(Nx, Ny, Nz, Dens, U, V, Filter, DeltaX, DeltaY, Zcoords, Ts
 end subroutine DoHorizKe
 
 !**************************************************************************************
-! DoHdaAvg()
+! DoHda()
 !
 ! This routine will do horizontal domain average for all z levels.
 !
-subroutine DoHdaAvg(Nx, Ny, Nz, HdaVar, DomAvg)
+subroutine DoHda(Nx, Ny, Nz, Var, DomAvg)
   implicit none
 
   integer :: Nx, Ny, Nz
-  real, dimension(Nx,Ny,Nz) :: HdaVar
+  real, dimension(Nx,Ny,Nz) :: Var
   real, dimension(Nz) :: DomAvg
 
   integer :: ix, iy, iz
@@ -683,7 +776,7 @@ subroutine DoHdaAvg(Nx, Ny, Nz, HdaVar, DomAvg)
 
     do iy = 1, Ny
       do ix = 1, Nx
-        DomAvg(iz) = DomAvg(iz) + HdaVar(ix,iy,iz)
+        DomAvg(iz) = DomAvg(iz) + Var(ix,iy,iz)
         NumPoints = NumPoints + 1
       enddo
     enddo
@@ -696,7 +789,65 @@ subroutine DoHdaAvg(Nx, Ny, Nz, HdaVar, DomAvg)
   enddo
 
   return
-end subroutine DoHdaAvg
+end subroutine DoHda
+
+!**************************************************************************************
+! DoHist()
+!
+! This routine will do histogram binning over all of the domain.
+!
+
+subroutine DoHist(Nx, Ny, Nz, Nb, Var, Bins, Counts)
+  implicit none
+
+  integer :: Nx, Ny, Nz, Nb
+  real, dimension(Nx,Ny,Nz) :: Var
+  real, dimension(Nb) :: Bins, Counts
+
+  integer :: ib, ix, iy, iz
+
+  ! Emulate matlab histc command, ie the values in Bins are treated as the edges
+  ! of the bin ranges. Do not count any values from Var that fall outside the
+  ! bin range (< Bins(1) or > Bins(Nb)). The count is incremented for bin ib when:
+  !
+  !   Bins(ib) <= Var(ix,iy,iz) < Bins(ib+1)
+  !
+  ! The count in Bin(Nb), last bin, is incremented when:
+  !
+  !   Var(ix,iy,iz) == Bins(ib)
+  !
+  do ib = 1, Nb
+    Counts(ib) = 0.0
+  enddo
+
+  ! Build the histogram (counts)
+  do iz = 1, Nz
+    do iy = 1, Ny
+      do ix = 1, Nx
+        ! Check all bins except the last.
+        !
+        ! Exiting out of the loop when finding the bin will help a lot when the
+        ! distribution of values is biased toward smaller values. After exiting
+        ! out of the loop you can either just check the last bin (which will be wasted)
+        ! or put in a logical variable and check that variable saying you can skip the
+        ! check of the last bin. Since you would have to check the logical variable and
+        ! the last bin every time you might as well just check the last bin instead.
+        do ib = 1, Nb-1
+           if ((Bins(ib) .le. Var(ix,iy,iz)) .and. (Var(ix,iy,iz) .lt. Bins(ib+1))) then
+              Counts(ib) = Counts(ib) + 1.0
+              exit
+           endif
+        enddo
+        ! check the last bin
+        if (Bins(Nb) .eq. Var(ix,iy,iz)) then
+          Counts(Nb) = Counts(Nb) + 1.0
+        endif
+      enddo
+    enddo
+  enddo
+
+  return
+end subroutine DoHist
 
 !**************************************************************************************
 ! DoStormInt()
