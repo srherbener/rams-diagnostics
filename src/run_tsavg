@@ -41,6 +41,18 @@ sub CreateFileNames
 
   my $Pattern;
   my @f;
+  my $TdirStr;
+
+  # If $Tdir is the string "NONE", then do not place a subdirectory
+  # in the path to the input and output files
+  if ($Tdir eq "NONE")
+    {
+    $TdirStr = "";
+    }
+  else
+    {
+    $TdirStr = "/" . $Tdir;
+    }
 
   # InDir is the directory that the input files come from.
   #
@@ -53,12 +65,12 @@ sub CreateFileNames
   #
   if ($Dname eq "max_azwind")
     {
-    $InDir = $AzavgDir . "/" . $Tdir;
+    $InDir = $AzavgDir . $TdirStr;
     $InFileSuffix = "_" . $Case . ".h5";
     }
   else
     {
-    $InDir = $Case . "/" . $RevuDir . "/" . $Tdir;
+    $InDir = $Case . "/" . $RevuDir . $TdirStr;
     # Use the w input file as a sample for finding the input file suffix.
     $Pattern = $InDir . "/w-*.h5";
     @f = glob($Pattern);
@@ -66,8 +78,8 @@ sub CreateFileNames
     $InFileSuffix =~ s/.*\/w-/-/;
     }
 
-  $OutFile = $TsavgDir . "/" . ${Tdir} . "/" . ${Dname} . "_" . ${Case} . ".h5";
-  $FilterFile = $FilterDir . "/" . ${Tdir} . "/" . ${FfilePrefix} . "_" . ${Case} . ".h5";
+  $OutFile = $TsavgDir . ${TdirStr} . "/" . ${Dname} . "_" . ${Case} . ".h5";
+  $FilterFile = $FilterDir . ${TdirStr} . "/" . ${FfilePrefix} . "_" . ${Case} . ".h5";
 
   return ($InDir, $InFileSuffix, $OutFile, $FilterFile);
   }
@@ -168,28 +180,38 @@ foreach $Case (sort(keys(%Cases)))
 
       @SysArgs = ("tsavg", $InDir, $InFileSuffix, $OutFile, $Dname, $FilterFile);
       print "Running: ", join(" ",@SysArgs), "\n\n";
-      system(@SysArgs);
+      #system(@SysArgs);
 
       # record the input file for the upcoming join
-      if ($JoinInFiles eq "")
+      if ($Tdir eq "NONE")
         {
-        $JoinInFiles = $OutFile;
-        $JoinOutFile = $TsavgDir . "/" . basename($OutFile);
+        $JoinInFiles = "NONE";
         }
       else
         {
-        $JoinInFiles = $JoinInFiles . ":" . $OutFile;
+        if ($JoinInFiles eq "")
+          {
+          $JoinInFiles = $OutFile;
+          $JoinOutFile = $TsavgDir . "/" . basename($OutFile);
+          }
+        else
+          {
+          $JoinInFiles = $JoinInFiles . ":" . $OutFile;
+          }
         }
       }
 
-    @SysArgs = ("join_hdata", $JoinInFiles, $JoinOutFile, $Dname);
-    print "***************************************************\n";
-    print " Joining HDF5 data:\n";
-    print "   Input Files: $JoinInFiles\n";
-    print "   Output File: $JoinOutFile\n";
-    print "   GRADS Variable: $Dname\n";
-    print "Running: ", join(" ",@SysArgs), "\n\n";
-    system(@SysArgs);
+    if ($JoinInFiles ne "NONE")
+      {
+      @SysArgs = ("join_hdata", $JoinInFiles, $JoinOutFile, $Dname);
+      print "***************************************************\n";
+      print " Joining HDF5 data:\n";
+      print "   Input Files: $JoinInFiles\n";
+      print "   Output File: $JoinOutFile\n";
+      print "   GRADS Variable: $Dname\n";
+      print "Running: ", join(" ",@SysArgs), "\n\n";
+      #system(@SysArgs);
+      }
     }
   }
 

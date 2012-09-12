@@ -15,6 +15,7 @@ program tsavg
   integer, parameter :: LargeString  = 512
   integer, parameter :: MediumString = 256
   integer, parameter :: LittleString = 128
+  integer, parameter :: MaxArgFields = 10
 
   real, parameter :: UndefVal = -999.0
 
@@ -23,21 +24,25 @@ program tsavg
   character (len=MediumString) :: OutFile
   character (len=MediumString) :: FilterFile
   character (len=LittleString) :: AvgFunc
+  character (len=MediumString), dimension(MaxArgFields) :: ArgList
+  integer :: Nfields
+  character (len=LittleString) :: VarDim
 
   ! Data arrays
   ! Dims: x, y, z, t
   type (Rhdf5Var) :: InXcoords, InYcoords, InZcoords, InTcoords
   type (Rhdf5Var) :: OutXcoords, OutYcoords, OutZcoords
-  real, dimension(:), allocatable :: U, V, AzWind, Speed10m, Dens, Filter, TserAvg
-  character (len=MediumString) :: Ufile, Vfile, AzWindFile, Speed10mFile, DensFile, InCoordFile
-  character (len=LittleString) :: Uvname, Vvname, AzWindVname, Speed10mVname, DensVname, FilterVname, OutVname
+  real, dimension(:), allocatable :: U, V, AzWind, Speed10m, Dens, HdaVar, Filter, TserAvg
+  character (len=MediumString) :: Ufile, Vfile, AzWindFile, Speed10mFile, DensFile, HdaFile, InCoordFile
+  character (len=LittleString) :: Uvname, Vvname, AzWindVname, Speed10mVname, DensVname
+  character (len=LittleString) :: HdaVname, HdaFprefix, FilterVname, OutVname
   character (len=LittleString) :: rh5f_facc
   integer :: InNdims, OutNdims, FilterNdims
   integer, dimension(RHDF5_MAX_DIMS) :: InDims, OutDims, FilterDims
   character (len=RHDF5_MAX_STRING) :: InUnits, InDescrip, OutUnits, OutDescrip, FilterUnits, FilterDescrip
   character (len=RHDF5_MAX_STRING), dimension(RHDF5_MAX_DIMS) :: InDimnames, OutDimnames, FilterDimnames
 
-  integer :: rh5f_azwind, rh5f_u, rh5f_v, rh5f_speed10m, rh5f_dens, rh5f_filter, rh5f_out
+  integer :: rh5f_azwind, rh5f_u, rh5f_v, rh5f_speed10m, rh5f_dens, rh5f_hda, rh5f_filter, rh5f_out
 
   integer :: id, ix, iy, iz, it
   integer :: Nx, Ny, Nz, Nt
@@ -47,12 +52,36 @@ program tsavg
 
   ! Get the command line arguments
   call GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile)
+  if (AvgFunc(1:4) .eq. 'hda:') then
+    call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'hda spec')
+    if (Nfields .eq. 4) then
+      ! got the right amount of fields
+      !   field    value
+      !    1       'hda'
+      !    2       name of variable inside the REVU file
+      !    3       prefix for the REVU file name
+      !    4       dimensionality of variable
+      AvgFunc    = trim(ArgList(1))
+      HdaVname   = trim(ArgList(2))
+      HdaFprefix = trim(ArgList(3))
+      HdaFile    = trim(InDir) // '/' //trim(HdaFprefix) // trim(InSuffix)
+      VarDim     = trim(ArgList(4))
+    else
+      write (*,*) 'ERROR: average function hda requires four fields: hda:<var>:<file>:<dim>'
+      stop
+    endif
+  endif
 
   write (*,*) 'Time seris of average for RAMS data:'
   write (*,*) '  Input directory: ', trim(InDir)
   write (*,*) '  Input file suffix: ', trim(InSuffix)
   write (*,*) '  Output file:  ', trim(OutFile)
   write (*,*) '  Averaging function: ', trim(AvgFunc)
+  if (AvgFunc .eq. 'hda') then
+    write (*,*) '    Variable name: ', trim(HdaVname)
+    write (*,*) '    File name: ', trim(HdaFile)
+    write (*,*) '    Dimensionality: ', trim(VarDim)
+  endif
   write (*,*) '  Filter file: ', trim(FilterFile)
   write (*,*) ''
   flush(6)
@@ -102,6 +131,23 @@ program tsavg
     Ny = InDims(2)
     Nz = InDims(3)
     Nt = InDims(4)
+  else if (AvgFunc .eq. 'hda') then
+    rh5f_facc = 'R'
+    call rhdf5_open_file(HdaFile, rh5f_facc, 0, rh5f_hda)
+    call rhdf5_read_variable_init(rh5f_hda, HdaVname, InNdims, 0, InDims, InUnits, InDescrip, InDimnames)
+    call rhdf5_close_file(rh5f_hda)
+
+    if (VarDim .eq. '2d') then
+      Nx = InDims(1)
+      Ny = InDims(2)
+      Nz = 1
+      Nt = InDims(3)
+    else
+      Nx = InDims(1)
+      Ny = InDims(2)
+      Nz = InDims(3)
+      Nt = InDims(4)
+    endif
   else
     ! Read in the filter and use it to check against all the other variables
     rh5f_facc = 'R'
@@ -167,7 +213,11 @@ program tsavg
   ! be read into GRADS which expects 3D variables. Always have (x,y,z) for the
   ! dimension names, but set the sizes of the dimensions according to the averaging
   ! function asked for.
-  OutVname = trim(AvgFunc)
+  if (AvgFunc .eq. 'hda') then
+    OutVname = 'hda_' // trim(HdaFprefix)
+  else
+    OutVname = trim(AvgFunc)
+  endif
   OutDescrip = 'time series averaged ' // trim(AvgFunc) 
   OutNdims = 3 
   OutDimnames(1) = 'x' 
@@ -180,6 +230,12 @@ program tsavg
     OutDims(2) = 1
     OutDims(3) = 1
     OutUnits = 'm/s'
+  else if (AvgFunc .eq. 'hda') then
+    ! all z points
+    OutDims(1) = 1
+    OutDims(2) = 1
+    OutDims(3) = Nz
+    OutUnits = InUnits
   else if (AvgFunc .eq. 'horiz_ke') then
     ! single point result
     OutDims(1) = 1
@@ -224,7 +280,6 @@ program tsavg
   enddo
   write (*,*) ''
   write (*,*) '  Number of time steps: ', Nt
-  write (*,*) '  Number of time steps: ', Nt
   write (*,*) ''
   flush(6)
 
@@ -233,6 +288,8 @@ program tsavg
     InCoordFile = trim(AzWindFile)
   else if (AvgFunc .eq. 'horiz_ke') then
     InCoordFile = trim(DensFile)
+  else if (AvgFunc .eq. 'hda') then
+    InCoordFile = trim(HdaFile)
   else if (AvgFunc .eq. 'storm_int') then
     InCoordFile = trim(Speed10mFile)
   endif
@@ -382,6 +439,24 @@ program tsavg
     call rhdf5_close_file(rh5f_u)
     call rhdf5_close_file(rh5f_v)
     call rhdf5_close_file(rh5f_filter)
+  else if (AvgFunc .eq. 'hda') then
+    rh5f_facc = 'R'
+    call rhdf5_open_file(HdaFile, rh5f_facc, 1, rh5f_hda)
+
+    do it = 1, Nt 
+      call rhdf5_read_variable(rh5f_hda, HdaVname, InNdims, it, InDims, rdata=HdaVar)
+
+      call DoHdaAvg(Nx, Ny, Nz, HdaVar, TserAvg)
+      deallocate(HdaVar)
+
+      call rhdf5_write_variable(rh5f_out, OutVname, OutNdims, it, OutDims, &
+         OutUnits, OutDescrip, OutDimnames, rdata=TserAvg)
+
+      if (modulo(it,100) .eq. 0) then
+        write (*,*) 'Working: Number of time steps processed so far: ', it
+      endif
+    enddo
+    call rhdf5_close_file(rh5f_hda)
   else if (AvgFunc .eq. 'storm_int') then
     rh5f_facc = 'R'
     call rhdf5_open_file(Speed10mFile, rh5f_facc, 1, rh5f_speed10m)
@@ -462,6 +537,10 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile)
     write (*,*) '            horiz_ke -> total kinetic energy form horizontal winds'
     write (*,*) '            storm_int -> storm intensity metric from horizontal wind speeds'
     write (*,*) '            max_azwind -> max value of azimuthially averaged wind'
+    write (*,*) '            hda:<var>:<file>:<dim> -> horizontal domain average at each z level for <var>'
+    write (*,*) '              <var>: revu var name inside the file'
+    write (*,*) '              <file>: prefix for the revu file'
+    write (*,*) '              <dim>: dimensionality of variable, either "2d" or "3d"'
     write (*,*) '        <filter_file>: file containing the filter mask'
     stop
   end if
@@ -475,10 +554,12 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile)
   BadArgs = .false.
 
   if ((AvgFunc .ne. 'horiz_ke')       .and. &
+      (AvgFunc(1:4) .ne. 'hda:')  .and. &
       (AvgFunc .ne. 'storm_int')  .and. &
       (AvgFunc .ne. 'max_azwind')) then
     write (*,*) 'ERROR: <avg_function> must be one of:'
     write (*,*) '          horiz_ke'
+    write (*,*) '          hda:<var>:<file>:<dim>'
     write (*,*) '          storm_int'
     write (*,*) '          max_azwind'
     write (*,*) ''
@@ -577,6 +658,42 @@ subroutine DoHorizKe(Nx, Ny, Nz, Dens, U, V, Filter, DeltaX, DeltaY, Zcoords, Ts
   
   return
 end subroutine DoHorizKe
+
+!**************************************************************************************
+! DoHdaAvg()
+!
+! This routine will do horizontal domain average for all z levels.
+!
+subroutine DoHdaAvg(Nx, Ny, Nz, HdaVar, DomAvg)
+  implicit none
+
+  integer :: Nx, Ny, Nz
+  real, dimension(Nx,Ny,Nz) :: HdaVar
+  real, dimension(Nz) :: DomAvg
+
+  integer :: ix, iy, iz
+  integer :: NumPoints
+
+  do iz = 1, Nz
+    DomAvg(iz) = 0.0
+    NumPoints = 0
+
+    do iy = 1, Ny
+      do ix = 1, Nx
+        DomAvg(iz) = DomAvg(iz) + HdaVar(ix,iy,iz)
+        NumPoints = NumPoints + 1
+      enddo
+    enddo
+
+    if (NumPoints .eq. 0) then
+      DomAvg(iz) = 0.0
+    else
+      DomAvg(iz) = DomAvg(iz) / float(NumPoints)
+    endif
+  enddo
+
+  return
+end subroutine DoHdaAvg
 
 !**************************************************************************************
 ! DoStormInt()
