@@ -38,10 +38,15 @@ sub CreateFileNames
   my $InFileSuffix;
   my $OutFile;
   my $FilterFile;
+  my $Dvar;
 
   my $Pattern;
   my @f;
   my $TdirStr;
+  my $Dfile;
+  my $Dtemp1;
+  my $Dtemp2;
+  my $Dtemp3;
 
   # If $Tdir is the string "NONE", then do not place a subdirectory
   # in the path to the input and output files
@@ -52,6 +57,20 @@ sub CreateFileNames
   else
     {
     $TdirStr = "/" . $Tdir;
+    }
+
+  # If $Dname starts with hda: then separate out the pieces, hda:<var>:<file>, and
+  # form the prefix using <file>.
+  if ($Dname =~ /hda:/)
+    {
+    ($Dtemp1, $Dtemp2, $Dfile, $Dtemp3) = split(':', $Dname);
+    $Dfile = "hda_" . $Dfile;
+    $Dvar = $Dfile;
+    }
+  else
+    {
+    $Dvar = $Dname;
+    $Dfile = $Dname; 
     }
 
   # InDir is the directory that the input files come from.
@@ -78,10 +97,10 @@ sub CreateFileNames
     $InFileSuffix =~ s/.*\/w-/-/;
     }
 
-  $OutFile = $TsavgDir . ${TdirStr} . "/" . ${Dname} . "_" . ${Case} . ".h5";
+  $OutFile = $TsavgDir . ${TdirStr} . "/" . ${Dfile} . "_" . ${Case} . ".h5";
   $FilterFile = $FilterDir . ${TdirStr} . "/" . ${FfilePrefix} . "_" . ${Case} . ".h5";
 
-  return ($InDir, $InFileSuffix, $OutFile, $FilterFile);
+  return ($InDir, $InFileSuffix, $OutFile, $FilterFile, $Dvar);
   }
 
 #######################################################################
@@ -115,6 +134,7 @@ my $InFileSuffix;
 my $OutFile;
 my $FilterFile;
 my $FfilePrefix;
+my $Dvar;
 
 my @SysArgs;
 my $OutDir;
@@ -157,7 +177,7 @@ foreach $Case (sort(keys(%Cases)))
     # then join these files into the main file (above the time directories)
     foreach $Tdir (sort(keys(%TimeDirs)))
       {
-      ($InDir,$InFileSuffix,$OutFile,$FilterFile) =
+      ($InDir,$InFileSuffix,$OutFile,$FilterFile,$Dvar) =
           &CreateFileNames($Case, $Tdir, $Dname, $FfilePrefix, $AzavgDir, $TsavgDir, $FilterDir, $RevuDir);
 
       print "***************************************************************\n";
@@ -180,7 +200,7 @@ foreach $Case (sort(keys(%Cases)))
 
       @SysArgs = ("tsavg", $InDir, $InFileSuffix, $OutFile, $Dname, $FilterFile);
       print "Running: ", join(" ",@SysArgs), "\n\n";
-      #system(@SysArgs);
+      system(@SysArgs);
 
       # record the input file for the upcoming join
       if ($Tdir eq "NONE")
@@ -203,14 +223,14 @@ foreach $Case (sort(keys(%Cases)))
 
     if ($JoinInFiles ne "NONE")
       {
-      @SysArgs = ("join_hdata", $JoinInFiles, $JoinOutFile, $Dname);
+      @SysArgs = ("join_hdata", $JoinInFiles, $JoinOutFile, $Dvar);
       print "***************************************************\n";
       print " Joining HDF5 data:\n";
       print "   Input Files: $JoinInFiles\n";
       print "   Output File: $JoinOutFile\n";
-      print "   GRADS Variable: $Dname\n";
+      print "   HDF5 Variable: $Dvar\n";
       print "Running: ", join(" ",@SysArgs), "\n\n";
-      #system(@SysArgs);
+      system(@SysArgs);
       }
     }
   }

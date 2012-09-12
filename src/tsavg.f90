@@ -481,7 +481,10 @@ program tsavg
     call rhdf5_close_file(rh5f_filter)
   endif
   call rhdf5_close_file(rh5f_out)
-  write (*,*) 'Finished: Total number of time steps processed: ', it
+ 
+  ! 'it' will be one beyond its loop limit (Nt) so subtract one
+  ! from 'it' when reporting how many times steps were processed
+  write (*,*) 'Finished: Total number of time steps processed: ', it-1
   write (*,*) ''
 
   ! Finish off output file
