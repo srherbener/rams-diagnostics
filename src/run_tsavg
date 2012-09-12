@@ -44,9 +44,9 @@ sub CreateFileNames
   my @f;
   my $TdirStr;
   my $Dfile;
+  my $Dsubname;
   my $Dtemp1;
   my $Dtemp2;
-  my $Dtemp3;
 
   # If $Tdir is the string "NONE", then do not place a subdirectory
   # in the path to the input and output files
@@ -61,10 +61,10 @@ sub CreateFileNames
 
   # If $Dname starts with hda: then separate out the pieces, hda:<var>:<file>, and
   # form the prefix using <file>.
-  if ($Dname =~ /hda:/)
+  if (($Dname =~ /hda:/) || ($Dname =~ /hist:/))
     {
-    ($Dtemp1, $Dtemp2, $Dfile, $Dtemp3) = split(':', $Dname);
-    $Dfile = "hda_" . $Dfile;
+    ($Dsubname, $Dtemp1, $Dfile, $Dtemp2) = split(':', $Dname);
+    $Dfile = $Dsubname . "_" . $Dfile;
     $Dvar = $Dfile;
     }
   else
