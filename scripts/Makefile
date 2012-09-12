@@ -3,31 +3,8 @@
 #
 
 DEST = $(HOME)/etc/matlab
-SCRIPTS = $(DEST)/GenHist2d.m \
-          $(DEST)/GenRrateHist.m \
-          $(DEST)/PlotHist2d.m \
-          $(DEST)/PlotRrateHist.m \
-          $(DEST)/ExtractSample.m \
-          $(DEST)/MergeHists.m \
-          $(DEST)/PlotHistSet.m \
-          $(DEST)/PlotHists.m \
-          $(DEST)/PlotSampleData.m \
-          $(DEST)/PlotMultiPanelSample.m \
-          $(DEST)/GenTimeSeries.m \
-          $(DEST)/GenDomTimAvgProfs.m \
-          $(DEST)/GenDomAvg.m \
-          $(DEST)/DomainTimeAvgProfile.m \
-          $(DEST)/RatioAvg2d.m \
-          $(DEST)/ReadConfig.m \
-          $(DEST)/ReadAzavgVar.m \
-          $(DEST)/PlotTimeSeries.m \
-          $(DEST)/PlotTseriesSet.m \
-          $(DEST)/PlotTseriesSet2.m \
-          $(DEST)/PlotProfSet.m \
-          $(DEST)/GenProfPlots.m \
-          $(DEST)/GenSwPlots.m \
-          $(DEST)/GenTsPlots.m \
-
+SCRIPTS = $(DEST)/PlotTseriesSet.m \
+          $(DEST)/ContourfLogScale.m
 
 #
 # Targets
@@ -35,74 +12,9 @@ SCRIPTS = $(DEST)/GenHist2d.m \
 
 all: $(SCRIPTS)
 
-$(DEST)/GenHist2d.m: GenHist2d.m
-	cp GenHist2d.m $(DEST)/GenHist2d.m
+#$(DEST)/%.m: %.m
+#	cp $(<) $(@)
 
-$(DEST)/GenRrateHist.m: GenRrateHist.m
-	cp GenRrateHist.m $(DEST)/GenRrateHist.m
+$(DEST)/%.m: %.m
+	@echo "$(<) is now obsolete"
 
-$(DEST)/PlotHist2d.m: PlotHist2d.m
-	cp PlotHist2d.m $(DEST)/PlotHist2d.m
-
-$(DEST)/PlotRrateHist.m: PlotRrateHist.m
-	cp PlotRrateHist.m $(DEST)/PlotRrateHist.m
-
-$(DEST)/ExtractSample.m: ExtractSample.m
-	cp ExtractSample.m $(DEST)/ExtractSample.m
-
-$(DEST)/MergeHists.m: MergeHists.m
-	cp MergeHists.m $(DEST)/MergeHists.m
-
-$(DEST)/PlotHistSet.m: PlotHistSet.m
-	cp PlotHistSet.m $(DEST)/PlotHistSet.m
-
-$(DEST)/PlotHists.m: PlotHists.m
-	cp PlotHists.m $(DEST)/PlotHists.m
-
-$(DEST)/PlotSampleData.m: PlotSampleData.m
-	cp PlotSampleData.m $(DEST)/PlotSampleData.m
-
-$(DEST)/PlotMultiPanelSample.m: PlotMultiPanelSample.m
-	cp PlotMultiPanelSample.m $(DEST)/PlotMultiPanelSample.m
-
-$(DEST)/GenTimeSeries.m: GenTimeSeries.m
-	cp GenTimeSeries.m $(DEST)/GenTimeSeries.m
-
-$(DEST)/GenDomTimAvgProfs.m: GenDomTimAvgProfs.m
-	cp GenDomTimAvgProfs.m $(DEST)/GenDomTimAvgProfs.m
-
-$(DEST)/GenDomAvg.m: GenDomAvg.m
-	cp GenDomAvg.m $(DEST)/GenDomAvg.m
-
-$(DEST)/DomainTimeAvgProfile.m: DomainTimeAvgProfile.m
-	cp DomainTimeAvgProfile.m $(DEST)/DomainTimeAvgProfile.m
-
-$(DEST)/RatioAvg2d.m: RatioAvg2d.m
-	cp RatioAvg2d.m $(DEST)/RatioAvg2d.m
-
-$(DEST)/ReadConfig.m: ReadConfig.m
-	cp ReadConfig.m $(DEST)/ReadConfig.m
-
-$(DEST)/ReadAzavgVar.m: ReadAzavgVar.m
-	cp ReadAzavgVar.m $(DEST)/ReadAzavgVar.m
-
-$(DEST)/PlotTimeSeries.m: PlotTimeSeries.m
-	cp PlotTimeSeries.m $(DEST)/PlotTimeSeries.m
-
-$(DEST)/PlotTseriesSet.m: PlotTseriesSet.m
-	cp PlotTseriesSet.m $(DEST)/PlotTseriesSet.m
-
-$(DEST)/PlotTseriesSet2.m: PlotTseriesSet2.m
-	cp PlotTseriesSet2.m $(DEST)/PlotTseriesSet2.m
-
-$(DEST)/PlotProfSet.m: PlotProfSet.m
-	cp PlotProfSet.m $(DEST)/PlotProfSet.m
-
-$(DEST)/GenProfPlots.m: GenProfPlots.m
-	cp GenProfPlots.m $(DEST)/GenProfPlots.m
-
-$(DEST)/GenSwPlots.m: GenSwPlots.m
-	cp GenSwPlots.m $(DEST)/GenSwPlots.m
-
-$(DEST)/GenTsPlots.m: GenTsPlots.m
-	cp GenTsPlots.m $(DEST)/GenTsPlots.m
