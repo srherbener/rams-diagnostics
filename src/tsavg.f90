@@ -774,8 +774,10 @@ subroutine DoHda(Nx, Ny, Nz, Var, DomAvg)
     DomAvg(iz) = 0.0
     NumPoints = 0
 
-    do iy = 1, Ny
-      do ix = 1, Nx
+    ! REVU outputs lateral boundaries set to zero so don't include these
+    ! in the domain averaging
+    do iy = 2, Ny-1
+      do ix = 2, Nx-1
         DomAvg(iz) = DomAvg(iz) + Var(ix,iy,iz)
         NumPoints = NumPoints + 1
       enddo
