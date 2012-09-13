@@ -4,7 +4,8 @@
 
 DEST = $(HOME)/etc/matlab/atex
 
-SCRIPTS = $(DEST)/SetPath.m
+SCRIPTS = $(DEST)/GenRain2CloudRatio.m \
+          $(DEST)/SetPath.m
 
 #
 # Targets
