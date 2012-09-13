@@ -5,6 +5,7 @@
 DEST = $(HOME)/etc/matlab/atex
 
 SCRIPTS = $(DEST)/GenRain2CloudRatio.m \
+          $(DEST)/GenTimeAvgRratePdf.m \
           $(DEST)/SetPath.m
 
 #
