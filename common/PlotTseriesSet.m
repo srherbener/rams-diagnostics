@@ -1,4 +1,4 @@
-function [ ] = PlotTseriesSet2( Times, Ts, Ptitle, Ylim, Ylabel, Lcolors, LegText, LegLoc, OutFile )
+function [ ] = PlotTseriesSet2( Times, Ts, Ptitle, Ylim, Ylabel, Tunits, Lcolors, LegText, LegLoc, OutFile )
 %PlotTseriesSet2 Plot a set of time series on the same panel
 %   This function will take data contained in Ts and plot them on a single
 %   panel.
@@ -20,6 +20,8 @@ FontSz = 20;
 
 Nts = size(Ts,1);
 
+Xlabel = sprintf('Simulation Time (%s)', Tunits);
+
 % Need to establish an axis style before calling "hold on" (for the
 % subsequent plots). Plot the first hist outside the loop, issue a "hold
 % on" and then plot the remainder hists.
@@ -37,7 +39,7 @@ end
 legend(LegText, 'Location', char(LegLoc));
 legend boxoff;
 title(Ptitle);
-xlabel('Simulation Time (hr)');
+xlabel(Xlabel);
 ylabel(Ylabel);
 
 saveas(Fig, OutFile);

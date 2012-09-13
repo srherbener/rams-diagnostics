@@ -89,15 +89,17 @@ for i = 1:length(InLines)
       Cdata.AzavgEof(i_aeof).Tmin = sscanf(Fields{7}, '%f');
       Cdata.AzavgEof(i_aeof).Tmax = sscanf(Fields{8}, '%f');
     case 'PlotExp:'
-      Cdata.Pexp.Ename  = Fields{2};
-      Cdata.Pexp.Tstart = sscanf(Fields{3}, '%d');
-      Cdata.Pexp.Tend   = sscanf(Fields{4}, '%d');
+      Cdata.Pexp.Ename   = Fields{2};
+      Cdata.Pexp.Ntsteps = sscanf(Fields{3}, '%d');
+      Cdata.Pexp.Tstart  = sscanf(Fields{4}, '%f');
+      Cdata.Pexp.Tinc    = sscanf(Fields{5}, '%f');
+      Cdata.Pexp.Tunits  = Fields{6};
     case 'TsavgPlot:'
       i_tsplot = i_tsplot + 1;
       Cdata.TsavgPlots(i_tsplot).Var    = Fields{2};
-      Cdata.TsavgPlots(i_tsplot).Name   = Fields{3};
-      Cdata.TsavgPlots(i_tsplot).Units  = Fields{4};
-      Cdata.TsavgPlots(i_tsplot).Title  = Fields{5};
+      Cdata.TsavgPlots(i_tsplot).Name   = regexprep(Fields{3}, '_', ' ');
+      Cdata.TsavgPlots(i_tsplot).Units  = regexprep(Fields{4}, '_', ' ');
+      Cdata.TsavgPlots(i_tsplot).Title  = regexprep(Fields{5}, '_', ' ');
       Cdata.TsavgPlots(i_tsplot).LegLoc = Fields{6};
       Cdata.TsavgPlots(i_tsplot).Ymin   = sscanf(Fields{7},  '%f');
       Cdata.TsavgPlots(i_tsplot).Ymax   = sscanf(Fields{8},  '%f');

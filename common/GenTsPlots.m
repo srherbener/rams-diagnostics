@@ -5,16 +5,23 @@ function [ ] = GenTsPlots(ConfigFile)
 % the file system.
 [ Config ] = ReadConfig(ConfigFile);
     
-Pname = Config.Pexp.Ename;
-Tstart = Config.Pexp.Tstart;
-Tend = Config.Pexp.Tend;
+Pname   = Config.Pexp.Ename;
+Ntsteps = Config.Pexp.Ntsteps;
+Tstart  = Config.Pexp.Tstart;
+Tinc    = Config.Pexp.Tinc;
+Tunits  = Config.Pexp.Tunits;
 
 Tdir = Config.TsavgDir;
 Pdir = Config.PlotDir;
 
+% For smoothing, length of a running mean
 Flen = 5;
-Times = (Tstart:Tend);
-Tlen = length(Times);
+
+% Generate the time values
+Times = zeros(1,Ntsteps);
+for i = 1:Ntsteps
+  Times(i) = Tstart + ((i-1)*Tinc);
+end
 
 Lcolors = { 'k' 'm' 'b' 'c' 'g' 'y' 'r' };
 
@@ -22,10 +29,10 @@ Lcolors = { 'k' 'm' 'b' 'c' 'g' 'y' 'r' };
 for iplot = 1:length(Config.TsavgPlots)
     Var = Config.TsavgPlots(iplot).Var;
 
-    Ptitle = regexprep(sprintf('%s: %s', Pname, Config.TsavgPlots(iplot).Title), '_', ' ');
+    Ptitle = sprintf('%s: %s', Pname, Config.TsavgPlots(iplot).Title);
     LegLoc = Config.TsavgPlots(iplot).LegLoc;
     Ylim = [ Config.TsavgPlots(iplot).Ymin Config.TsavgPlots(iplot).Ymax ];
-    Ylabel = regexprep(sprintf('%s (%s)', Config.TsavgPlots(iplot).Name, Config.TsavgPlots(iplot).Units), '_', ' ');
+    Ylabel = sprintf('%s (%s)', Config.TsavgPlots(iplot).Name, Config.TsavgPlots(iplot).Units);
     OutFile = sprintf('%s/TS_%s.jpg', Pdir, Var);
     
     % make sure output directory exists
@@ -42,11 +49,11 @@ for iplot = 1:length(Config.TsavgPlots)
         TS = squeeze(Hvar);
         
         % smooth with a running mean of length 'Flen'
-        [ TsAll(icase,:) ] = SmoothFillTseries(TS, Tlen, Flen);
+        [ TsAll(icase,:) ] = SmoothFillTseries(TS, Ntsteps, Flen);
         
         LegText(icase) = { Config.Cases(icase).Pname };
     end
     
-    PlotTseriesSet( Times, TsAll, Ptitle, Ylim, Ylabel, Lcolors, LegText, LegLoc, OutFile );
+    PlotTseriesSet( Times, TsAll, Ptitle, Ylim, Ylabel, Tunits, Lcolors, LegText, LegLoc, OutFile );
     fprintf('\n');
 end
