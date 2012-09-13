@@ -51,10 +51,10 @@ i_tdir = 0;
 i_aeof = 0;
 i_aeofplot = 0;
 i_tsplot = 0;
-for i = 1:length(InLines)
+i_pset = 0;
+for i = 1:size(InLines,1)
   % Convert a line to a list of space separated fields
   [ Fields ] = Line2Fields(InLines(i,:), ' ');
-
 
   switch Fields{1}
     case 'AzavgDir:'
@@ -94,15 +94,27 @@ for i = 1:length(InLines)
       Cdata.Pexp.Tstart  = sscanf(Fields{4}, '%f');
       Cdata.Pexp.Tinc    = sscanf(Fields{5}, '%f');
       Cdata.Pexp.Tunits  = Fields{6};
+    case 'PlotSet:'
+      i_pset = i_pset + 1;
+      Cdata.PlotSets(i_pset).Name   = Fields{2};
+      Cdata.PlotSets(i_pset).Ncases = sscanf(Fields{3}, '%d');
+      j = 4; % next field
+      for ips = 1:Cdata.PlotSets(i_pset).Ncases
+        Cdata.PlotSets(i_pset).Cases(ips).Cname = Fields{j};
+        Cdata.PlotSets(i_pset).Cases(ips).Legend = regexprep(Fields{j+1}, '_', ' ');
+        j = j + 2;
+      end
     case 'TsavgPlot:'
       i_tsplot = i_tsplot + 1;
-      Cdata.TsavgPlots(i_tsplot).Var    = Fields{2};
-      Cdata.TsavgPlots(i_tsplot).Name   = regexprep(Fields{3}, '_', ' ');
-      Cdata.TsavgPlots(i_tsplot).Units  = regexprep(Fields{4}, '_', ' ');
-      Cdata.TsavgPlots(i_tsplot).Title  = regexprep(Fields{5}, '_', ' ');
-      Cdata.TsavgPlots(i_tsplot).LegLoc = Fields{6};
-      Cdata.TsavgPlots(i_tsplot).Ymin   = sscanf(Fields{7},  '%f');
-      Cdata.TsavgPlots(i_tsplot).Ymax   = sscanf(Fields{8},  '%f');
+      Cdata.TsavgPlots(i_tsplot).PSname  = Fields{2};
+      Cdata.TsavgPlots(i_tsplot).Var     = Fields{3};
+      Cdata.TsavgPlots(i_tsplot).Name    = regexprep(Fields{4}, '_', ' ');
+      Cdata.TsavgPlots(i_tsplot).Units   = regexprep(Fields{5}, '_', ' ');
+      Cdata.TsavgPlots(i_tsplot).Title   = regexprep(Fields{6}, '_', ' ');
+      Cdata.TsavgPlots(i_tsplot).LegLoc  = Fields{7};
+      Cdata.TsavgPlots(i_tsplot).Ymin    = sscanf(Fields{8},  '%f');
+      Cdata.TsavgPlots(i_tsplot).Ymax    = sscanf(Fields{9},  '%f');
+      Cdata.TsavgPlots(i_tsplot).OutFile = Fields{10};
     case 'AzavgEofPlot:'
       i_aeofplot = i_aeofplot + 1;
       Cdata.AzavgEofPlots(i_aeofplot).Var   = Fields{2};
@@ -115,6 +127,22 @@ for i = 1:length(InLines)
       Cdata.AzavgEofPlots(i_aeofplot).Rmax  = sscanf(Fields{9},  '%f');
       Cdata.AzavgEofPlots(i_aeofplot).Zmin  = sscanf(Fields{10},  '%f');
       Cdata.AzavgEofPlots(i_aeofplot).Zmax  = sscanf(Fields{11}, '%f');
+  end
+end
+
+% Make the association between TsavgPlots and the PlotSets
+for itp = 1:length(Cdata.TsavgPlots)
+  PlotSetName = Cdata.TsavgPlots(itp).PSname;
+  Match = 0;
+  for ips = 1:length(Cdata.PlotSets)
+    if (strcmp(Cdata.PlotSets(ips).Name, PlotSetName))
+      Match = ips;
+    end
+  end
+  Cdata.TsavgPlots(itp).PSnum = Match;
+
+  if (Match == 0)
+    fprintf('WARNING: Could not find a match for PlotSet "%s" specified in TsavgPlot number %d\n', Cdata.TsavgPlots(itp).PSname, itp);
   end
 end
 

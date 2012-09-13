@@ -33,15 +33,20 @@ for iplot = 1:length(Config.TsavgPlots)
     LegLoc = Config.TsavgPlots(iplot).LegLoc;
     Ylim = [ Config.TsavgPlots(iplot).Ymin Config.TsavgPlots(iplot).Ymax ];
     Ylabel = sprintf('%s (%s)', Config.TsavgPlots(iplot).Name, Config.TsavgPlots(iplot).Units);
-    OutFile = sprintf('%s/TS_%s.jpg', Pdir, Var);
+    OutFile = sprintf('%s/%s', Pdir, Config.TsavgPlots(iplot).OutFile);
     
     % make sure output directory exists
     if (exist(Pdir, 'dir') ~= 7)
         mkdir(Pdir);
     end
-    
-    for icase = 1:length(Config.Cases)
-        Case = Config.Cases(icase).Cname;
+
+    ips = Config.TsavgPlots(iplot).PSnum;
+    if (ips == 0)
+      fprintf('WARNING: skipping TsavgPlot number %d due to no associated PlotSet\n', iplot)
+    else
+      for icase = 1:Config.PlotSets(ips).Ncases
+        Case = Config.PlotSets(ips).Cases(icase).Cname;
+        LegText(icase) = { Config.PlotSets(ips).Cases(icase).Legend };
 
         Hfile = sprintf('%s/%s_%s.h5', Tdir, Var, Case);
         fprintf('Reading HDF5 file: %s\n', Hfile);
@@ -50,8 +55,7 @@ for iplot = 1:length(Config.TsavgPlots)
         
         % smooth with a running mean of length 'Flen'
         [ TsAll(icase,:) ] = SmoothFillTseries(TS, Ntsteps, Flen);
-        
-        LegText(icase) = { Config.Cases(icase).Pname };
+      end
     end
     
     PlotTseriesSet( Times, TsAll, Ptitle, Ylim, Ylabel, Tunits, Lcolors, LegText, LegLoc, OutFile );
