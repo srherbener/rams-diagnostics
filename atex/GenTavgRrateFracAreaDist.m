@@ -1,5 +1,5 @@
-function [ ] = GenTimeAvgRratePdf(ConfigFile)
-% GenTimeAvgRratePdf generate time averages of the rain rate (pcprr) histogram data
+function [ ] = GenTavgRrateFracAreaDist(ConfigFile)
+% GenTavgRrateFracAreaDist generate time average of the rain rate (pcprr) histogram data as fractional area of domain
 
 % Read the config file to get the structure of how the data is laid out in
 % the file system.
@@ -21,39 +21,30 @@ for icase = 1:length(Config.Cases)
   OutFile = sprintf('%s/tavg_%s_%s.h5', OutDir, RrateHistVar, Case);
 
   fprintf('***************************************************************\n');
-  fprintf('Generating time averaged rain rate PDF:\n');
+  fprintf('Generating time averaged rain rate fractional area distribution:\n');
   fprintf('  Case: %s\n', Case);
   fprintf('  Input rain rain histogram file: %s\n', RrateHistFile);
   fprintf('  Output file: %s\n', OutFile);
-  fprintf('\n');
 
   % The histogram is organized as (x,y,z,t) with x being the bins, y and z being dummy
   % coordinates (size = 1), and t the time steps. Use squeeze to compress into a 2D array
   % (x,t) that has bins and time steps.
   RRHIST = squeeze(hdf5read(RrateHistFile, RrateHistVar));
   BINS = hdf5read(RrateHistFile, 'x_coords');
+  Nx = hdf5read(RrateHistFile, 'Nx');
+  Ny = hdf5read(RrateHistFile, 'Ny');
 
-  % The number of points selected for the histogram at each time step can vary so
-  % to get a mean PDF, first convert each histogram to a PDF, then take the averages
-  % of the PDF entries.
-  % It's possible that a histogram has all zero counts. In this case, the sum will
-  % be zero, which can be used to flag this case since there are no negative counts.
-  % Exclude the all zeros histogram from the final averaging since it will throw
-  % off keeping the sum of the averaged PDF equalling one.
-  SUMS = sum(RRHIST,1);
+  % Calculate the total number of points in the domain (2D --> Nx * Ny) multiplied
+  % by the total number of time steps.
   [ Nb, Nt ] = size(RRHIST);
-  ipdf = 0;
-  for i = 1:Nt
-    if (SUMS(i) ~= 0)
-      ipdf = ipdf + 1;
-      PDF(:,ipdf) = RRHIST(:,i) / SUMS(i);
-    end
-  end
-  AVGPDF = mean(PDF,2);
+  Npts = Nx * Ny * Nt; % number of domain points after summing up over all time points
+  fprintf('  Number of domain points: %d\n', Nx*Ny);
+  fprintf('  Number of time points: %d\n', Nt);
+  fprintf('\n');
 
-fprintf('DEBUG: Nt: %d, ipdf: %d\n', Nt, ipdf);
+  AVGDIST = sum(RRHIST,2) ./ Npts;
 
-  hdf5write(OutFile, '/AvgPdf', AVGPDF);
+  hdf5write(OutFile, '/AvgDist', AVGDIST);
   hdf5write(OutFile, '/Bins', BINS, 'WriteMode', 'append');
-
+  hdf5write(OutFile, '/Npts', Npts, 'WriteMode', 'append');
 end

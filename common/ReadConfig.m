@@ -51,6 +51,7 @@ i_tdir = 0;
 i_aeof = 0;
 i_aeofplot = 0;
 i_tsplot = 0;
+i_dplot = 0;
 i_pset = 0;
 for i = 1:size(InLines,1)
   % Convert a line to a list of space separated fields
@@ -61,6 +62,8 @@ for i = 1:size(InLines,1)
       Cdata.AzavgDir = Fields{2};
     case 'TsavgDir:'
       Cdata.TsavgDir = Fields{2};
+    case 'DiagDir:'
+      Cdata.DiagDir = Fields{2};
     case 'PlotDir:'
       Cdata.PlotDir = Fields{2};
     case 'EofDir:'
@@ -115,6 +118,17 @@ for i = 1:size(InLines,1)
       Cdata.TsavgPlots(i_tsplot).Ymin    = sscanf(Fields{8},  '%f');
       Cdata.TsavgPlots(i_tsplot).Ymax    = sscanf(Fields{9},  '%f');
       Cdata.TsavgPlots(i_tsplot).OutFile = Fields{10};
+    case 'DistPlot:'
+      i_dplot = i_dplot + 1;
+      Cdata.DistPlots(i_dplot).PSname  = Fields{2};
+      Cdata.DistPlots(i_dplot).Var     = Fields{3};
+      Cdata.DistPlots(i_dplot).Title   = regexprep(Fields{4}, '_', ' ');
+      Cdata.DistPlots(i_dplot).Xlabel  = regexprep(Fields{5}, '_', ' ');
+      Cdata.DistPlots(i_dplot).Ylabel  = regexprep(Fields{6}, '_', ' ');
+      Cdata.DistPlots(i_dplot).LegLoc  = Fields{7};
+      Cdata.DistPlots(i_dplot).Ymin    = sscanf(Fields{8},  '%f');
+      Cdata.DistPlots(i_dplot).Ymax    = sscanf(Fields{9},  '%f');
+      Cdata.DistPlots(i_dplot).OutFile = Fields{10};
     case 'AzavgEofPlot:'
       i_aeofplot = i_aeofplot + 1;
       Cdata.AzavgEofPlots(i_aeofplot).Var   = Fields{2};
@@ -143,6 +157,22 @@ for itp = 1:length(Cdata.TsavgPlots)
 
   if (Match == 0)
     fprintf('WARNING: Could not find a match for PlotSet "%s" specified in TsavgPlot number %d\n', Cdata.TsavgPlots(itp).PSname, itp);
+  end
+end
+
+% Make the association between DistPlots and the PlotSets
+for itp = 1:length(Cdata.DistPlots)
+  PlotSetName = Cdata.DistPlots(itp).PSname;
+  Match = 0;
+  for ips = 1:length(Cdata.PlotSets)
+    if (strcmp(Cdata.PlotSets(ips).Name, PlotSetName))
+      Match = ips;
+    end
+  end
+  Cdata.DistPlots(itp).PSnum = Match;
+
+  if (Match == 0)
+    fprintf('WARNING: Could not find a match for PlotSet "%s" specified in DistPlot number %d\n', Cdata.DistPlots(itp).PSname, itp);
   end
 end
 
