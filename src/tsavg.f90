@@ -31,7 +31,7 @@ program tsavg
   ! Data arrays
   ! Dims: x, y, z, t
   type (Rhdf5Var) :: InXcoords, InYcoords, InZcoords, InTcoords
-  type (Rhdf5Var) :: OutXcoords, OutYcoords, OutZcoords
+  type (Rhdf5Var) :: OutXcoords, OutYcoords, OutZcoords, OrigDimSize
   real, dimension(:), allocatable :: U, V, AzWind, Speed10m, Dens, Var, Filter, TserAvg
   character (len=MediumString) :: Ufile, Vfile, AzWindFile, Speed10mFile, DensFile, VarFile, InCoordFile
   character (len=LittleString) :: Uvname, Vvname, AzWindVname, Speed10mVname, DensVname
@@ -579,6 +579,48 @@ program tsavg
   call rhdf5_write(OutFile, OutYcoords, 1)
   call rhdf5_write(OutFile, OutZcoords, 1)
   call rhdf5_write(OutFile, InTcoords, 1)
+
+  ! If doing hist function, write out the input dimension sizes
+  ! for downstream analyses. Eg. if you want to do fractional
+  ! area calculations then the counts in the histogram do not
+  ! tell you how many total points are in the domain.
+  if (AvgFunc .eq. 'hist') then
+    ! common settings
+    OrigDimSize%ndims = 1
+    OrigDimSize%dims(1) = 1
+    OrigDimSize%units = 'number'
+    allocate(OrigDimSize%vdata(1))
+
+    ! X
+    OrigDimSize%vname = 'Nx'
+    OrigDimSize%dimnames(1) = 'x'
+    OrigDimSize%descrip = 'number of x points'
+    OrigDimSize%vdata(1) = float(Nx)
+    call rhdf5_write(OutFile, OrigDimSize, 1)
+
+    ! Y
+    OrigDimSize%vname = 'Ny'
+    OrigDimSize%dimnames(1) = 'y'
+    OrigDimSize%descrip = 'number of y points'
+    OrigDimSize%vdata(1) = float(Ny)
+    call rhdf5_write(OutFile, OrigDimSize, 1)
+
+    ! Z
+    OrigDimSize%vname = 'Nz'
+    OrigDimSize%dimnames(1) = 'z'
+    OrigDimSize%descrip = 'number of z points'
+    OrigDimSize%vdata(1) = float(Nz)
+    call rhdf5_write(OutFile, OrigDimSize, 1)
+
+    ! T
+    OrigDimSize%vname = 'Nt'
+    OrigDimSize%dimnames(1) = 't'
+    OrigDimSize%descrip = 'number of t points'
+    OrigDimSize%vdata(1) = float(Nt)
+    call rhdf5_write(OutFile, OrigDimSize, 1)
+
+    deallocate(OrigDimSize%vdata)
+  endif
 
   ! set up four (x,y,z,t) dimensions for use by GRADS
   call rhdf5_set_dimension(OutFile, OutXcoords, 'x')
