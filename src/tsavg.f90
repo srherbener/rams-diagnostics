@@ -514,7 +514,7 @@ program tsavg
     do it = 1, Nt 
       call rhdf5_read_variable(rh5f_hda, VarName, InNdims, it, InDims, rdata=Var)
 
-      call DoHda(Nx, Ny, Nz, Var, TserAvg)
+      call DoHda(Nx, Ny, Nz, Var, UndefVal, TserAvg)
       deallocate(Var)
 
       call rhdf5_write_variable(rh5f_out, OutVname, OutNdims, it, OutDims, &
@@ -532,7 +532,7 @@ program tsavg
     do it = 1, Nt 
       call rhdf5_read_variable(rh5f_hda, VarName, InNdims, it, InDims, rdata=Var)
 
-      call DoHist(Nx, Ny, Nz, NumBins, Var, Bins, TserAvg)
+      call DoHist(Nx, Ny, Nz, NumBins, Var, UndefVal, Bins, TserAvg)
       deallocate(Var)
 
       call rhdf5_write_variable(rh5f_out, OutVname, OutNdims, it, OutDims, &
@@ -732,7 +732,7 @@ subroutine DoMaxAzWind(Nx, Ny, Nz, AzWind, UndefVal, AzWindMax)
   do iz = 1, Nz
     do iy = 1, Ny
       do ix = 1, Nx
-        if ((AzWind(ix,iy,iz) .gt. AzWindMax) .and. (AzWind(ix,iy,iz) .ne. UndefVal)) then
+        if ((AzWind(ix,iy,iz) .gt. AzWindMax) .and. (anint(AzWind(ix,iy,iz)) .ne. UndefVal)) then
           AzWindMax = AzWind(ix,iy,iz)
         endif
       end do
@@ -802,11 +802,12 @@ end subroutine DoHorizKe
 !
 ! This routine will do horizontal domain average for all z levels.
 !
-subroutine DoHda(Nx, Ny, Nz, Var, DomAvg)
+subroutine DoHda(Nx, Ny, Nz, Var, UndefVal, DomAvg)
   implicit none
 
   integer :: Nx, Ny, Nz
   real, dimension(Nx,Ny,Nz) :: Var
+  real :: UndefVal
   real, dimension(Nz) :: DomAvg
 
   integer :: ix, iy, iz
@@ -816,17 +817,23 @@ subroutine DoHda(Nx, Ny, Nz, Var, DomAvg)
     DomAvg(iz) = 0.0
     NumPoints = 0
 
-    ! REVU outputs lateral boundaries set to zero so don't include these
-    ! in the domain averaging
+    ! RAMS reserves the first and last x and y values for lateral
+    ! boundaries. These only contain valid field data under certain
+    ! circumstances such as cyclic boundary cases. Most of the time
+    ! we want these to be excluded so for now always exclude them
+    ! (shouldn't hurt results with cyclic boundaries where the
+    ! boundary values could have been included).
     do iy = 2, Ny-1
       do ix = 2, Nx-1
-        DomAvg(iz) = DomAvg(iz) + Var(ix,iy,iz)
-        NumPoints = NumPoints + 1
+        if (anint(Var(ix,iy,iz)) .ne. UndefVal) then
+          DomAvg(iz) = DomAvg(iz) + Var(ix,iy,iz)
+          NumPoints = NumPoints + 1
+        endif
       enddo
     enddo
 
     if (NumPoints .eq. 0) then
-      DomAvg(iz) = 0.0
+      DomAvg(iz) = UndefVal
     else
       DomAvg(iz) = DomAvg(iz) / float(NumPoints)
     endif
@@ -841,11 +848,12 @@ end subroutine DoHda
 ! This routine will do histogram binning over all of the domain.
 !
 
-subroutine DoHist(Nx, Ny, Nz, Nb, Var, Bins, Counts)
+subroutine DoHist(Nx, Ny, Nz, Nb, Var, UndefVal, Bins, Counts)
   implicit none
 
   integer :: Nx, Ny, Nz, Nb
   real, dimension(Nx,Ny,Nz) :: Var
+  real :: UndefVal
   real, dimension(Nb) :: Bins, Counts
 
   integer :: ib, ix, iy, iz
@@ -868,23 +876,25 @@ subroutine DoHist(Nx, Ny, Nz, Nb, Var, Bins, Counts)
   do iz = 1, Nz
     do iy = 1, Ny
       do ix = 1, Nx
-        ! Check all bins except the last.
-        !
-        ! Exiting out of the loop when finding the bin will help a lot when the
-        ! distribution of values is biased toward smaller values. After exiting
-        ! out of the loop you can either just check the last bin (which will be wasted)
-        ! or put in a logical variable and check that variable saying you can skip the
-        ! check of the last bin. Since you would have to check the logical variable and
-        ! the last bin every time you might as well just check the last bin instead.
-        do ib = 1, Nb-1
-           if ((Bins(ib) .le. Var(ix,iy,iz)) .and. (Var(ix,iy,iz) .lt. Bins(ib+1))) then
-              Counts(ib) = Counts(ib) + 1.0
-              exit
-           endif
-        enddo
-        ! check the last bin
-        if (Bins(Nb) .eq. Var(ix,iy,iz)) then
-          Counts(Nb) = Counts(Nb) + 1.0
+        if (anint(Var(ix,iy,iz)) .ne. UndefVal) then 
+          ! Check all bins except the last.
+          !
+          ! Exiting out of the loop when finding the bin will help a lot when the
+          ! distribution of values is biased toward smaller values. After exiting
+          ! out of the loop you can either just check the last bin (which will be wasted)
+          ! or put in a logical variable and check that variable saying you can skip the
+          ! check of the last bin. Since you would have to check the logical variable and
+          ! the last bin every time you might as well just check the last bin instead.
+          do ib = 1, Nb-1
+             if ((Bins(ib) .le. Var(ix,iy,iz)) .and. (Var(ix,iy,iz) .lt. Bins(ib+1))) then
+                Counts(ib) = Counts(ib) + 1.0
+                exit
+             endif
+          enddo
+          ! check the last bin
+          if (Bins(Nb) .eq. Var(ix,iy,iz)) then
+            Counts(Nb) = Counts(Nb) + 1.0
+          endif
         endif
       enddo
     enddo
