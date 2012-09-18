@@ -901,6 +901,8 @@ end subroutine DoHda
 subroutine DoMin(Nx, Ny, Nz, Var, UndefVal, DomMin)
   implicit none
 
+  real, parameter :: BigPosNum = 10.0e50
+
   integer :: Nx, Ny, Nz
   real, dimension(Nx,Ny,Nz) :: Var
   real :: UndefVal
@@ -908,7 +910,7 @@ subroutine DoMin(Nx, Ny, Nz, Var, UndefVal, DomMin)
 
   integer :: ix, iy, iz
 
-  DomMin = 10.0e50 ! arbitrarily large number
+  DomMin = BigPosNum
   do iz = 1, Nz
     ! RAMS reserves the first and last x and y values for lateral
     ! boundaries. These only contain valid field data under certain
@@ -927,6 +929,11 @@ subroutine DoMin(Nx, Ny, Nz, Var, UndefVal, DomMin)
     enddo
   enddo
 
+  if (DomMin .eq. BigPosNum) then
+    ! all entries were UndefVal
+    DomMin = UndefVal
+  endif
+
   return
 end subroutine DoMin
 
@@ -939,6 +946,8 @@ end subroutine DoMin
 subroutine DoMax(Nx, Ny, Nz, Var, UndefVal, DomMax)
   implicit none
 
+  real, parameter :: BigNegNum = -10.0e50
+
   integer :: Nx, Ny, Nz
   real, dimension(Nx,Ny,Nz) :: Var
   real :: UndefVal
@@ -946,7 +955,7 @@ subroutine DoMax(Nx, Ny, Nz, Var, UndefVal, DomMax)
 
   integer :: ix, iy, iz
 
-  DomMax = -10.0e50 ! arbitrarily large negative number
+  DomMax = BigNegNum
   do iz = 1, Nz
     ! RAMS reserves the first and last x and y values for lateral
     ! boundaries. These only contain valid field data under certain
@@ -964,6 +973,11 @@ subroutine DoMax(Nx, Ny, Nz, Var, UndefVal, DomMax)
       enddo
     enddo
   enddo
+
+  if (DomMax .eq. BigNegNum) then
+    ! all entries were UndefVal
+    DomMax = UndefVal
+  endif
 
   return
 end subroutine DoMax
