@@ -61,7 +61,7 @@ sub CreateFileNames
 
   # If $Dname starts with hda: then separate out the pieces, hda:<var>:<file>, and
   # form the prefix using <file>.
-  if (($Dname =~ /hda:/) || ($Dname =~ /hist:/))
+  if (($Dname =~ /min:/) || ($Dname =~ /max:/) || ($Dname =~ /hda:/) || ($Dname =~ /hist:/))
     {
     ($Dsubname, $Dtemp1, $Dfile, $Dtemp2) = split(':', $Dname);
     $Dfile = $Dsubname . "_" . $Dfile;
