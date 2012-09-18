@@ -1,4 +1,4 @@
-function [ ] = Plot2dSet( X, Y, Ptitle, Xlabel, Ylabel, Lcolors, LegText, LegLoc, OutFile )
+function [ ] = Plot2dSet( X, Y, Ptitle, Xlabel, Ylabel, Lcolors, LegText, LegLoc, AxisProps, OutFile )
 %Plot2dSet Plot a set of 2D line plots on the same panel
 %   This function will take data contained in X and Y and plot them on a
 %   single panel.
@@ -6,14 +6,16 @@ function [ ] = Plot2dSet( X, Y, Ptitle, Xlabel, Ylabel, Lcolors, LegText, LegLoc
 %   Ptitle is a string (or array of strings) holding the title for the
 %   plot.
 %
+%   AxisProps is a structure contain a list of axis property names and
+%   associated values that are desired to be set.
+%
 %   OutFile is the path to the file that contains the image of the plot.
 %
 
 Fig = figure;
 
 Lwidth = 2;
-FontSz = 20;
-
+Nprops = length(AxisProps);
 Nplots = size(Y,1);
 
 % Need to establish an axis style before calling "hold on" (for the
@@ -21,12 +23,14 @@ Nplots = size(Y,1);
 % on" and then plot the remainder hists.
 
 plot(X(1,:), Y(1,:), 'Color', char(Lcolors(1)), 'LineWidth', Lwidth);
-set(gca, 'FontSize', FontSz);
+for i = 1:Nprops
+  set(gca, AxisProps(i).Name, AxisProps(i).Val);
+end
 
 hold on;
 
 for i = 2:Nplots % each row is a separate curve for plotting
-    plot(X(i,:), Y(i,:), 'Color', char(Lcolors(i)),'LineWidth', Lwidth);
+    plot(X(i,:), Y(i,:), 'Color', char(Lcolors(i)), 'LineWidth', Lwidth);
 end
 
 legend(LegText, 'Location', char(LegLoc));

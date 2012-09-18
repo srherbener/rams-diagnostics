@@ -4,7 +4,8 @@
 
 DEST = $(HOME)/etc/matlab/atex
 
-SCRIPTS = $(DEST)/GenDistPlots.m \
+SCRIPTS = $(DEST)/GenCloudStructPlots.m \
+          $(DEST)/GenDistPlots.m \
           $(DEST)/GenRain2CloudRatio.m \
           $(DEST)/GenTavgRrateFracAreaDist.m \
           $(DEST)/PlotDistSet.m \

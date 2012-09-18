@@ -52,6 +52,7 @@ i_aeof = 0;
 i_aeofplot = 0;
 i_tsplot = 0;
 i_dplot = 0;
+i_2dplot = 0;
 i_pset = 0;
 for i = 1:size(InLines,1)
   % Convert a line to a list of space separated fields
@@ -129,6 +130,16 @@ for i = 1:size(InLines,1)
       Cdata.DistPlots(i_dplot).Ymin    = sscanf(Fields{8},  '%f');
       Cdata.DistPlots(i_dplot).Ymax    = sscanf(Fields{9},  '%f');
       Cdata.DistPlots(i_dplot).OutFile = Fields{10};
+    case 'TwoDimPlot:'
+      i_2dplot = i_2dplot + 1;
+      Cdata.TwoDimPlots(i_2dplot).PSname  = Fields{2};
+      Cdata.TwoDimPlots(i_2dplot).Xvar     = Fields{3};
+      Cdata.TwoDimPlots(i_2dplot).Yvar     = Fields{4};
+      Cdata.TwoDimPlots(i_2dplot).Title   = regexprep(Fields{5}, '_', ' ');
+      Cdata.TwoDimPlots(i_2dplot).Xlabel  = regexprep(Fields{6}, '_', ' ');
+      Cdata.TwoDimPlots(i_2dplot).Ylabel  = regexprep(Fields{7}, '_', ' ');
+      Cdata.TwoDimPlots(i_2dplot).LegLoc  = Fields{8};
+      Cdata.TwoDimPlots(i_2dplot).OutFile = Fields{9};
     case 'AzavgEofPlot:'
       i_aeofplot = i_aeofplot + 1;
       Cdata.AzavgEofPlots(i_aeofplot).Var   = Fields{2};
@@ -173,6 +184,22 @@ for itp = 1:length(Cdata.DistPlots)
 
   if (Match == 0)
     fprintf('WARNING: Could not find a match for PlotSet "%s" specified in DistPlot number %d\n', Cdata.DistPlots(itp).PSname, itp);
+  end
+end
+
+% Make the association between TwoDimPlots and the PlotSets
+for itp = 1:length(Cdata.TwoDimPlots)
+  PlotSetName = Cdata.TwoDimPlots(itp).PSname;
+  Match = 0;
+  for ips = 1:length(Cdata.PlotSets)
+    if (strcmp(Cdata.PlotSets(ips).Name, PlotSetName))
+      Match = ips;
+    end
+  end
+  Cdata.TwoDimPlots(itp).PSnum = Match;
+
+  if (Match == 0)
+    fprintf('WARNING: Could not find a match for PlotSet "%s" specified in TwoDimPlot number %d\n', Cdata.TwoDimPlots(itp).PSname, itp);
   end
 end
 
