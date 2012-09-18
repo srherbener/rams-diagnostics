@@ -46,7 +46,7 @@ program tsavg
   real :: BinStart, BinInc
   real, dimension(:), allocatable :: Bins
 
-  integer :: rh5f_azwind, rh5f_u, rh5f_v, rh5f_speed10m, rh5f_dens, rh5f_hda, rh5f_filter, rh5f_out
+  integer :: rh5f_azwind, rh5f_u, rh5f_v, rh5f_speed10m, rh5f_dens, rh5f_var, rh5f_filter, rh5f_out
 
   integer :: id, ib, ix, iy, iz, it
   integer :: Nx, Ny, Nz, Nt
@@ -56,12 +56,12 @@ program tsavg
 
   ! Get the command line arguments
   call GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile)
-  if (AvgFunc(1:4) .eq. 'hda:') then
-    call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'hda spec')
+  if ((AvgFunc(1:4) .eq. 'min:') .or. (AvgFunc(1:4) .eq. 'max:') .or. (AvgFunc(1:4) .eq. 'hda:')) then
+    call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'avg spec')
     if (Nfields .eq. 4) then
       ! got the right amount of fields
       !   field    value
-      !    1       'hda'
+      !    1       'min', 'max', or 'hda' 
       !    2       name of variable inside the REVU file
       !    3       prefix for the REVU file name
       !    4       dimensionality of variable
@@ -81,7 +81,7 @@ program tsavg
     if (Nfields .eq. 7) then
       ! got the right amount of fields
       !   field    value
-      !    1       'hda'
+      !    1       'hist'
       !    2       name of variable inside the REVU file
       !    3       prefix for the REVU file name
       !    4       dimensionality of variable
@@ -107,7 +107,7 @@ program tsavg
   write (*,*) '  Input file suffix: ', trim(InSuffix)
   write (*,*) '  Output file:  ', trim(OutFile)
   write (*,*) '  Averaging function: ', trim(AvgFunc)
-  if (AvgFunc .eq. 'hda') then
+  if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. (AvgFunc .eq. 'hda')) then
     write (*,*) '    Variable name: ', trim(VarName)
     write (*,*) '    File name: ', trim(VarFile)
     write (*,*) '    Dimensionality: ', trim(VarDim)
@@ -169,11 +169,12 @@ program tsavg
     Ny = InDims(2)
     Nz = InDims(3)
     Nt = InDims(4)
-  else if ((AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist')) then
+  else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
+           (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist')) then
     rh5f_facc = 'R'
-    call rhdf5_open_file(VarFile, rh5f_facc, 0, rh5f_hda)
-    call rhdf5_read_variable_init(rh5f_hda, VarName, InNdims, 0, InDims, InUnits, InDescrip, InDimnames)
-    call rhdf5_close_file(rh5f_hda)
+    call rhdf5_open_file(VarFile, rh5f_facc, 0, rh5f_var)
+    call rhdf5_read_variable_init(rh5f_var, VarName, InNdims, 0, InDims, InUnits, InDescrip, InDimnames)
+    call rhdf5_close_file(rh5f_var)
 
     if (VarDim .eq. '2d') then
       Nx = InDims(1)
@@ -252,7 +253,7 @@ program tsavg
   ! dimension names, but set the sizes of the dimensions according to the averaging
   ! function asked for.
   OutVname = trim(AvgFunc)
-  if ((AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist')) then
+  if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist')) then
     OutVname = trim(OutVname) // '_' // trim(VarFprefix)
   endif
   OutDescrip = 'time series averaged ' // trim(AvgFunc) 
@@ -261,7 +262,7 @@ program tsavg
   OutDimnames(2) = 'y' 
   OutDimnames(3) = 'z' 
 
-  if (AvgFunc .eq. 'max_azwind') then
+  if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. (AvgFunc .eq. 'max_azwind')) then
     ! single point result
     OutDims(1) = 1
     OutDims(2) = 1
@@ -331,7 +332,8 @@ program tsavg
     InCoordFile = trim(AzWindFile)
   else if (AvgFunc .eq. 'horiz_ke') then
     InCoordFile = trim(DensFile)
-  else if ((AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist')) then
+  else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
+           (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist')) then
     InCoordFile = trim(VarFile)
   else if (AvgFunc .eq. 'storm_int') then
     InCoordFile = trim(Speed10mFile)
@@ -507,12 +509,48 @@ program tsavg
     call rhdf5_close_file(rh5f_u)
     call rhdf5_close_file(rh5f_v)
     call rhdf5_close_file(rh5f_filter)
-  else if (AvgFunc .eq. 'hda') then
+  else if (AvgFunc .eq. 'min') then
     rh5f_facc = 'R'
-    call rhdf5_open_file(VarFile, rh5f_facc, 1, rh5f_hda)
+    call rhdf5_open_file(VarFile, rh5f_facc, 1, rh5f_var)
 
     do it = 1, Nt 
-      call rhdf5_read_variable(rh5f_hda, VarName, InNdims, it, InDims, rdata=Var)
+      call rhdf5_read_variable(rh5f_var, VarName, InNdims, it, InDims, rdata=Var)
+
+      call DoMin(Nx, Ny, Nz, Var, UndefVal, TserAvg(1))
+      deallocate(Var)
+
+      call rhdf5_write_variable(rh5f_out, OutVname, OutNdims, it, OutDims, &
+         OutUnits, OutDescrip, OutDimnames, rdata=TserAvg)
+
+      if (modulo(it,100) .eq. 0) then
+        write (*,*) 'Working: Number of time steps processed so far: ', it
+      endif
+    enddo
+    call rhdf5_close_file(rh5f_var)
+  else if (AvgFunc .eq. 'max') then
+    rh5f_facc = 'R'
+    call rhdf5_open_file(VarFile, rh5f_facc, 1, rh5f_var)
+
+    do it = 1, Nt 
+      call rhdf5_read_variable(rh5f_var, VarName, InNdims, it, InDims, rdata=Var)
+
+      call DoMax(Nx, Ny, Nz, Var, UndefVal, TserAvg(1))
+      deallocate(Var)
+
+      call rhdf5_write_variable(rh5f_out, OutVname, OutNdims, it, OutDims, &
+         OutUnits, OutDescrip, OutDimnames, rdata=TserAvg)
+
+      if (modulo(it,100) .eq. 0) then
+        write (*,*) 'Working: Number of time steps processed so far: ', it
+      endif
+    enddo
+    call rhdf5_close_file(rh5f_var)
+  else if (AvgFunc .eq. 'hda') then
+    rh5f_facc = 'R'
+    call rhdf5_open_file(VarFile, rh5f_facc, 1, rh5f_var)
+
+    do it = 1, Nt 
+      call rhdf5_read_variable(rh5f_var, VarName, InNdims, it, InDims, rdata=Var)
 
       call DoHda(Nx, Ny, Nz, Var, UndefVal, TserAvg)
       deallocate(Var)
@@ -524,13 +562,13 @@ program tsavg
         write (*,*) 'Working: Number of time steps processed so far: ', it
       endif
     enddo
-    call rhdf5_close_file(rh5f_hda)
+    call rhdf5_close_file(rh5f_var)
   else if (AvgFunc .eq. 'hist') then
     rh5f_facc = 'R'
-    call rhdf5_open_file(VarFile, rh5f_facc, 1, rh5f_hda)
+    call rhdf5_open_file(VarFile, rh5f_facc, 1, rh5f_var)
 
     do it = 1, Nt 
-      call rhdf5_read_variable(rh5f_hda, VarName, InNdims, it, InDims, rdata=Var)
+      call rhdf5_read_variable(rh5f_var, VarName, InNdims, it, InDims, rdata=Var)
 
       call DoHist(Nx, Ny, Nz, NumBins, Var, UndefVal, Bins, TserAvg)
       deallocate(Var)
@@ -542,7 +580,7 @@ program tsavg
         write (*,*) 'Working: Number of time steps processed so far: ', it
       endif
     enddo
-    call rhdf5_close_file(rh5f_hda)
+    call rhdf5_close_file(rh5f_var)
   else if (AvgFunc .eq. 'storm_int') then
     rh5f_facc = 'R'
     call rhdf5_open_file(Speed10mFile, rh5f_facc, 1, rh5f_speed10m)
@@ -668,6 +706,14 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile)
     write (*,*) '            horiz_ke -> total kinetic energy form horizontal winds'
     write (*,*) '            storm_int -> storm intensity metric from horizontal wind speeds'
     write (*,*) '            max_azwind -> max value of azimuthially averaged wind'
+    write (*,*) '            min:<var>:<file>:<dim> -> domain minimum for <var>'
+    write (*,*) '              <var>: revu var name inside the file'
+    write (*,*) '              <file>: prefix for the revu file'
+    write (*,*) '              <dim>: dimensionality of variable, either "2d" or "3d"'
+    write (*,*) '            max:<var>:<file>:<dim> -> domain maximum for <var>'
+    write (*,*) '              <var>: revu var name inside the file'
+    write (*,*) '              <file>: prefix for the revu file'
+    write (*,*) '              <dim>: dimensionality of variable, either "2d" or "3d"'
     write (*,*) '            hda:<var>:<file>:<dim> -> horizontal domain average at each z level for <var>'
     write (*,*) '              <var>: revu var name inside the file'
     write (*,*) '              <file>: prefix for the revu file'
@@ -690,12 +736,16 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile)
   BadArgs = .false.
 
   if ((AvgFunc .ne. 'horiz_ke')       .and. &
+      (AvgFunc(1:4) .ne. 'min:')  .and. &
+      (AvgFunc(1:4) .ne. 'max:')  .and. &
       (AvgFunc(1:4) .ne. 'hda:')  .and. &
       (AvgFunc(1:5) .ne. 'hist:')  .and. &
       (AvgFunc .ne. 'storm_int')  .and. &
       (AvgFunc .ne. 'max_azwind')) then
     write (*,*) 'ERROR: <avg_function> must be one of:'
     write (*,*) '          horiz_ke'
+    write (*,*) '          min:<var>:<file>:<dim>'
+    write (*,*) '          max:<var>:<file>:<dim>'
     write (*,*) '          hda:<var>:<file>:<dim>'
     write (*,*) '          hist:<var>:<file>:<dim>:<num_bins>:<bin_start>:<bin_inc>'
     write (*,*) '          storm_int'
@@ -841,6 +891,82 @@ subroutine DoHda(Nx, Ny, Nz, Var, UndefVal, DomAvg)
 
   return
 end subroutine DoHda
+
+!**************************************************************************************
+! DoMin()
+!
+! This routine will return the domain minimum value. Values equal to UndefVal will
+! be ignored.
+!
+subroutine DoMin(Nx, Ny, Nz, Var, UndefVal, DomMin)
+  implicit none
+
+  integer :: Nx, Ny, Nz
+  real, dimension(Nx,Ny,Nz) :: Var
+  real :: UndefVal
+  real :: DomMin
+
+  integer :: ix, iy, iz
+
+  DomMin = 10.0e50 ! arbitrarily large number
+  do iz = 1, Nz
+    ! RAMS reserves the first and last x and y values for lateral
+    ! boundaries. These only contain valid field data under certain
+    ! circumstances such as cyclic boundary cases. Most of the time
+    ! we want these to be excluded so for now always exclude them
+    ! (shouldn't hurt results with cyclic boundaries where the
+    ! boundary values could have been included).
+    do iy = 2, Ny-1
+      do ix = 2, Nx-1
+        if (anint(Var(ix,iy,iz)) .ne. UndefVal) then
+          if (Var(ix,iy,iz) .lt. DomMin) then
+            DomMin = Var(ix,iy,iz)
+          endif
+        endif
+      enddo
+    enddo
+  enddo
+
+  return
+end subroutine DoMin
+
+!**************************************************************************************
+! DoMax()
+!
+! This routine will return the domain maximum value. Values equal to UndefVal will
+! be ignored.
+!
+subroutine DoMax(Nx, Ny, Nz, Var, UndefVal, DomMax)
+  implicit none
+
+  integer :: Nx, Ny, Nz
+  real, dimension(Nx,Ny,Nz) :: Var
+  real :: UndefVal
+  real :: DomMax
+
+  integer :: ix, iy, iz
+
+  DomMax = -10.0e50 ! arbitrarily large negative number
+  do iz = 1, Nz
+    ! RAMS reserves the first and last x and y values for lateral
+    ! boundaries. These only contain valid field data under certain
+    ! circumstances such as cyclic boundary cases. Most of the time
+    ! we want these to be excluded so for now always exclude them
+    ! (shouldn't hurt results with cyclic boundaries where the
+    ! boundary values could have been included).
+    do iy = 2, Ny-1
+      do ix = 2, Nx-1
+        if (anint(Var(ix,iy,iz)) .ne. UndefVal) then
+          if (Var(ix,iy,iz) .gt. DomMax) then
+            DomMax = Var(ix,iy,iz)
+          endif
+        endif
+      enddo
+    enddo
+  enddo
+
+  return
+end subroutine DoMax
 
 !**************************************************************************************
 ! DoHist()
