@@ -27,7 +27,20 @@ Lcolors = { 'k' 'm' 'b' 'c' 'g' 'y' 'r' };
 
 % Find and replace underscores in Ptitle, Ylabel with blank spaces
 for iplot = 1:length(Config.TsavgPlots)
+    clear TsAll;
+    clear LegText;
+
     Var = Config.TsavgPlots(iplot).Var;
+
+    % If doing a diff plot, read in the control profile
+    if (strcmp(Config.TsavgPlots(iplot).Type, 'diff'))
+      Case = Config.ControlCase;
+      Hfile = sprintf('%s/%s_%s.h5', Tdir, Var, Case);
+      fprintf('Reading Control Case: %s\n', Case);
+      fprintf('  HDF5 file: %s\n', Hfile);
+      [ Hvar, Rcoords, Zcoords, Tcoords ] = ReadAzavgVar(Hfile, Var);
+      TS_CNTL = squeeze(Hvar);
+    end 
 
     Ptitle = sprintf('%s: %s', Pname, Config.TsavgPlots(iplot).Title);
     LegLoc = Config.TsavgPlots(iplot).LegLoc;
@@ -53,6 +66,11 @@ for iplot = 1:length(Config.TsavgPlots)
         [ Hvar, Rcoords, Zcoords, Tcoords ] = ReadAzavgVar(Hfile, Var);
         TS = squeeze(Hvar);
         
+        % If doing a diff type plot, subtract off the control values
+        if (strcmp(Config.TsavgPlots(iplot).Type, 'diff'))
+          TS = TS - TS_CNTL;
+        end
+
         % smooth with a running mean of length 'Flen'
         [ TsAll(icase,:) ] = SmoothFillTseries(TS, Ntsteps, Flen);
       end

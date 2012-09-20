@@ -14,6 +14,9 @@ Lcolors = { 'k' 'm' 'b' 'c' 'g' 'y' 'r' };
 
 % Find and replace underscores in Ptitle, Ylabel with blank spaces
 for iplot = 1:length(Config.ProfPlots)
+    clear LHV;
+    clear LegText;
+
     Var = Config.ProfPlots(iplot).Var;
 
     % config for axes

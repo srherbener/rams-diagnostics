@@ -25,20 +25,23 @@ for icase = 1:length(Config.Cases)
     fprintf('  Output swup file: %s\n', OutFile);
     fprintf('\n');
 
-    % read in swup
-    % After squeeze, SWUP will be (z,t)
-    SWUP  = squeeze(hdf5read(SwupFile, SwupVar));
+    % read in swup, (x,y,z,t)
+    SWUP  = hdf5read(SwupFile, SwupVar);
 
     % copy the coordinate values to the output to keep GenTsPlots happy
+    Xcoords = hdf5read(SwupFile, 'x_coords');
+    Ycoords = hdf5read(SwupFile, 'y_coords');
     Zcoords = hdf5read(SwupFile, 'z_coords');
     Tcoords = hdf5read(SwupFile, 't_coords');
 
     % RAMS/REVU set the top boundary to all zeros so take the top-1 level
 
-    SWUP_TOP = SWUP(end-1,:);
+    SWUP_TOP = SWUP(:,:,end-1,:);
     ZcoordsTop = Zcoords(end-1);
 
     hdf5write(OutFile, OutVar, SWUP_TOP);
+    hdf5write(OutFile, 'x_coords', Xcoords, 'WriteMode', 'append');
+    hdf5write(OutFile, 'y_coords', Ycoords, 'WriteMode', 'append');
     hdf5write(OutFile, 'z_coords', ZcoordsTop, 'WriteMode', 'append');
     hdf5write(OutFile, 't_coords', Tcoords, 'WriteMode', 'append');
 

@@ -27,6 +27,10 @@ AxisProps(2).Val = 'Reverse';
 
 % make the plots
 for iplot = 1:length(Config.TwoDimPlots)
+    clear CtopAll;
+    clear CfracAll;
+    clear LegText;
+
     CtopVar = Config.TwoDimPlots(iplot).Xvar;
     CfracVar = Config.TwoDimPlots(iplot).Yvar;
 

@@ -14,6 +14,10 @@ Lcolors = { 'k' 'm' 'b' 'c' 'g' 'y' 'r' };
 
 % Find and replace underscores in Ptitle, Ylabel with blank spaces
 for iplot = 1:length(Config.DistPlots)
+    clear H;
+    clear B;
+    clear LegText;
+
     Var = Config.DistPlots(iplot).Var;
 
     Ptitle = sprintf('%s: %s', Pname, Config.DistPlots(iplot).Title);
