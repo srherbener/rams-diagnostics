@@ -53,6 +53,7 @@ i_aeofplot = 0;
 i_tsplot = 0;
 i_dplot = 0;
 i_2dplot = 0;
+i_pplot = 0;
 i_pset = 0;
 for i = 1:size(InLines,1)
   % Convert a line to a list of space separated fields
@@ -133,13 +134,26 @@ for i = 1:size(InLines,1)
     case 'TwoDimPlot:'
       i_2dplot = i_2dplot + 1;
       Cdata.TwoDimPlots(i_2dplot).PSname  = Fields{2};
-      Cdata.TwoDimPlots(i_2dplot).Xvar     = Fields{3};
-      Cdata.TwoDimPlots(i_2dplot).Yvar     = Fields{4};
+      Cdata.TwoDimPlots(i_2dplot).Xvar    = Fields{3};
+      Cdata.TwoDimPlots(i_2dplot).Yvar    = Fields{4};
       Cdata.TwoDimPlots(i_2dplot).Title   = regexprep(Fields{5}, '_', ' ');
       Cdata.TwoDimPlots(i_2dplot).Xlabel  = regexprep(Fields{6}, '_', ' ');
       Cdata.TwoDimPlots(i_2dplot).Ylabel  = regexprep(Fields{7}, '_', ' ');
       Cdata.TwoDimPlots(i_2dplot).LegLoc  = Fields{8};
       Cdata.TwoDimPlots(i_2dplot).OutFile = Fields{9};
+    case 'ProfPlot:'
+      i_pplot = i_pplot + 1;
+      Cdata.ProfPlots(i_pplot).PSname  = Fields{2};
+      Cdata.ProfPlots(i_pplot).Var     = Fields{3};
+      Cdata.ProfPlots(i_pplot).Type    = Fields{4};
+      Cdata.ProfPlots(i_pplot).Title   = regexprep(Fields{5}, '_', ' ');
+      Cdata.ProfPlots(i_pplot).Xlabel  = regexprep(Fields{6}, '_', ' ');
+      Cdata.ProfPlots(i_pplot).Zlabel  = regexprep(Fields{7}, '_', ' ');
+      Cdata.ProfPlots(i_pplot).LegLoc  = Fields{8};
+      Cdata.ProfPlots(i_pplot).Xspec   = sscanf(Fields{9}, '%f:%f:%f', 3);
+      Cdata.ProfPlots(i_pplot).Zmin    = sscanf(Fields{10}, '%f');
+      Cdata.ProfPlots(i_pplot).Zmax    = sscanf(Fields{11}, '%f');
+      Cdata.ProfPlots(i_pplot).OutFile = Fields{12};
     case 'AzavgEofPlot:'
       i_aeofplot = i_aeofplot + 1;
       Cdata.AzavgEofPlots(i_aeofplot).Var   = Fields{2};
@@ -200,6 +214,22 @@ for itp = 1:length(Cdata.TwoDimPlots)
 
   if (Match == 0)
     fprintf('WARNING: Could not find a match for PlotSet "%s" specified in TwoDimPlot number %d\n', Cdata.TwoDimPlots(itp).PSname, itp);
+  end
+end
+
+% Make the association between ProfPlots and the PlotSets
+for itp = 1:length(Cdata.ProfPlots)
+  PlotSetName = Cdata.ProfPlots(itp).PSname;
+  Match = 0;
+  for ips = 1:length(Cdata.PlotSets)
+    if (strcmp(Cdata.PlotSets(ips).Name, PlotSetName))
+      Match = ips;
+    end
+  end
+  Cdata.ProfPlots(itp).PSnum = Match;
+
+  if (Match == 0)
+    fprintf('WARNING: Could not find a match for PlotSet "%s" specified in ProfPlot number %d\n', Cdata.ProfPlots(itp).PSname, itp);
   end
 end
 

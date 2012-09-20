@@ -1,0 +1,92 @@
+function [ ] = GenProfPlots(ConfigFile)
+% GenProfPlots generate vertical profile plots
+
+% Read the config file to get the structure of how the data is laid out in
+% the file system.
+[ Config ] = ReadConfig(ConfigFile);
+    
+Pname   = Config.Pexp.Ename;
+
+Tdir = Config.TsavgDir;
+Pdir = Config.PlotDir;
+
+Lcolors = { 'k' 'm' 'b' 'c' 'g' 'y' 'r' };
+
+% Find and replace underscores in Ptitle, Ylabel with blank spaces
+for iplot = 1:length(Config.ProfPlots)
+    Var = Config.ProfPlots(iplot).Var;
+
+    % config for axes
+    Xstart = Config.ProfPlots(iplot).Xspec(1);
+    Xinc   = Config.ProfPlots(iplot).Xspec(2);
+    Xend   = Config.ProfPlots(iplot).Xspec(3);
+    X = (Xstart:Xinc:Xend);
+
+    Zmin = Config.ProfPlots(iplot).Zmin;
+    Zmax = Config.ProfPlots(iplot).Zmax;
+
+    % If doing a diff plot, read in the control profile
+    if (strcmp(Config.ProfPlots(iplot).Type, 'diff'))
+      Case = Config.ControlCase;
+      Hfile = sprintf('%s/%s_%s.h5', Tdir, Var, Case);
+      fprintf('Reading Control Case: %s\n', Case);
+      fprintf('  HDF5 file: %s\n', Hfile);
+      LHV_DOMAVG = squeeze(hdf5read(Hfile, Var));
+      LHV_CONTROL_ALLZ = mean(LHV_DOMAVG,2); % time average
+    end
+
+    Ptitle = sprintf('%s: %s', Pname, Config.ProfPlots(iplot).Title);
+    Xlabel = Config.ProfPlots(iplot).Xlabel;
+    Zlabel = Config.ProfPlots(iplot).Zlabel;
+    LegLoc = Config.ProfPlots(iplot).LegLoc;
+    OutFile = sprintf('%s/%s', Pdir, Config.ProfPlots(iplot).OutFile);
+    
+    % make sure output directory exists
+    if (exist(Pdir, 'dir') ~= 7)
+        mkdir(Pdir);
+    end
+
+    ihist = 0;
+    ips = Config.ProfPlots(iplot).PSnum;
+    if (ips == 0)
+      fprintf('WARNING: skipping ProfPlot number %d due to no associated PlotSet\n', iplot)
+    else
+      for icase = 1:Config.PlotSets(ips).Ncases
+        Case = Config.PlotSets(ips).Cases(icase).Cname;
+        LegText(icase) = { Config.PlotSets(ips).Cases(icase).Legend };
+
+        % Var is organized (x,y,z,t) in the file, however x and y
+        % dimension sizes are both 1. After running squeeze(), Var
+        % will be reduced to (z,t).
+        Hfile = sprintf('%s/%s_%s.h5', Tdir, Var, Case);
+        fprintf('Reading HDF5 file: %s\n', Hfile);
+        LHV_DOMAVG = squeeze(hdf5read(Hfile, Var));
+        LHV_ALLZ = mean(LHV_DOMAVG,2); % time average
+
+        % Grab the heights on the first case. The z coordinate
+        % values should be the same for all cases.
+        if (icase == 1)
+          Zall = hdf5read(Hfile, 'z_coords');
+          iz1 = find(Zall >= Zmin, 1, 'first');
+          iz2 = find(Zall <= Zmax, 1, 'last');
+          Z = Zall(iz1:iz2);
+        end
+
+        % Trim off the selected z range from the lhv data
+        % Each profile goes into a row of LHV
+        if (strcmp(Config.ProfPlots(iplot).Type, 'diff'))
+          LHV(icase,:) = LHV_ALLZ(iz1:iz2,:) - LHV_CONTROL_ALLZ(iz1:iz2,:);
+        else
+          LHV(icase,:) = LHV_ALLZ(iz1:iz2,:);
+        end
+      end
+    end
+
+    % Latent heating rate is K/5min (RAMS files are saved every
+    % 5 min of sim time), so need to multiply numbers the
+    % resulting average profile by 12 to get to K/hr.
+    LHV = LHV .* 12;
+
+    PlotProfSet(X, Z, LHV, Xlabel, Zlabel, Ptitle, Lcolors, LegText, LegLoc, OutFile);
+    fprintf('\n');
+end
