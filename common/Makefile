@@ -17,6 +17,7 @@ SCRIPTS = $(DEST)/AdiffEofPlot.m \
           $(DEST)/PlotProfSet.m \
           $(DEST)/PlotTseriesSet.m \
           $(DEST)/Plot2dSet.m \
+          $(DEST)/TimeToString.m \
           $(DEST)/Xyzt2EofArray.m
 
 #

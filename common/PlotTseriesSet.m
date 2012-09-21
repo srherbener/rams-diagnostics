@@ -1,11 +1,10 @@
-function [ ] = PlotTseriesSet2( Times, Ts, Ptitle, Ylim, Ylabel, Tunits, Lcolors, LegText, LegLoc, OutFile )
+function [ ] = PlotTseriesSet2( Times, Ts, Ptitle, Ylim, Ylabel, StartTime, Tticks, Tlabels, Tunits, Lcolors, LegText, LegLoc, OutFile )
 %PlotTseriesSet2 Plot a set of time series on the same panel
 %   This function will take data contained in Ts and plot them on a single
 %   panel.
 %
-%   Ccn and Sst define conditions (CCN concentrations and Sea Surface
-%   Temperatures) associated with the histograms. These values will be used
-%   for the plot legend.
+%   Times is expected to be in units of days since the epoch (like the ouput
+%   of the datenum function).
 %
 %   Ptitle is a string (or array of strings) holding the title for the
 %   plot.
@@ -20,7 +19,7 @@ FontSz = 20;
 
 Nts = size(Ts,1);
 
-Xlabel = sprintf('Simulation Time (%s)', Tunits);
+Xlabel = sprintf('Local Time, Starting at %s', StartTime);
 
 % Need to establish an axis style before calling "hold on" (for the
 % subsequent plots). Plot the first hist outside the loop, issue a "hold
@@ -28,6 +27,8 @@ Xlabel = sprintf('Simulation Time (%s)', Tunits);
 
 plot(Times, Ts(1,:), 'Color', char(Lcolors(1)), 'LineWidth', Lwidth);
 set(gca, 'FontSize', FontSz);
+set(gca, 'XTick', Tticks);
+set(gca, 'XTickLabel', Tlabels);
 ylim(Ylim);
 
 hold on;

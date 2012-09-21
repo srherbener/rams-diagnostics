@@ -11,6 +11,20 @@ Tstart  = Config.Pexp.Tstart;
 Tinc    = Config.Pexp.Tinc;
 Tunits  = Config.Pexp.Tunits;
 
+% BT is an array with numeric entries for:
+%    1 - year
+%    2 - month
+%    3 - day
+%    4 - hour
+%    5 - minute
+%    6 - second
+BT = Config.Pexp.BaseTime;
+BaseTime = datenum(BT(1), BT(2), BT(3), BT(4), BT(5), BT(6));
+StartTime = datestr(BaseTime, 'mm/dd/yyyy HH:MM')
+
+TsStart = Config.Pexp.TsStart;
+TsPeriod = Config.Pexp.TsPeriod;
+
 Tdir = Config.TsavgDir;
 Pdir = Config.PlotDir;
 
@@ -19,8 +33,19 @@ Flen = 5;
 
 % Generate the time values
 Times = zeros(1,Ntsteps);
+it = 0;
 for i = 1:Ntsteps
+  % Times will be in hours
   Times(i) = Tstart + ((i-1)*Tinc);
+
+  if (mod(i-TsStart,TsPeriod) == 0)
+    it = it + 1;
+    % returns date and time strings
+    [ Ds, Ts ] = TimeToString(BT(1), BT(2), BT(3), BT(4), BT(5), BT(6), Times(i));
+
+    Tticks(it) = Times(i);
+    Tlabels{it} =  Ts;
+  end
 end
 
 Lcolors = { 'k' 'm' 'b' 'c' 'g' 'y' 'r' };
@@ -76,6 +101,6 @@ for iplot = 1:length(Config.TsavgPlots)
       end
     end
     
-    PlotTseriesSet( Times, TsAll, Ptitle, Ylim, Ylabel, Tunits, Lcolors, LegText, LegLoc, OutFile );
+    PlotTseriesSet( Times, TsAll, Ptitle, Ylim, Ylabel, StartTime, Tticks, Tlabels, Tunits, Lcolors, LegText, LegLoc, OutFile );
     fprintf('\n');
 end
