@@ -1,51 +1,63 @@
+function [ ] = ExtractSample(ConfigFile)
 % Script to extract sample data for a 4 panel plot
 %
 
-clear;
+Config = ReadConfig(ConfigFile);
+
+Tdir = Config.TsavgDir;
+Ddir = Config.DiagDir;
+
+SampleDir = 'SampleHdf5';
+
+FileSuffix = '-AS-1999-02-10-040000-g1.h5';
+
 
 % Read in the PCPRR data
 %
 % After reading in, the dimensions will be (x,y,t)
 
-Exps = { 'z.atex250m.100km.ccn0050.sst298';
-'z.atex250m.100km.ccn0050.sst303';
-'z.atex250m.100km.ccn1600.sst298';
-'z.atex250m.100km.ccn1600.sst303' };
-
-CCN = [ 50 50 1600 1600 ]'; % keep these in sync with order in Exps
+CCN = [ 50 50 1600 1600 ]'; % keep these the same length
 SST = [ 298 303 298 303 ]';
 
-Vars = { 'PCPRR';
-'VERTINT_COND';
-'CLOUDTOP_TEMPC' };
+for i = 1:length(CCN)
+ Exps{i} = sprintf('z.atex.ccn%04d.sst%03d.gcn10m5', CCN(i), SST(i));
+end
+
+Vars = { 'pcprr';
+'vint_cond';
+'ctop_tempc' };
+
+Rvars = { 'pcprr';
+'vertint_cond';
+'cloudtop_TS' };
 
 % For this sim: 1999, Feb 10, 2300Z is time step 229
 Tstep = 229;
 Tstring = '1999-02-10T23:00:00Z';
 
 % Write the time step into the file
-h5_fout = sprintf('DIAG/SampleData.h5');
+h5_fout = sprintf('%s/SampleData.h5', Ddir);
 hdf5write(h5_fout, '/Tstep', Tstep);
 hdf5write(h5_fout, '/Time',Tstring, 'WriteMode', 'append');
 
 % Copy the lat and lon values into the output file
-h5_grid_fin = 'REVU/grid_info.h5';
-Lat = hdf5read(h5_grid_fin, '/lat');
-Lon = hdf5read(h5_grid_fin, '/lon');
-hdf5write(h5_fout, '/Lat', Lat, 'WriteMode', 'append');
+h5_grid_fin = sprintf('%s/%s/%s-%s%s', SampleDir, Exps{1}, Vars{1}, Exps{1}, FileSuffix);
+Lon = hdf5read(h5_grid_fin, '/x_coords');
+Lat = hdf5read(h5_grid_fin, '/y_coords');
 hdf5write(h5_fout, '/Lon', Lon, 'WriteMode', 'append');
+hdf5write(h5_fout, '/Lat', Lat, 'WriteMode', 'append');
 
 % Write out the CCN and SST values
 hdf5write(h5_fout, '/CcnConcen', CCN, 'WriteMode', 'append');
 hdf5write(h5_fout, '/Sst', SST, 'WriteMode', 'append');
 
 % Rain rate is in the REVU var PCPRR
-for i = 1:size(Exps,1)
-  Exp = char(Exps(i));
-  for j = 1:size(Vars,1)
-    Var = char(Vars(j));
-    h5_fin = sprintf('REVU/%s/%s.h5',Exp,Var);
-    h5_dset_in = sprintf('/%s',Var);
+for i = 1:length(Exps)
+  Exp = Exps{i};
+  for j = 1:length(Vars)
+    Var = Vars{j};
+    h5_fin = sprintf('%s/%s/%s-%s%s', SampleDir, Exps{i}, Vars{j}, Exps{i}, FileSuffix);
+    h5_dset_in = sprintf('/%s',Rvars{j});
     h5_dset_out = sprintf('/CCN_%d/SST_%d/%s',CCN(i),SST(i),Var);
     fprintf('Extracting Data:\n');
     fprintf('  Experiment: %s\n', Exp);

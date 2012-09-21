@@ -3,6 +3,9 @@
 
 clear;
 
+DiagDir = 'DIAGS';
+PlotDir = 'plots';
+
 % Sample data file has the CCN concentration values and SST values in two
 % arrays. Read these in to form the retrieval of the data fields. Each data
 % field is stored in:
@@ -18,7 +21,7 @@ clear;
 %
 % Create a multi-panel plot of one variable with all combinations of CCN
 % and SST values.
-h5_fin = 'DIAG/SampleData.h5';
+h5_fin = sprintf('%s/SampleData.h5', DiagDir);
 
 Tstep = hdf5read(h5_fin,'/Tstep');
 
@@ -34,10 +37,12 @@ Ns = length(CCN);
 % longitude each show the range of the longitudes from the sim. The domain
 % is small in this sim so just use the first row/column to grab the
 % latitude/longitude ranges.
-Lat2D = hdf5read(h5_fin,'Lat');
-Lon2D = hdf5read(h5_fin,'Lon');
-Lat = Lat2D(1,:)';
-Lon = Lon2D(:,1);
+%Lat2D = hdf5read(h5_fin,'Lat');
+%Lon2D = hdf5read(h5_fin,'Lon');
+%Lat = Lat2D(1,:)';
+%Lon = Lon2D(:,1);
+Lon = hdf5read(h5_fin,'Lon');
+Lat = hdf5read(h5_fin,'Lat');
 Nx = length(Lon);
 Ny = length(Lat);
 
@@ -53,7 +58,7 @@ for i = 1:Ns
     C = CCN(i);
     S = SST(i);
     
-    h5_dset = sprintf('/CCN_%d/SST_%d/PCPRR',C,S);
+    h5_dset = sprintf('/CCN_%d/SST_%d/pcprr',C,S);
     fprintf('Reading: %s\n', h5_dset);
     % put the different longitudes in the columns and the different
     % latitudes in the rows (ie, save the transpose of the 2D field from
@@ -61,12 +66,12 @@ for i = 1:Ns
     TEMP = hdf5read(h5_fin, h5_dset);
     PCPRR(i,:,:) = TEMP';
     
-    h5_dset = sprintf('/CCN_%d/SST_%d/CLOUDTOP_TEMPC',C,S);
+    h5_dset = sprintf('/CCN_%d/SST_%d/ctop_tempc',C,S);
     fprintf('Reading: %s\n', h5_dset);
     TEMP = hdf5read(h5_fin, h5_dset);
     CLOUDTOP_TEMPC(i,:,:) = TEMP';
     
-    h5_dset = sprintf('/CCN_%d/SST_%d/VERTINT_COND',C,S);
+    h5_dset = sprintf('/CCN_%d/SST_%d/vint_cond',C,S);
     fprintf('Reading: %s\n', h5_dset);
     TEMP = hdf5read(h5_fin, h5_dset);
     VERTINT_COND(i,:,:) = TEMP';
@@ -101,10 +106,13 @@ PtitleCLOUDTOP_TEMPC = sprintf('Cloud Top Temperature (degrees C)\n%s', StimeStr
 close; % issuing the colomap command opens a figure
 
 
-PlotMultiPanelSample(PCPRR,Lon,Lat,CCN,SST, CmapPCPRR, ClevsPCPRR, PtitlePCPRR, 'DIAG/PCPRR.sample.jpg');
-PlotMultiPanelSample(VERTINT_COND,Lon,Lat,CCN,SST, CmapVERTINT_COND, ClevsVERTINT_COND, PtitleVERTINT_COND, 'DIAG/VERTINT_COND.sample.jpg');
+OutFile = sprintf('%s/pcprr.sample.jpg', PlotDir);
+PlotMultiPanelSample(PCPRR,Lon,Lat,CCN,SST, CmapPCPRR, ClevsPCPRR, PtitlePCPRR, OutFile);
+OutFile = sprintf('%s/vint_cloud.sample.jpg', PlotDir);
+PlotMultiPanelSample(VERTINT_COND,Lon,Lat,CCN,SST, CmapVERTINT_COND, ClevsVERTINT_COND, PtitleVERTINT_COND, OutFile);
 
 % REVU placed a very cold temperature (-248.31 deg C) in where there is missing data (no clouds?)
 % Change these to extra warm to simulate no cloud regions.
 CLOUDTOP_TEMPC(CLOUDTOP_TEMPC <= 0) = 30;
-PlotMultiPanelSample(CLOUDTOP_TEMPC,Lon,Lat,CCN,SST, CmapCLOUDTOP_TEMPC, ClevsCLOUDTOP_TEMPC, PtitleCLOUDTOP_TEMPC, 'DIAG/CLOUDTOP_TEMPC.sample.jpg');
+OutFile = sprintf('%s/ctop_tempc.sample.jpg', PlotDir);
+PlotMultiPanelSample(CLOUDTOP_TEMPC,Lon,Lat,CCN,SST, CmapCLOUDTOP_TEMPC, ClevsCLOUDTOP_TEMPC, PtitleCLOUDTOP_TEMPC, OutFile);
