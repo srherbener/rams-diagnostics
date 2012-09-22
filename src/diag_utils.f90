@@ -12,68 +12,6 @@ contains
 ! Utilities for the azimuthial averaging code.
 !***************************************************************
 
-!**********************************************************************
-! RecordStormCenter()
-!
-! This routine will record the storm center for each time step
-!
-
-subroutine RecordStormCenter(Nx, Ny, Nz, Nt, Press, StmIx, StmIy, MinP)
-  implicit none
-
-  integer :: Nx, Ny, Nz, Nt
-  real, dimension(Nx,Ny,Nt) :: Press
-  integer, dimension(Nt) :: StmIx, StmIy
-  real, dimension(Nt) :: MinP
-
-  integer :: it
-
-  do it = 1, Nt
-    call FindStormCenter(Nx, Ny, Nz, Nt, Press, it, StmIx(it), StmIy(it), MinP(it))
-  end do
-
-  return
-end subroutine
-
-!**********************************************************************
-! FindStormCenter
-!
-! This routine will locate the storm center using the simple hueristic
-! of the center being where the minimum surface pressure exists.
-!
-! Argument it holds the time step that you want to analyze. (iStmCtr, jStmCtr)
-! hold the grid position of the minumum pressure value on the first vertical
-! level (iz = 1).
-!
-
-subroutine FindStormCenter(Nx, Ny, Nz, Nt, Press, iTime, ixStmCtr, iyStmCtr, MinP)
-  implicit none
-
-  integer :: Nx, Ny, Nz, Nt
-  real, dimension(Nx,Ny,Nt) :: Press
-  integer :: iTime, ixStmCtr, iyStmCtr
-  real :: MinP
-
-  integer :: ix, iy, it
-
-  it = iTime
-  MinP = 1e10 ! ridiculously large pressure
-  ixStmCtr = 0
-  iyStmCtr = 0
-
-  do ix = 1, Nx
-    do iy = 1, Ny
-      if (Press(ix,iy,it) .lt. MinP) then
-        MinP = Press(ix,iy,it)
-        ixStmCtr = ix
-        iyStmCtr = iy
-      end if
-    end do
-  end do
-  
-  return
-end subroutine
-
 !*************************************************************************
 ! AzimuthalAverage
 !
