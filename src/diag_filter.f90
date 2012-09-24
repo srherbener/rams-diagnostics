@@ -23,11 +23,11 @@ program diag_filter
   integer, parameter :: MediumString=256
   integer, parameter :: LittleString=128
 
-  character (len=LargeString) :: InDir, InSuffix, OutFile, AuxFile
+  character (len=LargeString) :: InDir, InSuffix, OutFile
 
   logical :: DoCylVol, DoCold, DoWarm, DoVertVel, DoAbsVertVel, DoCwp
 
-  integer, dimension(:), allocatable :: StmIx, StmIy
+  integer :: StmIx, StmIy
 
   real :: DeltaX, DeltaY, MinW, MaxW, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, CwpThresh
   real :: Xstart, Xinc, Ystart, Yinc
@@ -38,10 +38,14 @@ program diag_filter
   ! The *Loc vars hold the locations of cloud, tempc, precipr in the GRADS
   ! data files: the first index is the file number, the second index is the
   ! var number
-  type (Rhdf5Var) :: W, Press, TempC, Cwp, OutFilter, Xcoords, Ycoords, Zcoords, Tcoords
-  type (Rhdf5Var) :: MinP, StormX, StormY, Radius
+  type (Rhdf5Var) :: W, Press, TempC, Cwp, OutFilter
+  type (Rhdf5Var) :: Xcoords, Ycoords, Zcoords, Tcoords
+  type (Rhdf5Var) :: Radius, MinP, StormX, StormY
   real :: Rval, Pval, Zval
-  character (len=MediumString) :: Wfile, PressFile, TempFile, CwpFile
+  character (len=MediumString) :: Wfile, PressFile, TempcFile, CwpFile
+  character (len=LittleString) :: rh5f_facc;
+  integer :: rh5f_w, rh5f_press, rh5f_tempc, rh5f_cwp, rh5f_out
+  logical :: BadDims
 
   integer :: i
   integer :: ZcoordLoc
@@ -52,7 +56,7 @@ program diag_filter
   logical :: SelectThisPoint
 
   ! Get the command line arguments
-  call GetMyArgs(InDir, InSuffix, OutFile, LargeString, DoCylVol, DoCold, DoWarm, DoVertVel, DoAbsVertVel, DoCwp, MinW, MaxW, CwpThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, AuxFile)
+  call GetMyArgs(InDir, InSuffix, OutFile, LargeString, DoCylVol, DoCold, DoWarm, DoVertVel, DoAbsVertVel, DoCwp, MinW, MaxW, CwpThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ)
 
   write (*,*) 'Creating HDF5 data filter:'
   write (*,*) '  Input directory: ', trim(InDir)
@@ -67,7 +71,6 @@ program diag_filter
     write (*,*) '      Maximum angle: ', MaxPhi
     write (*,*) '      Minimum height: ', MinZ
     write (*,*) '      Maximum height: ', MaxZ
-    write (*,*) '      Auxillary file: ', trim(AuxFile)
   endif
   if (DoCold) then
     write (*,*) '    Cold (T <= 0 deg C)'
@@ -92,47 +95,99 @@ program diag_filter
   write (*,*) ''
   flush(6)
 
-  ! See if we have access to all of the required variables
-
-  ! Always need vertical velocity, even if not doing W filtering, since this
-  ! will serve as the model of the 3D field.
+  ! Set up names of built-in variables
   Wfile = trim(InDir) // '/w' // trim(InSuffix)
   W%vname = 'w'
+
+  PressFile = trim(InDir) // '/sea_press' // trim(InSuffix)
+  Press%vname = 'sea_press'
+
+  TempcFile = trim(InDir) // '/tempc' // trim(InSuffix)
+  Tempc%vname = 'tempc'
+
+  CwpFile = trim(InDir) // '/vint_cloud' // trim(InSuffix)
+  Cwp%vname = 'vertint_cloud'
+
+  ! See if we have access to all of the required variables
+  !
+  ! Always need vertical velocity, even if not doing W filtering, since this
+  ! will serve as the model of the 3D field.
+  !
+  ! Leave the files open for use later on
+  !
+  ! Since we will be processing one time step at a time, the effective number of dimensions
+  ! on each of the input is decreased by one. We want to eliminate the time dimension which
+  ! is always the last one. This works out conveniently since all we need to do is decrement
+  ! the number of dimensions by one.
+  !
   call rhdf5_read_init(Wfile, W)
 
+  Nx = W%dims(1)
+  Ny = W%dims(2)
+  Nz = W%dims(3)
+  Nt = W%dims(4)
+
+  ! If we need W later on, prepare for reading it in
+  ! otherwise close the file
+  if (DoVertVel .or. DoAbsVertVel) then
+    rh5f_facc = 'R'
+    call rhdf5_open_file(Wfile, rh5f_facc, 0, rh5f_w)
+    W%ndims = 3
+    allocate(W%vdata(Nx*Ny*Nz))
+  endif
+
+  BadDims = .false.
   if (DoCylVol) then
     ! Need pressure (to find the storm center)
-    PressFile = trim(InDir) // '/sea_press' // trim(InSuffix)
-    Press%vname = 'sea_press'
     call rhdf5_read_init(PressFile, Press)
-    if (.not. (DimsMatch(W, Press))) then
+
+    if (.not. DimsMatch(W, Press)) then
       write (*,*) 'ERROR: horizontal dimensions of w and sea_press do not match'
-      stop
+      BadDims = .true.
+    else
+      ! Good to go, prepare for reading Press
+      rh5f_facc = 'R'
+      call rhdf5_open_file(PressFile, rh5f_facc, 0, rh5f_press)
+      Press%ndims = 2
+      allocate(Press%vdata(Nx*Ny))
     endif
   endif
   if (DoWarm .or. DoCold) then
     ! Need temperature (in deg. C)
-    TempFile = trim(InDir) // '/tempc' // trim(InSuffix)
-    TempC%vname = 'tempc'
-    call rhdf5_read_init(TempFile, TempC)
-    if (.not. (DimsMatch(W, TempC))) then
+    call rhdf5_read_init(TempcFile, Tempc)
+
+    if (.not. DimsMatch(W, Tempc)) then
       write (*,*) 'ERROR: horizontal dimensions of w and tempc do not match'
-      stop
+      BadDims = .true.
+    else
+      ! Good to go, prepare for reading Tempc
+      rh5f_facc = 'R'
+      call rhdf5_open_file(TempcFile, rh5f_facc, 0, rh5f_tempc)
+      Tempc%ndims = 3
+      allocate(Tempc%vdata(Nx*Ny*Nz))
     endif
   endif
   if (DoCwp) then
-    ! Need column integrated liquid water
-    CwpFile = trim(InDir) // '/vint_cloud' // trim(InSuffix)
-    Cwp%vname = 'vertint_cloud'
     call rhdf5_read_init(CwpFile, Cwp)
-    if (.not. (DimsMatch(W, Cwp))) then
+
+    if (.not. DimsMatch(W, Cwp)) then
       write (*,*) 'ERROR: horizontal dimensions of w and vint_cloud do not match'
-      stop
+      BadDims = .true.
+    else
+      ! Good to go, prepare for reading Cwp
+      rh5f_facc = 'R'
+      call rhdf5_open_file(CwpFile, rh5f_facc, 0, rh5f_cwp)
+      Cwp%ndims = 2
+      allocate(Cwp%vdata(Nx*Ny))
     endif
   endif
 
+  if (BadDims) then
+    stop
+  endif
+
   ! Set the output dimensions and coordinates to those of the W field
-  call SetOutDimsCoords(Wfile, W, Nx, Ny, Nz, Nt, Xcoords, Ycoords, Zcoords, Tcoords)
+  call SetOutCoords(Wfile, Xcoords, Ycoords, Zcoords, Tcoords)
 
   ! Convert lat (x coords) and lon (y coords) to distances in km
   allocate(XcoordsKm(Nx))
@@ -158,7 +213,7 @@ program diag_filter
   write (*,*) ''
   flush(6)
 
-  ! Read in the variable data
+  ! Stats
   write (*,*) 'Gridded data information:'
   write (*,*) '  Number of x (longitude) points:          ', Nx
   write (*,*) '  Number of y (latitude) points:           ', Ny
@@ -172,166 +227,184 @@ program diag_filter
   write (*,*) ''
   flush(6)
 
-  if (DoCylVol) then
-    write (*,*) 'Reading variable: sea_press'
-    write (*,*) '  HDF5 file: ', trim(PressFile)
-    write (*,*) ''
-    call rhdf5_read(PressFile, Press)
-  end if
-  if (DoWarm .or. DoCold) then
-    write (*,*) 'Reading variable: tempc'
-    write (*,*) '  HDF5 file: ', trim(TempFile)
-    write (*,*) ''
-    call rhdf5_read(TempFile, TempC)
-  end if
-  if (DoVertVel .or. DoAbsVertVel) then
-    write (*,*) 'Reading variable: w'
-    write (*,*) '  HDF5 file: ', trim(Wfile)
-    write (*,*) ''
-    call rhdf5_read(Wfile, W)
-  end if
-  if (DoCwp) then
-    write (*,*) 'Reading variable: vint_cloud'
-    write (*,*) '  HDF5 file: ', trim(CwpFile)
-    write (*,*) ''
-    call rhdf5_read(CwpFile, Cwp)
-  end if
-  write (*,*) ''
-  flush(6)
-
-  ! Allocate the output array and create the filter
+  ! Prepare the output filter, only set up for the data field since
+  ! the time dimension will be built as we go through the loop below.
   OutFilter%vname = 'filter'
-  OutFilter%ndims = 4
+  OutFilter%ndims = 3
   OutFilter%dims(1) = Nx
   OutFilter%dims(2) = Ny
   OutFilter%dims(3) = Nz
-  OutFilter%dims(4) = Nt
   OutFilter%dimnames(1) = 'x'
   OutFilter%dimnames(2) = 'y'
   OutFilter%dimnames(3) = 'z'
-  OutFilter%dimnames(4) = 't'
   OutFilter%units = 'logical'
   OutFilter%descrip = 'data selection locations'
-  allocate(OutFilter%vdata(Nx*Ny*Nz*Nt))
+  allocate(OutFilter%vdata(Nx*Ny*Nz))
 
   if (DoCylVol) then
-    ! save the radius of every point in the horizontal domain
+    ! prepare for writing the radius values into the aux output file.
     Radius%vname = 'radius'
-    Radius%ndims = 3
+    Radius%ndims = 2
     Radius%dims(1) = Nx
     Radius%dims(2) = Ny
-    Radius%dims(3) = Nt
     Radius%dimnames(1) = 'x'
     Radius%dimnames(2) = 'y'
-    Radius%dimnames(3) = 't'
     Radius%units = 'km'
     Radius%descrip = 'radius from storm center'
-    allocate(Radius%vdata(Nx*Ny*Nt))
-    do it = 1, Nt
-      do iy = 1, Ny
-        do ix = 1, Nx
-          call MultiDimAssign(Nx, Ny, Nz, Nt, ix, iy, iz, it, 0.0, Var2d=Radius%vdata)
-        enddo
-      enddo
-    enddo
+    allocate(Radius%vdata(Nx*Ny))
 
     ! Generate the storm center for all time steps
     MinP%vname = 'min_press'
-    MinP%ndims = 1
-    MinP%dims(1) = Nt
-    MinP%dimnames(1) = 't'
+    MinP%ndims = 0
+    MinP%dims(1) = 0
+    MinP%dimnames(1) = ''
     MinP%units = 'mb'
     MinP%descrip = 'minimum SLP of storm'
-    allocate(MinP%vdata(Nt))
-    allocate (StmIx(1:Nt), StmIy(1:Nt))
-    call RecordStormCenter(Nx, Ny, Nz, Nt, Press%vdata, StmIx, StmIy, MinP%vdata)
+    allocate(MinP%vdata(1))
 
     StormX%vname = 'min_press_xloc'
-    StormX%ndims = 1
-    StormX%dims(1) = Nt
-    StormX%dimnames(1) = 't'
+    StormX%ndims = 0
+    StormX%dims(1) = 1
+    StormX%dimnames(1) = ''
     StormX%units = 'deg lon'
     StormX%descrip = 'longitude location of minimum SLP of storm'
-    allocate(StormX%vdata(Nt))
+    allocate(StormX%vdata(1))
     
     StormY%vname = 'min_press_yloc'
-    StormY%ndims = 1
-    StormY%dims(1) = Nt
-    StormY%dimnames(1) = 't'
+    StormY%ndims = 0
+    StormY%dims(1) = 1
+    StormY%dimnames(1) = ''
     StormY%units = 'deg lat'
     StormY%descrip = 'latitude location of minimum SLP of storm'
-    allocate(StormY%vdata(Nt))
-  
-    do it = 1, Nt
-      write (*,*) 'Timestep: ', it
-      write (*,'(a,i3,a,i3,a,g,a,g,a)') '  Storm Center: (', StmIx(it), ', ', StmIy(it), &
-         ') --> (', XcoordsKm(StmIx(it)), ', ', YcoordsKm(StmIy(it)), ')'
-      write (*,*) '  Minumum pressure: ', MinP%vdata(it)
+    allocate(StormY%vdata(1))
+  endif
 
-      StormX%vdata(it) = Xcoords%vdata(StmIx(it))
-      StormY%vdata(it) = Ycoords%vdata(StmIy(it))
-    end do
-    write (*,*) ''
-    flush(6)
-  end if
+  rh5f_facc = 'W'
+  call rhdf5_open_file(OutFile, rh5f_facc, 1, rh5f_out)
+  write (*,*) 'Writing HDF5 output: ', trim(OutFile)
+  write (*,*) ''
 
-  ! Apply the filter. We are forcing the user to specify at least one filtering mechamism. If
-  ! multiple filters are specified, then take the intersection of all filters.
+  ! Do the filtering one time step at a time.
+  !
+  ! The necessary input files have been opened, data buffers allocated,
+  ! plus the time dimensions have been "removed" from the descriptions
+  ! of the input variables.
+  !
   do it = 1, Nt
+    ! prepare for doing the selection
+    if (DoCylVol) then
+      ! Read in the pressure
+      call rhdf5_read_variable(rh5f_press, Press%vname, Press%ndims, it, Press%dims, rdata=Press%vdata)
+
+      ! zero out radius
+      do iy = 1, Ny
+        do ix = 1, Nx
+          call MultiDimAssign(Nx, Ny, Nz, ix, iy, iz, 0.0, Var2d=Radius%vdata)
+        enddo
+      enddo
+
+      ! Find the storm center
+      call FindStormCenter(Nx, Ny, Press%vdata, StmIx, StmIy, MinP%vdata(1))
+
+      ! Record the lat,lon of the storm center
+      StormX%vdata(1) = Xcoords%vdata(StmIx)
+      StormY%vdata(1) = Ycoords%vdata(StmIy)
+    endif
+
+    if (DoWarm .or. DoCold) then
+      call rhdf5_read_variable(rh5f_tempc, Tempc%vname, Tempc%ndims, it, Tempc%dims, rdata=Tempc%vdata)
+    endif
+
+    if (DoVertVel .or. DoAbsVertVel) then
+      call rhdf5_read_variable(rh5f_w, W%vname, W%ndims, it, W%dims, rdata=W%vdata)
+    endif
+
+    if (DoCwp) then
+      call rhdf5_read_variable(rh5f_cwp, Cwp%vname, Cwp%ndims, it, Cwp%dims, rdata=Cwp%vdata)
+    endif
+
+    ! do the selection
     do iz = 1, Nz
       do iy = 1, Ny
         do ix = 1, Nx
           SelectThisPoint = .true.
           if (DoCylVol) then
-            SelectThisPoint = SelectThisPoint .and. InsideCylVol(Nx, Ny, Nz, Nt, ix, iy, iz, it, &
+            SelectThisPoint = SelectThisPoint .and. InsideCylVol(Nx, Ny, Nz, ix, iy, iz, &
                   MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, &
                   XcoordsKm, YcoordsKm, Zcoords%vdata, Rval, Pval, Zval) 
-          end if
+          endif
           if (DoCold) then
             SelectThisPoint = SelectThisPoint .and. &
-              (MultiDimLookup(Nx, Ny, Nz, Nt, ix, iy, iz, it, Var3d=TempC%vdata) .le. 0.0)
-          end if
+              (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=TempC%vdata) .le. 0.0)
+          endif
           if (DoWarm) then
             SelectThisPoint = SelectThisPoint .and. &
-              (MultiDimLookup(Nx, Ny, Nz, Nt, ix, iy, iz, it, Var3d=TempC%vdata) .gt. 0.0)
-          end if
+              (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=TempC%vdata) .gt. 0.0)
+          endif
           if (DoVertVel) then
             SelectThisPoint = SelectThisPoint .and. &
-              ((MultiDimLookup(Nx, Ny, Nz, Nt, ix, iy, iz, it, Var3d=W%vdata) .ge. MinW) .and. &
-               (MultiDimLookup(Nx, Ny, Nz, Nt, ix, iy, iz, it, Var3d=W%vdata) .le. MaxW))
-          end if
+              ((MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=W%vdata) .ge. MinW) .and. &
+               (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=W%vdata) .le. MaxW))
+          endif
           if (DoAbsVertVel) then
             SelectThisPoint = SelectThisPoint .and. &
-              ((abs(MultiDimLookup(Nx, Ny, Nz, Nt, ix, iy, iz, it, Var3d=W%vdata)) .ge. MinW) .and. &
-               (abs(MultiDimLookup(Nx, Ny, Nz, Nt, ix, iy, iz, it, Var3d=W%vdata)) .le. MaxW))
-          end if
+              ((abs(MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=W%vdata)) .ge. MinW) .and. &
+               (abs(MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=W%vdata)) .le. MaxW))
+          endif
           if (DoCwp) then
             SelectThisPoint = SelectThisPoint .and. &
-              (MultiDimLookup(Nx, Ny, Nz, Nt, ix, iy, iz, it, Var2d=Cwp%vdata) .gt. CwpThresh)
+              (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Cwp%vdata) .gt. CwpThresh)
           end if
 
           if (SelectThisPoint) then
-            call MultiDimAssign(Nx, Ny, Nz, Nt, ix, iy, iz, it, 1.0, Var3d=OutFilter%vdata)
+            call MultiDimAssign(Nx, Ny, Nz, ix, iy, iz, 1.0, Var3d=OutFilter%vdata)
             if (DoCylVol) then
-              ! save the radius value for the auxillary data file
+              ! save the radius value
               ! note that this re-writes the same horizontal radius values for each z level
-              call MultiDimAssign(Nx, Ny, Nz, Nt, ix, iy, iz, it, Rval, Var2d=Radius%vdata)
+              call MultiDimAssign(Nx, Ny, Nz, ix, iy, iz, Rval, Var2d=Radius%vdata)
             endif
           else
-            call MultiDimAssign(Nx, Ny, Nz, Nt, ix, iy, iz, it, 0.0, Var3d=OutFilter%vdata)
-          end if
-        end do
-      end do
-    end do
-  end do
+            call MultiDimAssign(Nx, Ny, Nz, ix, iy, iz, 0.0, Var3d=OutFilter%vdata)
+          endif
+        enddo
+      enddo
+    enddo
 
-  ! write out the filter data
-  ! third arg to rhdf5_write is "append" flag:
-  !   0 - create new file
-  !   1 - append to existing file
-  write (*,*) 'Writing HDF5 output: ', trim(OutFile)
+    ! Write the filter data, and storm info if doing cylvol selection, to the output file
+    call rhdf5_write_variable(rh5f_out, OutFilter%vname, OutFilter%ndims, it, OutFilter%dims, &
+      OutFilter%units, OutFilter%descrip, OutFilter%dimnames, rdata=OutFilter%vdata)
+    if (DoCylVol) then
+      call rhdf5_write_variable(rh5f_out, Radius%vname, Radius%ndims, it, Radius%dims, &
+        Radius%units, Radius%descrip, Radius%dimnames, rdata=Radius%vdata)
+      call rhdf5_write_variable(rh5f_out, MinP%vname, MinP%ndims, it, MinP%dims, &
+        MinP%units, MinP%descrip, MinP%dimnames, rdata=MinP%vdata)
+      call rhdf5_write_variable(rh5f_out, StormX%vname, StormX%ndims, it, StormX%dims, &
+        StormX%units, StormX%descrip, StormX%dimnames, rdata=StormX%vdata)
+      call rhdf5_write_variable(rh5f_out, StormY%vname, StormY%ndims, it, StormY%dims, &
+        StormY%units, StormY%descrip, StormY%dimnames, rdata=StormY%vdata)
+    endif
+
+    ! Write out status to screen every 100 timesteps so that the user can see that a long
+    ! running job is progressing okay.
+    if (modulo(it,100) .eq. 0) then
+      write (*,*) 'Working: Timestep: ', it
+
+      if (DoCylVol) then
+        write (*,'(a,i3,a,i3,a,g,a,g,a)') '    Storm Center: (', StmIx, ', ', StmIy, &
+         ') --> (', XcoordsKm(StmIx), ', ', YcoordsKm(StmIy), ')'
+        write (*,*) '   Minumum pressure: ', MinP%vdata(1)
+      endif
+
+      write (*,*) ''
+    endif
+  enddo
+
+  ! 'it' will be one beyond its loop limit (Nt) so subtract one
+  ! from 'it' when reporting how many times steps were processed
+  write (*,*) 'Finished: Total number of time steps processed: ', it-1
   write (*,*) ''
-  call rhdf5_write(OutFile, OutFilter, 0)
+
+  ! Write out coordinates and attach dimensions
 
   ! write out the coordinate data
   call rhdf5_write(OutFile, Xcoords, 1)
@@ -348,27 +421,27 @@ program diag_filter
   ! attach the dimension specs to the output variable
   call rhdf5_attach_dimensions(OutFile, OutFilter)
 
-  ! Create the auxillary file if doing cylindrical volume filtering
   if (DoCylVol) then
-    write (*,*) 'Writing auxillary HDF5 output: ', trim(AuxFile)
-    write (*,*) ''
-    ! vars
-    call rhdf5_write(AuxFile, MinP, 0)
-    call rhdf5_write(AuxFile, StormX, 1)
-    call rhdf5_write(AuxFile, StormY, 1)
-    call rhdf5_write(AuxFile, Radius, 1)
+    ! Attach dims to the auxillary data
+    call rhdf5_attach_dimensions(OutFile, MinP)
+    call rhdf5_attach_dimensions(OutFile, StormX)
+    call rhdf5_attach_dimensions(OutFile, StormY)
+    call rhdf5_attach_dimensions(OutFile, Radius)
+  endif
 
-    ! dims
-    call rhdf5_write(AuxFile, Xcoords, 1)
-    call rhdf5_write(AuxFile, Ycoords, 1)
-    call rhdf5_write(AuxFile, Zcoords, 1)
-    call rhdf5_write(AuxFile, Tcoords, 1)
-
-    ! attach dims
-    call rhdf5_attach_dimensions(AuxFile, MinP)
-    call rhdf5_attach_dimensions(AuxFile, StormX)
-    call rhdf5_attach_dimensions(AuxFile, StormY)
-    call rhdf5_attach_dimensions(AuxFile, Radius)
+  ! cleanup
+  call rhdf5_close_file(rh5f_out)
+  if (DoCylVol) then
+    call rhdf5_close_file(rh5f_press)
+  endif
+  if (DoWarm .or. DoCold) then
+    call rhdf5_close_file(rh5f_tempc)
+  endif
+  if (DoVertVel .or. DoAbsVertVel) then
+    call rhdf5_close_file(rh5f_w)
+  endif
+  if (DoCwp) then
+    call rhdf5_close_file(rh5f_cwp)
   endif
 
   stop
@@ -385,10 +458,10 @@ contains
 ! GetMyArgs()
 !
 
-subroutine GetMyArgs(InDir, InSuffix, OutFile, StringSize, DoCylVol, DoCold, DoWarm, DoVertVel, DoAbsVertVel, DoCwp, MinW, MaxW, CwpThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, AuxFile)
+subroutine GetMyArgs(InDir, InSuffix, OutFile, StringSize, DoCylVol, DoCold, DoWarm, DoVertVel, DoAbsVertVel, DoCwp, MinW, MaxW, CwpThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ)
   implicit none
 
-  character (len=*) :: InDir, InSuffix, OutFile, AuxFile
+  character (len=*) :: InDir, InSuffix, OutFile
   integer :: StringSize
   real :: MinW, MaxW, CwpThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ
   logical :: DoCylVol, DoCold, DoWarm, DoVertVel, DoAbsVertVel, DoCwp
@@ -417,7 +490,6 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, StringSize, DoCylVol, DoCold, DoW
   MaxPhi    = -1.0
   MinZ      = -1.0
   MaxZ      = -1.0
-  AuxFile = ''
 
   ! walk through the list of arguments
   !   see the USAGE string at the end of this routine
@@ -449,8 +521,8 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, StringSize, DoCylVol, DoCold, DoW
       if (FilterFunc .eq. 'cylvol') then
         DoCylVol = .true.
 
-        if ((i+6) .gt. Nargs) then
-          write (*,*) 'ERROR: not enough arguments (7) left to fully specify the clyvol <filter_spec>'
+        if ((i+5) .gt. Nargs) then
+          write (*,*) 'ERROR: not enough arguments (6) left to fully specify the clyvol <filter_spec>'
           BadArgs = .true.
         else
           ! have enough args
@@ -466,8 +538,7 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, StringSize, DoCylVol, DoCold, DoW
           read(Arg, '(f)') MinZ
           call getarg(i+5, Arg)
           read(Arg, '(f)') MaxZ
-          call getarg(i+6, AuxFile)
-          i = i + 7
+          i = i + 6
     
           if ((MinR .lt. 0.0) .or. (MaxR .lt. 0.0) .or. (MaxR .le. MinR)) then
             write (*,*) 'ERROR: <min_r> and <max_r> must be >= 0.0, and <max_r> must be > <min_r>'
@@ -616,34 +687,20 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, StringSize, DoCylVol, DoCold, DoW
   end if
 
   return
-end subroutine
-
+end subroutine GetMyArgs
 
 !**********************************************************************
-! SetOutDimsCoords()
+! SetOutCoords()
 !
 ! This routine will set the coordinate and dimension data 
 
-subroutine SetOutDimsCoords(Hfile, Hvar, Nx, Ny, Nz, Nt, Xcoords, Ycoords, Zcoords, Tcoords)
+subroutine SetOutCoords(Hfile, Xcoords, Ycoords, Zcoords, Tcoords)
   use rhdf5_utils
   use diag_utils
   implicit none
 
   character (len=*) :: Hfile
-  type (Rhdf5Var) :: Hvar, Xcoords, Ycoords, Zcoords, Tcoords
-  integer :: Nx, Ny, Nz, Nt
-
-  if (Hvar%ndims .eq. 4) then
-    Nx = Hvar%dims(1)
-    Ny = Hvar%dims(2)
-    Nz = Hvar%dims(3)
-    Nt = Hvar%dims(4)
-  else
-    Nx = Hvar%dims(1)
-    Ny = Hvar%dims(2)
-    Nz = 1
-    Nt = Hvar%dims(3)
-  endif
+  type (Rhdf5Var) :: Xcoords, Ycoords, Zcoords, Tcoords
 
   ! Read in longitude, latitude and height values
   Xcoords%vname = 'x_coords'
@@ -663,6 +720,44 @@ subroutine SetOutDimsCoords(Hfile, Hvar, Nx, Ny, Nz, Nt, Xcoords, Ycoords, Zcoor
   call rhdf5_read(Hfile, Tcoords)
 
   return
-end subroutine
+end subroutine SetOutCoords
+
+!**********************************************************************
+! FindStormCenter
+!
+! This routine will locate the storm center using the simple hueristic
+! of the center being where the minimum surface pressure exists.
+!
+! Argument it holds the time step that you want to analyze. (iStmCtr, jStmCtr)
+! hold the grid position of the minumum pressure value on the first vertical
+! level (iz = 1).
+!
+
+subroutine FindStormCenter(Nx, Ny, Press, StmCtrX, StmCtrY, MinP)
+  implicit none
+
+  integer :: Nx, Ny
+  real, dimension(Nx,Ny) :: Press
+  integer :: StmCtrX, StmCtrY
+  real :: MinP
+
+  integer :: ix, iy
+
+  MinP = 1e10 ! ridiculously large pressure
+  StmCtrX = 0 
+  StmCtrY = 0 
+
+  do ix = 1, Nx
+    do iy = 1, Ny
+      if (Press(ix,iy) .lt. MinP) then
+        MinP = Press(ix,iy)
+        StmCtrX = ix
+        StmCtrY = iy
+      end if
+    end do
+  end do
+  
+  return
+end subroutine FindStormCenter
 
 end program diag_filter
