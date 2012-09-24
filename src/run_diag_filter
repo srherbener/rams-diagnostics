@@ -42,6 +42,18 @@ sub CreateFileNames
 
   my $Pattern;
   my @f;
+  my $TdirStr;
+
+  # If $Tdir is the string "NONE", then do not place a subdirectory
+  # in the path to the input and output files
+  if ($Tdir eq "NONE")
+    {   
+    $TdirStr = ""; 
+    }   
+  else
+    {   
+    $TdirStr = "/" . $Tdir;
+    }   
 
   # InDir is the directory that the input files come from.
   #
@@ -52,7 +64,7 @@ sub CreateFileNames
   #
   # OutFile is simply the whole path to the output file.
   #
-  $InDir = $Case . "/" . $RevuDir . "/" . $Tdir;
+  $InDir = $Case . "/" . $RevuDir . $TdirStr;
 
   # Use the w input file as a sample for finding the input file suffix.
   $Pattern = $InDir . "/w-*.h5";
@@ -60,7 +72,7 @@ sub CreateFileNames
   $InFileSuffix = $f[0];
   $InFileSuffix =~ s/.*\/w-/-/;
   
-  $OutFile = $FilterDir . "/" . ${Tdir} . "/" . ${Fname} . "_" . ${Case} . ".h5";
+  $OutFile = $FilterDir . ${TdirStr} . "/" . ${Fname} . "_" . ${Case} . ".h5";
 
   return ($InDir, $InFileSuffix, $OutFile);
   }
