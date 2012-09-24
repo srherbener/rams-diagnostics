@@ -350,14 +350,14 @@ end subroutine
 ! volume relative to the storm center.
 !
 
-logical function InsideCylVol(Nx, Ny, Nz, Nt, Ix, Iy, Iz, It, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ,  StmIx, StmIy, Xcoords, Ycoords, Zcoords, Radius, Phi, Z)
+logical function InsideCylVol(Nx, Ny, Nz, Ix, Iy, Iz, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ,  StmIx, StmIy, Xcoords, Ycoords, Zcoords, Radius, Phi, Z)
   implicit none
 
   real, parameter :: PI = 3.141592654
 
-  integer :: Nx, Ny, Nz, Nt, Ix, Iy, Iz, It
+  integer :: Nx, Ny, Nz, Ix, Iy, Iz
   real :: MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ
-  integer, dimension(1:Nt) :: StmIx, StmIy
+  integer :: StmIx, StmIy
   real, dimension(1:Nx) :: Xcoords
   real, dimension(1:Ny) :: Ycoords
   real, dimension(1:Nz) :: Zcoords
@@ -365,8 +365,8 @@ logical function InsideCylVol(Nx, Ny, Nz, Nt, Ix, Iy, Iz, It, MinR, MaxR, MinPhi
 
   real :: dX, dY
 
-  dX = Xcoords(Ix) - Xcoords(StmIx(It))
-  dY = Ycoords(Iy) - Ycoords(StmIy(It))
+  dX = Xcoords(Ix) - Xcoords(StmIx)
+  dY = Ycoords(Iy) - Ycoords(StmIy)
   Radius = sqrt(dX*dX + dY*dY)
   ! atan2 returns a value in radians between -PI and +PI
   ! convert to value between 0 and 2*PI
@@ -532,17 +532,17 @@ end function DimsMatch
 ! This function will take the 1D array of real and look up a value
 ! as if that array were either 2D or 3D field.
 !
-real function MultiDimLookup(Nx, Ny, Nz, Nt, ix, iy, iz, it, Var2d, Var3d)
+real function MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d, Var3d)
   implicit none
 
-  integer :: Nx, Ny, Nz, Nt, ix, iy, iz, it
-  real, dimension(Nx,Ny,Nt), optional :: Var2d
-  real, dimension(Nx,Ny,Nz,Nt), optional :: Var3d
+  integer :: Nx, Ny, Nz, ix, iy, iz
+  real, dimension(Nx,Ny), optional :: Var2d
+  real, dimension(Nx,Ny,Nz), optional :: Var3d
 
   if (present(Var2d)) then
-    MultiDimLookup = Var2d(ix,iy,it)
+    MultiDimLookup = Var2d(ix,iy)
   else if (present(Var3d)) then
-    MultiDimLookup = Var3d(ix,iy,iz,it)
+    MultiDimLookup = Var3d(ix,iy,iz)
   else
     print*, 'ERROR: MultiDimLookup: must use one of the optional arguments: Var2d or Var3d'
     stop 'MultiDimLookup: missing argument'
@@ -557,18 +557,18 @@ end function MultiDimLookup
 ! This subroutine will take the 1D array of real and look up a value
 ! as if that array were either 2D or 3D field.
 !
-subroutine MultiDimAssign(Nx, Ny, Nz, Nt, ix, iy, iz, it, Val, Var2d, Var3d)
+subroutine MultiDimAssign(Nx, Ny, Nz, ix, iy, iz, Val, Var2d, Var3d)
   implicit none
 
-  integer :: Nx, Ny, Nz, Nt, ix, iy, iz, it
+  integer :: Nx, Ny, Nz, ix, iy, iz
   real :: Val
-  real, dimension(Nx,Ny,Nt), optional :: Var2d
-  real, dimension(Nx,Ny,Nz,Nt), optional :: Var3d
+  real, dimension(Nx,Ny), optional :: Var2d
+  real, dimension(Nx,Ny,Nz), optional :: Var3d
 
   if (present(Var2d)) then
-    Var2d(ix,iy,it) = Val
+    Var2d(ix,iy) = Val
   else if (present(Var3d)) then
-    Var3d(ix,iy,iz,it) = Val
+    Var3d(ix,iy,iz) = Val
   else
     print*, 'ERROR: MultiDimAssign: must use one of the optional arguments: Var2d or Var3d'
     stop 'MultiDimAssign: missing argument'
