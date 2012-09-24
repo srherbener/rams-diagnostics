@@ -25,11 +25,11 @@ program diag_filter
 
   character (len=LargeString) :: InDir, InSuffix, OutFile
 
-  logical :: DoCylVol, DoCold, DoWarm, DoVertVel, DoAbsVertVel, DoCwp
+  logical :: DoCylVol, DoCold, DoWarm, DoVertVel, DoAbsVertVel, DoCwp, DoRwp, DoLwp
 
   integer :: StmIx, StmIy
 
-  real :: DeltaX, DeltaY, MinW, MaxW, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, CwpThresh
+  real :: DeltaX, DeltaY, MinW, MaxW, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, WpThresh
   real :: Xstart, Xinc, Ystart, Yinc
   real, dimension(:), allocatable :: XcoordsKm, YcoordsKm
 
@@ -38,13 +38,13 @@ program diag_filter
   ! The *Loc vars hold the locations of cloud, tempc, precipr in the GRADS
   ! data files: the first index is the file number, the second index is the
   ! var number
-  type (Rhdf5Var) :: W, Press, TempC, Cwp, OutFilter
+  type (Rhdf5Var) :: W, Press, TempC, Cwp, Rwp, OutFilter
   type (Rhdf5Var) :: Xcoords, Ycoords, Zcoords, Tcoords
   type (Rhdf5Var) :: Radius, MinP, StormX, StormY
   real :: Rval, Pval, Zval
-  character (len=MediumString) :: Wfile, PressFile, TempcFile, CwpFile
+  character (len=MediumString) :: Wfile, PressFile, TempcFile, CwpFile, RwpFile
   character (len=LittleString) :: rh5f_facc;
-  integer :: rh5f_w, rh5f_press, rh5f_tempc, rh5f_cwp, rh5f_out
+  integer :: rh5f_w, rh5f_press, rh5f_tempc, rh5f_cwp, rh5f_rwp, rh5f_out
   logical :: BadDims
 
   integer :: i
@@ -56,7 +56,7 @@ program diag_filter
   logical :: SelectThisPoint
 
   ! Get the command line arguments
-  call GetMyArgs(InDir, InSuffix, OutFile, LargeString, DoCylVol, DoCold, DoWarm, DoVertVel, DoAbsVertVel, DoCwp, MinW, MaxW, CwpThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ)
+  call GetMyArgs(InDir, InSuffix, OutFile, LargeString, DoCylVol, DoCold, DoWarm, DoVertVel, DoAbsVertVel, DoCwp, DoRwp, DoLwp, MinW, MaxW, WpThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ)
 
   write (*,*) 'Creating HDF5 data filter:'
   write (*,*) '  Input directory: ', trim(InDir)
@@ -90,7 +90,15 @@ program diag_filter
   endif
   if (DoCwp) then
     write (*,*) '    CWP:'
-    write (*,*) '      CWP (column integrated liquid water) threshold: ', CwpThresh
+    write (*,*) '      CWP (column integrated cloud water) threshold: ', WpThresh
+  endif
+  if (DoRwp) then
+    write (*,*) '    RWP:'
+    write (*,*) '      RWP (column integrated rain water) threshold: ', WpThresh
+  endif
+  if (DoLwp) then
+    write (*,*) '    LWP:'
+    write (*,*) '      LWP (column integrated liquid, cloud + rain, water) threshold: ', WpThresh
   endif
   write (*,*) ''
   flush(6)
@@ -107,6 +115,9 @@ program diag_filter
 
   CwpFile = trim(InDir) // '/vint_cloud' // trim(InSuffix)
   Cwp%vname = 'vertint_cloud'
+
+  RwpFile = trim(InDir) // '/vint_rain' // trim(InSuffix)
+  Rwp%vname = 'vertint_rain'
 
   ! See if we have access to all of the required variables
   !
@@ -158,7 +169,7 @@ program diag_filter
       allocate(Tempc%vdata(Nx*Ny*Nz))
     endif
   endif
-  if (DoCwp) then
+  if (DoCwp .or. DoLwp) then
     call rhdf5_read_init(CwpFile, Cwp)
 
     if (.not. DimsMatch(W, Cwp)) then
@@ -170,6 +181,20 @@ program diag_filter
       call rhdf5_open_file(CwpFile, rh5f_facc, 0, rh5f_cwp)
       Cwp%ndims = 2
       allocate(Cwp%vdata(Nx*Ny))
+    endif
+  endif
+  if (DoRwp .or. DoLwp) then
+    call rhdf5_read_init(RwpFile, Rwp)
+
+    if (.not. DimsMatch(W, Rwp)) then
+      write (*,*) 'ERROR: horizontal dimensions of w and vint_rain do not match'
+      BadDims = .true.
+    else
+      ! Good to go, prepare for reading Rwp
+      rh5f_facc = 'R'
+      call rhdf5_open_file(RwpFile, rh5f_facc, 0, rh5f_rwp)
+      Rwp%ndims = 2
+      allocate(Rwp%vdata(Nx*Ny))
     endif
   endif
 
@@ -185,7 +210,6 @@ program diag_filter
     W%ndims = 3
     allocate(W%vdata(Nx*Ny*Nz))
   endif
-
 
   ! Set the output dimensions and coordinates to those of the W field
   call SetOutCoords(Wfile, Xcoords, Ycoords, Zcoords, Tcoords)
@@ -320,8 +344,12 @@ program diag_filter
       call rhdf5_read_variable(rh5f_w, W%vname, W%ndims, it, W%dims, rdata=W%vdata)
     endif
 
-    if (DoCwp) then
+    if (DoCwp .or. DoLwp) then
       call rhdf5_read_variable(rh5f_cwp, Cwp%vname, Cwp%ndims, it, Cwp%dims, rdata=Cwp%vdata)
+    endif
+
+    if (DoRwp .or. DoLwp) then
+      call rhdf5_read_variable(rh5f_rwp, Rwp%vname, Rwp%ndims, it, Rwp%dims, rdata=Rwp%vdata)
     endif
 
     ! do the selection
@@ -354,7 +382,16 @@ program diag_filter
           endif
           if (DoCwp) then
             SelectThisPoint = SelectThisPoint .and. &
-              (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Cwp%vdata) .gt. CwpThresh)
+              (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Cwp%vdata) .gt. WpThresh)
+          end if
+          if (DoRwp) then
+            SelectThisPoint = SelectThisPoint .and. &
+              (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Rwp%vdata) .gt. WpThresh)
+          end if
+          if (DoLwp) then
+            SelectThisPoint = SelectThisPoint .and. &
+              ((MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Cwp%vdata) + &
+                MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Rwp%vdata)) .gt. WpThresh)
           end if
 
           if (SelectThisPoint) then
@@ -441,8 +478,11 @@ program diag_filter
   if (DoVertVel .or. DoAbsVertVel) then
     call rhdf5_close_file(rh5f_w)
   endif
-  if (DoCwp) then
+  if (DoCwp .or. DoLwp) then
     call rhdf5_close_file(rh5f_cwp)
+  endif
+  if (DoRwp .or. DoLwp) then
+    call rhdf5_close_file(rh5f_rwp)
   endif
 
   stop
@@ -459,13 +499,13 @@ contains
 ! GetMyArgs()
 !
 
-subroutine GetMyArgs(InDir, InSuffix, OutFile, StringSize, DoCylVol, DoCold, DoWarm, DoVertVel, DoAbsVertVel, DoCwp, MinW, MaxW, CwpThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ)
+subroutine GetMyArgs(InDir, InSuffix, OutFile, StringSize, DoCylVol, DoCold, DoWarm, DoVertVel, DoAbsVertVel, DoCwp, DoRwp, DoLwp, MinW, MaxW, WpThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ)
   implicit none
 
   character (len=*) :: InDir, InSuffix, OutFile
   integer :: StringSize
-  real :: MinW, MaxW, CwpThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ
-  logical :: DoCylVol, DoCold, DoWarm, DoVertVel, DoAbsVertVel, DoCwp
+  real :: MinW, MaxW, WpThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ
+  logical :: DoCylVol, DoCold, DoWarm, DoVertVel, DoAbsVertVel, DoCwp, DoRwp, DoLwp
 
   integer :: iargc, i, Nargs
   character (len=StringSize) :: Arg, FilterFunc
@@ -479,12 +519,14 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, StringSize, DoCylVol, DoCold, DoW
   DoVertVel    = .false.
   DoAbsVertVel = .false.
   DoCwp        = .false.
+  DoRwp        = .false.
+  DoLwp        = .false.
   InDir   = ''
   InSuffix = ''
   OutFile = ''
   MinW      = -999.0
   MaxW      = -999.0
-  CwpThresh = -1.0
+  WpThresh = -1.0
   MinR      = -1.0
   MaxR      = -1.0
   MinPhi    = -1.0
@@ -599,19 +641,25 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, StringSize, DoCylVol, DoCold, DoW
             BadArgs = .true.
           end if
         end if
-      else if (FilterFunc .eq. 'cwp') then
-        DoCwp = .true.
+      else if ((FilterFunc .eq. 'cwp') .or. (FilterFunc .eq. 'rwp') .or. (FilterFunc .eq. 'lwp')) then
+        if (FilterFunc .eq. 'cwp') then
+          DoCwp = .true.
+        else if (FilterFunc .eq. 'rwp') then
+          DoRwp = .true.
+        else
+          DoLwp = .true.
+        endif
   
         if (i .gt. Nargs) then
-          write (*,*) 'ERROR: not enough arguments (1) left to fully specify the cwp <filter_spec>'
+          write (*,*) 'ERROR: not enough arguments (1) left to fully specify <filter_spec> for cwp, rwp or lwp'
           BadArgs = .true.
         else
           call getarg(i, Arg)
-          read(Arg, '(f)') CwpThresh
+          read(Arg, '(f)') WpThresh
           i = i + 1
   
-          if (CwpThresh .lt. 0.0) then
-            write (*,*) 'ERROR: <cpw_thresh> must be >= 0.0'
+          if (WpThresh .lt. 0.0) then
+            write (*,*) 'ERROR: <wp_thresh> must be >= 0.0'
             write (*,*) ''
             BadArgs = .true.
           end if
@@ -624,6 +672,8 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, StringSize, DoCylVol, DoCold, DoW
         write (*,*) '          vertvel'
         write (*,*) '          absvertvel'
         write (*,*) '          cwp'
+        write (*,*) '          rwp'
+        write (*,*) '          lwp'
         write (*,*) ''
         BadArgs = .true.
       endif
@@ -631,7 +681,8 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, StringSize, DoCylVol, DoCold, DoW
   enddo
 
   if ((.not.DoCylVol) .and. (.not.DoCold) .and. (.not.DoWarm) &
-       .and. (.not.DoVertVel) .and. (.not.DoAbsVertVel) .and. (.not.DoCwp)) then
+       .and. (.not.DoVertVel) .and. (.not.DoAbsVertVel) &
+       .and. (.not.DoCwp) .and. (.not.DoRwp) .and. (.not.DoLwp)) then
     write (*,*) 'ERROR: must specify at least one <filter_spec>'
     write (*,*) ''
     BadArgs = .true.
@@ -648,6 +699,12 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, StringSize, DoCylVol, DoCold, DoW
     write (*,*) ''
     BadArgs = .true.
   end if
+
+  if ((DoCwp .and. DoRwp) .or. (DoCwp .and. DoLwp) .or. (DoRwp .and. DoLwp)) then
+    write (*,*) 'ERROR: cannot specify more than one of "cwp", "rwp", or "lwp"'
+    write (*,*) ''
+    BadArgs = .true.
+  endif
 
   if (BadArgs) then
     write (*,*) 'USAGE: diag_filter <in_dir> <in_suffix> <out_data_files> <filter_spec> [<filter_spec>...]'
@@ -676,8 +733,12 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, StringSize, DoCylVol, DoCold, DoW
     write (*,*) '                  <min_w> and <max_w> in m/s'
     write (*,*) '            absvertvel <min_w> <max_w>'
     write (*,*) '                Select data within regions where <min_w> <= |w| <= <max_w>'
-    write (*,*) '            cwp <cwp_thresh>'
-    write (*,*) '                Select data within regions where column integrated cloud water (cwp) >= <cwp_thresh>'
+    write (*,*) '            cwp <wp_thresh>'
+    write (*,*) '                Select data within regions where column integrated cloud water (cwp) >= <wp_thresh>'
+    write (*,*) '            rwp <wp_thresh>'
+    write (*,*) '                Select data within regions where column integrated rain water (rwp) >= <wp_thresh>'
+    write (*,*) '            lwp <wp_thresh>'
+    write (*,*) '                Select data within regions where column integrated cloud + rain water (lwp) >= <wp_thresh>'
     write (*,*) ''
     write (*,*) '        Note that more than one <filter_spec> can be specified. When this is done the data selection'
     write (*,*) '        becomes the intersection of all the filter specs. Eg., specifying both cylvol and cold'
