@@ -127,15 +127,6 @@ program diag_filter
   Nz = W%dims(3)
   Nt = W%dims(4)
 
-  ! If we need W later on, prepare for reading it in
-  ! otherwise close the file
-  if (DoVertVel .or. DoAbsVertVel) then
-    rh5f_facc = 'R'
-    call rhdf5_open_file(Wfile, rh5f_facc, 0, rh5f_w)
-    W%ndims = 3
-    allocate(W%vdata(Nx*Ny*Nz))
-  endif
-
   BadDims = .false.
   if (DoCylVol) then
     ! Need pressure (to find the storm center)
@@ -185,6 +176,16 @@ program diag_filter
   if (BadDims) then
     stop
   endif
+
+  ! If we need W later on, prepare for reading it in
+  ! otherwise close the file
+  if (DoVertVel .or. DoAbsVertVel) then
+    rh5f_facc = 'R'
+    call rhdf5_open_file(Wfile, rh5f_facc, 0, rh5f_w)
+    W%ndims = 3
+    allocate(W%vdata(Nx*Ny*Nz))
+  endif
+
 
   ! Set the output dimensions and coordinates to those of the W field
   call SetOutCoords(Wfile, Xcoords, Ycoords, Zcoords, Tcoords)
