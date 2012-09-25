@@ -40,7 +40,7 @@ program diag_filter
   ! var number
   type (Rhdf5Var) :: W, Press, TempC, Cwp, Rwp, OutFilter
   type (Rhdf5Var) :: Xcoords, Ycoords, Zcoords, Tcoords
-  type (Rhdf5Var) :: Radius, MinP, StormX, StormY
+  type (Rhdf5Var) :: Radius, MinP, StormX, StormY, MaxRadius
   real :: Rval, Pval, Zval
   character (len=MediumString) :: Wfile, PressFile, TempcFile, CwpFile, RwpFile
   character (len=LittleString) :: rh5f_facc;
@@ -267,7 +267,7 @@ program diag_filter
   allocate(OutFilter%vdata(Nx*Ny*Nz))
 
   if (DoCylVol) then
-    ! prepare for writing the radius values into the aux output file.
+    ! prepare for writing the radius values into the output file.
     Radius%vname = 'radius'
     Radius%ndims = 2
     Radius%dims(1) = Nx
@@ -302,6 +302,15 @@ program diag_filter
     StormY%units = 'deg lat'
     StormY%descrip = 'latitude location of minimum SLP of storm'
     allocate(StormY%vdata(1))
+
+    MaxRadius%vname = 'max_radius'
+    MaxRadius%ndims = 1
+    MaxRadius%dims(1) = 1
+    MaxRadius%dimnames(1) = 'x'
+    MaxRadius%units = 'km'
+    MaxRadius%descrip = 'maximum radius across domain and time'
+    allocate(MaxRadius%vdata(1))
+    MaxRadius%vdata(1) = -1.0 ! not expecting negative radii
   endif
 
   rh5f_facc = 'W'
@@ -315,6 +324,7 @@ program diag_filter
   ! plus the time dimensions have been "removed" from the descriptions
   ! of the input variables.
   !
+
   do it = 1, Nt
     ! prepare for doing the selection
     if (DoCylVol) then
@@ -400,6 +410,9 @@ program diag_filter
               ! save the radius value
               ! note that this re-writes the same horizontal radius values for each z level
               call MultiDimAssign(Nx, Ny, Nz, ix, iy, iz, Rval, Var2d=Radius%vdata)
+              if (Rval .gt. MaxRadius%vdata(1)) then
+                MaxRadius%vdata(1) = Rval
+              endif
             endif
           else
             call MultiDimAssign(Nx, Ny, Nz, ix, iy, iz, 0.0, Var3d=OutFilter%vdata)
@@ -460,6 +473,9 @@ program diag_filter
   call rhdf5_attach_dimensions(OutFile, OutFilter)
 
   if (DoCylVol) then
+    ! Write out the maximum radius value
+    call rhdf5_write(OutFile, MaxRadius, 1)
+
     ! Attach dims to the auxillary data
     call rhdf5_attach_dimensions(OutFile, MinP)
     call rhdf5_attach_dimensions(OutFile, StormX)
