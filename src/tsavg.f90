@@ -381,7 +381,7 @@ program tsavg
     enddo
   else
     ! x,y coords are in degrees lon,lat respectively
-    call ConvertGridCoords(Nx, Ny, Nz, Nt, InXcoords%vdata, InYcoords%vdata, InXcoordsKm, InYcoordsKm)
+    call ConvertGridCoords(Nx, Ny, Nz, InXcoords%vdata, InYcoords%vdata, InXcoordsKm, InYcoordsKm)
   endif
 
   DeltaX = InXcoordsKm(2) - InXcoordsKm(1)
