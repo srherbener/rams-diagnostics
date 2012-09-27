@@ -43,10 +43,21 @@ sub CreateFileNames
   my $InFileSuffix;
   my $OutFile;
   my $FilterFile;
-  my $RadiusFile;
 
   my $Pattern;
   my @f;
+  my $TdirStr;
+
+  # If $Tdir is the string "NONE", then do not place a subdirectory
+  # in the path to the input and output files
+  if ($Tdir eq "NONE")
+    {
+    $TdirStr = "";
+    }
+  else
+    {
+    $TdirStr = "/" . $Tdir;
+    }
 
   # InDir is the directory that the input files come from.
   #
@@ -57,7 +68,7 @@ sub CreateFileNames
   #
   # OutFile is simply the whole path to the output file.
   #
-  $InDir = $Case . "/" . $RevuDir . "/" . $Tdir;
+  $InDir = $Case . "/" . $RevuDir . $TdirStr;
 
   # Use the w input file as a sample for finding the input file suffix.
   $Pattern = $InDir . "/w-*.h5";
@@ -65,11 +76,10 @@ sub CreateFileNames
   $InFileSuffix = $f[0];
   $InFileSuffix =~ s/.*\/w-/-/;
   
-  $OutFile = $AzavgDir . "/" . ${Tdir} . "/" . ${Adiag} . "_" . ${Case} . ".h5";
-  $FilterFile = $FilterDir . "/" . ${Tdir} . "/" . ${Fprefix} . "_" . ${Case} . ".h5";
-  $RadiusFile = $FilterDir . "/" . ${Tdir} . "/" . ${Fprefix} . "_aux_" . ${Case} . ".h5";
+  $OutFile = $AzavgDir . ${TdirStr} . "/" . ${Adiag} . "_" . ${Case} . ".h5";
+  $FilterFile = $FilterDir . ${TdirStr} . "/" . ${Fprefix} . "_" . ${Case} . ".h5";
 
-  return ($InDir, $InFileSuffix, $OutFile, $FilterFile, $RadiusFile);
+  return ($InDir, $InFileSuffix, $OutFile, $FilterFile);
   }
 
 #######################################################################
@@ -100,7 +110,6 @@ my $InDir;
 my $InFileSuffix;
 my $OutFile;
 my $FilterFile;
-my $RadiusFile;
 
 my @SysArgs;
 my $OutDir;
@@ -158,7 +167,7 @@ foreach $Case (sort(keys(%Cases)))
     # then join these files into the main file (above the time directories)
     foreach $Tdir (sort(keys(%TimeDirs)))
       {
-      ($InDir,$InFileSuffix,$OutFile,$FilterFile,$RadiusFile) =
+      ($InDir,$InFileSuffix,$OutFile,$FilterFile) =
           &CreateFileNames($Case, $Tdir, $Adiag,$Fprefix, $AzavgDir, $FilterDir, $RevuDir);
 
       print "***************************************************************\n";
@@ -169,7 +178,6 @@ foreach $Case (sort(keys(%Cases)))
       print "    Variable Dimension: $VarDim\n";
       print "    Number Radial Bands: $Nbands\n";
       print "    Filter File Name: $FilterFile\n";
-      print "    Radius File Name: $RadiusFile\n";
       print "    Revu Variable Name: $RevuVar\n";
       print "  Input File Directory: $InDir\n";
       print "  Input File Suffix: $InFileSuffix\n";
@@ -183,29 +191,38 @@ foreach $Case (sort(keys(%Cases)))
         system(@SysArgs);
         }
 
-      @SysArgs = ("azavg", $InDir, $InFileSuffix, $OutFile, $FilterFile, $RadiusFile, $Nbands, $Avar, $RevuVar, $VarDim);
+      @SysArgs = ("azavg", $InDir, $InFileSuffix, $OutFile, $FilterFile, $Nbands, $Avar, $RevuVar, $VarDim);
       system(@SysArgs);
 
       # record the input file for the upcoming join
-      if ($JoinInFiles eq "")
+      if ($Tdir eq "NONE")
         {
-        $JoinInFiles = $OutFile;
-        $JoinOutFile = $AzavgDir . "/" . basename($OutFile);
+        $JoinInFiles = "NONE";
         }
       else
         {
-        $JoinInFiles = $JoinInFiles . ":" . $OutFile;
+        if ($JoinInFiles eq "")
+          {
+          $JoinInFiles = $OutFile;
+          $JoinOutFile = $AzavgDir . "/" . basename($OutFile);
+          }
+        else
+          {
+          $JoinInFiles = $JoinInFiles . ":" . $OutFile;
+          }
         }
       }
 
-    @SysArgs = ("join_hdata", $JoinInFiles, $JoinOutFile, $Avar);
-    print "***************************************************\n";
-    print " Joining HDF5 data:\n";
-    print "   Input Files: $JoinInFiles\n";
-    print "   Output File: $JoinOutFile\n";
-    print "   GRADS Variable: $Avar\n";
-    system(@SysArgs);
-
+    if ($JoinInFiles ne "NONE")
+      {
+      @SysArgs = ("join_hdata", $JoinInFiles, $JoinOutFile, $Avar);
+      print "***************************************************\n";
+      print " Joining HDF5 data:\n";
+      print "   Input Files: $JoinInFiles\n";
+      print "   Output File: $JoinOutFile\n";
+      print "   GRADS Variable: $Avar\n";
+      system(@SysArgs);
+      }
     }
   }
 
