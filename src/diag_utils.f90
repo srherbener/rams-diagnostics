@@ -17,30 +17,30 @@ contains
 !
 ! This routine will do the azimuthal averaging. It will create a 4-D array
 ! for its output (to keep GRADS write routine consistent/general) even though it
-! really is 3-D data (radial band, z level, time). It will put the radial bands 
+! really is 3-D data (radial band, z level). It will put the radial bands 
 ! in the x dimension and make the y dimension 1 long.
 !
-! This routine will step though each z and t value and compute the azimuthal
+! This routine will step though each z value and compute the azimuthal
 ! average of the x-y plane at each of these points. Then it will store that
 ! in the output array so that you get azimuthal averaging for every original
-! z and t point.
+! z level.
 !
 
-subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, AvarNz, NumRbands, Avar, AzAvg, &
+subroutine AzimuthalAverage(Nx, Ny, Nz, AvarNz, NumRbands, Avar, AzAvg, &
   RbandInc, Filter, Radius, UndefVal)
 
   implicit none
 
-  integer :: Nx, Ny, Nz, Nt
+  integer :: Nx, Ny, Nz
   integer :: AvarNz
   integer :: NumRbands
-  real, dimension(Nx,Ny,AvarNz,Nt) :: Avar
-  real, dimension(NumRbands,AvarNz,Nt) :: AzAvg
-  real, dimension(Nx,Ny,Nz,Nt) :: Filter
-  real, dimension(Nx,Ny,Nt) :: Radius
+  real, dimension(Nx,Ny,AvarNz) :: Avar
+  real, dimension(NumRbands,AvarNz) :: AzAvg
+  real, dimension(Nx,Ny,Nz) :: Filter
+  real, dimension(Nx,Ny) :: Radius
   real :: RbandInc, UndefVal
 
-  integer :: ix, iy, iz, it
+  integer :: ix, iy, iz
   real, dimension(NumRbands) :: Rcounts
   integer :: ir, iRband
 
@@ -51,43 +51,40 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, Nt, AvarNz, NumRbands, Avar, AzAvg, &
 
   write (*,*) 'Averaging Data:'
 
-  do it = 1, Nt
-    do iz = 1, AvarNz
-      ! For the averaging
-      do ir = 1, NumRbands
-        Rcounts(ir) = 0.0
-        AzAvg(ir,iz,it) = 0.0
-      end do
+  do iz = 1, AvarNz
+    ! For the averaging
+    do ir = 1, NumRbands
+      Rcounts(ir) = 0.0
+      AzAvg(ir,iz) = 0.0
+    end do
 
-      ! Get the averages for this x-y plane
-      do iy = 1, Ny
-        do ix = 1, Nx
-          ! Only keep the points where Filter is equal to 1
-          if ((anint(Filter(ix,iy,iz,it)) .eq. 1.0) .and. (Avar(ix,iy,iz,it) .ne. UndefVal)) then
-             iRband = int(Radius(ix,iy,it) / RbandInc) + 1
-             ! iRband will go from 1 to n, but n might extend beyond the last radial
-             ! band due to approximations made in deriving RbandInc
-             if (iRband .gt. NumRbands) then
-               iRband = NumRbands
-             end if
+    ! Get the averages for this x-y plane
+    do iy = 1, Ny
+      do ix = 1, Nx
+        ! Only keep the points where Filter is equal to 1
+        if ((anint(Filter(ix,iy,iz)) .eq. 1.0) .and. (Avar(ix,iy,iz) .ne. UndefVal)) then
+           iRband = int(Radius(ix,iy) / RbandInc) + 1
+           ! iRband will go from 1 to n, but n might extend beyond the last radial
+           ! band due to approximations made in deriving RbandInc
+           if (iRband .gt. NumRbands) then
+             iRband = NumRbands
+           end if
 
-             AzAvg(iRband,iz,it) = AzAvg(iRband,iz,it) + Avar(ix,iy,iz,it)
-             Rcounts(iRband) = Rcounts(iRband) + 1.0
-          end if
-        end do
-      end do
-
-      do ir = 1, NumRbands
-        ! If we didn't put anything into an AzAvg slot then set it
-        ! to the undefined value so the data isn't biased by trying to chose
-        ! a default value.
-        if (Rcounts(ir) .ne. 0.0) then
-          AzAvg(ir,iz,it) = AzAvg(ir,iz,it) / Rcounts(ir)
-        else
-          AzAvg(ir,iz,it) = UndefVal
+           AzAvg(iRband,iz) = AzAvg(iRband,iz) + Avar(ix,iy,iz)
+           Rcounts(iRband) = Rcounts(iRband) + 1.0
         end if
       end do
+    end do
 
+    do ir = 1, NumRbands
+      ! If we didn't put anything into an AzAvg slot then set it
+      ! to the undefined value so the data isn't biased by trying to chose
+      ! a default value.
+      if (Rcounts(ir) .ne. 0.0) then
+        AzAvg(ir,iz) = AzAvg(ir,iz) / Rcounts(ir)
+      else
+        AzAvg(ir,iz) = UndefVal
+      end if
     end do
   end do
   write (*,*) ''
@@ -215,47 +212,45 @@ end subroutine
 ! into tangential or radial components given the storm center location.
 !
 
-subroutine ConvertHorizVelocity(Nx, Ny, Nz, Nt, U, V, StormX, StormY, Xcoords, Ycoords, Avar, DoTangential)
+subroutine ConvertHorizVelocity(Nx, Ny, Nz, U, V, StormX, StormY, Xcoords, Ycoords, Avar, DoTangential)
   implicit none
 
-  integer :: Nx, Ny, Nz, Nt
-  real, dimension(Nx,Ny,Nz,Nt) :: U, V, Avar
-  real, dimension(Nt) :: StormX, StormY
+  integer :: Nx, Ny, Nz
+  real, dimension(Nx,Ny,Nz) :: U, V, Avar
+  real :: StormX, StormY
   real, dimension(Nx) :: Xcoords
   real, dimension(Ny) :: Ycoords
   logical :: DoTangential
 
-  integer :: ix, iy, iz, it
+  integer :: ix, iy, iz
   real :: StmX, StmY         ! x,y location relative to the storm center
   real :: Theta, Phi, Alpha  ! angle values, in radians
   real :: WindMag, WindX, WindY
   
-  do it = 1, Nt
-    do iz = 1, Nz
-      do iy = 1, Ny
-        StmY = Ycoords(iy) - StormY(it)
-        do ix = 1, Nx
-          StmX = Xcoords(ix) - StormX(it)
+  do iz = 1, Nz
+    do iy = 1, Ny
+      StmY = Ycoords(iy) - StormY
+      do ix = 1, Nx
+        StmX = Xcoords(ix) - StormX
 
-          WindX = U(ix,iy,iz,it)
-          WindY = V(ix,iy,iz,it)
+        WindX = U(ix,iy,iz)
+        WindY = V(ix,iy,iz)
 
-          Theta = atan2(StmY, StmX) ! Angle of radius line from horizontal
-          Phi = atan2(WindY, WindX) ! Angle of wind vector from horizontal
-          Alpha = Phi - Theta       ! Angle of wind vector from raduis line
-                                    !    radius line is the line from storm center through
-                                    !    the point (StmX, StmY)
+        Theta = atan2(StmY, StmX) ! Angle of radius line from horizontal
+        Phi = atan2(WindY, WindX) ! Angle of wind vector from horizontal
+        Alpha = Phi - Theta       ! Angle of wind vector from raduis line
+                                  !    radius line is the line from storm center through
+                                  !    the point (StmX, StmY)
 
-          WindMag = sqrt(WindX**2 + WindY**2)
-          
-          if (DoTangential) then
-            ! Tangential wind
-            Avar(ix,iy,iz,it) = WindMag * sin(Alpha)
-          else
-            ! Radial wind
-            Avar(ix,iy,iz,it) = WindMag * cos(Alpha)
-          end if
-        end do
+        WindMag = sqrt(WindX**2 + WindY**2)
+        
+        if (DoTangential) then
+          ! Tangential wind
+          Avar(ix,iy,iz) = WindMag * sin(Alpha)
+        else
+          ! Radial wind
+          Avar(ix,iy,iz) = WindMag * cos(Alpha)
+        end if
       end do
     end do
   end do
@@ -269,13 +264,13 @@ end subroutine
 ! This routine will convert the longitude, latitude angle values
 ! in the input var to a flat plane (x and y length values)
 !
-subroutine ConvertGridCoords(Nx, Ny, Nz, Nt, Lon, Lat, Xcoords, Ycoords)
+subroutine ConvertGridCoords(Nx, Ny, Nz, Lon, Lat, Xcoords, Ycoords)
   implicit none
 
   real, parameter :: RadiusEarth = 6378.1  ! km
   real, parameter :: PI = 3.14159
 
-  integer :: Nx, Ny, Nz, Nt
+  integer :: Nx, Ny, Nz
   real, dimension(Nx) :: Lon
   real, dimension(Ny) :: Lat
   real, dimension(Nx) :: Xcoords
@@ -629,24 +624,22 @@ end subroutine CreateFilter
 ! and convert them to km values according to the lon/x and lat/y
 ! data.
 !
-! This routine is not very efficient so it relies on Nx, Ny and Nt
+! This routine is not very efficient so it relies on Nx, Ny
 ! remaining small.
 !
-subroutine ConvertStormCenter(Nx, Ny, Nt, Lon, Xcoords, StormLon, StormX, &
+subroutine ConvertStormCenter(Nx, Ny, Lon, Xcoords, StormLon, StormX, &
       Lat, Ycoords, StormLat, StormY)
   implicit none
 
-  integer :: Nx, Ny, Nt
+  integer :: Nx, Ny
   real, dimension(Nx) :: Lon, Xcoords
   real, dimension(Ny) :: Lat, Ycoords
-  real, dimension(Nt) :: StormLon, StormX, StormLat, StormY
+  real :: StormLon, StormX, StormLat, StormY
 
-  integer :: ix, iy, it
+  integer :: ix, iy
 
-  do it = 1, Nt
-    StormX(it) = Xcoords(FindIndex(Nx, Lon, StormLon(it)))
-    StormY(it) = Ycoords(FindIndex(Ny, Lat, StormLat(it)))
-  enddo
+  StormX = Xcoords(FindIndex(Nx, Lon, StormLon))
+  StormY = Ycoords(FindIndex(Ny, Lat, StormLat))
 
   return
 end subroutine ConvertStormCenter
