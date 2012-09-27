@@ -331,8 +331,7 @@ program azavg
     
     ! Write out status to screen every 100 timesteps so that the user can see that a long
     ! running job is progressing okay.
-    !if (modulo(it,100) .eq. 0) then
-    if (modulo(it,1) .eq. 0) then
+    if (modulo(it,100) .eq. 0) then
       write (*,*) 'Working: Timestep, Time: ', it, Tcoords%vdata(it)
 
       write (*,'(a,4f15.4)') '   Storm center: lat, lon, x, y: ', StormLon%vdata(1), StormLat%vdata(1), StormX, StormY
@@ -340,6 +339,13 @@ program azavg
       flush(6)
     endif
   enddo
+
+
+  ! 'it' will be one beyond its loop limit (Nt) so subtract one
+  ! from 'it' when reporting how many times steps were processed
+  write (*,*) 'Finished: Total number of time steps processed: ', it-1
+  write (*,*) ''
+  flush(6)
 
   ! close the files
   call rhdf5_close_file(rh5f_filter)
