@@ -232,7 +232,7 @@ program diag_filter
   ! Convert lat (x coords) and lon (y coords) to distances in km
   allocate(XcoordsKm(Nx))
   allocate(YcoordsKm(Ny))
-  call ConvertGridCoords(Nx, Ny, Nz, Nt, Xcoords%vdata, Ycoords%vdata, XcoordsKm, YcoordsKm)
+  call ConvertGridCoords(Nx, Ny, Nz, Xcoords%vdata, Ycoords%vdata, XcoordsKm, YcoordsKm)
 
   DeltaX = (XcoordsKm(2) - XcoordsKm(1)) * 1000.0
   DeltaY = (YcoordsKm(2) - YcoordsKm(1)) * 1000.0
