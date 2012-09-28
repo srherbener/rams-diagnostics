@@ -174,66 +174,74 @@ for i = 1:size(InLines,1)
 end
 
 % Make the association between TsavgPlots and the PlotSets
-for itp = 1:length(Cdata.TsavgPlots)
-  PlotSetName = Cdata.TsavgPlots(itp).PSname;
-  Match = 0;
-  for ips = 1:length(Cdata.PlotSets)
-    if (strcmp(Cdata.PlotSets(ips).Name, PlotSetName))
-      Match = ips;
+if (isfield(Cdata, 'TsavgPlots'))
+  for itp = 1:length(Cdata.TsavgPlots)
+    PlotSetName = Cdata.TsavgPlots(itp).PSname;
+    Match = 0;
+    for ips = 1:length(Cdata.PlotSets)
+      if (strcmp(Cdata.PlotSets(ips).Name, PlotSetName))
+        Match = ips;
+      end
     end
-  end
-  Cdata.TsavgPlots(itp).PSnum = Match;
-
-  if (Match == 0)
-    fprintf('WARNING: Could not find a match for PlotSet "%s" specified in TsavgPlot number %d\n', Cdata.TsavgPlots(itp).PSname, itp);
+    Cdata.TsavgPlots(itp).PSnum = Match;
+  
+    if (Match == 0)
+      fprintf('WARNING: Could not find a match for PlotSet "%s" specified in TsavgPlot number %d\n', Cdata.TsavgPlots(itp).PSname, itp);
+    end
   end
 end
 
 % Make the association between DistPlots and the PlotSets
-for itp = 1:length(Cdata.DistPlots)
-  PlotSetName = Cdata.DistPlots(itp).PSname;
-  Match = 0;
-  for ips = 1:length(Cdata.PlotSets)
-    if (strcmp(Cdata.PlotSets(ips).Name, PlotSetName))
-      Match = ips;
+if (isfield(Cdata, 'DistPlots'))
+  for itp = 1:length(Cdata.DistPlots)
+    PlotSetName = Cdata.DistPlots(itp).PSname;
+    Match = 0;
+    for ips = 1:length(Cdata.PlotSets)
+      if (strcmp(Cdata.PlotSets(ips).Name, PlotSetName))
+        Match = ips;
+      end
+    end
+    Cdata.DistPlots(itp).PSnum = Match;
+  
+    if (Match == 0)
+      fprintf('WARNING: Could not find a match for PlotSet "%s" specified in DistPlot number %d\n', Cdata.DistPlots(itp).PSname, itp);
     end
   end
-  Cdata.DistPlots(itp).PSnum = Match;
-
-  if (Match == 0)
-    fprintf('WARNING: Could not find a match for PlotSet "%s" specified in DistPlot number %d\n', Cdata.DistPlots(itp).PSname, itp);
-  end
 end
-
+  
 % Make the association between TwoDimPlots and the PlotSets
-for itp = 1:length(Cdata.TwoDimPlots)
-  PlotSetName = Cdata.TwoDimPlots(itp).PSname;
-  Match = 0;
-  for ips = 1:length(Cdata.PlotSets)
-    if (strcmp(Cdata.PlotSets(ips).Name, PlotSetName))
-      Match = ips;
+if (isfield(Cdata, 'TwoDimPlots'))
+  for itp = 1:length(Cdata.TwoDimPlots)
+    PlotSetName = Cdata.TwoDimPlots(itp).PSname;
+    Match = 0;
+    for ips = 1:length(Cdata.PlotSets)
+      if (strcmp(Cdata.PlotSets(ips).Name, PlotSetName))
+        Match = ips;
+      end
     end
-  end
-  Cdata.TwoDimPlots(itp).PSnum = Match;
-
-  if (Match == 0)
-    fprintf('WARNING: Could not find a match for PlotSet "%s" specified in TwoDimPlot number %d\n', Cdata.TwoDimPlots(itp).PSname, itp);
+    Cdata.TwoDimPlots(itp).PSnum = Match;
+  
+    if (Match == 0)
+      fprintf('WARNING: Could not find a match for PlotSet "%s" specified in TwoDimPlot number %d\n', Cdata.TwoDimPlots(itp).PSname, itp);
+    end
   end
 end
-
+  
 % Make the association between ProfPlots and the PlotSets
-for itp = 1:length(Cdata.ProfPlots)
-  PlotSetName = Cdata.ProfPlots(itp).PSname;
-  Match = 0;
-  for ips = 1:length(Cdata.PlotSets)
-    if (strcmp(Cdata.PlotSets(ips).Name, PlotSetName))
-      Match = ips;
+if (isfield(Cdata, 'ProfPlots'))
+  for itp = 1:length(Cdata.ProfPlots)
+    PlotSetName = Cdata.ProfPlots(itp).PSname;
+    Match = 0;
+    for ips = 1:length(Cdata.PlotSets)
+      if (strcmp(Cdata.PlotSets(ips).Name, PlotSetName))
+        Match = ips;
+      end
     end
-  end
-  Cdata.ProfPlots(itp).PSnum = Match;
-
-  if (Match == 0)
-    fprintf('WARNING: Could not find a match for PlotSet "%s" specified in ProfPlot number %d\n', Cdata.ProfPlots(itp).PSname, itp);
+    Cdata.ProfPlots(itp).PSnum = Match;
+  
+    if (Match == 0)
+      fprintf('WARNING: Could not find a match for PlotSet "%s" specified in ProfPlot number %d\n', Cdata.ProfPlots(itp).PSname, itp);
+    end
   end
 end
 

@@ -40,11 +40,11 @@ for i = 1:Ntsteps
 
   if (mod(i-TsStart,TsPeriod) == 0)
     it = it + 1;
-    % returns date and time strings
+    % returns day and time strings
     [ Ds, Ts ] = TimeToString(BT(1), BT(2), BT(3), BT(4), BT(5), BT(6), Times(i));
 
     Tticks(it) = Times(i);
-    Tlabels{it} =  Ts;
+    Tlabels{it} = sprintf('%s/%s', Ds, Ts);
   end
 end
 
