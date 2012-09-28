@@ -1,54 +1,84 @@
-% script to plot KE vs Vt
+function [ ] = GenKeVtPlots(ConfigFile)
+% GenKeVtPlots function to plot total KE vs max azimuthally averaged tangential wind
 
-clear;
+[ Config ] = ReadConfig(ConfigFile);
 
-[ Config ] = ReadConfig('DiagConfig');
+UndefVal = Config.UndefVal;
 
-Pname = Config.Pexp.Ename;
-Tstart = Config.Pexp.Tstart;
-Tend = Config.Pexp.Tend;
+Pname   = Config.ExpName;
 
 Tdir = Config.TsavgDir;
 Pdir = Config.PlotDir;
-ControlCase = Config.ControlCase;
 
-KeVar = 'horiz_ke';
-VtVar = 'max_azwind';
-
-Ptitle = sprintf('%: Kinetic Energy vs Maximum Vt', Pname);
-Xlabel = 'Wind Speed (m/s)';
-Ylabel = 'KE (J)';
-OutFile = sprintf('%s/KeVt.jpg', Pdir);
-LegLoc = 'NorthWest';
-
+% For smoothing, length of a running mean
 Flen = 5;
 
-Times = (Tstart:Tend);
-Tlen = length(Times);
+Tstart = 1;
+Tend = Config.TsPlotSpecs.Ntsteps;
+Tlen = (Tend - Tstart) + 1;
 
+CntlTstart = Config.TsPlotSpecs.ControlStart;
+CntlTend = CntlTstart + (Config.TsPlotSpecs.Ntsteps - 1);
+
+% For plotting
 Lcolors = { 'k' 'm' 'b' 'c' 'g' 'y' 'r' };
 
+AxisProps(1).Name = 'FontSize';
+AxisProps(1).Val = 20; 
 
-% make sure output directory exists
-if (exist(Pdir, 'dir') ~= 7)
-    mkdir(Pdir);
+% make the plots
+for iplot = 1:length(Config.TwoDimPlots)
+    clear VtAll;
+    clear KeAll;
+    clear LegText;
+
+    VtVar = Config.TwoDimPlots(iplot).Xvar;
+    KeVar = Config.TwoDimPlots(iplot).Yvar;
+
+    Ptitle = sprintf('%s: %s', Pname, Config.TwoDimPlots(iplot).Title);
+    Xlabel = Config.TwoDimPlots(iplot).Xlabel;
+    Ylabel = Config.TwoDimPlots(iplot).Ylabel;
+    LegLoc = Config.TwoDimPlots(iplot).LegLoc;
+    OutFile = sprintf('%s/%s', Pdir, Config.TwoDimPlots(iplot).OutFile);
+    
+    % make sure output directory exists
+    if (exist(Pdir, 'dir') ~= 7)
+        mkdir(Pdir);
+    end
+
+    ihist = 0;
+    ips = Config.TwoDimPlots(iplot).PSnum;
+    if (ips == 0)
+      fprintf('WARNING: skipping TwoDimPlot number %d due to no associated PlotSet\n', iplot)
+    else
+      for icase = 1:Config.PlotSets(ips).Ncases
+        Case = Config.PlotSets(ips).Cases(icase).Cname;
+        LegText(icase) = { Config.PlotSets(ips).Cases(icase).Legend };
+
+        VtFile = sprintf('%s/%s_%s.h5', Tdir, VtVar, Case);
+        fprintf('Reading HDF5 file: %s\n', VtFile);
+        VT = squeeze(hdf5read(VtFile, VtVar));
+        if (strcmp(Case, Config.ControlCase))
+          VT = VT(CntlTstart:CntlTend);
+        else
+          VT = VT(Tstart:Tend);
+        end
+        [ VtAll(icase,:) ] = SmoothFillTseries(VT, Tlen, Flen);
+    
+        KeFile = sprintf('%s/%s_%s.h5', Tdir, KeVar, Case);
+        fprintf('Reading HDF5 file: %s\n', KeFile);
+        KE = squeeze(hdf5read(KeFile, KeVar));
+        if (strcmp(Case, Config.ControlCase))
+          KE = KE(CntlTstart:CntlTend);
+        else
+          KE = KE(Tstart:Tend);
+        end
+        [ KeAll(icase,:) ] = SmoothFillTseries(KE, Tlen, Flen);
+      end
+    end
+
+    Plot2dSet( VtAll, KeAll, Ptitle, Xlabel, Ylabel, Lcolors, LegText, LegLoc, AxisProps, OutFile );
+    fprintf('\n');
 end
 
-for icase = 1:length(Config.Cases)
-    Case = Config.Cases(icase).Cname;
-    Pcase = Config.Cases(icase).Pname;
-
-    KeFile = sprintf('%s/%s_%s.h5', Tdir, KeVar, Case);
-    fprintf('Reading HDF5 file: %s\n', KeFile);
-    [ KE, Rcoords, Zcoords, Tcoords ] = ReadAzavgVar(KeFile, KeVar);
-    [ KeAll(icase,:) ] = SmoothFillTseries(squeeze(KE), Tlen, Flen);
-    
-    VtFile = sprintf('%s/%s_%s.h5', Tdir, VtVar, Case);
-    fprintf('Reading HDF5 file: %s\n', VtFile);
-    [ VT, Rcoords, Zcoords, Tcoords ] = ReadAzavgVar(VtFile, VtVar);
-    [ VtAll(icase,:) ] = SmoothFillTseries(squeeze(VT), Tlen, Flen);
-    
-    LegText(icase) = { Pcase };
 end
-
-Plot2dSet( VtAll, KeAll, Ptitle, Xlabel, Ylabel, Lcolors, LegText, LegLoc, OutFile );
