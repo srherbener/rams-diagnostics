@@ -36,32 +36,51 @@ fprintf('\n');
 H5_Var1(H5_Var1 == UndefVal) = nan;
 H5_Var2(H5_Var2 == UndefVal) = nan;
 
-% Create the difference values
-H5_Var = H5_Var1 - H5_Var2;
-
 % Read in coordinate values from InFile1 (doesn't matter which one). Don't
 % need y_coords since this is a dummy dimension.
-H5_Xcoords = hdf5read(InFile1, 'x_coords');
-H5_Zcoords = hdf5read(InFile1, 'z_coords');
-H5_Tcoords = hdf5read(InFile1, 't_coords');
+F1_Xcoords = hdf5read(InFile1, 'x_coords');
+F1_Zcoords = hdf5read(InFile1, 'z_coords');
+F1_Tcoords = hdf5read(InFile1, 't_coords');
+
+F2_Xcoords = hdf5read(InFile2, 'x_coords');
+F2_Zcoords = hdf5read(InFile2, 'z_coords');
+F2_Tcoords = hdf5read(InFile2, 't_coords');
 
 % Grab the selection criteria out of DataSelect
-X1 = find(H5_Xcoords >= DataSelect(1), 1);
-X2 = find(H5_Xcoords <= DataSelect(2), 1, 'last');
-Y1 = 1;
-Y2 = 1;
-Z1 = find(H5_Zcoords >= DataSelect(3), 1);
-Z2 = find(H5_Zcoords <= DataSelect(4), 1, 'last');
-T1 = find(H5_Tcoords >= DataSelect(5), 1);
-T2 = find(H5_Tcoords <= DataSelect(6), 1, 'last');
+F1X1 = find(F1_Xcoords >= DataSelect(1), 1);
+F1X2 = find(F1_Xcoords <= DataSelect(2), 1, 'last');
+F1Y1 = 1;
+F1Y2 = 1;
+F1Z1 = find(F1_Zcoords >= DataSelect(3), 1);
+F1Z2 = find(F1_Zcoords <= DataSelect(4), 1, 'last');
+F1T1 = find(F1_Tcoords >= DataSelect(5), 1);
+F1T2 = find(F1_Tcoords <= DataSelect(6), 1, 'last');
+
+F2X1 = find(F2_Xcoords >= DataSelect(1), 1);
+F2X2 = find(F2_Xcoords <= DataSelect(2), 1, 'last');
+F2Y1 = 1;
+F2Y2 = 1;
+F2Z1 = find(F2_Zcoords >= DataSelect(3), 1);
+F2Z2 = find(F2_Zcoords <= DataSelect(4), 1, 'last');
+F2T1 = find(F2_Tcoords >= DataSelect(5), 1);
+F2T2 = find(F2_Tcoords <= DataSelect(6), 1, 'last');
 
 % Convert to the 2D format that EOF analysis wants --> (time, obs)
-Var = Xyzt2EofArray(H5_Var, X1, X2, Y1, Y2, Z1, Z2, T1, T2);
+Var1 = Xyzt2EofArray(H5_Var1, F1X1, F1X2, F1Y1, F1Y2, F1Z1, F1Z2, F1T1, F1T2);
+Var2 = Xyzt2EofArray(H5_Var2, F2X1, F2X2, F2Y1, F2Y2, F2Z1, F2Z2, F2T1, F2T2);
+
+% Create the difference values
+% Wait until here to create the differences since the control
+% run will typically have more time steps in it (making H5_Var1
+% and H5_Var2 different sizes), and the data selection in
+% Xyzt2EofArray will trim out equal sizes.
+Var = Var1 - Var2;
 
 % Coordinate values
-Radius = H5_Xcoords(X1:X2);
-Height = H5_Zcoords(Z1:Z2);
-Time   = H5_Tcoords(T1:T2);
+% Use the coordinates from the first file (not the control)
+Radius = F1_Xcoords(F1X1:F1X2);
+Height = F1_Zcoords(F1Z1:F1Z2);
+Time   = F1_Tcoords(F1T1:F1T2);
 
 % Run EOF and generate the eigenvalue spectrum
 fprintf('Running EOF analysis:\n', Vname, InFile1);

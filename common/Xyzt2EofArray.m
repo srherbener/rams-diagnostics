@@ -25,6 +25,7 @@ Nt = (t2-t1) + 1;
 NA = Nx*Ny*Nz;
 EofData = zeros(Nt, NA);
 
+it_out = 0;
 for it = t1:t2
     % draw out the (x,y,z) data at this time step into a linear (1D) array
     % only use the selected values for x,y,z however.
@@ -38,7 +39,8 @@ for it = t1:t2
             end
         end
     end
-    EofData(it,:) = A;
+    it_out = it_out + 1;
+    EofData(it_out,:) = A;
 end
 
 end
