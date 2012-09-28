@@ -5,11 +5,11 @@ function [ ] = GenTsPlots(ConfigFile)
 % the file system.
 [ Config ] = ReadConfig(ConfigFile);
     
-Pname   = Config.Pexp.Ename;
-Ntsteps = Config.Pexp.Ntsteps;
-Tstart  = Config.Pexp.Tstart;
-Tinc    = Config.Pexp.Tinc;
-Tunits  = Config.Pexp.Tunits;
+Pname   = Config.ExpName;
+Ntsteps = Config.TsPlotSpecs.Ntsteps;
+Tstart  = Config.TsPlotSpecs.Tstart;
+Tinc    = Config.TsPlotSpecs.Tinc;
+Tunits  = Config.TsPlotSpecs.Tunits;
 
 % BT is an array with numeric entries for:
 %    1 - year
@@ -18,12 +18,12 @@ Tunits  = Config.Pexp.Tunits;
 %    4 - hour
 %    5 - minute
 %    6 - second
-BT = Config.Pexp.BaseTime;
+BT = Config.TsPlotSpecs.BaseTime;
 BaseTime = datenum(BT(1), BT(2), BT(3), BT(4), BT(5), BT(6));
 StartTime = datestr(BaseTime, 'mm/dd/yyyy HH:MM')
 
-TsStart = Config.Pexp.TsStart;
-TsPeriod = Config.Pexp.TsPeriod;
+TsStart = Config.TsPlotSpecs.TsStart;
+TsPeriod = Config.TsPlotSpecs.TsPeriod;
 
 Tdir = Config.TsavgDir;
 Pdir = Config.PlotDir;
@@ -48,6 +48,10 @@ for i = 1:Ntsteps
   end
 end
 
+% Figure out the time step range for the control run
+T1_Cntl = Config.TsPlotSpecs.ControlStart;
+T2_Cntl = T1_Cntl + (Ntsteps - 1);
+
 Lcolors = { 'k' 'm' 'b' 'c' 'g' 'y' 'r' };
 
 % Find and replace underscores in Ptitle, Ylabel with blank spaces
@@ -63,8 +67,9 @@ for iplot = 1:length(Config.TsavgPlots)
       Hfile = sprintf('%s/%s_%s.h5', Tdir, Var, Case);
       fprintf('Reading Control Case: %s\n', Case);
       fprintf('  HDF5 file: %s\n', Hfile);
-      [ Hvar, Rcoords, Zcoords, Tcoords ] = ReadAzavgVar(Hfile, Var);
-      TS_CNTL = squeeze(Hvar);
+      TC_CNTL = squeeze(hdf5read(Hfile, Var));
+      % pick out the corresponding time steps
+      TS_CNTL = TC_CNTL(T1_Cntl:T2_Cntl);
     end 
 
     Ptitle = sprintf('%s: %s', Pname, Config.TsavgPlots(iplot).Title);
@@ -88,8 +93,11 @@ for iplot = 1:length(Config.TsavgPlots)
 
         Hfile = sprintf('%s/%s_%s.h5', Tdir, Var, Case);
         fprintf('Reading HDF5 file: %s\n', Hfile);
-        [ Hvar, Rcoords, Zcoords, Tcoords ] = ReadAzavgVar(Hfile, Var);
-        TS = squeeze(Hvar);
+        TS = squeeze(hdf5read(Hfile, Var));
+        if (strcmp(Case, Config.ControlCase))
+          % pick out the corresponding time steps
+          TS = TS(T1_Cntl:T2_Cntl);
+        end
         
         % If doing a diff type plot, subtract off the control values
         if (strcmp(Config.TsavgPlots(iplot).Type, 'diff'))

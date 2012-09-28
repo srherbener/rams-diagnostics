@@ -72,6 +72,8 @@ for i = 1:size(InLines,1)
       Cdata.EofDir = Fields{2};
     case 'ControlCase:'
       Cdata.ControlCase = Fields{2};
+    case 'ExpName:'
+      Cdata.ExpName = Fields{2};
     case 'UndefVal:'
       Cdata.UndefVal = sscanf(Fields{2}, '%f');
     case 'Case:'
@@ -93,15 +95,15 @@ for i = 1:size(InLines,1)
       Cdata.AzavgEof(i_aeof).Zmax = sscanf(Fields{6}, '%f');
       Cdata.AzavgEof(i_aeof).Tmin = sscanf(Fields{7}, '%f');
       Cdata.AzavgEof(i_aeof).Tmax = sscanf(Fields{8}, '%f');
-    case 'PlotExp:'
-      Cdata.Pexp.Ename    = Fields{2};
-      Cdata.Pexp.Ntsteps  = sscanf(Fields{3}, '%d');
-      Cdata.Pexp.Tstart   = sscanf(Fields{4}, '%f');
-      Cdata.Pexp.Tinc     = sscanf(Fields{5}, '%f');
-      Cdata.Pexp.Tunits   = Fields{6};
-      Cdata.Pexp.BaseTime = sscanf(Fields{7}, '%d:%d:%d:%d:%d:%d', 6);
-      Cdata.Pexp.TsStart  = sscanf(Fields{8}, '%d');
-      Cdata.Pexp.TsPeriod = sscanf(Fields{9}, '%d');
+    case 'TsPlotSpecs:'
+      Cdata.TsPlotSpecs.Ntsteps      = sscanf(Fields{2}, '%d');
+      Cdata.TsPlotSpecs.Tstart       = sscanf(Fields{3}, '%f');
+      Cdata.TsPlotSpecs.Tinc         = sscanf(Fields{4}, '%f');
+      Cdata.TsPlotSpecs.Tunits       = Fields{5};
+      Cdata.TsPlotSpecs.ControlStart = sscanf(Fields{6}, '%d');
+      Cdata.TsPlotSpecs.BaseTime     = sscanf(Fields{7}, '%d:%d:%d:%d:%d:%d', 6);
+      Cdata.TsPlotSpecs.TsStart      = sscanf(Fields{8}, '%d');
+      Cdata.TsPlotSpecs.TsPeriod     = sscanf(Fields{9}, '%d');
     case 'PlotSet:'
       i_pset = i_pset + 1;
       Cdata.PlotSets(i_pset).Name   = Fields{2};
