@@ -12,7 +12,7 @@ AzavgDir = Config.AzavgDir;
 PlotDir = Config.PlotDir;
 
 % read in the Vt and coordinate data
-Hfile = sprintf('%s/speed_t_%s.h5', AzavgDir, ControlCase)
+Hfile = sprintf('%s/speed_t_%s.h5', AzavgDir, ControlCase);
 VT = squeeze(hdf5read(Hfile, '/speed_t'));
 X = squeeze(hdf5read(Hfile, '/x_coords'));
 Z = squeeze(hdf5read(Hfile, '/z_coords'));
@@ -31,7 +31,7 @@ VT_INIT(VT_INIT == UndefVal) = nan;
 
 % trim off vertical range since initial vortex Only goes to ~8km
 Z1 = find(Z >= 0, 1);
-Z2 = find(Z <= 8000, 1, 'last');
+Z2 = find(Z <= 10000, 1, 'last');
 
 Z = Z(Z1:Z2);
 VT_INIT = VT_INIT(Z1:Z2,:); % rows are z dimension now (after the transpose)
@@ -42,9 +42,25 @@ Ptitle = sprintf('Initial Vortex: Azimuthally averaged Vt (m/s)');
 Xlabel = sprintf('Radius (km)');
 Ylabel = sprintf('Height (m)');
 
-Clevs = (0:1:15);
+Clevs = (-1:2:21);
 
 Fig = figure;
+
+% create a colormap that goes from dark gray (not black) to white.
+%   R == G == B will get a gray shade
+%   (R,G,B) = (0,0,0) is black
+%   (R,G,B) = (1,1,1) is white
+%   need 64 (R,G,B) entries
+cband = zeros(64,1);
+Cstart = 1;
+Cend = 0.40;
+Cinc = (Cstart - Cend) / 63;
+for i = 1:64
+  cband(i,1) = Cstart - ((i-1)*Cinc);
+end
+cmap = horzcat(cband, cband, cband);
+colormap(cmap);
+
 
 contourf(X, Z, VT_INIT, Clevs);
 set(gca,'FontSize', 20);
