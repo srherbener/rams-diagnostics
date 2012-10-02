@@ -55,7 +55,7 @@ all: $(BINS)
 $(DEST)/join_hdata: join_hdata.o
 	$(LOADER) -o $(DEST)/join_hdata join_hdata.o $(LOADER_OPTS) $(LOADER_LIBS)
 
-join_hdata.o: $(SRC_DIR)/join_hdata.f90 $(RHDF5_LIB_FILE) $(RHDF5_MOD_FILE)
+join_hdata.o: $(SRC_DIR)/join_hdata.f90 $(RHDF5_LIB_FILE) $(RHDF5_MOD_FILE) $(DIAG_LIB_FILE) $(DIAG_MOD_FILE)
 	$(F_COMMAND) $(<)
 
 .f90.o:
