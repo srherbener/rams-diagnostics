@@ -278,8 +278,13 @@ program azavg
   else
     call rhdf5_open_file(AvarFile, rh5f_facc, 0, rh5f_avar)
   endif
-  Avar%ndims = 3
-  allocate(Avar%vdata(Nx*Ny*VarNz))
+  if (VarIs2d) then
+    Avar%ndims = 2
+    allocate(Avar%vdata(Nx*Ny))
+  else
+    Avar%ndims = 3
+    allocate(Avar%vdata(Nx*Ny*VarNz))
+  endif
 
   ! set up the output variable
   rh5f_facc = 'W'
