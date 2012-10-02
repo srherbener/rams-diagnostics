@@ -49,8 +49,6 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, AvarNz, NumRbands, Avar, AzAvg, &
   ! The storm center is taken to be the min pressure location of the
   ! x-y plane on the surface (iz .eq. 1)
 
-  write (*,*) 'Averaging Data:'
-
   do iz = 1, AvarNz
     ! For the averaging
     do ir = 1, NumRbands
@@ -87,7 +85,6 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, AvarNz, NumRbands, Avar, AzAvg, &
       end if
     end do
   end do
-  write (*,*) ''
 
   return
 end subroutine
@@ -653,6 +650,8 @@ end subroutine ConvertStormCenter
 integer function FindIndex(N, Coords, Val)
   implicit none
 
+  real, parameter :: CloseEnough = 10.0e-4
+
   integer :: N
   real, dimension(N) :: Coords
   real :: Val
@@ -661,7 +660,7 @@ integer function FindIndex(N, Coords, Val)
 
   FindIndex = 0
   do i = 1, N
-    if (Coords(i) .eq. Val) then
+    if (abs(Coords(i) - Val) .le. CloseEnough) then
       FindIndex = i
       exit
     endif
