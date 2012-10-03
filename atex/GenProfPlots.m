@@ -5,7 +5,7 @@ function [ ] = GenProfPlots(ConfigFile)
 % the file system.
 [ Config ] = ReadConfig(ConfigFile);
     
-Pname   = Config.Pexp.Ename;
+Pname   = Config.ExpName;
 
 Tdir = Config.TsavgDir;
 Pdir = Config.PlotDir;

@@ -11,23 +11,17 @@ Fig = figure;
 % subsequent plots). Plot the first profile outside the loop, issue a "hold
 % on" and then plot the remainder profiles.
 
-% Want to rotate plot 90 deg counter clockwise which turns out to be +90
-% deg around the Z axis. After rotation, Xvals will apply to the x-axis and
-% Zvals will apply to the y-axis.
-
 [ Nprofs, Npts ] = size(Profs);
 Lwidth = 2;
 
-P = plot(Zvals,Profs(1,:),'LineWidth',Lwidth,'Color',char(Lcolors(1)));
-rotate(P, [ 0 0 1 ], 90, [ 0 0 0 ]);
+plot(Profs(1,:),Zvals,'LineWidth',Lwidth,'Color',char(Lcolors(1)));
 xlim([ min(Xvals) max(Xvals) ]);
 ylim([ min(Zvals) max(Zvals) ]);
 set (gca, 'FontSize', 20);
 hold on;
 
 for i = 2:Nprofs
-    P = plot(Zvals,Profs(i,:),'LineWidth',Lwidth,'Color',char(Lcolors(i)));
-    rotate(P, [ 0 0 1 ], 90, [ 0 0 0 ]);
+     plot(Profs(i,:),Zvals,'LineWidth',Lwidth,'Color',char(Lcolors(i)));
 end
 
 title(Ptitle);
