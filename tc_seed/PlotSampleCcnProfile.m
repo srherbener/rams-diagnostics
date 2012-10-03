@@ -54,9 +54,7 @@ Ylabel = sprintf('Height (m)');
 Fig = figure;
 
 % data
-P = plot(Z,CCN,'LineWidth',Lwidth);
-rotate(P, [ 0 0 1 ], 90, [ 0 0 0 ]);
-rotate(P, [ 0 1 0 ], 180, [ 0 0 0 ]);
+plot(CCN,Z,'LineWidth',Lwidth);
 xlim(Xlims);
 ylim(Ylims);
 
