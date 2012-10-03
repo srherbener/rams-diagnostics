@@ -12,7 +12,7 @@ AzavgDir = Config.AzavgDir;
 PlotDir = Config.PlotDir;
 
 % read in the Vt and coordinate data
-Hfile = sprintf('%s/speed_t_%s.h5', AzavgDir, ControlCase);
+Hfile = sprintf('%s/speed_t300_%s.h5', AzavgDir, ControlCase);
 VT = squeeze(hdf5read(Hfile, '/speed_t'));
 X = squeeze(hdf5read(Hfile, '/x_coords'));
 Z = squeeze(hdf5read(Hfile, '/z_coords'));
