@@ -72,7 +72,31 @@ Ptitle = sprintf('Control Run Storm Development');
 Xlabel = sprintf('Local Time, Starting at %s', StartTime);
 Y1label = sprintf('Maximum surface Vt (m/s)');
 Y2label = sprintf('Minimum sea level pressure (mb)');
+
 AxisPos = [ 0.11 0.15 0.75 0.75 ] ;
+Y1lims = [ 0 50 ];
+Y2lims = [ 970 1020 ];
+
+% locations on Vt that correpsond to times relative to the
+% rapid instensification phase
+%   before - 24hrs
+%   during - 54hrs
+%   after  - 84hrs
+%
+% each index in Vt is one hour and the first index is zero so
+% need to add one to the time to get the corresponding index.
+
+Tbefore = 24;
+Xbefore = [ Times(Tbefore+1) Times(Tbefore+1) ];
+TxtBefore = sprintf('\\leftarrow %d hr', Tbefore);
+
+Tduring = 54;
+Xduring = [ Times(Tduring+1) Times(Tduring+1) ];
+TxtDuring = sprintf('\\leftarrow %d hr', Tduring);
+
+Tafter = 84;
+Xafter = [ Times(Tafter+1) Times(Tafter+1) ];
+TxtAfter = sprintf('\\leftarrow %d hr', Tafter);
 
 Fig = figure;
 
@@ -88,6 +112,7 @@ set(gca, 'XTick', Tticks);
 set(gca, 'XTickLabel', Tlabels);
 set(gca, 'Position', AxisPos);
 ylabel(Y1label);
+ylim(Y1lims);
 
 axes(AX(2));
 set(gca, 'FontSize', Fsize);
@@ -95,9 +120,20 @@ set(gca, 'XTick', Tticks);
 set(gca, 'XTickLabel', Tlabels);
 set(gca, 'Position', AxisPos);
 ylabel(Y2label);
+ylim(Y2lims);
 
 title(Ptitle);
 xlabel(Xlabel);
+
+% markers
+Ytext = Y2lims(1) + ((Y2lims(2) - Y2lims(1))*0.95);
+TfontSize = 16;
+line(Xbefore,  Y2lims, 'LineStyle', '--', 'Color', 'k', 'LineWidth', Lwidth/2);
+text(Xbefore(1), Ytext, TxtBefore, 'FontSize', TfontSize);
+line(Xduring, Y2lims, 'LineStyle', '--', 'Color', 'k', 'LineWidth', Lwidth/2);
+text(Xduring(1), Ytext, TxtDuring, 'FontSize', TfontSize);
+line(Xafter,  Y2lims, 'LineStyle', '--', 'Color', 'k', 'LineWidth', Lwidth/2);
+text(Xafter(1), Ytext, TxtAfter, 'FontSize', TfontSize);
 
 saveas(Fig, Pfile);
 close(Fig);
