@@ -764,8 +764,14 @@ end subroutine GetMyArgs
 !************************************************************************************
 ! DoMaxAzWind()
 !
-! This subroutine will simply find the maximum wind speed in AzWind and copy that
-! to TserAvg.
+! This subroutine will find the maximum wind speed in AzWind and copy that
+! to TserAvg. The intent of this metric is to mimic the Saffir-Simpson scale
+! which uses the average 10m tangential wind speed that has been sustained
+! over 10 minutes.
+!
+! Typically, don't have enough RAMS files to do 10m time averaging so as a
+! proxy use the azimuthally averaged tangetial wind speed.
+!
 subroutine DoMaxAzWind(Nx, Ny, Nz, AzWind, UndefVal, AzWindMax)
   implicit none
 
@@ -778,14 +784,16 @@ subroutine DoMaxAzWind(Nx, Ny, Nz, AzWind, UndefVal, AzWindMax)
 
   ! dimension order is: x,y,z
 
+  ! RAMS places the first z level below the surface so use the second level
+  ! to approximate the 10m winds.
+
   AzWindMax = 0.0
-  do iz = 1, Nz
-    do iy = 1, Ny
-      do ix = 1, Nx
-        if ((AzWind(ix,iy,iz) .gt. AzWindMax) .and. (anint(AzWind(ix,iy,iz)) .ne. UndefVal)) then
-          AzWindMax = AzWind(ix,iy,iz)
-        endif
-      end do
+  iz = 2
+  do iy = 1, Ny
+    do ix = 1, Nx
+      if ((AzWind(ix,iy,iz) .gt. AzWindMax) .and. (anint(AzWind(ix,iy,iz)) .ne. UndefVal)) then
+        AzWindMax = AzWind(ix,iy,iz)
+      endif
     end do
   end do
 
