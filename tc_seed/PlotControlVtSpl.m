@@ -88,15 +88,15 @@ Y2lims = [ 970 1020 ];
 
 Tbefore = 24;
 Xbefore = [ Times(Tbefore+1) Times(Tbefore+1) ];
-TxtBefore = sprintf('\\leftarrow %d hr', Tbefore);
+TxtBefore = sprintf('\\leftarrow t = %d hr', Tbefore);
 
 Tduring = 54;
 Xduring = [ Times(Tduring+1) Times(Tduring+1) ];
-TxtDuring = sprintf('\\leftarrow %d hr', Tduring);
+TxtDuring = sprintf('\\leftarrow t = %d hr', Tduring);
 
 Tafter = 84;
 Xafter = [ Times(Tafter+1) Times(Tafter+1) ];
-TxtAfter = sprintf('\\leftarrow %d hr', Tafter);
+TxtAfter = sprintf('\\leftarrow t = %d hr', Tafter);
 
 Fig = figure;
 
@@ -127,7 +127,7 @@ xlabel(Xlabel);
 
 % markers
 Ytext = Y2lims(1) + ((Y2lims(2) - Y2lims(1))*0.95);
-TfontSize = 16;
+TfontSize = 14;
 line(Xbefore,  Y2lims, 'LineStyle', '--', 'Color', 'k', 'LineWidth', Lwidth/2);
 text(Xbefore(1), Ytext, TxtBefore, 'FontSize', TfontSize);
 line(Xduring, Y2lims, 'LineStyle', '--', 'Color', 'k', 'LineWidth', Lwidth/2);
