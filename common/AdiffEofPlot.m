@@ -11,9 +11,19 @@ ALL_PC  = hdf5read(InFile, 'PC');
 VarExpl = hdf5read(InFile, 'VarExpl');
 Err     = hdf5read(InFile, 'Err');
 
-R = hdf5read(InFile, 'Radius') / 1000; % convert to km
+R = hdf5read(InFile, 'Radius');
 Z = hdf5read(InFile, 'Height');
 T = hdf5read(InFile, 'Time') / 3600; % convert to hr
+
+% Translate the coordinate values in SelectData to their corresponding
+% indices.
+SelectIndices(1) = find(R >= SelectData(1), 1);
+SelectIndices(2) = find(R <= SelectData(2), 1, 'last');
+SelectIndices(3) = find(Z >= SelectData(3), 1);
+SelectIndices(4) = find(Z <= SelectData(4), 1, 'last');
+
+% Convert R to km
+R = R / 1000;
 
 % Pick out the EOF/PC pair of interest
 EOF = ALL_EOF(:,EofNum);
@@ -29,7 +39,7 @@ P_Xlabel = 'Time (hr)';
 P_Ylabel = sprintf('%s (%s)', Vname, Vunits);
 
 fprintf('Writing EOF plot to file: %s\n', EofOutFile);
-Plot2dEofPc(EOF, PC, R, Z, Clevs, Cbounds, E_Title, E_Xlabel, E_Ylabel, P_Title, P_Xlabel, P_Ylabel, EofOutFile);
+Plot2dEofPc(EOF, PC, R, Z, Clevs, Cbounds, E_Title, E_Xlabel, E_Ylabel, P_Title, P_Xlabel, P_Ylabel, SelectIndices, EofOutFile);
 
 EsTitle = sprintf('First %d Eigenvalues of %s Difference: %s', NumEv, Vname, Pcase);
 fprintf('Writing eigenvalue spectrum plot to file: %s\n', EsOutFile);

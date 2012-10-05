@@ -48,9 +48,14 @@ else
     KeepThreshold = round(length(A(1,:)) / 2);
 end
 % Need to divide by the counts to form the covariance
-Counts(Counts < KeepThreshold) = 0;
+% In order to keep track of data we want to toss out (count less
+% than the threshold), first change the count values where we
+% are tossing the data to nan, do the divide (will get nan wherever
+% count was a nan), then change the resulting nans back to zero (zero
+% covariance).
+Counts(Counts < KeepThreshold) = nan;
 C = C ./ Counts;
-
+C(isnan(C)) = 0;
 
 if (ObsInCols == 1)
     % rows are samples and columns are data --> the sample covariance

@@ -1,5 +1,5 @@
-function [ ] = GenAzavgDiffEof( InFile1, InFile2, Vname, OutFile, DataSelect, UndefVal, Nstar )
-% GenAzavgDiffEof generate the EOF/PCs and the Eigenvalue spectrum for a given dataset
+function [ ] = AzavgDiffEof( InFile1, InFile2, Vname, OutFile, DataSelect, UndefVal, Nstar )
+% AzavgDiffEof generate the EOF/PCs and the Eigenvalue spectrum for a given dataset
 %
 %   This function will read in data contained in InFile1:Vname and InFile2:Vname, select
 %   a subset of the data according to the specs in 'DataSelect', create a difference
@@ -20,16 +20,12 @@ function [ ] = GenAzavgDiffEof( InFile1, InFile2, Vname, OutFile, DataSelect, Un
 %   Nstar is the estimated sample size for the eigenvalue spectrum calculation.
 %
 
-% Read in the HDF5 data. The data will be organized as (x,y,z,t) after being read in.
-if ((strcmp(Vname, 'w_up')) || (strcmp(Vname, 'w_dn')))
-  H5_Var = 'w';
-else
-  H5_Var = Vname;
-end
-fprintf('Reading %s from HDF5 file: %s\n', H5_Var, InFile1);
-H5_Var1  = hdf5read(InFile1, H5_Var);
-fprintf('Reading %s from HDF5 file: %s\n', H5_Var, InFile2);
-H5_Var2  = hdf5read(InFile2, H5_Var);
+% Read in the HDF5 data. The data will be organized as (x,y,z,t) after
+% being read in.
+fprintf('Reading %s from HDF5 file: %s\n', Vname, InFile1);
+H5_Var1  = hdf5read(InFile1, Vname);
+fprintf('Reading %s from HDF5 file: %s\n', Vname, InFile2);
+H5_Var2  = hdf5read(InFile2, Vname);
 fprintf('\n');
 
 % convert the undefined value (-999) to nan
@@ -75,6 +71,7 @@ Var2 = Xyzt2EofArray(H5_Var2, F2X1, F2X2, F2Y1, F2Y2, F2Z1, F2Z2, F2T1, F2T2);
 % and H5_Var2 different sizes), and the data selection in
 % Xyzt2EofArray will trim out equal sizes.
 Var = Var1 - Var2;
+%Var(isnan(Var)) = 0;
 
 % Coordinate values
 % Use the coordinates from the first file (not the control)
@@ -83,7 +80,7 @@ Height = F1_Zcoords(F1Z1:F1Z2);
 Time   = F1_Tcoords(F1T1:F1T2);
 
 % Run EOF and generate the eigenvalue spectrum
-fprintf('Running EOF analysis:\n', Vname, InFile1);
+fprintf('Running EOF analysis: %s %s\n', Vname, InFile1);
 [ EOF, PC, EigVals ] = EofNan(Var,1);
 [ Lambda, VarExpl, Err ] = EigenSpectrum(EigVals, Nstar);
 fprintf('\n');

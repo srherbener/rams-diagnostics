@@ -18,7 +18,8 @@ for icase = 1:length(Config.Cases)
     if (~strcmp(Case, ControlCase))
       fprintf('***********************************************************************\n');
       fprintf('Running azavg EOF: \n');
-      fprintf('  Variable: %s\n', Config.AzavgEof(ieof).Var);
+      fprintf('  Name: %s\n', Config.AzavgEof(ieof).Name);
+      fprintf('  Variable: %s\n', Config.AzavgEof(ieof).Rvar);
       fprintf('  Case: %s\n', Case);
       fprintf('  Control: %s\n', ControlCase);
       fprintf('  Data selection:\n');
@@ -32,10 +33,11 @@ for icase = 1:length(Config.Cases)
       fprintf('  N-star: %d\n', Config.AzavgEofConfig.Nstar);
       fprintf('\n');
 
-      Vname = Config.AzavgEof(ieof).Var;
-      InFile1 = sprintf('%s/%s_%s.h5', Config.AzavgDir, Vname, Case);
-      InFile2 = sprintf('%s/%s_%s.h5', Config.AzavgDir, Vname, ControlCase);
-      OutFile = sprintf('%s/%s_%s.h5', EofDir, Vname, Case);
+      Name = Config.AzavgEof(ieof).Name;
+      Vname = Config.AzavgEof(ieof).Rvar;
+      InFile1 = sprintf('%s/%s_%s.h5', Config.AzavgDir, Name, Case);
+      InFile2 = sprintf('%s/%s_%s.h5', Config.AzavgDir, Name, ControlCase);
+      OutFile = sprintf('%s/%s_%s.h5', EofDir, Name, Case);
 
       SelectData = [ Config.AzavgEof(ieof).Rmin Config.AzavgEof(ieof).Rmax Config.AzavgEof(ieof).Zmin Config.AzavgEof(ieof).Zmax Config.AzavgEof(ieof).Tmin Config.AzavgEof(ieof).Tmax ];
 
