@@ -164,8 +164,8 @@ for i = 1:size(InLines,1)
     case 'AzavgEofPlot:'
       i_aeofplot = i_aeofplot + 1;
       Cdata.AzavgEofPlots(i_aeofplot).Var   = Fields{2};
-      Cdata.AzavgEofPlots(i_aeofplot).Name  = Fields{3};
-      Cdata.AzavgEofPlots(i_aeofplot).Units = Fields{4};
+      Cdata.AzavgEofPlots(i_aeofplot).Name  = regexprep(Fields{3}, '_', ' ');
+      Cdata.AzavgEofPlots(i_aeofplot).Units = regexprep(Fields{4}, '_', ' ');
       Cdata.AzavgEofPlots(i_aeofplot).Num   = sscanf(Fields{5},  '%d');
       Cdata.AzavgEofPlots(i_aeofplot).Clim  = sscanf(Fields{6},  '%f');
       Cdata.AzavgEofPlots(i_aeofplot).Cinc  = sscanf(Fields{7},  '%f');
