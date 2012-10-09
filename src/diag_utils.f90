@@ -41,6 +41,7 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, AvarNz, NumRbands, Avar, AzAvg, &
   real :: RbandInc, UndefVal
 
   integer :: ix, iy, iz
+  integer :: filter_z
   real, dimension(NumRbands) :: Rcounts
   integer :: ir, iRband
 
@@ -50,6 +51,22 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, AvarNz, NumRbands, Avar, AzAvg, &
   ! x-y plane on the surface (iz .eq. 1)
 
   do iz = 1, AvarNz
+    ! The filter data always comes in as a 3D var, and since RAMS has
+    ! the first z level below the surface, the first z level in the filter
+    ! tends to be all zeros (since it is typically desired to trim this
+    ! level off from diagnostics). When a 2D var comes in, AvarNz will
+    ! be equal to one which is the below surface level in the filter
+    ! data. To work around this, when AvarNz is one (2d var), then force
+    ! this code to look at the second level in the filter (first level
+    ! above surface). Note that it's up to the caller to make sure
+    ! that the 2nd level in the filter (first level above sfc) have
+    ! good data in it.
+    if (AvarNz .eq. 1) then
+      filter_z = 2
+    else
+      filter_z = iz
+    endif
+
     ! For the averaging
     do ir = 1, NumRbands
       Rcounts(ir) = 0.0
@@ -60,7 +77,7 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, AvarNz, NumRbands, Avar, AzAvg, &
     do iy = 1, Ny
       do ix = 1, Nx
         ! Only keep the points where Filter is equal to 1
-        if ((anint(Filter(ix,iy,iz)) .eq. 1.0) .and. (Avar(ix,iy,iz) .ne. UndefVal)) then
+        if ((anint(Filter(ix,iy,filter_z)) .eq. 1.0) .and. (Avar(ix,iy,iz) .ne. UndefVal)) then
            iRband = int(Radius(ix,iy) / RbandInc) + 1
            ! iRband will go from 1 to n, but n might extend beyond the last radial
            ! band due to approximations made in deriving RbandInc
