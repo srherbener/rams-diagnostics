@@ -32,15 +32,10 @@ program tsavg
   ! Dims: x, y, z, t
   type (Rhdf5Var) :: InXcoords, InYcoords, InZcoords, InTcoords
   type (Rhdf5Var) :: OutXcoords, OutYcoords, OutZcoords, OrigDimSize
-  real, dimension(:), allocatable :: U, V, AzWind, Speed10m, Dens, Var, Filter, TserAvg
+  type (Rhdf5Var) :: U, V, AzWind, Speed10m, Dens, Var, Filter, TserAvg
   character (len=MediumString) :: Ufile, Vfile, AzWindFile, Speed10mFile, DensFile, VarFile, InCoordFile
-  character (len=LittleString) :: Uvname, Vvname, AzWindVname, Speed10mVname, DensVname
-  character (len=LittleString) :: VarName, VarFprefix, FilterVname, OutVname
+  character (len=LittleString) :: VarFprefix
   character (len=LittleString) :: rh5f_facc
-  integer :: InNdims, OutNdims, FilterNdims
-  integer, dimension(RHDF5_MAX_DIMS) :: InDims, OutDims, FilterDims
-  character (len=RHDF5_MAX_STRING) :: InUnits, InDescrip, OutUnits, OutDescrip, FilterUnits, FilterDescrip
-  character (len=RHDF5_MAX_STRING), dimension(RHDF5_MAX_DIMS) :: InDimnames, OutDimnames, FilterDimnames
   
   integer :: NumBins
   real :: BinStart, BinInc
@@ -66,7 +61,7 @@ program tsavg
       !    3       prefix for the REVU file name
       !    4       dimensionality of variable
       AvgFunc    = trim(ArgList(1))
-      VarName   = trim(ArgList(2))
+      Var%vname  = trim(ArgList(2))
       VarFprefix = trim(ArgList(3))
       VarFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
       VarDim     = trim(ArgList(4))
@@ -89,7 +84,7 @@ program tsavg
       !    6       bin start
       !    7       bin increment
       AvgFunc    = trim(ArgList(1))
-      VarName    = trim(ArgList(2))
+      Var%vname  = trim(ArgList(2))
       VarFprefix = trim(ArgList(3))
       VarFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
       VarDim     = trim(ArgList(4))
@@ -108,11 +103,11 @@ program tsavg
   write (*,*) '  Output file:  ', trim(OutFile)
   write (*,*) '  Averaging function: ', trim(AvgFunc)
   if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. (AvgFunc .eq. 'hda')) then
-    write (*,*) '    Variable name: ', trim(VarName)
+    write (*,*) '    Variable name: ', trim(Var%vname)
     write (*,*) '    File name: ', trim(VarFile)
     write (*,*) '    Dimensionality: ', trim(VarDim)
   else if (AvgFunc .eq. 'hist') then
-    write (*,*) '    Variable name: ', trim(VarName)
+    write (*,*) '    Variable name: ', trim(Var%vname)
     write (*,*) '    File name: ', trim(VarFile)
     write (*,*) '    Dimensionality: ', trim(VarDim)
     write (*,*) '    Binning specs:'
@@ -126,22 +121,22 @@ program tsavg
 
   ! set up file and variable names
   AzWindFile = trim(InDir) // '/speed_t' // trim(InSuffix)
-  AzWIndVname = 'speed_t'
+  AzWind%vname = 'speed_t'
 
   ! FilterFile is set by command line arguments
-  FilterVname = 'filter'
+  Filter%vname = 'filter'
 
   DensFile = trim(InDir) // '/dn0' // trim(InSuffix)
-  DensVname = 'dn0'
+  Dens%vname = 'dn0'
 
   Ufile = trim(InDir) // '/u' // trim(InSuffix)
-  Uvname = 'u'
+  U%vname = 'u'
 
   Vfile = trim(InDir) // '/v' // trim(InSuffix)
-  Vvname = 'v'
+  V%vname = 'v'
 
   Speed10mFile = trim(InDir) // '/speed10m' // trim(InSuffix)
-  Speed10mVname = 'speed10m'
+  Speed10m%vname = 'speed10m'
 
   ! Check that the dimensions are consistent between the variables needed for
   ! the selected averaging function.
@@ -154,70 +149,52 @@ program tsavg
   !        2D vars to be: (x,y,t)
   !
 
-  ! Set FilterNdims to one here. This will result with FilterNdims being equal to zero (since
+  ! Set Filter%ndims to one here. This will result with Filter%ndims being equal to zero (since
   ! we need to chop of the time dimension to read the filter time step by time step) when we
-  ! are not using a filter. When using a filter, FilterNdims will get set by what's contained
+  ! are not using a filter. When using a filter, Filter%ndims will get set by what's contained
   ! in FilterFile.
-  FilterNdims = 1
+  Filter%ndims = 1
   if (AvgFunc .eq. 'max_azwind') then
-    rh5f_facc = 'R'
-    call rhdf5_open_file(AzWindFile, rh5f_facc, 0, rh5f_azwind)
-    call rhdf5_read_variable_init(rh5f_azwind, AzWindVname, InNdims, 0, InDims, InUnits, InDescrip, InDimnames)
-    call rhdf5_close_file(rh5f_azwind)
+    call rhdf5_read_init(AzWindFile, AzWind)
 
-    Nx = InDims(1)
-    Ny = InDims(2)
-    Nz = InDims(3)
-    Nt = InDims(4)
+    Nx = AzWind%dims(1)
+    Ny = AzWind%dims(2)
+    Nz = AzWind%dims(3)
+    Nt = AzWind%dims(4)
   else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
            (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist')) then
-    rh5f_facc = 'R'
-    call rhdf5_open_file(VarFile, rh5f_facc, 0, rh5f_var)
-    call rhdf5_read_variable_init(rh5f_var, VarName, InNdims, 0, InDims, InUnits, InDescrip, InDimnames)
-    call rhdf5_close_file(rh5f_var)
+    call rhdf5_read_init(VarFile, Var)
 
     if (VarDim .eq. '2d') then
-      Nx = InDims(1)
-      Ny = InDims(2)
+      Nx = Var%dims(1)
+      Ny = Var%dims(2)
       Nz = 1
-      Nt = InDims(3)
+      Nt = Var%dims(3)
     else
-      Nx = InDims(1)
-      Ny = InDims(2)
-      Nz = InDims(3)
-      Nt = InDims(4)
+      Nx = Var%dims(1)
+      Ny = Var%dims(2)
+      Nz = Var%dims(3)
+      Nt = Var%dims(4)
     endif
   else
     ! Read in the filter and use it to check against all the other variables
-    rh5f_facc = 'R'
-    call rhdf5_open_file(FilterFile, rh5f_facc, 0, rh5f_filter)
-    call rhdf5_read_variable_init(rh5f_filter, FilterVname, FilterNdims, 0, FilterDims, FilterUnits, FilterDescrip, FilterDimnames)
-    call rhdf5_close_file(rh5f_filter)
+    call rhdf5_read_init(FilterFile, Filter)
   
-    Nx = FilterDims(1)
-    Ny = FilterDims(2)
-    Nz = FilterDims(3)
-    Nt = FilterDims(4)
+    Nx = Filter%dims(1)
+    Ny = Filter%dims(2)
+    Nz = Filter%dims(3)
+    Nt = Filter%dims(4)
 
     BadDims = .false.
     if (AvgFunc .eq. 'horiz_ke') then
-      rh5f_facc = 'R'
-      call rhdf5_open_file(DensFile, rh5f_facc, 0, rh5f_dens)
-      call rhdf5_read_variable_init(rh5f_dens, DensVname, InNdims, 0, InDims, InUnits, InDescrip, InDimnames)
-      call rhdf5_close_file(rh5f_dens)
-      BadDims = BadDims .or. ((InDims(1) .ne. Nx) .or. (InDims(2) .ne. Ny) .or. (InDims(4).ne. Nt))
+      call rhdf5_read_init(DensFile, Dens)
+      BadDims = BadDims .or. (.not.(DimsMatch(Filter, Dens)))
   
-      rh5f_facc = 'R'
-      call rhdf5_open_file(Ufile, rh5f_facc, 0, rh5f_u)
-      call rhdf5_read_variable_init(rh5f_u, Uvname, InNdims, 0, InDims, InUnits, InDescrip, InDimnames)
-      call rhdf5_close_file(rh5f_u)
-      BadDims = BadDims .or. ((InDims(1) .ne. Nx) .or. (InDims(2) .ne. Ny) .or. (InDims(4).ne. Nt))
+      call rhdf5_read_init(Ufile, U)
+      BadDims = BadDims .or. (.not.(DimsMatch(Filter, U)))
   
-      rh5f_facc = 'R'
-      call rhdf5_open_file(Vfile, rh5f_facc, 0, rh5f_v)
-      call rhdf5_read_variable_init(rh5f_v, Vvname, InNdims, 0, InDims, InUnits, InDescrip, InDimnames)
-      call rhdf5_close_file(rh5f_v)
-      BadDims = BadDims .or. ((InDims(1) .ne. Nx) .or. (InDims(2) .ne. Ny) .or. (InDims(4).ne. Nt))
+      call rhdf5_read_init(Ufile, V)
+      BadDims = BadDims .or. (.not.(DimsMatch(Filter, V)))
 
       if (BadDims) then
         write (*,*) 'ERROR: dimensions of filter, dn0, u and v do not match'
@@ -225,12 +202,8 @@ program tsavg
       endif
     else if (AvgFunc .eq. 'storm_int') then
       ! speed10m is a 2D variable
-      rh5f_facc = 'R'
-      call rhdf5_open_file(Speed10mFile, rh5f_facc, 0, rh5f_speed10m)
-      call rhdf5_read_variable_init(rh5f_speed10m, Speed10mVname, InNdims, 0, InDims, InUnits, InDescrip, InDimnames)
-      call rhdf5_close_file(rh5f_speed10m)
-      BadDims = BadDims .or. ((InDims(1) .ne. Nx) .or. (InDims(2) .ne. Ny) .or. (InDims(3).ne. Nt))
-
+      call rhdf5_read_init(Speed10mFile, Speed10m)
+      BadDims = BadDims .or. (.not.(DimsMatch(Filter, Speed10m)))
       Nz = 1
   
       if (BadDims) then
@@ -243,84 +216,118 @@ program tsavg
   ! Set up the dimensions for reading in the input field data, one time step per read. 
   ! In other words, remove the time dimension from the input dimensions since we will 
   ! be incrementing through every time step in a loop. The time dimension is always the
-  ! last dimension so what this boils down to is to decrement InNdims by one.
-  InNdims = InNdims - 1
-  FilterNdims = FilterNdims - 1
+  ! last dimension so what this boils down to is to decrement number of dimensions by one.
+  write (*,*) 'Input variable information:'
+  if (AvgFunc .eq. 'max_azwind') then
+    AzWind%ndims = AzWind%ndims - 1
+    write (*,*) '  Number of dimensions: ', AzWind%ndims
+    write (*,*) '  Dimension sizes:'
+    do id = 1, AzWind%ndims
+      write (*,*), '    ', trim(AzWind%dimnames(id)), ': ', AzWind%dims(id)
+    enddo
+  else if (AvgFunc .eq. 'horiz_ke') then
+    Dens%ndims = Dens%ndims - 1
+    U%ndims = U%ndims - 1
+    V%ndims = V%ndims - 1
+    write (*,*) '  Number of dimensions: ', Dens%ndims
+    write (*,*) '  Dimension sizes:'
+    do id = 1, Dens%ndims
+      write (*,*), '    ', trim(Dens%dimnames(id)), ': ', Dens%dims(id)
+    enddo
+  else if (AvgFunc .eq. 'storm_int') then
+    Speed10m%ndims = Speed10m%ndims - 1
+    write (*,*) '  Number of dimensions: ', Speed10m%ndims
+    write (*,*) '  Dimension sizes:'
+    do id = 1, Speed10m%ndims
+      write (*,*), '    ', trim(Speed10m%dimnames(id)), ': ', Speed10m%dims(id)
+    enddo
+  else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
+           (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist')) then
+    Var%ndims = Var%ndims - 1
+    write (*,*) '  Number of dimensions: ', Var%ndims
+    write (*,*) '  Dimension sizes:'
+    do id = 1, Var%ndims
+      write (*,*), '    ', trim(Var%dimnames(id)), ': ', Var%dims(id)
+    enddo
+  endif
+  write (*,*) ''
+
+
+  Filter%ndims = Filter%ndims - 1
+  if (Filter%ndims .gt. 0) then
+    write (*,*) 'Filter variable information:'
+    write (*,*) '  Number of dimensions: ', Filter%ndims
+    write (*,*) '  Dimension sizes:'
+    do id = 1, Filter%ndims
+      write (*,*), '    ', trim(Filter%dimnames(id)), ': ', Filter%dims(id)
+    enddo
+    write (*,*) ''
+  endif
 
   ! Set up the dimensions for the output and allocate the output data array. Always
   ! set up as if the output were 3D. This is done so that the output file can
   ! be read into GRADS which expects 3D variables. Always have (x,y,z) for the
   ! dimension names, but set the sizes of the dimensions according to the averaging
   ! function asked for.
-  OutVname = trim(AvgFunc)
+  TserAvg%vname = trim(AvgFunc)
   if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist')) then
-    OutVname = trim(OutVname) // '_' // trim(VarFprefix)
+    TserAvg%vname = trim(TserAvg%vname) // '_' // trim(VarFprefix)
   endif
-  OutDescrip = 'time series averaged ' // trim(AvgFunc) 
-  OutNdims = 3 
-  OutDimnames(1) = 'x' 
-  OutDimnames(2) = 'y' 
-  OutDimnames(3) = 'z' 
+  TserAvg%descrip = 'time series averaged ' // trim(AvgFunc) 
+  TserAvg%ndims = 3 
+  TserAvg%dimnames(1) = 'x' 
+  TserAvg%dimnames(2) = 'y' 
+  TserAvg%dimnames(3) = 'z' 
 
-  if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. (AvgFunc .eq. 'max_azwind')) then
+  if (AvgFunc .eq. 'max_azwind') then
     ! single point result
-    OutDims(1) = 1
-    OutDims(2) = 1
-    OutDims(3) = 1
-    OutUnits = 'm/s'
+    TserAvg%dims(1) = 1
+    TserAvg%dims(2) = 1
+    TserAvg%dims(3) = 1
+    TserAvg%units = 'm/s'
+  else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max')) then
+    ! single point result
+    TserAvg%dims(1) = 1
+    TserAvg%dims(2) = 1
+    TserAvg%dims(3) = 1
+    TserAvg%units = Var%units
   else if (AvgFunc .eq. 'hda') then
     ! all z points
-    OutDims(1) = 1
-    OutDims(2) = 1
-    OutDims(3) = Nz
-    OutUnits = InUnits
+    TserAvg%dims(1) = 1
+    TserAvg%dims(2) = 1
+    TserAvg%dims(3) = Nz
+    TserAvg%units = Var%units
   else if (AvgFunc .eq. 'hist') then
     ! put bin values in the x dimension
-    OutDims(1) = NumBins
-    OutDims(2) = 1
-    OutDims(3) = 1
-    OutUnits = InUnits
+    TserAvg%dims(1) = NumBins
+    TserAvg%dims(2) = 1
+    TserAvg%dims(3) = 1
+    TserAvg%units = Var%units
   else if (AvgFunc .eq. 'horiz_ke') then
     ! single point result
-    OutDims(1) = 1
-    OutDims(2) = 1
-    OutDims(3) = 1
-    OutUnits = 'Joules'
+    TserAvg%dims(1) = 1
+    TserAvg%dims(2) = 1
+    TserAvg%dims(3) = 1
+    TserAvg%units = 'Joules'
   else if (AvgFunc .eq. 'storm_int') then
     ! single point result
-    OutDims(1) = 1
-    OutDims(2) = 1
-    OutDims(3) = 1
-    OutUnits = 'int'
+    TserAvg%dims(1) = 1
+    TserAvg%dims(2) = 1
+    TserAvg%dims(3) = 1
+    TserAvg%units = 'int'
   endif
 
-  allocate(TserAvg(OutDims(1)*OutDims(2)*OutDims(3)))
+  allocate(TserAvg%vdata(TserAvg%dims(1)*TserAvg%dims(2)*TserAvg%dims(3)))
 
   ! Report the dimensions
-  write (*,*) 'Input variable information:'
-  write (*,*) '  Number of dimensions: ', InNdims
-  write (*,*) '  Dimension sizes:'
-  do id = 1, InNdims
-    write (*,*), '    ', trim(InDimnames(id)), ': ', InDims(id)
-  enddo
-  write (*,*) ''
-  if (FilterNdims .gt. 0) then
-    write (*,*) 'Filter variable information:'
-    write (*,*) '  Number of dimensions: ', FilterNdims
-    write (*,*) '  Dimension sizes:'
-    do id = 1, FilterNdims
-      write (*,*), '    ', trim(FilterDimnames(id)), ': ', FilterDims(id)
-    enddo
-    write (*,*) ''
-  endif
   write (*,*) 'Output variable information:'
-  write (*,*) '  Name: ', trim(OutVname)
-  write (*,*) '  Units: ', trim(OutUnits)
-  write (*,*) '  Description: ', trim(OutDescrip)
-  write (*,*) '  Number of dimensions: ', OutNdims
+  write (*,*) '  Name: ', trim(TserAvg%vname)
+  write (*,*) '  Units: ', trim(TserAvg%units)
+  write (*,*) '  Description: ', trim(TserAvg%descrip)
+  write (*,*) '  Number of dimensions: ', TserAvg%ndims
   write (*,*) '  Dimension sizes:'
-  do id = 1, OutNdims
-    write (*,*), '    ', trim(OutDimnames(id)), ': ', OutDims(id)
+  do id = 1, TserAvg%ndims
+    write (*,*), '    ', trim(TserAvg%dimnames(id)), ': ', TserAvg%dims(id)
   enddo
   write (*,*) ''
   write (*,*) '  Number of time steps: ', Nt
@@ -466,13 +473,13 @@ program tsavg
     call rhdf5_open_file(AzWindFile, rh5f_facc, 1, rh5f_azwind)
 
     do it = 1, Nt 
-      call rhdf5_read_variable(rh5f_azwind, AzWindVname, InNdims, it, InDims, rdata=AzWind)
+      call rhdf5_read_variable(rh5f_azwind, AzWind%vname, AzWind%ndims, it, AzWind%dims, rdata=AzWind%vdata)
 
-      call DoMaxAzWind(Nx, Ny, Nz, AzWind, UndefVal, TserAvg(1))
-      deallocate(AzWind)
+      call DoMaxAzWind(Nx, Ny, Nz, AzWind%vdata, UndefVal, TserAvg%vdata(1))
+      deallocate(AzWind%vdata)
 
-      call rhdf5_write_variable(rh5f_out, OutVname, OutNdims, it, OutDims, &
-         OutUnits, OutDescrip, OutDimnames, rdata=TserAvg)
+      call rhdf5_write_variable(rh5f_out, TserAvg%vname, TserAvg%ndims, it, TserAvg%dims, &
+         TserAvg%units, TserAvg%descrip, TserAvg%dimnames, rdata=TserAvg%vdata)
 
       if (modulo(it,100) .eq. 0) then
         write (*,*) 'Working: Number of time steps processed so far: ', it
@@ -487,19 +494,19 @@ program tsavg
     call rhdf5_open_file(FilterFile, rh5f_facc, 1, rh5f_filter)
 
     do it = 1, Nt 
-      call rhdf5_read_variable(rh5f_dens, DensVname, InNdims, it, InDims, rdata=Dens)
-      call rhdf5_read_variable(rh5f_u, Uvname, InNdims, it, InDims, rdata=U)
-      call rhdf5_read_variable(rh5f_v, Vvname, InNdims, it, InDims, rdata=V)
-      call rhdf5_read_variable(rh5f_filter, FilterVname, FilterNdims, it, FilterDims, rdata=Filter)
+      call rhdf5_read_variable(rh5f_dens, Dens%vname, Dens%ndims, it, Dens%dims, rdata=Dens%vdata)
+      call rhdf5_read_variable(rh5f_u, U%vname, U%ndims, it, U%dims, rdata=U%vdata)
+      call rhdf5_read_variable(rh5f_v, V%vname, V%ndims, it, V%dims, rdata=V%vdata)
+      call rhdf5_read_variable(rh5f_filter, Filter%vname, Filter%ndims, it, Filter%dims, rdata=Filter%vdata)
 
-      call DoHorizKe(Nx, Ny, Nz, Dens, U, V, Filter, DeltaX, DeltaY, InZcoords%vdata, TserAvg(1))
-      deallocate(Dens)
-      deallocate(U)
-      deallocate(V)
-      deallocate(Filter)
+      call DoHorizKe(Nx, Ny, Nz, Dens%vdata, U%vdata, V%vdata, Filter%vdata, DeltaX, DeltaY, InZcoords%vdata, TserAvg%vdata(1))
+      deallocate(Dens%vdata)
+      deallocate(U%vdata)
+      deallocate(V%vdata)
+      deallocate(Filter%vdata)
 
-      call rhdf5_write_variable(rh5f_out, OutVname, OutNdims, it, OutDims, &
-         OutUnits, OutDescrip, OutDimnames, rdata=TserAvg)
+      call rhdf5_write_variable(rh5f_out, TserAvg%vname, TserAvg%ndims, it, TserAvg%dims, &
+         TserAvg%units, TserAvg%descrip, TserAvg%dimnames, rdata=TserAvg%vdata)
 
       if (modulo(it,100) .eq. 0) then
         write (*,*) 'Working: Number of time steps processed so far: ', it
@@ -514,13 +521,13 @@ program tsavg
     call rhdf5_open_file(VarFile, rh5f_facc, 1, rh5f_var)
 
     do it = 1, Nt 
-      call rhdf5_read_variable(rh5f_var, VarName, InNdims, it, InDims, rdata=Var)
+      call rhdf5_read_variable(rh5f_var, Var%vname, Var%ndims, it, Var%dims, rdata=Var%vdata)
 
-      call DoMin(Nx, Ny, Nz, Var, UndefVal, TserAvg(1))
-      deallocate(Var)
+      call DoMin(Nx, Ny, Nz, Var%vdata, UndefVal, TserAvg%vdata(1))
+      deallocate(Var%vdata)
 
-      call rhdf5_write_variable(rh5f_out, OutVname, OutNdims, it, OutDims, &
-         OutUnits, OutDescrip, OutDimnames, rdata=TserAvg)
+      call rhdf5_write_variable(rh5f_out, TserAvg%vname, TserAvg%ndims, it, TserAvg%dims, &
+         TserAvg%units, TserAvg%descrip, TserAvg%dimnames, rdata=TserAvg%vdata)
 
       if (modulo(it,100) .eq. 0) then
         write (*,*) 'Working: Number of time steps processed so far: ', it
@@ -532,13 +539,13 @@ program tsavg
     call rhdf5_open_file(VarFile, rh5f_facc, 1, rh5f_var)
 
     do it = 1, Nt 
-      call rhdf5_read_variable(rh5f_var, VarName, InNdims, it, InDims, rdata=Var)
+      call rhdf5_read_variable(rh5f_var, Var%vname, Var%ndims, it, Var%dims, rdata=Var%vdata)
 
-      call DoMax(Nx, Ny, Nz, Var, UndefVal, TserAvg(1))
-      deallocate(Var)
+      call DoMax(Nx, Ny, Nz, Var%vdata, UndefVal, TserAvg%vdata(1))
+      deallocate(Var%vdata)
 
-      call rhdf5_write_variable(rh5f_out, OutVname, OutNdims, it, OutDims, &
-         OutUnits, OutDescrip, OutDimnames, rdata=TserAvg)
+      call rhdf5_write_variable(rh5f_out, TserAvg%vname, TserAvg%ndims, it, TserAvg%dims, &
+         TserAvg%units, TserAvg%descrip, TserAvg%dimnames, rdata=TserAvg%vdata)
 
       if (modulo(it,100) .eq. 0) then
         write (*,*) 'Working: Number of time steps processed so far: ', it
@@ -550,13 +557,13 @@ program tsavg
     call rhdf5_open_file(VarFile, rh5f_facc, 1, rh5f_var)
 
     do it = 1, Nt 
-      call rhdf5_read_variable(rh5f_var, VarName, InNdims, it, InDims, rdata=Var)
+      call rhdf5_read_variable(rh5f_var, Var%vname, Var%ndims, it, Var%dims, rdata=Var%vdata)
 
-      call DoHda(Nx, Ny, Nz, Var, UndefVal, TserAvg)
-      deallocate(Var)
+      call DoHda(Nx, Ny, Nz, Var%vdata, UndefVal, TserAvg%vdata)
+      deallocate(Var%vdata)
 
-      call rhdf5_write_variable(rh5f_out, OutVname, OutNdims, it, OutDims, &
-         OutUnits, OutDescrip, OutDimnames, rdata=TserAvg)
+      call rhdf5_write_variable(rh5f_out, TserAvg%vname, TserAvg%ndims, it, TserAvg%dims, &
+         TserAvg%units, TserAvg%descrip, TserAvg%dimnames, rdata=TserAvg%vdata)
 
       if (modulo(it,100) .eq. 0) then
         write (*,*) 'Working: Number of time steps processed so far: ', it
@@ -568,13 +575,13 @@ program tsavg
     call rhdf5_open_file(VarFile, rh5f_facc, 1, rh5f_var)
 
     do it = 1, Nt 
-      call rhdf5_read_variable(rh5f_var, VarName, InNdims, it, InDims, rdata=Var)
+      call rhdf5_read_variable(rh5f_var, Var%vname, Var%ndims, it, Var%dims, rdata=Var%vdata)
 
-      call DoHist(Nx, Ny, Nz, NumBins, Var, UndefVal, Bins, TserAvg)
-      deallocate(Var)
+      call DoHist(Nx, Ny, Nz, NumBins, Var%vdata, UndefVal, Bins, TserAvg%vdata)
+      deallocate(Var%vdata)
 
-      call rhdf5_write_variable(rh5f_out, OutVname, OutNdims, it, OutDims, &
-         OutUnits, OutDescrip, OutDimnames, rdata=TserAvg)
+      call rhdf5_write_variable(rh5f_out, TserAvg%vname, TserAvg%ndims, it, TserAvg%dims, &
+         TserAvg%units, TserAvg%descrip, TserAvg%dimnames, rdata=TserAvg%vdata)
 
       if (modulo(it,100) .eq. 0) then
         write (*,*) 'Working: Number of time steps processed so far: ', it
@@ -587,15 +594,15 @@ program tsavg
     call rhdf5_open_file(FilterFile, rh5f_facc, 1, rh5f_filter)
 
     do it = 1, Nt 
-      call rhdf5_read_variable(rh5f_speed10m, Speed10mVname, InNdims, it, InDims, rdata=Speed10m)
-      call rhdf5_read_variable(rh5f_filter, FilterVname, FilterNdims, it, FilterDims, rdata=Filter)
+      call rhdf5_read_variable(rh5f_speed10m, Speed10m%vname, Speed10m%ndims, it, Speed10m%dims, rdata=Speed10m%vdata)
+      call rhdf5_read_variable(rh5f_filter, Filter%vname, Filter%ndims, it, Filter%dims, rdata=Filter%vdata)
 
-      call DoStormInt(Nx, Ny, Nz, Speed10m, Filter, TserAvg(1))
-      deallocate(Speed10m)
-      deallocate(Filter)
+      call DoStormInt(Nx, Ny, Nz, Speed10m%vdata, Filter%vdata, TserAvg%vdata(1))
+      deallocate(Speed10m%vdata)
+      deallocate(Filter%vdata)
 
-      call rhdf5_write_variable(rh5f_out, OutVname, OutNdims, it, OutDims, &
-         OutUnits, OutDescrip, OutDimnames, rdata=TserAvg)
+      call rhdf5_write_variable(rh5f_out, TserAvg%vname, TserAvg%ndims, it, TserAvg%dims, &
+         TserAvg%units, TserAvg%descrip, TserAvg%dimnames, rdata=TserAvg%vdata)
 
       if (modulo(it,100) .eq. 0) then
         write (*,*) 'Working: Number of time steps processed so far: ', it
@@ -667,10 +674,7 @@ program tsavg
   call rhdf5_set_dimension(OutFile, InTcoords, 't')
 
   ! attach the dimension specs to the output variable
-  rh5f_facc = 'RW'
-  call rhdf5_open_file(OutFile, rh5f_facc, 1, rh5f_out)
-  call rhdf5_attach_dims_to_var(rh5f_out, OutVname)
-  call rhdf5_close_file(rh5f_out)
+  call rhdf5_attach_dimensions(OutFile, TserAvg)
   
   stop
 
@@ -828,25 +832,29 @@ subroutine DoHorizKe(Nx, Ny, Nz, Dens, U, V, Filter, DeltaX, DeltaY, Zcoords, Ts
   ! Zcoords are technically the center points of the levels in the RAMS simulation. Since we don't have
   ! the level definition from the RAMS runs here, just use the difference from the i+1st z coord minus the
   ! ith z coord to approzimate the ith level thickness. This will be close enough for the measurement.
+  !
+  ! The integrated kinetic engery measurement done on hurricanes is taken over the domain on the 10m
+  ! level. Just use the first model level above the surface (z == 2) for this measurement which will
+  ! be close enough.
 
   SumKe = 0.0
   NumPoints = 0
 
-  do iz = 1, Nz
-    do iy = 1, Ny
-      do ix = 1, Nx
-        if (anint(Filter(ix,iy,iz)) .eq. 1.0) then
-          if (iz .eq. Nz) then
-            ! Use the level below for this case (since no level above)
-            LevThickness = Zcoords(iz) - Zcoords(iz-1)
-          else
-            LevThickness = Zcoords(iz+1) - Zcoords(iz)
-          end if
-          CurrKe = 0.5 * DeltaX * DeltaY * LevThickness * Dens(ix,iy,iz) * (U(ix,iy,iz)**2 + V(ix,iy,iz)**2)
-          SumKe = SumKe + CurrKe
-          NumPoints = NumPoints + 1
-        endif
-      enddo
+  iz = 2
+
+  do iy = 1, Ny
+    do ix = 1, Nx
+      if (anint(Filter(ix,iy,iz)) .eq. 1.0) then
+        if (iz .eq. Nz) then
+          ! Use the level below for this case (since no level above)
+          LevThickness = Zcoords(iz) - Zcoords(iz-1)
+        else
+          LevThickness = Zcoords(iz+1) - Zcoords(iz)
+        end if
+        CurrKe = 0.5 * DeltaX * DeltaY * LevThickness * Dens(ix,iy,iz) * (U(ix,iy,iz)**2 + V(ix,iy,iz)**2)
+        SumKe = SumKe + CurrKe
+        NumPoints = NumPoints + 1
+      endif
     enddo
   enddo
 
