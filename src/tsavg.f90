@@ -27,6 +27,7 @@ program tsavg
   character (len=MediumString), dimension(MaxArgFields) :: ArgList
   integer :: Nfields
   character (len=LittleString) :: VarDim
+  logical :: UseFilter
 
   ! Data arrays
   ! Dims: x, y, z, t
@@ -50,7 +51,7 @@ program tsavg
   logical :: BadDims
 
   ! Get the command line arguments
-  call GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile)
+  call GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
   if ((AvgFunc(1:4) .eq. 'min:') .or. (AvgFunc(1:4) .eq. 'max:') .or. (AvgFunc(1:4) .eq. 'hda:')) then
     call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'avg spec')
     if (Nfields .eq. 4) then
@@ -116,6 +117,7 @@ program tsavg
     write (*,*) '      Delta between bins: ', BinInc
   endif
   write (*,*) '  Filter file: ', trim(FilterFile)
+  write (*,*) '    Using filter: ', UseFilter
   write (*,*) ''
   flush(6)
 
@@ -153,8 +155,14 @@ program tsavg
   ! we need to chop of the time dimension to read the filter time step by time step) when we
   ! are not using a filter. When using a filter, Filter%ndims will get set by what's contained
   ! in FilterFile.
-  Filter%ndims = 1
   if (AvgFunc .eq. 'max_azwind') then
+    ! max_azwind: must not use filter (azavg already applied a filter)
+    if (UseFilter) then
+      write (*,*) 'ERROR: cannot use a filter with function: max_azwind'
+      stop
+    endif
+    
+    ! Read in the filter and use it to check against all the other variables
     call rhdf5_read_init(AzWindFile, AzWind)
 
     Nx = AzWind%dims(1)
@@ -176,7 +184,22 @@ program tsavg
       Nz = Var%dims(3)
       Nt = Var%dims(4)
     endif
-  else
+
+    ! filter is optional
+    if (UseFilter) then
+      call rhdf5_read_init(FilterFile, Filter)
+      if (.not.(DimsMatch(Filter, Var))) then
+        write (*,*) 'ERROR: dimensions of filter do not match dimensions of input variable: ', trim(Var%vname)
+        stop
+      endif
+    endif
+  else if ((AvgFunc .eq. 'horiz_ke') .or. (AvgFunc .eq. 'storm_int')) then
+    ! horiz_ke and storm_int require a filter
+    if (.not. UseFilter) then
+      write (*,*) 'ERROR: must use a filter with functions: horiz_ke and storm_int'
+      stop
+    endif
+    
     ! Read in the filter and use it to check against all the other variables
     call rhdf5_read_init(FilterFile, Filter)
   
@@ -252,9 +275,9 @@ program tsavg
   endif
   write (*,*) ''
 
+  if (UseFilter) then
+    Filter%ndims = Filter%ndims - 1
 
-  Filter%ndims = Filter%ndims - 1
-  if (Filter%ndims .gt. 0) then
     write (*,*) 'Filter variable information:'
     write (*,*) '  Number of dimensions: ', Filter%ndims
     write (*,*) '  Dimension sizes:'
@@ -468,150 +491,100 @@ program tsavg
   rh5f_facc = 'W'
   call rhdf5_open_file(OutFile, rh5f_facc, 1, rh5f_out)
 
+  rh5f_facc = 'R'
+  if (UseFilter) then
+    call rhdf5_open_file(FilterFile, rh5f_facc, 1, rh5f_filter)
+  endif
   if (AvgFunc .eq. 'max_azwind') then
-    rh5f_facc = 'R'
     call rhdf5_open_file(AzWindFile, rh5f_facc, 1, rh5f_azwind)
-
-    do it = 1, Nt 
-      call rhdf5_read_variable(rh5f_azwind, AzWind%vname, AzWind%ndims, it, AzWind%dims, rdata=AzWind%vdata)
-
-      call DoMaxAzWind(Nx, Ny, Nz, AzWind%vdata, UndefVal, TserAvg%vdata(1))
-      deallocate(AzWind%vdata)
-
-      call rhdf5_write_variable(rh5f_out, TserAvg%vname, TserAvg%ndims, it, TserAvg%dims, &
-         TserAvg%units, TserAvg%descrip, TserAvg%dimnames, rdata=TserAvg%vdata)
-
-      if (modulo(it,100) .eq. 0) then
-        write (*,*) 'Working: Number of time steps processed so far: ', it
-      endif
-    enddo
-    call rhdf5_close_file(rh5f_azwind)
   else if (AvgFunc .eq. 'horiz_ke') then
-    rh5f_facc = 'R'
     call rhdf5_open_file(DensFile, rh5f_facc, 1, rh5f_dens)
     call rhdf5_open_file(Ufile, rh5f_facc, 1, rh5f_u)
     call rhdf5_open_file(Vfile, rh5f_facc, 1, rh5f_v)
-    call rhdf5_open_file(FilterFile, rh5f_facc, 1, rh5f_filter)
+  else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
+           (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist'))  then
+    call rhdf5_open_file(VarFile, rh5f_facc, 1, rh5f_var)
+  else if (AvgFunc .eq. 'storm_int') then
+    call rhdf5_open_file(Speed10mFile, rh5f_facc, 1, rh5f_speed10m)
+  endif
 
-    do it = 1, Nt 
+  do it = 1, Nt
+    ! if using a filter read in the data
+    if (UseFilter) then
+      call rhdf5_read_variable(rh5f_filter, Filter%vname, Filter%ndims, it, Filter%dims, rdata=Filter%vdata)
+    endif
+
+    ! do the averaging function
+    if (AvgFunc .eq. 'max_azwind') then
+      call rhdf5_read_variable(rh5f_azwind, AzWind%vname, AzWind%ndims, it, AzWind%dims, rdata=AzWind%vdata)
+      call DoMaxAzWind(Nx, Ny, Nz, AzWind%vdata, UndefVal, TserAvg%vdata(1))
+      deallocate(AzWind%vdata)
+    else if (AvgFunc .eq. 'horiz_ke') then
       call rhdf5_read_variable(rh5f_dens, Dens%vname, Dens%ndims, it, Dens%dims, rdata=Dens%vdata)
       call rhdf5_read_variable(rh5f_u, U%vname, U%ndims, it, U%dims, rdata=U%vdata)
       call rhdf5_read_variable(rh5f_v, V%vname, V%ndims, it, V%dims, rdata=V%vdata)
-      call rhdf5_read_variable(rh5f_filter, Filter%vname, Filter%ndims, it, Filter%dims, rdata=Filter%vdata)
 
       call DoHorizKe(Nx, Ny, Nz, Dens%vdata, U%vdata, V%vdata, Filter%vdata, DeltaX, DeltaY, InZcoords%vdata, TserAvg%vdata(1))
+
       deallocate(Dens%vdata)
       deallocate(U%vdata)
       deallocate(V%vdata)
-      deallocate(Filter%vdata)
+    else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
+             (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist'))  then
+      call rhdf5_read_variable(rh5f_var, Var%vname, Var%ndims, it, Var%dims, rdata=Var%vdata)
 
-      call rhdf5_write_variable(rh5f_out, TserAvg%vname, TserAvg%ndims, it, TserAvg%dims, &
-         TserAvg%units, TserAvg%descrip, TserAvg%dimnames, rdata=TserAvg%vdata)
-
-      if (modulo(it,100) .eq. 0) then
-        write (*,*) 'Working: Number of time steps processed so far: ', it
+      if (AvgFunc .eq. 'min') then
+        call DoMin(Nx, Ny, Nz, Filter%dims(3), Var%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata(1))
+      else if (AvgFunc .eq. 'max') then
+        call DoMax(Nx, Ny, Nz, Filter%dims(3), Var%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata(1))
+      else if (AvgFunc .eq. 'hda') then
+        call DoHda(Nx, Ny, Nz, Filter%dims(3), Var%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata)
+      else if (AvgFunc .eq. 'hist') then
+        call DoHist(Nx, Ny, Nz, Filter%dims(3), NumBins, Var%vdata, Filter%vdata, UseFilter, UndefVal, Bins, TserAvg%vdata)
       endif
-    enddo
+
+      deallocate(Var%vdata)
+    else if (AvgFunc .eq. 'storm_int') then
+      call rhdf5_read_variable(rh5f_speed10m, Speed10m%vname, Speed10m%ndims, it, Speed10m%dims, rdata=Speed10m%vdata)
+      call DoStormInt(Nx, Ny, Nz, Speed10m%vdata, Filter%vdata, TserAvg%vdata(1))
+      deallocate(Speed10m%vdata)
+    endif
+
+    ! if using a filter, deallocate the space for the next time around
+    if (UseFilter) then
+      deallocate(Filter%vdata)
+    endif
+
+    ! write out the averaged data
+    call rhdf5_write_variable(rh5f_out, TserAvg%vname, TserAvg%ndims, it, TserAvg%dims, &
+       TserAvg%units, TserAvg%descrip, TserAvg%dimnames, rdata=TserAvg%vdata)
+
+    ! print a message for the user on longer jobs so that it can be
+    ! seen that progress is being made
+    if (modulo(it,100) .eq. 0) then
+      write (*,*) 'Working: Number of time steps processed so far: ', it
+    endif
+  enddo
+
+  rh5f_facc = 'W'
+  call rhdf5_close_file(rh5f_out)
+
+  rh5f_facc = 'R'
+  if (UseFilter) then
+    call rhdf5_close_file(rh5f_filter)
+  endif
+  if (AvgFunc .eq. 'max_azwind') then
+    call rhdf5_close_file(rh5f_azwind)
+  else if (AvgFunc .eq. 'horiz_ke') then
     call rhdf5_close_file(rh5f_dens)
     call rhdf5_close_file(rh5f_u)
     call rhdf5_close_file(rh5f_v)
-    call rhdf5_close_file(rh5f_filter)
-  else if (AvgFunc .eq. 'min') then
-    rh5f_facc = 'R'
-    call rhdf5_open_file(VarFile, rh5f_facc, 1, rh5f_var)
-
-    do it = 1, Nt 
-      call rhdf5_read_variable(rh5f_var, Var%vname, Var%ndims, it, Var%dims, rdata=Var%vdata)
-
-      call DoMin(Nx, Ny, Nz, Var%vdata, UndefVal, TserAvg%vdata(1))
-      deallocate(Var%vdata)
-
-      call rhdf5_write_variable(rh5f_out, TserAvg%vname, TserAvg%ndims, it, TserAvg%dims, &
-         TserAvg%units, TserAvg%descrip, TserAvg%dimnames, rdata=TserAvg%vdata)
-
-      if (modulo(it,100) .eq. 0) then
-        write (*,*) 'Working: Number of time steps processed so far: ', it
-      endif
-    enddo
-    call rhdf5_close_file(rh5f_var)
-  else if (AvgFunc .eq. 'max') then
-    rh5f_facc = 'R'
-    call rhdf5_open_file(VarFile, rh5f_facc, 1, rh5f_var)
-
-    do it = 1, Nt 
-      call rhdf5_read_variable(rh5f_var, Var%vname, Var%ndims, it, Var%dims, rdata=Var%vdata)
-
-      call DoMax(Nx, Ny, Nz, Var%vdata, UndefVal, TserAvg%vdata(1))
-      deallocate(Var%vdata)
-
-      call rhdf5_write_variable(rh5f_out, TserAvg%vname, TserAvg%ndims, it, TserAvg%dims, &
-         TserAvg%units, TserAvg%descrip, TserAvg%dimnames, rdata=TserAvg%vdata)
-
-      if (modulo(it,100) .eq. 0) then
-        write (*,*) 'Working: Number of time steps processed so far: ', it
-      endif
-    enddo
-    call rhdf5_close_file(rh5f_var)
-  else if (AvgFunc .eq. 'hda') then
-    rh5f_facc = 'R'
-    call rhdf5_open_file(VarFile, rh5f_facc, 1, rh5f_var)
-
-    do it = 1, Nt 
-      call rhdf5_read_variable(rh5f_var, Var%vname, Var%ndims, it, Var%dims, rdata=Var%vdata)
-
-      call DoHda(Nx, Ny, Nz, Var%vdata, UndefVal, TserAvg%vdata)
-      deallocate(Var%vdata)
-
-      call rhdf5_write_variable(rh5f_out, TserAvg%vname, TserAvg%ndims, it, TserAvg%dims, &
-         TserAvg%units, TserAvg%descrip, TserAvg%dimnames, rdata=TserAvg%vdata)
-
-      if (modulo(it,100) .eq. 0) then
-        write (*,*) 'Working: Number of time steps processed so far: ', it
-      endif
-    enddo
-    call rhdf5_close_file(rh5f_var)
-  else if (AvgFunc .eq. 'hist') then
-    rh5f_facc = 'R'
-    call rhdf5_open_file(VarFile, rh5f_facc, 1, rh5f_var)
-
-    do it = 1, Nt 
-      call rhdf5_read_variable(rh5f_var, Var%vname, Var%ndims, it, Var%dims, rdata=Var%vdata)
-
-      call DoHist(Nx, Ny, Nz, NumBins, Var%vdata, UndefVal, Bins, TserAvg%vdata)
-      deallocate(Var%vdata)
-
-      call rhdf5_write_variable(rh5f_out, TserAvg%vname, TserAvg%ndims, it, TserAvg%dims, &
-         TserAvg%units, TserAvg%descrip, TserAvg%dimnames, rdata=TserAvg%vdata)
-
-      if (modulo(it,100) .eq. 0) then
-        write (*,*) 'Working: Number of time steps processed so far: ', it
-      endif
-    enddo
+  else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
+           (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist'))  then
     call rhdf5_close_file(rh5f_var)
   else if (AvgFunc .eq. 'storm_int') then
-    rh5f_facc = 'R'
-    call rhdf5_open_file(Speed10mFile, rh5f_facc, 1, rh5f_speed10m)
-    call rhdf5_open_file(FilterFile, rh5f_facc, 1, rh5f_filter)
-
-    do it = 1, Nt 
-      call rhdf5_read_variable(rh5f_speed10m, Speed10m%vname, Speed10m%ndims, it, Speed10m%dims, rdata=Speed10m%vdata)
-      call rhdf5_read_variable(rh5f_filter, Filter%vname, Filter%ndims, it, Filter%dims, rdata=Filter%vdata)
-
-      call DoStormInt(Nx, Ny, Nz, Speed10m%vdata, Filter%vdata, TserAvg%vdata(1))
-      deallocate(Speed10m%vdata)
-      deallocate(Filter%vdata)
-
-      call rhdf5_write_variable(rh5f_out, TserAvg%vname, TserAvg%ndims, it, TserAvg%dims, &
-         TserAvg%units, TserAvg%descrip, TserAvg%dimnames, rdata=TserAvg%vdata)
-
-      if (modulo(it,100) .eq. 0) then
-        write (*,*) 'Working: Number of time steps processed so far: ', it
-      endif
-    enddo
     call rhdf5_close_file(rh5f_speed10m)
-    call rhdf5_close_file(rh5f_filter)
   endif
-  call rhdf5_close_file(rh5f_out)
  
   ! 'it' will be one beyond its loop limit (Nt) so subtract one
   ! from 'it' when reporting how many times steps were processed
@@ -688,10 +661,11 @@ contains
 !
 ! This routine will read in the command line arguments
 !
-subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile)
+subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
   implicit none
 
   character (len=*) :: InDir, InSuffix, OutFile, AvgFunc, FilterFile
+  logical :: UseFilter
 
   integer :: iargc
   character (len=128) :: arg
@@ -736,6 +710,12 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile)
   call getarg(3, OutFile)
   call getarg(4, AvgFunc)
   call getarg(5, FilterFile)
+
+  if ((FilterFile .eq. 'none') .or. (FilterFile .eq. 'NONE')) then
+    UseFilter = .false.
+  else
+    UseFilter = .true.
+  endif
 
   BadArgs = .false.
 
@@ -868,15 +848,19 @@ end subroutine DoHorizKe
 !
 ! This routine will do horizontal domain average for all z levels.
 !
-subroutine DoHda(Nx, Ny, Nz, Var, UndefVal, DomAvg)
+subroutine DoHda(Nx, Ny, Nz, FilterNz, Var, Filter, UseFilter, UndefVal, DomAvg)
   implicit none
 
-  integer :: Nx, Ny, Nz
+  integer :: Nx, Ny, Nz, FilterNz
   real, dimension(Nx,Ny,Nz) :: Var
+  real, dimension(Nx,Ny,FilterNz) :: Filter
+  logical :: UseFilter
   real :: UndefVal
   real, dimension(Nz) :: DomAvg
 
   integer :: ix, iy, iz
+  integer :: filter_z
+  logical :: SelectPoint
   integer :: NumPoints
 
   do iz = 1, Nz
@@ -889,9 +873,23 @@ subroutine DoHda(Nx, Ny, Nz, Var, UndefVal, DomAvg)
     ! we want these to be excluded so for now always exclude them
     ! (shouldn't hurt results with cyclic boundaries where the
     ! boundary values could have been included).
+
+    if (Nz .eq. 1) then
+      ! 2D var, use the z = 2 level (first model level above the surface)
+      ! since typically have the 3D filter z = 1 level all zeros (don't want
+      ! to include below surface model level in analysis).
+      filter_z = 2
+    else
+      filter_z = iz
+    endif
+
     do iy = 2, Ny-1
       do ix = 2, Nx-1
-        if (anint(Var(ix,iy,iz)) .ne. UndefVal) then
+        SelectPoint = anint(Var(ix,iy,iz)) .ne. UndefVal
+        if (UseFilter) then
+          SelectPoint = SelectPoint .and. (anint(Filter(ix,iy,filter_z)) .eq. 1.0)
+        endif
+        if (SelectPoint) then
           DomAvg(iz) = DomAvg(iz) + Var(ix,iy,iz)
           NumPoints = NumPoints + 1
         endif
@@ -914,17 +912,21 @@ end subroutine DoHda
 ! This routine will return the domain minimum value. Values equal to UndefVal will
 ! be ignored.
 !
-subroutine DoMin(Nx, Ny, Nz, Var, UndefVal, DomMin)
+subroutine DoMin(Nx, Ny, Nz, FilterNz, Var, Filter, UseFilter, UndefVal, DomMin)
   implicit none
 
   real, parameter :: BigPosNum = 10.0e50
 
-  integer :: Nx, Ny, Nz
+  integer :: Nx, Ny, Nz, FilterNz
   real, dimension(Nx,Ny,Nz) :: Var
+  real, dimension(Nx,Ny,FilterNz) :: Filter
+  logical :: UseFilter
   real :: UndefVal
   real :: DomMin
 
   integer :: ix, iy, iz
+  integer :: filter_z
+  logical :: SelectPoint
 
   DomMin = BigPosNum
   do iz = 1, Nz
@@ -934,9 +936,23 @@ subroutine DoMin(Nx, Ny, Nz, Var, UndefVal, DomMin)
     ! we want these to be excluded so for now always exclude them
     ! (shouldn't hurt results with cyclic boundaries where the
     ! boundary values could have been included).
+
+    if (Nz .eq. 1) then
+      ! 2D var, use the z = 2 level (first model level above the surface)
+      ! since typically have the 3D filter z = 1 level all zeros (don't want
+      ! to include below surface model level in analysis).
+      filter_z = 2
+    else
+      filter_z = iz
+    endif
+
     do iy = 2, Ny-1
       do ix = 2, Nx-1
-        if (anint(Var(ix,iy,iz)) .ne. UndefVal) then
+        SelectPoint = anint(Var(ix,iy,iz)) .ne. UndefVal
+        if (UseFilter) then
+          SelectPoint = SelectPoint .and. (anint(Filter(ix,iy,filter_z)) .eq. 1.0)
+        endif
+        if (SelectPoint) then
           if (Var(ix,iy,iz) .lt. DomMin) then
             DomMin = Var(ix,iy,iz)
           endif
@@ -959,17 +975,21 @@ end subroutine DoMin
 ! This routine will return the domain maximum value. Values equal to UndefVal will
 ! be ignored.
 !
-subroutine DoMax(Nx, Ny, Nz, Var, UndefVal, DomMax)
+subroutine DoMax(Nx, Ny, Nz, FilterNz, Var, Filter, UseFilter, UndefVal, DomMax)
   implicit none
 
   real, parameter :: BigNegNum = -10.0e50
 
-  integer :: Nx, Ny, Nz
+  integer :: Nx, Ny, Nz, FilterNz
   real, dimension(Nx,Ny,Nz) :: Var
+  real, dimension(Nx,Ny,FilterNz) :: Filter
+  logical :: UseFilter
   real :: UndefVal
   real :: DomMax
 
   integer :: ix, iy, iz
+  integer :: filter_z
+  logical :: SelectPoint
 
   DomMax = BigNegNum
   do iz = 1, Nz
@@ -979,9 +999,23 @@ subroutine DoMax(Nx, Ny, Nz, Var, UndefVal, DomMax)
     ! we want these to be excluded so for now always exclude them
     ! (shouldn't hurt results with cyclic boundaries where the
     ! boundary values could have been included).
+
+    if (Nz .eq. 1) then
+      ! 2D var, use the z = 2 level (first model level above the surface)
+      ! since typically have the 3D filter z = 1 level all zeros (don't want
+      ! to include below surface model level in analysis).
+      filter_z = 2
+    else
+      filter_z = iz
+    endif
+
     do iy = 2, Ny-1
       do ix = 2, Nx-1
-        if (anint(Var(ix,iy,iz)) .ne. UndefVal) then
+        SelectPoint = anint(Var(ix,iy,iz)) .ne. UndefVal
+        if (UseFilter) then
+          SelectPoint = SelectPoint .and. (anint(Filter(ix,iy,filter_z)) .eq. 1.0)
+        endif
+        if (SelectPoint) then
           if (Var(ix,iy,iz) .gt. DomMax) then
             DomMax = Var(ix,iy,iz)
           endif
@@ -1004,15 +1038,19 @@ end subroutine DoMax
 ! This routine will do histogram binning over all of the domain.
 !
 
-subroutine DoHist(Nx, Ny, Nz, Nb, Var, UndefVal, Bins, Counts)
+subroutine DoHist(Nx, Ny, Nz, FilterNz, Nb, Var, Filter, UseFilter, UndefVal, Bins, Counts)
   implicit none
 
-  integer :: Nx, Ny, Nz, Nb
+  integer :: Nx, Ny, Nz, Nb, FilterNz
   real, dimension(Nx,Ny,Nz) :: Var
+  real, dimension(Nx,Ny,FilterNz) :: Filter
+  logical :: UseFilter
   real :: UndefVal
   real, dimension(Nb) :: Bins, Counts
 
   integer :: ib, ix, iy, iz
+  integer :: filter_z
+  logical :: SelectPoint
 
   ! Emulate matlab histc command, ie the values in Bins are treated as the edges
   ! of the bin ranges. Do not count any values from Var that fall outside the
@@ -1030,9 +1068,22 @@ subroutine DoHist(Nx, Ny, Nz, Nb, Var, UndefVal, Bins, Counts)
 
   ! Build the histogram (counts)
   do iz = 1, Nz
+    if (Nz .eq. 1) then
+      ! 2D var, use the z = 2 level (first model level above the surface)
+      ! since typically have the 3D filter z = 1 level all zeros (don't want
+      ! to include below surface model level in analysis).
+      filter_z = 2
+    else
+      filter_z = iz
+    endif
+
     do iy = 1, Ny
       do ix = 1, Nx
-        if (anint(Var(ix,iy,iz)) .ne. UndefVal) then 
+        SelectPoint = anint(Var(ix,iy,iz)) .ne. UndefVal
+        if (UseFilter) then
+          SelectPoint = SelectPoint .and. (anint(Filter(ix,iy,filter_z)) .eq. 1.0)
+        endif
+        if (SelectPoint) then
           ! Check all bins except the last.
           !
           ! Exiting out of the loop when finding the bin will help a lot when the
