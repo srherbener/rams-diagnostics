@@ -74,7 +74,8 @@ sub ReadConfigFile
       }
     elsif ($f[0] eq "Tsavg:")
       {
-      $Config{TSAVG_DIAGS}{$f[1]}{FILTER} = $f[2];
+      $Config{TSAVG_DIAGS}{$f[1]}{DSPEC} = $f[2];
+      $Config{TSAVG_DIAGS}{$f[1]}{FILTER} = $f[3];
       }
     elsif ($f[0] eq "Filter:")
       {
