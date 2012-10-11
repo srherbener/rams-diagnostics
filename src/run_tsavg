@@ -32,7 +32,7 @@ use DiagUtils;
 #
 sub CreateFileNames
   {
-  my ($Case, $Tdir, $Dname, $FfilePrefix, $AzavgDir, $TsavgDir, $FilterDir, $RevuDir) = @_;
+  my ($Case, $Tdir, $Dname, $Dspec, $FfilePrefix, $AzavgDir, $TsavgDir, $FilterDir, $RevuDir) = @_;
   
   my $InDir;
   my $InFileSuffix;
@@ -43,10 +43,10 @@ sub CreateFileNames
   my $Pattern;
   my @f;
   my $TdirStr;
-  my $Dfile;
-  my $Dsubname;
-  my $Dtemp1;
-  my $Dtemp2;
+  my $DSfunc;
+  my $DSvname;
+  my $DSfprefix;
+  my $DSremain;
 
   # If $Tdir is the string "NONE", then do not place a subdirectory
   # in the path to the input and output files
@@ -59,18 +59,17 @@ sub CreateFileNames
     $TdirStr = "/" . $Tdir;
     }
 
-  # If $Dname starts with hda: then separate out the pieces, hda:<var>:<file>, and
-  # form the prefix using <file>.
-  if (($Dname =~ /min:/) || ($Dname =~ /max:/) || ($Dname =~ /hda:/) || ($Dname =~ /hist:/))
+  # If $Dspec contains mulitple parameters (colon separated) then separate out the
+  # individual value, <function>:<var>:<file_prefix>:<more_params>
+  if (($Dspec =~ /min:/) || ($Dspec =~ /max:/) || ($Dspec =~ /hda:/) || ($Dspec =~ /hist:/))
     {
-    ($Dsubname, $Dtemp1, $Dfile, $Dtemp2) = split(':', $Dname);
-    $Dfile = $Dsubname . "_" . $Dfile;
-    $Dvar = $Dfile;
+    ($DSfunc, $DSvname, $DSfprefix, $DSremain) = split(':', $Dspec);
+    $Dvar = $DSfunc . "_" . $DSfprefix;
     }
   else
     {
-    $Dvar = $Dname;
-    $Dfile = $Dname; 
+    $DSfunc = $Dspec;
+    $Dvar = $Dspec;
     }
 
   # InDir is the directory that the input files come from.
@@ -97,7 +96,7 @@ sub CreateFileNames
     $InFileSuffix =~ s/.*\/w-/-/;
     }
 
-  $OutFile = $TsavgDir . ${TdirStr} . "/" . ${Dfile} . "_" . ${Case} . ".h5";
+  $OutFile = $TsavgDir . ${TdirStr} . "/" . ${Dname} . "_" . ${Case} . ".h5";
   if (($FfilePrefix eq "none") || ($FfilePrefix eq "NONE"))
     {
     $FilterFile = $FfilePrefix;
@@ -107,7 +106,7 @@ sub CreateFileNames
     $FilterFile = $FilterDir . ${TdirStr} . "/" . ${FfilePrefix} . "_" . ${Case} . ".h5";
     }
 
-  return ($InDir, $InFileSuffix, $OutFile, $FilterFile, $Dvar);
+  return ($InDir, $InFileSuffix, $OutFile, $FilterFile, $DSfunc, $Dvar);
   }
 
 #######################################################################
@@ -130,6 +129,8 @@ my @f;
 my $Case;
 my $Tdir;
 my $Dname;
+my $Dspec;
+my $Dfunc;
 my $RevuVar;
 my $MaxRadius;
 my $VarDim;
@@ -178,20 +179,21 @@ foreach $Case (sort(keys(%Cases)))
     $JoinInFiles = "";
 
     # Grab the filter 
+    $Dspec = $TsavgDiags{$Dname}{DSPEC};
     $FfilePrefix = $TsavgDiags{$Dname}{FILTER};
 
     # run through each time directory generating the current diagnostic, and
     # then join these files into the main file (above the time directories)
     foreach $Tdir (sort(keys(%TimeDirs)))
       {
-      ($InDir,$InFileSuffix,$OutFile,$FilterFile,$Dvar) =
-          &CreateFileNames($Case, $Tdir, $Dname, $FfilePrefix, $AzavgDir, $TsavgDir, $FilterDir, $RevuDir);
+      ($InDir,$InFileSuffix,$OutFile,$FilterFile,$Dfunc,$Dvar) =
+          &CreateFileNames($Case, $Tdir, $Dname, $Dspec, $FfilePrefix, $AzavgDir, $TsavgDir, $FilterDir, $RevuDir);
 
       print "***************************************************************\n";
       print "Running tsavg:\n";
       print "  Case: $Case\n";
       print "  Time Directory: $Tdir\n";
-      print "  Tsavg Diagnostic: $Dname\n";
+      print "  Tsavg Diagnostic: $Dfunc\n";
       print "  Input File Directory: $InDir\n";
       print "  Input File Suffix: $InFileSuffix\n";
       print "  Filter File: $FilterFile\n";
@@ -205,7 +207,7 @@ foreach $Case (sort(keys(%Cases)))
         system(@SysArgs);
         }
 
-      @SysArgs = ("tsavg", $InDir, $InFileSuffix, $OutFile, $Dname, $FilterFile);
+      @SysArgs = ("tsavg", $InDir, $InFileSuffix, $OutFile, $Dspec, $FilterFile);
       print "Running: ", join(" ",@SysArgs), "\n\n";
       system(@SysArgs);
 
