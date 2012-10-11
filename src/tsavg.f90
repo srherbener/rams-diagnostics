@@ -41,7 +41,6 @@ program tsavg
   integer :: NumBins
   real :: BinStart, BinInc
   real, dimension(:), allocatable :: Bins
-  integer :: NumHistPoints
 
   integer :: rh5f_azwind, rh5f_u, rh5f_v, rh5f_speed10m, rh5f_dens, rh5f_var, rh5f_filter, rh5f_out
 
@@ -541,8 +540,7 @@ program tsavg
       else if (AvgFunc .eq. 'hda') then
         call DoHda(Nx, Ny, Nz, Filter%dims(3), Var%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata)
       else if (AvgFunc .eq. 'hist') then
-        call DoHist(Nx, Ny, Nz, Filter%dims(3), NumBins, Var%vdata, Filter%vdata, UseFilter, UndefVal, Bins, TserAvg%vdata, NumHistPoints)
-!print*, 'DEBUG: Nx, Ny, NumHistPoints: ', Nx, Ny, NumHistPoints
+        call DoHist(Nx, Ny, Nz, Filter%dims(3), NumBins, Var%vdata, Filter%vdata, UseFilter, UndefVal, Bins, TserAvg%vdata)
       endif
 
       deallocate(Var%vdata)
@@ -1040,10 +1038,10 @@ end subroutine DoMax
 ! This routine will do histogram binning over all of the domain.
 !
 
-subroutine DoHist(Nx, Ny, Nz, FilterNz, Nb, Var, Filter, UseFilter, UndefVal, Bins, Counts, NumPoints)
+subroutine DoHist(Nx, Ny, Nz, FilterNz, Nb, Var, Filter, UseFilter, UndefVal, Bins, Counts)
   implicit none
 
-  integer :: Nx, Ny, Nz, Nb, FilterNz, NumPoints
+  integer :: Nx, Ny, Nz, Nb, FilterNz
   real, dimension(Nx,Ny,Nz) :: Var
   real, dimension(Nx,Ny,FilterNz) :: Filter
   logical :: UseFilter
@@ -1069,7 +1067,6 @@ subroutine DoHist(Nx, Ny, Nz, FilterNz, Nb, Var, Filter, UseFilter, UndefVal, Bi
   enddo
 
   ! Build the histogram (counts)
-  NumPoints = 0
   do iz = 1, Nz
     if (Nz .eq. 1) then
       ! 2D var, use the z = 2 level (first model level above the surface)
@@ -1087,8 +1084,6 @@ subroutine DoHist(Nx, Ny, Nz, FilterNz, Nb, Var, Filter, UseFilter, UndefVal, Bi
           SelectPoint = SelectPoint .and. (anint(Filter(ix,iy,filter_z)) .eq. 1.0)
         endif
         if (SelectPoint) then
-          NumPoints = NumPoints + 1
-
           ! Check all bins except the last.
           !
           ! Exiting out of the loop when finding the bin will help a lot when the
