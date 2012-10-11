@@ -98,7 +98,14 @@ sub CreateFileNames
     }
 
   $OutFile = $TsavgDir . ${TdirStr} . "/" . ${Dfile} . "_" . ${Case} . ".h5";
-  $FilterFile = $FilterDir . ${TdirStr} . "/" . ${FfilePrefix} . "_" . ${Case} . ".h5";
+  if (($FfilePrefix eq "none") || ($FfilePrefix eq "NONE"))
+    {
+    $FilterFile = $FfilePrefix;
+    }
+  else
+    {
+    $FilterFile = $FilterDir . ${TdirStr} . "/" . ${FfilePrefix} . "_" . ${Case} . ".h5";
+    }
 
   return ($InDir, $InFileSuffix, $OutFile, $FilterFile, $Dvar);
   }

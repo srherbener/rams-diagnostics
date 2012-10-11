@@ -41,6 +41,7 @@ program tsavg
   integer :: NumBins
   real :: BinStart, BinInc
   real, dimension(:), allocatable :: Bins
+  integer :: NumHistPoints
 
   integer :: rh5f_azwind, rh5f_u, rh5f_v, rh5f_speed10m, rh5f_dens, rh5f_var, rh5f_filter, rh5f_out
 
@@ -216,7 +217,7 @@ program tsavg
       call rhdf5_read_init(Ufile, U)
       BadDims = BadDims .or. (.not.(DimsMatch(Filter, U)))
   
-      call rhdf5_read_init(Ufile, V)
+      call rhdf5_read_init(Vfile, V)
       BadDims = BadDims .or. (.not.(DimsMatch(Filter, V)))
 
       if (BadDims) then
@@ -540,7 +541,8 @@ program tsavg
       else if (AvgFunc .eq. 'hda') then
         call DoHda(Nx, Ny, Nz, Filter%dims(3), Var%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata)
       else if (AvgFunc .eq. 'hist') then
-        call DoHist(Nx, Ny, Nz, Filter%dims(3), NumBins, Var%vdata, Filter%vdata, UseFilter, UndefVal, Bins, TserAvg%vdata)
+        call DoHist(Nx, Ny, Nz, Filter%dims(3), NumBins, Var%vdata, Filter%vdata, UseFilter, UndefVal, Bins, TserAvg%vdata, NumHistPoints)
+!print*, 'DEBUG: Nx, Ny, NumHistPoints: ', Nx, Ny, NumHistPoints
       endif
 
       deallocate(Var%vdata)
@@ -612,28 +614,28 @@ program tsavg
     ! X
     OrigDimSize%vname = 'Nx'
     OrigDimSize%dimnames(1) = 'x'
-    OrigDimSize%descrip = 'number of x points'
+    OrigDimSize%descrip = 'number of domain x points'
     OrigDimSize%vdata(1) = float(Nx)
     call rhdf5_write(OutFile, OrigDimSize, 1)
 
     ! Y
     OrigDimSize%vname = 'Ny'
     OrigDimSize%dimnames(1) = 'y'
-    OrigDimSize%descrip = 'number of y points'
+    OrigDimSize%descrip = 'number of domain y points'
     OrigDimSize%vdata(1) = float(Ny)
     call rhdf5_write(OutFile, OrigDimSize, 1)
 
     ! Z
     OrigDimSize%vname = 'Nz'
     OrigDimSize%dimnames(1) = 'z'
-    OrigDimSize%descrip = 'number of z points'
+    OrigDimSize%descrip = 'number of domain z points'
     OrigDimSize%vdata(1) = float(Nz)
     call rhdf5_write(OutFile, OrigDimSize, 1)
 
     ! T
     OrigDimSize%vname = 'Nt'
     OrigDimSize%dimnames(1) = 't'
-    OrigDimSize%descrip = 'number of t points'
+    OrigDimSize%descrip = 'number of domain t points'
     OrigDimSize%vdata(1) = float(Nt)
     call rhdf5_write(OutFile, OrigDimSize, 1)
 
@@ -1038,10 +1040,10 @@ end subroutine DoMax
 ! This routine will do histogram binning over all of the domain.
 !
 
-subroutine DoHist(Nx, Ny, Nz, FilterNz, Nb, Var, Filter, UseFilter, UndefVal, Bins, Counts)
+subroutine DoHist(Nx, Ny, Nz, FilterNz, Nb, Var, Filter, UseFilter, UndefVal, Bins, Counts, NumPoints)
   implicit none
 
-  integer :: Nx, Ny, Nz, Nb, FilterNz
+  integer :: Nx, Ny, Nz, Nb, FilterNz, NumPoints
   real, dimension(Nx,Ny,Nz) :: Var
   real, dimension(Nx,Ny,FilterNz) :: Filter
   logical :: UseFilter
@@ -1067,6 +1069,7 @@ subroutine DoHist(Nx, Ny, Nz, FilterNz, Nb, Var, Filter, UseFilter, UndefVal, Bi
   enddo
 
   ! Build the histogram (counts)
+  NumPoints = 0
   do iz = 1, Nz
     if (Nz .eq. 1) then
       ! 2D var, use the z = 2 level (first model level above the surface)
@@ -1084,6 +1087,8 @@ subroutine DoHist(Nx, Ny, Nz, FilterNz, Nb, Var, Filter, UseFilter, UndefVal, Bi
           SelectPoint = SelectPoint .and. (anint(Filter(ix,iy,filter_z)) .eq. 1.0)
         endif
         if (SelectPoint) then
+          NumPoints = NumPoints + 1
+
           ! Check all bins except the last.
           !
           ! Exiting out of the loop when finding the bin will help a lot when the
