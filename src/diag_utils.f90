@@ -26,21 +26,24 @@ contains
 ! z level.
 !
 
-subroutine AzimuthalAverage(Nx, Ny, Nz, AvarNz, NumRbands, Avar, AzAvg, &
-  RbandInc, Filter, Radius, UndefVal)
+subroutine AzimuthalAverage(Nx, Ny, Nz, AvarNz, NumRbands, NumBins, Avar, AzAvg, &
+  RbandInc, Filter, Radius, HistBins, DoHist, UndefVal)
 
   implicit none
 
   integer :: Nx, Ny, Nz
   integer :: AvarNz
   integer :: NumRbands
+  integer :: NumBins
   real, dimension(Nx,Ny,AvarNz) :: Avar
-  real, dimension(NumRbands,AvarNz) :: AzAvg
+  real, dimension(NumRbands,NumBins,AvarNz) :: AzAvg
   real, dimension(Nx,Ny,Nz) :: Filter
   real, dimension(Nx,Ny) :: Radius
+  real, dimension(NumBins) :: HistBins
   real :: RbandInc, UndefVal
+  logical :: DoHist
 
-  integer :: ix, iy, iz
+  integer :: ix, iy, iz, ib
   integer :: filter_z
   real, dimension(NumRbands) :: Rcounts
   integer :: ir, iRband
@@ -49,6 +52,15 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, AvarNz, NumRbands, Avar, AzAvg, &
   !
   ! The storm center is taken to be the min pressure location of the
   ! x-y plane on the surface (iz .eq. 1)
+
+  ! zero out the output array
+  do iz = 1, AvarNz
+    do ib = 1, NumBins
+      do ir = 1, NumRbands
+        AzAvg(ir,ib,iz) = 0.0
+      enddo
+    enddo
+  enddo
 
   do iz = 1, AvarNz
     ! The filter data always comes in as a 3D var, and since RAMS has
@@ -68,10 +80,11 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, AvarNz, NumRbands, Avar, AzAvg, &
     endif
 
     ! For the averaging
-    do ir = 1, NumRbands
-      Rcounts(ir) = 0.0
-      AzAvg(ir,iz) = 0.0
-    end do
+    if (.not. DoHist) then
+      do ir = 1, NumRbands
+        Rcounts(ir) = 0.0
+      enddo
+    endif
 
     ! Get the averages for this x-y plane
     do iy = 1, Ny
@@ -85,137 +98,48 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, AvarNz, NumRbands, Avar, AzAvg, &
              iRband = NumRbands
            end if
 
-           AzAvg(iRband,iz) = AzAvg(iRband,iz) + Avar(ix,iy,iz)
-           Rcounts(iRband) = Rcounts(iRband) + 1.0
+           if (DoHist) then
+             ! Check all bins except the last.
+             !    
+             ! Exiting out of the loop when finding the bin will help a lot when the
+             ! distribution of values is biased toward smaller values. After exiting
+             ! out of the loop you can either just check the last bin (which will be wasted)
+             ! or put in a logical variable and check that variable saying you can skip the
+             ! check of the last bin. Since you would have to check the logical variable and
+             ! the last bin every time you might as well just check the last bin instead.
+             do ib = 1, NumBins-1 
+                if ((HistBins(ib) .le. Avar(ix,iy,iz)) .and. (Avar(ix,iy,iz) .lt. HistBins(ib+1))) then 
+                   Azavg(iRband,ib,iz) = Azavg(iRband,ib,iz) + 1.0
+                   exit 
+                endif
+             enddo
+             ! check the last bin
+             if (HistBins(NumBins) .eq. Avar(ix,iy,iz)) then 
+               Azavg(iRband,NumBins,iz) = Azavg(iRband,NumBins,iz) + 1.0
+             endif
+           else
+             AzAvg(iRband,1,iz) = AzAvg(iRband,1,iz) + Avar(ix,iy,iz)
+             Rcounts(iRband) = Rcounts(iRband) + 1.0
+           endif
         end if
       end do
     end do
 
-    do ir = 1, NumRbands
-      ! If we didn't put anything into an AzAvg slot then set it
-      ! to the undefined value so the data isn't biased by trying to chose
-      ! a default value.
-      if (Rcounts(ir) .ne. 0.0) then
-        AzAvg(ir,iz) = AzAvg(ir,iz) / Rcounts(ir)
-      else
-        AzAvg(ir,iz) = UndefVal
-      end if
-    end do
-  end do
-
-  return
-end subroutine
-
-
-!*****************************************************************************
-! BuildCfad()
-!
-! This routine will sort data points out into radial bands and then do 
-! the histogram binning within each radial band.
-!
-
-subroutine BuildCfad(Nx, Ny, Nz, Nt, NumRbands, NumBins, Avar, Cfad, &
-   RbandInc, BinVals, Filter, Radius, UndefVal)
-
-  implicit none
-
-  integer :: Nx, Ny, Nz, Nt, NumRbands, NumBins
-  real, dimension(Nx,Ny,Nz,Nt) :: Avar, Filter
-  real, dimension(Nx,Ny,Nt) :: Radius
-  real, dimension(NumRbands,NumBins,Nz,Nt) :: Cfad
-  real, dimension(NumBins) :: BinVals
-  real :: RbandInc, UndefVal
-
-  integer :: ix, iy, iz, it, ib, ir
-  real :: DeltaX, DeltaY, BinTotal
-  integer :: iRband, iBin
-  real, dimension(NumBins-1) :: BinEdges
-
-  ! initialize the counts
-  do ir = 1, NumRbands
-    do ib = 1, NumBins
-      do iz = 1, Nz
-        do it = 1, Nt
-          Cfad(ir,ib,iz,it) = 0.0;
-        end do 
-      end do 
-    end do 
-  end do 
-
-  ! Create the points halfway in between the points given in BinVals. Use
-  ! these half-way points as the boundaries between the bins.
-  do ib = 1, NumBins-1
-    BinEdges(ib) = (BinVals(ib) + BinVals(ib+1)) / 2.0
-  enddo
-
-  ! create the CFAD data
-  write (*,*) 'Binning Data:'
-
-  do it = 1, Nt
-    do iz = 1, Nz
-      do iy = 1, Ny
-        do ix = 1, Nx
-          ! Throw out undefined data points, and those screened out by Filter
-          if ((anint(Filter(ix,iy,iz,it)) .eq. 1.0) .and. (Avar(ix,iy,iz,it) .ne. UndefVal)) then
-             ! find the radial band for this data point
-             iRband = int(Radius(ix,iy,it) / RbandInc) + 1
-             ! iRband will go from 1 to n, but n might extend beyond the last radial
-             ! band due to approximations made in deriving RbandInc
-             if (iRband .gt. NumRbands) then
-               iRband = NumRbands
-             end if
-
-             ! Find the bin for this data point. Use the values in BinEdges to decide which
-             ! bin a value belongs in. Note that BinEdges(1) has the boundary between bins
-             ! 1 and 2, BinEdges(2) has the boundary between bins 2 and 3, etc.
-             iBin = 0
-             do ib = 1, NumBins
-               if (ib .lt. NumBins) then
-                 if (Avar(ix,iy,iz,it) .lt. BinEdges(ib)) then
-                   iBin = ib
-                   exit
-                 endif
-               else
-                 iBin = ib
-               endif
-             enddo
-
-             if (iBin .eq. 0) then
-               write (*,*) 'ERROR: did not find a bin for data at location:'
-               write (*,*) 'ERROR:   ix, iy, iz, it: ', ix, iy, iz, it
-               stop
-             endif
-
-             Cfad(iRband,iBin,iz,it) = Cfad(iRband,iBin,iz,it) + 1.0
-          endif
-        end do
-      end do
-    end do
-  end do
-
-  ! Have counts in Cfad now. Convert these to % numbers.
-
-  do it = 1, Nt
-    do iz = 1, Nz
+    ! If not doing histograms, then complete the average calculation.
+    if (.not. DoHist) then
       do ir = 1, NumRbands
-        ! sum up counts in all the bins
-        BinTotal = 0.0
-        do ib = 1, NumBins
-          BinTotal = BinTotal + Cfad(ir,ib,iz,it)
-        end do
-        ! convert entries to per cent values
-        do ib = 1, NumBins
-          ! If we selected out all data points, then the bin total will
-          ! be zero. In this case, leave the zeros in the Cfad array.
-          if (BinTotal .ne. 0.0) then
-            Cfad(ir,ib,iz,it) = (Cfad(ir,ib,iz,it) / BinTotal) * 100.0
-          endif
-        end do
+        ! If we didn't put anything into an AzAvg slot then set it
+        ! to the undefined value so the data isn't biased by trying to chose
+        ! a default value.
+        if (Rcounts(ir) .ne. 0.0) then
+          AzAvg(ir,1,iz) = AzAvg(ir,1,iz) / Rcounts(ir)
+        else
+          AzAvg(ir,1,iz) = UndefVal
+        end if
       end do
-    end do
+    endif
   end do
 
-  write (*,*) ''
   return
 end subroutine
 
