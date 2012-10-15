@@ -29,6 +29,7 @@ program azavg
   integer, parameter :: MaxFiles=10
   integer, parameter :: MaxCoords=1000
   real, parameter :: UndefVal=-999.0
+  integer, parameter :: MaxArgFields = 20
 
   integer NumRbands
   real :: WfilterMin, WfilterMax
@@ -38,6 +39,12 @@ program azavg
   character (len=MediumString) :: FilterFile
   character (len=LittleString) :: VarToAvg, RevuVar
   logical :: DoHorizVel, DoTangential
+  character (len=MediumString), dimension(MaxArgFields) :: ArgList
+  integer :: Nfields
+  logical :: DoHist
+  integer :: NumBins
+  real :: BinStart, BinSize
+  real, dimension(:), allocatable :: HistBins
 
   ! Data arrays: need one for w (vertical velocity), press (pressure)
   ! and the var we are doing the averaging on
@@ -46,7 +53,7 @@ program azavg
   ! data files: the first index is the file number, the second index is the
   ! var number
 
-  type (Rhdf5Var) :: U, V, Avar, Aavg, Rcoords, Zcoords, Tcoords, Dcoords, Xcoords, Ycoords
+  type (Rhdf5Var) :: U, V, Avar, Aavg, Rcoords, Zcoords, Tcoords, Bcoords, Xcoords, Ycoords
   type (Rhdf5Var) :: Filter, Radius, StormLon, StormLat, MaxRadius
   character (len=LittleString) :: rh5f_facc
   integer :: rh5f_filter, rh5f_u, rh5f_v, rh5f_avar, rh5f_aavg
@@ -58,15 +65,42 @@ program azavg
   integer :: i
   logical :: VarIs2d
 
-  integer :: ix, iy, iz, it, ilin
+  integer :: ix, iy, iz, it
   integer :: Nx, Ny, Nz, Nt, VarNz
 
   real :: DeltaX, DeltaY, RbandInc
-  real :: TestData, TestGridX, TestGridY
 
   ! Get the command line arguments
   call GetMyArgs(InDir, InSuffix, OutFile, FilterFile, NumRbands, VarToAvg, &
     RevuVar, DoHorizVel, DoTangential, VarIs2d)
+
+  if (VarToAvg(1:5) .eq. 'hist:') then
+    call String2List(VarToAvg, ':', ArgList, MaxArgFields, Nfields, 'hist spec')
+    if (Nfields .eq. 5) then
+      ! got the right amount of fields
+      !   field    value
+      !    1       'hist'
+      !    2       variable name
+      !    3       number of bins
+      !    4       first bin value
+      !    5       bin size
+      DoHist = .true.
+      VarToAvg   = trim(ArgList(2))
+      read(ArgList(3), '(i)') NumBins
+      read(ArgList(4), '(f)') BinStart
+      read(ArgList(5), '(f)') BinSize
+    else
+      write (*,*) 'ERROR: average function hist requires five fields: hist:<var>:<num_bins>:<bin_start>:<bin_size>'
+      stop
+    endif
+  else
+    ! Not doing histograms
+    !
+    ! Need to set NumBins to one since NumBins is being used to set the size
+    ! of the y dimension in the output variable, Aavg.
+    DoHist = .false.
+    NumBins = 1
+  endif
 
   write (*,*) 'Calculating azimuthal average for RAMS data:'
   write (*,*) '  Input directory: ', trim(InDir)
@@ -89,6 +123,12 @@ program azavg
   else
     write (*,*) '    Variable contains 3D data'
   end if
+  if (DoHist) then
+    write (*,*) '  Creating histogram counts:'
+    write (*,*) '    Number of bins: ', NumBins
+    write (*,*) '    Bin start: ', BinStart
+    write (*,*) '    Bin size: ', BinSize
+  endif
   write (*,*) ''
 
   ! Read the variable information from the HDF5 files and check for consistency.
@@ -202,6 +242,27 @@ program azavg
 
   write (*,*) ''
 
+  ! Create the histogram bins 'edges'. Emulate the way MATLAB does histograms.
+  ! Each bin is defined to be HistBins(i) <= x < HistBins(i+1) for all bins
+  ! up to the last one. The last bin is defined to be x == HistBins(NumBins)
+  !
+  ! NumBins will be one when not doing histograms. In this case place a zero
+  ! in HistBins. This will allow the code that creates Bcoords (below) to just
+  ! use NumBins and HistBins without checking DoHist.
+ allocate(HistBins(NumBins))
+  if (DoHist) then
+    write (*,*) 'Histogram Bins:'
+    HistBins(1) = BinStart
+    write (*,*) '  ', HistBins(1)
+    do i = 2, NumBins
+      HistBins(i) = HistBins(i-1) + BinSize
+      write (*,*) '  ', HistBins(i)
+    enddo
+    write (*,*) ''
+  else
+    HistBins(1) = 0.0
+  endif
+
   ! Convert the GRADS grid coordinates from longitude, latitude to flat plane (x and y).
   ! XcoordsKm, YcoordsKm are in units of km
   allocate(XcoordsKm(Nx))
@@ -292,17 +353,20 @@ program azavg
   write (*,*) 'Writing HDF5 output: ', trim(OutFile)
   write (*,*) ''
 
+  ! NumBins will be one when not doing histograms. Otherwise it will be
+  ! the number of bins the user specified.
+
   Aavg%vname = trim(VarToAvg)
   Aavg%ndims = 3
   Aavg%dims(1) = NumRbands
-  Aavg%dims(2) = 1
+  Aavg%dims(2) = NumBins
   Aavg%dims(3) = VarNz
   Aavg%dimnames(1) = 'x'
   Aavg%dimnames(2) = 'y'
   Aavg%dimnames(3) = 'z'
   Aavg%units = Avar%units 
   Aavg%descrip = 'azimuthally averaged ' // trim(VarToAvg) 
-  allocate(Aavg%vdata(NumRbands*VarNz))
+  allocate(Aavg%vdata(Aavg%dims(1)*Aavg%dims(2)*Aavg%dims(3)))
 
   ! Do the averaging - one time step at a time
   do it = 1, Nt
@@ -328,8 +392,8 @@ program azavg
     endif
 
     ! do the averaging and write out the results to the output file
-    call AzimuthalAverage(Nx, Ny, Nz, VarNz, NumRbands, Avar%vdata, Aavg%vdata, &
-      RbandInc, Filter%vdata, Radius%vdata, UndefVal)
+    call AzimuthalAverage(Nx, Ny, Nz, VarNz, NumRbands, NumBins, Avar%vdata, Aavg%vdata, &
+      RbandInc, Filter%vdata, Radius%vdata, HistBins, DoHist, UndefVal)
 
     call rhdf5_write_variable(rh5f_aavg, Aavg%vname, Aavg%ndims, it, Aavg%dims, &
       Aavg%units, Aavg%descrip, Aavg%dimnames, rdata=Aavg%vdata)
@@ -364,23 +428,27 @@ program azavg
 
   ! write out the coordinate data
   ! need to create a dummy y coordinate to keep grads happy
-  Dcoords%vname = 'y_coords'
-  Dcoords%ndims = 1
-  Dcoords%dims(1) = 1
-  Dcoords%dimnames(1) = 'y'
-  Dcoords%units = 'degrees_north'
-  Dcoords%descrip = 'dummy coordinates'
-  allocate (Dcoords%vdata(1))
-  Dcoords%vdata(1) = 0.0
+  ! NumBins will be one and HistBins(1) will be zero when we are
+  ! not doing histograms.
+  Bcoords%vname = 'y_coords'
+  Bcoords%ndims = 1
+  Bcoords%dims(1) = NumBins
+  Bcoords%dimnames(1) = 'y'
+  Bcoords%units = 'degrees_north'
+  Bcoords%descrip = 'dummy coordinates'
+  allocate (Bcoords%vdata(NumBins))
+  do iy = 1, NumBins
+    Bcoords%vdata(iy) = HistBins(iy)
+  enddo
   
   call rhdf5_write(OutFile, Rcoords, 1)
-  call rhdf5_write(OutFile, Dcoords, 1)
+  call rhdf5_write(OutFile, Bcoords, 1)
   call rhdf5_write(OutFile, Zcoords, 1)
   call rhdf5_write(OutFile, Tcoords, 1)
 
   ! set up four (x,y,z,t) dimensions for use by GRADS
   call rhdf5_set_dimension(OutFile, Rcoords, 'x')
-  call rhdf5_set_dimension(OutFile, Dcoords, 'y')
+  call rhdf5_set_dimension(OutFile, Bcoords, 'y')
   call rhdf5_set_dimension(OutFile, Zcoords, 'z')
   call rhdf5_set_dimension(OutFile, Tcoords, 't')
 
@@ -422,6 +490,12 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, FilterFile, NumRbands, VarToAvg, 
     write (*,*) '             special var names:'
     write (*,*) '                speed_t: horizontal tangential speed'
     write (*,*) '                speed_r: horizontal radial speed'
+    write (*,*) '                hist: create histogram counts instead of averages'
+    write (*,*) '                  hist:<var>:<num_bins>:<bin_start>:<bin_size>'
+    write (*,*) '                     <var>: same as <var_to_average>'
+    write (*,*) '                     <num_bins>: number of bins to use in the histogram creation'
+    write (*,*) '                     <bin_start>: starting value for first bin'
+    write (*,*) '                     <bin_inc>: size of each bin'
     write (*,*) '        <revu_var_name>: name of variable in the REVU file'
     write (*,*) '        <dim_of_var>: indicates if <var_to_average> is 2d or 3d'
     write (*,*) '           <dim_of_var> must be either "2d" or "3d"'
