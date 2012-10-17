@@ -79,6 +79,8 @@ for i = 1:size(InLines,1)
       Cdata.ExpName = Fields{2};
     case 'UndefVal:'
       Cdata.UndefVal = sscanf(Fields{2}, '%f');
+    case 'SstVal:'
+      Cdata.SstVal = sscanf(Fields{2}, '%f');
     case 'Case:'
       i_case = i_case + 1;
       Cdata.Cases(i_case).Cname = Fields{2};

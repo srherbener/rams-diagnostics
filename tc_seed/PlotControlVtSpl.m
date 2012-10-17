@@ -8,6 +8,12 @@ UndefVal = Config.UndefVal;
 ControlCase = Config.ControlCase;
 AzavgDir = Config.AzavgDir;
 PlotDir = Config.PlotDir;
+SstVal = Config.SstVal;
+
+% Make sure PlotDir exists
+if (exist(PlotDir, 'dir') ~= 7)
+    mkdir(PlotDir);
+end
 
 % read in the Vt and time coordinate data
 Hfile = sprintf('%s/speed_t_%s.h5', AzavgDir, ControlCase);
@@ -68,14 +74,41 @@ MIN_SPL = SmoothFillTseries(MIN_SPL, Ntsteps, Flen);
 Lwidth = 2;
 Fsize = 20;
 Pfile = sprintf('%s/CntlVtSpl.jpg', PlotDir);
-Ptitle = sprintf('Control Run Storm Development');
+Ptitle = sprintf('Control Run Storm Development: SST = %d\\circ C', SstVal);
 Xlabel = sprintf('Local Time, Starting at %s', StartTime);
 Y1label = sprintf('Maximum surface Vt (m/s)');
 Y2label = sprintf('Minimum sea level pressure (mb)');
 
 AxisPos = [ 0.11 0.15 0.75 0.75 ] ;
-Y1lims = [ 0 50 ];
-Y2lims = [ 970 1020 ];
+
+% Set up plot controls according to SST
+switch SstVal
+  case 26
+    Y1lims = [ 0 50 ];
+    Y2lims = [ 970 1020 ];
+    Tbefore = 24;
+    Tduring = 54;
+    Tafter = 84;
+  case 27
+    Y1lims = [ 0 60 ];
+    Y2lims = [ 940 1020 ];
+    Tbefore = 22;
+    Tduring = 40;
+    Tafter = 78;
+  case 28
+    Y1lims = [ 0 80 ];
+    Y2lims = [ 900 1020 ];
+    Tbefore = 24;
+    Tduring = 42;
+    Tafter = 60;
+  otherwise
+    % SST == 26 setup
+    Y1lims = [ 0 50 ];
+    Y2lims = [ 970 1020 ];
+    Tbefore = 24;
+    Tduring = 54;
+    Tafter = 84;
+end
 
 % locations on Vt that correpsond to times relative to the
 % rapid instensification phase
@@ -86,17 +119,14 @@ Y2lims = [ 970 1020 ];
 % each index in Vt is one hour and the first index is zero so
 % need to add one to the time to get the corresponding index.
 
-Tbefore = 24;
 Xbefore = [ Times(Tbefore+1) Times(Tbefore+1) ];
-TxtBefore = sprintf('\\leftarrow t = %d hr', Tbefore);
+TxtBefore = sprintf('\\leftarrow %d hr', Tbefore);
 
-Tduring = 54;
 Xduring = [ Times(Tduring+1) Times(Tduring+1) ];
-TxtDuring = sprintf('\\leftarrow t = %d hr', Tduring);
+TxtDuring = sprintf('\\leftarrow %d hr', Tduring);
 
-Tafter = 84;
 Xafter = [ Times(Tafter+1) Times(Tafter+1) ];
-TxtAfter = sprintf('\\leftarrow t = %d hr', Tafter);
+TxtAfter = sprintf('\\leftarrow %d hr', Tafter);
 
 Fig = figure;
 
