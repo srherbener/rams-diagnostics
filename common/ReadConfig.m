@@ -49,7 +49,7 @@ InLines = char(InFile{1});
 i_case = 0;
 i_tdir = 0;
 i_aeof = 0;
-i_cfad = 0;
+i_hmeas = 0;
 i_aeofplot = 0;
 i_tsplot = 0;
 i_dplot = 0;
@@ -71,8 +71,6 @@ for i = 1:size(InLines,1)
       Cdata.PlotDir = Fields{2};
     case 'EofDir:'
       Cdata.EofDir = Fields{2};
-    case 'CfadDir:'
-      Cdata.CfadDir = Fields{2};
     case 'ControlCase:'
       Cdata.ControlCase = Fields{2};
     case 'ExpName:'
@@ -101,12 +99,12 @@ for i = 1:size(InLines,1)
       Cdata.AzavgEof(i_aeof).Zmax = sscanf(Fields{7}, '%f');
       Cdata.AzavgEof(i_aeof).Tmin = sscanf(Fields{8}, '%f');
       Cdata.AzavgEof(i_aeof).Tmax = sscanf(Fields{9}, '%f');
-    case 'Cfad:'
-      i_cfad = i_cfad + 1;
-      Cdata.Cfads(i_cfad).Name    = Fields{2};
-      Cdata.Cfads(i_cfad).InDir   = Fields{3};
-      Cdata.Cfads(i_cfad).Fprefix = Fields{4};
-      Cdata.Cfads(i_cfad).Rvar    = Fields{5};
+    case 'Hmeas:'
+      i_hmeas = i_hmeas + 1;
+      Cdata.Hmeas(i_hmeas).Name    = Fields{2};
+      Cdata.Hmeas(i_hmeas).InDir   = Fields{3};
+      Cdata.Hmeas(i_hmeas).Fprefix = Fields{4};
+      Cdata.Hmeas(i_hmeas).Rvar    = Fields{5};
     case 'TsPlotSpecs:'
       Cdata.TsPlotSpecs.Ntsteps      = sscanf(Fields{2}, '%d');
       Cdata.TsPlotSpecs.Tstart       = sscanf(Fields{3}, '%f');
