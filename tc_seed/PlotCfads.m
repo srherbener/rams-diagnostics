@@ -60,7 +60,7 @@ for icase = 1:length(Config.Cases)
     end
     if (strcmp(Vname, 'w'))
         Xlabel = 'Velocity (m/s)';
-        clims = [ 0 150 ];
+        clims = [ 0 100 ];
         Zmin = 0;
         Zmax = 10;
         Bmin = -0.4;
@@ -68,19 +68,19 @@ for icase = 1:length(Config.Cases)
     end
     if (strcmp(Vname, 'lh_vapt'))
         Xlabel = 'Heating Rate (K/hr)';
-        clims = [ 0 100 ];
+        clims = [ 0 200 ];
         Zmin = 0;
-        Zmax = 5;
-        Bmin = -5;
-        Bmax = 0;
+        Zmax = 20;
+        Bmin = -35;
+        Bmax = 35;
     end
     if (strcmp(Vname, 'lh_frzt'))
         Xlabel = 'Heating Rate (K/hr)';
         clims = [ 0  300 ];
         Zmin = 0;
-        Zmax = 10;
-        Bmin = -0.3;
-        Bmax = 0.3;
+        Zmax = 20;
+        Bmin = -1;
+        Bmax = 1;
     end
     
     % Strip off the dimension according to Ptype

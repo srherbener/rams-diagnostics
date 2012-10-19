@@ -20,12 +20,7 @@ Rmax = 250;
 Tmin = 24;
 Tmax = 144;
 
-Cmin = 0;
-Cmax = 100;
-Wmin = -1;
-Wmax = 1;
-LHmin = -1;
-LHmax = 1;
+Fsize = 20;
 
 % make the plots
 for icase = 1:length(Config.Cases)
@@ -64,24 +59,24 @@ for icase = 1:length(Config.Cases)
     
     % Set limits according to the quantity we are viewing
     if (strcmp(Vname, 'ccn_conc'))
-        clims = [ Cmin, Cmax ];
+        clims = [ 0 150 ];
         Zmin = 0;
         Zmax = 2.5;
     end
     if (strcmp(Vname, 'w'))
-        clims = [ Wmin, Wmax ];
+        clims = [ -0.4 0.4 ];
         Zmin = 0;
         Zmax = 10;
     end
     if (strcmp(Vname, 'lh_vapt'))
-        clims = [ LHmin LHmax ];
+        clims = [ -35 35 ];
         Zmin = 0;
-        Zmax = 5;
+        Zmax = 20;
     end
     if (strcmp(Vname, 'lh_frzt'))
-        clims = [ LHmin LHmax ];
+        clims = [ -1 1 ];
         Zmin = 0;
-        Zmax = 10;
+        Zmax = 20;
     end
     
     % Strip off the dimension according to Ptype
@@ -105,18 +100,20 @@ for icase = 1:length(Config.Cases)
     Ylabel = 'Height (km)';
     
     % Plot time series
-    Ptitle = sprintf('Time series, R = %dkm: %s', Rval, Vname);
+    Ptitle = sprintf('Time: %s, R = %dkm: %s', Case, Rval, Vname);
+    Ptitle = regexprep(Ptitle, '_', '-');
     Xlabel = 'Time (hr)';
     Fig = figure;
     contourf(Tvals,Zvals,PdataT);
-    set(gca, 'FontSize', 20);
+    set(gca, 'FontSize', Fsize);
     if (~ strcmp(Vname, 'ccn_conc'))
         colormap(redblue);
     else
         colormap('default');
     end
     shading flat;
-    colorbar;
+    cbar = colorbar;
+    set(cbar, 'FontSize', Fsize);
     caxis(clims);
     title(Ptitle);
     xlabel(Xlabel);
@@ -126,18 +123,20 @@ for icase = 1:length(Config.Cases)
     close(Fig);
     
     % Plot radial view
-    Ptitle = sprintf('Radial view, T = %dhr: %s', Tval, Vname);
+    Ptitle = sprintf('Radius: %s, T = %dhr: %s', Case, Tval, Vname);
+    Ptitle = regexprep(Ptitle, '_', '-');
     Xlabel = 'Radius (km)';
     Fig = figure;
     contourf(Rvals,Zvals,PdataR);
-    set(gca, 'FontSize', 20);
+    set(gca, 'FontSize', Fsize);
     if (~ strcmp(Vname, 'ccn_conc'))
         colormap(redblue);
     else
         colormap('default');
     end
     shading flat;
-    colorbar;
+    cbar = colorbar;
+    set(cbar, 'FontSize', Fsize);
     caxis(clims);
     title(Ptitle);
     xlabel(Xlabel);
