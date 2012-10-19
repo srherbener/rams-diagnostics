@@ -5,7 +5,9 @@
 DEST = $(HOME)/etc/matlab/tc_seed
 
 SCRIPTS = $(DEST)/GenKeVtPlots.m \
+          $(DEST)/PlotCfads.m \
           $(DEST)/PlotControlVtSpl.m \
+          $(DEST)/PlotHmeas.m \
           $(DEST)/PlotInitialVortex.m \
           $(DEST)/PlotSampleCcnProfile.m \
           $(DEST)/SetPath.m
