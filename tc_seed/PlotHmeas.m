@@ -63,6 +63,16 @@ for icase = 1:length(Config.Cases)
         Zmin = 0;
         Zmax = 2.5;
     end
+    if (strcmp(Vname, 'saltf_conc'))
+        clims = [ 0 20 ];
+        Zmin = 0;
+        Zmax = 1.0;
+    end
+    if (strcmp(Vname, 'saltj_conc'))
+        clims = [ 0 0.5 ];
+        Zmin = 0;
+        Zmax = 1.0;
+    end
     if (strcmp(Vname, 'w'))
         clims = [ -0.4 0.4 ];
         Zmin = 0;
