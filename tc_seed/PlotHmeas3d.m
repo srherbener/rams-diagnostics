@@ -17,9 +17,11 @@ Fsize = 20;
 % make the plots
 for icase = 1:length(Config.Cases)
   Case = Config.Cases(icase).Cname;
-  for ihmplot = 1: length(Config.Hmeas)
+  CaseTitle = regexprep(Case, '_', '-');
+  for ihmplot = 1: length(Config.HmeasPlot3d)
     Name    = Config.HmeasPlot3d(ihmplot).Name;
     Vname   = Config.HmeasPlot3d(ihmplot).Var;
+    Fprefix = Config.HmeasPlot3d(ihmplot).Fprefix;
     Units   = Config.HmeasPlot3d(ihmplot).Units;
     Descrip = Config.HmeasPlot3d(ihmplot).Descrip;
     Vtype   = Config.HmeasPlot3d(ihmplot).Vtype;
@@ -42,7 +44,7 @@ for icase = 1:length(Config.Cases)
     fprintf('  Case: %s\n', Case);
     fprintf('\n');
 
-    InFile = sprintf('%s/hmeas_%s_%s.h5', InDir, Name, Case);
+    InFile = sprintf('%s/hmeas_%s_%s.h5', InDir, Fprefix, Case);
     OutFile = sprintf('%s/hmeas3d_%s_%s.jpg', OutDir, Name, Case);
     
     % Read in the histogram data. HDATA will be organized as (r,z,t) where
@@ -51,6 +53,7 @@ for icase = 1:length(Config.Cases)
     %    t --> time
     Hdset = sprintf('/%s_%s', Vname, Vtype);
     fprintf('Reading file: %s, Dataset: %s\n', InFile, Hdset);
+    fprintf('Writing file: %s\n', OutFile);
     fprintf('\n');
     R = hdf5read(InFile, '/x_coords');
     Z = hdf5read(InFile, '/z_coords');
@@ -80,7 +83,7 @@ for icase = 1:length(Config.Cases)
     Pdata = permute(Pdata, [ 1 3 2 ]);
     
     % Plot 
-    Ptitle = sprintf('%s, %s: Surface: %.1f (%s)', Case, Descrip, Isurf, Units);
+    Ptitle = sprintf('%s, %s: Surface: %.1f (%s)', CaseTitle, Descrip, Isurf, Units);
     Xlabel = 'Time (hr)';
     Ylabel = 'Radius (km)';
     Zlabel = 'Height (km)';
