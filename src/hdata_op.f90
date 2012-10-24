@@ -7,7 +7,7 @@
 ! series in HDF5 format
 !
 
-program tsavg
+program hdata_op
   use rhdf5_utils
   use diag_utils
   implicit none
@@ -19,220 +19,69 @@ program tsavg
 
   real, parameter :: UndefVal = -999.0
 
-  character (len=MediumString) :: InDir
-  character (len=MediumString) :: InSuffix
+  character (len=MediumString) :: InFile1
+  character (len=LittleString) :: VarName1
+  character (len=MediumString) :: InFile2
+  character (len=LittleString) :: VarName2
   character (len=MediumString) :: OutFile
-  character (len=MediumString) :: FilterFile
-  character (len=LittleString) :: AvgFunc
-  character (len=MediumString), dimension(MaxArgFields) :: ArgList
-  integer :: Nfields
-  character (len=LittleString) :: VarDim
-  logical :: UseFilter
+  character (len=LittleString) :: Op
 
   ! Data arrays
   ! Dims: x, y, z, t
-  type (Rhdf5Var) :: InXcoords, InYcoords, InZcoords, InTcoords
-  type (Rhdf5Var) :: OutXcoords, OutYcoords, OutZcoords, OrigDimSize
-  type (Rhdf5Var) :: U, V, AzWind, Speed10m, Dens, Var, Filter, TserAvg
-  character (len=MediumString) :: Ufile, Vfile, AzWindFile, Speed10mFile, DensFile, VarFile, InCoordFile
-  character (len=LittleString) :: VarFprefix
+  type (Rhdf5Var) :: Xcoords, Ycoords, Zcoords, Tcoords
+  type (Rhdf5Var) :: Var1, Var2, OutVar
   character (len=LittleString) :: rh5f_facc
-  
-  integer :: NumBins
-  real :: BinStart, BinInc
-  real, dimension(:), allocatable :: Bins
+  integer :: rh5f_in1, rh5f_in2, rh5f_out
 
-  integer :: rh5f_azwind, rh5f_u, rh5f_v, rh5f_speed10m, rh5f_dens, rh5f_var, rh5f_filter, rh5f_out
-
-  integer :: id, ib, ix, iy, iz, it
+  integer :: i, ix, iy, iz, it, id
   integer :: Nx, Ny, Nz, Nt
-  real :: DeltaX, DeltaY
-  real, dimension(:), allocatable :: InXcoordsKm, InYcoordsKm
   logical :: BadDims
 
   ! Get the command line arguments
-  call GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
-  if ((AvgFunc(1:4) .eq. 'min:') .or. (AvgFunc(1:4) .eq. 'max:') .or. (AvgFunc(1:4) .eq. 'hda:')) then
-    call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'avg spec')
-    if (Nfields .eq. 4) then
-      ! got the right amount of fields
-      !   field    value
-      !    1       'min', 'max', or 'hda' 
-      !    2       name of variable inside the REVU file
-      !    3       prefix for the REVU file name
-      !    4       dimensionality of variable
-      AvgFunc    = trim(ArgList(1))
-      Var%vname  = trim(ArgList(2))
-      VarFprefix = trim(ArgList(3))
-      VarFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
-      VarDim     = trim(ArgList(4))
-    else
-      write (*,*) 'ERROR: average function hda requires four fields: hda:<var>:<file>:<dim>'
-      stop
-    endif
-  endif
+  call GetMyArgs(InFile1, VarName1, InFile2, VarName2, OutFile, Op)
 
-  if (AvgFunc(1:5) .eq. 'hist:') then
-    call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'hist spec')
-    if (Nfields .eq. 7) then
-      ! got the right amount of fields
-      !   field    value
-      !    1       'hist'
-      !    2       name of variable inside the REVU file
-      !    3       prefix for the REVU file name
-      !    4       dimensionality of variable
-      !    5       number of bins
-      !    6       bin start
-      !    7       bin increment
-      AvgFunc    = trim(ArgList(1))
-      Var%vname  = trim(ArgList(2))
-      VarFprefix = trim(ArgList(3))
-      VarFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
-      VarDim     = trim(ArgList(4))
-      read(ArgList(5), '(i)') NumBins
-      read(ArgList(6), '(f)') BinStart
-      read(ArgList(7), '(f)') BinInc
-    else
-      write (*,*) 'ERROR: average function hist requires seven fields: hist:<var>:<file>:<dim>:<num_bins>:<bin_start>:<bin_inc>'
-      stop
-    endif
-  endif
-
-  write (*,*) 'Time seris of average for RAMS data:'
-  write (*,*) '  Input directory: ', trim(InDir)
-  write (*,*) '  Input file suffix: ', trim(InSuffix)
+  write (*,*) 'Performing operation on HDF5 REVU data:'
+  write (*,*) '  Input file 1: ', trim(InFile1)
+  write (*,*) '    Variable Name: ', trim(VarName1)
+  write (*,*) '  Input file 2: ', trim(InFile2)
+  write (*,*) '    Variable Name: ', trim(VarName2)
   write (*,*) '  Output file:  ', trim(OutFile)
-  write (*,*) '  Averaging function: ', trim(AvgFunc)
-  if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. (AvgFunc .eq. 'hda')) then
-    write (*,*) '    Variable name: ', trim(Var%vname)
-    write (*,*) '    File name: ', trim(VarFile)
-    write (*,*) '    Dimensionality: ', trim(VarDim)
-  else if (AvgFunc .eq. 'hist') then
-    write (*,*) '    Variable name: ', trim(Var%vname)
-    write (*,*) '    File name: ', trim(VarFile)
-    write (*,*) '    Dimensionality: ', trim(VarDim)
-    write (*,*) '    Binning specs:'
-    write (*,*) '      Number of bins: ', NumBins
-    write (*,*) '      Bins start at: ', BinStart
-    write (*,*) '      Delta between bins: ', BinInc
-  endif
-  write (*,*) '  Filter file: ', trim(FilterFile)
-  write (*,*) '    Using filter: ', UseFilter
+  write (*,*) '  Operator: ', trim(Op)
   write (*,*) ''
   flush(6)
 
   ! set up file and variable names
-  AzWindFile = trim(InDir) // '/speed_t' // trim(InSuffix)
-  AzWind%vname = 'speed_t'
-
-  ! FilterFile is set by command line arguments
-  Filter%vname = 'filter'
-
-  DensFile = trim(InDir) // '/dn0' // trim(InSuffix)
-  Dens%vname = 'dn0'
-
-  Ufile = trim(InDir) // '/u' // trim(InSuffix)
-  U%vname = 'u'
-
-  Vfile = trim(InDir) // '/v' // trim(InSuffix)
-  V%vname = 'v'
-
-  Speed10mFile = trim(InDir) // '/speed10m' // trim(InSuffix)
-  Speed10m%vname = 'speed10m'
+  Var1%vname = VarName1
+  Var2%vname = VarName2
 
   ! Check that the dimensions are consistent between the variables needed for
   ! the selected averaging function.
-  !
-  ! There is no associated filter with the max_azwind since a filter has already been
-  ! applied by the azavg program (which created the azwind data). All other functions
-  ! need the filter data.
-  !
-  ! Expect 3D vars to be: (x,y,z,t)
-  !        2D vars to be: (x,y,t)
-  !
 
-  ! Set Filter%ndims to one here. This will result with Filter%ndims being equal to zero (since
-  ! we need to chop of the time dimension to read the filter time step by time step) when we
-  ! are not using a filter. When using a filter, Filter%ndims will get set by what's contained
-  ! in FilterFile.
-  if (AvgFunc .eq. 'max_azwind') then
-    ! max_azwind: must not use filter (azavg already applied a filter)
-    if (UseFilter) then
-      write (*,*) 'ERROR: cannot use a filter with function: max_azwind'
+  call rhdf5_read_init(InFile1, Var1)
+  call rhdf5_read_init(InFile2, Var2)
+
+  Nx = Var1%dims(1)
+  Ny = Var1%dims(2)
+  Nz = Var1%dims(3)
+  Nt = Var1%dims(4)
+
+  BadDims = Var2%dims(1) .ne. Nx
+  BadDims = BadDims .or. (Var2%dims(2) .ne. Ny)
+  BadDims = BadDims .or. (Var2%dims(3) .ne. Nz)
+  BadDims = BadDims .or. (Var2%dims(4) .ne. Nt)
+
+  if (BadDims) then
+    write (*,*) 'ERROR: dimensions of variables from input files do not match'
+    stop
+  endif
+
+  ! Check if the operation makes sense
+  if (trim(Op) .eq. 'sub') then
+    if (trim(Var1%units) .ne. trim(Var2%units)) then
+      write (*,*) 'ERROR: units of variables from input files do not match'
+      write (*,*) 'ERROR:   Var1: ', trim(Var1%vname), ' -> ', trim(Var1%units)
+      write (*,*) 'ERROR:   Var2: ', trim(Var2%vname), ' -> ', trim(Var2%units)
       stop
-    endif
-    
-    ! Read in the filter and use it to check against all the other variables
-    call rhdf5_read_init(AzWindFile, AzWind)
-
-    Nx = AzWind%dims(1)
-    Ny = AzWind%dims(2)
-    Nz = AzWind%dims(3)
-    Nt = AzWind%dims(4)
-  else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
-           (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist')) then
-    call rhdf5_read_init(VarFile, Var)
-
-    if (VarDim .eq. '2d') then
-      Nx = Var%dims(1)
-      Ny = Var%dims(2)
-      Nz = 1
-      Nt = Var%dims(3)
-    else
-      Nx = Var%dims(1)
-      Ny = Var%dims(2)
-      Nz = Var%dims(3)
-      Nt = Var%dims(4)
-    endif
-
-    ! filter is optional
-    if (UseFilter) then
-      call rhdf5_read_init(FilterFile, Filter)
-      if (.not.(DimsMatch(Filter, Var))) then
-        write (*,*) 'ERROR: dimensions of filter do not match dimensions of input variable: ', trim(Var%vname)
-        stop
-      endif
-    endif
-  else if ((AvgFunc .eq. 'horiz_ke') .or. (AvgFunc .eq. 'storm_int')) then
-    ! horiz_ke and storm_int require a filter
-    if (.not. UseFilter) then
-      write (*,*) 'ERROR: must use a filter with functions: horiz_ke and storm_int'
-      stop
-    endif
-    
-    ! Read in the filter and use it to check against all the other variables
-    call rhdf5_read_init(FilterFile, Filter)
-  
-    Nx = Filter%dims(1)
-    Ny = Filter%dims(2)
-    Nz = Filter%dims(3)
-    Nt = Filter%dims(4)
-
-    BadDims = .false.
-    if (AvgFunc .eq. 'horiz_ke') then
-      call rhdf5_read_init(DensFile, Dens)
-      BadDims = BadDims .or. (.not.(DimsMatch(Filter, Dens)))
-  
-      call rhdf5_read_init(Ufile, U)
-      BadDims = BadDims .or. (.not.(DimsMatch(Filter, U)))
-  
-      call rhdf5_read_init(Vfile, V)
-      BadDims = BadDims .or. (.not.(DimsMatch(Filter, V)))
-
-      if (BadDims) then
-        write (*,*) 'ERROR: dimensions of filter, dn0, u and v do not match'
-        stop
-      endif
-    else if (AvgFunc .eq. 'storm_int') then
-      ! speed10m is a 2D variable
-      call rhdf5_read_init(Speed10mFile, Speed10m)
-      BadDims = BadDims .or. (.not.(DimsMatch(Filter, Speed10m)))
-      Nz = 1
-  
-      if (BadDims) then
-        write (*,*) 'ERROR: dimensions of filter and speed10m do not match'
-        stop
-      endif
     endif
   endif
 
@@ -240,325 +89,102 @@ program tsavg
   ! In other words, remove the time dimension from the input dimensions since we will 
   ! be incrementing through every time step in a loop. The time dimension is always the
   ! last dimension so what this boils down to is to decrement number of dimensions by one.
+  Var1%ndims = Var1%ndims - 1
+  Var2%ndims = Var2%ndims - 1
   write (*,*) 'Input variable information:'
-  if (AvgFunc .eq. 'max_azwind') then
-    AzWind%ndims = AzWind%ndims - 1
-    write (*,*) '  Number of dimensions: ', AzWind%ndims
-    write (*,*) '  Dimension sizes:'
-    do id = 1, AzWind%ndims
-      write (*,*), '    ', trim(AzWind%dimnames(id)), ': ', AzWind%dims(id)
-    enddo
-  else if (AvgFunc .eq. 'horiz_ke') then
-    Dens%ndims = Dens%ndims - 1
-    U%ndims = U%ndims - 1
-    V%ndims = V%ndims - 1
-    write (*,*) '  Number of dimensions: ', Dens%ndims
-    write (*,*) '  Dimension sizes:'
-    do id = 1, Dens%ndims
-      write (*,*), '    ', trim(Dens%dimnames(id)), ': ', Dens%dims(id)
-    enddo
-  else if (AvgFunc .eq. 'storm_int') then
-    Speed10m%ndims = Speed10m%ndims - 1
-    write (*,*) '  Number of dimensions: ', Speed10m%ndims
-    write (*,*) '  Dimension sizes:'
-    do id = 1, Speed10m%ndims
-      write (*,*), '    ', trim(Speed10m%dimnames(id)), ': ', Speed10m%dims(id)
-    enddo
-  else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
-           (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist')) then
-    Var%ndims = Var%ndims - 1
-    write (*,*) '  Number of dimensions: ', Var%ndims
-    write (*,*) '  Dimension sizes:'
-    do id = 1, Var%ndims
-      write (*,*), '    ', trim(Var%dimnames(id)), ': ', Var%dims(id)
-    enddo
-  endif
-  write (*,*) ''
-
-  if (UseFilter) then
-    Filter%ndims = Filter%ndims - 1
-
-    write (*,*) 'Filter variable information:'
-    write (*,*) '  Number of dimensions: ', Filter%ndims
-    write (*,*) '  Dimension sizes:'
-    do id = 1, Filter%ndims
-      write (*,*), '    ', trim(Filter%dimnames(id)), ': ', Filter%dims(id)
-    enddo
-    write (*,*) ''
-  endif
-
-  ! Set up the dimensions for the output and allocate the output data array. Always
-  ! set up as if the output were 3D. This is done so that the output file can
-  ! be read into GRADS which expects 3D variables. Always have (x,y,z) for the
-  ! dimension names, but set the sizes of the dimensions according to the averaging
-  ! function asked for.
-  TserAvg%vname = trim(AvgFunc)
-  if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist')) then
-    TserAvg%vname = trim(TserAvg%vname) // '_' // trim(VarFprefix)
-  endif
-  TserAvg%descrip = 'time series averaged ' // trim(AvgFunc) 
-  TserAvg%ndims = 3 
-  TserAvg%dimnames(1) = 'x' 
-  TserAvg%dimnames(2) = 'y' 
-  TserAvg%dimnames(3) = 'z' 
-
-  if (AvgFunc .eq. 'max_azwind') then
-    ! single point result
-    TserAvg%dims(1) = 1
-    TserAvg%dims(2) = 1
-    TserAvg%dims(3) = 1
-    TserAvg%units = 'm/s'
-  else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max')) then
-    ! single point result
-    TserAvg%dims(1) = 1
-    TserAvg%dims(2) = 1
-    TserAvg%dims(3) = 1
-    TserAvg%units = Var%units
-  else if (AvgFunc .eq. 'hda') then
-    ! all z points
-    TserAvg%dims(1) = 1
-    TserAvg%dims(2) = 1
-    TserAvg%dims(3) = Nz
-    TserAvg%units = Var%units
-  else if (AvgFunc .eq. 'hist') then
-    ! put bin values in the x dimension
-    TserAvg%dims(1) = NumBins
-    TserAvg%dims(2) = 1
-    TserAvg%dims(3) = 1
-    TserAvg%units = Var%units
-  else if (AvgFunc .eq. 'horiz_ke') then
-    ! single point result
-    TserAvg%dims(1) = 1
-    TserAvg%dims(2) = 1
-    TserAvg%dims(3) = 1
-    TserAvg%units = 'Joules'
-  else if (AvgFunc .eq. 'storm_int') then
-    ! single point result
-    TserAvg%dims(1) = 1
-    TserAvg%dims(2) = 1
-    TserAvg%dims(3) = 1
-    TserAvg%units = 'int'
-  endif
-
-  allocate(TserAvg%vdata(TserAvg%dims(1)*TserAvg%dims(2)*TserAvg%dims(3)))
-
-  ! Report the dimensions
-  write (*,*) 'Output variable information:'
-  write (*,*) '  Name: ', trim(TserAvg%vname)
-  write (*,*) '  Units: ', trim(TserAvg%units)
-  write (*,*) '  Description: ', trim(TserAvg%descrip)
-  write (*,*) '  Number of dimensions: ', TserAvg%ndims
+  write (*,*) '  Number of dimensions: ', Var1%ndims
   write (*,*) '  Dimension sizes:'
-  do id = 1, TserAvg%ndims
-    write (*,*), '    ', trim(TserAvg%dimnames(id)), ': ', TserAvg%dims(id)
+  do id = 1, Var1%ndims
+    write (*,*), '    ', trim(Var1%dimnames(id)), ': ', Var1%dims(id)
   enddo
   write (*,*) ''
-  write (*,*) '  Number of time steps: ', Nt
+  flush(6)
+
+  ! Set up the dimensions for the output and allocate the output data array.
+  ! Just copy the setup from Var1.
+  OutVar%vname = trim(VarName1) // '_' // trim(Op) // '_' // trim(VarName2)
+  if (trim(Op) .eq. 'sub') then
+    OutVar%descrip = 'var1 minus var2'
+  endif
+  OutVar%units = Var1%units
+
+  OutVar%ndims = Var1%ndims 
+  OutVar%dims(1) = Nx
+  OutVar%dims(2) = Ny
+  OutVar%dims(3) = Nz
+  OutVar%dimnames(1) = Var1%dimnames(1)
+  OutVar%dimnames(2) = Var1%dimnames(2)
+  OutVar%dimnames(3) = Var1%dimnames(3)
+
+  allocate(OutVar%vdata(Nx*Ny*Nz))
+ 
+  ! Report the dimensions
+  write (*,*) 'Output variable information:'
+  write (*,*) '  Name: ', trim(OutVar%vname)
+  write (*,*) '  Units: ', trim(OutVar%units)
+  write (*,*) '  Description: ', trim(OutVar%descrip)
+  write (*,*) '  Number of dimensions: ', OutVar%ndims
+  write (*,*) '  Dimension sizes:'
+  do id = 1, OutVar%ndims
+    write (*,*), '    ', trim(OutVar%dimnames(id)), ': ', OutVar%dims(id)
+  enddo
+  write (*,*) ''
+  flush(6)
+
+  ! Report time steps
+  write (*,*) 'Number of time steps: ', Nt
   write (*,*) ''
   flush(6)
 
   ! Read in the input coordinates
-  if (AvgFunc .eq. 'max_azwind') then
-    InCoordFile = trim(AzWindFile)
-  else if (AvgFunc .eq. 'horiz_ke') then
-    InCoordFile = trim(DensFile)
-  else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
-           (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist')) then
-    InCoordFile = trim(VarFile)
-  else if (AvgFunc .eq. 'storm_int') then
-    InCoordFile = trim(Speed10mFile)
-  endif
+  Xcoords%vname = 'x_coords'
+  call rhdf5_read_init(InFile1, Xcoords)
+  call rhdf5_read(InFile1, Xcoords)
 
-  InXcoords%vname = 'x_coords'
-  call rhdf5_read_init(InCoordFile, InXcoords)
-  call rhdf5_read(InCoordFile, InXcoords)
+  Ycoords%vname = 'y_coords'
+  call rhdf5_read_init(InFile1, Ycoords)
+  call rhdf5_read(InFile1, Ycoords)
 
-  InYcoords%vname = 'y_coords'
-  call rhdf5_read_init(InCoordFile, InYcoords)
-  call rhdf5_read(InCoordFile, InYcoords)
+  Zcoords%vname = 'z_coords'
+  call rhdf5_read_init(InFile1, Zcoords)
+  call rhdf5_read(InFile1, Zcoords)
 
-  if (AvgFunc .eq. 'storm_int') then
-    ! fake it for the storm intensity metric
-    InZcoords%vname = 'z_coords'
-    InZcoords%ndims = 1
-    InZcoords%dims(1) = 1
-    InZcoords%dimnames(1) = 'z'
-    InZcoords%units = 'meter'
-    InZcoords%descrip = 'sigma-z'
-    allocate(InZcoords%vdata(1))
-    InZcoords%vdata(1) = 10.0
-  else
-    InZcoords%vname = 'z_coords'
-    call rhdf5_read_init(InCoordFile, InZcoords)
-    call rhdf5_read(InCoordFile, InZcoords)
-  endif
+  Tcoords%vname = 't_coords'
+  call rhdf5_read_init(InFile1, Tcoords)
+  call rhdf5_read(InFile1, Tcoords)
 
-  InTcoords%vname = 't_coords'
-  call rhdf5_read_init(InCoordFile, InTcoords)
-  call rhdf5_read(InCoordFile, InTcoords)
-
-  ! Need to get delta for x and y (in meters) and the z heights (in meters)
-  ! for DoHorizKe to be able to calculate volume * density -> mass
-  allocate(InXcoordsKm(Nx))
-  allocate(InYcoordsKm(Ny))
-  if (AvgFunc .eq. 'max_azwind') then
-    ! x,y coords are in meters, convert to km
-    do ix = 1, Nx
-      InXcoordsKm(ix) = InXcoords%vdata(ix) / 1000.0
-    enddo
-    do iy = 1, Ny
-      InYcoordsKm(iy) = InYcoords%vdata(iy) / 1000.0
-    enddo
-  else
-    ! x,y coords are in degrees lon,lat respectively
-    call ConvertGridCoords(Nx, Ny, Nz, InXcoords%vdata, InYcoords%vdata, InXcoordsKm, InYcoordsKm)
-  endif
-
-  DeltaX = InXcoordsKm(2) - InXcoordsKm(1)
-  DeltaY = InYcoordsKm(2) - InYcoordsKm(1)
-
-  write (*,*) 'Horizontal grid info:'
-  write (*,*) '  X range (min lon, max lon) --> (min x, max x): '
-  write (*,*) '    ', InXcoords%vdata(1), InXcoords%vdata(Nx), InXcoordsKm(1), InXcoordsKm(Nx)
-  write (*,*) '  Y range (min lat, max lat) --> (min y, max y): '
-  write (*,*) '    ', InYcoords%vdata(1), InYcoords%vdata(Ny), InYcoordsKm(1), InYcoordsKm(Ny)
-  write (*,*) ''
-  write (*,*) 'Vertical grid info:'
-  do iz = 1, Nz
-    write (*,*) '  ', iz, ' --> ', InZcoords%vdata(iz)
-  end do
-  write (*,*) ''
-  flush(6)
-
-  ! If doing histogram, calculate the bin values
-  if (AvgFunc .eq. 'hist') then
-    allocate(Bins(NumBins))
-    Bins(1) = BinStart
-    do ib = 2, NumBins
-      Bins(ib) = Bins(ib-1) + BinInc
-    enddo
-  endif
-
-  ! Prepare the output coordinates
-  !
-  ! Create dummy coordinates (for GRADS sake) and write out the
-  ! time series as a 4D var, (x,y,z,t) regardless of how many
-  ! true dimensions exist in the output.
-  OutXcoords%vname = 'x_coords'
-  OutXcoords%ndims = 1
-  OutXcoords%dimnames(1) = 'x'
-  OutXcoords%units = 'degrees_east'
-  OutXcoords%descrip = 'longitude'
-  if (AvgFunc .eq. 'hist') then
-    OutXcoords%dims(1) = NumBins
-    allocate(OutXcoords%vdata(NumBins))
-    do ib = 1, NumBins
-      OutXcoords%vdata(ib) = Bins(ib)
-    enddo
-  else
-    OutXcoords%dims(1) = 1
-    allocate(OutXcoords%vdata(1))
-    OutXcoords%vdata(1) = 1.0
-  endif
-  
-  OutYcoords%vname = 'y_coords'
-  OutYcoords%ndims = 1
-  OutYcoords%dimnames(1) = 'y'
-  OutYcoords%units = 'degrees_north'
-  OutYcoords%descrip = 'latitude'
-  OutYcoords%dims(1) = 1
-  allocate(OutYcoords%vdata(1))
-  OutYcoords%vdata(1) = 1.0
-  
-  OutZcoords%vname = 'z_coords'
-  OutZcoords%ndims = 1
-  OutZcoords%dimnames(1) = 'z'
-  OutZcoords%units = 'meter'
-  OutZcoords%descrip = 'sigma-z'
-  if (AvgFunc .eq. 'hda') then
-    OutZcoords%dims(1) = Nz
-    allocate(OutZcoords%vdata(Nz))
-    do iz = 1, Nz
-      OutZcoords%vdata(iz) = InZcoords%vdata(iz)
-    enddo
-  else
-    OutZcoords%dims(1) = 1
-    allocate(OutZcoords%vdata(1))
-    OutZcoords%vdata(1) = 1.0
-  endif
-
-  ! Perform the averaging function.
+  ! Perform the operation
   rh5f_facc = 'W'
   call rhdf5_open_file(OutFile, rh5f_facc, 1, rh5f_out)
 
   rh5f_facc = 'R'
-  if (UseFilter) then
-    call rhdf5_open_file(FilterFile, rh5f_facc, 1, rh5f_filter)
-  endif
-  if (AvgFunc .eq. 'max_azwind') then
-    call rhdf5_open_file(AzWindFile, rh5f_facc, 1, rh5f_azwind)
-  else if (AvgFunc .eq. 'horiz_ke') then
-    call rhdf5_open_file(DensFile, rh5f_facc, 1, rh5f_dens)
-    call rhdf5_open_file(Ufile, rh5f_facc, 1, rh5f_u)
-    call rhdf5_open_file(Vfile, rh5f_facc, 1, rh5f_v)
-  else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
-           (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist'))  then
-    call rhdf5_open_file(VarFile, rh5f_facc, 1, rh5f_var)
-  else if (AvgFunc .eq. 'storm_int') then
-    call rhdf5_open_file(Speed10mFile, rh5f_facc, 1, rh5f_speed10m)
-  endif
+  call rhdf5_open_file(InFile1, rh5f_facc, 0, rh5f_in1)
+  call rhdf5_open_file(InFile2, rh5f_facc, 0, rh5f_in2)
 
   do it = 1, Nt
-    ! if using a filter read in the data
-    if (UseFilter) then
-      call rhdf5_read_variable(rh5f_filter, Filter%vname, Filter%ndims, it, Filter%dims, rdata=Filter%vdata)
-    endif
+    call rhdf5_read_variable(rh5f_in1, Var1%vname, Var1%ndims, it, Var1%dims, rdata=Var1%vdata)
+    call rhdf5_read_variable(rh5f_in2, Var2%vname, Var2%ndims, it, Var2%dims, rdata=Var2%vdata)
 
-    ! do the averaging function
-    if (AvgFunc .eq. 'max_azwind') then
-      call rhdf5_read_variable(rh5f_azwind, AzWind%vname, AzWind%ndims, it, AzWind%dims, rdata=AzWind%vdata)
-      call DoMaxAzWind(Nx, Ny, Nz, AzWind%vdata, UndefVal, TserAvg%vdata(1))
-      deallocate(AzWind%vdata)
-    else if (AvgFunc .eq. 'horiz_ke') then
-      call rhdf5_read_variable(rh5f_dens, Dens%vname, Dens%ndims, it, Dens%dims, rdata=Dens%vdata)
-      call rhdf5_read_variable(rh5f_u, U%vname, U%ndims, it, U%dims, rdata=U%vdata)
-      call rhdf5_read_variable(rh5f_v, V%vname, V%ndims, it, V%dims, rdata=V%vdata)
+    ! do the op here
+    i = 0
+    do iz = 1, Nz
+      do iy = 1, Ny
+        do ix = 1, Nx
+          i = i + 1
+          if (trim(Op) .eq. 'sub') then
+            OutVar%vdata(i) = Var1%vdata(i) - Var2%vdata(i)
+          endif
+        enddo
+      enddo
+    enddo
 
-      call DoHorizKe(Nx, Ny, Nz, Dens%vdata, U%vdata, V%vdata, Filter%vdata, DeltaX, DeltaY, InZcoords%vdata, TserAvg%vdata(1))
-
-      deallocate(Dens%vdata)
-      deallocate(U%vdata)
-      deallocate(V%vdata)
-    else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
-             (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist'))  then
-      call rhdf5_read_variable(rh5f_var, Var%vname, Var%ndims, it, Var%dims, rdata=Var%vdata)
-
-      if (AvgFunc .eq. 'min') then
-        call DoMin(Nx, Ny, Nz, Filter%dims(3), Var%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata(1))
-      else if (AvgFunc .eq. 'max') then
-        call DoMax(Nx, Ny, Nz, Filter%dims(3), Var%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata(1))
-      else if (AvgFunc .eq. 'hda') then
-        call DoHda(Nx, Ny, Nz, Filter%dims(3), Var%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata)
-      else if (AvgFunc .eq. 'hist') then
-        call DoHist(Nx, Ny, Nz, Filter%dims(3), NumBins, Var%vdata, Filter%vdata, UseFilter, UndefVal, Bins, TserAvg%vdata)
-      endif
-
-      deallocate(Var%vdata)
-    else if (AvgFunc .eq. 'storm_int') then
-      call rhdf5_read_variable(rh5f_speed10m, Speed10m%vname, Speed10m%ndims, it, Speed10m%dims, rdata=Speed10m%vdata)
-      call DoStormInt(Nx, Ny, Nz, Speed10m%vdata, Filter%vdata, TserAvg%vdata(1))
-      deallocate(Speed10m%vdata)
-    endif
-
-    ! if using a filter, deallocate the space for the next time around
-    if (UseFilter) then
-      deallocate(Filter%vdata)
-    endif
+    deallocate(Var1%vdata)
+    deallocate(Var2%vdata)
 
     ! write out the averaged data
-    call rhdf5_write_variable(rh5f_out, TserAvg%vname, TserAvg%ndims, it, TserAvg%dims, &
-       TserAvg%units, TserAvg%descrip, TserAvg%dimnames, rdata=TserAvg%vdata)
-
+    call rhdf5_write_variable(rh5f_out, OutVar%vname, OutVar%ndims, it, OutVar%dims, &
+       OutVar%units, OutVar%descrip, OutVar%dimnames, rdata=OutVar%vdata)
+ 
     ! print a message for the user on longer jobs so that it can be
     ! seen that progress is being made
     if (modulo(it,100) .eq. 0) then
@@ -566,26 +192,11 @@ program tsavg
     endif
   enddo
 
-  rh5f_facc = 'W'
+  call rhdf5_close_file(rh5f_in1)
+  call rhdf5_close_file(rh5f_in1)
   call rhdf5_close_file(rh5f_out)
+  deallocate(OutVar%vdata)
 
-  rh5f_facc = 'R'
-  if (UseFilter) then
-    call rhdf5_close_file(rh5f_filter)
-  endif
-  if (AvgFunc .eq. 'max_azwind') then
-    call rhdf5_close_file(rh5f_azwind)
-  else if (AvgFunc .eq. 'horiz_ke') then
-    call rhdf5_close_file(rh5f_dens)
-    call rhdf5_close_file(rh5f_u)
-    call rhdf5_close_file(rh5f_v)
-  else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
-           (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist'))  then
-    call rhdf5_close_file(rh5f_var)
-  else if (AvgFunc .eq. 'storm_int') then
-    call rhdf5_close_file(rh5f_speed10m)
-  endif
- 
   ! 'it' will be one beyond its loop limit (Nt) so subtract one
   ! from 'it' when reporting how many times steps were processed
   write (*,*) 'Finished: Total number of time steps processed: ', it-1
@@ -593,61 +204,19 @@ program tsavg
 
   ! Finish off output file
   ! write out the coordinate data
-  call rhdf5_write(OutFile, OutXcoords, 1)
-  call rhdf5_write(OutFile, OutYcoords, 1)
-  call rhdf5_write(OutFile, OutZcoords, 1)
-  call rhdf5_write(OutFile, InTcoords, 1)
-
-  ! If doing hist function, write out the input dimension sizes
-  ! for downstream analyses. Eg. if you want to do fractional
-  ! area calculations then the counts in the histogram do not
-  ! tell you how many total points are in the domain.
-  if (AvgFunc .eq. 'hist') then
-    ! common settings
-    OrigDimSize%ndims = 1
-    OrigDimSize%dims(1) = 1
-    OrigDimSize%units = 'number'
-    allocate(OrigDimSize%vdata(1))
-
-    ! X
-    OrigDimSize%vname = 'Nx'
-    OrigDimSize%dimnames(1) = 'x'
-    OrigDimSize%descrip = 'number of domain x points'
-    OrigDimSize%vdata(1) = float(Nx)
-    call rhdf5_write(OutFile, OrigDimSize, 1)
-
-    ! Y
-    OrigDimSize%vname = 'Ny'
-    OrigDimSize%dimnames(1) = 'y'
-    OrigDimSize%descrip = 'number of domain y points'
-    OrigDimSize%vdata(1) = float(Ny)
-    call rhdf5_write(OutFile, OrigDimSize, 1)
-
-    ! Z
-    OrigDimSize%vname = 'Nz'
-    OrigDimSize%dimnames(1) = 'z'
-    OrigDimSize%descrip = 'number of domain z points'
-    OrigDimSize%vdata(1) = float(Nz)
-    call rhdf5_write(OutFile, OrigDimSize, 1)
-
-    ! T
-    OrigDimSize%vname = 'Nt'
-    OrigDimSize%dimnames(1) = 't'
-    OrigDimSize%descrip = 'number of domain t points'
-    OrigDimSize%vdata(1) = float(Nt)
-    call rhdf5_write(OutFile, OrigDimSize, 1)
-
-    deallocate(OrigDimSize%vdata)
-  endif
+  call rhdf5_write(OutFile, Xcoords, 1)
+  call rhdf5_write(OutFile, Ycoords, 1)
+  call rhdf5_write(OutFile, Zcoords, 1)
+  call rhdf5_write(OutFile, Tcoords, 1)
 
   ! set up four (x,y,z,t) dimensions for use by GRADS
-  call rhdf5_set_dimension(OutFile, OutXcoords, 'x')
-  call rhdf5_set_dimension(OutFile, OutYcoords, 'y')
-  call rhdf5_set_dimension(OutFile, OutZcoords, 'z')
-  call rhdf5_set_dimension(OutFile, InTcoords, 't')
+  call rhdf5_set_dimension(OutFile, Xcoords, 'x')
+  call rhdf5_set_dimension(OutFile, Ycoords, 'y')
+  call rhdf5_set_dimension(OutFile, Zcoords, 'z')
+  call rhdf5_set_dimension(OutFile, Tcoords, 't')
 
   ! attach the dimension specs to the output variable
-  call rhdf5_attach_dimensions(OutFile, TserAvg)
+  call rhdf5_attach_dimensions(OutFile, OutVar)
   
   stop
 
@@ -661,11 +230,10 @@ contains
 !
 ! This routine will read in the command line arguments
 !
-subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
+subroutine GetMyArgs(InFile1, VarName1, InFile2, VarName2, OutFile, Op)
   implicit none
 
-  character (len=*) :: InDir, InSuffix, OutFile, AvgFunc, FilterFile
-  logical :: UseFilter
+  character (len=*) :: InFile1, VarName1, InFile2, VarName2, OutFile, Op
 
   integer :: iargc
   character (len=128) :: arg
@@ -673,67 +241,33 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
 
   logical :: BadArgs
 
-  if (iargc() .ne. 5) then
-    write (*,*) 'ERROR: must supply exactly 5 arguments'
+  if (iargc() .ne. 6) then
+    write (*,*) 'ERROR: must supply exactly 6 arguments'
     write (*,*) ''
-    write (*,*) 'USAGE: tsavg <in_dir> <in_suffix> <out_file> <avg_function> <filter_file>'
-    write (*,*) '        <in_dir>: directory where input files live'
-    write (*,*) '        <in_suffix>: suffix on input file names'
-    write (*,*) '        <out_file>: name of output file, HDF5 format'
-    write (*,*) '        <avg_function>: averaging function to use on input data'
-    write (*,*) '            horiz_ke -> total kinetic energy form horizontal winds'
-    write (*,*) '            storm_int -> storm intensity metric from horizontal wind speeds'
-    write (*,*) '            max_azwind -> max value of azimuthially averaged wind'
-    write (*,*) '            min:<var>:<file>:<dim> -> domain minimum for <var>'
-    write (*,*) '              <var>: revu var name inside the file'
-    write (*,*) '              <file>: prefix for the revu file'
-    write (*,*) '              <dim>: dimensionality of variable, either "2d" or "3d"'
-    write (*,*) '            max:<var>:<file>:<dim> -> domain maximum for <var>'
-    write (*,*) '              <var>: revu var name inside the file'
-    write (*,*) '              <file>: prefix for the revu file'
-    write (*,*) '              <dim>: dimensionality of variable, either "2d" or "3d"'
-    write (*,*) '            hda:<var>:<file>:<dim> -> horizontal domain average at each z level for <var>'
-    write (*,*) '              <var>: revu var name inside the file'
-    write (*,*) '              <file>: prefix for the revu file'
-    write (*,*) '              <dim>: dimensionality of variable, either "2d" or "3d"'
-    write (*,*) '            hist:<var>:<file>:<dim>:<num_bins>:<bin_start>:<bin_inc>'
-    write (*,*) '              <var>,<file>,<dim> same as for hda'
-    write (*,*) '              <num_bins>: number of bins'
-    write (*,*) '              <bin_start>: starting value for bins'
-    write (*,*) '              <bin_inc>: delta between bins'
-    write (*,*) '        <filter_file>: file containing the filter mask'
+    write (*,*) 'USAGE: hdata_op <in_file1> <var_name1> <in_file2> <var_name2> <out_file> <operator>'
+    write (*,*) '        <in_file1>: input file, HDF5 format'
+    write (*,*) '        <var_name1>: name of variable inside input file 1'
+    write (*,*) '        <in_file2>: input file, HDF5 format'
+    write (*,*) '        <var_name2>: name of variable inside input file 2'
+    write (*,*) '        <out_file>: output file, HDF5 format'
+    write (*,*) '        <operator>: operation to perform on data from input files'
+    write (*,*) '            order of operation: <in_file1> <operator> <in_file2>'
+    write (*,*) '            sub -> subtract values in <in_file2> from those in <in_file1>'
     stop
   end if
 
-  call getarg(1, InDir)
-  call getarg(2, InSuffix)
-  call getarg(3, OutFile)
-  call getarg(4, AvgFunc)
-  call getarg(5, FilterFile)
-
-  if ((FilterFile .eq. 'none') .or. (FilterFile .eq. 'NONE')) then
-    UseFilter = .false.
-  else
-    UseFilter = .true.
-  endif
+  call getarg(1, InFile1)
+  call getarg(2, VarName1)
+  call getarg(3, InFile2)
+  call getarg(4, VarName2)
+  call getarg(5, OutFile)
+  call getarg(6, Op)
 
   BadArgs = .false.
 
-  if ((AvgFunc .ne. 'horiz_ke')       .and. &
-      (AvgFunc(1:4) .ne. 'min:')  .and. &
-      (AvgFunc(1:4) .ne. 'max:')  .and. &
-      (AvgFunc(1:4) .ne. 'hda:')  .and. &
-      (AvgFunc(1:5) .ne. 'hist:')  .and. &
-      (AvgFunc .ne. 'storm_int')  .and. &
-      (AvgFunc .ne. 'max_azwind')) then
-    write (*,*) 'ERROR: <avg_function> must be one of:'
-    write (*,*) '          horiz_ke'
-    write (*,*) '          min:<var>:<file>:<dim>'
-    write (*,*) '          max:<var>:<file>:<dim>'
-    write (*,*) '          hda:<var>:<file>:<dim>'
-    write (*,*) '          hist:<var>:<file>:<dim>:<num_bins>:<bin_start>:<bin_inc>'
-    write (*,*) '          storm_int'
-    write (*,*) '          max_azwind'
+  if (Op .ne. 'sub') then
+    write (*,*) 'ERROR: <operator> must be one of:'
+    write (*,*) '          sub'
     write (*,*) ''
     BadArgs = .true.
   end if
@@ -1668,4 +1202,4 @@ end subroutine DoStormInt
 !!!   end do
 !!! end subroutine
 
-end program tsavg
+end program hdata_op
