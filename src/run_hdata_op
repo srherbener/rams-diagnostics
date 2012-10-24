@@ -32,81 +32,43 @@ use DiagUtils;
 #
 sub CreateFileNames
   {
-  my ($Case, $Tdir, $Dname, $Dspec, $FfilePrefix, $AzavgDir, $TsavgDir, $FilterDir, $RevuDir) = @_;
+  my ($Case1, $Case2, $Var, $Op, $Tdir, $RevuDir, $DiagDir) = @_;
   
-  my $InDir;
-  my $InFileSuffix;
+  my $InFile1;
+  my $InFile2;
   my $OutFile;
-  my $FilterFile;
-  my $Dvar;
 
+  my $InDir1;
+  my $InDir2;
   my $Pattern;
   my @f;
-  my $TdirStr;
-  my $DSfunc;
-  my $DSvname;
-  my $DSfprefix;
-  my $DSremain;
+  my $InFileSuffix;
 
   # If $Tdir is the string "NONE", then do not place a subdirectory
   # in the path to the input and output files
   if ($Tdir eq "NONE")
     {
-    $TdirStr = "";
+    $InDir1 = $Case1 . "/" . $RevuDir;
+    $InDir2 = $Case2 . "/" . $RevuDir;
     }
   else
     {
-    $TdirStr = "/" . $Tdir;
+    $InDir1 = $Case1 . "/" . $Tdir . "/" . $RevuDir;
+    $InDir2 = $Case2 . "/" . $Tdir . "/" . $RevuDir;
     }
 
-  # If $Dspec contains mulitple parameters (colon separated) then separate out the
-  # individual value, <function>:<var>:<file_prefix>:<more_params>
-  if (($Dspec =~ /min:/) || ($Dspec =~ /max:/) || ($Dspec =~ /hda:/) || ($Dspec =~ /hist:/))
-    {
-    ($DSfunc, $DSvname, $DSfprefix, $DSremain) = split(':', $Dspec);
-    $Dvar = $DSfunc . "_" . $DSfprefix;
-    }
-  else
-    {
-    $DSfunc = $Dspec;
-    $Dvar = $Dspec;
-    }
+  # Find the suffix on the input files in the REVU dir
+  $Pattern = $InDir1 . "/" . $Var . "-" . $Case1 . "-*.h5";
+  @f = glob($Pattern);
+  $InFileSuffix = $f[0];
+  $InFileSuffix =~ s/.*\/$Var-$Case1-/-/;
 
-  # InDir is the directory that the input files come from.
-  #
-  # InFileSuffix is used to create the names of all the input files. It is
-  # assumed that the input file names follow the form:
-  #
-  #   <VarName><InFileSuffix>
-  #
-  # OutFile is simply the whole path to the output file.
-  #
-  if ($Dname eq "max_azwind")
-    {
-    $InDir = $AzavgDir . $TdirStr;
-    $InFileSuffix = "_" . $Case . ".h5";
-    }
-  else
-    {
-    $InDir = $Case . "/" . $RevuDir . $TdirStr;
-    # Use the w input file as a sample for finding the input file suffix.
-    $Pattern = $InDir . "/w-*.h5";
-    @f = glob($Pattern);
-    $InFileSuffix = $f[0];
-    $InFileSuffix =~ s/.*\/w-/-/;
-    }
+  $InFile1 = $InDir1 . "/" . $Var . "-" . $Case1 . $InFileSuffix;;
+  $InFile2 = $InDir2 . "/" . $Var . "-" . $Case2 . $InFileSuffix;;
 
-  $OutFile = $TsavgDir . ${TdirStr} . "/" . ${Dname} . "_" . ${Case} . ".h5";
-  if (($FfilePrefix eq "none") || ($FfilePrefix eq "NONE"))
-    {
-    $FilterFile = $FfilePrefix;
-    }
-  else
-    {
-    $FilterFile = $FilterDir . ${TdirStr} . "/" . ${FfilePrefix} . "_" . ${Case} . ".h5";
-    }
+  $OutFile = $DiagDir . "/diff_" . $Var . "_" . $Case1 . "_" . $Case2 . ".h5";
 
-  return ($InDir, $InFileSuffix, $OutFile, $FilterFile, $DSfunc, $Dvar);
+  return ($InFile1,$InFile2,$OutFile);
   }
 
 #######################################################################
@@ -119,35 +81,23 @@ my $Config;
 
 my %Cases;
 my %TimeDirs;
-my %TsavgDiags;
-my $AzavgDir;
-my $TsavgDir;
-my $FilterDir;
+my %Ops;
 my $RevuDir;
+my $DiagDir;
 
 my @f;
-my $Case;
+my $Case1;
+my $Case2;
 my $Tdir;
-my $Dname;
-my $Dspec;
-my $Dfunc;
-my $RevuVar;
-my $MaxRadius;
-my $VarDim;
-my $Nbands;
-my $Wmin;
-my $Wmax;
-my $InDir;
-my $InFileSuffix;
+my $OpName;
+my $Op;
+my $InFile1;
+my $InFile2;
 my $OutFile;
-my $FilterFile;
-my $FfilePrefix;
-my $Dvar;
+my $Var;
 
 my @SysArgs;
 my $OutDir;
-my $JoinInFiles;
-my $JoinOutFile;
 
 $ConfigFile = $ARGV[0];
 
@@ -156,91 +106,57 @@ $ConfigFile = $ARGV[0];
 
 %Cases = %{ $$Config{CASES} };
 %TimeDirs = %{ $$Config{TIM_DIRS} };
-%TsavgDiags = %{ $$Config{TSAVG_DIAGS} };
+%Ops = %{ $$Config{OPS} };
 
-$AzavgDir = $$Config{AZAVG_DIR};
-$TsavgDir = $$Config{TSAVG_DIR};
-$FilterDir = $$Config{FILTER_DIR};
 $RevuDir = $$Config{REVU_DIR};
+$DiagDir = $$Config{DIAG_DIR};
 
-# make sure at least one of each of cases, time_directories and diagnostics has
+# make sure at least one of each of cases, time_directories and operations has
 # been specified
-if ((! (%Cases)) || (! (%TimeDirs)) || (! (%TsavgDiags)))
+if ((! (%TimeDirs)) || (! (%Ops)))
   {
-  print STDERR "ERROR: must specify at least one of each of case, time directory and diagnostic\n";
+  print STDERR "ERROR: must specify at least one of each of time directory and operation\n";
   exit 1;
   }
 
 # Walk through all combinations of cases, time directories, and diagnostics.
-foreach $Case (sort(keys(%Cases)))
+foreach $OpName (sort(keys(%Ops)))
   {
-  foreach $Dname (sort(keys(%TsavgDiags)))
+  # Get the specs for this operation
+  $Var   = $Ops{$OpName}{VAR};
+  $Case1 = $Ops{$OpName}{CASE1};
+  $Case2 = $Ops{$OpName}{CASE2};
+  $Op    = $Ops{$OpName}{OP};
+
+  # run through each time directory generating the current diagnostic, and
+  # then join these files into the main file (above the time directories)
+  foreach $Tdir (sort(keys(%TimeDirs)))
     {
-    $JoinInFiles = "";
+    ($InFile1,$InFile2,$OutFile) =
+        &CreateFileNames($Case1, $Case2, $Var, $Op, $Tdir, $RevuDir, $DiagDir);
 
-    # Grab the filter 
-    $Dspec = $TsavgDiags{$Dname}{DSPEC};
-    $FfilePrefix = $TsavgDiags{$Dname}{FILTER};
+    print "***************************************************************\n";
+    print "Running hdata_op:\n";
+    print "  Case 1: $Case1\n";
+    print "  Case 2: $Case2\n";
+    print "  Time Directory: $Tdir\n";
+    print "  Variable: $Var\n";
+    print "  Operation: $Op\n";
+    print "  Input File 1: $InFile1\n";
+    print "  Input File 2: $InFile2\n";
+    print "  Output File: $OutFile\n";
 
-    # run through each time directory generating the current diagnostic, and
-    # then join these files into the main file (above the time directories)
-    foreach $Tdir (sort(keys(%TimeDirs)))
+    # run hdata_op, make sure the output directory exists
+    $OutDir = dirname($OutFile);
+    if (! -d $OutDir)
       {
-      ($InDir,$InFileSuffix,$OutFile,$FilterFile,$Dfunc,$Dvar) =
-          &CreateFileNames($Case, $Tdir, $Dname, $Dspec, $FfilePrefix, $AzavgDir, $TsavgDir, $FilterDir, $RevuDir);
-
-      print "***************************************************************\n";
-      print "Running tsavg:\n";
-      print "  Case: $Case\n";
-      print "  Time Directory: $Tdir\n";
-      print "  Tsavg Diagnostic: $Dfunc\n";
-      print "  Input File Directory: $InDir\n";
-      print "  Input File Suffix: $InFileSuffix\n";
-      print "  Filter File: $FilterFile\n";
-      print "  Output File: $OutFile\n";
-
-      # run tsavg, make sure the output directory exists
-      $OutDir = dirname($OutFile);
-      if (! -d $OutDir)
-        {
-        @SysArgs = ("mkdir", "-p", $OutDir);
-        system(@SysArgs);
-        }
-
-      @SysArgs = ("tsavg", $InDir, $InFileSuffix, $OutFile, $Dspec, $FilterFile);
-      print "Running: ", join(" ",@SysArgs), "\n\n";
-      system(@SysArgs);
-
-      # record the input file for the upcoming join
-      if ($Tdir eq "NONE")
-        {
-        $JoinInFiles = "NONE";
-        }
-      else
-        {
-        if ($JoinInFiles eq "")
-          {
-          $JoinInFiles = $OutFile;
-          $JoinOutFile = $TsavgDir . "/" . basename($OutFile);
-          }
-        else
-          {
-          $JoinInFiles = $JoinInFiles . ":" . $OutFile;
-          }
-        }
-      }
-
-    if ($JoinInFiles ne "NONE")
-      {
-      @SysArgs = ("join_hdata", $JoinInFiles, $JoinOutFile, $Dvar);
-      print "***************************************************\n";
-      print " Joining HDF5 data:\n";
-      print "   Input Files: $JoinInFiles\n";
-      print "   Output File: $JoinOutFile\n";
-      print "   HDF5 Variable: $Dvar\n";
-      print "Running: ", join(" ",@SysArgs), "\n\n";
+      @SysArgs = ("mkdir", "-p", $OutDir);
       system(@SysArgs);
       }
+
+    @SysArgs = ("hdata_op", $InFile1, $Var, $InFile2, $Var, $OutFile, $Op);
+    print "Running: ", join(" ",@SysArgs), "\n\n";
+    system(@SysArgs);
     }
   }
 

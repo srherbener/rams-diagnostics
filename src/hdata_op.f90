@@ -102,12 +102,9 @@ program hdata_op
 
   ! Set up the dimensions for the output and allocate the output data array.
   ! Just copy the setup from Var1.
-  OutVar%vname = trim(VarName1) // '_' // trim(Op) // '_' // trim(VarName2)
-  if (trim(Op) .eq. 'sub') then
-    OutVar%descrip = 'var1 minus var2'
-  endif
+  OutVar%vname = trim(VarName1)
+  OutVar%descrip = Var1%descrip
   OutVar%units = Var1%units
-
   OutVar%ndims = Var1%ndims 
   OutVar%dims(1) = Nx
   OutVar%dims(2) = Ny
@@ -193,7 +190,7 @@ program hdata_op
   enddo
 
   call rhdf5_close_file(rh5f_in1)
-  call rhdf5_close_file(rh5f_in1)
+  call rhdf5_close_file(rh5f_in2)
   call rhdf5_close_file(rh5f_out)
   deallocate(OutVar%vdata)
 
