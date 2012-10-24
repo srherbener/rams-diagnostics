@@ -36,6 +36,10 @@ sub ReadConfigFile
       {
       $Config{REVU_DIR} = $f[1];
       }
+    elsif ($f[0] eq "DiagDir:")
+      {
+      $Config{DIAG_DIR} = $f[1];
+      }
     elsif ($f[0] eq "AzavgDir:")
       {
       $Config{AZAVG_DIR} = $f[1];
@@ -76,6 +80,13 @@ sub ReadConfigFile
       {
       $Config{TSAVG_DIAGS}{$f[1]}{DSPEC} = $f[2];
       $Config{TSAVG_DIAGS}{$f[1]}{FILTER} = $f[3];
+      }
+    elsif ($f[0] eq "Op:")
+      {
+      $Config{OPS}{$f[1]}{VAR}   = $f[2];
+      $Config{OPS}{$f[1]}{CASE1} = $f[3];
+      $Config{OPS}{$f[1]}{CASE2} = $f[4];
+      $Config{OPS}{$f[1]}{OP}    = $f[5];
       }
     elsif ($f[0] eq "Filter:")
       {
