@@ -5,6 +5,7 @@ function [ ] = PlotHmeas(ConfigFile)
 
 InDir = Config.DiagDir;
 OutDir = Config.PlotDir;
+ControlCase = Config.ControlCase;
 
 % Make sure output directory exists
 if (exist(OutDir, 'dir') ~= 7)
@@ -18,12 +19,14 @@ Fsize = 20;
 for icase = 1:length(Config.Cases)
   Case = Config.Cases(icase).Cname;
   CaseTitle = regexprep(Case, '_', '-');
+
   for ihmplot = 1: length(Config.HmeasPlot3d)
     Name    = Config.HmeasPlot3d(ihmplot).Name;
     Vname   = Config.HmeasPlot3d(ihmplot).Var;
     Fprefix = Config.HmeasPlot3d(ihmplot).Fprefix;
     Units   = Config.HmeasPlot3d(ihmplot).Units;
     Descrip = Config.HmeasPlot3d(ihmplot).Descrip;
+    Ptype   = Config.HmeasPlot3d(ihmplot).Ptype;
     Vtype   = Config.HmeasPlot3d(ihmplot).Vtype;
 
     Rmin = Config.HmeasPlot3d(ihmplot).Rmin;
@@ -37,11 +40,18 @@ for icase = 1:length(Config.Cases)
 
     Isurf = Config.HmeasPlot3d(ihmplot).Isurf;
     
+    % skip this iteration if we are on the control case and
+    % we are doing a 'diff' plot
+    if (strcmp(Ptype, 'diff') && strcmp(Case, ControlCase))
+      continue;
+    end
+ 
     fprintf('***********************************************************************\n');
     fprintf('Plotting Histogram Measurements:\n');
     fprintf('  Name: %s\n', Name);
     fprintf('  Variable: %s\n', Vname);
     fprintf('  Case: %s\n', Case);
+    fprintf('  Plot type: %s\n', Ptype);
     fprintf('\n');
 
     InFile = sprintf('%s/hmeas_%s_%s.h5', InDir, Fprefix, Case);
@@ -53,12 +63,20 @@ for icase = 1:length(Config.Cases)
     %    t --> time
     Hdset = sprintf('/%s_%s', Vname, Vtype);
     fprintf('Reading file: %s, Dataset: %s\n', InFile, Hdset);
-    fprintf('Writing file: %s\n', OutFile);
     fprintf('\n');
     R = hdf5read(InFile, '/x_coords');
     Z = hdf5read(InFile, '/z_coords');
     T = hdf5read(InFile, '/t_coords');
     HDATA = hdf5read(InFile, Hdset);
+
+    % If doing a 'diff' plot, read in the control data
+    if (strcmp(Ptype, 'diff'))
+      InFile = sprintf('%s/hmeas_%s_%s.h5', InDir, Fprefix, ControlCase);
+      Hdset = sprintf('/%s_%s', Vname, Vtype);
+      fprintf('Reading file: %s, Dataset: %s\n', InFile, Hdset);
+      fprintf('\n');
+      CNTL_HDATA = hdf5read(InFile, Hdset);
+    end
     
     % Change time to hours, radius and height to km
     R = R / 1000;
@@ -81,6 +99,17 @@ for icase = 1:length(Config.Cases)
     
     % switch (r,z,t) to (r,t,z)
     Pdata = permute(Pdata, [ 1 3 2 ]);
+
+    % If doing a 'diff' plot, subtract off the control data
+    if (strcmp(Ptype, 'diff'))
+      fprintf('Subtracting off control case: %s\n', ControlCase);
+      fprintf('\n');
+      CntlT1 = find(T >= Tmin, 1, 'first');
+      CntlT2 = find(T <= Tmax, 1, 'last');
+      CntlPdata = double(squeeze(CNTL_HDATA(R1:R2,Z1:Z2,CntlT1:CntlT2)));
+      CntlPdata = permute(CntlPdata, [ 1 3 2 ]);
+      Pdata = Pdata - CntlPdata;
+    end
     
     % Plot 
     Ptitle = sprintf('%s, %s: Surface: %.1f (%s)', CaseTitle, Descrip, Isurf, Units);
@@ -110,6 +139,8 @@ for icase = 1:length(Config.Cases)
     ylabel(Ylabel);
     zlabel(Zlabel);
     
+    fprintf('Writing file: %s\n', OutFile);
+    fprintf('\n');
     saveas(Fig, OutFile);
     close(Fig);
     
