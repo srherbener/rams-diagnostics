@@ -55,6 +55,7 @@ i_tsplot = 0;
 i_dplot = 0;
 i_2dplot = 0;
 i_hmp3d = 0;
+i_hmslice = 0;
 i_pplot = 0;
 i_pset = 0;
 for i = 1:size(InLines,1)
@@ -176,6 +177,28 @@ for i = 1:size(InLines,1)
       Cdata.HmeasPlot3d(i_hmp3d).Tmax    = sscanf(Fields{15},'%f');
       Cdata.HmeasPlot3d(i_hmp3d).Cmin    = sscanf(Fields{16},'%f');
       Cdata.HmeasPlot3d(i_hmp3d).Cmax    = sscanf(Fields{17},'%f');
+    case 'HmeasSlicePlot:'
+      i_hmslice = i_hmslice + 1;
+      Cdata.HmeasSlicePlots(i_hmslice).Name    = Fields{2};
+      Cdata.HmeasSlicePlots(i_hmslice).PSname  = Fields{3};
+      Cdata.HmeasSlicePlots(i_hmslice).Var     = Fields{4};
+      Cdata.HmeasSlicePlots(i_hmslice).Fprefix = Fields{5};
+      Cdata.HmeasSlicePlots(i_hmslice).Descrip = regexprep(Fields{6}, '_', ' ');
+      Cdata.HmeasSlicePlots(i_hmslice).Units   = Fields{7};
+      Cdata.HmeasSlicePlots(i_hmslice).Ptype   = Fields{8};
+      Cdata.HmeasSlicePlots(i_hmslice).Vtype   = Fields{9};
+      Cdata.HmeasSlicePlots(i_hmslice).Stype   = Fields{10};
+      Cdata.HmeasSlicePlots(i_hmslice).S1      = sscanf(Fields{11},'%f');
+      Cdata.HmeasSlicePlots(i_hmslice).S2      = sscanf(Fields{12},'%f');
+      Cdata.HmeasSlicePlots(i_hmslice).S3      = sscanf(Fields{13},'%f');
+      Cdata.HmeasSlicePlots(i_hmslice).Rmin    = sscanf(Fields{14},'%f');
+      Cdata.HmeasSlicePlots(i_hmslice).Rmax    = sscanf(Fields{15},'%f');
+      Cdata.HmeasSlicePlots(i_hmslice).Zmin    = sscanf(Fields{16},'%f');
+      Cdata.HmeasSlicePlots(i_hmslice).Zmax    = sscanf(Fields{17},'%f');
+      Cdata.HmeasSlicePlots(i_hmslice).Tmin    = sscanf(Fields{18},'%f');
+      Cdata.HmeasSlicePlots(i_hmslice).Tmax    = sscanf(Fields{19},'%f');
+      Cdata.HmeasSlicePlots(i_hmslice).Cmin    = sscanf(Fields{20},'%f');
+      Cdata.HmeasSlicePlots(i_hmslice).Cmax    = sscanf(Fields{21},'%f');
     case 'ProfPlot:'
       i_pplot = i_pplot + 1;
       Cdata.ProfPlots(i_pplot).PSname  = Fields{2};
@@ -272,6 +295,24 @@ if (isfield(Cdata, 'ProfPlots'))
   
     if (Match == 0)
       fprintf('WARNING: Could not find a match for PlotSet "%s" specified in ProfPlot number %d\n', Cdata.ProfPlots(itp).PSname, itp);
+    end
+  end
+end
+
+% Make the association between HmeasSlicePlots and the PlotSets
+if (isfield(Cdata, 'HmeasSlicePlots'))
+  for itp = 1:length(Cdata.HmeasSlicePlots)
+    PlotSetName = Cdata.HmeasSlicePlots(itp).PSname;
+    Match = 0;
+    for ips = 1:length(Cdata.PlotSets)
+      if (strcmp(Cdata.PlotSets(ips).Name, PlotSetName))
+        Match = ips;
+      end
+    end
+    Cdata.HmeasSlicePlots(itp).PSnum = Match;
+  
+    if (Match == 0)
+      fprintf('WARNING: Could not find a match for PlotSet "%s" specified in HmeasSlicePlot number %d\n', Cdata.HmeasSlicePlots(itp).PSname, itp);
     end
   end
 end
