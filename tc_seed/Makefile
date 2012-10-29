@@ -12,6 +12,7 @@ SCRIPTS = $(DEST)/GenKeVtPlots.m \
           $(DEST)/PlotHmeasSlices.m \
           $(DEST)/PlotInitialVortex.m \
           $(DEST)/PlotSampleCcnProfile.m \
+          $(DEST)/PlotVt.m \
           $(DEST)/SetPath.m
 
 

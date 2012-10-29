@@ -12,13 +12,11 @@ AzavgDir = Config.AzavgDir;
 PlotDir = Config.PlotDir;
 
 % read in the Vt and coordinate data
-Hfile = sprintf('%s/speed_t300_%s.h5', AzavgDir, ControlCase);
+%Hfile = sprintf('%s/speed_t300_%s.h5', AzavgDir, ControlCase);
+Hfile = sprintf('%s/speed_t_%s.h5', AzavgDir, ControlCase);
 VT = squeeze(hdf5read(Hfile, '/speed_t'));
-X = squeeze(hdf5read(Hfile, '/x_coords'));
-Z = squeeze(hdf5read(Hfile, '/z_coords'));
-
-% put X (radius) in km
-X = X ./ 1000;
+X = squeeze(hdf5read(Hfile, '/x_coords'))/1000; % in km
+Z = squeeze(hdf5read(Hfile, '/z_coords'))/1000; % in km
 
 % grab VT at the second time step (first time step is time zero which
 % has all wind set to zero).
@@ -31,7 +29,7 @@ VT_INIT(VT_INIT == UndefVal) = nan;
 
 % trim off vertical range since initial vortex Only goes to ~8km
 Z1 = find(Z >= 0, 1);
-Z2 = find(Z <= 10000, 1, 'last');
+Z2 = find(Z <= 15, 1, 'last');
 
 Z = Z(Z1:Z2);
 VT_INIT = VT_INIT(Z1:Z2,:); % rows are z dimension now (after the transpose)
@@ -40,9 +38,7 @@ VT_INIT = VT_INIT(Z1:Z2,:); % rows are z dimension now (after the transpose)
 Pfile = sprintf('%s/InitVortex.jpg', PlotDir);
 Ptitle = sprintf('Initial Vortex: Azimuthally averaged Vt (m/s)');
 Xlabel = sprintf('Radius (km)');
-Ylabel = sprintf('Height (m)');
-
-Clevs = (-1:2:21);
+Ylabel = sprintf('Height (km)');
 
 Fig = figure;
 
@@ -59,11 +55,12 @@ for i = 1:64
   cband(i,1) = Cstart - ((i-1)*Cinc);
 end
 cmap = horzcat(cband, cband, cband);
-colormap(cmap);
+%colormap(cmap);
 
 
-contourf(X, Z, VT_INIT, Clevs);
+contourf(X, Z, VT_INIT);
 set(gca,'FontSize', 20);
+caxis([ 0 15 ]);
 title(Ptitle);
 xlabel(Xlabel);
 ylabel(Ylabel);
