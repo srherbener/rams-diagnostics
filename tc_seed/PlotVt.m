@@ -26,6 +26,7 @@ Cmax = 80;
 
 for icase = 1:length(Config.Cases)
   Case = Config.Cases(icase).Cname;
+  CaseTitle = regexprep(Case, '_', '-');
   fprintf('Plotting Vt for case: %s\n', Case)
   fprintf('\n');
 
@@ -62,7 +63,7 @@ for icase = 1:length(Config.Cases)
 
   % plot
   Pfile  = sprintf('%s/vt_%s.jpg', PlotDir, Case);
-  Ptitle = sprintf('Azimuthally averaged Vt (m/s), T = %d hr', Ptime);
+  Ptitle = sprintf('%s: Vt (m/s), T = %d hr', CaseTitle, Ptime);
   Xlabel = sprintf('Radius (km)');
   Ylabel = sprintf('Height (km)');
    
@@ -99,7 +100,7 @@ for icase = 1:length(Config.Cases)
     Fig = figure;
   
     Pfile  = sprintf('%s/vt_START.jpg', PlotDir);
-    Ptitle = sprintf('Azimuthally averaged Vt (m/s), T = %d hr', Stime);
+    Ptitle = sprintf('%s: Vt (m/s), T = %d hr', CaseTitle, Stime);
 
     contourf(Rvals, Zvals, PdataStart);
     set(gca,'FontSize', 20);
