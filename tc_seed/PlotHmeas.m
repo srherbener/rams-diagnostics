@@ -1,5 +1,5 @@
 function [ ] = PlotHmeas(ConfigFile)
-% PlotHmeas function to plot total KE vs max azimuthally averaged tangential wind
+% PlotHmeas function to plot histogram measured data
 
 [ Config ] = ReadConfig(ConfigFile);
 
