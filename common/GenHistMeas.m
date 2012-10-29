@@ -104,14 +104,29 @@ for icase = 1:length(Config.Cases)
     [ HALF_V, HALF_I ] = min(CSHALF, [], 2);
     HIST_COM = squeeze(B(HALF_I));
 
+    % Also compute the time mean of the histogram measurements
+    % All variables are (r,z,t), this will convert to (r,z).
+    HIST_WMEAN_TMEAN = mean(HIST_WMEAN,3);
+    HIST_MAX_TMEAN   = mean(HIST_MAX,3);
+    HIST_COM_TMEAN   = mean(HIST_COM,3);
+
     fprintf('Writing file: %s\n', OutFile);
     fprintf('\n');
+
     Hdset = sprintf('/%s_wtmean', Vname);
     hdf5write(OutFile, Hdset, HIST_WMEAN);
     Hdset = sprintf('/%s_max', Vname);
     hdf5write(OutFile, Hdset, HIST_MAX, 'WriteMode', 'append');
     Hdset = sprintf('/%s_com', Vname);
     hdf5write(OutFile, Hdset, HIST_COM, 'WriteMode', 'append');
+
+    Hdset = sprintf('/%s_wtmean_tmean', Vname);
+    hdf5write(OutFile, Hdset, HIST_WMEAN_TMEAN, 'WriteMode', 'append');
+    Hdset = sprintf('/%s_max_tmean', Vname);
+    hdf5write(OutFile, Hdset, HIST_MAX_TMEAN, 'WriteMode', 'append');
+    Hdset = sprintf('/%s_com_tmean', Vname);
+    hdf5write(OutFile, Hdset, HIST_COM_TMEAN, 'WriteMode', 'append');
+
     hdf5write(OutFile, '/x_coords', R, 'WriteMode', 'append');
     hdf5write(OutFile, '/y_coords', B, 'WriteMode', 'append');
     hdf5write(OutFile, '/z_coords', Z, 'WriteMode', 'append');
