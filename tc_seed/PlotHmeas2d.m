@@ -119,7 +119,8 @@ for icase = 1:length(Config.Cases)
       colormap(cmap_def);
     end
     shading flat;
-    colorbar;
+    cbar = colorbar;
+    set(cbar, 'FontSize', Fsize);
     caxis([ Cmin Cmax ]);
     title(Ptitle);
     xlabel(Xlabel);
