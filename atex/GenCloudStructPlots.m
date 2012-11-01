@@ -5,7 +5,7 @@ function [ ] = GenCloudStructPlots(ConfigFile)
 
 UndefVal = Config.UndefVal;
 
-Pname   = Config.Pexp.Ename;
+Pname   = Config.ExpName;
 
 Tdir = Config.TsavgDir;
 Pdir = Config.PlotDir;
