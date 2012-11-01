@@ -179,6 +179,7 @@ for i = 1:size(InLines,1)
       Cdata.HmeasPlot3d(i_hmp3d).Tmax    = sscanf(Fields{15},'%f');
       Cdata.HmeasPlot3d(i_hmp3d).Cmin    = sscanf(Fields{16},'%f');
       Cdata.HmeasPlot3d(i_hmp3d).Cmax    = sscanf(Fields{17},'%f');
+      Cdata.HmeasPlot3d(i_hmp3d).Flevel  = sscanf(Fields{18},'%d');
     case 'HmeasSlicePlot:'
       i_hmslice = i_hmslice + 1;
       Cdata.HmeasSlicePlots(i_hmslice).Name    = Fields{2};

@@ -15,12 +15,14 @@ end
 % big font
 Fsize = 20;
 
+% Temperature file 
+TempFile = 'tempc_all'
+
 % Get some colormaps
 Fig = figure;
 cmap_def = colormap;
 cmap_rb = redblue;
 close(Fig);
-
 
 % make the plots
 % steal the config for the 3d plots, simply ignore the isosurface spec
@@ -45,6 +47,8 @@ for icase = 1:length(Config.Cases)
     Tmax = Config.HmeasPlot3d(ihmplot).Tmax;
     Cmin = Config.HmeasPlot3d(ihmplot).Cmin;
     Cmax = Config.HmeasPlot3d(ihmplot).Cmax;
+
+    Flevel = Config.HmeasPlot3d(ihmplot).Flevel;
 
     % skip this iteration if we are on the control case and
     % we are doing a 'diff' plot
@@ -73,6 +77,18 @@ for icase = 1:length(Config.Cases)
     Z = hdf5read(InFile, '/z_coords') / 1000; % km
     HDATA = hdf5read(InFile, Hdset);
 
+    % if adding a freezing level line, read in the freezing level data
+    % from the temperature file
+    %
+    % FL will have the same dimensions as R
+    if (Flevel == 1)
+      InFile = sprintf('%s/hmeas_%s_%s.h5', InDir, TempFile, Case);
+      Hdset = sprintf('/frzlev_%s', Vtype);
+      fprintf('Reading file: %s, Dataset: %s\n', InFile, Hdset);
+      fprintf('\n');
+      FL = hdf5read(InFile, Hdset) / 1000; % km
+    end
+
     % If doing a 'diff' plot, read in the control data
     if (strcmp(Ptype, 'diff'))
       InFile = sprintf('%s/hmeas_%s_%s.h5', InDir, Fprefix, ControlCase);
@@ -90,6 +106,9 @@ for icase = 1:length(Config.Cases)
 
     Rvals = R(R1:R2);
     Zvals = Z(Z1:Z2);
+    if (Flevel == 1)
+      FLvals = FL(R1:R2);
+    end
     
     Pdata = squeeze(HDATA(R1:R2,Z1:Z2));
     
@@ -125,6 +144,13 @@ for icase = 1:length(Config.Cases)
     title(Ptitle);
     xlabel(Xlabel);
     ylabel(Ylabel);
+
+    if (Flevel == 1)
+      line(Rvals, FLvals, 'LineStyle', '--', 'Color', 'k', 'LineWidth', 2.0);
+      text(double(Rvals(end)), double(FLvals(end)), 'FL', 'FontSize', Fsize, ...
+           'Color', 'k', 'HorizontalAlignment', 'Right', ...
+           'VerticalAlignment', 'Top');
+    end
     
     fprintf('Writing file: %s\n', OutFile);
     fprintf('\n');
