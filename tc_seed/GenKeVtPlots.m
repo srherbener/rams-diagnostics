@@ -37,7 +37,9 @@ for iplot = 1:length(Config.TwoDimPlots)
 
     Ptitle = sprintf('%s: %s', Pname, Config.TwoDimPlots(iplot).Title);
     Xlabel = Config.TwoDimPlots(iplot).Xlabel;
+    Xscale = Config.TwoDimPlots(iplot).Xscale;
     Ylabel = Config.TwoDimPlots(iplot).Ylabel;
+    Yscale = Config.TwoDimPlots(iplot).Yscale;
     LegLoc = Config.TwoDimPlots(iplot).LegLoc;
     OutFile = sprintf('%s/%s', Pdir, Config.TwoDimPlots(iplot).OutFile);
     
@@ -63,6 +65,7 @@ for iplot = 1:length(Config.TwoDimPlots)
         else
           VT = VT(Tstart:Tend);
         end
+        VT = VT * Xscale;
         [ VtAll(icase,:) ] = SmoothFillTseries(VT, Tlen, Flen);
     
         KeFile = sprintf('%s/%s_%s.h5', Tdir, KeVar, Case);
@@ -73,6 +76,7 @@ for iplot = 1:length(Config.TwoDimPlots)
         else
           KE = KE(Tstart:Tend);
         end
+        KE = KE * Yscale;
         [ KeAll(icase,:) ] = SmoothFillTseries(KE, Tlen, Flen);
       end
     end

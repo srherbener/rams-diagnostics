@@ -156,9 +156,11 @@ for i = 1:size(InLines,1)
       Cdata.TwoDimPlots(i_2dplot).Yvar    = Fields{4};
       Cdata.TwoDimPlots(i_2dplot).Title   = regexprep(Fields{5}, '_', ' ');
       Cdata.TwoDimPlots(i_2dplot).Xlabel  = regexprep(Fields{6}, '_', ' ');
-      Cdata.TwoDimPlots(i_2dplot).Ylabel  = regexprep(Fields{7}, '_', ' ');
-      Cdata.TwoDimPlots(i_2dplot).LegLoc  = Fields{8};
-      Cdata.TwoDimPlots(i_2dplot).OutFile = Fields{9};
+      Cdata.TwoDimPlots(i_2dplot).Xscale  = sscanf(Fields{7}, '%f');
+      Cdata.TwoDimPlots(i_2dplot).Ylabel  = regexprep(Fields{8}, '_', ' ');
+      Cdata.TwoDimPlots(i_2dplot).Yscale  = sscanf(Fields{9}, '%f');
+      Cdata.TwoDimPlots(i_2dplot).LegLoc  = Fields{10};
+      Cdata.TwoDimPlots(i_2dplot).OutFile = Fields{11};
     case 'HmeasPlot3d:'
       i_hmp3d = i_hmp3d + 1;
       Cdata.HmeasPlot3d(i_hmp3d).Name    = Fields{2};
