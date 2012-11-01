@@ -110,6 +110,33 @@ for icase = 1:length(Config.Cases)
     HIST_MAX_TMEAN   = mean(HIST_MAX,3);
     HIST_COM_TMEAN   = mean(HIST_COM,3);
 
+    % If doing 'tempc'
+    % Calculate a line representing the freezing level
+    % Don't use >= 0 in the find command because the wtmean method
+    % can result in multiple zeros in a profile
+    if (strcmp(Vname, 'tempc'))
+      FRZLEV_WMEAN = zeros(1,Nr);
+      FRZLEV_MAX = zeros(1,Nr);
+      FRZLEV_COM = zeros(1,Nr);
+      for ir = 1:Nr
+        i = find(HIST_WMEAN_TMEAN(ir,:) > 0, 1, 'last');
+        if (length(i) == 0)
+          i = 1;
+        end
+        FRZLEV_WMEAN(ir) = Z(i);
+        i = find(HIST_MAX_TMEAN(ir,:) > 0, 1, 'last');
+        if (length(i) == 0)
+          i = 1;
+        end
+        FRZLEV_MAX(ir)   = Z(i);
+        i = find(HIST_COM_TMEAN(ir,:) > 0, 1, 'last');
+        if (length(i) == 0)
+          i = 1;
+        end
+        FRZLEV_COM(ir)   = Z(i);
+      end
+    end
+
     fprintf('Writing file: %s\n', OutFile);
     fprintf('\n');
 
@@ -126,6 +153,15 @@ for icase = 1:length(Config.Cases)
     hdf5write(OutFile, Hdset, HIST_MAX_TMEAN, 'WriteMode', 'append');
     Hdset = sprintf('/%s_com_tmean', Vname);
     hdf5write(OutFile, Hdset, HIST_COM_TMEAN, 'WriteMode', 'append');
+
+    if (strcmp(Vname, 'tempc'))
+      Hdset = sprintf('/frzlev_wtmean');
+      hdf5write(OutFile, Hdset, FRZLEV_WMEAN, 'WriteMode', 'append');
+      Hdset = sprintf('/frzlev_max');
+      hdf5write(OutFile, Hdset, FRZLEV_MAX, 'WriteMode', 'append');
+      Hdset = sprintf('/frzlev_com');
+      hdf5write(OutFile, Hdset, FRZLEV_COM, 'WriteMode', 'append');
+    end
 
     hdf5write(OutFile, '/x_coords', R, 'WriteMode', 'append');
     hdf5write(OutFile, '/y_coords', B, 'WriteMode', 'append');
