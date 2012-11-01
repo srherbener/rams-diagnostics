@@ -20,7 +20,7 @@ Tunits  = Config.TsPlotSpecs.Tunits;
 %    6 - second
 BT = Config.TsPlotSpecs.BaseTime;
 BaseTime = datenum(BT(1), BT(2), BT(3), BT(4), BT(5), BT(6));
-StartTime = datestr(BaseTime, 'mm/dd/yyyy HH:MM')
+StartTime = datestr(BaseTime, 'mm/dd/yyyy HH:MM');
 
 TsStart = Config.TsPlotSpecs.TsStart;
 TsPeriod = Config.TsPlotSpecs.TsPeriod;
