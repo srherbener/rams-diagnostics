@@ -5,7 +5,7 @@ function [ ] = GenDistPlots(ConfigFile)
 % the file system.
 [ Config ] = ReadConfig(ConfigFile);
     
-Pname   = Config.Pexp.Ename;
+Pname   = Config.ExpName;
 
 Ddir = Config.DiagDir;
 Pdir = Config.PlotDir;
