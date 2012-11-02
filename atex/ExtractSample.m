@@ -20,7 +20,7 @@ CCN = [ 50 50 1600 1600 ]'; % keep these the same length
 SST = [ 298 303 298 303 ]';
 
 for i = 1:length(CCN)
- Exps{i} = sprintf('z.atex.ccn%04d.sst%03d.gcn10m5', CCN(i), SST(i));
+ Exps{i} = sprintf('z.atex.ccn%04d.sst%03d.gcn10m5.1um', CCN(i), SST(i));
 end
 
 Vars = { 'pcprr';

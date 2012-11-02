@@ -5,7 +5,7 @@ function [ ] = GenSwupBarCharts(ConfigFile)
 Config = ReadConfig(ConfigFile);
 
 ControlCase = Config.ControlCase;
-Pname   = Config.Pexp.Ename;
+Pname   = Config.ExpName;
 Tdir = Config.TsavgDir;
 Pdir = Config.PlotDir;
 
@@ -31,7 +31,7 @@ k = 0;
 for i = 1:Ns
   % collect the latent heat data
   for j = 1:Nc
-    Hfile = sprintf('%s/hda_swup_z.atex.ccn%04d.sst%d.gcn10m5.h5', Tdir, CCN(j),SST(i));
+    Hfile = sprintf('%s/hda_swup_z.atex.ccn%04d.sst%d.gcn10m5.1um.h5', Tdir, CCN(j),SST(i));
     fprintf('  Reading HDF5 file: %s\n', Hfile);
     SWUP_DOMAVG = hdf5read(Hfile, 'hda_swup');
 
