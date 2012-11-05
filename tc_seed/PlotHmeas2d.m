@@ -16,7 +16,7 @@ end
 Fsize = 20;
 
 % Temperature file 
-TempFile = 'tempc_all'
+TempFile = 'tempc_all';
 
 % Get some colormaps
 Fig = figure;
