@@ -10,12 +10,11 @@ Pname   = Config.ExpName;
 Tdir = Config.TsavgDir;
 Pdir = Config.PlotDir;
 
-Lcolors = { 'k' 'm' 'b' 'c' 'g' 'y' 'r' };
-
 % Find and replace underscores in Ptitle, Ylabel with blank spaces
 for iplot = 1:length(Config.ProfPlots)
     clear LHV;
     clear LegText;
+    clear Lspecs;
 
     Var = Config.ProfPlots(iplot).Var;
 
@@ -57,6 +56,7 @@ for iplot = 1:length(Config.ProfPlots)
       for icase = 1:Config.PlotSets(ips).Ncases
         Case = Config.PlotSets(ips).Cases(icase).Cname;
         LegText(icase) = { Config.PlotSets(ips).Cases(icase).Legend };
+        Lspecs(icase) = { Config.PlotSets(ips).Cases(icase).Lspec };
 
         % Var is organized (x,y,z,t) in the file, however x and y
         % dimension sizes are both 1. After running squeeze(), Var
@@ -90,6 +90,7 @@ for iplot = 1:length(Config.ProfPlots)
     % resulting average profile by 12 to get to K/hr.
     LHV = LHV .* 12;
 
-    PlotProfSet(X, Z, LHV, Xlabel, Zlabel, Ptitle, Lcolors, LegText, LegLoc, OutFile);
+    fprintf('Writing plot file: %s\n', OutFile);
+    PlotProfSet(X, Z, LHV, Xlabel, Zlabel, Ptitle, Lspecs, LegText, LegLoc, OutFile);
     fprintf('\n');
 end

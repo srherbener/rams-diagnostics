@@ -124,7 +124,8 @@ for i = 1:size(InLines,1)
       for ips = 1:Cdata.PlotSets(i_pset).Ncases
         Cdata.PlotSets(i_pset).Cases(ips).Cname = Fields{j};
         Cdata.PlotSets(i_pset).Cases(ips).Legend = regexprep(Fields{j+1}, '_', ' ');
-        j = j + 2;
+        Cdata.PlotSets(i_pset).Cases(ips).Lspec = Fields{j+2};
+        j = j + 3;
       end
     case 'TsavgPlot:'
       i_tsplot = i_tsplot + 1;

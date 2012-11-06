@@ -1,4 +1,4 @@
-function [ ] = PlotProfSet( Xvals, Zvals, Profs, Xlabel, Zlabel, Ptitle, Lcolors, LegText, LegLoc, OutFile )
+function [ ] = PlotProfSet( Xvals, Zvals, Profs, Xlabel, Zlabel, Ptitle, Lspecs, LegText, LegLoc, OutFile )
 %PlotProfSet Plot a set of vertical profiles on the same panel
 %   This function will take data contained in Profs and plot them on a
 %   single panel line plot. Each row of Profs is a separate profile.
@@ -14,14 +14,14 @@ Fig = figure;
 [ Nprofs, Npts ] = size(Profs);
 Lwidth = 2;
 
-plot(Profs(1,:),Zvals,'LineWidth',Lwidth,'Color',char(Lcolors(1)));
+plot(Profs(1,:),Zvals,Lspecs{1},'LineWidth',Lwidth);
 xlim([ min(Xvals) max(Xvals) ]);
 ylim([ min(Zvals) max(Zvals) ]);
 set (gca, 'FontSize', 20);
 hold on;
 
 for i = 2:Nprofs
-     plot(Profs(i,:),Zvals,'LineWidth',Lwidth,'Color',char(Lcolors(i)));
+     plot(Profs(i,:),Zvals,Lspecs{i},'LineWidth',Lwidth);
 end
 
 title(Ptitle);
