@@ -1,4 +1,4 @@
-function [ ] = Plot2dSet( X, Y, Ptitle, Xlabel, Ylabel, Lcolors, LegText, LegLoc, AxisProps, OutFile )
+function [ ] = Plot2dSet( X, Y, Ptitle, Xlabel, Ylabel, Lspecs, LegText, LegLoc, AxisProps, OutFile )
 %Plot2dSet Plot a set of 2D line plots on the same panel
 %   This function will take data contained in X and Y and plot them on a
 %   single panel.
@@ -22,7 +22,7 @@ Nplots = size(Y,1);
 % subsequent plots). Plot the first hist outside the loop, issue a "hold
 % on" and then plot the remainder hists.
 
-plot(X(1,:), Y(1,:), 'Color', char(Lcolors(1)), 'LineWidth', Lwidth);
+plot(X(1,:), Y(1,:), Lspecs{1}, 'LineWidth', Lwidth);
 for i = 1:Nprops
   set(gca, AxisProps(i).Name, AxisProps(i).Val);
 end
@@ -30,7 +30,7 @@ end
 hold on;
 
 for i = 2:Nplots % each row is a separate curve for plotting
-    plot(X(i,:), Y(i,:), 'Color', char(Lcolors(i)), 'LineWidth', Lwidth);
+    plot(X(i,:), Y(i,:), Lspecs{i}, 'LineWidth', Lwidth);
 end
 
 legend(LegText, 'Location', char(LegLoc));

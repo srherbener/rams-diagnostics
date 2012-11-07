@@ -6,6 +6,7 @@ function [ ] = GenProfPlots(ConfigFile)
 [ Config ] = ReadConfig(ConfigFile);
     
 Pname   = Config.ExpName;
+UndefVal = Config.UndefVal;
 
 Tdir = Config.TsavgDir;
 Pdir = Config.PlotDir;
@@ -16,6 +17,7 @@ for iplot = 1:length(Config.ProfPlots)
     clear LegText;
     clear Lspecs;
 
+    Fprefix = Config.ProfPlots(iplot).Fprefix;
     Var = Config.ProfPlots(iplot).Var;
 
     % config for axes
@@ -30,11 +32,12 @@ for iplot = 1:length(Config.ProfPlots)
     % If doing a diff plot, read in the control profile
     if (strcmp(Config.ProfPlots(iplot).Type, 'diff'))
       Case = Config.ControlCase;
-      Hfile = sprintf('%s/%s_%s.h5', Tdir, Var, Case);
+      Hfile = sprintf('%s/%s_%s.h5', Tdir, Fprefix, Case);
       fprintf('Reading Control Case: %s\n', Case);
       fprintf('  HDF5 file: %s\n', Hfile);
       LHV_DOMAVG = squeeze(hdf5read(Hfile, Var));
-      LHV_CONTROL_ALLZ = mean(LHV_DOMAVG,2); % time average
+      LHV_DOMAVG(LHV_DOMAVG == UndefVal) = nan;
+      LHV_CONTROL_ALLZ = nanmean(LHV_DOMAVG,2); % time average
     end
 
     Ptitle = sprintf('%s: %s', Pname, Config.ProfPlots(iplot).Title);
@@ -61,10 +64,11 @@ for iplot = 1:length(Config.ProfPlots)
         % Var is organized (x,y,z,t) in the file, however x and y
         % dimension sizes are both 1. After running squeeze(), Var
         % will be reduced to (z,t).
-        Hfile = sprintf('%s/%s_%s.h5', Tdir, Var, Case);
+        Hfile = sprintf('%s/%s_%s.h5', Tdir, Fprefix, Case);
         fprintf('Reading HDF5 file: %s\n', Hfile);
         LHV_DOMAVG = squeeze(hdf5read(Hfile, Var));
-        LHV_ALLZ = mean(LHV_DOMAVG,2); % time average
+        LHV_DOMAVG(LHV_DOMAVG == UndefVal) = nan;
+        LHV_ALLZ = nanmean(LHV_DOMAVG,2); % time average
 
         % Grab the heights on the first case. The z coordinate
         % values should be the same for all cases.

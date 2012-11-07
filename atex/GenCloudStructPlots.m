@@ -3,8 +3,6 @@ function [ ] = GenCloudStructPlots(ConfigFile)
 
 [ Config ] = ReadConfig(ConfigFile);
 
-UndefVal = Config.UndefVal;
-
 Pname   = Config.ExpName;
 
 Tdir = Config.TsavgDir;
@@ -17,19 +15,21 @@ Tstart = 120;
 Tend = 433;
 Tlen = (Tend - Tstart) + 1;
 
-% For plotting
-Lcolors = { 'k' 'm' 'b' 'c' 'g' 'y' 'r' };
-
 AxisProps(1).Name = 'FontSize';
 AxisProps(1).Val = 20; 
 AxisProps(2).Name = 'XDir';
 AxisProps(2).Val = 'Reverse';
+AxisProps(3).Name = 'Ylim';
+AxisProps(3).Val = [ 0 1 ];
+AxisProps(3).Name = 'Xlim';
+AxisProps(3).Val = [ 0 15 ];
 
 % make the plots
 for iplot = 1:length(Config.TwoDimPlots)
     clear CtopAll;
     clear CfracAll;
     clear LegText;
+    clear Lspecs;
 
     CtopVar = Config.TwoDimPlots(iplot).Xvar;
     CfracVar = Config.TwoDimPlots(iplot).Yvar;
@@ -45,7 +45,6 @@ for iplot = 1:length(Config.TwoDimPlots)
         mkdir(Pdir);
     end
 
-    ihist = 0;
     ips = Config.TwoDimPlots(iplot).PSnum;
     if (ips == 0)
       fprintf('WARNING: skipping TwoDimPlot number %d due to no associated PlotSet\n', iplot)
@@ -53,6 +52,7 @@ for iplot = 1:length(Config.TwoDimPlots)
       for icase = 1:Config.PlotSets(ips).Ncases
         Case = Config.PlotSets(ips).Cases(icase).Cname;
         LegText(icase) = { Config.PlotSets(ips).Cases(icase).Legend };
+        Lspecs(icase) = { Config.PlotSets(ips).Cases(icase).Lspec };
 
         CtopFile = sprintf('%s/%s_%s.h5', Tdir, CtopVar, Case);
         fprintf('Reading HDF5 file: %s\n', CtopFile);
@@ -67,8 +67,9 @@ for iplot = 1:length(Config.TwoDimPlots)
         [ CfracAll(icase,:) ] = SmoothFillTseries(CFRAC, Tlen, Flen);
       end
     end
-
-    Plot2dSet( CtopAll, CfracAll, Ptitle, Xlabel, Ylabel, Lcolors, LegText, LegLoc, AxisProps, OutFile );
+    
+    fprintf('Writing file: %s\n', OutFile);
+    Plot2dSet( CtopAll, CfracAll, Ptitle, Xlabel, Ylabel, Lspecs, LegText, LegLoc, AxisProps, OutFile );
     fprintf('\n');
 end
 

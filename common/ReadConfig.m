@@ -206,16 +206,17 @@ for i = 1:size(InLines,1)
     case 'ProfPlot:'
       i_pplot = i_pplot + 1;
       Cdata.ProfPlots(i_pplot).PSname  = Fields{2};
-      Cdata.ProfPlots(i_pplot).Var     = Fields{3};
-      Cdata.ProfPlots(i_pplot).Type    = Fields{4};
-      Cdata.ProfPlots(i_pplot).Title   = regexprep(Fields{5}, '_', ' ');
-      Cdata.ProfPlots(i_pplot).Xlabel  = regexprep(Fields{6}, '_', ' ');
-      Cdata.ProfPlots(i_pplot).Zlabel  = regexprep(Fields{7}, '_', ' ');
-      Cdata.ProfPlots(i_pplot).LegLoc  = Fields{8};
-      Cdata.ProfPlots(i_pplot).Xspec   = sscanf(Fields{9}, '%f:%f:%f', 3);
-      Cdata.ProfPlots(i_pplot).Zmin    = sscanf(Fields{10}, '%f');
-      Cdata.ProfPlots(i_pplot).Zmax    = sscanf(Fields{11}, '%f');
-      Cdata.ProfPlots(i_pplot).OutFile = Fields{12};
+      Cdata.ProfPlots(i_pplot).Fprefix = Fields{3};
+      Cdata.ProfPlots(i_pplot).Var     = Fields{4};
+      Cdata.ProfPlots(i_pplot).Type    = Fields{5};
+      Cdata.ProfPlots(i_pplot).Title   = regexprep(Fields{6}, '_', ' ');
+      Cdata.ProfPlots(i_pplot).Xlabel  = regexprep(Fields{7}, '_', ' ');
+      Cdata.ProfPlots(i_pplot).Zlabel  = regexprep(Fields{8}, '_', ' ');
+      Cdata.ProfPlots(i_pplot).LegLoc  = Fields{9};
+      Cdata.ProfPlots(i_pplot).Xspec   = sscanf(Fields{10}, '%f:%f:%f', 3);
+      Cdata.ProfPlots(i_pplot).Zmin    = sscanf(Fields{11}, '%f');
+      Cdata.ProfPlots(i_pplot).Zmax    = sscanf(Fields{12}, '%f');
+      Cdata.ProfPlots(i_pplot).OutFile = Fields{13};
     case 'AzavgEofPlot:'
       i_aeofplot = i_aeofplot + 1;
       Cdata.AzavgEofPlots(i_aeofplot).Var   = Fields{2};
