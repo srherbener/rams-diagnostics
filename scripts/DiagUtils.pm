@@ -90,7 +90,8 @@ sub ReadConfigFile
       }
     elsif ($f[0] eq "Filter:")
       {
-      $Config{FILTERS}{$f[1]} = [ @f[2..$#f] ];
+      $Config{FILTERS}{$f[1]}{MODEL} = $f[2];
+      $Config{FILTERS}{$f[1]}{SPECS} = [ @f[3..$#f] ];
       }
     elsif ($f[0] eq "Diag:")
       {
