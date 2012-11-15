@@ -34,7 +34,7 @@ use DiagUtils;
 #
 sub CreateFileNames
   {
-  my ($Case, $Tdir, $Fname, $FilterDir, $RevuDir) = @_;
+  my ($Case, $Tdir, $Fname, $FilterDir, $RevuDir, $Fmodel) = @_;
   
   my $InDir;
   my $InFileSuffix;
@@ -43,6 +43,8 @@ sub CreateFileNames
   my $Pattern;
   my @f;
   my $TdirStr;
+  my $ModelVname;
+  my $ModelFprefix;
 
   # If $Tdir is the string "NONE", then do not place a subdirectory
   # in the path to the input and output files
@@ -66,11 +68,12 @@ sub CreateFileNames
   #
   $InDir = $Case . "/" . $RevuDir . $TdirStr;
 
-  # Use the w input file as a sample for finding the input file suffix.
-  $Pattern = $InDir . "/w-*.h5";
+  # Use the "model" input file as a sample for finding the input file suffix.
+  ($ModelVname, $ModelFprefix) = split(':', $Fmodel);
+  $Pattern = $InDir . "/" . $ModelFprefix . "-*.h5";
   @f = glob($Pattern);
   $InFileSuffix = $f[0];
-  $InFileSuffix =~ s/.*\/w-/-/;
+  $InFileSuffix =~ s/.*\/$ModelFprefix-/-/;
   
   $OutFile = $FilterDir . ${TdirStr} . "/" . ${Fname} . "_" . ${Case} . ".h5";
 
@@ -107,6 +110,7 @@ my $OutFile;
 my @SysArgs;
 my $OutDir;
 my @Fspecs;
+my $Fmodel;
 
 $ConfigFile = $ARGV[0];
 
@@ -137,13 +141,14 @@ foreach $Case (sort(keys(%Cases)))
     {
     # the lengths of the argument lists vary according to which filter is selected
     # so the ReadConfigFile routine just places the arguments in a list
-    @Fspecs = @{ $Filters{$Fname} };
+    @Fspecs = @{ $Filters{$Fname}{SPECS} };
+    $Fmodel = $Filters{$Fname}{MODEL};
 
     # run through each time directory generating the current diagnostic, and
     # then join these files into the main file (above the time directories)
     foreach $Tdir (sort(keys(%TimeDirs)))
       {
-      ($InDir,$InFileSuffix,$OutFile) = &CreateFileNames($Case, $Tdir, $Fname, $FilterDir, $RevuDir);
+      ($InDir,$InFileSuffix,$OutFile) = &CreateFileNames($Case, $Tdir, $Fname, $FilterDir, $RevuDir, $Fmodel);
 
       print "***************************************************************\n";
       print "Running diag_filter:\n";
@@ -163,7 +168,7 @@ foreach $Case (sort(keys(%Cases)))
         system(@SysArgs);
         }
 
-      @SysArgs = ("diag_filter", $InDir, $InFileSuffix, $OutFile, @Fspecs);
+      @SysArgs = ("diag_filter", $InDir, $InFileSuffix, $OutFile, $Fmodel, @Fspecs);
       print "Running: ", join(" ",@SysArgs), "\n\n";
       system(@SysArgs);
       }
