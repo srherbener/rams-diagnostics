@@ -19,200 +19,171 @@ program diag_filter
   use diag_utils
   implicit none
 
-  integer, parameter :: LargeString=512
-  integer, parameter :: MediumString=256
-  integer, parameter :: LittleString=128
+  integer, parameter :: LargeString  = 512
+  integer, parameter :: MediumString = 256
+  integer, parameter :: LittleString = 128
+
+  integer, parameter :: MaxFilters = 10
+
+  type FilterDescrip
+    character (len=LittleString) :: Ftype
+    character (len=LittleString) :: Vname
+    character (len=LittleString) :: Vfprefix
+    real :: x1
+    real :: x2
+    real :: y1
+    real :: y2
+    real :: z1
+    real :: z2
+  end type FilterDescrip
 
   character (len=LargeString) :: InDir, InSuffix, OutFile
+  type (FilterDescrip), dimension(MaxFilters) :: Filters
+  character (len=LargeString) :: Mvname, Mfprefix
 
-  logical :: DoCylVol, DoCold, DoWarm, DoVertVel, DoAbsVertVel, DoCwp, DoRwp, DoLwp
+  integer :: Nfilters
 
-  integer :: StmIx, StmIy
+  integer :: i, ipress
+  integer :: ix, iy, iz, it
+  integer :: Nx, Ny, Nz, Nt
+  logical :: BadDims
+  logical :: DoingCylVol
 
-  real :: DeltaX, DeltaY, MinW, MaxW, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, WpThresh
+  type (Rhdf5Var), dimension(MaxFilters) :: Vars
+  character (len=RHDF5_MAX_STRING), dimension(MaxFilters) :: InFiles
+  character (len=RHDF5_MAX_STRING) :: Mfile
+  type (Rhdf5Var) :: Mvar
+
+  character (len=RHDF5_MAX_STRING) :: FileAcc
+  integer, dimension(MaxFilters) :: InFileIds
+  integer :: OutFileId
+
+  type (Rhdf5Var) :: OutFilter
+  type (Rhdf5Var) :: Xcoords, Ycoords, Zcoords, Tcoords, Dcoords
+
+  real :: DeltaX, DeltaY
   real :: Xstart, Xinc, Ystart, Yinc
   real, dimension(:), allocatable :: XcoordsKm, YcoordsKm
 
-  ! Data arrays: cloud, tempc, precipr
-  ! Dims: x, y, z, t
-  ! The *Loc vars hold the locations of cloud, tempc, precipr in the GRADS
-  ! data files: the first index is the file number, the second index is the
-  ! var number
-  type (Rhdf5Var) :: W, Press, TempC, Cwp, Rwp, OutFilter
-  type (Rhdf5Var) :: Xcoords, Ycoords, Zcoords, Tcoords, Dcoords
   type (Rhdf5Var) :: Radius, MinP, StormX, StormY, MaxRadius
   real :: Rval, Pval, Zval
-  character (len=MediumString) :: Wfile, PressFile, TempcFile, CwpFile, RwpFile
-  character (len=LittleString) :: rh5f_facc;
-  integer :: rh5f_w, rh5f_press, rh5f_tempc, rh5f_cwp, rh5f_rwp, rh5f_out
-  logical :: BadDims
-
-  integer :: i
-  integer :: ZcoordLoc
-
-  integer :: ix, iy, iz, it
-  integer :: Nx, Ny, Nz, Nt
+  integer :: StmIx, StmIy
 
   logical :: SelectThisPoint
 
   ! Get the command line arguments
-  call GetMyArgs(InDir, InSuffix, OutFile, LargeString, DoCylVol, DoCold, DoWarm, DoVertVel, DoAbsVertVel, DoCwp, DoRwp, DoLwp, MinW, MaxW, WpThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ)
+  call GetMyArgs(LargeString, MaxFilters, InDir, InSuffix, OutFile, Mvname, Mfprefix, Filters, Nfilters)
 
+  DoingCylVol = .false.
   write (*,*) 'Creating HDF5 data filter:'
   write (*,*) '  Input directory: ', trim(InDir)
   write (*,*) '  Input file name suffix: ', trim(InSuffix)
   write (*,*) '  Output file name:  ', trim(OutFile)
+  write (*,*) '  Model variable name:  ', trim(Mvname)
+  write (*,*) '  Model file prefix: ', trim(Mfprefix)
   write (*,*) '  Data selection specs: '
-  if (DoCylVol) then
-    write (*,*) '    Cylindrical volume:'
-    write (*,*) '      Minimum radius: ', MinR
-    write (*,*) '      Maximum radius: ', MaxR
-    write (*,*) '      Minimum angle: ', MinPhi
-    write (*,*) '      Maximum angle: ', MaxPhi
-    write (*,*) '      Minimum height: ', MinZ
-    write (*,*) '      Maximum height: ', MaxZ
-  endif
-  if (DoCold) then
-    write (*,*) '    Cold (T <= 0 deg C)'
-  endif
-  if (DoWarm) then
-    write (*,*) '    Warm (T > 0 deg C)'
-  endif
-  if (DoVertVel) then
-    write (*,*) '    Vertical velocity:'
-    write (*,*) '      Minimum W: ', MinW
-    write (*,*) '      Maximum W: ', MaxW
-  endif
-  if (DoAbsVertVel) then
-    write (*,*) '    Absolute value of vertical velocity:'
-    write (*,*) '      Minimum W: ', MinW
-    write (*,*) '      Maximum W: ', MaxW
-  endif
-  if (DoCwp) then
-    write (*,*) '    CWP:'
-    write (*,*) '      CWP (column integrated cloud water) threshold: ', WpThresh
-  endif
-  if (DoRwp) then
-    write (*,*) '    RWP:'
-    write (*,*) '      RWP (column integrated rain water) threshold: ', WpThresh
-  endif
-  if (DoLwp) then
-    write (*,*) '    LWP:'
-    write (*,*) '      LWP (column integrated liquid, cloud + rain, water) threshold: ', WpThresh
-  endif
+  do i = 1, Nfilters
+    if (Filters(i)%Ftype .eq. 'cylvol') then
+      DoingCylVol = .true.
+      ipress = i
+      write (*,*) '    Cylindrical volume:'
+      write (*,*) '      Pressure variable: ', trim(Filters(i)%Vname)
+      write (*,*) '      Pressure file prefix: ', trim(Filters(i)%Vfprefix)
+      write (*,*) '      Minimum radius: ', Filters(i)%x1
+      write (*,*) '      Maximum radius: ', Filters(i)%x2
+      write (*,*) '      Minimum angle: ', Filters(i)%y1
+      write (*,*) '      Maximum angle: ', Filters(i)%y2
+      write (*,*) '      Minimum height: ', Filters(i)%z1
+      write (*,*) '      Maximum height: ', Filters(i)%z2
+    else if (Filters(i)%Ftype .eq. 'ge') then
+      write (*,*) '    Greater than or equal:'
+      write (*,*) '      Variable: ', trim(Filters(i)%Vname)
+      write (*,*) '      Variable file prefix: ', trim(Filters(i)%Vfprefix)
+      write (*,*) '      Threshold: ', Filters(i)%x1
+    else if (Filters(i)%Ftype .eq. 'gt') then
+      write (*,*) '    Greater than:'
+      write (*,*) '      Variable: ', trim(Filters(i)%Vname)
+      write (*,*) '      Variable file prefix: ', trim(Filters(i)%Vfprefix)
+      write (*,*) '      Threshold: ', Filters(i)%x1
+    else if (Filters(i)%Ftype .eq. 'le') then
+      write (*,*) '    Less than or equal:'
+      write (*,*) '      Variable: ', trim(Filters(i)%Vname)
+      write (*,*) '      Variable file prefix: ', trim(Filters(i)%Vfprefix)
+      write (*,*) '      Threshold: ', Filters(i)%x1
+    else if (Filters(i)%Ftype .eq. 'lt') then
+      write (*,*) '    Less than:'
+      write (*,*) '      Variable: ', trim(Filters(i)%Vname)
+      write (*,*) '      Variable file prefix: ', trim(Filters(i)%Vfprefix)
+      write (*,*) '      Threshold: ', Filters(i)%x1
+    else if (Filters(i)%Ftype .eq. 'range') then
+      write (*,*) '    Inside range:'
+      write (*,*) '      Variable: ', trim(Filters(i)%Vname)
+      write (*,*) '      Variable file prefix: ', trim(Filters(i)%Vfprefix)
+      write (*,*) '      Min: ', Filters(i)%x1
+      write (*,*) '      Max: ', Filters(i)%x2
+    else if (Filters(i)%Ftype .eq. 'abs_range') then
+      write (*,*) '    Absolute value inside range:'
+      write (*,*) '      Variable: ', trim(Filters(i)%Vname)
+      write (*,*) '      Variable file prefix: ', trim(Filters(i)%Vfprefix)
+      write (*,*) '      Min: ', Filters(i)%x1
+      write (*,*) '      Max: ', Filters(i)%x2
+    endif
+  enddo
   write (*,*) ''
   flush(6)
 
-  ! Set up names of built-in variables
-  Wfile = trim(InDir) // '/w' // trim(InSuffix)
-  W%vname = 'w'
-
-  PressFile = trim(InDir) // '/sea_press' // trim(InSuffix)
-  Press%vname = 'sea_press'
-
-  TempcFile = trim(InDir) // '/tempc' // trim(InSuffix)
-  Tempc%vname = 'tempc'
-
-  CwpFile = trim(InDir) // '/vint_cloud' // trim(InSuffix)
-  Cwp%vname = 'vertint_cloud'
-
-  RwpFile = trim(InDir) // '/vint_rain' // trim(InSuffix)
-  Rwp%vname = 'vertint_rain'
-
-  ! See if we have access to all of the required variables
-  !
-  ! Always need vertical velocity, even if not doing W filtering, since this
-  ! will serve as the model of the 3D field.
-  !
-  ! Leave the files open for use later on
+  ! See if we have access to all of the required variables. Check to make sure the horizontal
+  ! and time dimensions match between all vars. Compare against the model file.
   !
   ! Since we will be processing one time step at a time, the effective number of dimensions
   ! on each of the input is decreased by one. We want to eliminate the time dimension which
   ! is always the last one. This works out conveniently since all we need to do is decrement
   ! the number of dimensions by one.
-  !
-  call rhdf5_read_init(Wfile, W)
-
-  Nx = W%dims(1)
-  Ny = W%dims(2)
-  Nz = W%dims(3)
-  Nt = W%dims(4)
 
   BadDims = .false.
-  if (DoCylVol) then
-    ! Need pressure (to find the storm center)
-    call rhdf5_read_init(PressFile, Press)
 
-    if (.not. DimsMatch(W, Press)) then
-      write (*,*) 'ERROR: horizontal dimensions of w and sea_press do not match'
+  ! Model var is expected to be 3d
+  Mfile = trim(InDir) // '/' // trim(Mfprefix) // trim(InSuffix)
+  Mvar%vname = trim(Mvname)
+  call rhdf5_read_init(Mfile, Mvar)
+
+  if (Mvar%ndims .ne. 4) then
+    write (*,*) 'ERROR: model variable must be a 3d variable: ', trim(Mvname)
+    stop
+  else
+    Nx = Mvar%dims(1)
+    Ny = Mvar%dims(2)
+    Nz = Mvar%dims(3)
+    Nt = Mvar%dims(4)
+  endif
+
+  do i = 1, Nfilters
+    InFiles(i) = trim(InDir) // '/' // trim(Filters(i)%Vfprefix) // trim(InSuffix)
+    Vars(i)%vname = trim(Filters(i)%Vname)
+
+    call rhdf5_read_init(InFiles(i), Vars(i))
+
+    ! Check that the horizontal and time dimensions match with the model var. 
+    if (.not. DimsMatch(Mvar, Vars(i))) then
+      write (*,*) 'ERROR: horizontal and time dimensions of variable do not match the model variable: ', trim(Vars(i)%vname)
       BadDims = .true.
     else
-      ! Good to go, prepare for reading Press
-      rh5f_facc = 'R'
-      call rhdf5_open_file(PressFile, rh5f_facc, 0, rh5f_press)
-      Press%ndims = 2
-      allocate(Press%vdata(Nx*Ny))
+      ! Prepare for reading
+      Vars(i)%ndims = Vars(i)%ndims - 1
+      if (Vars(i)%ndims .eq. 2) then
+        allocate(Vars(i)%vdata(Nx*Ny))
+      else
+        allocate(Vars(i)%vdata(Nx*Ny*Nz))
+      endif
     endif
-  endif
-  if (DoWarm .or. DoCold) then
-    ! Need temperature (in deg. C)
-    call rhdf5_read_init(TempcFile, Tempc)
-
-    if (.not. DimsMatch(W, Tempc)) then
-      write (*,*) 'ERROR: horizontal dimensions of w and tempc do not match'
-      BadDims = .true.
-    else
-      ! Good to go, prepare for reading Tempc
-      rh5f_facc = 'R'
-      call rhdf5_open_file(TempcFile, rh5f_facc, 0, rh5f_tempc)
-      Tempc%ndims = 3
-      allocate(Tempc%vdata(Nx*Ny*Nz))
-    endif
-  endif
-  if (DoCwp .or. DoLwp) then
-    call rhdf5_read_init(CwpFile, Cwp)
-
-    if (.not. DimsMatch(W, Cwp)) then
-      write (*,*) 'ERROR: horizontal dimensions of w and vint_cloud do not match'
-      BadDims = .true.
-    else
-      ! Good to go, prepare for reading Cwp
-      rh5f_facc = 'R'
-      call rhdf5_open_file(CwpFile, rh5f_facc, 0, rh5f_cwp)
-      Cwp%ndims = 2
-      allocate(Cwp%vdata(Nx*Ny))
-    endif
-  endif
-  if (DoRwp .or. DoLwp) then
-    call rhdf5_read_init(RwpFile, Rwp)
-
-    if (.not. DimsMatch(W, Rwp)) then
-      write (*,*) 'ERROR: horizontal dimensions of w and vint_rain do not match'
-      BadDims = .true.
-    else
-      ! Good to go, prepare for reading Rwp
-      rh5f_facc = 'R'
-      call rhdf5_open_file(RwpFile, rh5f_facc, 0, rh5f_rwp)
-      Rwp%ndims = 2
-      allocate(Rwp%vdata(Nx*Ny))
-    endif
-  endif
+  enddo
 
   if (BadDims) then
     stop
   endif
 
-  ! If we need W later on, prepare for reading it in
-  ! otherwise close the file
-  if (DoVertVel .or. DoAbsVertVel) then
-    rh5f_facc = 'R'
-    call rhdf5_open_file(Wfile, rh5f_facc, 0, rh5f_w)
-    W%ndims = 3
-    allocate(W%vdata(Nx*Ny*Nz))
-  endif
-
-  ! Set the output dimensions and coordinates to those of the W field
-  call SetOutCoords(Wfile, Xcoords, Ycoords, Zcoords, Tcoords)
+  ! Set the output dimensions and coordinates to those of the selected input var
+  call SetOutCoords(Mfile, Xcoords, Ycoords, Zcoords, Tcoords)
   
   ! In order for GRADS to be able to read in the output HDF5 file, every variable
   ! needs to be four dimensional: (x,y,z,t) regardless if that is the true nature
@@ -281,7 +252,7 @@ program diag_filter
   OutFilter%descrip = 'data selection locations'
   allocate(OutFilter%vdata(Nx*Ny*Nz))
 
-  if (DoCylVol) then
+  if (DoingCylVol) then
     ! prepare for writing the radius values into the output file.
     Radius%vname = 'radius'
     Radius%ndims = 3
@@ -348,9 +319,17 @@ program diag_filter
     MaxRadius%vdata(1) = -1.0 ! not expecting negative radii
   endif
 
-  rh5f_facc = 'W'
-  call rhdf5_open_file(OutFile, rh5f_facc, 1, rh5f_out)
-  write (*,*) 'Writing HDF5 output: ', trim(OutFile)
+  ! Open the input files and the output file
+  FileAcc = 'R'
+  do i = 1, Nfilters
+    call rhdf5_open_file(InFiles(i), FileAcc, 0, InFileIds(i))
+    write (*,*) 'Reading HDF5 file: ', trim(InFiles(i))
+  enddo
+  write (*,*) ''
+
+  FileAcc = 'W'
+  call rhdf5_open_file(OutFile, FileAcc, 1, OutFileId)
+  write (*,*) 'Writing HDF5 file: ', trim(OutFile)
   write (*,*) ''
 
   ! Do the filtering one time step at a time.
@@ -361,11 +340,15 @@ program diag_filter
   !
 
   do it = 1, Nt
-    ! prepare for doing the selection
-    if (DoCylVol) then
-      ! Read in the pressure
-      call rhdf5_read_variable(rh5f_press, Press%vname, Press%ndims, it, Press%dims, rdata=Press%vdata)
+    ! read the input vars
+    do i = 1, Nfilters
+      call rhdf5_read_variable(InFileIds(i), Vars(i)%vname, Vars(i)%ndims, it, Vars(i)%dims, rdata=Vars(i)%vdata)
+    enddo
 
+    ! In the case that we are doing cylvol, the above loop will have read in the pressure
+    ! data, and ipress will point to the index of the pressure data. Find the storm center
+    ! to prepare for the InsideCylVol call.
+    if (DoingCylVol) then
       ! zero out radius
       do iy = 1, Ny
         do ix = 1, Nx
@@ -374,27 +357,11 @@ program diag_filter
       enddo
 
       ! Find the storm center
-      call FindStormCenter(Nx, Ny, Press%vdata, StmIx, StmIy, MinP%vdata(1))
+      call FindStormCenter(Nx, Ny, Vars(ipress)%vdata, StmIx, StmIy, MinP%vdata(1))
 
       ! Record the lat,lon of the storm center
       StormX%vdata(1) = Xcoords%vdata(StmIx)
       StormY%vdata(1) = Ycoords%vdata(StmIy)
-    endif
-
-    if (DoWarm .or. DoCold) then
-      call rhdf5_read_variable(rh5f_tempc, Tempc%vname, Tempc%ndims, it, Tempc%dims, rdata=Tempc%vdata)
-    endif
-
-    if (DoVertVel .or. DoAbsVertVel) then
-      call rhdf5_read_variable(rh5f_w, W%vname, W%ndims, it, W%dims, rdata=W%vdata)
-    endif
-
-    if (DoCwp .or. DoLwp) then
-      call rhdf5_read_variable(rh5f_cwp, Cwp%vname, Cwp%ndims, it, Cwp%dims, rdata=Cwp%vdata)
-    endif
-
-    if (DoRwp .or. DoLwp) then
-      call rhdf5_read_variable(rh5f_rwp, Rwp%vname, Rwp%ndims, it, Rwp%dims, rdata=Rwp%vdata)
     endif
 
     ! do the selection
@@ -402,46 +369,89 @@ program diag_filter
       do iy = 1, Ny
         do ix = 1, Nx
           SelectThisPoint = .true.
-          if (DoCylVol) then
-            SelectThisPoint = SelectThisPoint .and. InsideCylVol(Nx, Ny, Nz, ix, iy, iz, &
-                  MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, &
-                  XcoordsKm, YcoordsKm, Zcoords%vdata, Rval, Pval, Zval) 
-          endif
-          if (DoCold) then
-            SelectThisPoint = SelectThisPoint .and. &
-              (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=TempC%vdata) .le. 0.0)
-          endif
-          if (DoWarm) then
-            SelectThisPoint = SelectThisPoint .and. &
-              (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=TempC%vdata) .gt. 0.0)
-          endif
-          if (DoVertVel) then
-            SelectThisPoint = SelectThisPoint .and. &
-              ((MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=W%vdata) .ge. MinW) .and. &
-               (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=W%vdata) .le. MaxW))
-          endif
-          if (DoAbsVertVel) then
-            SelectThisPoint = SelectThisPoint .and. &
-              ((abs(MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=W%vdata)) .ge. MinW) .and. &
-               (abs(MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=W%vdata)) .le. MaxW))
-          endif
-          if (DoCwp) then
-            SelectThisPoint = SelectThisPoint .and. &
-              (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Cwp%vdata) .gt. WpThresh)
-          end if
-          if (DoRwp) then
-            SelectThisPoint = SelectThisPoint .and. &
-              (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Rwp%vdata) .gt. WpThresh)
-          end if
-          if (DoLwp) then
-            SelectThisPoint = SelectThisPoint .and. &
-              ((MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Cwp%vdata) + &
-                MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Rwp%vdata)) .gt. WpThresh)
-          end if
+          do i = 1, Nfilters
+            ! select if inside the cylindrical volume
+            if (Filters(i)%Ftype .eq. 'cylvol') then
+              SelectThisPoint = SelectThisPoint .and. InsideCylVol(Nx, Ny, Nz, ix, iy, iz, &
+                    Filters(i)%x1, Filters(i)%x2, Filters(i)%y1, Filters(i)%y2, &
+                    Filters(i)%z1, Filters(i)%z2, StmIx, StmIy, &
+                    XcoordsKm, YcoordsKm, Zcoords%vdata, Rval, Pval, Zval) 
+            endif
+
+            ! select if var > threshold
+            if (Filters(i)%Ftype .eq. 'gt') then
+              if (Vars(i)%ndims .eq. 2) then
+                SelectThisPoint = SelectThisPoint .and. &
+                  (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata) .gt. Filters(i)%x1)
+              else
+                SelectThisPoint = SelectThisPoint .and. &
+                  (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata) .gt. Filters(i)%x1)
+              endif
+            endif
+
+            ! select if var >= threshold
+            if (Filters(i)%Ftype .eq. 'ge') then
+              if (Vars(i)%ndims .eq. 2) then
+                SelectThisPoint = SelectThisPoint .and. &
+                  (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata) .ge. Filters(i)%x1)
+              else
+                SelectThisPoint = SelectThisPoint .and. &
+                  (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata) .ge. Filters(i)%x1)
+              endif
+            endif
+
+            ! select if var < threshold
+            if (Filters(i)%Ftype .eq. 'lt') then
+              if (Vars(i)%ndims .eq. 2) then
+                SelectThisPoint = SelectThisPoint .and. &
+                  (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata) .lt. Filters(i)%x1)
+              else
+                SelectThisPoint = SelectThisPoint .and. &
+                  (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata) .lt. Filters(i)%x1)
+              endif
+            endif
+
+            ! select if var <= threshold
+            if (Filters(i)%Ftype .eq. 'le') then
+              if (Vars(i)%ndims .eq. 2) then
+                SelectThisPoint = SelectThisPoint .and. &
+                  (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata) .le. Filters(i)%x1)
+              else
+                SelectThisPoint = SelectThisPoint .and. &
+                  (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata) .le. Filters(i)%x1)
+              endif
+            endif
+
+            ! select if min <= var <= max
+            if (Filters(i)%Ftype .eq. 'range') then
+              if (Vars(i)%ndims .eq. 2) then
+                SelectThisPoint = SelectThisPoint .and. &
+                  ((MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata) .ge. Filters(i)%x1) .and. &
+                   (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata) .le. Filters(i)%x2))
+              else
+                SelectThisPoint = SelectThisPoint .and. &
+                  ((MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata) .ge. Filters(i)%x1) .and. &
+                   (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata) .le. Filters(i)%x2))
+              endif
+            endif
+
+            ! select if min <= abs(var) <= max
+            if (Filters(i)%Ftype .eq. 'abs_range') then
+              if (Vars(i)%ndims .eq. 2) then
+                SelectThisPoint = SelectThisPoint .and. &
+                  ((abs(MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata)) .ge. Filters(i)%x1) .and. &
+                   (abs(MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata)) .le. Filters(i)%x2))
+              else
+                SelectThisPoint = SelectThisPoint .and. &
+                  ((abs(MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata)) .ge. Filters(i)%x1) .and. &
+                   (abs(MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata)) .le. Filters(i)%x2))
+              endif
+            endif
+          enddo
 
           if (SelectThisPoint) then
             call MultiDimAssign(Nx, Ny, Nz, ix, iy, iz, 1.0, Var3d=OutFilter%vdata)
-            if (DoCylVol) then
+            if (DoingCylVol) then
               ! save the radius value
               ! note that this re-writes the same horizontal radius values for each z level
               call MultiDimAssign(Nx, Ny, Nz, ix, iy, iz, Rval, Var2d=Radius%vdata)
@@ -457,16 +467,16 @@ program diag_filter
     enddo
 
     ! Write the filter data, and storm info if doing cylvol selection, to the output file
-    call rhdf5_write_variable(rh5f_out, OutFilter%vname, OutFilter%ndims, it, OutFilter%dims, &
+    call rhdf5_write_variable(OutFileId, OutFilter%vname, OutFilter%ndims, it, OutFilter%dims, &
       OutFilter%units, OutFilter%descrip, OutFilter%dimnames, rdata=OutFilter%vdata)
-    if (DoCylVol) then
-      call rhdf5_write_variable(rh5f_out, Radius%vname, Radius%ndims, it, Radius%dims, &
+    if (DoingCylVol) then
+      call rhdf5_write_variable(OutFileId, Radius%vname, Radius%ndims, it, Radius%dims, &
         Radius%units, Radius%descrip, Radius%dimnames, rdata=Radius%vdata)
-      call rhdf5_write_variable(rh5f_out, MinP%vname, MinP%ndims, it, MinP%dims, &
+      call rhdf5_write_variable(OutFileId, MinP%vname, MinP%ndims, it, MinP%dims, &
         MinP%units, MinP%descrip, MinP%dimnames, rdata=MinP%vdata)
-      call rhdf5_write_variable(rh5f_out, StormX%vname, StormX%ndims, it, StormX%dims, &
+      call rhdf5_write_variable(OutFileId, StormX%vname, StormX%ndims, it, StormX%dims, &
         StormX%units, StormX%descrip, StormX%dimnames, rdata=StormX%vdata)
-      call rhdf5_write_variable(rh5f_out, StormY%vname, StormY%ndims, it, StormY%dims, &
+      call rhdf5_write_variable(OutFileId, StormY%vname, StormY%ndims, it, StormY%dims, &
         StormY%units, StormY%descrip, StormY%dimnames, rdata=StormY%vdata)
     endif
 
@@ -475,7 +485,7 @@ program diag_filter
     if (modulo(it,100) .eq. 0) then
       write (*,*) 'Working: Timestep: ', it
 
-      if (DoCylVol) then
+      if (DoingCylVol) then
         write (*,'(a,i3,a,i3,a,g,a,g,a)') '    Storm Center: (', StmIx, ', ', StmIy, &
          ') --> (', XcoordsKm(StmIx), ', ', YcoordsKm(StmIy), ')'
         write (*,*) '   Minumum pressure: ', MinP%vdata(1)
@@ -509,7 +519,7 @@ program diag_filter
   ! attach the dimension specs to the output variable
   call rhdf5_attach_dimensions(OutFile, OutFilter)
 
-  if (DoCylVol) then
+  if (DoingCylVol) then
     ! Write out the maximum radius value
     call rhdf5_write(OutFile, MaxRadius, 1)
 
@@ -522,22 +532,10 @@ program diag_filter
   endif
 
   ! cleanup
-  call rhdf5_close_file(rh5f_out)
-  if (DoCylVol) then
-    call rhdf5_close_file(rh5f_press)
-  endif
-  if (DoWarm .or. DoCold) then
-    call rhdf5_close_file(rh5f_tempc)
-  endif
-  if (DoVertVel .or. DoAbsVertVel) then
-    call rhdf5_close_file(rh5f_w)
-  endif
-  if (DoCwp .or. DoLwp) then
-    call rhdf5_close_file(rh5f_cwp)
-  endif
-  if (DoRwp .or. DoLwp) then
-    call rhdf5_close_file(rh5f_rwp)
-  endif
+  call rhdf5_close_file(OutFileId)
+  do i = 1, Nfilters
+    call rhdf5_close_file(InFileIds(i))
+  enddo
 
   stop
 
@@ -553,40 +551,28 @@ contains
 ! GetMyArgs()
 !
 
-subroutine GetMyArgs(InDir, InSuffix, OutFile, StringSize, DoCylVol, DoCold, DoWarm, DoVertVel, DoAbsVertVel, DoCwp, DoRwp, DoLwp, MinW, MaxW, WpThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ)
+ subroutine GetMyArgs(Nstr, Nfilt, InDir, InSuffix, OutFile, Mvname, Mfprefix, Filters, NumFilters)
   implicit none
 
-  character (len=*) :: InDir, InSuffix, OutFile
-  integer :: StringSize
-  real :: MinW, MaxW, WpThresh, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ
-  logical :: DoCylVol, DoCold, DoWarm, DoVertVel, DoAbsVertVel, DoCwp, DoRwp, DoLwp
+  integer, parameter :: MaxFields = 15
 
-  integer :: iargc, i, Nargs
-  character (len=StringSize) :: Arg, FilterFunc
+  character (len=Nstr) :: InDir, InSuffix, OutFile, Mvname, Mfprefix
+  integer :: Nstr, Nfilt, NumFilters
+  type (FilterDescrip), dimension(Nfilt) :: Filters
+
+  integer :: iargc, i, j, Nargs, Nfld
+  character (len=Nstr) :: Arg
+  character (len=Nstr), dimension(MaxFields) :: Fields
 
   logical :: BadArgs
 
-  ! set defaults
-  DoCylVol     = .false.
-  DoCold       = .false.
-  DoWarm       = .false.
-  DoVertVel    = .false.
-  DoAbsVertVel = .false.
-  DoCwp        = .false.
-  DoRwp        = .false.
-  DoLwp        = .false.
-  InDir   = ''
+  BadArgs = .false.
+  InDir = ''
   InSuffix = ''
   OutFile = ''
-  MinW      = -999.0
-  MaxW      = -999.0
-  WpThresh = -1.0
-  MinR      = -1.0
-  MaxR      = -1.0
-  MinPhi    = -1.0
-  MaxPhi    = -1.0
-  MinZ      = -1.0
-  MaxZ      = -1.0
+  Mvname = ''
+  Mfprefix = ''
+  NumFilters = 0
 
   ! walk through the list of arguments
   !   see the USAGE string at the end of this routine
@@ -596,7 +582,7 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, StringSize, DoCylVol, DoCold, DoW
   !   third arg --> OutFile
   !
   !   remaining arguments are the filter specs
-  BadArgs      = .false.
+
   i = 1
   Nargs = iargc()
   do while (i .le. Nargs)
@@ -611,192 +597,241 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, StringSize, DoCylVol, DoCold, DoW
     else if (i .eq. 3) then
       OutFile = Arg
       i = i + 1
-    else
-      FilterFunc = Arg
+    else if (i .eq. 4) then
+      call String2List(Arg, ':', Fields, MaxFields, Nfld, 'model spec')
       i = i + 1
 
-      if (FilterFunc .eq. 'cylvol') then
-        DoCylVol = .true.
+      Mvname   = Fields(1)
+      Mfprefix = Fields(2)
+    else
+      call String2List(Arg, ':', Fields, MaxFields, Nfld, 'filter spec')
+      i = i + 1
 
-        if ((i+5) .gt. Nargs) then
-          write (*,*) 'ERROR: not enough arguments (6) left to fully specify the clyvol <filter_spec>'
+      !************
+      !* CYLVOL
+      !************
+      if (Fields(1) .eq. 'cylvol') then
+        NumFilters = NumFilters + 1
+
+        if (Nfld .lt. 9) then
+          write (*,*) 'ERROR: not enough arguments to fully specify the clyvol filter'
           BadArgs = .true.
         else
           ! have enough args
-          call getarg(i, Arg)
-          read(Arg, '(f)') MinR
-          call getarg(i+1, Arg)
-          read(Arg, '(f)') MaxR
-          call getarg(i+2, Arg)
-          read(Arg, '(f)') MinPhi
-          call getarg(i+3, Arg)
-          read(Arg, '(f)') MaxPhi
-          call getarg(i+4, Arg)
-          read(Arg, '(f)') MinZ
-          call getarg(i+5, Arg)
-          read(Arg, '(f)') MaxZ
-          i = i + 6
-    
-          if ((MinR .lt. 0.0) .or. (MaxR .lt. 0.0) .or. (MaxR .le. MinR)) then
-            write (*,*) 'ERROR: <min_r> and <max_r> must be >= 0.0, and <max_r> must be > <min_r>'
-            write (*,*) ''
-            BadArgs = .true.
-          end if
-          if ((MinPhi .lt. 0.0) .or. (MaxPhi .lt. 0.0) .or. (MaxPhi .le. MinPhi)) then
-            write (*,*) 'ERROR: <min_phi> and <max_phi> must be >= 0.0, and <max_phi> must be > <min_phi>'
-            write (*,*) ''
-            BadArgs = .true.
-          end if
-          if ((MinZ .lt. 0.0) .or. (MaxZ .lt. 0.0) .or. (MaxZ .le. MinZ)) then
-            write (*,*) 'ERROR: <min_z> and <max_z> must be >= 0.0, and <max_z> must be > <min_z>'
-            write (*,*) ''
-            BadArgs = .true.
-          end if
-        end if
-      else if (FilterFunc .eq. 'cold') then
-        DoCold = .true.
-      else if (FilterFunc .eq. 'warm') then
-        DoWarm = .true.
-      else if (FilterFunc .eq. 'vertvel') then
-        DoVertVel = .true.
-  
-        if ((i+1) .gt. Nargs) then
-          write (*,*) 'ERROR: not enough arguments (2) left to fully specify the vertvel <filter_spec>'
-          BadArgs = .true.
-        else
-          call getarg(i, Arg)
-          read(Arg, '(f)') MinW
-          call getarg(i+1, Arg)
-          read(Arg, '(f)') MaxW
-          i = i + 2
-    
-          if (MaxW .le. MinW) then
-            write (*,*) 'ERROR: <max_w> must be > <min_w>'
-            write (*,*) ''
-            BadArgs = .true.
-          end if
-        end if
-      else if (FilterFunc .eq. 'absvertvel') then
-        DoAbsVertVel = .true.
-  
-        if ((i+1) .gt. Nargs) then
-          write (*,*) 'ERROR: not enough arguments (2) left to fully specify the absvertvel <filter_spec>'
-          BadArgs = .true.
-        else
-          call getarg(i, Arg)
-          read(Arg, '(f)') MinW
-          call getarg(i+1, Arg)
-          read(Arg, '(f)') MaxW
-          i = i + 2
-    
-          if (MaxW .le. MinW) then
-            write (*,*) 'ERROR: <max_w> must be > <min_w>'
-            write (*,*) ''
-            BadArgs = .true.
-          end if
-        end if
-      else if ((FilterFunc .eq. 'cwp') .or. (FilterFunc .eq. 'rwp') .or. (FilterFunc .eq. 'lwp')) then
-        if (FilterFunc .eq. 'cwp') then
-          DoCwp = .true.
-        else if (FilterFunc .eq. 'rwp') then
-          DoRwp = .true.
-        else
-          DoLwp = .true.
+          Filters(NumFilters)%Ftype    = Fields(1)
+          Filters(NumFilters)%Vname    = Fields(2)
+          Filters(NumFilters)%Vfprefix = Fields(3)
+
+          read(Fields(4), '(f)') Filters(NumFilters)%x1
+          read(Fields(5), '(f)') Filters(NumFilters)%x2
+          read(Fields(6), '(f)') Filters(NumFilters)%y1
+          read(Fields(7), '(f)') Filters(NumFilters)%y2
+          read(Fields(8), '(f)') Filters(NumFilters)%z1
+          read(Fields(9), '(f)') Filters(NumFilters)%z2
         endif
-  
-        if (i .gt. Nargs) then
-          write (*,*) 'ERROR: not enough arguments (1) left to fully specify <filter_spec> for cwp, rwp or lwp'
+
+        if ((Filters(NumFilters)%x1 .lt. 0.0) .or. (Filters(NumFilters)%x2 .lt. 0.0) .or. (Filters(NumFilters)%x2 .le. Filters(NumFilters)%x1)) then
+          write (*,*) 'ERROR: <x1> and <x2> must be >= 0.0, and <x2> must be > <x1>'
+          write (*,*) ''
+          BadArgs = .true.
+        end if
+        if ((Filters(NumFilters)%y1 .lt. 0.0) .or. (Filters(NumFilters)%y2 .lt. 0.0) .or. (Filters(NumFilters)%y2 .le. Filters(NumFilters)%y1)) then
+          write (*,*) 'ERROR: <y1> and <y2> must be >= 0.0, and <y2> must be > <y1>'
+          write (*,*) ''
+          BadArgs = .true.
+        end if
+        if ((Filters(NumFilters)%z1 .lt. 0.0) .or. (Filters(NumFilters)%z2 .lt. 0.0) .or. (Filters(NumFilters)%z2 .le. Filters(NumFilters)%z1)) then
+          write (*,*) 'ERROR: <z1> and <z2> must be >= 0.0, and <z2> must be > <z1>'
+          write (*,*) ''
+          BadArgs = .true.
+        end if
+      !************
+      !* GE
+      !************
+      else if (Fields(1) .eq. 'ge') then
+        NumFilters = NumFilters + 1
+
+        if (Nfld .lt. 4) then
+          write (*,*) 'ERROR: not enough arguments to fully specify the ge filter'
           BadArgs = .true.
         else
-          call getarg(i, Arg)
-          read(Arg, '(f)') WpThresh
-          i = i + 1
-  
-          if (WpThresh .lt. 0.0) then
-            write (*,*) 'ERROR: <wp_thresh> must be >= 0.0'
-            write (*,*) ''
-            BadArgs = .true.
-          end if
-        end if
+          ! have enough args
+          Filters(NumFilters)%Ftype    = Fields(1)
+          Filters(NumFilters)%Vname    = Fields(2)
+          Filters(NumFilters)%Vfprefix = Fields(3)
+
+          read(Fields(4),  '(f)') Filters(NumFilters)%x1
+          Filters(NumFilters)%x2 = 0
+          Filters(NumFilters)%y1 = 0
+          Filters(NumFilters)%y2 = 0
+          Filters(NumFilters)%z1 = 0
+          Filters(NumFilters)%z2 = 0
+        endif
+      !************
+      !* GT
+      !************
+      else if (Fields(1) .eq. 'gt') then
+        NumFilters = NumFilters + 1
+
+        if (Nfld .lt. 4) then
+          write (*,*) 'ERROR: not enough arguments to fully specify the gt filter'
+          BadArgs = .true.
+        else
+          ! have enough args
+          Filters(NumFilters)%Ftype    = Fields(1)
+          Filters(NumFilters)%Vname    = Fields(2)
+          Filters(NumFilters)%Vfprefix = Fields(3)
+
+          read(Fields(4),  '(f)') Filters(NumFilters)%x1
+          Filters(NumFilters)%x2 = 0
+          Filters(NumFilters)%y1 = 0
+          Filters(NumFilters)%y2 = 0
+          Filters(NumFilters)%z1 = 0
+          Filters(NumFilters)%z2 = 0
+        endif
+      !************
+      !* LE
+      !************
+      else if (Fields(1) .eq. 'le') then
+        NumFilters = NumFilters + 1
+
+        if (Nfld .lt. 4) then
+          write (*,*) 'ERROR: not enough arguments to fully specify the le filter'
+          BadArgs = .true.
+        else
+          ! have enough args
+          Filters(NumFilters)%Ftype    = Fields(1)
+          Filters(NumFilters)%Vname    = Fields(2)
+          Filters(NumFilters)%Vfprefix = Fields(3)
+
+          read(Fields(4),  '(f)') Filters(NumFilters)%x1
+          Filters(NumFilters)%x2 = 0
+          Filters(NumFilters)%y1 = 0
+          Filters(NumFilters)%y2 = 0
+          Filters(NumFilters)%z1 = 0
+          Filters(NumFilters)%z2 = 0
+        endif
+      !************
+      !* LT
+      !************
+      else if (Fields(1) .eq. 'lt') then
+        NumFilters = NumFilters + 1
+
+        if (Nfld .lt. 4) then
+          write (*,*) 'ERROR: not enough arguments to fully specify the lt filter'
+          BadArgs = .true.
+        else
+          ! have enough args
+          Filters(NumFilters)%Ftype    = Fields(1)
+          Filters(NumFilters)%Vname    = Fields(2)
+          Filters(NumFilters)%Vfprefix = Fields(3)
+
+          read(Fields(4),  '(f)') Filters(NumFilters)%x1
+          Filters(NumFilters)%x2 = 0
+          Filters(NumFilters)%y1 = 0
+          Filters(NumFilters)%y2 = 0
+          Filters(NumFilters)%z1 = 0
+          Filters(NumFilters)%z2 = 0
+        endif
+      !************
+      !* RANGE
+      !************
+      else if (Fields(1) .eq. 'range') then
+        NumFilters = NumFilters + 1
+
+        if (Nfld .lt. 5) then
+          write (*,*) 'ERROR: not enough arguments to fully specify the range filter'
+          BadArgs = .true.
+        else
+          ! have enough args
+          Filters(NumFilters)%Ftype    = Fields(1)
+          Filters(NumFilters)%Vname    = Fields(2)
+          Filters(NumFilters)%Vfprefix = Fields(3)
+
+          read(Fields(4),  '(f)') Filters(NumFilters)%x1
+          read(Fields(5),  '(f)') Filters(NumFilters)%x2
+          Filters(NumFilters)%y1 = 0
+          Filters(NumFilters)%y2 = 0
+          Filters(NumFilters)%z1 = 0
+          Filters(NumFilters)%z2 = 0
+        endif
+      !************
+      !* ABS_RANGE
+      !************
+      else if (Fields(1) .eq. 'abs_range') then
+        NumFilters = NumFilters + 1
+
+        if (Nfld .lt. 5) then
+          write (*,*) 'ERROR: not enough arguments to fully specify the abs_range filter'
+          BadArgs = .true.
+        else
+          ! have enough args
+          Filters(NumFilters)%Ftype    = Fields(1)
+          Filters(NumFilters)%Vname    = Fields(2)
+          Filters(NumFilters)%Vfprefix = Fields(3)
+
+          read(Fields(4),  '(f)') Filters(NumFilters)%x1
+          read(Fields(5),  '(f)') Filters(NumFilters)%x2
+          Filters(NumFilters)%y1 = 0
+          Filters(NumFilters)%y2 = 0
+          Filters(NumFilters)%z1 = 0
+          Filters(NumFilters)%z2 = 0
+        endif
       else
-        write (*,*) 'ERROR: <filter>, ', trim(FilterFunc), ', must be one of:'
+        write (*,*) 'ERROR: <ftype>, ', trim(Fields(1)), ', must be one of:'
         write (*,*) '          cylvol'
-        write (*,*) '          cold'
-        write (*,*) '          warm'
-        write (*,*) '          vertvel'
-        write (*,*) '          absvertvel'
-        write (*,*) '          cwp'
-        write (*,*) '          rwp'
-        write (*,*) '          lwp'
+        write (*,*) '          ge'
+        write (*,*) '          gt'
+        write (*,*) '          le'
+        write (*,*) '          lt'
+        write (*,*) '          range'
+        write (*,*) '          abs_range'
         write (*,*) ''
         BadArgs = .true.
       endif
     endif
   enddo
-
-  if ((.not.DoCylVol) .and. (.not.DoCold) .and. (.not.DoWarm) &
-       .and. (.not.DoVertVel) .and. (.not.DoAbsVertVel) &
-       .and. (.not.DoCwp) .and. (.not.DoRwp) .and. (.not.DoLwp)) then
+  
+  if (NumFilters .eq. 0) then
     write (*,*) 'ERROR: must specify at least one <filter_spec>'
     write (*,*) ''
     BadArgs = .true.
   endif
 
-  if (DoCold .and. DoWarm) then
-    write (*,*) 'ERROR: cannot specify both cold and warm <filter_spec>'
-    write (*,*) ''
-    BadArgs = .true.
-  end if
-
-  if (DoVertVel .and. DoAbsVertVel) then
-    write (*,*) 'ERROR: cannot specify both vertvel and absvertvel <filter_spec>'
-    write (*,*) ''
-    BadArgs = .true.
-  end if
-
-  if ((DoCwp .and. DoRwp) .or. (DoCwp .and. DoLwp) .or. (DoRwp .and. DoLwp)) then
-    write (*,*) 'ERROR: cannot specify more than one of "cwp", "rwp", or "lwp"'
-    write (*,*) ''
-    BadArgs = .true.
-  endif
-
   if (BadArgs) then
-    write (*,*) 'USAGE: diag_filter <in_dir> <in_suffix> <out_data_files> <filter_spec> [<filter_spec>...]'
+    write (*,*) 'USAGE: diag_filter <in_dir> <in_suffix> <out_file> <var3d_model> <filter_spec> [<filter_spec>...]'
     write (*,*) '        <in_dir>: directory containing input files'
     write (*,*) '        <in_suffix>: suffix to tag onto the end of input file names'
     write (*,*) '           Note: input file names become: <in_dir>/<var_name><in_suffix>'
     write (*,*) '        <out_file>: output hdf5 file name'
-    write (*,*) '        <filter_spec>: <filter> <filter_args>'
+    write (*,*) '        <var3d_model>: <vname>:<vfprefix>'
+    write (*,*) '            <vname>: hdf5 file name of variable that will serve as a model (same dimensions)'
+    write (*,*) '                     for the filter output'
+    write (*,*) '            <vfprefix>: file name prefix (goes with <in_suffix> to form the whole file name)' 
+    write (*,*) '        <filter_spec>: <ftype>:<vname>:<vfprefix>:<vdim>:<x1>:<x2>:<y1>:<y2>:<z1>:<z2>'
     write (*,*) ''
-    write (*,*) '        <filter> <filter_args>:'
-    write (*,*) '            cylvol <min_r> <max_r> <min_phi> <max_phi> <min_z> <max_z> <aux_file>'
-    write (*,*) '                Select data within a cylindrical (r,phi,z) volume centered on the storm center'
-    write (*,*) '                  <min_r> <max_r> (in km)'
-    write (*,*) '                  <max_phi> <max_phi> (in radians)'
-    write (*,*) '                  <min_z> <max_z> (in m)'
+    write (*,*) '            <ftype>:'
+    write (*,*) '                gt: select point if value >  <x1>'
+    write (*,*) '                ge: select point if value >= <x1>'
+    write (*,*) '                lt: select point if value <  <x1>'
+    write (*,*) '                le: select point if value <= <x1>'
+    write (*,*) '                range: select point if <x1> <= value <= <x2>'
+    write (*,*) '                abs_range: select point if <x1> <= abs(value) <= <x2>'
+    write (*,*) '                cylvol: select point if it is located within a cylindrical volume'
+    write (*,*) '                   <x1> -> minimum radius (in km)'
+    write (*,*) '                   <x2> -> maximum radius (in km)'
+    write (*,*) '                   <y1> -> minimum angle (phi, in radians)'
+    write (*,*) '                   <y2> -> maximum angle (phi, in radians)'
+    write (*,*) '                   <z1> -> minimum height (in m)'
+    write (*,*) '                   <z2> -> maximum height (in m)'
     write (*,*) ''
-    write (*,*) '                  <aux_file>: name of file to dump auxillary data into (r,phi,z for'
-    write (*,*) '                              each point in field, plus storm center location and'
-    write (*,*) '                              min pressure'
-    write (*,*) '            cold'
-    write (*,*) '                Select data within regions where T <= 0 deg C'
-    write (*,*) '            warm'
-    write (*,*) '                Select data within regions where T > 0 deg C'
-    write (*,*) '            vertvel <min_w> <max_w>'
-    write (*,*) '                Select data within regions where <min_w> <= w <= <max_w>'
-    write (*,*) '                  <min_w> and <max_w> in m/s'
-    write (*,*) '            absvertvel <min_w> <max_w>'
-    write (*,*) '                Select data within regions where <min_w> <= |w| <= <max_w>'
-    write (*,*) '            cwp <wp_thresh>'
-    write (*,*) '                Select data within regions where column integrated cloud water (cwp) >= <wp_thresh>'
-    write (*,*) '            rwp <wp_thresh>'
-    write (*,*) '                Select data within regions where column integrated rain water (rwp) >= <wp_thresh>'
-    write (*,*) '            lwp <wp_thresh>'
-    write (*,*) '                Select data within regions where column integrated cloud + rain water (lwp) >= <wp_thresh>'
+    write (*,*) '            <vname>: name of variable inside HDF5 file'
+    write (*,*) '            <vfprefix>: file name prefix (goes with <in_suffix> to form the whole file name)' 
+    write (*,*) '            <vdim>: dimensionality of input variable ("2d" or "3d")'
     write (*,*) ''
     write (*,*) '        Note that more than one <filter_spec> can be specified. When this is done the data selection'
-    write (*,*) '        becomes the intersection of all the filter specs. Eg., specifying both cylvol and cold'
-    write (*,*) '        will select only the data that is both inside the cylindrical volume and in regions <= 0 deg C'
+    write (*,*) '        becomes the intersection of all the filter specs. Eg., specifying both cylvol and tempc less that or equal '
+    write (*,*) '        to zero will select only the data that is both inside the cylindrical volume and in regions <= 0 deg C'
     write (*,*) ''
 
     stop
