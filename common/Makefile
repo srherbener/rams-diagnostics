@@ -7,11 +7,13 @@ DEST = $(HOME)/etc/matlab
 SCRIPTS = $(DEST)/AdiffEofPlot.m \
           $(DEST)/AzavgDiffEof.m \
           $(DEST)/GenAdiffEofPlots.m \
+          $(DEST)/GenCfad.m \
           $(DEST)/GenHistMeas.m \
           $(DEST)/GenTsPlots.m \
           $(DEST)/Line2Fields.m \
           $(DEST)/ReadConfig.m \
           $(DEST)/ReadAzavgVar.m \
+          $(DEST)/ReduceHists.m \
           $(DEST)/RunAzavgDiffEof.m \
           $(DEST)/SmoothFillTseries.m \
           $(DEST)/PlotProfSet.m \

@@ -50,6 +50,7 @@ i_case = 0;
 i_tdir = 0;
 i_aeof = 0;
 i_hmeas = 0;
+i_cfad = 0;
 i_aeofplot = 0;
 i_tsplot = 0;
 i_dplot = 0;
@@ -107,6 +108,17 @@ for i = 1:size(InLines,1)
       Cdata.Hmeas(i_hmeas).InDir   = Fields{3};
       Cdata.Hmeas(i_hmeas).Fprefix = Fields{4};
       Cdata.Hmeas(i_hmeas).Rvar    = Fields{5};
+      Cdata.Hmeas(i_hmeas).Method  = Fields{6};
+    case 'Cfad:'
+      i_cfad = i_cfad + 1;
+      Cdata.Cfad(i_cfad).Name    = Fields{2};
+      Cdata.Cfad(i_cfad).InDir   = Fields{3};
+      Cdata.Cfad(i_cfad).Fprefix = Fields{4};
+      Cdata.Cfad(i_cfad).Rvar    = Fields{5};
+      Cdata.Cfad(i_cfad).Rmin    = sscanf(Fields{6}, '%f');
+      Cdata.Cfad(i_cfad).Rmax    = sscanf(Fields{7}, '%f');
+      Cdata.Cfad(i_cfad).Tmin    = sscanf(Fields{8}, '%f');
+      Cdata.Cfad(i_cfad).Tmax    = sscanf(Fields{9}, '%f');
     case 'TsPlotSpecs:'
       Cdata.TsPlotSpecs.Ntsteps      = sscanf(Fields{2}, '%d');
       Cdata.TsPlotSpecs.Tstart       = sscanf(Fields{3}, '%f');
