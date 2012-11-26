@@ -7,8 +7,8 @@ DEST = $(HOME)/etc/matlab
 SCRIPTS = $(DEST)/AdiffEofPlot.m \
           $(DEST)/AzavgDiffEof.m \
           $(DEST)/GenAdiffEofPlots.m \
-          $(DEST)/GenCfad.m \
           $(DEST)/GenHistMeas.m \
+          $(DEST)/GenProfMeas.m \
           $(DEST)/GenTsPlots.m \
           $(DEST)/Line2Fields.m \
           $(DEST)/ReadConfig.m \

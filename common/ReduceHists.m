@@ -1,13 +1,13 @@
 function [ Hreduced ] = ReduceHists( Hdata, Hdim, Bins, Method )
 % ReduceHists reduces histogram bins to a single number
 %
-% Method: 1 - weighted mean
-%         2 - max
-%         3 - center of mass
+% Method: 'wtmean' - weighted mean
+%         'max'    - max
+%         'com'    - center of mass
 %
 
 switch Method
-    case 1
+    case 'wtmean'
         % Weighted mean
         
         % Want to form the average of the bin values weighted by their
@@ -61,7 +61,7 @@ switch Method
         SUM_C = squeeze(sum(Hdata, Hdim));
         Hreduced = SUM_BC ./ SUM_C;
 
-    case 2
+    case 'max'
         % Max value
         %
         % Create an array that contains ones where there are non zero
@@ -81,7 +81,7 @@ switch Method
         [ MAXC_V, MAXC_I ] = max(Hdata, [], Hdim);
         Hreduced = squeeze(Bins(MAXC_I));
         Hreduced = Hreduced .* HAVE_COUNTS;
-    case 3
+    case 'com'
         % Center of mass
         %
         % Create an array that contains ones where there are non zero
@@ -121,7 +121,7 @@ switch Method
         Hreduced = Hreduced .* HAVE_COUNTS;
         
     otherwise
-        fprintf('WARNING: ReduceHists: Unrecognized reduction method: %d\n', Method);
+        fprintf('WARNING: ReduceHists: Unrecognized reduction method: %s\n', Method);
         fprintf('WARNING:              Setting output to all nans\n');
         Hreduced = nan(size(Hdata));
 end

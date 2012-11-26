@@ -32,11 +32,11 @@ for iplot = 1:length(Config.ProfPlots)
     if (strcmp(Config.ProfPlots(iplot).Type, 'diff'))
       Case = Config.ControlCase;
       Hfile = sprintf('%s/%s_%s.h5', Ddir, Fprefix, Case);
+      Hdset = sprintf('/Prof_%s', Var);
       fprintf('Reading Control Case: %s\n', Case);
-      fprintf('  HDF5 file: %s\n', Hfile);
-      CFAD_CNTL = squeeze(hdf5read(Hfile, Var));
+      fprintf('  HDF5 file: %s, dataset: %s\n', Hfile, Hdset);
+      PROF_CNTL = squeeze(hdf5read(Hfile, Hdset));
       BINS = hdf5read(Hfile, 'Bins');
-      [ PROF_CNTL ] = ReduceHists(CFAD_CNTL, 1, BINS, 1);
     end
 
     Ptitle = sprintf('%s: %s', Pname, Config.ProfPlots(iplot).Title);
@@ -69,11 +69,11 @@ for iplot = 1:length(Config.ProfPlots)
         % Var is organized (b,z) in the file (CFAD).
         % Bins holds the bin values, Height holds the z values.
         Hfile = sprintf('%s/%s_%s.h5', Ddir, Fprefix, Case);
-        fprintf('Reading HDF5 file: %s\n', Hfile);
-        CFAD_EXP = squeeze(hdf5read(Hfile, Var));
+        Hdset = sprintf('/Prof_%s', Var);
+        fprintf('  HDF5 file: %s, dataset: %s\n', Hfile, Hdset);
+        PROF_EXP = squeeze(hdf5read(Hfile, Hdset));
         BINS = hdf5read(Hfile, 'Bins');
         Z = hdf5read(Hfile, 'Height')/1000; % km
-        [ PROF_EXP ] = ReduceHists(CFAD_EXP, 1, BINS, 1);
 
         % Trim off the selected z range from the lhv data
         % Each profile goes into a row of LHV

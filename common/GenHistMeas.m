@@ -47,21 +47,7 @@ for icase = 1:length(Config.Cases)
     HIST = hdf5read(InFile, Hdset);
 
     % ReduceHists( Hdata, Hdim, Bins, Method)
-    %   Method: 1 - weight mean
-    %           2 - max
-    %           3 - center of mass
-    switch Method
-      case 'wtmean'
-        [ HMEAS ] = ReduceHists(HIST, 2, B, 1);
-      case 'max'
-        [ HMEAS ]   = ReduceHists(HIST, 2, B, 2);
-      case 'com'
-        [ HMEAS ]   = ReduceHists(HIST, 2, B, 3);
-      otherwise
-        fprintf('WARNING: Unrecongnized measurement method: %s\n', Method);
-        fprintf('WARNING:   skipping this case\n');
-        continue;
-    end
+    [ HMEAS ] = ReduceHists(HIST, 2, B, Method);
 
     fprintf('Writing file: %s\n', OutFile);
     fprintf('\n');
