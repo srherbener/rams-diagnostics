@@ -12,7 +12,7 @@ AzavgDir = Config.AzavgDir;
 PlotDir = Config.PlotDir;
 
 Stime = 24; % experiment start time
-Ptime = 144; % plot time - end of sims
+Ptime = 120; % plot time - far enough out to see the size change
 
 % limit view into plot
 Zmin = 0;
