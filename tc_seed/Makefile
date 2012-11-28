@@ -15,6 +15,7 @@ SCRIPTS = $(DEST)/GenKeVtPlots.m \
           $(DEST)/PlotProfs.m \
           $(DEST)/PlotSampleCcnProfile.m \
           $(DEST)/PlotThetaE.m \
+          $(DEST)/PlotTsProfs.m \
           $(DEST)/PlotVt.m \
           $(DEST)/SetPath.m
 

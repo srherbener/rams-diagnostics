@@ -58,6 +58,7 @@ i_2dplot = 0;
 i_hmp3d = 0;
 i_hmslice = 0;
 i_pplot = 0;
+i_pts_plot = 0;
 i_pset = 0;
 for i = 1:size(InLines,1)
   % Convert a line to a list of space separated fields
@@ -230,6 +231,19 @@ for i = 1:size(InLines,1)
       Cdata.ProfPlots(i_pplot).Zmin    = sscanf(Fields{11}, '%f');
       Cdata.ProfPlots(i_pplot).Zmax    = sscanf(Fields{12}, '%f');
       Cdata.ProfPlots(i_pplot).OutFile = Fields{13};
+    case 'ProfTsPlot:'
+      i_pts_plot = i_pts_plot + 1;
+      Cdata.ProfTsPlots(i_pts_plot).PSname      = Fields{2};
+      Cdata.ProfTsPlots(i_pts_plot).Fprefix     = Fields{3};
+      Cdata.ProfTsPlots(i_pts_plot).Var         = Fields{4};
+      Cdata.ProfTsPlots(i_pts_plot).Title       = regexprep(Fields{5}, '_', ' ');
+      Cdata.ProfTsPlots(i_pts_plot).Tlabel      = regexprep(Fields{6}, '_', ' ');
+      Cdata.ProfTsPlots(i_pts_plot).Zlabel      = regexprep(Fields{7}, '_', ' ');
+      Cdata.ProfTsPlots(i_pts_plot).Cmin        = sscanf(Fields{8}, '%f');
+      Cdata.ProfTsPlots(i_pts_plot).Cmax        = sscanf(Fields{9}, '%f');
+      Cdata.ProfTsPlots(i_pts_plot).Zmin        = sscanf(Fields{10}, '%f');
+      Cdata.ProfTsPlots(i_pts_plot).Zmax        = sscanf(Fields{11}, '%f');
+      Cdata.ProfTsPlots(i_pts_plot).OutFileBase = Fields{12};
     case 'AzavgEofPlot:'
       i_aeofplot = i_aeofplot + 1;
       Cdata.AzavgEofPlots(i_aeofplot).Var   = Fields{2};
@@ -313,6 +327,24 @@ if (isfield(Cdata, 'ProfPlots'))
   
     if (Match == 0)
       fprintf('WARNING: Could not find a match for PlotSet "%s" specified in ProfPlot number %d\n', Cdata.ProfPlots(itp).PSname, itp);
+    end
+  end
+end
+
+% Make the association between ProfTsPlots and the PlotSets
+if (isfield(Cdata, 'ProfTsPlots'))
+  for itp = 1:length(Cdata.ProfTsPlots)
+    PlotSetName = Cdata.ProfTsPlots(itp).PSname;
+    Match = 0;
+    for ips = 1:length(Cdata.PlotSets)
+      if (strcmp(Cdata.PlotSets(ips).Name, PlotSetName))
+        Match = ips;
+      end
+    end
+    Cdata.ProfTsPlots(itp).PSnum = Match;
+  
+    if (Match == 0)
+      fprintf('WARNING: Could not find a match for PlotSet "%s" specified in ProfTsPlot number %d\n', Cdata.ProfTsPlots(itp).PSname, itp);
     end
   end
 end
