@@ -39,7 +39,6 @@ for icase = 1:length(Config.Cases)
     Units   = Config.HmeasPlot3d(ihmplot).Units;
     Descrip = Config.HmeasPlot3d(ihmplot).Descrip;
     Ptype   = Config.HmeasPlot3d(ihmplot).Ptype;
-    Vtype   = Config.HmeasPlot3d(ihmplot).Vtype;
 
     Rmin = Config.HmeasPlot3d(ihmplot).Rmin;
     Rmax = Config.HmeasPlot3d(ihmplot).Rmax;
@@ -73,7 +72,7 @@ for icase = 1:length(Config.Cases)
     % Read in the histogram data. HDATA will be organized as (r,z) where
     %    r --> radius
     %    z --> heights
-    Hdset = sprintf('/%s_%s', Vname, Vtype);
+    Hdset = sprintf('/%s', Vname);
     fprintf('Reading file: %s, Dataset: %s\n', InFile, Hdset);
     fprintf('\n');
     R = hdf5read(InFile, '/x_coords') / 1000; % km
@@ -85,7 +84,7 @@ for icase = 1:length(Config.Cases)
     % the temperature file
     if (Flevel == 1)
       InFile = sprintf('%s/hmeas_%s_%s.h5', InDir, TempFile, Case);
-      Hdset = sprintf('/%s_%s', TempVar, Vtype);
+      Hdset = sprintf('/%s', TempVar);
       fprintf('Reading file: %s, Dataset: %s\n', InFile, Hdset);
       fprintf('\n');
       TEMP = hdf5read(InFile, Hdset) / 1000; % km
@@ -94,7 +93,7 @@ for icase = 1:length(Config.Cases)
     % If doing a 'diff' plot, read in the control data
     if (strcmp(Ptype, 'diff'))
       InFile = sprintf('%s/hmeas_%s_%s.h5', InDir, Fprefix, ControlCase);
-      Hdset = sprintf('/%s_%s', Vname, Vtype);
+      Hdset = sprintf('/%s', Vname);
       fprintf('Reading file: %s, Dataset: %s\n', InFile, Hdset);
       fprintf('\n');
       CNTL_HDATA = hdf5read(InFile, Hdset);
