@@ -10,6 +10,13 @@ Pname   = Config.ExpName;
 Ddir = Config.DiagDir;
 Pdir = Config.PlotDir;
 
+% Grab the colormap
+Fig = figure;
+DefCmap = colormap;
+close(Fig);
+
+Fsize = 20;
+
 % Find and replace underscores in Ptitle, Ylabel with blank spaces
 for iplot = 1:length(Config.ProfTsPlots)
     clear Profs;
@@ -24,6 +31,9 @@ for iplot = 1:length(Config.ProfTsPlots)
     Cmax = Config.ProfTsPlots(iplot).Cmax;
     Zmin = Config.ProfTsPlots(iplot).Zmin;
     Zmax = Config.ProfTsPlots(iplot).Zmax;
+
+    % plot specs
+    Pspec = Config.ProfTsPlots(iplot).Pspec;
 
     Ptitle = sprintf('%s: %s', Pname, Config.ProfTsPlots(iplot).Title);
     Tlabel = Config.ProfTsPlots(iplot).Tlabel;
@@ -62,9 +72,31 @@ for iplot = 1:length(Config.ProfTsPlots)
         PtitleCase = sprintf('%s: %s', Ptitle, regexprep(Case, '_', '-'));
         Fig = figure;
 
-        contourf(T, Zvals, Pdata);
+        cmap = DefCmap;
+        if (strcmp(Pspec, 'min_white'))
+          % change first entry (min value) to white
+          cmap(1,:) = [ 1 1 1 ];
+        end
+        if (strcmp(Pspec, 'max_white'))
+          % change last entry (max value) to white
+          cmap(end,:) = [ 1 1 1 ];
+        end
+
+        CF = contourf(T, Zvals, Pdata);
+        if (length(CF(:)) == 0)
+          fprintf('WARNING: Constant Zdata - attempting to render a constant value contour plot\n');
+          % change the first value so that data is not constant
+          % pick a value that will hopefully map to the same color as the rest of the map
+          %   matlab tries to split into 20 contour levels by default so pick a value that
+          %   will likely not jump an adjacent contour level
+          Pdata(1) = Pdata(1) + (Cmax - Cmin)/200;
+          contourf(T, Zvals, Pdata);
+        end
+        set(gca, 'FontSize', Fsize)
+        colormap(cmap);
         shading flat;
-        colorbar;
+        cbar = colorbar;
+        set(cbar, 'FontSize', Fsize)
         caxis([ Cmin Cmax ]);
         title(PtitleCase);
         xlabel(Tlabel);
