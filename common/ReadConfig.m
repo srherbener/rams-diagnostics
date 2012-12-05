@@ -145,15 +145,17 @@ for i = 1:size(InLines,1)
     case 'TsavgPlot:'
       i_tsplot = i_tsplot + 1;
       Cdata.TsavgPlots(i_tsplot).PSname  = Fields{2};
-      Cdata.TsavgPlots(i_tsplot).Var     = Fields{3};
-      Cdata.TsavgPlots(i_tsplot).Type    = Fields{4};
-      Cdata.TsavgPlots(i_tsplot).Name    = regexprep(Fields{5}, '_', ' ');
-      Cdata.TsavgPlots(i_tsplot).Units   = regexprep(Fields{6}, '_', ' ');
-      Cdata.TsavgPlots(i_tsplot).Title   = regexprep(Fields{7}, '_', ' ');
-      Cdata.TsavgPlots(i_tsplot).LegLoc  = Fields{8};
-      Cdata.TsavgPlots(i_tsplot).Ymin    = sscanf(Fields{9},  '%f');
-      Cdata.TsavgPlots(i_tsplot).Ymax    = sscanf(Fields{10},  '%f');
-      Cdata.TsavgPlots(i_tsplot).OutFile = Fields{11};
+      Cdata.TsavgPlots(i_tsplot).Fprefix = Fields{3};
+      Cdata.TsavgPlots(i_tsplot).Var     = Fields{4};
+      Cdata.TsavgPlots(i_tsplot).Ptype   = Fields{5};
+      Cdata.TsavgPlots(i_tsplot).Ttype   = Fields{6};
+      Cdata.TsavgPlots(i_tsplot).Name    = regexprep(Fields{7}, '_', ' ');
+      Cdata.TsavgPlots(i_tsplot).Units   = regexprep(Fields{8}, '_', ' ');
+      Cdata.TsavgPlots(i_tsplot).Title   = regexprep(Fields{9}, '_', ' ');
+      Cdata.TsavgPlots(i_tsplot).LegLoc  = Fields{10};
+      Cdata.TsavgPlots(i_tsplot).Ymin    = sscanf(Fields{11},  '%f');
+      Cdata.TsavgPlots(i_tsplot).Ymax    = sscanf(Fields{12},  '%f');
+      Cdata.TsavgPlots(i_tsplot).OutFile = Fields{13};
     case 'DistPlot:'
       i_dplot = i_dplot + 1;
       Cdata.DistPlots(i_dplot).PSname  = Fields{2};

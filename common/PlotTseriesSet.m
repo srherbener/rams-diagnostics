@@ -1,4 +1,4 @@
-function [ ] = PlotTseriesSet2( Times, Ts, Ptitle, Ylim, Ylabel, StartTime, Tticks, Tlabels, Tunits, Lcolors, LegText, LegLoc, OutFile )
+function [ ] = PlotTseriesSet2( Times, Ts, Ptitle, Ylim, Ylabel, StartTime, Ttype, Tticks, Tlabels, Tunits, Lcolors, LegText, LegLoc, OutFile )
 %PlotTseriesSet2 Plot a set of time series on the same panel
 %   This function will take data contained in Ts and plot them on a single
 %   panel.
@@ -19,7 +19,14 @@ FontSz = 20;
 
 Nts = size(Ts,1);
 
-Xlabel = sprintf('Local Time, Starting at %s', StartTime);
+switch Ttype
+  case 'localtime'
+    Xlabel = sprintf('Local Time, Starting at %s', StartTime);
+  case 'simtime'
+    Xlabel = sprintf('Simulation Time (%s)', Tunits);
+  otherwise
+    Xlabel = sprintf('Time (%s)', Tunits);
+end
 
 % Need to establish an axis style before calling "hold on" (for the
 % subsequent plots). Plot the first hist outside the loop, issue a "hold
@@ -27,8 +34,10 @@ Xlabel = sprintf('Local Time, Starting at %s', StartTime);
 
 plot(Times, Ts(1,:), 'Color', char(Lcolors(1)), 'LineWidth', Lwidth);
 set(gca, 'FontSize', FontSz);
-set(gca, 'XTick', Tticks);
-set(gca, 'XTickLabel', Tlabels);
+if (Tticks(1) > 0)
+  set(gca, 'XTick', Tticks);
+  set(gca, 'XTickLabel', Tlabels);
+end
 ylim(Ylim);
 
 hold on;

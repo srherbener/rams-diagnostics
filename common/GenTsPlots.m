@@ -31,20 +31,21 @@ Pdir = Config.PlotDir;
 % For smoothing, length of a running mean
 Flen = 5;
 
-% Generate the time values
-Times = zeros(1,Ntsteps);
-it = 0;
+% Generate the time axis data for 'localtime'
+LTtimes = zeros(1,Ntsteps);
+i_lt = 0;
 for i = 1:Ntsteps
-  % Times will be in hours
-  Times(i) = Tstart + ((i-1)*Tinc);
+  % LTtimes will be in hours
+  LTtimes(i) = Tstart + ((i-1)*Tinc);
 
+  % local time
   if (mod(i-TsStart,TsPeriod) == 0)
-    it = it + 1;
+    i_lt = i_lt + 1;
     % returns day and time strings
-    [ Ds, Ts ] = TimeToString(BT(1), BT(2), BT(3), BT(4), BT(5), BT(6), Times(i));
+    [ Ds, Ts ] = TimeToString(BT(1), BT(2), BT(3), BT(4), BT(5), BT(6), LTtimes(i));
 
-    Tticks(it) = Times(i);
-    Tlabels{it} = sprintf('%s/%s', Ds, Ts);
+    LTticks(i_lt) = LTtimes(i);
+    LTlabels{i_lt} = sprintf('%s/%s', Ds, Ts);
   end
 end
 
@@ -60,11 +61,14 @@ for iplot = 1:length(Config.TsavgPlots)
     clear LegText;
 
     Var = Config.TsavgPlots(iplot).Var;
+    Fprefix = Config.TsavgPlots(iplot).Fprefix;
+    Ptype   = Config.TsavgPlots(iplot).Ptype;
+    Ttype   = Config.TsavgPlots(iplot).Ttype;
 
     % If doing a diff plot, read in the control profile
-    if (strcmp(Config.TsavgPlots(iplot).Type, 'diff'))
+    if (strcmp(Ptype, 'diff'))
       Case = Config.ControlCase;
-      Hfile = sprintf('%s/%s_%s.h5', Tdir, Var, Case);
+      Hfile = sprintf('%s/%s_%s.h5', Tdir, Fprefix, Case);
       fprintf('Reading Control Case: %s\n', Case);
       fprintf('  HDF5 file: %s\n', Hfile);
       TC_CNTL = squeeze(hdf5read(Hfile, Var));
@@ -91,16 +95,18 @@ for iplot = 1:length(Config.TsavgPlots)
         Case = Config.PlotSets(ips).Cases(icase).Cname;
         LegText(icase) = { Config.PlotSets(ips).Cases(icase).Legend };
 
-        Hfile = sprintf('%s/%s_%s.h5', Tdir, Var, Case);
+        Hfile = sprintf('%s/%s_%s.h5', Tdir, Fprefix, Case);
         fprintf('Reading HDF5 file: %s\n', Hfile);
         TS = squeeze(hdf5read(Hfile, Var));
+        T = squeeze(hdf5read(Hfile, '/t_coords')) / 3600; % hrs
         if (strcmp(Case, Config.ControlCase))
           % pick out the corresponding time steps
           TS = TS(T1_Cntl:T2_Cntl);
+          T = T(T1_Cntl:T2_Cntl);
         end
         
         % If doing a diff type plot, subtract off the control values
-        if (strcmp(Config.TsavgPlots(iplot).Type, 'diff'))
+        if (strcmp(Ptype, 'diff'))
           TS = TS - TS_CNTL;
         end
 
@@ -108,7 +114,24 @@ for iplot = 1:length(Config.TsavgPlots)
         [ TsAll(icase,:) ] = SmoothFillTseries(TS, Ntsteps, Flen);
       end
     end
-    
-    PlotTseriesSet( Times, TsAll, Ptitle, Ylim, Ylabel, StartTime, Tticks, Tlabels, Tunits, Lcolors, LegText, LegLoc, OutFile );
+    fprintf('\n');
+
+    switch Ttype
+      case 'localtime'
+        Times = LTtimes;
+        Tticks = LTticks;
+        Tlabels = LTlabels;
+      case 'simtime'
+        Times = T;
+        Tticks = find(mod(1:T(end), 20) == 0);
+        Tlabels = Tticks;
+      otherwise
+        Times = T;
+        Tticks(1) = -999; % flags PlotTseriesSet to not use this and Tlabels arrays
+        Tlabels{1} = '';
+    end
+
+    fprintf('Writing HDF5 file: %s\n', OutFile);
+    PlotTseriesSet( Times, TsAll, Ptitle, Ylim, Ylabel, StartTime, Ttype, Tticks, Tlabels, Tunits, Lcolors, LegText, LegLoc, OutFile );
     fprintf('\n');
 end
