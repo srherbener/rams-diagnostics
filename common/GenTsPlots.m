@@ -128,7 +128,7 @@ for iplot = 1:length(Config.TsavgPlots)
       otherwise
         Times = T;
         Tticks(1) = -999; % flags PlotTseriesSet to not use this and Tlabels arrays
-        Tlabels{1} = '';
+        Tlabels = { '' };
     end
 
     fprintf('Writing HDF5 file: %s\n', OutFile);
