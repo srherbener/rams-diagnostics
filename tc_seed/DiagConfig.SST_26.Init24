@@ -357,19 +357,25 @@ AzavgEof: w_twp4_SS w_twp4  w  0 250000  0  25000 324000 396000
 # local time. Round to nearest hour (21:00) to make the tick marks come out on even hours.
 TsPlotSpecs: 121 0 1.0 hr 25 1998:08:22:21:00:00 10 24
 
-# TsavgPlot: <plot_set_name> <var> <type> <name> <units> <title> <legend_loc> <ymin> <ymax> <output_file>
+# TsavgPlot: <plot_set_name> <file_prefix> <var> <plot_type> <time_type> <name> <units> <title> <legend_loc> <ymin> <ymax> <output_file>
+#
+#  <time_type> says what to display on the time axis
+#     simtime -> display simulation time
+#     localtiem -> display local time (day/hour)
 #
 #  '_' get turned to ' ' in <name>, <units>, and <title> so that
 #  these can contain multiple words
 #
 
 ####################### time series plots ############################
-TsavgPlot: ccn5 horiz_ke abs Kinetic_Energy J Total_Horizontal_Kinetic_Energy NorthWest 0.0 2.0e9 TS_horiz_ke.jpg
-TsavgPlot: ccn5 max_azwind abs Tangential_Wind_Speed m/s Maximum_Azimuthally_Averaged_Wind_Speed SouthEast 0.0 60.0 TS_max_azwind.jpg
-#TsavgPlot: ccn5 storm_int abs Intensity_Metric x Storm_Intensity_Metric NorthWest 0.0 0.05 TS_storm_int.jpg
+TsavgPlot: ccn5 horiz_ke horiz_ke abs simtime Kinetic_Energy J Total_Horizontal_Kinetic_Energy NorthWest 0.0 2.0e9 TS_horiz_ke.jpg
+TsavgPlot: ccn5 max_azwind max_azwind abs simtime Tangential_Wind_Speed m/s Maximum_Azimuthally_Averaged_Wind_Speed SouthEast 0.0 60.0 TS_max_azwind.jpg
+TsavgPlot: ccn5 max_azwind rmw abs simtime Radius km Radius_of_Max_Wind NorthEast 0.0 50.0 TS_rmw.jpg
+#TsavgPlot: ccn5 storm_int abs simtime Intensity_Metric x Storm_Intensity_Metric NorthWest 0.0 0.05 TS_storm_int.jpg
 
-TsavgPlot: ccn5_sd horiz_ke abs Kinetic_Energy J Total_Horizontal_Kinetic_Energy NorthWest 0.0 2.0e9 TS_horiz_ke_sd.jpg
-TsavgPlot: ccn5_sd max_azwind abs Tangential_Wind_Speed m/s Maximum_Azimuthally_Averaged_Wind_Speed SouthEast 0.0 60.0 TS_max_azwind_sd.jpg
+TsavgPlot: ccn5_sd horiz_ke horiz_ke abs localtime Kinetic_Energy J Total_Horizontal_Kinetic_Energy NorthWest 0.0 2.0e9 TS_horiz_ke_sd.jpg
+TsavgPlot: ccn5_sd max_azwind max_azwind abs localtime Tangential_Wind_Speed m/s Maximum_Azimuthally_Averaged_Wind_Speed SouthEast 0.0 60.0 TS_max_azwind_sd.jpg
+TsavgPlot: ccn5_sd max_azwind rmw abs localtime Radius km Radius_of_Max_Wind NorthEast 0.0 50.0 TS_rmw_sd.jpg
 
 ####################### 2D plots ############################
 TwoDimPlot: ccn5 max_azwind horiz_ke Storm_Development Max_Vt_(m/s) 1.0 KE_(10^9_J) 1.0e-9 Northwest KeVt.jpg
