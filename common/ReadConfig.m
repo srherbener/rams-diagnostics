@@ -95,14 +95,15 @@ for i = 1:size(InLines,1)
       Cdata.AzavgEofConfig.Nstar    = sscanf(Fields{3}, '%d');
     case 'AzavgEof:'
       i_aeof = i_aeof + 1;
-      Cdata.AzavgEof(i_aeof).Name = Fields{2};
-      Cdata.AzavgEof(i_aeof).Rvar = Fields{3};
-      Cdata.AzavgEof(i_aeof).Rmin = sscanf(Fields{4}, '%f');
-      Cdata.AzavgEof(i_aeof).Rmax = sscanf(Fields{5}, '%f');
-      Cdata.AzavgEof(i_aeof).Zmin = sscanf(Fields{6}, '%f');
-      Cdata.AzavgEof(i_aeof).Zmax = sscanf(Fields{7}, '%f');
-      Cdata.AzavgEof(i_aeof).Tmin = sscanf(Fields{8}, '%f');
-      Cdata.AzavgEof(i_aeof).Tmax = sscanf(Fields{9}, '%f');
+      Cdata.AzavgEof(i_aeof).Name    = Fields{2};
+      Cdata.AzavgEof(i_aeof).Fprefix = Fields{3};
+      Cdata.AzavgEof(i_aeof).Rvar    = Fields{4};
+      Cdata.AzavgEof(i_aeof).Rmin    = sscanf(Fields{5}, '%f');
+      Cdata.AzavgEof(i_aeof).Rmax    = sscanf(Fields{6}, '%f');
+      Cdata.AzavgEof(i_aeof).Zmin    = sscanf(Fields{7}, '%f');
+      Cdata.AzavgEof(i_aeof).Zmax    = sscanf(Fields{8}, '%f');
+      Cdata.AzavgEof(i_aeof).Tmin    = sscanf(Fields{9}, '%f');
+      Cdata.AzavgEof(i_aeof).Tmax    = sscanf(Fields{10}, '%f');
     case 'Hmeas:'
       i_hmeas = i_hmeas + 1;
       Cdata.Hmeas(i_hmeas).Name    = Fields{2};
@@ -247,16 +248,17 @@ for i = 1:size(InLines,1)
       Cdata.ProfTsPlots(i_pts_plot).OutFileBase = Fields{13};
     case 'AzavgEofPlot:'
       i_aeofplot = i_aeofplot + 1;
-      Cdata.AzavgEofPlots(i_aeofplot).Var   = Fields{2};
-      Cdata.AzavgEofPlots(i_aeofplot).Name  = regexprep(Fields{3}, '_', ' ');
-      Cdata.AzavgEofPlots(i_aeofplot).Units = regexprep(Fields{4}, '_', ' ');
-      Cdata.AzavgEofPlots(i_aeofplot).Num   = sscanf(Fields{5},  '%d');
-      Cdata.AzavgEofPlots(i_aeofplot).Clim  = sscanf(Fields{6},  '%f');
-      Cdata.AzavgEofPlots(i_aeofplot).Cinc  = sscanf(Fields{7},  '%f');
-      Cdata.AzavgEofPlots(i_aeofplot).Rmin  = sscanf(Fields{8},  '%f');
-      Cdata.AzavgEofPlots(i_aeofplot).Rmax  = sscanf(Fields{9},  '%f');
-      Cdata.AzavgEofPlots(i_aeofplot).Zmin  = sscanf(Fields{10},  '%f');
-      Cdata.AzavgEofPlots(i_aeofplot).Zmax  = sscanf(Fields{11}, '%f');
+      Cdata.AzavgEofPlots(i_aeofplot).Fprefix = Fields{2};
+      Cdata.AzavgEofPlots(i_aeofplot).Var     = Fields{3};
+      Cdata.AzavgEofPlots(i_aeofplot).Name    = regexprep(Fields{4}, '_', ' ');
+      Cdata.AzavgEofPlots(i_aeofplot).Units   = regexprep(Fields{5}, '_', ' ');
+      Cdata.AzavgEofPlots(i_aeofplot).Num     = sscanf(Fields{6},  '%d');
+      Cdata.AzavgEofPlots(i_aeofplot).Clim    = sscanf(Fields{7},  '%f');
+      Cdata.AzavgEofPlots(i_aeofplot).Cinc    = sscanf(Fields{8},  '%f');
+      Cdata.AzavgEofPlots(i_aeofplot).Rmin    = sscanf(Fields{9},  '%f');
+      Cdata.AzavgEofPlots(i_aeofplot).Rmax    = sscanf(Fields{10}, '%f');
+      Cdata.AzavgEofPlots(i_aeofplot).Zmin    = sscanf(Fields{11},  '%f');
+      Cdata.AzavgEofPlots(i_aeofplot).Zmax    = sscanf(Fields{12}, '%f');
   end
 end
 

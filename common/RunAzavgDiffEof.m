@@ -35,8 +35,9 @@ for icase = 1:length(Config.Cases)
 
       Name = Config.AzavgEof(ieof).Name;
       Vname = Config.AzavgEof(ieof).Rvar;
-      InFile1 = sprintf('%s/%s_%s.h5', Config.AzavgDir, Name, Case);
-      InFile2 = sprintf('%s/%s_%s.h5', Config.AzavgDir, Name, ControlCase);
+      Fprefix = Config.AzavgEof(ieof).Fprefix
+      InFile1 = sprintf('%s/%s_%s.h5', Config.AzavgDir, Fprefix, Case);
+      InFile2 = sprintf('%s/%s_%s.h5', Config.AzavgDir, Fprefix, ControlCase);
       OutFile = sprintf('%s/%s_%s.h5', EofDir, Name, Case);
 
       SelectData = [ Config.AzavgEof(ieof).Rmin Config.AzavgEof(ieof).Rmax Config.AzavgEof(ieof).Zmin Config.AzavgEof(ieof).Zmax Config.AzavgEof(ieof).Tmin Config.AzavgEof(ieof).Tmax ];

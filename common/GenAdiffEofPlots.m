@@ -19,6 +19,7 @@ for icase = 1:length(Config.Cases)
     % Don't run if the case matches the control
     if (~strcmp(Case, ControlCase))
 
+      Fprefix = Config.AzavgEofPlots(ieof).Fprefix;
       Var = Config.AzavgEofPlots(ieof).Var;
       Vname = Config.AzavgEofPlots(ieof).Name;
       Vunits = Config.AzavgEofPlots(ieof).Units;
@@ -44,9 +45,9 @@ for icase = 1:length(Config.Cases)
       fprintf('    Zmax: %.2f\n', Zmax);
       fprintf('\n');
   
-      InFile = sprintf('%s/%s_%s.h5', EofDir, Var, Case);
-      EofOutFile = sprintf('%s/EOF%d_%s_%s.jpg', Config.PlotDir, EofNum, Var, Case);
-      EsOutFile = sprintf('%s/ES%d_%s_%s.jpg', Config.PlotDir, EofNum, Var, Case);
+      InFile = sprintf('%s/%s_%s.h5', EofDir, Fprefix, Case);
+      EofOutFile = sprintf('%s/EOF%d_%s_%s.jpg', Config.PlotDir, EofNum, Fprefix, Case);
+      EsOutFile = sprintf('%s/ES%d_%s_%s.jpg', Config.PlotDir, EofNum, Fprefix, Case);
   
       SelectData = [ Rmin Rmax Zmin Zmax ];
   
