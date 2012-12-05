@@ -33,7 +33,7 @@ program tsavg
   ! Dims: x, y, z, t
   type (Rhdf5Var) :: InXcoords, InYcoords, InZcoords, InTcoords
   type (Rhdf5Var) :: OutXcoords, OutYcoords, OutZcoords, OrigDimSize
-  type (Rhdf5Var) :: U, V, AzWind, Speed10m, Dens, Var, Filter, TserAvg
+  type (Rhdf5Var) :: U, V, AzWind, Speed10m, Dens, Var, Filter, TserAvg, RadMaxWind
   character (len=MediumString) :: Ufile, Vfile, AzWindFile, Speed10mFile, DensFile, VarFile, InCoordFile
   character (len=LittleString) :: VarFprefix
   character (len=LittleString) :: rh5f_facc
@@ -49,6 +49,8 @@ program tsavg
   real :: DeltaX, DeltaY
   real, dimension(:), allocatable :: InXcoordsKm, InYcoordsKm
   logical :: BadDims
+
+  integer :: i_rmw
 
   ! Get the command line arguments
   call GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
@@ -342,6 +344,21 @@ program tsavg
 
   allocate(TserAvg%vdata(TserAvg%dims(1)*TserAvg%dims(2)*TserAvg%dims(3)))
 
+  ! If doing max_azwind, set up the output var for the radius of max wind
+  if (AvgFunc .eq. 'max_azwind') then
+    RadMaxWind%vname = 'rmw'
+    RadMaxWind%descrip = 'time series averaged ' // trim(AvgFunc) 
+    RadMaxWind%units = 'km'
+    RadMaxWind%ndims = 3 
+    RadMaxWind%dimnames(1) = 'x' 
+    RadMaxWind%dimnames(2) = 'y' 
+    RadMaxWind%dimnames(3) = 'z' 
+    RadMaxWind%dims(1) = 1
+    RadMaxWind%dims(2) = 1
+    RadMaxWind%dims(3) = 1
+    allocate(RadMaxWind%vdata(RadMaxWind%dims(1)*RadMaxWind%dims(2)*RadMaxWind%dims(3)))
+  endif
+
   ! Report the dimensions
   write (*,*) 'Output variable information:'
   write (*,*) '  Name: ', trim(TserAvg%vname)
@@ -517,7 +534,8 @@ program tsavg
     ! do the averaging function
     if (AvgFunc .eq. 'max_azwind') then
       call rhdf5_read_variable(rh5f_azwind, AzWind%vname, AzWind%ndims, it, AzWind%dims, rdata=AzWind%vdata)
-      call DoMaxAzWind(Nx, Ny, Nz, AzWind%vdata, UndefVal, TserAvg%vdata(1))
+      call DoMaxAzWind(Nx, Ny, Nz, AzWind%vdata, UndefVal, TserAvg%vdata(1), i_rmw)
+      RadMaxWind%vdata(1) = InXcoordsKm(i_rmw)
       deallocate(AzWind%vdata)
     else if (AvgFunc .eq. 'horiz_ke') then
       call rhdf5_read_variable(rh5f_dens, Dens%vname, Dens%ndims, it, Dens%dims, rdata=Dens%vdata)
@@ -558,6 +576,10 @@ program tsavg
     ! write out the averaged data
     call rhdf5_write_variable(rh5f_out, TserAvg%vname, TserAvg%ndims, it, TserAvg%dims, &
        TserAvg%units, TserAvg%descrip, TserAvg%dimnames, rdata=TserAvg%vdata)
+    if (AvgFunc .eq. 'max_azwind') then
+      call rhdf5_write_variable(rh5f_out, RadMaxWind%vname, RadMaxWind%ndims, it, RadMaxWind%dims, &
+         RadMaxWind%units, RadMaxWind%descrip, RadMaxWind%dimnames, rdata=RadMaxWind%vdata)
+    endif
 
     ! print a message for the user on longer jobs so that it can be
     ! seen that progress is being made
@@ -648,6 +670,9 @@ program tsavg
 
   ! attach the dimension specs to the output variable
   call rhdf5_attach_dimensions(OutFile, TserAvg)
+  if (AvgFunc .eq. 'max_azwind') then
+    call rhdf5_attach_dimensions(OutFile, RadMaxWind)
+  endif
   
   stop
 
@@ -756,13 +781,18 @@ end subroutine GetMyArgs
 ! Typically, don't have enough RAMS files to do 10m time averaging so as a
 ! proxy use the azimuthally averaged tangetial wind speed.
 !
-subroutine DoMaxAzWind(Nx, Ny, Nz, AzWind, UndefVal, AzWindMax)
+! Keep track of the index into the radius values that produced the maximum
+! wind speed. Pass this back to the caller so that the caller can look
+! up the radius value. Radius is the first dimension, x.
+!
+subroutine DoMaxAzWind(Nx, Ny, Nz, AzWind, UndefVal, AzWindMax, Irmw)
   implicit none
 
   integer :: Nx, Ny, Nz
   real, dimension(Nx,Ny,Nz) :: AzWind
   real :: UndefVal
   real :: AzWindMax
+  integer :: Irmw
 
   integer :: ix,iy,iz
 
@@ -772,11 +802,13 @@ subroutine DoMaxAzWind(Nx, Ny, Nz, AzWind, UndefVal, AzWindMax)
   ! to approximate the 10m winds.
 
   AzWindMax = 0.0
+  Irmw = 0
   iz = 2
   do iy = 1, Ny
     do ix = 1, Nx
       if ((AzWind(ix,iy,iz) .gt. AzWindMax) .and. (anint(AzWind(ix,iy,iz)) .ne. UndefVal)) then
         AzWindMax = AzWind(ix,iy,iz)
+        Irmw = ix
       endif
     end do
   end do
