@@ -380,13 +380,13 @@ TsavgPlot: ccn5_sd max_azwind rmw abs simtime Radius km Radius_of_Max_Wind North
 ####################### Line plots ############################
 # LinePlot: <plotset> <xspec> <yspec> <data_select_spec> <smoothing> <title> <legend_loc> <out_file>
 #
-#LinePlot: ccn5    MaxVt IKE TsAll xy Storm_Development Northwest KeVt.jpg
-#LinePlot: ccn5_sd MaxVt IKE TsAll xy Storm_Development Northwest KeVt_sd.jpg
+LinePlot: ccn5    MaxVt IKE TsAll xy Storm_Development Northwest KeVt.jpg
+LinePlot: ccn5_sd MaxVt IKE TsAll xy Storm_Development Northwest KeVt_sd.jpg
 
-#LinePlot: ccn5    SimTime IKE TsAll y Integrated_Kinetic_Energy NorthWest TS_ike.jpg
+LinePlot: ccn5    SimTime IKE TsAll y Integrated_Kinetic_Energy NorthWest TS_ike.jpg
 
-LinePlot: ccn5    Radius150 Vt  SfcVtRI y Vt:_RI,_t_=_60hr  NorthEast TS_Vt_RI.jpg
-LinePlot: ccn5    Radius150 Vt  SfcVtSS y Vt:_SS,_t_=_100hr NorthEast TS_Vt_SS.jpg
+LinePlot: ccn5    Radius Vt  SfcVtRI y Vt:_RI,_t_=_60hrs  NorthEast TS_Vt_RI.jpg
+LinePlot: ccn5    Radius Vt  SfcVtSS y Vt:_SS,_t_=_100hrs NorthEast TS_Vt_SS.jpg
 
 
 ####################### Profile Plots #############################
@@ -684,33 +684,35 @@ PlotSet: agu2 2 TCS_CNTL CONTROL -b TCS_GN_C2000 CCN:_2000/cc -r
 # 
 PlotVar: MaxVt    max_azwind TsAveragedData/max_azwind Max_Vt m/s    10  60     1
 PlotVar: IKE      horiz_ke   TsAveragedData/horiz_ke   KE     10^9_J  0   2  1e-9
-PlotVar: Vt       speed_t    AzAveragedData/speed_t    Vt     m/s    10  50     1
+PlotVar: Vt       speed_t    AzAveragedData/speed_t    Vt     m/s     0  50     1
 
 PlotVar: SimTime  t_coords   TsAveragedData/horiz_ke   Simulation_Time  hr  10 150  2.77777778e-4
 
-PlotVar: Radius150  x_coords   AzAveragedData/speed_t   Radius  km  0 150  1e-3
+PlotVar: Radius  x_coords   AzAveragedData/speed_t   Radius  km  0 250  1e-3
 
 ######################## Selection specs #########################
-# Sspec: <name> <xmin> <xmax> <ymin> <ymax> <zmin> <zmax> <tmin> <tmax>
+# PlotDselect: <name> <xmin> <xmax> <ymin> <ymax> <zmin> <zmax> <tmin> <tmax>
 #
 #  min,max specs are in the units that exist in the file, typicall
 #  x, y, z are meters and t is seconds
 #
 
-# For selecting out of time series of averaged data - data is stored
-# as (x,y,z,t) but x, y and z are all dummy dimensions (to keep GRADS happy)
-# and have size 1 with a value of 1 for the lone coordinate.
-Sspec: TsAll 1 1 1 1 1 1 86400 518400
+# selecting out time series of averaged data - (x,y,z,t)
+#   x - dummy, set to 1
+#   y - dummy, set to 1
+#   z - dummy, set to 1
+#   t - time in seconds
+PlotDselect: TsAll 1 1 1 1 1 1 86400 518400
 
 # select out of Vt data - (x,y,z,t)
 #   x - radius in meters
-#   y - dummy, set to 1
+#   y - dummy, set to 0
 #   z - height in meters
 #   t - time in seconds
 # RI -> Rapid Intensification, sample at time 60hr (216000s)
 # SS -> Steady State, sample at time 100hr (360000s)
-Sspec: SfcVtRI 0 250000 0 1 0 30 216000 216000
-Sspec: SfcVtSS 0 250000 0 1 0 30 360000 360000
+PlotDselect: SfcVtRI 0 250000 0 1 0 30 216000 216000
+PlotDselect: SfcVtSS 0 250000 0 1 0 30 360000 360000
 
 # AzavgEofPlot: <file_prefix> <Var> <name> <units> <EofPcNum> <clev_limit> <clev_inc> <r1> <r2> <z1> <z2>
 #

@@ -61,7 +61,7 @@ i_pplot = 0;
 i_pts_plot = 0;
 i_pset = 0;
 i_pvar = 0;
-i_sspec = 0;
+i_pds = 0;
 for i = 1:size(InLines,1)
   % Convert a line to a list of space separated fields
   [ Fields ] = Line2Fields(InLines(i,:), ' ');
@@ -154,17 +154,17 @@ for i = 1:size(InLines,1)
       Cdata.PlotVars(i_pvar).Min     = sscanf(Fields{7}, '%f');
       Cdata.PlotVars(i_pvar).Max     = sscanf(Fields{8}, '%f');
       Cdata.PlotVars(i_pvar).Scale   = sscanf(Fields{9}, '%f');
-    case 'Sspec:'
-      i_sspec = i_sspec + 1;
-      Cdata.Sspecs(i_sspec).Name = Fields{2};
-      Cdata.Sspecs(i_sspec).Xmin = sscanf(Fields{3}, '%f');
-      Cdata.Sspecs(i_sspec).Xmax = sscanf(Fields{4}, '%f');
-      Cdata.Sspecs(i_sspec).Ymin = sscanf(Fields{5}, '%f');
-      Cdata.Sspecs(i_sspec).Ymax = sscanf(Fields{6}, '%f');
-      Cdata.Sspecs(i_sspec).Zmin = sscanf(Fields{7}, '%f');
-      Cdata.Sspecs(i_sspec).Zmax = sscanf(Fields{8}, '%f');
-      Cdata.Sspecs(i_sspec).Tmin = sscanf(Fields{9}, '%f');
-      Cdata.Sspecs(i_sspec).Tmax = sscanf(Fields{10}, '%f');
+    case 'PlotDselect:'
+      i_pds = i_pds + 1;
+      Cdata.PlotDselects(i_pds).Name = Fields{2};
+      Cdata.PlotDselects(i_pds).Xmin = sscanf(Fields{3}, '%f');
+      Cdata.PlotDselects(i_pds).Xmax = sscanf(Fields{4}, '%f');
+      Cdata.PlotDselects(i_pds).Ymin = sscanf(Fields{5}, '%f');
+      Cdata.PlotDselects(i_pds).Ymax = sscanf(Fields{6}, '%f');
+      Cdata.PlotDselects(i_pds).Zmin = sscanf(Fields{7}, '%f');
+      Cdata.PlotDselects(i_pds).Zmax = sscanf(Fields{8}, '%f');
+      Cdata.PlotDselects(i_pds).Tmin = sscanf(Fields{9}, '%f');
+      Cdata.PlotDselects(i_pds).Tmax = sscanf(Fields{10}, '%f');
     case 'TsavgPlot:'
       i_tsplot = i_tsplot + 1;
       Cdata.TsavgPlots(i_tsplot).PSname  = Fields{2};
@@ -197,18 +197,18 @@ for i = 1:size(InLines,1)
     case 'LinePlot:'
       i_lplot = i_lplot + 1;
       Cdata.LinePlots(i_lplot).PSname  = Fields{2};
-      Cdata.LinePlots(i_lplot).XSname  = Fields{3};
-      Cdata.LinePlots(i_lplot).YSname  = Fields{4};
-      Cdata.LinePlots(i_lplot).SSname  = Fields{5};
+      Cdata.LinePlots(i_lplot).XVname  = Fields{3};
+      Cdata.LinePlots(i_lplot).YVname  = Fields{4};
+      Cdata.LinePlots(i_lplot).DSname  = Fields{5};
       Cdata.LinePlots(i_lplot).Smooth  = Fields{6};
       Cdata.LinePlots(i_lplot).Title   = regexprep(Fields{7}, '_', ' ');
       Cdata.LinePlots(i_lplot).LegLoc  = Fields{8};
       Cdata.LinePlots(i_lplot).OutFile = Fields{9};
 
       Cdata.LinePlots(i_lplot).PSnum   = -1;
-      Cdata.LinePlots(i_lplot).XSnum   = -1;
-      Cdata.LinePlots(i_lplot).YSnum   = -1;
-      Cdata.LinePlots(i_lplot).SSnum   = -1;
+      Cdata.LinePlots(i_lplot).XVnum   = -1;
+      Cdata.LinePlots(i_lplot).YVnum   = -1;
+      Cdata.LinePlots(i_lplot).DSnum   = -1;
     case 'HmeasPlot3d:'
       i_hmp3d = i_hmp3d + 1;
       Cdata.HmeasPlot3d(i_hmp3d).Name    = Fields{2};
@@ -310,12 +310,12 @@ if (isfield(Cdata, 'DistPlots'))
   Cdata.DistPlots = AssociateStructs( Cdata.DistPlots, Cdata.PlotSets, 'PS', 'PlotSet', 'DistPlot' ); 
 end
   
-% Make the association between LinePlots and the PlotSets, PlotVars, Sspecs
+% Make the association between LinePlots and the PlotSets, PlotVars, PlotDselects
 if (isfield(Cdata, 'LinePlots'))
   Cdata.LinePlots = AssociateStructs( Cdata.LinePlots, Cdata.PlotSets, 'PS', 'PlotSet', 'LinePlot' ); 
-  Cdata.LinePlots = AssociateStructs( Cdata.LinePlots, Cdata.PlotVars, 'XS', 'PlotVar', 'LinePlot' ); 
-  Cdata.LinePlots = AssociateStructs( Cdata.LinePlots, Cdata.PlotVars, 'YS', 'PlotVar', 'LinePlot' ); 
-  Cdata.LinePlots = AssociateStructs( Cdata.LinePlots, Cdata.Sspecs, 'SS', 'Sspec', 'LinePlot' ); 
+  Cdata.LinePlots = AssociateStructs( Cdata.LinePlots, Cdata.PlotVars, 'XV', 'PlotVar', 'LinePlot' ); 
+  Cdata.LinePlots = AssociateStructs( Cdata.LinePlots, Cdata.PlotVars, 'YV', 'PlotVar', 'LinePlot' ); 
+  Cdata.LinePlots = AssociateStructs( Cdata.LinePlots, Cdata.PlotDselects, 'DS', 'PlotDselect', 'LinePlot' ); 
 end
   
 % Make the association between ProfPlots and the PlotSets

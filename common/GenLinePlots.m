@@ -21,20 +21,20 @@ for iplot = 1:length(Config.LinePlots)
     clear AxisProps;
 
     % check associations
-    ixs = Config.LinePlots(iplot).XSnum;
-    iys = Config.LinePlots(iplot).YSnum;
-    iss = Config.LinePlots(iplot).SSnum;
+    ixv = Config.LinePlots(iplot).XVnum;
+    iyv = Config.LinePlots(iplot).YVnum;
+    ids = Config.LinePlots(iplot).DSnum;
     ips = Config.LinePlots(iplot).PSnum;
-    if (ixs == 0)
-      fprintf('WARNING: skipping LinePlot number %d due to no associated Xspec\n', iplot)
+    if (ixv == 0)
+      fprintf('WARNING: skipping LinePlot number %d due to no associated PlotVar\n', iplot)
       continue;
     end
-    if (iys == 0)
-      fprintf('WARNING: skipping LinePlot number %d due to no associated Yspec\n', iplot)
+    if (iyv == 0)
+      fprintf('WARNING: skipping LinePlot number %d due to no associated PlotVar\n', iplot)
       continue;
     end
-    if (iss == 0)
-      fprintf('WARNING: skipping LinePlot number %d due to no associated Sspec\n', iplot)
+    if (ids == 0)
+      fprintf('WARNING: skipping LinePlot number %d due to no associated PlotDselect\n', iplot)
       continue;
     end
     if (ips == 0)
@@ -51,30 +51,30 @@ for iplot = 1:length(Config.LinePlots)
     AxisProps(1).Val = 20; 
 
     % X variable, axis specs
-    Xvname   = Config.PlotVars(ixs).Var;
-    Xlabel   = sprintf('%s (%s)', Config.PlotVars(ixs).Label, Config.PlotVars(ixs).Units);
-    Xfprefix = Config.PlotVars(ixs).Fprefix;
-    Xscale   = Config.PlotVars(ixs).Scale;
+    Xvname   = Config.PlotVars(ixv).Var;
+    Xlabel   = sprintf('%s (%s)', Config.PlotVars(ixv).Label, Config.PlotVars(ixv).Units);
+    Xfprefix = Config.PlotVars(ixv).Fprefix;
+    Xscale   = Config.PlotVars(ixv).Scale;
     AxisProps(2).Name = 'Xlim';
-    AxisProps(2).Val = [ Config.PlotVars(ixs).Min Config.PlotVars(ixs).Max ]; 
+    AxisProps(2).Val = [ Config.PlotVars(ixv).Min Config.PlotVars(ixv).Max ]; 
 
     % Y variable, axis specs
-    Yvname   = Config.PlotVars(iys).Var;
-    Ylabel   = sprintf('%s (%s)', Config.PlotVars(iys).Label, Config.PlotVars(iys).Units);
-    Yfprefix = Config.PlotVars(iys).Fprefix;
-    Yscale   = Config.PlotVars(iys).Scale;
+    Yvname   = Config.PlotVars(iyv).Var;
+    Ylabel   = sprintf('%s (%s)', Config.PlotVars(iyv).Label, Config.PlotVars(iyv).Units);
+    Yfprefix = Config.PlotVars(iyv).Fprefix;
+    Yscale   = Config.PlotVars(iyv).Scale;
     AxisProps(3).Name = 'Ylim';
-    AxisProps(3).Val = [ Config.PlotVars(iys).Min Config.PlotVars(iys).Max ]; 
+    AxisProps(3).Val = [ Config.PlotVars(iyv).Min Config.PlotVars(iyv).Max ]; 
 
     % Data selection specs
-    Xmin = Config.Sspecs(iss).Xmin;
-    Xmax = Config.Sspecs(iss).Xmax;
-    Ymin = Config.Sspecs(iss).Ymin;
-    Ymax = Config.Sspecs(iss).Ymax;
-    Zmin = Config.Sspecs(iss).Zmin;
-    Zmax = Config.Sspecs(iss).Zmax;
-    Tmin = Config.Sspecs(iss).Tmin;
-    Tmax = Config.Sspecs(iss).Tmax;
+    Xmin = Config.PlotDselects(ids).Xmin;
+    Xmax = Config.PlotDselects(ids).Xmax;
+    Ymin = Config.PlotDselects(ids).Ymin;
+    Ymax = Config.PlotDselects(ids).Ymax;
+    Zmin = Config.PlotDselects(ids).Zmin;
+    Zmax = Config.PlotDselects(ids).Zmax;
+    Tmin = Config.PlotDselects(ids).Tmin;
+    Tmax = Config.PlotDselects(ids).Tmax;
     
     % make sure output directory exists
     if (exist(Pdir, 'dir') ~= 7)
