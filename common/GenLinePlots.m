@@ -88,29 +88,19 @@ for iplot = 1:length(Config.LinePlots)
 
       Xfile = sprintf('%s_%s.h5', Xfprefix, Case);
       fprintf('Reading HDF5 file: %s\n', Xfile);
-      Xdata = hdf5read(Xfile, Xvname) * Xscale;
-      X = hdf5read(Xfile, '/x_coords');
-      Y = hdf5read(Xfile, '/y_coords');
-      Z = hdf5read(Xfile, '/z_coords');
-      T = hdf5read(Xfile, '/t_coords');
-      Xdata = SelectDataXyzt(Xdata, X, Y, Z, T, Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, Tmin, Tmax);
+      Xdata = ReadSelectXyzt(Xfile, Xvname, Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, Tmin, Tmax);
       if ((strcmp(Smooth,'x') == 0) || (strcmp(Smooth,'xy') == 0))
         Xdata = SmoothFillTseries(Xdata, length(Xdata), Flen);
       end
-      Xall(icase,:) = Xdata;
+      Xall(icase,:) = Xdata * Xscale;
   
       Yfile = sprintf('%s_%s.h5', Yfprefix, Case);
       fprintf('Reading HDF5 file: %s\n', Yfile);
-      Ydata = hdf5read(Yfile, Yvname) * Yscale;
-      X = hdf5read(Yfile, '/x_coords');
-      Y = hdf5read(Yfile, '/y_coords');
-      Z = hdf5read(Yfile, '/z_coords');
-      T = hdf5read(Yfile, '/t_coords');
-      Ydata = SelectDataXyzt(Ydata, X, Y, Z, T, Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, Tmin, Tmax);
+      Ydata = ReadSelectXyzt(Yfile, Yvname, Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, Tmin, Tmax);
       if ((strcmp(Smooth,'y') == 0) || (strcmp(Smooth,'xy') == 0))
         Ydata = SmoothFillTseries(Ydata, length(Ydata), Flen);
       end
-      Yall(icase,:) = Ydata;
+      Yall(icase,:) = Ydata * Yscale;
     end
 
     fprintf('\n');

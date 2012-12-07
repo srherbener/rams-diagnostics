@@ -13,9 +13,9 @@ SCRIPTS = $(DEST)/AdiffEofPlot.m \
           $(DEST)/GenTsPlots.m \
           $(DEST)/ReadConfig.m \
           $(DEST)/ReadAzavgVar.m \
+          $(DEST)/ReadSelectXyzt.m \
           $(DEST)/ReduceHists.m \
           $(DEST)/RunAzavgDiffEof.m \
-          $(DEST)/SelectDataXyzt.m \
           $(DEST)/SmoothFillTseries.m \
           $(DEST)/PlotProfSet.m \
           $(DEST)/PlotTseriesSet.m \
