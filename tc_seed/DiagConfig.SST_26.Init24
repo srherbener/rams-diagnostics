@@ -381,6 +381,14 @@ TsavgPlot: ccn5_sd max_azwind rmw abs simtime Radius km Radius_of_Max_Wind North
 TwoDimPlot: ccn5 max_azwind horiz_ke Storm_Development Max_Vt_(m/s) 1.0 KE_(10^9_J) 1.0e-9 Northwest KeVt.jpg
 TwoDimPlot: ccn5_sd max_azwind horiz_ke Storm_Development Max_Vt_(m/s) 1.0 KE_(10^9_J) 1.0e-9 Northwest KeVt_sd.jpg
 
+# LinePlot: <plotset> <xspec> <yspec> <data_select_spec> <smoothing> <title> <legend_loc> <out_file>
+LinePlot: ccn5    MaxVt IKE TsAll xy Storm_Development Northwest KeVt2.jpg
+LinePlot: ccn5_sd MaxVt IKE TsAll xy Storm_Development Northwest KeVt_sd2.jpg
+
+PlotVar: MaxVt max_azwind max_azwind Max_Vt m/s    10  60     1
+PlotVar: IKE   horiz_ke   horiz_ke   KE     10^9_J  0   2  1e-9
+Sspec: TsAll 1 1 1 1 1 1 86400 518400
+
 ####################### Profile Plots #############################
 #ProfPlot: ccn5 pmeas_lhf_twp4_0p1_EW_RI lh_frzt diff EW_RI:_LH_Frz Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -0.5:0.025:0.5 0.0 20.0 prof_lhf_twp4_0p1_EW_RI.jpg
 #ProfPlot: ccn5 pmeas_lhf_twp4_0p1_CO_RI lh_frzt diff CO_RI:_LH_Frz Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -0.5:0.025:0.5 0.0 20.0 prof_lhf_twp4_0p1_CO_RI.jpg
