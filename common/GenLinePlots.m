@@ -7,7 +7,6 @@ UndefVal = Config.UndefVal;
 
 Pname   = Config.ExpName;
 
-Tdir = Config.TsavgDir;
 Pdir = Config.PlotDir;
 
 % For smoothing, length of a running mean
@@ -87,7 +86,7 @@ for iplot = 1:length(Config.LinePlots)
       LegText(icase) = { Config.PlotSets(ips).Cases(icase).Legend };
       LineSpecs(icase) = { Config.PlotSets(ips).Cases(icase).Lspec };
 
-      Xfile = sprintf('%s/%s_%s.h5', Tdir, Xfprefix, Case);
+      Xfile = sprintf('%s_%s.h5', Xfprefix, Case);
       fprintf('Reading HDF5 file: %s\n', Xfile);
       Xdata = hdf5read(Xfile, Xvname) * Xscale;
       X = hdf5read(Xfile, '/x_coords');
@@ -100,7 +99,7 @@ for iplot = 1:length(Config.LinePlots)
       end
       Xall(icase,:) = Xdata;
   
-      Yfile = sprintf('%s/%s_%s.h5', Tdir, Yfprefix, Case);
+      Yfile = sprintf('%s_%s.h5', Yfprefix, Case);
       fprintf('Reading HDF5 file: %s\n', Yfile);
       Ydata = hdf5read(Yfile, Yvname) * Yscale;
       X = hdf5read(Yfile, '/x_coords');
