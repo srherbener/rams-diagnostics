@@ -8,13 +8,14 @@ SCRIPTS = $(DEST)/AdiffEofPlot.m \
           $(DEST)/AzavgDiffEof.m \
           $(DEST)/GenAdiffEofPlots.m \
           $(DEST)/GenHistMeas.m \
+          $(DEST)/GenLinePlots.m \
           $(DEST)/GenProfMeas.m \
           $(DEST)/GenTsPlots.m \
-          $(DEST)/Line2Fields.m \
           $(DEST)/ReadConfig.m \
           $(DEST)/ReadAzavgVar.m \
           $(DEST)/ReduceHists.m \
           $(DEST)/RunAzavgDiffEof.m \
+          $(DEST)/SelectDataXyzt.m \
           $(DEST)/SmoothFillTseries.m \
           $(DEST)/PlotProfSet.m \
           $(DEST)/PlotTseriesSet.m \

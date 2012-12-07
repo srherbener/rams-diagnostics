@@ -54,12 +54,14 @@ i_pmeas = 0;
 i_aeofplot = 0;
 i_tsplot = 0;
 i_dplot = 0;
-i_2dplot = 0;
+i_lplot = 0;
 i_hmp3d = 0;
 i_hmslice = 0;
 i_pplot = 0;
 i_pts_plot = 0;
 i_pset = 0;
+i_pvar = 0;
+i_sspec = 0;
 for i = 1:size(InLines,1)
   % Convert a line to a list of space separated fields
   [ Fields ] = Line2Fields(InLines(i,:), ' ');
@@ -142,6 +144,27 @@ for i = 1:size(InLines,1)
         Cdata.PlotSets(i_pset).Cases(ips).Lspec = Fields{j+2};
         j = j + 3;
       end
+    case 'PlotVar:'
+      i_pvar = i_pvar + 1;
+      Cdata.PlotVars(i_pvar).Name    = Fields{2};
+      Cdata.PlotVars(i_pvar).Var     = Fields{3};
+      Cdata.PlotVars(i_pvar).Fprefix = Fields{4};
+      Cdata.PlotVars(i_pvar).Label   = regexprep(Fields{5}, '_', ' ');;
+      Cdata.PlotVars(i_pvar).Units   = regexprep(Fields{6}, '_', ' ');;
+      Cdata.PlotVars(i_pvar).Min     = sscanf(Fields{7}, '%f');
+      Cdata.PlotVars(i_pvar).Max     = sscanf(Fields{8}, '%f');
+      Cdata.PlotVars(i_pvar).Scale   = sscanf(Fields{9}, '%f');
+    case 'Sspec:'
+      i_sspec = i_sspec + 1;
+      Cdata.Sspecs(i_sspec).Name = Fields{2};
+      Cdata.Sspecs(i_sspec).Xmin = sscanf(Fields{3}, '%f');
+      Cdata.Sspecs(i_sspec).Xmax = sscanf(Fields{4}, '%f');
+      Cdata.Sspecs(i_sspec).Ymin = sscanf(Fields{5}, '%f');
+      Cdata.Sspecs(i_sspec).Ymax = sscanf(Fields{6}, '%f');
+      Cdata.Sspecs(i_sspec).Zmin = sscanf(Fields{7}, '%f');
+      Cdata.Sspecs(i_sspec).Zmax = sscanf(Fields{8}, '%f');
+      Cdata.Sspecs(i_sspec).Tmin = sscanf(Fields{9}, '%f');
+      Cdata.Sspecs(i_sspec).Tmax = sscanf(Fields{10}, '%f');
     case 'TsavgPlot:'
       i_tsplot = i_tsplot + 1;
       Cdata.TsavgPlots(i_tsplot).PSname  = Fields{2};
@@ -156,6 +179,8 @@ for i = 1:size(InLines,1)
       Cdata.TsavgPlots(i_tsplot).Ymin    = sscanf(Fields{11},  '%f');
       Cdata.TsavgPlots(i_tsplot).Ymax    = sscanf(Fields{12},  '%f');
       Cdata.TsavgPlots(i_tsplot).OutFile = Fields{13};
+      % Need the following to get the assignment from AssociateStructs to work
+      Cdata.TsavgPlots(i_tsplot).PSnum   = -1;
     case 'DistPlot:'
       i_dplot = i_dplot + 1;
       Cdata.DistPlots(i_dplot).PSname  = Fields{2};
@@ -167,18 +192,23 @@ for i = 1:size(InLines,1)
       Cdata.DistPlots(i_dplot).Ymin    = sscanf(Fields{8},  '%f');
       Cdata.DistPlots(i_dplot).Ymax    = sscanf(Fields{9},  '%f');
       Cdata.DistPlots(i_dplot).OutFile = Fields{10};
-    case 'TwoDimPlot:'
-      i_2dplot = i_2dplot + 1;
-      Cdata.TwoDimPlots(i_2dplot).PSname  = Fields{2};
-      Cdata.TwoDimPlots(i_2dplot).Xvar    = Fields{3};
-      Cdata.TwoDimPlots(i_2dplot).Yvar    = Fields{4};
-      Cdata.TwoDimPlots(i_2dplot).Title   = regexprep(Fields{5}, '_', ' ');
-      Cdata.TwoDimPlots(i_2dplot).Xlabel  = regexprep(Fields{6}, '_', ' ');
-      Cdata.TwoDimPlots(i_2dplot).Xscale  = sscanf(Fields{7}, '%f');
-      Cdata.TwoDimPlots(i_2dplot).Ylabel  = regexprep(Fields{8}, '_', ' ');
-      Cdata.TwoDimPlots(i_2dplot).Yscale  = sscanf(Fields{9}, '%f');
-      Cdata.TwoDimPlots(i_2dplot).LegLoc  = Fields{10};
-      Cdata.TwoDimPlots(i_2dplot).OutFile = Fields{11};
+
+      Cdata.DistPlots(i_dplot).PSnum   = -1;
+    case 'LinePlot:'
+      i_lplot = i_lplot + 1;
+      Cdata.LinePlots(i_lplot).PSname  = Fields{2};
+      Cdata.LinePlots(i_lplot).XSname  = Fields{3};
+      Cdata.LinePlots(i_lplot).YSname  = Fields{4};
+      Cdata.LinePlots(i_lplot).SSname  = Fields{5};
+      Cdata.LinePlots(i_lplot).Smooth  = Fields{6};
+      Cdata.LinePlots(i_lplot).Title   = regexprep(Fields{7}, '_', ' ');
+      Cdata.LinePlots(i_lplot).LegLoc  = Fields{8};
+      Cdata.LinePlots(i_lplot).OutFile = Fields{9};
+
+      Cdata.LinePlots(i_lplot).PSnum   = -1;
+      Cdata.LinePlots(i_lplot).XSnum   = -1;
+      Cdata.LinePlots(i_lplot).YSnum   = -1;
+      Cdata.LinePlots(i_lplot).SSnum   = -1;
     case 'HmeasPlot3d:'
       i_hmp3d = i_hmp3d + 1;
       Cdata.HmeasPlot3d(i_hmp3d).Name    = Fields{2};
@@ -220,6 +250,8 @@ for i = 1:size(InLines,1)
       Cdata.HmeasSlicePlots(i_hmslice).Tmax    = sscanf(Fields{19},'%f');
       Cdata.HmeasSlicePlots(i_hmslice).Cmin    = sscanf(Fields{20},'%f');
       Cdata.HmeasSlicePlots(i_hmslice).Cmax    = sscanf(Fields{21},'%f');
+
+      Cdata.HmeasSlicePlots(i_hmslice).PSnum   = -1;
     case 'ProfPlot:'
       i_pplot = i_pplot + 1;
       Cdata.ProfPlots(i_pplot).PSname  = Fields{2};
@@ -234,6 +266,8 @@ for i = 1:size(InLines,1)
       Cdata.ProfPlots(i_pplot).Zmin    = sscanf(Fields{11}, '%f');
       Cdata.ProfPlots(i_pplot).Zmax    = sscanf(Fields{12}, '%f');
       Cdata.ProfPlots(i_pplot).OutFile = Fields{13};
+
+      Cdata.ProfPlots(i_pplot).PSnum   = -1;
     case 'ProfTsPlot:'
       i_pts_plot = i_pts_plot + 1;
       Cdata.ProfTsPlots(i_pts_plot).PSname      = Fields{2};
@@ -248,6 +282,8 @@ for i = 1:size(InLines,1)
       Cdata.ProfTsPlots(i_pts_plot).Zmax        = sscanf(Fields{11}, '%f');
       Cdata.ProfTsPlots(i_pts_plot).Pspec       = Fields{12};
       Cdata.ProfTsPlots(i_pts_plot).OutFileBase = Fields{13};
+
+      Cdata.ProfTsPlots(i_pts_plot).PSnum       = -1;
     case 'AzavgEofPlot:'
       i_aeofplot = i_aeofplot + 1;
       Cdata.AzavgEofPlots(i_aeofplot).Fprefix = Fields{2};
@@ -266,110 +302,107 @@ end
 
 % Make the association between TsavgPlots and the PlotSets
 if (isfield(Cdata, 'TsavgPlots'))
-  for itp = 1:length(Cdata.TsavgPlots)
-    PlotSetName = Cdata.TsavgPlots(itp).PSname;
-    Match = 0;
-    for ips = 1:length(Cdata.PlotSets)
-      if (strcmp(Cdata.PlotSets(ips).Name, PlotSetName))
-        Match = ips;
-      end
-    end
-    Cdata.TsavgPlots(itp).PSnum = Match;
-  
-    if (Match == 0)
-      fprintf('WARNING: Could not find a match for PlotSet "%s" specified in TsavgPlot number %d\n', Cdata.TsavgPlots(itp).PSname, itp);
-    end
-  end
+  Cdata.TsavgPlots = AssociateStructs( Cdata.TsavgPlots, Cdata.PlotSets, 'PS', 'PlotSet', 'TsavgPlot' ); 
 end
 
 % Make the association between DistPlots and the PlotSets
 if (isfield(Cdata, 'DistPlots'))
-  for itp = 1:length(Cdata.DistPlots)
-    PlotSetName = Cdata.DistPlots(itp).PSname;
-    Match = 0;
-    for ips = 1:length(Cdata.PlotSets)
-      if (strcmp(Cdata.PlotSets(ips).Name, PlotSetName))
-        Match = ips;
-      end
-    end
-    Cdata.DistPlots(itp).PSnum = Match;
-  
-    if (Match == 0)
-      fprintf('WARNING: Could not find a match for PlotSet "%s" specified in DistPlot number %d\n', Cdata.DistPlots(itp).PSname, itp);
-    end
-  end
+  Cdata.DistPlots = AssociateStructs( Cdata.DistPlots, Cdata.PlotSets, 'PS', 'PlotSet', 'DistPlot' ); 
 end
   
-% Make the association between TwoDimPlots and the PlotSets
-if (isfield(Cdata, 'TwoDimPlots'))
-  for itp = 1:length(Cdata.TwoDimPlots)
-    PlotSetName = Cdata.TwoDimPlots(itp).PSname;
-    Match = 0;
-    for ips = 1:length(Cdata.PlotSets)
-      if (strcmp(Cdata.PlotSets(ips).Name, PlotSetName))
-        Match = ips;
-      end
-    end
-    Cdata.TwoDimPlots(itp).PSnum = Match;
-  
-    if (Match == 0)
-      fprintf('WARNING: Could not find a match for PlotSet "%s" specified in TwoDimPlot number %d\n', Cdata.TwoDimPlots(itp).PSname, itp);
-    end
-  end
+% Make the association between LinePlots and the PlotSets, PlotVars, Sspecs
+if (isfield(Cdata, 'LinePlots'))
+  Cdata.LinePlots = AssociateStructs( Cdata.LinePlots, Cdata.PlotSets, 'PS', 'PlotSet', 'LinePlot' ); 
+  Cdata.LinePlots = AssociateStructs( Cdata.LinePlots, Cdata.PlotVars, 'XS', 'PlotVar', 'LinePlot' ); 
+  Cdata.LinePlots = AssociateStructs( Cdata.LinePlots, Cdata.PlotVars, 'YS', 'PlotVar', 'LinePlot' ); 
+  Cdata.LinePlots = AssociateStructs( Cdata.LinePlots, Cdata.Sspecs, 'SS', 'Sspec', 'LinePlot' ); 
 end
   
 % Make the association between ProfPlots and the PlotSets
 if (isfield(Cdata, 'ProfPlots'))
-  for itp = 1:length(Cdata.ProfPlots)
-    PlotSetName = Cdata.ProfPlots(itp).PSname;
-    Match = 0;
-    for ips = 1:length(Cdata.PlotSets)
-      if (strcmp(Cdata.PlotSets(ips).Name, PlotSetName))
-        Match = ips;
-      end
-    end
-    Cdata.ProfPlots(itp).PSnum = Match;
-  
-    if (Match == 0)
-      fprintf('WARNING: Could not find a match for PlotSet "%s" specified in ProfPlot number %d\n', Cdata.ProfPlots(itp).PSname, itp);
-    end
-  end
+  Cdata.ProfPlots = AssociateStructs( Cdata.ProfPlots, Cdata.PlotSets, 'PS', 'PlotSet', 'ProfPlot' ); 
 end
 
 % Make the association between ProfTsPlots and the PlotSets
 if (isfield(Cdata, 'ProfTsPlots'))
-  for itp = 1:length(Cdata.ProfTsPlots)
-    PlotSetName = Cdata.ProfTsPlots(itp).PSname;
-    Match = 0;
-    for ips = 1:length(Cdata.PlotSets)
-      if (strcmp(Cdata.PlotSets(ips).Name, PlotSetName))
-        Match = ips;
-      end
-    end
-    Cdata.ProfTsPlots(itp).PSnum = Match;
-  
-    if (Match == 0)
-      fprintf('WARNING: Could not find a match for PlotSet "%s" specified in ProfTsPlot number %d\n', Cdata.ProfTsPlots(itp).PSname, itp);
-    end
-  end
+  Cdata.ProfTsPlots = AssociateStructs( Cdata.ProfTsPlots, Cdata.PlotSets, 'PS', 'PlotSet', 'ProfTsPlot' ); 
 end
 
 % Make the association between HmeasSlicePlots and the PlotSets
 if (isfield(Cdata, 'HmeasSlicePlots'))
-  for itp = 1:length(Cdata.HmeasSlicePlots)
-    PlotSetName = Cdata.HmeasSlicePlots(itp).PSname;
-    Match = 0;
-    for ips = 1:length(Cdata.PlotSets)
-      if (strcmp(Cdata.PlotSets(ips).Name, PlotSetName))
-        Match = ips;
-      end
+  Cdata.HmeasSlicePlots = AssociateStructs( Cdata.HmeasSlicePlots, Cdata.PlotSets, 'PS', 'PlotSet', 'HmeasSlicePlot' ); 
+end
+
+end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% AssociateStructs
+%
+% This function will take names specified in one struct array (Base) and find
+% these names in another struct array (List), then record the matching indeces
+% in the output structure OutStruct. Base is first copied to OutStruct so that
+% the caller can replace the struct passed in by List. This gets around the fact
+% that MATLAB uses call-by-value making it so that you cannot directly change
+% an argument to this function.
+%
+% Type is used to enable Base to have multiple associations in it. The
+% naming scheme for the structur elements needs to adhere to the following
+% convection for this routine to work.
+%
+% 1) Base is an array of structures with an element named '<Type>name'
+%     eg, if Type is 'PS', then Base need an element named 'PSname'
+% 2) The value stored in Base(i).<Type>name will be searched for in List
+%    where List is an array of structures with and element named 'Name'
+%     eg, List(:).Name will be checked to see if it matches Base(i).PSname
+% 3) The index in List where the match occurred will be entered into an element
+%    in OutStruct (copy of Base) named '<Type>num'. A zero is assigned if
+%    no match was made.
+%     eg, if List(3).Name matched Base(2).PSname, then OutStruct(2).PSnum will
+%     be set to 3.
+%
+% A copy of the input array with the new field (containing the index of the match)
+% is returned to facilitate the replacement of Base in the calling routine.
+% Since MATLAB uses pass-by-value it does not work to do the assignment
+% here in this routine.
+% 
+function [ OutStruct ] = AssociateStructs(Base, List, Type, Ltype, Btype)
+
+  % copy Base so the caller can replace Base
+  OutStruct = Base;
+
+  for i = 1:length(Base)
+    BaseName = sprintf('%sname', Type);
+    BaseNum  = sprintf('%snum', Type);
+
+    TestName = Base(i).(BaseName);
+    TestArray = { List(:).Name };
+    
+    Index = find(strcmp(TestName, TestArray));
+    if (length(Index) == 0)
+      fprintf('WARNING: Could not find a match for %s "%s" specified in %s number %d\n', Ltype, TestName, Btype, i);
+      Index = 0;
     end
-    Cdata.HmeasSlicePlots(itp).PSnum = Match;
-  
-    if (Match == 0)
-      fprintf('WARNING: Could not find a match for PlotSet "%s" specified in HmeasSlicePlot number %d\n', Cdata.HmeasSlicePlots(itp).PSname, itp);
-    end
+
+    OutStruct(i).(BaseNum) = Index;
   end
+end
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Line2Fields
+%
+% This function will parse the string given in Line using the
+% delimiter character given in Delim and separate Line into fields
+% which get passed back to the caller in the array Fields.
+%
+function [ Fields ] = Line2Fields ( Line, Delim )
+
+Remain = Line;
+
+i = 1;
+while (~isempty(Remain))
+    [ Fields{i}, Remain ] = strtok(Remain, Delim);
+    i = i + 1;
 end
 
 end
