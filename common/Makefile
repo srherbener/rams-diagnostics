@@ -10,6 +10,7 @@ SCRIPTS = $(DEST)/AdiffEofPlot.m \
           $(DEST)/GenHistMeas.m \
           $(DEST)/GenLinePlots.m \
           $(DEST)/GenProfMeas.m \
+          $(DEST)/GenTimeAvg.m \
           $(DEST)/GenTsPlots.m \
           $(DEST)/ReadConfig.m \
           $(DEST)/ReadAzavgVar.m \

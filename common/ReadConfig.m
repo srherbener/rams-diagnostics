@@ -51,6 +51,7 @@ i_tdir = 0;
 i_aeof = 0;
 i_hmeas = 0;
 i_pmeas = 0;
+i_tavg = 0;
 i_aeofplot = 0;
 i_tsplot = 0;
 i_dplot = 0;
@@ -124,6 +125,14 @@ for i = 1:size(InLines,1)
       Cdata.Pmeas(i_pmeas).Rmax    = sscanf(Fields{8},  '%f');
       Cdata.Pmeas(i_pmeas).Tmin    = sscanf(Fields{9},  '%f');
       Cdata.Pmeas(i_pmeas).Tmax    = sscanf(Fields{10}, '%f');
+    case 'Tavg:'
+      i_tavg = i_tavg + 1;
+      Cdata.Tavg(i_tavg).Name    = Fields{2};
+      Cdata.Tavg(i_tavg).InDir   = Fields{3};
+      Cdata.Tavg(i_tavg).Fprefix = Fields{4};
+      Cdata.Tavg(i_tavg).Rvar    = Fields{5};
+      Cdata.Tavg(i_tavg).Tmin    = sscanf(Fields{6}, '%f');;
+      Cdata.Tavg(i_tavg).Tmax    = sscanf(Fields{7}, '%f');;
     case 'TsPlotSpecs:'
       Cdata.TsPlotSpecs.Ntsteps      = sscanf(Fields{2}, '%d');
       Cdata.TsPlotSpecs.Tstart       = sscanf(Fields{3}, '%f');
