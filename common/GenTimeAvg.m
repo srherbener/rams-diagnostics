@@ -51,6 +51,15 @@ for icase = 1:length(Config.Cases)
 
     % Convert undef values to nans so they can be excluded from averaging
     % Note: nanmean(<all_nans) --> nan
+    % Doing a mean on the last dimension of a > 2D array will automatically
+    % squeeze that dimension off of the result. This happens with any
+    % operation that reduces the last dimension to one. MATLAB however will
+    % allow using an index value of 1 on dimensions beyond what size()
+    % says you have. This will allow the data to be written into the
+    % HDF5 as a 3D array, read it into another MATLAB job and access
+    % it as if it were 4D as long as you always use '1' for the fourth
+    % index.
+    [ Nx Ny Nz Nt ] = size(HDATA);
     HDATA(HDATA == UndefVal) = nan;
     TAVG = nanmean(HDATA(:,:,:,T1:T2), 4);
 
@@ -60,10 +69,11 @@ for icase = 1:length(Config.Cases)
     Hdset = sprintf('/%s', Vname);
     hdf5write(OutFile, Hdset, TAVG);
 
+    Tdummy(1) = 0;
     hdf5write(OutFile, '/x_coords', X, 'WriteMode', 'append');
     hdf5write(OutFile, '/y_coords', Y, 'WriteMode', 'append');
     hdf5write(OutFile, '/z_coords', Z, 'WriteMode', 'append');
-    hdf5write(OutFile, '/t_coords', T, 'WriteMode', 'append');
+    hdf5write(OutFile, '/t_coords', Tdummy, 'WriteMode', 'append');
 
     fprintf('\n');
   end

@@ -388,28 +388,28 @@ TsPlotSpecs: 121 0 1.0 hr 25 1998:08:22:21:00:00 10 24
 ####################### Line plots ############################
 # LinePlot: <plotset> <xspec> <yspec> <data_select_spec> <smoothing> <title> <legend_loc> <out_file>
 #
-#LinePlot: ccn5    MaxVt IKE TsAll xy Storm_Development Northwest KeVt.jpg
+LinePlot: ccn5    MaxVt IKE TsAll xy Storm_Development Northwest KeVt.jpg
 
-#LinePlot: ccn5    SimTime IKE   TsAll y Integrated_Kinetic_Energy NorthWest TS_ike.jpg
-#LinePlot: ccn5    SimTime MaxVt TsAll y Maximum_Vt                SouthEast TS_max_vt.jpg
-#LinePlot: ccn5    SimTime RMW   TsAll y Radius_of_Maximum_Wind    NorthEast TS_rmw.jpg
+LinePlot: ccn5    SimTime IKE   TsAll y Integrated_Kinetic_Energy NorthWest TS_ike.jpg
+LinePlot: ccn5    SimTime MaxVt TsAll y Maximum_Vt                SouthEast TS_max_vt.jpg
+LinePlot: ccn5    SimTime RMW   TsAll y Radius_of_Maximum_Wind    NorthEast TS_rmw.jpg
 
-LinePlot: ccn5    Radius     Vt        SfcVtRI      y Vt:_RI,_t_=_60hrs  NorthEast TS_Vt_RI.jpg
-LinePlot: ccn5    Radius     Vt        SfcVtSS      y Vt:_SS,_t_=_100hrs NorthEast TS_Vt_SS.jpg
-LinePlot: ccn5    RadiusZoom VtZoomRI  SfcVtRI_Zoom y Vt:_RI,_t_=_60hrs  NorthEast TS_Vt_RI_zoom.jpg
-LinePlot: ccn5    RadiusZoom VtZoomSS  SfcVtSS_Zoom y Vt:_SS,_t_=_100hrs NorthEast TS_Vt_SS_zoom.jpg
+LinePlot: ccn5    Radius     VtRI      SfcVtRI      y Vt:_RI  NorthEast TS_Vt_RI.jpg
+LinePlot: ccn5    Radius     VtSS      SfcVtSS      y Vt:_SS  NorthEast TS_Vt_SS.jpg
+LinePlot: ccn5    RadiusZoom VtZoomRI  SfcVtRI_Zoom y Vt:_RI  NorthEast TS_Vt_RI_zoom.jpg
+LinePlot: ccn5    RadiusZoom VtZoomSS  SfcVtSS_Zoom y Vt:_SS  NorthEast TS_Vt_SS_zoom.jpg
 
 # salt source disabled
-#LinePlot: ccn5_sd MaxVt IKE TsAll xy Storm_Development Northwest KeVt_sd.jpg
+LinePlot: ccn5_sd MaxVt IKE TsAll xy Storm_Development Northwest KeVt_sd.jpg
 
-#LinePlot: ccn5_sd    SimTime IKE   TsAll y Integrated_Kinetic_Energy NorthWest TS_ike_sd.jpg
-#LinePlot: ccn5_sd    SimTime MaxVt TsAll y Maximum_Vt                SouthEast TS_max_vt_sd.jpg
-#LinePlot: ccn5_sd    SimTime RMW   TsAll y Radius_of_Maximum_Wind    NorthEast TS_rmw_sd.jpg
+LinePlot: ccn5_sd    SimTime IKE   TsAll y Integrated_Kinetic_Energy NorthWest TS_ike_sd.jpg
+LinePlot: ccn5_sd    SimTime MaxVt TsAll y Maximum_Vt                SouthEast TS_max_vt_sd.jpg
+LinePlot: ccn5_sd    SimTime RMW   TsAll y Radius_of_Maximum_Wind    NorthEast TS_rmw_sd.jpg
 
-LinePlot: ccn5_sd    Radius     Vt        SfcVtRI      y Vt:_RI,_t_=_60hrs  NorthEast TS_Vt_RI_sd.jpg
-LinePlot: ccn5_sd    Radius     Vt        SfcVtSS      y Vt:_SS,_t_=_100hrs NorthEast TS_Vt_SS_sd.jpg
-LinePlot: ccn5_sd    RadiusZoom VtZoomRI  SfcVtRI_Zoom y Vt:_RI,_t_=_60hrs  NorthEast TS_Vt_RI_zoom_sd.jpg
-LinePlot: ccn5_sd    RadiusZoom VtZoomSS  SfcVtSS_Zoom y Vt:_SS,_t_=_100hrs NorthEast TS_Vt_SS_zoom_sd.jpg
+LinePlot: ccn5_sd    Radius     VtRI      SfcVtRI      y Vt:_RI  NorthEast TS_Vt_RI_sd.jpg
+LinePlot: ccn5_sd    Radius     VtSS      SfcVtSS      y Vt:_SS  NorthEast TS_Vt_SS_sd.jpg
+LinePlot: ccn5_sd    RadiusZoom VtZoomRI  SfcVtRI_Zoom y Vt:_RI  NorthEast TS_Vt_RI_zoom_sd.jpg
+LinePlot: ccn5_sd    RadiusZoom VtZoomSS  SfcVtSS_Zoom y Vt:_SS  NorthEast TS_Vt_SS_zoom_sd.jpg
 
 ####################### Profile Plots #############################
 #ProfPlot: ccn5 pmeas_lhf_twp4_0p1_EW_RI lh_frzt diff EW_RI:_LH_Frz Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -0.5:0.025:0.5 0.0 20.0 prof_lhf_twp4_0p1_EW_RI.jpg
@@ -706,10 +706,12 @@ PlotSet: agu2 2 TCS_CNTL CONTROL -b TCS_GN_C2000 CCN:_2000/cc -r
 # 
 PlotVar: MaxVt     max_azwind TsAveragedData/max_azwind Max_Vt m/s    10  60     1
 PlotVar: IKE       horiz_ke   TsAveragedData/horiz_ke   KE     10^9_J  0   2  1e-9
-PlotVar: Vt        speed_t    AzAveragedData/speed_t    Vt     m/s     0  50     1
-PlotVar: VtZoomRI  speed_t    AzAveragedData/speed_t    Vt     m/s    30  40     1
-PlotVar: VtZoomSS  speed_t    AzAveragedData/speed_t    Vt     m/s    30  45     1
 PlotVar: RMW       rmw        TsAveragedData/max_azwind RMW    km      5  40     1
+
+PlotVar: VtRI      speed_t    DIAGS/tavg_speed_t_RI Vt     m/s     0  50     1
+PlotVar: VtSS      speed_t    DIAGS/tavg_speed_t_SS Vt     m/s     0  50     1
+PlotVar: VtZoomRI  speed_t    DIAGS/tavg_speed_t_RI Vt     m/s    30  40     1
+PlotVar: VtZoomSS  speed_t    DIAGS/tavg_speed_t_SS Vt     m/s    30  45     1
 
 PlotVar: SimTime  t_coords   TsAveragedData/horiz_ke   Simulation_Time  hr  10 150  2.77777778e-4
 
@@ -737,10 +739,10 @@ PlotDselect: TsAll 1 1 1 1 1 1 86400 518400
 #   t - time in seconds
 # RI -> Rapid Intensification, sample at time 60hr (216000s)
 # SS -> Steady State, sample at time 100hr (360000s)
-PlotDselect: SfcVtRI      0 250000 0 1 0 30 216000 216000
-PlotDselect: SfcVtSS      0 250000 0 1 0 30 360000 360000
-PlotDselect: SfcVtRI_Zoom 0  50000 0 1 0 30 216000 216000
-PlotDselect: SfcVtSS_Zoom 0  50000 0 1 0 30 360000 360000
+PlotDselect: SfcVtRI      0 250000 0 0 0 30 0 0
+PlotDselect: SfcVtSS      0 250000 0 0 0 30 0 0
+PlotDselect: SfcVtRI_Zoom 0  50000 0 0 0 30 0 0
+PlotDselect: SfcVtSS_Zoom 0  50000 0 0 0 30 0 0
 
 # AzavgEofPlot: <file_prefix> <Var> <name> <units> <EofPcNum> <clev_limit> <clev_inc> <r1> <r2> <z1> <z2>
 #
