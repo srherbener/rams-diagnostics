@@ -15,6 +15,7 @@ SCRIPTS = $(DEST)/GenKeVtPlots.m \
           $(DEST)/PlotInitialVortex.m \
           $(DEST)/PlotProfs.m \
           $(DEST)/PlotSampleCcnProfile.m \
+          $(DEST)/PlotStormPhases.m \
           $(DEST)/PlotThetaE.m \
           $(DEST)/PlotTsProfs.m \
           $(DEST)/PlotVt.m \
