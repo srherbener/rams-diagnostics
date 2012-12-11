@@ -172,171 +172,188 @@ AzavgEof: w_twp4_SS w_twp4  w  0 250000  0  25000 324000 396000
 
 
 # profile measurments
+#
+# Time regions: RI - 50 to 70 hrs (rapid intensification)
+#               SS - 90 to 110 hrs (steady state)
+#               LC - 24 to 144 hrs (life cycle)
+#
+# Radial regions: EW -  0 to 40 km (eyewall)
+#                 CO - 40 to 70 km (core)
+#                 RB - 70 to 150 km (rainband)
+#                 OR - 150 to 250 km (outer rainband)
+#
 #Pmeas: pmeas_lhf_twp4_0p1_EW_RI AzAveragedData hist_lh_frzt_twp4_lhf0p1 lh_frzt wtmean  0.0  40.0 50.0  70.0
 #Pmeas: pmeas_lhf_twp4_0p1_CO_RI AzAveragedData hist_lh_frzt_twp4_lhf0p1 lh_frzt wtmean 40.0  70.0 50.0  70.0
-#Pmeas: pmeas_lhf_twp4_0p1_RB_RI AzAveragedData hist_lh_frzt_twp4_lhf0p1 lh_frzt wtmean 70.0 250.0 50.0  70.0
+#Pmeas: pmeas_lhf_twp4_0p1_RB_RI AzAveragedData hist_lh_frzt_twp4_lhf0p1 lh_frzt wtmean 70.0 150.0 50.0  70.0
 #Pmeas: pmeas_lhf_twp4_0p1_EW_SS AzAveragedData hist_lh_frzt_twp4_lhf0p1 lh_frzt wtmean  0.0  40.0 90.0 110.0
 #Pmeas: pmeas_lhf_twp4_0p1_CO_SS AzAveragedData hist_lh_frzt_twp4_lhf0p1 lh_frzt wtmean 40.0  70.0 90.0 110.0
-#Pmeas: pmeas_lhf_twp4_0p1_RB_SS AzAveragedData hist_lh_frzt_twp4_lhf0p1 lh_frzt wtmean 70.0 250.0 90.0 110.0
+#Pmeas: pmeas_lhf_twp4_0p1_RB_SS AzAveragedData hist_lh_frzt_twp4_lhf0p1 lh_frzt wtmean 70.0 150.0 90.0 110.0
 
 #Pmeas: pmeas_lhv_twp4_1p0_EW_RI AzAveragedData hist_lh_vapt_twp4_lhv1p0 lh_vapt wtmean  0.0  40.0 50.0  70.0
 #Pmeas: pmeas_lhv_twp4_1p0_CO_RI AzAveragedData hist_lh_vapt_twp4_lhv1p0 lh_vapt wtmean 40.0  70.0 50.0  70.0
-#Pmeas: pmeas_lhv_twp4_1p0_RB_RI AzAveragedData hist_lh_vapt_twp4_lhv1p0 lh_vapt wtmean 70.0 250.0 50.0  70.0
+#Pmeas: pmeas_lhv_twp4_1p0_RB_RI AzAveragedData hist_lh_vapt_twp4_lhv1p0 lh_vapt wtmean 70.0 150.0 50.0  70.0
 #Pmeas: pmeas_lhv_twp4_1p0_EW_SS AzAveragedData hist_lh_vapt_twp4_lhv1p0 lh_vapt wtmean  0.0  40.0 90.0 110.0
 #Pmeas: pmeas_lhv_twp4_1p0_CO_SS AzAveragedData hist_lh_vapt_twp4_lhv1p0 lh_vapt wtmean 40.0  70.0 90.0 110.0
-#Pmeas: pmeas_lhv_twp4_1p0_RB_SS AzAveragedData hist_lh_vapt_twp4_lhv1p0 lh_vapt wtmean 70.0 250.0 90.0 110.0
+#Pmeas: pmeas_lhv_twp4_1p0_RB_SS AzAveragedData hist_lh_vapt_twp4_lhv1p0 lh_vapt wtmean 70.0 150.0 90.0 110.0
 
 #Pmeas: pmeas_theta_e_EW_RI AzAveragedData hist_theta_e theta_e wtmean  0.0  40.0 50.0  70.0
 #Pmeas: pmeas_theta_e_CO_RI AzAveragedData hist_theta_e theta_e wtmean 40.0  70.0 50.0  70.0
-#Pmeas: pmeas_theta_e_RB_RI AzAveragedData hist_theta_e theta_e wtmean 70.0 250.0 50.0  70.0
+#Pmeas: pmeas_theta_e_RB_RI AzAveragedData hist_theta_e theta_e wtmean 70.0 150.0 50.0  70.0
 #Pmeas: pmeas_theta_e_EW_SS AzAveragedData hist_theta_e theta_e wtmean  0.0  40.0 90.0 110.0
 #Pmeas: pmeas_theta_e_CO_SS AzAveragedData hist_theta_e theta_e wtmean 40.0  70.0 90.0 110.0
-#Pmeas: pmeas_theta_e_RB_SS AzAveragedData hist_theta_e theta_e wtmean 70.0 250.0 90.0 110.0
+#Pmeas: pmeas_theta_e_RB_SS AzAveragedData hist_theta_e theta_e wtmean 70.0 150.0 90.0 110.0
 
 #Pmeas: pmeas_theta_e_twp4_EW_RI AzAveragedData hist_theta_e_twp4 theta_e wtmean  0.0  40.0 50.0  70.0
 #Pmeas: pmeas_theta_e_twp4_CO_RI AzAveragedData hist_theta_e_twp4 theta_e wtmean 40.0  70.0 50.0  70.0
-#Pmeas: pmeas_theta_e_twp4_RB_RI AzAveragedData hist_theta_e_twp4 theta_e wtmean 70.0 250.0 50.0  70.0
+#Pmeas: pmeas_theta_e_twp4_RB_RI AzAveragedData hist_theta_e_twp4 theta_e wtmean 70.0 150.0 50.0  70.0
 #Pmeas: pmeas_theta_e_twp4_EW_SS AzAveragedData hist_theta_e_twp4 theta_e wtmean  0.0  40.0 90.0 110.0
 #Pmeas: pmeas_theta_e_twp4_CO_SS AzAveragedData hist_theta_e_twp4 theta_e wtmean 40.0  70.0 90.0 110.0
-#Pmeas: pmeas_theta_e_twp4_RB_SS AzAveragedData hist_theta_e_twp4 theta_e wtmean 70.0 250.0 90.0 110.0
+#Pmeas: pmeas_theta_e_twp4_RB_SS AzAveragedData hist_theta_e_twp4 theta_e wtmean 70.0 150.0 90.0 110.0
+
+#Pmeas: pmeas_tempc_twp4_EW_RI AzAveragedData hist_tempc_twp4 tempc wtmean  0.0  40.0 50.0  70.0
+#Pmeas: pmeas_tempc_twp4_CO_RI AzAveragedData hist_tempc_twp4 tempc wtmean 40.0  70.0 50.0  70.0
+#Pmeas: pmeas_tempc_twp4_RB_RI AzAveragedData hist_tempc_twp4 tempc wtmean 70.0 150.0 50.0  70.0
+#Pmeas: pmeas_tempc_twp4_EW_SS AzAveragedData hist_tempc_twp4 tempc wtmean  0.0  40.0 90.0 110.0
+#Pmeas: pmeas_tempc_twp4_CO_SS AzAveragedData hist_tempc_twp4 tempc wtmean 40.0  70.0 90.0 110.0
+Pmeas: pmeas_tempc_twp4_RB_SS AzAveragedData hist_tempc_twp4 tempc wtmean 70.0 150.0 90.0 110.0
 
 #Pmeas: pmeas_w_twp4_EW_RI AzAveragedData hist_w_twp4 w wtmean  0.0  40.0 50.0  70.0
 #Pmeas: pmeas_w_twp4_CO_RI AzAveragedData hist_w_twp4 w wtmean 40.0  70.0 50.0  70.0
-#Pmeas: pmeas_w_twp4_RB_RI AzAveragedData hist_w_twp4 w wtmean 70.0 250.0 50.0  70.0
+#Pmeas: pmeas_w_twp4_RB_RI AzAveragedData hist_w_twp4 w wtmean 70.0 150.0 50.0  70.0
 #Pmeas: pmeas_w_twp4_EW_SS AzAveragedData hist_w_twp4 w wtmean  0.0  40.0 90.0 110.0
 #Pmeas: pmeas_w_twp4_CO_SS AzAveragedData hist_w_twp4 w wtmean 40.0  70.0 90.0 110.0
-#Pmeas: pmeas_w_twp4_RB_SS AzAveragedData hist_w_twp4 w wtmean 70.0 250.0 90.0 110.0
+#Pmeas: pmeas_w_twp4_RB_SS AzAveragedData hist_w_twp4 w wtmean 70.0 150.0 90.0 110.0
 
 #Pmeas: pmeas_w_up_twp4_EW_RI AzAveragedData hist_w_up_twp4 w wtmean  0.0  40.0 50.0  70.0
 #Pmeas: pmeas_w_up_twp4_CO_RI AzAveragedData hist_w_up_twp4 w wtmean 40.0  70.0 50.0  70.0
-#Pmeas: pmeas_w_up_twp4_RB_RI AzAveragedData hist_w_up_twp4 w wtmean 70.0 250.0 50.0  70.0
+#Pmeas: pmeas_w_up_twp4_RB_RI AzAveragedData hist_w_up_twp4 w wtmean 70.0 150.0 50.0  70.0
 #Pmeas: pmeas_w_up_twp4_EW_SS AzAveragedData hist_w_up_twp4 w wtmean  0.0  40.0 90.0 110.0
 #Pmeas: pmeas_w_up_twp4_CO_SS AzAveragedData hist_w_up_twp4 w wtmean 40.0  70.0 90.0 110.0
-#Pmeas: pmeas_w_up_twp4_RB_SS AzAveragedData hist_w_up_twp4 w wtmean 70.0 250.0 90.0 110.0
+#Pmeas: pmeas_w_up_twp4_RB_SS AzAveragedData hist_w_up_twp4 w wtmean 70.0 150.0 90.0 110.0
 
 #Pmeas: pmeas_w_dn_twp4_EW_RI AzAveragedData hist_w_dn_twp4 w wtmean  0.0  40.0 50.0  70.0
 #Pmeas: pmeas_w_dn_twp4_CO_RI AzAveragedData hist_w_dn_twp4 w wtmean 40.0  70.0 50.0  70.0
-#Pmeas: pmeas_w_dn_twp4_RB_RI AzAveragedData hist_w_dn_twp4 w wtmean 70.0 250.0 50.0  70.0
+#Pmeas: pmeas_w_dn_twp4_RB_RI AzAveragedData hist_w_dn_twp4 w wtmean 70.0 150.0 50.0  70.0
 #Pmeas: pmeas_w_dn_twp4_EW_SS AzAveragedData hist_w_dn_twp4 w wtmean  0.0  40.0 90.0 110.0
 #Pmeas: pmeas_w_dn_twp4_CO_SS AzAveragedData hist_w_dn_twp4 w wtmean 40.0  70.0 90.0 110.0
-#Pmeas: pmeas_w_dn_twp4_RB_SS AzAveragedData hist_w_dn_twp4 w wtmean 70.0 250.0 90.0 110.0
+#Pmeas: pmeas_w_dn_twp4_RB_SS AzAveragedData hist_w_dn_twp4 w wtmean 70.0 150.0 90.0 110.0
 
 #Pmeas: pmeas_ccn_conc_twp4_EW_RI AzAveragedData hist_ccn_conc_twp4 ccn_conc wtmean  0.0  40.0 50.0  70.0
 #Pmeas: pmeas_ccn_conc_twp4_CO_RI AzAveragedData hist_ccn_conc_twp4 ccn_conc wtmean 40.0  70.0 50.0  70.0
-#Pmeas: pmeas_ccn_conc_twp4_RB_RI AzAveragedData hist_ccn_conc_twp4 ccn_conc wtmean 70.0 250.0 50.0  70.0
+#Pmeas: pmeas_ccn_conc_twp4_RB_RI AzAveragedData hist_ccn_conc_twp4 ccn_conc wtmean 70.0 150.0 50.0  70.0
 #Pmeas: pmeas_ccn_conc_twp4_EW_SS AzAveragedData hist_ccn_conc_twp4 ccn_conc wtmean  0.0  40.0 90.0 110.0
 #Pmeas: pmeas_ccn_conc_twp4_CO_SS AzAveragedData hist_ccn_conc_twp4 ccn_conc wtmean 40.0  70.0 90.0 110.0
-#Pmeas: pmeas_ccn_conc_twp4_RB_SS AzAveragedData hist_ccn_conc_twp4 ccn_conc wtmean 70.0 250.0 90.0 110.0
+#Pmeas: pmeas_ccn_conc_twp4_RB_SS AzAveragedData hist_ccn_conc_twp4 ccn_conc wtmean 70.0 150.0 90.0 110.0
 
 #Pmeas: pmeas_saltf_conc_twp4_EW_RI AzAveragedData hist_saltf_conc_twp4 saltf_conc wtmean  0.0  40.0 50.0  70.0
 #Pmeas: pmeas_saltf_conc_twp4_CO_RI AzAveragedData hist_saltf_conc_twp4 saltf_conc wtmean 40.0  70.0 50.0  70.0
-#Pmeas: pmeas_saltf_conc_twp4_RB_RI AzAveragedData hist_saltf_conc_twp4 saltf_conc wtmean 70.0 250.0 50.0  70.0
+#Pmeas: pmeas_saltf_conc_twp4_RB_RI AzAveragedData hist_saltf_conc_twp4 saltf_conc wtmean 70.0 150.0 50.0  70.0
 #Pmeas: pmeas_saltf_conc_twp4_EW_SS AzAveragedData hist_saltf_conc_twp4 saltf_conc wtmean  0.0  40.0 90.0 110.0
 #Pmeas: pmeas_saltf_conc_twp4_CO_SS AzAveragedData hist_saltf_conc_twp4 saltf_conc wtmean 40.0  70.0 90.0 110.0
-#Pmeas: pmeas_saltf_conc_twp4_RB_SS AzAveragedData hist_saltf_conc_twp4 saltf_conc wtmean 70.0 250.0 90.0 110.0
+#Pmeas: pmeas_saltf_conc_twp4_RB_SS AzAveragedData hist_saltf_conc_twp4 saltf_conc wtmean 70.0 150.0 90.0 110.0
 
 #Pmeas: pmeas_saltj_conc_twp4_EW_RI AzAveragedData hist_saltj_conc_twp4 saltj_conc wtmean  0.0  40.0 50.0  70.0
 #Pmeas: pmeas_saltj_conc_twp4_CO_RI AzAveragedData hist_saltj_conc_twp4 saltj_conc wtmean 40.0  70.0 50.0  70.0
-#Pmeas: pmeas_saltj_conc_twp4_RB_RI AzAveragedData hist_saltj_conc_twp4 saltj_conc wtmean 70.0 250.0 50.0  70.0
+#Pmeas: pmeas_saltj_conc_twp4_RB_RI AzAveragedData hist_saltj_conc_twp4 saltj_conc wtmean 70.0 150.0 50.0  70.0
 #Pmeas: pmeas_saltj_conc_twp4_EW_SS AzAveragedData hist_saltj_conc_twp4 saltj_conc wtmean  0.0  40.0 90.0 110.0
 #Pmeas: pmeas_saltj_conc_twp4_CO_SS AzAveragedData hist_saltj_conc_twp4 saltj_conc wtmean 40.0  70.0 90.0 110.0
-#Pmeas: pmeas_saltj_conc_twp4_RB_SS AzAveragedData hist_saltj_conc_twp4 saltj_conc wtmean 70.0 250.0 90.0 110.0
+#Pmeas: pmeas_saltj_conc_twp4_RB_SS AzAveragedData hist_saltj_conc_twp4 saltj_conc wtmean 70.0 150.0 90.0 110.0
 
 #Pmeas: pmeas_cloud_d_twp4_EW_RI AzAveragedData hist_cloud_d_twp4 cloud_d wtmean  0.0  40.0 50.0  70.0
 #Pmeas: pmeas_cloud_d_twp4_CO_RI AzAveragedData hist_cloud_d_twp4 cloud_d wtmean 40.0  70.0 50.0  70.0
-#Pmeas: pmeas_cloud_d_twp4_RB_RI AzAveragedData hist_cloud_d_twp4 cloud_d wtmean 70.0 250.0 50.0  70.0
+#Pmeas: pmeas_cloud_d_twp4_RB_RI AzAveragedData hist_cloud_d_twp4 cloud_d wtmean 70.0 150.0 50.0  70.0
 #Pmeas: pmeas_cloud_d_twp4_EW_SS AzAveragedData hist_cloud_d_twp4 cloud_d wtmean  0.0  40.0 90.0 110.0
 #Pmeas: pmeas_cloud_d_twp4_CO_SS AzAveragedData hist_cloud_d_twp4 cloud_d wtmean 40.0  70.0 90.0 110.0
-#Pmeas: pmeas_cloud_d_twp4_RB_SS AzAveragedData hist_cloud_d_twp4 cloud_d wtmean 70.0 250.0 90.0 110.0
+#Pmeas: pmeas_cloud_d_twp4_RB_SS AzAveragedData hist_cloud_d_twp4 cloud_d wtmean 70.0 150.0 90.0 110.0
 
 #Pmeas: pmeas_cloud_cm3_twp4_EW_RI AzAveragedData hist_cloud_cm3_twp4 cloud_cm3 wtmean  0.0  40.0 50.0  70.0
 #Pmeas: pmeas_cloud_cm3_twp4_CO_RI AzAveragedData hist_cloud_cm3_twp4 cloud_cm3 wtmean 40.0  70.0 50.0  70.0
-#Pmeas: pmeas_cloud_cm3_twp4_RB_RI AzAveragedData hist_cloud_cm3_twp4 cloud_cm3 wtmean 70.0 250.0 50.0  70.0
+#Pmeas: pmeas_cloud_cm3_twp4_RB_RI AzAveragedData hist_cloud_cm3_twp4 cloud_cm3 wtmean 70.0 150.0 50.0  70.0
 #Pmeas: pmeas_cloud_cm3_twp4_EW_SS AzAveragedData hist_cloud_cm3_twp4 cloud_cm3 wtmean  0.0  40.0 90.0 110.0
 #Pmeas: pmeas_cloud_cm3_twp4_CO_SS AzAveragedData hist_cloud_cm3_twp4 cloud_cm3 wtmean 40.0  70.0 90.0 110.0
-#Pmeas: pmeas_cloud_cm3_twp4_RB_SS AzAveragedData hist_cloud_cm3_twp4 cloud_cm3 wtmean 70.0 250.0 90.0 110.0
+#Pmeas: pmeas_cloud_cm3_twp4_RB_SS AzAveragedData hist_cloud_cm3_twp4 cloud_cm3 wtmean 70.0 150.0 90.0 110.0
 
 #Pmeas: pmeas_drizzle_d_twp4_EW_RI AzAveragedData hist_drizzle_d_twp4 drizzle_d wtmean  0.0  40.0 50.0  70.0
 #Pmeas: pmeas_drizzle_d_twp4_CO_RI AzAveragedData hist_drizzle_d_twp4 drizzle_d wtmean 40.0  70.0 50.0  70.0
-#Pmeas: pmeas_drizzle_d_twp4_RB_RI AzAveragedData hist_drizzle_d_twp4 drizzle_d wtmean 70.0 250.0 50.0  70.0
+#Pmeas: pmeas_drizzle_d_twp4_RB_RI AzAveragedData hist_drizzle_d_twp4 drizzle_d wtmean 70.0 150.0 50.0  70.0
 #Pmeas: pmeas_drizzle_d_twp4_EW_SS AzAveragedData hist_drizzle_d_twp4 drizzle_d wtmean  0.0  40.0 90.0 110.0
 #Pmeas: pmeas_drizzle_d_twp4_CO_SS AzAveragedData hist_drizzle_d_twp4 drizzle_d wtmean 40.0  70.0 90.0 110.0
-#Pmeas: pmeas_drizzle_d_twp4_RB_SS AzAveragedData hist_drizzle_d_twp4 drizzle_d wtmean 70.0 250.0 90.0 110.0
+#Pmeas: pmeas_drizzle_d_twp4_RB_SS AzAveragedData hist_drizzle_d_twp4 drizzle_d wtmean 70.0 150.0 90.0 110.0
 
 #Pmeas: pmeas_drizzle_cm3_twp4_EW_RI AzAveragedData hist_drizzle_cm3_twp4 drizzle_cm3 wtmean  0.0  40.0 50.0  70.0
 #Pmeas: pmeas_drizzle_cm3_twp4_CO_RI AzAveragedData hist_drizzle_cm3_twp4 drizzle_cm3 wtmean 40.0  70.0 50.0  70.0
-#Pmeas: pmeas_drizzle_cm3_twp4_RB_RI AzAveragedData hist_drizzle_cm3_twp4 drizzle_cm3 wtmean 70.0 250.0 50.0  70.0
+#Pmeas: pmeas_drizzle_cm3_twp4_RB_RI AzAveragedData hist_drizzle_cm3_twp4 drizzle_cm3 wtmean 70.0 150.0 50.0  70.0
 #Pmeas: pmeas_drizzle_cm3_twp4_EW_SS AzAveragedData hist_drizzle_cm3_twp4 drizzle_cm3 wtmean  0.0  40.0 90.0 110.0
 #Pmeas: pmeas_drizzle_cm3_twp4_CO_SS AzAveragedData hist_drizzle_cm3_twp4 drizzle_cm3 wtmean 40.0  70.0 90.0 110.0
-#Pmeas: pmeas_drizzle_cm3_twp4_RB_SS AzAveragedData hist_drizzle_cm3_twp4 drizzle_cm3 wtmean 70.0 250.0 90.0 110.0
+#Pmeas: pmeas_drizzle_cm3_twp4_RB_SS AzAveragedData hist_drizzle_cm3_twp4 drizzle_cm3 wtmean 70.0 150.0 90.0 110.0
 
 #Pmeas: pmeas_rain_twp4_EW_RI AzAveragedData hist_rain_twp4 rain wtmean  0.0  40.0 50.0  70.0
 #Pmeas: pmeas_rain_twp4_CO_RI AzAveragedData hist_rain_twp4 rain wtmean 40.0  70.0 50.0  70.0
-#Pmeas: pmeas_rain_twp4_RB_RI AzAveragedData hist_rain_twp4 rain wtmean 70.0 250.0 50.0  70.0
+#Pmeas: pmeas_rain_twp4_RB_RI AzAveragedData hist_rain_twp4 rain wtmean 70.0 150.0 50.0  70.0
 #Pmeas: pmeas_rain_twp4_EW_SS AzAveragedData hist_rain_twp4 rain wtmean  0.0  40.0 90.0 110.0
 #Pmeas: pmeas_rain_twp4_CO_SS AzAveragedData hist_rain_twp4 rain wtmean 40.0  70.0 90.0 110.0
-#Pmeas: pmeas_rain_twp4_RB_SS AzAveragedData hist_rain_twp4 rain wtmean 70.0 250.0 90.0 110.0
+#Pmeas: pmeas_rain_twp4_RB_SS AzAveragedData hist_rain_twp4 rain wtmean 70.0 150.0 90.0 110.0
 
- full simulation
+# full simulation
 #Pmeas: pmeas_lhf_twp4_0p1_EW_LC AzAveragedData hist_lh_frzt_twp4_lhf0p1 lh_frzt wtmean  0.0  40.0 24.0  144.0
 #Pmeas: pmeas_lhf_twp4_0p1_CO_LC AzAveragedData hist_lh_frzt_twp4_lhf0p1 lh_frzt wtmean 40.0  70.0 24.0  144.0
-#Pmeas: pmeas_lhf_twp4_0p1_RB_LC AzAveragedData hist_lh_frzt_twp4_lhf0p1 lh_frzt wtmean 70.0 250.0 24.0  144.0
+#Pmeas: pmeas_lhf_twp4_0p1_RB_LC AzAveragedData hist_lh_frzt_twp4_lhf0p1 lh_frzt wtmean 70.0 150.0 24.0  144.0
 
 #Pmeas: pmeas_lhv_twp4_1p0_EW_LC AzAveragedData hist_lh_vapt_twp4_lhv1p0 lh_vapt wtmean  0.0  40.0 24.0  144.0
 #Pmeas: pmeas_lhv_twp4_1p0_CO_LC AzAveragedData hist_lh_vapt_twp4_lhv1p0 lh_vapt wtmean 40.0  70.0 24.0  144.0
-#Pmeas: pmeas_lhv_twp4_1p0_RB_LC AzAveragedData hist_lh_vapt_twp4_lhv1p0 lh_vapt wtmean 70.0 250.0 24.0  144.0
+#Pmeas: pmeas_lhv_twp4_1p0_RB_LC AzAveragedData hist_lh_vapt_twp4_lhv1p0 lh_vapt wtmean 70.0 150.0 24.0  144.0
 
 #Pmeas: pmeas_theta_e_EW_LC AzAveragedData hist_theta_e theta_e wtmean  0.0  40.0 24.0  144.0
 #Pmeas: pmeas_theta_e_CO_LC AzAveragedData hist_theta_e theta_e wtmean 40.0  70.0 24.0  144.0
-#Pmeas: pmeas_theta_e_RB_LC AzAveragedData hist_theta_e theta_e wtmean 70.0 250.0 24.0  144.0
+#Pmeas: pmeas_theta_e_RB_LC AzAveragedData hist_theta_e theta_e wtmean 70.0 150.0 24.0  144.0
 
 #Pmeas: pmeas_theta_e_twp4_EW_LC AzAveragedData hist_theta_e_twp4 theta_e wtmean  0.0  40.0 24.0  144.0
 #Pmeas: pmeas_theta_e_twp4_CO_LC AzAveragedData hist_theta_e_twp4 theta_e wtmean 40.0  70.0 24.0  144.0
-#Pmeas: pmeas_theta_e_twp4_RB_LC AzAveragedData hist_theta_e_twp4 theta_e wtmean 70.0 250.0 24.0  144.0
+#Pmeas: pmeas_theta_e_twp4_RB_LC AzAveragedData hist_theta_e_twp4 theta_e wtmean 70.0 150.0 24.0  144.0
 
 #Pmeas: pmeas_w_twp4_EW_LC AzAveragedData hist_w_twp4 w wtmean  0.0  40.0 24.0  144.0
 #Pmeas: pmeas_w_twp4_CO_LC AzAveragedData hist_w_twp4 w wtmean 40.0  70.0 24.0  144.0
-#Pmeas: pmeas_w_twp4_RB_LC AzAveragedData hist_w_twp4 w wtmean 70.0 250.0 24.0  144.0
+#Pmeas: pmeas_w_twp4_RB_LC AzAveragedData hist_w_twp4 w wtmean 70.0 150.0 24.0  144.0
 
 #Pmeas: pmeas_w_up_twp4_EW_LC AzAveragedData hist_w_up_twp4 w wtmean  0.0  40.0 24.0  144.0
 #Pmeas: pmeas_w_up_twp4_CO_LC AzAveragedData hist_w_up_twp4 w wtmean 40.0  70.0 24.0  144.0
-#Pmeas: pmeas_w_up_twp4_RB_LC AzAveragedData hist_w_up_twp4 w wtmean 70.0 250.0 24.0  144.0
+#Pmeas: pmeas_w_up_twp4_RB_LC AzAveragedData hist_w_up_twp4 w wtmean 70.0 150.0 24.0  144.0
 
 #Pmeas: pmeas_w_dn_twp4_EW_LC AzAveragedData hist_w_dn_twp4 w wtmean  0.0  40.0 24.0  144.0
 #Pmeas: pmeas_w_dn_twp4_CO_LC AzAveragedData hist_w_dn_twp4 w wtmean 40.0  70.0 24.0  144.0
-#Pmeas: pmeas_w_dn_twp4_RB_LC AzAveragedData hist_w_dn_twp4 w wtmean 70.0 250.0 24.0  144.0
+#Pmeas: pmeas_w_dn_twp4_RB_LC AzAveragedData hist_w_dn_twp4 w wtmean 70.0 150.0 24.0  144.0
 
 #Pmeas: pmeas_ccn_conc_twp4_EW_LC AzAveragedData hist_ccn_conc_twp4 ccn_conc wtmean  0.0  40.0 24.0  144.0
 #Pmeas: pmeas_ccn_conc_twp4_CO_LC AzAveragedData hist_ccn_conc_twp4 ccn_conc wtmean 40.0  70.0 24.0  144.0
-#Pmeas: pmeas_ccn_conc_twp4_RB_LC AzAveragedData hist_ccn_conc_twp4 ccn_conc wtmean 70.0 250.0 24.0  144.0
+#Pmeas: pmeas_ccn_conc_twp4_RB_LC AzAveragedData hist_ccn_conc_twp4 ccn_conc wtmean 70.0 150.0 24.0  144.0
 
 #Pmeas: pmeas_saltf_conc_twp4_EW_LC AzAveragedData hist_saltf_conc_twp4 saltf_conc wtmean  0.0  40.0 24.0  144.0
 #Pmeas: pmeas_saltf_conc_twp4_CO_LC AzAveragedData hist_saltf_conc_twp4 saltf_conc wtmean 40.0  70.0 24.0  144.0
-#Pmeas: pmeas_saltf_conc_twp4_RB_LC AzAveragedData hist_saltf_conc_twp4 saltf_conc wtmean 70.0 250.0 24.0  144.0
+#Pmeas: pmeas_saltf_conc_twp4_RB_LC AzAveragedData hist_saltf_conc_twp4 saltf_conc wtmean 70.0 150.0 24.0  144.0
 
 #Pmeas: pmeas_saltj_conc_twp4_EW_LC AzAveragedData hist_saltj_conc_twp4 saltj_conc wtmean  0.0  40.0 24.0  144.0
 #Pmeas: pmeas_saltj_conc_twp4_CO_LC AzAveragedData hist_saltj_conc_twp4 saltj_conc wtmean 40.0  70.0 24.0  144.0
-#Pmeas: pmeas_saltj_conc_twp4_RB_LC AzAveragedData hist_saltj_conc_twp4 saltj_conc wtmean 70.0 250.0 24.0  144.0
+#Pmeas: pmeas_saltj_conc_twp4_RB_LC AzAveragedData hist_saltj_conc_twp4 saltj_conc wtmean 70.0 150.0 24.0  144.0
 
 #Pmeas: pmeas_cloud_d_twp4_EW_LC AzAveragedData hist_cloud_d_twp4 cloud_d wtmean  0.0  40.0 24.0  144.0
 #Pmeas: pmeas_cloud_d_twp4_CO_LC AzAveragedData hist_cloud_d_twp4 cloud_d wtmean 40.0  70.0 24.0  144.0
-#Pmeas: pmeas_cloud_d_twp4_RB_LC AzAveragedData hist_cloud_d_twp4 cloud_d wtmean 70.0 250.0 24.0  144.0
+#Pmeas: pmeas_cloud_d_twp4_RB_LC AzAveragedData hist_cloud_d_twp4 cloud_d wtmean 70.0 150.0 24.0  144.0
 
 #Pmeas: pmeas_cloud_cm3_twp4_EW_LC AzAveragedData hist_cloud_cm3_twp4 cloud_cm3 wtmean  0.0  40.0 24.0  144.0
 #Pmeas: pmeas_cloud_cm3_twp4_CO_LC AzAveragedData hist_cloud_cm3_twp4 cloud_cm3 wtmean 40.0  70.0 24.0  144.0
-#Pmeas: pmeas_cloud_cm3_twp4_RB_LC AzAveragedData hist_cloud_cm3_twp4 cloud_cm3 wtmean 70.0 250.0 24.0  144.0
+#Pmeas: pmeas_cloud_cm3_twp4_RB_LC AzAveragedData hist_cloud_cm3_twp4 cloud_cm3 wtmean 70.0 150.0 24.0  144.0
 
 #Pmeas: pmeas_drizzle_d_twp4_EW_LC AzAveragedData hist_drizzle_d_twp4 drizzle_d wtmean  0.0  40.0 24.0  144.0
 #Pmeas: pmeas_drizzle_d_twp4_CO_LC AzAveragedData hist_drizzle_d_twp4 drizzle_d wtmean 40.0  70.0 24.0  144.0
-#Pmeas: pmeas_drizzle_d_twp4_RB_LC AzAveragedData hist_drizzle_d_twp4 drizzle_d wtmean 70.0 250.0 24.0  144.0
+#Pmeas: pmeas_drizzle_d_twp4_RB_LC AzAveragedData hist_drizzle_d_twp4 drizzle_d wtmean 70.0 150.0 24.0  144.0
 
 #Pmeas: pmeas_drizzle_cm3_twp4_EW_LC AzAveragedData hist_drizzle_cm3_twp4 drizzle_cm3 wtmean  0.0  40.0 24.0  144.0
 #Pmeas: pmeas_drizzle_cm3_twp4_CO_LC AzAveragedData hist_drizzle_cm3_twp4 drizzle_cm3 wtmean 40.0  70.0 24.0  144.0
-#Pmeas: pmeas_drizzle_cm3_twp4_RB_LC AzAveragedData hist_drizzle_cm3_twp4 drizzle_cm3 wtmean 70.0 250.0 24.0  144.0
+#Pmeas: pmeas_drizzle_cm3_twp4_RB_LC AzAveragedData hist_drizzle_cm3_twp4 drizzle_cm3 wtmean 70.0 150.0 24.0  144.0
 
 #Pmeas: pmeas_rain_twp4_EW_LC AzAveragedData hist_rain_twp4 rain wtmean  0.0  40.0 24.0  144.0
 #Pmeas: pmeas_rain_twp4_CO_LC AzAveragedData hist_rain_twp4 rain wtmean 40.0  70.0 24.0  144.0
-#Pmeas: pmeas_rain_twp4_RB_LC AzAveragedData hist_rain_twp4 rain wtmean 70.0 250.0 24.0  144.0
+#Pmeas: pmeas_rain_twp4_RB_LC AzAveragedData hist_rain_twp4 rain wtmean 70.0 150.0 24.0  144.0
 
 # Time Averages
 #   LC - 24 to 144 hrs ( 86400 to 518400 sec)
@@ -388,16 +405,16 @@ TsPlotSpecs: 121 0 1.0 hr 25 1998:08:22:21:00:00 10 24
 ####################### Line plots ############################
 # LinePlot: <plotset> <xspec> <yspec> <data_select_spec> <smoothing> <title> <legend_loc> <out_file>
 
-#LinePlot: ccn5    MaxVt IKE TsAll xy Storm_Development Northwest KeVt.jpg
+LinePlot: ccn5    MaxVt IKE TsAll xy Storm_Development Northwest KeVt.jpg
 
-#LinePlot: ccn5    SimTime IKE   TsAll y Integrated_Kinetic_Energy NorthWest TS_ike.jpg
-#LinePlot: ccn5    SimTime MaxVt TsAll y Maximum_Vt                SouthEast TS_max_vt.jpg
-#LinePlot: ccn5    SimTime RMW   TsAll y Radius_of_Maximum_Wind    NorthEast TS_rmw.jpg
+LinePlot: ccn5    SimTime IKE   TsAll y Integrated_Kinetic_Energy NorthWest TS_ike.jpg
+LinePlot: ccn5    SimTime MaxVt TsAll y Maximum_Vt                SouthEast TS_max_vt.jpg
+LinePlot: ccn5    SimTime RMW   TsAll y Radius_of_Maximum_Wind    NorthEast TS_rmw.jpg
 
-#LinePlot: ccn5    RadAll    VtAllRI   SfcVtAll    y Radial_Structure_of_Max_Vt:_RI  NorthEast R_Vt_All_RI.jpg
-#LinePlot: ccn5    RadAll    VtAllSS   SfcVtAll    y Radial_Structure_of_Max_Vt:_SS  NorthEast R_Vt_All_SS.jpg
-#LinePlot: ccn5    RadPeak   VtPeakRI  SfcVtPeak   y Peak_Section_of_Max_Vt:_RI      NorthEast R_Vt_Peak_RI.jpg
-#LinePlot: ccn5    RadPeak   VtPeakSS  SfcVtPeak   y Peak_Section_of_Max_Vt:_SS      NorthEast R_Vt_Peak_SS.jpg
+LinePlot: ccn5    RadAll    VtAllRI   SfcVtAll    y Radial_Structure_of_Max_Vt:_RI  NorthEast R_Vt_All_RI.jpg
+LinePlot: ccn5    RadAll    VtAllSS   SfcVtAll    y Radial_Structure_of_Max_Vt:_SS  NorthEast R_Vt_All_SS.jpg
+LinePlot: ccn5    RadPeak   VtPeakRI  SfcVtPeak   y Peak_Section_of_Max_Vt:_RI      NorthEast R_Vt_Peak_RI.jpg
+LinePlot: ccn5    RadPeak   VtPeakSS  SfcVtPeak   y Peak_Section_of_Max_Vt:_SS      NorthEast R_Vt_Peak_SS.jpg
 LinePlot: ccn5    RadRband  VtRbandRI SfcVtRband  y Rainband_Section_of_Max_Vt:_RI  NorthEast R_Vt_Rband_RI.jpg
 LinePlot: ccn5    RadRband  VtRbandSS SfcVtRband  y Rainband_Section_of_Max_Vt:_SS  NorthEast R_Vt_Rband_SS.jpg
 
@@ -412,114 +429,121 @@ LinePlot: ccn5    RadRband  VtRbandSS SfcVtRband  y Rainband_Section_of_Max_Vt:_
 #LinePlot: ccn5_sd    RadAll    VtAllSS   SfcVtAll    y Radial_Structure_of_Max_Vt:_SS  NorthEast R_Vt_All_SS_sd.jpg
 #LinePlot: ccn5_sd    RadPeak   VtPeakRI  SfcVtPeak   y Peak_Section_of_Max_Vt:_RI      NorthEast R_Vt_Peak_RI_sd.jpg
 #LinePlot: ccn5_sd    RadPeak   VtPeakSS  SfcVtPeak   y Peak_Section_of_Max_Vt:_SS      NorthEast R_Vt_Peak_SS_sd.jpg
-LinePlot: ccn5_sd    RadRband  VtRbandRI SfcVtRband  y Rainband_Section_of_Max_Vt:_RI  NorthEast R_Vt_Rband_RI_sd.jpg
-LinePlot: ccn5_sd    RadRband  VtRbandSS SfcVtRband  y Rainband_Section_of_Max_Vt:_SS  NorthEast R_Vt_Rband_SS_sd.jpg
+#LinePlot: ccn5_sd    RadRband  VtRbandRI SfcVtRband  y Rainband_Section_of_Max_Vt:_RI  NorthEast R_Vt_Rband_RI_sd.jpg
+#LinePlot: ccn5_sd    RadRband  VtRbandSS SfcVtRband  y Rainband_Section_of_Max_Vt:_SS  NorthEast R_Vt_Rband_SS_sd.jpg
 
 ####################### Profile Plots #############################
-#ProfPlot: ccn5 pmeas_lhf_twp4_0p1_EW_RI lh_frzt diff EW_RI:_LH_Frz Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -0.5:0.025:0.5 0.0 20.0 prof_lhf_twp4_0p1_EW_RI.jpg
-#ProfPlot: ccn5 pmeas_lhf_twp4_0p1_CO_RI lh_frzt diff CO_RI:_LH_Frz Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -0.5:0.025:0.5 0.0 20.0 prof_lhf_twp4_0p1_CO_RI.jpg
-#ProfPlot: ccn5 pmeas_lhf_twp4_0p1_RB_RI lh_frzt diff RB_RI:_LH_Frz Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -0.5:0.025:0.5 0.0 20.0 prof_lhf_twp4_0p1_RB_RI.jpg
-#ProfPlot: ccn5 pmeas_lhf_twp4_0p1_EW_SS lh_frzt diff EW_SS:_LH_Frz Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -0.5:0.025:0.5 0.0 20.0 prof_lhf_twp4_0p1_EW_SS.jpg
-#ProfPlot: ccn5 pmeas_lhf_twp4_0p1_CO_SS lh_frzt diff CO_SS:_LH_Frz Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -0.5:0.025:0.5 0.0 20.0 prof_lhf_twp4_0p1_CO_SS.jpg
-#ProfPlot: ccn5 pmeas_lhf_twp4_0p1_RB_SS lh_frzt diff RB_SS:_LH_Frz Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -0.5:0.025:0.5 0.0 20.0 prof_lhf_twp4_0p1_RB_SS.jpg
-#
-#ProfPlot: ccn5 pmeas_lhv_twp4_1p0_EW_RI lh_vapt diff EW_RI:_LH_Vap Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -10:0.5:10 0.0 20.0 prof_lhv_twp4_1p0_EW_RI.jpg
-#ProfPlot: ccn5 pmeas_lhv_twp4_1p0_CO_RI lh_vapt diff CO_RI:_LH_Vap Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -10:0.5:10 0.0 20.0 prof_lhv_twp4_1p0_CO_RI.jpg
-#ProfPlot: ccn5 pmeas_lhv_twp4_1p0_RB_RI lh_vapt diff RB_RI:_LH_Vap Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -10:0.5:10 0.0 20.0 prof_lhv_twp4_1p0_RB_RI.jpg
-#ProfPlot: ccn5 pmeas_lhv_twp4_1p0_EW_SS lh_vapt diff EW_SS:_LH_Vap Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -10:0.5:10 0.0 20.0 prof_lhv_twp4_1p0_EW_SS.jpg
-#ProfPlot: ccn5 pmeas_lhv_twp4_1p0_CO_SS lh_vapt diff CO_SS:_LH_Vap Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -10:0.5:10 0.0 20.0 prof_lhv_twp4_1p0_CO_SS.jpg
-#ProfPlot: ccn5 pmeas_lhv_twp4_1p0_RB_SS lh_vapt diff RB_SS:_LH_Vap Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -10:0.5:10 0.0 20.0 prof_lhv_twp4_1p0_RB_SS.jpg
-#
-#ProfPlot: ccn5 pmeas_theta_e_EW_RI theta_e diff EW_RI:_Theta-E Theta-E_Difference_(K) Height_(km) NorthEast -2:0.1:2 0.0 20.0 prof_theta_e_EW_RI.jpg
-#ProfPlot: ccn5 pmeas_theta_e_CO_RI theta_e diff CO_RI:_Theta-E Theta-E_Difference_(K) Height_(km) NorthEast -2:0.1:2 0.0 20.0 prof_theta_e_CO_RI.jpg
-#ProfPlot: ccn5 pmeas_theta_e_RB_RI theta_e diff RB_RI:_Theta-E Theta-E_Difference_(K) Height_(km) NorthEast -2:0.1:2 0.0 20.0 prof_theta_e_RB_RI.jpg
-#ProfPlot: ccn5 pmeas_theta_e_EW_SS theta_e diff EW_SS:_Theta-E Theta-E_Difference_(K) Height_(km) NorthEast -10:0.5:10 0.0 20.0 prof_theta_e_EW_SS.jpg
-#ProfPlot: ccn5 pmeas_theta_e_CO_SS theta_e diff CO_SS:_Theta-E Theta-E_Difference_(K) Height_(km) NorthEast -10:0.5:10 0.0 20.0 prof_theta_e_CO_SS.jpg
-#ProfPlot: ccn5 pmeas_theta_e_RB_SS theta_e diff RB_SS:_Theta-E Theta-E_Difference_(K) Height_(km) NorthEast -10:0.5:10 0.0 20.0 prof_theta_e_RB_SS.jpg
-#
-#ProfPlot: ccn5 pmeas_theta_e_twp4_EW_RI theta_e diff EW_RI:_Theta-E Theta-E_Difference_(K) Height_(km) NorthEast -2:0.1:2 0.0 20.0 prof_theta_e_twp4_EW_RI.jpg
-#ProfPlot: ccn5 pmeas_theta_e_twp4_CO_RI theta_e diff CO_RI:_Theta-E Theta-E_Difference_(K) Height_(km) NorthEast -2:0.1:2 0.0 20.0 prof_theta_e_twp4_CO_RI.jpg
-#ProfPlot: ccn5 pmeas_theta_e_twp4_RB_RI theta_e diff RB_RI:_Theta-E Theta-E_Difference_(K) Height_(km) NorthEast -2:0.1:2 0.0 20.0 prof_theta_e_twp4_RB_RI.jpg
-#ProfPlot: ccn5 pmeas_theta_e_twp4_EW_SS theta_e diff EW_SS:_Theta-E Theta-E_Difference_(K) Height_(km) NorthEast -10:0.5:10 0.0 20.0 prof_theta_e_twp4_EW_SS.jpg
-#ProfPlot: ccn5 pmeas_theta_e_twp4_CO_SS theta_e diff CO_SS:_Theta-E Theta-E_Difference_(K) Height_(km) NorthEast -10:0.5:10 0.0 20.0 prof_theta_e_twp4_CO_SS.jpg
-#ProfPlot: ccn5 pmeas_theta_e_twp4_RB_SS theta_e diff RB_SS:_Theta-E Theta-E_Difference_(K) Height_(km) NorthEast -10:0.5:10 0.0 20.0 prof_theta_e_twp4_RB_SS.jpg
-#
-#ProfPlot: ccn5 pmeas_w_twp4_EW_RI w abs EW_RI:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -1:0.05:1 0.0 20.0 prof_w_twp4_EW_RI.jpg
-#ProfPlot: ccn5 pmeas_w_twp4_CO_RI w abs CO_RI:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -1:0.05:1 0.0 20.0 prof_w_twp4_CO_RI.jpg
-#ProfPlot: ccn5 pmeas_w_twp4_RB_RI w abs RB_RI:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -1:0.05:1 0.0 20.0 prof_w_twp4_RB_RI.jpg
-#ProfPlot: ccn5 pmeas_w_twp4_EW_SS w abs EW_SS:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -1:0.05:1 0.0 20.0 prof_w_twp4_EW_SS.jpg
-#ProfPlot: ccn5 pmeas_w_twp4_CO_SS w abs CO_SS:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -1:0.05:1 0.0 20.0 prof_w_twp4_CO_SS.jpg
-#ProfPlot: ccn5 pmeas_w_twp4_RB_SS w abs RB_SS:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -1:0.05:1 0.0 20.0 prof_w_twp4_RB_SS.jpg
-#
-#ProfPlot: ccn5 pmeas_w_up_twp4_EW_RI w diff EW_RI:_Updrafts W_Difference_(m/s) Height_(km) NorthEast -1:0.05:1 0.0 20.0 prof_w_up_twp4_EW_RI.jpg
+ProfPlot: ccn5 pmeas_lhf_twp4_0p1_EW_RI lh_frzt abs EW_RI:_LH_Frz Avg_Latent_Heating_(K/hr) Height_(km) NorthWest -1.5:0.05:2.0 0.0 15.0 prof_lhf_twp4_0p1_EW_RI.jpg
+#ProfPlot: ccn5 pmeas_lhf_twp4_0p1_CO_RI lh_frzt abs CO_RI:_LH_Frz Avg_Latent_Heating_(K/hr) Height_(km) NorthWest -1.5:0.05:2.0 0.0 15.0 prof_lhf_twp4_0p1_CO_RI.jpg
+ProfPlot: ccn5 pmeas_lhf_twp4_0p1_RB_RI lh_frzt abs RB_RI:_LH_Frz Avg_Latent_Heating_(K/hr) Height_(km) NorthWest -1.5:0.05:2.0 0.0 15.0 prof_lhf_twp4_0p1_RB_RI.jpg
+ProfPlot: ccn5 pmeas_lhf_twp4_0p1_EW_SS lh_frzt abs EW_SS:_LH_Frz Avg_Latent_Heating_(K/hr) Height_(km) NorthWest -1.5:0.05:2.0 0.0 15.0 prof_lhf_twp4_0p1_EW_SS.jpg
+#ProfPlot: ccn5 pmeas_lhf_twp4_0p1_CO_SS lh_frzt abs CO_SS:_LH_Frz Avg_Latent_Heating_(K/hr) Height_(km) NorthWest -1.5:0.05:2.0 0.0 15.0 prof_lhf_twp4_0p1_CO_SS.jpg
+ProfPlot: ccn5 pmeas_lhf_twp4_0p1_RB_SS lh_frzt abs RB_SS:_LH_Frz Avg_Latent_Heating_(K/hr) Height_(km) NorthWest -1.5:0.05:2.0 0.0 15.0 prof_lhf_twp4_0p1_RB_SS.jpg
+
+ProfPlot: ccn5 pmeas_lhv_twp4_1p0_EW_RI lh_vapt abs EW_RI:_LH_Vap Avg_Latent_Heating_(K/hr) Height_(km) NorthWest -20:0.5:20 0.0 16.0 prof_lhv_twp4_1p0_EW_RI.jpg
+#ProfPlot: ccn5 pmeas_lhv_twp4_1p0_CO_RI lh_vapt abs CO_RI:_LH_Vap Avg_Latent_Heating_(K/hr) Height_(km) NorthWest -20:0.5:20 0.0 16.0 prof_lhv_twp4_1p0_CO_RI.jpg
+ProfPlot: ccn5 pmeas_lhv_twp4_1p0_RB_RI lh_vapt abs RB_RI:_LH_Vap Avg_Latent_Heating_(K/hr) Height_(km) NorthWest -20:0.5:20 0.0 16.0 prof_lhv_twp4_1p0_RB_RI.jpg
+ProfPlot: ccn5 pmeas_lhv_twp4_1p0_EW_SS lh_vapt abs EW_SS:_LH_Vap Avg_Latent_Heating_(K/hr) Height_(km) NorthWest -20:0.5:20 0.0 16.0 prof_lhv_twp4_1p0_EW_SS.jpg
+#ProfPlot: ccn5 pmeas_lhv_twp4_1p0_CO_SS lh_vapt abs CO_SS:_LH_Vap Avg_Latent_Heating_(K/hr) Height_(km) NorthWest -20:0.5:20 0.0 16.0 prof_lhv_twp4_1p0_CO_SS.jpg
+ProfPlot: ccn5 pmeas_lhv_twp4_1p0_RB_SS lh_vapt abs RB_SS:_LH_Vap Avg_Latent_Heating_(K/hr) Height_(km) NorthWest -20:0.5:20 0.0 16.0 prof_lhv_twp4_1p0_RB_SS.jpg
+
+ProfPlot: ccn5 pmeas_theta_e_EW_RI theta_e abs EW_RI:_Theta-E Theta-E_(K) Height_(km) NorthEast 325:5:355 0.0 10.0 prof_theta_e_EW_RI.jpg
+#ProfPlot: ccn5 pmeas_theta_e_CO_RI theta_e abs CO_RI:_Theta-E Theta-E_(K) Height_(km) NorthEast 325:5:355 0.0 10.0 prof_theta_e_CO_RI.jpg
+ProfPlot: ccn5 pmeas_theta_e_RB_RI theta_e abs RB_RI:_Theta-E Theta-E_(K) Height_(km) NorthEast 325:5:355 0.0 10.0 prof_theta_e_RB_RI.jpg
+ProfPlot: ccn5 pmeas_theta_e_EW_SS theta_e abs EW_SS:_Theta-E Theta-E_(K) Height_(km) NorthEast 325:5:355 0.0 10.0 prof_theta_e_EW_SS.jpg
+#ProfPlot: ccn5 pmeas_theta_e_CO_SS theta_e abs CO_SS:_Theta-E Theta-E_(K) Height_(km) NorthEast 325:5:355 0.0 10.0 prof_theta_e_CO_SS.jpg
+ProfPlot: ccn5 pmeas_theta_e_RB_SS theta_e abs RB_SS:_Theta-E Theta-E_(K) Height_(km) NorthEast 325:5:355 0.0 10.0 prof_theta_e_RB_SS.jpg
+
+ProfPlot: ccn5 pmeas_theta_e_twp4_EW_RI theta_e abs EW_RI:_Theta-E Theta-E_(K) Height_(km) NorthEast 325:5:355 0.0 10.0 prof_theta_e_twp4_EW_RI.jpg
+#ProfPlot: ccn5 pmeas_theta_e_twp4_CO_RI theta_e abs CO_RI:_Theta-E Theta-E_(K) Height_(km) NorthEast 325:5:355 0.0 10.0 prof_theta_e_twp4_CO_RI.jpg
+ProfPlot: ccn5 pmeas_theta_e_twp4_RB_RI theta_e abs RB_RI:_Theta-E Theta-E_(K) Height_(km) NorthEast 325:5:355 0.0 10.0 prof_theta_e_twp4_RB_RI.jpg
+ProfPlot: ccn5 pmeas_theta_e_twp4_EW_SS theta_e abs EW_SS:_Theta-E Theta-E_(K) Height_(km) NorthEast 325:5:355 0.0 10.0 prof_theta_e_twp4_EW_SS.jpg
+#ProfPlot: ccn5 pmeas_theta_e_twp4_CO_SS theta_e abs CO_SS:_Theta-E Theta-E_(K) Height_(km) NorthEast 325:5:355 0.0 10.0 prof_theta_e_twp4_CO_SS.jpg
+ProfPlot: ccn5 pmeas_theta_e_twp4_RB_SS theta_e abs RB_SS:_Theta-E Theta-E_(K) Height_(km) NorthEast 325:5:355 0.0 10.0 prof_theta_e_twp4_RB_SS.jpg
+
+ProfPlot: ccn5 pmeas_tempc_twp4_EW_RI tempc diff EW_RI:_Temperature Temperature_Difference_(\circC) Height_(km) NorthEast -1:0.1:1 0.0 6.0 prof_tempc_twp4_EW_RI.jpg
+#ProfPlot: ccn5 pmeas_tempc_twp4_CO_RI tempc diff CO_RI:_Temperature Temperature_Difference_(\circC) Height_(km) SouthWest -1:0.1:1 0.0 6.0 prof_tempc_twp4_CO_RI.jpg
+ProfPlot: ccn5 pmeas_tempc_twp4_RB_RI tempc diff RB_RI:_Temperature Temperature_Difference_(\circC) Height_(km) NorthEast -1:0.1:1 0.0 6.0 prof_tempc_twp4_RB_RI.jpg
+ProfPlot: ccn5 pmeas_tempc_twp4_EW_SS tempc diff EW_SS:_Temperature Temperature_Difference_(\circC) Height_(km) NorthEast -2:0.1:2 0.0 6.0 prof_tempc_twp4_EW_SS.jpg
+#ProfPlot: ccn5 pmeas_tempc_twp4_CO_SS tempc diff CO_SS:_Temperature Temperature_Difference_(\circC) Height_(km) NorthEast -2:0.1:2 0.0 6.0 prof_tempc_twp4_CO_SS.jpg
+ProfPlot: ccn5 pmeas_tempc_twp4_RB_SS tempc diff RB_SS:_Temperature Temperature_Difference_(\circC) Height_(km) NorthEast -2:0.1:2 0.0 6.0 prof_tempc_twp4_RB_SS.jpg
+
+ProfPlot: ccn5 pmeas_w_twp4_EW_RI w abs EW_RI:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 prof_w_twp4_EW_RI.jpg
+##ProfPlot: ccn5 pmeas_w_twp4_CO_RI w abs CO_RI:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 prof_w_twp4_CO_RI.jpg
+ProfPlot: ccn5 pmeas_w_twp4_RB_RI w abs RB_RI:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 prof_w_twp4_RB_RI.jpg
+ProfPlot: ccn5 pmeas_w_twp4_EW_SS w abs EW_SS:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 prof_w_twp4_EW_SS.jpg
+#ProfPlot: ccn5 pmeas_w_twp4_CO_SS w abs CO_SS:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 prof_w_twp4_CO_SS.jpg
+ProfPlot: ccn5 pmeas_w_twp4_RB_SS w abs RB_SS:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 prof_w_twp4_RB_SS.jpg
+
+ProfPlot: ccn5 pmeas_w_up_twp4_EW_RI w diff EW_RI:_Updrafts W_Difference_(m/s) Height_(km) NorthEast -1:0.05:1 0.0 20.0 prof_w_up_twp4_EW_RI.jpg
 #ProfPlot: ccn5 pmeas_w_up_twp4_CO_RI w diff CO_RI:_Updrafts W_Difference_(m/s) Height_(km) NorthEast -1:0.05:1 0.0 20.0 prof_w_up_twp4_CO_RI.jpg
-#ProfPlot: ccn5 pmeas_w_up_twp4_RB_RI w diff RB_RI:_Updrafts W_Difference_(m/s) Height_(km) NorthEast -1:0.05:1 0.0 20.0 prof_w_up_twp4_RB_RI.jpg
-#ProfPlot: ccn5 pmeas_w_up_twp4_EW_SS w diff EW_SS:_Updrafts W_Difference_(m/s) Height_(km) NorthEast -1:0.05:1 0.0 20.0 prof_w_up_twp4_EW_SS.jpg
+ProfPlot: ccn5 pmeas_w_up_twp4_RB_RI w diff RB_RI:_Updrafts W_Difference_(m/s) Height_(km) NorthEast -1:0.05:1 0.0 20.0 prof_w_up_twp4_RB_RI.jpg
+ProfPlot: ccn5 pmeas_w_up_twp4_EW_SS w diff EW_SS:_Updrafts W_Difference_(m/s) Height_(km) NorthEast -1:0.05:1 0.0 20.0 prof_w_up_twp4_EW_SS.jpg
 #ProfPlot: ccn5 pmeas_w_up_twp4_CO_SS w diff CO_SS:_Updrafts W_Difference_(m/s) Height_(km) NorthEast -1:0.05:1 0.0 20.0 prof_w_up_twp4_CO_SS.jpg
-#ProfPlot: ccn5 pmeas_w_up_twp4_RB_SS w diff RB_SS:_Updrafts W_Difference_(m/s) Height_(km) NorthEast -1:0.05:1 0.0 20.0 prof_w_up_twp4_RB_SS.jpg
-#
-#ProfPlot: ccn5 pmeas_w_dn_twp4_EW_RI w diff EW_RI:_Downdrafts W_Difference_(m/s) Height_(km) NorthEast -1:0.05:1 0.0 20.0 prof_w_dn_twp4_EW_RI.jpg
+ProfPlot: ccn5 pmeas_w_up_twp4_RB_SS w diff RB_SS:_Updrafts W_Difference_(m/s) Height_(km) NorthEast -1:0.05:1 0.0 20.0 prof_w_up_twp4_RB_SS.jpg
+
+ProfPlot: ccn5 pmeas_w_dn_twp4_EW_RI w diff EW_RI:_Downdrafts W_Difference_(m/s) Height_(km) NorthEast -1:0.05:1 0.0 20.0 prof_w_dn_twp4_EW_RI.jpg
 #ProfPlot: ccn5 pmeas_w_dn_twp4_CO_RI w diff CO_RI:_Downdrafts W_Difference_(m/s) Height_(km) NorthEast -1:0.05:1 0.0 20.0 prof_w_dn_twp4_CO_RI.jpg
-#ProfPlot: ccn5 pmeas_w_dn_twp4_RB_RI w diff RB_RI:_Downdrafts W_Difference_(m/s) Height_(km) NorthEast -1:0.05:1 0.0 20.0 prof_w_dn_twp4_RB_RI.jpg
-#ProfPlot: ccn5 pmeas_w_dn_twp4_EW_SS w diff EW_SS:_Downdrafts W_Difference_(m/s) Height_(km) NorthEast -1:0.05:1 0.0 20.0 prof_w_dn_twp4_EW_SS.jpg
+ProfPlot: ccn5 pmeas_w_dn_twp4_RB_RI w diff RB_RI:_Downdrafts W_Difference_(m/s) Height_(km) NorthEast -1:0.05:1 0.0 20.0 prof_w_dn_twp4_RB_RI.jpg
+ProfPlot: ccn5 pmeas_w_dn_twp4_EW_SS w diff EW_SS:_Downdrafts W_Difference_(m/s) Height_(km) NorthEast -1:0.05:1 0.0 20.0 prof_w_dn_twp4_EW_SS.jpg
 #ProfPlot: ccn5 pmeas_w_dn_twp4_CO_SS w diff CO_SS:_Downdrafts W_Difference_(m/s) Height_(km) NorthEast -1:0.05:1 0.0 20.0 prof_w_dn_twp4_CO_SS.jpg
-#ProfPlot: ccn5 pmeas_w_dn_twp4_RB_SS w diff RB_SS:_Downdrafts W_Difference_(m/s) Height_(km) NorthEast -1:0.05:1 0.0 20.0 prof_w_dn_twp4_RB_SS.jpg
-#
-#ProfPlot: ccn5 pmeas_ccn_conc_twp4_EW_RI ccn_conc abs EW_RI:_CCN_Conc Concentration_(#/cc) Height_(km) NorthEast -10:5.25:200 0.0 1.5 prof_ccn_conc_twp4_EW_RI.jpg
-#ProfPlot: ccn5 pmeas_ccn_conc_twp4_CO_RI ccn_conc abs CO_RI:_CCN_Conc Concentration_(#/cc) Height_(km) NorthEast -10:5.25:200 0.0 1.5 prof_ccn_conc_twp4_CO_RI.jpg
-#ProfPlot: ccn5 pmeas_ccn_conc_twp4_RB_RI ccn_conc abs RB_RI:_CCN_Conc Concentration_(#/cc) Height_(km) NorthEast -10:5.25:200 0.0 1.5 prof_ccn_conc_twp4_RB_RI.jpg
-#ProfPlot: ccn5 pmeas_ccn_conc_twp4_EW_SS ccn_conc abs EW_SS:_CCN_Conc Concentration_(#/cc) Height_(km) NorthEast -10:5.25:200 0.0 1.5 prof_ccn_conc_twp4_EW_SS.jpg
-#ProfPlot: ccn5 pmeas_ccn_conc_twp4_CO_SS ccn_conc abs CO_SS:_CCN_Conc Concentration_(#/cc) Height_(km) NorthEast -10:5.25:200 0.0 1.5 prof_ccn_conc_twp4_CO_SS.jpg
-#ProfPlot: ccn5 pmeas_ccn_conc_twp4_RB_SS ccn_conc abs RB_SS:_CCN_Conc Concentration_(#/cc) Height_(km) NorthEast -10:5.25:200 0.0 1.5 prof_ccn_conc_twp4_RB_SS.jpg
-#
-#ProfPlot: ccn5 pmeas_saltf_conc_twp4_EW_RI saltf_conc abs EW_RI:_Salt_Film_Conc Concentration_(#/cc) Height_(km) NorthEast -1:0.15:5 0.0 1.5 prof_saltf_conc_twp4_EW_RI.jpg
+ProfPlot: ccn5 pmeas_w_dn_twp4_RB_SS w diff RB_SS:_Downdrafts W_Difference_(m/s) Height_(km) NorthEast -1:0.05:1 0.0 20.0 prof_w_dn_twp4_RB_SS.jpg
+
+ProfPlot: ccn5 pmeas_ccn_conc_twp4_EW_RI ccn_conc abs EW_RI:_CCN_Conc Concentration_(#/cc) Height_(km) NorthEast -10:5:150 0.0 1.5 prof_ccn_conc_twp4_EW_RI.jpg
+#ProfPlot: ccn5 pmeas_ccn_conc_twp4_CO_RI ccn_conc abs CO_RI:_CCN_Conc Concentration_(#/cc) Height_(km) NorthEast -10:5:150 0.0 1.5 prof_ccn_conc_twp4_CO_RI.jpg
+ProfPlot: ccn5 pmeas_ccn_conc_twp4_RB_RI ccn_conc abs RB_RI:_CCN_Conc Concentration_(#/cc) Height_(km) NorthEast -10:5:300 0.0 2.5 prof_ccn_conc_twp4_RB_RI.jpg
+ProfPlot: ccn5 pmeas_ccn_conc_twp4_EW_SS ccn_conc abs EW_SS:_CCN_Conc Concentration_(#/cc) Height_(km) NorthEast -10:5:150 0.0 1.5 prof_ccn_conc_twp4_EW_SS.jpg
+#ProfPlot: ccn5 pmeas_ccn_conc_twp4_CO_SS ccn_conc abs CO_SS:_CCN_Conc Concentration_(#/cc) Height_(km) NorthEast -10:5:150 0.0 1.5 prof_ccn_conc_twp4_CO_SS.jpg
+ProfPlot: ccn5 pmeas_ccn_conc_twp4_RB_SS ccn_conc abs RB_SS:_CCN_Conc Concentration_(#/cc) Height_(km) NorthEast -10:5:300 0.0 2.5 prof_ccn_conc_twp4_RB_SS.jpg
+
+ProfPlot: ccn5 pmeas_saltf_conc_twp4_EW_RI saltf_conc abs EW_RI:_Salt_Film_Conc Concentration_(#/cc) Height_(km) NorthEast -1:0.15:5 0.0 1.5 prof_saltf_conc_twp4_EW_RI.jpg
 #ProfPlot: ccn5 pmeas_saltf_conc_twp4_CO_RI saltf_conc abs CO_RI:_Salt_Film_Conc Concentration_(#/cc) Height_(km) NorthEast -1:0.15:5 0.0 1.5 prof_saltf_conc_twp4_CO_RI.jpg
-#ProfPlot: ccn5 pmeas_saltf_conc_twp4_RB_RI saltf_conc abs RB_RI:_Salt_Film_Conc Concentration_(#/cc) Height_(km) NorthEast -1:0.15:5 0.0 1.5 prof_saltf_conc_twp4_RB_RI.jpg
-#ProfPlot: ccn5 pmeas_saltf_conc_twp4_EW_SS saltf_conc abs EW_SS:_Salt_Film_Conc Concentration_(#/cc) Height_(km) NorthEast -1:0.15:5 0.0 1.5 prof_saltf_conc_twp4_EW_SS.jpg
+ProfPlot: ccn5 pmeas_saltf_conc_twp4_RB_RI saltf_conc abs RB_RI:_Salt_Film_Conc Concentration_(#/cc) Height_(km) NorthEast -1:0.15:5 0.0 1.5 prof_saltf_conc_twp4_RB_RI.jpg
+ProfPlot: ccn5 pmeas_saltf_conc_twp4_EW_SS saltf_conc abs EW_SS:_Salt_Film_Conc Concentration_(#/cc) Height_(km) NorthEast -1:0.15:5 0.0 1.5 prof_saltf_conc_twp4_EW_SS.jpg
 #ProfPlot: ccn5 pmeas_saltf_conc_twp4_CO_SS saltf_conc abs CO_SS:_Salt_Film_Conc Concentration_(#/cc) Height_(km) NorthEast -1:0.15:5 0.0 1.5 prof_saltf_conc_twp4_CO_SS.jpg
-#ProfPlot: ccn5 pmeas_saltf_conc_twp4_RB_SS saltf_conc abs RB_SS:_Salt_Film_Conc Concentration_(#/cc) Height_(km) NorthEast -2:0.15:5 0.0 1.5 prof_saltf_conc_twp4_RB_SS.jpg
-#
-#ProfPlot: ccn5 pmeas_saltj_conc_twp4_EW_RI saltj_conc abs EW_RI:_Salt_Jet_Conc Concentration_(#/cc) Height_(km) NorthEast -0.1:0.015:0.5 0.0 1.5 prof_saltj_conc_twp4_EW_RI.jpg
+ProfPlot: ccn5 pmeas_saltf_conc_twp4_RB_SS saltf_conc abs RB_SS:_Salt_Film_Conc Concentration_(#/cc) Height_(km) NorthEast -2:0.15:5 0.0 1.5 prof_saltf_conc_twp4_RB_SS.jpg
+
+ProfPlot: ccn5 pmeas_saltj_conc_twp4_EW_RI saltj_conc abs EW_RI:_Salt_Jet_Conc Concentration_(#/cc) Height_(km) NorthEast -0.1:0.015:0.5 0.0 1.5 prof_saltj_conc_twp4_EW_RI.jpg
 #ProfPlot: ccn5 pmeas_saltj_conc_twp4_CO_RI saltj_conc abs CO_RI:_Salt_Jet_Conc Concentration_(#/cc) Height_(km) NorthEast -0.1:0.015:0.5 0.0 1.5 prof_saltj_conc_twp4_CO_RI.jpg
-#ProfPlot: ccn5 pmeas_saltj_conc_twp4_RB_RI saltj_conc abs RB_RI:_Salt_Jet_Conc Concentration_(#/cc) Height_(km) NorthEast -0.1:0.015:0.5 0.0 1.5 prof_saltj_conc_twp4_RB_RI.jpg
-#ProfPlot: ccn5 pmeas_saltj_conc_twp4_EW_SS saltj_conc abs EW_SS:_Salt_Jet_Conc Concentration_(#/cc) Height_(km) NorthEast -0.1:0.015:0.5 0.0 1.5 prof_saltj_conc_twp4_EW_SS.jpg
+ProfPlot: ccn5 pmeas_saltj_conc_twp4_RB_RI saltj_conc abs RB_RI:_Salt_Jet_Conc Concentration_(#/cc) Height_(km) NorthEast -0.1:0.015:0.5 0.0 1.5 prof_saltj_conc_twp4_RB_RI.jpg
+ProfPlot: ccn5 pmeas_saltj_conc_twp4_EW_SS saltj_conc abs EW_SS:_Salt_Jet_Conc Concentration_(#/cc) Height_(km) NorthEast -0.1:0.015:0.5 0.0 1.5 prof_saltj_conc_twp4_EW_SS.jpg
 #ProfPlot: ccn5 pmeas_saltj_conc_twp4_CO_SS saltj_conc abs CO_SS:_Salt_Jet_Conc Concentration_(#/cc) Height_(km) NorthEast -0.1:0.015:0.5 0.0 1.5 prof_saltj_conc_twp4_CO_SS.jpg
-#ProfPlot: ccn5 pmeas_saltj_conc_twp4_RB_SS saltj_conc abs RB_SS:_Salt_Jet_Conc Concentration_(#/cc) Height_(km) NorthEast -0.1:0.015:0.5 0.0 1.5 prof_saltj_conc_twp4_RB_SS.jpg
-#
-#ProfPlot: ccn5 pmeas_cloud_d_twp4_EW_RI cloud_d diff EW_RI:_Mean_Cloud_Diam Diameter_Difference_(um) Height_(km) NorthEast -25:1.0:25 0.0 15.0 prof_cloud_d_twp4_EW_RI.jpg
-#ProfPlot: ccn5 pmeas_cloud_d_twp4_CO_RI cloud_d diff CO_RI:_Mean_Cloud_Diam Diameter_Difference_(um) Height_(km) NorthEast -25:1.0:25 0.0 15.0 prof_cloud_d_twp4_CO_RI.jpg
-#ProfPlot: ccn5 pmeas_cloud_d_twp4_RB_RI cloud_d diff RB_RI:_Mean_Cloud_Diam Diameter_Difference_(um) Height_(km) NorthEast -10:0.5:10 0.0 15.0 prof_cloud_d_twp4_RB_RI.jpg
-#ProfPlot: ccn5 pmeas_cloud_d_twp4_EW_SS cloud_d diff EW_SS:_Mean_Cloud_Diam Diameter_Difference_(um) Height_(km) NorthEast -25:1.0:25 0.0 15.0 prof_cloud_d_twp4_EW_SS.jpg
-#ProfPlot: ccn5 pmeas_cloud_d_twp4_CO_SS cloud_d diff CO_SS:_Mean_Cloud_Diam Diameter_Difference_(um) Height_(km) NorthEast -25:1.0:25 0.0 15.0 prof_cloud_d_twp4_CO_SS.jpg
-#ProfPlot: ccn5 pmeas_cloud_d_twp4_RB_SS cloud_d diff RB_SS:_Mean_Cloud_Diam Diameter_Difference_(um) Height_(km) NorthEast -10:0.5:10 0.0 15.0 prof_cloud_d_twp4_RB_SS.jpg
-#
-#ProfPlot: ccn5 pmeas_cloud_cm3_twp4_EW_RI cloud_cm3 diff EW_RI:_Cloud_Conc Concentration_Difference_(#/cc) Height_(km) NorthEast -50:2:50 0.0 15.0 prof_cloud_cm3_twp4_EW_RI.jpg
-#ProfPlot: ccn5 pmeas_cloud_cm3_twp4_CO_RI cloud_cm3 diff CO_RI:_Cloud_Conc Concentration_Difference_(#/cc) Height_(km) NorthEast -50:2:50 0.0 15.0 prof_cloud_cm3_twp4_CO_RI.jpg
-#ProfPlot: ccn5 pmeas_cloud_cm3_twp4_RB_RI cloud_cm3 diff RB_RI:_Cloud_Conc Concentration_Difference_(#/cc) Height_(km) NorthEast -50:2:50 0.0 15.0 prof_cloud_cm3_twp4_RB_RI.jpg
-#ProfPlot: ccn5 pmeas_cloud_cm3_twp4_EW_SS cloud_cm3 diff EW_SS:_Cloud_Conc Concentration_Difference_(#/cc) Height_(km) NorthEast -50:2:50 0.0 15.0 prof_cloud_cm3_twp4_EW_SS.jpg
-#ProfPlot: ccn5 pmeas_cloud_cm3_twp4_CO_SS cloud_cm3 diff CO_SS:_Cloud_Conc Concentration_Difference_(#/cc) Height_(km) NorthEast -50:2:50 0.0 15.0 prof_cloud_cm3_twp4_CO_SS.jpg
-#ProfPlot: ccn5 pmeas_cloud_cm3_twp4_RB_SS cloud_cm3 diff RB_SS:_Cloud_Conc Concentration_Difference_(#/cc) Height_(km) NorthEast -75:3:75 0.0 15.0 prof_cloud_cm3_twp4_RB_SS.jpg
-#
-#ProfPlot: ccn5 pmeas_drizzle_d_twp4_EW_RI drizzle_d diff EW_RI:_Mean_Drizzle_Diam Diameter_Difference_(um) Height_(km) NorthEast -120:2:120 0.0 15.0 prof_drizzle_d_twp4_EW_RI.jpg
-#ProfPlot: ccn5 pmeas_drizzle_d_twp4_CO_RI drizzle_d diff CO_RI:_Mean_Drizzle_Diam Diameter_Difference_(um) Height_(km) NorthEast -120:2:120 0.0 15.0 prof_drizzle_d_twp4_CO_RI.jpg
-#ProfPlot: ccn5 pmeas_drizzle_d_twp4_RB_RI drizzle_d diff RB_RI:_Mean_Drizzle_Diam Diameter_Difference_(um) Height_(km) NorthEast -120:2:120 0.0 15.0 prof_drizzle_d_twp4_RB_RI.jpg
-#ProfPlot: ccn5 pmeas_drizzle_d_twp4_EW_SS drizzle_d diff EW_SS:_Mean_Drizzle_Diam Diameter_Difference_(um) Height_(km) NorthEast -120:2:120 0.0 15.0 prof_drizzle_d_twp4_EW_SS.jpg
-#ProfPlot: ccn5 pmeas_drizzle_d_twp4_CO_SS drizzle_d diff CO_SS:_Mean_Drizzle_Diam Diameter_Difference_(um) Height_(km) NorthEast -120:2:120 0.0 15.0 prof_drizzle_d_twp4_CO_SS.jpg
-#ProfPlot: ccn5 pmeas_drizzle_d_twp4_RB_SS drizzle_d diff RB_SS:_Mean_Drizzle_Diam Diameter_Difference_(um) Height_(km) NorthEast -120:2:120 0.0 15.0 prof_drizzle_d_twp4_RB_SS.jpg
-#
-#ProfPlot: ccn5 pmeas_drizzle_cm3_twp4_EW_RI drizzle_cm3 diff EW_RI:_Drizzle_Conc Concentration_Difference_(#/cc) Height_(km) NorthEast -0.05:0.001:0.05 0.0 15.0 prof_drizzle_cm3_twp4_EW_RI.jpg
-#ProfPlot: ccn5 pmeas_drizzle_cm3_twp4_CO_RI drizzle_cm3 diff CO_RI:_Drizzle_Conc Concentration_Difference_(#/cc) Height_(km) NorthEast -0.05:0.001:0.05 0.0 15.0 prof_drizzle_cm3_twp4_CO_RI.jpg
-#ProfPlot: ccn5 pmeas_drizzle_cm3_twp4_RB_RI drizzle_cm3 diff RB_RI:_Drizzle_Conc Concentration_Difference_(#/cc) Height_(km) NorthEast -0.05:0.001:0.05 0.0 15.0 prof_drizzle_cm3_twp4_RB_RI.jpg
-#ProfPlot: ccn5 pmeas_drizzle_cm3_twp4_EW_SS drizzle_cm3 diff EW_SS:_Drizzle_Conc Concentration_Difference_(#/cc) Height_(km) NorthEast -0.05:0.001:0.05 0.0 15.0 prof_drizzle_cm3_twp4_EW_SS.jpg
-#ProfPlot: ccn5 pmeas_drizzle_cm3_twp4_CO_SS drizzle_cm3 diff CO_SS:_Drizzle_Conc Concentration_Difference_(#/cc) Height_(km) NorthEast -0.05:0.001:0.05 0.0 15.0 prof_drizzle_cm3_twp4_CO_SS.jpg
-#ProfPlot: ccn5 pmeas_drizzle_cm3_twp4_RB_SS drizzle_cm3 diff RB_SS:_Drizzle_Conc Concentration_Difference_(#/cc) Height_(km) NorthEast -0.05:0.001:0.05 0.0 15.0 prof_drizzle_cm3_twp4_RB_SS.jpg
-#
-#ProfPlot: ccn5 pmeas_rain_twp4_EW_RI rain diff EW_RI:_Rain Mixing_Ratio_Difference_(g/kg) Height_(km) NorthEast -0.1:0.002:0.1 0.0 15.0 prof_rain_twp4_EW_RI.jpg
-#ProfPlot: ccn5 pmeas_rain_twp4_CO_RI rain diff CO_RI:_Rain Mixing_Ratio_Difference_(g/kg) Height_(km) NorthEast -0.1:0.002:0.1 0.0 15.0 prof_rain_twp4_CO_RI.jpg
-#ProfPlot: ccn5 pmeas_rain_twp4_RB_RI rain diff RB_RI:_Rain Mixing_Ratio_Difference_(g/kg) Height_(km) NorthEast -0.1:0.002:0.1 0.0 15.0 prof_rain_twp4_RB_RI.jpg
-#ProfPlot: ccn5 pmeas_rain_twp4_EW_SS rain diff EW_SS:_Rain Mixing_Ratio_Difference_(g/kg) Height_(km) NorthEast -0.1:0.002:0.1 0.0 15.0 prof_rain_twp4_EW_SS.jpg
-#ProfPlot: ccn5 pmeas_rain_twp4_CO_SS rain diff CO_SS:_Rain Mixing_Ratio_Difference_(g/kg) Height_(km) NorthEast -0.1:0.002:0.1 0.0 15.0 prof_rain_twp4_CO_SS.jpg
-#ProfPlot: ccn5 pmeas_rain_twp4_RB_SS rain diff RB_SS:_Rain Mixing_Ratio_Difference_(g/kg) Height_(km) NorthEast -0.1:0.002:0.1 0.0 15.0 prof_rain_twp4_RB_SS.jpg
+ProfPlot: ccn5 pmeas_saltj_conc_twp4_RB_SS saltj_conc abs RB_SS:_Salt_Jet_Conc Concentration_(#/cc) Height_(km) NorthEast -0.1:0.015:0.5 0.0 1.5 prof_saltj_conc_twp4_RB_SS.jpg
+
+ProfPlot: ccn5 pmeas_cloud_d_twp4_EW_RI cloud_d abs EW_RI:_Mean_Cloud_Diam Diameter_(um) Height_(km) NorthEast -5:2:30 0.0 15.0 prof_cloud_d_twp4_EW_RI.jpg
+#ProfPlot: ccn5 pmeas_cloud_d_twp4_CO_RI cloud_d abs CO_RI:_Mean_Cloud_Diam Diameter_(um) Height_(km) NorthEast -5:1:30 0.0 15.0 prof_cloud_d_twp4_CO_RI.jpg
+ProfPlot: ccn5 pmeas_cloud_d_twp4_RB_RI cloud_d abs RB_RI:_Mean_Cloud_Diam Diameter_(um) Height_(km) NorthEast -5:1:30 0.0 15.0 prof_cloud_d_twp4_RB_RI.jpg
+ProfPlot: ccn5 pmeas_cloud_d_twp4_EW_SS cloud_d abs EW_SS:_Mean_Cloud_Diam Diameter_(um) Height_(km) NorthEast -5:1:30 0.0 15.0 prof_cloud_d_twp4_EW_SS.jpg
+#ProfPlot: ccn5 pmeas_cloud_d_twp4_CO_SS cloud_d abs CO_SS:_Mean_Cloud_Diam Diameter_(um) Height_(km) NorthEast -5:1:30 0.0 15.0 prof_cloud_d_twp4_CO_SS.jpg
+ProfPlot: ccn5 pmeas_cloud_d_twp4_RB_SS cloud_d abs RB_SS:_Mean_Cloud_Diam Diameter_(um) Height_(km) NorthEast -5:1:30 0.0 15.0 prof_cloud_d_twp4_RB_SS.jpg
+
+ProfPlot: ccn5 pmeas_cloud_cm3_twp4_EW_RI cloud_cm3 abs EW_RI:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:65 0.0 15.0 prof_cloud_cm3_twp4_EW_RI.jpg
+#ProfPlot: ccn5 pmeas_cloud_cm3_twp4_CO_RI cloud_cm3 abs CO_RI:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:65 0.0 15.0 prof_cloud_cm3_twp4_CO_RI.jpg
+ProfPlot: ccn5 pmeas_cloud_cm3_twp4_RB_RI cloud_cm3 abs RB_RI:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:65 0.0 15.0 prof_cloud_cm3_twp4_RB_RI.jpg
+ProfPlot: ccn5 pmeas_cloud_cm3_twp4_EW_SS cloud_cm3 abs EW_SS:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:65 0.0 15.0 prof_cloud_cm3_twp4_EW_SS.jpg
+#ProfPlot: ccn5 pmeas_cloud_cm3_twp4_CO_SS cloud_cm3 abs CO_SS:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:65 0.0 15.0 prof_cloud_cm3_twp4_CO_SS.jpg
+ProfPlot: ccn5 pmeas_cloud_cm3_twp4_RB_SS cloud_cm3 abs RB_SS:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:65 0.0 15.0 prof_cloud_cm3_twp4_RB_SS.jpg
+
+ProfPlot: ccn5 pmeas_drizzle_d_twp4_EW_RI drizzle_d abs EW_RI:_Mean_Drizzle_Diam Diameter_(um) Height_(km) SouthWest -10:5:500 0.0 15.0 prof_drizzle_d_twp4_EW_RI.jpg
+#ProfPlot: ccn5 pmeas_drizzle_d_twp4_CO_RI drizzle_d abs CO_RI:_Mean_Drizzle_Diam Diameter_(um) Height_(km) NorthEast -10:5:500 0.0 15.0 prof_drizzle_d_twp4_CO_RI.jpg
+ProfPlot: ccn5 pmeas_drizzle_d_twp4_RB_RI drizzle_d abs RB_RI:_Mean_Drizzle_Diam Diameter_(um) Height_(km) NorthEast -10:5:500 0.0 15.0 prof_drizzle_d_twp4_RB_RI.jpg
+ProfPlot: ccn5 pmeas_drizzle_d_twp4_EW_SS drizzle_d abs EW_SS:_Mean_Drizzle_Diam Diameter_(um) Height_(km) SouthWest -10:5:500 0.0 15.0 prof_drizzle_d_twp4_EW_SS.jpg
+#ProfPlot: ccn5 pmeas_drizzle_d_twp4_CO_SS drizzle_d abs CO_SS:_Mean_Drizzle_Diam Diameter_(um) Height_(km) NorthEast -10:5:500 0.0 15.0 prof_drizzle_d_twp4_CO_SS.jpg
+ProfPlot: ccn5 pmeas_drizzle_d_twp4_RB_SS drizzle_d abs RB_SS:_Mean_Drizzle_Diam Diameter_(um) Height_(km) NorthEast -10:5:500 0.0 15.0 prof_drizzle_d_twp4_RB_SS.jpg
+
+ProfPlot: ccn5 pmeas_drizzle_cm3_twp4_EW_RI drizzle_cm3 abs EW_RI:_Drizzle_Conc Concentration_(#/cc) Height_(km) NorthEast -0.01:0.001:0.05 0.0 15.0 prof_drizzle_cm3_twp4_EW_RI.jpg
+#ProfPlot: ccn5 pmeas_drizzle_cm3_twp4_CO_RI drizzle_cm3 abs CO_RI:_Drizzle_Conc Concentration_(#/cc) Height_(km) NorthEast -0.01:0.001:0.05 0.0 15.0 prof_drizzle_cm3_twp4_CO_RI.jpg
+ProfPlot: ccn5 pmeas_drizzle_cm3_twp4_RB_RI drizzle_cm3 abs RB_RI:_Drizzle_Conc Concentration_(#/cc) Height_(km) NorthEast -0.01:0.001:0.05 0.0 15.0 prof_drizzle_cm3_twp4_RB_RI.jpg
+ProfPlot: ccn5 pmeas_drizzle_cm3_twp4_EW_SS drizzle_cm3 abs EW_SS:_Drizzle_Conc Concentration_(#/cc) Height_(km) NorthEast -0.01:0.001:0.05 0.0 15.0 prof_drizzle_cm3_twp4_EW_SS.jpg
+#ProfPlot: ccn5 pmeas_drizzle_cm3_twp4_CO_SS drizzle_cm3 abs CO_SS:_Drizzle_Conc Concentration_(#/cc) Height_(km) NorthEast -0.01:0.001:0.05 0.0 15.0 prof_drizzle_cm3_twp4_CO_SS.jpg
+ProfPlot: ccn5 pmeas_drizzle_cm3_twp4_RB_SS drizzle_cm3 abs RB_SS:_Drizzle_Conc Concentration_(#/cc) Height_(km) NorthEast -0.01:0.001:0.05 0.0 15.0 prof_drizzle_cm3_twp4_RB_SS.jpg
+
+ProfPlot: ccn5 pmeas_rain_twp4_EW_RI rain abs EW_RI:_Rain Mixing_Ratio_(g/kg) Height_(km) NorthEast -0.01:0.001:0.3 0.0 15.0 prof_rain_twp4_EW_RI.jpg
+#ProfPlot: ccn5 pmeas_rain_twp4_CO_RI rain abs CO_RI:_Rain Mixing_Ratio_(g/kg) Height_(km) NorthEast -0.01:0.001:0.3 0.0 15.0 prof_rain_twp4_CO_RI.jpg
+ProfPlot: ccn5 pmeas_rain_twp4_RB_RI rain abs RB_RI:_Rain Mixing_Ratio_(g/kg) Height_(km) NorthEast -0.01:0.001:0.3 0.0 15.0 prof_rain_twp4_RB_RI.jpg
+ProfPlot: ccn5 pmeas_rain_twp4_EW_SS rain abs EW_SS:_Rain Mixing_Ratio_(g/kg) Height_(km) NorthEast -0.01:0.001:0.3 0.0 15.0 prof_rain_twp4_EW_SS.jpg
+#ProfPlot: ccn5 pmeas_rain_twp4_CO_SS rain abs CO_SS:_Rain Mixing_Ratio_(g/kg) Height_(km) NorthEast -0.01:0.001:0.3 0.0 15.0 prof_rain_twp4_CO_SS.jpg
+ProfPlot: ccn5 pmeas_rain_twp4_RB_SS rain abs RB_SS:_Rain Mixing_Ratio_(g/kg) Height_(km) NorthEast -0.01:0.001:0.3 0.0 15.0 prof_rain_twp4_RB_SS.jpg
 
 ################### control vs C2000 (AGU) ############################
 #ProfPlot: agu2 pmeas_ccn_conc_twp4_EW_RI ccn_conc abs EW_RI:_CCN_Conc Concentration_(#/cc) Height_(km) NorthEast -10:5.25:150 0.0 1.0 agu_prof_ccn_conc_twp4_EW_RI.jpg
@@ -533,13 +557,17 @@ LinePlot: ccn5_sd    RadRband  VtRbandSS SfcVtRband  y Rainband_Section_of_Max_V
 #ProfPlot: agu2 pmeas_w_twp4_RB_SS w abs RB_SS:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 agu_prof_w_twp4_RB_SS.jpg
 
 ######################## Profile Plots SD #############################
+#ProfPlot: ccn5_sd pmeas_lhf_twp4_0p1_EW_RI lh_frzt diff LH_Frz,_Eyewall,_Rapid_Intensification Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -0.5:0.025:0.5 0.0 20.0 prof_lhf_twp4_0p1_EW_RI_sd.jpg
 #ProfPlot: ccn5_sd pmeas_lhf_twp4_0p1_CO_RI lh_frzt diff LH_Frz,_Core,_Rapid_Intensification Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -0.5:0.025:0.5 0.0 20.0 prof_lhf_twp4_0p1_CO_RI_sd.jpg
 #ProfPlot: ccn5_sd pmeas_lhf_twp4_0p1_RB_RI lh_frzt diff LH_Frz,_Rainbands,_Rapid_Intensification Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -0.5:0.025:0.5 0.0 20.0 prof_lhf_twp4_0p1_RB_RI_sd.jpg
+#ProfPlot: ccn5_sd pmeas_lhf_twp4_0p1_EW_SS lh_frzt diff LH_Frz,_Eyewall,_Steady_State Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -0.5:0.025:0.5 0.0 20.0 prof_lhf_twp4_0p1_EW_SS_sd.jpg
 #ProfPlot: ccn5_sd pmeas_lhf_twp4_0p1_CO_SS lh_frzt diff LH_Frz,_Core,_Steady_State Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -0.5:0.025:0.5 0.0 20.0 prof_lhf_twp4_0p1_CO_SS_sd.jpg
 #ProfPlot: ccn5_sd pmeas_lhf_twp4_0p1_RB_SS lh_frzt diff LH_Frz,_Rainbands,_Steady_State Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -0.5:0.025:0.5 0.0 20.0 prof_lhf_twp4_0p1_RB_SS_sd.jpg
-#
+
+#ProfPlot: ccn5_sd pmeas_lhv_twp4_1p0_EW_RI lh_vapt diff LH_Vap,_Eyewall,_Rapid_Intensification Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -10:0.5:10 0.0 20.0 prof_lhv_twp4_1p0_EW_RI_sd.jpg
 #ProfPlot: ccn5_sd pmeas_lhv_twp4_1p0_CO_RI lh_vapt diff LH_Vap,_Core,_Rapid_Intensification Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -10:0.5:10 0.0 20.0 prof_lhv_twp4_1p0_CO_RI_sd.jpg
 #ProfPlot: ccn5_sd pmeas_lhv_twp4_1p0_RB_RI lh_vapt diff LH_Vap,_Rainbands,_Rapid_Intensification Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -10:0.5:10 0.0 20.0 prof_lhv_twp4_1p0_RB_RI_sd.jpg
+#ProfPlot: ccn5_sd pmeas_lhv_twp4_1p0_EW_SS lh_vapt diff LH_Vap,_Eyewall,_Steady_State Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -10:0.5:10 0.0 20.0 prof_lhv_twp4_1p0_EW_SS_sd.jpg
 #ProfPlot: ccn5_sd pmeas_lhv_twp4_1p0_CO_SS lh_vapt diff LH_Vap,_Core,_Steady_State Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -10:0.5:10 0.0 20.0 prof_lhv_twp4_1p0_CO_SS_sd.jpg
 #ProfPlot: ccn5_sd pmeas_lhv_twp4_1p0_RB_SS lh_vapt diff LH_Vap,_Rainbands,_Steady_State Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -10:0.5:10 0.0 20.0 prof_lhv_twp4_1p0_RB_SS_sd.jpg
 
@@ -586,12 +614,12 @@ LinePlot: ccn5_sd    RadRband  VtRbandSS SfcVtRband  y Rainband_Section_of_Max_V
 #ProfTsPlot: ccn5 pmeas_w_dn_twp4_CO_SS w CO_SS:_Downdrafts_(m/s) Simulation_Time_(hr) Height_(km) -2 0 0 15 max_white pts_w_dn_twp4_CO_SS
 #ProfTsPlot: ccn5 pmeas_w_dn_twp4_RB_SS w RB_SS:_Downdrafts_(m/s) Simulation_Time_(hr) Height_(km) -2 0 0 15 max_white pts_w_dn_twp4_RB_SS
 
-ProfTsPlot: ccn5 pmeas_ccn_conc_twp4_EW_RI ccn_conc EW_RI:_CCN_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 250 0.0 1.5 min_white pts_ccn_conc_twp4_EW_RI
-ProfTsPlot: ccn5 pmeas_ccn_conc_twp4_CO_RI ccn_conc CO_RI:_CCN_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 250 0.0 1.5 min_white pts_ccn_conc_twp4_CO_RI
-ProfTsPlot: ccn5 pmeas_ccn_conc_twp4_RB_RI ccn_conc RB_RI:_CCN_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 250 0.0 1.5 min_white pts_ccn_conc_twp4_RB_RI
-ProfTsPlot: ccn5 pmeas_ccn_conc_twp4_EW_SS ccn_conc EW_SS:_CCN_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 250 0.0 1.5 min_white pts_ccn_conc_twp4_EW_SS
-ProfTsPlot: ccn5 pmeas_ccn_conc_twp4_CO_SS ccn_conc CO_SS:_CCN_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 250 0.0 1.5 min_white pts_ccn_conc_twp4_CO_SS
-ProfTsPlot: ccn5 pmeas_ccn_conc_twp4_RB_SS ccn_conc RB_SS:_CCN_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 250 0.0 1.5 min_white pts_ccn_conc_twp4_RB_SS
+#ProfTsPlot: ccn5 pmeas_ccn_conc_twp4_EW_RI ccn_conc EW_RI:_CCN_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 250 0.0 1.5 min_white pts_ccn_conc_twp4_EW_RI
+#ProfTsPlot: ccn5 pmeas_ccn_conc_twp4_CO_RI ccn_conc CO_RI:_CCN_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 250 0.0 1.5 min_white pts_ccn_conc_twp4_CO_RI
+#ProfTsPlot: ccn5 pmeas_ccn_conc_twp4_RB_RI ccn_conc RB_RI:_CCN_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 250 0.0 1.5 min_white pts_ccn_conc_twp4_RB_RI
+#ProfTsPlot: ccn5 pmeas_ccn_conc_twp4_EW_SS ccn_conc EW_SS:_CCN_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 250 0.0 1.5 min_white pts_ccn_conc_twp4_EW_SS
+#ProfTsPlot: ccn5 pmeas_ccn_conc_twp4_CO_SS ccn_conc CO_SS:_CCN_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 250 0.0 1.5 min_white pts_ccn_conc_twp4_CO_SS
+#ProfTsPlot: ccn5 pmeas_ccn_conc_twp4_RB_SS ccn_conc RB_SS:_CCN_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 250 0.0 1.5 min_white pts_ccn_conc_twp4_RB_SS
 
 #ProfTsPlot: ccn5 pmeas_saltf_conc_twp4_EW_RI saltf_conc EW_RI:_Salt_Film_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 2 0.0 1.5 min_white pts_saltf_conc_twp4_EW_RI
 #ProfTsPlot: ccn5 pmeas_saltf_conc_twp4_CO_RI saltf_conc CO_RI:_Salt_Film_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 2 0.0 1.5 min_white pts_saltf_conc_twp4_CO_RI
@@ -643,65 +671,65 @@ ProfTsPlot: ccn5 pmeas_ccn_conc_twp4_RB_SS ccn_conc RB_SS:_CCN_Conc_(#/cc) Simul
 #ProfTsPlot: ccn5 pmeas_rain_twp4_RB_SS rain RB_SS:_Rain_Mixing_Ratio_(g/kg) Simulation_Time_(hr) Height_(km) 0 0.5 0.0 15.0 min_white pts_rain_twp4_RB_SS
 
 # full simulation
-#ProfTsPlot: ccn5 pmeas_lhf_twp4_0p1_EW_LC lh_frzt EW_LC:_LH_Frz_Rate_(K/hr) Simulation_Time_(hr) Height_(km) -3  3 0 15 none pts_lhf_twp4_0p1_EW_LC
+ProfTsPlot: ccn5 pmeas_lhf_twp4_0p1_EW_LC lh_frzt EW_LC:_LH_Frz_Rate_(K/hr) Simulation_Time_(hr) Height_(km) -3  3 0 15 none pts_lhf_twp4_0p1_EW_LC
 #ProfTsPlot: ccn5 pmeas_lhf_twp4_0p1_CO_LC lh_frzt CO_LC:_LH_Frz_Rate_(K/hr) Simulation_Time_(hr) Height_(km) -3  3 0 15 none pts_lhf_twp4_0p1_CO_LC
-#ProfTsPlot: ccn5 pmeas_lhf_twp4_0p1_RB_LC lh_frzt RB_LC:_LH_Frz_Rate_(K/hr) Simulation_Time_(hr) Height_(km) -3  3 0 15 none pts_lhf_twp4_0p1_RB_LC
+ProfTsPlot: ccn5 pmeas_lhf_twp4_0p1_RB_LC lh_frzt RB_LC:_LH_Frz_Rate_(K/hr) Simulation_Time_(hr) Height_(km) -3  3 0 15 none pts_lhf_twp4_0p1_RB_LC
 
-#ProfTsPlot: ccn5 pmeas_lhv_twp4_1p0_EW_LC lh_vapt EW_LC:_LH_Vap_Rate_(K/hr) Simulation_Time_(hr) Height_(km) -30 30 0 15 none pts_lhv_twp4_1p0_EW_LC
+ProfTsPlot: ccn5 pmeas_lhv_twp4_1p0_EW_LC lh_vapt EW_LC:_LH_Vap_Rate_(K/hr) Simulation_Time_(hr) Height_(km) -30 30 0 15 none pts_lhv_twp4_1p0_EW_LC
 #ProfTsPlot: ccn5 pmeas_lhv_twp4_1p0_CO_LC lh_vapt CO_LC:_LH_Vap_Rate_(K/hr) Simulation_Time_(hr) Height_(km) -30 30 0 15 none pts_lhv_twp4_1p0_CO_LC
-#ProfTsPlot: ccn5 pmeas_lhv_twp4_1p0_RB_LC lh_vapt RB_LC:_LH_Vap_Rate_(K/hr) Simulation_Time_(hr) Height_(km) -30 30 0 15 none pts_lhv_twp4_1p0_RB_LC
+ProfTsPlot: ccn5 pmeas_lhv_twp4_1p0_RB_LC lh_vapt RB_LC:_LH_Vap_Rate_(K/hr) Simulation_Time_(hr) Height_(km) -30 30 0 15 none pts_lhv_twp4_1p0_RB_LC
 
-#ProfTsPlot: ccn5 pmeas_theta_e_EW_LC theta_e EW_LC:_Theta-E_(K) Simulation_Time_(hr) Height_(km) 340 350 0 5 min_white pts_theta_e_EW_LC
+ProfTsPlot: ccn5 pmeas_theta_e_EW_LC theta_e EW_LC:_Theta-E_(K) Simulation_Time_(hr) Height_(km) 340 350 0 5 min_white pts_theta_e_EW_LC
 #ProfTsPlot: ccn5 pmeas_theta_e_CO_LC theta_e CO_LC:_Theta-E_(K) Simulation_Time_(hr) Height_(km) 330 340 0 5 min_white pts_theta_e_CO_LC
-#ProfTsPlot: ccn5 pmeas_theta_e_RB_LC theta_e RB_LC:_Theta-E_(K) Simulation_Time_(hr) Height_(km) 330 340 0 5 min_white pts_theta_e_RB_LC
+ProfTsPlot: ccn5 pmeas_theta_e_RB_LC theta_e RB_LC:_Theta-E_(K) Simulation_Time_(hr) Height_(km) 330 340 0 5 min_white pts_theta_e_RB_LC
 
-#ProfTsPlot: ccn5 pmeas_w_twp4_EW_LC w EW_LC:_Vertical_Velocity_(m/s) Simulation_Time_(hr) Height_(km) -2 2 0 15 none pts_w_twp4_EW_LC
+ProfTsPlot: ccn5 pmeas_w_twp4_EW_LC w EW_LC:_Vertical_Velocity_(m/s) Simulation_Time_(hr) Height_(km) -2 2 0 15 none pts_w_twp4_EW_LC
 #ProfTsPlot: ccn5 pmeas_w_twp4_CO_LC w CO_LC:_Vertical_Velocity_(m/s) Simulation_Time_(hr) Height_(km) -2 2 0 15 none pts_w_twp4_CO_LC
-#ProfTsPlot: ccn5 pmeas_w_twp4_RB_LC w RB_LC:_Vertical_Velocity_(m/s) Simulation_Time_(hr) Height_(km) -2 2 0 15 none pts_w_twp4_RB_LC
+ProfTsPlot: ccn5 pmeas_w_twp4_RB_LC w RB_LC:_Vertical_Velocity_(m/s) Simulation_Time_(hr) Height_(km) -2 2 0 15 none pts_w_twp4_RB_LC
 
-#ProfTsPlot: ccn5 pmeas_w_up_twp4_EW_LC w EW_LC:_Updrafts_(m/s) Simulation_Time_(hr) Height_(km) 0 2 0 15 min_white pts_w_up_twp4_EW_LC
+ProfTsPlot: ccn5 pmeas_w_up_twp4_EW_LC w EW_LC:_Updrafts_(m/s) Simulation_Time_(hr) Height_(km) 0 2 0 15 min_white pts_w_up_twp4_EW_LC
 #ProfTsPlot: ccn5 pmeas_w_up_twp4_CO_LC w CO_LC:_Updrafts_(m/s) Simulation_Time_(hr) Height_(km) 0 2 0 15 min_white pts_w_up_twp4_CO_LC
-#ProfTsPlot: ccn5 pmeas_w_up_twp4_RB_LC w RB_LC:_Updrafts_(m/s) Simulation_Time_(hr) Height_(km) 0 2 0 15 min_white pts_w_up_twp4_RB_LC
+ProfTsPlot: ccn5 pmeas_w_up_twp4_RB_LC w RB_LC:_Updrafts_(m/s) Simulation_Time_(hr) Height_(km) 0 2 0 15 min_white pts_w_up_twp4_RB_LC
 
-#ProfTsPlot: ccn5 pmeas_w_dn_twp4_EW_LC w EW_LC:_Downdrafts_(m/s) Simulation_Time_(hr) Height_(km) -2 0 0 15 max_white pts_w_dn_twp4_EW_LC
+ProfTsPlot: ccn5 pmeas_w_dn_twp4_EW_LC w EW_LC:_Downdrafts_(m/s) Simulation_Time_(hr) Height_(km) -2 0 0 15 max_white pts_w_dn_twp4_EW_LC
 #ProfTsPlot: ccn5 pmeas_w_dn_twp4_CO_LC w CO_LC:_Downdrafts_(m/s) Simulation_Time_(hr) Height_(km) -2 0 0 15 max_white pts_w_dn_twp4_CO_LC
-#ProfTsPlot: ccn5 pmeas_w_dn_twp4_RB_LC w RB_LC:_Downdrafts_(m/s) Simulation_Time_(hr) Height_(km) -2 0 0 15 max_white pts_w_dn_twp4_RB_LC
+ProfTsPlot: ccn5 pmeas_w_dn_twp4_RB_LC w RB_LC:_Downdrafts_(m/s) Simulation_Time_(hr) Height_(km) -2 0 0 15 max_white pts_w_dn_twp4_RB_LC
 
 ProfTsPlot: ccn5 pmeas_ccn_conc_twp4_EW_LC ccn_conc EW_LC:_CCN_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 250 0.0 1.5 min_white pts_ccn_conc_twp4_EW_LC
-ProfTsPlot: ccn5 pmeas_ccn_conc_twp4_CO_LC ccn_conc CO_LC:_CCN_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 250 0.0 1.5 min_white pts_ccn_conc_twp4_CO_LC
+#ProfTsPlot: ccn5 pmeas_ccn_conc_twp4_CO_LC ccn_conc CO_LC:_CCN_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 250 0.0 1.5 min_white pts_ccn_conc_twp4_CO_LC
 ProfTsPlot: ccn5 pmeas_ccn_conc_twp4_RB_LC ccn_conc RB_LC:_CCN_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 250 0.0 1.5 min_white pts_ccn_conc_twp4_RB_LC
 
-#ProfTsPlot: ccn5 pmeas_saltf_conc_twp4_EW_LC saltf_conc EW_LC:_Salt_Film_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 2 0.0 1.5 min_white pts_saltf_conc_twp4_EW_LC
+ProfTsPlot: ccn5 pmeas_saltf_conc_twp4_EW_LC saltf_conc EW_LC:_Salt_Film_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 2 0.0 1.5 min_white pts_saltf_conc_twp4_EW_LC
 #ProfTsPlot: ccn5 pmeas_saltf_conc_twp4_CO_LC saltf_conc CO_LC:_Salt_Film_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 2 0.0 1.5 min_white pts_saltf_conc_twp4_CO_LC
-#ProfTsPlot: ccn5 pmeas_saltf_conc_twp4_RB_LC saltf_conc RB_LC:_Salt_Film_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 2 0.0 1.5 min_white pts_saltf_conc_twp4_RB_LC
+ProfTsPlot: ccn5 pmeas_saltf_conc_twp4_RB_LC saltf_conc RB_LC:_Salt_Film_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 2 0.0 1.5 min_white pts_saltf_conc_twp4_RB_LC
 
-#ProfTsPlot: ccn5 pmeas_saltj_conc_twp4_EW_LC saltj_conc EW_LC:_Salt_Jet_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 0.2 0.0 1.5 min_white pts_saltj_conc_twp4_EW_LC
+ProfTsPlot: ccn5 pmeas_saltj_conc_twp4_EW_LC saltj_conc EW_LC:_Salt_Jet_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 0.2 0.0 1.5 min_white pts_saltj_conc_twp4_EW_LC
 #ProfTsPlot: ccn5 pmeas_saltj_conc_twp4_CO_LC saltj_conc CO_LC:_Salt_Jet_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 0.2 0.0 1.5 min_white pts_saltj_conc_twp4_CO_LC
-#ProfTsPlot: ccn5 pmeas_saltj_conc_twp4_RB_LC saltj_conc RB_LC:_Salt_Jet_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 0.2 0.0 1.5 min_white pts_saltj_conc_twp4_RB_LC
+ProfTsPlot: ccn5 pmeas_saltj_conc_twp4_RB_LC saltj_conc RB_LC:_Salt_Jet_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 0.2 0.0 1.5 min_white pts_saltj_conc_twp4_RB_LC
 
-#ProfTsPlot: ccn5 pmeas_cloud_d_twp4_EW_LC cloud_d EW_LC:_Mean_Cloud_Diam_(um) Simulation_Time_(hr) Height_(km) 0 25 0.0 15.0 min_white pts_cloud_d_twp4_EW_LC
+ProfTsPlot: ccn5 pmeas_cloud_d_twp4_EW_LC cloud_d EW_LC:_Mean_Cloud_Diam_(um) Simulation_Time_(hr) Height_(km) 0 25 0.0 15.0 min_white pts_cloud_d_twp4_EW_LC
 #ProfTsPlot: ccn5 pmeas_cloud_d_twp4_CO_LC cloud_d CO_LC:_Mean_Cloud_Diam_(um) Simulation_Time_(hr) Height_(km) 0 25 0.0 15.0 min_white pts_cloud_d_twp4_CO_LC
-#ProfTsPlot: ccn5 pmeas_cloud_d_twp4_RB_LC cloud_d RB_LC:_Mean_Cloud_Diam_(um) Simulation_Time_(hr) Height_(km) 0 10 0.0 15.0 min_white pts_cloud_d_twp4_RB_LC
+ProfTsPlot: ccn5 pmeas_cloud_d_twp4_RB_LC cloud_d RB_LC:_Mean_Cloud_Diam_(um) Simulation_Time_(hr) Height_(km) 0 10 0.0 15.0 min_white pts_cloud_d_twp4_RB_LC
 
-#ProfTsPlot: ccn5 pmeas_cloud_cm3_twp4_EW_LC cloud_cm3 EW_LC:_Cloud_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 50 0.0 15.0 min_white pts_cloud_cm3_twp4_EW_LC
+ProfTsPlot: ccn5 pmeas_cloud_cm3_twp4_EW_LC cloud_cm3 EW_LC:_Cloud_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 50 0.0 15.0 min_white pts_cloud_cm3_twp4_EW_LC
 #ProfTsPlot: ccn5 pmeas_cloud_cm3_twp4_CO_LC cloud_cm3 CO_LC:_Cloud_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 50 0.0 15.0 min_white pts_cloud_cm3_twp4_CO_LC
-#ProfTsPlot: ccn5 pmeas_cloud_cm3_twp4_RB_LC cloud_cm3 RB_LC:_Cloud_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 50 0.0 15.0 min_white pts_cloud_cm3_twp4_RB_LC
+ProfTsPlot: ccn5 pmeas_cloud_cm3_twp4_RB_LC cloud_cm3 RB_LC:_Cloud_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 50 0.0 15.0 min_white pts_cloud_cm3_twp4_RB_LC
 
-#ProfTsPlot: ccn5 pmeas_drizzle_d_twp4_EW_LC drizzle_d EW_LC:_Mean_Drizzle_Diam_(um) Simulation_Time_(hr) Height_(km) 0 500 0.0 15.0 min_white pts_drizzle_d_twp4_EW_LC
+ProfTsPlot: ccn5 pmeas_drizzle_d_twp4_EW_LC drizzle_d EW_LC:_Mean_Drizzle_Diam_(um) Simulation_Time_(hr) Height_(km) 0 500 0.0 15.0 min_white pts_drizzle_d_twp4_EW_LC
 #ProfTsPlot: ccn5 pmeas_drizzle_d_twp4_CO_LC drizzle_d CO_LC:_Mean_Drizzle_Diam_(um) Simulation_Time_(hr) Height_(km) 0 500 0.0 15.0 min_white pts_drizzle_d_twp4_CO_LC
-#ProfTsPlot: ccn5 pmeas_drizzle_d_twp4_RB_LC drizzle_d RB_LC:_Mean_Drizzle_Diam_(um) Simulation_Time_(hr) Height_(km) 0 500 0.0 15.0 min_white pts_drizzle_d_twp4_RB_LC
+ProfTsPlot: ccn5 pmeas_drizzle_d_twp4_RB_LC drizzle_d RB_LC:_Mean_Drizzle_Diam_(um) Simulation_Time_(hr) Height_(km) 0 500 0.0 15.0 min_white pts_drizzle_d_twp4_RB_LC
 
-#ProfTsPlot: ccn5 pmeas_drizzle_cm3_twp4_EW_LC drizzle_cm3 EW_LC:_Drizzle_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 0.05 0.0 15.0 min_white pts_drizzle_cm3_twp4_EW_LC
+ProfTsPlot: ccn5 pmeas_drizzle_cm3_twp4_EW_LC drizzle_cm3 EW_LC:_Drizzle_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 0.05 0.0 15.0 min_white pts_drizzle_cm3_twp4_EW_LC
 #ProfTsPlot: ccn5 pmeas_drizzle_cm3_twp4_CO_LC drizzle_cm3 CO_LC:_Drizzle_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 0.05 0.0 15.0 min_white pts_drizzle_cm3_twp4_CO_LC
-#ProfTsPlot: ccn5 pmeas_drizzle_cm3_twp4_RB_LC drizzle_cm3 RB_LC:_Drizzle_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 0.05 0.0 15.0 min_white pts_drizzle_cm3_twp4_RB_LC
+ProfTsPlot: ccn5 pmeas_drizzle_cm3_twp4_RB_LC drizzle_cm3 RB_LC:_Drizzle_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 0.05 0.0 15.0 min_white pts_drizzle_cm3_twp4_RB_LC
 
-#ProfTsPlot: ccn5 pmeas_rain_twp4_EW_LC rain EW_LC:_Rain_Mixing_Ratio_(g/kg) Simulation_Time_(hr) Height_(km) 0 0.5 0.0 15.0 min_white pts_rain_twp4_EW_LC
+ProfTsPlot: ccn5 pmeas_rain_twp4_EW_LC rain EW_LC:_Rain_Mixing_Ratio_(g/kg) Simulation_Time_(hr) Height_(km) 0 0.5 0.0 15.0 min_white pts_rain_twp4_EW_LC
 #ProfTsPlot: ccn5 pmeas_rain_twp4_CO_LC rain CO_LC:_Rain_Mixing_Ratio_(g/kg) Simulation_Time_(hr) Height_(km) 0 0.5 0.0 15.0 min_white pts_rain_twp4_CO_LC
-#ProfTsPlot: ccn5 pmeas_rain_twp4_RB_LC rain RB_LC:_Rain_Mixing_Ratio_(g/kg) Simulation_Time_(hr) Height_(km) 0 0.5 0.0 15.0 min_white pts_rain_twp4_RB_LC
+ProfTsPlot: ccn5 pmeas_rain_twp4_RB_LC rain RB_LC:_Rain_Mixing_Ratio_(g/kg) Simulation_Time_(hr) Height_(km) 0 0.5 0.0 15.0 min_white pts_rain_twp4_RB_LC
 
 ####################### Plot Sets ############################
-PlotSet: ccn5 5 TCS_CNTL CONTROL -k TCS_GN_C0100 CCN:_100/cc -m TCS_GN_C0500 CCN:_500/cc -b TCS_GN_C1000 CCN:_1000/cc -c TCS_GN_C2000 CCN:_2000/cc -g
-PlotSet: ccn5_sd 3 TCS_CNTL CONTROL -k TCS_SD_C0100 CCN:_100/cc -m TCS_SD_C2000 CCN:_2000/cc -g
+PlotSet: ccn5 5 TCS_CNTL CONTROL -k TCS_GN_C0100 CCN:_100/cc :k TCS_GN_C0500 CCN:_500/cc --k TCS_GN_C1000 CCN:_1000/cc :g TCS_GN_C2000 CCN:_2000/cc --g
+PlotSet: ccn5_sd 3 TCS_CNTL CONTROL -k TCS_SD_C0100 CCN:_100/cc :k TCS_SD_C2000 CCN:_2000/cc --g
 
 PlotSet: agu2 2 TCS_CNTL CONTROL -b TCS_GN_C2000 CCN:_2000/cc -r
 
