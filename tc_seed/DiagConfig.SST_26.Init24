@@ -532,54 +532,54 @@ LinePlot: ccn5    RadRband  VtRbandSS SfcVtRband  y Rainband_Section_of_Max_Vt:_
 #ProfPlot: ccn5 pmeas_saltj_conc_twp4_CO_SS saltj_conc abs CO_SS:_Salt_Jet_Conc Concentration_(#/cc) Height_(km) NorthEast -0.1:0.015:0.5 0.0 1.5 prof_saltj_conc_twp4_CO_SS.jpg
 #ProfPlot: ccn5 pmeas_saltj_conc_twp4_RB_SS saltj_conc abs RB_SS:_Salt_Jet_Conc Concentration_(#/cc) Height_(km) NorthEast -0.1:0.015:0.5 0.0 1.5 prof_saltj_conc_twp4_RB_SS.jpg
 
-#ProfPlot: ccn5 pmeas_cloud_d_twp4_EW_RI cloud_d abs EW_RI:_Mean_Cloud_Diam Diameter_(um) Height_(km) NorthEast -5:2:30 0.0 15.0 prof_cloud_d_twp4_EW_RI.jpg
-#ProfPlot: ccn5 pmeas_cloud_d_twp4_CO_RI cloud_d abs CO_RI:_Mean_Cloud_Diam Diameter_(um) Height_(km) NorthEast -5:1:30 0.0 15.0 prof_cloud_d_twp4_CO_RI.jpg
-#ProfPlot: ccn5 pmeas_cloud_d_twp4_RB_RI cloud_d abs RB_RI:_Mean_Cloud_Diam Diameter_(um) Height_(km) NorthEast -5:1:30 0.0 15.0 prof_cloud_d_twp4_RB_RI.jpg
-#ProfPlot: ccn5 pmeas_cloud_d_twp4_EW_SS cloud_d abs EW_SS:_Mean_Cloud_Diam Diameter_(um) Height_(km) NorthEast -5:1:30 0.0 15.0 prof_cloud_d_twp4_EW_SS.jpg
-#ProfPlot: ccn5 pmeas_cloud_d_twp4_CO_SS cloud_d abs CO_SS:_Mean_Cloud_Diam Diameter_(um) Height_(km) NorthEast -5:1:30 0.0 15.0 prof_cloud_d_twp4_CO_SS.jpg
-#ProfPlot: ccn5 pmeas_cloud_d_twp4_RB_SS cloud_d abs RB_SS:_Mean_Cloud_Diam Diameter_(um) Height_(km) NorthEast -5:1:30 0.0 15.0 prof_cloud_d_twp4_RB_SS.jpg
+#ProfPlot: ccn5 pmeas_cloud_d_twp4_EW_RI cloud_d abs EW_RI:_Mean_Cloud_Diam Diameter_(um) Height_(km) NorthWest -5:2:30 0.0 8.0 prof_cloud_d_twp4_EW_RI.jpg
+#ProfPlot: ccn5 pmeas_cloud_d_twp4_CO_RI cloud_d abs CO_RI:_Mean_Cloud_Diam Diameter_(um) Height_(km) NorthWest -5:1:30 0.0 8.0 prof_cloud_d_twp4_CO_RI.jpg
+#ProfPlot: ccn5 pmeas_cloud_d_twp4_RB_RI cloud_d abs RB_RI:_Mean_Cloud_Diam Diameter_(um) Height_(km) NorthWest -5:1:30 0.0 8.0 prof_cloud_d_twp4_RB_RI.jpg
+#ProfPlot: ccn5 pmeas_cloud_d_twp4_EW_SS cloud_d abs EW_SS:_Mean_Cloud_Diam Diameter_(um) Height_(km) NorthWest -5:1:30 0.0 8.0 prof_cloud_d_twp4_EW_SS.jpg
+#ProfPlot: ccn5 pmeas_cloud_d_twp4_CO_SS cloud_d abs CO_SS:_Mean_Cloud_Diam Diameter_(um) Height_(km) NorthWest -5:1:30 0.0 8.0 prof_cloud_d_twp4_CO_SS.jpg
+#ProfPlot: ccn5 pmeas_cloud_d_twp4_RB_SS cloud_d abs RB_SS:_Mean_Cloud_Diam Diameter_(um) Height_(km) NorthWest -5:1:30 0.0 8.0 prof_cloud_d_twp4_RB_SS.jpg
+ 
+#ProfPlot: ccn5 pmeas_cloud_cm3_twp4_EW_RI cloud_cm3 abs EW_RI:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:65 0.0 8.0 prof_cloud_cm3_twp4_EW_RI.jpg
+#ProfPlot: ccn5 pmeas_cloud_cm3_twp4_CO_RI cloud_cm3 abs CO_RI:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:65 0.0 8.0 prof_cloud_cm3_twp4_CO_RI.jpg
+#ProfPlot: ccn5 pmeas_cloud_cm3_twp4_RB_RI cloud_cm3 abs RB_RI:_Cloud_Conc Concentration_(#/cc) Height_(km) SouthEast -5:2:65 0.0 8.0 prof_cloud_cm3_twp4_RB_RI.jpg
+#ProfPlot: ccn5 pmeas_cloud_cm3_twp4_EW_SS cloud_cm3 abs EW_SS:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:65 0.0 8.0 prof_cloud_cm3_twp4_EW_SS.jpg
+#ProfPlot: ccn5 pmeas_cloud_cm3_twp4_CO_SS cloud_cm3 abs CO_SS:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:65 0.0 8.0 prof_cloud_cm3_twp4_CO_SS.jpg
+#ProfPlot: ccn5 pmeas_cloud_cm3_twp4_RB_SS cloud_cm3 abs RB_SS:_Cloud_Conc Concentration_(#/cc) Height_(km) SouthEast -5:2:65 0.0 8.0 prof_cloud_cm3_twp4_RB_SS.jpg
 
-#ProfPlot: ccn5 pmeas_cloud_cm3_twp4_EW_RI cloud_cm3 abs EW_RI:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:65 0.0 15.0 prof_cloud_cm3_twp4_EW_RI.jpg
-#ProfPlot: ccn5 pmeas_cloud_cm3_twp4_CO_RI cloud_cm3 abs CO_RI:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:65 0.0 15.0 prof_cloud_cm3_twp4_CO_RI.jpg
-#ProfPlot: ccn5 pmeas_cloud_cm3_twp4_RB_RI cloud_cm3 abs RB_RI:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:65 0.0 15.0 prof_cloud_cm3_twp4_RB_RI.jpg
-#ProfPlot: ccn5 pmeas_cloud_cm3_twp4_EW_SS cloud_cm3 abs EW_SS:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:65 0.0 15.0 prof_cloud_cm3_twp4_EW_SS.jpg
-#ProfPlot: ccn5 pmeas_cloud_cm3_twp4_CO_SS cloud_cm3 abs CO_SS:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:65 0.0 15.0 prof_cloud_cm3_twp4_CO_SS.jpg
-#ProfPlot: ccn5 pmeas_cloud_cm3_twp4_RB_SS cloud_cm3 abs RB_SS:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:65 0.0 15.0 prof_cloud_cm3_twp4_RB_SS.jpg
+#ProfPlot: ccn5 pmeas_drizzle_d_twp4_EW_RI drizzle_d abs EW_RI:_Mean_Drizzle_Diam Diameter_(um) Height_(km) NorthWest -10:5:500 0.0 8.0 prof_drizzle_d_twp4_EW_RI.jpg
+#ProfPlot: ccn5 pmeas_drizzle_d_twp4_CO_RI drizzle_d abs CO_RI:_Mean_Drizzle_Diam Diameter_(um) Height_(km) NorthWest -10:5:500 0.0 8.0 prof_drizzle_d_twp4_CO_RI.jpg
+#ProfPlot: ccn5 pmeas_drizzle_d_twp4_RB_RI drizzle_d abs RB_RI:_Mean_Drizzle_Diam Diameter_(um) Height_(km) NorthWest -10:5:500 0.0 8.0 prof_drizzle_d_twp4_RB_RI.jpg
+#ProfPlot: ccn5 pmeas_drizzle_d_twp4_EW_SS drizzle_d abs EW_SS:_Mean_Drizzle_Diam Diameter_(um) Height_(km) NorthWest -10:5:500 0.0 8.0 prof_drizzle_d_twp4_EW_SS.jpg
+#ProfPlot: ccn5 pmeas_drizzle_d_twp4_CO_SS drizzle_d abs CO_SS:_Mean_Drizzle_Diam Diameter_(um) Height_(km) NorthWest -10:5:500 0.0 8.0 prof_drizzle_d_twp4_CO_SS.jpg
+#ProfPlot: ccn5 pmeas_drizzle_d_twp4_RB_SS drizzle_d abs RB_SS:_Mean_Drizzle_Diam Diameter_(um) Height_(km) NorthWest -10:5:500 0.0 8.0 prof_drizzle_d_twp4_RB_SS.jpg
 
-#ProfPlot: ccn5 pmeas_drizzle_d_twp4_EW_RI drizzle_d abs EW_RI:_Mean_Drizzle_Diam Diameter_(um) Height_(km) SouthWest -10:5:500 0.0 15.0 prof_drizzle_d_twp4_EW_RI.jpg
-#ProfPlot: ccn5 pmeas_drizzle_d_twp4_CO_RI drizzle_d abs CO_RI:_Mean_Drizzle_Diam Diameter_(um) Height_(km) NorthEast -10:5:500 0.0 15.0 prof_drizzle_d_twp4_CO_RI.jpg
-#ProfPlot: ccn5 pmeas_drizzle_d_twp4_RB_RI drizzle_d abs RB_RI:_Mean_Drizzle_Diam Diameter_(um) Height_(km) NorthEast -10:5:500 0.0 15.0 prof_drizzle_d_twp4_RB_RI.jpg
-#ProfPlot: ccn5 pmeas_drizzle_d_twp4_EW_SS drizzle_d abs EW_SS:_Mean_Drizzle_Diam Diameter_(um) Height_(km) SouthWest -10:5:500 0.0 15.0 prof_drizzle_d_twp4_EW_SS.jpg
-#ProfPlot: ccn5 pmeas_drizzle_d_twp4_CO_SS drizzle_d abs CO_SS:_Mean_Drizzle_Diam Diameter_(um) Height_(km) NorthEast -10:5:500 0.0 15.0 prof_drizzle_d_twp4_CO_SS.jpg
-#ProfPlot: ccn5 pmeas_drizzle_d_twp4_RB_SS drizzle_d abs RB_SS:_Mean_Drizzle_Diam Diameter_(um) Height_(km) NorthEast -10:5:500 0.0 15.0 prof_drizzle_d_twp4_RB_SS.jpg
+#ProfPlot: ccn5 pmeas_drizzle_cm3_twp4_EW_RI drizzle_cm3 abs EW_RI:_Drizzle_Conc Concentration_(#/cc) Height_(km) SouthEast -0.01:0.001:0.05 0.0 8.0 prof_drizzle_cm3_twp4_EW_RI.jpg
+#ProfPlot: ccn5 pmeas_drizzle_cm3_twp4_CO_RI drizzle_cm3 abs CO_RI:_Drizzle_Conc Concentration_(#/cc) Height_(km) SouthEast -0.01:0.001:0.05 0.0 8.0 prof_drizzle_cm3_twp4_CO_RI.jpg
+#ProfPlot: ccn5 pmeas_drizzle_cm3_twp4_RB_RI drizzle_cm3 abs RB_RI:_Drizzle_Conc Concentration_(#/cc) Height_(km) SouthEast -0.01:0.001:0.05 0.0 8.0 prof_drizzle_cm3_twp4_RB_RI.jpg
+#ProfPlot: ccn5 pmeas_drizzle_cm3_twp4_EW_SS drizzle_cm3 abs EW_SS:_Drizzle_Conc Concentration_(#/cc) Height_(km) SouthEast -0.01:0.001:0.05 0.0 8.0 prof_drizzle_cm3_twp4_EW_SS.jpg
+#ProfPlot: ccn5 pmeas_drizzle_cm3_twp4_CO_SS drizzle_cm3 abs CO_SS:_Drizzle_Conc Concentration_(#/cc) Height_(km) SouthEast -0.01:0.001:0.05 0.0 8.0 prof_drizzle_cm3_twp4_CO_SS.jpg
+#ProfPlot: ccn5 pmeas_drizzle_cm3_twp4_RB_SS drizzle_cm3 abs RB_SS:_Drizzle_Conc Concentration_(#/cc) Height_(km) SouthEast -0.01:0.001:0.05 0.0 8.0 prof_drizzle_cm3_twp4_RB_SS.jpg
 
-#ProfPlot: ccn5 pmeas_drizzle_cm3_twp4_EW_RI drizzle_cm3 abs EW_RI:_Drizzle_Conc Concentration_(#/cc) Height_(km) NorthEast -0.01:0.001:0.05 0.0 15.0 prof_drizzle_cm3_twp4_EW_RI.jpg
-#ProfPlot: ccn5 pmeas_drizzle_cm3_twp4_CO_RI drizzle_cm3 abs CO_RI:_Drizzle_Conc Concentration_(#/cc) Height_(km) NorthEast -0.01:0.001:0.05 0.0 15.0 prof_drizzle_cm3_twp4_CO_RI.jpg
-#ProfPlot: ccn5 pmeas_drizzle_cm3_twp4_RB_RI drizzle_cm3 abs RB_RI:_Drizzle_Conc Concentration_(#/cc) Height_(km) NorthEast -0.01:0.001:0.05 0.0 15.0 prof_drizzle_cm3_twp4_RB_RI.jpg
-#ProfPlot: ccn5 pmeas_drizzle_cm3_twp4_EW_SS drizzle_cm3 abs EW_SS:_Drizzle_Conc Concentration_(#/cc) Height_(km) NorthEast -0.01:0.001:0.05 0.0 15.0 prof_drizzle_cm3_twp4_EW_SS.jpg
-#ProfPlot: ccn5 pmeas_drizzle_cm3_twp4_CO_SS drizzle_cm3 abs CO_SS:_Drizzle_Conc Concentration_(#/cc) Height_(km) NorthEast -0.01:0.001:0.05 0.0 15.0 prof_drizzle_cm3_twp4_CO_SS.jpg
-#ProfPlot: ccn5 pmeas_drizzle_cm3_twp4_RB_SS drizzle_cm3 abs RB_SS:_Drizzle_Conc Concentration_(#/cc) Height_(km) NorthEast -0.01:0.001:0.05 0.0 15.0 prof_drizzle_cm3_twp4_RB_SS.jpg
+#ProfPlot: ccn5 pmeas_rain_twp4_EW_RI rain abs EW_RI:_Rain Mixing_Ratio_(g/kg) Height_(km) NorthEast -0.01:0.001:0.3 0.0 8.0 prof_rain_twp4_EW_RI.jpg
+#ProfPlot: ccn5 pmeas_rain_twp4_CO_RI rain abs CO_RI:_Rain Mixing_Ratio_(g/kg) Height_(km) NorthEast -0.01:0.001:0.3 0.0 8.0 prof_rain_twp4_CO_RI.jpg
+#ProfPlot: ccn5 pmeas_rain_twp4_RB_RI rain abs RB_RI:_Rain Mixing_Ratio_(g/kg) Height_(km) NorthEast -0.01:0.001:0.3 0.0 8.0 prof_rain_twp4_RB_RI.jpg
+#ProfPlot: ccn5 pmeas_rain_twp4_EW_SS rain abs EW_SS:_Rain Mixing_Ratio_(g/kg) Height_(km) NorthEast -0.01:0.001:0.3 0.0 8.0 prof_rain_twp4_EW_SS.jpg
+#ProfPlot: ccn5 pmeas_rain_twp4_CO_SS rain abs CO_SS:_Rain Mixing_Ratio_(g/kg) Height_(km) NorthEast -0.01:0.001:0.3 0.0 8.0 prof_rain_twp4_CO_SS.jpg
+#ProfPlot: ccn5 pmeas_rain_twp4_RB_SS rain abs RB_SS:_Rain Mixing_Ratio_(g/kg) Height_(km) NorthEast -0.01:0.001:0.3 0.0 8.0 prof_rain_twp4_RB_SS.jpg
 
-#ProfPlot: ccn5 pmeas_rain_twp4_EW_RI rain abs EW_RI:_Rain Mixing_Ratio_(g/kg) Height_(km) NorthEast -0.01:0.001:0.3 0.0 15.0 prof_rain_twp4_EW_RI.jpg
-#ProfPlot: ccn5 pmeas_rain_twp4_CO_RI rain abs CO_RI:_Rain Mixing_Ratio_(g/kg) Height_(km) NorthEast -0.01:0.001:0.3 0.0 15.0 prof_rain_twp4_CO_RI.jpg
-#ProfPlot: ccn5 pmeas_rain_twp4_RB_RI rain abs RB_RI:_Rain Mixing_Ratio_(g/kg) Height_(km) NorthEast -0.01:0.001:0.3 0.0 15.0 prof_rain_twp4_RB_RI.jpg
-#ProfPlot: ccn5 pmeas_rain_twp4_EW_SS rain abs EW_SS:_Rain Mixing_Ratio_(g/kg) Height_(km) NorthEast -0.01:0.001:0.3 0.0 15.0 prof_rain_twp4_EW_SS.jpg
-#ProfPlot: ccn5 pmeas_rain_twp4_CO_SS rain abs CO_SS:_Rain Mixing_Ratio_(g/kg) Height_(km) NorthEast -0.01:0.001:0.3 0.0 15.0 prof_rain_twp4_CO_SS.jpg
-#ProfPlot: ccn5 pmeas_rain_twp4_RB_SS rain abs RB_SS:_Rain Mixing_Ratio_(g/kg) Height_(km) NorthEast -0.01:0.001:0.3 0.0 15.0 prof_rain_twp4_RB_SS.jpg
+#ProfPlot: ccn5 pmeas_rain_d_twp4_EW_RI rain_d abs EW_RI:_Mean_Rain_Diam Diameter_(mm) Height_(km) NorthEast -0.1:0.01:1 0.0 8.0 prof_rain_d_twp4_EW_RI.jpg
+#ProfPlot: ccn5 pmeas_rain_d_twp4_CO_RI rain_d abs CO_RI:_Mean_Rain_Diam Diameter_(mm) Height_(km) NorthEast -0.1:0.01:1 0.0 8.0 prof_rain_d_twp4_CO_RI.jpg
+#ProfPlot: ccn5 pmeas_rain_d_twp4_RB_RI rain_d abs RB_RI:_Mean_Rain_Diam Diameter_(mm) Height_(km) NorthEast -0.1:0.01:1 0.0 8.0 prof_rain_d_twp4_RB_RI.jpg
+#ProfPlot: ccn5 pmeas_rain_d_twp4_EW_SS rain_d abs EW_SS:_Mean_Rain_Diam Diameter_(mm) Height_(km) NorthEast -0.1:0.01:1 0.0 8.0 prof_rain_d_twp4_EW_SS.jpg
+#ProfPlot: ccn5 pmeas_rain_d_twp4_CO_SS rain_d abs CO_SS:_Mean_Rain_Diam Diameter_(mm) Height_(km) NorthEast -0.1:0.01:1 0.0 8.0 prof_rain_d_twp4_CO_SS.jpg
+#ProfPlot: ccn5 pmeas_rain_d_twp4_RB_SS rain_d abs RB_SS:_Mean_Rain_Diam Diameter_(mm) Height_(km) NorthEast -0.1:0.01:1 0.0 8.0 prof_rain_d_twp4_RB_SS.jpg
 
-#ProfPlot: ccn5 pmeas_rain_d_twp4_EW_RI rain_d abs EW_RI:_Mean_Rain_Diam Diameter_(mm) Height_(km) NorthEast -0.1:0.01:1 0.0 15.0 prof_rain_d_twp4_EW_RI.jpg
-#ProfPlot: ccn5 pmeas_rain_d_twp4_CO_RI rain_d abs CO_RI:_Mean_Rain_Diam Diameter_(mm) Height_(km) NorthEast -0.1:0.01:1 0.0 15.0 prof_rain_d_twp4_CO_RI.jpg
-#ProfPlot: ccn5 pmeas_rain_d_twp4_RB_RI rain_d abs RB_RI:_Mean_Rain_Diam Diameter_(mm) Height_(km) NorthEast -0.1:0.01:1 0.0 15.0 prof_rain_d_twp4_RB_RI.jpg
-#ProfPlot: ccn5 pmeas_rain_d_twp4_EW_SS rain_d abs EW_SS:_Mean_Rain_Diam Diameter_(mm) Height_(km) NorthEast -0.1:0.01:1 0.0 15.0 prof_rain_d_twp4_EW_SS.jpg
-#ProfPlot: ccn5 pmeas_rain_d_twp4_CO_SS rain_d abs CO_SS:_Mean_Rain_Diam Diameter_(mm) Height_(km) NorthEast -0.1:0.01:1 0.0 15.0 prof_rain_d_twp4_CO_SS.jpg
-#ProfPlot: ccn5 pmeas_rain_d_twp4_RB_SS rain_d abs RB_SS:_Mean_Rain_Diam Diameter_(mm) Height_(km) NorthEast -0.1:0.01:1 0.0 15.0 prof_rain_d_twp4_RB_SS.jpg
-
-#ProfPlot: ccn5 pmeas_rain_m3_twp4_EW_RI rain_m3 abs EW_RI:_Rain_Conc Concentration_(#/m^3) Height_(km) NorthEast -100:50:1800 0.0 15.0 prof_rain_m3_twp4_EW_RI.jpg
-#ProfPlot: ccn5 pmeas_rain_m3_twp4_CO_RI rain_m3 abs CO_RI:_Rain_Conc Concentration_(#/m^3) Height_(km) NorthEast -100:50:1800 0.0 15.0 prof_rain_m3_twp4_CO_RI.jpg
-#ProfPlot: ccn5 pmeas_rain_m3_twp4_RB_RI rain_m3 abs RB_RI:_Rain_Conc Concentration_(#/m^3) Height_(km) NorthEast -100:50:1800 0.0 15.0 prof_rain_m3_twp4_RB_RI.jpg
-#ProfPlot: ccn5 pmeas_rain_m3_twp4_EW_SS rain_m3 abs EW_SS:_Rain_Conc Concentration_(#/m^3) Height_(km) NorthEast -100:50:1800 0.0 15.0 prof_rain_m3_twp4_EW_SS.jpg
-#ProfPlot: ccn5 pmeas_rain_m3_twp4_CO_SS rain_m3 abs CO_SS:_Rain_Conc Concentration_(#/m^3) Height_(km) NorthEast -100:50:1800 0.0 15.0 prof_rain_m3_twp4_CO_SS.jpg
-#ProfPlot: ccn5 pmeas_rain_m3_twp4_RB_SS rain_m3 abs RB_SS:_Rain_Conc Concentration_(#/m^3) Height_(km) NorthEast -100:50:1800 0.0 15.0 prof_rain_m3_twp4_RB_SS.jpg
+#ProfPlot: ccn5 pmeas_rain_m3_twp4_EW_RI rain_m3 abs EW_RI:_Rain_Conc Concentration_(#/m^3) Height_(km) SouthWest -100:50:1800 0.0 8.0 prof_rain_m3_twp4_EW_RI.jpg
+#ProfPlot: ccn5 pmeas_rain_m3_twp4_CO_RI rain_m3 abs CO_RI:_Rain_Conc Concentration_(#/m^3) Height_(km) SouthWest -100:50:1800 0.0 8.0 prof_rain_m3_twp4_CO_RI.jpg
+#ProfPlot: ccn5 pmeas_rain_m3_twp4_RB_RI rain_m3 abs RB_RI:_Rain_Conc Concentration_(#/m^3) Height_(km) SouthWest -100:50:1800 0.0 8.0 prof_rain_m3_twp4_RB_RI.jpg
+#ProfPlot: ccn5 pmeas_rain_m3_twp4_EW_SS rain_m3 abs EW_SS:_Rain_Conc Concentration_(#/m^3) Height_(km) SouthWest -100:50:1800 0.0 8.0 prof_rain_m3_twp4_EW_SS.jpg
+#ProfPlot: ccn5 pmeas_rain_m3_twp4_CO_SS rain_m3 abs CO_SS:_Rain_Conc Concentration_(#/m^3) Height_(km) NorthEast -100:50:1800 0.0 8.0 prof_rain_m3_twp4_CO_SS.jpg
+#ProfPlot: ccn5 pmeas_rain_m3_twp4_RB_SS rain_m3 abs RB_SS:_Rain_Conc Concentration_(#/m^3) Height_(km) SouthWest -100:50:1800 0.0 8.0 prof_rain_m3_twp4_RB_SS.jpg
 
 ################### control vs C2000 (AGU) ############################
 #ProfPlot: agu2 pmeas_ccn_conc_twp4_EW_RI ccn_conc abs EW_RI:_CCN_Conc Concentration_(#/cc) Height_(km) NorthEast -10:5.25:150 0.0 1.0 agu_prof_ccn_conc_twp4_EW_RI.jpg
