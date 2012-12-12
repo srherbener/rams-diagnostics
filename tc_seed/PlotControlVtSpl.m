@@ -49,21 +49,24 @@ TsStart  = 10;
 TsPeriod = 30;
 
 % Generate the time values
-Times = zeros(1,Ntsteps);
-it = 0;
-for i = 1:Ntsteps
-  % Times will be in hours
-  Times(i) = Tstart + ((i-1)*Tinc);
+% Times = zeros(1,Ntsteps);
+% it = 0;
+% for i = 1:Ntsteps
+%   % Times will be in hours
+%   Times(i) = Tstart + ((i-1)*Tinc);
+% 
+%   if (mod(i-TsStart,TsPeriod) == 0)
+%     it = it + 1;
+%     % returns day and time strings
+%     [ Ds, Ts ] = TimeToString(BT(1), BT(2), BT(3), BT(4), BT(5), BT(6), Times(i));
+% 
+%     Tticks(it) = Times(i);
+%     Tlabels{it} = sprintf('%s/%s', Ds, Ts);
+%   end
+% end
 
-  if (mod(i-TsStart,TsPeriod) == 0)
-    it = it + 1;
-    % returns day and time strings
-    [ Ds, Ts ] = TimeToString(BT(1), BT(2), BT(3), BT(4), BT(5), BT(6), Times(i));
-
-    Tticks(it) = Times(i);
-    Tlabels{it} = sprintf('%s/%s', Ds, Ts);
-  end
-end
+% Use simulation time
+Times = T / 3600;
 
 % smooth out the time series
 Flen = 5;
@@ -75,11 +78,13 @@ Lwidth = 2;
 Fsize = 20;
 Pfile = sprintf('%s/CntlVtSpl.jpg', PlotDir);
 Ptitle = sprintf('Control Run Storm Development: SST = %d\\circ C', SstVal);
-Xlabel = sprintf('Local Time, Starting at %s', StartTime);
+%Xlabel = sprintf('Local Time, Starting at %s', StartTime);
+Xlabel = sprintf('Simulation Time (hr)');
 Y1label = sprintf('Maximum surface Vt (m/s)');
 Y2label = sprintf('Minimum sea level pressure (mb)');
 
 AxisPos = [ 0.11 0.15 0.75 0.75 ] ;
+Xlims = [ 0 150 ];
 
 % Set up plot controls according to SST
 switch SstVal
@@ -119,36 +124,40 @@ end
 % each index in Vt is one hour and the first index is zero so
 % need to add one to the time to get the corresponding index.
 
-Xbefore = [ Times(Tbefore+1) Times(Tbefore+1) ];
+Xbefore = [ Tbefore Tbefore ];
 TxtBefore = sprintf('\\leftarrow %d hr', Tbefore);
 
-Xduring = [ Times(Tduring+1) Times(Tduring+1) ];
+Xduring = [ Tduring Tduring ];
 TxtDuring = sprintf('\\leftarrow %d hr', Tduring);
 
-Xafter = [ Times(Tafter+1) Times(Tafter+1) ];
+Xafter = [ Tafter Tafter ];
 TxtAfter = sprintf('\\leftarrow %d hr', Tafter);
 
 Fig = figure;
 
 % data
 [ AX, H1, H2 ] = plotyy(Times, MAX_VT, Times, MIN_SPL);
-set(H1, 'LineWidth', Lwidth);
-set(H2, 'LineWidth', Lwidth);
+set(H1, 'LineWidth', Lwidth, 'Color', 'k', 'LineStyle', '-');
+set(H2, 'LineWidth', Lwidth, 'Color', 'k', 'LineStyle', '--');
 
 % axes
 axes(AX(1));
 set(gca, 'FontSize', Fsize);
-set(gca, 'XTick', Tticks);
-set(gca, 'XTickLabel', Tlabels);
+%set(gca, 'XTick', Tticks);
+%set(gca, 'XTickLabel', Tlabels);
 set(gca, 'Position', AxisPos);
+set(gca, 'YColor', 'k');
+xlim(Xlims);
 ylabel(Y1label);
 ylim(Y1lims);
 
 axes(AX(2));
 set(gca, 'FontSize', Fsize);
-set(gca, 'XTick', Tticks);
-set(gca, 'XTickLabel', Tlabels);
+%set(gca, 'XTick', Tticks);
+%set(gca, 'XTickLabel', Tlabels);
 set(gca, 'Position', AxisPos);
+set(gca, 'YColor', 'k');
+xlim(Xlims);
 ylabel(Y2label);
 ylim(Y2lims);
 
@@ -158,11 +167,11 @@ xlabel(Xlabel);
 % markers
 Ytext = Y2lims(1) + ((Y2lims(2) - Y2lims(1))*0.95);
 TfontSize = 14;
-line(Xbefore,  Y2lims, 'LineStyle', '--', 'Color', 'k', 'LineWidth', Lwidth/2);
+line(Xbefore,  Y2lims, 'LineStyle', ':', 'Color', 'k', 'LineWidth', Lwidth/2);
 text(Xbefore(1), Ytext, TxtBefore, 'FontSize', TfontSize);
-line(Xduring, Y2lims, 'LineStyle', '--', 'Color', 'k', 'LineWidth', Lwidth/2);
+line(Xduring, Y2lims, 'LineStyle', ':', 'Color', 'k', 'LineWidth', Lwidth/2);
 text(Xduring(1), Ytext, TxtDuring, 'FontSize', TfontSize);
-line(Xafter,  Y2lims, 'LineStyle', '--', 'Color', 'k', 'LineWidth', Lwidth/2);
+line(Xafter,  Y2lims, 'LineStyle', ':', 'Color', 'k', 'LineWidth', Lwidth/2);
 text(Xafter(1), Ytext, TxtAfter, 'FontSize', TfontSize);
 
 saveas(Fig, Pfile);

@@ -11,11 +11,11 @@ PlotDir = Config.PlotDir;
 
 % read in any file in order to get the z coordinate values
 Hfile = sprintf('%s/speed_t_%s.h5', AzavgDir, ControlCase);
-Z = squeeze(hdf5read(Hfile, '/z_coords'));
+Z = squeeze(hdf5read(Hfile, '/z_coords')) / 1000; % km
 
 % chop off the bottom z value since it is below the surface
 Z1 = 2;
-Z2 = find(Z <= 10000, 1, 'last');
+Z2 = find(Z <= 10, 1, 'last');
 Z = Z(Z1:Z2);
 Nz = length(Z);
 
@@ -40,7 +40,7 @@ for i = 1:Nz
 end
 
 % pick x range so that CCN_VAL is in the middle
-Xlims = [ -10 CCN_VAL*2 ];
+Xlims = [ -50 CCN_VAL*2 ];
 Ylims = [ min(Z) max(Z) ];
 
 % Plot
@@ -49,12 +49,12 @@ Fsize = 20;
 Pfile = sprintf('%s/SampleCcnProf.jpg', PlotDir);
 Ptitle = sprintf('Aerosol Source Profile: %d/cc Example', CCN_VAL);
 Xlabel = sprintf('CCN concentration (#/cc)');
-Ylabel = sprintf('Height (m)');
+Ylabel = sprintf('Height (km)');
 
 Fig = figure;
 
 % data
-plot(CCN,Z,'LineWidth',Lwidth);
+plot(CCN,Z,'LineWidth',Lwidth, 'Color', 'k');
 xlim(Xlims);
 ylim(Ylims);
 
