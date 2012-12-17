@@ -1,22 +1,17 @@
 #!/usr/bin/env perl
 #
-# Script to run azavg on the set of diagnostics specified in the config file
+# Script to run gen_flux on the set of variables specified in the config file
 #
 # The config file defines the cases, time dirs and diagnostics that are to be run. Format
 # for lines in the config file are:
 #   Case: <CaseName>
 #   TimeDir: <Dir> <TimeSpec>
-#   Azavg: <Diagnostic> <Nbands> <wfilterMin> <WfilterMax>
 #
 #   <CaseName> corresponds to the simulation name such as TC_SEED_C0100 or SA0SC0.
 #
 #   <Dir> is a subdirectory of the <CaseName>/GRADS directory where the GRADS files live
 #   <TimeSpec> is the revu time spec (in the TVAR(1) spec)
 #
-#   <Diagnositc> is the name of the azavg function
-#   <Nbands> is the number of radial bands to divide the space into
-#   <WfilterMin> is the lower limit on the w filter (take data points with w < WfilterMin>
-#   <WfilterMax> is the upper limit on the w filter (take data points with w > WfilterMax>
 #
 
 BEGIN { push(@INC, "$ENV{HOME}/etc/perl"); }
@@ -37,12 +32,11 @@ use DiagUtils;
 #
 sub CreateFileNames
   {
-  my ($Case, $Tdir, $Adiag, $Fprefix, $AzavgDir, $FilterDir, $RevuDir) = @_;
+  my ($Case, $Tdir, $RevuDir, $Fdiag, $OutDir) = @_;
   
   my $InDir;
   my $InFileSuffix;
   my $OutFile;
-  my $FilterFile;
 
   my $Pattern;
   my @f;
@@ -70,16 +64,16 @@ sub CreateFileNames
   #
   $InDir = $Case . "/" . $RevuDir . $TdirStr;
 
-  # Use the w input file as a sample for finding the input file suffix.
-  $Pattern = $InDir . "/w-*.h5";
+  # Grab the first of the files with ".h5" suffix, and delete the path
+  # plus the characters up to the first "-".
+  $Pattern = $InDir . "/*.h5";
   @f = glob($Pattern);
   $InFileSuffix = $f[0];
-  $InFileSuffix =~ s/.*\/w-/-/;
+  $InFileSuffix =~ s/.*\/[^-]*-/-/;
   
-  $OutFile = $AzavgDir . ${TdirStr} . "/" . ${Adiag} . "_" . ${Case} . ".h5";
-  $FilterFile = $FilterDir . ${TdirStr} . "/" . ${Fprefix} . "_" . ${Case} . ".h5";
+  $OutFile = $OutDir . ${TdirStr} . "/" . ${Fdiag} . "_" . ${Case} . ".h5";
 
-  return ($InDir, $InFileSuffix, $OutFile, $FilterFile);
+  return ($InDir, $InFileSuffix, $OutFile);
   }
 
 #######################################################################
@@ -91,34 +85,22 @@ my $Config;
 
 my %Cases;
 my %TimeDirs;
-my %Vars;
-my %AzavgDiags;
-my $AzavgDir;
-my $FilterDir;
 my $RevuDir;
+my $DiagDir;
 
 my @f;
 my $Case;
 my $Tdir;
-my $Adiag;
-my $Avar;
-my $AvarName;
-my $RevuVar;
-my $VarDim;
-my $Nbands;
-my $Fprefix;
+my %FluxDiags;
+my $Fdiag;
+my @Fargs;
+my $Fspec;
 my $InDir;
 my $InFileSuffix;
 my $OutFile;
-my $FilterFile;
-my $Temp1;
-my $Temp2;
 
 my @SysArgs;
 my $OutDir;
-my $GradsControlFile;
-my $JoinInFiles;
-my $JoinOutFile;
 
 $ConfigFile = $ARGV[0];
 
@@ -126,69 +108,39 @@ $ConfigFile = $ARGV[0];
 ($Config) = &DiagUtils::ReadConfigFile($ConfigFile);
 %Cases      = %{ $$Config{CASES} };
 %TimeDirs   = %{ $$Config{TIM_DIRS} };
-%Vars       = %{ $$Config{VARS} };
-%AzavgDiags = %{ $$Config{AZAVG_DIAGS} };
-$AzavgDir = $$Config{AZAVG_DIR};
-$FilterDir = $$Config{FILTER_DIR};
-$RevuDir = $$Config{REVU_DIR};
+%FluxDiags  = %{ $$Config{DIAGS}{flux} };
+
+$RevuDir    = $$Config{REVU_DIR};
+$DiagDir    = $$Config{DIAG_DIR};
 
 # make sure at least one of each of cases, time_directories and diagnostics has
 # been specified
-if ((! (%Cases)) || (! (%TimeDirs)) || (! (%AzavgDiags)))
+if ((! (%Cases)) || (! (%TimeDirs)) || (! (%FluxDiags)))
   {
   print STDERR "ERROR: must specify at least one of each of case, time directory and diagnostic\n";
   exit 1;
   }
 
-# In all cases, except 'speed_t' and 'speed_r', <Diagnostic> matches the name of the
-# variable that you want to average. Also, the variable name matches the prefix of the GRADS
-# control file.
-#
 # Walk through all combinations of cases, time directories, and diagnostics.
 foreach $Case (sort(keys(%Cases)))
   {
-  foreach $Adiag (sort(keys(%AzavgDiags)))
+  foreach $Fdiag (sort(keys(%FluxDiags)))
     {
-    $JoinInFiles = "";
-
-    $Avar = $AzavgDiags{$Adiag}{VAR};
-    $VarDim = $AzavgDiags{$Adiag}{DIM};
-    $Nbands = $AzavgDiags{$Adiag}{NBANDS};
-    $Fprefix = $AzavgDiags{$Adiag}{FILTER};
-
-    if (($Avar eq "speed_t") || ($Avar eq "speed_r"))
-      {
-      # won't have a corresponding name in %Vars
-      $RevuVar = "HorizSpeed";
-      $AvarName = $Avar;
-      }
-    elsif ($Avar =~ /^hist:/)
-      {
-      ($Temp1, $AvarName, $Temp2) = split(':', $Avar);
-      $RevuVar = $Vars{$AvarName}{REVU_VAR};
-      }
-    else
-      {
-      $RevuVar = $Vars{$Avar}{REVU_VAR};
-      $AvarName = $Avar;
-      }
+    @Fargs = @{ $FluxDiags{$Fdiag} };
+    $Fspec = $Fargs[0];  # entire spec is in the first argument
 
     # run through each time directory generating the current diagnostic, and
     # then join these files into the main file (above the time directories)
     foreach $Tdir (sort(keys(%TimeDirs)))
       {
-      ($InDir,$InFileSuffix,$OutFile,$FilterFile) =
-          &CreateFileNames($Case, $Tdir, $Adiag,$Fprefix, $AzavgDir, $FilterDir, $RevuDir);
+      ($InDir, $InFileSuffix, $OutFile) =
+          &CreateFileNames($Case, $Tdir, $RevuDir, $Fdiag, $DiagDir);
 
       print "***************************************************************\n";
-      print "Running azavg:\n";
+      print "Running gen_flux:\n";
       print "  Case: $Case\n";
       print "  Time Directory: $Tdir\n";
-      print "  Variable: $AvarName\n";
-      print "    Variable Dimension: $VarDim\n";
-      print "    Number Radial Bands: $Nbands\n";
-      print "    Filter File Name: $FilterFile\n";
-      print "    Revu Variable Name: $RevuVar\n";
+      print "  Diagnostic: $Fdiag\n";
       print "  Input File Directory: $InDir\n";
       print "  Input File Suffix: $InFileSuffix\n";
       print "  Output File: $OutFile\n";
@@ -202,37 +154,8 @@ foreach $Case (sort(keys(%Cases)))
         system(@SysArgs);
         }
 
-      @SysArgs = ("azavg", $InDir, $InFileSuffix, $OutFile, $FilterFile, $Nbands, $Avar, $RevuVar, $VarDim);
+      @SysArgs = ("gen_flux", $InDir, $InFileSuffix, $OutFile, $Fdiag, $Fspec);
       print "Running: ", join(" ", @SysArgs), "\n\n";
-      system(@SysArgs);
-
-      # record the input file for the upcoming join
-      if ($Tdir eq "NONE")
-        {
-        $JoinInFiles = "NONE";
-        }
-      else
-        {
-        if ($JoinInFiles eq "")
-          {
-          $JoinInFiles = $OutFile;
-          $JoinOutFile = $AzavgDir . "/" . basename($OutFile);
-          }
-        else
-          {
-          $JoinInFiles = $JoinInFiles . ":" . $OutFile;
-          }
-        }
-      }
-
-    if ($JoinInFiles ne "NONE")
-      {
-      @SysArgs = ("join_hdata", $JoinInFiles, $JoinOutFile, $Avar);
-      print "***************************************************\n";
-      print " Joining HDF5 data:\n";
-      print "   Input Files: $JoinInFiles\n";
-      print "   Output File: $JoinOutFile\n";
-      print "   GRADS Variable: $Avar\n";
       system(@SysArgs);
       }
     }
