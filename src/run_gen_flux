@@ -32,7 +32,7 @@ use DiagUtils;
 #
 sub CreateFileNames
   {
-  my ($Case, $Tdir, $RevuDir, $Fdiag, $OutDir) = @_;
+  my ($Case, $Tdir, $RevuDir, $Fdiag) = @_;
   
   my $InDir;
   my $InFileSuffix;
@@ -71,7 +71,7 @@ sub CreateFileNames
   $InFileSuffix = $f[0];
   $InFileSuffix =~ s/.*\/[^-]*-/-/;
   
-  $OutFile = $OutDir . ${TdirStr} . "/" . ${Fdiag} . "_" . ${Case} . ".h5";
+  $OutFile = $InDir . "/" . $Fdiag . $InFileSuffix;
 
   return ($InDir, $InFileSuffix, $OutFile);
   }
@@ -86,7 +86,6 @@ my $Config;
 my %Cases;
 my %TimeDirs;
 my $RevuDir;
-my $DiagDir;
 
 my @f;
 my $Case;
@@ -111,7 +110,6 @@ $ConfigFile = $ARGV[0];
 %FluxDiags  = %{ $$Config{DIAGS}{flux} };
 
 $RevuDir    = $$Config{REVU_DIR};
-$DiagDir    = $$Config{DIAG_DIR};
 
 # make sure at least one of each of cases, time_directories and diagnostics has
 # been specified
@@ -134,7 +132,7 @@ foreach $Case (sort(keys(%Cases)))
     foreach $Tdir (sort(keys(%TimeDirs)))
       {
       ($InDir, $InFileSuffix, $OutFile) =
-          &CreateFileNames($Case, $Tdir, $RevuDir, $Fdiag, $DiagDir);
+          &CreateFileNames($Case, $Tdir, $RevuDir, $Fdiag);
 
       print "***************************************************************\n";
       print "Running gen_flux:\n";
