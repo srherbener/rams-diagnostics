@@ -6,6 +6,7 @@ DEST = $(HOME)/etc/matlab/tc_seed
 DIAG_DIR = /Volumes/data/RAMS/TcSeeding
 
 SCRIPTS = \
+          $(DEST)/AerosolAnimation.m \
           $(DEST)/GenHistOpenSpace.m \
           $(DEST)/GenKeVtPlots.m \
           $(DEST)/PlotCfads.m \
