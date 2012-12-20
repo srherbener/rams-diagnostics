@@ -17,6 +17,7 @@ SCRIPTS = \
           $(DEST)/PlotHmeasSlices.m \
           $(DEST)/PlotInitialVortex.m \
           $(DEST)/PlotProfs.m \
+          $(DEST)/PlotRsProfs.m \
           $(DEST)/PlotSampleCcnProfile.m \
           $(DEST)/PlotStormPhases.m \
           $(DEST)/PlotThetaE.m \
