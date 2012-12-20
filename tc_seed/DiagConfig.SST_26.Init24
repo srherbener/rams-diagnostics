@@ -420,7 +420,9 @@ AzavgEof: w_twp4_SS w_twp4  w  0 250000  0  25000 324000 396000
 #Pmeas: pmeas_snow_vflux_open_CO_SS AzAveragedData hist_snow_vflux_open snow_vflux wtmean 40.0  70.0 90.0 110.0
 #Pmeas: pmeas_snow_vflux_open_RB_SS AzAveragedData hist_snow_vflux_open snow_vflux wtmean 70.0 150.0 90.0 110.0
 
+####################################
 # full simulation
+####################################
 #Pmeas: pmeas_lhf_twp4_0p1_EW_LC AzAveragedData hist_lh_frzt_twp4_lhf0p1 lh_frzt wtmean  0.0  40.0 24.0  144.0
 #Pmeas: pmeas_lhf_twp4_0p1_CO_LC AzAveragedData hist_lh_frzt_twp4_lhf0p1 lh_frzt wtmean 40.0  70.0 24.0  144.0
 #Pmeas: pmeas_lhf_twp4_0p1_RB_LC AzAveragedData hist_lh_frzt_twp4_lhf0p1 lh_frzt wtmean 70.0 150.0 24.0  144.0
@@ -552,6 +554,13 @@ AzavgEof: w_twp4_SS w_twp4  w  0 250000  0  25000 324000 396000
 #Pmeas: pmeas_snow_vflux_open_EW_LC AzAveragedData hist_snow_vflux_open snow_vflux wtmean  0.0  40.0 24.0  144.0
 #Pmeas: pmeas_snow_vflux_open_CO_LC AzAveragedData hist_snow_vflux_open snow_vflux wtmean 40.0  70.0 24.0  144.0
 #Pmeas: pmeas_snow_vflux_open_RB_LC AzAveragedData hist_snow_vflux_open snow_vflux wtmean 70.0 150.0 24.0  144.0
+
+####################################
+# full radius (AR --> all radii
+####################################
+
+Pmeas: pmeas_theta_e_AR_RI AzAveragedData hist_theta_e theta_e wtmean  0.0 250.0 50.0  70.0
+Pmeas: pmeas_theta_e_AR_SS AzAveragedData hist_theta_e theta_e wtmean  0.0 250.0 90.0 110.0
 
 # Time Averages
 #   LC - 24 to 144 hrs ( 86400 to 518400 sec)
@@ -771,12 +780,12 @@ LinePlot: ccn5    RadRband  VtRbandSS SfcVtRband  y Rainband_Section_of_Max_Vt:_
 #ProfPlot: ccn5 pmeas_aggr_vflux_twp4_af0p05_CO_SS aggr_vflux abs CO_SS_CONV:_Aggr_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthWest -0.8:0.01:0.8 0.0 15.0 prof_aggr_vflux_twp4_af0p05_CO_SS.jpg
 #ProfPlot: ccn5 pmeas_aggr_vflux_twp4_af0p05_RB_SS aggr_vflux abs RB_SS_CONV:_Aggr_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthWest -0.8:0.01:0.8 0.0 15.0 prof_aggr_vflux_twp4_af0p05_RB_SS.jpg
 
-ProfPlot: ccn5 pmeas_aggr_vflux_open_EW_RI aggr_vflux abs EW_RI_NC:_Aggr_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.4:0.01:0.4 0.0 15.0 prof_aggr_vflux_open_EW_RI.jpg
-ProfPlot: ccn5 pmeas_aggr_vflux_open_CO_RI aggr_vflux abs CO_RI_NC:_Aggr_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.4:0.01:0.4 0.0 15.0 prof_aggr_vflux_open_CO_RI.jpg
-ProfPlot: ccn5 pmeas_aggr_vflux_open_RB_RI aggr_vflux abs RB_RI_NC:_Aggr_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.4:0.01:0.4 0.0 15.0 prof_aggr_vflux_open_RB_RI.jpg
-ProfPlot: ccn5 pmeas_aggr_vflux_open_EW_SS aggr_vflux abs EW_SS_NC:_Aggr_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.4:0.01:0.4 0.0 15.0 prof_aggr_vflux_open_EW_SS.jpg
-ProfPlot: ccn5 pmeas_aggr_vflux_open_CO_SS aggr_vflux abs CO_SS_NC:_Aggr_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.4:0.01:0.4 0.0 15.0 prof_aggr_vflux_open_CO_SS.jpg
-ProfPlot: ccn5 pmeas_aggr_vflux_open_RB_SS aggr_vflux abs RB_SS_NC:_Aggr_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.4:0.01:0.4 0.0 15.0 prof_aggr_vflux_open_RB_SS.jpg
+#ProfPlot: ccn5 pmeas_aggr_vflux_open_EW_RI aggr_vflux abs EW_RI_NC:_Aggr_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.4:0.01:0.4 0.0 15.0 prof_aggr_vflux_open_EW_RI.jpg
+#ProfPlot: ccn5 pmeas_aggr_vflux_open_CO_RI aggr_vflux abs CO_RI_NC:_Aggr_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.4:0.01:0.4 0.0 15.0 prof_aggr_vflux_open_CO_RI.jpg
+#ProfPlot: ccn5 pmeas_aggr_vflux_open_RB_RI aggr_vflux abs RB_RI_NC:_Aggr_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.4:0.01:0.4 0.0 15.0 prof_aggr_vflux_open_RB_RI.jpg
+#ProfPlot: ccn5 pmeas_aggr_vflux_open_EW_SS aggr_vflux abs EW_SS_NC:_Aggr_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.4:0.01:0.4 0.0 15.0 prof_aggr_vflux_open_EW_SS.jpg
+#ProfPlot: ccn5 pmeas_aggr_vflux_open_CO_SS aggr_vflux abs CO_SS_NC:_Aggr_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.4:0.01:0.4 0.0 15.0 prof_aggr_vflux_open_CO_SS.jpg
+#ProfPlot: ccn5 pmeas_aggr_vflux_open_RB_SS aggr_vflux abs RB_SS_NC:_Aggr_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.4:0.01:0.4 0.0 15.0 prof_aggr_vflux_open_RB_SS.jpg
 
 #ProfPlot: ccn5 pmeas_graup_vflux_twp4_gf0p001_EW_RI graup_vflux abs EW_RI_CONV:_Graup_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthWest -0.03:0.001:0.03 0.0 15.0 prof_graup_vflux_twp4_gf0p001_EW_RI.jpg
 #ProfPlot: ccn5 pmeas_graup_vflux_twp4_gf0p001_CO_RI graup_vflux abs CO_RI_CONV:_Graup_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthWest -0.03:0.001:0.03 0.0 15.0 prof_graup_vflux_twp4_gf0p001_CO_RI.jpg
@@ -785,12 +794,12 @@ ProfPlot: ccn5 pmeas_aggr_vflux_open_RB_SS aggr_vflux abs RB_SS_NC:_Aggr_Vert_Fl
 #ProfPlot: ccn5 pmeas_graup_vflux_twp4_gf0p001_CO_SS graup_vflux abs CO_SS_CONV:_Graup_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthWest -0.03:0.001:0.03 0.0 15.0 prof_graup_vflux_twp4_gf0p001_CO_SS.jpg
 #ProfPlot: ccn5 pmeas_graup_vflux_twp4_gf0p001_RB_SS graup_vflux abs RB_SS_CONV:_Graup_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthWest -0.03:0.001:0.03 0.0 15.0 prof_graup_vflux_twp4_gf0p001_RB_SS.jpg
 
-ProfPlot: ccn5 pmeas_graup_vflux_open_EW_RI graup_vflux abs EW_RI_NC:_Graup_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -0.01:0.001:0.01 0.0 15.0 prof_graup_vflux_open_EW_RI.jpg
-ProfPlot: ccn5 pmeas_graup_vflux_open_CO_RI graup_vflux abs CO_RI_NC:_Graup_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -0.01:0.001:0.01 0.0 15.0 prof_graup_vflux_open_CO_RI.jpg
-ProfPlot: ccn5 pmeas_graup_vflux_open_RB_RI graup_vflux abs RB_RI_NC:_Graup_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -0.01:0.001:0.01 0.0 15.0 prof_graup_vflux_open_RB_RI.jpg
-ProfPlot: ccn5 pmeas_graup_vflux_open_EW_SS graup_vflux abs EW_SS_NC:_Graup_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -0.01:0.001:0.01 0.0 15.0 prof_graup_vflux_open_EW_SS.jpg
-ProfPlot: ccn5 pmeas_graup_vflux_open_CO_SS graup_vflux abs CO_SS_NC:_Graup_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -0.01:0.001:0.01 0.0 15.0 prof_graup_vflux_open_CO_SS.jpg
-ProfPlot: ccn5 pmeas_graup_vflux_open_RB_SS graup_vflux abs RB_SS_NC:_Graup_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -0.01:0.001:0.01 0.0 15.0 prof_graup_vflux_open_RB_SS.jpg
+#ProfPlot: ccn5 pmeas_graup_vflux_open_EW_RI graup_vflux abs EW_RI_NC:_Graup_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -0.01:0.001:0.01 0.0 15.0 prof_graup_vflux_open_EW_RI.jpg
+#ProfPlot: ccn5 pmeas_graup_vflux_open_CO_RI graup_vflux abs CO_RI_NC:_Graup_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -0.01:0.001:0.01 0.0 15.0 prof_graup_vflux_open_CO_RI.jpg
+#ProfPlot: ccn5 pmeas_graup_vflux_open_RB_RI graup_vflux abs RB_RI_NC:_Graup_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -0.01:0.001:0.01 0.0 15.0 prof_graup_vflux_open_RB_RI.jpg
+#ProfPlot: ccn5 pmeas_graup_vflux_open_EW_SS graup_vflux abs EW_SS_NC:_Graup_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -0.01:0.001:0.01 0.0 15.0 prof_graup_vflux_open_EW_SS.jpg
+#ProfPlot: ccn5 pmeas_graup_vflux_open_CO_SS graup_vflux abs CO_SS_NC:_Graup_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -0.01:0.001:0.01 0.0 15.0 prof_graup_vflux_open_CO_SS.jpg
+#ProfPlot: ccn5 pmeas_graup_vflux_open_RB_SS graup_vflux abs RB_SS_NC:_Graup_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -0.01:0.001:0.01 0.0 15.0 prof_graup_vflux_open_RB_SS.jpg
 
 #ProfPlot: ccn5 pmeas_hail_vflux_twp4_hf0p1_EW_RI hail_vflux abs EW_RI_CONV:_Hail_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthWest -5:0.1:5 0.0 15.0 prof_hail_vflux_twp4_hf0p1_EW_RI.jpg
 #ProfPlot: ccn5 pmeas_hail_vflux_twp4_hf0p1_CO_RI hail_vflux abs CO_RI_CONV:_Hail_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthWest -5:0.1:5 0.0 15.0 prof_hail_vflux_twp4_hf0p1_CO_RI.jpg
@@ -799,12 +808,12 @@ ProfPlot: ccn5 pmeas_graup_vflux_open_RB_SS graup_vflux abs RB_SS_NC:_Graup_Vert
 #ProfPlot: ccn5 pmeas_hail_vflux_twp4_hf0p1_CO_SS hail_vflux abs CO_SS_CONV:_Hail_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthWest -5:0.1:5 0.0 15.0 prof_hail_vflux_twp4_hf0p1_CO_SS.jpg
 #ProfPlot: ccn5 pmeas_hail_vflux_twp4_hf0p1_RB_SS hail_vflux abs RB_SS_CONV:_Hail_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthWest -5:0.1:5 0.0 15.0 prof_hail_vflux_twp4_hf0p1_RB_SS.jpg
 
-ProfPlot: ccn5 pmeas_hail_vflux_open_EW_RI hail_vflux abs EW_RI_NC:_Hail_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -1:0.1:1 0.0 15.0 prof_hail_vflux_open_EW_RI.jpg
-ProfPlot: ccn5 pmeas_hail_vflux_open_CO_RI hail_vflux abs CO_RI_NC:_Hail_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -1:0.1:1 0.0 15.0 prof_hail_vflux_open_CO_RI.jpg
-ProfPlot: ccn5 pmeas_hail_vflux_open_RB_RI hail_vflux abs RB_RI_NC:_Hail_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -1:0.1:1 0.0 15.0 prof_hail_vflux_open_RB_RI.jpg
-ProfPlot: ccn5 pmeas_hail_vflux_open_EW_SS hail_vflux abs EW_SS_NC:_Hail_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -1:0.1:1 0.0 15.0 prof_hail_vflux_open_EW_SS.jpg
-ProfPlot: ccn5 pmeas_hail_vflux_open_CO_SS hail_vflux abs CO_SS_NC:_Hail_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -1:0.1:1 0.0 15.0 prof_hail_vflux_open_CO_SS.jpg
-ProfPlot: ccn5 pmeas_hail_vflux_open_RB_SS hail_vflux abs RB_SS_NC:_Hail_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -1:0.1:1 0.0 15.0 prof_hail_vflux_open_RB_SS.jpg
+#ProfPlot: ccn5 pmeas_hail_vflux_open_EW_RI hail_vflux abs EW_RI_NC:_Hail_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -1:0.1:1 0.0 15.0 prof_hail_vflux_open_EW_RI.jpg
+#ProfPlot: ccn5 pmeas_hail_vflux_open_CO_RI hail_vflux abs CO_RI_NC:_Hail_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -1:0.1:1 0.0 15.0 prof_hail_vflux_open_CO_RI.jpg
+#ProfPlot: ccn5 pmeas_hail_vflux_open_RB_RI hail_vflux abs RB_RI_NC:_Hail_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -1:0.1:1 0.0 15.0 prof_hail_vflux_open_RB_RI.jpg
+#ProfPlot: ccn5 pmeas_hail_vflux_open_EW_SS hail_vflux abs EW_SS_NC:_Hail_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -1:0.1:1 0.0 15.0 prof_hail_vflux_open_EW_SS.jpg
+#ProfPlot: ccn5 pmeas_hail_vflux_open_CO_SS hail_vflux abs CO_SS_NC:_Hail_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -1:0.1:1 0.0 15.0 prof_hail_vflux_open_CO_SS.jpg
+#ProfPlot: ccn5 pmeas_hail_vflux_open_RB_SS hail_vflux abs RB_SS_NC:_Hail_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -1:0.1:1 0.0 15.0 prof_hail_vflux_open_RB_SS.jpg
 
 #ProfPlot: ccn5 pmeas_pris_vflux_twp4_pf0p05_EW_RI pris_vflux abs EW_RI_CONV:_Pris_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthWest -0.6:0.01:0.6 0.0 18.0 prof_pris_vflux_twp4_pf0p05_EW_RI.jpg
 #ProfPlot: ccn5 pmeas_pris_vflux_twp4_pf0p05_CO_RI pris_vflux abs CO_RI_CONV:_Pris_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthWest -0.6:0.01:0.6 0.0 18.0 prof_pris_vflux_twp4_pf0p05_CO_RI.jpg
@@ -813,12 +822,12 @@ ProfPlot: ccn5 pmeas_hail_vflux_open_RB_SS hail_vflux abs RB_SS_NC:_Hail_Vert_Fl
 #ProfPlot: ccn5 pmeas_pris_vflux_twp4_pf0p05_CO_SS pris_vflux abs CO_SS_CONV:_Pris_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthWest -0.6:0.01:0.6 0.0 18.0 prof_pris_vflux_twp4_pf0p05_CO_SS.jpg
 #ProfPlot: ccn5 pmeas_pris_vflux_twp4_pf0p05_RB_SS pris_vflux abs RB_SS_CONV:_Pris_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthWest -0.6:0.01:0.6 0.0 18.0 prof_pris_vflux_twp4_pf0p05_RB_SS.jpg
 
-ProfPlot: ccn5 pmeas_pris_vflux_open_EW_RI pris_vflux abs EW_RI_NC:_Pris_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.3:0.01:0.3 0.0 18.0 prof_pris_vflux_open_EW_RI.jpg
-ProfPlot: ccn5 pmeas_pris_vflux_open_CO_RI pris_vflux abs CO_RI_NC:_Pris_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.3:0.01:0.3 0.0 18.0 prof_pris_vflux_open_CO_RI.jpg
-ProfPlot: ccn5 pmeas_pris_vflux_open_RB_RI pris_vflux abs RB_RI_NC:_Pris_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.3:0.01:0.3 0.0 18.0 prof_pris_vflux_open_RB_RI.jpg
-ProfPlot: ccn5 pmeas_pris_vflux_open_EW_SS pris_vflux abs EW_SS_NC:_Pris_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.3:0.01:0.3 0.0 18.0 prof_pris_vflux_open_EW_SS.jpg
-ProfPlot: ccn5 pmeas_pris_vflux_open_CO_SS pris_vflux abs CO_SS_NC:_Pris_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.3:0.01:0.3 0.0 18.0 prof_pris_vflux_open_CO_SS.jpg
-ProfPlot: ccn5 pmeas_pris_vflux_open_RB_SS pris_vflux abs RB_SS_NC:_Pris_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.3:0.01:0.3 0.0 18.0 prof_pris_vflux_open_RB_SS.jpg
+#ProfPlot: ccn5 pmeas_pris_vflux_open_EW_RI pris_vflux abs EW_RI_NC:_Pris_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.3:0.01:0.3 0.0 18.0 prof_pris_vflux_open_EW_RI.jpg
+#ProfPlot: ccn5 pmeas_pris_vflux_open_CO_RI pris_vflux abs CO_RI_NC:_Pris_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.3:0.01:0.3 0.0 18.0 prof_pris_vflux_open_CO_RI.jpg
+#ProfPlot: ccn5 pmeas_pris_vflux_open_RB_RI pris_vflux abs RB_RI_NC:_Pris_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.3:0.01:0.3 0.0 18.0 prof_pris_vflux_open_RB_RI.jpg
+#ProfPlot: ccn5 pmeas_pris_vflux_open_EW_SS pris_vflux abs EW_SS_NC:_Pris_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.3:0.01:0.3 0.0 18.0 prof_pris_vflux_open_EW_SS.jpg
+#ProfPlot: ccn5 pmeas_pris_vflux_open_CO_SS pris_vflux abs CO_SS_NC:_Pris_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.3:0.01:0.3 0.0 18.0 prof_pris_vflux_open_CO_SS.jpg
+#ProfPlot: ccn5 pmeas_pris_vflux_open_RB_SS pris_vflux abs RB_SS_NC:_Pris_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.3:0.01:0.3 0.0 18.0 prof_pris_vflux_open_RB_SS.jpg
 
 #ProfPlot: ccn5 pmeas_snow_vflux_twp4_sf0p01_EW_RI snow_vflux abs EW_RI_CONV:_Snow_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.2:0.01:0.2 0.0 15.0 prof_snow_vflux_twp4_sf0p01_EW_RI.jpg
 #ProfPlot: ccn5 pmeas_snow_vflux_twp4_sf0p01_CO_RI snow_vflux abs CO_RI_CONV:_Snow_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.2:0.01:0.2 0.0 15.0 prof_snow_vflux_twp4_sf0p01_CO_RI.jpg
@@ -827,24 +836,46 @@ ProfPlot: ccn5 pmeas_pris_vflux_open_RB_SS pris_vflux abs RB_SS_NC:_Pris_Vert_Fl
 #ProfPlot: ccn5 pmeas_snow_vflux_twp4_sf0p01_CO_SS snow_vflux abs CO_SS_CONV:_Snow_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.2:0.01:0.2 0.0 15.0 prof_snow_vflux_twp4_sf0p01_CO_SS.jpg
 #ProfPlot: ccn5 pmeas_snow_vflux_twp4_sf0p01_RB_SS snow_vflux abs RB_SS_CONV:_Snow_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.2:0.01:0.2 0.0 15.0 prof_snow_vflux_twp4_sf0p01_RB_SS.jpg
 
-ProfPlot: ccn5 pmeas_snow_vflux_open_EW_RI snow_vflux abs EW_RI_NC:_Snow_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -0.06:0.001:0.06 0.0 15.0 prof_snow_vflux_open_EW_RI.jpg
-ProfPlot: ccn5 pmeas_snow_vflux_open_CO_RI snow_vflux abs CO_RI_NC:_Snow_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -0.06:0.001:0.06 0.0 15.0 prof_snow_vflux_open_CO_RI.jpg
-ProfPlot: ccn5 pmeas_snow_vflux_open_RB_RI snow_vflux abs RB_RI_NC:_Snow_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -0.06:0.001:0.06 0.0 15.0 prof_snow_vflux_open_RB_RI.jpg
-ProfPlot: ccn5 pmeas_snow_vflux_open_EW_SS snow_vflux abs EW_SS_NC:_Snow_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -0.06:0.001:0.06 0.0 15.0 prof_snow_vflux_open_EW_SS.jpg
-ProfPlot: ccn5 pmeas_snow_vflux_open_CO_SS snow_vflux abs CO_SS_NC:_Snow_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -0.06:0.001:0.06 0.0 15.0 prof_snow_vflux_open_CO_SS.jpg
-ProfPlot: ccn5 pmeas_snow_vflux_open_RB_SS snow_vflux abs RB_SS_NC:_Snow_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -0.06:0.001:0.06 0.0 15.0 prof_snow_vflux_open_RB_SS.jpg
+#ProfPlot: ccn5 pmeas_snow_vflux_open_EW_RI snow_vflux abs EW_RI_NC:_Snow_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -0.06:0.001:0.06 0.0 15.0 prof_snow_vflux_open_EW_RI.jpg
+#ProfPlot: ccn5 pmeas_snow_vflux_open_CO_RI snow_vflux abs CO_RI_NC:_Snow_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -0.06:0.001:0.06 0.0 15.0 prof_snow_vflux_open_CO_RI.jpg
+#ProfPlot: ccn5 pmeas_snow_vflux_open_RB_RI snow_vflux abs RB_RI_NC:_Snow_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -0.06:0.001:0.06 0.0 15.0 prof_snow_vflux_open_RB_RI.jpg
+#ProfPlot: ccn5 pmeas_snow_vflux_open_EW_SS snow_vflux abs EW_SS_NC:_Snow_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -0.06:0.001:0.06 0.0 15.0 prof_snow_vflux_open_EW_SS.jpg
+#ProfPlot: ccn5 pmeas_snow_vflux_open_CO_SS snow_vflux abs CO_SS_NC:_Snow_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -0.06:0.001:0.06 0.0 15.0 prof_snow_vflux_open_CO_SS.jpg
+#ProfPlot: ccn5 pmeas_snow_vflux_open_RB_SS snow_vflux abs RB_SS_NC:_Snow_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -0.06:0.001:0.06 0.0 15.0 prof_snow_vflux_open_RB_SS.jpg
 
 ################### control vs C2000 (AGU) ############################
 #ProfPlot: agu2 pmeas_ccn_conc_twp4_EW_RI ccn_conc abs EW_RI:_CCN_Conc Concentration_(#/cc) Height_(km) NorthEast -10:5.25:150 0.0 1.0 agu_prof_ccn_conc_twp4_EW_RI.jpg
 #ProfPlot: agu2 pmeas_lhf_twp4_0p1_EW_RI lh_frzt abs EW_RI:_LH_Frz Latent_Heating_(K/hr) Height_(km) NorthEast -1.0:0.05:2.0 0.0 15.0 agu_prof_lhf_twp4_0p1_EW_RI.jpg
-#ProfPlot: agu2 pmeas_w_up_twp4_EW_RI w abs EW_RI:_Updrafts W_(m/s) Height_(km) NorthEast -0.03:0.03:1.5 0.0 20.0 agu_prof_w_up_twp4_EW_RI.jpg
-#ProfPlot: agu2 pmeas_w_twp4_EW_RI w abs EW_RI:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.03:1 0.0 20.0 agu_prof_w_twp4_EW_RI.jpg
+ProfPlot: agu2 pmeas_w_twp4_EW_RI w abs EW_RI:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.03:1 0.0 15.0 agu_prof_w_twp4_EW_RI.jpg
+#ProfPlot: agu2 pmeas_aggr_vflux_twp4_af0p05_EW_RI aggr_vflux abs EW_RI_CONV:_Aggr_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthWest -0.8:0.01:0.8 0.0 15.0 agu_prof_aggr_vflux_twp4_af0p05_EW_RI.jpg
+#ProfPlot: agu2 pmeas_aggr_vflux_open_EW_RI aggr_vflux abs EW_RI_NC:_Aggr_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.4:0.01:0.4 0.0 15.0 agu_prof_aggr_vflux_open_EW_RI.jpg
+#ProfPlot: agu2 pmeas_graup_vflux_twp4_gf0p001_EW_RI graup_vflux abs EW_RI_CONV:_Graup_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthWest -0.03:0.001:0.03 0.0 15.0 agu_prof_graup_vflux_twp4_gf0p001_EW_RI.jpg
+#ProfPlot: agu2 pmeas_graup_vflux_open_EW_RI graup_vflux abs EW_RI_NC:_Graup_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -0.01:0.001:0.01 0.0 15.0 agu_prof_graup_vflux_open_EW_RI.jpg
+#ProfPlot: agu2 pmeas_hail_vflux_twp4_hf0p1_EW_RI hail_vflux abs EW_RI_CONV:_Hail_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthWest -5:0.1:5 0.0 15.0 agu_prof_hail_vflux_twp4_hf0p1_EW_RI.jpg
+#ProfPlot: agu2 pmeas_hail_vflux_open_EW_RI hail_vflux abs EW_RI_NC:_Hail_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -1:0.1:1 0.0 15.0 agu_prof_hail_vflux_open_EW_RI.jpg
+#ProfPlot: agu2 pmeas_pris_vflux_twp4_pf0p05_EW_RI pris_vflux abs EW_RI_CONV:_Pris_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthWest -0.6:0.01:0.6 0.0 18.0 agu_prof_pris_vflux_twp4_pf0p05_EW_RI.jpg
+#ProfPlot: agu2 pmeas_pris_vflux_open_EW_RI pris_vflux abs EW_RI_NC:_Pris_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.3:0.01:0.3 0.0 18.0 agu_prof_pris_vflux_open_EW_RI.jpg
+#ProfPlot: agu2 pmeas_snow_vflux_twp4_sf0p01_EW_RI snow_vflux abs EW_RI_CONV:_Snow_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.2:0.01:0.2 0.0 15.0 agu_prof_snow_vflux_twp4_sf0p01_EW_RI.jpg
+#ProfPlot: agu2 pmeas_snow_vflux_twp4_sf0p01_RB_RI snow_vflux abs RB_RI_CONV:_Snow_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.2:0.01:0.2 0.0 15.0 agu_prof_snow_vflux_twp4_sf0p01_RB_RI.jpg
+
+#ProfPlot: agu2 pmeas_ccn_conc_twp4_RB_RI ccn_conc abs RB_RI:_CCN_Conc Concentration_(#/cc) Height_(km) NorthEast -10:5.25:200 0.0 4.0 agu_prof_ccn_conc_twp4_RB_RI.jpg
+#ProfPlot: agu2 pmeas_lhf_twp4_0p1_RB_RI lh_frzt abs RB_RI:_LH_Frz Latent_Heating_(K/hr) Height_(km) NorthEast -1.0:0.05:2.0 0.0 15.0 agu_prof_lhf_twp4_0p1_RB_RI.jpg
+ProfPlot: agu2 pmeas_w_twp4_RB_RI w abs RB_RI:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 15.0 agu_prof_w_twp4_RB_RI.jpg
+#ProfPlot: agu2 pmeas_aggr_vflux_twp4_af0p05_RB_RI aggr_vflux abs RB_RI_CONV:_Aggr_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthWest -0.8:0.01:0.8 0.0 15.0 agu_prof_aggr_vflux_twp4_af0p05_RB_RI.jpg
+#ProfPlot: agu2 pmeas_aggr_vflux_open_RB_RI aggr_vflux abs RB_RI_NC:_Aggr_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.4:0.01:0.4 0.0 15.0 agu_prof_aggr_vflux_open_RB_RI.jpg
+#ProfPlot: agu2 pmeas_graup_vflux_twp4_gf0p001_RB_RI graup_vflux abs RB_RI_CONV:_Graup_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthWest -0.03:0.001:0.03 0.0 15.0 agu_prof_graup_vflux_twp4_gf0p001_RB_RI.jpg
+#ProfPlot: agu2 pmeas_graup_vflux_open_RB_RI graup_vflux abs RB_RI_NC:_Graup_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -0.01:0.001:0.01 0.0 15.0 agu_prof_graup_vflux_open_RB_RI.jpg
+#ProfPlot: agu2 pmeas_hail_vflux_twp4_hf0p1_RB_RI hail_vflux abs RB_RI_CONV:_Hail_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthWest -5:0.1:5 0.0 15.0 agu_prof_hail_vflux_twp4_hf0p1_RB_RI.jpg
+#ProfPlot: agu2 pmeas_hail_vflux_open_RB_RI hail_vflux abs RB_RI_NC:_Hail_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -1:0.1:1 0.0 15.0 agu_prof_hail_vflux_open_RB_RI.jpg
+#ProfPlot: agu2 pmeas_pris_vflux_twp4_pf0p05_RB_RI pris_vflux abs RB_RI_CONV:_Pris_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthWest -0.6:0.01:0.6 0.0 18.0 agu_prof_pris_vflux_twp4_pf0p05_RB_RI.jpg
+#ProfPlot: agu2 pmeas_pris_vflux_open_RB_RI pris_vflux abs RB_RI_NC:_Pris_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) SouthEast -0.3:0.01:0.3 0.0 18.0 agu_prof_pris_vflux_open_RB_RI.jpg
+#ProfPlot: agu2 pmeas_snow_vflux_open_EW_RI snow_vflux abs EW_RI_NC:_Snow_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -0.06:0.001:0.06 0.0 15.0 agu_prof_snow_vflux_open_EW_RI.jpg
+#ProfPlot: agu2 pmeas_snow_vflux_open_RB_RI snow_vflux abs RB_RI_NC:_Snow_Vert_Flux Flux_(gm^-^2s^-^1) Height_(km) NorthEast -0.06:0.001:0.06 0.0 15.0 agu_prof_snow_vflux_open_RB_RI.jpg
 
 #ProfPlot: agu2 pmeas_ccn_conc_twp4_RB_SS ccn_conc abs RB_SS:_CCN_Conc Concentration_(#/cc) Height_(km) NorthEast -10:5.25:200 0.0 4.0 agu_prof_ccn_conc_twp4_RB_SS.jpg
 #ProfPlot: agu2 pmeas_lhf_twp4_0p1_RB_SS lh_frzt abs RB_SS:_LH_Frz Latent_Heating_(K/hr) Height_(km) NorthEast -1.0:0.05:2.0 0.0 15.0 agu_prof_lhf_twp4_0p1_RB_SS.jpg
-#ProfPlot: agu2 pmeas_w_up_twp4_RB_SS w abs RB_SS:_Updrafts W_(m/s) Height_(km) NorthEast -0.03:0.03:1.5 0.0 20.0 agu_prof_w_up_twp4_RB_SS.jpg
 #ProfPlot: agu2 pmeas_w_twp4_RB_SS w abs RB_SS:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 agu_prof_w_twp4_RB_SS.jpg
-
+#
 ######################## Profile Plots SD #############################
 #ProfPlot: ccn5_sd pmeas_lhf_twp4_0p1_EW_RI lh_frzt diff LH_Frz,_Eyewall,_Rapid_Intensification Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -0.5:0.025:0.5 0.0 20.0 prof_lhf_twp4_0p1_EW_RI_sd.jpg
 #ProfPlot: ccn5_sd pmeas_lhf_twp4_0p1_CO_RI lh_frzt diff LH_Frz,_Core,_Rapid_Intensification Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -0.5:0.025:0.5 0.0 20.0 prof_lhf_twp4_0p1_CO_RI_sd.jpg
