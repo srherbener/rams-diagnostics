@@ -86,6 +86,12 @@ for icase = 1:length(Config.Cases)
     R_HISTS = squeeze(sum(HIST(R1:R2,:,:,T1:T2),1));
     [ PROF_TS ] = ReduceHists(R_HISTS, 1, B, Method);
 
+    % Profile Radial Series
+    %
+    % Sum acroos only the t dimension, then reduce the bin dimension.
+    T_HISTS = squeeze(sum(HIST(R1:R2,:,:,T1:T2),4));
+    [ PROF_RS ] = ReduceHists(T_HISTS, 2, B, Method);
+
     fprintf('Writing file: %s\n', OutFile);
     fprintf('\n');
 
@@ -95,6 +101,8 @@ for icase = 1:length(Config.Cases)
     hdf5write(OutFile, Hdset, PROF, 'WriteMode', 'append');
     Hdset = sprintf('/ProfTs_%s', Vname);
     hdf5write(OutFile, Hdset, PROF_TS, 'WriteMode', 'append');
+    Hdset = sprintf('/ProfRs_%s', Vname);
+    hdf5write(OutFile, Hdset, PROF_RS, 'WriteMode', 'append');
 
     hdf5write(OutFile, '/Radius', R(R1:R2), 'WriteMode', 'append');
     hdf5write(OutFile, '/Bins', B, 'WriteMode', 'append');
