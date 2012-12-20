@@ -13,7 +13,10 @@ Pdir = Config.PlotDir;
 % Grab the colormap
 Fig = figure;
 DefCmap = colormap;
+RbCmap = redblue;
+RevGrayCmap = flipud(colormap('gray'));
 close(Fig);
+
 
 Fsize = 20;
 
@@ -81,6 +84,14 @@ for iplot = 1:length(Config.ProfTsPlots)
         if (strcmp(Pspec, 'max_white'))
           % change last entry (max value) to white
           cmap(end,:) = [ 1 1 1 ];
+        end
+        if (strcmp(Pspec, 'redblue'))
+          % change last entry (max value) to white
+          cmap = RbCmap;
+        end
+        if (strcmp(Pspec, 'revgray'))
+          % change last entry (max value) to white
+          cmap = RevGrayCmap;
         end
 
         CF = contourf(R, Zvals, Pdata);
