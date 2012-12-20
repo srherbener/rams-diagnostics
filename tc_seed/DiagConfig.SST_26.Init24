@@ -563,25 +563,31 @@ AzavgEof: w_twp4_SS w_twp4  w  0 250000  0  25000 324000 396000
 #Pmeas: pmeas_ccn_conc_twp4_AR_RI AzAveragedData hist_ccn_conc_twp4 ccn_conc wtmean  0.0 250.0 50.0  70.0
 #Pmeas: pmeas_ccn_conc_twp4_AR_SS AzAveragedData hist_ccn_conc_twp4 ccn_conc wtmean  0.0 250.0 90.0 110.0
 
-Pmeas: pmeas_theta_e_AR_RI AzAveragedData hist_theta_e theta_e wtmean  0.0 250.0 50.0  70.0
-Pmeas: pmeas_theta_e_AR_SS AzAveragedData hist_theta_e theta_e wtmean  0.0 250.0 90.0 110.0
+Pmeas: pmeas_tempc_AR_RI AzAveragedData hist_tempc tempc wtmean  0.0 250.0 50.0  70.0
+Pmeas: pmeas_tempc_AR_SS AzAveragedData hist_tempc tempc wtmean  0.0 250.0 90.0 110.0
 
-Pmeas: pmeas_lh_tott_lht1p0_AR_RI    AzAveragedData hist_lh_tott_lht1p0    lh_tott  wtmean  0.0 250.0 50.0  70.0
-Pmeas: pmeas_lh_tott_lht1p0_AR_SS    AzAveragedData hist_lh_tott_lht1p0    lh_tott  wtmean  0.0 250.0 90.0 110.0
-Pmeas: pmeas_vaptott_vt0p5_AR_RI     AzAveragedData hist_vaptott_vt0p5     vaptott  wtmean  0.0 250.0 50.0  70.0
-Pmeas: pmeas_vaptott_vt0p5_AR_SS     AzAveragedData hist_vaptott_vt0p5     vaptott  wtmean  0.0 250.0 90.0 110.0
-Pmeas: pmeas_potvortz_pvz5em6_AR_RI  AzAveragedData hist_potvortz_pvz5em6  potvortz wtmean  0.0 250.0 50.0  70.0
-Pmeas: pmeas_potvortz_pvz5em6_AR_SS  AzAveragedData hist_potvortz_pvz5em6  potvortz wtmean  0.0 250.0 90.0 110.0
-Pmeas: pmeas_relvortz_rvz1em4_AR_RI  AzAveragedData hist_relvortz_rvz1em4  relvortz wtmean  0.0 250.0 50.0  70.0
-Pmeas: pmeas_relvortz_rvz1em4_AR_SS  AzAveragedData hist_relvortz_rvz1em4  relvortz wtmean  0.0 250.0 90.0 110.0
+Pmeas: pmeas_tempc_EW_RI AzAveragedData hist_tempc tempc wtmean  0.0  40.0 50.0  70.0
+Pmeas: pmeas_tempc_EW_SS AzAveragedData hist_tempc tempc wtmean  0.0  40.0 90.0 110.0
 
-Pmeas: pmeas_lh_tott_twp4_lht1p0_AR_RI AzAveragedData hist_lh_tott_twp4_lht1p0 lh_tott wtmean  0.0 250.0 50.0  70.0
-Pmeas: pmeas_lh_tott_twp4_lht1p0_AR_SS AzAveragedData hist_lh_tott_twp4_lht1p0 lh_tott wtmean  0.0 250.0 90.0 110.0
-Pmeas: pmeas_vaptott_twp4_vt0p5_AR_RI  AzAveragedData hist_vaptott_twp4_vt0p5  vaptott wtmean  0.0 250.0 50.0  70.0
-Pmeas: pmeas_vaptott_twp4_vt0p5_AR_SS  AzAveragedData hist_vaptott_twp4_vt0p5  vaptott wtmean  0.0 250.0 90.0 110.0
+#Pmeas: pmeas_theta_e_AR_RI AzAveragedData hist_theta_e theta_e wtmean  0.0 250.0 50.0  70.0
+#Pmeas: pmeas_theta_e_AR_SS AzAveragedData hist_theta_e theta_e wtmean  0.0 250.0 90.0 110.0
 
-Pmeas: pmeas_relvortz_rvz1em4_EW_RI  AzAveragedData hist_relvortz_rvz1em4  relvortz wtmean  0.0  40.0 50.0  70.0
-Pmeas: pmeas_relvortz_rvz1em4_EW_SS  AzAveragedData hist_relvortz_rvz1em4  relvortz wtmean  0.0  40.0 90.0 110.0
+#Pmeas: pmeas_lh_tott_lht1p0_AR_RI    AzAveragedData hist_lh_tott_lht1p0    lh_tott  wtmean  0.0 250.0 50.0  70.0
+#Pmeas: pmeas_lh_tott_lht1p0_AR_SS    AzAveragedData hist_lh_tott_lht1p0    lh_tott  wtmean  0.0 250.0 90.0 110.0
+#Pmeas: pmeas_vaptott_vt0p5_AR_RI     AzAveragedData hist_vaptott_vt0p5     vaptott  wtmean  0.0 250.0 50.0  70.0
+#Pmeas: pmeas_vaptott_vt0p5_AR_SS     AzAveragedData hist_vaptott_vt0p5     vaptott  wtmean  0.0 250.0 90.0 110.0
+#Pmeas: pmeas_potvortz_pvz5em6_AR_RI  AzAveragedData hist_potvortz_pvz5em6  potvortz wtmean  0.0 250.0 50.0  70.0
+#Pmeas: pmeas_potvortz_pvz5em6_AR_SS  AzAveragedData hist_potvortz_pvz5em6  potvortz wtmean  0.0 250.0 90.0 110.0
+#Pmeas: pmeas_relvortz_rvz1em4_AR_RI  AzAveragedData hist_relvortz_rvz1em4  relvortz wtmean  0.0 250.0 50.0  70.0
+#Pmeas: pmeas_relvortz_rvz1em4_AR_SS  AzAveragedData hist_relvortz_rvz1em4  relvortz wtmean  0.0 250.0 90.0 110.0
+
+#Pmeas: pmeas_lh_tott_twp4_lht1p0_AR_RI AzAveragedData hist_lh_tott_twp4_lht1p0 lh_tott wtmean  0.0 250.0 50.0  70.0
+#Pmeas: pmeas_lh_tott_twp4_lht1p0_AR_SS AzAveragedData hist_lh_tott_twp4_lht1p0 lh_tott wtmean  0.0 250.0 90.0 110.0
+#Pmeas: pmeas_vaptott_twp4_vt0p5_AR_RI  AzAveragedData hist_vaptott_twp4_vt0p5  vaptott wtmean  0.0 250.0 50.0  70.0
+#Pmeas: pmeas_vaptott_twp4_vt0p5_AR_SS  AzAveragedData hist_vaptott_twp4_vt0p5  vaptott wtmean  0.0 250.0 90.0 110.0
+
+#Pmeas: pmeas_relvortz_rvz1em4_EW_RI  AzAveragedData hist_relvortz_rvz1em4  relvortz wtmean  0.0  40.0 50.0  70.0
+#Pmeas: pmeas_relvortz_rvz1em4_EW_SS  AzAveragedData hist_relvortz_rvz1em4  relvortz wtmean  0.0  40.0 90.0 110.0
 
 # Time Averages
 #   LC - 24 to 144 hrs ( 86400 to 518400 sec)
