@@ -43,7 +43,8 @@ for iplot = 1:length(Config.LinePlots)
     end
 
     Smooth = Config.LinePlots(iplot).Smooth;
-    Ptitle = sprintf('%s: %s', Pname, Config.LinePlots(iplot).Title);
+    %Ptitle = sprintf('%s: %s', Pname, Config.LinePlots(iplot).Title);
+    Ptitle = sprintf('%s', Config.LinePlots(iplot).Title);
     LegLoc = Config.LinePlots(iplot).LegLoc;
     OutFile = sprintf('%s/%s', Pdir, Config.LinePlots(iplot).OutFile);
 

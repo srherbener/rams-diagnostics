@@ -290,7 +290,9 @@ for i = 1:size(InLines,1)
       Cdata.ProfTsPlots(i_pts_plot).Zmin        = sscanf(Fields{10}, '%f');
       Cdata.ProfTsPlots(i_pts_plot).Zmax        = sscanf(Fields{11}, '%f');
       Cdata.ProfTsPlots(i_pts_plot).Pspec       = Fields{12};
-      Cdata.ProfTsPlots(i_pts_plot).OutFileBase = Fields{13};
+      Cdata.ProfTsPlots(i_pts_plot).Flevel      = sscanf(Fields{13}, '%i');;
+      Cdata.ProfTsPlots(i_pts_plot).Ptype       = Fields{14};
+      Cdata.ProfTsPlots(i_pts_plot).OutFileBase = Fields{15};
 
       Cdata.ProfTsPlots(i_pts_plot).PSnum       = -1;
     case 'AzavgEofPlot:'
