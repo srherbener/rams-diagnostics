@@ -39,7 +39,7 @@ for iplot = 1:length(Config.ProfPlots)
       BINS = hdf5read(Hfile, 'Bins');
     end
 
-    Ptitle = sprintf('%s: %s', Pname, Config.ProfPlots(iplot).Title);
+    Ptitle = sprintf('%s', Config.ProfPlots(iplot).Title);
     Xlabel = Config.ProfPlots(iplot).Xlabel;
     Zlabel = Config.ProfPlots(iplot).Zlabel;
     LegLoc = Config.ProfPlots(iplot).LegLoc;

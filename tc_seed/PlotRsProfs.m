@@ -3,12 +3,19 @@ function [ ] = PlotRsProfs(ConfigFile)
 
 % Read the config file to get the structure of how the data is laid out in
 % the file system.
+%
 [ Config ] = ReadConfig(ConfigFile);
     
 Pname   = Config.ExpName;
 
 Ddir = Config.DiagDir;
 Pdir = Config.PlotDir;
+
+ControlCase = Config.ControlCase;
+
+% Temperature file 
+TempFprefix = 'pmeas_tempc_AR_RI';
+TempVar = 'tempc';
 
 % Grab the colormap
 Fig = figure;
@@ -37,9 +44,11 @@ for iplot = 1:length(Config.ProfTsPlots)
     Zmax = Config.ProfTsPlots(iplot).Zmax;
 
     % plot specs
-    Pspec = Config.ProfTsPlots(iplot).Pspec;
+    Pspec  = Config.ProfTsPlots(iplot).Pspec;
+    Flevel = Config.ProfTsPlots(iplot).Flevel;
+    Ptype  = Config.ProfTsPlots(iplot).Ptype;
 
-    Ptitle = sprintf('%s: %s', Pname, Config.ProfTsPlots(iplot).Title);
+    Ptitle = sprintf('%s', Config.ProfTsPlots(iplot).Title);
     Tlabel = Config.ProfTsPlots(iplot).Tlabel;
     Zlabel = Config.ProfTsPlots(iplot).Zlabel;
     OutFileBase = sprintf('%s/%s', Pdir, Config.ProfTsPlots(iplot).OutFileBase);
@@ -55,6 +64,7 @@ for iplot = 1:length(Config.ProfTsPlots)
     else
       for icase = 1:Config.PlotSets(ips).Ncases
         Case = Config.PlotSets(ips).Cases(icase).Cname;
+        Legend = Config.PlotSets(ips).Cases(icase).Legend;
 
         % Var is organized (z,t) in the file (profile time series).
         % Height holds the z values, Time holds sim time in seconds.
@@ -71,9 +81,33 @@ for iplot = 1:length(Config.ProfTsPlots)
         Z2 = find(Z <= Zmax, 1, 'last');
         Zvals = Z(Z1:Z2);
         Pdata = squeeze(PROF_TS(:,Z1:Z2))';
+        
+        % if adding a freezing level line, generate it from the data in
+        % the temperature file
+        if (Flevel == 1)
+          Hfile = sprintf('%s/%s_%s.h5', Ddir, TempFprefix, Case);
+          Hdset = sprintf('/ProfRs_%s', TempVar);
+          fprintf('  HDF5 file: %s, dataset: %s\n', Hfile, Hdset);
+          TEMP = squeeze(hdf5read(Hfile, Hdset));
+          fprintf('\n');
+
+          % TEMP is now (r,z)
+          % Calculate a line representing the freezing level
+          % Don't use >= 0 in the find command because the wtmean method
+          % can result in multiple zeros in a profile
+          [ Nr, Nz ] = size(TEMP);
+          FLvals = zeros(1,Nr);
+          for ir = 1:Nr
+            i = find(TEMP(ir,:) > 0, 1, 'last');
+            if (isempty(i))
+              i = 1;
+            end
+            FLvals(ir) = Zvals(i);
+          end       
+        end
 
         % Create plot
-        PtitleCase = sprintf('%s: %s', Ptitle, regexprep(Case, '_', '-'));
+        PtitleCase = sprintf('%s: %s', Ptitle, Legend);
         Fig = figure;
 
         cmap = DefCmap;
@@ -95,7 +129,7 @@ for iplot = 1:length(Config.ProfTsPlots)
         end
 
         CF = contourf(R, Zvals, Pdata);
-        if (length(CF(:)) == 0)
+        if (isempty(CF(:)))
           fprintf('WARNING: Constant Zdata - attempting to render a constant value contour plot\n');
           % change the first value so that data is not constant
           % pick a value that will hopefully map to the same color as the rest of the map
@@ -113,6 +147,13 @@ for iplot = 1:length(Config.ProfTsPlots)
         title(PtitleCase);
         xlabel(Tlabel);
         ylabel(Zlabel);
+        
+        if (Flevel == 1)
+          line(R, FLvals, 'LineStyle', '--', 'Color', 'k', 'LineWidth', 2.0);
+          text(double(R(end)), double(FLvals(end)), 'FL', 'FontSize', Fsize, ...
+               'Color', 'k', 'HorizontalAlignment', 'Right', ...
+               'VerticalAlignment', 'Top');
+        end
 
         OutFile = sprintf('%s_%s.jpg', OutFileBase, Case);
         fprintf('Writing plot file: %s\n', OutFile);

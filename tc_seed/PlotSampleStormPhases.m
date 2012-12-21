@@ -7,7 +7,7 @@ function [ ] = PlotSampleStormPhases( ConfigFile )
 
 Pset = 'ams2';
 Tmin = 24; %hr
-Tmax = 144;
+Tmax = 90;
 Vname = 'max_azwind';
 Fprefix = 'max_azwind';
 Flen = 5;
@@ -17,7 +17,7 @@ Fsize = 20;
 LegLoc = 'SouthEast';
 Xlabel = 'Simulation Time (hr)';
 Ylabel = 'Vt (m/s)';
-Xlim = [ 10 150 ];
+Xlim = [ 10 100 ];
 Ylim = [ 10 60 ];
 
 % % Rectangular patches for drawing regions where RI and SS exist

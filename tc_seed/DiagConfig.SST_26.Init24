@@ -664,16 +664,16 @@ TsPlotSpecs: 121 0 1.0 hr 25 1998:08:22:21:00:00 10 24
 
 #LinePlot: agu2    MaxVt IKE TsAll xy Storm_Development Northwest agu_KeVt.jpg
 
-#LinePlot: ams2 MaxVt   IKE   TsAll xy KE_Vt_Time_Evolution      Northwest ams_KeVt.jpg
-#LinePlot: ams2 SimTime IKE   TsAll  y Integrated_Kinetic_Energy NorthWest ams_TS_ike.jpg
-#LinePlot: ams2 SimTime MaxVt TsAll  y Maximum_Vt                SouthEast ams_TS_max_vt.jpg
-#LinePlot: ams2 SimTime RMW   TsAll  y Radius_of_Maximum_Wind    NorthEast ams_TS_rmw.jpg
+#LinePlot: ams2 MaxVt     IKE90    Ts90 xy KE_Vt_Time_Evolution      Northwest ams_KeVt.jpg
+#LinePlot: ams2 SimTime90 IKE90    Ts90  y Integrated_Kinetic_Energy NorthWest ams_TS_ike.jpg
+#LinePlot: ams2 SimTime90 MaxVt    Ts90  y Maximum_Vt                SouthEast ams_TS_max_vt.jpg
+#LinePlot: ams2 SimTime90 RMW      Ts90  y Radius_of_Maximum_Wind    NorthEast ams_TS_rmw.jpg
 
- LinePlot: ams2 RadAll  VtAllRI   SfcVtAll  y Radial_Structure_of_Max_Vt:_RI  NorthEast ams_R_Vt_All_RI.jpg
- LinePlot: ams2 RadPeak VtPeakRI  SfcVtPeak y Peak_Section_of_Max_Vt:_RI      NorthEast ams_R_Vt_Peak_RI.jpg
+#LinePlot: ams2 RadAll  VtAllRI   SfcVtAll  y Radial_Structure_of_Max_Vt:_RI  NorthEast ams_R_Vt_All_RI.jpg
+#LinePlot: ams2 RadPeak VtPeakRI  SfcVtPeak y Peak_Section_of_Max_Vt:_RI      NorthEast ams_R_Vt_Peak_RI.jpg
 
 # salt source disabled
-#LinePlot: ccn5_sd MaxVt IKE TsAll xy Storm_Development Northwest KeVt_sd.jpg
+LinePlot: ccn5_sd MaxVt IKE TsAll xy Storm_Development Northwest KeVt_sd.jpg
 
 #LinePlot: ccn5_sd    SimTime IKE   TsAll y Integrated_Kinetic_Energy NorthWest TS_ike_sd.jpg
 #LinePlot: ccn5_sd    SimTime MaxVt TsAll y Maximum_Vt                SouthEast TS_max_vt_sd.jpg
@@ -1150,17 +1150,17 @@ ProfPlot: ams2 pmeas_w_twp4_EW_RI w abs EW_RI:_Vertical_Velocity W_(m/s) Height_
 
 ######################## Radial profile #####################
 # fake it with ProfTsPlot: specs
-#ProfTsPlot: ams2 pmeas_theta_e_AR_RI theta_e RI:_Theta-E_(K) Radius_(km) Height_(km) 330 350 0.0 5.0 none 0 abs ams_prs_theta_e_AR_RI
+ProfTsPlot: ams2 pmeas_theta_e_AR_RI theta_e RI:_Theta-E_(K) Radius_(km) Height_(km) 330 350 0.0 5.0 none 0 abs ams_prs_theta_e_AR_RI
 
-#ProfTsPlot: ams2 pmeas_lh_tott_lht1p0_AR_RI   lh_tott  RI:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -50    50  0.0 15.0 redblue 1 abs ams_prs_lh_tott_lht1p0_AR_RI
-#ProfTsPlot: ams2 pmeas_vaptott_vt0p5_AR_RI    vaptott  RI:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)    -10    10  0.0 15.0 redblue 1 abs ams_prs_vaptott_vt0p5_AR_RI
-#ProfTsPlot: ams2 pmeas_potvortz_pvz5em6_AR_RI potvortz RI:_Potential_Vorticity_(s^-^1)  Radius_(km) Height_(km)  -5e-5  5e-5  0.0 15.0 redblue ams_prs_potvortz_pvz5em6_AR_RI
-#ProfTsPlot: ams2 pmeas_relvortz_rvz1em4_AR_RI relvortz RI:_Relative_Vorticity_(s^-^1)   Radius_(km) Height_(km)      0  1e-2  0.0 15.0 revgray 0 abs ams_prs_relvortz_rvz1em4_AR_RI
-#ProfTsPlot: ams2 pmeas_relvortz_rvz1em4_EW_RI relvortz RI:_Relative_Vorticity_(s^-^1)   Radius_(km) Height_(km)      0  1e-2  0.0 15.0 revgray 0 abs ams_prs_relvortz_rvz1em4_EW_RI
+ProfTsPlot: ams2 pmeas_lh_tott_lht1p0_AR_RI   lh_tott  RI:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -50    50  0.0 15.0 redblue 1 abs ams_prs_lh_tott_lht1p0_AR_RI
+ProfTsPlot: ams2 pmeas_vaptott_vt0p5_AR_RI    vaptott  RI:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)    -10    10  0.0 15.0 redblue 1 abs ams_prs_vaptott_vt0p5_AR_RI
+ProfTsPlot: ams2 pmeas_potvortz_pvz5em6_AR_RI potvortz RI:_Potential_Vorticity_(s^-^1)  Radius_(km) Height_(km)  -5e-5  5e-5  0.0 15.0 redblue 0 abs ams_prs_potvortz_pvz5em6_AR_RI
+ProfTsPlot: ams2 pmeas_relvortz_rvz1em4_AR_RI relvortz RI:_Relative_Vorticity_(s^-^1)   Radius_(km) Height_(km)      0  1e-2  0.0 15.0 revgray 0 abs ams_prs_relvortz_rvz1em4_AR_RI
+ProfTsPlot: ams2 pmeas_relvortz_rvz1em4_EW_RI relvortz RI:_Relative_Vorticity_(s^-^1)   Radius_(km) Height_(km)      0  1e-2  0.0 15.0 revgray 0 abs ams_prs_relvortz_rvz1em4_EW_RI
 
-#ProfTsPlot: ams2 pmeas_lh_tott_twp4_lht1p0_AR_RI lh_tott AR_RI_CONV:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km) -20 20 0.0 15.0 redblue 1 abs ams_prs_lh_tott_twp4_lht1p0_AR_RI
-#ProfTsPlot: ams2 pmeas_vaptott_twp4_vt0p5_AR_RI  vaptott AR_RI_CONV:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km) -10 10 0.0 15.0 redblue 1 abs ams_prs_vaptott_twp4_vt0p5_AR_RI
-#ProfTsPlot: ams2 pmeas_w_twp4_AR_RI  w RI:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -2 2 0.0 15.0 redblue 1 abs ams_prs_w_twp4_AR_RI
+ProfTsPlot: ams2 pmeas_lh_tott_twp4_lht1p0_AR_RI lh_tott AR_RI_CONV:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km) -20 20 0.0 15.0 redblue 1 abs ams_prs_lh_tott_twp4_lht1p0_AR_RI
+ProfTsPlot: ams2 pmeas_vaptott_twp4_vt0p5_AR_RI  vaptott AR_RI_CONV:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km) -10 10 0.0 15.0 redblue 1 abs ams_prs_vaptott_twp4_vt0p5_AR_RI
+ProfTsPlot: ams2 pmeas_w_twp4_AR_RI  w RI:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -2 2 0.0 15.0 redblue 1 abs ams_prs_w_twp4_AR_RI
 ProfTsPlot: ams2 pmeas_w_AR_RI  w RI:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -2 2 0.0 15.0 redblue 1 abs ams_prs_w_AR_RI
 
 ####################### Plot Sets ############################
@@ -1176,6 +1176,7 @@ PlotSet: ams2 2 TCS_GN_C0100 CLEAN -b TCS_GN_C2000 POLLUTED -r
 # 
 PlotVar: MaxVt     max_azwind TsAveragedData/max_azwind Max_Vt m/s    10  60     1
 PlotVar: IKE       horiz_ke   TsAveragedData/horiz_ke   KE     10^9_J  0   2  1e-9
+PlotVar: IKE90     horiz_ke   TsAveragedData/horiz_ke   KE     10^9_J  0   1  1e-9
 PlotVar: RMW       rmw        TsAveragedData/max_azwind RMW    km      5  40     1
 
 PlotVar: VtAllRI    speed_t    DIAGS/tavg_speed_t_RI Vt     m/s     0  50     1
@@ -1185,7 +1186,8 @@ PlotVar: VtPeakSS   speed_t    DIAGS/tavg_speed_t_SS Vt     m/s    30  45     1
 PlotVar: VtRbandRI  speed_t    DIAGS/tavg_speed_t_RI Vt     m/s     3  13     1
 PlotVar: VtRbandSS  speed_t    DIAGS/tavg_speed_t_SS Vt     m/s     5  15     1
 
-PlotVar: SimTime  t_coords   TsAveragedData/horiz_ke   Simulation_Time  hr  10 150  2.77777778e-4
+PlotVar: SimTime    t_coords   TsAveragedData/horiz_ke   Simulation_Time  hr  10 150  2.77777778e-4
+PlotVar: SimTime90  t_coords   TsAveragedData/horiz_ke   Simulation_Time  hr  10 100  2.77777778e-4
 
 PlotVar: RadAll   x_coords   AzAveragedData/speed_t   Radius  km   0 250  1e-3
 PlotVar: RadPeak  x_coords   AzAveragedData/speed_t   Radius  km   0  30  1e-3
@@ -1204,6 +1206,7 @@ PlotVar: RadRband x_coords   AzAveragedData/speed_t   Radius  km  70 250  1e-3
 #   z - dummy, set to 1
 #   t - time in seconds
 PlotDselect: TsAll 1 1 1 1 1 1 86400 518400
+PlotDselect: Ts90  1 1 1 1 1 1 86400 324000
 
 # select out of Vt data - (x,y,z,t)
 #   x - radius in meters
