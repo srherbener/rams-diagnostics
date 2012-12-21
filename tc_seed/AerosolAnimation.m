@@ -1,81 +1,32 @@
-function [] = AeorsolAnimation ( InFile, Var, TsInc, Delay, Zlevel, Pmin, Pmax, Ptitle, OutFile )
-% AeorsolAnimation Create animated GIF for aerosol source
+% script to create a GIF animation of the contents of the CWP file
 
-  Paspect = [ 1 1 1 ];
-  Tstart = 1;
-  Tend = 110;
+clear;
 
-  fprintf('Creating GIF movie:\n');
-  fprintf('  Input file: %s\n', InFile);
-  fprintf('  Variable: %s\n', Var);
-  fprintf('  Time step increment: %d\n', TsInc);
-  fprintf('  Movie frame delay: %.2f\n', Delay);
-  fprintf('  Plot minimum: %.2f\n', Pmin);
-  fprintf('  Plot maximum: %.2f\n', Pmax);
-  fprintf('  Output File: %s\n', OutFile);
-  fprintf('\n');
+% Grab the cloud water path directly from REVU output
+CCN_ALLZ = hdf5read('ccn_conc-TCS_GN_C1000-AS-1998-08-22-120000-g3.h5','/ccn_concen');
+Lon = hdf5read('ccn_conc-TCS_GN_C1000-AS-1998-08-22-120000-g3.h5','/x_coords')';
+Lat = hdf5read('ccn_conc-TCS_GN_C1000-AS-1998-08-22-120000-g3.h5','/y_coords')';
 
-  % Read in the variable
-  % Data is (x,y,z,t)
-  %   x - longitude
-  %   y - latitude
-  %   z - levels
-  %   t - time
-  fprintf('Reading HDF5 file: %s, Dataset: %s\n', InFile, Var);
-  fprintf('\n');
-  Hvar = hdf5read(InFile, Var);
-  Lon = hdf5read(InFile, 'x_coords');
-  Lat = hdf5read(InFile, 'y_coords');
-  Z = hdf5read(InFile, 'z_coords') / 1000; % km
-  T = hdf5read(InFile, 't_coords') / 3600; % hr
+CCN = squeeze(CCN_ALLZ(:,:,17,3:73)); % z = 17 --> ~1500m AGL
 
-  % Reduce data to single Z level
-  Pdata = squeeze(Hvar(:,:,Zlevel,:));
-  clear Hvar;
-  
-  % Variable will be of the form: (Lon, Lat, Time)
-  [ Nlon, Nlat, Nt ] = size(Pdata);
- 
-  % Create the movie - go frame by frame creating a plot each time and
-  % writing that plot into the output file.
-  fprintf('Writing GIF movie file: %s\n', OutFile);
+DelayTime = 0.1;
 
-  Fig = figure;
-  
-  % get the frame size
-  Pos = get(gcf, 'Position');
-  Width = Pos(3);
-  Height = Pos(4);
-  
-  % preallocate the movie buffer
-  Tsteps = Tstart:TsInc:Tend;
-  mov = zeros(Height, Width, 1, length(Tsteps), 'uint8');
+Nt = size(CCN,3);
 
-  for i = Tsteps
-    fprintf('  Creating frame for time step: %d\n', i);
-    
-    % make the plot
-    contourf(Lon,Lat,Pdata(:,:,i)');
-    caxis([ Pmin Pmax ]);
-    daspect(Paspect);
-    shading flat;
-    colorbar;
-    colormap('cool');
-    title(Ptitle);
-    
-    % create the frame
-    drawnow;
-    frame = getframe(1);
-    im = frame2im(frame);
-    if (i == 1)
-      [ mov(:,:,1,i), cmap ] = rgb2ind(im, 256);
-    else
-      mov(:,:,1,i) = rgb2ind(im, cmap);
-    end
-  end
-
-  close(Fig);
-  
-  imwrite(mov, cmap, OutFile,'gif', 'DelayTime', Delay, 'Loopcount',inf);
-  
+Clevs = (0:20:1000);
+C = squeeze(CCN(:,:,1)');
+contourf(Lon, Lat, C, Clevs);
+axis tight
+shading flat;
+set(gca,'nextplot','replacechildren','visible','off')
+f = getframe;
+[im,map] = rgb2ind(f.cdata,256,'nodither');
+im(1,1,1,Nt) = 0;
+for k = 1:Nt
+  C = squeeze(CCN(:,:,k)');
+  contourf(Lon, Lat, C, Clevs);
+  shading flat;
+  f = getframe;
+  im(:,:,1,k) = rgb2ind(f.cdata,map,'nodither');
 end
+imwrite(im,map,'plots/Asource_movie.gif','DelayTime',DelayTime,'LoopCount',0);
