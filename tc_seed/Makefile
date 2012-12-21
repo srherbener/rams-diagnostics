@@ -19,6 +19,8 @@ SCRIPTS = \
           $(DEST)/PlotProfs.m \
           $(DEST)/PlotRsProfs.m \
           $(DEST)/PlotSampleCcnProfile.m \
+          $(DEST)/PlotSampleStormPhases.m \
+          $(DEST)/PlotSampleVtSPL.m \
           $(DEST)/PlotStormPhases.m \
           $(DEST)/PlotThetaE.m \
           $(DEST)/PlotTsProfs.m \
