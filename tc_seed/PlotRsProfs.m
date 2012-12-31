@@ -5,8 +5,6 @@ function [ ] = PlotRsProfs(ConfigFile)
 % the file system.
 %
 [ Config ] = ReadConfig(ConfigFile);
-    
-Pname   = Config.ExpName;
 
 Ddir = Config.DiagDir;
 Pdir = Config.PlotDir;
@@ -14,7 +12,7 @@ Pdir = Config.PlotDir;
 ControlCase = Config.ControlCase;
 
 % Temperature file 
-TempFprefix = 'pmeas_tempc_AR_RI';
+TempFprefix1 = 'pmeas_tempc';
 TempVar = 'tempc';
 
 % Grab the colormap
@@ -71,21 +69,39 @@ for iplot = 1:length(Config.ProfTsPlots)
         Hfile = sprintf('%s/%s_%s.h5', Ddir, Fprefix, Case);
         Hdset = sprintf('/ProfRs_%s', Var);
         fprintf('  HDF5 file: %s, dataset: %s\n', Hfile, Hdset);
-        PROF_TS = squeeze(hdf5read(Hfile, Hdset));
+        PROF_RS = squeeze(hdf5read(Hfile, Hdset));
         Z = hdf5read(Hfile, 'Height')/1000; % km
         R = hdf5read(Hfile, 'Radius')/1000; % km
+        
+        % If doing a diff plot then subtract off the 'control' case
+        if (strcmp(Ptype, 'diff'))
+            Hfile = sprintf('%s/%s_%s.h5', Ddir, Fprefix, ControlCase);
+            Hdset = sprintf('/ProfRs_%s', Var);
+            fprintf('  HDF5 file: %s, dataset: %s\n', Hfile, Hdset);
+            PROF_RS_CNTL = squeeze(hdf5read(Hfile, Hdset));
+            
+            PROF_RS = PROF_RS - PROF_RS_CNTL;
+        end
 
         % Trim off the selected z range
         % Each profile goes into a row of LHV
         Z1 = find(Z >= Zmin, 1, 'first');
         Z2 = find(Z <= Zmax, 1, 'last');
         Zvals = Z(Z1:Z2);
-        Pdata = squeeze(PROF_TS(:,Z1:Z2))';
+        Pdata = squeeze(PROF_RS(:,Z1:Z2))';
         
         % if adding a freezing level line, generate it from the data in
         % the temperature file
         if (Flevel == 1)
-          Hfile = sprintf('%s/%s_%s.h5', Ddir, TempFprefix, Case);
+          TempFprefix2 = '';
+          if (~isempty(strfind(Fprefix,'AR_RI')))
+              TempFprefix2 = 'AR_RI';
+          else
+              if (~isempty(strfind(Fprefix,'EW_RI')))
+                  TempFprefix2 = 'EW_RI';
+              end
+          end
+          Hfile = sprintf('%s/%s_%s_%s.h5', Ddir, TempFprefix1, TempFprefix2, Case);
           Hdset = sprintf('/ProfRs_%s', TempVar);
           fprintf('  HDF5 file: %s, dataset: %s\n', Hfile, Hdset);
           TEMP = squeeze(hdf5read(Hfile, Hdset));

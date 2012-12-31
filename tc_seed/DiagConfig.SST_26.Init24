@@ -11,7 +11,8 @@ FilterDir: FILTERS
 ExpName: TC24
 RamsDir: RAMS
 RevuDir: HDF5
-ControlCase: TCS_CNTL
+#ControlCase: TCS_CNTL
+ControlCase: TCS_GN_C0100
 UndefVal: -999
 SstVal: 26
 
@@ -932,7 +933,8 @@ ProfPlot: ams2 pmeas_lh_tott_lht1p0_EW_RI lh_tott abs EW_RI:_Total_Latent_Heatin
 
 ProfPlot: ams2 pmeas_vaptott_vt0p5_EW_RI vaptott abs EW_RI:_Total_Vapor_Diffusion_(g/kg) Vapor_Diffusion_(g/kg) Height_(km) NorthWest -10:0.1:10 0.0 15.0 ams_prof_vaptott_vt0p5_EW_RI.jpg
 
-ProfPlot: ams2 pmeas_w_twp4_EW_RI w abs EW_RI:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 ams_prof_w_twp4_EW_RI.jpg
+#ProfPlot: ams2 pmeas_w_twp4_EW_RI w abs EW_RI:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 ams_prof_w_twp4_EW_RI.jpg
+ProfPlot: ams2 pmeas_w_EW_RI w abs EW_RI:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 ams_prof_w_EW_RI.jpg
 
 ######################## Profile Plots SD #############################
 #ProfPlot: ccn5_sd pmeas_lhf_twp4_0p1_EW_RI lh_frzt diff LH_Frz,_Eyewall,_Rapid_Intensification Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -0.5:0.025:0.5 0.0 20.0 prof_lhf_twp4_0p1_EW_RI_sd.jpg
@@ -1151,18 +1153,34 @@ ProfPlot: ams2 pmeas_w_twp4_EW_RI w abs EW_RI:_Vertical_Velocity W_(m/s) Height_
 
 ######################## Radial profile #####################
 # fake it with ProfTsPlot: specs
-ProfTsPlot: ams2 pmeas_theta_e_AR_RI theta_e RI:_Theta-E_(K) Radius_(km) Height_(km) 330 350 0.0 5.0 none 0 abs ams_prs_theta_e_AR_RI
+#ProfTsPlot: ams2 pmeas_theta_e_AR_RI theta_e RI:_Theta-E_(K) Radius_(km) Height_(km) 330 350 0.0 5.0 none 0 abs ams_prs_theta_e_AR_RI
 
-ProfTsPlot: ams2 pmeas_lh_tott_lht1p0_AR_RI   lh_tott  RI:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -50    50  0.0 15.0 redblue 1 abs ams_prs_lh_tott_lht1p0_AR_RI
-ProfTsPlot: ams2 pmeas_vaptott_vt0p5_AR_RI    vaptott  RI:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)    -10    10  0.0 15.0 redblue 1 abs ams_prs_vaptott_vt0p5_AR_RI
-ProfTsPlot: ams2 pmeas_potvortz_pvz5em6_AR_RI potvortz RI:_Potential_Vorticity_(s^-^1)  Radius_(km) Height_(km)  -5e-5  5e-5  0.0 15.0 redblue 0 abs ams_prs_potvortz_pvz5em6_AR_RI
-ProfTsPlot: ams2 pmeas_relvortz_rvz1em4_AR_RI relvortz RI:_Relative_Vorticity_(s^-^1)   Radius_(km) Height_(km)      0  1e-2  0.0 15.0 revgray 0 abs ams_prs_relvortz_rvz1em4_AR_RI
-ProfTsPlot: ams2 pmeas_relvortz_rvz1em4_EW_RI relvortz RI:_Relative_Vorticity_(s^-^1)   Radius_(km) Height_(km)      0  1e-2  0.0 15.0 revgray 0 abs ams_prs_relvortz_rvz1em4_EW_RI
+#ProfTsPlot: ams2 pmeas_lh_tott_lht1p0_AR_RI   lh_tott  RI:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -50    50  0.0 15.0 redblue 1 abs ams_prs_lh_tott_lht1p0_AR_RI
+#ProfTsPlot: ams2 pmeas_vaptott_vt0p5_AR_RI    vaptott  RI:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)    -10    10  0.0 15.0 redblue 1 abs ams_prs_vaptott_vt0p5_AR_RI
+#ProfTsPlot: ams2 pmeas_potvortz_pvz5em6_AR_RI potvortz RI:_Potential_Vorticity_(s^-^1)  Radius_(km) Height_(km)  -5e-5  5e-5  0.0 15.0 redblue 0 abs ams_prs_potvortz_pvz5em6_AR_RI
+#ProfTsPlot: ams2 pmeas_relvortz_rvz1em4_AR_RI relvortz RI:_Relative_Vorticity_(s^-^1)   Radius_(km) Height_(km)      0  1e-2  0.0 15.0 revgray 0 abs ams_prs_relvortz_rvz1em4_AR_RI
+#ProfTsPlot: ams2 pmeas_relvortz_rvz1em4_EW_RI relvortz RI:_Relative_Vorticity_(s^-^1)   Radius_(km) Height_(km)      0  1e-2  0.0 15.0 revgray 0 abs ams_prs_relvortz_rvz1em4_EW_RI
 
-ProfTsPlot: ams2 pmeas_lh_tott_twp4_lht1p0_AR_RI lh_tott AR_RI_CONV:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km) -20 20 0.0 15.0 redblue 1 abs ams_prs_lh_tott_twp4_lht1p0_AR_RI
-ProfTsPlot: ams2 pmeas_vaptott_twp4_vt0p5_AR_RI  vaptott AR_RI_CONV:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km) -10 10 0.0 15.0 redblue 1 abs ams_prs_vaptott_twp4_vt0p5_AR_RI
-ProfTsPlot: ams2 pmeas_w_twp4_AR_RI  w RI:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -2 2 0.0 15.0 redblue 1 abs ams_prs_w_twp4_AR_RI
-ProfTsPlot: ams2 pmeas_w_AR_RI  w RI:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -2 2 0.0 15.0 redblue 1 abs ams_prs_w_AR_RI
+#ProfTsPlot: ams2 pmeas_lh_tott_twp4_lht1p0_AR_RI lh_tott AR_RI_CONV:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km) -20 20 0.0 15.0 redblue 1 abs ams_prs_lh_tott_twp4_lht1p0_AR_RI
+#ProfTsPlot: ams2 pmeas_vaptott_twp4_vt0p5_AR_RI  vaptott AR_RI_CONV:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km) -10 10 0.0 15.0 redblue 1 abs ams_prs_vaptott_twp4_vt0p5_AR_RI
+#ProfTsPlot: ams2 pmeas_w_twp4_AR_RI  w RI:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -2 2 0.0 15.0 redblue 1 abs ams_prs_w_twp4_AR_RI
+
+#ProfTsPlot: ams2 pmeas_w_AR_RI  w RI:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -2 2 0.0 15.0 redblue 1 abs ams_prs_w_AR_RI
+#ProfTsPlot: ams2 pmeas_lh_tott_lht1p0_AR_RI   lh_tott  RI:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -50    50  0.0 15.0 redblue 1 abs ams_prs_lh_tott_lht1p0_AR_RI
+#ProfTsPlot: ams2 pmeas_vaptott_vt0p5_AR_RI    vaptott  RI:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)    -10    10  0.0 15.0 redblue 1 abs ams_prs_vaptott_vt0p5_AR_RI
+
+#ProfTsPlot: ams2_diff pmeas_w_AR_RI  w RI:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -2 2 0.0 15.0 redblue 1 diff ams_prs_w_diff_AR_RI
+#ProfTsPlot: ams2_diff pmeas_lh_tott_lht1p0_AR_RI   lh_tott  RI:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 1 diff ams_prs_lh_tott_lht1p0_diff_AR_RI
+#ProfTsPlot: ams2_diff pmeas_vaptott_vt0p5_AR_RI    vaptott  RI:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 1 diff ams_prs_vaptott_vt0p5_diff_AR_RI
+
+#ProfTsPlot: ams2 pmeas_w_EW_RI  w EW_RI:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -2 2 0.0 15.0 redblue 1 abs ams_prs_w_EW_RI
+#ProfTsPlot: ams2 pmeas_lh_tott_lht1p0_EW_RI   lh_tott  EW_RI:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -50    50  0.0 15.0 redblue 1 abs ams_prs_lh_tott_lht1p0_EW_RI
+#ProfTsPlot: ams2 pmeas_vaptott_vt0p5_EW_RI    vaptott  EW_RI:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)    -10    10  0.0 15.0 redblue 1 abs ams_prs_vaptott_vt0p5_EW_RI
+
+#ProfTsPlot: ams2_diff pmeas_w_EW_RI  w EW_RI:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -2 2 0.0 15.0 redblue 1 diff ams_prs_w_diff_EW_RI
+#ProfTsPlot: ams2_diff pmeas_lh_tott_lht1p0_EW_RI   lh_tott  EW_RI:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 1 diff ams_prs_lh_tott_lht1p0_diff_EW_RI
+#ProfTsPlot: ams2_diff pmeas_vaptott_vt0p5_EW_RI    vaptott  EW_RI:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 1 diff ams_prs_vaptott_vt0p5_diff_EW_RI
+ProfTsPlot: ams2_diff pmeas_relvortz_rvz1em4_EW_RI relvortz EW_RI:_Relative_Vorticity_(s^-^1)   Radius_(km) Height_(km)  -2e-3  2e-3  0.0 15.0 redblue 0 diff ams_prs_relvortz_rvz1em4_diff_EW_RI
 
 ####################### Plot Sets ############################
 PlotSet: ccn5 5 TCS_CNTL CONTROL -k TCS_GN_C0100 CCN:_100/cc :k TCS_GN_C0500 CCN:_500/cc --k TCS_GN_C1000 CCN:_1000/cc --g TCS_GN_C2000 CCN:_2000/cc -g
@@ -1170,7 +1188,8 @@ PlotSet: ccn5_sd 3 TCS_CNTL CONTROL -k TCS_SD_C0100 CCN:_100/cc :k TCS_SD_C2000 
 
 PlotSet: agu2 2 TCS_CNTL CONTROL -b TCS_GN_C2000 CCN:_2000/cc -r
 
-PlotSet: ams2 2 TCS_GN_C0100 CLEAN -b TCS_GN_C2000 POLLUTED -r
+PlotSet: ams2      2 TCS_GN_C0100 CLEAN -b TCS_GN_C2000 POLLUTED -r
+PlotSet: ams2_diff 1 TCS_GN_C2000 POLLUTED-CLEAN -r
 
 ####################### Plot Vars ################################
 # PlotVar: <name> <vname> <file_prefix> <label> <units> <axis_min> <axis_max> <scale>
