@@ -929,12 +929,17 @@ LinePlot: ccn5_sd MaxVt IKE TsAll xy Storm_Development Northwest KeVt_sd.jpg
 #ProfPlot: agu2 pmeas_w_twp4_RB_SS w abs RB_SS:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 agu_prof_w_twp4_RB_SS.jpg
 
 ######################## Profile Plots AMS #############################
-ProfPlot: ams2 pmeas_lh_tott_lht1p0_EW_RI lh_tott abs EW_RI:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) NorthWest -50:0.1:50 0.0 15.0 ams_prof_lh_tott_lht1p0_EW_RI.jpg
+ProfPlot: ams2 pmeas_vaptott_vt0p5_EW_RI vaptott abs EW_RI:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -2:0.01:4 0.0 15.0 ams_prof_vaptott_vt0p5_EW_RI.jpg
+ProfPlot: ams2 pmeas_lh_tott_lht1p0_EW_RI lh_tott abs EW_RI:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) NorthEast -5:0.1:15 0.0 15.0 ams_prof_lh_tott_lht1p0_EW_RI.jpg
+ProfPlot: ams2 pmeas_w_EW_RI w abs EW_RI:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:0.7 0.0 20.0 ams_prof_w_EW_RI.jpg
 
-ProfPlot: ams2 pmeas_vaptott_vt0p5_EW_RI vaptott abs EW_RI:_Total_Vapor_Diffusion_(g/kg) Vapor_Diffusion_(g/kg) Height_(km) NorthWest -10:0.1:10 0.0 15.0 ams_prof_vaptott_vt0p5_EW_RI.jpg
+ProfPlot: ams2 pmeas_vaptott_vt0p5_EW_RI vaptott diff EW_RI:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -1:0.01:2 0.0 15.0 ams_prof_vaptott_vt0p5_diff_EW_RI.jpg
+ProfPlot: ams2 pmeas_lh_tott_lht1p0_EW_RI lh_tott diff EW_RI:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) NorthEast -2:0.1:5 0.0 15.0 ams_prof_lh_tott_lht1p0_diff_EW_RI.jpg
+ProfPlot: ams2 pmeas_w_EW_RI w diff EW_RI:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.1:0.01:0.4 0.0 20.0 ams_prof_w_diff_EW_RI.jpg
 
-#ProfPlot: ams2 pmeas_w_twp4_EW_RI w abs EW_RI:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 ams_prof_w_twp4_EW_RI.jpg
-ProfPlot: ams2 pmeas_w_EW_RI w abs EW_RI:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 ams_prof_w_EW_RI.jpg
+ProfPlot: ams2 pmeas_vaptott_vt0p5_EW_RI vaptott pdiff EW_RI:_Total_Vapor_Diffusion Percent_Difference Height_(km) NorthEast -150:1:1500 0.0 15.0 ams_prof_vaptott_vt0p5_pdiff_EW_RI.jpg
+ProfPlot: ams2 pmeas_lh_tott_lht1p0_EW_RI lh_tott pdiff EW_RI:_Total_Latent_Heating Percent_Difference Height_(km) NorthEast -50:1:600 0.0 15.0 ams_prof_lh_tott_lht1p0_pdiff_EW_RI.jpg
+ProfPlot: ams2 pmeas_w_EW_RI w pdiff EW_RI:_Vertical_Velocity Percent_Difference Height_(km) NorthEast -50:1:850 0.0 20.0 ams_prof_w_pdiff_EW_RI.jpg
 
 ######################## Profile Plots SD #############################
 #ProfPlot: ccn5_sd pmeas_lhf_twp4_0p1_EW_RI lh_frzt diff LH_Frz,_Eyewall,_Rapid_Intensification Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -0.5:0.025:0.5 0.0 20.0 prof_lhf_twp4_0p1_EW_RI_sd.jpg

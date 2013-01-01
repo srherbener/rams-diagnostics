@@ -4,8 +4,6 @@ function [ ] = PlotProfs(ConfigFile)
 % Read the config file to get the structure of how the data is laid out in
 % the file system.
 [ Config ] = ReadConfig(ConfigFile);
-    
-Pname   = Config.ExpName;
 
 Ddir = Config.DiagDir;
 Pdir = Config.PlotDir;
@@ -27,16 +25,17 @@ for iplot = 1:length(Config.ProfPlots)
 
     Zmin = Config.ProfPlots(iplot).Zmin;
     Zmax = Config.ProfPlots(iplot).Zmax;
+    
+    Ptype = Config.ProfPlots(iplot).Type;
 
     % If doing a diff plot, read in the control profile
-    if (strcmp(Config.ProfPlots(iplot).Type, 'diff'))
+    if (~isempty(strfind(Ptype, 'diff')))
       Case = Config.ControlCase;
       Hfile = sprintf('%s/%s_%s.h5', Ddir, Fprefix, Case);
       Hdset = sprintf('/Prof_%s', Var);
       fprintf('Reading Control Case: %s\n', Case);
       fprintf('  HDF5 file: %s, dataset: %s\n', Hfile, Hdset);
       PROF_CNTL = squeeze(hdf5read(Hfile, Hdset));
-      BINS = hdf5read(Hfile, 'Bins');
     end
 
     Ptitle = sprintf('%s', Config.ProfPlots(iplot).Title);
@@ -57,7 +56,7 @@ for iplot = 1:length(Config.ProfPlots)
     else
       for icase = 1:Config.PlotSets(ips).Ncases
         Case = Config.PlotSets(ips).Cases(icase).Cname;
-        if (strcmp(Case, Config.ControlCase) && strcmp(Config.ProfPlots(iplot).Type, 'diff'))
+        if (strcmp(Case, Config.ControlCase) && (~isempty(strfind(Ptype, 'diff'))))
           % skip the control case when doing a diff plot
           continue; 
         end
@@ -72,7 +71,6 @@ for iplot = 1:length(Config.ProfPlots)
         Hdset = sprintf('/Prof_%s', Var);
         fprintf('  HDF5 file: %s, dataset: %s\n', Hfile, Hdset);
         PROF_EXP = squeeze(hdf5read(Hfile, Hdset));
-        BINS = hdf5read(Hfile, 'Bins');
         Z = hdf5read(Hfile, 'Height')/1000; % km
 
         % Trim off the selected z range from the lhv data
@@ -80,8 +78,14 @@ for iplot = 1:length(Config.ProfPlots)
         Z1 = find(Z >= Zmin, 1, 'first');
         Z2 = find(Z <= Zmax, 1, 'last');
         Zvals = Z(Z1:Z2);
-        if (strcmp(Config.ProfPlots(iplot).Type, 'diff'))
-          Profs(iprof,:) = PROF_EXP(Z1:Z2) - PROF_CNTL(Z1:Z2);
+        if (~isempty(strfind(Ptype, 'diff')))
+          DIFF = PROF_EXP(Z1:Z2) - PROF_CNTL(Z1:Z2);
+          
+          if (strcmp(Ptype, 'pdiff'))
+              DIFF = (DIFF ./ abs(PROF_CNTL(Z1:Z2))) * 100;
+          end
+          
+          Profs(iprof,:) = DIFF;
         else
           Profs(iprof,:) = PROF_EXP(Z1:Z2);
         end
