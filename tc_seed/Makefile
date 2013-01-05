@@ -20,6 +20,7 @@ SCRIPTS = \
           $(DEST)/PlotRsProfs.m \
           $(DEST)/PlotSampleCcnProfile.m \
           $(DEST)/PlotSampleStormPhases.m \
+          $(DEST)/PlotSampleVt.m \
           $(DEST)/PlotSampleVtSPL.m \
           $(DEST)/PlotStormPhases.m \
           $(DEST)/PlotThetaE.m \

@@ -95,9 +95,13 @@ AzavgEofConfig: 10 20
 #AzavgEof: lh_frzt_twp4_RI lh_frzt_twp4  lh_frzt  0 250000  0  25000 180000 252000
 #AzavgEof: lh_frzt_twp4_SS lh_frzt_twp4  lh_frzt  0 250000  0  25000 324000 396000
 
-AzavgEof: w_twp4    w_twp4  w  0 250000  0  25000  86400 518400
-AzavgEof: w_twp4_RI w_twp4  w  0 250000  0  25000 180000 252000
-AzavgEof: w_twp4_SS w_twp4  w  0 250000  0  25000 324000 396000
+AzavgEof: lh_tott_twp4    lh_tott_twp4  lh_tott  0 250000  0  25000  86400 518400
+AzavgEof: lh_tott_twp4_RI lh_tott_twp4  lh_tott  0 250000  0  25000 180000 252000
+AzavgEof: lh_tott_twp4_SS lh_tott_twp4  lh_tott  0 250000  0  25000 324000 396000
+
+#AzavgEof: w_twp4    w_twp4  w  0 250000  0  25000  86400 518400
+#AzavgEof: w_twp4_RI w_twp4  w  0 250000  0  25000 180000 252000
+#AzavgEof: w_twp4_SS w_twp4  w  0 250000  0  25000 324000 396000
 
 # old config
 #AzavgEof: theta_e_lwp1        theta_e      0 250000     0  25000 86400 518400
@@ -260,14 +264,14 @@ AzavgEof: w_twp4_SS w_twp4  w  0 250000  0  25000 324000 396000
 #Pmeas: pmeas_saltj_conc_twp4_CO_SS AzAveragedData hist_saltj_conc_twp4 saltj_conc wtmean 40.0  70.0 90.0 110.0
 #Pmeas: pmeas_saltj_conc_twp4_RB_SS AzAveragedData hist_saltj_conc_twp4 saltj_conc wtmean 70.0 150.0 90.0 110.0
 
-#Pmeas: pmeas_cloud_d_twp4_EW_RI AzAveragedData hist_cloud_d_twp4 cloud_d wtmean  0.0  40.0 50.0  70.0
+Pmeas: pmeas_cloud_d_twp4_EW_RI AzAveragedData hist_cloud_d_twp4 cloud_d wtmean  0.0  40.0 50.0  70.0
 #Pmeas: pmeas_cloud_d_twp4_CO_RI AzAveragedData hist_cloud_d_twp4 cloud_d wtmean 40.0  70.0 50.0  70.0
 #Pmeas: pmeas_cloud_d_twp4_RB_RI AzAveragedData hist_cloud_d_twp4 cloud_d wtmean 70.0 150.0 50.0  70.0
 #Pmeas: pmeas_cloud_d_twp4_EW_SS AzAveragedData hist_cloud_d_twp4 cloud_d wtmean  0.0  40.0 90.0 110.0
 #Pmeas: pmeas_cloud_d_twp4_CO_SS AzAveragedData hist_cloud_d_twp4 cloud_d wtmean 40.0  70.0 90.0 110.0
 #Pmeas: pmeas_cloud_d_twp4_RB_SS AzAveragedData hist_cloud_d_twp4 cloud_d wtmean 70.0 150.0 90.0 110.0
 
-#Pmeas: pmeas_cloud_cm3_twp4_EW_RI AzAveragedData hist_cloud_cm3_twp4 cloud_cm3 wtmean  0.0  40.0 50.0  70.0
+Pmeas: pmeas_cloud_cm3_twp4_EW_RI AzAveragedData hist_cloud_cm3_twp4 cloud_cm3 wtmean  0.0  40.0 50.0  70.0
 #Pmeas: pmeas_cloud_cm3_twp4_CO_RI AzAveragedData hist_cloud_cm3_twp4 cloud_cm3 wtmean 40.0  70.0 50.0  70.0
 #Pmeas: pmeas_cloud_cm3_twp4_RB_RI AzAveragedData hist_cloud_cm3_twp4 cloud_cm3 wtmean 70.0 150.0 50.0  70.0
 #Pmeas: pmeas_cloud_cm3_twp4_EW_SS AzAveragedData hist_cloud_cm3_twp4 cloud_cm3 wtmean  0.0  40.0 90.0 110.0
@@ -666,6 +670,7 @@ TsPlotSpecs: 121 0 1.0 hr 25 1998:08:22:21:00:00 10 24
 
 #LinePlot: agu2    MaxVt IKE TsAll xy Storm_Development Northwest agu_KeVt.jpg
 
+LinePlot: ams2 MaxVt     IKE    TsAll xy KE_Vt_Time_Evolution      Northwest ams_KeVt_all.jpg
 #LinePlot: ams2 MaxVt     IKE90    Ts90 xy KE_Vt_Time_Evolution      Northwest ams_KeVt.jpg
 #LinePlot: ams2 SimTime90 IKE90    Ts90  y Integrated_Kinetic_Energy NorthWest ams_TS_ike.jpg
 #LinePlot: ams2 SimTime90 MaxVt    Ts90  y Maximum_Vt                SouthEast ams_TS_max_vt.jpg
@@ -675,7 +680,7 @@ TsPlotSpecs: 121 0 1.0 hr 25 1998:08:22:21:00:00 10 24
 #LinePlot: ams2 RadPeak VtPeakRI  SfcVtPeak y Peak_Section_of_Max_Vt:_RI      NorthEast ams_R_Vt_Peak_RI.jpg
 
 # salt source disabled
-LinePlot: ccn5_sd MaxVt IKE TsAll xy Storm_Development Northwest KeVt_sd.jpg
+#LinePlot: ccn5_sd MaxVt IKE TsAll xy Storm_Development Northwest KeVt_sd.jpg
 
 #LinePlot: ccn5_sd    SimTime IKE   TsAll y Integrated_Kinetic_Energy NorthWest TS_ike_sd.jpg
 #LinePlot: ccn5_sd    SimTime MaxVt TsAll y Maximum_Vt                SouthEast TS_max_vt_sd.jpg
@@ -929,17 +934,20 @@ LinePlot: ccn5_sd MaxVt IKE TsAll xy Storm_Development Northwest KeVt_sd.jpg
 #ProfPlot: agu2 pmeas_w_twp4_RB_SS w abs RB_SS:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 agu_prof_w_twp4_RB_SS.jpg
 
 ######################## Profile Plots AMS #############################
-ProfPlot: ams2 pmeas_vaptott_vt0p5_EW_RI vaptott abs EW_RI:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -2:0.01:4 0.0 15.0 ams_prof_vaptott_vt0p5_EW_RI.jpg
-ProfPlot: ams2 pmeas_lh_tott_lht1p0_EW_RI lh_tott abs EW_RI:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) NorthEast -5:0.1:15 0.0 15.0 ams_prof_lh_tott_lht1p0_EW_RI.jpg
-ProfPlot: ams2 pmeas_w_EW_RI w abs EW_RI:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:0.7 0.0 20.0 ams_prof_w_EW_RI.jpg
+#ProfPlot: ams2 pmeas_vaptott_vt0p5_EW_RI vaptott abs EW_RI:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -2:0.01:4 0.0 15.0 ams_prof_vaptott_vt0p5_EW_RI.jpg
+#ProfPlot: ams2 pmeas_lh_tott_lht1p0_EW_RI lh_tott abs EW_RI:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) NorthEast -5:0.1:15 0.0 15.0 ams_prof_lh_tott_lht1p0_EW_RI.jpg
+#ProfPlot: ams2 pmeas_w_EW_RI w abs EW_RI:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:0.7 0.0 20.0 ams_prof_w_EW_RI.jpg
 
-ProfPlot: ams2 pmeas_vaptott_vt0p5_EW_RI vaptott diff EW_RI:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -1:0.01:2 0.0 15.0 ams_prof_vaptott_vt0p5_diff_EW_RI.jpg
-ProfPlot: ams2 pmeas_lh_tott_lht1p0_EW_RI lh_tott diff EW_RI:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) NorthEast -2:0.1:5 0.0 15.0 ams_prof_lh_tott_lht1p0_diff_EW_RI.jpg
-ProfPlot: ams2 pmeas_w_EW_RI w diff EW_RI:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.1:0.01:0.4 0.0 20.0 ams_prof_w_diff_EW_RI.jpg
+#ProfPlot: ams2 pmeas_vaptott_vt0p5_EW_RI vaptott diff EW_RI:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -1:0.01:2 0.0 15.0 ams_prof_vaptott_vt0p5_diff_EW_RI.jpg
+#ProfPlot: ams2 pmeas_lh_tott_lht1p0_EW_RI lh_tott diff EW_RI:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) NorthEast -2:0.1:5 0.0 15.0 ams_prof_lh_tott_lht1p0_diff_EW_RI.jpg
+#ProfPlot: ams2 pmeas_w_EW_RI w diff EW_RI:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.1:0.01:0.4 0.0 20.0 ams_prof_w_diff_EW_RI.jpg
 
-ProfPlot: ams2 pmeas_vaptott_vt0p5_EW_RI vaptott pdiff EW_RI:_Total_Vapor_Diffusion Percent_Difference Height_(km) NorthEast -150:1:1500 0.0 15.0 ams_prof_vaptott_vt0p5_pdiff_EW_RI.jpg
-ProfPlot: ams2 pmeas_lh_tott_lht1p0_EW_RI lh_tott pdiff EW_RI:_Total_Latent_Heating Percent_Difference Height_(km) NorthEast -50:1:600 0.0 15.0 ams_prof_lh_tott_lht1p0_pdiff_EW_RI.jpg
-ProfPlot: ams2 pmeas_w_EW_RI w pdiff EW_RI:_Vertical_Velocity Percent_Difference Height_(km) NorthEast -50:1:850 0.0 20.0 ams_prof_w_pdiff_EW_RI.jpg
+#ProfPlot: ams2 pmeas_vaptott_vt0p5_EW_RI vaptott pdiff EW_RI:_Total_Vapor_Diffusion Percent_Difference Height_(km) NorthEast -150:1:1500 0.0 15.0 ams_prof_vaptott_vt0p5_pdiff_EW_RI.jpg
+#ProfPlot: ams2 pmeas_lh_tott_lht1p0_EW_RI lh_tott pdiff EW_RI:_Total_Latent_Heating Percent_Difference Height_(km) NorthEast -50:1:600 0.0 15.0 ams_prof_lh_tott_lht1p0_pdiff_EW_RI.jpg
+#ProfPlot: ams2 pmeas_w_EW_RI w pdiff EW_RI:_Vertical_Velocity Percent_Difference Height_(km) NorthEast -50:1:850 0.0 20.0 ams_prof_w_pdiff_EW_RI.jpg
+
+ProfPlot: ams2 pmeas_cloud_cm3_twp4_EW_RI cloud_cm3 abs EW_RI:_Cloud_Droplet_Concentration Number_Concentration_(#/cc) Height_(km) NorthEast -10:1:60 0.0 5.0 ams_prof_cloud_cm3_twp4_EW_RI.jpg
+ProfPlot: ams2 pmeas_cloud_d_twp4_EW_RI cloud_d abs EW_RI:_Cloud_Droplet_Mean_Diameter Diameter_(#/cc) Height_(km) NorthEast 0:0.1:30 0.0 10.0 ams_prof_cloud_d_twp4_EW_RI.jpg
 
 ######################## Profile Plots SD #############################
 #ProfPlot: ccn5_sd pmeas_lhf_twp4_0p1_EW_RI lh_frzt diff LH_Frz,_Eyewall,_Rapid_Intensification Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -0.5:0.025:0.5 0.0 20.0 prof_lhf_twp4_0p1_EW_RI_sd.jpg
@@ -1186,10 +1194,13 @@ ProfPlot: ams2 pmeas_w_EW_RI w pdiff EW_RI:_Vertical_Velocity Percent_Difference
 #ProfTsPlot: ams2 pmeas_vaptott_vt0p5_EW_RI    vaptott  EW_RI:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)    -10    10  0.0 15.0 redblue 0 abs ams_prs_vaptott_vt0p5_EW_RI
 #ProfTsPlot: ams2 pmeas_relvortz_rvz1em4_EW_RI relvortz RI:_Relative_Vorticity_(s^-^1)   Radius_(km) Height_(km)      0  1e-2  0.0 15.0 revgray 0 abs ams_prs_relvortz_rvz1em4_EW_RI
 
-ProfTsPlot: ams2_diff pmeas_w_EW_RI  w EW_RI:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -2 2 0.0 15.0 redblue 0 diff ams_prs_w_diff_EW_RI
+#ProfTsPlot: ams2_diff pmeas_w_EW_RI  w EW_RI:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -2 2 0.0 15.0 redblue 0 diff ams_prs_w_diff_EW_RI
 #ProfTsPlot: ams2_diff pmeas_lh_tott_lht1p0_EW_RI   lh_tott  EW_RI:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff ams_prs_lh_tott_lht1p0_diff_EW_RI
 #ProfTsPlot: ams2_diff pmeas_vaptott_vt0p5_EW_RI    vaptott  EW_RI:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff ams_prs_vaptott_vt0p5_diff_EW_RI
 #ProfTsPlot: ams2_diff pmeas_relvortz_rvz1em4_EW_RI relvortz EW_RI:_Relative_Vorticity_(s^-^1)   Radius_(km) Height_(km)  -2e-3  2e-3  0.0 15.0 redblue 0 diff ams_prs_relvortz_rvz1em4_diff_EW_RI
+
+ProfTsPlot: ams2_diff pmeas_cloud_cm3_twp4_EW_RI cloud_cm3 RI:_Cloud_Droplet_Concentration_(#/cc)   Radius_(km) Height_(km)    -100  100  0.0 5.0 redblue 0 diff ams_prs_cloud_cm3_twp4_diff_EW_RI
+ProfTsPlot: ams2_diff pmeas_cloud_d_twp4_EW_RI cloud_d RI:_Cloud_Droplet_Mean_Diameter_(um)   Radius_(km) Height_(km)    -30  30  0.0 5.0 redblue 0 diff ams_prs_cloud_d_twp4_diff_EW_RI
 
 ####################### Plot Sets ############################
 PlotSet: ccn5 5 TCS_CNTL CONTROL -k TCS_GN_C0100 CCN:_100/cc :k TCS_GN_C0500 CCN:_500/cc --k TCS_GN_C1000 CCN:_1000/cc --g TCS_GN_C2000 CCN:_2000/cc -g
@@ -1272,9 +1283,13 @@ PlotDselect: SfcVtRband 70 250000 0 0 0 30 0 0
 #AzavgEofPlot: lh_frzt_twp4_RI lh_frzt    Lat_Heat_Rate   K/hr 1 0.050 0.0025   0 250000    0  15000
 #AzavgEofPlot: lh_frzt_twp4_SS lh_frzt    Lat_Heat_Rate   K/hr 1 0.050 0.0025   0 250000    0  15000
 
-AzavgEofPlot: w_twp4    w    Vertical_Velocity   m/s 1 0.050 0.0025   0 250000    0  15000
-AzavgEofPlot: w_twp4_RI w    Vertical_Velocity   m/s 1 0.050 0.0025   0 250000    0  15000
-AzavgEofPlot: w_twp4_SS w    Vertical_Velocity   m/s 1 0.050 0.0025   0 250000    0  15000
+AzavgEofPlot: lh_tott_twp4    lh_tott    Lat_Heat_Rate   K/hr 1 0.100 0.0025   0 250000    0  15000
+AzavgEofPlot: lh_tott_twp4_RI lh_tott    Lat_Heat_Rate   K/hr 1 0.100 0.0025   0 250000    0  15000
+AzavgEofPlot: lh_tott_twp4_SS lh_tott    Lat_Heat_Rate   K/hr 1 0.100 0.0025   0 250000    0  15000
+
+#AzavgEofPlot: w_twp4    w    Vertical_Velocity   m/s 1 0.050 0.0025   0 250000    0  15000
+#AzavgEofPlot: w_twp4_RI w    Vertical_Velocity   m/s 1 0.050 0.0025   0 250000    0  15000
+#AzavgEofPlot: w_twp4_SS w    Vertical_Velocity   m/s 1 0.050 0.0025   0 250000    0  15000
 
 # old config
 #AzavgEofPlot: theta_e_lwp1          Theta-e      K 1 0.05 0.0025       0 250000    0  1200
