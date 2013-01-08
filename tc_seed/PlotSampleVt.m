@@ -14,7 +14,7 @@ Ptime = 90; % plot time - coincides with
 Zmin = 0;
 Zmax = 15; %km
 Rmin = 0;
-Rmax = 250; %km
+Rmax = 150; %km
 
 % color/contour limits
 Cmin = 0;
@@ -107,7 +107,7 @@ hold on;
 %patch(PX, PY, PC, 'FaceColor', [ PG PG PG ], 'FaceAlpha', 0.1, 'LineStyle', '--', 'EdgeColor', 'g');
 %text(20,13,'EW', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', Fsize);
 line([40, 40], [0 15], 'Color', 'r', 'LineStyle', '--', 'LineWidth', 2);
-text(20,13,'\leftarrow EW \rightarrow', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', 16, 'Color', 'r');
+text(20,13,'\leftarrow EW \rightarrow', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', Fsize, 'Color', 'k');
 
 fprintf('Writing plot file: %s\n', Pfile);
 saveas(Fig, Pfile);
