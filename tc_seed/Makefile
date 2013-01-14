@@ -28,7 +28,9 @@ SCRIPTS = \
           $(DEST)/PlotVt.m \
           $(DEST)/SetPath.m
 
-CONFIGS = $(DIAG_DIR)/SST_26/Init24/DiagConfig
+CONFIGS = \
+          $(DIAG_DIR)/SST_26/Init24/DiagConfig \
+          $(DIAG_DIR)/SST_26/Init54/DiagConfig
 
 #
 # Targets
@@ -43,4 +45,7 @@ $(DEST)/%.m: %.m
 	cp $(<) $(@)
 
 $(DIAG_DIR)/SST_26/Init24/DiagConfig: DiagConfig.SST_26.Init24
+	cp $(<) $(@)
+
+$(DIAG_DIR)/SST_26/Init54/DiagConfig: DiagConfig.SST_26.Init54
 	cp $(<) $(@)
