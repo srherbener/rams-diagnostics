@@ -12,7 +12,7 @@ Pdir = Config.PlotDir;
 ControlCase = Config.ControlCase;
 
 % Temperature file 
-TempFprefix1 = 'pmeas_tempc';
+TempFprefix1 = 'pmeas_tempc_twp4';
 TempVar = 'tempc';
 
 % Grab the colormap
@@ -97,9 +97,29 @@ for iplot = 1:length(Config.ProfTsPlots)
           if (~isempty(strfind(Fprefix,'AR_RI')))
               TempFprefix2 = 'AR_RI';
           else
-              if (~isempty(strfind(Fprefix,'EW_RI')))
-                  TempFprefix2 = 'EW_RI';
+            if (~isempty(strfind(Fprefix,'EW_RI')))
+                TempFprefix2 = 'EW_RI';
+            else
+              if (~isempty(strfind(Fprefix,'CO_RI')))
+                  TempFprefix2 = 'CO_RI';
+              else
+                if (~isempty(strfind(Fprefix,'RB_RI')))
+                    TempFprefix2 = 'RB_RI';
+                else
+                  if (~isempty(strfind(Fprefix,'EW_SS')))
+                      TempFprefix2 = 'EW_SS';
+                  else
+                    if (~isempty(strfind(Fprefix,'CO_SS')))
+                        TempFprefix2 = 'CO_SS';
+                    else
+                      if (~isempty(strfind(Fprefix,'RB_SS')))
+                          TempFprefix2 = 'RB_SS';
+                      end
+                    end
+                  end
+                end
               end
+            end
           end
           Hfile = sprintf('%s/%s_%s_%s.h5', Ddir, TempFprefix1, TempFprefix2, Case);
           Hdset = sprintf('/ProfRs_%s', TempVar);

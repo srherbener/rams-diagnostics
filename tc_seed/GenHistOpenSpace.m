@@ -13,19 +13,22 @@ FprefixAll = { 'hist_aggr_vflux_af0p05'
                'hist_graup_vflux_gf0p001'
                'hist_hail_vflux_hf0p1'
                'hist_pris_vflux_pf0p05'
-               'hist_snow_vflux_sf0p01' }
+               'hist_snow_vflux_sf0p01'
+               'hist_lh_tott_lht1p0' }
 
 FprefixConv = { 'hist_aggr_vflux_twp4_af0p05'
                 'hist_graup_vflux_twp4_gf0p001'
                 'hist_hail_vflux_twp4_hf0p1'
                 'hist_pris_vflux_twp4_pf0p05'
-                'hist_snow_vflux_twp4_sf0p01' }
+                'hist_snow_vflux_twp4_sf0p01'
+                'hist_lh_tott_twp4_lht1p0' }
 
 Vars = { 'aggr_vflux'
          'graup_vflux'
          'hail_vflux'
          'pris_vflux'
-         'snow_vflux' }
+         'snow_vflux'
+         'lh_tott' }
 
 % Read in the config data
 [ Config ] = ReadConfig(ConfigFile);
