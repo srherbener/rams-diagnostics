@@ -10,7 +10,6 @@ SCRIPTS = \
           $(DEST)/GenHistOpenSpace.m \
           $(DEST)/GenKeVtPlots.m \
           $(DEST)/PlotCfads.m \
-          $(DEST)/PlotControlVtSpl.m \
           $(DEST)/PlotHmeas.m \
           $(DEST)/PlotHmeas2d.m \
           $(DEST)/PlotHmeas3d.m \
@@ -22,6 +21,7 @@ SCRIPTS = \
           $(DEST)/PlotSampleStormPhases.m \
           $(DEST)/PlotSampleVt.m \
           $(DEST)/PlotSampleVtSPL.m \
+          $(DEST)/PlotSpinUpVtSpl.m \
           $(DEST)/PlotStormPhases.m \
           $(DEST)/PlotThetaE.m \
           $(DEST)/PlotTsProfs.m \

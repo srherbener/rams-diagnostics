@@ -5,7 +5,7 @@ function [ ] = PlotStormPhases( ConfigFile )
 %   phase. The intention of this is to show where these phases are being
 %   sampled for diagnostics.
 
-Pset = 'ccn5';
+Pset = 'ccn4';
 Tmin = 24; %hr
 Tmax = 144;
 Vname = 'max_azwind';

@@ -80,6 +80,8 @@ for i = 1:size(InLines,1)
       Cdata.EofDir = Fields{2};
     case 'ControlCase:'
       Cdata.ControlCase = Fields{2};
+    case 'SpinUpCase:'
+      Cdata.SpinUpCase = Fields{2};
     case 'ExpName:'
       Cdata.ExpName = Fields{2};
     case 'UndefVal:'

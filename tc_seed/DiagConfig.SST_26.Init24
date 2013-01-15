@@ -11,14 +11,14 @@ FilterDir: FILTERS
 ExpName: TC24
 RamsDir: RAMS
 RevuDir: HDF5
-#ControlCase: TCS_CNTL
+SpinUpCase: TCS_CNTL
 ControlCase: TCS_GN_C0100
 UndefVal: -999
 SstVal: 26
 
 # cases (experiment names)
 #  Case: <exp_name> <plot_name>
-Case: TCS_CNTL      CONTROL
+#Case: TCS_CNTL      CONTROL
 Case: TCS_GN_C0100  C0100
 Case: TCS_GN_C0500  C0500
 Case: TCS_GN_C1000  C1000
@@ -83,9 +83,9 @@ Var: lh_frzt latheatfrzt 3d
 #    which is to be selected out before running the EOF analysis
 AzavgEofConfig: 10 20
 
-#AzavgEof: theta_e     theta_e theta_e      0 250000     0  25000  86400 518400
-#AzavgEof: theta_e_RI  theta_e theta_e      0 250000     0  25000 180000 252000
-#AzavgEof: theta_e_SS  theta_e theta_e      0 250000     0  25000 324000 396000
+AzavgEof: theta_e     theta_e theta_e      0 250000     0  25000  86400 518400
+AzavgEof: theta_e_RI  theta_e theta_e      0 250000     0  25000 180000 252000
+AzavgEof: theta_e_SS  theta_e theta_e      0 250000     0  25000 324000 396000
 
 #AzavgEof: lh_vapt_twp4    lh_vapt_twp4  lh_vapt  0 250000  0  25000  86400 518400
 #AzavgEof: lh_vapt_twp4_RI lh_vapt_twp4  lh_vapt  0 250000  0  25000 180000 252000
@@ -682,22 +682,22 @@ TsPlotSpecs: 121 0 1.0 hr 25 1998:08:22:21:00:00 10 24
 ####################### Line plots ############################
 # LinePlot: <plotset> <xspec> <yspec> <data_select_spec> <smoothing> <title> <legend_loc> <out_file>
 
-#LinePlot: ccn5    MaxVt IKE TsAll xy Storm_Development Northwest KeVt.jpg
+LinePlot: ccn4    MaxVt IKE TsAll xy Storm_Development Northwest KeVt.jpg
 
-#LinePlot: ccn5    SimTime IKE   TsAll y Integrated_Kinetic_Energy NorthWest TS_ike.jpg
-#LinePlot: ccn5    SimTime MaxVt TsAll y Maximum_Vt                SouthEast TS_max_vt.jpg
-#LinePlot: ccn5    SimTime RMW   TsAll y Radius_of_Maximum_Wind    NorthEast TS_rmw.jpg
+LinePlot: ccn4    SimTime IKE   TsAll y Integrated_Kinetic_Energy NorthWest TS_ike.jpg
+LinePlot: ccn4    SimTime MaxVt TsAll y Maximum_Vt                SouthEast TS_max_vt.jpg
+LinePlot: ccn4    SimTime RMW   TsAll y Radius_of_Maximum_Wind    NorthEast TS_rmw.jpg
 
-#LinePlot: ccn5    RadAll    VtAllRI   SfcVtAll    y Radial_Structure_of_Max_Vt:_RI  NorthEast R_Vt_All_RI.jpg
-#LinePlot: ccn5    RadAll    VtAllSS   SfcVtAll    y Radial_Structure_of_Max_Vt:_SS  NorthEast R_Vt_All_SS.jpg
-#LinePlot: ccn5    RadPeak   VtPeakRI  SfcVtPeak   y Peak_Section_of_Max_Vt:_RI      NorthEast R_Vt_Peak_RI.jpg
-#LinePlot: ccn5    RadPeak   VtPeakSS  SfcVtPeak   y Peak_Section_of_Max_Vt:_SS      NorthEast R_Vt_Peak_SS.jpg
-#LinePlot: ccn5    RadRband  VtRbandRI SfcVtRband  y Rainband_Section_of_Max_Vt:_RI  NorthEast R_Vt_Rband_RI.jpg
-#LinePlot: ccn5    RadRband  VtRbandSS SfcVtRband  y Rainband_Section_of_Max_Vt:_SS  NorthEast R_Vt_Rband_SS.jpg
+LinePlot: ccn4    RadAll    VtAllRI   SfcVtAll    y Radial_Structure_of_Max_Vt:_RI  NorthEast R_Vt_All_RI.jpg
+LinePlot: ccn4    RadAll    VtAllSS   SfcVtAll    y Radial_Structure_of_Max_Vt:_SS  NorthEast R_Vt_All_SS.jpg
+LinePlot: ccn4    RadPeak   VtPeakRI  SfcVtPeak   y Peak_Section_of_Max_Vt:_RI      NorthEast R_Vt_Peak_RI.jpg
+LinePlot: ccn4    RadPeak   VtPeakSS  SfcVtPeak   y Peak_Section_of_Max_Vt:_SS      NorthEast R_Vt_Peak_SS.jpg
+LinePlot: ccn4    RadRband  VtRbandRI SfcVtRband  y Rainband_Section_of_Max_Vt:_RI  NorthEast R_Vt_Rband_RI.jpg
+LinePlot: ccn4    RadRband  VtRbandSS SfcVtRband  y Rainband_Section_of_Max_Vt:_SS  NorthEast R_Vt_Rband_SS.jpg
 
 #LinePlot: agu2    MaxVt IKE TsAll xy Storm_Development Northwest agu_KeVt.jpg
 
-LinePlot: ams2 MaxVt     IKE    TsAll xy KE_Vt_Time_Evolution      Northwest ams_KeVt_all.jpg
+#LinePlot: ams2 MaxVt     IKE    TsAll xy KE_Vt_Time_Evolution      Northwest ams_KeVt_all.jpg
 #LinePlot: ams2 MaxVt     IKE90    Ts90 xy KE_Vt_Time_Evolution      Northwest ams_KeVt.jpg
 #LinePlot: ams2 SimTime90 IKE90    Ts90  y Integrated_Kinetic_Energy NorthWest ams_TS_ike.jpg
 #LinePlot: ams2 SimTime90 MaxVt    Ts90  y Maximum_Vt                SouthEast ams_TS_max_vt.jpg
@@ -707,18 +707,18 @@ LinePlot: ams2 MaxVt     IKE    TsAll xy KE_Vt_Time_Evolution      Northwest ams
 #LinePlot: ams2 RadPeak VtPeakRI  SfcVtPeak y Peak_Section_of_Max_Vt:_RI      NorthEast ams_R_Vt_Peak_RI.jpg
 
 # salt source disabled
-#LinePlot: ccn5_sd MaxVt IKE TsAll xy Storm_Development Northwest KeVt_sd.jpg
+LinePlot: ccn4_sd MaxVt IKE TsAll xy Storm_Development Northwest KeVt_sd.jpg
 
-#LinePlot: ccn5_sd    SimTime IKE   TsAll y Integrated_Kinetic_Energy NorthWest TS_ike_sd.jpg
-#LinePlot: ccn5_sd    SimTime MaxVt TsAll y Maximum_Vt                SouthEast TS_max_vt_sd.jpg
-#LinePlot: ccn5_sd    SimTime RMW   TsAll y Radius_of_Maximum_Wind    NorthEast TS_rmw_sd.jpg
+LinePlot: ccn4_sd    SimTime IKE   TsAll y Integrated_Kinetic_Energy NorthWest TS_ike_sd.jpg
+LinePlot: ccn4_sd    SimTime MaxVt TsAll y Maximum_Vt                SouthEast TS_max_vt_sd.jpg
+LinePlot: ccn4_sd    SimTime RMW   TsAll y Radius_of_Maximum_Wind    NorthEast TS_rmw_sd.jpg
 
-#LinePlot: ccn5_sd    RadAll    VtAllRI   SfcVtAll    y Radial_Structure_of_Max_Vt:_RI  NorthEast R_Vt_All_RI_sd.jpg
-#LinePlot: ccn5_sd    RadAll    VtAllSS   SfcVtAll    y Radial_Structure_of_Max_Vt:_SS  NorthEast R_Vt_All_SS_sd.jpg
-#LinePlot: ccn5_sd    RadPeak   VtPeakRI  SfcVtPeak   y Peak_Section_of_Max_Vt:_RI      NorthEast R_Vt_Peak_RI_sd.jpg
-#LinePlot: ccn5_sd    RadPeak   VtPeakSS  SfcVtPeak   y Peak_Section_of_Max_Vt:_SS      NorthEast R_Vt_Peak_SS_sd.jpg
-#LinePlot: ccn5_sd    RadRband  VtRbandRI SfcVtRband  y Rainband_Section_of_Max_Vt:_RI  NorthEast R_Vt_Rband_RI_sd.jpg
-#LinePlot: ccn5_sd    RadRband  VtRbandSS SfcVtRband  y Rainband_Section_of_Max_Vt:_SS  NorthEast R_Vt_Rband_SS_sd.jpg
+LinePlot: ccn4_sd    RadAll    VtAllRI   SfcVtAll    y Radial_Structure_of_Max_Vt:_RI  NorthEast R_Vt_All_RI_sd.jpg
+LinePlot: ccn4_sd    RadAll    VtAllSS   SfcVtAll    y Radial_Structure_of_Max_Vt:_SS  NorthEast R_Vt_All_SS_sd.jpg
+LinePlot: ccn4_sd    RadPeak   VtPeakRI  SfcVtPeak   y Peak_Section_of_Max_Vt:_RI      NorthEast R_Vt_Peak_RI_sd.jpg
+LinePlot: ccn4_sd    RadPeak   VtPeakSS  SfcVtPeak   y Peak_Section_of_Max_Vt:_SS      NorthEast R_Vt_Peak_SS_sd.jpg
+LinePlot: ccn4_sd    RadRband  VtRbandRI SfcVtRband  y Rainband_Section_of_Max_Vt:_RI  NorthEast R_Vt_Rband_RI_sd.jpg
+LinePlot: ccn4_sd    RadRband  VtRbandSS SfcVtRband  y Rainband_Section_of_Max_Vt:_SS  NorthEast R_Vt_Rband_SS_sd.jpg
 
 ####################### Profile Plots #############################
 #ProfPlot: ccn5 pmeas_lh_tott_twp4_lht1p0_EW_RI lh_tott abs EW_RI:_LH_Tot Avg_Latent_Heating_(K/hr) Height_(km) NorthWest -20:0.5:20 0.0 15.0 prof_lh_tott_twp4_lht1p0_EW_RI.jpg
@@ -1266,6 +1266,9 @@ ProfTsPlot: ccn5 pmeas_vaptott_twp4_vt0p5_RB_SS    vaptott  RB_SS:_Total_Vapor_D
 PlotSet: ccn5 5 TCS_CNTL CONTROL -k TCS_GN_C0100 CCN:_100/cc :k TCS_GN_C0500 CCN:_500/cc --k TCS_GN_C1000 CCN:_1000/cc --g TCS_GN_C2000 CCN:_2000/cc -g
 PlotSet: ccn5_sd 3 TCS_CNTL CONTROL -k TCS_SD_C0100 CCN:_100/cc :k TCS_SD_C2000 CCN:_2000/cc -g
 
+PlotSet: ccn4    4 TCS_GN_C0100 CCN:_100/cc -k TCS_GN_C0500 CCN:_500/cc --k TCS_GN_C1000 CCN:_1000/cc --g TCS_GN_C2000 CCN:_2000/cc -g
+PlotSet: ccn4_sd 2 TCS_SD_C0100 CCN:_100/cc -k TCS_SD_C2000 CCN:_2000/cc -g
+
 PlotSet: agu2 2 TCS_CNTL CONTROL -b TCS_GN_C2000 CCN:_2000/cc -r
 
 PlotSet: ams2      2 TCS_GN_C0100 CLEAN -b TCS_GN_C2000 POLLUTED -r
@@ -1331,9 +1334,9 @@ PlotDselect: SfcVtRband 70 250000 0 0 0 30 0 0
 #   <r1> <r2> <z1> <z1> specifies a 2D window to cut out of the
 #       EOF to place on the plot
 #
-#AzavgEofPlot: theta_e     theta_e     Theta-e      K 1 0.05 0.0025       0 250000    0  1200
-#AzavgEofPlot: theta_e_RI  theta_e     Theta-e      K 1 0.05 0.0025       0 250000    0  1200
-#AzavgEofPlot: theta_e_SS  theta_e     Theta-e      K 1 0.05 0.0025       0 250000    0  1200
+AzavgEofPlot: theta_e     theta_e     Theta-e      K 1 0.05 0.0025       0 250000    0  1200
+AzavgEofPlot: theta_e_RI  theta_e     Theta-e      K 1 0.05 0.0025       0 250000    0  1200
+AzavgEofPlot: theta_e_SS  theta_e     Theta-e      K 1 0.05 0.0025       0 250000    0  1200
 
 #AzavgEofPlot: lh_vapt_twp4    lh_vapt    Lat_Heat_Rate   K/hr 1 0.050 0.0025   0 250000    0  15000
 #AzavgEofPlot: lh_vapt_twp4_RI lh_vapt    Lat_Heat_Rate   K/hr 1 0.050 0.0025   0 250000    0  15000

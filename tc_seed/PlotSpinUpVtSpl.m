@@ -1,11 +1,11 @@
-function [ ] = PlotControlVtSpl(ConfigFile)
-% PlotControlVtSpl function to plot max sfc Vt and SPL of control simulation
+function [ ] = PlotSpinUpVtSpl(ConfigFile)
+% PlotSpinUpVtSpl function to plot max sfc Vt and SPL of control simulation
 %
 
 [ Config ] = ReadConfig(ConfigFile);
 
 UndefVal = Config.UndefVal;
-ControlCase = Config.ControlCase;
+SpinUpCase = Config.SpinUpCase;
 AzavgDir = Config.AzavgDir;
 PlotDir = Config.PlotDir;
 SstVal = Config.SstVal;
@@ -16,12 +16,12 @@ if (exist(PlotDir, 'dir') ~= 7)
 end
 
 % read in the Vt and time coordinate data
-Hfile = sprintf('%s/speed_t_%s.h5', AzavgDir, ControlCase);
+Hfile = sprintf('%s/speed_t_%s.h5', AzavgDir, SpinUpCase);
 VT = squeeze(hdf5read(Hfile, '/speed_t'));
 T = squeeze(hdf5read(Hfile, '/t_coords'));
 
 % read in the SPL
-Hfile = sprintf('%s/sea_press_%s.h5', AzavgDir, ControlCase);
+Hfile = sprintf('%s/sea_press_%s.h5', AzavgDir, SpinUpCase);
 SPL = squeeze(hdf5read(Hfile, '/sea_press'));
 
 % VT will be (r,z,t), SPL will be (p,t)
@@ -76,8 +76,8 @@ MIN_SPL = SmoothFillTseries(MIN_SPL, Ntsteps, Flen);
 % Plot
 Lwidth = 2;
 Fsize = 20;
-Pfile = sprintf('%s/CntlVtSpl.jpg', PlotDir);
-Ptitle = sprintf('Control Run Storm Development: SST = %d\\circ C', SstVal);
+Pfile = sprintf('%s/SpinUpVtSpl.jpg', PlotDir);
+Ptitle = sprintf('Spin Up Run Storm Development: SST = %d\\circ C', SstVal);
 %Xlabel = sprintf('Local Time, Starting at %s', StartTime);
 Xlabel = sprintf('Simulation Time (hr)');
 Y1label = sprintf('Maximum surface Vt (m/s)');
