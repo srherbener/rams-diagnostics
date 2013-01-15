@@ -47,6 +47,7 @@ for icase = 1:length(Config.Cases)
   
       InFile = sprintf('%s/%s_%s.h5', EofDir, Fprefix, Case);
       EofOutFile = sprintf('%s/EOF%d_%s_%s.jpg', Config.PlotDir, EofNum, Fprefix, Case);
+      PcOutFile = sprintf('%s/PC%d_%s_%s.jpg', Config.PlotDir, EofNum, Fprefix, Case);
       EsOutFile = sprintf('%s/ES%d_%s_%s.jpg', Config.PlotDir, EofNum, Fprefix, Case);
   
       SelectData = [ Rmin Rmax Zmin Zmax ];
@@ -54,7 +55,7 @@ for icase = 1:length(Config.Cases)
       Clevs = (-Clim:Cinc:Clim);
       Cbounds = [ -Clim Clim ];
   
-      AdiffEofPlot(InFile, EofOutFile, EsOutFile, Vname, Vunits, Pcase, EofNum, NumEv, SelectData, Clevs, Cbounds);
+      AdiffEofPlot(InFile, EofOutFile, PcOutFile, EsOutFile, Vname, Vunits, Pcase, EofNum, NumEv, SelectData, Clevs, Cbounds);
   
       fprintf('\n');
     end

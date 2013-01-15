@@ -1,4 +1,4 @@
-function [ ] = Plot2dEofPc(EOF, PC, X, Y, Clevs, Cbounds, E_Title, E_Xlabel, E_Ylabel, P_Title, P_Xlabel, P_Ylabel, SelectData, OutFile)
+function [ ] = Plot2dEofPc(EOF, PC, X, Y, Clevs, Cbounds, E_Title, E_Xlabel, E_Ylabel, P_Title, P_Xlabel, P_Ylabel, SelectData, EofFile, PcFile)
 %Plot2dEofPc plot out a specified EOF and PC of a set of 2D observations
 %   This function will plot out the Nth EOF and PC of set of 2D
 %   observations. The EOFs and PCs are in the columns of their respective
@@ -8,15 +8,16 @@ function [ ] = Plot2dEofPc(EOF, PC, X, Y, Clevs, Cbounds, E_Title, E_Xlabel, E_Y
 %   region out of the entire 2D map.
 
 Fig = figure;
-subplot(2,1,1);
 Plot2dMap(Fig,X,Y,EOF, Clevs, Cbounds, E_Xlabel, E_Ylabel, E_Title, SelectData);
-subplot(2,1,2);
+saveas(Fig, EofFile);
+close(Fig);
+
+Fig = figure;
 plot(PC);
 title(P_Title);
 xlabel(P_Xlabel);
 ylabel(P_Ylabel);
-
-saveas(Fig, OutFile);
+saveas(Fig, PcFile);
 close(Fig);
 
 end
