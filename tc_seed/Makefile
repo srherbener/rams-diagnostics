@@ -23,6 +23,7 @@ SCRIPTS = \
           $(DEST)/PlotSampleVtSPL.m \
           $(DEST)/PlotSpinUpVtSpl.m \
           $(DEST)/PlotStormPhases.m \
+          $(DEST)/PlotStormRegions.m \
           $(DEST)/PlotThetaE.m \
           $(DEST)/PlotTsProfs.m \
           $(DEST)/PlotVt.m \
