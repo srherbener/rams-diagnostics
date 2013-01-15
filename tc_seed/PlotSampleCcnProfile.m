@@ -46,9 +46,9 @@ Ylims = [ min(Z) max(Z) ];
 % Plot
 Lwidth = 2;
 Fsize = 20;
-Pfile = sprintf('%s/SampleCcnProf.jpg', PlotDir);
+Pfile = sprintf('%s/SampleCcnProf.fig', PlotDir);
 Ptitle = sprintf('Aerosol Source Profile: %d/cc Example', CCN_VAL);
-Xlabel = sprintf('CCN concentration (#/cc)');
+Xlabel = sprintf('Aerosol concentration (#/cc)');
 Ylabel = sprintf('Height (km)');
 
 Fig = figure;

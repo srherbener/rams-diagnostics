@@ -10,6 +10,7 @@ SCRIPTS = \
           $(DEST)/GenHistOpenSpace.m \
           $(DEST)/GenKeVtPlots.m \
           $(DEST)/MakeSamplingFigure.m \
+          $(DEST)/MakeSinglePanelFigs.m \
           $(DEST)/PlotCfads.m \
           $(DEST)/PlotHmeas.m \
           $(DEST)/PlotHmeas2d.m \

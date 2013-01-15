@@ -36,6 +36,17 @@ text(0.5, 0.95, 'Temporal and Spatial Averaging', 'HorizontalAlignment', 'center
 set(SPhases, 'PlotBoxAspectRatio', [ 1 1 1 ]);
 set(SRegion, 'PlotBoxAspectRatio', [ 1 1 1 ]);
 
+% Adjust the position of the subplots
+% The phases plot needs to move a tad to the left
+% The region plot needs to move a tad to the right
+% These are both controlled by the first entry, 'x' (position -> [ x y w h ])
+SP_pos = get(SPhases, 'Position');
+SR_pos = get(SRegion, 'Position');
+SP_pos(1) = SP_pos(1) - 0.02;  % move left
+SR_pos(1) = SR_pos(1) + 0.03;  % move right
+set(SPhases, 'Position', SP_pos);
+set(SRegion, 'Position', SR_pos);
+
 saveas(Fig, OutFile);
 close(Fig);
 

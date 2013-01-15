@@ -76,8 +76,8 @@ MIN_SPL = SmoothFillTseries(MIN_SPL, Ntsteps, Flen);
 % Plot
 Lwidth = 2;
 Fsize = 20;
-Pfile = sprintf('%s/SpinUpVtSpl.jpg', PlotDir);
-Ptitle = sprintf('Spin Up Run Storm Development: SST = %d\\circ C', SstVal);
+Pfile = sprintf('%s/SpinUpVtSpl.fig', PlotDir);
+Ptitle = sprintf('Spin Up Storm Evolution');
 %Xlabel = sprintf('Local Time, Starting at %s', StartTime);
 Xlabel = sprintf('Simulation Time (hr)');
 Y1label = sprintf('Maximum surface Vt (m/s)');
