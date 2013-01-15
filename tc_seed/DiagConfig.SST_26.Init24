@@ -4,7 +4,8 @@
 
 AzavgDir: AzAveragedData
 TsavgDir: TsAveragedData
-PlotDir: plots
+PlotDir: Plots
+FigDir: Figures
 EofDir: EofData
 DiagDir: DIAGS
 FilterDir: FILTERS

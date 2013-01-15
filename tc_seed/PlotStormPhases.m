@@ -41,10 +41,9 @@ PG = 0.8; % Gray scale
 Tdir = Config.TsavgDir;
 Pdir = Config.PlotDir;
 
-ExpName = Config.ExpName;
-Ptitle = sprintf('%s: Maximum Vt', ExpName);
+Ptitle = sprintf('Maximum Vt');
 
-OutFile = sprintf('%s/StormPhases.jpg', Pdir);
+OutFile = sprintf('%s/StormPhases.fig', Pdir);
 
 % Make sure PlotDir exists
 if (exist(Pdir, 'dir') ~= 7)

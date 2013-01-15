@@ -4,7 +4,9 @@
 
 DEST = $(HOME)/etc/matlab
 
-SCRIPTS = $(DEST)/AdiffEofPlot.m \
+SCRIPTS = \
+          $(DEST)/figmerge.m \
+          $(DEST)/AdiffEofPlot.m \
           $(DEST)/AzavgDiffEof.m \
           $(DEST)/GenAdiffEofPlots.m \
           $(DEST)/GenHistMeas.m \

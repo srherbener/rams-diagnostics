@@ -76,6 +76,8 @@ for i = 1:size(InLines,1)
       Cdata.DiagDir = Fields{2};
     case 'PlotDir:'
       Cdata.PlotDir = Fields{2};
+    case 'FigDir:'
+      Cdata.FigDir = Fields{2};
     case 'EofDir:'
       Cdata.EofDir = Fields{2};
     case 'ControlCase:'

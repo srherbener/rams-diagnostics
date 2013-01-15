@@ -69,7 +69,7 @@ PC = [ 0;
 PG = 0.8; % Gray scale
 
 % plot
-Pfile  = sprintf('%s/StormRegions.jpg', PlotDir);
+Pfile  = sprintf('%s/StormRegions.fig', PlotDir);
 Ptitle = sprintf('Vt (m/s)');
 Xlabel = sprintf('Radius (km)');
 Ylabel = sprintf('Height (km)');

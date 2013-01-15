@@ -9,6 +9,7 @@ SCRIPTS = \
           $(DEST)/AerosolAnimation.m \
           $(DEST)/GenHistOpenSpace.m \
           $(DEST)/GenKeVtPlots.m \
+          $(DEST)/MakeSamplingFigure.m \
           $(DEST)/PlotCfads.m \
           $(DEST)/PlotHmeas.m \
           $(DEST)/PlotHmeas2d.m \
