@@ -11,6 +11,7 @@ SCRIPTS = \
           $(DEST)/GenKeVtPlots.m \
           $(DEST)/MakeDataAvgFig.m \
           $(DEST)/MakeSinglePanelFigs.m \
+          $(DEST)/MakeStormEvolFig.m \
           $(DEST)/PlotCfads.m \
           $(DEST)/PlotHmeas.m \
           $(DEST)/PlotHmeas2d.m \
