@@ -22,21 +22,12 @@ for i = 1:length(FigList)
   OutFile = sprintf('%s/%s.jpg', FigDir,  FigList{i});
 
   fprintf('MATLAB figure file: %s\n', InFile);
-
-  OrigFig = openfig(InFile);
-  OrigPlots = findall(0, 'type', 'axes');
-
-  Fig = figure;
-  for i = 1:length(OrigPlots)
-    copyobj(OrigPlots(i), Fig);
-  end
-  saveas(Fig, OutFile);
-  close(Fig);
-
-  close(OrigFig);
-
   fprintf('Writing file: %s\n', OutFile);
   fprintf('\n');
+
+  Fig = openfig(InFile);
+  saveas(Fig, OutFile);
+  close(Fig);
 end
 
 end

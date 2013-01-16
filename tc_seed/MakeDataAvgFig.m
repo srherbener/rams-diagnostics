@@ -1,5 +1,5 @@
-function [] = MakeSamplingFigure(ConfigFile)
-% MakeSamplingFigure - merge plots showing RI, SS time slices and EW, CO, SS radial regions
+function [] = MakeDataAvgFig(ConfigFile)
+% MakeDataAvgFig - merge plots showing RI, SS time slices and EW, CO, SS radial regions
 
 % Read in the config data
 [ Config ] = ReadConfig(ConfigFile);
@@ -16,7 +16,7 @@ end
 FileList{1} = sprintf('%s/StormPhases.fig', PlotDir);
 FileList{2} = sprintf('%s/StormRegions.fig', PlotDir);
 
-OutFile = sprintf('%s/SamplingFig.jpg', FigDir);
+OutFile = sprintf('%s/DataAveraging.jpg', FigDir);
 
 [ Fig, Splots ] = figmerge(FileList, [ 1 2 ]);
 % reverse gray map
