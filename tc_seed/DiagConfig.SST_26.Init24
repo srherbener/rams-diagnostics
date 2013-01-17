@@ -683,18 +683,18 @@ TsPlotSpecs: 121 0 1.0 hr 25 1998:08:22:21:00:00 10 24
 ####################### Line plots ############################
 # LinePlot: <plotset> <xspec> <yspec> <data_select_spec> <smoothing> <title> <legend_loc> <out_file>
 
-LinePlot: ccn4    MaxVt IKE TsAll xy Storm_Development Northwest KeVt.fig
+LinePlot: ccn4    MaxVt IKE TsAll xy Size_vs_Intensity Northwest KeVt.fig
 
-LinePlot: ccn4    SimTime IKE   TsAll y Integrated_Kinetic_Energy NorthWest TS_ike.fig
-LinePlot: ccn4    SimTime MaxVt TsAll y Maximum_Vt                SouthEast TS_max_vt.fig
-LinePlot: ccn4    SimTime RMW   TsAll y Radius_of_Maximum_Wind    NorthEast TS_rmw.fig
+#LinePlot: ccn4    SimTime IKE   TsAll y Integrated_Kinetic_Energy NorthWest TS_ike.fig
+#LinePlot: ccn4    SimTime MaxVt TsAll y Maximum_Vt                SouthEast TS_max_vt.fig
+#LinePlot: ccn4    SimTime RMW   TsAll y Radius_of_Maximum_Wind    NorthEast TS_rmw.fig
 
-LinePlot: ccn4    RadAll    VtAllRI   SfcVtAll    y Radial_Structure_of_Max_Vt:_RI  NorthEast R_Vt_All_RI.fig
-LinePlot: ccn4    RadAll    VtAllSS   SfcVtAll    y Radial_Structure_of_Max_Vt:_SS  NorthEast R_Vt_All_SS.fig
-LinePlot: ccn4    RadPeak   VtPeakRI  SfcVtPeak   y Peak_Section_of_Max_Vt:_RI      NorthEast R_Vt_Peak_RI.fig
-LinePlot: ccn4    RadPeak   VtPeakSS  SfcVtPeak   y Peak_Section_of_Max_Vt:_SS      NorthEast R_Vt_Peak_SS.fig
-LinePlot: ccn4    RadRband  VtRbandRI SfcVtRband  y Rainband_Section_of_Max_Vt:_RI  NorthEast R_Vt_Rband_RI.fig
-LinePlot: ccn4    RadRband  VtRbandSS SfcVtRband  y Rainband_Section_of_Max_Vt:_SS  NorthEast R_Vt_Rband_SS.fig
+#LinePlot: ccn4    RadAll    VtAllRI   SfcVtAll    y Radial_Structure_of_Max_Vt:_RI  NorthEast R_Vt_All_RI.fig
+#LinePlot: ccn4    RadAll    VtAllSS   SfcVtAll    y Radial_Structure_of_Max_Vt:_SS  NorthEast R_Vt_All_SS.fig
+#LinePlot: ccn4    RadPeak   VtPeakRI  SfcVtPeak   y Peak_Section_of_Max_Vt:_RI      NorthEast R_Vt_Peak_RI.fig
+#LinePlot: ccn4    RadPeak   VtPeakSS  SfcVtPeak   y Peak_Section_of_Max_Vt:_SS      NorthEast R_Vt_Peak_SS.fig
+#LinePlot: ccn4    RadRband  VtRbandRI SfcVtRband  y Rainband_Section_of_Max_Vt:_RI  NorthEast R_Vt_Rband_RI.fig
+#LinePlot: ccn4    RadRband  VtRbandSS SfcVtRband  y Rainband_Section_of_Max_Vt:_SS  NorthEast R_Vt_Rband_SS.fig
 
 #LinePlot: agu2    MaxVt IKE TsAll xy Storm_Development Northwest agu_KeVt.fig
 
@@ -708,18 +708,18 @@ LinePlot: ccn4    RadRband  VtRbandSS SfcVtRband  y Rainband_Section_of_Max_Vt:_
 #LinePlot: ams2 RadPeak VtPeakRI  SfcVtPeak y Peak_Section_of_Max_Vt:_RI      NorthEast ams_R_Vt_Peak_RI.fig
 
 # salt source disabled
-LinePlot: ccn4_sd MaxVt IKE TsAll xy Storm_Development Northwest KeVt_sd.fig
+LinePlot: ccn4_sd MaxVt IKE TsAll xy Size_vs_Intensity Northwest KeVt_sd.fig
 
-LinePlot: ccn4_sd    SimTime IKE   TsAll y Integrated_Kinetic_Energy NorthWest TS_ike_sd.fig
-LinePlot: ccn4_sd    SimTime MaxVt TsAll y Maximum_Vt                SouthEast TS_max_vt_sd.fig
-LinePlot: ccn4_sd    SimTime RMW   TsAll y Radius_of_Maximum_Wind    NorthEast TS_rmw_sd.fig
+#LinePlot: ccn4_sd    SimTime IKE   TsAll y Integrated_Kinetic_Energy NorthWest TS_ike_sd.fig
+#LinePlot: ccn4_sd    SimTime MaxVt TsAll y Maximum_Vt                SouthEast TS_max_vt_sd.fig
+#LinePlot: ccn4_sd    SimTime RMW   TsAll y Radius_of_Maximum_Wind    NorthEast TS_rmw_sd.fig
 
-LinePlot: ccn4_sd    RadAll    VtAllRI   SfcVtAll    y Radial_Structure_of_Max_Vt:_RI  NorthEast R_Vt_All_RI_sd.fig
-LinePlot: ccn4_sd    RadAll    VtAllSS   SfcVtAll    y Radial_Structure_of_Max_Vt:_SS  NorthEast R_Vt_All_SS_sd.fig
-LinePlot: ccn4_sd    RadPeak   VtPeakRI  SfcVtPeak   y Peak_Section_of_Max_Vt:_RI      NorthEast R_Vt_Peak_RI_sd.fig
-LinePlot: ccn4_sd    RadPeak   VtPeakSS  SfcVtPeak   y Peak_Section_of_Max_Vt:_SS      NorthEast R_Vt_Peak_SS_sd.fig
-LinePlot: ccn4_sd    RadRband  VtRbandRI SfcVtRband  y Rainband_Section_of_Max_Vt:_RI  NorthEast R_Vt_Rband_RI_sd.fig
-LinePlot: ccn4_sd    RadRband  VtRbandSS SfcVtRband  y Rainband_Section_of_Max_Vt:_SS  NorthEast R_Vt_Rband_SS_sd.fig
+#LinePlot: ccn4_sd    RadAll    VtAllRI   SfcVtAll    y Radial_Structure_of_Max_Vt:_RI  NorthEast R_Vt_All_RI_sd.fig
+#LinePlot: ccn4_sd    RadAll    VtAllSS   SfcVtAll    y Radial_Structure_of_Max_Vt:_SS  NorthEast R_Vt_All_SS_sd.fig
+#LinePlot: ccn4_sd    RadPeak   VtPeakRI  SfcVtPeak   y Peak_Section_of_Max_Vt:_RI      NorthEast R_Vt_Peak_RI_sd.fig
+#LinePlot: ccn4_sd    RadPeak   VtPeakSS  SfcVtPeak   y Peak_Section_of_Max_Vt:_SS      NorthEast R_Vt_Peak_SS_sd.fig
+#LinePlot: ccn4_sd    RadRband  VtRbandRI SfcVtRband  y Rainband_Section_of_Max_Vt:_RI  NorthEast R_Vt_Rband_RI_sd.fig
+#LinePlot: ccn4_sd    RadRband  VtRbandSS SfcVtRband  y Rainband_Section_of_Max_Vt:_SS  NorthEast R_Vt_Rband_SS_sd.fig
 
 ####################### Profile Plots #############################
 #ProfPlot: ccn5 pmeas_lh_tott_twp4_lht1p0_EW_RI lh_tott abs EW_RI:_LH_Tot Avg_Latent_Heating_(K/hr) Height_(km) NorthWest -20:0.5:20 0.0 15.0 prof_lh_tott_twp4_lht1p0_EW_RI.jpg
