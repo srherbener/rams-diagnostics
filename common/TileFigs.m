@@ -43,10 +43,18 @@ function [ ] = TileFigs( FigList, TileDims, OutFile )
     return;
   end
 
-  % Want the final pixel size to be 1200 x 900 (150dpi)
-  OutWidth = 1200;
-  OutHeight = 900;
+  % For raster images:
+  %
+  %   75 dpi -->  600 x  450 pixels
+  %  150 dpi --> 1200 x  900 pixels
+  %  300 dpi --> 2400 x 1800 pixels
+  %  600 dpi --> 4800 x 3600 pixels
+  %
+  % Want the final pixel resolution to be 300dpi
   OutRes = 150;
+  R = OutRes / 75;
+  OutWidth = R * 600;
+  OutHeight = R * 450;
 
   % Get a temporary file name that is unique so that multiple processes can
   % be running at the same time.
@@ -60,15 +68,7 @@ function [ ] = TileFigs( FigList, TileDims, OutFile )
       Images(i) = openfig(FigList{i});
   end
   
-  % Figure out how to size tiles. Really only supporting dimensions sizes
-  % of 1, 2 or 3 for now.
-  %
-  % For JPEG and PNG:
-  %   75 dpi --> 600 x 451 pixels
-  %  150 dpi --> 1200 x 900 pixels
-  %
-  % Want the resulting format to end up at 1200 x 900 (150dpi) so 75dpi
-  % is good for 2x2, 50dpi for 3x3, etc.
+  % Figure out how to size tiles.
   Dmax = max(TileDims);
   Ires =  OutRes / Dmax;
   Iwidth = OutWidth / Dmax;
