@@ -23,6 +23,7 @@ SCRIPTS = \
           $(DEST)/PlotProfSet.m \
           $(DEST)/PlotTseriesSet.m \
           $(DEST)/Plot2dSet.m \
+          $(DEST)/TileFigs.m \
           $(DEST)/TimeToString.m \
           $(DEST)/Xyzt2EofArray.m
 
