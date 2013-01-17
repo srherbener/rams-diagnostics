@@ -22,10 +22,27 @@ function [ ] = TileFigs( FigList, TileDims, OutFile )
 %             image will be saved.
 %
 
-  % Use a built in format: PNG, JPEG
-  Ofmt = '-djpeg';
-  Oext = 'jpg';
-  
+  % Use a built in format: JPEG, PNG or BMP for now
+  Ofmt = 'NONE';
+  Oext = 'NONE';
+  if (~isempty(regexp(OutFile, '\.jpg')))
+    Ofmt = '-djpeg';
+    Oext = 'jpg';
+  end
+  if (~isempty(regexp(OutFile, '\.png')))
+    Ofmt = '-dpng';
+    Oext = 'png';
+  end
+  if (~isempty(regexp(OutFile, '\.bmp')))
+    Ofmt = '-dbmp';
+    Oext = 'bmp';
+  end
+
+  if (strcmp(Ofmt, 'NONE'))
+    fprintf('TileArgs: ERROR: unrecognized file extension (image format) on OutFile: %s\n', OutFile);
+    return;
+  end
+
   % Want the final pixel size to be 1200 x 900 (150dpi)
   OutWidth = 1200;
   OutHeight = 900;
