@@ -15,6 +15,8 @@ function [ ] = Plot2dMap( Fig, X, Y, Z, Clevs, Cbounds, Xlab, Ylab, Ptitle, Sele
 %   SelectData contains [ x1 x2 y1 y2 ] which are used to select a
 %   rectangular section out of the entire map.
 
+Fsize = 20;
+
 figure(Fig);
 
 Nrows = length(Y);
@@ -35,6 +37,7 @@ MapP = Map(y1:y2,x1:x2);
 % negative values and red represents positive values.
 
 contourf(XP,YP,MapP,Clevs);
+set(gca, 'FontSize', Fsize);
 shading flat;
 title(Ptitle);
 xlabel(Xlab);
@@ -42,7 +45,8 @@ ylabel(Ylab);
     
 caxis(Cbounds);
 colormap(redblue);
-colorbar;
+cbar = colorbar;
+set(cbar, 'FontSize', Fsize);
     
 end
 

@@ -7,6 +7,8 @@ function [ ] = Plot2dEofPc(EOF, PC, X, Y, Clevs, Cbounds, E_Title, E_Xlabel, E_Y
 %   SelectData contains [ x1 x2 y1 y2 ] which are used to select a rectangular
 %   region out of the entire 2D map.
 
+Fsize = 20;
+
 Fig = figure;
 Plot2dMap(Fig,X,Y,EOF, Clevs, Cbounds, E_Xlabel, E_Ylabel, E_Title, SelectData);
 saveas(Fig, EofFile);
@@ -14,6 +16,7 @@ close(Fig);
 
 Fig = figure;
 plot(PC);
+set(gca, 'FontSize', Fsize);
 title(P_Title);
 xlabel(P_Xlabel);
 ylabel(P_Ylabel);
