@@ -216,12 +216,12 @@ AzavgEof: lh_tott_twp4_SS lh_tott_twp4  lh_tott  0 250000  0  25000 324000 39600
 #Pmeas: pmeas_theta_e_twp4_CO_SS AzAveragedData hist_theta_e_twp4 theta_e wtmean 40.0  70.0 90.0 110.0
 #Pmeas: pmeas_theta_e_twp4_RB_SS AzAveragedData hist_theta_e_twp4 theta_e wtmean 70.0 150.0 90.0 110.0
 
-Pmeas: pmeas_tempc_twp4_EW_RI AzAveragedData hist_tempc_twp4 tempc wtmean  0.0  40.0 50.0  70.0
-Pmeas: pmeas_tempc_twp4_CO_RI AzAveragedData hist_tempc_twp4 tempc wtmean 40.0  70.0 50.0  70.0
-Pmeas: pmeas_tempc_twp4_RB_RI AzAveragedData hist_tempc_twp4 tempc wtmean 70.0 150.0 50.0  70.0
-Pmeas: pmeas_tempc_twp4_EW_SS AzAveragedData hist_tempc_twp4 tempc wtmean  0.0  40.0 90.0 110.0
-Pmeas: pmeas_tempc_twp4_CO_SS AzAveragedData hist_tempc_twp4 tempc wtmean 40.0  70.0 90.0 110.0
-Pmeas: pmeas_tempc_twp4_RB_SS AzAveragedData hist_tempc_twp4 tempc wtmean 70.0 150.0 90.0 110.0
+#Pmeas: pmeas_tempc_twp4_EW_RI AzAveragedData hist_tempc_twp4 tempc wtmean  0.0  40.0 50.0  70.0
+#Pmeas: pmeas_tempc_twp4_CO_RI AzAveragedData hist_tempc_twp4 tempc wtmean 40.0  70.0 50.0  70.0
+#Pmeas: pmeas_tempc_twp4_RB_RI AzAveragedData hist_tempc_twp4 tempc wtmean 70.0 150.0 50.0  70.0
+#Pmeas: pmeas_tempc_twp4_EW_SS AzAveragedData hist_tempc_twp4 tempc wtmean  0.0  40.0 90.0 110.0
+#Pmeas: pmeas_tempc_twp4_CO_SS AzAveragedData hist_tempc_twp4 tempc wtmean 40.0  70.0 90.0 110.0
+#Pmeas: pmeas_tempc_twp4_RB_SS AzAveragedData hist_tempc_twp4 tempc wtmean 70.0 150.0 90.0 110.0
 
 #Pmeas: pmeas_w_twp4_EW_RI AzAveragedData hist_w_twp4 w wtmean  0.0  40.0 50.0  70.0
 #Pmeas: pmeas_w_twp4_CO_RI AzAveragedData hist_w_twp4 w wtmean 40.0  70.0 50.0  70.0
@@ -596,14 +596,10 @@ Pmeas: pmeas_tempc_twp4_RB_SS AzAveragedData hist_tempc_twp4 tempc wtmean 70.0 1
 #Pmeas: pmeas_vaptott_twp4_vt0p5_AR_RI  AzAveragedData hist_vaptott_twp4_vt0p5  vaptott wtmean  0.0 250.0 50.0  70.0
 #Pmeas: pmeas_vaptott_twp4_vt0p5_AR_SS  AzAveragedData hist_vaptott_twp4_vt0p5  vaptott wtmean  0.0 250.0 90.0 110.0
 
-#Pmeas: pmeas_relvortz_rvz1em4_EW_RI  AzAveragedData hist_relvortz_rvz1em4  relvortz wtmean  0.0  40.0 50.0  70.0
-#Pmeas: pmeas_relvortz_rvz1em4_EW_SS  AzAveragedData hist_relvortz_rvz1em4  relvortz wtmean  0.0  40.0 90.0 110.0
 
 #Pmeas: pmeas_w_twp4_AR_RI  AzAveragedData hist_w_twp4  w wtmean  0.0 250.0 50.0 70.0
 #Pmeas: pmeas_w_AR_RI       AzAveragedData hist_w       w wtmean  0.0 250.0 50.0 70.0
 
-#Pmeas: pmeas_w_EW_RI              AzAveragedData hist_w               w        wtmean  0.0 40.0 50.0 70.0
-#Pmeas: pmeas_vaptott_vt0p5_EW_RI  AzAveragedData hist_vaptott_vt0p5   vaptott  wtmean  0.0 40.0 50.0 70.0
 
 #Pmeas: pmeas_lh_tott_lht1p0_EW_RI AzAveragedData hist_lh_tott_lht1p0  lh_tott  wtmean   0.0  40.0 50.0  70.0
 #Pmeas: pmeas_lh_tott_lht1p0_EW_SS AzAveragedData hist_lh_tott_lht1p0  lh_tott  wtmean   0.0  40.0 90.0 110.0
@@ -619,19 +615,54 @@ Pmeas: pmeas_tempc_twp4_RB_SS AzAveragedData hist_tempc_twp4 tempc wtmean 70.0 1
 #Pmeas: pmeas_lh_tott_twp4_lht1p0_RB_RI AzAveragedData hist_lh_tott_twp4_lht1p0  lh_tott  wtmean  70.0 150.0 50.0  70.0
 #Pmeas: pmeas_lh_tott_twp4_lht1p0_RB_SS AzAveragedData hist_lh_tott_twp4_lht1p0  lh_tott  wtmean  70.0 150.0 90.0 110.0
 
-Pmeas: pmeas_vaptott_vt0p5_EW_RI  AzAveragedData hist_vaptott_vt0p5   vaptott  wtmean   0.0  40.0 50.0  70.0
-Pmeas: pmeas_vaptott_vt0p5_EW_SS  AzAveragedData hist_vaptott_vt0p5   vaptott  wtmean   0.0  40.0 90.0 110.0
-Pmeas: pmeas_vaptott_vt0p5_CO_RI  AzAveragedData hist_vaptott_vt0p5   vaptott  wtmean  40.0  70.0 50.0  70.0
-Pmeas: pmeas_vaptott_vt0p5_CO_SS  AzAveragedData hist_vaptott_vt0p5   vaptott  wtmean  40.0  70.0 90.0 110.0
-Pmeas: pmeas_vaptott_vt0p5_RB_RI  AzAveragedData hist_vaptott_vt0p5   vaptott  wtmean  70.0 150.0 50.0  70.0
-Pmeas: pmeas_vaptott_vt0p5_RB_SS  AzAveragedData hist_vaptott_vt0p5   vaptott  wtmean  70.0 150.0 90.0 110.0
+#Pmeas: pmeas_lh_tott_open_lht1p0_EW_RI AzAveragedData hist_lh_tott_open_lht1p0  lh_tott  wtmean   0.0  40.0 50.0  70.0
+#Pmeas: pmeas_lh_tott_open_lht1p0_EW_SS AzAveragedData hist_lh_tott_open_lht1p0  lh_tott  wtmean   0.0  40.0 90.0 110.0
+#Pmeas: pmeas_lh_tott_open_lht1p0_CO_RI AzAveragedData hist_lh_tott_open_lht1p0  lh_tott  wtmean  40.0  70.0 50.0  70.0
+#Pmeas: pmeas_lh_tott_open_lht1p0_CO_SS AzAveragedData hist_lh_tott_open_lht1p0  lh_tott  wtmean  40.0  70.0 90.0 110.0
+#Pmeas: pmeas_lh_tott_open_lht1p0_RB_RI AzAveragedData hist_lh_tott_open_lht1p0  lh_tott  wtmean  70.0 150.0 50.0  70.0
+#Pmeas: pmeas_lh_tott_open_lht1p0_RB_SS AzAveragedData hist_lh_tott_open_lht1p0  lh_tott  wtmean  70.0 150.0 90.0 110.0
 
-Pmeas: pmeas_vaptott_twp4_vt0p5_EW_RI  AzAveragedData hist_vaptott_twp4_vt0p5   vaptott  wtmean   0.0  40.0 50.0  70.0
-Pmeas: pmeas_vaptott_twp4_vt0p5_EW_SS  AzAveragedData hist_vaptott_twp4_vt0p5   vaptott  wtmean   0.0  40.0 90.0 110.0
-Pmeas: pmeas_vaptott_twp4_vt0p5_CO_RI  AzAveragedData hist_vaptott_twp4_vt0p5   vaptott  wtmean  40.0  70.0 50.0  70.0
-Pmeas: pmeas_vaptott_twp4_vt0p5_CO_SS  AzAveragedData hist_vaptott_twp4_vt0p5   vaptott  wtmean  40.0  70.0 90.0 110.0
-Pmeas: pmeas_vaptott_twp4_vt0p5_RB_RI  AzAveragedData hist_vaptott_twp4_vt0p5   vaptott  wtmean  70.0 150.0 50.0  70.0
-Pmeas: pmeas_vaptott_twp4_vt0p5_RB_SS  AzAveragedData hist_vaptott_twp4_vt0p5   vaptott  wtmean  70.0 150.0 90.0 110.0
+#Pmeas: pmeas_vaptott_vt0p5_EW_RI  AzAveragedData hist_vaptott_vt0p5   vaptott  wtmean   0.0  40.0 50.0  70.0
+#Pmeas: pmeas_vaptott_vt0p5_EW_SS  AzAveragedData hist_vaptott_vt0p5   vaptott  wtmean   0.0  40.0 90.0 110.0
+#Pmeas: pmeas_vaptott_vt0p5_CO_RI  AzAveragedData hist_vaptott_vt0p5   vaptott  wtmean  40.0  70.0 50.0  70.0
+#Pmeas: pmeas_vaptott_vt0p5_CO_SS  AzAveragedData hist_vaptott_vt0p5   vaptott  wtmean  40.0  70.0 90.0 110.0
+#Pmeas: pmeas_vaptott_vt0p5_RB_RI  AzAveragedData hist_vaptott_vt0p5   vaptott  wtmean  70.0 150.0 50.0  70.0
+#Pmeas: pmeas_vaptott_vt0p5_RB_SS  AzAveragedData hist_vaptott_vt0p5   vaptott  wtmean  70.0 150.0 90.0 110.0
+
+#Pmeas: pmeas_vaptott_twp4_vt0p5_EW_RI  AzAveragedData hist_vaptott_twp4_vt0p5   vaptott  wtmean   0.0  40.0 50.0  70.0
+#Pmeas: pmeas_vaptott_twp4_vt0p5_EW_SS  AzAveragedData hist_vaptott_twp4_vt0p5   vaptott  wtmean   0.0  40.0 90.0 110.0
+#Pmeas: pmeas_vaptott_twp4_vt0p5_CO_RI  AzAveragedData hist_vaptott_twp4_vt0p5   vaptott  wtmean  40.0  70.0 50.0  70.0
+#Pmeas: pmeas_vaptott_twp4_vt0p5_CO_SS  AzAveragedData hist_vaptott_twp4_vt0p5   vaptott  wtmean  40.0  70.0 90.0 110.0
+#Pmeas: pmeas_vaptott_twp4_vt0p5_RB_RI  AzAveragedData hist_vaptott_twp4_vt0p5   vaptott  wtmean  70.0 150.0 50.0  70.0
+#Pmeas: pmeas_vaptott_twp4_vt0p5_RB_SS  AzAveragedData hist_vaptott_twp4_vt0p5   vaptott  wtmean  70.0 150.0 90.0 110.0
+
+#Pmeas: pmeas_vaptott_open_vt0p5_EW_RI  AzAveragedData hist_vaptott_open_vt0p5   vaptott  wtmean   0.0  40.0 50.0  70.0
+#Pmeas: pmeas_vaptott_open_vt0p5_EW_SS  AzAveragedData hist_vaptott_open_vt0p5   vaptott  wtmean   0.0  40.0 90.0 110.0
+#Pmeas: pmeas_vaptott_open_vt0p5_CO_RI  AzAveragedData hist_vaptott_open_vt0p5   vaptott  wtmean  40.0  70.0 50.0  70.0
+#Pmeas: pmeas_vaptott_open_vt0p5_CO_SS  AzAveragedData hist_vaptott_open_vt0p5   vaptott  wtmean  40.0  70.0 90.0 110.0
+#Pmeas: pmeas_vaptott_open_vt0p5_RB_RI  AzAveragedData hist_vaptott_open_vt0p5   vaptott  wtmean  70.0 150.0 50.0  70.0
+#Pmeas: pmeas_vaptott_open_vt0p5_RB_SS  AzAveragedData hist_vaptott_open_vt0p5   vaptott  wtmean  70.0 150.0 90.0 110.0
+
+#Pmeas: pmeas_w_EW_RI              AzAveragedData hist_w               w        wtmean   0.0  40.0 50.0  70.0
+#Pmeas: pmeas_w_EW_SS              AzAveragedData hist_w               w        wtmean   0.0  40.0 90.0 110.0
+#Pmeas: pmeas_w_CO_RI              AzAveragedData hist_w               w        wtmean  40.0  70.0 50.0  70.0
+#Pmeas: pmeas_w_CO_SS              AzAveragedData hist_w               w        wtmean  40.0  70.0 90.0 110.0
+#Pmeas: pmeas_w_RB_RI              AzAveragedData hist_w               w        wtmean  70.0 150.0 50.0  70.0
+#Pmeas: pmeas_w_RB_SS              AzAveragedData hist_w               w        wtmean  70.0 150.0 90.0 110.0
+
+#Pmeas: pmeas_w_twp4_EW_RI         AzAveragedData hist_w_twp4          w        wtmean   0.0  40.0 50.0  70.0
+#Pmeas: pmeas_w_twp4_EW_SS         AzAveragedData hist_w_twp4          w        wtmean   0.0  40.0 90.0 110.0
+#Pmeas: pmeas_w_twp4_CO_RI         AzAveragedData hist_w_twp4          w        wtmean  40.0  70.0 50.0  70.0
+#Pmeas: pmeas_w_twp4_CO_SS         AzAveragedData hist_w_twp4          w        wtmean  40.0  70.0 90.0 110.0
+#Pmeas: pmeas_w_twp4_RB_RI         AzAveragedData hist_w_twp4          w        wtmean  70.0 150.0 50.0  70.0
+#Pmeas: pmeas_w_twp4_RB_SS         AzAveragedData hist_w_twp4          w        wtmean  70.0 150.0 90.0 110.0
+
+Pmeas: pmeas_relvortz_rvz1em4_EW_RI  AzAveragedData hist_relvortz_rvz1em4  relvortz wtmean   0.0  40.0 50.0  70.0
+Pmeas: pmeas_relvortz_rvz1em4_EW_SS  AzAveragedData hist_relvortz_rvz1em4  relvortz wtmean   0.0  40.0 90.0 110.0
+Pmeas: pmeas_relvortz_rvz1em4_CO_RI  AzAveragedData hist_relvortz_rvz1em4  relvortz wtmean  40.0  70.0 50.0  70.0
+Pmeas: pmeas_relvortz_rvz1em4_CO_SS  AzAveragedData hist_relvortz_rvz1em4  relvortz wtmean  40.0  70.0 90.0 110.0
+Pmeas: pmeas_relvortz_rvz1em4_SS_RI  AzAveragedData hist_relvortz_rvz1em4  relvortz wtmean  70.0 150.0 50.0  70.0
+Pmeas: pmeas_relvortz_rvz1em4_SS_SS  AzAveragedData hist_relvortz_rvz1em4  relvortz wtmean  70.0 150.0 90.0 110.0
 
 # Time Averages
 #   LC - 24 to 144 hrs ( 86400 to 518400 sec)
@@ -683,7 +714,7 @@ TsPlotSpecs: 121 0 1.0 hr 25 1998:08:22:21:00:00 10 24
 ####################### Line plots ############################
 # LinePlot: <plotset> <xspec> <yspec> <data_select_spec> <smoothing> <title> <legend_loc> <out_file>
 
-LinePlot: ccn4    MaxVt IKE TsAll xy Size_vs_Intensity Northwest KeVt.fig
+#LinePlot: ccn4    MaxVt IKE TsAll xy Size_vs_Intensity Northwest KeVt.fig
 
 #LinePlot: ccn4    SimTime IKE   TsAll y Integrated_Kinetic_Energy NorthWest TS_ike.fig
 #LinePlot: ccn4    SimTime MaxVt TsAll y Maximum_Vt                SouthEast TS_max_vt.fig
@@ -708,7 +739,7 @@ LinePlot: ccn4    MaxVt IKE TsAll xy Size_vs_Intensity Northwest KeVt.fig
 #LinePlot: ams2 RadPeak VtPeakRI  SfcVtPeak y Peak_Section_of_Max_Vt:_RI      NorthEast ams_R_Vt_Peak_RI.fig
 
 # salt source disabled
-LinePlot: ccn4_sd MaxVt IKE TsAll xy Size_vs_Intensity Northwest KeVt_sd.fig
+#LinePlot: ccn4_sd MaxVt IKE TsAll xy Size_vs_Intensity Northwest KeVt_sd.fig
 
 #LinePlot: ccn4_sd    SimTime IKE   TsAll y Integrated_Kinetic_Energy NorthWest TS_ike_sd.fig
 #LinePlot: ccn4_sd    SimTime MaxVt TsAll y Maximum_Vt                SouthEast TS_max_vt_sd.fig
@@ -729,13 +760,13 @@ LinePlot: ccn4_sd MaxVt IKE TsAll xy Size_vs_Intensity Northwest KeVt_sd.fig
 #ProfPlot: ccn5 pmeas_lh_tott_twp4_lht1p0_CO_SS lh_tott abs CO_SS:_LH_Tot Avg_Latent_Heating_(K/hr) Height_(km) NorthWest -20:0.5:20 0.0 15.0 prof_lh_tott_twp4_lht1p0_CO_SS.jpg
 #ProfPlot: ccn5 pmeas_lh_tott_twp4_lht1p0_RB_SS lh_tott abs RB_SS:_LH_Tot Avg_Latent_Heating_(K/hr) Height_(km) NorthWest -20:0.5:20 0.0 15.0 prof_lh_tott_twp4_lht1p0_RB_SS.jpg
 
-ProfPlot: ccn5 pmeas_vaptott_twp4_vt0p5_EW_RI vaptott abs EW_RI:_Tot_Vap_Diff Avg_Vapor_Diffusion_(g/kg) Height_(km) NorthWest -5:0.05:5 0.0 16.0 prof_vaptott_twp4_vt0p5_EW_RI.jpg
-ProfPlot: ccn5 pmeas_vaptott_twp4_vt0p5_CO_RI vaptott abs CO_RI:_Tot_Vap_Diff Avg_Vapor_Diffusion_(g/kg) Height_(km) NorthWest -5:0.05:5 0.0 16.0 prof_vaptott_twp4_vt0p5_CO_RI.jpg
-ProfPlot: ccn5 pmeas_vaptott_twp4_vt0p5_RB_RI vaptott abs RB_RI:_Tot_Vap_Diff Avg_Vapor_Diffusion_(g/kg) Height_(km) NorthWest -5:0.05:5 0.0 16.0 prof_vaptott_twp4_vt0p5_RB_RI.jpg
-ProfPlot: ccn5 pmeas_vaptott_twp4_vt0p5_EW_SS vaptott abs EW_SS:_Tot_Vap_Diff Avg_Vapor_Diffusion_(g/kg) Height_(km) NorthWest -5:0.05:5 0.0 16.0 prof_vaptott_twp4_vt0p5_EW_SS.jpg
-ProfPlot: ccn5 pmeas_vaptott_twp4_vt0p5_CO_SS vaptott abs CO_SS:_Tot_Vap_Diff Avg_Vapor_Diffusion_(g/kg) Height_(km) NorthWest -5:0.05:5 0.0 16.0 prof_vaptott_twp4_vt0p5_CO_SS.jpg
-ProfPlot: ccn5 pmeas_vaptott_twp4_vt0p5_RB_SS vaptott abs RB_SS:_Tot_Vap_Diff Avg_Vapor_Diffusion_(g/kg) Height_(km) NorthWest -5:0.05:5 0.0 16.0 prof_vaptott_twp4_vt0p5_RB_SS.jpg
-
+#ProfPlot: ccn5 pmeas_vaptott_twp4_vt0p5_EW_RI vaptott abs EW_RI:_Tot_Vap_Diff Avg_Vapor_Diffusion_(g/kg) Height_(km) NorthWest -5:0.05:5 0.0 16.0 prof_vaptott_twp4_vt0p5_EW_RI.jpg
+#ProfPlot: ccn5 pmeas_vaptott_twp4_vt0p5_CO_RI vaptott abs CO_RI:_Tot_Vap_Diff Avg_Vapor_Diffusion_(g/kg) Height_(km) NorthWest -5:0.05:5 0.0 16.0 prof_vaptott_twp4_vt0p5_CO_RI.jpg
+#ProfPlot: ccn5 pmeas_vaptott_twp4_vt0p5_RB_RI vaptott abs RB_RI:_Tot_Vap_Diff Avg_Vapor_Diffusion_(g/kg) Height_(km) NorthWest -5:0.05:5 0.0 16.0 prof_vaptott_twp4_vt0p5_RB_RI.jpg
+#ProfPlot: ccn5 pmeas_vaptott_twp4_vt0p5_EW_SS vaptott abs EW_SS:_Tot_Vap_Diff Avg_Vapor_Diffusion_(g/kg) Height_(km) NorthWest -5:0.05:5 0.0 16.0 prof_vaptott_twp4_vt0p5_EW_SS.jpg
+#ProfPlot: ccn5 pmeas_vaptott_twp4_vt0p5_CO_SS vaptott abs CO_SS:_Tot_Vap_Diff Avg_Vapor_Diffusion_(g/kg) Height_(km) NorthWest -5:0.05:5 0.0 16.0 prof_vaptott_twp4_vt0p5_CO_SS.jpg
+#ProfPlot: ccn5 pmeas_vaptott_twp4_vt0p5_RB_SS vaptott abs RB_SS:_Tot_Vap_Diff Avg_Vapor_Diffusion_(g/kg) Height_(km) NorthWest -5:0.05:5 0.0 16.0 prof_vaptott_twp4_vt0p5_RB_SS.jpg
+#
 
 
 
@@ -1218,19 +1249,45 @@ ProfPlot: ccn5 pmeas_vaptott_twp4_vt0p5_RB_SS vaptott abs RB_SS:_Tot_Vap_Diff Av
 
 ######################## Radial profile #####################
 # fake it with ProfTsPlot: specs
-ProfTsPlot: ccn5 pmeas_lh_tott_twp4_lht1p0_EW_RI   lh_tott  EW_RI:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 1 abs prs_lh_tott_twp4_lht1p0_EW_RI
-ProfTsPlot: ccn5 pmeas_lh_tott_twp4_lht1p0_CO_RI   lh_tott  CO_RI:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 1 abs prs_lh_tott_twp4_lht1p0_CO_RI
-ProfTsPlot: ccn5 pmeas_lh_tott_twp4_lht1p0_RB_RI   lh_tott  RB_RI:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 1 abs prs_lh_tott_twp4_lht1p0_RB_RI
-ProfTsPlot: ccn5 pmeas_lh_tott_twp4_lht1p0_EW_SS   lh_tott  EW_SS:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 1 abs prs_lh_tott_twp4_lht1p0_EW_SS
-ProfTsPlot: ccn5 pmeas_lh_tott_twp4_lht1p0_CO_SS   lh_tott  CO_SS:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 1 abs prs_lh_tott_twp4_lht1p0_CO_SS
-ProfTsPlot: ccn5 pmeas_lh_tott_twp4_lht1p0_RB_SS   lh_tott  RB_SS:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 1 abs prs_lh_tott_twp4_lht1p0_RB_RI
+#ProfTsPlot: ccn4_diff pmeas_lh_tott_lht1p0_EW_RI   lh_tott  EW_RI:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_lht1p0_EW_RI
+#ProfTsPlot: ccn4_diff pmeas_lh_tott_lht1p0_EW_SS   lh_tott  EW_SS:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_lht1p0_EW_SS
 
-ProfTsPlot: ccn5 pmeas_vaptott_twp4_vt0p5_EW_RI    vaptott  EW_RI:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 1 abs prs_vaptott_twp4_vt0p5_EW_RI
-ProfTsPlot: ccn5 pmeas_vaptott_twp4_vt0p5_CO_RI    vaptott  CO_RI:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 1 abs prs_vaptott_twp4_vt0p5_CO_RI
-ProfTsPlot: ccn5 pmeas_vaptott_twp4_vt0p5_RB_RI    vaptott  RB_RI:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 1 abs prs_vaptott_twp4_vt0p5_RB_RI
-ProfTsPlot: ccn5 pmeas_vaptott_twp4_vt0p5_EW_SS    vaptott  EW_SS:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 1 abs prs_vaptott_twp4_vt0p5_EW_SS
-ProfTsPlot: ccn5 pmeas_vaptott_twp4_vt0p5_CO_SS    vaptott  CO_SS:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 1 abs prs_vaptott_twp4_vt0p5_CO_SS
-ProfTsPlot: ccn5 pmeas_vaptott_twp4_vt0p5_RB_SS    vaptott  RB_SS:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 1 abs prs_vaptott_twp4_vt0p5_RB_SS
+#ProfTsPlot: ccn4_diff pmeas_lh_tott_twp4_lht1p0_CO_RI   lh_tott  CO_RI:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_twp4_lht1p0_CO_RI
+#ProfTsPlot: ccn4_diff pmeas_lh_tott_twp4_lht1p0_CO_SS   lh_tott  CO_SS:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_twp4_lht1p0_CO_SS
+#ProfTsPlot: ccn4_diff pmeas_lh_tott_twp4_lht1p0_RB_RI   lh_tott  RB_RI:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_twp4_lht1p0_RB_RI
+#ProfTsPlot: ccn4_diff pmeas_lh_tott_twp4_lht1p0_RB_SS   lh_tott  RB_SS:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_twp4_lht1p0_RB_RI
+
+#ProfTsPlot: ccn4_diff pmeas_lh_tott_open_lht1p0_CO_RI   lh_tott  CO_RI:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_open_lht1p0_CO_RI
+#ProfTsPlot: ccn4_diff pmeas_lh_tott_open_lht1p0_CO_SS   lh_tott  CO_SS:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_open_lht1p0_CO_SS
+#ProfTsPlot: ccn4_diff pmeas_lh_tott_open_lht1p0_RB_RI   lh_tott  RB_RI:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_open_lht1p0_RB_RI
+#ProfTsPlot: ccn4_diff pmeas_lh_tott_open_lht1p0_RB_SS   lh_tott  RB_SS:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_open_lht1p0_RB_RI
+
+#ProfTsPlot: ccn4_diff pmeas_vaptott_vt0p5_EW_RI    vaptott  EW_RI:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_vt0p5_EW_RI
+#ProfTsPlot: ccn4_diff pmeas_vaptott_vt0p5_EW_SS    vaptott  EW_SS:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_vt0p5_EW_SS
+
+#ProfTsPlot: ccn4_diff pmeas_vaptott_twp4_vt0p5_CO_RI    vaptott  CO_RI:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_twp4_vt0p5_CO_RI
+#ProfTsPlot: ccn4_diff pmeas_vaptott_twp4_vt0p5_CO_SS    vaptott  CO_SS:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_twp4_vt0p5_CO_SS
+#ProfTsPlot: ccn4_diff pmeas_vaptott_twp4_vt0p5_RB_RI    vaptott  RB_RI:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_twp4_vt0p5_RB_RI
+#ProfTsPlot: ccn4_diff pmeas_vaptott_twp4_vt0p5_RB_SS    vaptott  RB_SS:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_twp4_vt0p5_RB_SS
+
+#ProfTsPlot: ccn4_diff pmeas_vaptott_open_vt0p5_CO_RI    vaptott  CO_RI:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_open_vt0p5_CO_RI
+#ProfTsPlot: ccn4_diff pmeas_vaptott_open_vt0p5_CO_SS    vaptott  CO_SS:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_open_vt0p5_CO_SS
+#ProfTsPlot: ccn4_diff pmeas_vaptott_open_vt0p5_RB_RI    vaptott  RB_RI:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_open_vt0p5_RB_RI
+#ProfTsPlot: ccn4_diff pmeas_vaptott_open_vt0p5_RB_SS    vaptott  RB_SS:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_open_vt0p5_RB_SS
+
+#ProfTsPlot: ccn4_diff pmeas_w_EW_RI  w EW_RI:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -2 2 0.0 15.0 redblue 0 diff prs_w_EW_RI
+#ProfTsPlot: ccn4_diff pmeas_w_EW_SS  w EW_SS:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -2 2 0.0 15.0 redblue 0 diff prs_w_EW_SS
+
+#ProfTsPlot: ccn4_diff pmeas_w_twp4_CO_RI  w CO_RI:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -2 2 0.0 15.0 redblue 0 diff prs_w_twp4_CO_RI
+#ProfTsPlot: ccn4_diff pmeas_w_twp4_CO_SS  w CO_SS:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -2 2 0.0 15.0 redblue 0 diff prs_w_twp4_CO_SS
+#ProfTsPlot: ccn4_diff pmeas_w_twp4_RB_RI  w RB_RI:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -2 2 0.0 15.0 redblue 0 diff prs_w_twp4_RB_RI
+#ProfTsPlot: ccn4_diff pmeas_w_twp4_RB_SS  w RB_SS:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -2 2 0.0 15.0 redblue 0 diff prs_w_twp4_RB_SS
+
+ProfTsPlot: ccn4 pmeas_relvortz_rvz1em4_EW_RI relvortz EW_RI:_Relative_Vorticity_(s^-^1)   Radius_(km) Height_(km)      0  1e-2  0.0 15.0 revgray 0 abs prs_relvortz_rvz1em4_EW_RI
+ProfTsPlot: ccn4 pmeas_relvortz_rvz1em4_EW_SS relvortz EW_SS:_Relative_Vorticity_(s^-^1)   Radius_(km) Height_(km)      0  1e-2  0.0 15.0 revgray 0 abs prs_relvortz_rvz1em4_EW_SS
+
+ProfTsPlot: ccn4_diff pmeas_relvortz_rvz1em4_EW_RI relvortz EW_RI:_Relative_Vorticity_(s^-^1)   Radius_(km) Height_(km)  -2e-3  2e-3  0.0 15.0 redblue 0 diff prs_relvortz_rvz1em4_diff_EW_RI
+ProfTsPlot: ccn4_diff pmeas_relvortz_rvz1em4_EW_SS relvortz EW_SS:_Relative_Vorticity_(s^-^1)   Radius_(km) Height_(km)  -2e-3  2e-3  0.0 15.0 redblue 0 diff prs_relvortz_rvz1em4_diff_EW_SS
 
 # AMS
 #ProfTsPlot: ams2 pmeas_theta_e_AR_RI theta_e RI:_Theta-E_(K) Radius_(km) Height_(km) 330 350 0.0 5.0 none 0 abs ams_prs_theta_e_AR_RI
@@ -1269,6 +1326,9 @@ PlotSet: ccn5_sd 3 TCS_CNTL CONTROL -k TCS_SD_C0100 CCN:_100/cc :k TCS_SD_C2000 
 
 PlotSet: ccn4    4 TCS_GN_C0100 CCN:_100/cc -k TCS_GN_C0500 CCN:_500/cc --k TCS_GN_C1000 CCN:_1000/cc --g TCS_GN_C2000 CCN:_2000/cc -g
 PlotSet: ccn4_sd 2 TCS_SD_C0100 CCN:_100/cc -k TCS_SD_C2000 CCN:_2000/cc -g
+
+PlotSet: ccn4_diff    3 TCS_GN_C0500 C500-CLEAN --k TCS_GN_C1000 C1000-CLEAN --g TCS_GN_C2000 C2000-CLEAN -g
+PlotSet: ccn4_sd_diff 1 TCS_SD_C2000 C2000-CLEAN -g
 
 PlotSet: agu2 2 TCS_CNTL CONTROL -b TCS_GN_C2000 CCN:_2000/cc -r
 

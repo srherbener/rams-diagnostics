@@ -14,21 +14,32 @@ FprefixAll = { 'hist_aggr_vflux_af0p05'
                'hist_hail_vflux_hf0p1'
                'hist_pris_vflux_pf0p05'
                'hist_snow_vflux_sf0p01'
-               'hist_lh_tott_lht1p0' }
+               'hist_lh_tott_lht1p0'
+               'hist_vaptott_vt0p5' }
 
 FprefixConv = { 'hist_aggr_vflux_twp4_af0p05'
                 'hist_graup_vflux_twp4_gf0p001'
                 'hist_hail_vflux_twp4_hf0p1'
                 'hist_pris_vflux_twp4_pf0p05'
                 'hist_snow_vflux_twp4_sf0p01'
-                'hist_lh_tott_twp4_lht1p0' }
+                'hist_lh_tott_twp4_lht1p0'
+                'hist_vaptott_twp4_vt0p5' }
+
+FprefixOpen = { 'hist_aggr_vflux_open_af0p05'
+                'hist_graup_vflux_open_gf0p001'
+                'hist_hail_vflux_open_hf0p1'
+                'hist_pris_vflux_open_pf0p05'
+                'hist_snow_vflux_open_sf0p01'
+                'hist_lh_tott_open_lht1p0'
+                'hist_vaptott_open_vt0p5' }
 
 Vars = { 'aggr_vflux'
          'graup_vflux'
          'hail_vflux'
          'pris_vflux'
          'snow_vflux'
-         'lh_tott' }
+         'lh_tott'
+         'vaptott' }
 
 % Read in the config data
 [ Config ] = ReadConfig(ConfigFile);
@@ -41,6 +52,7 @@ for icase = 1:length(Config.Cases)
     Vname = Vars{ivar};
     FpAll = FprefixAll{ivar};
     FpConv = FprefixConv{ivar};
+    FpOpen = FprefixOpen{ivar};
 
     fprintf('***********************************************************************\n');
     fprintf('Generating open space histograms:\n');
@@ -50,7 +62,7 @@ for icase = 1:length(Config.Cases)
 
     InFileAll  = sprintf('%s/%s_%s.h5', AzavgDir, FpAll, Case);
     InFileConv = sprintf('%s/%s_%s.h5', AzavgDir, FpConv, Case);
-    OutFile    = sprintf('%s/hist_%s_open_%s.h5', AzavgDir, Vname, Case);
+    OutFile    = sprintf('%s/%s_%s.h5', AzavgDir, FpOpen, Case);
     Hdset      = sprintf('/%s', Vname);
 
     % Read in the histogram data. HIST will be organized as (r,b,z,t) where
