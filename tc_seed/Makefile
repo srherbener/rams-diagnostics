@@ -34,6 +34,7 @@ SCRIPTS = \
 
 CONFIGS = \
           $(DIAG_DIR)/SST_26/Init24/DiagConfig \
+          $(DIAG_DIR)/SST_26/Init24_SD/DiagConfig \
           $(DIAG_DIR)/SST_26/Init54/DiagConfig
 
 #
@@ -49,6 +50,9 @@ $(DEST)/%.m: %.m
 	cp $(<) $(@)
 
 $(DIAG_DIR)/SST_26/Init24/DiagConfig: DiagConfig.SST_26.Init24
+	cp $(<) $(@)
+
+$(DIAG_DIR)/SST_26/Init24_SD/DiagConfig: DiagConfig.SST_26.Init24_SD
 	cp $(<) $(@)
 
 $(DIAG_DIR)/SST_26/Init54/DiagConfig: DiagConfig.SST_26.Init54

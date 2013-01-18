@@ -9,8 +9,14 @@ function [ ] = GenAdiffEofPlots( ConfigFile )
 [ Config ] = ReadConfig(ConfigFile);
 
 EofDir = Config.EofDir;
+Pdir = Config.PlotDir;
 ControlCase = Config.ControlCase;
 NumEv = Config.AzavgEofConfig.NumEv;
+
+% make sure output directory exists
+if (exist(Pdir, 'dir') ~= 7)
+    mkdir(Pdir);
+end
 
 for icase = 1:length(Config.Cases)
   Case = Config.Cases(icase).Cname;
@@ -46,9 +52,9 @@ for icase = 1:length(Config.Cases)
       fprintf('\n');
   
       InFile = sprintf('%s/%s_%s.h5', EofDir, Fprefix, Case);
-      EofOutFile = sprintf('%s/EOF%d_%s_%s.fig', Config.PlotDir, EofNum, Fprefix, Case);
-      PcOutFile = sprintf('%s/PC%d_%s_%s.fig', Config.PlotDir, EofNum, Fprefix, Case);
-      EsOutFile = sprintf('%s/ES%d_%s_%s.fig', Config.PlotDir, EofNum, Fprefix, Case);
+      EofOutFile = sprintf('%s/EOF%d_%s_%s.fig', Pdir, EofNum, Fprefix, Case);
+      PcOutFile = sprintf('%s/PC%d_%s_%s.fig', Pdir, EofNum, Fprefix, Case);
+      EsOutFile = sprintf('%s/ES%d_%s_%s.fig', Pdir, EofNum, Fprefix, Case);
   
       SelectData = [ Rmin Rmax Zmin Zmax ];
   
