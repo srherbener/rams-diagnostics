@@ -43,18 +43,18 @@ function [ FigHdl, SubHdl ] = figmerge( FigLst, SubLoc, DstOpt, DoAxes, ...
 
     if nargin == 1
         SubLoc = [ 0 2 ];
-        DstOpt = 1;
-        DoAxes = true;
-        DoOrder = true;
+        DstOpt = 0;
+        DoAxes = false;
+        DoOrder = false;
     elseif nargin == 2
-        DstOpt = 1;
-        DoAxes = true;
-        DoOrder = true;
+        DstOpt = 0;
+        DoAxes = false;
+        DoOrder = false;
     elseif nargin == 3
-        DoAxes = true;
-        DoOrder = true;
+        DoAxes = false;
+        DoOrder = false;
     elseif nargin == 4
-        DoOrder = true;
+        DoOrder = false;
     end
 
     if isempty(FigLst)
@@ -153,13 +153,16 @@ function [ FigHdl, SubHdl ] = figmerge( FigLst, SubLoc, DstOpt, DoAxes, ...
         for k = 1 : AllFig
             if strcmpi(get(FigLst(isfig(k)), 'Type'), 'Figure')
                 OldGca = gca(FigLst(isfig(k))); 
+                %OldGca = findall(FigLst(isfig(k)), 'type', 'axes');
             elseif strcmpi(get(FigLst(isfig(k)), 'Type'), 'Axes')
                 OldGca = FigLst(isfig(k)); 
             end
             NewPos = get(SubHdl(k), 'Position');
             delete(SubHdl(k)) % Delete the subplot 
-            C = copyobj(OldGca, FigHdl);
-            set(C, 'Position', NewPos);
+            for i_ax = 1:length(OldGca)
+              C = copyobj(OldGca(i_ax), FigHdl);
+              set(C, 'Position', NewPos);
+            end
         end
         
     end

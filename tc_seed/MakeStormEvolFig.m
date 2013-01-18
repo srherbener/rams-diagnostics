@@ -18,10 +18,12 @@ FileList{2} = sprintf('%s/TS_rmw.fig', PlotDir);
 
 OutFile = sprintf('%s/StormEvolution.jpg', FigDir);
 
+% merge in the figures
 [ Fig, Splots ] = figmerge(FileList, [ 1 2 ]);
 
 % Get the handles of the subplots, note Splots from figmerge call
 % will contain stale subplot handles.
+clear Splots;
 KVplot = subplot(1,2,1);
 RMWplot = subplot(1,2,2);
 
@@ -47,5 +49,19 @@ set(RMWplot, 'Position', RMW_pos);
 
 saveas(Fig, OutFile);
 close(Fig);
+
+%%% % Use TileFigs to create an image with two plots side by side
+%%% TempFile = sprintf('%s.%s', tempname, 'jpg');
+%%% TileFigs(FileList, [ 1 2 ], TempFile);
+%%% Img = imread(TempFile);
+%%% 
+%%% Fig = figure;
+%%% 
+%%% imshow(Img);
+%%% 
+%%% saveas(Fig, OutFile);
+%%% close(Fig);
+%%% 
+%%% delete(TempFile);
 
 end
