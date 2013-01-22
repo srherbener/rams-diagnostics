@@ -170,7 +170,7 @@ for iplot = 1:length(Config.ProfTsPlots)
                'VerticalAlignment', 'Top');
         end
 
-        OutFile = sprintf('%s_%s.jpg', OutFileBase, Case);
+        OutFile = sprintf('%s_%s.fig', OutFileBase, Case);
         fprintf('Writing plot file: %s\n', OutFile);
         saveas(Fig, OutFile);
         fprintf('\n');

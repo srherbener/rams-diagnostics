@@ -26,37 +26,36 @@ close(Fig);
 Fsize = 20;
 
 % Find and replace underscores in Ptitle, Ylabel with blank spaces
-% Steal the ProfTsPlots config for now
-for iplot = 1:length(Config.ProfTsPlots)
+for iplot = 1:length(Config.ProfRsPlots)
     clear Profs;
     clear LegText;
     clear Lspecs;
 
-    Fprefix = Config.ProfTsPlots(iplot).Fprefix;
-    Var = Config.ProfTsPlots(iplot).Var;
+    Fprefix = Config.ProfRsPlots(iplot).Fprefix;
+    Var = Config.ProfRsPlots(iplot).Var;
 
     % config for axes
-    Cmin = Config.ProfTsPlots(iplot).Cmin;
-    Cmax = Config.ProfTsPlots(iplot).Cmax;
-    Zmin = Config.ProfTsPlots(iplot).Zmin;
-    Zmax = Config.ProfTsPlots(iplot).Zmax;
+    Cmin = Config.ProfRsPlots(iplot).Cmin;
+    Cmax = Config.ProfRsPlots(iplot).Cmax;
+    Zmin = Config.ProfRsPlots(iplot).Zmin;
+    Zmax = Config.ProfRsPlots(iplot).Zmax;
 
     % plot specs
-    Pspec  = Config.ProfTsPlots(iplot).Pspec;
-    Flevel = Config.ProfTsPlots(iplot).Flevel;
-    Ptype  = Config.ProfTsPlots(iplot).Ptype;
+    Pspec  = Config.ProfRsPlots(iplot).Pspec;
+    Flevel = Config.ProfRsPlots(iplot).Flevel;
+    Ptype  = Config.ProfRsPlots(iplot).Ptype;
 
-    Ptitle = sprintf('%s', Config.ProfTsPlots(iplot).Title);
-    Tlabel = Config.ProfTsPlots(iplot).Tlabel;
-    Zlabel = Config.ProfTsPlots(iplot).Zlabel;
-    OutFileBase = sprintf('%s/%s', Pdir, Config.ProfTsPlots(iplot).OutFileBase);
+    Ptitle = sprintf('%s', Config.ProfRsPlots(iplot).Title);
+    Tlabel = Config.ProfRsPlots(iplot).Tlabel;
+    Zlabel = Config.ProfRsPlots(iplot).Zlabel;
+    OutFileBase = sprintf('%s/%s', Pdir, Config.ProfRsPlots(iplot).OutFileBase);
     
     % make sure output directory exists
     if (exist(Pdir, 'dir') ~= 7)
         mkdir(Pdir);
     end
 
-    ips = Config.ProfTsPlots(iplot).PSnum;
+    ips = Config.ProfRsPlots(iplot).PSnum;
     if (ips == 0)
       fprintf('WARNING: skipping ProfPlot number %d due to no associated PlotSet\n', iplot)
     else

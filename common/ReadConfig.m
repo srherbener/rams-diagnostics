@@ -60,6 +60,7 @@ i_hmp3d = 0;
 i_hmslice = 0;
 i_pplot = 0;
 i_pts_plot = 0;
+i_prs_plot = 0;
 i_pset = 0;
 i_pvar = 0;
 i_pds = 0;
@@ -299,6 +300,24 @@ for i = 1:size(InLines,1)
       Cdata.ProfTsPlots(i_pts_plot).OutFileBase = Fields{15};
 
       Cdata.ProfTsPlots(i_pts_plot).PSnum       = -1;
+    case 'ProfRsPlot:'
+      i_prs_plot = i_prs_plot + 1;
+      Cdata.ProfRsPlots(i_prs_plot).PSname      = Fields{2};
+      Cdata.ProfRsPlots(i_prs_plot).Fprefix     = Fields{3};
+      Cdata.ProfRsPlots(i_prs_plot).Var         = Fields{4};
+      Cdata.ProfRsPlots(i_prs_plot).Title       = regexprep(Fields{5}, '_', ' ');
+      Cdata.ProfRsPlots(i_prs_plot).Tlabel      = regexprep(Fields{6}, '_', ' ');
+      Cdata.ProfRsPlots(i_prs_plot).Zlabel      = regexprep(Fields{7}, '_', ' ');
+      Cdata.ProfRsPlots(i_prs_plot).Cmin        = sscanf(Fields{8}, '%f');
+      Cdata.ProfRsPlots(i_prs_plot).Cmax        = sscanf(Fields{9}, '%f');
+      Cdata.ProfRsPlots(i_prs_plot).Zmin        = sscanf(Fields{10}, '%f');
+      Cdata.ProfRsPlots(i_prs_plot).Zmax        = sscanf(Fields{11}, '%f');
+      Cdata.ProfRsPlots(i_prs_plot).Pspec       = Fields{12};
+      Cdata.ProfRsPlots(i_prs_plot).Flevel      = sscanf(Fields{13}, '%i');;
+      Cdata.ProfRsPlots(i_prs_plot).Ptype       = Fields{14};
+      Cdata.ProfRsPlots(i_prs_plot).OutFileBase = Fields{15};
+
+      Cdata.ProfRsPlots(i_prs_plot).PSnum       = -1;
     case 'AzavgEofPlot:'
       i_aeofplot = i_aeofplot + 1;
       Cdata.AzavgEofPlots(i_aeofplot).Fprefix = Fields{2};
@@ -341,6 +360,11 @@ end
 % Make the association between ProfTsPlots and the PlotSets
 if (isfield(Cdata, 'ProfTsPlots'))
   Cdata.ProfTsPlots = AssociateStructs( Cdata.ProfTsPlots, Cdata.PlotSets, 'PS', 'PlotSet', 'ProfTsPlot' ); 
+end
+
+% Make the association between ProfRsPlots and the PlotSets
+if (isfield(Cdata, 'ProfRsPlots'))
+  Cdata.ProfRsPlots = AssociateStructs( Cdata.ProfRsPlots, Cdata.PlotSets, 'PS', 'PlotSet', 'ProfRsPlot' ); 
 end
 
 % Make the association between HmeasSlicePlots and the PlotSets
