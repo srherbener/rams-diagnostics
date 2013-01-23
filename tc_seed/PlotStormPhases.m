@@ -21,10 +21,10 @@ Xlim = [ 10 150 ];
 Ylim = [ 10 60 ];
 
 % Rectangular patches for drawing regions where RI and SS exist
-PX = [ 50 90;
-       50 90;
-       70 110;
-       70 110 ];
+PX = [ 50 110;
+       50 110;
+       70 130;
+       70 130 ];
 PY = [ 25 35;
        55 55;
        55 55;
@@ -109,7 +109,7 @@ else
     %rectangle('Position', [ 90 35 20 20 ], 'LineStyle', '--');
     patch(PX,PY, PC, 'FaceColor', [ PG PG PG ], 'LineStyle', '--');
     text(60,25,'RI', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', Fsize);
-    text(100,35,'SS', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', Fsize);
+    text(120,35,'SS', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', Fsize);
     
     fprintf('Writing plot file: %s\n', OutFile);
     saveas(Fig, OutFile);

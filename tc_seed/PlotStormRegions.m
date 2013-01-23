@@ -24,7 +24,7 @@ Cmax = 80;
 EW_R1 = 0;
 EW_R2 = 40; %km
 
-Case = 'TCS_GN_C0100';
+Case = 'TCS_SD_C0100';
 
 fprintf('Plotting Vt for case: %s\n', Case)
 fprintf('\n');
