@@ -169,10 +169,10 @@ Ytext = Y2lims(1) + ((Y2lims(2) - Y2lims(1))*0.95);
 TfontSize = 14;
 line(Xbefore,  Y2lims, 'LineStyle', ':', 'Color', 'k', 'LineWidth', Lwidth/2);
 text(Xbefore(1), Ytext, TxtBefore, 'FontSize', TfontSize);
-line(Xduring, Y2lims, 'LineStyle', ':', 'Color', 'k', 'LineWidth', Lwidth/2);
-text(Xduring(1), Ytext, TxtDuring, 'FontSize', TfontSize);
-line(Xafter,  Y2lims, 'LineStyle', ':', 'Color', 'k', 'LineWidth', Lwidth/2);
-text(Xafter(1), Ytext, TxtAfter, 'FontSize', TfontSize);
+%line(Xduring, Y2lims, 'LineStyle', ':', 'Color', 'k', 'LineWidth', Lwidth/2);
+%text(Xduring(1), Ytext, TxtDuring, 'FontSize', TfontSize);
+%line(Xafter,  Y2lims, 'LineStyle', ':', 'Color', 'k', 'LineWidth', Lwidth/2);
+%text(Xafter(1), Ytext, TxtAfter, 'FontSize', TfontSize);
 
 saveas(Fig, Pfile);
 close(Fig);
