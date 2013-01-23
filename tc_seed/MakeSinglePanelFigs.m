@@ -14,18 +14,19 @@ end
 
 % list of drawings to translate
 
-%FigList = { 'InitVortex'
-%            'SampleCcnProf'
-%            'SpinUpVtSpl'
-%            'StormPhases'
-%            'StormRegions'
-%            'KeVt'
-%            'TS_rmw' };
+FigList = { 'InitVortex'
+            'SampleCcnProf'
+            'SpinUpVtSpl'
+            'StormPhases'
+            'StormRegions'
+            'KeVt'
+            'KeVt_ext'
+            'TS_rmw' };
 
-FigList = { 'EOF1_theta_e_TCS_SD_C0500'
-            'EOF1_theta_e_TCS_SD_C2000'
-            'PC1_theta_e_TCS_SD_C0500'
-            'PC1_theta_e_TCS_SD_C2000' };
+%FigList = { 'EOF1_theta_e_TCS_SD_C0500'
+%            'EOF1_theta_e_TCS_SD_C2000'
+%            'PC1_theta_e_TCS_SD_C0500'
+%            'PC1_theta_e_TCS_SD_C2000' };
 
 %FigList = { 'prs_vaptott_vt0p5_EW_RI_TCS_GN_C0500'
 %            'prs_vaptott_vt0p5_EW_RI_TCS_GN_C1000'
