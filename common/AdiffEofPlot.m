@@ -11,8 +11,8 @@ ALL_PC  = hdf5read(InFile, 'PC');
 VarExpl = hdf5read(InFile, 'VarExpl');
 Err     = hdf5read(InFile, 'Err');
 
-R = hdf5read(InFile, 'Radius');
-Z = hdf5read(InFile, 'Height');
+R = hdf5read(InFile, 'Radius') / 1000; % convert to km
+Z = hdf5read(InFile, 'Height') / 1000; % convert to km
 T = hdf5read(InFile, 'Time') / 3600; % convert to hr
 
 % Translate the coordinate values in SelectData to their corresponding
@@ -22,9 +22,6 @@ SelectIndices(2) = find(R <= SelectData(2), 1, 'last');
 SelectIndices(3) = find(Z >= SelectData(3), 1);
 SelectIndices(4) = find(Z <= SelectData(4), 1, 'last');
 
-% Convert R to km
-R = R / 1000;
-
 % Pick out the EOF/PC pair of interest
 EOF = ALL_EOF(:,EofNum);
 PC = ALL_PC(:,EofNum);
@@ -32,7 +29,7 @@ PC = ALL_PC(:,EofNum);
 % Generate the plot
 E_Title = sprintf('%s Difference EOF%d: %s', Vname, EofNum, Pcase);
 E_Xlabel = 'Radius (km)';
-E_Ylabel = 'Height (m)';
+E_Ylabel = 'Height (km)';
 
 P_Title = sprintf('%s Difference PC%d: %s', Vname, EofNum, Pcase);
 P_Xlabel = 'Time (hr)';

@@ -74,17 +74,20 @@ Var: lh_frzt latheatfrzt 3d
 #    these pick out a rectangular area in the azavg (x,z) slice
 #    which is to be selected out before running the EOF analysis
 #
-#    RI - rapid intensification phase ->  50 -  70 hrs
+#    RI - rapid intensification phase ->  40 -  60 hrs
+#    TR - rapid intensification phase ->  70 -  90 hrs
 #    SS - steady state (mature) phase -> 110 - 130 hrs
 AzavgEofConfig: 10 20
 
 AzavgEof: theta_e     theta_e theta_e      0 250000     0  25000  86400 518400
-AzavgEof: theta_e_RI  theta_e theta_e      0 250000     0  25000 180000 252000
+AzavgEof: theta_e_RI  theta_e theta_e      0 250000     0  25000 144000 216000
+AzavgEof: theta_e_TR  theta_e theta_e      0 250000     0  25000 252000 324000
 AzavgEof: theta_e_SS  theta_e theta_e      0 250000     0  25000 396000 468000
 
 # profile measurments
 #
 # Time regions: RI -  50 to  70 hrs (rapid intensification)
+#               TR -  70 to  90 hrs (transition)
 #               SS - 110 to 130 hrs (steady state)
 #               LC -  24 to 144 hrs (life cycle)
 #
@@ -107,6 +110,13 @@ AzavgEof: theta_e_SS  theta_e theta_e      0 250000     0  25000 396000 468000
 #Pmeas: pmeas_lh_tott_twp4_lht1p0_EW_LC AzAveragedData hist_lh_tott_twp4_lht1p0  lh_tott  wtmean   0.0  40.0  24.0 144.0
 #Pmeas: pmeas_lh_tott_twp4_lht1p0_CO_LC AzAveragedData hist_lh_tott_twp4_lht1p0  lh_tott  wtmean  40.0  70.0  24.0 144.0
 #Pmeas: pmeas_lh_tott_twp4_lht1p0_RB_LC AzAveragedData hist_lh_tott_twp4_lht1p0  lh_tott  wtmean  70.0 150.0  24.0 144.0
+
+#Pmeas: pmeas_lh_tott_open_lht1p0_CO_LC AzAveragedData hist_lh_tott_open_lht1p0  lh_tott  wtmean  40.0  70.0  24.0 144.0
+#Pmeas: pmeas_lh_tott_open_lht1p0_RB_LC AzAveragedData hist_lh_tott_open_lht1p0  lh_tott  wtmean  70.0 150.0  24.0 144.0
+
+Pmeas: pmeas_w_EW_LC AzAveragedData hist_w  w  wtmean   0.0  40.0  24.0 144.0
+Pmeas: pmeas_w_CO_LC AzAveragedData hist_w  w  wtmean  40.0  70.0  24.0 144.0
+Pmeas: pmeas_w_RB_LC AzAveragedData hist_w  w  wtmean  70.0 150.0  24.0 144.0
 
 Pmeas: pmeas_w_twp4_EW_LC AzAveragedData hist_w_twp4  w  wtmean   0.0  40.0  24.0 144.0
 Pmeas: pmeas_w_twp4_CO_LC AzAveragedData hist_w_twp4  w  wtmean  40.0  70.0  24.0 144.0
@@ -568,9 +578,16 @@ ProfPlot: ccn4 pmeas_w_twp4_EW_RI w abs EW_RI:_Vertical_Velocity W_(m/s) Height_
 #ProfTsPlot: ccn4 pmeas_lh_tott_twp4_lht1p0_CO_LC lh_tott CO_LC:_Total_Latent_Heating_(K/hr) Simulation_Time_(hr) Height_(km) -20 20 0.0 15.0 redblue 0 abs pts_lh_tott_twp4_lht1p0_CO_LC
 #ProfTsPlot: ccn4 pmeas_lh_tott_twp4_lht1p0_RB_LC lh_tott RB_LC:_Total_Latent_Heating_(K/hr) Simulation_Time_(hr) Height_(km) -20 20 0.0 15.0 redblue 0 abs pts_lh_tott_twp4_lht1p0_RB_LC
 
+ProfTsPlot: ccn4 pmeas_w_EW_LC w EW_LC:_Vertical_Velocity_(m/s) Simulation_Time_(hr) Height_(km) -2 2 0.0 15.0 redblue 0 abs pts_w_EW_LC
+ProfTsPlot: ccn4 pmeas_w_CO_LC w CO_LC:_Vertical_Velocity_(m/s) Simulation_Time_(hr) Height_(km) -2 2 0.0 15.0 redblue 0 abs pts_w_CO_LC
+ProfTsPlot: ccn4 pmeas_w_RB_LC w RB_LC:_Vertical_Velocity_(m/s) Simulation_Time_(hr) Height_(km) -2 2 0.0 15.0 redblue 0 abs pts_w_RB_LC
+
 ProfTsPlot: ccn4 pmeas_w_twp4_EW_LC w EW_LC:_Vertical_Velocity_(m/s) Simulation_Time_(hr) Height_(km) -2 2 0.0 15.0 redblue 0 abs pts_w_twp4_EW_LC
 ProfTsPlot: ccn4 pmeas_w_twp4_CO_LC w CO_LC:_Vertical_Velocity_(m/s) Simulation_Time_(hr) Height_(km) -2 2 0.0 15.0 redblue 0 abs pts_w_twp4_CO_LC
 ProfTsPlot: ccn4 pmeas_w_twp4_RB_LC w RB_LC:_Vertical_Velocity_(m/s) Simulation_Time_(hr) Height_(km) -2 2 0.0 15.0 redblue 0 abs pts_w_twp4_RB_LC
+
+#ProfTsPlot: ccn4 pmeas_lh_tott_open_lht1p0_CO_LC lh_tott CO_LC:_Total_Latent_Heating_(K/hr) Simulation_Time_(hr) Height_(km) -20 20 0.0 15.0 redblue 0 abs pts_lh_tott_open_lht1p0_CO_LC
+#ProfTsPlot: ccn4 pmeas_lh_tott_open_lht1p0_RB_LC lh_tott RB_LC:_Total_Latent_Heating_(K/hr) Simulation_Time_(hr) Height_(km) -20 20 0.0 15.0 redblue 0 abs pts_lh_tott_open_lht1p0_RB_LC
 
 ####################### Radial profile #####################
 
@@ -597,6 +614,13 @@ ProfRsPlot: ccn4_diff pmeas_vaptott_open_vt0p5_CO_RI    vaptott  CO_RI:_Total_Va
 ProfRsPlot: ccn4_diff pmeas_vaptott_open_vt0p5_CO_SS    vaptott  CO_SS:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_open_vt0p5_CO_SS
 ProfRsPlot: ccn4_diff pmeas_vaptott_open_vt0p5_RB_RI    vaptott  RB_RI:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_open_vt0p5_RB_RI
 ProfRsPlot: ccn4_diff pmeas_vaptott_open_vt0p5_RB_SS    vaptott  RB_SS:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_open_vt0p5_RB_SS
+
+ProfRsPlot: ccn4_diff pmeas_w_EW_RI  w EW_RI:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -1 1 0.0 15.0 redblue 0 diff prs_w_EW_RI
+ProfRsPlot: ccn4_diff pmeas_w_EW_SS  w EW_SS:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -1 1 0.0 15.0 redblue 0 diff prs_w_EW_SS
+ProfRsPlot: ccn4_diff pmeas_w_CO_RI  w CO_RI:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -1 1 0.0 15.0 redblue 0 diff prs_w_CO_RI
+ProfRsPlot: ccn4_diff pmeas_w_CO_SS  w CO_SS:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -1 1 0.0 15.0 redblue 0 diff prs_w_CO_SS
+ProfRsPlot: ccn4_diff pmeas_w_RB_RI  w RB_RI:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -1 1 0.0 15.0 redblue 0 diff prs_w_RB_RI
+ProfRsPlot: ccn4_diff pmeas_w_RB_SS  w RB_SS:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -1 1 0.0 15.0 redblue 0 diff prs_w_RB_SS
 
 ProfRsPlot: ccn4_diff pmeas_w_twp4_EW_RI  w EW_RI:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -2 2 0.0 15.0 redblue 0 diff prs_w_twp4_EW_RI
 ProfRsPlot: ccn4_diff pmeas_w_twp4_EW_SS  w EW_SS:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -2 2 0.0 15.0 redblue 0 diff prs_w_twp4_EW_SS
@@ -676,11 +700,12 @@ PlotDselect: SfcVtRband 70 250000 0 0 0 30 0 0
 #       the contour levels will be set to: (-clev_limit:clev_inc:clev_limit)
 #
 #   <r1> <r2> <z1> <z1> specifies a 2D window to cut out of the
-#       EOF to place on the plot
+#       EOF to place on the plot (r and z in km)
 #
-AzavgEofPlot: theta_e     theta_e     Theta-e      K 1 0.05 0.0025       0 250000    0  5000
-AzavgEofPlot: theta_e_RI  theta_e     Theta-e      K 1 0.05 0.0025       0 250000    0  5000
-AzavgEofPlot: theta_e_SS  theta_e     Theta-e      K 1 0.05 0.0025       0 250000    0  5000
+AzavgEofPlot: theta_e     theta_e     Theta-e      K 1 0.05 0.0025       0 250    0  2
+AzavgEofPlot: theta_e_RI  theta_e     Theta-e      K 1 0.05 0.0025       0 250    0  2
+AzavgEofPlot: theta_e_TR  theta_e     Theta-e      K 1 0.05 0.0025       0 250    0  2
+AzavgEofPlot: theta_e_SS  theta_e     Theta-e      K 1 0.05 0.0025       0 250    0  2
 
 #AzavgEofPlot: lh_vapt_twp4    lh_vapt    Lat_Heat_Rate   K/hr 1 0.050 0.0025   0 250000    0  15000
 #AzavgEofPlot: lh_vapt_twp4_RI lh_vapt    Lat_Heat_Rate   K/hr 1 0.050 0.0025   0 250000    0  15000
