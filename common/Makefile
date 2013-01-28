@@ -14,6 +14,7 @@ SCRIPTS = \
           $(DEST)/GenProfMeas.m \
           $(DEST)/GenTimeAvg.m \
           $(DEST)/GenTsPlots.m \
+          $(DEST)/GenVintTseries.m \
           $(DEST)/ReadConfig.m \
           $(DEST)/ReadAzavgVar.m \
           $(DEST)/ReadSelectXyzt.m \

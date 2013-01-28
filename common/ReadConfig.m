@@ -52,6 +52,7 @@ i_aeof = 0;
 i_hmeas = 0;
 i_pmeas = 0;
 i_tavg = 0;
+i_vint_ts = 0;
 i_aeofplot = 0;
 i_tsplot = 0;
 i_dplot = 0;
@@ -138,6 +139,12 @@ for i = 1:size(InLines,1)
       Cdata.Tavg(i_tavg).Rvar    = Fields{5};
       Cdata.Tavg(i_tavg).Tmin    = sscanf(Fields{6}, '%f');;
       Cdata.Tavg(i_tavg).Tmax    = sscanf(Fields{7}, '%f');;
+    case 'VintTs:'
+      i_vint_ts = i_vint_ts + 1;
+      Cdata.VintTs(i_vint_ts).Name    = Fields{2};
+      Cdata.VintTs(i_vint_ts).InDir   = Fields{3};
+      Cdata.VintTs(i_vint_ts).Fprefix = Fields{4};
+      Cdata.VintTs(i_vint_ts).Rvar    = Fields{5};
     case 'TsPlotSpecs:'
       Cdata.TsPlotSpecs.Ntsteps      = sscanf(Fields{2}, '%d');
       Cdata.TsPlotSpecs.Tstart       = sscanf(Fields{3}, '%f');
