@@ -108,6 +108,10 @@ AzavgEof: theta_e_SS  theta_e theta_e      0 250000     0  25000 432000 504000
 #Pmeas: pmeas_cloud_d_twp4_CO_LC AzAveragedData hist_cloud_d_twp4 cloud_d wtmean 40.0  70.0 24.0 144
 #Pmeas: pmeas_cloud_d_twp4_RB_LC AzAveragedData hist_cloud_d_twp4 cloud_d wtmean 70.0 150.0 24.0 144
 
+#Pmeas: pmeas_ice_twp4_EW_LC AzAveragedData hist_ice_twp4 ice wtmean  0.0  40.0 24.0 144
+#Pmeas: pmeas_ice_twp4_CO_LC AzAveragedData hist_ice_twp4 ice wtmean 40.0  70.0 24.0 144
+#Pmeas: pmeas_ice_twp4_RB_LC AzAveragedData hist_ice_twp4 ice wtmean 70.0 150.0 24.0 144
+
 #Pmeas: pmeas_lh_tott_twp4_lht1p0_EW_LC AzAveragedData hist_lh_tott_twp4_lht1p0  lh_tott  wtmean   0.0  40.0  24.0 144.0
 #Pmeas: pmeas_lh_tott_twp4_lht1p0_CO_LC AzAveragedData hist_lh_tott_twp4_lht1p0  lh_tott  wtmean  40.0  70.0  24.0 144.0
 #Pmeas: pmeas_lh_tott_twp4_lht1p0_RB_LC AzAveragedData hist_lh_tott_twp4_lht1p0  lh_tott  wtmean  70.0 150.0  24.0 144.0
@@ -129,6 +133,14 @@ AzavgEof: theta_e_SS  theta_e theta_e      0 250000     0  25000 432000 504000
 #Pmeas: pmeas_w_twp4_EW_LC AzAveragedData hist_w_twp4  w  wtmean   0.0  40.0  24.0 144.0
 #Pmeas: pmeas_w_twp4_CO_LC AzAveragedData hist_w_twp4  w  wtmean  40.0  70.0  24.0 144.0
 #Pmeas: pmeas_w_twp4_RB_LC AzAveragedData hist_w_twp4  w  wtmean  70.0 150.0  24.0 144.0
+
+#Pmeas: pmeas_relhum_EW_LC AzAveragedData hist_relhum relhum wtmean  0.0  40.0 24.0 144
+#Pmeas: pmeas_relhum_CO_LC AzAveragedData hist_relhum relhum wtmean 40.0  70.0 24.0 144
+#Pmeas: pmeas_relhum_RB_LC AzAveragedData hist_relhum relhum wtmean 70.0 150.0 24.0 144
+
+Pmeas: pmeas_theta_e_EW_LC AzAveragedData hist_theta_e theta_e wtmean  0.0  40.0 24.0 144
+Pmeas: pmeas_theta_e_CO_LC AzAveragedData hist_theta_e theta_e wtmean 40.0  70.0 24.0 144
+Pmeas: pmeas_theta_e_RB_LC AzAveragedData hist_theta_e theta_e wtmean 70.0 150.0 24.0 144
 
 # for radial series plots - temporally chopped up
 #Pmeas: pmeas_cloud_cm3_twp4_EW_RI AzAveragedData hist_cloud_cm3_twp4 cloud_cm3 wtmean  0.0  40.0  40.0  60.0
@@ -241,6 +253,26 @@ AzavgEof: theta_e_SS  theta_e theta_e      0 250000     0  25000 432000 504000
 #Pmeas: pmeas_relvortz_rvz1em4_CO_SS  AzAveragedData hist_relvortz_rvz1em4  relvortz wtmean  40.0  70.0 120.0 140.0
 #Pmeas: pmeas_relvortz_rvz1em4_SS_SS  AzAveragedData hist_relvortz_rvz1em4  relvortz wtmean  70.0 150.0 120.0 140.0
 
+#Pmeas: pmeas_relhum_EW_RI   AzAveragedData hist_relhum  relhum   wtmean   0.0  40.0  40.0  60.0
+#Pmeas: pmeas_relhum_CO_RI   AzAveragedData hist_relhum  relhum   wtmean  40.0  70.0  40.0  60.0
+#Pmeas: pmeas_relhum_RB_RI   AzAveragedData hist_relhum  relhum   wtmean  70.0 150.0  40.0  60.0
+#Pmeas: pmeas_relhum_EW_TR   AzAveragedData hist_relhum  relhum   wtmean   0.0  40.0  80.0 100.0
+#Pmeas: pmeas_relhum_CO_TR   AzAveragedData hist_relhum  relhum   wtmean  40.0  70.0  80.0 100.0
+#Pmeas: pmeas_relhum_RB_TR   AzAveragedData hist_relhum  relhum   wtmean  70.0 150.0  80.0 100.0
+#Pmeas: pmeas_relhum_EW_SS   AzAveragedData hist_relhum  relhum   wtmean   0.0  40.0 120.0 140.0
+#Pmeas: pmeas_relhum_CO_SS   AzAveragedData hist_relhum  relhum   wtmean  40.0  70.0 120.0 140.0
+#Pmeas: pmeas_relhum_RB_SS   AzAveragedData hist_relhum  relhum   wtmean  70.0 150.0 120.0 140.0
+
+Pmeas: pmeas_theta_e_EW_RI   AzAveragedData hist_theta_e  theta_e   wtmean   0.0  40.0  40.0  60.0
+Pmeas: pmeas_theta_e_CO_RI   AzAveragedData hist_theta_e  theta_e   wtmean  40.0  70.0  40.0  60.0
+Pmeas: pmeas_theta_e_RB_RI   AzAveragedData hist_theta_e  theta_e   wtmean  70.0 150.0  40.0  60.0
+Pmeas: pmeas_theta_e_EW_TR   AzAveragedData hist_theta_e  theta_e   wtmean   0.0  40.0  80.0 100.0
+Pmeas: pmeas_theta_e_CO_TR   AzAveragedData hist_theta_e  theta_e   wtmean  40.0  70.0  80.0 100.0
+Pmeas: pmeas_theta_e_RB_TR   AzAveragedData hist_theta_e  theta_e   wtmean  70.0 150.0  80.0 100.0
+Pmeas: pmeas_theta_e_EW_SS   AzAveragedData hist_theta_e  theta_e   wtmean   0.0  40.0 120.0 140.0
+Pmeas: pmeas_theta_e_CO_SS   AzAveragedData hist_theta_e  theta_e   wtmean  40.0  70.0 120.0 140.0
+Pmeas: pmeas_theta_e_RB_SS   AzAveragedData hist_theta_e  theta_e   wtmean  70.0 150.0 120.0 140.0
+
 # Time Averages
 #   LC -  24 to 144 hrs ( 86400 to 518400 sec)
 #   RI -  40 to  60 hrs (144000 to 216000 sec)
@@ -260,6 +292,12 @@ VintTs: vintts_lh_tott_twp4_lht1p0_CO_LC DIAGS pmeas_lh_tott_twp4_lht1p0_CO_LC P
 
 VintTs: vintts_vaptott_twp4_vt0p5_RB_LC  DIAGS pmeas_vaptott_twp4_vt0p5_RB_LC  ProfTs_vaptott
 VintTs: vintts_lh_tott_twp4_lht1p0_RB_LC DIAGS pmeas_lh_tott_twp4_lht1p0_RB_LC ProfTs_lh_tott
+
+VintTs: vintts_vaptott_open_vt0p5_CO_LC  DIAGS pmeas_vaptott_open_vt0p5_CO_LC  ProfTs_vaptott
+VintTs: vintts_lh_tott_open_lht1p0_CO_LC DIAGS pmeas_lh_tott_open_lht1p0_CO_LC ProfTs_lh_tott
+
+VintTs: vintts_vaptott_open_vt0p5_RB_LC  DIAGS pmeas_vaptott_open_vt0p5_RB_LC  ProfTs_vaptott
+VintTs: vintts_lh_tott_open_lht1p0_RB_LC DIAGS pmeas_lh_tott_open_lht1p0_RB_LC ProfTs_lh_tott
 
 # plot config
 
@@ -330,6 +368,12 @@ LinePlot: ccn4    SimTime  VintLht_CO_LC  TsAll  y Vertically_Integrated_Total_L
 LinePlot: ccn4    SimTime  VintVapt_RB_LC TsAll  y Vertically_Integrated_Vapor_Diffusion:_RB       NorthEast TS_Vint_Vapt_RB.fig
 LinePlot: ccn4    SimTime  VintLht_RB_LC  TsAll  y Vertically_Integrated_Total_Latent_Heating:_RB  NorthEast TS_Vint_Lht_RB.fig
 
+LinePlot: ccn4    SimTime  VintVaptOpen_CO_LC TsAll  y Vertically_Integrated_Vapor_Diffusion:_CO       NorthEast TS_Vint_VaptOpen_CO.fig
+LinePlot: ccn4    SimTime  VintLhtOpen_CO_LC  TsAll  y Vertically_Integrated_Total_Latent_Heating:_CO  NorthEast TS_Vint_LhtOpen_CO.fig
+
+LinePlot: ccn4    SimTime  VintVaptOpen_RB_LC TsAll  y Vertically_Integrated_Vapor_Diffusion:_RB       NorthEast TS_Vint_VaptOpen_RB.fig
+LinePlot: ccn4    SimTime  VintLhtOpen_RB_LC  TsAll  y Vertically_Integrated_Total_Latent_Heating:_RB  NorthEast TS_Vint_LhtOpen_RB.fig
+
 ####################### Profile Plots #############################
 #ProfPlot: ccn5 pmeas_lh_tott_twp4_lht1p0_EW_RI lh_tott abs EW_RI:_LH_Tot Avg_Latent_Heating_(K/hr) Height_(km) NorthWest -20:0.5:20 0.0 15.0 prof_lh_tott_twp4_lht1p0_EW_RI.jpg
 #ProfPlot: ccn5 pmeas_lh_tott_twp4_lht1p0_CO_RI lh_tott abs CO_RI:_LH_Tot Avg_Latent_Heating_(K/hr) Height_(km) NorthWest -20:0.5:20 0.0 15.0 prof_lh_tott_twp4_lht1p0_CO_RI.jpg
@@ -344,7 +388,6 @@ LinePlot: ccn4    SimTime  VintLht_RB_LC  TsAll  y Vertically_Integrated_Total_L
 #ProfPlot: ccn5 pmeas_vaptott_twp4_vt0p5_EW_SS vaptott abs EW_SS:_Tot_Vap_Diff Avg_Vapor_Diffusion_(g/kg) Height_(km) NorthWest -5:0.05:5 0.0 16.0 prof_vaptott_twp4_vt0p5_EW_SS.jpg
 #ProfPlot: ccn5 pmeas_vaptott_twp4_vt0p5_CO_SS vaptott abs CO_SS:_Tot_Vap_Diff Avg_Vapor_Diffusion_(g/kg) Height_(km) NorthWest -5:0.05:5 0.0 16.0 prof_vaptott_twp4_vt0p5_CO_SS.jpg
 #ProfPlot: ccn5 pmeas_vaptott_twp4_vt0p5_RB_SS vaptott abs RB_SS:_Tot_Vap_Diff Avg_Vapor_Diffusion_(g/kg) Height_(km) NorthWest -5:0.05:5 0.0 16.0 prof_vaptott_twp4_vt0p5_RB_SS.jpg
-#
 
 
 
@@ -625,25 +668,33 @@ LinePlot: ccn4    SimTime  VintLht_RB_LC  TsAll  y Vertically_Integrated_Total_L
 #ProfPlot: ccn4 pmeas_cloud_d_twp4_CO_SS cloud_d abs CO_SS:_Cloud_Mean_Diameter Diameter_(um) Height_(km) NorthEast -5:2:25 0.0 8.0 prof_cloud_d_twp4_CO_SS.fig
 #ProfPlot: ccn4 pmeas_cloud_d_twp4_RB_SS cloud_d abs RB_SS:_Cloud_Mean_Diameter Diameter_(um) Height_(km) SouthEast -5:2:25 0.0 8.0 prof_cloud_d_twp4_RB_SS.fig
 
-ProfPlot: ccn4 pmeas_vaptott_twp4_vt0p5_EW_RI vaptott abs EW_RI:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -2:0.01:8 0.0 15.0 prof_vaptott_twp4_vt0p5_EW_RI.fig
-ProfPlot: ccn4 pmeas_lh_tott_twp4_lht1p0_EW_RI lh_tott abs EW_RI:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) NorthEast -5:0.1:25 0.0 15.0 prof_lh_tott_twp4_lht1p0_EW_RI.fig
-ProfPlot: ccn4 pmeas_w_twp4_EW_RI w abs EW_RI:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 prof_w_twp4_EW_RI.fig
+#ProfPlot: ccn4 pmeas_vaptott_twp4_vt0p5_EW_RI vaptott abs EW_RI:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -2:0.01:8 0.0 15.0 prof_vaptott_twp4_vt0p5_EW_RI.fig
+#ProfPlot: ccn4 pmeas_lh_tott_twp4_lht1p0_EW_RI lh_tott abs EW_RI:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) NorthEast -5:0.1:25 0.0 15.0 prof_lh_tott_twp4_lht1p0_EW_RI.fig
+#ProfPlot: ccn4 pmeas_w_twp4_EW_RI w abs EW_RI:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 prof_w_twp4_EW_RI.fig
 
-ProfPlot: ccn4 pmeas_vaptott_twp4_vt0p5_EW_TR vaptott abs EW_TR:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -2:0.01:8 0.0 15.0 prof_vaptott_twp4_vt0p5_EW_TR.fig
-ProfPlot: ccn4 pmeas_lh_tott_twp4_lht1p0_EW_TR lh_tott abs EW_TR:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) NorthEast -5:0.1:25 0.0 15.0 prof_lh_tott_twp4_lht1p0_EW_TR.fig
-ProfPlot: ccn4 pmeas_w_twp4_EW_TR w abs EW_TR:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 prof_w_twp4_EW_TR.fig
+#ProfPlot: ccn4 pmeas_vaptott_twp4_vt0p5_EW_TR vaptott abs EW_TR:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -2:0.01:8 0.0 15.0 prof_vaptott_twp4_vt0p5_EW_TR.fig
+#ProfPlot: ccn4 pmeas_lh_tott_twp4_lht1p0_EW_TR lh_tott abs EW_TR:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) NorthEast -5:0.1:25 0.0 15.0 prof_lh_tott_twp4_lht1p0_EW_TR.fig
+#ProfPlot: ccn4 pmeas_w_twp4_EW_TR w abs EW_TR:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 prof_w_twp4_EW_TR.fig
 
-ProfPlot: ccn4 pmeas_vaptott_twp4_vt0p5_EW_SS vaptott abs EW_SS:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -2:0.01:8 0.0 15.0 prof_vaptott_twp4_vt0p5_EW_SS.fig
-ProfPlot: ccn4 pmeas_lh_tott_twp4_lht1p0_EW_SS lh_tott abs EW_SS:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) SouthEast -5:0.1:25 0.0 15.0 prof_lh_tott_twp4_lht1p0_EW_SS.fig
-ProfPlot: ccn4 pmeas_w_twp4_EW_SS w abs EW_SS:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 prof_w_twp4_EW_SS.fig
+#ProfPlot: ccn4 pmeas_vaptott_twp4_vt0p5_EW_SS vaptott abs EW_SS:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -2:0.01:8 0.0 15.0 prof_vaptott_twp4_vt0p5_EW_SS.fig
+#ProfPlot: ccn4 pmeas_lh_tott_twp4_lht1p0_EW_SS lh_tott abs EW_SS:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) SouthEast -5:0.1:25 0.0 15.0 prof_lh_tott_twp4_lht1p0_EW_SS.fig
+#ProfPlot: ccn4 pmeas_w_twp4_EW_SS w abs EW_SS:_Vertical_Velocity W_(m/s) Height_(km) SouthEast -0.5:0.05:1.5 0.0 15.0 prof_w_twp4_EW_SS.fig
 
-ProfPlot: ccn4 pmeas_vaptott_twp4_vt0p5_CO_SS vaptott abs CO_SS:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -2:0.01:8 0.0 15.0 prof_vaptott_twp4_vt0p5_CO_SS.fig
-ProfPlot: ccn4 pmeas_lh_tott_twp4_lht1p0_CO_SS lh_tott abs CO_SS:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) SouthEast -5:0.1:25 0.0 15.0 prof_lh_tott_twp4_lht1p0_CO_SS.fig
-ProfPlot: ccn4 pmeas_w_twp4_CO_SS w abs CO_SS:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 prof_w_twp4_CO_SS.fig
+#ProfPlot: ccn4 pmeas_vaptott_twp4_vt0p5_CO_SS vaptott abs CO_SS:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) SouthEast -5:0.01:5 0.0 15.0 prof_vaptott_twp4_vt0p5_CO_SS.fig
+#ProfPlot: ccn4 pmeas_lh_tott_twp4_lht1p0_CO_SS lh_tott abs CO_SS:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) SouthEast -10:0.1:20 0.0 15.0 prof_lh_tott_twp4_lht1p0_CO_SS.fig
+#ProfPlot: ccn4 pmeas_w_twp4_CO_SS w abs CO_SS:_Vertical_Velocity W_(m/s) Height_(km) SouthEast -0.5:0.05:0.5 0.0 15.0 prof_w_twp4_CO_SS.fig
 
-ProfPlot: ccn4 pmeas_vaptott_twp4_vt0p5_RB_SS vaptott abs RB_SS:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -2:0.01:8 0.0 15.0 prof_vaptott_twp4_vt0p5_RB_SS.fig
-ProfPlot: ccn4 pmeas_lh_tott_twp4_lht1p0_RB_SS lh_tott abs RB_SS:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) SouthEast -5:0.1:25 0.0 15.0 prof_lh_tott_twp4_lht1p0_RB_SS.fig
-ProfPlot: ccn4 pmeas_w_twp4_RB_SS w abs RB_SS:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 prof_w_twp4_RB_SS.fig
+#ProfPlot: ccn4 pmeas_vaptott_twp4_vt0p5_RB_SS vaptott abs RB_SS:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -5:0.01:5 0.0 15.0 prof_vaptott_twp4_vt0p5_RB_SS.fig
+#ProfPlot: ccn4 pmeas_lh_tott_twp4_lht1p0_RB_SS lh_tott abs RB_SS:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) SouthEast -10:0.1:20 0.0 15.0 prof_lh_tott_twp4_lht1p0_RB_SS.fig
+#ProfPlot: ccn4 pmeas_w_twp4_RB_SS w abs RB_SS:_Vertical_Velocity W_(m/s) Height_(km) SouthEast -0.5:0.05:1 0.0 15.0 prof_w_twp4_RB_SS.fig
+
+#ProfPlot: ccn4 pmeas_relhum_EW_SS relhum abs EW_SS:_Relative_Humidity RH_(%) Height_(km) SouthWest 50:0.1:100 0.0 15.0 prof_relhum_EW_SS.fig
+#ProfPlot: ccn4 pmeas_relhum_CO_SS relhum abs CO_SS:_Relative_Humidity RH_(%) Height_(km) SouthWest 50:0.1:100 0.0 15.0 prof_relhum_CO_SS.fig
+#ProfPlot: ccn4 pmeas_relhum_RB_SS relhum abs RB_SS:_Relative_Humidity RH_(%) Height_(km) NorthEast 50:0.1:100 0.0 15.0 prof_relhum_RB_SS.fig
+
+ProfPlot: ccn4 pmeas_theta_e_EW_SS theta_e abs EW_SS:_Equiv._Potential_Temperature Theta-E_(K) Height_(km) SouthWest 320:0.1:360 0.0 15.0 prof_theta_e_EW_SS.fig
+ProfPlot: ccn4 pmeas_theta_e_CO_SS theta_e abs CO_SS:_Equiv._Potential_Temperature Theta-E_(K) Height_(km) SouthWest 320:0.1:360 0.0 15.0 prof_theta_e_CO_SS.fig
+ProfPlot: ccn4 pmeas_theta_e_RB_SS theta_e abs RB_SS:_Equiv._Potential_Temperature Theta-E_(K) Height_(km) NorthEast 320:0.1:360 0.0 15.0 prof_theta_e_RB_SS.fig
 
 ######################## Profile Plots SD #############################
 #ProfPlot: ccn5_sd pmeas_lhf_twp4_0p1_EW_RI lh_frzt diff LH_Frz,_Eyewall,_Rapid_Intensification Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -0.5:0.025:0.5 0.0 20.0 prof_lhf_twp4_0p1_EW_RI_sd.jpg
@@ -662,17 +713,21 @@ ProfPlot: ccn4 pmeas_w_twp4_RB_SS w abs RB_SS:_Vertical_Velocity W_(m/s) Height_
 
 ######################## Profile Time Series Plots #############################
  
-ProfTsPlot: ccn4 pmeas_cloud_d_twp4_EW_LC cloud_d EW_LC:_Mean_Cloud_Diam_(um) Simulation_Time_(hr) Height_(km) 0 25 0.0 10.0 revgray 0 abs pts_cloud_d_twp4_EW_LC
-ProfTsPlot: ccn4 pmeas_cloud_d_twp4_CO_LC cloud_d CO_LC:_Mean_Cloud_Diam_(um) Simulation_Time_(hr) Height_(km) 0 25 0.0 10.0 revgray 0 abs pts_cloud_d_twp4_CO_LC
-ProfTsPlot: ccn4 pmeas_cloud_d_twp4_RB_LC cloud_d RB_LC:_Mean_Cloud_Diam_(um) Simulation_Time_(hr) Height_(km) 0 10 0.0 10.0 revgray 0 abs pts_cloud_d_twp4_RB_LC
+#ProfTsPlot: ccn4 pmeas_cloud_d_twp4_EW_LC cloud_d EW_LC:_Mean_Cloud_Diam_(um) Simulation_Time_(hr) Height_(km) 0 25 0.0 10.0 revgray 0 abs pts_cloud_d_twp4_EW_LC
+#ProfTsPlot: ccn4 pmeas_cloud_d_twp4_CO_LC cloud_d CO_LC:_Mean_Cloud_Diam_(um) Simulation_Time_(hr) Height_(km) 0 25 0.0 10.0 revgray 0 abs pts_cloud_d_twp4_CO_LC
+#ProfTsPlot: ccn4 pmeas_cloud_d_twp4_RB_LC cloud_d RB_LC:_Mean_Cloud_Diam_(um) Simulation_Time_(hr) Height_(km) 0 10 0.0 10.0 revgray 0 abs pts_cloud_d_twp4_RB_LC
 
-ProfTsPlot: ccn4 pmeas_cloud_cm3_twp4_EW_LC cloud_cm3 EW_LC:_Cloud_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 50 0.0 10.0 revgray 0 abs pts_cloud_cm3_twp4_EW_LC
-ProfTsPlot: ccn4 pmeas_cloud_cm3_twp4_CO_LC cloud_cm3 CO_LC:_Cloud_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 50 0.0 10.0 revgray 0 abs pts_cloud_cm3_twp4_CO_LC
-ProfTsPlot: ccn4 pmeas_cloud_cm3_twp4_RB_LC cloud_cm3 RB_LC:_Cloud_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 50 0.0 10.0 revgray 0 abs pts_cloud_cm3_twp4_RB_LC
+#ProfTsPlot: ccn4 pmeas_cloud_cm3_twp4_EW_LC cloud_cm3 EW_LC:_Cloud_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 50 0.0 10.0 revgray 0 abs pts_cloud_cm3_twp4_EW_LC
+#ProfTsPlot: ccn4 pmeas_cloud_cm3_twp4_CO_LC cloud_cm3 CO_LC:_Cloud_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 50 0.0 10.0 revgray 0 abs pts_cloud_cm3_twp4_CO_LC
+#ProfTsPlot: ccn4 pmeas_cloud_cm3_twp4_RB_LC cloud_cm3 RB_LC:_Cloud_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 50 0.0 10.0 revgray 0 abs pts_cloud_cm3_twp4_RB_LC
 
-ProfTsPlot: ccn4 pmeas_lh_tott_twp4_lht1p0_EW_LC lh_tott EW_LC:_Total_Latent_Heating_(K/hr) Simulation_Time_(hr) Height_(km) -20 20 0.0 15.0 redblue 0 abs pts_lh_tott_twp4_lht1p0_EW_LC
-ProfTsPlot: ccn4 pmeas_lh_tott_twp4_lht1p0_CO_LC lh_tott CO_LC:_Total_Latent_Heating_(K/hr) Simulation_Time_(hr) Height_(km) -20 20 0.0 15.0 redblue 0 abs pts_lh_tott_twp4_lht1p0_CO_LC
-ProfTsPlot: ccn4 pmeas_lh_tott_twp4_lht1p0_RB_LC lh_tott RB_LC:_Total_Latent_Heating_(K/hr) Simulation_Time_(hr) Height_(km) -20 20 0.0 15.0 redblue 0 abs pts_lh_tott_twp4_lht1p0_RB_LC
+#ProfTsPlot: ccn4 pmeas_ice_twp4_EW_LC ice EW_LC:_Ice_Mass_(g/kg) Simulation_Time_(hr) Height_(km) 0 0.5 0.0 15.0 revgray 0 abs pts_ice_twp4_EW_LC
+#ProfTsPlot: ccn4 pmeas_ice_twp4_CO_LC ice CO_LC:_Ice_Mass_(g/kg) Simulation_Time_(hr) Height_(km) 0 0.5 0.0 15.0 revgray 0 abs pts_ice_twp4_CO_LC
+#ProfTsPlot: ccn4 pmeas_ice_twp4_RB_LC ice RB_LC:_Ice_Mass_(g/kg) Simulation_Time_(hr) Height_(km) 0 0.5 0.0 15.0 revgray 0 abs pts_ice_twp4_RB_LC
+
+#ProfTsPlot: ccn4 pmeas_lh_tott_twp4_lht1p0_EW_LC lh_tott EW_LC:_Total_Latent_Heating_(K/hr) Simulation_Time_(hr) Height_(km) -20 20 0.0 15.0 redblue 0 abs pts_lh_tott_twp4_lht1p0_EW_LC
+#ProfTsPlot: ccn4 pmeas_lh_tott_twp4_lht1p0_CO_LC lh_tott CO_LC:_Total_Latent_Heating_(K/hr) Simulation_Time_(hr) Height_(km) -20 20 0.0 15.0 redblue 0 abs pts_lh_tott_twp4_lht1p0_CO_LC
+#ProfTsPlot: ccn4 pmeas_lh_tott_twp4_lht1p0_RB_LC lh_tott RB_LC:_Total_Latent_Heating_(K/hr) Simulation_Time_(hr) Height_(km) -20 20 0.0 15.0 redblue 0 abs pts_lh_tott_twp4_lht1p0_RB_LC
 
 #ProfTsPlot: ccn4 pmeas_w_EW_LC w EW_LC:_Vertical_Velocity_(m/s) Simulation_Time_(hr) Height_(km) -2 2 0.0 15.0 redblue 0 abs pts_w_EW_LC
 #ProfTsPlot: ccn4 pmeas_w_CO_LC w CO_LC:_Vertical_Velocity_(m/s) Simulation_Time_(hr) Height_(km) -2 2 0.0 15.0 redblue 0 abs pts_w_CO_LC
@@ -684,6 +739,14 @@ ProfTsPlot: ccn4 pmeas_lh_tott_twp4_lht1p0_RB_LC lh_tott RB_LC:_Total_Latent_Hea
 
 #ProfTsPlot: ccn4 pmeas_lh_tott_open_lht1p0_CO_LC lh_tott CO_LC:_Total_Latent_Heating_(K/hr) Simulation_Time_(hr) Height_(km) -20 20 0.0 15.0 redblue 0 abs pts_lh_tott_open_lht1p0_CO_LC
 #ProfTsPlot: ccn4 pmeas_lh_tott_open_lht1p0_RB_LC lh_tott RB_LC:_Total_Latent_Heating_(K/hr) Simulation_Time_(hr) Height_(km) -20 20 0.0 15.0 redblue 0 abs pts_lh_tott_open_lht1p0_RB_LC
+
+#ProfTsPlot: ccn4 pmeas_relhum_EW_LC relhum EW_LC:_Relative_Humidity_(%) Simulation_Time_(hr) Height_(km) 50 100 0.0 15.0 revgray 0 abs pts_relhum_EW_LC
+#ProfTsPlot: ccn4 pmeas_relhum_CO_LC relhum CO_LC:_Relative_Humidity_(%) Simulation_Time_(hr) Height_(km) 50 100 0.0 15.0 revgray 0 abs pts_relhum_CO_LC
+#ProfTsPlot: ccn4 pmeas_relhum_RB_LC relhum RB_LC:_Relative_Humidity_(%) Simulation_Time_(hr) Height_(km) 50 100 0.0 15.0 revgray 0 abs pts_relhum_RB_LC
+
+ProfTsPlot: ccn4 pmeas_theta_e_EW_LC theta_e EW_LC:_Equiv._Potential_Temperature_(%) Simulation_Time_(hr) Height_(km) 320 360 0.0 15.0 revgray 0 abs pts_theta_e_EW_LC
+ProfTsPlot: ccn4 pmeas_theta_e_CO_LC theta_e CO_LC:_Equiv._Potential_Temperature_(%) Simulation_Time_(hr) Height_(km) 320 360 0.0 15.0 revgray 0 abs pts_theta_e_CO_LC
+ProfTsPlot: ccn4 pmeas_theta_e_RB_LC theta_e RB_LC:_Equiv._Potential_Temperature_(%) Simulation_Time_(hr) Height_(km) 320 360 0.0 15.0 revgray 0 abs pts_theta_e_RB_LC
 
 ####################### Radial profile #####################
 
@@ -772,6 +835,12 @@ PlotVar: VintLht_CO_LC   VintTs_lh_tott DIAGS/vintts_lh_tott_twp4_lht1p0_CO_LC L
 
 PlotVar: VintVapt_RB_LC  VintTs_vaptott DIAGS/vintts_vaptott_twp4_vt0p5_RB_LC  Vapor_Diffusion g/(kg_km) -10 20 1e-3
 PlotVar: VintLht_RB_LC   VintTs_lh_tott DIAGS/vintts_lh_tott_twp4_lht1p0_RB_LC LH_Vaporization K/(hr_km) -20 70 1e-3
+
+PlotVar: VintVaptOpen_CO_LC  VintTs_vaptott DIAGS/vintts_vaptott_open_vt0p5_CO_LC  Vapor_Diffusion g/(kg_km) -20  30 1e-3
+PlotVar: VintLhtOpen_CO_LC   VintTs_lh_tott DIAGS/vintts_lh_tott_open_lht1p0_CO_LC LH_Vaporization K/(hr_km) -30 100 1e-3
+
+PlotVar: VintVaptOpen_RB_LC  VintTs_vaptott DIAGS/vintts_vaptott_open_vt0p5_RB_LC  Vapor_Diffusion g/(kg_km) -10 20 1e-3
+PlotVar: VintLhtOpen_RB_LC   VintTs_lh_tott DIAGS/vintts_lh_tott_open_lht1p0_RB_LC LH_Vaporization K/(hr_km) -20 70 1e-3
 
 
 PlotVar: VtAllRI    speed_t    DIAGS/tavg_speed_t_RI Vt     m/s     0  50     1

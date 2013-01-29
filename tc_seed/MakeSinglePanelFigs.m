@@ -124,6 +124,36 @@ end
 %            'prs_relvortz_rvz1em4_diff_EW_SS_TCS_SD_C1000'
 %            'prs_relvortz_rvz1em4_diff_EW_SS_TCS_SD_C2000' };
 
+%FigList = { 
+%  'prs_vaptott_twp4_vt0p5_CO_RI_TCS_SD_C0500'
+%  'prs_vaptott_twp4_vt0p5_CO_RI_TCS_SD_C1000'
+%  'prs_vaptott_twp4_vt0p5_CO_RI_TCS_SD_C2000'
+%  'prs_vaptott_twp4_vt0p5_CO_TR_TCS_SD_C0500'
+%  'prs_vaptott_twp4_vt0p5_CO_TR_TCS_SD_C1000'
+%  'prs_vaptott_twp4_vt0p5_CO_TR_TCS_SD_C2000'
+%  'prs_vaptott_twp4_vt0p5_CO_SS_TCS_SD_C0500'
+%  'prs_vaptott_twp4_vt0p5_CO_SS_TCS_SD_C1000'
+%  'prs_vaptott_twp4_vt0p5_CO_SS_TCS_SD_C2000'
+%  'prs_lh_tott_twp4_lht1p0_CO_RI_TCS_SD_C0500'
+%  'prs_lh_tott_twp4_lht1p0_CO_RI_TCS_SD_C1000'
+%  'prs_lh_tott_twp4_lht1p0_CO_RI_TCS_SD_C2000'
+%  'prs_lh_tott_twp4_lht1p0_CO_TR_TCS_SD_C0500'
+%  'prs_lh_tott_twp4_lht1p0_CO_TR_TCS_SD_C1000'
+%  'prs_lh_tott_twp4_lht1p0_CO_TR_TCS_SD_C2000'
+%  'prs_lh_tott_twp4_lht1p0_CO_SS_TCS_SD_C0500'
+%  'prs_lh_tott_twp4_lht1p0_CO_SS_TCS_SD_C1000'
+%  'prs_lh_tott_twp4_lht1p0_CO_SS_TCS_SD_C2000'
+%  'prs_w_twp4_CO_RI_TCS_SD_C0500'
+%  'prs_w_twp4_CO_RI_TCS_SD_C1000'
+%  'prs_w_twp4_CO_RI_TCS_SD_C2000'
+%  'prs_w_twp4_CO_TR_TCS_SD_C0500'
+%  'prs_w_twp4_CO_TR_TCS_SD_C1000'
+%  'prs_w_twp4_CO_TR_TCS_SD_C2000'
+%  'prs_w_twp4_CO_SS_TCS_SD_C0500'
+%  'prs_w_twp4_CO_SS_TCS_SD_C1000'
+%  'prs_w_twp4_CO_SS_TCS_SD_C2000'
+%  };
+
 FigList = {
   'prof_lh_tott_twp4_lht1p0_EW_SS'
   'prof_lh_tott_twp4_lht1p0_CO_SS'
