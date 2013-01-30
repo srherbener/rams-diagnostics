@@ -9,49 +9,46 @@ function [ ] = GenHistOpenSpace( ConfigFile )
 %
 
 % For now define mappings for what we want converted here
-%FprefixAll = { 'hist_aggr_vflux_af0p05'
-%               'hist_graup_vflux_gf0p001'
-%               'hist_hail_vflux_hf0p1'
-%               'hist_pris_vflux_pf0p05'
-%               'hist_snow_vflux_sf0p01'
-%               'hist_lh_tott_lht1p0'
-%               'hist_vaptott_vt0p5' }
-%
-%FprefixConv = { 'hist_aggr_vflux_twp4_af0p05'
-%                'hist_graup_vflux_twp4_gf0p001'
-%                'hist_hail_vflux_twp4_hf0p1'
-%                'hist_pris_vflux_twp4_pf0p05'
-%                'hist_snow_vflux_twp4_sf0p01'
-%                'hist_lh_tott_twp4_lht1p0'
-%                'hist_vaptott_twp4_vt0p5' }
-%
-%FprefixOpen = { 'hist_aggr_vflux_open_af0p05'
-%                'hist_graup_vflux_open_gf0p001'
-%                'hist_hail_vflux_open_hf0p1'
-%                'hist_pris_vflux_open_pf0p05'
-%                'hist_snow_vflux_open_sf0p01'
-%                'hist_lh_tott_open_lht1p0'
-%                'hist_vaptott_open_vt0p5' }
-%
-%Vars = { 'aggr_vflux'
-%         'graup_vflux'
-%         'hail_vflux'
-%         'pris_vflux'
-%         'snow_vflux'
-%         'lh_tott'
-%         'vaptott' }
+FprefixAll = {
+  'hist_aggr_all'
+  'hist_graup_all'
+  'hist_hail_all'
+  'hist_pris_all'
+  'hist_snow_all'
+  'hist_lh_tott_lht1p0'
+  'hist_vaptott_vt0p5'
+  };
 
-FprefixAll = { 'hist_lh_tott_lht1p0'
-               'hist_vaptott_vt0p5' }
+FprefixConv = {
+  'hist_aggr_twp4'
+  'hist_graup_twp4'
+  'hist_hail_twp4'
+  'hist_pris_twp4'
+  'hist_snow_twp4'
+  'hist_lh_tott_twp4_lht1p0'
+  'hist_vaptott_twp4_vt0p5'
+  };
 
-FprefixConv = { 'hist_lh_tott_twp4_lht1p0'
-                'hist_vaptott_twp4_vt0p5' }
+FprefixOpen = {
+  'hist_aggr_open'
+  'hist_graup_open'
+  'hist_hail_open'
+  'hist_pris_open'
+  'hist_snow_open'
+  'hist_lh_tott_open_lht1p0'
+  'hist_vaptott_open_vt0p5'
+  };
 
-FprefixOpen = { 'hist_lh_tott_open_lht1p0'
-                'hist_vaptott_open_vt0p5' }
+Vars = {
+  'aggr'
+  'graup'
+  'hail'
+  'pris'
+  'snow'
+  'lh_tott'
+  'vaptott'
+  };
 
-Vars = { 'lh_tott'
-         'vaptott' }
 
 % Read in the config data
 [ Config ] = ReadConfig(ConfigFile);
