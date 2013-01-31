@@ -315,6 +315,11 @@ Tavg: tavg_speed_t_RI AzAveragedData speed_t speed_t 144000 216000
 Tavg: tavg_speed_t_TR AzAveragedData speed_t speed_t 288000 360000
 Tavg: tavg_speed_t_SS AzAveragedData speed_t speed_t 432000 504000
 
+Tavg: tavg_speed_r_LC AzAveragedData speed_r speed_r  86400 518400
+Tavg: tavg_speed_r_RI AzAveragedData speed_r speed_r 144000 216000
+Tavg: tavg_speed_r_TR AzAveragedData speed_r speed_r 288000 360000
+Tavg: tavg_speed_r_SS AzAveragedData speed_r speed_r 432000 504000
+
 # Vertically integrated time series
 VintTs: vintts_vaptott_twp4_vt0p5_EW_LC  DIAGS pmeas_vaptott_twp4_vt0p5_EW_LC  ProfTs_vaptott
 VintTs: vintts_lh_tott_twp4_lht1p0_EW_LC DIAGS pmeas_lh_tott_twp4_lht1p0_EW_LC ProfTs_lh_tott
@@ -880,25 +885,35 @@ ProfTsPlot: ccn4 pmeas_lh_tott_lht1p0_RB_LC lh_tott RB_LC:_Total_Latent_Heating_
 #ProfRsPlot: ccn4_diff pmeas_relvortz_rvz1em4_EW_TR relvortz EW_TR:_Relative_Vorticity_(s^-^1)   Radius_(km) Height_(km)  -2e-3  2e-3  0.0 15.0 redblue 0 diff prs_relvortz_rvz1em4_diff_EW_TR
 #ProfRsPlot: ccn4_diff pmeas_relvortz_rvz1em4_EW_SS relvortz EW_SS:_Relative_Vorticity_(s^-^1)   Radius_(km) Height_(km)  -2e-3  2e-3  0.0 15.0 redblue 0 diff prs_relvortz_rvz1em4_diff_EW_SS
 
-ProfRsPlot: ccn4_diff pmeas_aggr_twp4_EW_RI   aggr  EW_RI:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_twp4_EW_RI
-ProfRsPlot: ccn4_diff pmeas_aggr_twp4_CO_RI   aggr  CO_RI:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_twp4_CO_RI
-ProfRsPlot: ccn4_diff pmeas_aggr_twp4_RB_RI   aggr  RB_RI:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_twp4_RB_RI
-ProfRsPlot: ccn4_diff pmeas_aggr_twp4_EW_TR   aggr  EW_TR:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_twp4_EW_TR
-ProfRsPlot: ccn4_diff pmeas_aggr_twp4_CO_TR   aggr  CO_TR:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_twp4_CO_TR
-ProfRsPlot: ccn4_diff pmeas_aggr_twp4_RB_TR   aggr  RB_TR:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_twp4_RB_TR
-ProfRsPlot: ccn4_diff pmeas_aggr_twp4_EW_SS   aggr  EW_SS:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_twp4_EW_SS
-ProfRsPlot: ccn4_diff pmeas_aggr_twp4_CO_SS   aggr  CO_SS:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_twp4_CO_SS
-ProfRsPlot: ccn4_diff pmeas_aggr_twp4_RB_SS   aggr  RB_SS:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_twp4_RB_SS
+#ProfRsPlot: ccn4_diff pmeas_aggr_twp4_EW_RI   aggr  EW_RI:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_twp4_EW_RI
+#ProfRsPlot: ccn4_diff pmeas_aggr_twp4_CO_RI   aggr  CO_RI:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_twp4_CO_RI
+#ProfRsPlot: ccn4_diff pmeas_aggr_twp4_RB_RI   aggr  RB_RI:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_twp4_RB_RI
+#ProfRsPlot: ccn4_diff pmeas_aggr_twp4_EW_TR   aggr  EW_TR:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_twp4_EW_TR
+#ProfRsPlot: ccn4_diff pmeas_aggr_twp4_CO_TR   aggr  CO_TR:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_twp4_CO_TR
+#ProfRsPlot: ccn4_diff pmeas_aggr_twp4_RB_TR   aggr  RB_TR:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_twp4_RB_TR
+#ProfRsPlot: ccn4_diff pmeas_aggr_twp4_EW_SS   aggr  EW_SS:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_twp4_EW_SS
+#ProfRsPlot: ccn4_diff pmeas_aggr_twp4_CO_SS   aggr  CO_SS:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_twp4_CO_SS
+#ProfRsPlot: ccn4_diff pmeas_aggr_twp4_RB_SS   aggr  RB_SS:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_twp4_RB_SS
 
-ProfRsPlot: ccn4_diff pmeas_aggr_open_EW_RI   aggr  EW_RI:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_open_EW_RI
-ProfRsPlot: ccn4_diff pmeas_aggr_open_CO_RI   aggr  CO_RI:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_open_CO_RI
-ProfRsPlot: ccn4_diff pmeas_aggr_open_RB_RI   aggr  RB_RI:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_open_RB_RI
-ProfRsPlot: ccn4_diff pmeas_aggr_open_EW_TR   aggr  EW_TR:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_open_EW_TR
-ProfRsPlot: ccn4_diff pmeas_aggr_open_CO_TR   aggr  CO_TR:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_open_CO_TR
-ProfRsPlot: ccn4_diff pmeas_aggr_open_RB_TR   aggr  RB_TR:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_open_RB_TR
-ProfRsPlot: ccn4_diff pmeas_aggr_open_EW_SS   aggr  EW_SS:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_open_EW_SS
-ProfRsPlot: ccn4_diff pmeas_aggr_open_CO_SS   aggr  CO_SS:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_open_CO_SS
-ProfRsPlot: ccn4_diff pmeas_aggr_open_RB_SS   aggr  RB_SS:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_open_RB_SS
+#ProfRsPlot: ccn4_diff pmeas_aggr_open_EW_RI   aggr  EW_RI:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_open_EW_RI
+#ProfRsPlot: ccn4_diff pmeas_aggr_open_CO_RI   aggr  CO_RI:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_open_CO_RI
+#ProfRsPlot: ccn4_diff pmeas_aggr_open_RB_RI   aggr  RB_RI:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_open_RB_RI
+#ProfRsPlot: ccn4_diff pmeas_aggr_open_EW_TR   aggr  EW_TR:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_open_EW_TR
+#ProfRsPlot: ccn4_diff pmeas_aggr_open_CO_TR   aggr  CO_TR:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_open_CO_TR
+#ProfRsPlot: ccn4_diff pmeas_aggr_open_RB_TR   aggr  RB_TR:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_open_RB_TR
+#ProfRsPlot: ccn4_diff pmeas_aggr_open_EW_SS   aggr  EW_SS:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_open_EW_SS
+#ProfRsPlot: ccn4_diff pmeas_aggr_open_CO_SS   aggr  CO_SS:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_open_CO_SS
+#ProfRsPlot: ccn4_diff pmeas_aggr_open_RB_SS   aggr  RB_SS:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_open_RB_SS
+
+ProfRsPlot: ccn4_diff pmeas_relhum_EW_RI    relhum  EW_RI:_Relative_Humidity_(%) Radius_(km) Height_(km)     -10  10  0.0 15.0 redblue 0 diff prs_relhum_EW_RI
+ProfRsPlot: ccn4_diff pmeas_relhum_CO_RI    relhum  CO_RI:_Relative_Humidity_(%) Radius_(km) Height_(km)     -10  10  0.0 15.0 redblue 0 diff prs_relhum_CO_RI
+ProfRsPlot: ccn4_diff pmeas_relhum_RB_RI    relhum  RB_RI:_Relative_Humidity_(%) Radius_(km) Height_(km)     -10  10  0.0 15.0 redblue 0 diff prs_relhum_RB_RI
+ProfRsPlot: ccn4_diff pmeas_relhum_EW_TR    relhum  EW_TR:_Relative_Humidity_(%) Radius_(km) Height_(km)     -10  10  0.0 15.0 redblue 0 diff prs_relhum_EW_TR
+ProfRsPlot: ccn4_diff pmeas_relhum_CO_TR    relhum  CO_TR:_Relative_Humidity_(%) Radius_(km) Height_(km)     -10  10  0.0 15.0 redblue 0 diff prs_relhum_CO_TR
+ProfRsPlot: ccn4_diff pmeas_relhum_RB_TR    relhum  RB_TR:_Relative_Humidity_(%) Radius_(km) Height_(km)     -10  10  0.0 15.0 redblue 0 diff prs_relhum_RB_TR
+ProfRsPlot: ccn4_diff pmeas_relhum_EW_SS    relhum  EW_SS:_Relative_Humidity_(%) Radius_(km) Height_(km)     -10  10  0.0 15.0 redblue 0 diff prs_relhum_EW_SS
+ProfRsPlot: ccn4_diff pmeas_relhum_CO_SS    relhum  CO_SS:_Relative_Humidity_(%) Radius_(km) Height_(km)     -10  10  0.0 15.0 redblue 0 diff prs_relhum_CO_SS
+ProfRsPlot: ccn4_diff pmeas_relhum_RB_SS    relhum  RB_SS:_Relative_Humidity_(%) Radius_(km) Height_(km)     -10  10  0.0 15.0 redblue 0 diff prs_relhum_RB_SS
 
 ####################### Plot Sets ############################
 PlotSet: ccn4    4 TCS_SD_C0100 CCN:_100/cc -b TCS_SD_C0500 CCN:_500/cc --b TCS_SD_C1000 CCN:_1000/cc --r TCS_SD_C2000 CCN:_2000/cc -r

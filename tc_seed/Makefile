@@ -29,6 +29,7 @@ SCRIPTS = \
           $(DEST)/PlotStormRegions.m \
           $(DEST)/PlotThetaE.m \
           $(DEST)/PlotTsProfs.m \
+          $(DEST)/PlotVr.m \
           $(DEST)/PlotVt.m \
           $(DEST)/SetPath.m
 
