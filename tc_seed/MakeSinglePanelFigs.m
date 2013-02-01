@@ -154,28 +154,32 @@ end
 %  'prs_w_twp4_CO_SS_TCS_SD_C2000'
 %  };
 
+%FigList = {
+%  'prof_lh_tott_twp4_lht1p0_EW_SS'
+%  'prof_lh_tott_twp4_lht1p0_CO_SS'
+%  'prof_lh_tott_twp4_lht1p0_RB_SS'
+%  'prof_w_twp4_EW_SS'
+%  'prof_w_twp4_CO_SS'
+%  'prof_w_twp4_RB_SS'
+%  'prof_relhum_EW_SS'
+%  'prof_relhum_CO_SS'
+%  'prof_relhum_RB_SS'
+%  'prof_theta_e_EW_SS'
+%  'prof_theta_e_CO_SS'
+%  'prof_theta_e_RB_SS'
+%  'prs_relhum_CO_SS_TCS_SD_C0500'
+%  'prs_relhum_CO_SS_TCS_SD_C1000'
+%  'prs_relhum_CO_SS_TCS_SD_C2000'
+%  'prs_theta_e_CO_SS_TCS_SD_C0500'
+%  'prs_theta_e_CO_SS_TCS_SD_C1000'
+%  'prs_theta_e_CO_SS_TCS_SD_C2000'
+%  'vr_diff_TCS_SD_C0500'
+%  'vr_diff_TCS_SD_C1000'
+%  'vr_diff_TCS_SD_C2000'
+%  };
+
 FigList = {
-  'prof_lh_tott_twp4_lht1p0_EW_SS'
-  'prof_lh_tott_twp4_lht1p0_CO_SS'
-  'prof_lh_tott_twp4_lht1p0_RB_SS'
-  'prof_w_twp4_EW_SS'
-  'prof_w_twp4_CO_SS'
-  'prof_w_twp4_RB_SS'
-  'prof_relhum_EW_SS'
-  'prof_relhum_CO_SS'
-  'prof_relhum_RB_SS'
-  'prof_theta_e_EW_SS'
-  'prof_theta_e_CO_SS'
-  'prof_theta_e_RB_SS'
-  'prs_relhum_CO_SS_TCS_SD_C0500'
-  'prs_relhum_CO_SS_TCS_SD_C1000'
-  'prs_relhum_CO_SS_TCS_SD_C2000'
-  'prs_theta_e_CO_SS_TCS_SD_C0500'
-  'prs_theta_e_CO_SS_TCS_SD_C1000'
-  'prs_theta_e_CO_SS_TCS_SD_C2000'
-  'vr_diff_TCS_SD_C0500'
-  'vr_diff_TCS_SD_C1000'
-  'vr_diff_TCS_SD_C2000'
+  'TcAerosolIngest'
   };
 
 for i = 1:length(FigList)
