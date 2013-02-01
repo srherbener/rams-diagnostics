@@ -22,12 +22,17 @@ Tmax = 140;
 Phase = 'CO-SS';
 
 % color/contour limits
-Cmin = -10;
-Cmax = 10;
+if (DoDiff == 1)
+  Cmin = -5;
+  Cmax = 5;
+else
+  Cmin = -10;
+  Cmax = 10;
+end
 
 for icase = 1:length(Config.Cases)
   Case = Config.Cases(icase).Cname;
-  CaseTitle = regexprep(Case, '_', '-');
+  CaseTitle = regexprep(Case, '.*_', '');
   fprintf('Plotting Vt for case: %s\n', Case)
   fprintf('\n');
   

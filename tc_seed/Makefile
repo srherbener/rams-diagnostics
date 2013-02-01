@@ -31,7 +31,8 @@ SCRIPTS = \
           $(DEST)/PlotTsProfs.m \
           $(DEST)/PlotVr.m \
           $(DEST)/PlotVt.m \
-          $(DEST)/SetPath.m
+          $(DEST)/SetPath.m \
+          $(DEST)/WriteData.m
 
 CONFIGS = \
           $(DIAG_DIR)/SST_26/Init24/DiagConfig \
