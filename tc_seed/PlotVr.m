@@ -14,12 +14,15 @@ DoDiff = 1;
 % limit view into plot
 Zmin = 0;
 Zmax = 15; %km
+%Rmin = 0;
+%Rmax = 250; %km
 Rmin = 40;
-Rmax = 70; %km
+Rmax = 70;
 Tmin = 120;
 Tmax = 140;
 
-Phase = 'CO-SS';
+%Phase = 'SS';
+Phase = 'CO_SS';
 
 % color/contour limits
 if (DoDiff == 1)
@@ -77,11 +80,12 @@ for icase = 1:length(Config.Cases)
 
   % plot
   if (DoDiff == 1)
-    Pfile  = sprintf('%s/vr_diff_%s.fig', PlotDir, Case);
-    Ptitle = sprintf('%s: %s-CLEAN: Vr (m/s)', Phase, CaseTitle);
+    Pfile  = sprintf('%s/vr_diff_%s_%s.fig', PlotDir, Phase, Case);
+    Ptitle = sprintf('%s: %s-CLEAN: Vr (m/s)', regexprep(Phase, '_', ' '), CaseTitle);
   else
-    Pfile  = sprintf('%s/vr_%s.fig', PlotDir, Case);
-    Ptitle = sprintf('%s: %s: Vr (m/s)', Phase, CaseTitle);
+    %Pfile  = sprintf('%s/vr_CO_%s.fig', PlotDir, Case);
+    Pfile  = sprintf('%s/vr_%s_%s.fig', PlotDir, Phase, Case);
+    Ptitle = sprintf('%s: %s: Vr (m/s)', regexprep(Phase, '_', ' '), CaseTitle);
   end
   Xlabel = sprintf('Radius (km)');
   Ylabel = sprintf('Height (km)');

@@ -75,6 +75,17 @@ end
 %             'pts_lh_tott_twp4_lht1p0_RB_LC_TCS_SD_C1000'
 %             'pts_lh_tott_twp4_lht1p0_RB_LC_TCS_SD_C2000' };
 
+%FigList = {
+%  'pts_relhum_CO_LC_TCS_SD_C0100'
+%  'pts_relhum_CO_LC_TCS_SD_C0500'
+%  'pts_relhum_CO_LC_TCS_SD_C1000'
+%  'pts_relhum_CO_LC_TCS_SD_C2000'
+%  'pts_theta_e_CO_LC_TCS_SD_C0100'
+%  'pts_theta_e_CO_LC_TCS_SD_C0500'
+%  'pts_theta_e_CO_LC_TCS_SD_C1000'
+%  'pts_theta_e_CO_LC_TCS_SD_C2000'
+%  };
+
 %FigList = { 'prs_vaptott_twp4_vt0p5_EW_RI_TCS_SD_C0500'
 %            'prs_vaptott_twp4_vt0p5_EW_RI_TCS_SD_C1000'
 %            'prs_vaptott_twp4_vt0p5_EW_RI_TCS_SD_C2000'
@@ -173,14 +184,24 @@ end
 %  'prs_theta_e_CO_SS_TCS_SD_C0500'
 %  'prs_theta_e_CO_SS_TCS_SD_C1000'
 %  'prs_theta_e_CO_SS_TCS_SD_C2000'
-%  'vr_diff_TCS_SD_C0500'
-%  'vr_diff_TCS_SD_C1000'
-%  'vr_diff_TCS_SD_C2000'
 %  };
-
 FigList = {
-  'TcAerosolIngest'
+  'vr_CO_SS_TCS_SD_C0100'
+  'vr_CO_SS_TCS_SD_C0500'
+  'vr_CO_SS_TCS_SD_C1000'
+  'vr_CO_SS_TCS_SD_C2000'
+  'vr_SS_TCS_SD_C0100'
+  'vr_SS_TCS_SD_C0500'
+  'vr_SS_TCS_SD_C1000'
+  'vr_SS_TCS_SD_C2000'
+  'vr_diff_CO_SS_TCS_SD_C0500'
+  'vr_diff_CO_SS_TCS_SD_C1000'
+  'vr_diff_CO_SS_TCS_SD_C2000'
   };
+
+% FigList = {
+%   'TcAerosolIngest'
+%   };
 
 for i = 1:length(FigList)
   InFile  = sprintf('%s/%s.fig', PlotDir, FigList{i});

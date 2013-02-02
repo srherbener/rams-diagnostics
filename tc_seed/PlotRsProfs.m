@@ -19,7 +19,8 @@ TempVar = 'tempc';
 Fig = figure;
 DefCmap = colormap;
 RbCmap = redblue;
-RevGrayCmap = flipud(colormap('gray'));
+GrayCmap = colormap('gray');
+RevGrayCmap = flipud(GrayCmap);
 close(Fig);
 
 
@@ -161,6 +162,10 @@ for iplot = 1:length(Config.ProfRsPlots)
         if (strcmp(Pspec, 'revgray'))
           % change last entry (max value) to white
           cmap = RevGrayCmap;
+        end
+        if (strcmp(Pspec, 'gray'))
+          % change last entry (max value) to white
+          cmap = GrayCmap;
         end
 
         CF = contourf(R, Zvals, Pdata);

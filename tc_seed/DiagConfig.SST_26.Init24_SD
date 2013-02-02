@@ -745,9 +745,9 @@ LinePlot: ccn4    SimTime  VintLhtOpen_RB_LC  TsAll  y Vertically_Integrated_Tot
 #ProfPlot: ccn4 pmeas_relhum_CO_SS relhum abs CO_SS:_Relative_Humidity RH_(%) Height_(km) SouthWest 50:0.1:100 0.0 15.0 prof_relhum_CO_SS.fig
 #ProfPlot: ccn4 pmeas_relhum_RB_SS relhum abs RB_SS:_Relative_Humidity RH_(%) Height_(km) NorthEast 50:0.1:100 0.0 15.0 prof_relhum_RB_SS.fig
 
-ProfPlot: ccn4 pmeas_theta_e_EW_SS theta_e abs EW_SS:_Equiv._Potential_Temperature Theta-E_(K) Height_(km) NorthWest 320:0.1:360 0.0 15.0 prof_theta_e_EW_SS.fig
-ProfPlot: ccn4 pmeas_theta_e_CO_SS theta_e abs CO_SS:_Equiv._Potential_Temperature Theta-E_(K) Height_(km) NorthWest 320:0.1:360 0.0 15.0 prof_theta_e_CO_SS.fig
-ProfPlot: ccn4 pmeas_theta_e_RB_SS theta_e abs RB_SS:_Equiv._Potential_Temperature Theta-E_(K) Height_(km) NorthWest 320:0.1:360 0.0 15.0 prof_theta_e_RB_SS.fig
+#ProfPlot: ccn4 pmeas_theta_e_EW_SS theta_e abs EW_SS:_Equiv._Potential_Temperature Theta-E_(K) Height_(km) NorthWest 320:0.1:360 0.0 15.0 prof_theta_e_EW_SS.fig
+#ProfPlot: ccn4 pmeas_theta_e_CO_SS theta_e abs CO_SS:_Equiv._Potential_Temperature Theta-E_(K) Height_(km) NorthWest 320:0.1:360 0.0 15.0 prof_theta_e_CO_SS.fig
+#ProfPlot: ccn4 pmeas_theta_e_RB_SS theta_e abs RB_SS:_Equiv._Potential_Temperature Theta-E_(K) Height_(km) NorthWest 320:0.1:360 0.0 15.0 prof_theta_e_RB_SS.fig
 
 #ProfPlot: ccn4 pmeas_aggr_twp4_EW_RI aggr abs EW_RI:_Aggregate_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.3:0.01:0.3 0.0 15.0 prof_aggr_twp4_EW_RI.fig
 #ProfPlot: ccn4 pmeas_aggr_twp4_CO_RI aggr abs CO_RI:_Aggregate_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.3:0.01:0.3 0.0 15.0 prof_aggr_twp4_CO_RI.fig
@@ -833,9 +833,9 @@ ProfPlot: ccn4 pmeas_theta_e_RB_SS theta_e abs RB_SS:_Equiv._Potential_Temperatu
 #ProfTsPlot: ccn4 pmeas_relhum_CO_LC relhum CO_LC:_Relative_Humidity_(%) Simulation_Time_(hr) Height_(km) 50 100 0.0 15.0 revgray 0 abs pts_relhum_CO_LC
 #ProfTsPlot: ccn4 pmeas_relhum_RB_LC relhum RB_LC:_Relative_Humidity_(%) Simulation_Time_(hr) Height_(km) 50 100 0.0 15.0 revgray 0 abs pts_relhum_RB_LC
 
-#ProfTsPlot: ccn4 pmeas_theta_e_EW_LC theta_e EW_LC:_Equiv._Potential_Temperature_(%) Simulation_Time_(hr) Height_(km) 320 360 0.0 15.0 revgray 0 abs pts_theta_e_EW_LC
-#ProfTsPlot: ccn4 pmeas_theta_e_CO_LC theta_e CO_LC:_Equiv._Potential_Temperature_(%) Simulation_Time_(hr) Height_(km) 320 360 0.0 15.0 revgray 0 abs pts_theta_e_CO_LC
-#ProfTsPlot: ccn4 pmeas_theta_e_RB_LC theta_e RB_LC:_Equiv._Potential_Temperature_(%) Simulation_Time_(hr) Height_(km) 320 360 0.0 15.0 revgray 0 abs pts_theta_e_RB_LC
+ProfTsPlot: ccn4 pmeas_theta_e_EW_LC theta_e EW_LC:_Equiv._Potential_Temperature_(K) Simulation_Time_(hr) Height_(km) 320 350 0.0 15.0 gray 0 abs pts_theta_e_EW_LC
+ProfTsPlot: ccn4 pmeas_theta_e_CO_LC theta_e CO_LC:_Equiv._Potential_Temperature_(K) Simulation_Time_(hr) Height_(km) 320 350 0.0 15.0 gray 0 abs pts_theta_e_CO_LC
+ProfTsPlot: ccn4 pmeas_theta_e_RB_LC theta_e RB_LC:_Equiv._Potential_Temperature_(K) Simulation_Time_(hr) Height_(km) 320 350 0.0 15.0 gray 0 abs pts_theta_e_RB_LC
 
 #ProfTsPlot: ccn4 pmeas_aggr_twp4_EW_LC aggr EW_LC:_Aggregate_Mix_Ratio_(g/kg Simulation_Time_(hr) Height_(km) 0 0.5 0.0 15.0 revgray 0 abs pts_aggr_twp4_EW_LC
 #ProfTsPlot: ccn4 pmeas_aggr_twp4_CO_LC aggr CO_LC:_Aggregate_Mix_Ratio_(g/kg Simulation_Time_(hr) Height_(km) 0 0.5 0.0 15.0 revgray 0 abs pts_aggr_twp4_CO_LC
