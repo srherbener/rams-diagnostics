@@ -154,6 +154,10 @@ AzavgEof: theta_e_SS  theta_e theta_e      0 250000     0  25000 432000 504000
 #Pmeas: pmeas_aggr_open_CO_LC AzAveragedData hist_aggr_open aggr wtmean 40.0  70.0 24.0 144
 #Pmeas: pmeas_aggr_open_RB_LC AzAveragedData hist_aggr_open aggr wtmean 70.0 150.0 24.0 144
 
+Pmeas: pmeas_speed_r_EW_LC AzAveragedData speed_r speed_r azavg  0.0  40.0 24.0 144
+Pmeas: pmeas_speed_r_CO_LC AzAveragedData speed_r speed_r azavg 40.0  70.0 24.0 144
+Pmeas: pmeas_speed_r_RB_LC AzAveragedData speed_r speed_r azavg 70.0 150.0 24.0 144
+
 # for radial series plots - temporally chopped up
 #Pmeas: pmeas_cloud_cm3_twp4_EW_RI AzAveragedData hist_cloud_cm3_twp4 cloud_cm3 wtmean  0.0  40.0  40.0  60.0
 #Pmeas: pmeas_cloud_cm3_twp4_CO_RI AzAveragedData hist_cloud_cm3_twp4 cloud_cm3 wtmean 40.0  70.0  40.0  60.0
@@ -311,11 +315,21 @@ AzavgEof: theta_e_SS  theta_e theta_e      0 250000     0  25000 432000 504000
 #Pmeas: pmeas_graup_all_CO_SS AzAveragedData hist_graup_all graup wtmean 40.0  70.0 120.0 140.0
 #Pmeas: pmeas_hail_all_CO_SS  AzAveragedData hist_hail_all  hail  wtmean 40.0  70.0 120.0 140.0
 
-Pmeas: pmeas_aggr_conc_m3_twp4_CO_SS   AzAveragedData hist_aggr_conc_m3_twp4   aggr_conc_m3   wtmean 40.0  70.0 120.0 140.0
-Pmeas: pmeas_snow_conc_cm3_twp4_CO_SS  AzAveragedData hist_snow_conc_cm3_twp4  snow_conc_cm3  wtmean 40.0  70.0 120.0 140.0
-Pmeas: pmeas_pris_conc_cm3_twp4_CO_SS  AzAveragedData hist_pris_conc_cm3_twp4  pris_conc_cm3  wtmean 40.0  70.0 120.0 140.0
-Pmeas: pmeas_graup_conc_m3_twp4_CO_SS  AzAveragedData hist_graup_conc_m3_twp4  graup_conc_m3  wtmean 40.0  70.0 120.0 140.0
-Pmeas: pmeas_hail_conc_m3_twp4_CO_SS   AzAveragedData hist_hail_conc_m3_twp4   hail_conc_m3   wtmean 40.0  70.0 120.0 140.0
+#Pmeas: pmeas_aggr_conc_m3_twp4_CO_SS   AzAveragedData hist_aggr_conc_m3_twp4   aggr_conc_m3   wtmean 40.0  70.0 120.0 140.0
+#Pmeas: pmeas_snow_conc_cm3_twp4_CO_SS  AzAveragedData hist_snow_conc_cm3_twp4  snow_conc_cm3  wtmean 40.0  70.0 120.0 140.0
+#Pmeas: pmeas_pris_conc_cm3_twp4_CO_SS  AzAveragedData hist_pris_conc_cm3_twp4  pris_conc_cm3  wtmean 40.0  70.0 120.0 140.0
+#Pmeas: pmeas_graup_conc_m3_twp4_CO_SS  AzAveragedData hist_graup_conc_m3_twp4  graup_conc_m3  wtmean 40.0  70.0 120.0 140.0
+#Pmeas: pmeas_hail_conc_m3_twp4_CO_SS   AzAveragedData hist_hail_conc_m3_twp4   hail_conc_m3   wtmean 40.0  70.0 120.0 140.0
+
+Pmeas: pmeas_speed_r_EW_RI AzAveragedData speed_r speed_r azavg  0.0  40.0  40.0  60.0
+Pmeas: pmeas_speed_r_CO_RI AzAveragedData speed_r speed_r azavg 40.0  70.0  40.0  60.0
+Pmeas: pmeas_speed_r_RB_RI AzAveragedData speed_r speed_r azavg 70.0 150.0  40.0  60.0
+Pmeas: pmeas_speed_r_EW_TR AzAveragedData speed_r speed_r azavg  0.0  40.0  80.0 100.0
+Pmeas: pmeas_speed_r_CO_TR AzAveragedData speed_r speed_r azavg 40.0  70.0  80.0 100.0
+Pmeas: pmeas_speed_r_RB_TR AzAveragedData speed_r speed_r azavg 70.0 150.0  80.0 100.0
+Pmeas: pmeas_speed_r_EW_SS AzAveragedData speed_r speed_r azavg  0.0  40.0 120.0 140.0
+Pmeas: pmeas_speed_r_CO_SS AzAveragedData speed_r speed_r azavg 40.0  70.0 120.0 140.0
+Pmeas: pmeas_speed_r_RB_SS AzAveragedData speed_r speed_r azavg 70.0 150.0 120.0 140.0
 
 # Time Averages
 #   LC -  24 to 144 hrs ( 86400 to 518400 sec)
@@ -781,6 +795,16 @@ LinePlot: ccn4    SimTime  VintLhtOpen_RB_LC  TsAll  y Vertically_Integrated_Tot
 #ProfPlot: ccn4 pmeas_graup_conc_m3_twp4_CO_SS graup_conc_m3 abs CO_SS:_Graupel_Number_Concen Concentration_(#/m^3) Height_(km) NorthEast -0.5:0.1:15 0.0 15.0 prof_graup_conc_m3_twp4_CO_SS.fig
 #ProfPlot: ccn4 pmeas_hail_conc_m3_twp4_CO_SS hail_conc_m3 abs CO_SS:_Hail_Number_Concen Concentration_(#/m^3) Height_(km) NorthEast -0.5:0.1:50 0.0 15.0 prof_hail_conc_m3_twp4_CO_SS.fig
 
+ProfPlot: ccn4 pmeas_speed_r_EW_RI speed_r abs EW_RI:_Radial_Wind_Speed Speed_(m/s) Height_(km) SouthEast -15:0.1:15 0.0 15.0 prof_speed_r_EW_RI.fig
+ProfPlot: ccn4 pmeas_speed_r_CO_RI speed_r abs CO_RI:_Radial_Wind_Speed Speed_(m/s) Height_(km) SouthEast -15:0.1:15 0.0 15.0 prof_speed_r_CO_RI.fig
+ProfPlot: ccn4 pmeas_speed_r_RB_RI speed_r abs RB_RI:_Radial_Wind_Speed Speed_(m/s) Height_(km) SouthEast -15:0.1:15 0.0 15.0 prof_speed_r_RB_RI.fig
+ProfPlot: ccn4 pmeas_speed_r_EW_TR speed_r abs EW_TR:_Radial_Wind_Speed Speed_(m/s) Height_(km) SouthEast -15:0.1:15 0.0 15.0 prof_speed_r_EW_TR.fig
+ProfPlot: ccn4 pmeas_speed_r_CO_TR speed_r abs CO_TR:_Radial_Wind_Speed Speed_(m/s) Height_(km) SouthEast -15:0.1:15 0.0 15.0 prof_speed_r_CO_TR.fig
+ProfPlot: ccn4 pmeas_speed_r_RB_TR speed_r abs RB_TR:_Radial_Wind_Speed Speed_(m/s) Height_(km) SouthEast -15:0.1:15 0.0 15.0 prof_speed_r_RB_TR.fig
+ProfPlot: ccn4 pmeas_speed_r_EW_SS speed_r abs EW_SS:_Radial_Wind_Speed Speed_(m/s) Height_(km) SouthEast -15:0.1:15 0.0 15.0 prof_speed_r_EW_SS.fig
+ProfPlot: ccn4 pmeas_speed_r_CO_SS speed_r abs CO_SS:_Radial_Wind_Speed Speed_(m/s) Height_(km) SouthEast -15:0.1:15 0.0 15.0 prof_speed_r_CO_SS.fig
+ProfPlot: ccn4 pmeas_speed_r_RB_SS speed_r abs RB_SS:_Radial_Wind_Speed Speed_(m/s) Height_(km) SouthEast -15:0.1:15 0.0 15.0 prof_speed_r_RB_SS.fig
+
 ######################## Profile Plots SD #############################
 #ProfPlot: ccn5_sd pmeas_lhf_twp4_0p1_EW_RI lh_frzt diff LH_Frz,_Eyewall,_Rapid_Intensification Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -0.5:0.025:0.5 0.0 20.0 prof_lhf_twp4_0p1_EW_RI_sd.jpg
 #ProfPlot: ccn5_sd pmeas_lhf_twp4_0p1_CO_RI lh_frzt diff LH_Frz,_Core,_Rapid_Intensification Avg_Latent_Heating_Difference_(K/hr) Height_(km) NorthEast -0.5:0.025:0.5 0.0 20.0 prof_lhf_twp4_0p1_CO_RI_sd.jpg
@@ -833,9 +857,9 @@ LinePlot: ccn4    SimTime  VintLhtOpen_RB_LC  TsAll  y Vertically_Integrated_Tot
 #ProfTsPlot: ccn4 pmeas_relhum_CO_LC relhum CO_LC:_Relative_Humidity_(%) Simulation_Time_(hr) Height_(km) 50 100 0.0 15.0 revgray 0 abs pts_relhum_CO_LC
 #ProfTsPlot: ccn4 pmeas_relhum_RB_LC relhum RB_LC:_Relative_Humidity_(%) Simulation_Time_(hr) Height_(km) 50 100 0.0 15.0 revgray 0 abs pts_relhum_RB_LC
 
-ProfTsPlot: ccn4 pmeas_theta_e_EW_LC theta_e EW_LC:_Equiv._Potential_Temperature_(K) Simulation_Time_(hr) Height_(km) 320 350 0.0 15.0 gray 0 abs pts_theta_e_EW_LC
-ProfTsPlot: ccn4 pmeas_theta_e_CO_LC theta_e CO_LC:_Equiv._Potential_Temperature_(K) Simulation_Time_(hr) Height_(km) 320 350 0.0 15.0 gray 0 abs pts_theta_e_CO_LC
-ProfTsPlot: ccn4 pmeas_theta_e_RB_LC theta_e RB_LC:_Equiv._Potential_Temperature_(K) Simulation_Time_(hr) Height_(km) 320 350 0.0 15.0 gray 0 abs pts_theta_e_RB_LC
+#ProfTsPlot: ccn4 pmeas_theta_e_EW_LC theta_e EW_LC:_Equiv._Potential_Temperature_(K) Simulation_Time_(hr) Height_(km) 320 350 0.0 15.0 gray 0 abs pts_theta_e_EW_LC
+#ProfTsPlot: ccn4 pmeas_theta_e_CO_LC theta_e CO_LC:_Equiv._Potential_Temperature_(K) Simulation_Time_(hr) Height_(km) 320 350 0.0 15.0 gray 0 abs pts_theta_e_CO_LC
+#ProfTsPlot: ccn4 pmeas_theta_e_RB_LC theta_e RB_LC:_Equiv._Potential_Temperature_(K) Simulation_Time_(hr) Height_(km) 320 350 0.0 15.0 gray 0 abs pts_theta_e_RB_LC
 
 #ProfTsPlot: ccn4 pmeas_aggr_twp4_EW_LC aggr EW_LC:_Aggregate_Mix_Ratio_(g/kg Simulation_Time_(hr) Height_(km) 0 0.5 0.0 15.0 revgray 0 abs pts_aggr_twp4_EW_LC
 #ProfTsPlot: ccn4 pmeas_aggr_twp4_CO_LC aggr CO_LC:_Aggregate_Mix_Ratio_(g/kg Simulation_Time_(hr) Height_(km) 0 0.5 0.0 15.0 revgray 0 abs pts_aggr_twp4_CO_LC
@@ -844,6 +868,10 @@ ProfTsPlot: ccn4 pmeas_theta_e_RB_LC theta_e RB_LC:_Equiv._Potential_Temperature
 #ProfTsPlot: ccn4 pmeas_aggr_open_EW_LC aggr EW_LC:_Aggregate_Mix_Ratio_(g/kg Simulation_Time_(hr) Height_(km) 0 0.5 0.0 15.0 revgray 0 abs pts_aggr_open_EW_LC
 #ProfTsPlot: ccn4 pmeas_aggr_open_CO_LC aggr CO_LC:_Aggregate_Mix_Ratio_(g/kg Simulation_Time_(hr) Height_(km) 0 0.5 0.0 15.0 revgray 0 abs pts_aggr_open_CO_LC
 #ProfTsPlot: ccn4 pmeas_aggr_open_RB_LC aggr RB_LC:_Aggregate_Mix_Ratio_(g/kg Simulation_Time_(hr) Height_(km) 0 0.5 0.0 15.0 revgray 0 abs pts_aggr_open_RB_LC
+
+ProfTsPlot: ccn4 pmeas_speed_r_EW_LC speed_r EW_LC:_Radial_Wind_Speed_(m/s) Simulation_Time_(hr) Height_(km) -20 20 0.0 15.0 redblue 0 abs pts_speed_r_EW_LC
+ProfTsPlot: ccn4 pmeas_speed_r_CO_LC speed_r CO_LC:_Radial_Wind_Speed_(m/s) Simulation_Time_(hr) Height_(km) -20 20 0.0 15.0 redblue 0 abs pts_speed_r_CO_LC
+ProfTsPlot: ccn4 pmeas_speed_r_RB_LC speed_r RB_LC:_Radial_Wind_Speed_(m/s) Simulation_Time_(hr) Height_(km) -20 20 0.0 15.0 redblue 0 abs pts_speed_r_RB_LC
 
 ####################### Radial profile #####################
 
@@ -939,15 +967,25 @@ ProfTsPlot: ccn4 pmeas_theta_e_RB_LC theta_e RB_LC:_Equiv._Potential_Temperature
 #ProfRsPlot: ccn4_diff pmeas_relhum_CO_SS    relhum  CO_SS:_Relative_Humidity_(%) Radius_(km) Height_(km)     -10  10  0.0 15.0 redblue 0 diff prs_relhum_CO_SS
 #ProfRsPlot: ccn4_diff pmeas_relhum_RB_SS    relhum  RB_SS:_Relative_Humidity_(%) Radius_(km) Height_(km)     -10  10  0.0 15.0 redblue 0 diff prs_relhum_RB_SS
 
-ProfRsPlot: ccn4_diff pmeas_theta_e_EW_RI    theta_e  EW_RI:_Equiv._Potential_Temperature(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_EW_RI
-ProfRsPlot: ccn4_diff pmeas_theta_e_CO_RI    theta_e  CO_RI:_Equiv._Potential_Temperature(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_CO_RI
-ProfRsPlot: ccn4_diff pmeas_theta_e_RB_RI    theta_e  RB_RI:_Equiv._Potential_Temperature(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_RB_RI
-ProfRsPlot: ccn4_diff pmeas_theta_e_EW_TR    theta_e  EW_TR:_Equiv._Potential_Temperature(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_EW_TR
-ProfRsPlot: ccn4_diff pmeas_theta_e_CO_TR    theta_e  CO_TR:_Equiv._Potential_Temperature(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_CO_TR
-ProfRsPlot: ccn4_diff pmeas_theta_e_RB_TR    theta_e  RB_TR:_Equiv._Potential_Temperature(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_RB_TR
-ProfRsPlot: ccn4_diff pmeas_theta_e_EW_SS    theta_e  EW_SS:_Equiv._Potential_Temperature(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_EW_SS
-ProfRsPlot: ccn4_diff pmeas_theta_e_CO_SS    theta_e  CO_SS:_Equiv._Potential_Temperature(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_CO_SS
-ProfRsPlot: ccn4_diff pmeas_theta_e_RB_SS    theta_e  RB_SS:_Equiv._Potential_Temperature(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_RB_SS
+ProfRsPlot: ccn4_diff pmeas_theta_e_EW_RI    theta_e  EW_RI:_Equiv._Potential_Temperature_(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_EW_RI
+ProfRsPlot: ccn4_diff pmeas_theta_e_CO_RI    theta_e  CO_RI:_Equiv._Potential_Temperature_(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_CO_RI
+ProfRsPlot: ccn4_diff pmeas_theta_e_RB_RI    theta_e  RB_RI:_Equiv._Potential_Temperature_(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_RB_RI
+ProfRsPlot: ccn4_diff pmeas_theta_e_EW_TR    theta_e  EW_TR:_Equiv._Potential_Temperature_(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_EW_TR
+ProfRsPlot: ccn4_diff pmeas_theta_e_CO_TR    theta_e  CO_TR:_Equiv._Potential_Temperature_(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_CO_TR
+ProfRsPlot: ccn4_diff pmeas_theta_e_RB_TR    theta_e  RB_TR:_Equiv._Potential_Temperature_(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_RB_TR
+ProfRsPlot: ccn4_diff pmeas_theta_e_EW_SS    theta_e  EW_SS:_Equiv._Potential_Temperature_(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_EW_SS
+ProfRsPlot: ccn4_diff pmeas_theta_e_CO_SS    theta_e  CO_SS:_Equiv._Potential_Temperature_(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_CO_SS
+ProfRsPlot: ccn4_diff pmeas_theta_e_RB_SS    theta_e  RB_SS:_Equiv._Potential_Temperature_(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_RB_SS
+
+ProfRsPlot: ccn4_diff pmeas_speed_r_EW_RI    speed_r  EW_RI:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_speed_r_EW_RI
+ProfRsPlot: ccn4_diff pmeas_speed_r_CO_RI    speed_r  CO_RI:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_speed_r_CO_RI
+ProfRsPlot: ccn4_diff pmeas_speed_r_RB_RI    speed_r  RB_RI:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_speed_r_RB_RI
+ProfRsPlot: ccn4_diff pmeas_speed_r_EW_TR    speed_r  EW_TR:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_speed_r_EW_TR
+ProfRsPlot: ccn4_diff pmeas_speed_r_CO_TR    speed_r  CO_TR:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_speed_r_CO_TR
+ProfRsPlot: ccn4_diff pmeas_speed_r_RB_TR    speed_r  RB_TR:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_speed_r_RB_TR
+ProfRsPlot: ccn4_diff pmeas_speed_r_EW_SS    speed_r  EW_SS:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_speed_r_EW_SS
+ProfRsPlot: ccn4_diff pmeas_speed_r_CO_SS    speed_r  CO_SS:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_speed_r_CO_SS
+ProfRsPlot: ccn4_diff pmeas_speed_r_RB_SS    speed_r  RB_SS:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_speed_r_RB_SS
 
 ####################### Plot Sets ############################
 PlotSet: ccn4    4 TCS_SD_C0100 CCN:_100/cc -b TCS_SD_C0500 CCN:_500/cc --b TCS_SD_C1000 CCN:_1000/cc --r TCS_SD_C2000 CCN:_2000/cc -r

@@ -19,6 +19,7 @@ function [ ] = GenProfMeas( ConfigFile )
 [ Config ] = ReadConfig(ConfigFile);
 
 DiagDir = Config.DiagDir;
+UndefVal = Config.UndefVal;
 
 % Make sure output directory exists
 if (exist(DiagDir, 'dir') ~= 7)
@@ -71,26 +72,49 @@ for icase = 1:length(Config.Cases)
     T1 = find(T/3600 >= Tmin, 1, 'first'); % Tmin and Tmax are in hrs
     T2 = find(T/3600 <= Tmax, 1, 'last');
 
-    % CFAD
-    %
-    % Sum across the r and t dimensions (1st and 4th)
-    % limiting to the selected values
-    CFAD = squeeze(sum(sum(HIST(R1:R2,:,:,T1:T2),1),4));
+    if (strcmp(Method, 'azavg'))
+      % Will be workign with azimuthally averaged data, so there are no histograms for the 
+      % horizontal data. Can make PROF, PROF_TS and PROF_RS but cannot make CFAD. Just use
+      % PROF for CFAD so that the output section has something to write out.
+      %
+      % HIST will be organized as (r,d,z,t) where d ia a dummy dimension (size 1, value 0)
 
-    % Single Profile (corresponiding to CFAD)
-    [ PROF ] = ReduceHists(CFAD, 1, B, Method);
+      % In cases where no data was selected, the resulting entry will be UndefVal. Change
+      % these to nans before doing averaging.
+      HIST(HIST == UndefVal) = nan;
+      
+      % Single profile
+      PROF = squeeze(nanmean(nanmean(HIST(R1:R2,:,:,T1:T2),1),4));
+      CFAD = PROF;
 
-    % Profile Time Series
-    %
-    % Sum across only the r dimension, then reduce the bin dimension.
-    R_HISTS = squeeze(sum(HIST(R1:R2,:,:,T1:T2),1));
-    [ PROF_TS ] = ReduceHists(R_HISTS, 1, B, Method);
+      % Profile time series (take mean over radius)
+      PROF_TS = squeeze(nanmean(HIST(R1:R2,:,:,T1:T2),1));
 
-    % Profile Radial Series
-    %
-    % Sum acroos only the t dimension, then reduce the bin dimension.
-    T_HISTS = squeeze(sum(HIST(R1:R2,:,:,T1:T2),4));
-    [ PROF_RS ] = ReduceHists(T_HISTS, 2, B, Method);
+      % Profile radial series (take mean over time)
+      PROF_RS = squeeze(nanmean(HIST(R1:R2,:,:,T1:T2),4));
+    else
+      % Will be working on histogram data, so create profiles with ReduceHists()
+
+      % CFAD
+      % Sum across the r and t dimensions (1st and 4th)
+      % limiting to the selected values
+      CFAD = squeeze(sum(sum(HIST(R1:R2,:,:,T1:T2),1),4));
+  
+      % Single Profile (corresponiding to CFAD)
+      [ PROF ] = ReduceHists(CFAD, 1, B, Method);
+  
+      % Profile Time Series
+      %
+      % Sum across only the r dimension, then reduce the bin dimension.
+      R_HISTS = squeeze(sum(HIST(R1:R2,:,:,T1:T2),1));
+      [ PROF_TS ] = ReduceHists(R_HISTS, 1, B, Method);
+  
+      % Profile Radial Series
+      %
+      % Sum acroos only the t dimension, then reduce the bin dimension.
+      T_HISTS = squeeze(sum(HIST(R1:R2,:,:,T1:T2),4));
+      [ PROF_RS ] = ReduceHists(T_HISTS, 2, B, Method);
+    end
 
     fprintf('Writing file: %s\n', OutFile);
     fprintf('\n');
