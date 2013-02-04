@@ -123,6 +123,10 @@ AzavgEof: theta_e_SS  theta_e theta_e      0 250000     0  25000 432000 504000
 #Pmeas: pmeas_lh_tott_open_lht1p0_CO_LC AzAveragedData hist_lh_tott_open_lht1p0  lh_tott  wtmean  40.0  70.0  24.0 144.0
 #Pmeas: pmeas_lh_tott_open_lht1p0_RB_LC AzAveragedData hist_lh_tott_open_lht1p0  lh_tott  wtmean  70.0 150.0  24.0 144.0
 
+Pmeas: pmeas_vaptott_vt0p5_EW_LC  AzAveragedData hist_vaptott_vt0p5   vaptott  wtmean   0.0  40.0  24.0 144.0
+Pmeas: pmeas_vaptott_vt0p5_CO_LC  AzAveragedData hist_vaptott_vt0p5   vaptott  wtmean  40.0  70.0  24.0 144.0
+Pmeas: pmeas_vaptott_vt0p5_RB_LC  AzAveragedData hist_vaptott_vt0p5   vaptott  wtmean  70.0 150.0  24.0 144.0
+
 #Pmeas: pmeas_vaptott_twp4_vt0p5_EW_LC  AzAveragedData hist_vaptott_twp4_vt0p5   vaptott  wtmean   0.0  40.0  24.0 144.0
 #Pmeas: pmeas_vaptott_twp4_vt0p5_CO_LC  AzAveragedData hist_vaptott_twp4_vt0p5   vaptott  wtmean  40.0  70.0  24.0 144.0
 #Pmeas: pmeas_vaptott_twp4_vt0p5_RB_LC  AzAveragedData hist_vaptott_twp4_vt0p5   vaptott  wtmean  70.0 150.0  24.0 144.0
@@ -154,9 +158,9 @@ AzavgEof: theta_e_SS  theta_e theta_e      0 250000     0  25000 432000 504000
 #Pmeas: pmeas_aggr_open_CO_LC AzAveragedData hist_aggr_open aggr wtmean 40.0  70.0 24.0 144
 #Pmeas: pmeas_aggr_open_RB_LC AzAveragedData hist_aggr_open aggr wtmean 70.0 150.0 24.0 144
 
-Pmeas: pmeas_speed_r_EW_LC AzAveragedData speed_r speed_r azavg  0.0  40.0 24.0 144
-Pmeas: pmeas_speed_r_CO_LC AzAveragedData speed_r speed_r azavg 40.0  70.0 24.0 144
-Pmeas: pmeas_speed_r_RB_LC AzAveragedData speed_r speed_r azavg 70.0 150.0 24.0 144
+#Pmeas: pmeas_speed_r_EW_LC AzAveragedData speed_r speed_r azavg  0.0  40.0 24.0 144
+#Pmeas: pmeas_speed_r_CO_LC AzAveragedData speed_r speed_r azavg 40.0  70.0 24.0 144
+#Pmeas: pmeas_speed_r_RB_LC AzAveragedData speed_r speed_r azavg 70.0 150.0 24.0 144
 
 # for radial series plots - temporally chopped up
 #Pmeas: pmeas_cloud_cm3_twp4_EW_RI AzAveragedData hist_cloud_cm3_twp4 cloud_cm3 wtmean  0.0  40.0  40.0  60.0
@@ -321,15 +325,15 @@ Pmeas: pmeas_speed_r_RB_LC AzAveragedData speed_r speed_r azavg 70.0 150.0 24.0 
 #Pmeas: pmeas_graup_conc_m3_twp4_CO_SS  AzAveragedData hist_graup_conc_m3_twp4  graup_conc_m3  wtmean 40.0  70.0 120.0 140.0
 #Pmeas: pmeas_hail_conc_m3_twp4_CO_SS   AzAveragedData hist_hail_conc_m3_twp4   hail_conc_m3   wtmean 40.0  70.0 120.0 140.0
 
-Pmeas: pmeas_speed_r_EW_RI AzAveragedData speed_r speed_r azavg  0.0  40.0  40.0  60.0
-Pmeas: pmeas_speed_r_CO_RI AzAveragedData speed_r speed_r azavg 40.0  70.0  40.0  60.0
-Pmeas: pmeas_speed_r_RB_RI AzAveragedData speed_r speed_r azavg 70.0 150.0  40.0  60.0
-Pmeas: pmeas_speed_r_EW_TR AzAveragedData speed_r speed_r azavg  0.0  40.0  80.0 100.0
-Pmeas: pmeas_speed_r_CO_TR AzAveragedData speed_r speed_r azavg 40.0  70.0  80.0 100.0
-Pmeas: pmeas_speed_r_RB_TR AzAveragedData speed_r speed_r azavg 70.0 150.0  80.0 100.0
-Pmeas: pmeas_speed_r_EW_SS AzAveragedData speed_r speed_r azavg  0.0  40.0 120.0 140.0
-Pmeas: pmeas_speed_r_CO_SS AzAveragedData speed_r speed_r azavg 40.0  70.0 120.0 140.0
-Pmeas: pmeas_speed_r_RB_SS AzAveragedData speed_r speed_r azavg 70.0 150.0 120.0 140.0
+#Pmeas: pmeas_speed_r_EW_RI AzAveragedData speed_r speed_r azavg  0.0  40.0  40.0  60.0
+#Pmeas: pmeas_speed_r_CO_RI AzAveragedData speed_r speed_r azavg 40.0  70.0  40.0  60.0
+#Pmeas: pmeas_speed_r_RB_RI AzAveragedData speed_r speed_r azavg 70.0 150.0  40.0  60.0
+#Pmeas: pmeas_speed_r_EW_TR AzAveragedData speed_r speed_r azavg  0.0  40.0  80.0 100.0
+#Pmeas: pmeas_speed_r_CO_TR AzAveragedData speed_r speed_r azavg 40.0  70.0  80.0 100.0
+#Pmeas: pmeas_speed_r_RB_TR AzAveragedData speed_r speed_r azavg 70.0 150.0  80.0 100.0
+#Pmeas: pmeas_speed_r_EW_SS AzAveragedData speed_r speed_r azavg  0.0  40.0 120.0 140.0
+#Pmeas: pmeas_speed_r_CO_SS AzAveragedData speed_r speed_r azavg 40.0  70.0 120.0 140.0
+#Pmeas: pmeas_speed_r_RB_SS AzAveragedData speed_r speed_r azavg 70.0 150.0 120.0 140.0
 
 # Time Averages
 #   LC -  24 to 144 hrs ( 86400 to 518400 sec)
@@ -347,20 +351,26 @@ Tavg: tavg_speed_r_TR AzAveragedData speed_r speed_r 288000 360000
 Tavg: tavg_speed_r_SS AzAveragedData speed_r speed_r 432000 504000
 
 # Vertically integrated time series
-VintTs: vintts_vaptott_twp4_vt0p5_EW_LC  DIAGS pmeas_vaptott_twp4_vt0p5_EW_LC  ProfTs_vaptott
-VintTs: vintts_lh_tott_twp4_lht1p0_EW_LC DIAGS pmeas_lh_tott_twp4_lht1p0_EW_LC ProfTs_lh_tott
+#VintTs: vintts_vaptott_twp4_vt0p5_EW_LC  DIAGS pmeas_vaptott_twp4_vt0p5_EW_LC  ProfTs_vaptott
+#VintTs: vintts_lh_tott_twp4_lht1p0_EW_LC DIAGS pmeas_lh_tott_twp4_lht1p0_EW_LC ProfTs_lh_tott
 
-VintTs: vintts_vaptott_twp4_vt0p5_CO_LC  DIAGS pmeas_vaptott_twp4_vt0p5_CO_LC  ProfTs_vaptott
-VintTs: vintts_lh_tott_twp4_lht1p0_CO_LC DIAGS pmeas_lh_tott_twp4_lht1p0_CO_LC ProfTs_lh_tott
+#VintTs: vintts_vaptott_twp4_vt0p5_CO_LC  DIAGS pmeas_vaptott_twp4_vt0p5_CO_LC  ProfTs_vaptott
+#VintTs: vintts_lh_tott_twp4_lht1p0_CO_LC DIAGS pmeas_lh_tott_twp4_lht1p0_CO_LC ProfTs_lh_tott
 
-VintTs: vintts_vaptott_twp4_vt0p5_RB_LC  DIAGS pmeas_vaptott_twp4_vt0p5_RB_LC  ProfTs_vaptott
-VintTs: vintts_lh_tott_twp4_lht1p0_RB_LC DIAGS pmeas_lh_tott_twp4_lht1p0_RB_LC ProfTs_lh_tott
+#VintTs: vintts_vaptott_twp4_vt0p5_RB_LC  DIAGS pmeas_vaptott_twp4_vt0p5_RB_LC  ProfTs_vaptott
+#VintTs: vintts_lh_tott_twp4_lht1p0_RB_LC DIAGS pmeas_lh_tott_twp4_lht1p0_RB_LC ProfTs_lh_tott
 
-VintTs: vintts_vaptott_open_vt0p5_CO_LC  DIAGS pmeas_vaptott_open_vt0p5_CO_LC  ProfTs_vaptott
-VintTs: vintts_lh_tott_open_lht1p0_CO_LC DIAGS pmeas_lh_tott_open_lht1p0_CO_LC ProfTs_lh_tott
+#VintTs: vintts_vaptott_open_vt0p5_CO_LC  DIAGS pmeas_vaptott_open_vt0p5_CO_LC  ProfTs_vaptott
+#VintTs: vintts_lh_tott_open_lht1p0_CO_LC DIAGS pmeas_lh_tott_open_lht1p0_CO_LC ProfTs_lh_tott
 
-VintTs: vintts_vaptott_open_vt0p5_RB_LC  DIAGS pmeas_vaptott_open_vt0p5_RB_LC  ProfTs_vaptott
-VintTs: vintts_lh_tott_open_lht1p0_RB_LC DIAGS pmeas_lh_tott_open_lht1p0_RB_LC ProfTs_lh_tott
+#VintTs: vintts_vaptott_open_vt0p5_RB_LC  DIAGS pmeas_vaptott_open_vt0p5_RB_LC  ProfTs_vaptott
+#VintTs: vintts_lh_tott_open_lht1p0_RB_LC DIAGS pmeas_lh_tott_open_lht1p0_RB_LC ProfTs_lh_tott
+
+VintTs: vintts_vaptott_all_vt0p5_CO_LC  DIAGS pmeas_vaptott_vt0p5_CO_LC  ProfTs_vaptott
+VintTs: vintts_lh_tott_all_lht1p0_CO_LC DIAGS pmeas_lh_tott_lht1p0_CO_LC ProfTs_lh_tott
+
+VintTs: vintts_vaptott_all_vt0p5_RB_LC  DIAGS pmeas_vaptott_vt0p5_RB_LC  ProfTs_vaptott
+VintTs: vintts_lh_tott_all_lht1p0_RB_LC DIAGS pmeas_lh_tott_lht1p0_RB_LC ProfTs_lh_tott
 
 # plot config
 
@@ -436,6 +446,12 @@ LinePlot: ccn4    SimTime  VintLhtOpen_CO_LC  TsAll  y Vertically_Integrated_Tot
 
 LinePlot: ccn4    SimTime  VintVaptOpen_RB_LC TsAll  y Vertically_Integrated_Vapor_Diffusion:_RB       NorthEast TS_Vint_VaptOpen_RB.fig
 LinePlot: ccn4    SimTime  VintLhtOpen_RB_LC  TsAll  y Vertically_Integrated_Total_Latent_Heating:_RB  NorthEast TS_Vint_LhtOpen_RB.fig
+
+LinePlot: ccn4    SimTime  VintVaptAll_CO_LC TsAll  y Vertically_Integrated_Vapor_Diffusion:_CO       NorthEast TS_Vint_VaptAll_CO.fig
+LinePlot: ccn4    SimTime  VintLhtAll_CO_LC  TsAll  y Vertically_Integrated_Total_Latent_Heating:_CO  NorthEast TS_Vint_LhtAll_CO.fig
+
+LinePlot: ccn4    SimTime  VintVaptAll_RB_LC TsAll  y Vertically_Integrated_Vapor_Diffusion:_RB       NorthEast TS_Vint_VaptAll_RB.fig
+LinePlot: ccn4    SimTime  VintLhtAll_RB_LC  TsAll  y Vertically_Integrated_Total_Latent_Heating:_RB  NorthEast TS_Vint_LhtAll_RB.fig
 
 ####################### Profile Plots #############################
 #ProfPlot: ccn5 pmeas_lh_tott_twp4_lht1p0_EW_RI lh_tott abs EW_RI:_LH_Tot Avg_Latent_Heating_(K/hr) Height_(km) NorthWest -20:0.5:20 0.0 15.0 prof_lh_tott_twp4_lht1p0_EW_RI.jpg
@@ -869,9 +885,9 @@ ProfPlot: ccn4 pmeas_speed_r_RB_SS speed_r abs RB_SS:_Radial_Wind_Speed Speed_(m
 #ProfTsPlot: ccn4 pmeas_aggr_open_CO_LC aggr CO_LC:_Aggregate_Mix_Ratio_(g/kg Simulation_Time_(hr) Height_(km) 0 0.5 0.0 15.0 revgray 0 abs pts_aggr_open_CO_LC
 #ProfTsPlot: ccn4 pmeas_aggr_open_RB_LC aggr RB_LC:_Aggregate_Mix_Ratio_(g/kg Simulation_Time_(hr) Height_(km) 0 0.5 0.0 15.0 revgray 0 abs pts_aggr_open_RB_LC
 
-ProfTsPlot: ccn4 pmeas_speed_r_EW_LC speed_r EW_LC:_Radial_Wind_Speed_(m/s) Simulation_Time_(hr) Height_(km) -20 20 0.0 15.0 redblue 0 abs pts_speed_r_EW_LC
-ProfTsPlot: ccn4 pmeas_speed_r_CO_LC speed_r CO_LC:_Radial_Wind_Speed_(m/s) Simulation_Time_(hr) Height_(km) -20 20 0.0 15.0 redblue 0 abs pts_speed_r_CO_LC
-ProfTsPlot: ccn4 pmeas_speed_r_RB_LC speed_r RB_LC:_Radial_Wind_Speed_(m/s) Simulation_Time_(hr) Height_(km) -20 20 0.0 15.0 redblue 0 abs pts_speed_r_RB_LC
+#ProfTsPlot: ccn4 pmeas_speed_r_EW_LC speed_r EW_LC:_Radial_Wind_Speed_(m/s) Simulation_Time_(hr) Height_(km) -20 20 0.0 15.0 redblue 0 abs pts_speed_r_EW_LC
+#ProfTsPlot: ccn4 pmeas_speed_r_CO_LC speed_r CO_LC:_Radial_Wind_Speed_(m/s) Simulation_Time_(hr) Height_(km) -20 20 0.0 15.0 redblue 0 abs pts_speed_r_CO_LC
+#ProfTsPlot: ccn4 pmeas_speed_r_RB_LC speed_r RB_LC:_Radial_Wind_Speed_(m/s) Simulation_Time_(hr) Height_(km) -20 20 0.0 15.0 redblue 0 abs pts_speed_r_RB_LC
 
 ####################### Radial profile #####################
 
@@ -967,25 +983,29 @@ ProfTsPlot: ccn4 pmeas_speed_r_RB_LC speed_r RB_LC:_Radial_Wind_Speed_(m/s) Simu
 #ProfRsPlot: ccn4_diff pmeas_relhum_CO_SS    relhum  CO_SS:_Relative_Humidity_(%) Radius_(km) Height_(km)     -10  10  0.0 15.0 redblue 0 diff prs_relhum_CO_SS
 #ProfRsPlot: ccn4_diff pmeas_relhum_RB_SS    relhum  RB_SS:_Relative_Humidity_(%) Radius_(km) Height_(km)     -10  10  0.0 15.0 redblue 0 diff prs_relhum_RB_SS
 
-ProfRsPlot: ccn4_diff pmeas_theta_e_EW_RI    theta_e  EW_RI:_Equiv._Potential_Temperature_(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_EW_RI
-ProfRsPlot: ccn4_diff pmeas_theta_e_CO_RI    theta_e  CO_RI:_Equiv._Potential_Temperature_(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_CO_RI
-ProfRsPlot: ccn4_diff pmeas_theta_e_RB_RI    theta_e  RB_RI:_Equiv._Potential_Temperature_(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_RB_RI
-ProfRsPlot: ccn4_diff pmeas_theta_e_EW_TR    theta_e  EW_TR:_Equiv._Potential_Temperature_(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_EW_TR
-ProfRsPlot: ccn4_diff pmeas_theta_e_CO_TR    theta_e  CO_TR:_Equiv._Potential_Temperature_(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_CO_TR
-ProfRsPlot: ccn4_diff pmeas_theta_e_RB_TR    theta_e  RB_TR:_Equiv._Potential_Temperature_(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_RB_TR
-ProfRsPlot: ccn4_diff pmeas_theta_e_EW_SS    theta_e  EW_SS:_Equiv._Potential_Temperature_(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_EW_SS
-ProfRsPlot: ccn4_diff pmeas_theta_e_CO_SS    theta_e  CO_SS:_Equiv._Potential_Temperature_(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_CO_SS
-ProfRsPlot: ccn4_diff pmeas_theta_e_RB_SS    theta_e  RB_SS:_Equiv._Potential_Temperature_(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_RB_SS
+#ProfRsPlot: ccn4_diff pmeas_theta_e_EW_RI    theta_e  EW_RI:_Equiv._Potential_Temperature_(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_EW_RI
+#ProfRsPlot: ccn4_diff pmeas_theta_e_CO_RI    theta_e  CO_RI:_Equiv._Potential_Temperature_(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_CO_RI
+#ProfRsPlot: ccn4_diff pmeas_theta_e_RB_RI    theta_e  RB_RI:_Equiv._Potential_Temperature_(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_RB_RI
+#ProfRsPlot: ccn4_diff pmeas_theta_e_EW_TR    theta_e  EW_TR:_Equiv._Potential_Temperature_(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_EW_TR
+#ProfRsPlot: ccn4_diff pmeas_theta_e_CO_TR    theta_e  CO_TR:_Equiv._Potential_Temperature_(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_CO_TR
+#ProfRsPlot: ccn4_diff pmeas_theta_e_RB_TR    theta_e  RB_TR:_Equiv._Potential_Temperature_(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_RB_TR
+#ProfRsPlot: ccn4_diff pmeas_theta_e_EW_SS    theta_e  EW_SS:_Equiv._Potential_Temperature_(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_EW_SS
+#ProfRsPlot: ccn4_diff pmeas_theta_e_CO_SS    theta_e  CO_SS:_Equiv._Potential_Temperature_(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_CO_SS
+#ProfRsPlot: ccn4_diff pmeas_theta_e_RB_SS    theta_e  RB_SS:_Equiv._Potential_Temperature_(K) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_theta_e_RB_SS
 
-ProfRsPlot: ccn4_diff pmeas_speed_r_EW_RI    speed_r  EW_RI:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_speed_r_EW_RI
-ProfRsPlot: ccn4_diff pmeas_speed_r_CO_RI    speed_r  CO_RI:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_speed_r_CO_RI
-ProfRsPlot: ccn4_diff pmeas_speed_r_RB_RI    speed_r  RB_RI:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_speed_r_RB_RI
-ProfRsPlot: ccn4_diff pmeas_speed_r_EW_TR    speed_r  EW_TR:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_speed_r_EW_TR
-ProfRsPlot: ccn4_diff pmeas_speed_r_CO_TR    speed_r  CO_TR:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_speed_r_CO_TR
-ProfRsPlot: ccn4_diff pmeas_speed_r_RB_TR    speed_r  RB_TR:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_speed_r_RB_TR
-ProfRsPlot: ccn4_diff pmeas_speed_r_EW_SS    speed_r  EW_SS:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_speed_r_EW_SS
-ProfRsPlot: ccn4_diff pmeas_speed_r_CO_SS    speed_r  CO_SS:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_speed_r_CO_SS
-ProfRsPlot: ccn4_diff pmeas_speed_r_RB_SS    speed_r  RB_SS:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_speed_r_RB_SS
+#ProfRsPlot: ccn4_diff pmeas_speed_r_EW_RI    speed_r  EW_RI:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_speed_r_EW_RI
+#ProfRsPlot: ccn4_diff pmeas_speed_r_CO_RI    speed_r  CO_RI:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_speed_r_CO_RI
+#ProfRsPlot: ccn4_diff pmeas_speed_r_RB_RI    speed_r  RB_RI:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_speed_r_RB_RI
+#ProfRsPlot: ccn4_diff pmeas_speed_r_EW_TR    speed_r  EW_TR:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_speed_r_EW_TR
+#ProfRsPlot: ccn4_diff pmeas_speed_r_CO_TR    speed_r  CO_TR:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_speed_r_CO_TR
+#ProfRsPlot: ccn4_diff pmeas_speed_r_RB_TR    speed_r  RB_TR:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_speed_r_RB_TR
+#ProfRsPlot: ccn4_diff pmeas_speed_r_EW_SS    speed_r  EW_SS:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_speed_r_EW_SS
+#ProfRsPlot: ccn4_diff pmeas_speed_r_CO_SS    speed_r  CO_SS:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_speed_r_CO_SS
+#ProfRsPlot: ccn4_diff pmeas_speed_r_RB_SS    speed_r  RB_SS:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -5  5  0.0 15.0 redblue 0 diff prs_speed_r_RB_SS
+
+ProfRsPlot: ccn4 pmeas_speed_r_EW_SS    speed_r  EW_SS:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -10  10  0.0 15.0 redblue 0 abs prs_speed_r_abs_EW_SS
+ProfRsPlot: ccn4 pmeas_speed_r_CO_SS    speed_r  CO_SS:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -10  10  0.0 15.0 redblue 0 abs prs_speed_r_abs_CO_SS
+ProfRsPlot: ccn4 pmeas_speed_r_RB_SS    speed_r  RB_SS:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -10  10  0.0 15.0 redblue 0 abs prs_speed_r_abs_RB_SS
 
 ####################### Plot Sets ############################
 PlotSet: ccn4    4 TCS_SD_C0100 CCN:_100/cc -b TCS_SD_C0500 CCN:_500/cc --b TCS_SD_C1000 CCN:_1000/cc --r TCS_SD_C2000 CCN:_2000/cc -r
@@ -1014,8 +1034,14 @@ PlotVar: VintLht_RB_LC   VintTs_lh_tott DIAGS/vintts_lh_tott_twp4_lht1p0_RB_LC L
 PlotVar: VintVaptOpen_CO_LC  VintTs_vaptott DIAGS/vintts_vaptott_open_vt0p5_CO_LC  Vapor_Diffusion g/(kg_km) -20  30 1e-3
 PlotVar: VintLhtOpen_CO_LC   VintTs_lh_tott DIAGS/vintts_lh_tott_open_lht1p0_CO_LC LH_Vaporization K/(hr_km) -30 100 1e-3
 
-PlotVar: VintVaptOpen_RB_LC  VintTs_vaptott DIAGS/vintts_vaptott_open_vt0p5_RB_LC  Vapor_Diffusion g/(kg_km) -10 20 1e-3
-PlotVar: VintLhtOpen_RB_LC   VintTs_lh_tott DIAGS/vintts_lh_tott_open_lht1p0_RB_LC LH_Vaporization K/(hr_km) -20 70 1e-3
+PlotVar: VintVaptOpen_RB_LC  VintTs_vaptott DIAGS/vintts_vaptott_open_vt0p5_RB_LC  Vapor_Diffusion g/(kg_km) -20 10 1e-3
+PlotVar: VintLhtOpen_RB_LC   VintTs_lh_tott DIAGS/vintts_lh_tott_open_lht1p0_RB_LC LH_Vaporization K/(hr_km) -40 50 1e-3
+
+PlotVar: VintVaptAll_CO_LC  VintTs_vaptott DIAGS/vintts_vaptott_all_vt0p5_CO_LC  Vapor_Diffusion g/(kg_km) -20  30 1e-3
+PlotVar: VintLhtAll_CO_LC   VintTs_lh_tott DIAGS/vintts_lh_tott_all_lht1p0_CO_LC LH_Vaporization K/(hr_km) -30 100 1e-3
+
+PlotVar: VintVaptAll_RB_LC  VintTs_vaptott DIAGS/vintts_vaptott_all_vt0p5_RB_LC  Vapor_Diffusion g/(kg_km) -10 10 1e-3
+PlotVar: VintLhtAll_RB_LC   VintTs_lh_tott DIAGS/vintts_lh_tott_all_lht1p0_RB_LC LH_Vaporization K/(hr_km) -30 40 1e-3
 
 
 PlotVar: VtAllRI    speed_t    DIAGS/tavg_speed_t_RI Vt     m/s     0  50     1
