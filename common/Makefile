@@ -9,6 +9,7 @@ SCRIPTS = \
           $(DEST)/AdiffEofPlot.m \
           $(DEST)/AzavgDiffEof.m \
           $(DEST)/GenAdiffEofPlots.m \
+          $(DEST)/GenDeltapTseries.m \
           $(DEST)/GenHistMeas.m \
           $(DEST)/GenLinePlots.m \
           $(DEST)/GenProfMeas.m \

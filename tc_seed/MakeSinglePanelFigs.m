@@ -33,6 +33,7 @@ FigList = {
   'TS_Vint_VaptAll_RB'
   'TS_Vint_LhtAll_CO'
   'TS_Vint_LhtAll_RB'
+  'TS_DeltapAll_EW_CO'
   };
 
 % FigList = { 'EOF1_theta_e_TCS_SD_C0500'
