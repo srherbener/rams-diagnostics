@@ -97,23 +97,23 @@ for iplot = 1:length(Config.ProfRsPlots)
           if (~isempty(strfind(Fprefix,'AR_RI')))
               TempFprefix2 = 'AR_RI';
           else
-            if (~isempty(strfind(Fprefix,'EW_RI')))
-                TempFprefix2 = 'EW_RI';
+            if (~isempty(strfind(Fprefix,'SC_RI')))
+                TempFprefix2 = 'SC_RI';
             else
-              if (~isempty(strfind(Fprefix,'CO_RI')))
-                  TempFprefix2 = 'CO_RI';
+              if (~isempty(strfind(Fprefix,'RB_RI')))
+                  TempFprefix2 = 'RB_RI';
               else
-                if (~isempty(strfind(Fprefix,'RB_RI')))
-                    TempFprefix2 = 'RB_RI';
+                if (~isempty(strfind(Fprefix,'FF_RI')))
+                    TempFprefix2 = 'FF_RI';
                 else
-                  if (~isempty(strfind(Fprefix,'EW_SS')))
-                      TempFprefix2 = 'EW_SS';
+                  if (~isempty(strfind(Fprefix,'SC_SS')))
+                      TempFprefix2 = 'SC_SS';
                   else
-                    if (~isempty(strfind(Fprefix,'CO_SS')))
-                        TempFprefix2 = 'CO_SS';
+                    if (~isempty(strfind(Fprefix,'RB_SS')))
+                        TempFprefix2 = 'RB_SS';
                     else
-                      if (~isempty(strfind(Fprefix,'RB_SS')))
-                          TempFprefix2 = 'RB_SS';
+                      if (~isempty(strfind(Fprefix,'FF_SS')))
+                          TempFprefix2 = 'FF_SS';
                       end
                     end
                   end

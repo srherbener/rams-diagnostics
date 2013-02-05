@@ -21,8 +21,8 @@ Cmin = 0;
 Cmax = 80;
 
 % markers
-EW_R1 = 0;
-EW_R2 = 40; %km
+SC_R1 = 0;
+SC_R2 = 40; %km
 
 Case = 'TCS_GN_C2000';
 
@@ -105,9 +105,9 @@ hold on;
 
 % draw the marker as a "patch"
 %patch(PX, PY, PC, 'FaceColor', [ PG PG PG ], 'FaceAlpha', 0.1, 'LineStyle', '--', 'EdgeColor', 'g');
-%text(20,13,'EW', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', Fsize);
+%text(20,13,'SC', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', Fsize);
 line([40, 40], [0 15], 'Color', 'r', 'LineStyle', '--', 'LineWidth', 2);
-text(20,13,'\leftarrow EW \rightarrow', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', Fsize, 'Color', 'k');
+text(20,13,'\leftarrow SC \rightarrow', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', Fsize, 'Color', 'k');
 
 fprintf('Writing plot file: %s\n', Pfile);
 saveas(Fig, Pfile);

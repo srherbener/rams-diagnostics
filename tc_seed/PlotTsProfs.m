@@ -97,8 +97,8 @@ for iplot = 1:length(Config.ProfTsPlots)
           if (~isempty(strfind(Fprefix,'AR_RI')))
               TempFprefix2 = 'AR_RI';
           else
-              if (~isempty(strfind(Fprefix,'EW_RI')))
-                  TempFprefix2 = 'EW_RI';
+              if (~isempty(strfind(Fprefix,'SC_RI')))
+                  TempFprefix2 = 'SC_RI';
               end
           end
           Hfile = sprintf('%s/%s_%s_%s.h5', Ddir, TempFprefix1, TempFprefix2, Case);

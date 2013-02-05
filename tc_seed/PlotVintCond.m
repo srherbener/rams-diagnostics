@@ -70,9 +70,9 @@ for icase = 1:length(Config.Cases)
 
   line([ 40 40 ], [ Tmin Tmax ], 'Color' , 'r', 'LineStyle', '--', 'LineWidth', 2);
   line([ 70 70 ], [ Tmin Tmax ], 'Color' , 'r', 'LineStyle', '--', 'LineWidth', 2);
-  text(20,  Tmin, 'EW', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', Fsize, 'Color', 'k');
-  text(55,  Tmin, 'CO', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', Fsize, 'Color', 'k');
-  text(110, Tmin, 'RB', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', Fsize, 'Color', 'k');
+  text(20,  Tmin, 'SC', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', Fsize, 'Color', 'k');
+  text(55,  Tmin, 'RB', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', Fsize, 'Color', 'k');
+  text(110, Tmin, 'FF', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', Fsize, 'Color', 'k');
   
   fprintf('Writing plot file: %s\n', Pfile);
   saveas(Fig, Pfile);

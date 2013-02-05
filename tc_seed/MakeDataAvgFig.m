@@ -1,5 +1,5 @@
 function [] = MakeDataAvgFig(ConfigFile)
-% MakeDataAvgFig - merge plots showing RI, SS time slices and EW, CO, SS radial regions
+% MakeDataAvgFig - merge plots showing RI, TR, SS time slices and SC, RB radial regions
 
 % Read in the config data
 [ Config ] = ReadConfig(ConfigFile);
