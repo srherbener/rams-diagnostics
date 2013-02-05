@@ -19,10 +19,10 @@ SstVal: 26
 
 # cases (experiment names)
 #  Case: <exp_name> <plot_name>
-Case: TCS_SD_C0100  SD-C0100
-Case: TCS_SD_C0500  SD-C0500
-Case: TCS_SD_C1000  SD-C1000
-Case: TCS_SD_C2000  SD-C2000
+Case: TCS_SD_C0100  C0100
+Case: TCS_SD_C0500  C0500
+Case: TCS_SD_C1000  C1000
+Case: TCS_SD_C2000  C2000
 
 # Time specs/directories
 # TimeDir: <Dir> <TimeSpecForRevu>
@@ -414,7 +414,7 @@ LinePlot: ccn4 SimTime  DeltapAll_SC_RB TsAll  y Horizontal_Pressure_Difference:
 #ProfPlot: ams2 pmeas_cloud_cm3_twp4_SC_RI cloud_cm3 abs SC_RI:_Cloud_Droplet_Concentration Number_Concentration_(#/cc) Height_(km) NorthEast -10:1:60 0.0 5.0 ams_prof_cloud_cm3_twp4_SC_RI.jpg
 #ProfPlot: ams2 pmeas_cloud_d_twp4_SC_RI cloud_d abs SC_RI:_Cloud_Droplet_Mean_Diameter Diameter_(#/cc) Height_(km) NorthEast 0:0.1:30 0.0 10.0 ams_prof_cloud_d_twp4_SC_RI.jpg
 
-# PAPER
+#### PAPER
 #ProfPlot: ccn4 pmeas_cloud_cm3_twp4_SC_RI cloud_cm3 abs SC_RI:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:75 0.0 8.0 prof_cloud_cm3_twp4_SC_RI.fig
 #ProfPlot: ccn4 pmeas_cloud_cm3_twp4_RB_RI cloud_cm3 abs RB_RI:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:75 0.0 8.0 prof_cloud_cm3_twp4_RB_RI.fig
 #ProfPlot: ccn4 pmeas_cloud_cm3_twp4_SC_TR cloud_cm3 abs SC_TR:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:75 0.0 8.0 prof_cloud_cm3_twp4_SC_TR.fig
@@ -444,6 +444,22 @@ LinePlot: ccn4 SimTime  DeltapAll_SC_RB TsAll  y Horizontal_Pressure_Difference:
 #ProfPlot: ccn4 pmeas_vaptott_twp4_vt0p5_RB_SS vaptott abs RB_SS:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) SouthEast -5:0.01:5 0.0 15.0 prof_vaptott_twp4_vt0p5_RB_SS.fig
 #ProfPlot: ccn4 pmeas_lh_tott_twp4_lht1p0_RB_SS lh_tott abs RB_SS:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) SouthEast -10:0.1:20 0.0 15.0 prof_lh_tott_twp4_lht1p0_RB_SS.fig
 #ProfPlot: ccn4 pmeas_w_twp4_RB_SS w abs RB_SS:_Vertical_Velocity W_(m/s) Height_(km) SouthEast -0.5:0.05:0.5 0.0 15.0 prof_w_twp4_RB_SS.fig
+
+ProfPlot: ccn4 pmeas_vaptott_vt0p5_SC_RI vaptott abs SC_RI:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -2:0.01:8 0.0 15.0 prof_vaptott_vt0p5_SC_RI.fig
+ProfPlot: ccn4 pmeas_lh_tott_lht1p0_SC_RI lh_tott abs SC_RI:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) NorthEast -5:0.1:25 0.0 15.0 prof_lh_tott_lht1p0_SC_RI.fig
+ProfPlot: ccn4 pmeas_w_SC_RI w abs SC_RI:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 prof_w_SC_RI.fig
+
+ProfPlot: ccn4 pmeas_vaptott_vt0p5_SC_TR vaptott abs SC_TR:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -2:0.01:8 0.0 15.0 prof_vaptott_vt0p5_SC_TR.fig
+ProfPlot: ccn4 pmeas_lh_tott_lht1p0_SC_TR lh_tott abs SC_TR:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) NorthEast -5:0.1:25 0.0 15.0 prof_lh_tott_lht1p0_SC_TR.fig
+ProfPlot: ccn4 pmeas_w_SC_TR w abs SC_TR:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 prof_w_SC_TR.fig
+
+ProfPlot: ccn4 pmeas_vaptott_vt0p5_SC_SS vaptott abs SC_SS:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -2:0.01:8 0.0 15.0 prof_vaptott_vt0p5_SC_SS.fig
+ProfPlot: ccn4 pmeas_lh_tott_lht1p0_SC_SS lh_tott abs SC_SS:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) SouthEast -5:0.1:25 0.0 15.0 prof_lh_tott_lht1p0_SC_SS.fig
+ProfPlot: ccn4 pmeas_w_SC_SS w abs SC_SS:_Vertical_Velocity W_(m/s) Height_(km) SouthEast -0.5:0.05:1.5 0.0 15.0 prof_w_SC_SS.fig
+
+ProfPlot: ccn4 pmeas_vaptott_vt0p5_RB_SS vaptott abs RB_SS:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) SouthEast -5:0.01:5 0.0 15.0 prof_vaptott_vt0p5_RB_SS.fig
+ProfPlot: ccn4 pmeas_lh_tott_lht1p0_RB_SS lh_tott abs RB_SS:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) SouthEast -10:0.1:20 0.0 15.0 prof_lh_tott_lht1p0_RB_SS.fig
+ProfPlot: ccn4 pmeas_w_RB_SS w abs RB_SS:_Vertical_Velocity W_(m/s) Height_(km) SouthEast -0.5:0.05:0.5 0.0 15.0 prof_w_RB_SS.fig
 
 
 #ProfPlot: ccn4 pmeas_lh_tott_lht1p0_SC_SS lh_tott abs SC_SS:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) SouthEast -5:0.1:25 0.0 15.0 prof_lh_tott_lht1p0_SC_SS.fig
@@ -537,6 +553,13 @@ LinePlot: ccn4 SimTime  DeltapAll_SC_RB TsAll  y Horizontal_Pressure_Difference:
 #ProfRsPlot: ccn4_diff pmeas_lh_tott_twp4_lht1p0_SC_SS   lh_tott  SC_SS:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_twp4_lht1p0_SC_SS
 #ProfRsPlot: ccn4_diff pmeas_lh_tott_twp4_lht1p0_RB_SS   lh_tott  RB_SS:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_twp4_lht1p0_RB_SS
 
+ProfRsPlot: ccn4_diff pmeas_lh_tott_lht1p0_SC_RI   lh_tott  SC_RI:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_lht1p0_SC_RI
+ProfRsPlot: ccn4_diff pmeas_lh_tott_lht1p0_RB_RI   lh_tott  RB_RI:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_lht1p0_RB_RI
+ProfRsPlot: ccn4_diff pmeas_lh_tott_lht1p0_SC_TR   lh_tott  SC_TR:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_lht1p0_SC_TR
+ProfRsPlot: ccn4_diff pmeas_lh_tott_lht1p0_RB_TR   lh_tott  RB_TR:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_lht1p0_RB_TR
+ProfRsPlot: ccn4_diff pmeas_lh_tott_lht1p0_SC_SS   lh_tott  SC_SS:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_lht1p0_SC_SS
+ProfRsPlot: ccn4_diff pmeas_lh_tott_lht1p0_RB_SS   lh_tott  RB_SS:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_lht1p0_RB_SS
+
 #ProfRsPlot: ccn4_diff pmeas_lh_tott_open_lht1p0_RB_RI   lh_tott  RB_RI:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_open_lht1p0_RB_RI
 #ProfRsPlot: ccn4_diff pmeas_lh_tott_open_lht1p0_RB_TR   lh_tott  RB_TR:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_open_lht1p0_RB_TR
 #ProfRsPlot: ccn4_diff pmeas_lh_tott_open_lht1p0_RB_SS   lh_tott  RB_SS:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_open_lht1p0_RB_SS
@@ -547,6 +570,13 @@ LinePlot: ccn4 SimTime  DeltapAll_SC_RB TsAll  y Horizontal_Pressure_Difference:
 #ProfRsPlot: ccn4_diff pmeas_vaptott_twp4_vt0p5_RB_TR    vaptott  RB_TR:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_twp4_vt0p5_RB_TR
 #ProfRsPlot: ccn4_diff pmeas_vaptott_twp4_vt0p5_SC_SS    vaptott  SC_SS:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_twp4_vt0p5_SC_SS
 #ProfRsPlot: ccn4_diff pmeas_vaptott_twp4_vt0p5_RB_SS    vaptott  RB_SS:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_twp4_vt0p5_RB_SS
+
+ProfRsPlot: ccn4_diff pmeas_vaptott_vt0p5_SC_RI    vaptott  SC_RI:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_vt0p5_SC_RI
+ProfRsPlot: ccn4_diff pmeas_vaptott_vt0p5_RB_RI    vaptott  RB_RI:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_vt0p5_RB_RI
+ProfRsPlot: ccn4_diff pmeas_vaptott_vt0p5_SC_TR    vaptott  SC_TR:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_vt0p5_SC_TR
+ProfRsPlot: ccn4_diff pmeas_vaptott_vt0p5_RB_TR    vaptott  RB_TR:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_vt0p5_RB_TR
+ProfRsPlot: ccn4_diff pmeas_vaptott_vt0p5_SC_SS    vaptott  SC_SS:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_vt0p5_SC_SS
+ProfRsPlot: ccn4_diff pmeas_vaptott_vt0p5_RB_SS    vaptott  RB_SS:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_vt0p5_RB_SS
 
 #ProfRsPlot: ccn4_diff pmeas_vaptott_open_vt0p5_RB_RI    vaptott  RB_RI:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_open_vt0p5_RB_RI
 #ProfRsPlot: ccn4_diff pmeas_vaptott_open_vt0p5_RB_TR    vaptott  RB_TR:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_open_vt0p5_RB_TR
@@ -559,12 +589,12 @@ LinePlot: ccn4 SimTime  DeltapAll_SC_RB TsAll  y Horizontal_Pressure_Difference:
 #ProfRsPlot: ccn4_diff pmeas_w_SC_SS  w SC_SS:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -1 1 0.0 15.0 redblue 0 diff prs_w_SC_SS
 #ProfRsPlot: ccn4_diff pmeas_w_RB_SS  w RB_SS:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -1 1 0.0 15.0 redblue 0 diff prs_w_RB_SS
 
-#ProfRsPlot: ccn4_diff pmeas_w_twp4_SC_RI  w SC_RI:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -2 2 0.0 15.0 redblue 0 diff prs_w_twp4_SC_RI
-#ProfRsPlot: ccn4_diff pmeas_w_twp4_RB_RI  w RB_RI:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -2 2 0.0 15.0 redblue 0 diff prs_w_twp4_RB_RI
-#ProfRsPlot: ccn4_diff pmeas_w_twp4_SC_TR  w SC_TR:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -2 2 0.0 15.0 redblue 0 diff prs_w_twp4_SC_TR
-#ProfRsPlot: ccn4_diff pmeas_w_twp4_RB_TR  w RB_TR:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -2 2 0.0 15.0 redblue 0 diff prs_w_twp4_RB_TR
-#ProfRsPlot: ccn4_diff pmeas_w_twp4_SC_SS  w SC_SS:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -2 2 0.0 15.0 redblue 0 diff prs_w_twp4_SC_SS
-#ProfRsPlot: ccn4_diff pmeas_w_twp4_RB_SS  w RB_SS:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -2 2 0.0 15.0 redblue 0 diff prs_w_twp4_RB_SS
+#ProfRsPlot: ccn4_diff pmeas_w_twp4_SC_RI  w SC_RI:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -1 1 0.0 15.0 redblue 0 diff prs_w_twp4_SC_RI
+#ProfRsPlot: ccn4_diff pmeas_w_twp4_RB_RI  w RB_RI:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -1 1 0.0 15.0 redblue 0 diff prs_w_twp4_RB_RI
+#ProfRsPlot: ccn4_diff pmeas_w_twp4_SC_TR  w SC_TR:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -1 1 0.0 15.0 redblue 0 diff prs_w_twp4_SC_TR
+#ProfRsPlot: ccn4_diff pmeas_w_twp4_RB_TR  w RB_TR:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -1 1 0.0 15.0 redblue 0 diff prs_w_twp4_RB_TR
+#ProfRsPlot: ccn4_diff pmeas_w_twp4_SC_SS  w SC_SS:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -1 1 0.0 15.0 redblue 0 diff prs_w_twp4_SC_SS
+#ProfRsPlot: ccn4_diff pmeas_w_twp4_RB_SS  w RB_SS:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -1 1 0.0 15.0 redblue 0 diff prs_w_twp4_RB_SS
 
 #ProfRsPlot: ccn4 pmeas_relvortz_rvz1em4_SC_RI relvortz SC_RI:_Relative_Vorticity_(s^-^1)   Radius_(km) Height_(km)      0  1e-2  0.0 15.0 revgray 0 abs prs_relvortz_rvz1em4_SC_RI
 #ProfRsPlot: ccn4 pmeas_relvortz_rvz1em4_SC_TR relvortz SC_TR:_Relative_Vorticity_(s^-^1)   Radius_(km) Height_(km)      0  1e-2  0.0 15.0 revgray 0 abs prs_relvortz_rvz1em4_SC_TR
