@@ -12,7 +12,7 @@ SCRIPTS = \
           $(DEST)/MakeDataAvgFig.m \
           $(DEST)/MakeSinglePanelFigs.m \
           $(DEST)/MakeStormEvolFig.m \
-          $(DEST)/PlotAeorsol3d.m \
+          $(DEST)/PlotAerosol3d.m \
           $(DEST)/PlotCfads.m \
           $(DEST)/PlotHmeas.m \
           $(DEST)/PlotHmeas2d.m \

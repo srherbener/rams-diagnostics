@@ -1,5 +1,5 @@
-function [ ] = PlotAeorsol3d(ConfigFile, ReadRevu)
-% PlotAeorsol3d function to make 3d plot of TC ingesting aerosols
+function [ ] = PlotAerosol3d(ConfigFile, ReadRevu)
+% PlotAerosol3d function to make 3d plot of TC ingesting aerosols
 %
 %  ReadRevu: 1 --> read in and select data from REVU files, then
 %                  store in intermediate file.
