@@ -49,8 +49,8 @@ function [ ] = MakeAeorsol3d(ConfigFile, ReadRevu)
   CloudDset   = 'cloud';
   AerosolFile = 'ccn_conc-TCS_SD_C2000-AS-1998-08-22-120000-g3.h5';
   AerosolDset = 'ccn_concen';
-  CcnHydroFile = 'ccn_hydro_mass-TCS_SD_C2000-AS-1998-08-22-120000-g3.h5';
-  CcnHydroDset = 'ccn_hydro_mass';
+  CcnHydroFile = 'ccn_rain_mass-TCS_SD_C2000-AS-1998-08-22-120000-g3.h5';
+  CcnHydroDset = 'ccn_rain_mass';
   
   % Intermediate file
   DataFile = sprintf('%s/Aerosol3d.h5', Ddir);
