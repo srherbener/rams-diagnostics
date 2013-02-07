@@ -171,23 +171,24 @@ end
 %  'prs_speed_r_abs_RB_SS_TCS_SD_C2000'
 %  };
 
+% FigList = {
+%   'prof_lh_tott_lht1p0_SC_SS'
+%   'prof_lh_tott_lht1p0_RB_SS'
+%   'prof_w_SC_SS'
+%   'prof_w_RB_SS'
+%   'prof_relhum_SC_SS'
+%   'prof_relhum_RB_SS'
+%   'prof_theta_e_SC_SS'
+%   'prof_theta_e_RB_SS'
+%   'prof_speed_r_SC_SS'
+%   'prof_speed_r_RB_SS'
+%   };
+
+
 FigList = {
-  'prof_lh_tott_lht1p0_SC_SS'
-  'prof_lh_tott_lht1p0_RB_SS'
-  'prof_w_SC_SS'
-  'prof_w_RB_SS'
-  'prof_relhum_SC_SS'
-  'prof_relhum_RB_SS'
-  'prof_theta_e_SC_SS'
-  'prof_theta_e_RB_SS'
-  'prof_speed_r_SC_SS'
-  'prof_speed_r_RB_SS'
-  };
-
-
-%FigList = {
-%  'TcAerosolIngest'
-%  };
+ 'TcAerosolIngest'
+ 'TcAerosolScavenge'
+ };
 
 for i = 1:length(FigList)
   InFile  = sprintf('%s/%s.fig', PlotDir, FigList{i});

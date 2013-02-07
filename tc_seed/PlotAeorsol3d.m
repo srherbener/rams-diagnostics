@@ -1,5 +1,5 @@
-function [ ] = MakeAeorsol3d(ConfigFile, ReadRevu)
-% MakeAeorsol3d function to make 3d plot of TC ingesting aerosols
+function [ ] = PlotAeorsol3d(ConfigFile, ReadRevu)
+% PlotAeorsol3d function to make 3d plot of TC ingesting aerosols
 %
 %  ReadRevu: 1 --> read in and select data from REVU files, then
 %                  store in intermediate file.
@@ -33,15 +33,18 @@ function [ ] = MakeAeorsol3d(ConfigFile, ReadRevu)
   Ymax = 16;
   Zmin = 0;
   Zmax = 6500;
-  Tplot = 100 * 3600;;
+  Tplot = 100 * 3600;
 
   % Iso surface values
   CloudIsurf   = 0.25;
-  CloudAlpha   = 0.5;
+  CloudAlpha   = 0.3;
   AerosolIsurf = 200;
-  AerosolAlpha = 0.7;
-  CcnHydroIsurf = 7;
+  AerosolAlpha = 0.8;
+  CcnHydroIsurf = 0.5;
   CcnHydroAlpha = 0.7;
+  
+  IngestView = [ -60 90 ];
+  ScavengeView = [ - 60 90 ];
 
   % Use 2000/cc case for now - REVU output files
   % Want to plot cloud mass and aerosol number
@@ -134,7 +137,7 @@ function [ ] = MakeAeorsol3d(ConfigFile, ReadRevu)
   grid on;
   view(3);
   %view(gca, [-61.5 22]); % changes rotation and height, [ azimuth, elevation ]
-  view(gca, [0 90]); % changes rotation and height
+  view(gca, IngestView); % changes rotation and height
   camlight;
   lighting gouraud;
   
@@ -175,7 +178,7 @@ function [ ] = MakeAeorsol3d(ConfigFile, ReadRevu)
   grid on;
   view(3);
   %view(gca, [-61.5 22]); % changes rotation and height, [ azimuth, elevation ]
-  view(gca, [0 90]); % changes rotation and height
+  view(gca, ScavengeView); % changes rotation and height
   camlight;
   lighting gouraud;
   
