@@ -14,27 +14,27 @@ end
 
 % list of drawings to translate
 
-%FigList = {
-%  'InitVortex'
-%  'SampleCcnProf'
-%  'SpinUpVtSpl'
-%  'StormPhases'
-%  'StormRegions'
-%  'KeVt'
-%  'KeVt_ext'
-%  'TS_rmw',
-%  'TS_Vint_Vapt_SC'
-%  'TS_Vint_Vapt_RB'
-%  'TS_Vint_Lht_SC'
-%  'TS_Vint_Lht_RB'
-%  'TS_Vint_VaptAll_RB'
-%  'TS_Vint_LhtAll_RB'
-%  'TS_DeltapAll_SC_RB'
-%  'vint_cond_TCS_SD_C0100'
-%  'vint_cond_TCS_SD_C0500'
-%  'vint_cond_TCS_SD_C1000'
-%  'vint_cond_TCS_SD_C2000'
-%  };
+FigList = {
+  'InitVortex'
+  'SampleCcnProf'
+  'SpinUpVtSpl'
+  'StormPhases'
+  'StormRegions'
+  'KeVt'
+  'KeVt_ext'
+  'TS_rmw',
+  'TS_Vint_Vapt_SC'
+  'TS_Vint_Vapt_RB'
+  'TS_Vint_Lht_SC'
+  'TS_Vint_Lht_RB'
+  'TS_Vint_VaptAll_RB'
+  'TS_Vint_LhtAll_RB'
+  'TS_DeltapAll_SC_RB'
+  'vint_cond_TCS_SD_C0100'
+  'vint_cond_TCS_SD_C0500'
+  'vint_cond_TCS_SD_C1000'
+  'vint_cond_TCS_SD_C2000'
+  };
 
 %FigList = {
 %  'EOF1_theta_e_TCS_SD_C0500'
@@ -185,10 +185,10 @@ end
 %   };
 
 
-FigList = {
- 'TcAerosolIngest'
- 'TcAerosolScavenge'
- };
+%FigList = {
+% 'TcAerosolIngest'
+% 'TcAerosolScavenge'
+% };
 
 for i = 1:length(FigList)
   InFile  = sprintf('%s/%s.fig', PlotDir, FigList{i});

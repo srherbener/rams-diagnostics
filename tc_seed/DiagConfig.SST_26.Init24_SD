@@ -340,41 +340,41 @@ TsPlotSpecs: 121 0 1.0 hr 25 1998:08:22:21:00:00 10 24
 ####################### Line plots ############################
 # LinePlot: <plotset> <xspec> <yspec> <data_select_spec> <smoothing> <title> <legend_loc> <out_file>
 
-LinePlot: ccn4    MaxVt IKE TsAll xy Size_vs_Intensity Northwest KeVt.fig
+#LinePlot: ccn4    MaxVt IKE TsAll xy Size_vs_Intensity Northwest KeVt.fig
 
 LinePlot: ccn2_ext    MaxVt IKE TsAll xy Size_vs_Intensity Northwest KeVt_ext.fig
 
-LinePlot: ccn4    SimTime IKE   TsAll y Integrated_Kinetic_Energy NorthWest TS_ike.fig
-LinePlot: ccn4    SimTime MaxVt TsAll y Maximum_Vt                SouthEast TS_max_vt.fig
-LinePlot: ccn4    SimTime RMW   TsAll y Radius_of_Maximum_Wind    NorthEast TS_rmw.fig
+#LinePlot: ccn4    SimTime IKE   TsAll y Integrated_Kinetic_Energy NorthWest TS_ike.fig
+#LinePlot: ccn4    SimTime MaxVt TsAll y Maximum_Vt                SouthEast TS_max_vt.fig
+#LinePlot: ccn4    SimTime RMW   TsAll y Radius_of_Maximum_Wind    NorthEast TS_rmw.fig
 
-LinePlot: ccn4    RadAll    VtAllRI   SfcVtAll    y Radial_Structure_of_Max_Vt:_RI  NorthEast R_Vt_All_RI.fig
-LinePlot: ccn4    RadAll    VtAllTR   SfcVtAll    y Radial_Structure_of_Max_Vt:_TR  NorthEast R_Vt_All_TR.fig
-LinePlot: ccn4    RadAll    VtAllSS   SfcVtAll    y Radial_Structure_of_Max_Vt:_SS  NorthEast R_Vt_All_SS.fig
-LinePlot: ccn4    RadPeak   VtPeakRI  SfcVtPeak   y Peak_Section_of_Max_Vt:_RI      NorthEast R_Vt_Peak_RI.fig
-LinePlot: ccn4    RadPeak   VtPeakTR  SfcVtPeak   y Peak_Section_of_Max_Vt:_TR      NorthEast R_Vt_Peak_TR.fig
-LinePlot: ccn4    RadPeak   VtPeakSS  SfcVtPeak   y Peak_Section_of_Max_Vt:_SS      NorthEast R_Vt_Peak_SS.fig
-LinePlot: ccn4    RadRband  VtRbandRI SfcVtRband  y Rainband_Section_of_Max_Vt:_RI  NorthEast R_Vt_Rband_RI.fig
-LinePlot: ccn4    RadRband  VtRbandTR SfcVtRband  y Rainband_Section_of_Max_Vt:_TR  NorthEast R_Vt_Rband_TR.fig
-LinePlot: ccn4    RadRband  VtRbandSS SfcVtRband  y Rainband_Section_of_Max_Vt:_SS  NorthEast R_Vt_Rband_SS.fig
-
-
-LinePlot: ccn4    SimTime  VintVapt_SC_LC TsAll  y Vertically_Integrated_Vapor_Diffusion:_SC       SouthEast TS_Vint_Vapt_SC.fig
-LinePlot: ccn4    SimTime  VintLht_SC_LC  TsAll  y Vertically_Integrated_Total_Latent_Heating:_SC  SouthEast TS_Vint_Lht_SC.fig
-
-LinePlot: ccn4    SimTime  VintVapt_RB_LC TsAll  y Vertically_Integrated_Vapor_Diffusion:_RB       NorthEast TS_Vint_Vapt_RB.fig
-LinePlot: ccn4    SimTime  VintLht_RB_LC  TsAll  y Vertically_Integrated_Total_Latent_Heating:_RB  NorthEast TS_Vint_Lht_RB.fig
+#LinePlot: ccn4    RadAll    VtAllRI   SfcVtAll    y Radial_Structure_of_Max_Vt:_RI  NorthEast R_Vt_All_RI.fig
+#LinePlot: ccn4    RadAll    VtAllTR   SfcVtAll    y Radial_Structure_of_Max_Vt:_TR  NorthEast R_Vt_All_TR.fig
+#LinePlot: ccn4    RadAll    VtAllSS   SfcVtAll    y Radial_Structure_of_Max_Vt:_SS  NorthEast R_Vt_All_SS.fig
+#LinePlot: ccn4    RadPeak   VtPeakRI  SfcVtPeak   y Peak_Section_of_Max_Vt:_RI      NorthEast R_Vt_Peak_RI.fig
+#LinePlot: ccn4    RadPeak   VtPeakTR  SfcVtPeak   y Peak_Section_of_Max_Vt:_TR      NorthEast R_Vt_Peak_TR.fig
+#LinePlot: ccn4    RadPeak   VtPeakSS  SfcVtPeak   y Peak_Section_of_Max_Vt:_SS      NorthEast R_Vt_Peak_SS.fig
+#LinePlot: ccn4    RadRband  VtRbandRI SfcVtRband  y Rainband_Section_of_Max_Vt:_RI  NorthEast R_Vt_Rband_RI.fig
+#LinePlot: ccn4    RadRband  VtRbandTR SfcVtRband  y Rainband_Section_of_Max_Vt:_TR  NorthEast R_Vt_Rband_TR.fig
+#LinePlot: ccn4    RadRband  VtRbandSS SfcVtRband  y Rainband_Section_of_Max_Vt:_SS  NorthEast R_Vt_Rband_SS.fig
 
 
-LinePlot: ccn4    SimTime  VintVaptOpen_RB_LC TsAll  y Vertically_Integrated_Vapor_Diffusion:_RB       NorthEast TS_Vint_VaptOpen_RB.fig
-LinePlot: ccn4    SimTime  VintLhtOpen_RB_LC  TsAll  y Vertically_Integrated_Total_Latent_Heating:_RB  NorthEast TS_Vint_LhtOpen_RB.fig
+#LinePlot: ccn4    SimTime  VintVapt_SC_LC TsAll  y Vertically_Integrated_Vapor_Diffusion:_SC       SouthEast TS_Vint_Vapt_SC.fig
+#LinePlot: ccn4    SimTime  VintLht_SC_LC  TsAll  y Vertically_Integrated_Total_Latent_Heating:_SC  SouthEast TS_Vint_Lht_SC.fig
+
+#LinePlot: ccn4    SimTime  VintVapt_RB_LC TsAll  y Vertically_Integrated_Vapor_Diffusion:_RB       NorthEast TS_Vint_Vapt_RB.fig
+#LinePlot: ccn4    SimTime  VintLht_RB_LC  TsAll  y Vertically_Integrated_Total_Latent_Heating:_RB  NorthEast TS_Vint_Lht_RB.fig
 
 
-LinePlot: ccn4    SimTime  VintVaptAll_RB_LC TsAll  y Vertically_Integrated_Vapor_Diffusion:_RB       NorthEast TS_Vint_VaptAll_RB.fig
-LinePlot: ccn4    SimTime  VintLhtAll_RB_LC  TsAll  y Vertically_Integrated_Total_Latent_Heating:_RB  NorthEast TS_Vint_LhtAll_RB.fig
+#LinePlot: ccn4    SimTime  VintVaptOpen_RB_LC TsAll  y Vertically_Integrated_Vapor_Diffusion:_RB       NorthEast TS_Vint_VaptOpen_RB.fig
+#LinePlot: ccn4    SimTime  VintLhtOpen_RB_LC  TsAll  y Vertically_Integrated_Total_Latent_Heating:_RB  NorthEast TS_Vint_LhtOpen_RB.fig
 
 
-LinePlot: ccn4 SimTime  DeltapAll_SC_RB TsAll  y Horizontal_Pressure_Difference:_RB-SC  SouthEast TS_DeltapAll_SC_RB.fig
+#LinePlot: ccn4    SimTime  VintVaptAll_RB_LC TsAll  y Vertically_Integrated_Vapor_Diffusion:_RB       NorthEast TS_Vint_VaptAll_RB.fig
+#LinePlot: ccn4    SimTime  VintLhtAll_RB_LC  TsAll  y Vertically_Integrated_Total_Latent_Heating:_RB  NorthEast TS_Vint_LhtAll_RB.fig
+
+
+#LinePlot: ccn4 SimTime  DeltapAll_SC_RB TsAll  y Horizontal_Pressure_Difference:_RB-SC  SouthEast TS_DeltapAll_SC_RB.fig
 
 ####################### Profile Plots #############################
 
