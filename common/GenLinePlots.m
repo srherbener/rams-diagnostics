@@ -43,6 +43,7 @@ for iplot = 1:length(Config.LinePlots)
     end
 
     Smooth = Config.LinePlots(iplot).Smooth;
+    AddMeas = Config.LinePlots(iplot).AddMeas;
     %Ptitle = sprintf('%s: %s', Pname, Config.LinePlots(iplot).Title);
     Ptitle = sprintf('%s', Config.LinePlots(iplot).Title);
     LegLoc = Config.LinePlots(iplot).LegLoc;
@@ -84,8 +85,8 @@ for iplot = 1:length(Config.LinePlots)
 
     for icase = 1:Config.PlotSets(ips).Ncases
       Case = Config.PlotSets(ips).Cases(icase).Cname;
-      LegText(icase) = { Config.PlotSets(ips).Cases(icase).Legend };
-      LineSpecs(icase) = { Config.PlotSets(ips).Cases(icase).Lspec };
+      LegText{icase} = Config.PlotSets(ips).Cases(icase).Legend;
+      LineSpecs{icase} = Config.PlotSets(ips).Cases(icase).Lspec;
 
       Xfile = sprintf('%s_%s.h5', Xfprefix, Case);
       fprintf('Reading HDF5 file: %s\n', Xfile);
@@ -102,6 +103,34 @@ for iplot = 1:length(Config.LinePlots)
         Ydata = SmoothFillTseries(Ydata, length(Ydata), Flen);
       end
       Yall(icase,:) = Ydata * Yscale;
+
+      % If AddMeas is one of the known strings, calculate the appropriate measurement and
+      % append that value to the legend text so that it will show up on the plot
+      % associated with the correct curve.
+      Ltext = '';
+      if (strcmp(AddMeas, 'IntArea'))
+        Area = trapz(Xdata*Xscale, Ydata*Yscale);
+        Ltext = sprintf('%.2e', Area);
+        fprintf('  Area under curve: %s\n', Ltext);
+      end
+      if (strcmp(AddMeas, 'IntVol'))
+        % x values are the radii
+        % each radial band has a volume approx. equal to:
+        %    area of radial band X average height of curve in that radial band
+        %      --> PI * (R(outside)^2 - R(inside)^2) X (H(outside)+H(inside))/2
+        % Total volume is sum of volumes of each radial band.
+        Rsq = (Xdata*Xscale).^2;
+        H = (Ydata*Yscale).*0.5;
+        RsqDiff = Rsq(2:end) - Rsq(1:end-1);
+        Havg = H(2:end) + H(1:end-1);
+        Vol = sum(pi * (RsqDiff .* Havg));
+        Ltext = sprintf('%.2e', Vol);
+        fprintf('  Volume under rotated radial surface: %s\n', Ltext);
+      end
+
+      if (~strcmp(Ltext,''))
+        LegText{icase} = sprintf('%s (%s)', LegText{icase}, Ltext);
+      end
     end
 
     fprintf('\n');

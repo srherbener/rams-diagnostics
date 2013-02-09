@@ -22,6 +22,7 @@ FigList = {
   'StormRegions'
   'KeVt'
   'KeVt_ext'
+  'R_Vt_All_SS_ext'
   'TS_rmw',
   'TS_Vint_Vapt_SC'
   'TS_Vint_Vapt_RB'

@@ -233,7 +233,8 @@ for i = 1:size(InLines,1)
       Cdata.LinePlots(i_lplot).Smooth  = Fields{6};
       Cdata.LinePlots(i_lplot).Title   = regexprep(Fields{7}, '_', ' ');
       Cdata.LinePlots(i_lplot).LegLoc  = Fields{8};
-      Cdata.LinePlots(i_lplot).OutFile = Fields{9};
+      Cdata.LinePlots(i_lplot).AddMeas = Fields{9};
+      Cdata.LinePlots(i_lplot).OutFile = Fields{10};
 
       Cdata.LinePlots(i_lplot).PSnum   = -1;
       Cdata.LinePlots(i_lplot).XVnum   = -1;
