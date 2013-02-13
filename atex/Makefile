@@ -3,6 +3,7 @@
 #
 
 DEST = $(HOME)/etc/matlab/atex
+DIAG_DIR = /Volumes/tasman1/sherbener/data/RAMS/MarinePrecip/ATEX
 
 SCRIPTS = $(DEST)/ExtractSample.m \
           $(DEST)/GenCloudStructPlots.m \
@@ -17,14 +18,20 @@ SCRIPTS = $(DEST)/ExtractSample.m \
           $(DEST)/PlotDistSet.m \
           $(DEST)/SetPath.m
 
+CONFIGS = $(DIAG_DIR)/DiagConfig
+
 #
 # Targets
 #
 
-all: $(DEST) $(SCRIPTS)
+all: $(DEST) $(SCRIPTS) $(CONFIGS)
 
 $(DEST):
 	mkdir -p $(DEST)
 
 $(DEST)/%.m: %.m
 	cp $(<) $(@)
+
+$(DIAG_DIR)/DiagConfig: DiagConfig
+	cp $(<) $(@)
+
