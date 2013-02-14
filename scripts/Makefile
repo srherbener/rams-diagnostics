@@ -7,6 +7,7 @@ SCRIPTS = $(DEST)/lp1 \
           $(DEST)/lp2 \
           $(DEST)/grads2vis5d \
           $(DEST)/run_g2v \
+          $(DEST)/run_im \
           $(DEST)/run_vapor \
           $(DEST)/gen_html_index \
           $(DEST)/unpack_src_archive
@@ -28,6 +29,9 @@ $(DEST)/grads2vis5d: grads2vis5d
 
 $(DEST)/run_g2v: run_g2v
 	cp run_g2v $(DEST)/run_g2v
+
+$(DEST)/run_im: run_im
+	cp run_im $(DEST)/run_im
 
 $(DEST)/run_vapor: run_vapor
 	cp run_vapor $(DEST)/run_vapor
