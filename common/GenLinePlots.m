@@ -49,24 +49,56 @@ for iplot = 1:length(Config.LinePlots)
     LegLoc = Config.LinePlots(iplot).LegLoc;
     OutFile = sprintf('%s/%s', Pdir, Config.LinePlots(iplot).OutFile);
 
-    AxisProps(1).Name = 'FontSize';
-    AxisProps(1).Val = 20; 
+    i_ap = 1;
+    AxisProps(i_ap).Name = 'FontSize';
+    AxisProps(i_ap).Val = 20; 
+    i_ap = i_ap + 1;
 
     % X variable, axis specs
     Xvname   = Config.PlotVars(ixv).Var;
-    Xlabel   = sprintf('%s (%s)', Config.PlotVars(ixv).Label, Config.PlotVars(ixv).Units);
+    if (strcmp(Config.PlotVars(ixv).Units, ' '))
+      Xlabel   = sprintf('%s', Config.PlotVars(ixv).Label);
+    else
+      Xlabel   = sprintf('%s (%s)', Config.PlotVars(ixv).Label, Config.PlotVars(ixv).Units);
+    end
     Xfprefix = Config.PlotVars(ixv).Fprefix;
     Xscale   = Config.PlotVars(ixv).Scale;
-    AxisProps(2).Name = 'Xlim';
-    AxisProps(2).Val = [ Config.PlotVars(ixv).Min Config.PlotVars(ixv).Max ]; 
+    if (Config.PlotVars(ixv).Min > Config.PlotVars(ixv).Max)
+      AxisProps(i_ap).Name = 'Xlim';
+      AxisProps(i_ap).Val = [ Config.PlotVars(ixv).Max Config.PlotVars(ixv).Min ]; 
+      i_ap = i_ap + 1;
+
+      AxisProps(i_ap).Name = 'XDir';
+      AxisProps(i_ap).Val = 'Reverse';
+      i_ap = i_ap + 1;
+    else
+      AxisProps(i_ap).Name = 'Xlim';
+      AxisProps(i_ap).Val = [ Config.PlotVars(ixv).Min Config.PlotVars(ixv).Max ]; 
+      i_ap = i_ap + 1;
+    end
 
     % Y variable, axis specs
     Yvname   = Config.PlotVars(iyv).Var;
-    Ylabel   = sprintf('%s (%s)', Config.PlotVars(iyv).Label, Config.PlotVars(iyv).Units);
+    if (strcmp(Config.PlotVars(iyv).Units, ' '))
+      Ylabel   = sprintf('%s', Config.PlotVars(iyv).Label);
+    else
+      Ylabel   = sprintf('%s (%s)', Config.PlotVars(iyv).Label, Config.PlotVars(iyv).Units);
+    end
     Yfprefix = Config.PlotVars(iyv).Fprefix;
     Yscale   = Config.PlotVars(iyv).Scale;
-    AxisProps(3).Name = 'Ylim';
-    AxisProps(3).Val = [ Config.PlotVars(iyv).Min Config.PlotVars(iyv).Max ]; 
+    if (Config.PlotVars(iyv).Min > Config.PlotVars(iyv).Max)
+      AxisProps(i_ap).Name = 'Ylim';
+      AxisProps(i_ap).Val = [ Config.PlotVars(iyv).Max Config.PlotVars(iyv).Min ]; 
+      i_ap = i_ap + 1;
+
+      AxisProps(i_ap).Name = 'YDir';
+      AxisProps(i_ap).Val = 'Reverse';
+      i_ap = i_ap + 1;
+    else
+      AxisProps(i_ap).Name = 'Ylim';
+      AxisProps(i_ap).Val = [ Config.PlotVars(iyv).Min Config.PlotVars(iyv).Max ]; 
+      i_ap = i_ap + 1;
+    end
 
     % Data selection specs
     Xmin = Config.PlotDselects(ids).Xmin;
