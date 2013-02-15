@@ -16,6 +16,8 @@ SCRIPTS = \
           $(DEST)/GenTimeAvg.m \
           $(DEST)/GenTsPlots.m \
           $(DEST)/GenVintTseries.m \
+          $(DEST)/Hdf5ToBin.m \
+          $(DEST)/Hdf5ToVaporNcdf.m \
           $(DEST)/ReadConfig.m \
           $(DEST)/ReadAzavgVar.m \
           $(DEST)/ReadSelectXyzt.m \
