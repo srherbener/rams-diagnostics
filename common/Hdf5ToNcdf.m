@@ -1,5 +1,5 @@
-function [ ] = Hdf5ToVaporNcdf (Fname, Vname, OutFile)
-% Hdf5ToVaporNcdf read in a variable from an hdf5 file and write it out in a netcdf file that VAPOR can read
+function [ ] = Hdf5ToNcdf (Fname, Vname, OutFile)
+% Hdf5ToNcdf read in a variable from an hdf5 file and write it out in a netcdf file
 
   fprintf('Reading HDF5 file: %s, Dataset: %s\n', Fname, Vname);
   Var = hdf5read(Fname, Vname); 
