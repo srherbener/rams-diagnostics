@@ -4,8 +4,10 @@ function [ ] = ExtractSample(ConfigFile)
 
 Config = ReadConfig(ConfigFile);
 
-Tdir = Config.TsavgDir;
 Ddir = Config.DiagDir;
+if (exist(Ddir, 'dir') ~= 7)
+  mkdir(Ddir);
+end
 
 SampleDir = 'SampleHdf5';
 
@@ -16,11 +18,17 @@ FileSuffix = '-AS-1999-02-10-040000-g1.h5';
 %
 % After reading in, the dimensions will be (x,y,t)
 
-CCN = [ 50 50 1600 1600 ]'; % keep these the same length
-SST = [ 298 303 298 303 ]';
+% Keep the following four arrays the same length, and in sync between the values and names.
+% CCN , GCCN need numeric values, *_NAMES need to match the corresponding strings
+% (between dots) in the file names.
+CCN =  [ 50     50 1600   1600 ];
+GCCN = [  1 0.0001    1 0.0001 ];
 
-for i = 1:length(CCN)
- Exps{i} = sprintf('z.atex.ccn%04d.sst%03d.gcn10m5.1um', CCN(i), SST(i));
+CCN_NAMES  = { 'ccn0050' 'ccn0050' 'ccn1600' 'ccn1600' };
+GCCN_NAMES = { 'gcn10m0' 'gcn10m4' 'gcn10m0' 'gcn10m4' };
+
+for i = 1:length(CCN_NAMES)
+ Exps{i} = sprintf('z.atex.%s.sst298.%s.3um', CCN_NAMES{i}, GCCN_NAMES{i});
 end
 
 Vars = { 'pcprr';
@@ -49,7 +57,7 @@ hdf5write(h5_fout, '/Lat', Lat, 'WriteMode', 'append');
 
 % Write out the CCN and SST values
 hdf5write(h5_fout, '/CcnConcen', CCN, 'WriteMode', 'append');
-hdf5write(h5_fout, '/Sst', SST, 'WriteMode', 'append');
+hdf5write(h5_fout, '/GccnConcen', GCCN, 'WriteMode', 'append');
 
 % Rain rate is in the REVU var PCPRR
 for i = 1:length(Exps)
@@ -58,7 +66,7 @@ for i = 1:length(Exps)
     Var = Vars{j};
     h5_fin = sprintf('%s/%s/%s-%s%s', SampleDir, Exps{i}, Vars{j}, Exps{i}, FileSuffix);
     h5_dset_in = sprintf('/%s',Rvars{j});
-    h5_dset_out = sprintf('/CCN_%d/SST_%d/%s',CCN(i),SST(i),Var);
+    h5_dset_out = sprintf('/%s/%s/%s',CCN_NAMES{i},GCCN_NAMES{i},Var);
     fprintf('Extracting Data:\n');
     fprintf('  Experiment: %s\n', Exp);
     fprintf('  Variable: %s\n', Var);
