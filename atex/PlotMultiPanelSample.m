@@ -1,7 +1,7 @@
-function [ ] = PlotMultiPanelSample( Var, Lon, Lat, Ccn, Sst, Cmap, Clevs, Ptitle, OutFile )
+function [ ] = PlotMultiPanelSample( Var, Lon, Lat, Ccn, Gccn, Cmap, Clevs, Ptitle, OutFile )
 %PlotMultiPanelSample Create a multipanel plot of the sample data
 %   This function will create a multi-panel plot of the data given in Var.
-%   Var is a 3D array (n,x,y) where n equals the length of Ccn and Sst. Lon
+%   Var is a 3D array (n,x,y) where n equals the length of Ccn and Gccn. Lon
 %   holds the longitude values (x) and Lat holds the latitude values (y).
 
 % For now assume that n is 4 --> 2x2 subplots.
@@ -56,7 +56,7 @@ for i = 1:4
     set(gca,'XtickLabel', [ ] );
     set(gca,'YtickLabel', [ ] );
     if (i == 3 || i == 4)
-      Xlab = sprintf('SST: %d K',Sst(i));
+      Xlab = sprintf('GCCN: %.1e/cc',Gccn(i));
       xlabel(Xlab);
     end
     if (i == 1 || i == 3)

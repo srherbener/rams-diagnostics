@@ -6,7 +6,7 @@ function [ ] = GenTavgRrateFracAreaDist(ConfigFile)
 [ Config ] = ReadConfig(ConfigFile);
 
 Tdir = Config.TsavgDir;
-OutDir = 'DIAGS';
+OutDir = Config.DiagDir;
 
 RrateHistVar = 'hist_pcprr';
 
