@@ -34,15 +34,19 @@ program tsavg
   type (Rhdf5Var) :: InXcoords, InYcoords, InZcoords, InTcoords
   type (Rhdf5Var) :: OutXcoords, OutYcoords, OutZcoords, OrigDimSize
   type (Rhdf5Var) :: U, V, AzWind, Speed10m, Dens, Var, Filter, TserAvg, RadMaxWind
+  type (Rhdf5var) :: PrecipRate, Lwp
   character (len=MediumString) :: Ufile, Vfile, AzWindFile, Speed10mFile, DensFile, VarFile, InCoordFile
+  character (len=MediumString) :: PrecipRateFile, LwpFile
   character (len=LittleString) :: VarFprefix
   character (len=LittleString) :: rh5f_facc
+  real :: PrecipRateLimit
   
   integer :: NumBins
   real :: BinStart, BinInc
   real, dimension(:), allocatable :: Bins
 
   integer :: rh5f_azwind, rh5f_u, rh5f_v, rh5f_speed10m, rh5f_dens, rh5f_var, rh5f_filter, rh5f_out
+  integer :: rh5f_pcprate, rh5f_lwp
 
   integer :: id, ib, ix, iy, iz, it
   integer :: Nx, Ny, Nz, Nt
@@ -100,6 +104,37 @@ program tsavg
     endif
   endif
 
+  if (AvgFunc(1:4) .eq. 'pop:') then
+    call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'pop spec')
+    if (Nfields .eq. 9) then
+      ! got the right amount of fields
+      !   field    value
+      !    1       'pop'
+      !    2       name of precip rate variable inside the REVU file
+      !    3       prefix for the REVU file name containing the precip rate
+      !    4       precip rate threshold to deteriming if rainging or not
+      !    5       name of lwp variable inside the REVU file
+      !    6       prefix for the REVU file name containing the lwp
+      !    7       number of bins
+      !    8       bin start
+      !    9       bin increment
+      AvgFunc           = trim(ArgList(1))
+      PrecipRate%vname  = trim(ArgList(2))
+      VarFprefix        = trim(ArgList(3))
+      PrecipRateFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
+      read(ArgList(4), '(f)') PrecipRateLimit
+      Lwp%vname         = trim(ArgList(5))
+      VarFprefix        = trim(ArgList(6))
+      LwpFile           = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
+      read(ArgList(7), '(i)') NumBins
+      read(ArgList(8), '(f)') BinStart
+      read(ArgList(9), '(f)') BinInc
+    else
+      write (*,*) 'ERROR: average function pop requires nine fields: pop:<pcp_var>:<pcp_file>:<pcp_limit>:<lwp_var>:<lwp_file>:<num_bins>:<bin_start>:<bin_inc>'
+      stop
+    endif
+  endif
+
   write (*,*) 'Time seris of average for RAMS data:'
   write (*,*) '  Input directory: ', trim(InDir)
   write (*,*) '  Input file suffix: ', trim(InSuffix)
@@ -114,6 +149,16 @@ program tsavg
     write (*,*) '    File name: ', trim(VarFile)
     write (*,*) '    Dimensionality: ', trim(VarDim)
     write (*,*) '    Binning specs:'
+    write (*,*) '      Number of bins: ', NumBins
+    write (*,*) '      Bins start at: ', BinStart
+    write (*,*) '      Delta between bins: ', BinInc
+  else if (AvgFunc .eq. 'pop') then
+    write (*,*) '    Precip rate variable name: ', trim(PrecipRate%vname)
+    write (*,*) '    Precip rate File name: ', trim(PrecipRateFile)
+    write (*,*) '    Liquid water path variable name: ', trim(Lwp%vname)
+    write (*,*) '    Liquid water path file name: ', trim(LwpFile)
+    write (*,*) '    Precip rate threshold: ', PrecipRateLimit
+    write (*,*) '    Liquid water path binning specs:'
     write (*,*) '      Number of bins: ', NumBins
     write (*,*) '      Bins start at: ', BinStart
     write (*,*) '      Delta between bins: ', BinInc
@@ -192,6 +237,30 @@ program tsavg
       call rhdf5_read_init(FilterFile, Filter)
       if (.not.(DimsMatch(Filter, Var))) then
         write (*,*) 'ERROR: dimensions of filter do not match dimensions of input variable: ', trim(Var%vname)
+        stop
+      endif
+    endif
+  else if (AvgFunc .eq. 'pop') then
+    ! check that the horzontal dimensions of precip rate and lwp match
+    call rhdf5_read_init(PrecipRateFile, PrecipRate)
+    call rhdf5_read_init(LwpFile, Lwp)
+
+    if (.not.(DimsMatch(PrecipRate, Lwp))) then
+      write (*,*) 'ERROR: dimensions of precip rate variable do not match dimensions of liquid water path variable'
+      stop
+    endif
+
+    ! record dims - 2d data
+    Nx = PrecipRate%dims(1)
+    Ny = PrecipRate%dims(2)
+    Nz = 1
+    Nt = PrecipRate%dims(3)
+
+    ! filter is optional
+    if (UseFilter) then
+      call rhdf5_read_init(FilterFile, Filter)
+      if (.not.(DimsMatch(Filter, PrecipRate))) then
+        write (*,*) 'ERROR: dimensions of filter do not match dimensions of precip rate variable'
         stop
       endif
     endif
@@ -274,6 +343,14 @@ program tsavg
     do id = 1, Var%ndims
       write (*,*), '    ', trim(Var%dimnames(id)), ': ', Var%dims(id)
     enddo
+  else if (AvgFunc .eq. 'pop') then
+    PrecipRate%ndims = PrecipRate%ndims - 1
+    Lwp%ndims = Lwp%ndims - 1
+    write (*,*) '  Number of dimensions: ', PrecipRate%ndims
+    write (*,*) '  Dimension sizes:'
+    do id = 1, PrecipRate%ndims
+      write (*,*), '    ', trim(PrecipRate%dimnames(id)), ': ', PrecipRate%dims(id)
+    enddo
   endif
   write (*,*) ''
 
@@ -328,6 +405,13 @@ program tsavg
     TserAvg%dims(2) = 1
     TserAvg%dims(3) = 1
     TserAvg%units = Var%units
+  else if (AvgFunc .eq. 'pop') then
+    ! put bin values in the x dimension
+    ! put Nr and Nt results in y dimension
+    TserAvg%dims(1) = NumBins
+    TserAvg%dims(2) = 2
+    TserAvg%dims(3) = 1
+    TserAvg%units = PrecipRate%units // ':' // Lwp%units
   else if (AvgFunc .eq. 'horiz_ke') then
     ! single point result
     TserAvg%dims(1) = 1
@@ -382,6 +466,8 @@ program tsavg
   else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
            (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist')) then
     InCoordFile = trim(VarFile)
+  else if (AvgFunc .eq. 'pop') then
+    InCoordFile = trim(PrecipRateFile)
   else if (AvgFunc .eq. 'storm_int') then
     InCoordFile = trim(Speed10mFile)
   endif
@@ -447,8 +533,8 @@ program tsavg
   write (*,*) ''
   flush(6)
 
-  ! If doing histogram, calculate the bin values
-  if (AvgFunc .eq. 'hist') then
+  ! If doing histogram or pop, calculate the bin values
+  if ((AvgFunc .eq. 'hist') .or. (AvgFunc .eq. 'pop')) then
     allocate(Bins(NumBins))
     Bins(1) = BinStart
     do ib = 2, NumBins
@@ -466,7 +552,7 @@ program tsavg
   OutXcoords%dimnames(1) = 'x'
   OutXcoords%units = 'degrees_east'
   OutXcoords%descrip = 'longitude'
-  if (AvgFunc .eq. 'hist') then
+  if ((AvgFunc .eq. 'hist') .or. (AvgFunc .eq. 'pop')) then
     OutXcoords%dims(1) = NumBins
     allocate(OutXcoords%vdata(NumBins))
     do ib = 1, NumBins
@@ -483,9 +569,20 @@ program tsavg
   OutYcoords%dimnames(1) = 'y'
   OutYcoords%units = 'degrees_north'
   OutYcoords%descrip = 'latitude'
-  OutYcoords%dims(1) = 1
-  allocate(OutYcoords%vdata(1))
-  OutYcoords%vdata(1) = 1.0
+  if (AvgFunc .eq. 'pop') then
+    ! need a size of 2 for the y dimension
+    !   index 1 --> number of grids that are raining
+    !   index 2 --> number of total grids (selected per bin on lwp)
+    OutYcoords%dims(1) = 2
+    allocate(OutYcoords%vdata(2))
+    ! dummy values
+    OutYcoords%vdata(1) = 1.0
+    OutYcoords%vdata(2) = 2.0
+  else
+    OutYcoords%dims(1) = 1
+    allocate(OutYcoords%vdata(1))
+    OutYcoords%vdata(1) = 1.0
+  endif
   
   OutZcoords%vname = 'z_coords'
   OutZcoords%ndims = 1
@@ -521,6 +618,9 @@ program tsavg
   else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
            (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist'))  then
     call rhdf5_open_file(VarFile, rh5f_facc, 1, rh5f_var)
+  else if (AvgFunc .eq. 'pop') then
+    call rhdf5_open_file(PrecipRateFile, rh5f_facc, 1, rh5f_pcprate)
+    call rhdf5_open_file(LwpFile, rh5f_facc, 1, rh5f_lwp)
   else if (AvgFunc .eq. 'storm_int') then
     call rhdf5_open_file(Speed10mFile, rh5f_facc, 1, rh5f_speed10m)
   endif
@@ -562,6 +662,14 @@ program tsavg
       endif
 
       deallocate(Var%vdata)
+    else if (AvgFunc .eq. 'pop') then
+      call rhdf5_read_variable(rh5f_pcprate, PrecipRate%vname, PrecipRate%ndims, it, PrecipRate%dims, rdata=PrecipRate%vdata)
+      call rhdf5_read_variable(rh5f_lwp, Lwp%vname, Lwp%ndims, it, Lwp%dims, rdata=Lwp%vdata)
+
+      call DoPop(Nx, Ny, Nz, Filter%dims(3), NumBins, PrecipRate%vdata, Lwp%vdata, Filter%vdata, UseFilter, UndefVal, PrecipRateLimit, Bins, TserAvg%vdata)
+
+      deallocate(PrecipRate%vdata)
+      deallocate(Lwp%vdata)
     else if (AvgFunc .eq. 'storm_int') then
       call rhdf5_read_variable(rh5f_speed10m, Speed10m%vname, Speed10m%ndims, it, Speed10m%dims, rdata=Speed10m%vdata)
       call DoStormInt(Nx, Ny, Nz, Speed10m%vdata, Filter%vdata, TserAvg%vdata(1))
@@ -604,6 +712,9 @@ program tsavg
   else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
            (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist'))  then
     call rhdf5_close_file(rh5f_var)
+  else if (AvgFunc .eq. 'pop') then
+    call rhdf5_close_file(rh5f_pcprate)
+    call rhdf5_close_file(rh5f_lwp)
   else if (AvgFunc .eq. 'storm_int') then
     call rhdf5_close_file(rh5f_speed10m)
   endif
@@ -726,6 +837,19 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
     write (*,*) '              <num_bins>: number of bins'
     write (*,*) '              <bin_start>: starting value for bins'
     write (*,*) '              <bin_inc>: delta between bins'
+    write (*,*) '            pop:<pcp_var>:<pcp_file>:<pcp_limit>:<lwp_var>:<lwp_file>:<num_bins>:<bin_start>:<bin_inc>'
+    write (*,*) '              precip rate variable (2d):'
+    write (*,*) '                <pcp_var>: revu var name inside the file'
+    write (*,*) '                <pcp_file>: prefix for the revu file'
+    write (*,*) '                <pcp_limit>: threshold to determine if raining'
+    write (*,*) '                  precip rate >= threshold --> raining'
+    write (*,*) '                  precip rate <  threshold --> not raining'
+    write (*,*) '              liquid water path variable (2d):'
+    write (*,*) '                <lwp_var>: revu var name inside the file'
+    write (*,*) '                <lwp_file>: prefix for the revu file'
+    write (*,*) '                <num_bins>: number of bins'
+    write (*,*) '                <bin_start>: starting value for bins'
+    write (*,*) '                <bin_inc>: delta between bins'
     write (*,*) '        <filter_file>: file containing the filter mask'
     stop
   end if
@@ -749,6 +873,7 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
       (AvgFunc(1:4) .ne. 'max:')  .and. &
       (AvgFunc(1:4) .ne. 'hda:')  .and. &
       (AvgFunc(1:5) .ne. 'hist:')  .and. &
+      (AvgFunc(1:4) .ne. 'pop:')  .and. &
       (AvgFunc .ne. 'storm_int')  .and. &
       (AvgFunc .ne. 'max_azwind')) then
     write (*,*) 'ERROR: <avg_function> must be one of:'
@@ -757,6 +882,7 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
     write (*,*) '          max:<var>:<file>:<dim>'
     write (*,*) '          hda:<var>:<file>:<dim>'
     write (*,*) '          hist:<var>:<file>:<dim>:<num_bins>:<bin_start>:<bin_inc>'
+    write (*,*) '          pop:<pcp_var>:<pcp_file>:<pcp_limit>:<lwp_var>:<lwp_file>:<num_bins>:<bin_start>:<bin_inc>'
     write (*,*) '          storm_int'
     write (*,*) '          max_azwind'
     write (*,*) ''
@@ -1141,6 +1267,95 @@ subroutine DoHist(Nx, Ny, Nz, FilterNz, Nb, Var, Filter, UseFilter, UndefVal, Bi
 
   return
 end subroutine DoHist
+
+!**************************************************************************************
+! DoPop()
+!
+! This routine will create counts for generating a probability of precip statistic.
+! The data is binned on LWP, and each bin gets two counts: one for the number of grid cells that
+! it is raining in that bin and the other for the total number of cells in that bin. A cell counts
+! as raining when its precip rate is >= to the precip limit
+!
+
+subroutine DoPop(Nx, Ny, Nz, FilterNz, Nb, PrecipRate, Lwp, Filter, UseFilter, UndefVal, PrecipRateLimit, Bins, Counts)
+  implicit none
+
+  integer :: Nx, Ny, Nz, Nb, FilterNz
+  real, dimension(Nx,Ny,Nz) :: PrecipRate, Lwp
+  real, dimension(Nx,Ny,FilterNz) :: Filter
+  logical :: UseFilter
+  real :: UndefVal, PrecipRateLimit
+  real, dimension(Nb) :: Bins
+  real, dimension(Nb,2) :: Counts
+
+  integer :: ib, ix, iy, iz
+  integer :: filter_z
+  logical :: SelectPoint
+
+  ! Emulate matlab histc command, ie the values in Bins are treated as the edges
+  ! of the bin ranges. Do not count any values from Lwp that fall outside the
+  ! bin range (< Bins(1) or > Bins(Nb)). The count is incremented for bin ib when:
+  !
+  !   Bins(ib) <= Lwp(ix,iy,iz) < Bins(ib+1)
+  !
+  ! The count in Bin(Nb), last bin, is incremented when:
+  !
+  !   Lwp(ix,iy,iz) == Bins(ib)
+  !
+  do ib = 1, Nb
+    Counts(ib,1) = 0.0
+    Counts(ib,2) = 0.0
+  enddo
+
+  ! Build the histogram (counts)
+  do iz = 1, Nz
+    if (Nz .eq. 1) then
+      ! 2D var, use the z = 2 level (first model level above the surface)
+      ! since typically have the 3D filter z = 1 level all zeros (don't want
+      ! to include below surface model level in analysis).
+      filter_z = 2
+    else
+      filter_z = iz
+    endif
+
+    do iy = 1, Ny
+      do ix = 1, Nx
+        SelectPoint = anint(Lwp(ix,iy,iz)) .ne. UndefVal
+        if (UseFilter) then
+          SelectPoint = SelectPoint .and. (anint(Filter(ix,iy,filter_z)) .eq. 1.0)
+        endif
+        if (SelectPoint) then
+          ! Check all bins except the last.
+          !
+          ! Exiting out of the loop when finding the bin will help a lot when the
+          ! distribution of values is biased toward smaller values. After exiting
+          ! out of the loop you can either just check the last bin (which will be wasted)
+          ! or put in a logical variable and check that variable saying you can skip the
+          ! check of the last bin. Since you would have to check the logical variable and
+          ! the last bin every time you might as well just check the last bin instead.
+          do ib = 1, Nb-1
+             if ((Bins(ib) .le. Lwp(ix,iy,iz)) .and. (Lwp(ix,iy,iz) .lt. Bins(ib+1))) then
+                Counts(ib,1) = Counts(ib,1) + 1.0
+                if (PrecipRate(ix,iy,iz) .ge. PrecipRateLimit) then
+                  Counts(ib,2) = Counts(ib,2) + 1.0
+                endif
+                exit
+             endif
+          enddo
+          ! check the last bin
+          if (Bins(Nb) .eq. Lwp(ix,iy,iz)) then
+            Counts(Nb,1) = Counts(Nb,1) + 1.0
+            if (PrecipRate(ix,iy,iz) .ge. PrecipRateLimit) then
+              Counts(ib,2) = Counts(ib,2) + 1.0
+            endif
+          endif
+        endif
+      enddo
+    enddo
+  enddo
+
+  return
+end subroutine DoPop
 
 !**************************************************************************************
 ! DoStormInt()
