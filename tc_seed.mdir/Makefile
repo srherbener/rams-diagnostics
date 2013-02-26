@@ -52,11 +52,11 @@ $(DEST):
 $(DEST)/%.m: %.m
 	cp $(<) $(@)
 
-$(DIAG_DIR)/SST_26/Init24/DiagConfig: /Users/steve/src/diagnostics/matlab/tc_seed.mdir/DiagConfig.SST_26.Init24
+$(DIAG_DIR)/SST_26/Init24/DiagConfig: DiagConfig.SST_26.Init24
 	cp $(<) $(@)
 
-$(DIAG_DIR)/SST_26/Init24_SD/DiagConfig: /Users/steve/src/diagnostics/matlab/tc_seed.mdir/DiagConfig.SST_26.Init24_SD
+$(DIAG_DIR)/SST_26/Init24_SD/DiagConfig: DiagConfig.SST_26.Init24_SD
 	cp $(<) $(@)
 
-$(DIAG_DIR)/SST_26/Init54/DiagConfig: /Users/steve/src/diagnostics/matlab/tc_seed.mdir/DiagConfig.SST_26.Init54
+$(DIAG_DIR)/SST_26/Init54/DiagConfig: DiagConfig.SST_26.Init54
 	cp $(<) $(@)
