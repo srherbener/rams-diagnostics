@@ -51,6 +51,7 @@ i_tdir = 0;
 i_aeof = 0;
 i_hmeas = 0;
 i_pmeas = 0;
+i_smeas = 0;
 i_tavg = 0;
 i_dpts = 0;
 i_vint_ts = 0;
@@ -132,6 +133,20 @@ for i = 1:size(InLines,1)
       Cdata.Pmeas(i_pmeas).Rmax    = sscanf(Fields{8},  '%f');
       Cdata.Pmeas(i_pmeas).Tmin    = sscanf(Fields{9},  '%f');
       Cdata.Pmeas(i_pmeas).Tmax    = sscanf(Fields{10}, '%f');
+    case 'Smeas:'
+      i_smeas = i_smeas + 1;
+      Cdata.Smeas(i_smeas).PSname  = Fields{2};
+      Cdata.Smeas(i_smeas).Name    = Fields{3};
+      Cdata.Smeas(i_smeas).InDir   = Fields{4};
+      Cdata.Smeas(i_smeas).Fprefix = Fields{5};
+      Cdata.Smeas(i_smeas).Rvar    = Fields{6};
+      ix = 1;
+      for j = 7:length(Fields)  % grab the rest of the fields
+        Cdata.Smeas(i_smeas).Xvals(ix) = sscanf(Fields{j}, '%f');
+        ix = ix + 1;
+      end
+
+      Cdata.Smeas(i_smeas).PSnum   =  -1;
     case 'Tavg:'
       i_tavg = i_tavg + 1;
       Cdata.Tavg(i_tavg).Name    = Fields{2};
@@ -389,6 +404,11 @@ if (isfield(Cdata, 'HmeasSlicePlots'))
   Cdata.HmeasSlicePlots = AssociateStructs( Cdata.HmeasSlicePlots, Cdata.PlotSets, 'PS', 'PlotSet', 'HmeasSlicePlot' ); 
 end
 
+% Make the association between Smeas and the PlotSets
+if (isfield(Cdata, 'Smeas'))
+  Cdata.Smeas = AssociateStructs( Cdata.Smeas, Cdata.PlotSets, 'PS', 'PlotSet', 'Smeas' ); 
+end
+
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -459,6 +479,13 @@ i = 1;
 while (~isempty(Remain))
     [ Fields{i}, Remain ] = strtok(Remain, Delim);
     i = i + 1;
+end
+
+% Fields will end up with blank string in its last entry as
+% a result of the above loop. If there is more than one element
+% in Fields, then strip off this last entry since it is an artifact
+if ((strcmp(Fields{end},'')) && (length(Fields) > 1))
+  Fields = Fields(1:end-1);
 end
 
 end

@@ -16,67 +16,67 @@ UndefVal: -999
 #  #Case: <exp_name> <plot_name>
 #
 # CCN and SST cases
-#Case: z.atex.ccn0050.sst293.gcn10m5.1um
-#Case: z.atex.ccn0050.sst298.gcn10m5.1um
-#Case: z.atex.ccn0050.sst303.gcn10m5.1um
+#Case: z.atex.ccn0050.sst293.gcn10m5.1um XXX
+#Case: z.atex.ccn0050.sst298.gcn10m5.1um XXX
+#Case: z.atex.ccn0050.sst303.gcn10m5.1um XXX
 
-#Case: z.atex.ccn0100.sst293.gcn10m5.1um
-#Case: z.atex.ccn0100.sst298.gcn10m5.1um
-#Case: z.atex.ccn0100.sst303.gcn10m5.1um
+#Case: z.atex.ccn0100.sst293.gcn10m5.1um XXX
+#Case: z.atex.ccn0100.sst298.gcn10m5.1um XXX
+#Case: z.atex.ccn0100.sst303.gcn10m5.1um XXX
 
-#Case: z.atex.ccn0200.sst293.gcn10m5.1um
-#Case: z.atex.ccn0200.sst298.gcn10m5.1um
-#Case: z.atex.ccn0200.sst303.gcn10m5.1um
+#Case: z.atex.ccn0200.sst293.gcn10m5.1um XXX
+#Case: z.atex.ccn0200.sst298.gcn10m5.1um XXX
+#Case: z.atex.ccn0200.sst303.gcn10m5.1um XXX
 
-#Case: z.atex.ccn0400.sst293.gcn10m5.1um
-#Case: z.atex.ccn0400.sst298.gcn10m5.1um
-#Case: z.atex.ccn0400.sst303.gcn10m5.1um
+#Case: z.atex.ccn0400.sst293.gcn10m5.1um XXX
+#Case: z.atex.ccn0400.sst298.gcn10m5.1um XXX
+#Case: z.atex.ccn0400.sst303.gcn10m5.1um XXX
 
-#Case: z.atex.ccn0800.sst293.gcn10m5.1um
-#Case: z.atex.ccn0800.sst298.gcn10m5.1um
-#Case: z.atex.ccn0800.sst303.gcn10m5.1um
+#Case: z.atex.ccn0800.sst293.gcn10m5.1um XXX
+#Case: z.atex.ccn0800.sst298.gcn10m5.1um XXX
+#Case: z.atex.ccn0800.sst303.gcn10m5.1um XXX
 
-#Case: z.atex.ccn1200.sst293.gcn10m5.1um
-#Case: z.atex.ccn1200.sst298.gcn10m5.1um
-#Case: z.atex.ccn1200.sst303.gcn10m5.1um
+#Case: z.atex.ccn1200.sst293.gcn10m5.1um XXX
+#Case: z.atex.ccn1200.sst298.gcn10m5.1um XXX
+#Case: z.atex.ccn1200.sst303.gcn10m5.1um XXX
 
-#Case: z.atex.ccn1600.sst293.gcn10m5.1um
-#Case: z.atex.ccn1600.sst298.gcn10m5.1um
-#Case: z.atex.ccn1600.sst303.gcn10m5.1um
+#Case: z.atex.ccn1600.sst293.gcn10m5.1um XXX
+#Case: z.atex.ccn1600.sst298.gcn10m5.1um XXX
+#Case: z.atex.ccn1600.sst303.gcn10m5.1um XXX
 
 # Extra GCCN cases
-#Case: z.atex.ccn0050.sst298.gcn10m0.1um
-#Case: z.atex.ccn0050.sst298.gcn10m2.1um
-#Case: z.atex.ccn0050.sst298.gcn10m4.1um
+#Case: z.atex.ccn0050.sst298.gcn10m0.1um XXX
+#Case: z.atex.ccn0050.sst298.gcn10m2.1um XXX
+#Case: z.atex.ccn0050.sst298.gcn10m4.1um XXX
 
-#Case: z.atex.ccn0400.sst298.gcn10m0.1um
-#Case: z.atex.ccn0400.sst298.gcn10m2.1um
-#Case: z.atex.ccn0400.sst298.gcn10m4.1um
+#Case: z.atex.ccn0400.sst298.gcn10m0.1um XXX
+#Case: z.atex.ccn0400.sst298.gcn10m2.1um XXX
+#Case: z.atex.ccn0400.sst298.gcn10m4.1um XXX
 
-#Case: z.atex.ccn0400.sst303.gcn10m0.1um
-#Case: z.atex.ccn0400.sst303.gcn10m2.1um
-#Case: z.atex.ccn0400.sst303.gcn10m4.1um
+#Case: z.atex.ccn0400.sst303.gcn10m0.1um XXX
+#Case: z.atex.ccn0400.sst303.gcn10m2.1um XXX
+#Case: z.atex.ccn0400.sst303.gcn10m4.1um XXX
 
-#Case: z.atex.ccn1600.sst298.gcn10m0.1um
-#Case: z.atex.ccn1600.sst298.gcn10m2.1um
-#Case: z.atex.ccn1600.sst298.gcn10m4.1um
+#Case: z.atex.ccn1600.sst298.gcn10m0.1um XXX
+#Case: z.atex.ccn1600.sst298.gcn10m2.1um XXX
+#Case: z.atex.ccn1600.sst298.gcn10m4.1um XXX
 
 # Extra GCCN mean radius = 3um cases
-Case: z.atex.ccn0050.sst298.gcn10m0.3um
-Case: z.atex.ccn0050.sst298.gcn10m2.3um
-Case: z.atex.ccn0050.sst298.gcn10m4.3um
+Case: z.atex.ccn0050.sst298.gcn10m0.3um XXX
+Case: z.atex.ccn0050.sst298.gcn10m2.3um XXX
+Case: z.atex.ccn0050.sst298.gcn10m4.3um XXX
 
-Case: z.atex.ccn0400.sst298.gcn10m0.3um
-Case: z.atex.ccn0400.sst298.gcn10m2.3um
-Case: z.atex.ccn0400.sst298.gcn10m4.3um
+Case: z.atex.ccn0400.sst298.gcn10m0.3um XXX
+Case: z.atex.ccn0400.sst298.gcn10m2.3um XXX
+Case: z.atex.ccn0400.sst298.gcn10m4.3um XXX
 
-Case: z.atex.ccn0400.sst303.gcn10m0.3um
-Case: z.atex.ccn0400.sst303.gcn10m2.3um
-Case: z.atex.ccn0400.sst303.gcn10m4.3um
+Case: z.atex.ccn0400.sst303.gcn10m0.3um XXX
+Case: z.atex.ccn0400.sst303.gcn10m2.3um XXX
+Case: z.atex.ccn0400.sst303.gcn10m4.3um XXX
 
-Case: z.atex.ccn1600.sst298.gcn10m0.3um
-Case: z.atex.ccn1600.sst298.gcn10m2.3um
-Case: z.atex.ccn1600.sst298.gcn10m4.3um
+Case: z.atex.ccn1600.sst298.gcn10m0.3um XXX
+Case: z.atex.ccn1600.sst298.gcn10m2.3um XXX
+Case: z.atex.ccn1600.sst298.gcn10m4.3um XXX
 
 # Variable specs
 #  Var: <VarName> <RevuVarName> <TemplateSuffix>
@@ -257,6 +257,22 @@ ProfPlot: sst_c400_g10m4 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_CCN:_400/
 ProfPlot: ccn_s298_g10m0 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_SST:_298K,_GCCN:_1/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_S298_G10M0.fig
 ProfPlot: ccn_s298_g10m2 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_SST:_298K,_GCCN:_10e-2/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_S298_G10M2.fig
 ProfPlot: ccn_s298_g10m4 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_SST:_298K,_GCCN:_10e-4/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_S298_G10M4.fig
+
+#####################################
+####### Slope Measurements ##########
+#####################################
+
+# Vary GCCN, hold CCN and SST constant
+Smeas: gccn_c50_s298   smeas_pop_c50_s298   TsAveragedData pop pop 1 1e-2 1e-4
+Smeas: gccn_c400_s298  smeas_pop_c400_s298  TsAveragedData pop pop 1 1e-2 1e-4
+Smeas: gccn_c1600_s298 smeas_pop_c1600_s298 TsAveragedData pop pop 1 1e-2 1e-4
+
+Smeas: gccn_c400_s303  smeas_pop_c400_s303  TsAveragedData pop pop 1 1e-2 1e-4
+
+# Vary CCN, hold SST, GCCN constant
+Smeas: ccn_s298_g10m0 smeas_pop_s298_g10m0 TsAveragedData pop pop 50 400 1600
+Smeas: ccn_s298_g10m2 smeas_pop_s298_g10m2 TsAveragedData pop pop 50 400 1600
+Smeas: ccn_s298_g10m4 smeas_pop_s298_g10m4 TsAveragedData pop pop 50 400 1600
 
 ####################### Plot Sets ############################
 

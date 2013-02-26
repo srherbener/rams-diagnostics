@@ -2,7 +2,7 @@
 # Config
 #
 
-DEST = $(HOME)/etc/matlab
+DEST = $(HOME)/etc/matlab/common
 
 SCRIPTS = \
           $(DEST)/figmerge.m \
@@ -13,6 +13,7 @@ SCRIPTS = \
           $(DEST)/GenHistMeas.m \
           $(DEST)/GenLinePlots.m \
           $(DEST)/GenProfMeas.m \
+          $(DEST)/GenSlopes.m \
           $(DEST)/GenTimeAvg.m \
           $(DEST)/GenTsPlots.m \
           $(DEST)/GenVintTseries.m \
