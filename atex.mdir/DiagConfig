@@ -3,46 +3,46 @@
 AzavgDir: AzAveragedData
 TsavgDir: TsAveragedData
 DiagDir: DIAGS
-PlotDir: plots
+PlotDir: Plots
 EofDir: EofData
 FilterDir: FILTERS
 ExpName: ATEX
 RamsDir: RAMS
 RevuDir: HDF5
-ControlCase: z.atex.ccn0050.sst298.gcn10m4.3um
+ControlCase: z.atex.ccn0050.sst298.gcn10m5.1um
 UndefVal: -999
 
 # cases (experiment names)
 #  #Case: <exp_name> <plot_name>
 #
 # CCN and SST cases
-#Case: z.atex.ccn0050.sst293.gcn10m5.1um XXX
-#Case: z.atex.ccn0050.sst298.gcn10m5.1um XXX
-#Case: z.atex.ccn0050.sst303.gcn10m5.1um XXX
+Case: z.atex.ccn0050.sst293.gcn10m5.1um XXX
+Case: z.atex.ccn0050.sst298.gcn10m5.1um XXX
+Case: z.atex.ccn0050.sst303.gcn10m5.1um XXX
 
-#Case: z.atex.ccn0100.sst293.gcn10m5.1um XXX
-#Case: z.atex.ccn0100.sst298.gcn10m5.1um XXX
-#Case: z.atex.ccn0100.sst303.gcn10m5.1um XXX
+Case: z.atex.ccn0100.sst293.gcn10m5.1um XXX
+Case: z.atex.ccn0100.sst298.gcn10m5.1um XXX
+Case: z.atex.ccn0100.sst303.gcn10m5.1um XXX
 
-#Case: z.atex.ccn0200.sst293.gcn10m5.1um XXX
-#Case: z.atex.ccn0200.sst298.gcn10m5.1um XXX
-#Case: z.atex.ccn0200.sst303.gcn10m5.1um XXX
+Case: z.atex.ccn0200.sst293.gcn10m5.1um XXX
+Case: z.atex.ccn0200.sst298.gcn10m5.1um XXX
+Case: z.atex.ccn0200.sst303.gcn10m5.1um XXX
 
-#Case: z.atex.ccn0400.sst293.gcn10m5.1um XXX
-#Case: z.atex.ccn0400.sst298.gcn10m5.1um XXX
-#Case: z.atex.ccn0400.sst303.gcn10m5.1um XXX
+Case: z.atex.ccn0400.sst293.gcn10m5.1um XXX
+Case: z.atex.ccn0400.sst298.gcn10m5.1um XXX
+Case: z.atex.ccn0400.sst303.gcn10m5.1um XXX
 
-#Case: z.atex.ccn0800.sst293.gcn10m5.1um XXX
-#Case: z.atex.ccn0800.sst298.gcn10m5.1um XXX
-#Case: z.atex.ccn0800.sst303.gcn10m5.1um XXX
+Case: z.atex.ccn0800.sst293.gcn10m5.1um XXX
+Case: z.atex.ccn0800.sst298.gcn10m5.1um XXX
+Case: z.atex.ccn0800.sst303.gcn10m5.1um XXX
 
-#Case: z.atex.ccn1200.sst293.gcn10m5.1um XXX
-#Case: z.atex.ccn1200.sst298.gcn10m5.1um XXX
-#Case: z.atex.ccn1200.sst303.gcn10m5.1um XXX
+Case: z.atex.ccn1200.sst293.gcn10m5.1um XXX
+Case: z.atex.ccn1200.sst298.gcn10m5.1um XXX
+Case: z.atex.ccn1200.sst303.gcn10m5.1um XXX
 
-#Case: z.atex.ccn1600.sst293.gcn10m5.1um XXX
-#Case: z.atex.ccn1600.sst298.gcn10m5.1um XXX
-#Case: z.atex.ccn1600.sst303.gcn10m5.1um XXX
+Case: z.atex.ccn1600.sst293.gcn10m5.1um XXX
+Case: z.atex.ccn1600.sst298.gcn10m5.1um XXX
+Case: z.atex.ccn1600.sst303.gcn10m5.1um XXX
 
 # Extra GCCN cases
 #Case: z.atex.ccn0050.sst298.gcn10m0.1um XXX
@@ -62,21 +62,21 @@ UndefVal: -999
 #Case: z.atex.ccn1600.sst298.gcn10m4.1um XXX
 
 # Extra GCCN mean radius = 3um cases
-Case: z.atex.ccn0050.sst298.gcn10m0.3um XXX
-Case: z.atex.ccn0050.sst298.gcn10m2.3um XXX
-Case: z.atex.ccn0050.sst298.gcn10m4.3um XXX
+#Case: z.atex.ccn0050.sst298.gcn10m0.3um XXX
+#Case: z.atex.ccn0050.sst298.gcn10m2.3um XXX
+#Case: z.atex.ccn0050.sst298.gcn10m4.3um XXX
 
-Case: z.atex.ccn0400.sst298.gcn10m0.3um XXX
-Case: z.atex.ccn0400.sst298.gcn10m2.3um XXX
-Case: z.atex.ccn0400.sst298.gcn10m4.3um XXX
+#Case: z.atex.ccn0400.sst298.gcn10m0.3um XXX
+#Case: z.atex.ccn0400.sst298.gcn10m2.3um XXX
+#Case: z.atex.ccn0400.sst298.gcn10m4.3um XXX
 
-Case: z.atex.ccn0400.sst303.gcn10m0.3um XXX
-Case: z.atex.ccn0400.sst303.gcn10m2.3um XXX
-Case: z.atex.ccn0400.sst303.gcn10m4.3um XXX
+#Case: z.atex.ccn0400.sst303.gcn10m0.3um XXX
+#Case: z.atex.ccn0400.sst303.gcn10m2.3um XXX
+#Case: z.atex.ccn0400.sst303.gcn10m4.3um XXX
 
-Case: z.atex.ccn1600.sst298.gcn10m0.3um XXX
-Case: z.atex.ccn1600.sst298.gcn10m2.3um XXX
-Case: z.atex.ccn1600.sst298.gcn10m4.3um XXX
+#Case: z.atex.ccn1600.sst298.gcn10m0.3um XXX
+#Case: z.atex.ccn1600.sst298.gcn10m2.3um XXX
+#Case: z.atex.ccn1600.sst298.gcn10m4.3um XXX
 
 # Variable specs
 #  Var: <VarName> <RevuVarName> <TemplateSuffix>
@@ -112,25 +112,45 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 #  these can contain multiple words
 #
 
-####################### Line plots ############################
+###############################################################
+####################### LINE PLOTS ############################
+###############################################################
 # LinePlot: <plotset> <xspec> <yspec> <data_select_spec> <smoothing> <title> <legend_loc> <add_meas> <out_file>
 
-# Vary GCCN, hold SST and CCN constant
-LinePlot: gccn_c50_s298   Ctop Cfrac TsAll xy Cloud_Structure_Evolution:_CCN:_50/cc,_SST:_298K    NorthEast none CloudStruct_gccn_C50_S293.fig
-LinePlot: gccn_c400_s298  Ctop Cfrac TsAll xy Cloud_Structure_Evolution:_CCN:_400/cc,_SST:_298K   NorthEast none CloudStruct_gccn_C400_S293.fig
-LinePlot: gccn_c1600_s298 Ctop Cfrac TsAll xy Cloud_Structure_Evolution:_CCN:_16000/cc,_SST:_298K NorthEast none CloudStruct_gccn_C1600_S293.fig
+#### 1um GCCN median radius ####
 
-LinePlot: gccn_c400_s303  Ctop Cfrac TsAll xy Cloud_Structure_Evolution:_CCN:_400/cc,_SST:_303K   NorthEast none CloudStruct_gccn_C400_S303.fig
+# Vary CCN, hold SST constant
+LinePlot: CO_S293_G10M5  Ctop Cfrac CO_TsAll xy Cloud_Structure_Evolution:_SST:_293K,_GCCN:_1e-5/cc  NorthEast none CloudStruct_CO_S293_G10M5.fig
+LinePlot: CO_S298_G10M5  Ctop Cfrac CO_TsAll xy Cloud_Structure_Evolution:_SST:_298K,_GCCN:_1e-5/cc  NorthEast none CloudStruct_CO_S298_G10M5.fig
+LinePlot: CO_S303_G10M5  Ctop Cfrac CO_TsAll xy Cloud_Structure_Evolution:_SST:_303K,_GCCN:_1e-5/cc  NorthEast none CloudStruct_CO_S303_G10M5.fig
+
+# Vary SST, hold CCN constant
+LinePlot: CO_C0050_G10M5  Ctop Cfrac CO_TsAll xy Cloud_Structure_Evolution:_CCN:_50/cc,_GCCN:_1e-5/cc    NorthEast none CloudStruct_CO_C0050_G10M5.fig
+LinePlot: CO_C0100_G10M5  Ctop Cfrac CO_TsAll xy Cloud_Structure_Evolution:_CCN:_100/cc,_GCCN:_1e-5/cc   NorthEast none CloudStruct_CO_C0100_G10M5.fig
+LinePlot: CO_C0200_G10M5  Ctop Cfrac CO_TsAll xy Cloud_Structure_Evolution:_CCN:_200/cc,_GCCN:_1e-5/cc   NorthEast none CloudStruct_CO_C0200_G10M5.fig
+LinePlot: CO_C0400_G10M5  Ctop Cfrac CO_TsAll xy Cloud_Structure_Evolution:_CCN:_400/cc,_GCCN:_1e-5/cc   NorthEast none CloudStruct_CO_C0400_G10M5.fig
+LinePlot: CO_C0800_G10M5  Ctop Cfrac CO_TsAll xy Cloud_Structure_Evolution:_CCN:_800/cc,_GCCN:_1e-5/cc   NorthEast none CloudStruct_CO_C0800_G10M5.fig
+LinePlot: CO_C1200_G10M5  Ctop Cfrac CO_TsAll xy Cloud_Structure_Evolution:_CCN:_1200/cc,_GCCN:_1e-5/cc  NorthEast none CloudStruct_CO_C1200_G10M5.fig
+LinePlot: CO_C1600_G10M5  Ctop Cfrac CO_TsAll xy Cloud_Structure_Evolution:_CCN:_1600/cc,_GCCN:_1e-5/cc  NorthEast none CloudStruct_CO_C1600_G10M5.fig
+
+#### 3um GCCN median radius ####
+
+# Vary GCCN, hold SST and CCN constant
+LinePlot: CG_C0050_S298   Ctop Cfrac CG_TsAll xy Cloud_Structure_Evolution:_CCN:_50/cc,_SST:_298K    NorthEast none CloudStruct_CG_C50_S298.fig
+LinePlot: CG_C0400_S298  Ctop Cfrac CG_TsAll xy Cloud_Structure_Evolution:_CCN:_400/cc,_SST:_298K   NorthEast none CloudStruct_CG_C400_S298.fig
+LinePlot: CG_C1600_S298 Ctop Cfrac CG_TsAll xy Cloud_Structure_Evolution:_CCN:_16000/cc,_SST:_298K NorthEast none CloudStruct_CG_C1600_S298.fig
+
+LinePlot: CG_C0400_S303  Ctop Cfrac CG_TsAll xy Cloud_Structure_Evolution:_CCN:_400/cc,_SST:_303K   NorthEast none CloudStruct_CG_C400_S303.fig
 
 # Vary SST, hold CCN and GCCN constant
-LinePlot: sst_c400_g10m0  Ctop Cfrac TsAll xy Cloud_Structure_Evolution:_CCN:_400/cc,_GCCN:_1/cc  NorthEast none CloudStruct_sst_C400_G10m0.fig
-LinePlot: sst_c400_g10m2  Ctop Cfrac TsAll xy Cloud_Structure_Evolution:_CCN:_400/cc,_GCCN:_10e-2/cc  NorthEast none CloudStruct_sst_C400_G10m2.fig
-LinePlot: sst_c400_g10m4  Ctop Cfrac TsAll xy Cloud_Structure_Evolution:_CCN:_400/cc,_GCCN:_10e-4/cc  NorthEast none CloudStruct_sst_C400_G10m4.fig
+LinePlot: CG_C0400_G10M0  Ctop Cfrac CG_TsAll xy Cloud_Structure_Evolution:_CCN:_400/cc,_GCCN:_1/cc  NorthEast none CloudStruct_CG_C400_G10m0.fig
+LinePlot: CG_C0400_G10M2  Ctop Cfrac CG_TsAll xy Cloud_Structure_Evolution:_CCN:_400/cc,_GCCN:_1e-2/cc  NorthEast none CloudStruct_CG_C400_G10m2.fig
+LinePlot: CG_C0400_G10M4  Ctop Cfrac CG_TsAll xy Cloud_Structure_Evolution:_CCN:_400/cc,_GCCN:_1e-4/cc  NorthEast none CloudStruct_CG_C400_G10m4.fig
 
 # Vary CCN, hold SST and GCCN constant
-LinePlot: ccn_s298_g10m0   Ctop Cfrac TsAll xy Cloud_Structure_Evolution:_SST:_298K,_GCCN:_1/cc    NorthEast none CloudStruct_ccn_S298_G10M0.fig
-LinePlot: ccn_s298_g10m2   Ctop Cfrac TsAll xy Cloud_Structure_Evolution:_SST:_298K,_GCCN:_1/cc    NorthEast none CloudStruct_ccn_S298_G10M2.fig
-LinePlot: ccn_s298_g10m4   Ctop Cfrac TsAll xy Cloud_Structure_Evolution:_SST:_298K,_GCCN:_1/cc    NorthEast none CloudStruct_ccn_S298_G10M4.fig
+LinePlot: CG_S298_G10M0   Ctop Cfrac CG_TsAll xy Cloud_Structure_Evolution:_SST:_298K,_GCCN:_1/cc    NorthEast none CloudStruct_CG_S298_G10M0.fig
+LinePlot: CG_S298_G10M2   Ctop Cfrac CG_TsAll xy Cloud_Structure_Evolution:_SST:_298K,_GCCN:_1/cc    NorthEast none CloudStruct_CG_S298_G10M2.fig
+LinePlot: CG_S298_G10M4   Ctop Cfrac CG_TsAll xy Cloud_Structure_Evolution:_SST:_298K,_GCCN:_1/cc    NorthEast none CloudStruct_CG_S298_G10M4.fig
 
 ##################################################################
 ##################### DISTRIBUTION PLOTS #########################
@@ -138,22 +158,40 @@ LinePlot: ccn_s298_g10m4   Ctop Cfrac TsAll xy Cloud_Structure_Evolution:_SST:_2
 
 ####################### rain rate ############################
 
-# Vary GCCN, hold CCN, SST constant
-DistPlot: gccn_c50_s298 tavg_hist_pcprr Rainfall_Rate,_CCN:_50/cc,_SST:_298K Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_C50_S298.fig
-DistPlot: gccn_c400_s298 tavg_hist_pcprr Rainfall_Rate,_CCN:_400/cc,_SST:_298K Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_C400_S298.fig
-DistPlot: gccn_c1600_s298 tavg_hist_pcprr Rainfall_Rate,_CCN:_1600/cc,_SST:_298K Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_C1600_S298.fig
+#### 1um GCCN median radius ####
 
-DistPlot: gccn_c400_s303 tavg_hist_pcprr Rainfall_Rate,_CCN:_400/cc,_SST:_303K Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_C400_S303.fig
+# Vary CCN, hold SST constant
+DistPlot: CO_S293_G10M5 tavg_hist_pcprr Rainfall_Rate,_SST:_293K,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_S293_G10M5.fig
+DistPlot: CO_S298_G10M5 tavg_hist_pcprr Rainfall_Rate,_SST:_298K,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_S298_G10M5.fig
+DistPlot: CO_S303_G10M5 tavg_hist_pcprr Rainfall_Rate,_SST:_303K,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_S303_G10M5.fig
+
+# Vary SST, hold CCN constant
+DistPlot: CO_C0050_G10M5 tavg_hist_pcprr Rainfall_Rate,_CCN:_50/cc,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_C0050_G10M5.fig
+DistPlot: CO_C0100_G10M5 tavg_hist_pcprr Rainfall_Rate,_CCN:_100/cc,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_C0100_G10M5.fig
+DistPlot: CO_C0200_G10M5 tavg_hist_pcprr Rainfall_Rate,_CCN:_200/cc,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_C0200_G10M5.fig
+DistPlot: CO_C0400_G10M5 tavg_hist_pcprr Rainfall_Rate,_CCN:_400/cc,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_C0400_G10M5.fig
+DistPlot: CO_C0800_G10M5 tavg_hist_pcprr Rainfall_Rate,_CCN:_800/cc,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_C0800_G10M5.fig
+DistPlot: CO_C1200_G10M5 tavg_hist_pcprr Rainfall_Rate,_CCN:_1200/cc,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_C1200_G10M5.fig
+DistPlot: CO_C1600_G10M5 tavg_hist_pcprr Rainfall_Rate,_CCN:_1600/cc,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_C1600_G10M5.fig
+
+#### 3um GCCN median radius ####
+
+# Vary GCCN, hold CCN, SST constant
+DistPlot: CG_C0050_S298 tavg_hist_pcprr Rainfall_Rate,_CCN:_50/cc,_SST:_298K Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_C50_S298.fig
+DistPlot: CG_C0400_S298 tavg_hist_pcprr Rainfall_Rate,_CCN:_400/cc,_SST:_298K Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_C400_S298.fig
+DistPlot: CG_C1600_S298 tavg_hist_pcprr Rainfall_Rate,_CCN:_1600/cc,_SST:_298K Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_C1600_S298.fig
+
+DistPlot: CG_C0400_S303 tavg_hist_pcprr Rainfall_Rate,_CCN:_400/cc,_SST:_303K Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_C400_S303.fig
 
 # Vary SST, hold CCN, GCCN constant
-DistPlot: sst_c400_g10m0 tavg_hist_pcprr Rainfall_Rate,_CCN:_400/cc,_GCCN:_1/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_C400_G10M0.fig
-DistPlot: sst_c400_g10m2 tavg_hist_pcprr Rainfall_Rate,_CCN:_400/cc,_GCCN:_10e-2/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_C400_G10M2.fig
-DistPlot: sst_c400_g10m4 tavg_hist_pcprr Rainfall_Rate,_CCN:_400/cc,_GCCN:_10e-4/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_C400_G10M4.fig
+DistPlot: CG_C0400_G10M0 tavg_hist_pcprr Rainfall_Rate,_CCN:_400/cc,_GCCN:_1/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_C400_G10M0.fig
+DistPlot: CG_C0400_G10M2 tavg_hist_pcprr Rainfall_Rate,_CCN:_400/cc,_GCCN:_1e-2/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_C400_G10M2.fig
+DistPlot: CG_C0400_G10M4 tavg_hist_pcprr Rainfall_Rate,_CCN:_400/cc,_GCCN:_1e-4/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_C400_G10M4.fig
 
 # Vary CCN, hold SST, GCCN constant
-DistPlot: ccn_s298_g10m0 tavg_hist_pcprr Rainfall_Rate,_SST:_298K,_GCCN:_1/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_S298_G10M0.fig
-DistPlot: ccn_s298_g10m2 tavg_hist_pcprr Rainfall_Rate,_SST:_298K,_GCCN:_10e-2/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_S298_G10M2.fig
-DistPlot: ccn_s298_g10m4 tavg_hist_pcprr Rainfall_Rate,_SST:_298K,_GCCN:_10e-4/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_S298_G10M4.fig
+DistPlot: CG_S298_G10M0 tavg_hist_pcprr Rainfall_Rate,_SST:_298K,_GCCN:_1/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_S298_G10M0.fig
+DistPlot: CG_S298_G10M2 tavg_hist_pcprr Rainfall_Rate,_SST:_298K,_GCCN:_1e-2/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_S298_G10M2.fig
+DistPlot: CG_S298_G10M4 tavg_hist_pcprr Rainfall_Rate,_SST:_298K,_GCCN:_1e-4/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_S298_G10M4.fig
 
 ##################################################################
 ##################### TIME SERIES PLOTS ##########################
@@ -161,41 +199,77 @@ DistPlot: ccn_s298_g10m4 tavg_hist_pcprr Rainfall_Rate,_SST:_298K,_GCCN:_10e-4/c
 
 ####################### SW upward flux #############################
 
-# Vary GCCN, hold SST, GCCN constant
-TsavgPlot: gccn_c50_s298 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_50/cc,_SST:_298K NorthWest -150.0 150.0 TsAvgTopSwup_C50_S298.fig
-TsavgPlot: gccn_c400_s298 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_400/cc,_SST:_298K NorthWest -150.0 150.0 TsAvgTopSwup_C400_S298.fig
-TsavgPlot: gccn_c1600_s298 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_1600/cc,_SST:_298K NorthWest -150.0 150.0 TsAvgTopSwup_C1600_S298.fig
+#### 1um GCCN median radius ####
 
-TsavgPlot: gccn_c400_s303 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_400/cc,_SST:_303K NorthWest -150.0 150.0 TsAvgTopSwup_C400_S303.fig
+# Vary CCN, hold SST constant
+TsavgPlot: CO_S293_G10M5 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_SST:_293K,_GCCN:_1e-5/cc NorthWest -150.0 150.0 TsAvgTopSwup_CO_S293_G10M5.fig
+TsavgPlot: CO_S298_G10M5 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_SST:_298K,_GCCN:_1e-5/cc NorthWest -150.0 150.0 TsAvgTopSwup_CO_S298_G10M5.fig
+TsavgPlot: CO_S303_G10M5 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_SST:_303K,_GCCN:_1e-5/cc NorthWest -150.0 150.0 TsAvgTopSwup_CO_S303_G10M5.fig
+
+# Vary SST, hold CCN constant
+TsavgPlot: CO_C0050_G10M5 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_50/cc,_GCCN:_1e-5/cc NorthWest -150.0 150.0 TsAvgTopSwup_CO_C0050_G10M5.fig
+TsavgPlot: CO_C0100_G10M5 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_100/cc,_GCCN:_1e-5/cc NorthWest -150.0 150.0 TsAvgTopSwup_CO_C0100_G10M5.fig
+TsavgPlot: CO_C0200_G10M5 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_200/cc,_GCCN:_1e-5/cc NorthWest -150.0 150.0 TsAvgTopSwup_CO_C0200_G10M5.fig
+TsavgPlot: CO_C0400_G10M5 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_400/cc,_GCCN:_1e-5/cc NorthWest -150.0 150.0 TsAvgTopSwup_CO_C0400_G10M5.fig
+TsavgPlot: CO_C0800_G10M5 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_800/cc,_GCCN:_1e-5/cc NorthWest -150.0 150.0 TsAvgTopSwup_CO_C0800_G10M5.fig
+TsavgPlot: CO_C1200_G10M5 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_1200/cc,_GCCN:_1e-5/cc NorthWest -150.0 150.0 TsAvgTopSwup_CO_C1200_G10M5.fig
+TsavgPlot: CO_C1600_G10M5 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_1600/cc,_GCCN:_1e-5/cc NorthWest -150.0 150.0 TsAvgTopSwup_CO_C1600_G10M5.fig
+
+#### 3um GCCN median radius ####
+
+# Vary GCCN, hold SST, GCCN constant
+TsavgPlot: CG_C0050_S298 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_50/cc,_SST:_298K NorthWest -150.0 150.0 TsAvgTopSwup_CG_C50_S298.fig
+TsavgPlot: CG_C0400_S298 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_400/cc,_SST:_298K NorthWest -150.0 150.0 TsAvgTopSwup_CG_C400_S298.fig
+TsavgPlot: CG_C1600_S298 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_1600/cc,_SST:_298K NorthWest -150.0 150.0 TsAvgTopSwup_CG_C1600_S298.fig
+
+TsavgPlot: CG_C0400_S303 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_400/cc,_SST:_303K NorthWest -150.0 150.0 TsAvgTopSwup_CG_C400_S303.fig
 
 # Vary SST, hold CCN, GCCN constant
-TsavgPlot: sst_c400_g10m0 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_400/cc,_GCCN:_1/cc NorthWest -150.0 150.0 TsAvgTopSwup_C400_G10M0.fig
-TsavgPlot: sst_c400_g10m2 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_400/cc,_GCCN:_10e-2/cc NorthWest -150.0 150.0 TsAvgTopSwup_C400_G10M2.fig
-TsavgPlot: sst_c400_g10m4 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_400/cc,_GCCN:_10e-4/cc NorthWest -150.0 150.0 TsAvgTopSwup_C400_G10M4.fig
+TsavgPlot: CG_C0400_G10M0 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_400/cc,_GCCN:_1/cc NorthWest -150.0 150.0 TsAvgTopSwup_CG_C400_G10M0.fig
+TsavgPlot: CG_C0400_G10M2 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_400/cc,_GCCN:_1e-2/cc NorthWest -150.0 150.0 TsAvgTopSwup_CG_C400_G10M2.fig
+TsavgPlot: CG_C0400_G10M4 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_400/cc,_GCCN:_1e-4/cc NorthWest -150.0 150.0 TsAvgTopSwup_CG_C400_G10M4.fig
 
 # Vary CCN, hold SST, GCCN constant
-TsavgPlot: ccn_s298_g10m0 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_SST:_298K,_GCCN:_1/cc NorthWest -150.0 150.0 TsAvgTopSwup_S298_G10m0.fig
-TsavgPlot: ccn_s298_g10m2 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_SST:_298K,_GCCN:_10e-2/cc NorthWest -150.0 150.0 TsAvgTopSwup_S298_G10m2.fig
-TsavgPlot: ccn_s298_g10m4 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_SST:_298K,_GCCN:_10e-4/cc NorthWest -150.0 150.0 TsAvgTopSwup_S298_G10m4.fig
+TsavgPlot: CG_S298_G10M0 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_SST:_298K,_GCCN:_1/cc NorthWest -150.0 150.0 TsAvgTopSwup_CG_S298_G10M0.fig
+TsavgPlot: CG_S298_G10M2 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_SST:_298K,_GCCN:_1e-2/cc NorthWest -150.0 150.0 TsAvgTopSwup_CG_S298_G10M2.fig
+TsavgPlot: CG_S298_G10M4 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_SST:_298K,_GCCN:_1e-4/cc NorthWest -150.0 150.0 TsAvgTopSwup_CG_S298_G10M4.fig
 
 ####################### RAIN/CLOUD ############################
 
-# Vary GCCN, hold CCN, SST constant
-TsavgPlot: gccn_c50_s298 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_50/cc,_SST:_298K NorthWest 0.0 0.6 TsAvgR2C_C50_S298.fig
-TsavgPlot: gccn_c400_s298 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_400/cc,_SST:_298K NorthWest 0.0 0.6 TsAvgR2C_C400_S298.fig
-TsavgPlot: gccn_c1600_s298 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_1600/cc,_SST:_298K NorthWest 0.0 0.6 TsAvgR2C_C1600_S298.fig
+#### 1um GCCN median radius ####
 
-TsavgPlot: gccn_c400_s303 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_400/cc,_SST:_303K NorthWest 0.0 1.5 TsAvgR2C_C400_S303.fig
+# Vary CCN, hold SST constant
+TsavgPlot: CO_S293_G10M5 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_SST:_293K,_GCCN:_1e-5/cc NorthWest 0.0 0.6 TsAvgR2C_CO_S293_G10M5.fig
+TsavgPlot: CO_S298_G10M5 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_SST:_298K,_GCCN:_1e-5/cc NorthWest 0.0 0.6 TsAvgR2C_CO_S298_G10M5.fig
+TsavgPlot: CO_S303_G10M5 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_SST:_303K,_GCCN:_1e-5/cc NorthWest 0.0 0.6 TsAvgR2C_CO_S303_G10M5.fig
+
+# Vary SST, hold CCN constant
+TsavgPlot: CO_C0050_G10M5 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_50/cc,_GCCN:_1e-5/cc NorthWest 0.0 1.5 TsAvgR2C_CO_C0050_G10M5.fig
+TsavgPlot: CO_C0100_G10M5 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_100/cc,_GCCN:_1e-5/cc NorthWest 0.0 1.5 TsAvgR2C_CO_C0100_G10M5.fig
+TsavgPlot: CO_C0200_G10M5 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_200/cc,_GCCN:_1e-5/cc NorthWest 0.0 1.5 TsAvgR2C_CO_C0200_G10M5.fig
+TsavgPlot: CO_C0400_G10M5 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_400/cc,_GCCN:_1e-5/cc NorthWest 0.0 1.5 TsAvgR2C_CO_C0400_G10M5.fig
+TsavgPlot: CO_C0800_G10M5 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_800/cc,_GCCN:_1e-5/cc NorthWest 0.0 1.5 TsAvgR2C_CO_C0800_G10M5.fig
+TsavgPlot: CO_C1200_G10M5 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_1200/cc,_GCCN:_1e-5/cc NorthWest 0.0 1.5 TsAvgR2C_CO_C1200_G10M5.fig
+TsavgPlot: CO_C1600_G10M5 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_1600/cc,_GCCN:_1e-5/cc NorthWest 0.0 1.5 TsAvgR2C_CO_C1600_G10M5.fig
+
+#### 3um GCCN median radius ####
+
+# Vary GCCN, hold CCN, SST constant
+TsavgPlot: CG_C0050_S298 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_50/cc,_SST:_298K NorthWest 0.0 0.6 TsAvgR2C_CG_C50_S298.fig
+TsavgPlot: CG_C0400_S298 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_400/cc,_SST:_298K NorthWest 0.0 0.6 TsAvgR2C_CG_C400_S298.fig
+TsavgPlot: CG_C1600_S298 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_1600/cc,_SST:_298K NorthWest 0.0 0.6 TsAvgR2C_CG_C1600_S298.fig
+
+TsavgPlot: CG_C0400_S303 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_400/cc,_SST:_303K NorthWest 0.0 1.5 TsAvgR2C_CG_C400_S303.fig
 
 # Vary SST, hold CCN, GCCN constant
-TsavgPlot: sst_c400_g10m0 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_50/cc,_GCCN:_1/cc NorthWest 0.0 1.5 TsAvgR2C_C50_G10M0.fig
-TsavgPlot: sst_c400_g10m2 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_400/cc,_GCCN:_10e-2/cc NorthWest 0.0 1.5 TsAvgR2C_C400_G10M2.fig
-TsavgPlot: sst_c400_g10m4 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_1600/cc,_GCCN:_10e-4/cc NorthWest 0.0 1.5 TsAvgR2C_C1600_G10M4.fig
+TsavgPlot: CG_C0400_G10M0 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_400/cc,_GCCN:_1/cc NorthWest 0.0 1.5 TsAvgR2C_CG_C0400_G10M0.fig
+TsavgPlot: CG_C0400_G10M2 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_400/cc,_GCCN:_1e-2/cc NorthWest 0.0 1.5 TsAvgR2C_CG_C400_G10M2.fig
+TsavgPlot: CG_C0400_G10M4 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_400/cc,_GCCN:_1e-4/cc NorthWest 0.0 1.5 TsAvgR2C_CG_C400_G10M4.fig
 
 # Vary CCN, hold SST, GCCN constant
-TsavgPlot: ccn_s298_g10m0 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_SST:_298K,_GCCN:_1/cc NorthWest 0.0 0.6 TsAvgR2C_S298_G10M0.fig
-TsavgPlot: ccn_s298_g10m2 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_SST:_298K,_GCCN:_10e-2/cc NorthWest 0.0 0.6 TsAvgR2C_S298_G10M2.fig
-TsavgPlot: ccn_s298_g10m4 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_SST:_298K,_GCCN:_10e-4/cc NorthWest 0.0 0.6 TsAvgR2C_S298_G10M4.fig
+TsavgPlot: CG_S298_G10M0 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_SST:_298K,_GCCN:_1/cc NorthWest 0.0 0.6 TsAvgR2C_CG_S298_G10M0.fig
+TsavgPlot: CG_S298_G10M2 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_SST:_298K,_GCCN:_1e-2/cc NorthWest 0.0 0.6 TsAvgR2C_CG_S298_G10M2.fig
+TsavgPlot: CG_S298_G10M4 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_SST:_298K,_GCCN:_1e-4/cc NorthWest 0.0 0.6 TsAvgR2C_CG_S298_G10M4.fig
 
 ##################################################################
 ####################### PROFILE PLOTS ############################
@@ -203,95 +277,121 @@ TsavgPlot: ccn_s298_g10m4 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD rat
 
 ######### LH with LWP > 0.01mm ################
 
-# Vary GCCN, hold CCN, SST constant
-ProfPlot: gccn_c50_s298 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_CCN:_50/cc,_SST:_298K Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_C50_S298.fig
-ProfPlot: gccn_c400_s298 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_SST:_298K Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_C400_S298.fig
-ProfPlot: gccn_c1600_s298 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_CCN:_1600/cc,_SST:_298K Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_C1600_S298.fig
+#### 3um GCCN median radius ####
 
-ProfPlot: gccn_c400_s303 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_SST:_303K Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_C400_S303.fig
+# Vary GCCN, hold CCN, SST constant
+ProfPlot: CG_C0050_S298 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_CCN:_50/cc,_SST:_298K Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_CG_C50_S298.fig
+ProfPlot: CG_C0400_S298 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_SST:_298K Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_CG_C400_S298.fig
+ProfPlot: CG_C1600_S298 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_CCN:_1600/cc,_SST:_298K Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_CG_C1600_S298.fig
+
+ProfPlot: CG_C0400_S303 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_SST:_303K Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_CG_C400_S303.fig
 
 # Vary SST, hold CCN, GCCN constant
-ProfPlot: sst_c400_g10m0 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_GCCN:_1/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_C400_G10M0.fig
-ProfPlot: sst_c400_g10m2 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_GCCN:_10e-2/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_C400_G10M2.fig
-ProfPlot: sst_c400_g10m4 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_GCCN:_10e-4/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_C400_G10M4.fig
+ProfPlot: CG_C0400_G10M0 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_GCCN:_1/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_CG_C400_G10M0.fig
+ProfPlot: CG_C0400_G10M2 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_GCCN:_10e-2/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_CG_C400_G10M2.fig
+ProfPlot: CG_C0400_G10M4 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_GCCN:_10e-4/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_CG_C400_G10M4.fig
 
 # Vary CCN, hold SST, GCCN constant
-ProfPlot: ccn_s298_g10m0 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_SST:_298K,_GCCN:_1/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_S298_G10M0.fig
-ProfPlot: ccn_s298_g10m2 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_SST:_298K,_GCCN:_10e-2/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_S298_G10M2.fig
-ProfPlot: ccn_s298_g10m4 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_SST:_298K,_GCCN:_10e-4/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_S298_G10M4.fig
+ProfPlot: CG_S298_G10M0 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_SST:_298K,_GCCN:_1/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_CG_S298_G10M0.fig
+ProfPlot: CG_S298_G10M2 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_SST:_298K,_GCCN:_10e-2/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_CG_S298_G10M2.fig
+ProfPlot: CG_S298_G10M4 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_SST:_298K,_GCCN:_10e-4/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_CG_S298_G10M4.fig
 
 ######### LH with LWP > 0.10mm ################
 
-# Vary GCCN, hold CCN, SST constant
-ProfPlot: gccn_c50_s298 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_CCN:_50/cc,_SST:_298K Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_C50_S298.fig
-ProfPlot: gccn_c400_s298 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_SST:_298K Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_C400_S298.fig
-ProfPlot: gccn_c1600_s298 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_CCN:_1600/cc,_SST:_298K Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_C1600_S298.fig
+#### 3um GCCN median radius ####
 
-ProfPlot: gccn_c400_s303 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_SST:_303K Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_C400_S303.fig
+# Vary GCCN, hold CCN, SST constant
+ProfPlot: CG_C0050_S298 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_CCN:_50/cc,_SST:_298K Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_CG_C50_S298.fig
+ProfPlot: CG_C0400_S298 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_SST:_298K Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_CG_C400_S298.fig
+ProfPlot: CG_C1600_S298 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_CCN:_1600/cc,_SST:_298K Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_CG_C1600_S298.fig
+
+ProfPlot: CG_C0400_S303 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_SST:_303K Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_CG_C400_S303.fig
 
 # Vary SST, hold CCN, GCCN constant
-ProfPlot: sst_c400_g10m0 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_GCCN:_1/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_C400_G10M0.fig
-ProfPlot: sst_c400_g10m2 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_GCCN:_10e-2/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_C400_G10M2.fig
-ProfPlot: sst_c400_g10m4 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_GCCN:_10e-4/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_C400_G10M4.fig
+ProfPlot: CG_C0400_G10M0 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_GCCN:_1/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_CG_C400_G10M0.fig
+ProfPlot: CG_C0400_G10M2 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_GCCN:_10e-2/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_CG_C400_G10M2.fig
+ProfPlot: CG_C0400_G10M4 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_GCCN:_10e-4/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_CG_C400_G10M4.fig
 
 # Vary CCN, hold SST, GCCN constant
-ProfPlot: ccn_s298_g10m0 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_SST:_298K,_GCCN:_1/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_S298_G10M0.fig
-ProfPlot: ccn_s298_g10m2 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_SST:_298K,_GCCN:_10e-2/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_S298_G10M2.fig
-ProfPlot: ccn_s298_g10m4 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_SST:_298K,_GCCN:_10e-4/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_S298_G10M4.fig
+ProfPlot: CG_S298_G10M0 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_SST:_298K,_GCCN:_1/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_CG_S298_G10M0.fig
+ProfPlot: CG_S298_G10M2 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_SST:_298K,_GCCN:_10e-2/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_CG_S298_G10M2.fig
+ProfPlot: CG_S298_G10M4 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_SST:_298K,_GCCN:_10e-4/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_CG_S298_G10M4.fig
 
 ######### LH with LWP > 1.00mm ################
 
-# Vary GCCN, hold CCN, SST constant
-ProfPlot: gccn_c50_s298 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_CCN:_50/cc,_SST:_298K Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_C50_S298.fig
-ProfPlot: gccn_c400_s298 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_SST:_298K Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_C400_S298.fig
-ProfPlot: gccn_c1600_s298 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_CCN:_1600/cc,_SST:_298K Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_C1600_S298.fig
+#### 3um GCCN median radius ####
 
-ProfPlot: gccn_c400_s303 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_SST:_303K Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_C400_S303.fig
+# Vary GCCN, hold CCN, SST constant
+ProfPlot: CG_C0050_S298 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_CCN:_50/cc,_SST:_298K Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_CG_C50_S298.fig
+ProfPlot: CG_C0400_S298 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_SST:_298K Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_CG_C400_S298.fig
+ProfPlot: CG_C1600_S298 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_CCN:_1600/cc,_SST:_298K Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_CG_C1600_S298.fig
+
+ProfPlot: CG_C0400_S303 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_SST:_303K Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_CG_C400_S303.fig
 
 # Vary SST, hold CCN, GCCN constant
-ProfPlot: sst_c400_g10m0 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_GCCN:_1/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_C400_G10M0.fig
-ProfPlot: sst_c400_g10m2 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_GCCN:_10e-2/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_C400_G10M2.fig
-ProfPlot: sst_c400_g10m4 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_GCCN:_10e-4/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_C400_G10M4.fig
+ProfPlot: CG_C0400_G10M0 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_GCCN:_1/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_CG_C400_G10M0.fig
+ProfPlot: CG_C0400_G10M2 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_GCCN:_10e-2/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_CG_C400_G10M2.fig
+ProfPlot: CG_C0400_G10M4 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_GCCN:_10e-4/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_CG_C400_G10M4.fig
 
 # Vary CCN, hold SST, GCCN constant
-ProfPlot: ccn_s298_g10m0 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_SST:_298K,_GCCN:_1/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_S298_G10M0.fig
-ProfPlot: ccn_s298_g10m2 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_SST:_298K,_GCCN:_10e-2/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_S298_G10M2.fig
-ProfPlot: ccn_s298_g10m4 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_SST:_298K,_GCCN:_10e-4/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_S298_G10M4.fig
+ProfPlot: CG_S298_G10M0 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_SST:_298K,_GCCN:_1/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_CG_S298_G10M0.fig
+ProfPlot: CG_S298_G10M2 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_SST:_298K,_GCCN:_10e-2/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_CG_S298_G10M2.fig
+ProfPlot: CG_S298_G10M4 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_SST:_298K,_GCCN:_10e-4/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_CG_S298_G10M4.fig
 
 #####################################
 ####### Slope Measurements ##########
 #####################################
 
-# Vary GCCN, hold CCN and SST constant
-Smeas: gccn_c50_s298   smeas_pop_c50_s298   TsAveragedData pop pop 1 1e-2 1e-4
-Smeas: gccn_c400_s298  smeas_pop_c400_s298  TsAveragedData pop pop 1 1e-2 1e-4
-Smeas: gccn_c1600_s298 smeas_pop_c1600_s298 TsAveragedData pop pop 1 1e-2 1e-4
+#### 3um GCCN median radius ####
 
-Smeas: gccn_c400_s303  smeas_pop_c400_s303  TsAveragedData pop pop 1 1e-2 1e-4
+# Vary GCCN, hold CCN and SST constant
+Smeas: CG_C0050_S298   smeas_pop_CG_c50_s298   TsAveragedData pop pop 1 1e-2 1e-4
+Smeas: CG_C0400_S298  smeas_pop_CG_c400_s298  TsAveragedData pop pop 1 1e-2 1e-4
+Smeas: CG_C1600_S298 smeas_pop_CG_c1600_s298 TsAveragedData pop pop 1 1e-2 1e-4
+
+Smeas: CG_C0400_S303  smeas_pop_c400_s303  TsAveragedData pop pop 1 1e-2 1e-4
 
 # Vary CCN, hold SST, GCCN constant
-Smeas: ccn_s298_g10m0 smeas_pop_s298_g10m0 TsAveragedData pop pop 50 400 1600
-Smeas: ccn_s298_g10m2 smeas_pop_s298_g10m2 TsAveragedData pop pop 50 400 1600
-Smeas: ccn_s298_g10m4 smeas_pop_s298_g10m4 TsAveragedData pop pop 50 400 1600
+Smeas: CG_S298_G10M0 smeas_pop_s298_g10m0 TsAveragedData pop pop 50 400 1600
+Smeas: CG_S298_G10M2 smeas_pop_s298_g10m2 TsAveragedData pop pop 50 400 1600
+Smeas: CG_S298_G10M4 smeas_pop_s298_g10m4 TsAveragedData pop pop 50 400 1600
 
 ####################### Plot Sets ############################
 
-# Vary GCCN (3um mean radius)
-PlotSet: gccn_c50_s298 3 z.atex.ccn0050.sst298.gcn10m0.3um GCCN:_1/cc -k z.atex.ccn0050.sst298.gcn10m2.3um GCCN:_10e-2/cc -m z.atex.ccn0050.sst298.gcn10m4.3um GCCN:_10e-4/cc -b
-PlotSet: gccn_c400_s298 3 z.atex.ccn0400.sst298.gcn10m0.3um GCCN:_1/cc -k z.atex.ccn0400.sst298.gcn10m2.3um GCCN:_10e-2/cc -m z.atex.ccn0400.sst298.gcn10m4.3um GCCN:_10e-4/cc -b
-PlotSet: gccn_c1600_s298 3 z.atex.ccn1600.sst298.gcn10m0.3um GCCN:_1/cc -k z.atex.ccn1600.sst298.gcn10m2.3um GCCN:_10e-2/cc -m z.atex.ccn1600.sst298.gcn10m4.3um GCCN:_10e-4/cc -b
+#### 1um GCCN median radius ####
 
-PlotSet: gccn_c400_s303 3 z.atex.ccn0400.sst303.gcn10m0.3um GCCN:_1/cc -k z.atex.ccn0400.sst303.gcn10m2.3um GCCN:_10e-2/cc -m z.atex.ccn0400.sst303.gcn10m4.3um GCCN:_10e-4/cc -b
+# Vary CCN, hold SST constant
+PlotSet: CO_S293_G10M5 7 z.atex.ccn0050.sst293.gcn10m5.1um CCN:_50/cc -k z.atex.ccn0100.sst293.gcn10m5.1um CCN:_100/cc -m z.atex.ccn0200.sst293.gcn10m5.1um CCN:_200/cc -b z.atex.ccn0400.sst293.gcn10m5.1um CCN:_400/cc -c z.atex.ccn0800.sst293.gcn10m5.1um CCN:_800/cc -g z.atex.ccn1200.sst293.gcn10m5.1um CCN:_1200/cc -y z.atex.ccn1600.sst293.gcn10m5.1um CCN:_1600/cc -r
+PlotSet: CO_S298_G10M5 7 z.atex.ccn0050.sst298.gcn10m5.1um CCN:_50/cc -k z.atex.ccn0100.sst298.gcn10m5.1um CCN:_100/cc -m z.atex.ccn0200.sst298.gcn10m5.1um CCN:_200/cc -b z.atex.ccn0400.sst298.gcn10m5.1um CCN:_400/cc -c z.atex.ccn0800.sst298.gcn10m5.1um CCN:_800/cc -g z.atex.ccn1200.sst298.gcn10m5.1um CCN:_1200/cc -y z.atex.ccn1600.sst298.gcn10m5.1um CCN:_1600/cc -r
+PlotSet: CO_S303_G10M5 7 z.atex.ccn0050.sst303.gcn10m5.1um CCN:_50/cc -k z.atex.ccn0100.sst303.gcn10m5.1um CCN:_100/cc -m z.atex.ccn0200.sst303.gcn10m5.1um CCN:_200/cc -b z.atex.ccn0400.sst303.gcn10m5.1um CCN:_400/cc -c z.atex.ccn0800.sst303.gcn10m5.1um CCN:_800/cc -g z.atex.ccn1200.sst303.gcn10m5.1um CCN:_1200/cc -y z.atex.ccn1600.sst303.gcn10m5.1um CCN:_1600/cc -r
+
+# Vary SST, hold CCN constant
+PlotSet: CO_C0050_G10M5 3 z.atex.ccn0050.sst293.gcn10m5.1um SST:_293K -k z.atex.ccn0050.sst298.gcn10m5.1um SST:_298K -m z.atex.ccn0050.sst303.gcn10m5.1um SST:303K -b
+PlotSet: CO_C0100_G10M5 3 z.atex.ccn0100.sst293.gcn10m5.1um SST:_293K -k z.atex.ccn0100.sst298.gcn10m5.1um SST:_298K -m z.atex.ccn0100.sst303.gcn10m5.1um SST:303K -b
+PlotSet: CO_C0200_G10M5 3 z.atex.ccn0200.sst293.gcn10m5.1um SST:_293K -k z.atex.ccn0200.sst298.gcn10m5.1um SST:_298K -m z.atex.ccn0200.sst303.gcn10m5.1um SST:303K -b
+PlotSet: CO_C0400_G10M5 3 z.atex.ccn0400.sst293.gcn10m5.1um SST:_293K -k z.atex.ccn0400.sst298.gcn10m5.1um SST:_298K -m z.atex.ccn0400.sst303.gcn10m5.1um SST:303K -b
+PlotSet: CO_C0800_G10M5 3 z.atex.ccn0800.sst293.gcn10m5.1um SST:_293K -k z.atex.ccn0800.sst298.gcn10m5.1um SST:_298K -m z.atex.ccn0800.sst303.gcn10m5.1um SST:303K -b
+PlotSet: CO_C1200_G10M5 3 z.atex.ccn1200.sst293.gcn10m5.1um SST:_293K -k z.atex.ccn1200.sst298.gcn10m5.1um SST:_298K -m z.atex.ccn1200.sst303.gcn10m5.1um SST:303K -b
+PlotSet: CO_C1600_G10M5 3 z.atex.ccn1600.sst293.gcn10m5.1um SST:_293K -k z.atex.ccn1600.sst298.gcn10m5.1um SST:_298K -m z.atex.ccn1600.sst303.gcn10m5.1um SST:303K -b
+
+#### 3um GCCN median radius ####
+
+# Vary GCCN (3um mean radius)
+PlotSet: CG_C0050_S298 3 z.atex.ccn0050.sst298.gcn10m0.3um GCCN:_1/cc -k z.atex.ccn0050.sst298.gcn10m2.3um GCCN:_10e-2/cc -m z.atex.ccn0050.sst298.gcn10m4.3um GCCN:_10e-4/cc -b
+PlotSet: CG_C0400_S298 3 z.atex.ccn0400.sst298.gcn10m0.3um GCCN:_1/cc -k z.atex.ccn0400.sst298.gcn10m2.3um GCCN:_10e-2/cc -m z.atex.ccn0400.sst298.gcn10m4.3um GCCN:_10e-4/cc -b
+PlotSet: CG_C1600_S298 3 z.atex.ccn1600.sst298.gcn10m0.3um GCCN:_1/cc -k z.atex.ccn1600.sst298.gcn10m2.3um GCCN:_10e-2/cc -m z.atex.ccn1600.sst298.gcn10m4.3um GCCN:_10e-4/cc -b
+
+PlotSet: CG_C0400_S303 3 z.atex.ccn0400.sst303.gcn10m0.3um GCCN:_1/cc -k z.atex.ccn0400.sst303.gcn10m2.3um GCCN:_10e-2/cc -m z.atex.ccn0400.sst303.gcn10m4.3um GCCN:_10e-4/cc -b
 
 # Vary SST (only on the CCN = 400/cc case)
-PlotSet: sst_c400_g10m0 2 z.atex.ccn0400.sst298.gcn10m0.3um SST:_298K -k z.atex.ccn0400.sst303.gcn10m0.3um SST:_303K -m
-PlotSet: sst_c400_g10m2 2 z.atex.ccn0400.sst298.gcn10m2.3um SST:_298K -k z.atex.ccn0400.sst303.gcn10m2.3um SST:_303K -m
-PlotSet: sst_c400_g10m4 2 z.atex.ccn0400.sst298.gcn10m4.3um SST:_298K -k z.atex.ccn0400.sst303.gcn10m4.3um SST:_303K -m
+PlotSet: CG_C0400_G10M0 2 z.atex.ccn0400.sst298.gcn10m0.3um SST:_298K -k z.atex.ccn0400.sst303.gcn10m0.3um SST:_303K -m
+PlotSet: CG_C0400_G10M2 2 z.atex.ccn0400.sst298.gcn10m2.3um SST:_298K -k z.atex.ccn0400.sst303.gcn10m2.3um SST:_303K -m
+PlotSet: CG_C0400_G10M4 2 z.atex.ccn0400.sst298.gcn10m4.3um SST:_298K -k z.atex.ccn0400.sst303.gcn10m4.3um SST:_303K -m
 
 # Vary CCN
-PlotSet: ccn_s298_g10m0 3 z.atex.ccn0050.sst298.gcn10m0.3um CCN:_50/cc -k z.atex.ccn0400.sst298.gcn10m0.3um CCN:_400/cc -m z.atex.ccn1600.sst298.gcn10m0.3um CCN:_1600/cc -b
-PlotSet: ccn_s298_g10m2 3 z.atex.ccn0050.sst298.gcn10m2.3um CCN:_50/cc -k z.atex.ccn0400.sst298.gcn10m2.3um CCN:_400/cc -m z.atex.ccn1600.sst298.gcn10m2.3um CCN:_1600/cc -b
-PlotSet: ccn_s298_g10m4 3 z.atex.ccn0050.sst298.gcn10m4.3um CCN:_50/cc -k z.atex.ccn0400.sst298.gcn10m4.3um CCN:_400/cc -m z.atex.ccn1600.sst298.gcn10m4.3um CCN:_1600/cc -b
+PlotSet: CG_S298_G10M0 3 z.atex.ccn0050.sst298.gcn10m0.3um CCN:_50/cc -k z.atex.ccn0400.sst298.gcn10m0.3um CCN:_400/cc -m z.atex.ccn1600.sst298.gcn10m0.3um CCN:_1600/cc -b
+PlotSet: CG_S298_G10M2 3 z.atex.ccn0050.sst298.gcn10m2.3um CCN:_50/cc -k z.atex.ccn0400.sst298.gcn10m2.3um CCN:_400/cc -m z.atex.ccn1600.sst298.gcn10m2.3um CCN:_1600/cc -b
+PlotSet: CG_S298_G10M4 3 z.atex.ccn0050.sst298.gcn10m4.3um CCN:_50/cc -k z.atex.ccn0400.sst298.gcn10m4.3um CCN:_400/cc -m z.atex.ccn1600.sst298.gcn10m4.3um CCN:_1600/cc -b
 
 ####################### Plot Vars ################################
 # PlotVar: <name> <vname> <file_prefix> <label> <units> <axis_min> <axis_max> <scale>
@@ -300,7 +400,7 @@ PlotSet: ccn_s298_g10m4 3 z.atex.ccn0050.sst298.gcn10m4.3um CCN:_50/cc -k z.atex
 #  from the figure.
 #
 PlotVar: Ctop  hda_ctop_tempc TsAveragedData/hda_ctop_tempc Cloud_Top_Temperature Deg_C    15    5  1
-PlotVar: Cfrac hda_cloud_frac TsAveragedData/hda_cloud_frac Cloud_Fraction            _  0.35 0.65  1
+PlotVar: Cfrac hda_cloud_frac TsAveragedData/hda_cloud_frac Cloud_Fraction            _   0.2  1.0  1
 
 PlotVar: SimTime t_coords TsAveragedData/hda_ctop_tempc Simulation_Time  hr  0 36 0.0833333
 
@@ -316,7 +416,8 @@ PlotVar: SimTime t_coords TsAveragedData/hda_ctop_tempc Simulation_Time  hr  0 3
 #   y - dummy, set to 1
 #   z - dummy, set to 1
 #   t - time in seconds
-PlotDselect: TsAll 1 1 1 1 50 50 43200 129600
+PlotDselect: CG_TsAll 1 1 1 1  50  50 43200 129600
+PlotDselect: CO_TsAll 1 1 1 1 -50 -50 43200 129600
 
 
 ### ####################### LWP time series plots ############################

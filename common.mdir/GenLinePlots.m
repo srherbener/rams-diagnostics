@@ -38,7 +38,7 @@ for iplot = 1:length(Config.LinePlots)
       continue;
     end
     if (ips == 0)
-      fprintf('WARNING: skipping TwoDimPlot number %d due to no associated PlotSet\n', iplot)
+      fprintf('WARNING: skipping LinePlot number %d due to no associated PlotSet\n', iplot)
       continue;
     end
 
