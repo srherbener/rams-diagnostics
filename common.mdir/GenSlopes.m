@@ -14,6 +14,12 @@ if (exist(Ddir, 'dir') ~= 7)
 end
 
 for ismeas = 1: length(Config.Smeas)
+  % clear these out because they may need to change size, and without the clear
+  % they will just retain the largest size (and associated data) that they have
+  % been set to so far
+  clear Xvals;
+  clear RDATA;
+
   Name = Config.Smeas(ismeas).Name;
   InDir = Config.Smeas(ismeas).InDir;
   Fprefix = Config.Smeas(ismeas).Fprefix;
@@ -30,6 +36,8 @@ for ismeas = 1: length(Config.Smeas)
   end
   fprintf('\n');
 
+  OutFile = sprintf('%s/%s.h5', Ddir, Name);
+
   ips = Config.Smeas(ismeas).PSnum;
   if (ips == 0)
     fprintf('  WARNING: skipping Smeas number %d due to no associated PlotSet\n', ismeas)
@@ -40,7 +48,6 @@ for ismeas = 1: length(Config.Smeas)
       Case = Config.PlotSets(ips).Cases(icase).Cname;
 
       InFile  = sprintf('%s/%s_%s.h5', InDir, Fprefix, Case);
-      OutFile = sprintf('%s/%s_%s.h5', Ddir, Name, Case);
       Hdset   = sprintf('/%s', Vname);
 
       % Read in the count data. COUNTS will be organized as (x,y,z,t) where

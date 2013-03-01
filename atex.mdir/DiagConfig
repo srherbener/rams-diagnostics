@@ -277,6 +277,22 @@ TsavgPlot: CG_S298_G10M4 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD rati
 
 ######### LH with LWP > 0.01mm ################
 
+#### 1um GCCN median radius ####
+
+# Vary CCN, hold SST constant
+ProfPlot: CO_S293_G10M5 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_SST:_293K,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_CO_S293_G10M5.fig
+ProfPlot: CO_S298_G10M5 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_SST:_298K,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_CO_S298_G10M5.fig
+ProfPlot: CO_S303_G10M5 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_SST:_303K,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_CO_S303_G10M5.fig
+
+# Vary SST, hold CCN constant
+ProfPlot: CO_C0050_G10M5 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_CCN:_50/cc,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_CO_C0050_G10M5.fig
+ProfPlot: CO_C0100_G10M5 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_CCN:_100/cc,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_CO_C0100_G10M5.fig
+ProfPlot: CO_C0200_G10M5 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_CCN:_200/cc,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_CO_C0200_G10M5.fig
+ProfPlot: CO_C0400_G10M5 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_CO_C0400_G10M5.fig
+ProfPlot: CO_C0800_G10M5 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_CCN:_800/cc,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_CO_C0800_G10M5.fig
+ProfPlot: CO_C1200_G10M5 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_CCN:_1200/cc,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_CO_C1200_G10M5.fig
+ProfPlot: CO_C1600_G10M5 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_CCN:_1600/cc,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -8:0.5:8 0.0 2500.0 LatHeatAvg_LWP0p01_CO_C1600_G10M5.fig
+
 #### 3um GCCN median radius ####
 
 # Vary GCCN, hold CCN, SST constant
@@ -298,6 +314,22 @@ ProfPlot: CG_S298_G10M4 hda_lh_vapt_lwp_0p01 hda_lh_vapt diff LH_Vap,_SST:_298K,
 
 ######### LH with LWP > 0.10mm ################
 
+#### 1um GCCN median radius ####
+
+# Vary CCN, hold SST constant
+ProfPlot: CO_S293_G10M5 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_SST:_293K,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_CO_S293_G10M5.fig
+ProfPlot: CO_S298_G10M5 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_SST:_298K,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_CO_S298_G10M5.fig
+ProfPlot: CO_S303_G10M5 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_SST:_303K,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_CO_S303_G10M5.fig
+
+# Vary SST, hold CCN constant
+ProfPlot: CO_C0050_G10M5 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_CCN:_50/cc,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_CO_C0050_G10M5.fig
+ProfPlot: CO_C0100_G10M5 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_CCN:_100/cc,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_CO_C0100_G10M5.fig
+ProfPlot: CO_C0200_G10M5 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_CCN:_200/cc,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_CO_C0200_G10M5.fig
+ProfPlot: CO_C0400_G10M5 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_CO_C0400_G10M5.fig
+ProfPlot: CO_C0800_G10M5 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_CCN:_800/cc,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_CO_C0800_G10M5.fig
+ProfPlot: CO_C1200_G10M5 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_CCN:_1200/cc,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_CO_C1200_G10M5.fig
+ProfPlot: CO_C1600_G10M5 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_CCN:_1600/cc,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_CO_C1600_G10M5.fig
+
 #### 3um GCCN median radius ####
 
 # Vary GCCN, hold CCN, SST constant
@@ -318,6 +350,22 @@ ProfPlot: CG_S298_G10M2 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_SST:_298K,
 ProfPlot: CG_S298_G10M4 hda_lh_vapt_lwp_0p10 hda_lh_vapt diff LH_Vap,_SST:_298K,_GCCN:_10e-4/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -10:0.5:10 0.0 2500.0 LatHeatAvg_LWP0p10_CG_S298_G10M4.fig
 
 ######### LH with LWP > 1.00mm ################
+
+#### 1um GCCN median radius ####
+
+# Vary CCN, hold SST constant
+ProfPlot: CO_S293_G10M5 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_SST:_293K,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_CO_S293_G10M5.fig
+ProfPlot: CO_S298_G10M5 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_SST:_298K,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_CO_S298_G10M5.fig
+ProfPlot: CO_S303_G10M5 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_SST:_303K,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_CO_S303_G10M5.fig
+
+# Vary SST, hold CCN constant
+ProfPlot: CO_C0050_G10M5 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_CCN:_50/cc,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_CO_C0050_G10M5.fig
+ProfPlot: CO_C0100_G10M5 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_CCN:_100/cc,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_CO_C0100_G10M5.fig
+ProfPlot: CO_C0200_G10M5 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_CCN:_200/cc,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_CO_C0200_G10M5.fig
+ProfPlot: CO_C0400_G10M5 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_CCN:_400/cc,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_CO_C0400_G10M5.fig
+ProfPlot: CO_C0800_G10M5 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_CCN:_800/cc,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_CO_C0800_G10M5.fig
+ProfPlot: CO_C1200_G10M5 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_CCN:_1200/cc,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_CO_C1200_G10M5.fig
+ProfPlot: CO_C1600_G10M5 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_CCN:_1600/cc,_GCCN:_1e-5/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_CO_C1600_G10M5.fig
 
 #### 3um GCCN median radius ####
 
@@ -342,19 +390,26 @@ ProfPlot: CG_S298_G10M4 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_SST:_298K,
 ####### Slope Measurements ##########
 #####################################
 
+#### 1um GCCN median radius ####
+
+# Vary CCN, hold SST constant
+Smeas: CO_S293_G10M5 smeas_pop_CO_S293_G10M5 TsAveragedData pop pop 50 100 200 400 800 1200 1600
+Smeas: CO_S298_G10M5 smeas_pop_CO_S298_G10M5 TsAveragedData pop pop 50 100 200 400 800 1200 1600
+Smeas: CO_S303_G10M5 smeas_pop_CO_S303_G10M5 TsAveragedData pop pop 50 100 200 400 800 1200 1600
+
 #### 3um GCCN median radius ####
 
 # Vary GCCN, hold CCN and SST constant
-Smeas: CG_C0050_S298   smeas_pop_CG_c50_s298   TsAveragedData pop pop 1 1e-2 1e-4
-Smeas: CG_C0400_S298  smeas_pop_CG_c400_s298  TsAveragedData pop pop 1 1e-2 1e-4
-Smeas: CG_C1600_S298 smeas_pop_CG_c1600_s298 TsAveragedData pop pop 1 1e-2 1e-4
+Smeas: CG_C0050_S298 smeas_pop_CG_C0050_S298 TsAveragedData pop pop 1 1e-2 1e-4
+Smeas: CG_C0400_S298 smeas_pop_CG_C0400_S298 TsAveragedData pop pop 1 1e-2 1e-4
+Smeas: CG_C1600_S298 smeas_pop_CG_C1600_S298 TsAveragedData pop pop 1 1e-2 1e-4
 
-Smeas: CG_C0400_S303  smeas_pop_c400_s303  TsAveragedData pop pop 1 1e-2 1e-4
+Smeas: CG_C0400_S303 smeas_pop_CG_C0400_S303 TsAveragedData pop pop 1 1e-2 1e-4
 
 # Vary CCN, hold SST, GCCN constant
-Smeas: CG_S298_G10M0 smeas_pop_s298_g10m0 TsAveragedData pop pop 50 400 1600
-Smeas: CG_S298_G10M2 smeas_pop_s298_g10m2 TsAveragedData pop pop 50 400 1600
-Smeas: CG_S298_G10M4 smeas_pop_s298_g10m4 TsAveragedData pop pop 50 400 1600
+Smeas: CG_S298_G10M0 smeas_pop_CG_S298_G10M0 TsAveragedData pop pop 50 400 1600
+Smeas: CG_S298_G10M2 smeas_pop_CG_S298_G10M2 TsAveragedData pop pop 50 400 1600
+Smeas: CG_S298_G10M4 smeas_pop_CG_S298_G10M4 TsAveragedData pop pop 50 400 1600
 
 ####################### Plot Sets ############################
 

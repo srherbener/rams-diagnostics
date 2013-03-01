@@ -13,6 +13,7 @@ SCRIPTS = $(DEST)/CompositeEiTemp.m \
           $(DEST)/DotProdNan.m \
           $(DEST)/EigenSpectrum.m \
           $(DEST)/EofNan.m \
+          $(DEST)/FisherZscore.m \
           $(DEST)/GenCoherence.m \
           $(DEST)/GenCrossSpectrum.m \
           $(DEST)/GenPowerSpectrum.m \
