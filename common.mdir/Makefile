@@ -13,6 +13,7 @@ SCRIPTS = \
           $(DEST)/GenHistMeas.m \
           $(DEST)/GenLinePlots.m \
           $(DEST)/GenProfMeas.m \
+          $(DEST)/GenSlopeBins.m \
           $(DEST)/GenSlopes.m \
           $(DEST)/GenTimeAvg.m \
           $(DEST)/GenTsPlots.m \
