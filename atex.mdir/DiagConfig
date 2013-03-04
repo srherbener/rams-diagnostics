@@ -389,27 +389,40 @@ ProfPlot: CG_S298_G10M4 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_SST:_298K,
 #####################################
 ####### Slope Measurements ##########
 #####################################
+#
+# smeas <plot_set_name> <name> <input_dir> <file_prefix> <revu_var> <bin_group_size> <x_values>
 
 #### 1um GCCN median radius ####
 
 # Vary CCN, hold SST constant
-Smeas: CO_S293_G10M5 smeas_pop_CO_S293_G10M5 TsAveragedData pop pop 50 100 200 400 800 1200 1600
-Smeas: CO_S298_G10M5 smeas_pop_CO_S298_G10M5 TsAveragedData pop pop 50 100 200 400 800 1200 1600
-Smeas: CO_S303_G10M5 smeas_pop_CO_S303_G10M5 TsAveragedData pop pop 50 100 200 400 800 1200 1600
+Smeas: CO_S293_G10M5 smeas_pop_CO_S293_G10M5 TsAveragedData pop pop 5 50 100 200 400 800 1200 1600
+Smeas: CO_S298_G10M5 smeas_pop_CO_S298_G10M5 TsAveragedData pop pop 5 50 100 200 400 800 1200 1600
+Smeas: CO_S303_G10M5 smeas_pop_CO_S303_G10M5 TsAveragedData pop pop 5 50 100 200 400 800 1200 1600
 
 #### 3um GCCN median radius ####
 
 # Vary GCCN, hold CCN and SST constant
-Smeas: CG_C0050_S298 smeas_pop_CG_C0050_S298 TsAveragedData pop pop 1 1e-2 1e-4
-Smeas: CG_C0400_S298 smeas_pop_CG_C0400_S298 TsAveragedData pop pop 1 1e-2 1e-4
-Smeas: CG_C1600_S298 smeas_pop_CG_C1600_S298 TsAveragedData pop pop 1 1e-2 1e-4
+Smeas: CG_C0050_S298 smeas_pop_CG_C0050_S298 TsAveragedData pop pop 5 1 1e-2 1e-4
+Smeas: CG_C0400_S298 smeas_pop_CG_C0400_S298 TsAveragedData pop pop 5 1 1e-2 1e-4
+Smeas: CG_C1600_S298 smeas_pop_CG_C1600_S298 TsAveragedData pop pop 5 1 1e-2 1e-4
 
-Smeas: CG_C0400_S303 smeas_pop_CG_C0400_S303 TsAveragedData pop pop 1 1e-2 1e-4
+Smeas: CG_C0400_S303 smeas_pop_CG_C0400_S303 TsAveragedData pop pop 5 1 1e-2 1e-4
 
 # Vary CCN, hold SST, GCCN constant
-Smeas: CG_S298_G10M0 smeas_pop_CG_S298_G10M0 TsAveragedData pop pop 50 400 1600
-Smeas: CG_S298_G10M2 smeas_pop_CG_S298_G10M2 TsAveragedData pop pop 50 400 1600
-Smeas: CG_S298_G10M4 smeas_pop_CG_S298_G10M4 TsAveragedData pop pop 50 400 1600
+Smeas: CG_S298_G10M0 smeas_pop_CG_S298_G10M0 TsAveragedData pop pop 5 50 400 1600
+Smeas: CG_S298_G10M2 smeas_pop_CG_S298_G10M2 TsAveragedData pop pop 5 50 400 1600
+Smeas: CG_S298_G10M4 smeas_pop_CG_S298_G10M4 TsAveragedData pop pop 5 50 400 1600
+
+#####################################
+########## Slope Plots ##############
+#####################################
+#
+# SlopePlot: <plot_set_name> <slope_var> <correlation_coeff_var> <bin_lower_edge_var> <bin_upper_edge_var> <time_var> <num_samples> <test_correlation> <title> <xlabel> <ylabel> <time_min> <time_max> <color_min> <color_max> <out_file>
+
+#### 1um GCCN median radius ####
+
+# Vary SST
+SlopePlot: CO_POP_G10M5 Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper Time 7 0.7 Slope_of_POP_vs_Sulfate_Aerosol_Concentration LWP_(mm) SST_(K) 12 36 -5e-4 5e-4 pop_CO_G10M5.fig
 
 ####################### Plot Sets ############################
 
@@ -428,6 +441,9 @@ PlotSet: CO_C0400_G10M5 3 z.atex.ccn0400.sst293.gcn10m5.1um SST:_293K -k z.atex.
 PlotSet: CO_C0800_G10M5 3 z.atex.ccn0800.sst293.gcn10m5.1um SST:_293K -k z.atex.ccn0800.sst298.gcn10m5.1um SST:_298K -m z.atex.ccn0800.sst303.gcn10m5.1um SST:303K -b
 PlotSet: CO_C1200_G10M5 3 z.atex.ccn1200.sst293.gcn10m5.1um SST:_293K -k z.atex.ccn1200.sst298.gcn10m5.1um SST:_298K -m z.atex.ccn1200.sst303.gcn10m5.1um SST:303K -b
 PlotSet: CO_C1600_G10M5 3 z.atex.ccn1600.sst293.gcn10m5.1um SST:_293K -k z.atex.ccn1600.sst298.gcn10m5.1um SST:_298K -m z.atex.ccn1600.sst303.gcn10m5.1um SST:303K -b
+
+# For POP slope plots
+PlotSet: CO_POP_G10M5 3 smeas_pop_CO_S293_G10M5 293 -k  smeas_pop_CO_S298_G10M5 298 -k  smeas_pop_CO_S303_G10M5 303 -k 
 
 #### 3um GCCN median radius ####
 

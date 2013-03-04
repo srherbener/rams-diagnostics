@@ -12,6 +12,7 @@ SCRIPTS = $(DEST)/ExtractSample.m \
           $(DEST)/PlotSampleData.m \
           $(DEST)/GenProfPlots.m \
           $(DEST)/GenRain2CloudRatio.m \
+          $(DEST)/GenSlopePlots.m \
           $(DEST)/GenSwupBarCharts.m \
           $(DEST)/GenTavgRrateFracAreaDist.m \
           $(DEST)/GenTopSwup.m \

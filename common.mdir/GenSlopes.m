@@ -24,12 +24,14 @@ for ismeas = 1: length(Config.Smeas)
   InDir = Config.Smeas(ismeas).InDir;
   Fprefix = Config.Smeas(ismeas).Fprefix;
   Vname = Config.Smeas(ismeas).Rvar;
+  BinGroupSize = Config.Smeas(ismeas).Bgroup;
   Xvals = Config.Smeas(ismeas).Xvals'; % note transpose to get dimensions matching Yvals below
 
   fprintf('***********************************************************************\n');
   fprintf('Generating Slope time series:\n');
   fprintf('  Name: %s\n', Name);
   fprintf('  Variable: %s\n', Vname);
+  fprintf('  Bin group size: %d\n', BinGroupSize);
   fprintf('  X values for the regression fit:\n');
   for ix = 1:length(Xvals)
     fprintf('    Xvals(%d): %f\n', ix, Xvals(ix));
@@ -61,11 +63,20 @@ for ismeas = 1: length(Config.Smeas)
       T = hdf5read(InFile, '/t_coords');
       COUNTS = squeeze(hdf5read(InFile, Hdset));
 
-      % Do a bit-wise divide of the 2st column of y by the 1st column of y. Ie, form
-      % the values Nr/Nt. This will reduce y to size-1 dimension so squeeze it out -->
-      % results in the array being organized as (x,t) where x are the Nr/Nt ratios.
-      % Keep a copy of the ratios for each case.
-      RDATA(:,:,icase) = squeeze(COUNTS(:,2,:) ./ COUNTS(:,1,:));
+      % Generate the bins for the slope calculations. The BinGroupSize determines
+      % how to reduce bins (by combining the counts for adjacent groups of bins).
+      % If BinGroupSize is 5, then every 5 adjacent bins have the counts summed
+      % together to form one output bin, so 100 bins would get reduced to 20 bins,
+      % where the first output bin would consitst of the counts summed together
+      % from the input bins 1-5, second output bins from the input bins 6-10, etc.
+      [ NR, NT, BL, BU ] = GenSlopeBins(COUNTS, X, BinGroupSize);
+
+      % At this point we have:
+      %    NR(x,t) - count of grid cells that are raining, by bin
+      %    NT(x,t) - count of total grid cells, by bin
+      %    BL(x)   - lower edge of each bin
+      %    BU(x)   - upper edge of each bin
+      RDATA(:,:,icase) = NR ./ NT;
     end
 
     % RDATA is now orgainized as (x,t,c) where x are the LWP bins, t are the times and
@@ -83,8 +94,8 @@ for ismeas = 1: length(Config.Smeas)
     SLOPES     = zeros([ Nx Nt ]);
     YINTS      = zeros([ Nx Nt ]);
     CORCOEFFS  = zeros([ Nx Nt ]);
-    for it = 1:size(RDATA, 2) % loop over time
-      for ix = 1:size(RDATA, 1) % loop over LWP bins
+    for it = 1:Nt % loop over time
+      for ix = 1:Nx % loop over LWP bins
         Yvals = squeeze(RDATA(ix,it,:));
         [ SLOPES(ix,it) YINTS(ix,it) CORCOEFFS(ix,it) ] = RegFit(Xvals, Yvals); 
       end
@@ -100,7 +111,8 @@ for ismeas = 1: length(Config.Smeas)
     Hdset = sprintf('/CorCoeffs_%s', Vname);
     hdf5write(OutFile, Hdset, CORCOEFFS, 'WriteMode', 'append');
 
-    hdf5write(OutFile, '/LwpBins', X, 'WriteMode', 'append');
+    hdf5write(OutFile, '/LwpBinLower', BL, 'WriteMode', 'append');
+    hdf5write(OutFile, '/LwpBinUpper', BU, 'WriteMode', 'append');
     hdf5write(OutFile, '/Time', T, 'WriteMode', 'append');
 
     fprintf('\n');

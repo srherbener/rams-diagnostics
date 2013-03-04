@@ -62,6 +62,7 @@ i_lplot = 0;
 i_hmp3d = 0;
 i_hmslice = 0;
 i_pplot = 0;
+i_splot = 0;
 i_pts_plot = 0;
 i_prs_plot = 0;
 i_pset = 0;
@@ -140,8 +141,9 @@ for i = 1:size(InLines,1)
       Cdata.Smeas(i_smeas).InDir   = Fields{4};
       Cdata.Smeas(i_smeas).Fprefix = Fields{5};
       Cdata.Smeas(i_smeas).Rvar    = Fields{6};
+      Cdata.Smeas(i_smeas).Bgroup  = sscanf(Fields{7}, '%d');
       ix = 1;
-      for j = 7:length(Fields)  % grab the rest of the fields
+      for j = 8:length(Fields)  % grab the rest of the fields
         Cdata.Smeas(i_smeas).Xvals(ix) = sscanf(Fields{j}, '%f');
         ix = ix + 1;
       end
@@ -314,6 +316,26 @@ for i = 1:size(InLines,1)
       Cdata.ProfPlots(i_pplot).OutFile = Fields{13};
 
       Cdata.ProfPlots(i_pplot).PSnum   = -1;
+    case 'SlopePlot:'
+      i_splot = i_splot + 1;
+      Cdata.SlopePlots(i_splot).PSname  = Fields{2};
+      Cdata.SlopePlots(i_splot).Svar    = Fields{3};
+      Cdata.SlopePlots(i_splot).Cvar    = Fields{4};
+      Cdata.SlopePlots(i_splot).BLvar   = Fields{5};
+      Cdata.SlopePlots(i_splot).BUvar   = Fields{6};
+      Cdata.SlopePlots(i_splot).Tvar    = Fields{7};
+      Cdata.SlopePlots(i_splot).Nsamp   = sscanf(Fields{8}, '%d');
+      Cdata.SlopePlots(i_splot).Tcor    = sscanf(Fields{9}, '%f');
+      Cdata.SlopePlots(i_splot).Title   = regexprep(Fields{10}, '_', ' ');
+      Cdata.SlopePlots(i_splot).Xlabel  = regexprep(Fields{11}, '_', ' ');
+      Cdata.SlopePlots(i_splot).Ylabel  = regexprep(Fields{12}, '_', ' ');
+      Cdata.SlopePlots(i_splot).Tmin    = sscanf(Fields{13}, '%f');
+      Cdata.SlopePlots(i_splot).Tmax    = sscanf(Fields{14}, '%f');
+      Cdata.SlopePlots(i_splot).Cmin    = sscanf(Fields{15}, '%f');
+      Cdata.SlopePlots(i_splot).Cmax    = sscanf(Fields{16}, '%f');
+      Cdata.SlopePlots(i_splot).OutFile = Fields{17};
+
+      Cdata.SlopePlots(i_splot).PSnum   = -1;
     case 'ProfTsPlot:'
       i_pts_plot = i_pts_plot + 1;
       Cdata.ProfTsPlots(i_pts_plot).PSname      = Fields{2};
@@ -387,6 +409,11 @@ end
 % Make the association between ProfPlots and the PlotSets
 if (isfield(Cdata, 'ProfPlots'))
   Cdata.ProfPlots = AssociateStructs( Cdata.ProfPlots, Cdata.PlotSets, 'PS', 'PlotSet', 'ProfPlot' ); 
+end
+
+% Make the association between SlopePlots and the PlotSets
+if (isfield(Cdata, 'SlopePlots'))
+  Cdata.SlopePlots = AssociateStructs( Cdata.SlopePlots, Cdata.PlotSets, 'PS', 'PlotSet', 'SlopePlot' ); 
 end
 
 % Make the association between ProfTsPlots and the PlotSets
