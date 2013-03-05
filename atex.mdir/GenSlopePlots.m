@@ -53,7 +53,7 @@ for iplot = 1:length(Config.SlopePlots)
       for icase = 1:Config.PlotSets(ips).Ncases
         Case = Config.PlotSets(ips).Cases(icase).Cname;
         % steal the legend text to generate the Y axis values
-        Y(icase) = sscanf(Config.PlotSets(ips).Cases(icase).Legend, '%d');
+        Ycenters(icase) = sscanf(Config.PlotSets(ips).Cases(icase).Legend, '%d');
 
         % Slopes and correlation coefficients are organized (x,t)
         % If on the first case, also read in lower and upper bin edges, and time
@@ -66,10 +66,6 @@ for iplot = 1:length(Config.SlopePlots)
           BL = hdf5read(Hfile, BLvar);
           BU = hdf5read(Hfile, BUvar);
           T  = hdf5read(Hfile, Tvar)/3600; % hr
-
-          % Create the LWP bin values
-          %    Use centers for now
-          X = (BL + BU) .* 0.5;
 
           % find the indices for selecting out a time range
           T1 = find(T >= Tmin, 1, 'first');
@@ -98,12 +94,49 @@ for iplot = 1:length(Config.SlopePlots)
     end
 
 
+    % Use pcolor to make the plot. This will look much better than using contourf
+    % since contourf will try to interpolate between values in the grids when it
+    % is trying to build the contour lines. Pcolor will simple pick a color for
+    % each box that represents the slope value.
+    %
+    % pcolor(X,Y,C)
+    %
+    % Pcolor treats the X and Y values as if they were the edges of individual
+    % grid cells. This means that the last row and column in C are not used.
+    %
+    % In order to get all of the data in SLOPES plotted, need to
+    %
+    %   Form X using the union of BL and BU.
+    %
+    %   Treat Y as the centers of the grids, form the edges equally spaced
+    %   between the centers. Assume that the centers themselves are equally
+    %   spaced.
+    %
+    %   Pad SLOPES with an extra column and row at the ends of the dimensions.
+
+
+    % use the bin edges as is
+    X = [ BL(1:end); BU(end) ]';
+
+    % assume even spaced Y values, place evenly spaced edges around the centers
+    Ny = length(Ycenters);
+    Yinc = Ycenters(2) - Ycenters(1);
+    Y(1) = Ycenters(1) - (0.5 * Yinc);
+    for i = 2:Ny+1
+      Y(i) = Y(i-1) + Yinc;
+    end 
+
+    % add an extra row and column at the ends of the rows and columns
+    SLOPES(:,end+1) = nan;
+    SLOPES(end+1,:) = nan;
+
     fprintf('  Writing plot file: %s\n', OutFile);
     Fig = figure;
 
-    contourf(X, Y, SLOPES);
+    pcolor(X, Y, SLOPES);
     shading flat;
     set(gca, 'FontSize', Fsize);
+    set(gca, 'YTick', Ycenters);
     title(Ptitle);
     xlabel(Xlabel);
     ylabel(Ylabel);
@@ -111,6 +144,7 @@ for iplot = 1:length(Config.SlopePlots)
     set(cbar, 'FontSize', Fsize);
     colormap(redblue);
     caxis([ Cmin Cmax ]);
+    set(gca, 'Layer', 'top'); % place the axes (tick marks, box, etc) on top of the plot
 
     saveas(Fig, OutFile);
     close(Fig);
