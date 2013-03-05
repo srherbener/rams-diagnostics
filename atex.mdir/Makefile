@@ -16,6 +16,7 @@ SCRIPTS = $(DEST)/ExtractSample.m \
           $(DEST)/GenSwupBarCharts.m \
           $(DEST)/GenTavgRrateFracAreaDist.m \
           $(DEST)/GenTopSwup.m \
+          $(DEST)/MakeSinglePanelFigs.m \
           $(DEST)/PlotDistSet.m \
           $(DEST)/SetPath.m
 

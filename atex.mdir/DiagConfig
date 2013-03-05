@@ -4,6 +4,7 @@ AzavgDir: AzAveragedData
 TsavgDir: TsAveragedData
 DiagDir: DIAGS
 PlotDir: Plots
+FigDir: Figures
 EofDir: EofData
 FilterDir: FILTERS
 ExpName: ATEX
