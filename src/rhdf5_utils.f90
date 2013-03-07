@@ -1289,7 +1289,7 @@ logical function rhdf5_exists(parent_id, child_name)
 
   integer :: exists
 
-  call rh5l_exists(parent_id, child_name, exists)
+  call rh5l_exists(parent_id, trim(child_name)//char(0), exists)
   rhdf5_exists = exists .ne. 0
 
   return
