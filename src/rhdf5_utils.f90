@@ -1274,4 +1274,25 @@ subroutine rhdf5_attach_dims_to_var(fileid, vname)
   return
 end subroutine rhdf5_attach_dims_to_var
 
+!***********************************************************************
+! rhdf5_exists()
+!
+! This routine will test for existence of an HDF5 object. It is up to
+! the caller to get the right relationship between parent_id and
+! child_name.
+!
+logical function rhdf5_exists(parent_id, child_name)
+  implicit none
+
+  integer :: parent_id
+  character (len=*) :: child_name
+
+  integer :: exists
+
+  call rh5l_exists(parent_id, child_name, exists)
+  rhdf5_exists = exists .ne. 0
+
+  return
+end function rhdf5_exists
+
 end module

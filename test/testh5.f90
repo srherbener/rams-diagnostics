@@ -150,6 +150,12 @@ program testh5
     rh5_file_acc = 'R'
     call rhdf5_open_file(rh5_file_name, rh5_file_acc, 0, rh5_file)
 
+    print*, 'Try test for existence:'
+    print*, '  IntData exists: ', rhdf5_exists(rh5_file, 'IntData')
+    print*, '  RealData exists: ', rhdf5_exists(rh5_file, 'RealData')
+    print*, '  XXX exists: ', rhdf5_exists(rh5_file, 'XXX')
+    print*, ''
+
     print*, 'Reading IntData:'
     call rhdf5_read_variable_init(rh5_file,'IntData', ndims, 0, dims, units, descrip, dimnames)
     call rhdf5_read_variable(rh5_file,'IntData', ndims, 0, dims, idata=InIarray)
