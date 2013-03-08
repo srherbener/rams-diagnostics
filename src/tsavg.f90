@@ -34,19 +34,20 @@ program tsavg
   type (Rhdf5Var) :: InXcoords, InYcoords, InZcoords, InTcoords
   type (Rhdf5Var) :: OutXcoords, OutYcoords, OutZcoords, OrigDimSize
   type (Rhdf5Var) :: U, V, AzWind, Speed10m, Dens, Var, Filter, TserAvg, RadMaxWind
-  type (Rhdf5var) :: PrecipRate, Lwp
+  type (Rhdf5var) :: PrecipRate, Lwp, Theta
   character (len=MediumString) :: Ufile, Vfile, AzWindFile, Speed10mFile, DensFile, VarFile, InCoordFile
-  character (len=MediumString) :: PrecipRateFile, LwpFile
+  character (len=MediumString) :: PrecipRateFile, LwpFile, ThetaFile
   character (len=LittleString) :: VarFprefix
   character (len=LittleString) :: rh5f_facc
-  real :: PrecipRateLimit
+  real :: PrecipRateLimit, Zbot, Ztop
+  integer :: Kbot, Ktop
   
   integer :: NumBins
   real :: BinStart, BinInc
   real, dimension(:), allocatable :: Bins
 
   integer :: rh5f_azwind, rh5f_u, rh5f_v, rh5f_speed10m, rh5f_dens, rh5f_var, rh5f_filter, rh5f_out
-  integer :: rh5f_pcprate, rh5f_lwp
+  integer :: rh5f_pcprate, rh5f_lwp, rh5f_theta
 
   integer :: id, ib, ix, iy, iz, it
   integer :: Nx, Ny, Nz, Nt
@@ -135,6 +136,32 @@ program tsavg
     endif
   endif
 
+  if (AvgFunc(1:5) .eq. 'ltss:') then
+    call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'pop spec')
+    if (Nfields .eq. 5) then
+      ! got the right amount of fields
+      !   field    value
+      !    1       'pop'
+      !    2       name of precip rate variable inside the REVU file
+      !    3       prefix for the REVU file name containing the precip rate
+      !    4       precip rate threshold to deteriming if rainging or not
+      !    5       name of lwp variable inside the REVU file
+      !    6       prefix for the REVU file name containing the lwp
+      !    7       number of bins
+      !    8       bin start
+      !    9       bin increment
+      AvgFunc           = trim(ArgList(1))
+      Theta%vname     = trim(ArgList(2))
+      VarFprefix        = trim(ArgList(3))
+      ThetaFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
+      read(ArgList(4), '(f)') Zbot
+      read(ArgList(5), '(f)') Ztop
+    else
+      write (*,*) 'ERROR: average function ltss requires five fields: ltss:<theta_var>:<theta_file>:<z_bot>:<z_top>'
+      stop
+    endif
+  endif
+
   write (*,*) 'Time seris of average for RAMS data:'
   write (*,*) '  Input directory: ', trim(InDir)
   write (*,*) '  Input file suffix: ', trim(InSuffix)
@@ -162,6 +189,11 @@ program tsavg
     write (*,*) '      Number of bins: ', NumBins
     write (*,*) '      Bins start at: ', BinStart
     write (*,*) '      Delta between bins: ', BinInc
+  else if (AvgFunc .eq. 'ltss') then
+    write (*,*) '    Theta variable name: ', trim(Theta%vname)
+    write (*,*) '    Theta file name: ', trim(ThetaFile)
+    write (*,*) '    Z at bottom: ', Zbot
+    write (*,*) '    Z at top: ', Ztop
   endif
   write (*,*) '  Filter file: ', trim(FilterFile)
   write (*,*) '    Using filter: ', UseFilter
@@ -264,6 +296,24 @@ program tsavg
         stop
       endif
     endif
+  else if (AvgFunc .eq. 'ltss') then
+    ! get dimensions from theta file
+    call rhdf5_read_init(ThetaFile, Theta)
+
+    ! record dims - 3d data
+    Nx = Theta%dims(1)
+    Ny = Theta%dims(2)
+    Nz = Theta%dims(3)
+    Nt = Theta%dims(4)
+
+    ! filter is optional
+    if (UseFilter) then
+      call rhdf5_read_init(FilterFile, Filter)
+      if (.not.(DimsMatch(Filter, Theta))) then
+        write (*,*) 'ERROR: dimensions of filter do not match dimensions of theta variable'
+        stop
+      endif
+    endif
   else if ((AvgFunc .eq. 'horiz_ke') .or. (AvgFunc .eq. 'storm_int')) then
     ! horiz_ke and storm_int require a filter
     if (.not. UseFilter) then
@@ -351,6 +401,13 @@ program tsavg
     do id = 1, PrecipRate%ndims
       write (*,*), '    ', trim(PrecipRate%dimnames(id)), ': ', PrecipRate%dims(id)
     enddo
+  else if (AvgFunc .eq. 'ltss') then
+    Theta%ndims = Theta%ndims - 1
+    write (*,*) '  Number of dimensions: ', Theta%ndims
+    write (*,*) '  Dimension sizes:'
+    do id = 1, Theta%ndims
+      write (*,*), '    ', trim(Theta%dimnames(id)), ': ', Theta%dims(id)
+    enddo
   endif
   write (*,*) ''
 
@@ -412,6 +469,12 @@ program tsavg
     TserAvg%dims(2) = 2
     TserAvg%dims(3) = 1
     TserAvg%units = PrecipRate%units // ':' // Lwp%units
+  else if (AvgFunc .eq. 'ltss') then
+    ! single point result
+    TserAvg%dims(1) = 1
+    TserAvg%dims(2) = 1
+    TserAvg%dims(3) = 1
+    TserAvg%units = Theta%units
   else if (AvgFunc .eq. 'horiz_ke') then
     ! single point result
     TserAvg%dims(1) = 1
@@ -468,6 +531,8 @@ program tsavg
     InCoordFile = trim(VarFile)
   else if (AvgFunc .eq. 'pop') then
     InCoordFile = trim(PrecipRateFile)
+  else if (AvgFunc .eq. 'ltss') then
+    InCoordFile = trim(ThetaFile)
   else if (AvgFunc .eq. 'storm_int') then
     InCoordFile = trim(Speed10mFile)
   endif
@@ -540,6 +605,30 @@ program tsavg
     do ib = 2, NumBins
       Bins(ib) = Bins(ib-1) + BinInc
     enddo
+  endif
+
+  ! if doing ltss, find the indices associated with Zbot and Ztop
+  if (AvgFunc .eq. 'ltss') then
+    Kbot = Nt
+    do iz = Nz,1,-1
+      if (InZcoords%vdata(iz) .ge. Zbot) then
+        Kbot = iz
+      endif
+    enddo
+
+    Ktop = 1
+    do iz = 1,Nz
+      if (InZcoords%vdata(iz) .le. Ztop) then
+        Ktop = iz
+      endif
+    enddo
+
+    write (*,*) 'Height indices for LTSS calculation:'
+    write (*,*) '   Zbot: ', Zbot
+    write (*,*) '     Index for Zbot: ', Kbot
+    write (*,*) '   Ztop: ', Ztop
+    write (*,*) '     Index for Ztop: ', Ktop
+    write (*,*) ''
   endif
 
   ! Prepare the output coordinates
@@ -621,6 +710,8 @@ program tsavg
   else if (AvgFunc .eq. 'pop') then
     call rhdf5_open_file(PrecipRateFile, rh5f_facc, 1, rh5f_pcprate)
     call rhdf5_open_file(LwpFile, rh5f_facc, 1, rh5f_lwp)
+  else if (AvgFunc .eq. 'ltss') then
+    call rhdf5_open_file(ThetaFile, rh5f_facc, 1, rh5f_theta)
   else if (AvgFunc .eq. 'storm_int') then
     call rhdf5_open_file(Speed10mFile, rh5f_facc, 1, rh5f_speed10m)
   endif
@@ -670,6 +761,12 @@ program tsavg
 
       deallocate(PrecipRate%vdata)
       deallocate(Lwp%vdata)
+    else if (AvgFunc .eq. 'ltss') then
+      call rhdf5_read_variable(rh5f_theta, Theta%vname, Theta%ndims, it, Theta%dims, rdata=Theta%vdata)
+
+      call DoLtss(Nx, Ny, Nz, Filter%dims(3), Theta%vdata, Filter%vdata, UseFilter, UndefVal, Kbot, Ktop, TserAvg%vdata(1))
+
+      deallocate(Theta%vdata)
     else if (AvgFunc .eq. 'storm_int') then
       call rhdf5_read_variable(rh5f_speed10m, Speed10m%vname, Speed10m%ndims, it, Speed10m%dims, rdata=Speed10m%vdata)
       call DoStormInt(Nx, Ny, Nz, Speed10m%vdata, Filter%vdata, TserAvg%vdata(1))
@@ -715,6 +812,8 @@ program tsavg
   else if (AvgFunc .eq. 'pop') then
     call rhdf5_close_file(rh5f_pcprate)
     call rhdf5_close_file(rh5f_lwp)
+  else if (AvgFunc .eq. 'ltss') then
+    call rhdf5_close_file(rh5f_theta)
   else if (AvgFunc .eq. 'storm_int') then
     call rhdf5_close_file(rh5f_speed10m)
   endif
@@ -850,6 +949,11 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
     write (*,*) '                <num_bins>: number of bins'
     write (*,*) '                <bin_start>: starting value for bins'
     write (*,*) '                <bin_inc>: delta between bins'
+    write (*,*) '            ltss:<theta_var>:<theta_file>:<k_bot>:<k_top>'
+    write (*,*) '                <theta_var>: revu var name inside the file'
+    write (*,*) '                <theta_file>: prefix for the revu file'
+    write (*,*) '                <z_bot>: height (Z) for bottom'
+    write (*,*) '                <z_top>: height (Z) for top'
     write (*,*) '        <filter_file>: file containing the filter mask'
     stop
   end if
@@ -874,6 +978,7 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
       (AvgFunc(1:4) .ne. 'hda:')  .and. &
       (AvgFunc(1:5) .ne. 'hist:')  .and. &
       (AvgFunc(1:4) .ne. 'pop:')  .and. &
+      (AvgFunc(1:5) .ne. 'ltss:')  .and. &
       (AvgFunc .ne. 'storm_int')  .and. &
       (AvgFunc .ne. 'max_azwind')) then
     write (*,*) 'ERROR: <avg_function> must be one of:'
@@ -883,6 +988,7 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
     write (*,*) '          hda:<var>:<file>:<dim>'
     write (*,*) '          hist:<var>:<file>:<dim>:<num_bins>:<bin_start>:<bin_inc>'
     write (*,*) '          pop:<pcp_var>:<pcp_file>:<pcp_limit>:<lwp_var>:<lwp_file>:<num_bins>:<bin_start>:<bin_inc>'
+    write (*,*) '          ltss:<theta_var>:<theta_file>:<k_bot>:<k_top>'
     write (*,*) '          storm_int'
     write (*,*) '          max_azwind'
     write (*,*) ''
@@ -1356,6 +1462,79 @@ subroutine DoPop(Nx, Ny, Nz, FilterNz, Nb, PrecipRate, Lwp, Filter, UseFilter, U
 
   return
 end subroutine DoPop
+
+!**************************************************************************************
+! DoLtss()
+!
+! This routine will calculate the lower tropsheric static stability (LTSS) from the
+! theta field. 
+!
+
+subroutine DoLtss(Nx, Ny, Nz, FilterNz, Theta, Filter, UseFilter, UndefVal, Kbot, Ktop, Ltss)
+  implicit none
+
+  integer :: Nx, Ny, Nz, Nb, FilterNz
+  real, dimension(Nx,Ny,Nz) :: Theta
+  real, dimension(Nx,Ny,FilterNz) :: Filter
+  logical :: UseFilter
+  real :: UndefVal, Ltss
+  integer :: Kbot, Ktop
+
+  integer :: ib, ix, iy
+  integer :: filter_zbot, filter_ztop
+  logical :: SelectPointBot, SelectPointTop
+  real :: ThetaAvgBot, ThetaAvgTop
+  integer :: Nbot, Ntop
+
+  ! Figure out which lelels to use in the filter data
+  if (Nz .eq. 1) then
+    ! 2D var, use the z = 2 level (first model level above the surface)
+    ! since typically have the 3D filter z = 1 level all zeros (don't want
+    ! to include below surface model level in analysis).
+    filter_zbot = 2
+    filter_ztop = 2
+  else
+    filter_zbot = Kbot
+    filter_ztop = Ktop
+  endif
+
+  ! Calculate the horizontal average theta for each of the levels defined by Kbot and Ktop
+  ThetaAvgBot = 0.0
+  ThetaAvgTop = 0.0
+  Nbot = 0
+  Ntop = 0
+  do iy = 1, Ny
+    do ix = 1, Nx
+      SelectPointBot = anint(Theta(ix,iy,Kbot)) .ne. UndefVal
+      SelectPointTop = anint(Theta(ix,iy,Ktop)) .ne. UndefVal
+      if (UseFilter) then
+        SelectPointBot = SelectPointBot .and. (anint(Filter(ix,iy,filter_zbot)) .eq. 1.0)
+        SelectPointTop = SelectPointTop .and. (anint(Filter(ix,iy,filter_ztop)) .eq. 1.0)
+      endif
+
+      if (SelectPointBot) then
+        ThetaAvgBot = ThetaAvgBot + Theta(ix,iy,Kbot)
+        Nbot = Nbot + 1
+      endif
+
+      if (SelectPointTop) then
+        ThetaAvgTop = ThetaAvgTop + Theta(ix,iy,Ktop)
+        Ntop = Ntop + 1
+      endif
+    enddo
+  enddo
+
+  if ((Nbot .eq. 0) .or. (Ntop .eq. 0)) then
+    Ltss = UndefVal
+  else
+    ! both Nbot and Ntop are non-zero
+    ThetaAvgBot = ThetaAvgBot / float(Nbot)
+    ThetaAvgTop = ThetaAvgTop / float(Ntop)
+    Ltss = ThetaAvgTop - ThetaAvgBot
+  endif
+
+  return
+end subroutine DoLtss
 
 !**************************************************************************************
 ! DoStormInt()
