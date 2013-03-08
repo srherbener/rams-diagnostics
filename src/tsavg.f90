@@ -1469,6 +1469,7 @@ end subroutine DoPop
 ! This routine will calculate the lower tropsheric static stability (LTSS) from the
 ! theta field. 
 !
+! Use an average of differences. Tried difference of averages and the traces are noisy.
 
 subroutine DoLtss(Nx, Ny, Nz, FilterNz, Theta, Filter, UseFilter, UndefVal, Kbot, Ktop, Ltss)
   implicit none
@@ -1482,11 +1483,10 @@ subroutine DoLtss(Nx, Ny, Nz, FilterNz, Theta, Filter, UseFilter, UndefVal, Kbot
 
   integer :: ib, ix, iy
   integer :: filter_zbot, filter_ztop
-  logical :: SelectPointBot, SelectPointTop
-  real :: ThetaAvgBot, ThetaAvgTop
-  integer :: Nbot, Ntop
+  logical :: SelectPoint
+  integer :: Npts
 
-  ! Figure out which lelels to use in the filter data
+  ! Figure out which levels to use in the filter data
   if (Nz .eq. 1) then
     ! 2D var, use the z = 2 level (first model level above the surface)
     ! since typically have the 3D filter z = 1 level all zeros (don't want
@@ -1498,39 +1498,30 @@ subroutine DoLtss(Nx, Ny, Nz, FilterNz, Theta, Filter, UseFilter, UndefVal, Kbot
     filter_ztop = Ktop
   endif
 
-  ! Calculate the horizontal average theta for each of the levels defined by Kbot and Ktop
-  ThetaAvgBot = 0.0
-  ThetaAvgTop = 0.0
-  Nbot = 0
-  Ntop = 0
+  ! Calculate theta difference at each point and then take the average of
+  ! these differences.
+  Ltss = 0.0
+  Npts = 0
   do iy = 1, Ny
     do ix = 1, Nx
-      SelectPointBot = anint(Theta(ix,iy,Kbot)) .ne. UndefVal
-      SelectPointTop = anint(Theta(ix,iy,Ktop)) .ne. UndefVal
+      SelectPoint = (anint(Theta(ix,iy,Kbot)) .ne. UndefVal) .and. (anint(Theta(ix,iy,Ktop)) .ne. UndefVal)
       if (UseFilter) then
-        SelectPointBot = SelectPointBot .and. (anint(Filter(ix,iy,filter_zbot)) .eq. 1.0)
-        SelectPointTop = SelectPointTop .and. (anint(Filter(ix,iy,filter_ztop)) .eq. 1.0)
+        SelectPoint = SelectPoint .and. (anint(Filter(ix,iy,filter_zbot)) .eq. 1.0) &
+                                  .and. (anint(Filter(ix,iy,filter_ztop)) .eq. 1.0)
       endif
 
-      if (SelectPointBot) then
-        ThetaAvgBot = ThetaAvgBot + Theta(ix,iy,Kbot)
-        Nbot = Nbot + 1
-      endif
-
-      if (SelectPointTop) then
-        ThetaAvgTop = ThetaAvgTop + Theta(ix,iy,Ktop)
-        Ntop = Ntop + 1
+      ! Sum up the theta differences
+      if (SelectPoint) then
+        Ltss = Ltss + (Theta(ix,iy,Ktop) - Theta(ix,iy,Kbot))
+        Npts = Npts + 1
       endif
     enddo
   enddo
 
-  if ((Nbot .eq. 0) .or. (Ntop .eq. 0)) then
+  if (Npts .eq. 0) then
     Ltss = UndefVal
   else
-    ! both Nbot and Ntop are non-zero
-    ThetaAvgBot = ThetaAvgBot / float(Nbot)
-    ThetaAvgTop = ThetaAvgTop / float(Ntop)
-    Ltss = ThetaAvgTop - ThetaAvgBot
+    Ltss = Ltss / float(Npts)
   endif
 
   return
