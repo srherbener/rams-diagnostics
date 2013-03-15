@@ -20,6 +20,8 @@ SCRIPTS = \
           $(DEST)/GenVintTseries.m \
           $(DEST)/Hdf5ToBin.m \
           $(DEST)/Hdf5ToNcdf.m \
+          $(DEST)/LatToKm.m \
+          $(DEST)/LonToKm.m \
           $(DEST)/ReadConfig.m \
           $(DEST)/ReadAzavgVar.m \
           $(DEST)/ReadSelectXyzt.m \
@@ -29,9 +31,9 @@ SCRIPTS = \
           $(DEST)/PlotProfSet.m \
           $(DEST)/PlotTseriesSet.m \
           $(DEST)/Plot2dSet.m \
-          $(DEST)/PrepVaporData.m \
           $(DEST)/TileFigs.m \
           $(DEST)/TimeToString.m \
+          $(DEST)/WriteCoordData.m \
           $(DEST)/Xyzt2EofArray.m
 
 #

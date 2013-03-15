@@ -33,6 +33,7 @@ SCRIPTS = \
           $(DEST)/PlotVintCond.m \
           $(DEST)/PlotVr.m \
           $(DEST)/PlotVt.m \
+          $(DEST)/PrepVaporData.m \
           $(DEST)/SetPath.m
 
 CONFIGS = \

@@ -11,6 +11,8 @@ Xmax = -36;
 Ymin = 12; % degrees lat
 Ymax = 18;
 
+% If Zmin changed from zero, then change the assignment
+% of ZDATA(1) to zero in the code below.
 Zmin = 0;  % km
 Zmax = 18; 
 
@@ -81,6 +83,22 @@ for i = 1:length(InFiles)
   YDATA = Y(Y1:Y2);
   ZDATA = Z(Z1:Z2);
   TDATA = T(T1:T2);
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % Fix up coordinate values
+  % Change X and Y data to km, round to integers since used integer spacing in RAMS
+  % Force ZDATA(1) to zero - change this if Zmin changes
+  Xkm = LonToKm(XDATA, 15); % use 15N as reference
+  Ykm = LatToKm(YDATA);
+
+  XDATA = round(Xkm - Xkm(1)); % start at zero
+  YDATA = round(Ykm - Ykm(1));
+
+  ZDATA(1) = 0; % change this if Zmin changes
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % if we are doing ELEVATION, write out the coordinate data as well
+  % as construction VDATA.
   if (strcmp(Hdset, 'ELEVATION'))
     fprintf('Constructing ELEVATION\n');
     Nx = length(XDATA);
@@ -92,6 +110,19 @@ for i = 1:length(InFiles)
     % replicate the ZDATA column into all the x, y, t locations.
     Zvals = reshape(ZDATA, [ 1 1 Nz 1 ]);
     VDATA = repmat(Zvals, [ Nx Ny 1 Nt ]);
+
+    % Write out the x,y and z values into coordinate files
+    OutFile = sprintf('%s/XCOORDS', Vdir);
+    fprintf('  Creating coordinate file: %s\n', OutFile);
+    WriteCoordData(XDATA, OutFile)
+
+    OutFile = sprintf('%s/YCOORDS', Vdir);
+    fprintf('  Creating coordinate file: %s\n', OutFile);
+    WriteCoordData(YDATA, OutFile)
+
+    OutFile = sprintf('%s/ZCOORDS', Vdir);
+    fprintf('  Creating coordinate file: %s\n', OutFile);
+    WriteCoordData(ZDATA, OutFile)
   else
     VDATA = squeeze(HDATA(X1:X2,Y1:Y2,Z1:Z2,T1:T2));
   end
@@ -137,5 +168,4 @@ for i = 1:length(InFiles)
   H5F.close(file_id);
   fprintf('\n');
 end
-
 
