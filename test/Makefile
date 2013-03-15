@@ -38,12 +38,14 @@ LOADER_LIBS = $(RHDF5_LIBS) $(HDF5_LIBS)
 #  testh5 - Tests with know array contents so one can see how the data
 #           gets organized on disk in the HDF5 file.
 #           Also does a timed test for roughly 1G of data.
+#
+# test_dim_attach - Tests the dimension attaching routines.
 
 #
 # Targets
 #
 
-all: test_cwrite testh5
+all: test_cwrite testh5 test_dim_attach
 
 test_cwrite: test_cwrite.c
 	$(C_COMP) -o test_cwrite test_cwrite.c
@@ -53,6 +55,11 @@ testh5: testh5.f90 $(RHDF5_LIB_FILE) $(RHDF5_MOD_FILE)
 	$(F_COMMAND) testh5.f90
 	$(LOADER) -o testh5 testh5.o $(LOADER_OPTS) $(LOADER_LIBS)
 	rm -f testh5.o
+
+test_dim_attach: test_dim_attach.f90 $(RHDF5_LIB_FILE) $(RHDF5_MOD_FILE)
+	$(F_COMMAND) test_dim_attach.f90
+	$(LOADER) -o test_dim_attach test_dim_attach.o $(LOADER_OPTS) $(LOADER_LIBS)
+	rm -f test_dim_attach.o
 
 clean:
 	rm -f *.o
