@@ -10,7 +10,8 @@ SCRIPTS = \
           $(DEST)/GenHistOpenSpace.m \
           $(DEST)/GenKeVtPlots.m \
           $(DEST)/MakeDataAvgFig.m \
-          $(DEST)/MakeSinglePanelFigs.m \
+          $(DEST)/MakeFigureJpeg.m \
+          $(DEST)/MakeKevtRmwFig.m \
           $(DEST)/MakeStormEvolFig.m \
           $(DEST)/PlotAerosol3d.m \
           $(DEST)/PlotAerosolProfiles.m \

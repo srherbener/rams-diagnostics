@@ -17,7 +17,8 @@ for iplot = 1:length(Config.LinePlots)
     clear Xall;
     clear Yall;
     clear LegText;
-    clear LineSpecs;
+    clear LineStyles;
+    clear LineGscales;
     clear AxisProps;
 
     % check associations
@@ -51,7 +52,7 @@ for iplot = 1:length(Config.LinePlots)
 
     i_ap = 1;
     AxisProps(i_ap).Name = 'FontSize';
-    AxisProps(i_ap).Val = 20; 
+    AxisProps(i_ap).Val = 30; 
     i_ap = i_ap + 1;
 
     % X variable, axis specs
@@ -118,7 +119,8 @@ for iplot = 1:length(Config.LinePlots)
     for icase = 1:Config.PlotSets(ips).Ncases
       Case = Config.PlotSets(ips).Cases(icase).Cname;
       LegText{icase} = Config.PlotSets(ips).Cases(icase).Legend;
-      LineSpecs{icase} = Config.PlotSets(ips).Cases(icase).Lspec;
+      LineStyles{icase} = Config.PlotSets(ips).Cases(icase).Lstyle;
+      LineGscales(icase) = Config.PlotSets(ips).Cases(icase).Lgscale;
 
       Xfile = sprintf('%s_%s.h5', Xfprefix, Case);
       fprintf('Reading HDF5 file: %s\n', Xfile);
@@ -167,7 +169,7 @@ for iplot = 1:length(Config.LinePlots)
 
     fprintf('\n');
     fprintf('Writing plot file: %s\n', OutFile);
-    Plot2dSet( Xall, Yall, Ptitle, Xlabel, Ylabel, LineSpecs, LegText, LegLoc, AxisProps, OutFile );
+    Plot2dSet( Xall, Yall, Ptitle, Xlabel, Ylabel, LineStyles, LineGscales, LegText, LegLoc, AxisProps, OutFile );
     fprintf('\n');
 end
 

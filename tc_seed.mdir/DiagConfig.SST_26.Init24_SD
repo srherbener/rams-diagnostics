@@ -347,14 +347,14 @@ TsPlotSpecs: 121 0 1.0 hr 25 1998:08:22:21:00:00 10 24
 #   'IntVol' - report the volume under the surface after rotating the radial curve 360 degrees
 #              form that surface.
 
-#LinePlot: ccn4    MaxVt IKE TsAll xy Size_vs_Intensity Northwest none KeVt.fig
+LinePlot: ccn4    MaxVt IKE TsAll xy _ Northwest none KeVt.fig
 
-LinePlot: ccn2_ext    MaxVt  IKE     TsAll    xy Size_vs_Intensity           Northwest none   KeVt_ext.fig
-LinePlot: ccn2_ext    RadAll VtAllSS SfcVtAll  y Radial_Structure_of_Vt:_SS  NorthEast IntVol R_Vt_All_SS_ext.fig
+#LinePlot: ccn2_ext    MaxVt  IKE     TsAll    xy Size_vs_Intensity           Northwest none   KeVt_ext.fig
+#LinePlot: ccn2_ext    RadAll VtAllSS SfcVtAll  y Radial_Structure_of_Vt:_SS  NorthEast IntVol R_Vt_All_SS_ext.fig
 
 #LinePlot: ccn4    SimTime IKE   TsAll y Integrated_Kinetic_Energy NorthWest none TS_ike.fig
 #LinePlot: ccn4    SimTime MaxVt TsAll y Maximum_Vt                SouthEast none TS_max_vt.fig
-#LinePlot: ccn4    SimTime RMW   TsAll y Radius_of_Maximum_Wind    NorthEast none TS_rmw.fig
+LinePlot: ccn4    SimTime RMW   TsAll y _ NorthEast none TS_rmw.fig
 
 #LinePlot: ccn4    RadAll    VtAllRI   SfcVtAll    y Radial_Structure_of_Max_Vt:_RI  NorthEast none R_Vt_All_RI.fig
 #LinePlot: ccn4    RadAll    VtAllTR   SfcVtAll    y Radial_Structure_of_Max_Vt:_TR  NorthEast none R_Vt_All_TR.fig
@@ -651,11 +651,17 @@ ProfRsPlot: ccn4_diff pmeas_vaptott_vt0p5_RB_SS    vaptott  RB_SS:_Total_Vapor_D
 #ProfRsPlot: ccn4 pmeas_speed_r_RB_SS    speed_r  RB_SS:_Radial_Wind_Speed_(m/s) Radius_(km) Height_(km)  -10  10  0.0 15.0 redblue 0 abs prs_speed_r_abs_RB_SS
 
 ####################### Plot Sets ############################
-PlotSet: ccn4    4 TCS_SD_C0100 CCN:_100/cc -b TCS_SD_C0500 CCN:_500/cc --b TCS_SD_C1000 CCN:_1000/cc --r TCS_SD_C2000 CCN:_2000/cc -r
+# PlotSet: <name> <number_of_cases> <case_spec> ...
+#
+#    <case_spec> := <case_name> <legend_name> <line_style> <gray_scale>
+#       <gray_scale>: 0 -> black
+#                     1 -> white
+#
+PlotSet: ccn4    4 TCS_SD_C0100 CLEAN - 0.0 TCS_SD_C0500 C500 -- 0.0 TCS_SD_C1000 C1000 -- 0.5 TCS_SD_C2000 C2000 - 0.5
 
-PlotSet: ccn2_ext    2 TCS_SD_C0100 CLEAN -b TCS_SD_C2000 POLLUTED -r
+PlotSet: ccn2_ext    2 TCS_SD_C0100 CLEAN - 0.0 TCS_SD_C2000 POLLUTED - 0.5
 
-PlotSet: ccn4_diff    3 TCS_SD_C0500 C500-CLEAN --b TCS_SD_C1000 C1000-CLEAN --r TCS_SD_C2000 C2000-CLEAN -r
+PlotSet: ccn4_diff    3 TCS_SD_C0500 C500-CLEAN - 0.0 TCS_SD_C1000 C1000-CLEAN -- 0.0 TCS_SD_C2000 C2000-CLEAN - 0.5
 
 ####################### Plot Vars ################################
 # PlotVar: <name> <vname> <file_prefix> <label> <units> <axis_min> <axis_max> <scale>

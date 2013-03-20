@@ -1,5 +1,5 @@
-function [] = MakeSinglePanelFigs(ConfigFile)
-% MakeSinglePanelFigs - covert matlab fig to JPEG
+function [] = MakeFigureJpeg(ConfigFile)
+% MakeFigureJpeg - covert matlab fig to JPEG, number Figure1, Figure2, etc.
 
 % Read in the config data
 [ Config ] = ReadConfig(ConfigFile);
@@ -196,15 +196,14 @@ FigList = {
   'InitVortex'
   'ControlVtSpl'
   'AerosolProfiles'
+  'KevtRmw'
   };
 
 for i = 1:length(FigList)
   InFile  = sprintf('%s/%s.fig', PlotDir, FigList{i});
-  OutFile = sprintf('%s/%s.jpg', FigDir,  FigList{i});
+  OutFile = sprintf('%s/Figure%d.jpg', FigDir, i);
 
-  fprintf('MATLAB figure file: %s\n', InFile);
-  fprintf('Writing file: %s\n', OutFile);
-  fprintf('\n');
+  fprintf('Figure to JPEG: %s --> %s\n', InFile, OutFile);
 
   Fig = openfig(InFile);
   saveas(Fig, OutFile);
