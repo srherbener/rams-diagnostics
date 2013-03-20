@@ -62,7 +62,7 @@ contourf(X, Z, VT_INIT);
 shading flat;
 set(gca,'FontSize', 20);
 caxis([ 0 15 ]);
-title(Ptitle);
+%title(Ptitle);
 xlabel(Xlabel);
 ylabel(Ylabel);
 colorbar;

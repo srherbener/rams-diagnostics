@@ -1,11 +1,12 @@
-function [ ] = PlotSpinUpVtSpl(ConfigFile)
-% PlotSpinUpVtSpl function to plot max sfc Vt and SPL of control simulation
+function [ ] = PlotControlVtSpl(ConfigFile)
+% PlotControlVtSpl function to plot max sfc Vt and SPL of control simulation
 %
 
 [ Config ] = ReadConfig(ConfigFile);
 
 UndefVal = Config.UndefVal;
 SpinUpCase = Config.SpinUpCase;
+ControlCase = Config.ControlCase;
 AzavgDir = Config.AzavgDir;
 PlotDir = Config.PlotDir;
 SstVal = Config.SstVal;
@@ -15,16 +16,27 @@ if (exist(PlotDir, 'dir') ~= 7)
     mkdir(PlotDir);
 end
 
+% Need to stitch together the first 23 hours of the spin up run with
+% the remainder (24 through 144 hours) of the control run in order to
+% show the complete control run.
+%
+% VT will be (r,z,t), SPL will be (p,t)
+
 % read in the Vt and time coordinate data
 Hfile = sprintf('%s/speed_t_%s.h5', AzavgDir, SpinUpCase);
-VT = squeeze(hdf5read(Hfile, '/speed_t'));
+VT_SPINUP = squeeze(hdf5read(Hfile, '/speed_t'));
 T = squeeze(hdf5read(Hfile, '/t_coords'));
+Hfile = sprintf('%s/speed_t_%s.h5', AzavgDir, ControlCase);
+VT_CNTL = squeeze(hdf5read(Hfile, '/speed_t'));
+VT = cat(3, VT_SPINUP(:,:,1:24), VT_CNTL);
 
 % read in the SPL
 Hfile = sprintf('%s/sea_press_%s.h5', AzavgDir, SpinUpCase);
-SPL = squeeze(hdf5read(Hfile, '/sea_press'));
+SPL_SPINUP = squeeze(hdf5read(Hfile, '/sea_press'));
+Hfile = sprintf('%s/sea_press_%s.h5', AzavgDir, ControlCase);
+SPL_CNTL = squeeze(hdf5read(Hfile, '/sea_press'));
+SPL = cat(2, SPL_SPINUP(:,1:24), SPL_CNTL);
 
-% VT will be (r,z,t), SPL will be (p,t)
 % Create a time series of the max sfc Vt and one of the min SPL
 % z == 1 is below sfc, so use z == 2 for sfc Vt
 VT = squeeze(VT(:,2,:)); % take the z == 2 level
@@ -76,8 +88,8 @@ MIN_SPL = SmoothFillTseries(MIN_SPL, Ntsteps, Flen);
 % Plot
 Lwidth = 2;
 Fsize = 20;
-Pfile = sprintf('%s/SpinUpVtSpl.fig', PlotDir);
-Ptitle = sprintf('Spin Up Storm Evolution');
+Pfile = sprintf('%s/ControlVtSpl.fig', PlotDir);
+Ptitle = sprintf('Control Storm Evolution');
 %Xlabel = sprintf('Local Time, Starting at %s', StartTime);
 Xlabel = sprintf('Simulation Time (hr)');
 Y1label = sprintf('Maximum surface Vt (m/s)');
@@ -161,7 +173,7 @@ xlim(Xlims);
 ylabel(Y2label);
 ylim(Y2lims);
 
-title(Ptitle);
+%title(Ptitle);
 xlabel(Xlabel);
 
 % markers

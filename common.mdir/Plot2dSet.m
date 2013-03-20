@@ -14,7 +14,7 @@ function [ ] = Plot2dSet( X, Y, Ptitle, Xlabel, Ylabel, Lspecs, LegText, LegLoc,
 
 Fig = figure;
 
-Lwidth = 2;
+Lwidth = 3;
 Nprops = length(AxisProps);
 Nplots = size(Y,1);
 

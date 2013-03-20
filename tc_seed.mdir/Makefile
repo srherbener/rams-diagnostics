@@ -13,7 +13,10 @@ SCRIPTS = \
           $(DEST)/MakeSinglePanelFigs.m \
           $(DEST)/MakeStormEvolFig.m \
           $(DEST)/PlotAerosol3d.m \
+          $(DEST)/PlotAerosolProfiles.m \
           $(DEST)/PlotCfads.m \
+          $(DEST)/PlotControlVtSpl.m \
+          $(DEST)/PlotGrids.m \
           $(DEST)/PlotHmeas.m \
           $(DEST)/PlotHmeas2d.m \
           $(DEST)/PlotHmeas3d.m \
@@ -21,11 +24,9 @@ SCRIPTS = \
           $(DEST)/PlotInitialVortex.m \
           $(DEST)/PlotProfs.m \
           $(DEST)/PlotRsProfs.m \
-          $(DEST)/PlotSampleCcnProfile.m \
           $(DEST)/PlotSampleStormPhases.m \
           $(DEST)/PlotSampleVt.m \
           $(DEST)/PlotSampleVtSPL.m \
-          $(DEST)/PlotSpinUpVtSpl.m \
           $(DEST)/PlotStormPhases.m \
           $(DEST)/PlotStormRegions.m \
           $(DEST)/PlotThetaE.m \
