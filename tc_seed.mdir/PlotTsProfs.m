@@ -211,10 +211,10 @@ for iplot = 1:length(Config.ProfTsPlots)
 
         % Fix up the positioning
         Ppos = get(gca, 'Position'); % position of plot area
-        Ppos(1) = Ppos(1) * 0.82;
-        Ppos(2) = Ppos(2) * 0.82;
-        Ppos(3) = Ppos(3) * 0.93;
-        Ppos(4) = Ppos(4) * 0.93;
+        Ppos(1) = Ppos(1) * 1.00;
+        Ppos(2) = Ppos(2) * 1.00;
+        Ppos(3) = Ppos(3) * 0.85;
+        Ppos(4) = Ppos(4) * 0.85;
         set(gca, 'Position', Ppos);
 
         OutFile = sprintf('%s_%s.jpg', OutFileBase, Case);
