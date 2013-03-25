@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+#
+# script to create figures for AIE - TC paper
+
+Jsize="1200x900"
+
+# Figure 1: RAMS grids
+echo "Figure 1"
+montage -tile 1x1 -geometry ${Jsize} RamsGrids.jpg Figure1.jpg
+
+# Figure 2: initial vortex
+echo "Figure 2"
+montage -tile 1x1 -geometry ${Jsize} InitVortex.jpg Figure2.jpg
+
+# Figure 3: control max Vt and min SLP
+echo "Figure 3"
+montage -tile 1x1 -geometry ${Jsize} ControlVtSpl.jpg Figure3.jpg
+
+# Figure 4: aerosol profile
+echo "Figure 4"
+montage -tile 1x1 -geometry ${Jsize} AerosolProfiles.jpg Figure4.jpg
+
+# Figure 5: KE-Vt above RMW
+echo "Figure 5"
+montage -tile 1x2 -geometry ${Jsize} KeVt.jpg TS_rmw.jpg Figure5.jpg
+
+# Figure 6: EOF in first column, VintCond in second column
+echo "Figure 6"
+montage -tile 2x4 -geometry ${Jsize}+2+100 \
+ Blank.jpg \
+ vint_cond_TCS_SD_C0100.jpg \
+ EOF1_theta_e_TCS_SD_C0500.jpg \
+ vint_cond_TCS_SD_C0500.jpg \
+ EOF1_theta_e_TCS_SD_C1000.jpg \
+ vint_cond_TCS_SD_C1000.jpg \
+ EOF1_theta_e_TCS_SD_C2000.jpg \
+ vint_cond_TCS_SD_C2000.jpg \
+ Figure6.jpg
+
+# Figure 7: storm core: cloud num conc in first column, cloud mean diam in second column
+echo "Figure 7"
+montage -tile 2x4 -geometry ${Jsize}+2+100 \
+ pts_cloud_cm3_twp4_SC_LC_TCS_SD_C0100.jpg \
+ pts_cloud_d_twp4_SC_LC_TCS_SD_C0100.jpg \
+ pts_cloud_cm3_twp4_SC_LC_TCS_SD_C0500.jpg \
+ pts_cloud_d_twp4_SC_LC_TCS_SD_C0500.jpg \
+ pts_cloud_cm3_twp4_SC_LC_TCS_SD_C1000.jpg \
+ pts_cloud_d_twp4_SC_LC_TCS_SD_C1000.jpg \
+ pts_cloud_cm3_twp4_SC_LC_TCS_SD_C2000.jpg \
+ pts_cloud_d_twp4_SC_LC_TCS_SD_C2000.jpg \
+ Figure7.jpg
+
+# Figure 8: storm core: latent heat in first column, w in second column
+echo "Figure 8"
+montage -tile 2x4 -geometry ${Jsize}+2+100 \
+ prs_lh_tott_lht1p0_SC_SS_TCS_SD_C0500.jpg \
+ prs_w_SC_SS_TCS_SD_C0500.jpg \
+ prs_lh_tott_lht1p0_SC_SS_TCS_SD_C1000.jpg \
+ prs_w_SC_SS_TCS_SD_C1000.jpg \
+ prs_lh_tott_lht1p0_SC_SS_TCS_SD_C2000.jpg \
+ prs_w_SC_SS_TCS_SD_C2000.jpg \
+ prof_lh_tott_lht1p0_SC_SS.jpg \
+ prof_w_SC_SS.jpg \
+ Figure8.jpg
+
+# Figure 9: storm core: relative vorticity
+echo "Figure 9"
+montage -tile 2x4 -geometry ${Jsize}+2+100 \
+ prs_relvortz_rvz1em4_SC_SS_TCS_SD_C0100.jpg \
+ Blank.jpg \
+ prs_relvortz_rvz1em4_SC_SS_TCS_SD_C0500.jpg \
+ prs_relvortz_rvz1em4_diff_SC_SS_TCS_SD_C0500.jpg \
+ prs_relvortz_rvz1em4_SC_SS_TCS_SD_C1000.jpg \
+ prs_relvortz_rvz1em4_diff_SC_SS_TCS_SD_C1000.jpg \
+ prs_relvortz_rvz1em4_SC_SS_TCS_SD_C2000.jpg \
+ prs_relvortz_rvz1em4_diff_SC_SS_TCS_SD_C2000.jpg \
+ Figure9.jpg
+
+# Figure 10: rainbands, profiles
+echo "Figure 10"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ prof_speed_r_RB_SS.jpg \
+ prof_relhum_RB_SS.jpg \
+ prof_lh_tott_lht1p0_RB_SS.jpg \
+ prof_w_twp4_RB_SS.jpg \
+ Figure10.jpg
+
+# Figure 11: pressure diff
+echo "Figure 11"
+montage -tile 1x1 -geometry ${Jsize}+2+100 \
+  TS_DeltapAll_SC_RB.jpg \
+  Figure11.jpg
