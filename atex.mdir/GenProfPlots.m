@@ -15,7 +15,8 @@ Pdir = Config.PlotDir;
 for iplot = 1:length(Config.ProfPlots)
     clear LHV;
     clear LegText;
-    clear Lspecs;
+    clear Lstyles;
+    clear Lgscales;
 
     Fprefix = Config.ProfPlots(iplot).Fprefix;
     Var = Config.ProfPlots(iplot).Var;
@@ -59,7 +60,8 @@ for iplot = 1:length(Config.ProfPlots)
       for icase = 1:Config.PlotSets(ips).Ncases
         Case = Config.PlotSets(ips).Cases(icase).Cname;
         LegText(icase) = { Config.PlotSets(ips).Cases(icase).Legend };
-        Lspecs(icase) = { Config.PlotSets(ips).Cases(icase).Lspec };
+        Lstyles(icase) = { Config.PlotSets(ips).Cases(icase).Lstyle };
+        Lgscales(icase) = Config.PlotSets(ips).Cases(icase).Lgscale;
 
         % Var is organized (x,y,z,t) in the file, however x and y
         % dimension sizes are both 1. After running squeeze(), Var
@@ -95,6 +97,6 @@ for iplot = 1:length(Config.ProfPlots)
     LHV = LHV .* 12;
 
     fprintf('Writing plot file: %s\n', OutFile);
-    PlotProfSet(X, Z, LHV, Xlabel, Zlabel, Ptitle, Lspecs, LegText, LegLoc, OutFile);
+    PlotProfSet(X, Z, LHV, Xlabel, Zlabel, Ptitle, Lstyles, Lgscales, LegText, LegLoc, OutFile);
     fprintf('\n');
 end
