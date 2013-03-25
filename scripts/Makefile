@@ -5,6 +5,7 @@
 DEST = $(HOME)/bin
 SCRIPTS = $(DEST)/lp1 \
           $(DEST)/lp2 \
+          $(DEST)/make_figs_TC \
           $(DEST)/grads2vis5d \
           $(DEST)/run_g2v \
           $(DEST)/run_im \
@@ -23,6 +24,9 @@ $(DEST)/lp1: lp1
 
 $(DEST)/lp2: lp2
 	cp lp2 $(DEST)/lp2
+
+$(DEST)/make_figs_TC: make_figs_TC
+	cp make_figs_TC $(DEST)/make_figs_TC
 
 $(DEST)/grads2vis5d: grads2vis5d
 	cp grads2vis5d $(DEST)/grads2vis5d
