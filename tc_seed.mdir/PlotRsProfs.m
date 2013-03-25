@@ -24,7 +24,10 @@ RevGrayCmap = flipud(GrayCmap);
 close(Fig);
 
 
-Fsize = 20;
+Fsize = 45;
+
+Yticks = [ 2 6 10 14 ];
+Yticklabels = { '2' '6' '10' '14' };
 
 % Find and replace underscores in Ptitle, Ylabel with blank spaces
 for iplot = 1:length(Config.ProfRsPlots)
@@ -50,6 +53,18 @@ for iplot = 1:length(Config.ProfRsPlots)
     Tlabel = Config.ProfRsPlots(iplot).Tlabel;
     Zlabel = Config.ProfRsPlots(iplot).Zlabel;
     OutFileBase = sprintf('%s/%s', Pdir, Config.ProfRsPlots(iplot).OutFileBase);
+    
+    % Fix up title if panel labeling is requested
+    PanelTitle = false;
+    if (regexp(Ptitle, '^PANEL:'))
+        % strip off the leading 'PANEL:'. This leaves a list of single
+        % letter names. Convert that into a cell array using cellstr().
+        % Note that you have to use a column vector to get cellstr to
+        % recognize each letter as a separate string.
+        S = regexprep(Ptitle, '^PANEL:', '');
+        Pmarkers = cellstr(S');
+        PanelTitle = true;
+    end
     
     % make sure output directory exists
     if (exist(Pdir, 'dir') ~= 7)
@@ -143,7 +158,12 @@ for iplot = 1:length(Config.ProfRsPlots)
         end
 
         % Create plot
-        PtitleCase = sprintf('%s: %s', Ptitle, Legend);
+        if (PanelTitle)
+            PtitleCase = sprintf('%s) %s', Pmarkers{icase}, Legend);
+        else
+            PtitleCase = sprintf('%s: %s', Ptitle, Legend);
+        end
+        
         Fig = figure;
 
         cmap = DefCmap;
@@ -178,13 +198,34 @@ for iplot = 1:length(Config.ProfRsPlots)
           Pdata(1) = Pdata(1) + (Cmax - Cmin)/200;
           contourf(T, Zvals, Pdata);
         end
-        set(gca, 'FontSize', Fsize)
+        if (strcmp(Ptype, 'diff'))
+            % plot the zero contour
+            hold on;
+            contour(R, Zvals, Pdata, [ 0 0 ], 'Color', 'k', 'LineStyle', '--', 'LineWidth', 3);
+        end
+        set(gca, 'FontSize', Fsize);
+        set(gca, 'YTick', Yticks);
+        set(gca, 'YTickLabel', Yticklabels);
         colormap(cmap);
         shading flat;
         cbar = colorbar;
         set(cbar, 'FontSize', Fsize)
         caxis([ Cmin Cmax ]);
-        title(PtitleCase);
+        
+        if (PanelTitle)
+          % The title is in a box that adjusts to the amount of characters in
+          % the title. Ie, it doesn't do any good to do Left/Center/Right
+          % alignment. But, the entire box can be moved to the left side of the
+          % plot.
+          T = title(PtitleCase);
+          set(T, 'Units', 'Normalized');
+          set(T, 'HorizontalAlignment', 'Left');
+          Tpos = get(T, 'Position');
+          Tpos(1) = 0; % line up with left edge of plot area
+          set(T, 'Position', Tpos);
+        else
+            title(PtitleCase);
+        end
         xlabel(Tlabel);
         ylabel(Zlabel);
         
@@ -195,7 +236,15 @@ for iplot = 1:length(Config.ProfRsPlots)
                'VerticalAlignment', 'Top');
         end
 
-        OutFile = sprintf('%s_%s.fig', OutFileBase, Case);
+        % Fix up the positioning
+        Ppos = get(gca, 'Position'); % position of plot area
+        Ppos(1) = Ppos(1) * 0.82;
+        Ppos(2) = Ppos(2) * 0.82;
+        Ppos(3) = Ppos(3) * 0.93;
+        Ppos(4) = Ppos(4) * 0.93;
+        set(gca, 'Position', Ppos);
+
+        OutFile = sprintf('%s_%s.jpg', OutFileBase, Case);
         fprintf('Writing plot file: %s\n', OutFile);
         saveas(Fig, OutFile);
         fprintf('\n');

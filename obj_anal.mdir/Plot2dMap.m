@@ -15,7 +15,13 @@ function [ ] = Plot2dMap( Fig, X, Y, Z, Clevs, Cbounds, Xlab, Ylab, Ptitle, Sele
 %   SelectData contains [ x1 x2 y1 y2 ] which are used to select a
 %   rectangular section out of the entire map.
 
-Fsize = 20;
+Fsize = 40;
+
+PanelTitle = false;
+if (regexp(Ptitle, '^PANEL:'))
+    Ptitle = regexprep(Ptitle, '^PANEL:', '');
+    PanelTitle = true;
+end
 
 figure(Fig);
 
@@ -32,21 +38,54 @@ XP = X(x1:x2);
 YP = Y(y1:y2);
 MapP = Map(y1:y2,x1:x2);
 
+%
+Xticks = [ 75 200 ];
+Xticklabels = { '75' '200' };
+
 % Find the largest absolute value of the entries in Dmap for setting the
 % colormap axis. Want to center this about zero so that blue represents
 % negative values and red represents positive values.
-
-contourf(XP,YP,MapP,Clevs);
+contourf(XP, YP, MapP, Clevs);
 set(gca, 'FontSize', Fsize);
+set(gca, 'XTick', Xticks);
+set(gca, 'XTickLabel', Xticklabels);
 shading flat;
-title(Ptitle);
-xlabel(Xlab);
-ylabel(Ylab);
-    
 caxis(Cbounds);
-colormap(redblue);
+colormap('gray');
 cbar = colorbar;
 set(cbar, 'FontSize', Fsize);
-    
+hold on;
+
+% Draw the zero contour
+contour(XP, YP, MapP, [ 0 0 ], 'Color', 'k', 'LineStyle', '--', 'LineWidth', 3);
+
+if (~strcmp(Ptitle, ' '))
+  if (PanelTitle)
+      % The title is in a box that adjusts to the amount of characters in
+      % the title. Ie, it doesn't do any good to do Left/Center/Right
+      % alignment. But, the entire box can be moved to the left side of the
+      % plot.
+      T = title(Ptitle);
+      set(T, 'Units', 'Normalized');
+      set(T, 'HorizontalAlignment', 'Left');
+      Tpos = get(T, 'Position');
+      Tpos(1) = 0; % line up with left edge of plot area
+      set(T, 'Position', Tpos);
+  else
+      title(Ptitle);
+  end
+end
+xlabel(Xlab);
+ylabel(Ylab);
+
+
+% Fix up the positioning
+Ppos = get(gca, 'Position'); % position of plot area
+Ppos(1) = Ppos(1) * 0.82;
+Ppos(2) = Ppos(2) * 0.82;
+Ppos(3) = Ppos(3) * 0.95;
+Ppos(4) = Ppos(4) * 0.95;
+set(gca, 'Position', Ppos);
+
 end
 

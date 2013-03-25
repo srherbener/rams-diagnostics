@@ -1,4 +1,4 @@
-function [ ] = AdiffEofPlot(InFile, EofOutFile, PcOutFile, EsOutFile, Vname, Vunits, Pcase, EofNum, NumEv, SelectData, Clevs, Cbounds)
+function [ ] = AdiffEofPlot(InFile, EofOutFile, PcOutFile, EsOutFile, Vname, Vunits, Ptitle, EofNum, NumEv, SelectData, Clevs, Cbounds)
 % AdiffEofPlot plot an EOF/PC pair that was creaged by Azavg difference EOF routine.
 %
 % This function will take the EOF/PC data from Infile and plot the EOF/PC pair
@@ -27,18 +27,18 @@ EOF = ALL_EOF(:,EofNum);
 PC = ALL_PC(:,EofNum);
 
 % Generate the plot
-E_Title = sprintf('%s Difference EOF%d: %s', Vname, EofNum, Pcase);
+E_Title = Ptitle;
 E_Xlabel = 'Radius (km)';
 E_Ylabel = 'Height (km)';
 
-P_Title = sprintf('%s Difference PC%d: %s', Vname, EofNum, Pcase);
+P_Title = Ptitle;
 P_Xlabel = 'Time (hr)';
 P_Ylabel = sprintf('%s (%s)', Vname, Vunits);
 
 fprintf('Writing EOF plot to file: %s\n', EofOutFile);
 Plot2dEofPc(EOF, PC, R, Z, Clevs, Cbounds, E_Title, E_Xlabel, E_Ylabel, P_Title, P_Xlabel, P_Ylabel, SelectIndices, EofOutFile, PcOutFile);
 
-EsTitle = sprintf('First %d Eigenvalues of %s Difference: %s', NumEv, Vname, Pcase);
+EsTitle = sprintf('First %d Eigenvalues of %s Difference: %s', NumEv, Vname, regexprep(Ptitle, '^PANEL:', ''));
 fprintf('Writing eigenvalue spectrum plot to file: %s\n', EsOutFile);
 PlotEigSpectrum( VarExpl, Err, NumEv, EsTitle, EsOutFile );
 

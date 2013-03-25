@@ -18,6 +18,16 @@ if (exist(Pdir, 'dir') ~= 7)
     mkdir(Pdir);
 end
 
+% Grab the plot name for the control case
+for icase = 1:length(Config.Cases)
+    if (strcmp(Config.Cases(icase).Cname, ControlCase))
+        ControlPcase = Config.Cases(icase).Pname;
+    end
+end
+
+PanelMarkers = { 'a' 'b' 'c' 'd' 'e' 'f' 'g' };
+ipm = 1;
+
 for icase = 1:length(Config.Cases)
   Case = Config.Cases(icase).Cname;
   Pcase = Config.Cases(icase).Pname;
@@ -40,10 +50,10 @@ for icase = 1:length(Config.Cases)
       fprintf('***********************************************************************\n');
       fprintf('Generating azavg EOF plots: \n');
       fprintf('  Variable: %s\n', Var);
-      fprintf('  Case: %s\n', Case);
+      fprintf('  Case: %s --> %s\n', Case, Pcase);
       fprintf('  Contour levels:\n');
-      fprintf('    Limit: %.2f\n', Clim);
-      fprintf('    Increment: %.2f\n', Cinc);
+      fprintf('    Limit: %.3f\n', Clim);
+      fprintf('    Increment: %.3f\n', Cinc);
       fprintf('  Data selection:\n');
       fprintf('    Rmin: %.2f\n', Rmin);
       fprintf('    Rmax: %.2f\n', Rmax);
@@ -52,16 +62,18 @@ for icase = 1:length(Config.Cases)
       fprintf('\n');
   
       InFile = sprintf('%s/%s_%s.h5', EofDir, Fprefix, Case);
-      EofOutFile = sprintf('%s/EOF%d_%s_%s.fig', Pdir, EofNum, Fprefix, Case);
-      PcOutFile = sprintf('%s/PC%d_%s_%s.fig', Pdir, EofNum, Fprefix, Case);
-      EsOutFile = sprintf('%s/ES%d_%s_%s.fig', Pdir, EofNum, Fprefix, Case);
+      EofOutFile = sprintf('%s/EOF%d_%s_%s.jpg', Pdir, EofNum, Fprefix, Case);
+      PcOutFile = sprintf('%s/PC%d_%s_%s.jpg', Pdir, EofNum, Fprefix, Case);
+      EsOutFile = sprintf('%s/ES%d_%s_%s.jpg', Pdir, EofNum, Fprefix, Case);
+      Ptitle = sprintf('PANEL:%s) %s - %s', PanelMarkers{ipm}, Pcase, ControlPcase);
+      ipm = ipm + 1;
   
       SelectData = [ Rmin Rmax Zmin Zmax ];
   
       Clevs = (-Clim:Cinc:Clim);
       Cbounds = [ -Clim Clim ];
   
-      AdiffEofPlot(InFile, EofOutFile, PcOutFile, EsOutFile, Vname, Vunits, Pcase, EofNum, NumEv, SelectData, Clevs, Cbounds);
+      AdiffEofPlot(InFile, EofOutFile, PcOutFile, EsOutFile, Vname, Vunits, Ptitle, EofNum, NumEv, SelectData, Clevs, Cbounds);
   
       fprintf('\n');
     end

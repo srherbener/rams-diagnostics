@@ -7,7 +7,13 @@ function [ ] = Plot2dEofPc(EOF, PC, X, Y, Clevs, Cbounds, E_Title, E_Xlabel, E_Y
 %   SelectData contains [ x1 x2 y1 y2 ] which are used to select a rectangular
 %   region out of the entire 2D map.
 
-Fsize = 20;
+Fsize = 25;
+
+PanelTitle = false;
+if (regexp(P_Title, '^PANEL:'))
+    P_Title = regexprep(P_Title, '^PANEL:', '');
+    PanelTitle = true;
+end
 
 Fig = figure;
 Plot2dMap(Fig,X,Y,EOF, Clevs, Cbounds, E_Xlabel, E_Ylabel, E_Title, SelectData);
@@ -17,9 +23,34 @@ close(Fig);
 Fig = figure;
 plot(PC);
 set(gca, 'FontSize', Fsize);
-title(P_Title);
+
+if (~strcmp(P_Title, ' '))
+  if (PanelTitle)
+      % The title is in a box that adjusts to the amount of characters in
+      % the title. Ie, it doesn't do any good to do Left/Center/Right
+      % alignment. But, the entire box can be moved to the left side of the
+      % plot.
+      T = title(P_Title);
+      set(T, 'Units', 'Normalized');
+      set(T, 'HorizontalAlignment', 'Left');
+      Tpos = get(T, 'Position');
+      Tpos(1) = 0; % line up with left edge of plot area
+      set(T, 'Position', Tpos);
+  else
+      title(P_Title);
+  end
+end
 xlabel(P_Xlabel);
 ylabel(P_Ylabel);
+
+% Fix up the positioning
+Ppos = get(gca, 'Position'); % position of plot area
+Ppos(1) = Ppos(1) * 1.05;
+Ppos(2) = Ppos(2) * 1.05;
+Ppos(3) = Ppos(3) * 0.90;
+Ppos(4) = Ppos(4) * 0.90;
+set(gca, 'Position', Ppos);
+
 saveas(Fig, PcFile);
 close(Fig);
 

@@ -207,6 +207,7 @@ for i = 1:length(FigList)
 
   Fig = openfig(InFile);
   saveas(Fig, OutFile);
+  %screen2jpeg(Fig, OutFile);
   close(Fig);
 end
 

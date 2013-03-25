@@ -52,7 +52,7 @@ for iplot = 1:length(Config.LinePlots)
 
     i_ap = 1;
     AxisProps(i_ap).Name = 'FontSize';
-    AxisProps(i_ap).Val = 30; 
+    AxisProps(i_ap).Val = 25; 
     i_ap = i_ap + 1;
 
     % X variable, axis specs
@@ -169,7 +169,7 @@ for iplot = 1:length(Config.LinePlots)
 
     fprintf('\n');
     fprintf('Writing plot file: %s\n', OutFile);
-    Plot2dSet( Xall, Yall, Ptitle, Xlabel, Ylabel, LineStyles, LineGscales, LegText, LegLoc, AxisProps, OutFile );
+    Plot2dSet( Xall, Yall, Ptitle, Xlabel, Ylabel, LineStyles, LineGscales, LegText, LegLoc, AxisProps, AddMeas, OutFile );
     fprintf('\n');
 end
 

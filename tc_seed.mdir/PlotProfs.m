@@ -12,7 +12,8 @@ Pdir = Config.PlotDir;
 for iplot = 1:length(Config.ProfPlots)
     clear Profs;
     clear LegText;
-    clear Lspecs;
+    clear Lstyles;
+    clear Lgscales;
 
     Fprefix = Config.ProfPlots(iplot).Fprefix;
     Var = Config.ProfPlots(iplot).Var;
@@ -63,7 +64,8 @@ for iplot = 1:length(Config.ProfPlots)
 
         iprof = iprof + 1;
         LegText(iprof) = { Config.PlotSets(ips).Cases(icase).Legend };
-        Lspecs(iprof) = { Config.PlotSets(ips).Cases(icase).Lspec };
+        Lstyles(iprof) = { Config.PlotSets(ips).Cases(icase).Lstyle };
+        Lgscales(iprof) = Config.PlotSets(ips).Cases(icase).Lgscale;
 
         % Var is organized (b,z) in the file (CFAD).
         % Bins holds the bin values, Height holds the z values.
@@ -93,6 +95,6 @@ for iplot = 1:length(Config.ProfPlots)
     end
 
     fprintf('Writing plot file: %s\n', OutFile);
-    PlotProfSet(Xvals, Zvals, Profs, Xlabel, Zlabel, Ptitle, Lspecs, LegText, LegLoc, OutFile);
+    PlotProfSet(Xvals, Zvals, Profs, Xlabel, Zlabel, Ptitle, Lstyles, Lgscales, LegText, LegLoc, OutFile);
     fprintf('\n');
 end

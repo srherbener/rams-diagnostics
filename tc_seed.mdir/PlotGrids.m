@@ -9,7 +9,7 @@ if (exist(Pdir, 'dir') ~= 7)
   mkdir(Pdir);
 end
 
-OutFile = sprintf('%s/RamsGrids.fig', Pdir);
+OutFile = sprintf('%s/RamsGrids.jpg', Pdir);
 
 Fsize = 25;
 Lwidth = 2;

@@ -52,8 +52,8 @@ Ltext = { 'AS0100' 'AS0500' 'AS1000' 'AS2000' };
 
 % Plot
 Lwidth = 2;
-Fsize = 20;
-Pfile = sprintf('%s/AerosolProfiles.fig', PlotDir);
+Fsize = 25;
+Pfile = sprintf('%s/AerosolProfiles.jpg', PlotDir);
 Ptitle = sprintf('Aerosol Source Profile: %d/cc Example', CCN_VAL);
 Xlabel = sprintf('Aerosol concentration (#/cc)');
 Ylabel = sprintf('Height (km)');

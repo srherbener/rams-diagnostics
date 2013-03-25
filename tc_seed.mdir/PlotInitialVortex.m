@@ -35,7 +35,7 @@ Z = Z(Z1:Z2);
 VT_INIT = VT_INIT(Z1:Z2,:); % rows are z dimension now (after the transpose)
 
 % plot
-Pfile = sprintf('%s/InitVortex.fig', PlotDir);
+Pfile = sprintf('%s/InitVortex.jpg', PlotDir);
 Ptitle = sprintf('Initial Vortex: Azimuthally averaged Vt (m/s)');
 Xlabel = sprintf('Radius (km)');
 Ylabel = sprintf('Height (km)');
@@ -60,7 +60,7 @@ colormap(cmap);
 
 contourf(X, Z, VT_INIT);
 shading flat;
-set(gca,'FontSize', 20);
+set(gca,'FontSize', 25);
 caxis([ 0 15 ]);
 %title(Ptitle);
 xlabel(Xlabel);

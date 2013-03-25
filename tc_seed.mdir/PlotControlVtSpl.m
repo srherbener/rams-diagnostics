@@ -86,9 +86,9 @@ MAX_VT  = SmoothFillTseries(MAX_VT, Ntsteps, Flen);
 MIN_SPL = SmoothFillTseries(MIN_SPL, Ntsteps, Flen);
 
 % Plot
-Lwidth = 2;
-Fsize = 20;
-Pfile = sprintf('%s/ControlVtSpl.fig', PlotDir);
+Lwidth = 3;
+Fsize = 25;
+Pfile = sprintf('%s/ControlVtSpl.jpg', PlotDir);
 Ptitle = sprintf('Control Storm Evolution');
 %Xlabel = sprintf('Local Time, Starting at %s', StartTime);
 Xlabel = sprintf('Simulation Time (hr)');
@@ -185,6 +185,14 @@ text(Xbefore(1), Ytext, TxtBefore, 'FontSize', TfontSize);
 %text(Xduring(1), Ytext, TxtDuring, 'FontSize', TfontSize);
 %line(Xafter,  Y2lims, 'LineStyle', ':', 'Color', 'k', 'LineWidth', Lwidth/2);
 %text(Xafter(1), Ytext, TxtAfter, 'FontSize', TfontSize);
+
+% fix position
+Ppos = get(gca, 'Position');
+Ppos(1) = Ppos(1) * 1.05;
+Ppos(2) = Ppos(2) * 1.05;
+Ppos(3) = Ppos(3) * 0.90;
+Ppos(4) = Ppos(4) * 0.90;
+set(gca, 'Position', Ppos);
 
 saveas(Fig, Pfile);
 close(Fig);

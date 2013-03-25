@@ -8,7 +8,7 @@ UndefVal = Config.UndefVal;
 AzavgDir = Config.AzavgDir;
 PlotDir = Config.PlotDir;
 
-Fsize = 20;
+Fsize = 40;
 
 % limit view into plot
 Rmin = 0;
@@ -20,9 +20,18 @@ Tmax = 144;
 Cmin = 0;
 Cmax = 30;
 
+PanelMarkers = { 'd' 'e' 'f' 'g' };
+
+% Tick marks
+Xticks = [ 50 100 ];
+Xticklabels = { '50' '100' };
+
+Yticks = [ 40 80 120 ];
+Yticklabels = { '40' '80' '120' };
+
 for icase = 1:length(Config.Cases)
   Case = Config.Cases(icase).Cname;
-  CaseTitle = regexprep(Case, '.*_', '');
+  Pcase = Config.Cases(icase).Pname;
   fprintf('Plotting VintCond for case: %s\n', Case)
   fprintf('\n');
   
@@ -50,8 +59,8 @@ for icase = 1:length(Config.Cases)
   Pdata (Pdata  == UndefVal) = nan;
 
   % plot
-  Pfile  = sprintf('%s/vint_cond_%s.fig', PlotDir, Case);
-  Ptitle = sprintf('Vertically Integrated Condensate (mm): %s', CaseTitle);
+  Pfile  = sprintf('%s/vint_cond_%s.jpg', PlotDir, Case);
+  Ptitle = sprintf('%s) %s', PanelMarkers{icase}, Pcase);
   Xlabel = sprintf('Radius (km)');
   Ylabel = sprintf('Time (hr)');
    
@@ -59,20 +68,43 @@ for icase = 1:length(Config.Cases)
   
   contourf(Rvals, Tvals, Pdata');
   set(gca,'FontSize', Fsize);
+  set(gca, 'XTick', Xticks);
+  set(gca, 'XTickLabel', Xticklabels);
+  set(gca, 'YTick', Yticks);
+  set(gca, 'YTickLabel', Yticklabels);
   colormap(flipud(colormap('gray')));
   shading flat;
   caxis([ Cmin Cmax ]);
-  title(Ptitle);
+  
+  % The title is in a box that adjusts to the amount of characters in
+  % the title. Ie, it doesn't do any good to do Left/Center/Right
+  % alignment. But, the entire box can be moved to the left side of the
+  % plot.
+  T = title(Ptitle);
+  set(T, 'Units', 'Normalized');
+  set(T, 'HorizontalAlignment', 'Left');
+  Tpos = get(T, 'Position');
+  Tpos(1) = 0; % line up with left edge of plot area
+  set(T, 'Position', Tpos);
+
   xlabel(Xlabel);
   ylabel(Ylabel);
   cbar = colorbar;
   set(cbar, 'FontSize', Fsize);
 
-  line([ 40 40 ], [ Tmin Tmax ], 'Color' , 'r', 'LineStyle', '--', 'LineWidth', 2);
-  line([ 70 70 ], [ Tmin Tmax ], 'Color' , 'r', 'LineStyle', '--', 'LineWidth', 2);
-  text(20,  Tmin, 'SC', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', Fsize, 'Color', 'k');
-  text(55,  Tmin, 'RB', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', Fsize, 'Color', 'k');
-  text(110, Tmin, 'FF', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', Fsize, 'Color', 'k');
+  line([ 40 40 ], [ Tmin Tmax ], 'Color' , 'k', 'LineStyle', '--', 'LineWidth', 2);
+  line([ 70 70 ], [ Tmin Tmax ], 'Color' , 'k', 'LineStyle', '--', 'LineWidth', 2);
+  text(20,  Tmin, 'SC', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', 30, 'Color', 'k');
+  text(55,  Tmin, 'RB', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', 30, 'Color', 'k');
+  text(110, Tmin, 'FF', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', 30, 'Color', 'k');
+  
+  % Fix up the positioning
+  Ppos = get(gca, 'Position'); % position of plot area
+  Ppos(1) = Ppos(1) * 0.82;
+  Ppos(2) = Ppos(2) * 0.82;
+  Ppos(3) = Ppos(3) * 0.95;
+  Ppos(4) = Ppos(4) * 0.95;
+  set(gca, 'Position', Ppos);
   
   fprintf('Writing plot file: %s\n', Pfile);
   saveas(Fig, Pfile);
