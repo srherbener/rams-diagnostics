@@ -19,8 +19,8 @@ SstVal: 26
 
 # cases (experiment names)
 #  Case: <exp_name> <plot_name>
-Case: TCS_SD_C0100  C0100
-Case: TCS_SD_C0500  C0500
+Case: TCS_SD_C0100  CLEAN
+Case: TCS_SD_C0500  C500
 Case: TCS_SD_C1000  C1000
 Case: TCS_SD_C2000  C2000
 
@@ -346,43 +346,44 @@ TsPlotSpecs: 121 0 1.0 hr 25 1998:08:22:21:00:00 10 24
 #   'IntArea' - report the area under each curve (via integration of each curve)
 #   'IntVol' - report the volume under the surface after rotating the radial curve 360 degrees
 #              form that surface.
+#   'Tphases' - add the marking of temporal phases (hardwired for iedealized TC sims).
 
-LinePlot: ccn4    MaxVt IKE TsAll xy _ Northwest none KeVt.fig
+LinePlot: ccn4 MaxVt   IKE             TsAll xy PANEL:a) Northwest none    KeVt.jpg
+LinePlot: ccn4 SimTime RMW             TsAll  y PANEL:b) NorthEast Tphases TS_rmw.jpg
+LinePlot: ccn4 SimTime DeltapAll_SC_RB TsAll  y _        SouthEast Tphases TS_DeltapAll_SC_RB.jpg
 
-#LinePlot: ccn2_ext    MaxVt  IKE     TsAll    xy Size_vs_Intensity           Northwest none   KeVt_ext.fig
-#LinePlot: ccn2_ext    RadAll VtAllSS SfcVtAll  y Radial_Structure_of_Vt:_SS  NorthEast IntVol R_Vt_All_SS_ext.fig
+#LinePlot: ccn2_ext    MaxVt  IKE     TsAll    xy Size_vs_Intensity           Northwest none   KeVt_ext.jpg
+#LinePlot: ccn2_ext    RadAll VtAllSS SfcVtAll  y Radial_Structure_of_Vt:_SS  NorthEast IntVol R_Vt_All_SS_ext.jpg
 
-#LinePlot: ccn4    SimTime IKE   TsAll y Integrated_Kinetic_Energy NorthWest none TS_ike.fig
-#LinePlot: ccn4    SimTime MaxVt TsAll y Maximum_Vt                SouthEast none TS_max_vt.fig
-LinePlot: ccn4    SimTime RMW   TsAll y _ NorthEast none TS_rmw.fig
+#LinePlot: ccn4    SimTime IKE   TsAll y Integrated_Kinetic_Energy NorthWest none TS_ike.jpg
+#LinePlot: ccn4    SimTime MaxVt TsAll y Maximum_Vt                SouthEast none TS_max_vt.jpg
 
-#LinePlot: ccn4    RadAll    VtAllRI   SfcVtAll    y Radial_Structure_of_Max_Vt:_RI  NorthEast none R_Vt_All_RI.fig
-#LinePlot: ccn4    RadAll    VtAllTR   SfcVtAll    y Radial_Structure_of_Max_Vt:_TR  NorthEast none R_Vt_All_TR.fig
-#LinePlot: ccn4    RadAll    VtAllSS   SfcVtAll    y Radial_Structure_of_Max_Vt:_SS  NorthEast none R_Vt_All_SS.fig
-#LinePlot: ccn4    RadPeak   VtPeakRI  SfcVtPeak   y Peak_Section_of_Max_Vt:_RI      NorthEast none R_Vt_Peak_RI.fig
-#LinePlot: ccn4    RadPeak   VtPeakTR  SfcVtPeak   y Peak_Section_of_Max_Vt:_TR      NorthEast none R_Vt_Peak_TR.fig
-#LinePlot: ccn4    RadPeak   VtPeakSS  SfcVtPeak   y Peak_Section_of_Max_Vt:_SS      NorthEast none R_Vt_Peak_SS.fig
-#LinePlot: ccn4    RadRband  VtRbandRI SfcVtRband  y Rainband_Section_of_Max_Vt:_RI  NorthEast none R_Vt_Rband_RI.fig
-#LinePlot: ccn4    RadRband  VtRbandTR SfcVtRband  y Rainband_Section_of_Max_Vt:_TR  NorthEast none R_Vt_Rband_TR.fig
-#LinePlot: ccn4    RadRband  VtRbandSS SfcVtRband  y Rainband_Section_of_Max_Vt:_SS  NorthEast none R_Vt_Rband_SS.fig
-
-
-#LinePlot: ccn4    SimTime  VintVapt_SC_LC TsAll  y Vertically_Integrated_Vapor_Diffusion:_SC       SouthEast none TS_Vint_Vapt_SC.fig
-#LinePlot: ccn4    SimTime  VintLht_SC_LC  TsAll  y Vertically_Integrated_Total_Latent_Heating:_SC  SouthEast none TS_Vint_Lht_SC.fig
-
-#LinePlot: ccn4    SimTime  VintVapt_RB_LC TsAll  y Vertically_Integrated_Vapor_Diffusion:_RB       NorthEast none TS_Vint_Vapt_RB.fig
-#LinePlot: ccn4    SimTime  VintLht_RB_LC  TsAll  y Vertically_Integrated_Total_Latent_Heating:_RB  NorthEast none TS_Vint_Lht_RB.fig
+#LinePlot: ccn4    RadAll    VtAllRI   SfcVtAll    y Radial_Structure_of_Max_Vt:_RI  NorthEast none R_Vt_All_RI.jpg
+#LinePlot: ccn4    RadAll    VtAllTR   SfcVtAll    y Radial_Structure_of_Max_Vt:_TR  NorthEast none R_Vt_All_TR.jpg
+#LinePlot: ccn4    RadAll    VtAllSS   SfcVtAll    y Radial_Structure_of_Max_Vt:_SS  NorthEast none R_Vt_All_SS.jpg
+#LinePlot: ccn4    RadPeak   VtPeakRI  SfcVtPeak   y Peak_Section_of_Max_Vt:_RI      NorthEast none R_Vt_Peak_RI.jpg
+#LinePlot: ccn4    RadPeak   VtPeakTR  SfcVtPeak   y Peak_Section_of_Max_Vt:_TR      NorthEast none R_Vt_Peak_TR.jpg
+#LinePlot: ccn4    RadPeak   VtPeakSS  SfcVtPeak   y Peak_Section_of_Max_Vt:_SS      NorthEast none R_Vt_Peak_SS.jpg
+#LinePlot: ccn4    RadRband  VtRbandRI SfcVtRband  y Rainband_Section_of_Max_Vt:_RI  NorthEast none R_Vt_Rband_RI.jpg
+#LinePlot: ccn4    RadRband  VtRbandTR SfcVtRband  y Rainband_Section_of_Max_Vt:_TR  NorthEast none R_Vt_Rband_TR.jpg
+#LinePlot: ccn4    RadRband  VtRbandSS SfcVtRband  y Rainband_Section_of_Max_Vt:_SS  NorthEast none R_Vt_Rband_SS.jpg
 
 
-#LinePlot: ccn4    SimTime  VintVaptOpen_RB_LC TsAll  y Vertically_Integrated_Vapor_Diffusion:_RB       NorthEast none TS_Vint_VaptOpen_RB.fig
-#LinePlot: ccn4    SimTime  VintLhtOpen_RB_LC  TsAll  y Vertically_Integrated_Total_Latent_Heating:_RB  NorthEast none TS_Vint_LhtOpen_RB.fig
+#LinePlot: ccn4    SimTime  VintVapt_SC_LC TsAll  y Vertically_Integrated_Vapor_Diffusion:_SC       SouthEast none TS_Vint_Vapt_SC.jpg
+#LinePlot: ccn4    SimTime  VintLht_SC_LC  TsAll  y Vertically_Integrated_Total_Latent_Heating:_SC  SouthEast none TS_Vint_Lht_SC.jpg
+
+#LinePlot: ccn4    SimTime  VintVapt_RB_LC TsAll  y Vertically_Integrated_Vapor_Diffusion:_RB       NorthEast none TS_Vint_Vapt_RB.jpg
+#LinePlot: ccn4    SimTime  VintLht_RB_LC  TsAll  y Vertically_Integrated_Total_Latent_Heating:_RB  NorthEast none TS_Vint_Lht_RB.jpg
 
 
-#LinePlot: ccn4    SimTime  VintVaptAll_RB_LC TsAll  y Vertically_Integrated_Vapor_Diffusion:_RB       NorthEast none TS_Vint_VaptAll_RB.fig
-#LinePlot: ccn4    SimTime  VintLhtAll_RB_LC  TsAll  y Vertically_Integrated_Total_Latent_Heating:_RB  NorthEast none TS_Vint_LhtAll_RB.fig
+#LinePlot: ccn4    SimTime  VintVaptOpen_RB_LC TsAll  y Vertically_Integrated_Vapor_Diffusion:_RB       NorthEast none TS_Vint_VaptOpen_RB.jpg
+#LinePlot: ccn4    SimTime  VintLhtOpen_RB_LC  TsAll  y Vertically_Integrated_Total_Latent_Heating:_RB  NorthEast none TS_Vint_LhtOpen_RB.jpg
 
 
-#LinePlot: ccn4 SimTime  DeltapAll_SC_RB TsAll  y Horizontal_Pressure_Difference:_RB-SC  SouthEast none TS_DeltapAll_SC_RB.fig
+#LinePlot: ccn4    SimTime  VintVaptAll_RB_LC TsAll  y Vertically_Integrated_Vapor_Diffusion:_RB       NorthEast none TS_Vint_VaptAll_RB.jpg
+#LinePlot: ccn4    SimTime  VintLhtAll_RB_LC  TsAll  y Vertically_Integrated_Total_Latent_Heating:_RB  NorthEast none TS_Vint_LhtAll_RB.jpg
+
+
 
 ####################### Profile Plots #############################
 
@@ -423,101 +424,108 @@ LinePlot: ccn4    SimTime RMW   TsAll y _ NorthEast none TS_rmw.fig
 #ProfPlot: ams2 pmeas_cloud_d_twp4_SC_RI cloud_d abs SC_RI:_Cloud_Droplet_Mean_Diameter Diameter_(#/cc) Height_(km) NorthEast 0:0.1:30 0.0 10.0 ams_prof_cloud_d_twp4_SC_RI.jpg
 
 #### PAPER
-#ProfPlot: ccn4 pmeas_cloud_cm3_twp4_SC_RI cloud_cm3 abs SC_RI:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:75 0.0 8.0 prof_cloud_cm3_twp4_SC_RI.fig
-#ProfPlot: ccn4 pmeas_cloud_cm3_twp4_RB_RI cloud_cm3 abs RB_RI:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:75 0.0 8.0 prof_cloud_cm3_twp4_RB_RI.fig
-#ProfPlot: ccn4 pmeas_cloud_cm3_twp4_SC_TR cloud_cm3 abs SC_TR:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:75 0.0 8.0 prof_cloud_cm3_twp4_SC_TR.fig
-#ProfPlot: ccn4 pmeas_cloud_cm3_twp4_RB_TR cloud_cm3 abs RB_TR:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:75 0.0 8.0 prof_cloud_cm3_twp4_RB_TR.fig
-#ProfPlot: ccn4 pmeas_cloud_cm3_twp4_SC_SS cloud_cm3 abs SC_SS:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:75 0.0 8.0 prof_cloud_cm3_twp4_SC_SS.fig
-#ProfPlot: ccn4 pmeas_cloud_cm3_twp4_RB_SS cloud_cm3 abs RB_SS:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:75 0.0 8.0 prof_cloud_cm3_twp4_RB_SS.fig
+#ProfPlot: ccn4 pmeas_cloud_cm3_twp4_SC_RI cloud_cm3 abs SC_RI:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:75 0.0 8.0 prof_cloud_cm3_twp4_SC_RI.jpg
+#ProfPlot: ccn4 pmeas_cloud_cm3_twp4_RB_RI cloud_cm3 abs RB_RI:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:75 0.0 8.0 prof_cloud_cm3_twp4_RB_RI.jpg
+#ProfPlot: ccn4 pmeas_cloud_cm3_twp4_SC_TR cloud_cm3 abs SC_TR:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:75 0.0 8.0 prof_cloud_cm3_twp4_SC_TR.jpg
+#ProfPlot: ccn4 pmeas_cloud_cm3_twp4_RB_TR cloud_cm3 abs RB_TR:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:75 0.0 8.0 prof_cloud_cm3_twp4_RB_TR.jpg
+#ProfPlot: ccn4 pmeas_cloud_cm3_twp4_SC_SS cloud_cm3 abs SC_SS:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:75 0.0 8.0 prof_cloud_cm3_twp4_SC_SS.jpg
+#ProfPlot: ccn4 pmeas_cloud_cm3_twp4_RB_SS cloud_cm3 abs RB_SS:_Cloud_Conc Concentration_(#/cc) Height_(km) NorthEast -5:2:75 0.0 8.0 prof_cloud_cm3_twp4_RB_SS.jpg
 
-#ProfPlot: ccn4 pmeas_cloud_d_twp4_SC_RI cloud_d abs SC_RI:_Cloud_Mean_Diameter Diameter_(um) Height_(km) NorthEast -5:2:25 0.0 8.0 prof_cloud_d_twp4_SC_RI.fig
-#ProfPlot: ccn4 pmeas_cloud_d_twp4_RB_RI cloud_d abs RB_RI:_Cloud_Mean_Diameter Diameter_(um) Height_(km) NorthEast -5:2:25 0.0 8.0 prof_cloud_d_twp4_RB_RI.fig
-#ProfPlot: ccn4 pmeas_cloud_d_twp4_SC_TR cloud_d abs SC_TR:_Cloud_Mean_Diameter Diameter_(um) Height_(km) NorthEast -5:2:25 0.0 8.0 prof_cloud_d_twp4_SC_TR.fig
-#ProfPlot: ccn4 pmeas_cloud_d_twp4_RB_TR cloud_d abs RB_TR:_Cloud_Mean_Diameter Diameter_(um) Height_(km) NorthEast -5:2:25 0.0 8.0 prof_cloud_d_twp4_RB_TR.fig
-#ProfPlot: ccn4 pmeas_cloud_d_twp4_SC_SS cloud_d abs SC_SS:_Cloud_Mean_Diameter Diameter_(um) Height_(km) NorthEast -5:2:25 0.0 8.0 prof_cloud_d_twp4_SC_SS.fig
-#ProfPlot: ccn4 pmeas_cloud_d_twp4_RB_SS cloud_d abs RB_SS:_Cloud_Mean_Diameter Diameter_(um) Height_(km) NorthEast -5:2:25 0.0 8.0 prof_cloud_d_twp4_RB_SS.fig
+#ProfPlot: ccn4 pmeas_cloud_d_twp4_SC_RI cloud_d abs SC_RI:_Cloud_Mean_Diameter Diameter_(um) Height_(km) NorthEast -5:2:25 0.0 8.0 prof_cloud_d_twp4_SC_RI.jpg
+#ProfPlot: ccn4 pmeas_cloud_d_twp4_RB_RI cloud_d abs RB_RI:_Cloud_Mean_Diameter Diameter_(um) Height_(km) NorthEast -5:2:25 0.0 8.0 prof_cloud_d_twp4_RB_RI.jpg
+#ProfPlot: ccn4 pmeas_cloud_d_twp4_SC_TR cloud_d abs SC_TR:_Cloud_Mean_Diameter Diameter_(um) Height_(km) NorthEast -5:2:25 0.0 8.0 prof_cloud_d_twp4_SC_TR.jpg
+#ProfPlot: ccn4 pmeas_cloud_d_twp4_RB_TR cloud_d abs RB_TR:_Cloud_Mean_Diameter Diameter_(um) Height_(km) NorthEast -5:2:25 0.0 8.0 prof_cloud_d_twp4_RB_TR.jpg
+#ProfPlot: ccn4 pmeas_cloud_d_twp4_SC_SS cloud_d abs SC_SS:_Cloud_Mean_Diameter Diameter_(um) Height_(km) NorthEast -5:2:25 0.0 8.0 prof_cloud_d_twp4_SC_SS.jpg
+#ProfPlot: ccn4 pmeas_cloud_d_twp4_RB_SS cloud_d abs RB_SS:_Cloud_Mean_Diameter Diameter_(um) Height_(km) NorthEast -5:2:25 0.0 8.0 prof_cloud_d_twp4_RB_SS.jpg
 
-#ProfPlot: ccn4 pmeas_vaptott_twp4_vt0p5_SC_RI vaptott abs SC_RI:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -2:0.01:8 0.0 15.0 prof_vaptott_twp4_vt0p5_SC_RI.fig
-#ProfPlot: ccn4 pmeas_lh_tott_twp4_lht1p0_SC_RI lh_tott abs SC_RI:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) NorthEast -5:0.1:25 0.0 15.0 prof_lh_tott_twp4_lht1p0_SC_RI.fig
-#ProfPlot: ccn4 pmeas_w_twp4_SC_RI w abs SC_RI:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 prof_w_twp4_SC_RI.fig
+#ProfPlot: ccn4 pmeas_vaptott_twp4_vt0p5_SC_RI vaptott abs SC_RI:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -2:0.01:8 0.0 15.0 prof_vaptott_twp4_vt0p5_SC_RI.jpg
+#ProfPlot: ccn4 pmeas_lh_tott_twp4_lht1p0_SC_RI lh_tott abs SC_RI:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) NorthEast -5:0.1:25 0.0 15.0 prof_lh_tott_twp4_lht1p0_SC_RI.jpg
+#ProfPlot: ccn4 pmeas_w_twp4_SC_RI w abs SC_RI:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 prof_w_twp4_SC_RI.jpg
 
-#ProfPlot: ccn4 pmeas_vaptott_twp4_vt0p5_SC_TR vaptott abs SC_TR:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -2:0.01:8 0.0 15.0 prof_vaptott_twp4_vt0p5_SC_TR.fig
-#ProfPlot: ccn4 pmeas_lh_tott_twp4_lht1p0_SC_TR lh_tott abs SC_TR:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) NorthEast -5:0.1:25 0.0 15.0 prof_lh_tott_twp4_lht1p0_SC_TR.fig
-#ProfPlot: ccn4 pmeas_w_twp4_SC_TR w abs SC_TR:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 prof_w_twp4_SC_TR.fig
+#ProfPlot: ccn4 pmeas_vaptott_twp4_vt0p5_SC_TR vaptott abs SC_TR:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -2:0.01:8 0.0 15.0 prof_vaptott_twp4_vt0p5_SC_TR.jpg
+#ProfPlot: ccn4 pmeas_lh_tott_twp4_lht1p0_SC_TR lh_tott abs SC_TR:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) NorthEast -5:0.1:25 0.0 15.0 prof_lh_tott_twp4_lht1p0_SC_TR.jpg
+#ProfPlot: ccn4 pmeas_w_twp4_SC_TR w abs SC_TR:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 prof_w_twp4_SC_TR.jpg
 
-#ProfPlot: ccn4 pmeas_vaptott_twp4_vt0p5_SC_SS vaptott abs SC_SS:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -2:0.01:8 0.0 15.0 prof_vaptott_twp4_vt0p5_SC_SS.fig
-#ProfPlot: ccn4 pmeas_lh_tott_twp4_lht1p0_SC_SS lh_tott abs SC_SS:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) SouthEast -5:0.1:25 0.0 15.0 prof_lh_tott_twp4_lht1p0_SC_SS.fig
-#ProfPlot: ccn4 pmeas_w_twp4_SC_SS w abs SC_SS:_Vertical_Velocity W_(m/s) Height_(km) SouthEast -0.5:0.05:1.5 0.0 15.0 prof_w_twp4_SC_SS.fig
+#ProfPlot: ccn4 pmeas_vaptott_twp4_vt0p5_SC_SS vaptott abs SC_SS:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -2:0.01:8 0.0 15.0 prof_vaptott_twp4_vt0p5_SC_SS.jpg
+#ProfPlot: ccn4 pmeas_lh_tott_twp4_lht1p0_SC_SS lh_tott abs SC_SS:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) SouthEast -5:0.1:25 0.0 15.0 prof_lh_tott_twp4_lht1p0_SC_SS.jpg
+#ProfPlot: ccn4 pmeas_w_twp4_SC_SS w abs SC_SS:_Vertical_Velocity W_(m/s) Height_(km) SouthEast -0.5:0.05:1.5 0.0 15.0 prof_w_twp4_SC_SS.jpg
 
-#ProfPlot: ccn4 pmeas_vaptott_twp4_vt0p5_RB_SS vaptott abs RB_SS:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) SouthEast -5:0.01:5 0.0 15.0 prof_vaptott_twp4_vt0p5_RB_SS.fig
-#ProfPlot: ccn4 pmeas_lh_tott_twp4_lht1p0_RB_SS lh_tott abs RB_SS:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) SouthEast -10:0.1:20 0.0 15.0 prof_lh_tott_twp4_lht1p0_RB_SS.fig
-#ProfPlot: ccn4 pmeas_w_twp4_RB_SS w abs RB_SS:_Vertical_Velocity W_(m/s) Height_(km) SouthEast -0.5:0.05:0.5 0.0 15.0 prof_w_twp4_RB_SS.fig
+#ProfPlot: ccn4 pmeas_vaptott_twp4_vt0p5_RB_SS vaptott abs RB_SS:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) SouthEast -5:0.01:5 0.0 15.0 prof_vaptott_twp4_vt0p5_RB_SS.jpg
+#ProfPlot: ccn4 pmeas_lh_tott_twp4_lht1p0_RB_SS lh_tott abs RB_SS:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) SouthEast -10:0.1:20 0.0 15.0 prof_lh_tott_twp4_lht1p0_RB_SS.jpg
 
-ProfPlot: ccn4 pmeas_vaptott_vt0p5_SC_RI vaptott abs SC_RI:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -2:0.01:8 0.0 15.0 prof_vaptott_vt0p5_SC_RI.fig
-ProfPlot: ccn4 pmeas_lh_tott_lht1p0_SC_RI lh_tott abs SC_RI:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) NorthEast -5:0.1:25 0.0 15.0 prof_lh_tott_lht1p0_SC_RI.fig
-ProfPlot: ccn4 pmeas_w_SC_RI w abs SC_RI:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 prof_w_SC_RI.fig
+#ProfPlot: ccn4 pmeas_vaptott_vt0p5_SC_RI vaptott abs SC_RI:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -2:0.01:8 0.0 15.0 prof_vaptott_vt0p5_SC_RI.jpg
+#ProfPlot: ccn4 pmeas_lh_tott_lht1p0_SC_RI lh_tott abs SC_RI:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) NorthEast -5:0.1:25 0.0 15.0 prof_lh_tott_lht1p0_SC_RI.jpg
+#ProfPlot: ccn4 pmeas_w_SC_RI w abs SC_RI:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 prof_w_SC_RI.jpg
 
-ProfPlot: ccn4 pmeas_vaptott_vt0p5_SC_TR vaptott abs SC_TR:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -2:0.01:8 0.0 15.0 prof_vaptott_vt0p5_SC_TR.fig
-ProfPlot: ccn4 pmeas_lh_tott_lht1p0_SC_TR lh_tott abs SC_TR:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) NorthEast -5:0.1:25 0.0 15.0 prof_lh_tott_lht1p0_SC_TR.fig
-ProfPlot: ccn4 pmeas_w_SC_TR w abs SC_TR:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 prof_w_SC_TR.fig
+#ProfPlot: ccn4 pmeas_vaptott_vt0p5_SC_TR vaptott abs SC_TR:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -2:0.01:8 0.0 15.0 prof_vaptott_vt0p5_SC_TR.jpg
+#ProfPlot: ccn4 pmeas_lh_tott_lht1p0_SC_TR lh_tott abs SC_TR:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) NorthEast -5:0.1:25 0.0 15.0 prof_lh_tott_lht1p0_SC_TR.jpg
+#ProfPlot: ccn4 pmeas_w_SC_TR w abs SC_TR:_Vertical_Velocity W_(m/s) Height_(km) NorthEast -0.5:0.05:1.5 0.0 20.0 prof_w_SC_TR.jpg
 
-ProfPlot: ccn4 pmeas_vaptott_vt0p5_SC_SS vaptott abs SC_SS:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -2:0.01:8 0.0 15.0 prof_vaptott_vt0p5_SC_SS.fig
-ProfPlot: ccn4 pmeas_lh_tott_lht1p0_SC_SS lh_tott abs SC_SS:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) SouthEast -5:0.1:25 0.0 15.0 prof_lh_tott_lht1p0_SC_SS.fig
-ProfPlot: ccn4 pmeas_w_SC_SS w abs SC_SS:_Vertical_Velocity W_(m/s) Height_(km) SouthEast -0.5:0.05:1.5 0.0 15.0 prof_w_SC_SS.fig
+#ProfPlot: ccn4 pmeas_vaptott_vt0p5_SC_SS vaptott abs SC_SS:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) NorthEast -2:0.01:8 0.0 15.0 prof_vaptott_vt0p5_SC_SS.jpg
 
-ProfPlot: ccn4 pmeas_vaptott_vt0p5_RB_SS vaptott abs RB_SS:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) SouthEast -5:0.01:5 0.0 15.0 prof_vaptott_vt0p5_RB_SS.fig
-ProfPlot: ccn4 pmeas_lh_tott_lht1p0_RB_SS lh_tott abs RB_SS:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) SouthEast -10:0.1:20 0.0 15.0 prof_lh_tott_lht1p0_RB_SS.fig
-ProfPlot: ccn4 pmeas_w_RB_SS w abs RB_SS:_Vertical_Velocity W_(m/s) Height_(km) SouthEast -0.5:0.05:0.5 0.0 15.0 prof_w_RB_SS.fig
+#ProfPlot: ccn4 pmeas_vaptott_vt0p5_RB_SS vaptott abs RB_SS:_Total_Vapor_Diffusion Vapor_Diffusion_(g/kg) Height_(km) SouthEast -5:0.01:5 0.0 15.0 prof_vaptott_vt0p5_RB_SS.jpg
+#ProfPlot: ccn4 pmeas_lh_tott_lht1p0_RB_SS lh_tott abs RB_SS:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) SouthEast -10:0.1:20 0.0 15.0 prof_lh_tott_lht1p0_RB_SS.jpg
+#ProfPlot: ccn4 pmeas_w_RB_SS w abs RB_SS:_Vertical_Velocity W_(m/s) Height_(km) SouthEast -0.5:0.05:0.5 0.0 15.0 prof_w_RB_SS.jpg
 
 
-#ProfPlot: ccn4 pmeas_lh_tott_lht1p0_SC_SS lh_tott abs SC_SS:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) SouthEast -5:0.1:25 0.0 15.0 prof_lh_tott_lht1p0_SC_SS.fig
-#ProfPlot: ccn4 pmeas_lh_tott_lht1p0_RB_SS lh_tott abs RB_SS:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) SouthEast -10:0.1:20 0.0 15.0 prof_lh_tott_lht1p0_RB_SS.fig
+#ProfPlot: ccn4 pmeas_lh_tott_lht1p0_SC_SS lh_tott abs SC_SS:_Total_Latent_Heating Latent_Heating_(K/hr) Height_(km) SouthEast -5:0.1:25 0.0 15.0 prof_lh_tott_lht1p0_SC_SS.jpg
 
-#ProfPlot: ccn4 pmeas_relhum_SC_SS relhum abs SC_SS:_Relative_Humidity RH_(%) Height_(km) SouthWest 50:0.1:100 0.0 15.0 prof_relhum_SC_SS.fig
-#ProfPlot: ccn4 pmeas_relhum_RB_SS relhum abs RB_SS:_Relative_Humidity RH_(%) Height_(km) SouthWest 50:0.1:100 0.0 15.0 prof_relhum_RB_SS.fig
+#ProfPlot: ccn4 pmeas_relhum_SC_SS relhum abs SC_SS:_Relative_Humidity RH_(%) Height_(km) SouthWest 50:0.1:100 0.0 15.0 prof_relhum_SC_SS.jpg
 
-#ProfPlot: ccn4 pmeas_theta_e_SC_SS theta_e abs SC_SS:_Equiv._Potential_Temperature Theta-E_(K) Height_(km) NorthWest 320:0.1:360 0.0 15.0 prof_theta_e_SC_SS.fig
-#ProfPlot: ccn4 pmeas_theta_e_RB_SS theta_e abs RB_SS:_Equiv._Potential_Temperature Theta-E_(K) Height_(km) NorthWest 320:0.1:360 0.0 15.0 prof_theta_e_RB_SS.fig
+#ProfPlot: ccn4 pmeas_theta_e_SC_SS theta_e abs SC_SS:_Equiv._Potential_Temperature Theta-E_(K) Height_(km) NorthWest 320:0.1:360 0.0 15.0 prof_theta_e_SC_SS.jpg
+#ProfPlot: ccn4 pmeas_theta_e_RB_SS theta_e abs RB_SS:_Equiv._Potential_Temperature Theta-E_(K) Height_(km) NorthWest 320:0.1:360 0.0 15.0 prof_theta_e_RB_SS.jpg
 
-#ProfPlot: ccn4 pmeas_aggr_twp4_SC_RI aggr abs SC_RI:_Aggregate_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.3:0.01:0.3 0.0 15.0 prof_aggr_twp4_SC_RI.fig
-#ProfPlot: ccn4 pmeas_aggr_twp4_RB_RI aggr abs RB_RI:_Aggregate_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.3:0.01:0.3 0.0 15.0 prof_aggr_twp4_RB_RI.fig
-#ProfPlot: ccn4 pmeas_aggr_twp4_SC_TR aggr abs SC_TR:_Aggregate_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.3:0.01:0.3 0.0 15.0 prof_aggr_twp4_SC_TR.fig
-#ProfPlot: ccn4 pmeas_aggr_twp4_RB_TR aggr abs RB_TR:_Aggregate_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.3:0.01:0.3 0.0 15.0 prof_aggr_twp4_RB_TR.fig
-#ProfPlot: ccn4 pmeas_aggr_twp4_SC_SS aggr abs SC_SS:_Aggregate_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.3:0.01:0.3 0.0 15.0 prof_aggr_twp4_SC_SS.fig
-#ProfPlot: ccn4 pmeas_aggr_twp4_RB_SS aggr abs RB_SS:_Aggregate_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.3:0.01:0.3 0.0 15.0 prof_aggr_twp4_RB_SS.fig
+#ProfPlot: ccn4 pmeas_aggr_twp4_SC_RI aggr abs SC_RI:_Aggregate_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.3:0.01:0.3 0.0 15.0 prof_aggr_twp4_SC_RI.jpg
+#ProfPlot: ccn4 pmeas_aggr_twp4_RB_RI aggr abs RB_RI:_Aggregate_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.3:0.01:0.3 0.0 15.0 prof_aggr_twp4_RB_RI.jpg
+#ProfPlot: ccn4 pmeas_aggr_twp4_SC_TR aggr abs SC_TR:_Aggregate_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.3:0.01:0.3 0.0 15.0 prof_aggr_twp4_SC_TR.jpg
+#ProfPlot: ccn4 pmeas_aggr_twp4_RB_TR aggr abs RB_TR:_Aggregate_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.3:0.01:0.3 0.0 15.0 prof_aggr_twp4_RB_TR.jpg
+#ProfPlot: ccn4 pmeas_aggr_twp4_SC_SS aggr abs SC_SS:_Aggregate_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.3:0.01:0.3 0.0 15.0 prof_aggr_twp4_SC_SS.jpg
+#ProfPlot: ccn4 pmeas_aggr_twp4_RB_SS aggr abs RB_SS:_Aggregate_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.3:0.01:0.3 0.0 15.0 prof_aggr_twp4_RB_SS.jpg
 
-#ProfPlot: ccn4 pmeas_aggr_open_SC_RI aggr abs SC_RI:_Aggregate_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.3:0.01:0.3 0.0 15.0 prof_aggr_open_SC_RI.fig
-#ProfPlot: ccn4 pmeas_aggr_open_RB_RI aggr abs RB_RI:_Aggregate_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.3:0.01:0.3 0.0 15.0 prof_aggr_open_RB_RI.fig
-#ProfPlot: ccn4 pmeas_aggr_open_SC_TR aggr abs SC_TR:_Aggregate_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.3:0.01:0.3 0.0 15.0 prof_aggr_open_SC_TR.fig
-#ProfPlot: ccn4 pmeas_aggr_open_RB_TR aggr abs RB_TR:_Aggregate_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.3:0.01:0.3 0.0 15.0 prof_aggr_open_RB_TR.fig
-#ProfPlot: ccn4 pmeas_aggr_open_SC_SS aggr abs SC_SS:_Aggregate_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.3:0.01:0.3 0.0 15.0 prof_aggr_open_SC_SS.fig
-#ProfPlot: ccn4 pmeas_aggr_open_RB_SS aggr abs RB_SS:_Aggregate_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.3:0.01:0.3 0.0 15.0 prof_aggr_open_RB_SS.fig
+#ProfPlot: ccn4 pmeas_aggr_open_SC_RI aggr abs SC_RI:_Aggregate_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.3:0.01:0.3 0.0 15.0 prof_aggr_open_SC_RI.jpg
+#ProfPlot: ccn4 pmeas_aggr_open_RB_RI aggr abs RB_RI:_Aggregate_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.3:0.01:0.3 0.0 15.0 prof_aggr_open_RB_RI.jpg
+#ProfPlot: ccn4 pmeas_aggr_open_SC_TR aggr abs SC_TR:_Aggregate_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.3:0.01:0.3 0.0 15.0 prof_aggr_open_SC_TR.jpg
+#ProfPlot: ccn4 pmeas_aggr_open_RB_TR aggr abs RB_TR:_Aggregate_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.3:0.01:0.3 0.0 15.0 prof_aggr_open_RB_TR.jpg
+#ProfPlot: ccn4 pmeas_aggr_open_SC_SS aggr abs SC_SS:_Aggregate_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.3:0.01:0.3 0.0 15.0 prof_aggr_open_SC_SS.jpg
+#ProfPlot: ccn4 pmeas_aggr_open_RB_SS aggr abs RB_SS:_Aggregate_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.3:0.01:0.3 0.0 15.0 prof_aggr_open_RB_SS.jpg
 
-#ProfPlot: ccn4 pmeas_aggr_all_RB_SS aggr abs RB_SS:_Aggregate_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.3:0.01:0.3 0.0 15.0 prof_aggr_all_RB_SS.fig
-#ProfPlot: ccn4 pmeas_snow_all_RB_SS snow abs RB_SS:_Snow_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.05:0.001:0.05 0.0 15.0 prof_snow_all_RB_SS.fig
-#ProfPlot: ccn4 pmeas_pris_all_RB_SS pris abs RB_SS:_Pristine_Ice_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.2:0.01:0.2 0.0 15.0 prof_pris_all_RB_SS.fig
-#ProfPlot: ccn4 pmeas_graup_all_RB_SS graup abs RB_SS:_Graupel_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.02:0.001:0.02 0.0 15.0 prof_graup_all_RB_SS.fig
-#ProfPlot: ccn4 pmeas_hail_all_RB_SS hail abs RB_SS:_Hail_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.1:0.01:0.1 0.0 15.0 prof_hail_all_RB_SS.fig
+#ProfPlot: ccn4 pmeas_aggr_all_RB_SS aggr abs RB_SS:_Aggregate_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.3:0.01:0.3 0.0 15.0 prof_aggr_all_RB_SS.jpg
+#ProfPlot: ccn4 pmeas_snow_all_RB_SS snow abs RB_SS:_Snow_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.05:0.001:0.05 0.0 15.0 prof_snow_all_RB_SS.jpg
+#ProfPlot: ccn4 pmeas_pris_all_RB_SS pris abs RB_SS:_Pristine_Ice_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.2:0.01:0.2 0.0 15.0 prof_pris_all_RB_SS.jpg
+#ProfPlot: ccn4 pmeas_graup_all_RB_SS graup abs RB_SS:_Graupel_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.02:0.001:0.02 0.0 15.0 prof_graup_all_RB_SS.jpg
+#ProfPlot: ccn4 pmeas_hail_all_RB_SS hail abs RB_SS:_Hail_Mix_Ratio Mix_Ratio_(g/kg) Height_(km) SouthWest -0.1:0.01:0.1 0.0 15.0 prof_hail_all_RB_SS.jpg
 
-#ProfPlot: ccn4 pmeas_aggr_conc_m3_twp4_RB_SS aggr_conc_m3 abs RB_SS:_Aggregate_Number_Concen Concentration_(#/m^3) Height_(km) SouthEast -1000:1000:70000 0.0 15.0 prof_aggr_conc_m3_twp4_RB_SS.fig
-#ProfPlot: ccn4 pmeas_snow_conc_cm3_twp4_RB_SS snow_conc_cm3 abs RB_SS:_Snow_Number_Concen Concentration_(#/cm^3) Height_(km) SouthEast -0.01:0.001:0.05 0.0 15.0 prof_snow_conc_cm3_twp4_RB_SS.fig
-#ProfPlot: ccn4 pmeas_pris_conc_cm3_twp4_RB_SS pris_conc_cm3 abs RB_SS:_Pristine_Ice_Number_Concen Concentration_(#/cm^3) Height_(km) SouthEast -0.1:0.01:1 0.0 15.0 prof_pris_conc_cm3_twp4_RB_SS.fig
-#ProfPlot: ccn4 pmeas_graup_conc_m3_twp4_RB_SS graup_conc_m3 abs RB_SS:_Graupel_Number_Concen Concentration_(#/m^3) Height_(km) NorthEast -0.5:0.1:15 0.0 15.0 prof_graup_conc_m3_twp4_RB_SS.fig
-#ProfPlot: ccn4 pmeas_hail_conc_m3_twp4_RB_SS hail_conc_m3 abs RB_SS:_Hail_Number_Concen Concentration_(#/m^3) Height_(km) NorthEast -0.5:0.1:50 0.0 15.0 prof_hail_conc_m3_twp4_RB_SS.fig
+#ProfPlot: ccn4 pmeas_aggr_conc_m3_twp4_RB_SS aggr_conc_m3 abs RB_SS:_Aggregate_Number_Concen Concentration_(#/m^3) Height_(km) SouthEast -1000:1000:70000 0.0 15.0 prof_aggr_conc_m3_twp4_RB_SS.jpg
+#ProfPlot: ccn4 pmeas_snow_conc_cm3_twp4_RB_SS snow_conc_cm3 abs RB_SS:_Snow_Number_Concen Concentration_(#/cm^3) Height_(km) SouthEast -0.01:0.001:0.05 0.0 15.0 prof_snow_conc_cm3_twp4_RB_SS.jpg
+#ProfPlot: ccn4 pmeas_pris_conc_cm3_twp4_RB_SS pris_conc_cm3 abs RB_SS:_Pristine_Ice_Number_Concen Concentration_(#/cm^3) Height_(km) SouthEast -0.1:0.01:1 0.0 15.0 prof_pris_conc_cm3_twp4_RB_SS.jpg
+#ProfPlot: ccn4 pmeas_graup_conc_m3_twp4_RB_SS graup_conc_m3 abs RB_SS:_Graupel_Number_Concen Concentration_(#/m^3) Height_(km) NorthEast -0.5:0.1:15 0.0 15.0 prof_graup_conc_m3_twp4_RB_SS.jpg
+#ProfPlot: ccn4 pmeas_hail_conc_m3_twp4_RB_SS hail_conc_m3 abs RB_SS:_Hail_Number_Concen Concentration_(#/m^3) Height_(km) NorthEast -0.5:0.1:50 0.0 15.0 prof_hail_conc_m3_twp4_RB_SS.jpg
 
-#ProfPlot: ccn4 pmeas_speed_r_SC_RI speed_r abs SC_RI:_Radial_Wind_Speed Speed_(m/s) Height_(km) SouthEast -15:0.1:15 0.0 15.0 prof_speed_r_SC_RI.fig
-#ProfPlot: ccn4 pmeas_speed_r_RB_RI speed_r abs RB_RI:_Radial_Wind_Speed Speed_(m/s) Height_(km) SouthEast -15:0.1:15 0.0 15.0 prof_speed_r_RB_RI.fig
-#ProfPlot: ccn4 pmeas_speed_r_SC_TR speed_r abs SC_TR:_Radial_Wind_Speed Speed_(m/s) Height_(km) SouthEast -15:0.1:15 0.0 15.0 prof_speed_r_SC_TR.fig
-#ProfPlot: ccn4 pmeas_speed_r_RB_TR speed_r abs RB_TR:_Radial_Wind_Speed Speed_(m/s) Height_(km) SouthEast -15:0.1:15 0.0 15.0 prof_speed_r_RB_TR.fig
-#ProfPlot: ccn4 pmeas_speed_r_SC_SS speed_r abs SC_SS:_Radial_Wind_Speed Speed_(m/s) Height_(km) SouthEast -15:0.1:15 0.0 15.0 prof_speed_r_SC_SS.fig
-#ProfPlot: ccn4 pmeas_speed_r_RB_SS speed_r abs RB_SS:_Radial_Wind_Speed Speed_(m/s) Height_(km) SouthEast -15:0.1:15 0.0 15.0 prof_speed_r_RB_SS.fig
+#ProfPlot: ccn4 pmeas_speed_r_SC_RI speed_r abs SC_RI:_Radial_Wind_Speed Speed_(m/s) Height_(km) SouthEast -15:0.1:15 0.0 15.0 prof_speed_r_SC_RI.jpg
+#ProfPlot: ccn4 pmeas_speed_r_RB_RI speed_r abs RB_RI:_Radial_Wind_Speed Speed_(m/s) Height_(km) SouthEast -15:0.1:15 0.0 15.0 prof_speed_r_RB_RI.jpg
+#ProfPlot: ccn4 pmeas_speed_r_SC_TR speed_r abs SC_TR:_Radial_Wind_Speed Speed_(m/s) Height_(km) SouthEast -15:0.1:15 0.0 15.0 prof_speed_r_SC_TR.jpg
+#ProfPlot: ccn4 pmeas_speed_r_RB_TR speed_r abs RB_TR:_Radial_Wind_Speed Speed_(m/s) Height_(km) SouthEast -15:0.1:15 0.0 15.0 prof_speed_r_RB_TR.jpg
+#ProfPlot: ccn4 pmeas_speed_r_SC_SS speed_r abs SC_SS:_Radial_Wind_Speed Speed_(m/s) Height_(km) SouthEast -15:0.1:15 0.0 15.0 prof_speed_r_SC_SS.jpg
+
+#### PAPER - round 2
+ProfPlot: ccn4_diff_short pmeas_lh_tott_lht1p0_SC_SS lh_tott diff PANEL:d_EXP-CLEAN Latent_Heating_(K/hr) Height_(km) NorthWest -10:0.1:10 0.0 15.0 prof_lh_tott_lht1p0_SC_SS.jpg
+
+ProfPlot: ccn4_diff_short pmeas_w_SC_SS w diff PANEL:h_EXP-CLEAN W_(m/s) Height_(km) NorthWest -0.5:0.01:0.5 0.0 15.0 prof_w_SC_SS.jpg
+
+ProfPlot: ccn4_diff_short pmeas_speed_r_RB_SS speed_r diff PANEL:a_EXP-CLEAN Speed_(m/s) Height_(km) SouthWest -5:0.1:5 0.0 15.0 prof_speed_r_RB_SS.jpg
+
+ProfPlot: ccn4_diff_short pmeas_relhum_RB_SS relhum diff PANEL:b_EXP-CLEAN RH_(%) Height_(km) NorthEast -15:0.1:15 0.0 15.0 prof_relhum_RB_SS.jpg
+
+ProfPlot: ccn4_diff_short pmeas_lh_tott_lht1p0_RB_SS lh_tott diff PANEL:c_EXP-CLEAN Latent_Heating_(K/hr) Height_(km) NorthEast -10:0.1:10 0.0 15.0 prof_lh_tott_lht1p0_RB_SS.jpg
+
+ProfPlot: ccn4_diff_short pmeas_w_twp4_RB_SS w diff PANEL:d_EXP-CLEAN W_(m/s) Height_(km) SouthEast -0.5:0.05:0.5 0.0 15.0 prof_w_twp4_RB_SS.jpg
 
 ######################## Profile Time Series Plots #############################
  
-#ProfTsPlot: ccn4 pmeas_cloud_d_twp4_SC_LC cloud_d SC_LC:_Mean_Cloud_Diam_(um) Simulation_Time_(hr) Height_(km) 0 25 0.0 10.0 revgray 0 abs pts_cloud_d_twp4_SC_LC
+ProfTsPlot: ccn4 pmeas_cloud_d_twp4_SC_LC cloud_d PANEL:efgh Simulation_Time_(hr) Height_(km) 0 30 0.0 2.0 revgray 0 abs pts_cloud_d_twp4_SC_LC
 #ProfTsPlot: ccn4 pmeas_cloud_d_twp4_RB_LC cloud_d RB_LC:_Mean_Cloud_Diam_(um) Simulation_Time_(hr) Height_(km) 0 25 0.0 10.0 revgray 0 abs pts_cloud_d_twp4_RB_LC
 
-#ProfTsPlot: ccn4 pmeas_cloud_cm3_twp4_SC_LC cloud_cm3 SC_LC:_Cloud_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 50 0.0 10.0 revgray 0 abs pts_cloud_cm3_twp4_SC_LC
+ProfTsPlot: ccn4 pmeas_cloud_cm3_twp4_SC_LC cloud_cm3 PANEL:abcd Simulation_Time_(hr) Height_(km) 0 50 0.0 2.0 revgray 0 abs pts_cloud_cm3_twp4_SC_LC
 #ProfTsPlot: ccn4 pmeas_cloud_cm3_twp4_RB_LC cloud_cm3 RB_LC:_Cloud_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 50 0.0 10.0 revgray 0 abs pts_cloud_cm3_twp4_RB_LC
 
 #ProfTsPlot: ccn4 pmeas_ice_twp4_SC_LC ice SC_LC:_Ice_Mass_(g/kg) Simulation_Time_(hr) Height_(km) 0 0.5 0.0 15.0 revgray 0 abs pts_ice_twp4_SC_LC
@@ -561,12 +569,12 @@ ProfPlot: ccn4 pmeas_w_RB_SS w abs RB_SS:_Vertical_Velocity W_(m/s) Height_(km) 
 #ProfRsPlot: ccn4_diff pmeas_lh_tott_twp4_lht1p0_SC_SS   lh_tott  SC_SS:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_twp4_lht1p0_SC_SS
 #ProfRsPlot: ccn4_diff pmeas_lh_tott_twp4_lht1p0_RB_SS   lh_tott  RB_SS:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_twp4_lht1p0_RB_SS
 
-ProfRsPlot: ccn4_diff pmeas_lh_tott_lht1p0_SC_RI   lh_tott  SC_RI:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_lht1p0_SC_RI
-ProfRsPlot: ccn4_diff pmeas_lh_tott_lht1p0_RB_RI   lh_tott  RB_RI:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_lht1p0_RB_RI
-ProfRsPlot: ccn4_diff pmeas_lh_tott_lht1p0_SC_TR   lh_tott  SC_TR:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_lht1p0_SC_TR
-ProfRsPlot: ccn4_diff pmeas_lh_tott_lht1p0_RB_TR   lh_tott  RB_TR:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_lht1p0_RB_TR
-ProfRsPlot: ccn4_diff pmeas_lh_tott_lht1p0_SC_SS   lh_tott  SC_SS:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_lht1p0_SC_SS
-ProfRsPlot: ccn4_diff pmeas_lh_tott_lht1p0_RB_SS   lh_tott  RB_SS:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_lht1p0_RB_SS
+#ProfRsPlot: ccn4_diff pmeas_lh_tott_lht1p0_SC_RI   lh_tott  SC_RI:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_lht1p0_SC_RI
+#ProfRsPlot: ccn4_diff pmeas_lh_tott_lht1p0_RB_RI   lh_tott  RB_RI:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_lht1p0_RB_RI
+#ProfRsPlot: ccn4_diff pmeas_lh_tott_lht1p0_SC_TR   lh_tott  SC_TR:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_lht1p0_SC_TR
+#ProfRsPlot: ccn4_diff pmeas_lh_tott_lht1p0_RB_TR   lh_tott  RB_TR:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_lht1p0_RB_TR
+ProfRsPlot: ccn4_diff pmeas_lh_tott_lht1p0_SC_SS   lh_tott  PANEL:abc  Radius_(km) Height_(km)    -15    15  0.0 15.0 gray 0 diff prs_lh_tott_lht1p0_SC_SS
+#ProfRsPlot: ccn4_diff pmeas_lh_tott_lht1p0_RB_SS   lh_tott  RB_SS:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_lht1p0_RB_SS
 
 #ProfRsPlot: ccn4_diff pmeas_lh_tott_open_lht1p0_RB_RI   lh_tott  RB_RI:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_open_lht1p0_RB_RI
 #ProfRsPlot: ccn4_diff pmeas_lh_tott_open_lht1p0_RB_TR   lh_tott  RB_TR:_Total_Latent_Heating_(K/hr)  Radius_(km) Height_(km)    -15    15  0.0 15.0 redblue 0 diff prs_lh_tott_open_lht1p0_RB_TR
@@ -579,12 +587,12 @@ ProfRsPlot: ccn4_diff pmeas_lh_tott_lht1p0_RB_SS   lh_tott  RB_SS:_Total_Latent_
 #ProfRsPlot: ccn4_diff pmeas_vaptott_twp4_vt0p5_SC_SS    vaptott  SC_SS:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_twp4_vt0p5_SC_SS
 #ProfRsPlot: ccn4_diff pmeas_vaptott_twp4_vt0p5_RB_SS    vaptott  RB_SS:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_twp4_vt0p5_RB_SS
 
-ProfRsPlot: ccn4_diff pmeas_vaptott_vt0p5_SC_RI    vaptott  SC_RI:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_vt0p5_SC_RI
-ProfRsPlot: ccn4_diff pmeas_vaptott_vt0p5_RB_RI    vaptott  RB_RI:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_vt0p5_RB_RI
-ProfRsPlot: ccn4_diff pmeas_vaptott_vt0p5_SC_TR    vaptott  SC_TR:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_vt0p5_SC_TR
-ProfRsPlot: ccn4_diff pmeas_vaptott_vt0p5_RB_TR    vaptott  RB_TR:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_vt0p5_RB_TR
-ProfRsPlot: ccn4_diff pmeas_vaptott_vt0p5_SC_SS    vaptott  SC_SS:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_vt0p5_SC_SS
-ProfRsPlot: ccn4_diff pmeas_vaptott_vt0p5_RB_SS    vaptott  RB_SS:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_vt0p5_RB_SS
+#ProfRsPlot: ccn4_diff pmeas_vaptott_vt0p5_SC_RI    vaptott  SC_RI:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_vt0p5_SC_RI
+#ProfRsPlot: ccn4_diff pmeas_vaptott_vt0p5_RB_RI    vaptott  RB_RI:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_vt0p5_RB_RI
+#ProfRsPlot: ccn4_diff pmeas_vaptott_vt0p5_SC_TR    vaptott  SC_TR:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_vt0p5_SC_TR
+#ProfRsPlot: ccn4_diff pmeas_vaptott_vt0p5_RB_TR    vaptott  RB_TR:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_vt0p5_RB_TR
+#ProfRsPlot: ccn4_diff pmeas_vaptott_vt0p5_SC_SS    vaptott  SC_SS:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_vt0p5_SC_SS
+#ProfRsPlot: ccn4_diff pmeas_vaptott_vt0p5_RB_SS    vaptott  RB_SS:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_vt0p5_RB_SS
 
 #ProfRsPlot: ccn4_diff pmeas_vaptott_open_vt0p5_RB_RI    vaptott  RB_RI:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_open_vt0p5_RB_RI
 #ProfRsPlot: ccn4_diff pmeas_vaptott_open_vt0p5_RB_TR    vaptott  RB_TR:_Total_Vapor_Diffusion_(g/kg) Radius_(km) Height_(km)     -5     5  0.0 15.0 redblue 0 diff prs_vaptott_open_vt0p5_RB_TR
@@ -594,7 +602,7 @@ ProfRsPlot: ccn4_diff pmeas_vaptott_vt0p5_RB_SS    vaptott  RB_SS:_Total_Vapor_D
 #ProfRsPlot: ccn4_diff pmeas_w_RB_RI  w RB_RI:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -1 1 0.0 15.0 redblue 0 diff prs_w_RB_RI
 #ProfRsPlot: ccn4_diff pmeas_w_SC_TR  w SC_TR:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -1 1 0.0 15.0 redblue 0 diff prs_w_SC_TR
 #ProfRsPlot: ccn4_diff pmeas_w_RB_TR  w RB_TR:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -1 1 0.0 15.0 redblue 0 diff prs_w_RB_TR
-#ProfRsPlot: ccn4_diff pmeas_w_SC_SS  w SC_SS:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -1 1 0.0 15.0 redblue 0 diff prs_w_SC_SS
+ProfRsPlot: ccn4_diff pmeas_w_SC_SS  w PANEL:efg Radius_(km) Height_(km) -1 1 0.0 15.0 gray 0 diff prs_w_SC_SS
 #ProfRsPlot: ccn4_diff pmeas_w_RB_SS  w RB_SS:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -1 1 0.0 15.0 redblue 0 diff prs_w_RB_SS
 
 #ProfRsPlot: ccn4_diff pmeas_w_twp4_SC_RI  w SC_RI:_Vertical_Velocity_(m/s) Radius_(km) Height_(km) -1 1 0.0 15.0 redblue 0 diff prs_w_twp4_SC_RI
@@ -606,11 +614,11 @@ ProfRsPlot: ccn4_diff pmeas_vaptott_vt0p5_RB_SS    vaptott  RB_SS:_Total_Vapor_D
 
 #ProfRsPlot: ccn4 pmeas_relvortz_rvz1em4_SC_RI relvortz SC_RI:_Relative_Vorticity_(s^-^1)   Radius_(km) Height_(km)      0  1e-2  0.0 15.0 revgray 0 abs prs_relvortz_rvz1em4_SC_RI
 #ProfRsPlot: ccn4 pmeas_relvortz_rvz1em4_SC_TR relvortz SC_TR:_Relative_Vorticity_(s^-^1)   Radius_(km) Height_(km)      0  1e-2  0.0 15.0 revgray 0 abs prs_relvortz_rvz1em4_SC_TR
-#ProfRsPlot: ccn4 pmeas_relvortz_rvz1em4_SC_SS relvortz SC_SS:_Relative_Vorticity_(s^-^1)   Radius_(km) Height_(km)      0  1e-2  0.0 15.0 revgray 0 abs prs_relvortz_rvz1em4_SC_SS
+ProfRsPlot: ccn4 pmeas_relvortz_rvz1em4_SC_SS relvortz PANEL:abcd  Radius_(km) Height_(km)      0  1e-2  0.0 15.0 revgray 0 abs prs_relvortz_rvz1em4_SC_SS
 
 #ProfRsPlot: ccn4_diff pmeas_relvortz_rvz1em4_SC_RI relvortz SC_RI:_Relative_Vorticity_(s^-^1)   Radius_(km) Height_(km)  -2e-3  2e-3  0.0 15.0 redblue 0 diff prs_relvortz_rvz1em4_diff_SC_RI
 #ProfRsPlot: ccn4_diff pmeas_relvortz_rvz1em4_SC_TR relvortz SC_TR:_Relative_Vorticity_(s^-^1)   Radius_(km) Height_(km)  -2e-3  2e-3  0.0 15.0 redblue 0 diff prs_relvortz_rvz1em4_diff_SC_TR
-#ProfRsPlot: ccn4_diff pmeas_relvortz_rvz1em4_SC_SS relvortz SC_SS:_Relative_Vorticity_(s^-^1)   Radius_(km) Height_(km)  -2e-3  2e-3  0.0 15.0 redblue 0 diff prs_relvortz_rvz1em4_diff_SC_SS
+ProfRsPlot: ccn4_diff pmeas_relvortz_rvz1em4_SC_SS relvortz PANEL:efg   Radius_(km) Height_(km)  -2e-3  2e-3  0.0 15.0 gray 0 diff prs_relvortz_rvz1em4_diff_SC_SS
 
 #ProfRsPlot: ccn4_diff pmeas_aggr_twp4_SC_RI   aggr  SC_RI:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_twp4_SC_RI
 #ProfRsPlot: ccn4_diff pmeas_aggr_twp4_RB_RI   aggr  RB_RI:_Aggregate_Mix_Ratio_(g/kg)  Radius_(km) Height_(km)    -0.2    0.2  0.0 15.0 redblue 0 diff prs_aggr_twp4_RB_RI
@@ -663,6 +671,8 @@ PlotSet: ccn2_ext    2 TCS_SD_C0100 CLEAN - 0.0 TCS_SD_C2000 POLLUTED - 0.5
 
 PlotSet: ccn4_diff    3 TCS_SD_C0500 C500-CLEAN - 0.0 TCS_SD_C1000 C1000-CLEAN -- 0.0 TCS_SD_C2000 C2000-CLEAN - 0.5
 
+PlotSet: ccn4_diff_short    3 TCS_SD_C0500 C500 - 0.0 TCS_SD_C1000 C1000 -- 0.0 TCS_SD_C2000 C2000 - 0.5
+
 ####################### Plot Vars ################################
 # PlotVar: <name> <vname> <file_prefix> <label> <units> <axis_min> <axis_max> <scale>
 # 
@@ -686,7 +696,7 @@ PlotVar: VintVaptAll_RB_LC  VintTs_vaptott DIAGS/vintts_vaptott_all_vt0p5_RB_LC 
 PlotVar: VintLhtAll_RB_LC   VintTs_lh_tott DIAGS/vintts_lh_tott_all_lht1p0_RB_LC LH_Vaporization K/(hr_km) -30 100 1e-3
 
 
-PlotVar: DeltapAll_SC_RB   DeltapTs_sea_press DIAGS/dpts_sea_press_SC_RB Pressure_Difference mb 0 70 1
+PlotVar: DeltapAll_SC_RB   DeltapTs_sea_press DIAGS/dpts_sea_press_SC_RB Pressure_Difference mb 0 75 1
 
 
 PlotVar: VtAllRI    speed_t    DIAGS/tavg_speed_t_RI Vt     m/s     0  50     1
@@ -744,9 +754,9 @@ PlotDselect: SfcVtRband 70 250000 0 0 0 30 0 0
 #       EOF to place on the plot (r and z in km)
 #
 AzavgEofPlot: theta_e     theta_e     Theta-e      K 1 0.02 0.0005       0 250    0  2
-AzavgEofPlot: theta_e_RI  theta_e     Theta-e      K 1 0.02 0.0005       0 250    0  2
-AzavgEofPlot: theta_e_TR  theta_e     Theta-e      K 1 0.02 0.0005       0 250    0  2
-AzavgEofPlot: theta_e_SS  theta_e     Theta-e      K 1 0.02 0.0005       0 250    0  2
+#AzavgEofPlot: theta_e_RI  theta_e     Theta-e      K 1 0.02 0.0005       0 250    0  2
+#AzavgEofPlot: theta_e_TR  theta_e     Theta-e      K 1 0.02 0.0005       0 250    0  2
+#AzavgEofPlot: theta_e_SS  theta_e     Theta-e      K 1 0.02 0.0005       0 250    0  2
 
 #AzavgEofPlot: lh_vapt_twp4    lh_vapt    Lat_Heat_Rate   K/hr 1 0.050 0.0025   0 250000    0  15000
 #AzavgEofPlot: lh_vapt_twp4_RI lh_vapt    Lat_Heat_Rate   K/hr 1 0.050 0.0025   0 250000    0  15000
