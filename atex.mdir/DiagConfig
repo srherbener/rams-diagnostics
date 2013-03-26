@@ -414,9 +414,9 @@ CompCounts: CO_C1600_G10M5 pop_counts_CO_C1600_G10M5 TsAveragedData pop pop
 Smeas: CO_POP_G10M5 smeas_pop_CO_G10M5 DIAGS pop_counts pop 1 1   50 100 200 400 800 1200 1600
 
 # Vary CCN, hold SST constant
-#Smeas: CO_S293_G10M5 smeas_pop_CO_S293_G10M5 TsAveragedData pop pop 1 1   50 100 200 400 800 1200 1600
-#Smeas: CO_S298_G10M5 smeas_pop_CO_S298_G10M5 TsAveragedData pop pop 1 1   50 100 200 400 800 1200 1600
-#Smeas: CO_S303_G10M5 smeas_pop_CO_S303_G10M5 TsAveragedData pop pop 1 1   50 100 200 400 800 1200 1600
+Smeas: CO_S293_G10M5 smeas_pop_CO_S293_G10M5 TsAveragedData pop pop 1 1   50 100 200 400 800 1200 1600
+Smeas: CO_S298_G10M5 smeas_pop_CO_S298_G10M5 TsAveragedData pop pop 1 1   50 100 200 400 800 1200 1600
+Smeas: CO_S303_G10M5 smeas_pop_CO_S303_G10M5 TsAveragedData pop pop 1 1   50 100 200 400 800 1200 1600
 
 #### 3um GCCN median radius ####
 
@@ -441,7 +441,11 @@ Smeas: CO_POP_G10M5 smeas_pop_CO_G10M5 DIAGS pop_counts pop 1 1   50 100 200 400
 #### 1um GCCN median radius ####
 
 # Vary SST
-SlopePlot: DIAGS/smeas_pop_CO_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper LtssBinLower LtssBinUpper Time 7 0.6 Slope_of_POP_vs_Sulfate_Aerosol_Concentration LWP_(mm) LTSS_(K) 12 36 -10e-4 10e-4 pop_CO_G10M5.jpg
+SlopePlot: DIAGS/smeas_pop_CO_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper LtssBinLower LtssBinUpper Time 7 0.7 Slope_of_POP_vs_Sulfate_Aerosol_Concentration LWP_(mm) LTSS_(K) 12 36 -5e-4 5e-4 pop_CO_G10M5.jpg
+
+SlopePlot: DIAGS/smeas_pop_CO_S293_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper LtssBinLower LtssBinUpper Time 7 0.7 Slope_of_POP_vs_Sulfate_Aerosol_Concentration LWP_(mm) LTSS_(K) 12 36 -5e-4 5e-4 pop_CO_S293_G10M5.jpg
+SlopePlot: DIAGS/smeas_pop_CO_S298_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper LtssBinLower LtssBinUpper Time 7 0.7 Slope_of_POP_vs_Sulfate_Aerosol_Concentration LWP_(mm) LTSS_(K) 12 36 -5e-4 5e-4 pop_CO_S298_G10M5.jpg
+SlopePlot: DIAGS/smeas_pop_CO_S303_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper LtssBinLower LtssBinUpper Time 7 0.7 Slope_of_POP_vs_Sulfate_Aerosol_Concentration LWP_(mm) LTSS_(K) 12 36 -5e-4 5e-4 pop_CO_S303_G10M5.jpg
 
 ####################### Plot Sets ############################
 

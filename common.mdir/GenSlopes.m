@@ -91,7 +91,7 @@ for ismeas = 1: length(Config.Smeas)
     %
     % WARNING: this assumes that the counts got constructed correctly. Ie, you can't have a
     % non-zero Nr without a non-zero Nt, so the only time you get a nan is when Nr = Nt = 0.
-    %RDATA(isnan(RDATA)) = 0;
+    RDATA(isnan(RDATA)) = 0;
     [ Nx, Ny, Nt, Nc ] = size(RDATA);
 
     % Now go through each set of ratios for each LWP bin, and calculate the slope (regression
@@ -105,15 +105,6 @@ for ismeas = 1: length(Config.Smeas)
         for ix = 1:Nx % loop over LWP bins
           Yvals = squeeze(RDATA(ix,iy,it,:));
           [ SLOPES(ix,iy,it) YINTS(ix,iy,it) CORCOEFFS(ix,iy,it) NUSED(ix,iy,it) ] = RegFit(Xvals, Yvals); 
-if ((NUSED(ix,iy,it) > 1) && isnan(SLOPES(ix,iy,it)))
- fprintf('DEBUG: slope is nan:\n');
- ix
- iy
- it
- NUSED(ix,iy,it)
- Xvals
- Yvals
-end
         end
       end
     end
