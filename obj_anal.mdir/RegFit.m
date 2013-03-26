@@ -1,4 +1,4 @@
-function [ RegCoeff, RegYint, CorCoeff ] = RegFit( X, Y )
+function [ RegCoeff, RegYint, CorCoeff, Nused ] = RegFit( X, Y )
 %RegFit calculate regression line and correlation coefficient
 %   This routine will return the regression line (coefficient and
 %   y-intercept) and the correlation coefficient from a least squares
@@ -18,14 +18,22 @@ if (length(X) == length(Y))
                                  % X and Y contain non NaN values               
     Xuse = X(Use);
     Yuse = Y(Use);
+    Nused = length(Xuse);
+
+    if (Nused > 1)
+      StdDevX = sqrt(VarNan(Xuse));
+      StdDevY = sqrt(VarNan(Yuse));
+      CovXY = CovNan(Xuse, Yuse);
     
-    StdDevX = sqrt(VarNan(Xuse));
-    StdDevY = sqrt(VarNan(Yuse));
-    CovXY = CovNan(Xuse, Yuse);
-    
-    CorCoeff = CovXY / (StdDevX * StdDevY);
-    RegCoeff = CorCoeff * StdDevY / StdDevX;
-    RegYint = MeanNan(Y) - RegCoeff*MeanNan(X);
+      CorCoeff = CovXY / (StdDevX * StdDevY);
+      RegCoeff = CorCoeff * StdDevY / StdDevX;
+      RegYint = MeanNan(Y) - RegCoeff*MeanNan(X);
+    else
+      % zero point pairs were selected
+      RegCoeff = NaN;
+      CorCoeff = NaN;
+      RegYint = NaN;
+    end
 else
     fprintf('ERROR: RegCorCoeffs: X and Y vectors must have the same length\n');
     fprintf('                     Setting results to NaN\n');

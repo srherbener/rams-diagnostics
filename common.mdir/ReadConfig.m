@@ -52,6 +52,7 @@ i_aeof = 0;
 i_hmeas = 0;
 i_pmeas = 0;
 i_smeas = 0;
+i_counts = 0;
 i_tavg = 0;
 i_dpts = 0;
 i_vint_ts = 0;
@@ -150,6 +151,15 @@ for i = 1:size(InLines,1)
       end
 
       Cdata.Smeas(i_smeas).PSnum   =  -1;
+    case 'CompCounts:'
+      i_counts = i_counts + 1;
+      Cdata.CompCounts(i_counts).PSname  = Fields{2};
+      Cdata.CompCounts(i_counts).Name    = Fields{3};
+      Cdata.CompCounts(i_counts).InDir   = Fields{4};
+      Cdata.CompCounts(i_counts).Fprefix = Fields{5};
+      Cdata.CompCounts(i_counts).Rvar    = Fields{6};
+
+      Cdata.CompCounts(i_counts).PSnum   =  -1;
     case 'Tavg:'
       i_tavg = i_tavg + 1;
       Cdata.Tavg(i_tavg).Name    = Fields{2};
@@ -320,24 +330,24 @@ for i = 1:size(InLines,1)
       Cdata.ProfPlots(i_pplot).PSnum   = -1;
     case 'SlopePlot:'
       i_splot = i_splot + 1;
-      Cdata.SlopePlots(i_splot).PSname  = Fields{2};
+      Cdata.SlopePlots(i_splot).InFile  = Fields{2};
       Cdata.SlopePlots(i_splot).Svar    = Fields{3};
       Cdata.SlopePlots(i_splot).Cvar    = Fields{4};
-      Cdata.SlopePlots(i_splot).BLvar   = Fields{5};
-      Cdata.SlopePlots(i_splot).BUvar   = Fields{6};
-      Cdata.SlopePlots(i_splot).Tvar    = Fields{7};
-      Cdata.SlopePlots(i_splot).Nsamp   = sscanf(Fields{8}, '%d');
-      Cdata.SlopePlots(i_splot).Tcor    = sscanf(Fields{9}, '%f');
-      Cdata.SlopePlots(i_splot).Title   = regexprep(Fields{10}, '_', ' ');
-      Cdata.SlopePlots(i_splot).Xlabel  = regexprep(Fields{11}, '_', ' ');
-      Cdata.SlopePlots(i_splot).Ylabel  = regexprep(Fields{12}, '_', ' ');
-      Cdata.SlopePlots(i_splot).Tmin    = sscanf(Fields{13}, '%f');
-      Cdata.SlopePlots(i_splot).Tmax    = sscanf(Fields{14}, '%f');
-      Cdata.SlopePlots(i_splot).Cmin    = sscanf(Fields{15}, '%f');
-      Cdata.SlopePlots(i_splot).Cmax    = sscanf(Fields{16}, '%f');
-      Cdata.SlopePlots(i_splot).OutFile = Fields{17};
-
-      Cdata.SlopePlots(i_splot).PSnum   = -1;
+      Cdata.SlopePlots(i_splot).XLvar   = Fields{5};
+      Cdata.SlopePlots(i_splot).XUvar   = Fields{6};
+      Cdata.SlopePlots(i_splot).YLvar   = Fields{7};
+      Cdata.SlopePlots(i_splot).YUvar   = Fields{8};
+      Cdata.SlopePlots(i_splot).Tvar    = Fields{9};
+      Cdata.SlopePlots(i_splot).Nsamp   = sscanf(Fields{10}, '%d');
+      Cdata.SlopePlots(i_splot).Tcor    = sscanf(Fields{11}, '%f');
+      Cdata.SlopePlots(i_splot).Title   = regexprep(Fields{12}, '_', ' ');
+      Cdata.SlopePlots(i_splot).Xlabel  = regexprep(Fields{13}, '_', ' ');
+      Cdata.SlopePlots(i_splot).Ylabel  = regexprep(Fields{14}, '_', ' ');
+      Cdata.SlopePlots(i_splot).Tmin    = sscanf(Fields{15}, '%f');
+      Cdata.SlopePlots(i_splot).Tmax    = sscanf(Fields{16}, '%f');
+      Cdata.SlopePlots(i_splot).Cmin    = sscanf(Fields{17}, '%f');
+      Cdata.SlopePlots(i_splot).Cmax    = sscanf(Fields{18}, '%f');
+      Cdata.SlopePlots(i_splot).OutFile = Fields{19};
     case 'ProfTsPlot:'
       i_pts_plot = i_pts_plot + 1;
       Cdata.ProfTsPlots(i_pts_plot).PSname      = Fields{2};
@@ -413,11 +423,6 @@ if (isfield(Cdata, 'ProfPlots'))
   Cdata.ProfPlots = AssociateStructs( Cdata.ProfPlots, Cdata.PlotSets, 'PS', 'PlotSet', 'ProfPlot' ); 
 end
 
-% Make the association between SlopePlots and the PlotSets
-if (isfield(Cdata, 'SlopePlots'))
-  Cdata.SlopePlots = AssociateStructs( Cdata.SlopePlots, Cdata.PlotSets, 'PS', 'PlotSet', 'SlopePlot' ); 
-end
-
 % Make the association between ProfTsPlots and the PlotSets
 if (isfield(Cdata, 'ProfTsPlots'))
   Cdata.ProfTsPlots = AssociateStructs( Cdata.ProfTsPlots, Cdata.PlotSets, 'PS', 'PlotSet', 'ProfTsPlot' ); 
@@ -436,6 +441,11 @@ end
 % Make the association between Smeas and the PlotSets
 if (isfield(Cdata, 'Smeas'))
   Cdata.Smeas = AssociateStructs( Cdata.Smeas, Cdata.PlotSets, 'PS', 'PlotSet', 'Smeas' ); 
+end
+
+% Make the association between CompCounts and the PlotSets
+if (isfield(Cdata, 'CompCounts'))
+  Cdata.CompCounts = AssociateStructs( Cdata.CompCounts, Cdata.PlotSets, 'PS', 'PlotSet', 'CompCounts' ); 
 end
 
 end

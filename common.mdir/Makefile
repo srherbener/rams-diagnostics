@@ -11,6 +11,7 @@ SCRIPTS = \
           $(DEST)/screen2jpeg.m \
           $(DEST)/AdiffEofPlot.m \
           $(DEST)/AzavgDiffEof.m \
+          $(DEST)/CompileCounts.m \
           $(DEST)/GenAdiffEofPlots.m \
           $(DEST)/GenDeltapTseries.m \
           $(DEST)/GenHistMeas.m \

@@ -390,6 +390,20 @@ ProfPlot: CG_S298_G10M0 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_SST:_298K,
 ProfPlot: CG_S298_G10M2 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_SST:_298K,_GCCN:_10e-2/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_CG_S298_G10M2.jpg
 ProfPlot: CG_S298_G10M4 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_SST:_298K,_GCCN:_10e-4/cc Avg_Latent_Heating_Difference_(K/hr) Height NorthEast -15:0.5:15 0.0 2500.0 LatHeatAvg_LWP1p00_CG_S298_G10M4.jpg
 
+########################################################
+####### Compile Counts for Slope Measurements ##########
+########################################################
+#
+# CompCounts <plot_set_name> <name> <input_dir> <file_prefix> <revu_var>
+
+CompCounts: CO_C0050_G10M5 pop_counts_CO_C0050_G10M5 TsAveragedData pop pop
+CompCounts: CO_C0100_G10M5 pop_counts_CO_C0100_G10M5 TsAveragedData pop pop
+CompCounts: CO_C0200_G10M5 pop_counts_CO_C0200_G10M5 TsAveragedData pop pop
+CompCounts: CO_C0400_G10M5 pop_counts_CO_C0400_G10M5 TsAveragedData pop pop
+CompCounts: CO_C0800_G10M5 pop_counts_CO_C0800_G10M5 TsAveragedData pop pop
+CompCounts: CO_C1200_G10M5 pop_counts_CO_C1200_G10M5 TsAveragedData pop pop
+CompCounts: CO_C1600_G10M5 pop_counts_CO_C1600_G10M5 TsAveragedData pop pop
+
 #####################################
 ####### Slope Measurements ##########
 #####################################
@@ -397,9 +411,10 @@ ProfPlot: CG_S298_G10M4 hda_lh_vapt_lwp_1p00 hda_lh_vapt diff LH_Vap,_SST:_298K,
 # smeas <plot_set_name> <name> <input_dir> <file_prefix> <revu_var> <x_bin_group_size> <y_bin_group_size> <x_values>
 
 #### 1um GCCN median radius ####
+Smeas: CO_POP_G10M5 smeas_pop_CO_G10M5 DIAGS pop_counts pop 1 1   50 100 200 400 800 1200 1600
 
 # Vary CCN, hold SST constant
-Smeas: CO_S293_G10M5 smeas_pop_CO_S293_G10M5 TsAveragedData pop pop 1 1   50 100 200 400 800 1200 1600
+#Smeas: CO_S293_G10M5 smeas_pop_CO_S293_G10M5 TsAveragedData pop pop 1 1   50 100 200 400 800 1200 1600
 #Smeas: CO_S298_G10M5 smeas_pop_CO_S298_G10M5 TsAveragedData pop pop 1 1   50 100 200 400 800 1200 1600
 #Smeas: CO_S303_G10M5 smeas_pop_CO_S303_G10M5 TsAveragedData pop pop 1 1   50 100 200 400 800 1200 1600
 
@@ -421,12 +436,12 @@ Smeas: CO_S293_G10M5 smeas_pop_CO_S293_G10M5 TsAveragedData pop pop 1 1   50 100
 ########## Slope Plots ##############
 #####################################
 #
-# SlopePlot: <plot_set_name> <slope_var> <correlation_coeff_var> <bin_lower_edge_var> <bin_upper_edge_var> <time_var> <num_samples> <test_correlation> <title> <xlabel> <ylabel> <time_min> <time_max> <color_min> <color_max> <out_file>
+# SlopePlot: <file> <slope_var> <correlation_coeff_var> <x_lower_edge_var> <x_upper_edge_var> <y_lower_edge_var> <y_upper_edge_var> <time_var> <num_samples> <test_correlation> <title> <xlabel> <ylabel> <time_min> <time_max> <color_min> <color_max> <out_file>
 
 #### 1um GCCN median radius ####
 
 # Vary SST
-SlopePlot: CO_POP_G10M5 Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper Time 7 0.7 Slope_of_POP_vs_Sulfate_Aerosol_Concentration LWP_(mm) SST_(K) 12 36 -5e-4 5e-4 pop_CO_G10M5.jpg
+SlopePlot: DIAGS/smeas_pop_CO_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper LtssBinLower LtssBinUpper Time 7 0.6 Slope_of_POP_vs_Sulfate_Aerosol_Concentration LWP_(mm) LTSS_(K) 12 36 -10e-4 10e-4 pop_CO_G10M5.jpg
 
 ####################### Plot Sets ############################
 
@@ -446,8 +461,8 @@ PlotSet: CO_C0800_G10M5 3 z.atex.ccn0800.sst293.gcn10m5.1um SST:_293K - 0.0 z.at
 PlotSet: CO_C1200_G10M5 3 z.atex.ccn1200.sst293.gcn10m5.1um SST:_293K - 0.0 z.atex.ccn1200.sst298.gcn10m5.1um SST:_298K -- 0.0 z.atex.ccn1200.sst303.gcn10m5.1um SST:303K - 0.5
 PlotSet: CO_C1600_G10M5 3 z.atex.ccn1600.sst293.gcn10m5.1um SST:_293K - 0.0 z.atex.ccn1600.sst298.gcn10m5.1um SST:_298K -- 0.0 z.atex.ccn1600.sst303.gcn10m5.1um SST:303K - 0.5
 
-# For POP slope plots
-PlotSet: CO_POP_G10M5 3 smeas_pop_CO_S293_G10M5 293 - 0.0  smeas_pop_CO_S298_G10M5 298 - 0.0  smeas_pop_CO_S303_G10M5 303 - 0.0 
+# For POP smeas
+PlotSet: CO_POP_G10M5 7 CO_C0050_G10M5 C0050 - 0.0 CO_C0100_G10M5 C0100 - 0.0 CO_C0200_G10M5 C0200 - 0.0 CO_C0400_G10M5 C0400 - 0.0 CO_C0800_G10M5 C0800 - 0.0 CO_C1200_G10M5 C1200 - 0.0 CO_C1600_G10M5 C1600 - 0.0
 
 #### 3um GCCN median radius ####
 

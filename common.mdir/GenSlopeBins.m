@@ -15,7 +15,7 @@ function [ NR, NT, XL, XU, YL, YU ] = GenSlopeBins(Counts, Xbins, Ybins, Xsize, 
 %   z - (Nt,Nr)  (note size of z dimension is 2)
 %   t - time
 %
-% The arguments Xsize, Ysize are an integers that say how many adjacent bins
+% The arguments Xsize, Ysize are integers that say how many adjacent bins
 % from the input data are to be combined into a single bin for the output
 % data. This can be used to reduce the number of bins if desired. Say there
 % are 100 Xbins in the input, then if Xsize is set to 5 there will be

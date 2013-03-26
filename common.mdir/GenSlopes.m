@@ -13,8 +13,7 @@ if (exist(Ddir, 'dir') ~= 7)
     mkdir(Ddir);
 end
 
-%for ismeas = 1: length(Config.Smeas)
-for ismeas = 1: 1
+for ismeas = 1: length(Config.Smeas)
   % clear these out because they may need to change size, and without the clear
   % they will just retain the largest size (and associated data) that they have
   % been set to so far
@@ -74,8 +73,6 @@ for ismeas = 1: 1
       % where the first output bin would consitst of the counts summed together
       % from the input bins 1-5, second output bins from the input bins 6-10, etc.
       [ NR, NT, XL, XU, YL, YU ] = GenSlopeBins(COUNTS, X, Y, Xgroup, Ygroup);
-NR
-NT
 
       % At this point we have:
       %    NR(x,y,t) - count of grid cells that are raining, by bin
@@ -94,7 +91,7 @@ NT
     %
     % WARNING: this assumes that the counts got constructed correctly. Ie, you can't have a
     % non-zero Nr without a non-zero Nt, so the only time you get a nan is when Nr = Nt = 0.
-    RDATA(isnan(RDATA)) = 0;
+    %RDATA(isnan(RDATA)) = 0;
     [ Nx, Ny, Nt, Nc ] = size(RDATA);
 
     % Now go through each set of ratios for each LWP bin, and calculate the slope (regression
@@ -102,11 +99,21 @@ NT
     SLOPES     = zeros([ Nx Ny Nt ]);
     YINTS      = zeros([ Nx Ny Nt ]);
     CORCOEFFS  = zeros([ Nx Ny Nt ]);
+    NUSED      = zeros([ Nx Ny Nt ]);
     for it = 1:Nt % loop over time
-      for ix = 1:Nx % loop over LWP bins
-        for iy = 1:Ny % loop over LTSS bins
+      for iy = 1:Ny % loop over LTSS bins
+        for ix = 1:Nx % loop over LWP bins
           Yvals = squeeze(RDATA(ix,iy,it,:));
-          [ SLOPES(ix,iy,it) YINTS(ix,iy,it) CORCOEFFS(ix,iy,it) ] = RegFit(Xvals, Yvals); 
+          [ SLOPES(ix,iy,it) YINTS(ix,iy,it) CORCOEFFS(ix,iy,it) NUSED(ix,iy,it) ] = RegFit(Xvals, Yvals); 
+if ((NUSED(ix,iy,it) > 1) && isnan(SLOPES(ix,iy,it)))
+ fprintf('DEBUG: slope is nan:\n');
+ ix
+ iy
+ it
+ NUSED(ix,iy,it)
+ Xvals
+ Yvals
+end
         end
       end
     end
@@ -120,6 +127,8 @@ NT
     hdf5write(OutFile, Hdset, YINTS, 'WriteMode', 'append');
     Hdset = sprintf('/CorCoeffs_%s', Vname);
     hdf5write(OutFile, Hdset, CORCOEFFS, 'WriteMode', 'append');
+    Hdset = sprintf('/Nused_%s', Vname);
+    hdf5write(OutFile, Hdset, NUSED, 'WriteMode', 'append');
 
     hdf5write(OutFile, '/LwpBinLower', XL, 'WriteMode', 'append');
     hdf5write(OutFile, '/LwpBinUpper', XU, 'WriteMode', 'append');
