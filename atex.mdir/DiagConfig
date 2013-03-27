@@ -411,12 +411,12 @@ CompCounts: CO_C1600_G10M5 pop_counts_CO_C1600_G10M5 TsAveragedData pop pop
 # smeas <plot_set_name> <name> <input_dir> <file_prefix> <revu_var> <x_bin_group_size> <y_bin_group_size> <x_values>
 
 #### 1um GCCN median radius ####
-Smeas: CO_POP_G10M5 smeas_pop_CO_G10M5 DIAGS pop_counts pop 1 1   50 100 200 400 800 1200 1600
+Smeas: CO_POP_G10M5 smeas_pop_CO_G10M5 DIAGS pop_counts pop 0.0999 1.001 2 8.999 19.001 2   50 100 200 400 800 1200 1600
 
 # Vary CCN, hold SST constant
-Smeas: CO_S293_G10M5 smeas_pop_CO_S293_G10M5 TsAveragedData pop pop 1 1   50 100 200 400 800 1200 1600
-Smeas: CO_S298_G10M5 smeas_pop_CO_S298_G10M5 TsAveragedData pop pop 1 1   50 100 200 400 800 1200 1600
-Smeas: CO_S303_G10M5 smeas_pop_CO_S303_G10M5 TsAveragedData pop pop 1 1   50 100 200 400 800 1200 1600
+Smeas: CO_S293_G10M5 smeas_pop_CO_S293_G10M5 TsAveragedData pop pop 0.0999 1.001 2 8.999 19.001 2   50 100 200 400 800 1200 1600
+Smeas: CO_S298_G10M5 smeas_pop_CO_S298_G10M5 TsAveragedData pop pop 0.0999 1.001 2 8.999 19.001 2   50 100 200 400 800 1200 1600
+Smeas: CO_S303_G10M5 smeas_pop_CO_S303_G10M5 TsAveragedData pop pop 0.0999 1.001 2 8.999 19.001 2   50 100 200 400 800 1200 1600
 
 #### 3um GCCN median radius ####
 

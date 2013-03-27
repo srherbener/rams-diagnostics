@@ -142,10 +142,14 @@ for i = 1:size(InLines,1)
       Cdata.Smeas(i_smeas).InDir   = Fields{4};
       Cdata.Smeas(i_smeas).Fprefix = Fields{5};
       Cdata.Smeas(i_smeas).Rvar    = Fields{6};
-      Cdata.Smeas(i_smeas).Xgroup  = sscanf(Fields{7}, '%d');
-      Cdata.Smeas(i_smeas).Ygroup  = sscanf(Fields{8}, '%d');
+      Cdata.Smeas(i_smeas).Xmin    = sscanf(Fields{7}, '%f');
+      Cdata.Smeas(i_smeas).Xmax    = sscanf(Fields{8}, '%f');
+      Cdata.Smeas(i_smeas).Xgroup  = sscanf(Fields{9}, '%d');
+      Cdata.Smeas(i_smeas).Ymin    = sscanf(Fields{10}, '%f');
+      Cdata.Smeas(i_smeas).Ymax    = sscanf(Fields{11}, '%f');
+      Cdata.Smeas(i_smeas).Ygroup  = sscanf(Fields{12}, '%d');
       ix = 1;
-      for j = 9:length(Fields)  % grab the rest of the fields
+      for j = 13:length(Fields)  % grab the rest of the fields
         Cdata.Smeas(i_smeas).Xvals(ix) = sscanf(Fields{j}, '%f');
         ix = ix + 1;
       end

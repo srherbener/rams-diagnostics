@@ -1,4 +1,4 @@
-function [ NR, NT, XL, XU, YL, YU ] = GenSlopeBins(Counts, Xbins, Ybins, Xsize, Ysize)
+function [ NR, NT, XL, XU, YL, YU ] = GenSlopeBins(Counts, Xbins, Ybins, Xmin, Xmax, Xsize, Ymin, Ymax, Ysize)
 % GenSlopeBins generate bins for slope data from POP diagnostic
 %
 %   Counts - array holding the count datat from the HDF5 pop file
@@ -87,13 +87,16 @@ TempNT(end,end,:) = TempNT(end,end,:) + reshape(Counts(end,end,1,:), [ 1 1 Ntime
 
 % Form the output by combining the bins. This depends on the new number of bins
 % Nb being an integer. NR and NT are now organized as (x,y,t).
+%
+X1 = find(TempXL >= Xmin, 1, 'first');
+X2 = find(TempXU <= Xmax, 1, 'last');
+Y1 = find(TempYL >= Ymin, 1, 'first');
+Y2 = find(TempYU <= Ymax, 1, 'last');
 
 % Form the indices to pick out the proper data spaced at the interval defined
 % by (Xsize,Ysize).
-OrigNx = length(TempXL);
-OrigNy = length(TempYL);
-UseX = 1:Xsize:OrigNx;
-UseY = 1:Ysize:OrigNy;
+UseX = X1:Xsize:X2;
+UseY = Y1:Ysize:Y2;
 NewNx = length(UseX);
 NewNy = length(UseY);
 

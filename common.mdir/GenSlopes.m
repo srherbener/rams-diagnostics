@@ -24,7 +24,11 @@ for ismeas = 1: length(Config.Smeas)
   InDir = Config.Smeas(ismeas).InDir;
   Fprefix = Config.Smeas(ismeas).Fprefix;
   Vname = Config.Smeas(ismeas).Rvar;
+  Xmin = Config.Smeas(ismeas).Xmin;
+  Xmax = Config.Smeas(ismeas).Xmax;
   Xgroup = Config.Smeas(ismeas).Xgroup;
+  Ymin = Config.Smeas(ismeas).Ymin;
+  Ymax = Config.Smeas(ismeas).Ymax;
   Ygroup = Config.Smeas(ismeas).Ygroup;
   Xvals = Config.Smeas(ismeas).Xvals'; % note transpose to get dimensions matching Yvals below
 
@@ -32,8 +36,14 @@ for ismeas = 1: length(Config.Smeas)
   fprintf('Generating Slope time series:\n');
   fprintf('  Name: %s\n', Name);
   fprintf('  Variable: %s\n', Vname);
-  fprintf('  Bin group size in x: %d\n', Xgroup);
-  fprintf('  Bin group size in y: %d\n', Ygroup);
+  fprintf('  X bin selection:\n');
+  fprintf('    Min: %.2f\n', Xmin);
+  fprintf('    Max: %.2f\n', Xmax);
+  fprintf('    Bin group size: %d\n', Xgroup);
+  fprintf('  Y bin selection:\n');
+  fprintf('    Min: %.2f\n', Ymin);
+  fprintf('    Max: %.2f\n', Ymax);
+  fprintf('    Bin group size: %d\n', Ygroup);
   fprintf('  X values for the regression fit:\n');
   for ix = 1:length(Xvals)
     fprintf('    Xvals(%d): %f\n', ix, Xvals(ix));
@@ -72,7 +82,7 @@ for ismeas = 1: length(Config.Smeas)
       % together to form one output bin, so 100 bins would get reduced to 20 bins,
       % where the first output bin would consitst of the counts summed together
       % from the input bins 1-5, second output bins from the input bins 6-10, etc.
-      [ NR, NT, XL, XU, YL, YU ] = GenSlopeBins(COUNTS, X, Y, Xgroup, Ygroup);
+      [ NR, NT, XL, XU, YL, YU ] = GenSlopeBins(COUNTS, X, Y, Xmin, Xmax, Xgroup, Ymin, Ymax, Ygroup);
 
       % At this point we have:
       %    NR(x,y,t) - count of grid cells that are raining, by bin

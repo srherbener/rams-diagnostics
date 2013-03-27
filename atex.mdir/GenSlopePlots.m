@@ -105,8 +105,6 @@ for iplot = 1:length(Config.SlopePlots)
     % use the bin edges as is
     X = [ XL(1:end); XU(end) ]';
     Y = [ YL(1:end); YU(end) ]';
-    Xticks = (XL + XU) ./ 2;  % use the bin centers for tick marks on the axes
-    Yticks = (YL + YU) ./ 2;  % use the bin centers for tick marks on the axes
 
     % add an extra row and column at the ends of the rows and columns
     SLOPES(:,end+1) = nan;
@@ -118,8 +116,8 @@ for iplot = 1:length(Config.SlopePlots)
     pcolor(X, Y, SLOPES);
     shading flat;
     set(gca, 'FontSize', Fsize);
-    set(gca, 'XTick', Xticks);
-    set(gca, 'YTick', Yticks);
+    set(gca, 'XTick', X);
+    set(gca, 'YTick', Y);
     title(Ptitle);
     xlabel(Xlabel);
     ylabel(Ylabel);
