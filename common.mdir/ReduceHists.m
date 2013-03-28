@@ -80,7 +80,12 @@ switch Method
         % existed.
         [ MAXC_V, MAXC_I ] = max(Hdata, [], Hdim);
         Hreduced = squeeze(Bins(MAXC_I));
-        Hreduced = Hreduced .* HAVE_COUNTS;
+        if (size(HAVE_COUNTS) == size(Hreduced'))
+          % catch the case where you have a column vector and a row vector
+          Hreduced = Hreduced' .* HAVE_COUNTS;
+        else
+          Hreduced = Hreduced .* HAVE_COUNTS;
+        end
     case 'com'
         % Center of mass
         %
@@ -118,7 +123,12 @@ switch Method
         CSHALF = abs(CSUM - (SUM/2));
         [ HALF_V, HALF_I ] = min(CSHALF, [], Hdim);
         Hreduced = squeeze(Bins(HALF_I));
-        Hreduced = Hreduced .* HAVE_COUNTS;
+        if (size(HAVE_COUNTS) == size(Hreduced'))
+          % catch the case where you have a column vector and a row vector
+          Hreduced = Hreduced' .* HAVE_COUNTS;
+        else
+          Hreduced = Hreduced .* HAVE_COUNTS;
+        end
         
     otherwise
         fprintf('WARNING: ReduceHists: Unrecognized reduction method: %s\n', Method);
