@@ -273,7 +273,12 @@ DistPlot: CG_S298_G10M4 tavg_hist_pcprr Rainfall_Rate,_SST:_298K,_GCCN:_1e-4/cc 
 #TsavgPlot: CG_S298_G10M4 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_SST:_298K,_GCCN:_1e-4/cc NorthWest 0.0 0.6 TsAvgR2C_CG_S298_G10M4.jpg
 
 # LTSS sample
-TsavgPlot: LTSS_SAMPLE ltss ltss abs localtime Static_Stability K LTSS SouthWest 8.0 20.0 TsAvg_LTSS_SAMPLE.jpg
+#TsavgPlot: LTSS_SAMPLE ltss ltss abs localtime Static_Stability K LTSS SouthWest 8.0 20.0 TsAvg_LTSS_SAMPLE.jpg
+
+# average cloud depth
+TsavgPlot: CO_S293_G10M5 horiz_avg_cdepth havg_cloud_depth abs localtime Depth m Avg_Cloud_Depth,_SST:_293K NorthWest 0 1000 TsAvg_cdepth_CO_S293_G10M5.jpg
+TsavgPlot: CO_S298_G10M5 horiz_avg_cdepth havg_cloud_depth abs localtime Depth m Avg_Cloud_Depth,_SST:_298K NorthWest 0 1000 TsAvg_cdepth_CO_S298_G10M5.jpg
+TsavgPlot: CO_S303_G10M5 horiz_avg_cdepth havg_cloud_depth abs localtime Depth m Avg_Cloud_Depth,_SST:_303K NorthWest 0 1000 TsAvg_cdepth_CO_S303.jpg
 
 ##################################################################
 ####################### PROFILE PLOTS ############################
@@ -441,7 +446,9 @@ Smeas: CO_S303_G10M5 smeas_pop_CO_S303_G10M5 TsAveragedData pop pop 0.0999 1.001
 #### 1um GCCN median radius ####
 
 # Vary SST
-SlopePlot: DIAGS/smeas_pop_CO_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper LtssBinLower LtssBinUpper Time 7 0.7 Slope_of_POP_vs_Sulfate_Aerosol_Concentration LWP_(mm) LTSS_(K) 12 36 -5e-4 5e-4 pop_CO_G10M5.jpg
+SlopePlot: DIAGS/smeas_pop_CO_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper LtssBinLower LtssBinUpper Time 7 0.7 Slope_of_POP_vs_Sulfate_Aerosol_Concentration LWP_(mm) LTSS_(K) 12 36 -5e-4 5e-4 pop_LTSS_CO_G10M5.jpg
+
+SlopePlot: DIAGS/smeas_pop_CO_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper LtssBinLower LtssBinUpper Time 7 0.0 Slope_of_POP_vs_Sulfate_Aerosol_Concentration LWP_(mm) LTSS_(K) 12 36 -5e-4 5e-4 pop_nosig_LTSS_CO_G10M5.jpg
 
 SlopePlot: DIAGS/smeas_pop_CO_S293_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper LtssBinLower LtssBinUpper Time 7 0.7 Slope_of_POP_vs_Sulfate_Aerosol_Concentration LWP_(mm) LTSS_(K) 12 36 -5e-4 5e-4 pop_CO_S293_G10M5.jpg
 SlopePlot: DIAGS/smeas_pop_CO_S298_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper LtssBinLower LtssBinUpper Time 7 0.7 Slope_of_POP_vs_Sulfate_Aerosol_Concentration LWP_(mm) LTSS_(K) 12 36 -5e-4 5e-4 pop_CO_S298_G10M5.jpg

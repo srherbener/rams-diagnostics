@@ -96,7 +96,7 @@ for iplot = 1:length(Config.TsavgPlots)
         LegText(icase) = { Config.PlotSets(ips).Cases(icase).Legend };
 
         Hfile = sprintf('%s/%s_%s.h5', Tdir, Fprefix, Case);
-        fprintf('Reading HDF5 file: %s\n', Hfile);
+        fprintf('Reading HDF5 file: %s, Dataset: %s\n', Hfile, Var);
         TS = squeeze(hdf5read(Hfile, Var));
         T = squeeze(hdf5read(Hfile, '/t_coords')) / 3600; % hrs
         if (strcmp(Case, Config.ControlCase))
@@ -104,7 +104,7 @@ for iplot = 1:length(Config.TsavgPlots)
           TS = TS(T1_Cntl:T2_Cntl);
           T = T(T1_Cntl:T2_Cntl);
         end
-        
+
         % If doing a diff type plot, subtract off the control values
         if (strcmp(Ptype, 'diff'))
           TS = TS - TS_CNTL;

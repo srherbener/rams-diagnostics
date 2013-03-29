@@ -6,6 +6,7 @@ DEST = $(HOME)/etc/matlab/atex
 DIAG_DIR = /Volumes/tasman1/sherbener/data/RAMS/MarinePrecip/ATEX
 
 SCRIPTS = $(DEST)/ExtractSample.m \
+          $(DEST)/GenAvgCloudDepth.m \
           $(DEST)/GenCloudStructPlots.m \
           $(DEST)/GenDistPlots.m \
           $(DEST)/PlotMultiPanelSample.m \
