@@ -2,7 +2,7 @@ function [ ] = PlotMaxWind(ConfigFile)
 
 [ Config ] = ReadConfig(ConfigFile);
 
-Tdir = Config.TsavgDir;
+Adir = Config.AzavgDir;
 
 Pdir = Config.PlotDir;
 if (exist(Pdir, 'dir') ~= 7)
@@ -10,7 +10,7 @@ if (exist(Pdir, 'dir') ~= 7)
 end
 
 % read in the sea level pressure
-Hfile = sprintf('%s/speed_t_TSD_3GRIDS.h5', Tdir);
+Hfile = sprintf('%s/speed_t_TSD_3GRIDS.h5', Adir);
 Hdset = 'speed_t';
 fprintf('Reading: %s, Dataset: %s\n', Hfile, Hdset);
 SPEED_T = hdf5read(Hfile, Hdset);
@@ -18,7 +18,6 @@ SPEED_T = hdf5read(Hfile, Hdset);
 % Throw away first 36 hrs of the simulation since the circulation hadn't
 % formed yet.
 ST = SPEED_T(:,:,37:end);
-whos
 TIMES = 1:size(ST,3);
 
 % generate the time series of the maximum Vt of the horizontal domain

@@ -3,8 +3,6 @@ function [ ] = PlotPressWind(ConfigFile)
 
 [ Config ] = ReadConfig(ConfigFile);
 
-Tdir = Config.TsavgDir;
-
 Pdir = Config.PlotDir;
 if (exist(Pdir, 'dir') ~= 7)
     mkdir(Pdir);

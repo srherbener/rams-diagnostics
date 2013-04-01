@@ -2,7 +2,7 @@ function [ ] = PlotSpeedtThetae(ConfigFile)
 
 [ Config ] = ReadConfig(ConfigFile);
 
-Tdir = Config.TsavgDir;
+Adir = Config.AzavgDir;
 
 Pdir = Config.PlotDir;
 if (exist(Pdir, 'dir') ~= 7)
@@ -10,12 +10,12 @@ if (exist(Pdir, 'dir') ~= 7)
 end
 
 % read in the speed and theta_e
-Hfile = sprintf('%s/speed_t_TSD_3GRIDS.h5', Tdir);
+Hfile = sprintf('%s/speed_t_TSD_3GRIDS.h5', Adir);
 Hdset = 'speed_t';
 fprintf('Reading: %s, Dataset: %s\n', Hfile, Hdset);
 SPEED_T = hdf5read(Hfile, Hdset);
 
-Hfile = sprintf('%s/theta_e_TSD_3GRIDS.h5', Tdir);
+Hfile = sprintf('%s/theta_e_TSD_3GRIDS.h5', Adir);
 Hdset = 'theta_e';
 fprintf('Reading: %s, Dataset: %s\n', Hfile, Hdset);
 THETA_E = hdf5read(Hfile, Hdset);

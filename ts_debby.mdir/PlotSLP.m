@@ -2,15 +2,13 @@ function [ ] = PlotSLP(ConfigFile)
 
 [ Config ] = ReadConfig(ConfigFile);
 
-Tdir = Config.TsavgDir;
-
 Pdir = Config.PlotDir;
 if (exist(Pdir, 'dir') ~= 7)
     mkdir(Pdir);
 end
 
 % read in the sea level pressure
-Hfile = sprintf('%s/sea_press_TSD_3GRIDS.h5', Tdir);
+Hfile = sprintf('sea_press_TSD_3GRIDS.h5');
 Hdset = 'sea_press';
 fprintf('Reading: %s, Dataset: %s\n', Hfile, Hdset);
 SPRESS = hdf5read(Hfile, Hdset);
