@@ -1,0 +1,122 @@
+#
+# specs for extracting data via revu
+#
+
+AzavgDir: AzAveragedData
+TsavgDir: TsAveragedData
+DiagDir: DIAGS
+PlotDir: Plots
+EofDir: EofData
+FilterDir: FILTERS
+RamsDir: RAMS
+RevuDir: HDF5
+ControlCase: TSD_3GRIDS
+UndefVal: -999
+
+# cases (experiment names)
+#  Case: <exp_name> <plot_name>
+Case: TSD_3GRIDS CONTROL
+
+# Time specs/directories
+# TimeDir: <Dir> <TimeSpecForRevu>
+TimeDir: NONE 1:150:1
+
+# Variable specs
+#  Var: <VarName> <RevuVarName> <TemplateSuffix>
+Var: u u tsdebby_3d
+Var: v v tsdebby_3d
+Var: w w tsdebby_3d
+
+Var: sea_press sea_press tsdebby_h2d
+
+### Var: press press tsdebby_3d
+### Var: dn0 dn0 tsdebby_3d
+### Var: speed10m speed10m tsdebby_h2d
+### Var: tempc tempc tsdebby_3d
+### Var: theta_e theta_e tsdebby_3d
+### Var: pcprate pcprate tsdebby_h2d
+
+### Var: cloud cloud tsdebby_3d
+### Var: cloud_d cloud_diam tsdebby_3d
+### Var: cloud_cm3 cloud_concen_cm3 tsdebby_3d
+### Var: drizzle drizzle tsdebby_3d
+### Var: drizzle_d drizzle_diam tsdebby_3d
+### Var: drizzle_cm3 drizzle_concen_cm3 tsdebby_3d
+### Var: rain rain tsdebby_3d
+### Var: rain_d rain_diam tsdebby_3d
+### Var: rain_m3 rain_concen_m3 tsdebby_3d
+### Var: liquid liquid tsdebby_3d
+### Var: ice ice tsdebby_3d
+### Var: vapor vapor tsdebby_3d
+### Var: r_total r_total tsdebby_3d
+### Var: pris pristine tsdebby_3d
+### Var: pris_conc_cm3 pris_concen_cm3 tsdebby_3d
+### Var: pris_d pris_diam tsdebby_3d
+### Var: snow snow tsdebby_3d
+### Var: snow_conc_cm3 snow_concen_cm3 tsdebby_3d
+### Var: snow_d snow_diam tsdebby_3d
+### Var: aggr aggregates tsdebby_3d
+### Var: aggr_conc_m3 agg_concen_m3 tsdebby_3d
+### Var: aggr_d agg_diam tsdebby_3d
+### Var: graup graupel tsdebby_3d
+### Var: graup_conc_m3 graup_concen_m3 tsdebby_3d
+### Var: graup_d graup_diam tsdebby_3d
+### Var: hail hail tsdebby_3d
+### Var: hail_conc_m3 hail_concen_m3 tsdebby_3d
+### Var: hail_d hail_diam tsdebby_3d
+
+### Var: ccn_conc ccn_concen tsdebby_3d
+### Var: gccn_conc gccn_concen tsdebby_3d
+### Var: ifn_conc ifn_conc tsdebby_3d
+### Var: saltf_conc salt_film_concen tsdebby_3d
+### Var: saltj_conc salt_jet_concen tsdebby_3d
+
+### Var: vint_cloud vertint_cloud tsdebby_h2d
+### Var: vint_rain  vertint_rain  tsdebby_h2d
+### Var: vint_ice   vertint_ice   tsdebby_h2d
+### Var: vint_liq    vertint_liquid tsdebby_h2d
+### Var: vint_cond   vertint_cond   tsdebby_h2d
+
+### Var: lh_vapt latheatvapt tsdebby_3d
+### Var: lh_frzt latheatfrzt tsdebby_3d
+### Var: lh_tott latheattott tsdebby_3d
+
+### Var: vint_lh_vapt vertint_lhvapt tsdebby_h2d
+
+### Var: aggr_vflux aggr_vflux tsdebby_3d
+### Var: graup_vflux graup_vflux tsdebby_3d
+### Var: hail_vflux hail_vflux tsdebby_3d
+### Var: pris_vflux pris_vflux tsdebby_3d
+### Var: snow_vflux snow_vflux tsdebby_3d
+
+### Var: vapliqt vapliqt tsdebby_3d
+### Var: vapicet vapicet tsdebby_3d
+### Var: vaptott vaptott tsdebby_3d
+
+### Var: relvortz relvortz tsdebby_3d
+### Var: potvortz potvortz tsdebby_3d
+
+Filter: all w:w cylvol:sea_press:sea_press:0.0:500.0:0.0:6.3:0.0:25000.0
+
+#
+# Specs for run_azavg, also uses Case: and TimeDir: above
+#
+#   Azavg: <diag_name> <var> <dim> <num_radial_bands> <filter>
+#
+#     <var> is one of the name above in the Var: section, except for
+#     special <var> names "speed_t" and "speed_r" which denote horizontal
+#     tangential speed and horizontal radial speed respectively
+#
+
+# select all points
+#Azavg: sea_press        sea_press     2d 50 all
+#Azavg: speed_r          speed_r       3d 250 all
+#Azavg: speed_t          speed_t       3d 250 all
+
+# Specs for tsavg
+#  Tsavg: <avg_func> <filter>
+#
+
+#Tsavg: horiz_ke horiz_ke   all
+#Tsavg: storm_int storm_int  all
+#Tsavg: max_azwind max_azwind none
