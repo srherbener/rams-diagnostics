@@ -15,7 +15,8 @@ SCRIPTS = \
   $(DEST)/SetPath.m
 
 CONFIGS = \
-  $(DIAG_DIR)/SST_CONST/DiagConfig
+  $(DIAG_DIR)/SST_CONST/DiagConfig \
+  $(DIAG_DIR)/SST_OBS/DiagConfig
 
 #
 # Targets
@@ -30,4 +31,7 @@ $(DEST)/%.m: %.m
 	cp $(<) $(@)
 
 $(DIAG_DIR)/SST_CONST/DiagConfig: DiagConfig.SST_CONST
+	cp $(<) $(@)
+
+$(DIAG_DIR)/SST_OBS/DiagConfig: DiagConfig.SST_OBS
 	cp $(<) $(@)
