@@ -522,10 +522,10 @@ ProfPlot: ccn4_diff_short pmeas_w_twp4_RB_SS w diff PANEL:d_EXP-CLEAN W_(m/s) He
 
 ######################## Profile Time Series Plots #############################
  
-ProfTsPlot: ccn4 pmeas_cloud_d_twp4_SC_LC cloud_d PANEL:efgh Simulation_Time_(hr) Height_(km) 0 30 0.0 2.0 revgray 0 abs pts_cloud_d_twp4_SC_LC
+ProfTsPlot: ccn4 pmeas_cloud_d_twp4_SC_LC cloud_d PANEL:efgh Simulation_Time_(hr) Height_(km) 0 30 0.0 1.0 revgray 0 abs pts_cloud_d_twp4_SC_LC
 #ProfTsPlot: ccn4 pmeas_cloud_d_twp4_RB_LC cloud_d RB_LC:_Mean_Cloud_Diam_(um) Simulation_Time_(hr) Height_(km) 0 25 0.0 10.0 revgray 0 abs pts_cloud_d_twp4_RB_LC
 
-ProfTsPlot: ccn4 pmeas_cloud_cm3_twp4_SC_LC cloud_cm3 PANEL:abcd Simulation_Time_(hr) Height_(km) 0 50 0.0 2.0 revgray 0 abs pts_cloud_cm3_twp4_SC_LC
+ProfTsPlot: ccn4 pmeas_cloud_cm3_twp4_SC_LC cloud_cm3 PANEL:abcd Simulation_Time_(hr) Height_(km) 0 50 0.0 1.0 revgray 0 abs pts_cloud_cm3_twp4_SC_LC
 #ProfTsPlot: ccn4 pmeas_cloud_cm3_twp4_RB_LC cloud_cm3 RB_LC:_Cloud_Conc_(#/cc) Simulation_Time_(hr) Height_(km) 0 50 0.0 10.0 revgray 0 abs pts_cloud_cm3_twp4_RB_LC
 
 #ProfTsPlot: ccn4 pmeas_ice_twp4_SC_LC ice SC_LC:_Ice_Mass_(g/kg) Simulation_Time_(hr) Height_(km) 0 0.5 0.0 15.0 revgray 0 abs pts_ice_twp4_SC_LC
