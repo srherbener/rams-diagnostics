@@ -26,37 +26,25 @@ montage -tile 1x2 -geometry ${Jsize} KeVt.jpg TS_rmw.jpg Figure5.jpg
 
 # Figure 6: EOF in first column, VintCond in second column
 echo "Figure 6"
-montage -tile 2x4 -geometry ${Jsize}+2+100 \
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
  Blank.jpg \
  vint_cond_TCS_SD_C0100.jpg \
- EOF1_theta_e_TCS_SD_C0500.jpg \
- vint_cond_TCS_SD_C0500.jpg \
- EOF1_theta_e_TCS_SD_C1000.jpg \
- vint_cond_TCS_SD_C1000.jpg \
  EOF1_theta_e_TCS_SD_C2000.jpg \
  vint_cond_TCS_SD_C2000.jpg \
  Figure6.jpg
 
 # Figure 7: storm core: cloud num conc in first column, cloud mean diam in second column
 echo "Figure 7"
-montage -tile 2x4 -geometry ${Jsize}+2+100 \
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
  pts_cloud_cm3_twp4_SC_LC_TCS_SD_C0100.jpg \
  pts_cloud_d_twp4_SC_LC_TCS_SD_C0100.jpg \
- pts_cloud_cm3_twp4_SC_LC_TCS_SD_C0500.jpg \
- pts_cloud_d_twp4_SC_LC_TCS_SD_C0500.jpg \
- pts_cloud_cm3_twp4_SC_LC_TCS_SD_C1000.jpg \
- pts_cloud_d_twp4_SC_LC_TCS_SD_C1000.jpg \
  pts_cloud_cm3_twp4_SC_LC_TCS_SD_C2000.jpg \
  pts_cloud_d_twp4_SC_LC_TCS_SD_C2000.jpg \
  Figure7.jpg
 
 # Figure 8: storm core: latent heat in first column, w in second column
 echo "Figure 8"
-montage -tile 2x4 -geometry ${Jsize}+2+100 \
- prs_lh_tott_lht1p0_SC_SS_TCS_SD_C0500.jpg \
- prs_w_SC_SS_TCS_SD_C0500.jpg \
- prs_lh_tott_lht1p0_SC_SS_TCS_SD_C1000.jpg \
- prs_w_SC_SS_TCS_SD_C1000.jpg \
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
  prs_lh_tott_lht1p0_SC_SS_TCS_SD_C2000.jpg \
  prs_w_SC_SS_TCS_SD_C2000.jpg \
  prof_lh_tott_lht1p0_SC_SS.jpg \
@@ -65,13 +53,9 @@ montage -tile 2x4 -geometry ${Jsize}+2+100 \
 
 # Figure 9: storm core: relative vorticity
 echo "Figure 9"
-montage -tile 2x4 -geometry ${Jsize}+2+100 \
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
  prs_relvortz_rvz1em4_SC_SS_TCS_SD_C0100.jpg \
  Blank.jpg \
- prs_relvortz_rvz1em4_SC_SS_TCS_SD_C0500.jpg \
- prs_relvortz_rvz1em4_diff_SC_SS_TCS_SD_C0500.jpg \
- prs_relvortz_rvz1em4_SC_SS_TCS_SD_C1000.jpg \
- prs_relvortz_rvz1em4_diff_SC_SS_TCS_SD_C1000.jpg \
  prs_relvortz_rvz1em4_SC_SS_TCS_SD_C2000.jpg \
  prs_relvortz_rvz1em4_diff_SC_SS_TCS_SD_C2000.jpg \
  Figure9.jpg
