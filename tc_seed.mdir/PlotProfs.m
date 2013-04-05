@@ -57,10 +57,6 @@ for iplot = 1:length(Config.ProfPlots)
     else
       for icase = 1:Config.PlotSets(ips).Ncases
         Case = Config.PlotSets(ips).Cases(icase).Cname;
-        if (strcmp(Case, Config.ControlCase) && (~isempty(strfind(Ptype, 'diff'))))
-          % skip the control case when doing a diff plot
-          continue; 
-        end
 
         iprof = iprof + 1;
         LegText(iprof) = { Config.PlotSets(ips).Cases(icase).Legend };

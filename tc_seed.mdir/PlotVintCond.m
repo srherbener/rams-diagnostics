@@ -20,7 +20,8 @@ Tmax = 144;
 Cmin = 0;
 Cmax = 30;
 
-PanelMarkers = { 'd' 'e' 'f' 'g' };
+%PanelMarkers = { 'd' 'e' 'f' 'g' };
+PanelMarkers = { 'b' 'e' 'f' 'c' };
 
 % Tick marks
 Xticks = [ 50 100 ];

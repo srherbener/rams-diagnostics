@@ -51,7 +51,7 @@ set(gca, 'XTick', Xticks);
 set(gca, 'XTickLabel', Xticklabels);
 shading flat;
 caxis(Cbounds);
-colormap('gray');
+colormap('redblue');
 cbar = colorbar;
 set(cbar, 'FontSize', Fsize);
 hold on;
