@@ -524,16 +524,16 @@ ProfPlot: ccn2 pmeas_w_SC_SS              w       diff PANEL:f_CASE-CLEAN W_(m/s
 
 # Figure 10
 ProfPlot: ccn2 pmeas_speed_r_RB_SS        speed_r abs PANEL:a_CASE Vr_(m/s)              Height_(km) SouthEast     -5:0.1:10   0.0 15.0 prof_speed_r_RB_SS.jpg
-ProfPlot: ccn2 pmeas_relhum_RB_SS         relhum  abs PANEL:b_CASE RH_(%)                Height_(km) SouthWest    50:0.1:100   0.0 15.0 prof_relhum_RB_SS.jpg
-ProfPlot: ccn2 pmeas_lh_tott_lht1p0_RB_SS lh_tott abs PANEL:c_CASE Latent_Heating_(K/hr) Height_(km) SouthEast    -10:0.1:15   0.0 15.0 prof_lh_tott_lht1p0_RB_SS.jpg
-ProfPlot: ccn2 pmeas_theta_e_RB_SS        theta_e abs PANEL:c_CASE Theta-E_(K)           Height_(km) SouthEast   330:0.1:360 0.0 15.0 prof_theta_e_RB_SS.jpg
-ProfPlot: ccn2 pmeas_w_twp4_RB_SS         w       abs PANEL:d_CASE W_(m/s)               Height_(km) SouthEast  -0.5:0.05:0.5  0.0 15.0 prof_w_twp4_RB_SS.jpg
+#ProfPlot: ccn2 pmeas_relhum_RB_SS         relhum  abs PANEL:b_CASE RH_(%)                Height_(km) SouthWest    50:0.1:100   0.0 15.0 prof_relhum_RB_SS.jpg
+#ProfPlot: ccn2 pmeas_lh_tott_lht1p0_RB_SS lh_tott abs PANEL:c_CASE Latent_Heating_(K/hr) Height_(km) SouthEast    -10:0.1:15   0.0 15.0 prof_lh_tott_lht1p0_RB_SS.jpg
+ProfPlot: ccn2 pmeas_theta_e_RB_SS        theta_e abs PANEL:b_CASE Theta-E_(K)           Height_(km) SouthEast   330:0.1:360 0.0 15.0 prof_theta_e_RB_SS.jpg
+ProfPlot: ccn2 pmeas_w_twp4_RB_SS         w       abs PANEL:c_CASE W_(m/s)               Height_(km) SouthEast  -0.5:0.05:0.5  0.0 15.0 prof_w_twp4_RB_SS.jpg
 
-ProfPlot: ccn2 pmeas_speed_r_RB_SS        speed_r diff PANEL:e_CASE-CLEAN Vr_(m/s)              Height_(km) SouthWest  -5:0.1:5      0.0 15.0 prof_speed_r_diff_RB_SS.jpg
-ProfPlot: ccn2 pmeas_relhum_RB_SS         relhum  diff PANEL:f_CASE-CLEAN RH_(%)                Height_(km) NorthEast -15:0.1:15     0.0 15.0 prof_relhum_diff_RB_SS.jpg
-ProfPlot: ccn2 pmeas_lh_tott_lht1p0_RB_SS lh_tott diff PANEL:g_CASE-CLEAN Latent_Heating_(K/hr) Height_(km) NorthEast -10:0.1:10     0.0 15.0 prof_lh_tott_lht1p0_diff_RB_SS.jpg
-ProfPlot: ccn2 pmeas_theta_e_RB_SS        theta_e diff PANEL:g_CASE-CLEAN Theta-E_(K)           Height_(km) NorthEast    -5:0.01:5   0.0 15.0 prof_theta_e_diff_RB_SS.jpg
-ProfPlot: ccn2 pmeas_w_twp4_RB_SS         w       diff PANEL:h_CASE-CLEAN W_(m/s)               Height_(km) SouthEast  -0.5:0.05:0.5 0.0 15.0 prof_w_twp4_diff_RB_SS.jpg
+ProfPlot: ccn2 pmeas_speed_r_RB_SS        speed_r diff PANEL:d_CASE-CLEAN Vr_(m/s)              Height_(km) SouthWest  -5:0.1:5      0.0 15.0 prof_speed_r_diff_RB_SS.jpg
+#ProfPlot: ccn2 pmeas_relhum_RB_SS         relhum  diff PANEL:f_CASE-CLEAN RH_(%)                Height_(km) NorthEast -15:0.1:15     0.0 15.0 prof_relhum_diff_RB_SS.jpg
+#ProfPlot: ccn2 pmeas_lh_tott_lht1p0_RB_SS lh_tott diff PANEL:g_CASE-CLEAN Latent_Heating_(K/hr) Height_(km) NorthEast -10:0.1:10     0.0 15.0 prof_lh_tott_lht1p0_diff_RB_SS.jpg
+ProfPlot: ccn2 pmeas_theta_e_RB_SS        theta_e diff PANEL:e_CASE-CLEAN Theta-E_(K)           Height_(km) NorthEast    -5:0.01:5   0.0 15.0 prof_theta_e_diff_RB_SS.jpg
+ProfPlot: ccn2 pmeas_w_twp4_RB_SS         w       diff PANEL:f_CASE-CLEAN W_(m/s)               Height_(km) SouthEast  -0.5:0.05:0.5 0.0 15.0 prof_w_twp4_diff_RB_SS.jpg
 
 ######################## Profile Time Series Plots #############################
  
