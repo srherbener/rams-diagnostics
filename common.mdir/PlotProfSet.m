@@ -1,4 +1,4 @@
-function [ ] = PlotProfSet( Xvals, Zvals, Profs, Xlabel, Zlabel, Ptitle, Lstyles, Lgscales, LegText, LegLoc, OutFile )
+function [ ] = PlotProfSet( Xvals, Zvals, Profs, Xlabel, Zlabel, Ptitle, Lstyles, Lgscales, LegText, LegLoc, Ptype, OutFile )
 %PlotProfSet Plot a set of vertical profiles on the same panel
 %   This function will take data contained in Profs and plot them on a
 %   single panel line plot. Each row of Profs is a separate profile.
@@ -12,7 +12,15 @@ Fig = figure;
 % on" and then plot the remainder profiles.
 
 [ Nprofs, Npts ] = size(Profs);
-Lwidth = 3;
+if (strcmp(Ptype, 'test'))
+  Lwidth = 1;
+  Fsize = 16;
+  LegFsize = 12;
+else
+  Lwidth = 3;
+  Fsize = 45;
+  LegFsize = 25;
+end
 
 Yticks = [ 2 6 10 14 ];
 Yticklabels = { '2' '6' '10' '14' };
@@ -32,7 +40,7 @@ Lcolor = [ 1 1 1 ] * Lgscales(1);
 plot(Profs(1,:),Zvals,'Color', Lcolor, 'LineStyle', Lstyles{1},'LineWidth',Lwidth);
 xlim([ min(Xvals) max(Xvals) ]);
 ylim([ min(Zvals) max(Zvals) ]);
-set (gca, 'FontSize', 45);
+set (gca, 'FontSize', Fsize);
 set(gca, 'YTick', Yticks);
 set(gca, 'YTickLabel', Yticklabels);
 hold on;
@@ -58,7 +66,7 @@ else
 end
 xlabel(Xlabel);
 ylabel(Zlabel);
-legend(LegText, 'Location', LegLoc, 'FontSize', 25);
+legend(LegText, 'Location', LegLoc, 'FontSize', LegFsize);
 legend boxoff;
 
 % Fix up the positioning

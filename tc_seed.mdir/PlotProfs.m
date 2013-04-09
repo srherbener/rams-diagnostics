@@ -91,6 +91,6 @@ for iplot = 1:length(Config.ProfPlots)
     end
 
     fprintf('Writing plot file: %s\n', OutFile);
-    PlotProfSet(Xvals, Zvals, Profs, Xlabel, Zlabel, Ptitle, Lstyles, Lgscales, LegText, LegLoc, OutFile);
+    PlotProfSet(Xvals, Zvals, Profs, Xlabel, Zlabel, Ptitle, Lstyles, Lgscales, LegText, LegLoc, Ptype, OutFile);
     fprintf('\n');
 end

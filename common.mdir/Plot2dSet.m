@@ -77,7 +77,7 @@ if (strcmp(AddMeas, 'Tphases'))
         Ty = Ylims(1) + 0.95 * Yrange;
     end
     
-    DrawTmark( 40,  60, 5, Ty, Yinc, 'RI');
+    %DrawTmark( 40,  60, 5, Ty, Yinc, 'RI');
     %DrawTmark( 80, 100, 5, Ty, Yinc, 'TR');
     DrawTmark(120, 140, 5, Ty, Yinc, 'SS');
 end
