@@ -44,11 +44,13 @@ montage -tile 2x2 -geometry ${Jsize}+2+100 \
 
 # Figure 8: storm core: latent heat in first column, w in second column
 echo "Figure 8"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
+montage -tile 2x3 -geometry ${Jsize}+2+100 \
  prs_lh_tott_lht1p0_SC_SS_TCS_SD_C2000.jpg \
  prs_w_SC_SS_TCS_SD_C2000.jpg \
  prof_lh_tott_lht1p0_SC_SS.jpg \
  prof_w_SC_SS.jpg \
+ prof_lh_tott_lht1p0_diff_SC_SS.jpg \
+ prof_w_diff_SC_SS.jpg \
  Figure8.jpg
 
 # Figure 9: storm core: relative vorticity
@@ -62,11 +64,15 @@ montage -tile 2x2 -geometry ${Jsize}+2+100 \
 
 # Figure 10: rainbands, profiles
 echo "Figure 10"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
+montage -tile 2x4 -geometry ${Jsize}+2+100 \
  prof_speed_r_RB_SS.jpg \
+ prof_speed_r_diff_RB_SS.jpg \
  prof_relhum_RB_SS.jpg \
+ prof_relhum_diff_RB_SS.jpg \
  prof_lh_tott_lht1p0_RB_SS.jpg \
+ prof_lh_tott_lht1p0_diff_RB_SS.jpg \
  prof_w_twp4_RB_SS.jpg \
+ prof_w_twp4_diff_RB_SS.jpg \
  Figure10.jpg
 
 # Figure 11: pressure diff
