@@ -354,8 +354,8 @@ LinePlot: ccn4 MaxVt   IKE             TsAll xy PANEL:a) Northwest none    KeVt.
 LinePlot: ccn4 SimTime RMW             TsAll  y PANEL:b) NorthEast Tphases TS_rmw.jpg
 LinePlot: ccn4 SimTime DeltapAll_SC_RB TsAll  y _        SouthEast Tphases TS_DeltapAll_SC_RB.jpg
 
-#LinePlot: ccn2_ext    MaxVt  IKE     TsAll    xy Size_vs_Intensity           Northwest none   KeVt_ext.jpg
-#LinePlot: ccn2_ext    RadAll VtAllSS SfcVtAll  y Radial_Structure_of_Vt:_SS  NorthEast IntVol R_Vt_All_SS_ext.jpg
+LinePlot: ccn2 MaxVt  IKE     TsAll    xy PANEL:a) Northwest none   KeVt_ext.jpg
+LinePlot: ccn2 RadAll VtAllSS SfcVtAll  y PANEL:b) NorthEast IntVol R_Vt_All_SS_ext.jpg
 
 #LinePlot: ccn4    SimTime IKE   TsAll y Integrated_Kinetic_Energy NorthWest none TS_ike.jpg
 #LinePlot: ccn4    SimTime MaxVt TsAll y Maximum_Vt                SouthEast none TS_max_vt.jpg
