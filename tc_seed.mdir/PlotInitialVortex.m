@@ -36,7 +36,6 @@ VT_INIT = VT_INIT(Z1:Z2,:); % rows are z dimension now (after the transpose)
 
 % plot
 Pfile = sprintf('%s/InitVortex.jpg', PlotDir);
-Ptitle = sprintf('Initial Vortex: Azimuthally averaged Vt (m/s)');
 Xlabel = sprintf('Radius (km)');
 Ylabel = sprintf('Height (km)');
 
@@ -60,12 +59,30 @@ colormap(cmap);
 
 contourf(X, Z, VT_INIT);
 shading flat;
-set(gca,'FontSize', 25);
+set(gca,'FontSize', 45);
 caxis([ 0 15 ]);
-%title(Ptitle);
+set(gca, 'XTick', [ 100 200 ]);
+% The title is in a box that adjusts to the amount of characters in
+% the title. Ie, it doesn't do any good to do Left/Center/Right
+% alignment. But, the entire box can be moved to the left side of the
+% plot.
+T = title('a)');
+set(T, 'Units', 'Normalized');
+set(T, 'HorizontalAlignment', 'Left');
+Tpos = get(T, 'Position');
+Tpos(1) = 0; % line up with left edge of plot area
+set(T, 'Position', Tpos);
 xlabel(Xlabel);
 ylabel(Ylabel);
 colorbar;
+
+% Fix up the positioning
+Ppos = get(gca, 'Position'); % position of plot area
+Ppos(1) = Ppos(1) * 1.05;
+Ppos(2) = Ppos(2) * 0.95;
+Ppos(3) = Ppos(3) * 0.90;
+Ppos(4) = Ppos(4) * 0.90;
+set(gca, 'Position', Ppos);
 
 saveas(Fig, Pfile);
 close(Fig);

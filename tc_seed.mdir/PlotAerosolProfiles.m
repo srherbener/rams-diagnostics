@@ -16,7 +16,7 @@ Z = squeeze(hdf5read(Hfile, '/z_coords')) / 1000; % km
 % replace the bottom z value with zero since it is below the surface
 Z(1) = 0;
 Z1 = 1;
-Z2 = find(Z <= 8, 1, 'last');
+Z2 = find(Z <= 10, 1, 'last');
 Z = Z(Z1:Z2);
 Nz = length(Z);
 
@@ -27,7 +27,7 @@ CCN_TAPER = 31;
 Np = length(CCN_VAL);
 
 % the profile actually starts with Z(2), but this is 25m which on the
-% scale of 8km vertical is essentially zero, so just
+% scale of 10km vertical is essentially zero, so just
 % let the profile go to the bottom
 CCN = zeros(Np,Nz);
 for i = 1:Nz
@@ -51,11 +51,10 @@ Colors = { 'k' 'k' 'k' 'k' };
 Ltext = { 'AS0100' 'AS0500' 'AS1000' 'AS2000' };
 
 % Plot
-Lwidth = 2;
-Fsize = 25;
+Lwidth = 3;
+Fsize = 45;
 Pfile = sprintf('%s/AerosolProfiles.jpg', PlotDir);
-Ptitle = sprintf('Aerosol Source Profile: %d/cc Example', CCN_VAL);
-Xlabel = sprintf('Aerosol concentration (#/cc)');
+Xlabel = sprintf('Concentration (#/cc)');
 Ylabel = sprintf('Height (km)');
 
 Fig = figure;
@@ -72,12 +71,28 @@ ylim(Ylims);
 
 % axes
 set (gca, 'FontSize', Fsize);
-%title(Ptitle);
+% The title is in a box that adjusts to the amount of characters in
+% the title. Ie, it doesn't do any good to do Left/Center/Right
+% alignment. But, the entire box can be moved to the left side of the
+% plot.
+T = title('b)');
+set(T, 'Units', 'Normalized');
+set(T, 'HorizontalAlignment', 'Left');
+Tpos = get(T, 'Position');
+Tpos(1) = 0; % line up with left edge of plot area
+set(T, 'Position', Tpos);
 xlabel(Xlabel);
 ylabel(Ylabel);
-legend(Ltext, 'Location', 'NorthEast');
+legend(Ltext, 'Location', 'NorthEast', 'FontSize', 25);
 legend boxoff;
 
+% Fix up the positioning
+Ppos = get(gca, 'Position'); % position of plot area
+Ppos(1) = Ppos(1) * 1.05;
+Ppos(2) = Ppos(2) * 0.95;
+Ppos(3) = Ppos(3) * 0.90;
+Ppos(4) = Ppos(4) * 0.90;
+set(gca, 'Position', Ppos);
 
 saveas(Fig, Pfile);
 close(Fig);

@@ -87,13 +87,11 @@ MIN_SPL = SmoothFillTseries(MIN_SPL, Ntsteps, Flen);
 
 % Plot
 Lwidth = 3;
-Fsize = 25;
+Fsize = 45;
 Pfile = sprintf('%s/ControlVtSpl.jpg', PlotDir);
-Ptitle = sprintf('Control Storm Evolution');
-%Xlabel = sprintf('Local Time, Starting at %s', StartTime);
 Xlabel = sprintf('Simulation Time (hr)');
-Y1label = sprintf('Maximum surface Vt (m/s)');
-Y2label = sprintf('Minimum sea level pressure (mb)');
+Y1label = sprintf('Max Vt (m/s)');
+Y2label = sprintf('Min SLP (mb)');
 
 AxisPos = [ 0.11 0.15 0.75 0.75 ] ;
 Xlims = [ 0 150 ];
@@ -155,25 +153,34 @@ set(H2, 'LineWidth', Lwidth, 'Color', 'k', 'LineStyle', '--');
 % axes
 axes(AX(1));
 set(gca, 'FontSize', Fsize);
-%set(gca, 'XTick', Tticks);
-%set(gca, 'XTickLabel', Tlabels);
 set(gca, 'Position', AxisPos);
 set(gca, 'YColor', 'k');
+set(gca, 'XTick', [ 50 100 ]);
+set(gca, 'YTick', [ 0 20 40 ]);
 xlim(Xlims);
 ylabel(Y1label);
 ylim(Y1lims);
 
 axes(AX(2));
 set(gca, 'FontSize', Fsize);
-%set(gca, 'XTick', Tticks);
-%set(gca, 'XTickLabel', Tlabels);
 set(gca, 'Position', AxisPos);
 set(gca, 'YColor', 'k');
+set(gca, 'XTick', [ 50 100 ]);
+set(gca, 'YTick', [ 970 990 1010 ]);
 xlim(Xlims);
 ylabel(Y2label);
 ylim(Y2lims);
 
-%title(Ptitle);
+% The title is in a box that adjusts to the amount of characters in
+% the title. Ie, it doesn't do any good to do Left/Center/Right
+% alignment. But, the entire box can be moved to the left side of the
+% plot.
+T = title('c)');
+set(T, 'Units', 'Normalized');
+set(T, 'HorizontalAlignment', 'Left');
+Tpos = get(T, 'Position');
+Tpos(1) = 0; % line up with left edge of plot area
+set(T, 'Position', Tpos);
 xlabel(Xlabel);
 
 % markers
@@ -188,10 +195,10 @@ text(Xbefore(1), Ytext, TxtBefore, 'FontSize', TfontSize);
 
 % fix position
 Ppos = get(gca, 'Position');
-Ppos(1) = Ppos(1) * 1.05;
-Ppos(2) = Ppos(2) * 1.05;
-Ppos(3) = Ppos(3) * 0.90;
-Ppos(4) = Ppos(4) * 0.90;
+Ppos(1) = Ppos(1) * 1.65;
+Ppos(2) = Ppos(2) * 1.65;
+Ppos(3) = Ppos(3) * 0.70;
+Ppos(4) = Ppos(4) * 0.80;
 set(gca, 'Position', Ppos);
 
 saveas(Fig, Pfile);
