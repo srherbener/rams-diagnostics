@@ -84,3 +84,10 @@ montage -tile 2x2 -geometry ${Jsize}+2+100 \
  pts_w_SC_LC_TCS_SD_C2000.jpg \
  pts_w_RB_LC_TCS_SD_C2000.jpg \
  Figure10.jpg
+
+# Figure 11: destructive potential
+echo "Figure 11"
+montage -tile 2x1 -geometry ${Jsize}+2+100 \
+ KeVt_ext.jpg \
+ R_Vt_All_SS_ext.jpg \
+ Figure11.jpg
