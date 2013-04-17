@@ -26,7 +26,7 @@ program tsavg
   character (len=LittleString) :: AvgFunc
   character (len=MediumString), dimension(MaxArgFields) :: ArgList
   integer :: Nfields
-  character (len=LittleString) :: VarDim
+  character (len=LittleString) :: VarDim, XvarDim, YvarDim
   logical :: UseFilter
 
   ! Data arrays
@@ -35,22 +35,26 @@ program tsavg
   type (Rhdf5Var) :: OutXcoords, OutYcoords, OutZcoords, OrigDimSize
   type (Rhdf5Var) :: U, V, AzWind, Speed10m, Dens, Var, Filter, TserAvg, RadMaxWind
   type (Rhdf5var) :: PrecipRate, Lwp, Ltss, Theta
+  type (Rhdf5var) :: Xvar, Yvar
   character (len=MediumString) :: Ufile, Vfile, AzWindFile, Speed10mFile, DensFile, VarFile, InCoordFile
   character (len=MediumString) :: PrecipRateFile, LwpFile, LtssFile, ThetaFile
+  character (len=MediumString) :: XvarFile, YvarFile
   character (len=LittleString) :: VarFprefix
   character (len=LittleString) :: rh5f_facc
   real :: PrecipRateLimit, Zbot, Ztop
   integer :: Kbot, Ktop
   
-  integer :: Nbins1, Nbins2
-  real :: Bstart1, Binc1, Bstart2, Binc2
-  real, dimension(:), allocatable :: Bins1, Bins2
+  integer :: Xnbins, Ynbins
+  real :: Xbstart, Xbinc, Ybstart, Ybinc
+  real, dimension(:), allocatable :: Xbins, Ybins
 
   integer :: rh5f_azwind, rh5f_u, rh5f_v, rh5f_speed10m, rh5f_dens, rh5f_var, rh5f_filter, rh5f_out
   integer :: rh5f_pcprate, rh5f_lwp, rh5f_ltss, rh5f_theta
+  integer :: rh5f_xvar, rh5f_yvar
 
   integer :: id, ib, ix, iy, iz, it
   integer :: Nx, Ny, Nz, Nt
+  integer :: XvarNz, YvarNz
   real :: DeltaX, DeltaY
   real, dimension(:), allocatable :: InXcoordsKm, InYcoordsKm
   logical :: BadDims
@@ -96,9 +100,9 @@ program tsavg
       VarFprefix = trim(ArgList(3))
       VarFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
       VarDim     = trim(ArgList(4))
-      read(ArgList(5), '(i)') Nbins1
-      read(ArgList(6), '(f)') Bstart1
-      read(ArgList(7), '(f)') Binc1
+      read(ArgList(5), '(i)') Xnbins
+      read(ArgList(6), '(f)') Xbstart
+      read(ArgList(7), '(f)') Xbinc
     else
       write (*,*) 'ERROR: average function hist requires seven fields: hist:<var>:<file>:<dim>:<num_bins>:<bin_start>:<bin_inc>'
       stop
@@ -132,19 +136,59 @@ program tsavg
       Lwp%vname         = trim(ArgList(5))
       VarFprefix        = trim(ArgList(6))
       LwpFile           = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
-      read(ArgList(7), '(i)') Nbins1
-      read(ArgList(8), '(f)') Bstart1
-      read(ArgList(9), '(f)') Binc1
+      read(ArgList(7), '(i)') Xnbins
+      read(ArgList(8), '(f)') Xbstart
+      read(ArgList(9), '(f)') Xbinc
       Ltss%vname        = trim(ArgList(10))
       VarFprefix        = trim(ArgList(11))
       LtssFile          = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
-      read(ArgList(12), '(i)') Nbins2
-      read(ArgList(13), '(f)') Bstart2
-      read(ArgList(14), '(f)') Binc2
+      read(ArgList(12), '(i)') Ynbins
+      read(ArgList(13), '(f)') Ybstart
+      read(ArgList(14), '(f)') Ybinc
     else
       write (*,*) 'ERROR: average function pop requires fourteen fields:'
       write (*,*) 'ERROR:   pop:<pcp_var>:<pcp_file>:<pcp_limit>:<lwp_var>:<lwp_file>:<lwp_nbins>:<lwp_bstart>:<lwp_binc>:'
       write (*,*) 'ERROR:       <ltss_var>:<ltss_file>:<ltss_nbins>:<ltss_bstart>:<ltss_binc>'
+      stop
+    endif
+  endif
+
+  if (AvgFunc(1:7) .eq. 'hist2d:') then
+    call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'hist2d spec')
+    if (Nfields .eq. 13) then
+      ! got the right amount of fields
+      !   field    value
+      !    1       'hist2d'
+      !    2       name of x variable inside the REVU file
+      !    3       prefix for the REVU file name containing the x variable
+      !    4       dimensionalitiy of x variable (2d or 3d)
+      !    5       x: number of bins
+      !    6       x: bin start
+      !    7       x: bin increment
+      !    8       name of y variable inside the REVU file
+      !    9       prefix for the REVU file name containing the y variable
+      !   10       dimensionalitiy of y variable (2d or 3d)
+      !   11       y: number of bins
+      !   12       y: bin start
+      !   13       y: bin increment
+      AvgFunc     = trim(ArgList(1))
+      Xvar%vname  = trim(ArgList(2))
+      VarFprefix  = trim(ArgList(3))
+      XvarFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
+      XvarDim     = trim(ArgList(4))
+      read(ArgList(5), '(i)') Xnbins
+      read(ArgList(6), '(f)') Xbstart
+      read(ArgList(7), '(f)') Xbinc
+      Yvar%vname  = trim(ArgList(8))
+      VarFprefix  = trim(ArgList(9))
+      YvarFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
+      YvarDim     = trim(ArgList(10))
+      read(ArgList(11), '(i)') Ynbins
+      read(ArgList(12), '(f)') Ybstart
+      read(ArgList(13), '(f)') Ybinc
+    else
+      write (*,*) 'ERROR: average function hist2d requires thirteen fields:'
+      write (*,*) 'ERROR:   hist2d:<x_var>:<x_file>:<x_dim>:<x_nbins><x_bstart><x_binc>:<y_var>:<y_file>:<y_dim>:<y_nbins>:<y_bstart>:<y_binc>:'
       stop
     endif
   endif
@@ -185,9 +229,9 @@ program tsavg
     write (*,*) '    File name: ', trim(VarFile)
     write (*,*) '    Dimensionality: ', trim(VarDim)
     write (*,*) '    Binning specs:'
-    write (*,*) '      Number of bins: ', Nbins1
-    write (*,*) '      Bins start at: ', Bstart1
-    write (*,*) '      Delta between bins: ', Binc1
+    write (*,*) '      Number of bins: ', Xnbins
+    write (*,*) '      Bins start at: ', Xbstart
+    write (*,*) '      Delta between bins: ', Xbinc
   else if (AvgFunc .eq. 'pop') then
     write (*,*) '    Precip rate variable name: ', trim(PrecipRate%vname)
     write (*,*) '    Precip rate File name: ', trim(PrecipRateFile)
@@ -197,13 +241,28 @@ program tsavg
     write (*,*) '    Lower troposhperic static stability file name: ', trim(LtssFile)
     write (*,*) '    Precip rate threshold: ', PrecipRateLimit
     write (*,*) '    Liquid water path binning specs:'
-    write (*,*) '      Number of bins: ', Nbins1
-    write (*,*) '      Bins start at: ', Bstart1
-    write (*,*) '      Delta between bins: ', Binc1
+    write (*,*) '      Number of bins: ', Xnbins
+    write (*,*) '      Bins start at: ', Xbstart
+    write (*,*) '      Delta between bins: ', Xbinc
     write (*,*) '    Lower tropospheric static stability binning specs:'
-    write (*,*) '      Number of bins: ', Nbins2
-    write (*,*) '      Bins start at: ', Bstart2
-    write (*,*) '      Delta between bins: ', Binc2
+    write (*,*) '      Number of bins: ', Ynbins
+    write (*,*) '      Bins start at: ', Ybstart
+    write (*,*) '      Delta between bins: ', Ybinc
+  else if (AvgFunc .eq. 'hist2d') then
+    write (*,*) '    X variable name: ', trim(Xvar%vname)
+    write (*,*) '    X file name: ', trim(XvarFile)
+    write (*,*) '    X variable dimensionality: ', trim(XvarDim)
+    write (*,*) '    X variable binning specs:'
+    write (*,*) '      Number of bins: ', Xnbins
+    write (*,*) '      Bins start at: ', Xbstart
+    write (*,*) '      Delta between bins: ', Xbinc
+    write (*,*) '    Y variable name: ', trim(Yvar%vname)
+    write (*,*) '    Y file name: ', trim(YvarFile)
+    write (*,*) '    Y variable dimensionality: ', trim(YvarDim)
+    write (*,*) '    Y variable binning specs:'
+    write (*,*) '      Number of bins: ', Ynbins
+    write (*,*) '      Bins start at: ', Ybstart
+    write (*,*) '      Delta between bins: ', Ybinc
   else if (AvgFunc .eq. 'ltss') then
     write (*,*) '    Theta variable name: ', trim(Theta%vname)
     write (*,*) '    Theta file name: ', trim(ThetaFile)
@@ -314,6 +373,61 @@ program tsavg
         stop
       endif
     endif
+  else if (AvgFunc .eq. 'hist2d') then
+    ! check that the horzontal dimensions of x and y match
+    call rhdf5_read_init(XvarFile, Xvar)
+    call rhdf5_read_init(YvarFile, Yvar)
+
+    if (.not.(DimsMatch(Xvar, Yvar))) then
+      write (*,*) 'ERROR: dimensions of x and y variables do not match'
+      stop
+    endif
+
+    ! Record dims: if we got to here, then x and y have matching x, y and t dimensions
+    ! so get these from the x variable.
+    !
+    ! Want to allow for x and y to be 2d or 3d. To do this record the z dimensions
+    ! separately for x and y. If either of x and y are 3d, then make the output 3d
+    ! (do histograms for each level).
+    Nx = Xvar%dims(1)
+    Ny = Xvar%dims(2)
+    Nz = 1                       ! Assume both x and y are 2d, if either is 3d then
+                                 ! set Nz to the 3d size. If both are 3d, there is a
+                                 ! check that x and y have matching z dimensions so it
+                                 ! doesn't matter if Nz gets set from x or y.
+    if (XvarDim .eq. '2d') then
+      XvarNz = 1
+      Nt = Xvar%dims(3)
+    else
+      XvarNz = Xvar%dims(3)
+      Nt = Xvar%dims(4)
+
+      Nz = XvarNz
+    endif
+    if (YvarDim .eq. '2d') then
+      YvarNz = 1
+    else
+      YvarNz = Yvar%dims(3)
+
+      Nz = YvarNz
+    endif
+
+    ! make sure if x and y are both 3d, that their z dimensions match
+    if ((XvarDim .eq. '3d') .and. (YvarDim .eq. '3d')) then
+      if (XvarNz .ne. YvarNz) then
+        write (*,*) 'ERROR: x and y variables are both 3d, but their z dimensions do not match'
+        stop
+      endif
+    endif
+
+    ! filter is optional
+    if (UseFilter) then
+      call rhdf5_read_init(FilterFile, Filter)
+      if (.not.(DimsMatch(Filter, Xvar))) then
+        write (*,*) 'ERROR: dimensions of filter do not match dimensions of x and y variables'
+        stop
+      endif
+    endif
   else if (AvgFunc .eq. 'ltss') then
     ! get dimensions from theta file
     call rhdf5_read_init(ThetaFile, Theta)
@@ -420,6 +534,21 @@ program tsavg
     do id = 1, PrecipRate%ndims
       write (*,*), '    ', trim(PrecipRate%dimnames(id)), ': ', PrecipRate%dims(id)
     enddo
+  else if (AvgFunc .eq. 'hist2d') then
+    Xvar%ndims = Xvar%ndims - 1
+    Yvar%ndims = Yvar%ndims - 1
+    write (*,*) '  X variable: ', Xvar%ndims
+    write (*,*) '    Number of dimensions: ', Xvar%ndims
+    write (*,*) '    Dimension sizes:'
+    do id = 1, Xvar%ndims
+      write (*,*), '      ', trim(Xvar%dimnames(id)), ': ', Xvar%dims(id)
+    enddo
+    write (*,*) '  Y variable: ', Yvar%ndims
+    write (*,*) '    Number of dimensions: ', Yvar%ndims
+    write (*,*) '    Dimension sizes:'
+    do id = 1, Yvar%ndims
+      write (*,*), '      ', trim(Yvar%dimnames(id)), ': ', Yvar%dims(id)
+    enddo
   else if (AvgFunc .eq. 'ltss') then
     Theta%ndims = Theta%ndims - 1
     write (*,*) '  Number of dimensions: ', Theta%ndims
@@ -477,7 +606,7 @@ program tsavg
     TserAvg%units = Var%units
   else if (AvgFunc .eq. 'hist') then
     ! put bin values in the x dimension
-    TserAvg%dims(1) = Nbins1
+    TserAvg%dims(1) = Xnbins
     TserAvg%dims(2) = 1
     TserAvg%dims(3) = 1
     TserAvg%units = Var%units
@@ -485,10 +614,15 @@ program tsavg
     ! put LWP bin values in the x dimension
     ! put LTSS bin values in the y dimension
     ! put Nr and Nt results in z dimension
-    TserAvg%dims(1) = Nbins1
-    TserAvg%dims(2) = Nbins2
+    TserAvg%dims(1) = Xnbins
+    TserAvg%dims(2) = Ynbins
     TserAvg%dims(3) = 2
     TserAvg%units = PrecipRate%units // ':' // Lwp%units
+  else if (AvgFunc .eq. 'hist2d') then
+    TserAvg%dims(1) = Xnbins
+    TserAvg%dims(2) = Ynbins
+    TserAvg%dims(3) = Nz
+    TserAvg%units = Xvar%units // ':' // Lwp%units
   else if (AvgFunc .eq. 'ltss') then
     ! single point result
     TserAvg%dims(1) = 1
@@ -551,6 +685,19 @@ program tsavg
     InCoordFile = trim(VarFile)
   else if (AvgFunc .eq. 'pop') then
     InCoordFile = trim(PrecipRateFile)
+  else if (AvgFunc .eq. 'hist2d') then
+    ! Want to end up using a 3d var if one of x and y is 3d, that is use 2d only
+    ! if both x and y are 2d. Set InCoordFile to x, and switch to y only if y is 3d.
+    ! This gives you:
+    !     x   y    InCoordFile
+    !    2d  2d       2d  (x)
+    !    2d  3d       3d  (y)
+    !    3d  2d       3d  (x)
+    !    3d  3d       3d  (y)
+    InCoordFile = trim(XvarFile)
+    if (YvarDim .eq. '3d') then
+      InCoordFile = trim(YvarFile)
+    endif
   else if (AvgFunc .eq. 'ltss') then
     InCoordFile = trim(ThetaFile)
   else if (AvgFunc .eq. 'storm_int') then
@@ -619,18 +766,18 @@ program tsavg
   flush(6)
 
   ! If doing histogram or pop, calculate the bin values
-  if ((AvgFunc .eq. 'hist') .or. (AvgFunc .eq. 'pop')) then
-    allocate(Bins1(Nbins1))
-    Bins1(1) = Bstart1
-    do ib = 2, Nbins1
-      Bins1(ib) = Bins1(ib-1) + Binc1
+  if ((AvgFunc .eq. 'hist') .or. (AvgFunc .eq. 'pop') .or. (AvgFunc .eq. 'hist2d')) then
+    allocate(Xbins(Xnbins))
+    Xbins(1) = Xbstart
+    do ib = 2, Xnbins
+      Xbins(ib) = Xbins(ib-1) + Xbinc
     enddo
 
-    if (AvgFunc .eq. 'pop') then
-      allocate(Bins2(Nbins2))
-      Bins2(1) = Bstart2
-      do ib = 2, Nbins2
-        Bins2(ib) = Bins2(ib-1) + Binc2
+    if ((AvgFunc .eq. 'pop') .or. (AvgFunc .eq. 'hist2d')) then
+      allocate(Ybins(Ynbins))
+      Ybins(1) = Ybstart
+      do ib = 2, Ynbins
+        Ybins(ib) = Ybins(ib-1) + Ybinc
       enddo
     endif
   endif
@@ -669,11 +816,11 @@ program tsavg
   OutXcoords%dimnames(1) = 'x'
   OutXcoords%units = 'degrees_east'
   OutXcoords%descrip = 'longitude'
-  if ((AvgFunc .eq. 'hist') .or. (AvgFunc .eq. 'pop')) then
-    OutXcoords%dims(1) = Nbins1
-    allocate(OutXcoords%vdata(Nbins1))
-    do ib = 1, Nbins1
-      OutXcoords%vdata(ib) = Bins1(ib)
+  if ((AvgFunc .eq. 'hist') .or. (AvgFunc .eq. 'pop') .or. (AvgFunc .eq. 'hist2d')) then
+    OutXcoords%dims(1) = Xnbins
+    allocate(OutXcoords%vdata(Xnbins))
+    do ib = 1, Xnbins
+      OutXcoords%vdata(ib) = Xbins(ib)
     enddo
   else
     OutXcoords%dims(1) = 1
@@ -686,11 +833,11 @@ program tsavg
   OutYcoords%dimnames(1) = 'y'
   OutYcoords%units = 'degrees_north'
   OutYcoords%descrip = 'latitude'
-  if (AvgFunc .eq. 'pop') then
-    OutYcoords%dims(1) = Nbins2
-    allocate(OutYcoords%vdata(Nbins2))
-    do ib = 1, Nbins2
-      OutYcoords%vdata(ib) = Bins2(ib)
+  if ((AvgFunc .eq. 'pop') .or. (AvgFunc .eq. 'hist2d')) then
+    OutYcoords%dims(1) = Ynbins
+    allocate(OutYcoords%vdata(Ynbins))
+    do ib = 1, Ynbins
+      OutYcoords%vdata(ib) = Ybins(ib)
     enddo
   else
     OutYcoords%dims(1) = 1
@@ -703,7 +850,7 @@ program tsavg
   OutZcoords%dimnames(1) = 'z'
   OutZcoords%units = 'meter'
   OutZcoords%descrip = 'sigma-z'
-  if (AvgFunc .eq. 'hda') then
+  if ((AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist2d')) then
     OutZcoords%dims(1) = Nz
     allocate(OutZcoords%vdata(Nz))
     do iz = 1, Nz
@@ -745,6 +892,9 @@ program tsavg
     call rhdf5_open_file(PrecipRateFile, rh5f_facc, 1, rh5f_pcprate)
     call rhdf5_open_file(LwpFile, rh5f_facc, 1, rh5f_lwp)
     call rhdf5_open_file(LtssFile, rh5f_facc, 1, rh5f_ltss)
+  else if (AvgFunc .eq. 'hist2d') then
+    call rhdf5_open_file(XvarFile, rh5f_facc, 1, rh5f_xvar)
+    call rhdf5_open_file(YvarFile, rh5f_facc, 1, rh5f_yvar)
   else if (AvgFunc .eq. 'ltss') then
     call rhdf5_open_file(ThetaFile, rh5f_facc, 1, rh5f_theta)
   else if (AvgFunc .eq. 'storm_int') then
@@ -784,7 +934,7 @@ program tsavg
       else if (AvgFunc .eq. 'hda') then
         call DoHda(Nx, Ny, Nz, Filter%dims(3), Var%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata)
       else if (AvgFunc .eq. 'hist') then
-        call DoHist(Nx, Ny, Nz, Filter%dims(3), Nbins1, Var%vdata, Filter%vdata, UseFilter, UndefVal, Bins1, TserAvg%vdata)
+        call DoHist(Nx, Ny, Nz, Filter%dims(3), Xnbins, Var%vdata, Filter%vdata, UseFilter, UndefVal, Xbins, TserAvg%vdata)
       endif
 
       deallocate(Var%vdata)
@@ -793,11 +943,19 @@ program tsavg
       call rhdf5_read_variable(rh5f_lwp, Lwp%vname, Lwp%ndims, it, Lwp%dims, rdata=Lwp%vdata)
       call rhdf5_read_variable(rh5f_ltss, Ltss%vname, Ltss%ndims, it, Ltss%dims, rdata=Ltss%vdata)
 
-      call DoPop(Nx, Ny, Nz, Filter%dims(3), Nbins1, Nbins2, PrecipRate%vdata, Lwp%vdata, Ltss%vdata(1), Filter%vdata, UseFilter, UndefVal, PrecipRateLimit, Bins1, Bins2, TserAvg%vdata)
+      call DoPop(Nx, Ny, Nz, Filter%dims(3), Xnbins, Ynbins, PrecipRate%vdata, Lwp%vdata, Ltss%vdata(1), Filter%vdata, UseFilter, UndefVal, PrecipRateLimit, Xbins, Ybins, TserAvg%vdata)
 
       deallocate(PrecipRate%vdata)
       deallocate(Lwp%vdata)
       deallocate(Ltss%vdata)
+    else if (AvgFunc .eq. 'hist2d') then
+      call rhdf5_read_variable(rh5f_xvar, Xvar%vname, Xvar%ndims, it, Xvar%dims, rdata=Xvar%vdata)
+      call rhdf5_read_variable(rh5f_yvar, Yvar%vname, Yvar%ndims, it, Yvar%dims, rdata=Yvar%vdata)
+
+      call DoHist2d(Nx, Ny, Nz, XvarNz, YvarNz, Filter%dims(3), Xnbins, Ynbins, Xvar%vdata, Yvar%vdata, Filter%vdata, UseFilter, UndefVal, Xbins, Ybins, TserAvg%vdata)
+
+      deallocate(Xvar%vdata)
+      deallocate(Yvar%vdata)
     else if (AvgFunc .eq. 'ltss') then
       call rhdf5_read_variable(rh5f_theta, Theta%vname, Theta%ndims, it, Theta%dims, rdata=Theta%vdata)
 
@@ -850,6 +1008,9 @@ program tsavg
     call rhdf5_close_file(rh5f_pcprate)
     call rhdf5_close_file(rh5f_lwp)
     call rhdf5_close_file(rh5f_ltss)
+  else if (AvgFunc .eq. 'hist2d') then
+    call rhdf5_close_file(rh5f_xvar)
+    call rhdf5_close_file(rh5f_yvar)
   else if (AvgFunc .eq. 'ltss') then
     call rhdf5_close_file(rh5f_theta)
   else if (AvgFunc .eq. 'storm_int') then
@@ -872,7 +1033,7 @@ program tsavg
   ! for downstream analyses. Eg. if you want to do fractional
   ! area calculations then the counts in the histogram do not
   ! tell you how many total points are in the domain.
-  if (AvgFunc .eq. 'hist') then
+  if ((AvgFunc .eq. 'hist') .or. (AvgFunc .eq. 'hist2d')) then
     ! common settings
     OrigDimSize%ndims = 1
     OrigDimSize%dims(1) = 1
@@ -999,6 +1160,14 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
     write (*,*) '                <theta_file>: prefix for the revu file'
     write (*,*) '                <z_bot>: height (Z) for bottom'
     write (*,*) '                <z_top>: height (Z) for top'
+    write (*,*) '            hist2d:<x_var>:<x_file>:<x_dim>:<x_nbins><x_bstart><x_binc>:<y_var>:<y_file>:<y_dim>:<y_nbins>:<y_bstart>:<y_binc>:'
+    write (*,*) '              for both X and Y bins:'
+    write (*,*) '                <*_var>: revu var name inside the file'
+    write (*,*) '                <*_file>: prefix for the revu file'
+    write (*,*) '                <*_dim>: dimensionality of variable, either "2d" or "3d"'
+    write (*,*) '                <*_nbins>: number of bins'
+    write (*,*) '                <*_bstart>: starting value for bins'
+    write (*,*) '                <*_binc>: delta between bins'
     write (*,*) '        <filter_file>: file containing the filter mask'
     stop
   end if
@@ -1023,6 +1192,7 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
       (AvgFunc(1:4) .ne. 'hda:')  .and. &
       (AvgFunc(1:5) .ne. 'hist:')  .and. &
       (AvgFunc(1:4) .ne. 'pop:')  .and. &
+      (AvgFunc(1:7) .ne. 'hist2d:')  .and. &
       (AvgFunc(1:5) .ne. 'ltss:')  .and. &
       (AvgFunc .ne. 'storm_int')  .and. &
       (AvgFunc .ne. 'max_azwind')) then
@@ -1034,6 +1204,7 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
     write (*,*) '          hist:<var>:<file>:<dim>:<num_bins>:<bin_start>:<bin_inc>'
     write (*,*) '          pop:<pcp_var>:<pcp_file>:<pcp_limit>:<lwp_var>:<lwp_file>:<lwp_nbins>:<lwp_bstart>:<lwp_binc>:'
     write (*,*) '              <ltss_var>:<ltss_file>:<ltss_nbins>:<ltss_bstart>:<ltss_binc>'
+    write (*,*) '          hist2d:<x_var>:<x_file>:<x_dim>:<x_nbins><x_bstart><x_binc>:<y_var>:<y_file>:<y_dim>:<y_nbins>:<y_bstart>:<y_binc>:'
     write (*,*) '          ltss:<theta_var>:<theta_file>:<k_bot>:<k_top>'
     write (*,*) '          storm_int'
     write (*,*) '          max_azwind'
@@ -1502,6 +1673,87 @@ subroutine DoPop(Nx, Ny, Nz, FilterNz, Nb_lwp, Nb_ltss, PrecipRate, Lwp, Ltss, F
 
   return
 end subroutine DoPop
+
+!**************************************************************************************
+! DoHist2d()
+!
+! This routine will create a 2D histogram.
+!
+subroutine DoHist2d(Nx, Ny, Nz, XvarNz, YvarNz, FilterNz, Xnbins, Ynbins, Xvar, Yvar, Filter, UseFilter, UndefVal, Xbins, Ybins, Counts)
+  implicit none
+
+  integer :: Nx, Ny, Nz, XvarNz, YvarNz, FilterNz, Xnbins, Ynbins
+  real, dimension(Nx,Ny,XvarNz) :: Xvar
+  real, dimension(Nx,Ny,YvarNz) :: Yvar
+  real, dimension(Nx,Ny,FilterNz) :: Filter
+  logical :: UseFilter
+  real :: UndefVal
+  real, dimension(Xnbins) :: Xbins
+  real, dimension(Ynbins) :: Ybins
+  real, dimension(Xnbins,Ynbins,Nz) :: Counts
+
+  integer :: ix, iy, iz, iz_x, iz_y, iz_filter
+  integer :: ib_x, ib_y
+
+  logical :: SelectPoint
+
+  ! go level by level
+  do iz = 1, Nz
+    ! zero out the counts
+    do ib_x = 1, Xnbins
+      do ib_y = 1, Ynbins
+        Counts(ib_x,ib_y,iz) = 0.0
+      enddo
+    enddo
+
+    ! Since Xvar and Yvar can have differing z dimensions, check to make sure we are not
+    ! going past the max z coordinate.
+    if (iz .gt. XvarNz) then
+      iz_x = XvarNz
+    else
+      iz_x = iz
+    endif
+    if (iz .gt. YvarNz) then
+      iz_y = YvarNz
+    else
+      iz_y = iz
+    endif
+   
+    ! If both x and y are 2D vars, use the z = 2 level (first model level above the surface)
+    ! since typically have the 3D filter z = 1 level all zeros (don't want
+    ! to include below surface model level in analysis).
+    if (Nz .eq. 1) then
+      iz_filter = 2
+    else
+      iz_filter = iz
+    endif
+
+    ! Walk through each grid cell on this level. Simultaneously bin the Xvar and Yvar values.
+    ! Increment the count for this grid cell only if the Xvar and Yvar values got placed into
+    ! an Xbin and Ybin.
+    do iy = 1, Ny
+      do ix = 1, Nx
+        ! don't select if either x or y is undefined
+        SelectPoint = ((anint(Xvar(ix,iy,iz_x)) .ne. UndefVal) .and. &
+                       (anint(Yvar(ix,iy,iz_y)) .ne. UndefVal))
+
+        ! if using a filter, check the filter value
+        if (UseFilter) then
+          SelectPoint = SelectPoint .and. (anint(Filter(ix,iy,iz_filter)) .eq. 1.0)
+        endif
+
+        ! get the bins and only count if both x and y bins were found
+        ib_x = FindBin(Xnbins, Xbins, Xvar(ix,iy,iz_x))
+        ib_y = FindBin(Ynbins, Ybins, Yvar(ix,iy,iz_y))
+        SelectPoint = SelectPoint .and. (ib_x .ne. -1) .and. (ib_y .ne. -1)
+        
+        if (SelectPoint) then
+          Counts(ib_x,ib_y,iz) = Counts(ib_x,ib_y,iz) + 1.0
+        endif
+      enddo
+    enddo
+  enddo
+end subroutine DoHist2d
 
 !**************************************************************************************
 ! DoLtss()
