@@ -13,7 +13,7 @@ if (exist(Pdir, 'dir') ~= 7)
   mkdir(Pdir);
 end
 
-Fsize = 30;
+Fsize = 45;
 
 for icase = 1:length(Config.Cases)
   Case  = Config.Cases(icase).Cname;
@@ -40,38 +40,38 @@ for icase = 1:length(Config.Cases)
       Title = regexprep(Pname,'_', ' ');
     end
 
-   fprintf('********************************************************************\n');
-   fprintf('Generating psuedo color plot:\n');
-   fprintf('  Input file: %s\n', InFile);
-   fprintf('  Input variable: %s\n', Var);
-   fprintf('  Data selection:\n');
-   fprintf('    Xrange, Xgroup: [ %.2f %.2f], %d\n', Xmin, Xmax, Xgroup);
-   fprintf('    Yrange, Ygroup: [ %.2f %.2f], %d\n', Ymin, Ymax, Ygroup);
-   fprintf('    Trange: [ %.2f %.2f]\n', Tmin, Tmax);
-   fprintf('  Plot color range: [ %.2f %.2f ]\n', Cmin, Cmax);
-   fprintf('  Output File: %s\n', OutFile);
-   fprintf('\n');
+    fprintf('********************************************************************\n');
+    fprintf('Generating psuedo color plot:\n');
+    fprintf('  Input file: %s\n', InFile);
+    fprintf('  Input variable: %s\n', Var);
+    fprintf('  Data selection:\n');
+    fprintf('    Xrange, Xgroup: [ %.2f %.2f], %d\n', Xmin, Xmax, Xgroup);
+    fprintf('    Yrange, Ygroup: [ %.2f %.2f], %d\n', Ymin, Ymax, Ygroup);
+    fprintf('    Trange: [ %.2f %.2f]\n', Tmin, Tmax);
+    fprintf('  Plot color range: [ %.2f %.2f ]\n', Cmin, Cmax);
+    fprintf('  Output File: %s\n', OutFile);
+    fprintf('\n');
 
-   % Read in the counts and do the data selection (along with combining bins)
-   C = hdf5read(InFile, Var);
-   X = hdf5read(InFile, 'x_coords');
-   Y = hdf5read(InFile, 'y_coords');
-   T = hdf5read(InFile, 't_coords')/3600; % hr
+    % Read in the counts and do the data selection (along with combining bins)
+    C = hdf5read(InFile, Var);
+    X = hdf5read(InFile, 'x_coords');
+    Y = hdf5read(InFile, 'y_coords');
+    T = hdf5read(InFile, 't_coords')/3600; % hr
+ 
+    T1 = find(T >= Tmin, 1, 'first');
+    T2 = find(T <= Tmax, 1, 'last');
+ 
+    [ COUNTS, XL, XU, YL, YU ] = GenCountBins(C(:,:,:,T1:T2), X, Y, Xmin, Xmax, Xgroup, Ymin, Ymax, Ygroup);
+    TIMES = T(T1:T2);
 
-   T1 = find(T >= Tmin, 1, 'first');
-   T2 = find(T <= Tmax, 1, 'last');
+    % If the time range was more than a single point, then sum up counts across the time
+    % dimension. Time will be the last dimension.
+    if ((T2-T1) > 0)
+      COUNTS = sum(COUNTS, ndims(COUNTS));
+    end
 
-   [ COUNTS, XL, XU, YL, YU ] = GenCountBins(C(:,:,:,T1:T2), X, Y, Xmin, Xmax, Xgroup, Ymin, Ymax, Ygroup);
-   TIMES = T(T1:T2);
-
-   % If the time range was more than a single point, then sum up counts across the time
-   % dimension. Time will be the last dimension.
-   if ((T2-T1) > 0)
-     COUNTS = sum(COUNTS, ndims(COUNTS));
-   end
-
-   % Turn the counts into a pdf
-   PDATA = double(COUNTS ./ sum(COUNTS(:)))'; % transpose is for plotting pursposes
+    % Turn the counts into a pdf
+    PDATA = double(COUNTS ./ sum(COUNTS(:)))'; % transpose is for plotting pursposes
 
     % Use pcolor to make the plot. This will look much better than using contourf
     % since contourf will try to interpolate between values in the grids when it
@@ -106,12 +106,25 @@ for icase = 1:length(Config.Cases)
     shading flat;
     set(gca, 'FontSize', Fsize);
     set(gca, 'Layer', 'top'); % place the axes (tick marks, box, etc) on top of the plot
+% kludge to get cloud depth working
+if (~isempty(regexp(InFile, '_cdepth_')))
+  fprintf('WARNING: have cloud depth, adjusting x ticks\n');
+  set(gca, 'XTick', [ 1000 3000 ]);
+end
     title(Title);
     xlabel(Xlabel);
     ylabel(Ylabel);
     cbar = colorbar;
     set(cbar, 'FontSize', Fsize);
     caxis([ Cmin Cmax ]);
+
+    % fix the position
+    Ppos = get(gca, 'Position'); % position of plot area
+    Ppos(1) = Ppos(1) * 1.00;
+    Ppos(2) = Ppos(2) * 1.00;
+    Ppos(3) = Ppos(3) * 0.90;
+    Ppos(4) = Ppos(4) * 1.00;
+    set(gca, 'Position', Ppos);
  
     saveas(Fig, OutFile);
     close(Fig);
