@@ -1,18 +1,18 @@
-function [ NR, NT, XL, XU, YL, YU ] = GenSlopeBins(Counts, Xbins, Ybins, Xmin, Xmax, Xsize, Ymin, Ymax, Ysize)
-% GenSlopeBins generate bins for slope data from POP diagnostic
+function [ OUT_COUNTS, XL, XU, YL, YU ] = GenCountBins(Counts, Xbins, Ybins, Xmin, Xmax, Xsize, Ymin, Ymax, Ysize)
+% GenCountBins combine bins from counts (histogram fashion)
 %
-%   Counts - array holding the count datat from the HDF5 pop file
+%   Counts - array holding the count data
 %   Xbins - vector holding the bin edge vaules for the x dimension
 %   Ybins - vector holding the bin edge vaules for the y dimension
 %   Xsize, Ysize - integers that say how many adjacent bins (in the x- and
 %                  y-directions that are to be used to combine into the output bins
 %
-% This function will create bins out of the count data from the pop diagnostic.
+% This function will create bins out of the count data.
 % The argument Counts is an array organized as (x,y,z,t) where
 %
 %   x - bins
 %   y - bins
-%   z - (Nt,Nr)  (note size of z dimension is 2)
+%   z - levels
 %   t - time
 %
 % The arguments Xsize, Ysize are integers that say how many adjacent bins
@@ -25,8 +25,7 @@ function [ NR, NT, XL, XU, YL, YU ] = GenSlopeBins(Counts, Xbins, Ybins, Xmin, X
 %
 % Output:
 %
-%  NR - total number of grid cells for each bin where it is raining
-%  NT - total number of grid cells for each bin
+%  OUT_COUNTS - combined counts in the new bin structure
 %  XL - lower boundaries of each Xbin
 %  XU - upper boundaries of each Xbin
 %  YL - lower boundaries of each Ybin
@@ -50,7 +49,7 @@ function [ NR, NT, XL, XU, YL, YU ] = GenSlopeBins(Counts, Xbins, Ybins, Xmin, X
 % of this, there are really effectively length(Bins)-1 bins. (we can just
 % add the last bin to the prior bin and git rid of the final bin)
 
-[ Nx, Ny, Nz, Ntime ] = size(Counts);
+[ Nx, Ny, Nz, Nt ] = size(Counts);
 
 % Create the bin edge data
 TempXL = Xbins(1:end-1);
@@ -58,12 +57,10 @@ TempXU = Xbins(2:end);
 TempYL = Ybins(1:end-1);
 TempYU = Ybins(2:end);
 
-% Split up the Counts array into the corresponding NR and NT arrays, and add
-% in the counts from the last bin into the next to last bin (in both the x and y
-% directions).
-%
-% Note that we need to add in a "band" around the ends of array (where the -1's
-% are located in the example below).
+% In the Counts array, add in the counts from the last bin into the next to
+% last bin (in both the x and y directions). This means that we need to add
+% the "band" around the ends of array (where the -1's are located in the
+% example below) to the entries adjacent to that band.
 %
 %  Counts = 
 %    1  4  7 -1         1 4 6
@@ -71,19 +68,11 @@ TempYU = Ybins(2:end);
 %    3  6  9 -1         2 5 6
 %   -1 -1 -1 -1
 %
-% Note that the -1 in the lower right got added in resulting in the 
-% '9' entry getting a -1 added three times.
-%
-TempNR = squeeze(Counts(1:end-1,1:end-1,2,:)); % extract all but the last bin
-TempNT = squeeze(Counts(1:end-1,1:end-1,1,:));
+TempC = squeeze(Counts(1:end-1,1:end-1,:,:)); % extract all but the last bin
 
-TempNR(:,end,:) = TempNR(:,end,:) + reshape(Counts(1:end-1,end,2,:), [ Nx-1 1 Ntime ] );
-TempNR(end,:,:) = TempNR(end,:,:) + reshape(Counts(end,1:end-1,2,:), [ 1 Ny-1 Ntime ] );
-TempNR(end,end,:) = TempNR(end,end,:) + reshape(Counts(end,end,2,:), [ 1 1 Ntime ]);
-
-TempNT(:,end,:) = TempNT(:,end,:) + reshape(Counts(1:end-1,end,1,:), [ Nx-1 1 Ntime ] );
-TempNT(end,:,:) = TempNT(end,:,:) + reshape(Counts(end,1:end-1,1,:), [ 1 Ny-1 Ntime ] );
-TempNT(end,end,:) = TempNT(end,end,:) + reshape(Counts(end,end,1,:), [ 1 1 Ntime ]);
+TempC(:,end,:) = TempC(:,end,:) + reshape(Counts(1:end-1,end,:,:), [ Nx-1 1 Nt ] );
+TempC(end,:,:) = TempC(end,:,:) + reshape(Counts(end,1:end-1,:,:), [ 1 Ny-1 Nt ] );
+TempC(end,end,:) = TempC(end,end,:) + reshape(Counts(end,end,:,:), [ 1 1 Nt ]);
 
 % Form the output by combining the bins. This depends on the new number of bins
 % Nb being an integer. NR and NT are now organized as (x,y,t).
@@ -107,14 +96,12 @@ XU = TempXU(UseX+OffsetX);
 YL = TempYL(UseY);
 YU = TempYU(UseY+OffsetY);
 
-NR = zeros(NewNx,NewNy,Ntime);
-NT = zeros(NewNx,NewNy,Ntime);
+OUT_COUNTS = zeros(NewNx,NewNy,Nt);
 for i = 1:Xsize
   OffsetX = i - 1;
   for j = 1:Ysize
     OffsetY = j - 1;
-    NR = NR + TempNR(UseX+OffsetX,UseY+OffsetY,:);
-    NT = NT + TempNT(UseX+OffsetX,UseY+OffsetY,:);
+    OUT_COUNTS = OUT_COUNTS + TempC(UseX+OffsetX,UseY+OffsetY,:);
   end
 end
 

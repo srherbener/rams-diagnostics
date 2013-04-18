@@ -17,33 +17,33 @@ UndefVal: -999
 #  #Case: <exp_name> <plot_name>
 #
 # CCN and SST cases
-Case: z.atex.ccn0050.sst293.gcn10m5.1um XXX
-Case: z.atex.ccn0050.sst298.gcn10m5.1um XXX
-Case: z.atex.ccn0050.sst303.gcn10m5.1um XXX
+Case: z.atex.ccn0050.sst293.gcn10m5.1um C0050_S293
+Case: z.atex.ccn0050.sst298.gcn10m5.1um C0050_S298
+Case: z.atex.ccn0050.sst303.gcn10m5.1um C0050_S303
 
-Case: z.atex.ccn0100.sst293.gcn10m5.1um XXX
-Case: z.atex.ccn0100.sst298.gcn10m5.1um XXX
-Case: z.atex.ccn0100.sst303.gcn10m5.1um XXX
+Case: z.atex.ccn0100.sst293.gcn10m5.1um C0100_S293
+Case: z.atex.ccn0100.sst298.gcn10m5.1um C0100_S298
+Case: z.atex.ccn0100.sst303.gcn10m5.1um C0100_S303
 
-Case: z.atex.ccn0200.sst293.gcn10m5.1um XXX
-Case: z.atex.ccn0200.sst298.gcn10m5.1um XXX
-Case: z.atex.ccn0200.sst303.gcn10m5.1um XXX
+Case: z.atex.ccn0200.sst293.gcn10m5.1um C0200_S293
+Case: z.atex.ccn0200.sst298.gcn10m5.1um C0200_S298
+Case: z.atex.ccn0200.sst303.gcn10m5.1um C0200_S303
 
-Case: z.atex.ccn0400.sst293.gcn10m5.1um XXX
-Case: z.atex.ccn0400.sst298.gcn10m5.1um XXX
-Case: z.atex.ccn0400.sst303.gcn10m5.1um XXX
+Case: z.atex.ccn0400.sst293.gcn10m5.1um C0400_S293
+Case: z.atex.ccn0400.sst298.gcn10m5.1um C0400_S298
+Case: z.atex.ccn0400.sst303.gcn10m5.1um C0400_S303
 
-Case: z.atex.ccn0800.sst293.gcn10m5.1um XXX
-Case: z.atex.ccn0800.sst298.gcn10m5.1um XXX
-Case: z.atex.ccn0800.sst303.gcn10m5.1um XXX
+Case: z.atex.ccn0800.sst293.gcn10m5.1um C0800_S293
+Case: z.atex.ccn0800.sst298.gcn10m5.1um C0800_S298
+Case: z.atex.ccn0800.sst303.gcn10m5.1um C0800_S303
 
-Case: z.atex.ccn1200.sst293.gcn10m5.1um XXX
-Case: z.atex.ccn1200.sst298.gcn10m5.1um XXX
-Case: z.atex.ccn1200.sst303.gcn10m5.1um XXX
+Case: z.atex.ccn1200.sst293.gcn10m5.1um C1200_S293
+Case: z.atex.ccn1200.sst298.gcn10m5.1um C1200_S298
+Case: z.atex.ccn1200.sst303.gcn10m5.1um C1200_S303
 
-Case: z.atex.ccn1600.sst293.gcn10m5.1um XXX
-Case: z.atex.ccn1600.sst298.gcn10m5.1um XXX
-Case: z.atex.ccn1600.sst303.gcn10m5.1um XXX
+Case: z.atex.ccn1600.sst293.gcn10m5.1um C1600_S293
+Case: z.atex.ccn1600.sst298.gcn10m5.1um C1600_S298
+Case: z.atex.ccn1600.sst303.gcn10m5.1um C1600_S303
 
 # Extra GCCN cases
 #Case: z.atex.ccn0050.sst298.gcn10m0.1um XXX
@@ -453,6 +453,15 @@ SlopePlot: DIAGS/smeas_pop_CO_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower LwpB
 SlopePlot: DIAGS/smeas_pop_CO_S293_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper LtssBinLower LtssBinUpper Time 7 0.7 Slope_of_POP_vs_Sulfate_Aerosol_Concentration LWP_(mm) LTSS_(K) 12 36 -5e-4 5e-4 pop_CO_S293_G10M5.jpg
 SlopePlot: DIAGS/smeas_pop_CO_S298_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper LtssBinLower LtssBinUpper Time 7 0.7 Slope_of_POP_vs_Sulfate_Aerosol_Concentration LWP_(mm) LTSS_(K) 12 36 -5e-4 5e-4 pop_CO_S298_G10M5.jpg
 SlopePlot: DIAGS/smeas_pop_CO_S303_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper LtssBinLower LtssBinUpper Time 7 0.7 Slope_of_POP_vs_Sulfate_Aerosol_Concentration LWP_(mm) LTSS_(K) 12 36 -5e-4 5e-4 pop_CO_S303_G10M5.jpg
+
+###########################################
+########## PsuedoColor Plots ##############
+###########################################
+#
+# PcolorPlot: <file_prefix> <var> <xmin> <xmax> <xgroup> <ymin> <ymax> <ygroup> <tmin> <tmax> <color_min> <color_max> <title> <xlabel> <ylabel> <out_file>
+
+PcolorPlot: TsAveragedData/hist2d_ctoptemp_cfrac hist2d   0   20 1   0.2 1 1   35 36  0.0 0.05 _ Cloud_Top_Temperature_(deg_C) Cloud_Fraction h2d_cfrac_ctoptempc
+PcolorPlot: TsAveragedData/hist2d_cdepth_cfrac   hist2d 100 4000 1   0.2 1 1   35 36  0.0 0.05 _ Cloud_Depth_(m)               Cloud_Fraction h2d_cfrac_cdepth
 
 ####################### Plot Sets ############################
 

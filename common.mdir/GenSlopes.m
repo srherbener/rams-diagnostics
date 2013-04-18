@@ -82,7 +82,8 @@ for ismeas = 1: length(Config.Smeas)
       % together to form one output bin, so 100 bins would get reduced to 20 bins,
       % where the first output bin would consitst of the counts summed together
       % from the input bins 1-5, second output bins from the input bins 6-10, etc.
-      [ NR, NT, XL, XU, YL, YU ] = GenSlopeBins(COUNTS, X, Y, Xmin, Xmax, Xgroup, Ymin, Ymax, Ygroup);
+      [ NR, XL, XU, YL, YU ] = GenCountBins(COUNTS(:,:,2,:), X, Y, Xmin, Xmax, Xgroup, Ymin, Ymax, Ygroup);
+      [ NT, XL, XU, YL, YU ] = GenCountBins(COUNTS(:,:,1,:), X, Y, Xmin, Xmax, Xgroup, Ymin, Ymax, Ygroup);
 
       % At this point we have:
       %    NR(x,y,t) - count of grid cells that are raining, by bin

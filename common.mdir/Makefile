@@ -13,11 +13,12 @@ SCRIPTS = \
           $(DEST)/AzavgDiffEof.m \
           $(DEST)/CompileCounts.m \
           $(DEST)/GenAdiffEofPlots.m \
+          $(DEST)/GenCountBins.m \
           $(DEST)/GenDeltapTseries.m \
           $(DEST)/GenHistMeas.m \
           $(DEST)/GenLinePlots.m \
+          $(DEST)/GenPcolorPlots.m \
           $(DEST)/GenProfMeas.m \
-          $(DEST)/GenSlopeBins.m \
           $(DEST)/GenSlopes.m \
           $(DEST)/GenTimeAvg.m \
           $(DEST)/GenTsPlots.m \
