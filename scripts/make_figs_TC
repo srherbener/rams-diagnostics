@@ -91,3 +91,12 @@ montage -tile 1x2 -geometry ${Jsize}+2+100 \
  KeVt_ext_annot.jpg \
  R_Vt_All_SS_ext.jpg \
  Figure11.jpg
+
+# Figure 12: schematic
+echo "Figure 12"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ Slide1.jpg \
+ Slide2.jpg \
+ Blank.jpg \
+ Slide3.jpg \
+ Figure12.jpg
