@@ -372,10 +372,12 @@ for i = 1:size(InLines,1)
       Cdata.PcolorPlots(i_pcplot).Fprefix = Fields{2};
       Cdata.PcolorPlots(i_pcplot).Cmin    = sscanf(Fields{3}, '%f');
       Cdata.PcolorPlots(i_pcplot).Cmax    = sscanf(Fields{4}, '%f');
-      Cdata.PcolorPlots(i_pcplot).Title   = regexprep(Fields{5}, '_', ' ');
-      Cdata.PcolorPlots(i_pcplot).Xlabel  = regexprep(Fields{6}, '_', ' ');
-      Cdata.PcolorPlots(i_pcplot).Ylabel  = regexprep(Fields{7}, '_', ' ');
-      Cdata.PcolorPlots(i_pcplot).OutFile = Fields{8};
+      Cdata.PcolorPlots(i_pcplot).Cticks  = sscanf(regexprep(Fields{5}, ':', ' '), '%f');
+      Cdata.PcolorPlots(i_pcplot).Cscale  = Fields{6};
+      Cdata.PcolorPlots(i_pcplot).Title   = regexprep(Fields{7}, '_', ' ');
+      Cdata.PcolorPlots(i_pcplot).Xlabel  = regexprep(Fields{8}, '_', ' ');
+      Cdata.PcolorPlots(i_pcplot).Ylabel  = regexprep(Fields{9}, '_', ' ');
+      Cdata.PcolorPlots(i_pcplot).OutFile = Fields{10};
     case 'ProfTsPlot:'
       i_pts_plot = i_pts_plot + 1;
       Cdata.ProfTsPlots(i_pts_plot).PSname      = Fields{2};

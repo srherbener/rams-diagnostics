@@ -53,7 +53,6 @@ for icase = 1:length(Config.Cases)
     T2 = find(T <= Tmax, 1, 'last');
  
     [ COUNTS, XL, XU, YL, YU ] = GenCountBins(C(:,:,:,T1:T2), X, Y, Xmin, Xmax, Xgroup, Ymin, Ymax, Ygroup);
-    TIMES = T(T1:T2);
 
     % If the time range was more than a single point, then sum up counts across the time
     % dimension. Time will be the last dimension.
@@ -71,7 +70,6 @@ for icase = 1:length(Config.Cases)
     hdf5write(OutFile, '/XU',    XU, 'WriteMode', 'append');
     hdf5write(OutFile, '/YL',    YL, 'WriteMode', 'append');
     hdf5write(OutFile, '/YU',    YU, 'WriteMode', 'append');
-    hdf5write(OutFile,  '/T', TIMES, 'WriteMode', 'append');
 
     fprintf('\n');
   end

@@ -22,6 +22,8 @@ for icase = 1:length(Config.Cases)
     InFile  = sprintf('%s_%s.h5', Config.PcolorPlots(iplot).Fprefix, Case);
     Cmin    = Config.PcolorPlots(iplot).Cmin;
     Cmax    = Config.PcolorPlots(iplot).Cmax;
+    Cticks  = Config.PcolorPlots(iplot).Cticks;
+    Cscale  = Config.PcolorPlots(iplot).Cscale;
     Title   = Config.PcolorPlots(iplot).Title;
     Xlabel  = Config.PcolorPlots(iplot).Xlabel;
     Ylabel  = Config.PcolorPlots(iplot).Ylabel;
@@ -35,6 +37,7 @@ for icase = 1:length(Config.Cases)
     fprintf('Generating psuedo color plot:\n');
     fprintf('  Input file: %s\n', InFile);
     fprintf('  Plot color range: [ %.2f %.2f ]\n', Cmin, Cmax);
+    fprintf('  Plot color scale: %s\n', Cscale);
     fprintf('  Output File: %s\n', OutFile);
     fprintf('\n');
 
@@ -44,10 +47,9 @@ for icase = 1:length(Config.Cases)
     XU     = hdf5read(InFile, 'XU');
     YL     = hdf5read(InFile, 'YL');
     YU     = hdf5read(InFile, 'YU');
-    TIMES  = hdf5read(InFile, 'T');
  
-    % Turn the counts into a pdf
-    PDATA = double(COUNTS ./ sum(COUNTS(:)))'; % transpose is for plotting pursposes
+    % pcolor wants doubles
+    PDATA = double(COUNTS)'; % transpose is for plotting pursposes
 
     % Use pcolor to make the plot. This will look much better than using contourf
     % since contourf will try to interpolate between values in the grids when it
@@ -76,6 +78,18 @@ for icase = 1:length(Config.Cases)
     % convert zeros into nans so they don't show up on the plot
     PDATA(PDATA == 0) = nan;
 
+    Crange = [ Cmin Cmax ];
+
+    % convert to logarithmic color scale if requested
+    if (strcmp(Cscale, 'log'))
+      PDATA = log10(PDATA);
+      Crange = log10(Crange);
+      Cticks = log10(Cticks);
+      for i = 1:length(Cticks)
+        CtickLabels{i} = sprintf('10^%d', Cticks(i));
+      end
+    end
+
     Fig = figure;
 
     pcolor(PX, PY, PDATA);
@@ -92,7 +106,11 @@ end
     ylabel(Ylabel);
     cbar = colorbar;
     set(cbar, 'FontSize', Fsize);
-    caxis([ Cmin Cmax ]);
+    caxis(Crange);
+    if (strcmp(Cscale, 'log'))
+      set(cbar, 'YTick', Cticks);
+      set(cbar, 'YTickLabel', CtickLabels);
+    end
 
     % fix the position
     Ppos = get(gca, 'Position'); % position of plot area
