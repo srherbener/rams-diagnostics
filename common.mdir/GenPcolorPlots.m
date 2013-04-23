@@ -20,15 +20,6 @@ for icase = 1:length(Config.Cases)
   Pname = Config.Cases(icase).Pname;
   for iplot = 1:length(Config.PcolorPlots)
     InFile  = sprintf('%s_%s.h5', Config.PcolorPlots(iplot).Fprefix, Case);
-    Var     = Config.PcolorPlots(iplot).Var;
-    Xmin    = Config.PcolorPlots(iplot).Xmin;
-    Xmax    = Config.PcolorPlots(iplot).Xmax;
-    Xgroup  = Config.PcolorPlots(iplot).Xgroup;
-    Ymin    = Config.PcolorPlots(iplot).Ymin;
-    Ymax    = Config.PcolorPlots(iplot).Ymax;
-    Ygroup  = Config.PcolorPlots(iplot).Ygroup;
-    Tmin    = Config.PcolorPlots(iplot).Tmin;
-    Tmax    = Config.PcolorPlots(iplot).Tmax;
     Cmin    = Config.PcolorPlots(iplot).Cmin;
     Cmax    = Config.PcolorPlots(iplot).Cmax;
     Title   = Config.PcolorPlots(iplot).Title;
@@ -43,33 +34,18 @@ for icase = 1:length(Config.Cases)
     fprintf('********************************************************************\n');
     fprintf('Generating psuedo color plot:\n');
     fprintf('  Input file: %s\n', InFile);
-    fprintf('  Input variable: %s\n', Var);
-    fprintf('  Data selection:\n');
-    fprintf('    Xrange, Xgroup: [ %.2f %.2f], %d\n', Xmin, Xmax, Xgroup);
-    fprintf('    Yrange, Ygroup: [ %.2f %.2f], %d\n', Ymin, Ymax, Ygroup);
-    fprintf('    Trange: [ %.2f %.2f]\n', Tmin, Tmax);
     fprintf('  Plot color range: [ %.2f %.2f ]\n', Cmin, Cmax);
     fprintf('  Output File: %s\n', OutFile);
     fprintf('\n');
 
     % Read in the counts and do the data selection (along with combining bins)
-    C = hdf5read(InFile, Var);
-    X = hdf5read(InFile, 'x_coords');
-    Y = hdf5read(InFile, 'y_coords');
-    T = hdf5read(InFile, 't_coords')/3600; % hr
+    COUNTS = hdf5read(InFile, 'COUNTS');
+    XL     = hdf5read(InFile, 'XL');
+    XU     = hdf5read(InFile, 'XU');
+    YL     = hdf5read(InFile, 'YL');
+    YU     = hdf5read(InFile, 'YU');
+    TIMES  = hdf5read(InFile, 'T');
  
-    T1 = find(T >= Tmin, 1, 'first');
-    T2 = find(T <= Tmax, 1, 'last');
- 
-    [ COUNTS, XL, XU, YL, YU ] = GenCountBins(C(:,:,:,T1:T2), X, Y, Xmin, Xmax, Xgroup, Ymin, Ymax, Ygroup);
-    TIMES = T(T1:T2);
-
-    % If the time range was more than a single point, then sum up counts across the time
-    % dimension. Time will be the last dimension.
-    if ((T2-T1) > 0)
-      COUNTS = sum(COUNTS, ndims(COUNTS));
-    end
-
     % Turn the counts into a pdf
     PDATA = double(COUNTS ./ sum(COUNTS(:)))'; % transpose is for plotting pursposes
 

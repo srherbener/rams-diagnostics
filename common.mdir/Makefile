@@ -12,6 +12,7 @@ SCRIPTS = \
           $(DEST)/AdiffEofPlot.m \
           $(DEST)/AzavgDiffEof.m \
           $(DEST)/CompileCounts.m \
+          $(DEST)/Gen2dHistData.m \
           $(DEST)/GenAdiffEofPlots.m \
           $(DEST)/GenCountBins.m \
           $(DEST)/GenDeltapTseries.m \

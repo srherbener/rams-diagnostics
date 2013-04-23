@@ -52,6 +52,7 @@ i_aeof = 0;
 i_hmeas = 0;
 i_pmeas = 0;
 i_smeas = 0;
+i_hist2d = 0;
 i_counts = 0;
 i_tavg = 0;
 i_dpts = 0;
@@ -156,6 +157,19 @@ for i = 1:size(InLines,1)
       end
 
       Cdata.Smeas(i_smeas).PSnum   =  -1;
+    case 'Hist2d:'
+      i_hist2d = i_hist2d + 1;
+      Cdata.Hist2d(i_hist2d).Name    = Fields{2};
+      Cdata.Hist2d(i_hist2d).Fprefix = Fields{3};
+      Cdata.Hist2d(i_hist2d).Var     = Fields{4};
+      Cdata.Hist2d(i_hist2d).Xmin    = sscanf(Fields{5}, '%f');;
+      Cdata.Hist2d(i_hist2d).Xmax    = sscanf(Fields{6}, '%f');;
+      Cdata.Hist2d(i_hist2d).Xgroup  = sscanf(Fields{7}, '%d');;
+      Cdata.Hist2d(i_hist2d).Ymin    = sscanf(Fields{8}, '%f');;
+      Cdata.Hist2d(i_hist2d).Ymax    = sscanf(Fields{9}, '%f');;
+      Cdata.Hist2d(i_hist2d).Ygroup  = sscanf(Fields{10}, '%d');;
+      Cdata.Hist2d(i_hist2d).Tmin    = sscanf(Fields{11}, '%f');
+      Cdata.Hist2d(i_hist2d).Tmax    = sscanf(Fields{12}, '%f');
     case 'CompCounts:'
       i_counts = i_counts + 1;
       Cdata.CompCounts(i_counts).PSname  = Fields{2};
@@ -356,21 +370,12 @@ for i = 1:size(InLines,1)
     case 'PcolorPlot:'
       i_pcplot = i_pcplot + 1;
       Cdata.PcolorPlots(i_pcplot).Fprefix = Fields{2};
-      Cdata.PcolorPlots(i_pcplot).Var     = Fields{3};
-      Cdata.PcolorPlots(i_pcplot).Xmin    = sscanf(Fields{4}, '%f');;
-      Cdata.PcolorPlots(i_pcplot).Xmax    = sscanf(Fields{5}, '%f');;
-      Cdata.PcolorPlots(i_pcplot).Xgroup  = sscanf(Fields{6}, '%d');;
-      Cdata.PcolorPlots(i_pcplot).Ymin    = sscanf(Fields{7}, '%f');;
-      Cdata.PcolorPlots(i_pcplot).Ymax    = sscanf(Fields{8}, '%f');;
-      Cdata.PcolorPlots(i_pcplot).Ygroup  = sscanf(Fields{9}, '%d');;
-      Cdata.PcolorPlots(i_pcplot).Tmin    = sscanf(Fields{10}, '%f');
-      Cdata.PcolorPlots(i_pcplot).Tmax    = sscanf(Fields{11}, '%f');
-      Cdata.PcolorPlots(i_pcplot).Cmin    = sscanf(Fields{12}, '%f');
-      Cdata.PcolorPlots(i_pcplot).Cmax    = sscanf(Fields{13}, '%f');
-      Cdata.PcolorPlots(i_pcplot).Title   = regexprep(Fields{14}, '_', ' ');
-      Cdata.PcolorPlots(i_pcplot).Xlabel  = regexprep(Fields{15}, '_', ' ');
-      Cdata.PcolorPlots(i_pcplot).Ylabel  = regexprep(Fields{16}, '_', ' ');
-      Cdata.PcolorPlots(i_pcplot).OutFile = Fields{17};
+      Cdata.PcolorPlots(i_pcplot).Cmin    = sscanf(Fields{3}, '%f');
+      Cdata.PcolorPlots(i_pcplot).Cmax    = sscanf(Fields{4}, '%f');
+      Cdata.PcolorPlots(i_pcplot).Title   = regexprep(Fields{5}, '_', ' ');
+      Cdata.PcolorPlots(i_pcplot).Xlabel  = regexprep(Fields{6}, '_', ' ');
+      Cdata.PcolorPlots(i_pcplot).Ylabel  = regexprep(Fields{7}, '_', ' ');
+      Cdata.PcolorPlots(i_pcplot).OutFile = Fields{8};
     case 'ProfTsPlot:'
       i_pts_plot = i_pts_plot + 1;
       Cdata.ProfTsPlots(i_pts_plot).PSname      = Fields{2};

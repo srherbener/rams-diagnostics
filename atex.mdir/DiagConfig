@@ -437,6 +437,15 @@ Smeas: CO_S303_G10M5 smeas_pop_CO_S303_G10M5 TsAveragedData pop pop 0.0999 1.001
 #Smeas: CG_S298_G10M2 smeas_pop_CG_S298_G10M2 TsAveragedData pop pop 1 1   50 400 1600
 #Smeas: CG_S298_G10M4 smeas_pop_CG_S298_G10M4 TsAveragedData pop pop 1 1   50 400 1600
 
+###########################################
+########## 2D Histogram Data ##############
+###########################################
+#
+# Hist2d: <name> <file_prefix> <var> <xmin> <xmax> <xgroup> <ymin> <ymax> <ygroup> <tmin> <tmax>
+
+Hist2d: h2d_cfrac_ctoptemp TsAveragedData/hist2d_ctoptemp_cfrac hist2d   0   20 1     0.2 1 1     30 36
+Hist2d: h2d_cfrac_cdepth   TsAveragedData/hist2d_cdepth_cfrac   hist2d 100 4000 1     0.2 1 1     30 36
+
 #####################################
 ########## Slope Plots ##############
 #####################################
@@ -458,10 +467,10 @@ SlopePlot: DIAGS/smeas_pop_CO_S303_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower
 ########## PsuedoColor Plots ##############
 ###########################################
 #
-# PcolorPlot: <file_prefix> <var> <xmin> <xmax> <xgroup> <ymin> <ymax> <ygroup> <tmin> <tmax> <color_min> <color_max> <title> <xlabel> <ylabel> <out_file>
+# PcolorPlot: <file_prefix> <color_min> <color_max> <title> <xlabel> <ylabel> <out_file>
 
-PcolorPlot: TsAveragedData/hist2d_ctoptemp_cfrac hist2d   0   20 1   0.2 1 1   30 36  0.0 0.05 _ Top_Temp_(C) Fraction h2d_cfrac_ctoptempc
-PcolorPlot: TsAveragedData/hist2d_cdepth_cfrac   hist2d 100 4000 1   0.2 1 1   30 36  0.0 0.05 _ Depth_(m)    Fraction h2d_cfrac_cdepth
+PcolorPlot: DIAGS/h2d_cfrac_ctoptemp 0.0 0.05 _ Top_Temp_(C) Fraction h2d_cfrac_ctoptempc
+PcolorPlot: DIAGS/h2d_cfrac_cdepth   0.0 0.05 _ Depth_(m)    Fraction h2d_cfrac_cdepth
 
 ####################### Plot Sets ############################
 
