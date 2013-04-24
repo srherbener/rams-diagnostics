@@ -648,6 +648,14 @@ void rh5d_close(int *dsetid, int *hdferr)
 return;
 }
 
+/**********************************************************************/
+void rh5d_delete(int *id, char *name, int *hdferr)
+{
+*hdferr = H5Ldelete(*id, name, H5P_DEFAULT);
+
+return;
+}
+
 /******************* DATASPACE ROUTINES *******************/
 
 /**********************************************************/
@@ -886,6 +894,20 @@ void rh5ds_set_scale(int *dsetid, char *dimname, int *hdferr)
 void rh5ds_attach_scale(int *dsetid, int *dsclid, int *index, int *hdferr)
   {
   *hdferr = H5DSattach_scale(*dsetid, *dsclid, *index);
+
+  return;
+  }
+
+/****************************************************
+ * rh5ds_detach_scale()
+ *
+ * This routine will walk through the dimensions of
+ * the dataset given by dsetid, and detach the scales
+ * associated with those dimensions.
+ ****************************************************/
+void rh5ds_detach_scale(int *dsetid, int *dsclid, int *index, int *hdferr)
+  {
+  *hdferr = H5DSdetach_scale(*dsetid, *dsclid, *index);
 
   return;
   }

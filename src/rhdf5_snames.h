@@ -34,12 +34,14 @@
 #define rh5d_read_get_dims   rh5d_read_get_dims_
 #define rh5d_read            rh5d_read_
 #define rh5d_close           rh5d_close_
+#define rh5d_delete          rh5d_delete_
 #define rh5t_close           rh5t_close_
 #define rh5s_close           rh5s_close_
 #define rh5p_close           rh5p_close_
 #define rh5a_write_anyscalar rh5a_write_anyscalar_
 #define rh5a_read_anyscalar  rh5a_read_anyscalar_
 #define rh5ds_attach_scale   rh5ds_attach_scale_
+#define rh5ds_detach_scale   rh5ds_detach_scale_
 #define rh5ds_set_scale      rh5ds_set_scale_
 
 #endif
@@ -53,6 +55,7 @@
 #define rh5g_create          RH5G_CREATE
 #define rh5g_open            RH5G_OPEN
 #define rh5g_close           RH5G_CLOSE
+#define rh5g_delete          RH5G_DELETE
 #define rh5d_open            RH5D_OPEN
 #define rh5d_write           RH5D_WRITE
 #define rh5d_setup_and_write RH5D_SETUP_AND_WRITE
@@ -65,6 +68,7 @@
 #define rh5a_write_anyscalar RH5A_WRITE_ANYSCALAR
 #define rh5a_read_anyscalar  RH5A_READ_ANYSCALAR
 #define rh5ds_attach_scale   RH5DS_ATTACH_SCALE
+#define rh5ds_detach_scale   RH5DS_DETACH_SCALE
 #define rh5ds_set_scale      RH5DS_SET_SCALE
 
 #endif

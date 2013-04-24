@@ -213,6 +213,43 @@ subroutine rhdf5_attach_dimensions(fname, rvar)
   return
 end subroutine rhdf5_attach_dimensions
 
+!**************************************************************
+! rhdf5_detach_dimensions()
+!
+! This routine will detach the dimension specs to the given
+! variable. The code assumes that for each dimension in rvar,
+! there exists a dataset in the file that contains the coordinate
+! values for that dimension. The name of the coordinate variable
+! is given by the suffix "_coords" appended to the dimension name. 
+!
+! Example:
+!  If the variable is U and it has dimensions (x,y,z,t), ie.
+!  dimnames contains the strings: "x", "y", "z" and "t", then
+!  the followind datasets will be expected in the file for
+!  attachement:
+!    x_coords
+!    y_coords
+!    z_coords
+!    t_coords
+!
+subroutine rhdf5_detach_dimensions(fname, rvar)
+  implicit none
+
+  character (len=*) :: fname
+  type (Rhdf5Var) :: rvar
+
+  integer :: fileid
+  character (len=RHDF5_MAX_STRING):: facc
+
+  facc = 'RW'
+  call rhdf5_open_file(fname, facc, 1, fileid)
+
+  call rhdf5_detach_dims_from_var(fileid, rvar%vname)
+
+  call rhdf5_close_file(fileid)
+  return
+end subroutine rhdf5_detach_dimensions
+
 !********************************************************************
 ! rhdf5_write_attribute()
 !
@@ -1273,6 +1310,115 @@ subroutine rhdf5_attach_dims_to_var(fileid, vname)
 
   return
 end subroutine rhdf5_attach_dims_to_var
+
+!***********************************************************************
+! rhdf5_detach_dims_from_var()
+!
+! This routine will detach dimensions specs to the given variable. This
+! is done via the HDF5 dimension scaling feature, and the purpose of
+! doing the detachment is so that the variable can be subsequently
+! deleted and then replaced.
+!
+subroutine rhdf5_detach_dims_from_var(fileid, vname)
+  implicit none
+
+  integer :: fileid
+  character (len=*) :: vname
+
+  integer :: i
+  integer :: ndims
+  integer, dimension(RHDF5_MAX_DIMS) :: dims
+  character (len=RHDF5_MAX_STRING) :: units
+  character (len=RHDF5_MAX_STRING) :: descrip
+  character (len=RHDF5_MAX_STRING), dimension(RHDF5_MAX_DIMS) :: dimnames
+
+  integer :: hdferr
+  integer :: dsetid
+  integer :: dsclid
+  character (len=RHDF5_MAX_STRING) :: dnstring
+  character (len=RHDF5_MAX_STRING) :: stemp
+  character (len=RHDF5_MAX_STRING) :: coord_name
+
+  ! open dataset
+  call rh5d_open(fileid, trim(vname)//char(0), dsetid, hdferr)
+  if (hdferr .ne. 0) then
+    print*,'ERROR: hdf5_detach_dims_from_var: cannot open dataset for variable: ',trim(vname)
+    stop 'hdf5_detach_dims_from_var: bad variable read'
+  endif
+
+  ! dimensions
+  call rh5d_read_get_dims(dsetid, ndims, dims, hdferr)
+  if (hdferr .ne. 0) then
+    print*,'ERROR: hdf5_detach_dims_from_var: cannot obtain dimension information for variable: ',trim(vname)
+    stop 'hdf5_detach_dims_from_var: bad variable read'
+  endif
+
+  ! read the DimNames attribute
+  call rh5a_read_anyscalar(dsetid, 'DimNames'//char(0),    stemp, RHDF5_TYPE_STRING, hdferr)
+  call rhdf5_c2f_string(stemp, dnstring, RHDF5_MAX_STRING)
+  call rhdf5_read_dim_name_string(ndims, dimnames, dnstring)
+
+  ! There is no need to reverse the dimensions since we are going immediately back
+  ! into the C interface to do the dimension scale attach.
+  !
+  ! Assume that the coordinate information is stored in datasets with names
+  ! that reflect the dimension names as shown below:
+  !     dim name            dataset name with coordinates
+  !       x                     x_coords
+  !       y                     y_coords
+  !       z                     z_coords
+  !       t                     t_coords
+  !      <n>                    <n>_coords  (in general)
+
+  do i = ndims, 1, -1
+    coord_name = trim(dimnames(i)) // '_coords'
+
+    call rh5d_open(fileid, trim(coord_name)//char(0), dsclid, hdferr)
+    if (hdferr .ne. 0) then
+      print*,'ERROR: hdf5_detach_dims_from_var: cannot open dataset for coordinates: ',trim(coord_name)
+      stop 'hdf5_detach_dims_from_var: bad variable read'
+    endif
+
+    ! do the detach, C indices start with zero so send (i-1) to this routine
+    call rh5ds_detach_scale(dsetid, dsclid, i-1, hdferr)
+    if (hdferr .ne. 0) then
+      print*,'ERROR: hdf5_detach_dims_from_var: cannot detach coordinate data from variable:'
+      print*,'ERROR:  Variable dataset: ',trim(vname)
+      print*,'ERROR:  Coordinate dataset: ',trim(coord_name)
+      stop 'hdf5_detach_dims_from_var: bad variable attach'
+    endif
+
+    call rh5d_close(dsclid, hdferr)
+  enddo
+
+  ! close the dataset
+  call rh5d_close(dsetid, hdferr)
+
+  return
+end subroutine rhdf5_detach_dims_from_var
+
+!***********************************************************************
+! rhdf5_exists()
+!
+! This routine will test for existence of an HDF5 object. It is up to
+! the caller to get the right relationship between parent_id and
+! child_name.
+!
+subroutine rhdf5_delete_variable(parent_id, var_name)
+  implicit none
+
+  integer :: parent_id
+  character (len=*) :: var_name
+ 
+  integer :: hdferr
+
+  call rh5d_delete(parent_id, trim(var_name)//char(0), hdferr)
+  if (hdferr .ne. 0) then
+    print*,'ERROR: rhdf5_delete_variable: cannot delete variable: ', trim(var_name)
+    stop 'rhdf5_delete_variable: failed to delete'
+  endif
+
+end subroutine rhdf5_delete_variable
 
 !***********************************************************************
 ! rhdf5_exists()
