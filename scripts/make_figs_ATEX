@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+#
+# script to create figures for ATEX paper
+
+Jsize="1200x900"
+
+# 2d hist cfrac vs ctoptemp
+echo "Figure Hist2d -> cfrac vs ctoptemp"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ h2d_cfrac_ctoptempc_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+ h2d_cfrac_ctoptempc_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+ h2d_cfrac_ctoptempc_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+ h2d_cfrac_ctoptempc_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+ h2d_cfrac_ctoptempc_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ h2d_cfrac_ctoptempc_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+ h2d_cfrac_ctoptempc_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+ h2d_cfrac_ctoptempc_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+ h2d_cfrac_ctoptempc_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+ FigureHist2dCfracCtoptemp.jpg
+
+# 2d hist cfrac vs cdepth
+echo "Figure Hist2d -> cfrac vs cdepth"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ h2d_cfrac_cdepth_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+ h2d_cfrac_cdepth_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+ h2d_cfrac_cdepth_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+ h2d_cfrac_cdepth_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+ h2d_cfrac_cdepth_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ h2d_cfrac_cdepth_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+ h2d_cfrac_cdepth_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+ h2d_cfrac_cdepth_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+ h2d_cfrac_cdepth_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+ FigureHist2dCfracCdepth.jpg
