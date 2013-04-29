@@ -28,6 +28,7 @@ SCRIPTS = \
           $(DEST)/Hdf5ToNcdf.m \
           $(DEST)/LatToKm.m \
           $(DEST)/LonToKm.m \
+          $(DEST)/MakeBlankPlot.m \
           $(DEST)/ReadConfig.m \
           $(DEST)/ReadAzavgVar.m \
           $(DEST)/ReadSelectXyzt.m \
