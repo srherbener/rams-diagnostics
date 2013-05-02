@@ -139,14 +139,14 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 # Vary GCCN, hold SST and CCN constant
 #LinePlot: CG_C0050_S298   Ctop Cfrac CG_TsAll xy Cloud_Structure_Evolution:_CCN:_50/cc,_SST:_298K    NorthEast none CloudStruct_CG_C50_S298.jpg
 #LinePlot: CG_C0400_S298  Ctop Cfrac CG_TsAll xy Cloud_Structure_Evolution:_CCN:_400/cc,_SST:_298K   NorthEast none CloudStruct_CG_C400_S298.jpg
-#LinePlot: CG_C1600_S298 Ctop Cfrac CG_TsAll xy Cloud_Structure_Evolution:_CCN:_16000/cc,_SST:_298K NorthEast none CloudStruct_CG_C1600_S298.jpg
+#LinePlot: CG_C1600_S298 Ctop Cfrac CG_TsAll xy Cloud_Structure_Evolution:_CCN:_1600/cc,_SST:_298K NorthEast none CloudStruct_CG_C1600_S298.jpg
 
 #LinePlot: CG_C0400_S303  Ctop Cfrac CG_TsAll xy Cloud_Structure_Evolution:_CCN:_400/cc,_SST:_303K   NorthEast none CloudStruct_CG_C400_S303.jpg
 
 # Vary SST, hold CCN and GCCN constant
-#LinePlot: CG_C0400_G10M0  Ctop Cfrac CG_TsAll xy Cloud_Structure_Evolution:_CCN:_400/cc,_GCCN:_1/cc  NorthEast none CloudStruct_CG_C400_G10m0.jpg
-#LinePlot: CG_C0400_G10M2  Ctop Cfrac CG_TsAll xy Cloud_Structure_Evolution:_CCN:_400/cc,_GCCN:_1e-2/cc  NorthEast none CloudStruct_CG_C400_G10m2.jpg
-#LinePlot: CG_C0400_G10M4  Ctop Cfrac CG_TsAll xy Cloud_Structure_Evolution:_CCN:_400/cc,_GCCN:_1e-4/cc  NorthEast none CloudStruct_CG_C400_G10m4.jpg
+#LinePlot: CG_C0400_G10M0  Ctop Cfrac CG_TsAll xy Cloud_Structure_Evolution:_CCN:_400/cc,_GCCN:_1/cc  NorthEast none CloudStruct_CG_C400_G10M0.jpg
+#LinePlot: CG_C0400_G10M2  Ctop Cfrac CG_TsAll xy Cloud_Structure_Evolution:_CCN:_400/cc,_GCCN:_1e-2/cc  NorthEast none CloudStruct_CG_C400_G10M2.jpg
+#LinePlot: CG_C0400_G10M4  Ctop Cfrac CG_TsAll xy Cloud_Structure_Evolution:_CCN:_400/cc,_GCCN:_1e-4/cc  NorthEast none CloudStruct_CG_C400_G10M4.jpg
 
 # Vary CCN, hold SST and GCCN constant
 #LinePlot: CG_S298_G10M0   Ctop Cfrac CG_TsAll xy Cloud_Structure_Evolution:_SST:_298K,_GCCN:_1/cc    NorthEast none CloudStruct_CG_S298_G10M0.jpg
@@ -175,19 +175,19 @@ LinePlot: CO_C1600_G10M5  SimTime Cfrac TsAll none CCN:_1600/cc,_GCCN:_1e-5/cc  
 # Vary GCCN, hold SST and CCN constant
 LinePlot: CG_C0050_S298   SimTime Cfrac TsAll none CCN:_50/cc,_SST:_298K    NorthEast none Cloud_Frac_CG_C50_S298.jpg
 LinePlot: CG_C0400_S298  SimTime Cfrac TsAll none CCN:_400/cc,_SST:_298K   NorthEast none Cloud_Frac_CG_C400_S298.jpg
-LinePlot: CG_C1600_S298 SimTime Cfrac TsAll none CCN:_16000/cc,_SST:_298K NorthEast none Cloud_Frac_CG_C1600_S298.jpg
+LinePlot: CG_C1600_S298 SimTime Cfrac TsAll none CCN:_1600/cc,_SST:_298K NorthEast none Cloud_Frac_CG_C1600_S298.jpg
 
 LinePlot: CG_C0400_S303  SimTime Cfrac TsAll none CCN:_400/cc,_SST:_303K   NorthEast none Cloud_Frac_CG_C400_S303.jpg
 
 # Vary SST, hold CCN and GCCN constant
-LinePlot: CG_C0400_G10M0  SimTime Cfrac TsAll none CCN:_400/cc,_GCCN:_1/cc  NorthEast none Cloud_Frac_CG_C400_G10m0.jpg
-LinePlot: CG_C0400_G10M2  SimTime Cfrac TsAll none CCN:_400/cc,_GCCN:_1e-2/cc  NorthEast none Cloud_Frac_CG_C400_G10m2.jpg
-LinePlot: CG_C0400_G10M4  SimTime Cfrac TsAll none CCN:_400/cc,_GCCN:_1e-4/cc  NorthEast none Cloud_Frac_CG_C400_G10m4.jpg
+LinePlot: CG_C0400_G10M0  SimTime Cfrac TsAll none CCN:_400/cc,_GCCN:_1/cc  NorthEast none Cloud_Frac_CG_C400_G10M0.jpg
+LinePlot: CG_C0400_G10M2  SimTime Cfrac TsAll none CCN:_400/cc,_GCCN:_1e-2/cc  NorthEast none Cloud_Frac_CG_C400_G10M2.jpg
+LinePlot: CG_C0400_G10M4  SimTime Cfrac TsAll none CCN:_400/cc,_GCCN:_1e-4/cc  NorthEast none Cloud_Frac_CG_C400_G10M4.jpg
 
 # Vary CCN, hold SST and GCCN constant
-LinePlot: CG_S298_G10M0   SimTime Cfrac TsAll none SST:_298K,_GCCN:_1/cc    NorthEast none Cloud_Frac_CG_S298_G10M0.jpg
-LinePlot: CG_S298_G10M2   SimTime Cfrac TsAll none SST:_298K,_GCCN:_1/cc    NorthEast none Cloud_Frac_CG_S298_G10M2.jpg
-LinePlot: CG_S298_G10M4   SimTime Cfrac TsAll none SST:_298K,_GCCN:_1/cc    NorthEast none Cloud_Frac_CG_S298_G10M4.jpg
+LinePlot: CG_S298_G10M0   SimTime Cfrac TsAll none SST:_298K,_GCCN:_1/cc       NorthEast none Cloud_Frac_CG_S298_G10M0.jpg
+LinePlot: CG_S298_G10M2   SimTime Cfrac TsAll none SST:_298K,_GCCN:_1e-2/cc    NorthEast none Cloud_Frac_CG_S298_G10M2.jpg
+LinePlot: CG_S298_G10M4   SimTime Cfrac TsAll none SST:_298K,_GCCN:_1e-4/cc    NorthEast none Cloud_Frac_CG_S298_G10M4.jpg
 
 #### Max cloud depth - time series
 #### 1um GCCN median radius ####
@@ -211,19 +211,19 @@ LinePlot: CO_C1600_G10M5  SimTime MaxCdepth TsAll none CCN:_1600/cc,_GCCN:_1e-5/
 # Vary GCCN, hold SST and CCN constant
 LinePlot: CG_C0050_S298   SimTime MaxCdepth TsAll none CCN:_50/cc,_SST:_298K    NorthEast none Cloud_Depth_CG_C50_S298.jpg
 LinePlot: CG_C0400_S298  SimTime MaxCdepth TsAll none CCN:_400/cc,_SST:_298K   NorthEast none Cloud_Depth_CG_C400_S298.jpg
-LinePlot: CG_C1600_S298 SimTime MaxCdepth TsAll none CCN:_16000/cc,_SST:_298K NorthEast none Cloud_Depth_CG_C1600_S298.jpg
+LinePlot: CG_C1600_S298 SimTime MaxCdepth TsAll none CCN:_1600/cc,_SST:_298K NorthEast none Cloud_Depth_CG_C1600_S298.jpg
 
 LinePlot: CG_C0400_S303  SimTime MaxCdepth TsAll none CCN:_400/cc,_SST:_303K   NorthEast none Cloud_Depth_CG_C400_S303.jpg
 
 # Vary SST, hold CCN and GCCN constant
-LinePlot: CG_C0400_G10M0  SimTime MaxCdepth TsAll none CCN:_400/cc,_GCCN:_1/cc  NorthEast none Cloud_Depth_CG_C400_G10m0.jpg
-LinePlot: CG_C0400_G10M2  SimTime MaxCdepth TsAll none CCN:_400/cc,_GCCN:_1e-2/cc  NorthEast none Cloud_Depth_CG_C400_G10m2.jpg
-LinePlot: CG_C0400_G10M4  SimTime MaxCdepth TsAll none CCN:_400/cc,_GCCN:_1e-4/cc  NorthEast none Cloud_Depth_CG_C400_G10m4.jpg
+LinePlot: CG_C0400_G10M0  SimTime MaxCdepth TsAll none CCN:_400/cc,_GCCN:_1/cc  NorthEast none Cloud_Depth_CG_C400_G10M0.jpg
+LinePlot: CG_C0400_G10M2  SimTime MaxCdepth TsAll none CCN:_400/cc,_GCCN:_1e-2/cc  NorthEast none Cloud_Depth_CG_C400_G10M2.jpg
+LinePlot: CG_C0400_G10M4  SimTime MaxCdepth TsAll none CCN:_400/cc,_GCCN:_1e-4/cc  NorthEast none Cloud_Depth_CG_C400_G10M4.jpg
 
 # Vary CCN, hold SST and GCCN constant
-LinePlot: CG_S298_G10M0   SimTime Cfrac TsAll none SST:_298K,_GCCN:_1/cc    NorthEast none Cloud_Depth_CG_S298_G10M0.jpg
-LinePlot: CG_S298_G10M2   SimTime Cfrac TsAll none SST:_298K,_GCCN:_1/cc    NorthEast none Cloud_Depth_CG_S298_G10M2.jpg
-LinePlot: CG_S298_G10M4   SimTime Cfrac TsAll none SST:_298K,_GCCN:_1/cc    NorthEast none Cloud_Depth_CG_S298_G10M4.jpg
+LinePlot: CG_S298_G10M0   SimTime MaxCdepth TsAll none SST:_298K,_GCCN:_1/cc       NorthEast none Cloud_Depth_CG_S298_G10M0.jpg
+LinePlot: CG_S298_G10M2   SimTime MaxCdepth TsAll none SST:_298K,_GCCN:_1e-2/cc    NorthEast none Cloud_Depth_CG_S298_G10M2.jpg
+LinePlot: CG_S298_G10M4   SimTime MaxCdepth TsAll none SST:_298K,_GCCN:_1e-4/cc    NorthEast none Cloud_Depth_CG_S298_G10M4.jpg
 
 ##################################################################
 ##################### DISTRIBUTION PLOTS #########################
@@ -622,14 +622,14 @@ PlotDselect: TsAll    1 1 1 1 -50  50     0 129600
 ### ####################### LWP time series plots ############################
 ### 
 ### # Hold SST, GCCN constant, vary CCN
-### #TsavgPlot: ccn_s293_g10m5.1um hda_vint_cond abs LWP mm Average_LWP,_SST:_293K,_GCCN:_10e-5/cc SouthEast 0.0 0.25 TsAvgLWP_S293_G10m5.1um.jpg
-### #TsavgPlot: ccn_s298_g10m5.1um hda_vint_cond abs LWP mm Average_LWP,_SST:_298K,_GCCN:_10e-5/cc NorthEast 0.0 0.25 TsAvgLWP_S298_G10m5.1um.jpg
-### #TsavgPlot: ccn_s303_g10m5.1um hda_vint_cond abs LWP mm Average_LWP,_SST:_303K,_GCCN:_10e-5/cc NorthEast 0.0 0.25 TsAvgLWP_S303_G10m5.1um.jpg
+### #TsavgPlot: ccn_s293_g10m5.1um hda_vint_cond abs LWP mm Average_LWP,_SST:_293K,_GCCN:_10e-5/cc SouthEast 0.0 0.25 TsAvgLWP_S293_G10M5.1um.jpg
+### #TsavgPlot: ccn_s298_g10m5.1um hda_vint_cond abs LWP mm Average_LWP,_SST:_298K,_GCCN:_10e-5/cc NorthEast 0.0 0.25 TsAvgLWP_S298_G10M5.1um.jpg
+### #TsavgPlot: ccn_s303_g10m5.1um hda_vint_cond abs LWP mm Average_LWP,_SST:_303K,_GCCN:_10e-5/cc NorthEast 0.0 0.25 TsAvgLWP_S303_G10M5.1um.jpg
 ### 
 ### # Hold CCN, GCCN constant, vary SST
-### #TsavgPlot: sst_c50_g10m5.1um hda_vint_cond abs LWP mm Average_LWP,_CCN:_50/cc,_GCCN:_10e-5/cc NorthWest 0.0 0.25 TsAvgLWP_C50_G10m5.1um.jpg
-### #TsavgPlot: sst_c400_g10m5.1um hda_vint_cond abs LWP mm Average_LWP,_CCN:_400/cc,_GCCN:_10e-5/cc NorthEast 0.0 0.25 TsAvgLWP_C400_G10m5.1um.jpg
-### #TsavgPlot: sst_c1600_g10m5.1um hda_vint_cond abs LWP mm Average_LWP,_CCN:_1600/cc,_GCCN:_10e-5/cc NorthEast 0.0 0.25 TsAvgLWP_C1600_G10m5.1um.jpg
+### #TsavgPlot: sst_c50_g10m5.1um hda_vint_cond abs LWP mm Average_LWP,_CCN:_50/cc,_GCCN:_10e-5/cc NorthWest 0.0 0.25 TsAvgLWP_C50_G10M5.1um.jpg
+### #TsavgPlot: sst_c400_g10m5.1um hda_vint_cond abs LWP mm Average_LWP,_CCN:_400/cc,_GCCN:_10e-5/cc NorthEast 0.0 0.25 TsAvgLWP_C400_G10M5.1um.jpg
+### #TsavgPlot: sst_c1600_g10m5.1um hda_vint_cond abs LWP mm Average_LWP,_CCN:_1600/cc,_GCCN:_10e-5/cc NorthEast 0.0 0.25 TsAvgLWP_C1600_G10M5.1um.jpg
 ### 
 ### # Hold CCN, SST constant, vary GCCN
 ### #TsavgPlot: gccn_c50_s298.1um hda_vint_cond abs LWP mm Average_LWP,_CCN:_50/cc,_SST:_298K NorthEast 0.0 0.25 TsAvgLWP_C50_S298.jpg
@@ -640,21 +640,21 @@ PlotDselect: TsAll    1 1 1 1 -50  50     0 129600
 ### #TsavgPlot: gccn_c400_s303.1um hda_vint_cond abs LWP mm Average_LWP,_CCN:_400/cc,_SST:_303K NorthEast 0.0 0.25 TsAvgLWP_C400_S303.jpg
 ### 
 ### ####################### cloud structure plots ############################
-### TwoDimPlot: ccn_s293_g10m5.1um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_SST:_293K,_GCCN:_10^-^5/cc Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 SouthEast CloudStructAvg_S293_G10m5.1um.jpg
-### TwoDimPlot: ccn_s298_g10m5.1um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_SST:_298K,_GCCN:_10^-^5/cc Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_S298_G10m5.1um.jpg
-### TwoDimPlot: ccn_s303_g10m5.1um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_SST:_303K,_GCCN:_10^-^5/cc Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_S303_G10m5.1um.jpg
+### TwoDimPlot: ccn_s293_g10m5.1um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_SST:_293K,_GCCN:_10^-^5/cc Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 SouthEast CloudStructAvg_S293_G10M5.1um.jpg
+### TwoDimPlot: ccn_s298_g10m5.1um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_SST:_298K,_GCCN:_10^-^5/cc Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_S298_G10M5.1um.jpg
+### TwoDimPlot: ccn_s303_g10m5.1um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_SST:_303K,_GCCN:_10^-^5/cc Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_S303_G10M5.1um.jpg
 ### 
-### TwoDimPlot: sst_c50_g10m5.1um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_50/cc,_GCCN:_10^-^5/cc Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_C50_G10m5.1um.jpg
-### TwoDimPlot: sst_c400_g10m5.1um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_400/cc,_GCCN:_10^-^5/cc Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_C400_G10m5.1um.jpg
-### TwoDimPlot: sst_c1600_g10m5.1um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_1600/cc,_GCCN:_10^-^5/cc Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_C1600_G10m5.1um.jpg
+### TwoDimPlot: sst_c50_g10m5.1um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_50/cc,_GCCN:_10^-^5/cc Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_C50_G10M5.1um.jpg
+### TwoDimPlot: sst_c400_g10m5.1um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_400/cc,_GCCN:_10^-^5/cc Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_C400_G10M5.1um.jpg
+### TwoDimPlot: sst_c1600_g10m5.1um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_1600/cc,_GCCN:_10^-^5/cc Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_C1600_G10M5.1um.jpg
 ### 
-### TwoDimPlot: ccn_s293_g10m5.1um min_ctop_tempc hda_cloud_frac Cloud_Structure,_SST:_293K,_GCCN:_10^-^5/cc Min_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 SouthEast CloudStructMin_S293_G10m5.1um.jpg
-### TwoDimPlot: ccn_s298_g10m5.1um min_ctop_tempc hda_cloud_frac Cloud_Structure,_SST:_298K,_GCCN:_10^-^5/cc Min_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructMin_S298_G10m5.1um.jpg
-### TwoDimPlot: ccn_s303_g10m5.1um min_ctop_tempc hda_cloud_frac Cloud_Structure,_SST:_303K,_GCCN:_10^-^5/cc Min_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructMin_S303_G10m5.1um.jpg
+### TwoDimPlot: ccn_s293_g10m5.1um min_ctop_tempc hda_cloud_frac Cloud_Structure,_SST:_293K,_GCCN:_10^-^5/cc Min_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 SouthEast CloudStructMin_S293_G10M5.1um.jpg
+### TwoDimPlot: ccn_s298_g10m5.1um min_ctop_tempc hda_cloud_frac Cloud_Structure,_SST:_298K,_GCCN:_10^-^5/cc Min_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructMin_S298_G10M5.1um.jpg
+### TwoDimPlot: ccn_s303_g10m5.1um min_ctop_tempc hda_cloud_frac Cloud_Structure,_SST:_303K,_GCCN:_10^-^5/cc Min_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructMin_S303_G10M5.1um.jpg
 ### 
-### TwoDimPlot: sst_c50_g10m5.1um min_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_50/cc,_GCCN:_10^-^5/cc Min_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructMin_C50_G10m5.1um.jpg
-### TwoDimPlot: sst_c400_g10m5.1um min_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_400/cc,_GCCN:_10^-^5/cc Min_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructMin_C400_G10m5.1um.jpg
-### TwoDimPlot: sst_c1600_g10m5.1um min_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_1600/cc,_GCCN:_10^-^5/cc Min_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructMin_C1600_G10m5.1um.jpg
+### TwoDimPlot: sst_c50_g10m5.1um min_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_50/cc,_GCCN:_10^-^5/cc Min_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructMin_C50_G10M5.1um.jpg
+### TwoDimPlot: sst_c400_g10m5.1um min_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_400/cc,_GCCN:_10^-^5/cc Min_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructMin_C400_G10M5.1um.jpg
+### TwoDimPlot: sst_c1600_g10m5.1um min_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_1600/cc,_GCCN:_10^-^5/cc Min_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructMin_C1600_G10M5.1um.jpg
 ### 
 ### TwoDimPlot: gccn_c50_s298.13um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_50/cc,_SST:_298K_(-_1um,--_3um) Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_C50_S298.13um.jpg
 ### TwoDimPlot: gccn_c400_s298.13um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_400/cc,_SST:_298K_(-_1um,--_3um) Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_C400_S298.13um.jpg
@@ -662,8 +662,8 @@ PlotDselect: TsAll    1 1 1 1 -50  50     0 129600
 ### 
 ### TwoDimPlot: gccn_c400_s303.13um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_400/cc,_SST:_303K_(-_1um,--_3um) Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_C400_S303.13um.jpg
 ### 
-### TwoDimPlot: sst_c400_g10m0.13um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_400/cc,_GCCN:_1/cc_(-_1um,--_3um) Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_C400_G10m0.13um.jpg
-### TwoDimPlot: sst_c400_g10m4.13um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_400/cc,_GCCN:_10^-^4/cc_(-_1um,--_3um) Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_C400_G10m4.13um.jpg
+### TwoDimPlot: sst_c400_g10m0.13um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_400/cc,_GCCN:_1/cc_(-_1um,--_3um) Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_C400_G10M0.13um.jpg
+### TwoDimPlot: sst_c400_g10m4.13um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_400/cc,_GCCN:_10^-^4/cc_(-_1um,--_3um) Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_C400_G10M4.13um.jpg
 ### 
-### TwoDimPlot: ccn_s298_g10m0.13um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_SST:_298K,_GCCN:_1/cc_(-_1um,--_3um) Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_S298_G10m0.13um.jpg
-### TwoDimPlot: ccn_s298_g10m4.13um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_SST:_298K,_GCCN:_10^-^4/cc_(-_1um,--_3um) Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_S298_G10m4.13um.jpg
+### TwoDimPlot: ccn_s298_g10m0.13um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_SST:_298K,_GCCN:_1/cc_(-_1um,--_3um) Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_S298_G10M0.13um.jpg
+### TwoDimPlot: ccn_s298_g10m4.13um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_SST:_298K,_GCCN:_10^-^4/cc_(-_1um,--_3um) Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_S298_G10M4.13um.jpg
