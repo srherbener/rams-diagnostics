@@ -16,7 +16,7 @@ montage -tile 3x3 -geometry ${Jsize}+2+100 \
  h2d_cfrac_ctoptempc_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
  h2d_cfrac_ctoptempc_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
  h2d_cfrac_ctoptempc_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
- FigureHist2dCfracCtoptemp.jpg
+ FigureHist2dOldCfracCtoptemp.jpg
 
 # 2d hist cfrac vs cdepth
 echo "Figure Hist2d -> cfrac vs cdepth"
@@ -30,4 +30,153 @@ montage -tile 3x3 -geometry ${Jsize}+2+100 \
  h2d_cfrac_cdepth_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
  h2d_cfrac_cdepth_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
  h2d_cfrac_cdepth_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+ FigureHist2dOldCfracCdepth.jpg
+
+# 2d hist cfrac vs ctoptemp, sst = 298K
+echo "Figure Hist2d -> cfrac vs ctoptemp"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ h2d_cfrac_ctoptempc_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+ h2d_cfrac_ctoptempc_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+ h2d_cfrac_ctoptempc_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+ h2d_cfrac_ctoptempc_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ h2d_cfrac_ctoptempc_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+ h2d_cfrac_ctoptempc_z.atex.ccn1200.sst298.gcn10m5.1um.jpg \
+ Blank.jpg \
+ h2d_cfrac_ctoptempc_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+ Blank.jpg \
+ FigureHist2dOldCfracCtoptempS298.jpg
+
+# 2d hist cfrac vs cdepth, sst = 298K
+echo "Figure Hist2d -> cfrac vs cdepth"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ h2d_cfrac_cdepth_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+ h2d_cfrac_cdepth_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+ h2d_cfrac_cdepth_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+ h2d_cfrac_cdepth_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ h2d_cfrac_cdepth_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+ h2d_cfrac_cdepth_z.atex.ccn1200.sst298.gcn10m5.1um.jpg \
+ Blank.jpg \
+ h2d_cfrac_cdepth_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+ Blank.jpg \
+ FigureHist2dOldCfracCdepthS298.jpg
+
+################ NEW 2D HISTS ######################
+# 2d hist cfrac vs ctoptemp
+echo "Figure Hist2d -> cfrac vs ctoptemp"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ hist2d_cfrac_ctoptempc_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+ hist2d_cfrac_ctoptempc_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+ hist2d_cfrac_ctoptempc_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+ hist2d_cfrac_ctoptempc_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+ hist2d_cfrac_ctoptempc_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ hist2d_cfrac_ctoptempc_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+ hist2d_cfrac_ctoptempc_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+ hist2d_cfrac_ctoptempc_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+ hist2d_cfrac_ctoptempc_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+ FigureHist2dCfracCtoptemp.jpg
+
+# 2d hist cfrac vs cdepth
+echo "Figure Hist2d -> cfrac vs cdepth"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ hist2d_cfrac_cdepth_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+ hist2d_cfrac_cdepth_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+ hist2d_cfrac_cdepth_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+ hist2d_cfrac_cdepth_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+ hist2d_cfrac_cdepth_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ hist2d_cfrac_cdepth_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+ hist2d_cfrac_cdepth_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+ hist2d_cfrac_cdepth_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+ hist2d_cfrac_cdepth_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
  FigureHist2dCfracCdepth.jpg
+
+# 2d hist cfrac vs ctoptemp, sst = 298K
+echo "Figure Hist2d -> cfrac vs ctoptemp"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ hist2d_cfrac_ctoptempc_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+ hist2d_cfrac_ctoptempc_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+ hist2d_cfrac_ctoptempc_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+ hist2d_cfrac_ctoptempc_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ hist2d_cfrac_ctoptempc_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+ hist2d_cfrac_ctoptempc_z.atex.ccn1200.sst298.gcn10m5.1um.jpg \
+ Blank.jpg \
+ hist2d_cfrac_ctoptempc_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+ Blank.jpg \
+ FigureHist2dCfracCtoptempS298.jpg
+
+# 2d hist cfrac vs cdepth, sst = 298K
+echo "Figure Hist2d -> cfrac vs cdepth"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ hist2d_cfrac_cdepth_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+ hist2d_cfrac_cdepth_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+ hist2d_cfrac_cdepth_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+ hist2d_cfrac_cdepth_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ hist2d_cfrac_cdepth_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+ hist2d_cfrac_cdepth_z.atex.ccn1200.sst298.gcn10m5.1um.jpg \
+ Blank.jpg \
+ hist2d_cfrac_cdepth_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+ Blank.jpg \
+ FigureHist2dCfracCdepthS298.jpg
+
+# time series cloud frac
+echo "Figure cloud fraction time series"
+montage -tile 3x2 -geometry ${Jsize}+2+100 \
+ Cloud_Frac_CO_C0050_G10M5.jpg \
+ Cloud_Frac_CO_C0400_G10M5.jpg \
+ Cloud_Frac_CO_C1600_G10M5.jpg \
+ Cloud_Frac_CO_S293_G10M5.jpg \
+ Cloud_Frac_CO_S298_G10M5.jpg \
+ Cloud_Frac_CO_S303_G10M5.jpg \
+ FigureCfracTimeSeries.jpg
+
+# time series max cloud depth
+echo "Figure max cloud depth time series"
+montage -tile 3x2 -geometry ${Jsize}+2+100 \
+ Cloud_Depth_CO_C0050_G10M5.jpg \
+ Cloud_Depth_CO_C0400_G10M5.jpg \
+ Cloud_Depth_CO_C1600_G10M5.jpg \
+ Cloud_Depth_CO_S293_G10M5.jpg \
+ Cloud_Depth_CO_S298_G10M5.jpg \
+ Cloud_Depth_CO_S303_G10M5.jpg \
+ FigureMaxCdepthTimeSeries.jpg
+
+# time series cloud frac w/ GCCN
+echo "Figure cloud fraction time series, with GCCN"
+montage -tile 3x2 -geometry ${Jsize}+2+100 \
+ Cloud_Frac_CG_C50_S298.jpg \
+ Cloud_Frac_CG_C400_S298.jpg \
+ Cloud_Frac_CG_C1600_S298.jpg \
+ Blank.jpg \
+ Cloud_Frac_CG_C400_S303.jpg \
+ FigureCfracGccnTimeSeries.jpg
+
+# time series max cloud depth w/ GCCN
+echo "Figure max cloud depth time series, with GCCN"
+montage -tile 3x2 -geometry ${Jsize}+2+100 \
+ Cloud_Depth_CG_C50_S298.jpg \
+ Cloud_Depth_CG_C400_S298.jpg \
+ Cloud_Depth_CG_C1600_S298.jpg \
+ Blank.jpg \
+ Cloud_Depth_CG_C400_S303.jpg \
+ FigureMaxCdepthGccnTimeSeries.jpg
+
+# time series cloud fraction w/ GCCN
+echo "Figure cloud fraction time series, with GCCN"
+montage -tile 3x2 -geometry ${Jsize}+2+100 \
+ Cloud_Frac_CG_C400_G10M4.jpg \
+ Cloud_Frac_CG_C400_G10M2.jpg \
+ Cloud_Frac_CG_C400_G10M0.jpg \
+ Cloud_Frac_CG_S298_G10M4.jpg \
+ Cloud_Frac_CG_S298_G10M2.jpg \
+ Cloud_Frac_CG_S298_G10M0.jpg \
+ FigureCfracGccnTimeSeries2.jpg
+
+# time series max cloud depth w/ GCCN
+echo "Figure max cloud depth time series, with GCCN"
+montage -tile 3x2 -geometry ${Jsize}+2+100 \
+ Cloud_Depth_CG_C400_G10M4.jpg \
+ Cloud_Depth_CG_C400_G10M2.jpg \
+ Cloud_Depth_CG_C400_G10M0.jpg \
+ Cloud_Depth_CG_S298_G10M4.jpg \
+ Cloud_Depth_CG_S298_G10M2.jpg \
+ Cloud_Depth_CG_S298_G10M0.jpg \
+ FigureMaxCdepthGccnTimeSeries2.jpg
