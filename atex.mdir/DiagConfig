@@ -541,8 +541,10 @@ SlopePlot: DIAGS/smeas_pop_CO_S303_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower
 #
 # PcolorPlot: <file_prefix> <color_min> <color_max> <color_ticks> <color_scale> <title> <xlabel> <ylabel> <out_file>
 
-PcolorPlot: DIAGS/h2d_cfrac_ctoptemp 1 1e5 10:1000:100000 log _ Top_Temp_(C) Fraction h2d_cfrac_ctoptempc
-PcolorPlot: DIAGS/h2d_cfrac_cdepth   1 1e5 10:1000:100000 log  _ Depth_(m)    Fraction h2d_cfrac_cdepth
+#PcolorPlot: DIAGS/h2d_cfrac_ctoptemp 1 1e5 10:1000:100000 log _ Top_Temp_(C) Fraction h2d_cfrac_ctoptempc
+#PcolorPlot: DIAGS/h2d_cfrac_cdepth   1 1e5 10:1000:100000 log  _ Depth_(m)    Fraction h2d_cfrac_cdepth
+PcolorPlot: DIAGS/hist2d_cfrac_ctoptempc 1 1e5 10:1000:100000 log _ Top_Temp_(C) Fraction hist2d_cfrac_ctoptempc
+PcolorPlot: DIAGS/hist2d_cfrac_cdepth    1 1e5 10:1000:100000 log _ Depth_(m)    Fraction hist2d_cfrac_cdepth
 
 ####################### Plot Sets ############################
 

@@ -41,7 +41,7 @@ Xselect = {
 
 CfracSelect = '0:1:1';
 
-Tmin = 30;
+Tmin = 12;
 Tmax = 36;
 
 % Find and replace underscores in Ptitle, Ylabel with blank spaces
