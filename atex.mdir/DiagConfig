@@ -515,8 +515,11 @@ Smeas: CO_S303_G10M5 smeas_pop_CO_S303_G10M5 TsAveragedData pop pop 0.0999 1.001
 #
 # Hist2d: <name> <file_prefix> <var> <xmin> <xmax> <xgroup> <ymin> <ymax> <ygroup> <tmin> <tmax>
 
-Hist2d: h2d_cfrac_ctoptemp TsAveragedData/hist2d_ctoptemp_cfrac hist2d   0   20 1     0.2 1 1     30 36
-Hist2d: h2d_cfrac_cdepth   TsAveragedData/hist2d_cdepth_cfrac   hist2d 100 4000 1     0.2 1 1     30 36
+#### Doing these using new cfrac variable (1D) with the GenCfrac2dHists.m script
+#Hist2d: h2d_cfrac_ctoptemp TsAveragedData/hist2d_ctoptemp_cfrac hist2d   0   20 1     0.2 1 1     30 36
+#Hist2d: h2d_cfrac_cdepth   TsAveragedData/hist2d_cdepth_cfrac   hist2d 100 4000 1     0.2 1 1     30 36
+
+Hist2d: hist2d_swuptoa_pcprr  TsAveragedData/hist2d_pcprr_swuptoa  hist2d 0 10 2    0.0 1000 2     12 36
 
 #####################################
 ########## Slope Plots ##############
@@ -541,10 +544,10 @@ SlopePlot: DIAGS/smeas_pop_CO_S303_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower
 #
 # PcolorPlot: <file_prefix> <color_min> <color_max> <color_ticks> <color_scale> <title> <xlabel> <ylabel> <out_file>
 
-#PcolorPlot: DIAGS/h2d_cfrac_ctoptemp 1 1e5 10:1000:100000 log _ Top_Temp_(C) Fraction h2d_cfrac_ctoptempc
-#PcolorPlot: DIAGS/h2d_cfrac_cdepth   1 1e5 10:1000:100000 log  _ Depth_(m)    Fraction h2d_cfrac_cdepth
-PcolorPlot: DIAGS/hist2d_cfrac_ctoptempc 1 1e5 10:1000:100000 log _ Top_Temp_(C) Fraction hist2d_cfrac_ctoptempc
-PcolorPlot: DIAGS/hist2d_cfrac_cdepth    1 1e5 10:1000:100000 log _ Depth_(m)    Fraction hist2d_cfrac_cdepth
+#PcolorPlot: DIAGS/hist2d_cfrac_ctoptempc 1 1e5 10:1000:100000 log _ Top_Temp_(C) Fraction hist2d_cfrac_ctoptempc
+#PcolorPlot: DIAGS/hist2d_cfrac_cdepth    1 1e5 10:1000:100000 log _ Depth_(m)    Fraction hist2d_cfrac_cdepth
+
+PcolorPlot: DIAGS/hist2d_swuptoa_pcprr   1 1e5 10:1000:100000 log _ Precip_Rate_(mm/hr) SWUP_TOA_(W/m^2) hist2d_swuptoa_pcprr
 
 ####################### Plot Sets ############################
 
