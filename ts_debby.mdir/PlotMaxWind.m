@@ -13,22 +13,18 @@ end
 Hfile = sprintf('%s/speed_t_TSD_3GRIDS.h5', Adir);
 Hdset = 'speed_t';
 fprintf('Reading: %s, Dataset: %s\n', Hfile, Hdset);
-SPEED_T = hdf5read(Hfile, Hdset);
-
-% Throw away first 36 hrs of the simulation since the circulation hadn't
-% formed yet.
-ST = SPEED_T(:,:,37:end);
-TIMES = 1:size(ST,3);
+SPEED_T = squeeze(hdf5read(Hfile, Hdset));
+TIMES = 1:size(SPEED_T,3);
 
 % generate the time series of the maximum Vt of the horizontal domain
 % ST is organized as x,y,t so take the max along the first two dimensions
-ST_MAX = squeeze(max(max(ST,[],1),[],2));
+ST_MAX = squeeze(max(max(SPEED_T,[],1),[],2));
 
 % NHC Best Track (every six hours) data
-% time step 43 from the simulation is where the NHC data starts
+% time step 1 from the simulation is where the NHC data starts
 % NHC wind is in mph, multiply by 0.447 to convert to m/s
 NHC_WIND  = [ 35   35   35   35   35   40   45   50   50   50   50   50   50   ] * 0.447;
-NHC_TIMES = (7:6:79);
+NHC_TIMES = (1:6:73);
 
 % plot
 OutFile = sprintf('%s/TsDebbyWind.jpg', Pdir);

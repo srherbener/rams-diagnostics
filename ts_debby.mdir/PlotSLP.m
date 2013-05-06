@@ -8,26 +8,22 @@ if (exist(Pdir, 'dir') ~= 7)
 end
 
 % read in the sea level pressure
-Hfile = sprintf('sea_press_TSD_3GRIDS.h5');
+Hfile = sprintf('AzAveragedData/sea_press_TSD_3GRIDS.h5');
 Hdset = 'sea_press';
 fprintf('Reading: %s, Dataset: %s\n', Hfile, Hdset);
-SPRESS = hdf5read(Hfile, Hdset);
-
-% Throw away first 36 hrs of the simulation since the circulation hadn't
-% formed yet. Chop off the eastern part of the horizontal grid since this
-% is land and at times has lower SLP than the storm.
-SLP = SPRESS(1:750,:,37:end);
-TIMES = 1:size(SLP,3);
+SPRESS = squeeze(hdf5read(Hfile, Hdset));
+TIMES = 1:size(SPRESS,2);
 
 % generate the time series of the minimum SLP of the horizontal domain
 % SPRESS is organized as x,y,t so take the minimum along the first two
 % dimensions
-SLP_MIN = squeeze(min(min(SLP,[],1),[],2));
+SLP_MIN = squeeze(min(SPRESS,[],1));
 
 % NHC Best Track (every six hours) data
-% time step 43 from the simulation is where the NHC data starts
+% time step 1 from the simulation is where the NHC data starts
 NHC_SLP = [ 1007 1007 1007 1007 1005 1003 1002 1001 1001 1000  999 1000 1000 ];
-NHC_TIMES = (7:6:79);
+NHC_TIMES = (1:6:73);
+
 
 % plot
 OutFile = sprintf('%s/TsDebbyPress.jpg', Pdir);

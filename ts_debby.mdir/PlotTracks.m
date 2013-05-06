@@ -14,8 +14,15 @@ LonBounds = [ -42 -8 ];
 NhcTrackLats = [ 11.6 12.0 12.6 13.4 14.2 14.9 15.7 16.7 17.6 18.4 19.2 20.1 20.9 ];
 NhcTrackLons = [ 21.7 22.7 23.9 25.3 26.7 28.1 29.5 30.0 32.4 33.9 35.5 37.1 38.7 ] * -1; 
 
-SimTrackLats = [ 12.5 13.0 13.5 14.0 14.5 15.5 16.0 16.5 17.5 18.0 19.0 19.0 19.5 ];
-SimTrackLons = [ 20.0 21.5 23.0 24.0 25.0 26.5 27.5 29.0 30.5 31.5 33.0 34.0 36.0 ] * -1;
+Hfile = 'FILTERS/all_TSD_3GRIDS.h5';
+HdsetLon = 'min_press_xloc';
+HdsetLat = 'min_press_yloc';
+
+fprintf('Reading: %s\n', Hfile);
+fprintf('  Track longitude: %s\n', HdsetLon);
+fprintf('  Track latitude: %s\n', HdsetLat);
+SimTrackLons = squeeze(hdf5read(Hfile, HdsetLon));
+SimTrackLats = squeeze(hdf5read(Hfile, HdsetLat));
 
 % plot
 FigTracks = figure;
