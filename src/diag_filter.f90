@@ -40,6 +40,7 @@ program diag_filter
   character (len=LargeString) :: InDir, InSuffix, OutFile
   type (FilterDescrip), dimension(MaxFilters) :: Filters
   character (len=LargeString) :: Mvname, Mfprefix
+  character (len=LargeString) :: VCvname, VCfprefix
 
   integer :: Nfilters
 
@@ -52,11 +53,14 @@ program diag_filter
   type (Rhdf5Var), dimension(MaxFilters) :: Vars
   character (len=RHDF5_MAX_STRING), dimension(MaxFilters) :: InFiles
   character (len=RHDF5_MAX_STRING) :: Mfile
+  character (len=RHDF5_MAX_STRING) :: VCfile
   type (Rhdf5Var) :: Mvar
+  type (Rhdf5Var) :: VCvar
 
   character (len=RHDF5_MAX_STRING) :: FileAcc
   integer, dimension(MaxFilters) :: InFileIds
   integer :: OutFileId
+  integer :: rh5f_vclass_fid
 
   type (Rhdf5Var) :: OutFilter
   type (Rhdf5Var) :: Xcoords, Ycoords, Zcoords, Tcoords, Dcoords
@@ -70,9 +74,10 @@ program diag_filter
   integer :: StmIx, StmIy
 
   logical :: SelectThisPoint
+  logical :: UseVclass
 
   ! Get the command line arguments
-  call GetMyArgs(LargeString, MaxFilters, InDir, InSuffix, OutFile, Mvname, Mfprefix, Filters, Nfilters)
+  call GetMyArgs(LargeString, MaxFilters, InDir, InSuffix, OutFile, Mvname, Mfprefix, VCvname, VCfprefix, Filters, Nfilters)
 
   DoingCylVol = .false.
   write (*,*) 'Creating HDF5 data filter:'
@@ -81,6 +86,8 @@ program diag_filter
   write (*,*) '  Output file name:  ', trim(OutFile)
   write (*,*) '  Model variable name:  ', trim(Mvname)
   write (*,*) '  Model file prefix: ', trim(Mfprefix)
+  write (*,*) '  Vegetation class variable name:  ', trim(VCvname)
+  write (*,*) '  Vegetation class file prefix: ', trim(VCfprefix)
   write (*,*) '  Data selection specs: '
   do i = 1, Nfilters
     if (Filters(i)%Ftype .eq. 'cylvol') then
@@ -177,6 +184,29 @@ program diag_filter
       endif
     endif
   enddo
+
+  ! Check to see if we are using the vegetation class information. It is only used by
+  ! the cylvol filter in the call to FindStormCenter with the purpose of keeping the
+  ! the search for the storm center over the ocean.
+  UseVclass = .false.
+  if (DoingCylVol) then
+    if (trim(VCvname) .ne. 'none') then
+      UseVclass = .true.
+      VCfile = trim(InDir) // '/' // trim(VCfprefix) // trim(InSuffix)
+      VCvar%vname = trim(VCvname)
+      call rhdf5_read_init(VCfile, VCvar)
+
+      ! check dimensions and prepare for reading
+      if (.not. DimsMatch(Mvar, VCvar)) then
+        write (*,*) 'ERROR: horizontal and time dimensions of vegetation class variable do not match the model variable: ', trim(VCvar%vname)
+        BadDims = .true.
+      else
+        ! Prepare for reading
+        VCvar%ndims = VCvar%ndims - 1
+        allocate(VCvar%vdata(Nx*Ny))
+      endif
+    endif
+  endif
 
   if (BadDims) then
     stop
@@ -325,6 +355,10 @@ program diag_filter
     call rhdf5_open_file(InFiles(i), FileAcc, 0, InFileIds(i))
     write (*,*) 'Reading HDF5 file: ', trim(InFiles(i))
   enddo
+  if (UseVclass) then
+    call rhdf5_open_file(VCfile, FileAcc, 0, rh5f_vclass_fid)
+    write (*,*) 'Reading HDF5 file: ', trim(VCfile)
+  endif
   write (*,*) ''
 
   FileAcc = 'W'
@@ -357,7 +391,10 @@ program diag_filter
       enddo
 
       ! Find the storm center
-      call FindStormCenter(Nx, Ny, Vars(ipress)%vdata, StmIx, StmIy, MinP%vdata(1))
+      if (UseVclass) then
+        call rhdf5_read_variable(rh5f_vclass_fid, VCvar%vname, VCvar%ndims, it, VCvar%dims, rdata=VCvar%vdata)
+      endif
+      call FindStormCenter(Nx, Ny, Vars(ipress)%vdata, UseVclass, VCvar%vdata, StmIx, StmIy, MinP%vdata(1))
 
       ! Record the lat,lon of the storm center
       StormX%vdata(1) = Xcoords%vdata(StmIx)
@@ -551,12 +588,12 @@ contains
 ! GetMyArgs()
 !
 
- subroutine GetMyArgs(Nstr, Nfilt, InDir, InSuffix, OutFile, Mvname, Mfprefix, Filters, NumFilters)
+ subroutine GetMyArgs(Nstr, Nfilt, InDir, InSuffix, OutFile, Mvname, Mfprefix, VCvname, VCfprefix, Filters, NumFilters)
   implicit none
 
   integer, parameter :: MaxFields = 15
 
-  character (len=Nstr) :: InDir, InSuffix, OutFile, Mvname, Mfprefix
+  character (len=Nstr) :: InDir, InSuffix, OutFile, Mvname, Mfprefix, VCvname, VCfprefix
   integer :: Nstr, Nfilt, NumFilters
   type (FilterDescrip), dimension(Nfilt) :: Filters
 
@@ -572,6 +609,8 @@ contains
   OutFile = ''
   Mvname = ''
   Mfprefix = ''
+  VCvname = ''
+  VCfprefix = ''
   NumFilters = 0
 
   ! walk through the list of arguments
@@ -603,6 +642,12 @@ contains
 
       Mvname   = Fields(1)
       Mfprefix = Fields(2)
+    else if (i .eq. 5) then
+      call String2List(Arg, ':', Fields, MaxFields, Nfld, 'veg class')
+      i = i + 1
+
+      VCvname   = Fields(1)
+      VCfprefix = Fields(2)
     else
       call String2List(Arg, ':', Fields, MaxFields, Nfld, 'filter spec')
       i = i + 1
@@ -614,7 +659,7 @@ contains
         NumFilters = NumFilters + 1
 
         if (Nfld .lt. 9) then
-          write (*,*) 'ERROR: not enough arguments to fully specify the clyvol filter'
+          write (*,*) 'ERROR: not enough arguments to fully specify the cylvol filter'
           BadArgs = .true.
         else
           ! have enough args
@@ -808,6 +853,9 @@ contains
     write (*,*) '            <vname>: hdf5 file name of variable that will serve as a model (same dimensions)'
     write (*,*) '                     for the filter output'
     write (*,*) '            <vfprefix>: file name prefix (goes with <in_suffix> to form the whole file name)' 
+    write (*,*) '        <2d_veg_class>: <vname>:<vfprefix>'
+    write (*,*) '            <vname>: hdf5 file name of variable that contains vegetation class'
+    write (*,*) '            <vfprefix>: file name prefix (goes with <in_suffix> to form the whole file name)' 
     write (*,*) '        <filter_spec>: <ftype>:<vname>:<vfprefix>:<x1>:<x2>:<y1>:<y2>:<z1>:<z2>'
     write (*,*) ''
     write (*,*) '            <ftype>:'
@@ -883,13 +931,14 @@ end subroutine SetOutCoords
 ! level (iz = 1).
 !
 
-subroutine FindStormCenter(Nx, Ny, Press, StmCtrX, StmCtrY, MinP)
+subroutine FindStormCenter(Nx, Ny, Press, UseVclass, Vclass, StmCtrX, StmCtrY, MinP)
   implicit none
 
   integer :: Nx, Ny
-  real, dimension(Nx,Ny) :: Press
+  real, dimension(Nx,Ny) :: Press, Vclass
   integer :: StmCtrX, StmCtrY
   real :: MinP
+  logical :: UseVclass
 
   integer :: ix, iy
 
@@ -899,6 +948,15 @@ subroutine FindStormCenter(Nx, Ny, Press, StmCtrX, StmCtrY, MinP)
 
   do ix = 1, Nx
     do iy = 1, Ny
+      ! Only consider points over the ocean
+      ! Grid cells that are all ocean will have a class value of zero.
+      if (UseVclass) then
+        if (Vclass(ix,iy) .ge. 0.001) then
+          cycle
+        endif
+      endif
+
+      ! If we are here, we are in a location over the ocean
       if (Press(ix,iy) .lt. MinP) then
         MinP = Press(ix,iy)
         StmCtrX = ix
