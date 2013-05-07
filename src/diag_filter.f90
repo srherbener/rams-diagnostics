@@ -40,7 +40,6 @@ program diag_filter
   character (len=LargeString) :: InDir, InSuffix, OutFile
   type (FilterDescrip), dimension(MaxFilters) :: Filters
   character (len=LargeString) :: Mvname, Mfprefix
-  character (len=LargeString) :: VCvname, VCfprefix
 
   integer :: Nfilters
 
@@ -53,14 +52,14 @@ program diag_filter
   type (Rhdf5Var), dimension(MaxFilters) :: Vars
   character (len=RHDF5_MAX_STRING), dimension(MaxFilters) :: InFiles
   character (len=RHDF5_MAX_STRING) :: Mfile
-  character (len=RHDF5_MAX_STRING) :: VCfile
+  character (len=RHDF5_MAX_STRING) :: FsFilterFile
   type (Rhdf5Var) :: Mvar
-  type (Rhdf5Var) :: VCvar
+  type (Rhdf5Var) :: FsFilterVar
 
   character (len=RHDF5_MAX_STRING) :: FileAcc
   integer, dimension(MaxFilters) :: InFileIds
   integer :: OutFileId
-  integer :: rh5f_vclass_fid
+  integer :: rh5f_fsf__fid
 
   type (Rhdf5Var) :: OutFilter
   type (Rhdf5Var) :: Xcoords, Ycoords, Zcoords, Tcoords, Dcoords
@@ -74,10 +73,11 @@ program diag_filter
   integer :: StmIx, StmIy
 
   logical :: SelectThisPoint
-  logical :: UseVclass
+  logical :: UseFsFilter
+  type (FilterDescrip) :: FsFilter
 
   ! Get the command line arguments
-  call GetMyArgs(LargeString, MaxFilters, InDir, InSuffix, OutFile, Mvname, Mfprefix, VCvname, VCfprefix, Filters, Nfilters)
+  call GetMyArgs(LargeString, MaxFilters, InDir, InSuffix, OutFile, Mvname, Mfprefix, FsFilter, Filters, Nfilters)
 
   DoingCylVol = .false.
   write (*,*) 'Creating HDF5 data filter:'
@@ -86,8 +86,11 @@ program diag_filter
   write (*,*) '  Output file name:  ', trim(OutFile)
   write (*,*) '  Model variable name:  ', trim(Mvname)
   write (*,*) '  Model file prefix: ', trim(Mfprefix)
-  write (*,*) '  Vegetation class variable name:  ', trim(VCvname)
-  write (*,*) '  Vegetation class file prefix: ', trim(VCfprefix)
+  write (*,*) '  Find storm filter:'
+  write (*,*) '    Filter type:  ', trim(FsFilter%Ftype)
+  write (*,*) '    Variable name:  ', trim(FsFilter%Vname)
+  write (*,*) '    File prefix: ', trim(FsFilter%Vfprefix)
+  write (*,*) '    Treshold: ', FsFilter%x1
   write (*,*) '  Data selection specs: '
   do i = 1, Nfilters
     if (Filters(i)%Ftype .eq. 'cylvol') then
@@ -185,25 +188,36 @@ program diag_filter
     endif
   enddo
 
-  ! Check to see if we are using the vegetation class information. It is only used by
+  ! Check to see if we are using the find storm "hints". It is only used by
   ! the cylvol filter in the call to FindStormCenter with the purpose of keeping the
   ! the search for the storm center over the ocean.
-  UseVclass = .false.
+  UseFsFilter = .false.
   if (DoingCylVol) then
-    if (trim(VCvname) .ne. 'none') then
-      UseVclass = .true.
-      VCfile = trim(InDir) // '/' // trim(VCfprefix) // trim(InSuffix)
-      VCvar%vname = trim(VCvname)
-      call rhdf5_read_init(VCfile, VCvar)
+    if (trim(FsFilter%Ftype) .ne. 'none') then
+      UseFsFilter = .true.
+      FsFilterFile = trim(InDir) // '/' // trim(FsFilter%Vfprefix) // trim(InSuffix)
+      FsFilterVar%vname = trim(FsFilter%Vname)
+      call rhdf5_read_init(FsFilterFile, FsFilterVar)
 
       ! check dimensions and prepare for reading
-      if (.not. DimsMatch(Mvar, VCvar)) then
-        write (*,*) 'ERROR: horizontal and time dimensions of vegetation class variable do not match the model variable: ', trim(VCvar%vname)
-        BadDims = .true.
+      if ((trim(FsFilterVar%Vname) .eq. 'sfclat') .or. (trim(FsFilterVar%Vname) .eq. 'sfclon')) then
+        ! just check horizontal dims (not time)
+        if ((FsFilterVar%dims(1) .ne. Mvar%dims(1)) .or. (FsFilterVar%dims(2) .ne. Mvar%dims(2))) then
+          write (*,*) 'ERROR: horizontal and time dimensions of find storm variable do not match the model variable: ', trim(FsFilterVar%vname)
+          BadDims = .true.
+        else
+          ! Prepare for reading
+          allocate(FsFilterVar%vdata(Nx*Ny))
+        endif
       else
-        ! Prepare for reading
-        VCvar%ndims = VCvar%ndims - 1
-        allocate(VCvar%vdata(Nx*Ny))
+        if (.not. DimsMatch(Mvar, FsFilterVar)) then
+          write (*,*) 'ERROR: horizontal and time dimensions of find storm variable do not match the model variable: ', trim(FsFilterVar%vname)
+          BadDims = .true.
+        else
+          ! Prepare for reading
+          FsFilterVar%ndims = FsFilterVar%ndims - 1
+          allocate(FsFilterVar%vdata(Nx*Ny))
+        endif
       endif
     endif
   endif
@@ -355,9 +369,9 @@ program diag_filter
     call rhdf5_open_file(InFiles(i), FileAcc, 0, InFileIds(i))
     write (*,*) 'Reading HDF5 file: ', trim(InFiles(i))
   enddo
-  if (UseVclass) then
-    call rhdf5_open_file(VCfile, FileAcc, 0, rh5f_vclass_fid)
-    write (*,*) 'Reading HDF5 file: ', trim(VCfile)
+  if (UseFsFilter) then
+    call rhdf5_open_file(FsFilterFile, FileAcc, 0, rh5f_fsf__fid)
+    write (*,*) 'Reading HDF5 file: ', trim(FsFilterFile)
   endif
   write (*,*) ''
 
@@ -391,10 +405,14 @@ program diag_filter
       enddo
 
       ! Find the storm center
-      if (UseVclass) then
-        call rhdf5_read_variable(rh5f_vclass_fid, VCvar%vname, VCvar%ndims, it, VCvar%dims, rdata=VCvar%vdata)
+      if (UseFsFilter) then
+        if ((trim(FsFilterVar%Vname) .eq. 'sfclat') .or. (trim(FsFilterVar%Vname) .eq. 'sfclon')) then
+          call rhdf5_read_variable(rh5f_fsf__fid, FsFilterVar%vname, FsFilterVar%ndims, 0, FsFilterVar%dims, rdata=FsFilterVar%vdata)
+        else
+          call rhdf5_read_variable(rh5f_fsf__fid, FsFilterVar%vname, FsFilterVar%ndims, it, FsFilterVar%dims, rdata=FsFilterVar%vdata)
+        endif
       endif
-      call FindStormCenter(Nx, Ny, Vars(ipress)%vdata, UseVclass, VCvar%vdata, StmIx, StmIy, MinP%vdata(1))
+      call FindStormCenter(Nx, Ny, Vars(ipress)%vdata, UseFsFilter, FsFilter, FsFilterVar%vdata, StmIx, StmIy, MinP%vdata(1))
 
       ! Record the lat,lon of the storm center
       StormX%vdata(1) = Xcoords%vdata(StmIx)
@@ -588,14 +606,15 @@ contains
 ! GetMyArgs()
 !
 
- subroutine GetMyArgs(Nstr, Nfilt, InDir, InSuffix, OutFile, Mvname, Mfprefix, VCvname, VCfprefix, Filters, NumFilters)
+ subroutine GetMyArgs(Nstr, Nfilt, InDir, InSuffix, OutFile, Mvname, Mfprefix, FsFilter, Filters, NumFilters)
   implicit none
 
   integer, parameter :: MaxFields = 15
 
-  character (len=Nstr) :: InDir, InSuffix, OutFile, Mvname, Mfprefix, VCvname, VCfprefix
+  character (len=Nstr) :: InDir, InSuffix, OutFile, Mvname, Mfprefix
   integer :: Nstr, Nfilt, NumFilters
   type (FilterDescrip), dimension(Nfilt) :: Filters
+  type (FilterDescrip) :: FsFilter
 
   integer :: iargc, i, j, Nargs, Nfld
   character (len=Nstr) :: Arg
@@ -609,8 +628,6 @@ contains
   OutFile = ''
   Mvname = ''
   Mfprefix = ''
-  VCvname = ''
-  VCfprefix = ''
   NumFilters = 0
 
   ! walk through the list of arguments
@@ -643,11 +660,19 @@ contains
       Mvname   = Fields(1)
       Mfprefix = Fields(2)
     else if (i .eq. 5) then
-      call String2List(Arg, ':', Fields, MaxFields, Nfld, 'veg class')
+      call String2List(Arg, ':', Fields, MaxFields, Nfld, 'find storm')
       i = i + 1
 
-      VCvname   = Fields(1)
-      VCfprefix = Fields(2)
+      FsFilter%Ftype    = Fields(1)
+      FsFilter%Vname    = Fields(2)
+      FsFilter%Vfprefix = Fields(3)
+      read(Fields(4), '(f)') FsFilter%x1
+      ! for now just support 'le', 'ge', 'lt', and 'gt'
+      FsFilter%x2 = 0
+      FsFilter%y1 = 0
+      FsFilter%y2 = 0
+      FsFilter%z1 = 0
+      FsFilter%z2 = 0
     else
       call String2List(Arg, ':', Fields, MaxFields, Nfld, 'filter spec')
       i = i + 1
@@ -853,9 +878,15 @@ contains
     write (*,*) '            <vname>: hdf5 file name of variable that will serve as a model (same dimensions)'
     write (*,*) '                     for the filter output'
     write (*,*) '            <vfprefix>: file name prefix (goes with <in_suffix> to form the whole file name)' 
-    write (*,*) '        <2d_veg_class>: <vname>:<vfprefix>'
-    write (*,*) '            <vname>: hdf5 file name of variable that contains vegetation class'
+    write (*,*) '        <2d_find_storm_filter>: <ftype>:<vname>:<vfprefix>:<val>'
+    write (*,*) '            <ftype>:'
+    write (*,*) '                gt: select point if value >  <val>'
+    write (*,*) '                ge: select point if value >= <val>'
+    write (*,*) '                lt: select point if value <  <val>'
+    write (*,*) '                le: select point if value <= <val>'
+    write (*,*) '            <vname>: hdf5 variable'
     write (*,*) '            <vfprefix>: file name prefix (goes with <in_suffix> to form the whole file name)' 
+    write (*,*) '            <val>'
     write (*,*) '        <filter_spec>: <ftype>:<vname>:<vfprefix>:<x1>:<x2>:<y1>:<y2>:<z1>:<z2>'
     write (*,*) ''
     write (*,*) '            <ftype>:'
@@ -931,16 +962,18 @@ end subroutine SetOutCoords
 ! level (iz = 1).
 !
 
-subroutine FindStormCenter(Nx, Ny, Press, UseVclass, Vclass, StmCtrX, StmCtrY, MinP)
+subroutine FindStormCenter(Nx, Ny, Press, UseFsFilter, FsFilter, Fs, StmCtrX, StmCtrY, MinP)
   implicit none
 
   integer :: Nx, Ny
-  real, dimension(Nx,Ny) :: Press, Vclass
+  real, dimension(Nx,Ny) :: Press, Fs
+  type(FilterDescrip) :: FsFilter
   integer :: StmCtrX, StmCtrY
   real :: MinP
-  logical :: UseVclass
+  logical :: UseFsFilter
 
   integer :: ix, iy
+  logical :: SelectPoint
 
   MinP = 1e10 ! ridiculously large pressure
   StmCtrX = 0 
@@ -948,22 +981,38 @@ subroutine FindStormCenter(Nx, Ny, Press, UseVclass, Vclass, StmCtrX, StmCtrY, M
 
   do ix = 1, Nx
     do iy = 1, Ny
-      ! Only consider points over the ocean
-      ! Grid cells that are all ocean will have a class value of zero.
-      if (UseVclass) then
-        if (Vclass(ix,iy) .ge. 0.001) then
-          cycle
+      ! Figure out if we want to consider this point
+      SelectPoint = .true.
+      if (UseFsFilter) then
+        SelectPoint = .false.
+        if (FsFilter%Ftype .eq. 'gt') then
+          if (Fs(ix,iy) .gt. FsFilter%x1) then
+            SelectPoint = .true.
+          endif
+        elseif (FsFilter%Ftype .eq. 'ge') then
+          if (Fs(ix,iy) .ge. FsFilter%x1) then
+            SelectPoint = .true.
+          endif
+        elseif (FsFilter%Ftype .eq. 'lt') then
+          if (Fs(ix,iy) .lt. FsFilter%x1) then
+            SelectPoint = .true.
+          endif
+        elseif (FsFilter%Ftype .eq. 'le') then
+          if (Fs(ix,iy) .le. FsFilter%x1) then
+            SelectPoint = .true.
+          endif
         endif
       endif
 
-      ! If we are here, we are in a location over the ocean
-      if (Press(ix,iy) .lt. MinP) then
-        MinP = Press(ix,iy)
-        StmCtrX = ix
-        StmCtrY = iy
-      end if
-    end do
-  end do
+      if (SelectPoint) then 
+        if (Press(ix,iy) .lt. MinP) then
+          MinP = Press(ix,iy)
+          StmCtrX = ix
+          StmCtrY = iy
+        endif
+      endif
+    enddo
+  enddo
   
   return
 end subroutine FindStormCenter
