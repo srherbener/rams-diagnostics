@@ -14,10 +14,9 @@ fprintf('Reading: %s, Dataset: %s\n', Hfile, Hdset);
 SPRESS = squeeze(hdf5read(Hfile, Hdset));
 TIMES = 1:size(SPRESS,2);
 
+% SPRESS is organized as r,t so take the minimum along the first dimension
 % generate the time series of the minimum SLP of the horizontal domain
-% SPRESS is organized as x,y,t so take the minimum along the first two
-% dimensions
-SLP_MIN = squeeze(min(SPRESS,[],1));
+SLP_MIN = min(SPRESS,[],1);
 
 % NHC Best Track (every six hours) data
 % time step 1 from the simulation is where the NHC data starts
@@ -38,7 +37,7 @@ xlabel('Time');
 set(gca,'xtick', (13:24:61));
 set(gca,'xticklabel', { 'Aug22:0Z', 'Aug23:0Z', 'Aug24:0Z' });
 ylabel('Pressure (mb)');
-ylim([ 995 1010 ]);
+ylim([ 990 1010 ]);
 legend([ NhcSLP SimSLP ], 'NHC Best Track', 'Simulated Storm', 'Location', 'NorthEast');
 
 fprintf('Writing: %s\n', OutFile);

@@ -16,9 +16,10 @@ fprintf('Reading: %s, Dataset: %s\n', Hfile, Hdset);
 SPEED_T = squeeze(hdf5read(Hfile, Hdset));
 TIMES = 1:size(SPEED_T,3);
 
-% generate the time series of the maximum Vt of the horizontal domain
-% ST is organized as x,y,t so take the max along the first two dimensions
-ST_MAX = squeeze(max(max(SPEED_T,[],1),[],2));
+% ST is organized as r,z,t so take the max along the first two dimensions
+% Generate the time series of the maximum of the near surface Vt. Use Z = 2
+% since Z = 1 is below surface in RAMS.
+ST_MAX = max(squeeze(SPEED_T(:,2,:)), [] ,1);
 
 % NHC Best Track (every six hours) data
 % time step 1 from the simulation is where the NHC data starts
