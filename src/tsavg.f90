@@ -608,7 +608,7 @@ program tsavg
     ! put bin values in the x dimension
     TserAvg%dims(1) = Xnbins
     TserAvg%dims(2) = 1
-    TserAvg%dims(3) = 1
+    TserAvg%dims(3) = Nz
     TserAvg%units = Var%units
   else if (AvgFunc .eq. 'pop') then
     ! put LWP bin values in the x dimension
@@ -850,7 +850,7 @@ program tsavg
   OutZcoords%dimnames(1) = 'z'
   OutZcoords%units = 'meter'
   OutZcoords%descrip = 'sigma-z'
-  if ((AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist2d')) then
+  if ((AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. (AvgFunc .eq. 'hist2d')) then
     OutZcoords%dims(1) = Nz
     allocate(OutZcoords%vdata(Nz))
     do iz = 1, Nz
@@ -1527,7 +1527,8 @@ subroutine DoHist(Nx, Ny, Nz, FilterNz, Nb, Var, Filter, UseFilter, UndefVal, Bi
   real, dimension(Nx,Ny,FilterNz) :: Filter
   logical :: UseFilter
   real :: UndefVal
-  real, dimension(Nb) :: Bins, Counts
+  real, dimension(Nb,Nz) :: Counts
+  real, dimension(Nb) :: Bins
 
   integer :: ib, ix, iy, iz
   integer :: filter_z
@@ -1543,12 +1544,12 @@ subroutine DoHist(Nx, Ny, Nz, FilterNz, Nb, Var, Filter, UseFilter, UndefVal, Bi
   !
   !   Var(ix,iy,iz) == Bins(ib)
   !
-  do ib = 1, Nb
-    Counts(ib) = 0.0
-  enddo
-
   ! Build the histogram (counts)
   do iz = 1, Nz
+    do ib = 1, Nb
+      Counts(ib,iz) = 0.0
+    enddo
+
     if (Nz .eq. 1) then
       ! 2D var, use the z = 2 level (first model level above the surface)
       ! since typically have the 3D filter z = 1 level all zeros (don't want
@@ -1575,13 +1576,13 @@ subroutine DoHist(Nx, Ny, Nz, FilterNz, Nb, Var, Filter, UseFilter, UndefVal, Bi
           ! the last bin every time you might as well just check the last bin instead.
           do ib = 1, Nb-1
              if ((Bins(ib) .le. Var(ix,iy,iz)) .and. (Var(ix,iy,iz) .lt. Bins(ib+1))) then
-                Counts(ib) = Counts(ib) + 1.0
+                Counts(ib,iz) = Counts(ib,iz) + 1.0
                 exit
              endif
           enddo
           ! check the last bin
           if (Bins(Nb) .eq. Var(ix,iy,iz)) then
-            Counts(Nb) = Counts(Nb) + 1.0
+            Counts(Nb,iz) = Counts(Nb,iz) + 1.0
           endif
         endif
       enddo
