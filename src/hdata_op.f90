@@ -175,6 +175,18 @@ program hdata_op
         OutVar%vdata(i) = Var1%vdata(i) * Var2%vdata(i)
       else if (trim(Op) .eq. 'div') then
         OutVar%vdata(i) = Var1%vdata(i) / Var2%vdata(i)
+      else if (trim(Op) .eq. 'or') then
+        if ((anint(Var1%vdata(i)) .eq. 0.0) .and. (anint(Var2%vdata(i)) .eq. 0.0)) then
+          OutVar%vdata(i) = 0.0
+        else
+          OutVar%vdata(i) = 1.0
+        endif
+      else if (trim(Op) .eq. 'and') then
+        if ((anint(Var1%vdata(i)) .eq. 1.0) .and. (anint(Var2%vdata(i)) .eq. 1.0)) then
+          OutVar%vdata(i) = 1.0
+        else
+          OutVar%vdata(i) = 0.0
+        endif
       endif
     enddo
 
@@ -257,6 +269,8 @@ subroutine GetMyArgs(InFile1, VarName1, InFile2, VarName2, OutFile, OutVarName, 
     write (*,*) '            add -> add values in <in_file1> to those in <in_file2>'
     write (*,*) '            mult -> multiply values in <in_file1> by those in <in_file2>'
     write (*,*) '            div -> divide values in <in_file1> by those in <in_file2>'
+    write (*,*) '            or -> logical or values in <in_file1> with those in <in_file2>'
+    write (*,*) '            and -> logical and values in <in_file1> with those in <in_file2>'
     stop
   end if
 
@@ -271,12 +285,15 @@ subroutine GetMyArgs(InFile1, VarName1, InFile2, VarName2, OutFile, OutVarName, 
   BadArgs = .false.
 
   if ((Op .ne. 'sub') .and. (Op .ne. 'add') .and. &
-      (Op .ne. 'mult') .and. (Op .ne. 'div')) then
+      (Op .ne. 'mult') .and. (Op .ne. 'div') .and. &
+      (Op .ne. 'or') .and. (Op .ne. 'and')) then
     write (*,*) 'ERROR: <operator> must be one of:'
     write (*,*) '          sub'
     write (*,*) '          add'
     write (*,*) '          mult'
     write (*,*) '          div'
+    write (*,*) '          or'
+    write (*,*) '          and'
     write (*,*) ''
     BadArgs = .true.
   end if
