@@ -76,10 +76,17 @@ program diag_filter
   logical :: UseFsFilter
   type (FilterDescrip) :: FsFilter
 
+  logical, dimension(:,:), allocatable :: UpDnDraftMask
+  logical :: DoingUpDrafts
+  logical :: DoingDnDrafts
+  integer :: UDfnum
+
   ! Get the command line arguments
   call GetMyArgs(LargeString, MaxFilters, InDir, InSuffix, OutFile, Mvname, Mfprefix, FsFilter, Filters, Nfilters)
 
   DoingCylVol = .false.
+  DoingUpDrafts = .false.
+  DoingDnDrafts = .false.
   write (*,*) 'Creating HDF5 data filter:'
   write (*,*) '  Input directory: ', trim(InDir)
   write (*,*) '  Input file name suffix: ', trim(InSuffix)
@@ -137,6 +144,20 @@ program diag_filter
       write (*,*) '      Variable file prefix: ', trim(Filters(i)%Vfprefix)
       write (*,*) '      Min: ', Filters(i)%x1
       write (*,*) '      Max: ', Filters(i)%x2
+    else if (Filters(i)%Ftype .eq. 'up') then
+      DoingUpDrafts = .true.
+      UDfnum = i
+      write (*,*) '    Updraft:'
+      write (*,*) '      Variable: ', trim(Filters(i)%Vname)
+      write (*,*) '      Variable file prefix: ', trim(Filters(i)%Vfprefix)
+      write (*,*) '      Threshold: ', Filters(i)%x1
+    else if (Filters(i)%Ftype .eq. 'dn') then
+      DoingDnDrafts = .true.
+      UDfnum = i
+      write (*,*) '    Downdraft:'
+      write (*,*) '      Variable: ', trim(Filters(i)%Vname)
+      write (*,*) '      Variable file prefix: ', trim(Filters(i)%Vfprefix)
+      write (*,*) '      Threshold: ', Filters(i)%x1
     endif
   enddo
   write (*,*) ''
@@ -363,6 +384,16 @@ program diag_filter
     MaxRadius%vdata(1) = -1.0 ! not expecting negative radii
   endif
 
+  ! Check up and down draft filtering
+  if (DoingUpDrafts .and. DoingDnDrafts) then
+    write (*,*) 'ERROR: cannot use both updraft and downdraft filtering'
+    stop
+  endif
+
+  if (DoingUpDrafts .or. DoingDnDrafts) then
+    allocate(UpDnDraftMask(Nx,Ny))
+  endif
+
   ! Open the input files and the output file
   FileAcc = 'R'
   do i = 1, Nfilters
@@ -417,6 +448,30 @@ program diag_filter
       ! Record the lat,lon of the storm center
       StormX%vdata(1) = Xcoords%vdata(StmIx)
       StormY%vdata(1) = Ycoords%vdata(StmIy)
+    endif
+
+    ! If doing up- or down-draft filtering, build the mask
+    if (DoingUpDrafts .or. DoingDnDrafts) then
+      do iy = 1, Ny
+        do ix = 1, Nx
+          UpDnDraftMask(ix,iy) = .false.
+
+          do iz = 1, Nz
+            if (DoingUpDrafts) then
+              if (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(UDfnum)%vdata) .ge. Filters(UDfnum)%x1) then
+                UpDnDraftMask(ix,iy) = .true.
+                exit
+              endif
+            else
+              ! doing down drafts
+              if (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(UDfnum)%vdata) .le. Filters(UDfnum)%x1) then
+                UpDnDraftMask(ix,iy) = .true.
+                exit
+              endif
+            endif
+          enddo
+        enddo
+      enddo
     endif
 
     ! do the selection
@@ -502,6 +557,12 @@ program diag_filter
                    (abs(MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata)) .le. Filters(i)%x2))
               endif
             endif
+
+            ! select according to up down draft mask
+            if ((Filters(i)%Ftype .eq. 'up') .or. (Filters(i)%Ftype .eq. 'dn')) then
+              SelectThisPoint = SelectThisPoint .and. UpDnDraftMask(ix,iy)
+            endif
+
           enddo
 
           if (SelectThisPoint) then
@@ -847,6 +908,44 @@ contains
           Filters(NumFilters)%z1 = 0
           Filters(NumFilters)%z2 = 0
         endif
+      else if (Fields(1) .eq. 'up') then
+        NumFilters = NumFilters + 1
+
+        if (Nfld .lt. 4) then
+          write (*,*) 'ERROR: not enough arguments to fully specify the updraft filter'
+          BadArgs = .true.
+        else
+          ! have enough args
+          Filters(NumFilters)%Ftype    = Fields(1)
+          Filters(NumFilters)%Vname    = Fields(2)
+          Filters(NumFilters)%Vfprefix = Fields(3)
+
+          read(Fields(4), '(f)') Filters(NumFilters)%x1
+          Filters(NumFilters)%x2 = 0
+          Filters(NumFilters)%y1 = 0
+          Filters(NumFilters)%y2 = 0
+          Filters(NumFilters)%z1 = 0
+          Filters(NumFilters)%z2 = 0
+        endif
+      else if (Fields(1) .eq. 'dn') then
+        NumFilters = NumFilters + 1
+
+        if (Nfld .lt. 4) then
+          write (*,*) 'ERROR: not enough arguments to fully specify the downdraft filter'
+          BadArgs = .true.
+        else
+          ! have enough args
+          Filters(NumFilters)%Ftype    = Fields(1)
+          Filters(NumFilters)%Vname    = Fields(2)
+          Filters(NumFilters)%Vfprefix = Fields(3)
+
+          read(Fields(4), '(f)') Filters(NumFilters)%x1
+          Filters(NumFilters)%x2 = 0
+          Filters(NumFilters)%y1 = 0
+          Filters(NumFilters)%y2 = 0
+          Filters(NumFilters)%z1 = 0
+          Filters(NumFilters)%z2 = 0
+        endif
       else
         write (*,*) 'ERROR: <ftype>, ', trim(Fields(1)), ', must be one of:'
         write (*,*) '          cylvol'
@@ -856,6 +955,8 @@ contains
         write (*,*) '          lt'
         write (*,*) '          range'
         write (*,*) '          abs_range'
+        write (*,*) '          up'
+        write (*,*) '          dn'
         write (*,*) ''
         BadArgs = .true.
       endif
@@ -896,6 +997,8 @@ contains
     write (*,*) '                le: select point if value <= <x1>'
     write (*,*) '                range: select point if <x1> <= value <= <x2>'
     write (*,*) '                abs_range: select point if <x1> <= abs(value) <= <x2>'
+    write (*,*) '                up: select entire column if and value in column >=  <x1>'
+    write (*,*) '                dn: select entire column if and value in column <=  <x1>'
     write (*,*) '                cylvol: select point if it is located within a cylindrical volume'
     write (*,*) '                   <x1> -> minimum radius (in km)'
     write (*,*) '                   <x2> -> maximum radius (in km)'
