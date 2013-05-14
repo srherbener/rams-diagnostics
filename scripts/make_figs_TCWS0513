@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+#
+# script to create figures for TC Workshop, May 2013 presentation
+
+Jsize="1200x900"
+
+# RAMS  grids
+echo "Model Grids"
+montage -tile 1x1 -geometry ${Jsize} \
+ RamsGrids.jpg \
+ FigModelGrids.jpg
+
+# aerosol profile
+echo "Aerosol Profile"
+montage -tile 1x1 -geometry ${Jsize} \
+ TCWS0513_AerosolProfiles.jpg \
+ FigAeroProfiles.jpg
+
+# Storm Development
+echo "Storm Development"
+montage -tile 2x1 -geometry ${Jsize}+2+100 \
+ TCWS0513_KeVt_ext.jpg \
+ TCWS0513_TS_rmw.jpg \
+ FigStormDevel.jpg

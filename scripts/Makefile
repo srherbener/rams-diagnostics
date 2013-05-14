@@ -7,6 +7,7 @@ SCRIPTS = $(DEST)/lp1 \
           $(DEST)/lp2 \
           $(DEST)/make_figs_ATEX \
           $(DEST)/make_figs_TC \
+          $(DEST)/make_figs_TCWS0513 \
           $(DEST)/grads2vis5d \
           $(DEST)/run_g2v \
           $(DEST)/run_im \
@@ -28,6 +29,9 @@ $(DEST)/lp2: lp2
 
 $(DEST)/make_figs_TC: make_figs_TC
 	cp make_figs_TC $(DEST)/make_figs_TC
+
+$(DEST)/make_figs_TCWS0513: make_figs_TCWS0513
+	cp make_figs_TCWS0513 $(DEST)/make_figs_TCWS0513
 
 $(DEST)/make_figs_ATEX: make_figs_ATEX
 	cp make_figs_ATEX $(DEST)/make_figs_ATEX
