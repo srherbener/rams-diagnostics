@@ -7,8 +7,16 @@ function [ ] = PlotSampleVtSPL(ConfigFile)
 AzavgDir = Config.AzavgDir;
 PlotDir = Config.PlotDir;
 
-Case1 = 'TCS_GN_C0100';
-Case2 = 'TCS_GN_C2000';
+%DoingSD = false; % sea salt enabled
+DoingSD = true; % sea salt disabled
+
+if (DoingSD)
+  Case1 = 'TCS_SD_C0100';
+  Case2 = 'TCS_SD_C2000';
+else
+  Case1 = 'TCS_GN_C0100';
+  Case2 = 'TCS_GN_C2000';
+end
 
 % for selection
 Tmin = 24; 
@@ -65,11 +73,19 @@ MIN_SPL2 = SmoothFillTseries(MIN_SPL2, Nt, Flen);
 % Plot
 Lwidth = 2;
 Fsize = 20;
-Pfile = sprintf('%s/ams_SampleVtSpl.jpg', PlotDir);
-Ptitle = sprintf('Maximum Vt, Minimum Sea-level Pressure');
-Xlabel = sprintf('Simulation Time (hr)');
-Y1label = sprintf('Maximum surface Vt (m/s)');
-Y2label = sprintf('Minimum sea level pressure (mb)');
+if (DoingSD)
+  Pfile = sprintf('%s/TCWS0513_SampleVtSpl.jpg', PlotDir);
+  Ptitle = sprintf('Max Vt, Min SLP');
+  Xlabel = sprintf('Simulation Time (hr)');
+  Y1label = sprintf('Wind Speed (m/s)');
+  Y2label = sprintf('SLP (mb)');
+else
+  Pfile = sprintf('%s/ams_SampleVtSpl.jpg', PlotDir);
+  Ptitle = sprintf('Maximum Vt, Minimum Sea-level Pressure');
+  Xlabel = sprintf('Simulation Time (hr)');
+  Y1label = sprintf('Maximum surface Vt (m/s)');
+  Y2label = sprintf('Minimum sea level pressure (mb)');
+end
 
 AxisPos = [ 0.11 0.15 0.75 0.75 ] ;
 Xlims = [ Xmin Xmax ];

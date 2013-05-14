@@ -9,6 +9,9 @@ ControlCase = Config.ControlCase;
 AzavgDir = Config.AzavgDir;
 PlotDir = Config.PlotDir;
 
+%DoingPresentation = false; % make figure for paper
+DoingPresentation = true; % make figure for presentation
+
 % read in any file in order to get the z coordinate values
 Hfile = sprintf('%s/speed_t_%s.h5', AzavgDir, ControlCase);
 Z = squeeze(hdf5read(Hfile, '/z_coords')) / 1000; % km
@@ -51,9 +54,16 @@ Colors = { 'k' 'k' 'k' 'k' };
 Ltext = { 'AS0100' 'AS0500' 'AS1000' 'AS2000' };
 
 % Plot
-Lwidth = 3;
-Fsize = 45;
-Pfile = sprintf('%s/AerosolProfiles.jpg', PlotDir);
+if (DoingPresentation)
+  Lwidth = 2;
+  Fsize = 25;
+  Pfile = sprintf('%s/TCWS0513_AerosolProfiles.jpg', PlotDir);
+else
+  Lwidth = 3;
+  Fsize = 45;
+  Pfile = sprintf('%s/AerosolProfiles.jpg', PlotDir);
+end
+
 Xlabel = sprintf('Concentration (#/cc)');
 Ylabel = sprintf('Height (km)');
 
@@ -71,28 +81,36 @@ ylim(Ylims);
 
 % axes
 set (gca, 'FontSize', Fsize);
-% The title is in a box that adjusts to the amount of characters in
-% the title. Ie, it doesn't do any good to do Left/Center/Right
-% alignment. But, the entire box can be moved to the left side of the
-% plot.
-T = title('b)');
-set(T, 'Units', 'Normalized');
-set(T, 'HorizontalAlignment', 'Left');
-Tpos = get(T, 'Position');
-Tpos(1) = 0; % line up with left edge of plot area
-set(T, 'Position', Tpos);
+
+if (DoingPresentation)
+  title('Aerosol Source Profiles');
+else
+  % The title is in a box that adjusts to the amount of characters in
+  % the title. Ie, it doesn't do any good to do Left/Center/Right
+  % alignment. But, the entire box can be moved to the left side of the
+  % plot.
+  T = title('b)');
+  set(T, 'Units', 'Normalized');
+  set(T, 'HorizontalAlignment', 'Left');
+  Tpos = get(T, 'Position');
+  Tpos(1) = 0; % line up with left edge of plot area
+  set(T, 'Position', Tpos);
+end
+
 xlabel(Xlabel);
 ylabel(Ylabel);
 legend(Ltext, 'Location', 'NorthEast', 'FontSize', 25);
 legend boxoff;
 
+if (~DoingPresentation)
 % Fix up the positioning
-Ppos = get(gca, 'Position'); % position of plot area
-Ppos(1) = Ppos(1) * 1.05;
-Ppos(2) = Ppos(2) * 0.95;
-Ppos(3) = Ppos(3) * 0.90;
-Ppos(4) = Ppos(4) * 0.90;
-set(gca, 'Position', Ppos);
+  Ppos = get(gca, 'Position'); % position of plot area
+  Ppos(1) = Ppos(1) * 1.05;
+  Ppos(2) = Ppos(2) * 0.95;
+  Ppos(3) = Ppos(3) * 0.90;
+  Ppos(4) = Ppos(4) * 0.90;
+  set(gca, 'Position', Ppos);
+end
 
 saveas(Fig, Pfile);
 close(Fig);
