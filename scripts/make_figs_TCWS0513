@@ -22,3 +22,32 @@ montage -tile 2x1 -geometry ${Jsize}+2+100 \
  TCWS0513_KeVt_ext.jpg \
  TCWS0513_TS_rmw.jpg \
  FigStormDevel.jpg
+
+# Vertically Integrated Condensate
+echo "Vertically Integrated Condensate"
+montage -tile 2x1 -geometry ${Jsize}+2+100 \
+ TCWS0513_vint_cond_TCS_SD_C0100.jpg \
+ TCWS0513_vint_cond_TCS_SD_C2000.jpg \
+ FigVintCond.jpg
+
+# Cloud Droplets
+echo "Cloud Droplets"
+montage -tile 2x1 -geometry ${Jsize}+2+100 \
+ TCWS0513_pts_cloud_cm3_twp4_diff_SC_LC_TCS_SD_C2000.jpg \
+ TCWS0513_pts_cloud_d_twp4_diff_SC_LC_TCS_SD_C2000.jpg \
+ FigCloudDroplets.jpg
+
+# Latent Heating
+echo "Latent Heating"
+montage -tile 2x1 -geometry ${Jsize}+2+100 \
+ TCWS0513_prs_lh_tott_lht1p0_SC_SS_TCS_SD_C2000.jpg \
+ TCWS0513_prof_lh_tott_lht1p0_diff_SC_SS.jpg \
+ FigLatHeat.jpg
+
+# Vertical Velocity
+echo "Vertical Velocity"
+montage -tile 2x1 -geometry ${Jsize}+2+100 \
+ TCWS0513_prs_w_diff_SC_SS_TCS_SD_C2000.jpg \
+ TCWS0513_prof_w_diff_SC_SS.jpg \
+ FigVerticalVelocity.jpg
+
