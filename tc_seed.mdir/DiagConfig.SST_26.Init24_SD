@@ -547,6 +547,10 @@ LinePlot: ccn2_ext SimTime RMW  TsAll  y Radius_of_Max_Wind NorthEast none TCWS0
 #ProfPlot: ccn2 pmeas_theta_e_RB_SS        theta_e diff PANEL:e_CASE-CLEAN Theta-E_(K)           Height_(km) NorthEast    -5:0.01:5   0.0 15.0 prof_theta_e_diff_RB_SS.jpg
 #ProfPlot: ccn2 pmeas_w_twp4_RB_SS         w       diff PANEL:f_CASE-CLEAN W_(m/s)               Height_(km) SouthEast  -0.5:0.05:0.5 0.0 15.0 prof_w_twp4_diff_RB_SS.jpg
 
+# TC WS, May 2013
+ProfPlot: ccn2_ext pmeas_lh_tott_lht1p0_SC_SS lh_tott diff CASE-CLEAN Latent_Heating_(K/hr) Height_(km) NorthWest -10:0.1:10     0.0 15.0 TCWS0513_prof_lh_tott_lht1p0_diff_SC_SS.jpg
+ProfPlot: ccn2_ext pmeas_w_SC_SS              w       diff CASE-CLEAN               W_(m/s) Height_(km) NorthWest  -0.5:0.01:0.5 0.0 15.0 TCWS0513_prof_w_diff_SC_SS.jpg
+
 ######################## Profile Time Series Plots #############################
  
 #ProfTsPlot: ccn4 pmeas_cloud_d_twp4_RB_LC cloud_d RB_LC:_Mean_Cloud_Diam_(um) Simulation_Time_(hr) Height_(km) 0 25 0.0 10.0 revgray 0 abs pts_cloud_d_twp4_RB_LC
@@ -596,6 +600,13 @@ LinePlot: ccn2_ext SimTime RMW  TsAll  y Radius_of_Max_Wind NorthEast none TCWS0
 
 #ProfTsPlot: ccn2 pmeas_w_SC_LC w PANEL:ab Simulation_Time_(hr) Height_(km) -1.0 1.0 0.0 16.0 redblue 0 abs pts_w_SC_LC
 #ProfTsPlot: ccn2 pmeas_w_RB_LC w PANEL:cd Simulation_Time_(hr) Height_(km) -1.0 1.0 0.0 16.0 redblue 0 abs pts_w_RB_LC
+
+# TC WS May 2013
+ProfTsPlot: ccn2_ext pmeas_cloud_cm3_twp4_SC_LC cloud_cm3 Cloud_Num_(#/cm^2) Simulation_Time_(hr) Height_(km) 0 50 0.0 1.0 revgray 0 abs TCWS0513_pts_cloud_cm3_twp4_SC_LC
+ProfTsPlot: ccn2_ext pmeas_cloud_d_twp4_SC_LC   cloud_d   Cloud_Diam_(um)    Simulation_Time_(hr) Height_(km) 0 30 0.0 1.0 revgray 0 abs TCWS0513_pts_cloud_d_twp4_SC_LC
+
+ProfTsPlot: ccn2_ext_diff pmeas_cloud_cm3_twp4_SC_LC cloud_cm3 Cloud_Num_(#/cm^2) Simulation_Time_(hr) Height_(km) -100 100 0.0 1.0 redblue 0 diff TCWS0513_pts_cloud_cm3_twp4_diff_SC_LC
+ProfTsPlot: ccn2_ext_diff pmeas_cloud_d_twp4_SC_LC   cloud_d   Cloud_Diam_(um)    Simulation_Time_(hr) Height_(km) -40 40 0.0 1.0 redblue 0 diff TCWS0513_pts_cloud_d_twp4_diff_SC_LC
 
 ####################### Radial profile #####################
 
@@ -704,6 +715,11 @@ LinePlot: ccn2_ext SimTime RMW  TsAll  y Radius_of_Max_Wind NorthEast none TCWS0
 # illustrate freezing level
 #ProfRsPlot: ccn4_diff pmeas_w_SC_SS  w Vertical_Velocity_(m/s) Radius_(km) Height_(km) -1 1 0.0 15.0 redblue 1 diff prs_w_fl_SC_SS
 
+# TC WS, May 2013
+ProfRsPlot: ccn2_ext_diff pmeas_lh_tott_lht1p0_SC_SS lh_tott  Total_Latent_Heating_(K/hr) Radius_(km) Height_(km) -15 15 0.0 15.0 redblue 0 diff TCWS0513_prs_lh_tott_lht1p0_SC_SS
+ProfRsPlot: ccn2_ext_diff pmeas_w_SC_SS              w        Vertical_Velocity_(m/s)     Radius_(km) Height_(km)  -1  1 0.0 15.0 redblue 0 diff TCWS0513_prs_w_diff_SC_SS
+
+
 ####################### Plot Sets ############################
 # PlotSet: <name> <number_of_cases> <case_spec> ...
 #
@@ -714,7 +730,8 @@ LinePlot: ccn2_ext SimTime RMW  TsAll  y Radius_of_Max_Wind NorthEast none TCWS0
 PlotSet: ccn4    4 TCS_SD_C0100 CLEAN - 0.0 TCS_SD_C0500 C500 -- 0.0 TCS_SD_C1000 C1000 -- 0.5 TCS_SD_C2000 C2000 - 0.5
 PlotSet: ccn2    2 TCS_SD_C0100 CLEAN - 0.0 TCS_SD_C2000 C2000 - 0.5
 
-PlotSet: ccn2_ext    2 TCS_SD_C0100 CLEAN - 0.0 TCS_SD_C2000 POLLUTED - 0.5
+PlotSet: ccn2_ext       2 TCS_SD_C0100 CLEAN - 0.0 TCS_SD_C2000 POLLUTED - 0.5
+PlotSet: ccn2_ext_diff  1 TCS_SD_C2000 POLLUTED-CLEAN - 0.0
 
 PlotSet: ccn4_diff    3 TCS_SD_C0500 C500-CLEAN - 0.0 TCS_SD_C1000 C1000-CLEAN -- 0.0 TCS_SD_C2000 C2000-CLEAN - 0.5
 PlotSet: ccn2_diff    1 TCS_SD_C2000 C2000-CLEAN - 0.0

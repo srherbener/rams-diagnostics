@@ -34,6 +34,10 @@ if (regexp(Ptitle, '^PANEL:'))
         Ptitle = sprintf('%s)', Ptitle);
     end
     PanelTitle = true;
+else
+  Lwidth = 2;
+  Fsize = 25;
+  LegFsize = 25;
 end
 
 Lcolor = [ 1 1 1 ] * Lgscales(1);
@@ -69,13 +73,15 @@ ylabel(Zlabel);
 legend(LegText, 'Location', LegLoc, 'FontSize', LegFsize);
 legend boxoff;
 
-% Fix up the positioning
-Ppos = get(gca, 'Position'); % position of plot area
-Ppos(1) = Ppos(1) * 1.00;
-Ppos(2) = Ppos(2) * 1.00;
-Ppos(3) = Ppos(3) * 0.85;
-Ppos(4) = Ppos(4) * 0.85;
-set(gca, 'Position', Ppos);
+if (PanelTitle)
+  % Fix up the positioning
+  Ppos = get(gca, 'Position'); % position of plot area
+  Ppos(1) = Ppos(1) * 1.00;
+  Ppos(2) = Ppos(2) * 1.00;
+  Ppos(3) = Ppos(3) * 0.85;
+  Ppos(4) = Ppos(4) * 0.85;
+  set(gca, 'Position', Ppos);
+end
 
 saveas(Fig, OutFile);
 

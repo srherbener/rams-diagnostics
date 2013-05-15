@@ -24,7 +24,6 @@ RevGrayCmap = flipud(GrayCmap);
 close(Fig);
 
 
-Fsize = 45;
 
 Xticks = [ 40 80 120 ];
 Xticklabels = { '40' '80' '120' };
@@ -56,6 +55,8 @@ for iplot = 1:length(Config.ProfTsPlots)
     % Fix up title if panel labeling is requested
     PanelTitle = false;
     if (regexp(Ptitle, '^PANEL:'))
+        Fsize = 45;
+
         % strip off the leading 'PANEL:'. This leaves a list of single
         % letter names. Convert that into a cell array using cellstr().
         % Note that you have to use a column vector to get cellstr to
@@ -63,6 +64,8 @@ for iplot = 1:length(Config.ProfTsPlots)
         S = regexprep(Ptitle, '^PANEL:', '');
         Pmarkers = cellstr(S');
         PanelTitle = true;
+    else
+        Fsize = 25;
     end
     
     % make sure output directory exists
@@ -209,14 +212,16 @@ for iplot = 1:length(Config.ProfTsPlots)
                'VerticalAlignment', 'Top');
         end
 
-        % Fix up the positioning
-        Ppos = get(gca, 'Position'); % position of plot area
-        Ppos(1) = Ppos(1) * 1.00;
-        Ppos(2) = Ppos(2) * 1.00;
-        Ppos(3) = Ppos(3) * 0.85;
-        Ppos(4) = Ppos(4) * 0.85;
-        set(gca, 'Position', Ppos);
-
+        if (PanelTitle)
+          % Fix up the positioning
+          Ppos = get(gca, 'Position'); % position of plot area
+          Ppos(1) = Ppos(1) * 1.00;
+          Ppos(2) = Ppos(2) * 1.00;
+          Ppos(3) = Ppos(3) * 0.85;
+          Ppos(4) = Ppos(4) * 0.85;
+          set(gca, 'Position', Ppos);
+        end
+  
         OutFile = sprintf('%s_%s.jpg', OutFileBase, Case);
         fprintf('Writing plot file: %s\n', OutFile);
         saveas(Fig, OutFile);

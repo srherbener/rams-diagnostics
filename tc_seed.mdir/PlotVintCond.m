@@ -8,7 +8,8 @@ UndefVal = Config.UndefVal;
 AzavgDir = Config.AzavgDir;
 PlotDir = Config.PlotDir;
 
-Fsize = 40;
+DoingPresentation = true; % powerpoint slides
+%DoingPresentation = false; % paper
 
 % limit view into plot
 Rmin = 0;
@@ -60,8 +61,20 @@ for icase = 1:length(Config.Cases)
   Pdata (Pdata  == UndefVal) = nan;
 
   % plot
-  Pfile  = sprintf('%s/vint_cond_%s.jpg', PlotDir, Case);
-  Ptitle = sprintf('%s) %s', PanelMarkers{icase}, Pcase);
+  if (DoingPresentation)
+    Fsize = 25;
+    if (strcmp(Pcase, 'C2000'))
+      Pcase = 'POLLUTED';
+    end
+    Pfile  = sprintf('%s/TCWS0513_vint_cond_%s.jpg', PlotDir, Case);
+    Ptitle = sprintf('%s', Pcase);
+  else
+    Fsize = 40;
+    Pfile  = sprintf('%s/vint_cond_%s.jpg', PlotDir, Case);
+    Ptitle = sprintf('%s) %s', PanelMarkers{icase}, Pcase);
+  end
+
+  
   Xlabel = sprintf('Radius (km)');
   Ylabel = sprintf('Time (hr)');
    
@@ -77,16 +90,20 @@ for icase = 1:length(Config.Cases)
   shading flat;
   caxis([ Cmin Cmax ]);
   
-  % The title is in a box that adjusts to the amount of characters in
-  % the title. Ie, it doesn't do any good to do Left/Center/Right
-  % alignment. But, the entire box can be moved to the left side of the
-  % plot.
-  T = title(Ptitle);
-  set(T, 'Units', 'Normalized');
-  set(T, 'HorizontalAlignment', 'Left');
-  Tpos = get(T, 'Position');
-  Tpos(1) = 0; % line up with left edge of plot area
-  set(T, 'Position', Tpos);
+  if (DoingPresentation)
+    title(Ptitle);
+  else
+    % The title is in a box that adjusts to the amount of characters in
+    % the title. Ie, it doesn't do any good to do Left/Center/Right
+    % alignment. But, the entire box can be moved to the left side of the
+    % plot.
+    T = title(Ptitle);
+    set(T, 'Units', 'Normalized');
+    set(T, 'HorizontalAlignment', 'Left');
+    Tpos = get(T, 'Position');
+    Tpos(1) = 0; % line up with left edge of plot area
+    set(T, 'Position', Tpos);
+  end
 
   xlabel(Xlabel);
   ylabel(Ylabel);
@@ -99,13 +116,15 @@ for icase = 1:length(Config.Cases)
   text(55,  Tmin, 'RB', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', 30, 'Color', 'k');
   text(110, Tmin, 'FF', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', 30, 'Color', 'k');
   
-  % Fix up the positioning
-  Ppos = get(gca, 'Position'); % position of plot area
-  Ppos(1) = Ppos(1) * 1.00;
-  Ppos(2) = Ppos(2) * 1.00;
-  Ppos(3) = Ppos(3) * 0.85;
-  Ppos(4) = Ppos(4) * 0.85;
-  set(gca, 'Position', Ppos);
+  if (~DoingPresentation)
+    % Fix up the positioning
+    Ppos = get(gca, 'Position'); % position of plot area
+    Ppos(1) = Ppos(1) * 1.00;
+    Ppos(2) = Ppos(2) * 1.00;
+    Ppos(3) = Ppos(3) * 0.85;
+    Ppos(4) = Ppos(4) * 0.85;
+    set(gca, 'Position', Ppos);
+  end
   
   fprintf('Writing plot file: %s\n', Pfile);
   saveas(Fig, Pfile);

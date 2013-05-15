@@ -24,7 +24,6 @@ RevGrayCmap = flipud(GrayCmap);
 close(Fig);
 
 
-Fsize = 45;
 
 Yticks = [ 2 6 10 14 ];
 Yticklabels = { '2' '6' '10' '14' };
@@ -64,6 +63,10 @@ for iplot = 1:length(Config.ProfRsPlots)
         S = regexprep(Ptitle, '^PANEL:', '');
         Pmarkers = cellstr(S');
         PanelTitle = true;
+
+        Fsize = 45;
+     else
+        Fsize = 25;
     end
     
     % make sure output directory exists
@@ -236,13 +239,15 @@ for iplot = 1:length(Config.ProfRsPlots)
                'VerticalAlignment', 'Top');
         end
 
-        % Fix up the positioning
-        Ppos = get(gca, 'Position'); % position of plot area
-        Ppos(1) = Ppos(1) * 1.00;
-        Ppos(2) = Ppos(2) * 1.00;
-        Ppos(3) = Ppos(3) * 0.85;
-        Ppos(4) = Ppos(4) * 0.85;
-        set(gca, 'Position', Ppos);
+        if (PanelTitle)
+          % Fix up the positioning
+          Ppos = get(gca, 'Position'); % position of plot area
+          Ppos(1) = Ppos(1) * 1.00;
+          Ppos(2) = Ppos(2) * 1.00;
+          Ppos(3) = Ppos(3) * 0.85;
+          Ppos(4) = Ppos(4) * 0.85;
+          set(gca, 'Position', Ppos);
+        end
 
         OutFile = sprintf('%s_%s.jpg', OutFileBase, Case);
         fprintf('Writing plot file: %s\n', OutFile);
