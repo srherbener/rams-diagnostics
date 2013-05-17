@@ -1,22 +1,9 @@
-% souding input format
-% http://weather.uwyo.edu/upperair/sounding.html
-%-----------------------------------------------------------------------------
-%   PRES   HGHT   TEMP   DWPT   RELH   MIXR   DRCT   SKNT   THTA   THTE   THTV
-%    hPa     m      C      C      %    g/kg    deg   knot     K      K      K 
-%-----------------------------------------------------------------------------
-sounding=sound_oak.rf61700Z; % example replace by your data
+function [] = skew_sounding(pz, tz, tdz, rhz, wsp, wdir)
 
 %initialize
 g=9.80665; M=0.0289644; R=8.31447; L=0.0065; ex_10=(R*L)/(g*M);
-pz=sounding(:,1);
-tz=sounding(:,3);
-rhz=sounding(:,5)/100;
-tdz=sounding(:,4);
-nk=size(sounding,1); %needed for cape calculation
 altz=(1-(pz/1013.25).^ex_10)*(tz(find(min(pz)))+273.15)/L;
 tskew(pz,tz,rhz); hold on
-wsp=sounding(:,8)/0.514; %knots 2 m/s
-wdir=sounding(:,7);
 
 % filter windvelocity and direction
 wsp=filter(ones(round(size(wsp,1)/20),1)/round(size(wsp,1)/20),1,wsp);

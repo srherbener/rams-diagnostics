@@ -7,6 +7,7 @@ DEST = $(HOME)/etc/matlab/metpack
 SCRIPTS = \
           $(DEST)/getcape.m \
           $(DEST)/lcl.m \
+          $(DEST)/read_example_soundings.m \
           $(DEST)/skew_sounding.m \
           $(DEST)/soundings_RF6.mat \
           $(DEST)/tskew.m \

@@ -65,7 +65,8 @@ if isempty(pinc), pinc = 100.0; end;
 %  results,larger number makes code
 %  go faster)
 % Source parcel:
-if isempty(source), source = 2; end;
+%if isempty(source), source = 2; end;
+if isempty(source), source = 1; end;
 % 1 = surface
 % 2 = most unstable (max theta-e)
 % 3 = mixed-layer (specify ml_depth)
@@ -173,7 +174,7 @@ if isempty(rddcp), rddcp = rd./cp; end;
 if isempty(cpdrd), cpdrd = cp./rd; end;
 if isempty(cpdg), cpdg  = cp./g; end;
 if isempty(converge), converge = 0.0002; end;
-if isempty(debug_level), debug_level =   0; end;
+if isempty(debug_level), debug_level =   200; end;
 %-----------------------------------------------------------------------
 %---- convert p,t,td to mks units; get pi,q,th,thv ----!
 for k=1:nk;
