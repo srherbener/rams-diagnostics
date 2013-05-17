@@ -5,7 +5,7 @@
 # Targets
 #
 
-all: atex.mdir common.mdir m_map.mdir obj_anal.mdir tc_seed.mdir ts_debby.mdir
+all: atex.mdir common.mdir m_map.mdir metpack.mdir obj_anal.mdir tc_seed.mdir ts_debby.mdir
 
 %.mdir: .FORCE
 	$(MAKE) -C $(@)
