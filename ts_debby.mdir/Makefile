@@ -16,7 +16,8 @@ SCRIPTS = \
 
 CONFIGS = \
   $(DIAG_DIR)/SST_CONST/DiagConfig \
-  $(DIAG_DIR)/SST_OBS/DiagConfig
+  $(DIAG_DIR)/SST_OBS/DiagConfig \
+  $(DIAG_DIR)/SST_OBS_UBMIN/DiagConfig
 
 #
 # Targets
@@ -34,4 +35,7 @@ $(DIAG_DIR)/SST_CONST/DiagConfig: DiagConfig.SST_CONST
 	cp $(<) $(@)
 
 $(DIAG_DIR)/SST_OBS/DiagConfig: DiagConfig.SST_OBS
+	cp $(<) $(@)
+
+$(DIAG_DIR)/SST_OBS_UBMIN/DiagConfig: DiagConfig.SST_OBS_UBMIN
 	cp $(<) $(@)
