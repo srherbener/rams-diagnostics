@@ -30,7 +30,7 @@ x_loc=40; % note change x_loc value accordingly -
           % it will plot the windbarb vertically at 40 C on the x-axis
 
 for i=1:size(wspf,1)
-    windbarb(latx(i)*x_loc,pzff(i),wspf(i),wdirf(i),0.02, 3,'k'); 
+    windbarb(latx(i)*x_loc,pzff(i),wspf(i),wdirf(i),0.02, 1,'k'); 
 end
 
 if 0
