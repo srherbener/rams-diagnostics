@@ -1,0 +1,179 @@
+#!/usr/bin/env perl
+#
+# Script to extract a number of soundings from simulation data.
+#
+# This script depends on the following REVU variables existing in HDF5 files
+#      tempc
+#      dewptc
+#      relhum
+#      press
+#      u
+#      v
+
+use strict;
+
+###########################################
+# SUBROUTINES
+###########################################
+
+sub FindFile
+  {
+  my ($Case, $Hdir, $Fprefix) = @_;
+
+  my $Fpath;
+
+  my $Pattern;
+  my @Files;
+
+  $Fpath = 'NoFile';
+  $Pattern = sprintf("%s/%s/%s-*", $Case, $Hdir, $Fprefix);
+  @Files = glob($Pattern);
+
+  if ($Files[0] ne "")
+    {
+    $Fpath = $Files[0];
+    }
+
+  return($Fpath);
+  }
+
+###########################################
+# MAIN
+###########################################
+
+my %Soundings;
+
+my @f;
+
+my $OutDir;
+my $Hdir;
+my $Zmin;
+my $Zmax;
+
+my $Sname;
+my $Lon;
+my $Lat;
+my $Ts;
+
+my @Cases;
+my $Case;
+my $ic;
+
+my $Tfile;
+my $TdFile;
+my $Pfile;
+my $RhFile;
+my $Ufile;
+my $Vfile;
+
+my $OutFile;
+
+my $Cmd;
+
+# Read in the files given on the command line. These files will specify the
+# horizontal locations and timesteps for each sounding to be extracted. Collect
+# these into a hash structure for downstream processing.
+undef(%Soundings);
+undef(@Cases);
+while(<>)
+  {
+  @f = split(' ');
+
+  if ($f[0] eq 'Hdir:')
+    {
+    $Hdir = $f[1];
+    }
+  elsif ($f[0] eq 'OutDir:')
+    {
+    $OutDir = $f[1];
+    }
+  elsif ($f[0] eq 'Zmin:')
+    {
+    $Zmin = $f[1];
+    }
+  elsif ($f[0] eq 'Zmax:')
+    {
+    $Zmax = $f[1];
+    }
+  elsif ($f[0] eq 'Case:')
+    {
+    push(@Cases, $f[1]);
+    }
+  elsif ($f[0] eq 'Sounding:')
+    {
+    $Soundings{$f[1]}{LON}   = $f[2];
+    $Soundings{$f[1]}{LAT}   = $f[3];
+    $Soundings{$f[1]}{TS}    = $f[4];
+    $Soundings{$f[1]}{OFILE} = $f[5];
+    }
+  }
+
+if (! -d $OutDir)
+  {
+  mkdir($OutDir);
+  }
+
+foreach $ic (0..$#Cases)
+  {
+  $Case = $Cases[$ic];
+
+  print "Extracting soundings: $Case\n";
+
+  foreach $Sname (sort(keys(%Soundings)))
+    {
+    $Lon     = $Soundings{$Sname}{LON};
+    $Lat     = $Soundings{$Sname}{LAT};
+    $Ts      = $Soundings{$Sname}{TS};
+    $OutFile = sprintf("%s/%s_%s", $OutDir, $Case, $Soundings{$Sname}{OFILE});
+  
+    print "  Writing to: $OutFile\n";
+    print "\n";
+  
+    # Find the input files
+    $Tfile  = &FindFile($Case, $Hdir, "tempc");
+    $TdFile = &FindFile($Case, $Hdir, "dewptc");
+    $Pfile  = &FindFile($Case, $Hdir, "press");
+    $RhFile = &FindFile($Case, $Hdir, "relhum");
+    $Ufile  = &FindFile($Case, $Hdir, "u");
+    $Vfile  = &FindFile($Case, $Hdir, "v");
+    
+    # Run GRADS to get the sounding data. Write the sounding data into the output file in a readable format.
+    $Cmd = sprintf("RunGradsBatch DumpSounding %s %s %s %s %s %s %s %s %s %s %s",
+                   $Pfile, $Tfile, $TdFile, $RhFile, $Ufile, $Vfile, $Lon, $Lat, $Zmin, $Zmax, $Ts);
+    open(GRADS, "$Cmd |") or die "Cannot run GRADS DumpSounding command: $!";
+    open(SFILE, "> $OutFile") or die "Cannot open output file: $OutFile: $!";
+
+    printf(SFILE "Sounding: %s\n", $Sname);
+    printf(SFILE "Latitude: %s\n", $Lat);
+    printf(SFILE "Longitude: %s\n", $Lon);
+    printf(SFILE "\n");
+    printf(SFILE "%15s %15s %15s %15s %15s %15s %15s\n",
+      "Height (m)",
+      "P (mb)",
+      "T (deg C)",
+      "Td (deg C)",
+      "RH (%)",
+      "U (m/s)",
+      "V (m/s)");
+    printf(SFILE "\n");
+
+    while(<GRADS>)
+      {
+      @f = split(' ');
+
+      if ($f[0] eq "SND:")
+        {
+        printf(SFILE "%15.2f %15.2f %15.2f %15.2f %15.2f %15.2f %15.2f\n", @f[1..$#f]);
+        }
+      else
+        {
+        print; # echo messages from GRADS
+        }
+      }
+    close(GRADS);
+    close(SFILE);
+
+    print "\n";
+    }
+  }
+

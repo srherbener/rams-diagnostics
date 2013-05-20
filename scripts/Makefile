@@ -13,14 +13,17 @@ G_SCRIPTS = $(G_DEST)/cbarn.gs \
             $(G_DEST)/plotTestCcnFields.gs \
             $(G_DEST)/dumpVar2d.gs \
             $(G_DEST)/plotVslices.gs \
-            $(G_DEST)/plotTseries.gs
+            $(G_DEST)/plotTseries.gs \
+            $(G_DEST)/DumpSounding.gs
 
 B_DEST = $(HOME)/bin
 B_SCRIPTS = $(B_DEST)/run_azavg_grads \
             $(B_DEST)/run_diags_grads \
             $(B_DEST)/gen_grads_plots \
             $(B_DEST)/gen_grads_stats \
-            $(B_DEST)/plot_grads_vslice
+            $(B_DEST)/plot_grads_vslice \
+            $(B_DEST)/RunGradsBatch \
+            $(B_DEST)/extractSoundings
 
 M_DEST = $(HOME)/etc/perl_grads
 #M_PACKAGES = $(M_DEST)/DiagUtils.pm
@@ -64,6 +67,10 @@ $(G_DEST)/plotVslices.gs: plotVslices.gs
 $(G_DEST)/plotTseries.gs: plotTseries.gs
 	cp plotTseries.gs $(G_DEST)/plotTseries.gs
 
+$(G_DEST)/DumpSounding.gs: DumpSounding.gs
+	cp DumpSounding.gs $(G_DEST)/DumpSounding.gs
+
+
 
 $(B_DEST)/run_azavg_grads: run_azavg_grads
 	cp run_azavg_grads $(B_DEST)/run_azavg_grads
@@ -79,6 +86,12 @@ $(B_DEST)/gen_grads_stats: gen_grads_stats
 
 $(B_DEST)/plot_grads_vslice: plot_grads_vslice
 	cp plot_grads_vslice $(B_DEST)/plot_grads_vslice
+
+$(B_DEST)/extractSoundings: extractSoundings
+	cp extractSoundings $(B_DEST)/extractSoundings
+
+$(B_DEST)/RunGradsBatch: RunGradsBatch
+	cp RunGradsBatch $(B_DEST)/RunGradsBatch
 
 
 $(M_DEST)/DiagUtils.pm: DiagUtils.pm
