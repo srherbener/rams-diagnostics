@@ -4,6 +4,8 @@
 
 Gcmd="$@"
 
+export GASCRP=$HOME/etc/grads
+
 grads -l -b <<EOF
 $Gcmd
 EOF
