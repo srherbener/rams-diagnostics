@@ -21,6 +21,7 @@ SCRIPTS = \
           $(DEST)/GenPcolorPlots.m \
           $(DEST)/GenProfMeas.m \
           $(DEST)/GenSlopes.m \
+          $(DEST)/GenSoundingStruct.m \
           $(DEST)/GenTimeAvg.m \
           $(DEST)/GenTsPlots.m \
           $(DEST)/GenVintTseries.m \
