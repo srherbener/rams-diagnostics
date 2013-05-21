@@ -61,7 +61,7 @@ function [ SndStruct ] = GenSoundingStruct(InFilePattern)
     % rest of file is the sounding data
     Line = textscan(fid, '%f %f %f %f %f %f %f %f %f %f');
     if (i == 1)
-      SndStruct.Heights = [ Line{1} ];
+      SndStruct.Height = [ Line{1} ];
     end
     SndStruct.Pressure{i}    = [ Line{2} ];
     SndStruct.Temperature{i} = [ Line{3} ];
