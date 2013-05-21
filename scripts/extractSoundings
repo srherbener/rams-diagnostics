@@ -7,6 +7,9 @@
 #      dewptc
 #      relhum
 #      press
+#      cloud
+#      ice
+#      rain
 #      u
 #      v
 
@@ -63,6 +66,9 @@ my $Tfile;
 my $TdFile;
 my $Pfile;
 my $RhFile;
+my $Cfile;
+my $Ifile;
+my $Rfile;
 my $Ufile;
 my $Vfile;
 
@@ -134,25 +140,32 @@ foreach $ic (0..$#Cases)
     $TdFile = &FindFile($Case, $Hdir, "dewptc");
     $Pfile  = &FindFile($Case, $Hdir, "press");
     $RhFile = &FindFile($Case, $Hdir, "relhum");
+    $Cfile  = &FindFile($Case, $Hdir, "cloud");
+    $Ifile  = &FindFile($Case, $Hdir, "ice");
+    $Rfile  = &FindFile($Case, $Hdir, "rain");
     $Ufile  = &FindFile($Case, $Hdir, "u");
     $Vfile  = &FindFile($Case, $Hdir, "v");
     
     # Run GRADS to get the sounding data. Write the sounding data into the output file in a readable format.
-    $Cmd = sprintf("RunGradsBatch DumpSounding %s %s %s %s %s %s %s %s %s %s %s",
-                   $Pfile, $Tfile, $TdFile, $RhFile, $Ufile, $Vfile, $Lon, $Lat, $Zmin, $Zmax, $Ts);
+    $Cmd = sprintf("RunGradsBatch DumpSounding %s %s %s %s %s %s %s %s %s %s %s %s %s %s",
+                   $Pfile, $Tfile, $TdFile, $RhFile, $Cfile, $Ifile, $Rfile, $Ufile, $Vfile, $Lon, $Lat, $Zmin, $Zmax, $Ts);
     open(GRADS, "$Cmd |") or die "Cannot run GRADS DumpSounding command: $!";
     open(SFILE, "> $OutFile") or die "Cannot open output file: $OutFile: $!";
 
     printf(SFILE "Sounding: %s\n", $Sname);
     printf(SFILE "Latitude: %s\n", $Lat);
     printf(SFILE "Longitude: %s\n", $Lon);
+    printf(SFILE "Time step: %d\n",$Ts);
     printf(SFILE "\n");
-    printf(SFILE "%15s %15s %15s %15s %15s %15s %15s\n",
+    printf(SFILE "%15s %15s %15s %15s %15s %15s %15s %15s %15s %15s\n",
       "Height (m)",
       "P (mb)",
-      "T (deg C)",
-      "Td (deg C)",
+      "T (K)",
+      "Td (K)",
       "RH (%)",
+      "Cloud (kg/kg)",
+      "Ice (kg/kg)",
+      "Rain (kg/kg)",
       "U (m/s)",
       "V (m/s)");
     printf(SFILE "\n");
@@ -163,7 +176,7 @@ foreach $ic (0..$#Cases)
 
       if ($f[0] eq "SND:")
         {
-        printf(SFILE "%15.2f %15.2f %15.2f %15.2f %15.2f %15.2f %15.2f\n", @f[1..$#f]);
+        printf(SFILE "%15.3e %15.3e %15.3e %15.3e %15.3e %15.3e %15.3e %15.3e %15.3e %15.3e\n", @f[1..$#f]);
         }
       else
         {

@@ -9,13 +9,16 @@
 *    2 --> Temperature file
 *    3 --> Dew point file
 *    4 --> Relative Humidity file
-*    5 --> u (zonal winds) file
-*    6 --> v (meridional winds) file
-*    7 --> Longitude
-*    8 --> Latitude
-*    9 --> Zmin
-*   10 --> Zmax
-*   11 --> Timestep
+*    5 --> Cloud file
+*    6 --> Ice file
+*    7 --> Rain file
+*    8 --> u (zonal winds) file
+*    9 --> v (meridional winds) file
+*   10 --> Longitude
+*   11 --> Latitude
+*   12 --> Zmin
+*   13 --> Zmax
+*   14 --> Timestep
 
 function main(args)
 
@@ -23,13 +26,16 @@ function main(args)
   Tfile    = subwrd(args, 2)
   TdFile   = subwrd(args, 3)
   RhFile   = subwrd(args, 4)
-  Ufile    = subwrd(args, 5)
-  Vfile    = subwrd(args, 6)
-  Xlon     = subwrd(args, 7)
-  Ylat     = subwrd(args, 8)
-  Zmin     = subwrd(args, 9)
-  Zmax     = subwrd(args, 10)
-  Tstep    = subwrd(args, 11)
+  Cfile    = subwrd(args, 5)
+  Ifile    = subwrd(args, 6)
+  Rfile    = subwrd(args, 7)
+  Ufile    = subwrd(args, 8)
+  Vfile    = subwrd(args, 9)
+  Xlon     = subwrd(args, 10)
+  Ylat     = subwrd(args, 11)
+  Zmin     = subwrd(args, 12)
+  Zmax     = subwrd(args, 13)
+  Tstep    = subwrd(args, 14)
 
   'reinit'
   'clear'
@@ -39,6 +45,9 @@ function main(args)
   say '  Temperature file: 'Tfile
   say '  Dew point file: 'TdFile
   say '  Relative humidity file: 'RhFile
+  say '  Cloud file: 'Cfile
+  say '  Ice file: 'Cfile
+  say '  Rain file: 'Rfile
   say '  U file: 'Ufile
   say '  V file: 'Vfile
   say ''
@@ -60,6 +69,9 @@ function main(args)
   'sdfopen 'Tfile
   'sdfopen 'TdFile
   'sdfopen 'RhFile
+  'sdfopen 'Cfile
+  'sdfopen 'Ifile
+  'sdfopen 'Rfile
   'sdfopen 'Ufile
   'sdfopen 'Vfile
 
@@ -90,6 +102,9 @@ function main(args)
 *   Grab variables from their respective files
 *   Dump out a line with each value for that level
 *      Mark the line so the caller can easily identify it
+*
+* Temp and dew point come of of REVU in deg C, convert to K --> add 273.15
+* Cloud, Rain and Ice come out of REVU in g/kg, convert to kg/kg --> divide by 1000
   i = Zstart
   while (i <= Zend)
 
@@ -108,25 +123,37 @@ function main(args)
 
       'set dfile 2'
       'd 'tempc
-      T = subwrd(result, 4)
+      T = subwrd(result, 4) + 273.15
 
       'set dfile 3'
       'd 'dewptc
-      Td = subwrd(result, 4)
+      Td = subwrd(result, 4) + 273.15
 
       'set dfile 4'
       'd 'relhum
       RH = subwrd(result, 4)
 
       'set dfile 5'
+      'd 'cloud
+      Cloud = subwrd(result, 4) / 1000
+
+      'set dfile 6'
+      'd 'ice
+      Ice = subwrd(result, 4) / 1000
+
+      'set dfile 7'
+      'd 'rain
+      Rain = subwrd(result, 4) / 1000
+
+      'set dfile 8'
       'd 'u
       Uwind = subwrd(result, 4)
 
-      'set dfile 6'
+      'set dfile 9'
       'd 'v
       Vwind = subwrd(result, 4)
 
-      say 'SND: 'Zlev' 'P' 'T' 'Td' 'RH' 'Uwind' 'Vwind
+      say 'SND: 'Zlev' 'P' 'T' 'Td' 'RH' 'Cloud' 'Ice' 'Rain' 'Uwind' 'Vwind
     endif
 
     i = i + 1
