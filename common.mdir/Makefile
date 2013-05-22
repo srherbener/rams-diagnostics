@@ -36,6 +36,7 @@ SCRIPTS = \
           $(DEST)/ReduceHists.m \
           $(DEST)/RunAzavgDiffEof.m \
           $(DEST)/SmoothFillTseries.m \
+          $(DEST)/SoundingToProfile.m \
           $(DEST)/PlotProfSet.m \
           $(DEST)/PlotTseriesSet.m \
           $(DEST)/Plot2dSet.m \
