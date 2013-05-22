@@ -19,8 +19,8 @@ function [ SndStruct ] = GenSoundingStruct(InFilePattern)
 %   v wind speed
 
   % Use the pattern to form a list of input files.
-  DirInfo = dir(InFilePattern);
-  InFileList = { DirInfo.name };
+  LsInfo = textscan(ls(InFilePattern), '%s');
+  InFileList = LsInfo{1};
 
   % Read in the input files and construct a set of soundings.
   %   Use the heights out of the first file for all sets of profiles
