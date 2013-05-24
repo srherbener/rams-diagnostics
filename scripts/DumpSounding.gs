@@ -46,7 +46,7 @@ function main(args)
   say '  Dew point file: 'TdFile
   say '  Relative humidity file: 'RhFile
   say '  Cloud file: 'Cfile
-  say '  Ice file: 'Cfile
+  say '  Ice file: 'Ifile
   say '  Rain file: 'Rfile
   say '  U file: 'Ufile
   say '  V file: 'Vfile
@@ -105,6 +105,10 @@ function main(args)
 *
 * Temp and dew point come of of REVU in deg C, convert to K --> add 273.15
 * Cloud, Rain and Ice come out of REVU in g/kg, convert to kg/kg --> divide by 1000
+*
+* When displaying variables, shut off warnings and display the variable twice. It
+* seems that GRADS insists upon writing its warning about chunk sizes at least once
+* even when warnings are shut off.
   i = Zstart
   while (i <= Zend)
 
@@ -118,38 +122,56 @@ function main(args)
       say '  Level = 'Zlev
 
       'set dfile 1'
-      'd press'
+      'set warn off'
+      'd 'press
+      'd 'press
       P = subwrd(result, 4)
 
       'set dfile 2'
+      'set warn off'
+      'd 'tempc
       'd 'tempc
       T = subwrd(result, 4) + 273.15
 
       'set dfile 3'
+      'set warn off'
+      'd 'dewptc
       'd 'dewptc
       Td = subwrd(result, 4) + 273.15
 
       'set dfile 4'
+      'set warn off'
+      'd 'relhum
       'd 'relhum
       RH = subwrd(result, 4)
 
       'set dfile 5'
+      'set warn off'
+      'd 'cloud
       'd 'cloud
       Cloud = subwrd(result, 4) / 1000
 
       'set dfile 6'
+      'set warn off'
+      'd 'ice
       'd 'ice
       Ice = subwrd(result, 4) / 1000
 
       'set dfile 7'
+      'set warn off'
+      'd 'rain
       'd 'rain
       Rain = subwrd(result, 4) / 1000
 
       'set dfile 8'
+      'set warn off'
+      'd 'u
       'd 'u
       Uwind = subwrd(result, 4)
 
       'set dfile 9'
+      'set warn off'
+      'd 'v
       'd 'v
       Vwind = subwrd(result, 4)
 
