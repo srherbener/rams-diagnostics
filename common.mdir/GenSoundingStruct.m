@@ -19,7 +19,7 @@ function [ SndStruct ] = GenSoundingStruct(InFilePattern)
 %   v wind speed
 
   % Use the pattern to form a list of input files.
-  LsInfo = textscan(ls(InFilePattern), '%s');
+  LsInfo = textscan(ls('-1', InFilePattern), '%s');
   InFileList = LsInfo{1};
 
   % Read in the input files and construct a set of soundings.
