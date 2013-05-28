@@ -23,7 +23,7 @@ GrayCmap = colormap('gray');
 RevGrayCmap = flipud(GrayCmap);
 close(Fig);
 
-
+Ncont = 10; % number of contours
 
 Yticks = [ 2 6 10 14 ];
 Yticklabels = { '2' '6' '10' '14' };
@@ -191,7 +191,7 @@ for iplot = 1:length(Config.ProfRsPlots)
           cmap = GrayCmap;
         end
 
-        CF = contourf(R, Zvals, Pdata);
+        CF = contourf(R, Zvals, Pdata, Ncont);
         if (isempty(CF(:)))
           fprintf('WARNING: Constant Zdata - attempting to render a constant value contour plot\n');
           % change the first value so that data is not constant
