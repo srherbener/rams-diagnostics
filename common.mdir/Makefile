@@ -14,12 +14,14 @@ SCRIPTS = \
           $(DEST)/CompileCounts.m \
           $(DEST)/Gen2dHistData.m \
           $(DEST)/GenAdiffEofPlots.m \
+          $(DEST)/GenCountBins1d.m \
           $(DEST)/GenCountBins.m \
           $(DEST)/GenDeltapTseries.m \
           $(DEST)/GenHistMeas.m \
           $(DEST)/GenLinePlots.m \
           $(DEST)/GenPcolorPlots.m \
           $(DEST)/GenProfMeas.m \
+          $(DEST)/GenSlopes1d.m \
           $(DEST)/GenSlopes.m \
           $(DEST)/GenSoundingStruct.m \
           $(DEST)/GenTimeAvg.m \

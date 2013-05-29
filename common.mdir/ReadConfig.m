@@ -52,6 +52,7 @@ i_aeof = 0;
 i_hmeas = 0;
 i_pmeas = 0;
 i_smeas = 0;
+i_smeas1d = 0;
 i_hist2d = 0;
 i_counts = 0;
 i_tavg = 0;
@@ -65,6 +66,7 @@ i_hmp3d = 0;
 i_hmslice = 0;
 i_pplot = 0;
 i_splot = 0;
+i_splot1d = 0;
 i_pcplot = 0;
 i_pts_plot = 0;
 i_prs_plot = 0;
@@ -157,17 +159,34 @@ for i = 1:size(InLines,1)
       end
 
       Cdata.Smeas(i_smeas).PSnum   =  -1;
+    case 'Smeas1d:'
+      i_smeas1d = i_smeas1d + 1;
+      Cdata.Smeas1d(i_smeas1d).PSname  = Fields{2};
+      Cdata.Smeas1d(i_smeas1d).Name    = Fields{3};
+      Cdata.Smeas1d(i_smeas1d).InDir   = Fields{4};
+      Cdata.Smeas1d(i_smeas1d).Fprefix = Fields{5};
+      Cdata.Smeas1d(i_smeas1d).Rvar    = Fields{6};
+      Cdata.Smeas1d(i_smeas1d).Xmin    = sscanf(Fields{7}, '%f');
+      Cdata.Smeas1d(i_smeas1d).Xmax    = sscanf(Fields{8}, '%f');
+      Cdata.Smeas1d(i_smeas1d).Xgroup  = sscanf(Fields{9}, '%d');
+      ix = 1;
+      for j = 10:length(Fields)  % grab the rest of the fields
+        Cdata.Smeas1d(i_smeas1d).Xvals(ix) = sscanf(Fields{j}, '%f');
+        ix = ix + 1;
+      end
+
+      Cdata.Smeas1d(i_smeas1d).PSnum   =  -1;
     case 'Hist2d:'
       i_hist2d = i_hist2d + 1;
       Cdata.Hist2d(i_hist2d).Name    = Fields{2};
       Cdata.Hist2d(i_hist2d).Fprefix = Fields{3};
       Cdata.Hist2d(i_hist2d).Var     = Fields{4};
-      Cdata.Hist2d(i_hist2d).Xmin    = sscanf(Fields{5}, '%f');;
-      Cdata.Hist2d(i_hist2d).Xmax    = sscanf(Fields{6}, '%f');;
-      Cdata.Hist2d(i_hist2d).Xgroup  = sscanf(Fields{7}, '%d');;
-      Cdata.Hist2d(i_hist2d).Ymin    = sscanf(Fields{8}, '%f');;
-      Cdata.Hist2d(i_hist2d).Ymax    = sscanf(Fields{9}, '%f');;
-      Cdata.Hist2d(i_hist2d).Ygroup  = sscanf(Fields{10}, '%d');;
+      Cdata.Hist2d(i_hist2d).Xmin    = sscanf(Fields{5}, '%f');
+      Cdata.Hist2d(i_hist2d).Xmax    = sscanf(Fields{6}, '%f');
+      Cdata.Hist2d(i_hist2d).Xgroup  = sscanf(Fields{7}, '%d');
+      Cdata.Hist2d(i_hist2d).Ymin    = sscanf(Fields{8}, '%f');
+      Cdata.Hist2d(i_hist2d).Ymax    = sscanf(Fields{9}, '%f');
+      Cdata.Hist2d(i_hist2d).Ygroup  = sscanf(Fields{10}, '%d');
       Cdata.Hist2d(i_hist2d).Tmin    = sscanf(Fields{11}, '%f');
       Cdata.Hist2d(i_hist2d).Tmax    = sscanf(Fields{12}, '%f');
     case 'CompCounts:'
@@ -185,16 +204,16 @@ for i = 1:size(InLines,1)
       Cdata.Tavg(i_tavg).InDir   = Fields{3};
       Cdata.Tavg(i_tavg).Fprefix = Fields{4};
       Cdata.Tavg(i_tavg).Rvar    = Fields{5};
-      Cdata.Tavg(i_tavg).Tmin    = sscanf(Fields{6}, '%f');;
-      Cdata.Tavg(i_tavg).Tmax    = sscanf(Fields{7}, '%f');;
+      Cdata.Tavg(i_tavg).Tmin    = sscanf(Fields{6}, '%f');
+      Cdata.Tavg(i_tavg).Tmax    = sscanf(Fields{7}, '%f');
     case 'DeltapTs:'
       i_dpts = i_dpts + 1;
       Cdata.DeltapTs(i_dpts).Name    = Fields{2};
       Cdata.DeltapTs(i_dpts).InDir   = Fields{3};
       Cdata.DeltapTs(i_dpts).Fprefix = Fields{4};
       Cdata.DeltapTs(i_dpts).Rvar    = Fields{5};
-      Cdata.DeltapTs(i_dpts).Rmin    = sscanf(Fields{6}, '%f');;
-      Cdata.DeltapTs(i_dpts).Rmax    = sscanf(Fields{7}, '%f');;
+      Cdata.DeltapTs(i_dpts).Rmin    = sscanf(Fields{6}, '%f');
+      Cdata.DeltapTs(i_dpts).Rmax    = sscanf(Fields{7}, '%f');
     case 'VintTs:'
       i_vint_ts = i_vint_ts + 1;
       Cdata.VintTs(i_vint_ts).Name    = Fields{2};
@@ -219,7 +238,7 @@ for i = 1:size(InLines,1)
         Cdata.PlotSets(i_pset).Cases(ips).Cname   = Fields{j};
         Cdata.PlotSets(i_pset).Cases(ips).Legend  = regexprep(Fields{j+1}, '_', ' ');
         Cdata.PlotSets(i_pset).Cases(ips).Lstyle  = Fields{j+2};
-        Cdata.PlotSets(i_pset).Cases(ips).Lgscale = sscanf(Fields{j+3}, '%f');;
+        Cdata.PlotSets(i_pset).Cases(ips).Lgscale = sscanf(Fields{j+3}, '%f');
         j = j + 4;
       end
     case 'PlotVar:'
@@ -227,8 +246,8 @@ for i = 1:size(InLines,1)
       Cdata.PlotVars(i_pvar).Name    = Fields{2};
       Cdata.PlotVars(i_pvar).Var     = Fields{3};
       Cdata.PlotVars(i_pvar).Fprefix = Fields{4};
-      Cdata.PlotVars(i_pvar).Label   = regexprep(Fields{5}, '_', ' ');;
-      Cdata.PlotVars(i_pvar).Units   = regexprep(Fields{6}, '_', ' ');;
+      Cdata.PlotVars(i_pvar).Label   = regexprep(Fields{5}, '_', ' ');
+      Cdata.PlotVars(i_pvar).Units   = regexprep(Fields{6}, '_', ' ');
       Cdata.PlotVars(i_pvar).Min     = sscanf(Fields{7}, '%f');
       Cdata.PlotVars(i_pvar).Max     = sscanf(Fields{8}, '%f');
       Cdata.PlotVars(i_pvar).Scale   = sscanf(Fields{9}, '%f');
@@ -367,6 +386,27 @@ for i = 1:size(InLines,1)
       Cdata.SlopePlots(i_splot).Cmin    = sscanf(Fields{17}, '%f');
       Cdata.SlopePlots(i_splot).Cmax    = sscanf(Fields{18}, '%f');
       Cdata.SlopePlots(i_splot).OutFile = Fields{19};
+    case 'Slope1dPlot:'
+      i_splot1d = i_splot1d + 1;
+      Cdata.Slope1dPlots(i_splot1d).PSname  = Fields{2};
+      Cdata.Slope1dPlots(i_splot1d).InDir   = Fields{3};
+      Cdata.Slope1dPlots(i_splot1d).Svar    = Fields{4};
+      Cdata.Slope1dPlots(i_splot1d).Cvar    = Fields{5};
+      Cdata.Slope1dPlots(i_splot1d).XLvar   = Fields{6};
+      Cdata.Slope1dPlots(i_splot1d).XUvar   = Fields{7};
+      Cdata.Slope1dPlots(i_splot1d).Tvar    = Fields{8};
+      Cdata.Slope1dPlots(i_splot1d).Nsamp   = sscanf(Fields{9}, '%d');
+      Cdata.Slope1dPlots(i_splot1d).Tcor    = sscanf(Fields{10}, '%f');
+      Cdata.Slope1dPlots(i_splot1d).Title   = regexprep(Fields{11}, '_', ' ');
+      Cdata.Slope1dPlots(i_splot1d).Xlabel  = regexprep(Fields{12}, '_', ' ');
+      Cdata.Slope1dPlots(i_splot1d).Ylabel  = regexprep(Fields{13}, '_', ' ');
+      Cdata.Slope1dPlots(i_splot1d).Tmin    = sscanf(Fields{14}, '%f');
+      Cdata.Slope1dPlots(i_splot1d).Tmax    = sscanf(Fields{15}, '%f');
+      Cdata.Slope1dPlots(i_splot1d).Cmin    = sscanf(Fields{16}, '%f');
+      Cdata.Slope1dPlots(i_splot1d).Cmax    = sscanf(Fields{17}, '%f');
+      Cdata.Slope1dPlots(i_splot1d).OutFile = Fields{18};
+      
+      Cdata.Slope1dPlots(i_splot1d).PSnum = -1;
     case 'PcolorPlot:'
       i_pcplot = i_pcplot + 1;
       Cdata.PcolorPlots(i_pcplot).Fprefix = Fields{2};
@@ -391,7 +431,7 @@ for i = 1:size(InLines,1)
       Cdata.ProfTsPlots(i_pts_plot).Zmin        = sscanf(Fields{10}, '%f');
       Cdata.ProfTsPlots(i_pts_plot).Zmax        = sscanf(Fields{11}, '%f');
       Cdata.ProfTsPlots(i_pts_plot).Pspec       = Fields{12};
-      Cdata.ProfTsPlots(i_pts_plot).Flevel      = sscanf(Fields{13}, '%i');;
+      Cdata.ProfTsPlots(i_pts_plot).Flevel      = sscanf(Fields{13}, '%i');
       Cdata.ProfTsPlots(i_pts_plot).Ptype       = Fields{14};
       Cdata.ProfTsPlots(i_pts_plot).OutFileBase = Fields{15};
 
@@ -409,7 +449,7 @@ for i = 1:size(InLines,1)
       Cdata.ProfRsPlots(i_prs_plot).Zmin        = sscanf(Fields{10}, '%f');
       Cdata.ProfRsPlots(i_prs_plot).Zmax        = sscanf(Fields{11}, '%f');
       Cdata.ProfRsPlots(i_prs_plot).Pspec       = Fields{12};
-      Cdata.ProfRsPlots(i_prs_plot).Flevel      = sscanf(Fields{13}, '%i');;
+      Cdata.ProfRsPlots(i_prs_plot).Flevel      = sscanf(Fields{13}, '%i');
       Cdata.ProfRsPlots(i_prs_plot).Ptype       = Fields{14};
       Cdata.ProfRsPlots(i_prs_plot).OutFileBase = Fields{15};
 
@@ -468,9 +508,19 @@ if (isfield(Cdata, 'HmeasSlicePlots'))
   Cdata.HmeasSlicePlots = AssociateStructs( Cdata.HmeasSlicePlots, Cdata.PlotSets, 'PS', 'PlotSet', 'HmeasSlicePlot' ); 
 end
 
+% Make the association between Slope1dPlots and the PlotSets
+if (isfield(Cdata, 'Slope1dPlots'))
+  Cdata.Slope1dPlots = AssociateStructs( Cdata.Slope1dPlots, Cdata.PlotSets, 'PS', 'PlotSet', 'Slope1dPlot' ); 
+end
+
 % Make the association between Smeas and the PlotSets
 if (isfield(Cdata, 'Smeas'))
   Cdata.Smeas = AssociateStructs( Cdata.Smeas, Cdata.PlotSets, 'PS', 'PlotSet', 'Smeas' ); 
+end
+
+% Make the association between Smeas1d and the PlotSets
+if (isfield(Cdata, 'Smeas1d'))
+  Cdata.Smeas1d = AssociateStructs( Cdata.Smeas1d, Cdata.PlotSets, 'PS', 'PlotSet', 'Smeas1d' ); 
 end
 
 % Make the association between CompCounts and the PlotSets
@@ -523,7 +573,7 @@ function [ OutStruct ] = AssociateStructs(Base, List, Type, Ltype, Btype)
     TestArray = { List(:).Name };
     
     Index = find(strcmp(TestName, TestArray));
-    if (length(Index) == 0)
+    if (isempty(Index))
       fprintf('WARNING: Could not find a match for %s "%s" specified in %s number %d\n', Ltype, TestName, Btype, i);
       Index = 0;
     end

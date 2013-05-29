@@ -14,6 +14,7 @@ SCRIPTS = $(DEST)/ExtractSample.m \
           $(DEST)/GenCfrac2dHists.m \
           $(DEST)/GenProfPlots.m \
           $(DEST)/GenRain2CloudRatio.m \
+          $(DEST)/GenSlope1dPlots.m \
           $(DEST)/GenSlopePlots.m \
           $(DEST)/GenSwupBarCharts.m \
           $(DEST)/GenTavgRrateFracAreaDist.m \
