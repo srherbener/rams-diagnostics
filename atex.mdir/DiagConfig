@@ -509,6 +509,20 @@ Smeas: CO_S303_G10M5 smeas_pop_CO_S303_G10M5 TsAveragedData pop pop 0.0999 1.001
 #Smeas: CG_S298_G10M2 smeas_pop_CG_S298_G10M2 TsAveragedData pop pop 1 1   50 400 1600
 #Smeas: CG_S298_G10M4 smeas_pop_CG_S298_G10M4 TsAveragedData pop pop 1 1   50 400 1600
 
+########################################
+####### Slope Measurements 1D ##########
+########################################
+#
+# smeas <plot_set_name> <name> <input_dir> <file_prefix> <revu_var> <x_bin_group_size> <x_values>
+
+#### 1um GCCN median radius ####
+Smeas1d: CO_S293_G10M5 smeas1d_pop_CO_S293_G10M5 TsAveragedData pop_lwp pop 0.0 15.001 1   50 100 200 400 800 1200 1600
+Smeas1d: CO_S298_G10M5 smeas1d_pop_CO_S298_G10M5 TsAveragedData pop_lwp pop 0.0 15.001 1   50 100 200 400 800 1200 1600
+Smeas1d: CO_S303_G10M5 smeas1d_pop_CO_S303_G10M5 TsAveragedData pop_lwp pop 0.0 15.001 1   50 100 200 400 800 1200 1600
+
+#### 3um GCCN median radius ####
+
+
 ###########################################
 ########## 2D Histogram Data ##############
 ###########################################
@@ -537,6 +551,14 @@ SlopePlot: DIAGS/smeas_pop_CO_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower LwpB
 SlopePlot: DIAGS/smeas_pop_CO_S293_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper LtssBinLower LtssBinUpper Time 7 0.7 Slope_of_POP_vs_Sulfate_Aerosol_Concentration LWP_(mm) LTSS_(K) 12 36 -5e-4 5e-4 pop_CO_S293_G10M5.jpg
 SlopePlot: DIAGS/smeas_pop_CO_S298_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper LtssBinLower LtssBinUpper Time 7 0.7 Slope_of_POP_vs_Sulfate_Aerosol_Concentration LWP_(mm) LTSS_(K) 12 36 -5e-4 5e-4 pop_CO_S298_G10M5.jpg
 SlopePlot: DIAGS/smeas_pop_CO_S303_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper LtssBinLower LtssBinUpper Time 7 0.7 Slope_of_POP_vs_Sulfate_Aerosol_Concentration LWP_(mm) LTSS_(K) 12 36 -5e-4 5e-4 pop_CO_S303_G10M5.jpg
+
+#######################################
+########## Slope1D Plots ##############
+#######################################
+#
+# Slope1dPlot: <file> <slope_var> <correlation_coeff_var> <x_lower_edge_var> <x_upper_edge_var> <time_var> <num_samples> <test_correlation> <title> <xlabel> <ylabel> <time_min> <time_max> <color_min> <color_max> <out_file>
+
+Slope1dPlot: CO_POP_SST_G10M5 DIAGS Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper Time 7 0.7 Slope_of_POP_vs_Aerosol_Concentration LWP_(mm) SST_(K) 12 36 -5e-4 5e-4 pop_SST_CO_G10M5.jpg
 
 ###########################################
 ########## PsuedoColor Plots ##############
@@ -591,6 +613,9 @@ PlotSet: CG_S298_G10M4 3 z.atex.ccn0050.sst298.gcn10m4.3um CCN:_50/cc - 0.0 z.at
 
 # For LTSS sample
 PlotSet: LTSS_SAMPLE 6 z.atex.ccn0050.sst293.gcn10m5.1um C0050-S293 - 0.0 z.atex.ccn1600.sst293.gcn10m5.1um C1600-S293 -- 0.0 z.atex.ccn0050.sst298.gcn10m5.1um C0050-S298 - 0.25 z.atex.ccn1600.sst298.gcn10m5.1um C1600-S298 -- 0.25 z.atex.ccn0050.sst303.gcn10m5.1um C0050-S303 - 0.50 z.atex.ccn1600.sst303.gcn10m5.1um C1600-S303 -- 0.50 
+
+# For Slope1dPlots
+PlotSet: CO_POP_SST_G10M5 3 smeas1d_pop_CO_S293_G10M5 293 - 0.0 smeas1d_pop_CO_S298_G10M5 298 - 0.0 smeas1d_pop_CO_S303_G10M5 303 - 0.0
 
 ####################### Plot Vars ################################
 # PlotVar: <name> <vname> <file_prefix> <label> <units> <axis_min> <axis_max> <scale>
