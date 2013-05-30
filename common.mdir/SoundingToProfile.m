@@ -16,6 +16,7 @@ function [ Profile ] = SoundingToProfile(InFilePattern)
 
   Snames = {
     'Height'
+    'Pressure'
     'Temperature'
     'RelHum'
     'Cloud'
@@ -25,6 +26,7 @@ function [ Profile ] = SoundingToProfile(InFilePattern)
 
   Pnames = {
     'Heights'
+    'Pressure'
     'Temperatures'
     'RelHum'
     'CloudWater'
