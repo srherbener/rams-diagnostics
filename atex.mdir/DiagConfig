@@ -558,7 +558,9 @@ SlopePlot: DIAGS/smeas_pop_CO_S303_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower
 #
 # Slope1dPlot: <file> <slope_var> <correlation_coeff_var> <x_lower_edge_var> <x_upper_edge_var> <time_var> <num_samples> <test_correlation> <title> <xlabel> <ylabel> <time_min> <time_max> <color_min> <color_max> <out_file>
 
-Slope1dPlot: CO_POP_SST_G10M5 DIAGS Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper Time 7 0.7 Slope_of_POP_vs_Aerosol_Concentration LWP_(mm) SST_(K) 12 36 -5e-4 5e-4 pop_SST_CO_G10M5.jpg
+Slope1dPlot: CO_POP_SST_G10M5 DIAGS Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper Time 7 0.7 Slope_of_POP_vs_Aerosol_Concentration LWP_(mm) SST_(K) 0 8 12 36 -10e-4 10e-4 pop_SST_CO_G10M5.jpg
+Slope1dPlot: CO_POP_SST_G10M5 DIAGS Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper Time 7 0.7 Slope_of_POP_vs_Aerosol_Concentration LWP_(mm) SST_(K) 0 8 12 24 -10e-4 10e-4 pop_SST_CO_G10M5_First12.jpg
+Slope1dPlot: CO_POP_SST_G10M5 DIAGS Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper Time 7 0.7 Slope_of_POP_vs_Aerosol_Concentration LWP_(mm) SST_(K) 0 8 24 36 -10e-4 10e-4 pop_SST_CO_G10M5_Last12.jpg
 
 ###########################################
 ########## PsuedoColor Plots ##############
