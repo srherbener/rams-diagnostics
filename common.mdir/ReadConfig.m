@@ -400,11 +400,13 @@ for i = 1:size(InLines,1)
       Cdata.Slope1dPlots(i_splot1d).Title   = regexprep(Fields{11}, '_', ' ');
       Cdata.Slope1dPlots(i_splot1d).Xlabel  = regexprep(Fields{12}, '_', ' ');
       Cdata.Slope1dPlots(i_splot1d).Ylabel  = regexprep(Fields{13}, '_', ' ');
-      Cdata.Slope1dPlots(i_splot1d).Tmin    = sscanf(Fields{14}, '%f');
-      Cdata.Slope1dPlots(i_splot1d).Tmax    = sscanf(Fields{15}, '%f');
-      Cdata.Slope1dPlots(i_splot1d).Cmin    = sscanf(Fields{16}, '%f');
-      Cdata.Slope1dPlots(i_splot1d).Cmax    = sscanf(Fields{17}, '%f');
-      Cdata.Slope1dPlots(i_splot1d).OutFile = Fields{18};
+      Cdata.Slope1dPlots(i_splot1d).Xmin    = sscanf(Fields{14}, '%f');
+      Cdata.Slope1dPlots(i_splot1d).Xmax    = sscanf(Fields{15}, '%f');
+      Cdata.Slope1dPlots(i_splot1d).Tmin    = sscanf(Fields{16}, '%f');
+      Cdata.Slope1dPlots(i_splot1d).Tmax    = sscanf(Fields{17}, '%f');
+      Cdata.Slope1dPlots(i_splot1d).Cmin    = sscanf(Fields{18}, '%f');
+      Cdata.Slope1dPlots(i_splot1d).Cmax    = sscanf(Fields{19}, '%f');
+      Cdata.Slope1dPlots(i_splot1d).OutFile = Fields{20};
       
       Cdata.Slope1dPlots(i_splot1d).PSnum = -1;
     case 'PcolorPlot:'

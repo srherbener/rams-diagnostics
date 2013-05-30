@@ -24,6 +24,8 @@ for iplot = 1:length(Config.Slope1dPlots)
     Tvar  = Config.Slope1dPlots(iplot).Tvar;
     Nsamp = Config.Slope1dPlots(iplot).Nsamp;
     Tcor  = Config.Slope1dPlots(iplot).Tcor;
+    Xmin  = Config.Slope1dPlots(iplot).Xmin;
+    Xmax  = Config.Slope1dPlots(iplot).Xmax;
     Tmin  = Config.Slope1dPlots(iplot).Tmin;
     Tmax  = Config.Slope1dPlots(iplot).Tmax;
     Cmin  = Config.Slope1dPlots(iplot).Cmin;
@@ -39,6 +41,9 @@ for iplot = 1:length(Config.Slope1dPlots)
     fprintf('  Time range for data selection (hr):\n');
     fprintf('    Tmin: %.2f\n', Tmin);
     fprintf('    Tmax: %.2f\n', Tmax);
+    fprintf('  X Range:\n');
+    fprintf('    Xmin: %.2f\n', Xmin);
+    fprintf('    Xmax: %.2f\n', Xmax);
     fprintf('  Parameters for Fisher z-score screening:\n');
     fprintf('    Number of samples: %d\n', Nsamp);
     fprintf('    Test correlation: %.2f\n', Tcor);
@@ -86,10 +91,13 @@ for iplot = 1:length(Config.Slope1dPlots)
     % find the indices for selecting out a time range
     T1 = find(T >= Tmin, 1, 'first');
     T2 = find(T <= Tmax, 1, 'last');
+    
+    X1 = find(XL >= Xmin, 1, 'first');
+    X2 = find(XU <= Xmax, 1, 'last');
 
     % Select out the slope data based on the time range
-    S = S(:,:,T1:T2);
-    C = C(:,:,T1:T2);
+    S = S(X1:X2,:,T1:T2);
+    C = C(X1:X2,:,T1:T2);
 
     % Select out the slopes that have >= 95% statistical significance
     % Use the fisher z-score to test the null hypothesis that the
@@ -124,8 +132,9 @@ for iplot = 1:length(Config.Slope1dPlots)
 
 
     % use the bin edges for the plot, bin centers for the tick marks.
-    X = [ XL' XU(end) ];
+    X = [ XL(X1:X2)' XU(X2) ];
     Xcenters = (XL + XU)' / 2;
+    Xcenters = Xcenters(X1:X2);
     
     Yshift = (Ycenters(2) - Ycenters(1)) / 2; % assume even spacing
     Y = Ycenters - Yshift;
