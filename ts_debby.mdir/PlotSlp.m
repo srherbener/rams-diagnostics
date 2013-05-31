@@ -1,4 +1,4 @@
-function [ ] = PlotSLP(ConfigFile)
+function [ ] = PlotSlp(ConfigFile)
 
 [ Config ] = ReadConfig(ConfigFile);
 
@@ -16,7 +16,9 @@ TIMES = 1:size(SPRESS,2);
 
 % SPRESS is organized as r,t so take the minimum along the first dimension
 % generate the time series of the minimum SLP of the horizontal domain
-SLP_MIN = min(SPRESS,[],1);
+R1 = 1;
+R2 = size(SPRESS,1);
+SLP_MIN = min(SPRESS(R1:R2,:),[],1);
 
 % NHC Best Track (every six hours) data
 % time step 1 from the simulation is where the NHC data starts
