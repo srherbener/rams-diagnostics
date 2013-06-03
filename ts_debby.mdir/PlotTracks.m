@@ -30,8 +30,8 @@ set(gca, 'FontSize', 18);
 m_proj('miller', 'lat', LatBounds, 'long', LonBounds);
 m_coast('color', 'k'); % k --> black
 m_grid('linestyle','none','box','fancy','tickdir','out');
-NhcTrack = m_line(NhcTrackLons, NhcTrackLats, 'linewi', 3, 'color', 'b');
-SimTrack = m_line(SimTrackLons, SimTrackLats, 'linewi', 3, 'color', 'r');
+NhcTrack = m_line(NhcTrackLons, NhcTrackLats, 'linewi', 3, 'color', 'b', 'linestyle', 'none', 'marker', '+');
+SimTrack = m_line(SimTrackLons, SimTrackLats, 'linewi', 3, 'color', 'r'); 
 title('TS Debby Tracks');
 legend([ NhcTrack SimTrack ], 'NHC Best Track', 'Simulated Track', 'Location', 'NorthWest');
 

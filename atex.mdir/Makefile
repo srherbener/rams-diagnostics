@@ -11,6 +11,7 @@ SCRIPTS = $(DEST)/ExtractSample.m \
           $(DEST)/GenDistPlots.m \
           $(DEST)/PlotMultiPanelSample.m \
           $(DEST)/PlotSampleData.m \
+          $(DEST)/PlotSampleW250.m \
           $(DEST)/GenCfrac2dHists.m \
           $(DEST)/GenProfPlots.m \
           $(DEST)/GenRain2CloudRatio.m \
