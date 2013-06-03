@@ -9,13 +9,13 @@ end
 
 Cases = {
  'SST_CONST'
- 'SST_OBS'
+% 'SST_OBS'
  'SST_OBS_UBMIN'
  };
 
 LegText = {
  'SST CONST'
- 'SST OBS'
+% 'SST OBS'
  'SST OBS UBMIN'
  };
 
@@ -56,7 +56,7 @@ set(gca, 'FontSize', 18);
 m_proj('miller', 'lat', LatBounds, 'long', LonBounds);
 m_coast('color', 'k'); % k --> black
 m_grid('linestyle','none','box','fancy','tickdir','out');
-NhcTrack = m_line(NhcTrackLons, NhcTrackLats, 'linewi', 2, 'color', 'k');
+NhcTrack = m_line(NhcTrackLons, NhcTrackLats, 'linewi', 2, 'color', 'k', 'linestyle', 'none', 'marker', '+');
 SimTrack = m_line(SimTrackLons, SimTrackLats, 'linewi', 2);
 title('TS Debby Tracks');
 legend( SimTrack, LegText,'Location', 'SouthWest');
