@@ -8,7 +8,6 @@ function [ ] = PlotProfs(ConfigFile)
 Ddir = Config.DiagDir;
 Pdir = Config.PlotDir;
 
-% Find and replace underscores in Ptitle, Ylabel with blank spaces
 for iplot = 1:length(Config.ProfPlots)
     clear Profs;
     clear LegText;
@@ -39,7 +38,8 @@ for iplot = 1:length(Config.ProfPlots)
       PROF_CNTL = squeeze(hdf5read(Hfile, Hdset));
     end
 
-    Ptitle = sprintf('%s', Config.ProfPlots(iplot).Title);
+    Ptitle = Config.ProfPlots(iplot).Title.Main;
+    Pmarkers = Config.ProfPlots(iplot).Title.Pmarkers;
     Xlabel = Config.ProfPlots(iplot).Xlabel;
     Zlabel = Config.ProfPlots(iplot).Zlabel;
     LegLoc = Config.ProfPlots(iplot).LegLoc;
@@ -91,6 +91,6 @@ for iplot = 1:length(Config.ProfPlots)
     end
 
     fprintf('Writing plot file: %s\n', OutFile);
-    PlotProfSet(Xvals, Zvals, Profs, Xlabel, Zlabel, Ptitle, Lstyles, Lgscales, LegText, LegLoc, Ptype, OutFile);
+    PlotProfSet(Xvals, Zvals, Profs, Xlabel, Zlabel, Ptitle, Pmarkers, Lstyles, Lgscales, LegText, LegLoc, Ptype, OutFile);
     fprintf('\n');
 end

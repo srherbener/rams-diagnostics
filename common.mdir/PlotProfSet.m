@@ -1,4 +1,4 @@
-function [ ] = PlotProfSet( Xvals, Zvals, Profs, Xlabel, Zlabel, Ptitle, Lstyles, Lgscales, LegText, LegLoc, Ptype, OutFile )
+function [ ] = PlotProfSet( Xvals, Zvals, Profs, Xlabel, Zlabel, Ptitle, Pmarkers, Lstyles, Lgscales, LegText, LegLoc, Ptype, OutFile )
 %PlotProfSet Plot a set of vertical profiles on the same panel
 %   This function will take data contained in Profs and plot them on a
 %   single panel line plot. Each row of Profs is a separate profile.
@@ -25,15 +25,9 @@ end
 Yticks = [ 2 6 10 14 ];
 Yticklabels = { '2' '6' '10' '14' };
 
-PanelTitle = false;
-if (regexp(Ptitle, '^PANEL:'))
-    Ptitle = regexprep(Ptitle, '^PANEL:', '');
-    if (regexp(Ptitle, ' '))
-        Ptitle = regexprep(Ptitle, ' ', ') ');
-    else
-        Ptitle = sprintf('%s)', Ptitle);
-    end
-    PanelTitle = true;
+PanelTitle = ~isempty(Pmarkers);;
+if (PanelTitle)
+  Ptitle = sprintf('(%s) %s', Pmarkers{1}, Ptitle);
 else
   Lwidth = 2;
   Fsize = 25;

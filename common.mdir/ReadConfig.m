@@ -271,7 +271,7 @@ for i = 1:size(InLines,1)
       Cdata.TsavgPlots(i_tsplot).Ttype   = Fields{6};
       Cdata.TsavgPlots(i_tsplot).Name    = regexprep(Fields{7}, '_', ' ');
       Cdata.TsavgPlots(i_tsplot).Units   = regexprep(Fields{8}, '_', ' ');
-      Cdata.TsavgPlots(i_tsplot).Title   = regexprep(Fields{9}, '_', ' ');
+      Cdata.TsavgPlots(i_tsplot).Title   = ParseTitle(Fields{9});
       Cdata.TsavgPlots(i_tsplot).LegLoc  = Fields{10};
       Cdata.TsavgPlots(i_tsplot).Ymin    = sscanf(Fields{11},  '%f');
       Cdata.TsavgPlots(i_tsplot).Ymax    = sscanf(Fields{12},  '%f');
@@ -282,7 +282,7 @@ for i = 1:size(InLines,1)
       i_dplot = i_dplot + 1;
       Cdata.DistPlots(i_dplot).PSname  = Fields{2};
       Cdata.DistPlots(i_dplot).Var     = Fields{3};
-      Cdata.DistPlots(i_dplot).Title   = regexprep(Fields{4}, '_', ' ');
+      Cdata.DistPlots(i_dplot).Title   = ParseTitle(Fields{4});
       Cdata.DistPlots(i_dplot).Xlabel  = regexprep(Fields{5}, '_', ' ');
       Cdata.DistPlots(i_dplot).Ylabel  = regexprep(Fields{6}, '_', ' ');
       Cdata.DistPlots(i_dplot).LegLoc  = Fields{7};
@@ -298,7 +298,7 @@ for i = 1:size(InLines,1)
       Cdata.LinePlots(i_lplot).YVname  = Fields{4};
       Cdata.LinePlots(i_lplot).DSname  = Fields{5};
       Cdata.LinePlots(i_lplot).Smooth  = Fields{6};
-      Cdata.LinePlots(i_lplot).Title   = regexprep(Fields{7}, '_', ' ');
+      Cdata.LinePlots(i_lplot).Title   = ParseTitle(Fields{7});
       Cdata.LinePlots(i_lplot).LegLoc  = Fields{8};
       Cdata.LinePlots(i_lplot).AddMeas = Fields{9};
       Cdata.LinePlots(i_lplot).OutFile = Fields{10};
@@ -356,7 +356,7 @@ for i = 1:size(InLines,1)
       Cdata.ProfPlots(i_pplot).Fprefix = Fields{3};
       Cdata.ProfPlots(i_pplot).Var     = Fields{4};
       Cdata.ProfPlots(i_pplot).Type    = Fields{5};
-      Cdata.ProfPlots(i_pplot).Title   = regexprep(Fields{6}, '_', ' ');
+      Cdata.ProfPlots(i_pplot).Title   = ParseTitle(Fields{6});
       Cdata.ProfPlots(i_pplot).Xlabel  = regexprep(Fields{7}, '_', ' ');
       Cdata.ProfPlots(i_pplot).Zlabel  = regexprep(Fields{8}, '_', ' ');
       Cdata.ProfPlots(i_pplot).LegLoc  = Fields{9};
@@ -378,7 +378,7 @@ for i = 1:size(InLines,1)
       Cdata.SlopePlots(i_splot).Tvar    = Fields{9};
       Cdata.SlopePlots(i_splot).Nsamp   = sscanf(Fields{10}, '%d');
       Cdata.SlopePlots(i_splot).Tcor    = sscanf(Fields{11}, '%f');
-      Cdata.SlopePlots(i_splot).Title   = regexprep(Fields{12}, '_', ' ');
+      Cdata.SlopePlots(i_splot).Title   = ParseTitle(Fields{12});
       Cdata.SlopePlots(i_splot).Xlabel  = regexprep(Fields{13}, '_', ' ');
       Cdata.SlopePlots(i_splot).Ylabel  = regexprep(Fields{14}, '_', ' ');
       Cdata.SlopePlots(i_splot).Tmin    = sscanf(Fields{15}, '%f');
@@ -397,7 +397,7 @@ for i = 1:size(InLines,1)
       Cdata.Slope1dPlots(i_splot1d).Tvar    = Fields{8};
       Cdata.Slope1dPlots(i_splot1d).Nsamp   = sscanf(Fields{9}, '%d');
       Cdata.Slope1dPlots(i_splot1d).Tcor    = sscanf(Fields{10}, '%f');
-      Cdata.Slope1dPlots(i_splot1d).Title   = regexprep(Fields{11}, '_', ' ');
+      Cdata.Slope1dPlots(i_splot1d).Title   = ParseTitle(Fields{11});
       Cdata.Slope1dPlots(i_splot1d).Xlabel  = regexprep(Fields{12}, '_', ' ');
       Cdata.Slope1dPlots(i_splot1d).Ylabel  = regexprep(Fields{13}, '_', ' ');
       Cdata.Slope1dPlots(i_splot1d).Xmin    = sscanf(Fields{14}, '%f');
@@ -416,7 +416,7 @@ for i = 1:size(InLines,1)
       Cdata.PcolorPlots(i_pcplot).Cmax    = sscanf(Fields{4}, '%f');
       Cdata.PcolorPlots(i_pcplot).Cticks  = sscanf(regexprep(Fields{5}, ':', ' '), '%f');
       Cdata.PcolorPlots(i_pcplot).Cscale  = Fields{6};
-      Cdata.PcolorPlots(i_pcplot).Title   = regexprep(Fields{7}, '_', ' ');
+      Cdata.PcolorPlots(i_pcplot).Title   = ParseTitle(Fields{7});
       Cdata.PcolorPlots(i_pcplot).Xlabel  = regexprep(Fields{8}, '_', ' ');
       Cdata.PcolorPlots(i_pcplot).Ylabel  = regexprep(Fields{9}, '_', ' ');
       Cdata.PcolorPlots(i_pcplot).OutFile = Fields{10};
@@ -425,7 +425,7 @@ for i = 1:size(InLines,1)
       Cdata.ProfTsPlots(i_pts_plot).PSname      = Fields{2};
       Cdata.ProfTsPlots(i_pts_plot).Fprefix     = Fields{3};
       Cdata.ProfTsPlots(i_pts_plot).Var         = Fields{4};
-      Cdata.ProfTsPlots(i_pts_plot).Title       = regexprep(Fields{5}, '_', ' ');
+      Cdata.ProfTsPlots(i_pts_plot).Title       = ParseTitle(Fields{5});
       Cdata.ProfTsPlots(i_pts_plot).Tlabel      = regexprep(Fields{6}, '_', ' ');
       Cdata.ProfTsPlots(i_pts_plot).Zlabel      = regexprep(Fields{7}, '_', ' ');
       Cdata.ProfTsPlots(i_pts_plot).Cmin        = sscanf(Fields{8}, '%f');
@@ -443,7 +443,7 @@ for i = 1:size(InLines,1)
       Cdata.ProfRsPlots(i_prs_plot).PSname      = Fields{2};
       Cdata.ProfRsPlots(i_prs_plot).Fprefix     = Fields{3};
       Cdata.ProfRsPlots(i_prs_plot).Var         = Fields{4};
-      Cdata.ProfRsPlots(i_prs_plot).Title       = regexprep(Fields{5}, '_', ' ');
+      Cdata.ProfRsPlots(i_prs_plot).Title       = ParseTitle(Fields{5});
       Cdata.ProfRsPlots(i_prs_plot).Tlabel      = regexprep(Fields{6}, '_', ' ');
       Cdata.ProfRsPlots(i_prs_plot).Zlabel      = regexprep(Fields{7}, '_', ' ');
       Cdata.ProfRsPlots(i_prs_plot).Cmin        = sscanf(Fields{8}, '%f');
@@ -581,6 +581,49 @@ function [ OutStruct ] = AssociateStructs(Base, List, Type, Ltype, Btype)
     end
 
     OutStruct(i).(BaseNum) = Index;
+  end
+end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ParseTitle
+%
+% This function will read the string given for a title and
+% split it up into a main title and a set of panel markers
+% (if given). The panel markers are denoted by:
+%
+%   PANEL:a:b:c:d
+%
+% where each string between ':'s is a successive label for a panel
+% in the overall figure.
+function [ Title ] = ParseTitle(Tstr)
+  %
+  % In general, underscores are replaced with spaces. Once
+  % this is done, if the first token starts with "PANEL:", then
+  % this token is further broken down into a set of one character
+  % labels for each panel.
+
+  Fields = regexp(Tstr, '_', 'split');
+  if (regexp(Fields{1}, '^PANEL:'))
+    % Split the first string into a list of panel markers
+    Pmkrs = regexp(Fields{1}, ':', 'split');
+
+    % At this point we want to toss the first element of Fields and Pmkrs. The
+    % first element of Fields is 'PANEL:.*', and the first element of Pmkrs is 'PANEL'.
+    if (length(Fields) >= 2)
+      Title.Main = Fields{2};
+      for i = 3:length(Fields)
+        Title.Main = sprintf('%s %s', Title.Main, Fields{i});
+      end
+    else
+      Title.Main = '';
+    end
+    for i = 2:length(Pmkrs)
+      Title.Pmarkers{i-1} = Pmkrs{i};
+    end
+  else
+    % no panel markers, use title as is
+    Title.Main = Tstr;
+    Title.Pmarkers = {}; % empty cell array
   end
 end
 

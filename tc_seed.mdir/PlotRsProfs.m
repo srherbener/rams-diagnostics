@@ -48,22 +48,14 @@ for iplot = 1:length(Config.ProfRsPlots)
     Flevel = Config.ProfRsPlots(iplot).Flevel;
     Ptype  = Config.ProfRsPlots(iplot).Ptype;
 
-    Ptitle = sprintf('%s', Config.ProfRsPlots(iplot).Title);
+    Ptitle = Config.ProfRsPlots(iplot).Title.Main;
+    Pmarkers = Config.ProfRsPlots(iplot).Title.Pmarkers;
     Tlabel = Config.ProfRsPlots(iplot).Tlabel;
     Zlabel = Config.ProfRsPlots(iplot).Zlabel;
     OutFileBase = sprintf('%s/%s', Pdir, Config.ProfRsPlots(iplot).OutFileBase);
     
-    % Fix up title if panel labeling is requested
-    PanelTitle = false;
-    if (regexp(Ptitle, '^PANEL:'))
-        % strip off the leading 'PANEL:'. This leaves a list of single
-        % letter names. Convert that into a cell array using cellstr().
-        % Note that you have to use a column vector to get cellstr to
-        % recognize each letter as a separate string.
-        S = regexprep(Ptitle, '^PANEL:', '');
-        Pmarkers = cellstr(S');
-        PanelTitle = true;
-
+    PanelTitle = ~isempty(Pmarkers);
+    if (PanelTitle)
         Fsize = 45;
      else
         Fsize = 25;
@@ -162,7 +154,11 @@ for iplot = 1:length(Config.ProfRsPlots)
 
         % Create plot
         if (PanelTitle)
-            PtitleCase = sprintf('%s) %s', Pmarkers{icase}, Legend);
+            if (isempty(Ptitle))
+              PtitleCase = sprintf('(%s) %s', Pmarkers{icase}, Legend);
+            else
+              PtitleCase = sprintf('(%s) %s: %s', Pmarkers{icase}, Ptitle, Legend);
+            end
         else
             PtitleCase = sprintf('%s: %s', Ptitle, Legend);
         end
