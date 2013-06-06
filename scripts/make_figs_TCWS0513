@@ -51,3 +51,30 @@ montage -tile 2x1 -geometry ${Jsize}+2+100 \
  TCWS0513_prof_w_diff_SC_SS.jpg \
  FigVerticalVelocity.jpg
 
+# Relative Vorticity
+echo "Relative Vorticity"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ TCWS0513_prs_relvortz_rvz1em4_SC_SS_TCS_SD_C0100.jpg \
+ Blank.jpg \
+ TCWS0513_prs_relvortz_rvz1em4_SC_SS_TCS_SD_C2000.jpg \
+ TCWS0513_prs_relvortz_rvz1em4_diff_SC_SS_TCS_SD_C2000.jpg \
+ FigRelVorticity.jpg
+
+# Schematic
+echo "RB ThetaE Vertical Velocity"
+ montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ TCWS0513_prof_theta_e_RB_SS.jpg \
+ TCWS0513_prof_theta_e_diff_RB_SS.jpg \
+ TCWS0513_prof_w_twp4_RB_SS.jpg \
+ TCWS0513_prof_w_twp4_diff_RB_SS.jpg \
+ FigThetaeVertVelocityRB.jpg
+
+# Schematic
+echo "Schematic"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ Slide1.jpg \
+ Slide2.jpg \
+ Blank.jpg \
+ Slide3.jpg \
+ FigSchematic.jpg
+
