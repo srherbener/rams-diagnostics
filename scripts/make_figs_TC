@@ -42,11 +42,11 @@ montage -tile 2x2 -geometry ${Jsize}+2+100 \
 # Figure 6: storm core: latent heat in first column, w in second column
 echo "Figure 6"
 montage -tile 2x3 -geometry ${Jsize}+2+100 \
- prs_lh_tott_lht1p0_SC_SS_TCS_SD_C2000.jpg \
+ prs_lh_tott_diff_SC_SS_TCS_SD_C2000.jpg \
  prs_w_SC_SS_TCS_SD_C2000.jpg \
- prof_lh_tott_lht1p0_SC_SS.jpg \
+ prof_lh_tott_SC_SS.jpg \
  prof_w_SC_SS.jpg \
- prof_lh_tott_lht1p0_diff_SC_SS.jpg \
+ prof_lh_tott_diff_SC_SS.jpg \
  prof_w_diff_SC_SS.jpg \
  Figure6.jpg
 
