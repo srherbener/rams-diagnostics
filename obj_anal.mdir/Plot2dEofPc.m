@@ -23,6 +23,8 @@ close(Fig);
 Fig = figure;
 plot(PC);
 set(gca, 'FontSize', Fsize);
+set(gca, 'LineWidth', 2);
+set(gca, 'TickLength', [ 0.025 0.025 ]);
 
 if (~strcmp(P_Title, ' '))
   if (PanelTitle)

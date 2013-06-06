@@ -67,7 +67,7 @@ for icase = 1:length(Config.Cases)
       EofOutFile = sprintf('%s/EOF%d_%s_%s.jpg', Pdir, EofNum, Fprefix, Case);
       PcOutFile = sprintf('%s/PC%d_%s_%s.jpg', Pdir, EofNum, Fprefix, Case);
       EsOutFile = sprintf('%s/ES%d_%s_%s.jpg', Pdir, EofNum, Fprefix, Case);
-      Ptitle = sprintf('PANEL:%s) %s - %s', PanelMarkers{ipm}, Pcase, ControlPcase);
+      Ptitle = sprintf('PANEL:(%s) %s - %s', PanelMarkers{ipm}, Pcase, ControlPcase);
       ipm = ipm + 1;
   
       SelectData = [ Rmin Rmax Zmin Zmax ];

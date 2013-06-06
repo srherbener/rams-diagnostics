@@ -15,7 +15,7 @@ function [ ] = Plot2dMap( Fig, X, Y, Z, Clevs, Cbounds, Xlab, Ylab, Ptitle, Sele
 %   SelectData contains [ x1 x2 y1 y2 ] which are used to select a
 %   rectangular section out of the entire map.
 
-Fsize = 40;
+Fsize = 38;
 
 PanelTitle = false;
 if (regexp(Ptitle, '^PANEL:'))
@@ -39,14 +39,16 @@ YP = Y(y1:y2);
 MapP = Map(y1:y2,x1:x2);
 
 %
-Xticks = [ 75 200 ];
-Xticklabels = { '75' '200' };
+Xticks = [ 70 140 210 ];
+Xticklabels = { '70' '140' '210' };
 
 % Find the largest absolute value of the entries in Dmap for setting the
 % colormap axis. Want to center this about zero so that blue represents
 % negative values and red represents positive values.
 contourf(XP, YP, MapP, Clevs);
 set(gca, 'FontSize', Fsize);
+set(gca, 'LineWidth', 2);
+set(gca, 'TickLength', [ 0.025 0.025 ]);
 set(gca, 'XTick', Xticks);
 set(gca, 'XTickLabel', Xticklabels);
 shading flat;

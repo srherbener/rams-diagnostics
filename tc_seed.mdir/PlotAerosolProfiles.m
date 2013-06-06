@@ -1,4 +1,4 @@
-function [ ] = PlotCcnProfiles(ConfigFile)
+function [ ] = PlotAerosolProfiles(ConfigFile)
 % PlotCcnProfiles function to plot CCN profiles used the aerosol source
 %
 
@@ -9,8 +9,8 @@ ControlCase = Config.ControlCase;
 AzavgDir = Config.AzavgDir;
 PlotDir = Config.PlotDir;
 
-%DoingPresentation = false; % make figure for paper
-DoingPresentation = true; % make figure for presentation
+DoingPresentation = false; % make figure for paper
+%DoingPresentation = true; % make figure for presentation
 
 % read in any file in order to get the z coordinate values
 Hfile = sprintf('%s/speed_t_%s.h5', AzavgDir, ControlCase);
@@ -81,6 +81,8 @@ ylim(Ylims);
 
 % axes
 set (gca, 'FontSize', Fsize);
+set(gca, 'LineWidth', 2);
+set(gca, 'TickLength', [ 0.015 0.015 ]);
 
 if (DoingPresentation)
   title('Aerosol Source Profiles');
@@ -89,7 +91,7 @@ else
   % the title. Ie, it doesn't do any good to do Left/Center/Right
   % alignment. But, the entire box can be moved to the left side of the
   % plot.
-  T = title('b)');
+  T = title('(b)');
   set(T, 'Units', 'Normalized');
   set(T, 'HorizontalAlignment', 'Left');
   Tpos = get(T, 'Position');
@@ -105,8 +107,8 @@ legend boxoff;
 if (~DoingPresentation)
 % Fix up the positioning
   Ppos = get(gca, 'Position'); % position of plot area
-  Ppos(1) = Ppos(1) * 1.05;
-  Ppos(2) = Ppos(2) * 0.95;
+  Ppos(1) = Ppos(1) * 1.00;
+  Ppos(2) = Ppos(2) * 0.90;
   Ppos(3) = Ppos(3) * 0.90;
   Ppos(4) = Ppos(4) * 0.90;
   set(gca, 'Position', Ppos);

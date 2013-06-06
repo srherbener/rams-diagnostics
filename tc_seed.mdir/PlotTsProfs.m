@@ -141,7 +141,7 @@ for iplot = 1:length(Config.ProfTsPlots)
 
         % Create plot
         if (PanelTitle)
-            PtitleCase = sprintf('%s) %s', Pmarkers{icase}, Legend);
+            PtitleCase = sprintf('(%s) %s', Pmarkers{icase}, Legend);
         else
             PtitleCase = sprintf('%s: %s', Ptitle, Legend);
         end
@@ -180,6 +180,8 @@ for iplot = 1:length(Config.ProfTsPlots)
           contourf(T, Zvals, Pdata);
         end
         set(gca, 'FontSize', Fsize)
+        set(gca, 'LineWidth', 2);
+        set(gca, 'TickLength', [ 0.025 0.025 ]);
         set(gca, 'XTick', Xticks);
         set(gca, 'XTickLabel', Xticklabels);
         colormap(cmap);
@@ -216,7 +218,7 @@ for iplot = 1:length(Config.ProfTsPlots)
           % Fix up the positioning
           Ppos = get(gca, 'Position'); % position of plot area
           Ppos(1) = Ppos(1) * 1.00;
-          Ppos(2) = Ppos(2) * 1.00;
+          Ppos(2) = Ppos(2) * 0.95;
           Ppos(3) = Ppos(3) * 0.85;
           Ppos(4) = Ppos(4) * 0.85;
           set(gca, 'Position', Ppos);

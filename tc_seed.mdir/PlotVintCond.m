@@ -8,8 +8,8 @@ UndefVal = Config.UndefVal;
 AzavgDir = Config.AzavgDir;
 PlotDir = Config.PlotDir;
 
-DoingPresentation = true; % powerpoint slides
-%DoingPresentation = false; % paper
+%DoingPresentation = true; % powerpoint slides
+DoingPresentation = false; % paper
 
 % limit view into plot
 Rmin = 0;
@@ -19,14 +19,14 @@ Tmax = 144;
 
 % color/contour limits
 Cmin = 0;
-Cmax = 30;
+Cmax = 25;
 
 %PanelMarkers = { 'd' 'e' 'f' 'g' };
 PanelMarkers = { 'b' 'e' 'f' 'c' };
 
 % Tick marks
-Xticks = [ 50 100 ];
-Xticklabels = { '50' '100' };
+Xticks = [ 40 70 ];
+Xticklabels = { '40' '70' };
 
 Yticks = [ 40 80 120 ];
 Yticklabels = { '40' '80' '120' };
@@ -69,9 +69,9 @@ for icase = 1:length(Config.Cases)
     Pfile  = sprintf('%s/TCWS0513_vint_cond_%s.jpg', PlotDir, Case);
     Ptitle = sprintf('%s', Pcase);
   else
-    Fsize = 40;
+    Fsize = 38;
     Pfile  = sprintf('%s/vint_cond_%s.jpg', PlotDir, Case);
-    Ptitle = sprintf('%s) %s', PanelMarkers{icase}, Pcase);
+    Ptitle = sprintf('(%s) %s', PanelMarkers{icase}, Pcase);
   end
 
   
@@ -82,11 +82,13 @@ for icase = 1:length(Config.Cases)
   
   contourf(Rvals, Tvals, Pdata');
   set(gca,'FontSize', Fsize);
+  set(gca, 'LineWidth', 2);
+  set(gca, 'TickLength', [ 0.025 0.025 ]);
   set(gca, 'XTick', Xticks);
   set(gca, 'XTickLabel', Xticklabels);
   set(gca, 'YTick', Yticks);
   set(gca, 'YTickLabel', Yticklabels);
-  colormap(flipud(colormap('gray')));
+  %colormap(flipud(colormap('gray')));
   shading flat;
   caxis([ Cmin Cmax ]);
   
@@ -110,11 +112,11 @@ for icase = 1:length(Config.Cases)
   cbar = colorbar;
   set(cbar, 'FontSize', Fsize);
 
-  line([ 40 40 ], [ Tmin Tmax ], 'Color' , 'k', 'LineStyle', '--', 'LineWidth', 2);
-  line([ 70 70 ], [ Tmin Tmax ], 'Color' , 'k', 'LineStyle', '--', 'LineWidth', 2);
-  text(20,  Tmin, 'SC', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', 30, 'Color', 'k');
-  text(55,  Tmin, 'RB', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', 30, 'Color', 'k');
-  text(110, Tmin, 'FF', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', 30, 'Color', 'k');
+  line([ 40 40 ], [ Tmin Tmax ], 'Color' , 'w', 'LineStyle', '--', 'LineWidth', 2);
+  line([ 70 70 ], [ Tmin Tmax ], 'Color' , 'w', 'LineStyle', '--', 'LineWidth', 2);
+  text(20,  Tmin, 'SC', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', 30, 'Color', 'w');
+  text(55,  Tmin, 'RB', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', 30, 'Color', 'w');
+  text(110, Tmin, 'FF', 'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Bottom', 'FontSize', 30, 'Color', 'w');
   
   if (~DoingPresentation)
     % Fix up the positioning

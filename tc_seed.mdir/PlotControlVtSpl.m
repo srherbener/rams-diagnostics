@@ -153,6 +153,8 @@ set(H2, 'LineWidth', Lwidth, 'Color', 'k', 'LineStyle', '--');
 % axes
 axes(AX(1));
 set(gca, 'FontSize', Fsize);
+set(gca, 'LineWidth', 2);
+set(gca, 'TickLength', [ 0.025 0.025 ]);
 set(gca, 'Position', AxisPos);
 set(gca, 'YColor', 'k');
 set(gca, 'XTick', [ 50 100 ]);
@@ -163,6 +165,8 @@ ylim(Y1lims);
 
 axes(AX(2));
 set(gca, 'FontSize', Fsize);
+set(gca, 'LineWidth', 2);
+set(gca, 'TickLength', [ 0.025 0.025 ]);
 set(gca, 'Position', AxisPos);
 set(gca, 'YColor', 'k');
 set(gca, 'XTick', [ 50 100 ]);
@@ -175,7 +179,7 @@ ylim(Y2lims);
 % the title. Ie, it doesn't do any good to do Left/Center/Right
 % alignment. But, the entire box can be moved to the left side of the
 % plot.
-T = title('c)');
+T = title('(c)');
 set(T, 'Units', 'Normalized');
 set(T, 'HorizontalAlignment', 'Left');
 Tpos = get(T, 'Position');
