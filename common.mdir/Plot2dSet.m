@@ -15,6 +15,7 @@ function [ ] = Plot2dSet( X, Y, Ptitle, Pmarkers, Xlabel, Ylabel, Lstyles, Gscal
 Fig = figure;
 
 Lwidth = 4;
+LegFsize = 25;
 Nprops = length(AxisProps);
 Nplots = size(Y,1);
 
@@ -32,6 +33,8 @@ plot(X(1,:), Y(1,:), 'Color', Color, 'LineStyle', Lstyles{1}, 'LineWidth', Lwidt
 for i = 1:Nprops
   set(gca, AxisProps(i).Name, AxisProps(i).Val);
 end
+set(gca, 'LineWidth', 2);
+set(gca, 'TickLength', [ 0.025 0.025 ]);
 
 hold on;
 
@@ -40,7 +43,7 @@ for i = 2:Nplots % each row is a separate curve for plotting
     plot(X(i,:), Y(i,:), 'Color', Color, 'LineStyle', Lstyles{i}, 'LineWidth', Lwidth);
 end
 
-legend(LegText, 'Location', char(LegLoc));
+legend(LegText, 'Location', char(LegLoc), 'FontSize', LegFsize);
 legend boxoff;
 
 if (~strcmp(Ptitle, ' '))
@@ -83,8 +86,8 @@ end
 
 % Fix up the positioning
 Ppos = get(gca, 'Position'); % position of plot area
-Ppos(1) = Ppos(1) * 1.05;
-Ppos(2) = Ppos(2) * 1.05;
+Ppos(1) = Ppos(1) * 1.00;
+Ppos(2) = Ppos(2) * 1.00;
 Ppos(3) = Ppos(3) * 0.90;
 Ppos(4) = Ppos(4) * 0.90;
 set(gca, 'Position', Ppos);

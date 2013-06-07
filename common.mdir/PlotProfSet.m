@@ -17,8 +17,8 @@ if (strcmp(Ptype, 'test'))
   Fsize = 16;
   LegFsize = 12;
 else
-  Lwidth = 3;
-  Fsize = 45;
+  Lwidth = 4;
+  Fsize = 40;
   LegFsize = 25;
 end
 
@@ -39,6 +39,8 @@ plot(Profs(1,:),Zvals,'Color', Lcolor, 'LineStyle', Lstyles{1},'LineWidth',Lwidt
 xlim([ min(Xvals) max(Xvals) ]);
 ylim([ min(Zvals) max(Zvals) ]);
 set (gca, 'FontSize', Fsize);
+set(gca, 'LineWidth', 2);
+set(gca, 'TickLength', [ 0.025 0.025 ]);
 set(gca, 'YTick', Yticks);
 set(gca, 'YTickLabel', Yticklabels);
 hold on;
@@ -72,8 +74,8 @@ if (PanelTitle)
   Ppos = get(gca, 'Position'); % position of plot area
   Ppos(1) = Ppos(1) * 1.00;
   Ppos(2) = Ppos(2) * 0.95;
-  Ppos(3) = Ppos(3) * 0.85;
-  Ppos(4) = Ppos(4) * 0.85;
+  Ppos(3) = Ppos(3) * 0.90;
+  Ppos(4) = Ppos(4) * 0.90;
   set(gca, 'Position', Ppos);
 end
 

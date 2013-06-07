@@ -358,11 +358,11 @@ TsPlotSpecs: 121 0 1.0 hr 25 1998:08:22:21:00:00 10 24
 #              form that surface.
 #   'Tphases' - add the marking of temporal phases (hardwired for iedealized TC sims).
 
-LinePlot: ccn4 MaxVt   IKE             TsAll xy PANEL:a Northwest none    KeVt.jpg
-LinePlot: ccn4 SimTime RMW             TsAll  y PANEL:b NorthEast Tphases TS_rmw.jpg
-LinePlot: ccn4 SimTime DeltapAll_SC_RB TsAll  y PANEL:c SouthEast Tphases TS_DeltapAll_SC_RB.jpg
+LinePlot: ccn4 MaxVt   IKE             TsAll xy PANEL:a                   Northwest none    KeVt.jpg
+LinePlot: ccn4 SimTime RMW             TsAll  y PANEL:b                   NorthEast Tphases TS_rmw.jpg
+LinePlot: ccn4 SimTime DeltapAll_SC_RB TsAll  y PANEL:c@Horiz@P@Gradient  SouthEast Tphases TS_DeltapAll_SC_RB.jpg
 
-LinePlot: ccn2 MaxVt  IKE     TsAll    xy PANEL:a) Northwest none   KeVt_ext.jpg
+LinePlot: ccn2 MaxVt  IKE     TsAll    xy PANEL:a  Northwest none   KeVt_ext.jpg
 LinePlot: ccn2 RadAll VtAllSS SfcVtAll  y @        NorthEast IntVol R_Vt_All_SS_ext.jpg
 
 #LinePlot: ccn4    SimTime IKE   TsAll y Integrated_Kinetic_Energy NorthWest none TS_ike.jpg
@@ -602,8 +602,8 @@ ProfPlot: ccn2 pmeas_w_RB_SS         w       diff PANEL:b@W@Diff W@(m/s)        
 
 ProfTsPlot: ccn2 pmeas_cloud_cm3_SC_LC cloud_cm3 PANEL:a:c@N Simulation@Time@(hr) Height@(km) 0 50 0.0 1.0 revgray 0 abs pts_cloud_cm3_SC_LC
 ProfTsPlot: ccn2 pmeas_cloud_d_SC_LC   cloud_d   PANEL:b:d@D Simulation@Time@(hr) Height@(km) 0 30 0.0 1.0 revgray 0 abs pts_cloud_d_SC_LC
-ProfTsPlot: ccn2_diff_short pmeas_cloud_cm3_SC_LC cloud_cm3 PANEL:a@N@Diff Simulation@Time@(hr) Height@(km) -50 50 0.0 1.0 redblue 0 diff pts_cloud_cm3_diff_SC_LC
-ProfTsPlot: ccn2_diff_short pmeas_cloud_d_SC_LC   cloud_d   PANEL:b@D@Diff Simulation@Time@(hr) Height@(km) -20 20 0.0 1.0 redblue 0 diff pts_cloud_d_diff_SC_LC
+ProfTsPlot: ccn2_diff pmeas_cloud_cm3_SC_LC cloud_cm3 PANEL:a@N Simulation@Time@(hr) Height@(km) -50 50 0.0 1.0 redblue 0 diff pts_cloud_cm3_diff_SC_LC
+ProfTsPlot: ccn2_diff pmeas_cloud_d_SC_LC   cloud_d   PANEL:b@D Simulation@Time@(hr) Height@(km) -20 20 0.0 1.0 redblue 0 diff pts_cloud_d_diff_SC_LC
 
 # Figure 9
 #ProfTsPlot: ccn2 pmeas_theta_e_RB_LC theta_e PANEL:ab Simulation_Time_(hr) Height_(km) 320 350 0.0 16.0 gray    0 abs pts_theta_e_RB_LC
@@ -617,8 +617,8 @@ ProfTsPlot: ccn2_diff_short pmeas_cloud_d_SC_LC   cloud_d   PANEL:b@D@Diff Simul
 
 #ProfTsPlot: ccn2 pmeas_w_SC_LC w PANEL:ab Simulation_Time_(hr) Height_(km) -1.0 1.0 0.0 16.0 redblue 0 abs pts_w_SC_LC
 #ProfTsPlot: ccn2 pmeas_w_RB_LC w PANEL:cd Simulation_Time_(hr) Height_(km) -1.0 1.0 0.0 16.0 redblue 0 abs pts_w_RB_LC
-ProfTsPlot: ccn2_diff_short pmeas_w_SC_LC w PANEL:a@W@Diff Simulation@Time@(hr) Height@(km) -0.5 0.5 0.0 16.0 redblue 0 diff pts_w_diff_SC_LC
-ProfTsPlot: ccn2_diff_short pmeas_w_RB_LC w PANEL:b@W@Diff Simulation@Time@(hr) Height@(km) -0.5 0.5 0.0 16.0 redblue 0 diff pts_w_diff_RB_LC
+ProfTsPlot: ccn2_diff pmeas_w_SC_LC w PANEL:a@W Simulation@Time@(hr) Height@(km) -0.5 0.5 0.0 16.0 redblue 0 diff pts_w_diff_SC_LC
+ProfTsPlot: ccn2_diff pmeas_w_RB_LC w PANEL:b@W Simulation@Time@(hr) Height@(km) -0.5 0.5 0.0 16.0 redblue 0 diff pts_w_diff_RB_LC
 
 # TC WS May 2013
 #ProfTsPlot: ccn2_ext pmeas_cloud_cm3_twp4_SC_LC cloud_cm3 Cloud_Num_(#/cm^2) Simulation_Time_(hr) Height_(km) 0 50 0.0 1.0 revgray 0 abs TCWS0513_pts_cloud_cm3_twp4_SC_LC
@@ -724,12 +724,12 @@ ProfTsPlot: ccn2_diff_short pmeas_w_RB_LC w PANEL:b@W@Diff Simulation@Time@(hr) 
 # Paper round 2
 # Figure 6
 ####ProfRsPlot: ccn2_diff pmeas_lh_tott_lht1p0_SC_SS lh_tott  PANEL:a Radius_(km) Height_(km) -15 15 0.0 15.0 redblue 0 diff prs_lh_tott_lht1p0_SC_SS
-ProfRsPlot: ccn2_diff_short pmeas_lh_tott_SC_SS lh_tott  PANEL:a@LH@Diff Radius@(km) Height@(km) -15 15 0.0 15.0 redblue 0 diff prs_lh_tott_diff_SC_SS
-ProfRsPlot: ccn2_diff_short pmeas_w_SC_SS       w        PANEL:b@W@Diff  Radius@(km) Height@(km)  -1  1 0.0 15.0 redblue 0 diff prs_w_diff_SC_SS
+ProfRsPlot: ccn2_diff pmeas_lh_tott_SC_SS lh_tott  PANEL:a@LH Radius@(km) Height@(km) -15 15 0.0 15.0 redblue 0 diff prs_lh_tott_diff_SC_SS
+ProfRsPlot: ccn2_diff pmeas_w_SC_SS       w        PANEL:b@W  Radius@(km) Height@(km)  -1  1 0.0 15.0 redblue 0 diff prs_w_diff_SC_SS
 
 # Figure 7
 ProfRsPlot: ccn2            pmeas_relvortz_rvz1em4_SC_SS relvortz PANEL:a:b@\zeta     Radius@(km) Height@(km)     0  1e-2  0.0 15.0 none    0  abs prs_relvortz_rvz1em4_SC_SS
-ProfRsPlot: ccn2_diff_short pmeas_relvortz_rvz1em4_SC_SS relvortz PANEL:c@\zeta@Diff   Radius@(km) Height@(km) -2e-3  2e-3  0.0 15.0 redblue 0 diff prs_relvortz_rvz1em4_diff_SC_SS
+ProfRsPlot: ccn2_diff pmeas_relvortz_rvz1em4_SC_SS relvortz PANEL:c@\zeta   Radius@(km) Height@(km) -2e-3  2e-3  0.0 15.0 redblue 0 diff prs_relvortz_rvz1em4_diff_SC_SS
 
 # illustrate freezing level
 #ProfRsPlot: ccn4_diff pmeas_w_SC_SS  w Vertical_Velocity_(m/s) Radius_(km) Height_(km) -1 1 0.0 15.0 redblue 1 diff prs_w_fl_SC_SS
@@ -784,7 +784,7 @@ PlotVar: VintVaptAll_RB_LC  VintTs_vaptott DIAGS/vintts_vaptott_all_vt0p5_RB_LC 
 PlotVar: VintLhtAll_RB_LC   VintTs_lh_tott DIAGS/vintts_lh_tott_all_lht1p0_RB_LC LH@Vaporization K/(hr@km) -30 100 1e-3
 
 
-PlotVar: DeltapAll_SC_RB   DeltapTs_sea_press DIAGS/dpts_sea_press_SC_RB Pressure@Difference mb 0 75 1
+PlotVar: DeltapAll_SC_RB   DeltapTs_sea_press DIAGS/dpts_sea_press_SC_RB Pressure mb 0 75 1
 
 
 PlotVar: VtAllRI    speed_t    DIAGS/tavg_speed_t_RI Vt     m/s     0  50     1

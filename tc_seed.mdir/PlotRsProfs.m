@@ -203,13 +203,18 @@ for iplot = 1:length(Config.ProfRsPlots)
             contour(R, Zvals, Pdata, [ 0 0 ], 'Color', 'k', 'LineStyle', '--', 'LineWidth', 3);
         end
         set(gca, 'FontSize', Fsize);
+        set(gca, 'LineWidth', 2);
+        set(gca, 'TickLength', [ 0.025 0.025 ]);
         set(gca, 'YTick', Yticks);
         set(gca, 'YTickLabel', Yticklabels);
         colormap(cmap);
         shading flat;
-        cbar = colorbar;
-        set(cbar, 'FontSize', Fsize)
         caxis([ Cmin Cmax ]);
+        cbar = colorbar;
+        set(cbar, 'FontSize', Fsize);
+        Clabels = num2str(get(cbar, 'Ytick'));
+        Clabels = regexp(Clabels, '[ ][ ]*', 'split');
+        set(cbar, 'YtickLabel', Clabels);
         
         if (PanelTitle)
           % The title is in a box that adjusts to the amount of characters in
@@ -238,7 +243,7 @@ for iplot = 1:length(Config.ProfRsPlots)
         if (PanelTitle)
           % Fix up the positioning
           Ppos = get(gca, 'Position'); % position of plot area
-          Ppos(1) = Ppos(1) * 1.00;
+          Ppos(1) = Ppos(1) * 0.95;
           Ppos(2) = Ppos(2) * 0.95;
           Ppos(3) = Ppos(3) * 0.85;
           Ppos(4) = Ppos(4) * 0.85;
