@@ -358,9 +358,9 @@ TsPlotSpecs: 121 0 1.0 hr 25 1998:08:22:21:00:00 10 24
 #              form that surface.
 #   'Tphases' - add the marking of temporal phases (hardwired for iedealized TC sims).
 
-LinePlot: ccn4 MaxVt   IKE             TsAll xy PANEL:a                   Northwest none    KeVt.jpg
-LinePlot: ccn4 SimTime RMW             TsAll  y PANEL:b                   NorthEast Tphases TS_rmw.jpg
-LinePlot: ccn4 SimTime DeltapAll_SC_RB TsAll  y PANEL:c@Horiz@P@Gradient  SouthEast Tphases TS_DeltapAll_SC_RB.jpg
+LinePlot: ccn4 MaxVt   IKE             TsAll xy PANEL:a                 Northwest none    KeVt.jpg
+LinePlot: ccn4 SimTime RMW             TsAll  y PANEL:b                 NorthEast Tphases TS_rmw.jpg
+LinePlot: ccn4 SimTime DeltapAll_SC_RB TsAll  y PANEL:c@Horiz@Gradient  SouthEast Tphases TS_DeltapAll_SC_RB.jpg
 
 LinePlot: ccn2 MaxVt  IKE     TsAll    xy PANEL:a  Northwest none   KeVt_ext.jpg
 LinePlot: ccn2 RadAll VtAllSS SfcVtAll  y @        NorthEast IntVol R_Vt_All_SS_ext.jpg
