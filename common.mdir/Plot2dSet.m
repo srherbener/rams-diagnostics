@@ -1,4 +1,4 @@
-function [ ] = Plot2dSet( X, Y, Ptitle, Xlabel, Ylabel, Lstyles, Gscales, LegText, LegLoc, AxisProps, AddMeas, OutFile )
+function [ ] = Plot2dSet( X, Y, Ptitle, Pmarkers, Xlabel, Ylabel, Lstyles, Gscales, LegText, LegLoc, AxisProps, AddMeas, OutFile )
 %Plot2dSet Plot a set of 2D line plots on the same panel
 %   This function will take data contained in X and Y and plot them on a
 %   single panel.
@@ -18,10 +18,9 @@ Lwidth = 4;
 Nprops = length(AxisProps);
 Nplots = size(Y,1);
 
-PanelTitle = false;
-if (regexp(Ptitle, '^PANEL:'))
-    Ptitle = regexprep(Ptitle, '^PANEL:', '');
-    PanelTitle = true;
+PanelTitle = ~isempty(Pmarkers);
+if (PanelTitle)
+    Ptitle = sprintf('(%s) %s', Pmarkers{1}, Ptitle);
 end
 
 % Need to establish an axis style before calling "hold on" (for the
