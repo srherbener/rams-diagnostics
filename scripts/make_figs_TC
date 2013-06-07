@@ -19,7 +19,10 @@ montage -tile 2x2 -geometry ${Jsize}+2+100 \
 
 # Figure 3: KE-Vt above RMW
 echo "Figure 3"
-montage -tile 1x2 -geometry ${Jsize} KeVt.jpg TS_rmw.jpg Figure3.jpg
+montage -tile 1x2 -geometry ${Jsize}+2+100 \
+ KeVt.jpg \
+ TS_rmw.jpg \
+ Figure3.jpg
 
 # Figure 4: EOF in first column, VintCond in second column
 echo "Figure 4"
@@ -30,20 +33,27 @@ montage -tile 2x2 -geometry ${Jsize}+2+100 \
  vint_cond_TCS_SD_C2000.jpg \
  Figure4.jpg
 
+## Figure 5: storm core: cloud num conc in first column, cloud mean diam in second column
+#echo "Figure 5"
+#montage -tile 2x2 -geometry ${Jsize}+2+100 \
+# pts_cloud_cm3_SC_LC_TCS_SD_C0100.jpg \
+# pts_cloud_d_SC_LC_TCS_SD_C0100.jpg \
+# pts_cloud_cm3_SC_LC_TCS_SD_C2000.jpg \
+# pts_cloud_d_SC_LC_TCS_SD_C2000.jpg \
+# Figure5.jpg
+
 # Figure 5: storm core: cloud num conc in first column, cloud mean diam in second column
 echo "Figure 5"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
- pts_cloud_cm3_twp4_SC_LC_TCS_SD_C0100.jpg \
- pts_cloud_d_twp4_SC_LC_TCS_SD_C0100.jpg \
- pts_cloud_cm3_twp4_SC_LC_TCS_SD_C2000.jpg \
- pts_cloud_d_twp4_SC_LC_TCS_SD_C2000.jpg \
+montage -tile 1x2 -geometry ${Jsize}+2+100 \
+ pts_cloud_cm3_diff_SC_LC_TCS_SD_C2000.jpg \
+ pts_cloud_d_diff_SC_LC_TCS_SD_C2000.jpg \
  Figure5.jpg
 
 # Figure 6: storm core: latent heat in first column, w in second column
 echo "Figure 6"
 montage -tile 2x3 -geometry ${Jsize}+2+100 \
  prs_lh_tott_diff_SC_SS_TCS_SD_C2000.jpg \
- prs_w_SC_SS_TCS_SD_C2000.jpg \
+ prs_w_diff_SC_SS_TCS_SD_C2000.jpg \
  prof_lh_tott_SC_SS.jpg \
  prof_w_SC_SS.jpg \
  prof_lh_tott_diff_SC_SS.jpg \
@@ -52,51 +62,38 @@ montage -tile 2x3 -geometry ${Jsize}+2+100 \
 
 # Figure 7: storm core: relative vorticity
 echo "Figure 7"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
+montage -tile 1x3 -geometry ${Jsize}+2+100 \
  prs_relvortz_rvz1em4_SC_SS_TCS_SD_C0100.jpg \
- Blank.jpg \
  prs_relvortz_rvz1em4_SC_SS_TCS_SD_C2000.jpg \
  prs_relvortz_rvz1em4_diff_SC_SS_TCS_SD_C2000.jpg \
  Figure7.jpg
 
 # Figure 8: rainbands, profiles
 echo "Figure 8"
-montage -tile 2x3 -geometry ${Jsize}+2+100 \
- prof_speed_r_RB_SS.jpg \
- prof_speed_r_diff_RB_SS.jpg \
- prof_theta_e_RB_SS.jpg \
+montage -tile 1x3 -geometry ${Jsize}+2+100 \
  prof_theta_e_diff_RB_SS.jpg \
- prof_w_twp4_RB_SS.jpg \
- prof_w_twp4_diff_RB_SS.jpg \
+ prof_w_diff_RB_SS.jpg \
+ TS_DeltapAll_SC_RB.jpg \
  Figure8.jpg
 
-# Figure 9: pressure diff
+# Figure 9: compare core and rainbands, dynamic response
 echo "Figure 9"
-montage -tile 1x1 -geometry ${Jsize}+2+100 \
-  TS_DeltapAll_SC_RB.jpg \
-  Figure9.jpg
+montage -tile 1x2 -geometry ${Jsize}+2+100 \
+ pts_w_diff_SC_LC_TCS_SD_C2000.jpg \
+ pts_w_diff_RB_LC_TCS_SD_C2000.jpg \
+ Figure9.jpg
 
-# Figure 10: compare core and rainbands, dynamic response
+# Figure 10: destructive potential
 echo "Figure 10"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
- pts_w_SC_LC_TCS_SD_C0100.jpg \
- pts_w_RB_LC_TCS_SD_C0100.jpg \
- pts_w_SC_LC_TCS_SD_C2000.jpg \
- pts_w_RB_LC_TCS_SD_C2000.jpg \
+montage -tile 1x1 -geometry ${Jsize} \
+ R_Vt_All_SS_ext.jpg \
  Figure10.jpg
 
-# Figure 11: destructive potential
+# Figure 11: schematic
 echo "Figure 11"
-montage -tile 1x2 -geometry ${Jsize}+2+100 \
- KeVt_ext_annot.jpg \
- R_Vt_All_SS_ext.jpg \
- Figure11.jpg
-
-# Figure 12: schematic
-echo "Figure 12"
 montage -tile 2x2 -geometry ${Jsize}+2+100 \
  Slide1.jpg \
  Slide2.jpg \
  Blank.jpg \
  Slide3.jpg \
- Figure12.jpg
+ Figure11.jpg
