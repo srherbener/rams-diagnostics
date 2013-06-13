@@ -3,7 +3,7 @@
 #
 
 # Change RHDF5_HOME depending on where you loaded this package
-DIAG_UTILS_HOME = $(HOME)/src/diagnostics/utils
+DIAG_UTILS_HOME = $(HOME)/projects/Code/diagnostics/utils
 
 # Install directory should be set to where you want to install
 # the resulting library and module files.
