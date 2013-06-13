@@ -5,7 +5,7 @@
 ML_MAIN = $(HOME)/etc/matlab
 DEST = $(ML_MAIN)/m_map
 
-TFILE = /Users/steve/src/diagnostics/matlab/m_map.mdir/m_map1.4.tar
+TFILE = /Users/steve/projects/Code/diagnostics/matlab/m_map.mdir/m_map1.4.tar
 
 #
 # Targets
