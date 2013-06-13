@@ -4,7 +4,7 @@
 
 .SUFFIXES: .f90 .mod .o
 
-AZAVG_HOME = $(HOME)/src/diagnostics/azavg
+AZAVG_HOME = $(HOME)/projects/Code/diagnostics/azavg
 
 # Location of results of building the RHDF5 library (ie, running
 # make in the 'build' directory of this package
