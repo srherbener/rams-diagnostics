@@ -4,7 +4,7 @@
 
 .SUFFIXES: .f90 .mod .o
 
-JHDATA_HOME = $(HOME)/src/diagnostics/join_hdata
+JHDATA_HOME = $(HOME)/projects/Code/diagnostics/join_hdata
 
 # Location of results of building the RHDF5 library (ie, running
 # make in the 'build' directory of this package
