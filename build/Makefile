@@ -4,7 +4,7 @@
 
 .SUFFIXES: .f90 .mod .o
 
-HOP_HOME = $(HOME)/src/diagnostics/hdata_op
+HOP_HOME = $(HOME)/projects/Code/diagnostics/hdata_op
 
 # Location of results of building the RHDF5 library (ie, running
 # make in the 'build' directory of this package
