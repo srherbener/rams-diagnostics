@@ -400,7 +400,7 @@ program find_track
     endif
 
     call rhdf5_read_variable(PfileId, Pvar%vname, Pvar%ndims, it, Pvar%dims, rdata=Pvar%vdata)
-    call FindStormCenter(Nx, Ny, Pvar%vdata, DataSelect, StmIx, StmIy, MinP%vdata(1))
+    call FindStormCenter(Nx, Ny, Pvar%vdata, DataSelect, Pspecs%Npts, Pspecs%Sigma, StmIx, StmIy, MinP%vdata(1))
 
     ! Record the lat,lon of the storm center
     StormX%vdata(1) = Xcoords%vdata(StmIx)
@@ -763,18 +763,25 @@ end subroutine SetOutCoords
 ! hold the grid position of the minumum pressure value on the first vertical
 ! level (iz = 1).
 !
+! Gaussian smoothing will be applied to the pressure field in order to help
+! prevent mistakenly using topological features as the storm center.
+!
 
-subroutine FindStormCenter(Nx, Ny, Press, DataSelect, StmCtrX, StmCtrY, MinP)
+subroutine FindStormCenter(Nx, Ny, Press, DataSelect, Npts, Sigma, StmCtrX, StmCtrY, MinP)
   implicit none
 
-  integer :: Nx, Ny
+  integer :: Nx, Ny, Npts
   real, dimension(Nx,Ny) :: Press
   logical, dimension(Nx,Ny) :: DataSelect
   integer :: StmCtrX, StmCtrY
-  real :: MinP
+  real :: MinP, Sigma
   logical :: UseFsFilter
 
   integer :: ix, iy
+  real, dimension(Nx,Ny) :: Psmooth
+
+  ! apply 2D Gaussian smoothing to the pressure field
+  call Gsmooth2d(Nx, Ny, Npts, Press, Sigma, Psmooth)
 
   MinP = 1e10 ! ridiculously large pressure
   StmCtrX = 0 
@@ -785,8 +792,8 @@ subroutine FindStormCenter(Nx, Ny, Press, DataSelect, StmCtrX, StmCtrY, MinP)
       ! DataSelect holds true for points that we want to consider
       ! for minimum pressure
       if (DataSelect(ix,iy)) then 
-        if (Press(ix,iy) .lt. MinP) then
-          MinP = Press(ix,iy)
+        if (Psmooth(ix,iy) .lt. MinP) then
+          MinP = Psmooth(ix,iy)
           StmCtrX = ix
           StmCtrY = iy
         endif
@@ -796,5 +803,104 @@ subroutine FindStormCenter(Nx, Ny, Press, DataSelect, StmCtrX, StmCtrY, MinP)
   
   return
 end subroutine FindStormCenter
+
+!*******************************************************************
+! Gsmooth2d()
+!
+! This routine will do Gaussian smoothing in two dimension. It assumes
+! that the filter matrix is square (Npts X Npts). Because of this, it
+! will split the filtering into two passes: one for horizontal the other
+! for vertical.
+!
+subroutine Gsmooth2d(Nx, Ny, Npts, X, Sigma, Xsmooth)
+  implicit none
+
+  real, parameter :: PI = 3.14159265
+
+  integer :: Nx, Ny, Npts
+  real, dimension(Nx, Ny) :: X, Xsmooth
+  real :: Sigma
+
+  integer :: ix, iy, ig
+  integer :: i_center, i_samp
+  real, dimension(Npts) :: Gfilter
+
+  real :: Gsum
+  real, dimension(Nx, Ny) :: Xtemp
+
+  ! Want to do 2D filtering, however the gaussian filter is seperable (into
+  ! horizontal and vertical so it is possible to apply a horizontal filter
+  ! first followed by a vertical filter. For simplicity make the 2D filter
+  ! square so that the same linear filter can be applied to both horizontal
+  ! and vertical directions.
+  
+  ! Build the linear filter
+  ! For gaussian:
+  !    g(x) = 1/(sqrt(2*pi) * sigma) * exp( - x**2 / (2 * sigma))
+  !
+  !    where x is the distance from the center of the array
+  !
+  ! Also, normalize the filter so that it will preserve the magnitude
+  ! of the pressure.
+
+  i_center = int(Npts / 2) + 1 ! Assumes that Npts is odd
+  Gsum = 0.0
+  do ig = 1, Npts
+    Gfilter(ig) = 1./(sqrt(2. * PI) * Sigma) * exp(- (float(i_center-ig)**2) / (2. * (Sigma**2)))
+    Gsum = Gsum + Gfilter(ig)
+  enddo
+  do ig = 1, Npts
+    Gfilter(ig) = Gfilter(ig) / Gsum
+  enddo
+
+  ! At the edges, the filter will extend beyond the X array bounds. To handle this,
+  ! just repeat the X value at the array edge.
+
+  ! Horzontal filter - apply to X
+  do ix = 1, Nx
+    do iy = 1, Ny
+      ! locate center of Gfilter over iy
+      ! do a dot product between X (vector in y direction, across columns) and Gfilter
+      Gsum = 0.0
+      do ig = 1, Npts
+        ! don't go past array boundaries
+        i_samp = (iy + ig)  - i_center
+        if (i_samp .lt. 1) then
+           i_samp = 1
+        else if (i_samp .gt. Ny) then
+           i_samp = Ny
+        endif
+ 
+        Gsum = Gsum + (X(ix,i_samp) * Gfilter(ig))
+      enddo
+
+      Xtemp(ix,iy) = Gsum
+    enddo
+  enddo
+
+  ! Vertical filter - apply to Xtemp
+  do iy = 1, Ny
+    do ix = 1, Nx
+      ! locate center of Gfilter over ix
+      ! do a dot product between X (vector in x direction, across rows) and Gfilter
+      Gsum = 0.0
+      do ig = 1, Npts
+        ! don't go past array boundaries
+        i_samp = (ix + ig)  - i_center
+        if (i_samp .lt. 1) then
+           i_samp = 1
+        else if (i_samp .gt. Nx) then
+           i_samp = Nx
+        endif
+ 
+        Gsum = Gsum + (Xtemp(i_samp,iy) * Gfilter(ig))
+      enddo
+
+      Xsmooth(ix,iy) = Gsum
+    enddo
+  enddo
+
+  return
+end subroutine Gsmooth2d
 
 end program find_track
