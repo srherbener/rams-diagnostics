@@ -4,7 +4,7 @@
 
 .SUFFIXES: .f90 .mod .o
 
-AZAVG_HOME = $(HOME)/projects/Code/diagnostics/find_track
+AZAVG_HOME = $(HOME)/projects/Code/diagnostics/sig_proc
 
 # Location of results of building the RHDF5 library (ie, running
 # make in the 'build' directory of this package
@@ -43,10 +43,10 @@ LOADER_LIBS = $(RHDF5_LIBS) $(HDF5_LIBS) $(DIAG_LIBS)
 
 
 DEST = $(HOME)/bin
-BINS = $(DEST)/find_track
+BINS = $(DEST)/sig_proc
 SRC_DIR = $(AZAVG_HOME)/src
 
-#SCRIPTS = $(DEST)/run_find_track
+#SCRIPTS = $(DEST)/run_sig_proc
 SCRIPTS =
 
 #
@@ -55,14 +55,14 @@ SCRIPTS =
 
 all: $(BINS) $(SCRIPTS)
 
-$(DEST)/find_track: find_track.o
-	$(LOADER) -o $(DEST)/find_track find_track.o $(LOADER_OPTS) $(LOADER_LIBS)
+$(DEST)/sig_proc: sig_proc.o
+	$(LOADER) -o $(DEST)/sig_proc sig_proc.o $(LOADER_OPTS) $(LOADER_LIBS)
 
-find_track.o: $(SRC_DIR)/find_track.f90 $(RHDF5_LIB_FILE) $(RHDF5_MOD_FILE) $(DIAG_LIB_FILE) $(DIAG_MOD_FILE)
+sig_proc.o: $(SRC_DIR)/sig_proc.f90 $(RHDF5_LIB_FILE) $(RHDF5_MOD_FILE) $(DIAG_LIB_FILE) $(DIAG_MOD_FILE)
 	$(F_COMMAND) $(<)
 
-$(DEST)/run_find_track: $(SRC_DIR)/run_find_track
-	cp $(SRC_DIR)/run_find_track $(DEST)/run_find_track
+$(DEST)/run_sig_proc: $(SRC_DIR)/run_sig_proc
+	cp $(SRC_DIR)/run_sig_proc $(DEST)/run_sig_proc
 
 .f90.o:
 	$(F_COMP) $(F_COMP_OPTS) $(INCLUDES) -c $(<)
