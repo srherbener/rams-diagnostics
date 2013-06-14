@@ -62,13 +62,13 @@ program diag_filter
   integer :: rh5f_fsf__fid
 
   type (Rhdf5Var) :: OutFilter
-  type (Rhdf5Var) :: Xcoords, Ycoords, Zcoords, Tcoords, Dcoords
+  type (Rhdf5Var) :: Xcoords, Ycoords, Zcoords, Tcoords
 
   real :: DeltaX, DeltaY
   real :: Xstart, Xinc, Ystart, Yinc
   real, dimension(:), allocatable :: XcoordsKm, YcoordsKm
 
-  type (Rhdf5Var) :: Radius, MinP, StormX, StormY, MaxRadius
+  type (Rhdf5Var) :: Radius, MinP, StormX, StormY
   real :: Rval, Pval, Zval
   integer :: StmIx, StmIy
 
@@ -250,21 +250,6 @@ program diag_filter
   ! Set the output dimensions and coordinates to those of the selected input var
   call SetOutCoords(Mfile, Xcoords, Ycoords, Zcoords, Tcoords)
   
-  ! In order for GRADS to be able to read in the output HDF5 file, every variable
-  ! needs to be four dimensional: (x,y,z,t) regardless if that is the true nature
-  ! of the variable. To accommodate this, fill in missing dimensions with the following
-  ! dummy coordinate so that the variariable meets the (x,y,z,t) structure requirement
-  ! of GRADS. For example, say a variable is really (x,y,t), then add a z dimension
-  ! with a size of one to it so it will be compatible with GRADS, (x,y,z,t).
-  Dcoords%vname = 'd_coords'
-  Dcoords%ndims = 1
-  Dcoords%dims(1) = 1
-  Dcoords%dimnames(1) = 'd'
-  Dcoords%units = 'dummy'
-  Dcoords%descrip = 'dummy coordinates'
-  allocate(Dcoords%vdata(1))
-  Dcoords%vdata = 0.0
-
   ! Convert lat (x coords) and lon (y coords) to distances in km
   allocate(XcoordsKm(Nx))
   allocate(YcoordsKm(Ny))
@@ -320,68 +305,33 @@ program diag_filter
   if (DoingCylVol) then
     ! prepare for writing the radius values into the output file.
     Radius%vname = 'radius'
-    Radius%ndims = 3
+    Radius%ndims = 2
     Radius%dims(1) = Nx
     Radius%dims(2) = Ny
-    Radius%dims(3) = 1
     Radius%dimnames(1) = 'x'
     Radius%dimnames(2) = 'y'
-    Radius%dimnames(3) = 'd'
     Radius%units = 'km'
     Radius%descrip = 'radius from storm center'
     allocate(Radius%vdata(Nx*Ny))
 
-    ! Generate the storm center for all time steps
+    ! ndims == 0 means this var will be a time series, f(t)
     MinP%vname = 'min_press'
-    MinP%ndims = 3
-    MinP%dims(1) = 1
-    MinP%dims(2) = 1
-    MinP%dims(3) = 1
-    MinP%dimnames(1) = 'd'
-    MinP%dimnames(2) = 'd'
-    MinP%dimnames(3) = 'd'
+    MinP%ndims = 0
     MinP%units = 'mb'
     MinP%descrip = 'minimum SLP of storm'
     allocate(MinP%vdata(1))
 
     StormX%vname = 'min_press_xloc'
-    StormX%ndims = 3
-    StormX%dims(1) = 1
-    StormX%dims(2) = 1
-    StormX%dims(3) = 1
-    StormX%dimnames(1) = 'd'
-    StormX%dimnames(2) = 'd'
-    StormX%dimnames(3) = 'd'
+    StormX%ndims = 0
     StormX%units = 'deg lon'
     StormX%descrip = 'longitude location of minimum SLP of storm'
     allocate(StormX%vdata(1))
     
     StormY%vname = 'min_press_yloc'
-    StormY%ndims = 3
-    StormY%dims(1) = 1
-    StormY%dims(2) = 1
-    StormY%dims(3) = 1
-    StormY%dimnames(1) = 'd'
-    StormY%dimnames(2) = 'd'
-    StormY%dimnames(3) = 'd'
+    StormY%ndims = 0
     StormY%units = 'deg lat'
     StormY%descrip = 'latitude location of minimum SLP of storm'
     allocate(StormY%vdata(1))
-
-    MaxRadius%vname = 'max_radius'
-    MaxRadius%ndims = 4
-    MaxRadius%dims(1) = 1
-    MaxRadius%dims(2) = 1
-    MaxRadius%dims(3) = 1
-    MaxRadius%dims(4) = 1
-    MaxRadius%dimnames(1) = 'd'
-    MaxRadius%dimnames(2) = 'd'
-    MaxRadius%dimnames(3) = 'd'
-    MaxRadius%dimnames(4) = 'd'
-    MaxRadius%units = 'km'
-    MaxRadius%descrip = 'maximum radius across domain and time'
-    allocate(MaxRadius%vdata(1))
-    MaxRadius%vdata(1) = -1.0 ! not expecting negative radii
   endif
 
   ! Check up and down draft filtering
@@ -565,16 +515,14 @@ program diag_filter
 
           enddo
 
+          if (DoingCylVol) then
+            ! save the radius value
+            ! note that this re-writes the same horizontal radius values for each z level
+            call MultiDimAssign(Nx, Ny, Nz, ix, iy, iz, Rval, Var2d=Radius%vdata)
+          endif
+
           if (SelectThisPoint) then
             call MultiDimAssign(Nx, Ny, Nz, ix, iy, iz, 1.0, Var3d=OutFilter%vdata)
-            if (DoingCylVol) then
-              ! save the radius value
-              ! note that this re-writes the same horizontal radius values for each z level
-              call MultiDimAssign(Nx, Ny, Nz, ix, iy, iz, Rval, Var2d=Radius%vdata)
-              if (Rval .gt. MaxRadius%vdata(1)) then
-                MaxRadius%vdata(1) = Rval
-              endif
-            endif
           else
             call MultiDimAssign(Nx, Ny, Nz, ix, iy, iz, 0.0, Var3d=OutFilter%vdata)
           endif
@@ -623,28 +571,22 @@ program diag_filter
   call rhdf5_write(OutFile, Ycoords, 1)
   call rhdf5_write(OutFile, Zcoords, 1)
   call rhdf5_write(OutFile, Tcoords, 1)
-  call rhdf5_write(OutFile, Dcoords, 1)
 
   ! set up four (x,y,z,t) dimensions for use by GRADS
   call rhdf5_set_dimension(OutFile, Xcoords, 'x')
   call rhdf5_set_dimension(OutFile, Ycoords, 'y')
   call rhdf5_set_dimension(OutFile, Zcoords, 'z')
   call rhdf5_set_dimension(OutFile, Tcoords, 't')
-  call rhdf5_set_dimension(OutFile, Dcoords, 'd')
 
   ! attach the dimension specs to the output variable
   call rhdf5_attach_dimensions(OutFile, OutFilter)
 
   if (DoingCylVol) then
-    ! Write out the maximum radius value
-    call rhdf5_write(OutFile, MaxRadius, 1)
-
     ! Attach dims to the auxillary data
     call rhdf5_attach_dimensions(OutFile, MinP)
     call rhdf5_attach_dimensions(OutFile, StormX)
     call rhdf5_attach_dimensions(OutFile, StormY)
     call rhdf5_attach_dimensions(OutFile, Radius)
-    call rhdf5_attach_dimensions(OutFile, MaxRadius)
   endif
 
   ! cleanup
