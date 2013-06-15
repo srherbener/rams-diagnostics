@@ -68,8 +68,8 @@ program diag_filter
   real :: Xstart, Xinc, Ystart, Yinc
   real, dimension(:), allocatable :: XcoordsKm, YcoordsKm
 
-  type (Rhdf5Var) :: Radius, MinP, StormX, StormY
-  real :: Rval, Pval, Zval
+  type (Rhdf5Var) :: Radius, MinP, StormX, StormY, MaxRadius
+  real :: Rval, Pval, Zval, MaxRval
   integer :: StmIx, StmIy
 
   logical :: SelectThisPoint
@@ -112,6 +112,8 @@ program diag_filter
       write (*,*) '      Maximum angle: ', Filters(i)%y2
       write (*,*) '      Minimum height: ', Filters(i)%z1
       write (*,*) '      Maximum height: ', Filters(i)%z2
+
+      MaxRval = Filters(i)%x2
     else if (Filters(i)%Ftype .eq. 'ge') then
       write (*,*) '    Greater than or equal:'
       write (*,*) '      Variable: ', trim(Filters(i)%Vname)
@@ -332,6 +334,13 @@ program diag_filter
     StormY%units = 'deg lat'
     StormY%descrip = 'latitude location of minimum SLP of storm'
     allocate(StormY%vdata(1))
+
+    MaxRadius%vname = 'max_radius'
+    MaxRadius%ndims = 0 
+    MaxRadius%units = 'km'
+    MaxRadius%descrip = 'maximum radius across domain and time'
+    allocate(MaxRadius%vdata(1))
+    MaxRadius%vdata(1) = MaxRval ! use the maximum radius spec from the command line
   endif
 
   ! Check up and down draft filtering
@@ -542,6 +551,10 @@ program diag_filter
         StormX%units, StormX%descrip, StormX%dimnames, rdata=StormX%vdata)
       call rhdf5_write_variable(OutFileId, StormY%vname, StormY%ndims, it, StormY%dims, &
         StormY%units, StormY%descrip, StormY%dimnames, rdata=StormY%vdata)
+      ! This repeats the max radius value for each time step, however this keeps the size of
+      ! the data array consistent with the size of t_coords
+      call rhdf5_write_variable(OutFileId, MaxRadius%vname, MaxRadius%ndims, it, MaxRadius%dims, &
+        MaxRadius%units, MaxRadius%descrip, MaxRadius%dimnames, rdata=MaxRadius%vdata)
     endif
 
     ! Write out status to screen every 100 timesteps so that the user can see that a long
@@ -564,8 +577,6 @@ program diag_filter
   write (*,*) 'Finished: Total number of time steps processed: ', it-1
   write (*,*) ''
 
-  ! Write out coordinates and attach dimensions
-
   ! write out the coordinate data
   call rhdf5_write(OutFile, Xcoords, 1)
   call rhdf5_write(OutFile, Ycoords, 1)
@@ -587,6 +598,7 @@ program diag_filter
     call rhdf5_attach_dimensions(OutFile, StormX)
     call rhdf5_attach_dimensions(OutFile, StormY)
     call rhdf5_attach_dimensions(OutFile, Radius)
+    call rhdf5_attach_dimensions(OutFile, MaxRadius)
   endif
 
   ! cleanup
