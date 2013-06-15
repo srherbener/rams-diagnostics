@@ -4,7 +4,7 @@
 
 .SUFFIXES: .f90 .mod .o
 
-AZAVG_HOME = $(HOME)/projects/Code/diagnostics/sig_proc
+SPROC_HOME = $(HOME)/projects/Code/diagnostics/sig_proc
 
 # Location of results of building the RHDF5 library (ie, running
 # make in the 'build' directory of this package
@@ -44,7 +44,7 @@ LOADER_LIBS = $(RHDF5_LIBS) $(HDF5_LIBS) $(DIAG_LIBS)
 
 DEST = $(HOME)/bin
 BINS = $(DEST)/sig_proc
-SRC_DIR = $(AZAVG_HOME)/src
+SRC_DIR = $(SPROC_HOME)/src
 
 #SCRIPTS = $(DEST)/run_sig_proc
 SCRIPTS =
