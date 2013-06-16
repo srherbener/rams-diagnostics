@@ -59,7 +59,8 @@ program azavg
   integer :: rh5f_filter, rh5f_u, rh5f_v, rh5f_avar, rh5f_aavg
   character (len=MediumString) :: Ufile, Vfile, AvarFile, AavgFile
   integer, dimension(:), allocatable :: StmIx, StmIy
-  real, dimension(:), allocatable :: MinP, XcoordsKm, YcoordsKm
+  real, dimension(:), allocatable :: XcoordsKm, YcoordsKm
+  real, dimension(:), allocatable :: TempArray
   real :: StormX, StormY
 
   integer :: i
@@ -159,12 +160,12 @@ program azavg
   call rhdf5_read_init(FilterFile, Ycoords)
   call rhdf5_read_init(FilterFile, Tcoords)
 
-  ! Read in the variable data that does not depend on time (the variables with
-  ! a time dimension will be read in one time step at a time later on)
-  ! plus the x, y and t coordinate data.
+  ! Read in the 1D variable data
   call rhdf5_read(FilterFile, Xcoords)
   call rhdf5_read(FilterFile, Ycoords)
   call rhdf5_read(FilterFile, Tcoords)
+  call rhdf5_read(FilterFile, StormLon)
+  call rhdf5_read(FilterFile, StormLat)
   call rhdf5_read(FilterFile, MaxRadius)
 
   if (DoHorizVel) then
@@ -305,27 +306,18 @@ program azavg
   ! dimension so we need to remove the time dimension from the variables we are
   ! using. This turns out to be easy - since time is always the last dimension, we
   ! simply decrement the number of dimensions by one to remove time.
-  rh5f_facc = 'R'
-  call rhdf5_open_file(FilterFile, rh5f_facc, 0, rh5f_filter)
-  ! chop off the time dimensions of the variables that have time dimensions
-  !   In the file (for GRADS sake), Filter, Radius, StormLon, StormLat are
-  !   all stored as (x,y,z,t) where unused dimensions are filled in with 
-  !   dummy dimension that has size equal to one. Logically, these variables
-  !   are dimensioned as follows:
+  !
+  ! Chop off the time dimensions of the variables that have time dimensions
   !     Filter is (x,y,z,t)
   !     Radius is (x,y,t)
-  !     StormLon, StormLat are (t)
   !
+  rh5f_facc = 'R'
+  call rhdf5_open_file(FilterFile, rh5f_facc, 0, rh5f_filter)
+
   Filter%ndims = 3
-  Radius%ndims = 3
-  StormLon%ndims = 3
-  StormLat%ndims = 3
-  ! allocate the memory for these variables - do this according to their
-  ! logical dimensions
+  Radius%ndims = 2
   allocate(Filter%vdata(Nx*Ny*Nz))
   allocate(Radius%vdata(Nx*Ny))
-  allocate(StormLon%vdata(1))
-  allocate(StormLat%vdata(1))
 
   ! set up the input variable data
   rh5f_facc = 'R'
@@ -370,11 +362,9 @@ program azavg
 
   ! Do the averaging - one time step at a time
   do it = 1, Nt
-    ! Read in the storm center and convert to km
-    call rhdf5_read_variable(rh5f_filter, StormLon%vname, StormLon%ndims, it, StormLon%dims, rdata=StormLon%vdata)
-    call rhdf5_read_variable(rh5f_filter, StormLat%vname, StormLat%ndims, it, StormLat%dims, rdata=StormLat%vdata)
-    call ConvertStormCenter(Nx, Ny, Xcoords%vdata, XcoordsKm, StormLon%vdata(1), StormX, &
-      Ycoords%vdata, YcoordsKm, StormLat%vdata(1), StormY)
+    ! convert storm center to km
+    call ConvertStormCenter(Nx, Ny, Xcoords%vdata, XcoordsKm, StormLon%vdata(it), StormX, &
+      Ycoords%vdata, YcoordsKm, StormLat%vdata(it), StormY)
 
     ! Read in the filter, radius and variable data
     call rhdf5_read_variable(rh5f_filter, Filter%vname, Filter%ndims, it, Filter%dims, rdata=Filter%vdata)
@@ -403,7 +393,7 @@ program azavg
     if (modulo(it,100) .eq. 0) then
       write (*,*) 'Working: Timestep, Time: ', it, Tcoords%vdata(it)
 
-      write (*,'(a,4f15.4)') '   Storm center: lat, lon, x, y: ', StormLon%vdata(1), StormLat%vdata(1), StormX, StormY
+      write (*,'(a,4f15.4)') '   Storm center: lon, lat, x, y: ', StormLon%vdata(it), StormLat%vdata(it), StormX, StormY
       write (*,*) ''
       flush(6)
     endif
