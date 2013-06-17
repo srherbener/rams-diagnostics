@@ -14,6 +14,7 @@ SCRIPTS = \
           $(DEST)/MakeKevtRmwFig.m \
           $(DEST)/MakeStormEvolFig.m \
           $(DEST)/PlotAerosol3d.m \
+          $(DEST)/PlotAerosolLoc.m \
           $(DEST)/PlotAerosolProfiles.m \
           $(DEST)/PlotCfads.m \
           $(DEST)/PlotControlVtSpl.m \
