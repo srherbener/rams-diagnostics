@@ -48,6 +48,9 @@ program testh5
   type (Rhdf5Var) :: Vout
   character (len=128) :: fname
 
+  real, dimension(3) :: Xcoords, Ycoords, Zcoords, Tcoords
+  real, dimension(Nx,Ny,Nz) :: X, Y, Z
+
   call GetArgs(TestNum)
 
   if (TestNum .eq. 1) then
@@ -62,6 +65,11 @@ program testh5
           A(ix,iy,iz) = i
           B(ix,iy,iz) = i + 12
           C(ix,iy,iz) = i + 24
+
+          X(ix,iy,iz) = float(i)
+          Y(ix,iy,iz) = float(i+12)
+          Z(ix,iy,iz) = float(i+24)
+
           i = i + 1
         enddo
       enddo
@@ -73,6 +81,13 @@ program testh5
         Array2D(ix,iy) = i
         i = i + 1
       enddo
+    enddo
+
+    do i = 1, 3
+      Xcoords(i) = float(i)
+      Ycoords(i) = float(i)
+      Zcoords(i) = float(i)
+      Tcoords(i) = float(i)
     enddo
   
     print*,'A before hdf5 write (linear storage): '
@@ -103,6 +118,21 @@ program testh5
     call rhdf5_write_variable(rh5_file, 'test_3D', 3, 0, dims, 'test', 'test', dimnames, idata=A)
   
     call rhdf5_write_variable(rh5_file, 'test_2D', 2, 0, dims, 'test', 'test', dimnames, idata=Array2D)
+
+    
+    ! test data for gen_moments
+    call rhdf5_write_variable(rh5_file, 'test_gm', 3, 1, dims, 'test', 'test', dimnames, rdata=X)
+    call rhdf5_write_variable(rh5_file, 'test_gm', 3, 2, dims, 'test', 'test', dimnames, rdata=Y)
+    call rhdf5_write_variable(rh5_file, 'test_gm', 3, 3, dims, 'test', 'test', dimnames, rdata=Z)
+
+    dims(1) = Nx
+    call rhdf5_write_variable(rh5_file, 'x_coords', 1, 0, dims, 'test', 'test', dimnames, rdata=Xcoords)
+    dims(1) = Ny
+    call rhdf5_write_variable(rh5_file, 'y_coords', 1, 0, dims, 'test', 'test', dimnames, rdata=Ycoords)
+    dims(1) = Nz
+    call rhdf5_write_variable(rh5_file, 'z_coords', 1, 0, dims, 'test', 'test', dimnames, rdata=Zcoords)
+    dims(1) = 3 ! match the number of calls that write into 'test_gm'
+    call rhdf5_write_variable(rh5_file, 't_coords', 1, 0, dims, 'test', 'test', dimnames, rdata=Tcoords)
   
     call rhdf5_close_file(rh5_file)
   elseif (TestNum .eq. 2) then
