@@ -22,8 +22,9 @@ SLP_MIN = min(SPRESS(R1:R2,:),[],1);
 
 % NHC Best Track (every six hours) data
 % time step 1 from the simulation is where the NHC data starts
-NHC_SLP = [ 1007 1007 1007 1007 1005 1003 1002 1001 1001 1000  999 1000 1000 ];
-NHC_TIMES = (1:6:73);
+% Aug 22, 2006, 6Z through Aug 24, 2006, 18Z (11 points)
+NHC_SLP = [ 1007 1007 1005 1003 1002 1001 1001 1000  999 1000 1000 ];
+NHC_TIMES = (1:6:61);
 
 
 % plot

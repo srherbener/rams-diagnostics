@@ -28,8 +28,9 @@ ST_MAX = max(squeeze(SPEED_T(R1:R2,2,:)), [] ,1);
 % NHC Best Track (every six hours) data
 % time step 1 from the simulation is where the NHC data starts
 % NHC wind is in mph, multiply by 0.447 to convert to m/s
-NHC_WIND  = [ 35   35   35   35   35   40   45   50   50   50   50   50   50   ] * 0.447;
-NHC_TIMES = (1:6:73);
+% Aug 22, 2006, 6Z through Aug 24, 2006, 18Z (11 points)
+NHC_WIND  = [ 35   35   35   40   45   50   50   50   50   50   50   ] * 0.447;
+NHC_TIMES = (1:6:61);
 
 % plot
 OutFile = sprintf('%s/TsDebbyWind.jpg', Pdir);

@@ -11,8 +11,9 @@ end
 LatBounds = [ 5 26 ];
 LonBounds = [ -42 -8 ];
 
-NhcTrackLats = [ 11.6 12.0 12.6 13.4 14.2 14.9 15.7 16.7 17.6 18.4 19.2 20.1 20.9 ];
-NhcTrackLons = [ 21.7 22.7 23.9 25.3 26.7 28.1 29.5 30.0 32.4 33.9 35.5 37.1 38.7 ] * -1; 
+% Aug 22, 2006, 6Z through Aug 24, 2006, 18Z (11 points)
+NhcTrackLats = [ 12.6 13.4 14.2 14.9 15.7 16.7 17.6 18.4 19.2 20.1 20.9 ];
+NhcTrackLons = [ 23.9 25.3 26.7 28.1 29.5 30.0 32.4 33.9 35.5 37.1 38.7 ] * -1; 
 
 Hfile = 'FILTERS/all_TSD_3GRIDS.h5';
 HdsetLon = 'min_press_xloc';
