@@ -10,7 +10,6 @@ Fig = figure;
 % Need to establish an axis style before calling "hold on" (for the
 % subsequent plots). Plot the first profile outside the loop, issue a "hold
 % on" and then plot the remainder profiles.
-
 [ Nprofs, Npts ] = size(Profs);
 if (strcmp(Ptype, 'test'))
   Lwidth = 1;
@@ -18,20 +17,17 @@ if (strcmp(Ptype, 'test'))
   LegFsize = 12;
 else
   Lwidth = 4;
-  Fsize = 40;
-  LegFsize = 25;
+  Fsize = 45;
+  LegFsize = 20;
 end
 
-Yticks = [ 2 6 10 14 ];
-Yticklabels = { '2' '6' '10' '14' };
-
-PanelTitle = ~isempty(Pmarkers);;
+PanelTitle = ~isempty(Pmarkers);
 if (PanelTitle)
   Ptitle = sprintf('(%s) %s', Pmarkers{1}, Ptitle);
 else
   Lwidth = 2;
-  Fsize = 25;
-  LegFsize = 25;
+  Fsize = 30;
+  LegFsize = 20;
 end
 
 Lcolor = [ 1 1 1 ] * Lgscales(1);
@@ -41,8 +37,6 @@ ylim([ min(Zvals) max(Zvals) ]);
 set (gca, 'FontSize', Fsize);
 set(gca, 'LineWidth', 2);
 set(gca, 'TickLength', [ 0.025 0.025 ]);
-set(gca, 'YTick', Yticks);
-set(gca, 'YTickLabel', Yticklabels);
 hold on;
 
 for i = 2:Nprofs

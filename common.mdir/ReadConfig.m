@@ -627,7 +627,7 @@ function [ Title ] = ParseTitle(Tstr)
     end
   else
     % no panel markers, use title as is
-    Title.Main = Tstr;
+    Title.Main = regexprep(Tstr, '@', ' ');
     Title.Pmarkers = {}; % empty cell array
   end
 end

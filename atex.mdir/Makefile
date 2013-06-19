@@ -10,6 +10,7 @@ SCRIPTS = $(DEST)/ExtractSample.m \
           $(DEST)/GenCloudStructPlots.m \
           $(DEST)/GenDistPlots.m \
           $(DEST)/PlotMultiPanelSample.m \
+          $(DEST)/PlotProfs.m \
           $(DEST)/PlotSampleData.m \
           $(DEST)/PlotSampleW250.m \
           $(DEST)/GenCfrac2dHists.m \

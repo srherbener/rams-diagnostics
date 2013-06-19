@@ -31,7 +31,8 @@ for iplot = 1:length(Config.ProfPlots)
     Zmax = Config.ProfPlots(iplot).Zmax;
 
     % If doing a diff plot, read in the control profile
-    if (strcmp(Config.ProfPlots(iplot).Type, 'diff'))
+    Ptype = Config.ProfPlots(iplot).Type;
+    if (strcmp(Ptype, 'diff'))
       Case = Config.ControlCase;
       Hfile = sprintf('%s/%s_%s.h5', Tdir, Fprefix, Case);
       fprintf('Reading Control Case: %s\n', Case);
@@ -41,11 +42,12 @@ for iplot = 1:length(Config.ProfPlots)
       LHV_CONTROL_ALLZ = nanmean(LHV_DOMAVG,2); % time average
     end
 
-    Ptitle = sprintf('%s: %s', Pname, Config.ProfPlots(iplot).Title);
-    Xlabel = Config.ProfPlots(iplot).Xlabel;
-    Zlabel = Config.ProfPlots(iplot).Zlabel;
-    LegLoc = Config.ProfPlots(iplot).LegLoc;
-    OutFile = sprintf('%s/%s', Pdir, Config.ProfPlots(iplot).OutFile);
+    Ptitle   = Config.ProfPlots(iplot).Title.Main;
+    Pmarkers = Config.ProfPlots(iplot).Title.Pmarkers;
+    Xlabel   = Config.ProfPlots(iplot).Xlabel;
+    Zlabel   = Config.ProfPlots(iplot).Zlabel;
+    LegLoc   = Config.ProfPlots(iplot).LegLoc;
+    OutFile  = sprintf('%s/%s', Pdir, Config.ProfPlots(iplot).OutFile);
     
     % make sure output directory exists
     if (exist(Pdir, 'dir') ~= 7)
@@ -95,8 +97,9 @@ for iplot = 1:length(Config.ProfPlots)
     % 5 min of sim time), so need to multiply numbers the
     % resulting average profile by 12 to get to K/hr.
     LHV = LHV .* 12;
+    Z = Z ./ 1000; % km
 
     fprintf('Writing plot file: %s\n', OutFile);
-    PlotProfSet(X, Z, LHV, Xlabel, Zlabel, Ptitle, Lstyles, Lgscales, LegText, LegLoc, OutFile);
+    PlotProfSet(X, Z, LHV, Xlabel, Zlabel, Ptitle, Pmarkers, Lstyles, Lgscales, LegText, LegLoc, Ptype, OutFile);
     fprintf('\n');
 end
