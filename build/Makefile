@@ -46,8 +46,7 @@ DEST = $(HOME)/bin
 BINS = $(DEST)/gen_moments
 SRC_DIR = $(SPROC_HOME)/src
 
-#SCRIPTS = $(DEST)/run_gen_moments
-SCRIPTS =
+SCRIPTS = $(DEST)/run_gen_moments
 
 #
 # Targets

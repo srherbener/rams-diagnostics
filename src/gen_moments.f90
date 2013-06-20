@@ -136,11 +136,11 @@ program gen_moments
  
     if (iv .eq. 1) then
       OutVarName = trim(InVars(iv)%vname)
-      OutVarUnits = trim(InVars(iv)%units)
+      OutVarUnits = '(' // trim(InVars(iv)%units) // ')'
       OutVarDescrip = 'moment: (' // trim(InVars(iv)%vname) // ')'
     else
       OutVarName = trim(OutVarName) // '-' // trim(InVars(iv)%vname)
-      OutVarUnits = trim(OutVarUnits) // '_' // trim(InVars(iv)%units)
+      OutVarUnits = trim(OutVarUnits) // '(' // trim(InVars(iv)%units) // ')'
       OutVarDescrip = trim(OutVarDescrip) // '(' // trim(InVars(iv)%vname) // ')'
     endif
   enddo
