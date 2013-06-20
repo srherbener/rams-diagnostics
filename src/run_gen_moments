@@ -106,6 +106,7 @@ my $OutDir;
 my @Mspecs;
 my $TsStart;
 my $TsEnd;
+my $i;
 
 $ConfigFile = $ARGV[0];
 
@@ -141,7 +142,7 @@ foreach $Case (sort(keys(%Cases)))
     # then join these files into the main file (above the time directories)
     foreach $Tdir (sort(keys(%TimeDirs)))
       {
-      ($InDir,$InFileSuffix,$OutFile) = &CreateFileNames($Case, $Tdir, $Mname, $MomentDir, $RevuDir, $Mspecs[1]);
+      ($InDir,$InFileSuffix,$OutFile) = &CreateFileNames($Case, $Tdir, $Mname, $MomentDir, $RevuDir, $Mspecs[0]);
 
       print "***************************************************************\n";
       print "Running diag_filter:\n";
