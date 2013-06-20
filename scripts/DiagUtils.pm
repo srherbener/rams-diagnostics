@@ -93,6 +93,12 @@ sub ReadConfigFile
       $Config{FILTERS}{$f[1]}{MODEL} = $f[2];
       $Config{FILTERS}{$f[1]}{SPECS} = [ @f[3..$#f] ];
       }
+    elsif ($f[0] eq "Moment:")
+      {
+      $Config{MOMENTS}{$f[1]}{TSTART} = $f[2];
+      $Config{MOMENTS}{$f[1]}{TEND}   = $f[3];
+      $Config{MOMENTS}{$f[1]}{SPECS}  = [ @f[4..$#f] ];
+      }
     elsif ($f[0] eq "Diag:")
       {
       $Config{DIAGS}{$f[1]}{$f[2]} = [ @f[3..$#f] ];
