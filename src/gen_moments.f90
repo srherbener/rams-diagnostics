@@ -22,15 +22,27 @@ program gen_moments
   integer, parameter :: LargeString  = 512
   integer, parameter :: MediumString = 256
   integer, parameter :: LittleString = 128
+  integer, parameter :: MaxVars = 5
 
-  character (len=LargeString) :: InFile, InVarName, OutFile
+  type VarSpec
+    character (len=LittleString) :: Vname
+    character (len=LittleString) :: Vfprefix
+  end type VarSpec
+
+  character (len=LargeString) :: InDir, InSuffix, OutFile
   integer :: TsStart, TsEnd
+  type (VarSpec), dimension(MaxVars) :: VarList
+  integer :: Nvars
 
-  integer :: ix, iy, iz, it
+  logical :: BadDims, ZdimMatches
+
+  integer :: iv, ix, iy, iz, it
   integer :: Nx, Ny, Nz, Nt
   integer :: Ntsteps
 
-  type (Rhdf5Var) :: InVar
+  character (len=LargeString), dimension(MaxVars) :: InFiles, InVarNames
+  type (Rhdf5Var), dimension(MaxVars) :: InVars
+  integer, dimension(MaxVars) :: InFileIds
 
   character (len=RHDF5_MAX_STRING) :: FileAcc
 
@@ -39,18 +51,26 @@ program gen_moments
 
   real :: DeltaX, DeltaY
 
-  integer :: InFileId, OutFileId
+  integer :: OutFileId
+  type (Rhdf5Var) :: OutVar, Npts
+  character (len=RHDF5_MAX_STRING) :: OutVarName, OutVarUnits, OutVarDescrip
 
-  type (Rhdf5Var) :: VarM1, VarM2, VarM3, VarM4 ! first four moments
-  type (Rhdf5Var) :: Npts
+  real, dimension(:,:), allocatable :: Means
   real :: Vdiff, Vterm
 
   ! Get the command line arguments
-  call GetMyArgs(LargeString, InFile, InVarName, OutFile, TsStart, TsEnd)
+  call GetMyArgs(LargeString, MaxVars, InDir, InSuffix, OutFile, TsStart, TsEnd, VarList, Nvars)
+  do iv = 1, Nvars
+    InFiles(iv) = trim(InDir) // '/' // trim(VarList(iv)%Vfprefix) // trim(InSuffix)
+    InVarNames(iv) = trim(VarList(iv)%Vname)
+  enddo
 
   write (*,*) 'Generating moments:'
-  write (*,*) '  Input file: ', trim(InFile)
-  write (*,*) '  Input variable name: ', trim(InVarName)
+  write (*,*) '  Input variables:'
+  do iv = 1, Nvars
+    write (*,*) '    File: ', trim(InFiles(iv))
+    write (*,*) '    Variable: ', trim(InVarNames(iv))
+  enddo
   write (*,*) '  Output file:  ', trim(OutFile)
   write (*,*) '  Beginning time step: ', TsStart
   write (*,*) '  Ending time step: ', TsEnd
@@ -62,32 +82,72 @@ program gen_moments
   ! is always the last one. This works out conveniently since all we need to do is decrement
   ! the number of dimensions by one.
 
-  InVar%vname = trim(InVarName)
-  call rhdf5_read_init(InFile, InVar)
+  BadDims = .false.
+  do iv = 1, Nvars
+    InVars(iv)%vname = trim(InVarNames(iv))
+    call rhdf5_read_init(InFiles(iv), InVars(iv))
 
-  Nx = InVar%dims(1)
-  Ny = InVar%dims(2)
-  if (InVar%ndims .eq. 3) then
-    ! 2D field
-    Nz = 1
-    Nt = InVar%dims(3)
-  else
-    ! 3D field
-    Nz = InVar%dims(3)
-    Nt = InVar%dims(4)
+    if (iv .eq. 1) then
+      ! If first variable, record the dimensions
+      Nx = InVars(iv)%dims(1)
+      Ny = InVars(iv)%dims(2)
+      if (InVars(iv)%ndims .eq. 3) then
+        ! 2D field
+        Nz = 1
+        Nt = InVars(iv)%dims(3)
+      else
+        ! 3D field
+        Nz = InVars(iv)%dims(3)
+        Nt = InVars(iv)%dims(4)
+      endif
+    else
+      ! If beyond the first variable, check to make sure its dimensions match
+      ! The DimsMatch() function only checks horzontal and time dimensions. We also want to
+      ! force the z dimensions to match as well.
+      if (Nz .eq. 1) then
+        ! 2D vars
+        ZdimMatches = InVars(iv)%ndims .eq. 3
+      else
+        ! 3D vars
+        ZdimMatches = Nz .eq. InVars(iv)%dims(3)
+      endif
+
+      if (DimsMatch(InVars(1), InVars(iv)) .and. ZdimMatches) then
+      else
+        write (*,*) 'ERROR: dimensions of variable do not match the first variable: ', trim(InVars(iv)%vname)
+        BadDims = .true.
+      endif
+    endif
+  enddo
+
+  if (BadDims) then
+    stop
   endif
 
   ! Prepare for reading
-  InVar%ndims = InVar%ndims - 1
-  if (InVar%ndims .eq. 2) then
-    allocate(InVar%vdata(Nx*Ny))
-  else
-    allocate(InVar%vdata(Nx*Ny*Nz))
-  endif
+  ! Create names for ouput variable
+  do iv = 1, Nvars
+    InVars(iv)%ndims = InVars(iv)%ndims - 1
+    if (InVars(iv)%ndims .eq. 2) then
+      allocate(InVars(iv)%vdata(Nx*Ny))
+    else
+      allocate(InVars(iv)%vdata(Nx*Ny*Nz))
+    endif
+ 
+    if (iv .eq. 1) then
+      OutVarName = trim(InVars(iv)%vname)
+      OutVarUnits = trim(InVars(iv)%units)
+      OutVarDescrip = 'moment: (' // trim(InVars(iv)%vname) // ')'
+    else
+      OutVarName = trim(OutVarName) // '-' // trim(InVars(iv)%vname)
+      OutVarUnits = trim(OutVarUnits) // '_' // trim(InVars(iv)%units)
+      OutVarDescrip = trim(OutVarDescrip) // '(' // trim(InVars(iv)%vname) // ')'
+    endif
+  enddo
 
   ! Set the output dimensions and coordinates to those of the selected input var
-  call SetOutCoords(InFile, Xcoords, Ycoords, Zcoords, Tcoords)
-  
+  call SetOutCoords(InFiles(1), Xcoords, Ycoords, Zcoords, Tcoords)
+
   ! Convert lat (x coords) and lon (y coords) to distances in km
   allocate(XcoordsKm(Nx))
   allocate(YcoordsKm(Ny))
@@ -135,42 +195,20 @@ program gen_moments
   Npts%dimnames(1) = 'z'
   allocate(Npts%vdata(Nz))
 
-  VarM1%vname = trim(InVar%vname) // '_M1'
-  VarM1%units = trim(InVar%units)
-  VarM1%descrip = 'first moment ' // trim(InVar%descrip)
-  VarM1%ndims = 1
-  VarM1%dims(1) = Nz
-  VarM1%dimnames(1) = 'z'
-  allocate(VarM1%vdata(Nz))
-
-  VarM2%vname = trim(InVar%vname) // '_M2'
-  VarM2%units = '(' // trim(InVar%units) // ')^2'
-  VarM2%descrip = 'second moment ' // trim(InVar%descrip)
-  VarM2%ndims = 1
-  VarM2%dims(1) = Nz
-  VarM2%dimnames(1) = 'z'
-  allocate(VarM2%vdata(Nz))
-
-  VarM3%vname = trim(InVar%vname) // '_M3'
-  VarM3%units = '(' // trim(InVar%units) // ')^3'
-  VarM3%descrip = 'third moment ' // trim(InVar%descrip)
-  VarM3%ndims = 1
-  VarM3%dims(1) = Nz
-  VarM3%dimnames(1) = 'z'
-  allocate(VarM3%vdata(Nz))
-
-  VarM4%vname = trim(InVar%vname) // '_M4'
-  VarM4%units = '(' // trim(InVar%units) // ')^4'
-  VarM4%descrip = 'fourth moment ' // trim(InVar%descrip)
-  VarM4%ndims = 1
-  VarM4%dims(1) = Nz
-  VarM4%dimnames(1) = 'z'
-  allocate(VarM4%vdata(Nz))
+  OutVar%vname = trim(OutVarName)
+  OutVar%units = trim(OutVarUnits)
+  OutVar%descrip = trim(OutVarDescrip)
+  OutVar%ndims = 1
+  OutVar%dims(1) = Nz
+  OutVar%dimnames(1) = 'z'
+  allocate(OutVar%vdata(Nz))
 
   ! Open the input files and the output file
   FileAcc = 'R'
-  call rhdf5_open_file(InFile, FileAcc, 0, InFileId)
-  write (*,*) 'Reading HDF5 file: ', trim(InFile)
+  do iv = 1, Nvars
+    call rhdf5_open_file(InFiles(iv), FileAcc, 0, InFileIds(iv))
+    write (*,*) 'Reading HDF5 file: ', trim(InFiles(iv))
+  enddo
   write (*,*) ''
 
   FileAcc = 'W'
@@ -184,56 +222,35 @@ program gen_moments
   !
   ! Need to make two passes through the data:
   !   Pass 1 -> compute the mean (1st moment)
-  !   Pass 2 -> compute the higher moments
+  !   Pass 2 -> compute the higher moments, if asked for
 
   ! Pass 1 -> mean (first moment)
+  !   record the means of each variable separately, however the number of points will
+  !   be the same for each variable so only count those up during the first variable
+  !   Count the number of points in a loop (as opposed to multiplying Nx * Ny * NumberTimeSteps)
+  !   so that filtering can be added later on.
+  allocate(Means(Nvars, Nz))
   do iz = 1, Nz
-    VarM1%vdata(iz) = 0.0
     Npts%vdata(iz) = 0.0
-  enddo
-  write (*,*) 'Pass 1 - calculating mean'
-  do it = TsStart, TsEnd
-    call rhdf5_read_variable(InFileId, InVar%vname, InVar%ndims, it, InVar%dims, rdata=InVar%vdata)
-
-    do iz = 1, Nz
-      do iy = 1, Ny
-        do ix = 1, Nx
-          VarM1%vdata(iz) = VarM1%vdata(iz) + MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=InVar%vdata)
-          Npts%vdata(iz) = Npts%vdata(iz) + 1.0
-        enddo
-      enddo
+    do iv = 1, Nvars
+      Means(iv,iz) = 0.0
     enddo
   enddo
-
-  do iz = 1, Nz 
-    VarM1%vdata(iz) = VarM1%vdata(iz) / Npts%vdata(iz)
-  enddo
-  write (*,*) '  Done!'
-  write (*,*) ''
-
-  ! Pass 2 --> higher moments
+  write (*,*) 'Pass 1 - calculating mean'
   Ntsteps = 0
-  write (*,*) 'Pass 2 - higher moments'
   do it = TsStart, TsEnd
-    call rhdf5_read_variable(InFileId, InVar%vname, InVar%ndims, it, InVar%dims, rdata=InVar%vdata)
+    do iv = 1, Nvars
+      call rhdf5_read_variable(InFileIds(iv), InVars(iv)%vname, InVars(iv)%ndims, it, InVars(iv)%dims, rdata=InVars(iv)%vdata)
 
-    do iz = 1, Nz
-      do iy = 1, Ny
-        do ix = 1, Nx
-          ! Form (X-Xmean)
-          Vdiff = MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=InVar%vdata) - VarM1%vdata(iz)
-
-          ! second moment: sum up (X-Xmean)^2
-          Vterm = Vdiff * Vdiff
-          VarM2%vdata(iz) = VarM2%vdata(iz) + Vterm
-
-          ! third moment: sum up (X-Xmean)^3
-          Vterm = Vterm * Vdiff
-          VarM3%vdata(iz) = VarM3%vdata(iz) + Vterm
-
-          ! fourth moment: sum up (X-Xmean)^4
-          Vterm = Vterm * Vdiff
-          VarM4%vdata(iz) = VarM4%vdata(iz) + Vterm
+      do iz = 1, Nz
+        do iy = 1, Ny
+          do ix = 1, Nx
+            Means(iv,iz) = Means(iv,iz) + MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=InVars(iv)%vdata)
+            ! Only count Npts during first variable
+            if (iv .eq. 1) then
+              Npts%vdata(iz) = Npts%vdata(iz) + 1.0
+            endif
+          enddo
         enddo
       enddo
     enddo
@@ -246,27 +263,70 @@ program gen_moments
     endif
   enddo
 
-  do iz = 1, Nz 
-    VarM2%vdata(iz) = VarM2%vdata(iz) / Npts%vdata(iz)
-    VarM3%vdata(iz) = VarM3%vdata(iz) / Npts%vdata(iz)
-    VarM4%vdata(iz) = VarM4%vdata(iz) / Npts%vdata(iz)
+  do iv = 1, Nvars
+    do iz = 1, Nz 
+      Means(iv,iz) = Means(iv,iz) / Npts%vdata(iz)
+    enddo
   enddo
   write (*,*) '  Done!'
   write (*,*) ''
 
-! Write out the moment data
+  ! Pass 2 --> higher moments
+  !   If there is only one variable, copy the mean values into OutVar
+  !   Otherwise go through and compute the higher moments
+  if (Nvars .eq. 1) then
+    do iz = 1, Nz
+      OutVar%vdata(iz) = Means(1,iz)
+    enddo 
+  else
+    do iz = 1, Nz
+      OutVar%vdata(iz) = 0.0
+    enddo 
+
+    Ntsteps = 0
+    write (*,*) 'Pass 2 - higher moments'
+    do it = TsStart, TsEnd
+      ! Read in all variables
+      do iv = 1, Nvars
+        call rhdf5_read_variable(InFileIds(iv), InVars(iv)%vname, InVars(iv)%ndims, it, InVars(iv)%dims, rdata=InVars(iv)%vdata)
+      enddo
+  
+      do iz = 1, Nz
+        do iy = 1, Ny
+          do ix = 1, Nx
+
+            ! Form (V1 - V1bar)*(V2 - V2bar)*...
+            Vterm = 1.0
+            do iv = 1, Nvars
+              Vdiff = MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=InVars(iv)%vdata) - Means(iv,iz)
+              Vterm = Vterm * Vdiff
+            enddo
+  
+            OutVar%vdata(iz) = OutVar%vdata(iz) + Vterm
+          enddo
+        enddo
+      enddo
+  
+      ! Write out status to screen every 100 timesteps so that the user can see that a long
+      ! running job is progressing okay.
+      Ntsteps = Ntsteps + 1
+      if (modulo(Ntsteps,100) .eq. 0) then
+        write (*,*) 'Working: Timestep: ', it
+      endif
+    enddo
+  
+    do iz = 1, Nz 
+      OutVar%vdata(iz) = OutVar%vdata(iz) / Npts%vdata(iz)
+    enddo
+  endif
+  write (*,*) '  Done!'
+  write (*,*) ''
+
+  ! Write out the moment data
   call rhdf5_write_variable(OutFileId, Npts%vname, Npts%ndims, 0, Npts%dims, &
      Npts%units, Npts%descrip, Npts%dimnames, rdata=Npts%vdata)
-  call rhdf5_write_variable(OutFileId, VarM1%vname, VarM1%ndims, 0, VarM1%dims, &
-     VarM1%units, VarM1%descrip, VarM1%dimnames, rdata=VarM1%vdata)
-  call rhdf5_write_variable(OutFileId, VarM2%vname, VarM2%ndims, 0, VarM2%dims, &
-     VarM2%units, VarM2%descrip, VarM2%dimnames, rdata=VarM2%vdata)
-  call rhdf5_write_variable(OutFileId, VarM3%vname, VarM3%ndims, 0, VarM3%dims, &
-     VarM3%units, VarM3%descrip, VarM3%dimnames, rdata=VarM3%vdata)
-  call rhdf5_write_variable(OutFileId, VarM4%vname, VarM4%ndims, 0, VarM4%dims, &
-     VarM4%units, VarM4%descrip, VarM4%dimnames, rdata=VarM4%vdata)
-
-  write (*,*) ''
+  call rhdf5_write_variable(OutFileId, OutVar%vname, OutVar%ndims, 0, OutVar%dims, &
+     OutVar%units, OutVar%descrip, OutVar%dimnames, rdata=OutVar%vdata)
 
   write (*,*) 'Finished: Total number of time steps processed: ', Ntsteps
   write (*,*) ''
@@ -287,14 +347,13 @@ program gen_moments
 
   ! attach the dimension specs to the output variable
   call rhdf5_attach_dimensions(OutFile, Npts)
-  call rhdf5_attach_dimensions(OutFile, VarM1)
-  call rhdf5_attach_dimensions(OutFile, VarM2)
-  call rhdf5_attach_dimensions(OutFile, VarM3)
-  call rhdf5_attach_dimensions(OutFile, VarM4)
+  call rhdf5_attach_dimensions(OutFile, OutVar)
 
   ! cleanup
   call rhdf5_close_file(OutFileId)
-  call rhdf5_close_file(InFileId)
+  do iv = 1, Nvars
+    call rhdf5_close_file(InFileIds(iv))
+  enddo
 
   stop
 
@@ -310,56 +369,87 @@ contains
 ! GetMyArgs()
 !
 
- subroutine GetMyArgs(MaxStr, InFile, InVarName, OutFile, TsStart, TsEnd)
+ subroutine GetMyArgs(MaxStr, MaxVars, InDir, InSuffix, OutFile, TsStart, TsEnd, VarList, NumVars)
   implicit none
 
-  integer :: MaxStr, TsStart, TsEnd
-  character (len=MaxStr) :: InFile, InVarName, OutFile
+  integer, parameter :: MaxFields = 15
 
-  integer :: iargc, i, j, Nargs
+  integer :: MaxStr, MaxVars, TsStart, TsEnd, NumVars
+  character (len=MaxStr) :: InDir, InSuffix, OutFile
+  type (VarSpec), dimension(MaxVars) :: VarList
+
+  integer :: iargc, i, Nargs, Nfld
   character (len=MaxStr) :: Arg
+  character (len=MaxStr), dimension(MaxFields) :: Fields
 
   logical :: BadArgs
 
   BadArgs = .false.
+  InDir = ''
+  InSuffix = ''
+  OutFile = ''
+  TsStart = 0
+  TsEnd = 0
+  NumVars = 0
 
   ! parse args
   i = 1
   Nargs = iargc()
 
-  if (Nargs .eq. 5) then
+  do while (i .le. Nargs)
+    call getarg(i, Arg)
 
-    call getarg(1, Arg)
-    InFile = Arg
+    if (i .eq. 1) then 
+      InDir = Arg
+      i = i + 1
+    else if (i .eq. 2) then 
+      InSuffix = Arg
+      i = i + 1
+    else if (i .eq. 3) then 
+      OutFile = Arg
+      i = i + 1
+    else if (i .eq. 4) then
+      read(Arg, '(i)') TsStart
+      i = i + 1
+    else if (i .eq. 5) then
+      read(Arg, '(i)') TsEnd
+      i = i + 1
+    else
+      call String2List(Arg, ':', Fields, MaxFields, Nfld, 'var spec')
+      i = i + 1
 
-    call getarg(2, Arg)
-    InVarName = Arg
-
-    call getarg(3, Arg)
-    OutFile = Arg
-
-    call getarg(4, Arg)
-    read(Arg, '(i)') TsStart
-
-    call getarg(5, Arg)
-    read(Arg, '(i)') TsEnd
-
-    if (TsEnd .lt. TsStart) then
-      write (*,*) 'ERROR: <ts_end> must be greater than or equal to <ts_start>'
-      BadArgs = .true.
+      NumVars = NumVars + 1
+      if (NumVars .gt. MaxVars) then
+        write (*,'(a,i1,a)') 'ERROR: Exceeded maximum number of times <var_spec> can be used (', MaxVars, ')'
+        BadArgs = .true.
+      else
+        VarList(NumVars)%Vname = Fields(1)
+        VarList(NumVars)%Vfprefix = Fields(2)
+      endif
     endif
-  else
-    write (*,*) 'ERROR: Must supply exactly 5 arguments'
+  enddo
+
+  if (TsEnd .lt. TsStart) then
+    write (*,*) 'ERROR: <ts_end> must be greater than or equal to <ts_start>'
+    BadArgs = .true.
+  endif
+  
+  if (NumVars .lt. 1) then
+    write (*,*) 'ERROR: must specify at least one <var_spec>'
     BadArgs = .true.
   endif
   
   if (BadArgs) then
-    write (*,*) 'USAGE: gen_moments <in_file> <in_var> <out_file> <ts_start> <ts_end>'
-    write (*,*) '        <in_file>: input HDF5 file'
-    write (*,*) '        <in_var>: variable (dataset) name inside the input HDF5 file'
+    write (*,*) 'USAGE: gen_moments <in_dir> <in_suffix> <out_file> <ts_start> <ts_end> <var_spec> [<var_spec>...]'
+    write (*,*) '        <in_dir>: directory containing input HDF5 files'
+    write (*,*) '        <in_suffix>: suffix attached to all input HDF5 files'
     write (*,*) '        <out_file>: output HDF5 file name'
     write (*,*) '        <ts_start>: beginning time step number'
     write (*,*) '        <ts_end>: end time step number'
+    write (*,*) '        <var_spec> = <var_name>:<file_prefix>'
+    write (*,*) '          <var_name>: name of variable inside input HDF5 file'
+    write (*,*) '          <file_prefix>: leading name of input HDF5 file'
+    write (*,*) '              input file name gets built by joining: <file_prefix><in_suffix>'
     write (*,*) ''
 
     stop
