@@ -242,6 +242,7 @@ program gen_moments
     do iv = 1, Nvars
       call rhdf5_read_variable(InFileIds(iv), InVars(iv)%vname, InVars(iv)%ndims, it, InVars(iv)%dims, rdata=InVars(iv)%vdata)
 
+      ! calculte mean for each level
       do iz = 1, Nz
         do iy = 1, Ny
           do ix = 1, Nx
@@ -253,6 +254,9 @@ program gen_moments
           enddo
         enddo
       enddo
+
+      ! free up the memory that rhdf5_read_variable allocated
+      deallocate(InVars(iv)%vdata)
     enddo
 
     ! Write out status to screen every 100 timesteps so that the user can see that a long
@@ -305,6 +309,11 @@ program gen_moments
             OutVar%vdata(iz) = OutVar%vdata(iz) + Vterm
           enddo
         enddo
+      enddo
+
+      ! free up the memory that rhdf5_read_variable allocated
+      do iv = 1, Nvars
+        deallocate(InVars(iv)%vdata)
       enddo
   
       ! Write out status to screen every 100 timesteps so that the user can see that a long
