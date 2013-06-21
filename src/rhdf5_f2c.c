@@ -636,6 +636,8 @@ void rh5d_read(int *dsetid, int *dtype, int *ms_ndims, int *ms_dims, int *fs_ndi
     {
     H5Tclose(dtypid);
     }
+  H5Sclose(mem_dspace);
+  H5Sclose(file_dspace);
 
   return;
   }
