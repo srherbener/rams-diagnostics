@@ -65,6 +65,7 @@ program azavg
 
   integer :: i
   logical :: VarIs2d
+  integer :: AvarNelems
 
   integer :: ix, iy, iz, it
   integer :: Nx, Ny, Nz, Nt, VarNz
@@ -316,8 +317,6 @@ program azavg
 
   Filter%ndims = 3
   Radius%ndims = 2
-  allocate(Filter%vdata(Nx*Ny*Nz))
-  allocate(Radius%vdata(Nx*Ny))
 
   ! set up the input variable data
   rh5f_facc = 'R'
@@ -326,17 +325,15 @@ program azavg
     call rhdf5_open_file(Vfile, rh5f_facc, 0, rh5f_v)
     U%ndims = 3
     V%ndims = 3
-    allocate(U%vdata(Nx*Ny*Nz))
-    allocate(V%vdata(Nx*Ny*Nz))
   else
     call rhdf5_open_file(AvarFile, rh5f_facc, 0, rh5f_avar)
   endif
   if (VarIs2d) then
     Avar%ndims = 2
-    allocate(Avar%vdata(Nx*Ny))
+    AvarNelems = Nx * Ny
   else
     Avar%ndims = 3
-    allocate(Avar%vdata(Nx*Ny*VarNz))
+    AvarNelems = Nx * Ny * Nz
   endif
 
   ! set up the output variable
@@ -375,8 +372,13 @@ program azavg
       call rhdf5_read_variable(rh5f_v, V%vname, V%ndims, it, V%dims, rdata=V%vdata)
 
       ! convert u,v to tangential or radial
+      allocate(Avar%vdata(AvarNelems))
       call ConvertHorizVelocity(Nx, Ny, VarNz, U%vdata, V%vdata, StormX, StormY, &
         XcoordsKm, YcoordsKm, Avar%vdata, DoTangential)
+
+      ! Free up variable memory
+      deallocate(U%vdata)
+      deallocate(V%vdata)
     else
       call rhdf5_read_variable(rh5f_avar, Avar%vname, Avar%ndims, it, Avar%dims, rdata=Avar%vdata)
     endif
@@ -387,6 +389,11 @@ program azavg
 
     call rhdf5_write_variable(rh5f_aavg, Aavg%vname, Aavg%ndims, it, Aavg%dims, &
       Aavg%units, Aavg%descrip, Aavg%dimnames, rdata=Aavg%vdata)
+
+    ! Free up variable memory
+    deallocate(Filter%vdata)
+    deallocate(Radius%vdata)
+    deallocate(Avar%vdata)
     
     ! Write out status to screen every 100 timesteps so that the user can see that a long
     ! running job is progressing okay.
