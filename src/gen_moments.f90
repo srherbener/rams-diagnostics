@@ -55,8 +55,9 @@ program gen_moments
   type (Rhdf5Var) :: OutVar, NumPoints
   character (len=RHDF5_MAX_STRING) :: OutVarName, OutVarUnits, OutVarDescrip
 
-  real, dimension(:,:), allocatable :: Means
-  real :: Vdiff, Vterm
+  double precision, dimension(:,:), allocatable :: Means
+  double precision, dimension(:), allocatable :: Npts, Moments
+  double precision :: Vdiff, Vterm
 
   ! Get the command line arguments
   call GetMyArgs(LargeString, MaxVars, InDir, InSuffix, OutFile, TsStart, TsEnd, VarList, Nvars)
@@ -225,10 +226,12 @@ program gen_moments
   !   Count the number of points in a loop (as opposed to multiplying Nx * Ny * NumberTimeSteps)
   !   so that filtering can be added later on.
   allocate(Means(Nvars, Nz))
+  allocate(Npts(Nz))
+  allocate(Moments(Nz))
   do iz = 1, Nz
-    NumPoints%vdata(iz) = 0.0
+    Npts(iz) = 0.0d0
     do iv = 1, Nvars
-      Means(iv,iz) = 0.0
+      Means(iv,iz) = 0.0d0
     enddo
   enddo
   write (*,*) 'Pass 1 - calculating mean'
@@ -241,10 +244,10 @@ program gen_moments
       do iz = 1, Nz
         do iy = 1, Ny
           do ix = 1, Nx
-            Means(iv,iz) = Means(iv,iz) + MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=InVars(iv)%vdata)
+            Means(iv,iz) = Means(iv,iz) + dble(MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=InVars(iv)%vdata))
             ! Only count NumPoints during first variable
             if (iv .eq. 1) then
-              NumPoints%vdata(iz) = NumPoints%vdata(iz) + 1.0
+              Npts(iz) = Npts(iz) + 1.0d0
             endif
           enddo
         enddo
@@ -264,7 +267,7 @@ program gen_moments
 
   do iv = 1, Nvars
     do iz = 1, Nz 
-      Means(iv,iz) = Means(iv,iz) / NumPoints%vdata(iz)
+      Means(iv,iz) = Means(iv,iz) / Npts(iz)
     enddo
   enddo
   write (*,*) '  Done!'
@@ -279,7 +282,7 @@ program gen_moments
     enddo 
   else
     do iz = 1, Nz
-      OutVar%vdata(iz) = 0.0
+      Moments(iz) = 0.0d0
     enddo 
 
     Ntsteps = 0
@@ -297,11 +300,11 @@ program gen_moments
             ! Form (V1 - V1bar)*(V2 - V2bar)*...
             Vterm = 1.0
             do iv = 1, Nvars
-              Vdiff = MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=InVars(iv)%vdata) - Means(iv,iz)
+              Vdiff = dble(MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=InVars(iv)%vdata)) - Means(iv,iz)
               Vterm = Vterm * Vdiff
             enddo
   
-            OutVar%vdata(iz) = OutVar%vdata(iz) + Vterm
+            Moments(iz) = Moments(iz) + Vterm
           enddo
         enddo
       enddo
@@ -320,11 +323,17 @@ program gen_moments
     enddo
   
     do iz = 1, Nz 
-      OutVar%vdata(iz) = OutVar%vdata(iz) / NumPoints%vdata(iz)
+      Moments(iz) = Moments(iz) / Npts(iz)
+      OutVar%vdata(iz) = Moments(iz)
     enddo
   endif
   write (*,*) '  Done!'
   write (*,*) ''
+
+  ! copy to output var
+  do iz = 1, Nz
+    NumPoints%vdata(iz) = Npts(iz)
+  enddo
 
   ! Write out the moment data
   call rhdf5_write_variable(OutFileId, NumPoints%vname, NumPoints%ndims, 0, NumPoints%dims, &
