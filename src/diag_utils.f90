@@ -610,6 +610,38 @@ integer function FindIndex(N, Coords, Val)
   return
 end function FindIndex
 
+!**********************************************************************
+! SetOutCoords()
+!
+! This routine will set the coordinate and dimension data 
+
+subroutine SetOutCoords(Hfile, Xcoords, Ycoords, Zcoords, Tcoords)
+  use rhdf5_utils
+  implicit none 
+
+  character (len=*) :: Hfile
+  type (Rhdf5Var) :: Xcoords, Ycoords, Zcoords, Tcoords
+
+  ! Read in longitude, latitude and height values
+  Xcoords%vname = 'x_coords'
+  call rhdf5_read_init(Hfile, Xcoords)
+  call rhdf5_read(Hfile, Xcoords)
+  
+  Ycoords%vname = 'y_coords'
+  call rhdf5_read_init(Hfile, Ycoords)
+  call rhdf5_read(Hfile, Ycoords)
+
+  Zcoords%vname = 'z_coords'
+  call rhdf5_read_init(Hfile, Zcoords)
+  call rhdf5_read(Hfile, Zcoords)
+
+  Tcoords%vname = 't_coords'
+  call rhdf5_read_init(Hfile, Tcoords)
+  call rhdf5_read(Hfile, Tcoords)
+
+  return
+end subroutine SetOutCoords
+
 !*******************************************************************
 ! Gsmooth2d()
 !
