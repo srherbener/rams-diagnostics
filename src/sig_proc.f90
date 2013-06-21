@@ -106,11 +106,6 @@ program sig_proc
 
   ! Prepare for reading
   InVar%ndims = InVar%ndims - 1
-  if (InVar%ndims .eq. 2) then
-    allocate(InVar%vdata(Nx*Ny))
-  else
-    allocate(InVar%vdata(Nx*Ny*Nz))
-  endif
 
   ! Set the output dimensions and coordinates to those of the selected input var
   call SetOutCoords(InFile, Xcoords, Ycoords, Zcoords, Tcoords)
@@ -222,6 +217,9 @@ program sig_proc
     ! Write the filter data, and storm info if doing cylvol selection, to the output file
     call rhdf5_write_variable(OutFileId, OutVar%vname, OutVar%ndims, it, OutVar%dims, &
       OutVar%units, OutVar%descrip, OutVar%dimnames, rdata=OutVar%vdata)
+
+    ! clean up
+    deallocate(InVar%vdata)
 
     ! Write out status to screen every 100 timesteps so that the user can see that a long
     ! running job is progressing okay.
@@ -359,89 +357,5 @@ contains
 
   return
 end subroutine GetMyArgs
-
-!**********************************************************************
-! SetOutCoords()
-!
-! This routine will set the coordinate and dimension data 
-
-subroutine SetOutCoords(Hfile, Xcoords, Ycoords, Zcoords, Tcoords)
-  use rhdf5_utils
-  use diag_utils
-  implicit none
-
-  character (len=*) :: Hfile
-  type (Rhdf5Var) :: Xcoords, Ycoords, Zcoords, Tcoords
-
-  ! Read in longitude, latitude and height values
-  Xcoords%vname = 'x_coords'
-  call rhdf5_read_init(Hfile, Xcoords)
-  call rhdf5_read(Hfile, Xcoords)
-  
-  Ycoords%vname = 'y_coords'
-  call rhdf5_read_init(Hfile, Ycoords)
-  call rhdf5_read(Hfile, Ycoords)
-
-  Zcoords%vname = 'z_coords'
-  call rhdf5_read_init(Hfile, Zcoords)
-  call rhdf5_read(Hfile, Zcoords)
-
-  Tcoords%vname = 't_coords'
-  call rhdf5_read_init(Hfile, Tcoords)
-  call rhdf5_read(Hfile, Tcoords)
-
-  return
-end subroutine SetOutCoords
-
-!**********************************************************************
-! FindStormCenter
-!
-! This routine will locate the storm center using the simple hueristic
-! of the center being where the minimum surface pressure exists.
-!
-! Argument it holds the time step that you want to analyze. (iStmCtr, jStmCtr)
-! hold the grid position of the minumum pressure value on the first vertical
-! level (iz = 1).
-!
-! Gaussian smoothing will be applied to the pressure field in order to help
-! prevent mistakenly using topological features as the storm center.
-!
-
-subroutine FindStormCenter(Nx, Ny, Press, DataSelect, Npts, Sigma, StmCtrX, StmCtrY, MinP)
-  implicit none
-
-  integer :: Nx, Ny, Npts
-  real, dimension(Nx,Ny) :: Press
-  logical, dimension(Nx,Ny) :: DataSelect
-  integer :: StmCtrX, StmCtrY
-  real :: MinP, Sigma
-  logical :: UseFsFilter
-
-  integer :: ix, iy
-  real, dimension(Nx,Ny) :: Psmooth
-
-  ! apply 2D Gaussian smoothing to the pressure field
-  call Gsmooth2d(Nx, Ny, Npts, Press, Sigma, Psmooth)
-
-  MinP = 1e10 ! ridiculously large pressure
-  StmCtrX = 0 
-  StmCtrY = 0 
-
-  do ix = 1, Nx
-    do iy = 1, Ny
-      ! DataSelect holds true for points that we want to consider
-      ! for minimum pressure
-      if (DataSelect(ix,iy)) then 
-        if (Psmooth(ix,iy) .lt. MinP) then
-          MinP = Psmooth(ix,iy)
-          StmCtrX = ix
-          StmCtrY = iy
-        endif
-      endif
-    enddo
-  enddo
-  
-  return
-end subroutine FindStormCenter
 
 end program sig_proc
