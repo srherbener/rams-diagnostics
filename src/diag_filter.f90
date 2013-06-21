@@ -203,11 +203,6 @@ program diag_filter
     else
       ! Prepare for reading
       Vars(i)%ndims = Vars(i)%ndims - 1
-      if (Vars(i)%ndims .eq. 2) then
-        allocate(Vars(i)%vdata(Nx*Ny))
-      else
-        allocate(Vars(i)%vdata(Nx*Ny*Nz))
-      endif
     endif
   enddo
 
@@ -228,18 +223,11 @@ program diag_filter
         if ((FsFilterVar%dims(1) .ne. Mvar%dims(1)) .or. (FsFilterVar%dims(2) .ne. Mvar%dims(2))) then
           write (*,*) 'ERROR: horizontal and time dimensions of find storm variable do not match the model variable: ', trim(FsFilterVar%vname)
           BadDims = .true.
-        else
-          ! Prepare for reading
-          allocate(FsFilterVar%vdata(Nx*Ny))
         endif
       else
         if (.not. DimsMatch(Mvar, FsFilterVar)) then
           write (*,*) 'ERROR: horizontal and time dimensions of find storm variable do not match the model variable: ', trim(FsFilterVar%vname)
           BadDims = .true.
-        else
-          ! Prepare for reading
-          FsFilterVar%ndims = FsFilterVar%ndims - 1
-          allocate(FsFilterVar%vdata(Nx*Ny))
         endif
       endif
     endif
@@ -407,6 +395,11 @@ program diag_filter
       ! Record the lat,lon of the storm center
       StormX%vdata(1) = Xcoords%vdata(StmIx)
       StormY%vdata(1) = Ycoords%vdata(StmIy)
+
+      ! clean up
+      if (UseFsFilter) then
+        deallocate(FsFilterVar%vdata)
+      endif
     endif
 
     ! If doing up- or down-draft filtering, build the mask
@@ -556,6 +549,11 @@ program diag_filter
       call rhdf5_write_variable(OutFileId, MaxRadius%vname, MaxRadius%ndims, it, MaxRadius%dims, &
         MaxRadius%units, MaxRadius%descrip, MaxRadius%dimnames, rdata=MaxRadius%vdata)
     endif
+
+    ! cleanup
+    do i = 1, Nfilters
+      deallocate(Vars(i)%vdata)
+    enddo
 
     ! Write out status to screen every 100 timesteps so that the user can see that a long
     ! running job is progressing okay.
@@ -974,39 +972,6 @@ contains
 
   return
 end subroutine GetMyArgs
-
-!**********************************************************************
-! SetOutCoords()
-!
-! This routine will set the coordinate and dimension data 
-
-subroutine SetOutCoords(Hfile, Xcoords, Ycoords, Zcoords, Tcoords)
-  use rhdf5_utils
-  use diag_utils
-  implicit none
-
-  character (len=*) :: Hfile
-  type (Rhdf5Var) :: Xcoords, Ycoords, Zcoords, Tcoords
-
-  ! Read in longitude, latitude and height values
-  Xcoords%vname = 'x_coords'
-  call rhdf5_read_init(Hfile, Xcoords)
-  call rhdf5_read(Hfile, Xcoords)
-  
-  Ycoords%vname = 'y_coords'
-  call rhdf5_read_init(Hfile, Ycoords)
-  call rhdf5_read(Hfile, Ycoords)
-
-  Zcoords%vname = 'z_coords'
-  call rhdf5_read_init(Hfile, Zcoords)
-  call rhdf5_read(Hfile, Zcoords)
-
-  Tcoords%vname = 't_coords'
-  call rhdf5_read_init(Hfile, Tcoords)
-  call rhdf5_read(Hfile, Tcoords)
-
-  return
-end subroutine SetOutCoords
 
 !**********************************************************************
 ! FindStormCenter
