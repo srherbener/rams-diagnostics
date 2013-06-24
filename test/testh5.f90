@@ -32,7 +32,7 @@ program testh5
   character, dimension(:), allocatable :: InCarray
  
   integer :: i, ix, iy, iz, it
-  integer, dimension(3) :: dims
+  integer, dimension(3) :: dims, xyz_dims
   integer :: ndims
   integer :: rh5_file
   character (len=RHDF5_MAX_STRING) :: rh5_file_name
@@ -48,8 +48,8 @@ program testh5
   type (Rhdf5Var) :: Vout
   character (len=128) :: fname
 
-  real, dimension(3) :: Xcoords, Ycoords, Zcoords, Tcoords
-  real, dimension(Nx,Ny,Nz) :: X, Y, Z
+  real, dimension(5) :: Xcoords, Ycoords, Zcoords, Tcoords
+  real, dimension(Nx+2,Ny+2,Nz) :: X, Y, Z
 
   call GetArgs(TestNum)
 
@@ -57,6 +57,14 @@ program testh5
     dims(1) = Nx
     dims(2) = Ny
     dims(3) = Nz
+
+    xyz_dims(1) = Nx + 2
+    xyz_dims(2) = Ny + 2
+    xyz_dims(3) = Nz
+
+    X = -1.0
+    Y = -1.0
+    Z = -1.0
   
     i = 1
     do iz = 1,Nz
@@ -66,9 +74,9 @@ program testh5
           B(ix,iy,iz) = i + 12
           C(ix,iy,iz) = i + 24
 
-          X(ix,iy,iz) = float(i)
-          Y(ix,iy,iz) = float(i+12)
-          Z(ix,iy,iz) = float(i+24)
+          X(ix+1,iy+1,iz) = float(i)
+          Y(ix+1,iy+1,iz) = float(i+12)
+          Z(ix+1,iy+1,iz) = float(i+24)
 
           i = i + 1
         enddo
@@ -83,7 +91,7 @@ program testh5
       enddo
     enddo
 
-    do i = 1, 3
+    do i = 1, 5
       Xcoords(i) = float(i)
       Ycoords(i) = float(i)
       Zcoords(i) = float(i)
@@ -121,18 +129,18 @@ program testh5
 
     
     ! test data for gen_moments
-    call rhdf5_write_variable(rh5_file, 'test_gm', 3, 1, dims, 'test', 'test', dimnames, rdata=X)
-    call rhdf5_write_variable(rh5_file, 'test_gm', 3, 2, dims, 'test', 'test', dimnames, rdata=Y)
-    call rhdf5_write_variable(rh5_file, 'test_gm', 3, 3, dims, 'test', 'test', dimnames, rdata=Z)
+    call rhdf5_write_variable(rh5_file, 'test_gm', 3, 1, xyz_dims, 'test', 'test', dimnames, rdata=X)
+    call rhdf5_write_variable(rh5_file, 'test_gm', 3, 2, xyz_dims, 'test', 'test', dimnames, rdata=Y)
+    call rhdf5_write_variable(rh5_file, 'test_gm', 3, 3, xyz_dims, 'test', 'test', dimnames, rdata=Z)
 
-    dims(1) = Nx
-    call rhdf5_write_variable(rh5_file, 'x_coords', 1, 0, dims, 'test', 'test', dimnames, rdata=Xcoords)
-    dims(1) = Ny
-    call rhdf5_write_variable(rh5_file, 'y_coords', 1, 0, dims, 'test', 'test', dimnames, rdata=Ycoords)
-    dims(1) = Nz
-    call rhdf5_write_variable(rh5_file, 'z_coords', 1, 0, dims, 'test', 'test', dimnames, rdata=Zcoords)
-    dims(1) = 3 ! match the number of calls that write into 'test_gm'
-    call rhdf5_write_variable(rh5_file, 't_coords', 1, 0, dims, 'test', 'test', dimnames, rdata=Tcoords)
+    xyz_dims(1) = Nx + 2
+    call rhdf5_write_variable(rh5_file, 'x_coords', 1, 0, xyz_dims, 'test', 'test', dimnames, rdata=Xcoords)
+    xyz_dims(1) = Ny + 2
+    call rhdf5_write_variable(rh5_file, 'y_coords', 1, 0, xyz_dims, 'test', 'test', dimnames, rdata=Ycoords)
+    xyz_dims(1) = Nz
+    call rhdf5_write_variable(rh5_file, 'z_coords', 1, 0, xyz_dims, 'test', 'test', dimnames, rdata=Zcoords)
+    xyz_dims(1) = 3 ! match the number of calls that write into 'test_gm'
+    call rhdf5_write_variable(rh5_file, 't_coords', 1, 0, xyz_dims, 'test', 'test', dimnames, rdata=Tcoords)
   
     call rhdf5_close_file(rh5_file)
   elseif (TestNum .eq. 2) then
