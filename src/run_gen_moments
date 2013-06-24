@@ -107,6 +107,7 @@ my @Mspecs;
 my $TsStart;
 my $TsEnd;
 my $Filter;
+my $FilterFile;
 my $i;
 
 $ConfigFile = $ARGV[0];
@@ -146,6 +147,16 @@ foreach $Case (sort(keys(%Cases)))
       {
       ($InDir,$InFileSuffix,$OutFile) = &CreateFileNames($Case, $Tdir, $Mname, $MomentDir, $RevuDir, $Mspecs[0]);
 
+      # Construct the filter file name
+      if ($Filter eq "none")
+        {
+        $FilterFile = "none";
+        }
+      else
+        {
+        $FilterFile = $Filter . "_" . $Case . ".h5";
+        }
+
       print "***************************************************************\n";
       print "Running diag_filter:\n";
       print "  Case: $Case\n";
@@ -154,6 +165,7 @@ foreach $Case (sort(keys(%Cases)))
       print "  Input File Directory: $InDir\n";
       print "  Input File Suffix: $InFileSuffix\n";
       print "  Output File: $OutFile\n";
+      print "  Filter: $FilterFile\n";
       print "\n";
 
       # run diag_filter, make sure the output directory exists
@@ -164,7 +176,7 @@ foreach $Case (sort(keys(%Cases)))
         system(@SysArgs);
         }
 
-      @SysArgs = ("gen_moments", $InDir, $InFileSuffix, $OutFile, $Filter, $TsStart, $TsEnd, @Mspecs);
+      @SysArgs = ("gen_moments", $InDir, $InFileSuffix, $OutFile, $FilterFile, $TsStart, $TsEnd, @Mspecs);
       print "Running: ", join(" ",@SysArgs), "\n\n";
       system(@SysArgs);
       }
