@@ -12,9 +12,9 @@ montage -tile 1x1 -geometry ${Jsize} RamsGrids.jpg Figure1.jpg
 echo "Figure 2"
 montage -tile 2x2 -geometry ${Jsize}+2+100 \
  InitVortex.jpg \
+ AerosolLoc.jpg \
  AerosolProfiles.jpg \
  ControlVtSpl.jpg \
- Blank.jpg \
  Figure2.jpg
 
 # Figure 3: KE-Vt above RMW
