@@ -24,19 +24,22 @@ program gen_moments
   integer, parameter :: LittleString = 128
   integer, parameter :: MaxVars = 5
 
+  real, parameter :: UndefVal = -999.0
+
   type VarSpec
     character (len=LittleString) :: Vname
     character (len=LittleString) :: Vfprefix
   end type VarSpec
 
-  character (len=LargeString) :: InDir, InSuffix, OutFile
+  character (len=LargeString) :: InDir, InSuffix, OutFile, FilterFile
   integer :: TsStart, TsEnd
   type (VarSpec), dimension(MaxVars) :: VarList
   integer :: Nvars
+  logical :: UseFilter, SelectPoint
 
   logical :: BadDims, ZdimMatches
 
-  integer :: iv, ix, iy, iz, it
+  integer :: id, iv, ix, iy, iz, it, filter_z
   integer :: Nx, Ny, Nz, Nt
   integer :: Ntsteps
 
@@ -51,8 +54,8 @@ program gen_moments
 
   real :: DeltaX, DeltaY
 
-  integer :: OutFileId
-  type (Rhdf5Var) :: OutVar, NumPoints
+  integer :: OutFileId, FilterFileId
+  type (Rhdf5Var) :: OutVar, NumPoints, Filter
   character (len=RHDF5_MAX_STRING) :: OutVarName, OutVarUnits, OutVarDescrip
 
   double precision, dimension(:,:), allocatable :: Means
@@ -60,7 +63,7 @@ program gen_moments
   double precision :: Vdiff, Vterm
 
   ! Get the command line arguments
-  call GetMyArgs(LargeString, MaxVars, InDir, InSuffix, OutFile, TsStart, TsEnd, VarList, Nvars)
+  call GetMyArgs(LargeString, MaxVars, InDir, InSuffix, OutFile, FilterFile, UseFilter, TsStart, TsEnd, VarList, Nvars)
   do iv = 1, Nvars
     InFiles(iv) = trim(InDir) // '/' // trim(VarList(iv)%Vfprefix) // trim(InSuffix)
     InVarNames(iv) = trim(VarList(iv)%Vname)
@@ -73,6 +76,11 @@ program gen_moments
     write (*,*) '    Variable: ', trim(InVarNames(iv))
   enddo
   write (*,*) '  Output file:  ', trim(OutFile)
+  if (UseFilter) then
+    write (*,*) '  Filter file:  ', trim(FilterFile)
+  else
+    write (*,*) '  No filtering'
+  endif
   write (*,*) '  Beginning time step: ', TsStart
   write (*,*) '  Ending time step: ', TsEnd
   write (*,*) ''
@@ -121,6 +129,17 @@ program gen_moments
     endif
   enddo
 
+  ! check dimensions of filter if being used
+  if (UseFilter) then
+    Filter%vname = 'filter'
+    call rhdf5_read_init(FilterFile, Filter)
+
+   if (.not. DimsMatch(InVars(1), Filter)) then
+     write (*,*) 'ERROR: dimensions of filter do not match the variables: '
+     BadDims = .true.
+   endif
+  endif
+
   if (BadDims) then
     stop
   endif
@@ -140,6 +159,18 @@ program gen_moments
       OutVarDescrip = trim(OutVarDescrip) // '(' // trim(InVars(iv)%vname) // ')'
     endif
   enddo
+
+  if (UseFilter) then 
+    Filter%ndims = Filter%ndims - 1
+
+    write (*,*) 'Filter variable information:'
+    write (*,*) '  Number of dimensions: ', Filter%ndims
+    write (*,*) '  Dimension sizes:'
+    do id = 1, Filter%ndims
+      write (*,*), '    ', trim(Filter%dimnames(id)), ': ', Filter%dims(id)
+    enddo
+    write (*,*) ''
+  endif
 
   ! Set the output dimensions and coordinates to those of the selected input var
   call SetOutCoords(InFiles(1), Xcoords, Ycoords, Zcoords, Tcoords)
@@ -207,6 +238,11 @@ program gen_moments
   enddo
   write (*,*) ''
 
+  if (UseFilter) then
+    call rhdf5_open_file(FilterFile, FileAcc, 0, FilterFileId)
+    write (*,*) 'Reading HDF5 file: ', trim(FilterFile)
+  endif
+
   FileAcc = 'W'
   call rhdf5_open_file(OutFile, FileAcc, 1, OutFileId)
   write (*,*) 'Writing HDF5 file: ', trim(OutFile)
@@ -237,17 +273,37 @@ program gen_moments
   write (*,*) 'Pass 1 - calculating mean'
   Ntsteps = 0
   do it = TsStart, TsEnd
+    if (UseFilter) then
+      call rhdf5_read_variable(FilterFileId, Filter%vname, Filter%ndims, it, Filter%dims, rdata=Filter%vdata)
+    endif
+
     do iv = 1, Nvars
       call rhdf5_read_variable(InFileIds(iv), InVars(iv)%vname, InVars(iv)%ndims, it, InVars(iv)%dims, rdata=InVars(iv)%vdata)
 
       ! calculte mean for each level
       do iz = 1, Nz
-        do iy = 1, Ny
-          do ix = 1, Nx
-            Means(iv,iz) = Means(iv,iz) + dble(MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=InVars(iv)%vdata))
-            ! Only count NumPoints during first variable
-            if (iv .eq. 1) then
-              Npts(iz) = Npts(iz) + 1.0d0
+        if (Nz .eq. 1) then
+          ! Use z = 2 for the filter (first model level above the surface)
+          filter_z = 2
+        else
+          filter_z = iz
+        endif
+        ! strip off lateral boundaries
+        do iy = 2, Ny-1
+          do ix = 2, Nx-1
+            if (UseFilter) then
+              SelectPoint = anint(MultiDimLookup(Nx, Ny, Nz, ix, iy, filter_z, Var3d=Filter%vdata)) .eq. 1.0
+            else
+              ! no filtering, select all points
+              SelectPoint = .true.
+            endif
+
+            if (SelectPoint) then
+              Means(iv,iz) = Means(iv,iz) + dble(MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=InVars(iv)%vdata))
+              ! Only count NumPoints during first variable
+              if (iv .eq. 1) then
+                Npts(iz) = Npts(iz) + 1.0d0
+              endif
             endif
           enddo
         enddo
@@ -256,6 +312,10 @@ program gen_moments
       ! free up the memory that rhdf5_read_variable allocated
       deallocate(InVars(iv)%vdata)
     enddo
+
+    if (UseFilter) then
+      deallocate(Filter%vdata)
+    endif
 
     ! Write out status to screen every 100 timesteps so that the user can see that a long
     ! running job is progressing okay.
@@ -267,7 +327,11 @@ program gen_moments
 
   do iv = 1, Nvars
     do iz = 1, Nz 
-      Means(iv,iz) = Means(iv,iz) / Npts(iz)
+      if (Npts(iz) .eq. 0.0) then
+        Means(iv,iz) = UndefVal
+      else
+        Means(iv,iz) = Means(iv,iz) / Npts(iz)
+      endif
     enddo
   enddo
   write (*,*) '  Done!'
@@ -288,23 +352,42 @@ program gen_moments
     Ntsteps = 0
     write (*,*) 'Pass 2 - higher moments'
     do it = TsStart, TsEnd
+      if (UseFilter) then
+        call rhdf5_read_variable(FilterFileId, Filter%vname, Filter%ndims, it, Filter%dims, rdata=Filter%vdata)
+      endif
+
       ! Read in all variables
       do iv = 1, Nvars
         call rhdf5_read_variable(InFileIds(iv), InVars(iv)%vname, InVars(iv)%ndims, it, InVars(iv)%dims, rdata=InVars(iv)%vdata)
       enddo
   
       do iz = 1, Nz
-        do iy = 1, Ny
-          do ix = 1, Nx
+        if (Nz .eq. 1) then
+          ! Use z = 2 for the filter (first model level above the surface)
+          filter_z = 2
+        else
+          filter_z = iz
+        endif
+        ! strip off lateral boundaries
+        do iy = 2, Ny-1
+          do ix = 2, Nx-1
+            if (UseFilter) then
+              SelectPoint = anint(MultiDimLookup(Nx, Ny, Nz, ix, iy, filter_z, Var3d=Filter%vdata)) .eq. 1.0
+            else
+              ! no filtering, select all points
+              SelectPoint = .true.
+            endif
 
-            ! Form (V1 - V1bar)*(V2 - V2bar)*...
-            Vterm = 1.0
-            do iv = 1, Nvars
-              Vdiff = dble(MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=InVars(iv)%vdata)) - Means(iv,iz)
-              Vterm = Vterm * Vdiff
-            enddo
+            if (SelectPoint) then
+              ! Form (V1 - V1bar)*(V2 - V2bar)*...
+              Vterm = 1.0
+              do iv = 1, Nvars
+                Vdiff = dble(MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=InVars(iv)%vdata)) - Means(iv,iz)
+                Vterm = Vterm * Vdiff
+              enddo
   
-            Moments(iz) = Moments(iz) + Vterm
+              Moments(iz) = Moments(iz) + Vterm
+            endif
           enddo
         enddo
       enddo
@@ -313,6 +396,10 @@ program gen_moments
       do iv = 1, Nvars
         deallocate(InVars(iv)%vdata)
       enddo
+
+      if (UseFilter) then
+        deallocate(Filter%vdata)
+      endif
   
       ! Write out status to screen every 100 timesteps so that the user can see that a long
       ! running job is progressing okay.
@@ -323,7 +410,11 @@ program gen_moments
     enddo
   
     do iz = 1, Nz 
-      Moments(iz) = Moments(iz) / Npts(iz)
+      if (Npts(iz) .eq. 0.0) then
+        Moments(iz) = UndefVal
+      else
+        Moments(iz) = Moments(iz) / Npts(iz)
+      endif
       OutVar%vdata(iz) = Moments(iz)
     enddo
   endif
@@ -382,14 +473,15 @@ contains
 ! GetMyArgs()
 !
 
- subroutine GetMyArgs(MaxStr, MaxVars, InDir, InSuffix, OutFile, TsStart, TsEnd, VarList, NumVars)
+ subroutine GetMyArgs(MaxStr, MaxVars, InDir, InSuffix, OutFile, FilterFile, UseFilter, TsStart, TsEnd, VarList, NumVars)
   implicit none
 
   integer, parameter :: MaxFields = 15
 
   integer :: MaxStr, MaxVars, TsStart, TsEnd, NumVars
-  character (len=MaxStr) :: InDir, InSuffix, OutFile
+  character (len=MaxStr) :: InDir, InSuffix, OutFile, FilterFile
   type (VarSpec), dimension(MaxVars) :: VarList
+  logical :: UseFilter
 
   integer :: iargc, i, Nargs, Nfld
   character (len=MaxStr) :: Arg
@@ -421,10 +513,13 @@ contains
     else if (i .eq. 3) then 
       OutFile = Arg
       i = i + 1
-    else if (i .eq. 4) then
-      read(Arg, '(i)') TsStart
+    else if (i .eq. 4) then 
+      FilterFile = Arg
       i = i + 1
     else if (i .eq. 5) then
+      read(Arg, '(i)') TsStart
+      i = i + 1
+    else if (i .eq. 6) then
       read(Arg, '(i)') TsEnd
       i = i + 1
     else
@@ -446,6 +541,12 @@ contains
     write (*,*) 'ERROR: <ts_end> must be greater than or equal to <ts_start>'
     BadArgs = .true.
   endif
+
+  if (FilterFile .eq. 'none') then
+    UseFilter = .false.
+  else
+    UseFilter = .true.
+  endif
   
   if (NumVars .lt. 1) then
     write (*,*) 'ERROR: must specify at least one <var_spec>'
@@ -453,14 +554,15 @@ contains
   endif
   
   if (BadArgs) then
-    write (*,*) 'USAGE: gen_moments <in_dir> <in_suffix> <out_file> <ts_start> <ts_end> <var_spec> [<var_spec>...]'
-    write (*,*) '        <in_dir>: directory containing input HDF5 files'
-    write (*,*) '        <in_suffix>: suffix attached to all input HDF5 files'
-    write (*,*) '        <out_file>: output HDF5 file name'
+    write (*,*) 'USAGE: gen_moments <in_dir> <in_suffix> <out_file> <filter_file> <ts_start> <ts_end> <var_spec> [<var_spec>...]'
+    write (*,*) '        <in_dir>: directory containing input files'
+    write (*,*) '        <in_suffix>: suffix attached to all input files'
+    write (*,*) '        <out_file>: output file name'
+    write (*,*) '        <filter_file>: filter file name'
     write (*,*) '        <ts_start>: beginning time step number'
     write (*,*) '        <ts_end>: end time step number'
     write (*,*) '        <var_spec> = <var_name>:<file_prefix>'
-    write (*,*) '          <var_name>: name of variable inside input HDF5 file'
+    write (*,*) '          <var_name>: name of variable inside input file'
     write (*,*) '          <file_prefix>: leading name of input HDF5 file'
     write (*,*) '              input file name gets built by joining: <file_prefix><in_suffix>'
     write (*,*) ''
