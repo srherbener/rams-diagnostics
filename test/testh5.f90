@@ -49,7 +49,7 @@ program testh5
   character (len=128) :: fname
 
   real, dimension(5) :: Xcoords, Ycoords, Zcoords, Tcoords
-  real, dimension(Nx+2,Ny+2,Nz) :: X, Y, Z
+  real, dimension(Nx+2,Ny+2,Nz) :: X, Y, Z, Filter
 
   call GetArgs(TestNum)
 
@@ -65,6 +65,7 @@ program testh5
     X = -1.0
     Y = -1.0
     Z = -1.0
+    Filter = 0.0
   
     i = 1
     do iz = 1,Nz
@@ -77,6 +78,12 @@ program testh5
           X(ix+1,iy+1,iz) = float(i)
           Y(ix+1,iy+1,iz) = float(i+12)
           Z(ix+1,iy+1,iz) = float(i+24)
+
+          if (iz .eq. 1) then
+            if (ix .le. 2) then
+              Filter(ix+1,iy+1,iz) = 1.0
+            endif
+          endif
 
           i = i + 1
         enddo
@@ -132,6 +139,10 @@ program testh5
     call rhdf5_write_variable(rh5_file, 'test_gm', 3, 1, xyz_dims, 'test', 'test', dimnames, rdata=X)
     call rhdf5_write_variable(rh5_file, 'test_gm', 3, 2, xyz_dims, 'test', 'test', dimnames, rdata=Y)
     call rhdf5_write_variable(rh5_file, 'test_gm', 3, 3, xyz_dims, 'test', 'test', dimnames, rdata=Z)
+
+    call rhdf5_write_variable(rh5_file, 'filter', 3, 1, xyz_dims, 'test', 'test', dimnames, rdata=Filter)
+    call rhdf5_write_variable(rh5_file, 'filter', 3, 2, xyz_dims, 'test', 'test', dimnames, rdata=Filter)
+    call rhdf5_write_variable(rh5_file, 'filter', 3, 3, xyz_dims, 'test', 'test', dimnames, rdata=Filter)
 
     xyz_dims(1) = Nx + 2
     call rhdf5_write_variable(rh5_file, 'x_coords', 1, 0, xyz_dims, 'test', 'test', dimnames, rdata=Xcoords)
