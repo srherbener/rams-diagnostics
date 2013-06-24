@@ -106,6 +106,7 @@ my $OutDir;
 my @Mspecs;
 my $TsStart;
 my $TsEnd;
+my $Filter;
 my $i;
 
 $ConfigFile = $ARGV[0];
@@ -134,6 +135,7 @@ foreach $Case (sort(keys(%Cases)))
     {
     # the lengths of the argument lists vary according to which filter is selected
     # so the ReadConfigFile routine just places the arguments in a list
+    $Filter = $Moments{$Mname}{FILTER};
     $TsStart = $Moments{$Mname}{TSTART};
     $TsEnd   = $Moments{$Mname}{TEND};
     @Mspecs  = @{ $Moments{$Mname}{SPECS} };
@@ -162,7 +164,7 @@ foreach $Case (sort(keys(%Cases)))
         system(@SysArgs);
         }
 
-      @SysArgs = ("gen_moments", $InDir, $InFileSuffix, $OutFile, $TsStart, $TsEnd, @Mspecs);
+      @SysArgs = ("gen_moments", $InDir, $InFileSuffix, $OutFile, $Filter, $TsStart, $TsEnd, @Mspecs);
       print "Running: ", join(" ",@SysArgs), "\n\n";
       system(@SysArgs);
       }
