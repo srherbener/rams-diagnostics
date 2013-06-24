@@ -179,7 +179,7 @@ ylim(Y2lims);
 % the title. Ie, it doesn't do any good to do Left/Center/Right
 % alignment. But, the entire box can be moved to the left side of the
 % plot.
-T = title('(c)');
+T = title('(d)');
 set(T, 'Units', 'Normalized');
 set(T, 'HorizontalAlignment', 'Left');
 Tpos = get(T, 'Position');
