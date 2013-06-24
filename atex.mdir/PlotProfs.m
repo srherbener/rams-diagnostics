@@ -31,7 +31,7 @@ for iplot = 1:length(Config.ProfPlots)
     % If doing a diff plot, read in the control profile
     if (~isempty(strfind(Ptype, 'diff')))
       Case = Config.ControlCase;
-      Hfile = sprintf('%s/%s-%s.h5', Ddir, Fprefix, Case);
+      Hfile = sprintf('%s/%s_%s.h5', Ddir, Fprefix, Case);
       Hdset = sprintf('/%s', Var);
       fprintf('Reading Control Case: %s\n', Case);
       fprintf('  HDF5 file: %s, dataset: %s\n', Hfile, Hdset);
@@ -65,7 +65,7 @@ for iplot = 1:length(Config.ProfPlots)
 
         % Var is organized (b,z) in the file (CFAD).
         % Bins holds the bin values, Height holds the z values.
-        Hfile = sprintf('%s/%s-%s.h5', Ddir, Fprefix, Case);
+        Hfile = sprintf('%s/%s_%s.h5', Ddir, Fprefix, Case);
         Hdset = sprintf('/%s', Var);
         fprintf('  HDF5 file: %s, dataset: %s\n', Hfile, Hdset);
         PROF_EXP = squeeze(hdf5read(Hfile, Hdset));
