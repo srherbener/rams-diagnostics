@@ -237,9 +237,10 @@ for i = 1:size(InLines,1)
       for ips = 1:Cdata.PlotSets(i_pset).Ncases
         Cdata.PlotSets(i_pset).Cases(ips).Cname   = Fields{j};
         Cdata.PlotSets(i_pset).Cases(ips).Legend  = regexprep(Fields{j+1}, '@', ' ');
-        Cdata.PlotSets(i_pset).Cases(ips).Lstyle  = Fields{j+2};
-        Cdata.PlotSets(i_pset).Cases(ips).Lgscale = sscanf(Fields{j+3}, '%f');
-        j = j + 4;
+        Cdata.PlotSets(i_pset).Cases(ips).Lcolor  = Fields{j+2};
+        Cdata.PlotSets(i_pset).Cases(ips).Lstyle  = Fields{j+3};
+        Cdata.PlotSets(i_pset).Cases(ips).Lgscale = sscanf(Fields{j+4}, '%f');
+        j = j + 5;
       end
     case 'PlotVar:'
       i_pvar = i_pvar + 1;

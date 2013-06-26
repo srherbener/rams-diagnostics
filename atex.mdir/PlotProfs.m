@@ -11,6 +11,7 @@ Pdir = Config.PlotDir;
 for iplot = 1:length(Config.ProfPlots)
     clear Profs;
     clear LegText;
+    clear Lcolors;
     clear Lstyles;
     clear Lgscales;
 
@@ -60,6 +61,7 @@ for iplot = 1:length(Config.ProfPlots)
 
         iprof = iprof + 1;
         LegText(iprof) = { Config.PlotSets(ips).Cases(icase).Legend };
+        Lcolors(iprof) = { Config.PlotSets(ips).Cases(icase).Lcolor };
         Lstyles(iprof) = { Config.PlotSets(ips).Cases(icase).Lstyle };
         Lgscales(iprof) = Config.PlotSets(ips).Cases(icase).Lgscale;
 
@@ -91,6 +93,6 @@ for iplot = 1:length(Config.ProfPlots)
     end
 
     fprintf('Writing plot file: %s\n', OutFile);
-    PlotProfSet(Xvals, Zvals, Profs, Xlabel, Zlabel, Ptitle, Pmarkers, Lstyles, Lgscales, LegText, LegLoc, Ptype, OutFile);
+    PlotProfSet(Xvals, Zvals, Profs, Xlabel, Zlabel, Ptitle, Pmarkers, Lcolors, Lstyles, Lgscales, LegText, LegLoc, Ptype, OutFile);
     fprintf('\n');
 end
