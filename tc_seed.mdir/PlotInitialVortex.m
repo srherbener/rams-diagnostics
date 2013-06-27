@@ -11,6 +11,8 @@ SpinUpCase = Config.SpinUpCase;
 AzavgDir = Config.AzavgDir;
 PlotDir = Config.PlotDir;
 
+Fsize = 45;
+
 % read in the Vt and coordinate data
 %Hfile = sprintf('%s/speed_t300_%s.h5', AzavgDir, SpinUpCase);
 Hfile = sprintf('%s/speed_t_%s.h5', AzavgDir, SpinUpCase);
@@ -59,7 +61,7 @@ colormap(cmap);
 
 contourf(X, Z, VT_INIT);
 shading flat;
-set(gca,'FontSize', 45);
+set(gca,'FontSize', Fsize);
 caxis([ 0 15 ]);
 set(gca, 'XTick', [ 100 200 ]);
 set(gca, 'LineWidth', 2);
@@ -76,7 +78,8 @@ Tpos(1) = 0; % line up with left edge of plot area
 set(T, 'Position', Tpos);
 xlabel(Xlabel);
 ylabel(Ylabel);
-colorbar;
+cbar = colorbar;
+set(cbar, 'FontSize', Fsize);
 
 % Fix up the positioning
 Ppos = get(gca, 'Position'); % position of plot area

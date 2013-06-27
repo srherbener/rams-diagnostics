@@ -749,17 +749,17 @@ ProfRsPlot: ccn2_diff pmeas_relvortz_rvz1em4_SC_SS relvortz PANEL:c@\zeta   Radi
 #       <gray_scale>: 0 -> black
 #                     1 -> white
 #
-PlotSet: ccn4    4 TCS_SD_C0100 CLEAN - 0.0 TCS_SD_C0500 C500 -- 0.0 TCS_SD_C1000 C1000 -- 0.5 TCS_SD_C2000 C2000 - 0.5
-PlotSet: ccn2    2 TCS_SD_C0100 CLEAN - 0.0 TCS_SD_C2000 C2000 - 0.5
+PlotSet: ccn4    4 TCS_SD_C0100 CLEAN k - 0.0 TCS_SD_C0500 C500 k -- 0.0 TCS_SD_C1000 C1000 k -- 0.5 TCS_SD_C2000 C2000 k - 0.5
+PlotSet: ccn2    2 TCS_SD_C0100 CLEAN k - 0.0 TCS_SD_C2000 C2000 k - 0.5
 
-PlotSet: ccn2_ext       2 TCS_SD_C0100 CLEAN - 0.0 TCS_SD_C2000 POLLUTED - 0.5
-PlotSet: ccn2_ext_diff  1 TCS_SD_C2000 POLLUTED-CLEAN - 0.0
+PlotSet: ccn2_ext       2 TCS_SD_C0100 CLEAN k - 0.0 TCS_SD_C2000 POLLUTED k - 0.5
+PlotSet: ccn2_ext_diff  1 TCS_SD_C2000 POLLUTED-CLEAN k - 0.0
 
-PlotSet: ccn4_diff    3 TCS_SD_C0500 C500-CLEAN - 0.0 TCS_SD_C1000 C1000-CLEAN -- 0.0 TCS_SD_C2000 C2000-CLEAN - 0.5
-PlotSet: ccn2_diff    1 TCS_SD_C2000 C2000-CLEAN - 0.0
+PlotSet: ccn4_diff    3 TCS_SD_C0500 C500-CLEAN k - 0.0 TCS_SD_C1000 C1000-CLEAN k -- 0.0 TCS_SD_C2000 C2000-CLEAN k - 0.5
+PlotSet: ccn2_diff    1 TCS_SD_C2000 C2000-CLEAN k - 0.0
 
-PlotSet: ccn4_diff_short    3 TCS_SD_C0500 C500 - 0.0 TCS_SD_C1000 C1000 -- 0.0 TCS_SD_C2000 C2000 - 0.5
-PlotSet: ccn2_diff_short    1 TCS_SD_C2000 C2000 - 0.0
+PlotSet: ccn4_diff_short    3 TCS_SD_C0500 C500 k - 0.0 TCS_SD_C1000 C1000 k -- 0.0 TCS_SD_C2000 C2000 k - 0.5
+PlotSet: ccn2_diff_short    1 TCS_SD_C2000 C2000 k - 0.0
 
 ####################### Plot Vars ################################
 # PlotVar: <name> <vname> <file_prefix> <label> <units> <axis_min> <axis_max> <scale>
