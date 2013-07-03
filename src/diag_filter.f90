@@ -68,7 +68,7 @@ program diag_filter
   real :: Xstart, Xinc, Ystart, Yinc
   real, dimension(:), allocatable :: XcoordsKm, YcoordsKm
 
-  type (Rhdf5Var) :: Radius, MinP, StormX, StormY, MaxRadius
+  type (Rhdf5Var) :: Radius, MinP, StormX, StormY, MaxRadius, StormXidx, StormYidx
   real :: Rval, Pval, Zval, MaxRval
   integer :: StmIx, StmIy
 
@@ -323,6 +323,18 @@ program diag_filter
     StormY%descrip = 'latitude location of minimum SLP of storm'
     allocate(StormY%vdata(1))
 
+    StormXidx%vname = 'min_press_x_index'
+    StormXidx%ndims = 0
+    StormXidx%units = 'lon index'
+    StormXidx%descrip = 'longitude index of minimum SLP of storm'
+    allocate(StormXidx%vdata(1))
+    
+    StormYidx%vname = 'min_press_y_index'
+    StormYidx%ndims = 0
+    StormYidx%units = 'lat index'
+    StormYidx%descrip = 'latitude index of minimum SLP of storm'
+    allocate(StormYidx%vdata(1))
+
     MaxRadius%vname = 'max_radius'
     MaxRadius%ndims = 0 
     MaxRadius%units = 'km'
@@ -395,6 +407,8 @@ program diag_filter
       ! Record the lat,lon of the storm center
       StormX%vdata(1) = Xcoords%vdata(StmIx)
       StormY%vdata(1) = Ycoords%vdata(StmIy)
+      StormXidx%vdata(1) = float(StmIx)
+      StormYidx%vdata(1) = float(StmIy)
 
       ! clean up
       if (UseFsFilter) then
@@ -544,6 +558,10 @@ program diag_filter
         StormX%units, StormX%descrip, StormX%dimnames, rdata=StormX%vdata)
       call rhdf5_write_variable(OutFileId, StormY%vname, StormY%ndims, it, StormY%dims, &
         StormY%units, StormY%descrip, StormY%dimnames, rdata=StormY%vdata)
+      call rhdf5_write_variable(OutFileId, StormXidx%vname, StormXidx%ndims, it, StormXidx%dims, &
+        StormXidx%units, StormXidx%descrip, StormXidx%dimnames, rdata=StormXidx%vdata)
+      call rhdf5_write_variable(OutFileId, StormYidx%vname, StormYidx%ndims, it, StormYidx%dims, &
+        StormYidx%units, StormYidx%descrip, StormYidx%dimnames, rdata=StormYidx%vdata)
       ! This repeats the max radius value for each time step, however this keeps the size of
       ! the data array consistent with the size of t_coords
       call rhdf5_write_variable(OutFileId, MaxRadius%vname, MaxRadius%ndims, it, MaxRadius%dims, &
@@ -595,6 +613,8 @@ program diag_filter
     call rhdf5_attach_dimensions(OutFile, MinP)
     call rhdf5_attach_dimensions(OutFile, StormX)
     call rhdf5_attach_dimensions(OutFile, StormY)
+    call rhdf5_attach_dimensions(OutFile, StormXidx)
+    call rhdf5_attach_dimensions(OutFile, StormYidx)
     call rhdf5_attach_dimensions(OutFile, Radius)
     call rhdf5_attach_dimensions(OutFile, MaxRadius)
   endif
