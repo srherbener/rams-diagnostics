@@ -74,7 +74,7 @@ program azavg
 
   ! Get the command line arguments
   call GetMyArgs(InDir, InSuffix, OutFile, FilterFile, NumRbands, VarToAvg, &
-    RevuVar, DoHorizVel, DoTangential, VarIs2d)
+    RevuVar, VarIs2d)
 
   if (VarToAvg(1:5) .eq. 'hist:') then
     call String2List(VarToAvg, ':', ArgList, MaxArgFields, Nfields, 'hist spec')
@@ -103,6 +103,21 @@ program azavg
     DoHist = .false.
     NumBins = 1
   endif
+
+  ! Do the check for horizontal velocity cases in order to support
+  ! both averaging and creation of a histogram.
+  if (VarToAvg == 'speed_t') then
+    DoHorizVel = .true.
+    DoTangential = .true.
+  else
+    if (VarToAvg == 'speed_r') then
+      DoHorizVel = .true.
+      DoTangential = .false.
+    else
+      DoHorizVel = .false.
+      DoTangential = .false.
+    end if
+  end if
 
   write (*,*) 'Calculating azimuthal average for RAMS data:'
   write (*,*) '  Input directory: ', trim(InDir)
@@ -463,13 +478,13 @@ Contains
 !
 
 subroutine GetMyArgs(InDir, InSuffix, OutFile, FilterFile, NumRbands, VarToAvg, &
-    RevuVar, DoHorizVel, DoTangential, VarIs2d)
+    RevuVar, VarIs2d)
 
   implicit none
 
   integer :: NumRbands
   character (len=*) :: InDir, InSuffix, OutFile, FilterFile, VarToAvg, RevuVar
-  logical :: DoHorizVel, DoTangential, VarIs2d
+  logical :: VarIs2d
 
   integer :: iargc
   character (len=128) :: arg
@@ -509,18 +524,6 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, FilterFile, NumRbands, VarToAvg, 
   read (arg, '(i)') NumRbands !convert to integer
 
   call getarg(6, VarToAvg)
-  if (VarToAvg == 'speed_t') then
-    DoHorizVel = .true.
-    DoTangential = .true.
-  else
-    if (VarToAvg == 'speed_r') then
-      DoHorizVel = .true.
-      DoTangential = .false.
-    else
-      DoHorizVel = .false.
-      DoTangential = .false.
-    end if
-  end if
 
   call getarg(7, RevuVar)
 
