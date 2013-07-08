@@ -9,21 +9,48 @@ if (exist(Pdir, 'dir') ~= 7)
     mkdir(Pdir);
 end
 
-% read in the sea level pressure
-Hfile = sprintf('%s/speed_t_TSD_3GRIDS.h5', Adir);
+% read in the tangential wind
+Hfile = sprintf('AzAveragedData/hist_speed_t_TSD_3GRIDS.h5');
 Hdset = 'speed_t';
 fprintf('Reading: %s, Dataset: %s\n', Hfile, Hdset);
-SPEED_T = squeeze(hdf5read(Hfile, Hdset));
-TIMES = 1:size(SPEED_T,3);
+HDATA = hdf5read(Hfile, Hdset);
+R = hdf5read(Hfile, 'x_coords')/1000;  % radius (km)
+S = hdf5read(Hfile, 'y_coords');  % wind speed
+Z = hdf5read(Hfile, 'z_coords');  % height
+T = hdf5read(Hfile, 't_coords');  % times
 
-% ST is organized as r,z,t so take the max along the first two dimensions
-% Generate the time series of the maximum of the near surface Vt. Use Z = 2
-% since Z = 1 is below surface in RAMS.
-% Also, skip the first radial entry. There is a miscalculation in the
-% speed_t diagnostic due to TS Debby travelling over the Verde Islands.
-R1 = 2;
-R2 = size(SPEED_T,1);
-ST_MAX = max(squeeze(SPEED_T(R1:R2,2,:)), [] ,1);
+% Select data
+%  All radii
+%  All pressure bins
+%  First model level above ground
+%  All times
+R1 = 1;
+R2 = length(R);
+S1 = 1;
+S2 = length(S);
+Z1 = find(Z >= 0, 1, 'first');
+T1 = 1;
+T2 = length(T);
+
+SPEED = squeeze(HDATA(R1:R2,S1:S2,Z1,T1:T2));
+TIMES = T1:T2;
+
+% SPEED is organized as r,s,t where each entry contains a count of the
+% occurrences of speed value, s, at radius, r. To get the maximum
+% speed, at each time step, find the largest speed bin that has a
+% non-zero count across all radii and use the speed value for that bin.
+SPEED = squeeze(sum(SPEED,1));
+
+% SPEED is now organized as (s,t). For each time step, find the largest
+% speed bin that has a non-zero count, and use that bin to look up the
+% speed value associtated with it. This will be the maximum speed
+% for that time step.
+Nt = length(TIMES);
+ST_MAX = zeros([1 Nt]);
+for it = 1:Nt
+  Sind = find(SPEED(:,it) > 0, 1, 'last');
+  ST_MAX(it) = S(Sind);
+end
 
 % NHC Best Track (every six hours) data
 % time step 1 from the simulation is where the NHC data starts
@@ -45,7 +72,7 @@ xlabel('Time');
 set(gca,'xtick', (13:24:61));
 set(gca,'xticklabel', { 'Aug22:0Z', 'Aug23:0Z', 'Aug24:0Z' });
 ylabel('Wind Speed (m/s)');
-ylim([ 0 40 ]);
+ylim([ 0 30 ]);
 legend([ NhcST SimST ], 'NHC Best Track', 'Simulated Storm', 'Location', 'NorthEast');
 
 fprintf('Writing: %s\n', OutFile);
