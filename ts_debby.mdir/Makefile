@@ -15,6 +15,7 @@ SCRIPTS = \
   $(DEST)/PlotSpeedtThetae.m \
   $(DEST)/PlotTracks.m \
   $(DEST)/PlotTracksAll.m \
+  $(DEST)/PlotWinds.m \
   $(DEST)/SetPath.m
 
 CONFIGS = \
