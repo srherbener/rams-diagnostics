@@ -16,7 +16,7 @@ fprintf('Reading: %s, Dataset: %s\n', Hfile, Hdset);
 HDATA = hdf5read(Hfile, Hdset);
 R = hdf5read(Hfile, 'x_coords')/1000;  % radius (km)
 S = hdf5read(Hfile, 'y_coords');  % wind speed
-Z = hdf5read(Hfile, 'z_coords');  % height
+Z = hdf5read(Hfile, 'z_coords')/1000;  % height (km)
 T = hdf5read(Hfile, 't_coords');  % times
 
 % Select data
@@ -29,17 +29,21 @@ R2 = length(R);
 S1 = 1;
 S2 = length(S);
 Z1 = find(Z >= 0, 1, 'first');
+Z2 = find(Z <= 0.05, 1, 'last');
 T1 = 1;
 T2 = length(T);
 
-SPEED = squeeze(HDATA(R1:R2,S1:S2,Z1,T1:T2));
+SPEED = squeeze(HDATA(R1:R2,S1:S2,Z1:Z2,T1:T2));
 TIMES = T1:T2;
 
-% SPEED is organized as r,s,t where each entry contains a count of the
+% SPEED is organized as r,s,z,t where each entry contains a count of the
 % occurrences of speed value, s, at radius, r. To get the maximum
 % speed, at each time step, find the largest speed bin that has a
 % non-zero count across all radii and use the speed value for that bin.
-SPEED = squeeze(sum(SPEED,1));
+%
+% UNCOMMENT THE FOLLOWING IF Z2 > Z1
+%SPEED = sum(SPEED, 3); % sum across z
+SPEED = squeeze(sum(SPEED,1)); % sum across r
 
 % SPEED is now organized as (s,t). For each time step, find the largest
 % speed bin that has a non-zero count, and use that bin to look up the
