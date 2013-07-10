@@ -10,11 +10,11 @@ if (exist(Pdir, 'dir') ~= 7)
     mkdir(Pdir);
 end
 
-SampleTimes = [ 7 31 55 ];
+SampleTimes = [ 1 25 49 ];
 SampleNames = {
- 'Aug 22, 12Z'
- 'Aug 23, 12Z'
- 'Aug 24, 12Z'
+ 'Aug 22, 06Z'
+ 'Aug 23, 06Z'
+ 'Aug 24, 06Z'
  };
 
 % Get set up to read in horizontal winds
@@ -50,7 +50,7 @@ WB_Z1 = find(Z <= 0.5, 1, 'last');
 
 % Levels for the Vt plot
 VT_R1 = find(R >= 0, 1, 'first');
-VT_R2 = find(R <= 300, 1, 'last');
+VT_R2 = find(R <= 400, 1, 'last');
 VT_Z1 = find(Z >= 0, 1, 'first');
 VT_Z2 = find(Z <= 5, 1, 'last');
 
@@ -72,7 +72,7 @@ Scale = 1;
 % For the Vt plots
 VT_R = R(VT_R1:VT_R2);
 VT_Z = Z(VT_Z1:VT_Z2);
-Clims = [ 0 20 ];
+Clims = [ 0 15 ];
 
 for it = 1:length(SampleTimes)
   T1 = SampleTimes(it);
