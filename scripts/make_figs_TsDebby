@@ -5,9 +5,10 @@
 Jsize="1200x900"
 
 echo "Figure: Storm Evolution"
-montage -tile 1x2 -geometry ${Jsize}+2+100 \
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
  TsDebbyTracks.jpg \
  TsDebbyPress.jpg \
+ HovVintCond.jpg \
  FigureStormEvolution.jpg
 
 echo "Figure: Storm Winds"
