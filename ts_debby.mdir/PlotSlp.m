@@ -61,11 +61,18 @@ NHC_TIMES = (1:6:61);
 OutFile = sprintf('%s/TsDebbyPress.jpg', Pdir);
 
 FigPress = figure;
-set(gca, 'FontSize', 18);
+set(gca, 'FontSize', 20);
 SimSLP = plot(TIMES, SLP_MIN, '-r', 'linewi', 2);
 hold on;
 NhcSLP = plot(NHC_TIMES, NHC_SLP, '+b', 'linewi', 2);
-title('TS Debby Minumum SLP');
+
+T = title('(b)');
+set(T, 'Units', 'Normalized');
+set(T, 'HorizontalAlignment', 'Left');
+Tpos = get(T, 'Position');
+Tpos(1) = 0; % line up with left edge of plot area
+set(T, 'Position', Tpos);
+
 xlabel('Time');
 set(gca,'xtick', (13:24:61));
 set(gca,'xticklabel', { 'Aug22:0Z', 'Aug23:0Z', 'Aug24:0Z' });

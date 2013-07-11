@@ -27,14 +27,20 @@ SimTrackLats = squeeze(hdf5read(Hfile, HdsetLat));
 
 % plot
 FigTracks = figure;
-set(gca, 'FontSize', 18);
+set(gca, 'FontSize', 20);
 m_proj('miller', 'lat', LatBounds, 'long', LonBounds);
 m_coast('color', 'k'); % k --> black
 m_grid('linestyle','none','box','fancy','tickdir','out');
 NhcTrack = m_line(NhcTrackLons, NhcTrackLats, 'linewi', 3, 'color', 'b', 'linestyle', 'none', 'marker', '+');
 SimTrack = m_line(SimTrackLons, SimTrackLats, 'linewi', 3, 'color', 'r'); 
-title('TS Debby Tracks');
 legend([ NhcTrack SimTrack ], 'NHC Best Track', 'Simulated Track', 'Location', 'NorthWest');
+
+T = title('(a)');
+set(T, 'Units', 'Normalized');
+set(T, 'HorizontalAlignment', 'Left');
+Tpos = get(T, 'Position');
+Tpos(1) = 0; % line up with left edge of plot area
+set(T, 'Position', Tpos);
 
 OutFile = sprintf('%s/TsDebbyTracks.jpg', Pdir);
 fprintf('Writing: %s\n', OutFile);

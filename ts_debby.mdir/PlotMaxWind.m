@@ -67,11 +67,18 @@ NHC_TIMES = (1:6:61);
 OutFile = sprintf('%s/TsDebbyWind.jpg', Pdir);
 
 FigWind = figure;
-set(gca, 'FontSize', 18);
+set(gca, 'FontSize', 20);
 SimST = plot(TIMES, ST_MAX, '-r', 'linewi', 2);
 hold on;
 NhcST = plot(NHC_TIMES, NHC_WIND, '+b', 'linewi', 2);
-title('TS Debby Maximum Tangential Wind Speed');
+
+T = title('(c)');
+set(T, 'Units', 'Normalized');
+set(T, 'HorizontalAlignment', 'Left');
+Tpos = get(T, 'Position');
+Tpos(1) = 0; % line up with left edge of plot area
+set(T, 'Position', Tpos);
+
 xlabel('Time');
 set(gca,'xtick', (13:24:61));
 set(gca,'xticklabel', { 'Aug22:0Z', 'Aug23:0Z', 'Aug24:0Z' });

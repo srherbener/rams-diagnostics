@@ -10,11 +10,25 @@ if (exist(Pdir, 'dir') ~= 7)
     mkdir(Pdir);
 end
 
+Fsize = 20;
+
 SampleTimes = [ 1 25 49 ];
 SampleNames = {
  'Aug 22, 06Z'
  'Aug 23, 06Z'
  'Aug 24, 06Z'
+ };
+
+Slabels = {
+ '(a)'
+ '(c)'
+ '(e)'
+ };
+
+VTlabels = {
+ '(b)'
+ '(d)'
+ '(f)'
  };
 
 % Get set up to read in horizontal winds
@@ -27,22 +41,27 @@ fprintf('Reading: %s, Variable: %s\n', Vfile, Vvar);
 VTfile = sprintf('%s/speed_t_TSD_3GRIDS.h5', Adir);
 VTvar = 'speed_t';
 fprintf('Reading: %s, Variable: %s\n', VTfile, VTvar);
+Wfile = sprintf('%s/w_TSD_3GRIDS.h5', Adir);
+Wvar = 'w';
+fprintf('Reading: %s, Variable: %s\n', Wfile, Wvar);
 
 Udset = ncgeodataset(Ufile);
 Vdset = ncgeodataset(Vfile);
 VTdset = ncgeodataset(VTfile);
+Wdset = ncgeodataset(Wfile);
 Uwind = Udset.geovariable(Uvar);
 Vwind = Vdset.geovariable(Vvar);
 VTwind = VTdset.geovariable(VTvar);
+Wwind = Wdset.geovariable(Wvar);
 
 % Read in coord values (same in both U and V files)
 X = Udset.data('x_coords');      % degrees lon
 Y = Udset.data('y_coords');      % degrees lat
-Z = Udset.data('z_coords')/1000; % height km
-T = Udset.data('t_coords')/3600; % time hr
 
 % Read in Vt coords
 R = VTdset.data('x_coords')/1000; % radius km
+Z = VTdset.data('z_coords')/1000; % height km
+T = VTdset.data('t_coords')/3600; % time hr
 
 % Pick out a good level for the wind barb plots - use ~500m for now since that is where
 % the tangential winds are the strongest
@@ -53,6 +72,10 @@ VT_R1 = find(R >= 0, 1, 'first');
 VT_R2 = find(R <= 400, 1, 'last');
 VT_Z1 = find(Z >= 0, 1, 'first');
 VT_Z2 = find(Z <= 5, 1, 'last');
+W_R1 = find(R >= 0, 1, 'first');
+W_R2 = find(R <= 400, 1, 'last');
+W_Z1 = find(Z >= 0, 1, 'first');
+W_Z2 = find(Z <= 15, 1, 'last');
 
 % Create wind barb plots: one for each time sample
 % m_quiver wants coordinates in a meshgrid style
@@ -72,14 +95,16 @@ Scale = 1;
 % For the Vt plots
 VT_R = R(VT_R1:VT_R2);
 VT_Z = Z(VT_Z1:VT_Z2);
-Clims = [ 0 15 ];
+VT_Clims = [ 0 15 ];
+W_R = R(W_R1:W_R2);
+W_Z = Z(W_Z1:W_Z2);
+W_Clims = [ -0.2 0.2 ];
 
 for it = 1:length(SampleTimes)
   T1 = SampleTimes(it);
   Time = T(T1);
   fprintf('Generating stream line plot: T = %d hr\n', Time);
 
-  Ptitle = sprintf('TS Debby (2006), %s', SampleNames{it});
 
   %%%%%%%%%%%%%%%%%%%%%% WIND BARB PLOT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   % Read in horizontal winds at the given time and level.
@@ -92,7 +117,7 @@ for it = 1:length(SampleTimes)
   V = double(squeeze(Vwind.data(T1,WB_Z1,:,:)));
 
   Fig = figure;
-  set(gca, 'FontSize', 18);
+  set(gca, 'FontSize', Fsize);
 
   m_proj('miller', 'lat', LatBounds, 'lon', LonBounds);
   m_coast('color', 'k', 'linewidth', 3); % k --> black
@@ -103,7 +128,12 @@ for it = 1:length(SampleTimes)
              U(1:Xinc:end,1:Yinc:end),   V(1:Xinc:end,1:Yinc:end), ...
           Scale, 'linewidth', 1.5);
 
-  title(Ptitle);
+  Thand = title(Slabels{it});
+  set(Thand, 'Units', 'Normalized');
+  set(Thand, 'HorizontalAlignment', 'Left');
+  Tpos = get(Thand, 'Position');
+  Tpos(1) = 0; % line up with left edge of plot area
+  set(Thand, 'Position', Tpos);
 
   OutFile = sprintf('%s/WindsStream_T%d.jpg', Pdir, Time);
   fprintf('  Writing file: %s\n', OutFile);
@@ -115,14 +145,21 @@ for it = 1:length(SampleTimes)
   VT = double(squeeze(VTwind.data(T1,VT_Z1:VT_Z2,:,VT_R1:VT_R2)));
 
   Fig = figure;
-  set(gca, 'FontSize', 18);
+  set(gca, 'FontSize', Fsize);
 
   contourf(VT_R, VT_Z, VT);
   shading flat;
-  colorbar;
-  caxis(Clims);
+  cbar = colorbar;
+  set(cbar, 'FontSize', Fsize);
+  caxis(VT_Clims);
 
-  title(Ptitle);
+  Thand = title(VTlabels{it});
+  set(Thand, 'Units', 'Normalized');
+  set(Thand, 'HorizontalAlignment', 'Left');
+  Tpos = get(Thand, 'Position');
+  Tpos(1) = 0; % line up with left edge of plot area
+  set(Thand, 'Position', Tpos);
+
   xlabel('Radius (km)');
   ylabel('Height (km)');
 
@@ -130,6 +167,30 @@ for it = 1:length(SampleTimes)
   fprintf('  Writing file: %s\n', OutFile);
   saveas(Fig, OutFile);
   close(Fig);
+  
+  %%%%%%%%%%%%%%%%%%%%%% W PLOT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  W = double(squeeze(Wwind.data(T1,W_Z1:W_Z2,:,W_R1:W_R2)));
+
+  Fig = figure;
+  set(gca, 'FontSize', Fsize);
+
+  contourf(W_R, W_Z, W);
+  shading flat;
+  cbar = colorbar;
+  set(cbar, 'FontSize', Fsize);
+  colormap(redblue);
+  caxis(W_Clims);
+
+  Ptitle = sprintf('TS Debby (2006), %s: W (m/s)', SampleNames{it});
+  title(Ptitle);
+  xlabel('Radius (km)');
+  ylabel('Height (km)');
+
+  OutFile = sprintf('%s/WindsW_T%d.jpg', Pdir, Time);
+  fprintf('  Writing file: %s\n', OutFile);
+  saveas(Fig, OutFile);
+  close(Fig);
+
 end
 
 
