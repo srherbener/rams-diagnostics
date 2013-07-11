@@ -1,4 +1,4 @@
-function [ ] = PlotSpeedtThetae(ConfigFile)
+function [ ] = PlotHydro(ConfigFile)
 
 [ Config ] = ReadConfig(ConfigFile);
 
@@ -65,34 +65,31 @@ fprintf('Reading: %s, Variable: %s\n', GRfile, GRvar);
 PRfile = sprintf('%s/pcprate-TSD_3GRIDS-AS-2006-08-20-120000-g3.h5', Hdir);
 PRvar = 'pcprate';
 fprintf('Reading: %s, Variable: %s\n', PRfile, PRvar);
-VCfile = sprintf('%s/vint_cond-TSD_3GRIDS-AS-2006-08-20-120000-g3.h5', Hdir);
-VCvar = 'vertint_cond';
+VCfile = sprintf('%s/vint_cond_TSD_3GRIDS.h5', Adir);
+VCvar = 'vint_cond';
 fprintf('Reading: %s, Variable: %s\n', VCfile, VCvar);
 
 CLdset = ncgeodataset(CLfile);
 CLhydro = CLdset.geovariable(CLvar);
 RNdset = ncgeodataset(RNfile);
-RNwind = RNdset.geovariable(RNvar);
+RNhydro = RNdset.geovariable(RNvar);
 AGdset = ncgeodataset(AGfile);
-AGwind = AGdset.geovariable(AGvar);
+AGhydro = AGdset.geovariable(AGvar);
 GRdset = ncgeodataset(GRfile);
-GRwind = GRdset.geovariable(GRvar);
+GRhydro = GRdset.geovariable(GRvar);
 PRdset = ncgeodataset(PRfile);
-PRwind = PRdset.geovariable(PRvar);
+PRhydro = PRdset.geovariable(PRvar);
 VCdset = ncgeodataset(VCfile);
-VCwind = VCdset.geovariable(VCvar);
+VChydro = VCdset.geovariable(VCvar);
 
 % coords
-R = CLdset.data('x_coords')/1000; % radius km
-Z = CLdset.data('z_coords')/1000; % height km
-T = CLdset.data('t_coords')/3600; % time hr
-
-% Read in lat, lon
+R   = CLdset.data('x_coords')/1000; % radius km
+Z   = CLdset.data('z_coords')/1000; % height km
+T   = PRdset.data('t_coords')/3600; % time hr
 LON = PRdset.data('x_coords');      % degrees lon
 LAT = PRdset.data('y_coords');      % degrees lat
 LonBounds = [ -40 -13.5 ];
 LatBounds = [   7  24   ];
-
 
 % Data Selection
 CL_R1 = find(R >= 0, 1, 'first');
@@ -111,7 +108,8 @@ GR_R1 = find(R >= 0, 1, 'first');
 GR_R2 = find(R <= 400, 1, 'last');
 GR_Z1 = find(Z >= 0, 1, 'first');
 GR_Z2 = find(Z <= 15, 1, 'last');
-
+VC_R1 = find(R >= 0, 1, 'first');
+VC_R2 = find(R <= 400, 1, 'last');
 
 % For plots
 CL_R = R(CL_R1:CL_R2);
@@ -126,6 +124,8 @@ AG_Clims = [ 0 0.5 ];
 GR_R = R(GR_R1:GR_R2);
 GR_Z = Z(GR_Z1:GR_Z2);
 GR_Clims = [ 0 0.05 ];
+VC_R = R(VC_R1:VC_R2);
+VC_Clims = [ 0 3 ];
 
 PR_Clims = [ 0 20 ];
 
@@ -139,7 +139,7 @@ for it = 1:length(SampleTimes)
   % hdf5 file (as opposed to hdf5read which reverses the dimensions).
   % This works out since we need lat (y) in the rows and lon (x) in
   % the columns.
-  PR = squeeze(PRwind.data(T1,:,:,:));
+  PR = squeeze(PRhydro.data(T1,:,:,:));
   PR(PR < 0.3) = nan;
 
   Fig = figure;
@@ -197,7 +197,7 @@ for it = 1:length(SampleTimes)
   close(Fig);
   
   %%%%%%%%%%%%%%%%%%%%%% Rain PLOT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  RN = double(squeeze(RNwind.data(T1,RN_Z1:RN_Z2,:,RN_R1:RN_R2)));
+  RN = double(squeeze(RNhydro.data(T1,RN_Z1:RN_Z2,:,RN_R1:RN_R2)));
 
   Fig = figure;
   set(gca, 'FontSize', Fsize);
@@ -225,7 +225,7 @@ for it = 1:length(SampleTimes)
   close(Fig);
 
   %%%%%%%%%%%%%%%%%%%%%% Aggregate PLOT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  AG = double(squeeze(AGwind.data(T1,AG_Z1:AG_Z2,:,AG_R1:AG_R2)));
+  AG = double(squeeze(AGhydro.data(T1,AG_Z1:AG_Z2,:,AG_R1:AG_R2)));
 
   Fig = figure;
   set(gca, 'FontSize', Fsize);
@@ -253,7 +253,7 @@ for it = 1:length(SampleTimes)
   close(Fig);
 
   %%%%%%%%%%%%%%%%%%%%%% Graupel PLOT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  GR = double(squeeze(GRwind.data(T1,GR_Z1:GR_Z2,:,GR_R1:GR_R2)));
+  GR = double(squeeze(GRhydro.data(T1,GR_Z1:GR_Z2,:,GR_R1:GR_R2)));
 
   Fig = figure;
   set(gca, 'FontSize', Fsize);
@@ -280,6 +280,34 @@ for it = 1:length(SampleTimes)
   saveas(Fig, OutFile);
   close(Fig);
 end
+
+% create hovmoller plot of vertically integrated condensate
+VC = double(squeeze(VChydro.data(:,:,:,VC_R1:VC_R2)));
+
+Fig = figure;
+set(gca, 'FontSize', Fsize);
+
+contourf(VC_R, T, VC);
+shading flat;
+cbar = colorbar;
+set(cbar, 'FontSize', Fsize);
+caxis(VC_Clims);
+
+Ptitle = '(c)';
+Thand = title(Ptitle);
+set(Thand, 'Units', 'Normalized');
+set(Thand, 'HorizontalAlignment', 'Left');
+Tpos = get(Thand, 'Position');
+Tpos(1) = 0; % line up with left edge of plot area
+set(Thand, 'Position', Tpos);
+
+xlabel('Radius (km)');
+ylabel('Time (hr)');
+
+OutFile = sprintf('%s/HovVintCond.jpg', Pdir);
+fprintf('  Writing file: %s\n', OutFile);
+saveas(Fig, OutFile);
+close(Fig);
 
 
 end

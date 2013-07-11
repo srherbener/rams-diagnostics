@@ -1,4 +1,4 @@
-function [ ] = PlotSpeedtThetae(ConfigFile)
+function [ ] = PlotWinds(ConfigFile)
 
 [ Config ] = ReadConfig(ConfigFile);
 
