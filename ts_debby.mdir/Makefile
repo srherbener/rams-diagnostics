@@ -7,6 +7,7 @@ DIAG_DIR = /Volumes/tasman1/sherbener/data/RAMS/TsDebby
 
 SCRIPTS = \
   $(DEST)/PlotGrids.m \
+  $(DEST)/PlotHydro.m \
   $(DEST)/PlotMaxWind.m \
   $(DEST)/PlotMaxWindAll.m \
   $(DEST)/PlotPressWind.m \

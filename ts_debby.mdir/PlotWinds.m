@@ -21,14 +21,14 @@ SampleNames = {
 
 Slabels = {
  '(a)'
- '(c)'
- '(e)'
+ '(d)'
+ '(g)'
  };
 
 VTlabels = {
- '(b)'
- '(d)'
+ '(c)'
  '(f)'
+ '(i)'
  };
 
 % Get set up to read in horizontal winds
@@ -128,7 +128,8 @@ for it = 1:length(SampleTimes)
              U(1:Xinc:end,1:Yinc:end),   V(1:Xinc:end,1:Yinc:end), ...
           Scale, 'linewidth', 1.5);
 
-  Thand = title(Slabels{it});
+  Ptitle = sprintf('%s %s', Slabels{it}, SampleNames{it});
+  Thand = title(Ptitle);
   set(Thand, 'Units', 'Normalized');
   set(Thand, 'HorizontalAlignment', 'Left');
   Tpos = get(Thand, 'Position');
@@ -153,7 +154,8 @@ for it = 1:length(SampleTimes)
   set(cbar, 'FontSize', Fsize);
   caxis(VT_Clims);
 
-  Thand = title(VTlabels{it});
+  Ptitle = sprintf('%s %s', VTlabels{it}, SampleNames{it});
+  Thand = title(Ptitle);
   set(Thand, 'Units', 'Normalized');
   set(Thand, 'HorizontalAlignment', 'Left');
   Tpos = get(Thand, 'Position');
