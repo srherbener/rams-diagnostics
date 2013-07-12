@@ -13,14 +13,14 @@ montage -tile 2x2 -geometry ${Jsize}+2+100 \
 
 echo "Figure: Storm Winds"
 montage -tile 3x3 -geometry ${Jsize}+2+100 \
- WindsStream_T42.jpg \
- PrecipRate_T42.jpg \
- WindsVt_T42.jpg \
- WindsStream_T66.jpg \
- PrecipRate_T66.jpg \
- WindsVt_T66.jpg \
- WindsStream_T90.jpg \
- PrecipRate_T90.jpg \
- WindsVt_T90.jpg \
+ WindsStream_T1.jpg \
+ PrecipRate_T1.jpg \
+ WindsVt_T1.jpg \
+ WindsStream_T2.jpg \
+ PrecipRate_T2.jpg \
+ WindsVt_T2.jpg \
+ WindsStream_T3.jpg \
+ PrecipRate_T3.jpg \
+ WindsVt_T3.jpg \
  FigureStormWinds.jpg
 
