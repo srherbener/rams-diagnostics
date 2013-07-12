@@ -12,11 +12,11 @@ end
 
 Fsize = 20;
 
-SampleTimes = [ 1 25 49 ];
+SampleTimes = [ 7 31 55 ];
 SampleNames = {
- 'Aug 22, 06Z'
- 'Aug 23, 06Z'
- 'Aug 24, 06Z'
+ 'Aug 22:12Z'
+ 'Aug 23:12Z'
+ 'Aug 24:12Z'
  };
 
 Slabels = {
@@ -136,7 +136,7 @@ for it = 1:length(SampleTimes)
   Tpos(1) = 0; % line up with left edge of plot area
   set(Thand, 'Position', Tpos);
 
-  OutFile = sprintf('%s/WindsStream_T%d.jpg', Pdir, Time);
+  OutFile = sprintf('%s/WindsStream_T%d.jpg', Pdir, it);
   fprintf('  Writing file: %s\n', OutFile);
   saveas(Fig, OutFile);
   close(Fig);
@@ -146,13 +146,15 @@ for it = 1:length(SampleTimes)
   VT = double(squeeze(VTwind.data(T1,VT_Z1:VT_Z2,:,VT_R1:VT_R2)));
 
   Fig = figure;
-  set(gca, 'FontSize', Fsize);
 
   contourf(VT_R, VT_Z, VT);
   shading flat;
   cbar = colorbar;
   set(cbar, 'FontSize', Fsize);
   caxis(VT_Clims);
+  set(gca, 'FontSize', Fsize);
+  set(gca, 'LineWidth', 2); 
+  set(gca, 'TickLength', [ 0.025 0.025 ]); 
 
   Ptitle = sprintf('%s %s', VTlabels{it}, SampleNames{it});
   Thand = title(Ptitle);
@@ -165,7 +167,7 @@ for it = 1:length(SampleTimes)
   xlabel('Radius (km)');
   ylabel('Height (km)');
 
-  OutFile = sprintf('%s/WindsVt_T%d.jpg', Pdir, Time);
+  OutFile = sprintf('%s/WindsVt_T%d.jpg', Pdir, it);
   fprintf('  Writing file: %s\n', OutFile);
   saveas(Fig, OutFile);
   close(Fig);
@@ -174,7 +176,6 @@ for it = 1:length(SampleTimes)
   W = double(squeeze(Wwind.data(T1,W_Z1:W_Z2,:,W_R1:W_R2)));
 
   Fig = figure;
-  set(gca, 'FontSize', Fsize);
 
   contourf(W_R, W_Z, W);
   shading flat;
@@ -182,13 +183,16 @@ for it = 1:length(SampleTimes)
   set(cbar, 'FontSize', Fsize);
   colormap(redblue);
   caxis(W_Clims);
+  set(gca, 'FontSize', Fsize);
+  set(gca, 'LineWidth', 2); 
+  set(gca, 'TickLength', [ 0.025 0.025 ]); 
 
   Ptitle = sprintf('TS Debby (2006), %s: W (m/s)', SampleNames{it});
   title(Ptitle);
   xlabel('Radius (km)');
   ylabel('Height (km)');
 
-  OutFile = sprintf('%s/WindsW_T%d.jpg', Pdir, Time);
+  OutFile = sprintf('%s/WindsW_T%d.jpg', Pdir, it);
   fprintf('  Writing file: %s\n', OutFile);
   saveas(Fig, OutFile);
   close(Fig);

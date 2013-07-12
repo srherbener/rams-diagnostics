@@ -74,8 +74,9 @@ Tpos(1) = 0; % line up with left edge of plot area
 set(T, 'Position', Tpos);
 
 xlabel('Time');
-set(gca,'xtick', (13:24:61));
-set(gca,'xticklabel', { 'Aug22:0Z', 'Aug23:0Z', 'Aug24:0Z' });
+xlim([ 0 62 ]);
+set(gca,'xtick', (7:24:55));
+set(gca,'xticklabel', { 'Aug22:12Z', 'Aug23:12Z', 'Aug24:12Z' });
 ylabel('Pressure (mb)');
 ylim([ 995 1010 ]);
 legend([ NhcSLP SimSLP ], 'NHC Best Track', 'Simulated Storm', 'Location', 'NorthEast');

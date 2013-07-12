@@ -12,11 +12,11 @@ end
 
 Fsize = 20;
 
-SampleTimes = [ 1 25 49 ];
+SampleTimes = [ 7 31 55 ];
 SampleNames = {
- 'Aug 22, 06Z'
- 'Aug 23, 06Z'
- 'Aug 24, 06Z'
+ 'Aug 22:12Z'
+ 'Aug 23:12Z'
+ 'Aug 24:12Z'
  };
 
 CLlabels = {
@@ -163,7 +163,7 @@ for it = 1:length(SampleTimes)
   Tpos(1) = 0; % line up with left edge of plot area
   set(Thand, 'Position', Tpos);
 
-  OutFile = sprintf('%s/PrecipRate_T%d.jpg', Pdir, Time);
+  OutFile = sprintf('%s/PrecipRate_T%d.jpg', Pdir, it);
   fprintf('  Writing file: %s\n', OutFile);
   saveas(Fig, OutFile);
   close(Fig);
@@ -172,13 +172,15 @@ for it = 1:length(SampleTimes)
   CL = double(squeeze(CLhydro.data(T1,CL_Z1:CL_Z2,:,CL_R1:CL_R2)));
 
   Fig = figure;
-  set(gca, 'FontSize', Fsize);
 
   contourf(CL_R, CL_Z, CL);
   shading flat;
   cbar = colorbar;
   set(cbar, 'FontSize', Fsize);
   caxis(CL_Clims);
+  set(gca, 'FontSize', Fsize);
+  set(gca, 'LineWidth', 2); 
+  set(gca, 'TickLength', [ 0.025 0.025 ]); 
 
   Ptitle = sprintf('%s %s', CLlabels{it}, SampleNames{it});
   Thand = title(Ptitle);
@@ -191,7 +193,7 @@ for it = 1:length(SampleTimes)
   xlabel('Radius (km)');
   ylabel('Height (km)');
 
-  OutFile = sprintf('%s/HydroCloud_T%d.jpg', Pdir, Time);
+  OutFile = sprintf('%s/HydroCloud_T%d.jpg', Pdir, it);
   fprintf('  Writing file: %s\n', OutFile);
   saveas(Fig, OutFile);
   close(Fig);
@@ -200,13 +202,15 @@ for it = 1:length(SampleTimes)
   RN = double(squeeze(RNhydro.data(T1,RN_Z1:RN_Z2,:,RN_R1:RN_R2)));
 
   Fig = figure;
-  set(gca, 'FontSize', Fsize);
 
   contourf(RN_R, RN_Z, RN);
   shading flat;
   cbar = colorbar;
   set(cbar, 'FontSize', Fsize);
   caxis(RN_Clims);
+  set(gca, 'FontSize', Fsize);
+  set(gca, 'LineWidth', 2); 
+  set(gca, 'TickLength', [ 0.025 0.025 ]); 
 
   Ptitle = sprintf('%s %s', RNlabels{it}, SampleNames{it});
   Thand = title(Ptitle);
@@ -219,7 +223,7 @@ for it = 1:length(SampleTimes)
   xlabel('Radius (km)');
   ylabel('Height (km)');
 
-  OutFile = sprintf('%s/HydroRain_T%d.jpg', Pdir, Time);
+  OutFile = sprintf('%s/HydroRain_T%d.jpg', Pdir, it);
   fprintf('  Writing file: %s\n', OutFile);
   saveas(Fig, OutFile);
   close(Fig);
@@ -228,13 +232,15 @@ for it = 1:length(SampleTimes)
   AG = double(squeeze(AGhydro.data(T1,AG_Z1:AG_Z2,:,AG_R1:AG_R2)));
 
   Fig = figure;
-  set(gca, 'FontSize', Fsize);
 
   contourf(AG_R, AG_Z, AG);
   shading flat;
   cbar = colorbar;
   set(cbar, 'FontSize', Fsize);
   caxis(AG_Clims);
+  set(gca, 'FontSize', Fsize);
+  set(gca, 'LineWidth', 2); 
+  set(gca, 'TickLength', [ 0.025 0.025 ]); 
 
   Ptitle = sprintf('%s %s', AGlabels{it}, SampleNames{it});
   Thand = title(Ptitle);
@@ -247,7 +253,7 @@ for it = 1:length(SampleTimes)
   xlabel('Radius (km)');
   ylabel('Height (km)');
 
-  OutFile = sprintf('%s/HydroAggr_T%d.jpg', Pdir, Time);
+  OutFile = sprintf('%s/HydroAggr_T%d.jpg', Pdir, it);
   fprintf('  Writing file: %s\n', OutFile);
   saveas(Fig, OutFile);
   close(Fig);
@@ -256,13 +262,15 @@ for it = 1:length(SampleTimes)
   GR = double(squeeze(GRhydro.data(T1,GR_Z1:GR_Z2,:,GR_R1:GR_R2)));
 
   Fig = figure;
-  set(gca, 'FontSize', Fsize);
 
   contourf(GR_R, GR_Z, GR);
   shading flat;
   cbar = colorbar;
   set(cbar, 'FontSize', Fsize);
   caxis(GR_Clims);
+  set(gca, 'FontSize', Fsize);
+  set(gca, 'LineWidth', 2); 
+  set(gca, 'TickLength', [ 0.025 0.025 ]); 
 
   Ptitle = sprintf('%s %s', GRlabels{it}, SampleNames{it});
   Thand = title(Ptitle);
@@ -275,7 +283,7 @@ for it = 1:length(SampleTimes)
   xlabel('Radius (km)');
   ylabel('Height (km)');
 
-  OutFile = sprintf('%s/HydroGraup_T%d.jpg', Pdir, Time);
+  OutFile = sprintf('%s/HydroGraup_T%d.jpg', Pdir, it);
   fprintf('  Writing file: %s\n', OutFile);
   saveas(Fig, OutFile);
   close(Fig);
@@ -285,13 +293,15 @@ end
 VC = double(squeeze(VChydro.data(:,:,:,VC_R1:VC_R2)));
 
 Fig = figure;
-set(gca, 'FontSize', Fsize);
 
 contourf(VC_R, T, VC);
 shading flat;
 cbar = colorbar;
 set(cbar, 'FontSize', Fsize);
 caxis(VC_Clims);
+set(gca, 'FontSize', Fsize);
+set(gca, 'LineWidth', 2);
+set(gca, 'TickLength', [ 0.025 0.025 ]);
 
 Ptitle = '(c)';
 Thand = title(Ptitle);
@@ -302,7 +312,9 @@ Tpos(1) = 0; % line up with left edge of plot area
 set(Thand, 'Position', Tpos);
 
 xlabel('Radius (km)');
-ylabel('Time (hr)');
+ylabel('Time');
+set(gca, 'Ytick', SampleTimes + 41);
+set(gca, 'YtickLabel', SampleNames);
 
 OutFile = sprintf('%s/HovVintCond.jpg', Pdir);
 fprintf('  Writing file: %s\n', OutFile);
