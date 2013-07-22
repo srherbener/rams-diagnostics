@@ -3,7 +3,7 @@
 #
 
 # Change RHDF5_HOME depending on where you loaded this package
-DIAG_UTILS_HOME = $(HOME)/projects/Code/diagnostics/utils
+DIAG_UTILS_HOME = $(HOME)/projects/Code/diagnostics/fortran/utils
 
 # Install directory should be set to where you want to install
 # the resulting library and module files.
@@ -42,7 +42,7 @@ OBJS = $(ARC)($(SRC_DIR)/diag_utils.o)
 # Targets
 #
 
-all: $(ARC) $(MOD)
+all: $(ARC) $(MOD) install
 
 $(ARC): $(OBJS)
 

@@ -5,12 +5,14 @@
 # Targets
 #
 
-UTILS_DIR = utils.cdir
-CODE_DIRS = azavg.cdir diag_filter.cdir gen_flux.cdir gen_moments.cdir hdata_op.cdir join_hdata.cdir sig_proc.cdir tsavg.cdir
+F_UTILS = fortran/utils
+F_DIAGS = azavg.cdir diag_filter.cdir gen_flux.cdir gen_moments.cdir hdata_op.cdir join_hdata.cdir sig_proc.cdir tsavg.cdir
 
-all: $(UTILS_DIR) $(CODE_DIRS)
+all: fortran
 
-%.cdir: .FORCE
+fortran: $(F_UTILS)
+
+fortran/%: .FORCE
 	$(MAKE) -C $(@)/build
 
 #
