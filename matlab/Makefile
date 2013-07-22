@@ -5,10 +5,10 @@
 # Targets
 #
 
-all: atex.mdir common.mdir m_map.mdir metpack.mdir nctoolbox.mdir obj_anal.mdir tc_seed.mdir ts_debby.mdir
+all: atex/Makefile common/Makefile m_map/Makefile metpack/Makefile nctoolbox/Makefile obj_anal/Makefile tc_seed/Makefile ts_debby/Makefile
 
-%.mdir: .FORCE
-	$(MAKE) -C $(@)
+%/Makefile: .FORCE
+	$(MAKE) -C $(@D)
 
 #
 # dummy targets to force action every time

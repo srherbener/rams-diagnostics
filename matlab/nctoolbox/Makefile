@@ -5,7 +5,7 @@
 ML_MAIN = $(HOME)/etc/matlab
 DEST = $(ML_MAIN)/nctoolbox
 
-TFILE = /Users/steve/projects/Code/diagnostics/matlab/nctoolbox.mdir/nctoolbox-20130305.tar.gz
+TFILE = /Users/steve/projects/Code/diagnostics/matlab/nctoolbox/nctoolbox-20130305.tar.gz
 
 #
 # Targets
