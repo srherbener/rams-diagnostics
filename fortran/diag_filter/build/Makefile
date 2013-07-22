@@ -4,7 +4,7 @@
 
 .SUFFIXES: .f90 .mod .o
 
-DFILT_HOME = $(HOME)/projects/Code/diagnostics/diag_filter
+DFILT_HOME = $(HOME)/projects/Code/diagnostics/fortran/diag_filter
 
 # Location of results of building the RHDF5 library (ie, running
 # make in the 'build' directory of this package
