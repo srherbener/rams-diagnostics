@@ -5,7 +5,7 @@
 # Targets
 #
 
-all: fortran/Makefile grads/Makefile idl/Makefile perl/Makefile
+all: fortran/Makefile grads/Makefile idl/Makefile matlab/Makefile perl/Makefile
 
 %/Makefile: .FORCE
 	$(MAKE) -C $(@D)
