@@ -1,0 +1,178 @@
+#!/usr/bin/env perl
+#
+# Script to run diag_filter on the set of cases specified in the config file
+#
+# The config file defines the cases, time dirs and diagnostics that are to be run. Format
+# for lines in the config file are:
+#   Case: <CaseName>
+#   TimeDir: <Dir> <TimeSpec>
+#   Dfilt: <Filters>
+#
+#   <CaseName> corresponds to the simulation name such as TC_SEED_C0100 or SA0SC0.
+#
+#   <Dir> is a subdirectory of the <CaseName>/GRADS directory where the GRADS files live
+#   <TimeSpec> is the revu time spec (in the TVAR(1) spec)
+#
+#   <FilterSpec> is the name of the filtering operation
+#
+
+BEGIN { push(@INC, "$ENV{HOME}/etc/perl"); }
+
+use strict;
+use File::Basename;
+use DiagUtils;
+
+#######################################################################
+# SUBROUTINES
+#######################################################################
+
+#######################################################################
+# CreateFileNames()
+#
+# This routine will take the case, time dir, and diagnostic name
+# and create the file lists (input and output) needed for diag_filter.
+#
+sub CreateFileNames
+  {
+  my ($Case, $Tdir, $Fname, $FilterDir, $RevuDir, $Fmodel) = @_;
+  
+  my $InDir;
+  my $InFileSuffix;
+  my $OutFile;
+
+  my $Pattern;
+  my @f;
+  my $TdirStr;
+  my $ModelVname;
+  my $ModelFprefix;
+
+  # If $Tdir is the string "NONE", then do not place a subdirectory
+  # in the path to the input and output files
+  if ($Tdir eq "NONE")
+    {   
+    $TdirStr = ""; 
+    }   
+  else
+    {   
+    $TdirStr = "/" . $Tdir;
+    }   
+
+  # InDir is the directory that the input files come from.
+  #
+  # InFileSuffix is used to create the names of all the input files. It is
+  # assumed that the input file names follow the form:
+  #
+  #   <VarName><InFileSuffix>
+  #
+  # OutFile is simply the whole path to the output file.
+  #
+  $InDir = $Case . "/" . $RevuDir . $TdirStr;
+
+  # Use the "model" input file as a sample for finding the input file suffix.
+  ($ModelVname, $ModelFprefix) = split(':', $Fmodel);
+  $Pattern = $InDir . "/" . $ModelFprefix . "-*.h5";
+  @f = glob($Pattern);
+  $InFileSuffix = $f[0];
+  $InFileSuffix =~ s/.*\/$ModelFprefix-/-/;
+  
+  $OutFile = $FilterDir . ${TdirStr} . "/" . ${Fname} . "_" . ${Case} . ".h5";
+
+  return ($InDir, $InFileSuffix, $OutFile);
+  }
+
+#######################################################################
+# MAIN
+#######################################################################
+
+my $ConfigFile;
+my $Config;
+
+my %Cases;
+my %TimeDirs;
+my %Filters;
+my $FilterDir;
+my $RevuDir;
+
+my @f;
+my $Case;
+my $Tdir;
+my $Fname;
+my $RevuVar;
+my $MaxRadius;
+my $VarDim;
+my $Nbands;
+my $Wmin;
+my $Wmax;
+my $InDir;
+my $InFileSuffix;
+my $OutFile;
+
+my @SysArgs;
+my $OutDir;
+my @Fspecs;
+my $Fmodel;
+
+$ConfigFile = $ARGV[0];
+
+# read in info from the config file
+($Config) = &DiagUtils::ReadConfigFile($ConfigFile);
+%Cases    = %{ $$Config{CASES} };
+%TimeDirs = %{ $$Config{TIM_DIRS} };
+%Filters  = %{ $$Config{FILTERS} };
+$FilterDir = $$Config{FILTER_DIR};
+$RevuDir = $$Config{REVU_DIR};
+
+# make sure at least one of each of cases, time_directories and diagnostics has
+# been specified
+if ((! (%Cases)) || (! (%TimeDirs)) || (! (%Filters)))
+  {
+  print STDERR "ERROR: must specify at least one of each of case, time directory and diagnostic\n";
+  exit 1;
+  }
+
+# In all cases, except 'speed_t' and 'speed_r', <Diagnostic> matches the name of the
+# variable that you want to average. Also, the variable name matches the prefix of the GRADS
+# control file.
+#
+# Walk through all combinations of cases, time directories, and diagnostics.
+foreach $Case (sort(keys(%Cases)))
+  {
+  foreach $Fname (sort(keys(%Filters)))
+    {
+    # the lengths of the argument lists vary according to which filter is selected
+    # so the ReadConfigFile routine just places the arguments in a list
+    @Fspecs = @{ $Filters{$Fname}{SPECS} };
+    $Fmodel = $Filters{$Fname}{MODEL};
+
+    # run through each time directory generating the current diagnostic, and
+    # then join these files into the main file (above the time directories)
+    foreach $Tdir (sort(keys(%TimeDirs)))
+      {
+      ($InDir,$InFileSuffix,$OutFile) = &CreateFileNames($Case, $Tdir, $Fname, $FilterDir, $RevuDir, $Fmodel);
+
+      print "***************************************************************\n";
+      print "Running diag_filter:\n";
+      print "  Case: $Case\n";
+      print "  Time Directory: $Tdir\n";
+      print "  Filter: $Fname\n";
+      print "  Input File Directory: $InDir\n";
+      print "  Input File Suffix: $InFileSuffix\n";
+      print "  Output File: $OutFile\n";
+      print "\n";
+
+      # run diag_filter, make sure the output directory exists
+      $OutDir = dirname($OutFile);
+      if (! -d $OutDir)
+        {
+        @SysArgs = ("mkdir", "-p", $OutDir);
+        system(@SysArgs);
+        }
+
+      @SysArgs = ("diag_filter", $InDir, $InFileSuffix, $OutFile, $Fmodel, @Fspecs);
+      print "Running: ", join(" ",@SysArgs), "\n\n";
+      system(@SysArgs);
+      }
+    }
+  }
+
+exit 0;
