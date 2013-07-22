@@ -6,8 +6,7 @@
 #
 
 F_UTILS = fortran/utils
-F_DIAGS = fortran/azavg fortran/diag_filter fortran/gen_flux fortran/gen_moments fortran/hdata_op fortran/join_hdata fortran/sig_proc
-# fortran/tsavg
+F_DIAGS = fortran/azavg fortran/diag_filter fortran/gen_flux fortran/gen_moments fortran/hdata_op fortran/join_hdata fortran/sig_proc fortran/tsavg
 
 all: fortran
 
