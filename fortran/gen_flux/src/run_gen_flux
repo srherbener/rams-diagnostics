@@ -1,0 +1,162 @@
+#!/usr/bin/env perl
+#
+# Script to run gen_flux on the set of variables specified in the config file
+#
+# The config file defines the cases, time dirs and diagnostics that are to be run. Format
+# for lines in the config file are:
+#   Case: <CaseName>
+#   TimeDir: <Dir> <TimeSpec>
+#
+#   <CaseName> corresponds to the simulation name such as TC_SEED_C0100 or SA0SC0.
+#
+#   <Dir> is a subdirectory of the <CaseName>/GRADS directory where the GRADS files live
+#   <TimeSpec> is the revu time spec (in the TVAR(1) spec)
+#
+#
+
+BEGIN { push(@INC, "$ENV{HOME}/etc/perl"); }
+
+use strict;
+use File::Basename;
+use DiagUtils;
+
+#######################################################################
+# SUBROUTINES
+#######################################################################
+
+#######################################################################
+# CreateFileNames()
+#
+# This routine will take the case, time dir, and diagnostic name
+# and create the file lists (input and output) needed for azavg.
+#
+sub CreateFileNames
+  {
+  my ($Case, $Tdir, $RevuDir, $Fdiag) = @_;
+  
+  my $InDir;
+  my $InFileSuffix;
+  my $OutFile;
+
+  my $Pattern;
+  my @f;
+  my $TdirStr;
+
+  # If $Tdir is the string "NONE", then do not place a subdirectory
+  # in the path to the input and output files
+  if ($Tdir eq "NONE")
+    {
+    $TdirStr = "";
+    }
+  else
+    {
+    $TdirStr = "/" . $Tdir;
+    }
+
+  # InDir is the directory that the input files come from.
+  #
+  # InFileSuffix is used to create the names of all the input files. It is
+  # assumed that the input file names follow the form:
+  #
+  #   <VarName><InFileSuffix>
+  #
+  # OutFile is simply the whole path to the output file.
+  #
+  $InDir = $Case . "/" . $RevuDir . $TdirStr;
+
+  # Grab the first of the files with ".h5" suffix, and delete the path
+  # plus the characters up to the first "-".
+  $Pattern = $InDir . "/*.h5";
+  @f = glob($Pattern);
+  $InFileSuffix = $f[0];
+  $InFileSuffix =~ s/.*\/[^-]*-/-/;
+  
+  $OutFile = $InDir . "/" . $Fdiag . $InFileSuffix;
+
+  return ($InDir, $InFileSuffix, $OutFile);
+  }
+
+#######################################################################
+# MAIN
+#######################################################################
+
+my $ConfigFile;
+my $Config;
+
+my %Cases;
+my %TimeDirs;
+my $RevuDir;
+
+my @f;
+my $Case;
+my $Tdir;
+my %FluxDiags;
+my $Fdiag;
+my @Fargs;
+my $Fspec;
+my $InDir;
+my $InFileSuffix;
+my $OutFile;
+
+my @SysArgs;
+my $OutDir;
+
+$ConfigFile = $ARGV[0];
+
+# read in info from the config file
+($Config) = &DiagUtils::ReadConfigFile($ConfigFile);
+%Cases      = %{ $$Config{CASES} };
+%TimeDirs   = %{ $$Config{TIM_DIRS} };
+%FluxDiags  = %{ $$Config{DIAGS}{flux} };
+
+$RevuDir    = $$Config{REVU_DIR};
+
+# make sure at least one of each of cases, time_directories and diagnostics has
+# been specified
+if ((! (%Cases)) || (! (%TimeDirs)) || (! (%FluxDiags)))
+  {
+  print STDERR "ERROR: must specify at least one of each of case, time directory and diagnostic\n";
+  exit 1;
+  }
+
+# Walk through all combinations of cases, time directories, and diagnostics.
+foreach $Case (sort(keys(%Cases)))
+  {
+  foreach $Fdiag (sort(keys(%FluxDiags)))
+    {
+    @Fargs = @{ $FluxDiags{$Fdiag} };
+    $Fspec = $Fargs[0];  # entire spec is in the first argument
+
+    # run through each time directory generating the current diagnostic, and
+    # then join these files into the main file (above the time directories)
+    foreach $Tdir (sort(keys(%TimeDirs)))
+      {
+      ($InDir, $InFileSuffix, $OutFile) =
+          &CreateFileNames($Case, $Tdir, $RevuDir, $Fdiag);
+
+      print "***************************************************************\n";
+      print "Running gen_flux:\n";
+      print "  Case: $Case\n";
+      print "  Time Directory: $Tdir\n";
+      print "  Diagnostic: $Fdiag\n";
+      print "  Input File Directory: $InDir\n";
+      print "  Input File Suffix: $InFileSuffix\n";
+      print "  Output File: $OutFile\n";
+      print "\n";
+
+      # run azavg, make sure the output directory exists
+      $OutDir = dirname($OutFile);
+      if (! -d $OutDir)
+        {
+        @SysArgs = ("mkdir", "-p", $OutDir);
+        system(@SysArgs);
+        }
+
+      @SysArgs = ("gen_flux", $InDir, $InFileSuffix, $OutFile, $Fdiag, $Fspec);
+      print "Running: ", join(" ", @SysArgs), "\n\n";
+      system(@SysArgs);
+      }
+    }
+  }
+
+exit 0;

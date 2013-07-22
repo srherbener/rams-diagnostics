@@ -6,8 +6,12 @@
 #
 
 F_UTILS = fortran/utils
-F_DIAGS = fortran/azavg fortran/diag_filter
-# gen_flux.cdir gen_moments.cdir hdata_op.cdir join_hdata.cdir sig_proc.cdir tsavg.cdir
+F_DIAGS = fortran/azavg fortran/diag_filter fortran/gen_flux
+# fortran/gen_moments
+# fortran/hdata_op
+# fortran/join_hdata
+# fortran/sig_proc
+# fortran/tsavg
 
 all: fortran
 
