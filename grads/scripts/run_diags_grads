@@ -1,0 +1,369 @@
+#!/usr/bin/env perl
+#
+# Script to run various diagnostics
+#
+
+BEGIN { push(@INC, "$ENV{HOME}/etc/perl"); }
+
+use strict;
+use File::Basename;
+use DiagUtils;
+
+#################################################################
+# SUBROUTINES
+#################################################################
+
+#################################################################
+# BuildDiagArgList()
+#
+# This routine will build the argument list for $Diag
+#
+sub BuildDiagArgList
+  {
+  my ($Diag, $Case, $Tdir, $Gvar, $Args) = @_;
+
+  my @DiagArgs;
+  my $OutDir;
+
+  my $Var;
+  my $DiagVar;
+  my @InGvars;
+  my $InFile;
+  my $InFiles;
+  my $OutBase;
+  my $OutBaseTan;
+  my $OutBaseRad;
+  my $OutBaseRates;
+  my $GvarRwinds;
+  my $Zlevel;
+  my $GvarRates;
+  my $TsDiag;
+  my $Wlim;
+  my $CILlim;
+  my $Rmin;
+  my $Rmax;
+  my $PhiMin;
+  my $PhiMax;
+  my $Zmin;
+  my $Zmax;
+  my $Scale;
+  my $DataMin;
+  my $DataMax;
+  my $NumBins;
+  my $BinStart;
+  my $BinSize;
+  my @SysArgs;
+
+  undef (@DiagArgs);
+
+  $OutDir = "GRADS/" . $Tdir;
+  if (! -d $OutDir)
+    {
+    @SysArgs = ("mkdir", "-p", $OutDir);
+    system(@SysArgs);
+    }
+
+  if ($Diag eq "colint")
+    {
+    # colint <InFiles> <OutFileBase> <Var>
+    # $@Args --> <Var>,  followed by list of input grads vars
+    #
+    # Use $Gvar, $Case, $Tdir to form <OutBase>
+    # Use list of input grads vars to form <InFiles>
+    ($DiagVar, @InGvars) = @$Args;
+
+    $InFiles = "";
+    foreach $Var (@InGvars) 
+      {
+      $InFiles = &DiagUtils::AppendGradsVarFile($InFiles, $Case, $Tdir, $Var);
+      }
+
+    $OutBase = $OutDir . "/" . $Gvar . "_" . $Case;
+
+    @DiagArgs = ( $InFiles, $OutBase, $DiagVar );
+    }
+  elsif ($Diag eq "sfcwind")
+    {
+    # sfcwind <InFiles> <OutFileBase>
+    # $@Args --> list of input grads vars
+    #
+    # Use $Gvar, $Case, $Tdir to form <OutBase>
+    # Use list of input grads vars to form <InFiles>
+ 
+    @InGvars = @$Args;
+
+    $InFiles = "";
+    foreach $Var (@InGvars)
+      {
+      $InFiles = &DiagUtils::AppendGradsVarFile($InFiles, $Case, $Tdir, $Var);
+      }
+
+    $OutBase = $OutDir . "/" . $Gvar . "_" . $Case;
+
+    @DiagArgs = ( $InFiles, $OutBase );
+    }
+  elsif ($Diag eq "hslice")
+    {
+    # hslice <InFiles> <OutFileBase> <Var> <Zlevel>
+    # $@Args --> diagnostic var, z level
+    #
+    # Use $Gvar, $Case, $Tdir to form <OutBase>
+    # Use list of input grads vars to form <InFiles>
+ 
+    ($DiagVar, $Zlevel) = @$Args;
+
+    $InFiles = &DiagUtils::AppendGradsVarFile("", $Case, $Tdir, $DiagVar);
+
+    $OutBase = $OutDir . "/" . $Gvar . "_" . $Case;
+
+    @DiagArgs = ( $InFiles, $OutBase, $DiagVar, $Zlevel );
+    }
+  elsif ($Diag eq "tr_winds")
+    {
+    # tr_winds <InFiles> <OutFileBaseTanWinds> <OutFilesBaseRadWinds>
+    # $@Args --> radial winds GRADS var, list of input grads vars
+    # $Gvar holds tangential winds GRADS var
+    #
+    # Use $Gvar, $Case, $Tdir to form <OutBase>
+    # Use list of input grads vars to form <InFiles>
+ 
+    ($GvarRwinds, @InGvars) = @$Args;
+
+    $InFiles = "";
+    foreach $Var (@InGvars)
+      {
+      $InFiles = &DiagUtils::AppendGradsVarFile($InFiles, $Case, $Tdir, $Var);
+      }
+
+    $OutBaseTan = $OutDir . "/" . $Gvar . "_" . $Case;
+    $OutBaseRad = $OutDir . "/" . $GvarRwinds . "_" . $Case;
+
+    @DiagArgs = ( $InFiles, $OutBaseTan, $OutBaseRad );
+    }
+  elsif ($Diag eq "tseries_avg")
+    {
+    # tseries_avg <InFiles> <OutFileBase> <Diag> <RatesFlag> <Wthreshold> <CILthreshold>
+    #             <Rmin> <Rmax> <PhiMin> <PhiMax> <Zmin> <Zmax> <Vars>
+    # $@Args --> <GvarRates> <TsDiag> <Wthreshold> <CILthreshold> <Rmin> <Rmax>
+    #            <PhiMin> <PhiMax> <Zmin> <Zmax>, list of input GRADS vars
+    # $Gvar holds grads var for main diagnostic, the rates file name formed by adding "_dt" suffix
+    #
+    # Use $Gvar, $Case, $Tdir to form <OutBase>
+    # Use list of input grads vars to form <InFiles>
+    #
+    # Always ask for the rates data --> first entry in $@Args is the grads var for the rates data.
+ 
+    ($GvarRates, $TsDiag, $Wlim, $CILlim, $Rmin, $Rmax, $PhiMin, $PhiMax,
+     $Zmin, $Zmax, @InGvars) = @$Args;
+
+    $InFiles = "";
+    foreach $Var (@InGvars)
+      {
+      $InFiles = &DiagUtils::AppendGradsVarFile($InFiles, $Case, $Tdir, $Var);
+      }
+
+    $OutBase      = $OutDir . "/" . $Gvar . "_" . $Case;
+    $OutBaseRates = $OutDir . "/" . $GvarRates . "_" . $Case;
+
+    $OutBase = $OutBase . ":" . $OutBaseRates;
+    @DiagArgs = ( $InFiles, $OutBase, $TsDiag, "rates", $Wlim, $CILlim,
+                  $Rmin, $Rmax, $PhiMin, $PhiMax, $Zmin, $Zmax );
+    }
+  elsif ($Diag eq "ghist")
+    {
+    # ghist <InFiles> <OutFilesBase> <Gvar> <Scale> <DataMin> <DataMax> <NumBins> <BinStart> <BinSize>
+    #
+    # $@Args --> <DiagVar> <Scale> <DataMin> <DataMax> <NumBins> <BinStart> <BinSize>, list of GRADS input vars
+    #
+    # Use $Gvar, $Case, $Tdir to form <OutFilesBase>
+    # Use list of input grads vars to form <InFiles>
+ 
+    ($DiagVar, $Scale, $DataMin, $DataMax, $NumBins, $BinStart, $BinSize, @InGvars) = @$Args;
+
+    $InFiles = "";
+    foreach $Var (@InGvars)
+      {
+      $InFiles = &DiagUtils::AppendGradsVarFile($InFiles, $Case, $Tdir, $Var);
+      }
+
+    $OutBase = $OutDir . "/" . $Gvar . "_" . $Case;
+
+    @DiagArgs = ( $InFiles, $OutBase, $DiagVar, $Scale, $DataMin, $DataMax, $NumBins, $BinStart, $BinSize );
+    }
+  else
+   {
+   print "WARNING: BuildDiagArgList: unrecognized diagnostic: $Diag\n";
+   print "WARNING: skipping diagnostic\n";
+   }
+
+  return (\@DiagArgs, $OutDir);
+  }
+
+#################################################################
+# MAIN
+#################################################################
+
+my $ConfigFile;
+
+my $Cases;
+my $TimeDirs;
+my $Vars;
+my $AzavgDiags; 
+my $Diags;
+my $Plots;
+
+my $Case;
+my $Tdir;
+my $Diag;
+my $Gvar;
+my @Args;
+my $DiagArgs;
+my $Gfile;
+
+my @SysArgs;
+my $OutDir;
+my $GradsControlFile;
+my $JoinInFiles;
+my $JoinOutPrefix;
+my $JoinInFiles2;
+my $JoinOutPrefix2;
+my $FilePrefix;
+
+$ConfigFile = $ARGV[0];
+
+print "ConfigFile: $ConfigFile\n";
+
+# read in info from the config file
+($Cases, $TimeDirs, $Vars, $AzavgDiags, $Diags, $Plots) = &DiagUtils::ReadConfigFile($ConfigFile);
+
+# walk through the cases and time dirs and submit the diagnostics
+foreach $Case (sort(keys(%$Cases)))
+  {
+  foreach $Diag (sort(keys(%$Diags)))
+    {
+    foreach $Gvar (sort(keys(%{ $$Diags{$Diag} })))
+      {
+      $JoinInFiles = "";
+      $JoinInFiles2 = ""; # use the for radial winds with the "tr_winds" diagnostic
+
+      # run through each time directory generating the current diagnostic, and
+      # then join these files into the main file (above the time directories)
+      foreach $Tdir (sort(keys(%$TimeDirs)))
+        {
+        @Args =  @{$$Diags{$Diag}{$Gvar}};
+
+        print "***************************************************************\n";
+        print "Running diagnostic: $Diag\n";
+        print "  Grads Variable: $Gvar\n";
+        print "  Case: $Case\n";
+        print "  Time Directory: $Tdir\n";
+        print "  Diagnostic Argument List: @Args\n";
+
+        # BuildDiagArgList will set the output directory ($OutDir) and
+        # also make sure the output directory exists.
+        ($DiagArgs, $OutDir) = &BuildDiagArgList($Diag, $Case, $Tdir, $Gvar, \@Args);
+
+        @SysArgs = ($Diag, @$DiagArgs);
+        print "  Command: @SysArgs\n";
+        system(@SysArgs);
+
+        # fix paths and var names in the output GRADS control file
+        if ($Diag eq "tseries_avg")
+          {
+          # tseries_avg <InFiles> <OutPrefixList> ...
+          # <OutPrefixList> --> OutPrefix:OutPrefixRates
+          # want to process file asscociated with OutPrefix which is 2nd argument
+          # (in $$DiagArgs) with everything from the ":" to the end of the string stripped off
+          $FilePrefix = $$DiagArgs[1];
+          $FilePrefix =~ s/:.*//;
+          }
+        else
+          {
+          # all other diagnostics --> file prefix is 2nd argument
+          $FilePrefix = $$DiagArgs[1];
+          }
+        ($GradsControlFile) = &DiagUtils::FindGradsControlFile($FilePrefix);
+        &DiagUtils::FixGradsControlFile($GradsControlFile, $OutDir, $Gvar);
+
+        # record the input file for the upcoming join
+        if ($JoinInFiles eq "")
+          {
+          $JoinInFiles = $GradsControlFile;
+          }
+        else
+          {
+          $JoinInFiles = $JoinInFiles . ":" . $GradsControlFile;
+          }
+
+        # repeat fix paths and recording of the input files for the upcoming join
+        # if we are doing "tr_winds" or "tseries_avg" (these diagnostics have
+        # two output GRADS file sets)
+        if (($Diag eq "tr_winds") || ($Diag eq "tseries_avg"))
+          {
+          if ($Diag eq "tr_winds")
+            {
+            # tr_winds <InFiles> <OutPrefixTan> <OutPrefixRad>
+            # want to process file associated with <OutPrefixRad> which is the 3rd argument
+            # (in $$DiagArgs)
+            $FilePrefix = $$DiagArgs[2];
+            }
+          else
+            {
+            # tseries_avg <InFiles> <OutPrefixList> ...
+            # <OutPrefixList> --> OutPrefix:OutPrefixRates
+            # want to process file asscociated with OutPrefixRates which is 2nd argument with
+            # everything up through the ":" stripped off
+            $FilePrefix = $$DiagArgs[1];
+            $FilePrefix =~ s/.*://;
+            }
+
+          ($GradsControlFile) = &DiagUtils::FindGradsControlFile($FilePrefix);
+          &DiagUtils::FixGradsControlFile($GradsControlFile, $OutDir, $Args[0]);
+
+          if ($JoinInFiles2 eq "")
+            {
+            $JoinInFiles2 = $GradsControlFile;
+            }
+          else
+            {
+            $JoinInFiles2 = $JoinInFiles2 . ":" . $GradsControlFile;
+            }
+          }
+        }
+
+      $JoinOutPrefix = "GRADS/" . $Gvar . "_" . $Case;
+      @SysArgs = ("join_gdata", $JoinInFiles, $JoinOutPrefix, $Gvar);
+      print "***************************************************\n";
+      print " Joining GRADS data:\n";
+      print "   Input Files: $JoinInFiles\n";
+      print "   Output File Prefix: $JoinOutPrefix\n";
+      print "   GRADS Variable: $Gvar\n";
+      system(@SysArgs);
+
+      # fix paths and var names
+      $OutDir = dirname($JoinOutPrefix);
+      ($GradsControlFile) = &DiagUtils::FindGradsControlFile($JoinOutPrefix);
+      &DiagUtils::FixGradsControlFile($GradsControlFile, $OutDir, $Gvar);
+
+      # repeat for radial winds GRADS files if running "tr_winds"
+      # or for the rates GRADS file if running "tseries_avg"
+      if (($Diag eq "tr_winds") || ($Diag eq "tseries_avg"))
+        {
+        # $Args[0] in both cases holds the second GRADS var name.
+        $JoinOutPrefix2 = "GRADS/" . $Args[0] . "_" . $Case;
+        @SysArgs = ("join_gdata", $JoinInFiles2, $JoinOutPrefix2, $Args[0]);
+        print "***************************************************\n";
+        print " Joining GRADS data:\n";
+        print "   Input Files: $JoinInFiles2\n";
+        print "   Output File Prefix: $JoinOutPrefix2\n";
+        print "   GRADS Variable: $Args[0]\n";
+        system(@SysArgs);
+
+        # fix paths and var names
+        $OutDir = dirname($JoinOutPrefix2);
+        ($GradsControlFile) = &DiagUtils::FindGradsControlFile($JoinOutPrefix2);
+        &DiagUtils::FixGradsControlFile($GradsControlFile, $OutDir, $Args[0]);
+        }
+      }
+    }
+  }

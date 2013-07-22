@@ -5,10 +5,10 @@
 # Targets
 #
 
-all: fortran
+all: fortran/Makefile grads/Makefile
 
-fortran: .FORCE
-	$(MAKE) -C $(@)
+%/Makefile: .FORCE
+	$(MAKE) -C $(@D)
 
 #
 # dummy targets to force action every time

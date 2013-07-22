@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+#
+# script to run a GRADS batch job
+
+Gcmd="$@"
+
+export GASCRP=$HOME/etc/grads
+
+grads -l -b <<EOF
+$Gcmd
+EOF
