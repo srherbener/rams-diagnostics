@@ -1,0 +1,163 @@
+#!/usr/bin/env perl
+#
+# Script to run tsavg on the set of cases specified in the config file
+#
+# The config file defines the cases, time dirs and diagnostics that are to be run. Format
+# for lines in the config file are:
+#   Case: <CaseName>
+#   TimeDir: <Dir> <TimeSpec>
+#   Diag: tsavg <TsavgArgs>
+#
+#   <CaseName> corresponds to the simulation name such as TC_SEED_C0100 or SA0SC0.
+#
+#   <Dir> is a subdirectory of the <CaseName>/GRADS directory where the GRADS files live
+#   <TimeSpec> is the revu time spec (in the TVAR(1) spec)
+#
+
+BEGIN { push(@INC, "$ENV{HOME}/etc/perl"); }
+
+use strict;
+use File::Basename;
+use DiagUtils;
+
+#######################################################################
+# SUBROUTINES
+#######################################################################
+
+#######################################################################
+# CreateFileNames()
+#
+# This routine will take the case, time dir, and diagnostic name
+# and create the file lists (input and output) needed for tsavg.
+#
+sub CreateFileNames
+  {
+  my ($Case1, $Case2, $Var, $Op, $Tdir, $RevuDir, $DiagDir) = @_;
+  
+  my $InFile1;
+  my $InFile2;
+  my $OutFile;
+
+  my $InDir1;
+  my $InDir2;
+  my $Pattern;
+  my @f;
+  my $InFileSuffix;
+
+  # If $Tdir is the string "NONE", then do not place a subdirectory
+  # in the path to the input and output files
+  if ($Tdir eq "NONE")
+    {
+    $InDir1 = $Case1 . "/" . $RevuDir;
+    $InDir2 = $Case2 . "/" . $RevuDir;
+    }
+  else
+    {
+    $InDir1 = $Case1 . "/" . $Tdir . "/" . $RevuDir;
+    $InDir2 = $Case2 . "/" . $Tdir . "/" . $RevuDir;
+    }
+
+  # Find the suffix on the input files in the REVU dir
+  $Pattern = $InDir1 . "/" . $Var . "-" . $Case1 . "-*.h5";
+  @f = glob($Pattern);
+  $InFileSuffix = $f[0];
+  $InFileSuffix =~ s/.*\/$Var-$Case1-/-/;
+
+  $InFile1 = $InDir1 . "/" . $Var . "-" . $Case1 . $InFileSuffix;;
+  $InFile2 = $InDir2 . "/" . $Var . "-" . $Case2 . $InFileSuffix;;
+
+  $OutFile = $DiagDir . "/diff_" . $Var . "_" . $Case1 . "_" . $Case2 . ".h5";
+
+  return ($InFile1,$InFile2,$OutFile);
+  }
+
+#######################################################################
+# MAIN
+#######################################################################
+
+my $ConfigFile;
+
+my $Config;
+
+my %Cases;
+my %TimeDirs;
+my %Ops;
+my $RevuDir;
+my $DiagDir;
+
+my @f;
+my $Case1;
+my $Case2;
+my $Tdir;
+my $OpName;
+my $Op;
+my $InFile1;
+my $InFile2;
+my $OutFile;
+my $Var;
+
+my @SysArgs;
+my $OutDir;
+
+$ConfigFile = $ARGV[0];
+
+# read in info from the config file
+($Config) = &DiagUtils::ReadConfigFile($ConfigFile);
+
+%Cases = %{ $$Config{CASES} };
+%TimeDirs = %{ $$Config{TIM_DIRS} };
+%Ops = %{ $$Config{OPS} };
+
+$RevuDir = $$Config{REVU_DIR};
+$DiagDir = $$Config{DIAG_DIR};
+
+# make sure at least one of each of cases, time_directories and operations has
+# been specified
+if ((! (%TimeDirs)) || (! (%Ops)))
+  {
+  print STDERR "ERROR: must specify at least one of each of time directory and operation\n";
+  exit 1;
+  }
+
+# Walk through all combinations of cases, time directories, and diagnostics.
+foreach $OpName (sort(keys(%Ops)))
+  {
+  # Get the specs for this operation
+  $Var   = $Ops{$OpName}{VAR};
+  $Case1 = $Ops{$OpName}{CASE1};
+  $Case2 = $Ops{$OpName}{CASE2};
+  $Op    = $Ops{$OpName}{OP};
+
+  # run through each time directory generating the current diagnostic, and
+  # then join these files into the main file (above the time directories)
+  foreach $Tdir (sort(keys(%TimeDirs)))
+    {
+    ($InFile1,$InFile2,$OutFile) =
+        &CreateFileNames($Case1, $Case2, $Var, $Op, $Tdir, $RevuDir, $DiagDir);
+
+    print "***************************************************************\n";
+    print "Running hdata_op:\n";
+    print "  Case 1: $Case1\n";
+    print "  Case 2: $Case2\n";
+    print "  Time Directory: $Tdir\n";
+    print "  Variable: $Var\n";
+    print "  Operation: $Op\n";
+    print "  Input File 1: $InFile1\n";
+    print "  Input File 2: $InFile2\n";
+    print "  Output File: $OutFile\n";
+
+    # run hdata_op, make sure the output directory exists
+    $OutDir = dirname($OutFile);
+    if (! -d $OutDir)
+      {
+      @SysArgs = ("mkdir", "-p", $OutDir);
+      system(@SysArgs);
+      }
+
+    @SysArgs = ("hdata_op", $InFile1, $Var, $InFile2, $Var, $OutFile, $Op);
+    print "Running: ", join(" ",@SysArgs), "\n\n";
+    system(@SysArgs);
+    }
+  }
+
+exit 0;
