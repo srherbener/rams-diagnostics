@@ -157,73 +157,73 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 #### 1um GCCN median radius ####
 
 # Vary CCN, hold SST constant
-LinePlot: CO_S293_G10M5  SimTime Cfrac TsAll none SST:_293K,_GCCN:_1e-5/cc  NorthEast none Cloud_Frac_CO_S293_G10M5.jpg
-LinePlot: CO_S298_G10M5  SimTime Cfrac TsAll none SST:_298K,_GCCN:_1e-5/cc  NorthEast none Cloud_Frac_CO_S298_G10M5.jpg
-LinePlot: CO_S303_G10M5  SimTime Cfrac TsAll none SST:_303K,_GCCN:_1e-5/cc  NorthEast none Cloud_Frac_CO_S303_G10M5.jpg
+LinePlot: CO_S293_G10M5  SimTime Cfrac TsAll none SST:@293K,@GCCN:@1e-5/cc  NorthEast none Cloud_Frac_CO_S293_G10M5.jpg
+LinePlot: CO_S298_G10M5  SimTime Cfrac TsAll none SST:@298K,@GCCN:@1e-5/cc  NorthEast none Cloud_Frac_CO_S298_G10M5.jpg
+LinePlot: CO_S303_G10M5  SimTime Cfrac TsAll none SST:@303K,@GCCN:@1e-5/cc  NorthEast none Cloud_Frac_CO_S303_G10M5.jpg
 
 # Vary SST, hold CCN constant
-LinePlot: CO_C0050_G10M5  SimTime Cfrac TsAll none CCN:_50/cc,_GCCN:_1e-5/cc    NorthEast none Cloud_Frac_CO_C0050_G10M5.jpg
-LinePlot: CO_C0100_G10M5  SimTime Cfrac TsAll none CCN:_100/cc,_GCCN:_1e-5/cc   NorthEast none Cloud_Frac_CO_C0100_G10M5.jpg
-LinePlot: CO_C0200_G10M5  SimTime Cfrac TsAll none CCN:_200/cc,_GCCN:_1e-5/cc   NorthEast none Cloud_Frac_CO_C0200_G10M5.jpg
-LinePlot: CO_C0400_G10M5  SimTime Cfrac TsAll none CCN:_400/cc,_GCCN:_1e-5/cc   NorthEast none Cloud_Frac_CO_C0400_G10M5.jpg
-LinePlot: CO_C0800_G10M5  SimTime Cfrac TsAll none CCN:_800/cc,_GCCN:_1e-5/cc   NorthEast none Cloud_Frac_CO_C0800_G10M5.jpg
-LinePlot: CO_C1200_G10M5  SimTime Cfrac TsAll none CCN:_1200/cc,_GCCN:_1e-5/cc  NorthEast none Cloud_Frac_CO_C1200_G10M5.jpg
-LinePlot: CO_C1600_G10M5  SimTime Cfrac TsAll none CCN:_1600/cc,_GCCN:_1e-5/cc  NorthEast none Cloud_Frac_CO_C1600_G10M5.jpg
+LinePlot: CO_C0050_G10M5  SimTime Cfrac TsAll none CCN:@50/cc,@GCCN:@1e-5/cc    NorthEast none Cloud_Frac_CO_C0050_G10M5.jpg
+LinePlot: CO_C0100_G10M5  SimTime Cfrac TsAll none CCN:@100/cc,@GCCN:@1e-5/cc   NorthEast none Cloud_Frac_CO_C0100_G10M5.jpg
+LinePlot: CO_C0200_G10M5  SimTime Cfrac TsAll none CCN:@200/cc,@GCCN:@1e-5/cc   NorthEast none Cloud_Frac_CO_C0200_G10M5.jpg
+LinePlot: CO_C0400_G10M5  SimTime Cfrac TsAll none CCN:@400/cc,@GCCN:@1e-5/cc   NorthEast none Cloud_Frac_CO_C0400_G10M5.jpg
+LinePlot: CO_C0800_G10M5  SimTime Cfrac TsAll none CCN:@800/cc,@GCCN:@1e-5/cc   NorthEast none Cloud_Frac_CO_C0800_G10M5.jpg
+LinePlot: CO_C1200_G10M5  SimTime Cfrac TsAll none CCN:@1200/cc,@GCCN:@1e-5/cc  NorthEast none Cloud_Frac_CO_C1200_G10M5.jpg
+LinePlot: CO_C1600_G10M5  SimTime Cfrac TsAll none CCN:@1600/cc,@GCCN:@1e-5/cc  NorthEast none Cloud_Frac_CO_C1600_G10M5.jpg
 
 #### 3um GCCN median radius ####
 
 # Vary GCCN, hold SST and CCN constant
-LinePlot: CG_C0050_S298   SimTime Cfrac TsAll none CCN:_50/cc,_SST:_298K    NorthEast none Cloud_Frac_CG_C50_S298.jpg
-LinePlot: CG_C0400_S298  SimTime Cfrac TsAll none CCN:_400/cc,_SST:_298K   NorthEast none Cloud_Frac_CG_C400_S298.jpg
-LinePlot: CG_C1600_S298 SimTime Cfrac TsAll none CCN:_1600/cc,_SST:_298K NorthEast none Cloud_Frac_CG_C1600_S298.jpg
+LinePlot: CG_C0050_S298   SimTime Cfrac TsAll none CCN:@50/cc,@SST:@298K    NorthEast none Cloud_Frac_CG_C50_S298.jpg
+LinePlot: CG_C0400_S298  SimTime Cfrac TsAll none CCN:@400/cc,@SST:@298K   NorthEast none Cloud_Frac_CG_C400_S298.jpg
+LinePlot: CG_C1600_S298 SimTime Cfrac TsAll none CCN:@1600/cc,@SST:@298K NorthEast none Cloud_Frac_CG_C1600_S298.jpg
 
-LinePlot: CG_C0400_S303  SimTime Cfrac TsAll none CCN:_400/cc,_SST:_303K   NorthEast none Cloud_Frac_CG_C400_S303.jpg
+LinePlot: CG_C0400_S303  SimTime Cfrac TsAll none CCN:@400/cc,@SST:@303K   NorthEast none Cloud_Frac_CG_C400_S303.jpg
 
 # Vary SST, hold CCN and GCCN constant
-LinePlot: CG_C0400_G10M0  SimTime Cfrac TsAll none CCN:_400/cc,_GCCN:_1/cc  NorthEast none Cloud_Frac_CG_C400_G10M0.jpg
-LinePlot: CG_C0400_G10M2  SimTime Cfrac TsAll none CCN:_400/cc,_GCCN:_1e-2/cc  NorthEast none Cloud_Frac_CG_C400_G10M2.jpg
-LinePlot: CG_C0400_G10M4  SimTime Cfrac TsAll none CCN:_400/cc,_GCCN:_1e-4/cc  NorthEast none Cloud_Frac_CG_C400_G10M4.jpg
+LinePlot: CG_C0400_G10M0  SimTime Cfrac TsAll none CCN:@400/cc,@GCCN:@1/cc  NorthEast none Cloud_Frac_CG_C400_G10M0.jpg
+LinePlot: CG_C0400_G10M2  SimTime Cfrac TsAll none CCN:@400/cc,@GCCN:@1e-2/cc  NorthEast none Cloud_Frac_CG_C400_G10M2.jpg
+LinePlot: CG_C0400_G10M4  SimTime Cfrac TsAll none CCN:@400/cc,@GCCN:@1e-4/cc  NorthEast none Cloud_Frac_CG_C400_G10M4.jpg
 
 # Vary CCN, hold SST and GCCN constant
-LinePlot: CG_S298_G10M0   SimTime Cfrac TsAll none SST:_298K,_GCCN:_1/cc       NorthEast none Cloud_Frac_CG_S298_G10M0.jpg
-LinePlot: CG_S298_G10M2   SimTime Cfrac TsAll none SST:_298K,_GCCN:_1e-2/cc    NorthEast none Cloud_Frac_CG_S298_G10M2.jpg
-LinePlot: CG_S298_G10M4   SimTime Cfrac TsAll none SST:_298K,_GCCN:_1e-4/cc    NorthEast none Cloud_Frac_CG_S298_G10M4.jpg
+LinePlot: CG_S298_G10M0   SimTime Cfrac TsAll none SST:@298K,@GCCN:@1/cc       NorthEast none Cloud_Frac_CG_S298_G10M0.jpg
+LinePlot: CG_S298_G10M2   SimTime Cfrac TsAll none SST:@298K,@GCCN:@1e-2/cc    NorthEast none Cloud_Frac_CG_S298_G10M2.jpg
+LinePlot: CG_S298_G10M4   SimTime Cfrac TsAll none SST:@298K,@GCCN:@1e-4/cc    NorthEast none Cloud_Frac_CG_S298_G10M4.jpg
 
 #### Max cloud depth - time series
 #### 1um GCCN median radius ####
 
 # Vary CCN, hold SST constant
-LinePlot: CO_S293_G10M5  SimTime MaxCdepth TsAll none SST:_293K,_GCCN:_1e-5/cc  NorthEast none Cloud_Depth_CO_S293_G10M5.jpg
-LinePlot: CO_S298_G10M5  SimTime MaxCdepth TsAll none SST:_298K,_GCCN:_1e-5/cc  NorthEast none Cloud_Depth_CO_S298_G10M5.jpg
-LinePlot: CO_S303_G10M5  SimTime MaxCdepth TsAll none SST:_303K,_GCCN:_1e-5/cc  NorthEast none Cloud_Depth_CO_S303_G10M5.jpg
+LinePlot: CO_S293_G10M5  SimTime MaxCdepth TsAll none SST:@293K,@GCCN:@1e-5/cc  NorthEast none Cloud_Depth_CO_S293_G10M5.jpg
+LinePlot: CO_S298_G10M5  SimTime MaxCdepth TsAll none SST:@298K,@GCCN:@1e-5/cc  NorthEast none Cloud_Depth_CO_S298_G10M5.jpg
+LinePlot: CO_S303_G10M5  SimTime MaxCdepth TsAll none SST:@303K,@GCCN:@1e-5/cc  NorthEast none Cloud_Depth_CO_S303_G10M5.jpg
 
 # Vary SST, hold CCN constant
-LinePlot: CO_C0050_G10M5  SimTime MaxCdepth TsAll none CCN:_50/cc,_GCCN:_1e-5/cc    NorthEast none Cloud_Depth_CO_C0050_G10M5.jpg
-LinePlot: CO_C0100_G10M5  SimTime MaxCdepth TsAll none CCN:_100/cc,_GCCN:_1e-5/cc   NorthEast none Cloud_Depth_CO_C0100_G10M5.jpg
-LinePlot: CO_C0200_G10M5  SimTime MaxCdepth TsAll none CCN:_200/cc,_GCCN:_1e-5/cc   NorthEast none Cloud_Depth_CO_C0200_G10M5.jpg
-LinePlot: CO_C0400_G10M5  SimTime MaxCdepth TsAll none CCN:_400/cc,_GCCN:_1e-5/cc   NorthEast none Cloud_Depth_CO_C0400_G10M5.jpg
-LinePlot: CO_C0800_G10M5  SimTime MaxCdepth TsAll none CCN:_800/cc,_GCCN:_1e-5/cc   NorthEast none Cloud_Depth_CO_C0800_G10M5.jpg
-LinePlot: CO_C1200_G10M5  SimTime MaxCdepth TsAll none CCN:_1200/cc,_GCCN:_1e-5/cc  NorthEast none Cloud_Depth_CO_C1200_G10M5.jpg
-LinePlot: CO_C1600_G10M5  SimTime MaxCdepth TsAll none CCN:_1600/cc,_GCCN:_1e-5/cc  NorthEast none Cloud_Depth_CO_C1600_G10M5.jpg
+LinePlot: CO_C0050_G10M5  SimTime MaxCdepth TsAll none CCN:@50/cc,@GCCN:@1e-5/cc    NorthEast none Cloud_Depth_CO_C0050_G10M5.jpg
+LinePlot: CO_C0100_G10M5  SimTime MaxCdepth TsAll none CCN:@100/cc,@GCCN:@1e-5/cc   NorthEast none Cloud_Depth_CO_C0100_G10M5.jpg
+LinePlot: CO_C0200_G10M5  SimTime MaxCdepth TsAll none CCN:@200/cc,@GCCN:@1e-5/cc   NorthEast none Cloud_Depth_CO_C0200_G10M5.jpg
+LinePlot: CO_C0400_G10M5  SimTime MaxCdepth TsAll none CCN:@400/cc,@GCCN:@1e-5/cc   NorthEast none Cloud_Depth_CO_C0400_G10M5.jpg
+LinePlot: CO_C0800_G10M5  SimTime MaxCdepth TsAll none CCN:@800/cc,@GCCN:@1e-5/cc   NorthEast none Cloud_Depth_CO_C0800_G10M5.jpg
+LinePlot: CO_C1200_G10M5  SimTime MaxCdepth TsAll none CCN:@1200/cc,@GCCN:@1e-5/cc  NorthEast none Cloud_Depth_CO_C1200_G10M5.jpg
+LinePlot: CO_C1600_G10M5  SimTime MaxCdepth TsAll none CCN:@1600/cc,@GCCN:@1e-5/cc  NorthEast none Cloud_Depth_CO_C1600_G10M5.jpg
 
 #### 3um GCCN median radius ####
 
 # Vary GCCN, hold SST and CCN constant
-LinePlot: CG_C0050_S298   SimTime MaxCdepth TsAll none CCN:_50/cc,_SST:_298K    NorthEast none Cloud_Depth_CG_C50_S298.jpg
-LinePlot: CG_C0400_S298  SimTime MaxCdepth TsAll none CCN:_400/cc,_SST:_298K   NorthEast none Cloud_Depth_CG_C400_S298.jpg
-LinePlot: CG_C1600_S298 SimTime MaxCdepth TsAll none CCN:_1600/cc,_SST:_298K NorthEast none Cloud_Depth_CG_C1600_S298.jpg
+LinePlot: CG_C0050_S298   SimTime MaxCdepth TsAll none CCN:@50/cc,@SST:@298K    NorthEast none Cloud_Depth_CG_C50_S298.jpg
+LinePlot: CG_C0400_S298  SimTime MaxCdepth TsAll none CCN:@400/cc,@SST:@298K   NorthEast none Cloud_Depth_CG_C400_S298.jpg
+LinePlot: CG_C1600_S298 SimTime MaxCdepth TsAll none CCN:@1600/cc,@SST:@298K NorthEast none Cloud_Depth_CG_C1600_S298.jpg
 
-LinePlot: CG_C0400_S303  SimTime MaxCdepth TsAll none CCN:_400/cc,_SST:_303K   NorthEast none Cloud_Depth_CG_C400_S303.jpg
+LinePlot: CG_C0400_S303  SimTime MaxCdepth TsAll none CCN:@400/cc,@SST:@303K   NorthEast none Cloud_Depth_CG_C400_S303.jpg
 
 # Vary SST, hold CCN and GCCN constant
-LinePlot: CG_C0400_G10M0  SimTime MaxCdepth TsAll none CCN:_400/cc,_GCCN:_1/cc  NorthEast none Cloud_Depth_CG_C400_G10M0.jpg
-LinePlot: CG_C0400_G10M2  SimTime MaxCdepth TsAll none CCN:_400/cc,_GCCN:_1e-2/cc  NorthEast none Cloud_Depth_CG_C400_G10M2.jpg
-LinePlot: CG_C0400_G10M4  SimTime MaxCdepth TsAll none CCN:_400/cc,_GCCN:_1e-4/cc  NorthEast none Cloud_Depth_CG_C400_G10M4.jpg
+LinePlot: CG_C0400_G10M0  SimTime MaxCdepth TsAll none CCN:@400/cc,@GCCN:@1/cc  NorthEast none Cloud_Depth_CG_C400_G10M0.jpg
+LinePlot: CG_C0400_G10M2  SimTime MaxCdepth TsAll none CCN:@400/cc,@GCCN:@1e-2/cc  NorthEast none Cloud_Depth_CG_C400_G10M2.jpg
+LinePlot: CG_C0400_G10M4  SimTime MaxCdepth TsAll none CCN:@400/cc,@GCCN:@1e-4/cc  NorthEast none Cloud_Depth_CG_C400_G10M4.jpg
 
 # Vary CCN, hold SST and GCCN constant
-LinePlot: CG_S298_G10M0   SimTime MaxCdepth TsAll none SST:_298K,_GCCN:_1/cc       NorthEast none Cloud_Depth_CG_S298_G10M0.jpg
-LinePlot: CG_S298_G10M2   SimTime MaxCdepth TsAll none SST:_298K,_GCCN:_1e-2/cc    NorthEast none Cloud_Depth_CG_S298_G10M2.jpg
-LinePlot: CG_S298_G10M4   SimTime MaxCdepth TsAll none SST:_298K,_GCCN:_1e-4/cc    NorthEast none Cloud_Depth_CG_S298_G10M4.jpg
+LinePlot: CG_S298_G10M0   SimTime MaxCdepth TsAll none SST:@298K,@GCCN:@1/cc       NorthEast none Cloud_Depth_CG_S298_G10M0.jpg
+LinePlot: CG_S298_G10M2   SimTime MaxCdepth TsAll none SST:@298K,@GCCN:@1e-2/cc    NorthEast none Cloud_Depth_CG_S298_G10M2.jpg
+LinePlot: CG_S298_G10M4   SimTime MaxCdepth TsAll none SST:@298K,@GCCN:@1e-4/cc    NorthEast none Cloud_Depth_CG_S298_G10M4.jpg
 
 ##################################################################
 ##################### DISTRIBUTION PLOTS #########################
@@ -855,12 +855,12 @@ PlotSet: CO_POP_SST_G10M5 3 smeas1d_pop_CO_S293_G10M5 293 k - 0.0 smeas1d_pop_CO
 #  When <units> is set to '_', which turns into a blank, then the units designation is dropped
 #  from the figure.
 #
-PlotVar: Ctop  hda_ctop_tempc TsAveragedData/hda_ctop_tempc Cloud_Top_Temperature Deg_C       15       5  1
-PlotVar: Cfrac hda_cloud_mask TsAveragedData/hda_cloud_frac Cloud_Fraction            _     -0.1     1.1  1
+PlotVar: Ctop  hda_ctop_tempc TsAveragedData/hda_ctop_tempc Cloud@Top@Temperature Deg@C       15       5  1
+PlotVar: Cfrac hda_cloud_mask TsAveragedData/hda_cloud_frac Cloud@Fraction            @     -0.1     1.1  1
 
-PlotVar: MaxCdepth max_cloud_depth TsAveragedData/max_cdepth Max_Cloud_Depth              m   -100.0  4100.0  1
+PlotVar: MaxCdepth max_cloud_depth TsAveragedData/max_cdepth Max@Cloud@Depth              m   -100.0  4100.0  1
 
-PlotVar: SimTime t_coords TsAveragedData/hda_ctop_tempc Simulation_Time  hr  0 80 2.77777778e-4
+PlotVar: SimTime t_coords TsAveragedData/hda_ctop_tempc Simulation@Time  hr  0 80 2.77777778e-4
 
 ######################## Selection specs #########################
 # PlotDselect: <name> <xmin> <xmax> <ymin> <ymax> <zmin> <zmax> <tmin> <tmax>

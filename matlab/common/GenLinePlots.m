@@ -17,6 +17,7 @@ for iplot = 1:length(Config.LinePlots)
     clear Xall;
     clear Yall;
     clear LegText;
+    clear LineColors;
     clear LineStyles;
     clear LineGscales;
     clear AxisProps;
@@ -119,6 +120,7 @@ for iplot = 1:length(Config.LinePlots)
     for icase = 1:Config.PlotSets(ips).Ncases
       Case = Config.PlotSets(ips).Cases(icase).Cname;
       LegText{icase} = Config.PlotSets(ips).Cases(icase).Legend;
+      LineColors{icase} = Config.PlotSets(ips).Cases(icase).Lcolor;
       LineStyles{icase} = Config.PlotSets(ips).Cases(icase).Lstyle;
       LineGscales(icase) = Config.PlotSets(ips).Cases(icase).Lgscale;
 
@@ -169,7 +171,7 @@ for iplot = 1:length(Config.LinePlots)
 
     fprintf('\n');
     fprintf('Writing plot file: %s\n', OutFile);
-    Plot2dSet( Xall, Yall, Ptitle, Pmarkers, Xlabel, Ylabel, LineStyles, LineGscales, LegText, LegLoc, AxisProps, AddMeas, OutFile );
+    Plot2dSet( Xall, Yall, Ptitle, Pmarkers, Xlabel, Ylabel, LineColors, LineStyles, LineGscales, LegText, LegLoc, AxisProps, AddMeas, OutFile );
     fprintf('\n');
 end
 

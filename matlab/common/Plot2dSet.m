@@ -1,4 +1,4 @@
-function [ ] = Plot2dSet( X, Y, Ptitle, Pmarkers, Xlabel, Ylabel, Lstyles, Gscales, LegText, LegLoc, AxisProps, AddMeas, OutFile )
+function [ ] = Plot2dSet( X, Y, Ptitle, Pmarkers, Xlabel, Ylabel, Lcolors, Lstyles, Gscales, LegText, LegLoc, AxisProps, AddMeas, OutFile )
 %Plot2dSet Plot a set of 2D line plots on the same panel
 %   This function will take data contained in X and Y and plot them on a
 %   single panel.
@@ -28,8 +28,12 @@ end
 % subsequent plots). Plot the first hist outside the loop, issue a "hold
 % on" and then plot the remainder hists.
 
-Color = [ 1 1 1 ] * Gscales(1);
-plot(X(1,:), Y(1,:), 'Color', Color, 'LineStyle', Lstyles{1}, 'LineWidth', Lwidth);
+if (strcmp(Lcolors{1}, 'k'))
+  Lcolor = [ 1 1 1 ] * Gscales(1);
+else
+  Lcolor = Lcolors{1};
+end
+plot(X(1,:), Y(1,:), 'Color', Lcolor, 'LineStyle', Lstyles{1}, 'LineWidth', Lwidth);
 for i = 1:Nprops
   set(gca, AxisProps(i).Name, AxisProps(i).Val);
 end
@@ -39,8 +43,12 @@ set(gca, 'TickLength', [ 0.025 0.025 ]);
 hold on;
 
 for i = 2:Nplots % each row is a separate curve for plotting
-    Color = [ 1 1 1 ] * Gscales(i);
-    plot(X(i,:), Y(i,:), 'Color', Color, 'LineStyle', Lstyles{i}, 'LineWidth', Lwidth);
+    if (strcmp(Lcolors{i}, 'k'))
+      Lcolor = [ 1 1 1 ] * Gscales(i);
+    else
+      Lcolor = Lcolors{i};
+    end
+    plot(X(i,:), Y(i,:), 'Color', Lcolor, 'LineStyle', Lstyles{i}, 'LineWidth', Lwidth);
 end
 
 legend(LegText, 'Location', char(LegLoc), 'FontSize', LegFsize);
