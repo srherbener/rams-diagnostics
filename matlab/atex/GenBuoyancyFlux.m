@@ -53,15 +53,25 @@ function [ ] = GenBuoyancyFlux(ConfigFile)
             WP_TVP = squeeze(hdf5read(WpTvpFile, WpTvpName));
             TB     = squeeze(hdf5read(TbFile, TbName));
     
-            % Grab coordinates: Z
+            % Grab height coordinates
             Z = hdf5read(WpTvpFile, 'z_coords');
+            Nz = length(Z);
             
             BF = (g ./ TB) .* WP_TVP;
     
-            % output
+            % output --> Use REVU format, 4D var, *_coords
+            % fabricate x, y, t coords
+            X = 1;
+            Y = 1;
+            T = 1;
+            Ovar = reshape(BF, [ 1 1 Nz 1 ]);
+            
             fprintf('Writing: %s\n', OutFile);
-            hdf5write(OutFile, '/BUOY_FLUX', BF);
-            hdf5write(OutFile, 'Z', Z, 'WriteMode', 'append');
+            hdf5write(OutFile, '/BUOY_FLUX', Ovar);
+            hdf5write(OutFile, 'x_coords', X, 'WriteMode', 'append');
+            hdf5write(OutFile, 'y_coords', Y, 'WriteMode', 'append');
+            hdf5write(OutFile, 'z_coords', Z, 'WriteMode', 'append');
+            hdf5write(OutFile, 't_coords', T, 'WriteMode', 'append');
             fprintf('\n');
         end
     end
