@@ -9,7 +9,7 @@ if (exist(Pdir, 'dir') ~= 7)
   mkdir(Pdir);
 end
 
-Tlist = [ 51 101 201 401 ];
+Tlist = [ 217 289 361 433 ];
 
 % W will be organized as (x,y,t)
 Hfile = sprintf('%s/w_z250-z.atex.ccn1600.sst303.gcn10m5.1um-AS-1999-02-10-040000-g1.h5', Hdir);

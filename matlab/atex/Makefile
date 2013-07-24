@@ -10,6 +10,7 @@ SCRIPTS = $(DEST)/ExtractSample.m \
           $(DEST)/GenBuoyancyFlux.m \
           $(DEST)/GenCloudStructPlots.m \
           $(DEST)/GenDistPlots.m \
+          $(DEST)/GenWmoments.m \
           $(DEST)/PlotMultiPanelSample.m \
           $(DEST)/PlotProfs.m \
           $(DEST)/PlotSampleData.m \
