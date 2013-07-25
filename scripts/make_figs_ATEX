@@ -195,98 +195,173 @@ Jsize="1200x900"
 ###  Cloud_Depth_CG_S298_G10M2.jpg \
 ###  Cloud_Depth_CG_S298_G10M0.jpg \
 ###  FigureMaxCdepthGccnTimeSeries2.jpg
+### 
+### echo "Figure: W moments vs CCN, 12-36 hr"
+### montage -tile 3x3 -geometry ${Jsize}+2+100 \
+###  W_M1_T12_T36_CO_S293_G10M5.jpg \
+###  W_M1_T12_T36_CO_S298_G10M5.jpg \
+###  W_M1_T12_T36_CO_S303_G10M5.jpg \
+###  W_M2_T12_T36_CO_S293_G10M5.jpg \
+###  W_M2_T12_T36_CO_S298_G10M5.jpg \
+###  W_M2_T12_T36_CO_S303_G10M5.jpg \
+###  W_M3_T12_T36_CO_S293_G10M5.jpg \
+###  W_M3_T12_T36_CO_S298_G10M5.jpg \
+###  W_M3_T12_T36_CO_S303_G10M5.jpg \
+###  FigureWmomentsVsCcn_T12_36.jpg
+### 
+### echo "Figure: W moment 1 vs SST, 12-36 hr"
+### montage -tile 3x3 -geometry ${Jsize}+2+100 \
+###  W_M1_T12_T36_CO_C0050_G10M5.jpg \
+###  W_M1_T12_T36_CO_C0100_G10M5.jpg \
+###  W_M1_T12_T36_CO_C0200_G10M5.jpg \
+###  W_M1_T12_T36_CO_C0400_G10M5.jpg \
+###  W_M1_T12_T36_CO_C0800_G10M5.jpg \
+###  W_M1_T12_T36_CO_C1200_G10M5.jpg \
+###  W_M1_T12_T36_CO_C1600_G10M5.jpg \
+###  Blank.jpg \
+###  Blank.jpg \
+###  FigureWmomentsVsSst_M1_T12_36.jpg
+### 
+### echo "Figure: W moment 2 vs SST, 12-36 hr"
+### montage -tile 3x3 -geometry ${Jsize}+2+100 \
+###  W_M2_T12_T36_CO_C0050_G10M5.jpg \
+###  W_M2_T12_T36_CO_C0100_G10M5.jpg \
+###  W_M2_T12_T36_CO_C0200_G10M5.jpg \
+###  W_M2_T12_T36_CO_C0400_G10M5.jpg \
+###  W_M2_T12_T36_CO_C0800_G10M5.jpg \
+###  W_M2_T12_T36_CO_C1200_G10M5.jpg \
+###  W_M2_T12_T36_CO_C1600_G10M5.jpg \
+###  Blank.jpg \
+###  Blank.jpg \
+###  FigureWmomentsVsSst_M2_T12_36.jpg
+### 
+### echo "Figure: W moment 3 vs SST, 12-36 hr"
+### montage -tile 3x3 -geometry ${Jsize}+2+100 \
+###  W_M3_T12_T36_CO_C0050_G10M5.jpg \
+###  W_M3_T12_T36_CO_C0100_G10M5.jpg \
+###  W_M3_T12_T36_CO_C0200_G10M5.jpg \
+###  W_M3_T12_T36_CO_C0400_G10M5.jpg \
+###  W_M3_T12_T36_CO_C0800_G10M5.jpg \
+###  W_M3_T12_T36_CO_C1200_G10M5.jpg \
+###  W_M3_T12_T36_CO_C1600_G10M5.jpg \
+###  Blank.jpg \
+###  Blank.jpg \
+###  FigureWmomentsVsSst_M3_T12_36.jpg
+### 
+### echo "Figure: W moments vs SST (GCCN), 12-36 hr"
+### montage -tile 3x3 -geometry ${Jsize}+2+100 \
+###  W_M1_T12_T36_CG_C400_G10M0.jpg \
+###  W_M1_T12_T36_CG_C400_G10M2.jpg \
+###  W_M1_T12_T36_CG_C400_G10M4.jpg \
+###  W_M2_T12_T36_CG_C400_G10M0.jpg \
+###  W_M2_T12_T36_CG_C400_G10M2.jpg \
+###  W_M2_T12_T36_CG_C400_G10M4.jpg \
+###  W_M3_T12_T36_CG_C400_G10M0.jpg \
+###  W_M3_T12_T36_CG_C400_G10M2.jpg \
+###  W_M3_T12_T36_CG_C400_G10M4.jpg \
+###  FigureWmomentsVsSst_GCCN_T12_36.jpg
+### 
+### echo "Figure: W moment 1 vs CCN, 12-36 hr"
+### montage -tile 2x3 -geometry ${Jsize}+2+100 \
+###  W_M1_T12_T36_CG_C50_S298.jpg \
+###  Blank.jpg \
+###  W_M1_T12_T36_CG_C400_S298.jpg \
+###  W_M1_T12_T36_CG_C400_S303.jpg \
+###  W_M1_T12_T36_CG_C1600_S298.jpg \
+###  Blank.jpg \
+###  FigureWmomentsVsGccn_M1_T12_36.jpg
+### 
+### echo "Figure: W moment 2 vs CCN, 12-36 hr"
+### montage -tile 2x3 -geometry ${Jsize}+2+100 \
+###  W_M2_T12_T36_CG_C50_S298.jpg \
+###  Blank.jpg \
+###  W_M2_T12_T36_CG_C400_S298.jpg \
+###  W_M2_T12_T36_CG_C400_S303.jpg \
+###  W_M2_T12_T36_CG_C1600_S298.jpg \
+###  Blank.jpg \
+###  FigureWmomentsVsGccn_M2_T12_36.jpg
+### 
+### echo "Figure: W moment 3 vs CCN, 12-36 hr"
+### montage -tile 2x3 -geometry ${Jsize}+2+100 \
+###  W_M3_T12_T36_CG_C50_S298.jpg \
+###  Blank.jpg \
+###  W_M3_T12_T36_CG_C400_S298.jpg \
+###  W_M3_T12_T36_CG_C400_S303.jpg \
+###  W_M3_T12_T36_CG_C1600_S298.jpg \
+###  Blank.jpg \
+###  FigureWmomentsVsGccn_M3_T12_36.jpg
 
-echo "Figure: W moments vs CCN, 12-36 hr"
+echo "Figure: Cloud Fraction and Cloud Max Depth"
+montage -tile 3x2 -geometry ${Jsize}+2+100 \
+ CloudFrac_CO_S298_G10M5.jpg \
+ CloudFrac_CO_C400_G10M5.jpg \
+ CloudFrac_CG_C400_S298.jpg \
+ CloudMaxDepth_CO_S298_G10M5.jpg \
+ CloudMaxDepth_CO_C400_G10M5.jpg \
+ CloudMaxDepth_CG_C400_S298.jpg \
+ FigureCfracCdepth.jpg
+
+echo "Figure: Turbulent Structure"
 montage -tile 3x3 -geometry ${Jsize}+2+100 \
- W_M1_T12_T36_CO_S293_G10M5.jpg \
- W_M1_T12_T36_CO_S298_G10M5.jpg \
- W_M1_T12_T36_CO_S303_G10M5.jpg \
- W_M2_T12_T36_CO_S293_G10M5.jpg \
- W_M2_T12_T36_CO_S298_G10M5.jpg \
- W_M2_T12_T36_CO_S303_G10M5.jpg \
- W_M3_T12_T36_CO_S293_G10M5.jpg \
- W_M3_T12_T36_CO_S298_G10M5.jpg \
- W_M3_T12_T36_CO_S303_G10M5.jpg \
- FigureWmomentsVsCcn_T12_36.jpg
+ BuoyFlux_T12_T36_CO_S298_G10M5.jpg \
+ BuoyFlux_T12_T36_CO_C400_G10M5.jpg \
+ BuoyFlux_T12_T36_CG_C400_S298.jpg \
+ Wvar_T12_T36_CO_S298_G10M5.jpg \
+ Wvar_T12_T36_CO_C400_G10M5.jpg \
+ Wvar_T12_T36_CG_C400_S298.jpg \
+ Wskew_T12_T36_CO_S298_G10M5.jpg \
+ Wskew_T12_T36_CO_C400_G10M5.jpg \
+ Wskew_T12_T36_CG_C400_S298.jpg \
+ FigureTurbStruct.jpg
 
-echo "Figure: W moment 1 vs SST, 12-36 hr"
+echo "Figure: W250 T18"
 montage -tile 3x3 -geometry ${Jsize}+2+100 \
- W_M1_T12_T36_CO_C0050_G10M5.jpg \
- W_M1_T12_T36_CO_C0100_G10M5.jpg \
- W_M1_T12_T36_CO_C0200_G10M5.jpg \
- W_M1_T12_T36_CO_C0400_G10M5.jpg \
- W_M1_T12_T36_CO_C0800_G10M5.jpg \
- W_M1_T12_T36_CO_C1200_G10M5.jpg \
- W_M1_T12_T36_CO_C1600_G10M5.jpg \
- Blank.jpg \
- Blank.jpg \
- FigureWmomentsVsSst_M1_T12_36.jpg
+ Sample_W250_T217_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+ Sample_W250_T217_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ Sample_W250_T217_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+ Sample_W250_T217_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+ Sample_W250_T217_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ Sample_W250_T217_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+ Sample_W250_T217_z.atex.ccn0400.sst298.gcn10m0.3um.jpg \
+ Sample_W250_T217_z.atex.ccn0400.sst298.gcn10m2.3um.jpg \
+ Sample_W250_T217_z.atex.ccn0400.sst298.gcn10m4.3um.jpg \
+ Figure_W250_T18.jpg
 
-echo "Figure: W moment 2 vs SST, 12-36 hr"
+echo "Figure: W250 T24"
 montage -tile 3x3 -geometry ${Jsize}+2+100 \
- W_M2_T12_T36_CO_C0050_G10M5.jpg \
- W_M2_T12_T36_CO_C0100_G10M5.jpg \
- W_M2_T12_T36_CO_C0200_G10M5.jpg \
- W_M2_T12_T36_CO_C0400_G10M5.jpg \
- W_M2_T12_T36_CO_C0800_G10M5.jpg \
- W_M2_T12_T36_CO_C1200_G10M5.jpg \
- W_M2_T12_T36_CO_C1600_G10M5.jpg \
- Blank.jpg \
- Blank.jpg \
- FigureWmomentsVsSst_M2_T12_36.jpg
+ Sample_W250_T289_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+ Sample_W250_T289_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ Sample_W250_T289_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+ Sample_W250_T289_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+ Sample_W250_T289_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ Sample_W250_T289_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+ Sample_W250_T289_z.atex.ccn0400.sst298.gcn10m0.3um.jpg \
+ Sample_W250_T289_z.atex.ccn0400.sst298.gcn10m2.3um.jpg \
+ Sample_W250_T289_z.atex.ccn0400.sst298.gcn10m4.3um.jpg \
+ Figure_W250_T24.jpg
 
-echo "Figure: W moment 3 vs SST, 12-36 hr"
+echo "Figure: W250 T30"
 montage -tile 3x3 -geometry ${Jsize}+2+100 \
- W_M3_T12_T36_CO_C0050_G10M5.jpg \
- W_M3_T12_T36_CO_C0100_G10M5.jpg \
- W_M3_T12_T36_CO_C0200_G10M5.jpg \
- W_M3_T12_T36_CO_C0400_G10M5.jpg \
- W_M3_T12_T36_CO_C0800_G10M5.jpg \
- W_M3_T12_T36_CO_C1200_G10M5.jpg \
- W_M3_T12_T36_CO_C1600_G10M5.jpg \
- Blank.jpg \
- Blank.jpg \
- FigureWmomentsVsSst_M3_T12_36.jpg
+ Sample_W250_T361_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+ Sample_W250_T361_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ Sample_W250_T361_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+ Sample_W250_T361_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+ Sample_W250_T361_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ Sample_W250_T361_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+ Sample_W250_T361_z.atex.ccn0400.sst298.gcn10m0.3um.jpg \
+ Sample_W250_T361_z.atex.ccn0400.sst298.gcn10m2.3um.jpg \
+ Sample_W250_T361_z.atex.ccn0400.sst298.gcn10m4.3um.jpg \
+ Figure_W250_T30.jpg
 
-echo "Figure: W moments vs SST (GCCN), 12-36 hr"
+echo "Figure: W250 T36"
 montage -tile 3x3 -geometry ${Jsize}+2+100 \
- W_M1_T12_T36_CG_C400_G10M0.jpg \
- W_M1_T12_T36_CG_C400_G10M2.jpg \
- W_M1_T12_T36_CG_C400_G10M4.jpg \
- W_M2_T12_T36_CG_C400_G10M0.jpg \
- W_M2_T12_T36_CG_C400_G10M2.jpg \
- W_M2_T12_T36_CG_C400_G10M4.jpg \
- W_M3_T12_T36_CG_C400_G10M0.jpg \
- W_M3_T12_T36_CG_C400_G10M2.jpg \
- W_M3_T12_T36_CG_C400_G10M4.jpg \
- FigureWmomentsVsSst_GCCN_T12_36.jpg
-
-echo "Figure: W moment 1 vs CCN, 12-36 hr"
-montage -tile 2x3 -geometry ${Jsize}+2+100 \
- W_M1_T12_T36_CG_C50_S298.jpg \
- Blank.jpg \
- W_M1_T12_T36_CG_C400_S298.jpg \
- W_M1_T12_T36_CG_C400_S303.jpg \
- W_M1_T12_T36_CG_C1600_S298.jpg \
- Blank.jpg \
- FigureWmomentsVsGccn_M1_T12_36.jpg
-
-echo "Figure: W moment 2 vs CCN, 12-36 hr"
-montage -tile 2x3 -geometry ${Jsize}+2+100 \
- W_M2_T12_T36_CG_C50_S298.jpg \
- Blank.jpg \
- W_M2_T12_T36_CG_C400_S298.jpg \
- W_M2_T12_T36_CG_C400_S303.jpg \
- W_M2_T12_T36_CG_C1600_S298.jpg \
- Blank.jpg \
- FigureWmomentsVsGccn_M2_T12_36.jpg
-
-echo "Figure: W moment 3 vs CCN, 12-36 hr"
-montage -tile 2x3 -geometry ${Jsize}+2+100 \
- W_M3_T12_T36_CG_C50_S298.jpg \
- Blank.jpg \
- W_M3_T12_T36_CG_C400_S298.jpg \
- W_M3_T12_T36_CG_C400_S303.jpg \
- W_M3_T12_T36_CG_C1600_S298.jpg \
- Blank.jpg \
- FigureWmomentsVsGccn_M3_T12_36.jpg
+ Sample_W250_T433_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+ Sample_W250_T433_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ Sample_W250_T433_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+ Sample_W250_T433_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+ Sample_W250_T433_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ Sample_W250_T433_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+ Sample_W250_T433_z.atex.ccn0400.sst298.gcn10m0.3um.jpg \
+ Sample_W250_T433_z.atex.ccn0400.sst298.gcn10m2.3um.jpg \
+ Sample_W250_T433_z.atex.ccn0400.sst298.gcn10m4.3um.jpg \
+ Figure_W250_T36.jpg
