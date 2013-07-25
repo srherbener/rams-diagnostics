@@ -9,7 +9,7 @@ if (exist(Pdir, 'dir') ~= 7)
   mkdir(Pdir);
 end
 
-Tlist = [ 217 289 361 433 ];
+Tlist = [ 145 217 289 361 433 ];
 Cases = {
     'z.atex.ccn0050.sst298.gcn10m5.1um'
     'z.atex.ccn0400.sst298.gcn10m5.1um'
