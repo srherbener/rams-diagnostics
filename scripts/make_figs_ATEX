@@ -314,6 +314,58 @@ montage -tile 3x3 -geometry ${Jsize}+2+100 \
  Wskew_T12_T36_CG_C400_S298.jpg \
  FigureTurbStruct.jpg
 
+echo "Figure: Turbulent Structure (L0P01)"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ BuoyFlux_L0P01_T12_T36_CO_S298_G10M5.jpg \
+ BuoyFlux_L0P01_T12_T36_CO_C400_G10M5.jpg \
+ BuoyFlux_L0P01_T12_T36_CG_C400_S298.jpg \
+ Wvar_L0P01_T12_T36_CO_S298_G10M5.jpg \
+ Wvar_L0P01_T12_T36_CO_C400_G10M5.jpg \
+ Wvar_L0P01_T12_T36_CG_C400_S298.jpg \
+ Wskew_L0P01_T12_T36_CO_S298_G10M5.jpg \
+ Wskew_L0P01_T12_T36_CO_C400_G10M5.jpg \
+ Wskew_L0P01_T12_T36_CG_C400_S298.jpg \
+ FigureTurbStruct_L0P01.jpg
+
+echo "Figure: Turbulent Structure (L0P10)"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ BuoyFlux_L0P10_T12_T36_CO_S298_G10M5.jpg \
+ BuoyFlux_L0P10_T12_T36_CO_C400_G10M5.jpg \
+ BuoyFlux_L0P10_T12_T36_CG_C400_S298.jpg \
+ Wvar_L0P10_T12_T36_CO_S298_G10M5.jpg \
+ Wvar_L0P10_T12_T36_CO_C400_G10M5.jpg \
+ Wvar_L0P10_T12_T36_CG_C400_S298.jpg \
+ Wskew_L0P10_T12_T36_CO_S298_G10M5.jpg \
+ Wskew_L0P10_T12_T36_CO_C400_G10M5.jpg \
+ Wskew_L0P10_T12_T36_CG_C400_S298.jpg \
+ FigureTurbStruct_L0P10.jpg
+
+echo "Figure: Turbulent Structure (L1P00)"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ BuoyFlux_L1P00_T12_T36_CO_S298_G10M5.jpg \
+ BuoyFlux_L1P00_T12_T36_CO_C400_G10M5.jpg \
+ BuoyFlux_L1P00_T12_T36_CG_C400_S298.jpg \
+ Wvar_L1P00_T12_T36_CO_S298_G10M5.jpg \
+ Wvar_L1P00_T12_T36_CO_C400_G10M5.jpg \
+ Wvar_L1P00_T12_T36_CG_C400_S298.jpg \
+ Wskew_L1P00_T12_T36_CO_S298_G10M5.jpg \
+ Wskew_L1P00_T12_T36_CO_C400_G10M5.jpg \
+ Wskew_L1P00_T12_T36_CG_C400_S298.jpg \
+ FigureTurbStruct_L1P00.jpg
+
+echo "Figure: W250 T12"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ Sample_W250_T145_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+ Sample_W250_T145_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ Sample_W250_T145_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+ Sample_W250_T145_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+ Sample_W250_T145_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ Sample_W250_T145_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+ Sample_W250_T145_z.atex.ccn0400.sst298.gcn10m0.3um.jpg \
+ Sample_W250_T145_z.atex.ccn0400.sst298.gcn10m2.3um.jpg \
+ Sample_W250_T145_z.atex.ccn0400.sst298.gcn10m4.3um.jpg \
+ Figure_W250_T12.jpg
+
 echo "Figure: W250 T18"
 montage -tile 3x3 -geometry ${Jsize}+2+100 \
  Sample_W250_T217_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
