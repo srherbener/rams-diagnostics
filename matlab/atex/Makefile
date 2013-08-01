@@ -25,6 +25,7 @@ SCRIPTS = $(DEST)/ExtractSample.m \
           $(DEST)/GenTopSwup.m \
           $(DEST)/MakeSinglePanelFigs.m \
           $(DEST)/PlotDistSet.m \
+          $(DEST)/PlotInitialSounding.m \
           $(DEST)/SetPath.m
 
 CONFIGS = $(DIAG_DIR)/DiagConfig
