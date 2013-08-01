@@ -1,4 +1,6 @@
-function [] = skew_sounding(pz, tz, tdz, rhz, wsp, wdir)
+function [] = skew_sounding(fig, pz, tz, tdz, rhz, wsp, wdir)
+
+figure(fig);
 
 %initialize
 g=9.80665; M=0.0289644; R=8.31447; L=0.0065; ex_10=(R*L)/(g*M);
