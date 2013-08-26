@@ -1,4 +1,4 @@
-function [ ] = PlotContour( X, Y, Z, Ptitle, Pmarkers, Xlabel, Ylabel, Fill, Cbar, Cmap, Crange, Clevs, AxisProps, OutFile )
+function [ ] = PlotContour( X, Y, Z, Ptitle, Pmarker, Xlabel, Ylabel, Fill, Cbar, Cmap, Crange, Clevs, AxisProps, OutFile )
 %PlotContour Creae a contour plot
 %   This function will plot data contained in Z as contours on a grid defined
 %   by X and Y.
@@ -16,9 +16,9 @@ Fig = figure;
 
 Nprops = length(AxisProps);
 
-PanelTitle = ~isempty(Pmarkers);
+PanelTitle = ~isempty(Pmarker);
 if (PanelTitle)
-    Ptitle = sprintf('(%s) %s', Pmarkers{1}, Ptitle);
+    Ptitle = sprintf('(%s) %s', Pmarker, Ptitle);
 end
 
 % create the plot

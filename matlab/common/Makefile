@@ -19,6 +19,7 @@ SCRIPTS = \
           $(DEST)/GenDeltapTseries.m \
           $(DEST)/GenHistMeas.m \
           $(DEST)/GenLinePlots.m \
+          $(DEST)/GenContourPlots.m \
           $(DEST)/GenPcolorPlots.m \
           $(DEST)/GenProfMeas.m \
           $(DEST)/GenSlopes1d.m \

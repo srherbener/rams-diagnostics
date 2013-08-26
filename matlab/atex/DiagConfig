@@ -331,6 +331,18 @@ LinePlot: CG_UP_C0400_S298  Wskew_L1P00 Prof_Heights Prof_T12_T36 none PANEL:f  
 #LinePlot: CG_S298_G10M2   BuoyFlux Prof_Heights Prof_T12_T36 none SST:@298K,@GCCN:@1e-2/cc    NorthEast none BuoyFlux_T12_T36_CG_S298_G10M2.jpg
 #LinePlot: CG_S298_G10M4   BuoyFlux Prof_Heights Prof_T12_T36 none SST:@298K,@GCCN:@1e-4/cc    NorthEast none BuoyFlux_T12_T36_CG_S298_G10M4.jpg
 
+#############################################################
+##################### CONTOUR PLOTS #########################
+#############################################################
+# ContourPlot: <xspec> <yspec> <zspec> <data_select_spec> <title> <fill> <color_bar> <color_map> <out_file>
+
+########### For Update #############
+
+### Albedo
+#ContourPlot: AlbedoPsetCCN AlbedoLon_T12 AlbedoLat_T12 Albedo_T12 AlbedoSelect_T12 PANEL:a:b:c:d:e  1 1 40 Gray Albedo_T12
+ContourPlot: AlbedoPsetCCN AlbedoLon_T24 AlbedoLat_T24 Albedo_T24 AlbedoSelect_T24 PANEL:a:b:c:d:e  1 1 40 Gray Albedo_T24
+ContourPlot: AlbedoPsetCCN AlbedoLon_T36 AlbedoLat_T36 Albedo_T36 AlbedoSelect_T36 PANEL:a:b:c:d:e  1 1 40 Gray Albedo_T36
+
 ##################################################################
 ##################### DISTRIBUTION PLOTS #########################
 ##################################################################
@@ -960,6 +972,10 @@ PlotSet: LTSS_SAMPLE 6 z.atex.ccn0050.sst293.gcn10m5.1um C0050-S293 k - 0.0 z.at
 # For Slope1dPlots
 PlotSet: CO_POP_SST_G10M5 3 smeas1d_pop_CO_S293_G10M5 293 k - 0.0 smeas1d_pop_CO_S298_G10M5 298 k - 0.0 smeas1d_pop_CO_S303_G10M5 303 c - 0.0
 
+# For albedo plots
+PlotSet: AlbedoPsetCCN 3 z.atex.ccn0050.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn0050.sst298.gcn10m5.1um 298K k - 0.0 z.atex.ccn0050.sst303.gcn10m5.1um 303K k - 0.0
+#PlotSet: AlbedoPsetCCN 21 z.atex.ccn0050.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn0050.sst298.gcn10m5.1um 298K k - 0.0 z.atex.ccn0050.sst303.gcn10m5.1um 303K k - 0.0 z.atex.ccn0100.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn0100.sst298.gcn10m5.1um 298K k - 0.0 z.atex.ccn0100.sst303.gcn10m5.1um 303K k - 0.0 z.atex.ccn0200.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn0200.sst298.gcn10m5.1um 298K k - 0.0 z.atex.ccn0200.sst303.gcn10m5.1um 303K k - 0.0 z.atex.ccn0400.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn0400.sst298.gcn10m5.1um 298K k - 0.0 z.atex.ccn0400.sst303.gcn10m5.1um 303K k - 0.0 z.atex.ccn0800.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn0800.sst298.gcn10m5.1um 298K k - 0.0 z.atex.ccn0800.sst303.gcn10m5.1um 303K k - 0.0 z.atex.ccn1200.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn1200.sst298.gcn10m5.1um 298K k - 0.0 z.atex.ccn1200.sst303.gcn10m5.1um 303K k - 0.0 z.atex.ccn1600.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn1600.sst298.gcn10m5.1um 298K k - 0.0 z.atex.ccn1600.sst303.gcn10m5.1um 303K k - 0.0
+
 ####################### Plot Vars ################################
 # PlotVar: <name> <vname> <file_prefix> <label> <units> <axis_min> <axis_max> <scale>
 # 
@@ -990,6 +1006,16 @@ PlotVar: Wskew_L0P01     W3        DIAGS/w_moments_lwp0p01_T12_T36  <w'w'w'>  m^
 PlotVar: Wskew_L0P10     W3        DIAGS/w_moments_lwp0p10_T12_T36  <w'w'w'>  m^3@s^-^3    -5.0  5.0   1
 PlotVar: Wskew_L1P00     W3        DIAGS/w_moments_lwp1p00_T12_T36  <w'w'w'>  m^3@s^-^3   -10.0 10.0   1
 
+PlotVar: AlbedoLon_T12 x_coords  DIAGS/albedo_T12 Longitude   @      -180 180 1
+PlotVar: AlbedoLat_T12 y_coords  DIAGS/albedo_T12 Latitude    @      -180 180 1
+PlotVar: Albedo_T12    albedo    DIAGS/albedo_T12 Albdeo      @         0   1 1
+PlotVar: AlbedoLon_T24 x_coords  DIAGS/albedo_T24 Longitude   @      -180 180 1
+PlotVar: AlbedoLat_T24 y_coords  DIAGS/albedo_T24 Latitude    @      -180 180 1
+PlotVar: Albedo_T24    albedo    DIAGS/albedo_T24 Albdeo      @         0   1 1
+PlotVar: AlbedoLon_T36 x_coords  DIAGS/albedo_T36 Longitude   @      -180 180 1
+PlotVar: AlbedoLat_T36 y_coords  DIAGS/albedo_T36 Latitude    @      -180 180 1
+PlotVar: Albedo_T36    albedo    DIAGS/albedo_T36 Albdeo      @         0   1 1
+
 ######################## Selection specs #########################
 # PlotDselect: <name> <xmin> <xmax> <ymin> <ymax> <zmin> <zmax> <tmin> <tmax>
 #
@@ -1007,6 +1033,9 @@ PlotDselect: TsAll           1 1 1 1 -50  50     0 129600
 
 PlotDselect: Prof_T12_T36 1 1 1 1 0 4000  1 1
 
+PlotDselect: AlbedoSelect_T12  -36.5 -35.4   14.4 15.4    50.0 50.0    43200  43200
+PlotDselect: AlbedoSelect_T24  -36.5 -35.4   14.4 15.4    50.0 50.0    86400  86400
+PlotDselect: AlbedoSelect_T36  -36.5 -35.4   14.4 15.4    50.0 50.0   129600 129600
 
 ### ####################### LWP time series plots ############################
 ### 

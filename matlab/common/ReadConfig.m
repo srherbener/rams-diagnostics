@@ -62,6 +62,7 @@ i_aeofplot = 0;
 i_tsplot = 0;
 i_dplot = 0;
 i_lplot = 0;
+i_cplot = 0;
 i_hmp3d = 0;
 i_hmslice = 0;
 i_pplot = 0;
@@ -308,6 +309,25 @@ for i = 1:size(InLines,1)
       Cdata.LinePlots(i_lplot).XVnum   = -1;
       Cdata.LinePlots(i_lplot).YVnum   = -1;
       Cdata.LinePlots(i_lplot).DSnum   = -1;
+    case 'ContourPlot:'
+      i_cplot = i_cplot + 1;
+      Cdata.ContourPlots(i_cplot).PSname     = Fields{2};
+      Cdata.ContourPlots(i_cplot).XVname     = Fields{3};
+      Cdata.ContourPlots(i_cplot).YVname     = Fields{4};
+      Cdata.ContourPlots(i_cplot).ZVname     = Fields{5};
+      Cdata.ContourPlots(i_cplot).DSname     = Fields{6};
+      Cdata.ContourPlots(i_cplot).Title      = ParseTitle(Fields{7});
+      Cdata.ContourPlots(i_cplot).Fill       = sscanf(Fields{8}, '%i');
+      Cdata.ContourPlots(i_cplot).Cbar       = sscanf(Fields{9}, '%i');
+      Cdata.ContourPlots(i_cplot).Cnlevs     = sscanf(Fields{10}, '%i');
+      Cdata.ContourPlots(i_cplot).Cmap       = Fields{11};
+      Cdata.ContourPlots(i_cplot).OutFprefix = Fields{12};
+
+      Cdata.ContourPlots(i_cplot).XVnum   = -1;
+      Cdata.ContourPlots(i_cplot).YVnum   = -1;
+      Cdata.ContourPlots(i_cplot).ZVnum   = -1;
+      Cdata.ContourPlots(i_cplot).DSnum   = -1;
+      Cdata.ContourPlots(i_cplot).PSnum   = -1;
     case 'HmeasPlot3d:'
       i_hmp3d = i_hmp3d + 1;
       Cdata.HmeasPlot3d(i_hmp3d).Name    = Fields{2};
@@ -489,6 +509,15 @@ if (isfield(Cdata, 'LinePlots'))
   Cdata.LinePlots = AssociateStructs( Cdata.LinePlots, Cdata.PlotVars, 'XV', 'PlotVar', 'LinePlot' ); 
   Cdata.LinePlots = AssociateStructs( Cdata.LinePlots, Cdata.PlotVars, 'YV', 'PlotVar', 'LinePlot' ); 
   Cdata.LinePlots = AssociateStructs( Cdata.LinePlots, Cdata.PlotDselects, 'DS', 'PlotDselect', 'LinePlot' ); 
+end
+
+% Make the association between ContourPlots and the PlotVars, PlotDselects
+if (isfield(Cdata, 'ContourPlots'))
+  Cdata.ContourPlots = AssociateStructs( Cdata.ContourPlots, Cdata.PlotSets, 'PS', 'PlotSet', 'ContourPlot' );
+  Cdata.ContourPlots = AssociateStructs( Cdata.ContourPlots, Cdata.PlotVars, 'XV', 'PlotVar', 'ContourPlot' ); 
+  Cdata.ContourPlots = AssociateStructs( Cdata.ContourPlots, Cdata.PlotVars, 'YV', 'PlotVar', 'ContourPlot' ); 
+  Cdata.ContourPlots = AssociateStructs( Cdata.ContourPlots, Cdata.PlotVars, 'ZV', 'PlotVar', 'ContourPlot' ); 
+  Cdata.ContourPlots = AssociateStructs( Cdata.ContourPlots, Cdata.PlotDselects, 'DS', 'PlotDselect', 'ContourPlot' ); 
 end
   
 % Make the association between ProfPlots and the PlotSets
