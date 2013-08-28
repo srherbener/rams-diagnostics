@@ -14,6 +14,33 @@ function [ ] = PlotContour( X, Y, Z, Ptitle, Pmarker, Xlabel, Ylabel, Fill, Cbar
 
 Fig = figure;
 
+if (strcmp(Cmap, 'LightGray'))
+  % Gray scale, but go from [ g g g ] to [ 1 1 1 ] instead
+  % of [ 0 0 0 ] to [ 1 1 1 ] where g > 0.
+  % This will get rid of dark regions.
+  %
+  % x = 1 to 64, corresponds to y = g to 1.0
+  % produce a linear scale
+  %   y = mx + b
+  %       m = (y2 - y1)/(x2 - x1)
+  %       b = y1 - m*x1
+
+  x1 = 1;
+  x2 = 64;
+  y1 = 0.3; % <-- g  (0.3 seems to get good contrast without making the overall picture too dark)
+  y2 = 1.0;
+
+  m = (y2 - y1) / (x2 - x1);
+  b = y1 - (m * x1);
+  
+  x = x1:x2;
+  y = m .* x + b;
+
+  ColorMap = repmat(y', [ 1 3 ]);
+else
+  ColorMap = Cmap;
+end
+
 Nprops = length(AxisProps);
 
 PanelTitle = ~isempty(Pmarker);
@@ -31,8 +58,8 @@ else
   contour(X, Y, Z, Clevs);
 end
 
-if (~isempty(Cmap))
-  colormap(Cmap);
+if (~isempty(ColorMap))
+  colormap(ColorMap);
 end
 
 if (~isempty(Crange))

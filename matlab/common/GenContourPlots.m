@@ -42,6 +42,8 @@ for iplot = 1:length(Config.ContourPlots)
     Cmap        = Config.ContourPlots(iplot).Cmap;
     OfilePrefix = sprintf('%s/%s', Pdir, Config.ContourPlots(iplot).OutFprefix);
 
+    Npm = length(Pmarkers);
+
     AxisProps(1).Name = 'FontSize';
     AxisProps(1).Val = 25; 
 
@@ -103,10 +105,19 @@ for iplot = 1:length(Config.ContourPlots)
 
       fprintf('\n');
       fprintf('Writing plot file: %s\n', OutFile);
-      if (isempty(Pmarkers{icase})) then
+      if (Npm < 1) then
         Pmark = '';
       else
-        Pmark = Pmarkers{icase};
+        % cycle through the list of panel markers as needed
+        ipm = mod(icase,Npm);
+        if (ipm == 0)
+          ipm = Npm;
+        end
+        if (isempty(Pmarkers{ipm}))
+          Pmark = '';
+        else
+          Pmark = Pmarkers{ipm};
+        end
       end
       PlotContour( X, Y, Z, Ptitle, Pmark, Xlabel, Ylabel, Cfill, Cbar, Cmap, Crange, Cnlevs, AxisProps, OutFile );
       fprintf('\n');

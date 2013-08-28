@@ -339,9 +339,9 @@ LinePlot: CG_UP_C0400_S298  Wskew_L1P00 Prof_Heights Prof_T12_T36 none PANEL:f  
 ########### For Update #############
 
 ### Albedo
-#ContourPlot: AlbedoPsetCCN AlbedoLon_T12 AlbedoLat_T12 Albedo_T12 AlbedoSelect_T12 PANEL:a:b:c:d:e  1 1 40 Gray Albedo_T12
-ContourPlot: AlbedoPsetCCN AlbedoLon_T24 AlbedoLat_T24 Albedo_T24 AlbedoSelect_T24 PANEL:a:b:c:d:e  1 1 40 Gray Albedo_T24
-ContourPlot: AlbedoPsetCCN AlbedoLon_T36 AlbedoLat_T36 Albedo_T36 AlbedoSelect_T36 PANEL:a:b:c:d:e  1 1 40 Gray Albedo_T36
+ContourPlot: AlbedoPsetCCN AlbedoLon_T12 AlbedoLat_T12 Albedo_T12 AlbedoSelect_T12 PANEL:a:b:c  1 1 40 LightGray Albedo_T12
+ContourPlot: AlbedoPsetCCN AlbedoLon_T24 AlbedoLat_T24 Albedo_T24 AlbedoSelect_T24 PANEL:a:b:c  1 1 40 LightGray Albedo_T24
+ContourPlot: AlbedoPsetCCN AlbedoLon_T36 AlbedoLat_T36 Albedo_T36 AlbedoSelect_T36 PANEL:a:b:c  1 1 40 LightGray Albedo_T36
 
 ##################################################################
 ##################### DISTRIBUTION PLOTS #########################
@@ -973,8 +973,7 @@ PlotSet: LTSS_SAMPLE 6 z.atex.ccn0050.sst293.gcn10m5.1um C0050-S293 k - 0.0 z.at
 PlotSet: CO_POP_SST_G10M5 3 smeas1d_pop_CO_S293_G10M5 293 k - 0.0 smeas1d_pop_CO_S298_G10M5 298 k - 0.0 smeas1d_pop_CO_S303_G10M5 303 c - 0.0
 
 # For albedo plots
-PlotSet: AlbedoPsetCCN 3 z.atex.ccn0050.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn0050.sst298.gcn10m5.1um 298K k - 0.0 z.atex.ccn0050.sst303.gcn10m5.1um 303K k - 0.0
-#PlotSet: AlbedoPsetCCN 21 z.atex.ccn0050.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn0050.sst298.gcn10m5.1um 298K k - 0.0 z.atex.ccn0050.sst303.gcn10m5.1um 303K k - 0.0 z.atex.ccn0100.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn0100.sst298.gcn10m5.1um 298K k - 0.0 z.atex.ccn0100.sst303.gcn10m5.1um 303K k - 0.0 z.atex.ccn0200.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn0200.sst298.gcn10m5.1um 298K k - 0.0 z.atex.ccn0200.sst303.gcn10m5.1um 303K k - 0.0 z.atex.ccn0400.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn0400.sst298.gcn10m5.1um 298K k - 0.0 z.atex.ccn0400.sst303.gcn10m5.1um 303K k - 0.0 z.atex.ccn0800.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn0800.sst298.gcn10m5.1um 298K k - 0.0 z.atex.ccn0800.sst303.gcn10m5.1um 303K k - 0.0 z.atex.ccn1200.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn1200.sst298.gcn10m5.1um 298K k - 0.0 z.atex.ccn1200.sst303.gcn10m5.1um 303K k - 0.0 z.atex.ccn1600.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn1600.sst298.gcn10m5.1um 298K k - 0.0 z.atex.ccn1600.sst303.gcn10m5.1um 303K k - 0.0
+PlotSet: AlbedoPsetCCN 21 z.atex.ccn0050.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn0050.sst298.gcn10m5.1um 298K k - 0.0 z.atex.ccn0050.sst303.gcn10m5.1um 303K k - 0.0 z.atex.ccn0100.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn0100.sst298.gcn10m5.1um 298K k - 0.0 z.atex.ccn0100.sst303.gcn10m5.1um 303K k - 0.0 z.atex.ccn0200.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn0200.sst298.gcn10m5.1um 298K k - 0.0 z.atex.ccn0200.sst303.gcn10m5.1um 303K k - 0.0 z.atex.ccn0400.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn0400.sst298.gcn10m5.1um 298K k - 0.0 z.atex.ccn0400.sst303.gcn10m5.1um 303K k - 0.0 z.atex.ccn0800.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn0800.sst298.gcn10m5.1um 298K k - 0.0 z.atex.ccn0800.sst303.gcn10m5.1um 303K k - 0.0 z.atex.ccn1200.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn1200.sst298.gcn10m5.1um 298K k - 0.0 z.atex.ccn1200.sst303.gcn10m5.1um 303K k - 0.0 z.atex.ccn1600.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn1600.sst298.gcn10m5.1um 298K k - 0.0 z.atex.ccn1600.sst303.gcn10m5.1um 303K k - 0.0
 
 ####################### Plot Vars ################################
 # PlotVar: <name> <vname> <file_prefix> <label> <units> <axis_min> <axis_max> <scale>
