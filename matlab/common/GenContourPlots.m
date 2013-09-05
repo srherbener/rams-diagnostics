@@ -119,7 +119,8 @@ for iplot = 1:length(Config.ContourPlots)
           Pmark = Pmarkers{ipm};
         end
       end
-      PlotContour( X, Y, Z, Ptitle, Pmark, Xlabel, Ylabel, Cfill, Cbar, Cmap, Crange, Cnlevs, AxisProps, OutFile );
+      % transpose Z since the contour plotting functions wants columns to be the X-axis and rows to be the Y-axis
+      PlotContour( X, Y, Z', Ptitle, Pmark, Xlabel, Ylabel, Cfill, Cbar, Cmap, Crange, Cnlevs, AxisProps, OutFile );
       fprintf('\n');
     end
 end
