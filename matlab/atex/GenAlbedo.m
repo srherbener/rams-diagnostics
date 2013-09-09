@@ -20,18 +20,18 @@ function [ ] = GenAlbedo(ConfigFile)
         CtFile = sprintf('%s/%s-%s-AS-1999-02-10-040000-g1.h5', Hdir, CtFprefix, Case);
 
         for it = 1:length(Times)
-            Time = Times(it);
-            TimeSec = Time * 3600;
+           Time = Times(it);
+           TimeSec = Time * 3600;
 
-            OutFile = sprintf('%s/albedo_T%d_%s.h5', Ddir, Time, Case);
-    
-            fprintf('***************************************************************\n');
-            fprintf('Generating albedo:\n');
-            fprintf('  Case: %s\n', Case);
-            fprintf('  Input cloud optical thickness file: %s\n', CtFile);
-            fprintf('    Var name: %s\n', CtName);
-            fprintf('  Time: %d\n', Time);
-            fprintf('\n');
+           OutFile = sprintf('%s/albedo_T%d_%s.h5', Ddir, Time, Case);
+   
+           fprintf('***************************************************************\n');
+           fprintf('Generating albedo:\n');
+           fprintf('  Case: %s\n', Case);
+           fprintf('  Input cloud optical thickness file: %s\n', CtFile);
+           fprintf('    Var name: %s\n', CtName);
+           fprintf('  Time: %d\n', Time);
+           fprintf('\n');
     
            % Albedo:
            %   A = (1-g)*CT / (((1-g)*CT) + 2)
@@ -57,9 +57,32 @@ function [ ] = GenAlbedo(ConfigFile)
            ALB = ((1 - g) .* CT) ./ (((1 - g) .* CT) + 2);
    
            % output --> Use REVU format, 4D var, *_coords
-           % fabricate x, y, t coords
            Ovar = reshape(ALB, [ Nx Ny Nz Nt ]);
             
+           fprintf('Writing: %s\n', OutFile);
+           hdf5write(OutFile, '/albedo', Ovar);
+           hdf5write(OutFile, 'x_coords', X, 'WriteMode', 'append');
+           hdf5write(OutFile, 'y_coords', Y, 'WriteMode', 'append');
+           hdf5write(OutFile, 'z_coords', Z, 'WriteMode', 'append');
+           hdf5write(OutFile, 't_coords', TimeSec, 'WriteMode', 'append');
+           fprintf('\n');
+
+           % create a histogram of albedo
+           % at this point, ALB is (x,y)
+           OutFile = sprintf('%s/hist_albedo_T%d_%s.h5', Ddir, Time, Case);
+
+           % put bins in X, make Y a dummy dimension
+           % albedo bins are 0 to 1
+           X = 0:0.01:1;
+           Nx = length(X);
+           Y = 1;
+           Ny = length(Y);;
+           HIST_ALB = histc(ALB(:), X); % one histogram for the entire 2D region
+
+           % output --> Use REVU format, 4D var, *_coords
+           Ovar = reshape(HIST_ALB, [ Nx Ny Nz Nt ]);
+
+           % output --> Use REVU format, 4D var, *_coords
            fprintf('Writing: %s\n', OutFile);
            hdf5write(OutFile, '/albedo', Ovar);
            hdf5write(OutFile, 'x_coords', X, 'WriteMode', 'append');
