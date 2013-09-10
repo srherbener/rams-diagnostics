@@ -43,6 +43,7 @@ SCRIPTS = \
           $(DEST)/PlotProfSet.m \
           $(DEST)/PlotTseriesSet.m \
           $(DEST)/Plot2dSet.m \
+          $(DEST)/PlotBarSet.m \
           $(DEST)/PlotContour.m \
           $(DEST)/TileFigs.m \
           $(DEST)/TimeToString.m \
