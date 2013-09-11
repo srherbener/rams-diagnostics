@@ -47,6 +47,7 @@ program tsavg
   integer :: Xnbins, Ynbins
   real :: Xbstart, Xbinc, Ybstart, Ybinc
   real, dimension(:), allocatable :: Xbins, Ybins
+  real :: HfracThresh
 
   integer :: rh5f_azwind, rh5f_u, rh5f_v, rh5f_speed10m, rh5f_dens, rh5f_var, rh5f_filter, rh5f_out
   integer :: rh5f_pcprate, rh5f_lwp, rh5f_ltss, rh5f_theta
@@ -105,6 +106,28 @@ program tsavg
       read(ArgList(7), '(f)') Xbinc
     else
       write (*,*) 'ERROR: average function hist requires seven fields: hist:<var>:<file>:<dim>:<num_bins>:<bin_start>:<bin_inc>'
+      stop
+    endif
+  endif
+
+  if (AvgFunc(1:6) .eq. 'hfrac:') then
+    call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'hfrac spec')
+    if (Nfields .eq. 5) then
+      ! got the right amount of fields
+      !   field    value
+      !    1       'hist'
+      !    2       name of variable inside the REVU file
+      !    3       prefix for the REVU file name
+      !    4       dimensionality of variable
+      !    5       threshold for determining numerator count
+      AvgFunc    = trim(ArgList(1))
+      Var%vname  = trim(ArgList(2))
+      VarFprefix = trim(ArgList(3))
+      VarFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
+      VarDim     = trim(ArgList(4))
+      read(ArgList(5), '(f)') HfracThresh
+    else
+      write (*,*) 'ERROR: average function hfrac requires five fields: hist:<var>:<file>:<dim>:<threshold>'
       stop
     endif
   endif
@@ -232,6 +255,11 @@ program tsavg
     write (*,*) '      Number of bins: ', Xnbins
     write (*,*) '      Bins start at: ', Xbstart
     write (*,*) '      Delta between bins: ', Xbinc
+  else if (AvgFunc .eq. 'hfrac') then
+    write (*,*) '    Variable name: ', trim(Var%vname)
+    write (*,*) '    File name: ', trim(VarFile)
+    write (*,*) '    Dimensionality: ', trim(VarDim)
+    write (*,*) '    Threshold for fraction calculation: ', HfracThresh 
   else if (AvgFunc .eq. 'pop') then
     write (*,*) '    Precip rate variable name: ', trim(PrecipRate%vname)
     write (*,*) '    Precip rate File name: ', trim(PrecipRateFile)
@@ -323,7 +351,8 @@ program tsavg
     Nz = AzWind%dims(3)
     Nt = AzWind%dims(4)
   else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
-           (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist')) then
+           (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. &
+           (AvgFunc .eq. 'hfrac')) then
     call rhdf5_read_init(VarFile, Var)
 
     if (VarDim .eq. '2d') then
@@ -518,7 +547,8 @@ program tsavg
       write (*,*), '    ', trim(Speed10m%dimnames(id)), ': ', Speed10m%dims(id)
     enddo
   else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
-           (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist')) then
+           (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. &
+           (AvgFunc .eq. 'hfrac')) then
     Var%ndims = Var%ndims - 1
     write (*,*) '  Number of dimensions: ', Var%ndims
     write (*,*) '  Dimension sizes:'
@@ -577,7 +607,9 @@ program tsavg
   ! dimension names, but set the sizes of the dimensions according to the averaging
   ! function asked for.
   TserAvg%vname = trim(AvgFunc)
-  if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist')) then
+  if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
+      (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. &
+      (AvgFunc .eq. 'hfrac')) then
     TserAvg%vname = trim(TserAvg%vname) // '_' // trim(VarFprefix)
   endif
   TserAvg%descrip = 'time series averaged ' // trim(AvgFunc) 
@@ -598,7 +630,7 @@ program tsavg
     TserAvg%dims(2) = 1
     TserAvg%dims(3) = 1
     TserAvg%units = Var%units
-  else if (AvgFunc .eq. 'hda') then
+  else if ((AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hfrac')) then
     ! all z points
     TserAvg%dims(1) = 1
     TserAvg%dims(2) = 1
@@ -681,7 +713,8 @@ program tsavg
   else if (AvgFunc .eq. 'horiz_ke') then
     InCoordFile = trim(DensFile)
   else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
-           (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist')) then
+           (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. &
+           (AvgFunc .eq. 'hfrac')) then
     InCoordFile = trim(VarFile)
   else if (AvgFunc .eq. 'pop') then
     InCoordFile = trim(PrecipRateFile)
@@ -850,7 +883,7 @@ program tsavg
   OutZcoords%dimnames(1) = 'z'
   OutZcoords%units = 'meter'
   OutZcoords%descrip = 'sigma-z'
-  if ((AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. (AvgFunc .eq. 'hist2d')) then
+  if ((AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. (AvgFunc .eq. 'hist2d') .or. (AvgFunc .eq. 'hfrac')) then
     OutZcoords%dims(1) = Nz
     allocate(OutZcoords%vdata(Nz))
     do iz = 1, Nz
@@ -886,7 +919,8 @@ program tsavg
     call rhdf5_open_file(Ufile, rh5f_facc, 1, rh5f_u)
     call rhdf5_open_file(Vfile, rh5f_facc, 1, rh5f_v)
   else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
-           (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist'))  then
+           (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. &
+           (AvgFunc .eq. 'hfrac')) then
     call rhdf5_open_file(VarFile, rh5f_facc, 1, rh5f_var)
   else if (AvgFunc .eq. 'pop') then
     call rhdf5_open_file(PrecipRateFile, rh5f_facc, 1, rh5f_pcprate)
@@ -924,7 +958,8 @@ program tsavg
       deallocate(U%vdata)
       deallocate(V%vdata)
     else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
-             (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist'))  then
+             (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. &
+             (AvgFunc .eq. 'hfrac')) then
       call rhdf5_read_variable(rh5f_var, Var%vname, Var%ndims, it, Var%dims, rdata=Var%vdata)
 
       if (AvgFunc .eq. 'min') then
@@ -935,6 +970,8 @@ program tsavg
         call DoHda(Nx, Ny, Nz, Filter%dims(3), Var%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata)
       else if (AvgFunc .eq. 'hist') then
         call DoHist(Nx, Ny, Nz, Filter%dims(3), Xnbins, Var%vdata, Filter%vdata, UseFilter, UndefVal, Xbins, TserAvg%vdata)
+      else if (AvgFunc .eq. 'hfrac') then
+        call DoHfrac(Nx, Ny, Nz, Filter%dims(3), HfracThresh, Var%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata)
       endif
 
       deallocate(Var%vdata)
@@ -1002,7 +1039,8 @@ program tsavg
     call rhdf5_close_file(rh5f_u)
     call rhdf5_close_file(rh5f_v)
   else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
-           (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist'))  then
+           (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. &
+           (AvgFunc .eq. 'hfrac')) then
     call rhdf5_close_file(rh5f_var)
   else if (AvgFunc .eq. 'pop') then
     call rhdf5_close_file(rh5f_pcprate)
@@ -1135,6 +1173,10 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
     write (*,*) '              <num_bins>: number of bins'
     write (*,*) '              <bin_start>: starting value for bins'
     write (*,*) '              <bin_inc>: delta between bins'
+    write (*,*) '            hfrac:<var>:<file>:<dim>:<thresh>'
+    write (*,*) '              <var>,<file>,<dim> same as for hda'
+    write (*,*) '              <threshold>: if var > threshold, that hoizontal grid cell gets a 1, otherwise a zero.'
+    write (*,*) '                           Then the fraction for that level = Number of cells with 1s divided by total Number of cells'
     write (*,*) '            pop:<pcp_var>:<pcp_file>:<pcp_limit>:<lwp_var>:<lwp_file>:<lwp_nbins>:<lwp_bstart>:<lwp_binc>:'
     write (*,*) '                <ltss_var>:<ltss_file>:<ltss_nbins>:<ltss_bstart>:<ltss_binc>'
     write (*,*) '              precip rate variable (2d):'
@@ -1191,6 +1233,7 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
       (AvgFunc(1:4) .ne. 'max:')  .and. &
       (AvgFunc(1:4) .ne. 'hda:')  .and. &
       (AvgFunc(1:5) .ne. 'hist:')  .and. &
+      (AvgFunc(1:6) .ne. 'hfrac:')  .and. &
       (AvgFunc(1:4) .ne. 'pop:')  .and. &
       (AvgFunc(1:7) .ne. 'hist2d:')  .and. &
       (AvgFunc(1:5) .ne. 'ltss:')  .and. &
@@ -1202,6 +1245,7 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
     write (*,*) '          max:<var>:<file>:<dim>'
     write (*,*) '          hda:<var>:<file>:<dim>'
     write (*,*) '          hist:<var>:<file>:<dim>:<num_bins>:<bin_start>:<bin_inc>'
+    write (*,*) '          hfrac:<var>:<file>:<dim>:<threshold>'
     write (*,*) '          pop:<pcp_var>:<pcp_file>:<pcp_limit>:<lwp_var>:<lwp_file>:<lwp_nbins>:<lwp_bstart>:<lwp_binc>:'
     write (*,*) '              <ltss_var>:<ltss_file>:<ltss_nbins>:<ltss_bstart>:<ltss_binc>'
     write (*,*) '          hist2d:<x_var>:<x_file>:<x_dim>:<x_nbins><x_bstart><x_binc>:<y_var>:<y_file>:<y_dim>:<y_nbins>:<y_bstart>:<y_binc>:'
@@ -1386,6 +1430,72 @@ subroutine DoHda(Nx, Ny, Nz, FilterNz, Var, Filter, UseFilter, UndefVal, DomAvg)
 
   return
 end subroutine DoHda
+
+!**************************************************************************************
+! DoHfrac()
+!
+! This routine will do horizontal domain fraction calculations
+!
+subroutine DoHfrac(Nx, Ny, Nz, FilterNz, Threshold, Var, Filter, UseFilter, UndefVal, DomFrac)
+  implicit none
+
+  integer :: Nx, Ny, Nz, FilterNz
+  real, dimension(Nx,Ny,Nz) :: Var
+  real, dimension(Nx,Ny,FilterNz) :: Filter
+  logical :: UseFilter
+  real :: UndefVal, Threshold
+  real, dimension(Nz) :: DomFrac
+
+  integer :: ix, iy, iz
+  integer :: filter_z
+  logical :: SelectPoint
+  integer :: NumPoints, NumFracPoints
+
+  do iz = 1, Nz
+    DomFrac(iz) = 0.0
+    NumPoints = 0
+    NumFracPoints = 0
+
+    ! RAMS reserves the first and last x and y values for lateral
+    ! boundaries. These only contain valid field data under certain
+    ! circumstances such as cyclic boundary cases. Most of the time
+    ! we want these to be excluded so for now always exclude them
+    ! (shouldn't hurt results with cyclic boundaries where the
+    ! boundary values could have been included).
+
+    if (Nz .eq. 1) then
+      ! 2D var, use the z = 2 level (first model level above the surface)
+      ! since typically have the 3D filter z = 1 level all zeros (don't want
+      ! to include below surface model level in analysis).
+      filter_z = 2
+    else
+      filter_z = iz
+    endif
+
+    do iy = 2, Ny-1
+      do ix = 2, Nx-1
+        SelectPoint = anint(Var(ix,iy,iz)) .ne. UndefVal
+        if (UseFilter) then
+          SelectPoint = SelectPoint .and. (anint(Filter(ix,iy,filter_z)) .eq. 1.0)
+        endif
+        if (SelectPoint) then
+          if (Var(ix,iy,iz) .gt. Threshold) then
+            NumFracPoints = NumFracPoints + 1
+          endif
+          NumPoints = NumPoints + 1
+        endif
+      enddo
+    enddo
+
+    if (NumPoints .eq. 0) then
+      DomFrac(iz) = UndefVal
+    else
+      DomFrac(iz) = float(NumFracPoints) / float(NumPoints)
+    endif
+  enddo
+
+  return
+end subroutine DoHfrac
 
 !**************************************************************************************
 ! DoMin()
