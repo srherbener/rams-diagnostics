@@ -118,7 +118,7 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 ###############################################################
 # LinePlot: <plotset> <xspec> <yspec> <data_select_spec> <smoothing> <title> <legend_loc> <add_meas> <out_file>
 
-########### For Update #############
+########### For Update/Paper #############
 
 ### Cloud fraction vs Cloud top temp
 #LinePlot: CO_UP_S298_G10M5  Ctop Cfrac TsAll_T12_T36 xy PANEL:a  NorthEast none CloudStruct_CO_S298_G10M5.jpg
@@ -126,18 +126,35 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 #LinePlot: CG_UP_C0400_S298  Ctop Cfrac TsAll_T12_T36 xy PANEL:c  NorthEast none CloudStruct_CG_C400_S298.jpg
 
 ### Cloud fraction time series
-#LinePlot: CO_UP_S298_G10M5  SimTime Cfrac TsAll none PANEL:a  NorthEast none CloudFrac_CO_S298_G10M5.jpg
-#LinePlot: CO_UP_C0400_G10M5 SimTime Cfrac TsAll none PANEL:b  NorthEast none CloudFrac_CO_C400_G10M5.jpg
+LinePlot: CO_UP_S293_G10M5  SimTime Cfrac TsAll none PANEL:e@SST:@293K    NorthEast none CloudFrac_CO_S293_G10M5.jpg
+LinePlot: CO_UP_S298_G10M5  SimTime Cfrac TsAll none PANEL:c@SST:@298K    NorthEast none CloudFrac_CO_S298_G10M5.jpg
+LinePlot: CO_UP_S303_G10M5  SimTime Cfrac TsAll none PANEL:a@SST:@303K    NorthEast none CloudFrac_CO_S303_G10M5.jpg
+
+LinePlot: CO_UP_C0050_G10M5 SimTime Cfrac TsAll none PANEL:f@CCN:@50/cc    NorthEast none CloudFrac_CO_C50_G10M5.jpg
+LinePlot: CO_UP_C0400_G10M5 SimTime Cfrac TsAll none PANEL:d@CCN:@400/cc   NorthEast none CloudFrac_CO_C400_G10M5.jpg
+LinePlot: CO_UP_C1600_G10M5 SimTime Cfrac TsAll none PANEL:b@CCN:@1600/cc  NorthEast none CloudFrac_CO_C1600_G10M5.jpg
+
 #LinePlot: CG_UP_C0400_S298  SimTime Cfrac TsAll none PANEL:c  NorthEast none CloudFrac_CG_C400_S298.jpg
 
 ### Cloud depth time series
-#LinePlot: CO_UP_S298_G10M5  SimTime MaxCdepth TsAll none PANEL:d  NorthEast none CloudMaxDepth_CO_S298_G10M5.jpg
-#LinePlot: CO_UP_C0400_G10M5 SimTime MaxCdepth TsAll none PANEL:e  NorthEast none CloudMaxDepth_CO_C400_G10M5.jpg
+LinePlot: CO_UP_S293_G10M5  SimTime MaxCdepth TsAll none PANEL:e@SST:@293K    NorthEast none CloudMaxDepth_CO_S293_G10M5.jpg
+LinePlot: CO_UP_S298_G10M5  SimTime MaxCdepth TsAll none PANEL:c@SST:@298K    NorthEast none CloudMaxDepth_CO_S298_G10M5.jpg
+LinePlot: CO_UP_S303_G10M5  SimTime MaxCdepth TsAll none PANEL:a@SST:@303K    NorthEast none CloudMaxDepth_CO_S303_G10M5.jpg
+
+LinePlot: CO_UP_C0050_G10M5 SimTime MaxCdepth TsAll none PANEL:f@CCN:@50/cc    NorthEast none CloudMaxDepth_CO_C50_G10M5.jpg
+LinePlot: CO_UP_C0400_G10M5 SimTime MaxCdepth TsAll none PANEL:d@CCN:@400/cc   NorthEast none CloudMaxDepth_CO_C400_G10M5.jpg
+LinePlot: CO_UP_C1600_G10M5 SimTime MaxCdepth TsAll none PANEL:b@CCN:@1600/cc  NorthEast none CloudMaxDepth_CO_C1600_G10M5.jpg
+
 #LinePlot: CG_UP_C0400_S298  SimTime MaxCdepth TsAll none PANEL:f  NorthEast none CloudMaxDepth_CG_C400_S298.jpg
 
 ### Buoyancy Flux profile
-#LinePlot: CO_UP_S298_G10M5  BuoyFlux Prof_Heights Prof_T12_T36 none PANEL:a  NorthEast none BuoyFlux_T12_T36_CO_S298_G10M5.jpg
-#LinePlot: CO_UP_C0400_G10M5 BuoyFlux Prof_Heights Prof_T12_T36 none PANEL:b  NorthEast none BuoyFlux_T12_T36_CO_C400_G10M5.jpg
+#LinePlot: CO_UP_S298_G10M5  HfracCloud Prof_Heights Prof_T12_T36 none PANEL:a@SST:@298K    NorthEast none HfracCloud_T12_T36_CO_S298_G10M5.jpg
+#LinePlot: CO_UP_C0400_G10M5 HfracCloud Prof_Heights Prof_T12_T36 none PANEL:b@CCN:@400/cc  NorthEast none HfracCloud_T12_T36_CO_C400_G10M5.jpg
+#LinePlot: CG_UP_C0400_S298  HfracCloud Prof_Heights Prof_T12_T36 none PANEL:c  NorthEast none BuoyFlux_T12_T36_CG_C400_S298.jpg
+
+### Buoyancy Flux profile
+#LinePlot: CO_UP_S298_G10M5  BuoyFlux Prof_Heights Prof_T12_T36 none PANEL:c@SST:@298K  NorthEast none BuoyFlux_T12_T36_CO_S298_G10M5.jpg
+#LinePlot: CO_UP_C0400_G10M5 BuoyFlux Prof_Heights Prof_T12_T36 none PANEL:d@CCN:@400/cc  NorthEast none BuoyFlux_T12_T36_CO_C400_G10M5.jpg
 #LinePlot: CG_UP_C0400_S298  BuoyFlux Prof_Heights Prof_T12_T36 none PANEL:c  NorthEast none BuoyFlux_T12_T36_CG_C400_S298.jpg
 
 #LinePlot: CO_UP_S298_G10M5  BuoyFlux_L0P01 Prof_Heights Prof_T12_T36 none PANEL:a  NorthEast none BuoyFlux_L0P01_T12_T36_CO_S298_G10M5.jpg
@@ -153,8 +170,8 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 #LinePlot: CG_UP_C0400_S298  BuoyFlux_L1P00 Prof_Heights Prof_T12_T36 none PANEL:c  NorthEast none BuoyFlux_L1P00_T12_T36_CG_C400_S298.jpg
 
 ### W variance
-#LinePlot: CO_UP_S298_G10M5  Wvar Prof_Heights Prof_T12_T36 none PANEL:d  NorthWest none Wvar_T12_T36_CO_S298_G10M5.jpg
-#LinePlot: CO_UP_C0400_G10M5 Wvar Prof_Heights Prof_T12_T36 none PANEL:e  NorthWest none Wvar_T12_T36_CO_C400_G10M5.jpg
+#LinePlot: CO_UP_S298_G10M5  Wvar Prof_Heights Prof_T12_T36 none PANEL:e@SST:@298K  NorthWest none Wvar_T12_T36_CO_S298_G10M5.jpg
+#LinePlot: CO_UP_C0400_G10M5 Wvar Prof_Heights Prof_T12_T36 none PANEL:f@CCN:@400/cc  NorthWest none Wvar_T12_T36_CO_C400_G10M5.jpg
 #LinePlot: CG_UP_C0400_S298  Wvar Prof_Heights Prof_T12_T36 none PANEL:f  NorthWest none Wvar_T12_T36_CG_C400_S298.jpg
 
 #LinePlot: CO_UP_S298_G10M5  Wvar_L0P01 Prof_Heights Prof_T12_T36 none PANEL:d  NorthWest none Wvar_L0P01_T12_T36_CO_S298_G10M5.jpg
@@ -170,21 +187,21 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 #LinePlot: CG_UP_C0400_S298  Wvar_L1P00 Prof_Heights Prof_T12_T36 none PANEL:f  NorthWest none Wvar_L1P00_T12_T36_CG_C400_S298.jpg
 
 ### W skew
-#LinePlot: CO_UP_S298_G10M5  Wskew Prof_Heights Prof_T12_T36 none PANEL:g  NorthWest none Wskew_T12_T36_CO_S298_G10M5.jpg
-#LinePlot: CO_UP_C0400_G10M5 Wskew Prof_Heights Prof_T12_T36 none PANEL:h  NorthWest none Wskew_T12_T36_CO_C400_G10M5.jpg
+#LinePlot: CO_UP_S298_G10M5  Wskew Prof_Heights Prof_T12_T36 none PANEL:g@SST:@298K  NorthWest none Wskew_T12_T36_CO_S298_G10M5.jpg
+#LinePlot: CO_UP_C0400_G10M5 Wskew Prof_Heights Prof_T12_T36 none PANEL:h@CCN:@400/cc  NorthWest none Wskew_T12_T36_CO_C400_G10M5.jpg
 #LinePlot: CG_UP_C0400_S298  Wskew Prof_Heights Prof_T12_T36 none PANEL:i  NorthWest none Wskew_T12_T36_CG_C400_S298.jpg
 
-LinePlot: CO_UP_S298_G10M5  Wskew_L0P01 Prof_Heights Prof_T12_T36 none PANEL:d  NorthWest none Wskew_L0P01_T12_T36_CO_S298_G10M5.jpg
-LinePlot: CO_UP_C0400_G10M5 Wskew_L0P01 Prof_Heights Prof_T12_T36 none PANEL:e  NorthWest none Wskew_L0P01_T12_T36_CO_C400_G10M5.jpg
-LinePlot: CG_UP_C0400_S298  Wskew_L0P01 Prof_Heights Prof_T12_T36 none PANEL:f  NorthWest none Wskew_L0P01_T12_T36_CG_C400_S298.jpg
+#LinePlot: CO_UP_S298_G10M5  Wskew_L0P01 Prof_Heights Prof_T12_T36 none PANEL:d  NorthWest none Wskew_L0P01_T12_T36_CO_S298_G10M5.jpg
+#LinePlot: CO_UP_C0400_G10M5 Wskew_L0P01 Prof_Heights Prof_T12_T36 none PANEL:e  NorthWest none Wskew_L0P01_T12_T36_CO_C400_G10M5.jpg
+#LinePlot: CG_UP_C0400_S298  Wskew_L0P01 Prof_Heights Prof_T12_T36 none PANEL:f  NorthWest none Wskew_L0P01_T12_T36_CG_C400_S298.jpg
 
-LinePlot: CO_UP_S298_G10M5  Wskew_L0P10 Prof_Heights Prof_T12_T36 none PANEL:d  NorthWest none Wskew_L0P10_T12_T36_CO_S298_G10M5.jpg
-LinePlot: CO_UP_C0400_G10M5 Wskew_L0P10 Prof_Heights Prof_T12_T36 none PANEL:e  NorthWest none Wskew_L0P10_T12_T36_CO_C400_G10M5.jpg
-LinePlot: CG_UP_C0400_S298  Wskew_L0P10 Prof_Heights Prof_T12_T36 none PANEL:f  NorthWest none Wskew_L0P10_T12_T36_CG_C400_S298.jpg
+#LinePlot: CO_UP_S298_G10M5  Wskew_L0P10 Prof_Heights Prof_T12_T36 none PANEL:d  NorthWest none Wskew_L0P10_T12_T36_CO_S298_G10M5.jpg
+#LinePlot: CO_UP_C0400_G10M5 Wskew_L0P10 Prof_Heights Prof_T12_T36 none PANEL:e  NorthWest none Wskew_L0P10_T12_T36_CO_C400_G10M5.jpg
+#LinePlot: CG_UP_C0400_S298  Wskew_L0P10 Prof_Heights Prof_T12_T36 none PANEL:f  NorthWest none Wskew_L0P10_T12_T36_CG_C400_S298.jpg
 
-LinePlot: CO_UP_S298_G10M5  Wskew_L1P00 Prof_Heights Prof_T12_T36 none PANEL:d  NorthWest none Wskew_L1P00_T12_T36_CO_S298_G10M5.jpg
-LinePlot: CO_UP_C0400_G10M5 Wskew_L1P00 Prof_Heights Prof_T12_T36 none PANEL:e  NorthWest none Wskew_L1P00_T12_T36_CO_C400_G10M5.jpg
-LinePlot: CG_UP_C0400_S298  Wskew_L1P00 Prof_Heights Prof_T12_T36 none PANEL:f  NorthWest none Wskew_L1P00_T12_T36_CG_C400_S298.jpg
+#LinePlot: CO_UP_S298_G10M5  Wskew_L1P00 Prof_Heights Prof_T12_T36 none PANEL:d  NorthWest none Wskew_L1P00_T12_T36_CO_S298_G10M5.jpg
+#LinePlot: CO_UP_C0400_G10M5 Wskew_L1P00 Prof_Heights Prof_T12_T36 none PANEL:e  NorthWest none Wskew_L1P00_T12_T36_CO_C400_G10M5.jpg
+#LinePlot: CG_UP_C0400_S298  Wskew_L1P00 Prof_Heights Prof_T12_T36 none PANEL:f  NorthWest none Wskew_L1P00_T12_T36_CG_C400_S298.jpg
 
 
 
@@ -339,14 +356,14 @@ LinePlot: CG_UP_C0400_S298  Wskew_L1P00 Prof_Heights Prof_T12_T36 none PANEL:f  
 ########### For Update #############
 
 ### Albedo
-ContourPlot: ContourPsetCCN AlbedoLon_T12 AlbedoLat_T12 Albedo_T12 ContourSelect_T12 PANEL:a:b:c  1 1 40 LightGray Albedo_T12
-ContourPlot: ContourPsetCCN AlbedoLon_T24 AlbedoLat_T24 Albedo_T24 ContourSelect_T24 PANEL:a:b:c  1 1 40 LightGray Albedo_T24
-ContourPlot: ContourPsetCCN AlbedoLon_T36 AlbedoLat_T36 Albedo_T36 ContourSelect_T36 PANEL:a:b:c  1 1 40 LightGray Albedo_T36
+ContourPlot: ContourPsetCCN AlbedoLon_T12 AlbedoLat_T12 Albedo_T12 ContourSelect_T12 PANEL:a@t@=@12@h 1 1 40 LightGray Albedo_T12
+ContourPlot: ContourPsetCCN AlbedoLon_T24 AlbedoLat_T24 Albedo_T24 ContourSelect_T24 PANEL:b@t@=@24@h 1 1 40 LightGray Albedo_T24
+ContourPlot: ContourPsetCCN AlbedoLon_T36 AlbedoLat_T36 Albedo_T36 ContourSelect_T36 PANEL:c@t@=@36@h 1 1 40 LightGray Albedo_T36
 
 ### Surface divergence
-ContourPlot: ContourPsetCCN SfcDivLon_T12 SfcDivLat_T12 SfcDiv_T12 ContourSelect_T12 PANEL:a:b:c  1 1 40 redblue SfcDiv_T12
-ContourPlot: ContourPsetCCN SfcDivLon_T24 SfcDivLat_T24 SfcDiv_T24 ContourSelect_T24 PANEL:a:b:c  1 1 40 redblue SfcDiv_T24
-ContourPlot: ContourPsetCCN SfcDivLon_T36 SfcDivLat_T36 SfcDiv_T36 ContourSelect_T36 PANEL:a:b:c  1 1 40 redblue SfcDiv_T36
+ContourPlot: ContourPsetCCN SfcConvLon_T12 SfcConvLat_T12 SfcConv_T12 ContourSelect_T12 PANEL:d@t@=@12@h 1 1 40 redblue SfcConv_T12
+ContourPlot: ContourPsetCCN SfcConvLon_T24 SfcConvLat_T24 SfcConv_T24 ContourSelect_T24 PANEL:e@t@=@24@h 1 1 40 redblue SfcConv_T24
+ContourPlot: ContourPsetCCN SfcConvLon_T36 SfcConvLat_T36 SfcConv_T36 ContourSelect_T36 PANEL:f@t@=@36@h 1 1 40 redblue SfcConv_T36
 
 ##################################################################
 ##################### DISTRIBUTION PLOTS #########################
@@ -928,9 +945,15 @@ PcolorPlot: DIAGS/hist2d_swuptoa_pcprr   1 1e5 10:1000:100000 log _ Precip_Rate_
 
 ####################### Plot Sets ############################
 
-#### For Update
+#### For Update/Paper
+PlotSet: CO_UP_C0050_G10M5 3 z.atex.ccn0050.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn0050.sst298.gcn10m5.1um 298K c - 0.0 z.atex.ccn0050.sst303.gcn10m5.1um 303K m - 0.0
 PlotSet: CO_UP_C0400_G10M5 3 z.atex.ccn0400.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn0400.sst298.gcn10m5.1um 298K c - 0.0 z.atex.ccn0400.sst303.gcn10m5.1um 303K m - 0.0
+PlotSet: CO_UP_C1600_G10M5 3 z.atex.ccn1600.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn1600.sst298.gcn10m5.1um 298K c - 0.0 z.atex.ccn1600.sst303.gcn10m5.1um 303K m - 0.0
+
+PlotSet: CO_UP_S293_G10M5 3 z.atex.ccn0050.sst293.gcn10m5.1um 50/cc k - 0.0 z.atex.ccn0400.sst293.gcn10m5.1um 400/cc c - 0.0 z.atex.ccn1600.sst293.gcn10m5.1um 1600/cc m - 0.0
 PlotSet: CO_UP_S298_G10M5 3 z.atex.ccn0050.sst298.gcn10m5.1um 50/cc k - 0.0 z.atex.ccn0400.sst298.gcn10m5.1um 400/cc c - 0.0 z.atex.ccn1600.sst298.gcn10m5.1um 1600/cc m - 0.0
+PlotSet: CO_UP_S303_G10M5 3 z.atex.ccn0050.sst303.gcn10m5.1um 50/cc k - 0.0 z.atex.ccn0400.sst303.gcn10m5.1um 400/cc c - 0.0 z.atex.ccn1600.sst303.gcn10m5.1um 1600/cc m - 0.0
+
 PlotSet: CG_UP_C0400_S298 3 z.atex.ccn0400.sst298.gcn10m0.3um 1/cc k - 0.0 z.atex.ccn0400.sst298.gcn10m2.3um 10e-2/cc c - 0.0 z.atex.ccn0400.sst298.gcn10m4.3um 10e-4/cc m - 0.0
 
 #### 1um GCCN median radius ####
@@ -995,6 +1018,8 @@ PlotVar: SimTime t_coords TsAveragedData/hda_ctop_tempc Simulation@Time  hr  0 6
 
 PlotVar: Prof_Heights z_coords  DIAGS/buoy_flux_T12_T36 Height               km     0   4 1e-3
 
+PlotVar: HfracCloud      hfrac_cloud DIAGS/hfrac_cloud_T12_T36   Cloud@Fraction @     0 1 1
+
 PlotVar: BuoyFlux        BUOY_FLUX DIAGS/buoy_flux_T12_T36          Buoy@Flux cm^2@s^-^3     -1  15 1e4
 PlotVar: BuoyFlux_L0P01  BUOY_FLUX DIAGS/buoy_flux_lwp0p01_T12_T36  Buoy@Flux cm^2@s^-^3     -5  50 1e4
 PlotVar: BuoyFlux_L0P10  BUOY_FLUX DIAGS/buoy_flux_lwp0p10_T12_T36  Buoy@Flux cm^2@s^-^3    -50 150 1e4
@@ -1020,15 +1045,16 @@ PlotVar: AlbedoLon_T36 x_coords  DIAGS/albedo_T36 Longitude   @      -180 180 1
 PlotVar: AlbedoLat_T36 y_coords  DIAGS/albedo_T36 Latitude    @      -180 180 1
 PlotVar: Albedo_T36    albedo    DIAGS/albedo_T36 Albedo      @         0   1 1
 
-PlotVar: SfcDivLon_T12 x_coords  DIAGS/sfc_div_T12 Longitude        @      -180  180 1
-PlotVar: SfcDivLat_T12 y_coords  DIAGS/sfc_div_T12 Latitude         @      -180  180 1
-PlotVar: SfcDiv_T12    sfc_div   DIAGS/sfc_div_T12 Sfc.@Divergence  s^-1  -0.5e-2 0.5e-2 1
-PlotVar: SfcDivLon_T24 x_coords  DIAGS/sfc_div_T24 Longitude        @      -180  180 1
-PlotVar: SfcDivLat_T24 y_coords  DIAGS/sfc_div_T24 Latitude         @      -180  180 1
-PlotVar: SfcDiv_T24    sfc_div   DIAGS/sfc_div_T24 Sfc.@Divergence  s^-1  -0.5e-2 0.51e-2 1
-PlotVar: SfcDivLon_T36 x_coords  DIAGS/sfc_div_T36 Longitude        @      -180  180 1
-PlotVar: SfcDivLat_T36 y_coords  DIAGS/sfc_div_T36 Latitude         @      -180  180 1
-PlotVar: SfcDiv_T36    sfc_div   DIAGS/sfc_div_T36 Sfc.@Divergence  s^-1  -0.51e-2 0.51e-2 1
+# Surface convergence: data from REVU is surface divergence, so multiply by -1 to get convergence
+PlotVar: SfcConvLon_T12 x_coords  DIAGS/sfc_div_T12 Longitude         @      -180  180 1
+PlotVar: SfcConvLat_T12 y_coords  DIAGS/sfc_div_T12 Latitude          @      -180  180 1
+PlotVar: SfcConv_T12    sfc_div   DIAGS/sfc_div_T12 Sfc.@Convergence  s^-1  -0.5e-2 0.5e-2 -1
+PlotVar: SfcConvLon_T24 x_coords  DIAGS/sfc_div_T24 Longitude         @      -180  180 1
+PlotVar: SfcConvLat_T24 y_coords  DIAGS/sfc_div_T24 Latitude          @      -180  180 1
+PlotVar: SfcConv_T24    sfc_div   DIAGS/sfc_div_T24 Sfc.@Convergence  s^-1  -0.5e-2 0.51e-2 -1
+PlotVar: SfcConvLon_T36 x_coords  DIAGS/sfc_div_T36 Longitude         @      -180  180 1
+PlotVar: SfcConvLat_T36 y_coords  DIAGS/sfc_div_T36 Latitude          @      -180  180 1
+PlotVar: SfcConv_T36    sfc_div   DIAGS/sfc_div_T36 Sfc.@Convergence  s^-1  -0.51e-2 0.51e-2 -1
 
 ######################## Selection specs #########################
 # PlotDselect: <name> <xmin> <xmax> <ymin> <ymax> <zmin> <zmax> <tmin> <tmax>

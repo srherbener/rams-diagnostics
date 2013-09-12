@@ -50,6 +50,7 @@ for iplot = 1:length(Config.ContourPlots)
     % X variable contains x axis values
     Xvname   = Config.PlotVars(ixv).Var;
     Xfprefix = Config.PlotVars(ixv).Fprefix;
+    Xscale   = Config.PlotVars(ixv).Scale;
     if (strcmp(Config.PlotVars(ixv).Units, ' '))
       Xlabel   = sprintf('%s', Config.PlotVars(ixv).Label);
     else
@@ -59,6 +60,7 @@ for iplot = 1:length(Config.ContourPlots)
     % Y variable contains y axix values
     Yvname   = Config.PlotVars(iyv).Var;
     Yfprefix = Config.PlotVars(iyv).Fprefix;
+    Yscale   = Config.PlotVars(iyv).Scale;
     if (strcmp(Config.PlotVars(iyv).Units, ' '))
       Ylabel   = sprintf('%s', Config.PlotVars(iyv).Label);
     else
@@ -69,6 +71,7 @@ for iplot = 1:length(Config.ContourPlots)
     % use min and max for caxis range
     Zvname   = Config.PlotVars(izv).Var;
     Zfprefix = Config.PlotVars(izv).Fprefix;
+    Zscale   = Config.PlotVars(izv).Scale;
     Crange   = [ Config.PlotVars(izv).Min Config.PlotVars(izv).Max ];
 
     % Data selection specs
@@ -93,15 +96,15 @@ for iplot = 1:length(Config.ContourPlots)
 
       Hfile = sprintf('%s_%s.h5', Xfprefix, Case);
       fprintf('Reading HDF5 file: %s, Dataset: %s\n', Hfile, Xvname);
-      X = ReadSelectXyzt(Hfile, Xvname, Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, Tmin, Tmax);
+      X = ReadSelectXyzt(Hfile, Xvname, Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, Tmin, Tmax) .* Xscale;
 
       Hfile = sprintf('%s_%s.h5', Yfprefix, Case);
       fprintf('Reading HDF5 file: %s, Dataset: %s\n', Hfile, Yvname);
-      Y = ReadSelectXyzt(Hfile, Yvname, Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, Tmin, Tmax);
+      Y = ReadSelectXyzt(Hfile, Yvname, Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, Tmin, Tmax) .* Yscale;
 
       Hfile = sprintf('%s_%s.h5', Zfprefix, Case);
       fprintf('Reading HDF5 file: %s, Dataset: %s\n', Hfile, Zvname);
-      Z = ReadSelectXyzt(Hfile, Zvname, Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, Tmin, Tmax);
+      Z = ReadSelectXyzt(Hfile, Zvname, Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, Tmin, Tmax) .* Zscale;
 
       fprintf('\n');
       fprintf('Writing plot file: %s\n', OutFile);
