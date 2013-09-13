@@ -126,24 +126,32 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 #LinePlot: CG_UP_C0400_S298  Ctop Cfrac TsAll_T12_T36 xy PANEL:c  NorthEast none CloudStruct_CG_C400_S298.jpg
 
 ### Cloud fraction time series
-LinePlot: CO_UP_S293_G10M5  SimTime Cfrac TsAll none PANEL:e@SST:@293K    NorthEast none CloudFrac_CO_S293_G10M5.jpg
-LinePlot: CO_UP_S298_G10M5  SimTime Cfrac TsAll none PANEL:c@SST:@298K    NorthEast none CloudFrac_CO_S298_G10M5.jpg
-LinePlot: CO_UP_S303_G10M5  SimTime Cfrac TsAll none PANEL:a@SST:@303K    NorthEast none CloudFrac_CO_S303_G10M5.jpg
+#LinePlot: CO_UP_S293_G10M5  SimTime Cfrac TsAll none PANEL:e@SST:@293K    NorthEast none CloudFrac_CO_S293_G10M5.jpg
+#LinePlot: CO_UP_S298_G10M5  SimTime Cfrac TsAll none PANEL:c@SST:@298K    NorthEast none CloudFrac_CO_S298_G10M5.jpg
+#LinePlot: CO_UP_S303_G10M5  SimTime Cfrac TsAll none PANEL:a@SST:@303K    NorthEast none CloudFrac_CO_S303_G10M5.jpg
 
-LinePlot: CO_UP_C0050_G10M5 SimTime Cfrac TsAll none PANEL:f@CCN:@50/cc    NorthEast none CloudFrac_CO_C50_G10M5.jpg
-LinePlot: CO_UP_C0400_G10M5 SimTime Cfrac TsAll none PANEL:d@CCN:@400/cc   NorthEast none CloudFrac_CO_C400_G10M5.jpg
-LinePlot: CO_UP_C1600_G10M5 SimTime Cfrac TsAll none PANEL:b@CCN:@1600/cc  NorthEast none CloudFrac_CO_C1600_G10M5.jpg
+LinePlot: CO_UP_S293_G10M5_L  SimTime Cfrac TsAll none PANEL:e@SST:@293K    NorthEast none CloudFrac_CO_S293_G10M5_L.jpg
+LinePlot: CO_UP_S298_G10M5_L  SimTime Cfrac TsAll none PANEL:c@SST:@298K    NorthEast none CloudFrac_CO_S298_G10M5_L.jpg
+LinePlot: CO_UP_S303_G10M5_L  SimTime Cfrac TsAll none PANEL:a@SST:@303K    NorthEast none CloudFrac_CO_S303_G10M5_L.jpg
+
+#LinePlot: CO_UP_C0050_G10M5 SimTime Cfrac TsAll none PANEL:f@CCN:@50/cc    NorthEast none CloudFrac_CO_C50_G10M5.jpg
+LinePlot: CO_UP_C0100_G10M5 SimTime Cfrac TsAll none PANEL:f@CCN:@100/cc    NorthEast none CloudFrac_CO_C100_G10M5.jpg
+LinePlot: CO_UP_C0200_G10M5 SimTime Cfrac TsAll none PANEL:f@CCN:@200/cc    NorthEast none CloudFrac_CO_C200_G10M5.jpg
+#LinePlot: CO_UP_C0400_G10M5 SimTime Cfrac TsAll none PANEL:d@CCN:@400/cc   NorthEast none CloudFrac_CO_C400_G10M5.jpg
+LinePlot: CO_UP_C0800_G10M5 SimTime Cfrac TsAll none PANEL:d@CCN:@800/cc   NorthEast none CloudFrac_CO_C800_G10M5.jpg
+LinePlot: CO_UP_C1200_G10M5 SimTime Cfrac TsAll none PANEL:d@CCN:@1200/cc   NorthEast none CloudFrac_CO_C1200_G10M5.jpg
+#LinePlot: CO_UP_C1600_G10M5 SimTime Cfrac TsAll none PANEL:b@CCN:@1600/cc  NorthEast none CloudFrac_CO_C1600_G10M5.jpg
 
 #LinePlot: CG_UP_C0400_S298  SimTime Cfrac TsAll none PANEL:c  NorthEast none CloudFrac_CG_C400_S298.jpg
 
 ### Cloud depth time series
-LinePlot: CO_UP_S293_G10M5  SimTime MaxCdepth TsAll none PANEL:e@SST:@293K    NorthEast none CloudMaxDepth_CO_S293_G10M5.jpg
-LinePlot: CO_UP_S298_G10M5  SimTime MaxCdepth TsAll none PANEL:c@SST:@298K    NorthEast none CloudMaxDepth_CO_S298_G10M5.jpg
-LinePlot: CO_UP_S303_G10M5  SimTime MaxCdepth TsAll none PANEL:a@SST:@303K    NorthEast none CloudMaxDepth_CO_S303_G10M5.jpg
+#LinePlot: CO_UP_S293_G10M5  SimTime MaxCdepth TsAll none PANEL:e@SST:@293K    NorthEast none CloudMaxDepth_CO_S293_G10M5.jpg
+#LinePlot: CO_UP_S298_G10M5  SimTime MaxCdepth TsAll none PANEL:c@SST:@298K    NorthEast none CloudMaxDepth_CO_S298_G10M5.jpg
+#LinePlot: CO_UP_S303_G10M5  SimTime MaxCdepth TsAll none PANEL:a@SST:@303K    NorthEast none CloudMaxDepth_CO_S303_G10M5.jpg
 
-LinePlot: CO_UP_C0050_G10M5 SimTime MaxCdepth TsAll none PANEL:f@CCN:@50/cc    NorthEast none CloudMaxDepth_CO_C50_G10M5.jpg
-LinePlot: CO_UP_C0400_G10M5 SimTime MaxCdepth TsAll none PANEL:d@CCN:@400/cc   NorthEast none CloudMaxDepth_CO_C400_G10M5.jpg
-LinePlot: CO_UP_C1600_G10M5 SimTime MaxCdepth TsAll none PANEL:b@CCN:@1600/cc  NorthEast none CloudMaxDepth_CO_C1600_G10M5.jpg
+#LinePlot: CO_UP_C0050_G10M5 SimTime MaxCdepth TsAll none PANEL:f@CCN:@50/cc    NorthEast none CloudMaxDepth_CO_C50_G10M5.jpg
+#LinePlot: CO_UP_C0400_G10M5 SimTime MaxCdepth TsAll none PANEL:d@CCN:@400/cc   NorthEast none CloudMaxDepth_CO_C400_G10M5.jpg
+#LinePlot: CO_UP_C1600_G10M5 SimTime MaxCdepth TsAll none PANEL:b@CCN:@1600/cc  NorthEast none CloudMaxDepth_CO_C1600_G10M5.jpg
 
 #LinePlot: CG_UP_C0400_S298  SimTime MaxCdepth TsAll none PANEL:f  NorthEast none CloudMaxDepth_CG_C400_S298.jpg
 
@@ -914,13 +922,13 @@ Hist2d: hist2d_swuptoa_pcprr  TsAveragedData/hist2d_pcprr_swuptoa  hist2d 0 10 2
 #### 1um GCCN median radius ####
 
 # Vary SST
-SlopePlot: DIAGS/smeas_pop_CO_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper LtssBinLower LtssBinUpper Time 7 0.7 Slope_of_POP_vs_Sulfate_Aerosol_Concentration LWP_(mm) LTSS_(K) 12 36 -5e-4 5e-4 pop_LTSS_CO_G10M5.jpg
+#SlopePlot: DIAGS/smeas_pop_CO_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper LtssBinLower LtssBinUpper Time 7 0.7 Slope_of_POP_vs_Sulfate_Aerosol_Concentration LWP_(mm) LTSS_(K) 12 36 -5e-4 5e-4 pop_LTSS_CO_G10M5.jpg
 
-SlopePlot: DIAGS/smeas_pop_CO_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper LtssBinLower LtssBinUpper Time 7 0.0 Slope_of_POP_vs_Sulfate_Aerosol_Concentration LWP_(mm) LTSS_(K) 12 36 -5e-4 5e-4 pop_nosig_LTSS_CO_G10M5.jpg
+#SlopePlot: DIAGS/smeas_pop_CO_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper LtssBinLower LtssBinUpper Time 7 0.0 Slope_of_POP_vs_Sulfate_Aerosol_Concentration LWP_(mm) LTSS_(K) 12 36 -5e-4 5e-4 pop_nosig_LTSS_CO_G10M5.jpg
 
-SlopePlot: DIAGS/smeas_pop_CO_S293_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper LtssBinLower LtssBinUpper Time 7 0.7 Slope_of_POP_vs_Sulfate_Aerosol_Concentration LWP_(mm) LTSS_(K) 12 36 -5e-4 5e-4 pop_CO_S293_G10M5.jpg
-SlopePlot: DIAGS/smeas_pop_CO_S298_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper LtssBinLower LtssBinUpper Time 7 0.7 Slope_of_POP_vs_Sulfate_Aerosol_Concentration LWP_(mm) LTSS_(K) 12 36 -5e-4 5e-4 pop_CO_S298_G10M5.jpg
-SlopePlot: DIAGS/smeas_pop_CO_S303_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper LtssBinLower LtssBinUpper Time 7 0.7 Slope_of_POP_vs_Sulfate_Aerosol_Concentration LWP_(mm) LTSS_(K) 12 36 -5e-4 5e-4 pop_CO_S303_G10M5.jpg
+#SlopePlot: DIAGS/smeas_pop_CO_S293_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper LtssBinLower LtssBinUpper Time 7 0.7 Slope_of_POP_vs_Sulfate_Aerosol_Concentration LWP_(mm) LTSS_(K) 12 36 -5e-4 5e-4 pop_CO_S293_G10M5.jpg
+#SlopePlot: DIAGS/smeas_pop_CO_S298_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper LtssBinLower LtssBinUpper Time 7 0.7 Slope_of_POP_vs_Sulfate_Aerosol_Concentration LWP_(mm) LTSS_(K) 12 36 -5e-4 5e-4 pop_CO_S298_G10M5.jpg
+#SlopePlot: DIAGS/smeas_pop_CO_S303_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper LtssBinLower LtssBinUpper Time 7 0.7 Slope_of_POP_vs_Sulfate_Aerosol_Concentration LWP_(mm) LTSS_(K) 12 36 -5e-4 5e-4 pop_CO_S303_G10M5.jpg
 
 #######################################
 ########## Slope1D Plots ##############
@@ -928,9 +936,9 @@ SlopePlot: DIAGS/smeas_pop_CO_S303_G10M5.h5 Slopes_pop CorCoeffs_pop LwpBinLower
 #
 # Slope1dPlot: <file> <slope_var> <correlation_coeff_var> <x_lower_edge_var> <x_upper_edge_var> <time_var> <num_samples> <test_correlation> <title> <xlabel> <ylabel> <time_min> <time_max> <color_min> <color_max> <out_file>
 
-Slope1dPlot: CO_POP_SST_G10M5 DIAGS Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper Time 7 0.7 Slope_of_POP_vs_Aerosol_Concentration LWP_(mm) SST_(K) 0 8 12 36 -10e-4 10e-4 pop_SST_CO_G10M5.jpg
-Slope1dPlot: CO_POP_SST_G10M5 DIAGS Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper Time 7 0.7 Slope_of_POP_vs_Aerosol_Concentration LWP_(mm) SST_(K) 0 8 12 24 -10e-4 10e-4 pop_SST_CO_G10M5_First12.jpg
-Slope1dPlot: CO_POP_SST_G10M5 DIAGS Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper Time 7 0.7 Slope_of_POP_vs_Aerosol_Concentration LWP_(mm) SST_(K) 0 8 24 36 -10e-4 10e-4 pop_SST_CO_G10M5_Last12.jpg
+Slope1dPlot: CO_POP_SST_G10M5 DIAGS Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper Time 7 0.5 Slope@of@POP@vs@Na LWP@(mm) SST@(K) 0 8 12 36 -10e-4 10e-4 pop_SST_CO_G10M5.jpg
+Slope1dPlot: CO_POP_SST_G10M5 DIAGS Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper Time 7 0.5 Slope@of@POP@vs@Na LWP@(mm) SST@(K) 0 8 12 24 -10e-4 10e-4 pop_SST_CO_G10M5_First12.jpg
+Slope1dPlot: CO_POP_SST_G10M5 DIAGS Slopes_pop CorCoeffs_pop LwpBinLower LwpBinUpper Time 7 0.5 Slope@of@POP@vs@Na LWP@(mm) SST@(K) 0 8 24 36 -10e-4 10e-4 pop_SST_CO_G10M5_Last12.jpg
 
 ###########################################
 ########## PsuedoColor Plots ##############
@@ -947,12 +955,20 @@ PcolorPlot: DIAGS/hist2d_swuptoa_pcprr   1 1e5 10:1000:100000 log _ Precip_Rate_
 
 #### For Update/Paper
 PlotSet: CO_UP_C0050_G10M5 3 z.atex.ccn0050.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn0050.sst298.gcn10m5.1um 298K c - 0.0 z.atex.ccn0050.sst303.gcn10m5.1um 303K m - 0.0
+PlotSet: CO_UP_C0100_G10M5 3 z.atex.ccn0100.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn0100.sst298.gcn10m5.1um 298K c - 0.0 z.atex.ccn0100.sst303.gcn10m5.1um 303K m - 0.0
+PlotSet: CO_UP_C0200_G10M5 3 z.atex.ccn0200.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn0200.sst298.gcn10m5.1um 298K c - 0.0 z.atex.ccn0200.sst303.gcn10m5.1um 303K m - 0.0
 PlotSet: CO_UP_C0400_G10M5 3 z.atex.ccn0400.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn0400.sst298.gcn10m5.1um 298K c - 0.0 z.atex.ccn0400.sst303.gcn10m5.1um 303K m - 0.0
+PlotSet: CO_UP_C0800_G10M5 3 z.atex.ccn0800.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn0800.sst298.gcn10m5.1um 298K c - 0.0 z.atex.ccn0800.sst303.gcn10m5.1um 303K m - 0.0
+PlotSet: CO_UP_C1200_G10M5 3 z.atex.ccn1200.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn1200.sst298.gcn10m5.1um 298K c - 0.0 z.atex.ccn1200.sst303.gcn10m5.1um 303K m - 0.0
 PlotSet: CO_UP_C1600_G10M5 3 z.atex.ccn1600.sst293.gcn10m5.1um 293K k - 0.0 z.atex.ccn1600.sst298.gcn10m5.1um 298K c - 0.0 z.atex.ccn1600.sst303.gcn10m5.1um 303K m - 0.0
 
 PlotSet: CO_UP_S293_G10M5 3 z.atex.ccn0050.sst293.gcn10m5.1um 50/cc k - 0.0 z.atex.ccn0400.sst293.gcn10m5.1um 400/cc c - 0.0 z.atex.ccn1600.sst293.gcn10m5.1um 1600/cc m - 0.0
 PlotSet: CO_UP_S298_G10M5 3 z.atex.ccn0050.sst298.gcn10m5.1um 50/cc k - 0.0 z.atex.ccn0400.sst298.gcn10m5.1um 400/cc c - 0.0 z.atex.ccn1600.sst298.gcn10m5.1um 1600/cc m - 0.0
 PlotSet: CO_UP_S303_G10M5 3 z.atex.ccn0050.sst303.gcn10m5.1um 50/cc k - 0.0 z.atex.ccn0400.sst303.gcn10m5.1um 400/cc c - 0.0 z.atex.ccn1600.sst303.gcn10m5.1um 1600/cc m - 0.0
+
+PlotSet: CO_UP_S293_G10M5_L 4 z.atex.ccn0050.sst293.gcn10m5.1um 50/cc k - 0.0 z.atex.ccn0100.sst293.gcn10m5.1um 100/cc c - 0.0 z.atex.ccn0200.sst293.gcn10m5.1um 200/cc m - 0.0 z.atex.ccn0400.sst293.gcn10m5.1um 400/cc b - 0.0
+PlotSet: CO_UP_S298_G10M5_L 4 z.atex.ccn0050.sst298.gcn10m5.1um 50/cc k - 0.0 z.atex.ccn0100.sst298.gcn10m5.1um 100/cc c - 0.0 z.atex.ccn0200.sst298.gcn10m5.1um 200/cc m - 0.0 z.atex.ccn0400.sst298.gcn10m5.1um 400/cc b - 0.0
+PlotSet: CO_UP_S303_G10M5_L 4 z.atex.ccn0050.sst303.gcn10m5.1um 50/cc k - 0.0 z.atex.ccn0100.sst303.gcn10m5.1um 100/cc c - 0.0 z.atex.ccn0200.sst303.gcn10m5.1um 200/cc m - 0.0 z.atex.ccn0400.sst303.gcn10m5.1um 400/cc b - 0.0
 
 PlotSet: CG_UP_C0400_S298 3 z.atex.ccn0400.sst298.gcn10m0.3um 1/cc k - 0.0 z.atex.ccn0400.sst298.gcn10m2.3um 10e-2/cc c - 0.0 z.atex.ccn0400.sst298.gcn10m4.3um 10e-4/cc m - 0.0
 

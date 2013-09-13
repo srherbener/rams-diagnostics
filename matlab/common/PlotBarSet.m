@@ -22,7 +22,10 @@ if (PanelTitle)
     Ptitle = sprintf('(%s) %s', Pmarkers{1}, Ptitle);
 end
 
-bar(X, Y, 'FaceColor', Bcolors)
+if (~isempty(Bcolors)
+  bar(X, Y, 'FaceColor', Bcolors)
+end
+
 for i = 1:Nprops
   set(gca, AxisProps(i).Name, AxisProps(i).Val);
 end

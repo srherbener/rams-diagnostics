@@ -31,7 +31,7 @@ for iplot = 1:length(Config.Slope1dPlots)
     Cmin  = Config.Slope1dPlots(iplot).Cmin;
     Cmax  = Config.Slope1dPlots(iplot).Cmax;
 
-    Ptitle = sprintf('%s', Config.Slope1dPlots(iplot).Title);
+    Ptitle = sprintf('%s', Config.Slope1dPlots(iplot).Title.Main);
     Xlabel = Config.Slope1dPlots(iplot).Xlabel;
     Ylabel = Config.Slope1dPlots(iplot).Ylabel;
     OutFile = sprintf('%s/%s', Pdir, Config.Slope1dPlots(iplot).OutFile);
