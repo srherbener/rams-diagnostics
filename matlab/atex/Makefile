@@ -25,6 +25,7 @@ SCRIPTS = $(DEST)/ExtractSample.m \
           $(DEST)/GenSlope1dPlots.m \
           $(DEST)/GenSlopePlots.m \
           $(DEST)/GenSwupBarCharts.m \
+          $(DEST)/GenCfCdBarPlots.m \
           $(DEST)/GenTavgRrateFracAreaDist.m \
           $(DEST)/GenTopSwup.m \
           $(DEST)/MakeSinglePanelFigs.m \

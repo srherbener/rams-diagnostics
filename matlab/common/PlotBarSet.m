@@ -22,8 +22,11 @@ if (PanelTitle)
     Ptitle = sprintf('(%s) %s', Pmarkers{1}, Ptitle);
 end
 
-if (~isempty(Bcolors)
-  bar(X, Y, 'FaceColor', Bcolors)
+bgraph = bar(X, Y);
+if (~isempty(Bcolors))
+  for i = 1:length(bgraph)
+    set(bgraph(i), 'FaceColor', Bcolors{i});
+  end
 end
 
 for i = 1:Nprops
