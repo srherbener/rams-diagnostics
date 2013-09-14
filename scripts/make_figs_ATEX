@@ -10,12 +10,16 @@ montage -tile 1x1 -geometry ${Jsize}+2+100 \
  Figure1.jpg
 
 echo "Figure 2: Bar graphs, CF and CD, CCN only"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
- cf_start_bars.jpg \
- cf_end_bars.jpg \
- cd_start_bars.jpg \
- cd_end_bars.jpg \
+montage -tile 1x2 -geometry ${Jsize}+2+100 \
+ cf_avg_bars.jpg \
+ cd_avg_bars.jpg \
  Figure2.jpg
+
+echo "Figure 3: Bar graphs, CF and CD, CCN and GCCN"
+montage -tile 1x2 -geometry ${Jsize}+2+100 \
+ cf_avg_bars_gccn.jpg \
+ cd_avg_bars_gccn.jpg \
+ Figure3.jpg
 
 ### echo "Figure 3: Time average HfracCloud, BuoyFlux, Wvar, Wskew, CCN only"
 ### montage -tile 2x4 -geometry ${Jsize}+2+100 \
