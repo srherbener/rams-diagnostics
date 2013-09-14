@@ -1,5 +1,5 @@
-function [ ] = GenStartEndData(ConfigFile)
-% GenStartEndData generate data indexed by SST and CCN concentration for beginning and end of time series
+function [ ] = GenBarGraphData(ConfigFile)
+% GenBarGraphData generate data indexed by SST and CCN concentration for bar graphs
 
     % Read the config file to get the structure of how the data is laid out in
     % the file system.
@@ -66,6 +66,9 @@ function [ ] = GenStartEndData(ConfigFile)
         CF_End(i)   = CF(T2);
         CD_End(i)   = CD(T2);
 
+        CF_Avg(i) = mean(CF(T1:T2));
+        CD_Avg(i) = mean(CD(T1:T2));
+
         CCN(i) = CCNval;
         SST(i) = SSTval;
         GCCN(i) = GCCNval;
@@ -77,12 +80,14 @@ function [ ] = GenStartEndData(ConfigFile)
     Z = 1;
     T = 1;
      
-    OutFile = sprintf('%s/cf_cd_start_end.h5', Ddir);
+    OutFile = sprintf('%s/cf_cd_bar_graph_data.h5', Ddir);
     fprintf('Writing: %s\n', OutFile);
     hdf5write(OutFile, '/cf_start', CF_Start);
     hdf5write(OutFile, '/cf_end',   CF_End,   'WriteMode', 'append');
+    hdf5write(OutFile, '/cf_avg',   CF_Avg,   'WriteMode', 'append');
     hdf5write(OutFile, '/cd_start', CD_Start, 'WriteMode', 'append');
     hdf5write(OutFile, '/cd_end',   CD_End,   'WriteMode', 'append');
+    hdf5write(OutFile, '/cd_avg',   CD_Avg,   'WriteMode', 'append');
     hdf5write(OutFile, '/ccn',      CCN,      'WriteMode', 'append');
     hdf5write(OutFile, '/sst',      SST,      'WriteMode', 'append');
     hdf5write(OutFile, '/gccn',     GCCN,     'WriteMode', 'append');

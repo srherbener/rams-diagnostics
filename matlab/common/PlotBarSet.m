@@ -33,7 +33,7 @@ for i = 1:Nprops
   set(gca, AxisProps(i).Name, AxisProps(i).Val);
 end
 
-legend(LegText, 'Location', char(LegLoc), 'FontSize', 25);
+legend(LegText, 'Location', char(LegLoc), 'Orientation', 'horizontal', 'FontSize', 20);
 legend boxoff;
 
 if (~strcmp(Ptitle, ' '))
