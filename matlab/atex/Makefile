@@ -31,6 +31,7 @@ SCRIPTS = $(DEST)/ExtractSample.m \
           $(DEST)/MakeSinglePanelFigs.m \
           $(DEST)/PlotDistSet.m \
           $(DEST)/PlotInitialSounding.m \
+          $(DEST)/PlotInitialAerosols.m \
           $(DEST)/SetPath.m
 
 CONFIGS = $(DIAG_DIR)/DiagConfig
