@@ -1347,8 +1347,8 @@ subroutine DoHorizKe(Nx, Ny, Nz, Dens, U, V, Filter, DeltaX, DeltaY, Zcoords, Ts
 
   iz = 2
 
-  do iy = 1, Ny
-    do ix = 1, Nx
+  do iy = 2, Ny-1
+    do ix = 2, Nx-1
       if (anint(Filter(ix,iy,iz)) .eq. 1.0) then
         if (iz .eq. Nz) then
           ! Use the level below for this case (since no level above)
@@ -1669,8 +1669,8 @@ subroutine DoHist(Nx, Ny, Nz, FilterNz, Nb, Var, Filter, UseFilter, UndefVal, Bi
       filter_z = iz
     endif
 
-    do iy = 1, Ny
-      do ix = 1, Nx
+    do iy = 2, Ny-1
+      do ix = 2, Nx-1
         SelectPoint = anint(Var(ix,iy,iz)) .ne. UndefVal
         if (UseFilter) then
           SelectPoint = SelectPoint .and. (anint(Filter(ix,iy,filter_z)) .eq. 1.0)
@@ -1762,8 +1762,8 @@ subroutine DoPop(Nx, Ny, Nz, FilterNz, Nb_lwp, Nb_ltss, PrecipRate, Lwp, Ltss, F
         filter_z = iz
       endif
   
-      do iy = 1, Ny
-        do ix = 1, Nx
+      do iy = 2, Ny-1
+        do ix = 2, Nx-1
           SelectPoint = anint(Lwp(ix,iy,iz)) .ne. UndefVal
           if (UseFilter) then
             SelectPoint = SelectPoint .and. (anint(Filter(ix,iy,filter_z)) .eq. 1.0)
@@ -1842,8 +1842,8 @@ subroutine DoHist2d(Nx, Ny, Nz, XvarNz, YvarNz, FilterNz, Xnbins, Ynbins, Xvar, 
     ! Walk through each grid cell on this level. Simultaneously bin the Xvar and Yvar values.
     ! Increment the count for this grid cell only if the Xvar and Yvar values got placed into
     ! an Xbin and Ybin.
-    do iy = 1, Ny
-      do ix = 1, Nx
+    do iy = 2, Ny-1
+      do ix = 2, Nx-1
         ! don't select if either x or y is undefined
         SelectPoint = ((anint(Xvar(ix,iy,iz_x)) .ne. UndefVal) .and. &
                        (anint(Yvar(ix,iy,iz_y)) .ne. UndefVal))
@@ -1905,8 +1905,8 @@ subroutine DoLtss(Nx, Ny, Nz, FilterNz, Theta, Filter, UseFilter, UndefVal, Kbot
   ! these differences.
   Ltss = 0.0
   Npts = 0
-  do iy = 1, Ny
-    do ix = 1, Nx
+  do iy = 2, Ny-1
+    do ix = 2, Nx-1
       SelectPoint = (anint(Theta(ix,iy,Kbot)) .ne. UndefVal) .and. (anint(Theta(ix,iy,Ktop)) .ne. UndefVal)
       if (UseFilter) then
         SelectPoint = SelectPoint .and. (anint(Filter(ix,iy,filter_zbot)) .eq. 1.0) &
@@ -1971,8 +1971,8 @@ subroutine DoStormInt(Nx, Ny, Nz, Speed10m, Filter, TserAvg)
 
   iz = 2 ! use next to bottom layer in the filter
 
-  do iy = 1, Ny
-    do ix = 1, Nx
+  do iy = 2, Ny-1
+    do ix = 2, Nx-1
       if (anint(Filter(ix,iy,iz)) .eq. 1.0) then
         ! Count up the number of grid points with wind speeds fitting each of the
         ! Saffir-Simpson categories. Then form the metric by weighting each category
