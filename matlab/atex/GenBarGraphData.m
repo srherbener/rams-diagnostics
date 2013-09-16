@@ -7,11 +7,14 @@ function [ ] = GenBarGraphData(ConfigFile)
 
     Ddir = Config.DiagDir;
     Tdir = Config.TsavgDir;
+    Hdir = './HDF5';
 
     CfName = 'hda_cloud_mask';
     CfFprefix = 'hda_cloud_frac';
     CdName = 'max_cloud_depth';
     CdFprefix = 'max_cdepth';
+    TpName = 'totpcp';
+    TpFprefix = 'totpcp';
 
     Tstart = 12;
     Tend = 36;
@@ -21,6 +24,7 @@ function [ ] = GenBarGraphData(ConfigFile)
         Case = Config.Cases(icase).Cname;
         CfFile = sprintf('%s/%s_%s.h5', Tdir, CfFprefix, Case);
         CdFile = sprintf('%s/%s_%s.h5', Tdir, CdFprefix, Case);
+        TpFile = sprintf('%s/%s-%s-AS-1999-02-10-040000-g1.h5', Hdir, TpFprefix, Case);
 
         % grab the CCN concentration and SST value from the case name
         CCNstr = regexprep(regexp(Case, 'ccn[0-9]+', 'match'), 'ccn', '');
@@ -39,6 +43,8 @@ function [ ] = GenBarGraphData(ConfigFile)
         fprintf('    Var name: %s\n', CfName);
         fprintf('  Input cloud depth file: %s\n', CdFile);
         fprintf('    Var name: %s\n', CdName);
+        fprintf('  Input total precip file: %s\n', TpFile);
+        fprintf('    Var name: %s\n', TpName);
         fprintf('  Start Time: %d\n', Tstart);
         fprintf('  End Time: %d\n', Tend);
         fprintf('  CCN: %d\n', CCNval);
@@ -47,8 +53,10 @@ function [ ] = GenBarGraphData(ConfigFile)
         fprintf('\n');
  
         % Cloud frac and cloud depth will be organized as (t)
+        % Total precip will be organized as (x,y,t)
         CF = squeeze(hdf5read(CfFile, CfName));
         CD = squeeze(hdf5read(CdFile, CdName));
+        TP = squeeze(hdf5read(TpFile, TpName));
     
         % Grab time coordinates
         T = hdf5read(CfFile, 't_coords')/3600; % hrs
@@ -69,6 +77,12 @@ function [ ] = GenBarGraphData(ConfigFile)
         CF_Avg(i) = mean(CF(T1:T2));
         CD_Avg(i) = mean(CD(T1:T2));
 
+        % calculate total accumulated precip by subtracting the total domain
+        % precip at T1 from that at T2
+        TP1 = squeeze(TP(:,:,T1));
+        TP2 = squeeze(TP(:,:,T2));
+        ACC_PCP(i) = sum(TP2(:)) - sum(TP1(:));
+
         CCN(i) = CCNval;
         SST(i) = SSTval;
         GCCN(i) = GCCNval;
@@ -88,6 +102,7 @@ function [ ] = GenBarGraphData(ConfigFile)
     hdf5write(OutFile, '/cd_start', CD_Start, 'WriteMode', 'append');
     hdf5write(OutFile, '/cd_end',   CD_End,   'WriteMode', 'append');
     hdf5write(OutFile, '/cd_avg',   CD_Avg,   'WriteMode', 'append');
+    hdf5write(OutFile, '/acc_pcp',  ACC_PCP,  'WriteMode', 'append');
     hdf5write(OutFile, '/ccn',      CCN,      'WriteMode', 'append');
     hdf5write(OutFile, '/sst',      SST,      'WriteMode', 'append');
     hdf5write(OutFile, '/gccn',     GCCN,     'WriteMode', 'append');
