@@ -13,6 +13,7 @@ SCRIPTS = $(DEST)/ExtractSample.m \
           $(DEST)/GenDistPlots.m \
           $(DEST)/GenHfracCloud.m \
           $(DEST)/GenBarGraphData.m \
+          $(DEST)/GenPdfData.m \
           $(DEST)/GenWmoments.m \
           $(DEST)/GenSfcDiv.m \
           $(DEST)/PlotMultiPanelSample.m \

@@ -130,16 +130,16 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 #LinePlot: CO_UP_S298_G10M5  SimTime Cfrac TsAll none PANEL:c@SST:@298K    NorthEast none CloudFrac_CO_S298_G10M5.jpg
 #LinePlot: CO_UP_S303_G10M5  SimTime Cfrac TsAll none PANEL:a@SST:@303K    NorthEast none CloudFrac_CO_S303_G10M5.jpg
 
-LinePlot: CO_UP_S293_G10M5_L  SimTime Cfrac TsAll none PANEL:e@SST:@293K    NorthEast none CloudFrac_CO_S293_G10M5_L.jpg
-LinePlot: CO_UP_S298_G10M5_L  SimTime Cfrac TsAll none PANEL:c@SST:@298K    NorthEast none CloudFrac_CO_S298_G10M5_L.jpg
-LinePlot: CO_UP_S303_G10M5_L  SimTime Cfrac TsAll none PANEL:a@SST:@303K    NorthEast none CloudFrac_CO_S303_G10M5_L.jpg
+#LinePlot: CO_UP_S293_G10M5_L  SimTime Cfrac TsAll none PANEL:e@SST:@293K    NorthEast none CloudFrac_CO_S293_G10M5_L.jpg
+#LinePlot: CO_UP_S298_G10M5_L  SimTime Cfrac TsAll none PANEL:c@SST:@298K    NorthEast none CloudFrac_CO_S298_G10M5_L.jpg
+#LinePlot: CO_UP_S303_G10M5_L  SimTime Cfrac TsAll none PANEL:a@SST:@303K    NorthEast none CloudFrac_CO_S303_G10M5_L.jpg
 
 #LinePlot: CO_UP_C0050_G10M5 SimTime Cfrac TsAll none PANEL:f@CCN:@50/cc    NorthEast none CloudFrac_CO_C50_G10M5.jpg
-LinePlot: CO_UP_C0100_G10M5 SimTime Cfrac TsAll none PANEL:f@CCN:@100/cc    NorthEast none CloudFrac_CO_C100_G10M5.jpg
-LinePlot: CO_UP_C0200_G10M5 SimTime Cfrac TsAll none PANEL:f@CCN:@200/cc    NorthEast none CloudFrac_CO_C200_G10M5.jpg
+#LinePlot: CO_UP_C0100_G10M5 SimTime Cfrac TsAll none PANEL:f@CCN:@100/cc    NorthEast none CloudFrac_CO_C100_G10M5.jpg
+#LinePlot: CO_UP_C0200_G10M5 SimTime Cfrac TsAll none PANEL:f@CCN:@200/cc    NorthEast none CloudFrac_CO_C200_G10M5.jpg
 #LinePlot: CO_UP_C0400_G10M5 SimTime Cfrac TsAll none PANEL:d@CCN:@400/cc   NorthEast none CloudFrac_CO_C400_G10M5.jpg
-LinePlot: CO_UP_C0800_G10M5 SimTime Cfrac TsAll none PANEL:d@CCN:@800/cc   NorthEast none CloudFrac_CO_C800_G10M5.jpg
-LinePlot: CO_UP_C1200_G10M5 SimTime Cfrac TsAll none PANEL:d@CCN:@1200/cc   NorthEast none CloudFrac_CO_C1200_G10M5.jpg
+#LinePlot: CO_UP_C0800_G10M5 SimTime Cfrac TsAll none PANEL:d@CCN:@800/cc   NorthEast none CloudFrac_CO_C800_G10M5.jpg
+#LinePlot: CO_UP_C1200_G10M5 SimTime Cfrac TsAll none PANEL:d@CCN:@1200/cc   NorthEast none CloudFrac_CO_C1200_G10M5.jpg
 #LinePlot: CO_UP_C1600_G10M5 SimTime Cfrac TsAll none PANEL:b@CCN:@1600/cc  NorthEast none CloudFrac_CO_C1600_G10M5.jpg
 
 #LinePlot: CG_UP_C0400_S298  SimTime Cfrac TsAll none PANEL:c  NorthEast none CloudFrac_CG_C400_S298.jpg
@@ -155,10 +155,14 @@ LinePlot: CO_UP_C1200_G10M5 SimTime Cfrac TsAll none PANEL:d@CCN:@1200/cc   Nort
 
 #LinePlot: CG_UP_C0400_S298  SimTime MaxCdepth TsAll none PANEL:f  NorthEast none CloudMaxDepth_CG_C400_S298.jpg
 
-### Buoyancy Flux profile
+### Horizontal domain cloud fraction 
 #LinePlot: CO_UP_S298_G10M5  HfracCloud Prof_Heights Prof_T12_T36 none PANEL:a@SST:@298K    NorthEast none HfracCloud_T12_T36_CO_S298_G10M5.jpg
 #LinePlot: CO_UP_C0400_G10M5 HfracCloud Prof_Heights Prof_T12_T36 none PANEL:b@CCN:@400/cc  NorthEast none HfracCloud_T12_T36_CO_C400_G10M5.jpg
 #LinePlot: CG_UP_C0400_S298  HfracCloud Prof_Heights Prof_T12_T36 none PANEL:c  NorthEast none BuoyFlux_T12_T36_CG_C400_S298.jpg
+
+LinePlot: CO_UP_S293_G10M5_ALL  HfracCloud_1p3 Prof_Heights Prof_T12_T36 none PANEL:a@SST:@293K    NorthEast none HfracCloud_T12_T36_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  HfracCloud_1p2 Prof_Heights Prof_T12_T36 none PANEL:a@SST:@298K    NorthEast none HfracCloud_T12_T36_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  HfracCloud_1p0 Prof_Heights Prof_T12_T36 none PANEL:a@SST:@303K    NorthEast none HfracCloud_T12_T36_CO_S303_G10M5_ALL.jpg
 
 ### Buoyancy Flux profile
 #LinePlot: CO_UP_S298_G10M5  BuoyFlux Prof_Heights Prof_T12_T36 none PANEL:c@SST:@298K  NorthEast none BuoyFlux_T12_T36_CO_S298_G10M5.jpg
@@ -970,6 +974,10 @@ PlotSet: CO_UP_S293_G10M5_L 4 z.atex.ccn0050.sst293.gcn10m5.1um 50/cc k - 0.0 z.
 PlotSet: CO_UP_S298_G10M5_L 4 z.atex.ccn0050.sst298.gcn10m5.1um 50/cc k - 0.0 z.atex.ccn0100.sst298.gcn10m5.1um 100/cc c - 0.0 z.atex.ccn0200.sst298.gcn10m5.1um 200/cc m - 0.0 z.atex.ccn0400.sst298.gcn10m5.1um 400/cc b - 0.0
 PlotSet: CO_UP_S303_G10M5_L 4 z.atex.ccn0050.sst303.gcn10m5.1um 50/cc k - 0.0 z.atex.ccn0100.sst303.gcn10m5.1um 100/cc c - 0.0 z.atex.ccn0200.sst303.gcn10m5.1um 200/cc m - 0.0 z.atex.ccn0400.sst303.gcn10m5.1um 400/cc b - 0.0
 
+PlotSet: CO_UP_S293_G10M5_ALL 7 z.atex.ccn0050.sst293.gcn10m5.1um 50/cc k - 0.0 z.atex.ccn0100.sst293.gcn10m5.1um 100/cc g - 0.0 z.atex.ccn0200.sst293.gcn10m5.1um 200/cc b - 0.0 z.atex.ccn0400.sst293.gcn10m5.1um 400/cc c - 0.0 z.atex.ccn0800.sst293.gcn10m5.1um 800/cc r - 0.0 z.atex.ccn1200.sst293.gcn10m5.1um 1200/cc y - 0.0 z.atex.ccn1600.sst293.gcn10m5.1um 1600/cc m - 0.0
+PlotSet: CO_UP_S298_G10M5_ALL 7 z.atex.ccn0050.sst298.gcn10m5.1um 50/cc k - 0.0 z.atex.ccn0100.sst298.gcn10m5.1um 100/cc g - 0.0 z.atex.ccn0200.sst298.gcn10m5.1um 200/cc b - 0.0 z.atex.ccn0400.sst298.gcn10m5.1um 400/cc c - 0.0 z.atex.ccn0800.sst298.gcn10m5.1um 800/cc r - 0.0 z.atex.ccn1200.sst298.gcn10m5.1um 1200/cc y - 0.0 z.atex.ccn1600.sst298.gcn10m5.1um 1600/cc m - 0.0
+PlotSet: CO_UP_S303_G10M5_ALL 7 z.atex.ccn0050.sst303.gcn10m5.1um 50/cc k - 0.0 z.atex.ccn0100.sst303.gcn10m5.1um 100/cc g - 0.0 z.atex.ccn0200.sst303.gcn10m5.1um 200/cc b - 0.0 z.atex.ccn0400.sst303.gcn10m5.1um 400/cc c - 0.0 z.atex.ccn0800.sst303.gcn10m5.1um 800/cc r - 0.0 z.atex.ccn1200.sst303.gcn10m5.1um 1200/cc y - 0.0 z.atex.ccn1600.sst303.gcn10m5.1um 1600/cc m - 0.0
+
 PlotSet: CG_UP_C0400_S298 3 z.atex.ccn0400.sst298.gcn10m0.3um 1/cc k - 0.0 z.atex.ccn0400.sst298.gcn10m2.3um 10e-2/cc c - 0.0 z.atex.ccn0400.sst298.gcn10m4.3um 10e-4/cc m - 0.0
 
 #### 1um GCCN median radius ####
@@ -1034,7 +1042,10 @@ PlotVar: SimTime t_coords TsAveragedData/hda_ctop_tempc Simulation@Time  hr  0 6
 
 PlotVar: Prof_Heights z_coords  DIAGS/buoy_flux_T12_T36 Height               km     0   4 1e-3
 
-PlotVar: HfracCloud      hfrac_cloud DIAGS/hfrac_cloud_T12_T36   Cloud@Fraction @     0 1 1
+PlotVar: HfracCloud_1p3      hfrac_cloud DIAGS/hfrac_cloud_T12_T36   Cloud@Fraction @     0 1.3 1
+PlotVar: HfracCloud_1p2      hfrac_cloud DIAGS/hfrac_cloud_T12_T36   Cloud@Fraction @     0 1.2 1
+PlotVar: HfracCloud_1p0      hfrac_cloud DIAGS/hfrac_cloud_T12_T36   Cloud@Fraction @     0 1.0 1
+
 
 PlotVar: BuoyFlux        BUOY_FLUX DIAGS/buoy_flux_T12_T36          Buoy@Flux cm^2@s^-^3     -1  15 1e4
 PlotVar: BuoyFlux_L0P01  BUOY_FLUX DIAGS/buoy_flux_lwp0p01_T12_T36  Buoy@Flux cm^2@s^-^3     -5  50 1e4
