@@ -10,16 +10,38 @@ montage -tile 1x1 -geometry ${Jsize}+2+100 \
  Figure1.jpg
 
 echo "Figure 2: Bar graphs, CF and ACC_PCP, CCN only"
-montage -tile 1x2 -geometry ${Jsize}+2+100 \
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
  cf_avg_bars.jpg \
  acc_pcp_bars.jpg \
+ cd_avg_bars.jpg \
+ pcprr_avg_bars.jpg \
  Figure2.jpg
 
-echo "Figure 3: Bar graphs, CF and ACC_PCP, CCN and GCCN"
+echo "Figure 3: Cloud Frac, Cloud, PCPRR, CCN only"
+montage -tile 1x3 -geometry ${Jsize}+2+100 \
+ Cloud_T12_T36_CO_S293_G10M5_ALL.jpg \
+ Cloud_T12_T36_CO_S298_G10M5_ALL.jpg \
+ Cloud_T12_T36_CO_S303_G10M5_ALL.jpg \
+ Figure3.jpg
+
+echo "Figure 4: BuoyFlux, Wvar, Wskew, CCN only"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ BuoyFlux_T12_T36_CO_S293_G10M5_ALL.jpg \
+ Wvar_T12_T36_CO_S293_G10M5_ALL.jpg \
+ Wskew_T12_T36_CO_S293_G10M5_ALL.jpg \
+ BuoyFlux_T12_T36_CO_S298_G10M5_ALL.jpg \
+ Wvar_T12_T36_CO_S298_G10M5_ALL.jpg \
+ Wskew_T12_T36_CO_S298_G10M5_ALL.jpg \
+ BuoyFlux_T12_T36_CO_S303_G10M5_ALL.jpg \
+ Wvar_T12_T36_CO_S303_G10M5_ALL.jpg \
+ Wskew_T12_T36_CO_S303_G10M5_ALL.jpg \
+ Figure4.jpg
+
+echo "Figure 5: Bar graphs, CF and ACC_PCP, CCN and GCCN"
 montage -tile 1x2 -geometry ${Jsize}+2+100 \
  cf_avg_bars_gccn.jpg \
  acc_pcp_bars_gccn.jpg \
- Figure3.jpg
+ Figure5.jpg
 
 ### echo "Figure 3: Time average HfracCloud, BuoyFlux, Wvar, Wskew, CCN only"
 ### montage -tile 2x4 -geometry ${Jsize}+2+100 \
