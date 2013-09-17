@@ -160,14 +160,23 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 #LinePlot: CO_UP_C0400_G10M5 HfracCloud Prof_Heights Prof_T12_T36 none PANEL:b@CCN:@400/cc  NorthEast none HfracCloud_T12_T36_CO_C400_G10M5.jpg
 #LinePlot: CG_UP_C0400_S298  HfracCloud Prof_Heights Prof_T12_T36 none PANEL:c  NorthEast none BuoyFlux_T12_T36_CG_C400_S298.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL  HfracCloud_1p3 Prof_Heights Prof_T12_T36 none PANEL:a@SST:@293K    NorthEast none HfracCloud_T12_T36_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL  HfracCloud_1p2 Prof_Heights Prof_T12_T36 none PANEL:a@SST:@298K    NorthEast none HfracCloud_T12_T36_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL  HfracCloud_1p0 Prof_Heights Prof_T12_T36 none PANEL:a@SST:@303K    NorthEast none HfracCloud_T12_T36_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  HfracCloud_293 Prof_Heights Prof_T12_T36 none PANEL:a@SST:@293K    NorthEast none HfracCloud_T12_T36_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  HfracCloud_298 Prof_Heights Prof_T12_T36 none PANEL:d@SST:@298K    NorthEast none HfracCloud_T12_T36_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  HfracCloud_303 Prof_Heights Prof_T12_T36 none PANEL:g@SST:@303K    NorthEast none HfracCloud_T12_T36_CO_S303_G10M5_ALL.jpg
+
+### Cloud mass profile
+LinePlot: CO_UP_S293_G10M5_ALL  Cloud_293 Prof_Heights Prof_T12_T36 none PANEL:b@SST:@293K    NorthEast none Cloud_T12_T36_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  Cloud_298 Prof_Heights Prof_T12_T36 none PANEL:e@SST:@298K    NorthEast none Cloud_T12_T36_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  Cloud_303 Prof_Heights Prof_T12_T36 none PANEL:h@SST:@303K    NorthEast none Cloud_T12_T36_CO_S303_G10M5_ALL.jpg
 
 ### Buoyancy Flux profile
 #LinePlot: CO_UP_S298_G10M5  BuoyFlux Prof_Heights Prof_T12_T36 none PANEL:c@SST:@298K  NorthEast none BuoyFlux_T12_T36_CO_S298_G10M5.jpg
 #LinePlot: CO_UP_C0400_G10M5 BuoyFlux Prof_Heights Prof_T12_T36 none PANEL:d@CCN:@400/cc  NorthEast none BuoyFlux_T12_T36_CO_C400_G10M5.jpg
 #LinePlot: CG_UP_C0400_S298  BuoyFlux Prof_Heights Prof_T12_T36 none PANEL:c  NorthEast none BuoyFlux_T12_T36_CG_C400_S298.jpg
+
+#LinePlot: CO_UP_S293_G10M5_ALL  BuoyFlux_293 Prof_Heights Prof_T12_T36 none PANEL:a@SST:@293K  NorthEast none BuoyFlux_T12_T36_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL  BuoyFlux_298 Prof_Heights Prof_T12_T36 none PANEL:e@SST:@298K  NorthEast none BuoyFlux_T12_T36_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL  BuoyFlux_303 Prof_Heights Prof_T12_T36 none PANEL:g@SST:@303K  NorthEast none BuoyFlux_T12_T36_CO_S303_G10M5_ALL.jpg
 
 #LinePlot: CO_UP_S298_G10M5  BuoyFlux_L0P01 Prof_Heights Prof_T12_T36 none PANEL:a  NorthEast none BuoyFlux_L0P01_T12_T36_CO_S298_G10M5.jpg
 #LinePlot: CO_UP_C0400_G10M5 BuoyFlux_L0P01 Prof_Heights Prof_T12_T36 none PANEL:b  NorthEast none BuoyFlux_L0P01_T12_T36_CO_C400_G10M5.jpg
@@ -186,6 +195,10 @@ LinePlot: CO_UP_S303_G10M5_ALL  HfracCloud_1p0 Prof_Heights Prof_T12_T36 none PA
 #LinePlot: CO_UP_C0400_G10M5 Wvar Prof_Heights Prof_T12_T36 none PANEL:f@CCN:@400/cc  NorthWest none Wvar_T12_T36_CO_C400_G10M5.jpg
 #LinePlot: CG_UP_C0400_S298  Wvar Prof_Heights Prof_T12_T36 none PANEL:f  NorthWest none Wvar_T12_T36_CG_C400_S298.jpg
 
+#LinePlot: CO_UP_S293_G10M5_ALL  Wvar_293 Prof_Heights Prof_T12_T36 none PANEL:b@SST:@293K  NorthWest none Wvar_T12_T36_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL  Wvar_298 Prof_Heights Prof_T12_T36 none PANEL:e@SST:@298K  NorthWest none Wvar_T12_T36_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL  Wvar_303 Prof_Heights Prof_T12_T36 none PANEL:h@SST:@303K  NorthWest none Wvar_T12_T36_CO_S303_G10M5_ALL.jpg
+
 #LinePlot: CO_UP_S298_G10M5  Wvar_L0P01 Prof_Heights Prof_T12_T36 none PANEL:d  NorthWest none Wvar_L0P01_T12_T36_CO_S298_G10M5.jpg
 #LinePlot: CO_UP_C0400_G10M5 Wvar_L0P01 Prof_Heights Prof_T12_T36 none PANEL:e  NorthWest none Wvar_L0P01_T12_T36_CO_C400_G10M5.jpg
 #LinePlot: CG_UP_C0400_S298  Wvar_L0P01 Prof_Heights Prof_T12_T36 none PANEL:f  NorthWest none Wvar_L0P01_T12_T36_CG_C400_S298.jpg
@@ -202,6 +215,10 @@ LinePlot: CO_UP_S303_G10M5_ALL  HfracCloud_1p0 Prof_Heights Prof_T12_T36 none PA
 #LinePlot: CO_UP_S298_G10M5  Wskew Prof_Heights Prof_T12_T36 none PANEL:g@SST:@298K  NorthWest none Wskew_T12_T36_CO_S298_G10M5.jpg
 #LinePlot: CO_UP_C0400_G10M5 Wskew Prof_Heights Prof_T12_T36 none PANEL:h@CCN:@400/cc  NorthWest none Wskew_T12_T36_CO_C400_G10M5.jpg
 #LinePlot: CG_UP_C0400_S298  Wskew Prof_Heights Prof_T12_T36 none PANEL:i  NorthWest none Wskew_T12_T36_CG_C400_S298.jpg
+
+#LinePlot: CO_UP_S293_G10M5_ALL  Wskew_293 Prof_Heights Prof_T12_T36 none PANEL:c@SST:@293K  NorthWest none Wskew_T12_T36_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL  Wskew_298 Prof_Heights Prof_T12_T36 none PANEL:f@SST:@298K  NorthWest none Wskew_T12_T36_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL  Wskew_303 Prof_Heights Prof_T12_T36 none PANEL:i@SST:@303K  NorthWest none Wskew_T12_T36_CO_S303_G10M5_ALL.jpg
 
 #LinePlot: CO_UP_S298_G10M5  Wskew_L0P01 Prof_Heights Prof_T12_T36 none PANEL:d  NorthWest none Wskew_L0P01_T12_T36_CO_S298_G10M5.jpg
 #LinePlot: CO_UP_C0400_G10M5 Wskew_L0P01 Prof_Heights Prof_T12_T36 none PANEL:e  NorthWest none Wskew_L0P01_T12_T36_CO_C400_G10M5.jpg
@@ -1042,22 +1059,34 @@ PlotVar: SimTime t_coords TsAveragedData/hda_ctop_tempc Simulation@Time  hr  0 6
 
 PlotVar: Prof_Heights z_coords  DIAGS/buoy_flux_T12_T36 Height               km     0   4 1e-3
 
-PlotVar: HfracCloud_1p3      hfrac_cloud DIAGS/hfrac_cloud_T12_T36   Cloud@Fraction @     0 1.3 1
-PlotVar: HfracCloud_1p2      hfrac_cloud DIAGS/hfrac_cloud_T12_T36   Cloud@Fraction @     0 1.2 1
-PlotVar: HfracCloud_1p0      hfrac_cloud DIAGS/hfrac_cloud_T12_T36   Cloud@Fraction @     0 1.0 1
+PlotVar: HfracCloud_293      hfrac_cloud DIAGS/hfrac_cloud_T12_T36   Cloud@Fraction @     0 1.3 1
+PlotVar: HfracCloud_298      hfrac_cloud DIAGS/hfrac_cloud_T12_T36   Cloud@Fraction @     0 1.2 1
+PlotVar: HfracCloud_303      hfrac_cloud DIAGS/hfrac_cloud_T12_T36   Cloud@Fraction @     0 0.8 1
 
+PlotVar: Cloud_293      cloud DIAGS/cloud_profile_T12_T36   q_c g@kg^-^1     0 0.4 1
+PlotVar: Cloud_298      cloud DIAGS/cloud_profile_T12_T36   q_c g@kg^-^1     0 0.4 1
+PlotVar: Cloud_303      cloud DIAGS/cloud_profile_T12_T36   q_c g@kg^-^1     0 0.4 1
 
-PlotVar: BuoyFlux        BUOY_FLUX DIAGS/buoy_flux_T12_T36          Buoy@Flux cm^2@s^-^3     -1  15 1e4
+PlotVar: BuoyFlux_293    BUOY_FLUX DIAGS/buoy_flux_T12_T36          Buoy@Flux cm^2@s^-^3     -1   5 1e4
+PlotVar: BuoyFlux_298    BUOY_FLUX DIAGS/buoy_flux_T12_T36          Buoy@Flux cm^2@s^-^3     -1  12 1e4
+PlotVar: BuoyFlux_303    BUOY_FLUX DIAGS/buoy_flux_T12_T36          Buoy@Flux cm^2@s^-^3     -1  15 1e4
+
 PlotVar: BuoyFlux_L0P01  BUOY_FLUX DIAGS/buoy_flux_lwp0p01_T12_T36  Buoy@Flux cm^2@s^-^3     -5  50 1e4
 PlotVar: BuoyFlux_L0P10  BUOY_FLUX DIAGS/buoy_flux_lwp0p10_T12_T36  Buoy@Flux cm^2@s^-^3    -50 150 1e4
 PlotVar: BuoyFlux_L1P00  BUOY_FLUX DIAGS/buoy_flux_lwp1p00_T12_T36  Buoy@Flux cm^2@s^-^3   -100 400 1e4
 
-PlotVar: Wvar            W2        DIAGS/w_moments_T12_T36          <w'w'>    m^2@s^-^2    -0.1  0.1   1
+PlotVar: Wvar_293        W2        DIAGS/w_moments_T12_T36          <w'w'>    m^2@s^-^2    -0.01  0.01   1
+PlotVar: Wvar_298        W2        DIAGS/w_moments_T12_T36          <w'w'>    m^2@s^-^2    -0.05  0.05   1
+PlotVar: Wvar_303        W2        DIAGS/w_moments_T12_T36          <w'w'>    m^2@s^-^2    -0.10  0.15  1
+
 PlotVar: Wvar_L0P01      W2        DIAGS/w_moments_lwp0p01_T12_T36  <w'w'>    m^2@s^-^2   -0.25 0.25   1
 PlotVar: Wvar_L0P10      W2        DIAGS/w_moments_lwp0p10_T12_T36  <w'w'>    m^2@s^-^2    -1.5  1.5   1
 PlotVar: Wvar_L1P00      W2        DIAGS/w_moments_lwp1p00_T12_T36  <w'w'>    m^2@s^-^2    -5.0  5.0   1
 
-PlotVar: Wskew           W3        DIAGS/w_moments_T12_T36          <w'w'w'>  m^3@s^-^3    -0.3  0.3   1
+PlotVar: Wskew_293       W3        DIAGS/w_moments_T12_T36          <w'w'w'>  m^3@s^-^3    -0.01  0.01   1
+PlotVar: Wskew_298       W3        DIAGS/w_moments_T12_T36          <w'w'w'>  m^3@s^-^3    -0.20  0.20   1
+PlotVar: Wskew_303       W3        DIAGS/w_moments_T12_T36          <w'w'w'>  m^3@s^-^3    -0.30  0.50   1
+
 PlotVar: Wskew_L0P01     W3        DIAGS/w_moments_lwp0p01_T12_T36  <w'w'w'>  m^3@s^-^3    -0.7  0.7   1
 PlotVar: Wskew_L0P10     W3        DIAGS/w_moments_lwp0p10_T12_T36  <w'w'w'>  m^3@s^-^3    -5.0  5.0   1
 PlotVar: Wskew_L1P00     W3        DIAGS/w_moments_lwp1p00_T12_T36  <w'w'w'>  m^3@s^-^3   -10.0 10.0   1
