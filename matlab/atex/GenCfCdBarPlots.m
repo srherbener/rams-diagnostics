@@ -24,6 +24,13 @@ CCN  = squeeze(hdf5read(InFile, 'ccn'));
 SST  = squeeze(hdf5read(InFile, 'sst'));
 GCCN = squeeze(hdf5read(InFile, 'gccn'));
 
+% Read in histograms and convert to single values using ReduceHists
+PrFile = sprintf('%s/hist_data.h5', Ddir);
+PR_HIST = squeeze(hdf5read(PrFile, 'pcprr_hist'));
+PR_BINS = squeeze(hdf5read(PrFile, 'pcprr_bins'));
+PR_AVG = ReduceHists(PR_HIST, 1, PR_BINS, 'wtmean');
+
+    
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % First look at the GCCN = 1e-5 (essentially off, especially since the mean radius was small at 1um)
 % Make vertical bar plots where the SST values are color coded bars, and the different CCN values go along the x-axis
@@ -40,6 +47,7 @@ CDE = zeros([ Nsel 3 ]);
 CFA = zeros([ Nsel 3 ]);
 CDA = zeros([ Nsel 3 ]);
 ACP = zeros([ Nsel 3 ]);
+PRA = zeros([ Nsel 3 ]);
 
 CFS(:,1) = CF_START(Select);
 CDS(:,1) = CD_START(Select);
@@ -48,6 +56,7 @@ CDE(:,1) = CD_END(Select);
 CFA(:,1) = CF_AVG(Select);
 CDA(:,1) = CD_AVG(Select);
 ACP(:,1) = ACC_PCP(Select);
+PRA(:,1) = PR_AVG(Select);
 
 Select = SST == 298 & GCCN == 1e-5;
 CFS(:,2) = CF_START(Select);
@@ -57,6 +66,7 @@ CDE(:,2) = CD_END(Select);
 CFA(:,2) = CF_AVG(Select);
 CDA(:,2) = CD_AVG(Select);
 ACP(:,2) = ACC_PCP(Select);
+PRA(:,2) = PR_AVG(Select);
 
 Select = SST == 303 & GCCN == 1e-5;
 CFS(:,3) = CF_START(Select);
@@ -66,6 +76,7 @@ CDE(:,3) = CD_END(Select);
 CFA(:,3) = CF_AVG(Select);
 CDA(:,3) = CD_AVG(Select);
 ACP(:,3) = ACC_PCP(Select);
+PRA(:,3) = PR_AVG(Select);
 
 % Got x and y data for the bar plot. Now set up the plotting.
 iaxis = 1;
@@ -96,6 +107,7 @@ Xlabel = 'N_c (#/cc)';
 CFlabel = 'Cloud Fraction';
 CDlabel = 'Max Cloud Depth (m)';
 APlabel = 'Accum Precip (m)';
+PRlabel = 'Avg. Precip Rate (mm/h)';
 
 CFSfile = sprintf('%s/cf_start_bars.jpg', Pdir);
 CFEfile = sprintf('%s/cf_end_bars.jpg', Pdir);
@@ -104,6 +116,7 @@ CDEfile = sprintf('%s/cd_end_bars.jpg', Pdir);
 CFAfile = sprintf('%s/cf_avg_bars.jpg', Pdir);
 CDAfile = sprintf('%s/cd_avg_bars.jpg', Pdir);
 ACPfile = sprintf('%s/acc_pcp_bars.jpg', Pdir);
+PRAfile = sprintf('%s/pcprr_avg_bars.jpg', Pdir);
 
 % Make six plots: CD start end avg, CF start end avg
 % PlotBarSet( X, Y, Ptitle, Pmarkers, Xlabel, Ylabel, Bcolors, LegText, LegLoc, AxisProps, OutFile )
@@ -126,6 +139,11 @@ AxisProps(iaxis).Name = 'Ylim';
 AxisProps(iaxis).Val  = [ 0 400 ];
 
 PlotBarSet(X, ACP, '',         { 'a' }, Xlabel, APlabel, Bcolors, LegText, 'NorthWest', AxisProps, ACPfile);
+
+AxisProps(iaxis).Name = 'Ylim';
+AxisProps(iaxis).Val  = [ 0 0.3 ];
+
+PlotBarSet(X, PRA, '',         { 'a' }, Xlabel, PRlabel, Bcolors, LegText, 'NorthWest', AxisProps, PRAfile);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Next look at the GCCN impact (mean radius, 3um)

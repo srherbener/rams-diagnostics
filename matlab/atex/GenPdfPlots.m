@@ -11,15 +11,15 @@ Pdir = Config.PlotDir;
 % Variables are all linear arrays
 %   ith entry has corresponding SST(i), CCN(i), GCCN(i) values associated with it
 
-InFile = sprintf('%s/pdf_data.h5', Ddir);
-PCPRR_PDF  = squeeze(hdf5read(InFile, 'pcprr_pdf'));
-PCPRR_BINS = squeeze(hdf5read(InFile, 'pcprr_bins'));
+InFile = sprintf('%s/hist_data.h5', Ddir);
+PR_HIST  = squeeze(hdf5read(InFile, 'pcprr_hist'));
+PR_BINS  = squeeze(hdf5read(InFile, 'pcprr_bins'));
+ALB_HIST = squeeze(hdf5read(InFile, 'albedo_hist'));
+ALB_BINS = squeeze(hdf5read(InFile, 'albedo_bins'));
 
 CCN  = squeeze(hdf5read(InFile, 'ccn'));
 SST  = squeeze(hdf5read(InFile, 'sst'));
 GCCN = squeeze(hdf5read(InFile, 'gccn'));
-
-Nb = length(PCPRR_BINS);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % First look at the GCCN = 1e-5 (essentially off, especially since the mean radius was small at 1um)
@@ -27,28 +27,28 @@ Nb = length(PCPRR_BINS);
 
 Select = SST == 293 & GCCN == 1e-5; % Sel has 1's where we want to select data out of arrays, zeros elsewhere
 Nsel = sum(Select);
-PDF_PR293 = PCPRR_PDF(:,Select);
+PDF_PR293 = PR_HIST(:,Select);
+PDF_ALB293 = ALB_HIST(:,Select);
 
 Select = SST == 298 & GCCN == 1e-5;
-PDF_PR298 = PCPRR_PDF(:,Select);
+PDF_PR298 = PR_HIST(:,Select);
+PDF_ALB298 = ALB_HIST(:,Select);
 
 Select = SST == 303 & GCCN == 1e-5;
-PDF_PR303 = PCPRR_PDF(:,Select);
+PDF_PR303 = PR_HIST(:,Select);
+PDF_ALB303 = ALB_HIST(:,Select);
 
-% Got x and y data for the bar plot. Now set up the plotting.
-iaxis = 1;
+for i = 1:Nsel
+  PDF_PR293(:,i) = PDF_PR293(:,i) ./ sum(PDF_PR293(:,i));
+  PDF_PR298(:,i) = PDF_PR298(:,i) ./ sum(PDF_PR298(:,i));
+  PDF_PR303(:,i) = PDF_PR303(:,i) ./ sum(PDF_PR303(:,i));
 
-% Large font
-AxisProps(iaxis).Name = 'FontSize';
-AxisProps(iaxis).Val  = 20;
-iaxis = iaxis + 1;
+  PDF_ALB293(:,i) = PDF_ALB293(:,i) ./ sum(PDF_ALB293(:,i));
+  PDF_ALB298(:,i) = PDF_ALB298(:,i) ./ sum(PDF_ALB298(:,i));
+  PDF_ALB303(:,i) = PDF_ALB303(:,i) ./ sum(PDF_ALB303(:,i));
+end
 
-% log scale on x-axis
-AxisProps(iaxis).Name = 'Xscale';
-AxisProps(iaxis).Val  = 'log';
-iaxis = iaxis + 1;
-
-% Put the actual CCN values on the tick marks for the x-axis.
+% Legend
 X_CCN = CCN(Select);
 for i = 1:Nsel
   LegText{i} = sprintf('%d/cc', X_CCN(i));
@@ -76,7 +76,8 @@ Lstyles = {
 
 Gscales = zeros([ Nsel 1 ]);
 
-% Misc plotting
+% Plot2dSet( X, Y, Ptitle, Pmarkers, Xlabel, Ylabel, Lcolors, Lstyles,
+%            Gscales, LegText, LegLoc, AxisProps, AddMeas, OutFile )
 
 Xlabel = 'Precip Rate (mm/h)';
 Ylabel = '';
@@ -85,26 +86,62 @@ PR293file = sprintf('%s/pcprr_pdf_S293.jpg', Pdir);
 PR298file = sprintf('%s/pcprr_pdf_S298.jpg', Pdir);
 PR303file = sprintf('%s/pcprr_pdf_S303.jpg', Pdir);
 
-% Make six plots: CD start end avg, CF start end avg
-% Plot2dSet( X, Y, Ptitle, Pmarkers, Xlabel, Ylabel, Lcolors, Lstyles,
-%            Gscales, LegText, LegLoc, AxisProps, AddMeas, OutFile )
+AxisProps(1).Name = 'FontSize';
+AxisProps(1).Val  = 35;
 
-AxisProps(iaxis).Name = 'Xlim';
-AxisProps(iaxis).Val  = [ 0.001 100 ];
-iaxis = iaxis + 1;
+Xvals = [ 0.001 0.01 0.1 1 10 100 ];
+AxisProps(2).Name = 'Xtick';
+AxisProps(2).Val = Xvals;
 
-AxisProps(iaxis).Name = 'Ylim';
-AxisProps(iaxis).Val  = [ 0 0.035 ];
+AxisProps(3).Name = 'Xscale';
+AxisProps(3).Val  = 'log';
+
+AxisProps(4).Name = 'Xlim';
+AxisProps(4).Val  = [ 0.001 100 ];
+
+AxisProps(5).Name = 'Ylim';
+AxisProps(5).Val  = [ 0 0.035 ];
 
 
-BINS = repmat(PCPRR_BINS', [ Nsel 1 ]);
+BINS = repmat(PR_BINS', [ Nsel 1 ]);
 
-Plot2dSet(BINS, PDF_PR293', 'SST: 293K', { 'c' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+Plot2dSet(BINS, PDF_PR293', 'SST: 293K', { 'b' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
          Gscales, LegText, 'NorthEast', AxisProps, 'none', PR293file);
-Plot2dSet(BINS, PDF_PR298', 'SST: 298K', { 'f' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+Plot2dSet(BINS, PDF_PR298', 'SST: 298K', { 'e' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
          Gscales, LegText, 'NorthEast', AxisProps, 'none', PR298file);
-Plot2dSet(BINS, PDF_PR303', 'SST: 303K', { 'i' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+Plot2dSet(BINS, PDF_PR303', 'SST: 303K', { 'h' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
          Gscales, LegText, 'NorthEast', AxisProps, 'none', PR303file);
+
+
+
+% Albedo plots
+Xlabel = 'Albedo';
+Ylabel = '';
+
+ALB293file = sprintf('%s/albedo_pdf_S293.jpg', Pdir);
+ALB298file = sprintf('%s/albedo_pdf_S298.jpg', Pdir);
+ALB303file = sprintf('%s/albedo_pdf_S303.jpg', Pdir);
+
+clear AxisProps;
+
+AxisProps(1).Name = 'FontSize';
+AxisProps(1).Val  = 35;
+
+AxisProps(2).Name = 'Xlim';
+AxisProps(2).Val  = [ 0 1 ];
+
+AxisProps(3).Name = 'Ylim';
+AxisProps(3).Val  = [ 0 0.2 ];
+
+
+BINS = repmat(ALB_BINS', [ Nsel 1 ]);
+
+Plot2dSet(BINS, PDF_ALB293', 'SST: 293K', { 'c' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+         Gscales, LegText, 'NorthEast', AxisProps, 'none', ALB293file);
+Plot2dSet(BINS, PDF_ALB298', 'SST: 298K', { 'f' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+         Gscales, LegText, 'NorthEast', AxisProps, 'none', ALB298file);
+Plot2dSet(BINS, PDF_ALB303', 'SST: 303K', { 'i' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+         Gscales, LegText, 'NorthEast', AxisProps, 'none', ALB303file);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Next look at the GCCN impact (mean radius, 3um)
