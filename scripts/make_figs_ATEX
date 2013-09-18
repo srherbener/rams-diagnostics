@@ -83,6 +83,26 @@ montage -tile 3x3 -geometry ${Jsize}+2+100 \
  Wskew_T12_T36_CG_C1600_S298.jpg \
  Figure8.jpg
 
+echo "Figure 9: Albedo, sfc conv examples, C50, S293 CCN only"
+montage -tile 3x2 -geometry ${Jsize}+2+100 \
+ Albedo_T12_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+ Albedo_T24_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+ Albedo_T36_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+ SfcDiv_T12_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+ SfcDiv_T24_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+ SfcDiv_T36_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+ Figure9.jpg
+
+echo "Figure 10: Albedo, sfc conv examples, C1600, S303 CCN only"
+montage -tile 3x2 -geometry ${Jsize}+2+100 \
+ Albedo_T12_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+ Albedo_T24_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+ Albedo_T36_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+ SfcDiv_T12_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+ SfcDiv_T24_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+ SfcDiv_T36_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+ Figure10.jpg
+
 ### echo "Figure 4: Time snapshots albedo and sfc convergence S293, C400, CCN only"
 ### montage -tile 3x2 -geometry ${Jsize}+2+100 \
 ###  Albedo_T12_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
