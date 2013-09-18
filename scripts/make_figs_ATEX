@@ -9,22 +9,34 @@ montage -tile 1x1 -geometry ${Jsize}+2+100 \
  InitialSounding.jpg \
  Figure1.jpg
 
-echo "Figure 2: Bar graphs, CF and ACC_PCP, CCN only"
+echo "Figure 2: Aerosol profiles"
+montage -tile 1x2 -geometry ${Jsize}+2+100 \
+ InitialCcnProfile.jpg \
+ InitialGccnProfile.jpg \
+ Figure2.jpg
+
+echo "Figure 3: Bar graphs, CF and ACC_PCP, CCN only"
 montage -tile 2x2 -geometry ${Jsize}+2+100 \
  cf_avg_bars.jpg \
  acc_pcp_bars.jpg \
  cd_avg_bars.jpg \
  pcprr_avg_bars.jpg \
- Figure2.jpg
-
-echo "Figure 3: Cloud Frac, Cloud, PCPRR, CCN only"
-montage -tile 1x3 -geometry ${Jsize}+2+100 \
- Cloud_T12_T36_CO_S293_G10M5_ALL.jpg \
- Cloud_T12_T36_CO_S298_G10M5_ALL.jpg \
- Cloud_T12_T36_CO_S303_G10M5_ALL.jpg \
  Figure3.jpg
 
-echo "Figure 4: BuoyFlux, Wvar, Wskew, CCN only"
+echo "Figure 4: Cloud Frac, Cloud, PCPRR, CCN only"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ Cloud_T12_T36_CO_S293_G10M5_ALL.jpg \
+ copt_thick_pdf_S293.jpg \
+ pcprr_pdf_S293.jpg \
+ Cloud_T12_T36_CO_S298_G10M5_ALL.jpg \
+ copt_thick_pdf_S298.jpg \
+ pcprr_pdf_S298.jpg \
+ Cloud_T12_T36_CO_S303_G10M5_ALL.jpg \
+ copt_thick_pdf_S303.jpg \
+ pcprr_pdf_S303.jpg \
+ Figure4.jpg
+
+echo "Figure 5: BuoyFlux, Wvar, Wskew, CCN only"
 montage -tile 3x3 -geometry ${Jsize}+2+100 \
  BuoyFlux_T12_T36_CO_S293_G10M5_ALL.jpg \
  Wvar_T12_T36_CO_S293_G10M5_ALL.jpg \
@@ -35,26 +47,42 @@ montage -tile 3x3 -geometry ${Jsize}+2+100 \
  BuoyFlux_T12_T36_CO_S303_G10M5_ALL.jpg \
  Wvar_T12_T36_CO_S303_G10M5_ALL.jpg \
  Wskew_T12_T36_CO_S303_G10M5_ALL.jpg \
- Figure4.jpg
-
-echo "Figure 5: Bar graphs, CF and ACC_PCP, CCN and GCCN"
-montage -tile 1x2 -geometry ${Jsize}+2+100 \
- cf_avg_bars_gccn.jpg \
- acc_pcp_bars_gccn.jpg \
  Figure5.jpg
 
-### echo "Figure 3: Time average HfracCloud, BuoyFlux, Wvar, Wskew, CCN only"
-### montage -tile 2x4 -geometry ${Jsize}+2+100 \
-###  HfracCloud_T12_T36_CO_S298_G10M5.jpg \
-###  HfracCloud_T12_T36_CO_C400_G10M5.jpg \
-###  BuoyFlux_T12_T36_CO_S298_G10M5.jpg \
-###  BuoyFlux_T12_T36_CO_C400_G10M5.jpg \
-###  Wvar_T12_T36_CO_S298_G10M5.jpg \
-###  Wvar_T12_T36_CO_C400_G10M5.jpg \
-###  Wskew_T12_T36_CO_S298_G10M5.jpg \
-###  Wskew_T12_T36_CO_C400_G10M5.jpg \
-###  Figure3.jpg
-### 
+echo "Figure 6: Bar graphs, CF and ACC_PCP, CCN and GCCN"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ cf_avg_bars_gccn.jpg \
+ acc_pcp_bars_gccn.jpg \
+ cd_avg_bars_gccn.jpg \
+ pcprr_avg_bars_gccn.jpg \
+ Figure6.jpg
+
+echo "Figure 7: Cloud Frac, Cloud, PCPRR, CCN and GCCN"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ Cloud_T12_T36_CG_C50_S298.jpg \
+ copt_thick_pdf_C50_S298.jpg \
+ pcprr_pdf_C50_S298.jpg \
+ Cloud_T12_T36_CG_C400_S298.jpg \
+ copt_thick_pdf_C400_S298.jpg \
+ pcprr_pdf_C400_S298.jpg \
+ Cloud_T12_T36_CG_C1600_S298.jpg \
+ copt_thick_pdf_C1600_S298.jpg \
+ pcprr_pdf_C1600_S298.jpg \
+ Figure7.jpg
+
+echo "Figure 8: BuoyFlux, Wvar, Wskew, CCN and GCCN"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ BuoyFlux_T12_T36_CG_C50_S298.jpg \
+ Wvar_T12_T36_CG_C50_S298.jpg \
+ Wskew_T12_T36_CG_C50_S298.jpg \
+ BuoyFlux_T12_T36_CG_C400_S298.jpg \
+ Wvar_T12_T36_CG_C400_S298.jpg \
+ Wskew_T12_T36_CG_C400_S298.jpg \
+ BuoyFlux_T12_T36_CG_C1600_S298.jpg \
+ Wvar_T12_T36_CG_C1600_S298.jpg \
+ Wskew_T12_T36_CG_C1600_S298.jpg \
+ Figure8.jpg
+
 ### echo "Figure 4: Time snapshots albedo and sfc convergence S293, C400, CCN only"
 ### montage -tile 3x2 -geometry ${Jsize}+2+100 \
 ###  Albedo_T12_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
