@@ -12,6 +12,23 @@ end
 CCN = [ 50 100 200 400 800 1200 1600 ];
 GCCN = [ 1e-5 1e-4 1e-2 1 ];
 
+ClegText = {
+    '50/cc'
+    '100/cc'
+    '200/cc'
+    '400/cc'
+    '800/cc'
+    '1200/cc'
+    '1600/cc'
+    };
+
+GlegText = {
+    '10^-^5/cc'
+    '10^-^4/cc'
+    '10^-^2/cc'
+    '1/cc'
+    };
+
 Z = 50:100:4950;
 
 Cnmin = 50;
@@ -23,6 +40,8 @@ Nz = length(Z);
 
 C_PROFS = zeros(Nz, Nc);
 G_PROFS = zeros(Nz, Ng);
+
+Fsize = 35;
 
 for i = 1:Nc
   C_PROFS(:,i) = GenRamsProfile(Z, Cnmin, CCN(i), 1, 4000);
@@ -38,8 +57,15 @@ end
 Fig = figure;
 
 plot(C_PROFS, Z, 'LineWidth', 3);
+set(gca, 'FontSize', Fsize);
+xlabel('Nc (#/cc)');
+ylabel('Height (m)');
 
-OutFile = sprintf('%/InitialCcnProfile.jpg', Pdir);
+legend(ClegText, 'Location', 'NorthEast', 'FontSize', 20);
+legend boxoff;
+
+OutFile = sprintf('%s/InitialCcnProfile.jpg', Pdir);
+fprintf('Writing file: %s\n', OutFile);
 saveas(Fig, OutFile);
 
 close(Fig);
@@ -47,20 +73,25 @@ close(Fig);
 % GCCN profiles
 Fig = figure;
 
-plot(G_PROFS, Z, 'LineWidth', 3);
+semilogx(G_PROFS, Z, 'LineWidth', 3);
+set(gca, 'FontSize', Fsize);
+set(gca, 'Xtick', [ 1e-5 1e-3 1e-1 ]);
+xlabel('Ng (#/cc)');
+ylabel('Height (m)');
+xlim([ 1e-6 1 ]);
+ylim([ 0 7000 ]);
 
-OutFile = sprintf('%/InitialGccnProfile.jpg', Pdir);
+legend(GlegText, 'Location', 'NorthWest', 'Orientation', 'horizontal', 'FontSize', 20);
+legend boxoff;
+
+OutFile = sprintf('%s/InitialGccnProfile.jpg', Pdir);
+fprintf('Writing file: %s\n', OutFile);
 saveas(Fig, OutFile);
 
 close(Fig);
 
 end
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% GenRamsProfile() 
-%
-% This function will emulate the code in RAMS that creates
-% the initial vertical profiles for the aerosols.
 
 function [ Prof ] = GenRamsProfile(Z, Nmin, Nmax, Kmin, Zmax)
 % GenRamsProfile emulate the code in RAMS that generates the vertical profile for aerosol concentration
@@ -77,7 +108,7 @@ for k = 1:Nz
   if (k <= Kmin)
     Prof(k) = Nmax;
   end
-  if ((k > Kmin) & (Z(k) <= Zmax))
+  if ((k > Kmin) && (Z(k) <= Zmax))
     Prof(k) = max(Nmin, Nmax * (1 - (Z(k)/Zmax)));
   end
   if (Z(k) > Zmax)

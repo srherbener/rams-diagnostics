@@ -16,6 +16,8 @@ PR_HIST  = squeeze(hdf5read(InFile, 'pcprr_hist'));
 PR_BINS  = squeeze(hdf5read(InFile, 'pcprr_bins'));
 ALB_HIST = squeeze(hdf5read(InFile, 'albedo_hist'));
 ALB_BINS = squeeze(hdf5read(InFile, 'albedo_bins'));
+COT_HIST = squeeze(hdf5read(InFile, 'copt_thick_hist'));
+COT_BINS = squeeze(hdf5read(InFile, 'copt_thick_bins'));
 
 CCN  = squeeze(hdf5read(InFile, 'ccn'));
 SST  = squeeze(hdf5read(InFile, 'sst'));
@@ -29,14 +31,17 @@ Select = SST == 293 & GCCN == 1e-5; % Sel has 1's where we want to select data o
 Nsel = sum(Select);
 PDF_PR293 = PR_HIST(:,Select);
 PDF_ALB293 = ALB_HIST(:,Select);
+PDF_COT293 = COT_HIST(:,Select);
 
 Select = SST == 298 & GCCN == 1e-5;
 PDF_PR298 = PR_HIST(:,Select);
 PDF_ALB298 = ALB_HIST(:,Select);
+PDF_COT298 = COT_HIST(:,Select);
 
 Select = SST == 303 & GCCN == 1e-5;
 PDF_PR303 = PR_HIST(:,Select);
 PDF_ALB303 = ALB_HIST(:,Select);
+PDF_COT303 = COT_HIST(:,Select);
 
 for i = 1:Nsel
   PDF_PR293(:,i) = PDF_PR293(:,i) ./ sum(PDF_PR293(:,i));
@@ -46,6 +51,10 @@ for i = 1:Nsel
   PDF_ALB293(:,i) = PDF_ALB293(:,i) ./ sum(PDF_ALB293(:,i));
   PDF_ALB298(:,i) = PDF_ALB298(:,i) ./ sum(PDF_ALB298(:,i));
   PDF_ALB303(:,i) = PDF_ALB303(:,i) ./ sum(PDF_ALB303(:,i));
+  
+  PDF_COT293(:,i) = PDF_COT293(:,i) ./ sum(PDF_COT293(:,i));
+  PDF_COT298(:,i) = PDF_COT298(:,i) ./ sum(PDF_COT298(:,i));
+  PDF_COT303(:,i) = PDF_COT303(:,i) ./ sum(PDF_COT303(:,i));
 end
 
 % Legend
@@ -89,7 +98,7 @@ PR303file = sprintf('%s/pcprr_pdf_S303.jpg', Pdir);
 AxisProps(1).Name = 'FontSize';
 AxisProps(1).Val  = 35;
 
-Xvals = [ 0.001 0.01 0.1 1 10 100 ];
+Xvals = [ 0.001 0.01 0.1 1 10 100 1000 ];
 AxisProps(2).Name = 'Xtick';
 AxisProps(2).Val = Xvals;
 
@@ -100,16 +109,23 @@ AxisProps(4).Name = 'Xlim';
 AxisProps(4).Val  = [ 0.001 100 ];
 
 AxisProps(5).Name = 'Ylim';
-AxisProps(5).Val  = [ 0 0.035 ];
+AxisProps(5).Val  = [ 0 0.1 ];
+
+AxisProps(6).Name = 'Yscale';
+AxisProps(6).Val  = 'log';
+
+Yvals = [ 1e-5 1e-3 1e-1 ];
+AxisProps(7).Name = 'Ytick';
+AxisProps(7).Val = Yvals;
 
 
 BINS = repmat(PR_BINS', [ Nsel 1 ]);
 
-Plot2dSet(BINS, PDF_PR293', 'SST: 293K', { 'b' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+Plot2dSet(BINS, PDF_PR293', '293K', { 'c' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
          Gscales, LegText, 'NorthEast', AxisProps, 'none', PR293file);
-Plot2dSet(BINS, PDF_PR298', 'SST: 298K', { 'e' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+Plot2dSet(BINS, PDF_PR298', '298K', { 'f' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
          Gscales, LegText, 'NorthEast', AxisProps, 'none', PR298file);
-Plot2dSet(BINS, PDF_PR303', 'SST: 303K', { 'h' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+Plot2dSet(BINS, PDF_PR303', '303K', { 'i' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
          Gscales, LegText, 'NorthEast', AxisProps, 'none', PR303file);
 
 
@@ -131,125 +147,256 @@ AxisProps(2).Name = 'Xlim';
 AxisProps(2).Val  = [ 0 1 ];
 
 AxisProps(3).Name = 'Ylim';
-AxisProps(3).Val  = [ 0 0.2 ];
+AxisProps(3).Val  = [ 0 0.5 ];
+
+AxisProps(4).Name = 'Yscale';
+AxisProps(4).Val  = 'log';
+
+Yvals = [ 1e-5 1e-3 1e-1 ];
+AxisProps(5).Name = 'Ytick';
+AxisProps(5).Val = Yvals;
 
 
 BINS = repmat(ALB_BINS', [ Nsel 1 ]);
 
-Plot2dSet(BINS, PDF_ALB293', 'SST: 293K', { 'c' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+Plot2dSet(BINS, PDF_ALB293', '293K', { 'c' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
          Gscales, LegText, 'NorthEast', AxisProps, 'none', ALB293file);
-Plot2dSet(BINS, PDF_ALB298', 'SST: 298K', { 'f' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+Plot2dSet(BINS, PDF_ALB298', '298K', { 'f' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
          Gscales, LegText, 'NorthEast', AxisProps, 'none', ALB298file);
-Plot2dSet(BINS, PDF_ALB303', 'SST: 303K', { 'i' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+Plot2dSet(BINS, PDF_ALB303', '303K', { 'i' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
          Gscales, LegText, 'NorthEast', AxisProps, 'none', ALB303file);
+     
+
+% Cloud optical thickness plots
+Xlabel = 'Cloud OT';
+Ylabel = '';
+
+COT293file = sprintf('%s/copt_thick_pdf_S293.jpg', Pdir);
+COT298file = sprintf('%s/copt_thick_pdf_S298.jpg', Pdir);
+COT303file = sprintf('%s/copt_thick_pdf_S303.jpg', Pdir);
+
+clear AxisProps;
+
+AxisProps(1).Name = 'FontSize';
+AxisProps(1).Val  = 35;
+
+AxisProps(2).Name = 'Xlim';
+AxisProps(2).Val  = [ 0 300 ];
+
+AxisProps(3).Name = 'Ylim';
+AxisProps(3).Val  = [ 0 0.8 ];
+
+AxisProps(4).Name = 'Yscale';
+AxisProps(4).Val  = 'log';
+
+Yvals = [ 1e-5 1e-3 1e-1 ];
+AxisProps(5).Name = 'Ytick';
+AxisProps(5).Val = Yvals;
+
+
+BINS = repmat(COT_BINS', [ Nsel 1 ]);
+
+Plot2dSet(BINS, PDF_COT293', '293K', { 'b' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+         Gscales, LegText, 'NorthEast', AxisProps, 'none', COT293file);
+Plot2dSet(BINS, PDF_COT298', '298K', { 'e' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+         Gscales, LegText, 'NorthEast', AxisProps, 'none', COT298file);
+Plot2dSet(BINS, PDF_COT303', '303K', { 'h' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+         Gscales, LegText, 'NorthEast', AxisProps, 'none', COT303file);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Next look at the GCCN impact (mean radius, 3um)
 %
 % Have SST = 298 and CCN = 50, 400, 1600; and one more SST = 303, CCN = 400
 
-% Select = SST == 298 & GCCN == 1e-5 & (CCN == 50 | CCN == 400 | CCN == 1600);
-% Nsel = sum(Select);
-% 
-% X = 1:Nsel; % using numbers allows for even spacing on the bar plot
-% 
-% CFS = zeros([ Nsel 4 ]);
-% CDS = zeros([ Nsel 4 ]);
-% CFE = zeros([ Nsel 4 ]);
-% CDE = zeros([ Nsel 4 ]);
-% CFA = zeros([ Nsel 4 ]);
-% CDA = zeros([ Nsel 4 ]);
-% ACP = zeros([ Nsel 4 ]);
-% 
-% CFS(:,1) = CF_START(Select);
-% CDS(:,1) = CD_START(Select);
-% CFE(:,1) = CF_END(Select);
-% CDE(:,1) = CD_END(Select);
-% CFA(:,1) = CF_AVG(Select);
-% CDA(:,1) = CD_AVG(Select);
-% ACP(:,1) = ACC_PCP(Select);
-% 
-% Select = SST == 298 & GCCN == 1e-4;
-% CFS(:,2) = CF_START(Select);
-% CDS(:,2) = CD_START(Select);
-% CFE(:,2) = CF_END(Select);
-% CDE(:,2) = CD_END(Select);
-% CFA(:,2) = CF_AVG(Select);
-% CDA(:,2) = CD_AVG(Select);
-% ACP(:,2) = ACC_PCP(Select);
-% 
-% Select = SST == 298 & GCCN == 1e-2;
-% CFS(:,3) = CF_START(Select);
-% CDS(:,3) = CD_START(Select);
-% CFE(:,3) = CF_END(Select);
-% CDE(:,3) = CD_END(Select);
-% CFA(:,3) = CF_AVG(Select);
-% CDA(:,3) = CD_AVG(Select);
-% ACP(:,3) = ACC_PCP(Select);
-% 
-% Select = SST == 298 & GCCN == 1;
-% CFS(:,4) = CF_START(Select);
-% CDS(:,4) = CD_START(Select);
-% CFE(:,4) = CF_END(Select);
-% CDE(:,4) = CD_END(Select);
-% CFA(:,4) = CF_AVG(Select);
-% CDA(:,4) = CD_AVG(Select);
-% ACP(:,4) = ACC_PCP(Select);
-% 
-% % Got x and y data for the bar plot. Now set up the plotting.
-% iaxis = 1;
-% 
-% % Large font
-% AxisProps(iaxis).Name = 'FontSize';
-% AxisProps(iaxis).Val  = 20;
-% iaxis = iaxis + 1;
-% 
-% % Put the actual CCN values on the tick marks for the x-axis.
-% AxisProps(iaxis).Name = 'XTickLabel';
-% AxisProps(iaxis).Val = { '50' '400' '1600' };
-% iaxis = iaxis + 1;
-% 
-% % Misc plotting
-% 
-% % bar colors - triplet is [ r g b ]
-% % want black cyan blue magenta
-% Bcolors = { [ 0 0 0 ] [ 0 1 1 ] [ 0 0 1 ] [ 1 0 1 ] };
-% 
-% LegText = { '10^-^5/cc', '10^-^4/cc', '10^-^2/cc' '1/cc' };
-% 
-% Xlabel = 'N_c (#/cc)';
-% CFlabel = 'Cloud Fraction';
-% CDlabel = 'Max Cloud Depth (m)';
-% APlabel = 'Accum Precip (m)';
-% 
-% CFSfile = sprintf('%s/cf_start_bars_gccn.jpg', Pdir);
-% CFEfile = sprintf('%s/cf_end_bars_gccn.jpg', Pdir);
-% CDSfile = sprintf('%s/cd_start_bars_gccn.jpg', Pdir);
-% CDEfile = sprintf('%s/cd_end_bars_gccn.jpg', Pdir);
-% CFAfile = sprintf('%s/cf_avg_bars_gccn.jpg', Pdir);
-% CDAfile = sprintf('%s/cd_avg_bars_gccn.jpg', Pdir);
-% ACPfile = sprintf('%s/acc_pcp_bars_gccn.jpg', Pdir);
-% 
-% % Make four plots: CD start and end, CF start and end
-% % PlotBarSet( X, Y, Ptitle, Pmarkers, Xlabel, Ylabel, Bcolors, LegText, LegLoc, AxisProps, OutFile )
-% 
-% AxisProps(iaxis).Name = 'Ylim';
-% AxisProps(iaxis).Val  = [ 0 1.5 ];
-% 
-% PlotBarSet(X, CFS, 't = 12 h', { 'a' }, Xlabel, CFlabel, Bcolors, LegText, 'NorthWest', AxisProps, CFSfile);
-% PlotBarSet(X, CFE, 't = 36 h', { 'b' }, Xlabel, CFlabel, Bcolors, LegText, 'NorthWest', AxisProps, CFEfile);
-% PlotBarSet(X, CFA, '',         { 'a' }, Xlabel, CFlabel, Bcolors, LegText, 'NorthWest', AxisProps, CFAfile);
-% 
-% AxisProps(iaxis).Name = 'Ylim';
-% AxisProps(iaxis).Val  = [ 0 6000 ];
-% 
-% PlotBarSet(X, CDS, 't = 12 h', { 'a' }, Xlabel, CDlabel, Bcolors, LegText, 'NorthWest', AxisProps, CDSfile);
-% PlotBarSet(X, CDE, 't = 36 h', { 'b' }, Xlabel, CDlabel, Bcolors, LegText, 'NorthWest', AxisProps, CDEfile);
-% PlotBarSet(X, CDA, '',         { 'b' }, Xlabel, CDlabel, Bcolors, LegText, 'NorthWest', AxisProps, CDAfile);
-% 
-% AxisProps(iaxis).Name = 'Ylim';
-% AxisProps(iaxis).Val  = [ 0 400 ];
-% 
-% PlotBarSet(X, ACP, '',         { 'a' }, Xlabel, APlabel, Bcolors, LegText, 'NorthWest', AxisProps, ACPfile);
+Select = SST == 298 & CCN == 50;
+Nsel = sum(Select);
+PDF_PR50 = PR_HIST(:,Select);
+PDF_ALB50 = ALB_HIST(:,Select);
+PDF_COT50 = COT_HIST(:,Select);
+
+Select = SST == 298 & CCN == 400;
+PDF_PR400 = PR_HIST(:,Select);
+PDF_ALB400 = ALB_HIST(:,Select);
+PDF_COT400 = COT_HIST(:,Select);
+
+Select = SST == 298 & CCN == 1600;
+PDF_PR1600 = PR_HIST(:,Select);
+PDF_ALB1600 = ALB_HIST(:,Select);
+PDF_COT1600 = COT_HIST(:,Select);
+
+for i = 1:Nsel
+  PDF_PR50(:,i) = PDF_PR50(:,i) ./ sum(PDF_PR50(:,i));
+  PDF_PR400(:,i) = PDF_PR400(:,i) ./ sum(PDF_PR400(:,i));
+  PDF_PR1600(:,i) = PDF_PR1600(:,i) ./ sum(PDF_PR1600(:,i));
+
+  PDF_ALB50(:,i) = PDF_ALB50(:,i) ./ sum(PDF_ALB50(:,i));
+  PDF_ALB400(:,i) = PDF_ALB400(:,i) ./ sum(PDF_ALB400(:,i));
+  PDF_ALB1600(:,i) = PDF_ALB1600(:,i) ./ sum(PDF_ALB1600(:,i));
+  
+  PDF_COT50(:,i) = PDF_COT50(:,i) ./ sum(PDF_COT50(:,i));
+  PDF_COT400(:,i) = PDF_COT400(:,i) ./ sum(PDF_COT400(:,i));
+  PDF_COT1600(:,i) = PDF_COT1600(:,i) ./ sum(PDF_COT1600(:,i));
+end
+
+% Rearrange the columns - PDF's have columns corresponding to:
+%    GCCN = 1e-5 1 1e-2 1e-4
+% and want
+%    GCCN = 1e-5 1e-4 1e-2 1
+
+PDF_PR50 = PDF_PR50(:,[ 1 4 3 2 ]);
+PDF_PR400 = PDF_PR400(:,[ 1 4 3 2 ]);
+PDF_PR1600 = PDF_PR1600(:,[ 1 4 3 2 ]);
+
+PDF_ALB50 = PDF_ALB50(:,[ 1 4 3 2 ]);
+PDF_ALB400 = PDF_ALB400(:,[ 1 4 3 2 ]);
+PDF_ALB1600 = PDF_ALB1600(:,[ 1 4 3 2 ]);
+
+PDF_COT50 = PDF_COT50(:,[ 1 4 3 2 ]);
+PDF_COT400 = PDF_COT400(:,[ 1 4 3 2 ]);
+PDF_COT1600 = PDF_COT1600(:,[ 1 4 3 2 ]);
+
+% Legend
+
+LegText = {
+    '10^-^5/cc'
+    '10^-^4/cc'
+    '10^-^2/cc'
+    '1/cc'
+    };
+
+Lcolors = {
+    'k'
+    'c'
+    'b'
+    'm'
+    };
+
+Lstyles = {
+    '-'
+    '-'
+    '-'
+    '-'
+    };
+
+Gscales = zeros([ Nsel 1 ]);
+
+% Plot2dSet( X, Y, Ptitle, Pmarkers, Xlabel, Ylabel, Lcolors, Lstyles,
+%            Gscales, LegText, LegLoc, AxisProps, AddMeas, OutFile )
+
+Xlabel = 'Precip Rate (mm/h)';
+Ylabel = '';
+
+PR50file = sprintf('%s/pcprr_pdf_C50_S298.jpg', Pdir);
+PR400file = sprintf('%s/pcprr_pdf_C400_S298.jpg', Pdir);
+PR1600file = sprintf('%s/pcprr_pdf_C1600_S298.jpg', Pdir);
+
+AxisProps(1).Name = 'FontSize';
+AxisProps(1).Val  = 35;
+
+Xvals = [ 0.001 0.01 0.1 1 10 100 1000 ];
+AxisProps(2).Name = 'Xtick';
+AxisProps(2).Val = Xvals;
+
+AxisProps(3).Name = 'Xscale';
+AxisProps(3).Val  = 'log';
+
+AxisProps(4).Name = 'Xlim';
+AxisProps(4).Val  = [ 0.001 100 ];
+
+AxisProps(5).Name = 'Ylim';
+AxisProps(5).Val  = [ 0 0.1 ];
+
+AxisProps(6).Name = 'Yscale';
+AxisProps(6).Val  = 'log';
+
+Yvals = [ 1e-5 1e-3 1e-1 ];
+AxisProps(7).Name = 'Ytick';
+AxisProps(7).Val = Yvals;
+
+
+BINS = repmat(PR_BINS', [ Nsel 1 ]);
+
+Plot2dSet(BINS, PDF_PR50', '298K 50/cc', { 'c' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+         Gscales, LegText, 'NorthEast', AxisProps, 'none', PR50file);
+Plot2dSet(BINS, PDF_PR400', '298K 400/cc', { 'f' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+         Gscales, LegText, 'NorthEast', AxisProps, 'none', PR400file);
+Plot2dSet(BINS, PDF_PR1600', '298K 1600/cc', { 'i' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+         Gscales, LegText, 'NorthEast', AxisProps, 'none', PR1600file);
+
+
+
+% Albedo plots
+Xlabel = 'Albedo';
+Ylabel = '';
+
+ALB50file = sprintf('%s/albedo_pdf_C50_S298.jpg', Pdir);
+ALB400file = sprintf('%s/albedo_pdf_C400_S298.jpg', Pdir);
+ALB1600file = sprintf('%s/albedo_pdf_C1600_S298.jpg', Pdir);
+
+clear AxisProps;
+
+AxisProps(1).Name = 'FontSize';
+AxisProps(1).Val  = 35;
+
+AxisProps(2).Name = 'Xlim';
+AxisProps(2).Val  = [ 0 1 ];
+
+AxisProps(3).Name = 'Ylim';
+AxisProps(3).Val  = [ 0 0.5 ];
+
+AxisProps(4).Name = 'Yscale';
+AxisProps(4).Val  = 'log';
+
+Yvals = [ 1e-5 1e-3 1e-1 ];
+AxisProps(5).Name = 'Ytick';
+AxisProps(5).Val = Yvals;
+
+
+BINS = repmat(ALB_BINS', [ Nsel 1 ]);
+
+Plot2dSet(BINS, PDF_ALB50', '298K 50/cc', { 'c' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+         Gscales, LegText, 'NorthEast', AxisProps, 'none', ALB50file);
+Plot2dSet(BINS, PDF_ALB400', '298K 400/cc', { 'f' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+         Gscales, LegText, 'NorthEast', AxisProps, 'none', ALB400file);
+Plot2dSet(BINS, PDF_ALB1600', '298K 1600/cc', { 'i' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+         Gscales, LegText, 'NorthEast', AxisProps, 'none', ALB1600file);
+     
+
+% Cloud optical thickness plots
+Xlabel = 'Cloud OT';
+Ylabel = '';
+
+COT50file = sprintf('%s/copt_thick_pdf_C50_S298.jpg', Pdir);
+COT400file = sprintf('%s/copt_thick_pdf_C400_S298.jpg', Pdir);
+COT1600file = sprintf('%s/copt_thick_pdf_C1600_S298.jpg', Pdir);
+
+clear AxisProps;
+
+AxisProps(1).Name = 'FontSize';
+AxisProps(1).Val  = 35;
+
+AxisProps(2).Name = 'Xlim';
+AxisProps(2).Val  = [ 0 300 ];
+
+AxisProps(3).Name = 'Ylim';
+AxisProps(3).Val  = [ 0 0.8 ];
+
+AxisProps(4).Name = 'Yscale';
+AxisProps(4).Val  = 'log';
+
+Yvals = [ 1e-5 1e-3 1e-1 ];
+AxisProps(5).Name = 'Ytick';
+AxisProps(5).Val = Yvals;
+
+
+BINS = repmat(COT_BINS', [ Nsel 1 ]);
+
+Plot2dSet(BINS, PDF_COT50', '298K 50/cc', { 'b' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+         Gscales, LegText, 'NorthEast', AxisProps, 'none', COT50file);
+Plot2dSet(BINS, PDF_COT400', '298K 400/cc', { 'e' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+         Gscales, LegText, 'NorthEast', AxisProps, 'none', COT400file);
+Plot2dSet(BINS, PDF_COT1600', '298K 1600/cc', { 'h' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+         Gscales, LegText, 'NorthEast', AxisProps, 'none', COT1600file);
+
 
 end
