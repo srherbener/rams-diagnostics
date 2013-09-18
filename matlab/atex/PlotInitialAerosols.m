@@ -58,7 +58,7 @@ Fig = figure;
 
 plot(C_PROFS, Z, 'LineWidth', 3);
 set(gca, 'FontSize', Fsize);
-xlabel('Nc (#/cc)');
+xlabel('N_C_C_N (#/cc)');
 ylabel('Height (m)');
 
 legend(ClegText, 'Location', 'NorthEast', 'FontSize', 20);
@@ -76,7 +76,7 @@ Fig = figure;
 semilogx(G_PROFS, Z, 'LineWidth', 3);
 set(gca, 'FontSize', Fsize);
 set(gca, 'Xtick', [ 1e-5 1e-3 1e-1 ]);
-xlabel('Ng (#/cc)');
+xlabel('N_G_C_C_N (#/cc)');
 ylabel('Height (m)');
 xlim([ 1e-6 1 ]);
 ylim([ 0 7000 ]);
