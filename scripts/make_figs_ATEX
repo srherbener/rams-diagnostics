@@ -103,52 +103,16 @@ montage -tile 3x2 -geometry ${Jsize}+2+100 \
  SfcDiv_T36_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
  Figure10.jpg
 
-### echo "Figure 4: Time snapshots albedo and sfc convergence S293, C400, CCN only"
-### montage -tile 3x2 -geometry ${Jsize}+2+100 \
-###  Albedo_T12_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
-###  Albedo_T24_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
-###  Albedo_T36_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
-###  SfcConv_T12_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
-###  SfcConv_T24_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
-###  SfcConv_T36_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
-###  Figure4.jpg
-### 
-### echo "Figure 5: Time snapshots albedo and sfc convergence S298, C400, CCN only"
-### montage -tile 3x2 -geometry ${Jsize}+2+100 \
-###  Albedo_T12_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
-###  Albedo_T24_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
-###  Albedo_T36_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
-###  SfcConv_T12_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
-###  SfcConv_T24_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
-###  SfcConv_T36_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
-###  Figure5.jpg
-### 
-### echo "Figure 6: Time snapshots albedo and sfc convergence S303, C400, CCN only"
-### montage -tile 3x2 -geometry ${Jsize}+2+100 \
-###  Albedo_T12_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
-###  Albedo_T24_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
-###  Albedo_T36_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
-###  SfcConv_T12_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
-###  SfcConv_T24_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
-###  SfcConv_T36_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
-###  Figure6.jpg
-### 
-### echo "Figure 7: Time snapshots albedo and sfc convergence S298, C50, CCN only"
-### montage -tile 3x2 -geometry ${Jsize}+2+100 \
-###  Albedo_T12_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
-###  Albedo_T24_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
-###  Albedo_T36_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
-###  SfcConv_T12_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
-###  SfcConv_T24_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
-###  SfcConv_T36_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
-###  Figure7.jpg
-### 
-### echo "Figure 8: Time snapshots albedo and sfc convergence S298, C1600, CCN only"
-### montage -tile 3x2 -geometry ${Jsize}+2+100 \
-###  Albedo_T12_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
-###  Albedo_T24_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
-###  Albedo_T36_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
-###  SfcConv_T12_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
-###  SfcConv_T24_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
-###  SfcConv_T36_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
-###  Figure8.jpg
+echo "Figure : Cloud, with different LWP selection"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ Cloud_T12_T36_CO_S293_G10M5_ALL.jpg \
+ Cloud_T12_T36_CO_S293_G10M5_LWP0P10_ALL.jpg \
+ Cloud_T12_T36_CO_S293_G10M5_LWP1P00_ALL.jpg \
+ Cloud_T12_T36_CO_S298_G10M5_ALL.jpg \
+ Cloud_T12_T36_CO_S298_G10M5_LWP0P10_ALL.jpg \
+ Cloud_T12_T36_CO_S298_G10M5_LWP1P00_ALL.jpg \
+ Cloud_T12_T36_CO_S303_G10M5_ALL.jpg \
+ Cloud_T12_T36_CO_S303_G10M5_LWP0P10_ALL.jpg \
+ Cloud_T12_T36_CO_S303_G10M5_LWP1P00_ALL.jpg \
+ FigureCloudSampling.jpg
+
