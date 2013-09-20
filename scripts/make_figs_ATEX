@@ -4,26 +4,30 @@
 
 Jsize="1200x900"
 
-echo "Figure 1: ATEX sounding"
+echo "Figure: ATEX sounding"
 montage -tile 1x1 -geometry ${Jsize}+2+100 \
  InitialSounding.jpg \
- Figure1.jpg
+ FigSounding.jpg
 
-echo "Figure 2: Aerosol profiles"
+echo "Figure: Aerosol profiles"
 montage -tile 1x2 -geometry ${Jsize}+2+100 \
  InitialCcnProfile.jpg \
  InitialGccnProfile.jpg \
- Figure2.jpg
+ FigAerosolProfiles.jpg
 
-echo "Figure 3: Bar graphs, CF and ACC_PCP, CCN only"
+echo "Figure: Bar graphs, COT, CCN only"
 montage -tile 2x2 -geometry ${Jsize}+2+100 \
- cf_avg_bars.jpg \
- acc_pcp_bars.jpg \
- cd_avg_bars.jpg \
- pcprr_avg_bars.jpg \
- Figure3.jpg
+ cot_avg_bars.jpg \
+ cot_lwp_0p01_avg_bars.jpg \
+ cot_lwp_0p10_avg_bars.jpg \
+ cot_lwp_1p00_avg_bars.jpg \
+ FigCloudOptThick.jpg
 
-echo "Figure 4: Cloud Frac, Cloud, PCPRR, CCN only"
+# cd_avg_bars.jpg \
+# acc_pcp_bars.jpg \
+# pcprr_avg_bars.jpg \
+
+echo "Figure: Cloud Frac, Cloud, PCPRR, CCN only"
 montage -tile 3x3 -geometry ${Jsize}+2+100 \
  Cloud_T12_T36_CO_S293_G10M5_ALL.jpg \
  copt_thick_pdf_S293.jpg \
@@ -34,9 +38,9 @@ montage -tile 3x3 -geometry ${Jsize}+2+100 \
  Cloud_T12_T36_CO_S303_G10M5_ALL.jpg \
  copt_thick_pdf_S303.jpg \
  pcprr_pdf_S303.jpg \
- Figure4.jpg
+ FigCloudProperties.jpg
 
-echo "Figure 5: BuoyFlux, Wvar, Wskew, CCN only"
+echo "Figure: BuoyFlux, Wvar, Wskew, CCN only"
 montage -tile 3x3 -geometry ${Jsize}+2+100 \
  BuoyFlux_T12_T36_CO_S293_G10M5_ALL.jpg \
  Wvar_T12_T36_CO_S293_G10M5_ALL.jpg \
@@ -47,17 +51,21 @@ montage -tile 3x3 -geometry ${Jsize}+2+100 \
  BuoyFlux_T12_T36_CO_S303_G10M5_ALL.jpg \
  Wvar_T12_T36_CO_S303_G10M5_ALL.jpg \
  Wskew_T12_T36_CO_S303_G10M5_ALL.jpg \
- Figure5.jpg
+ FigTurbStruct.jpg
 
-echo "Figure 6: Bar graphs, CF and ACC_PCP, CCN and GCCN"
+echo "Figure: Bar graphs, COT and ACC_PCP, CCN and GCCN"
 montage -tile 2x2 -geometry ${Jsize}+2+100 \
- cf_avg_bars_gccn.jpg \
- acc_pcp_bars_gccn.jpg \
- cd_avg_bars_gccn.jpg \
- pcprr_avg_bars_gccn.jpg \
- Figure6.jpg
+ cot_avg_bars_gccn.jpg \
+ cot_lwp_0p01_avg_bars_gccn.jpg \
+ cot_lwp_0p10_avg_bars_gccn.jpg \
+ cot_lwp_1p00_avg_bars_gccn.jpg \
+ FigCloudOptThickGccn.jpg
 
-echo "Figure 7: Cloud Frac, Cloud, PCPRR, CCN and GCCN"
+# acc_pcp_bars_gccn.jpg \
+# cd_avg_bars_gccn.jpg \
+# pcprr_avg_bars_gccn.jpg \
+
+echo "Figure: Cloud Frac, Cloud, PCPRR, CCN and GCCN"
 montage -tile 3x3 -geometry ${Jsize}+2+100 \
  Cloud_T12_T36_CG_C50_S298.jpg \
  copt_thick_pdf_C50_S298.jpg \
@@ -68,9 +76,9 @@ montage -tile 3x3 -geometry ${Jsize}+2+100 \
  Cloud_T12_T36_CG_C1600_S298.jpg \
  copt_thick_pdf_C1600_S298.jpg \
  pcprr_pdf_C1600_S298.jpg \
- Figure7.jpg
+ FigCloudPropertiesGccn.jpg
 
-echo "Figure 8: BuoyFlux, Wvar, Wskew, CCN and GCCN"
+echo "Figure: BuoyFlux, Wvar, Wskew, CCN and GCCN"
 montage -tile 3x3 -geometry ${Jsize}+2+100 \
  BuoyFlux_T12_T36_CG_C50_S298.jpg \
  Wvar_T12_T36_CG_C50_S298.jpg \
@@ -81,9 +89,9 @@ montage -tile 3x3 -geometry ${Jsize}+2+100 \
  BuoyFlux_T12_T36_CG_C1600_S298.jpg \
  Wvar_T12_T36_CG_C1600_S298.jpg \
  Wskew_T12_T36_CG_C1600_S298.jpg \
- Figure8.jpg
+ FigTurbStructGeen.jpg
 
-echo "Figure 9: Albedo, sfc conv examples, C50, S293 CCN only"
+echo "Figure: Albedo, sfc conv examples, C50, S293 CCN only"
 montage -tile 3x2 -geometry ${Jsize}+2+100 \
  Albedo_T12_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
  Albedo_T24_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
@@ -91,9 +99,9 @@ montage -tile 3x2 -geometry ${Jsize}+2+100 \
  SfcDiv_T12_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
  SfcDiv_T24_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
  SfcDiv_T36_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
- Figure9.jpg
+ FigSampleAlbSfcDiv_C50_S293.jpg
 
-echo "Figure 10: Albedo, sfc conv examples, C1600, S303 CCN only"
+echo "Figure: Albedo, sfc conv examples, C1600, S303 CCN only"
 montage -tile 3x2 -geometry ${Jsize}+2+100 \
  Albedo_T12_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
  Albedo_T24_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
@@ -101,9 +109,9 @@ montage -tile 3x2 -geometry ${Jsize}+2+100 \
  SfcDiv_T12_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
  SfcDiv_T24_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
  SfcDiv_T36_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
- Figure10.jpg
+ FigSampleAlbSfcDiv_C1600_S303.jpg
 
-echo "Figure : Cloud, with different LWP selection"
+echo "Figure: Cloud, with different LWP selection"
 montage -tile 3x3 -geometry ${Jsize}+2+100 \
  Cloud_T12_T36_CO_S293_G10M5_ALL.jpg \
  Cloud_T12_T36_CO_S293_G10M5_LWP0P10_ALL.jpg \
