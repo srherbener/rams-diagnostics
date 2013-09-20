@@ -9,10 +9,17 @@ function [ ] = GenBarGraphData(ConfigFile)
     Tdir = Config.TsavgDir;
     Hdir = './HDF5';
 
+    UndefVal = Config.UndefVal;
+
     CfName = 'hda_cloud_mask';
     CfFprefix = 'hda_cloud_frac';
     CdName = 'max_cloud_depth';
     CdFprefix = 'max_cdepth';
+    CotName = 'hda_cloud_opt_thick';
+    CotFprefix = 'hda_cot'
+    CotFprefix_lwp_0p01 = 'hda_cot_lwp_0p01'
+    CotFprefix_lwp_0p10 = 'hda_cot_lwp_0p10'
+    CotFprefix_lwp_1p00 = 'hda_cot_lwp_1p00'
     TpName = 'totpcp';
     TpFprefix = 'totpcp';
 
@@ -24,6 +31,10 @@ function [ ] = GenBarGraphData(ConfigFile)
         Case = Config.Cases(icase).Cname;
         CfFile = sprintf('%s/%s_%s.h5', Tdir, CfFprefix, Case);
         CdFile = sprintf('%s/%s_%s.h5', Tdir, CdFprefix, Case);
+        CotFile = sprintf('%s/%s_%s.h5', Tdir, CotFprefix, Case);
+        CotFile_lwp_0p01 = sprintf('%s/%s_%s.h5', Tdir, CotFprefix_lwp_0p01, Case);
+        CotFile_lwp_0p10 = sprintf('%s/%s_%s.h5', Tdir, CotFprefix_lwp_0p10, Case);
+        CotFile_lwp_1p00 = sprintf('%s/%s_%s.h5', Tdir, CotFprefix_lwp_1p00, Case);
         TpFile = sprintf('%s/%s-%s-AS-1999-02-10-040000-g1.h5', Hdir, TpFprefix, Case);
 
         % grab the CCN concentration and SST value from the case name
@@ -43,6 +54,11 @@ function [ ] = GenBarGraphData(ConfigFile)
         fprintf('    Var name: %s\n', CfName);
         fprintf('  Input cloud depth file: %s\n', CdFile);
         fprintf('    Var name: %s\n', CdName);
+        fprintf('  Input cloud optical thickness file: %s\n', CotFile);
+        fprintf('  Input cloud optical thickness file: %s\n', CotFile_lwp_0p01);
+        fprintf('  Input cloud optical thickness file: %s\n', CotFile_lwp_0p10);
+        fprintf('  Input cloud optical thickness file: %s\n', CotFile_lwp_1p00);
+        fprintf('    Var name: %s\n', CotName);
         fprintf('  Input total precip file: %s\n', TpFile);
         fprintf('    Var name: %s\n', TpName);
         fprintf('  Start Time: %d\n', Tstart);
@@ -54,9 +70,13 @@ function [ ] = GenBarGraphData(ConfigFile)
  
         % Cloud frac and cloud depth will be organized as (t)
         % Total precip will be organized as (x,y,t)
-        CF = squeeze(hdf5read(CfFile, CfName));
-        CD = squeeze(hdf5read(CdFile, CdName));
-        TP = squeeze(hdf5read(TpFile, TpName));
+        CF  = squeeze(hdf5read(CfFile, CfName));
+        CD  = squeeze(hdf5read(CdFile, CdName));
+        COT = squeeze(hdf5read(CotFile, CotName));
+        COT_L0P01 = squeeze(hdf5read(CotFile_lwp_0p01, CotName));
+        COT_L0P10 = squeeze(hdf5read(CotFile_lwp_0p10, CotName));
+        COT_L1P00 = squeeze(hdf5read(CotFile_lwp_1p00, CotName));
+        TP  = squeeze(hdf5read(TpFile, TpName));
     
         % Grab time coordinates
         T = hdf5read(CfFile, 't_coords')/3600; % hrs
@@ -76,6 +96,17 @@ function [ ] = GenBarGraphData(ConfigFile)
 
         CF_Avg(i) = mean(CF(T1:T2));
         CD_Avg(i) = mean(CD(T1:T2));
+
+        % might have undefined values in the cloud optical thickness data
+        % exclude these from the mean calculation
+        COT(COT == UndefVal) = nan;
+        COT_Avg(i) = nanmean(COT(T1:T2));
+        COT_L0P01(COT_L0P01 == UndefVal) = nan;
+        COT_L0P01_Avg(i) = nanmean(COT_L0P01(T1:T2));
+        COT_L0P10(COT_L0P10 == UndefVal) = nan;
+        COT_L0P10_Avg(i) = nanmean(COT_L0P10(T1:T2));
+        COT_L1P00(COT_L1P00 == UndefVal) = nan;
+        COT_L1P00_Avg(i) = nanmean(COT_L1P00(T1:T2));
 
         % calculate total accumulated precip by subtracting the total domain
         % precip at T1 from that at T2
@@ -102,6 +133,10 @@ function [ ] = GenBarGraphData(ConfigFile)
     hdf5write(OutFile, '/cd_start', CD_Start, 'WriteMode', 'append');
     hdf5write(OutFile, '/cd_end',   CD_End,   'WriteMode', 'append');
     hdf5write(OutFile, '/cd_avg',   CD_Avg,   'WriteMode', 'append');
+    hdf5write(OutFile, '/cot_avg',  COT_Avg,  'WriteMode', 'append');
+    hdf5write(OutFile, '/cot_avg_lwp_0p01',  COT_L0P01_Avg,  'WriteMode', 'append');
+    hdf5write(OutFile, '/cot_avg_lwp_0p10',  COT_L0P10_Avg,  'WriteMode', 'append');
+    hdf5write(OutFile, '/cot_avg_lwp_1p00',  COT_L1P00_Avg,  'WriteMode', 'append');
     hdf5write(OutFile, '/acc_pcp',  ACC_PCP,  'WriteMode', 'append');
     hdf5write(OutFile, '/ccn',      CCN,      'WriteMode', 'append');
     hdf5write(OutFile, '/sst',      SST,      'WriteMode', 'append');
