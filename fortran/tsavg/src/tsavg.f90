@@ -631,9 +631,10 @@ program tsavg
     TserAvg%dims(3) = 1
     TserAvg%units = Var%units
   else if ((AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hfrac')) then
+    ! y has size 2, one for the sum and the other for the count
     ! all z points
     TserAvg%dims(1) = 1
-    TserAvg%dims(2) = 1
+    TserAvg%dims(2) = 2
     TserAvg%dims(3) = Nz
     TserAvg%units = Var%units
   else if (AvgFunc .eq. 'hist') then
@@ -872,6 +873,11 @@ program tsavg
     do ib = 1, Ynbins
       OutYcoords%vdata(ib) = Ybins(ib)
     enddo
+  elseif ((AvgFunc .eq. 'hfrac') .or. (AvgFunc .eq. 'hda')) then
+    OutYcoords%dims(1) = 2
+    allocate(OutYcoords%vdata(2))
+    OutYcoords%vdata(1) = 1.0
+    OutYcoords%vdata(2) = 2.0
   else
     OutYcoords%dims(1) = 1
     allocate(OutYcoords%vdata(1))
@@ -1373,7 +1379,7 @@ end subroutine DoHorizKe
 !
 ! This routine will do horizontal domain average for all z levels.
 !
-subroutine DoHda(Nx, Ny, Nz, FilterNz, Var, Filter, UseFilter, UndefVal, DomAvg)
+subroutine DoHda(Nx, Ny, Nz, FilterNz, Var, Filter, UseFilter, UndefVal, DomStats)
   implicit none
 
   integer :: Nx, Ny, Nz, FilterNz
@@ -1381,15 +1387,16 @@ subroutine DoHda(Nx, Ny, Nz, FilterNz, Var, Filter, UseFilter, UndefVal, DomAvg)
   real, dimension(Nx,Ny,FilterNz) :: Filter
   logical :: UseFilter
   real :: UndefVal
-  real, dimension(Nz) :: DomAvg
+  real, dimension(2,Nz) :: DomStats ! (1,z) <-- domain sum, (2,z) <-- domain count
 
   integer :: ix, iy, iz
   integer :: filter_z
   logical :: SelectPoint
   integer :: NumPoints
+  real    :: DomSum
 
   do iz = 1, Nz
-    DomAvg(iz) = 0.0
+    DomSum = 0.0
     NumPoints = 0
 
     ! RAMS reserves the first and last x and y values for lateral
@@ -1415,17 +1422,14 @@ subroutine DoHda(Nx, Ny, Nz, FilterNz, Var, Filter, UseFilter, UndefVal, DomAvg)
           SelectPoint = SelectPoint .and. (anint(Filter(ix,iy,filter_z)) .eq. 1.0)
         endif
         if (SelectPoint) then
-          DomAvg(iz) = DomAvg(iz) + Var(ix,iy,iz)
+          DomSum = DomSum + Var(ix,iy,iz)
           NumPoints = NumPoints + 1
         endif
       enddo
     enddo
 
-    if (NumPoints .eq. 0) then
-      DomAvg(iz) = UndefVal
-    else
-      DomAvg(iz) = DomAvg(iz) / float(NumPoints)
-    endif
+    DomStats(1,iz) = DomSum
+    DomStats(2,iz) = float(NumPoints)
   enddo
 
   return
@@ -1436,7 +1440,7 @@ end subroutine DoHda
 !
 ! This routine will do horizontal domain fraction calculations
 !
-subroutine DoHfrac(Nx, Ny, Nz, FilterNz, Threshold, Var, Filter, UseFilter, UndefVal, DomFrac)
+subroutine DoHfrac(Nx, Ny, Nz, FilterNz, Threshold, Var, Filter, UseFilter, UndefVal, DomStats)
   implicit none
 
   integer :: Nx, Ny, Nz, FilterNz
@@ -1444,7 +1448,7 @@ subroutine DoHfrac(Nx, Ny, Nz, FilterNz, Threshold, Var, Filter, UseFilter, Unde
   real, dimension(Nx,Ny,FilterNz) :: Filter
   logical :: UseFilter
   real :: UndefVal, Threshold
-  real, dimension(Nz) :: DomFrac
+  real, dimension(2,Nz) :: DomStats ! (1,x) <-- fraction count, (2,x) <-- total count
 
   integer :: ix, iy, iz
   integer :: filter_z
@@ -1452,7 +1456,6 @@ subroutine DoHfrac(Nx, Ny, Nz, FilterNz, Threshold, Var, Filter, UseFilter, Unde
   integer :: NumPoints, NumFracPoints
 
   do iz = 1, Nz
-    DomFrac(iz) = 0.0
     NumPoints = 0
     NumFracPoints = 0
 
@@ -1487,11 +1490,8 @@ subroutine DoHfrac(Nx, Ny, Nz, FilterNz, Threshold, Var, Filter, UseFilter, Unde
       enddo
     enddo
 
-    if (NumPoints .eq. 0) then
-      DomFrac(iz) = UndefVal
-    else
-      DomFrac(iz) = float(NumFracPoints) / float(NumPoints)
-    endif
+    DomStats(1,iz) = float(NumFracPoints)
+    DomStats(2,iz) = float(NumPoints)
   enddo
 
   return
