@@ -40,7 +40,12 @@ function [ ] = GenProfileData(ConfigFile)
         fprintf('  End Time: %d\n', Tend);
         fprintf('\n');
  
-        % Cloud will be organized as (z,t)
+        % Cloud will be organized as (y,z,t)
+        %   y has size 2 and holds:
+        %     y(1) --> sum of horizontal domain
+        %     y(2) --> total number of points used to create y(1)
+        %   z is height
+        %   t is time
         CLD = squeeze(hdf5read(CldFile, CldName));
         CLD_LWP_0P01 = squeeze(hdf5read(CldFile_lwp_0p01, CldName));
         CLD_LWP_0P10 = squeeze(hdf5read(CldFile_lwp_0p10, CldName));
@@ -57,18 +62,24 @@ function [ ] = GenProfileData(ConfigFile)
         i = i + 1;
 
         % compute temporal average profile
-        % put in nan's for the undefined value and use nanmean
-        CLD(CLD == UndefVal) = nan;
-        CLD_LWP_0P01(CLD_LWP_0P01 == UndefVal) = nan;
-        CLD_LWP_0P10(CLD_LWP_0P10 == UndefVal) = nan;
-        CLD_LWP_1P00(CLD_LWP_1P00 == UndefVal) = nan;
+        % note that when npts == 0, so does sum == 0 and the divide will produce a nan
+        CLD_SUM  = squeeze(sum(CLD(1,:,T1:T2), 3));
+        CLD_NPTS = squeeze(sum(CLD(2,:,T1:T2), 3));
+        CLD_PROF = CLD_SUM ./ CLD_NPTS;
 
-        CLD_PROF = nanmean(CLD(:,T1:T2),2);
-        CLD_PROF_LWP_0P01 = nanmean(CLD_LWP_0P01(:,T1:T2),2);
-        CLD_PROF_LWP_0P10 = nanmean(CLD_LWP_0P10(:,T1:T2),2);
-        CLD_PROF_LWP_1P00 = nanmean(CLD_LWP_1P00(:,T1:T2),2);
-        
-            % output --> Use REVU format, 4D var, *_coords
+        CLD_SUM_LWP_0P01  = squeeze(sum(CLD_LWP_0P01(1,:,T1:T2), 3));
+        CLD_NPTS_LWP_0P01 = squeeze(sum(CLD_LWP_0P01(2,:,T1:T2), 3));
+        CLD_PROF_LWP_0P01 = CLD_SUM_LWP_0P01 ./ CLD_NPTS_LWP_0P01;
+
+        CLD_SUM_LWP_0P10  = squeeze(sum(CLD_LWP_0P10(1,:,T1:T2), 3));
+        CLD_NPTS_LWP_0P10 = squeeze(sum(CLD_LWP_0P10(2,:,T1:T2), 3));
+        CLD_PROF_LWP_0P10 = CLD_SUM_LWP_0P10 ./ CLD_NPTS_LWP_0P10;
+
+        CLD_SUM_LWP_1P00  = squeeze(sum(CLD_LWP_1P00(1,:,T1:T2), 3));
+        CLD_NPTS_LWP_1P00 = squeeze(sum(CLD_LWP_1P00(2,:,T1:T2), 3));
+        CLD_PROF_LWP_1P00 = CLD_SUM_LWP_1P00 ./ CLD_NPTS_LWP_1P00;
+
+        % output --> Use REVU format, 4D var, *_coords
         X = 1;
         Y = 1;
         Z = squeeze(hdf5read(CldFile, 'z_coords'));
@@ -86,6 +97,16 @@ function [ ] = GenProfileData(ConfigFile)
         hdf5write(OutFile, '/cloud_lwp_0p01', Ovar_lwp_0p01, 'WriteMode', 'append');
         hdf5write(OutFile, '/cloud_lwp_0p10', Ovar_lwp_0p10, 'WriteMode', 'append');
         hdf5write(OutFile, '/cloud_lwp_1p00', Ovar_lwp_1p00, 'WriteMode', 'append');
+
+        Ovar = reshape(CLD_NPTS, [ 1 1 Nz 1 ]);
+        Ovar_lwp_0p01 = reshape(CLD_NPTS_LWP_0P01, [ 1 1 Nz 1 ]);
+        Ovar_lwp_0p10 = reshape(CLD_NPTS_LWP_0P10, [ 1 1 Nz 1 ]);
+        Ovar_lwp_1p00 = reshape(CLD_NPTS_LWP_1P00, [ 1 1 Nz 1 ]);
+
+        hdf5write(OutFile, '/cloud_npts',          Ovar,          'WriteMode', 'append');
+        hdf5write(OutFile, '/cloud_lwp_0p01_npts', Ovar_lwp_0p01, 'WriteMode', 'append');
+        hdf5write(OutFile, '/cloud_lwp_0p10_npts', Ovar_lwp_0p10, 'WriteMode', 'append');
+        hdf5write(OutFile, '/cloud_lwp_1p00_npts', Ovar_lwp_1p00, 'WriteMode', 'append');
         
         hdf5write(OutFile, 'x_coords', X, 'WriteMode', 'append');
         hdf5write(OutFile, 'y_coords', Y, 'WriteMode', 'append');

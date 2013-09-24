@@ -28,7 +28,12 @@ function [ ] = GenHfracCloud(ConfigFile)
         fprintf('    Var name: %s\n', CfracName);
         fprintf('\n');
 
-        % Data will be (z,t) after squeeze
+        % Data will be (y,z,t) after squeeze
+        %   y has size 2 and holds:
+        %     y(1) --> count of cloudy cells
+        %     y(2) --> total number of cells
+        %   z is height
+        %   t is time
         CF = squeeze(hdf5read(CfracFile, CfracName));
 
         % Grab height coordinates
@@ -39,7 +44,10 @@ function [ ] = GenHfracCloud(ConfigFile)
         Time = hdf5read(CfracFile, 't_coords')/3600; % hrs
         T1 = find(Time >= Time1, 1, 'first');
         T2 = find(Time <= Time2, 1, 'last');
-        CF_AVG = squeeze(mean(CF(:,T1:T2),2));
+
+        CLD_CELLS = squeeze(sum(CF(1,:,T1:T2), 3));
+        TOT_CELLS = squeeze(sum(CF(2,:,T1:T2), 3));
+        CF_AVG = CLD_CELLS ./ TOT_CELLS;
 
         % output --> Use REVU format, 4D var, *_coords
         % fabricate x, y, t coords
@@ -47,9 +55,12 @@ function [ ] = GenHfracCloud(ConfigFile)
         Y = 1;
         T = 1;
         Ovar = reshape(CF_AVG, [ 1 1 Nz 1 ]);
+        OvarNpts = reshape(TOT_CELLS, [ 1 1 Nz 1 ]);
         
         fprintf('Writing: %s\n', OutFile);
-        hdf5write(OutFile, '/hfrac_cloud', Ovar);
+        hdf5write(OutFile, '/hfrac_cloud',      Ovar);
+        hdf5write(OutFile, '/hfrac_cloud_npts', OvarNpts, 'WriteMode', 'append');
+
         hdf5write(OutFile, 'x_coords', X, 'WriteMode', 'append');
         hdf5write(OutFile, 'y_coords', Y, 'WriteMode', 'append');
         hdf5write(OutFile, 'z_coords', Z, 'WriteMode', 'append');

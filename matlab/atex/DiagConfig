@@ -107,12 +107,6 @@ Var: hda_swup    hda_swup    3d
 
 TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 
-# #TsavgPlot: <plot_set_name> <var> <type> <name> <units> <title> <legend_loc> <ymin> <ymax> <output_file>
-#
-#  '_' get turned to ' ' in <name>, <units>, and <title> so that
-#  these can contain multiple words
-#
-
 ###############################################################
 ####################### LINE PLOTS ############################
 ###############################################################
@@ -156,22 +150,22 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 #LinePlot: CG_UP_C0400_S298  SimTime MaxCdepth TsAll none PANEL:f  NorthEast none CloudMaxDepth_CG_C400_S298.jpg
 
 ### Horizontal domain cloud fraction 
-#LinePlot: CO_UP_S298_G10M5  HfracCloud Prof_Heights Prof_T12_T36 none PANEL:a@SST:@298K    NorthEast none HfracCloud_T12_T36_CO_S298_G10M5.jpg
-#LinePlot: CO_UP_C0400_G10M5 HfracCloud Prof_Heights Prof_T12_T36 none PANEL:b@CCN:@400/cc  NorthEast none HfracCloud_T12_T36_CO_C400_G10M5.jpg
-#LinePlot: CG_UP_C0400_S298  HfracCloud Prof_Heights Prof_T12_T36 none PANEL:c  NorthEast none BuoyFlux_T12_T36_CG_C400_S298.jpg
+LinePlot: CO_UP_S298_G10M5  HfracCloud Prof_Heights Prof_T12_T36 none PANEL:a@SST:@298K    NorthEast none HfracCloud_T12_T36_CO_S298_G10M5.jpg
+LinePlot: CO_UP_C0400_G10M5 HfracCloud Prof_Heights Prof_T12_T36 none PANEL:b@CCN:@400/cc  NorthEast none HfracCloud_T12_T36_CO_C400_G10M5.jpg
+LinePlot: CG_UP_C0400_S298  HfracCloud Prof_Heights Prof_T12_T36 none PANEL:c  NorthEast none BuoyFlux_T12_T36_CG_C400_S298.jpg
 
-#LinePlot: CO_UP_S293_G10M5_ALL  HfracCloud_293 Prof_Heights Prof_T12_T36 none PANEL:a@SST:@293K    NorthEast none HfracCloud_T12_T36_CO_S293_G10M5_ALL.jpg
-#LinePlot: CO_UP_S298_G10M5_ALL  HfracCloud_298 Prof_Heights Prof_T12_T36 none PANEL:d@SST:@298K    NorthEast none HfracCloud_T12_T36_CO_S298_G10M5_ALL.jpg
-#LinePlot: CO_UP_S303_G10M5_ALL  HfracCloud_303 Prof_Heights Prof_T12_T36 none PANEL:g@SST:@303K    NorthEast none HfracCloud_T12_T36_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  HfracCloud_293 Prof_Heights Prof_T12_T36 none PANEL:a@SST:@293K    NorthEast none HfracCloud_T12_T36_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  HfracCloud_298 Prof_Heights Prof_T12_T36 none PANEL:d@SST:@298K    NorthEast none HfracCloud_T12_T36_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  HfracCloud_303 Prof_Heights Prof_T12_T36 none PANEL:g@SST:@303K    NorthEast none HfracCloud_T12_T36_CO_S303_G10M5_ALL.jpg
 
 ### Cloud mass profile
-#LinePlot: CO_UP_S293_G10M5_ALL  Cloud_293 Prof_Heights Prof_T12_T36 none PANEL:a@293K    NorthEast none Cloud_T12_T36_CO_S293_G10M5_ALL.jpg
-#LinePlot: CO_UP_S298_G10M5_ALL  Cloud_298 Prof_Heights Prof_T12_T36 none PANEL:d@298K    NorthEast none Cloud_T12_T36_CO_S298_G10M5_ALL.jpg
-#LinePlot: CO_UP_S303_G10M5_ALL  Cloud_303 Prof_Heights Prof_T12_T36 none PANEL:g@303K    NorthEast none Cloud_T12_T36_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  Cloud_293 Prof_Heights Prof_T12_T36 none PANEL:a@293K    NorthEast none Cloud_T12_T36_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  Cloud_298 Prof_Heights Prof_T12_T36 none PANEL:d@298K    NorthEast none Cloud_T12_T36_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  Cloud_303 Prof_Heights Prof_T12_T36 none PANEL:g@303K    NorthEast none Cloud_T12_T36_CO_S303_G10M5_ALL.jpg
 
-#LinePlot: CG_UP_C0050_S298 Cloud_298 Prof_Heights Prof_T12_T36 none PANEL:a@298K@50/cc  NorthEast none Cloud_T12_T36_CG_C50_S298.jpg
-#LinePlot: CG_UP_C0400_S298 Cloud_298 Prof_Heights Prof_T12_T36 none PANEL:d@298K@400/cc  NorthEast none Cloud_T12_T36_CG_C400_S298.jpg
-#LinePlot: CG_UP_C1600_S298 Cloud_298 Prof_Heights Prof_T12_T36 none PANEL:g@298K@1600/cc  NorthEast none Cloud_T12_T36_CG_C1600_S298.jpg
+LinePlot: CG_UP_C0050_S298 Cloud_298 Prof_Heights Prof_T12_T36 none PANEL:a@298K@50/cc  NorthEast none Cloud_T12_T36_CG_C50_S298.jpg
+LinePlot: CG_UP_C0400_S298 Cloud_298 Prof_Heights Prof_T12_T36 none PANEL:d@298K@400/cc  NorthEast none Cloud_T12_T36_CG_C400_S298.jpg
+LinePlot: CG_UP_C1600_S298 Cloud_298 Prof_Heights Prof_T12_T36 none PANEL:g@298K@1600/cc  NorthEast none Cloud_T12_T36_CG_C1600_S298.jpg
 
 LinePlot: CO_UP_S293_G10M5_ALL  Cloud_LWP0P01_293 Prof_Heights Prof_T12_T36 none PANEL:a@293K@LWP@0.01    NorthEast none Cloud_T12_T36_CO_S293_G10M5_LWP0P01_ALL.jpg
 LinePlot: CO_UP_S298_G10M5_ALL  Cloud_LWP0P01_298 Prof_Heights Prof_T12_T36 none PANEL:d@298K@LWP@0.01    NorthEast none Cloud_T12_T36_CO_S298_G10M5_LWP0P01_ALL.jpg
@@ -389,14 +383,14 @@ LinePlot: CG_UP_C1600_S298 Cloud_LWP1P00_298 Prof_Heights Prof_T12_T36 none PANE
 ########### For Update #############
 
 ### Albedo
-ContourPlot: ContourPsetCCN AlbedoLon_T12 AlbedoLat_T12 Albedo_T12 ContourSelect_T12 PANEL:a@t@=@12@h 1 1 40 LightGray Albedo_T12
-ContourPlot: ContourPsetCCN AlbedoLon_T24 AlbedoLat_T24 Albedo_T24 ContourSelect_T24 PANEL:b@t@=@24@h 1 1 40 LightGray Albedo_T24
-ContourPlot: ContourPsetCCN AlbedoLon_T36 AlbedoLat_T36 Albedo_T36 ContourSelect_T36 PANEL:c@t@=@36@h 1 1 40 LightGray Albedo_T36
+#ContourPlot: ContourPsetCCN AlbedoLon_T12 AlbedoLat_T12 Albedo_T12 ContourSelect_T12 PANEL:a@t@=@12@h 1 1 40 LightGray Albedo_T12
+#ContourPlot: ContourPsetCCN AlbedoLon_T24 AlbedoLat_T24 Albedo_T24 ContourSelect_T24 PANEL:b@t@=@24@h 1 1 40 LightGray Albedo_T24
+#ContourPlot: ContourPsetCCN AlbedoLon_T36 AlbedoLat_T36 Albedo_T36 ContourSelect_T36 PANEL:c@t@=@36@h 1 1 40 LightGray Albedo_T36
 
 ### Surface divergence
-ContourPlot: ContourPsetCCN SfcConvLon_T12 SfcConvLat_T12 SfcConv_T12 ContourSelect_T12 PANEL:d@t@=@12@h 1 1 40 redblue SfcConv_T12
-ContourPlot: ContourPsetCCN SfcConvLon_T24 SfcConvLat_T24 SfcConv_T24 ContourSelect_T24 PANEL:e@t@=@24@h 1 1 40 redblue SfcConv_T24
-ContourPlot: ContourPsetCCN SfcConvLon_T36 SfcConvLat_T36 SfcConv_T36 ContourSelect_T36 PANEL:f@t@=@36@h 1 1 40 redblue SfcConv_T36
+#ContourPlot: ContourPsetCCN SfcConvLon_T12 SfcConvLat_T12 SfcConv_T12 ContourSelect_T12 PANEL:d@t@=@12@h 1 1 40 redblue SfcConv_T12
+#ContourPlot: ContourPsetCCN SfcConvLon_T24 SfcConvLat_T24 SfcConv_T24 ContourSelect_T24 PANEL:e@t@=@24@h 1 1 40 redblue SfcConv_T24
+#ContourPlot: ContourPsetCCN SfcConvLon_T36 SfcConvLat_T36 SfcConv_T36 ContourSelect_T36 PANEL:f@t@=@36@h 1 1 40 redblue SfcConv_T36
 
 ##################################################################
 ##################### DISTRIBUTION PLOTS #########################
@@ -407,123 +401,37 @@ ContourPlot: ContourPsetCCN SfcConvLon_T36 SfcConvLat_T36 SfcConv_T36 ContourSel
 #### 1um GCCN median radius ####
 
 # Vary CCN, hold SST constant
-DistPlot: CO_S293_G10M5 tavg_hist_pcprr Rainfall_Rate,_SST:_293K,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_S293_G10M5.jpg
-DistPlot: CO_S298_G10M5 tavg_hist_pcprr Rainfall_Rate,_SST:_298K,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_S298_G10M5.jpg
-DistPlot: CO_S303_G10M5 tavg_hist_pcprr Rainfall_Rate,_SST:_303K,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_S303_G10M5.jpg
+#DistPlot: CO_S293_G10M5 tavg_hist_pcprr Rainfall_Rate,_SST:_293K,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_S293_G10M5.jpg
+#DistPlot: CO_S298_G10M5 tavg_hist_pcprr Rainfall_Rate,_SST:_298K,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_S298_G10M5.jpg
+#DistPlot: CO_S303_G10M5 tavg_hist_pcprr Rainfall_Rate,_SST:_303K,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_S303_G10M5.jpg
 
 # Vary SST, hold CCN constant
-DistPlot: CO_C0050_G10M5 tavg_hist_pcprr Rainfall_Rate,_CCN:_50/cc,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_C0050_G10M5.jpg
-DistPlot: CO_C0100_G10M5 tavg_hist_pcprr Rainfall_Rate,_CCN:_100/cc,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_C0100_G10M5.jpg
-DistPlot: CO_C0200_G10M5 tavg_hist_pcprr Rainfall_Rate,_CCN:_200/cc,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_C0200_G10M5.jpg
-DistPlot: CO_C0400_G10M5 tavg_hist_pcprr Rainfall_Rate,_CCN:_400/cc,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_C0400_G10M5.jpg
-DistPlot: CO_C0800_G10M5 tavg_hist_pcprr Rainfall_Rate,_CCN:_800/cc,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_C0800_G10M5.jpg
-DistPlot: CO_C1200_G10M5 tavg_hist_pcprr Rainfall_Rate,_CCN:_1200/cc,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_C1200_G10M5.jpg
-DistPlot: CO_C1600_G10M5 tavg_hist_pcprr Rainfall_Rate,_CCN:_1600/cc,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_C1600_G10M5.jpg
+#DistPlot: CO_C0050_G10M5 tavg_hist_pcprr Rainfall_Rate,_CCN:_50/cc,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_C0050_G10M5.jpg
+#DistPlot: CO_C0100_G10M5 tavg_hist_pcprr Rainfall_Rate,_CCN:_100/cc,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_C0100_G10M5.jpg
+#DistPlot: CO_C0200_G10M5 tavg_hist_pcprr Rainfall_Rate,_CCN:_200/cc,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_C0200_G10M5.jpg
+#DistPlot: CO_C0400_G10M5 tavg_hist_pcprr Rainfall_Rate,_CCN:_400/cc,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_C0400_G10M5.jpg
+#DistPlot: CO_C0800_G10M5 tavg_hist_pcprr Rainfall_Rate,_CCN:_800/cc,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_C0800_G10M5.jpg
+#DistPlot: CO_C1200_G10M5 tavg_hist_pcprr Rainfall_Rate,_CCN:_1200/cc,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_C1200_G10M5.jpg
+#DistPlot: CO_C1600_G10M5 tavg_hist_pcprr Rainfall_Rate,_CCN:_1600/cc,_GCCN:_1e-5/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CO_C1600_G10M5.jpg
 
 #### 3um GCCN median radius ####
 
 # Vary GCCN, hold CCN, SST constant
-DistPlot: CG_C0050_S298 tavg_hist_pcprr Rainfall_Rate,_CCN:_50/cc,_SST:_298K Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_C50_S298.jpg
-DistPlot: CG_C0400_S298 tavg_hist_pcprr Rainfall_Rate,_CCN:_400/cc,_SST:_298K Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_C400_S298.jpg
-DistPlot: CG_C1600_S298 tavg_hist_pcprr Rainfall_Rate,_CCN:_1600/cc,_SST:_298K Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_C1600_S298.jpg
+#DistPlot: CG_C0050_S298 tavg_hist_pcprr Rainfall_Rate,_CCN:_50/cc,_SST:_298K Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_C50_S298.jpg
+#DistPlot: CG_C0400_S298 tavg_hist_pcprr Rainfall_Rate,_CCN:_400/cc,_SST:_298K Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_C400_S298.jpg
+#DistPlot: CG_C1600_S298 tavg_hist_pcprr Rainfall_Rate,_CCN:_1600/cc,_SST:_298K Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_C1600_S298.jpg
 
-DistPlot: CG_C0400_S303 tavg_hist_pcprr Rainfall_Rate,_CCN:_400/cc,_SST:_303K Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_C400_S303.jpg
-
-# Vary SST, hold CCN, GCCN constant
-DistPlot: CG_C0400_G10M0 tavg_hist_pcprr Rainfall_Rate,_CCN:_400/cc,_GCCN:_1/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_C400_G10M0.jpg
-DistPlot: CG_C0400_G10M2 tavg_hist_pcprr Rainfall_Rate,_CCN:_400/cc,_GCCN:_1e-2/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_C400_G10M2.jpg
-DistPlot: CG_C0400_G10M4 tavg_hist_pcprr Rainfall_Rate,_CCN:_400/cc,_GCCN:_1e-4/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_C400_G10M4.jpg
-
-# Vary CCN, hold SST, GCCN constant
-DistPlot: CG_S298_G10M0 tavg_hist_pcprr Rainfall_Rate,_SST:_298K,_GCCN:_1/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_S298_G10M0.jpg
-DistPlot: CG_S298_G10M2 tavg_hist_pcprr Rainfall_Rate,_SST:_298K,_GCCN:_1e-2/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_S298_G10M2.jpg
-DistPlot: CG_S298_G10M4 tavg_hist_pcprr Rainfall_Rate,_SST:_298K,_GCCN:_1e-4/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_S298_G10M4.jpg
-
-##################################################################
-##################### TIME SERIES PLOTS ##########################
-##################################################################
-
-####################### SW upward flux #############################
-
-#### 1um GCCN median radius ####
-
-# Vary CCN, hold SST constant
-#TsavgPlot: CO_S293_G10M5 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_SST:_293K,_GCCN:_1e-5/cc NorthWest -150.0 150.0 TsAvgTopSwup_CO_S293_G10M5.jpg
-#TsavgPlot: CO_S298_G10M5 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_SST:_298K,_GCCN:_1e-5/cc NorthWest -150.0 150.0 TsAvgTopSwup_CO_S298_G10M5.jpg
-#TsavgPlot: CO_S303_G10M5 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_SST:_303K,_GCCN:_1e-5/cc NorthWest -150.0 150.0 TsAvgTopSwup_CO_S303_G10M5.jpg
-
-# Vary SST, hold CCN constant
-#TsavgPlot: CO_C0050_G10M5 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_50/cc,_GCCN:_1e-5/cc NorthWest -150.0 150.0 TsAvgTopSwup_CO_C0050_G10M5.jpg
-#TsavgPlot: CO_C0100_G10M5 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_100/cc,_GCCN:_1e-5/cc NorthWest -150.0 150.0 TsAvgTopSwup_CO_C0100_G10M5.jpg
-#TsavgPlot: CO_C0200_G10M5 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_200/cc,_GCCN:_1e-5/cc NorthWest -150.0 150.0 TsAvgTopSwup_CO_C0200_G10M5.jpg
-#TsavgPlot: CO_C0400_G10M5 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_400/cc,_GCCN:_1e-5/cc NorthWest -150.0 150.0 TsAvgTopSwup_CO_C0400_G10M5.jpg
-#TsavgPlot: CO_C0800_G10M5 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_800/cc,_GCCN:_1e-5/cc NorthWest -150.0 150.0 TsAvgTopSwup_CO_C0800_G10M5.jpg
-#TsavgPlot: CO_C1200_G10M5 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_1200/cc,_GCCN:_1e-5/cc NorthWest -150.0 150.0 TsAvgTopSwup_CO_C1200_G10M5.jpg
-#TsavgPlot: CO_C1600_G10M5 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_1600/cc,_GCCN:_1e-5/cc NorthWest -150.0 150.0 TsAvgTopSwup_CO_C1600_G10M5.jpg
-
-#### 3um GCCN median radius ####
-
-# Vary GCCN, hold SST, GCCN constant
-#TsavgPlot: CG_C0050_S298 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_50/cc,_SST:_298K NorthWest -150.0 150.0 TsAvgTopSwup_CG_C50_S298.jpg
-#TsavgPlot: CG_C0400_S298 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_400/cc,_SST:_298K NorthWest -150.0 150.0 TsAvgTopSwup_CG_C400_S298.jpg
-#TsavgPlot: CG_C1600_S298 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_1600/cc,_SST:_298K NorthWest -150.0 150.0 TsAvgTopSwup_CG_C1600_S298.jpg
-
-#TsavgPlot: CG_C0400_S303 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_400/cc,_SST:_303K NorthWest -150.0 150.0 TsAvgTopSwup_CG_C400_S303.jpg
+#DistPlot: CG_C0400_S303 tavg_hist_pcprr Rainfall_Rate,_CCN:_400/cc,_SST:_303K Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_C400_S303.jpg
 
 # Vary SST, hold CCN, GCCN constant
-#TsavgPlot: CG_C0400_G10M0 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_400/cc,_GCCN:_1/cc NorthWest -150.0 150.0 TsAvgTopSwup_CG_C400_G10M0.jpg
-#TsavgPlot: CG_C0400_G10M2 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_400/cc,_GCCN:_1e-2/cc NorthWest -150.0 150.0 TsAvgTopSwup_CG_C400_G10M2.jpg
-#TsavgPlot: CG_C0400_G10M4 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_CCN:_400/cc,_GCCN:_1e-4/cc NorthWest -150.0 150.0 TsAvgTopSwup_CG_C400_G10M4.jpg
+#DistPlot: CG_C0400_G10M0 tavg_hist_pcprr Rainfall_Rate,_CCN:_400/cc,_GCCN:_1/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_C400_G10M0.jpg
+#DistPlot: CG_C0400_G10M2 tavg_hist_pcprr Rainfall_Rate,_CCN:_400/cc,_GCCN:_1e-2/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_C400_G10M2.jpg
+#DistPlot: CG_C0400_G10M4 tavg_hist_pcprr Rainfall_Rate,_CCN:_400/cc,_GCCN:_1e-4/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_C400_G10M4.jpg
 
 # Vary CCN, hold SST, GCCN constant
-#TsavgPlot: CG_S298_G10M0 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_SST:_298K,_GCCN:_1/cc NorthWest -150.0 150.0 TsAvgTopSwup_CG_S298_G10M0.jpg
-#TsavgPlot: CG_S298_G10M2 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_SST:_298K,_GCCN:_1e-2/cc NorthWest -150.0 150.0 TsAvgTopSwup_CG_S298_G10M2.jpg
-#TsavgPlot: CG_S298_G10M4 hda_top_swup hda_top_swup diff localtime Radiative_Flux W/m^2 Upward_SW_Flux_Diff,_SST:_298K,_GCCN:_1e-4/cc NorthWest -150.0 150.0 TsAvgTopSwup_CG_S298_G10M4.jpg
-
-####################### RAIN/CLOUD ############################
-
-#### 1um GCCN median radius ####
-
-# Vary CCN, hold SST constant
-#TsavgPlot: CO_S293_G10M5 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_SST:_293K,_GCCN:_1e-5/cc NorthWest 0.0 0.6 TsAvgR2C_CO_S293_G10M5.jpg
-#TsavgPlot: CO_S298_G10M5 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_SST:_298K,_GCCN:_1e-5/cc NorthWest 0.0 0.6 TsAvgR2C_CO_S298_G10M5.jpg
-#TsavgPlot: CO_S303_G10M5 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_SST:_303K,_GCCN:_1e-5/cc NorthWest 0.0 0.6 TsAvgR2C_CO_S303_G10M5.jpg
-
-# Vary SST, hold CCN constant
-#TsavgPlot: CO_C0050_G10M5 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_50/cc,_GCCN:_1e-5/cc NorthWest 0.0 1.5 TsAvgR2C_CO_C0050_G10M5.jpg
-#TsavgPlot: CO_C0100_G10M5 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_100/cc,_GCCN:_1e-5/cc NorthWest 0.0 1.5 TsAvgR2C_CO_C0100_G10M5.jpg
-#TsavgPlot: CO_C0200_G10M5 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_200/cc,_GCCN:_1e-5/cc NorthWest 0.0 1.5 TsAvgR2C_CO_C0200_G10M5.jpg
-#TsavgPlot: CO_C0400_G10M5 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_400/cc,_GCCN:_1e-5/cc NorthWest 0.0 1.5 TsAvgR2C_CO_C0400_G10M5.jpg
-#TsavgPlot: CO_C0800_G10M5 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_800/cc,_GCCN:_1e-5/cc NorthWest 0.0 1.5 TsAvgR2C_CO_C0800_G10M5.jpg
-#TsavgPlot: CO_C1200_G10M5 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_1200/cc,_GCCN:_1e-5/cc NorthWest 0.0 1.5 TsAvgR2C_CO_C1200_G10M5.jpg
-#TsavgPlot: CO_C1600_G10M5 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_1600/cc,_GCCN:_1e-5/cc NorthWest 0.0 1.5 TsAvgR2C_CO_C1600_G10M5.jpg
-
-#### 3um GCCN median radius ####
-
-# Vary GCCN, hold CCN, SST constant
-#TsavgPlot: CG_C0050_S298 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_50/cc,_SST:_298K NorthWest 0.0 0.6 TsAvgR2C_CG_C50_S298.jpg
-#TsavgPlot: CG_C0400_S298 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_400/cc,_SST:_298K NorthWest 0.0 0.6 TsAvgR2C_CG_C400_S298.jpg
-#TsavgPlot: CG_C1600_S298 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_1600/cc,_SST:_298K NorthWest 0.0 0.6 TsAvgR2C_CG_C1600_S298.jpg
-
-#TsavgPlot: CG_C0400_S303 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_400/cc,_SST:_303K NorthWest 0.0 1.5 TsAvgR2C_CG_C400_S303.jpg
-
-# Vary SST, hold CCN, GCCN constant
-#TsavgPlot: CG_C0400_G10M0 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_400/cc,_GCCN:_1/cc NorthWest 0.0 1.5 TsAvgR2C_CG_C0400_G10M0.jpg
-#TsavgPlot: CG_C0400_G10M2 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_400/cc,_GCCN:_1e-2/cc NorthWest 0.0 1.5 TsAvgR2C_CG_C400_G10M2.jpg
-#TsavgPlot: CG_C0400_G10M4 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_CCN:_400/cc,_GCCN:_1e-4/cc NorthWest 0.0 1.5 TsAvgR2C_CG_C400_G10M4.jpg
-
-# Vary CCN, hold SST, GCCN constant
-#TsavgPlot: CG_S298_G10M0 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_SST:_298K,_GCCN:_1/cc NorthWest 0.0 0.6 TsAvgR2C_CG_S298_G10M0.jpg
-#TsavgPlot: CG_S298_G10M2 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_SST:_298K,_GCCN:_1e-2/cc NorthWest 0.0 0.6 TsAvgR2C_CG_S298_G10M2.jpg
-#TsavgPlot: CG_S298_G10M4 hda_vint_r2c hda_vint_r2c abs localtime RAIN/CLOUD ratio Average_RAIN/CLOUD,_SST:_298K,_GCCN:_1e-4/cc NorthWest 0.0 0.6 TsAvgR2C_CG_S298_G10M4.jpg
-
-# LTSS sample
-#TsavgPlot: LTSS_SAMPLE ltss ltss abs localtime Static_Stability K LTSS SouthWest 8.0 20.0 TsAvg_LTSS_SAMPLE.jpg
-
-# average cloud depth
-#TsavgPlot: CO_S293_G10M5 horiz_avg_cdepth havg_cloud_depth abs localtime Depth m Avg_Cloud_Depth,_SST:_293K NorthWest 0 1000 TsAvg_cdepth_CO_S293_G10M5.jpg
-#TsavgPlot: CO_S298_G10M5 horiz_avg_cdepth havg_cloud_depth abs localtime Depth m Avg_Cloud_Depth,_SST:_298K NorthWest 0 1000 TsAvg_cdepth_CO_S298_G10M5.jpg
-#TsavgPlot: CO_S303_G10M5 horiz_avg_cdepth havg_cloud_depth abs localtime Depth m Avg_Cloud_Depth,_SST:_303K NorthWest 0 1000 TsAvg_cdepth_CO_S303.jpg
+#DistPlot: CG_S298_G10M0 tavg_hist_pcprr Rainfall_Rate,_SST:_298K,_GCCN:_1/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_S298_G10M0.jpg
+#DistPlot: CG_S298_G10M2 tavg_hist_pcprr Rainfall_Rate,_SST:_298K,_GCCN:_1e-2/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_S298_G10M2.jpg
+#DistPlot: CG_S298_G10M4 tavg_hist_pcprr Rainfall_Rate,_SST:_298K,_GCCN:_1e-4/cc Rainfall_Rate_(mm/hr) Fraction_of_Domain NorthEast 0.00001 0.1 RrateDist_CG_S298_G10M4.jpg
 
 ##################################################################
 ####################### PROFILE PLOTS ############################
@@ -760,38 +668,38 @@ DistPlot: CG_S298_G10M4 tavg_hist_pcprr Rainfall_Rate,_SST:_298K,_GCCN:_1e-4/cc 
 #### 1um GCCN median radius ####
 
 # Vary CCN, hold SST constant
-ProfPlot: CO_S293_G10M5 w_M1_T12_T36_lwp0p01 w abs SST:@293K,@GCCN:@1e-5/cc w-bar@(m/s) Height@(km) NorthWest -0.001:0.0001:0.001 0.0 4.0 W_M1_T12_T36_lwp0p01_CO_S293_G10M5.jpg
-ProfPlot: CO_S298_G10M5 w_M1_T12_T36_lwp0p01 w abs SST:@298K,@GCCN:@1e-5/cc w-bar@(m/s) Height@(km) NorthWest -0.005:0.0005:0.005 0.0 4.0 W_M1_T12_T36_lwp0p01_CO_S298_G10M5.jpg
-ProfPlot: CO_S303_G10M5 w_M1_T12_T36_lwp0p01 w abs SST:@303K,@GCCN:@1e-5/cc w-bar@(m/s) Height@(km) NorthWest -0.04:0.001:0.04 0.0 4.0 W_M1_T12_T36_lwp0p01_CO_S303_G10M5.jpg
+#ProfPlot: CO_S293_G10M5 w_M1_T12_T36_lwp0p01 w abs SST:@293K,@GCCN:@1e-5/cc w-bar@(m/s) Height@(km) NorthWest -0.001:0.0001:0.001 0.0 4.0 W_M1_T12_T36_lwp0p01_CO_S293_G10M5.jpg
+#ProfPlot: CO_S298_G10M5 w_M1_T12_T36_lwp0p01 w abs SST:@298K,@GCCN:@1e-5/cc w-bar@(m/s) Height@(km) NorthWest -0.005:0.0005:0.005 0.0 4.0 W_M1_T12_T36_lwp0p01_CO_S298_G10M5.jpg
+#ProfPlot: CO_S303_G10M5 w_M1_T12_T36_lwp0p01 w abs SST:@303K,@GCCN:@1e-5/cc w-bar@(m/s) Height@(km) NorthWest -0.04:0.001:0.04 0.0 4.0 W_M1_T12_T36_lwp0p01_CO_S303_G10M5.jpg
 
 
 # Vary SST, hold CCN constant
-ProfPlot: CO_C0050_G10M5 w_M1_T12_T36_lwp0p01 w abs CCN:@50/cc,@GCCN:@1e-5/cc w-bar@(m/s) Height@(km) NorthWest -0.04:0.001:0.04 0.0 4.0 W_M1_T12_T36_lwp0p01_CO_C0050_G10M5.jpg
-ProfPlot: CO_C0100_G10M5 w_M1_T12_T36_lwp0p01 w abs CCN:@100/cc,@GCCN:@1e-5/cc w-bar@(m/s) Height@(km) NorthWest -0.04:0.001:0.04 0.0 4.0 W_M1_T12_T36_lwp0p01_CO_C0100_G10M5.jpg
-ProfPlot: CO_C0200_G10M5 w_M1_T12_T36_lwp0p01 w abs CCN:@200/cc,@GCCN:@1e-5/cc w-bar@(m/s) Height@(km) NorthWest -0.04:0.001:0.04 0.0 4.0 W_M1_T12_T36_lwp0p01_CO_C0200_G10M5.jpg
-ProfPlot: CO_C0400_G10M5 w_M1_T12_T36_lwp0p01 w abs CCN:@400/cc,@GCCN:@1e-5/cc w-bar@(m/s) Height@(km) NorthWest -0.04:0.001:0.04 0.0 4.0 W_M1_T12_T36_lwp0p01_CO_C0400_G10M5.jpg
-ProfPlot: CO_C0800_G10M5 w_M1_T12_T36_lwp0p01 w abs CCN:@800/cc,@GCCN:@1e-5/cc w-bar@(m/s) Height@(km) NorthWest -0.04:0.001:0.04 0.0 4.0 W_M1_T12_T36_lwp0p01_CO_C0800_G10M5.jpg
-ProfPlot: CO_C1200_G10M5 w_M1_T12_T36_lwp0p01 w abs CCN:@1200/cc,@GCCN:@1e-5/cc w-bar@(m/s) Height@(km) NorthWest -0.04:0.001:0.04 0.0 4.0 W_M1_T12_T36_lwp0p01_CO_C1200_G10M5.jpg
-ProfPlot: CO_C1600_G10M5 w_M1_T12_T36_lwp0p01 w abs CCN:@1600/cc,@GCCN:@1e-5/cc w-bar@(m/s) Height@(km) NorthWest -0.04:0.001:0.04 0.0 4.0 W_M1_T12_T36_lwp0p01_CO_C1600_G10M5.jpg
+#ProfPlot: CO_C0050_G10M5 w_M1_T12_T36_lwp0p01 w abs CCN:@50/cc,@GCCN:@1e-5/cc w-bar@(m/s) Height@(km) NorthWest -0.04:0.001:0.04 0.0 4.0 W_M1_T12_T36_lwp0p01_CO_C0050_G10M5.jpg
+#ProfPlot: CO_C0100_G10M5 w_M1_T12_T36_lwp0p01 w abs CCN:@100/cc,@GCCN:@1e-5/cc w-bar@(m/s) Height@(km) NorthWest -0.04:0.001:0.04 0.0 4.0 W_M1_T12_T36_lwp0p01_CO_C0100_G10M5.jpg
+#ProfPlot: CO_C0200_G10M5 w_M1_T12_T36_lwp0p01 w abs CCN:@200/cc,@GCCN:@1e-5/cc w-bar@(m/s) Height@(km) NorthWest -0.04:0.001:0.04 0.0 4.0 W_M1_T12_T36_lwp0p01_CO_C0200_G10M5.jpg
+#ProfPlot: CO_C0400_G10M5 w_M1_T12_T36_lwp0p01 w abs CCN:@400/cc,@GCCN:@1e-5/cc w-bar@(m/s) Height@(km) NorthWest -0.04:0.001:0.04 0.0 4.0 W_M1_T12_T36_lwp0p01_CO_C0400_G10M5.jpg
+#ProfPlot: CO_C0800_G10M5 w_M1_T12_T36_lwp0p01 w abs CCN:@800/cc,@GCCN:@1e-5/cc w-bar@(m/s) Height@(km) NorthWest -0.04:0.001:0.04 0.0 4.0 W_M1_T12_T36_lwp0p01_CO_C0800_G10M5.jpg
+#ProfPlot: CO_C1200_G10M5 w_M1_T12_T36_lwp0p01 w abs CCN:@1200/cc,@GCCN:@1e-5/cc w-bar@(m/s) Height@(km) NorthWest -0.04:0.001:0.04 0.0 4.0 W_M1_T12_T36_lwp0p01_CO_C1200_G10M5.jpg
+#ProfPlot: CO_C1600_G10M5 w_M1_T12_T36_lwp0p01 w abs CCN:@1600/cc,@GCCN:@1e-5/cc w-bar@(m/s) Height@(km) NorthWest -0.04:0.001:0.04 0.0 4.0 W_M1_T12_T36_lwp0p01_CO_C1600_G10M5.jpg
 
 #### 3um GCCN median radius ####
 
 # Vary GCCN, hold CCN, SST constant
-ProfPlot: CG_C0050_S298 w_M1_T12_T36_lwp0p01 w abs CCN:@50/cc,@SST:@298K w-bar@(m/s) Height@(km) NorthWest -0.01:0.001:0.01 0.0 4.0 W_M1_T12_T36_lwp0p01_CG_C50_S298.jpg
-ProfPlot: CG_C0400_S298 w_M1_T12_T36_lwp0p01 w abs CCN:@400/cc,@SST:@298K w-bar@(m/s) Height@(km) NorthWest -0.01:0.001:0.01 0.0 4.0 W_M1_T12_T36_lwp0p01_CG_C400_S298.jpg
-ProfPlot: CG_C1600_S298 w_M1_T12_T36_lwp0p01 w abs CCN:@1600/cc,@SST:@298K w-bar@(m/s) Height@(km) NorthWest -0.01:0.001:0.01 0.0 4.0 W_M1_T12_T36_lwp0p01_CG_C1600_S298.jpg
+#ProfPlot: CG_C0050_S298 w_M1_T12_T36_lwp0p01 w abs CCN:@50/cc,@SST:@298K w-bar@(m/s) Height@(km) NorthWest -0.01:0.001:0.01 0.0 4.0 W_M1_T12_T36_lwp0p01_CG_C50_S298.jpg
+#ProfPlot: CG_C0400_S298 w_M1_T12_T36_lwp0p01 w abs CCN:@400/cc,@SST:@298K w-bar@(m/s) Height@(km) NorthWest -0.01:0.001:0.01 0.0 4.0 W_M1_T12_T36_lwp0p01_CG_C400_S298.jpg
+#ProfPlot: CG_C1600_S298 w_M1_T12_T36_lwp0p01 w abs CCN:@1600/cc,@SST:@298K w-bar@(m/s) Height@(km) NorthWest -0.01:0.001:0.01 0.0 4.0 W_M1_T12_T36_lwp0p01_CG_C1600_S298.jpg
 
-ProfPlot: CG_C0400_S303 w_M1_T12_T36_lwp0p01 w abs CCN:@400/cc,@SST:@303K w-bar@(m/s) Height@(km) NorthWest -0.1:0.01:0.1 0.0 4.0 W_M1_T12_T36_lwp0p01_CG_C400_S303.jpg
+#ProfPlot: CG_C0400_S303 w_M1_T12_T36_lwp0p01 w abs CCN:@400/cc,@SST:@303K w-bar@(m/s) Height@(km) NorthWest -0.1:0.01:0.1 0.0 4.0 W_M1_T12_T36_lwp0p01_CG_C400_S303.jpg
 
 # Vary SST, hold CCN, GCCN constant
-ProfPlot: CG_C0400_G10M0 w_M1_T12_T36_lwp0p01 w abs CCN:@400/cc,@GCCN:@1/cc w-bar@(m/s) Height@(km) NorthWest -0.02:0.001:0.02 0.0 4.0 W_M1_T12_T36_lwp0p01_CG_C400_G10M0.jpg
-ProfPlot: CG_C0400_G10M2 w_M1_T12_T36_lwp0p01 w abs CCN:@400/cc,@GCCN:@10e-2/cc w-bar@(m/s) Height@(km) NorthWest -0.02:0.001:0.02 0.0 4.0 W_M1_T12_T36_lwp0p01_CG_C400_G10M2.jpg
-ProfPlot: CG_C0400_G10M4 w_M1_T12_T36_lwp0p01 w abs CCN:@400/cc,@GCCN:@10e-4/cc w-bar@(m/s) Height@(km) NorthWest -0.02:0.001:0.02 0.0 4.0 W_M1_T12_T36_lwp0p01_CG_C400_G10M4.jpg
+#ProfPlot: CG_C0400_G10M0 w_M1_T12_T36_lwp0p01 w abs CCN:@400/cc,@GCCN:@1/cc w-bar@(m/s) Height@(km) NorthWest -0.02:0.001:0.02 0.0 4.0 W_M1_T12_T36_lwp0p01_CG_C400_G10M0.jpg
+#ProfPlot: CG_C0400_G10M2 w_M1_T12_T36_lwp0p01 w abs CCN:@400/cc,@GCCN:@10e-2/cc w-bar@(m/s) Height@(km) NorthWest -0.02:0.001:0.02 0.0 4.0 W_M1_T12_T36_lwp0p01_CG_C400_G10M2.jpg
+#ProfPlot: CG_C0400_G10M4 w_M1_T12_T36_lwp0p01 w abs CCN:@400/cc,@GCCN:@10e-4/cc w-bar@(m/s) Height@(km) NorthWest -0.02:0.001:0.02 0.0 4.0 W_M1_T12_T36_lwp0p01_CG_C400_G10M4.jpg
 
 # Vary CCN, hold SST, GCCN constant
-ProfPlot: CG_S298_G10M0 w_M1_T12_T36_lwp0p01 w abs SST:@298K,@GCCN:@1/cc w-bar@(m/s) Height@(km) NorthWest -0.01:0.001:0.01 0.0 4.0 W_M1_T12_T36_lwp0p01_CG_S298_G10M0.jpg
-ProfPlot: CG_S298_G10M2 w_M1_T12_T36_lwp0p01 w abs SST:@298K,@GCCN:@10e-2/cc w-bar@(m/s) Height@(km) NorthWest -0.01:0.001:0.01 0.0 4.0 W_M1_T12_T36_lwp0p01_CG_S298_G10M2.jpg
-ProfPlot: CG_S298_G10M4 w_M1_T12_T36_lwp0p01 w abs SST:@298K,@GCCN:@10e-4/cc w-bar@(m/s) Height@(km) NorthWest -0.01:0.001:0.01 0.0 4.0 W_M1_T12_T36_lwp0p01_CG_S298_G10M4.jpg
+#ProfPlot: CG_S298_G10M0 w_M1_T12_T36_lwp0p01 w abs SST:@298K,@GCCN:@1/cc w-bar@(m/s) Height@(km) NorthWest -0.01:0.001:0.01 0.0 4.0 W_M1_T12_T36_lwp0p01_CG_S298_G10M0.jpg
+#ProfPlot: CG_S298_G10M2 w_M1_T12_T36_lwp0p01 w abs SST:@298K,@GCCN:@10e-2/cc w-bar@(m/s) Height@(km) NorthWest -0.01:0.001:0.01 0.0 4.0 W_M1_T12_T36_lwp0p01_CG_S298_G10M2.jpg
+#ProfPlot: CG_S298_G10M4 w_M1_T12_T36_lwp0p01 w abs SST:@298K,@GCCN:@10e-4/cc w-bar@(m/s) Height@(km) NorthWest -0.01:0.001:0.01 0.0 4.0 W_M1_T12_T36_lwp0p01_CG_S298_G10M4.jpg
 
 ######### W 2nd moment, 12-36 hr ################
 
@@ -1150,52 +1058,3 @@ PlotDselect: Prof_T12_T36 1 1 1 1 0 4000  1 1
 PlotDselect: ContourSelect_T12  -36.5 -35.4   14.4 15.4    50.0 50.0    43200  43200
 PlotDselect: ContourSelect_T24  -36.5 -35.4   14.4 15.4    50.0 50.0    86400  86400
 PlotDselect: ContourSelect_T36  -36.5 -35.4   14.4 15.4    50.0 50.0   129600 129600
-
-### ####################### LWP time series plots ############################
-### 
-### # Hold SST, GCCN constant, vary CCN
-### #TsavgPlot: ccn_s293_g10m5.1um hda_vint_cond abs LWP mm Average_LWP,_SST:_293K,_GCCN:_10e-5/cc SouthEast 0.0 0.25 TsAvgLWP_S293_G10M5.1um.jpg
-### #TsavgPlot: ccn_s298_g10m5.1um hda_vint_cond abs LWP mm Average_LWP,_SST:_298K,_GCCN:_10e-5/cc NorthEast 0.0 0.25 TsAvgLWP_S298_G10M5.1um.jpg
-### #TsavgPlot: ccn_s303_g10m5.1um hda_vint_cond abs LWP mm Average_LWP,_SST:_303K,_GCCN:_10e-5/cc NorthEast 0.0 0.25 TsAvgLWP_S303_G10M5.1um.jpg
-### 
-### # Hold CCN, GCCN constant, vary SST
-### #TsavgPlot: sst_c50_g10m5.1um hda_vint_cond abs LWP mm Average_LWP,_CCN:_50/cc,_GCCN:_10e-5/cc NorthWest 0.0 0.25 TsAvgLWP_C50_G10M5.1um.jpg
-### #TsavgPlot: sst_c400_g10m5.1um hda_vint_cond abs LWP mm Average_LWP,_CCN:_400/cc,_GCCN:_10e-5/cc NorthEast 0.0 0.25 TsAvgLWP_C400_G10M5.1um.jpg
-### #TsavgPlot: sst_c1600_g10m5.1um hda_vint_cond abs LWP mm Average_LWP,_CCN:_1600/cc,_GCCN:_10e-5/cc NorthEast 0.0 0.25 TsAvgLWP_C1600_G10M5.1um.jpg
-### 
-### # Hold CCN, SST constant, vary GCCN
-### #TsavgPlot: gccn_c50_s298.1um hda_vint_cond abs LWP mm Average_LWP,_CCN:_50/cc,_SST:_298K NorthEast 0.0 0.25 TsAvgLWP_C50_S298.jpg
-### #TsavgPlot: gccn_c400_s298.1um hda_vint_cond abs LWP mm Average_LWP,_CCN:_400/cc,_SST:_298K NorthEast 0.0 0.25 TsAvgLWP_C400_S298.jpg
-### #TsavgPlot: gccn_c1600_s298.1um hda_vint_cond abs LWP mm Average_LWP,_CCN:_1600/cc,_SST:_298K NorthEast 0.0 0.25 TsAvgLWP_C1600_S303.jpg
-### 
-### # Hold CCN, SST constant, vary GCCN
-### #TsavgPlot: gccn_c400_s303.1um hda_vint_cond abs LWP mm Average_LWP,_CCN:_400/cc,_SST:_303K NorthEast 0.0 0.25 TsAvgLWP_C400_S303.jpg
-### 
-### ####################### cloud structure plots ############################
-### TwoDimPlot: ccn_s293_g10m5.1um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_SST:_293K,_GCCN:_10^-^5/cc Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 SouthEast CloudStructAvg_S293_G10M5.1um.jpg
-### TwoDimPlot: ccn_s298_g10m5.1um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_SST:_298K,_GCCN:_10^-^5/cc Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_S298_G10M5.1um.jpg
-### TwoDimPlot: ccn_s303_g10m5.1um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_SST:_303K,_GCCN:_10^-^5/cc Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_S303_G10M5.1um.jpg
-### 
-### TwoDimPlot: sst_c50_g10m5.1um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_50/cc,_GCCN:_10^-^5/cc Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_C50_G10M5.1um.jpg
-### TwoDimPlot: sst_c400_g10m5.1um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_400/cc,_GCCN:_10^-^5/cc Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_C400_G10M5.1um.jpg
-### TwoDimPlot: sst_c1600_g10m5.1um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_1600/cc,_GCCN:_10^-^5/cc Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_C1600_G10M5.1um.jpg
-### 
-### TwoDimPlot: ccn_s293_g10m5.1um min_ctop_tempc hda_cloud_frac Cloud_Structure,_SST:_293K,_GCCN:_10^-^5/cc Min_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 SouthEast CloudStructMin_S293_G10M5.1um.jpg
-### TwoDimPlot: ccn_s298_g10m5.1um min_ctop_tempc hda_cloud_frac Cloud_Structure,_SST:_298K,_GCCN:_10^-^5/cc Min_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructMin_S298_G10M5.1um.jpg
-### TwoDimPlot: ccn_s303_g10m5.1um min_ctop_tempc hda_cloud_frac Cloud_Structure,_SST:_303K,_GCCN:_10^-^5/cc Min_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructMin_S303_G10M5.1um.jpg
-### 
-### TwoDimPlot: sst_c50_g10m5.1um min_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_50/cc,_GCCN:_10^-^5/cc Min_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructMin_C50_G10M5.1um.jpg
-### TwoDimPlot: sst_c400_g10m5.1um min_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_400/cc,_GCCN:_10^-^5/cc Min_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructMin_C400_G10M5.1um.jpg
-### TwoDimPlot: sst_c1600_g10m5.1um min_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_1600/cc,_GCCN:_10^-^5/cc Min_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructMin_C1600_G10M5.1um.jpg
-### 
-### TwoDimPlot: gccn_c50_s298.13um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_50/cc,_SST:_298K_(-_1um,--_3um) Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_C50_S298.13um.jpg
-### TwoDimPlot: gccn_c400_s298.13um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_400/cc,_SST:_298K_(-_1um,--_3um) Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_C400_S298.13um.jpg
-### TwoDimPlot: gccn_c1600_s298.13um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_1600/cc,_SST:_298K_(-_1um,--_3um) Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_C1600_S298.13um.jpg
-### 
-### TwoDimPlot: gccn_c400_s303.13um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_400/cc,_SST:_303K_(-_1um,--_3um) Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_C400_S303.13um.jpg
-### 
-### TwoDimPlot: sst_c400_g10m0.13um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_400/cc,_GCCN:_1/cc_(-_1um,--_3um) Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_C400_G10M0.13um.jpg
-### TwoDimPlot: sst_c400_g10m4.13um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_CCN:_400/cc,_GCCN:_10^-^4/cc_(-_1um,--_3um) Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_C400_G10M4.13um.jpg
-### 
-### TwoDimPlot: ccn_s298_g10m0.13um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_SST:_298K,_GCCN:_1/cc_(-_1um,--_3um) Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_S298_G10M0.13um.jpg
-### TwoDimPlot: ccn_s298_g10m4.13um hda_ctop_tempc hda_cloud_frac Cloud_Structure,_SST:_298K,_GCCN:_10^-^4/cc_(-_1um,--_3um) Avg_Cloud_Top_Temperature_(Deg_C) 1.0 Cloud_Fraction 1.0 NorthEast CloudStructAvg_S298_G10M4.13um.jpg
