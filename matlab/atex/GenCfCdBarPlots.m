@@ -12,15 +12,11 @@ Pdir = Config.PlotDir;
 %   ith entry has corresponding SST(i), CCN(i), GCCN(i) values associated with it
 
 InFile = sprintf('%s/cf_cd_bar_graph_data.h5', Ddir);
-CF_START = squeeze(hdf5read(InFile, 'cf_start'));
-CF_END   = squeeze(hdf5read(InFile, 'cf_end'));
 CF_AVG   = squeeze(hdf5read(InFile, 'cf_avg'));
 COT_AVG  = squeeze(hdf5read(InFile, 'cot_avg'));
 COT_L0P01_AVG  = squeeze(hdf5read(InFile, 'cot_avg_lwp_0p01'));
 COT_L0P10_AVG  = squeeze(hdf5read(InFile, 'cot_avg_lwp_0p10'));
 COT_L1P00_AVG  = squeeze(hdf5read(InFile, 'cot_avg_lwp_1p00'));
-CD_START = squeeze(hdf5read(InFile, 'cd_start'));
-CD_END   = squeeze(hdf5read(InFile, 'cd_end'));
 CD_AVG   = squeeze(hdf5read(InFile, 'cd_avg'));
 ACC_PCP  = squeeze(hdf5read(InFile, 'acc_pcp'))/1000; % meters
 
@@ -44,10 +40,6 @@ Nsel = sum(Select);
 
 X = 1:Nsel; % using numbers allows for even spacing on the bar plot
 
-CFS = zeros([ Nsel 3 ]);
-CDS = zeros([ Nsel 3 ]);
-CFE = zeros([ Nsel 3 ]);
-CDE = zeros([ Nsel 3 ]);
 CFA = zeros([ Nsel 3 ]);
 COTA = zeros([ Nsel 3 ]);
 COT_L0P01_A = zeros([ Nsel 3 ]);
@@ -57,10 +49,6 @@ CDA = zeros([ Nsel 3 ]);
 ACP = zeros([ Nsel 3 ]);
 PRA = zeros([ Nsel 3 ]);
 
-CFS(:,1) = CF_START(Select);
-CDS(:,1) = CD_START(Select);
-CFE(:,1) = CF_END(Select);
-CDE(:,1) = CD_END(Select);
 CFA(:,1) = CF_AVG(Select);
 COTA(:,1) = COT_AVG(Select);
 COT_L0P01_A(:,1) = COT_L0P01_AVG(Select);
@@ -71,10 +59,6 @@ ACP(:,1) = ACC_PCP(Select);
 PRA(:,1) = PR_AVG(Select);
 
 Select = SST == 298 & GCCN == 1e-5;
-CFS(:,2) = CF_START(Select);
-CDS(:,2) = CD_START(Select);
-CFE(:,2) = CF_END(Select);
-CDE(:,2) = CD_END(Select);
 CFA(:,2) = CF_AVG(Select);
 COTA(:,2) = COT_AVG(Select);
 COT_L0P01_A(:,2) = COT_L0P01_AVG(Select);
@@ -85,10 +69,6 @@ ACP(:,2) = ACC_PCP(Select);
 PRA(:,2) = PR_AVG(Select);
 
 Select = SST == 303 & GCCN == 1e-5;
-CFS(:,3) = CF_START(Select);
-CDS(:,3) = CD_START(Select);
-CFE(:,3) = CF_END(Select);
-CDE(:,3) = CD_END(Select);
 CFA(:,3) = CF_AVG(Select);
 COTA(:,3) = COT_AVG(Select);
 COT_L0P01_A(:,3) = COT_L0P01_AVG(Select);
@@ -133,10 +113,6 @@ CDlabel = 'Max Cloud Depth (m)';
 APlabel = 'Accum Precip (m)';
 PRlabel = 'Avg Precip Rate (mm/h)';
 
-CFSfile = sprintf('%s/cf_start_bars.jpg', Pdir);
-CFEfile = sprintf('%s/cf_end_bars.jpg', Pdir);
-CDSfile = sprintf('%s/cd_start_bars.jpg', Pdir);
-CDEfile = sprintf('%s/cd_end_bars.jpg', Pdir);
 CFAfile = sprintf('%s/cf_avg_bars.jpg', Pdir);
 COTAfile = sprintf('%s/cot_avg_bars.jpg', Pdir);
 COT_L0P01_Afile = sprintf('%s/cot_lwp_0p01_avg_bars.jpg', Pdir);
@@ -152,8 +128,6 @@ PRAfile = sprintf('%s/pcprr_avg_bars.jpg', Pdir);
 AxisProps(iaxis).Name = 'Ylim';
 AxisProps(iaxis).Val  = [ 0 1.5 ];
 
-PlotBarSet(X, CFS,  't = 12 h', { 'a' }, Xlabel, CFlabel,  Bcolors, LegText, 'NorthWest', AxisProps, CFSfile);
-PlotBarSet(X, CFE,  't = 36 h', { 'a' }, Xlabel, CFlabel,  Bcolors, LegText, 'NorthWest', AxisProps, CFEfile);
 PlotBarSet(X, CFA,  '',         { 'a' }, Xlabel, CFlabel,  Bcolors, LegText, 'NorthWest', AxisProps, CFAfile);
 
 AxisProps(iaxis).Name = 'Ylim';
@@ -175,8 +149,6 @@ PlotBarSet(X, COT_L1P00_A, 'LWP > 1.00 mm', { 'd' }, Xlabel, COTlabel, Bcolors, 
 AxisProps(iaxis).Name = 'Ylim';
 AxisProps(iaxis).Val  = [ 0 6000 ];
 
-PlotBarSet(X, CDS, 't = 12 h', { 'c' }, Xlabel, CDlabel, Bcolors, LegText, 'NorthWest', AxisProps, CDSfile);
-PlotBarSet(X, CDE, 't = 36 h', { 'c' }, Xlabel, CDlabel, Bcolors, LegText, 'NorthWest', AxisProps, CDEfile);
 PlotBarSet(X, CDA, '',         { 'c' }, Xlabel, CDlabel, Bcolors, LegText, 'NorthWest', AxisProps, CDAfile);
 
 AxisProps(iaxis).Name = 'Ylim';
@@ -199,10 +171,6 @@ Nsel = sum(Select);
 
 X = 1:Nsel; % using numbers allows for even spacing on the bar plot
 
-CFS = zeros([ Nsel 4 ]);
-CDS = zeros([ Nsel 4 ]);
-CFE = zeros([ Nsel 4 ]);
-CDE = zeros([ Nsel 4 ]);
 CFA = zeros([ Nsel 4 ]);
 COTA = zeros([ Nsel 4 ]);
 COT_L0P01_A = zeros([ Nsel 4 ]);
@@ -212,10 +180,6 @@ CDA = zeros([ Nsel 4 ]);
 ACP = zeros([ Nsel 4 ]);
 PRA = zeros([ Nsel 4 ]);
 
-CFS(:,1) = CF_START(Select);
-CDS(:,1) = CD_START(Select);
-CFE(:,1) = CF_END(Select);
-CDE(:,1) = CD_END(Select);
 CFA(:,1) = CF_AVG(Select);
 COTA(:,1) = COT_AVG(Select);
 COT_L0P01_A(:,1) = COT_L0P01_AVG(Select);
@@ -226,10 +190,6 @@ ACP(:,1) = ACC_PCP(Select);
 PRA(:,1) = PR_AVG(Select);
 
 Select = SST == 298 & GCCN == 1e-4;
-CFS(:,2) = CF_START(Select);
-CDS(:,2) = CD_START(Select);
-CFE(:,2) = CF_END(Select);
-CDE(:,2) = CD_END(Select);
 CFA(:,2) = CF_AVG(Select);
 COTA(:,2) = COT_AVG(Select);
 COT_L0P01_A(:,2) = COT_L0P01_AVG(Select);
@@ -240,10 +200,6 @@ ACP(:,2) = ACC_PCP(Select);
 PRA(:,2) = PR_AVG(Select);
 
 Select = SST == 298 & GCCN == 1e-2;
-CFS(:,3) = CF_START(Select);
-CDS(:,3) = CD_START(Select);
-CFE(:,3) = CF_END(Select);
-CDE(:,3) = CD_END(Select);
 CFA(:,3) = CF_AVG(Select);
 COTA(:,3) = COT_AVG(Select);
 COT_L0P01_A(:,3) = COT_L0P01_AVG(Select);
@@ -254,10 +210,6 @@ ACP(:,3) = ACC_PCP(Select);
 PRA(:,3) = PR_AVG(Select);
 
 Select = SST == 298 & GCCN == 1;
-CFS(:,4) = CF_START(Select);
-CDS(:,4) = CD_START(Select);
-CFE(:,4) = CF_END(Select);
-CDE(:,4) = CD_END(Select);
 CFA(:,4) = CF_AVG(Select);
 COTA(:,4) = COT_AVG(Select);
 COT_L0P01_A(:,4) = COT_L0P01_AVG(Select);
@@ -295,10 +247,6 @@ CDlabel = 'Max Cloud Depth (m)';
 APlabel = 'Accum Precip (m)';
 PRlabel = 'Avg Precip Rate (mm/h)';
 
-CFSfile = sprintf('%s/cf_start_bars_gccn.jpg', Pdir);
-CFEfile = sprintf('%s/cf_end_bars_gccn.jpg', Pdir);
-CDSfile = sprintf('%s/cd_start_bars_gccn.jpg', Pdir);
-CDEfile = sprintf('%s/cd_end_bars_gccn.jpg', Pdir);
 CFAfile = sprintf('%s/cf_avg_bars_gccn.jpg', Pdir);
 COTAfile = sprintf('%s/cot_avg_bars_gccn.jpg', Pdir);
 COT_L0P01_Afile = sprintf('%s/cot_lwp_0p01_avg_bars_gccn.jpg', Pdir);
@@ -314,8 +262,6 @@ PRAfile = sprintf('%s/pcprr_avg_bars_gccn.jpg', Pdir);
 AxisProps(iaxis).Name = 'Ylim';
 AxisProps(iaxis).Val  = [ 0 1.5 ];
 
-PlotBarSet(X, CFS,  't = 12 h', { 'a' }, Xlabel, CFlabel,  Bcolors, LegText, 'NorthWest', AxisProps, CFSfile);
-PlotBarSet(X, CFE,  't = 36 h', { 'a' }, Xlabel, CFlabel,  Bcolors, LegText, 'NorthWest', AxisProps, CFEfile);
 PlotBarSet(X, CFA,  '',         { 'a' }, Xlabel, CFlabel,  Bcolors, LegText, 'NorthWest', AxisProps, CFAfile);
 
 AxisProps(iaxis).Name = 'Ylim';
@@ -337,8 +283,6 @@ PlotBarSet(X, COT_L1P00_A, 'LWP > 1.00 mm', { 'd' }, Xlabel, COTlabel, Bcolors, 
 AxisProps(iaxis).Name = 'Ylim';
 AxisProps(iaxis).Val  = [ 0 6000 ];
 
-PlotBarSet(X, CDS, 't = 12 h', { 'c' }, Xlabel, CDlabel, Bcolors, LegText, 'NorthWest', AxisProps, CDSfile);
-PlotBarSet(X, CDE, 't = 36 h', { 'c' }, Xlabel, CDlabel, Bcolors, LegText, 'NorthWest', AxisProps, CDEfile);
 PlotBarSet(X, CDA, '',         { 'c' }, Xlabel, CDlabel, Bcolors, LegText, 'NorthWest', AxisProps, CDAfile);
 
 AxisProps(iaxis).Name = 'Ylim';

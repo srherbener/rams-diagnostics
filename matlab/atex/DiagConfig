@@ -196,39 +196,39 @@ LinePlot: CG_UP_C1600_S298 Cloud_LWP1P00_298 Prof_Heights Prof_T12_T36 none PANE
 #LinePlot: CO_UP_C0400_G10M5 BuoyFlux Prof_Heights Prof_T12_T36 none PANEL:d@CCN:@400/cc  NorthEast none BuoyFlux_T12_T36_CO_C400_G10M5.jpg
 #LinePlot: CG_UP_C0400_S298  BuoyFlux Prof_Heights Prof_T12_T36 none PANEL:c  NorthEast none BuoyFlux_T12_T36_CG_C400_S298.jpg
 
-#LinePlot: CO_UP_S293_G10M5_ALL  BuoyFlux_293 Prof_Heights Prof_T12_T36 none PANEL:a@293K  NorthEast none BuoyFlux_T12_T36_CO_S293_G10M5_ALL.jpg
-#LinePlot: CO_UP_S298_G10M5_ALL  BuoyFlux_298 Prof_Heights Prof_T12_T36 none PANEL:d@298K  NorthEast none BuoyFlux_T12_T36_CO_S298_G10M5_ALL.jpg
-#LinePlot: CO_UP_S303_G10M5_ALL  BuoyFlux_303 Prof_Heights Prof_T12_T36 none PANEL:g@303K  NorthEast none BuoyFlux_T12_T36_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  BuoyFlux_293 Prof_Heights Prof_T12_T36 none PANEL:a@293K  NorthEast none BuoyFlux_T12_T36_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  BuoyFlux_298 Prof_Heights Prof_T12_T36 none PANEL:d@298K  NorthEast none BuoyFlux_T12_T36_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  BuoyFlux_303 Prof_Heights Prof_T12_T36 none PANEL:g@303K  NorthEast none BuoyFlux_T12_T36_CO_S303_G10M5_ALL.jpg
 
-#LinePlot: CG_UP_C0050_S298  BuoyFlux_298 Prof_Heights Prof_T12_T36 none PANEL:a@298K@50/cc  NorthEast none BuoyFlux_T12_T36_CG_C50_S298.jpg
-#LinePlot: CG_UP_C0400_S298  BuoyFlux_298 Prof_Heights Prof_T12_T36 none PANEL:d@298K@400/cc  NorthEast none BuoyFlux_T12_T36_CG_C400_S298.jpg
-#LinePlot: CG_UP_C1600_S298  BuoyFlux_298 Prof_Heights Prof_T12_T36 none PANEL:g@298K@1600/cc  NorthEast none BuoyFlux_T12_T36_CG_C1600_S298.jpg
+LinePlot: CG_UP_C0050_S298  BuoyFlux_298 Prof_Heights Prof_T12_T36 none PANEL:a@298K@50/cc  NorthEast none BuoyFlux_T12_T36_CG_C50_S298.jpg
+LinePlot: CG_UP_C0400_S298  BuoyFlux_298 Prof_Heights Prof_T12_T36 none PANEL:d@298K@400/cc  NorthEast none BuoyFlux_T12_T36_CG_C400_S298.jpg
+LinePlot: CG_UP_C1600_S298  BuoyFlux_298 Prof_Heights Prof_T12_T36 none PANEL:g@298K@1600/cc  NorthEast none BuoyFlux_T12_T36_CG_C1600_S298.jpg
 
 ### W variance
 #LinePlot: CO_UP_S298_G10M5  Wvar Prof_Heights Prof_T12_T36 none PANEL:e@SST:@298K  NorthWest none Wvar_T12_T36_CO_S298_G10M5.jpg
 #LinePlot: CO_UP_C0400_G10M5 Wvar Prof_Heights Prof_T12_T36 none PANEL:f@CCN:@400/cc  NorthWest none Wvar_T12_T36_CO_C400_G10M5.jpg
 #LinePlot: CG_UP_C0400_S298  Wvar Prof_Heights Prof_T12_T36 none PANEL:f  NorthWest none Wvar_T12_T36_CG_C400_S298.jpg
 
-#LinePlot: CO_UP_S293_G10M5_ALL  Wvar_293 Prof_Heights Prof_T12_T36 none PANEL:b@293K  NorthWest none Wvar_T12_T36_CO_S293_G10M5_ALL.jpg
-#LinePlot: CO_UP_S298_G10M5_ALL  Wvar_298 Prof_Heights Prof_T12_T36 none PANEL:e@298K  NorthWest none Wvar_T12_T36_CO_S298_G10M5_ALL.jpg
-#LinePlot: CO_UP_S303_G10M5_ALL  Wvar_303 Prof_Heights Prof_T12_T36 none PANEL:h@303K  NorthWest none Wvar_T12_T36_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  Wvar_293 Prof_Heights Prof_T12_T36 none PANEL:b@293K  NorthWest none Wvar_T12_T36_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  Wvar_298 Prof_Heights Prof_T12_T36 none PANEL:e@298K  NorthWest none Wvar_T12_T36_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  Wvar_303 Prof_Heights Prof_T12_T36 none PANEL:h@303K  NorthWest none Wvar_T12_T36_CO_S303_G10M5_ALL.jpg
 
-#LinePlot: CG_UP_C0050_S298  Wvar_298 Prof_Heights Prof_T12_T36 none PANEL:b@298K@50/cc  NorthWest none Wvar_T12_T36_CG_C50_S298.jpg
-#LinePlot: CG_UP_C0400_S298  Wvar_298 Prof_Heights Prof_T12_T36 none PANEL:e@298K@400/cc  NorthWest none Wvar_T12_T36_CG_C400_S298.jpg
-#LinePlot: CG_UP_C1600_S298  Wvar_298 Prof_Heights Prof_T12_T36 none PANEL:h@298K@1600/cc  NorthWest none Wvar_T12_T36_CG_C1600_S298.jpg
+LinePlot: CG_UP_C0050_S298  Wvar_298 Prof_Heights Prof_T12_T36 none PANEL:b@298K@50/cc  NorthWest none Wvar_T12_T36_CG_C50_S298.jpg
+LinePlot: CG_UP_C0400_S298  Wvar_298 Prof_Heights Prof_T12_T36 none PANEL:e@298K@400/cc  NorthWest none Wvar_T12_T36_CG_C400_S298.jpg
+LinePlot: CG_UP_C1600_S298  Wvar_298 Prof_Heights Prof_T12_T36 none PANEL:h@298K@1600/cc  NorthWest none Wvar_T12_T36_CG_C1600_S298.jpg
 
 ### W skew
 #LinePlot: CO_UP_S298_G10M5  Wskew Prof_Heights Prof_T12_T36 none PANEL:g@SST:@298K  NorthWest none Wskew_T12_T36_CO_S298_G10M5.jpg
 #LinePlot: CO_UP_C0400_G10M5 Wskew Prof_Heights Prof_T12_T36 none PANEL:h@CCN:@400/cc  NorthWest none Wskew_T12_T36_CO_C400_G10M5.jpg
 #LinePlot: CG_UP_C0400_S298  Wskew Prof_Heights Prof_T12_T36 none PANEL:i  NorthWest none Wskew_T12_T36_CG_C400_S298.jpg
 
-#LinePlot: CO_UP_S293_G10M5_ALL  Wskew_293 Prof_Heights Prof_T12_T36 none PANEL:c@293K  NorthWest none Wskew_T12_T36_CO_S293_G10M5_ALL.jpg
-#LinePlot: CO_UP_S298_G10M5_ALL  Wskew_298 Prof_Heights Prof_T12_T36 none PANEL:f@298K  NorthWest none Wskew_T12_T36_CO_S298_G10M5_ALL.jpg
-#LinePlot: CO_UP_S303_G10M5_ALL  Wskew_303 Prof_Heights Prof_T12_T36 none PANEL:i@303K  NorthWest none Wskew_T12_T36_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  Wskew_293 Prof_Heights Prof_T12_T36 none PANEL:c@293K  NorthWest none Wskew_T12_T36_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  Wskew_298 Prof_Heights Prof_T12_T36 none PANEL:f@298K  NorthWest none Wskew_T12_T36_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  Wskew_303 Prof_Heights Prof_T12_T36 none PANEL:i@303K  NorthWest none Wskew_T12_T36_CO_S303_G10M5_ALL.jpg
 
-#LinePlot: CG_UP_C0050_S298  Wskew_298 Prof_Heights Prof_T12_T36 none PANEL:c@298K@50/cc  NorthWest none Wskew_T12_T36_CG_C50_S298.jpg
-#LinePlot: CG_UP_C0400_S298  Wskew_298 Prof_Heights Prof_T12_T36 none PANEL:f@298K@400/cc  NorthWest none Wskew_T12_T36_CG_C400_S298.jpg
-#LinePlot: CG_UP_C1600_S298  Wskew_298 Prof_Heights Prof_T12_T36 none PANEL:i@298K@1600/cc  NorthWest none Wskew_T12_T36_CG_C1600_S298.jpg
+LinePlot: CG_UP_C0050_S298  Wskew_298 Prof_Heights Prof_T12_T36 none PANEL:c@298K@50/cc  NorthWest none Wskew_T12_T36_CG_C50_S298.jpg
+LinePlot: CG_UP_C0400_S298  Wskew_298 Prof_Heights Prof_T12_T36 none PANEL:f@298K@400/cc  NorthWest none Wskew_T12_T36_CG_C400_S298.jpg
+LinePlot: CG_UP_C1600_S298  Wskew_298 Prof_Heights Prof_T12_T36 none PANEL:i@298K@1600/cc  NorthWest none Wskew_T12_T36_CG_C1600_S298.jpg
 
 
 
@@ -383,14 +383,14 @@ LinePlot: CG_UP_C1600_S298 Cloud_LWP1P00_298 Prof_Heights Prof_T12_T36 none PANE
 ########### For Update #############
 
 ### Albedo
-#ContourPlot: ContourPsetCCN AlbedoLon_T12 AlbedoLat_T12 Albedo_T12 ContourSelect_T12 PANEL:a@t@=@12@h 1 1 40 LightGray Albedo_T12
-#ContourPlot: ContourPsetCCN AlbedoLon_T24 AlbedoLat_T24 Albedo_T24 ContourSelect_T24 PANEL:b@t@=@24@h 1 1 40 LightGray Albedo_T24
-#ContourPlot: ContourPsetCCN AlbedoLon_T36 AlbedoLat_T36 Albedo_T36 ContourSelect_T36 PANEL:c@t@=@36@h 1 1 40 LightGray Albedo_T36
+ContourPlot: ContourPsetCCN AlbedoLon_T12 AlbedoLat_T12 Albedo_T12 ContourSelect_T12 PANEL:a@t@=@12@h 1 1 40 LightGray Albedo_T12
+ContourPlot: ContourPsetCCN AlbedoLon_T24 AlbedoLat_T24 Albedo_T24 ContourSelect_T24 PANEL:b@t@=@24@h 1 1 40 LightGray Albedo_T24
+ContourPlot: ContourPsetCCN AlbedoLon_T36 AlbedoLat_T36 Albedo_T36 ContourSelect_T36 PANEL:c@t@=@36@h 1 1 40 LightGray Albedo_T36
 
 ### Surface divergence
-#ContourPlot: ContourPsetCCN SfcConvLon_T12 SfcConvLat_T12 SfcConv_T12 ContourSelect_T12 PANEL:d@t@=@12@h 1 1 40 redblue SfcConv_T12
-#ContourPlot: ContourPsetCCN SfcConvLon_T24 SfcConvLat_T24 SfcConv_T24 ContourSelect_T24 PANEL:e@t@=@24@h 1 1 40 redblue SfcConv_T24
-#ContourPlot: ContourPsetCCN SfcConvLon_T36 SfcConvLat_T36 SfcConv_T36 ContourSelect_T36 PANEL:f@t@=@36@h 1 1 40 redblue SfcConv_T36
+ContourPlot: ContourPsetCCN SfcConvLon_T12 SfcConvLat_T12 SfcConv_T12 ContourSelect_T12 PANEL:d@t@=@12@h 1 1 40 redblue SfcConv_T12
+ContourPlot: ContourPsetCCN SfcConvLon_T24 SfcConvLat_T24 SfcConv_T24 ContourSelect_T24 PANEL:e@t@=@24@h 1 1 40 redblue SfcConv_T24
+ContourPlot: ContourPsetCCN SfcConvLon_T36 SfcConvLat_T36 SfcConv_T36 ContourSelect_T36 PANEL:f@t@=@36@h 1 1 40 redblue SfcConv_T36
 
 ##################################################################
 ##################### DISTRIBUTION PLOTS #########################

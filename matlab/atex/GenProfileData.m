@@ -63,21 +63,11 @@ function [ ] = GenProfileData(ConfigFile)
 
         % compute temporal average profile
         % note that when npts == 0, so does sum == 0 and the divide will produce a nan
-        CLD_SUM  = squeeze(sum(CLD(1,:,T1:T2), 3));
-        CLD_NPTS = squeeze(sum(CLD(2,:,T1:T2), 3));
-        CLD_PROF = CLD_SUM ./ CLD_NPTS;
+        [ CLD_PROF CLD_NPTS ] = CountsToAvg(CLD, T1, T2);
 
-        CLD_SUM_LWP_0P01  = squeeze(sum(CLD_LWP_0P01(1,:,T1:T2), 3));
-        CLD_NPTS_LWP_0P01 = squeeze(sum(CLD_LWP_0P01(2,:,T1:T2), 3));
-        CLD_PROF_LWP_0P01 = CLD_SUM_LWP_0P01 ./ CLD_NPTS_LWP_0P01;
-
-        CLD_SUM_LWP_0P10  = squeeze(sum(CLD_LWP_0P10(1,:,T1:T2), 3));
-        CLD_NPTS_LWP_0P10 = squeeze(sum(CLD_LWP_0P10(2,:,T1:T2), 3));
-        CLD_PROF_LWP_0P10 = CLD_SUM_LWP_0P10 ./ CLD_NPTS_LWP_0P10;
-
-        CLD_SUM_LWP_1P00  = squeeze(sum(CLD_LWP_1P00(1,:,T1:T2), 3));
-        CLD_NPTS_LWP_1P00 = squeeze(sum(CLD_LWP_1P00(2,:,T1:T2), 3));
-        CLD_PROF_LWP_1P00 = CLD_SUM_LWP_1P00 ./ CLD_NPTS_LWP_1P00;
+        [ CLD_PROF_LWP_0P01 CLD_NPTS_LWP_0P01 ] = CountsToAvg(CLD_LWP_0P01, T1, T2);
+        [ CLD_PROF_LWP_0P10 CLD_NPTS_LWP_0P10 ] = CountsToAvg(CLD_LWP_0P10, T1, T2);
+        [ CLD_PROF_LWP_1P00 CLD_NPTS_LWP_1P00 ] = CountsToAvg(CLD_LWP_1P00, T1, T2);
 
         % output --> Use REVU format, 4D var, *_coords
         X = 1;
