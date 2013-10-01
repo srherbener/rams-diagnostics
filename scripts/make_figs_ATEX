@@ -15,13 +15,21 @@ montage -tile 1x2 -geometry ${Jsize}+2+100 \
  InitialGccnProfile.jpg \
  FigAerosolProfiles.jpg
 
-echo "Figure: Bar graphs, COT, CCN only"
+echo "Figure: Bar graphs, COT, CCN only, LWP Thresholds"
 montage -tile 2x2 -geometry ${Jsize}+2+100 \
  cot_avg_bars.jpg \
  cot_lwp_0p01_avg_bars.jpg \
  cot_lwp_0p10_avg_bars.jpg \
  cot_lwp_1p00_avg_bars.jpg \
  FigCloudOptThick.jpg
+
+echo "Figure: Bar graphs, COT, CCN only, LWP Bins"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ cot_avg_bars.jpg \
+ cot_lwp_b1_avg_bars.jpg \
+ cot_lwp_b2_avg_bars.jpg \
+ cot_lwp_b3_avg_bars.jpg \
+ FigCloudOptThickLwpBins.jpg
 
 # cd_avg_bars.jpg \
 # acc_pcp_bars.jpg \
@@ -53,13 +61,21 @@ montage -tile 3x3 -geometry ${Jsize}+2+100 \
  Wskew_T12_T36_CO_S303_G10M5_ALL.jpg \
  FigTurbStruct.jpg
 
-echo "Figure: Bar graphs, COT and ACC_PCP, CCN and GCCN"
+echo "Figure: Bar graphs, COT and ACC_PCP, CCN and GCCN, LWP thresholds"
 montage -tile 2x2 -geometry ${Jsize}+2+100 \
  cot_avg_bars_gccn.jpg \
  cot_lwp_0p01_avg_bars_gccn.jpg \
  cot_lwp_0p10_avg_bars_gccn.jpg \
  cot_lwp_1p00_avg_bars_gccn.jpg \
  FigCloudOptThickGccn.jpg
+
+echo "Figure: Bar graphs, COT and ACC_PCP, CCN and GCCN, LWP bins"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ cot_avg_bars_gccn.jpg \
+ cot_lwp_b1_avg_bars_gccn.jpg \
+ cot_lwp_b2_avg_bars_gccn.jpg \
+ cot_lwp_b3_avg_bars_gccn.jpg \
+ FigCloudOptThickGccnLwpBins.jpg
 
 # acc_pcp_bars_gccn.jpg \
 # cd_avg_bars_gccn.jpg \
@@ -96,20 +112,20 @@ montage -tile 3x2 -geometry ${Jsize}+2+100 \
  Albedo_T12_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
  Albedo_T24_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
  Albedo_T36_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
- SfcDiv_T12_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
- SfcDiv_T24_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
- SfcDiv_T36_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
- FigSampleAlbSfcDiv_C50_S293.jpg
+ SfcConv_T12_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+ SfcConv_T24_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+ SfcConv_T36_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+ FigSampleAlbSfcConv_C50_S293.jpg
 
 echo "Figure: Albedo, sfc conv examples, C1600, S303 CCN only"
 montage -tile 3x2 -geometry ${Jsize}+2+100 \
  Albedo_T12_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
  Albedo_T24_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
  Albedo_T36_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
- SfcDiv_T12_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
- SfcDiv_T24_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
- SfcDiv_T36_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
- FigSampleAlbSfcDiv_C1600_S303.jpg
+ SfcConv_T12_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+ SfcConv_T24_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+ SfcConv_T36_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+ FigSampleAlbSfcConv_C1600_S303.jpg
 
 echo "Figure: Cloud, with different LWP selection"
 montage -tile 3x3 -geometry ${Jsize}+2+100 \
