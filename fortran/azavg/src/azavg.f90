@@ -325,13 +325,13 @@ program azavg
   !
   ! Chop off the time dimensions of the variables that have time dimensions
   !     Filter is (x,y,z,t)
-  !     Radius is (x,y,t)
+  !     Radius is (x,y,z,t) (z is size 1)
   !
   rh5f_facc = 'R'
   call rhdf5_open_file(FilterFile, rh5f_facc, 0, rh5f_filter)
 
   Filter%ndims = 3
-  Radius%ndims = 2
+  Radius%ndims = 3
 
   ! set up the input variable data
   rh5f_facc = 'R'
