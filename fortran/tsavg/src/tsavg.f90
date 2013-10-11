@@ -40,7 +40,7 @@ program tsavg
   character (len=MediumString) :: PrecipRateFile, LwpFile, LtssFile, ThetaFile
   character (len=MediumString) :: XvarFile, YvarFile
   character (len=LittleString) :: VarFprefix
-  character (len=LittleString) :: HkeInType
+  character (len=LittleString) :: VelInType
   character (len=LittleString) :: rh5f_facc
   real :: PrecipRateLimit, Zbot, Ztop
   integer :: Kbot, Ktop
@@ -241,7 +241,7 @@ program tsavg
     endif
   endif
 
-  if (AvgFunc(1:9) .eq. 'horiz_ke:') then
+  if ((AvgFunc(1:9) .eq. 'horiz_ke:') .or. (AvgFunc(1:11) .eq. 'max_azwind:')) then
     call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'horiz_ke spec')
     if (Nfields .eq. 2) then
       ! got the right amount of fields
@@ -249,10 +249,10 @@ program tsavg
       !    1       'horiz_ke'
       !    2       type of input
       AvgFunc    = trim(ArgList(1))
-      HkeInType  = trim(ArgList(2))
+      VelInType  = trim(ArgList(2))
 
-      if ((HkeInType .ne. 'uv') .and. (HkeInType .ne. 's10')) then
-        write (*,*) 'ERROR: <in_type> for average function horiz_ke must be one of: "uv" or "s10"'
+      if ((VelInType .ne. 'uv') .and. (VelInType .ne. 's10')) then
+        write (*,*) 'ERROR: <in_type> for average functions horiz_ke and max_azwind must be one of: "uv" or "s10"'
         stop
       endif
     else
@@ -266,8 +266,8 @@ program tsavg
   write (*,*) '  Input file suffix: ', trim(InSuffix)
   write (*,*) '  Output file:  ', trim(OutFile)
   write (*,*) '  Averaging function: ', trim(AvgFunc)
-  if (AvgFunc .eq. 'horiz_ke') then
-    write (*,*) '    Input Type: ', trim(HkeInType)
+  if ((AvgFunc .eq. 'horiz_ke') .or. (AvgFunc .eq. 'max_azwind')) then
+    write (*,*) '    Input Type: ', trim(VelInType)
   else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. (AvgFunc .eq. 'hda')) then
     write (*,*) '    Variable name: ', trim(Var%vname)
     write (*,*) '    File name: ', trim(VarFile)
@@ -328,8 +328,13 @@ program tsavg
   flush(6)
 
   ! set up file and variable names
-  AzWindFile = trim(InDir) // '/speed_t' // trim(InSuffix)
-  AzWind%vname = 'speed_t'
+  if (VelInType .eq. 'uv') then
+    AzWindFile = trim(InDir) // '/speed_t' // trim(InSuffix)
+    AzWind%vname = 'speed_t'
+  else if (VelInType .eq. 's10') then
+    AzWindFile = trim(InDir) // '/speed10m' // trim(InSuffix)
+    AzWind%vname = 'speed10m'
+  endif
 
   ! FilterFile is set by command line arguments
   Filter%vname = 'filter'
@@ -520,13 +525,13 @@ program tsavg
       call rhdf5_read_init(DensFile, Dens)
       BadDims = BadDims .or. (.not.(DimsMatch(Filter, Dens)))
   
-      if (HkeInType .eq. 'uv') then
+      if (VelInType .eq. 'uv') then
         call rhdf5_read_init(Ufile, U)
         BadDims = BadDims .or. (.not.(DimsMatch(Filter, U)))
   
         call rhdf5_read_init(Vfile, V)
         BadDims = BadDims .or. (.not.(DimsMatch(Filter, V)))
-      else if (HkeInType .eq. 's10') then
+      else if (VelInType .eq. 's10') then
         ! speed10m is a 2D variable
         call rhdf5_read_init(Speed10mFile, Speed10m)
         BadDims = BadDims .or. (.not.(DimsMatch(Filter, Speed10m)))
@@ -565,10 +570,10 @@ program tsavg
     enddo
   else if (AvgFunc .eq. 'horiz_ke') then
     Dens%ndims = Dens%ndims - 1
-    if (HkeInType .eq. 'uv') then
+    if (VelInType .eq. 'uv') then
       U%ndims = U%ndims - 1
       V%ndims = V%ndims - 1
-    else if (HkeInType .eq. 's10') then
+    else if (VelInType .eq. 's10') then
       Speed10m%ndims = Speed10m%ndims - 1
     endif
     write (*,*) '  Number of dimensions: ', Dens%ndims
@@ -959,10 +964,10 @@ program tsavg
     call rhdf5_open_file(AzWindFile, rh5f_facc, 1, rh5f_azwind)
   else if (AvgFunc .eq. 'horiz_ke') then
     call rhdf5_open_file(DensFile, rh5f_facc, 1, rh5f_dens)
-    if (HkeInType .eq. 'uv') then
+    if (VelInType .eq. 'uv') then
       call rhdf5_open_file(Ufile, rh5f_facc, 1, rh5f_u)
       call rhdf5_open_file(Vfile, rh5f_facc, 1, rh5f_v)
-    else if (HkeInType .eq. 's10') then
+    else if (VelInType .eq. 's10') then
       call rhdf5_open_file(Speed10mFile, rh5f_facc, 1, rh5f_speed10m)
     endif
   else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
@@ -997,7 +1002,7 @@ program tsavg
     else if (AvgFunc .eq. 'horiz_ke') then
       call rhdf5_read_variable(rh5f_dens, Dens%vname, Dens%ndims, it, Dens%dims, rdata=Dens%vdata)
 
-      if (HkeInType .eq. 'uv') then
+      if (VelInType .eq. 'uv') then
         call rhdf5_read_variable(rh5f_u, U%vname, U%ndims, it, U%dims, rdata=U%vdata)
         call rhdf5_read_variable(rh5f_v, V%vname, V%ndims, it, V%dims, rdata=V%vdata)
 
@@ -1008,7 +1013,7 @@ program tsavg
         deallocate(U%vdata)
         deallocate(V%vdata)
         deallocate(HorizSpeed)
-      else if (HkeInType .eq. 's10') then
+      else if (VelInType .eq. 's10') then
         call rhdf5_read_variable(rh5f_speed10m, Speed10m%vname, Speed10m%ndims, it, Speed10m%dims, rdata=Speed10m%vdata)
         call DoHorizKe(Nx, Ny, Nz, Dens%vdata, Speed10m%vdata, Filter%vdata, DeltaX, DeltaY, InZcoords%vdata, TserAvg%vdata(1))
         deallocate(Speed10m%vdata)
@@ -1094,10 +1099,10 @@ program tsavg
     call rhdf5_close_file(rh5f_azwind)
   else if (AvgFunc .eq. 'horiz_ke') then
     call rhdf5_close_file(rh5f_dens)
-    if (HkeInType .eq. 'uv') then
+    if (VelInType .eq. 'uv') then
       call rhdf5_close_file(rh5f_u)
       call rhdf5_close_file(rh5f_v)
-    else if (HkeInType .eq. 's10') then
+    else if (VelInType .eq. 's10') then
       call rhdf5_close_file(rh5f_speed10m)
     endif
   else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
@@ -1217,9 +1222,11 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
     write (*,*) '        <avg_function>: averaging function to use on input data'
     write (*,*) '            horiz_ke:<in_type> -> total kinetic energy form horizontal winds'
     write (*,*) '              <in_type>: "uv" calculate from lowest level of u and v fields,'
-    write (*,*) '                      "s10" calculate from 10m wind speed field,'
+    write (*,*) '                         "s10" calculate from 10m wind speed field,'
     write (*,*) '            storm_int -> storm intensity metric from horizontal wind speeds'
-    write (*,*) '            max_azwind -> max value of azimuthially averaged wind'
+    write (*,*) '            max_azwind:<in_type> -> max value of azimuthially averaged wind'
+    write (*,*) '              <in_type>: "uv" calculate from lowest level of u and v fields,'
+    write (*,*) '                         "s10" calculate from 10m wind speed field,'
     write (*,*) '            min:<var>:<file>:<dim> -> domain minimum for <var>'
     write (*,*) '              <var>: revu var name inside the file'
     write (*,*) '              <file>: prefix for the revu file'
@@ -1302,7 +1309,7 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
       (AvgFunc(1:7)  .ne. 'hist2d:')      .and. &
       (AvgFunc(1:5)  .ne. 'ltss:')        .and. &
       (AvgFunc(1:9)  .ne. 'storm_int:')   .and. &
-      (AvgFunc(1:10) .ne. 'max_azwind:')) then
+      (AvgFunc(1:11) .ne. 'max_azwind:')) then
     write (*,*) 'ERROR: <avg_function> must be one of:'
     write (*,*) '          horiz_ke:<in_type>'
     write (*,*) '          min:<var>:<file>:<dim>'
@@ -1315,7 +1322,7 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
     write (*,*) '          hist2d:<x_var>:<x_file>:<x_dim>:<x_nbins><x_bstart><x_binc>:<y_var>:<y_file>:<y_dim>:<y_nbins>:<y_bstart>:<y_binc>:'
     write (*,*) '          ltss:<theta_var>:<theta_file>:<k_bot>:<k_top>'
     write (*,*) '          storm_int'
-    write (*,*) '          max_azwind'
+    write (*,*) '          max_azwind:<in_type>'
     write (*,*) ''
     BadArgs = .true.
   end if
@@ -1360,7 +1367,11 @@ subroutine DoMaxAzWind(Nx, Ny, Nz, AzWind, UndefVal, AzWindMax, Irmw)
 
   AzWindMax = 0.0
   Irmw = 0
-  iz = 2
+  if (Nz .eq. 1) then
+    iz = 1
+  else
+    iz = 2
+  endif
   do iy = 1, Ny
     do ix = 1, Nx
       if ((AzWind(ix,iy,iz) .gt. AzWindMax) .and. (anint(AzWind(ix,iy,iz)) .ne. UndefVal)) then
