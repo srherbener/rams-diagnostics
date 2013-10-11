@@ -40,6 +40,7 @@ program tsavg
   character (len=MediumString) :: PrecipRateFile, LwpFile, LtssFile, ThetaFile
   character (len=MediumString) :: XvarFile, YvarFile
   character (len=LittleString) :: VarFprefix
+  character (len=LittleString) :: HkeInType
   character (len=LittleString) :: rh5f_facc
   real :: PrecipRateLimit, Zbot, Ztop
   integer :: Kbot, Ktop
@@ -48,6 +49,8 @@ program tsavg
   real :: Xbstart, Xbinc, Ybstart, Ybinc
   real, dimension(:), allocatable :: Xbins, Ybins
   real :: HfracThresh
+
+  real, dimension(:,:), allocatable :: HorizSpeed
 
   integer :: rh5f_azwind, rh5f_u, rh5f_v, rh5f_speed10m, rh5f_dens, rh5f_var, rh5f_filter, rh5f_out
   integer :: rh5f_pcprate, rh5f_lwp, rh5f_ltss, rh5f_theta
@@ -238,12 +241,34 @@ program tsavg
     endif
   endif
 
+  if (AvgFunc(1:9) .eq. 'horiz_ke:') then
+    call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'horiz_ke spec')
+    if (Nfields .eq. 2) then
+      ! got the right amount of fields
+      !   field    value
+      !    1       'horiz_ke'
+      !    2       type of input
+      AvgFunc    = trim(ArgList(1))
+      HkeInType  = trim(ArgList(2))
+
+      if ((HkeInType .ne. 'uv') .and. (HkeInType .ne. 's10')) then
+        write (*,*) 'ERROR: <in_type> for average function horiz_ke must be one of: "uv" or "s10"'
+        stop
+      endif
+    else
+      write (*,*) 'ERROR: average function ltss requires five fields: ltss:<theta_var>:<theta_file>:<z_bot>:<z_top>'
+      stop
+    endif
+  endif
+
   write (*,*) 'Time seris of average for RAMS data:'
   write (*,*) '  Input directory: ', trim(InDir)
   write (*,*) '  Input file suffix: ', trim(InSuffix)
   write (*,*) '  Output file:  ', trim(OutFile)
   write (*,*) '  Averaging function: ', trim(AvgFunc)
-  if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. (AvgFunc .eq. 'hda')) then
+  if (AvgFunc .eq. 'horiz_ke') then
+    write (*,*) '    Input Type: ', trim(HkeInType)
+  else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. (AvgFunc .eq. 'hda')) then
     write (*,*) '    Variable name: ', trim(Var%vname)
     write (*,*) '    File name: ', trim(VarFile)
     write (*,*) '    Dimensionality: ', trim(VarDim)
@@ -495,11 +520,19 @@ program tsavg
       call rhdf5_read_init(DensFile, Dens)
       BadDims = BadDims .or. (.not.(DimsMatch(Filter, Dens)))
   
-      call rhdf5_read_init(Ufile, U)
-      BadDims = BadDims .or. (.not.(DimsMatch(Filter, U)))
+      if (HkeInType .eq. 'uv') then
+        call rhdf5_read_init(Ufile, U)
+        BadDims = BadDims .or. (.not.(DimsMatch(Filter, U)))
   
-      call rhdf5_read_init(Vfile, V)
-      BadDims = BadDims .or. (.not.(DimsMatch(Filter, V)))
+        call rhdf5_read_init(Vfile, V)
+        BadDims = BadDims .or. (.not.(DimsMatch(Filter, V)))
+      else if (HkeInType .eq. 's10') then
+        ! speed10m is a 2D variable
+        call rhdf5_read_init(Speed10mFile, Speed10m)
+        BadDims = BadDims .or. (.not.(DimsMatch(Filter, Speed10m)))
+
+        Nz = 1
+      endif
 
       if (BadDims) then
         write (*,*) 'ERROR: dimensions of filter, dn0, u and v do not match'
@@ -532,8 +565,12 @@ program tsavg
     enddo
   else if (AvgFunc .eq. 'horiz_ke') then
     Dens%ndims = Dens%ndims - 1
-    U%ndims = U%ndims - 1
-    V%ndims = V%ndims - 1
+    if (HkeInType .eq. 'uv') then
+      U%ndims = U%ndims - 1
+      V%ndims = V%ndims - 1
+    else if (HkeInType .eq. 's10') then
+      Speed10m%ndims = Speed10m%ndims - 1
+    endif
     write (*,*) '  Number of dimensions: ', Dens%ndims
     write (*,*) '  Dimension sizes:'
     do id = 1, Dens%ndims
@@ -922,8 +959,12 @@ program tsavg
     call rhdf5_open_file(AzWindFile, rh5f_facc, 1, rh5f_azwind)
   else if (AvgFunc .eq. 'horiz_ke') then
     call rhdf5_open_file(DensFile, rh5f_facc, 1, rh5f_dens)
-    call rhdf5_open_file(Ufile, rh5f_facc, 1, rh5f_u)
-    call rhdf5_open_file(Vfile, rh5f_facc, 1, rh5f_v)
+    if (HkeInType .eq. 'uv') then
+      call rhdf5_open_file(Ufile, rh5f_facc, 1, rh5f_u)
+      call rhdf5_open_file(Vfile, rh5f_facc, 1, rh5f_v)
+    else if (HkeInType .eq. 's10') then
+      call rhdf5_open_file(Speed10mFile, rh5f_facc, 1, rh5f_speed10m)
+    endif
   else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
            (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. &
            (AvgFunc .eq. 'hfrac')) then
@@ -955,14 +996,25 @@ program tsavg
       deallocate(AzWind%vdata)
     else if (AvgFunc .eq. 'horiz_ke') then
       call rhdf5_read_variable(rh5f_dens, Dens%vname, Dens%ndims, it, Dens%dims, rdata=Dens%vdata)
-      call rhdf5_read_variable(rh5f_u, U%vname, U%ndims, it, U%dims, rdata=U%vdata)
-      call rhdf5_read_variable(rh5f_v, V%vname, V%ndims, it, V%dims, rdata=V%vdata)
 
-      call DoHorizKe(Nx, Ny, Nz, Dens%vdata, U%vdata, V%vdata, Filter%vdata, DeltaX, DeltaY, InZcoords%vdata, TserAvg%vdata(1))
+      if (HkeInType .eq. 'uv') then
+        call rhdf5_read_variable(rh5f_u, U%vname, U%ndims, it, U%dims, rdata=U%vdata)
+        call rhdf5_read_variable(rh5f_v, V%vname, V%ndims, it, V%dims, rdata=V%vdata)
+
+        allocate(HorizSpeed(Nx,Ny))
+        call UvToSpeed(Nx, Ny, Nz, U%vdata, V%vdata, HorizSpeed)
+        call DoHorizKe(Nx, Ny, Nz, Dens%vdata, HorizSpeed, Filter%vdata, DeltaX, DeltaY, InZcoords%vdata, TserAvg%vdata(1))
+
+        deallocate(U%vdata)
+        deallocate(V%vdata)
+        deallocate(HorizSpeed)
+      else if (HkeInType .eq. 's10') then
+        call rhdf5_read_variable(rh5f_speed10m, Speed10m%vname, Speed10m%ndims, it, Speed10m%dims, rdata=Speed10m%vdata)
+        call DoHorizKe(Nx, Ny, Nz, Dens%vdata, Speed10m%vdata, Filter%vdata, DeltaX, DeltaY, InZcoords%vdata, TserAvg%vdata(1))
+        deallocate(Speed10m%vdata)
+      endif
 
       deallocate(Dens%vdata)
-      deallocate(U%vdata)
-      deallocate(V%vdata)
     else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
              (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. &
              (AvgFunc .eq. 'hfrac')) then
@@ -1042,8 +1094,12 @@ program tsavg
     call rhdf5_close_file(rh5f_azwind)
   else if (AvgFunc .eq. 'horiz_ke') then
     call rhdf5_close_file(rh5f_dens)
-    call rhdf5_close_file(rh5f_u)
-    call rhdf5_close_file(rh5f_v)
+    if (HkeInType .eq. 'uv') then
+      call rhdf5_close_file(rh5f_u)
+      call rhdf5_close_file(rh5f_v)
+    else if (HkeInType .eq. 's10') then
+      call rhdf5_close_file(rh5f_speed10m)
+    endif
   else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
            (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. &
            (AvgFunc .eq. 'hfrac')) then
@@ -1159,7 +1215,9 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
     write (*,*) '        <in_suffix>: suffix on input file names'
     write (*,*) '        <out_file>: name of output file, HDF5 format'
     write (*,*) '        <avg_function>: averaging function to use on input data'
-    write (*,*) '            horiz_ke -> total kinetic energy form horizontal winds'
+    write (*,*) '            horiz_ke:<in_type> -> total kinetic energy form horizontal winds'
+    write (*,*) '              <in_type>: "uv" calculate from lowest level of u and v fields,'
+    write (*,*) '                      "s10" calculate from 10m wind speed field,'
     write (*,*) '            storm_int -> storm intensity metric from horizontal wind speeds'
     write (*,*) '            max_azwind -> max value of azimuthially averaged wind'
     write (*,*) '            min:<var>:<file>:<dim> -> domain minimum for <var>'
@@ -1234,19 +1292,19 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
 
   BadArgs = .false.
 
-  if ((AvgFunc .ne. 'horiz_ke')       .and. &
-      (AvgFunc(1:4) .ne. 'min:')  .and. &
-      (AvgFunc(1:4) .ne. 'max:')  .and. &
-      (AvgFunc(1:4) .ne. 'hda:')  .and. &
-      (AvgFunc(1:5) .ne. 'hist:')  .and. &
-      (AvgFunc(1:6) .ne. 'hfrac:')  .and. &
-      (AvgFunc(1:4) .ne. 'pop:')  .and. &
-      (AvgFunc(1:7) .ne. 'hist2d:')  .and. &
-      (AvgFunc(1:5) .ne. 'ltss:')  .and. &
-      (AvgFunc .ne. 'storm_int')  .and. &
-      (AvgFunc .ne. 'max_azwind')) then
+  if ((AvgFunc(1:9)  .ne. 'horiz_ke:')    .and. &
+      (AvgFunc(1:4)  .ne. 'min:')         .and. &
+      (AvgFunc(1:4)  .ne. 'max:')         .and. &
+      (AvgFunc(1:4)  .ne. 'hda:')         .and. &
+      (AvgFunc(1:5)  .ne. 'hist:')        .and. &
+      (AvgFunc(1:6)  .ne. 'hfrac:')       .and. &
+      (AvgFunc(1:4)  .ne. 'pop:')         .and. &
+      (AvgFunc(1:7)  .ne. 'hist2d:')      .and. &
+      (AvgFunc(1:5)  .ne. 'ltss:')        .and. &
+      (AvgFunc(1:9)  .ne. 'storm_int:')   .and. &
+      (AvgFunc(1:10) .ne. 'max_azwind:')) then
     write (*,*) 'ERROR: <avg_function> must be one of:'
-    write (*,*) '          horiz_ke'
+    write (*,*) '          horiz_ke:<in_type>'
     write (*,*) '          min:<var>:<file>:<dim>'
     write (*,*) '          max:<var>:<file>:<dim>'
     write (*,*) '          hda:<var>:<file>:<dim>'
@@ -1322,11 +1380,12 @@ end subroutine DoMaxAzWind
 ! volume. Do not want average since we want the size of the storm reflected in
 ! this diagnostic.
 
-subroutine DoHorizKe(Nx, Ny, Nz, Dens, U, V, Filter, DeltaX, DeltaY, Zcoords, TserAvg)
+subroutine DoHorizKe(Nx, Ny, Nz, Dens, Speed, Filter, DeltaX, DeltaY, Zcoords, TserAvg)
   implicit none
 
   integer :: Nx, Ny, Nz
-  real, dimension(Nx,Ny,Nz) :: Dens, U, V, Filter
+  real, dimension(Nx,Ny,Nz) :: Dens, Filter
+  real, dimension(Nx,Ny) :: Speed
   real :: DeltaX, DeltaY
   real, dimension(Nz) :: Zcoords
   real :: TserAvg
@@ -1338,7 +1397,7 @@ subroutine DoHorizKe(Nx, Ny, Nz, Dens, U, V, Filter, DeltaX, DeltaY, Zcoords, Ts
   ! KE is 1/2 * m * v^2
   !   - calculate this a every point inside the defined cylindrical volume
   !   - get m by density * volume
-  !   - v^2 is based on horiz velocity so is equal to U^2 + V^2
+  !   - v^2 is based on horiz velocity so is equal to Speed^2
   !
   ! Zcoords are technically the center points of the levels in the RAMS simulation. Since we don't have
   ! the level definition from the RAMS runs here, just use the difference from the i+1st z coord minus the
@@ -1362,7 +1421,7 @@ subroutine DoHorizKe(Nx, Ny, Nz, Dens, U, V, Filter, DeltaX, DeltaY, Zcoords, Ts
         else
           LevThickness = Zcoords(iz+1) - Zcoords(iz)
         end if
-        CurrKe = 0.5 * DeltaX * DeltaY * LevThickness * Dens(ix,iy,iz) * (U(ix,iy,iz)**2 + V(ix,iy,iz)**2)
+        CurrKe = 0.5 * DeltaX * DeltaY * LevThickness * Dens(ix,iy,iz) * Speed(ix,iy)**2.
         SumKe = SumKe + CurrKe
         NumPoints = NumPoints + 1
       endif
@@ -2049,6 +2108,32 @@ integer function FindBin(Nb, Bins, Val)
 
   return
 end function FindBin
+
+!************************************************************************
+! UvToSpeed()
+!
+! This function will convert the U, V fields into speed (vector magnitude)
+! on the lowest above ground model level.
+
+subroutine UvToSpeed(Nx, Ny, Nz, U, V, HorizSpeed)
+  implicit none
+
+  integer :: Nx, Ny, Nz
+  real, dimension(Nx,Ny,Nz) :: U, V
+  real, dimension(Nx,Ny) :: HorizSpeed
+
+  integer :: ix, iy, iz
+
+  ! RAMS has first model level underground, so use z = 2 (1st model level above ground)
+  iz = 2
+  do iy = 1, Ny
+    do ix = 1, Nx
+      HorizSpeed(ix,iy) = sqrt(U(ix,iy,iz)**2. + V(ix,iy,iz)**2.)
+    enddo
+  enddo
+
+  return
+end subroutine UvToSpeed
 
 !!! !*****************************************************************************
 !!! ! DoCloud()
