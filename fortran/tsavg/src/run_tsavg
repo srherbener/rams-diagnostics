@@ -81,7 +81,7 @@ sub CreateFileNames
   #
   # OutFile is simply the whole path to the output file.
   #
-  if ($Dname eq "max_azwind")
+  if ($Dname =~ /^max_azwind/)
     {
     $InDir = $AzavgDir . $TdirStr;
     $InFileSuffix = "_" . $Case . ".h5";
