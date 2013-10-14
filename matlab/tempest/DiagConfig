@@ -1,0 +1,71 @@
+#
+# specs for extracting data via revu
+#
+
+AzavgDir: AzAveragedData
+TsavgDir: TsAveragedData
+PlotDir: Plots
+FigDir: Figures
+EofDir: EofData
+DiagDir: DIAGS
+FilterDir: FILTERS
+ExpName: TC24
+RamsDir: RAMS
+RevuDir: HDF5
+SpinUpCase: TCS_CNTL
+ControlCase: TCS_GN_C0100
+UndefVal: -999
+SstVal: 26
+
+# Experiments
+#Case: ACCR_2X     XXX
+#Case: ACCR_HALF   XXX
+#Case: AUTO_2X     XXX
+#Case: AUTO_HALF   XXX
+#Case: BASE        XXX
+#Case: RIME_2X     XXX
+#Case: RIME_HALF   XXX
+Case: WARM_ACCR_2X     XXX
+Case: WARM_ACCR_HALF   XXX
+Case: WARM_AUTO_2X     XXX
+Case: WARM_AUTO_HALF   XXX
+Case: WARM_BASE        XXX
+
+# grads variables
+Var: totpcp totpcp tempest_h2d
+
+####################### Line plots ############################
+# LinePlot: <plotset> <xspec> <yspec> <data_select_spec> <smoothing> <title> <legend_loc> <add_meas> <out_file>
+
+LinePlot: CoeffExp         SimTime TotalPrecip TsAll none @ Northwest none TotalAccumPrecip.jpg
+LinePlot: CoeffExp_NoAuto  SimTime TotalPrecip TsAll none @ Northwest none TotalAccumPrecipNoAuto.jpg
+
+LinePlot: CoeffExp_WarmRain SimTime TotalPrecip TsAll none @ Northwest none AccumPcpWarmRain.jpg
+
+####################### Plot Sets ############################
+PlotSet: CoeffExp 7 BASE CONTROL k - 0.0 ACCR_2X ACCR@2X b - 0.0 ACCR_HALF ACCR@HALF c - 0.0 AUTO_2X AUTO@2X g - 0.0 AUTO_HALF AUTO@HALF y - 0.0 RIME_2X RIME@2X r - 0.0 RIME_HALF RIME@HALF m - 0.0
+
+PlotSet: CoeffExp_NoAuto 5 BASE CONTROL k - 0.0 ACCR_2X ACCR@2X b - 0.0 ACCR_HALF ACCR@HALF c - 0.0 RIME_2X RIME@2X r - 0.0 RIME_HALF RIME@HALF m - 0.0
+
+PlotSet: CoeffExp_WarmRain 5 WARM_BASE CONTROL k - 0.0 WARM_ACCR_2X ACCR@2X b - 0.0 WARM_ACCR_HALF ACCR@HALF c - 0.0 AUTO_2X AUTO@2X r - 0.0 AUTO_HALF AUTO@HALF m - 0.0
+
+####################### Plot Vars ################################
+# PlotVar: <name> <vname> <file_prefix> <label> <units> <axis_min> <axis_max> <scale>
+# 
+PlotVar: TotalPrecip  totpcp   DIAGS/totpcp Accum@Precip     m-liq   0    2   0.001
+PlotVar: SimTime      t_coords DIAGS/totpcp Simulation@Time  min     0   60   0.0166666667
+
+######################## Selection specs #########################
+# PlotDselect: <name> <xmin> <xmax> <ymin> <ymax> <zmin> <zmax> <tmin> <tmax>
+#
+#  min,max specs are in the units that exist in the file, typicall
+#  x, y, z are meters and t is seconds
+#
+
+# selecting out time series of averaged data - (x,y,z,t)
+#   x - dummy, set to 1
+#   y - dummy, set to 1
+#   z - dummy, set to 1
+#   t - time in seconds
+PlotDselect: TsAll 1 1 1 1 1 1 0 3600
+
