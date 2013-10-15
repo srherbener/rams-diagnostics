@@ -33,7 +33,7 @@ program tsavg
   ! Dims: x, y, z, t
   type (Rhdf5Var) :: InXcoords, InYcoords, InZcoords, InTcoords
   type (Rhdf5Var) :: OutXcoords, OutYcoords, OutZcoords, OrigDimSize
-  type (Rhdf5Var) :: U, V, AzWind, Speed10m, Dens, Var, Filter, TserAvg, RadMaxWind
+  type (Rhdf5Var) :: U, V, AzWind, Speed10m, Dens, Var, Filter, TserAvg, RadMaxWind, Rad34ktWind, Rad50ktWind, Rad64ktWind
   type (Rhdf5var) :: PrecipRate, Lwp, Ltss, Theta
   type (Rhdf5var) :: Xvar, Yvar
   character (len=MediumString) :: Ufile, Vfile, AzWindFile, Speed10mFile, DensFile, VarFile, InCoordFile
@@ -62,8 +62,6 @@ program tsavg
   real :: DeltaX, DeltaY
   real, dimension(:), allocatable :: InXcoordsKm, InYcoordsKm
   logical :: BadDims
-
-  integer :: i_rmw
 
   ! Get the command line arguments
   call GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
@@ -733,6 +731,42 @@ program tsavg
     RadMaxWind%dims(2) = 1
     RadMaxWind%dims(3) = 1
     allocate(RadMaxWind%vdata(RadMaxWind%dims(1)*RadMaxWind%dims(2)*RadMaxWind%dims(3)))
+
+    Rad34ktWind%vname = 'r34kt'
+    Rad34ktWind%descrip = 'time series averaged ' // trim(AvgFunc) 
+    Rad34ktWind%units = 'km'
+    Rad34ktWind%ndims = 3 
+    Rad34ktWind%dimnames(1) = 'x' 
+    Rad34ktWind%dimnames(2) = 'y' 
+    Rad34ktWind%dimnames(3) = 'z' 
+    Rad34ktWind%dims(1) = 1
+    Rad34ktWind%dims(2) = 1
+    Rad34ktWind%dims(3) = 1
+    allocate(Rad34ktWind%vdata(Rad34ktWind%dims(1)*Rad34ktWind%dims(2)*Rad34ktWind%dims(3)))
+
+    Rad50ktWind%vname = 'r50kt'
+    Rad50ktWind%descrip = 'time series averaged ' // trim(AvgFunc) 
+    Rad50ktWind%units = 'km'
+    Rad50ktWind%ndims = 3 
+    Rad50ktWind%dimnames(1) = 'x' 
+    Rad50ktWind%dimnames(2) = 'y' 
+    Rad50ktWind%dimnames(3) = 'z' 
+    Rad50ktWind%dims(1) = 1
+    Rad50ktWind%dims(2) = 1
+    Rad50ktWind%dims(3) = 1
+    allocate(Rad50ktWind%vdata(Rad50ktWind%dims(1)*Rad50ktWind%dims(2)*Rad50ktWind%dims(3)))
+
+    Rad64ktWind%vname = 'r64kt'
+    Rad64ktWind%descrip = 'time series averaged ' // trim(AvgFunc) 
+    Rad64ktWind%units = 'km'
+    Rad64ktWind%ndims = 3 
+    Rad64ktWind%dimnames(1) = 'x' 
+    Rad64ktWind%dimnames(2) = 'y' 
+    Rad64ktWind%dimnames(3) = 'z' 
+    Rad64ktWind%dims(1) = 1
+    Rad64ktWind%dims(2) = 1
+    Rad64ktWind%dims(3) = 1
+    allocate(Rad64ktWind%vdata(Rad64ktWind%dims(1)*Rad64ktWind%dims(2)*Rad64ktWind%dims(3)))
   endif
 
   ! Report the dimensions
@@ -996,8 +1030,8 @@ program tsavg
     ! do the averaging function
     if (AvgFunc .eq. 'max_azwind') then
       call rhdf5_read_variable(rh5f_azwind, AzWind%vname, AzWind%ndims, it, AzWind%dims, rdata=AzWind%vdata)
-      call DoMaxAzWind(Nx, Ny, Nz, AzWind%vdata, UndefVal, TserAvg%vdata(1), i_rmw)
-      RadMaxWind%vdata(1) = InXcoordsKm(i_rmw)
+      call DoMaxAzWind(Nx, Ny, Nz, AzWind%vdata, InXcoordsKm, UndefVal, TserAvg%vdata(1), RadMaxWind%vdata(1), &
+                      Rad34ktWind%vdata(1), Rad50ktWind%vdata(1), Rad64ktWind%vdata(1))
       deallocate(AzWind%vdata)
     else if (AvgFunc .eq. 'horiz_ke') then
       call rhdf5_read_variable(rh5f_dens, Dens%vname, Dens%ndims, it, Dens%dims, rdata=Dens%vdata)
@@ -1079,6 +1113,12 @@ program tsavg
     if (AvgFunc .eq. 'max_azwind') then
       call rhdf5_write_variable(rh5f_out, RadMaxWind%vname, RadMaxWind%ndims, it, RadMaxWind%dims, &
          RadMaxWind%units, RadMaxWind%descrip, RadMaxWind%dimnames, rdata=RadMaxWind%vdata)
+      call rhdf5_write_variable(rh5f_out, Rad34ktWind%vname, Rad34ktWind%ndims, it, Rad34ktWind%dims, &
+         Rad34ktWind%units, Rad34ktWind%descrip, Rad34ktWind%dimnames, rdata=Rad34ktWind%vdata)
+      call rhdf5_write_variable(rh5f_out, Rad50ktWind%vname, Rad50ktWind%ndims, it, Rad50ktWind%dims, &
+         Rad50ktWind%units, Rad50ktWind%descrip, Rad50ktWind%dimnames, rdata=Rad50ktWind%vdata)
+      call rhdf5_write_variable(rh5f_out, Rad64ktWind%vname, Rad64ktWind%ndims, it, Rad64ktWind%dims, &
+         Rad64ktWind%units, Rad64ktWind%descrip, Rad64ktWind%dimnames, rdata=Rad64ktWind%vdata)
     endif
 
     ! print a message for the user on longer jobs so that it can be
@@ -1186,6 +1226,9 @@ program tsavg
   call rhdf5_attach_dimensions(OutFile, TserAvg)
   if (AvgFunc .eq. 'max_azwind') then
     call rhdf5_attach_dimensions(OutFile, RadMaxWind)
+    call rhdf5_attach_dimensions(OutFile, Rad34ktWind)
+    call rhdf5_attach_dimensions(OutFile, Rad50ktWind)
+    call rhdf5_attach_dimensions(OutFile, Rad64ktWind)
   endif
   
   stop
@@ -1349,16 +1392,30 @@ end subroutine GetMyArgs
 ! wind speed. Pass this back to the caller so that the caller can look
 ! up the radius value. Radius is the first dimension, x.
 !
-subroutine DoMaxAzWind(Nx, Ny, Nz, AzWind, UndefVal, AzWindMax, Irmw)
+! Also keep track of the greatest radial index where the wind speed was
+! >= 34 kt, 50 kt and 64 kt. AzWind is in m/s so the corresponding values
+! are:
+!   34 kt -> 17.5 m/s
+!   50 kt -> 25.7 m/s
+!   64 kt -> 32.9 m/s
+!
+subroutine DoMaxAzWind(Nx, Ny, Nz, AzWind, Radius, UndefVal, AzWindMax, RadMax, Rad34kt, Rad50kt, Rad64kt)
   implicit none
+
+  ! 1 kt = 0.514444 m/s
+  real, parameter :: w_34kt_in_ms = 34.0 * 0.514444
+  real, parameter :: w_50kt_in_ms = 50.0 * 0.514444
+  real, parameter :: w_64kt_in_ms = 64.0 * 0.514444
 
   integer :: Nx, Ny, Nz
   real, dimension(Nx,Ny,Nz) :: AzWind
+  real, dimension(Nx) :: Radius
   real :: UndefVal
   real :: AzWindMax
-  integer :: Irmw
+  real :: RadMax, Rad34kt, Rad50kt, Rad64kt
 
   integer :: ix,iy,iz
+  integer :: i_rmw, i_34kt, i_50kt, i_64kt
 
   ! dimension order is: x,y,z
 
@@ -1366,23 +1423,89 @@ subroutine DoMaxAzWind(Nx, Ny, Nz, AzWind, UndefVal, AzWindMax, Irmw)
   ! to approximate the 10m winds.
 
   AzWindMax = 0.0
-  Irmw = 0
+  i_rmw = 0
+  i_34kt = 0
+  i_50kt = 0
+  i_64kt = 0
+  iy = 1 ! dummy dimension in azmuthally averaged wind speed
   if (Nz .eq. 1) then
     iz = 1
   else
     iz = 2
   endif
-  do iy = 1, Ny
-    do ix = 1, Nx
-      if ((AzWind(ix,iy,iz) .gt. AzWindMax) .and. (anint(AzWind(ix,iy,iz)) .ne. UndefVal)) then
-        AzWindMax = AzWind(ix,iy,iz)
-        Irmw = ix
-      endif
-    end do
+  do ix = 1, Nx
+    ! Max wind
+    if ((AzWind(ix,iy,iz) .gt. AzWindMax) .and. (anint(AzWind(ix,iy,iz)) .ne. UndefVal)) then
+      AzWindMax = AzWind(ix,iy,iz)
+      i_rmw = ix
+    endif
+    ! Last index where wind >= 34 kt
+    if ((AzWind(ix,iy,iz) .ge. w_34kt_in_ms) .and. (anint(AzWind(ix,iy,iz)) .ne. UndefVal)) then
+      i_34kt = ix
+    endif
+    ! Last index where wind >= 50 kt
+    if ((AzWind(ix,iy,iz) .ge. w_50kt_in_ms) .and. (anint(AzWind(ix,iy,iz)) .ne. UndefVal)) then
+      i_50kt = ix
+    endif
+    ! Last index where wind >= 64 kt
+    if ((AzWind(ix,iy,iz) .ge. w_64kt_in_ms) .and. (anint(AzWind(ix,iy,iz)) .ne. UndefVal)) then
+      i_64kt = ix
+    endif
   end do
+
+  RadMax = Radius(i_rmw)
+  Rad34kt = InterpRadius(Nx, Ny, Nz, AzWind, Radius, w_34kt_in_ms, i_34kt, UndefVal)
+  Rad50kt = InterpRadius(Nx, Ny, Nz, AzWind, Radius, w_50kt_in_ms, i_50kt, UndefVal)
+  Rad64kt = InterpRadius(Nx, Ny, Nz, AzWind, Radius, w_64kt_in_ms, i_64kt, UndefVal)
 
   return
 end subroutine DoMaxAzWind
+
+!**************************************************************************************
+! InterpRadius()
+!
+! This function will interpolate a radial value (x) given the cooresponding wind speed.
+!
+real function InterpRadius(Nx, Ny, Nz, AzWind, Radius, W, Ileft, UndefVal)
+  implicit none
+
+  integer :: Nx, Ny, Nz
+  real, dimension(Nx,Ny,Nz) :: AzWind
+  real, dimension(Nx) :: Radius
+  real :: W, UndefVal
+  integer :: Ileft
+
+  integer :: ix1, ix2, iy, iz
+  real :: W1, W2, R1, R2
+
+  iy = 1 ! dummy dimension in azmuthally averaged wind speed
+  if (Nz .eq. 1) then
+    iz = 1
+  else
+    iz = 2
+  endif
+
+  if (Ileft .eq. 0) then
+    ! Didn't find any entry in AzWind >= W -> return UndefVal
+    InterpRadius = UndefVal
+  else if (Ileft .eq. Nx) then
+    ! The last entry in AzWind is >= W -> can't interpolate so just return the last entry
+    InterpRadius = AzWind(Nx,iy,iz)
+  else
+    ! W has fallen between two entries in AzWind -> linearly interpolate radius value
+    ! Ileft points to the last entry in AzWind that was >= W (left side of interval)
+    ix1 = Ileft
+    ix2 = Ileft + 1
+
+    R1 = Radius(ix1)
+    R2 = Radius(ix2)
+    W1 = AzWind(ix1,iy,iz)
+    W2 = AzWind(ix2,iy,iz)
+
+    InterpRadius = R1 + (((W - W1)/(W2 - W1)) * (R2 - R1))
+  endif
+
+end function InterpRadius
 
 !**************************************************************************************
 ! DoHorizKe()
