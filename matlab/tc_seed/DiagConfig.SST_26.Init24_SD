@@ -363,15 +363,23 @@ TsPlotSpecs: 121 0 1.0 hr 25 1998:08:22:21:00:00 10 24
 #              form that surface.
 #   'Tphases' - add the marking of temporal phases (hardwired for iedealized TC sims).
 
-LinePlot: ccn4 MaxVt      IKE     TsAll xy PANEL:a  Northwest none    KeVt.jpg
-LinePlot: ccn4 MaxVt_s10  IKE_s10 TsAll xy PANEL:a  Northwest none    KeVt_s10.jpg
-LinePlot: ccn4 SimTime RMW             TsAll  y PANEL:b                 NorthEast Tphases TS_rmw.jpg
-LinePlot: ccn4 SimTime RMW_s10         TsAll  y PANEL:b                 NorthEast Tphases TS_rmw_s10.jpg
+#LinePlot: ccn4 MaxVt      IKE     TsAll xy PANEL:a  Northwest none    KeVt.jpg
+#LinePlot: ccn4 MaxVt_s10  IKE_s10 TsAll xy PANEL:a  Northwest none    KeVt_s10.jpg
+#LinePlot: ccn4 SimTime RMW             TsAll  y PANEL:b                 NorthEast Tphases TS_rmw.jpg
+#LinePlot: ccn4 SimTime RMW_s10         TsAll  y PANEL:b                 NorthEast Tphases TS_rmw_s10.jpg
+LinePlot: ccn4 SimTime R34KT             TsAll  y PANEL:b                 NorthWest Tphases TS_r34kt.jpg
+LinePlot: ccn4 SimTime R34KT_s10         TsAll  y PANEL:b                 NorthWest Tphases TS_r34kt_s10.jpg
+LinePlot: ccn4 SimTime R50KT             TsAll  y PANEL:b                 NorthWest Tphases TS_r50kt.jpg
+LinePlot: ccn4 SimTime R50KT_s10         TsAll  y PANEL:b                 NorthWest Tphases TS_r50kt_s10.jpg
+LinePlot: ccn4 SimTime R64KT             TsAll  y PANEL:b                 NorthWest Tphases TS_r64kt.jpg
+LinePlot: ccn4 SimTime R64KT_s10         TsAll  y PANEL:b                 NorthWest Tphases TS_r64kt_s10.jpg
+
 #LinePlot: ccn4 SimTime DeltapAll_SC_RB TsAll  y PANEL:c@Horiz@Gradient  SouthEast Tphases TS_DeltapAll_SC_RB.jpg
 
 #LinePlot: ccn2 MaxVt  IKE     TsAll    xy PANEL:a  Northwest none   KeVt_ext.jpg
-LinePlot: ccn2 RadAll     VtAllSS    SfcVtAll  y @        NorthEast IntVol R_Vt_All_SS_ext.jpg
-LinePlot: ccn2 RadAll_10m V10m_AllSS SfcVtAll  y @        NorthEast IntVol R_V10m_All_SS_ext.jpg
+
+#LinePlot: ccn2 RadAll     VtAllSS    SfcVtAll  y @        NorthEast IntVol R_Vt_All_SS_ext.jpg
+#LinePlot: ccn2 RadAll_10m V10m_AllSS SfcVtAll  y @        NorthEast IntVol R_V10m_All_SS_ext.jpg
 
 #LinePlot: ccn4    SimTime IKE   TsAll y Integrated_Kinetic_Energy NorthWest none TS_ike.jpg
 #LinePlot: ccn4    SimTime MaxVt TsAll y Maximum_Vt                SouthEast none TS_max_vt.jpg
@@ -779,6 +787,12 @@ PlotVar: IKE_s10    horiz_ke   TsAveragedData/horiz_ke_sp10   KE     10^9@J  0  
 PlotVar: IKE90      horiz_ke   TsAveragedData/horiz_ke        KE     10^9@J  0    1  1e-9
 PlotVar: RMW        rmw        TsAveragedData/max_azwind      RMW    km      5   40     1
 PlotVar: RMW_s10    rmw        TsAveragedData/max_azwind_sp10 RMW    km      5   40     1
+PlotVar: R34KT      r34kt      TsAveragedData/max_azwind      R_3_4  km     20  110     1
+PlotVar: R34KT_s10  r34kt      TsAveragedData/max_azwind_sp10 R_3_4  km     20  110     1
+PlotVar: R50KT      r50kt      TsAveragedData/max_azwind      R_5_0  km     10   70     1
+PlotVar: R50KT_s10  r50kt      TsAveragedData/max_azwind_sp10 R_5_0  km     10   70     1
+PlotVar: R64KT      r64kt      TsAveragedData/max_azwind      R_6_4  km      0   50     1
+PlotVar: R64KT_s10  r64kt      TsAveragedData/max_azwind_sp10 R_6_4  km      0   50     1
 
 PlotVar: VintVapt_SC_LC  VintTs_vaptott DIAGS/vintts_vaptott_twp4_vt0p5_SC_LC  Vapor@Diffusion g/(kg@km) 0  40 1e-3
 PlotVar: VintLht_SC_LC   VintTs_lh_tott DIAGS/vintts_lh_tott_twp4_lht1p0_SC_LC LH@Vaporization K/(hr@km) 0 150 1e-3
