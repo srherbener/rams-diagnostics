@@ -128,7 +128,7 @@ for iplot = 1:length(Config.LinePlots)
       fprintf('Reading HDF5 file: %s\n', Xfile);
       Xdata = ReadSelectXyzt(Xfile, Xvname, Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, Tmin, Tmax);
       Xdata(Xdata == UndefVal) = nan;
-      if ((strcmp(Smooth,'x') == 0) || (strcmp(Smooth,'xy') == 0))
+      if (strcmp(Smooth,'x') || strcmp(Smooth,'xy'))
         Xdata = SmoothFillTseries(Xdata, length(Xdata), Flen);
       end
       Xall(icase,:) = Xdata * Xscale;
@@ -137,7 +137,7 @@ for iplot = 1:length(Config.LinePlots)
       fprintf('Reading HDF5 file: %s\n', Yfile);
       Ydata = ReadSelectXyzt(Yfile, Yvname, Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, Tmin, Tmax);
       Ydata(Ydata == UndefVal) = nan;
-      if ((strcmp(Smooth,'y') == 0) || (strcmp(Smooth,'xy') == 0))
+      if (strcmp(Smooth,'y') || strcmp(Smooth,'xy'))
         Ydata = SmoothFillTseries(Ydata, length(Ydata), Flen);
       end
       Yall(icase,:) = Ydata * Yscale;

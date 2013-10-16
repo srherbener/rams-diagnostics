@@ -25,11 +25,14 @@ SstVal: 26
 #Case: BASE        XXX
 #Case: RIME_2X     XXX
 #Case: RIME_HALF   XXX
-Case: WARM_ACCR_2X     XXX
-Case: WARM_ACCR_HALF   XXX
-Case: WARM_AUTO_2X     XXX
-Case: WARM_AUTO_HALF   XXX
-Case: WARM_BASE        XXX
+#Case: WARM_ACCR_2X     XXX
+#Case: WARM_ACCR_HALF   XXX
+#Case: WARM_AUTO_2X     XXX
+#Case: WARM_AUTO_HALF   XXX
+#Case: WARM_BASE        XXX
+Case: WARM_2D_ACCR_2X     XXX
+Case: WARM_2D_ACCR_HALF   XXX
+Case: WARM_2D_BASE        XXX
 
 # grads variables
 Var: totpcp totpcp tempest_h2d
@@ -37,10 +40,14 @@ Var: totpcp totpcp tempest_h2d
 ####################### Line plots ############################
 # LinePlot: <plotset> <xspec> <yspec> <data_select_spec> <smoothing> <title> <legend_loc> <add_meas> <out_file>
 
-LinePlot: CoeffExp         SimTime TotalPrecip TsAll none @ Northwest none TotalAccumPrecip.jpg
-LinePlot: CoeffExp_NoAuto  SimTime TotalPrecip TsAll none @ Northwest none TotalAccumPrecipNoAuto.jpg
+#LinePlot: CoeffExp         SimTime TotalPrecip TsAll none @ Northwest none TotalAccumPrecip.jpg
+#LinePlot: CoeffExp_NoAuto  SimTime TotalPrecip TsAll none @ Northwest none TotalAccumPrecipNoAuto.jpg
 
-LinePlot: CoeffExp_WarmRain SimTime TotalPrecip TsAll none @ Northwest none AccumPcpWarmRain.jpg
+#LinePlot: CoeffExp_WarmRain SimTime TotalPrecip TsAll none @ Northwest none AccumPcpWarmRain.jpg
+
+LinePlot: CoeffExp_WarmRain_2D SimTime_2D TotalPrecip_2D  TsAll_2D y @ Northwest none AccumPcpWarmRain2D.jpg
+LinePlot: CoeffExp_WarmRain_2D SimTime_2D PrecipRate_2D   TsAll_2D y @ Northwest none PcpRateWarmRain2D.jpg
+LinePlot: CoeffExp_WarmRain_2D SimTime_2D PrecipRateNz_2D TsAll_2D y @ Northwest none PcpRateNzWarmRain2D.jpg
 
 ####################### Plot Sets ############################
 PlotSet: CoeffExp 7 BASE CONTROL k - 0.0 ACCR_2X ACCR@2X b - 0.0 ACCR_HALF ACCR@HALF c - 0.0 AUTO_2X AUTO@2X g - 0.0 AUTO_HALF AUTO@HALF y - 0.0 RIME_2X RIME@2X r - 0.0 RIME_HALF RIME@HALF m - 0.0
@@ -49,11 +56,17 @@ PlotSet: CoeffExp_NoAuto 5 BASE CONTROL k - 0.0 ACCR_2X ACCR@2X b - 0.0 ACCR_HAL
 
 PlotSet: CoeffExp_WarmRain 5 WARM_BASE CONTROL k - 0.0 WARM_ACCR_2X ACCR@2X b - 0.0 WARM_ACCR_HALF ACCR@HALF c - 0.0 AUTO_2X AUTO@2X r - 0.0 AUTO_HALF AUTO@HALF m - 0.0
 
+PlotSet: CoeffExp_WarmRain_2D 3 WARM_2D_BASE CONTROL k - 0.0 WARM_2D_ACCR_2X ACCR@2X b - 0.0 WARM_2D_ACCR_HALF ACCR@HALF c - 0.0
+
 ####################### Plot Vars ################################
 # PlotVar: <name> <vname> <file_prefix> <label> <units> <axis_min> <axis_max> <scale>
 # 
-PlotVar: TotalPrecip  totpcp   DIAGS/totpcp Accum@Precip     m-liq   0    2   0.001
-PlotVar: SimTime      t_coords DIAGS/totpcp Simulation@Time  min     0   60   0.0166666667
+PlotVar: TotalPrecip     totpcp   DIAGS/totpcp Accum@Precip     m-liq   0    2   0.001
+PlotVar: SimTime         t_coords DIAGS/totpcp Simulation@Time  min     0   60   0.0166666667
+PlotVar: TotalPrecip_2D  accpr    DIAGS/accpr  Accum@Precip     mm-liq  0  200   1
+PlotVar: PrecipRate_2D   pcprr    DIAGS/pcprr  Precip@Rate      mm/hr   0  0.2   1
+PlotVar: PrecipRateNz_2D pcprr_nz DIAGS/pcprr  Precip@Rate      mm/hr   0  0.2   1
+PlotVar: SimTime_2D      t_coords DIAGS/accpr  Simulation@Time  hr      0   10   2.7777777778e-4
 
 ######################## Selection specs #########################
 # PlotDselect: <name> <xmin> <xmax> <ymin> <ymax> <zmin> <zmax> <tmin> <tmax>
@@ -68,4 +81,5 @@ PlotVar: SimTime      t_coords DIAGS/totpcp Simulation@Time  min     0   60   0.
 #   z - dummy, set to 1
 #   t - time in seconds
 PlotDselect: TsAll 1 1 1 1 1 1 0 3600
+PlotDselect: TsAll_2D 1 1 1 1 1 1 0 86400
 

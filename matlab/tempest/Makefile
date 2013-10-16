@@ -6,6 +6,7 @@ DEST = $(HOME)/etc/matlab/tempest
 DIAG_DIR = /Volumes/data/RAMS/NasaTempest
 
 SCRIPTS = $(DEST)/GenTotPcp.m \
+          $(DEST)/GenPcp2d.m \
           $(DEST)/SetPath.m \
           $(DEST)/Sounding.m \
           $(DEST)/Sounding2.m
