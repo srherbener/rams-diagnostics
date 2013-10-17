@@ -14,14 +14,16 @@ montage -tile 2x2 -geometry ${Jsize}+2+100 \
  InitVortex.jpg \
  AerosolLoc.jpg \
  AerosolProfiles.jpg \
- ControlVtSpl.jpg \
+ ControlVtSpl_s10.jpg \
  Figure2.jpg
 
 # Figure 3: KE-Vt above RMW
 echo "Figure 3"
-montage -tile 1x2 -geometry ${Jsize}+2+100 \
- KeVt.jpg \
- TS_rmw.jpg \
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ KeV_s10.jpg \
+ TS_rmw_s10.jpg \
+ TS_r50kt_s10.jpg \
+ TS_r34kt_s10.jpg \
  Figure3.jpg
 
 # Figure 4: EOF in first column, VintCond in second column
@@ -86,7 +88,7 @@ montage -tile 1x2 -geometry ${Jsize}+2+100 \
 # Figure 10: destructive potential
 echo "Figure 10"
 montage -tile 1x1 -geometry ${Jsize} \
- R_Vt_All_SS_ext.jpg \
+ R_V10m_All_SS_ext.jpg \
  Figure10.jpg
 
 # Figure 11: schematic
