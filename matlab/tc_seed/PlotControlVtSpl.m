@@ -2,7 +2,7 @@ function [ ] = PlotControlVtSpl(ConfigFile, InType)
 % PlotControlVtSpl function to plot max sfc Vt and SPL of control simulation
 %
 
-UseUv = strcmp(InType, 'uv');
+UseVt = strcmp(InType, 'vt');
 
 [ Config ] = ReadConfig(ConfigFile);
 
@@ -25,7 +25,7 @@ end
 % VT will be (r,z,t), SPL will be (p,t)
 
 % read in the Vt and time coordinate data
-if (UseUv)
+if (UseVt)
   Hfile = sprintf('%s/speed_t_%s.h5', AzavgDir, SpinUpCase);
   VT_SPINUP = squeeze(hdf5read(Hfile, '/speed_t'));
 else
@@ -33,7 +33,7 @@ else
   VT_SPINUP = squeeze(hdf5read(Hfile, '/speed10m'));
 end
 T = squeeze(hdf5read(Hfile, '/t_coords'));
-if (UseUv)
+if (UseVt)
   Hfile = sprintf('%s/speed_t_%s.h5', AzavgDir, ControlCase);
   VT_CNTL = squeeze(hdf5read(Hfile, '/speed_t'));
 else
@@ -41,7 +41,7 @@ else
   VT_CNTL = squeeze(hdf5read(Hfile, '/speed10m'));
 end
 
-if (UseUv)
+if (UseVt)
   VT = cat(3, VT_SPINUP(:,:,1:24), VT_CNTL);
 else
   VT = cat(2, VT_SPINUP(:,1:24), VT_CNTL);
@@ -56,7 +56,7 @@ SPL = cat(2, SPL_SPINUP(:,1:24), SPL_CNTL);
 
 % Create a time series of the max sfc Vt and one of the min SPL
 % z == 1 is below sfc, so use z == 2 for sfc Vt
-if (UseUv)
+if (UseVt)
   VT = squeeze(VT(:,2,:)); % take the z == 2 level
 else
   VT = squeeze(VT(:,:));
@@ -108,14 +108,18 @@ MIN_SPL = SmoothFillTseries(MIN_SPL, Ntsteps, Flen);
 
 % Plot
 Lwidth = 3;
-Fsize = 45;
-if (UseUv)
+Fsize = 35;
+if (UseVt)
   Pfile = sprintf('%s/ControlVtSpl.jpg', PlotDir);
 else
   Pfile = sprintf('%s/ControlVtSpl_s10.jpg', PlotDir);
 end
 Xlabel = sprintf('Simulation Time (hr)');
-Y1label = sprintf('Max Vt (m/s)');
+if (UseVt)
+  Y1label = sprintf('Max Vt (m/s)');
+else
+  Y1label = sprintf('Max V_1_0_m (m/s)');
+end
 Y2label = sprintf('Min SLP (mb)');
 
 AxisPos = [ 0.11 0.15 0.75 0.75 ] ;
@@ -124,7 +128,7 @@ Xlims = [ 0 150 ];
 % Set up plot controls according to SST
 switch SstVal
   case 26
-    if (UseUv)
+    if (UseVt)
       Y1lims = [ 0 50 ];
       Y2lims = [ 970 1020 ];
     else
@@ -188,7 +192,7 @@ set(gca, 'TickLength', [ 0.025 0.025 ]);
 set(gca, 'Position', AxisPos);
 set(gca, 'YColor', 'k');
 set(gca, 'XTick', [ 50 100 ]);
-if (UseUv)
+if (UseVt)
   set(gca, 'YTick', [ 0 20 40 ]);
 else
   set(gca, 'YTick', [ 0 20 40 60 ]);
@@ -204,7 +208,7 @@ set(gca, 'TickLength', [ 0.025 0.025 ]);
 set(gca, 'Position', AxisPos);
 set(gca, 'YColor', 'k');
 set(gca, 'XTick', [ 50 100 ]);
-if (UseUv)
+if (UseVt)
   set(gca, 'YTick', [ 970 990 1010 ]);
 else
   set(gca, 'YTick', [ 960 980 1000 1020 ]);

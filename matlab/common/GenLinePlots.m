@@ -161,6 +161,10 @@ for iplot = 1:length(Config.LinePlots)
         H = (Ydata*Yscale).*0.5;
         RsqDiff = Rsq(2:end) - Rsq(1:end-1);
         Havg = H(2:end) + H(1:end-1);
+        if (size(RsqDiff) == size(Havg'))
+          % if one vector is row and the other column, make them both the same
+          Havg = Havg';
+        end
         Vol = sum(pi * (RsqDiff .* Havg));
         Ltext = sprintf('%.2e', Vol);
         fprintf('  Volume under rotated radial surface: %s\n', Ltext);
