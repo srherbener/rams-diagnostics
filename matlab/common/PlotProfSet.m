@@ -17,7 +17,7 @@ if (strcmp(Ptype, 'test'))
   LegFsize = 12;
 else
   Lwidth = 4;
-  Fsize = 45;
+  Fsize = 35;
   LegFsize = 20;
 end
 

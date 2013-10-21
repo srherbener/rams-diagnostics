@@ -56,7 +56,7 @@ for iplot = 1:length(Config.ProfRsPlots)
     
     PanelTitle = ~isempty(Pmarkers);
     if (PanelTitle)
-        Fsize = 45;
+        Fsize = 35;
      else
         Fsize = 25;
     end
