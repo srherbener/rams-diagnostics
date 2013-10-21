@@ -72,10 +72,13 @@ montage -tile 1x3 -geometry ${Jsize}+2+100 \
 
 # Figure 8: rainbands, profiles
 echo "Figure 8"
-montage -tile 1x3 -geometry ${Jsize}+2+100 \
+montage -tile 2x3 -geometry ${Jsize}+2+100 \
  prof_theta_e_diff_RB_SS.jpg \
+ prof_theta_diff_RB_SS.jpg \
+ prof_vapor_diff_RB_SS.jpg \
  prof_w_diff_RB_SS.jpg \
  TS_DeltapAll_SC_RB.jpg \
+ Blank.jpg \
  Figure8.jpg
 
 # Figure 9: compare core and rainbands, dynamic response
