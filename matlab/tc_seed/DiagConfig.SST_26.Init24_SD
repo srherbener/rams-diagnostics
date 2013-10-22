@@ -382,7 +382,8 @@ TsPlotSpecs: 121 0 1.0 hr 25 1998:08:22:21:00:00 10 24
 #LinePlot: ccn2 MaxVt  IKE     TsAll    xy PANEL:a  Northwest none   KeVt_ext.jpg
 
 #LinePlot: ccn2 RadAll     VtAllSS    SfcVtAll  y @        NorthEast IntVol R_Vt_All_SS_ext.jpg
-LinePlot: ccn2 RadAll_10m V10m_AllSS SfcVtAll  y @        NorthEast IntVol R_V10m_All_SS_ext.jpg
+LinePlot: ccn2 RadAll_10m  V10m_AllSS  SfcVtAll  y PANEL:a NorthEast IntVol R_V10m_All_SS_ext.jpg
+LinePlot: ccn2 RadPeak_10m V10m_PeakSS SfcVtAll  y PANEL:b NorthEast none   R_V10m_Peak_SS_ext.jpg
 
 #LinePlot: ccn4    SimTime IKE   TsAll y Integrated_Kinetic_Energy NorthWest none TS_ike.jpg
 #LinePlot: ccn4    SimTime MaxVt TsAll y Maximum_Vt                SouthEast none TS_max_vt.jpg
@@ -832,7 +833,7 @@ PlotVar: V10m_AllTR    speed10m    DIAGS/tavg_speed10m_TR V_1_0_m     m/s     0 
 PlotVar: V10m_AllSS    speed10m    DIAGS/tavg_speed10m_SS V_1_0_m     m/s     0  60     1
 PlotVar: V10m_PeakRI   speed10m    DIAGS/tavg_speed10m_RI V_1_0_m     m/s    20  30     1
 PlotVar: V10m_PeakTR   speed10m    DIAGS/tavg_speed10m_TR V_1_0_m     m/s    35  45     1
-PlotVar: V10m_PeakSS   speed10m    DIAGS/tavg_speed10m_SS V_1_0_m     m/s    35  50     1
+PlotVar: V10m_PeakSS   speed10m    DIAGS/tavg_speed10m_SS V_1_0_m     m/s    40  60     1
 PlotVar: V10m_RbandRI  speed10m    DIAGS/tavg_speed10m_RI V_1_0_m     m/s     3  13     1
 PlotVar: V10m_RbandTR  speed10m    DIAGS/tavg_speed10m_TR V_1_0_m     m/s     3  13     1
 PlotVar: V10m_RbandSS  speed10m    DIAGS/tavg_speed10m_SS V_1_0_m     m/s     5  15     1
