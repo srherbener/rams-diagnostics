@@ -89,16 +89,17 @@ montage -tile 1x2 -geometry ${Jsize}+2+100 \
  Figure9.jpg
 
 # Figure 10: destructive potential
-echo "Figure 10"
-montage -tile 1x1 -geometry ${Jsize} \
- R_V10m_All_SS_ext.jpg \
- Figure10.jpg
+#echo "Figure 10"
+#montage -tile 1x2 -geometry ${Jsize} \
+# R_V10m_All_SS_ext.jpg \
+# R_V10m_Peak_SS_ext.jpg \
+# Figure10.jpg
 
-# Figure 11: schematic
-echo "Figure 11"
+# Figure 10: schematic
+echo "Figure 10"
 montage -tile 2x2 -geometry ${Jsize}+2+100 \
  Slide1.jpg \
  Slide2.jpg \
  Blank.jpg \
  Slide3.jpg \
- Figure11.jpg
+ Figure10.jpg
