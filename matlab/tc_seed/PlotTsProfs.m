@@ -54,7 +54,7 @@ for iplot = 1:length(Config.ProfTsPlots)
     
     PanelTitle = ~isempty(Pmarkers);
     if (PanelTitle)
-        Fsize = 45; 
+        Fsize = 35; 
      else
         Fsize = 25;
     end
@@ -184,9 +184,9 @@ for iplot = 1:length(Config.ProfTsPlots)
         caxis([ Cmin Cmax ]);
         cbar = colorbar;
         set(cbar, 'FontSize', Fsize)
-        Clabels = num2str(get(cbar, 'Ytick'));
-        Clabels = regexp(Clabels, '[ ][ ]*', 'split');
-        set(cbar, 'YtickLabel', Clabels);
+%        Clabels = num2str(get(cbar, 'Ytick'));
+%        Clabels = regexp(Clabels, '[ ][ ]*', 'split');
+%        set(cbar, 'YtickLabel', Clabels);
         
         if (PanelTitle)
           % The title is in a box that adjusts to the amount of characters in
