@@ -60,11 +60,11 @@ if (DoingPresentation)
   Pfile = sprintf('%s/TCWS0513_AerosolProfiles.jpg', PlotDir);
 else
   Lwidth = 3;
-  Fsize = 45;
+  Fsize = 35;
   Pfile = sprintf('%s/AerosolProfiles.jpg', PlotDir);
 end
 
-Xlabel = sprintf('Concentration (#/cc)');
+Xlabel = sprintf('Concentration (cm^-^3)');
 Ylabel = sprintf('Height (km)');
 
 Fig = figure;

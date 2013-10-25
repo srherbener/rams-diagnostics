@@ -114,11 +114,11 @@ if (UseVt)
 else
   Pfile = sprintf('%s/ControlVtSpl_s10.jpg', PlotDir);
 end
-Xlabel = sprintf('Simulation Time (hr)');
+Xlabel = sprintf('Simulation Time (h)');
 if (UseVt)
-  Y1label = sprintf('Max Vt (m/s)');
+  Y1label = sprintf('Max Vt (m s^-^1)');
 else
-  Y1label = sprintf('Max V_1_0_m (m/s)');
+  Y1label = sprintf('Max V_1_0_m (m s^-^1)');
 end
 Y2label = sprintf('Min SLP (mb)');
 

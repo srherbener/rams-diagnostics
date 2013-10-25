@@ -11,7 +11,7 @@ SpinUpCase = Config.SpinUpCase;
 AzavgDir = Config.AzavgDir;
 PlotDir = Config.PlotDir;
 
-Fsize = 45;
+Fsize = 35;
 
 % read in the Vt and coordinate data
 %Hfile = sprintf('%s/speed_t300_%s.h5', AzavgDir, SpinUpCase);

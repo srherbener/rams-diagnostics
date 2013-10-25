@@ -209,12 +209,12 @@ for iplot = 1:length(Config.ProfRsPlots)
         set(gca, 'YTickLabel', Yticklabels);
         colormap(cmap);
         shading flat;
-        caxis([ Cmin Cmax ]);
         cbar = colorbar;
+%        Clabels = num2str(get(cbar, 'Ytick'));
+%        Clabels = regexp(Clabels, '[ ][ ]*', 'split');
+%        set(cbar, 'YtickLabel', Clabels);
+        caxis([ Cmin Cmax ]);
         set(cbar, 'FontSize', Fsize);
-        Clabels = num2str(get(cbar, 'Ytick'));
-        Clabels = regexp(Clabels, '[ ][ ]*', 'split');
-        set(cbar, 'YtickLabel', Clabels);
         
         if (PanelTitle)
           % The title is in a box that adjusts to the amount of characters in
