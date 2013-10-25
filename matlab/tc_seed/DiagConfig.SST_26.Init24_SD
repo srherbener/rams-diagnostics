@@ -611,9 +611,9 @@ LinePlot: ccn2 RadPeak_10m V10m_PeakSS SfcVtAll  y PANEL:b NorthEast none   R_V1
 #ProfPlot: ccn2 pmeas_cloud_d_c0p1_SC_LC   cloud_d   abs SC-LC-c0p1:D   Diameter@(um)           Height@(km) NorthWest -2:1:60      0.0 12.0 prof_cloud_d_c0p1_SC_LC.jpg
 #ProfPlot: ccn2 pmeas_cloud_c0p1_SC_LC     cloud     abs SC-LC-c0p1:q_c Mixing@Ratio@(g/kg)     Height@(km) NorthEast -0.1:0.1:2.0 0.0 12.0 prof_cloud_c0p1_SC_LC.jpg
 
-ProfPlot: ccn2 pmeas_cloud_cm3_c0p01_SC_LC cloud_cm3 abs SC-LC-c0p01:N   Concentration@(#/cm^3)  Height@(km) NorthEast -4:2:100     0.0 12.0 prof_cloud_cm3_c0p01_SC_LC.jpg
-ProfPlot: ccn2 pmeas_cloud_d_c0p01_SC_LC   cloud_d   abs SC-LC-c0p01:D   Diameter@(um)           Height@(km) NorthWest -2:1:60      0.0 12.0 prof_cloud_d_c0p01_SC_LC.jpg
-ProfPlot: ccn2 pmeas_cloud_c0p01_SC_LC     cloud     abs SC-LC-c0p01:q_c Mixing@Ratio@(g/kg)     Height@(km) NorthEast -0.1:0.1:2.0 0.0 12.0 prof_cloud_c0p01_SC_LC.jpg
+ProfPlot: ccn2 pmeas_cloud_c0p01_SC_LC     cloud     abs PANEL:b@q_c@Actual Mixing@Ratio@(g/kg)     Height@(km) NorthEast -0.1:0.1:2.0 0.0 12.0 prof_cloud_c0p01_SC_LC.jpg
+ProfPlot: ccn2 pmeas_cloud_cm3_c0p01_SC_LC cloud_cm3 abs PANEL:d@N_c@Actual Concentration@(#/cm^3)  Height@(km) NorthEast -4:2:100     0.0 12.0 prof_cloud_cm3_c0p01_SC_LC.jpg
+ProfPlot: ccn2 pmeas_cloud_d_c0p01_SC_LC   cloud_d   abs PANEL:f@D_c@Actual Diameter@(um)           Height@(km) NorthWest -2:1:60      0.0 12.0 prof_cloud_d_c0p01_SC_LC.jpg
 
 #ProfPlot: ccn2 pmeas_cloud_cm3_c0p001_SC_LC cloud_cm3 abs SC-LC-c0p001:N   Concentration@(#/cm^3)  Height@(km) NorthEast -4:2:100     0.0 12.0 prof_cloud_cm3_c0p001_SC_LC.jpg
 #ProfPlot: ccn2 pmeas_cloud_d_c0p001_SC_LC   cloud_d   abs SC-LC-c0p001:D   Diameter@(um)           Height@(km) NorthWest -2:1:60      0.0 12.0 prof_cloud_d_c0p001_SC_LC.jpg
@@ -628,9 +628,9 @@ ProfPlot: ccn2 pmeas_cloud_c0p01_SC_LC     cloud     abs SC-LC-c0p01:q_c Mixing@
 #ProfPlot: ccn2 pmeas_cloud_d_c0p1_SC_AC   cloud_d   abs SC-AC-c0p1:D   Diameter@(um)           Height@(km) NorthWest -2:1:60      0.0 12.0 prof_cloud_d_c0p1_SC_AC.jpg
 #ProfPlot: ccn2 pmeas_cloud_c0p1_SC_AC     cloud     abs SC-AC-c0p1:q_c Mixing@Ratio@(g/kg)     Height@(km) NorthEast -0.1:0.1:2.0 0.0 12.0 prof_cloud_c0p1_SC_AC.jpg
 
-ProfPlot: ccn2 pmeas_cloud_cm3_c0p01_SC_AC cloud_cm3 abs SC-AC-c0p01:N   Concentration@(#/cm^3)  Height@(km) NorthEast -4:2:100     0.0 12.0 prof_cloud_cm3_c0p01_SC_AC.jpg
-ProfPlot: ccn2 pmeas_cloud_d_c0p01_SC_AC   cloud_d   abs SC-AC-c0p01:D   Diameter@(um)           Height@(km) NorthWest -2:1:60      0.0 12.0 prof_cloud_d_c0p01_SC_AC.jpg
-ProfPlot: ccn2 pmeas_cloud_c0p01_SC_AC     cloud     abs SC-AC-c0p01:q_c Mixing@Ratio@(g/kg)     Height@(km) NorthEast -0.1:0.1:2.0 0.0 12.0 prof_cloud_c0p01_SC_AC.jpg
+#ProfPlot: ccn2 pmeas_cloud_cm3_c0p01_SC_AC cloud_cm3 abs SC-AC-c0p01:N_c Concentration@(#/cm^3)  Height@(km) NorthEast -4:2:100     0.0 12.0 prof_cloud_cm3_c0p01_SC_AC.jpg
+#ProfPlot: ccn2 pmeas_cloud_d_c0p01_SC_AC   cloud_d   abs SC-AC-c0p01:D_c Diameter@(um)           Height@(km) NorthWest -2:1:60      0.0 12.0 prof_cloud_d_c0p01_SC_AC.jpg
+#ProfPlot: ccn2 pmeas_cloud_c0p01_SC_AC     cloud     abs SC-AC-c0p01:q_c Mixing@Ratio@(g/kg)     Height@(km) NorthEast -0.1:0.1:2.0 0.0 12.0 prof_cloud_c0p01_SC_AC.jpg
 
 #ProfPlot: ccn2 pmeas_cloud_cm3_c0p001_SC_AC cloud_cm3 abs SC-AC-c0p001:N   Concentration@(#/cm^3) Height@(km) NorthEast -4:2:100     0.0 12.0 prof_cloud_cm3_c0p001_SC_AC.jpg
 #ProfPlot: ccn2 pmeas_cloud_d_c0p001_SC_AC   cloud_d   abs SC-AC-c0p001:D   Diameter@(um)          Height@(km) NorthWest -2:1:60      0.0 12.0 prof_cloud_d_c0p001_SC_AC.jpg
@@ -644,8 +644,8 @@ ProfPlot: ccn2 pmeas_cloud_c0p01_SC_AC     cloud     abs SC-AC-c0p01:q_c Mixing@
 #ProfPlot: ccn2 pmeas_lh_tott_c0p1_SC_SS   lh_tott abs PANEL:c@LH@Actual Latent@Heating@(K/hr) Height@(km) SouthEast -5:0.1:50      0.0 12.0 prof_lh_tott_c0p1_SC_SS.jpg
 #ProfPlot: ccn2 pmeas_w_c0p1_SC_SS         w       abs PANEL:d@W@Actual  W@(m/s)               Height@(km) SouthEast  -0.5:0.1:10.0 0.0 12.0 prof_w_c0p1_SC_SS.jpg
 
-ProfPlot: ccn2 pmeas_lh_tott_c0p01_SC_SS  lh_tott abs PANEL:c@LH@Actual Latent@Heating@(K/hr) Height@(km) SouthEast -5:0.1:50      0.0 12.0 prof_lh_tott_c0p01_SC_SS.jpg
-ProfPlot: ccn2 pmeas_w_c0p01_SC_SS        w       abs PANEL:d@W@Actual  W@(m/s)               Height@(km) SouthEast  -0.5:0.1:10.0 0.0 12.0 prof_w_c0p01_SC_SS.jpg
+ProfPlot: ccn2 pmeas_lh_tott_c0p01_SC_SS  lh_tott abs PANEL:c@LH@Actual Latent@Heating@(K/hr) Height@(km) SouthEast -5:0.1:40      0.0 12.0 prof_lh_tott_c0p01_SC_SS.jpg
+ProfPlot: ccn2 pmeas_w_c0p01_SC_SS        w       abs PANEL:d@W@Actual  W@(m/s)               Height@(km) SouthEast  -0.5:0.1:5.0  0.0 12.0 prof_w_c0p01_SC_SS.jpg
 
 #ProfPlot: ccn2 pmeas_lh_tott_c0p001_SC_SS lh_tott abs PANEL:c@LH@Actual Latent@Heating@(K/hr) Height@(km) SouthEast -5:0.1:50      0.0 12.0 prof_lh_tott_c0p001_SC_SS.jpg
 #ProfPlot: ccn2 pmeas_w_c0p001_SC_SS       w       abs PANEL:d@W@Actual  W@(m/s)               Height@(km) SouthEast  -0.5:0.1:10.0 0.0 12.0 prof_w_c0p001_SC_SS.jpg
@@ -657,8 +657,8 @@ ProfPlot: ccn2 pmeas_w_c0p01_SC_SS        w       abs PANEL:d@W@Actual  W@(m/s) 
 #ProfPlot: ccn2 pmeas_lh_tott_c0p1_SC_SS   lh_tott diff PANEL:e@LH@Difference Latent@Heating@(K/hr) Height@(km) NorthEast -5:0.1:20      0.0 12.0 prof_lh_tott_diff_c0p1_SC_SS.jpg
 #ProfPlot: ccn2 pmeas_w_c0p1_SC_SS         w       diff PANEL:f@W@Difference  W@(m/s)               Height@(km) NorthEast  -2.0:0.1:2.0  0.0 12.0 prof_w_diff_c0p1_SC_SS.jpg
 
-ProfPlot: ccn2 pmeas_lh_tott_c0p01_SC_SS  lh_tott diff PANEL:e@LH@Difference Latent@Heating@(K/hr) Height@(km) NorthEast -5:0.1:20      0.0 12.0 prof_lh_tott_diff_c0p01_SC_SS.jpg
-ProfPlot: ccn2 pmeas_w_c0p01_SC_SS        w       diff PANEL:f@W@Difference  W@(m/s)               Height@(km) NorthEast  -2.0:0.1:2.0  0.0 12.0 prof_w_diff_c0p01_SC_SS.jpg
+ProfPlot: ccn2 pmeas_lh_tott_c0p01_SC_SS  lh_tott diff PANEL:e@LH@Difference Latent@Heating@(K/hr) Height@(km) NorthWest -15:0.1:15     0.0 12.0 prof_lh_tott_diff_c0p01_SC_SS.jpg
+ProfPlot: ccn2 pmeas_w_c0p01_SC_SS        w       diff PANEL:f@W@Difference  W@(m/s)               Height@(km) SouthWest  -1.0:0.1:1.0  0.0 12.0 prof_w_diff_c0p01_SC_SS.jpg
 
 #ProfPlot: ccn2 pmeas_lh_tott_c0p001_SC_SS lh_tott diff PANEL:e@LH@Difference Latent@Heating@(K/hr) Height@(km) NorthEast -5:0.1:20      0.0 12.0 prof_lh_tott_diff_c0p001_SC_SS.jpg
 #ProfPlot: ccn2 pmeas_w_c0p001_SC_SS       w       diff PANEL:f@W@Difference  W@(m/s)               Height@(km) NorthEast  -2.0:0.1:2.0  0.0 12.0 prof_w_diff_c0p001_SC_SS.jpg
@@ -675,11 +675,13 @@ ProfPlot: ccn2 pmeas_w_c0p01_SC_SS        w       diff PANEL:f@W@Difference  W@(
 #ProfPlot: ccn2 pmeas_relhum_RB_SS         relhum  diff PANEL:f_CASE-CLEAN RH_(%)                Height_(km) NorthEast -15:0.1:15     0.0 15.0 prof_relhum_diff_RB_SS.jpg
 #ProfPlot: ccn2 pmeas_lh_tott_lht1p0_RB_SS lh_tott diff PANEL:g_CASE-CLEAN Latent_Heating_(K/hr) Height_(km) NorthEast -10:0.1:10     0.0 15.0 prof_lh_tott_lht1p0_diff_RB_SS.jpg
 #ProfPlot: ccn2 pmeas_lh_tott_RB_SS lh_tott diff PANEL:g_CASE-CLEAN Latent_Heating_(K/hr) Height_(km) NorthEast -10:0.1:10     0.0 15.0 prof_lh_tott_diff_RB_SS.jpg
-#ProfPlot: ccn2 pmeas_theta_e_RB_SS  theta_e diff PANEL:a@Theta-E@Difference Theta-E@(K)   Height@(km) NorthEast   -5:0.01:5   0.0 15.0 prof_theta_e_diff_RB_SS.jpg
-#ProfPlot: ccn2 pmeas_theta_RB_SS    theta diff   PANEL:b@Theta@Difference   Theta@(K)     Height@(km) NorthEast   -5:0.01:5   0.0 15.0 prof_theta_diff_RB_SS.jpg
-#ProfPlot: ccn2 pmeas_vapor_RB_SS    vapor diff   PANEL:c@Vapor@Difference   Vapor@(g/kg)  Height@(km) NorthEast   -1:0.01:1   0.0 15.0 prof_vapor_diff_RB_SS.jpg
+
+ProfPlot: ccn2 pmeas_theta_e_RB_SS  theta_e diff PANEL:a@Theta-E@Difference Theta-E@(K)   Height@(km) NorthEast   -5:0.01:5   0.0 15.0 prof_theta_e_diff_RB_SS.jpg
+ProfPlot: ccn2 pmeas_theta_RB_SS    theta diff   PANEL:b@Theta@Difference   Theta@(K)     Height@(km) NorthEast   -5:0.01:5   0.0 15.0 prof_theta_diff_RB_SS.jpg
+ProfPlot: ccn2 pmeas_vapor_RB_SS    vapor diff   PANEL:c@Vapor@Difference   Vapor@(g/kg)  Height@(km) NorthEast   -1:0.01:1   0.0 15.0 prof_vapor_diff_RB_SS.jpg
+
 #ProfPlot: ccn2 pmeas_w_twp4_RB_SS         w       diff PANEL:b@W@Difference W@(m/s)               Height@(km) SouthEast  -0.5:0.05:0.5 0.0 15.0 prof_w_twp4_diff_RB_SS.jpg
-#ProfPlot: ccn2 pmeas_w_RB_SS         w       diff PANEL:d@W@Difference W@(m/s)               Height@(km) SouthEast  -0.5:0.05:0.5 0.0 15.0 prof_w_diff_RB_SS.jpg
+ProfPlot: ccn2 pmeas_w_RB_SS         w       diff PANEL:d@W@Difference W@(m/s)               Height@(km) SouthEast  -0.5:0.05:0.5 0.0 15.0 prof_w_diff_RB_SS.jpg
 
 # TC WS, May 2013
 #ProfPlot: ccn2_ext pmeas_lh_tott_lht1p0_SC_SS lh_tott diff CASE-CLEAN Latent_Heating_(K/hr) Height_(km) NorthWest -10:0.1:10     0.0 15.0 TCWS0513_prof_lh_tott_lht1p0_diff_SC_SS.jpg
@@ -733,9 +735,9 @@ ProfPlot: ccn2 pmeas_w_c0p01_SC_SS        w       diff PANEL:f@W@Difference  W@(
 #ProfTsPlot: ccn2 pmeas_cloud_d_c0p1_SC_LC     cloud_d   PANEL:b:d@D   Simulation@Time@(hr) Height@(km) 0 60  0.0 12.0 revgray 0 abs pts_cloud_d_c0p1_SC_LC
 #ProfTsPlot: ccn2 pmeas_cloud_c0p1_SC_LC       cloud     PANEL:b:d@q_c Simulation@Time@(hr) Height@(km) 0 2.0 0.0 12.0 revgray 0 abs pts_cloud_c0p1_SC_LC
 
-ProfTsPlot: ccn2 pmeas_cloud_cm3_c0p01_SC_LC  cloud_cm3 PANEL:a:c@N   Simulation@Time@(hr) Height@(km) 0 75  0.0 12.0 revgray 0 abs pts_cloud_cm3_c0p01_SC_LC
-ProfTsPlot: ccn2 pmeas_cloud_d_c0p01_SC_LC    cloud_d   PANEL:b:d@D   Simulation@Time@(hr) Height@(km) 0 60  0.0 12.0 revgray 0 abs pts_cloud_d_c0p01_SC_LC
-ProfTsPlot: ccn2 pmeas_cloud_c0p01_SC_LC      cloud     PANEL:b:d@q_c Simulation@Time@(hr) Height@(km) 0 2.0 0.0 12.0 revgray 0 abs pts_cloud_c0p01_SC_LC
+ProfTsPlot: ccn2 pmeas_cloud_c0p01_SC_LC      cloud     PANEL:a:b@q_c Simulation@Time@(hr) Height@(km) 0 2.0 0.0 12.0 revgray 0 abs pts_cloud_c0p01_SC_LC
+ProfTsPlot: ccn2 pmeas_cloud_cm3_c0p01_SC_LC  cloud_cm3 PANEL:c:d@N_c Simulation@Time@(hr) Height@(km) 0 75  0.0 12.0 revgray 0 abs pts_cloud_cm3_c0p01_SC_LC
+ProfTsPlot: ccn2 pmeas_cloud_d_c0p01_SC_LC    cloud_d   PANEL:e:f@D_c Simulation@Time@(hr) Height@(km) 0 60  0.0 12.0 revgray 0 abs pts_cloud_d_c0p01_SC_LC
 
 #ProfTsPlot: ccn2 pmeas_cloud_cm3_c0p001_SC_LC cloud_cm3 PANEL:a:c@N   Simulation@Time@(hr) Height@(km) 0 75  0.0 12.0 revgray 0 abs pts_cloud_cm3_c0p001_SC_LC
 #ProfTsPlot: ccn2 pmeas_cloud_d_c0p001_SC_LC   cloud_d   PANEL:b:d@D   Simulation@Time@(hr) Height@(km) 0 60  0.0 12.0 revgray 0 abs pts_cloud_d_c0p001_SC_LC
@@ -756,9 +758,9 @@ ProfTsPlot: ccn2 pmeas_cloud_c0p01_SC_LC      cloud     PANEL:b:d@q_c Simulation
 #ProfTsPlot: ccn2_diff pmeas_cloud_d_c0p1_SC_LC     cloud_d   PANEL:b@D   Simulation@Time@(hr) Height@(km)  -20  20 0.0 12.0 redblue 0 diff pts_cloud_d_c0p1_diff_SC_LC
 #ProfTsPlot: ccn2_diff pmeas_cloud_c0p1_SC_LC       cloud     PANEL:b@q_c Simulation@Time@(hr) Height@(km) -0.3 0.3 0.0 12.0 redblue 0 diff pts_cloud_c0p1_diff_SC_LC
 
-ProfTsPlot: ccn2_diff pmeas_cloud_cm3_c0p01_SC_LC  cloud_cm3 PANEL:a@N   Simulation@Time@(hr) Height@(km)  -75  75 0.0 12.0 redblue 0 diff pts_cloud_cm3_c0p01_diff_SC_LC
-ProfTsPlot: ccn2_diff pmeas_cloud_d_c0p01_SC_LC    cloud_d   PANEL:b@D   Simulation@Time@(hr) Height@(km)  -20  20 0.0 12.0 redblue 0 diff pts_cloud_d_c0p01_diff_SC_LC
-ProfTsPlot: ccn2_diff pmeas_cloud_c0p01_SC_LC      cloud     PANEL:b@q_c Simulation@Time@(hr) Height@(km) -0.3 0.3 0.0 12.0 redblue 0 diff pts_cloud_c0p01_diff_SC_LC
+ProfTsPlot: ccn2_diff pmeas_cloud_c0p01_SC_LC      cloud     PANEL:a@q_c Simulation@Time@(hr) Height@(km) -0.3 0.3 0.0 12.0 redblue 0 diff pts_cloud_c0p01_diff_SC_LC
+ProfTsPlot: ccn2_diff pmeas_cloud_cm3_c0p01_SC_LC  cloud_cm3 PANEL:c@N_c Simulation@Time@(hr) Height@(km)  -75  75 0.0 12.0 redblue 0 diff pts_cloud_cm3_c0p01_diff_SC_LC
+ProfTsPlot: ccn2_diff pmeas_cloud_d_c0p01_SC_LC    cloud_d   PANEL:e@D_c Simulation@Time@(hr) Height@(km)  -20  20 0.0 12.0 redblue 0 diff pts_cloud_d_c0p01_diff_SC_LC
 
 #ProfTsPlot: ccn2_diff pmeas_cloud_cm3_c0p001_SC_LC cloud_cm3 PANEL:a@N   Simulation@Time@(hr) Height@(km)  -75  75 0.0 12.0 redblue 0 diff pts_cloud_cm3_c0p001_diff_SC_LC
 #ProfTsPlot: ccn2_diff pmeas_cloud_d_c0p001_SC_LC   cloud_d   PANEL:b@D   Simulation@Time@(hr) Height@(km)  -20  20 0.0 12.0 redblue 0 diff pts_cloud_d_c0p001_diff_SC_LC
