@@ -36,6 +36,7 @@ for iplot = 1:length(Config.ProfRsPlots)
 
     Fprefix = Config.ProfRsPlots(iplot).Fprefix;
     Var = Config.ProfRsPlots(iplot).Var;
+    Scale = Config.ProfRsPlots(iplot).Scale;
 
     % config for axes
     Cmin = Config.ProfRsPlots(iplot).Cmin;
@@ -79,7 +80,7 @@ for iplot = 1:length(Config.ProfRsPlots)
         Hfile = sprintf('%s/%s_%s.h5', Ddir, Fprefix, Case);
         Hdset = sprintf('/ProfRs_%s', Var);
         fprintf('  HDF5 file: %s, dataset: %s\n', Hfile, Hdset);
-        PROF_RS = squeeze(hdf5read(Hfile, Hdset));
+        PROF_RS = squeeze(hdf5read(Hfile, Hdset)) .* Scale;
         Z = hdf5read(Hfile, 'Height')/1000; % km
         R = hdf5read(Hfile, 'Radius')/1000; % km
         
@@ -88,7 +89,7 @@ for iplot = 1:length(Config.ProfRsPlots)
             Hfile = sprintf('%s/%s_%s.h5', Ddir, Fprefix, ControlCase);
             Hdset = sprintf('/ProfRs_%s', Var);
             fprintf('  HDF5 file: %s, dataset: %s\n', Hfile, Hdset);
-            PROF_RS_CNTL = squeeze(hdf5read(Hfile, Hdset));
+            PROF_RS_CNTL = squeeze(hdf5read(Hfile, Hdset)) .* Scale;
             
             PROF_RS = PROF_RS - PROF_RS_CNTL;
         end

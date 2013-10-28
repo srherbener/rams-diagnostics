@@ -102,10 +102,11 @@ Var: lh_frzt latheatfrzt 3d
 #
 AzavgEofConfig: 10 20
 
-AzavgEof: theta_e     theta_e theta_e      0 250000     0  25000  86400 518400
-AzavgEof: theta_e_RI  theta_e theta_e      0 250000     0  25000 144000 216000
-AzavgEof: theta_e_TR  theta_e theta_e      0 250000     0  25000 288000 360000
-AzavgEof: theta_e_SS  theta_e theta_e      0 250000     0  25000 432000 504000
+AzavgEof: theta_e       theta_e       theta_e      0 250000     0  25000  86400 518400
+AzavgEof: theta_e_c0p01 theta_e_c0p01 theta_e      0 250000     0  25000  86400 518400
+#AzavgEof: theta_e_RI  theta_e theta_e      0 250000     0  25000 144000 216000
+#AzavgEof: theta_e_TR  theta_e theta_e      0 250000     0  25000 288000 360000
+#AzavgEof: theta_e_SS  theta_e theta_e      0 250000     0  25000 432000 504000
 
 ############################################
 # profile measurments
@@ -904,15 +905,15 @@ ProfTsPlot: ccn2_diff pmeas_w_RB_LC w PANEL:b@W Simulation@Time@(h) Height@(km) 
 #ProfRsPlot: ccn2_diff pmeas_lh_tott_c0p1_SC_SS   lh_tott  PANEL:a@LH Radius@(km) Height@(km) -15 15 0.0 12.0 redblue 0 diff prs_lh_tott_diff_c0p1_SC_SS
 #ProfRsPlot: ccn2_diff pmeas_w_c0p1_SC_SS         w        PANEL:b@W  Radius@(km) Height@(km)  -1  1 0.0 12.0 redblue 0 diff prs_w_diff_c0p1_SC_SS
 
-ProfRsPlot: ccn2_diff pmeas_lh_tott_c0p01_SC_SS  lh_tott  PANEL:a@LH Radius@(km) Height@(km) -15 15 0.0 12.0 redblue 0 diff prs_lh_tott_diff_c0p01_SC_SS
-ProfRsPlot: ccn2_diff pmeas_w_c0p01_SC_SS        w        PANEL:b@W  Radius@(km) Height@(km)  -1  1 0.0 12.0 redblue 0 diff prs_w_diff_c0p01_SC_SS
+ProfRsPlot: ccn2_diff pmeas_lh_tott_c0p01_SC_SS  lh_tott 1.0 PANEL:a@LH Radius@(km) Height@(km) -15 15 0.0 12.0 redblue 0 diff prs_lh_tott_diff_c0p01_SC_SS
+ProfRsPlot: ccn2_diff pmeas_w_c0p01_SC_SS        w       1.0 PANEL:b@W  Radius@(km) Height@(km)  -1  1 0.0 12.0 redblue 0 diff prs_w_diff_c0p01_SC_SS
 
 #ProfRsPlot: ccn2_diff pmeas_lh_tott_c0p001_SC_SS lh_tott  PANEL:a@LH Radius@(km) Height@(km) -15 15 0.0 12.0 redblue 0 diff prs_lh_tott_diff_c0p001_SC_SS
 #ProfRsPlot: ccn2_diff pmeas_w_c0p001_SC_SS       w        PANEL:b@W  Radius@(km) Height@(km)  -1  1 0.0 12.0 redblue 0 diff prs_w_diff_c0p001_SC_SS
 
 # Figure 7
-ProfRsPlot: ccn2      pmeas_relvortz_rvz1em4_SC_SS relvortz PANEL:a:b@\zeta Radius@(km) Height@(km)     0  1e-2  0.0 15.0 none    0  abs prs_relvortz_rvz1em4_SC_SS
-ProfRsPlot: ccn2_diff pmeas_relvortz_rvz1em4_SC_SS relvortz PANEL:c@\zeta   Radius@(km) Height@(km) -2e-3  2e-3  0.0 15.0 redblue 0 diff prs_relvortz_rvz1em4_diff_SC_SS
+ProfRsPlot: ccn2      pmeas_relvortz_rvz1em4_SC_SS relvortz 1000.0 PANEL:a:b@\zeta Radius@(km) Height@(km)  0 10  0.0 15.0 none    0  abs prs_relvortz_rvz1em4_SC_SS
+ProfRsPlot: ccn2_diff pmeas_relvortz_rvz1em4_SC_SS relvortz 1000.0 PANEL:c@\zeta   Radius@(km) Height@(km) -2  2  0.0 15.0 redblue 0 diff prs_relvortz_rvz1em4_diff_SC_SS
 
 # illustrate freezing level
 #ProfRsPlot: ccn4_diff pmeas_w_SC_SS  w Vertical_Velocity_(m/s) Radius_(km) Height_(km) -1 1 0.0 15.0 redblue 1 diff prs_w_fl_SC_SS
@@ -949,9 +950,9 @@ PlotSet: ccn2_diff_short    1 TCS_SD_C2000 C2000 k - 0.0
 # 
 PlotVar: MaxVt      max_azwind TsAveragedData/max_azwind      Max@Vt      m@s^-^1 10   60     1
 PlotVar: MaxV_s10   max_azwind TsAveragedData/max_azwind_sp10 Max@V_1_0_m m@s^-^1 10   65     1
-PlotVar: IKE        horiz_ke   TsAveragedData/horiz_ke        KE          10^9@J   0    2  1e-9
-PlotVar: IKE_s10    horiz_ke   TsAveragedData/horiz_ke_sp10   KE          10^9@J   0  1.5  1e-9
-PlotVar: IKE90      horiz_ke   TsAveragedData/horiz_ke        KE          10^9@J   0    1  1e-9
+PlotVar: IKE        horiz_ke   TsAveragedData/horiz_ke        IKE         10^9@J   0    2  1e-9
+PlotVar: IKE_s10    horiz_ke   TsAveragedData/horiz_ke_sp10   IKE         10^9@J   0  1.5  1e-9
+PlotVar: IKE90      horiz_ke   TsAveragedData/horiz_ke        IKE         10^9@J   0    1  1e-9
 PlotVar: RMW        rmw        TsAveragedData/max_azwind      RMW         km       5   40     1
 PlotVar: RMW_s10    rmw        TsAveragedData/max_azwind_sp10 RMW         km       5   40     1
 PlotVar: R34KT      r34kt      TsAveragedData/max_azwind      R_3_4_k_t   km      20  110     1
@@ -1047,7 +1048,8 @@ PlotDselect: SfcVtRband 70 250000 0 0 0 30 0 0
 #   <r1> <r2> <z1> <z1> specifies a 2D window to cut out of the
 #       EOF to place on the plot (r and z in km)
 #
-AzavgEofPlot: theta_e     theta_e     Theta-e      K 1 0.02 0.0005       0 250    0  2
+AzavgEofPlot: theta_e       theta_e     Theta-e      K 1 0.02 0.0005       0 250    0  12
+AzavgEofPlot: theta_e_c0p01 theta_e     Theta-e      K 1 0.02 0.0005       0 250    0  12
 #AzavgEofPlot: theta_e_RI  theta_e     Theta-e      K 1 0.02 0.0005       0 250    0  2
 #AzavgEofPlot: theta_e_TR  theta_e     Theta-e      K 1 0.02 0.0005       0 250    0  2
 #AzavgEofPlot: theta_e_SS  theta_e     Theta-e      K 1 0.02 0.0005       0 250    0  2

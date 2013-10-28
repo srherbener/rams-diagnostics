@@ -35,7 +35,7 @@ for icase = 1:length(Config.Cases)
 
       Name = Config.AzavgEof(ieof).Name;
       Vname = Config.AzavgEof(ieof).Rvar;
-      Fprefix = Config.AzavgEof(ieof).Fprefix
+      Fprefix = Config.AzavgEof(ieof).Fprefix;
       InFile1 = sprintf('%s/%s_%s.h5', Config.AzavgDir, Fprefix, Case);
       InFile2 = sprintf('%s/%s_%s.h5', Config.AzavgDir, Fprefix, ControlCase);
       OutFile = sprintf('%s/%s_%s.h5', EofDir, Name, Case);
