@@ -429,11 +429,15 @@ TsPlotSpecs: 121 0 1.0 hr 25 1998:08:22:21:00:00 10 24
 #LinePlot: ccn4 SimTime    R50KT       TsAll  y PANEL:c  NorthWest Tphases TS_r50kt.jpg
 #LinePlot: ccn4 SimTime    R64KT       TsAll  y PANEL:a  NorthWest Tphases TS_r64kt.jpg
 
-LinePlot: ccn4 MaxV_s10   IKE_s10     TsAll xy PANEL:a  Northwest none    KeV_s10.jpg
+LinePlot: ccn4 MaxV_s10   IKE_s10     TsAll xy PANEL:a  NorthWest none    KeV_s10.jpg
 LinePlot: ccn4 SimTime    RMW_s10     TsAll  y PANEL:b  NorthEast Tphases TS_rmw_s10.jpg
-LinePlot: ccn4 SimTime    R34KT_s10   TsAll  y PANEL:d  NorthWest Tphases TS_r34kt_s10.jpg
-LinePlot: ccn4 SimTime    R50KT_s10   TsAll  y PANEL:c  NorthWest Tphases TS_r50kt_s10.jpg
+LinePlot: ccn4 SimTime    R34KT_s10   TsAll  y PANEL:c  NorthWest Tphases TS_r34kt_s10.jpg
+LinePlot: ccn4 SimTime    MinSlp      TsAll  y PANEL:d  NorthEast Tphases TS_MinSLP.jpg
+
+LinePlot: ccn4 SimTime    MaxV_s10    TsAll  y PANEL:a  NorthWest Tphases TS_MaxV_s10.jpg
+LinePlot: ccn4 SimTime    R50KT_s10   TsAll  y PANEL:a  NorthWest Tphases TS_r50kt_s10.jpg
 LinePlot: ccn4 SimTime    R64KT_s10   TsAll  y PANEL:a  NorthWest Tphases TS_r64kt_s10.jpg
+
 
 LinePlot: ccn4 SimTime DeltapAll_SC_RB TsAll  y PANEL:e@Horiz@Gradient  SouthEast Tphases TS_DeltapAll_SC_RB.jpg
 
@@ -961,6 +965,7 @@ PlotVar: R50KT      r50kt      TsAveragedData/max_azwind      R_5_0_k_t   km    
 PlotVar: R50KT_s10  r50kt      TsAveragedData/max_azwind_sp10 R_5_0_k_t   km      10   70     1
 PlotVar: R64KT      r64kt      TsAveragedData/max_azwind      R_6_4_k_t   km       0   50     1
 PlotVar: R64KT_s10  r64kt      TsAveragedData/max_azwind_sp10 R_6_4_k_t   km       0   50     1
+PlotVar: MinSlp     min_azslp  TsAveragedData/min_azslp       Min@SLP     mb     950 1010     1
 
 PlotVar: VintVapt_SC_LC  VintTs_vaptott DIAGS/vintts_vaptott_twp4_vt0p5_SC_LC  Vapor@Diffusion g/(kg@km) 0  40 1e-3
 PlotVar: VintLht_SC_LC   VintTs_lh_tott DIAGS/vintts_lh_tott_twp4_lht1p0_SC_LC LH@Vaporization K/(hr@km) 0 150 1e-3
