@@ -34,9 +34,11 @@ program tsavg
   type (Rhdf5Var) :: InXcoords, InYcoords, InZcoords, InTcoords
   type (Rhdf5Var) :: OutXcoords, OutYcoords, OutZcoords, OrigDimSize
   type (Rhdf5Var) :: U, V, AzWind, Speed10m, Dens, Var, Filter, TserAvg, RadMaxWind, Rad34ktWind, Rad50ktWind, Rad64ktWind
+  type (Rhdf5Var) :: AzSlp
   type (Rhdf5var) :: PrecipRate, Lwp, Ltss, Theta
   type (Rhdf5var) :: Xvar, Yvar
   character (len=MediumString) :: Ufile, Vfile, AzWindFile, Speed10mFile, DensFile, VarFile, InCoordFile
+  character (len=MediumString) :: AzSlpFile
   character (len=MediumString) :: PrecipRateFile, LwpFile, LtssFile, ThetaFile
   character (len=MediumString) :: XvarFile, YvarFile
   character (len=LittleString) :: VarFprefix
@@ -52,7 +54,7 @@ program tsavg
 
   real, dimension(:,:), allocatable :: HorizSpeed
 
-  integer :: rh5f_azwind, rh5f_u, rh5f_v, rh5f_speed10m, rh5f_dens, rh5f_var, rh5f_filter, rh5f_out
+  integer :: rh5f_azwind, rh5f_azslp, rh5f_u, rh5f_v, rh5f_speed10m, rh5f_dens, rh5f_var, rh5f_filter, rh5f_out
   integer :: rh5f_pcprate, rh5f_lwp, rh5f_ltss, rh5f_theta
   integer :: rh5f_xvar, rh5f_yvar
 
@@ -334,6 +336,9 @@ program tsavg
     AzWind%vname = 'speed10m'
   endif
 
+  AzSlpFile = trim(InDir) // '/sea_press' // trim(InSuffix)
+  AzSlp%vname = 'sea_press'
+
   ! FilterFile is set by command line arguments
   Filter%vname = 'filter'
 
@@ -352,7 +357,7 @@ program tsavg
   ! Check that the dimensions are consistent between the variables needed for
   ! the selected averaging function.
   !
-  ! There is no associated filter with the max_azwind since a filter has already been
+  ! There is no associated filter with max_azwind and min_azslp since a filter has already been
   ! applied by the azavg program (which created the azwind data). All other functions
   ! need the filter data.
   !
@@ -364,20 +369,30 @@ program tsavg
   ! we need to chop of the time dimension to read the filter time step by time step) when we
   ! are not using a filter. When using a filter, Filter%ndims will get set by what's contained
   ! in FilterFile.
-  if (AvgFunc .eq. 'max_azwind') then
-    ! max_azwind: must not use filter (azavg already applied a filter)
+  if ((AvgFunc .eq. 'max_azwind') .or. (AvgFunc .eq. 'min_azslp')) then
+    ! max_azwind, min_azslp must not use filter (azavg already applied a filter)
     if (UseFilter) then
-      write (*,*) 'ERROR: cannot use a filter with function: max_azwind'
+      write (*,*) 'ERROR: cannot use a filter with function: max_azwind, min_azslp'
       stop
     endif
     
     ! Read in the filter and use it to check against all the other variables
-    call rhdf5_read_init(AzWindFile, AzWind)
+    if (AvgFunc .eq. 'max_azwind') then
+      call rhdf5_read_init(AzWindFile, AzWind)
 
-    Nx = AzWind%dims(1)
-    Ny = AzWind%dims(2)
-    Nz = AzWind%dims(3)
-    Nt = AzWind%dims(4)
+      Nx = AzWind%dims(1)
+      Ny = AzWind%dims(2)
+      Nz = AzWind%dims(3)
+      Nt = AzWind%dims(4)
+    else
+      ! min_azslp
+      call rhdf5_read_init(AzSlpFile, AzSlp)
+
+      Nx = AzSlp%dims(1)
+      Ny = AzSlp%dims(2)
+      Nz = AzSlp%dims(3)
+      Nt = AzSlp%dims(4)
+    endif
   else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
            (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. &
            (AvgFunc .eq. 'hfrac')) then
@@ -566,6 +581,13 @@ program tsavg
     do id = 1, AzWind%ndims
       write (*,*), '    ', trim(AzWind%dimnames(id)), ': ', AzWind%dims(id)
     enddo
+  else if (AvgFunc .eq. 'min_azslp') then
+    AzSlp%ndims = AzSlp%ndims - 1
+    write (*,*) '  Number of dimensions: ', AzSlp%ndims
+    write (*,*) '  Dimension sizes:'
+    do id = 1, AzSlp%ndims
+      write (*,*), '    ', trim(AzSlp%dimnames(id)), ': ', AzSlp%dims(id)
+    enddo
   else if (AvgFunc .eq. 'horiz_ke') then
     Dens%ndims = Dens%ndims - 1
     if (VelInType .eq. 'uv') then
@@ -664,6 +686,12 @@ program tsavg
     TserAvg%dims(2) = 1
     TserAvg%dims(3) = 1
     TserAvg%units = 'm/s'
+  else if (AvgFunc .eq. 'min_azslp') then
+    ! single point result
+    TserAvg%dims(1) = 1
+    TserAvg%dims(2) = 1
+    TserAvg%dims(3) = 1
+    TserAvg%units = 'mb'
   else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max')) then
     ! single point result
     TserAvg%dims(1) = 1
@@ -787,6 +815,8 @@ program tsavg
   ! Read in the input coordinates
   if (AvgFunc .eq. 'max_azwind') then
     InCoordFile = trim(AzWindFile)
+  else if (AvgFunc .eq. 'min_azslp') then
+    InCoordFile = trim(AzSlpFile)
   else if (AvgFunc .eq. 'horiz_ke') then
     InCoordFile = trim(DensFile)
   else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
@@ -846,7 +876,7 @@ program tsavg
   ! for DoHorizKe to be able to calculate volume * density -> mass
   allocate(InXcoordsKm(Nx))
   allocate(InYcoordsKm(Ny))
-  if (AvgFunc .eq. 'max_azwind') then
+  if ((AvgFunc .eq. 'max_azwind') .or. (AvgFunc .eq. 'min_azslp')) then
     ! x,y coords are in meters, convert to km
     do ix = 1, Nx
       InXcoordsKm(ix) = InXcoords%vdata(ix) / 1000.0
@@ -996,6 +1026,8 @@ program tsavg
   endif
   if (AvgFunc .eq. 'max_azwind') then
     call rhdf5_open_file(AzWindFile, rh5f_facc, 1, rh5f_azwind)
+  else if (AvgFunc .eq. 'min_azslp') then
+    call rhdf5_open_file(AzSlpFile, rh5f_facc, 1, rh5f_azslp)
   else if (AvgFunc .eq. 'horiz_ke') then
     call rhdf5_open_file(DensFile, rh5f_facc, 1, rh5f_dens)
     if (VelInType .eq. 'uv') then
@@ -1033,6 +1065,10 @@ program tsavg
       call DoMaxAzWind(Nx, Ny, Nz, AzWind%vdata, InXcoordsKm, UndefVal, TserAvg%vdata(1), RadMaxWind%vdata(1), &
                       Rad34ktWind%vdata(1), Rad50ktWind%vdata(1), Rad64ktWind%vdata(1))
       deallocate(AzWind%vdata)
+    else if (AvgFunc .eq. 'min_azslp') then
+      call rhdf5_read_variable(rh5f_azslp, AzSlp%vname, AzSlp%ndims, it, AzSlp%dims, rdata=AzSlp%vdata)
+      call DoMinAzSlp(Nx, Ny, Nz, AzSlp%vdata, UndefVal, TserAvg%vdata(1))
+      deallocate(AzSlp%vdata)
     else if (AvgFunc .eq. 'horiz_ke') then
       call rhdf5_read_variable(rh5f_dens, Dens%vname, Dens%ndims, it, Dens%dims, rdata=Dens%vdata)
 
@@ -1137,6 +1173,8 @@ program tsavg
   endif
   if (AvgFunc .eq. 'max_azwind') then
     call rhdf5_close_file(rh5f_azwind)
+  else if (AvgFunc .eq. 'max_azslp') then
+    call rhdf5_close_file(rh5f_azslp)
   else if (AvgFunc .eq. 'horiz_ke') then
     call rhdf5_close_file(rh5f_dens)
     if (VelInType .eq. 'uv') then
@@ -1270,6 +1308,7 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
     write (*,*) '            max_azwind:<in_type> -> max value of azimuthially averaged wind'
     write (*,*) '              <in_type>: "uv" calculate from lowest level of u and v fields,'
     write (*,*) '                         "s10" calculate from 10m wind speed field,'
+    write (*,*) '            min_azslp -> min value of azimuthially averaged sea-level pressure'
     write (*,*) '            min:<var>:<file>:<dim> -> domain minimum for <var>'
     write (*,*) '              <var>: revu var name inside the file'
     write (*,*) '              <file>: prefix for the revu file'
@@ -1351,7 +1390,8 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
       (AvgFunc(1:4)  .ne. 'pop:')         .and. &
       (AvgFunc(1:7)  .ne. 'hist2d:')      .and. &
       (AvgFunc(1:5)  .ne. 'ltss:')        .and. &
-      (AvgFunc(1:9)  .ne. 'storm_int:')   .and. &
+      (AvgFunc(1:10) .ne. 'storm_int:')   .and. &
+      (AvgFunc(1:9)  .ne. 'min_azslp')   .and. &
       (AvgFunc(1:11) .ne. 'max_azwind:')) then
     write (*,*) 'ERROR: <avg_function> must be one of:'
     write (*,*) '          horiz_ke:<in_type>'
@@ -1365,6 +1405,7 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
     write (*,*) '          hist2d:<x_var>:<x_file>:<x_dim>:<x_nbins><x_bstart><x_binc>:<y_var>:<y_file>:<y_dim>:<y_nbins>:<y_bstart>:<y_binc>:'
     write (*,*) '          ltss:<theta_var>:<theta_file>:<k_bot>:<k_top>'
     write (*,*) '          storm_int'
+    write (*,*) '          min_azslp'
     write (*,*) '          max_azwind:<in_type>'
     write (*,*) ''
     BadArgs = .true.
@@ -1460,6 +1501,42 @@ subroutine DoMaxAzWind(Nx, Ny, Nz, AzWind, Radius, UndefVal, AzWindMax, RadMax, 
 
   return
 end subroutine DoMaxAzWind
+
+!************************************************************************************
+! DoMinAzSlp()
+!
+! This subroutine will find the min sea-level pressure in AzSlp and copy that
+! to TserAvg. The intent of this metric is to mimic the usage of mininum central
+! pressure for an intensity measurement.
+!
+!
+subroutine DoMinAzSlp(Nx, Ny, Nz, AzSlp, UndefVal, AzSlpMin)
+  implicit none
+
+  integer :: Nx, Ny, Nz
+  real, dimension(Nx,Ny,Nz) :: AzSlp
+  real :: UndefVal
+  real :: AzSlpMin
+
+  integer :: ix,iy,iz
+
+  ! dimension order is: x,y,z
+
+  ! RAMS places the first z level below the surface so use the second level
+  ! to approximate the 10m winds.
+
+  AzSlpMin = 1000000
+  iy = 1 ! dummy dimension in azmuthally averaged sea level pressure
+  iz = 1 ! dummy dimension in azmuthally averaged sea level pressure
+  do ix = 1, Nx
+    ! Min SLP
+    if ((AzSlp(ix,iy,iz) .lt. AzSlpMin) .and. (anint(AzSlp(ix,iy,iz)) .ne. UndefVal)) then
+      AzSlpMin = AzSlp(ix,iy,iz)
+    endif
+  end do
+
+  return
+end subroutine DoMinAzSlp
 
 !**************************************************************************************
 ! InterpRadius()

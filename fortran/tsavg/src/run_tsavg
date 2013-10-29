@@ -86,6 +86,11 @@ sub CreateFileNames
     $InDir = $AzavgDir . $TdirStr;
     $InFileSuffix = "_" . $Case . ".h5";
     }
+  elsif ($Dname =~ /^min_azslp/)
+    {
+    $InDir = $AzavgDir . $TdirStr;
+    $InFileSuffix = "_" . $Case . ".h5";
+    }
   else
     {
     $InDir = $Case . "/" . $RevuDir . $TdirStr;
