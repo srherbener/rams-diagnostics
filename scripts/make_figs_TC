@@ -22,8 +22,8 @@ echo "Figure 3"
 montage -tile 2x2 -geometry ${Jsize}+2+100 \
  KeV_s10.jpg \
  TS_rmw_s10.jpg \
- TS_r50kt_s10.jpg \
  TS_r34kt_s10.jpg \
+ TS_MinSLP.jpg \
  Figure3.jpg
 
 # Figure 4: EOF in first column, VintCond in second column
