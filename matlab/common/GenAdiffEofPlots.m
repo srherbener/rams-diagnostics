@@ -26,8 +26,8 @@ for icase = 1:length(Config.Cases)
 end
 
 %PanelMarkers = { 'a' 'b' 'c' 'd' 'e' 'f' 'g' };
-% make the C2000-CLEAN panel a)
-PanelMarkers = { 'a' 'b' 'a' 'd' 'e' 'f' 'g' };
+% make all panels 'a' for now
+PanelMarkers = { 'a' 'a' 'a' 'a' 'a' 'a' 'a' };
 ipm = 1;
 
 for icase = 1:length(Config.Cases)
