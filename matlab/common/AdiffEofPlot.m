@@ -32,7 +32,7 @@ E_Xlabel = 'Radius (km)';
 E_Ylabel = 'Height (km)';
 
 P_Title = Ptitle;
-P_Xlabel = 'Time (hr)';
+P_Xlabel = 'Simulation Time (h)';
 P_Ylabel = sprintf('%s (%s)', Vname, Vunits);
 
 fprintf('Writing EOF plot to file: %s\n', EofOutFile);

@@ -7,7 +7,7 @@ function [ ] = Plot2dEofPc(EOF, PC, X, Y, Clevs, Cbounds, E_Title, E_Xlabel, E_Y
 %   SelectData contains [ x1 x2 y1 y2 ] which are used to select a rectangular
 %   region out of the entire 2D map.
 
-Fsize = 25;
+Fsize = 35;
 
 PanelTitle = false;
 if (regexp(P_Title, '^PANEL:'))
@@ -21,7 +21,7 @@ saveas(Fig, EofFile);
 close(Fig);
 
 Fig = figure;
-plot(PC);
+plot(PC, 'Color', 'k', 'LineWidth', 4);
 set(gca, 'FontSize', Fsize);
 set(gca, 'LineWidth', 2);
 set(gca, 'TickLength', [ 0.025 0.025 ]);
@@ -44,6 +44,8 @@ if (~strcmp(P_Title, ' '))
 end
 xlabel(P_Xlabel);
 ylabel(P_Ylabel);
+
+xlim([ 0 150 ]);
 
 % Fix up the positioning
 Ppos = get(gca, 'Position'); % position of plot area
