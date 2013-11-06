@@ -8,6 +8,7 @@ SCRIPTS = \
           $(DEST)/export_fig.m \
           $(DEST)/figmerge.m \
           $(DEST)/print2array.m \
+          $(DEST)/str2rgb.m \
           $(DEST)/screen2jpeg.m \
           $(DEST)/AdiffEofPlot.m \
           $(DEST)/AzavgDiffEof.m \

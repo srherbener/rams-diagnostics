@@ -201,7 +201,7 @@ for iplot = 1:length(Config.ProfRsPlots)
         if (strcmp(Ptype, 'diff'))
             % plot the zero contour
             hold on;
-            contour(R, Zvals, Pdata, [ 0 0 ], 'Color', 'k', 'LineStyle', '--', 'LineWidth', 3);
+            contour(R, Zvals, Pdata, [ 0 0 ], 'Color', 'k', 'LineStyle', '--', 'LineWidth', 5);
         end
         set(gca, 'FontSize', Fsize);
         set(gca, 'LineWidth', 2);

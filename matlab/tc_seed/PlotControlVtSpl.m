@@ -181,8 +181,8 @@ Fig = figure;
 
 % data
 [ AX, H1, H2 ] = plotyy(Times, MAX_VT, Times, MIN_SPL);
-set(H1, 'LineWidth', Lwidth, 'Color', 'k', 'LineStyle', '-');
-set(H2, 'LineWidth', Lwidth, 'Color', 'k', 'LineStyle', '--');
+set(H1, 'LineWidth', Lwidth, 'Color', 'b', 'LineStyle', '-');
+set(H2, 'LineWidth', Lwidth, 'Color', 'r', 'LineStyle', '-');
 
 % axes
 axes(AX(1));

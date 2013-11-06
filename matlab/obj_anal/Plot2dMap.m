@@ -59,7 +59,7 @@ set(cbar, 'FontSize', Fsize);
 hold on;
 
 % Draw the zero contour
-contour(XP, YP, MapP, [ 0 0 ], 'Color', 'k', 'LineStyle', '--', 'LineWidth', 3);
+contour(XP, YP, MapP, [ 0 0 ], 'Color', 'k', 'LineStyle', '--', 'LineWidth', 5);
 
 if (~strcmp(Ptitle, ' '))
   if (PanelTitle)

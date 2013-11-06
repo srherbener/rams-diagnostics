@@ -28,10 +28,10 @@ end
 % subsequent plots). Plot the first hist outside the loop, issue a "hold
 % on" and then plot the remainder hists.
 
-if (strcmp(Lcolors{1}, 'k'))
+if (strcmp(Lcolors{1}, 'Black'))
   Lcolor = [ 1 1 1 ] * Gscales(1);
 else
-  Lcolor = Lcolors{1};
+  Lcolor = str2rgb(Lcolors{1});
 end
 plot(X(1,:), Y(1,:), 'Color', Lcolor, 'LineStyle', Lstyles{1}, 'LineWidth', Lwidth);
 for i = 1:Nprops
@@ -43,10 +43,10 @@ set(gca, 'TickLength', [ 0.025 0.025 ]);
 hold on;
 
 for i = 2:Nplots % each row is a separate curve for plotting
-    if (strcmp(Lcolors{i}, 'k'))
+    if (strcmp(Lcolors{i}, 'Black'))
       Lcolor = [ 1 1 1 ] * Gscales(i);
     else
-      Lcolor = Lcolors{i};
+      Lcolor = str2rgb(Lcolors{i});
     end
     plot(X(i,:), Y(i,:), 'Color', Lcolor, 'LineStyle', Lstyles{i}, 'LineWidth', Lwidth);
 end
@@ -77,7 +77,7 @@ ylabel(Ylabel);
 if (strcmp(AddMeas, 'Tphases'))
     Ylims = ylim;
     Yrange = Ylims(2) - Ylims(1);
-    Yinc = 0.02 * Yrange;
+    Yinc = 0.04 * Yrange;
     % put text opposite the place where the legend is located
     if (regexp(char(LegLoc), '[nN]orth'))
         % text goes on bottom
@@ -89,7 +89,7 @@ if (strcmp(AddMeas, 'Tphases'))
     
     %DrawTmark( 40,  60, 5, Ty, Yinc, 'RI');
     %DrawTmark( 80, 100, 5, Ty, Yinc, 'TR');
-    DrawTmark(120, 140, 5, Ty, Yinc, 'SS');
+    DrawTmark(120, 140, 3, Ty, Yinc, 'SS');
 end
 
 % Fix up the positioning
@@ -121,8 +121,8 @@ text(X, Y, Text, 'Color', Bcolor, 'FontSize', 20, ...
     'HorizontalAlignment', 'Center', 'VerticalAlignment', 'Middle');
 
 % Draw brackets around the text
-line([ X1 X1 ], [ Y1 Y2 ], 'Color', Bcolor, 'LineWidth', 2, 'LineStyle', '-');
-line([ X2 X2 ], [ Y1 Y2 ], 'Color', Bcolor, 'LineWidth', 2, 'LineStyle', '-');
+line([ X1 X1 ], [ Y1 Y2 ], 'Color', Bcolor, 'LineWidth', 3, 'LineStyle', '-');
+line([ X2 X2 ], [ Y1 Y2 ], 'Color', Bcolor, 'LineWidth', 3, 'LineStyle', '-');
 
 line([ X1 X1+Xinc ], [ Y  Y  ], 'Color', Bcolor, 'LineWidth', 2, 'LineStyle', '-');
 line([ X2-Xinc X2 ], [ Y  Y  ], 'Color', Bcolor, 'LineWidth', 2, 'LineStyle', '-');

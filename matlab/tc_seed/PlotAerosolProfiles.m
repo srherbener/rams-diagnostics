@@ -49,8 +49,8 @@ end
 Xlims = [ -50 2500 ];
 Ylims = [ min(Z) max(Z) ];
 
-Lstyles = { '-' '--' ':' '-.' };
-Colors = { 'k' 'k' 'k' 'k' };
+Lstyles = { '-' '-' '-' '-' };
+Colors = { 'Blue' 'Cyan' 'ForestGreen' 'Red' };
 Ltext = { 'AS0100' 'AS0500' 'AS1000' 'AS2000' };
 
 % Plot
@@ -71,7 +71,8 @@ Fig = figure;
 
 % data
 for i = 1:Np
-  plot(CCN(i,:), Z, 'LineWidth', Lwidth, 'Color', Colors{i}, 'LineStyle', Lstyles{i});
+  Lcolor = str2rgb(Colors{i});
+  plot(CCN(i,:), Z, 'LineWidth', Lwidth, 'Color', Lcolor, 'LineStyle', Lstyles{i});
   if (i == 1)
     hold on;
   end
