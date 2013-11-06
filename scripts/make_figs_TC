@@ -3,6 +3,7 @@
 # script to create figures for AIE - TC paper
 
 Jsize="1200x900"
+Jinc="+0+15"
 
 # Figure 1: RAMS grids
 echo "Figure 1"
@@ -10,7 +11,7 @@ montage -tile 1x1 -geometry ${Jsize} RamsGrids.jpg Figure1.jpg
 
 # Figure 2: Control sim
 echo "Figure 2"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
+montage -tile 2x2 -geometry ${Jsize}${Jinc} \
  InitVortex.jpg \
  AerosolLoc.jpg \
  AerosolProfiles.jpg \
@@ -19,7 +20,7 @@ montage -tile 2x2 -geometry ${Jsize}+2+100 \
 
 # Figure 3: KE-Vt above RMW
 echo "Figure 3"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
+montage -tile 2x2 -geometry ${Jsize}${Jinc} \
  KeV_s10.jpg \
  TS_rmw_s10.jpg \
  TS_r34kt_s10.jpg \
@@ -28,7 +29,7 @@ montage -tile 2x2 -geometry ${Jsize}+2+100 \
 
 # Figure 4: EOF in first column, VintCond in second column
 echo "Figure 4"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
+montage -tile 2x2 -geometry ${Jsize}${Jinc} \
  EOF1_theta_e_TCS_SD_C2000.jpg \
  vint_cond_TCS_SD_C0100.jpg \
  Blank.jpg \
@@ -37,7 +38,7 @@ montage -tile 2x2 -geometry ${Jsize}+2+100 \
 
 ## Figure 5: storm core: cloud num conc in first column, cloud mean diam in second column
 #echo "Figure 5"
-#montage -tile 2x2 -geometry ${Jsize}+2+100 \
+#montage -tile 2x2 -geometry ${Jsize}${Jinc} \
 # pts_cloud_cm3_SC_LC_TCS_SD_C0100.jpg \
 # pts_cloud_d_SC_LC_TCS_SD_C0100.jpg \
 # pts_cloud_cm3_SC_LC_TCS_SD_C2000.jpg \
@@ -46,7 +47,7 @@ montage -tile 2x2 -geometry ${Jsize}+2+100 \
 
 # Figure 5: storm core: cloud num conc in first column, cloud mean diam in second column
 echo "Figure 5"
-montage -tile 2x3 -geometry ${Jsize}+2+100 \
+montage -tile 2x3 -geometry ${Jsize}${Jinc} \
  pts_cloud_c0p01_diff_SC_LC_TCS_SD_C2000.jpg \
  prof_cloud_c0p01_SC_LC.jpg \
  pts_cloud_cm3_c0p01_diff_SC_LC_TCS_SD_C2000.jpg \
@@ -57,7 +58,7 @@ montage -tile 2x3 -geometry ${Jsize}+2+100 \
 
 # Figure 6: storm core: latent heat in first column, w in second column
 echo "Figure 6"
-montage -tile 2x3 -geometry ${Jsize}+2+100 \
+montage -tile 2x3 -geometry ${Jsize}${Jinc} \
  prs_lh_tott_diff_c0p01_SC_SS_TCS_SD_C2000.jpg \
  prs_w_diff_c0p01_SC_SS_TCS_SD_C2000.jpg \
  prof_lh_tott_c0p01_SC_SS.jpg \
@@ -68,7 +69,7 @@ montage -tile 2x3 -geometry ${Jsize}+2+100 \
 
 # Figure 7: storm core: relative vorticity
 echo "Figure 7"
-montage -tile 1x3 -geometry ${Jsize}+2+100 \
+montage -tile 1x3 -geometry ${Jsize}${Jinc} \
  prs_relvortz_rvz1em4_SC_SS_TCS_SD_C0100.jpg \
  prs_relvortz_rvz1em4_SC_SS_TCS_SD_C2000.jpg \
  prs_relvortz_rvz1em4_diff_SC_SS_TCS_SD_C2000.jpg \
@@ -76,7 +77,7 @@ montage -tile 1x3 -geometry ${Jsize}+2+100 \
 
 # Figure 8: rainbands, profiles
 echo "Figure 8"
-montage -tile 2x3 -geometry ${Jsize}+2+100 \
+montage -tile 2x3 -geometry ${Jsize}${Jinc} \
  prof_theta_e_diff_RB_SS.jpg \
  prof_theta_diff_RB_SS.jpg \
  prof_vapor_diff_RB_SS.jpg \
@@ -87,7 +88,7 @@ montage -tile 2x3 -geometry ${Jsize}+2+100 \
 
 # Figure 9: compare core and rainbands, dynamic response
 echo "Figure 9"
-montage -tile 1x2 -geometry ${Jsize}+2+100 \
+montage -tile 1x2 -geometry ${Jsize}${Jinc} \
  pts_w_diff_SC_LC_TCS_SD_C2000.jpg \
  pts_w_diff_RB_LC_TCS_SD_C2000.jpg \
  Figure9.jpg
@@ -101,7 +102,7 @@ montage -tile 1x2 -geometry ${Jsize}+2+100 \
 
 # Figure 10: schematic
 echo "Figure 10"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
+montage -tile 2x2 -geometry ${Jsize}${Jinc} \
  Slide1.jpg \
  Slide2.jpg \
  Blank.jpg \
