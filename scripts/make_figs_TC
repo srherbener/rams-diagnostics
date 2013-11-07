@@ -108,3 +108,11 @@ montage -tile 2x2 -geometry ${Jsize}${Jinc} \
  Blank.jpg \
  Slide3.jpg \
  Figure10.jpg
+
+# For reviewer
+echo "Figure: Aerosol concentration"
+montage -tile 2x1 -geometry ${Jsize}${Jinc} \
+ prof_ccn_conc_SC_LC.jpg \
+ prof_ccn_conc_SC_LC_LowLevel.jpg \
+ FigureAeroConc.jpg
+
