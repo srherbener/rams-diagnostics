@@ -111,58 +111,62 @@ AzavgEof: theta_e_c0p01 theta_e_c0p01 theta_e      0 250000     0  25000  86400 
 ############################################
 # profile measurments
 
+# CCN concentration
+Pmeas: pmeas_ccn_conc_SC_LC   AzAveragedData hist_ccn_conc  ccn_conc  wtmean  0.0  40.0 24.0 144
+
+
 # LC - full lifecycle (24 to 144 hr)
 
-Pmeas: pmeas_cloud_SC_LC            AzAveragedData hist_cloud            cloud     wtmean  0.0  40.0 24.0 144
-Pmeas: pmeas_cloud_c0p001_SC_LC     AzAveragedData hist_cloud_c0p001     cloud     wtmean  0.0  40.0 24.0 144
-Pmeas: pmeas_cloud_c0p01_SC_LC      AzAveragedData hist_cloud_c0p01      cloud     wtmean  0.0  40.0 24.0 144
-Pmeas: pmeas_cloud_c0p1_SC_LC       AzAveragedData hist_cloud_c0p1       cloud     wtmean  0.0  40.0 24.0 144
-Pmeas: pmeas_cloud_twp4_SC_LC       AzAveragedData hist_cloud_twp4       cloud     wtmean  0.0  40.0 24.0 144
+#Pmeas: pmeas_cloud_SC_LC            AzAveragedData hist_cloud            cloud     wtmean  0.0  40.0 24.0 144
+#Pmeas: pmeas_cloud_c0p001_SC_LC     AzAveragedData hist_cloud_c0p001     cloud     wtmean  0.0  40.0 24.0 144
+#Pmeas: pmeas_cloud_c0p01_SC_LC      AzAveragedData hist_cloud_c0p01      cloud     wtmean  0.0  40.0 24.0 144
+#Pmeas: pmeas_cloud_c0p1_SC_LC       AzAveragedData hist_cloud_c0p1       cloud     wtmean  0.0  40.0 24.0 144
+#Pmeas: pmeas_cloud_twp4_SC_LC       AzAveragedData hist_cloud_twp4       cloud     wtmean  0.0  40.0 24.0 144
 
-Pmeas: pmeas_cloud_cm3_SC_LC        AzAveragedData hist_cloud_cm3        cloud_cm3 wtmean  0.0  40.0 24.0 144
-Pmeas: pmeas_cloud_cm3_c0p001_SC_LC AzAveragedData hist_cloud_cm3_c0p001 cloud_cm3 wtmean  0.0  40.0 24.0 144
-Pmeas: pmeas_cloud_cm3_c0p01_SC_LC  AzAveragedData hist_cloud_cm3_c0p01  cloud_cm3 wtmean  0.0  40.0 24.0 144
-Pmeas: pmeas_cloud_cm3_c0p1_SC_LC   AzAveragedData hist_cloud_cm3_c0p1   cloud_cm3 wtmean  0.0  40.0 24.0 144
-Pmeas: pmeas_cloud_cm3_twp4_SC_LC   AzAveragedData hist_cloud_cm3_twp4   cloud_cm3 wtmean  0.0  40.0 24.0 144
+#Pmeas: pmeas_cloud_cm3_SC_LC        AzAveragedData hist_cloud_cm3        cloud_cm3 wtmean  0.0  40.0 24.0 144
+#Pmeas: pmeas_cloud_cm3_c0p001_SC_LC AzAveragedData hist_cloud_cm3_c0p001 cloud_cm3 wtmean  0.0  40.0 24.0 144
+#Pmeas: pmeas_cloud_cm3_c0p01_SC_LC  AzAveragedData hist_cloud_cm3_c0p01  cloud_cm3 wtmean  0.0  40.0 24.0 144
+#Pmeas: pmeas_cloud_cm3_c0p1_SC_LC   AzAveragedData hist_cloud_cm3_c0p1   cloud_cm3 wtmean  0.0  40.0 24.0 144
+#Pmeas: pmeas_cloud_cm3_twp4_SC_LC   AzAveragedData hist_cloud_cm3_twp4   cloud_cm3 wtmean  0.0  40.0 24.0 144
 
-Pmeas: pmeas_cloud_d_SC_LC          AzAveragedData hist_cloud_d          cloud_d   wtmean  0.0  40.0 24.0 144
-Pmeas: pmeas_cloud_d_c0p001_SC_LC   AzAveragedData hist_cloud_d_c0p001   cloud_d   wtmean  0.0  40.0 24.0 144
-Pmeas: pmeas_cloud_d_c0p01_SC_LC    AzAveragedData hist_cloud_d_c0p01    cloud_d   wtmean  0.0  40.0 24.0 144
-Pmeas: pmeas_cloud_d_c0p1_SC_LC     AzAveragedData hist_cloud_d_c0p1     cloud_d   wtmean  0.0  40.0 24.0 144
-Pmeas: pmeas_cloud_d_twp4_SC_LC     AzAveragedData hist_cloud_d_twp4     cloud_d   wtmean  0.0  40.0 24.0 144
+#Pmeas: pmeas_cloud_d_SC_LC          AzAveragedData hist_cloud_d          cloud_d   wtmean  0.0  40.0 24.0 144
+#Pmeas: pmeas_cloud_d_c0p001_SC_LC   AzAveragedData hist_cloud_d_c0p001   cloud_d   wtmean  0.0  40.0 24.0 144
+#Pmeas: pmeas_cloud_d_c0p01_SC_LC    AzAveragedData hist_cloud_d_c0p01    cloud_d   wtmean  0.0  40.0 24.0 144
+#Pmeas: pmeas_cloud_d_c0p1_SC_LC     AzAveragedData hist_cloud_d_c0p1     cloud_d   wtmean  0.0  40.0 24.0 144
+#Pmeas: pmeas_cloud_d_twp4_SC_LC     AzAveragedData hist_cloud_d_twp4     cloud_d   wtmean  0.0  40.0 24.0 144
 
 # AC - active lifecycle (50 to 144 hr, 50 hr is when a significant amount of aerosols
 #      show up and persist at low levels in the C2000 case.
 
-Pmeas: pmeas_cloud_SC_AC            AzAveragedData hist_cloud            cloud     wtmean  0.0  40.0 50.0 144
-Pmeas: pmeas_cloud_c0p001_SC_AC     AzAveragedData hist_cloud_c0p001     cloud     wtmean  0.0  40.0 50.0 144
-Pmeas: pmeas_cloud_c0p01_SC_AC      AzAveragedData hist_cloud_c0p01      cloud     wtmean  0.0  40.0 50.0 144
-Pmeas: pmeas_cloud_c0p1_SC_AC       AzAveragedData hist_cloud_c0p1       cloud     wtmean  0.0  40.0 50.0 144
-Pmeas: pmeas_cloud_twp4_SC_AC       AzAveragedData hist_cloud_twp4       cloud     wtmean  0.0  40.0 50.0 144
+#Pmeas: pmeas_cloud_SC_AC            AzAveragedData hist_cloud            cloud     wtmean  0.0  40.0 50.0 144
+#Pmeas: pmeas_cloud_c0p001_SC_AC     AzAveragedData hist_cloud_c0p001     cloud     wtmean  0.0  40.0 50.0 144
+#Pmeas: pmeas_cloud_c0p01_SC_AC      AzAveragedData hist_cloud_c0p01      cloud     wtmean  0.0  40.0 50.0 144
+#Pmeas: pmeas_cloud_c0p1_SC_AC       AzAveragedData hist_cloud_c0p1       cloud     wtmean  0.0  40.0 50.0 144
+#Pmeas: pmeas_cloud_twp4_SC_AC       AzAveragedData hist_cloud_twp4       cloud     wtmean  0.0  40.0 50.0 144
 
-Pmeas: pmeas_cloud_cm3_SC_AC        AzAveragedData hist_cloud_cm3        cloud_cm3 wtmean  0.0  40.0 50.0 144
-Pmeas: pmeas_cloud_cm3_c0p001_SC_AC AzAveragedData hist_cloud_cm3_c0p001 cloud_cm3 wtmean  0.0  40.0 50.0 144
-Pmeas: pmeas_cloud_cm3_c0p01_SC_AC  AzAveragedData hist_cloud_cm3_c0p01  cloud_cm3 wtmean  0.0  40.0 50.0 144
-Pmeas: pmeas_cloud_cm3_c0p1_SC_AC   AzAveragedData hist_cloud_cm3_c0p1   cloud_cm3 wtmean  0.0  40.0 50.0 144
-Pmeas: pmeas_cloud_cm3_twp4_SC_AC   AzAveragedData hist_cloud_cm3_twp4   cloud_cm3 wtmean  0.0  40.0 50.0 144
+#Pmeas: pmeas_cloud_cm3_SC_AC        AzAveragedData hist_cloud_cm3        cloud_cm3 wtmean  0.0  40.0 50.0 144
+#Pmeas: pmeas_cloud_cm3_c0p001_SC_AC AzAveragedData hist_cloud_cm3_c0p001 cloud_cm3 wtmean  0.0  40.0 50.0 144
+#Pmeas: pmeas_cloud_cm3_c0p01_SC_AC  AzAveragedData hist_cloud_cm3_c0p01  cloud_cm3 wtmean  0.0  40.0 50.0 144
+#Pmeas: pmeas_cloud_cm3_c0p1_SC_AC   AzAveragedData hist_cloud_cm3_c0p1   cloud_cm3 wtmean  0.0  40.0 50.0 144
+#Pmeas: pmeas_cloud_cm3_twp4_SC_AC   AzAveragedData hist_cloud_cm3_twp4   cloud_cm3 wtmean  0.0  40.0 50.0 144
 
-Pmeas: pmeas_cloud_d_SC_AC          AzAveragedData hist_cloud_d          cloud_d   wtmean  0.0  40.0 50.0 144
-Pmeas: pmeas_cloud_d_c0p001_SC_AC   AzAveragedData hist_cloud_d_c0p001   cloud_d   wtmean  0.0  40.0 50.0 144
-Pmeas: pmeas_cloud_d_c0p01_SC_AC    AzAveragedData hist_cloud_d_c0p01    cloud_d   wtmean  0.0  40.0 50.0 144
-Pmeas: pmeas_cloud_d_c0p1_SC_AC     AzAveragedData hist_cloud_d_c0p1     cloud_d   wtmean  0.0  40.0 50.0 144
-Pmeas: pmeas_cloud_d_twp4_SC_AC     AzAveragedData hist_cloud_d_twp4     cloud_d   wtmean  0.0  40.0 50.0 144
+#Pmeas: pmeas_cloud_d_SC_AC          AzAveragedData hist_cloud_d          cloud_d   wtmean  0.0  40.0 50.0 144
+#Pmeas: pmeas_cloud_d_c0p001_SC_AC   AzAveragedData hist_cloud_d_c0p001   cloud_d   wtmean  0.0  40.0 50.0 144
+#Pmeas: pmeas_cloud_d_c0p01_SC_AC    AzAveragedData hist_cloud_d_c0p01    cloud_d   wtmean  0.0  40.0 50.0 144
+#Pmeas: pmeas_cloud_d_c0p1_SC_AC     AzAveragedData hist_cloud_d_c0p1     cloud_d   wtmean  0.0  40.0 50.0 144
+#Pmeas: pmeas_cloud_d_twp4_SC_AC     AzAveragedData hist_cloud_d_twp4     cloud_d   wtmean  0.0  40.0 50.0 144
 
 # SS - steady state phase (120 to 140 hr)
 
-Pmeas: pmeas_lh_tott_SC_SS        AzAveragedData hist_lh_tott        lh_tott  wtmean   0.0  40.0 120.0 140.0
-Pmeas: pmeas_lh_tott_c0p001_SC_SS AzAveragedData hist_lh_tott_c0p001 lh_tott  wtmean   0.0  40.0 120.0 140.0
-Pmeas: pmeas_lh_tott_c0p01_SC_SS  AzAveragedData hist_lh_tott_c0p01  lh_tott  wtmean   0.0  40.0 120.0 140.0
-Pmeas: pmeas_lh_tott_c0p1_SC_SS   AzAveragedData hist_lh_tott_c0p1   lh_tott  wtmean   0.0  40.0 120.0 140.0
+#Pmeas: pmeas_lh_tott_SC_SS        AzAveragedData hist_lh_tott        lh_tott  wtmean   0.0  40.0 120.0 140.0
+#Pmeas: pmeas_lh_tott_c0p001_SC_SS AzAveragedData hist_lh_tott_c0p001 lh_tott  wtmean   0.0  40.0 120.0 140.0
+#Pmeas: pmeas_lh_tott_c0p01_SC_SS  AzAveragedData hist_lh_tott_c0p01  lh_tott  wtmean   0.0  40.0 120.0 140.0
+#Pmeas: pmeas_lh_tott_c0p1_SC_SS   AzAveragedData hist_lh_tott_c0p1   lh_tott  wtmean   0.0  40.0 120.0 140.0
 
-Pmeas: pmeas_w_SC_SS              AzAveragedData hist_w              w        wtmean   0.0  40.0 120.0 140.0
-Pmeas: pmeas_w_c0p001_SC_SS       AzAveragedData hist_w_c0p001       w        wtmean   0.0  40.0 120.0 140.0
-Pmeas: pmeas_w_c0p01_SC_SS        AzAveragedData hist_w_c0p01        w        wtmean   0.0  40.0 120.0 140.0
-Pmeas: pmeas_w_c0p1_SC_SS         AzAveragedData hist_w_c0p1         w        wtmean   0.0  40.0 120.0 140.0
+#Pmeas: pmeas_w_SC_SS              AzAveragedData hist_w              w        wtmean   0.0  40.0 120.0 140.0
+#Pmeas: pmeas_w_c0p001_SC_SS       AzAveragedData hist_w_c0p001       w        wtmean   0.0  40.0 120.0 140.0
+#Pmeas: pmeas_w_c0p01_SC_SS        AzAveragedData hist_w_c0p01        w        wtmean   0.0  40.0 120.0 140.0
+#Pmeas: pmeas_w_c0p1_SC_SS         AzAveragedData hist_w_c0p1         w        wtmean   0.0  40.0 120.0 140.0
 
 
 #Pmeas: pmeas_cloud_cm3_twp4_SC_LC AzAveragedData hist_cloud_cm3_twp4 cloud_cm3 wtmean  0.0  40.0 24.0 144
@@ -617,9 +621,9 @@ LinePlot: ccn2 RadPeak_10m V10m_PeakSS SfcVtAll  y PANEL:b NorthEast none   R_V1
 #ProfPlot: ccn2 pmeas_cloud_d_c0p1_SC_LC   cloud_d   abs SC-LC-c0p1:D   Diameter@(um)           Height@(km) NorthWest -2:1:60      0.0 12.0 prof_cloud_d_c0p1_SC_LC.jpg
 #ProfPlot: ccn2 pmeas_cloud_c0p1_SC_LC     cloud     abs SC-LC-c0p1:q_c Mixing@Ratio@(g/kg)     Height@(km) NorthEast -0.1:0.1:2.0 0.0 12.0 prof_cloud_c0p1_SC_LC.jpg
 
-ProfPlot: ccn2 pmeas_cloud_c0p01_SC_LC     cloud     abs PANEL:b q_c@(g@kg^-^1) Height@(km) NorthEast -0.1:0.1:2.0 0.0 12.0 prof_cloud_c0p01_SC_LC.jpg
-ProfPlot: ccn2 pmeas_cloud_cm3_c0p01_SC_LC cloud_cm3 abs PANEL:d N_c@(cm^-^3)   Height@(km) NorthEast -4:2:100     0.0 12.0 prof_cloud_cm3_c0p01_SC_LC.jpg
-ProfPlot: ccn2 pmeas_cloud_d_c0p01_SC_LC   cloud_d   abs PANEL:f D_c@(um)       Height@(km) NorthWest -2:1:60      0.0 12.0 prof_cloud_d_c0p01_SC_LC.jpg
+#ProfPlot: ccn2 pmeas_cloud_c0p01_SC_LC     cloud     abs PANEL:b q_c@(g@kg^-^1) Height@(km) NorthEast -0.1:0.1:2.0 0.0 12.0 prof_cloud_c0p01_SC_LC.jpg
+#ProfPlot: ccn2 pmeas_cloud_cm3_c0p01_SC_LC cloud_cm3 abs PANEL:d N_c@(cm^-^3)   Height@(km) NorthEast -4:2:100     0.0 12.0 prof_cloud_cm3_c0p01_SC_LC.jpg
+#ProfPlot: ccn2 pmeas_cloud_d_c0p01_SC_LC   cloud_d   abs PANEL:f D_c@(um)       Height@(km) NorthWest -2:1:60      0.0 12.0 prof_cloud_d_c0p01_SC_LC.jpg
 
 #ProfPlot: ccn2 pmeas_cloud_cm3_c0p001_SC_LC cloud_cm3 abs SC-LC-c0p001:N   Concentration@(#/cm^3)  Height@(km) NorthEast -4:2:100     0.0 12.0 prof_cloud_cm3_c0p001_SC_LC.jpg
 #ProfPlot: ccn2 pmeas_cloud_d_c0p001_SC_LC   cloud_d   abs SC-LC-c0p001:D   Diameter@(um)           Height@(km) NorthWest -2:1:60      0.0 12.0 prof_cloud_d_c0p001_SC_LC.jpg
@@ -650,8 +654,8 @@ ProfPlot: ccn2 pmeas_cloud_d_c0p01_SC_LC   cloud_d   abs PANEL:f D_c@(um)       
 #ProfPlot: ccn2 pmeas_lh_tott_c0p1_SC_SS   lh_tott abs PANEL:c Latent@Heating@(K/hr) Height@(km) SouthEast -5:0.1:50      0.0 12.0 prof_lh_tott_c0p1_SC_SS.jpg
 #ProfPlot: ccn2 pmeas_w_c0p1_SC_SS         w       abs PANEL:d W@(m/s)               Height@(km) SouthEast  -0.5:0.1:10.0 0.0 12.0 prof_w_c0p1_SC_SS.jpg
 
-ProfPlot: ccn2 pmeas_lh_tott_c0p01_SC_SS  lh_tott abs PANEL:c Latent@Heating@(K@h^-^1) Height@(km) SouthEast -5:0.1:40      0.0 12.0 prof_lh_tott_c0p01_SC_SS.jpg
-ProfPlot: ccn2 pmeas_w_c0p01_SC_SS        w       abs PANEL:d W@(m@s^-^1)              Height@(km) SouthEast  -0.5:0.1:5.0  0.0 12.0 prof_w_c0p01_SC_SS.jpg
+#ProfPlot: ccn2 pmeas_lh_tott_c0p01_SC_SS  lh_tott abs PANEL:c Latent@Heating@(K@h^-^1) Height@(km) SouthEast -5:0.1:40      0.0 12.0 prof_lh_tott_c0p01_SC_SS.jpg
+#ProfPlot: ccn2 pmeas_w_c0p01_SC_SS        w       abs PANEL:d W@(m@s^-^1)              Height@(km) SouthEast  -0.5:0.1:5.0  0.0 12.0 prof_w_c0p01_SC_SS.jpg
 
 #ProfPlot: ccn2 pmeas_lh_tott_c0p001_SC_SS lh_tott abs PANEL:c Latent@Heating@(K/hr) Height@(km) SouthEast -5:0.1:50      0.0 12.0 prof_lh_tott_c0p001_SC_SS.jpg
 #ProfPlot: ccn2 pmeas_w_c0p001_SC_SS       w       abs PANEL:d W@(m/s)               Height@(km) SouthEast  -0.5:0.1:10.0 0.0 12.0 prof_w_c0p001_SC_SS.jpg
@@ -663,8 +667,8 @@ ProfPlot: ccn2 pmeas_w_c0p01_SC_SS        w       abs PANEL:d W@(m@s^-^1)       
 #ProfPlot: ccn2 pmeas_lh_tott_c0p1_SC_SS   lh_tott diff PANEL:e Latent@Heating@(K/hr) Height@(km) NorthEast -5:0.1:20      0.0 12.0 prof_lh_tott_diff_c0p1_SC_SS.jpg
 #ProfPlot: ccn2 pmeas_w_c0p1_SC_SS         w       diff PANEL:f W@(m/s)               Height@(km) NorthEast  -2.0:0.1:2.0  0.0 12.0 prof_w_diff_c0p1_SC_SS.jpg
 
-ProfPlot: ccn2 pmeas_lh_tott_c0p01_SC_SS  lh_tott diff PANEL:e Latent@Heating@(K@h^-^1) Height@(km) NorthWest -15:0.1:15     0.0 12.0 prof_lh_tott_diff_c0p01_SC_SS.jpg
-ProfPlot: ccn2 pmeas_w_c0p01_SC_SS        w       diff PANEL:f W@(m@s^-^1)              Height@(km) SouthWest  -1.0:0.1:1.0  0.0 12.0 prof_w_diff_c0p01_SC_SS.jpg
+#ProfPlot: ccn2 pmeas_lh_tott_c0p01_SC_SS  lh_tott diff PANEL:e Latent@Heating@(K@h^-^1) Height@(km) NorthWest -15:0.1:15     0.0 12.0 prof_lh_tott_diff_c0p01_SC_SS.jpg
+#ProfPlot: ccn2 pmeas_w_c0p01_SC_SS        w       diff PANEL:f W@(m@s^-^1)              Height@(km) SouthWest  -1.0:0.1:1.0  0.0 12.0 prof_w_diff_c0p01_SC_SS.jpg
 
 #ProfPlot: ccn2 pmeas_lh_tott_c0p001_SC_SS lh_tott diff PANEL:e Latent@Heating@(K/hr) Height@(km) NorthEast -5:0.1:20      0.0 12.0 prof_lh_tott_diff_c0p001_SC_SS.jpg
 #ProfPlot: ccn2 pmeas_w_c0p001_SC_SS       w       diff PANEL:f W@(m/s)               Height@(km) NorthEast  -2.0:0.1:2.0  0.0 12.0 prof_w_diff_c0p001_SC_SS.jpg
@@ -682,12 +686,12 @@ ProfPlot: ccn2 pmeas_w_c0p01_SC_SS        w       diff PANEL:f W@(m@s^-^1)      
 #ProfPlot: ccn2 pmeas_lh_tott_lht1p0_RB_SS lh_tott diff PANEL:g_CASE-CLEAN Latent_Heating_(K/hr) Height_(km) NorthEast -10:0.1:10     0.0 15.0 prof_lh_tott_lht1p0_diff_RB_SS.jpg
 #ProfPlot: ccn2 pmeas_lh_tott_RB_SS lh_tott diff PANEL:g_CASE-CLEAN Latent_Heating_(K/hr) Height_(km) NorthEast -10:0.1:10     0.0 15.0 prof_lh_tott_diff_RB_SS.jpg
 
-ProfPlot: ccn2 pmeas_theta_e_RB_SS  theta_e diff PANEL:a \theta_e@(K) Height@(km) NorthEast   -5:0.01:5   0.0 15.0 prof_theta_e_diff_RB_SS.jpg
-ProfPlot: ccn2 pmeas_theta_RB_SS    theta diff   PANEL:b \theta@(K)   Height@(km) NorthEast   -5:0.01:5   0.0 15.0 prof_theta_diff_RB_SS.jpg
-ProfPlot: ccn2 pmeas_vapor_RB_SS    vapor diff   PANEL:c q@(g@kg^-^1) Height@(km) NorthEast   -1:0.01:1   0.0 15.0 prof_vapor_diff_RB_SS.jpg
+#ProfPlot: ccn2 pmeas_theta_e_RB_SS  theta_e diff PANEL:a \theta_e@(K) Height@(km) NorthEast   -5:0.01:5   0.0 15.0 prof_theta_e_diff_RB_SS.jpg
+#ProfPlot: ccn2 pmeas_theta_RB_SS    theta diff   PANEL:b \theta@(K)   Height@(km) NorthEast   -5:0.01:5   0.0 15.0 prof_theta_diff_RB_SS.jpg
+#ProfPlot: ccn2 pmeas_vapor_RB_SS    vapor diff   PANEL:c q@(g@kg^-^1) Height@(km) NorthEast   -1:0.01:1   0.0 15.0 prof_vapor_diff_RB_SS.jpg
 
 #ProfPlot: ccn2 pmeas_w_twp4_RB_SS         w       diff PANEL:b@W@Difference W@(m/s)               Height@(km) SouthEast  -0.5:0.05:0.5 0.0 15.0 prof_w_twp4_diff_RB_SS.jpg
-ProfPlot: ccn2 pmeas_w_RB_SS        w     diff   PANEL:d W@(m@s^-^1)  Height@(km) SouthEast  -0.5:0.05:0.5 0.0 15.0 prof_w_diff_RB_SS.jpg
+#ProfPlot: ccn2 pmeas_w_RB_SS        w     diff   PANEL:d W@(m@s^-^1)  Height@(km) SouthEast  -0.5:0.05:0.5 0.0 15.0 prof_w_diff_RB_SS.jpg
 
 # TC WS, May 2013
 #ProfPlot: ccn2_ext pmeas_lh_tott_lht1p0_SC_SS lh_tott diff CASE-CLEAN Latent_Heating_(K/hr) Height_(km) NorthWest -10:0.1:10     0.0 15.0 TCWS0513_prof_lh_tott_lht1p0_diff_SC_SS.jpg
@@ -698,6 +702,10 @@ ProfPlot: ccn2 pmeas_w_RB_SS        w     diff   PANEL:d W@(m@s^-^1)  Height@(km
 
 #ProfPlot: ccn2_ext pmeas_theta_e_RB_SS        theta_e diff CASE-CLEAN Theta-E_(K)           Height_(km) NorthEast    -5:0.01:5   0.0 15.0 TCWS0513_prof_theta_e_diff_RB_SS.jpg
 #ProfPlot: ccn2_ext pmeas_w_twp4_RB_SS         w       diff CASE-CLEAN W_(m/s)               Height_(km) SouthEast  -0.5:0.05:0.5 0.0 15.0 TCWS0513_prof_w_twp4_diff_RB_SS.jpg
+
+# for reviewer
+ProfPlot: ccn4 pmeas_ccn_conc_SC_LC  ccn_conc abs PANEL:a N_a@(cm^-^3) Height@(km) NorthEast -1.0:1.0:70.0 0.0 12.0 prof_ccn_conc_SC_LC.jpg
+ProfPlot: ccn4 pmeas_ccn_conc_SC_LC  ccn_conc abs PANEL:b N_a@(cm^-^3) Height@(km) NorthEast -1.0:1.0:70.0 0.0  1.0 prof_ccn_conc_SC_LC_LowLevel.jpg
 
 ######################## Profile Time Series Plots #############################
  

@@ -33,7 +33,7 @@ end
 if (strcmp(Lcolors{1}, 'k'))
   Lcolor = [ 1 1 1 ] * Lgscales(1);
 else
-  Lcolor = Lcolors{1};
+  Lcolor = str2rgb(Lcolors{1});
 end
 plot(Profs(1,:),Zvals,'Color', Lcolor, 'LineStyle', Lstyles{1},'LineWidth',Lwidth);
 xlim([ min(Xvals) max(Xvals) ]);
@@ -47,7 +47,7 @@ for i = 2:Nprofs
      if (strcmp(Lcolors{i}, 'k'))
        Lcolor = [ 1 1 1 ] * Lgscales(i);
      else
-       Lcolor = Lcolors{i};
+       Lcolor = str2rgb(Lcolors{i});
      end
      plot(Profs(i,:),Zvals,'Color', Lcolor, 'LineStyle', Lstyles{i},'LineWidth',Lwidth);
 end
