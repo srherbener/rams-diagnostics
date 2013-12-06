@@ -116,3 +116,11 @@ montage -tile 2x1 -geometry ${Jsize}${Jinc} \
  prof_ccn_conc_SC_LC_LowLevel.jpg \
  FigureAeroConc.jpg
 
+# For danny
+echo "Figure: low-level cloud properties"
+montage -tile 1x3 -geometry ${Jsize}${Jinc} \
+ prof_cloud_c0p01_SC_LC_LowLevel.jpg \
+ prof_cloud_cm3_c0p01_SC_LC_LowLevel.jpg \
+ prof_cloud_d_c0p01_SC_LC_LowLevel.jpg \
+ FigureLowLevelCloudProps.jpg
+
