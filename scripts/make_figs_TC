@@ -124,3 +124,23 @@ montage -tile 1x3 -geometry ${Jsize}${Jinc} \
  prof_cloud_d_c0p01_SC_LC_LowLevel.jpg \
  FigureLowLevelCloudProps.jpg
 
+echo "Figure: Azavg Liq"
+montage -tile 2x3 -geometry ${Jsize}${Jinc} \
+ AzavgLiqMixRatio_T48_TCS_SD_C0100.jpg \
+ AzavgLiqMixRatio_T48_TCS_SD_C2000.jpg \
+ AzavgLiqMixRatio_T72_TCS_SD_C0100.jpg \
+ AzavgLiqMixRatio_T72_TCS_SD_C2000.jpg \
+ AzavgLiqMixRatio_T96_TCS_SD_C0100.jpg \
+ AzavgLiqMixRatio_T96_TCS_SD_C2000.jpg \
+ FigureAzavgLiqMixRatio.jpg
+
+echo "Figure: Azavg Ice"
+montage -tile 2x3 -geometry ${Jsize}${Jinc} \
+ AzavgIceMixRatio_T48_TCS_SD_C0100.jpg \
+ AzavgIceMixRatio_T48_TCS_SD_C2000.jpg \
+ AzavgIceMixRatio_T72_TCS_SD_C0100.jpg \
+ AzavgIceMixRatio_T72_TCS_SD_C2000.jpg \
+ AzavgIceMixRatio_T96_TCS_SD_C0100.jpg \
+ AzavgIceMixRatio_T96_TCS_SD_C2000.jpg \
+ FigureAzavgIceMixRatio.jpg
+
