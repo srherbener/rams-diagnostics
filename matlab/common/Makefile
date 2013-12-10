@@ -10,6 +10,7 @@ SCRIPTS = \
           $(DEST)/print2array.m \
           $(DEST)/str2rgb.m \
           $(DEST)/screen2jpeg.m \
+          $(DEST)/radar_cmap.m \
           $(DEST)/AdiffEofPlot.m \
           $(DEST)/AzavgDiffEof.m \
           $(DEST)/CompileCounts.m \

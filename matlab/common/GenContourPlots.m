@@ -3,6 +3,7 @@ function [ ] = GenContourPlots(ConfigFile)
 
 [ Config ] = ReadConfig(ConfigFile);
 Pdir = Config.PlotDir;
+UndefVal = Config.UndefVal;
 
 % make the plots
 for iplot = 1:length(Config.ContourPlots)
@@ -96,15 +97,19 @@ for iplot = 1:length(Config.ContourPlots)
 
       Hfile = sprintf('%s_%s.h5', Xfprefix, Case);
       fprintf('Reading HDF5 file: %s, Dataset: %s\n', Hfile, Xvname);
-      X = ReadSelectXyzt(Hfile, Xvname, Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, Tmin, Tmax) .* Xscale;
+      X = ReadSelectXyzt(Hfile, Xvname, Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, Tmin, Tmax);
+      X = X .* Xscale;
 
       Hfile = sprintf('%s_%s.h5', Yfprefix, Case);
       fprintf('Reading HDF5 file: %s, Dataset: %s\n', Hfile, Yvname);
-      Y = ReadSelectXyzt(Hfile, Yvname, Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, Tmin, Tmax) .* Yscale;
+      Y = ReadSelectXyzt(Hfile, Yvname, Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, Tmin, Tmax);
+      Y = Y .* Yscale;
 
       Hfile = sprintf('%s_%s.h5', Zfprefix, Case);
       fprintf('Reading HDF5 file: %s, Dataset: %s\n', Hfile, Zvname);
-      Z = ReadSelectXyzt(Hfile, Zvname, Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, Tmin, Tmax) .* Zscale;
+      Z = ReadSelectXyzt(Hfile, Zvname, Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, Tmin, Tmax);
+      Z(Z == UndefVal) = nan;
+      Z = Z .* Zscale;
 
       fprintf('\n');
       fprintf('Writing plot file: %s\n', OutFile);

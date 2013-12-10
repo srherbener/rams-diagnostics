@@ -135,6 +135,9 @@ AzavgEof: theta_e_c0p01 theta_e_c0p01 theta_e      0 250000     0  25000  86400 
 #Pmeas: pmeas_cloud_d_c0p1_SC_LC     AzAveragedData hist_cloud_d_c0p1     cloud_d   wtmean  0.0  40.0 24.0 144
 #Pmeas: pmeas_cloud_d_twp4_SC_LC     AzAveragedData hist_cloud_d_twp4     cloud_d   wtmean  0.0  40.0 24.0 144
 
+Pmeas: pmeas_liq_l0p01_SC_LC   AzAveragedData hist_liq_l0p01   liquid   wtmean  0.0  40.0 24.0 144
+Pmeas: pmeas_ice_i0p01_SC_LC   AzAveragedData hist_ice_i0p01   ice      wtmean  0.0  40.0 24.0 144
+
 # AC - active lifecycle (50 to 144 hr, 50 hr is when a significant amount of aerosols
 #      show up and persist at low levels in the C2000 case.
 
@@ -158,23 +161,23 @@ AzavgEof: theta_e_c0p01 theta_e_c0p01 theta_e      0 250000     0  25000  86400 
 
 # SS - steady state phase (120 to 140 hr)
 
-Pmeas: pmeas_cloud_SC_SS            AzAveragedData hist_cloud            cloud     wtmean  0.0  40.0 120.0 140.0
-Pmeas: pmeas_cloud_c0p001_SC_SS     AzAveragedData hist_cloud_c0p001     cloud     wtmean  0.0  40.0 120.0 140.0
-Pmeas: pmeas_cloud_c0p01_SC_SS      AzAveragedData hist_cloud_c0p01      cloud     wtmean  0.0  40.0 120.0 140.0
-Pmeas: pmeas_cloud_c0p1_SC_SS       AzAveragedData hist_cloud_c0p1       cloud     wtmean  0.0  40.0 120.0 140.0
-Pmeas: pmeas_cloud_twp4_SC_SS       AzAveragedData hist_cloud_twp4       cloud     wtmean  0.0  40.0 120.0 140.0
+#Pmeas: pmeas_cloud_SC_SS            AzAveragedData hist_cloud            cloud     wtmean  0.0  40.0 120.0 140.0
+#Pmeas: pmeas_cloud_c0p001_SC_SS     AzAveragedData hist_cloud_c0p001     cloud     wtmean  0.0  40.0 120.0 140.0
+#Pmeas: pmeas_cloud_c0p01_SC_SS      AzAveragedData hist_cloud_c0p01      cloud     wtmean  0.0  40.0 120.0 140.0
+#Pmeas: pmeas_cloud_c0p1_SC_SS       AzAveragedData hist_cloud_c0p1       cloud     wtmean  0.0  40.0 120.0 140.0
+#Pmeas: pmeas_cloud_twp4_SC_SS       AzAveragedData hist_cloud_twp4       cloud     wtmean  0.0  40.0 120.0 140.0
 
-Pmeas: pmeas_cloud_cm3_SC_SS        AzAveragedData hist_cloud_cm3        cloud_cm3 wtmean  0.0  40.0 120.0 140.0
-Pmeas: pmeas_cloud_cm3_c0p001_SC_SS AzAveragedData hist_cloud_cm3_c0p001 cloud_cm3 wtmean  0.0  40.0 120.0 140.0
-Pmeas: pmeas_cloud_cm3_c0p01_SC_SS  AzAveragedData hist_cloud_cm3_c0p01  cloud_cm3 wtmean  0.0  40.0 120.0 140.0
-Pmeas: pmeas_cloud_cm3_c0p1_SC_SS   AzAveragedData hist_cloud_cm3_c0p1   cloud_cm3 wtmean  0.0  40.0 120.0 140.0
-Pmeas: pmeas_cloud_cm3_twp4_SC_SS   AzAveragedData hist_cloud_cm3_twp4   cloud_cm3 wtmean  0.0  40.0 120.0 140.0
+#Pmeas: pmeas_cloud_cm3_SC_SS        AzAveragedData hist_cloud_cm3        cloud_cm3 wtmean  0.0  40.0 120.0 140.0
+#Pmeas: pmeas_cloud_cm3_c0p001_SC_SS AzAveragedData hist_cloud_cm3_c0p001 cloud_cm3 wtmean  0.0  40.0 120.0 140.0
+#Pmeas: pmeas_cloud_cm3_c0p01_SC_SS  AzAveragedData hist_cloud_cm3_c0p01  cloud_cm3 wtmean  0.0  40.0 120.0 140.0
+#Pmeas: pmeas_cloud_cm3_c0p1_SC_SS   AzAveragedData hist_cloud_cm3_c0p1   cloud_cm3 wtmean  0.0  40.0 120.0 140.0
+#Pmeas: pmeas_cloud_cm3_twp4_SC_SS   AzAveragedData hist_cloud_cm3_twp4   cloud_cm3 wtmean  0.0  40.0 120.0 140.0
 
-Pmeas: pmeas_cloud_d_SC_SS          AzAveragedData hist_cloud_d          cloud_d   wtmean  0.0  40.0 120.0 140.0
-Pmeas: pmeas_cloud_d_c0p001_SC_SS   AzAveragedData hist_cloud_d_c0p001   cloud_d   wtmean  0.0  40.0 120.0 140.0
-Pmeas: pmeas_cloud_d_c0p01_SC_SS    AzAveragedData hist_cloud_d_c0p01    cloud_d   wtmean  0.0  40.0 120.0 140.0
-Pmeas: pmeas_cloud_d_c0p1_SC_SS     AzAveragedData hist_cloud_d_c0p1     cloud_d   wtmean  0.0  40.0 120.0 140.0
-Pmeas: pmeas_cloud_d_twp4_SC_SS     AzAveragedData hist_cloud_d_twp4     cloud_d   wtmean  0.0  40.0 120.0 140.0
+#Pmeas: pmeas_cloud_d_SC_SS          AzAveragedData hist_cloud_d          cloud_d   wtmean  0.0  40.0 120.0 140.0
+#Pmeas: pmeas_cloud_d_c0p001_SC_SS   AzAveragedData hist_cloud_d_c0p001   cloud_d   wtmean  0.0  40.0 120.0 140.0
+#Pmeas: pmeas_cloud_d_c0p01_SC_SS    AzAveragedData hist_cloud_d_c0p01    cloud_d   wtmean  0.0  40.0 120.0 140.0
+#Pmeas: pmeas_cloud_d_c0p1_SC_SS     AzAveragedData hist_cloud_d_c0p1     cloud_d   wtmean  0.0  40.0 120.0 140.0
+#Pmeas: pmeas_cloud_d_twp4_SC_SS     AzAveragedData hist_cloud_d_twp4     cloud_d   wtmean  0.0  40.0 120.0 140.0
 
 #Pmeas: pmeas_lh_tott_SC_SS        AzAveragedData hist_lh_tott        lh_tott  wtmean   0.0  40.0 120.0 140.0
 #Pmeas: pmeas_lh_tott_c0p001_SC_SS AzAveragedData hist_lh_tott_c0p001 lh_tott  wtmean   0.0  40.0 120.0 140.0
@@ -730,17 +733,23 @@ LinePlot: ccn2 RadPeak_10m V10m_PeakSS SfcVtAll  y PANEL:b NorthEast none   R_V1
 #ProfPlot: ccn2 pmeas_cloud_cm3_c0p01_SC_LC cloud_cm3 abs PANEL:b N_c@(cm^-^3)   Height@(km) NorthEast -4:2:100     0.0 2.0 prof_cloud_cm3_c0p01_SC_LC_LowLevel.jpg
 #ProfPlot: ccn2 pmeas_cloud_d_c0p01_SC_LC   cloud_d   abs PANEL:c D_c@(um)       Height@(km) NorthWest -2:1:60      0.0 2.0 prof_cloud_d_c0p01_SC_LC_LowLevel.jpg
 
+ProfPlot: ccn2 pmeas_liq_l0p01_SC_LC     liquid     abs PANEL:a q_l@(g@kg^-^1) Height@(km) NorthEast -0.1:0.1:2.0 0.0 12.0 prof_liq_l0p01_SC_LC.jpg
+ProfPlot: ccn2 pmeas_liq_l0p01_SC_LC     liquid     abs PANEL:a q_l@(g@kg^-^1) Height@(km) NorthEast -0.1:0.1:2.0 0.0  2.0 prof_liq_l0p01_SC_LC_LowLevel.jpg
+
+ProfPlot: ccn2 pmeas_ice_i0p01_SC_LC     ice        abs PANEL:a q_l@(g@kg^-^1) Height@(km) NorthEast -0.1:0.1:2.0 0.0 12.0 prof_ice_i0p01_SC_LC.jpg
+ProfPlot: ccn2 pmeas_ice_i0p01_SC_LC     ice        abs PANEL:a q_l@(g@kg^-^1) Height@(km) NorthEast -0.1:0.1:2.0 0.0  2.0 prof_ice_i0p01_SC_LC_LowLevel.jpg
+
 #ProfPlot: ccn2 pmeas_cloud_c0p1_SC_LC     cloud     abs PANEL:a q_c@(g@kg^-^1) Height@(km) NorthEast -0.1:0.1:2.0 0.0 2.0 prof_cloud_c0p1_SC_LC_LowLevel.jpg
 #ProfPlot: ccn2 pmeas_cloud_cm3_c0p1_SC_LC cloud_cm3 abs PANEL:b N_c@(cm^-^3)   Height@(km) NorthEast -4:2:100     0.0 2.0 prof_cloud_cm3_c0p1_SC_LC_LowLevel.jpg
 #ProfPlot: ccn2 pmeas_cloud_d_c0p1_SC_LC   cloud_d   abs PANEL:c D_c@(um)       Height@(km) NorthWest -2:1:60      0.0 2.0 prof_cloud_d_c0p1_SC_LC_LowLevel.jpg
 
-ProfPlot: ccn2 pmeas_cloud_c0p01_SC_SS     cloud     abs PANEL:a q_c@(g@kg^-^1) Height@(km) NorthEast -0.1:0.1:2.0 0.0 2.0 prof_cloud_c0p01_SC_SS_LowLevel.jpg
-ProfPlot: ccn2 pmeas_cloud_cm3_c0p01_SC_SS cloud_cm3 abs PANEL:b N_c@(cm^-^3)   Height@(km) NorthEast -4:2:100     0.0 2.0 prof_cloud_cm3_c0p01_SC_SS_LowLevel.jpg
-ProfPlot: ccn2 pmeas_cloud_d_c0p01_SC_SS   cloud_d   abs PANEL:c D_c@(um)       Height@(km) NorthWest -2:1:60      0.0 2.0 prof_cloud_d_c0p01_SC_SS_LowLevel.jpg
+#ProfPlot: ccn2 pmeas_cloud_c0p01_SC_SS     cloud     abs PANEL:a q_c@(g@kg^-^1) Height@(km) NorthEast -0.1:0.1:2.0 0.0 2.0 prof_cloud_c0p01_SC_SS_LowLevel.jpg
+#ProfPlot: ccn2 pmeas_cloud_cm3_c0p01_SC_SS cloud_cm3 abs PANEL:b N_c@(cm^-^3)   Height@(km) NorthEast -4:2:100     0.0 2.0 prof_cloud_cm3_c0p01_SC_SS_LowLevel.jpg
+#ProfPlot: ccn2 pmeas_cloud_d_c0p01_SC_SS   cloud_d   abs PANEL:c D_c@(um)       Height@(km) NorthWest -2:1:60      0.0 2.0 prof_cloud_d_c0p01_SC_SS_LowLevel.jpg
 
-ProfPlot: ccn2 pmeas_cloud_c0p1_SC_SS     cloud     abs PANEL:a q_c@(g@kg^-^1) Height@(km) NorthEast -0.1:0.1:2.0 0.0 2.0 prof_cloud_c0p1_SC_SS_LowLevel.jpg
-ProfPlot: ccn2 pmeas_cloud_cm3_c0p1_SC_SS cloud_cm3 abs PANEL:b N_c@(cm^-^3)   Height@(km) NorthEast -4:2:100     0.0 2.0 prof_cloud_cm3_c0p1_SC_SS_LowLevel.jpg
-ProfPlot: ccn2 pmeas_cloud_d_c0p1_SC_SS   cloud_d   abs PANEL:c D_c@(um)       Height@(km) NorthWest -2:1:60      0.0 2.0 prof_cloud_d_c0p1_SC_SS_LowLevel.jpg
+#ProfPlot: ccn2 pmeas_cloud_c0p1_SC_SS     cloud     abs PANEL:a q_c@(g@kg^-^1) Height@(km) NorthEast -0.1:0.1:2.0 0.0 2.0 prof_cloud_c0p1_SC_SS_LowLevel.jpg
+#ProfPlot: ccn2 pmeas_cloud_cm3_c0p1_SC_SS cloud_cm3 abs PANEL:b N_c@(cm^-^3)   Height@(km) NorthEast -4:2:100     0.0 2.0 prof_cloud_cm3_c0p1_SC_SS_LowLevel.jpg
+#ProfPlot: ccn2 pmeas_cloud_d_c0p1_SC_SS   cloud_d   abs PANEL:c D_c@(um)       Height@(km) NorthWest -2:1:60      0.0 2.0 prof_cloud_d_c0p1_SC_SS_LowLevel.jpg
 
 ######################## Profile Time Series Plots #############################
  
@@ -977,6 +986,24 @@ ProfRsPlot: ccn2_diff pmeas_relvortz_rvz1em4_SC_SS relvortz 1000.0 PANEL:c@\zeta
 #ProfRsPlot: ccn2_ext      pmeas_relvortz_rvz1em4_SC_SS relvortz Relative_Vorticity_(s^-^1) Radius_(km) Height_(km)     0  1e-2  0.0 15.0 revgray 0  abs TCWS0513_prs_relvortz_rvz1em4_SC_SS
 #ProfRsPlot: ccn2_ext_diff pmeas_relvortz_rvz1em4_SC_SS relvortz Relative_Vorticity_(s^-^1) Radius_(km) Height_(km) -2e-3  2e-3  0.0 15.0 redblue 0 diff TCWS0513_prs_relvortz_rvz1em4_diff_SC_SS
 
+####################### Contour plots ########################
+# ContourPlot: <xspec> <yspec> <zspec> <data_select_spec> <title> <fill> <color_bar> <contour_nlevels> <color_map> <out_file>
+
+# Danny
+# Sample radial plot of azimuthally averaged data
+### Liquid mixing ratio
+#ContourPlot: ccn2 AzavgLiqRadius AzavgLiqHeight AzavgLiqMixRatio AzavgSelect_T48 PANEL:a@q_l,@t@=@48@h 1 1 40 default AzavgLiqMixRatio_T48
+#ContourPlot: ccn2 AzavgLiqRadius AzavgLiqHeight AzavgLiqMixRatio AzavgSelect_T72 PANEL:c@q_l,@t@=@72@h 1 1 40 default AzavgLiqMixRatio_T72
+#ContourPlot: ccn2 AzavgLiqRadius AzavgLiqHeight AzavgLiqMixRatio AzavgSelect_T96 PANEL:e@q_l,@t@=@96@h 1 1 40 default AzavgLiqMixRatio_T96
+
+#ContourPlot: ccn2 AzavgIceRadius AzavgIceHeight AzavgIceMixRatio AzavgSelect_T48 PANEL:b@q_i,@t@=@48@h 1 1 40 default AzavgIceMixRatio_T48
+#ContourPlot: ccn2 AzavgIceRadius AzavgIceHeight AzavgIceMixRatio AzavgSelect_T72 PANEL:d@q_i,@t@=@72@h 1 1 40 default AzavgIceMixRatio_T72
+#ContourPlot: ccn2 AzavgIceRadius AzavgIceHeight AzavgIceMixRatio AzavgSelect_T96 PANEL:f@q_i,@t@=@96@h 1 1 40 default AzavgIceMixRatio_T96
+
+ContourPlot: ccn2 RadarLon RadarLat RadarReflect RadarSelect_T48 PANEL:a@dBZ,@t@=@48@h 1 1 40 radar_cmap RadarReflect_T48
+ContourPlot: ccn2 RadarLon RadarLat RadarReflect RadarSelect_T72 PANEL:a@dBZ,@t@=@72@h 1 1 40 radar_cmap RadarReflect_T72
+ContourPlot: ccn2 RadarLon RadarLat RadarReflect RadarSelect_T96 PANEL:a@dBZ,@t@=@96@h 1 1 40 radar_cmap RadarReflect_T96
+
 
 ####################### Plot Sets ############################
 # PlotSet: <name> <number_of_cases> <case_spec> ...
@@ -1066,6 +1093,18 @@ PlotVar: RadAll_10m   x_coords   AzAveragedData/speed10m   Radius  km   0 250  1
 PlotVar: RadPeak_10m  x_coords   AzAveragedData/speed10m   Radius  km   0  30  1e-3
 PlotVar: RadRband_10m x_coords   AzAveragedData/speed10m   Radius  km  70 250  1e-3
 
+PlotVar: AzavgLiqRadius   x_coords AzAveragedData/liq_l0p01 Radius km       0 250 1e-3
+PlotVar: AzavgLiqHeight   z_coords AzAveragedData/liq_l0p01 Height km       0  15 1e-3
+PlotVar: AzavgLiqMixRatio liquid   AzAveragedData/liq_l0p01 q_l    g@kg^-^1 0   2    1
+
+PlotVar: AzavgIceRadius   x_coords AzAveragedData/ice_i0p01 Radius km       0 250 1e-3
+PlotVar: AzavgIceHeight   z_coords AzAveragedData/ice_i0p01 Height km       0  15 1e-3
+PlotVar: AzavgIceMixRatio ice      AzAveragedData/ice_i0p01 q_i    g@kg^-^1 0   2    1
+
+PlotVar: RadarLon     x_coords    DIAGS/reflect_all Longitude      @  -180  180 1
+PlotVar: RadarLat     y_coords    DIAGS/reflect_all Latitude       @  -180  180 1
+PlotVar: RadarReflect reflect_all DIAGS/reflect_all Reflectivity dBZ  -2.5 77.5 1
+
 ######################## Selection specs #########################
 # PlotDselect: <name> <xmin> <xmax> <ymin> <ymax> <zmin> <zmax> <tmin> <tmax>
 #
@@ -1089,6 +1128,16 @@ PlotDselect: Ts90  1 1 1 1 1 1 86400 324000
 PlotDselect: SfcVtAll    0 250000 0 0 0 30 0 0
 PlotDselect: SfcVtPeak   0  50000 0 0 0 30 0 0
 PlotDselect: SfcVtRband 70 250000 0 0 0 30 0 0
+
+
+# contour plots - radial cross-section of azimuthally averaged data
+PlotDselect: AzavgSelect_T48  0 250000   0 0   0 15000   172800 172800
+PlotDselect: AzavgSelect_T72  0 250000   0 0   0 15000   259200 259200
+PlotDselect: AzavgSelect_T96  0 250000   0 0   0 15000   345600 345600
+
+PlotDselect: RadarSelect_T48  -180 180   -180 180   0 0   172800 172800
+PlotDselect: RadarSelect_T72  -180 180   -180 180   0 0   259200 259200
+PlotDselect: RadarSelect_T96  -180 180   -180 180   0 0   345600 345600
 
 ############################################
 # AzavgEofPlot: <file_prefix> <Var> <name> <units> <EofPcNum> <clev_limit> <clev_inc> <r1> <r2> <z1> <z2>
