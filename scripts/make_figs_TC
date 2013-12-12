@@ -144,3 +144,20 @@ montage -tile 2x3 -geometry ${Jsize}${Jinc} \
  AzavgIceMixRatio_T96_TCS_SD_C2000.jpg \
  FigureAzavgIceMixRatio.jpg
 
+echo "Figure: Radar Reflectivity"
+montage -tile 3x2 -geometry ${Jsize}${Jinc} \
+ RadarReflect_T48_TCS_SD_C0100.jpg \
+ RadarReflect_T72_TCS_SD_C0100.jpg \
+ RadarReflect_T96_TCS_SD_C0100.jpg \
+ RadarReflect_T48_TCS_SD_C2000.jpg \
+ RadarReflect_T72_TCS_SD_C2000.jpg \
+ RadarReflect_T96_TCS_SD_C2000.jpg \
+ FigureRadarReflect.jpg
+
+echo "Figure: Hurricane Radar Examples"
+montage -tile 2x2 -geometry ${Jsize}${Jinc} \
+ HugoAirborneRadar.jpg \
+ OliviaAirborneDoppler.gif \
+ EarlRadar.png \
+ RitaAirborneRadar.jpeg \
+ FigureHurricaneRadarExamples.jpg
