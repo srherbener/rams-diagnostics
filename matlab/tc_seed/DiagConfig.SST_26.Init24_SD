@@ -1000,9 +1000,9 @@ ProfRsPlot: ccn2_diff pmeas_relvortz_rvz1em4_SC_SS relvortz 1000.0 PANEL:c@\zeta
 #ContourPlot: ccn2 AzavgIceRadius AzavgIceHeight AzavgIceMixRatio AzavgSelect_T72 PANEL:d@q_i,@t@=@72@h 1 1 40 default AzavgIceMixRatio_T72
 #ContourPlot: ccn2 AzavgIceRadius AzavgIceHeight AzavgIceMixRatio AzavgSelect_T96 PANEL:f@q_i,@t@=@96@h 1 1 40 default AzavgIceMixRatio_T96
 
-ContourPlot: ccn2 RadarLon RadarLat RadarReflect RadarSelect_T48 PANEL:a@dBZ,@t@=@48@h 1 1 40 radar_cmap RadarReflect_T48
-ContourPlot: ccn2 RadarLon RadarLat RadarReflect RadarSelect_T72 PANEL:a@dBZ,@t@=@72@h 1 1 40 radar_cmap RadarReflect_T72
-ContourPlot: ccn2 RadarLon RadarLat RadarReflect RadarSelect_T96 PANEL:a@dBZ,@t@=@96@h 1 1 40 radar_cmap RadarReflect_T96
+ContourPlot: ccn2 RadarLon RadarLat RadarReflect RadarSelect_T48 PANEL:a:d@dBZ,@t@=@48@h 1 1 40 radar_cmap RadarReflect_T48
+ContourPlot: ccn2 RadarLon RadarLat RadarReflect RadarSelect_T72 PANEL:b:e@dBZ,@t@=@72@h 1 1 40 radar_cmap RadarReflect_T72
+ContourPlot: ccn2 RadarLon RadarLat RadarReflect RadarSelect_T96 PANEL:d:f@dBZ,@t@=@96@h 1 1 40 radar_cmap RadarReflect_T96
 
 
 ####################### Plot Sets ############################
