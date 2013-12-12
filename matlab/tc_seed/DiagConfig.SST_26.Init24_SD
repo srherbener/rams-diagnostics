@@ -135,8 +135,8 @@ AzavgEof: theta_e_c0p01 theta_e_c0p01 theta_e      0 250000     0  25000  86400 
 #Pmeas: pmeas_cloud_d_c0p1_SC_LC     AzAveragedData hist_cloud_d_c0p1     cloud_d   wtmean  0.0  40.0 24.0 144
 #Pmeas: pmeas_cloud_d_twp4_SC_LC     AzAveragedData hist_cloud_d_twp4     cloud_d   wtmean  0.0  40.0 24.0 144
 
-Pmeas: pmeas_liq_l0p01_SC_LC   AzAveragedData hist_liq_l0p01   liquid   wtmean  0.0  40.0 24.0 144
-Pmeas: pmeas_ice_i0p01_SC_LC   AzAveragedData hist_ice_i0p01   ice      wtmean  0.0  40.0 24.0 144
+#Pmeas: pmeas_liq_l0p01_SC_LC   AzAveragedData hist_liq_l0p01   liquid   wtmean  0.0  40.0 24.0 144
+#Pmeas: pmeas_ice_i0p01_SC_LC   AzAveragedData hist_ice_i0p01   ice      wtmean  0.0  40.0 24.0 144
 
 # AC - active lifecycle (50 to 144 hr, 50 hr is when a significant amount of aerosols
 #      show up and persist at low levels in the C2000 case.
@@ -379,6 +379,16 @@ Pmeas: pmeas_ice_i0p01_SC_LC   AzAveragedData hist_ice_i0p01   ice      wtmean  
 #Pmeas: pmeas_speed_r_RB_SS AzAveragedData speed_r speed_r azavg 40.0  70.0 120.0 140.0
 
 #Pmeas: pmeas_tempc_twp4_SC_SS AzAveragedData hist_tempc_twp4 tempc wtmean  0.0  40.0 120.0 140.0
+
+# for Danny
+Pmeas: pmeas_ccn_conc_ALL_T48        AzAveragedData hist_ccn_conc       ccn_conc  wtmean  0.0  250.0 48.0 48.0
+Pmeas: pmeas_ccn_conc_twp4_ALL_T48   AzAveragedData hist_ccn_conc_twp4  ccn_conc  wtmean  0.0  250.0 48.0 48.0
+
+Pmeas: pmeas_ccn_conc_ALL_T72        AzAveragedData hist_ccn_conc       ccn_conc  wtmean  0.0  250.0 72.0 72.0
+Pmeas: pmeas_ccn_conc_twp4_ALL_T72   AzAveragedData hist_ccn_conc_twp4  ccn_conc  wtmean  0.0  250.0 72.0 72.0
+
+Pmeas: pmeas_ccn_conc_ALL_T96        AzAveragedData hist_ccn_conc       ccn_conc  wtmean  0.0  250.0 96.0 96.0
+Pmeas: pmeas_ccn_conc_twp4_ALL_T96   AzAveragedData hist_ccn_conc_twp4  ccn_conc  wtmean  0.0  250.0 96.0 96.0
 
 ############################################
 # Time Averages
