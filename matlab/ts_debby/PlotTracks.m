@@ -7,6 +7,9 @@ if (exist(Pdir, 'dir') ~= 7)
     mkdir(Pdir);
 end
 
+%Case = 'TSD_3GRIDS';
+Case = 'TSD_DRY_NODUST';
+
 % for the TS Debby simulations:
 LatBounds = [ 5 26 ];
 LonBounds = [ -42 -8 ];
@@ -15,7 +18,7 @@ LonBounds = [ -42 -8 ];
 NhcTrackLats = [ 12.6 13.4 14.2 14.9 15.7 16.7 17.6 18.4 19.2 20.1 20.9 ];
 NhcTrackLons = [ 23.9 25.3 26.7 28.1 29.5 30.0 32.4 33.9 35.5 37.1 38.7 ] * -1; 
 
-Hfile = 'FILTERS/all_TSD_3GRIDS.h5';
+Hfile = sprintf('FILTERS/all_%s.h5', Case);
 HdsetLon = 'min_press_xloc';
 HdsetLat = 'min_press_yloc';
 
@@ -42,7 +45,7 @@ Tpos = get(T, 'Position');
 Tpos(1) = 0; % line up with left edge of plot area
 set(T, 'Position', Tpos);
 
-OutFile = sprintf('%s/TsDebbyTracks.jpg', Pdir);
+OutFile = sprintf('%s/TsDebbyTracks_%s.jpg', Pdir, Case);
 fprintf('Writing: %s\n', OutFile);
 saveas(FigTracks, OutFile);
 close(FigTracks);
