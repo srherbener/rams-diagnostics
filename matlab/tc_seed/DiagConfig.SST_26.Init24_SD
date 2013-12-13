@@ -1010,9 +1010,13 @@ ProfRsPlot: ccn2_diff pmeas_relvortz_rvz1em4_SC_SS relvortz 1000.0 PANEL:c@\zeta
 #ContourPlot: ccn2 AzavgIceRadius AzavgIceHeight AzavgIceMixRatio AzavgSelect_T72 PANEL:d@q_i,@t@=@72@h 1 1 40 default AzavgIceMixRatio_T72
 #ContourPlot: ccn2 AzavgIceRadius AzavgIceHeight AzavgIceMixRatio AzavgSelect_T96 PANEL:f@q_i,@t@=@96@h 1 1 40 default AzavgIceMixRatio_T96
 
-ContourPlot: ccn2 RadarLon RadarLat RadarReflect RadarSelect_T48 PANEL:a:d@dBZ,@t@=@48@h 1 1 40 radar_cmap RadarReflect_T48
-ContourPlot: ccn2 RadarLon RadarLat RadarReflect RadarSelect_T72 PANEL:b:e@dBZ,@t@=@72@h 1 1 40 radar_cmap RadarReflect_T72
-ContourPlot: ccn2 RadarLon RadarLat RadarReflect RadarSelect_T96 PANEL:d:f@dBZ,@t@=@96@h 1 1 40 radar_cmap RadarReflect_T96
+#ContourPlot: ccn2 RadarLon RadarLat RadarReflect RadarSelect_T48 PANEL:a:d@dBZ,@t@=@48@h 1 1 40 radar_cmap RadarReflect_T48
+#ContourPlot: ccn2 RadarLon RadarLat RadarReflect RadarSelect_T72 PANEL:b:e@dBZ,@t@=@72@h 1 1 40 radar_cmap RadarReflect_T72
+#ContourPlot: ccn2 RadarLon RadarLat RadarReflect RadarSelect_T96 PANEL:d:f@dBZ,@t@=@96@h 1 1 40 radar_cmap RadarReflect_T96
+
+ContourPlot: ccn2 CcnRadius CcnHeight CcnConc CcnSelect_T48 PANEL:a:d@N_a,@t@=@48@h 1 1 40 default CcnConc_T48
+ContourPlot: ccn2 CcnRadius CcnHeight CcnConc CcnSelect_T72 PANEL:a:d@N_a,@t@=@72@h 1 1 40 default CcnConc_T72
+ContourPlot: ccn2 CcnRadius CcnHeight CcnConc CcnSelect_T96 PANEL:a:d@N_a,@t@=@96@h 1 1 40 default CcnConc_T96
 
 
 ####################### Plot Sets ############################
@@ -1115,6 +1119,10 @@ PlotVar: RadarLon     x_coords    DIAGS/reflect_all Longitude      @  -180  180 
 PlotVar: RadarLat     y_coords    DIAGS/reflect_all Latitude       @  -180  180 1
 PlotVar: RadarReflect reflect_all DIAGS/reflect_all Reflectivity dBZ  -2.5 77.5 1
 
+PlotVar: CcnRadius   x_coords    AzAveragedData/ccn_conc Radius                km   0  250 1e-3
+PlotVar: CcnHeight   z_coords    AzAveragedData/ccn_conc Height                km   0   10 1e-3
+PlotVar: CcnConc     ccn_conc    AzAveragedData/ccn_conc Concentration     cm^-^3   0  300    1
+
 ######################## Selection specs #########################
 # PlotDselect: <name> <xmin> <xmax> <ymin> <ymax> <zmin> <zmax> <tmin> <tmax>
 #
@@ -1148,6 +1156,10 @@ PlotDselect: AzavgSelect_T96  0 250000   0 0   0 15000   345600 345600
 PlotDselect: RadarSelect_T48  -180 180   -180 180   0 0   172800 172800
 PlotDselect: RadarSelect_T72  -180 180   -180 180   0 0   259200 259200
 PlotDselect: RadarSelect_T96  -180 180   -180 180   0 0   345600 345600
+
+PlotDselect: CcnSelect_T48  0 250000   0 0   0 10000  172800 172800
+PlotDselect: CcnSelect_T72  0 250000   0 0   0 10000  259200 259200
+PlotDselect: CcnSelect_T96  0 250000   0 0   0 10000  345600 345600
 
 ############################################
 # AzavgEofPlot: <file_prefix> <Var> <name> <units> <EofPcNum> <clev_limit> <clev_inc> <r1> <r2> <z1> <z2>
