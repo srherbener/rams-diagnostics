@@ -161,3 +161,13 @@ montage -tile 2x2 -geometry ${Jsize}${Jinc} \
  EarlRadar.png \
  RitaAirborneRadar.jpeg \
  FigureHurricaneRadarExamples.jpg
+
+echo "Figure: Radial cross-section of CCN"
+montage -tile 3x2 -geometry ${Jsize}${Jinc} \
+ CcnConc_T48_TCS_SD_C0100.jpg \
+ CcnConc_T72_TCS_SD_C0100.jpg \
+ CcnConc_T96_TCS_SD_C0100.jpg \
+ CcnConc_T48_TCS_SD_C2000.jpg \
+ CcnConc_T72_TCS_SD_C2000.jpg \
+ CcnConc_T96_TCS_SD_C2000.jpg \
+ FigureCcnRadialXsection.jpg
