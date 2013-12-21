@@ -1015,8 +1015,12 @@ ProfRsPlot: ccn2_diff pmeas_relvortz_rvz1em4_SC_SS relvortz 1000.0 PANEL:c@\zeta
 #ContourPlot: ccn2 RadarLon RadarLat RadarReflect RadarSelect_T96 PANEL:d:f@dBZ,@t@=@96@h 1 1 40 radar_cmap RadarReflect_T96
 
 ContourPlot: ccn2 CcnRadius CcnHeight CcnConc CcnSelect_T48 PANEL:a:d@N_a,@t@=@48@h 1 1 40 default CcnConc_T48
-ContourPlot: ccn2 CcnRadius CcnHeight CcnConc CcnSelect_T72 PANEL:a:d@N_a,@t@=@72@h 1 1 40 default CcnConc_T72
-ContourPlot: ccn2 CcnRadius CcnHeight CcnConc CcnSelect_T96 PANEL:a:d@N_a,@t@=@96@h 1 1 40 default CcnConc_T96
+ContourPlot: ccn2 CcnRadius CcnHeight CcnConc CcnSelect_T72 PANEL:b:e@N_a,@t@=@72@h 1 1 40 default CcnConc_T72
+ContourPlot: ccn2 CcnRadius CcnHeight CcnConc CcnSelect_T96 PANEL:c:f@N_a,@t@=@96@h 1 1 40 default CcnConc_T96
+
+ContourPlot: ccn2 CcnRadius CcnHeight CcnConcHigh CcnSelect_T48 PANEL:a:d@N_a,@t@=@48@h 1 1 40 default CcnConcHigh_T48
+ContourPlot: ccn2 CcnRadius CcnHeight CcnConcHigh CcnSelect_T72 PANEL:b:e@N_a,@t@=@72@h 1 1 40 default CcnConcHigh_T72
+ContourPlot: ccn2 CcnRadius CcnHeight CcnConcHigh CcnSelect_T96 PANEL:c:f@N_a,@t@=@96@h 1 1 40 default CcnConcHigh_T96
 
 
 ####################### Plot Sets ############################
@@ -1122,6 +1126,7 @@ PlotVar: RadarReflect reflect_all DIAGS/reflect_all Reflectivity dBZ  -2.5 77.5 
 PlotVar: CcnRadius   x_coords    AzAveragedData/ccn_conc Radius                km   0  250 1e-3
 PlotVar: CcnHeight   z_coords    AzAveragedData/ccn_conc Height                km   0   10 1e-3
 PlotVar: CcnConc     ccn_conc    AzAveragedData/ccn_conc Concentration     cm^-^3   0  300    1
+PlotVar: CcnConcHigh ccn_conc    AzAveragedData/ccn_conc Concentration     cm^-^3   0 1000    1
 
 ######################## Selection specs #########################
 # PlotDselect: <name> <xmin> <xmax> <ymin> <ymax> <zmin> <zmax> <tmin> <tmax>
