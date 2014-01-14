@@ -1,4 +1,4 @@
-function [ ] = PlotTracks(ConfigFile)
+function [ ] = PlotTracks(ConfigFile, Case)
 
 [ Config ] = ReadConfig(ConfigFile);
 
@@ -8,7 +8,8 @@ if (exist(Pdir, 'dir') ~= 7)
 end
 
 %Case = 'TSD_3GRIDS';
-Case = 'TSD_DRY_NODUST';
+%Case = 'TSD_DRY_NODUST';
+%Case = 'TSD_DRY_DUST';
 
 % for the TS Debby simulations:
 LatBounds = [ 5 26 ];
