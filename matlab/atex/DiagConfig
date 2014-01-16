@@ -150,9 +150,9 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 #LinePlot: CG_UP_C0400_S298  SimTime MaxCdepth TsAll none PANEL:f  NorthEast none CloudMaxDepth_CG_C400_S298.jpg
 
 ### Horizontal domain cloud fraction 
-LinePlot: CO_UP_S298_G10M5  HfracCloud Prof_Heights Prof_T12_T36 none PANEL:a@SST:@298K    NorthEast none HfracCloud_T12_T36_CO_S298_G10M5.jpg
-LinePlot: CO_UP_C0400_G10M5 HfracCloud Prof_Heights Prof_T12_T36 none PANEL:b@CCN:@400/cc  NorthEast none HfracCloud_T12_T36_CO_C400_G10M5.jpg
-LinePlot: CG_UP_C0400_S298  HfracCloud Prof_Heights Prof_T12_T36 none PANEL:c  NorthEast none BuoyFlux_T12_T36_CG_C400_S298.jpg
+LinePlot: CO_UP_S298_G10M5  HfracCloud_298 Prof_Heights Prof_T12_T36 none PANEL:a@SST:@298K    NorthEast none HfracCloud_T12_T36_CO_S298_G10M5.jpg
+LinePlot: CO_UP_C0400_G10M5 HfracCloud_303 Prof_Heights Prof_T12_T36 none PANEL:b@CCN:@400/cc  NorthEast none HfracCloud_T12_T36_CO_C400_G10M5.jpg
+LinePlot: CG_UP_C0400_S298  HfracCloud_298 Prof_Heights Prof_T12_T36 none PANEL:c  NorthEast none BuoyFlux_T12_T36_CG_C400_S298.jpg
 
 LinePlot: CO_UP_S293_G10M5_ALL  HfracCloud_293 Prof_Heights Prof_T12_T36 none PANEL:a@SST:@293K    NorthEast none HfracCloud_T12_T36_CO_S293_G10M5_ALL.jpg
 LinePlot: CO_UP_S298_G10M5_ALL  HfracCloud_298 Prof_Heights Prof_T12_T36 none PANEL:d@SST:@298K    NorthEast none HfracCloud_T12_T36_CO_S298_G10M5_ALL.jpg
