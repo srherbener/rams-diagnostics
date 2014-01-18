@@ -13,6 +13,7 @@ SCRIPTS = \
           $(DEST)/radar_cmap.m \
           $(DEST)/AdiffEofPlot.m \
           $(DEST)/AzavgDiffEof.m \
+          $(DEST)/CombineBins.m \
           $(DEST)/CompileCounts.m \
           $(DEST)/CountsToAvg.m \
           $(DEST)/Gen2dHistData.m \
