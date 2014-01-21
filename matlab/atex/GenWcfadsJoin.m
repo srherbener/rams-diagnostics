@@ -23,14 +23,9 @@ function [ ] = GenWcfadsJoin(ConfigFile)
      'cfad_w_0p10'
      };
 
-    TstartTimes = [
+    Times = [
      12
      24
-     35
-     ];
-    TendTimes = [
-     13
-     25
      36
      ];
 
@@ -77,18 +72,15 @@ function [ ] = GenWcfadsJoin(ConfigFile)
             DN_X_TEMP = DN_X(1:end-1);  % strip off the last bin (w == zero)
             X = cat(1, DN_X_TEMP(1:GroupSize:end), UP_X(1:GroupSize:end));
 
-            for it = 1:length(TstartTimes)
-              Tstart = TstartTimes(it);
-              Tend   = TendTimes(it);
-              OutFile = sprintf('%s/%s_T%d_T%d_%s.h5', Ddir, Ofcase, Tstart, Tend, Case);
+            for it = 1:length(Times)
+              Tsamp = Times(it);
+              OutFile = sprintf('%s/%s_T%d_%s.h5', Ddir, Ofcase, Tsamp, Case);
 
-              fprintf('  Time Average Interval:\n');
-              fprintf('    Tstart: %d (h)\n', Tstart);
-              fprintf('    Tend: %d (h)\n', Tend);
+              fprintf('  Time: %d (h)\n', Tsamp);
               fprintf('\n');
 
-              T1 = find(T >= Tstart, 1, 'first');
-              T2 = find(T <= Tend,   1, 'last');
+              T1 = find(T >= Tsamp, 1, 'first');
+              T2 = T1;
 
               % sum up histogram counts over the interval T1 to T2
               % make each level a PDF of W
