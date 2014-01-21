@@ -383,14 +383,27 @@ LinePlot: CG_UP_C1600_S298  Wskew_298 Prof_Heights Prof_T12_T36 none PANEL:i@298
 ########### For Update #############
 
 ### Albedo
-ContourPlot: ContourPsetCCN AlbedoLon_T12 AlbedoLat_T12 Albedo_T12 ContourSelect_T12 PANEL:a@t@=@12@h 1 1 40 LightGray Albedo_T12
-ContourPlot: ContourPsetCCN AlbedoLon_T24 AlbedoLat_T24 Albedo_T24 ContourSelect_T24 PANEL:b@t@=@24@h 1 1 40 LightGray Albedo_T24
-ContourPlot: ContourPsetCCN AlbedoLon_T36 AlbedoLat_T36 Albedo_T36 ContourSelect_T36 PANEL:c@t@=@36@h 1 1 40 LightGray Albedo_T36
+#ContourPlot: ContourPsetCCN AlbedoLon_T12 AlbedoLat_T12 Albedo_T12 ContourSelect_T12 PANEL:a@t@=@12@h 1 1 40 none LightGray Albedo_T12
+#ContourPlot: ContourPsetCCN AlbedoLon_T24 AlbedoLat_T24 Albedo_T24 ContourSelect_T24 PANEL:b@t@=@24@h 1 1 40 none LightGray Albedo_T24
+#ContourPlot: ContourPsetCCN AlbedoLon_T36 AlbedoLat_T36 Albedo_T36 ContourSelect_T36 PANEL:c@t@=@36@h 1 1 40 none LightGray Albedo_T36
 
 ### Surface divergence
-ContourPlot: ContourPsetCCN SfcConvLon_T12 SfcConvLat_T12 SfcConv_T12 ContourSelect_T12 PANEL:d@t@=@12@h 1 1 40 redblue SfcConv_T12
-ContourPlot: ContourPsetCCN SfcConvLon_T24 SfcConvLat_T24 SfcConv_T24 ContourSelect_T24 PANEL:e@t@=@24@h 1 1 40 redblue SfcConv_T24
-ContourPlot: ContourPsetCCN SfcConvLon_T36 SfcConvLat_T36 SfcConv_T36 ContourSelect_T36 PANEL:f@t@=@36@h 1 1 40 redblue SfcConv_T36
+#ContourPlot: ContourPsetCCN SfcConvLon_T12 SfcConvLat_T12 SfcConv_T12 ContourSelect_T12 PANEL:d@t@=@12@h 1 1 40 none redblue SfcConv_T12
+#ContourPlot: ContourPsetCCN SfcConvLon_T24 SfcConvLat_T24 SfcConv_T24 ContourSelect_T24 PANEL:e@t@=@24@h 1 1 40 none redblue SfcConv_T24
+#ContourPlot: ContourPsetCCN SfcConvLon_T36 SfcConvLat_T36 SfcConv_T36 ContourSelect_T36 PANEL:f@t@=@36@h 1 1 40 none redblue SfcConv_T36
+
+### W CFADS
+#ContourPlot: ContourPsetCCN W_CFAD_BINS_T12_T13 W_CFAD_Height_T12_T13 W_CFAD_T12_T13 W_CFAD_Select_T12_T13 PANEL:a@t@=@12@to@13@h 1 1 40 log default W_CFAD_T12_T13
+#ContourPlot: ContourPsetCCN W_CFAD_BINS_T24_T25 W_CFAD_Height_T24_T25 W_CFAD_T24_T25 W_CFAD_Select_T24_T25 PANEL:a@t@=@24@to@25@h 1 1 40 log default W_CFAD_T24_T25
+#ContourPlot: ContourPsetCCN W_CFAD_BINS_T35_T36 W_CFAD_Height_T35_T36 W_CFAD_T35_T36 W_CFAD_Select_T35_T36 PANEL:a@t@=@35@to@36@h 1 1 40 log default W_CFAD_T35_T36
+
+ContourPlot: ContourPsetCCN W_CFAD_BINS_0p01_T12_T13 W_CFAD_Height_0p01_T12_T13 W_CFAD_0p01_T12_T13 W_CFAD_Select_0p01_T12_T13 PANEL:a@t@=@12@to@13@h 1 1 40 log default W_CFAD_0p01_T12_T13
+ContourPlot: ContourPsetCCN W_CFAD_BINS_0p01_T24_T25 W_CFAD_Height_0p01_T24_T25 W_CFAD_0p01_T24_T25 W_CFAD_Select_0p01_T24_T25 PANEL:a@t@=@24@to@25@h 1 1 40 log default W_CFAD_0p01_T24_T25
+ContourPlot: ContourPsetCCN W_CFAD_BINS_0p01_T35_T36 W_CFAD_Height_0p01_T35_T36 W_CFAD_0p01_T35_T36 W_CFAD_Select_0p01_T35_T36 PANEL:a@t@=@35@to@36@h 1 1 40 log default W_CFAD_0p01_T35_T36
+
+ContourPlot: ContourPsetCCN W_CFAD_BINS_0p10_T12_T13 W_CFAD_Height_0p10_T12_T13 W_CFAD_0p10_T12_T13 W_CFAD_Select_0p10_T12_T13 PANEL:a@t@=@12@to@13@h 1 1 40 log default W_CFAD_0p10_T12_T13
+ContourPlot: ContourPsetCCN W_CFAD_BINS_0p10_T24_T25 W_CFAD_Height_0p10_T24_T25 W_CFAD_0p10_T24_T25 W_CFAD_Select_0p10_T24_T25 PANEL:a@t@=@24@to@25@h 1 1 40 log default W_CFAD_0p10_T24_T25
+ContourPlot: ContourPsetCCN W_CFAD_BINS_0p10_T35_T36 W_CFAD_Height_0p10_T35_T36 W_CFAD_0p10_T35_T36 W_CFAD_Select_0p10_T35_T36 PANEL:a@t@=@35@to@36@h 1 1 40 log default W_CFAD_0p10_T35_T36
 
 ##################################################################
 ##################### DISTRIBUTION PLOTS #########################
@@ -1038,6 +1051,37 @@ PlotVar: SfcConvLon_T36 x_coords  DIAGS/sfc_div_T36 Longitude         @      -18
 PlotVar: SfcConvLat_T36 y_coords  DIAGS/sfc_div_T36 Latitude          @      -180  180 1
 PlotVar: SfcConv_T36    sfc_div   DIAGS/sfc_div_T36 Sfc.@Convergence  s^-1  -0.51e-2 0.51e-2 -1
 
+# W CFAD
+PlotVar: W_CFAD_BINS_T12_T13   x_coords  DIAGS/cfad_w_T12_T13 W         m@s^-^1   -10 10 1
+PlotVar: W_CFAD_Height_T12_T13 z_coords  DIAGS/cfad_w_T12_T13 Height    km          0  4 1e-3
+PlotVar: W_CFAD_T12_T13        W_CFAD    DIAGS/cfad_w_T12_T13 CFAD      @          -8 -1 1
+PlotVar: W_CFAD_BINS_T24_T25   x_coords  DIAGS/cfad_w_T24_T25 W         m@s^-^1   -10 10 1
+PlotVar: W_CFAD_Height_T24_T25 z_coords  DIAGS/cfad_w_T24_T25 Height    km          0  4 1e-3
+PlotVar: W_CFAD_T24_T25        W_CFAD    DIAGS/cfad_w_T24_T25 CFAD      @          -8 -1 1
+PlotVar: W_CFAD_BINS_T35_T36   x_coords  DIAGS/cfad_w_T35_T36 W         m@s^-^1   -10 10 1
+PlotVar: W_CFAD_Height_T35_T36 z_coords  DIAGS/cfad_w_T35_T36 Height    km          0  4 1e-3
+PlotVar: W_CFAD_T35_T36        W_CFAD    DIAGS/cfad_w_T35_T36 CFAD      @          -8 -1 1
+
+PlotVar: W_CFAD_BINS_0p01_T12_T13   x_coords  DIAGS/cfad_w_0p01_T12_T13 W         m@s^-^1   -10 10 1
+PlotVar: W_CFAD_Height_0p01_T12_T13 z_coords  DIAGS/cfad_w_0p01_T12_T13 Height    km          0  4 1e-3
+PlotVar: W_CFAD_0p01_T12_T13        W_CFAD    DIAGS/cfad_w_0p01_T12_T13 CFAD      @          -8 -1 1
+PlotVar: W_CFAD_BINS_0p01_T24_T25   x_coords  DIAGS/cfad_w_0p01_T24_T25 W         m@s^-^1   -10 10 1
+PlotVar: W_CFAD_Height_0p01_T24_T25 z_coords  DIAGS/cfad_w_0p01_T24_T25 Height    km          0  4 1e-3
+PlotVar: W_CFAD_0p01_T24_T25        W_CFAD    DIAGS/cfad_w_0p01_T24_T25 CFAD      @          -8 -1 1
+PlotVar: W_CFAD_BINS_0p01_T35_T36   x_coords  DIAGS/cfad_w_0p01_T35_T36 W         m@s^-^1   -10 10 1
+PlotVar: W_CFAD_Height_0p01_T35_T36 z_coords  DIAGS/cfad_w_0p01_T35_T36 Height    km          0  4 1e-3
+PlotVar: W_CFAD_0p01_T35_T36        W_CFAD    DIAGS/cfad_w_0p01_T35_T36 CFAD      @          -8 -1 1
+
+PlotVar: W_CFAD_BINS_0p10_T12_T13   x_coords  DIAGS/cfad_w_0p10_T12_T13 W         m@s^-^1   -10 10 1
+PlotVar: W_CFAD_Height_0p10_T12_T13 z_coords  DIAGS/cfad_w_0p10_T12_T13 Height    km          0  4 1e-3
+PlotVar: W_CFAD_0p10_T12_T13        W_CFAD    DIAGS/cfad_w_0p10_T12_T13 CFAD      @          -8 -1 1
+PlotVar: W_CFAD_BINS_0p10_T24_T25   x_coords  DIAGS/cfad_w_0p10_T24_T25 W         m@s^-^1   -10 10 1
+PlotVar: W_CFAD_Height_0p10_T24_T25 z_coords  DIAGS/cfad_w_0p10_T24_T25 Height    km          0  4 1e-3
+PlotVar: W_CFAD_0p10_T24_T25        W_CFAD    DIAGS/cfad_w_0p10_T24_T25 CFAD      @          -8 -1 1
+PlotVar: W_CFAD_BINS_0p10_T35_T36   x_coords  DIAGS/cfad_w_0p10_T35_T36 W         m@s^-^1   -10 10 1
+PlotVar: W_CFAD_Height_0p10_T35_T36 z_coords  DIAGS/cfad_w_0p10_T35_T36 Height    km          0  4 1e-3
+PlotVar: W_CFAD_0p10_T35_T36        W_CFAD    DIAGS/cfad_w_0p10_T35_T36 CFAD      @          -8 -1 1
+
 ######################## Selection specs #########################
 # PlotDselect: <name> <xmin> <xmax> <ymin> <ymax> <zmin> <zmax> <tmin> <tmax>
 #
@@ -1058,3 +1102,15 @@ PlotDselect: Prof_T12_T36 1 1 1 1 0 4000  1 1
 PlotDselect: ContourSelect_T12  -36.5 -35.4   14.4 15.4    50.0 50.0    43200  43200
 PlotDselect: ContourSelect_T24  -36.5 -35.4   14.4 15.4    50.0 50.0    86400  86400
 PlotDselect: ContourSelect_T36  -36.5 -35.4   14.4 15.4    50.0 50.0   129600 129600
+
+PlotDselect: W_CFAD_Select_T12_T13  -10.0 10.0   1 1    0.0 4000.0   1 1
+PlotDselect: W_CFAD_Select_T24_T25  -10.0 10.0   1 1    0.0 4000.0   1 1
+PlotDselect: W_CFAD_Select_T35_T36  -10.0 10.0   1 1    0.0 4000.0   1 1
+
+PlotDselect: W_CFAD_Select_0p01_T12_T13  -10.0 10.0   1 1    0.0 4000.0   1 1
+PlotDselect: W_CFAD_Select_0p01_T24_T25  -10.0 10.0   1 1    0.0 4000.0   1 1
+PlotDselect: W_CFAD_Select_0p01_T35_T36  -10.0 10.0   1 1    0.0 4000.0   1 1
+
+PlotDselect: W_CFAD_Select_0p10_T12_T13  -10.0 10.0   1 1    0.0 4000.0   1 1
+PlotDselect: W_CFAD_Select_0p10_T24_T25  -10.0 10.0   1 1    0.0 4000.0   1 1
+PlotDselect: W_CFAD_Select_0p10_T35_T36  -10.0 10.0   1 1    0.0 4000.0   1 1

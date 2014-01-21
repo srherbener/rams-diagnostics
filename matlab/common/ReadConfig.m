@@ -320,8 +320,9 @@ for i = 1:size(InLines,1)
       Cdata.ContourPlots(i_cplot).Fill       = sscanf(Fields{8}, '%i');
       Cdata.ContourPlots(i_cplot).Cbar       = sscanf(Fields{9}, '%i');
       Cdata.ContourPlots(i_cplot).Cnlevs     = sscanf(Fields{10}, '%i');
-      Cdata.ContourPlots(i_cplot).Cmap       = Fields{11};
-      Cdata.ContourPlots(i_cplot).OutFprefix = Fields{12};
+      Cdata.ContourPlots(i_cplot).Cscale     = Fields{11};
+      Cdata.ContourPlots(i_cplot).Cmap       = Fields{12};
+      Cdata.ContourPlots(i_cplot).OutFprefix = Fields{13};
 
       Cdata.ContourPlots(i_cplot).XVnum   = -1;
       Cdata.ContourPlots(i_cplot).YVnum   = -1;

@@ -40,6 +40,7 @@ for iplot = 1:length(Config.ContourPlots)
     Cfill       = Config.ContourPlots(iplot).Fill;
     Cbar        = Config.ContourPlots(iplot).Cbar;
     Cnlevs      = Config.ContourPlots(iplot).Cnlevs;
+    Cscale      = Config.ContourPlots(iplot).Cscale;
     Cmap        = Config.ContourPlots(iplot).Cmap;
     OfilePrefix = sprintf('%s/%s', Pdir, Config.ContourPlots(iplot).OutFprefix);
 
@@ -126,6 +127,11 @@ for iplot = 1:length(Config.ContourPlots)
         else
           Pmark = Pmarkers{ipm};
         end
+      end
+
+      if (strcmp(Cscale, 'log'))
+        Z = log10(Z);
+        Z(Z == -Inf) = nan;
       end
       % transpose Z since the contour plotting functions wants columns to be the X-axis and rows to be the Y-axis
       PlotContour( X, Y, Z', Ptitle, Pmark, Xlabel, Ylabel, Cfill, Cbar, Cmap, Crange, Cnlevs, AxisProps, OutFile );
