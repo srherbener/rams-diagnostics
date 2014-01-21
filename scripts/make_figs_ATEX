@@ -107,25 +107,31 @@ montage -tile 3x3 -geometry ${Jsize}+2+100 \
  Wskew_T12_T36_CG_C1600_S298.jpg \
  FigTurbStructGeen.jpg
 
-echo "Figure: Albedo, sfc conv examples, C50, S293 CCN only"
-montage -tile 3x2 -geometry ${Jsize}+2+100 \
+echo "Figure: Albedo, sfc conv, w examples, C50, S293 CCN only"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
  Albedo_T12_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
  Albedo_T24_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
  Albedo_T36_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
  SfcConv_T12_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
  SfcConv_T24_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
  SfcConv_T36_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
- FigSampleAlbSfcConv_C50_S293.jpg
+ W_CFAD_0p01_T12_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+ W_CFAD_0p01_T24_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+ W_CFAD_0p01_T36_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+ FigSampleAlbSfcConvW_C50_S293.jpg
 
-echo "Figure: Albedo, sfc conv examples, C1600, S303 CCN only"
-montage -tile 3x2 -geometry ${Jsize}+2+100 \
+echo "Figure: Albedo, sfc conv, w examples, C1600, S303 CCN only"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
  Albedo_T12_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
  Albedo_T24_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
  Albedo_T36_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
  SfcConv_T12_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
  SfcConv_T24_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
  SfcConv_T36_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
- FigSampleAlbSfcConv_C1600_S303.jpg
+ W_CFAD_0p01_T12_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+ W_CFAD_0p01_T24_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+ W_CFAD_0p01_T36_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+ FigSampleAlbSfcConvW_C1600_S303.jpg
 
 echo "Figure: Cloud, with different LWP selection"
 montage -tile 3x3 -geometry ${Jsize}+2+100 \
