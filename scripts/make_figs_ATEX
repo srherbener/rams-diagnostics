@@ -24,11 +24,12 @@ montage -tile 2x2 -geometry ${Jsize}+2+100 \
  FigCloudOptThick.jpg
 
 echo "Figure: Bar graphs, COT, CCN only, LWP Bins"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
+montage -tile 2x3 -geometry ${Jsize}+2+100 \
  cot_avg_bars.jpg \
  cot_lwp_b1_avg_bars.jpg \
  cot_lwp_b2_avg_bars.jpg \
  cot_lwp_b3_avg_bars.jpg \
+ cot_lwp_b4_avg_bars.jpg \
  FigCloudOptThickLwpBins.jpg
 
 # cd_avg_bars.jpg \
@@ -70,11 +71,12 @@ montage -tile 2x2 -geometry ${Jsize}+2+100 \
  FigCloudOptThickGccn.jpg
 
 echo "Figure: Bar graphs, COT and ACC_PCP, CCN and GCCN, LWP bins"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
+montage -tile 2x3 -geometry ${Jsize}+2+100 \
  cot_avg_bars_gccn.jpg \
  cot_lwp_b1_avg_bars_gccn.jpg \
  cot_lwp_b2_avg_bars_gccn.jpg \
  cot_lwp_b3_avg_bars_gccn.jpg \
+ cot_lwp_b4_avg_bars_gccn.jpg \
  FigCloudOptThickGccnLwpBins.jpg
 
 # acc_pcp_bars_gccn.jpg \
