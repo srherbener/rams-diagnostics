@@ -91,11 +91,19 @@ function [ ] = GenBLcouplingData(ConfigFile)
           end
         
           % average LCL
-          %   Try taking average of differences
-          TEMP = squeeze(TEMP_VAR.data(it,:,:,:));    % TEMP, TEMPD will be (y,x)
-          TEMPD = squeeze(TEMPD_VAR.data(it,:,:,:));
-          T_DIFF = TEMP - TEMPD;
-          LCL(it) = 125 .* squeeze(mean(mean(T_DIFF,1),2));
+          TEMP  = TEMP_VAR.data(it,:,:,:);    % TEMP, TEMPD will be (y,x)
+          TEMPD = TEMPD_VAR.data(it,:,:,:);
+          Tmean = mean(TEMP(:))   + 273.15; % convert to Kelvin
+          TDmean = mean(TEMPD(:)) + 273.15;
+
+          % temp of adiabatically lifted parcel at condensation level
+          % formula is from Bolton, 1980 MWR "The Computation of Equivalent Potential Temperature"
+          %    equation (15)
+          Tlcl = 1 / ((1/(TDmean-56)) + (log(Tmean/TDmean)/800)) + 56;
+
+          % the change in height will just be (T - Tlcl) divided
+          % by the adiabatic lapse rate: 9.8 K / km -> 0.0098 K / m -> 102 m / K
+          LCL(it) = Z(2) + ((Tmean - Tlcl) * 102);
         end
 
         % output --> Use REVU format, 4D var, *_coords
