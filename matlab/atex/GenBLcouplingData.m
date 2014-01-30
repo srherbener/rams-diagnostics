@@ -1,6 +1,12 @@
 function [ ] = GenBLcouplingData(ConfigFile)
 % GenBLcouplingData generate time series of LCL and BL cloud base
 
+    % Mixing ratio for determining cloud base
+    CLD_THRESHOLD = 0.1;   % g/kg
+    Nfilter = 5;           % use five point in running average smoothing filter
+
+    CBASE_THRESHOLD = 0.5; % 50% of max value in PDF
+
     % Read the config file to get the structure of how the data is laid out in
     % the file system.
     [ Config ] = ReadConfig(ConfigFile);
@@ -15,18 +21,14 @@ function [ ] = GenBLcouplingData(ConfigFile)
     Tfprefix = 'sfc_tempc';
     TDname = 'dewptc';
     TDfprefix = 'sfc_dewptc';
-    CldName = 'hda_cloud';
-    CldFprefix = 'hda_cloud';
-    Cld_c0p01_fprefix = 'hda_cloud_c0p01';
-    Cld_c0p10_fprefix = 'hda_cloud_c0p10';
+    CldName = 'hist_cloud';
+    CldFprefix = 'hist_cloud_m2';
 
     for icase = 1:length(Config.Cases)
 	Case = Config.Cases(icase).Cname;
 	Tfile = sprintf('%s/%s-%s-AS-1999-02-10-040000-g1.h5', Hdir, Tfprefix, Case);
 	TDfile = sprintf('%s/%s-%s-AS-1999-02-10-040000-g1.h5', Hdir, TDfprefix, Case);
 	CldFile = sprintf('%s/%s_%s.h5', Tdir, CldFprefix, Case);
-	Cld_c0p01_file = sprintf('%s/%s_%s.h5', Tdir, Cld_c0p01_fprefix, Case);
-	Cld_c0p10_file = sprintf('%s/%s_%s.h5', Tdir, Cld_c0p10_fprefix, Case);
 
         fprintf('***************************************************************\n');
         fprintf('Generating BL coupling data:\n');
@@ -36,73 +38,65 @@ function [ ] = GenBLcouplingData(ConfigFile)
         fprintf('  Input dewpoint file: %s\n', TDfile);
         fprintf('    Var name: %s\n', TDname);
         fprintf('  Input cloud file: %s\n', CldFile);
-        fprintf('  Input cloud file: %s\n', Cld_c0p01_file);
-        fprintf('  Input cloud file: %s\n', Cld_c0p10_file);
         fprintf('    Var name: %s\n', CldName);
         fprintf('\n');
  
-        % Cloud will be organized as (y,z,t)
-        %   y has size 2 and holds:
-        %     y(1) --> sum of horizontal domain
-        %     y(2) --> total number of points used to create y(1)
-        %   z is height
-        %   t is time
-        CLD       = squeeze(hdf5read(CldFile, CldName));
-        CLD_C0P01 = squeeze(hdf5read(Cld_c0p01_file, CldName));
-        CLD_C0P10 = squeeze(hdf5read(Cld_c0p10_file, CldName));
+        % Use nctoolbox in order to walk through the data per time step
+        CLD_DS = ncgeodataset(CldFile);
+        CLD_VAR = CLD_DS.geovariable(CldName);
+        X_VAR = CLD_DS.geovariable('x_coords');
+        Z_VAR = CLD_DS.geovariable('z_coords');
+        T_VAR = CLD_DS.geovariable('t_coords');
 
-        TEMP = squeeze(hdf5read(Tfile, Tname));
-        TEMPD = squeeze(hdf5read(TDfile, TDname));
+        X = X_VAR.data(:);
+        Z = Z_VAR.data(:);
+        T = T_VAR.data(:);
 
-        % Grab height and time coordinates
-        Z = squeeze(hdf5read(CldFile, 'z_coords'));
-        T = squeeze(hdf5read(Tfile, 't_coords'));
         Nt = length(T);
 
-        % Form an array (z,t) that shows where Z > some minimum height for the cloud base
-        Z_FILTER = repmat(Z, [ 1 Nt ]) > 200;
+        TEMP_DS = ncgeodataset(Tfile);
+        TEMP_VAR = TEMP_DS.geovariable(Tname);
 
-        % cloud base
-        %   calculate average profile
-        %   find the index of the first point (from sfc) that has cloud profile > 0.01 g/kg
-        % CLD_PROF will be (z,t)
-        CLD_PROF = squeeze(CLD(1,:,:) ./ CLD(2,:,:));
-        CLD_C0P01_PROF = squeeze(CLD_C0P01(1,:,:) ./ CLD_C0P01(2,:,:));
-        CLD_C0P10_PROF = squeeze(CLD_C0P10(1,:,:) ./ CLD_C0P10(2,:,:));
+        TEMPD_DS = ncgeodataset(TDfile);
+        TEMPD_VAR = TEMPD_DS.geovariable(TDname);
 
-        % Form logical arrays that have 1's where the clouds exist, except
-        % exclude the near surface levels (Z_FILTER).
-        % Cloud base is then where the lowest level 1 exists in each column
-        % of SELECT.
-        SELECT = CLD_PROF > 0.01 & Z_FILTER;
-        SELECT_C0P01 = CLD_C0P01_PROF > 0.01 & Z_FILTER;
-        SELECT_C0P10 = CLD_C0P10_PROF > 0.01 & Z_FILTER;
-
+        % Find cloud base of the stratiform deck
+        %   Use histogram of cloud mixing ratio
+        %   Sum up the counts from the bins >= CLD_THRESHOLD which
+        %     will create a vertical profile of counts of cloudy regions
+        %   Smooth the profile
+        %   Change profile into PDF
+        %   Select first occurance of PDF entry, starting from ground, that crosses CBASE_THRESHOLD
+        %
+        % Note that out of the files, the variables will have the form (t, z, y, x)
+        %     CLD will have dummy variable (size == 1) y  --> (t, z, 1, x)
+        %     TEMP and TEMPD will have dummy variable z   --> (t, 1, y, x)
         CLD_BASE = zeros([ 1 Nt ]);
-        CLD_C0P01_BASE = zeros([ 1 Nt ]);
-        CLD_C0P10_BASE = zeros([ 1 Nt ]);
+        LCL = zeros([ 1 Nt ]);
+
+        X1 = find(X >= CLD_THRESHOLD, 1, 'first');
+
         for it = 1:Nt
-          S = squeeze(SELECT(:,it));
-          S_C0P01 = squeeze(SELECT_C0P01(:,it));
-          S_C0P10 = squeeze(SELECT_C0P10(:,it));
-
-          ZB       = find(S, 1, 'first');
-          ZB_C0P01 = find(S_C0P01, 1, 'first');
-          ZB_C0P10 = find(S_C0P10, 1, 'first');
-          if (isempty(ZB))
+          % Can get the case where all counts are zero, in this case CLD_PDF will
+          % come out all nans. For this case place a nan in CLD_BASE.
+          CLD = squeeze(CLD_VAR.data(it, :, :, :));       % CLD will be (z,x)
+          CLD_PDF = smooth(squeeze(sum(CLD(:,X1:end), 2)), Nfilter);
+          SUM = sum(CLD_PDF);
+          if (SUM == 0)
             CLD_BASE(it) = nan;
-            CLD_C0P01_BASE(it) = nan;
-            CLD_C0P10_BASE(it) = nan;
           else
+            CLD_PDF = CLD_PDF ./ SUM;
+            ZB = find(CLD_PDF >= max(CLD_PDF)*CBASE_THRESHOLD, 1, 'first');
             CLD_BASE(it) = Z(ZB);
-            CLD_C0P01_BASE(it) = Z(ZB_C0P01);
-            CLD_C0P10_BASE(it) = Z(ZB_C0P10);
           end
+        
+          % average LCL
+          %   Try taking average of differences
+          TEMP = squeeze(TEMP_VAR.data(it,:,:,:));    % TEMP, TEMPD will be (y,x)
+          TEMPD = squeeze(TEMPD_VAR.data(it,:,:,:));
+          T_DIFF = TEMP - TEMPD;
+          LCL(it) = 125 .* squeeze(mean(mean(T_DIFF,1),2));
         end
-
-        % average LCL
-        T_DIFF = TEMP - TEMPD;
-        LCL = 125 .* squeeze(mean(mean(T_DIFF,1),2));
 
         % output --> Use REVU format, 4D var, *_coords
         X = 1;
@@ -117,12 +111,6 @@ function [ ] = GenBLcouplingData(ConfigFile)
 
         Ovar = reshape(CLD_BASE, [ 1 1 1 Nt ]);
         hdf5write(OutFile, '/avg_cloud_base', Ovar, 'WriteMode', 'append');
-
-        Ovar = reshape(CLD_C0P01_BASE, [ 1 1 1 Nt ]);
-        hdf5write(OutFile, '/avg_cloud_base_c0p01', Ovar, 'WriteMode', 'append');
-
-        Ovar = reshape(CLD_C0P10_BASE, [ 1 1 1 Nt ]);
-        hdf5write(OutFile, '/avg_cloud_base_c0p10', Ovar, 'WriteMode', 'append');
 
         hdf5write(OutFile, 'x_coords', X, 'WriteMode', 'append');
         hdf5write(OutFile, 'y_coords', Y, 'WriteMode', 'append');
