@@ -96,9 +96,7 @@ sub ReadConfigFile
     elsif ($f[0] eq "Moment:")
       {
       $Config{MOMENTS}{$f[1]}{FILTER} = $f[2];
-      $Config{MOMENTS}{$f[1]}{TSTART} = $f[3];
-      $Config{MOMENTS}{$f[1]}{TEND}   = $f[4];
-      $Config{MOMENTS}{$f[1]}{SPECS}  = [ @f[5..$#f] ];
+      $Config{MOMENTS}{$f[1]}{SPECS}  = [ @f[3..$#f] ];
       }
     elsif ($f[0] eq "Diag:")
       {

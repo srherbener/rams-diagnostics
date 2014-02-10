@@ -104,8 +104,6 @@ my $OutFile;
 my @SysArgs;
 my $OutDir;
 my @Mspecs;
-my $TsStart;
-my $TsEnd;
 my $Filter;
 my $FilterFile;
 my $i;
@@ -137,8 +135,6 @@ foreach $Case (sort(keys(%Cases)))
     # the lengths of the argument lists vary according to which filter is selected
     # so the ReadConfigFile routine just places the arguments in a list
     $Filter = $Moments{$Mname}{FILTER};
-    $TsStart = $Moments{$Mname}{TSTART};
-    $TsEnd   = $Moments{$Mname}{TEND};
     @Mspecs  = @{ $Moments{$Mname}{SPECS} };
 
     # run through each time directory generating the current diagnostic, and
@@ -158,7 +154,7 @@ foreach $Case (sort(keys(%Cases)))
         }
 
       print "***************************************************************\n";
-      print "Running diag_filter:\n";
+      print "Running gen_moments:\n";
       print "  Case: $Case\n";
       print "  Time Directory: $Tdir\n";
       print "  Moment: $Mname\n";
@@ -176,7 +172,7 @@ foreach $Case (sort(keys(%Cases)))
         system(@SysArgs);
         }
 
-      @SysArgs = ("gen_moments", $InDir, $InFileSuffix, $OutFile, $FilterFile, $TsStart, $TsEnd, @Mspecs);
+      @SysArgs = ("gen_moments", $InDir, $InFileSuffix, $OutFile, $FilterFile, @Mspecs);
       print "Running: ", join(" ",@SysArgs), "\n\n";
       system(@SysArgs);
       }
