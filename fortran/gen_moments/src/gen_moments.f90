@@ -1,5 +1,6 @@
 !***************************************************************
-! Program to find the storm track.
+! Program to calculate terms (sums) used for generating
+! statistical moments.
 !
 ! Args
 !   1. directory containing input files
@@ -8,10 +9,104 @@
 !   4. selection of averaging function
 !
 ! Output
-!   1. minimum pressure
-!   2. longitude of minimum pressure location
-!   3. latitude of minimum pressure location
-!   4. radius of every horizontal point (distance from storm center)
+!   For each time step:
+!     1. number of points per level
+!     2. moment terms per level
+!
+! This program is going to break up the formulas for moments into the individual
+! summation terms so that they can be assembled as desired by a post processing
+! step. Doing it this way allows for the combination of multiple time steps
+! into one moment calculation. That is, the terms and number of point counts
+! can simply be added together across multiple time steps and then the terms
+! can be combined into the moment calculation.
+!
+! At this point, only up to the fourth moment is supported. The first moment
+! is the mean, and subsequent moments use the definition:
+!
+!   Mr = sum(Xi - Xbar)^r / N
+!
+! where r is the degree of the moment (2, 3 or 4). Note that covariances can
+! also be calculated by specifying 2 different variables to this program.
+!
+! For example, if doing the 3rd moment of the vertical velocity, w, you would
+! specify w three times to gen_moments. Then the terms of
+!
+!   (Wi - Wbar)^3
+!
+! are actually calculated using (Wi - Wbar) * (Wi - Wbar) * (Wi - Wbar). Doing
+! it the algorithm this way allows for covariance when you specify 2 different
+! variables to gen_moments. Say you specify x and y, then you get terms:
+! 
+!   (Xi - Xbar) * (Yi - Ybar)
+!
+! that lead to covariance.
+!
+! In order to accomodate combining multiple time steps, the means are never
+! calculate in this program. Instead all of the summation terms are calculated
+! and output. These terms are obtained by multiplying out the expressions
+! for sum(Xi - Xbar)^r. Using the notation, X1 for the first variable,
+! X2 for the second, X3 for the third and X4 for the fourth: The list of terms
+! for the first four moments are:
+!
+! 1st moment
+!    Sum(X1)
+!
+!    where Sum(X1) means summing up all of the elements of X1(i,j)
+!    across the horizontal domain
+!
+! 2nd moment
+!    Sum(X1), Sum(X2)
+!    Sum(X1 * X2)
+!
+!    where Sum(X1 * X2) means summing up X1(i,j) * X2(i,j)
+!    across the horizontal domain
+!
+! 3rd moment
+!   Sum(X1), Sum(X2), Sum(X3)
+!   Sum(X1 * X2), Sum(X1 * X3), Sum(X2 * X3)
+!   Sum(X1 * X2 * X3)
+!
+! 4th moment
+!   Sum(X1), Sum(X2), Sum(X3), Sum(X4)
+!   Sum(X1 * X2), Sum(X1 * X3), Sum(X1, X4), Sum(X2 * X3), Sum(X2 * X4), Sum(X3 * X4)
+!   Sum(X1 * X2 * X3), Sum(X1 * X2 * X4), Sum(X1 * X3 * X4), Sum(X2 * X3 * X4)
+!   Sum(X1 * X2 * X3 * X4)
+!
+! For all of these terms the associate N (number of points) is also saved
+!
+! Then a postprocessor, can finish the moment calculation using:
+!
+! 1st moment
+!    M = Sum(X1) / N
+!
+! 2nd moment
+!   M = ( Sum(X1 * X2) - (Sum(X1) * Sum(X2) / N) ) / N
+!
+! 3rd moment
+!  M = ( Sum(X1 * X2 * X3) - ((Sum(X1)*Sum(X2*X3) + Sum(X2)*Sum(X1*X3 + Sum(X3)*Sum(X1*X2)) / N) + ( 2 * (Sum(X1*X2*X3) / N^2)) / N
+!
+! Output is organized as 3D array (Nterms, Order of Terms, Nz)
+!  The single variable terms (X1, X2, ...) are in the first column
+!  The double variable terms (X1*X2, X1*X3, X2*X3, ...) are in the second column
+!  The triple variable terms are in the third column
+!  The quadruple variable terms are in the fourth column
+!
+! The loop below that computes these terms and fills in the output variable array will order terms by varying
+! the first index (denoting the variable number) the slowest. Take the exmaple of 4 input variables. This
+! will create 4 single variable terms, 6 double variable terms, 4 triple variable terms and 1 quadruple
+! variable term. The output array (sums, 6 rows, 4 columns) will be filled in as (just one level shown):
+!
+!      Col->  1        2        3            4
+!   Row
+!    |
+!    v
+!
+!    1       X1      X1*X2   X1*X2*X3    X1*X2*X3*X4
+!    2       X2      X1*X3   X1*X2*X4              0
+!    3       X3      X1*X4   X1*X3*X4              0
+!    4       X4      X2*X3   X2*X3*X4              0
+!    5        0      X2*X4          0              0
+!    6        0      X3*X4          0              0
 !
 
 program gen_moments
@@ -22,7 +117,8 @@ program gen_moments
   integer, parameter :: LargeString  = 512
   integer, parameter :: MediumString = 256
   integer, parameter :: LittleString = 128
-  integer, parameter :: MaxVars = 5
+  integer, parameter :: MaxVars = 4
+  integer, parameter :: MaxTerms = 6
 
   real, parameter :: UndefVal = -999.0
 
@@ -32,16 +128,18 @@ program gen_moments
   end type VarSpec
 
   character (len=LargeString) :: InDir, InSuffix, OutFile, FilterFile
-  integer :: TsStart, TsEnd
   type (VarSpec), dimension(MaxVars) :: VarList
-  integer :: Nvars
+  integer :: Nvars, Nterms
   logical :: UseFilter, SelectPoint
 
   logical :: BadDims, ZdimMatches
 
-  integer :: id, iv, ix, iy, iz, it, filter_z
+  integer :: id, ivar, ix, iy, iz, it, filter_z
+  integer :: iv1, iv2, iv3, iv4
+  integer :: iterm1, iterm2, iterm3, iterm4
+  real :: v1, v2, v3, v4
+  real :: s_temp
   integer :: Nx, Ny, Nz, Nt
-  integer :: Ntsteps
 
   character (len=LargeString), dimension(MaxVars) :: InFiles, InVarNames
   type (Rhdf5Var), dimension(MaxVars) :: InVars
@@ -58,22 +156,20 @@ program gen_moments
   type (Rhdf5Var) :: OutVar, NumPoints, Filter
   character (len=RHDF5_MAX_STRING) :: OutVarName, OutVarUnits, OutVarDescrip
 
-  double precision, dimension(:,:), allocatable :: Means
-  double precision, dimension(:), allocatable :: Npts, Moments
-  double precision :: Vdiff, Vterm
-
   ! Get the command line arguments
-  call GetMyArgs(LargeString, MaxVars, InDir, InSuffix, OutFile, FilterFile, UseFilter, TsStart, TsEnd, VarList, Nvars)
-  do iv = 1, Nvars
-    InFiles(iv) = trim(InDir) // '/' // trim(VarList(iv)%Vfprefix) // trim(InSuffix)
-    InVarNames(iv) = trim(VarList(iv)%Vname)
+  call GetMyArgs(LargeString, MaxVars, InDir, InSuffix, OutFile, FilterFile, UseFilter, VarList, Nvars, Nterms)
+  do ivar = 1, Nvars
+    InFiles(ivar) = trim(InDir) // '/' // trim(VarList(ivar)%Vfprefix) // trim(InSuffix)
+    InVarNames(ivar) = trim(VarList(ivar)%Vname)
   enddo
 
   write (*,*) 'Generating moments:'
+  write (*,*) '  Number of variables: ', Nvars
+  write (*,*) '  Max number of terms: ', Nterms
   write (*,*) '  Input variables:'
-  do iv = 1, Nvars
-    write (*,*) '    File: ', trim(InFiles(iv))
-    write (*,*) '    Variable: ', trim(InVarNames(iv))
+  do ivar = 1, Nvars
+    write (*,*) '    File: ', trim(InFiles(ivar))
+    write (*,*) '    Variable: ', trim(InVarNames(ivar))
   enddo
   write (*,*) '  Output file:  ', trim(OutFile)
   if (UseFilter) then
@@ -81,8 +177,6 @@ program gen_moments
   else
     write (*,*) '  No filtering'
   endif
-  write (*,*) '  Beginning time step: ', TsStart
-  write (*,*) '  Ending time step: ', TsEnd
   write (*,*) ''
   flush(6)
 
@@ -92,22 +186,22 @@ program gen_moments
   ! the number of dimensions by one.
 
   BadDims = .false.
-  do iv = 1, Nvars
-    InVars(iv)%vname = trim(InVarNames(iv))
-    call rhdf5_read_init(InFiles(iv), InVars(iv))
+  do ivar = 1, Nvars
+    InVars(ivar)%vname = trim(InVarNames(ivar))
+    call rhdf5_read_init(InFiles(ivar), InVars(ivar))
 
-    if (iv .eq. 1) then
+    if (ivar .eq. 1) then
       ! If first variable, record the dimensions
-      Nx = InVars(iv)%dims(1)
-      Ny = InVars(iv)%dims(2)
-      if (InVars(iv)%ndims .eq. 3) then
+      Nx = InVars(ivar)%dims(1)
+      Ny = InVars(ivar)%dims(2)
+      if (InVars(ivar)%ndims .eq. 3) then
         ! 2D field
         Nz = 1
-        Nt = InVars(iv)%dims(3)
+        Nt = InVars(ivar)%dims(3)
       else
         ! 3D field
-        Nz = InVars(iv)%dims(3)
-        Nt = InVars(iv)%dims(4)
+        Nz = InVars(ivar)%dims(3)
+        Nt = InVars(ivar)%dims(4)
       endif
     else
       ! If beyond the first variable, check to make sure its dimensions match
@@ -115,15 +209,15 @@ program gen_moments
       ! force the z dimensions to match as well.
       if (Nz .eq. 1) then
         ! 2D vars
-        ZdimMatches = InVars(iv)%ndims .eq. 3
+        ZdimMatches = InVars(ivar)%ndims .eq. 3
       else
         ! 3D vars
-        ZdimMatches = Nz .eq. InVars(iv)%dims(3)
+        ZdimMatches = Nz .eq. InVars(ivar)%dims(3)
       endif
 
-      if (DimsMatch(InVars(1), InVars(iv)) .and. ZdimMatches) then
+      if (DimsMatch(InVars(1), InVars(ivar)) .and. ZdimMatches) then
       else
-        write (*,*) 'ERROR: dimensions of variable do not match the first variable: ', trim(InVars(iv)%vname)
+        write (*,*) 'ERROR: dimensions of variable do not match the first variable: ', trim(InVars(ivar)%vname)
         BadDims = .true.
       endif
     endif
@@ -146,17 +240,17 @@ program gen_moments
 
   ! Prepare for reading
   ! Create names for ouput variable
-  do iv = 1, Nvars
-    InVars(iv)%ndims = InVars(iv)%ndims - 1
+  do ivar = 1, Nvars
+    InVars(ivar)%ndims = InVars(ivar)%ndims - 1
  
-    if (iv .eq. 1) then
-      OutVarName = trim(InVars(iv)%vname)
-      OutVarUnits = '(' // trim(InVars(iv)%units) // ')'
-      OutVarDescrip = 'moment: (' // trim(InVars(iv)%vname) // ')'
+    if (ivar .eq. 1) then
+      OutVarName = trim(InVars(ivar)%vname)
+      OutVarUnits = '(' // trim(InVars(ivar)%units) // ')'
+      OutVarDescrip = 'moment: (' // trim(InVars(ivar)%vname) // ')'
     else
-      OutVarName = trim(OutVarName) // '-' // trim(InVars(iv)%vname)
-      OutVarUnits = trim(OutVarUnits) // '(' // trim(InVars(iv)%units) // ')'
-      OutVarDescrip = trim(OutVarDescrip) // '(' // trim(InVars(iv)%vname) // ')'
+      OutVarName = trim(OutVarName) // '-' // trim(InVars(ivar)%vname)
+      OutVarUnits = trim(OutVarUnits) // '(' // trim(InVars(ivar)%units) // ')'
+      OutVarDescrip = trim(OutVarDescrip) // '(' // trim(InVars(ivar)%vname) // ')'
     endif
   enddo
 
@@ -225,16 +319,20 @@ program gen_moments
   OutVar%vname = trim(OutVarName)
   OutVar%units = trim(OutVarUnits)
   OutVar%descrip = trim(OutVarDescrip)
-  OutVar%ndims = 1
-  OutVar%dims(1) = Nz
-  OutVar%dimnames(1) = 'z'
-  allocate(OutVar%vdata(Nz))
+  OutVar%ndims = 3
+  OutVar%dims(1) = Nterms
+  OutVar%dims(2) = Nvars
+  OutVar%dims(3) = Nz
+  OutVar%dimnames(1) = 'x'
+  OutVar%dimnames(2) = 'y'
+  OutVar%dimnames(3) = 'z'
+  allocate(OutVar%vdata(Nterms*Nvars*Nz))
 
   ! Open the input files and the output file
   FileAcc = 'R'
-  do iv = 1, Nvars
-    call rhdf5_open_file(InFiles(iv), FileAcc, 0, InFileIds(iv))
-    write (*,*) 'Reading HDF5 file: ', trim(InFiles(iv))
+  do ivar = 1, Nvars
+    call rhdf5_open_file(InFiles(ivar), FileAcc, 0, InFileIds(ivar))
+    write (*,*) 'Reading HDF5 file: ', trim(InFiles(ivar))
   enddo
   write (*,*) ''
 
@@ -252,188 +350,94 @@ program gen_moments
   ! plus the time dimensions have been "removed" from the descriptions
   ! of the input variables.
   !
-  ! Need to make two passes through the data:
-  !   Pass 1 -> compute the mean (1st moment)
-  !   Pass 2 -> compute the higher moments, if asked for
 
-  ! Pass 1 -> mean (first moment)
-  !   record the means of each variable separately, however the number of points will
-  !   be the same for each variable so only count those up during the first variable
-  !   Count the number of points in a loop (as opposed to multiplying Nx * Ny * NumberTimeSteps)
-  !   so that filtering can be added later on.
-  allocate(Means(Nvars, Nz))
-  allocate(Npts(Nz))
-  allocate(Moments(Nz))
-  do iz = 1, Nz
-    Npts(iz) = 0.0d0
-    do iv = 1, Nvars
-      Means(iv,iz) = 0.0d0
+  do it = 1, Nt
+    ! zero out the terms (sums) an number of points counters
+    do iz = 1, Nz
+      NumPoints%vdata(iz) = 0.0
+      do ivar = 1, Nvars
+        do iterm1 = 1, Nterms
+          call MultiDimAssign(Nterms, Nvars, Nz, iterm1, ivar, iz, 0.0, Var3d=OutVar%vdata)
+        enddo
+      enddo
     enddo
-  enddo
-  write (*,*) 'Pass 1 - calculating mean'
-  Ntsteps = 0
-  do it = TsStart, TsEnd
+
+    ! Read in the input variables and filter
+    do ivar = 1, Nvars
+      call rhdf5_read_variable(InFileIds(ivar), InVars(ivar)%vname, InVars(ivar)%ndims, it, InVars(ivar)%dims, rdata=InVars(ivar)%vdata)
+    enddo
+
     if (UseFilter) then
       call rhdf5_read_variable(FilterFileId, Filter%vname, Filter%ndims, it, Filter%dims, rdata=Filter%vdata)
     endif
 
-    do iv = 1, Nvars
-      call rhdf5_read_variable(InFileIds(iv), InVars(iv)%vname, InVars(iv)%ndims, it, InVars(iv)%dims, rdata=InVars(iv)%vdata)
-
-      ! calculte mean for each level
-      do iz = 1, Nz
-        if (Nz .eq. 1) then
-          ! Use z = 2 for the filter (first model level above the surface)
-          filter_z = 2
-        else
-          filter_z = iz
-        endif
-        ! strip off lateral boundaries
-        do iy = 2, Ny-1
-          do ix = 2, Nx-1
-            if (UseFilter) then
-              SelectPoint = anint(MultiDimLookup(Nx, Ny, Nz, ix, iy, filter_z, Var3d=Filter%vdata)) .eq. 1.0
-            else
-              ! no filtering, select all points
-              SelectPoint = .true.
-            endif
-
-            if (SelectPoint) then
-              Means(iv,iz) = Means(iv,iz) + dble(MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=InVars(iv)%vdata))
-              ! Only count NumPoints during first variable
-              if (iv .eq. 1) then
-                Npts(iz) = Npts(iz) + 1.0d0
-              endif
-            endif
-          enddo
-        enddo
-      enddo
-
-      ! free up the memory that rhdf5_read_variable allocated
-      deallocate(InVars(iv)%vdata)
-    enddo
-
-    if (UseFilter) then
-      deallocate(Filter%vdata)
-    endif
-
-    ! Write out status to screen every 100 timesteps so that the user can see that a long
-    ! running job is progressing okay.
-    Ntsteps = Ntsteps + 1
-    if (modulo(Ntsteps,100) .eq. 0) then
-      write (*,*) 'Working: Timestep: ', it
-    endif
-  enddo
-
-  do iv = 1, Nvars
-    do iz = 1, Nz 
-      if (Npts(iz) .eq. 0.0) then
-        Means(iv,iz) = UndefVal
+    ! Form the sums
+    ! Output is 3D array (iterm, ivar, iz)
+    !   The ivar dimension represent the "order" of the term stored in that column. The order
+    !   is 1 for sum(Xi) terms, the order is 2 for sum(Xi * Xj) terms, etc.
+    do iz = 1, Nz
+      if (Nz .eq. 1) then
+        ! Use z = 2 for the filter (first model level above zero)
+        filter_z = 2
       else
-        Means(iv,iz) = Means(iv,iz) / Npts(iz)
-      endif
-    enddo
-  enddo
-  write (*,*) '  Done!'
-  write (*,*) ''
-
-  ! Pass 2 --> higher moments
-  !   If there is only one variable, copy the mean values into OutVar
-  !   Otherwise go through and compute the higher moments
-  if (Nvars .eq. 1) then
-    do iz = 1, Nz
-      OutVar%vdata(iz) = Means(1,iz)
-    enddo 
-  else
-    do iz = 1, Nz
-      Moments(iz) = 0.0d0
-    enddo 
-
-    Ntsteps = 0
-    write (*,*) 'Pass 2 - higher moments'
-    do it = TsStart, TsEnd
-      if (UseFilter) then
-        call rhdf5_read_variable(FilterFileId, Filter%vname, Filter%ndims, it, Filter%dims, rdata=Filter%vdata)
+        filter_z = iz
       endif
 
-      ! Read in all variables
-      do iv = 1, Nvars
-        call rhdf5_read_variable(InFileIds(iv), InVars(iv)%vname, InVars(iv)%ndims, it, InVars(iv)%dims, rdata=InVars(iv)%vdata)
-      enddo
-  
-      do iz = 1, Nz
-        if (Nz .eq. 1) then
-          ! Use z = 2 for the filter (first model level above the surface)
-          filter_z = 2
-        else
-          filter_z = iz
-        endif
-        ! strip off lateral boundaries
-        do iy = 2, Ny-1
-          do ix = 2, Nx-1
-            if (UseFilter) then
-              SelectPoint = anint(MultiDimLookup(Nx, Ny, Nz, ix, iy, filter_z, Var3d=Filter%vdata)) .eq. 1.0
-            else
-              ! no filtering, select all points
-              SelectPoint = .true.
-            endif
+      do iy = 2, Ny-1
+        do ix = 2, Nx-1
+          SelectPoint = .true.
+          if (UseFilter) then
+            SelectPoint = SelectPoint .and. (anint(MultiDimLookup(Nx, Ny, Nz, ix, iy, filter_z, Var3d=Filter%vdata)) .eq. 1.0)
+          endif
 
-            if (SelectPoint) then
-              ! Form (V1 - V1bar)*(V2 - V2bar)*...
-              Vterm = 1.0
-              do iv = 1, Nvars
-                Vdiff = dble(MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=InVars(iv)%vdata)) - Means(iv,iz)
-                Vterm = Vterm * Vdiff
+          if (SelectPoint) then
+            NumPoints%vdata(iz) = NumPoints%vdata(iz) + 1.0
+
+            iterm1 = 0
+            iterm2 = 0
+            iterm3 = 0
+            iterm4 = 0
+
+            do iv1 = 1, Nvars
+              iterm1 = iterm1 + 1
+              v1 = MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=InVars(1)%vdata)
+              s_temp = MultiDimLookup(Nterms, Nvars, Nz, iterm1, 1, iz, Var3d=OutVar%vdata) + v1
+              call MultiDimAssign(Nterms, Nvars, Nz, iterm1, 1, iz, s_temp, Var3d=OutVar%vdata)
+
+              do iv2 = iv1+1, Nvars
+                iterm2 = iterm2 + 1
+                v2 = MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=InVars(2)%vdata)
+                s_temp = MultiDimLookup(Nterms, Nvars, Nz, iterm2, 2, iz, Var3d=OutVar%vdata) + (v1 * v2)
+                call MultiDimAssign(Nterms, Nvars, Nz, iterm2, 2, iz, s_temp, Var3d=OutVar%vdata)
+
+                do iv3 = iv2+1, Nvars
+                  iterm3 = iterm3 + 1
+                  v3 = MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=InVars(3)%vdata)
+                  s_temp = MultiDimLookup(Nterms, Nvars, Nz, iterm3, 3, iz, Var3d=OutVar%vdata) + (v1 * v2 * v3)
+                  call MultiDimAssign(Nterms, Nvars, Nz, iterm3, 3, iz, s_temp, Var3d=OutVar%vdata)
+
+                  do iv4 = iv3+1, Nvars
+                    iterm4 = iterm4 + 1
+                    v4 = MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=InVars(4)%vdata)
+                    s_temp = MultiDimLookup(Nterms, Nvars, Nz, iterm4, 4, iz, Var3d=OutVar%vdata) + (v1 * v2 * v3 * v4)
+                    call MultiDimAssign(Nterms, Nvars, Nz, iterm4, 4, iz, s_temp, Var3d=OutVar%vdata)
+
+                  enddo
+                enddo
               enddo
-  
-              Moments(iz) = Moments(iz) + Vterm
-            endif
-          enddo
+            enddo
+          endif
         enddo
       enddo
 
-      ! free up the memory that rhdf5_read_variable allocated
-      do iv = 1, Nvars
-        deallocate(InVars(iv)%vdata)
-      enddo
-
-      if (UseFilter) then
-        deallocate(Filter%vdata)
-      endif
-  
-      ! Write out status to screen every 100 timesteps so that the user can see that a long
-      ! running job is progressing okay.
-      Ntsteps = Ntsteps + 1
-      if (modulo(Ntsteps,100) .eq. 0) then
-        write (*,*) 'Working: Timestep: ', it
-      endif
     enddo
-  
-    do iz = 1, Nz 
-      if (Npts(iz) .eq. 0.0) then
-        Moments(iz) = UndefVal
-      else
-        Moments(iz) = Moments(iz) / Npts(iz)
-      endif
-      OutVar%vdata(iz) = Moments(iz)
-    enddo
-  endif
-  write (*,*) '  Done!'
-  write (*,*) ''
 
-  ! copy to output var
-  do iz = 1, Nz
-    NumPoints%vdata(iz) = Npts(iz)
+    ! Write out the moment data
+    call rhdf5_write_variable(OutFileId, NumPoints%vname, NumPoints%ndims, it, NumPoints%dims, &
+       NumPoints%units, NumPoints%descrip, NumPoints%dimnames, rdata=NumPoints%vdata)
+    call rhdf5_write_variable(OutFileId, OutVar%vname, OutVar%ndims, it, OutVar%dims, &
+       OutVar%units, OutVar%descrip, OutVar%dimnames, rdata=OutVar%vdata)
   enddo
-
-  ! Write out the moment data
-  call rhdf5_write_variable(OutFileId, NumPoints%vname, NumPoints%ndims, 0, NumPoints%dims, &
-     NumPoints%units, NumPoints%descrip, NumPoints%dimnames, rdata=NumPoints%vdata)
-  call rhdf5_write_variable(OutFileId, OutVar%vname, OutVar%ndims, 0, OutVar%dims, &
-     OutVar%units, OutVar%descrip, OutVar%dimnames, rdata=OutVar%vdata)
-
-  write (*,*) 'Finished: Total number of time steps processed: ', Ntsteps
-  write (*,*) ''
 
   ! Write out coordinates and attach dimensions
 
@@ -455,8 +459,8 @@ program gen_moments
 
   ! cleanup
   call rhdf5_close_file(OutFileId)
-  do iv = 1, Nvars
-    call rhdf5_close_file(InFileIds(iv))
+  do ivar = 1, Nvars
+    call rhdf5_close_file(InFileIds(ivar))
   enddo
 
   stop
@@ -473,12 +477,12 @@ contains
 ! GetMyArgs()
 !
 
- subroutine GetMyArgs(MaxStr, MaxVars, InDir, InSuffix, OutFile, FilterFile, UseFilter, TsStart, TsEnd, VarList, NumVars)
+ subroutine GetMyArgs(MaxStr, MaxVars, InDir, InSuffix, OutFile, FilterFile, UseFilter, VarList, NumVars, Nterms)
   implicit none
 
   integer, parameter :: MaxFields = 15
 
-  integer :: MaxStr, MaxVars, TsStart, TsEnd, NumVars
+  integer :: MaxStr, MaxVars, NumVars, Nterms
   character (len=MaxStr) :: InDir, InSuffix, OutFile, FilterFile
   type (VarSpec), dimension(MaxVars) :: VarList
   logical :: UseFilter
@@ -493,8 +497,6 @@ contains
   InDir = ''
   InSuffix = ''
   OutFile = ''
-  TsStart = 0
-  TsEnd = 0
   NumVars = 0
 
   ! parse args
@@ -516,12 +518,6 @@ contains
     else if (i .eq. 4) then 
       FilterFile = Arg
       i = i + 1
-    else if (i .eq. 5) then
-      read(Arg, '(i)') TsStart
-      i = i + 1
-    else if (i .eq. 6) then
-      read(Arg, '(i)') TsEnd
-      i = i + 1
     else
       call String2List(Arg, ':', Fields, MaxFields, Nfld, 'var spec')
       i = i + 1
@@ -536,11 +532,6 @@ contains
       endif
     endif
   enddo
-
-  if (TsEnd .lt. TsStart) then
-    write (*,*) 'ERROR: <ts_end> must be greater than or equal to <ts_start>'
-    BadArgs = .true.
-  endif
 
   if (FilterFile .eq. 'none') then
     UseFilter = .false.
@@ -559,8 +550,6 @@ contains
     write (*,*) '        <in_suffix>: suffix attached to all input files'
     write (*,*) '        <out_file>: output file name'
     write (*,*) '        <filter_file>: filter file name'
-    write (*,*) '        <ts_start>: beginning time step number'
-    write (*,*) '        <ts_end>: end time step number'
     write (*,*) '        <var_spec> = <var_name>:<file_prefix>'
     write (*,*) '          <var_name>: name of variable inside input file'
     write (*,*) '          <file_prefix>: leading name of input HDF5 file'
@@ -569,6 +558,17 @@ contains
 
     stop
   end if
+
+  ! The number of variables determines the number of terms
+  !     1 variable  --> 1 term
+  !     2 variables --> 2 terms
+  !     3 variables --> 3 terms
+  !     4 variables --> 6 terms
+  if (NumVars .eq. 4) then
+    Nterms = 6
+  else
+   Nterms = NumVars
+  endif
 
   return
 end subroutine GetMyArgs
