@@ -437,6 +437,15 @@ program gen_moments
        NumPoints%units, NumPoints%descrip, NumPoints%dimnames, rdata=NumPoints%vdata)
     call rhdf5_write_variable(OutFileId, OutVar%vname, OutVar%ndims, it, OutVar%dims, &
        OutVar%units, OutVar%descrip, OutVar%dimnames, rdata=OutVar%vdata)
+
+    ! Free up input var space
+    do ivar = 1, Nvars
+      deallocate(InVars(ivar)%vdata)
+    enddo
+
+    if (UseFilter) then
+      deallocate(Filter%vdata)
+    endif
   enddo
 
   ! Write out coordinates and attach dimensions
