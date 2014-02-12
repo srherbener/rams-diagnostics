@@ -18,6 +18,7 @@ SCRIPTS = \
   $(DEST)/PlotTracks.m \
   $(DEST)/PlotTracksAll.m \
   $(DEST)/PlotWinds.m \
+  $(DEST)/TwpAnimation.m \
   $(DEST)/SetPath.m
 
 CONFIGS = \
