@@ -400,25 +400,25 @@ program gen_moments
 
             do iv1 = 1, Nvars
               iterm1 = iterm1 + 1
-              v1 = MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=InVars(1)%vdata)
+              v1 = MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=InVars(iv1)%vdata)
               s_temp = MultiDimLookup(Nterms, Nvars, Nz, iterm1, 1, iz, Var3d=OutVar%vdata) + v1
               call MultiDimAssign(Nterms, Nvars, Nz, iterm1, 1, iz, s_temp, Var3d=OutVar%vdata)
 
               do iv2 = iv1+1, Nvars
                 iterm2 = iterm2 + 1
-                v2 = MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=InVars(2)%vdata)
+                v2 = MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=InVars(iv2)%vdata)
                 s_temp = MultiDimLookup(Nterms, Nvars, Nz, iterm2, 2, iz, Var3d=OutVar%vdata) + (v1 * v2)
                 call MultiDimAssign(Nterms, Nvars, Nz, iterm2, 2, iz, s_temp, Var3d=OutVar%vdata)
 
                 do iv3 = iv2+1, Nvars
                   iterm3 = iterm3 + 1
-                  v3 = MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=InVars(3)%vdata)
+                  v3 = MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=InVars(iv3)%vdata)
                   s_temp = MultiDimLookup(Nterms, Nvars, Nz, iterm3, 3, iz, Var3d=OutVar%vdata) + (v1 * v2 * v3)
                   call MultiDimAssign(Nterms, Nvars, Nz, iterm3, 3, iz, s_temp, Var3d=OutVar%vdata)
 
                   do iv4 = iv3+1, Nvars
                     iterm4 = iterm4 + 1
-                    v4 = MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=InVars(4)%vdata)
+                    v4 = MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=InVars(iv4)%vdata)
                     s_temp = MultiDimLookup(Nterms, Nvars, Nz, iterm4, 4, iz, Var3d=OutVar%vdata) + (v1 * v2 * v3 * v4)
                     call MultiDimAssign(Nterms, Nvars, Nz, iterm4, 4, iz, s_temp, Var3d=OutVar%vdata)
 
