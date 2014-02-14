@@ -7,122 +7,141 @@ function [ ] = GenMomentData(ConfigFile)
 
     Ddir = Config.DiagDir;
 
-    FprefixList = {
-      'cloud_M1'
-      'cloud_M1_c0p01'
-      'cloud_M1_c0p10'
-      'theta_e_M1'
-      'w_M3'
-      'w_speed_flux'
-      'w_theta_flux'
-      'w_theta_v_flux'
-      'w_vapor_flux'
-      };
+    % These lists are organized as 2D cell arrays. Each row is one complete spec for one variable.
+    % Syntax for rows:
+    %    { 'input file prefix' 'input file var name' 'input var term number' 'input var order number' 'output var name' }
+    VarList = {
+      % means
+      { 'w_M3'           'w-w-w'     1 1 'w'           }
+      { 'w_theta_flux'   'w-theta'   2 1 'theta'       }
+      { 'theta_e_M1'     'theta_e'   1 1 'theta_e'     }
+      { 'w_theta_v_flux' 'w-theta_v' 2 1 'theta_v'     }
+      { 'w_vapor_flux'   'w-vapor'   2 1 'vapor'       }
+      { 'w_speed_flux'   'w-speed'   2 1 'speed'       }
+      { 'cloud_M1'       'cloud'     1 1 'cloud'       }
+      { 'cloud_M1_c0p01' 'cloud'     1 1 'cloud_c0p01' }
+      { 'cloud_M1_c0p10' 'cloud'     1 1 'cloud_c0p10' }
 
-    VnameList = {
-      'cloud'
-      'cloud'
-      'cloud'
-      'theta_e'
-      'w-w-w'
-      'w-speed'
-      'w-theta'
-      'w-theta_v'
-      'w-vapor'
+      % fluxes (covariances)
+      { 'w_theta_flux'   'w-theta'   1 2 'w-theta'     }
+      { 'w_theta_v_flux' 'w-theta_v' 1 2 'w-theta_v'   }
+      { 'w_vapor_flux'   'w-vapor'   1 2 'w-vapor'     }
+      { 'w_speed_flux'   'w-speed'   1 2 'w-speed'     }
+
+      % variances
+      { 'w_M3'           'w-w-w'     1 2 'w-w'         }
+
+      % skews
+      { 'w_M3'           'w-w-w'     1 3 'w-w-w'       }
       };
 
     Tstart = 12;
-    Tend = 36;
+    Tmid   = 24;
+    Tend   = 36;
+
 
     for icase = 1:length(Config.Cases)
       Case = Config.Cases(icase).Cname;
+      OutFname = sprintf('%s/moments_%s.h5', Ddir, Case);
 
-      for ivar = 1:length(FprefixList)
-        Fprefix = FprefixList{ivar};
-        Fname = sprintf('%s/%s_%s.h5', Ddir, Fprefix, Case);
-        Vname = VnameList{ivar};
+      fprintf('***************************************************************\n');
+      fprintf('Generating moment/flux profiles:\n');
+      fprintf('  Case: %s\n', Case);
+      fprintf('  Output file: %s\n', OutFname);
+      fprintf('\n');
 
-        fprintf('***************************************************************\n');
-        fprintf('Generating moment/flux profiles:\n');
-        fprintf('  Case: %s\n', Case);
-        fprintf('  Input file: %s\n', Fname);
-        fprintf('    Var name: %s\n', Vname);
+      % The vars and coords are written into the file in append mode so write 
+      % the file here without append mode in order to create a new file each time
+      % this script is run.
+      hdf5write(OutFname, 'header', Case);
+
+      for ivar = 1:length(VarList)
+        InFprefix = VarList{ivar}{1};
+        InVname   = VarList{ivar}{2};
+        InTerm    = VarList{ivar}{3};
+        InOrder   = VarList{ivar}{4};
+        OutVname  = VarList{ivar}{5};
+
+        InFname = sprintf('%s/%s_%s.h5', Ddir, InFprefix, Case);
+
+        fprintf('  Input file: %s\n', InFname);
+        fprintf('    Var name: %s\n', InVname);
+        fprintf('    Var term: %d\n', InTerm);
+        fprintf('    Var order: %d\n', InOrder);
         fprintf('\n');
 
-        TERMS = squeeze(hdf5read(Fname, Vname));
-        NPTS = squeeze(hdf5read(Fname, 'num_points'));
-        Z = squeeze(hdf5read(Fname, 'z_coords'));
-        T = squeeze(hdf5read(Fname, 't_coords')) / 3600;   % hr
-        
+        % read in and 
+        TERMS = squeeze(hdf5read(InFname, InVname));
+        NPTS = squeeze(hdf5read(InFname, 'num_points'));
+        Z = squeeze(hdf5read(InFname, 'z_coords'));
+        T = squeeze(hdf5read(InFname, 't_coords')) / 3600;   % hr
+
         Nz = length(Z);
         Nt = length(T);
 
         % *_M1 files will lose their first two dimensions, so put them back
-        if (strcmp(Vname, 'cloud') || strcmp(Vname, 'theta_e'))
+        if (strcmp(InVname, 'cloud') || strcmp(InVname, 'theta_e'))
           TERMS = reshape(TERMS, [ 1 1 Nz Nt ]);
         end
 
-        % select and sum up across the time range
+        % find the indices of the start, mid and end times
+        % use these to generate 4 profiles: one each at Tstart, Tmid, Tend
+        % and one across range from Tstart to Tend
         T1 = find(T >= Tstart, 1, 'first');
-        T2 = find(T <= Tend, 1, 'last');
-
-        [ MOMENTS OUT_NPTS ] = GenMoments(TERMS, NPTS, T1, T2);
+        T2 = find(T >= Tmid, 1, 'first');
+        T3 = find(T >= Tend, 1, 'first');
 
         % MOMENTS is organized: (Nterms, Norder, Nz)
-        %
-        % For cloud and theta_e, MOMENTS will be (1, 1, Nz) and will contain the
-        % moment1 of cloud or theta_e.
-        %
-        % For w-w-w, MOMENTS will be (3, 3, Nz) and the first row will
-        % consist of (moment1, moment2, moment3).
-        %
-        % For flux, MOMENTS will be (2, 2, Nz) and the first column will
-        % consist of (moment1 of the first variable, moment1 of the second
-        % variable), and the first row in the second column will consist
-        % of the covariance between the two variables.
-        if (strcmp(Vname, 'cloud') || strcmp(Vname, 'theta_e'))
-          X = 1;
-          OUT_MOMENTS = squeeze(MOMENTS(1,1,:));
-        elseif (strcmp(Vname, 'w-w-w'))
-          OUT_MOMENTS = zeros([ 3 1 Nz ]);
-          X = [ 1 2 3 ];
-          OUT_MOMENTS(1,1,:) = squeeze(MOMENTS(1,1,:));
-          OUT_MOMENTS(2,1,:) = squeeze(MOMENTS(1,2,:));
-          OUT_MOMENTS(3,1,:) = squeeze(MOMENTS(1,3,:));
-        else
-          OUT_MOMENTS = zeros([ 3 1 Nz ]);
-          X = [ 1 2 3 ];
-          OUT_MOMENTS(1,1,:) = squeeze(MOMENTS(1,1,:));
-          OUT_MOMENTS(2,1,:) = squeeze(MOMENTS(2,1,:));
-          OUT_MOMENTS(3,1,:) = squeeze(MOMENTS(1,2,:));
-        end
+        [ MOMENTS_T1    OUT_NPTS ] = GenMoments(TERMS, NPTS, T1, T1);
+        [ MOMENTS_T2    OUT_NPTS ] = GenMoments(TERMS, NPTS, T2, T2);
+        [ MOMENTS_T3    OUT_NPTS ] = GenMoments(TERMS, NPTS, T3, T3);
+        [ MOMENTS_T1_T3 OUT_NPTS ] = GenMoments(TERMS, NPTS, T1, T3);
+
+        OUT_MOMENTS_T1    = squeeze(MOMENTS_T1(InTerm, InOrder, :));
+        OUT_MOMENTS_T2    = squeeze(MOMENTS_T2(InTerm, InOrder, :));
+        OUT_MOMENTS_T3    = squeeze(MOMENTS_T3(InTerm, InOrder, :));
+        OUT_MOMENTS_T1_T3 = squeeze(MOMENTS_T1_T3(InTerm, InOrder, :));
 
         % GenMoments() will fill levels with zero count (NPTS == 0) with nans. For
         % cloud mass we want these moments to be zero.
-        if (strcmp(Vname, 'cloud'))
-          OUT_MOMENTS(isnan(OUT_MOMENTS)) = 0;
+        if (strcmp(InVname, 'cloud'))
+          OUT_MOMENTS_T1(isnan(OUT_MOMENTS_T1)) = 0;
+          OUT_MOMENTS_T2(isnan(OUT_MOMENTS_T2)) = 0;
+          OUT_MOMENTS_T3(isnan(OUT_MOMENTS_T3)) = 0;
+          OUT_MOMENTS_T1_T3(isnan(OUT_MOMENTS_T1_T3)) = 0;
         end
-        
-        % Write out the moment data. Put in dummy x, y and t coordinates.
-        Y = 1;
-        T = 1;
-        
-        Nx = length(X);
-        OutVar = reshape(OUT_MOMENTS, [ Nx 1 Nz 1 ]);
-        
-        OutFile = sprintf('%s/gmd_%s_T%d_T%d_%s.h5', Ddir, Fprefix, Tstart, Tend, Case);
-        fprintf('Writing: %s\n', OutFile);
-        
-        hdf5write(OutFile, Vname, OutVar);
 
-        OutVar = reshape(OUT_NPTS, [ 1 1 Nz 1 ]);
-        hdf5write(OutFile, 'NumPoints', OutVar, 'WriteMode', 'append');
- 
-        hdf5write(OutFile, 'x_coords', X, 'WriteMode', 'append');
-        hdf5write(OutFile, 'y_coords', Y, 'WriteMode', 'append');
-        hdf5write(OutFile, 'z_coords', Z, 'WriteMode', 'append');
-        hdf5write(OutFile, 't_coords', T, 'WriteMode', 'append');
+        % Write out data - put in dummy x, y and t coordinates
+        Xdummy = 1;
+        Ydummy = 1;
+        Tdummy = 1;
+
+        OutVar = reshape(OUT_MOMENTS_T1, [ 1 1 Nz 1 ]);
+        OutVarName = sprintf('%s_T%d', OutVname, Tstart);
+        fprintf('  Writing var: %s\n', OutVarName);
+        hdf5write(OutFname, OutVarName, OutVar, 'WriteMode', 'append');
+
+        OutVar = reshape(OUT_MOMENTS_T2, [ 1 1 Nz 1 ]);
+        OutVarName = sprintf('%s_T%d', OutVname, Tmid);
+        fprintf('  Writing var: %s\n', OutVarName);
+        hdf5write(OutFname, OutVarName, OutVar, 'WriteMode', 'append');
+
+        OutVar = reshape(OUT_MOMENTS_T3, [ 1 1 Nz 1 ]);
+        OutVarName = sprintf('%s_T%d', OutVname, Tend);
+        fprintf('  Writing var: %s\n', OutVarName);
+        hdf5write(OutFname, OutVarName, OutVar, 'WriteMode', 'append');
+
+        OutVar = reshape(OUT_MOMENTS_T1_T3, [ 1 1 Nz 1 ]);
+        OutVarName = sprintf('%s_T%d_T%d', OutVname, Tstart, Tend);
+        fprintf('  Writing var: %s\n', OutVarName);
+        hdf5write(OutFname, OutVarName, OutVar, 'WriteMode', 'append');
+
         fprintf('\n');
       end
+
+      % all vars are written out to the file, now write out the coordinates
+      hdf5write(OutFname, 'x_coords', Xdummy, 'WriteMode', 'append');
+      hdf5write(OutFname, 'y_coords', Ydummy, 'WriteMode', 'append');
+      hdf5write(OutFname, 'z_coords', Z,      'WriteMode', 'append');
+      hdf5write(OutFname, 't_coords', Tdummy, 'WriteMode', 'append');
     end
-end
