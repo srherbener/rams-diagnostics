@@ -66,7 +66,7 @@ function [ ] = GenMomentData(ConfigFile)
         T1 = find(T >= Tstart, 1, 'first');
         T2 = find(T <= Tend, 1, 'last');
 
-        MOMENTS = GenMoments(TERMS, NPTS, T1, T2);
+        [ MOMENTS OUT_NPTS ] = GenMoments(TERMS, NPTS, T1, T2);
 
         % MOMENTS is organized: (Nterms, Norder, Nz)
         %
@@ -96,6 +96,12 @@ function [ ] = GenMomentData(ConfigFile)
           OUT_MOMENTS(2,1,:) = squeeze(MOMENTS(2,1,:));
           OUT_MOMENTS(3,1,:) = squeeze(MOMENTS(1,2,:));
         end
+
+        % GenMoments() will fill levels with zero count (NPTS == 0) with nans. For
+        % cloud mass we want these moments to be zero.
+        if (strcmp(Vname, 'cloud'))
+          OUT_MOMENTS(isnan(OUT_MOMENTS)) = 0;
+        end
         
         % Write out the moment data. Put in dummy x, y and t coordinates.
         Y = 1;
@@ -108,6 +114,9 @@ function [ ] = GenMomentData(ConfigFile)
         fprintf('Writing: %s\n', OutFile);
         
         hdf5write(OutFile, Vname, OutVar);
+
+        OutVar = reshape(OUT_NPTS, [ 1 1 Nz 1 ]);
+        hdf5write(OutFile, 'NumPoints', OutVar, 'WriteMode', 'append');
  
         hdf5write(OutFile, 'x_coords', X, 'WriteMode', 'append');
         hdf5write(OutFile, 'y_coords', Y, 'WriteMode', 'append');

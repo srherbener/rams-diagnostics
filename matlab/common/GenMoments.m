@@ -1,4 +1,4 @@
-function [ Moments ] = GenMoments( Terms, NumPoints, T1, T2 )
+function [ Moments Npts ] = GenMoments( Terms, NumPoints, T1, T2 )
 % GenMoments generate moment values from gen_moments output
 %
 % Input
