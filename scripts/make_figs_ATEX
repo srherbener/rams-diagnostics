@@ -226,3 +226,68 @@ montage -tile 3x3 -geometry ${Jsize}+2+100 \
  W_Speed_TEND_CO_S303_G10M5_ALL.jpg \
  FigureWspeedFlux.jpg
 
+echo "Figure: Mean theta"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ Theta_TSTART_CO_S293_G10M5_ALL.jpg \
+ Theta_TMID_CO_S293_G10M5_ALL.jpg \
+ Theta_TEND_CO_S293_G10M5_ALL.jpg \
+ Theta_TSTART_CO_S298_G10M5_ALL.jpg \
+ Theta_TMID_CO_S298_G10M5_ALL.jpg \
+ Theta_TEND_CO_S298_G10M5_ALL.jpg \
+ Theta_TSTART_CO_S303_G10M5_ALL.jpg \
+ Theta_TMID_CO_S303_G10M5_ALL.jpg \
+ Theta_TEND_CO_S303_G10M5_ALL.jpg \
+ FigureMeanTheta.jpg
+
+echo "Figure: Mean theta_e"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ ThetaE_TSTART_CO_S293_G10M5_ALL.jpg \
+ ThetaE_TMID_CO_S293_G10M5_ALL.jpg \
+ ThetaE_TEND_CO_S293_G10M5_ALL.jpg \
+ ThetaE_TSTART_CO_S298_G10M5_ALL.jpg \
+ ThetaE_TMID_CO_S298_G10M5_ALL.jpg \
+ ThetaE_TEND_CO_S298_G10M5_ALL.jpg \
+ ThetaE_TSTART_CO_S303_G10M5_ALL.jpg \
+ ThetaE_TMID_CO_S303_G10M5_ALL.jpg \
+ ThetaE_TEND_CO_S303_G10M5_ALL.jpg \
+ FigureMeanThetaE.jpg
+
+echo "Figure: Mean theta_v"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ ThetaV_TSTART_CO_S293_G10M5_ALL.jpg \
+ ThetaV_TMID_CO_S293_G10M5_ALL.jpg \
+ ThetaV_TEND_CO_S293_G10M5_ALL.jpg \
+ ThetaV_TSTART_CO_S298_G10M5_ALL.jpg \
+ ThetaV_TMID_CO_S298_G10M5_ALL.jpg \
+ ThetaV_TEND_CO_S298_G10M5_ALL.jpg \
+ ThetaV_TSTART_CO_S303_G10M5_ALL.jpg \
+ ThetaV_TMID_CO_S303_G10M5_ALL.jpg \
+ ThetaV_TEND_CO_S303_G10M5_ALL.jpg \
+ FigureMeanThetaV.jpg
+
+echo "Figure: Mean speed"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ Speed_TSTART_CO_S293_G10M5_ALL.jpg \
+ Speed_TMID_CO_S293_G10M5_ALL.jpg \
+ Speed_TEND_CO_S293_G10M5_ALL.jpg \
+ Speed_TSTART_CO_S298_G10M5_ALL.jpg \
+ Speed_TMID_CO_S298_G10M5_ALL.jpg \
+ Speed_TEND_CO_S298_G10M5_ALL.jpg \
+ Speed_TSTART_CO_S303_G10M5_ALL.jpg \
+ Speed_TMID_CO_S303_G10M5_ALL.jpg \
+ Speed_TEND_CO_S303_G10M5_ALL.jpg \
+ FigureMeanSpeed.jpg
+
+echo "Figure: Mean vapor"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ Vapor_TSTART_CO_S293_G10M5_ALL.jpg \
+ Vapor_TMID_CO_S293_G10M5_ALL.jpg \
+ Vapor_TEND_CO_S293_G10M5_ALL.jpg \
+ Vapor_TSTART_CO_S298_G10M5_ALL.jpg \
+ Vapor_TMID_CO_S298_G10M5_ALL.jpg \
+ Vapor_TEND_CO_S298_G10M5_ALL.jpg \
+ Vapor_TSTART_CO_S303_G10M5_ALL.jpg \
+ Vapor_TMID_CO_S303_G10M5_ALL.jpg \
+ Vapor_TEND_CO_S303_G10M5_ALL.jpg \
+ FigureMeanVapor.jpg
+
