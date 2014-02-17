@@ -35,10 +35,17 @@ function [ ] = GenMomentData(ConfigFile)
       { 'w_M3'           'w-w-w'     1 3 'w-w-w'       }
       };
 
-    Tstart = 12;
-    Tmid   = 24;
-    Tend   = 36;
+    % do one hour time average at beginning, middle and end of sampling period
+    % also do time average over entire sampling inerval
+    TSstart = 12;
+    TSend = 13;
+    TMstart = 23.5;
+    TMend = 24.5;
+    TEstart = 35;
+    TEend = 36;
 
+    TAstart = 12;
+    TAend = 36;
 
     for icase = 1:length(Config.Cases)
       Case = Config.Cases(icase).Cname;
@@ -84,31 +91,37 @@ function [ ] = GenMomentData(ConfigFile)
           TERMS = reshape(TERMS, [ 1 1 Nz Nt ]);
         end
 
-        % find the indices of the start, mid and end times
-        % use these to generate 4 profiles: one each at Tstart, Tmid, Tend
-        % and one across range from Tstart to Tend
-        T1 = find(T >= Tstart, 1, 'first');
-        T2 = find(T >= Tmid, 1, 'first');
-        T3 = find(T >= Tend, 1, 'first');
+        % find the indices of the start, mid, end and "all" time intervals
+        TS1 = find(T >= TSstart, 1, 'first');
+        TS2 = find(T <= TSend, 1, 'last');
+
+        TM1 = find(T >= TMstart, 1, 'first');
+        TM2 = find(T <= TMend, 1, 'last');
+
+        TE1 = find(T >= TEstart, 1, 'first');
+        TE2 = find(T <= TEend, 1, 'last');
+
+        TA1 = find(T >= TAstart, 1, 'first');
+        TA2 = find(T <= TAend, 1, 'last');
 
         % MOMENTS is organized: (Nterms, Norder, Nz)
-        [ MOMENTS_T1    OUT_NPTS ] = GenMoments(TERMS, NPTS, T1, T1);
-        [ MOMENTS_T2    OUT_NPTS ] = GenMoments(TERMS, NPTS, T2, T2);
-        [ MOMENTS_T3    OUT_NPTS ] = GenMoments(TERMS, NPTS, T3, T3);
-        [ MOMENTS_T1_T3 OUT_NPTS ] = GenMoments(TERMS, NPTS, T1, T3);
+        [ MOMENTS_TS    OUT_NPTS ] = GenMoments(TERMS, NPTS, TS1, TS1);
+        [ MOMENTS_TM    OUT_NPTS ] = GenMoments(TERMS, NPTS, TM1, TM2);
+        [ MOMENTS_TE    OUT_NPTS ] = GenMoments(TERMS, NPTS, TE1, TE2);
+        [ MOMENTS_TA OUT_NPTS ] = GenMoments(TERMS, NPTS, TA1, TA2);
 
-        OUT_MOMENTS_T1    = squeeze(MOMENTS_T1(InTerm, InOrder, :));
-        OUT_MOMENTS_T2    = squeeze(MOMENTS_T2(InTerm, InOrder, :));
-        OUT_MOMENTS_T3    = squeeze(MOMENTS_T3(InTerm, InOrder, :));
-        OUT_MOMENTS_T1_T3 = squeeze(MOMENTS_T1_T3(InTerm, InOrder, :));
+        OUT_MOMENTS_TS = squeeze(MOMENTS_TS(InTerm, InOrder, :));
+        OUT_MOMENTS_TM = squeeze(MOMENTS_TM(InTerm, InOrder, :));
+        OUT_MOMENTS_TE = squeeze(MOMENTS_TE(InTerm, InOrder, :));
+        OUT_MOMENTS_TA = squeeze(MOMENTS_TA(InTerm, InOrder, :));
 
         % GenMoments() will fill levels with zero count (NPTS == 0) with nans. For
         % cloud mass we want these moments to be zero.
         if (strcmp(InVname, 'cloud'))
-          OUT_MOMENTS_T1(isnan(OUT_MOMENTS_T1)) = 0;
-          OUT_MOMENTS_T2(isnan(OUT_MOMENTS_T2)) = 0;
-          OUT_MOMENTS_T3(isnan(OUT_MOMENTS_T3)) = 0;
-          OUT_MOMENTS_T1_T3(isnan(OUT_MOMENTS_T1_T3)) = 0;
+          OUT_MOMENTS_TS(isnan(OUT_MOMENTS_TS)) = 0;
+          OUT_MOMENTS_TM(isnan(OUT_MOMENTS_TM)) = 0;
+          OUT_MOMENTS_TE(isnan(OUT_MOMENTS_TE)) = 0;
+          OUT_MOMENTS_TA(isnan(OUT_MOMENTS_TA)) = 0;
         end
 
         % Write out data - put in dummy x, y and t coordinates
@@ -116,23 +129,23 @@ function [ ] = GenMomentData(ConfigFile)
         Ydummy = 1;
         Tdummy = 1;
 
-        OutVar = reshape(OUT_MOMENTS_T1, [ 1 1 Nz 1 ]);
-        OutVarName = sprintf('%s_T%d', OutVname, Tstart);
+        OutVar = reshape(OUT_MOMENTS_TS, [ 1 1 Nz 1 ]);
+        OutVarName = sprintf('%s_start', OutVname);
         fprintf('  Writing var: %s\n', OutVarName);
         hdf5write(OutFname, OutVarName, OutVar, 'WriteMode', 'append');
 
-        OutVar = reshape(OUT_MOMENTS_T2, [ 1 1 Nz 1 ]);
-        OutVarName = sprintf('%s_T%d', OutVname, Tmid);
+        OutVar = reshape(OUT_MOMENTS_TM, [ 1 1 Nz 1 ]);
+        OutVarName = sprintf('%s_mid', OutVname);
         fprintf('  Writing var: %s\n', OutVarName);
         hdf5write(OutFname, OutVarName, OutVar, 'WriteMode', 'append');
 
-        OutVar = reshape(OUT_MOMENTS_T3, [ 1 1 Nz 1 ]);
-        OutVarName = sprintf('%s_T%d', OutVname, Tend);
+        OutVar = reshape(OUT_MOMENTS_TE, [ 1 1 Nz 1 ]);
+        OutVarName = sprintf('%s_end', OutVname);
         fprintf('  Writing var: %s\n', OutVarName);
         hdf5write(OutFname, OutVarName, OutVar, 'WriteMode', 'append');
 
-        OutVar = reshape(OUT_MOMENTS_T1_T3, [ 1 1 Nz 1 ]);
-        OutVarName = sprintf('%s_T%d_T%d', OutVname, Tstart, Tend);
+        OutVar = reshape(OUT_MOMENTS_TA, [ 1 1 Nz 1 ]);
+        OutVarName = sprintf('%s_all', OutVname);
         fprintf('  Writing var: %s\n', OutVarName);
         hdf5write(OutFname, OutVarName, OutVar, 'WriteMode', 'append');
 
