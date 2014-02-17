@@ -38,28 +38,28 @@ montage -tile 2x3 -geometry ${Jsize}+2+100 \
 
 echo "Figure: Cloud Frac, Cloud, PCPRR, CCN only"
 montage -tile 3x3 -geometry ${Jsize}+2+100 \
- Cloud_T12_T36_CO_S293_G10M5_ALL.jpg \
+ Cloud_TALL_CO_S293_G10M5_ALL.jpg \
  copt_thick_pdf_S293.jpg \
  pcprr_pdf_S293.jpg \
- Cloud_T12_T36_CO_S298_G10M5_ALL.jpg \
+ Cloud_TALL_CO_S298_G10M5_ALL.jpg \
  copt_thick_pdf_S298.jpg \
  pcprr_pdf_S298.jpg \
- Cloud_T12_T36_CO_S303_G10M5_ALL.jpg \
+ Cloud_TALL_CO_S303_G10M5_ALL.jpg \
  copt_thick_pdf_S303.jpg \
  pcprr_pdf_S303.jpg \
  FigCloudProperties.jpg
 
-echo "Figure: BuoyFlux, Wvar, Wskew, CCN only"
+echo "Figure: W'ThetaV', Wvar, Wskew, CCN only"
 montage -tile 3x3 -geometry ${Jsize}+2+100 \
- BuoyFlux_T12_T36_CO_S293_G10M5_ALL.jpg \
- Wvar_T12_T36_CO_S293_G10M5_ALL.jpg \
- Wskew_T12_T36_CO_S293_G10M5_ALL.jpg \
- BuoyFlux_T12_T36_CO_S298_G10M5_ALL.jpg \
- Wvar_T12_T36_CO_S298_G10M5_ALL.jpg \
- Wskew_T12_T36_CO_S298_G10M5_ALL.jpg \
- BuoyFlux_T12_T36_CO_S303_G10M5_ALL.jpg \
- Wvar_T12_T36_CO_S303_G10M5_ALL.jpg \
- Wskew_T12_T36_CO_S303_G10M5_ALL.jpg \
+ W_ThetaV_TALL_CO_S293_G10M5_ALL.jpg \
+ W_Var_TALL_CO_S293_G10M5_ALL.jpg \
+ W_Skew_TALL_CO_S293_G10M5_ALL.jpg \
+ W_ThetaV_TALL_CO_S298_G10M5_ALL.jpg \
+ W_Var_TALL_CO_S298_G10M5_ALL.jpg \
+ W_Skew_TALL_CO_S298_G10M5_ALL.jpg \
+ W_ThetaV_TALL_CO_S303_G10M5_ALL.jpg \
+ W_Var_TALL_CO_S303_G10M5_ALL.jpg \
+ W_Skew_TALL_CO_S303_G10M5_ALL.jpg \
  FigTurbStruct.jpg
 
 echo "Figure: Bar graphs, COT and ACC_PCP, CCN and GCCN, LWP thresholds"
@@ -85,28 +85,28 @@ montage -tile 2x3 -geometry ${Jsize}+2+100 \
 
 echo "Figure: Cloud Frac, Cloud, PCPRR, CCN and GCCN"
 montage -tile 3x3 -geometry ${Jsize}+2+100 \
- Cloud_T12_T36_CG_C50_S298.jpg \
+ Cloud_TALL_CG_C50_S298.jpg \
  copt_thick_pdf_C50_S298.jpg \
  pcprr_pdf_C50_S298.jpg \
- Cloud_T12_T36_CG_C400_S298.jpg \
+ Cloud_TALL_CG_C400_S298.jpg \
  copt_thick_pdf_C400_S298.jpg \
  pcprr_pdf_C400_S298.jpg \
- Cloud_T12_T36_CG_C1600_S298.jpg \
+ Cloud_TALL_CG_C1600_S298.jpg \
  copt_thick_pdf_C1600_S298.jpg \
  pcprr_pdf_C1600_S298.jpg \
  FigCloudPropertiesGccn.jpg
 
-echo "Figure: BuoyFlux, Wvar, Wskew, CCN and GCCN"
+echo "Figure: W'ThetaV', Wvar, Wskew, CCN and GCCN"
 montage -tile 3x3 -geometry ${Jsize}+2+100 \
- BuoyFlux_T12_T36_CG_C50_S298.jpg \
- Wvar_T12_T36_CG_C50_S298.jpg \
- Wskew_T12_T36_CG_C50_S298.jpg \
- BuoyFlux_T12_T36_CG_C400_S298.jpg \
- Wvar_T12_T36_CG_C400_S298.jpg \
- Wskew_T12_T36_CG_C400_S298.jpg \
- BuoyFlux_T12_T36_CG_C1600_S298.jpg \
- Wvar_T12_T36_CG_C1600_S298.jpg \
- Wskew_T12_T36_CG_C1600_S298.jpg \
+ W_ThetaV_TALL_CG_C50_S298.jpg \
+ W_Var_TALL_CG_C50_S298.jpg \
+ W_Skew_TALL_CG_C50_S298.jpg \
+ W_ThetaV_TALL_CG_C400_S298.jpg \
+ W_Var_TALL_CG_C400_S298.jpg \
+ W_Skew_TALL_CG_C400_S298.jpg \
+ W_ThetaV_TALL_CG_C1600_S298.jpg \
+ W_Var_TALL_CG_C1600_S298.jpg \
+ W_Skew_TALL_CG_C1600_S298.jpg \
  FigTurbStructGeen.jpg
 
 echo "Figure: Albedo, sfc conv, w examples, C50, S293 CCN only"
@@ -135,16 +135,94 @@ montage -tile 3x3 -geometry ${Jsize}+2+100 \
  W_CFAD_0p01_T36_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
  FigSampleAlbSfcConvW_C1600_S303.jpg
 
-echo "Figure: Cloud, with different LWP selection"
+echo "Figure: Cloud, with different qc selection"
 montage -tile 3x3 -geometry ${Jsize}+2+100 \
- Cloud_T12_T36_CO_S293_G10M5_ALL.jpg \
- Cloud_T12_T36_CO_S293_G10M5_LWP0P10_ALL.jpg \
- Cloud_T12_T36_CO_S293_G10M5_LWP1P00_ALL.jpg \
- Cloud_T12_T36_CO_S298_G10M5_ALL.jpg \
- Cloud_T12_T36_CO_S298_G10M5_LWP0P10_ALL.jpg \
- Cloud_T12_T36_CO_S298_G10M5_LWP1P00_ALL.jpg \
- Cloud_T12_T36_CO_S303_G10M5_ALL.jpg \
- Cloud_T12_T36_CO_S303_G10M5_LWP0P10_ALL.jpg \
- Cloud_T12_T36_CO_S303_G10M5_LWP1P00_ALL.jpg \
+ Cloud_TALL_CO_S293_G10M5_ALL.jpg \
+ Cloud_C0P01_TALL_CO_S293_G10M5_ALL.jpg \
+ Cloud_C0P10_TALL_CO_S293_G10M5_ALL.jpg \
+ Cloud_TALL_CO_S298_G10M5_ALL.jpg \
+ Cloud_C0P01_TALL_CO_S298_G10M5_ALL.jpg \
+ Cloud_C0P10_TALL_CO_S298_G10M5_ALL.jpg \
+ Cloud_TALL_CO_S303_G10M5_ALL.jpg \
+ Cloud_C0P01_TALL_CO_S303_G10M5_ALL.jpg \
+ Cloud_C0P10_TALL_CO_S303_G10M5_ALL.jpg \
  FigureCloudSampling.jpg
+
+echo "Figure: W variance"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ W_Var_TSTART_CO_S293_G10M5_ALL.jpg \
+ W_Var_TMID_CO_S293_G10M5_ALL.jpg \
+ W_Var_TEND_CO_S293_G10M5_ALL.jpg \
+ W_Var_TSTART_CO_S298_G10M5_ALL.jpg \
+ W_Var_TMID_CO_S298_G10M5_ALL.jpg \
+ W_Var_TEND_CO_S298_G10M5_ALL.jpg \
+ W_Var_TSTART_CO_S303_G10M5_ALL.jpg \
+ W_Var_TMID_CO_S303_G10M5_ALL.jpg \
+ W_Var_TEND_CO_S303_G10M5_ALL.jpg \
+ FigureWvar.jpg
+
+echo "Figure: W skew"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ W_Skew_TSTART_CO_S293_G10M5_ALL.jpg \
+ W_Skew_TMID_CO_S293_G10M5_ALL.jpg \
+ W_Skew_TEND_CO_S293_G10M5_ALL.jpg \
+ W_Skew_TSTART_CO_S298_G10M5_ALL.jpg \
+ W_Skew_TMID_CO_S298_G10M5_ALL.jpg \
+ W_Skew_TEND_CO_S298_G10M5_ALL.jpg \
+ W_Skew_TSTART_CO_S303_G10M5_ALL.jpg \
+ W_Skew_TMID_CO_S303_G10M5_ALL.jpg \
+ W_Skew_TEND_CO_S303_G10M5_ALL.jpg \
+ FigureWskew.jpg
+
+echo "Figure: W vapor flux"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ W_Vapor_TSTART_CO_S293_G10M5_ALL.jpg \
+ W_Vapor_TMID_CO_S293_G10M5_ALL.jpg \
+ W_Vapor_TEND_CO_S293_G10M5_ALL.jpg \
+ W_Vapor_TSTART_CO_S298_G10M5_ALL.jpg \
+ W_Vapor_TMID_CO_S298_G10M5_ALL.jpg \
+ W_Vapor_TEND_CO_S298_G10M5_ALL.jpg \
+ W_Vapor_TSTART_CO_S303_G10M5_ALL.jpg \
+ W_Vapor_TMID_CO_S303_G10M5_ALL.jpg \
+ W_Vapor_TEND_CO_S303_G10M5_ALL.jpg \
+ FigureWvaporFlux.jpg
+
+echo "Figure: W theta flux"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ W_Theta_TSTART_CO_S293_G10M5_ALL.jpg \
+ W_Theta_TMID_CO_S293_G10M5_ALL.jpg \
+ W_Theta_TEND_CO_S293_G10M5_ALL.jpg \
+ W_Theta_TSTART_CO_S298_G10M5_ALL.jpg \
+ W_Theta_TMID_CO_S298_G10M5_ALL.jpg \
+ W_Theta_TEND_CO_S298_G10M5_ALL.jpg \
+ W_Theta_TSTART_CO_S303_G10M5_ALL.jpg \
+ W_Theta_TMID_CO_S303_G10M5_ALL.jpg \
+ W_Theta_TEND_CO_S303_G10M5_ALL.jpg \
+ FigureWthetaFlux.jpg
+
+echo "Figure: W theta_v flux"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ W_ThetaV_TSTART_CO_S293_G10M5_ALL.jpg \
+ W_ThetaV_TMID_CO_S293_G10M5_ALL.jpg \
+ W_ThetaV_TEND_CO_S293_G10M5_ALL.jpg \
+ W_ThetaV_TSTART_CO_S298_G10M5_ALL.jpg \
+ W_ThetaV_TMID_CO_S298_G10M5_ALL.jpg \
+ W_ThetaV_TEND_CO_S298_G10M5_ALL.jpg \
+ W_ThetaV_TSTART_CO_S303_G10M5_ALL.jpg \
+ W_ThetaV_TMID_CO_S303_G10M5_ALL.jpg \
+ W_ThetaV_TEND_CO_S303_G10M5_ALL.jpg \
+ FigureWthetavFlux.jpg
+
+echo "Figure: W speed flux"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ W_Speed_TSTART_CO_S293_G10M5_ALL.jpg \
+ W_Speed_TMID_CO_S293_G10M5_ALL.jpg \
+ W_Speed_TEND_CO_S293_G10M5_ALL.jpg \
+ W_Speed_TSTART_CO_S298_G10M5_ALL.jpg \
+ W_Speed_TMID_CO_S298_G10M5_ALL.jpg \
+ W_Speed_TEND_CO_S298_G10M5_ALL.jpg \
+ W_Speed_TSTART_CO_S303_G10M5_ALL.jpg \
+ W_Speed_TMID_CO_S303_G10M5_ALL.jpg \
+ W_Speed_TEND_CO_S303_G10M5_ALL.jpg \
+ FigureWspeedFlux.jpg
 
