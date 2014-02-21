@@ -79,6 +79,7 @@ program diag_filter
   logical, dimension(:,:), allocatable :: UpDnDraftMask
   logical :: DoingUpDrafts
   logical :: DoingDnDrafts
+  logical :: DoingUpDnDrafts
   integer :: UDfnum
 
   ! Get the command line arguments
@@ -87,6 +88,7 @@ program diag_filter
   DoingCylVol = .false.
   DoingUpDrafts = .false.
   DoingDnDrafts = .false.
+  DoingUpDnDrafts = .false.
   write (*,*) 'Creating HDF5 data filter:'
   write (*,*) '  Input directory: ', trim(InDir)
   write (*,*) '  Input file name suffix: ', trim(InSuffix)
@@ -160,6 +162,14 @@ program diag_filter
       write (*,*) '      Variable: ', trim(Filters(i)%Vname)
       write (*,*) '      Variable file prefix: ', trim(Filters(i)%Vfprefix)
       write (*,*) '      Threshold: ', Filters(i)%x1
+    else if (Filters(i)%Ftype .eq. 'up_dn') then
+      DoingUpDnDrafts = .true.
+      UDfnum = i
+      write (*,*) '    Updraft/Downdraft:'
+      write (*,*) '      Variable: ', trim(Filters(i)%Vname)
+      write (*,*) '      Variable file prefix: ', trim(Filters(i)%Vfprefix)
+      write (*,*) '      Updraft Threshold: ', Filters(i)%x1
+      write (*,*) '      Downdraft Threshold: ', Filters(i)%x2
     endif
   enddo
   write (*,*) ''
@@ -347,9 +357,15 @@ program diag_filter
   if (DoingUpDrafts .and. DoingDnDrafts) then
     write (*,*) 'ERROR: cannot use both updraft and downdraft filtering'
     stop
+  else if (DoingUpDrafts .and. DoingUpDnDrafts) then
+    write (*,*) 'ERROR: cannot use both updraft and updraft/downdraft filtering'
+    stop
+  else if (DoingDnDrafts .and. DoingUpDnDrafts) then
+    write (*,*) 'ERROR: cannot use both downdraft and updraft/downdraft filtering'
+    stop
   endif
 
-  if (DoingUpDrafts .or. DoingDnDrafts) then
+  if (DoingUpDrafts .or. DoingDnDrafts .or. DoingUpDnDrafts) then
     allocate(UpDnDraftMask(Nx,Ny))
   endif
 
@@ -417,7 +433,7 @@ program diag_filter
     endif
 
     ! If doing up- or down-draft filtering, build the mask
-    if (DoingUpDrafts .or. DoingDnDrafts) then
+    if (DoingUpDrafts .or. DoingDnDrafts .or. DoingUpDnDrafts) then
       do iy = 1, Ny
         do ix = 1, Nx
           UpDnDraftMask(ix,iy) = .false.
@@ -428,9 +444,16 @@ program diag_filter
                 UpDnDraftMask(ix,iy) = .true.
                 exit
               endif
-            else
+            else if (DoingDnDrafts) then
               ! doing down drafts
               if (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(UDfnum)%vdata) .le. Filters(UDfnum)%x1) then
+                UpDnDraftMask(ix,iy) = .true.
+                exit
+              endif
+            else
+              ! doing up/down drafts
+              if ((MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(UDfnum)%vdata) .ge. Filters(UDfnum)%x1) .or. &
+                  (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(UDfnum)%vdata) .le. Filters(UDfnum)%x2)) then
                 UpDnDraftMask(ix,iy) = .true.
                 exit
               endif
@@ -525,7 +548,7 @@ program diag_filter
             endif
 
             ! select according to up down draft mask
-            if ((Filters(i)%Ftype .eq. 'up') .or. (Filters(i)%Ftype .eq. 'dn')) then
+            if ((Filters(i)%Ftype .eq. 'up') .or. (Filters(i)%Ftype .eq. 'dn') .or. (Filters(i)%Ftype .eq. 'up_dn')) then
               SelectThisPoint = SelectThisPoint .and. UpDnDraftMask(ix,iy)
             endif
 
@@ -918,6 +941,25 @@ contains
           Filters(NumFilters)%z1 = 0
           Filters(NumFilters)%z2 = 0
         endif
+      else if (Fields(1) .eq. 'up_dn') then
+        NumFilters = NumFilters + 1
+
+        if (Nfld .lt. 5) then
+          write (*,*) 'ERROR: not enough arguments to fully specify the updraft/downdraft filter'
+          BadArgs = .true.
+        else
+          ! have enough args
+          Filters(NumFilters)%Ftype    = Fields(1)
+          Filters(NumFilters)%Vname    = Fields(2)
+          Filters(NumFilters)%Vfprefix = Fields(3)
+
+          read(Fields(4), '(f)') Filters(NumFilters)%x1
+          read(Fields(5), '(f)') Filters(NumFilters)%x2
+          Filters(NumFilters)%y1 = 0
+          Filters(NumFilters)%y2 = 0
+          Filters(NumFilters)%z1 = 0
+          Filters(NumFilters)%z2 = 0
+        endif
       else
         write (*,*) 'ERROR: <ftype>, ', trim(Fields(1)), ', must be one of:'
         write (*,*) '          cylvol'
@@ -929,6 +971,7 @@ contains
         write (*,*) '          abs_range'
         write (*,*) '          up'
         write (*,*) '          dn'
+        write (*,*) '          up_dn'
         write (*,*) ''
         BadArgs = .true.
       endif
@@ -969,8 +1012,9 @@ contains
     write (*,*) '                le: select point if value <= <x1>'
     write (*,*) '                range: select point if <x1> <= value <= <x2>'
     write (*,*) '                abs_range: select point if <x1> <= abs(value) <= <x2>'
-    write (*,*) '                up: select entire column if and value in column >=  <x1>'
-    write (*,*) '                dn: select entire column if and value in column <=  <x1>'
+    write (*,*) '                up: select entire column if any value in column >=  <x1>'
+    write (*,*) '                dn: select entire column if any value in column <=  <x1>'
+    write (*,*) '                up_dn: select entire column if any value in column >= <x1> or <=  <x2>'
     write (*,*) '                cylvol: select point if it is located within a cylindrical volume'
     write (*,*) '                   <x1> -> minimum radius (in km)'
     write (*,*) '                   <x2> -> maximum radius (in km)'
