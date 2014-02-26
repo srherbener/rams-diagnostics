@@ -67,7 +67,7 @@ program tsavg
 
   ! Get the command line arguments
   call GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
-  if ((AvgFunc(1:4) .eq. 'min:') .or. (AvgFunc(1:4) .eq. 'max:') .or. (AvgFunc(1:4) .eq. 'hda:')) then
+  if ((AvgFunc(1:4) .eq. 'min:') .or. (AvgFunc(1:4) .eq. 'max:') .or. (AvgFunc(1:4) .eq. 'hda:') .or. (AvgFunc(1:10) .eq. 'turb_mmts:')) then
     call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'avg spec')
     if (Nfields .eq. 4) then
       ! got the right amount of fields
@@ -82,7 +82,7 @@ program tsavg
       VarFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
       VarDim     = trim(ArgList(4))
     else
-      write (*,*) 'ERROR: average function hda requires four fields: hda:<var>:<file>:<dim>'
+      write (*,*) 'ERROR: average function requires four fields: <avg_func>:<var>:<file>:<dim>'
       stop
     endif
   endif
@@ -219,6 +219,37 @@ program tsavg
     endif
   endif
 
+  if (AvgFunc(1:9) .eq. 'turb_cov:') then
+    call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'turb_cov spec')
+    if (Nfields .eq. 7) then
+      ! got the right amount of fields
+      !   field    value
+      !    1       'turb_cov'
+      !    2       name of x variable inside the REVU file
+      !    3       prefix for the REVU file name containing the x variable
+      !    4       dimensionalitiy of x variable (2d or 3d)
+      !    5       name of y variable inside the REVU file
+      !    6       prefix for the REVU file name containing the y variable
+      !    7       dimensionalitiy of y variable (2d or 3d)
+      AvgFunc     = trim(ArgList(1))
+
+      Xvar%vname  = trim(ArgList(2))
+      VarFprefix  = trim(ArgList(3))
+      XvarFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
+      XvarDim     = trim(ArgList(4))
+
+      Yvar%vname  = trim(ArgList(5))
+      VarFprefix  = trim(ArgList(6))
+      YvarFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
+      YvarDim     = trim(ArgList(7))
+
+    else
+      write (*,*) 'ERROR: average function turb_cov requires seven fields:'
+      write (*,*) 'ERROR:   turb_cov:<x_var>:<x_file>:<x_dim>:<y_var>:<y_file>:<y_dim>'
+      stop
+    endif
+  endif
+
   if (AvgFunc(1:5) .eq. 'ltss:') then
     call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'pop spec')
     if (Nfields .eq. 5) then
@@ -268,7 +299,7 @@ program tsavg
   write (*,*) '  Averaging function: ', trim(AvgFunc)
   if ((AvgFunc .eq. 'horiz_ke') .or. (AvgFunc .eq. 'max_azwind')) then
     write (*,*) '    Input Type: ', trim(VelInType)
-  else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. (AvgFunc .eq. 'hda')) then
+  else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'turb_mmts')) then
     write (*,*) '    Variable name: ', trim(Var%vname)
     write (*,*) '    File name: ', trim(VarFile)
     write (*,*) '    Dimensionality: ', trim(VarDim)
@@ -316,6 +347,13 @@ program tsavg
     write (*,*) '      Number of bins: ', Ynbins
     write (*,*) '      Bins start at: ', Ybstart
     write (*,*) '      Delta between bins: ', Ybinc
+  else if (AvgFunc .eq. 'turb_cov') then
+    write (*,*) '    X variable name: ', trim(Xvar%vname)
+    write (*,*) '    X file name: ', trim(XvarFile)
+    write (*,*) '    X variable dimensionality: ', trim(XvarDim)
+    write (*,*) '    Y variable name: ', trim(Yvar%vname)
+    write (*,*) '    Y file name: ', trim(YvarFile)
+    write (*,*) '    Y variable dimensionality: ', trim(YvarDim)
   else if (AvgFunc .eq. 'ltss') then
     write (*,*) '    Theta variable name: ', trim(Theta%vname)
     write (*,*) '    Theta file name: ', trim(ThetaFile)
@@ -395,7 +433,7 @@ program tsavg
     endif
   else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
            (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. &
-           (AvgFunc .eq. 'hfrac')) then
+           (AvgFunc .eq. 'hfrac') .or. (AvgFunc .eq. 'turb_mmts')) then
     call rhdf5_read_init(VarFile, Var)
 
     if (VarDim .eq. '2d') then
@@ -445,7 +483,7 @@ program tsavg
         stop
       endif
     endif
-  else if (AvgFunc .eq. 'hist2d') then
+  else if ((AvgFunc .eq. 'hist2d') .or. (AvgFunc .eq. 'turb_cov')) then
     ! check that the horzontal dimensions of x and y match
     call rhdf5_read_init(XvarFile, Xvar)
     call rhdf5_read_init(YvarFile, Yvar)
@@ -488,6 +526,14 @@ program tsavg
     if ((XvarDim .eq. '3d') .and. (YvarDim .eq. '3d')) then
       if (XvarNz .ne. YvarNz) then
         write (*,*) 'ERROR: x and y variables are both 3d, but their z dimensions do not match'
+        stop
+      endif
+    endif
+
+    ! make sure if doing turb_cov, that x and y z dimensions match
+    if (AvgFunc .eq. 'turb_cov') then
+      if (XvarNz .ne. YvarNz) then
+        write (*,*) 'ERROR: x and y variables need to have their z dimensions match for "turb_cov" function'
         stop
       endif
     endif
@@ -610,7 +656,7 @@ program tsavg
     enddo
   else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
            (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. &
-           (AvgFunc .eq. 'hfrac')) then
+           (AvgFunc .eq. 'hfrac') .or. (AvgFunc .eq. 'turb_mmts')) then
     Var%ndims = Var%ndims - 1
     write (*,*) '  Number of dimensions: ', Var%ndims
     write (*,*) '  Dimension sizes:'
@@ -626,16 +672,16 @@ program tsavg
     do id = 1, PrecipRate%ndims
       write (*,*), '    ', trim(PrecipRate%dimnames(id)), ': ', PrecipRate%dims(id)
     enddo
-  else if (AvgFunc .eq. 'hist2d') then
+  else if ((AvgFunc .eq. 'hist2d') .or. (AvgFunc .eq. 'turb_cov')) then
     Xvar%ndims = Xvar%ndims - 1
     Yvar%ndims = Yvar%ndims - 1
-    write (*,*) '  X variable: ', Xvar%ndims
+    write (*,*) '  X variable: '
     write (*,*) '    Number of dimensions: ', Xvar%ndims
     write (*,*) '    Dimension sizes:'
     do id = 1, Xvar%ndims
       write (*,*), '      ', trim(Xvar%dimnames(id)), ': ', Xvar%dims(id)
     enddo
-    write (*,*) '  Y variable: ', Yvar%ndims
+    write (*,*) '  Y variable: '
     write (*,*) '    Number of dimensions: ', Yvar%ndims
     write (*,*) '    Dimension sizes:'
     do id = 1, Yvar%ndims
@@ -671,7 +717,7 @@ program tsavg
   TserAvg%vname = trim(AvgFunc)
   if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
       (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. &
-      (AvgFunc .eq. 'hfrac')) then
+      (AvgFunc .eq. 'hfrac') .or. (AvgFunc .eq. 'turb_mmts')) then
     TserAvg%vname = trim(TserAvg%vname) // '_' // trim(VarFprefix)
   endif
   TserAvg%descrip = 'time series averaged ' // trim(AvgFunc) 
@@ -700,9 +746,26 @@ program tsavg
     TserAvg%units = Var%units
   else if ((AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hfrac')) then
     ! y has size 2, one for the sum and the other for the count
-    ! all z points
+    ! all z levels
     TserAvg%dims(1) = 1
     TserAvg%dims(2) = 2
+    TserAvg%dims(3) = Nz
+    TserAvg%units = Var%units
+  else if ((AvgFunc .eq. 'turb_cov') .or. (AvgFunc .eq. 'turb_mmts')) then
+    ! y has size 4
+    !   For turb_cov
+    !     y(1) - sum of mean values of x
+    !     y(2) - sum of mean values of y
+    !     y(3) - sum of x'y' products
+    !     y(4) - number of points
+    !   For turb_mmts
+    !     y(1) - sum of mean values of x
+    !     y(2) - sum of x'x' products
+    !     y(3) - sum of x'x'x' products
+    !     y(4) - number of points
+    ! all z levels
+    TserAvg%dims(1) = 1
+    TserAvg%dims(2) = 4
     TserAvg%dims(3) = Nz
     TserAvg%units = Var%units
   else if (AvgFunc .eq. 'hist') then
@@ -821,11 +884,11 @@ program tsavg
     InCoordFile = trim(DensFile)
   else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
            (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. &
-           (AvgFunc .eq. 'hfrac')) then
+           (AvgFunc .eq. 'hfrac') .or. (AvgFunc .eq. 'turb_mmts')) then
     InCoordFile = trim(VarFile)
   else if (AvgFunc .eq. 'pop') then
     InCoordFile = trim(PrecipRateFile)
-  else if (AvgFunc .eq. 'hist2d') then
+  else if ((AvgFunc .eq. 'hist2d') .or. (AvgFunc .eq. 'turb_cov')) then
     ! Want to end up using a 3d var if one of x and y is 3d, that is use 2d only
     ! if both x and y are 2d. Set InCoordFile to x, and switch to y only if y is 3d.
     ! This gives you:
@@ -984,6 +1047,13 @@ program tsavg
     allocate(OutYcoords%vdata(2))
     OutYcoords%vdata(1) = 1.0
     OutYcoords%vdata(2) = 2.0
+  elseif ((AvgFunc .eq. 'turb_cov') .or. (AvgFunc .eq. 'turb_mmts')) then
+    OutYcoords%dims(1) = 4
+    allocate(OutYcoords%vdata(4))
+    OutYcoords%vdata(1) = 1.0
+    OutYcoords%vdata(2) = 2.0
+    OutYcoords%vdata(3) = 3.0
+    OutYcoords%vdata(4) = 4.0
   else
     OutYcoords%dims(1) = 1
     allocate(OutYcoords%vdata(1))
@@ -995,7 +1065,8 @@ program tsavg
   OutZcoords%dimnames(1) = 'z'
   OutZcoords%units = 'meter'
   OutZcoords%descrip = 'sigma-z'
-  if ((AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. (AvgFunc .eq. 'hist2d') .or. (AvgFunc .eq. 'hfrac')) then
+  if ((AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. (AvgFunc .eq. 'hist2d') .or.  &
+      (AvgFunc .eq. 'hfrac') .or. (AvgFunc .eq. 'turb_cov') .or. (AvgFunc .eq. 'turb_mmts')) then
     OutZcoords%dims(1) = Nz
     allocate(OutZcoords%vdata(Nz))
     do iz = 1, Nz
@@ -1038,13 +1109,13 @@ program tsavg
     endif
   else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
            (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. &
-           (AvgFunc .eq. 'hfrac')) then
+           (AvgFunc .eq. 'hfrac') .or. (AvgFunc .eq. 'turb_mmts')) then
     call rhdf5_open_file(VarFile, rh5f_facc, 1, rh5f_var)
   else if (AvgFunc .eq. 'pop') then
     call rhdf5_open_file(PrecipRateFile, rh5f_facc, 1, rh5f_pcprate)
     call rhdf5_open_file(LwpFile, rh5f_facc, 1, rh5f_lwp)
     call rhdf5_open_file(LtssFile, rh5f_facc, 1, rh5f_ltss)
-  else if (AvgFunc .eq. 'hist2d') then
+  else if ((AvgFunc .eq. 'hist2d') .or. (AvgFunc .eq. 'turb_cov')) then
     call rhdf5_open_file(XvarFile, rh5f_facc, 1, rh5f_xvar)
     call rhdf5_open_file(YvarFile, rh5f_facc, 1, rh5f_yvar)
   else if (AvgFunc .eq. 'ltss') then
@@ -1092,7 +1163,7 @@ program tsavg
       deallocate(Dens%vdata)
     else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
              (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. &
-             (AvgFunc .eq. 'hfrac')) then
+             (AvgFunc .eq. 'hfrac') .or. (AvgFunc .eq. 'turb_mmts')) then
       call rhdf5_read_variable(rh5f_var, Var%vname, Var%ndims, it, Var%dims, rdata=Var%vdata)
 
       if (AvgFunc .eq. 'min') then
@@ -1105,6 +1176,8 @@ program tsavg
         call DoHist(Nx, Ny, Nz, Filter%dims(3), Xnbins, Var%vdata, Filter%vdata, UseFilter, UndefVal, Xbins, TserAvg%vdata)
       else if (AvgFunc .eq. 'hfrac') then
         call DoHfrac(Nx, Ny, Nz, Filter%dims(3), HfracThresh, Var%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata)
+      else if (AvgFunc .eq. 'turb_mmts') then
+        call DoTurbMmts(Nx, Ny, Nz, Filter%dims(3), Var%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata)
       endif
 
       deallocate(Var%vdata)
@@ -1118,11 +1191,15 @@ program tsavg
       deallocate(PrecipRate%vdata)
       deallocate(Lwp%vdata)
       deallocate(Ltss%vdata)
-    else if (AvgFunc .eq. 'hist2d') then
+    else if ((AvgFunc .eq. 'hist2d') .or. (AvgFunc .eq. 'turb_cov')) then
       call rhdf5_read_variable(rh5f_xvar, Xvar%vname, Xvar%ndims, it, Xvar%dims, rdata=Xvar%vdata)
       call rhdf5_read_variable(rh5f_yvar, Yvar%vname, Yvar%ndims, it, Yvar%dims, rdata=Yvar%vdata)
 
-      call DoHist2d(Nx, Ny, Nz, XvarNz, YvarNz, Filter%dims(3), Xnbins, Ynbins, Xvar%vdata, Yvar%vdata, Filter%vdata, UseFilter, UndefVal, Xbins, Ybins, TserAvg%vdata)
+      if (AvgFunc .eq. 'hist2d') then
+        call DoHist2d(Nx, Ny, Nz, XvarNz, YvarNz, Filter%dims(3), Xnbins, Ynbins, Xvar%vdata, Yvar%vdata, Filter%vdata, UseFilter, UndefVal, Xbins, Ybins, TserAvg%vdata)
+      else if (AvgFunc .eq. 'turb_cov') then
+        call DoTurbCov(Nx, Ny, Nz, Filter%dims(3), Xvar%vdata, Yvar%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata)
+      endif
 
       deallocate(Xvar%vdata)
       deallocate(Yvar%vdata)
@@ -1185,13 +1262,13 @@ program tsavg
     endif
   else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
            (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. &
-           (AvgFunc .eq. 'hfrac')) then
+           (AvgFunc .eq. 'hfrac') .or. (AvgFunc .eq. 'turb_mmts')) then
     call rhdf5_close_file(rh5f_var)
   else if (AvgFunc .eq. 'pop') then
     call rhdf5_close_file(rh5f_pcprate)
     call rhdf5_close_file(rh5f_lwp)
     call rhdf5_close_file(rh5f_ltss)
-  else if (AvgFunc .eq. 'hist2d') then
+  else if ((AvgFunc .eq. 'hist2d') .or. (AvgFunc .eq. 'turb_cov')) then
     call rhdf5_close_file(rh5f_xvar)
     call rhdf5_close_file(rh5f_yvar)
   else if (AvgFunc .eq. 'ltss') then
@@ -1363,6 +1440,14 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
     write (*,*) '                <*_nbins>: number of bins'
     write (*,*) '                <*_bstart>: starting value for bins'
     write (*,*) '                <*_binc>: delta between bins'
+    write (*,*) '            turb_cov:<x_var>:<x_file>:<x_dim>:<y_var>:<y_file>:<y_dim>'
+    write (*,*) '                <[xy]_var>: revu var name inside the file'
+    write (*,*) '                <[xy]_file>: prefix for the revu file'
+    write (*,*) '                <[xy]_dim>: dimensionality of variable, either "2d" or "3d"'
+    write (*,*) '            turb_mmts:<x_var>:<x_file>:<x_dim>'
+    write (*,*) '                <x_var>: revu var name inside the file'
+    write (*,*) '                <x_file>: prefix for the revu file'
+    write (*,*) '                <x_dim>: dimensionality of variable, either "2d" or "3d"'
     write (*,*) '        <filter_file>: file containing the filter mask'
     stop
   end if
@@ -1386,6 +1471,8 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
       (AvgFunc(1:4)  .ne. 'max:')         .and. &
       (AvgFunc(1:4)  .ne. 'hda:')         .and. &
       (AvgFunc(1:5)  .ne. 'hist:')        .and. &
+      (AvgFunc(1:9)  .ne. 'turb_cov:')    .and. &
+      (AvgFunc(1:10) .ne. 'turb_mmts:')   .and. &
       (AvgFunc(1:6)  .ne. 'hfrac:')       .and. &
       (AvgFunc(1:4)  .ne. 'pop:')         .and. &
       (AvgFunc(1:7)  .ne. 'hist2d:')      .and. &
@@ -1399,6 +1486,8 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
     write (*,*) '          max:<var>:<file>:<dim>'
     write (*,*) '          hda:<var>:<file>:<dim>'
     write (*,*) '          hist:<var>:<file>:<dim>:<num_bins>:<bin_start>:<bin_inc>'
+    write (*,*) '          turb_cov:<x_var>:<x_file>:<x_dim>:<y_var>:<y_file>:<y_dim>'
+    write (*,*) '          turb_mmts:<x_var>:<x_file>:<x_dim>'
     write (*,*) '          hfrac:<var>:<file>:<dim>:<threshold>'
     write (*,*) '          pop:<pcp_var>:<pcp_file>:<pcp_limit>:<lwp_var>:<lwp_file>:<lwp_nbins>:<lwp_bstart>:<lwp_binc>:'
     write (*,*) '              <ltss_var>:<ltss_file>:<ltss_nbins>:<ltss_bstart>:<ltss_binc>'
@@ -2278,6 +2367,216 @@ subroutine DoStormInt(Nx, Ny, Nz, Speed10m, Filter, TserAvg)
   return
 end subroutine DoStormInt
 
+!**************************************************************************************
+! DoTurbCov()
+!
+! This routine will do summing for the calculation of the mean, variance and skew
+! (first three moments) of the input variable.
+!
+subroutine DoTurbCov(Nx, Ny, Nz, FilterNz, Xvar, Yvar, Filter, UseFilter, UndefVal, DomStats)
+  implicit none
+
+  integer :: Nx, Ny, Nz, FilterNz
+  real, dimension(Nx,Ny,Nz) :: Xvar, Yvar
+  real, dimension(Nx,Ny,FilterNz) :: Filter
+  logical :: UseFilter
+  real :: UndefVal
+  real, dimension(4,Nz) :: DomStats ! (1,Nz) <-- sum of mean values from running mean of Xvar
+                                    ! (2,Nz) <-- sum of mean values from running mean of Yvar
+                                    ! (3,Nz) <-- sum of (x-xmean)*(y-ymean)
+                                    ! (4,Nz) <-- number of points
+
+  integer :: ix, iy, iz
+  integer :: Xstart, Xend, Ystart, Yend
+  integer :: filter_z
+  logical :: SelectPoint
+  integer :: NumPoints
+  real    :: DomS1
+  real    :: DomS2
+  real    :: DomS3
+  real    :: Xmean, Ymean
+
+  ! RAMS reserves the first and last x and y values for lateral
+  ! boundaries. These only contain valid field data under certain
+  ! circumstances such as cyclic boundary cases. Most of the time
+  ! we want these to be excluded so for now always exclude them
+  ! (shouldn't hurt results with cyclic boundaries where the
+  ! boundary values could have been included).
+  Xstart = 2
+  Xend = Nx - 1
+  Ystart = 2
+  Yend = Ny - 1
+
+  do iz = 1, Nz
+    DomS1 = 0.0
+    DomS2 = 0.0
+    DomS3 = 0.0
+    NumPoints = 0
+
+    if (Nz .eq. 1) then
+      ! 2D var, use the z = 2 level (first model level above the surface)
+      ! since typically have the 3D filter z = 1 level all zeros (don't want
+      ! to include below surface model level in analysis).
+      filter_z = 2
+    else
+      filter_z = iz
+    endif
+
+    do iy = Ystart, Yend
+      do ix = Xstart, Xend
+        SelectPoint = ((anint(Xvar(ix,iy,iz)) .ne. UndefVal) .and. (anint(Yvar(ix,iy,iz)) .ne. UndefVal))
+        if (UseFilter) then
+          SelectPoint = SelectPoint .and. (anint(Filter(ix,iy,filter_z)) .eq. 1.0)
+        endif
+        if (SelectPoint) then
+          Xmean = Calc2dMean(Nx, Ny, Nz, Xvar, ix, iy, iz, Xstart, Xend, Ystart, Yend)
+          Ymean = Calc2dMean(Nx, Ny, Nz, Yvar, ix, iy, iz, Xstart, Xend, Ystart, Yend)
+          DomS1 = DomS1 + Xmean
+          DomS2 = DomS2 + Ymean
+          DomS3 = DomS3 + ((Xvar(ix,iy,iz)-Xmean)*(Yvar(ix,iy,iz)-Ymean))
+          NumPoints = NumPoints + 1
+        endif
+      enddo
+    enddo
+
+    DomStats(1,iz) = DomS1
+    DomStats(2,iz) = DomS2
+    DomStats(3,iz) = DomS3
+    DomStats(4,iz) = float(NumPoints)
+  enddo
+
+  return
+end subroutine DoTurbCov
+
+!**************************************************************************************
+! DoTurbMmts()
+!
+! This routine will do summing for the calculation of the mean, variance and skew
+! (first three moments) of the input variable.
+!
+subroutine DoTurbMmts(Nx, Ny, Nz, FilterNz, Var, Filter, UseFilter, UndefVal, DomStats)
+  implicit none
+
+  integer :: Nx, Ny, Nz, FilterNz
+  real, dimension(Nx,Ny,Nz) :: Var
+  real, dimension(Nx,Ny,FilterNz) :: Filter
+  logical :: UseFilter
+  real :: UndefVal
+  real, dimension(4,Nz) :: DomStats ! (1,Nz) <-- sum of mean values from running mean
+                                    ! (2,Nz) <-- sum of (x-xmean)**2
+                                    ! (3,Nz) <-- sum of (x-xmean)**3
+                                    ! (4,Nz) <-- number of points
+
+  integer :: ix, iy, iz
+  integer :: Xstart, Xend, Ystart, Yend
+  integer :: filter_z
+  logical :: SelectPoint
+  integer :: NumPoints
+  real    :: DomS1
+  real    :: DomS2
+  real    :: DomS3
+  real    :: Vmean
+
+  ! RAMS reserves the first and last x and y values for lateral
+  ! boundaries. These only contain valid field data under certain
+  ! circumstances such as cyclic boundary cases. Most of the time
+  ! we want these to be excluded so for now always exclude them
+  ! (shouldn't hurt results with cyclic boundaries where the
+  ! boundary values could have been included).
+  Xstart = 2
+  Xend = Nx - 1
+  Ystart = 2
+  Yend = Ny - 1
+
+  do iz = 1, Nz
+    DomS1 = 0.0
+    DomS2 = 0.0
+    DomS3 = 0.0
+    NumPoints = 0
+
+    if (Nz .eq. 1) then
+      ! 2D var, use the z = 2 level (first model level above the surface)
+      ! since typically have the 3D filter z = 1 level all zeros (don't want
+      ! to include below surface model level in analysis).
+      filter_z = 2
+    else
+      filter_z = iz
+    endif
+
+    do iy = Ystart, Yend
+      do ix = Xstart, Xend
+        SelectPoint = anint(Var(ix,iy,iz)) .ne. UndefVal
+        if (UseFilter) then
+          SelectPoint = SelectPoint .and. (anint(Filter(ix,iy,filter_z)) .eq. 1.0)
+        endif
+        if (SelectPoint) then
+          Vmean = Calc2dMean(Nx, Ny, Nz, Var, ix, iy, iz, Xstart, Xend, Ystart, Yend)
+          DomS1 = DomS1 + Vmean
+          DomS2 = DomS2 + ((Var(ix,iy,iz)-Vmean)**2)
+          DomS3 = DomS3 + ((Var(ix,iy,iz)-Vmean)**3)
+          NumPoints = NumPoints + 1
+        endif
+      enddo
+    enddo
+
+    DomStats(1,iz) = DomS1
+    DomStats(2,iz) = DomS2
+    DomStats(3,iz) = DomS3
+    DomStats(4,iz) = float(NumPoints)
+  enddo
+
+  return
+end subroutine DoTurbMmts
+
+!*****************************************************************************
+! Calc2dMean()
+!
+! This function will find the mean for the given ix, iy, iz point. The mean
+! is taken from the surrounding N points about (ix,iy) on the level given
+! by iz. When called for each (x,y) point on a level, this effective does
+! a 2D running average over that level.
+!
+! 
+!
+real function Calc2dMean(Nx, Ny, Nz, Var, ix, iy, iz, xs, xe, ys, ye)
+  integer :: Nx, Ny, Nz, ix, iy, iz, xs, xe, ys, ye
+  real, dimension(Nx,Ny,Nz) :: Var
+
+  integer :: i, j, Fi, Fj
+  integer :: Fsize
+  real :: Npts
+
+  ! use a 5x5 box for computing the average
+  Fsize = 2
+  Npts = 25.0
+
+  Calc2dMean = 0.0
+  do Fj = iy-Fsize, iy+Fsize
+    do Fi = ix-Fsize, ix+Fsize
+      ! If the box extends beyond the borders of Var, then repeat
+      ! the value of Var from the border.
+      if (Fi .lt. xs) then
+         i = xs
+      else if (Fi .gt. xe) then
+         i = xe
+      else
+         i = Fi
+      endif
+      if (Fj .lt. ys) then
+         j = ys
+      else if (Fj .gt. ye) then
+         j = ye
+      else
+         j = Fj
+      endif
+
+      Calc2dMean = Calc2dMean + Var(i,j,iz)
+    enddo
+  enddo
+  
+  Calc2dMean = Calc2dMean / Npts
+
+end function Calc2dMean
 
 !*****************************************************************************
 ! FindBin()
