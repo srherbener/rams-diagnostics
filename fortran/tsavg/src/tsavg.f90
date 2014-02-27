@@ -767,7 +767,11 @@ program tsavg
     TserAvg%dims(1) = 1
     TserAvg%dims(2) = 4
     TserAvg%dims(3) = Nz
-    TserAvg%units = Var%units
+    if (AvgFunc .eq. 'turb_cov') then
+      TserAvg%units = trim(Xvar%units) // ' ' // trim(Yvar%units)
+    else if (AvgFunc .eq. 'turb_mmts') then
+      TserAvg%units = Var%units
+    endif
   else if (AvgFunc .eq. 'hist') then
     ! put bin values in the x dimension
     TserAvg%dims(1) = Xnbins
