@@ -717,7 +717,8 @@ program tsavg
   TserAvg%vname = trim(AvgFunc)
   if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
       (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. &
-      (AvgFunc .eq. 'hfrac') .or. (AvgFunc .eq. 'turb_mmts')) then
+      (AvgFunc .eq. 'hfrac') .or. (AvgFunc .eq. 'turb_mmts') .or. &
+      (AvgFunc .eq. 'turb_cov')) then
     TserAvg%vname = trim(TserAvg%vname) // '_' // trim(VarFprefix)
   endif
   TserAvg%descrip = 'time series averaged ' // trim(AvgFunc) 
@@ -2435,9 +2436,11 @@ subroutine DoTurbCov(Nx, Ny, Nz, FilterNz, Xvar, Yvar, Filter, UseFilter, UndefV
         if (SelectPoint) then
           Xmean = Calc2dMean(Nx, Ny, Nz, Xvar, ix, iy, iz, Xstart, Xend, Ystart, Yend)
           Ymean = Calc2dMean(Nx, Ny, Nz, Yvar, ix, iy, iz, Xstart, Xend, Ystart, Yend)
+
           DomS1 = DomS1 + Xmean
           DomS2 = DomS2 + Ymean
-          DomS3 = DomS3 + ((Xvar(ix,iy,iz)-Xmean)*(Yvar(ix,iy,iz)-Ymean))
+          DomS3 = DomS3 + (dble(Xvar(ix,iy,iz)-Xmean)*dble(Yvar(ix,iy,iz)-Ymean))
+
           NumPoints = NumPoints + 1
         endif
       enddo
@@ -2516,8 +2519,8 @@ subroutine DoTurbMmts(Nx, Ny, Nz, FilterNz, Var, Filter, UseFilter, UndefVal, Do
         if (SelectPoint) then
           Vmean = Calc2dMean(Nx, Ny, Nz, Var, ix, iy, iz, Xstart, Xend, Ystart, Yend)
           DomS1 = DomS1 + Vmean
-          DomS2 = DomS2 + ((Var(ix,iy,iz)-Vmean)**2)
-          DomS3 = DomS3 + ((Var(ix,iy,iz)-Vmean)**3)
+          DomS2 = DomS2 + (dble(Var(ix,iy,iz)-Vmean)**2)
+          DomS3 = DomS3 + (dble(Var(ix,iy,iz)-Vmean)**3)
           NumPoints = NumPoints + 1
         endif
       enddo
@@ -2546,8 +2549,9 @@ real function Calc2dMean(Nx, Ny, Nz, Var, ix, iy, iz, xs, xe, ys, ye)
   integer :: Nx, Ny, Nz, ix, iy, iz, xs, xe, ys, ye
   real, dimension(Nx,Ny,Nz) :: Var
 
-  integer :: i, j, Fi, Fj
+  integer :: i, j
   integer :: Fsize
+  real :: VarVal
   real :: Npts
 
   ! use a 5x5 box for computing the average
@@ -2555,26 +2559,16 @@ real function Calc2dMean(Nx, Ny, Nz, Var, ix, iy, iz, xs, xe, ys, ye)
   Npts = 25.0
 
   Calc2dMean = 0.0
-  do Fj = iy-Fsize, iy+Fsize
-    do Fi = ix-Fsize, ix+Fsize
-      ! If the box extends beyond the borders of Var, then repeat
-      ! the value of Var from the border.
-      if (Fi .lt. xs) then
-         i = xs
-      else if (Fi .gt. xe) then
-         i = xe
+  do j = iy-Fsize, iy+Fsize
+    do i = ix-Fsize, ix+Fsize
+      ! If the box extends beyond the borders of Var, then fill with zeros.
+      if ((i .lt. xs) .or. (j .lt. ys) .or. (i .gt. xe) .or. (j .gt. ye)) then
+         VarVal = 0.0
       else
-         i = Fi
-      endif
-      if (Fj .lt. ys) then
-         j = ys
-      else if (Fj .gt. ye) then
-         j = ye
-      else
-         j = Fj
+         VarVal = Var(i,j,iz)
       endif
 
-      Calc2dMean = Calc2dMean + Var(i,j,iz)
+      Calc2dMean = Calc2dMean + VarVal
     enddo
   enddo
   
