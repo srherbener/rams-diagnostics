@@ -7,32 +7,51 @@ function [ ] = GenMomentData(ConfigFile)
 
     Ddir = Config.DiagDir;
 
+    Tfirst = 0; % calc moment for each time step, the take average over time steps.
+
     % These lists are organized as 2D cell arrays. Each row is one complete spec for one variable.
     % Syntax for rows:
     %    { 'input file prefix' 'input file var name' 'input var term number' 'input var order number' 'output var name' }
     VarList = {
       % means
-      { 'w_M3'           'w-w-w'     1 1 'w'           }
-      { 'w_theta_flux'   'w-theta'   2 1 'theta'       }
-      { 'theta_e_M1'     'theta_e'   1 1 'theta_e'     }
-      { 'w_theta_v_flux' 'w-theta_v' 2 1 'theta_v'     }
-      { 'w_vapor_flux'   'w-vapor'   2 1 'vapor'       }
-      { 'w_speed_flux'   'w-speed'   2 1 'speed'       }
-      { 'cloud_M1'       'cloud'     1 1 'cloud'       }
-      { 'cloud_M1_c0p01' 'cloud'     1 1 'cloud_c0p01' }
-      { 'cloud_M1_c0p10' 'cloud'     1 1 'cloud_c0p10' }
+      { 'w_M3'                          'w-w-w'     1 1 'w'           }
+      { 'w_theta_flux'                  'w-theta'   2 1 'theta'       }
+      { 'theta_e_M1'                    'theta_e'   1 1 'theta_e'     }
+      { 'w_theta_v_flux'                'w-theta_v' 2 1 'theta_v'     }
+      { 'w_vapor_flux'                  'w-vapor'   2 1 'vapor'       }
+      { 'w_speed_flux'                  'w-speed'   2 1 'speed'       }
+      { 'cloud_M1'                      'cloud'     1 1 'cloud'       }
+
+      { 'cloud_M1_c0p01'                'cloud'     1 1 'cloud_c0p01' }
+      { 'cloud_M1_c0p10'                'cloud'     1 1 'cloud_c0p10' }
+
+      { 'w_M3_col_up_dn_0p10'           'w-w-w'     1 1 'w_ud0p10'    }
+      { 'w_theta_flux_col_up_dn_0p10'   'w-theta'   2 1 'theta_ud0p10'       }
+      { 'theta_e_M1_col_up_dn_0p10'     'theta_e'   1 1 'theta_e_ud0p10'     }
+      { 'w_theta_v_flux_col_up_dn_0p10' 'w-theta_v' 2 1 'theta_v_ud0p10'     }
+      { 'w_vapor_flux_col_up_dn_0p10'   'w-vapor'   2 1 'vapor_ud0p10'       }
+      { 'w_speed_flux_col_up_dn_0p10'   'w-speed'   2 1 'speed_ud0p10'       }
 
       % fluxes (covariances)
-      { 'w_theta_flux'   'w-theta'   1 2 'w-theta'     }
-      { 'w_theta_v_flux' 'w-theta_v' 1 2 'w-theta_v'   }
-      { 'w_vapor_flux'   'w-vapor'   1 2 'w-vapor'     }
-      { 'w_speed_flux'   'w-speed'   1 2 'w-speed'     }
+      { 'w_theta_flux'                  'w-theta'   1 2 'w-theta'     }
+      { 'w_theta_v_flux'                'w-theta_v' 1 2 'w-theta_v'   }
+      { 'w_vapor_flux'                  'w-vapor'   1 2 'w-vapor'     }
+      { 'w_speed_flux'                  'w-speed'   1 2 'w-speed'     }
+
+      { 'w_theta_flux_col_up_dn_0p10'   'w-theta'   1 2 'w-theta_ud0p10'     }
+      { 'w_theta_v_flux_col_up_dn_0p10' 'w-theta_v' 1 2 'w-theta_v_ud0p10'   }
+      { 'w_vapor_flux_col_up_dn_0p10'   'w-vapor'   1 2 'w-vapor_ud0p10'     }
+      { 'w_speed_flux_col_up_dn_0p10'   'w-speed'   1 2 'w-speed_ud0p10'     }
 
       % variances
-      { 'w_M3'           'w-w-w'     1 2 'w-w'         }
+      { 'w_M3'                          'w-w-w'     1 2 'w-w'         }
+
+      { 'w_M3_col_up_dn_0p10'           'w-w-w'     1 2 'w-w_ud0p10'         }
 
       % skews
-      { 'w_M3'           'w-w-w'     1 3 'w-w-w'       }
+      { 'w_M3'                          'w-w-w'     1 3 'w-w-w'       }
+
+      { 'w_M3_col_up_dn_0p10'           'w-w-w'     1 3 'w-w-w_ud0p10'       }
       };
 
     % do one hour time average at beginning, middle and end of sampling period
@@ -105,10 +124,10 @@ function [ ] = GenMomentData(ConfigFile)
         TA2 = find(T <= TAend, 1, 'last');
 
         % MOMENTS is organized: (Nterms, Norder, Nz)
-        [ MOMENTS_TS    OUT_NPTS ] = GenMoments(TERMS, NPTS, TS1, TS1);
-        [ MOMENTS_TM    OUT_NPTS ] = GenMoments(TERMS, NPTS, TM1, TM2);
-        [ MOMENTS_TE    OUT_NPTS ] = GenMoments(TERMS, NPTS, TE1, TE2);
-        [ MOMENTS_TA OUT_NPTS ] = GenMoments(TERMS, NPTS, TA1, TA2);
+        [ MOMENTS_TS    OUT_NPTS ] = GenMoments(TERMS, NPTS, TS1, TS1, Tfirst);
+        [ MOMENTS_TM    OUT_NPTS ] = GenMoments(TERMS, NPTS, TM1, TM2, Tfirst);
+        [ MOMENTS_TE    OUT_NPTS ] = GenMoments(TERMS, NPTS, TE1, TE2, Tfirst);
+        [ MOMENTS_TA OUT_NPTS ] = GenMoments(TERMS, NPTS, TA1, TA2, Tfirst);
 
         OUT_MOMENTS_TS = squeeze(MOMENTS_TS(InTerm, InOrder, :));
         OUT_MOMENTS_TM = squeeze(MOMENTS_TM(InTerm, InOrder, :));
