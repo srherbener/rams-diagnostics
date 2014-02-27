@@ -2395,9 +2395,9 @@ subroutine DoTurbCov(Nx, Ny, Nz, FilterNz, Xvar, Yvar, Filter, UseFilter, UndefV
   integer :: filter_z
   logical :: SelectPoint
   integer :: NumPoints
-  real    :: DomS1
-  real    :: DomS2
-  real    :: DomS3
+  double precision    :: DomS1
+  double precision    :: DomS2
+  double precision    :: DomS3
   real    :: Xmean, Ymean
 
   ! RAMS reserves the first and last x and y values for lateral
@@ -2412,9 +2412,9 @@ subroutine DoTurbCov(Nx, Ny, Nz, FilterNz, Xvar, Yvar, Filter, UseFilter, UndefV
   Yend = Ny - 1
 
   do iz = 1, Nz
-    DomS1 = 0.0
-    DomS2 = 0.0
-    DomS3 = 0.0
+    DomS1 = 0.0d+0
+    DomS2 = 0.0d+0
+    DomS3 = 0.0d+0
     NumPoints = 0
 
     if (Nz .eq. 1) then
@@ -2476,9 +2476,9 @@ subroutine DoTurbMmts(Nx, Ny, Nz, FilterNz, Var, Filter, UseFilter, UndefVal, Do
   integer :: filter_z
   logical :: SelectPoint
   integer :: NumPoints
-  real    :: DomS1
-  real    :: DomS2
-  real    :: DomS3
+  double precision    :: DomS1
+  double precision    :: DomS2
+  double precision    :: DomS3
   real    :: Vmean
 
   ! RAMS reserves the first and last x and y values for lateral
@@ -2493,9 +2493,9 @@ subroutine DoTurbMmts(Nx, Ny, Nz, FilterNz, Var, Filter, UseFilter, UndefVal, Do
   Yend = Ny - 1
 
   do iz = 1, Nz
-    DomS1 = 0.0
-    DomS2 = 0.0
-    DomS3 = 0.0
+    DomS1 = 0.0d+0
+    DomS2 = 0.0d+0
+    DomS3 = 0.0d+0
     NumPoints = 0
 
     if (Nz .eq. 1) then
