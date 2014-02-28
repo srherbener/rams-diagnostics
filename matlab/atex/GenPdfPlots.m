@@ -64,13 +64,13 @@ for i = 1:Nsel
 end
 
 Lcolors = {
-    'k'
-    'g'
-    'b'
-    'c'
-    'r'
-    'y'
-    'm'
+    'black'
+    'green'
+    'blue'
+    'cyan'
+    'red'
+    'yellow'
+    'magenta'
     };
 
 Lstyles = {
@@ -265,10 +265,10 @@ LegText = {
     };
 
 Lcolors = {
-    'k'
-    'c'
-    'b'
-    'm'
+    'black'
+    'cyan'
+    'blue'
+    'magenta'
     };
 
 Lstyles = {

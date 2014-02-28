@@ -123,7 +123,7 @@ Bcolors = { [ 0 0 0 ] [ 0 1 1 ] [ 1 0 1 ] };
 
 LegText = { '293 K', '298 K', '303 K' };
 
-Xlabel = 'N_C_C_N (#/cc)';
+Xlabel = 'N_a (#/cc)';
 CFlabel = 'Cloud Fraction';
 COTlabel = 'Cloud Optical Thickness';
 COTlabel_lpw_0p01 = 'Cloud Optical Thickness';
@@ -304,7 +304,7 @@ Bcolors = { [ 0 0 0 ] [ 0 1 1 ] [ 0 0 1 ] [ 1 0 1 ] };
 
 LegText = { '10^-^5/cc', '10^-^4/cc', '10^-^2/cc' '1/cc' };
 
-Xlabel = 'N_C_C_N (#/cc)';
+Xlabel = 'N_a (#/cc)';
 CFlabel = 'Cloud Fraction';
 COTlabel = 'Cloud Optical Thickness';
 CDlabel = 'Max Cloud Depth (m)';
