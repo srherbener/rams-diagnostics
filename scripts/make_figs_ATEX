@@ -24,7 +24,7 @@ montage -tile 2x2 -geometry ${Jsize}+2+100 \
  FigCloudOptThick.jpg
 
 echo "Figure: Bar graphs, COT, CCN only, LWP Bins"
-montage -tile 2x3 -geometry ${Jsize}+2+100 \
+montage -tile 3x2 -geometry ${Jsize}+2+100 \
  cot_avg_bars.jpg \
  cot_lwp_b1_avg_bars.jpg \
  cot_lwp_b2_avg_bars.jpg \
@@ -32,19 +32,24 @@ montage -tile 2x3 -geometry ${Jsize}+2+100 \
  cot_lwp_b4_avg_bars.jpg \
  FigCloudOptThickLwpBins.jpg
 
-# cd_avg_bars.jpg \
-# acc_pcp_bars.jpg \
-# pcprr_avg_bars.jpg \
+echo "Figure: Bar graphs, CCN only: COT, CD, CF, Acc precip, Precip rate"
+montage -tile 3x2 -geometry ${Jsize}+2+100 \
+ cot_avg_bars.jpg \
+ cd_avg_bars.jpg \
+ cf_avg_bars.jpg \
+ acc_pcp_bars.jpg \
+ pcprr_avg_bars.jpg \
+ FigBarCloudtPrecip.jpg
 
 echo "Figure: Cloud Frac, Cloud, PCPRR, CCN only"
 montage -tile 3x3 -geometry ${Jsize}+2+100 \
- Cloud_TALL_CO_S293_G10M5_ALL.jpg \
+ Cloud_C0P01_TALL_CO_S293_G10M5_ALL.jpg \
  copt_thick_pdf_S293.jpg \
  pcprr_pdf_S293.jpg \
- Cloud_TALL_CO_S298_G10M5_ALL.jpg \
+ Cloud_C0P01_TALL_CO_S298_G10M5_ALL.jpg \
  copt_thick_pdf_S298.jpg \
  pcprr_pdf_S298.jpg \
- Cloud_TALL_CO_S303_G10M5_ALL.jpg \
+ Cloud_C0P01_TALL_CO_S303_G10M5_ALL.jpg \
  copt_thick_pdf_S303.jpg \
  pcprr_pdf_S303.jpg \
  FigCloudProperties.jpg
@@ -71,7 +76,7 @@ montage -tile 2x2 -geometry ${Jsize}+2+100 \
  FigCloudOptThickGccn.jpg
 
 echo "Figure: Bar graphs, COT and ACC_PCP, CCN and GCCN, LWP bins"
-montage -tile 2x3 -geometry ${Jsize}+2+100 \
+montage -tile 3x2 -geometry ${Jsize}+2+100 \
  cot_avg_bars_gccn.jpg \
  cot_lwp_b1_avg_bars_gccn.jpg \
  cot_lwp_b2_avg_bars_gccn.jpg \
@@ -79,19 +84,24 @@ montage -tile 2x3 -geometry ${Jsize}+2+100 \
  cot_lwp_b4_avg_bars_gccn.jpg \
  FigCloudOptThickGccnLwpBins.jpg
 
-# acc_pcp_bars_gccn.jpg \
-# cd_avg_bars_gccn.jpg \
-# pcprr_avg_bars_gccn.jpg \
+echo "Figure: Bar graphs, GCCN: COT, CD, CF, Acc precip, Precip rate"
+montage -tile 3x2 -geometry ${Jsize}+2+100 \
+ cot_avg_bars_gccn.jpg \
+ cd_avg_bars_gccn.jpg \
+ cf_avg_bars_gccn.jpg \
+ acc_pcp_bars_gccn.jpg \
+ pcprr_avg_bars_gccn.jpg \
+ FigBarCloudtPrecipGccn.jpg
 
 echo "Figure: Cloud Frac, Cloud, PCPRR, CCN and GCCN"
 montage -tile 3x3 -geometry ${Jsize}+2+100 \
- Cloud_TALL_CG_C50_S298.jpg \
+ Cloud_C0P01_TALL_CG_C50_S298.jpg \
  copt_thick_pdf_C50_S298.jpg \
  pcprr_pdf_C50_S298.jpg \
- Cloud_TALL_CG_C400_S298.jpg \
+ Cloud_C0P01_TALL_CG_C400_S298.jpg \
  copt_thick_pdf_C400_S298.jpg \
  pcprr_pdf_C400_S298.jpg \
- Cloud_TALL_CG_C1600_S298.jpg \
+ Cloud_C0P01_TALL_CG_C1600_S298.jpg \
  copt_thick_pdf_C1600_S298.jpg \
  pcprr_pdf_C1600_S298.jpg \
  FigCloudPropertiesGccn.jpg
@@ -134,19 +144,6 @@ montage -tile 3x3 -geometry ${Jsize}+2+100 \
  W_CFAD_0p01_T24_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
  W_CFAD_0p01_T36_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
  FigSampleAlbSfcConvW_C1600_S303.jpg
-
-echo "Figure: Cloud, with different qc selection"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- Cloud_TALL_CO_S293_G10M5_ALL.jpg \
- Cloud_C0P01_TALL_CO_S293_G10M5_ALL.jpg \
- Cloud_C0P10_TALL_CO_S293_G10M5_ALL.jpg \
- Cloud_TALL_CO_S298_G10M5_ALL.jpg \
- Cloud_C0P01_TALL_CO_S298_G10M5_ALL.jpg \
- Cloud_C0P10_TALL_CO_S298_G10M5_ALL.jpg \
- Cloud_TALL_CO_S303_G10M5_ALL.jpg \
- Cloud_C0P01_TALL_CO_S303_G10M5_ALL.jpg \
- Cloud_C0P10_TALL_CO_S303_G10M5_ALL.jpg \
- FigureCloudSampling.jpg
 
 echo "Figure: W variance"
 montage -tile 3x3 -geometry ${Jsize}+2+100 \
