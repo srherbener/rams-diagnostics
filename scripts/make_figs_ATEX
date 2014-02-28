@@ -291,3 +291,55 @@ montage -tile 3x3 -geometry ${Jsize}+2+100 \
  Vapor_TEND_CO_S303_G10M5_ALL.jpg \
  FigureMeanVapor.jpg
 
+echo "Figure: w-vapor flux all time points"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ W_Mean_TALL_CO_S293_G10M5_ALL.jpg \
+ W_Mean_TALL_CO_S298_G10M5_ALL.jpg \
+ W_Mean_TALL_CO_S303_G10M5_ALL.jpg \
+ Vapor_TALL_CO_S293_G10M5_ALL.jpg \
+ Vapor_TALL_CO_S298_G10M5_ALL.jpg \
+ Vapor_TALL_CO_S303_G10M5_ALL.jpg \
+ W_Vapor_TALL_CO_S293_G10M5_ALL.jpg \
+ W_Vapor_TALL_CO_S298_G10M5_ALL.jpg \
+ W_Vapor_TALL_CO_S303_G10M5_ALL.jpg \
+ FigureVaporFluxTall.jpg
+
+echo "Figure: w-speed flux all time points"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ W_Mean_TALL_CO_S293_G10M5_ALL.jpg \
+ W_Mean_TALL_CO_S298_G10M5_ALL.jpg \
+ W_Mean_TALL_CO_S303_G10M5_ALL.jpg \
+ Speed_TALL_CO_S293_G10M5_ALL.jpg \
+ Speed_TALL_CO_S298_G10M5_ALL.jpg \
+ Speed_TALL_CO_S303_G10M5_ALL.jpg \
+ W_Speed_TALL_CO_S293_G10M5_ALL.jpg \
+ W_Speed_TALL_CO_S298_G10M5_ALL.jpg \
+ W_Speed_TALL_CO_S303_G10M5_ALL.jpg \
+ FigureSpeedFluxTall.jpg
+
+echo "Figure: w-theta flux all time points"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ W_Mean_TALL_CO_S293_G10M5_ALL.jpg \
+ W_Mean_TALL_CO_S298_G10M5_ALL.jpg \
+ W_Mean_TALL_CO_S303_G10M5_ALL.jpg \
+ Theta_TALL_CO_S293_G10M5_ALL.jpg \
+ Theta_TALL_CO_S298_G10M5_ALL.jpg \
+ Theta_TALL_CO_S303_G10M5_ALL.jpg \
+ W_Theta_TALL_CO_S293_G10M5_ALL.jpg \
+ W_Theta_TALL_CO_S298_G10M5_ALL.jpg \
+ W_Theta_TALL_CO_S303_G10M5_ALL.jpg \
+ FigureThetaFluxTall.jpg
+
+echo "Figure: w-theta_v flux all time points"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ W_Mean_TALL_CO_S293_G10M5_ALL.jpg \
+ W_Mean_TALL_CO_S298_G10M5_ALL.jpg \
+ W_Mean_TALL_CO_S303_G10M5_ALL.jpg \
+ ThetaV_TALL_CO_S293_G10M5_ALL.jpg \
+ ThetaV_TALL_CO_S298_G10M5_ALL.jpg \
+ ThetaV_TALL_CO_S303_G10M5_ALL.jpg \
+ W_ThetaV_TALL_CO_S293_G10M5_ALL.jpg \
+ W_ThetaV_TALL_CO_S298_G10M5_ALL.jpg \
+ W_ThetaV_TALL_CO_S303_G10M5_ALL.jpg \
+ FigureThetavFluxTall.jpg
+
