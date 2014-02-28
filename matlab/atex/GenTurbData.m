@@ -63,8 +63,7 @@ function [ ] = GenTurbData(ConfigFile)
     TAstart = 12;
     TAend = 36;
 
-%    for icase = 1:length(Config.Cases)
-    for icase = 1:1
+    for icase = 1:length(Config.Cases)
       Case = Config.Cases(icase).Cname;
       OutFname = sprintf('%s/turb_stats_%s.h5', Ddir, Case);
 
