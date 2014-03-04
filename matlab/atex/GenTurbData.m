@@ -63,6 +63,8 @@ function [ ] = GenTurbData(ConfigFile)
     TAstart = 12;
     TAend = 36;
 
+    TotalN = 158404; % excluding borders --> 398 * 398
+
     for icase = 1:length(Config.Cases)
       Case = Config.Cases(icase).Cname;
       OutFname = sprintf('%s/turb_stats_%s.h5', Ddir, Case);
@@ -125,6 +127,14 @@ function [ ] = GenTurbData(ConfigFile)
         PROF_E = squeeze(mean(PROF(:,TE1:TE2),2));
         PROF_A = squeeze(mean(PROF(:,TA1:TA2),2));
 
+        % Generate a fraction statistic - the ratio of number of points selected 
+        % to total number of points in domain
+        PROF_FRAC = N ./ TotalN;
+        PROF_FRAC_S = squeeze(mean(PROF_FRAC(:,TS1:TS2), 2));
+        PROF_FRAC_M = squeeze(mean(PROF_FRAC(:,TM1:TM2), 2));
+        PROF_FRAC_E = squeeze(mean(PROF_FRAC(:,TE1:TE2), 2));
+        PROF_FRAC_A = squeeze(mean(PROF_FRAC(:,TA1:TA2), 2));
+
         % Write out data - put in dummy x, y and t coordinates
         Xdummy = 1;
         Ydummy = 1;
@@ -147,6 +157,26 @@ function [ ] = GenTurbData(ConfigFile)
 
         OutVar = reshape(PROF_A, [ 1 1 Nz 1 ]);
         OutVarName = sprintf('%s_all', OutVname);
+        fprintf('  Writing var: %s\n', OutVarName);
+        hdf5write(OutFname, OutVarName, OutVar, 'WriteMode', 'append');
+
+        OutVar = reshape(PROF_FRAC_S, [ 1 1 Nz 1 ]);
+        OutVarName = sprintf('%s_frac_start', OutVname);
+        fprintf('  Writing var: %s\n', OutVarName);
+        hdf5write(OutFname, OutVarName, OutVar, 'WriteMode', 'append');
+
+        OutVar = reshape(PROF_FRAC_M, [ 1 1 Nz 1 ]);
+        OutVarName = sprintf('%s_frac_mid', OutVname);
+        fprintf('  Writing var: %s\n', OutVarName);
+        hdf5write(OutFname, OutVarName, OutVar, 'WriteMode', 'append');
+
+        OutVar = reshape(PROF_FRAC_E, [ 1 1 Nz 1 ]);
+        OutVarName = sprintf('%s_frac_end', OutVname);
+        fprintf('  Writing var: %s\n', OutVarName);
+        hdf5write(OutFname, OutVarName, OutVar, 'WriteMode', 'append');
+
+        OutVar = reshape(PROF_FRAC_A, [ 1 1 Nz 1 ]);
+        OutVarName = sprintf('%s_frac_all', OutVname);
         fprintf('  Writing var: %s\n', OutVarName);
         hdf5write(OutFname, OutVarName, OutVar, 'WriteMode', 'append');
 

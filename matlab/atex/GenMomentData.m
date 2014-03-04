@@ -7,51 +7,52 @@ function [ ] = GenMomentData(ConfigFile)
 
     Ddir = Config.DiagDir;
 
-    Tfirst = 0; % calc moment for each time step, the take average over time steps.
+    %Tfirst = 0; % calc moment for each time step, the take average over time steps.
+    Tfirst = 1; % take average over time steps first, then calculate moments.
 
     % These lists are organized as 2D cell arrays. Each row is one complete spec for one variable.
     % Syntax for rows:
     %    { 'input file prefix' 'input file var name' 'input var term number' 'input var order number' 'output var name' }
     VarList = {
       % means
-      { 'w_M3'                          'w-w-w'     1 1 'w'           }
-      { 'w_theta_flux'                  'w-theta'   2 1 'theta'       }
-      { 'theta_e_M1'                    'theta_e'   1 1 'theta_e'     }
-      { 'w_theta_v_flux'                'w-theta_v' 2 1 'theta_v'     }
-      { 'w_vapor_flux'                  'w-vapor'   2 1 'vapor'       }
-      { 'w_speed_flux'                  'w-speed'   2 1 'speed'       }
+%      { 'w_M3'                          'w-w-w'     1 1 'w'           }
+%      { 'w_theta_flux'                  'w-theta'   2 1 'theta'       }
+%      { 'theta_e_M1'                    'theta_e'   1 1 'theta_e'     }
+%      { 'w_theta_v_flux'                'w-theta_v' 2 1 'theta_v'     }
+%      { 'w_vapor_flux'                  'w-vapor'   2 1 'vapor'       }
+%      { 'w_speed_flux'                  'w-speed'   2 1 'speed'       }
       { 'cloud_M1'                      'cloud'     1 1 'cloud'       }
 
       { 'cloud_M1_c0p01'                'cloud'     1 1 'cloud_c0p01' }
       { 'cloud_M1_c0p10'                'cloud'     1 1 'cloud_c0p10' }
 
-      { 'w_M3_col_up_dn_0p10'           'w-w-w'     1 1 'w_ud0p10'    }
-      { 'w_theta_flux_col_up_dn_0p10'   'w-theta'   2 1 'theta_ud0p10'       }
-      { 'theta_e_M1_col_up_dn_0p10'     'theta_e'   1 1 'theta_e_ud0p10'     }
-      { 'w_theta_v_flux_col_up_dn_0p10' 'w-theta_v' 2 1 'theta_v_ud0p10'     }
-      { 'w_vapor_flux_col_up_dn_0p10'   'w-vapor'   2 1 'vapor_ud0p10'       }
-      { 'w_speed_flux_col_up_dn_0p10'   'w-speed'   2 1 'speed_ud0p10'       }
+%      { 'w_M3_col_up_dn_0p10'           'w-w-w'     1 1 'w_ud0p10'    }
+%      { 'w_theta_flux_col_up_dn_0p10'   'w-theta'   2 1 'theta_ud0p10'       }
+%      { 'theta_e_M1_col_up_dn_0p10'     'theta_e'   1 1 'theta_e_ud0p10'     }
+%      { 'w_theta_v_flux_col_up_dn_0p10' 'w-theta_v' 2 1 'theta_v_ud0p10'     }
+%      { 'w_vapor_flux_col_up_dn_0p10'   'w-vapor'   2 1 'vapor_ud0p10'       }
+%      { 'w_speed_flux_col_up_dn_0p10'   'w-speed'   2 1 'speed_ud0p10'       }
 
       % fluxes (covariances)
-      { 'w_theta_flux'                  'w-theta'   1 2 'w-theta'     }
-      { 'w_theta_v_flux'                'w-theta_v' 1 2 'w-theta_v'   }
-      { 'w_vapor_flux'                  'w-vapor'   1 2 'w-vapor'     }
-      { 'w_speed_flux'                  'w-speed'   1 2 'w-speed'     }
+%      { 'w_theta_flux'                  'w-theta'   1 2 'w-theta'     }
+%      { 'w_theta_v_flux'                'w-theta_v' 1 2 'w-theta_v'   }
+%      { 'w_vapor_flux'                  'w-vapor'   1 2 'w-vapor'     }
+%      { 'w_speed_flux'                  'w-speed'   1 2 'w-speed'     }
 
-      { 'w_theta_flux_col_up_dn_0p10'   'w-theta'   1 2 'w-theta_ud0p10'     }
-      { 'w_theta_v_flux_col_up_dn_0p10' 'w-theta_v' 1 2 'w-theta_v_ud0p10'   }
-      { 'w_vapor_flux_col_up_dn_0p10'   'w-vapor'   1 2 'w-vapor_ud0p10'     }
-      { 'w_speed_flux_col_up_dn_0p10'   'w-speed'   1 2 'w-speed_ud0p10'     }
+%      { 'w_theta_flux_col_up_dn_0p10'   'w-theta'   1 2 'w-theta_ud0p10'     }
+%      { 'w_theta_v_flux_col_up_dn_0p10' 'w-theta_v' 1 2 'w-theta_v_ud0p10'   }
+%      { 'w_vapor_flux_col_up_dn_0p10'   'w-vapor'   1 2 'w-vapor_ud0p10'     }
+%      { 'w_speed_flux_col_up_dn_0p10'   'w-speed'   1 2 'w-speed_ud0p10'     }
 
       % variances
-      { 'w_M3'                          'w-w-w'     1 2 'w-w'         }
+%      { 'w_M3'                          'w-w-w'     1 2 'w-w'         }
 
-      { 'w_M3_col_up_dn_0p10'           'w-w-w'     1 2 'w-w_ud0p10'         }
+%      { 'w_M3_col_up_dn_0p10'           'w-w-w'     1 2 'w-w_ud0p10'         }
 
       % skews
-      { 'w_M3'                          'w-w-w'     1 3 'w-w-w'       }
+%      { 'w_M3'                          'w-w-w'     1 3 'w-w-w'       }
 
-      { 'w_M3_col_up_dn_0p10'           'w-w-w'     1 3 'w-w-w_ud0p10'       }
+%      { 'w_M3_col_up_dn_0p10'           'w-w-w'     1 3 'w-w-w_ud0p10'       }
       };
 
     % do one hour time average at beginning, middle and end of sampling period
@@ -65,6 +66,8 @@ function [ ] = GenMomentData(ConfigFile)
 
     TAstart = 12;
     TAend = 36;
+
+    TotalN = 158404; % excluding borders --> 398 * 398
 
     for icase = 1:length(Config.Cases)
       Case = Config.Cases(icase).Cname;
@@ -143,6 +146,15 @@ function [ ] = GenMomentData(ConfigFile)
           OUT_MOMENTS_TA(isnan(OUT_MOMENTS_TA)) = 0;
         end
 
+        % Generate a fraction statistic - the ratio of number of points selected 
+        % to total number of points in domain
+        PROF_FRAC = NPTS ./ TotalN;
+        PROF_FRAC_S = squeeze(mean(PROF_FRAC(:,TS1:TS2), 2));
+        PROF_FRAC_M = squeeze(mean(PROF_FRAC(:,TM1:TM2), 2));
+        PROF_FRAC_E = squeeze(mean(PROF_FRAC(:,TE1:TE2), 2));
+        PROF_FRAC_A = squeeze(mean(PROF_FRAC(:,TA1:TA2), 2));
+
+
         % Write out data - put in dummy x, y and t coordinates
         Xdummy = 1;
         Ydummy = 1;
@@ -165,6 +177,26 @@ function [ ] = GenMomentData(ConfigFile)
 
         OutVar = reshape(OUT_MOMENTS_TA, [ 1 1 Nz 1 ]);
         OutVarName = sprintf('%s_all', OutVname);
+        fprintf('  Writing var: %s\n', OutVarName);
+        hdf5write(OutFname, OutVarName, OutVar, 'WriteMode', 'append');
+
+        OutVar = reshape(PROF_FRAC_S, [ 1 1 Nz 1 ]);
+        OutVarName = sprintf('%s_frac_start', OutVname);
+        fprintf('  Writing var: %s\n', OutVarName);
+        hdf5write(OutFname, OutVarName, OutVar, 'WriteMode', 'append');
+
+        OutVar = reshape(PROF_FRAC_M, [ 1 1 Nz 1 ]);
+        OutVarName = sprintf('%s_frac_mid', OutVname);
+        fprintf('  Writing var: %s\n', OutVarName);
+        hdf5write(OutFname, OutVarName, OutVar, 'WriteMode', 'append');
+
+        OutVar = reshape(PROF_FRAC_E, [ 1 1 Nz 1 ]);
+        OutVarName = sprintf('%s_frac_end', OutVname);
+        fprintf('  Writing var: %s\n', OutVarName);
+        hdf5write(OutFname, OutVarName, OutVar, 'WriteMode', 'append');
+
+        OutVar = reshape(PROF_FRAC_A, [ 1 1 Nz 1 ]);
+        OutVarName = sprintf('%s_frac_all', OutVname);
         fprintf('  Writing var: %s\n', OutVarName);
         hdf5write(OutFname, OutVarName, OutVar, 'WriteMode', 'append');
 
