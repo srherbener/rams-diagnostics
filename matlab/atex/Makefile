@@ -12,6 +12,7 @@ SCRIPTS = $(DEST)/ExtractSample.m \
           $(DEST)/GenBuoyancyFlux.m \
           $(DEST)/GenCloudStructPlots.m \
           $(DEST)/GenDistPlots.m \
+          $(DEST)/GenDropSizeDists.m \
           $(DEST)/GenHfracCloud.m \
           $(DEST)/GenBarGraphData.m \
           $(DEST)/GenMomentData.m \
