@@ -180,7 +180,7 @@ RainNu = 2;    % dimensionless
       RR = RR_SUMS ./ RR_NPTS;
       RR(isnan(RR)) = 0;
   
-      NR_SUMS = squeeze(hdf5read(NrFile, NrVar)) .* 1e6;
+      NR_SUMS = squeeze(hdf5read(NrFile, NrVar));
       NR_NPTS = squeeze(hdf5read(NrFile, NumPtsVar));
       NR = NR_SUMS ./ NR_NPTS;
       NR(isnan(NR)) = 0;
