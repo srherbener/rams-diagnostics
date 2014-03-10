@@ -10,6 +10,7 @@ SCRIPTS = $(DEST)/ExtractSample.m \
           $(DEST)/GenAlbedo.m \
           $(DEST)/GenBLcouplingData.m \
           $(DEST)/GenBuoyancyFlux.m \
+          $(DEST)/GenBlStats.m \
           $(DEST)/GenCloudStructPlots.m \
           $(DEST)/GenDistPlots.m \
           $(DEST)/GenDropSizeDists.m \

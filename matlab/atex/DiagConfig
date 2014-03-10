@@ -114,6 +114,33 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 
 ########### For Update/Paper #############
 
+### Inversion height
+LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL InvHeight TsAll_T12_T36 none PANEL:a NorthEastOutside none InvHeight_CO_S293_G10M5.jpg
+LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL InvHeight TsAll_T12_T36 none PANEL:a NorthEastOutside none InvHeight_CO_S298_G10M5.jpg
+LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL InvHeight TsAll_T12_T36 none PANEL:a NorthEastOutside none InvHeight_CO_S303_G10M5.jpg
+
+LinePlot: CG_UP_C0050_S298 SimTimeBL InvHeight TsAll_T12_T36 none PANEL:a NorthEastOutside none InvHeight_CG_C0050_S298.jpg
+LinePlot: CG_UP_C0400_S298 SimTimeBL InvHeight TsAll_T12_T36 none PANEL:a NorthEastOutside none InvHeight_CG_C0400_S298.jpg
+LinePlot: CG_UP_C1600_S298 SimTimeBL InvHeight TsAll_T12_T36 none PANEL:a NorthEastOutside none InvHeight_CG_C1600_S298.jpg
+
+### Cloud top
+LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL CloudTop TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudTop_CO_S293_G10M5.jpg
+LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL CloudTop TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudTop_CO_S298_G10M5.jpg
+LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL CloudTop TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudTop_CO_S303_G10M5.jpg
+
+LinePlot: CG_UP_C0050_S298 SimTimeBL CloudTop TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudTop_CG_C0050_S298.jpg
+LinePlot: CG_UP_C0400_S298 SimTimeBL CloudTop TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudTop_CG_C0400_S298.jpg
+LinePlot: CG_UP_C1600_S298 SimTimeBL CloudTop TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudTop_CG_C1600_S298.jpg
+
+### Cloud bottom
+LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL CloudBot TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudBot_CO_S293_G10M5.jpg
+LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL CloudBot TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudBot_CO_S298_G10M5.jpg
+LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL CloudBot TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudBot_CO_S303_G10M5.jpg
+
+LinePlot: CG_UP_C0050_S298 SimTimeBL CloudBot TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudBot_CG_C0050_S298.jpg
+LinePlot: CG_UP_C0400_S298 SimTimeBL CloudBot TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudBot_CG_C0400_S298.jpg
+LinePlot: CG_UP_C1600_S298 SimTimeBL CloudBot TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudBot_CG_C1600_S298.jpg
+
 ### Cloud fraction vs Cloud top temp
 ##LinePlot: CO_UP_S298_G10M5  Ctop Cfrac TsAll_T12_T36 xy PANEL:a  NorthEast none CloudStruct_CO_S298_G10M5.jpg
 ##LinePlot: CO_UP_C0400_G10M5 Ctop Cfrac TsAll_T12_T36 xy PANEL:b  NorthEast none CloudStruct_CO_C400_G10M5.jpg
@@ -997,37 +1024,37 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 
 ### w skew
 # no filter
-LinePlot: CO_UP_S293_G10M5_ALL  W_SKEW_293_TALL TURB_HEIGHTS TURB_SELECT none PANEL:a@293K    NorthEast none W_Skew_TALL_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL  W_SKEW_298_TALL TURB_HEIGHTS TURB_SELECT none PANEL:d@298K    NorthEast none W_Skew_TALL_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL  W_SKEW_303_TALL TURB_HEIGHTS TURB_SELECT none PANEL:g@303K    NorthEast none W_Skew_TALL_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL  W_SKEW_293_TALL TURB_HEIGHTS TURB_SELECT none PANEL:a@293K    NorthEast none W_Skew_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL  W_SKEW_298_TALL TURB_HEIGHTS TURB_SELECT none PANEL:d@298K    NorthEast none W_Skew_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL  W_SKEW_303_TALL TURB_HEIGHTS TURB_SELECT none PANEL:g@303K    NorthEast none W_Skew_TALL_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CG_UP_C0050_S298 W_SKEW_298_TALL TURB_HEIGHTS TURB_SELECT none PANEL:a@298K@50/cc  NorthEast none W_Skew_TALL_CG_C50_S298.jpg
-LinePlot: CG_UP_C0400_S298 W_SKEW_298_TALL TURB_HEIGHTS TURB_SELECT none PANEL:d@298K@400/cc  NorthEast none W_Skew_TALL_CG_C400_S298.jpg
-LinePlot: CG_UP_C1600_S298 W_SKEW_298_TALL TURB_HEIGHTS TURB_SELECT none PANEL:g@298K@1600/cc  NorthEast none W_Skew_TALL_CG_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 W_SKEW_298_TALL TURB_HEIGHTS TURB_SELECT none PANEL:a@298K@50/cc  NorthEast none W_Skew_TALL_CG_C50_S298.jpg
+#LinePlot: CG_UP_C0400_S298 W_SKEW_298_TALL TURB_HEIGHTS TURB_SELECT none PANEL:d@298K@400/cc  NorthEast none W_Skew_TALL_CG_C400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 W_SKEW_298_TALL TURB_HEIGHTS TURB_SELECT none PANEL:g@298K@1600/cc  NorthEast none W_Skew_TALL_CG_C1600_S298.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL  W_SKEW_293_TSTART TURB_HEIGHTS TURB_SELECT none PANEL:a@293K    NorthEast none W_Skew_TSTART_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL  W_SKEW_298_TSTART TURB_HEIGHTS TURB_SELECT none PANEL:d@298K    NorthEast none W_Skew_TSTART_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL  W_SKEW_303_TSTART TURB_HEIGHTS TURB_SELECT none PANEL:g@303K    NorthEast none W_Skew_TSTART_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL  W_SKEW_293_TSTART TURB_HEIGHTS TURB_SELECT none PANEL:a@293K    NorthEast none W_Skew_TSTART_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL  W_SKEW_298_TSTART TURB_HEIGHTS TURB_SELECT none PANEL:d@298K    NorthEast none W_Skew_TSTART_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL  W_SKEW_303_TSTART TURB_HEIGHTS TURB_SELECT none PANEL:g@303K    NorthEast none W_Skew_TSTART_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CG_UP_C0050_S298 W_SKEW_298_TSTART TURB_HEIGHTS TURB_SELECT none PANEL:a@298K@50/cc  NorthEast none W_Skew_TSTART_CG_C50_S298.jpg
-LinePlot: CG_UP_C0400_S298 W_SKEW_298_TSTART TURB_HEIGHTS TURB_SELECT none PANEL:d@298K@400/cc  NorthEast none W_Skew_TSTART_CG_C400_S298.jpg
-LinePlot: CG_UP_C1600_S298 W_SKEW_298_TSTART TURB_HEIGHTS TURB_SELECT none PANEL:g@298K@1600/cc  NorthEast none W_Skew_TSTART_CG_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 W_SKEW_298_TSTART TURB_HEIGHTS TURB_SELECT none PANEL:a@298K@50/cc  NorthEast none W_Skew_TSTART_CG_C50_S298.jpg
+#LinePlot: CG_UP_C0400_S298 W_SKEW_298_TSTART TURB_HEIGHTS TURB_SELECT none PANEL:d@298K@400/cc  NorthEast none W_Skew_TSTART_CG_C400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 W_SKEW_298_TSTART TURB_HEIGHTS TURB_SELECT none PANEL:g@298K@1600/cc  NorthEast none W_Skew_TSTART_CG_C1600_S298.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL  W_SKEW_293_TMID TURB_HEIGHTS TURB_SELECT none PANEL:a@293K    NorthEast none W_Skew_TMID_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL  W_SKEW_298_TMID TURB_HEIGHTS TURB_SELECT none PANEL:d@298K    NorthEast none W_Skew_TMID_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL  W_SKEW_303_TMID TURB_HEIGHTS TURB_SELECT none PANEL:g@303K    NorthEast none W_Skew_TMID_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL  W_SKEW_293_TMID TURB_HEIGHTS TURB_SELECT none PANEL:a@293K    NorthEast none W_Skew_TMID_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL  W_SKEW_298_TMID TURB_HEIGHTS TURB_SELECT none PANEL:d@298K    NorthEast none W_Skew_TMID_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL  W_SKEW_303_TMID TURB_HEIGHTS TURB_SELECT none PANEL:g@303K    NorthEast none W_Skew_TMID_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CG_UP_C0050_S298 W_SKEW_298_TMID TURB_HEIGHTS TURB_SELECT none PANEL:a@298K@50/cc  NorthEast none W_Skew_TMID_CG_C50_S298.jpg
-LinePlot: CG_UP_C0400_S298 W_SKEW_298_TMID TURB_HEIGHTS TURB_SELECT none PANEL:d@298K@400/cc  NorthEast none W_Skew_TMID_CG_C400_S298.jpg
-LinePlot: CG_UP_C1600_S298 W_SKEW_298_TMID TURB_HEIGHTS TURB_SELECT none PANEL:g@298K@1600/cc  NorthEast none W_Skew_TMID_CG_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 W_SKEW_298_TMID TURB_HEIGHTS TURB_SELECT none PANEL:a@298K@50/cc  NorthEast none W_Skew_TMID_CG_C50_S298.jpg
+#LinePlot: CG_UP_C0400_S298 W_SKEW_298_TMID TURB_HEIGHTS TURB_SELECT none PANEL:d@298K@400/cc  NorthEast none W_Skew_TMID_CG_C400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 W_SKEW_298_TMID TURB_HEIGHTS TURB_SELECT none PANEL:g@298K@1600/cc  NorthEast none W_Skew_TMID_CG_C1600_S298.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL  W_SKEW_293_TEND TURB_HEIGHTS TURB_SELECT none PANEL:a@293K    NorthEast none W_Skew_TEND_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL  W_SKEW_298_TEND TURB_HEIGHTS TURB_SELECT none PANEL:d@298K    NorthEast none W_Skew_TEND_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL  W_SKEW_303_TEND TURB_HEIGHTS TURB_SELECT none PANEL:g@303K    NorthEast none W_Skew_TEND_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL  W_SKEW_293_TEND TURB_HEIGHTS TURB_SELECT none PANEL:a@293K    NorthEast none W_Skew_TEND_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL  W_SKEW_298_TEND TURB_HEIGHTS TURB_SELECT none PANEL:d@298K    NorthEast none W_Skew_TEND_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL  W_SKEW_303_TEND TURB_HEIGHTS TURB_SELECT none PANEL:g@303K    NorthEast none W_Skew_TEND_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CG_UP_C0050_S298 W_SKEW_298_TEND TURB_HEIGHTS TURB_SELECT none PANEL:a@298K@50/cc  NorthEast none W_Skew_TEND_CG_C50_S298.jpg
-LinePlot: CG_UP_C0400_S298 W_SKEW_298_TEND TURB_HEIGHTS TURB_SELECT none PANEL:d@298K@400/cc  NorthEast none W_Skew_TEND_CG_C400_S298.jpg
-LinePlot: CG_UP_C1600_S298 W_SKEW_298_TEND TURB_HEIGHTS TURB_SELECT none PANEL:g@298K@1600/cc  NorthEast none W_Skew_TEND_CG_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 W_SKEW_298_TEND TURB_HEIGHTS TURB_SELECT none PANEL:a@298K@50/cc  NorthEast none W_Skew_TEND_CG_C50_S298.jpg
+#LinePlot: CG_UP_C0400_S298 W_SKEW_298_TEND TURB_HEIGHTS TURB_SELECT none PANEL:d@298K@400/cc  NorthEast none W_Skew_TEND_CG_C400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 W_SKEW_298_TEND TURB_HEIGHTS TURB_SELECT none PANEL:g@298K@1600/cc  NorthEast none W_Skew_TEND_CG_C1600_S298.jpg
 
 # filter by |w| >= 10 cm/s
 #LinePlot: CO_UP_S293_G10M5_ALL  W_SKEW_UD0P10_293_TALL TURB_HEIGHTS TURB_SELECT none PANEL:a@293K    NorthEast none W_Skew_UD0P10_TALL_CO_S293_G10M5_ALL.jpg
@@ -1852,6 +1879,13 @@ PlotVar: TURB_HEIGHTS      z_coords  DIAGS/turb_stats           Height km     0 
 PlotVar: HfracCloud_293      hfrac_cloud DIAGS/hfrac_cloud_T12_T36   Cloud@Fraction @     0 1.3 1
 PlotVar: HfracCloud_298      hfrac_cloud DIAGS/hfrac_cloud_T12_T36   Cloud@Fraction @     0 1.2 1
 PlotVar: HfracCloud_303      hfrac_cloud DIAGS/hfrac_cloud_T12_T36   Cloud@Fraction @     0 0.8 1
+
+############## BL stats #####################
+PlotVar: InvHeight   InversionHeightSmooth DIAGS/bl_stats Inversion@Height m  1000 4000 1
+PlotVar: CloudTop    CloudTopSmooth        DIAGS/bl_stats Inversion@Height m     0 4000 1
+PlotVar: CloudBot    CloudBotSmooth        DIAGS/bl_stats Inversion@Height m     0 4000 1
+
+PlotVar: SimTimeBL   t_coords              DIAGS/bl_stats Simulation@Time  h  10   40   2.77777778e-4
 
 ############## Cloud Mass (mixing ratio) ############################
 # no filter
