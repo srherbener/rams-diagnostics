@@ -12,7 +12,7 @@ function [ ] = GenBlStats(ConfigFile)
   %   No filter on theta
   %   Filter clouds based on cloud mix ratios >= 0.01 g/kg
   VarList = {
-    { 'cloud_M1_c0p01' 'cloud' 'turb_cov_w_theta' 'turb_cov_theta' 'turb_cov_w_vapor' 'turb_cov_vapor' }
+    { 'cloud_M1_c0p01' 'cloud' 'turb_cov_w_theta' 'turb_cov_theta' 'turb_cov_w_vapor' 'turb_cov_vapor' 'turb_cov_w_theta_v' 'turb_cov_theta_v' }
     };
 
   OutFprefixList = {
@@ -35,6 +35,8 @@ function [ ] = GenBlStats(ConfigFile)
       W_ThVar   = VarList{ivar}{4};
       W_VapFile  = sprintf('%s/%s_%s.h5', Tdir, VarList{ivar}{5}, Case);
       W_VapVar   = VarList{ivar}{6};
+      W_ThvFile  = sprintf('%s/%s_%s.h5', Tdir, VarList{ivar}{7}, Case);
+      W_ThvVar   = VarList{ivar}{8};
       
       OutFile = sprintf('%s/%s_%s.h5', Ddir, OutFprefixList{ivar}, Case);
   
@@ -47,6 +49,8 @@ function [ ] = GenBlStats(ConfigFile)
       fprintf('    Variable name: %s\n', W_ThVar);
       fprintf('  Input w-vapor file: %s\n', W_VapFile);
       fprintf('    Variable name: %s\n', W_VapVar);
+      fprintf('  Input w-theta_v file: %s\n', W_ThvFile);
+      fprintf('    Variable name: %s\n', W_ThvVar);
       
       fprintf('  Output file: %s\n', OutFile);
       fprintf('\n');
@@ -86,6 +90,15 @@ function [ ] = GenBlStats(ConfigFile)
       W_VAP = W_VAP_SUMS ./ W_VAP_NPTS;
       W_VAP(isnan(W_VAP)) = 0;
 
+      W_THV_TERMS = squeeze(hdf5read(W_ThvFile, W_ThvVar));
+      THV_SUMS   = squeeze(W_THV_TERMS(2, :, :));
+      W_THV_SUMS = squeeze(W_THV_TERMS(3, :, :));
+      W_THV_NPTS = squeeze(W_THV_TERMS(4, :, :));
+      THV = THV_SUMS ./ W_THV_NPTS;
+      THV(isnan(THV)) = 0;
+      W_THV = W_THV_SUMS ./ W_THV_NPTS;
+      W_THV(isnan(W_THV)) = 0;
+
 
       % coordinates
       Z = hdf5read(CldFile, 'z_coords');
@@ -108,6 +121,9 @@ function [ ] = GenBlStats(ConfigFile)
       ZbotCld = zeros([ 1 Nt ]);
       ThetaWe = zeros([ 1 Nt ]);
       VaporWe = zeros([ 1 Nt ]);
+      ThetaV_We = zeros([ 1 Nt ]);
+      MaxCf = zeros([ 1 Nt ]);
+      MaxCfHeight = zeros([ 1 Nt ]);
       for i = 1:Nt
         % inversion
         % use smooth() to eliminate "blips" in Dtheta/Dz, ie make the largest inversion region stand out
@@ -170,6 +186,19 @@ function [ ] = GenBlStats(ConfigFile)
         D_VAP = VAP_I(ZinvInd+1) - VAP_I(ZinvInd);
         W_VAP_FLUX = (W_VAP_I(ZinvInd+1) + W_VAP_I(ZinvInd)) * 0.5;
         VaporWe(i) = W_VAP_FLUX / D_VAP;
+
+        % Bouyancy entrainment velocity (theta_v)
+        THV_I = squeeze(THV(:,i));
+        W_THV_I = squeeze(W_THV(:,i));
+        D_THV = THV_I(ZinvInd+1) - THV_I(ZinvInd);
+        W_THV_FLUX = (W_THV_I(ZinvInd+1) + W_THV_I(ZinvInd)) * 0.5;
+        ThetaV_We(i) = W_THV_FLUX / D_THV;
+
+        % Find the max value of cloud fraction, also record the height at which this occurs
+        CF_I = squeeze(CF(:,i));
+        CfMax(i) = max(CF_I);
+        ZcfMaxInd = find(CF_I == CfMax(i), 1, 'first');
+        CfMaxHeight(i) = Z(ZcfMaxInd);
       end
 
       % Create smoothed versions of measurements
@@ -180,6 +209,9 @@ function [ ] = GenBlStats(ConfigFile)
       ZbotCldSmooth = smooth(ZbotCld, Nfilter);
       ThetaWeSmooth = smooth(ThetaWe, Nfilter);
       VaporWeSmooth = smooth(VaporWe, Nfilter);
+      ThetaV_WeSmooth = smooth(ThetaV_We, Nfilter);
+      CfMaxSmooth = smooth(CfMax, Nfilter);
+      CfMaxHeightSmooth = smooth(CfMaxHeight, Nfilter);
 
       % Save the diameters (in Y) and characteristic diameters (convert m to um)
       Xdummy = 1;
@@ -219,6 +251,21 @@ function [ ] = GenBlStats(ConfigFile)
       hdf5write(OutFile, 'VaporWe', OutVar, 'WriteMode', 'append');
       OutVar = reshape(VaporWeSmooth, [ 1 1 1 Nt ]);
       hdf5write(OutFile, 'VaporWeSmooth', OutVar, 'WriteMode', 'append');
+
+      OutVar = reshape(ThetaV_We, [ 1 1 1 Nt ]);
+      hdf5write(OutFile, 'ThetaV_We', OutVar, 'WriteMode', 'append');
+      OutVar = reshape(ThetaV_WeSmooth, [ 1 1 1 Nt ]);
+      hdf5write(OutFile, 'ThetaV_WeSmooth', OutVar, 'WriteMode', 'append');
+
+      OutVar = reshape(CfMax, [ 1 1 1 Nt ]);
+      hdf5write(OutFile, 'CfMax', OutVar, 'WriteMode', 'append');
+      OutVar = reshape(CfMaxSmooth, [ 1 1 1 Nt ]);
+      hdf5write(OutFile, 'CfMaxSmooth', OutVar, 'WriteMode', 'append');
+
+      OutVar = reshape(CfMaxHeight, [ 1 1 1 Nt ]);
+      hdf5write(OutFile, 'CfMaxHeight', OutVar, 'WriteMode', 'append');
+      OutVar = reshape(CfMaxHeightSmooth, [ 1 1 1 Nt ]);
+      hdf5write(OutFile, 'CfMaxHeightSmooth', OutVar, 'WriteMode', 'append');
 
       hdf5write(OutFile, 'x_coords', Xdummy, 'WriteMode', 'append');
       hdf5write(OutFile, 'y_coords', Ydummy, 'WriteMode', 'append');
