@@ -88,7 +88,7 @@ Gscales = zeros([ Nsel 1 ]);
 % Plot2dSet( X, Y, Ptitle, Pmarkers, Xlabel, Ylabel, Lcolors, Lstyles,
 %            Gscales, LegText, LegLoc, AxisProps, AddMeas, OutFile )
 
-Xlabel = 'Precip Rate (mm/h)';
+Xlabel = 'Precip Rate (mm h^-^1)';
 Ylabel = '';
 
 PR293file = sprintf('%s/pcprr_pdf_S293.jpg', Pdir);
@@ -121,9 +121,9 @@ AxisProps(7).Val = Yvals;
 
 BINS = repmat(PR_BINS', [ Nsel 1 ]);
 
-Plot2dSet(BINS, PDF_PR293', '293K', { 'c' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+Plot2dSet(BINS, PDF_PR293', '293K', { 'g' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
          Gscales, LegText, 'NorthEast', AxisProps, 'none', PR293file);
-Plot2dSet(BINS, PDF_PR298', '298K', { 'f' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+Plot2dSet(BINS, PDF_PR298', '298K', { 'h' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
          Gscales, LegText, 'NorthEast', AxisProps, 'none', PR298file);
 Plot2dSet(BINS, PDF_PR303', '303K', { 'i' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
          Gscales, LegText, 'NorthEast', AxisProps, 'none', PR303file);
@@ -196,11 +196,11 @@ AxisProps(5).Val = Yvals;
 
 BINS = repmat(COT_BINS', [ Nsel 1 ]);
 
-Plot2dSet(BINS, PDF_COT293', '293K', { 'b' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+Plot2dSet(BINS, PDF_COT293', '293K', { 'd' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
          Gscales, LegText, 'NorthEast', AxisProps, 'none', COT293file);
 Plot2dSet(BINS, PDF_COT298', '298K', { 'e' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
          Gscales, LegText, 'NorthEast', AxisProps, 'none', COT298file);
-Plot2dSet(BINS, PDF_COT303', '303K', { 'h' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+Plot2dSet(BINS, PDF_COT303', '303K', { 'f' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
          Gscales, LegText, 'NorthEast', AxisProps, 'none', COT303file);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -283,7 +283,7 @@ Gscales = zeros([ Nsel 1 ]);
 % Plot2dSet( X, Y, Ptitle, Pmarkers, Xlabel, Ylabel, Lcolors, Lstyles,
 %            Gscales, LegText, LegLoc, AxisProps, AddMeas, OutFile )
 
-Xlabel = 'Precip Rate (mm/h)';
+Xlabel = 'Precip Rate (mm h^-^1)';
 Ylabel = '';
 
 PR50file = sprintf('%s/pcprr_pdf_C50_S298.jpg', Pdir);
@@ -316,9 +316,9 @@ AxisProps(7).Val = Yvals;
 
 BINS = repmat(PR_BINS', [ Nsel 1 ]);
 
-Plot2dSet(BINS, PDF_PR50', '298K 50/cc', { 'c' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+Plot2dSet(BINS, PDF_PR50', '298K 50/cc', { 'g' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
          Gscales, LegText, 'NorthEast', AxisProps, 'none', PR50file);
-Plot2dSet(BINS, PDF_PR400', '298K 400/cc', { 'f' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+Plot2dSet(BINS, PDF_PR400', '298K 400/cc', { 'h' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
          Gscales, LegText, 'NorthEast', AxisProps, 'none', PR400file);
 Plot2dSet(BINS, PDF_PR1600', '298K 1600/cc', { 'i' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
          Gscales, LegText, 'NorthEast', AxisProps, 'none', PR1600file);
@@ -391,11 +391,11 @@ AxisProps(5).Val = Yvals;
 
 BINS = repmat(COT_BINS', [ Nsel 1 ]);
 
-Plot2dSet(BINS, PDF_COT50', '298K 50/cc', { 'b' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+Plot2dSet(BINS, PDF_COT50', '298K 50/cc', { 'd' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
          Gscales, LegText, 'NorthEast', AxisProps, 'none', COT50file);
 Plot2dSet(BINS, PDF_COT400', '298K 400/cc', { 'e' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
          Gscales, LegText, 'NorthEast', AxisProps, 'none', COT400file);
-Plot2dSet(BINS, PDF_COT1600', '298K 1600/cc', { 'h' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
+Plot2dSet(BINS, PDF_COT1600', '298K 1600/cc', { 'f' }, Xlabel, Ylabel, Lcolors, Lstyles, ...
          Gscales, LegText, 'NorthEast', AxisProps, 'none', COT1600file);
 
 

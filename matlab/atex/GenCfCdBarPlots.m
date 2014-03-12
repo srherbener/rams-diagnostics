@@ -188,7 +188,7 @@ PlotBarSet(X, COT_LB3_A, '0.10 mm <= LWP < 1.00 mm', { 'd' }, Xlabel, COTlabel, 
 
 AxisProps(iaxis).Name = 'Ylim';
 AxisProps(iaxis).Val  = [ 0 100 ];
-PlotBarSet(X, COT_LB4_A, 'LWP >= 1.00 mm', { 'd' }, Xlabel, COTlabel, Bcolors, LegText, 'NorthWest', AxisProps, COT_LB4_Afile);
+PlotBarSet(X, COT_LB4_A, 'LWP >= 1.00 mm', { 'e' }, Xlabel, COTlabel, Bcolors, LegText, 'NorthWest', AxisProps, COT_LB4_Afile);
 
 AxisProps(iaxis).Name = 'Ylim';
 AxisProps(iaxis).Val  = [ 0 6000 ];
@@ -362,7 +362,7 @@ PlotBarSet(X, COT_LB3_A, '0.10 mm <= LWP < 1.00 mm', { 'd' }, Xlabel, COTlabel, 
 
 AxisProps(iaxis).Name = 'Ylim';
 AxisProps(iaxis).Val  = [ 0 100 ];
-PlotBarSet(X, COT_LB4_A, 'LWP >= 1.00 mm', { 'd' }, Xlabel, COTlabel, Bcolors, LegText, 'NorthWest', AxisProps, COT_LB4_Afile);
+PlotBarSet(X, COT_LB4_A, 'LWP >= 1.00 mm', { 'e' }, Xlabel, COTlabel, Bcolors, LegText, 'NorthWest', AxisProps, COT_LB4_Afile);
 
 AxisProps(iaxis).Name = 'Ylim';
 AxisProps(iaxis).Val  = [ 0 6000 ];
