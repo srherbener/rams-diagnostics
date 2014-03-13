@@ -24,7 +24,7 @@ montage -tile 2x2 -geometry ${Jsize}+2+100 \
  FigCloudOptThick.jpg
 
 echo "Figure: Bar graphs, COT, CCN only, LWP Bins"
-montage -tile 3x2 -geometry ${Jsize}+2+100 \
+montage -tile 2x3 -geometry ${Jsize}+2+100 \
  cot_avg_bars.jpg \
  cot_lwp_b1_avg_bars.jpg \
  cot_lwp_b2_avg_bars.jpg \
@@ -33,7 +33,7 @@ montage -tile 3x2 -geometry ${Jsize}+2+100 \
  FigCloudOptThickLwpBins.jpg
 
 echo "Figure: Bar graphs, CCN only: COT, CD, CF, Acc precip, Precip rate"
-montage -tile 3x2 -geometry ${Jsize}+2+100 \
+montage -tile 2x3 -geometry ${Jsize}+2+100 \
  cot_avg_bars.jpg \
  cd_avg_bars.jpg \
  cf_avg_bars.jpg \
