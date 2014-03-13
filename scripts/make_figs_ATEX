@@ -41,6 +41,13 @@ montage -tile 2x3 -geometry ${Jsize}+2+100 \
  pcprr_avg_bars.jpg \
  FigBarCloudtPrecip.jpg
 
+echo "Figure: Bar graphs, CCN only: COT, Precip rate"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ cot_avg_bars.jpg \
+ pcprr_avg_bars.jpg \
+ acc_pcp_bars.jpg \
+ FigBarCloudtPrecipShort.jpg
+
 echo "Figure: Cloud Mass (whole domain), Cloud, PCPRR, CCN only"
 montage -tile 3x3 -geometry ${Jsize}+2+100 \
  Cloud_TALL_CO_S293_G10M5_ALL.jpg \
@@ -92,6 +99,13 @@ montage -tile 3x2 -geometry ${Jsize}+2+100 \
  acc_pcp_bars_gccn.jpg \
  pcprr_avg_bars_gccn.jpg \
  FigBarCloudtPrecipGccn.jpg
+
+echo "Figure: Bar graphs, GCCN: COT, Precip rate"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ cot_avg_bars_gccn.jpg \
+ pcprr_avg_bars_gccn.jpg \
+ acc_pcp_bars_gccn.jpg \
+ FigBarCloudtPrecipShortGccn.jpg
 
 echo "Figure: Cloud Mass (whole domain), Cloud, PCPRR, CCN and GCCN"
 montage -tile 3x3 -geometry ${Jsize}+2+100 \
@@ -406,13 +420,13 @@ montage -tile 3x3 -geometry ${Jsize}+2+100 \
 echo "Figure: Time series: Zi, Zt, CFmax, all cases, CCN only"
 montage -tile 3x3 -geometry ${Jsize}+2+100 \
  InvHeight_CO_S293_G10M5_ALL.jpg \
- InvHeight_CO_S298_G10M5_ALL.jpg \
- InvHeight_CO_S303_G10M5_ALL.jpg \
  CloudCldTop_CO_S293_G10M5_ALL.jpg \
- CloudCldTop_CO_S298_G10M5_ALL.jpg \
- CloudCldTop_CO_S303_G10M5_ALL.jpg \
  CfMax_CO_S293_G10M5_ALL.jpg \
+ InvHeight_CO_S298_G10M5_ALL.jpg \
+ CloudCldTop_CO_S298_G10M5_ALL.jpg \
  CfMax_CO_S298_G10M5_ALL.jpg \
+ InvHeight_CO_S303_G10M5_ALL.jpg \
+ CloudCldTop_CO_S303_G10M5_ALL.jpg \
  CfMax_CO_S303_G10M5_ALL.jpg \
  FigureTsBlStats_ALL.jpg
 
@@ -456,15 +470,12 @@ montage -tile 3x3 -geometry ${Jsize}+2+100 \
  FigureWcfadC400_S298.jpg
 
 echo "Figure: W stats all time points"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- W_Mean_TALL_CO_S293_G10M5_ALL.jpg \
- W_Mean_TALL_CO_S298_G10M5_ALL.jpg \
- W_Mean_TALL_CO_S303_G10M5_ALL.jpg \
+montage -tile 2x3 -geometry ${Jsize}+2+100 \
  W_Var_TALL_CO_S293_G10M5_ALL.jpg \
- W_Var_TALL_CO_S298_G10M5_ALL.jpg \
- W_Var_TALL_CO_S303_G10M5_ALL.jpg \
  W_Skew_TALL_CO_S293_G10M5_ALL.jpg \
+ W_Var_TALL_CO_S298_G10M5_ALL.jpg \
  W_Skew_TALL_CO_S298_G10M5_ALL.jpg \
+ W_Var_TALL_CO_S303_G10M5_ALL.jpg \
  W_Skew_TALL_CO_S303_G10M5_ALL.jpg \
  FigureWstatsTall.jpg
 
