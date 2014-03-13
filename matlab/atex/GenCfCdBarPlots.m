@@ -135,7 +135,7 @@ COTlabel_lpw_b3 = 'Cloud Optical Thickness';
 COTlabel_lpw_b4 = 'Cloud Optical Thickness';
 CDlabel = 'Max Cloud Depth (m)';
 APlabel = 'Accum Precip (m)';
-PRlabel = 'Avg Precip Rate (mm/h)';
+PRlabel = 'Avg Precip Rate (mm h^-^1)';
 
 CFAfile = sprintf('%s/cf_avg_bars.jpg', Pdir);
 COTAfile = sprintf('%s/cot_avg_bars.jpg', Pdir);
@@ -198,12 +198,12 @@ PlotBarSet(X, CDA, '',         { 'c' }, Xlabel, CDlabel, Bcolors, LegText, 'Nort
 AxisProps(iaxis).Name = 'Ylim';
 AxisProps(iaxis).Val  = [ 0 400 ];
 
-PlotBarSet(X, ACP, '',         { 'b' }, Xlabel, APlabel, Bcolors, LegText, 'NorthWest', AxisProps, ACPfile);
+PlotBarSet(X, ACP, '',         { 'c' }, Xlabel, APlabel, Bcolors, LegText, 'NorthWest', AxisProps, ACPfile);
 
 AxisProps(iaxis).Name = 'Ylim';
 AxisProps(iaxis).Val  = [ 0 0.3 ];
 
-PlotBarSet(X, PRA, '',         { 'd' }, Xlabel, PRlabel, Bcolors, LegText, 'NorthWest', AxisProps, PRAfile);
+PlotBarSet(X, PRA, '',         { 'b' }, Xlabel, PRlabel, Bcolors, LegText, 'NorthWest', AxisProps, PRAfile);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Next look at the GCCN impact (mean radius, 3um)
@@ -309,7 +309,7 @@ CFlabel = 'Cloud Fraction';
 COTlabel = 'Cloud Optical Thickness';
 CDlabel = 'Max Cloud Depth (m)';
 APlabel = 'Accum Precip (m)';
-PRlabel = 'Avg Precip Rate (mm/h)';
+PRlabel = 'Avg Precip Rate (mm h^-^1)';
 
 CFAfile = sprintf('%s/cf_avg_bars_gccn.jpg', Pdir);
 COTAfile = sprintf('%s/cot_avg_bars_gccn.jpg', Pdir);
@@ -372,11 +372,11 @@ PlotBarSet(X, CDA, '',         { 'c' }, Xlabel, CDlabel, Bcolors, LegText, 'Nort
 AxisProps(iaxis).Name = 'Ylim';
 AxisProps(iaxis).Val  = [ 0 400 ];
 
-PlotBarSet(X, ACP, '',         { 'b' }, Xlabel, APlabel, Bcolors, LegText, 'NorthWest', AxisProps, ACPfile);
+PlotBarSet(X, ACP, '',         { 'c' }, Xlabel, APlabel, Bcolors, LegText, 'NorthWest', AxisProps, ACPfile);
 
 AxisProps(iaxis).Name = 'Ylim';
 AxisProps(iaxis).Val  = [ 0 0.3 ];
 
-PlotBarSet(X, PRA, '',         { 'd' }, Xlabel, PRlabel, Bcolors, LegText, 'NorthWest', AxisProps, PRAfile);
+PlotBarSet(X, PRA, '',         { 'b' }, Xlabel, PRlabel, Bcolors, LegText, 'NorthWest', AxisProps, PRAfile);
 
 end

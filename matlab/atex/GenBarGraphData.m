@@ -79,7 +79,7 @@ function [ ] = GenBarGraphData(ConfigFile)
         fprintf('  SST: %d\n', SSTval);
         fprintf('  GCN: %f\n', GCCNval);
         fprintf('\n');
- 
+
         % Cloud frac and cloud depth will be organized as (t)
         % Total precip will be organized as (x,y,t)
         CF  = squeeze(hdf5read(CfFile, CfName));
