@@ -479,3 +479,335 @@ montage -tile 2x3 -geometry ${Jsize}+2+100 \
  W_Skew_TALL_CO_S303_G10M5_ALL.jpg \
  FigureWstatsTall.jpg
 
+echo "Figure: COT pdfs with LWP bin 1, CCN only"
+montage -tile 3x4 -geometry ${Jsize}+2+100 \
+ CotPdf_lwp_b1_TSTART_CO_S293_G10M5_ALL.jpg \
+ CotPdf_lwp_b1_TSTART_CO_S298_G10M5_ALL.jpg \
+ CotPdf_lwp_b1_TSTART_CO_S303_G10M5_ALL.jpg \
+ CotPdf_lwp_b1_TMID_CO_S293_G10M5_ALL.jpg \
+ CotPdf_lwp_b1_TMID_CO_S298_G10M5_ALL.jpg \
+ CotPdf_lwp_b1_TMID_CO_S303_G10M5_ALL.jpg \
+ CotPdf_lwp_b1_TEND_CO_S293_G10M5_ALL.jpg \
+ CotPdf_lwp_b1_TEND_CO_S298_G10M5_ALL.jpg \
+ CotPdf_lwp_b1_TEND_CO_S303_G10M5_ALL.jpg \
+ CotPdf_lwp_b1_TALL_CO_S293_G10M5_ALL.jpg \
+ CotPdf_lwp_b1_TALL_CO_S298_G10M5_ALL.jpg \
+ CotPdf_lwp_b1_TALL_CO_S303_G10M5_ALL.jpg \
+ FigureCotPdfLwpBin1.jpg
+
+echo "Figure: COT pdfs with LWP bin 2, CCN only"
+montage -tile 3x4 -geometry ${Jsize}+2+100 \
+ CotPdf_lwp_b2_TSTART_CO_S293_G10M5_ALL.jpg \
+ CotPdf_lwp_b2_TSTART_CO_S298_G10M5_ALL.jpg \
+ CotPdf_lwp_b2_TSTART_CO_S303_G10M5_ALL.jpg \
+ CotPdf_lwp_b2_TMID_CO_S293_G10M5_ALL.jpg \
+ CotPdf_lwp_b2_TMID_CO_S298_G10M5_ALL.jpg \
+ CotPdf_lwp_b2_TMID_CO_S303_G10M5_ALL.jpg \
+ CotPdf_lwp_b2_TEND_CO_S293_G10M5_ALL.jpg \
+ CotPdf_lwp_b2_TEND_CO_S298_G10M5_ALL.jpg \
+ CotPdf_lwp_b2_TEND_CO_S303_G10M5_ALL.jpg \
+ CotPdf_lwp_b2_TALL_CO_S293_G10M5_ALL.jpg \
+ CotPdf_lwp_b2_TALL_CO_S298_G10M5_ALL.jpg \
+ CotPdf_lwp_b2_TALL_CO_S303_G10M5_ALL.jpg \
+ FigureCotPdfLwpBin2.jpg
+
+echo "Figure: COT pdfs with LWP bin 3, CCN only"
+montage -tile 3x4 -geometry ${Jsize}+2+100 \
+ CotPdf_lwp_b3_TSTART_CO_S293_G10M5_ALL.jpg \
+ CotPdf_lwp_b3_TSTART_CO_S298_G10M5_ALL.jpg \
+ CotPdf_lwp_b3_TSTART_CO_S303_G10M5_ALL.jpg \
+ CotPdf_lwp_b3_TMID_CO_S293_G10M5_ALL.jpg \
+ CotPdf_lwp_b3_TMID_CO_S298_G10M5_ALL.jpg \
+ CotPdf_lwp_b3_TMID_CO_S303_G10M5_ALL.jpg \
+ CotPdf_lwp_b3_TEND_CO_S293_G10M5_ALL.jpg \
+ CotPdf_lwp_b3_TEND_CO_S298_G10M5_ALL.jpg \
+ CotPdf_lwp_b3_TEND_CO_S303_G10M5_ALL.jpg \
+ CotPdf_lwp_b3_TALL_CO_S293_G10M5_ALL.jpg \
+ CotPdf_lwp_b3_TALL_CO_S298_G10M5_ALL.jpg \
+ CotPdf_lwp_b3_TALL_CO_S303_G10M5_ALL.jpg \
+ FigureCotPdfLwpBin3.jpg
+
+echo "Figure: COT pdfs with LWP bin 4, CCN only"
+montage -tile 3x4 -geometry ${Jsize}+2+100 \
+ CotPdf_lwp_b4_TSTART_CO_S293_G10M5_ALL.jpg \
+ CotPdf_lwp_b4_TSTART_CO_S298_G10M5_ALL.jpg \
+ CotPdf_lwp_b4_TSTART_CO_S303_G10M5_ALL.jpg \
+ CotPdf_lwp_b4_TMID_CO_S293_G10M5_ALL.jpg \
+ CotPdf_lwp_b4_TMID_CO_S298_G10M5_ALL.jpg \
+ CotPdf_lwp_b4_TMID_CO_S303_G10M5_ALL.jpg \
+ CotPdf_lwp_b4_TEND_CO_S293_G10M5_ALL.jpg \
+ CotPdf_lwp_b4_TEND_CO_S298_G10M5_ALL.jpg \
+ CotPdf_lwp_b4_TEND_CO_S303_G10M5_ALL.jpg \
+ CotPdf_lwp_b4_TALL_CO_S293_G10M5_ALL.jpg \
+ CotPdf_lwp_b4_TALL_CO_S298_G10M5_ALL.jpg \
+ CotPdf_lwp_b4_TALL_CO_S303_G10M5_ALL.jpg \
+ FigureCotPdfLwpBin4.jpg
+
+echo "Figure: COT pdfs with LWP bin 1, CCN+GCCN"
+montage -tile 3x4 -geometry ${Jsize}+2+100 \
+ CotPdf_lwp_b1_TSTART_CG_UP_C0050_S298.jpg \
+ CotPdf_lwp_b1_TSTART_CG_UP_C0400_S298.jpg \
+ CotPdf_lwp_b1_TSTART_CG_UP_C1600_S298.jpg \
+ CotPdf_lwp_b1_TMID_CG_UP_C0050_S298.jpg \
+ CotPdf_lwp_b1_TMID_CG_UP_C0400_S298.jpg \
+ CotPdf_lwp_b1_TMID_CG_UP_C1600_S298.jpg \
+ CotPdf_lwp_b1_TEND_CG_UP_C0050_S298.jpg \
+ CotPdf_lwp_b1_TEND_CG_UP_C0400_S298.jpg \
+ CotPdf_lwp_b1_TEND_CG_UP_C1600_S298.jpg \
+ CotPdf_lwp_b1_TALL_CG_UP_C0050_S298.jpg \
+ CotPdf_lwp_b1_TALL_CG_UP_C0400_S298.jpg \
+ CotPdf_lwp_b1_TALL_CG_UP_C1600_S298.jpg \
+ FigureCotPdfLwpBin1Gccn.jpg
+
+echo "Figure: COT pdfs with LWP bin 2, CCN+GCCN"
+montage -tile 3x4 -geometry ${Jsize}+2+100 \
+ CotPdf_lwp_b2_TSTART_CG_UP_C0050_S298.jpg \
+ CotPdf_lwp_b2_TSTART_CG_UP_C0400_S298.jpg \
+ CotPdf_lwp_b2_TSTART_CG_UP_C1600_S298.jpg \
+ CotPdf_lwp_b2_TMID_CG_UP_C0050_S298.jpg \
+ CotPdf_lwp_b2_TMID_CG_UP_C0400_S298.jpg \
+ CotPdf_lwp_b2_TMID_CG_UP_C1600_S298.jpg \
+ CotPdf_lwp_b2_TEND_CG_UP_C0050_S298.jpg \
+ CotPdf_lwp_b2_TEND_CG_UP_C0400_S298.jpg \
+ CotPdf_lwp_b2_TEND_CG_UP_C1600_S298.jpg \
+ CotPdf_lwp_b2_TALL_CG_UP_C0050_S298.jpg \
+ CotPdf_lwp_b2_TALL_CG_UP_C0400_S298.jpg \
+ CotPdf_lwp_b2_TALL_CG_UP_C1600_S298.jpg \
+ FigureCotPdfLwpBin2Gccn.jpg
+
+echo "Figure: COT pdfs with LWP bin 3, CCN+GCCN"
+montage -tile 3x4 -geometry ${Jsize}+2+100 \
+ CotPdf_lwp_b3_TSTART_CG_UP_C0050_S298.jpg \
+ CotPdf_lwp_b3_TSTART_CG_UP_C0400_S298.jpg \
+ CotPdf_lwp_b3_TSTART_CG_UP_C1600_S298.jpg \
+ CotPdf_lwp_b3_TMID_CG_UP_C0050_S298.jpg \
+ CotPdf_lwp_b3_TMID_CG_UP_C0400_S298.jpg \
+ CotPdf_lwp_b3_TMID_CG_UP_C1600_S298.jpg \
+ CotPdf_lwp_b3_TEND_CG_UP_C0050_S298.jpg \
+ CotPdf_lwp_b3_TEND_CG_UP_C0400_S298.jpg \
+ CotPdf_lwp_b3_TEND_CG_UP_C1600_S298.jpg \
+ CotPdf_lwp_b3_TALL_CG_UP_C0050_S298.jpg \
+ CotPdf_lwp_b3_TALL_CG_UP_C0400_S298.jpg \
+ CotPdf_lwp_b3_TALL_CG_UP_C1600_S298.jpg \
+ FigureCotPdfLwpBin3Gccn.jpg
+
+echo "Figure: COT pdfs with LWP bin 4, CCN+GCCN"
+montage -tile 3x4 -geometry ${Jsize}+2+100 \
+ CotPdf_lwp_b4_TSTART_CG_UP_C0050_S298.jpg \
+ CotPdf_lwp_b4_TSTART_CG_UP_C0400_S298.jpg \
+ CotPdf_lwp_b4_TSTART_CG_UP_C1600_S298.jpg \
+ CotPdf_lwp_b4_TMID_CG_UP_C0050_S298.jpg \
+ CotPdf_lwp_b4_TMID_CG_UP_C0400_S298.jpg \
+ CotPdf_lwp_b4_TMID_CG_UP_C1600_S298.jpg \
+ CotPdf_lwp_b4_TEND_CG_UP_C0050_S298.jpg \
+ CotPdf_lwp_b4_TEND_CG_UP_C0400_S298.jpg \
+ CotPdf_lwp_b4_TEND_CG_UP_C1600_S298.jpg \
+ CotPdf_lwp_b4_TALL_CG_UP_C0050_S298.jpg \
+ CotPdf_lwp_b4_TALL_CG_UP_C0400_S298.jpg \
+ CotPdf_lwp_b4_TALL_CG_UP_C1600_S298.jpg \
+ FigureCotPdfLwpBin4Gccn.jpg
+
+echo "Figure: PRATE pdfs with LWP bin 1, CCN only"
+montage -tile 3x4 -geometry ${Jsize}+2+100 \
+ PratePdf_lwp_b1_TSTART_CO_S293_G10M5_ALL.jpg \
+ PratePdf_lwp_b1_TSTART_CO_S298_G10M5_ALL.jpg \
+ PratePdf_lwp_b1_TSTART_CO_S303_G10M5_ALL.jpg \
+ PratePdf_lwp_b1_TMID_CO_S293_G10M5_ALL.jpg \
+ PratePdf_lwp_b1_TMID_CO_S298_G10M5_ALL.jpg \
+ PratePdf_lwp_b1_TMID_CO_S303_G10M5_ALL.jpg \
+ PratePdf_lwp_b1_TEND_CO_S293_G10M5_ALL.jpg \
+ PratePdf_lwp_b1_TEND_CO_S298_G10M5_ALL.jpg \
+ PratePdf_lwp_b1_TEND_CO_S303_G10M5_ALL.jpg \
+ PratePdf_lwp_b1_TALL_CO_S293_G10M5_ALL.jpg \
+ PratePdf_lwp_b1_TALL_CO_S298_G10M5_ALL.jpg \
+ PratePdf_lwp_b1_TALL_CO_S303_G10M5_ALL.jpg \
+ FigurePratePdfLwpBin1.jpg
+
+echo "Figure: PRATE pdfs with LWP bin 2, CCN only"
+montage -tile 3x4 -geometry ${Jsize}+2+100 \
+ PratePdf_lwp_b2_TSTART_CO_S293_G10M5_ALL.jpg \
+ PratePdf_lwp_b2_TSTART_CO_S298_G10M5_ALL.jpg \
+ PratePdf_lwp_b2_TSTART_CO_S303_G10M5_ALL.jpg \
+ PratePdf_lwp_b2_TMID_CO_S293_G10M5_ALL.jpg \
+ PratePdf_lwp_b2_TMID_CO_S298_G10M5_ALL.jpg \
+ PratePdf_lwp_b2_TMID_CO_S303_G10M5_ALL.jpg \
+ PratePdf_lwp_b2_TEND_CO_S293_G10M5_ALL.jpg \
+ PratePdf_lwp_b2_TEND_CO_S298_G10M5_ALL.jpg \
+ PratePdf_lwp_b2_TEND_CO_S303_G10M5_ALL.jpg \
+ PratePdf_lwp_b2_TALL_CO_S293_G10M5_ALL.jpg \
+ PratePdf_lwp_b2_TALL_CO_S298_G10M5_ALL.jpg \
+ PratePdf_lwp_b2_TALL_CO_S303_G10M5_ALL.jpg \
+ FigurePratePdfLwpBin2.jpg
+
+echo "Figure: PRATE pdfs with LWP bin 3, CCN only"
+montage -tile 3x4 -geometry ${Jsize}+2+100 \
+ PratePdf_lwp_b3_TSTART_CO_S293_G10M5_ALL.jpg \
+ PratePdf_lwp_b3_TSTART_CO_S298_G10M5_ALL.jpg \
+ PratePdf_lwp_b3_TSTART_CO_S303_G10M5_ALL.jpg \
+ PratePdf_lwp_b3_TMID_CO_S293_G10M5_ALL.jpg \
+ PratePdf_lwp_b3_TMID_CO_S298_G10M5_ALL.jpg \
+ PratePdf_lwp_b3_TMID_CO_S303_G10M5_ALL.jpg \
+ PratePdf_lwp_b3_TEND_CO_S293_G10M5_ALL.jpg \
+ PratePdf_lwp_b3_TEND_CO_S298_G10M5_ALL.jpg \
+ PratePdf_lwp_b3_TEND_CO_S303_G10M5_ALL.jpg \
+ PratePdf_lwp_b3_TALL_CO_S293_G10M5_ALL.jpg \
+ PratePdf_lwp_b3_TALL_CO_S298_G10M5_ALL.jpg \
+ PratePdf_lwp_b3_TALL_CO_S303_G10M5_ALL.jpg \
+ FigurePratePdfLwpBin3.jpg
+
+echo "Figure: PRATE pdfs with LWP bin 4, CCN only"
+montage -tile 3x4 -geometry ${Jsize}+2+100 \
+ PratePdf_lwp_b4_TSTART_CO_S293_G10M5_ALL.jpg \
+ PratePdf_lwp_b4_TSTART_CO_S298_G10M5_ALL.jpg \
+ PratePdf_lwp_b4_TSTART_CO_S303_G10M5_ALL.jpg \
+ PratePdf_lwp_b4_TMID_CO_S293_G10M5_ALL.jpg \
+ PratePdf_lwp_b4_TMID_CO_S298_G10M5_ALL.jpg \
+ PratePdf_lwp_b4_TMID_CO_S303_G10M5_ALL.jpg \
+ PratePdf_lwp_b4_TEND_CO_S293_G10M5_ALL.jpg \
+ PratePdf_lwp_b4_TEND_CO_S298_G10M5_ALL.jpg \
+ PratePdf_lwp_b4_TEND_CO_S303_G10M5_ALL.jpg \
+ PratePdf_lwp_b4_TALL_CO_S293_G10M5_ALL.jpg \
+ PratePdf_lwp_b4_TALL_CO_S298_G10M5_ALL.jpg \
+ PratePdf_lwp_b4_TALL_CO_S303_G10M5_ALL.jpg \
+ FigurePratePdfLwpBin4.jpg
+
+echo "Figure: PRATE pdfs with LWP bin 1, CCN+GCCN"
+montage -tile 3x4 -geometry ${Jsize}+2+100 \
+ PratePdf_lwp_b1_TSTART_CG_UP_C0050_S298.jpg \
+ PratePdf_lwp_b1_TSTART_CG_UP_C0400_S298.jpg \
+ PratePdf_lwp_b1_TSTART_CG_UP_C1600_S298.jpg \
+ PratePdf_lwp_b1_TMID_CG_UP_C0050_S298.jpg \
+ PratePdf_lwp_b1_TMID_CG_UP_C0400_S298.jpg \
+ PratePdf_lwp_b1_TMID_CG_UP_C1600_S298.jpg \
+ PratePdf_lwp_b1_TEND_CG_UP_C0050_S298.jpg \
+ PratePdf_lwp_b1_TEND_CG_UP_C0400_S298.jpg \
+ PratePdf_lwp_b1_TEND_CG_UP_C1600_S298.jpg \
+ PratePdf_lwp_b1_TALL_CG_UP_C0050_S298.jpg \
+ PratePdf_lwp_b1_TALL_CG_UP_C0400_S298.jpg \
+ PratePdf_lwp_b1_TALL_CG_UP_C1600_S298.jpg \
+ FigurePratePdfLwpBin1Gccn.jpg
+
+echo "Figure: PRATE pdfs with LWP bin 2, CCN+GCCN"
+montage -tile 3x4 -geometry ${Jsize}+2+100 \
+ PratePdf_lwp_b2_TSTART_CG_UP_C0050_S298.jpg \
+ PratePdf_lwp_b2_TSTART_CG_UP_C0400_S298.jpg \
+ PratePdf_lwp_b2_TSTART_CG_UP_C1600_S298.jpg \
+ PratePdf_lwp_b2_TMID_CG_UP_C0050_S298.jpg \
+ PratePdf_lwp_b2_TMID_CG_UP_C0400_S298.jpg \
+ PratePdf_lwp_b2_TMID_CG_UP_C1600_S298.jpg \
+ PratePdf_lwp_b2_TEND_CG_UP_C0050_S298.jpg \
+ PratePdf_lwp_b2_TEND_CG_UP_C0400_S298.jpg \
+ PratePdf_lwp_b2_TEND_CG_UP_C1600_S298.jpg \
+ PratePdf_lwp_b2_TALL_CG_UP_C0050_S298.jpg \
+ PratePdf_lwp_b2_TALL_CG_UP_C0400_S298.jpg \
+ PratePdf_lwp_b2_TALL_CG_UP_C1600_S298.jpg \
+ FigurePratePdfLwpBin2Gccn.jpg
+
+echo "Figure: PRATE pdfs with LWP bin 3, CCN+GCCN"
+montage -tile 3x4 -geometry ${Jsize}+2+100 \
+ PratePdf_lwp_b3_TSTART_CG_UP_C0050_S298.jpg \
+ PratePdf_lwp_b3_TSTART_CG_UP_C0400_S298.jpg \
+ PratePdf_lwp_b3_TSTART_CG_UP_C1600_S298.jpg \
+ PratePdf_lwp_b3_TMID_CG_UP_C0050_S298.jpg \
+ PratePdf_lwp_b3_TMID_CG_UP_C0400_S298.jpg \
+ PratePdf_lwp_b3_TMID_CG_UP_C1600_S298.jpg \
+ PratePdf_lwp_b3_TEND_CG_UP_C0050_S298.jpg \
+ PratePdf_lwp_b3_TEND_CG_UP_C0400_S298.jpg \
+ PratePdf_lwp_b3_TEND_CG_UP_C1600_S298.jpg \
+ PratePdf_lwp_b3_TALL_CG_UP_C0050_S298.jpg \
+ PratePdf_lwp_b3_TALL_CG_UP_C0400_S298.jpg \
+ PratePdf_lwp_b3_TALL_CG_UP_C1600_S298.jpg \
+ FigurePratePdfLwpBin3Gccn.jpg
+
+echo "Figure: PRATE pdfs with LWP bin 4, CCN+GCCN"
+montage -tile 3x4 -geometry ${Jsize}+2+100 \
+ PratePdf_lwp_b4_TSTART_CG_UP_C0050_S298.jpg \
+ PratePdf_lwp_b4_TSTART_CG_UP_C0400_S298.jpg \
+ PratePdf_lwp_b4_TSTART_CG_UP_C1600_S298.jpg \
+ PratePdf_lwp_b4_TMID_CG_UP_C0050_S298.jpg \
+ PratePdf_lwp_b4_TMID_CG_UP_C0400_S298.jpg \
+ PratePdf_lwp_b4_TMID_CG_UP_C1600_S298.jpg \
+ PratePdf_lwp_b4_TEND_CG_UP_C0050_S298.jpg \
+ PratePdf_lwp_b4_TEND_CG_UP_C0400_S298.jpg \
+ PratePdf_lwp_b4_TEND_CG_UP_C1600_S298.jpg \
+ PratePdf_lwp_b4_TALL_CG_UP_C0050_S298.jpg \
+ PratePdf_lwp_b4_TALL_CG_UP_C0400_S298.jpg \
+ PratePdf_lwp_b4_TALL_CG_UP_C1600_S298.jpg \
+ FigurePratePdfLwpBin4Gccn.jpg
+
+echo "Figure: COT PDFs all LWP bins, CCN only"
+montage -tile 3x5 -geometry ${Jsize}+2+100 \
+ CotPdf_lwp_b1_TALL_CO_S293_G10M5_ALL.jpg \
+ CotPdf_lwp_b1_TALL_CO_S298_G10M5_ALL.jpg \
+ CotPdf_lwp_b1_TALL_CO_S303_G10M5_ALL.jpg \
+ CotPdf_lwp_b2_TALL_CO_S293_G10M5_ALL.jpg \
+ CotPdf_lwp_b2_TALL_CO_S298_G10M5_ALL.jpg \
+ CotPdf_lwp_b2_TALL_CO_S303_G10M5_ALL.jpg \
+ CotPdf_lwp_b3_TALL_CO_S293_G10M5_ALL.jpg \
+ CotPdf_lwp_b3_TALL_CO_S298_G10M5_ALL.jpg \
+ CotPdf_lwp_b3_TALL_CO_S303_G10M5_ALL.jpg \
+ CotPdf_lwp_b4_TALL_CO_S293_G10M5_ALL.jpg \
+ CotPdf_lwp_b4_TALL_CO_S298_G10M5_ALL.jpg \
+ CotPdf_lwp_b4_TALL_CO_S303_G10M5_ALL.jpg \
+ CotPdf_TALL_CO_S293_G10M5_ALL.jpg \
+ CotPdf_TALL_CO_S298_G10M5_ALL.jpg \
+ CotPdf_TALL_CO_S303_G10M5_ALL.jpg \
+ FigureCotPdfLwpAllBins.jpg
+
+echo "Figure: PRATE PDFs all LWP bins, CCN only"
+montage -tile 3x5 -geometry ${Jsize}+2+100 \
+ PratePdf_lwp_b1_TALL_CO_S293_G10M5_ALL.jpg \
+ PratePdf_lwp_b1_TALL_CO_S298_G10M5_ALL.jpg \
+ PratePdf_lwp_b1_TALL_CO_S303_G10M5_ALL.jpg \
+ PratePdf_lwp_b2_TALL_CO_S293_G10M5_ALL.jpg \
+ PratePdf_lwp_b2_TALL_CO_S298_G10M5_ALL.jpg \
+ PratePdf_lwp_b2_TALL_CO_S303_G10M5_ALL.jpg \
+ PratePdf_lwp_b3_TALL_CO_S293_G10M5_ALL.jpg \
+ PratePdf_lwp_b3_TALL_CO_S298_G10M5_ALL.jpg \
+ PratePdf_lwp_b3_TALL_CO_S303_G10M5_ALL.jpg \
+ PratePdf_lwp_b4_TALL_CO_S293_G10M5_ALL.jpg \
+ PratePdf_lwp_b4_TALL_CO_S298_G10M5_ALL.jpg \
+ PratePdf_lwp_b4_TALL_CO_S303_G10M5_ALL.jpg \
+ PratePdf_TALL_CO_S293_G10M5_ALL.jpg \
+ PratePdf_TALL_CO_S298_G10M5_ALL.jpg \
+ PratePdf_TALL_CO_S303_G10M5_ALL.jpg \
+ FigurePratePdfLwpAllBins.jpg
+
+echo "Figure: COT pdfs all LWP bins, CCN+GCCN"
+montage -tile 3x5 -geometry ${Jsize}+2+100 \
+ CotPdf_lwp_b1_TALL_CG_UP_C0050_S298.jpg \
+ CotPdf_lwp_b1_TALL_CG_UP_C0400_S298.jpg \
+ CotPdf_lwp_b1_TALL_CG_UP_C1600_S298.jpg \
+ CotPdf_lwp_b2_TALL_CG_UP_C0050_S298.jpg \
+ CotPdf_lwp_b2_TALL_CG_UP_C0400_S298.jpg \
+ CotPdf_lwp_b2_TALL_CG_UP_C1600_S298.jpg \
+ CotPdf_lwp_b3_TALL_CG_UP_C0050_S298.jpg \
+ CotPdf_lwp_b3_TALL_CG_UP_C0400_S298.jpg \
+ CotPdf_lwp_b3_TALL_CG_UP_C1600_S298.jpg \
+ CotPdf_lwp_b4_TALL_CG_UP_C0050_S298.jpg \
+ CotPdf_lwp_b4_TALL_CG_UP_C0400_S298.jpg \
+ CotPdf_lwp_b4_TALL_CG_UP_C1600_S298.jpg \
+ CotPdf_TALL_CG_UP_C0050_S298.jpg \
+ CotPdf_TALL_CG_UP_C0400_S298.jpg \
+ CotPdf_TALL_CG_UP_C1600_S298.jpg \
+ FigureCotPdfLwpAllBinsGccn.jpg
+
+echo "Figure: PRATE pdfs all LWP bins, CCN+GCCN"
+montage -tile 3x5 -geometry ${Jsize}+2+100 \
+ PratePdf_lwp_b1_TALL_CG_UP_C0050_S298.jpg \
+ PratePdf_lwp_b1_TALL_CG_UP_C0400_S298.jpg \
+ PratePdf_lwp_b1_TALL_CG_UP_C1600_S298.jpg \
+ PratePdf_lwp_b2_TALL_CG_UP_C0050_S298.jpg \
+ PratePdf_lwp_b2_TALL_CG_UP_C0400_S298.jpg \
+ PratePdf_lwp_b2_TALL_CG_UP_C1600_S298.jpg \
+ PratePdf_lwp_b3_TALL_CG_UP_C0050_S298.jpg \
+ PratePdf_lwp_b3_TALL_CG_UP_C0400_S298.jpg \
+ PratePdf_lwp_b3_TALL_CG_UP_C1600_S298.jpg \
+ PratePdf_lwp_b4_TALL_CG_UP_C0050_S298.jpg \
+ PratePdf_lwp_b4_TALL_CG_UP_C0400_S298.jpg \
+ PratePdf_lwp_b4_TALL_CG_UP_C1600_S298.jpg \
+ PratePdf_TALL_CG_UP_C0050_S298.jpg \
+ PratePdf_TALL_CG_UP_C0400_S298.jpg \
+ PratePdf_TALL_CG_UP_C1600_S298.jpg \
+ FigurePratePdfLwpAllBinsGccn.jpg
+
