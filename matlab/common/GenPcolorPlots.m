@@ -13,7 +13,7 @@ if (exist(Pdir, 'dir') ~= 7)
   mkdir(Pdir);
 end
 
-Fsize = 45;
+Fsize = 25;
 
 for icase = 1:length(Config.Cases)
   Case  = Config.Cases(icase).Cname;
@@ -24,14 +24,11 @@ for icase = 1:length(Config.Cases)
     Cmax    = Config.PcolorPlots(iplot).Cmax;
     Cticks  = Config.PcolorPlots(iplot).Cticks;
     Cscale  = Config.PcolorPlots(iplot).Cscale;
-    Title   = Config.PcolorPlots(iplot).Title;
+    Ptitle  = Config.PcolorPlots(iplot).Title.Main;
+    Pmarkers = Config.PcolorPlots(iplot).Title.Pmarkers;
     Xlabel  = Config.PcolorPlots(iplot).Xlabel;
     Ylabel  = Config.PcolorPlots(iplot).Ylabel;
     OutFile = sprintf('%s/%s_%s.jpg', Pdir, Config.PcolorPlots(iplot).OutFile, Case);
-
-    if (strcmp(Title, ' '))
-      Title = regexprep(Pname,'_', ' ');
-    end
 
     fprintf('********************************************************************\n');
     fprintf('Generating psuedo color plot:\n');
@@ -101,7 +98,7 @@ if (~isempty(regexp(InFile, '_cdepth_')))
   fprintf('WARNING: have cloud depth, adjusting x ticks\n');
   set(gca, 'XTick', [ 1000 3000 ]);
 end
-    title(Title);
+    title(Ptitle);
     xlabel(Xlabel);
     ylabel(Ylabel);
     cbar = colorbar;

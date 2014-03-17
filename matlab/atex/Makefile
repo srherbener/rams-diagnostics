@@ -19,6 +19,8 @@ SCRIPTS = $(DEST)/ExtractSample.m \
           $(DEST)/GenMomentData.m \
           $(DEST)/GenProfileData.m \
           $(DEST)/GenHistData.m \
+          $(DEST)/GenHistFiles.m \
+          $(DEST)/GenPdfFiles.m \
           $(DEST)/GenPdfPlots.m \
           $(DEST)/GenTurbData.m \
           $(DEST)/GenWcfads.m \

@@ -73,6 +73,7 @@ i_pts_plot = 0;
 i_prs_plot = 0;
 i_pset = 0;
 i_pvar = 0;
+i_paxis = 0;
 i_pds = 0;
 for i = 1:size(InLines,1)
   % Convert a line to a list of space separated fields
@@ -250,9 +251,13 @@ for i = 1:size(InLines,1)
       Cdata.PlotVars(i_pvar).Fprefix = Fields{4};
       Cdata.PlotVars(i_pvar).Label   = regexprep(Fields{5}, '@', ' ');
       Cdata.PlotVars(i_pvar).Units   = regexprep(Fields{6}, '@', ' ');
-      Cdata.PlotVars(i_pvar).Min     = sscanf(Fields{7}, '%f');
-      Cdata.PlotVars(i_pvar).Max     = sscanf(Fields{8}, '%f');
-      Cdata.PlotVars(i_pvar).Scale   = sscanf(Fields{9}, '%f');
+      Cdata.PlotVars(i_pvar).Scale   = sscanf(Fields{7}, '%f');
+    case 'PlotAxis:'
+      i_paxis = i_paxis + 1;
+      Cdata.PlotAxes(i_paxis).Name    = Fields{2};
+      Cdata.PlotAxes(i_paxis).Min     = sscanf(Fields{3}, '%f');
+      Cdata.PlotAxes(i_paxis).Max     = sscanf(Fields{4}, '%f');
+      Cdata.PlotAxes(i_paxis).Scale   = Fields{5};
     case 'PlotDselect:'
       i_pds = i_pds + 1;
       Cdata.PlotDselects(i_pds).Name = Fields{2};
@@ -298,16 +303,20 @@ for i = 1:size(InLines,1)
       Cdata.LinePlots(i_lplot).PSname  = Fields{2};
       Cdata.LinePlots(i_lplot).XVname  = Fields{3};
       Cdata.LinePlots(i_lplot).YVname  = Fields{4};
-      Cdata.LinePlots(i_lplot).DSname  = Fields{5};
-      Cdata.LinePlots(i_lplot).Smooth  = Fields{6};
-      Cdata.LinePlots(i_lplot).Title   = ParseTitle(Fields{7});
-      Cdata.LinePlots(i_lplot).LegLoc  = Fields{8};
-      Cdata.LinePlots(i_lplot).AddMeas = Fields{9};
-      Cdata.LinePlots(i_lplot).OutFile = Fields{10};
+      Cdata.LinePlots(i_lplot).XAname  = Fields{5};
+      Cdata.LinePlots(i_lplot).YAname  = Fields{6};
+      Cdata.LinePlots(i_lplot).DSname  = Fields{7};
+      Cdata.LinePlots(i_lplot).Smooth  = Fields{8};
+      Cdata.LinePlots(i_lplot).Title   = ParseTitle(Fields{9});
+      Cdata.LinePlots(i_lplot).LegLoc  = Fields{10};
+      Cdata.LinePlots(i_lplot).AddMeas = Fields{11};
+      Cdata.LinePlots(i_lplot).OutFile = Fields{12};
 
       Cdata.LinePlots(i_lplot).PSnum   = -1;
       Cdata.LinePlots(i_lplot).XVnum   = -1;
       Cdata.LinePlots(i_lplot).YVnum   = -1;
+      Cdata.LinePlots(i_lplot).XAnum   = -1;
+      Cdata.LinePlots(i_lplot).YAnum   = -1;
       Cdata.LinePlots(i_lplot).DSnum   = -1;
     case 'ContourPlot:'
       i_cplot = i_cplot + 1;
@@ -507,9 +516,11 @@ end
   
 % Make the association between LinePlots and the PlotSets, PlotVars, PlotDselects
 if (isfield(Cdata, 'LinePlots'))
-  Cdata.LinePlots = AssociateStructs( Cdata.LinePlots, Cdata.PlotSets, 'PS', 'PlotSet', 'LinePlot' ); 
-  Cdata.LinePlots = AssociateStructs( Cdata.LinePlots, Cdata.PlotVars, 'XV', 'PlotVar', 'LinePlot' ); 
-  Cdata.LinePlots = AssociateStructs( Cdata.LinePlots, Cdata.PlotVars, 'YV', 'PlotVar', 'LinePlot' ); 
+  Cdata.LinePlots = AssociateStructs( Cdata.LinePlots, Cdata.PlotSets, 'PS', 'PlotSet',  'LinePlot' ); 
+  Cdata.LinePlots = AssociateStructs( Cdata.LinePlots, Cdata.PlotVars, 'XV', 'PlotVar',  'LinePlot' ); 
+  Cdata.LinePlots = AssociateStructs( Cdata.LinePlots, Cdata.PlotVars, 'YV', 'PlotVar',  'LinePlot' ); 
+  Cdata.LinePlots = AssociateStructs( Cdata.LinePlots, Cdata.PlotAxes, 'XA', 'PlotAxis', 'LinePlot' ); 
+  Cdata.LinePlots = AssociateStructs( Cdata.LinePlots, Cdata.PlotAxes, 'YA', 'PlotAxis', 'LinePlot' ); 
   Cdata.LinePlots = AssociateStructs( Cdata.LinePlots, Cdata.PlotDselects, 'DS', 'PlotDselect', 'LinePlot' ); 
 end
 

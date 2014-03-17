@@ -25,14 +25,24 @@ for iplot = 1:length(Config.LinePlots)
     % check associations
     ixv = Config.LinePlots(iplot).XVnum;
     iyv = Config.LinePlots(iplot).YVnum;
+    ixa = Config.LinePlots(iplot).XAnum;
+    iya = Config.LinePlots(iplot).YAnum;
     ids = Config.LinePlots(iplot).DSnum;
     ips = Config.LinePlots(iplot).PSnum;
     if (ixv == 0)
-      fprintf('WARNING: skipping LinePlot number %d due to no associated PlotVar\n', iplot)
+      fprintf('WARNING: skipping LinePlot number %d due to no associated PlotVar for X\n', iplot)
       continue;
     end
     if (iyv == 0)
-      fprintf('WARNING: skipping LinePlot number %d due to no associated PlotVar\n', iplot)
+      fprintf('WARNING: skipping LinePlot number %d due to no associated PlotVar for Y\n', iplot)
+      continue;
+    end
+    if (ixa == 0)
+      fprintf('WARNING: skipping LinePlot number %d due to no associated PlotAxis for X\n', iplot)
+      continue;
+    end
+    if (iya == 0)
+      fprintf('WARNING: skipping LinePlot number %d due to no associated PlotAxis for Y\n', iplot)
       continue;
     end
     if (ids == 0)
@@ -65,9 +75,11 @@ for iplot = 1:length(Config.LinePlots)
     end
     Xfprefix = Config.PlotVars(ixv).Fprefix;
     Xscale   = Config.PlotVars(ixv).Scale;
-    if (Config.PlotVars(ixv).Min > Config.PlotVars(ixv).Max)
+    Xamin    = Config.PlotAxes(ixa).Min;
+    Xamax    = Config.PlotAxes(ixa).Max;
+    if (Xamin > Xamax)
       AxisProps(i_ap).Name = 'Xlim';
-      AxisProps(i_ap).Val = [ Config.PlotVars(ixv).Max Config.PlotVars(ixv).Min ]; 
+      AxisProps(i_ap).Val = [ Xamax Xamin ]; 
       i_ap = i_ap + 1;
 
       AxisProps(i_ap).Name = 'XDir';
@@ -75,9 +87,13 @@ for iplot = 1:length(Config.LinePlots)
       i_ap = i_ap + 1;
     else
       AxisProps(i_ap).Name = 'Xlim';
-      AxisProps(i_ap).Val = [ Config.PlotVars(ixv).Min Config.PlotVars(ixv).Max ]; 
+      AxisProps(i_ap).Val = [ Xamin Xamax ]; 
       i_ap = i_ap + 1;
     end
+    % axis scale
+    AxisProps(i_ap).Name = 'Xscale';
+    AxisProps(i_ap).Val  = Config.PlotAxes(ixa).Scale;
+    i_ap = i_ap + 1;
 
     % Y variable, axis specs
     Yvname   = Config.PlotVars(iyv).Var;
@@ -88,9 +104,11 @@ for iplot = 1:length(Config.LinePlots)
     end
     Yfprefix = Config.PlotVars(iyv).Fprefix;
     Yscale   = Config.PlotVars(iyv).Scale;
-    if (Config.PlotVars(iyv).Min > Config.PlotVars(iyv).Max)
+    Yamin    = Config.PlotAxes(iya).Min;
+    Yamax    = Config.PlotAxes(iya).Max;
+    if (Yamin > Yamax)
       AxisProps(i_ap).Name = 'Ylim';
-      AxisProps(i_ap).Val = [ Config.PlotVars(iyv).Max Config.PlotVars(iyv).Min ]; 
+      AxisProps(i_ap).Val = [ Yamax Yamin ]; 
       i_ap = i_ap + 1;
 
       AxisProps(i_ap).Name = 'YDir';
@@ -98,9 +116,13 @@ for iplot = 1:length(Config.LinePlots)
       i_ap = i_ap + 1;
     else
       AxisProps(i_ap).Name = 'Ylim';
-      AxisProps(i_ap).Val = [ Config.PlotVars(iyv).Min Config.PlotVars(iyv).Max ]; 
+      AxisProps(i_ap).Val = [ Yamin Yamax ]; 
       i_ap = i_ap + 1;
     end
+    % axis scale
+    AxisProps(i_ap).Name = 'Yscale';
+    AxisProps(i_ap).Val  = Config.PlotAxes(iya).Scale;
+    i_ap = i_ap + 1;
 
     % Data selection specs
     Xmin = Config.PlotDselects(ids).Xmin;
