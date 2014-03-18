@@ -2300,7 +2300,9 @@ Smeas1d: CO_S303_G10M5 smeas1d_pop_CO_S303_G10M5 TsAveragedData pop_lwp pop 0.0 
 #Hist2d: h2d_cfrac_cdepth   TsAveragedData/hist2d_cdepth_cfrac   hist2d 100 4000 1     0.2 1 1     30 36
 
 #Hist2d: hist2d_swuptoa_pcprr  TsAveragedData/hist2d_pcprr_swuptoa  hist2d 0 10 2    0.0 1000 2     12 36
-Hist2d: hist2d_lwp_cdepth  TsAveragedData/hist2d_lwp_cdepth  hist2d 0 20 2    0.0 4000 2     12 36
+#Hist2d: hist2d_lwp_cdepth  TsAveragedData/hist2d_lwp_cdepth  hist2d 0 20 2    0.0 4000 2     12 36
+#Hist2d: hist2d_lwp_pcprr     TsAveragedData/hist2d_lwp_pcprr   hist2d 0 20 2    0 120 2     12 36
+Hist2d: hist2d_pcprr_cdepth  TsAveragedData/hist2d_pcprr_cdepth   hist2d 0 120 2    0 4000 2     12 36
 
 #####################################
 ########## Slope Plots ##############
@@ -2335,11 +2337,13 @@ Slope1dPlot: CO_POP_SST_G10M5 DIAGS Slopes_pop CorCoeffs_pop LwpBinLower LwpBinU
 #
 # PcolorPlot: <file_prefix> <color_min> <color_max> <color_ticks> <color_scale> <title> <xlabel> <ylabel> <out_file>
 
-PcolorPlot: DIAGS/hist2d_cfrac_ctoptempc 1 1e5 10:1000:100000 log _ Top_Temp_(C) Fraction hist2d_cfrac_ctoptempc
-PcolorPlot: DIAGS/hist2d_cfrac_cdepth    1 1e5 10:1000:100000 log _ Depth_(m)    Fraction hist2d_cfrac_cdepth
-PcolorPlot: DIAGS/hist2d_swuptoa_pcprr   1 1e5 10:1000:100000 log _ Precip_Rate_(mm/hr) SWUP_TOA_(W/m^2) hist2d_swuptoa_pcprr
+#PcolorPlot: DIAGS/hist2d_cfrac_ctoptempc 1 1e5 10:1000:100000 log _ Top_Temp_(C) Fraction hist2d_cfrac_ctoptempc
+#PcolorPlot: DIAGS/hist2d_cfrac_cdepth    1 1e5 10:1000:100000 log _ Depth_(m)    Fraction hist2d_cfrac_cdepth
+#PcolorPlot: DIAGS/hist2d_swuptoa_pcprr   1 1e5 10:1000:100000 log _ Precip_Rate_(mm/hr) SWUP_TOA_(W/m^2) hist2d_swuptoa_pcprr
 
-PcolorPlot: DIAGS/hist2d_lwp_cdepth      1 1e5 10:1000:100000 log _ LWP_(mm) Cloud_Depth(m) hist2d_lwp_cdepth
+#PcolorPlot: DIAGS/hist2d_lwp_cdepth      1 1e5 10:1000:100000 log _ LWP_(mm) Cloud_Depth(m) hist2d_lwp_cdepth
+#PcolorPlot: DIAGS/hist2d_lwp_pcprr       1 1e5 10:1000:100000 log _ LWP_(mm) Precip_Rate(mm/h) hist2d_lwp_pcprr
+PcolorPlot: DIAGS/hist2d_pcprr_cdepth    1 1e5 10:1000:100000 log _ Precip_Rate(mm/h) Cloud_Depth(m) hist2d_pcprr_cdepth
 
 ####################### Plot Sets ############################
 
