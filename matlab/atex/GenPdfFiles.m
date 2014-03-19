@@ -14,6 +14,8 @@ function [ ] = GenPdfFiles(ConfigFile)
     { { 'pcprr'  'pcprr_lwp_b1'  'pcprr_lwp_b2'  'pcprr_lwp_b3'  'pcprr_lwp_b4'  } 'pcprr_bins'  'pdf_pcprr' }
     { { 'cot'    'cot_lwp_b1'    'cot_lwp_b2'    'cot_lwp_b3'    'cot_lwp_b4'    } 'cot_bins'    'pdf_cot' }
     { { 'albedo' 'albedo_lwp_b1' 'albedo_lwp_b2' 'albedo_lwp_b3' 'albedo_lwp_b4' } 'albedo_bins' 'pdf_albedo' }
+    { { 'cd' 'cd_lwp_b1' 'cd_lwp_b2' 'cd_lwp_b3' 'cd_lwp_b4' } 'cd_bins' 'pdf_cd' }
+    { { 'cf' 'cf_lwp_b1' 'cf_lwp_b2' 'cf_lwp_b3' 'cf_lwp_b4' } 'cf_bins' 'pdf_cf' }
     };
   Nset = length(VarSets);
 

@@ -14,14 +14,22 @@ function [ ] = GenHistFiles(ConfigFile)
     CtFprefix = 'cloud_opt_thick';
     LwpName = 'vertint_cond';
     LwpFprefix = 'vint_cond';
+    CdName = 'cloud_depth';
+    CdFprefix = 'cloud_depth';
+    CfName = 'cloud_frac';
+    CfFprefix = 'cloud_frac';
 
     PR_BINS = 10.^(-3:0.02:2); % pcprr bins, even logarithmic spacing from 0.001 to 100.0
     ALB_BINS = 0:0.01:1; % albedo bins
     CT_BINS = 0:300;  % cloud optical thickness bins
+    CD_BINS = 0:100:4000;  % cloud depth bins
+    CF_BINS = 0:0.01:1;  % cloud fraction bins
 
     Nprb = length(PR_BINS);
     Nab  = length(ALB_BINS);
     Nctb  = length(CT_BINS);
+    Ncdb  = length(CD_BINS);
+    Ncfb  = length(CF_BINS);
 
     g = 0.85; % for albedo calc, scattering asymmetry param (cloud droplets interacting with visible light)
 
@@ -29,6 +37,8 @@ function [ ] = GenHistFiles(ConfigFile)
         Case = Config.Cases(icase).Cname;
         PrFile = sprintf('%s/%s-%s-AS-1999-02-10-040000-g1.h5', Hdir, PrFprefix, Case);
         CtFile = sprintf('%s/%s-%s-AS-1999-02-10-040000-g1.h5', Hdir, CtFprefix, Case);
+        CdFile = sprintf('%s/%s-%s-AS-1999-02-10-040000-g1.h5', Hdir, CdFprefix, Case);
+        CfFile = sprintf('%s/%s-%s-AS-1999-02-10-040000-g1.h5', Hdir, CfFprefix, Case);
         LwpFile = sprintf('%s/%s-%s-AS-1999-02-10-040000-g1.h5', Hdir, LwpFprefix, Case);
 
         fprintf('***************************************************************\n');
@@ -38,6 +48,10 @@ function [ ] = GenHistFiles(ConfigFile)
         fprintf('    Var name: %s\n', PrName);
         fprintf('  Input cloud optical thickness file: %s\n', CtFile);
         fprintf('    Var name: %s\n', CtName);
+        fprintf('  Input cloud depth file: %s\n', CdFile);
+        fprintf('    Var name: %s\n', CdName);
+        fprintf('  Input cloud fraction file: %s\n', CfFile);
+        fprintf('    Var name: %s\n', CfName);
         fprintf('  LWP file: %s\n', LwpFile);
         fprintf('    Var name: %s\n', LwpName);
         fprintf('\n');
@@ -59,6 +73,12 @@ function [ ] = GenHistFiles(ConfigFile)
         CT_DS = ncgeodataset(CtFile);
         CT_VAR = CT_DS.geovariable(CtName);
  
+        CD_DS = ncgeodataset(CdFile);
+        CD_VAR = CD_DS.geovariable(CdName);
+ 
+        CF_DS = ncgeodataset(CfFile);
+        CF_VAR = CF_DS.geovariable(CfName);
+ 
         LWP_DS = ncgeodataset(LwpFile);
         LWP_VAR = LWP_DS.geovariable(LwpName);
 
@@ -75,6 +95,18 @@ function [ ] = GenHistFiles(ConfigFile)
         CT_LWP_B3_HIST = zeros([ Nctb Nt ]);
         CT_LWP_B4_HIST = zeros([ Nctb Nt ]);
 
+        CD_HIST        = zeros([ Ncdb Nt ]);
+        CD_LWP_B1_HIST = zeros([ Ncdb Nt ]);
+        CD_LWP_B2_HIST = zeros([ Ncdb Nt ]);
+        CD_LWP_B3_HIST = zeros([ Ncdb Nt ]);
+        CD_LWP_B4_HIST = zeros([ Ncdb Nt ]);
+
+        CF_HIST        = zeros([ Ncfb Nt ]);
+        CF_LWP_B1_HIST = zeros([ Ncfb Nt ]);
+        CF_LWP_B2_HIST = zeros([ Ncfb Nt ]);
+        CF_LWP_B3_HIST = zeros([ Ncfb Nt ]);
+        CF_LWP_B4_HIST = zeros([ Ncfb Nt ]);
+
         ALB_HIST        = zeros([ Nab Nt ]);
         ALB_LWP_B1_HIST = zeros([ Nab Nt ]);
         ALB_LWP_B2_HIST = zeros([ Nab Nt ]);
@@ -88,10 +120,14 @@ function [ ] = GenHistFiles(ConfigFile)
           % RAMS uses the borders for boundaries so trim these off
           PR  = squeeze(PR_VAR.data(i,:,:));
           CT  = squeeze(CT_VAR.data(i,:,:));
+          CD  = squeeze(CD_VAR.data(i,:,:));
+          CF  = squeeze(CF_VAR.data(i,:,:));
           LWP = squeeze(LWP_VAR.data(i,:,:));
 
           PR = reshape(PR(2:end-1,2:end-1), [ 1  Ntrim ]);
           CT = reshape(CT(2:end-1,2:end-1), [ 1  Ntrim ]);
+          CD = reshape(CD(2:end-1,2:end-1), [ 1  Ntrim ]);
+          CF = reshape(CF(2:end-1,2:end-1), [ 1  Ntrim ]);
           LWP = reshape(LWP(2:end-1,2:end-1), [ 1  Ntrim ]);
 
           % Divide PR and CT into 4 bins according to LWP (mm)
@@ -109,6 +145,16 @@ function [ ] = GenHistFiles(ConfigFile)
           CT_LWP_B3 = CT(LWP >= 0.10 & LWP < 1.00);
           CT_LWP_B4 = CT(LWP >= 1.00);
 
+          CD_LWP_B1 = CD(LWP < 0.01);
+          CD_LWP_B2 = CD(LWP >= 0.01 & LWP < 0.10);
+          CD_LWP_B3 = CD(LWP >= 0.10 & LWP < 1.00);
+          CD_LWP_B4 = CD(LWP >= 1.00);
+
+          CF_LWP_B1 = CF(LWP < 0.01);
+          CF_LWP_B2 = CF(LWP >= 0.01 & LWP < 0.10);
+          CF_LWP_B3 = CF(LWP >= 0.10 & LWP < 1.00);
+          CF_LWP_B4 = CF(LWP >= 1.00);
+
           % form the histograms
           PR_HIST(:,i)        = histc(PR, PR_BINS);
           PR_LWP_B1_HIST(:,i) = histc(PR_LWP_B1, PR_BINS);
@@ -121,6 +167,18 @@ function [ ] = GenHistFiles(ConfigFile)
           CT_LWP_B2_HIST(:,i) = histc(CT_LWP_B2, CT_BINS);
           CT_LWP_B3_HIST(:,i) = histc(CT_LWP_B3, CT_BINS);
           CT_LWP_B4_HIST(:,i) = histc(CT_LWP_B4, CT_BINS);
+
+          CD_HIST(:,i)        = histc(CD, CD_BINS);
+          CD_LWP_B1_HIST(:,i) = histc(CD_LWP_B1, CD_BINS);
+          CD_LWP_B2_HIST(:,i) = histc(CD_LWP_B2, CD_BINS);
+          CD_LWP_B3_HIST(:,i) = histc(CD_LWP_B3, CD_BINS);
+          CD_LWP_B4_HIST(:,i) = histc(CD_LWP_B4, CD_BINS);
+
+          CF_HIST(:,i)        = histc(CF, CF_BINS);
+          CF_LWP_B1_HIST(:,i) = histc(CF_LWP_B1, CF_BINS);
+          CF_LWP_B2_HIST(:,i) = histc(CF_LWP_B2, CF_BINS);
+          CF_LWP_B3_HIST(:,i) = histc(CF_LWP_B3, CF_BINS);
+          CF_LWP_B4_HIST(:,i) = histc(CF_LWP_B4, CF_BINS);
 
           % calculate albdeo and form the histograms
           ALB        = ((1 - g) .* CT) ./ (((1 - g) .* CT) + 2);
@@ -154,6 +212,20 @@ function [ ] = GenHistFiles(ConfigFile)
         hdf5write(OutFile, '/cot_lwp_b2_hist', CT_LWP_B2_HIST, 'WriteMode', 'append');
         hdf5write(OutFile, '/cot_lwp_b3_hist', CT_LWP_B3_HIST, 'WriteMode', 'append');
         hdf5write(OutFile, '/cot_lwp_b4_hist', CT_LWP_B4_HIST, 'WriteMode', 'append');
+
+        hdf5write(OutFile, '/cd_bins',        CD_BINS,        'WriteMode', 'append');
+        hdf5write(OutFile, '/cd_hist',        CD_HIST,        'WriteMode', 'append');
+        hdf5write(OutFile, '/cd_lwp_b1_hist', CD_LWP_B1_HIST, 'WriteMode', 'append');
+        hdf5write(OutFile, '/cd_lwp_b2_hist', CD_LWP_B2_HIST, 'WriteMode', 'append');
+        hdf5write(OutFile, '/cd_lwp_b3_hist', CD_LWP_B3_HIST, 'WriteMode', 'append');
+        hdf5write(OutFile, '/cd_lwp_b4_hist', CD_LWP_B4_HIST, 'WriteMode', 'append');
+
+        hdf5write(OutFile, '/cf_bins',        CF_BINS,        'WriteMode', 'append');
+        hdf5write(OutFile, '/cf_hist',        CF_HIST,        'WriteMode', 'append');
+        hdf5write(OutFile, '/cf_lwp_b1_hist', CF_LWP_B1_HIST, 'WriteMode', 'append');
+        hdf5write(OutFile, '/cf_lwp_b2_hist', CF_LWP_B2_HIST, 'WriteMode', 'append');
+        hdf5write(OutFile, '/cf_lwp_b3_hist', CF_LWP_B3_HIST, 'WriteMode', 'append');
+        hdf5write(OutFile, '/cf_lwp_b4_hist', CF_LWP_B4_HIST, 'WriteMode', 'append');
 
         hdf5write(OutFile, '/albedo_bins',        ALB_BINS,        'WriteMode', 'append');
         hdf5write(OutFile, '/albedo_hist',        ALB_HIST,        'WriteMode', 'append');
