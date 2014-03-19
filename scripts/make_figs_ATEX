@@ -4,810 +4,1375 @@
 
 Jsize="1200x900"
 
-echo "Figure: ATEX sounding"
-montage -tile 1x1 -geometry ${Jsize}+2+100 \
- InitialSounding.jpg \
- FigSounding.jpg
+#echo "Figure: ATEX sounding"
+#montage -tile 1x1 -geometry ${Jsize}+2+100 \
+# InitialSounding.jpg \
+# FigSounding.jpg
+#
+#echo "Figure: Aerosol profiles"
+#montage -tile 1x2 -geometry ${Jsize}+2+100 \
+# InitialCcnProfile.jpg \
+# InitialGccnProfile.jpg \
+# FigAerosolProfiles.jpg
+#
+#echo "Figure: Bar graphs, COT, CCN only, LWP Thresholds"
+#montage -tile 2x2 -geometry ${Jsize}+2+100 \
+# cot_avg_bars.jpg \
+# cot_lwp_0p01_avg_bars.jpg \
+# cot_lwp_0p10_avg_bars.jpg \
+# cot_lwp_1p00_avg_bars.jpg \
+# FigCloudOptThick.jpg
+#
+#echo "Figure: Bar graphs, COT, CCN only, LWP Bins"
+#montage -tile 2x3 -geometry ${Jsize}+2+100 \
+# cot_avg_bars.jpg \
+# cot_lwp_b1_avg_bars.jpg \
+# cot_lwp_b2_avg_bars.jpg \
+# cot_lwp_b3_avg_bars.jpg \
+# cot_lwp_b4_avg_bars.jpg \
+# FigCloudOptThickLwpBins.jpg
+#
+#echo "Figure: Bar graphs, CCN only: COT, CD, CF, Acc precip, Precip rate"
+#montage -tile 2x3 -geometry ${Jsize}+2+100 \
+# cot_avg_bars.jpg \
+# cd_avg_bars.jpg \
+# cf_avg_bars.jpg \
+# acc_pcp_bars.jpg \
+# pcprr_avg_bars.jpg \
+# FigBarCloudtPrecip.jpg
+#
+#echo "Figure: Bar graphs, CCN only: COT, Precip rate"
+#montage -tile 2x2 -geometry ${Jsize}+2+100 \
+# cot_avg_bars.jpg \
+# pcprr_avg_bars.jpg \
+# acc_pcp_bars.jpg \
+# FigBarCloudtPrecipShort.jpg
+#
+#echo "Figure: Cloud Mass (whole domain), Cloud, PCPRR, CCN only"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# Cloud_TALL_CO_S293_G10M5_ALL.jpg \
+# Cloud_TALL_CO_S298_G10M5_ALL.jpg \
+# Cloud_TALL_CO_S303_G10M5_ALL.jpg \
+# copt_thick_pdf_S293.jpg \
+# copt_thick_pdf_S298.jpg \
+# copt_thick_pdf_S303.jpg \
+# pcprr_pdf_S293.jpg \
+# pcprr_pdf_S298.jpg \
+# pcprr_pdf_S303.jpg \
+# FigCloudProperties.jpg
+#
+#echo "Figure: W'ThetaV', Wvar, Wskew, CCN only"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# W_ThetaV_TALL_CO_S293_G10M5_ALL.jpg \
+# W_Var_TALL_CO_S293_G10M5_ALL.jpg \
+# W_Skew_TALL_CO_S293_G10M5_ALL.jpg \
+# W_ThetaV_TALL_CO_S298_G10M5_ALL.jpg \
+# W_Var_TALL_CO_S298_G10M5_ALL.jpg \
+# W_Skew_TALL_CO_S298_G10M5_ALL.jpg \
+# W_ThetaV_TALL_CO_S303_G10M5_ALL.jpg \
+# W_Var_TALL_CO_S303_G10M5_ALL.jpg \
+# W_Skew_TALL_CO_S303_G10M5_ALL.jpg \
+# FigTurbStruct.jpg
+#
+#echo "Figure: Bar graphs, COT and ACC_PCP, CCN and GCCN, LWP thresholds"
+#montage -tile 2x2 -geometry ${Jsize}+2+100 \
+# cot_avg_bars_gccn.jpg \
+# cot_lwp_0p01_avg_bars_gccn.jpg \
+# cot_lwp_0p10_avg_bars_gccn.jpg \
+# cot_lwp_1p00_avg_bars_gccn.jpg \
+# FigCloudOptThickGccn.jpg
+#
+#echo "Figure: Bar graphs, COT and ACC_PCP, CCN and GCCN, LWP bins"
+#montage -tile 3x2 -geometry ${Jsize}+2+100 \
+# cot_avg_bars_gccn.jpg \
+# cot_lwp_b1_avg_bars_gccn.jpg \
+# cot_lwp_b2_avg_bars_gccn.jpg \
+# cot_lwp_b3_avg_bars_gccn.jpg \
+# cot_lwp_b4_avg_bars_gccn.jpg \
+# FigCloudOptThickGccnLwpBins.jpg
+#
+#echo "Figure: Bar graphs, GCCN: COT, CD, CF, Acc precip, Precip rate"
+#montage -tile 3x2 -geometry ${Jsize}+2+100 \
+# cot_avg_bars_gccn.jpg \
+# cd_avg_bars_gccn.jpg \
+# cf_avg_bars_gccn.jpg \
+# acc_pcp_bars_gccn.jpg \
+# pcprr_avg_bars_gccn.jpg \
+# FigBarCloudtPrecipGccn.jpg
+#
+#echo "Figure: Bar graphs, GCCN: COT, Precip rate"
+#montage -tile 2x2 -geometry ${Jsize}+2+100 \
+# cot_avg_bars_gccn.jpg \
+# pcprr_avg_bars_gccn.jpg \
+# acc_pcp_bars_gccn.jpg \
+# FigBarCloudtPrecipShortGccn.jpg
+#
+#echo "Figure: Cloud Mass (whole domain), Cloud, PCPRR, CCN and GCCN"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# Cloud_TALL_CG_C50_S298.jpg \
+# Cloud_TALL_CG_C400_S298.jpg \
+# Cloud_TALL_CG_C1600_S298.jpg \
+# copt_thick_pdf_C50_S298.jpg \
+# copt_thick_pdf_C400_S298.jpg \
+# copt_thick_pdf_C1600_S298.jpg \
+# pcprr_pdf_C50_S298.jpg \
+# pcprr_pdf_C400_S298.jpg \
+# pcprr_pdf_C1600_S298.jpg \
+# FigCloudPropertiesGccn.jpg
+#
+#echo "Figure: W'ThetaV', Wvar, Wskew, CCN and GCCN"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# W_ThetaV_TALL_CG_C50_S298.jpg \
+# W_Var_TALL_CG_C50_S298.jpg \
+# W_Skew_TALL_CG_C50_S298.jpg \
+# W_ThetaV_TALL_CG_C400_S298.jpg \
+# W_Var_TALL_CG_C400_S298.jpg \
+# W_Skew_TALL_CG_C400_S298.jpg \
+# W_ThetaV_TALL_CG_C1600_S298.jpg \
+# W_Var_TALL_CG_C1600_S298.jpg \
+# W_Skew_TALL_CG_C1600_S298.jpg \
+# FigTurbStructGccn.jpg
+#
+#echo "Figure: Albedo, sfc conv, w examples, C50, S293 CCN only"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# Albedo_T12_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+# Albedo_T24_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+# Albedo_T36_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+# SfcConv_T12_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+# SfcConv_T24_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+# SfcConv_T36_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+# W_CFAD_0p01_T12_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+# W_CFAD_0p01_T24_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+# W_CFAD_0p01_T36_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+# FigSampleAlbSfcConvW_C50_S293.jpg
+#
+#echo "Figure: Albedo, sfc conv, w examples, C1600, S303 CCN only"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# Albedo_T12_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+# Albedo_T24_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+# Albedo_T36_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+# SfcConv_T12_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+# SfcConv_T24_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+# SfcConv_T36_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+# W_CFAD_0p01_T12_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+# W_CFAD_0p01_T24_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+# W_CFAD_0p01_T36_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+# FigSampleAlbSfcConvW_C1600_S303.jpg
+#
+#echo "Figure: W variance"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# W_Var_TSTART_CO_S293_G10M5_ALL.jpg \
+# W_Var_TMID_CO_S293_G10M5_ALL.jpg \
+# W_Var_TEND_CO_S293_G10M5_ALL.jpg \
+# W_Var_TSTART_CO_S298_G10M5_ALL.jpg \
+# W_Var_TMID_CO_S298_G10M5_ALL.jpg \
+# W_Var_TEND_CO_S298_G10M5_ALL.jpg \
+# W_Var_TSTART_CO_S303_G10M5_ALL.jpg \
+# W_Var_TMID_CO_S303_G10M5_ALL.jpg \
+# W_Var_TEND_CO_S303_G10M5_ALL.jpg \
+# FigureWvar.jpg
+#
+#echo "Figure: W skew"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# W_Skew_TSTART_CO_S293_G10M5_ALL.jpg \
+# W_Skew_TMID_CO_S293_G10M5_ALL.jpg \
+# W_Skew_TEND_CO_S293_G10M5_ALL.jpg \
+# W_Skew_TSTART_CO_S298_G10M5_ALL.jpg \
+# W_Skew_TMID_CO_S298_G10M5_ALL.jpg \
+# W_Skew_TEND_CO_S298_G10M5_ALL.jpg \
+# W_Skew_TSTART_CO_S303_G10M5_ALL.jpg \
+# W_Skew_TMID_CO_S303_G10M5_ALL.jpg \
+# W_Skew_TEND_CO_S303_G10M5_ALL.jpg \
+# FigureWskew.jpg
+#
+#echo "Figure: W vapor flux"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# W_Vapor_TSTART_CO_S293_G10M5_ALL.jpg \
+# W_Vapor_TMID_CO_S293_G10M5_ALL.jpg \
+# W_Vapor_TEND_CO_S293_G10M5_ALL.jpg \
+# W_Vapor_TSTART_CO_S298_G10M5_ALL.jpg \
+# W_Vapor_TMID_CO_S298_G10M5_ALL.jpg \
+# W_Vapor_TEND_CO_S298_G10M5_ALL.jpg \
+# W_Vapor_TSTART_CO_S303_G10M5_ALL.jpg \
+# W_Vapor_TMID_CO_S303_G10M5_ALL.jpg \
+# W_Vapor_TEND_CO_S303_G10M5_ALL.jpg \
+# FigureWvaporFlux.jpg
+#
+#echo "Figure: W theta flux"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# W_Theta_TSTART_CO_S293_G10M5_ALL.jpg \
+# W_Theta_TMID_CO_S293_G10M5_ALL.jpg \
+# W_Theta_TEND_CO_S293_G10M5_ALL.jpg \
+# W_Theta_TSTART_CO_S298_G10M5_ALL.jpg \
+# W_Theta_TMID_CO_S298_G10M5_ALL.jpg \
+# W_Theta_TEND_CO_S298_G10M5_ALL.jpg \
+# W_Theta_TSTART_CO_S303_G10M5_ALL.jpg \
+# W_Theta_TMID_CO_S303_G10M5_ALL.jpg \
+# W_Theta_TEND_CO_S303_G10M5_ALL.jpg \
+# FigureWthetaFlux.jpg
+#
+#echo "Figure: W theta_v flux"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# W_ThetaV_TSTART_CO_S293_G10M5_ALL.jpg \
+# W_ThetaV_TMID_CO_S293_G10M5_ALL.jpg \
+# W_ThetaV_TEND_CO_S293_G10M5_ALL.jpg \
+# W_ThetaV_TSTART_CO_S298_G10M5_ALL.jpg \
+# W_ThetaV_TMID_CO_S298_G10M5_ALL.jpg \
+# W_ThetaV_TEND_CO_S298_G10M5_ALL.jpg \
+# W_ThetaV_TSTART_CO_S303_G10M5_ALL.jpg \
+# W_ThetaV_TMID_CO_S303_G10M5_ALL.jpg \
+# W_ThetaV_TEND_CO_S303_G10M5_ALL.jpg \
+# FigureWthetavFlux.jpg
+#
+#echo "Figure: W speed flux"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# W_Speed_TSTART_CO_S293_G10M5_ALL.jpg \
+# W_Speed_TMID_CO_S293_G10M5_ALL.jpg \
+# W_Speed_TEND_CO_S293_G10M5_ALL.jpg \
+# W_Speed_TSTART_CO_S298_G10M5_ALL.jpg \
+# W_Speed_TMID_CO_S298_G10M5_ALL.jpg \
+# W_Speed_TEND_CO_S298_G10M5_ALL.jpg \
+# W_Speed_TSTART_CO_S303_G10M5_ALL.jpg \
+# W_Speed_TMID_CO_S303_G10M5_ALL.jpg \
+# W_Speed_TEND_CO_S303_G10M5_ALL.jpg \
+# FigureWspeedFlux.jpg
+#
+#echo "Figure: Mean theta"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# Theta_TSTART_CO_S293_G10M5_ALL.jpg \
+# Theta_TMID_CO_S293_G10M5_ALL.jpg \
+# Theta_TEND_CO_S293_G10M5_ALL.jpg \
+# Theta_TSTART_CO_S298_G10M5_ALL.jpg \
+# Theta_TMID_CO_S298_G10M5_ALL.jpg \
+# Theta_TEND_CO_S298_G10M5_ALL.jpg \
+# Theta_TSTART_CO_S303_G10M5_ALL.jpg \
+# Theta_TMID_CO_S303_G10M5_ALL.jpg \
+# Theta_TEND_CO_S303_G10M5_ALL.jpg \
+# FigureMeanTheta.jpg
+#
+#echo "Figure: Mean theta_e"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# ThetaE_TSTART_CO_S293_G10M5_ALL.jpg \
+# ThetaE_TMID_CO_S293_G10M5_ALL.jpg \
+# ThetaE_TEND_CO_S293_G10M5_ALL.jpg \
+# ThetaE_TSTART_CO_S298_G10M5_ALL.jpg \
+# ThetaE_TMID_CO_S298_G10M5_ALL.jpg \
+# ThetaE_TEND_CO_S298_G10M5_ALL.jpg \
+# ThetaE_TSTART_CO_S303_G10M5_ALL.jpg \
+# ThetaE_TMID_CO_S303_G10M5_ALL.jpg \
+# ThetaE_TEND_CO_S303_G10M5_ALL.jpg \
+# FigureMeanThetaE.jpg
+#
+#echo "Figure: Mean theta_v"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# ThetaV_TSTART_CO_S293_G10M5_ALL.jpg \
+# ThetaV_TMID_CO_S293_G10M5_ALL.jpg \
+# ThetaV_TEND_CO_S293_G10M5_ALL.jpg \
+# ThetaV_TSTART_CO_S298_G10M5_ALL.jpg \
+# ThetaV_TMID_CO_S298_G10M5_ALL.jpg \
+# ThetaV_TEND_CO_S298_G10M5_ALL.jpg \
+# ThetaV_TSTART_CO_S303_G10M5_ALL.jpg \
+# ThetaV_TMID_CO_S303_G10M5_ALL.jpg \
+# ThetaV_TEND_CO_S303_G10M5_ALL.jpg \
+# FigureMeanThetaV.jpg
+#
+#echo "Figure: Mean speed"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# Speed_TSTART_CO_S293_G10M5_ALL.jpg \
+# Speed_TMID_CO_S293_G10M5_ALL.jpg \
+# Speed_TEND_CO_S293_G10M5_ALL.jpg \
+# Speed_TSTART_CO_S298_G10M5_ALL.jpg \
+# Speed_TMID_CO_S298_G10M5_ALL.jpg \
+# Speed_TEND_CO_S298_G10M5_ALL.jpg \
+# Speed_TSTART_CO_S303_G10M5_ALL.jpg \
+# Speed_TMID_CO_S303_G10M5_ALL.jpg \
+# Speed_TEND_CO_S303_G10M5_ALL.jpg \
+# FigureMeanSpeed.jpg
+#
+#echo "Figure: Mean vapor"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# Vapor_TSTART_CO_S293_G10M5_ALL.jpg \
+# Vapor_TMID_CO_S293_G10M5_ALL.jpg \
+# Vapor_TEND_CO_S293_G10M5_ALL.jpg \
+# Vapor_TSTART_CO_S298_G10M5_ALL.jpg \
+# Vapor_TMID_CO_S298_G10M5_ALL.jpg \
+# Vapor_TEND_CO_S298_G10M5_ALL.jpg \
+# Vapor_TSTART_CO_S303_G10M5_ALL.jpg \
+# Vapor_TMID_CO_S303_G10M5_ALL.jpg \
+# Vapor_TEND_CO_S303_G10M5_ALL.jpg \
+# FigureMeanVapor.jpg
+#
+#echo "Figure: w-vapor flux all time points"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# W_Mean_TALL_CO_S293_G10M5_ALL.jpg \
+# W_Mean_TALL_CO_S298_G10M5_ALL.jpg \
+# W_Mean_TALL_CO_S303_G10M5_ALL.jpg \
+# Vapor_TALL_CO_S293_G10M5_ALL.jpg \
+# Vapor_TALL_CO_S298_G10M5_ALL.jpg \
+# Vapor_TALL_CO_S303_G10M5_ALL.jpg \
+# W_Vapor_TALL_CO_S293_G10M5_ALL.jpg \
+# W_Vapor_TALL_CO_S298_G10M5_ALL.jpg \
+# W_Vapor_TALL_CO_S303_G10M5_ALL.jpg \
+# FigureVaporFluxTall.jpg
+#
+#echo "Figure: w-speed flux all time points"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# W_Mean_TALL_CO_S293_G10M5_ALL.jpg \
+# W_Mean_TALL_CO_S298_G10M5_ALL.jpg \
+# W_Mean_TALL_CO_S303_G10M5_ALL.jpg \
+# Speed_TALL_CO_S293_G10M5_ALL.jpg \
+# Speed_TALL_CO_S298_G10M5_ALL.jpg \
+# Speed_TALL_CO_S303_G10M5_ALL.jpg \
+# W_Speed_TALL_CO_S293_G10M5_ALL.jpg \
+# W_Speed_TALL_CO_S298_G10M5_ALL.jpg \
+# W_Speed_TALL_CO_S303_G10M5_ALL.jpg \
+# FigureSpeedFluxTall.jpg
+#
+#echo "Figure: w-theta flux all time points"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# W_Mean_TALL_CO_S293_G10M5_ALL.jpg \
+# W_Mean_TALL_CO_S298_G10M5_ALL.jpg \
+# W_Mean_TALL_CO_S303_G10M5_ALL.jpg \
+# Theta_TALL_CO_S293_G10M5_ALL.jpg \
+# Theta_TALL_CO_S298_G10M5_ALL.jpg \
+# Theta_TALL_CO_S303_G10M5_ALL.jpg \
+# W_Theta_TALL_CO_S293_G10M5_ALL.jpg \
+# W_Theta_TALL_CO_S298_G10M5_ALL.jpg \
+# W_Theta_TALL_CO_S303_G10M5_ALL.jpg \
+# FigureThetaFluxTall.jpg
+#
+#echo "Figure: w-theta_v flux all time points"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# W_Mean_TALL_CO_S293_G10M5_ALL.jpg \
+# W_Mean_TALL_CO_S298_G10M5_ALL.jpg \
+# W_Mean_TALL_CO_S303_G10M5_ALL.jpg \
+# ThetaV_TALL_CO_S293_G10M5_ALL.jpg \
+# ThetaV_TALL_CO_S298_G10M5_ALL.jpg \
+# ThetaV_TALL_CO_S303_G10M5_ALL.jpg \
+# W_ThetaV_TALL_CO_S293_G10M5_ALL.jpg \
+# W_ThetaV_TALL_CO_S298_G10M5_ALL.jpg \
+# W_ThetaV_TALL_CO_S303_G10M5_ALL.jpg \
+# FigureThetavFluxTall.jpg
+#
+#echo "Figure: Time series: Inversion Height"
+#montage -tile 3x2 -geometry ${Jsize}+2+100 \
+# InvHeight_CO_S293_G10M5.jpg \
+# InvHeight_CO_S298_G10M5.jpg \
+# InvHeight_CO_S303_G10M5.jpg \
+# InvHeight_CG_C0050_S298.jpg \
+# InvHeight_CG_C0400_S298.jpg \
+# InvHeight_CG_C1600_S298.jpg \
+# FigureTsInvHeight.jpg
+#
+#echo "Figure: Time series: Cloud Bottom"
+#montage -tile 3x2 -geometry ${Jsize}+2+100 \
+# CloudCldBot_CO_S293_G10M5.jpg \
+# CloudCldBot_CO_S298_G10M5.jpg \
+# CloudCldBot_CO_S303_G10M5.jpg \
+# CloudCldBot_CG_C0050_S298.jpg \
+# CloudCldBot_CG_C0400_S298.jpg \
+# CloudCldBot_CG_C1600_S298.jpg \
+# FigureTsCldBot.jpg
+#
+#echo "Figure: Time series: Cloud Top"
+#montage -tile 3x2 -geometry ${Jsize}+2+100 \
+# CloudCldTop_CO_S293_G10M5.jpg \
+# CloudCldTop_CO_S298_G10M5.jpg \
+# CloudCldTop_CO_S303_G10M5.jpg \
+# CloudCldTop_CG_C0050_S298.jpg \
+# CloudCldTop_CG_C0400_S298.jpg \
+# CloudCldTop_CG_C1600_S298.jpg \
+# FigureTsCldTop.jpg
+#
+#echo "Figure: Time series: Max Cloud Fraction"
+#montage -tile 3x2 -geometry ${Jsize}+2+100 \
+# CfMax_CO_S293_G10M5.jpg \
+# CfMax_CO_S298_G10M5.jpg \
+# CfMax_CO_S303_G10M5.jpg \
+# CfMax_CG_C0050_S298.jpg \
+# CfMax_CG_C0400_S298.jpg \
+# CfMax_CG_C1600_S298.jpg \
+# FigureTsMaxCldFrac.jpg
+#
+#echo "Figure: Time series: Height of Max Cloud Fraction"
+#montage -tile 3x2 -geometry ${Jsize}+2+100 \
+# CfMaxHeight_CO_S293_G10M5.jpg \
+# CfMaxHeight_CO_S298_G10M5.jpg \
+# CfMaxHeight_CO_S303_G10M5.jpg \
+# CfMaxHeight_CG_C0050_S298.jpg \
+# CfMaxHeight_CG_C0400_S298.jpg \
+# CfMaxHeight_CG_C1600_S298.jpg \
+# FigureTsMaxCldFracHeight.jpg
+#
+#echo "Figure: Time series: Zi, Zt, CFmax, CCN only"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# InvHeight_CO_S293_G10M5.jpg \
+# InvHeight_CO_S298_G10M5.jpg \
+# InvHeight_CO_S303_G10M5.jpg \
+# CloudCldTop_CO_S293_G10M5.jpg \
+# CloudCldTop_CO_S298_G10M5.jpg \
+# CloudCldTop_CO_S303_G10M5.jpg \
+# CfMax_CO_S293_G10M5.jpg \
+# CfMax_CO_S298_G10M5.jpg \
+# CfMax_CO_S303_G10M5.jpg \
+# FigureTsBlStas.jpg
+#
+#echo "Figure: Time series: Zi, Zt, CFmax, all cases, CCN only"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# InvHeight_CO_S293_G10M5_ALL.jpg \
+# CloudCldTop_CO_S293_G10M5_ALL.jpg \
+# CfMax_CO_S293_G10M5_ALL.jpg \
+# InvHeight_CO_S298_G10M5_ALL.jpg \
+# CloudCldTop_CO_S298_G10M5_ALL.jpg \
+# CfMax_CO_S298_G10M5_ALL.jpg \
+# InvHeight_CO_S303_G10M5_ALL.jpg \
+# CloudCldTop_CO_S303_G10M5_ALL.jpg \
+# CfMax_CO_S303_G10M5_ALL.jpg \
+# FigureTsBlStats_ALL.jpg
+#
+#echo "Figure: Vertical Velocity CFAD, C400"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# W_CFAD_C400_0p01_T12_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+# W_CFAD_C400_0p01_T24_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+# W_CFAD_C400_0p01_T36_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+# W_CFAD_C400_0p01_T12_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+# W_CFAD_C400_0p01_T24_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+# W_CFAD_C400_0p01_T36_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+# W_CFAD_C400_0p01_T12_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+# W_CFAD_C400_0p01_T24_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+# W_CFAD_C400_0p01_T36_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+# FigureWcfadC400.jpg
+#
+#echo "Figure: Vertical Velocity CFAD, S298"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# W_CFAD_S298_0p01_T12_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+# W_CFAD_S298_0p01_T24_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+# W_CFAD_S298_0p01_T36_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+# W_CFAD_S298_0p01_T12_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+# W_CFAD_S298_0p01_T24_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+# W_CFAD_S298_0p01_T36_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+# W_CFAD_S298_0p01_T12_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+# W_CFAD_S298_0p01_T24_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+# W_CFAD_S298_0p01_T36_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+# FigureWcfadS298.jpg
+#
+#echo "Figure: Vertical Velocity CFAD, S298 and C400"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# W_CFAD_C400_S298_0p01_T12_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+# W_CFAD_C400_S298_0p01_T24_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+# W_CFAD_C400_S298_0p01_T36_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+# W_CFAD_C400_S298_0p01_T12_z.atex.ccn0400.sst298.gcn10m2.3um.jpg \
+# W_CFAD_C400_S298_0p01_T24_z.atex.ccn0400.sst298.gcn10m2.3um.jpg \
+# W_CFAD_C400_S298_0p01_T36_z.atex.ccn0400.sst298.gcn10m2.3um.jpg \
+# W_CFAD_C400_S298_0p01_T12_z.atex.ccn0400.sst298.gcn10m0.3um.jpg \
+# W_CFAD_C400_S298_0p01_T24_z.atex.ccn0400.sst298.gcn10m0.3um.jpg \
+# W_CFAD_C400_S298_0p01_T36_z.atex.ccn0400.sst298.gcn10m0.3um.jpg \
+# FigureWcfadC400_S298.jpg
+#
+#echo "Figure: W stats all time points"
+#montage -tile 2x3 -geometry ${Jsize}+2+100 \
+# W_Var_TALL_CO_S293_G10M5_ALL.jpg \
+# W_Skew_TALL_CO_S293_G10M5_ALL.jpg \
+# W_Var_TALL_CO_S298_G10M5_ALL.jpg \
+# W_Skew_TALL_CO_S298_G10M5_ALL.jpg \
+# W_Var_TALL_CO_S303_G10M5_ALL.jpg \
+# W_Skew_TALL_CO_S303_G10M5_ALL.jpg \
+# FigureWstatsTall.jpg
+#
+#echo "Figure: COT pdfs with LWP bin 1, CCN only"
+#montage -tile 3x4 -geometry ${Jsize}+2+100 \
+# CotPdf_lwp_b1_TSTART_CO_S293_G10M5_ALL.jpg \
+# CotPdf_lwp_b1_TSTART_CO_S298_G10M5_ALL.jpg \
+# CotPdf_lwp_b1_TSTART_CO_S303_G10M5_ALL.jpg \
+# CotPdf_lwp_b1_TMID_CO_S293_G10M5_ALL.jpg \
+# CotPdf_lwp_b1_TMID_CO_S298_G10M5_ALL.jpg \
+# CotPdf_lwp_b1_TMID_CO_S303_G10M5_ALL.jpg \
+# CotPdf_lwp_b1_TEND_CO_S293_G10M5_ALL.jpg \
+# CotPdf_lwp_b1_TEND_CO_S298_G10M5_ALL.jpg \
+# CotPdf_lwp_b1_TEND_CO_S303_G10M5_ALL.jpg \
+# CotPdf_lwp_b1_TALL_CO_S293_G10M5_ALL.jpg \
+# CotPdf_lwp_b1_TALL_CO_S298_G10M5_ALL.jpg \
+# CotPdf_lwp_b1_TALL_CO_S303_G10M5_ALL.jpg \
+# FigureCotPdfLwpBin1.jpg
+#
+#echo "Figure: COT pdfs with LWP bin 2, CCN only"
+#montage -tile 3x4 -geometry ${Jsize}+2+100 \
+# CotPdf_lwp_b2_TSTART_CO_S293_G10M5_ALL.jpg \
+# CotPdf_lwp_b2_TSTART_CO_S298_G10M5_ALL.jpg \
+# CotPdf_lwp_b2_TSTART_CO_S303_G10M5_ALL.jpg \
+# CotPdf_lwp_b2_TMID_CO_S293_G10M5_ALL.jpg \
+# CotPdf_lwp_b2_TMID_CO_S298_G10M5_ALL.jpg \
+# CotPdf_lwp_b2_TMID_CO_S303_G10M5_ALL.jpg \
+# CotPdf_lwp_b2_TEND_CO_S293_G10M5_ALL.jpg \
+# CotPdf_lwp_b2_TEND_CO_S298_G10M5_ALL.jpg \
+# CotPdf_lwp_b2_TEND_CO_S303_G10M5_ALL.jpg \
+# CotPdf_lwp_b2_TALL_CO_S293_G10M5_ALL.jpg \
+# CotPdf_lwp_b2_TALL_CO_S298_G10M5_ALL.jpg \
+# CotPdf_lwp_b2_TALL_CO_S303_G10M5_ALL.jpg \
+# FigureCotPdfLwpBin2.jpg
+#
+#echo "Figure: COT pdfs with LWP bin 3, CCN only"
+#montage -tile 3x4 -geometry ${Jsize}+2+100 \
+# CotPdf_lwp_b3_TSTART_CO_S293_G10M5_ALL.jpg \
+# CotPdf_lwp_b3_TSTART_CO_S298_G10M5_ALL.jpg \
+# CotPdf_lwp_b3_TSTART_CO_S303_G10M5_ALL.jpg \
+# CotPdf_lwp_b3_TMID_CO_S293_G10M5_ALL.jpg \
+# CotPdf_lwp_b3_TMID_CO_S298_G10M5_ALL.jpg \
+# CotPdf_lwp_b3_TMID_CO_S303_G10M5_ALL.jpg \
+# CotPdf_lwp_b3_TEND_CO_S293_G10M5_ALL.jpg \
+# CotPdf_lwp_b3_TEND_CO_S298_G10M5_ALL.jpg \
+# CotPdf_lwp_b3_TEND_CO_S303_G10M5_ALL.jpg \
+# CotPdf_lwp_b3_TALL_CO_S293_G10M5_ALL.jpg \
+# CotPdf_lwp_b3_TALL_CO_S298_G10M5_ALL.jpg \
+# CotPdf_lwp_b3_TALL_CO_S303_G10M5_ALL.jpg \
+# FigureCotPdfLwpBin3.jpg
+#
+#echo "Figure: COT pdfs with LWP bin 4, CCN only"
+#montage -tile 3x4 -geometry ${Jsize}+2+100 \
+# CotPdf_lwp_b4_TSTART_CO_S293_G10M5_ALL.jpg \
+# CotPdf_lwp_b4_TSTART_CO_S298_G10M5_ALL.jpg \
+# CotPdf_lwp_b4_TSTART_CO_S303_G10M5_ALL.jpg \
+# CotPdf_lwp_b4_TMID_CO_S293_G10M5_ALL.jpg \
+# CotPdf_lwp_b4_TMID_CO_S298_G10M5_ALL.jpg \
+# CotPdf_lwp_b4_TMID_CO_S303_G10M5_ALL.jpg \
+# CotPdf_lwp_b4_TEND_CO_S293_G10M5_ALL.jpg \
+# CotPdf_lwp_b4_TEND_CO_S298_G10M5_ALL.jpg \
+# CotPdf_lwp_b4_TEND_CO_S303_G10M5_ALL.jpg \
+# CotPdf_lwp_b4_TALL_CO_S293_G10M5_ALL.jpg \
+# CotPdf_lwp_b4_TALL_CO_S298_G10M5_ALL.jpg \
+# CotPdf_lwp_b4_TALL_CO_S303_G10M5_ALL.jpg \
+# FigureCotPdfLwpBin4.jpg
+#
+#echo "Figure: COT pdfs with LWP bin 1, CCN+GCCN"
+#montage -tile 3x4 -geometry ${Jsize}+2+100 \
+# CotPdf_lwp_b1_TSTART_CG_UP_C0050_S298.jpg \
+# CotPdf_lwp_b1_TSTART_CG_UP_C0400_S298.jpg \
+# CotPdf_lwp_b1_TSTART_CG_UP_C1600_S298.jpg \
+# CotPdf_lwp_b1_TMID_CG_UP_C0050_S298.jpg \
+# CotPdf_lwp_b1_TMID_CG_UP_C0400_S298.jpg \
+# CotPdf_lwp_b1_TMID_CG_UP_C1600_S298.jpg \
+# CotPdf_lwp_b1_TEND_CG_UP_C0050_S298.jpg \
+# CotPdf_lwp_b1_TEND_CG_UP_C0400_S298.jpg \
+# CotPdf_lwp_b1_TEND_CG_UP_C1600_S298.jpg \
+# CotPdf_lwp_b1_TALL_CG_UP_C0050_S298.jpg \
+# CotPdf_lwp_b1_TALL_CG_UP_C0400_S298.jpg \
+# CotPdf_lwp_b1_TALL_CG_UP_C1600_S298.jpg \
+# FigureCotPdfLwpBin1Gccn.jpg
+#
+#echo "Figure: COT pdfs with LWP bin 2, CCN+GCCN"
+#montage -tile 3x4 -geometry ${Jsize}+2+100 \
+# CotPdf_lwp_b2_TSTART_CG_UP_C0050_S298.jpg \
+# CotPdf_lwp_b2_TSTART_CG_UP_C0400_S298.jpg \
+# CotPdf_lwp_b2_TSTART_CG_UP_C1600_S298.jpg \
+# CotPdf_lwp_b2_TMID_CG_UP_C0050_S298.jpg \
+# CotPdf_lwp_b2_TMID_CG_UP_C0400_S298.jpg \
+# CotPdf_lwp_b2_TMID_CG_UP_C1600_S298.jpg \
+# CotPdf_lwp_b2_TEND_CG_UP_C0050_S298.jpg \
+# CotPdf_lwp_b2_TEND_CG_UP_C0400_S298.jpg \
+# CotPdf_lwp_b2_TEND_CG_UP_C1600_S298.jpg \
+# CotPdf_lwp_b2_TALL_CG_UP_C0050_S298.jpg \
+# CotPdf_lwp_b2_TALL_CG_UP_C0400_S298.jpg \
+# CotPdf_lwp_b2_TALL_CG_UP_C1600_S298.jpg \
+# FigureCotPdfLwpBin2Gccn.jpg
+#
+#echo "Figure: COT pdfs with LWP bin 3, CCN+GCCN"
+#montage -tile 3x4 -geometry ${Jsize}+2+100 \
+# CotPdf_lwp_b3_TSTART_CG_UP_C0050_S298.jpg \
+# CotPdf_lwp_b3_TSTART_CG_UP_C0400_S298.jpg \
+# CotPdf_lwp_b3_TSTART_CG_UP_C1600_S298.jpg \
+# CotPdf_lwp_b3_TMID_CG_UP_C0050_S298.jpg \
+# CotPdf_lwp_b3_TMID_CG_UP_C0400_S298.jpg \
+# CotPdf_lwp_b3_TMID_CG_UP_C1600_S298.jpg \
+# CotPdf_lwp_b3_TEND_CG_UP_C0050_S298.jpg \
+# CotPdf_lwp_b3_TEND_CG_UP_C0400_S298.jpg \
+# CotPdf_lwp_b3_TEND_CG_UP_C1600_S298.jpg \
+# CotPdf_lwp_b3_TALL_CG_UP_C0050_S298.jpg \
+# CotPdf_lwp_b3_TALL_CG_UP_C0400_S298.jpg \
+# CotPdf_lwp_b3_TALL_CG_UP_C1600_S298.jpg \
+# FigureCotPdfLwpBin3Gccn.jpg
+#
+#echo "Figure: COT pdfs with LWP bin 4, CCN+GCCN"
+#montage -tile 3x4 -geometry ${Jsize}+2+100 \
+# CotPdf_lwp_b4_TSTART_CG_UP_C0050_S298.jpg \
+# CotPdf_lwp_b4_TSTART_CG_UP_C0400_S298.jpg \
+# CotPdf_lwp_b4_TSTART_CG_UP_C1600_S298.jpg \
+# CotPdf_lwp_b4_TMID_CG_UP_C0050_S298.jpg \
+# CotPdf_lwp_b4_TMID_CG_UP_C0400_S298.jpg \
+# CotPdf_lwp_b4_TMID_CG_UP_C1600_S298.jpg \
+# CotPdf_lwp_b4_TEND_CG_UP_C0050_S298.jpg \
+# CotPdf_lwp_b4_TEND_CG_UP_C0400_S298.jpg \
+# CotPdf_lwp_b4_TEND_CG_UP_C1600_S298.jpg \
+# CotPdf_lwp_b4_TALL_CG_UP_C0050_S298.jpg \
+# CotPdf_lwp_b4_TALL_CG_UP_C0400_S298.jpg \
+# CotPdf_lwp_b4_TALL_CG_UP_C1600_S298.jpg \
+# FigureCotPdfLwpBin4Gccn.jpg
+#
+#echo "Figure: PRATE pdfs with LWP bin 1, CCN only"
+#montage -tile 3x4 -geometry ${Jsize}+2+100 \
+# PratePdf_lwp_b1_TSTART_CO_S293_G10M5_ALL.jpg \
+# PratePdf_lwp_b1_TSTART_CO_S298_G10M5_ALL.jpg \
+# PratePdf_lwp_b1_TSTART_CO_S303_G10M5_ALL.jpg \
+# PratePdf_lwp_b1_TMID_CO_S293_G10M5_ALL.jpg \
+# PratePdf_lwp_b1_TMID_CO_S298_G10M5_ALL.jpg \
+# PratePdf_lwp_b1_TMID_CO_S303_G10M5_ALL.jpg \
+# PratePdf_lwp_b1_TEND_CO_S293_G10M5_ALL.jpg \
+# PratePdf_lwp_b1_TEND_CO_S298_G10M5_ALL.jpg \
+# PratePdf_lwp_b1_TEND_CO_S303_G10M5_ALL.jpg \
+# PratePdf_lwp_b1_TALL_CO_S293_G10M5_ALL.jpg \
+# PratePdf_lwp_b1_TALL_CO_S298_G10M5_ALL.jpg \
+# PratePdf_lwp_b1_TALL_CO_S303_G10M5_ALL.jpg \
+# FigurePratePdfLwpBin1.jpg
+#
+#echo "Figure: PRATE pdfs with LWP bin 2, CCN only"
+#montage -tile 3x4 -geometry ${Jsize}+2+100 \
+# PratePdf_lwp_b2_TSTART_CO_S293_G10M5_ALL.jpg \
+# PratePdf_lwp_b2_TSTART_CO_S298_G10M5_ALL.jpg \
+# PratePdf_lwp_b2_TSTART_CO_S303_G10M5_ALL.jpg \
+# PratePdf_lwp_b2_TMID_CO_S293_G10M5_ALL.jpg \
+# PratePdf_lwp_b2_TMID_CO_S298_G10M5_ALL.jpg \
+# PratePdf_lwp_b2_TMID_CO_S303_G10M5_ALL.jpg \
+# PratePdf_lwp_b2_TEND_CO_S293_G10M5_ALL.jpg \
+# PratePdf_lwp_b2_TEND_CO_S298_G10M5_ALL.jpg \
+# PratePdf_lwp_b2_TEND_CO_S303_G10M5_ALL.jpg \
+# PratePdf_lwp_b2_TALL_CO_S293_G10M5_ALL.jpg \
+# PratePdf_lwp_b2_TALL_CO_S298_G10M5_ALL.jpg \
+# PratePdf_lwp_b2_TALL_CO_S303_G10M5_ALL.jpg \
+# FigurePratePdfLwpBin2.jpg
+#
+#echo "Figure: PRATE pdfs with LWP bin 3, CCN only"
+#montage -tile 3x4 -geometry ${Jsize}+2+100 \
+# PratePdf_lwp_b3_TSTART_CO_S293_G10M5_ALL.jpg \
+# PratePdf_lwp_b3_TSTART_CO_S298_G10M5_ALL.jpg \
+# PratePdf_lwp_b3_TSTART_CO_S303_G10M5_ALL.jpg \
+# PratePdf_lwp_b3_TMID_CO_S293_G10M5_ALL.jpg \
+# PratePdf_lwp_b3_TMID_CO_S298_G10M5_ALL.jpg \
+# PratePdf_lwp_b3_TMID_CO_S303_G10M5_ALL.jpg \
+# PratePdf_lwp_b3_TEND_CO_S293_G10M5_ALL.jpg \
+# PratePdf_lwp_b3_TEND_CO_S298_G10M5_ALL.jpg \
+# PratePdf_lwp_b3_TEND_CO_S303_G10M5_ALL.jpg \
+# PratePdf_lwp_b3_TALL_CO_S293_G10M5_ALL.jpg \
+# PratePdf_lwp_b3_TALL_CO_S298_G10M5_ALL.jpg \
+# PratePdf_lwp_b3_TALL_CO_S303_G10M5_ALL.jpg \
+# FigurePratePdfLwpBin3.jpg
+#
+#echo "Figure: PRATE pdfs with LWP bin 4, CCN only"
+#montage -tile 3x4 -geometry ${Jsize}+2+100 \
+# PratePdf_lwp_b4_TSTART_CO_S293_G10M5_ALL.jpg \
+# PratePdf_lwp_b4_TSTART_CO_S298_G10M5_ALL.jpg \
+# PratePdf_lwp_b4_TSTART_CO_S303_G10M5_ALL.jpg \
+# PratePdf_lwp_b4_TMID_CO_S293_G10M5_ALL.jpg \
+# PratePdf_lwp_b4_TMID_CO_S298_G10M5_ALL.jpg \
+# PratePdf_lwp_b4_TMID_CO_S303_G10M5_ALL.jpg \
+# PratePdf_lwp_b4_TEND_CO_S293_G10M5_ALL.jpg \
+# PratePdf_lwp_b4_TEND_CO_S298_G10M5_ALL.jpg \
+# PratePdf_lwp_b4_TEND_CO_S303_G10M5_ALL.jpg \
+# PratePdf_lwp_b4_TALL_CO_S293_G10M5_ALL.jpg \
+# PratePdf_lwp_b4_TALL_CO_S298_G10M5_ALL.jpg \
+# PratePdf_lwp_b4_TALL_CO_S303_G10M5_ALL.jpg \
+# FigurePratePdfLwpBin4.jpg
+#
+#echo "Figure: PRATE pdfs with LWP bin 1, CCN+GCCN"
+#montage -tile 3x4 -geometry ${Jsize}+2+100 \
+# PratePdf_lwp_b1_TSTART_CG_UP_C0050_S298.jpg \
+# PratePdf_lwp_b1_TSTART_CG_UP_C0400_S298.jpg \
+# PratePdf_lwp_b1_TSTART_CG_UP_C1600_S298.jpg \
+# PratePdf_lwp_b1_TMID_CG_UP_C0050_S298.jpg \
+# PratePdf_lwp_b1_TMID_CG_UP_C0400_S298.jpg \
+# PratePdf_lwp_b1_TMID_CG_UP_C1600_S298.jpg \
+# PratePdf_lwp_b1_TEND_CG_UP_C0050_S298.jpg \
+# PratePdf_lwp_b1_TEND_CG_UP_C0400_S298.jpg \
+# PratePdf_lwp_b1_TEND_CG_UP_C1600_S298.jpg \
+# PratePdf_lwp_b1_TALL_CG_UP_C0050_S298.jpg \
+# PratePdf_lwp_b1_TALL_CG_UP_C0400_S298.jpg \
+# PratePdf_lwp_b1_TALL_CG_UP_C1600_S298.jpg \
+# FigurePratePdfLwpBin1Gccn.jpg
+#
+#echo "Figure: PRATE pdfs with LWP bin 2, CCN+GCCN"
+#montage -tile 3x4 -geometry ${Jsize}+2+100 \
+# PratePdf_lwp_b2_TSTART_CG_UP_C0050_S298.jpg \
+# PratePdf_lwp_b2_TSTART_CG_UP_C0400_S298.jpg \
+# PratePdf_lwp_b2_TSTART_CG_UP_C1600_S298.jpg \
+# PratePdf_lwp_b2_TMID_CG_UP_C0050_S298.jpg \
+# PratePdf_lwp_b2_TMID_CG_UP_C0400_S298.jpg \
+# PratePdf_lwp_b2_TMID_CG_UP_C1600_S298.jpg \
+# PratePdf_lwp_b2_TEND_CG_UP_C0050_S298.jpg \
+# PratePdf_lwp_b2_TEND_CG_UP_C0400_S298.jpg \
+# PratePdf_lwp_b2_TEND_CG_UP_C1600_S298.jpg \
+# PratePdf_lwp_b2_TALL_CG_UP_C0050_S298.jpg \
+# PratePdf_lwp_b2_TALL_CG_UP_C0400_S298.jpg \
+# PratePdf_lwp_b2_TALL_CG_UP_C1600_S298.jpg \
+# FigurePratePdfLwpBin2Gccn.jpg
+#
+#echo "Figure: PRATE pdfs with LWP bin 3, CCN+GCCN"
+#montage -tile 3x4 -geometry ${Jsize}+2+100 \
+# PratePdf_lwp_b3_TSTART_CG_UP_C0050_S298.jpg \
+# PratePdf_lwp_b3_TSTART_CG_UP_C0400_S298.jpg \
+# PratePdf_lwp_b3_TSTART_CG_UP_C1600_S298.jpg \
+# PratePdf_lwp_b3_TMID_CG_UP_C0050_S298.jpg \
+# PratePdf_lwp_b3_TMID_CG_UP_C0400_S298.jpg \
+# PratePdf_lwp_b3_TMID_CG_UP_C1600_S298.jpg \
+# PratePdf_lwp_b3_TEND_CG_UP_C0050_S298.jpg \
+# PratePdf_lwp_b3_TEND_CG_UP_C0400_S298.jpg \
+# PratePdf_lwp_b3_TEND_CG_UP_C1600_S298.jpg \
+# PratePdf_lwp_b3_TALL_CG_UP_C0050_S298.jpg \
+# PratePdf_lwp_b3_TALL_CG_UP_C0400_S298.jpg \
+# PratePdf_lwp_b3_TALL_CG_UP_C1600_S298.jpg \
+# FigurePratePdfLwpBin3Gccn.jpg
+#
+#echo "Figure: PRATE pdfs with LWP bin 4, CCN+GCCN"
+#montage -tile 3x4 -geometry ${Jsize}+2+100 \
+# PratePdf_lwp_b4_TSTART_CG_UP_C0050_S298.jpg \
+# PratePdf_lwp_b4_TSTART_CG_UP_C0400_S298.jpg \
+# PratePdf_lwp_b4_TSTART_CG_UP_C1600_S298.jpg \
+# PratePdf_lwp_b4_TMID_CG_UP_C0050_S298.jpg \
+# PratePdf_lwp_b4_TMID_CG_UP_C0400_S298.jpg \
+# PratePdf_lwp_b4_TMID_CG_UP_C1600_S298.jpg \
+# PratePdf_lwp_b4_TEND_CG_UP_C0050_S298.jpg \
+# PratePdf_lwp_b4_TEND_CG_UP_C0400_S298.jpg \
+# PratePdf_lwp_b4_TEND_CG_UP_C1600_S298.jpg \
+# PratePdf_lwp_b4_TALL_CG_UP_C0050_S298.jpg \
+# PratePdf_lwp_b4_TALL_CG_UP_C0400_S298.jpg \
+# PratePdf_lwp_b4_TALL_CG_UP_C1600_S298.jpg \
+# FigurePratePdfLwpBin4Gccn.jpg
+#
+#echo "Figure: COT PDFs all LWP bins, CCN only"
+#montage -tile 3x5 -geometry ${Jsize}+2+100 \
+# CotPdf_lwp_b1_TALL_CO_S293_G10M5_ALL.jpg \
+# CotPdf_lwp_b1_TALL_CO_S298_G10M5_ALL.jpg \
+# CotPdf_lwp_b1_TALL_CO_S303_G10M5_ALL.jpg \
+# CotPdf_lwp_b2_TALL_CO_S293_G10M5_ALL.jpg \
+# CotPdf_lwp_b2_TALL_CO_S298_G10M5_ALL.jpg \
+# CotPdf_lwp_b2_TALL_CO_S303_G10M5_ALL.jpg \
+# CotPdf_lwp_b3_TALL_CO_S293_G10M5_ALL.jpg \
+# CotPdf_lwp_b3_TALL_CO_S298_G10M5_ALL.jpg \
+# CotPdf_lwp_b3_TALL_CO_S303_G10M5_ALL.jpg \
+# CotPdf_lwp_b4_TALL_CO_S293_G10M5_ALL.jpg \
+# CotPdf_lwp_b4_TALL_CO_S298_G10M5_ALL.jpg \
+# CotPdf_lwp_b4_TALL_CO_S303_G10M5_ALL.jpg \
+# CotPdf_TALL_CO_S293_G10M5_ALL.jpg \
+# CotPdf_TALL_CO_S298_G10M5_ALL.jpg \
+# CotPdf_TALL_CO_S303_G10M5_ALL.jpg \
+# FigureCotPdfLwpAllBins.jpg
+#
+#echo "Figure: Cloud Depth PDFs all LWP bins, CCN only"
+#montage -tile 3x5 -geometry ${Jsize}+2+100 \
+# CdepthPdf_lwp_b1_TALL_CO_S293_G10M5_ALL.jpg \
+# CdepthPdf_lwp_b1_TALL_CO_S298_G10M5_ALL.jpg \
+# CdepthPdf_lwp_b1_TALL_CO_S303_G10M5_ALL.jpg \
+# CdepthPdf_lwp_b2_TALL_CO_S293_G10M5_ALL.jpg \
+# CdepthPdf_lwp_b2_TALL_CO_S298_G10M5_ALL.jpg \
+# CdepthPdf_lwp_b2_TALL_CO_S303_G10M5_ALL.jpg \
+# CdepthPdf_lwp_b3_TALL_CO_S293_G10M5_ALL.jpg \
+# CdepthPdf_lwp_b3_TALL_CO_S298_G10M5_ALL.jpg \
+# CdepthPdf_lwp_b3_TALL_CO_S303_G10M5_ALL.jpg \
+# CdepthPdf_lwp_b4_TALL_CO_S293_G10M5_ALL.jpg \
+# CdepthPdf_lwp_b4_TALL_CO_S298_G10M5_ALL.jpg \
+# CdepthPdf_lwp_b4_TALL_CO_S303_G10M5_ALL.jpg \
+# CdepthPdf_TALL_CO_S293_G10M5_ALL.jpg \
+# CdepthPdf_TALL_CO_S298_G10M5_ALL.jpg \
+# CdepthPdf_TALL_CO_S303_G10M5_ALL.jpg \
+# FigureCdepthPdfLwpAllBins.jpg
 
-echo "Figure: Aerosol profiles"
-montage -tile 1x2 -geometry ${Jsize}+2+100 \
- InitialCcnProfile.jpg \
- InitialGccnProfile.jpg \
- FigAerosolProfiles.jpg
+#echo "Figure: PRATE PDFs all LWP bins, CCN only"
+#montage -tile 3x5 -geometry ${Jsize}+2+100 \
+# PratePdf_lwp_b1_TALL_CO_S293_G10M5_ALL.jpg \
+# PratePdf_lwp_b1_TALL_CO_S298_G10M5_ALL.jpg \
+# PratePdf_lwp_b1_TALL_CO_S303_G10M5_ALL.jpg \
+# PratePdf_lwp_b2_TALL_CO_S293_G10M5_ALL.jpg \
+# PratePdf_lwp_b2_TALL_CO_S298_G10M5_ALL.jpg \
+# PratePdf_lwp_b2_TALL_CO_S303_G10M5_ALL.jpg \
+# PratePdf_lwp_b3_TALL_CO_S293_G10M5_ALL.jpg \
+# PratePdf_lwp_b3_TALL_CO_S298_G10M5_ALL.jpg \
+# PratePdf_lwp_b3_TALL_CO_S303_G10M5_ALL.jpg \
+# PratePdf_lwp_b4_TALL_CO_S293_G10M5_ALL.jpg \
+# PratePdf_lwp_b4_TALL_CO_S298_G10M5_ALL.jpg \
+# PratePdf_lwp_b4_TALL_CO_S303_G10M5_ALL.jpg \
+# PratePdf_TALL_CO_S293_G10M5_ALL.jpg \
+# PratePdf_TALL_CO_S298_G10M5_ALL.jpg \
+# PratePdf_TALL_CO_S303_G10M5_ALL.jpg \
+# FigurePratePdfLwpAllBins.jpg
+#
+#echo "Figure: COT pdfs all LWP bins, CCN+GCCN"
+#montage -tile 3x5 -geometry ${Jsize}+2+100 \
+# CotPdf_lwp_b1_TALL_CG_UP_C0050_S298.jpg \
+# CotPdf_lwp_b1_TALL_CG_UP_C0400_S298.jpg \
+# CotPdf_lwp_b1_TALL_CG_UP_C1600_S298.jpg \
+# CotPdf_lwp_b2_TALL_CG_UP_C0050_S298.jpg \
+# CotPdf_lwp_b2_TALL_CG_UP_C0400_S298.jpg \
+# CotPdf_lwp_b2_TALL_CG_UP_C1600_S298.jpg \
+# CotPdf_lwp_b3_TALL_CG_UP_C0050_S298.jpg \
+# CotPdf_lwp_b3_TALL_CG_UP_C0400_S298.jpg \
+# CotPdf_lwp_b3_TALL_CG_UP_C1600_S298.jpg \
+# CotPdf_lwp_b4_TALL_CG_UP_C0050_S298.jpg \
+# CotPdf_lwp_b4_TALL_CG_UP_C0400_S298.jpg \
+# CotPdf_lwp_b4_TALL_CG_UP_C1600_S298.jpg \
+# CotPdf_TALL_CG_UP_C0050_S298.jpg \
+# CotPdf_TALL_CG_UP_C0400_S298.jpg \
+# CotPdf_TALL_CG_UP_C1600_S298.jpg \
+# FigureCotPdfLwpAllBinsGccn.jpg
+#
+#echo "Figure: Cloud Depth pdfs all LWP bins, CCN+GCCN"
+#montage -tile 3x5 -geometry ${Jsize}+2+100 \
+# CdepthPdf_lwp_b1_TALL_CG_UP_C0050_S298.jpg \
+# CdepthPdf_lwp_b1_TALL_CG_UP_C0400_S298.jpg \
+# CdepthPdf_lwp_b1_TALL_CG_UP_C1600_S298.jpg \
+# CdepthPdf_lwp_b2_TALL_CG_UP_C0050_S298.jpg \
+# CdepthPdf_lwp_b2_TALL_CG_UP_C0400_S298.jpg \
+# CdepthPdf_lwp_b2_TALL_CG_UP_C1600_S298.jpg \
+# CdepthPdf_lwp_b3_TALL_CG_UP_C0050_S298.jpg \
+# CdepthPdf_lwp_b3_TALL_CG_UP_C0400_S298.jpg \
+# CdepthPdf_lwp_b3_TALL_CG_UP_C1600_S298.jpg \
+# CdepthPdf_lwp_b4_TALL_CG_UP_C0050_S298.jpg \
+# CdepthPdf_lwp_b4_TALL_CG_UP_C0400_S298.jpg \
+# CdepthPdf_lwp_b4_TALL_CG_UP_C1600_S298.jpg \
+# CdepthPdf_TALL_CG_UP_C0050_S298.jpg \
+# CdepthPdf_TALL_CG_UP_C0400_S298.jpg \
+# CdepthPdf_TALL_CG_UP_C1600_S298.jpg \
+# FigureCdepthPdfLwpAllBinsGccn.jpg
+#
+#echo "Figure: PRATE pdfs all LWP bins, CCN+GCCN"
+#montage -tile 3x5 -geometry ${Jsize}+2+100 \
+# PratePdf_lwp_b1_TALL_CG_UP_C0050_S298.jpg \
+# PratePdf_lwp_b1_TALL_CG_UP_C0400_S298.jpg \
+# PratePdf_lwp_b1_TALL_CG_UP_C1600_S298.jpg \
+# PratePdf_lwp_b2_TALL_CG_UP_C0050_S298.jpg \
+# PratePdf_lwp_b2_TALL_CG_UP_C0400_S298.jpg \
+# PratePdf_lwp_b2_TALL_CG_UP_C1600_S298.jpg \
+# PratePdf_lwp_b3_TALL_CG_UP_C0050_S298.jpg \
+# PratePdf_lwp_b3_TALL_CG_UP_C0400_S298.jpg \
+# PratePdf_lwp_b3_TALL_CG_UP_C1600_S298.jpg \
+# PratePdf_lwp_b4_TALL_CG_UP_C0050_S298.jpg \
+# PratePdf_lwp_b4_TALL_CG_UP_C0400_S298.jpg \
+# PratePdf_lwp_b4_TALL_CG_UP_C1600_S298.jpg \
+# PratePdf_TALL_CG_UP_C0050_S298.jpg \
+# PratePdf_TALL_CG_UP_C0400_S298.jpg \
+# PratePdf_TALL_CG_UP_C1600_S298.jpg \
+# FigurePratePdfLwpAllBinsGccn.jpg
+#
+#echo "Figure: 2D Histogram: LWP vs COT, CCN only"
+#montage -tile 3x6 -geometry ${Jsize}+2+100 \
+# hist2d_lwp_cot_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_cot_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_cot_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_cot_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_cot_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_cot_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_cot_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_cot_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_cot_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_cot_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_cot_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_cot_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_cot_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_cot_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_cot_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_cot_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_cot_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_cot_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+# FigureHist2dLwpCot.jpg
+#
+#echo "Figure: 2D Histogram: LWP vs PCPRR, CCN only"
+#montage -tile 3x6 -geometry ${Jsize}+2+100 \
+# hist2d_lwp_pcprr_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_pcprr_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_pcprr_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_pcprr_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_pcprr_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_pcprr_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_pcprr_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_pcprr_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_pcprr_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_pcprr_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_pcprr_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_pcprr_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_pcprr_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_pcprr_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_pcprr_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_pcprr_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_pcprr_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_pcprr_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+# FigureHist2dLwpPcprr.jpg
+#
+#echo "Figure: 2D Histogram: LWP vs Cloud depth, CCN only"
+#montage -tile 3x6 -geometry ${Jsize}+2+100 \
+# hist2d_lwp_cdepth_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_cdepth_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_cdepth_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_cdepth_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_cdepth_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_cdepth_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_cdepth_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_cdepth_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_cdepth_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_cdepth_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_cdepth_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_cdepth_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_cdepth_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_cdepth_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_cdepth_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_cdepth_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_cdepth_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_cdepth_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+# FigureHist2dLwpCdepth.jpg
+#
+#echo "Figure: 2D Histogram: PCPRR vs COT, CCN only"
+#montage -tile 3x6 -geometry ${Jsize}+2+100 \
+# hist2d_pcprr_cot_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+# hist2d_pcprr_cot_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+# hist2d_pcprr_cot_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+# hist2d_pcprr_cot_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+# hist2d_pcprr_cot_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+# hist2d_pcprr_cot_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+# hist2d_pcprr_cot_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+# hist2d_pcprr_cot_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+# hist2d_pcprr_cot_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+# hist2d_pcprr_cot_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+# hist2d_pcprr_cot_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+# hist2d_pcprr_cot_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+# hist2d_pcprr_cot_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+# hist2d_pcprr_cot_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+# hist2d_pcprr_cot_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+# hist2d_pcprr_cot_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+# hist2d_pcprr_cot_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+# hist2d_pcprr_cot_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+# FigureHist2dPcprrCot.jpg
+#
+#echo "Figure: 2D Histogram: PCPRR vs Cloud depth, CCN only"
+#montage -tile 3x6 -geometry ${Jsize}+2+100 \
+# hist2d_pcprr_cdepth_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+# hist2d_pcprr_cdepth_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+# hist2d_pcprr_cdepth_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+# hist2d_pcprr_cdepth_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+# hist2d_pcprr_cdepth_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+# hist2d_pcprr_cdepth_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+# hist2d_pcprr_cdepth_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+# hist2d_pcprr_cdepth_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+# hist2d_pcprr_cdepth_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+# hist2d_pcprr_cdepth_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+# hist2d_pcprr_cdepth_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+# hist2d_pcprr_cdepth_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+# hist2d_pcprr_cdepth_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+# hist2d_pcprr_cdepth_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+# hist2d_pcprr_cdepth_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+# hist2d_pcprr_cdepth_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+# hist2d_pcprr_cdepth_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+# hist2d_pcprr_cdepth_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+# FigureHist2dPcprrCdepth.jpg
+#
+#echo "Figure: 2D Histogram: Cloud depth vs Cloud optical thickness, CCN only"
+#montage -tile 3x6 -geometry ${Jsize}+2+100 \
+# hist2d_cdepth_cot_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+# hist2d_cdepth_cot_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+# hist2d_cdepth_cot_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+# hist2d_cdepth_cot_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+# hist2d_cdepth_cot_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+# hist2d_cdepth_cot_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+# hist2d_cdepth_cot_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+# hist2d_cdepth_cot_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+# hist2d_cdepth_cot_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+# hist2d_cdepth_cot_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+# hist2d_cdepth_cot_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+# hist2d_cdepth_cot_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+# hist2d_cdepth_cot_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+# hist2d_cdepth_cot_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+# hist2d_cdepth_cot_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+# hist2d_cdepth_cot_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+# hist2d_cdepth_cot_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+# hist2d_cdepth_cot_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+# FigureHist2dCdepthCot.jpg
+#
+#echo "Figure: Pdf set all LWP bins, CCN only"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# CotPdf_TALL_CO_S293_G10M5_ALL.jpg \
+# CotPdf_TALL_CO_S298_G10M5_ALL.jpg \
+# CotPdf_TALL_CO_S303_G10M5_ALL.jpg \
+# CdepthPdf_TALL_CO_S293_G10M5_ALL.jpg \
+# CdepthPdf_TALL_CO_S298_G10M5_ALL.jpg \
+# CdepthPdf_TALL_CO_S303_G10M5_ALL.jpg \
+# PratePdf_TALL_CO_S293_G10M5_ALL.jpg \
+# PratePdf_TALL_CO_S298_G10M5_ALL.jpg \
+# PratePdf_TALL_CO_S303_G10M5_ALL.jpg \
+# FigurePdfSetLwpAllBins.jpg
+#
+#echo "Figure: Pdf set LWP bin 1, CCN only"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# CotPdf_lwp_b1_TALL_CO_S293_G10M5_ALL.jpg \
+# CotPdf_lwp_b1_TALL_CO_S298_G10M5_ALL.jpg \
+# CotPdf_lwp_b1_TALL_CO_S303_G10M5_ALL.jpg \
+# CdepthPdf_lwp_b1_TALL_CO_S293_G10M5_ALL.jpg \
+# CdepthPdf_lwp_b1_TALL_CO_S298_G10M5_ALL.jpg \
+# CdepthPdf_lwp_b1_TALL_CO_S303_G10M5_ALL.jpg \
+# PratePdf_lwp_b1_TALL_CO_S293_G10M5_ALL.jpg \
+# PratePdf_lwp_b1_TALL_CO_S298_G10M5_ALL.jpg \
+# PratePdf_lwp_b1_TALL_CO_S303_G10M5_ALL.jpg \
+# FigurePdfSetLwpBin1.jpg
+#
+#echo "Figure: Pdf set LWP bin 2, CCN only"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# CotPdf_lwp_b2_TALL_CO_S293_G10M5_ALL.jpg \
+# CotPdf_lwp_b2_TALL_CO_S298_G10M5_ALL.jpg \
+# CotPdf_lwp_b2_TALL_CO_S303_G10M5_ALL.jpg \
+# CdepthPdf_lwp_b2_TALL_CO_S293_G10M5_ALL.jpg \
+# CdepthPdf_lwp_b2_TALL_CO_S298_G10M5_ALL.jpg \
+# CdepthPdf_lwp_b2_TALL_CO_S303_G10M5_ALL.jpg \
+# PratePdf_lwp_b2_TALL_CO_S293_G10M5_ALL.jpg \
+# PratePdf_lwp_b2_TALL_CO_S298_G10M5_ALL.jpg \
+# PratePdf_lwp_b2_TALL_CO_S303_G10M5_ALL.jpg \
+# FigurePdfSetLwpBin2.jpg
+#
+#echo "Figure: Pdf set LWP bin 3, CCN only"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# CotPdf_lwp_b3_TALL_CO_S293_G10M5_ALL.jpg \
+# CotPdf_lwp_b3_TALL_CO_S298_G10M5_ALL.jpg \
+# CotPdf_lwp_b3_TALL_CO_S303_G10M5_ALL.jpg \
+# CdepthPdf_lwp_b3_TALL_CO_S293_G10M5_ALL.jpg \
+# CdepthPdf_lwp_b3_TALL_CO_S298_G10M5_ALL.jpg \
+# CdepthPdf_lwp_b3_TALL_CO_S303_G10M5_ALL.jpg \
+# PratePdf_lwp_b3_TALL_CO_S293_G10M5_ALL.jpg \
+# PratePdf_lwp_b3_TALL_CO_S298_G10M5_ALL.jpg \
+# PratePdf_lwp_b3_TALL_CO_S303_G10M5_ALL.jpg \
+# FigurePdfSetLwpBin3.jpg
+#
+#echo "Figure: Pdf set LWP bin 4, CCN only"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# CotPdf_lwp_b4_TALL_CO_S293_G10M5_ALL.jpg \
+# CotPdf_lwp_b4_TALL_CO_S298_G10M5_ALL.jpg \
+# CotPdf_lwp_b4_TALL_CO_S303_G10M5_ALL.jpg \
+# CdepthPdf_lwp_b4_TALL_CO_S293_G10M5_ALL.jpg \
+# CdepthPdf_lwp_b4_TALL_CO_S298_G10M5_ALL.jpg \
+# CdepthPdf_lwp_b4_TALL_CO_S303_G10M5_ALL.jpg \
+# PratePdf_lwp_b4_TALL_CO_S293_G10M5_ALL.jpg \
+# PratePdf_lwp_b4_TALL_CO_S298_G10M5_ALL.jpg \
+# PratePdf_lwp_b4_TALL_CO_S303_G10M5_ALL.jpg \
+# FigurePdfSetLwpBin4.jpg
+#
+#
+#echo "Figure: Pdf set all LWP bins, CCN+GCCN"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# CotPdf_TALL_CG_UP_C0050_S298.jpg \
+# CotPdf_TALL_CG_UP_C0400_S298.jpg \
+# CotPdf_TALL_CG_UP_C1600_S298.jpg \
+# CdepthPdf_TALL_CG_UP_C0050_S298.jpg \
+# CdepthPdf_TALL_CG_UP_C0400_S298.jpg \
+# CdepthPdf_TALL_CG_UP_C1600_S298.jpg \
+# PratePdf_TALL_CG_UP_C0050_S298.jpg \
+# PratePdf_TALL_CG_UP_C0400_S298.jpg \
+# PratePdf_TALL_CG_UP_C1600_S298.jpg \
+# FigurePdfSetLwpAllBinsGccn.jpg
+#
+#echo "Figure: Pdf set LWP bin 1, CCN+GCCN"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# CotPdf_lwp_b1_TALL_CG_UP_C0050_S298.jpg \
+# CotPdf_lwp_b1_TALL_CG_UP_C0400_S298.jpg \
+# CotPdf_lwp_b1_TALL_CG_UP_C1600_S298.jpg \
+# CdepthPdf_lwp_b1_TALL_CG_UP_C0050_S298.jpg \
+# CdepthPdf_lwp_b1_TALL_CG_UP_C0400_S298.jpg \
+# CdepthPdf_lwp_b1_TALL_CG_UP_C1600_S298.jpg \
+# PratePdf_lwp_b1_TALL_CG_UP_C0050_S298.jpg \
+# PratePdf_lwp_b1_TALL_CG_UP_C0400_S298.jpg \
+# PratePdf_lwp_b1_TALL_CG_UP_C1600_S298.jpg \
+# FigurePdfSetLwpBin1Gccn.jpg
+#
+#echo "Figure: Pdf set LWP bin 2, CCN+GCCN"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# CotPdf_lwp_b2_TALL_CG_UP_C0050_S298.jpg \
+# CotPdf_lwp_b2_TALL_CG_UP_C0400_S298.jpg \
+# CotPdf_lwp_b2_TALL_CG_UP_C1600_S298.jpg \
+# CdepthPdf_lwp_b2_TALL_CG_UP_C0050_S298.jpg \
+# CdepthPdf_lwp_b2_TALL_CG_UP_C0400_S298.jpg \
+# CdepthPdf_lwp_b2_TALL_CG_UP_C1600_S298.jpg \
+# PratePdf_lwp_b2_TALL_CG_UP_C0050_S298.jpg \
+# PratePdf_lwp_b2_TALL_CG_UP_C0400_S298.jpg \
+# PratePdf_lwp_b2_TALL_CG_UP_C1600_S298.jpg \
+# FigurePdfSetLwpBin2Gccn.jpg
+#
+#echo "Figure: Pdf set LWP bin 3, CCN+GCCN"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# CotPdf_lwp_b3_TALL_CG_UP_C0050_S298.jpg \
+# CotPdf_lwp_b3_TALL_CG_UP_C0400_S298.jpg \
+# CotPdf_lwp_b3_TALL_CG_UP_C1600_S298.jpg \
+# CdepthPdf_lwp_b3_TALL_CG_UP_C0050_S298.jpg \
+# CdepthPdf_lwp_b3_TALL_CG_UP_C0400_S298.jpg \
+# CdepthPdf_lwp_b3_TALL_CG_UP_C1600_S298.jpg \
+# PratePdf_lwp_b3_TALL_CG_UP_C0050_S298.jpg \
+# PratePdf_lwp_b3_TALL_CG_UP_C0400_S298.jpg \
+# PratePdf_lwp_b3_TALL_CG_UP_C1600_S298.jpg \
+# FigurePdfSetLwpBin3Gccn.jpg
+#
+#echo "Figure: Pdf set LWP bin 4, CCN+GCCN"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# CotPdf_lwp_b4_TALL_CG_UP_C0050_S298.jpg \
+# CotPdf_lwp_b4_TALL_CG_UP_C0400_S298.jpg \
+# CotPdf_lwp_b4_TALL_CG_UP_C1600_S298.jpg \
+# CdepthPdf_lwp_b4_TALL_CG_UP_C0050_S298.jpg \
+# CdepthPdf_lwp_b4_TALL_CG_UP_C0400_S298.jpg \
+# CdepthPdf_lwp_b4_TALL_CG_UP_C1600_S298.jpg \
+# PratePdf_lwp_b4_TALL_CG_UP_C0050_S298.jpg \
+# PratePdf_lwp_b4_TALL_CG_UP_C0400_S298.jpg \
+# PratePdf_lwp_b4_TALL_CG_UP_C1600_S298.jpg \
+# FigurePdfSetLwpBin4Gccn.jpg
+#
+echo "Figure: 2D Histogram: LWP Bin1 vs COT, CCN only"
+montage -tile 3x6 -geometry ${Jsize}+2+100 \
+ hist2d_lwp_b1_cot_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cot_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cot_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cot_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cot_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cot_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cot_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cot_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cot_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cot_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cot_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cot_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cot_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cot_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cot_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cot_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cot_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cot_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+ FigureHist2dLwpB1Cot.jpg
 
-echo "Figure: Bar graphs, COT, CCN only, LWP Thresholds"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
- cot_avg_bars.jpg \
- cot_lwp_0p01_avg_bars.jpg \
- cot_lwp_0p10_avg_bars.jpg \
- cot_lwp_1p00_avg_bars.jpg \
- FigCloudOptThick.jpg
+echo "Figure: 2D Histogram: LWP Bin1 vs PCPRR, CCN only"
+montage -tile 3x6 -geometry ${Jsize}+2+100 \
+ hist2d_lwp_b1_pcprr_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_pcprr_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_pcprr_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_pcprr_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_pcprr_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_pcprr_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_pcprr_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_pcprr_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_pcprr_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_pcprr_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_pcprr_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_pcprr_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_pcprr_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_pcprr_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_pcprr_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_pcprr_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_pcprr_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_pcprr_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+ FigureHist2dLwpB1Pcprr.jpg
 
-echo "Figure: Bar graphs, COT, CCN only, LWP Bins"
-montage -tile 2x3 -geometry ${Jsize}+2+100 \
- cot_avg_bars.jpg \
- cot_lwp_b1_avg_bars.jpg \
- cot_lwp_b2_avg_bars.jpg \
- cot_lwp_b3_avg_bars.jpg \
- cot_lwp_b4_avg_bars.jpg \
- FigCloudOptThickLwpBins.jpg
+echo "Figure: 2D Histogram: LWP Bin1 vs Cloud depth, CCN only"
+montage -tile 3x6 -geometry ${Jsize}+2+100 \
+ hist2d_lwp_b1_cdepth_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cdepth_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cdepth_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cdepth_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cdepth_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cdepth_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cdepth_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cdepth_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cdepth_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cdepth_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cdepth_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cdepth_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cdepth_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cdepth_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cdepth_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cdepth_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cdepth_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b1_cdepth_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+ FigureHist2dLwpB1Cdepth.jpg
 
-echo "Figure: Bar graphs, CCN only: COT, CD, CF, Acc precip, Precip rate"
-montage -tile 2x3 -geometry ${Jsize}+2+100 \
- cot_avg_bars.jpg \
- cd_avg_bars.jpg \
- cf_avg_bars.jpg \
- acc_pcp_bars.jpg \
- pcprr_avg_bars.jpg \
- FigBarCloudtPrecip.jpg
+echo "Figure: 2D Histogram: LWP Bin2 vs COT, CCN only"
+montage -tile 3x6 -geometry ${Jsize}+2+100 \
+ hist2d_lwp_b2_cot_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cot_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cot_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cot_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cot_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cot_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cot_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cot_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cot_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cot_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cot_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cot_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cot_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cot_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cot_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cot_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cot_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cot_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+ FigureHist2dLwpB2Cot.jpg
 
-echo "Figure: Bar graphs, CCN only: COT, Precip rate"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
- cot_avg_bars.jpg \
- pcprr_avg_bars.jpg \
- acc_pcp_bars.jpg \
- FigBarCloudtPrecipShort.jpg
+echo "Figure: 2D Histogram: LWP Bin2 vs PCPRR, CCN only"
+montage -tile 3x6 -geometry ${Jsize}+2+100 \
+ hist2d_lwp_b2_pcprr_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_pcprr_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_pcprr_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_pcprr_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_pcprr_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_pcprr_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_pcprr_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_pcprr_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_pcprr_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_pcprr_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_pcprr_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_pcprr_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_pcprr_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_pcprr_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_pcprr_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_pcprr_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_pcprr_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_pcprr_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+ FigureHist2dLwpB2Pcprr.jpg
 
-echo "Figure: Cloud Mass (whole domain), Cloud, PCPRR, CCN only"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- Cloud_TALL_CO_S293_G10M5_ALL.jpg \
- Cloud_TALL_CO_S298_G10M5_ALL.jpg \
- Cloud_TALL_CO_S303_G10M5_ALL.jpg \
- copt_thick_pdf_S293.jpg \
- copt_thick_pdf_S298.jpg \
- copt_thick_pdf_S303.jpg \
- pcprr_pdf_S293.jpg \
- pcprr_pdf_S298.jpg \
- pcprr_pdf_S303.jpg \
- FigCloudProperties.jpg
+echo "Figure: 2D Histogram: LWP Bin2 vs Cloud depth, CCN only"
+montage -tile 3x6 -geometry ${Jsize}+2+100 \
+ hist2d_lwp_b2_cdepth_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cdepth_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cdepth_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cdepth_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cdepth_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cdepth_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cdepth_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cdepth_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cdepth_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cdepth_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cdepth_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cdepth_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cdepth_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cdepth_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cdepth_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cdepth_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cdepth_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b2_cdepth_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+ FigureHist2dLwpB2Cdepth.jpg
 
-echo "Figure: W'ThetaV', Wvar, Wskew, CCN only"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- W_ThetaV_TALL_CO_S293_G10M5_ALL.jpg \
- W_Var_TALL_CO_S293_G10M5_ALL.jpg \
- W_Skew_TALL_CO_S293_G10M5_ALL.jpg \
- W_ThetaV_TALL_CO_S298_G10M5_ALL.jpg \
- W_Var_TALL_CO_S298_G10M5_ALL.jpg \
- W_Skew_TALL_CO_S298_G10M5_ALL.jpg \
- W_ThetaV_TALL_CO_S303_G10M5_ALL.jpg \
- W_Var_TALL_CO_S303_G10M5_ALL.jpg \
- W_Skew_TALL_CO_S303_G10M5_ALL.jpg \
- FigTurbStruct.jpg
+echo "Figure: 2D Histogram: LWP Bin3 vs COT, CCN only"
+montage -tile 3x6 -geometry ${Jsize}+2+100 \
+ hist2d_lwp_b3_cot_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cot_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cot_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cot_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cot_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cot_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cot_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cot_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cot_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cot_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cot_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cot_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cot_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cot_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cot_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cot_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cot_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cot_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+ FigureHist2dLwpB3Cot.jpg
 
-echo "Figure: Bar graphs, COT and ACC_PCP, CCN and GCCN, LWP thresholds"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
- cot_avg_bars_gccn.jpg \
- cot_lwp_0p01_avg_bars_gccn.jpg \
- cot_lwp_0p10_avg_bars_gccn.jpg \
- cot_lwp_1p00_avg_bars_gccn.jpg \
- FigCloudOptThickGccn.jpg
+echo "Figure: 2D Histogram: LWP Bin3 vs PCPRR, CCN only"
+montage -tile 3x6 -geometry ${Jsize}+2+100 \
+ hist2d_lwp_b3_pcprr_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_pcprr_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_pcprr_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_pcprr_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_pcprr_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_pcprr_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_pcprr_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_pcprr_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_pcprr_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_pcprr_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_pcprr_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_pcprr_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_pcprr_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_pcprr_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_pcprr_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_pcprr_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_pcprr_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_pcprr_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+ FigureHist2dLwpB3Pcprr.jpg
 
-echo "Figure: Bar graphs, COT and ACC_PCP, CCN and GCCN, LWP bins"
-montage -tile 3x2 -geometry ${Jsize}+2+100 \
- cot_avg_bars_gccn.jpg \
- cot_lwp_b1_avg_bars_gccn.jpg \
- cot_lwp_b2_avg_bars_gccn.jpg \
- cot_lwp_b3_avg_bars_gccn.jpg \
- cot_lwp_b4_avg_bars_gccn.jpg \
- FigCloudOptThickGccnLwpBins.jpg
+echo "Figure: 2D Histogram: LWP Bin3 vs Cloud depth, CCN only"
+montage -tile 3x6 -geometry ${Jsize}+2+100 \
+ hist2d_lwp_b3_cdepth_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cdepth_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cdepth_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cdepth_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cdepth_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cdepth_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cdepth_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cdepth_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cdepth_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cdepth_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cdepth_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cdepth_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cdepth_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cdepth_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cdepth_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cdepth_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cdepth_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b3_cdepth_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+ FigureHist2dLwpB3Cdepth.jpg
 
-echo "Figure: Bar graphs, GCCN: COT, CD, CF, Acc precip, Precip rate"
-montage -tile 3x2 -geometry ${Jsize}+2+100 \
- cot_avg_bars_gccn.jpg \
- cd_avg_bars_gccn.jpg \
- cf_avg_bars_gccn.jpg \
- acc_pcp_bars_gccn.jpg \
- pcprr_avg_bars_gccn.jpg \
- FigBarCloudtPrecipGccn.jpg
+echo "Figure: 2D Histogram: LWP Bin4 vs COT, CCN only"
+montage -tile 3x6 -geometry ${Jsize}+2+100 \
+ hist2d_lwp_b4_cot_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cot_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cot_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cot_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cot_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cot_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cot_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cot_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cot_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cot_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cot_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cot_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cot_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cot_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cot_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cot_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cot_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cot_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+ FigureHist2dLwpB4Cot.jpg
 
-echo "Figure: Bar graphs, GCCN: COT, Precip rate"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
- cot_avg_bars_gccn.jpg \
- pcprr_avg_bars_gccn.jpg \
- acc_pcp_bars_gccn.jpg \
- FigBarCloudtPrecipShortGccn.jpg
+echo "Figure: 2D Histogram: LWP Bin4 vs PCPRR, CCN only"
+montage -tile 3x6 -geometry ${Jsize}+2+100 \
+ hist2d_lwp_b4_pcprr_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_pcprr_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_pcprr_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_pcprr_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_pcprr_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_pcprr_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_pcprr_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_pcprr_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_pcprr_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_pcprr_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_pcprr_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_pcprr_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_pcprr_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_pcprr_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_pcprr_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_pcprr_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_pcprr_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_pcprr_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+ FigureHist2dLwpB4Pcprr.jpg
 
-echo "Figure: Cloud Mass (whole domain), Cloud, PCPRR, CCN and GCCN"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- Cloud_TALL_CG_C50_S298.jpg \
- Cloud_TALL_CG_C400_S298.jpg \
- Cloud_TALL_CG_C1600_S298.jpg \
- copt_thick_pdf_C50_S298.jpg \
- copt_thick_pdf_C400_S298.jpg \
- copt_thick_pdf_C1600_S298.jpg \
- pcprr_pdf_C50_S298.jpg \
- pcprr_pdf_C400_S298.jpg \
- pcprr_pdf_C1600_S298.jpg \
- FigCloudPropertiesGccn.jpg
-
-echo "Figure: W'ThetaV', Wvar, Wskew, CCN and GCCN"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- W_ThetaV_TALL_CG_C50_S298.jpg \
- W_Var_TALL_CG_C50_S298.jpg \
- W_Skew_TALL_CG_C50_S298.jpg \
- W_ThetaV_TALL_CG_C400_S298.jpg \
- W_Var_TALL_CG_C400_S298.jpg \
- W_Skew_TALL_CG_C400_S298.jpg \
- W_ThetaV_TALL_CG_C1600_S298.jpg \
- W_Var_TALL_CG_C1600_S298.jpg \
- W_Skew_TALL_CG_C1600_S298.jpg \
- FigTurbStructGccn.jpg
-
-echo "Figure: Albedo, sfc conv, w examples, C50, S293 CCN only"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- Albedo_T12_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
- Albedo_T24_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
- Albedo_T36_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
- SfcConv_T12_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
- SfcConv_T24_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
- SfcConv_T36_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
- W_CFAD_0p01_T12_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
- W_CFAD_0p01_T24_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
- W_CFAD_0p01_T36_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
- FigSampleAlbSfcConvW_C50_S293.jpg
-
-echo "Figure: Albedo, sfc conv, w examples, C1600, S303 CCN only"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- Albedo_T12_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
- Albedo_T24_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
- Albedo_T36_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
- SfcConv_T12_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
- SfcConv_T24_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
- SfcConv_T36_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
- W_CFAD_0p01_T12_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
- W_CFAD_0p01_T24_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
- W_CFAD_0p01_T36_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
- FigSampleAlbSfcConvW_C1600_S303.jpg
-
-echo "Figure: W variance"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- W_Var_TSTART_CO_S293_G10M5_ALL.jpg \
- W_Var_TMID_CO_S293_G10M5_ALL.jpg \
- W_Var_TEND_CO_S293_G10M5_ALL.jpg \
- W_Var_TSTART_CO_S298_G10M5_ALL.jpg \
- W_Var_TMID_CO_S298_G10M5_ALL.jpg \
- W_Var_TEND_CO_S298_G10M5_ALL.jpg \
- W_Var_TSTART_CO_S303_G10M5_ALL.jpg \
- W_Var_TMID_CO_S303_G10M5_ALL.jpg \
- W_Var_TEND_CO_S303_G10M5_ALL.jpg \
- FigureWvar.jpg
-
-echo "Figure: W skew"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- W_Skew_TSTART_CO_S293_G10M5_ALL.jpg \
- W_Skew_TMID_CO_S293_G10M5_ALL.jpg \
- W_Skew_TEND_CO_S293_G10M5_ALL.jpg \
- W_Skew_TSTART_CO_S298_G10M5_ALL.jpg \
- W_Skew_TMID_CO_S298_G10M5_ALL.jpg \
- W_Skew_TEND_CO_S298_G10M5_ALL.jpg \
- W_Skew_TSTART_CO_S303_G10M5_ALL.jpg \
- W_Skew_TMID_CO_S303_G10M5_ALL.jpg \
- W_Skew_TEND_CO_S303_G10M5_ALL.jpg \
- FigureWskew.jpg
-
-echo "Figure: W vapor flux"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- W_Vapor_TSTART_CO_S293_G10M5_ALL.jpg \
- W_Vapor_TMID_CO_S293_G10M5_ALL.jpg \
- W_Vapor_TEND_CO_S293_G10M5_ALL.jpg \
- W_Vapor_TSTART_CO_S298_G10M5_ALL.jpg \
- W_Vapor_TMID_CO_S298_G10M5_ALL.jpg \
- W_Vapor_TEND_CO_S298_G10M5_ALL.jpg \
- W_Vapor_TSTART_CO_S303_G10M5_ALL.jpg \
- W_Vapor_TMID_CO_S303_G10M5_ALL.jpg \
- W_Vapor_TEND_CO_S303_G10M5_ALL.jpg \
- FigureWvaporFlux.jpg
-
-echo "Figure: W theta flux"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- W_Theta_TSTART_CO_S293_G10M5_ALL.jpg \
- W_Theta_TMID_CO_S293_G10M5_ALL.jpg \
- W_Theta_TEND_CO_S293_G10M5_ALL.jpg \
- W_Theta_TSTART_CO_S298_G10M5_ALL.jpg \
- W_Theta_TMID_CO_S298_G10M5_ALL.jpg \
- W_Theta_TEND_CO_S298_G10M5_ALL.jpg \
- W_Theta_TSTART_CO_S303_G10M5_ALL.jpg \
- W_Theta_TMID_CO_S303_G10M5_ALL.jpg \
- W_Theta_TEND_CO_S303_G10M5_ALL.jpg \
- FigureWthetaFlux.jpg
-
-echo "Figure: W theta_v flux"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- W_ThetaV_TSTART_CO_S293_G10M5_ALL.jpg \
- W_ThetaV_TMID_CO_S293_G10M5_ALL.jpg \
- W_ThetaV_TEND_CO_S293_G10M5_ALL.jpg \
- W_ThetaV_TSTART_CO_S298_G10M5_ALL.jpg \
- W_ThetaV_TMID_CO_S298_G10M5_ALL.jpg \
- W_ThetaV_TEND_CO_S298_G10M5_ALL.jpg \
- W_ThetaV_TSTART_CO_S303_G10M5_ALL.jpg \
- W_ThetaV_TMID_CO_S303_G10M5_ALL.jpg \
- W_ThetaV_TEND_CO_S303_G10M5_ALL.jpg \
- FigureWthetavFlux.jpg
-
-echo "Figure: W speed flux"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- W_Speed_TSTART_CO_S293_G10M5_ALL.jpg \
- W_Speed_TMID_CO_S293_G10M5_ALL.jpg \
- W_Speed_TEND_CO_S293_G10M5_ALL.jpg \
- W_Speed_TSTART_CO_S298_G10M5_ALL.jpg \
- W_Speed_TMID_CO_S298_G10M5_ALL.jpg \
- W_Speed_TEND_CO_S298_G10M5_ALL.jpg \
- W_Speed_TSTART_CO_S303_G10M5_ALL.jpg \
- W_Speed_TMID_CO_S303_G10M5_ALL.jpg \
- W_Speed_TEND_CO_S303_G10M5_ALL.jpg \
- FigureWspeedFlux.jpg
-
-echo "Figure: Mean theta"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- Theta_TSTART_CO_S293_G10M5_ALL.jpg \
- Theta_TMID_CO_S293_G10M5_ALL.jpg \
- Theta_TEND_CO_S293_G10M5_ALL.jpg \
- Theta_TSTART_CO_S298_G10M5_ALL.jpg \
- Theta_TMID_CO_S298_G10M5_ALL.jpg \
- Theta_TEND_CO_S298_G10M5_ALL.jpg \
- Theta_TSTART_CO_S303_G10M5_ALL.jpg \
- Theta_TMID_CO_S303_G10M5_ALL.jpg \
- Theta_TEND_CO_S303_G10M5_ALL.jpg \
- FigureMeanTheta.jpg
-
-echo "Figure: Mean theta_e"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- ThetaE_TSTART_CO_S293_G10M5_ALL.jpg \
- ThetaE_TMID_CO_S293_G10M5_ALL.jpg \
- ThetaE_TEND_CO_S293_G10M5_ALL.jpg \
- ThetaE_TSTART_CO_S298_G10M5_ALL.jpg \
- ThetaE_TMID_CO_S298_G10M5_ALL.jpg \
- ThetaE_TEND_CO_S298_G10M5_ALL.jpg \
- ThetaE_TSTART_CO_S303_G10M5_ALL.jpg \
- ThetaE_TMID_CO_S303_G10M5_ALL.jpg \
- ThetaE_TEND_CO_S303_G10M5_ALL.jpg \
- FigureMeanThetaE.jpg
-
-echo "Figure: Mean theta_v"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- ThetaV_TSTART_CO_S293_G10M5_ALL.jpg \
- ThetaV_TMID_CO_S293_G10M5_ALL.jpg \
- ThetaV_TEND_CO_S293_G10M5_ALL.jpg \
- ThetaV_TSTART_CO_S298_G10M5_ALL.jpg \
- ThetaV_TMID_CO_S298_G10M5_ALL.jpg \
- ThetaV_TEND_CO_S298_G10M5_ALL.jpg \
- ThetaV_TSTART_CO_S303_G10M5_ALL.jpg \
- ThetaV_TMID_CO_S303_G10M5_ALL.jpg \
- ThetaV_TEND_CO_S303_G10M5_ALL.jpg \
- FigureMeanThetaV.jpg
-
-echo "Figure: Mean speed"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- Speed_TSTART_CO_S293_G10M5_ALL.jpg \
- Speed_TMID_CO_S293_G10M5_ALL.jpg \
- Speed_TEND_CO_S293_G10M5_ALL.jpg \
- Speed_TSTART_CO_S298_G10M5_ALL.jpg \
- Speed_TMID_CO_S298_G10M5_ALL.jpg \
- Speed_TEND_CO_S298_G10M5_ALL.jpg \
- Speed_TSTART_CO_S303_G10M5_ALL.jpg \
- Speed_TMID_CO_S303_G10M5_ALL.jpg \
- Speed_TEND_CO_S303_G10M5_ALL.jpg \
- FigureMeanSpeed.jpg
-
-echo "Figure: Mean vapor"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- Vapor_TSTART_CO_S293_G10M5_ALL.jpg \
- Vapor_TMID_CO_S293_G10M5_ALL.jpg \
- Vapor_TEND_CO_S293_G10M5_ALL.jpg \
- Vapor_TSTART_CO_S298_G10M5_ALL.jpg \
- Vapor_TMID_CO_S298_G10M5_ALL.jpg \
- Vapor_TEND_CO_S298_G10M5_ALL.jpg \
- Vapor_TSTART_CO_S303_G10M5_ALL.jpg \
- Vapor_TMID_CO_S303_G10M5_ALL.jpg \
- Vapor_TEND_CO_S303_G10M5_ALL.jpg \
- FigureMeanVapor.jpg
-
-echo "Figure: w-vapor flux all time points"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- W_Mean_TALL_CO_S293_G10M5_ALL.jpg \
- W_Mean_TALL_CO_S298_G10M5_ALL.jpg \
- W_Mean_TALL_CO_S303_G10M5_ALL.jpg \
- Vapor_TALL_CO_S293_G10M5_ALL.jpg \
- Vapor_TALL_CO_S298_G10M5_ALL.jpg \
- Vapor_TALL_CO_S303_G10M5_ALL.jpg \
- W_Vapor_TALL_CO_S293_G10M5_ALL.jpg \
- W_Vapor_TALL_CO_S298_G10M5_ALL.jpg \
- W_Vapor_TALL_CO_S303_G10M5_ALL.jpg \
- FigureVaporFluxTall.jpg
-
-echo "Figure: w-speed flux all time points"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- W_Mean_TALL_CO_S293_G10M5_ALL.jpg \
- W_Mean_TALL_CO_S298_G10M5_ALL.jpg \
- W_Mean_TALL_CO_S303_G10M5_ALL.jpg \
- Speed_TALL_CO_S293_G10M5_ALL.jpg \
- Speed_TALL_CO_S298_G10M5_ALL.jpg \
- Speed_TALL_CO_S303_G10M5_ALL.jpg \
- W_Speed_TALL_CO_S293_G10M5_ALL.jpg \
- W_Speed_TALL_CO_S298_G10M5_ALL.jpg \
- W_Speed_TALL_CO_S303_G10M5_ALL.jpg \
- FigureSpeedFluxTall.jpg
-
-echo "Figure: w-theta flux all time points"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- W_Mean_TALL_CO_S293_G10M5_ALL.jpg \
- W_Mean_TALL_CO_S298_G10M5_ALL.jpg \
- W_Mean_TALL_CO_S303_G10M5_ALL.jpg \
- Theta_TALL_CO_S293_G10M5_ALL.jpg \
- Theta_TALL_CO_S298_G10M5_ALL.jpg \
- Theta_TALL_CO_S303_G10M5_ALL.jpg \
- W_Theta_TALL_CO_S293_G10M5_ALL.jpg \
- W_Theta_TALL_CO_S298_G10M5_ALL.jpg \
- W_Theta_TALL_CO_S303_G10M5_ALL.jpg \
- FigureThetaFluxTall.jpg
-
-echo "Figure: w-theta_v flux all time points"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- W_Mean_TALL_CO_S293_G10M5_ALL.jpg \
- W_Mean_TALL_CO_S298_G10M5_ALL.jpg \
- W_Mean_TALL_CO_S303_G10M5_ALL.jpg \
- ThetaV_TALL_CO_S293_G10M5_ALL.jpg \
- ThetaV_TALL_CO_S298_G10M5_ALL.jpg \
- ThetaV_TALL_CO_S303_G10M5_ALL.jpg \
- W_ThetaV_TALL_CO_S293_G10M5_ALL.jpg \
- W_ThetaV_TALL_CO_S298_G10M5_ALL.jpg \
- W_ThetaV_TALL_CO_S303_G10M5_ALL.jpg \
- FigureThetavFluxTall.jpg
-
-echo "Figure: Time series: Inversion Height"
-montage -tile 3x2 -geometry ${Jsize}+2+100 \
- InvHeight_CO_S293_G10M5.jpg \
- InvHeight_CO_S298_G10M5.jpg \
- InvHeight_CO_S303_G10M5.jpg \
- InvHeight_CG_C0050_S298.jpg \
- InvHeight_CG_C0400_S298.jpg \
- InvHeight_CG_C1600_S298.jpg \
- FigureTsInvHeight.jpg
-
-echo "Figure: Time series: Cloud Bottom"
-montage -tile 3x2 -geometry ${Jsize}+2+100 \
- CloudCldBot_CO_S293_G10M5.jpg \
- CloudCldBot_CO_S298_G10M5.jpg \
- CloudCldBot_CO_S303_G10M5.jpg \
- CloudCldBot_CG_C0050_S298.jpg \
- CloudCldBot_CG_C0400_S298.jpg \
- CloudCldBot_CG_C1600_S298.jpg \
- FigureTsCldBot.jpg
-
-echo "Figure: Time series: Cloud Top"
-montage -tile 3x2 -geometry ${Jsize}+2+100 \
- CloudCldTop_CO_S293_G10M5.jpg \
- CloudCldTop_CO_S298_G10M5.jpg \
- CloudCldTop_CO_S303_G10M5.jpg \
- CloudCldTop_CG_C0050_S298.jpg \
- CloudCldTop_CG_C0400_S298.jpg \
- CloudCldTop_CG_C1600_S298.jpg \
- FigureTsCldTop.jpg
-
-echo "Figure: Time series: Max Cloud Fraction"
-montage -tile 3x2 -geometry ${Jsize}+2+100 \
- CfMax_CO_S293_G10M5.jpg \
- CfMax_CO_S298_G10M5.jpg \
- CfMax_CO_S303_G10M5.jpg \
- CfMax_CG_C0050_S298.jpg \
- CfMax_CG_C0400_S298.jpg \
- CfMax_CG_C1600_S298.jpg \
- FigureTsMaxCldFrac.jpg
-
-echo "Figure: Time series: Height of Max Cloud Fraction"
-montage -tile 3x2 -geometry ${Jsize}+2+100 \
- CfMaxHeight_CO_S293_G10M5.jpg \
- CfMaxHeight_CO_S298_G10M5.jpg \
- CfMaxHeight_CO_S303_G10M5.jpg \
- CfMaxHeight_CG_C0050_S298.jpg \
- CfMaxHeight_CG_C0400_S298.jpg \
- CfMaxHeight_CG_C1600_S298.jpg \
- FigureTsMaxCldFracHeight.jpg
-
-echo "Figure: Time series: Zi, Zt, CFmax, CCN only"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- InvHeight_CO_S293_G10M5.jpg \
- InvHeight_CO_S298_G10M5.jpg \
- InvHeight_CO_S303_G10M5.jpg \
- CloudCldTop_CO_S293_G10M5.jpg \
- CloudCldTop_CO_S298_G10M5.jpg \
- CloudCldTop_CO_S303_G10M5.jpg \
- CfMax_CO_S293_G10M5.jpg \
- CfMax_CO_S298_G10M5.jpg \
- CfMax_CO_S303_G10M5.jpg \
- FigureTsBlStas.jpg
-
-echo "Figure: Time series: Zi, Zt, CFmax, all cases, CCN only"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- InvHeight_CO_S293_G10M5_ALL.jpg \
- CloudCldTop_CO_S293_G10M5_ALL.jpg \
- CfMax_CO_S293_G10M5_ALL.jpg \
- InvHeight_CO_S298_G10M5_ALL.jpg \
- CloudCldTop_CO_S298_G10M5_ALL.jpg \
- CfMax_CO_S298_G10M5_ALL.jpg \
- InvHeight_CO_S303_G10M5_ALL.jpg \
- CloudCldTop_CO_S303_G10M5_ALL.jpg \
- CfMax_CO_S303_G10M5_ALL.jpg \
- FigureTsBlStats_ALL.jpg
-
-echo "Figure: Vertical Velocity CFAD, C400"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- W_CFAD_C400_0p01_T12_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
- W_CFAD_C400_0p01_T24_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
- W_CFAD_C400_0p01_T36_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
- W_CFAD_C400_0p01_T12_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
- W_CFAD_C400_0p01_T24_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
- W_CFAD_C400_0p01_T36_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
- W_CFAD_C400_0p01_T12_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
- W_CFAD_C400_0p01_T24_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
- W_CFAD_C400_0p01_T36_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
- FigureWcfadC400.jpg
-
-echo "Figure: Vertical Velocity CFAD, S298"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- W_CFAD_S298_0p01_T12_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
- W_CFAD_S298_0p01_T24_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
- W_CFAD_S298_0p01_T36_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
- W_CFAD_S298_0p01_T12_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
- W_CFAD_S298_0p01_T24_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
- W_CFAD_S298_0p01_T36_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
- W_CFAD_S298_0p01_T12_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
- W_CFAD_S298_0p01_T24_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
- W_CFAD_S298_0p01_T36_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
- FigureWcfadS298.jpg
-
-echo "Figure: Vertical Velocity CFAD, S298 and C400"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- W_CFAD_C400_S298_0p01_T12_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
- W_CFAD_C400_S298_0p01_T24_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
- W_CFAD_C400_S298_0p01_T36_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
- W_CFAD_C400_S298_0p01_T12_z.atex.ccn0400.sst298.gcn10m2.3um.jpg \
- W_CFAD_C400_S298_0p01_T24_z.atex.ccn0400.sst298.gcn10m2.3um.jpg \
- W_CFAD_C400_S298_0p01_T36_z.atex.ccn0400.sst298.gcn10m2.3um.jpg \
- W_CFAD_C400_S298_0p01_T12_z.atex.ccn0400.sst298.gcn10m0.3um.jpg \
- W_CFAD_C400_S298_0p01_T24_z.atex.ccn0400.sst298.gcn10m0.3um.jpg \
- W_CFAD_C400_S298_0p01_T36_z.atex.ccn0400.sst298.gcn10m0.3um.jpg \
- FigureWcfadC400_S298.jpg
-
-echo "Figure: W stats all time points"
-montage -tile 2x3 -geometry ${Jsize}+2+100 \
- W_Var_TALL_CO_S293_G10M5_ALL.jpg \
- W_Skew_TALL_CO_S293_G10M5_ALL.jpg \
- W_Var_TALL_CO_S298_G10M5_ALL.jpg \
- W_Skew_TALL_CO_S298_G10M5_ALL.jpg \
- W_Var_TALL_CO_S303_G10M5_ALL.jpg \
- W_Skew_TALL_CO_S303_G10M5_ALL.jpg \
- FigureWstatsTall.jpg
-
-echo "Figure: COT pdfs with LWP bin 1, CCN only"
-montage -tile 3x4 -geometry ${Jsize}+2+100 \
- CotPdf_lwp_b1_TSTART_CO_S293_G10M5_ALL.jpg \
- CotPdf_lwp_b1_TSTART_CO_S298_G10M5_ALL.jpg \
- CotPdf_lwp_b1_TSTART_CO_S303_G10M5_ALL.jpg \
- CotPdf_lwp_b1_TMID_CO_S293_G10M5_ALL.jpg \
- CotPdf_lwp_b1_TMID_CO_S298_G10M5_ALL.jpg \
- CotPdf_lwp_b1_TMID_CO_S303_G10M5_ALL.jpg \
- CotPdf_lwp_b1_TEND_CO_S293_G10M5_ALL.jpg \
- CotPdf_lwp_b1_TEND_CO_S298_G10M5_ALL.jpg \
- CotPdf_lwp_b1_TEND_CO_S303_G10M5_ALL.jpg \
- CotPdf_lwp_b1_TALL_CO_S293_G10M5_ALL.jpg \
- CotPdf_lwp_b1_TALL_CO_S298_G10M5_ALL.jpg \
- CotPdf_lwp_b1_TALL_CO_S303_G10M5_ALL.jpg \
- FigureCotPdfLwpBin1.jpg
-
-echo "Figure: COT pdfs with LWP bin 2, CCN only"
-montage -tile 3x4 -geometry ${Jsize}+2+100 \
- CotPdf_lwp_b2_TSTART_CO_S293_G10M5_ALL.jpg \
- CotPdf_lwp_b2_TSTART_CO_S298_G10M5_ALL.jpg \
- CotPdf_lwp_b2_TSTART_CO_S303_G10M5_ALL.jpg \
- CotPdf_lwp_b2_TMID_CO_S293_G10M5_ALL.jpg \
- CotPdf_lwp_b2_TMID_CO_S298_G10M5_ALL.jpg \
- CotPdf_lwp_b2_TMID_CO_S303_G10M5_ALL.jpg \
- CotPdf_lwp_b2_TEND_CO_S293_G10M5_ALL.jpg \
- CotPdf_lwp_b2_TEND_CO_S298_G10M5_ALL.jpg \
- CotPdf_lwp_b2_TEND_CO_S303_G10M5_ALL.jpg \
- CotPdf_lwp_b2_TALL_CO_S293_G10M5_ALL.jpg \
- CotPdf_lwp_b2_TALL_CO_S298_G10M5_ALL.jpg \
- CotPdf_lwp_b2_TALL_CO_S303_G10M5_ALL.jpg \
- FigureCotPdfLwpBin2.jpg
-
-echo "Figure: COT pdfs with LWP bin 3, CCN only"
-montage -tile 3x4 -geometry ${Jsize}+2+100 \
- CotPdf_lwp_b3_TSTART_CO_S293_G10M5_ALL.jpg \
- CotPdf_lwp_b3_TSTART_CO_S298_G10M5_ALL.jpg \
- CotPdf_lwp_b3_TSTART_CO_S303_G10M5_ALL.jpg \
- CotPdf_lwp_b3_TMID_CO_S293_G10M5_ALL.jpg \
- CotPdf_lwp_b3_TMID_CO_S298_G10M5_ALL.jpg \
- CotPdf_lwp_b3_TMID_CO_S303_G10M5_ALL.jpg \
- CotPdf_lwp_b3_TEND_CO_S293_G10M5_ALL.jpg \
- CotPdf_lwp_b3_TEND_CO_S298_G10M5_ALL.jpg \
- CotPdf_lwp_b3_TEND_CO_S303_G10M5_ALL.jpg \
- CotPdf_lwp_b3_TALL_CO_S293_G10M5_ALL.jpg \
- CotPdf_lwp_b3_TALL_CO_S298_G10M5_ALL.jpg \
- CotPdf_lwp_b3_TALL_CO_S303_G10M5_ALL.jpg \
- FigureCotPdfLwpBin3.jpg
-
-echo "Figure: COT pdfs with LWP bin 4, CCN only"
-montage -tile 3x4 -geometry ${Jsize}+2+100 \
- CotPdf_lwp_b4_TSTART_CO_S293_G10M5_ALL.jpg \
- CotPdf_lwp_b4_TSTART_CO_S298_G10M5_ALL.jpg \
- CotPdf_lwp_b4_TSTART_CO_S303_G10M5_ALL.jpg \
- CotPdf_lwp_b4_TMID_CO_S293_G10M5_ALL.jpg \
- CotPdf_lwp_b4_TMID_CO_S298_G10M5_ALL.jpg \
- CotPdf_lwp_b4_TMID_CO_S303_G10M5_ALL.jpg \
- CotPdf_lwp_b4_TEND_CO_S293_G10M5_ALL.jpg \
- CotPdf_lwp_b4_TEND_CO_S298_G10M5_ALL.jpg \
- CotPdf_lwp_b4_TEND_CO_S303_G10M5_ALL.jpg \
- CotPdf_lwp_b4_TALL_CO_S293_G10M5_ALL.jpg \
- CotPdf_lwp_b4_TALL_CO_S298_G10M5_ALL.jpg \
- CotPdf_lwp_b4_TALL_CO_S303_G10M5_ALL.jpg \
- FigureCotPdfLwpBin4.jpg
-
-echo "Figure: COT pdfs with LWP bin 1, CCN+GCCN"
-montage -tile 3x4 -geometry ${Jsize}+2+100 \
- CotPdf_lwp_b1_TSTART_CG_UP_C0050_S298.jpg \
- CotPdf_lwp_b1_TSTART_CG_UP_C0400_S298.jpg \
- CotPdf_lwp_b1_TSTART_CG_UP_C1600_S298.jpg \
- CotPdf_lwp_b1_TMID_CG_UP_C0050_S298.jpg \
- CotPdf_lwp_b1_TMID_CG_UP_C0400_S298.jpg \
- CotPdf_lwp_b1_TMID_CG_UP_C1600_S298.jpg \
- CotPdf_lwp_b1_TEND_CG_UP_C0050_S298.jpg \
- CotPdf_lwp_b1_TEND_CG_UP_C0400_S298.jpg \
- CotPdf_lwp_b1_TEND_CG_UP_C1600_S298.jpg \
- CotPdf_lwp_b1_TALL_CG_UP_C0050_S298.jpg \
- CotPdf_lwp_b1_TALL_CG_UP_C0400_S298.jpg \
- CotPdf_lwp_b1_TALL_CG_UP_C1600_S298.jpg \
- FigureCotPdfLwpBin1Gccn.jpg
-
-echo "Figure: COT pdfs with LWP bin 2, CCN+GCCN"
-montage -tile 3x4 -geometry ${Jsize}+2+100 \
- CotPdf_lwp_b2_TSTART_CG_UP_C0050_S298.jpg \
- CotPdf_lwp_b2_TSTART_CG_UP_C0400_S298.jpg \
- CotPdf_lwp_b2_TSTART_CG_UP_C1600_S298.jpg \
- CotPdf_lwp_b2_TMID_CG_UP_C0050_S298.jpg \
- CotPdf_lwp_b2_TMID_CG_UP_C0400_S298.jpg \
- CotPdf_lwp_b2_TMID_CG_UP_C1600_S298.jpg \
- CotPdf_lwp_b2_TEND_CG_UP_C0050_S298.jpg \
- CotPdf_lwp_b2_TEND_CG_UP_C0400_S298.jpg \
- CotPdf_lwp_b2_TEND_CG_UP_C1600_S298.jpg \
- CotPdf_lwp_b2_TALL_CG_UP_C0050_S298.jpg \
- CotPdf_lwp_b2_TALL_CG_UP_C0400_S298.jpg \
- CotPdf_lwp_b2_TALL_CG_UP_C1600_S298.jpg \
- FigureCotPdfLwpBin2Gccn.jpg
-
-echo "Figure: COT pdfs with LWP bin 3, CCN+GCCN"
-montage -tile 3x4 -geometry ${Jsize}+2+100 \
- CotPdf_lwp_b3_TSTART_CG_UP_C0050_S298.jpg \
- CotPdf_lwp_b3_TSTART_CG_UP_C0400_S298.jpg \
- CotPdf_lwp_b3_TSTART_CG_UP_C1600_S298.jpg \
- CotPdf_lwp_b3_TMID_CG_UP_C0050_S298.jpg \
- CotPdf_lwp_b3_TMID_CG_UP_C0400_S298.jpg \
- CotPdf_lwp_b3_TMID_CG_UP_C1600_S298.jpg \
- CotPdf_lwp_b3_TEND_CG_UP_C0050_S298.jpg \
- CotPdf_lwp_b3_TEND_CG_UP_C0400_S298.jpg \
- CotPdf_lwp_b3_TEND_CG_UP_C1600_S298.jpg \
- CotPdf_lwp_b3_TALL_CG_UP_C0050_S298.jpg \
- CotPdf_lwp_b3_TALL_CG_UP_C0400_S298.jpg \
- CotPdf_lwp_b3_TALL_CG_UP_C1600_S298.jpg \
- FigureCotPdfLwpBin3Gccn.jpg
-
-echo "Figure: COT pdfs with LWP bin 4, CCN+GCCN"
-montage -tile 3x4 -geometry ${Jsize}+2+100 \
- CotPdf_lwp_b4_TSTART_CG_UP_C0050_S298.jpg \
- CotPdf_lwp_b4_TSTART_CG_UP_C0400_S298.jpg \
- CotPdf_lwp_b4_TSTART_CG_UP_C1600_S298.jpg \
- CotPdf_lwp_b4_TMID_CG_UP_C0050_S298.jpg \
- CotPdf_lwp_b4_TMID_CG_UP_C0400_S298.jpg \
- CotPdf_lwp_b4_TMID_CG_UP_C1600_S298.jpg \
- CotPdf_lwp_b4_TEND_CG_UP_C0050_S298.jpg \
- CotPdf_lwp_b4_TEND_CG_UP_C0400_S298.jpg \
- CotPdf_lwp_b4_TEND_CG_UP_C1600_S298.jpg \
- CotPdf_lwp_b4_TALL_CG_UP_C0050_S298.jpg \
- CotPdf_lwp_b4_TALL_CG_UP_C0400_S298.jpg \
- CotPdf_lwp_b4_TALL_CG_UP_C1600_S298.jpg \
- FigureCotPdfLwpBin4Gccn.jpg
-
-echo "Figure: PRATE pdfs with LWP bin 1, CCN only"
-montage -tile 3x4 -geometry ${Jsize}+2+100 \
- PratePdf_lwp_b1_TSTART_CO_S293_G10M5_ALL.jpg \
- PratePdf_lwp_b1_TSTART_CO_S298_G10M5_ALL.jpg \
- PratePdf_lwp_b1_TSTART_CO_S303_G10M5_ALL.jpg \
- PratePdf_lwp_b1_TMID_CO_S293_G10M5_ALL.jpg \
- PratePdf_lwp_b1_TMID_CO_S298_G10M5_ALL.jpg \
- PratePdf_lwp_b1_TMID_CO_S303_G10M5_ALL.jpg \
- PratePdf_lwp_b1_TEND_CO_S293_G10M5_ALL.jpg \
- PratePdf_lwp_b1_TEND_CO_S298_G10M5_ALL.jpg \
- PratePdf_lwp_b1_TEND_CO_S303_G10M5_ALL.jpg \
- PratePdf_lwp_b1_TALL_CO_S293_G10M5_ALL.jpg \
- PratePdf_lwp_b1_TALL_CO_S298_G10M5_ALL.jpg \
- PratePdf_lwp_b1_TALL_CO_S303_G10M5_ALL.jpg \
- FigurePratePdfLwpBin1.jpg
-
-echo "Figure: PRATE pdfs with LWP bin 2, CCN only"
-montage -tile 3x4 -geometry ${Jsize}+2+100 \
- PratePdf_lwp_b2_TSTART_CO_S293_G10M5_ALL.jpg \
- PratePdf_lwp_b2_TSTART_CO_S298_G10M5_ALL.jpg \
- PratePdf_lwp_b2_TSTART_CO_S303_G10M5_ALL.jpg \
- PratePdf_lwp_b2_TMID_CO_S293_G10M5_ALL.jpg \
- PratePdf_lwp_b2_TMID_CO_S298_G10M5_ALL.jpg \
- PratePdf_lwp_b2_TMID_CO_S303_G10M5_ALL.jpg \
- PratePdf_lwp_b2_TEND_CO_S293_G10M5_ALL.jpg \
- PratePdf_lwp_b2_TEND_CO_S298_G10M5_ALL.jpg \
- PratePdf_lwp_b2_TEND_CO_S303_G10M5_ALL.jpg \
- PratePdf_lwp_b2_TALL_CO_S293_G10M5_ALL.jpg \
- PratePdf_lwp_b2_TALL_CO_S298_G10M5_ALL.jpg \
- PratePdf_lwp_b2_TALL_CO_S303_G10M5_ALL.jpg \
- FigurePratePdfLwpBin2.jpg
-
-echo "Figure: PRATE pdfs with LWP bin 3, CCN only"
-montage -tile 3x4 -geometry ${Jsize}+2+100 \
- PratePdf_lwp_b3_TSTART_CO_S293_G10M5_ALL.jpg \
- PratePdf_lwp_b3_TSTART_CO_S298_G10M5_ALL.jpg \
- PratePdf_lwp_b3_TSTART_CO_S303_G10M5_ALL.jpg \
- PratePdf_lwp_b3_TMID_CO_S293_G10M5_ALL.jpg \
- PratePdf_lwp_b3_TMID_CO_S298_G10M5_ALL.jpg \
- PratePdf_lwp_b3_TMID_CO_S303_G10M5_ALL.jpg \
- PratePdf_lwp_b3_TEND_CO_S293_G10M5_ALL.jpg \
- PratePdf_lwp_b3_TEND_CO_S298_G10M5_ALL.jpg \
- PratePdf_lwp_b3_TEND_CO_S303_G10M5_ALL.jpg \
- PratePdf_lwp_b3_TALL_CO_S293_G10M5_ALL.jpg \
- PratePdf_lwp_b3_TALL_CO_S298_G10M5_ALL.jpg \
- PratePdf_lwp_b3_TALL_CO_S303_G10M5_ALL.jpg \
- FigurePratePdfLwpBin3.jpg
-
-echo "Figure: PRATE pdfs with LWP bin 4, CCN only"
-montage -tile 3x4 -geometry ${Jsize}+2+100 \
- PratePdf_lwp_b4_TSTART_CO_S293_G10M5_ALL.jpg \
- PratePdf_lwp_b4_TSTART_CO_S298_G10M5_ALL.jpg \
- PratePdf_lwp_b4_TSTART_CO_S303_G10M5_ALL.jpg \
- PratePdf_lwp_b4_TMID_CO_S293_G10M5_ALL.jpg \
- PratePdf_lwp_b4_TMID_CO_S298_G10M5_ALL.jpg \
- PratePdf_lwp_b4_TMID_CO_S303_G10M5_ALL.jpg \
- PratePdf_lwp_b4_TEND_CO_S293_G10M5_ALL.jpg \
- PratePdf_lwp_b4_TEND_CO_S298_G10M5_ALL.jpg \
- PratePdf_lwp_b4_TEND_CO_S303_G10M5_ALL.jpg \
- PratePdf_lwp_b4_TALL_CO_S293_G10M5_ALL.jpg \
- PratePdf_lwp_b4_TALL_CO_S298_G10M5_ALL.jpg \
- PratePdf_lwp_b4_TALL_CO_S303_G10M5_ALL.jpg \
- FigurePratePdfLwpBin4.jpg
-
-echo "Figure: PRATE pdfs with LWP bin 1, CCN+GCCN"
-montage -tile 3x4 -geometry ${Jsize}+2+100 \
- PratePdf_lwp_b1_TSTART_CG_UP_C0050_S298.jpg \
- PratePdf_lwp_b1_TSTART_CG_UP_C0400_S298.jpg \
- PratePdf_lwp_b1_TSTART_CG_UP_C1600_S298.jpg \
- PratePdf_lwp_b1_TMID_CG_UP_C0050_S298.jpg \
- PratePdf_lwp_b1_TMID_CG_UP_C0400_S298.jpg \
- PratePdf_lwp_b1_TMID_CG_UP_C1600_S298.jpg \
- PratePdf_lwp_b1_TEND_CG_UP_C0050_S298.jpg \
- PratePdf_lwp_b1_TEND_CG_UP_C0400_S298.jpg \
- PratePdf_lwp_b1_TEND_CG_UP_C1600_S298.jpg \
- PratePdf_lwp_b1_TALL_CG_UP_C0050_S298.jpg \
- PratePdf_lwp_b1_TALL_CG_UP_C0400_S298.jpg \
- PratePdf_lwp_b1_TALL_CG_UP_C1600_S298.jpg \
- FigurePratePdfLwpBin1Gccn.jpg
-
-echo "Figure: PRATE pdfs with LWP bin 2, CCN+GCCN"
-montage -tile 3x4 -geometry ${Jsize}+2+100 \
- PratePdf_lwp_b2_TSTART_CG_UP_C0050_S298.jpg \
- PratePdf_lwp_b2_TSTART_CG_UP_C0400_S298.jpg \
- PratePdf_lwp_b2_TSTART_CG_UP_C1600_S298.jpg \
- PratePdf_lwp_b2_TMID_CG_UP_C0050_S298.jpg \
- PratePdf_lwp_b2_TMID_CG_UP_C0400_S298.jpg \
- PratePdf_lwp_b2_TMID_CG_UP_C1600_S298.jpg \
- PratePdf_lwp_b2_TEND_CG_UP_C0050_S298.jpg \
- PratePdf_lwp_b2_TEND_CG_UP_C0400_S298.jpg \
- PratePdf_lwp_b2_TEND_CG_UP_C1600_S298.jpg \
- PratePdf_lwp_b2_TALL_CG_UP_C0050_S298.jpg \
- PratePdf_lwp_b2_TALL_CG_UP_C0400_S298.jpg \
- PratePdf_lwp_b2_TALL_CG_UP_C1600_S298.jpg \
- FigurePratePdfLwpBin2Gccn.jpg
-
-echo "Figure: PRATE pdfs with LWP bin 3, CCN+GCCN"
-montage -tile 3x4 -geometry ${Jsize}+2+100 \
- PratePdf_lwp_b3_TSTART_CG_UP_C0050_S298.jpg \
- PratePdf_lwp_b3_TSTART_CG_UP_C0400_S298.jpg \
- PratePdf_lwp_b3_TSTART_CG_UP_C1600_S298.jpg \
- PratePdf_lwp_b3_TMID_CG_UP_C0050_S298.jpg \
- PratePdf_lwp_b3_TMID_CG_UP_C0400_S298.jpg \
- PratePdf_lwp_b3_TMID_CG_UP_C1600_S298.jpg \
- PratePdf_lwp_b3_TEND_CG_UP_C0050_S298.jpg \
- PratePdf_lwp_b3_TEND_CG_UP_C0400_S298.jpg \
- PratePdf_lwp_b3_TEND_CG_UP_C1600_S298.jpg \
- PratePdf_lwp_b3_TALL_CG_UP_C0050_S298.jpg \
- PratePdf_lwp_b3_TALL_CG_UP_C0400_S298.jpg \
- PratePdf_lwp_b3_TALL_CG_UP_C1600_S298.jpg \
- FigurePratePdfLwpBin3Gccn.jpg
-
-echo "Figure: PRATE pdfs with LWP bin 4, CCN+GCCN"
-montage -tile 3x4 -geometry ${Jsize}+2+100 \
- PratePdf_lwp_b4_TSTART_CG_UP_C0050_S298.jpg \
- PratePdf_lwp_b4_TSTART_CG_UP_C0400_S298.jpg \
- PratePdf_lwp_b4_TSTART_CG_UP_C1600_S298.jpg \
- PratePdf_lwp_b4_TMID_CG_UP_C0050_S298.jpg \
- PratePdf_lwp_b4_TMID_CG_UP_C0400_S298.jpg \
- PratePdf_lwp_b4_TMID_CG_UP_C1600_S298.jpg \
- PratePdf_lwp_b4_TEND_CG_UP_C0050_S298.jpg \
- PratePdf_lwp_b4_TEND_CG_UP_C0400_S298.jpg \
- PratePdf_lwp_b4_TEND_CG_UP_C1600_S298.jpg \
- PratePdf_lwp_b4_TALL_CG_UP_C0050_S298.jpg \
- PratePdf_lwp_b4_TALL_CG_UP_C0400_S298.jpg \
- PratePdf_lwp_b4_TALL_CG_UP_C1600_S298.jpg \
- FigurePratePdfLwpBin4Gccn.jpg
-
-echo "Figure: COT PDFs all LWP bins, CCN only"
-montage -tile 3x5 -geometry ${Jsize}+2+100 \
- CotPdf_lwp_b1_TALL_CO_S293_G10M5_ALL.jpg \
- CotPdf_lwp_b1_TALL_CO_S298_G10M5_ALL.jpg \
- CotPdf_lwp_b1_TALL_CO_S303_G10M5_ALL.jpg \
- CotPdf_lwp_b2_TALL_CO_S293_G10M5_ALL.jpg \
- CotPdf_lwp_b2_TALL_CO_S298_G10M5_ALL.jpg \
- CotPdf_lwp_b2_TALL_CO_S303_G10M5_ALL.jpg \
- CotPdf_lwp_b3_TALL_CO_S293_G10M5_ALL.jpg \
- CotPdf_lwp_b3_TALL_CO_S298_G10M5_ALL.jpg \
- CotPdf_lwp_b3_TALL_CO_S303_G10M5_ALL.jpg \
- CotPdf_lwp_b4_TALL_CO_S293_G10M5_ALL.jpg \
- CotPdf_lwp_b4_TALL_CO_S298_G10M5_ALL.jpg \
- CotPdf_lwp_b4_TALL_CO_S303_G10M5_ALL.jpg \
- CotPdf_TALL_CO_S293_G10M5_ALL.jpg \
- CotPdf_TALL_CO_S298_G10M5_ALL.jpg \
- CotPdf_TALL_CO_S303_G10M5_ALL.jpg \
- FigureCotPdfLwpAllBins.jpg
-
-echo "Figure: PRATE PDFs all LWP bins, CCN only"
-montage -tile 3x5 -geometry ${Jsize}+2+100 \
- PratePdf_lwp_b1_TALL_CO_S293_G10M5_ALL.jpg \
- PratePdf_lwp_b1_TALL_CO_S298_G10M5_ALL.jpg \
- PratePdf_lwp_b1_TALL_CO_S303_G10M5_ALL.jpg \
- PratePdf_lwp_b2_TALL_CO_S293_G10M5_ALL.jpg \
- PratePdf_lwp_b2_TALL_CO_S298_G10M5_ALL.jpg \
- PratePdf_lwp_b2_TALL_CO_S303_G10M5_ALL.jpg \
- PratePdf_lwp_b3_TALL_CO_S293_G10M5_ALL.jpg \
- PratePdf_lwp_b3_TALL_CO_S298_G10M5_ALL.jpg \
- PratePdf_lwp_b3_TALL_CO_S303_G10M5_ALL.jpg \
- PratePdf_lwp_b4_TALL_CO_S293_G10M5_ALL.jpg \
- PratePdf_lwp_b4_TALL_CO_S298_G10M5_ALL.jpg \
- PratePdf_lwp_b4_TALL_CO_S303_G10M5_ALL.jpg \
- PratePdf_TALL_CO_S293_G10M5_ALL.jpg \
- PratePdf_TALL_CO_S298_G10M5_ALL.jpg \
- PratePdf_TALL_CO_S303_G10M5_ALL.jpg \
- FigurePratePdfLwpAllBins.jpg
-
-echo "Figure: COT pdfs all LWP bins, CCN+GCCN"
-montage -tile 3x5 -geometry ${Jsize}+2+100 \
- CotPdf_lwp_b1_TALL_CG_UP_C0050_S298.jpg \
- CotPdf_lwp_b1_TALL_CG_UP_C0400_S298.jpg \
- CotPdf_lwp_b1_TALL_CG_UP_C1600_S298.jpg \
- CotPdf_lwp_b2_TALL_CG_UP_C0050_S298.jpg \
- CotPdf_lwp_b2_TALL_CG_UP_C0400_S298.jpg \
- CotPdf_lwp_b2_TALL_CG_UP_C1600_S298.jpg \
- CotPdf_lwp_b3_TALL_CG_UP_C0050_S298.jpg \
- CotPdf_lwp_b3_TALL_CG_UP_C0400_S298.jpg \
- CotPdf_lwp_b3_TALL_CG_UP_C1600_S298.jpg \
- CotPdf_lwp_b4_TALL_CG_UP_C0050_S298.jpg \
- CotPdf_lwp_b4_TALL_CG_UP_C0400_S298.jpg \
- CotPdf_lwp_b4_TALL_CG_UP_C1600_S298.jpg \
- CotPdf_TALL_CG_UP_C0050_S298.jpg \
- CotPdf_TALL_CG_UP_C0400_S298.jpg \
- CotPdf_TALL_CG_UP_C1600_S298.jpg \
- FigureCotPdfLwpAllBinsGccn.jpg
-
-echo "Figure: PRATE pdfs all LWP bins, CCN+GCCN"
-montage -tile 3x5 -geometry ${Jsize}+2+100 \
- PratePdf_lwp_b1_TALL_CG_UP_C0050_S298.jpg \
- PratePdf_lwp_b1_TALL_CG_UP_C0400_S298.jpg \
- PratePdf_lwp_b1_TALL_CG_UP_C1600_S298.jpg \
- PratePdf_lwp_b2_TALL_CG_UP_C0050_S298.jpg \
- PratePdf_lwp_b2_TALL_CG_UP_C0400_S298.jpg \
- PratePdf_lwp_b2_TALL_CG_UP_C1600_S298.jpg \
- PratePdf_lwp_b3_TALL_CG_UP_C0050_S298.jpg \
- PratePdf_lwp_b3_TALL_CG_UP_C0400_S298.jpg \
- PratePdf_lwp_b3_TALL_CG_UP_C1600_S298.jpg \
- PratePdf_lwp_b4_TALL_CG_UP_C0050_S298.jpg \
- PratePdf_lwp_b4_TALL_CG_UP_C0400_S298.jpg \
- PratePdf_lwp_b4_TALL_CG_UP_C1600_S298.jpg \
- PratePdf_TALL_CG_UP_C0050_S298.jpg \
- PratePdf_TALL_CG_UP_C0400_S298.jpg \
- PratePdf_TALL_CG_UP_C1600_S298.jpg \
- FigurePratePdfLwpAllBinsGccn.jpg
+echo "Figure: 2D Histogram: LWP Bin4 vs Cloud depth, CCN only"
+montage -tile 3x6 -geometry ${Jsize}+2+100 \
+ hist2d_lwp_b4_cdepth_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cdepth_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cdepth_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cdepth_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cdepth_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cdepth_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cdepth_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cdepth_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cdepth_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cdepth_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cdepth_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cdepth_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cdepth_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cdepth_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cdepth_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cdepth_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cdepth_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+ hist2d_lwp_b4_cdepth_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+ FigureHist2dLwpB4Cdepth.jpg
 
