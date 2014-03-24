@@ -39,7 +39,7 @@ program diag_filter
 
   character (len=LargeString) :: InDir, InSuffix, OutFile
   type (FilterDescrip), dimension(MaxFilters) :: Filters
-  character (len=LargeString) :: Mvname, Mfprefix
+  character (len=LargeString) :: Mvname, Mfprefix, CombSense
 
   integer :: Nfilters
 
@@ -72,7 +72,7 @@ program diag_filter
   real :: Rval, Pval, Zval, MaxRval
   integer :: StmIx, StmIy
 
-  logical :: SelectThisPoint
+  logical :: FilterVal, SelectThisPoint
   logical :: UseFsFilter
   type (FilterDescrip) :: FsFilter
 
@@ -83,7 +83,7 @@ program diag_filter
   integer :: UDfnum
 
   ! Get the command line arguments
-  call GetMyArgs(LargeString, MaxFilters, InDir, InSuffix, OutFile, Mvname, Mfprefix, FsFilter, Filters, Nfilters)
+  call GetMyArgs(LargeString, MaxFilters, InDir, InSuffix, OutFile, Mvname, Mfprefix, FsFilter, CombSense, Filters, Nfilters)
 
   DoingCylVol = .false.
   DoingUpDrafts = .false.
@@ -101,6 +101,7 @@ program diag_filter
   write (*,*) '    File prefix: ', trim(FsFilter%Vfprefix)
   write (*,*) '    Treshold: ', FsFilter%x1
   write (*,*) '  Data selection specs: '
+  write (*,*) '    Combination sense: ', trim(CombSense)
   do i = 1, Nfilters
     if (Filters(i)%Ftype .eq. 'cylvol') then
       DoingCylVol = .true.
@@ -467,91 +468,88 @@ program diag_filter
     do iz = 1, Nz
       do iy = 1, Ny
         do ix = 1, Nx
-          SelectThisPoint = .true.
+          if (CombSense .eq. 'and') then
+            SelectThisPoint = .true.
+          else if (CombSense .eq. 'or') then
+            SelectThisPoint = .false.
+          endif
+
           do i = 1, Nfilters
             ! select if inside the cylindrical volume
             if (Filters(i)%Ftype .eq. 'cylvol') then
-              SelectThisPoint = SelectThisPoint .and. InsideCylVol(Nx, Ny, Nz, ix, iy, iz, &
-                    Filters(i)%x1, Filters(i)%x2, Filters(i)%y1, Filters(i)%y2, &
-                    Filters(i)%z1, Filters(i)%z2, StmIx, StmIy, &
-                    XcoordsKm, YcoordsKm, Zcoords%vdata, Rval, Pval, Zval) 
+              FilterVal = InsideCylVol(Nx, Ny, Nz, ix, iy, iz, Filters(i)%x1, Filters(i)%x2, Filters(i)%y1, Filters(i)%y2, &
+                    Filters(i)%z1, Filters(i)%z2, StmIx, StmIy, XcoordsKm, YcoordsKm, Zcoords%vdata, Rval, Pval, Zval) 
             endif
 
             ! select if var > threshold
             if (Filters(i)%Ftype .eq. 'gt') then
               if (Vars(i)%ndims .eq. 2) then
-                SelectThisPoint = SelectThisPoint .and. &
-                  (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata) .gt. Filters(i)%x1)
+                FilterVal = (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata) .gt. Filters(i)%x1)
               else
-                SelectThisPoint = SelectThisPoint .and. &
-                  (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata) .gt. Filters(i)%x1)
+                FilterVal = (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata) .gt. Filters(i)%x1)
               endif
             endif
 
             ! select if var >= threshold
             if (Filters(i)%Ftype .eq. 'ge') then
               if (Vars(i)%ndims .eq. 2) then
-                SelectThisPoint = SelectThisPoint .and. &
-                  (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata) .ge. Filters(i)%x1)
+                FilterVal = (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata) .ge. Filters(i)%x1)
               else
-                SelectThisPoint = SelectThisPoint .and. &
-                  (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata) .ge. Filters(i)%x1)
+                FilterVal = (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata) .ge. Filters(i)%x1)
               endif
             endif
 
             ! select if var < threshold
             if (Filters(i)%Ftype .eq. 'lt') then
               if (Vars(i)%ndims .eq. 2) then
-                SelectThisPoint = SelectThisPoint .and. &
-                  (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata) .lt. Filters(i)%x1)
+                FilterVal = (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata) .lt. Filters(i)%x1)
               else
-                SelectThisPoint = SelectThisPoint .and. &
-                  (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata) .lt. Filters(i)%x1)
+                FilterVal = (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata) .lt. Filters(i)%x1)
               endif
             endif
 
             ! select if var <= threshold
             if (Filters(i)%Ftype .eq. 'le') then
               if (Vars(i)%ndims .eq. 2) then
-                SelectThisPoint = SelectThisPoint .and. &
-                  (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata) .le. Filters(i)%x1)
+                FilterVal = (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata) .le. Filters(i)%x1)
               else
-                SelectThisPoint = SelectThisPoint .and. &
-                  (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata) .le. Filters(i)%x1)
+                FilterVal = (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata) .le. Filters(i)%x1)
               endif
             endif
 
             ! select if min <= var <= max
             if (Filters(i)%Ftype .eq. 'range') then
               if (Vars(i)%ndims .eq. 2) then
-                SelectThisPoint = SelectThisPoint .and. &
-                  ((MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata) .ge. Filters(i)%x1) .and. &
-                   (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata) .le. Filters(i)%x2))
+                FilterVal = (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata) .ge. Filters(i)%x1) .and. &
+                            (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata) .le. Filters(i)%x2)
               else
-                SelectThisPoint = SelectThisPoint .and. &
-                  ((MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata) .ge. Filters(i)%x1) .and. &
-                   (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata) .le. Filters(i)%x2))
+                FilterVal = (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata) .ge. Filters(i)%x1) .and. &
+                            (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata) .le. Filters(i)%x2)
               endif
             endif
 
             ! select if min <= abs(var) <= max
             if (Filters(i)%Ftype .eq. 'abs_range') then
               if (Vars(i)%ndims .eq. 2) then
-                SelectThisPoint = SelectThisPoint .and. &
-                  ((abs(MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata)) .ge. Filters(i)%x1) .and. &
-                   (abs(MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata)) .le. Filters(i)%x2))
+                FilterVal = (abs(MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata)) .ge. Filters(i)%x1) .and. &
+                            (abs(MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata)) .le. Filters(i)%x2)
               else
-                SelectThisPoint = SelectThisPoint .and. &
-                  ((abs(MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata)) .ge. Filters(i)%x1) .and. &
-                   (abs(MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata)) .le. Filters(i)%x2))
+                FilterVal = (abs(MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata)) .ge. Filters(i)%x1) .and. &
+                            (abs(MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata)) .le. Filters(i)%x2)
               endif
             endif
 
             ! select according to up down draft mask
             if ((Filters(i)%Ftype .eq. 'up') .or. (Filters(i)%Ftype .eq. 'dn') .or. (Filters(i)%Ftype .eq. 'up_dn')) then
-              SelectThisPoint = SelectThisPoint .and. UpDnDraftMask(ix,iy)
+              FilterVal = UpDnDraftMask(ix,iy)
             endif
 
+            ! combine the current filter value with the overall selection according to CombSense
+            if (CombSense .eq. 'and') then
+              SelectThisPoint = SelectThisPoint .and. FilterVal
+            else if (CombSense .eq. 'or') then
+              SelectThisPoint = SelectThisPoint .or. FilterVal
+            end if
           enddo
 
           if (DoingCylVol) then
@@ -662,12 +660,12 @@ contains
 ! GetMyArgs()
 !
 
- subroutine GetMyArgs(Nstr, Nfilt, InDir, InSuffix, OutFile, Mvname, Mfprefix, FsFilter, Filters, NumFilters)
+ subroutine GetMyArgs(Nstr, Nfilt, InDir, InSuffix, OutFile, Mvname, Mfprefix, FsFilter, CombSense, Filters, NumFilters)
   implicit none
 
   integer, parameter :: MaxFields = 15
 
-  character (len=Nstr) :: InDir, InSuffix, OutFile, Mvname, Mfprefix
+  character (len=Nstr) :: InDir, InSuffix, OutFile, Mvname, Mfprefix, CombSense
   integer :: Nstr, Nfilt, NumFilters
   type (FilterDescrip), dimension(Nfilt) :: Filters
   type (FilterDescrip) :: FsFilter
@@ -729,6 +727,14 @@ contains
       FsFilter%y2 = 0
       FsFilter%z1 = 0
       FsFilter%z2 = 0
+    else if (i .eq. 6) then
+      CombSense = Arg
+
+      if ((CombSense .ne. 'and') .and. (CombSense .ne. 'or')) then
+        write (*,*) 'ERROR: <comb_sense> must be one of: "and", "or"'
+        BadArgs = .true.
+      endif
+      i = i + 1
     else
       call String2List(Arg, ':', Fields, MaxFields, Nfld, 'filter spec')
       i = i + 1
@@ -985,7 +991,7 @@ contains
   endif
 
   if (BadArgs) then
-    write (*,*) 'USAGE: diag_filter <in_dir> <in_suffix> <out_file> <var3d_model> <filter_spec> [<filter_spec>...]'
+    write (*,*) 'USAGE: diag_filter <in_dir> <in_suffix> <out_file> <var3d_model> <2d_find_storm_filter> <comb_sense> <filter_spec> [<filter_spec>...]'
     write (*,*) '        <in_dir>: directory containing input files'
     write (*,*) '        <in_suffix>: suffix to tag onto the end of input file names'
     write (*,*) '           Note: input file names become: <in_dir>/<var_name><in_suffix>'
@@ -1003,6 +1009,9 @@ contains
     write (*,*) '            <vname>: hdf5 variable'
     write (*,*) '            <vfprefix>: file name prefix (goes with <in_suffix> to form the whole file name)' 
     write (*,*) '            <val>'
+    write (*,*) '        <comb_sense>: one of "and", "or"'
+    write (*,*) '            and: multiple filter specs are and-ed together' 
+    write (*,*) '            or: multiple filter specs are or-ed together' 
     write (*,*) '        <filter_spec>: <ftype>:<vname>:<vfprefix>:<x1>:<x2>:<y1>:<y2>:<z1>:<z2>'
     write (*,*) ''
     write (*,*) '            <ftype>:'
@@ -1027,8 +1036,7 @@ contains
     write (*,*) '            <vfprefix>: file name prefix (goes with <in_suffix> to form the whole file name)' 
     write (*,*) ''
     write (*,*) '        Note that more than one <filter_spec> can be specified. When this is done the data selection'
-    write (*,*) '        becomes the intersection of all the filter specs. Eg., specifying both cylvol and tempc less that or equal '
-    write (*,*) '        to zero will select only the data that is both inside the cylindrical volume and in regions <= 0 deg C'
+    write (*,*) '        becomes the intersection or union of all the filter specs depending on the <comb_sense> spec.'
     write (*,*) ''
 
     stop
