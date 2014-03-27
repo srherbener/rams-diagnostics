@@ -16,11 +16,14 @@ SCRIPTS = $(DEST)/ExtractSample.m \
           $(DEST)/GenDropSizeDists.m \
           $(DEST)/GenHfracCloud.m \
           $(DEST)/GenBarGraphData.m \
+          $(DEST)/GenBarGraphFilesCtype.m \
           $(DEST)/GenMomentData.m \
           $(DEST)/GenProfileData.m \
           $(DEST)/GenHistData.m \
           $(DEST)/GenHistFiles.m \
+          $(DEST)/GenHistFilesCtype.m \
           $(DEST)/GenPdfFiles.m \
+          $(DEST)/GenPdfFilesCtype.m \
           $(DEST)/GenPdfPlots.m \
           $(DEST)/GenTurbData.m \
           $(DEST)/GenWcfads.m \
