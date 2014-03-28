@@ -404,32 +404,32 @@ Jsize="1200x900"
 # CfMaxHeight_CG_C1600_S298.jpg \
 # FigureTsMaxCldFracHeight.jpg
 #
-#echo "Figure: Time series: Zi, Zt, CFmax, CCN only"
-#montage -tile 3x3 -geometry ${Jsize}+2+100 \
-# InvHeight_CO_S293_G10M5.jpg \
-# InvHeight_CO_S298_G10M5.jpg \
-# InvHeight_CO_S303_G10M5.jpg \
-# CloudCldTop_CO_S293_G10M5.jpg \
-# CloudCldTop_CO_S298_G10M5.jpg \
-# CloudCldTop_CO_S303_G10M5.jpg \
-# CfMax_CO_S293_G10M5.jpg \
-# CfMax_CO_S298_G10M5.jpg \
-# CfMax_CO_S303_G10M5.jpg \
-# FigureTsBlStas.jpg
-#
-#echo "Figure: Time series: Zi, Zt, CFmax, all cases, CCN only"
-#montage -tile 3x3 -geometry ${Jsize}+2+100 \
-# InvHeight_CO_S293_G10M5_ALL.jpg \
-# CloudCldTop_CO_S293_G10M5_ALL.jpg \
-# CfMax_CO_S293_G10M5_ALL.jpg \
-# InvHeight_CO_S298_G10M5_ALL.jpg \
-# CloudCldTop_CO_S298_G10M5_ALL.jpg \
-# CfMax_CO_S298_G10M5_ALL.jpg \
-# InvHeight_CO_S303_G10M5_ALL.jpg \
-# CloudCldTop_CO_S303_G10M5_ALL.jpg \
-# CfMax_CO_S303_G10M5_ALL.jpg \
-# FigureTsBlStats_ALL.jpg
-#
+echo "Figure: Time series: Zi, Zt, CFmax, CCN only"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ InvHeight_CO_S293_G10M5.jpg \
+ InvHeight_CO_S298_G10M5.jpg \
+ InvHeight_CO_S303_G10M5.jpg \
+ CloudCldTop_CO_S293_G10M5.jpg \
+ CloudCldTop_CO_S298_G10M5.jpg \
+ CloudCldTop_CO_S303_G10M5.jpg \
+ CloudFrac_CO_S293_G10M5.jpg \
+ CloudFrac_CO_S298_G10M5.jpg \
+ CloudFrac_CO_S303_G10M5.jpg \
+ FigureTsBlStats.jpg
+
+echo "Figure: Time series: Zi, Zt, CFmax, all cases, CCN only"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ InvHeight_CO_S293_G10M5_ALL.jpg \
+ InvHeight_CO_S298_G10M5_ALL.jpg \
+ InvHeight_CO_S303_G10M5_ALL.jpg \
+ CloudCldTop_CO_S293_G10M5_ALL.jpg \
+ CloudCldTop_CO_S298_G10M5_ALL.jpg \
+ CloudCldTop_CO_S303_G10M5_ALL.jpg \
+ CloudFrac_CO_S293_G10M5_ALL.jpg \
+ CloudFrac_CO_S298_G10M5_ALL.jpg \
+ CloudFrac_CO_S303_G10M5_ALL.jpg \
+ FigureTsBlStats_ALL.jpg
+
 #echo "Figure: Vertical Velocity CFAD, C400"
 #montage -tile 3x3 -geometry ${Jsize}+2+100 \
 # W_CFAD_C400_0p01_T12_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
@@ -1112,267 +1112,267 @@ Jsize="1200x900"
 # PratePdf_lwp_b4_TALL_CG_UP_C1600_S298.jpg \
 # FigurePdfSetLwpBin4Gccn.jpg
 #
-echo "Figure: 2D Histogram: LWP Bin1 vs COT, CCN only"
-montage -tile 3x6 -geometry ${Jsize}+2+100 \
- hist2d_lwp_b1_cot_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cot_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cot_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cot_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cot_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cot_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cot_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cot_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cot_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cot_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cot_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cot_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cot_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cot_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cot_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cot_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cot_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cot_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
- FigureHist2dLwpB1Cot.jpg
-
-echo "Figure: 2D Histogram: LWP Bin1 vs PCPRR, CCN only"
-montage -tile 3x6 -geometry ${Jsize}+2+100 \
- hist2d_lwp_b1_pcprr_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b1_pcprr_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b1_pcprr_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b1_pcprr_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b1_pcprr_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b1_pcprr_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b1_pcprr_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b1_pcprr_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b1_pcprr_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b1_pcprr_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b1_pcprr_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b1_pcprr_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b1_pcprr_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b1_pcprr_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b1_pcprr_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b1_pcprr_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b1_pcprr_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b1_pcprr_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
- FigureHist2dLwpB1Pcprr.jpg
-
-echo "Figure: 2D Histogram: LWP Bin1 vs Cloud depth, CCN only"
-montage -tile 3x6 -geometry ${Jsize}+2+100 \
- hist2d_lwp_b1_cdepth_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cdepth_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cdepth_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cdepth_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cdepth_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cdepth_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cdepth_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cdepth_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cdepth_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cdepth_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cdepth_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cdepth_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cdepth_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cdepth_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cdepth_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cdepth_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cdepth_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b1_cdepth_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
- FigureHist2dLwpB1Cdepth.jpg
-
-echo "Figure: 2D Histogram: LWP Bin2 vs COT, CCN only"
-montage -tile 3x6 -geometry ${Jsize}+2+100 \
- hist2d_lwp_b2_cot_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cot_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cot_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cot_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cot_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cot_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cot_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cot_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cot_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cot_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cot_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cot_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cot_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cot_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cot_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cot_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cot_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cot_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
- FigureHist2dLwpB2Cot.jpg
-
-echo "Figure: 2D Histogram: LWP Bin2 vs PCPRR, CCN only"
-montage -tile 3x6 -geometry ${Jsize}+2+100 \
- hist2d_lwp_b2_pcprr_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b2_pcprr_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b2_pcprr_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b2_pcprr_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b2_pcprr_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b2_pcprr_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b2_pcprr_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b2_pcprr_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b2_pcprr_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b2_pcprr_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b2_pcprr_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b2_pcprr_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b2_pcprr_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b2_pcprr_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b2_pcprr_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b2_pcprr_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b2_pcprr_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b2_pcprr_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
- FigureHist2dLwpB2Pcprr.jpg
-
-echo "Figure: 2D Histogram: LWP Bin2 vs Cloud depth, CCN only"
-montage -tile 3x6 -geometry ${Jsize}+2+100 \
- hist2d_lwp_b2_cdepth_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cdepth_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cdepth_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cdepth_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cdepth_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cdepth_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cdepth_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cdepth_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cdepth_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cdepth_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cdepth_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cdepth_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cdepth_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cdepth_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cdepth_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cdepth_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cdepth_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b2_cdepth_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
- FigureHist2dLwpB2Cdepth.jpg
-
-echo "Figure: 2D Histogram: LWP Bin3 vs COT, CCN only"
-montage -tile 3x6 -geometry ${Jsize}+2+100 \
- hist2d_lwp_b3_cot_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cot_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cot_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cot_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cot_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cot_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cot_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cot_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cot_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cot_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cot_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cot_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cot_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cot_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cot_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cot_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cot_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cot_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
- FigureHist2dLwpB3Cot.jpg
-
-echo "Figure: 2D Histogram: LWP Bin3 vs PCPRR, CCN only"
-montage -tile 3x6 -geometry ${Jsize}+2+100 \
- hist2d_lwp_b3_pcprr_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b3_pcprr_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b3_pcprr_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b3_pcprr_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b3_pcprr_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b3_pcprr_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b3_pcprr_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b3_pcprr_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b3_pcprr_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b3_pcprr_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b3_pcprr_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b3_pcprr_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b3_pcprr_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b3_pcprr_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b3_pcprr_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b3_pcprr_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b3_pcprr_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b3_pcprr_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
- FigureHist2dLwpB3Pcprr.jpg
-
-echo "Figure: 2D Histogram: LWP Bin3 vs Cloud depth, CCN only"
-montage -tile 3x6 -geometry ${Jsize}+2+100 \
- hist2d_lwp_b3_cdepth_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cdepth_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cdepth_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cdepth_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cdepth_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cdepth_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cdepth_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cdepth_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cdepth_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cdepth_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cdepth_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cdepth_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cdepth_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cdepth_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cdepth_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cdepth_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cdepth_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b3_cdepth_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
- FigureHist2dLwpB3Cdepth.jpg
-
-echo "Figure: 2D Histogram: LWP Bin4 vs COT, CCN only"
-montage -tile 3x6 -geometry ${Jsize}+2+100 \
- hist2d_lwp_b4_cot_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cot_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cot_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cot_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cot_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cot_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cot_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cot_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cot_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cot_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cot_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cot_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cot_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cot_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cot_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cot_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cot_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cot_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
- FigureHist2dLwpB4Cot.jpg
-
-echo "Figure: 2D Histogram: LWP Bin4 vs PCPRR, CCN only"
-montage -tile 3x6 -geometry ${Jsize}+2+100 \
- hist2d_lwp_b4_pcprr_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b4_pcprr_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b4_pcprr_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b4_pcprr_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b4_pcprr_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b4_pcprr_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b4_pcprr_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b4_pcprr_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b4_pcprr_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b4_pcprr_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b4_pcprr_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b4_pcprr_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b4_pcprr_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b4_pcprr_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b4_pcprr_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b4_pcprr_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b4_pcprr_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b4_pcprr_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
- FigureHist2dLwpB4Pcprr.jpg
-
-echo "Figure: 2D Histogram: LWP Bin4 vs Cloud depth, CCN only"
-montage -tile 3x6 -geometry ${Jsize}+2+100 \
- hist2d_lwp_b4_cdepth_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cdepth_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cdepth_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cdepth_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cdepth_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cdepth_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cdepth_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cdepth_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cdepth_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cdepth_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cdepth_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cdepth_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cdepth_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cdepth_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cdepth_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cdepth_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cdepth_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
- hist2d_lwp_b4_cdepth_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
- FigureHist2dLwpB4Cdepth.jpg
-
+#echo "Figure: 2D Histogram: LWP Bin1 vs COT, CCN only"
+#montage -tile 3x6 -geometry ${Jsize}+2+100 \
+# hist2d_lwp_b1_cot_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cot_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cot_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cot_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cot_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cot_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cot_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cot_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cot_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cot_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cot_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cot_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cot_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cot_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cot_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cot_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cot_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cot_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+# FigureHist2dLwpB1Cot.jpg
+#
+#echo "Figure: 2D Histogram: LWP Bin1 vs PCPRR, CCN only"
+#montage -tile 3x6 -geometry ${Jsize}+2+100 \
+# hist2d_lwp_b1_pcprr_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_pcprr_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_pcprr_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_pcprr_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_pcprr_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_pcprr_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_pcprr_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_pcprr_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_pcprr_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_pcprr_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_pcprr_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_pcprr_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_pcprr_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_pcprr_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_pcprr_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_pcprr_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_pcprr_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_pcprr_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+# FigureHist2dLwpB1Pcprr.jpg
+#
+#echo "Figure: 2D Histogram: LWP Bin1 vs Cloud depth, CCN only"
+#montage -tile 3x6 -geometry ${Jsize}+2+100 \
+# hist2d_lwp_b1_cdepth_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cdepth_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cdepth_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cdepth_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cdepth_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cdepth_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cdepth_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cdepth_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cdepth_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cdepth_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cdepth_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cdepth_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cdepth_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cdepth_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cdepth_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cdepth_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cdepth_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b1_cdepth_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+# FigureHist2dLwpB1Cdepth.jpg
+#
+#echo "Figure: 2D Histogram: LWP Bin2 vs COT, CCN only"
+#montage -tile 3x6 -geometry ${Jsize}+2+100 \
+# hist2d_lwp_b2_cot_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cot_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cot_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cot_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cot_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cot_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cot_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cot_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cot_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cot_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cot_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cot_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cot_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cot_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cot_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cot_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cot_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cot_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+# FigureHist2dLwpB2Cot.jpg
+#
+#echo "Figure: 2D Histogram: LWP Bin2 vs PCPRR, CCN only"
+#montage -tile 3x6 -geometry ${Jsize}+2+100 \
+# hist2d_lwp_b2_pcprr_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_pcprr_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_pcprr_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_pcprr_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_pcprr_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_pcprr_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_pcprr_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_pcprr_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_pcprr_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_pcprr_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_pcprr_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_pcprr_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_pcprr_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_pcprr_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_pcprr_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_pcprr_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_pcprr_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_pcprr_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+# FigureHist2dLwpB2Pcprr.jpg
+#
+#echo "Figure: 2D Histogram: LWP Bin2 vs Cloud depth, CCN only"
+#montage -tile 3x6 -geometry ${Jsize}+2+100 \
+# hist2d_lwp_b2_cdepth_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cdepth_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cdepth_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cdepth_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cdepth_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cdepth_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cdepth_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cdepth_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cdepth_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cdepth_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cdepth_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cdepth_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cdepth_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cdepth_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cdepth_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cdepth_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cdepth_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b2_cdepth_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+# FigureHist2dLwpB2Cdepth.jpg
+#
+#echo "Figure: 2D Histogram: LWP Bin3 vs COT, CCN only"
+#montage -tile 3x6 -geometry ${Jsize}+2+100 \
+# hist2d_lwp_b3_cot_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cot_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cot_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cot_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cot_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cot_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cot_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cot_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cot_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cot_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cot_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cot_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cot_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cot_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cot_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cot_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cot_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cot_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+# FigureHist2dLwpB3Cot.jpg
+#
+#echo "Figure: 2D Histogram: LWP Bin3 vs PCPRR, CCN only"
+#montage -tile 3x6 -geometry ${Jsize}+2+100 \
+# hist2d_lwp_b3_pcprr_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_pcprr_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_pcprr_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_pcprr_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_pcprr_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_pcprr_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_pcprr_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_pcprr_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_pcprr_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_pcprr_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_pcprr_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_pcprr_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_pcprr_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_pcprr_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_pcprr_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_pcprr_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_pcprr_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_pcprr_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+# FigureHist2dLwpB3Pcprr.jpg
+#
+#echo "Figure: 2D Histogram: LWP Bin3 vs Cloud depth, CCN only"
+#montage -tile 3x6 -geometry ${Jsize}+2+100 \
+# hist2d_lwp_b3_cdepth_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cdepth_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cdepth_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cdepth_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cdepth_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cdepth_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cdepth_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cdepth_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cdepth_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cdepth_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cdepth_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cdepth_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cdepth_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cdepth_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cdepth_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cdepth_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cdepth_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b3_cdepth_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+# FigureHist2dLwpB3Cdepth.jpg
+#
+#echo "Figure: 2D Histogram: LWP Bin4 vs COT, CCN only"
+#montage -tile 3x6 -geometry ${Jsize}+2+100 \
+# hist2d_lwp_b4_cot_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cot_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cot_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cot_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cot_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cot_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cot_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cot_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cot_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cot_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cot_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cot_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cot_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cot_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cot_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cot_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cot_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cot_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+# FigureHist2dLwpB4Cot.jpg
+#
+#echo "Figure: 2D Histogram: LWP Bin4 vs PCPRR, CCN only"
+#montage -tile 3x6 -geometry ${Jsize}+2+100 \
+# hist2d_lwp_b4_pcprr_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_pcprr_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_pcprr_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_pcprr_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_pcprr_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_pcprr_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_pcprr_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_pcprr_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_pcprr_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_pcprr_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_pcprr_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_pcprr_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_pcprr_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_pcprr_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_pcprr_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_pcprr_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_pcprr_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_pcprr_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+# FigureHist2dLwpB4Pcprr.jpg
+#
+#echo "Figure: 2D Histogram: LWP Bin4 vs Cloud depth, CCN only"
+#montage -tile 3x6 -geometry ${Jsize}+2+100 \
+# hist2d_lwp_b4_cdepth_z.atex.ccn0050.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cdepth_z.atex.ccn0050.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cdepth_z.atex.ccn0050.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cdepth_z.atex.ccn0100.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cdepth_z.atex.ccn0100.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cdepth_z.atex.ccn0100.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cdepth_z.atex.ccn0200.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cdepth_z.atex.ccn0200.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cdepth_z.atex.ccn0200.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cdepth_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cdepth_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cdepth_z.atex.ccn0400.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cdepth_z.atex.ccn0800.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cdepth_z.atex.ccn0800.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cdepth_z.atex.ccn0800.sst303.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cdepth_z.atex.ccn1600.sst293.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cdepth_z.atex.ccn1600.sst298.gcn10m5.1um.jpg \
+# hist2d_lwp_b4_cdepth_z.atex.ccn1600.sst303.gcn10m5.1um.jpg \
+# FigureHist2dLwpB4Cdepth.jpg
+#
