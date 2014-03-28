@@ -449,335 +449,335 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 
 ### Cloud depth, PDF
 # no filter
-LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_TALL Cdepth CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_TALL_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_TALL Cdepth CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_TALL_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_TALL Cdepth CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_TALL_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_TALL_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_TSTART Cdepth CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_TSTART_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_TSTART Cdepth CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_TSTART_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_TSTART Cdepth CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_TSTART_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_TSTART_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_TSTART_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_TSTART_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_TMID Cdepth CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_TMID_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_TMID Cdepth CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_TMID_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_TMID Cdepth CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_TMID_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_TMID_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_TMID_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_TMID_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_TEND Cdepth CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_TEND_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_TEND Cdepth CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_TEND_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_TEND Cdepth CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_TEND_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_TEND_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_TEND_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_TEND_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_TALL Cdepth CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_TALL_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_TALL Cdepth CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_TALL_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_TALL Cdepth CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_TALL_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_TALL_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_TALL_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_TALL_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_TSTART Cdepth CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_TSTART_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_TSTART Cdepth CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_TSTART_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_TSTART Cdepth CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_TSTART_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_TSTART_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_TSTART_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_TSTART_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_TMID Cdepth CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_TMID_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_TMID Cdepth CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_TMID_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_TMID Cdepth CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_TMID_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_TMID_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_TMID_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_TMID_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_TEND Cdepth CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_TEND_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_TEND Cdepth CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_TEND_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_TEND Cdepth CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_TEND_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_TEND_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_TEND_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_TEND_CG_UP_C1600_S298.jpg
 
 # LWP < 0.01
-LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b1_TALL Cdepth_lwp_b1 CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b1_TALL_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b1_TALL Cdepth_lwp_b1 CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b1_TALL_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b1_TALL Cdepth_lwp_b1 CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b1_TALL_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b1_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b1_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b1_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b1_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b1_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b1_TALL_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b1_TSTART Cdepth_lwp_b1 CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b1_TSTART_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b1_TSTART Cdepth_lwp_b1 CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b1_TSTART_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b1_TSTART Cdepth_lwp_b1 CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b1_TSTART_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b1_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b1_TSTART_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b1_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b1_TSTART_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b1_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b1_TSTART_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b1_TMID Cdepth_lwp_b1 CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b1_TMID_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b1_TMID Cdepth_lwp_b1 CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b1_TMID_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b1_TMID Cdepth_lwp_b1 CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b1_TMID_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b1_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b1_TMID_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b1_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b1_TMID_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b1_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b1_TMID_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b1_TEND Cdepth_lwp_b1 CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b1_TEND_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b1_TEND Cdepth_lwp_b1 CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b1_TEND_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b1_TEND Cdepth_lwp_b1 CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b1_TEND_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b1_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b1_TEND_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b1_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b1_TEND_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b1_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b1_TEND_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b1_TALL Cdepth_lwp_b1 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b1_TALL_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b1_TALL Cdepth_lwp_b1 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b1_TALL_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b1_TALL Cdepth_lwp_b1 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b1_TALL_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b1_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b1_TALL_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b1_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b1_TALL_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b1_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b1_TALL_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b1_TSTART Cdepth_lwp_b1 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b1_TSTART_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b1_TSTART Cdepth_lwp_b1 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b1_TSTART_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b1_TSTART Cdepth_lwp_b1 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b1_TSTART_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b1_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b1_TSTART_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b1_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b1_TSTART_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b1_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b1_TSTART_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b1_TMID Cdepth_lwp_b1 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b1_TMID_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b1_TMID Cdepth_lwp_b1 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b1_TMID_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b1_TMID Cdepth_lwp_b1 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b1_TMID_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b1_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b1_TMID_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b1_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b1_TMID_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b1_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b1_TMID_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b1_TEND Cdepth_lwp_b1 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b1_TEND_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b1_TEND Cdepth_lwp_b1 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b1_TEND_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b1_TEND Cdepth_lwp_b1 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b1_TEND_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b1_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b1_TEND_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b1_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b1_TEND_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b1_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b1_TEND_CG_UP_C1600_S298.jpg
 
 # 0.01 <= LWP < 0.10
-LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b2_TALL Cdepth_lwp_b2 CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b2_TALL_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b2_TALL Cdepth_lwp_b2 CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b2_TALL_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b2_TALL Cdepth_lwp_b2 CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b2_TALL_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b2_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b2_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b2_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b2_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b2_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b2_TALL_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b2_TSTART Cdepth_lwp_b2 CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b2_TSTART_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b2_TSTART Cdepth_lwp_b2 CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b2_TSTART_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b2_TSTART Cdepth_lwp_b2 CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b2_TSTART_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b2_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b2_TSTART_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b2_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b2_TSTART_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b2_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b2_TSTART_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b2_TMID Cdepth_lwp_b2 CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b2_TMID_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b2_TMID Cdepth_lwp_b2 CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b2_TMID_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b2_TMID Cdepth_lwp_b2 CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b2_TMID_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b2_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b2_TMID_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b2_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b2_TMID_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b2_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b2_TMID_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b2_TEND Cdepth_lwp_b2 CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b2_TEND_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b2_TEND Cdepth_lwp_b2 CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b2_TEND_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b2_TEND Cdepth_lwp_b2 CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b2_TEND_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b2_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b2_TEND_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b2_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b2_TEND_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b2_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b2_TEND_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b2_TALL Cdepth_lwp_b2 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b2_TALL_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b2_TALL Cdepth_lwp_b2 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b2_TALL_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b2_TALL Cdepth_lwp_b2 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b2_TALL_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b2_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b2_TALL_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b2_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b2_TALL_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b2_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b2_TALL_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b2_TSTART Cdepth_lwp_b2 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b2_TSTART_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b2_TSTART Cdepth_lwp_b2 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b2_TSTART_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b2_TSTART Cdepth_lwp_b2 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b2_TSTART_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b2_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b2_TSTART_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b2_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b2_TSTART_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b2_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b2_TSTART_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b2_TMID Cdepth_lwp_b2 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b2_TMID_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b2_TMID Cdepth_lwp_b2 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b2_TMID_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b2_TMID Cdepth_lwp_b2 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b2_TMID_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b2_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b2_TMID_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b2_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b2_TMID_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b2_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b2_TMID_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b2_TEND Cdepth_lwp_b2 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b2_TEND_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b2_TEND Cdepth_lwp_b2 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b2_TEND_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b2_TEND Cdepth_lwp_b2 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b2_TEND_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b2_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b2_TEND_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b2_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b2_TEND_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b2_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b2_TEND_CG_UP_C1600_S298.jpg
 
 # 0.10 <= LWP < 1.00
-LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b3_TALL Cdepth_lwp_b3 CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b3_TALL_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b3_TALL Cdepth_lwp_b3 CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b3_TALL_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b3_TALL Cdepth_lwp_b3 CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b3_TALL_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b3_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b3_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b3_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b3_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b3_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b3_TALL_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b3_TSTART Cdepth_lwp_b3 CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b3_TSTART_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b3_TSTART Cdepth_lwp_b3 CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b3_TSTART_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b3_TSTART Cdepth_lwp_b3 CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b3_TSTART_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b3_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b3_TSTART_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b3_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b3_TSTART_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b3_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b3_TSTART_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b3_TMID Cdepth_lwp_b3 CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b3_TMID_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b3_TMID Cdepth_lwp_b3 CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b3_TMID_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b3_TMID Cdepth_lwp_b3 CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b3_TMID_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b3_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b3_TMID_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b3_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b3_TMID_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b3_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b3_TMID_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b3_TEND Cdepth_lwp_b3 CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b3_TEND_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b3_TEND Cdepth_lwp_b3 CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b3_TEND_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b3_TEND Cdepth_lwp_b3 CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b3_TEND_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b3_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b3_TEND_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b3_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b3_TEND_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b3_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b3_TEND_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b3_TALL Cdepth_lwp_b3 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b3_TALL_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b3_TALL Cdepth_lwp_b3 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b3_TALL_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b3_TALL Cdepth_lwp_b3 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b3_TALL_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b3_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b3_TALL_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b3_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b3_TALL_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b3_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b3_TALL_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b3_TSTART Cdepth_lwp_b3 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b3_TSTART_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b3_TSTART Cdepth_lwp_b3 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b3_TSTART_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b3_TSTART Cdepth_lwp_b3 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b3_TSTART_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b3_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b3_TSTART_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b3_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b3_TSTART_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b3_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b3_TSTART_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b3_TMID Cdepth_lwp_b3 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b3_TMID_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b3_TMID Cdepth_lwp_b3 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b3_TMID_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b3_TMID Cdepth_lwp_b3 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b3_TMID_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b3_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b3_TMID_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b3_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b3_TMID_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b3_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b3_TMID_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b3_TEND Cdepth_lwp_b3 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b3_TEND_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b3_TEND Cdepth_lwp_b3 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b3_TEND_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b3_TEND Cdepth_lwp_b3 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b3_TEND_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b3_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b3_TEND_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b3_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b3_TEND_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b3_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b3_TEND_CG_UP_C1600_S298.jpg
 
 # LWP >= 1.00
-LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b4_TALL Cdepth_lwp_b4 CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b4_TALL_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b4_TALL Cdepth_lwp_b4 CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b4_TALL_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b4_TALL Cdepth_lwp_b4 CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b4_TALL_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b4_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b4_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b4_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b4_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b4_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b4_TALL_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b4_TSTART Cdepth_lwp_b4 CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b4_TSTART_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b4_TSTART Cdepth_lwp_b4 CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b4_TSTART_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b4_TSTART Cdepth_lwp_b4 CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b4_TSTART_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b4_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b4_TSTART_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b4_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b4_TSTART_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b4_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b4_TSTART_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b4_TMID Cdepth_lwp_b4 CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b4_TMID_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b4_TMID Cdepth_lwp_b4 CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b4_TMID_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b4_TMID Cdepth_lwp_b4 CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b4_TMID_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b4_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b4_TMID_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b4_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b4_TMID_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b4_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b4_TMID_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b4_TEND Cdepth_lwp_b4 CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b4_TEND_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b4_TEND Cdepth_lwp_b4 CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b4_TEND_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b4_TEND Cdepth_lwp_b4 CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b4_TEND_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b4_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@293K NorthEast none CdepthPdf_lwp_b4_TEND_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b4_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K NorthEast none CdepthPdf_lwp_b4_TEND_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CdepthPdfBins CdepthPdf_lwp_b4_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@303K NorthEast none CdepthPdf_lwp_b4_TEND_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b4_TALL Cdepth_lwp_b4 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b4_TALL_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b4_TALL Cdepth_lwp_b4 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b4_TALL_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b4_TALL Cdepth_lwp_b4 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b4_TALL_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b4_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b4_TALL_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b4_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b4_TALL_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b4_TALL HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b4_TALL_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b4_TSTART Cdepth_lwp_b4 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b4_TSTART_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b4_TSTART Cdepth_lwp_b4 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b4_TSTART_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b4_TSTART Cdepth_lwp_b4 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b4_TSTART_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b4_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b4_TSTART_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b4_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b4_TSTART_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b4_TSTART HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b4_TSTART_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b4_TMID Cdepth_lwp_b4 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b4_TMID_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b4_TMID Cdepth_lwp_b4 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b4_TMID_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b4_TMID Cdepth_lwp_b4 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b4_TMID_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b4_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b4_TMID_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b4_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b4_TMID_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b4_TMID HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b4_TMID_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b4_TEND Cdepth_lwp_b4 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b4_TEND_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b4_TEND Cdepth_lwp_b4 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b4_TEND_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b4_TEND Cdepth_lwp_b4 CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b4_TEND_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CdepthPdfBins CdepthPdf_lwp_b4_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C50   NorthEast none CdepthPdf_lwp_b4_TEND_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CdepthPdfBins CdepthPdf_lwp_b4_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C400  NorthEast none CdepthPdf_lwp_b4_TEND_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CdepthPdfBins CdepthPdf_lwp_b4_TEND HeightKm CdepthPdf CdepthPdfSelect none PANEL:a@298K@C1200 NorthEast none CdepthPdf_lwp_b4_TEND_CG_UP_C1600_S298.jpg
 
 ### Cloud fraction, PDF
 # no filter
-LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_TALL Cfrac CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_TALL_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_TALL Cfrac CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_TALL_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_TALL Cfrac CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_TALL_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_TALL_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_TSTART Cfrac CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_TSTART_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_TSTART Cfrac CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_TSTART_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_TSTART Cfrac CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_TSTART_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_TSTART_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_TSTART_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_TSTART_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_TMID Cfrac CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_TMID_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_TMID Cfrac CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_TMID_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_TMID Cfrac CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_TMID_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_TMID_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_TMID_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_TMID_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_TEND Cfrac CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_TEND_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_TEND Cfrac CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_TEND_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_TEND Cfrac CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_TEND_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_TEND_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_TEND_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_TEND_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_TALL Cfrac CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_TALL_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_TALL Cfrac CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_TALL_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_TALL Cfrac CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_TALL_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_TALL_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_TALL_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_TALL_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_TSTART Cfrac CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_TSTART_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_TSTART Cfrac CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_TSTART_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_TSTART Cfrac CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_TSTART_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_TSTART_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_TSTART_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_TSTART_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_TMID Cfrac CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_TMID_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_TMID Cfrac CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_TMID_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_TMID Cfrac CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_TMID_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_TMID_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_TMID_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_TMID_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_TEND Cfrac CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_TEND_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_TEND Cfrac CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_TEND_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_TEND Cfrac CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_TEND_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_TEND_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_TEND_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_TEND_CG_UP_C1600_S298.jpg
 
 # LWP < 0.01
-LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b1_TALL Cfrac_lwp_b1 CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b1_TALL_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b1_TALL Cfrac_lwp_b1 CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b1_TALL_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b1_TALL Cfrac_lwp_b1 CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b1_TALL_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b1_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b1_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b1_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b1_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b1_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b1_TALL_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b1_TSTART Cfrac_lwp_b1 CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b1_TSTART_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b1_TSTART Cfrac_lwp_b1 CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b1_TSTART_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b1_TSTART Cfrac_lwp_b1 CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b1_TSTART_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b1_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b1_TSTART_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b1_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b1_TSTART_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b1_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b1_TSTART_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b1_TMID Cfrac_lwp_b1 CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b1_TMID_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b1_TMID Cfrac_lwp_b1 CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b1_TMID_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b1_TMID Cfrac_lwp_b1 CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b1_TMID_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b1_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b1_TMID_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b1_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b1_TMID_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b1_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b1_TMID_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b1_TEND Cfrac_lwp_b1 CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b1_TEND_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b1_TEND Cfrac_lwp_b1 CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b1_TEND_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b1_TEND Cfrac_lwp_b1 CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b1_TEND_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b1_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b1_TEND_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b1_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b1_TEND_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b1_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b1_TEND_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b1_TALL Cfrac_lwp_b1 CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b1_TALL_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b1_TALL Cfrac_lwp_b1 CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b1_TALL_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b1_TALL Cfrac_lwp_b1 CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b1_TALL_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b1_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b1_TALL_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b1_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b1_TALL_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b1_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b1_TALL_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b1_TSTART Cfrac_lwp_b1 CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b1_TSTART_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b1_TSTART Cfrac_lwp_b1 CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b1_TSTART_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b1_TSTART Cfrac_lwp_b1 CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b1_TSTART_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b1_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b1_TSTART_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b1_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b1_TSTART_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b1_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b1_TSTART_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b1_TMID Cfrac_lwp_b1 CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b1_TMID_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b1_TMID Cfrac_lwp_b1 CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b1_TMID_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b1_TMID Cfrac_lwp_b1 CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b1_TMID_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b1_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b1_TMID_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b1_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b1_TMID_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b1_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b1_TMID_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b1_TEND Cfrac_lwp_b1 CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b1_TEND_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b1_TEND Cfrac_lwp_b1 CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b1_TEND_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b1_TEND Cfrac_lwp_b1 CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b1_TEND_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b1_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b1_TEND_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b1_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b1_TEND_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b1_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b1_TEND_CG_UP_C1600_S298.jpg
 
 # 0.01 <= LWP < 0.10
-LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b2_TALL Cfrac_lwp_b2 CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b2_TALL_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b2_TALL Cfrac_lwp_b2 CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b2_TALL_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b2_TALL Cfrac_lwp_b2 CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b2_TALL_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b2_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b2_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b2_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b2_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b2_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b2_TALL_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b2_TSTART Cfrac_lwp_b2 CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b2_TSTART_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b2_TSTART Cfrac_lwp_b2 CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b2_TSTART_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b2_TSTART Cfrac_lwp_b2 CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b2_TSTART_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b2_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b2_TSTART_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b2_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b2_TSTART_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b2_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b2_TSTART_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b2_TMID Cfrac_lwp_b2 CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b2_TMID_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b2_TMID Cfrac_lwp_b2 CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b2_TMID_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b2_TMID Cfrac_lwp_b2 CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b2_TMID_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b2_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b2_TMID_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b2_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b2_TMID_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b2_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b2_TMID_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b2_TEND Cfrac_lwp_b2 CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b2_TEND_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b2_TEND Cfrac_lwp_b2 CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b2_TEND_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b2_TEND Cfrac_lwp_b2 CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b2_TEND_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b2_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b2_TEND_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b2_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b2_TEND_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b2_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b2_TEND_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b2_TALL Cfrac_lwp_b2 CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b2_TALL_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b2_TALL Cfrac_lwp_b2 CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b2_TALL_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b2_TALL Cfrac_lwp_b2 CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b2_TALL_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b2_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b2_TALL_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b2_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b2_TALL_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b2_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b2_TALL_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b2_TSTART Cfrac_lwp_b2 CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b2_TSTART_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b2_TSTART Cfrac_lwp_b2 CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b2_TSTART_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b2_TSTART Cfrac_lwp_b2 CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b2_TSTART_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b2_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b2_TSTART_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b2_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b2_TSTART_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b2_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b2_TSTART_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b2_TMID Cfrac_lwp_b2 CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b2_TMID_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b2_TMID Cfrac_lwp_b2 CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b2_TMID_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b2_TMID Cfrac_lwp_b2 CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b2_TMID_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b2_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b2_TMID_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b2_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b2_TMID_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b2_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b2_TMID_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b2_TEND Cfrac_lwp_b2 CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b2_TEND_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b2_TEND Cfrac_lwp_b2 CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b2_TEND_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b2_TEND Cfrac_lwp_b2 CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b2_TEND_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b2_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b2_TEND_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b2_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b2_TEND_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b2_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b2_TEND_CG_UP_C1600_S298.jpg
 
 # 0.10 <= LWP < 1.00
-LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b3_TALL Cfrac_lwp_b3 CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b3_TALL_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b3_TALL Cfrac_lwp_b3 CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b3_TALL_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b3_TALL Cfrac_lwp_b3 CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b3_TALL_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b3_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b3_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b3_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b3_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b3_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b3_TALL_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b3_TSTART Cfrac_lwp_b3 CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b3_TSTART_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b3_TSTART Cfrac_lwp_b3 CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b3_TSTART_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b3_TSTART Cfrac_lwp_b3 CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b3_TSTART_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b3_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b3_TSTART_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b3_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b3_TSTART_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b3_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b3_TSTART_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b3_TMID Cfrac_lwp_b3 CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b3_TMID_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b3_TMID Cfrac_lwp_b3 CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b3_TMID_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b3_TMID Cfrac_lwp_b3 CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b3_TMID_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b3_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b3_TMID_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b3_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b3_TMID_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b3_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b3_TMID_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b3_TEND Cfrac_lwp_b3 CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b3_TEND_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b3_TEND Cfrac_lwp_b3 CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b3_TEND_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b3_TEND Cfrac_lwp_b3 CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b3_TEND_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b3_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b3_TEND_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b3_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b3_TEND_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b3_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b3_TEND_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b3_TALL Cfrac_lwp_b3 CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b3_TALL_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b3_TALL Cfrac_lwp_b3 CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b3_TALL_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b3_TALL Cfrac_lwp_b3 CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b3_TALL_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b3_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b3_TALL_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b3_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b3_TALL_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b3_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b3_TALL_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b3_TSTART Cfrac_lwp_b3 CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b3_TSTART_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b3_TSTART Cfrac_lwp_b3 CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b3_TSTART_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b3_TSTART Cfrac_lwp_b3 CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b3_TSTART_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b3_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b3_TSTART_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b3_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b3_TSTART_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b3_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b3_TSTART_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b3_TMID Cfrac_lwp_b3 CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b3_TMID_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b3_TMID Cfrac_lwp_b3 CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b3_TMID_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b3_TMID Cfrac_lwp_b3 CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b3_TMID_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b3_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b3_TMID_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b3_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b3_TMID_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b3_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b3_TMID_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b3_TEND Cfrac_lwp_b3 CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b3_TEND_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b3_TEND Cfrac_lwp_b3 CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b3_TEND_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b3_TEND Cfrac_lwp_b3 CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b3_TEND_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b3_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b3_TEND_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b3_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b3_TEND_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b3_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b3_TEND_CG_UP_C1600_S298.jpg
 
 # LWP >= 1.00
-LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b4_TALL Cfrac_lwp_b4 CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b4_TALL_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b4_TALL Cfrac_lwp_b4 CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b4_TALL_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b4_TALL Cfrac_lwp_b4 CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b4_TALL_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b4_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b4_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b4_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b4_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b4_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b4_TALL_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b4_TSTART Cfrac_lwp_b4 CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b4_TSTART_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b4_TSTART Cfrac_lwp_b4 CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b4_TSTART_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b4_TSTART Cfrac_lwp_b4 CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b4_TSTART_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b4_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b4_TSTART_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b4_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b4_TSTART_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b4_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b4_TSTART_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b4_TMID Cfrac_lwp_b4 CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b4_TMID_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b4_TMID Cfrac_lwp_b4 CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b4_TMID_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b4_TMID Cfrac_lwp_b4 CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b4_TMID_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b4_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b4_TMID_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b4_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b4_TMID_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b4_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b4_TMID_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b4_TEND Cfrac_lwp_b4 CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b4_TEND_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b4_TEND Cfrac_lwp_b4 CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b4_TEND_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b4_TEND Cfrac_lwp_b4 CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b4_TEND_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CfracPdfBins CfracPdf_lwp_b4_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@293K NorthEast none CfracPdf_lwp_b4_TEND_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CfracPdfBins CfracPdf_lwp_b4_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@298K NorthEast none CfracPdf_lwp_b4_TEND_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CfracPdfBins CfracPdf_lwp_b4_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@303K NorthEast none CfracPdf_lwp_b4_TEND_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b4_TALL Cfrac_lwp_b4 CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b4_TALL_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b4_TALL Cfrac_lwp_b4 CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b4_TALL_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b4_TALL Cfrac_lwp_b4 CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b4_TALL_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b4_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b4_TALL_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b4_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b4_TALL_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b4_TALL Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b4_TALL_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b4_TSTART Cfrac_lwp_b4 CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b4_TSTART_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b4_TSTART Cfrac_lwp_b4 CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b4_TSTART_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b4_TSTART Cfrac_lwp_b4 CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b4_TSTART_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b4_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b4_TSTART_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b4_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b4_TSTART_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b4_TSTART Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b4_TSTART_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b4_TMID Cfrac_lwp_b4 CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b4_TMID_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b4_TMID Cfrac_lwp_b4 CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b4_TMID_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b4_TMID Cfrac_lwp_b4 CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b4_TMID_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b4_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b4_TMID_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b4_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b4_TMID_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b4_TMID Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b4_TMID_CG_UP_C1600_S298.jpg
 
-LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b4_TEND Cfrac_lwp_b4 CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b4_TEND_CG_UP_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b4_TEND Cfrac_lwp_b4 CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b4_TEND_CG_UP_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b4_TEND Cfrac_lwp_b4 CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b4_TEND_CG_UP_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CfracPdfBins CfracPdf_lwp_b4_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C50   NorthEast none CfracPdf_lwp_b4_TEND_CG_UP_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CfracPdfBins CfracPdf_lwp_b4_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C400  NorthEast none CfracPdf_lwp_b4_TEND_CG_UP_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b4_TEND Fraction CfracPdf CfracPdfSelect none PANEL:a@298K@C1200 NorthEast none CfracPdf_lwp_b4_TEND_CG_UP_C1600_S298.jpg
 
 ### Albedo, PDF
 #LinePlot: CO_UP_S293_G10M5_ALL AlbPdfBins AlbPdf_TALL Alb AlbPdf AlbPdfSelect none PANEL:a@293K NorthEast none AlbPdf_TALL_CO_S293_G10M5_ALL.jpg
@@ -813,134 +813,134 @@ LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b4_TEND Cfrac_lwp_b4 CfracP
 #LinePlot: CG_UP_C1600_S298 AlbPdfBins AlbPdf_TEND Alb AlbPdf AlbPdfSelect none PANEL:a@298K@C1200 NorthEast none AlbPdf_TEND_CG_UP_C1600_S298.jpg
 
 ### Inversion height
-#LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL InvHeight TsAll_T12_T36 none PANEL:a@S293 NorthEastOutside none InvHeight_CO_S293_G10M5_ALL.jpg
-#LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL InvHeight TsAll_T12_T36 none PANEL:d@S298 NorthEastOutside none InvHeight_CO_S298_G10M5_ALL.jpg
-#LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL InvHeight TsAll_T12_T36 none PANEL:g@S303 NorthEastOutside none InvHeight_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL InvHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:a@S293 NorthEastOutside none InvHeight_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL InvHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:d@S298 NorthEastOutside none InvHeight_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL InvHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:g@S303 NorthEastOutside none InvHeight_CO_S303_G10M5_ALL.jpg
 
-#LinePlot: CO_UP_S293_G10M5 SimTimeBL InvHeight TsAll_T12_T36 none PANEL:a@S293 SouthEast none InvHeight_CO_S293_G10M5.jpg
-#LinePlot: CO_UP_S298_G10M5 SimTimeBL InvHeight TsAll_T12_T36 none PANEL:b@S298 SouthEast none InvHeight_CO_S298_G10M5.jpg
-#LinePlot: CO_UP_S303_G10M5 SimTimeBL InvHeight TsAll_T12_T36 none PANEL:c@S303 SouthEast none InvHeight_CO_S303_G10M5.jpg
+#LinePlot: CO_UP_S293_G10M5 SimTimeBL InvHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:a@S293 SouthEast none InvHeight_CO_S293_G10M5.jpg
+#LinePlot: CO_UP_S298_G10M5 SimTimeBL InvHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:b@S298 SouthEast none InvHeight_CO_S298_G10M5.jpg
+#LinePlot: CO_UP_S303_G10M5 SimTimeBL InvHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:c@S303 SouthEast none InvHeight_CO_S303_G10M5.jpg
 
-#LinePlot: CG_UP_C0050_S298 SimTimeBL InvHeight TsAll_T12_T36 none PANEL:d@S298@C50   NorthWest none InvHeight_CG_C0050_S298.jpg
-#LinePlot: CG_UP_C0400_S298 SimTimeBL InvHeight TsAll_T12_T36 none PANEL:e@S298@C400  NorthWest none InvHeight_CG_C0400_S298.jpg
-#LinePlot: CG_UP_C1600_S298 SimTimeBL InvHeight TsAll_T12_T36 none PANEL:f@S298@C1600 NorthWest none InvHeight_CG_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 SimTimeBL InvHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:d@S298@C50   NorthWest none InvHeight_CG_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 SimTimeBL InvHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:e@S298@C400  NorthWest none InvHeight_CG_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 SimTimeBL InvHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:f@S298@C1600 NorthWest none InvHeight_CG_C1600_S298.jpg
 
 ### Cloud top - based on cloud fraction
-#LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL CloudCfTop TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudCfTop_CO_S293_G10M5_ALL.jpg
-#LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL CloudCfTop TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudCfTop_CO_S298_G10M5_ALL.jpg
-#LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL CloudCfTop TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudCfTop_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL CloudCfTop SimTimeHr HeightKm TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudCfTop_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL CloudCfTop SimTimeHr HeightKm TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudCfTop_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL CloudCfTop SimTimeHr HeightKm TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudCfTop_CO_S303_G10M5_ALL.jpg
 
-#LinePlot: CO_UP_S293_G10M5 SimTimeBL CloudCfTop TsAll_T12_T36 none PANEL:a@S293 SouthEast none CloudCfTop_CO_S293_G10M5.jpg
-#LinePlot: CO_UP_S298_G10M5 SimTimeBL CloudCfTop TsAll_T12_T36 none PANEL:b@S298 SouthEast none CloudCfTop_CO_S298_G10M5.jpg
-#LinePlot: CO_UP_S303_G10M5 SimTimeBL CloudCfTop TsAll_T12_T36 none PANEL:c@S303 SouthEast none CloudCfTop_CO_S303_G10M5.jpg
+#LinePlot: CO_UP_S293_G10M5 SimTimeBL CloudCfTop SimTimeHr HeightKm TsAll_T12_T36 none PANEL:a@S293 SouthEast none CloudCfTop_CO_S293_G10M5.jpg
+#LinePlot: CO_UP_S298_G10M5 SimTimeBL CloudCfTop SimTimeHr HeightKm TsAll_T12_T36 none PANEL:b@S298 SouthEast none CloudCfTop_CO_S298_G10M5.jpg
+#LinePlot: CO_UP_S303_G10M5 SimTimeBL CloudCfTop SimTimeHr HeightKm TsAll_T12_T36 none PANEL:c@S303 SouthEast none CloudCfTop_CO_S303_G10M5.jpg
 
-#LinePlot: CG_UP_C0050_S298 SimTimeBL CloudCfTop TsAll_T12_T36 none PANEL:d@S298@C50   SouthEast none CloudCfTop_CG_C0050_S298.jpg
-#LinePlot: CG_UP_C0400_S298 SimTimeBL CloudCfTop TsAll_T12_T36 none PANEL:e@S298@C400  SouthEast none CloudCfTop_CG_C0400_S298.jpg
-#LinePlot: CG_UP_C1600_S298 SimTimeBL CloudCfTop TsAll_T12_T36 none PANEL:f@S298@C1600 SouthEast none CloudCfTop_CG_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 SimTimeBL CloudCfTop SimTimeHr HeightKm TsAll_T12_T36 none PANEL:d@S298@C50   SouthEast none CloudCfTop_CG_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 SimTimeBL CloudCfTop SimTimeHr HeightKm TsAll_T12_T36 none PANEL:e@S298@C400  SouthEast none CloudCfTop_CG_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 SimTimeBL CloudCfTop SimTimeHr HeightKm TsAll_T12_T36 none PANEL:f@S298@C1600 SouthEast none CloudCfTop_CG_C1600_S298.jpg
 
 ### Cloud bottom - based on cloud fraction
-#LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL CloudCfBot TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudCfBot_CO_S293_G10M5_ALL.jpg
-#LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL CloudCfBot TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudCfBot_CO_S298_G10M5_ALL.jpg
-#LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL CloudCfBot TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudCfBot_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL CloudCfBot SimTimeHr HeightKm TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudCfBot_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL CloudCfBot SimTimeHr HeightKm TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudCfBot_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL CloudCfBot SimTimeHr HeightKm TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudCfBot_CO_S303_G10M5_ALL.jpg
 
-#LinePlot: CO_UP_S293_G10M5 SimTimeBL CloudCfBot TsAll_T12_T36 none PANEL:a@S293 NorthWest none CloudCfBot_CO_S293_G10M5.jpg
-#LinePlot: CO_UP_S298_G10M5 SimTimeBL CloudCfBot TsAll_T12_T36 none PANEL:b@S298 NorthWest none CloudCfBot_CO_S298_G10M5.jpg
-#LinePlot: CO_UP_S303_G10M5 SimTimeBL CloudCfBot TsAll_T12_T36 none PANEL:c@S303 NorthWest none CloudCfBot_CO_S303_G10M5.jpg
+#LinePlot: CO_UP_S293_G10M5 SimTimeBL CloudCfBot SimTimeHr HeightKm TsAll_T12_T36 none PANEL:a@S293 NorthWest none CloudCfBot_CO_S293_G10M5.jpg
+#LinePlot: CO_UP_S298_G10M5 SimTimeBL CloudCfBot SimTimeHr HeightKm TsAll_T12_T36 none PANEL:b@S298 NorthWest none CloudCfBot_CO_S298_G10M5.jpg
+#LinePlot: CO_UP_S303_G10M5 SimTimeBL CloudCfBot SimTimeHr HeightKm TsAll_T12_T36 none PANEL:c@S303 NorthWest none CloudCfBot_CO_S303_G10M5.jpg
 
-#LinePlot: CG_UP_C0050_S298 SimTimeBL CloudCfBot TsAll_T12_T36 none PANEL:d@S298@C50   NorthWest none CloudCfBot_CG_C0050_S298.jpg
-#LinePlot: CG_UP_C0400_S298 SimTimeBL CloudCfBot TsAll_T12_T36 none PANEL:e@S298@C400  NorthWest none CloudCfBot_CG_C0400_S298.jpg
-#LinePlot: CG_UP_C1600_S298 SimTimeBL CloudCfBot TsAll_T12_T36 none PANEL:f@S298@C1600 NorthWest none CloudCfBot_CG_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 SimTimeBL CloudCfBot SimTimeHr HeightKm TsAll_T12_T36 none PANEL:d@S298@C50   NorthWest none CloudCfBot_CG_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 SimTimeBL CloudCfBot SimTimeHr HeightKm TsAll_T12_T36 none PANEL:e@S298@C400  NorthWest none CloudCfBot_CG_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 SimTimeBL CloudCfBot SimTimeHr HeightKm TsAll_T12_T36 none PANEL:f@S298@C1600 NorthWest none CloudCfBot_CG_C1600_S298.jpg
 
 ### Cloud top - based on cloud mixing ratio
-#LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL CloudCldTop TsAll_T12_T36 none PANEL:b@S293 NorthEastOutside none CloudCldTop_CO_S293_G10M5_ALL.jpg
-#LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL CloudCldTop TsAll_T12_T36 none PANEL:e@S298 NorthEastOutside none CloudCldTop_CO_S298_G10M5_ALL.jpg
-#LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL CloudCldTop TsAll_T12_T36 none PANEL:h@S303 NorthEastOutside none CloudCldTop_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL CloudCldTop SimTimeHr HeightKm TsAll_T12_T36 none PANEL:b@S293 NorthEastOutside none CloudCldTop_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL CloudCldTop SimTimeHr HeightKm TsAll_T12_T36 none PANEL:e@S298 NorthEastOutside none CloudCldTop_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL CloudCldTop SimTimeHr HeightKm TsAll_T12_T36 none PANEL:h@S303 NorthEastOutside none CloudCldTop_CO_S303_G10M5_ALL.jpg
 
-#LinePlot: CO_UP_S293_G10M5 SimTimeBL CloudCldTop TsAll_T12_T36 none PANEL:d@S293 SouthEast none CloudCldTop_CO_S293_G10M5.jpg
-#LinePlot: CO_UP_S298_G10M5 SimTimeBL CloudCldTop TsAll_T12_T36 none PANEL:e@S298 SouthEast none CloudCldTop_CO_S298_G10M5.jpg
-#LinePlot: CO_UP_S303_G10M5 SimTimeBL CloudCldTop TsAll_T12_T36 none PANEL:f@S303 SouthEast none CloudCldTop_CO_S303_G10M5.jpg
+#LinePlot: CO_UP_S293_G10M5 SimTimeBL CloudCldTop SimTimeHr HeightKm TsAll_T12_T36 none PANEL:d@S293 SouthEast none CloudCldTop_CO_S293_G10M5.jpg
+#LinePlot: CO_UP_S298_G10M5 SimTimeBL CloudCldTop SimTimeHr HeightKm TsAll_T12_T36 none PANEL:e@S298 SouthEast none CloudCldTop_CO_S298_G10M5.jpg
+#LinePlot: CO_UP_S303_G10M5 SimTimeBL CloudCldTop SimTimeHr HeightKm TsAll_T12_T36 none PANEL:f@S303 SouthEast none CloudCldTop_CO_S303_G10M5.jpg
 
-#LinePlot: CG_UP_C0050_S298 SimTimeBL CloudCldTop TsAll_T12_T36 none PANEL:d@S298@C50   SouthEast none CloudCldTop_CG_C0050_S298.jpg
-#LinePlot: CG_UP_C0400_S298 SimTimeBL CloudCldTop TsAll_T12_T36 none PANEL:e@S298@C400  SouthEast none CloudCldTop_CG_C0400_S298.jpg
-#LinePlot: CG_UP_C1600_S298 SimTimeBL CloudCldTop TsAll_T12_T36 none PANEL:f@S298@C1600 SouthEast none CloudCldTop_CG_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 SimTimeBL CloudCldTop SimTimeHr HeightKm TsAll_T12_T36 none PANEL:d@S298@C50   SouthEast none CloudCldTop_CG_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 SimTimeBL CloudCldTop SimTimeHr HeightKm TsAll_T12_T36 none PANEL:e@S298@C400  SouthEast none CloudCldTop_CG_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 SimTimeBL CloudCldTop SimTimeHr HeightKm TsAll_T12_T36 none PANEL:f@S298@C1600 SouthEast none CloudCldTop_CG_C1600_S298.jpg
 
 ### Cloud bottom - based on cloud mixing ratio
-#LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL CloudCldBot TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudCldBot_CO_S293_G10M5_ALL.jpg
-#LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL CloudCldBot TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudCldBot_CO_S298_G10M5_ALL.jpg
-#LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL CloudCldBot TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudCldBot_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL CloudCldBot SimTimeHr HeightKm TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudCldBot_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL CloudCldBot SimTimeHr HeightKm TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudCldBot_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL CloudCldBot SimTimeHr HeightKm TsAll_T12_T36 none PANEL:a NorthEastOutside none CloudCldBot_CO_S303_G10M5_ALL.jpg
 
-#LinePlot: CO_UP_S293_G10M5 SimTimeBL CloudCldBot TsAll_T12_T36 none PANEL:a@S293 NorthEast none CloudCldBot_CO_S293_G10M5.jpg
-#LinePlot: CO_UP_S298_G10M5 SimTimeBL CloudCldBot TsAll_T12_T36 none PANEL:b@S298 NorthEast none CloudCldBot_CO_S298_G10M5.jpg
-#LinePlot: CO_UP_S303_G10M5 SimTimeBL CloudCldBot TsAll_T12_T36 none PANEL:c@S303 NorthEast none CloudCldBot_CO_S303_G10M5.jpg
+#LinePlot: CO_UP_S293_G10M5 SimTimeBL CloudCldBot SimTimeHr HeightKm TsAll_T12_T36 none PANEL:a@S293 NorthEast none CloudCldBot_CO_S293_G10M5.jpg
+#LinePlot: CO_UP_S298_G10M5 SimTimeBL CloudCldBot SimTimeHr HeightKm TsAll_T12_T36 none PANEL:b@S298 NorthEast none CloudCldBot_CO_S298_G10M5.jpg
+#LinePlot: CO_UP_S303_G10M5 SimTimeBL CloudCldBot SimTimeHr HeightKm TsAll_T12_T36 none PANEL:c@S303 NorthEast none CloudCldBot_CO_S303_G10M5.jpg
 
-#LinePlot: CG_UP_C0050_S298 SimTimeBL CloudCldBot TsAll_T12_T36 none PANEL:d@S298@C50   NorthEast none CloudCldBot_CG_C0050_S298.jpg
-#LinePlot: CG_UP_C0400_S298 SimTimeBL CloudCldBot TsAll_T12_T36 none PANEL:e@S298@C400  NorthEast none CloudCldBot_CG_C0400_S298.jpg
-#LinePlot: CG_UP_C1600_S298 SimTimeBL CloudCldBot TsAll_T12_T36 none PANEL:f@S298@C1600 NorthEast none CloudCldBot_CG_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 SimTimeBL CloudCldBot SimTimeHr HeightKm TsAll_T12_T36 none PANEL:d@S298@C50   NorthEast none CloudCldBot_CG_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 SimTimeBL CloudCldBot SimTimeHr HeightKm TsAll_T12_T36 none PANEL:e@S298@C400  NorthEast none CloudCldBot_CG_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 SimTimeBL CloudCldBot SimTimeHr HeightKm TsAll_T12_T36 none PANEL:f@S298@C1600 NorthEast none CloudCldBot_CG_C1600_S298.jpg
 
 ### Heat entrainment velocity (theta)
-#LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL ThetaWe_293 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaWe_CO_S293_G10M5_ALL.jpg
-#LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL ThetaWe_298 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaWe_CO_S298_G10M5_ALL.jpg
-#LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL ThetaWe_303 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaWe_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL ThetaWe SimtTimeHr ThetaWe_293 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaWe_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL ThetaWe SimtTimeHr ThetaWe_298 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaWe_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL ThetaWe SimtTimeHr ThetaWe_303 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaWe_CO_S303_G10M5_ALL.jpg
 
-#LinePlot: CO_UP_S293_G10M5 SimTimeBL ThetaWe_293 TsAll_T12_T36 none PANEL:a@S293 SouthWest none ThetaWe_CO_S293_G10M5.jpg
-#LinePlot: CO_UP_S298_G10M5 SimTimeBL ThetaWe_298 TsAll_T12_T36 none PANEL:b@S298 SouthWest none ThetaWe_CO_S298_G10M5.jpg
-#LinePlot: CO_UP_S303_G10M5 SimTimeBL ThetaWe_303 TsAll_T12_T36 none PANEL:c@S303 SouthWest none ThetaWe_CO_S303_G10M5.jpg
+#LinePlot: CO_UP_S293_G10M5 SimTimeBL ThetaWe SimtTimeHr ThetaWe_293 TsAll_T12_T36 none PANEL:a@S293 SouthWest none ThetaWe_CO_S293_G10M5.jpg
+#LinePlot: CO_UP_S298_G10M5 SimTimeBL ThetaWe SimtTimeHr ThetaWe_298 TsAll_T12_T36 none PANEL:b@S298 SouthWest none ThetaWe_CO_S298_G10M5.jpg
+#LinePlot: CO_UP_S303_G10M5 SimTimeBL ThetaWe SimtTimeHr ThetaWe_303 TsAll_T12_T36 none PANEL:c@S303 SouthWest none ThetaWe_CO_S303_G10M5.jpg
 
-#LinePlot: CG_UP_C0050_S298 SimTimeBL ThetaWe_298 TsAll_T12_T36 none PANEL:d@S298@C50   SouthWest none ThetaWe_CG_C0050_S298.jpg
-#LinePlot: CG_UP_C0400_S298 SimTimeBL ThetaWe_298 TsAll_T12_T36 none PANEL:e@S298@C400  SouthWest none ThetaWe_CG_C0400_S298.jpg
-#LinePlot: CG_UP_C1600_S298 SimTimeBL ThetaWe_298 TsAll_T12_T36 none PANEL:f@S298@C1600 SouthWest none ThetaWe_CG_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 SimTimeBL ThetaWe SimtTimeHr ThetaWe_293 TsAll_T12_T36 none PANEL:d@S298@C50   SouthWest none ThetaWe_CG_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 SimTimeBL ThetaWe SimtTimeHr ThetaWe_298 TsAll_T12_T36 none PANEL:e@S298@C400  SouthWest none ThetaWe_CG_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 SimTimeBL ThetaWe SimtTimeHr ThetaWe_303 TsAll_T12_T36 none PANEL:f@S298@C1600 SouthWest none ThetaWe_CG_C1600_S298.jpg
 
 ### Moisture entrainment velocity (vapor)
-#LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL VaporWe_293 TsAll_T12_T36 none PANEL:a NorthEastOutside none VaporWe_CO_S293_G10M5_ALL.jpg
-#LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL VaporWe_298 TsAll_T12_T36 none PANEL:a NorthEastOutside none VaporWe_CO_S298_G10M5_ALL.jpg
-#LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL VaporWe_303 TsAll_T12_T36 none PANEL:a NorthEastOutside none VaporWe_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL VaporWe SimTimeHr VaporWe_293 TsAll_T12_T36 none PANEL:a NorthEastOutside none VaporWe_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL VaporWe SimTimeHr VaporWe_298 TsAll_T12_T36 none PANEL:a NorthEastOutside none VaporWe_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL VaporWe SimTimeHr VaporWe_303 TsAll_T12_T36 none PANEL:a NorthEastOutside none VaporWe_CO_S303_G10M5_ALL.jpg
 
-#LinePlot: CO_UP_S293_G10M5 SimTimeBL VaporWe_293 TsAll_T12_T36 none PANEL:a@S293 NorthEast none VaporWe_CO_S293_G10M5.jpg
-#LinePlot: CO_UP_S298_G10M5 SimTimeBL VaporWe_298 TsAll_T12_T36 none PANEL:b@S298 NorthEast none VaporWe_CO_S298_G10M5.jpg
-#LinePlot: CO_UP_S303_G10M5 SimTimeBL VaporWe_303 TsAll_T12_T36 none PANEL:c@S303 NorthEast none VaporWe_CO_S303_G10M5.jpg
+#LinePlot: CO_UP_S293_G10M5 SimTimeBL VaporWe SimTimeHr VaporWe_293 TsAll_T12_T36 none PANEL:a@S293 NorthEast none VaporWe_CO_S293_G10M5.jpg
+#LinePlot: CO_UP_S298_G10M5 SimTimeBL VaporWe SimTimeHr VaporWe_298 TsAll_T12_T36 none PANEL:b@S298 NorthEast none VaporWe_CO_S298_G10M5.jpg
+#LinePlot: CO_UP_S303_G10M5 SimTimeBL VaporWe SimTimeHr VaporWe_303 TsAll_T12_T36 none PANEL:c@S303 NorthEast none VaporWe_CO_S303_G10M5.jpg
 
-#LinePlot: CG_UP_C0050_S298 SimTimeBL VaporWe_298 TsAll_T12_T36 none PANEL:d@S298@C50   NorthEast none VaporWe_CG_C0050_S298.jpg
-#LinePlot: CG_UP_C0400_S298 SimTimeBL VaporWe_298 TsAll_T12_T36 none PANEL:e@S298@C400  NorthEast none VaporWe_CG_C0400_S298.jpg
-#LinePlot: CG_UP_C1600_S298 SimTimeBL VaporWe_298 TsAll_T12_T36 none PANEL:f@S298@C1600 NorthEast none VaporWe_CG_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 SimTimeBL VaporWe SimTimeHr VaporWe_293 TsAll_T12_T36 none PANEL:d@S298@C50   NorthEast none VaporWe_CG_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 SimTimeBL VaporWe SimTimeHr VaporWe_298 TsAll_T12_T36 none PANEL:e@S298@C400  NorthEast none VaporWe_CG_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 SimTimeBL VaporWe SimTimeHr VaporWe_303 TsAll_T12_T36 none PANEL:f@S298@C1600 NorthEast none VaporWe_CG_C1600_S298.jpg
 
 ### Buoyancy entrainment velocity (theta_v)
-#LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL ThetaV_We_293 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaV_We_CO_S293_G10M5_ALL.jpg
-#LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL ThetaV_We_298 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaV_We_CO_S298_G10M5_ALL.jpg
-#LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL ThetaV_We_303 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaV_We_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL ThetaV_We SimTimeHr ThetaV_We_293 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaV_We_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL ThetaV_We SimTimeHr ThetaV_We_298 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaV_We_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL ThetaV_We SimTimeHr ThetaV_We_303 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaV_We_CO_S303_G10M5_ALL.jpg
 
-#LinePlot: CO_UP_S293_G10M5 SimTimeBL ThetaV_We_293 TsAll_T12_T36 none PANEL:a@S293 SouthWest none ThetaV_We_CO_S293_G10M5.jpg
-#LinePlot: CO_UP_S298_G10M5 SimTimeBL ThetaV_We_298 TsAll_T12_T36 none PANEL:b@S298 SouthWest none ThetaV_We_CO_S298_G10M5.jpg
-#LinePlot: CO_UP_S303_G10M5 SimTimeBL ThetaV_We_303 TsAll_T12_T36 none PANEL:c@S303 SouthWest none ThetaV_We_CO_S303_G10M5.jpg
+#LinePlot: CO_UP_S293_G10M5 SimTimeBL ThetaV_We SimTimeHr ThetaV_We_293 TsAll_T12_T36 none PANEL:a@S293 SouthWest none ThetaV_We_CO_S293_G10M5.jpg
+#LinePlot: CO_UP_S298_G10M5 SimTimeBL ThetaV_We SimTimeHr ThetaV_We_298 TsAll_T12_T36 none PANEL:b@S298 SouthWest none ThetaV_We_CO_S298_G10M5.jpg
+#LinePlot: CO_UP_S303_G10M5 SimTimeBL ThetaV_We SimTimeHr ThetaV_We_303 TsAll_T12_T36 none PANEL:c@S303 SouthWest none ThetaV_We_CO_S303_G10M5.jpg
 
-#LinePlot: CG_UP_C0050_S298 SimTimeBL ThetaV_We_298 TsAll_T12_T36 none PANEL:d@S298@C50   SouthWest none ThetaV_We_CG_C0050_S298.jpg
-#LinePlot: CG_UP_C0400_S298 SimTimeBL ThetaV_We_298 TsAll_T12_T36 none PANEL:e@S298@C400  SouthWest none ThetaV_We_CG_C0400_S298.jpg
-#LinePlot: CG_UP_C1600_S298 SimTimeBL ThetaV_We_298 TsAll_T12_T36 none PANEL:f@S298@C1600 SouthWest none ThetaV_We_CG_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 SimTimeBL ThetaV_We SimTimeHr ThetaV_We_293 TsAll_T12_T36 none PANEL:d@S298@C50   SouthWest none ThetaV_We_CG_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 SimTimeBL ThetaV_We SimTimeHr ThetaV_We_298 TsAll_T12_T36 none PANEL:e@S298@C400  SouthWest none ThetaV_We_CG_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 SimTimeBL ThetaV_We SimTimeHr ThetaV_We_303 TsAll_T12_T36 none PANEL:f@S298@C1600 SouthWest none ThetaV_We_CG_C1600_S298.jpg
 
 ### Max cloud fraction
-#LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL CfMax_293 TsAll_T12_T36 none PANEL:c@S293 NorthEastOutside none CfMax_CO_S293_G10M5_ALL.jpg
-#LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL CfMax_298 TsAll_T12_T36 none PANEL:f@S298 NorthEastOutside none CfMax_CO_S298_G10M5_ALL.jpg
-#LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL CfMax_303 TsAll_T12_T36 none PANEL:i@S303 NorthEastOutside none CfMax_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL CfMax SimTimeHr Fraction TsAll_T12_T36 none PANEL:c@S293 NorthEastOutside none CfMax_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL CfMax SimTimeHr Fraction TsAll_T12_T36 none PANEL:f@S298 NorthEastOutside none CfMax_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL CfMax SimTimeHr Fraction TsAll_T12_T36 none PANEL:i@S303 NorthEastOutside none CfMax_CO_S303_G10M5_ALL.jpg
 
-#LinePlot: CO_UP_S293_G10M5 SimTimeBL CfMax_293 TsAll_T12_T36 none PANEL:g@S293 SouthWest none CfMax_CO_S293_G10M5.jpg
-#LinePlot: CO_UP_S298_G10M5 SimTimeBL CfMax_298 TsAll_T12_T36 none PANEL:h@S298 SouthWest none CfMax_CO_S298_G10M5.jpg
-#LinePlot: CO_UP_S303_G10M5 SimTimeBL CfMax_303 TsAll_T12_T36 none PANEL:i@S303 SouthWest none CfMax_CO_S303_G10M5.jpg
+#LinePlot: CO_UP_S293_G10M5 SimTimeBL CfMax SimTimeHr Fraction TsAll_T12_T36 none PANEL:g@S293 SouthWest none CfMax_CO_S293_G10M5.jpg
+#LinePlot: CO_UP_S298_G10M5 SimTimeBL CfMax SimTimeHr Fraction TsAll_T12_T36 none PANEL:h@S298 SouthWest none CfMax_CO_S298_G10M5.jpg
+#LinePlot: CO_UP_S303_G10M5 SimTimeBL CfMax SimTimeHr Fraction TsAll_T12_T36 none PANEL:i@S303 SouthWest none CfMax_CO_S303_G10M5.jpg
 
-#LinePlot: CG_UP_C0050_S298 SimTimeBL CfMax_298 TsAll_T12_T36 none PANEL:d@S298@C50   SouthWest none CfMax_CG_C0050_S298.jpg
-#LinePlot: CG_UP_C0400_S298 SimTimeBL CfMax_298 TsAll_T12_T36 none PANEL:e@S298@C400  SouthWest none CfMax_CG_C0400_S298.jpg
-#LinePlot: CG_UP_C1600_S298 SimTimeBL CfMax_298 TsAll_T12_T36 none PANEL:f@S298@C1600 SouthWest none CfMax_CG_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 SimTimeBL CfMax SimTimeHr Fraction TsAll_T12_T36 none PANEL:d@S298@C50   SouthWest none CfMax_CG_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 SimTimeBL CfMax SimTimeHr Fraction TsAll_T12_T36 none PANEL:e@S298@C400  SouthWest none CfMax_CG_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 SimTimeBL CfMax SimTimeHr Fraction TsAll_T12_T36 none PANEL:f@S298@C1600 SouthWest none CfMax_CG_C1600_S298.jpg
 
 ### Height of max cloud fraction
-#LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL CfMaxHeight_293 TsAll_T12_T36 none PANEL:a NorthEastOutside none CfMaxHeight_CO_S293_G10M5_ALL.jpg
-#LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL CfMaxHeight_298 TsAll_T12_T36 none PANEL:a NorthEastOutside none CfMaxHeight_CO_S298_G10M5_ALL.jpg
-#LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL CfMaxHeight_303 TsAll_T12_T36 none PANEL:a NorthEastOutside none CfMaxHeight_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL CfMaxHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:a NorthEastOutside none CfMaxHeight_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL CfMaxHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:a NorthEastOutside none CfMaxHeight_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL CfMaxHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:a NorthEastOutside none CfMaxHeight_CO_S303_G10M5_ALL.jpg
 
-#LinePlot: CO_UP_S293_G10M5 SimTimeBL CfMaxHeight_293 TsAll_T12_T36 none PANEL:a@S293 NorthWest none CfMaxHeight_CO_S293_G10M5.jpg
-#LinePlot: CO_UP_S298_G10M5 SimTimeBL CfMaxHeight_298 TsAll_T12_T36 none PANEL:b@S298 NorthWest none CfMaxHeight_CO_S298_G10M5.jpg
-#LinePlot: CO_UP_S303_G10M5 SimTimeBL CfMaxHeight_303 TsAll_T12_T36 none PANEL:c@S303 NorthWest none CfMaxHeight_CO_S303_G10M5.jpg
+#LinePlot: CO_UP_S293_G10M5 SimTimeBL CfMaxHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:a@S293 NorthWest none CfMaxHeight_CO_S293_G10M5.jpg
+#LinePlot: CO_UP_S298_G10M5 SimTimeBL CfMaxHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:b@S298 NorthWest none CfMaxHeight_CO_S298_G10M5.jpg
+#LinePlot: CO_UP_S303_G10M5 SimTimeBL CfMaxHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:c@S303 NorthWest none CfMaxHeight_CO_S303_G10M5.jpg
 
-#LinePlot: CG_UP_C0050_S298 SimTimeBL CfMaxHeight_298 TsAll_T12_T36 none PANEL:d@S298@C50   NorthWest none CfMaxHeight_CG_C0050_S298.jpg
-#LinePlot: CG_UP_C0400_S298 SimTimeBL CfMaxHeight_298 TsAll_T12_T36 none PANEL:e@S298@C400  NorthWest none CfMaxHeight_CG_C0400_S298.jpg
-#LinePlot: CG_UP_C1600_S298 SimTimeBL CfMaxHeight_298 TsAll_T12_T36 none PANEL:f@S298@C1600 NorthWest none CfMaxHeight_CG_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 SimTimeBL CfMaxHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:d@S298@C50   NorthWest none CfMaxHeight_CG_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 SimTimeBL CfMaxHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:e@S298@C400  NorthWest none CfMaxHeight_CG_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 SimTimeBL CfMaxHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:f@S298@C1600 NorthWest none CfMaxHeight_CG_C1600_S298.jpg
 
 ### Cloud fraction vs Cloud top temp
 ##LinePlot: CO_UP_S298_G10M5  Ctop Cfrac TsAll_T12_T36 xy PANEL:a  NorthEast none CloudStruct_CO_S298_G10M5.jpg
@@ -2040,9 +2040,13 @@ LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b4_TEND Cfrac_lwp_b4 CfracP
 #### 1um GCCN median radius ####
 
 # Vary CCN, hold SST constant
-###LinePlot: CO_S293_G10M5  SimTime Cfrac TsAll none SST:@293K,@GCCN:@1e-5/cc  NorthEast none Cloud_Frac_CO_S293_G10M5.jpg
-###LinePlot: CO_S298_G10M5  SimTime Cfrac TsAll none SST:@298K,@GCCN:@1e-5/cc  NorthEast none Cloud_Frac_CO_S298_G10M5.jpg
-###LinePlot: CO_S303_G10M5  SimTime Cfrac TsAll none SST:@303K,@GCCN:@1e-5/cc  NorthEast none Cloud_Frac_CO_S303_G10M5.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  SimTime Cfrac SimTimeHr Fraction TsAll none PANEL:a@S293  NorthEastOutside none CloudFrac_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  SimTime Cfrac SimTimeHr Fraction TsAll none PANEL:a@S298  NorthEastOutside none CloudFrac_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  SimTime Cfrac SimTimeHr Fraction TsAll none PANEL:a@S303  NorthEastOutside none CloudFrac_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_S293_G10M5  SimTime Cfrac SimTimeHr Fraction TsAll none PANEL:a@S293  SouthWest none CloudFrac_CO_S293_G10M5.jpg
+LinePlot: CO_UP_S298_G10M5  SimTime Cfrac SimTimeHr Fraction TsAll none PANEL:a@S298  SouthWest none CloudFrac_CO_S298_G10M5.jpg
+LinePlot: CO_UP_S303_G10M5  SimTime Cfrac SimTimeHr Fraction TsAll none PANEL:a@S303  NorthEast none CloudFrac_CO_S303_G10M5.jpg
 
 # Vary SST, hold CCN constant
 ###LinePlot: CO_C0050_G10M5  SimTime Cfrac TsAll none CCN:@50/cc,@GCCN:@1e-5/cc    NorthEast none Cloud_Frac_CO_C0050_G10M5.jpg
@@ -2056,9 +2060,9 @@ LinePlot: CG_UP_C1600_S298 CfracPdfBins CfracPdf_lwp_b4_TEND Cfrac_lwp_b4 CfracP
 #### 3um GCCN median radius ####
 
 # Vary GCCN, hold SST and CCN constant
-###LinePlot: CG_C0050_S298   SimTime Cfrac TsAll none CCN:@50/cc,@SST:@298K    NorthEast none Cloud_Frac_CG_C50_S298.jpg
-###LinePlot: CG_C0400_S298  SimTime Cfrac TsAll none CCN:@400/cc,@SST:@298K   NorthEast none Cloud_Frac_CG_C400_S298.jpg
-###LinePlot: CG_C1600_S298 SimTime Cfrac TsAll none CCN:@1600/cc,@SST:@298K NorthEast none Cloud_Frac_CG_C1600_S298.jpg
+LinePlot: CG_UP_C0050_S298 SimTime Cfrac SimTimeHr Fraction TsAll none PANEL:a@C50@S298   SouthWest none CloudFrac_CG_C50_S298.jpg
+LinePlot: CG_UP_C0400_S298 SimTime Cfrac SimTimeHr Fraction TsAll none PANEL:a@C400@S298  SouthWest none CloudFrac_CG_C400_S298.jpg
+LinePlot: CG_UP_C1600_S298 SimTime Cfrac SimTimeHr Fraction TsAll none PANEL:a@C1600@S298 SouthWest none CloudFrac_CG_C1600_S298.jpg
 
 ###LinePlot: CG_C0400_S303  SimTime Cfrac TsAll none CCN:@400/cc,@SST:@303K   NorthEast none Cloud_Frac_CG_C400_S303.jpg
 
@@ -2811,11 +2815,11 @@ PlotSet: ContourPset_C400_S298 3 z.atex.ccn0400.sst298.gcn10m5.1um 10e-5/cc blac
 #  from the figure.
 #
 #PlotVar: Ctop  hda_ctop_tempc TsAveragedData/hda_ctop_tempc Cloud@Top@Temp  Deg@C       15       5  1
-#PlotVar: Cfrac hda_cloud_mask TsAveragedData/hda_cloud_frac Cloud@Fraction      @     -0.1     1.1  1
+PlotVar: Cfrac cloud_frac DIAGS/hda_ts_cf CF      @   1
 
 #PlotVar: MaxCdepth max_cloud_depth TsAveragedData/max_cdepth Max@Cloud@Depth              m   -100.0  4100.0  1
 
-#PlotVar: SimTime t_coords TsAveragedData/hda_ctop_tempc Simulation@Time  hr  0 60 2.77777778e-4
+PlotVar: SimTime t_coords TsAveragedData/hda_cloud_frac Simulation@Time  h  2.77777778e-4
 
 #PlotVar: Prof_Heights      z_coords  DIAGS/buoy_flux_T12_T36    Height km     0   4 1e-3
 #PlotVar: MOMENT_HEIGHTS    z_coords  DIAGS/moments              Height km     0   4 1e-3
@@ -2868,7 +2872,7 @@ PlotVar: CdepthPdf_lwp_b4_TALL    cd_lwp_b4_pdf_TALL    DIAGS/pdf_cd   @        
 PlotVar: CdepthPdf_lwp_b4_TSTART  cd_lwp_b4_pdf_TSTART  DIAGS/pdf_cd   @        @ 1
 PlotVar: CdepthPdf_lwp_b4_TMID    cd_lwp_b4_pdf_TMID    DIAGS/pdf_cd   @        @ 1
 PlotVar: CdepthPdf_lwp_b4_TEND    cd_lwp_b4_pdf_TEND    DIAGS/pdf_cd   @        @ 1
-PlotVar: CdepthPdfBins     x_coords        DIAGS/pdf_cd   Cloud@Depth m 1
+PlotVar: CdepthPdfBins     x_coords        DIAGS/pdf_cd   Cloud@Depth km 1e-3
 
 PlotVar: CfracPdf_TALL    cf_pdf_TALL    DIAGS/pdf_cf   @        @ 1
 PlotVar: CfracPdf_TSTART  cf_pdf_TSTART  DIAGS/pdf_cf   @        @ 1
@@ -2921,30 +2925,20 @@ PlotVar: AlbPdf_TEND    albedo_pdf_TEND    DIAGS/pdf_albedo   @       @  1
 PlotVar: AlbPdfBins     x_coords           DIAGS/pdf_albedo   Albedo  @  1
 
 ############## BL stats #####################
-#PlotVar: InvHeight      InversionHeightSmooth   DIAGS/bl_stats_0p01 Z_i  km  0 4 1e-3
-#PlotVar: CloudCfTop     CloudTopCfSmooth        DIAGS/bl_stats_0p01 Z_t  km  0 4 1e-3
-#PlotVar: CloudCfBot     CloudBotCfSmooth        DIAGS/bl_stats_0p01 Z_b  km  0 4 1e-3
-#PlotVar: CloudCldTop    CloudTopCldSmooth       DIAGS/bl_stats_0p01 Z_t  km  0 4 1e-3
-#PlotVar: CloudCldBot    CloudBotCldSmooth       DIAGS/bl_stats_0p01 Z_b  km  0 4 1e-3
+PlotVar: InvHeight      InversionHeightSmooth   DIAGS/bl_stats_0p01 Z_i  km  1e-3
+PlotVar: CloudCfTop     CloudTopCfSmooth        DIAGS/bl_stats_0p01 Z_t  km  1e-3
+PlotVar: CloudCfBot     CloudBotCfSmooth        DIAGS/bl_stats_0p01 Z_b  km  1e-3
+PlotVar: CloudCldTop    CloudTopCldSmooth       DIAGS/bl_stats_0p01 Z_t  km  1e-3
+PlotVar: CloudCldBot    CloudBotCldSmooth       DIAGS/bl_stats_0p01 Z_b  km  1e-3
 
-#PlotVar: ThetaWe_293    ThetaWeSmooth           DIAGS/bl_stats_0p01 W_e_\theta    cm@s^-^1  -0.50 0.50 100
-#PlotVar: ThetaWe_298    ThetaWeSmooth           DIAGS/bl_stats_0p01 W_e_\theta    cm@s^-^1  -2.00 2.00 100
-#PlotVar: ThetaWe_303    ThetaWeSmooth           DIAGS/bl_stats_0p01 W_e_\theta    cm@s^-^1  -6.00 6.00 100
-#PlotVar: VaporWe_293    VaporWeSmooth           DIAGS/bl_stats_0p01 W_e_r         cm@s^-^1  -0.05 0.05 100
-#PlotVar: VaporWe_298    VaporWeSmooth           DIAGS/bl_stats_0p01 W_e_r         cm@s^-^1  -0.20 0.20 100
-#PlotVar: VaporWe_303    VaporWeSmooth           DIAGS/bl_stats_0p01 W_e_r         cm@s^-^1  -0.50 0.50 100
-#PlotVar: ThetaV_We_293  ThetaV_WeSmooth         DIAGS/bl_stats_0p01 W_e_\theta_v  cm@s^-^1  -0.50 0.50 100
-#PlotVar: ThetaV_We_298  ThetaV_WeSmooth         DIAGS/bl_stats_0p01 W_e_\theta_v  cm@s^-^1  -2.00 2.00 100
-#PlotVar: ThetaV_We_303  ThetaV_WeSmooth         DIAGS/bl_stats_0p01 W_e_\theta_v  cm@s^-^1  -6.00 6.00 100
+PlotVar: ThetaWe        ThetaWeSmooth           DIAGS/bl_stats_0p01 W_e_\theta    cm@s^-^1  100
+PlotVar: VaporWe        VaporWeSmooth           DIAGS/bl_stats_0p01 W_e_r         cm@s^-^1  100
+PlotVar: ThetaV_We      ThetaV_WeSmooth         DIAGS/bl_stats_0p01 W_e_\theta_v  cm@s^-^1  100
 
-#PlotVar: CfMax_293        CfMaxSmooth               DIAGS/bl_stats_0p01 CF_m_a_x  @  0 1.0 1
-#PlotVar: CfMax_298        CfMaxSmooth               DIAGS/bl_stats_0p01 CF_m_a_x  @  0 1.0 1
-#PlotVar: CfMax_303        CfMaxSmooth               DIAGS/bl_stats_0p01 CF_m_a_x  @  0 1.0 1
-#PlotVar: CfMaxHeight_293  CfMaxHeightSmooth         DIAGS/bl_stats_0p01 CF_m_a_x@Height  km  0 4 1e-3
-#PlotVar: CfMaxHeight_298  CfMaxHeightSmooth         DIAGS/bl_stats_0p01 CF_m_a_x@Height  km  0 4 1e-3
-#PlotVar: CfMaxHeight_303  CfMaxHeightSmooth         DIAGS/bl_stats_0p01 CF_m_a_x@Height  km  0 4 1e-3
+PlotVar: CfMax          CfMaxSmooth             DIAGS/bl_stats_0p01 CF_m_a_x             @  1
+PlotVar: CfMaxHeight    CfMaxHeightSmooth       DIAGS/bl_stats_0p01 CF_m_a_x@Height     km  1e-3
 
-#PlotVar: SimTimeBL   t_coords              DIAGS/bl_stats_0p01 Simulation@Time  h  10   40   2.77777778e-4
+PlotVar: SimTimeBL   t_coords              DIAGS/bl_stats_0p01 Simulation@Time  h  2.77777778e-4
 
 ############## Cloud Mass (mixing ratio) ############################
 # no filter
@@ -3479,18 +3473,8 @@ PlotAxis: Cot_lwp_b3      0    100 linear
 PlotAxis: Cot_lwp_b4      0    300 linear
 PlotAxis: CotPdf          1e-8   1 log
 
-PlotAxis: Cdepth             0    4000 linear
-PlotAxis: Cdepth_lwp_b1      0    4000 linear
-PlotAxis: Cdepth_lwp_b2      0    4000 linear
-PlotAxis: Cdepth_lwp_b3      0    4000 linear
-PlotAxis: Cdepth_lwp_b4      0    4000 linear
 PlotAxis: CdepthPdf          1e-8   1 log
 
-PlotAxis: Cfrac             0    1 linear
-PlotAxis: Cfrac_lwp_b1      0    1 linear
-PlotAxis: Cfrac_lwp_b2      0    1 linear
-PlotAxis: Cfrac_lwp_b3      0    1 linear
-PlotAxis: Cfrac_lwp_b4      0    1 linear
 PlotAxis: CfracPdf          1e-8   1 log
 
 PlotAxis: Prate      1e-3 100 log
@@ -3498,6 +3482,22 @@ PlotAxis: PratePdf   1e-8   1 log
 
 PlotAxis: Alb      0    1 linear
 PlotAxis: AlbPdf   1e-8 1 log
+
+PlotAxis: ThetaWe_293    -0.50 0.50 linear
+PlotAxis: ThetaWe_298    -2.00 2.00 linear
+PlotAxis: ThetaWe_303    -6.00 6.00 linear
+PlotAxis: VaporWe_293    -0.05 0.05 linear
+PlotAxis: VaporWe_298    -0.20 0.20 linear
+PlotAxis: VaporWe_303    -0.50 0.50 linear
+PlotAxis: ThetaV_We_293  -0.50 0.50 linear
+PlotAxis: ThetaV_We_298  -2.00 2.00 linear
+PlotAxis: ThetaV_We_303  -6.00 6.00 linear
+
+
+PlotAxis: SimTimeHr  10     40 linear
+PlotAxis: HeightKm    0      4 linear
+PlotAxis: HeightM     0   4000 linear
+PlotAxis: Fraction    0      1 linear
 
 ######################## Selection specs #########################
 # PlotDselect: <name> <xmin> <xmax> <ymin> <ymax> <zmin> <zmax> <tmin> <tmax>

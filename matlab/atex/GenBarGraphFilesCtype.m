@@ -22,6 +22,10 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
           'cot_strat_hist_TMID'
           'cot_strat_hist_TEND'
           'cot_strat_hist_TALL'
+          'cot_scmix_hist_TSTART'
+          'cot_scmix_hist_TMID'
+          'cot_scmix_hist_TEND'
+          'cot_scmix_hist_TALL'
           'cot_cumul_hist_TSTART'
           'cot_cumul_hist_TMID'
           'cot_cumul_hist_TEND'
@@ -42,6 +46,10 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
           'cf_strat_hist_TMID'
           'cf_strat_hist_TEND'
           'cf_strat_hist_TALL'
+          'cf_scmix_hist_TSTART'
+          'cf_scmix_hist_TMID'
+          'cf_scmix_hist_TEND'
+          'cf_scmix_hist_TALL'
           'cf_cumul_hist_TSTART'
           'cf_cumul_hist_TMID'
           'cf_cumul_hist_TEND'
@@ -49,6 +57,30 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
         }
         'x_coords'
         'bgraph_cf'
+      }
+
+      { % cloud depth 
+        'pdf_ctype_cd'
+        {
+          'cd_hist_TSTART'
+          'cd_hist_TMID'
+          'cd_hist_TEND'
+          'cd_hist_TALL'
+          'cd_strat_hist_TSTART'
+          'cd_strat_hist_TMID'
+          'cd_strat_hist_TEND'
+          'cd_strat_hist_TALL'
+          'cd_scmix_hist_TSTART'
+          'cd_scmix_hist_TMID'
+          'cd_scmix_hist_TEND'
+          'cd_scmix_hist_TALL'
+          'cd_cumul_hist_TSTART'
+          'cd_cumul_hist_TMID'
+          'cd_cumul_hist_TEND'
+          'cd_cumul_hist_TALL'
+        }
+        'x_coords'
+        'bgraph_cd'
       }
 
       { % precip rate
@@ -62,6 +94,10 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
           'pcprr_strat_hist_TMID'
           'pcprr_strat_hist_TEND'
           'pcprr_strat_hist_TALL'
+          'pcprr_scmix_hist_TSTART'
+          'pcprr_scmix_hist_TMID'
+          'pcprr_scmix_hist_TEND'
+          'pcprr_scmix_hist_TALL'
           'pcprr_cumul_hist_TSTART'
           'pcprr_cumul_hist_TMID'
           'pcprr_cumul_hist_TEND'
@@ -82,6 +118,10 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
           'albedo_strat_hist_TMID'
           'albedo_strat_hist_TEND'
           'albedo_strat_hist_TALL'
+          'albedo_scmix_hist_TSTART'
+          'albedo_scmix_hist_TMID'
+          'albedo_scmix_hist_TEND'
+          'albedo_scmix_hist_TALL'
           'albedo_cumul_hist_TSTART'
           'albedo_cumul_hist_TMID'
           'albedo_cumul_hist_TEND'
@@ -89,6 +129,30 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
         }
         'x_coords'
         'bgraph_albedo'
+      }
+
+      { % lwp
+        'pdf_ctype_lwp'
+        {
+          'lwp_hist_TSTART'
+          'lwp_hist_TMID'
+          'lwp_hist_TEND'
+          'lwp_hist_TALL'
+          'lwp_strat_hist_TSTART'
+          'lwp_strat_hist_TMID'
+          'lwp_strat_hist_TEND'
+          'lwp_strat_hist_TALL'
+          'lwp_scmix_hist_TSTART'
+          'lwp_scmix_hist_TMID'
+          'lwp_scmix_hist_TEND'
+          'lwp_scmix_hist_TALL'
+          'lwp_cumul_hist_TSTART'
+          'lwp_cumul_hist_TMID'
+          'lwp_cumul_hist_TEND'
+          'lwp_cumul_hist_TALL'
+        }
+        'x_coords'
+        'bgraph_lwp'
       }
 
       };

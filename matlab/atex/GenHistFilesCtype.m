@@ -27,11 +27,15 @@ function [ ] = GenHistFilesCtype(ConfigFile)
     ALB_BINS = 0:0.01:1; % albedo bins
     CT_BINS = 0:300;  % cloud optical thickness bins
     CF_BINS = 0:0.01:1;  % cloud fraction bins
+    CD_BINS = 0:100:4000;  % cloud depth bins
+    LWP_BINS = 10.^(-2:0.01:1.4);  % lwp bins, even logarithmic spacing from 0.01 to 25
 
     Nprb = length(PR_BINS);
     Nab  = length(ALB_BINS);
-    Nctb  = length(CT_BINS);
-    Ncfb  = length(CF_BINS);
+    Nctb = length(CT_BINS);
+    Ncfb = length(CF_BINS);
+    Ncd  = length(CD_BINS);
+    Nlwp = length(LWP_BINS);
 
     g = 0.85; % for albedo calc, scattering asymmetry param (cloud droplets interacting with visible light)
 
@@ -85,20 +89,34 @@ function [ ] = GenHistFilesCtype(ConfigFile)
         LWP_VAR = LWP_DS.geovariable(LwpName);
 
         % Output will be of the form (Nb, Nt) where Nb is the number of bins in the histogram
-        PR_HIST        = zeros([ Nprb Nt ]);
+        PR_HIST       = zeros([ Nprb Nt ]);
         PR_STRAT_HIST = zeros([ Nprb Nt ]);
+        PR_SCMIX_HIST = zeros([ Nprb Nt ]);
         PR_CUMUL_HIST = zeros([ Nprb Nt ]);
 
-        CT_HIST        = zeros([ Nctb Nt ]);
+        CT_HIST       = zeros([ Nctb Nt ]);
         CT_STRAT_HIST = zeros([ Nctb Nt ]);
+        CT_SCMIX_HIST = zeros([ Nctb Nt ]);
         CT_CUMUL_HIST = zeros([ Nctb Nt ]);
 
-        CF_HIST        = zeros([ Ncfb Nt ]);
+        CF_HIST       = zeros([ Ncfb Nt ]);
         CF_STRAT_HIST = zeros([ Ncfb Nt ]);
+        CF_SCMIX_HIST = zeros([ Ncfb Nt ]);
         CF_CUMUL_HIST = zeros([ Ncfb Nt ]);
 
-        ALB_HIST        = zeros([ Nab Nt ]);
+        CD_HIST       = zeros([ Ncd Nt ]);
+        CD_STRAT_HIST = zeros([ Ncd Nt ]);
+        CD_SCMIX_HIST = zeros([ Ncd Nt ]);
+        CD_CUMUL_HIST = zeros([ Ncd Nt ]);
+
+        LWP_HIST       = zeros([ Nlwp Nt ]);
+        LWP_STRAT_HIST = zeros([ Nlwp Nt ]);
+        LWP_SCMIX_HIST = zeros([ Nlwp Nt ]);
+        LWP_CUMUL_HIST = zeros([ Nlwp Nt ]);
+
+        ALB_HIST       = zeros([ Nab Nt ]);
         ALB_STRAT_HIST = zeros([ Nab Nt ]);
+        ALB_SCMIX_HIST = zeros([ Nab Nt ]);
         ALB_CUMUL_HIST = zeros([ Nab Nt ]);
 
         % Walk through each time step forming the histogram counts for that time step. These
@@ -118,41 +136,79 @@ function [ ] = GenHistFilesCtype(ConfigFile)
           CF = reshape(CF(2:end-1,2:end-1), [ 1  Ntrim ]);
           LWP = reshape(LWP(2:end-1,2:end-1), [ 1  Ntrim ]);
 
-          % Divide PR and CT into 2 bins according to LWP (mm) and cdepth (m)
-          %    stratiform: 0.01 <= LWP <= 0.20  AND 50 <= CD <= 1500
-          %    cumuliform: LWP > 0.2  OR CD > 1500
-          S_SELECT = (LWP >= 0.01 & LWP <= 0.2 & CD >= 50 & CD <= 1500);
-          C_SELECT = (LWP > 0.2 | CD > 1500);
+          % Form the selection based on precip rate
+          % Exclude 0's
+          %    stratiform: 0.001 <= PR <= 1.0
+          %    mix:        1.0 < PR < 10.0            
+          %    cumuliform: PR >= 10.0
+          %
+          LWP1 = 0.01;
+          LWP2 = 0.10;
+          CD1 = 50;
+          CD2 = 1500;
+          PR1 = 0.001;
+          PR2 = 1.0;
+          PR3 = 10.0;
+
+          S_SELECT = (PR >= PR1 & PR <= PR2);
+          M_SELECT = (PR >  PR2 & PR <  PR3);
+          C_SELECT = (PR >  PR3);
 
           PR_STRAT = PR(S_SELECT);
+          PR_SCMIX = PR(M_SELECT);
           PR_CUMUL = PR(C_SELECT);
 
           CT_STRAT = CT(S_SELECT);
+          CT_SCMIX = CT(M_SELECT);
           CT_CUMUL = CT(C_SELECT);
 
           CF_STRAT = CF(S_SELECT);
+          CF_SCMIX = CF(M_SELECT);
           CF_CUMUL = CF(C_SELECT);
 
+          CD_STRAT = CD(S_SELECT);
+          CD_SCMIX = CD(M_SELECT);
+          CD_CUMUL = CD(C_SELECT);
+
+          LWP_STRAT = LWP(S_SELECT);
+          LWP_SCMIX = LWP(M_SELECT);
+          LWP_CUMUL = LWP(C_SELECT);
+
           % form the histograms
-          PR_HIST(:,i)        = histc(PR, PR_BINS);
+          PR_HIST(:,i)       = histc(PR, PR_BINS);
           PR_STRAT_HIST(:,i) = histc(PR_STRAT, PR_BINS);
+          PR_SCMIX_HIST(:,i) = histc(PR_SCMIX, PR_BINS);
           PR_CUMUL_HIST(:,i) = histc(PR_CUMUL, PR_BINS);
 
-          CT_HIST(:,i)        = histc(CT, CT_BINS);
+          CT_HIST(:,i)       = histc(CT, CT_BINS);
           CT_STRAT_HIST(:,i) = histc(CT_STRAT, CT_BINS);
+          CT_SCMIX_HIST(:,i) = histc(CT_SCMIX, CT_BINS);
           CT_CUMUL_HIST(:,i) = histc(CT_CUMUL, CT_BINS);
 
-          CF_HIST(:,i)        = histc(CF, CF_BINS);
+          CF_HIST(:,i)       = histc(CF, CF_BINS);
           CF_STRAT_HIST(:,i) = histc(CF_STRAT, CF_BINS);
+          CF_SCMIX_HIST(:,i) = histc(CF_SCMIX, CF_BINS);
           CF_CUMUL_HIST(:,i) = histc(CF_CUMUL, CF_BINS);
 
+          CD_HIST(:,i)       = histc(CD, CD_BINS);
+          CD_STRAT_HIST(:,i) = histc(CD_STRAT, CD_BINS);
+          CD_SCMIX_HIST(:,i) = histc(CD_SCMIX, CD_BINS);
+          CD_CUMUL_HIST(:,i) = histc(CD_CUMUL, CD_BINS);
+
+          LWP_HIST(:,i)       = histc(LWP, LWP_BINS);
+          LWP_STRAT_HIST(:,i) = histc(LWP_STRAT, LWP_BINS);
+          LWP_SCMIX_HIST(:,i) = histc(LWP_SCMIX, LWP_BINS);
+          LWP_CUMUL_HIST(:,i) = histc(LWP_CUMUL, LWP_BINS);
+
           % calculate albdeo and form the histograms
-          ALB        = ((1 - g) .* CT) ./ (((1 - g) .* CT) + 2);
+          ALB       = ((1 - g) .* CT      ) ./ (((1 - g) .* CT      ) + 2);
           ALB_STRAT = ((1 - g) .* CT_STRAT) ./ (((1 - g) .* CT_STRAT) + 2);
+          ALB_SCMIX = ((1 - g) .* CT_SCMIX) ./ (((1 - g) .* CT_SCMIX) + 2);
           ALB_CUMUL = ((1 - g) .* CT_CUMUL) ./ (((1 - g) .* CT_CUMUL) + 2);
           
-          ALB_HIST(:,i)        = histc(ALB, ALB_BINS);
+          ALB_HIST(:,i)       = histc(ALB, ALB_BINS);
           ALB_STRAT_HIST(:,i) = histc(ALB_STRAT, ALB_BINS);
+          ALB_SCMIX_HIST(:,i) = histc(ALB_SCMIX, ALB_BINS);
           ALB_CUMUL_HIST(:,i) = histc(ALB_CUMUL, ALB_BINS);
         end
  
@@ -161,25 +217,41 @@ function [ ] = GenHistFilesCtype(ConfigFile)
         OutFile = sprintf('%s/hist_data_ctype_%s.h5', Ddir, Case);
         fprintf('Writing: %s\n', OutFile);
 
-        hdf5write(OutFile, '/pcprr_bins',        PR_BINS);
-        hdf5write(OutFile, '/pcprr_hist',        PR_HIST,        'WriteMode', 'append');
+        hdf5write(OutFile, '/pcprr_bins',       PR_BINS);
+        hdf5write(OutFile, '/pcprr_hist',       PR_HIST,       'WriteMode', 'append');
         hdf5write(OutFile, '/pcprr_strat_hist', PR_STRAT_HIST, 'WriteMode', 'append');
+        hdf5write(OutFile, '/pcprr_scmix_hist', PR_SCMIX_HIST, 'WriteMode', 'append');
         hdf5write(OutFile, '/pcprr_cumul_hist', PR_CUMUL_HIST, 'WriteMode', 'append');
 
-        hdf5write(OutFile, '/cot_bins',        CT_BINS,        'WriteMode', 'append');
-        hdf5write(OutFile, '/cot_hist',        CT_HIST,        'WriteMode', 'append');
+        hdf5write(OutFile, '/cot_bins',       CT_BINS,       'WriteMode', 'append');
+        hdf5write(OutFile, '/cot_hist',       CT_HIST,       'WriteMode', 'append');
         hdf5write(OutFile, '/cot_strat_hist', CT_STRAT_HIST, 'WriteMode', 'append');
+        hdf5write(OutFile, '/cot_scmix_hist', CT_SCMIX_HIST, 'WriteMode', 'append');
         hdf5write(OutFile, '/cot_cumul_hist', CT_CUMUL_HIST, 'WriteMode', 'append');
 
-        hdf5write(OutFile, '/cf_bins',        CF_BINS,        'WriteMode', 'append');
-        hdf5write(OutFile, '/cf_hist',        CF_HIST,        'WriteMode', 'append');
+        hdf5write(OutFile, '/cf_bins',       CF_BINS,       'WriteMode', 'append');
+        hdf5write(OutFile, '/cf_hist',       CF_HIST,       'WriteMode', 'append');
         hdf5write(OutFile, '/cf_strat_hist', CF_STRAT_HIST, 'WriteMode', 'append');
+        hdf5write(OutFile, '/cf_scmix_hist', CF_SCMIX_HIST, 'WriteMode', 'append');
         hdf5write(OutFile, '/cf_cumul_hist', CF_CUMUL_HIST, 'WriteMode', 'append');
 
-        hdf5write(OutFile, '/albedo_bins',        ALB_BINS,        'WriteMode', 'append');
-        hdf5write(OutFile, '/albedo_hist',        ALB_HIST,        'WriteMode', 'append');
+        hdf5write(OutFile, '/cd_bins',       CD_BINS,       'WriteMode', 'append');
+        hdf5write(OutFile, '/cd_hist',       CD_HIST,       'WriteMode', 'append');
+        hdf5write(OutFile, '/cd_strat_hist', CD_STRAT_HIST, 'WriteMode', 'append');
+        hdf5write(OutFile, '/cd_scmix_hist', CD_SCMIX_HIST, 'WriteMode', 'append');
+        hdf5write(OutFile, '/cd_cumul_hist', CD_CUMUL_HIST, 'WriteMode', 'append');
+
+        hdf5write(OutFile, '/albedo_bins',       ALB_BINS,       'WriteMode', 'append');
+        hdf5write(OutFile, '/albedo_hist',       ALB_HIST,       'WriteMode', 'append');
         hdf5write(OutFile, '/albedo_strat_hist', ALB_STRAT_HIST, 'WriteMode', 'append');
+        hdf5write(OutFile, '/albedo_scmix_hist', ALB_SCMIX_HIST, 'WriteMode', 'append');
         hdf5write(OutFile, '/albedo_cumul_hist', ALB_CUMUL_HIST, 'WriteMode', 'append');
+
+        hdf5write(OutFile, '/lwp_bins',       LWP_BINS,       'WriteMode', 'append');
+        hdf5write(OutFile, '/lwp_hist',       LWP_HIST,       'WriteMode', 'append');
+        hdf5write(OutFile, '/lwp_strat_hist', LWP_STRAT_HIST, 'WriteMode', 'append');
+        hdf5write(OutFile, '/lwp_scmix_hist', LWP_SCMIX_HIST, 'WriteMode', 'append');
+        hdf5write(OutFile, '/lwp_cumul_hist', LWP_CUMUL_HIST, 'WriteMode', 'append');
 
         hdf5write(OutFile, 't_coords', T, 'WriteMode', 'append');
         fprintf('\n');
