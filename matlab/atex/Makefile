@@ -14,6 +14,7 @@ SCRIPTS = $(DEST)/ExtractSample.m \
           $(DEST)/GenCloudStructPlots.m \
           $(DEST)/GenDistPlots.m \
           $(DEST)/GenDropSizeDists.m \
+          $(DEST)/GenDomAvgCtypeTseries.m \
           $(DEST)/GenHfracCloud.m \
           $(DEST)/GenHdaTseriesFiles.m \
           $(DEST)/GenBarGraphData.m \
