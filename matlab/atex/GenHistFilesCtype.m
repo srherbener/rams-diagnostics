@@ -23,11 +23,11 @@ function [ ] = GenHistFilesCtype(ConfigFile)
     CmName = 'cloud_mask';     % 1 for cloudy column, 0 for clear column
     CmFprefix = 'cloud_mask';
 
-    PR_BINS = 10.^(-5:0.02:2); % pcprr bins, even logarithmic spacing from 1e-5 to 100.0
-    ALB_BINS = 0:0.01:1; % albedo bins
-    CT_BINS = 0:300;  % cloud optical thickness bins
-    CD_BINS = 0:100:4000;  % cloud depth bins
-    LWP_BINS = 10.^(-4:0.02:1.4);  % lwp bins, even logarithmic spacing from 1e-4 to ~25
+    PR_BINS = 10.^(-5:0.02:2);    % pcprr bins, even log spacing from 1e-5 to 100.0
+    ALB_BINS = 0:0.01:1;          % albedo bins
+    CT_BINS = 10.^(-4:0.02:2.6);  % cloud optical thickness bins, even log spacing from 1e-4 to ~400
+    CD_BINS = 0:100:4000;         % cloud depth bins
+    LWP_BINS = 10.^(-4:0.02:1.4); % lwp bins, even log spacing from 1e-4 to ~25
 
     Nprb = length(PR_BINS);
     Nab  = length(ALB_BINS);
