@@ -11,10 +11,10 @@ function [ ] = GenAvgFilesCtype(ConfigFile)
   FileHeader = 'ATEX PDF data';
 
   VarSets = {
-    { 'hda_pcprr'           { 'pcprr'  'pcprr_strat'  'pcprr_scmix'  'pcprr_cumul'  } 1 2 'avg_ctype_pcprr'  }
-    { 'hda_cloud_opt_thick' { 'cot'    'cot_strat'    'cot_scmix'    'cot_cumul'    } 1 2 'avg_ctype_cot'    }
-    { 'hda_cloud_depth'     { 'cdepth' 'cdepth_strat' 'cdepth_scmix' 'cdepth_cumul' } 1 2 'avg_ctype_cdepth' }
-    { 'hda_vint_cond'       { 'lwp'    'lwp_strat'    'lwp_scmix'    'lwp_cumul'    } 1 2 'avg_ctype_lwp'    }
+    { 'hda_pcprr'           { 'pcprr'  'pcprr_strat'  'pcprr_scmix'  'pcprr_cumul'  } 'avg_ctype_pcprr'  }
+    { 'hda_cloud_opt_thick' { 'cot'    'cot_strat'    'cot_scmix'    'cot_cumul'    } 'avg_ctype_cot'    }
+    { 'hda_cloud_depth'     { 'cdepth' 'cdepth_strat' 'cdepth_scmix' 'cdepth_cumul' } 'avg_ctype_cdepth' }
+    { 'hda_vint_cond'       { 'lwp'    'lwp_strat'    'lwp_scmix'    'lwp_cumul'    } 'avg_ctype_lwp'    }
     };
   Nset = length(VarSets);
 
@@ -36,9 +36,7 @@ function [ ] = GenAvgFilesCtype(ConfigFile)
     for iset = 1:Nset
       InVarName   = VarSets{iset}{1};
       OutVarList  = VarSets{iset}{2};
-      SumInd      = VarSets{iset}{3};
-      NptsInd     = VarSets{iset}{4};
-      OutFprefix  = VarSets{iset}{5};
+      OutFprefix  = VarSets{iset}{3};
 
       fprintf('    Input files:\n');
 
@@ -55,7 +53,8 @@ function [ ] = GenAvgFilesCtype(ConfigFile)
         InFile = sprintf('%s/hda_%s_%s.h5', Tdir, OutVarName , Case);
         fprintf('      %s --> %s\n', InFile, InVarName);
 
-        % grab the t coordinates, use these for combinations
+        % grab the hda data and the t coordinates
+        HDA  = squeeze(hdf5read(InFile, InVarName));
         T = squeeze(hdf5read(InFile, 't_coords'))/3600; % hours
 
         OutAvgName  = sprintf('%s_avg', OutVarName);
@@ -69,14 +68,8 @@ function [ ] = GenAvgFilesCtype(ConfigFile)
           T1 = find(T >= Tstart, 1, 'first');
           T2 = find(T <= Tend,   1, 'last');
 
-          % sum up bins across selected times, and convert counts to PDF
-          % VAR will be organized as (2,t) where the first dimension denotes
-          % sums and npts, and t is time
-          VAR  = squeeze(hdf5read(InFile, InVarName));
-          SUM  = squeeze(sum(VAR(SumInd,T1:T2)));
-          NPTS = squeeze(sum(VAR(NptsInd,T1:T2)));
-
-          AVG = SUM ./ NPTS;
+          % sum up bins across selected times, and convert HDA counts to an average
+          [ AVG NPTS ] = CountsToAvg(HDA, T1, T2);
 
           % With the data selection it is possible to get no data points selected (all counts
           % equal to zero in hda file). When this happens, get nans in Avg since the sum
@@ -97,6 +90,8 @@ function [ ] = GenAvgFilesCtype(ConfigFile)
       Ydummy = 1;
       Zdummy = 1;
       Tdummy = 1;
+
+      fprintf('    Writing: %s\n', OutFile);
 
       hdf5write(OutFile, '/x_coords', Xdummy, 'WriteMode', 'append');
       hdf5write(OutFile, '/y_coords', Ydummy, 'WriteMode', 'append');

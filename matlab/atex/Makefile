@@ -20,6 +20,7 @@ SCRIPTS = $(DEST)/ExtractSample.m \
           $(DEST)/GenHdaTseriesFiles.m \
           $(DEST)/GenBarGraphData.m \
           $(DEST)/GenBarGraphFilesCtype.m \
+          $(DEST)/GenBarGraphsCtype.m \
           $(DEST)/GenMomentData.m \
           $(DEST)/GenProfileData.m \
           $(DEST)/GenHistData.m \

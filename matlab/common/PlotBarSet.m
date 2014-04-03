@@ -1,4 +1,4 @@
-function [ ] = PlotBarSet( X, Y, Ptitle, Pmarkers, Xlabel, Ylabel, Bcolors, LegText, LegLoc, AxisProps, OutFile )
+function [ ] = PlotBarSet( X, Y, Ptitle, Pmarker, Xlabel, Ylabel, Bcolors, Pstyle, LegText, LegLoc, AxisProps, OutFile )
 %PlotBarSet Plot a set of bar plots on the same panel
 %   This function will take data contained in X and Y and plot them on a
 %   single panel.
@@ -17,12 +17,12 @@ Fig = figure;
 Nprops = length(AxisProps);
 Nplots = size(Y,1);
 
-PanelTitle = ~isempty(Pmarkers);
+PanelTitle = ~isempty(Pmarker);
 if (PanelTitle)
-    Ptitle = sprintf('(%s) %s', Pmarkers{1}, Ptitle);
+    Ptitle = sprintf('(%s) %s', Pmarker, Ptitle);
 end
 
-bgraph = bar(X, Y);
+bgraph = bar(X, Y, Pstyle);
 if (~isempty(Bcolors))
   for i = 1:length(bgraph)
     set(bgraph(i), 'FaceColor', Bcolors{i});

@@ -7,148 +7,114 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
 
     Ddir = Config.DiagDir;
     Tdir = Config.TsavgDir;
-    Hdir = './HDF5';
-
 
     VarSets = {
       { % cloud optical thickness
-        'pdf_ctype_cot'
+        'avg_ctype_cot'
         {
-          'cot_hist_TSTART'
-          'cot_hist_TMID'
-          'cot_hist_TEND'
-          'cot_hist_TALL'
-          'cot_strnp_hist_TSTART'
-          'cot_strnp_hist_TMID'
-          'cot_strnp_hist_TEND'
-          'cot_strnp_hist_TALL'
-          'cot_strat_hist_TSTART'
-          'cot_strat_hist_TMID'
-          'cot_strat_hist_TEND'
-          'cot_strat_hist_TALL'
-          'cot_scmix_hist_TSTART'
-          'cot_scmix_hist_TMID'
-          'cot_scmix_hist_TEND'
-          'cot_scmix_hist_TALL'
-          'cot_cumul_hist_TSTART'
-          'cot_cumul_hist_TMID'
-          'cot_cumul_hist_TEND'
-          'cot_cumul_hist_TALL'
+           'cot_TSTART'
+           'cot_TMID'
+           'cot_TEND'
+           'cot_TALL'
+%           'cot_strnp_TSTART'
+%           'cot_strnp_TMID'
+%           'cot_strnp_TEND'
+%           'cot_strnp_TALL'
+           'cot_strat_TSTART'
+           'cot_strat_TMID'
+           'cot_strat_TEND'
+           'cot_strat_TALL'
+           'cot_scmix_TSTART'
+           'cot_scmix_TMID'
+           'cot_scmix_TEND'
+           'cot_scmix_TALL'
+           'cot_cumul_TSTART'
+           'cot_cumul_TMID'
+           'cot_cumul_TEND'
+           'cot_cumul_TALL'
         }
-        'x_coords'
         'bgraph_cot'
       }
 
-      { % cloud depth 
-        'pdf_ctype_cd'
+      { % cloud depth
+        'avg_ctype_cdepth'
         {
-          'cd_hist_TSTART'
-          'cd_hist_TMID'
-          'cd_hist_TEND'
-          'cd_hist_TALL'
-          'cd_strnp_hist_TSTART'
-          'cd_strnp_hist_TMID'
-          'cd_strnp_hist_TEND'
-          'cd_strnp_hist_TALL'
-          'cd_strat_hist_TSTART'
-          'cd_strat_hist_TMID'
-          'cd_strat_hist_TEND'
-          'cd_strat_hist_TALL'
-          'cd_scmix_hist_TSTART'
-          'cd_scmix_hist_TMID'
-          'cd_scmix_hist_TEND'
-          'cd_scmix_hist_TALL'
-          'cd_cumul_hist_TSTART'
-          'cd_cumul_hist_TMID'
-          'cd_cumul_hist_TEND'
-          'cd_cumul_hist_TALL'
+           'cdepth_TSTART'
+           'cdepth_TMID'
+           'cdepth_TEND'
+           'cdepth_TALL'
+%           'cdepth_strnp_TSTART'
+%           'cdepth_strnp_TMID'
+%           'cdepth_strnp_TEND'
+%           'cdepth_strnp_TALL'
+           'cdepth_strat_TSTART'
+           'cdepth_strat_TMID'
+           'cdepth_strat_TEND'
+           'cdepth_strat_TALL'
+           'cdepth_scmix_TSTART'
+           'cdepth_scmix_TMID'
+           'cdepth_scmix_TEND'
+           'cdepth_scmix_TALL'
+           'cdepth_cumul_TSTART'
+           'cdepth_cumul_TMID'
+           'cdepth_cumul_TEND'
+           'cdepth_cumul_TALL'
         }
-        'x_coords'
-        'bgraph_cd'
+        'bgraph_cdepth'
+      }
+
+      { % liquid water path
+        'avg_ctype_lwp'
+        {
+           'lwp_TSTART'
+           'lwp_TMID'
+           'lwp_TEND'
+           'lwp_TALL'
+%           'lwp_strnp_TSTART'
+%           'lwp_strnp_TMID'
+%           'lwp_strnp_TEND'
+%           'lwp_strnp_TALL'
+           'lwp_strat_TSTART'
+           'lwp_strat_TMID'
+           'lwp_strat_TEND'
+           'lwp_strat_TALL'
+           'lwp_scmix_TSTART'
+           'lwp_scmix_TMID'
+           'lwp_scmix_TEND'
+           'lwp_scmix_TALL'
+           'lwp_cumul_TSTART'
+           'lwp_cumul_TMID'
+           'lwp_cumul_TEND'
+           'lwp_cumul_TALL'
+        }
+        'bgraph_lwp'
       }
 
       { % precip rate
-        'pdf_ctype_pcprr'
+        'avg_ctype_pcprr'
         {
-          'pcprr_hist_TSTART'
-          'pcprr_hist_TMID'
-          'pcprr_hist_TEND'
-          'pcprr_hist_TALL'
-          'pcprr_strnp_hist_TSTART'
-          'pcprr_strnp_hist_TMID'
-          'pcprr_strnp_hist_TEND'
-          'pcprr_strnp_hist_TALL'
-          'pcprr_strat_hist_TSTART'
-          'pcprr_strat_hist_TMID'
-          'pcprr_strat_hist_TEND'
-          'pcprr_strat_hist_TALL'
-          'pcprr_scmix_hist_TSTART'
-          'pcprr_scmix_hist_TMID'
-          'pcprr_scmix_hist_TEND'
-          'pcprr_scmix_hist_TALL'
-          'pcprr_cumul_hist_TSTART'
-          'pcprr_cumul_hist_TMID'
-          'pcprr_cumul_hist_TEND'
-          'pcprr_cumul_hist_TALL'
+           'pcprr_TSTART'
+           'pcprr_TMID'
+           'pcprr_TEND'
+           'pcprr_TALL'
+%           'pcprr_strnp_TSTART'
+%           'pcprr_strnp_TMID'
+%           'pcprr_strnp_TEND'
+%           'pcprr_strnp_TALL'
+           'pcprr_strat_TSTART'
+           'pcprr_strat_TMID'
+           'pcprr_strat_TEND'
+           'pcprr_strat_TALL'
+           'pcprr_scmix_TSTART'
+           'pcprr_scmix_TMID'
+           'pcprr_scmix_TEND'
+           'pcprr_scmix_TALL'
+           'pcprr_cumul_TSTART'
+           'pcprr_cumul_TMID'
+           'pcprr_cumul_TEND'
+           'pcprr_cumul_TALL'
         }
-        'x_coords'
         'bgraph_pcprr'
-      }
-
-      { % albedo
-        'pdf_ctype_albedo'
-        {
-          'albedo_hist_TSTART'
-          'albedo_hist_TMID'
-          'albedo_hist_TEND'
-          'albedo_hist_TALL'
-          'albedo_strnp_hist_TSTART'
-          'albedo_strnp_hist_TMID'
-          'albedo_strnp_hist_TEND'
-          'albedo_strnp_hist_TALL'
-          'albedo_strat_hist_TSTART'
-          'albedo_strat_hist_TMID'
-          'albedo_strat_hist_TEND'
-          'albedo_strat_hist_TALL'
-          'albedo_scmix_hist_TSTART'
-          'albedo_scmix_hist_TMID'
-          'albedo_scmix_hist_TEND'
-          'albedo_scmix_hist_TALL'
-          'albedo_cumul_hist_TSTART'
-          'albedo_cumul_hist_TMID'
-          'albedo_cumul_hist_TEND'
-          'albedo_cumul_hist_TALL'
-        }
-        'x_coords'
-        'bgraph_albedo'
-      }
-
-      { % lwp
-        'pdf_ctype_lwp'
-        {
-          'lwp_hist_TSTART'
-          'lwp_hist_TMID'
-          'lwp_hist_TEND'
-          'lwp_hist_TALL'
-          'lwp_strnp_hist_TSTART'
-          'lwp_strnp_hist_TMID'
-          'lwp_strnp_hist_TEND'
-          'lwp_strnp_hist_TALL'
-          'lwp_strat_hist_TSTART'
-          'lwp_strat_hist_TMID'
-          'lwp_strat_hist_TEND'
-          'lwp_strat_hist_TALL'
-          'lwp_scmix_hist_TSTART'
-          'lwp_scmix_hist_TMID'
-          'lwp_scmix_hist_TEND'
-          'lwp_scmix_hist_TALL'
-          'lwp_cumul_hist_TSTART'
-          'lwp_cumul_hist_TMID'
-          'lwp_cumul_hist_TEND'
-          'lwp_cumul_hist_TALL'
-        }
-        'x_coords'
-        'bgraph_lwp'
       }
 
       };
@@ -166,7 +132,7 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
     SstVals  = [     293      298      303  ];
     Nsst = length(SstNames);
 
-    % Organize data from set of files into a 3D array with dimensions
+    % Organize data from set of files into a 4D array with dimensions
     %   dim 1 -> Var 
     %   dim 2 -> SST
     %   dim 3 -> CCN
@@ -177,18 +143,24 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
     for ivset = 1:length(VarSets)
       InFprefix  = VarSets{ivset}{1};
       VarList    = VarSets{ivset}{2};
-      BinVname   = VarSets{ivset}{3};
-      OutFprefix = VarSets{ivset}{4};
+      OutFprefix = VarSets{ivset}{3};
 
       Nvars = length(VarList);
       OutFile = sprintf('%s/%s.h5', Ddir, OutFprefix);
+
+      % Form the HDF5 variable names by inserting "_avg" and "_npts" into
+      % the names in VarList
+      for ivar = 1:Nvars
+        AvgVarList{ivar}  = regexprep(VarList{ivar}, '_T', '_avg_T');
+        NptsVarList{ivar} = regexprep(VarList{ivar}, '_T', '_npts_T');
+      end
 
       fprintf('*************************************************************************\n');
       fprintf('Generating bar graph data:\n');
       fprintf('  Variables:\n');
       fprintf('\n');
       for ivar = 1:Nvars
-        fprintf('    %s\n', VarList{ivar});
+        fprintf('    %s --> %s, %s\n', VarList{ivar}, AvgVarList{ivar}, NptsVarList{ivar});
       end
       fprintf('\n');
       fprintf('  Input files:\n');
@@ -205,20 +177,15 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
 
               % use the histogram counts and bin values to calculate an average
               % then place the average into the output array
-              BINS = squeeze(hdf5read(InFile, BinVname));
               for ivar = 1:Nvars
-                Vname = VarList{ivar};
-                HIST = squeeze(hdf5read(InFile, Vname));
+                AVG = squeeze(hdf5read(InFile, AvgVarList{ivar}));
+                OutNpts(ivar,isst,iccn,igccn) = squeeze(hdf5read(InFile, NptsVarList{ivar}));
 
-                N = sum(HIST);
-                S = sum(HIST .* BINS);
-                if (N == 0)
+                if (isnan(AVG))
                   OutAvgs(ivar,isst,iccn,igccn) = 0;
                 else
-                  OutAvgs(ivar,isst,iccn,igccn) = S / N;
+                  OutAvgs(ivar,isst,iccn,igccn) = AVG;
                 end
-
-                OutNpts(ivar,isst,iccn,igccn) = N;
               end
             end
           end
@@ -232,7 +199,7 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
       hdf5write(OutFile, 'Averages', OutAvgs);
       hdf5write(OutFile, 'Npoints',  OutNpts,  'WriteMode', 'append');
 
-      hdf5write(OutFile, 'VarNames', VarList,  'WriteMode', 'append');
+      hdf5write(OutFile, 'VarNames', VarList,   'WriteMode', 'append');
       hdf5write(OutFile, 'SST',      SstVals,  'WriteMode', 'append');
       hdf5write(OutFile, 'CCN',      CcnVals,  'WriteMode', 'append');
       hdf5write(OutFile, 'GCCN',     GccnVals, 'WriteMode', 'append');
