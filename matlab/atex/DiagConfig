@@ -116,25 +116,25 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 ########### For Update/Paper #############
 
 ### Precip rate, histogram
-LinePlot: CO_UP_S293_G10M5_ALL PrateHistBins PrateHist_TALL      Prate      PrateHist_293      PrateHistSelect none PANEL:a@293K NorthEast none PrateHist_TALL_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL PrateHistBins PrateHist_TALL      Prate      PrateHist_298      PrateHistSelect none PANEL:a@298K NorthEast none PrateHist_TALL_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL PrateHistBins PrateHist_TALL      Prate      PrateHist_303      PrateHistSelect none PANEL:a@303K NorthEast none PrateHist_TALL_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL PrateHistBins PrateHist_TALL      Prate      PrateHist_293      PrateHistSelect none PANEL:a@293K NorthEast none PrateHist_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL PrateHistBins PrateHist_TALL      Prate      PrateHist_298      PrateHistSelect none PANEL:a@298K NorthEast none PrateHist_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL PrateHistBins PrateHist_TALL      Prate      PrateHist_303      PrateHistSelect none PANEL:a@303K NorthEast none PrateHist_TALL_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL PrateHistBins PrateStrnpHist_TALL PrateStrnp PrateStrnpHist_293 PrateHistSelect none PANEL:a@293K NorthWest none PrateStrnpHist_TALL_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL PrateHistBins PrateStrnpHist_TALL PrateStrnp PrateStrnpHist_298 PrateHistSelect none PANEL:a@298K NorthWest none PrateStrnpHist_TALL_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL PrateHistBins PrateStrnpHist_TALL PrateStrnp PrateStrnpHist_303 PrateHistSelect none PANEL:a@303K NorthWest none PrateStrnpHist_TALL_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL PrateHistBins PrateStrnpHist_TALL PrateStrnp PrateStrnpHist_293 PrateHistSelect none PANEL:a@293K NorthWest none PrateStrnpHist_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL PrateHistBins PrateStrnpHist_TALL PrateStrnp PrateStrnpHist_298 PrateHistSelect none PANEL:a@298K NorthWest none PrateStrnpHist_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL PrateHistBins PrateStrnpHist_TALL PrateStrnp PrateStrnpHist_303 PrateHistSelect none PANEL:a@303K NorthWest none PrateStrnpHist_TALL_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL PrateHistBins PrateStratHist_TALL PrateStrat PrateStratHist_293 PrateHistSelect none PANEL:a@293K NorthEast none PrateStratHist_TALL_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL PrateHistBins PrateStratHist_TALL PrateStrat PrateStratHist_298 PrateHistSelect none PANEL:a@298K NorthEast none PrateStratHist_TALL_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL PrateHistBins PrateStratHist_TALL PrateStrat PrateStratHist_303 PrateHistSelect none PANEL:a@303K NorthEast none PrateStratHist_TALL_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL PrateHistBins PrateStratHist_TALL PrateStrat PrateStratHist_293 PrateHistSelect none PANEL:a@293K NorthEast none PrateStratHist_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL PrateHistBins PrateStratHist_TALL PrateStrat PrateStratHist_298 PrateHistSelect none PANEL:a@298K NorthEast none PrateStratHist_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL PrateHistBins PrateStratHist_TALL PrateStrat PrateStratHist_303 PrateHistSelect none PANEL:a@303K NorthEast none PrateStratHist_TALL_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL PrateHistBins PrateScmixHist_TALL PrateScmix PrateScmixHist_293 PrateHistSelect none PANEL:a@293K NorthEast none PrateScmixHist_TALL_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL PrateHistBins PrateScmixHist_TALL PrateScmix PrateScmixHist_298 PrateHistSelect none PANEL:a@298K NorthEast none PrateScmixHist_TALL_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL PrateHistBins PrateScmixHist_TALL PrateScmix PrateScmixHist_303 PrateHistSelect none PANEL:a@303K NorthEast none PrateScmixHist_TALL_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL PrateHistBins PrateScmixHist_TALL PrateScmix PrateScmixHist_293 PrateHistSelect none PANEL:a@293K NorthEast none PrateScmixHist_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL PrateHistBins PrateScmixHist_TALL PrateScmix PrateScmixHist_298 PrateHistSelect none PANEL:a@298K NorthEast none PrateScmixHist_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL PrateHistBins PrateScmixHist_TALL PrateScmix PrateScmixHist_303 PrateHistSelect none PANEL:a@303K NorthEast none PrateScmixHist_TALL_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL PrateHistBins PrateCumulHist_TALL PrateCumul PrateCumulHist_293 PrateHistSelect none PANEL:a@293K NorthEast none PrateCumulHist_TALL_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL PrateHistBins PrateCumulHist_TALL PrateCumul PrateCumulHist_298 PrateHistSelect none PANEL:a@298K NorthEast none PrateCumulHist_TALL_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL PrateHistBins PrateCumulHist_TALL PrateCumul PrateCumulHist_303 PrateHistSelect none PANEL:a@303K NorthEast none PrateCumulHist_TALL_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL PrateHistBins PrateCumulHist_TALL PrateCumul PrateCumulHist_293 PrateHistSelect none PANEL:a@293K NorthEast none PrateCumulHist_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL PrateHistBins PrateCumulHist_TALL PrateCumul PrateCumulHist_298 PrateHistSelect none PANEL:a@298K NorthEast none PrateCumulHist_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL PrateHistBins PrateCumulHist_TALL PrateCumul PrateCumulHist_303 PrateHistSelect none PANEL:a@303K NorthEast none PrateCumulHist_TALL_CO_S303_G10M5_ALL.jpg
 
 ### Cloud optical thickness, histogram
 #LinePlot: CO_UP_S293_G10M5_ALL CotHistBins CotHist_TALL      CotLog     CotHist_293      CotHistSelect none PANEL:a@293K NorthEast none CotHist_TALL_CO_S293_G10M5_ALL.jpg
@@ -177,6 +177,27 @@ LinePlot: CO_UP_S303_G10M5_ALL PrateHistBins PrateCumulHist_TALL PrateCumul Prat
 #LinePlot: CO_UP_S293_G10M5_ALL LwpHistBins LwpCumulHist_TALL LwpLog     LwpCumulHist_293 LwpHistSelect none PANEL:a@293K NorthWest none LwpCumulHist_TALL_CO_S293_G10M5_ALL.jpg
 #LinePlot: CO_UP_S298_G10M5_ALL LwpHistBins LwpCumulHist_TALL LwpLog     LwpCumulHist_298 LwpHistSelect none PANEL:a@298K NorthWest none LwpCumulHist_TALL_CO_S298_G10M5_ALL.jpg
 #LinePlot: CO_UP_S303_G10M5_ALL LwpHistBins LwpCumulHist_TALL LwpLog     LwpCumulHist_303 LwpHistSelect none PANEL:a@303K NorthWest none LwpCumulHist_TALL_CO_S303_G10M5_ALL.jpg
+
+### Cloud depth, histogram
+#LinePlot: CO_UP_S293_G10M5_ALL CdepthHistBins CdepthHist_TALL      CdepthLin     CdepthHist_293      CdepthHistSelect none PANEL:a@293K NorthEast none CdepthHist_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CdepthHistBins CdepthHist_TALL      CdepthLin     CdepthHist_298      CdepthHistSelect none PANEL:a@298K NorthEast none CdepthHist_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CdepthHistBins CdepthHist_TALL      CdepthLin     CdepthHist_303      CdepthHistSelect none PANEL:a@303K NorthEast none CdepthHist_TALL_CO_S303_G10M5_ALL.jpg
+
+#LinePlot: CO_UP_S293_G10M5_ALL CdepthHistBins CdepthStrnpHist_TALL CdepthLin     CdepthStrnpHist_293 CdepthHistSelect none PANEL:a@293K NorthEast none CdepthStrnpHist_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CdepthHistBins CdepthStrnpHist_TALL CdepthLin     CdepthStrnpHist_298 CdepthHistSelect none PANEL:a@298K NorthEast none CdepthStrnpHist_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CdepthHistBins CdepthStrnpHist_TALL CdepthLin     CdepthStrnpHist_303 CdepthHistSelect none PANEL:a@303K NorthEast none CdepthStrnpHist_TALL_CO_S303_G10M5_ALL.jpg
+
+#LinePlot: CO_UP_S293_G10M5_ALL CdepthHistBins CdepthStratHist_TALL CdepthLin     CdepthStratHist_293 CdepthHistSelect none PANEL:a@293K NorthEast none CdepthStratHist_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CdepthHistBins CdepthStratHist_TALL CdepthLin     CdepthStratHist_298 CdepthHistSelect none PANEL:a@298K NorthEast none CdepthStratHist_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CdepthHistBins CdepthStratHist_TALL CdepthLin     CdepthStratHist_303 CdepthHistSelect none PANEL:a@303K NorthEast none CdepthStratHist_TALL_CO_S303_G10M5_ALL.jpg
+
+#LinePlot: CO_UP_S293_G10M5_ALL CdepthHistBins CdepthScmixHist_TALL CdepthLin     CdepthScmixHist_293 CdepthHistSelect none PANEL:a@293K NorthEast none CdepthScmixHist_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CdepthHistBins CdepthScmixHist_TALL CdepthLin     CdepthScmixHist_298 CdepthHistSelect none PANEL:a@298K NorthEast none CdepthScmixHist_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CdepthHistBins CdepthScmixHist_TALL CdepthLin     CdepthScmixHist_303 CdepthHistSelect none PANEL:a@303K NorthEast none CdepthScmixHist_TALL_CO_S303_G10M5_ALL.jpg
+
+#LinePlot: CO_UP_S293_G10M5_ALL CdepthHistBins CdepthCumulHist_TALL CdepthLin     CdepthCumulHist_293 CdepthHistSelect none PANEL:a@293K NorthEast none CdepthCumulHist_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CdepthHistBins CdepthCumulHist_TALL CdepthLin     CdepthCumulHist_298 CdepthHistSelect none PANEL:a@298K NorthEast none CdepthCumulHist_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CdepthHistBins CdepthCumulHist_TALL CdepthLin     CdepthCumulHist_303 CdepthHistSelect none PANEL:a@303K NorthEast none CdepthCumulHist_TALL_CO_S303_G10M5_ALL.jpg
 
 
 ### Cloud optical thickness, PDF
@@ -3066,6 +3087,13 @@ PlotVar: LwpScmixHist_TALL    lwp_scmix_hist_TALL    DIAGS/pdf_ctype_lwp   Count
 PlotVar: LwpCumulHist_TALL    lwp_cumul_hist_TALL    DIAGS/pdf_ctype_lwp   Count   x10^3  1e-3
 PlotVar: LwpHistBins          x_coords               DIAGS/pdf_ctype_lwp   LWP        mm  1
 
+PlotVar: CdepthHist_TALL         cd_hist_TALL          DIAGS/pdf_ctype_cd   Count  @ 1 #      x10^6  1e-6
+PlotVar: CdepthStrnpHist_TALL    cd_strnp_hist_TALL    DIAGS/pdf_ctype_cd   Count  @ 1 #      x10^4  1e-4
+PlotVar: CdepthStratHist_TALL    cd_strat_hist_TALL    DIAGS/pdf_ctype_cd   Count  @ 1 #      x10^6  1e-6
+PlotVar: CdepthScmixHist_TALL    cd_scmix_hist_TALL    DIAGS/pdf_ctype_cd   Count  @ 1 #      x10^4  1e-4
+PlotVar: CdepthCumulHist_TALL    cd_cumul_hist_TALL    DIAGS/pdf_ctype_cd   Count  @ 1 #      x10^3  1e-3
+PlotVar: CdepthHistBins          x_coords              DIAGS/pdf_ctype_cd   Cloud@Depth      m  1
+
 ############## PDF ########################
 PlotVar: CotPdf_TALL        cot_pdf_TALL        DIAGS/pdf_ctype_cot   @        @ 1
 PlotVar: CotStratPdf_TALL   cot_strat_pdf_TALL  DIAGS/pdf_ctype_cot   @        @ 1
@@ -3779,6 +3807,9 @@ PlotAxis: Lwp_293         0   2 linear
 PlotAxis: Lwp_298         0  12 linear
 PlotAxis: Lwp_303         0  20 linear
 
+PlotAxis: CdepthLog     100  4000 log
+PlotAxis: CdepthLin       0  4000 linear
+
 PlotAxis: ThetaWe_293    -0.50 0.50 linear
 PlotAxis: ThetaWe_298    -2.00 2.00 linear
 PlotAxis: ThetaWe_303    -6.00 6.00 linear
@@ -3828,6 +3859,22 @@ PlotAxis: LwpScmixHist_303     0    3.5 linear
 PlotAxis: LwpCumulHist_293     0    0.1 linear
 PlotAxis: LwpCumulHist_298     0    2.5 linear
 PlotAxis: LwpCumulHist_303     0      4 linear
+
+PlotAxis: CdepthHist_293         1e2    1e8 log
+PlotAxis: CdepthHist_298         1e2    1e8 log
+PlotAxis: CdepthHist_303         1e2    1e8 log
+PlotAxis: CdepthStrnpHist_293    1e0    1e6 log
+PlotAxis: CdepthStrnpHist_298    1e0    1e6 log
+PlotAxis: CdepthStrnpHist_303    1e0    1e6 log
+PlotAxis: CdepthStratHist_293    1e2    1e8 log
+PlotAxis: CdepthStratHist_298    1e2    1e8 log
+PlotAxis: CdepthStratHist_303    1e2    1e8 log
+PlotAxis: CdepthScmixHist_293    1e0    1e6 log
+PlotAxis: CdepthScmixHist_298    1e0    1e6 log
+PlotAxis: CdepthScmixHist_303    1e0    1e6 log
+PlotAxis: CdepthCumulHist_293    1e0    1e6 log
+PlotAxis: CdepthCumulHist_298    1e0    1e6 log
+PlotAxis: CdepthCumulHist_303    1e0    1e6 log
 
 PlotAxis: CotHist_293         0      6 linear
 PlotAxis: CotHist_298         0      3 linear
@@ -3887,3 +3934,4 @@ PlotDselect: LwpPdfSelect     0   20 1 1 1 1 1 1
 PlotDselect: CotHistSelect     0  300 1 1 1 1 1 1
 PlotDselect: PrateHistSelect   0  100 1 1 1 1 1 1
 PlotDselect: LwpHistSelect     0   20 1 1 1 1 1 1
+PlotDselect: CdepthHistSelect  0 4000 1 1 1 1 1 1

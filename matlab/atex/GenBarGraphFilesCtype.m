@@ -117,6 +117,19 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
         'bgraph_pcprr'
       }
 
+      { % cloud fraction
+        'avg_ctype_cfrac'
+        {
+           'cfrac_TSTART'
+           'cfrac_TMID'
+           'cfrac_TEND'
+           'cfrac_TALL'
+           % any selection by cloud type will just
+           % create CF = 1.0 for all cases
+        }
+        'bgraph_cfrac'
+      }
+
       };
     Nvarsets = length(VarSets);
 

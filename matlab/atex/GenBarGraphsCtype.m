@@ -122,6 +122,20 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'bars_avg_cdepth_TALL_CO.jpg'
        }
 
+       % Cloud fraction averages, all time points, CCN only
+       {
+       'Cloud Fraction Avg TALL CCN only, grouped by SST'
+       'bgraph_cfrac.h5'
+       { 'a' 'All Points' }
+       'N_a (# cm^-^3)'
+       'Cloud Fraction'
+       { 'blue' 'cyan' 'magenta' }
+       { { '293 K', '298 K', '303 K' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [4] [1:3] [1:6] [1] } 1 'CCN' 0 1.2 }
+       'bars_avg_cfrac_TALL_CO.jpg'
+       }
+
        % Cloud type, npoints (relative amounts), TALL, CCN only, SST 293
        {
        'Cloud Distribution TALL CCN only, 293K'

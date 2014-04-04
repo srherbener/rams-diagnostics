@@ -15,6 +15,7 @@ function [ ] = GenAvgFilesCtype(ConfigFile)
     { 'hda_cloud_opt_thick' { 'cot'    'cot_strat'    'cot_scmix'    'cot_cumul'    } 'avg_ctype_cot'    }
     { 'hda_cloud_depth'     { 'cdepth' 'cdepth_strat' 'cdepth_scmix' 'cdepth_cumul' } 'avg_ctype_cdepth' }
     { 'hda_vint_cond'       { 'lwp'    'lwp_strat'    'lwp_scmix'    'lwp_cumul'    } 'avg_ctype_lwp'    }
+    { 'hda_cloud_mask'      { 'cfrac'                                               } 'avg_ctype_cfrac'  }
     };
   Nset = length(VarSets);
 
