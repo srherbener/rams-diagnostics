@@ -6,6 +6,8 @@ function [ ] = PlotBarSet( X, Y, Ptitle, Pmarker, Xlabel, Ylabel, Bcolors, Pstyl
 %   Ptitle is a string (or array of strings) holding the title for the
 %   plot.
 %
+%   Bcolors is a cell array (1D) of color names that str2rgb recognizes
+%
 %   AxisProps is a structure contain a list of axis property names and
 %   associated values that are desired to be set.
 %
@@ -25,7 +27,7 @@ end
 bgraph = bar(X, Y, Pstyle);
 if (~isempty(Bcolors))
   for i = 1:length(bgraph)
-    set(bgraph(i), 'FaceColor', Bcolors{i});
+    set(bgraph(i), 'FaceColor', str2rgb(Bcolors{i}));
   end
 end
 

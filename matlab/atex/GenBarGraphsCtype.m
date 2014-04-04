@@ -25,8 +25,11 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
   %  Ylabel
   %  LegSpec --> { LegText LegLoc }
   %  Bcolors
+  %     entries are names that str2rgb recognizes
   %  Pstyle   ('grouped', 'stacked', etc.)
-  %  VarSpec --> { Vname Select Transpose Xname Yname }
+  %  VarSpec --> { InVarName InVarScale Select Transpose Vname Vmin Vmax }
+  %    InVarName is name of dataset inside the HDF5 file
+  %    InVarScale is a scaling factor to be applied to InVarName data
   %    Select has to be such that the result will reduce to a 2D array
   %       use vectors (okay to have 1 element vector) for selection
   %       eg: { [1] [1:3] [ 2 4 6 ] [3] } says to select
@@ -35,6 +38,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
   %    after it is selected down to two dimensions
   %       1 --> transpose
   %       0 --> do not transpose
+  %    Vmin and Vmax are for scaling the y-axis
   %  Output file
   %
   % Need to keep this in sync with GenBarGraphFilesCtype.m
@@ -54,67 +58,112 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
   %    11  _scmix_TEND
   %    12  _scmix_TALL
   %
-  %    13  _scmix_TSTART
-  %    14  _scmix_TMID
-  %    15  _scmix_TEND
-  %    16  _scmix_TALL
+  %    13  _cumul_TSTART
+  %    14  _cumul_TMID
+  %    15  _cumul_TEND
+  %    16  _cumul_TALL
 
+  NptsScaleTALL = 1 / (398 * 398 * 289); % divide by total number of points in domain for TALL group
+                                         %    horiz domain: 398 * 398 points, 289 time steps (12 to 36 h)
   PlotDefs = {
        % COT averages, all time points, CCN only
        {
-       'COT Avg TALL CCN only'
+       'COT Avg TALL CCN only, grouped by SST'
        'bgraph_cot.h5'
        { 'a' 'All Points' }
        'N_a (# cm^-^3)'
        'COT'
-       { [ 0 0 0 ] [ 0 1 1 ] [ 1 0 1 ] }
+       { 'blue' 'cyan' 'magenta' }
        { { '293 K', '298 K', '303 K' } 'NorthWest' }
        'grouped'
-       { 'Averages' { [4] [1:3] [1:6] [1] } 1 'CCN' 'SST' }
+       { 'Averages' 1 { [4] [1:3] [1:6] [1] } 1 'CCN' 0 4.5 }
        'bars_avg_cot_TALL_CO.jpg'
        }
 
        % PR averages, all time points, CCN only
        {
-       'PR Avg TALL CCN only'
+       'PR Avg TALL CCN only, grouped by SST'
        'bgraph_pcprr.h5'
        { 'a' 'All Points' }
        'N_a (# cm^-^3)'
        'Precip Rate (mm h^-^1)'
-       { [ 0 0 0 ] [ 0 1 1 ] [ 1 0 1 ] }
+       { 'blue' 'cyan' 'magenta' }
        { { '293 K', '298 K', '303 K' } 'NorthWest' }
        'grouped'
-       { 'Averages' { [4] [1:3] [1:6] [1] } 1 'CCN' 'SST' }
+       { 'Averages' 1 { [4] [1:3] [1:6] [1] } 1 'CCN' 0 0.12 }
        'bars_avg_pcprr_TALL_CO.jpg'
        }
 
        % LWP averages, all time points, CCN only
        {
-       'LWP Avg TALL CCN only'
+       'LWP Avg TALL CCN only, grouped by SST'
        'bgraph_lwp.h5'
        { 'a' 'All Points' }
        'N_a (# cm^-^3)'
        'LWP (mm)'
-       { [ 0 0 0 ] [ 0 1 1 ] [ 1 0 1 ] }
+       { 'blue' 'cyan' 'magenta' }
        { { '293 K', '298 K', '303 K' } 'NorthWest' }
        'grouped'
-       { 'Averages' { [4] [1:3] [1:6] [1] } 1 'CCN' 'SST' }
+       { 'Averages' 1 { [4] [1:3] [1:6] [1] } 1 'CCN' 0 0.25 }
        'bars_avg_lwp_TALL_CO.jpg'
        }
 
        % Cloud depth averages, all time points, CCN only
        {
-       'Cloud Depth Avg TALL CCN only'
+       'Cloud Depth Avg TALL CCN only, grouped by SST'
        'bgraph_cdepth.h5'
        { 'a' 'All Points' }
        'N_a (# cm^-^3)'
        'Cloud Depth (m)'
-       { [ 0 0 0 ] [ 0 1 1 ] [ 1 0 1 ] }
+       { 'blue' 'cyan' 'magenta' }
        { { '293 K', '298 K', '303 K' } 'NorthWest' }
        'grouped'
-       { 'Averages' { [4] [1:3] [1:6] [1] } 1 'CCN' 'SST' }
+       { 'Averages' 1 { [4] [1:3] [1:6] [1] } 1 'CCN' 0 900 }
        'bars_avg_cdepth_TALL_CO.jpg'
        }
+
+       % Cloud type, npoints (relative amounts), TALL, CCN only, SST 293
+       {
+       'Cloud Distribution TALL CCN only, 293K'
+       'bgraph_pcprr.h5'
+       { 'a' 'All Points, S293' }
+       'N_a (# cm^-^3)'
+       'Cloud Distribution (%)'
+       { 'blue' 'cyan' 'magenta' 'white' }
+       { { 'St', 'St-Cu', 'Cu' 'Clear' } 'NorthWest' }
+       'stacked'
+       { 'Npoints' NptsScaleTALL*100 { [8 12 16] [1] [1:6] [1] } 1 'CCN' 0 120 }
+       'bars_avg_ctype_TALL_CO_S293.jpg'
+       }
+
+       % Cloud type, npoints (relative amounts), TALL, CCN only, SST 298
+       {
+       'Cloud Distribution TALL CCN only, 293K'
+       'bgraph_pcprr.h5'
+       { 'a' 'All Points, S298' }
+       'N_a (# cm^-^3)'
+       'Cloud Distribution (%)'
+       { 'blue' 'cyan' 'magenta' 'white' }
+       { { 'St', 'St-Cu', 'Cu' 'Clear' } 'NorthWest' }
+       'stacked'
+       { 'Npoints' NptsScaleTALL*100 { [8 12 16] [2] [1:6] [1] } 1 'CCN' 0 120 }
+       'bars_avg_ctype_TALL_CO_S298.jpg'
+       }
+
+       % Cloud type, npoints (relative amounts), TALL, CCN only, SST 303
+       {
+       'Cloud Distribution TALL CCN only, 293K'
+       'bgraph_pcprr.h5'
+       { 'a' 'All Points, S303' }
+       'N_a (# cm^-^3)'
+       'Cloud Distribution (%)'
+       { 'blue' 'cyan' 'magenta' 'white' }
+       { { 'St', 'St-Cu', 'Cu' 'Clear' } 'NorthWest' }
+       'stacked'
+       { 'Npoints' NptsScaleTALL*100 { [8 12 16] [3] [1:6] [1] } 1 'CCN' 0 120 }
+       'bars_avg_ctype_TALL_CO_S303.jpg'
+       }
+
      };
 
 
@@ -137,14 +186,16 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
     Pstyle  = PlotDefs{ipd}{8};
 
     % VarSpec
-    InVarName = PlotDefs{ipd}{9}{1};
-    Vsel      = PlotDefs{ipd}{9}{2}{1};
-    Ssel      = PlotDefs{ipd}{9}{2}{2};
-    Csel      = PlotDefs{ipd}{9}{2}{3};
-    Gsel      = PlotDefs{ipd}{9}{2}{4};
-    Tpose     = PlotDefs{ipd}{9}{3};
-    Xname     = PlotDefs{ipd}{9}{4};
-    Yname     = PlotDefs{ipd}{9}{5};
+    InVarName  = PlotDefs{ipd}{9}{1};
+    InVarScale = PlotDefs{ipd}{9}{2};
+    Vsel       = PlotDefs{ipd}{9}{3}{1};
+    Ssel       = PlotDefs{ipd}{9}{3}{2};
+    Csel       = PlotDefs{ipd}{9}{3}{3};
+    Gsel       = PlotDefs{ipd}{9}{3}{4};
+    Tpose      = PlotDefs{ipd}{9}{4};
+    Vname      = PlotDefs{ipd}{9}{5};
+    Vmin       = PlotDefs{ipd}{9}{6};
+    Vmax       = PlotDefs{ipd}{9}{7};
 
     OutFname = PlotDefs{ipd}{10};
 
@@ -152,26 +203,39 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
     fprintf('Generating bar graph: %s\n', PdName);
     fprintf('  Input File: %s\n', InFile);
     fprintf('    Variable: %s\n', InVarName);
+    fprintf('    Scale: %f4\n', InVarScale);
     fprintf('  Selection specs:\n');
     fprintf('    Vsel: %s\n', strtrim(sprintf('%d ', Vsel)));
     fprintf('    Ssel: %s\n', strtrim(sprintf('%d ', Ssel)));
     fprintf('    Csel: %s\n', strtrim(sprintf('%d ', Csel)));
     fprintf('    Gsel: %s\n', strtrim(sprintf('%d ', Gsel)));
     fprintf('  Transpose: %d\n', Tpose);
-    fprintf('  Xname: %s\n', Xname);
-    fprintf('  Yname: %s\n', Yname);
+    fprintf('  Vname: %s\n', Vname);
+    fprintf('    Vmin: %f\n', Vmin);
+    fprintf('    Vmax: %f\n', Vmax);
     fprintf('\n');
  
 
     % read in variables
-    HDATA = hdf5read(InFile, InVarName);
+    HDATA = hdf5read(InFile, InVarName) .* InVarScale;
     BDATA = squeeze(HDATA(Vsel, Ssel, Csel, Gsel));
     if (Tpose == 1)
       BDATA = BDATA';
     end
 
-    XVAR = hdf5read(InFile, Xname);
-    YVAR = hdf5read(InFile, Yname);
+    XVAR = hdf5read(InFile, Vname);
+
+    % If doing cloud distribution, then combine the strat and strnp counts
+    % and add a count of clear space so that all bars stack up to 100%
+    % NOTE: this assumes that you've specified this plot to create percent values
+    % in BDATA.
+    if (regexp(PdName, '^Cloud Distribution'))
+      % BDATA is organized as (c,v) now. Want sum up across variables (v)
+      % and subtract from 100 to get the clear column counts. Then append
+      % the clear counts to the end of BDATA.
+      CLEAR = 100 - sum(BDATA, 2);
+      BDATA = [ BDATA CLEAR ];
+    end
 
     % do the plot
     clear AxisProps;
@@ -181,7 +245,8 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
     AxisProps(iaxis).Name = 'FontSize';
     AxisProps(iaxis).Val  = 20;
 
-    if (strcmp(Xname, 'CCN'))
+    % x-axis labeling
+    if (strcmp(Vname, 'CCN'))
       % label tick marks with CCN value
       Nvar = length(XVAR);
       X = 1:Nvar;      % use these for x-axis values -> evenly spaced integers creates evenly spaced bars
@@ -196,13 +261,15 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
       X = XVAR;
     end
 
+
+    iaxis = iaxis + 1;
+    AxisProps(iaxis).Name = 'Ylim';
+    AxisProps(iaxis).Val  = [ Vmin Vmax ];
+
     % plot averages
     OutFile = sprintf('%s/%s', Pdir, OutFname);
     fprintf('      %s\n', OutFile);
 
-    iaxis = iaxis + 1;
-    AxisProps(iaxis).Name = 'Ylim';
-    AxisProps(iaxis).Val  = [ 0 1.2*max(BDATA(:)) ];
     PlotBarSet(X, BDATA, Ptitle, Pmark, Xlabel, Ylabel, Bcolors, Pstyle, LegText, LegLoc, AxisProps, OutFile);
 
     fprintf('\n');
