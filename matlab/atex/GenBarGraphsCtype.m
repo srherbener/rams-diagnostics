@@ -48,20 +48,25 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
   %     3  _TEND
   %     4  _TALL
   %
-  %     5  _strat_TSTART
-  %     6  _strat_TMID
-  %     7  _strat_TEND
-  %     8  _strat_TALL
+  %     5  _strnp_TSTART
+  %     6  _strnp_TMID
+  %     7  _strnp_TEND
+  %     8  _strnp_TALL
   %
-  %     9  _scmix_TSTART
-  %    10  _scmix_TMID
-  %    11  _scmix_TEND
-  %    12  _scmix_TALL
+  %     9  _strat_TSTART
+  %    10  _strat_TMID
+  %    11  _strat_TEND
+  %    12  _strat_TALL
   %
-  %    13  _cumul_TSTART
-  %    14  _cumul_TMID
-  %    15  _cumul_TEND
-  %    16  _cumul_TALL
+  %    13  _scmix_TSTART
+  %    14  _scmix_TMID
+  %    15  _scmix_TEND
+  %    16  _scmix_TALL
+  %
+  %    17  _cumul_TSTART
+  %    18  _cumul_TMID
+  %    19  _cumul_TEND
+  %    20  _cumul_TALL
 
   NptsScaleTALL = 1 / (398 * 398 * 289); % divide by total number of points in domain for TALL group
                                          %    horiz domain: 398 * 398 points, 289 time steps (12 to 36 h)
@@ -144,9 +149,9 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'N_a (# cm^-^3)'
        'Cloud Distribution (%)'
        { 'blue' 'cyan' 'magenta' 'white' }
-       { { 'St', 'St-Cu', 'Cu' 'Clear' } 'NorthWest' }
+       { { 'S', 'S-C', 'C' 'Clear' } 'NorthWest' }
        'stacked'
-       { 'Npoints' NptsScaleTALL*100 { [8 12 16] [1] [1:6] [1] } 1 'CCN' 0 120 }
+       { 'Npoints' NptsScaleTALL*100 { [8 12 16 20] [1] [1:6] [1] } 1 'CCN' 0 120 }
        'bars_avg_ctype_TALL_CO_S293.jpg'
        }
 
@@ -158,9 +163,9 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'N_a (# cm^-^3)'
        'Cloud Distribution (%)'
        { 'blue' 'cyan' 'magenta' 'white' }
-       { { 'St', 'St-Cu', 'Cu' 'Clear' } 'NorthWest' }
+       { { 'S', 'S-C', 'C' 'Clear' } 'NorthWest' }
        'stacked'
-       { 'Npoints' NptsScaleTALL*100 { [8 12 16] [2] [1:6] [1] } 1 'CCN' 0 120 }
+       { 'Npoints' NptsScaleTALL*100 { [8 12 16 20] [2] [1:6] [1] } 1 'CCN' 0 120 }
        'bars_avg_ctype_TALL_CO_S298.jpg'
        }
 
@@ -172,9 +177,9 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'N_a (# cm^-^3)'
        'Cloud Distribution (%)'
        { 'blue' 'cyan' 'magenta' 'white' }
-       { { 'St', 'St-Cu', 'Cu' 'Clear' } 'NorthWest' }
+       { { 'S', 'S-C', 'C' 'Clear' } 'NorthWest' }
        'stacked'
-       { 'Npoints' NptsScaleTALL*100 { [8 12 16] [3] [1:6] [1] } 1 'CCN' 0 120 }
+       { 'Npoints' NptsScaleTALL*100 { [8 12 16 20] [3] [1:6] [1] } 1 'CCN' 0 120 }
        'bars_avg_ctype_TALL_CO_S303.jpg'
        }
 
@@ -244,10 +249,14 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
     % NOTE: this assumes that you've specified this plot to create percent values
     % in BDATA.
     if (regexp(PdName, '^Cloud Distribution'))
-      % BDATA is organized as (c,v) now. Want sum up across variables (v)
-      % and subtract from 100 to get the clear column counts. Then append
-      % the clear counts to the end of BDATA.
-      CLEAR = 100 - sum(BDATA, 2);
+      % BDATA is organized as (c,v) now.
+      % First add the first two columns of BDATA together (reduce BDATA by one column)
+      TEMP = nansum(BDATA(:,1:2),2);
+      BDATA = [ TEMP BDATA(:,3:end) ];
+
+      % Sum up across variables (v) and subtract from 100 to get the clear
+      % column counts. Then append the clear counts to the end of BDATA.
+      CLEAR = 100 - nansum(BDATA, 2);
       BDATA = [ BDATA CLEAR ];
     end
 

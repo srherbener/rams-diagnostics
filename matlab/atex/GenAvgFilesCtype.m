@@ -11,11 +11,11 @@ function [ ] = GenAvgFilesCtype(ConfigFile)
   FileHeader = 'ATEX PDF data';
 
   VarSets = {
-    { 'hda_pcprr'           { 'pcprr'  'pcprr_strat'  'pcprr_scmix'  'pcprr_cumul'  } 'avg_ctype_pcprr'  }
-    { 'hda_cloud_opt_thick' { 'cot'    'cot_strat'    'cot_scmix'    'cot_cumul'    } 'avg_ctype_cot'    }
-    { 'hda_cloud_depth'     { 'cdepth' 'cdepth_strat' 'cdepth_scmix' 'cdepth_cumul' } 'avg_ctype_cdepth' }
-    { 'hda_vint_cond'       { 'lwp'    'lwp_strat'    'lwp_scmix'    'lwp_cumul'    } 'avg_ctype_lwp'    }
-    { 'hda_cloud_mask'      { 'cfrac'                                               } 'avg_ctype_cfrac'  }
+    { 'hda_pcprr'           { 'pcprr'  'pcprr_strnp'  'pcprr_strat'  'pcprr_scmix'  'pcprr_cumul'  } 'avg_ctype_pcprr'  }
+    { 'hda_cloud_opt_thick' { 'cot'    'cot_strnp'    'cot_strat'    'cot_scmix'    'cot_cumul'    } 'avg_ctype_cot'    }
+    { 'hda_cloud_depth'     { 'cdepth' 'cdepth_strnp' 'cdepth_strat' 'cdepth_scmix' 'cdepth_cumul' } 'avg_ctype_cdepth' }
+    { 'hda_vint_cond'       { 'lwp'    'lwp_strnp'    'lwp_strat'    'lwp_scmix'    'lwp_cumul'    } 'avg_ctype_lwp'    }
+    { 'hda_cloud_mask'      { 'cfrac'                                                              } 'avg_ctype_cfrac'  }
     };
   Nset = length(VarSets);
 

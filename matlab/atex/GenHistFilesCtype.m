@@ -149,7 +149,7 @@ function [ ] = GenHistFilesCtype(ConfigFile)
           SNP_SELECT = (PR < PR1 & CM > 0.5);
           S_SELECT = (PR >= PR1 & PR <= PR2);
           M_SELECT = (PR >  PR2 & PR <  PR3);
-          C_SELECT = (PR >  PR3);
+          C_SELECT = (PR >= PR3);
 
           PR_STRNP = PR(SNP_SELECT);
           PR_STRAT = PR(S_SELECT);
