@@ -39,10 +39,18 @@ function [ ] = GenDomAvgCtypeTseries(ConfigFile)
       fprintf('    Variable set:\n');
 
       % read in the bins and replicate the bins for every time point
+      % histc() was used to create histograms which means that BINS
+      % are the edges of the histogram bins. The very last bin however
+      % contains a count of the sampled data points that exactly match
+      % that bin value. Therefore, use the average value between the
+      % edges for calculating a domain average for bins 1 through n-1
+      % and use the value (instead of the average) for bin n.
       fprintf('      Bins: %s\n', BinsName);
       fprintf('\n');
-      BINS = squeeze(hdf5read(InFile, BinsName));
-      BINS_MAT = repmat(BINS, [ 1 Nt ]);
+      BINS = squeeze(hdf5read(InFile, BinsName));       % column vector
+      BINAVG = (BINS(1:end-1) + BINS(2:end)) .* 0.5;
+      BINAVG = [ BINAVG; BINS(end) ];
+      BINS_MAT = repmat(BINAVG, [ 1 Nt ]);
 
       % Write a header into the file so that a write statement without append mode
       % will be run first which consequently will erase an existing file and replace
