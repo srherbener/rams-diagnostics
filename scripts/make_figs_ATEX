@@ -518,6 +518,12 @@ montage -tile 2x1 -geometry ${Jsize}+2+100 \
  bars_avg_cdepth_TALL_CO.jpg \
  FigureBgraphPrateCdepth.jpg
 
+echo "Figure: Bgraph Stratiform PR, Cdepth : CCN only"
+montage -tile 2x1 -geometry ${Jsize}+2+100 \
+ bars_avg_pcprr_stratiform_TALL_CO.jpg \
+ bars_avg_cdepth_stratiform_TALL_CO.jpg \
+ FigureBgraphPrateCdepthStratiform.jpg
+
 echo "Figure: Bgraph Cloud Distribution : CCN only"
 montage -tile 3x1 -geometry ${Jsize}+2+100 \
  bars_avg_ctype_TALL_CO_S293.jpg \
