@@ -45,7 +45,9 @@ program diag_filter
 
   integer :: i, ipress
   integer :: ix, iy, iz, it
+  integer :: ih2d, ih3d, ih
   integer :: Nx, Ny, Nz, Nt
+  integer :: NhElems
   logical :: BadDims
   logical :: DoingCylVol
 
@@ -394,6 +396,7 @@ program diag_filter
   ! of the input variables.
   !
 
+  NhElems = Nx * Ny
   do it = 1, Nt
     ! read the input vars
     do i = 1, Nfilters
@@ -405,10 +408,8 @@ program diag_filter
     ! to prepare for the InsideCylVol call.
     if (DoingCylVol) then
       ! zero out radius
-      do iy = 1, Ny
-        do ix = 1, Nx
-          call MultiDimAssign(Nx, Ny, Nz, ix, iy, iz, 0.0, Var2d=Radius%vdata)
-        enddo
+      do ih2d = 1, NhElems
+        Radius%vdata(ih2d) = 0.0
       enddo
 
       ! Find the storm center
@@ -434,40 +435,39 @@ program diag_filter
     endif
 
     ! If doing up- or down-draft filtering, build the mask
-    if (DoingUpDrafts .or. DoingDnDrafts .or. DoingUpDnDrafts) then
-      do iy = 1, Ny
-        do ix = 1, Nx
-          UpDnDraftMask(ix,iy) = .false.
-
-          do iz = 1, Nz
-            if (DoingUpDrafts) then
-              if (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(UDfnum)%vdata) .ge. Filters(UDfnum)%x1) then
-                UpDnDraftMask(ix,iy) = .true.
-                exit
-              endif
-            else if (DoingDnDrafts) then
-              ! doing down drafts
-              if (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(UDfnum)%vdata) .le. Filters(UDfnum)%x1) then
-                UpDnDraftMask(ix,iy) = .true.
-                exit
-              endif
-            else
-              ! doing up/down drafts
-              if ((MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(UDfnum)%vdata) .ge. Filters(UDfnum)%x1) .or. &
-                  (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(UDfnum)%vdata) .le. Filters(UDfnum)%x2)) then
-                UpDnDraftMask(ix,iy) = .true.
-                exit
-              endif
-            endif
-          enddo
-        enddo
-      enddo
+    ! Note that last argument is a code telling subrouting which mask to build:
+    !    1 - updraft
+    !    2 - downdraft
+    !    3 - up and down drafts
+    if (DoingUpDrafts) then
+      call BuildUpDnMask(Nx, Ny, Nz, Vars(UDfnum)%vdata, UpDnDraftMask, Filters(UDfnum)%x1, Filters(UDfnum)%x2, 1)
+    elseif (DoingDnDrafts) then
+      call BuildUpDnMask(Nx, Ny, Nz, Vars(UDfnum)%vdata, UpDnDraftMask, Filters(UDfnum)%x1, Filters(UDfnum)%x2, 2)
+    elseif (DoingUpDnDrafts) then
+      call BuildUpDnMask(Nx, Ny, Nz, Vars(UDfnum)%vdata, UpDnDraftMask, Filters(UDfnum)%x1, Filters(UDfnum)%x2, 3)
     endif
 
-    ! do the selection
+    ! do the filter selection
+    !
+    ! For execution speed, want to walk thorugh Vars in the same order as
+    ! contiguous memory (which will minimize cache misses). Since the array
+    ! is column major, this means the looping from outer to inner should be
+    ! done as: z, y, x.
+    ! 
+    ! Calling subroutines (MultiDimLookup, MultiDimAssign) for every point in domain seems wasteful
+    ! in terms of execution speed, so keep track of the proper linear index for 3D and 2D variables.
+    ! Use these index variables to reference linear arrays in the variables.
+    !
+    ! WARNING: this algorithm depends on the looping order going from outside to inside to be: z, y, x
+
+    ih3d = 0
     do iz = 1, Nz
+      ih2d = 0
       do iy = 1, Ny
         do ix = 1, Nx
+          ih3d = ih3d + 1
+          ih2d = ih2d + 1
+
           if (CombSense .eq. 'and') then
             SelectThisPoint = .true.
           else if (CombSense .eq. 'or') then
@@ -484,58 +484,54 @@ program diag_filter
             ! select if var > threshold
             if (Filters(i)%Ftype .eq. 'gt') then
               if (Vars(i)%ndims .eq. 2) then
-                FilterVal = (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata) .gt. Filters(i)%x1)
+                FilterVal = (Vars(i)%vdata(ih2d) .gt. Filters(i)%x1)
               else
-                FilterVal = (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata) .gt. Filters(i)%x1)
+                FilterVal = (Vars(i)%vdata(ih3d) .gt. Filters(i)%x1)
               endif
             endif
 
             ! select if var >= threshold
             if (Filters(i)%Ftype .eq. 'ge') then
               if (Vars(i)%ndims .eq. 2) then
-                FilterVal = (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata) .ge. Filters(i)%x1)
+                FilterVal = (Vars(i)%vdata(ih2d) .ge. Filters(i)%x1)
               else
-                FilterVal = (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata) .ge. Filters(i)%x1)
+                FilterVal = (Vars(i)%vdata(ih3d) .ge. Filters(i)%x1)
               endif
             endif
 
             ! select if var < threshold
             if (Filters(i)%Ftype .eq. 'lt') then
               if (Vars(i)%ndims .eq. 2) then
-                FilterVal = (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata) .lt. Filters(i)%x1)
+                FilterVal = (Vars(i)%vdata(ih2d) .lt. Filters(i)%x1)
               else
-                FilterVal = (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata) .lt. Filters(i)%x1)
+                FilterVal = (Vars(i)%vdata(ih3d) .lt. Filters(i)%x1)
               endif
             endif
 
             ! select if var <= threshold
             if (Filters(i)%Ftype .eq. 'le') then
               if (Vars(i)%ndims .eq. 2) then
-                FilterVal = (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata) .le. Filters(i)%x1)
+                FilterVal = (Vars(i)%vdata(ih2d) .le. Filters(i)%x1)
               else
-                FilterVal = (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata) .le. Filters(i)%x1)
+                FilterVal = (Vars(i)%vdata(ih3d) .le. Filters(i)%x1)
               endif
             endif
 
             ! select if min <= var <= max
             if (Filters(i)%Ftype .eq. 'range') then
               if (Vars(i)%ndims .eq. 2) then
-                FilterVal = (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata) .ge. Filters(i)%x1) .and. &
-                            (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata) .le. Filters(i)%x2)
+                FilterVal = (Vars(i)%vdata(ih2d) .ge. Filters(i)%x1) .and. (Vars(i)%vdata(ih2d) .le. Filters(i)%x2)
               else
-                FilterVal = (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata) .ge. Filters(i)%x1) .and. &
-                            (MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata) .le. Filters(i)%x2)
+                FilterVal = (Vars(i)%vdata(ih3d) .ge. Filters(i)%x1) .and. (Vars(i)%vdata(ih3d) .le. Filters(i)%x2)
               endif
             endif
 
             ! select if min <= abs(var) <= max
             if (Filters(i)%Ftype .eq. 'abs_range') then
               if (Vars(i)%ndims .eq. 2) then
-                FilterVal = (abs(MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata)) .ge. Filters(i)%x1) .and. &
-                            (abs(MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var2d=Vars(i)%vdata)) .le. Filters(i)%x2)
+                FilterVal = (abs(Vars(i)%vdata(ih2d)) .ge. Filters(i)%x1) .and. (abs(Vars(i)%vdata(ih2d)) .le. Filters(i)%x2)
               else
-                FilterVal = (abs(MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata)) .ge. Filters(i)%x1) .and. &
-                            (abs(MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Vars(i)%vdata)) .le. Filters(i)%x2)
+                FilterVal = (abs(Vars(i)%vdata(ih3d)) .ge. Filters(i)%x1) .and. (abs(Vars(i)%vdata(ih3d)) .le. Filters(i)%x2)
               endif
             endif
 
@@ -552,16 +548,15 @@ program diag_filter
             end if
           enddo
 
-          if (DoingCylVol) then
+          if ((DoingCylVol) .and. (iz .eq. 1)) then
             ! save the radius value
-            ! note that this re-writes the same horizontal radius values for each z level
-            call MultiDimAssign(Nx, Ny, Nz, ix, iy, iz, Rval, Var2d=Radius%vdata)
+            Radius%vdata(ih2d) = Rval
           endif
 
           if (SelectThisPoint) then
-            call MultiDimAssign(Nx, Ny, Nz, ix, iy, iz, 1.0, Var3d=OutFilter%vdata)
+            OutFilter%vdata(ih3d) = 1.0
           else
-            call MultiDimAssign(Nx, Ny, Nz, ix, iy, iz, 0.0, Var3d=OutFilter%vdata)
+            OutFilter%vdata(ih3d) = 0.0
           endif
         enddo
       enddo
@@ -1110,5 +1105,68 @@ subroutine FindStormCenter(Nx, Ny, Press, UseFsFilter, FsFilter, Fs, StmCtrX, St
   
   return
 end subroutine FindStormCenter
+
+!**********************************************************************
+! BuildUpDnMask()
+!
+! This routine will construct a mask (horizontal 2d field) that shows
+! where updfraft and/or downdraft speed surpasses a threshold.
+!
+! UpDnCode:
+!   1 - check for updrafts only
+!   2 - check for downdrafts only
+!   3 - check for updrafts and downdrafts
+!
+!   Note: Need to keep the list of legal values in sync with caller.
+!
+! For updrafts only (UpDnCode == 1) and downdrafts only (UpDnCode == 2), the
+! associated threshold is passed in Thresh1. For up and down drafs
+! (UpDnCode == 3) the updraft threshold is in Thresh1 and the downdraft
+! threshold is in Thresh2.
+
+subroutine BuildUpDnMask(Nx, Ny, Nz, Wvar, Wmask, Thresh1, Thresh2, UpDnCode)
+  implicit none
+
+  integer :: Nx, Ny, Nz
+  real, dimension(Nx,Ny,Nz) :: Wvar
+  logical, dimension(Nx,Ny) :: Wmask
+  real :: Thresh1, Thresh2
+  integer :: UpDnCode
+
+  integer :: ix, iy, iz
+
+  ! For execution speed, want to walk thorugh Wvar in the same order as
+  ! contiguous memory (which will minimize cache misses). Since the array
+  ! is column major, this means the looping from outer to inner should be
+  ! done as: z, y, x.
+  !
+  ! Want to look at columns and set Wmask(ix,iy) to .true. if any w value
+  ! in the column surpasses the corresponding threshold. Putting z on the
+  ! outer loop makes this a bit awkward but it is still do-able.
+
+  do iy = 1, Ny
+    do ix = 1, Nx
+      Wmask(ix,iy) = .false.
+    enddo
+  enddo
+
+  do iz = 1, Nz
+    do iy = 1, Ny
+      do ix = 1, Nx
+        ! if already found a qualifying w value, skip checking this column
+        if (Wmask(ix,iy) .eq. .false.) then
+          if ((UpDnCode .eq. 1) .and. (Wvar(ix,iy,iz) .ge. Thresh1)) then
+            Wmask(ix,iy) = .true.
+          else if ((UpDnCode .eq. 2) .and. (Wvar(ix,iy,iz) .le. Thresh1)) then
+            Wmask(ix,iy) = .true.
+          else if ((UpDnCode .eq. 3) .and. ((Wvar(ix,iy,iz) .ge. Thresh1) .or. (Wvar(ix,iy,iz) .le. Thresh2))) then
+            Wmask(ix,iy) = .true.
+          endif
+        endif
+      enddo
+    enddo
+  enddo
+
+end subroutine BuildUpDnMask
 
 end program diag_filter
