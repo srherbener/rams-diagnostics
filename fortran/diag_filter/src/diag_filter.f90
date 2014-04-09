@@ -23,10 +23,31 @@ program diag_filter
   integer, parameter :: MediumString = 256
   integer, parameter :: LittleString = 128
 
+  ! Ftype codes for the FilterDescrip type
+  ! In the main loop below that is applying the filters
+  ! it is advantageous to use integers (representing the filter
+  ! type) versus strings. The conditional expressions in the if
+  ! statements will be much faster using integers than strings.
+  ! The inner statements of the loop doing the filter application
+  ! can get executed a great number of times (billions) so it will
+  ! make a big difference in performance using the integers.
+  integer, parameter :: FTYPE_NONE      =  0
+  integer, parameter :: FTYPE_CYLVOL    =  1
+  integer, parameter :: FTYPE_GE        =  2
+  integer, parameter :: FTYPE_GT        =  3
+  integer, parameter :: FTYPE_LE        =  4
+  integer, parameter :: FTYPE_LT        =  5
+  integer, parameter :: FTYPE_RANGE     =  6
+  integer, parameter :: FTYPE_ABS_RANGE =  7
+  integer, parameter :: FTYPE_UP        =  8
+  integer, parameter :: FTYPE_DN        =  9
+  integer, parameter :: FTYPE_UP_DN     = 10
+
   integer, parameter :: MaxFilters = 10
 
   type FilterDescrip
-    character (len=LittleString) :: Ftype
+    character (len=LittleString) :: Fname
+    integer :: Ftype
     character (len=LittleString) :: Vname
     character (len=LittleString) :: Vfprefix
     real :: x1
@@ -78,6 +99,9 @@ program diag_filter
   logical :: UseFsFilter
   type (FilterDescrip) :: FsFilter
 
+  logical :: AndFilters
+  logical :: OrFilters
+
   logical, dimension(:,:), allocatable :: UpDnDraftMask
   logical :: DoingUpDrafts
   logical :: DoingDnDrafts
@@ -86,6 +110,11 @@ program diag_filter
 
   ! Get the command line arguments
   call GetMyArgs(LargeString, MaxFilters, InDir, InSuffix, OutFile, Mvname, Mfprefix, FsFilter, CombSense, Filters, Nfilters)
+
+  ! Record which combination sense for the filters was selected
+  ! GetMyArgs already checked to make sure one of 'and' or 'or' was selected for CombSense
+  AndFilters = (CombSense .eq. 'and')
+  OrFilters = (CombSense .eq. 'or')
 
   DoingCylVol = .false.
   DoingUpDrafts = .false.
@@ -98,14 +127,18 @@ program diag_filter
   write (*,*) '  Model variable name:  ', trim(Mvname)
   write (*,*) '  Model file prefix: ', trim(Mfprefix)
   write (*,*) '  Find storm filter:'
-  write (*,*) '    Filter type:  ', trim(FsFilter%Ftype)
+  write (*,*) '    Filter type:  ', trim(FsFilter%Fname)
   write (*,*) '    Variable name:  ', trim(FsFilter%Vname)
   write (*,*) '    File prefix: ', trim(FsFilter%Vfprefix)
   write (*,*) '    Treshold: ', FsFilter%x1
   write (*,*) '  Data selection specs: '
-  write (*,*) '    Combination sense: ', trim(CombSense)
+  if (AndFilters) then
+    write (*,*) '    Filters will be logically and-ed together'
+  else if (OrFilters) then
+    write (*,*) '    Filters will be logically or-ed together'
+  endif
   do i = 1, Nfilters
-    if (Filters(i)%Ftype .eq. 'cylvol') then
+    if (Filters(i)%Ftype .eq. FTYPE_CYLVOL) then
       DoingCylVol = .true.
       ipress = i
       write (*,*) '    Cylindrical volume:'
@@ -119,53 +152,53 @@ program diag_filter
       write (*,*) '      Maximum height: ', Filters(i)%z2
 
       MaxRval = Filters(i)%x2
-    else if (Filters(i)%Ftype .eq. 'ge') then
+    else if (Filters(i)%Ftype .eq. FTYPE_GE) then
       write (*,*) '    Greater than or equal:'
       write (*,*) '      Variable: ', trim(Filters(i)%Vname)
       write (*,*) '      Variable file prefix: ', trim(Filters(i)%Vfprefix)
       write (*,*) '      Threshold: ', Filters(i)%x1
-    else if (Filters(i)%Ftype .eq. 'gt') then
+    else if (Filters(i)%Ftype .eq. FTYPE_GT) then
       write (*,*) '    Greater than:'
       write (*,*) '      Variable: ', trim(Filters(i)%Vname)
       write (*,*) '      Variable file prefix: ', trim(Filters(i)%Vfprefix)
       write (*,*) '      Threshold: ', Filters(i)%x1
-    else if (Filters(i)%Ftype .eq. 'le') then
+    else if (Filters(i)%Ftype .eq. FTYPE_LE) then
       write (*,*) '    Less than or equal:'
       write (*,*) '      Variable: ', trim(Filters(i)%Vname)
       write (*,*) '      Variable file prefix: ', trim(Filters(i)%Vfprefix)
       write (*,*) '      Threshold: ', Filters(i)%x1
-    else if (Filters(i)%Ftype .eq. 'lt') then
+    else if (Filters(i)%Ftype .eq. FTYPE_LT) then
       write (*,*) '    Less than:'
       write (*,*) '      Variable: ', trim(Filters(i)%Vname)
       write (*,*) '      Variable file prefix: ', trim(Filters(i)%Vfprefix)
       write (*,*) '      Threshold: ', Filters(i)%x1
-    else if (Filters(i)%Ftype .eq. 'range') then
+    else if (Filters(i)%Ftype .eq. FTYPE_RANGE) then
       write (*,*) '    Inside range:'
       write (*,*) '      Variable: ', trim(Filters(i)%Vname)
       write (*,*) '      Variable file prefix: ', trim(Filters(i)%Vfprefix)
       write (*,*) '      Min: ', Filters(i)%x1
       write (*,*) '      Max: ', Filters(i)%x2
-    else if (Filters(i)%Ftype .eq. 'abs_range') then
+    else if (Filters(i)%Ftype .eq. FTYPE_ABS_RANGE) then
       write (*,*) '    Absolute value inside range:'
       write (*,*) '      Variable: ', trim(Filters(i)%Vname)
       write (*,*) '      Variable file prefix: ', trim(Filters(i)%Vfprefix)
       write (*,*) '      Min: ', Filters(i)%x1
       write (*,*) '      Max: ', Filters(i)%x2
-    else if (Filters(i)%Ftype .eq. 'up') then
+    else if (Filters(i)%Ftype .eq. FTYPE_UP) then
       DoingUpDrafts = .true.
       UDfnum = i
       write (*,*) '    Updraft:'
       write (*,*) '      Variable: ', trim(Filters(i)%Vname)
       write (*,*) '      Variable file prefix: ', trim(Filters(i)%Vfprefix)
       write (*,*) '      Threshold: ', Filters(i)%x1
-    else if (Filters(i)%Ftype .eq. 'dn') then
+    else if (Filters(i)%Ftype .eq. FTYPE_DN) then
       DoingDnDrafts = .true.
       UDfnum = i
       write (*,*) '    Downdraft:'
       write (*,*) '      Variable: ', trim(Filters(i)%Vname)
       write (*,*) '      Variable file prefix: ', trim(Filters(i)%Vfprefix)
       write (*,*) '      Threshold: ', Filters(i)%x1
-    else if (Filters(i)%Ftype .eq. 'up_dn') then
+    else if (Filters(i)%Ftype .eq. FTYPE_UP_DN) then
       DoingUpDnDrafts = .true.
       UDfnum = i
       write (*,*) '    Updraft/Downdraft:'
@@ -224,7 +257,7 @@ program diag_filter
   ! the search for the storm center over the ocean.
   UseFsFilter = .false.
   if (DoingCylVol) then
-    if (trim(FsFilter%Ftype) .ne. 'none') then
+    if (FsFilter%Ftype .ne. FTYPE_NONE) then
       UseFsFilter = .true.
       FsFilterFile = trim(InDir) // '/' // trim(FsFilter%Vfprefix) // trim(InSuffix)
       FsFilterVar%vname = trim(FsFilter%Vname)
@@ -468,84 +501,78 @@ program diag_filter
           ih3d = ih3d + 1
           ih2d = ih2d + 1
 
-          if (CombSense .eq. 'and') then
+          if (AndFilters) then
             SelectThisPoint = .true.
-          else if (CombSense .eq. 'or') then
+          else if (OrFilters) then
             SelectThisPoint = .false.
           endif
 
           do i = 1, Nfilters
-            ! select if inside the cylindrical volume
-            if (Filters(i)%Ftype .eq. 'cylvol') then
+            ! Apply the current filter
+            if (Filters(i)%Ftype .eq. FTYPE_CYLVOL) then
+              ! select if inside the cylindrical volume
               FilterVal = InsideCylVol(Nx, Ny, Nz, ix, iy, iz, Filters(i)%x1, Filters(i)%x2, Filters(i)%y1, Filters(i)%y2, &
                     Filters(i)%z1, Filters(i)%z2, StmIx, StmIy, XcoordsKm, YcoordsKm, Zcoords%vdata, Rval, Pval, Zval) 
-            endif
 
-            ! select if var > threshold
-            if (Filters(i)%Ftype .eq. 'gt') then
+            else if (Filters(i)%Ftype .eq. FTYPE_GT) then
+              ! select if var > threshold
               if (Vars(i)%ndims .eq. 2) then
                 FilterVal = (Vars(i)%vdata(ih2d) .gt. Filters(i)%x1)
               else
                 FilterVal = (Vars(i)%vdata(ih3d) .gt. Filters(i)%x1)
               endif
-            endif
 
-            ! select if var >= threshold
-            if (Filters(i)%Ftype .eq. 'ge') then
+            else if (Filters(i)%Ftype .eq. FTYPE_GE) then
+              ! select if var >= threshold
               if (Vars(i)%ndims .eq. 2) then
                 FilterVal = (Vars(i)%vdata(ih2d) .ge. Filters(i)%x1)
               else
                 FilterVal = (Vars(i)%vdata(ih3d) .ge. Filters(i)%x1)
               endif
-            endif
 
-            ! select if var < threshold
-            if (Filters(i)%Ftype .eq. 'lt') then
+            else if (Filters(i)%Ftype .eq. FTYPE_LT) then
+              ! select if var < threshold
               if (Vars(i)%ndims .eq. 2) then
                 FilterVal = (Vars(i)%vdata(ih2d) .lt. Filters(i)%x1)
               else
                 FilterVal = (Vars(i)%vdata(ih3d) .lt. Filters(i)%x1)
               endif
-            endif
 
-            ! select if var <= threshold
-            if (Filters(i)%Ftype .eq. 'le') then
+            else if (Filters(i)%Ftype .eq. FTYPE_LE) then
+              ! select if var <= threshold
               if (Vars(i)%ndims .eq. 2) then
                 FilterVal = (Vars(i)%vdata(ih2d) .le. Filters(i)%x1)
               else
                 FilterVal = (Vars(i)%vdata(ih3d) .le. Filters(i)%x1)
               endif
-            endif
 
-            ! select if min <= var <= max
-            if (Filters(i)%Ftype .eq. 'range') then
+            else if (Filters(i)%Ftype .eq. FTYPE_RANGE) then
+              ! select if min <= var <= max
               if (Vars(i)%ndims .eq. 2) then
                 FilterVal = (Vars(i)%vdata(ih2d) .ge. Filters(i)%x1) .and. (Vars(i)%vdata(ih2d) .le. Filters(i)%x2)
               else
                 FilterVal = (Vars(i)%vdata(ih3d) .ge. Filters(i)%x1) .and. (Vars(i)%vdata(ih3d) .le. Filters(i)%x2)
               endif
-            endif
 
-            ! select if min <= abs(var) <= max
-            if (Filters(i)%Ftype .eq. 'abs_range') then
+            else if (Filters(i)%Ftype .eq. FTYPE_ABS_RANGE) then
+              ! select if min <= abs(var) <= max
               if (Vars(i)%ndims .eq. 2) then
                 FilterVal = (abs(Vars(i)%vdata(ih2d)) .ge. Filters(i)%x1) .and. (abs(Vars(i)%vdata(ih2d)) .le. Filters(i)%x2)
               else
                 FilterVal = (abs(Vars(i)%vdata(ih3d)) .ge. Filters(i)%x1) .and. (abs(Vars(i)%vdata(ih3d)) .le. Filters(i)%x2)
               endif
-            endif
 
-            ! select according to up down draft mask
-            if ((Filters(i)%Ftype .eq. 'up') .or. (Filters(i)%Ftype .eq. 'dn') .or. (Filters(i)%Ftype .eq. 'up_dn')) then
+            else if ((Filters(i)%Ftype .eq. FTYPE_UP) .or. (Filters(i)%Ftype .eq. FTYPE_DN) .or. (Filters(i)%Ftype .eq. FTYPE_UP_DN)) then
+              ! select according to up down draft mask
               FilterVal = UpDnDraftMask(ix,iy)
             endif
 
-            ! combine the current filter value with the overall selection according to CombSense
-            if (CombSense .eq. 'and') then
+            ! Combine the current filter value with the overall selection according to CombSense
+            if (AndFilters) then
               SelectThisPoint = SelectThisPoint .and. FilterVal
-            else if (CombSense .eq. 'or') then
+            else if (OrFilters) then
               SelectThisPoint = SelectThisPoint .or. FilterVal
-            end if
+            endif
           enddo
 
           if ((DoingCylVol) .and. (iz .eq. 1)) then
@@ -712,11 +739,27 @@ contains
       call String2List(Arg, ':', Fields, MaxFields, Nfld, 'find storm')
       i = i + 1
 
-      FsFilter%Ftype    = Fields(1)
+      FsFilter%Fname    = Fields(1)
+      ! for now just support 'ge', 'gt', 'le' and 'lt'
+      if (Fields(1) .eq. 'none') then
+        FsFilter%Ftype = FTYPE_NONE
+      else if (Fields(1) .eq. 'ge') then
+        FsFilter%Ftype = FTYPE_GE
+      else if (Fields(1) .eq. 'gt') then
+        FsFilter%Ftype = FTYPE_GT
+      else if (Fields(1) .eq. 'le') then
+        FsFilter%Ftype = FTYPE_LE
+      else if (Fields(1) .eq. 'lt') then
+        FsFilter%Ftype = FTYPE_LT
+      else
+        write (*,*) 'ERROR: <ftype> for <2d_find_storm_filter> must be one of: "none", "ge", "gt", "le" or "le"'
+        BadArgs = .true.
+      endif
       FsFilter%Vname    = Fields(2)
       FsFilter%Vfprefix = Fields(3)
+
+      ! 'le', 'ge', 'lt', and 'gt' only need one parameter
       read(Fields(4), '(f)') FsFilter%x1
-      ! for now just support 'le', 'ge', 'lt', and 'gt'
       FsFilter%x2 = 0
       FsFilter%y1 = 0
       FsFilter%y2 = 0
@@ -745,7 +788,8 @@ contains
           BadArgs = .true.
         else
           ! have enough args
-          Filters(NumFilters)%Ftype    = Fields(1)
+          Filters(NumFilters)%Fname    = Fields(1)
+          Filters(NumFilters)%Ftype    = FTYPE_CYLVOL
           Filters(NumFilters)%Vname    = Fields(2)
           Filters(NumFilters)%Vfprefix = Fields(3)
 
@@ -783,7 +827,8 @@ contains
           BadArgs = .true.
         else
           ! have enough args
-          Filters(NumFilters)%Ftype    = Fields(1)
+          Filters(NumFilters)%Fname    = Fields(1)
+          Filters(NumFilters)%Ftype    = FTYPE_GE
           Filters(NumFilters)%Vname    = Fields(2)
           Filters(NumFilters)%Vfprefix = Fields(3)
 
@@ -805,7 +850,8 @@ contains
           BadArgs = .true.
         else
           ! have enough args
-          Filters(NumFilters)%Ftype    = Fields(1)
+          Filters(NumFilters)%Fname    = Fields(1)
+          Filters(NumFilters)%Ftype    = FTYPE_GT
           Filters(NumFilters)%Vname    = Fields(2)
           Filters(NumFilters)%Vfprefix = Fields(3)
 
@@ -827,7 +873,8 @@ contains
           BadArgs = .true.
         else
           ! have enough args
-          Filters(NumFilters)%Ftype    = Fields(1)
+          Filters(NumFilters)%Fname    = Fields(1)
+          Filters(NumFilters)%Ftype    = FTYPE_LE
           Filters(NumFilters)%Vname    = Fields(2)
           Filters(NumFilters)%Vfprefix = Fields(3)
 
@@ -849,7 +896,8 @@ contains
           BadArgs = .true.
         else
           ! have enough args
-          Filters(NumFilters)%Ftype    = Fields(1)
+          Filters(NumFilters)%Fname    = Fields(1)
+          Filters(NumFilters)%Ftype    = FTYPE_LT
           Filters(NumFilters)%Vname    = Fields(2)
           Filters(NumFilters)%Vfprefix = Fields(3)
 
@@ -871,7 +919,8 @@ contains
           BadArgs = .true.
         else
           ! have enough args
-          Filters(NumFilters)%Ftype    = Fields(1)
+          Filters(NumFilters)%Fname    = Fields(1)
+          Filters(NumFilters)%Ftype    = FTYPE_RANGE
           Filters(NumFilters)%Vname    = Fields(2)
           Filters(NumFilters)%Vfprefix = Fields(3)
 
@@ -893,7 +942,8 @@ contains
           BadArgs = .true.
         else
           ! have enough args
-          Filters(NumFilters)%Ftype    = Fields(1)
+          Filters(NumFilters)%Fname    = Fields(1)
+          Filters(NumFilters)%Ftype    = FTYPE_ABS_RANGE
           Filters(NumFilters)%Vname    = Fields(2)
           Filters(NumFilters)%Vfprefix = Fields(3)
 
@@ -912,7 +962,8 @@ contains
           BadArgs = .true.
         else
           ! have enough args
-          Filters(NumFilters)%Ftype    = Fields(1)
+          Filters(NumFilters)%Fname    = Fields(1)
+          Filters(NumFilters)%Ftype    = FTYPE_UP
           Filters(NumFilters)%Vname    = Fields(2)
           Filters(NumFilters)%Vfprefix = Fields(3)
 
@@ -931,7 +982,8 @@ contains
           BadArgs = .true.
         else
           ! have enough args
-          Filters(NumFilters)%Ftype    = Fields(1)
+          Filters(NumFilters)%Fname    = Fields(1)
+          Filters(NumFilters)%Ftype    = FTYPE_DN
           Filters(NumFilters)%Vname    = Fields(2)
           Filters(NumFilters)%Vfprefix = Fields(3)
 
@@ -950,7 +1002,8 @@ contains
           BadArgs = .true.
         else
           ! have enough args
-          Filters(NumFilters)%Ftype    = Fields(1)
+          Filters(NumFilters)%Fname    = Fields(1)
+          Filters(NumFilters)%Ftype    = FTYPE_UP_DN
           Filters(NumFilters)%Vname    = Fields(2)
           Filters(NumFilters)%Vfprefix = Fields(3)
 
@@ -1074,19 +1127,19 @@ subroutine FindStormCenter(Nx, Ny, Press, UseFsFilter, FsFilter, Fs, StmCtrX, St
       SelectPoint = .true.
       if (UseFsFilter) then
         SelectPoint = .false.
-        if (FsFilter%Ftype .eq. 'gt') then
+        if (FsFilter%Ftype .eq. FTYPE_GT) then
           if (Fs(ix,iy) .gt. FsFilter%x1) then
             SelectPoint = .true.
           endif
-        elseif (FsFilter%Ftype .eq. 'ge') then
+        elseif (FsFilter%Ftype .eq. FTYPE_GE) then
           if (Fs(ix,iy) .ge. FsFilter%x1) then
             SelectPoint = .true.
           endif
-        elseif (FsFilter%Ftype .eq. 'lt') then
+        elseif (FsFilter%Ftype .eq. FTYPE_LT) then
           if (Fs(ix,iy) .lt. FsFilter%x1) then
             SelectPoint = .true.
           endif
-        elseif (FsFilter%Ftype .eq. 'le') then
+        elseif (FsFilter%Ftype .eq. FTYPE_LE) then
           if (Fs(ix,iy) .le. FsFilter%x1) then
             SelectPoint = .true.
           endif
