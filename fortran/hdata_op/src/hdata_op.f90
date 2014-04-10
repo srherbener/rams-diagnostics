@@ -12,6 +12,16 @@ program hdata_op
   use diag_utils
   implicit none
 
+  ! Use integer representatives for the different operations so that
+  ! the if statements in the main loop below can use interger comparisons
+  ! instead of string comparisons. This will help speed up that loop.
+  integer, parameter :: OP_ADD  = 1
+  integer, parameter :: OP_SUB  = 2
+  integer, parameter :: OP_MULT = 3
+  integer, parameter :: OP_DIV  = 4
+  integer, parameter :: OP_AND  = 5
+  integer, parameter :: OP_OR   = 6
+
   integer, parameter :: LargeString  = 512
   integer, parameter :: MediumString = 256
   integer, parameter :: LittleString = 128
@@ -25,7 +35,8 @@ program hdata_op
   character (len=LittleString) :: VarName2
   character (len=MediumString) :: OutFile
   character (len=LittleString) :: OutVarName
-  character (len=LittleString) :: Op
+  character (len=LittleString) :: OpName
+  integer :: Op
 
   ! Data arrays
   ! Dims: x, y, z, t
@@ -39,7 +50,7 @@ program hdata_op
   logical :: BadDims
 
   ! Get the command line arguments
-  call GetMyArgs(InFile1, VarName1, InFile2, VarName2, OutFile, OutVarName, Op)
+  call GetMyArgs(InFile1, VarName1, InFile2, VarName2, OutFile, OutVarName, OpName, Op)
 
   write (*,*) 'Performing operation on HDF5 REVU data:'
   write (*,*) '  Input file 1: ', trim(InFile1)
@@ -48,7 +59,7 @@ program hdata_op
   write (*,*) '    Variable Name: ', trim(VarName2)
   write (*,*) '  Output file:  ', trim(OutFile)
   write (*,*) '    Variable Name: ', trim(OutVarName)
-  write (*,*) '  Operator: ', trim(Op)
+  write (*,*) '  Operator: ', trim(OpName)
   write (*,*) ''
   flush(6)
 
@@ -80,7 +91,7 @@ program hdata_op
   endif
 
   ! Check if the operation makes sense
-  if ((trim(Op) .eq. 'sub') .or. (trim(Op) .eq. 'add')) then
+  if ((Op .eq. OP_ADD) .or. (Op .eq. OP_SUB)) then
     if (trim(Var1%units) .ne. trim(Var2%units)) then
       write (*,*) 'ERROR: units of variables from input files do not match'
       write (*,*) 'ERROR:   Var1: ', trim(Var1%vname), ' -> ', trim(Var1%units)
@@ -167,25 +178,25 @@ program hdata_op
 
     ! do the op here
     do i = 1, Nelems
-      if (trim(Op) .eq. 'sub') then
-        OutVar%vdata(i) = Var1%vdata(i) - Var2%vdata(i)
-      else if (trim(Op) .eq. 'add') then
+      if (Op .eq. OP_ADD) then
         OutVar%vdata(i) = Var1%vdata(i) + Var2%vdata(i)
-      else if (trim(Op) .eq. 'mult') then
+      else if (Op .eq. OP_SUB) then
+        OutVar%vdata(i) = Var1%vdata(i) - Var2%vdata(i)
+      else if (Op .eq. OP_MULT) then
         OutVar%vdata(i) = Var1%vdata(i) * Var2%vdata(i)
-      else if (trim(Op) .eq. 'div') then
+      else if (Op .eq. OP_DIV) then
         OutVar%vdata(i) = Var1%vdata(i) / Var2%vdata(i)
-      else if (trim(Op) .eq. 'or') then
-        if ((anint(Var1%vdata(i)) .eq. 0.0) .and. (anint(Var2%vdata(i)) .eq. 0.0)) then
-          OutVar%vdata(i) = 0.0
-        else
-          OutVar%vdata(i) = 1.0
-        endif
-      else if (trim(Op) .eq. 'and') then
+      else if (Op .eq. OP_AND) then
         if ((anint(Var1%vdata(i)) .eq. 1.0) .and. (anint(Var2%vdata(i)) .eq. 1.0)) then
           OutVar%vdata(i) = 1.0
         else
           OutVar%vdata(i) = 0.0
+        endif
+      else if (Op .eq. OP_OR) then
+        if ((anint(Var1%vdata(i)) .eq. 0.0) .and. (anint(Var2%vdata(i)) .eq. 0.0)) then
+          OutVar%vdata(i) = 0.0
+        else
+          OutVar%vdata(i) = 1.0
         endif
       endif
     enddo
@@ -193,7 +204,7 @@ program hdata_op
     deallocate(Var1%vdata)
     deallocate(Var2%vdata)
 
-    ! write out the averaged data
+    ! write out the result
     call rhdf5_write_variable(rh5f_out, OutVar%vname, OutVar%ndims, it, OutVar%dims, &
        OutVar%units, OutVar%descrip, OutVar%dimnames, rdata=OutVar%vdata)
  
@@ -242,10 +253,11 @@ contains
 !
 ! This routine will read in the command line arguments
 !
-subroutine GetMyArgs(InFile1, VarName1, InFile2, VarName2, OutFile, OutVarName, Op)
+subroutine GetMyArgs(InFile1, VarName1, InFile2, VarName2, OutFile, OutVarName, OpName, Op)
   implicit none
 
-  character (len=*) :: InFile1, VarName1, InFile2, VarName2, OutFile, OutVarName, Op
+  character (len=*) :: InFile1, VarName1, InFile2, VarName2, OutFile, OutVarName, OpName
+  integer :: Op
 
   integer :: iargc
   character (len=128) :: arg
@@ -265,12 +277,12 @@ subroutine GetMyArgs(InFile1, VarName1, InFile2, VarName2, OutFile, OutVarName, 
     write (*,*) '        <out_var_name>: name of variable in output file'
     write (*,*) '        <operator>: operation to perform on data from input files'
     write (*,*) '            order of operation: <in_file1> <operator> <in_file2>'
-    write (*,*) '            sub -> subtract values in <in_file2> from those in <in_file1>'
     write (*,*) '            add -> add values in <in_file1> to those in <in_file2>'
+    write (*,*) '            sub -> subtract values in <in_file2> from those in <in_file1>'
     write (*,*) '            mult -> multiply values in <in_file1> by those in <in_file2>'
     write (*,*) '            div -> divide values in <in_file1> by those in <in_file2>'
-    write (*,*) '            or -> logical or values in <in_file1> with those in <in_file2>'
     write (*,*) '            and -> logical and values in <in_file1> with those in <in_file2>'
+    write (*,*) '            or -> logical or values in <in_file1> with those in <in_file2>'
     stop
   end if
 
@@ -280,20 +292,30 @@ subroutine GetMyArgs(InFile1, VarName1, InFile2, VarName2, OutFile, OutVarName, 
   call getarg(4, VarName2)
   call getarg(5, OutFile)
   call getarg(6, OutVarName)
-  call getarg(7, Op)
+  call getarg(7, OpName)
 
   BadArgs = .false.
 
-  if ((Op .ne. 'sub') .and. (Op .ne. 'add') .and. &
-      (Op .ne. 'mult') .and. (Op .ne. 'div') .and. &
-      (Op .ne. 'or') .and. (Op .ne. 'and')) then
+  if (OpName .eq. 'add') then
+    Op = OP_ADD
+  else if (OpName .eq. 'sub') then
+    Op = OP_SUB
+  else if (OpName .eq. 'mult') then
+    Op = OP_MULT
+  else if (OpName .eq. 'div') then
+    Op = OP_DIV
+  else if (OpName .eq. 'and') then
+    Op = OP_AND
+  else if (OpName .eq. 'or') then
+    Op = OP_OR
+  else
     write (*,*) 'ERROR: <operator> must be one of:'
-    write (*,*) '          sub'
     write (*,*) '          add'
+    write (*,*) '          sub'
     write (*,*) '          mult'
     write (*,*) '          div'
-    write (*,*) '          or'
     write (*,*) '          and'
+    write (*,*) '          or'
     write (*,*) ''
     BadArgs = .true.
   end if
