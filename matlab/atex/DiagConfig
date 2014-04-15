@@ -115,6 +115,7 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 
 ########### For Update/Paper #############
 
+#################### HISTOGRAMS ####################
 ### Precip rate, histogram
 #LinePlot: CO_UP_S293_G10M5_ALL PrateHistBins PrateHist_TALL      Prate      PrateHist_293      PrateHistSelect none PANEL:a@293K NorthEast none PrateHist_TALL_CO_S293_G10M5_ALL.jpg
 #LinePlot: CO_UP_S298_G10M5_ALL PrateHistBins PrateHist_TALL      Prate      PrateHist_298      PrateHistSelect none PANEL:a@298K NorthEast none PrateHist_TALL_CO_S298_G10M5_ALL.jpg
@@ -199,7 +200,7 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 #LinePlot: CO_UP_S298_G10M5_ALL CdepthHistBins CdepthCumulHist_TALL CdepthLin     CdepthCumulHist_298 CdepthHistSelect none PANEL:a@298K NorthEast none CdepthCumulHist_TALL_CO_S298_G10M5_ALL.jpg
 #LinePlot: CO_UP_S303_G10M5_ALL CdepthHistBins CdepthCumulHist_TALL CdepthLin     CdepthCumulHist_303 CdepthHistSelect none PANEL:a@303K NorthEast none CdepthCumulHist_TALL_CO_S303_G10M5_ALL.jpg
 
-
+####################### PDF ##############################
 ### Cloud optical thickness, PDF
 #LinePlot: CO_UP_S293_G10M5_ALL CotPdfBins CotPdf_TALL      Cot_293 PdfAll   CotPdfSelect none PANEL:a@S293 NorthEast none CotPdf_TALL_CO_S293_G10M5_ALL.jpg
 #LinePlot: CO_UP_S298_G10M5_ALL CotPdfBins CotPdf_TALL      Cot_298 PdfAll   CotPdfSelect none PANEL:a@S298 NorthEast none CotPdf_TALL_CO_S298_G10M5_ALL.jpg
@@ -1114,69 +1115,69 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 #LinePlot: CG_UP_C1600_S298 SimTimeBL CfMaxHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:f@S298@C1600 NorthWest none CfMaxHeight_CG_C1600_S298.jpg
 
 ### Domain average cloud optical thickness
-LinePlot: CO_UP_S293_G10M5_ALL SimTime AvgCot SimTimeHr AvgCot TsAll_T12_T36 none PANEL:a@S293 NorthWest none AvgCot_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL SimTime AvgCot SimTimeHr AvgCot TsAll_T12_T36 none PANEL:a@S298 NorthWest none AvgCot_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL SimTime AvgCot SimTimeHr AvgCot TsAll_T12_T36 none PANEL:a@S303 NorthWest none AvgCot_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL SimTime AvgCot SimTimeHr AvgCot TsAll_T12_T36 none PANEL:a@S293 NorthWest none AvgCot_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL SimTime AvgCot SimTimeHr AvgCot TsAll_T12_T36 none PANEL:a@S298 NorthWest none AvgCot_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL SimTime AvgCot SimTimeHr AvgCot TsAll_T12_T36 none PANEL:a@S303 NorthWest none AvgCot_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5 SimTime AvgCot SimTimeHr AvgCot TsAll_T12_T36 none PANEL:a@S293 NorthWest none AvgCot_CO_S293_G10M5.jpg
-LinePlot: CO_UP_S298_G10M5 SimTime AvgCot SimTimeHr AvgCot TsAll_T12_T36 none PANEL:b@S298 NorthWest none AvgCot_CO_S298_G10M5.jpg
-LinePlot: CO_UP_S303_G10M5 SimTime AvgCot SimTimeHr AvgCot TsAll_T12_T36 none PANEL:c@S303 NorthWest none AvgCot_CO_S303_G10M5.jpg
+#LinePlot: CO_UP_S293_G10M5 SimTime AvgCot SimTimeHr AvgCot TsAll_T12_T36 none PANEL:a@S293 NorthWest none AvgCot_CO_S293_G10M5.jpg
+#LinePlot: CO_UP_S298_G10M5 SimTime AvgCot SimTimeHr AvgCot TsAll_T12_T36 none PANEL:b@S298 NorthWest none AvgCot_CO_S298_G10M5.jpg
+#LinePlot: CO_UP_S303_G10M5 SimTime AvgCot SimTimeHr AvgCot TsAll_T12_T36 none PANEL:c@S303 NorthWest none AvgCot_CO_S303_G10M5.jpg
 
-LinePlot: CG_UP_C0050_S298 SimTime AvgCot SimTimeHr AvgCot TsAll_T12_T36 none PANEL:d@S298@C50   NorthWest none AvgCot_CG_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 SimTime AvgCot SimTimeHr AvgCot TsAll_T12_T36 none PANEL:e@S298@C400  NorthWest none AvgCot_CG_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 SimTime AvgCot SimTimeHr AvgCot TsAll_T12_T36 none PANEL:f@S298@C1600 NorthWest none AvgCot_CG_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 SimTime AvgCot SimTimeHr AvgCot TsAll_T12_T36 none PANEL:d@S298@C50   NorthWest none AvgCot_CG_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 SimTime AvgCot SimTimeHr AvgCot TsAll_T12_T36 none PANEL:e@S298@C400  NorthWest none AvgCot_CG_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 SimTime AvgCot SimTimeHr AvgCot TsAll_T12_T36 none PANEL:f@S298@C1600 NorthWest none AvgCot_CG_C1600_S298.jpg
 
 ### Domain average cloud depth
-LinePlot: CO_UP_S293_G10M5_ALL SimTime AvgCdepth SimTimeHr AvgCdepth TsAll_T12_T36 none PANEL:a@S293 NorthWest none AvgCdepth_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL SimTime AvgCdepth SimTimeHr AvgCdepth TsAll_T12_T36 none PANEL:a@S298 NorthWest none AvgCdepth_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL SimTime AvgCdepth SimTimeHr AvgCdepth TsAll_T12_T36 none PANEL:a@S303 NorthEast none AvgCdepth_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL SimTime AvgCdepth SimTimeHr AvgCdepth TsAll_T12_T36 none PANEL:a@S293 NorthWest none AvgCdepth_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL SimTime AvgCdepth SimTimeHr AvgCdepth TsAll_T12_T36 none PANEL:a@S298 NorthWest none AvgCdepth_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL SimTime AvgCdepth SimTimeHr AvgCdepth TsAll_T12_T36 none PANEL:a@S303 NorthEast none AvgCdepth_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5 SimTime AvgCdepth SimTimeHr AvgCdepth TsAll_T12_T36 none PANEL:a@S293 NorthWest none AvgCdepth_CO_S293_G10M5.jpg
-LinePlot: CO_UP_S298_G10M5 SimTime AvgCdepth SimTimeHr AvgCdepth TsAll_T12_T36 none PANEL:b@S298 NorthWest none AvgCdepth_CO_S298_G10M5.jpg
-LinePlot: CO_UP_S303_G10M5 SimTime AvgCdepth SimTimeHr AvgCdepth TsAll_T12_T36 none PANEL:c@S303 NorthWest none AvgCdepth_CO_S303_G10M5.jpg
+#LinePlot: CO_UP_S293_G10M5 SimTime AvgCdepth SimTimeHr AvgCdepth TsAll_T12_T36 none PANEL:a@S293 NorthWest none AvgCdepth_CO_S293_G10M5.jpg
+#LinePlot: CO_UP_S298_G10M5 SimTime AvgCdepth SimTimeHr AvgCdepth TsAll_T12_T36 none PANEL:b@S298 NorthWest none AvgCdepth_CO_S298_G10M5.jpg
+#LinePlot: CO_UP_S303_G10M5 SimTime AvgCdepth SimTimeHr AvgCdepth TsAll_T12_T36 none PANEL:c@S303 NorthWest none AvgCdepth_CO_S303_G10M5.jpg
 
-LinePlot: CG_UP_C0050_S298 SimTime AvgCdepth SimTimeHr AvgCdepth TsAll_T12_T36 none PANEL:d@S298@C50   NorthWest none AvgCdepth_CG_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 SimTime AvgCdepth SimTimeHr AvgCdepth TsAll_T12_T36 none PANEL:e@S298@C400  NorthWest none AvgCdepth_CG_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 SimTime AvgCdepth SimTimeHr AvgCdepth TsAll_T12_T36 none PANEL:f@S298@C1600 NorthWest none AvgCdepth_CG_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 SimTime AvgCdepth SimTimeHr AvgCdepth TsAll_T12_T36 none PANEL:d@S298@C50   NorthWest none AvgCdepth_CG_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 SimTime AvgCdepth SimTimeHr AvgCdepth TsAll_T12_T36 none PANEL:e@S298@C400  NorthWest none AvgCdepth_CG_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 SimTime AvgCdepth SimTimeHr AvgCdepth TsAll_T12_T36 none PANEL:f@S298@C1600 NorthWest none AvgCdepth_CG_C1600_S298.jpg
 
 ### Domain average LWP
-LinePlot: CO_UP_S293_G10M5_ALL SimTime AvgLwp SimTimeHr AvgLwp TsAll_T12_T36 none PANEL:a@S293 NorthWest none AvgLwp_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL SimTime AvgLwp SimTimeHr AvgLwp TsAll_T12_T36 none PANEL:a@S298 NorthWest none AvgLwp_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL SimTime AvgLwp SimTimeHr AvgLwp TsAll_T12_T36 none PANEL:a@S303 NorthWest none AvgLwp_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL SimTime AvgLwp SimTimeHr AvgLwp TsAll_T12_T36 none PANEL:a@S293 NorthWest none AvgLwp_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL SimTime AvgLwp SimTimeHr AvgLwp TsAll_T12_T36 none PANEL:a@S298 NorthWest none AvgLwp_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL SimTime AvgLwp SimTimeHr AvgLwp TsAll_T12_T36 none PANEL:a@S303 NorthWest none AvgLwp_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5 SimTime AvgLwp SimTimeHr AvgLwp TsAll_T12_T36 none PANEL:a@S293 NorthWest none AvgLwp_CO_S293_G10M5.jpg
-LinePlot: CO_UP_S298_G10M5 SimTime AvgLwp SimTimeHr AvgLwp TsAll_T12_T36 none PANEL:b@S298 NorthWest none AvgLwp_CO_S298_G10M5.jpg
-LinePlot: CO_UP_S303_G10M5 SimTime AvgLwp SimTimeHr AvgLwp TsAll_T12_T36 none PANEL:c@S303 NorthWest none AvgLwp_CO_S303_G10M5.jpg
+#LinePlot: CO_UP_S293_G10M5 SimTime AvgLwp SimTimeHr AvgLwp TsAll_T12_T36 none PANEL:a@S293 NorthWest none AvgLwp_CO_S293_G10M5.jpg
+#LinePlot: CO_UP_S298_G10M5 SimTime AvgLwp SimTimeHr AvgLwp TsAll_T12_T36 none PANEL:b@S298 NorthWest none AvgLwp_CO_S298_G10M5.jpg
+#LinePlot: CO_UP_S303_G10M5 SimTime AvgLwp SimTimeHr AvgLwp TsAll_T12_T36 none PANEL:c@S303 NorthWest none AvgLwp_CO_S303_G10M5.jpg
 
-LinePlot: CG_UP_C0050_S298 SimTime AvgLwp SimTimeHr AvgLwp TsAll_T12_T36 none PANEL:d@S298@C50   NorthWest none AvgLwp_CG_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 SimTime AvgLwp SimTimeHr AvgLwp TsAll_T12_T36 none PANEL:e@S298@C400  NorthWest none AvgLwp_CG_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 SimTime AvgLwp SimTimeHr AvgLwp TsAll_T12_T36 none PANEL:f@S298@C1600 NorthWest none AvgLwp_CG_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 SimTime AvgLwp SimTimeHr AvgLwp TsAll_T12_T36 none PANEL:d@S298@C50   NorthWest none AvgLwp_CG_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 SimTime AvgLwp SimTimeHr AvgLwp TsAll_T12_T36 none PANEL:e@S298@C400  NorthWest none AvgLwp_CG_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 SimTime AvgLwp SimTimeHr AvgLwp TsAll_T12_T36 none PANEL:f@S298@C1600 NorthWest none AvgLwp_CG_C1600_S298.jpg
 
 ### Domain average precip rate
-LinePlot: CO_UP_S293_G10M5_ALL SimTime AvgPrate SimTimeHr AvgPrate_293 TsAll_T12_T36 none PANEL:a@S293 NorthWest none AvgPrate_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL SimTime AvgPrate SimTimeHr AvgPrate_298 TsAll_T12_T36 none PANEL:a@S298 NorthWest none AvgPrate_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL SimTime AvgPrate SimTimeHr AvgPrate_303 TsAll_T12_T36 none PANEL:a@S303 NorthWest none AvgPrate_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL SimTime AvgPrate SimTimeHr AvgPrate_293 TsAll_T12_T36 none PANEL:a@S293 NorthWest none AvgPrate_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL SimTime AvgPrate SimTimeHr AvgPrate_298 TsAll_T12_T36 none PANEL:a@S298 NorthWest none AvgPrate_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL SimTime AvgPrate SimTimeHr AvgPrate_303 TsAll_T12_T36 none PANEL:a@S303 NorthWest none AvgPrate_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5 SimTime AvgPrate SimTimeHr AvgPrate_293 TsAll_T12_T36 none PANEL:a@S293 NorthWest none AvgPrate_CO_S293_G10M5.jpg
-LinePlot: CO_UP_S298_G10M5 SimTime AvgPrate SimTimeHr AvgPrate_298 TsAll_T12_T36 none PANEL:b@S298 NorthWest none AvgPrate_CO_S298_G10M5.jpg
-LinePlot: CO_UP_S303_G10M5 SimTime AvgPrate SimTimeHr AvgPrate_303 TsAll_T12_T36 none PANEL:c@S303 NorthWest none AvgPrate_CO_S303_G10M5.jpg
+#LinePlot: CO_UP_S293_G10M5 SimTime AvgPrate SimTimeHr AvgPrate_293 TsAll_T12_T36 none PANEL:a@S293 NorthWest none AvgPrate_CO_S293_G10M5.jpg
+#LinePlot: CO_UP_S298_G10M5 SimTime AvgPrate SimTimeHr AvgPrate_298 TsAll_T12_T36 none PANEL:b@S298 NorthWest none AvgPrate_CO_S298_G10M5.jpg
+#LinePlot: CO_UP_S303_G10M5 SimTime AvgPrate SimTimeHr AvgPrate_303 TsAll_T12_T36 none PANEL:c@S303 NorthWest none AvgPrate_CO_S303_G10M5.jpg
 
-LinePlot: CG_UP_C0050_S298 SimTime AvgPrate SimTimeHr AvgPrate_293 TsAll_T12_T36 none PANEL:d@S298@C50   NorthWest none AvgPrate_CG_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 SimTime AvgPrate SimTimeHr AvgPrate_298 TsAll_T12_T36 none PANEL:e@S298@C400  NorthWest none AvgPrate_CG_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 SimTime AvgPrate SimTimeHr AvgPrate_303 TsAll_T12_T36 none PANEL:f@S298@C1600 NorthWest none AvgPrate_CG_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 SimTime AvgPrate SimTimeHr AvgPrate_293 TsAll_T12_T36 none PANEL:d@S298@C50   NorthWest none AvgPrate_CG_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 SimTime AvgPrate SimTimeHr AvgPrate_298 TsAll_T12_T36 none PANEL:e@S298@C400  NorthWest none AvgPrate_CG_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 SimTime AvgPrate SimTimeHr AvgPrate_303 TsAll_T12_T36 none PANEL:f@S298@C1600 NorthWest none AvgPrate_CG_C1600_S298.jpg
 
 ### Domain average albedo
-LinePlot: CO_UP_S293_G10M5_ALL SimTime AvgAlbedo SimTimeHr AvgAlbedo TsAll_T12_T36 none PANEL:a@S293 NorthWest none AvgAlbedo_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL SimTime AvgAlbedo SimTimeHr AvgAlbedo TsAll_T12_T36 none PANEL:a@S298 NorthWest none AvgAlbedo_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL SimTime AvgAlbedo SimTimeHr AvgAlbedo TsAll_T12_T36 none PANEL:a@S303 NorthWest none AvgAlbedo_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL SimTime AvgAlbedo SimTimeHr AvgAlbedo TsAll_T12_T36 none PANEL:a@S293 NorthWest none AvgAlbedo_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL SimTime AvgAlbedo SimTimeHr AvgAlbedo TsAll_T12_T36 none PANEL:a@S298 NorthWest none AvgAlbedo_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL SimTime AvgAlbedo SimTimeHr AvgAlbedo TsAll_T12_T36 none PANEL:a@S303 NorthWest none AvgAlbedo_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5 SimTime AvgAlbedo SimTimeHr AvgAlbedo TsAll_T12_T36 none PANEL:a@S293 NorthWest none AvgAlbedo_CO_S293_G10M5.jpg
-LinePlot: CO_UP_S298_G10M5 SimTime AvgAlbedo SimTimeHr AvgAlbedo TsAll_T12_T36 none PANEL:b@S298 NorthWest none AvgAlbedo_CO_S298_G10M5.jpg
-LinePlot: CO_UP_S303_G10M5 SimTime AvgAlbedo SimTimeHr AvgAlbedo TsAll_T12_T36 none PANEL:c@S303 NorthWest none AvgAlbedo_CO_S303_G10M5.jpg
+#LinePlot: CO_UP_S293_G10M5 SimTime AvgAlbedo SimTimeHr AvgAlbedo TsAll_T12_T36 none PANEL:a@S293 NorthWest none AvgAlbedo_CO_S293_G10M5.jpg
+#LinePlot: CO_UP_S298_G10M5 SimTime AvgAlbedo SimTimeHr AvgAlbedo TsAll_T12_T36 none PANEL:b@S298 NorthWest none AvgAlbedo_CO_S298_G10M5.jpg
+#LinePlot: CO_UP_S303_G10M5 SimTime AvgAlbedo SimTimeHr AvgAlbedo TsAll_T12_T36 none PANEL:c@S303 NorthWest none AvgAlbedo_CO_S303_G10M5.jpg
 
-LinePlot: CG_UP_C0050_S298 SimTime AvgAlbedo SimTimeHr AvgAlbedo TsAll_T12_T36 none PANEL:d@S298@C50   NorthWest none AvgAlbedo_CG_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 SimTime AvgAlbedo SimTimeHr AvgAlbedo TsAll_T12_T36 none PANEL:e@S298@C400  NorthWest none AvgAlbedo_CG_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 SimTime AvgAlbedo SimTimeHr AvgAlbedo TsAll_T12_T36 none PANEL:f@S298@C1600 NorthWest none AvgAlbedo_CG_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 SimTime AvgAlbedo SimTimeHr AvgAlbedo TsAll_T12_T36 none PANEL:d@S298@C50   NorthWest none AvgAlbedo_CG_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 SimTime AvgAlbedo SimTimeHr AvgAlbedo TsAll_T12_T36 none PANEL:e@S298@C400  NorthWest none AvgAlbedo_CG_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 SimTime AvgAlbedo SimTimeHr AvgAlbedo TsAll_T12_T36 none PANEL:f@S298@C1600 NorthWest none AvgAlbedo_CG_C1600_S298.jpg
 
 ### Cloud fraction vs Cloud top temp
 #LinePlot: CO_UP_S298_G10M5  Ctop Cfrac TsAll_T12_T36 xy PANEL:a  NorthEast none CloudStruct_CO_S298_G10M5.jpg
@@ -1212,6 +1213,69 @@ LinePlot: CG_UP_C1600_S298 SimTime AvgAlbedo SimTimeHr AvgAlbedo TsAll_T12_T36 n
 ##LinePlot: CO_UP_C1600_G10M5 SimTime MaxCdepth TsAll none PANEL:b@CCN:@1600/cc  NorthEast none CloudMaxDepth_CO_C1600_G10M5.jpg
 
 ##LinePlot: CG_UP_C0400_S298  SimTime MaxCdepth TsAll none PANEL:f  NorthEast none CloudMaxDepth_CG_C400_S298.jpg
+
+####################### PROFILES ##############################
+
+### TURBULENCE STATS ###
+### w mean
+# no filter
+#LinePlot: CO_UP_S293_G10M5_ALL  WmeanTall TurbHeights Wmean_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none Wmean_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL  WmeanTall TurbHeights Wmean_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none Wmean_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL  WmeanTall TurbHeights Wmean_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none Wmean_TALL_CO_S303_G10M5_ALL.jpg
+
+# st circ filter
+#LinePlot: CO_UP_S293_G10M5_ALL  WmeanStCircTall TurbHeights WmeanStCirc_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none WmeanStCirc_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL  WmeanStCircTall TurbHeights WmeanStCirc_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none WmeanStCirc_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL  WmeanStCircTall TurbHeights WmeanStCirc_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none WmeanStCirc_TALL_CO_S303_G10M5_ALL.jpg
+
+# cv circ filter
+#LinePlot: CO_UP_S293_G10M5_ALL  WmeanCvCircTall TurbHeights WmeanCvCirc_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none WmeanCvCirc_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL  WmeanCvCircTall TurbHeights WmeanCvCirc_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none WmeanCvCirc_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL  WmeanCvCircTall TurbHeights WmeanCvCirc_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none WmeanCvCirc_TALL_CO_S303_G10M5_ALL.jpg
+
+### w var
+# no filter
+#LinePlot: CO_UP_S293_G10M5_ALL  WvarTall TurbHeights Wvar_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none Wvar_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL  WvarTall TurbHeights Wvar_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none Wvar_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL  WvarTall TurbHeights Wvar_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none Wvar_TALL_CO_S303_G10M5_ALL.jpg
+
+# st circ filter
+#LinePlot: CO_UP_S293_G10M5_ALL  WvarStCircTall TurbHeights WvarStCirc_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none WvarStCirc_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL  WvarStCircTall TurbHeights WvarStCirc_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none WvarStCirc_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL  WvarStCircTall TurbHeights WvarStCirc_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none WvarStCirc_TALL_CO_S303_G10M5_ALL.jpg
+
+# cv circ filter
+#LinePlot: CO_UP_S293_G10M5_ALL  WvarCvCircTall TurbHeights WvarCvCirc_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none WvarCvCirc_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL  WvarCvCircTall TurbHeights WvarCvCirc_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none WvarCvCirc_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL  WvarCvCircTall TurbHeights WvarCvCirc_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none WvarCvCirc_TALL_CO_S303_G10M5_ALL.jpg
+
+### w skew
+# no filter
+#LinePlot: CO_UP_S293_G10M5_ALL  WskewTall TurbHeights Wskew_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none Wskew_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL  WskewTall TurbHeights Wskew_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none Wskew_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL  WskewTall TurbHeights Wskew_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none Wskew_TALL_CO_S303_G10M5_ALL.jpg
+
+# st circ filter
+#LinePlot: CO_UP_S293_G10M5_ALL  WskewStCircTall TurbHeights WskewStCirc_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none WskewStCirc_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL  WskewStCircTall TurbHeights WskewStCirc_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none WskewStCirc_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL  WskewStCircTall TurbHeights WskewStCirc_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none WskewStCirc_TALL_CO_S303_G10M5_ALL.jpg
+
+# cv circ filter
+#LinePlot: CO_UP_S293_G10M5_ALL  WskewCvCircTall TurbHeights WskewCvCirc_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none WskewCvCirc_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL  WskewCvCircTall TurbHeights WskewCvCirc_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none WskewCvCirc_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL  WskewCvCircTall TurbHeights WskewCvCirc_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none WskewCvCirc_TALL_CO_S303_G10M5_ALL.jpg
+
+
+
+### Horizontal domain cloud fraction 
+##LinePlot: CO_UP_S298_G10M5  HfracCloud_298 Prof_Heights Prof_T12_T36 none PANEL:a@SST:@298K    NorthEast none HfracCloud_T12_T36_CO_S298_G10M5.jpg
+##LinePlot: CO_UP_C0400_G10M5 HfracCloud_303 Prof_Heights Prof_T12_T36 none PANEL:b@CCN:@400/cc  NorthEast none HfracCloud_T12_T36_CO_C400_G10M5.jpg
+##LinePlot: CG_UP_C0400_S298  HfracCloud_298 Prof_Heights Prof_T12_T36 none PANEL:c  NorthEast none BuoyFlux_T12_T36_CG_C400_S298.jpg
+
+##LinePlot: CO_UP_S293_G10M5_ALL  HfracCloud_293 Prof_Heights Prof_T12_T36 none PANEL:a@SST:@293K    NorthEast none HfracCloud_T12_T36_CO_S293_G10M5_ALL.jpg
+##LinePlot: CO_UP_S298_G10M5_ALL  HfracCloud_298 Prof_Heights Prof_T12_T36 none PANEL:d@SST:@298K    NorthEast none HfracCloud_T12_T36_CO_S298_G10M5_ALL.jpg
+##LinePlot: CO_UP_S303_G10M5_ALL  HfracCloud_303 Prof_Heights Prof_T12_T36 none PANEL:g@SST:@303K    NorthEast none HfracCloud_T12_T36_CO_S303_G10M5_ALL.jpg
+
 
 ### Horizontal domain cloud fraction 
 ##LinePlot: CO_UP_S298_G10M5  HfracCloud_298 Prof_Heights Prof_T12_T36 none PANEL:a@SST:@298K    NorthEast none HfracCloud_T12_T36_CO_S298_G10M5.jpg
@@ -3059,7 +3123,7 @@ PlotVar: SimTime t_coords TsAveragedData/hda_cfrac Simulation@Time  h  2.7777777
 
 #PlotVar: Prof_Heights      z_coords  DIAGS/buoy_flux_T12_T36    Height km     0   4 1e-3
 #PlotVar: MOMENT_HEIGHTS    z_coords  DIAGS/moments              Height km     0   4 1e-3
-#PlotVar: TURB_HEIGHTS      z_coords  DIAGS/turb_stats           Height km     0   4 1e-3
+PlotVar: TurbHeights      z_coords  DIAGS/turb_stats           Height km   1e-3
 
 #PlotVar: HfracCloud_293      hfrac_cloud DIAGS/hfrac_cloud_T12_T36   Cloud@Fraction @     0 1.3 1
 #PlotVar: HfracCloud_298      hfrac_cloud DIAGS/hfrac_cloud_T12_T36   Cloud@Fraction @     0 1.2 1
@@ -3235,6 +3299,23 @@ PlotVar: AvgAlbedo   albedo_avg   DIAGS/avg_ts_ctype_albedo Albedo             @
 
 PlotVar: SimTimeBL   t_coords     DIAGS/bl_stats_0p01     Simulation@Time  h  2.77777778e-4
 PlotVar: SimTimeAVG  t_coords     DIAGS/avg_ts_ctype_cot  Simulation@Time  h  2.77777778e-4
+
+############## TURBULENCE STATS ###################
+
+### Mean Vertical Velocity ###
+PlotVar: WmeanTall         w_all         DIAGS/turb_stats   <w> cm@s^-^1  100
+PlotVar: WmeanStCircTall   w_st_circ_all DIAGS/turb_stats   <w> cm@s^-^1  100
+PlotVar: WmeanCvCircTall   w_cv_circ_all DIAGS/turb_stats   <w>  m@s^-^1    1
+
+### Vertical Velocity Variance ###
+PlotVar: WvarTall         w-w_all         DIAGS/turb_stats   <w'w'>  m^2@s^-^2    1
+PlotVar: WvarStCircTall   w-w_st_circ_all DIAGS/turb_stats   <w'w'>  m^2@s^-^2    1
+PlotVar: WvarCvCircTall   w-w_cv_circ_all DIAGS/turb_stats   <w'w'>  m^2@s^-^2    1
+
+### Vertical Velocity Skew ###
+PlotVar: WskewTall         w-w-w_all         DIAGS/turb_stats   <w'w'w'>  m^3@s^-^3    1
+PlotVar: WskewStCircTall   w-w-w_st_circ_all DIAGS/turb_stats   <w'w'w'>  m^3@s^-^3    1
+PlotVar: WskewCvCircTall   w-w-w_cv_circ_all DIAGS/turb_stats   <w'w'w'>  m^3@s^-^3    1
 
 ############## Cloud Mass (mixing ratio) ############################
 # no filter
@@ -3892,6 +3973,36 @@ PlotAxis: CotCumulHist_293    0    0.1 linear
 PlotAxis: CotCumulHist_298    0      3 linear
 PlotAxis: CotCumulHist_303    0      6 linear
 
+PlotAxis: Wmean_293         -0.02 0.02 linear
+PlotAxis: Wmean_298         -0.02 0.02 linear
+PlotAxis: Wmean_303         -0.02 0.02 linear
+PlotAxis: WmeanStCirc_293      -2    2 linear
+PlotAxis: WmeanStCirc_298      -2    2 linear
+PlotAxis: WmeanStCirc_303      -2    2 linear
+PlotAxis: WmeanCvCirc_293      -1    2 linear
+PlotAxis: WmeanCvCirc_298      -1    2 linear
+PlotAxis: WmeanCvCirc_303      -1    2 linear
+
+PlotAxis: Wvar_293         -0.001  0.001 linear
+PlotAxis: Wvar_298         -0.001  0.020 linear
+PlotAxis: Wvar_303         -0.001  0.050 linear
+PlotAxis: WvarStCirc_293   -0.001  0.004 linear
+PlotAxis: WvarStCirc_298   -0.001  0.010 linear
+PlotAxis: WvarStCirc_303   -0.001  0.010 linear
+PlotAxis: WvarCvCirc_293     -0.1    1.5 linear
+PlotAxis: WvarCvCirc_298     -0.1    1.5 linear
+PlotAxis: WvarCvCirc_303     -0.1    1.5 linear
+
+PlotAxis: Wskew_293        -0.0001 0.0001 linear
+PlotAxis: Wskew_298         -0.001  0.005 linear
+PlotAxis: Wskew_303         -0.001  0.020 linear
+PlotAxis: WskewStCirc_293  -0.0003 0.0003 linear
+PlotAxis: WskewStCirc_298   -0.005  0.005 linear
+PlotAxis: WskewStCirc_303   -0.005  0.005 linear
+PlotAxis: WskewCvCirc_293     -0.1      1 linear
+PlotAxis: WskewCvCirc_298     -0.1      1 linear
+PlotAxis: WskewCvCirc_303     -0.1      1 linear
+
 PlotAxis: SimTimeHr  10     40 linear
 PlotAxis: HeightKm    0      4 linear
 PlotAxis: HeightM     0   4000 linear
@@ -3914,7 +4025,8 @@ PlotDselect: TsAll           1 1 1 1 -50  50     0 129600
 
 PlotDselect: Prof_T12_T36   1 1 1 1 0 4000  1 1
 PlotDselect: MOMENT_SELECT  1 1 1 1 0 4000  1 1
-PlotDselect: TURB_SELECT    1 1 1 1 0 4000  1 1
+
+PlotDselect: TurbSelect    1 1 1 1 0 4000  1 1
 
 PlotDselect: ContourSelect_T12  -36.5 -35.4   14.4 15.4    50.0 50.0    43200  43200
 PlotDselect: ContourSelect_T24  -36.5 -35.4   14.4 15.4    50.0 50.0    86400  86400

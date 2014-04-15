@@ -28,6 +28,12 @@ function [ ] = GenTurbData(ConfigFile)
       { 'turb_cov_w_vapor_ud0p10'   'turb_cov_vapor'    2 'vapor_ud0p10'     }
       { 'turb_cov_w_speed_ud0p10'   'turb_cov_speed'    2 'speed_ud0p10'     }
 
+      { 'turb_mmts_w_st_circ'       'turb_mmts_w'       1 'w_st_circ'        }
+      { 'turb_mmts_theta_e_st_circ' 'turb_mmts_theta_e' 1 'theta_e_st_circ'  }
+
+      { 'turb_mmts_w_cv_circ'       'turb_mmts_w'       1 'w_cv_circ'        }
+      { 'turb_mmts_theta_e_cv_circ' 'turb_mmts_theta_e' 1 'theta_e_cv_circ'  }
+
       % fluxes (covariances)
       { 'turb_cov_w_theta'          'turb_cov_theta'    3 'w-theta'          }
       { 'turb_cov_w_theta_v'        'turb_cov_theta_v'  3 'w-theta_v'        }
@@ -44,10 +50,18 @@ function [ ] = GenTurbData(ConfigFile)
 
       { 'turb_mmts_w_ud0p10'        'turb_mmts_w'       2 'w-w_ud0p10'       }
 
+      { 'turb_mmts_w_st_circ'       'turb_mmts_w'       2 'w-w_st_circ'      }
+
+      { 'turb_mmts_w_cv_circ'       'turb_mmts_w'       2 'w-w_cv_circ'      }
+
       % skews
       { 'turb_mmts_w'               'turb_mmts_w'       3 'w-w-w'            }
 
       { 'turb_mmts_w_ud0p10'        'turb_mmts_w'       3 'w-w-w_ud0p10'     }
+
+      { 'turb_mmts_w_st_circ'       'turb_mmts_w'       3 'w-w-w_st_circ'    }
+
+      { 'turb_mmts_w_cv_circ'       'turb_mmts_w'       3 'w-w-w_cv_circ'    }
       
       };
 

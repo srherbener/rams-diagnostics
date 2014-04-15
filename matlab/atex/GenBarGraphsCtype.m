@@ -67,6 +67,16 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
   %    18  _cumul_TMID
   %    19  _cumul_TEND
   %    20  _cumul_TALL
+  %
+  %    21  _st_circ_TSTART
+  %    22  _st_circ_TMID
+  %    23  _st_circ_TEND
+  %    24  _st_circ_TALL
+  %
+  %    25  _cv_circ_TSTART
+  %    26  _cv_circ_TMID
+  %    27  _cv_circ_TEND
+  %    28  _cv_circ_TALL
 
   NptsScaleTALL = 1 / (398 * 398 * 289); % divide by total number of points in domain for TALL group
                                          %    horiz domain: 398 * 398 points, 289 time steps (12 to 36 h)
@@ -127,34 +137,34 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'bars_avg_cdepth_TALL_CO.jpg'
 %       }
 %
-       % Stratiform cloud types, PR averages, all time points, CCN only
-       {
-       'Stratiform PR Avg TALL CCN only, grouped by SST'
-       'bgraph_pcprr.h5'
-       { 'a' 'Stratiform' }
-       'N_a (# cm^-^3)'
-       'Precip Rate (mm h^-^1)'
-       { 'blue' 'cyan' 'magenta' }
-       { { '293 K', '298 K', '303 K' } 'NorthWest' }
-       'grouped'
-       { 'Averages' 1 { [8 12] [1:3] [1:6] [1] } 1 'CCN' 0 0.06 }
-       'bars_avg_pcprr_stratiform_TALL_CO.jpg'
-       }
-
-       % Stratiform cloud types, Cloud depth averages, all time points, CCN only
-       {
-       'Stratiform Cloud Depth Avg TALL CCN only, grouped by SST'
-       'bgraph_cdepth.h5'
-       { 'a' 'Stratiform' }
-       'N_a (# cm^-^3)'
-       'Cloud Depth (m)'
-       { 'blue' 'cyan' 'magenta' }
-       { { '293 K', '298 K', '303 K' } 'NorthWest' }
-       'grouped'
-       { 'Averages' 1 { [8 12] [1:3] [1:6] [1] } 1 'CCN' 0 900 }
-       'bars_avg_cdepth_stratiform_TALL_CO.jpg'
-       }
-
+%       % Stratiform cloud types, PR averages, all time points, CCN only
+%       {
+%       'Stratiform PR Avg TALL CCN only, grouped by SST'
+%       'bgraph_pcprr.h5'
+%       { 'a' 'Stratiform' }
+%       'N_a (# cm^-^3)'
+%       'Precip Rate (mm h^-^1)'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { '293 K', '298 K', '303 K' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [8 12] [1:3] [1:6] [1] } 1 'CCN' 0 0.06 }
+%       'bars_avg_pcprr_stratiform_TALL_CO.jpg'
+%       }
+%
+%       % Stratiform cloud types, Cloud depth averages, all time points, CCN only
+%       {
+%       'Stratiform Cloud Depth Avg TALL CCN only, grouped by SST'
+%       'bgraph_cdepth.h5'
+%       { 'a' 'Stratiform' }
+%       'N_a (# cm^-^3)'
+%       'Cloud Depth (m)'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { '293 K', '298 K', '303 K' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [8 12] [1:3] [1:6] [1] } 1 'CCN' 0 900 }
+%       'bars_avg_cdepth_stratiform_TALL_CO.jpg'
+%       }
+%
 %       % Cloud fraction averages, all time points, CCN only
 %       {
 %       'Cloud Fraction Avg TALL CCN only, grouped by SST'
@@ -185,7 +195,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %
 %       % Cloud type, npoints (relative amounts), TALL, CCN only, SST 298
 %       {
-%       'Cloud Distribution TALL CCN only, 293K'
+%       'Cloud Distribution TALL CCN only, 298K'
 %       'bgraph_pcprr.h5'
 %       { 'a' 'All Points, S298' }
 %       'N_a (# cm^-^3)'
@@ -199,7 +209,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %
 %       % Cloud type, npoints (relative amounts), TALL, CCN only, SST 303
 %       {
-%       'Cloud Distribution TALL CCN only, 293K'
+%       'Cloud Distribution TALL CCN only, 300K'
 %       'bgraph_pcprr.h5'
 %       { 'a' 'All Points, S303' }
 %       'N_a (# cm^-^3)'
@@ -210,6 +220,118 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       { 'Npoints' NptsScaleTALL*100 { [8 12 16 20] [3] [1:6] [1] } 1 'CCN' 0 120 }
 %       'bars_avg_ctype_TALL_CO_S303.jpg'
 %       }
+%
+       % stratiform circulation, COT averages, all time points, CCN only
+       {
+       'ST_CIRC, COT Avg TALL CCN only, grouped by SST'
+       'bgraph_cot.h5'
+       { 'a' 'Stratiform Circulation' }
+       'N_a (# cm^-^3)'
+       'COT'
+       { 'blue' 'cyan' 'magenta' }
+       { { '293 K', '298 K', '303 K' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [24] [1:3] [1:6] [1] } 1 'CCN' 0 6 }
+       'bars_avg_st_circ_cot_TALL_CO.jpg'
+       }
+
+       % stratiform circulation, PR averages, all time points, CCN only
+       {
+       'ST_CIRC, PR Avg TALL CCN only, grouped by SST'
+       'bgraph_pcprr.h5'
+       { 'a' 'Stratiform Circulation' }
+       'N_a (# cm^-^3)'
+       'Precip Rate (mm h^-^1)'
+       { 'blue' 'cyan' 'magenta' }
+       { { '293 K', '298 K', '303 K' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [24] [1:3] [1:6] [1] } 1 'CCN' 0 0.12 }
+       'bars_avg_st_circ_pcprr_TALL_CO.jpg'
+       }
+
+       % stratiform circulation, LWP averages, all time points, CCN only
+       {
+       'ST_CIRC, LWP Avg TALL CCN only, grouped by SST'
+       'bgraph_lwp.h5'
+       { 'a' 'Stratiform Circulation' }
+       'N_a (# cm^-^3)'
+       'LWP (mm)'
+       { 'blue' 'cyan' 'magenta' }
+       { { '293 K', '298 K', '303 K' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [24] [1:3] [1:6] [1] } 1 'CCN' 0 0.25 }
+       'bars_avg_st_circ_lwp_TALL_CO.jpg'
+       }
+
+       % stratiform circulation, Cloud depth averages, all time points, CCN only
+       {
+       'ST_CIRC, Cloud Depth Avg TALL CCN only, grouped by SST'
+       'bgraph_cdepth.h5'
+       { 'a' 'Stratiform Circulation' }
+       'N_a (# cm^-^3)'
+       'Cloud Depth (m)'
+       { 'blue' 'cyan' 'magenta' }
+       { { '293 K', '298 K', '303 K' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [24] [1:3] [1:6] [1] } 1 'CCN' 0 1000 }
+       'bars_avg_st_circ_cdepth_TALL_CO.jpg'
+       }
+
+       % convective circulation, COT averages, all time points, CCN only
+       {
+       'CV_CIRC, COT Avg TALL CCN only, grouped by SST'
+       'bgraph_cot.h5'
+       { 'a' 'Convective Circulation' }
+       'N_a (# cm^-^3)'
+       'COT'
+       { 'blue' 'cyan' 'magenta' }
+       { { '293 K', '298 K', '303 K' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [28] [1:3] [1:6] [1] } 1 'CCN' 0 60 }
+       'bars_avg_cv_circ_cot_TALL_CO.jpg'
+       }
+
+       % convective circulation, PR averages, all time points, CCN only
+       {
+       'CV_CIRC, PR Avg TALL CCN only, grouped by SST'
+       'bgraph_pcprr.h5'
+       { 'a' 'Convective Circulation' }
+       'N_a (# cm^-^3)'
+       'Precip Rate (mm h^-^1)'
+       { 'blue' 'cyan' 'magenta' }
+       { { '293 K', '298 K', '303 K' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [28] [1:3] [1:6] [1] } 1 'CCN' 0 6 }
+       'bars_avg_cv_circ_pcprr_TALL_CO.jpg'
+       }
+
+       % convective circulation, LWP averages, all time points, CCN only
+       {
+       'CV_CIRC, LWP Avg TALL CCN only, grouped by SST'
+       'bgraph_lwp.h5'
+       { 'a' 'Convective Circulation' }
+       'N_a (# cm^-^3)'
+       'LWP (mm)'
+       { 'blue' 'cyan' 'magenta' }
+       { { '293 K', '298 K', '303 K' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [28] [1:3] [1:6] [1] } 1 'CCN' 0 1.5 }
+       'bars_avg_cv_circ_lwp_TALL_CO.jpg'
+       }
+
+       % convective circulation, Cloud depth averages, all time points, CCN only
+       {
+       'CV_CIRC, Cloud Depth Avg TALL CCN only, grouped by SST'
+       'bgraph_cdepth.h5'
+       { 'a' 'Convective Circulation' }
+       'N_a (# cm^-^3)'
+       'Cloud Depth (m)'
+       { 'blue' 'cyan' 'magenta' }
+       { { '293 K', '298 K', '303 K' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [28] [1:3] [1:6] [1] } 1 'CCN' 0 2000 }
+       'bars_avg_cv_circ_cdepth_TALL_CO.jpg'
+       }
 
      };
 

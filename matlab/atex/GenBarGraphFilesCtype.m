@@ -32,6 +32,14 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
            'cot_cumul_TMID'
            'cot_cumul_TEND'
            'cot_cumul_TALL'
+           'cot_st_circ_TSTART'
+           'cot_st_circ_TMID'
+           'cot_st_circ_TEND'
+           'cot_st_circ_TALL'
+           'cot_cv_circ_TSTART'
+           'cot_cv_circ_TMID'
+           'cot_cv_circ_TEND'
+           'cot_cv_circ_TALL'
         }
         'bgraph_cot'
       }
@@ -59,6 +67,14 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
            'cdepth_cumul_TMID'
            'cdepth_cumul_TEND'
            'cdepth_cumul_TALL'
+           'cdepth_st_circ_TSTART'
+           'cdepth_st_circ_TMID'
+           'cdepth_st_circ_TEND'
+           'cdepth_st_circ_TALL'
+           'cdepth_cv_circ_TSTART'
+           'cdepth_cv_circ_TMID'
+           'cdepth_cv_circ_TEND'
+           'cdepth_cv_circ_TALL'
         }
         'bgraph_cdepth'
       }
@@ -86,6 +102,14 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
            'lwp_cumul_TMID'
            'lwp_cumul_TEND'
            'lwp_cumul_TALL'
+           'lwp_st_circ_TSTART'
+           'lwp_st_circ_TMID'
+           'lwp_st_circ_TEND'
+           'lwp_st_circ_TALL'
+           'lwp_cv_circ_TSTART'
+           'lwp_cv_circ_TMID'
+           'lwp_cv_circ_TEND'
+           'lwp_cv_circ_TALL'
         }
         'bgraph_lwp'
       }
@@ -113,6 +137,14 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
            'pcprr_cumul_TMID'
            'pcprr_cumul_TEND'
            'pcprr_cumul_TALL'
+           'pcprr_st_circ_TSTART'
+           'pcprr_st_circ_TMID'
+           'pcprr_st_circ_TEND'
+           'pcprr_st_circ_TALL'
+           'pcprr_cv_circ_TSTART'
+           'pcprr_cv_circ_TMID'
+           'pcprr_cv_circ_TEND'
+           'pcprr_cv_circ_TALL'
         }
         'bgraph_pcprr'
       }
