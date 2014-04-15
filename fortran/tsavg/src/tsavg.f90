@@ -975,18 +975,9 @@ program tsavg
 
   ! If doing histogram or pop, calculate the bin values
   if ((AvgFunc .eq. 'hist') .or. (AvgFunc .eq. 'pop') .or. (AvgFunc .eq. 'hist2d')) then
-    allocate(Xbins(Xnbins))
-    Xbins(1) = Xbstart
-    do ib = 2, Xnbins
-      Xbins(ib) = Xbins(ib-1) + Xbinc
-    enddo
-
+    call InitBins(Xnbins, Xbins, Xbstart, Xbinc)
     if ((AvgFunc .eq. 'pop') .or. (AvgFunc .eq. 'hist2d')) then
-      allocate(Ybins(Ynbins))
-      Ybins(1) = Ybstart
-      do ib = 2, Ynbins
-        Ybins(ib) = Ybins(ib-1) + Ybinc
-      enddo
+      call InitBins(Ynbins, Ybins, Ybstart, Ybinc)
     endif
   endif
 
@@ -2036,28 +2027,16 @@ subroutine DoHist(Nx, Ny, Nz, FilterNz, Nb, Var, Filter, UseFilter, UndefVal, Bi
     do iy = 2, Ny-1
       do ix = 2, Nx-1
         SelectPoint = anint(Var(ix,iy,iz)) .ne. UndefVal
+
         if (UseFilter) then
           SelectPoint = SelectPoint .and. (anint(Filter(ix,iy,filter_z)) .eq. 1.0)
         endif
+        
+        ib = FindBin(Nb, Bins, Var(ix,iy,iz))
+        SelectPoint = SelectPoint .and. (ib .ne. -1)
+        
         if (SelectPoint) then
-          ! Check all bins except the last.
-          !
-          ! Exiting out of the loop when finding the bin will help a lot when the
-          ! distribution of values is biased toward smaller values. After exiting
-          ! out of the loop you can either just check the last bin (which will be wasted)
-          ! or put in a logical variable and check that variable saying you can skip the
-          ! check of the last bin. Since you would have to check the logical variable and
-          ! the last bin every time you might as well just check the last bin instead.
-          do ib = 1, Nb-1
-             if ((Bins(ib) .le. Var(ix,iy,iz)) .and. (Var(ix,iy,iz) .lt. Bins(ib+1))) then
-                Counts(ib,iz) = Counts(ib,iz) + 1.0
-                exit
-             endif
-          enddo
-          ! check the last bin
-          if (Bins(Nb) .eq. Var(ix,iy,iz)) then
-            Counts(Nb,iz) = Counts(Nb,iz) + 1.0
-          endif
+          Counts(ib,iz) = Counts(ib,iz) + 1.0
         endif
       enddo
     enddo
@@ -2575,6 +2554,30 @@ real function Calc2dMean(Nx, Ny, Nz, Var, ix, iy, iz, xs, xe, ys, ye)
   Calc2dMean = Calc2dMean / Npts
 
 end function Calc2dMean
+
+!*****************************************************************************
+! InitBins()
+!
+! This subroutine will initialize a 1D array of bins. For now, this is
+! done from the input specs: Nb, Bstart, Binc
+!
+subroutine InitBins(Nb, Bins, Bstart, Binc)
+  implicit none
+
+  integer :: Nb
+  real, dimension(:), allocatable :: Bins
+  real :: Bstart, Binc
+
+  integer :: ib
+
+  allocate(Bins(Nb))
+  Bins(1) = Bstart
+  do ib = 2, Nb
+    Bins(ib) = Bins(ib-1) + Binc
+  enddo
+
+  return
+end subroutine InitBins
 
 !*****************************************************************************
 ! FindBin()
