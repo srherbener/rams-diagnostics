@@ -652,14 +652,43 @@ montage -tile 3x1 -geometry ${Jsize}+2+100 \
 # FigureWcfadC400_S298.jpg
 #
 echo "Figure: W stats all time points"
-montage -tile 3x2 -geometry ${Jsize}+2+100 \
- W_Var_TALL_CO_S293_G10M5_ALL.jpg \
- W_Var_TALL_CO_S298_G10M5_ALL.jpg \
- W_Var_TALL_CO_S303_G10M5_ALL.jpg \
- W_Skew_TALL_CO_S293_G10M5_ALL.jpg \
- W_Skew_TALL_CO_S298_G10M5_ALL.jpg \
- W_Skew_TALL_CO_S303_G10M5_ALL.jpg \
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ Wmean_TALL_CO_S293_G10M5_ALL.jpg \
+ Wmean_TALL_CO_S298_G10M5_ALL.jpg \
+ Wmean_TALL_CO_S303_G10M5_ALL.jpg \
+ Wvar_TALL_CO_S293_G10M5_ALL.jpg \
+ Wvar_TALL_CO_S298_G10M5_ALL.jpg \
+ Wvar_TALL_CO_S303_G10M5_ALL.jpg \
+ Wskew_TALL_CO_S293_G10M5_ALL.jpg \
+ Wskew_TALL_CO_S298_G10M5_ALL.jpg \
+ Wskew_TALL_CO_S303_G10M5_ALL.jpg \
  FigureWstatsTall.jpg
+
+echo "Figure: W stats, st circ, all time points"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ WmeanStCirc_TALL_CO_S293_G10M5_ALL.jpg \
+ WmeanStCirc_TALL_CO_S298_G10M5_ALL.jpg \
+ WmeanStCirc_TALL_CO_S303_G10M5_ALL.jpg \
+ WvarStCirc_TALL_CO_S293_G10M5_ALL.jpg \
+ WvarStCirc_TALL_CO_S298_G10M5_ALL.jpg \
+ WvarStCirc_TALL_CO_S303_G10M5_ALL.jpg \
+ WskewStCirc_TALL_CO_S293_G10M5_ALL.jpg \
+ WskewStCirc_TALL_CO_S298_G10M5_ALL.jpg \
+ WskewStCirc_TALL_CO_S303_G10M5_ALL.jpg \
+ FigureWstatsStCircTall.jpg
+
+echo "Figure: W stats, cv circ, all time points"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ WmeanCvCirc_TALL_CO_S293_G10M5_ALL.jpg \
+ WmeanCvCirc_TALL_CO_S298_G10M5_ALL.jpg \
+ WmeanCvCirc_TALL_CO_S303_G10M5_ALL.jpg \
+ WvarCvCirc_TALL_CO_S293_G10M5_ALL.jpg \
+ WvarCvCirc_TALL_CO_S298_G10M5_ALL.jpg \
+ WvarCvCirc_TALL_CO_S303_G10M5_ALL.jpg \
+ WskewCvCirc_TALL_CO_S293_G10M5_ALL.jpg \
+ WskewCvCirc_TALL_CO_S298_G10M5_ALL.jpg \
+ WskewCvCirc_TALL_CO_S303_G10M5_ALL.jpg \
+ FigureWstatsCvCircTall.jpg
 
 #echo "Figure: COT pdfs with LWP bin 1, CCN only"
 #montage -tile 3x4 -geometry ${Jsize}+2+100 \
