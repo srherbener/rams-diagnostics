@@ -47,8 +47,8 @@ program tsavg
   real :: PrecipRateLimit, Zbot, Ztop
   integer :: Kbot, Ktop
   
+  character (len=LargeString) :: XbinsFile, YbinsFile
   integer :: Xnbins, Ynbins
-  real :: Xbstart, Xbinc, Ybstart, Ybinc
   real, dimension(:), allocatable :: Xbins, Ybins
   real :: HfracThresh
 
@@ -89,26 +89,22 @@ program tsavg
 
   if (AvgFunc(1:5) .eq. 'hist:') then
     call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'hist spec')
-    if (Nfields .eq. 7) then
+    if (Nfields .eq. 5) then
       ! got the right amount of fields
       !   field    value
       !    1       'hist'
       !    2       name of variable inside the REVU file
       !    3       prefix for the REVU file name
       !    4       dimensionality of variable
-      !    5       number of bins
-      !    6       bin start
-      !    7       bin increment
+      !    5       bins file
       AvgFunc    = trim(ArgList(1))
       Var%vname  = trim(ArgList(2))
       VarFprefix = trim(ArgList(3))
       VarFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
       VarDim     = trim(ArgList(4))
-      read(ArgList(5), '(i)') Xnbins
-      read(ArgList(6), '(f)') Xbstart
-      read(ArgList(7), '(f)') Xbinc
+      XbinsFile  = trim(ArgList(5))
     else
-      write (*,*) 'ERROR: average function hist requires seven fields: hist:<var>:<file>:<dim>:<num_bins>:<bin_start>:<bin_inc>'
+      write (*,*) 'ERROR: average function hist requires five fields: hist:<var>:<file>:<dim>:<bins_file>'
       stop
     endif
   endif
@@ -118,7 +114,7 @@ program tsavg
     if (Nfields .eq. 5) then
       ! got the right amount of fields
       !   field    value
-      !    1       'hist'
+      !    1       'hfrac'
       !    2       name of variable inside the REVU file
       !    3       prefix for the REVU file name
       !    4       dimensionality of variable
@@ -137,7 +133,7 @@ program tsavg
 
   if (AvgFunc(1:4) .eq. 'pop:') then
     call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'pop spec')
-    if (Nfields .eq. 14) then
+    if (Nfields .eq. 10) then
       ! got the right amount of fields
       !   field    value
       !    1       'pop'
@@ -146,14 +142,10 @@ program tsavg
       !    4       precip rate threshold to deteriming if rainging or not
       !    5       name of lwp variable inside the REVU file
       !    6       prefix for the REVU file name containing the lwp
-      !    7       lwp: number of bins
-      !    8       lwp: bin start
-      !    9       lwp: bin increment
-      !   10       name of ltss variable inside the REVU file
-      !   11       prefix for the REVU file name containing the ltss
-      !   12       ltss: number of bins
-      !   13       ltss: bin start
-      !   14       ltss: bin increment
+      !    7       lwp: bins file
+      !    8       name of ltss variable inside the REVU file
+      !    9       prefix for the REVU file name containing the ltss
+      !   10       ltss: bins file
       AvgFunc           = trim(ArgList(1))
       PrecipRate%vname  = trim(ArgList(2))
       VarFprefix        = trim(ArgList(3))
@@ -162,59 +154,47 @@ program tsavg
       Lwp%vname         = trim(ArgList(5))
       VarFprefix        = trim(ArgList(6))
       LwpFile           = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
-      read(ArgList(7), '(i)') Xnbins
-      read(ArgList(8), '(f)') Xbstart
-      read(ArgList(9), '(f)') Xbinc
-      Ltss%vname        = trim(ArgList(10))
-      VarFprefix        = trim(ArgList(11))
+      XbinsFile         = trim(ArgList(7))
+      Ltss%vname        = trim(ArgList(8))
+      VarFprefix        = trim(ArgList(9))
       LtssFile          = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
-      read(ArgList(12), '(i)') Ynbins
-      read(ArgList(13), '(f)') Ybstart
-      read(ArgList(14), '(f)') Ybinc
+      YbinsFile         = trim(ArgList(10))
     else
-      write (*,*) 'ERROR: average function pop requires fourteen fields:'
-      write (*,*) 'ERROR:   pop:<pcp_var>:<pcp_file>:<pcp_limit>:<lwp_var>:<lwp_file>:<lwp_nbins>:<lwp_bstart>:<lwp_binc>:'
-      write (*,*) 'ERROR:       <ltss_var>:<ltss_file>:<ltss_nbins>:<ltss_bstart>:<ltss_binc>'
+      write (*,*) 'ERROR: average function pop requires ten fields:'
+      write (*,*) 'ERROR:   pop:<pcp_var>:<pcp_file>:<pcp_limit>:<lwp_var>:<lwp_file>:<lwp_bins_file>:'
+      write (*,*) 'ERROR:       <ltss_var>:<ltss_file>:<ltss_bins_file>'
       stop
     endif
   endif
 
   if (AvgFunc(1:7) .eq. 'hist2d:') then
     call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'hist2d spec')
-    if (Nfields .eq. 13) then
+    if (Nfields .eq. 9) then
       ! got the right amount of fields
       !   field    value
       !    1       'hist2d'
       !    2       name of x variable inside the REVU file
       !    3       prefix for the REVU file name containing the x variable
       !    4       dimensionalitiy of x variable (2d or 3d)
-      !    5       x: number of bins
-      !    6       x: bin start
-      !    7       x: bin increment
-      !    8       name of y variable inside the REVU file
-      !    9       prefix for the REVU file name containing the y variable
-      !   10       dimensionalitiy of y variable (2d or 3d)
-      !   11       y: number of bins
-      !   12       y: bin start
-      !   13       y: bin increment
+      !    5       x: bins file
+      !    6       name of y variable inside the REVU file
+      !    7       prefix for the REVU file name containing the y variable
+      !    8       dimensionalitiy of y variable (2d or 3d)
+      !    9       y: bins file
       AvgFunc     = trim(ArgList(1))
       Xvar%vname  = trim(ArgList(2))
       VarFprefix  = trim(ArgList(3))
       XvarFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
       XvarDim     = trim(ArgList(4))
-      read(ArgList(5), '(i)') Xnbins
-      read(ArgList(6), '(f)') Xbstart
-      read(ArgList(7), '(f)') Xbinc
-      Yvar%vname  = trim(ArgList(8))
-      VarFprefix  = trim(ArgList(9))
+      XbinsFile   = trim(ArgList(5))
+      Yvar%vname  = trim(ArgList(6))
+      VarFprefix  = trim(ArgList(7))
       YvarFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
-      YvarDim     = trim(ArgList(10))
-      read(ArgList(11), '(i)') Ynbins
-      read(ArgList(12), '(f)') Ybstart
-      read(ArgList(13), '(f)') Ybinc
+      YvarDim     = trim(ArgList(8))
+      YbinsFile   = trim(ArgList(9))
     else
-      write (*,*) 'ERROR: average function hist2d requires thirteen fields:'
-      write (*,*) 'ERROR:   hist2d:<x_var>:<x_file>:<x_dim>:<x_nbins><x_bstart><x_binc>:<y_var>:<y_file>:<y_dim>:<y_nbins>:<y_bstart>:<y_binc>:'
+      write (*,*) 'ERROR: average function hist2d requires nine fields:'
+      write (*,*) 'ERROR:   hist2d:<x_var>:<x_file>:<x_dim>:<x_bins_file>:<y_var>:<y_file>:<y_dim>:<y_bins_file>'
       stop
     endif
   endif
@@ -307,10 +287,7 @@ program tsavg
     write (*,*) '    Variable name: ', trim(Var%vname)
     write (*,*) '    File name: ', trim(VarFile)
     write (*,*) '    Dimensionality: ', trim(VarDim)
-    write (*,*) '    Binning specs:'
-    write (*,*) '      Number of bins: ', Xnbins
-    write (*,*) '      Bins start at: ', Xbstart
-    write (*,*) '      Delta between bins: ', Xbinc
+    write (*,*) '    Bins File: ', trim(XbinsFile)
   else if (AvgFunc .eq. 'hfrac') then
     write (*,*) '    Variable name: ', trim(Var%vname)
     write (*,*) '    File name: ', trim(VarFile)
@@ -324,29 +301,17 @@ program tsavg
     write (*,*) '    Lower troposhperic static stability variable name: ', trim(Ltss%vname)
     write (*,*) '    Lower troposhperic static stability file name: ', trim(LtssFile)
     write (*,*) '    Precip rate threshold: ', PrecipRateLimit
-    write (*,*) '    Liquid water path binning specs:'
-    write (*,*) '      Number of bins: ', Xnbins
-    write (*,*) '      Bins start at: ', Xbstart
-    write (*,*) '      Delta between bins: ', Xbinc
-    write (*,*) '    Lower tropospheric static stability binning specs:'
-    write (*,*) '      Number of bins: ', Ynbins
-    write (*,*) '      Bins start at: ', Ybstart
-    write (*,*) '      Delta between bins: ', Ybinc
+    write (*,*) '    Liquid water path bins file: ', trim(XbinsFile)
+    write (*,*) '    Lower tropospheric static stability bins file: ', trim(YbinsFile)
   else if (AvgFunc .eq. 'hist2d') then
     write (*,*) '    X variable name: ', trim(Xvar%vname)
     write (*,*) '    X file name: ', trim(XvarFile)
     write (*,*) '    X variable dimensionality: ', trim(XvarDim)
-    write (*,*) '    X variable binning specs:'
-    write (*,*) '      Number of bins: ', Xnbins
-    write (*,*) '      Bins start at: ', Xbstart
-    write (*,*) '      Delta between bins: ', Xbinc
+    write (*,*) '    X variable bins file: ', trim(XbinsFile)
     write (*,*) '    Y variable name: ', trim(Yvar%vname)
     write (*,*) '    Y file name: ', trim(YvarFile)
     write (*,*) '    Y variable dimensionality: ', trim(YvarDim)
-    write (*,*) '    Y variable binning specs:'
-    write (*,*) '      Number of bins: ', Ynbins
-    write (*,*) '      Bins start at: ', Ybstart
-    write (*,*) '      Delta between bins: ', Ybinc
+    write (*,*) '    Y variable bins file: ', trim(YbinsFile)
   else if (AvgFunc .eq. 'turb_cov') then
     write (*,*) '    X variable name: ', trim(Xvar%vname)
     write (*,*) '    X file name: ', trim(XvarFile)
@@ -709,6 +674,15 @@ program tsavg
     write (*,*) ''
   endif
 
+  ! If doing 'hist', read in the bins. Do it before the next section since Xnbins is being
+  ! use to set up the output variable coordinates.
+  if ((AvgFunc .eq. 'hist') .or. (AvgFunc .eq. 'pop') .or. (AvgFunc .eq. 'hist2d')) then
+    call ReadBinsFile(XbinsFile, Xnbins, Xbins)
+    if ((AvgFunc .eq. 'pop') .or. (AvgFunc .eq. 'hist2d')) then
+      call ReadBinsFile(YbinsFile, Ynbins, Ybins)
+    endif
+  endif
+
   ! Set up the dimensions for the output and allocate the output data array. Always
   ! set up as if the output were 3D. This is done so that the output file can
   ! be read into GRADS which expects 3D variables. Always have (x,y,z) for the
@@ -972,14 +946,6 @@ program tsavg
   end do
   write (*,*) ''
   flush(6)
-
-  ! If doing histogram or pop, calculate the bin values
-  if ((AvgFunc .eq. 'hist') .or. (AvgFunc .eq. 'pop') .or. (AvgFunc .eq. 'hist2d')) then
-    call InitBins(Xnbins, Xbins, Xbstart, Xbinc)
-    if ((AvgFunc .eq. 'pop') .or. (AvgFunc .eq. 'hist2d')) then
-      call InitBins(Ynbins, Ybins, Ybstart, Ybinc)
-    endif
-  endif
 
   ! if doing ltss, find the indices associated with Zbot and Ztop
   if (AvgFunc .eq. 'ltss') then
@@ -1394,17 +1360,14 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
     write (*,*) '              <var>: revu var name inside the file'
     write (*,*) '              <file>: prefix for the revu file'
     write (*,*) '              <dim>: dimensionality of variable, either "2d" or "3d"'
-    write (*,*) '            hist:<var>:<file>:<dim>:<num_bins>:<bin_start>:<bin_inc>'
+    write (*,*) '            hist:<var>:<file>:<dim>:<bins_file>'
     write (*,*) '              <var>,<file>,<dim> same as for hda'
-    write (*,*) '              <num_bins>: number of bins'
-    write (*,*) '              <bin_start>: starting value for bins'
-    write (*,*) '              <bin_inc>: delta between bins'
+    write (*,*) '              <bins_file>: file containing the edge values of the bins'
     write (*,*) '            hfrac:<var>:<file>:<dim>:<thresh>'
     write (*,*) '              <var>,<file>,<dim> same as for hda'
     write (*,*) '              <threshold>: if var > threshold, that hoizontal grid cell gets a 1, otherwise a zero.'
     write (*,*) '                           Then the fraction for that level = Number of cells with 1s divided by total Number of cells'
-    write (*,*) '            pop:<pcp_var>:<pcp_file>:<pcp_limit>:<lwp_var>:<lwp_file>:<lwp_nbins>:<lwp_bstart>:<lwp_binc>:'
-    write (*,*) '                <ltss_var>:<ltss_file>:<ltss_nbins>:<ltss_bstart>:<ltss_binc>'
+    write (*,*) '            pop:<pcp_var>:<pcp_file>:<pcp_limit>:<lwp_var>:<lwp_file>:<lwp_bins_file>:<ltss_var>:<ltss_file>:<ltss_bins_file>'
     write (*,*) '              precip rate variable (2d):'
     write (*,*) '                <pcp_var>: revu var name inside the file'
     write (*,*) '                <pcp_file>: prefix for the revu file'
@@ -1414,28 +1377,22 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
     write (*,*) '              liquid water path variable (2d):'
     write (*,*) '                <lwp_var>: revu var name inside the file'
     write (*,*) '                <lwp_file>: prefix for the revu file'
-    write (*,*) '                <lwp_nbins>: number of bins'
-    write (*,*) '                <lwp_bstart>: starting value for bins'
-    write (*,*) '                <lwp_binc>: delta between bins'
+    write (*,*) '                <lwp_bins_file>: file containing the edge values of the bins'
     write (*,*) '              lower tropospheric static stabilty variable (1d):'
     write (*,*) '                <ltss_var>: revu var name inside the file'
     write (*,*) '                <ltss_file>: prefix for the revu file'
-    write (*,*) '                <ltss_nbins>: number of bins'
-    write (*,*) '                <ltss_bstart>: starting value for bins'
-    write (*,*) '                <ltss_binc>: delta between bins'
+    write (*,*) '                <ltss_bins_file>: file containing the edge values of the bins'
     write (*,*) '            ltss:<theta_var>:<theta_file>:<k_bot>:<k_top>'
     write (*,*) '                <theta_var>: revu var name inside the file'
     write (*,*) '                <theta_file>: prefix for the revu file'
     write (*,*) '                <z_bot>: height (Z) for bottom'
     write (*,*) '                <z_top>: height (Z) for top'
-    write (*,*) '            hist2d:<x_var>:<x_file>:<x_dim>:<x_nbins><x_bstart><x_binc>:<y_var>:<y_file>:<y_dim>:<y_nbins>:<y_bstart>:<y_binc>:'
+    write (*,*) '            hist2d:<x_var>:<x_file>:<x_dim>:<x_bins_file>:<y_var>:<y_file>:<y_dim>:<y_bins_file>'
     write (*,*) '              for both X and Y bins:'
     write (*,*) '                <*_var>: revu var name inside the file'
     write (*,*) '                <*_file>: prefix for the revu file'
     write (*,*) '                <*_dim>: dimensionality of variable, either "2d" or "3d"'
-    write (*,*) '                <*_nbins>: number of bins'
-    write (*,*) '                <*_bstart>: starting value for bins'
-    write (*,*) '                <*_binc>: delta between bins'
+    write (*,*) '                <*_bins_file>: file containing the edge values of the bins'
     write (*,*) '            turb_cov:<x_var>:<x_file>:<x_dim>:<y_var>:<y_file>:<y_dim>'
     write (*,*) '                <[xy]_var>: revu var name inside the file'
     write (*,*) '                <[xy]_file>: prefix for the revu file'
@@ -1481,13 +1438,12 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
     write (*,*) '          min:<var>:<file>:<dim>'
     write (*,*) '          max:<var>:<file>:<dim>'
     write (*,*) '          hda:<var>:<file>:<dim>'
-    write (*,*) '          hist:<var>:<file>:<dim>:<num_bins>:<bin_start>:<bin_inc>'
+    write (*,*) '          hist:<var>:<file>:<dim>:<bins_file>'
     write (*,*) '          turb_cov:<x_var>:<x_file>:<x_dim>:<y_var>:<y_file>:<y_dim>'
     write (*,*) '          turb_mmts:<x_var>:<x_file>:<x_dim>'
     write (*,*) '          hfrac:<var>:<file>:<dim>:<threshold>'
-    write (*,*) '          pop:<pcp_var>:<pcp_file>:<pcp_limit>:<lwp_var>:<lwp_file>:<lwp_nbins>:<lwp_bstart>:<lwp_binc>:'
-    write (*,*) '              <ltss_var>:<ltss_file>:<ltss_nbins>:<ltss_bstart>:<ltss_binc>'
-    write (*,*) '          hist2d:<x_var>:<x_file>:<x_dim>:<x_nbins><x_bstart><x_binc>:<y_var>:<y_file>:<y_dim>:<y_nbins>:<y_bstart>:<y_binc>:'
+    write (*,*) '          pop:<pcp_var>:<pcp_file>:<pcp_limit>:<lwp_var>:<lwp_file>:<lwp_bins_file>:<ltss_var>:<ltss_file>:<ltss_bins_file>'
+    write (*,*) '          hist2d:<x_var>:<x_file>:<x_dim>:<x_bins_file>:<y_var>:<y_file>:<y_dim>:<y_bins_file>'
     write (*,*) '          ltss:<theta_var>:<theta_file>:<k_bot>:<k_top>'
     write (*,*) '          storm_int'
     write (*,*) '          min_azslp'
@@ -2556,28 +2512,44 @@ real function Calc2dMean(Nx, Ny, Nz, Var, ix, iy, iz, xs, xe, ys, ye)
 end function Calc2dMean
 
 !*****************************************************************************
-! InitBins()
+! ReadBinsFile()
 !
-! This subroutine will initialize a 1D array of bins. For now, this is
-! done from the input specs: Nb, Bstart, Binc
+! This subroutine will initialize a 1D array of bins. This is done by
+! reading in a text file in the following format:
 !
-subroutine InitBins(Nb, Bins, Bstart, Binc)
+!   n
+!   E1
+!   E2
+!   E3
+!   ...
+!   En
+!
+! First line contains number of edges (n), followed by n lines containing
+! the n edges, in order, defining the bins (one edge value per line).
+!
+subroutine ReadBinsFile(BinsFile, Nbins, Bins)
   implicit none
+  integer, parameter :: fun = 20
 
-  integer :: Nb
+  integer :: Nbins
+  character (len=*) :: BinsFile
   real, dimension(:), allocatable :: Bins
-  real :: Bstart, Binc
 
-  integer :: ib
+  integer :: i
 
-  allocate(Bins(Nb))
-  Bins(1) = Bstart
-  do ib = 2, Nb
-    Bins(ib) = Bins(ib-1) + Binc
+  open(fun, file=BinsFile, status='old')
+
+  read(fun, '(i)') Nbins
+
+  allocate(Bins(Nbins))
+  do i = 1, Nbins
+    read(fun, '(e)') Bins(i)
   enddo
 
+  close(fun)
+
   return
-end subroutine InitBins
+end subroutine ReadBinsFile
 
 !*****************************************************************************
 ! FindBin()
