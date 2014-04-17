@@ -60,11 +60,13 @@ program diag_filter
 
   character (len=LargeString) :: InDir, InSuffix, OutFile
   type (FilterDescrip), dimension(MaxFilters) :: Filters
-  character (len=LargeString) :: Mvname, Mfprefix, CombSense
+  character (len=LargeString) :: CombSense
 
   integer :: Nfilters
 
   integer :: i, ipress
+  integer :: imodel, OutNdims, FilterNdims
+  real :: TempZ
   integer :: ix, iy, iz, it
   integer :: ih2d, ih3d, ih
   integer :: Nx, Ny, Nz, Nt
@@ -74,9 +76,7 @@ program diag_filter
 
   type (Rhdf5Var), dimension(MaxFilters) :: Vars
   character (len=RHDF5_MAX_STRING), dimension(MaxFilters) :: InFiles
-  character (len=RHDF5_MAX_STRING) :: Mfile
   character (len=RHDF5_MAX_STRING) :: FsFilterFile
-  type (Rhdf5Var) :: Mvar
   type (Rhdf5Var) :: FsFilterVar
 
   character (len=RHDF5_MAX_STRING) :: FileAcc
@@ -109,7 +109,7 @@ program diag_filter
   integer :: UDfnum
 
   ! Get the command line arguments
-  call GetMyArgs(LargeString, MaxFilters, InDir, InSuffix, OutFile, Mvname, Mfprefix, FsFilter, CombSense, Filters, Nfilters)
+  call GetMyArgs(LargeString, MaxFilters, InDir, InSuffix, OutFile, FsFilter, CombSense, Filters, Nfilters)
 
   ! Record which combination sense for the filters was selected
   ! GetMyArgs already checked to make sure one of 'and' or 'or' was selected for CombSense
@@ -124,8 +124,6 @@ program diag_filter
   write (*,*) '  Input directory: ', trim(InDir)
   write (*,*) '  Input file name suffix: ', trim(InSuffix)
   write (*,*) '  Output file name:  ', trim(OutFile)
-  write (*,*) '  Model variable name:  ', trim(Mvname)
-  write (*,*) '  Model file prefix: ', trim(Mfprefix)
   write (*,*) '  Find storm filter:'
   write (*,*) '    Filter type:  ', trim(FsFilter%Fname)
   write (*,*) '    Variable name:  ', trim(FsFilter%Vname)
@@ -220,35 +218,49 @@ program diag_filter
   ! the number of dimensions by one.
 
   BadDims = .false.
+  OutNdims = 0
 
-  ! Model var is expected to be 3d
-  Mfile = trim(InDir) // '/' // trim(Mfprefix) // trim(InSuffix)
-  Mvar%vname = trim(Mvname)
-  call rhdf5_read_init(Mfile, Mvar)
-
-  if (Mvar%ndims .ne. 4) then
-    write (*,*) 'ERROR: model variable must be a 3d variable: ', trim(Mvname)
-    stop
-  else
-    Nx = Mvar%dims(1)
-    Ny = Mvar%dims(2)
-    Nz = Mvar%dims(3)
-    Nt = Mvar%dims(4)
-  endif
-
+  ! The number of dims for the output is determined by the maximum number of dims
+  ! of all the input variables. Note that 'up', 'dn', 'up_dn' and 'cylvol' produce
+  ! 2D output regarless of dimensions of the associate filter variable.
   do i = 1, Nfilters
     InFiles(i) = trim(InDir) // '/' // trim(Filters(i)%Vfprefix) // trim(InSuffix)
     Vars(i)%vname = trim(Filters(i)%Vname)
 
     call rhdf5_read_init(InFiles(i), Vars(i))
 
-    ! Check that the horizontal and time dimensions match with the model var. 
-    if (.not. DimsMatch(Mvar, Vars(i))) then
-      write (*,*) 'ERROR: horizontal and time dimensions of variable do not match the model variable: ', trim(Vars(i)%vname)
-      BadDims = .true.
+    ! Check that the horizontal and time dimensions match with the first var. 
+    if (i .gt. 1) then
+      if (.not. DimsMatch(Vars(1), Vars(i))) then
+        write (*,*) 'ERROR: horizontal and time dimensions of variable do not match the first filter variable: ', trim(Vars(i)%vname)
+        BadDims = .true.
+      endif
+    endif
+
+    ! Prepare for reading
+    Vars(i)%ndims = Vars(i)%ndims - 1
+
+    ! Record var with maximum number of dimensions --> output dims
+    if ((Filters(i)%Ftype .eq. FTYPE_UP) .or. (Filters(i)%Ftype .eq. FTYPE_DN) .or. &
+        (Filters(i)%Ftype .eq. FTYPE_UP_DN) .or. (Filters(i)%Ftype .eq. FTYPE_CYLVOL)) then
+      FilterNdims = 2
     else
-      ! Prepare for reading
-      Vars(i)%ndims = Vars(i)%ndims - 1
+      FilterNdims = Vars(i)%ndims
+    endif
+    if (FilterNdims .gt. OutNdims) then
+      imodel = i
+      OutNdims = FilterNdims
+
+      ! record dimension sizes
+      Nx = Vars(i)%dims(1)
+      Ny = Vars(i)%dims(2)
+      if (Vars(i)%ndims .eq. 2) then
+        Nz = 1
+        Nt = Vars(i)%dims(3)
+      else
+        Nz = Vars(i)%dims(3)
+        Nt = Vars(i)%dims(4)
+      endif
     endif
   enddo
 
@@ -266,13 +278,13 @@ program diag_filter
       ! check dimensions and prepare for reading
       if ((trim(FsFilterVar%Vname) .eq. 'sfclat') .or. (trim(FsFilterVar%Vname) .eq. 'sfclon')) then
         ! just check horizontal dims (not time)
-        if ((FsFilterVar%dims(1) .ne. Mvar%dims(1)) .or. (FsFilterVar%dims(2) .ne. Mvar%dims(2))) then
-          write (*,*) 'ERROR: horizontal and time dimensions of find storm variable do not match the model variable: ', trim(FsFilterVar%vname)
+        if ((FsFilterVar%dims(1) .ne. Vars(1)%dims(1)) .or. (FsFilterVar%dims(2) .ne. Vars(1)%dims(2))) then
+          write (*,*) 'ERROR: horizontal and time dimensions of find storm variable do not match the first filter variable: ', trim(FsFilterVar%vname)
           BadDims = .true.
         endif
       else
-        if (.not. DimsMatch(Mvar, FsFilterVar)) then
-          write (*,*) 'ERROR: horizontal and time dimensions of find storm variable do not match the model variable: ', trim(FsFilterVar%vname)
+        if (.not. DimsMatch(Vars(1), FsFilterVar)) then
+          write (*,*) 'ERROR: horizontal and time dimensions of find storm variable do not match the first filter variable: ', trim(FsFilterVar%vname)
           BadDims = .true.
         endif
       endif
@@ -283,8 +295,25 @@ program diag_filter
     stop
   endif
 
+  ! Set dimensions of output
+  !
+  ! It is possible that a filter type that forces 2D output is using a 3D variable
+  ! ('up' uses variable 'w' for example). In this case change the Zcoords to a
+  ! size of 1 using the value in Zcoords(2) (first level above surface) as the
+  ! coordinate value.
+  call SetOutCoords(InFiles(imodel), Xcoords, Ycoords, Zcoords, Tcoords)
+  if ((OutNdims .eq. 2) .and. (Vars(imodel)%ndims .eq. 3)) then
+    TempZ = Zcoords%vdata(2)
+
+    deallocate(Zcoords%vdata)
+    allocate(Zcoords%vdata(1))
+
+    Zcoords%dims(1) = 1
+    Zcoords%vdata(1) = TempZ
+    Nz = 1
+  endif
+
   ! Set the output dimensions and coordinates to those of the selected input var
-  call SetOutCoords(Mfile, Xcoords, Ycoords, Zcoords, Tcoords)
   
   ! Convert lat (x coords) and lon (y coords) to distances in km
   allocate(XcoordsKm(Nx))
@@ -473,11 +502,11 @@ program diag_filter
     !    2 - downdraft
     !    3 - up and down drafts
     if (DoingUpDrafts) then
-      call BuildUpDnMask(Nx, Ny, Nz, Vars(UDfnum)%vdata, UpDnDraftMask, Filters(UDfnum)%x1, Filters(UDfnum)%x2, 1)
+      call BuildUpDnMask(Nx, Ny, Vars(UDfnum)%dims(3), Vars(UDfnum)%vdata, UpDnDraftMask, Filters(UDfnum)%x1, Filters(UDfnum)%x2, 1)
     elseif (DoingDnDrafts) then
-      call BuildUpDnMask(Nx, Ny, Nz, Vars(UDfnum)%vdata, UpDnDraftMask, Filters(UDfnum)%x1, Filters(UDfnum)%x2, 2)
+      call BuildUpDnMask(Nx, Ny, Vars(UDfnum)%dims(3), Vars(UDfnum)%vdata, UpDnDraftMask, Filters(UDfnum)%x1, Filters(UDfnum)%x2, 2)
     elseif (DoingUpDnDrafts) then
-      call BuildUpDnMask(Nx, Ny, Nz, Vars(UDfnum)%vdata, UpDnDraftMask, Filters(UDfnum)%x1, Filters(UDfnum)%x2, 3)
+      call BuildUpDnMask(Nx, Ny, Vars(UDfnum)%dims(3), Vars(UDfnum)%vdata, UpDnDraftMask, Filters(UDfnum)%x1, Filters(UDfnum)%x2, 3)
     endif
 
     ! do the filter selection
@@ -682,12 +711,12 @@ contains
 ! GetMyArgs()
 !
 
- subroutine GetMyArgs(Nstr, Nfilt, InDir, InSuffix, OutFile, Mvname, Mfprefix, FsFilter, CombSense, Filters, NumFilters)
+ subroutine GetMyArgs(Nstr, Nfilt, InDir, InSuffix, OutFile, FsFilter, CombSense, Filters, NumFilters)
   implicit none
 
   integer, parameter :: MaxFields = 15
 
-  character (len=Nstr) :: InDir, InSuffix, OutFile, Mvname, Mfprefix, CombSense
+  character (len=Nstr) :: InDir, InSuffix, OutFile, CombSense
   integer :: Nstr, Nfilt, NumFilters
   type (FilterDescrip), dimension(Nfilt) :: Filters
   type (FilterDescrip) :: FsFilter
@@ -702,8 +731,6 @@ contains
   InDir = ''
   InSuffix = ''
   OutFile = ''
-  Mvname = ''
-  Mfprefix = ''
   NumFilters = 0
 
   ! walk through the list of arguments
@@ -730,12 +757,6 @@ contains
       OutFile = Arg
       i = i + 1
     else if (i .eq. 4) then
-      call String2List(Arg, ':', Fields, MaxFields, Nfld, 'model spec')
-      i = i + 1
-
-      Mvname   = Fields(1)
-      Mfprefix = Fields(2)
-    else if (i .eq. 5) then
       call String2List(Arg, ':', Fields, MaxFields, Nfld, 'find storm')
       i = i + 1
 
@@ -765,7 +786,7 @@ contains
       FsFilter%y2 = 0
       FsFilter%z1 = 0
       FsFilter%z2 = 0
-    else if (i .eq. 6) then
+    else if (i .eq. 5) then
       CombSense = Arg
 
       if ((CombSense .ne. 'and') .and. (CombSense .ne. 'or')) then
@@ -1039,15 +1060,11 @@ contains
   endif
 
   if (BadArgs) then
-    write (*,*) 'USAGE: diag_filter <in_dir> <in_suffix> <out_file> <var3d_model> <2d_find_storm_filter> <comb_sense> <filter_spec> [<filter_spec>...]'
+    write (*,*) 'USAGE: diag_filter <in_dir> <in_suffix> <out_file> <2d_find_storm_filter> <comb_sense> <filter_spec> [<filter_spec>...]'
     write (*,*) '        <in_dir>: directory containing input files'
     write (*,*) '        <in_suffix>: suffix to tag onto the end of input file names'
     write (*,*) '           Note: input file names become: <in_dir>/<var_name><in_suffix>'
     write (*,*) '        <out_file>: output hdf5 file name'
-    write (*,*) '        <var3d_model>: <vname>:<vfprefix>'
-    write (*,*) '            <vname>: hdf5 file name of variable that will serve as a model (same dimensions)'
-    write (*,*) '                     for the filter output'
-    write (*,*) '            <vfprefix>: file name prefix (goes with <in_suffix> to form the whole file name)' 
     write (*,*) '        <2d_find_storm_filter>: <ftype>:<vname>:<vfprefix>:<val>'
     write (*,*) '            <ftype>:'
     write (*,*) '                gt: select point if value >  <val>'
