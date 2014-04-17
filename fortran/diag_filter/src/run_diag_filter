@@ -43,6 +43,7 @@ sub CreateFileNames
   my $Pattern;
   my @f;
   my $TdirStr;
+  my $Ftype;
   my $ModelVname;
   my $ModelFprefix;
 
@@ -69,7 +70,7 @@ sub CreateFileNames
   $InDir = $Case . "/" . $RevuDir . $TdirStr;
 
   # Use the "model" input file as a sample for finding the input file suffix.
-  ($ModelVname, $ModelFprefix) = split(':', $Fmodel);
+  ($Ftype, $ModelVname, $ModelFprefix) = split(':', $Fmodel);
   $Pattern = $InDir . "/" . $ModelFprefix . "-*.h5";
   @f = glob($Pattern);
   $InFileSuffix = $f[0];
