@@ -46,6 +46,7 @@ program tsavg
   character (len=LittleString) :: rh5f_facc
   real :: PrecipRateLimit, Zbot, Ztop
   integer :: Kbot, Ktop
+  real :: HkeZthick
   
   character (len=LargeString) :: XbinsFile, YbinsFile
   integer :: Xnbins, Ynbins
@@ -253,6 +254,11 @@ program tsavg
   endif
 
   if ((AvgFunc(1:9) .eq. 'horiz_ke:') .or. (AvgFunc(1:11) .eq. 'max_azwind:')) then
+write (*,*) 'ERROR: horiz_ke needs to be fixed:'
+write (*,*) 'ERROR:   Does not handle "uv" type input correctly'
+write (*,*) 'ERROR:   Does not set HkeZthick argument'
+stop
+
     call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'horiz_ke spec')
     if (Nfields .eq. 2) then
       ! got the right amount of fields
@@ -1111,14 +1117,14 @@ program tsavg
 
         allocate(HorizSpeed(Nx,Ny))
         call UvToSpeed(Nx, Ny, Nz, U%vdata, V%vdata, HorizSpeed)
-        call DoHorizKe(Nx, Ny, Nz, Dens%vdata, HorizSpeed, Filter%vdata, DeltaX, DeltaY, InZcoords%vdata, TserAvg%vdata(1))
+        call DoHorizKe(Nx, Ny, Nz, Filter%dims(3), Dens%vdata, HorizSpeed, Filter%vdata, DeltaX, DeltaY, HkeZthick, TserAvg%vdata(1))
 
         deallocate(U%vdata)
         deallocate(V%vdata)
         deallocate(HorizSpeed)
       else if (VelInType .eq. 's10') then
         call rhdf5_read_variable(rh5f_speed10m, Speed10m%vname, Speed10m%ndims, it, Speed10m%dims, rdata=Speed10m%vdata)
-        call DoHorizKe(Nx, Ny, Nz, Dens%vdata, Speed10m%vdata, Filter%vdata, DeltaX, DeltaY, InZcoords%vdata, TserAvg%vdata(1))
+        call DoHorizKe(Nx, Ny, Nz, Filter%dims(3), Dens%vdata, Speed10m%vdata, Filter%vdata, DeltaX, DeltaY, HkeZthick, TserAvg%vdata(1))
         deallocate(Speed10m%vdata)
       endif
 
@@ -1173,7 +1179,7 @@ program tsavg
       deallocate(Theta%vdata)
     else if (AvgFunc .eq. 'storm_int') then
       call rhdf5_read_variable(rh5f_speed10m, Speed10m%vname, Speed10m%ndims, it, Speed10m%dims, rdata=Speed10m%vdata)
-      call DoStormInt(Nx, Ny, Nz, Speed10m%vdata, Filter%vdata, TserAvg%vdata(1))
+      call DoStormInt(Nx, Ny, Filter%dims(3), Speed10m%vdata, Filter%vdata, TserAvg%vdata(1))
       deallocate(Speed10m%vdata)
     endif
 
@@ -1632,28 +1638,26 @@ end function InterpRadius
 ! volume. Do not want average since we want the size of the storm reflected in
 ! this diagnostic.
 
-subroutine DoHorizKe(Nx, Ny, Nz, Dens, Speed, Filter, DeltaX, DeltaY, Zcoords, TserAvg)
+subroutine DoHorizKe(Nx, Ny, Nz, FilterNz, Dens, Speed, Filter, DeltaX, DeltaY, Zthick, TserAvg)
   implicit none
 
-  integer :: Nx, Ny, Nz
-  real, dimension(Nx,Ny,Nz) :: Dens, Filter
+  integer :: Nx, Ny, Nz, FilterNz
+  real, dimension(Nx,Ny,Nz) :: Dens
+  real, dimension(Nx,Ny,FilterNz) :: Filter
   real, dimension(Nx,Ny) :: Speed
   real :: DeltaX, DeltaY
-  real, dimension(Nz) :: Zcoords
+  real :: Zthick
   real :: TserAvg
 
-  integer ix,iy,iz
-  integer NumPoints
-  real SumKe, CurrKe, LevThickness
+  integer :: ix,iy,iz
+  integer :: filter_z
+  integer :: NumPoints
+  real :: SumKe, CurrKe
 
   ! KE is 1/2 * m * v^2
   !   - calculate this a every point inside the defined cylindrical volume
   !   - get m by density * volume
   !   - v^2 is based on horiz velocity so is equal to Speed^2
-  !
-  ! Zcoords are technically the center points of the levels in the RAMS simulation. Since we don't have
-  ! the level definition from the RAMS runs here, just use the difference from the i+1st z coord minus the
-  ! ith z coord to approzimate the ith level thickness. This will be close enough for the measurement.
   !
   ! The integrated kinetic engery measurement done on hurricanes is taken over the domain on the 10m
   ! level. Just use the first model level above the surface (z == 2) for this measurement which will
@@ -1664,16 +1668,16 @@ subroutine DoHorizKe(Nx, Ny, Nz, Dens, Speed, Filter, DeltaX, DeltaY, Zcoords, T
 
   iz = 2
 
+  if (FilterNz .eq. 1) then
+    filter_z = 1
+  else
+    filter_z = iz
+  endif
+
   do iy = 2, Ny-1
     do ix = 2, Nx-1
-      if (anint(Filter(ix,iy,iz)) .eq. 1.0) then
-        if (iz .eq. Nz) then
-          ! Use the level below for this case (since no level above)
-          LevThickness = Zcoords(iz) - Zcoords(iz-1)
-        else
-          LevThickness = Zcoords(iz+1) - Zcoords(iz)
-        end if
-        CurrKe = 0.5 * DeltaX * DeltaY * LevThickness * Dens(ix,iy,iz) * Speed(ix,iy)**2.
+      if (anint(Filter(ix,iy,filter_z)) .eq. 1.0) then
+        CurrKe = 0.5 * DeltaX * DeltaY * Zthick * Dens(ix,iy,iz) * Speed(ix,iy)**2.
         SumKe = SumKe + CurrKe
         NumPoints = NumPoints + 1
       endif
@@ -1717,11 +1721,8 @@ subroutine DoHda(Nx, Ny, Nz, FilterNz, Var, Filter, UseFilter, UndefVal, DomStat
     ! (shouldn't hurt results with cyclic boundaries where the
     ! boundary values could have been included).
 
-    if (Nz .eq. 1) then
-      ! 2D var, use the z = 2 level (first model level above the surface)
-      ! since typically have the 3D filter z = 1 level all zeros (don't want
-      ! to include below surface model level in analysis).
-      filter_z = 2
+    if (FilterNz .eq. 1) then
+      filter_z = 1
     else
       filter_z = iz
     endif
@@ -1777,11 +1778,8 @@ subroutine DoHfrac(Nx, Ny, Nz, FilterNz, Threshold, Var, Filter, UseFilter, Unde
     ! (shouldn't hurt results with cyclic boundaries where the
     ! boundary values could have been included).
 
-    if (Nz .eq. 1) then
-      ! 2D var, use the z = 2 level (first model level above the surface)
-      ! since typically have the 3D filter z = 1 level all zeros (don't want
-      ! to include below surface model level in analysis).
-      filter_z = 2
+    if (FilterNz .eq. 1) then
+      filter_z = 1
     else
       filter_z = iz
     endif
@@ -1839,11 +1837,8 @@ subroutine DoMin(Nx, Ny, Nz, FilterNz, Var, Filter, UseFilter, UndefVal, DomMin)
     ! (shouldn't hurt results with cyclic boundaries where the
     ! boundary values could have been included).
 
-    if (Nz .eq. 1) then
-      ! 2D var, use the z = 2 level (first model level above the surface)
-      ! since typically have the 3D filter z = 1 level all zeros (don't want
-      ! to include below surface model level in analysis).
-      filter_z = 2
+    if (FilterNz .eq. 1) then
+      filter_z = 1
     else
       filter_z = iz
     endif
@@ -1902,11 +1897,8 @@ subroutine DoMax(Nx, Ny, Nz, FilterNz, Var, Filter, UseFilter, UndefVal, DomMax)
     ! (shouldn't hurt results with cyclic boundaries where the
     ! boundary values could have been included).
 
-    if (Nz .eq. 1) then
-      ! 2D var, use the z = 2 level (first model level above the surface)
-      ! since typically have the 3D filter z = 1 level all zeros (don't want
-      ! to include below surface model level in analysis).
-      filter_z = 2
+    if (FilterNz .eq. 1) then
+      filter_z = 1
     else
       filter_z = iz
     endif
@@ -1971,11 +1963,8 @@ subroutine DoHist(Nx, Ny, Nz, FilterNz, Nb, Var, Filter, UseFilter, UndefVal, Bi
       Counts(ib,iz) = 0.0
     enddo
 
-    if (Nz .eq. 1) then
-      ! 2D var, use the z = 2 level (first model level above the surface)
-      ! since typically have the 3D filter z = 1 level all zeros (don't want
-      ! to include below surface model level in analysis).
-      filter_z = 2
+    if (FilterNz .eq. 1) then
+      filter_z = 1
     else
       filter_z = iz
     endif
@@ -2052,11 +2041,8 @@ subroutine DoPop(Nx, Ny, Nz, FilterNz, Nb_lwp, Nb_ltss, PrecipRate, Lwp, Ltss, F
   ! Only if an LTSS bin has been selected
   if (ib_ltss .ne. -1) then
     do iz = 1, Nz
-      if (Nz .eq. 1) then
-        ! 2D var, use the z = 2 level (first model level above the surface)
-        ! since typically have the 3D filter z = 1 level all zeros (don't want
-        ! to include below surface model level in analysis).
-        filter_z = 2
+      if (FilterNz .eq. 1) then
+        filter_z = 1
       else
         filter_z = iz
       endif
@@ -2129,11 +2115,8 @@ subroutine DoHist2d(Nx, Ny, Nz, XvarNz, YvarNz, FilterNz, Xnbins, Ynbins, Xvar, 
       iz_y = iz
     endif
    
-    ! If both x and y are 2D vars, use the z = 2 level (first model level above the surface)
-    ! since typically have the 3D filter z = 1 level all zeros (don't want
-    ! to include below surface model level in analysis).
-    if (Nz .eq. 1) then
-      iz_filter = 2
+    if (FilterNz .eq. 1) then
+      iz_filter = 1
     else
       iz_filter = iz
     endif
@@ -2189,12 +2172,9 @@ subroutine DoLtss(Nx, Ny, Nz, FilterNz, Theta, Filter, UseFilter, UndefVal, Kbot
   integer :: Npts
 
   ! Figure out which levels to use in the filter data
-  if (Nz .eq. 1) then
-    ! 2D var, use the z = 2 level (first model level above the surface)
-    ! since typically have the 3D filter z = 1 level all zeros (don't want
-    ! to include below surface model level in analysis).
-    filter_zbot = 2
-    filter_ztop = 2
+  if (FilterNz .eq. 1) then
+    filter_zbot = 1
+    filter_ztop = 1
   else
     filter_zbot = Kbot
     filter_ztop = Ktop
@@ -2249,15 +2229,15 @@ end subroutine DoLtss
 !    >= 70 m/s -> 5
 !
 
-subroutine DoStormInt(Nx, Ny, Nz, Speed10m, Filter, TserAvg)
+subroutine DoStormInt(Nx, Ny, FilterNz, Speed10m, Filter, TserAvg)
   implicit none
 
-  integer :: Nx, Ny, Nz
-  real, dimension(Nx,Ny,Nz) :: Filter
+  integer :: Nx, Ny, FilterNz
+  real, dimension(Nx,Ny,FilterNz) :: Filter
   real, dimension(Nx,Ny) :: Speed10m
   real :: TserAvg
 
-  integer ix,iy,iz
+  integer ix,iy
   integer nCat0, nCat1, nCat2, nCat3, nCat4, nCat5, NumPoints
   real Wspeed, SiMetric
 
@@ -2268,11 +2248,9 @@ subroutine DoStormInt(Nx, Ny, Nz, Speed10m, Filter, TserAvg)
   nCat4 = 0
   nCat5 = 0
 
-  iz = 2 ! use next to bottom layer in the filter
-
   do iy = 2, Ny-1
     do ix = 2, Nx-1
-      if (anint(Filter(ix,iy,iz)) .eq. 1.0) then
+      if (anint(Filter(ix,iy,1)) .eq. 1.0) then
         ! Count up the number of grid points with wind speeds fitting each of the
         ! Saffir-Simpson categories. Then form the metric by weighting each category
         ! count.
@@ -2353,11 +2331,8 @@ subroutine DoTurbCov(Nx, Ny, Nz, FilterNz, Xvar, Yvar, Filter, UseFilter, UndefV
     DomS3 = 0.0d+0
     NumPoints = 0
 
-    if (Nz .eq. 1) then
-      ! 2D var, use the z = 2 level (first model level above the surface)
-      ! since typically have the 3D filter z = 1 level all zeros (don't want
-      ! to include below surface model level in analysis).
-      filter_z = 2
+    if (FilterNz .eq. 1) then
+      filter_z = 1
     else
       filter_z = iz
     endif
@@ -2436,11 +2411,8 @@ subroutine DoTurbMmts(Nx, Ny, Nz, FilterNz, Var, Filter, UseFilter, UndefVal, Do
     DomS3 = 0.0d+0
     NumPoints = 0
 
-    if (Nz .eq. 1) then
-      ! 2D var, use the z = 2 level (first model level above the surface)
-      ! since typically have the 3D filter z = 1 level all zeros (don't want
-      ! to include below surface model level in analysis).
-      filter_z = 2
+    if (FilterNz .eq. 1) then
+      filter_z = 1
     else
       filter_z = iz
     endif
