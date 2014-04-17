@@ -110,7 +110,6 @@ my $OutFile;
 my @SysArgs;
 my $OutDir;
 my @Fspecs;
-my $Fmodel;
 
 $ConfigFile = $ARGV[0];
 
@@ -142,13 +141,12 @@ foreach $Case (sort(keys(%Cases)))
     # the lengths of the argument lists vary according to which filter is selected
     # so the ReadConfigFile routine just places the arguments in a list
     @Fspecs = @{ $Filters{$Fname}{SPECS} };
-    $Fmodel = $Filters{$Fname}{MODEL};
 
     # run through each time directory generating the current diagnostic, and
     # then join these files into the main file (above the time directories)
     foreach $Tdir (sort(keys(%TimeDirs)))
       {
-      ($InDir,$InFileSuffix,$OutFile) = &CreateFileNames($Case, $Tdir, $Fname, $FilterDir, $RevuDir, $Fmodel);
+      ($InDir,$InFileSuffix,$OutFile) = &CreateFileNames($Case, $Tdir, $Fname, $FilterDir, $RevuDir, $Fspecs[2]);
 
       print "***************************************************************\n";
       print "Running diag_filter:\n";
@@ -168,7 +166,7 @@ foreach $Case (sort(keys(%Cases)))
         system(@SysArgs);
         }
 
-      @SysArgs = ("diag_filter", $InDir, $InFileSuffix, $OutFile, $Fmodel, @Fspecs);
+      @SysArgs = ("diag_filter", $InDir, $InFileSuffix, $OutFile, @Fspecs);
       print "Running: ", join(" ",@SysArgs), "\n\n";
       system(@SysArgs);
       }
