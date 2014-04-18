@@ -11,11 +11,11 @@ function [ ] = GenPdfFilesCtype(ConfigFile)
 
   InFprefix = 'hist_data_ctype';
   VarSets = {
-    { { 'pcprr'  'pcprr_strnp'  'pcprr_strat'  'pcprr_scmix'  'pcprr_cumul'  } 'pcprr_bins'  'pdf_ctype_pcprr'  }
-    { { 'cot'    'cot_strnp'    'cot_strat'    'cot_scmix'    'cot_cumul'    } 'cot_bins'    'pdf_ctype_cot'    }
-    { { 'albedo' 'albedo_strnp' 'albedo_strat' 'albedo_scmix' 'albedo_cumul' } 'albedo_bins' 'pdf_ctype_albedo' }
-    { { 'cd'     'cd_strnp'     'cd_strat'     'cd_scmix'     'cd_cumul'     } 'cd_bins'     'pdf_ctype_cd'     }
-    { { 'lwp'    'lwp_strnp'    'lwp_strat'    'lwp_scmix'    'lwp_cumul'    } 'lwp_bins'    'pdf_ctype_lwp'    }
+    { { 'pcprr'  'pcprr_strnp'  'pcprr_strat'  'pcprr_cumul'  } 'pcprr_bins'  'pdf_ctype_pcprr'  }
+    { { 'cot'    'cot_strnp'    'cot_strat'    'cot_cumul'    } 'cot_bins'    'pdf_ctype_cot'    }
+    { { 'albedo' 'albedo_strnp' 'albedo_strat' 'albedo_cumul' } 'albedo_bins' 'pdf_ctype_albedo' }
+    { { 'cd'     'cd_strnp'     'cd_strat'     'cd_cumul'     } 'cd_bins'     'pdf_ctype_cd'     }
+    { { 'lwp'    'lwp_strnp'    'lwp_strat'    'lwp_cumul'    } 'lwp_bins'    'pdf_ctype_lwp'    }
     };
   Nset = length(VarSets);
 
