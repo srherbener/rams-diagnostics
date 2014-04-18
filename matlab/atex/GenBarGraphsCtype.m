@@ -295,6 +295,62 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'bars_avg_cdepth_cumul_TALL_CO.jpg'
        }
 
+       % All cloud types, COT averages, all time points, CCN only
+       {
+       'All Clouds Avg TALL CCN only, grouped by SST'
+       'bgraph_cot.h5'
+       { 'a' 'All Clouds' }
+       'N_a (# cm^-^3)'
+       'COT'
+       { 'blue' 'cyan' 'magenta' }
+       { { '293 K', '298 K', '303 K' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [20] [1:3] [1:6] [1] } 1 'CCN' 0 4.5 }
+       'bars_avg_cot_all_cld_TALL_CO.jpg'
+       }
+
+       % All cloud types, PR averages, all time points, CCN only
+       {
+       'All Clouds PR Avg TALL CCN only, grouped by SST'
+       'bgraph_pcprr.h5'
+       { 'a' 'All Clouds' }
+       'N_a (# cm^-^3)'
+       'Precip Rate (mm h^-^1)'
+       { 'blue' 'cyan' 'magenta' }
+       { { '293 K', '298 K', '303 K' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [20] [1:3] [1:6] [1] } 1 'CCN' 0 0.06 }
+       'bars_avg_pcprr_all_cld_TALL_CO.jpg'
+       }
+
+       % All cloud types, LWP averages, all time points, CCN only
+       {
+       'All Clouds LWP Avg TALL CCN only, grouped by SST'
+       'bgraph_lwp.h5'
+       { 'a' 'All Clouds' }
+       'N_a (# cm^-^3)'
+       'LWP (mm)'
+       { 'blue' 'cyan' 'magenta' }
+       { { '293 K', '298 K', '303 K' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [20] [1:3] [1:6] [1] } 1 'CCN' 0 0.25 }
+       'bars_avg_lwp_all_cld_TALL_CO.jpg'
+       }
+
+       % All cloud types, Cloud depth averages, all time points, CCN only
+       {
+       'All Clouds Cloud Depth Avg TALL CCN only, grouped by SST'
+       'bgraph_cdepth.h5'
+       { 'a' 'All Clouds' }
+       'N_a (# cm^-^3)'
+       'Cloud Depth (m)'
+       { 'blue' 'cyan' 'magenta' }
+       { { '293 K', '298 K', '303 K' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [20] [1:3] [1:6] [1] } 1 'CCN' 0 900 }
+       'bars_avg_cdepth_all_cld_TALL_CO.jpg'
+       }
+
        % Cloud fraction averages, all time points, CCN only
        {
        'Cloud Fraction Avg TALL CCN only, grouped by SST'
