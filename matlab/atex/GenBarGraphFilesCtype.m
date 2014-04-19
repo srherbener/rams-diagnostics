@@ -124,8 +124,22 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
            'cfrac_TMID'
            'cfrac_TEND'
            'cfrac_TALL'
-           % any selection by cloud type will just
-           % create CF = 1.0 for all cases
+           'cfrac_strnp_TSTART'
+           'cfrac_strnp_TMID'
+           'cfrac_strnp_TEND'
+           'cfrac_strnp_TALL'
+           'cfrac_strat_TSTART'
+           'cfrac_strat_TMID'
+           'cfrac_strat_TEND'
+           'cfrac_strat_TALL'
+           'cfrac_cumul_TSTART'
+           'cfrac_cumul_TMID'
+           'cfrac_cumul_TEND'
+           'cfrac_cumul_TALL'
+           'cfrac_all_cld_TSTART'
+           'cfrac_all_cld_TMID'
+           'cfrac_all_cld_TEND'
+           'cfrac_all_cld_TALL'
         }
         'bgraph_cfrac'
       }
