@@ -136,10 +136,14 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
            'cfrac_cumul_TMID'
            'cfrac_cumul_TEND'
            'cfrac_cumul_TALL'
-           'cfrac_all_cld_TSTART'
-           'cfrac_all_cld_TMID'
-           'cfrac_all_cld_TEND'
-           'cfrac_all_cld_TALL'
+           'cfrac_stmix_TSTART'
+           'cfrac_stmix_TMID'
+           'cfrac_stmix_TEND'
+           'cfrac_stmix_TALL'
+           'cfrac_scmix_TSTART'
+           'cfrac_scmix_TMID'
+           'cfrac_scmix_TEND'
+           'cfrac_scmix_TALL'
         }
         'bgraph_cfrac'
       }

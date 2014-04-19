@@ -15,7 +15,8 @@ function [ ] = GenAvgFilesCtype(ConfigFile)
     { 'hda_cloud_opt_thick' { 'cot'    'cot_strnp'    'cot_strat'    'cot_cumul'    'cot_all_cld'    } 'avg_ctype_cot'    }
     { 'hda_cloud_depth'     { 'cdepth' 'cdepth_strnp' 'cdepth_strat' 'cdepth_cumul' 'cdepth_all_cld' } 'avg_ctype_cdepth' }
     { 'hda_vint_cond'       { 'lwp'    'lwp_strnp'    'lwp_strat'    'lwp_cumul'    'lwp_all_cld'    } 'avg_ctype_lwp'    }
-    { 'hda_cloud_mask'      { 'cfrac'  'cfrac_strnp'  'cfrac_strat'  'cfrac_cumul'  'cfrac_all_cld'  } 'avg_ctype_cfrac'  }
+
+    { 'hda_cloud_mask'      { 'cfrac'  'cfrac_strnp'  'cfrac_strat'  'cfrac_cumul'  'cfrac_stmix' 'cfrac_scmix'  } 'avg_ctype_cfrac'  }
     };
   Nset = length(VarSets);
 
@@ -52,57 +53,19 @@ function [ ] = GenAvgFilesCtype(ConfigFile)
         OutVarName = OutVarList{ivar};
 
         % Special case for cfrac_strnp, etc. These have the strnp, cumul etc appended to
-        % then end of the dataset inside the HDF5 file.
+        % then end of the dataset name inside the HDF5 file.
         if (regexp(OutVarName, '^cfrac_'))
           InVarName = sprintf('%s_%s', InVname, regexprep(OutVarName, '^cfrac_', ''));
         else
           InVarName = InVname;
         end
 
-        % Special case for cfrac_all_cld. There is no hda file for this. Instead
-        % all of the strnp, strat, cumul, stmix and scmix need to be read in and
-        % added together to form the HDA data.
-        if (regexp(OutVarName, 'cfrac_all_cld'))
-          InFile = sprintf('%s/hda_cfrac_strnp_%s.h5', Tdir, Case);
-          InVarName = 'hda_cloud_mask_strnp';
-          fprintf('      cfrac_cld_all: %s --> %s\n', InFile, InVarName);
-          HDA  = squeeze(hdf5read(InFile, InVarName));
-          SUM = squeeze(HDA(1,:));
-          T = squeeze(hdf5read(InFile, 't_coords'))/3600; % hours
+        InFile = sprintf('%s/hda_%s_%s.h5', Tdir, OutVarName , Case);
+        fprintf('      %s --> %s\n', InFile, InVarName);
 
-          InFile = sprintf('%s/hda_cfrac_stmix_%s.h5', Tdir, Case);
-          InVarName = 'hda_cloud_mask_stmix';
-          fprintf('      cfrac_cld_all: %s --> %s\n', InFile, InVarName);
-          TEMP  = squeeze(hdf5read(InFile, InVarName));
-          SUM = SUM + squeeze(TEMP(1,:));    % add up only the sums, leave the counts alone
-
-          InFile = sprintf('%s/hda_cfrac_strat_%s.h5', Tdir, Case);
-          InVarName = 'hda_cloud_mask_strat';
-          fprintf('      cfrac_cld_all: %s --> %s\n', InFile, InVarName);
-          TEMP  = squeeze(hdf5read(InFile, InVarName));
-          SUM = SUM + squeeze(TEMP(1,:));    % add up only the sums, leave the counts alone
-          
-          InFile = sprintf('%s/hda_cfrac_scmix_%s.h5', Tdir, Case);
-          InVarName = 'hda_cloud_mask_scmix';
-          fprintf('      cfrac_cld_all: %s --> %s\n', InFile, InVarName);
-          TEMP  = squeeze(hdf5read(InFile, InVarName));
-          SUM = SUM + squeeze(TEMP(1,:));    % add up only the sums, leave the counts alone
-
-          InFile = sprintf('%s/hda_cfrac_cumul_%s.h5', Tdir, Case);
-          InVarName = 'hda_cloud_mask_cumul';
-          fprintf('      cfrac_cld_all: %s --> %s\n', InFile, InVarName);
-          TEMP  = squeeze(hdf5read(InFile, InVarName));
-          SUM = SUM + squeeze(TEMP(1,:));    % add up only the sums, leave the counts alone
-          
-          HDA(1,:) = SUM;
-        else
-          InFile = sprintf('%s/hda_%s_%s.h5', Tdir, OutVarName , Case);
-          fprintf('      %s --> %s\n', InFile, InVarName);
-
-          % grab the hda data and the t coordinates
-          HDA  = squeeze(hdf5read(InFile, InVarName));
-          T = squeeze(hdf5read(InFile, 't_coords'))/3600; % hours
-        end
+        % grab the hda data and the t coordinates
+        HDA  = squeeze(hdf5read(InFile, InVarName));
+        T = squeeze(hdf5read(InFile, 't_coords'))/3600; % hours
 
         OutAvgName  = sprintf('%s_avg', OutVarName);
         OutNptsName = sprintf('%s_npts', OutVarName);
