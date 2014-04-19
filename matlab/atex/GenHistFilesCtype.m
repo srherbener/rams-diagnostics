@@ -128,7 +128,7 @@ function [ ] = GenHistFilesCtype(ConfigFile)
           %   Exclude clear columns (CM == 0) for lightly precipitating stratiform category
           %   Select only on precip rate for other categories (assume you have clouds)
           %
-          %    stratiform with light or no precip:  PR < 0.001 and CM == 1
+          %    stratiform with light or no precip:  PR < 0.0001 and CM == 1
           %    stratiform: 0.001 <= PR <= 1.0 and CM == 1
           %    cumuliform: PR > 10.0 and CM == 1
           %
@@ -137,8 +137,8 @@ function [ ] = GenHistFilesCtype(ConfigFile)
           CD1 = 50;
           CD2 = 1500;
 
-          SNP_SELECT = ((PR < 0.001) & (CM > 0.5));
-          S_SELECT = ((PR >= 0.01) & (PR <= 1.0) & (CM > 0.5));
+          SNP_SELECT = ((PR < 0.0001) & (CM > 0.5));
+          S_SELECT = ((PR >= 0.001) & (PR <= 1.0) & (CM > 0.5));
           C_SELECT = ((PR > 10.0) & (CM > 0.5));
 
           PR_STRNP = PR(SNP_SELECT);
