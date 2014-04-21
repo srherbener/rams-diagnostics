@@ -564,11 +564,95 @@ montage -tile 2x1 -geometry ${Jsize}+2+100 \
  FigureBgraphPrateCdepthCumul.jpg
 
 echo "Figure: Bgraph Cloud Distribution : CCN only"
-montage -tile 3x1 -geometry ${Jsize}+2+100 \
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
  bars_avg_ctype_TALL_CO_S293.jpg \
  bars_avg_ctype_TALL_CO_S298.jpg \
  bars_avg_ctype_TALL_CO_S303.jpg \
  FigureBgraphCtype.jpg
+
+echo "Figure: COT hist, PR hist, CD hist, CCN only, 293K"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ CotHist_TALL_CO_S293_G10M5_ALL.jpg \
+ PrateHist_TALL_CO_S293_G10M5_ALL.jpg \
+ CdepthHist_TALL_CO_S293_G10M5_ALL.jpg \
+ FigureDomainStats_S293.jpg
+
+echo "Figure: COT hist, PR hist, CD hist, CCN only, 298K"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ CotHist_TALL_CO_S298_G10M5_ALL.jpg \
+ PrateHist_TALL_CO_S298_G10M5_ALL.jpg \
+ CdepthHist_TALL_CO_S298_G10M5_ALL.jpg \
+ FigureDomainStats_S298.jpg
+
+echo "Figure: COT hist, PR hist, CD hist, CCN only, 303K"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ CotHist_TALL_CO_S303_G10M5_ALL.jpg \
+ PrateHist_TALL_CO_S303_G10M5_ALL.jpg \
+ CdepthHist_TALL_CO_S303_G10M5_ALL.jpg \
+ FigureDomainStats_S303.jpg
+
+echo "Figure: COT hist, PR hist, CD hist, CCN only, C50"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ CotHist_TALL_CO_C0050_G10M5.jpg \
+ PrateHist_TALL_CO_C0050_G10M5.jpg \
+ CdepthHist_TALL_CO_C0050_G10M5.jpg \
+ FigureDomainStats_C50.jpg
+
+echo "Figure: COT hist, PR hist, CD hist, CCN only, C400"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ CotHist_TALL_CO_C0400_G10M5.jpg \
+ PrateHist_TALL_CO_C0400_G10M5.jpg \
+ CdepthHist_TALL_CO_C0400_G10M5.jpg \
+ FigureDomainStats_C400.jpg
+
+echo "Figure: COT hist, PR hist, CD hist, CCN only, C1600"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ CotHist_TALL_CO_C1600_G10M5.jpg \
+ PrateHist_TALL_CO_C1600_G10M5.jpg \
+ CdepthHist_TALL_CO_C1600_G10M5.jpg \
+ FigureDomainStats_C1600.jpg
+
+echo "Figure: ST: COT hist, PR hist, CD hist, CCN only, 293K"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ CotStratHist_TALL_CO_S293_G10M5_ALL.jpg \
+ PrateStratHist_TALL_CO_S293_G10M5_ALL.jpg \
+ CdepthStratHist_TALL_CO_S293_G10M5_ALL.jpg \
+ FigureStratStats_S293.jpg
+
+echo "Figure: ST: COT hist, PR hist, CD hist, CCN only, 298K"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ CotStratHist_TALL_CO_S298_G10M5_ALL.jpg \
+ PrateStratHist_TALL_CO_S298_G10M5_ALL.jpg \
+ CdepthStratHist_TALL_CO_S298_G10M5_ALL.jpg \
+ FigureStratStats_S298.jpg
+
+echo "Figure: ST: COT hist, PR hist, CD hist, CCN only, 303K"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ CotStratHist_TALL_CO_S303_G10M5_ALL.jpg \
+ PrateStratHist_TALL_CO_S303_G10M5_ALL.jpg \
+ CdepthStratHist_TALL_CO_S303_G10M5_ALL.jpg \
+ FigureStratStats_S303.jpg
+
+echo "Figure: ST: COT hist, PR hist, CD hist, CCN only, C50"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ CotStratHist_TALL_CO_C0050_G10M5.jpg \
+ PrateStratHist_TALL_CO_C0050_G10M5.jpg \
+ CdepthStratHist_TALL_CO_C0050_G10M5.jpg \
+ FigureStratStats_C50.jpg
+
+echo "Figure: ST: COT hist, PR hist, CD hist, CCN only, C400"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ CotStratHist_TALL_CO_C0400_G10M5.jpg \
+ PrateStratHist_TALL_CO_C0400_G10M5.jpg \
+ CdepthStratHist_TALL_CO_C0400_G10M5.jpg \
+ FigureStratStats_C400.jpg
+
+echo "Figure: ST: COT hist, PR hist, CD hist, CCN only, C1600"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ CotStratHist_TALL_CO_C1600_G10M5.jpg \
+ PrateStratHist_TALL_CO_C1600_G10M5.jpg \
+ CdepthStratHist_TALL_CO_C1600_G10M5.jpg \
+ FigureStratStats_C1600.jpg
 
 #echo "Figure: Hist Strat PR, LWP, COT: CCN only"
 #montage -tile 3x3 -geometry ${Jsize}+2+100 \
