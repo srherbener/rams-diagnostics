@@ -9,24 +9,37 @@ if (exist(Pdir, 'dir') ~= 7)
 end
 
 % Using the vertical profile mode of aerosol initialization (ICLOUD = 6)
-CCN = [ 50 100 200 400 800 1200 1600 ];
-GCCN = [ 1e-5 1e-4 1e-2 1 ];
+CCN = [ 50 100 200 400 800 1600 ];
+GCCN = [ 1e-4 1e-2 1 ];
 
 ClegText = {
-    '50/cc'
-    '100/cc'
-    '200/cc'
-    '400/cc'
-    '800/cc'
-    '1200/cc'
-    '1600/cc'
+    'C50'
+    'C100'
+    'C200'
+    'C400'
+    'C800'
+    'C1600'
     };
 
 GlegText = {
-    '10^-^5/cc'
-    '10^-^4/cc'
-    '10^-^2/cc'
-    '1/cc'
+    'G10M4'
+    'G10M2'
+    'G10M0'
+    };
+
+CcolorList = {
+    'black'
+    'green'
+    'blue'
+    'cyan'
+    'red'
+    'magenta'
+    };
+
+GcolorList = {
+    'cyan'
+    'blue'
+    'magenta'
     };
 
 Z = 50:100:4950;
@@ -56,10 +69,14 @@ end
 % CCN profiles
 Fig = figure;
 
-plot(C_PROFS, Z, 'LineWidth', 3);
+Hlines = plot(C_PROFS, Z./1000, 'LineWidth', 3);
+for i = 1:Nc
+  set(Hlines(i), 'Color', str2rgb(CcolorList{i}));
+end
 set(gca, 'FontSize', Fsize);
-xlabel('N_C_C_N (#/cc)');
-ylabel('Height (m)');
+xlabel('N_a (# cm^-^3)');
+ylabel('Height (km)');
+ylim([ 0 5 ]);
 
 legend(ClegText, 'Location', 'NorthEast', 'FontSize', 20);
 legend boxoff;
@@ -73,13 +90,16 @@ close(Fig);
 % GCCN profiles
 Fig = figure;
 
-semilogx(G_PROFS, Z, 'LineWidth', 3);
+Hlines = semilogx(G_PROFS, Z./1000, 'LineWidth', 3);
+for i = 1:Ng
+  set(Hlines(i), 'Color', str2rgb(GcolorList{i}));
+end
 set(gca, 'FontSize', Fsize);
 set(gca, 'Xtick', [ 1e-5 1e-3 1e-1 ]);
-xlabel('N_G_C_C_N (#/cc)');
-ylabel('Height (m)');
+xlabel('N_a (# cm^-^3)');
+ylabel('Height (km)');
 xlim([ 1e-6 1 ]);
-ylim([ 0 7000 ]);
+ylim([ 0 7 ]);
 
 legend(GlegText, 'Location', 'NorthWest', 'Orientation', 'horizontal', 'FontSize', 20);
 legend boxoff;
