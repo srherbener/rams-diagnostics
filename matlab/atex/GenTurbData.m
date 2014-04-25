@@ -136,18 +136,18 @@ function [ ] = GenTurbData(ConfigFile)
         % get the start, middle, end and all profiles.
         PROF = SUM ./ N;
         
-        PROF_S = squeeze(mean(PROF(:,TS1:TS2),2));
-        PROF_M = squeeze(mean(PROF(:,TM1:TM2),2));
-        PROF_E = squeeze(mean(PROF(:,TE1:TE2),2));
-        PROF_A = squeeze(mean(PROF(:,TA1:TA2),2));
+        PROF_S = squeeze(nanmean(PROF(:,TS1:TS2),2));
+        PROF_M = squeeze(nanmean(PROF(:,TM1:TM2),2));
+        PROF_E = squeeze(nanmean(PROF(:,TE1:TE2),2));
+        PROF_A = squeeze(nanmean(PROF(:,TA1:TA2),2));
 
         % Generate a fraction statistic - the ratio of number of points selected 
         % to total number of points in domain
         PROF_FRAC = N ./ TotalN;
-        PROF_FRAC_S = squeeze(mean(PROF_FRAC(:,TS1:TS2), 2));
-        PROF_FRAC_M = squeeze(mean(PROF_FRAC(:,TM1:TM2), 2));
-        PROF_FRAC_E = squeeze(mean(PROF_FRAC(:,TE1:TE2), 2));
-        PROF_FRAC_A = squeeze(mean(PROF_FRAC(:,TA1:TA2), 2));
+        PROF_FRAC_S = squeeze(nanmean(PROF_FRAC(:,TS1:TS2), 2));
+        PROF_FRAC_M = squeeze(nanmean(PROF_FRAC(:,TM1:TM2), 2));
+        PROF_FRAC_E = squeeze(nanmean(PROF_FRAC(:,TE1:TE2), 2));
+        PROF_FRAC_A = squeeze(nanmean(PROF_FRAC(:,TA1:TA2), 2));
 
         % Write out data - put in dummy x, y and t coordinates
         Xdummy = 1;

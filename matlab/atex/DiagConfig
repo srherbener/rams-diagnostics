@@ -141,9 +141,9 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 #LinePlot: CO_UP_S298_G10M5_ALL PrateHistBins PrateCumulHist_TALL PrateCumul PrateCumulHist_298 PrateHistSelect none PANEL:k@CV,@298K NorthEast none PrateCumulHist_TALL_CO_S298_G10M5_ALL.jpg
 #LinePlot: CO_UP_S303_G10M5_ALL PrateHistBins PrateCumulHist_TALL PrateCumul PrateCumulHist_303 PrateHistSelect none PANEL:l@CV,@303K NorthEast none PrateCumulHist_TALL_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CG_UP_C0050_S298 PrateHistBins PrateStratHist_TALL      Prate      PrateHist_C50        PrateHistSelect none PANEL:b@ST,@C50   NorthEast none PrateStratHist_TALL_CG_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 PrateHistBins PrateStratHist_TALL      Prate      PrateHist_C400       PrateHistSelect none PANEL:b@ST,@C400  NorthEast none PrateStratHist_TALL_CG_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 PrateHistBins PrateStratHist_TALL      Prate      PrateHist_C1600      PrateHistSelect none PANEL:b@ST,@C1600 NorthEast none PrateStratHist_TALL_CG_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 PrateHistBins PrateStratHist_TALL      Prate      PrateHist_C50        PrateHistSelect none PANEL:b@ST,@C50   NorthEast none PrateStratHist_TALL_CG_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 PrateHistBins PrateStratHist_TALL      Prate      PrateHist_C400       PrateHistSelect none PANEL:b@ST,@C400  NorthEast none PrateStratHist_TALL_CG_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 PrateHistBins PrateStratHist_TALL      Prate      PrateHist_C1600      PrateHistSelect none PANEL:b@ST,@C1600 NorthEast none PrateStratHist_TALL_CG_C1600_S298.jpg
 
 ### Cloud optical thickness, histogram
 #LinePlot: CO_UP_S293_G10M5_ALL CotHistBins CotHist_TALL      CotLog     CotHist_293      CotHistSelect none PANEL:a@Domain,@293K NorthEast none CotHist_TALL_CO_S293_G10M5_ALL.jpg
@@ -170,9 +170,9 @@ LinePlot: CG_UP_C1600_S298 PrateHistBins PrateStratHist_TALL      Prate      Pra
 #LinePlot: CO_UP_S298_G10M5_ALL CotHistBins CotCumulHist_TALL CotLog     CotCumulHist_298 CotHistSelect none PANEL:k@CV,@298K NorthWest none CotCumulHist_TALL_CO_S298_G10M5_ALL.jpg
 #LinePlot: CO_UP_S303_G10M5_ALL CotHistBins CotCumulHist_TALL CotLog     CotCumulHist_303 CotHistSelect none PANEL:l@CV,@303K NorthWest none CotCumulHist_TALL_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CG_UP_C0050_S298 CotHistBins CotStratHist_TALL      CotLog     CotHist_C50        CotHistSelect none PANEL:a@ST,@C50   NorthEast none CotStratHist_TALL_CG_C0050_S298.jpg
-LinePlot: CG_UP_C0050_S298 CotHistBins CotStratHist_TALL      CotLog     CotHist_C400       CotHistSelect none PANEL:a@ST,@C400  NorthEast none CotStratHist_TALL_CG_C0400_S298.jpg
-LinePlot: CG_UP_C0050_S298 CotHistBins CotStratHist_TALL      CotLog     CotHist_C1600      CotHistSelect none PANEL:a@ST,@C1600 NorthEast none CotStratHist_TALL_CG_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CotHistBins CotStratHist_TALL      CotLog     CotHist_C50        CotHistSelect none PANEL:a@ST,@C50   NorthEast none CotStratHist_TALL_CG_C0050_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CotHistBins CotStratHist_TALL      CotLog     CotHist_C400       CotHistSelect none PANEL:a@ST,@C400  NorthEast none CotStratHist_TALL_CG_C0400_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CotHistBins CotStratHist_TALL      CotLog     CotHist_C1600      CotHistSelect none PANEL:a@ST,@C1600 NorthEast none CotStratHist_TALL_CG_C1600_S298.jpg
 
 ### LWP, histogram
 #LinePlot: CO_UP_S293_G10M5_ALL LwpHistBins LwpHist_TALL      LwpLog     LwpHist_293      LwpHistSelect none PANEL:d@Domain,@293K NorthEast none LwpHist_TALL_CO_S293_G10M5_ALL.jpg
@@ -200,33 +200,33 @@ LinePlot: CG_UP_C0050_S298 CotHistBins CotStratHist_TALL      CotLog     CotHist
 #LinePlot: CO_UP_S303_G10M5_ALL LwpHistBins LwpCumulHist_TALL LwpLog     LwpCumulHist_303 LwpHistSelect none PANEL:l@CV,@303K NorthWest none LwpCumulHist_TALL_CO_S303_G10M5_ALL.jpg
 
 ### Cloud depth, histogram
-LinePlot: CO_UP_S293_G10M5_ALL CdepthHistBins CdepthHist_TALL      CdepthLin     CdepthHist_293      CdepthHistSelect none PANEL:c@Domain,@293K NorthEast none CdepthHist_TALL_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CdepthHistBins CdepthHist_TALL      CdepthLin     CdepthHist_298      CdepthHistSelect none PANEL:c@Domain,@298K NorthEast none CdepthHist_TALL_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CdepthHistBins CdepthHist_TALL      CdepthLin     CdepthHist_303      CdepthHistSelect none PANEL:c@Domain,@303K NorthEast none CdepthHist_TALL_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CdepthHistBins CdepthHist_TALL      CdepthLin     CdepthHist_293      CdepthHistSelect none PANEL:c@Domain,@293K NorthEast none CdepthHist_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CdepthHistBins CdepthHist_TALL      CdepthLin     CdepthHist_298      CdepthHistSelect none PANEL:c@Domain,@298K NorthEast none CdepthHist_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CdepthHistBins CdepthHist_TALL      CdepthLin     CdepthHist_303      CdepthHistSelect none PANEL:c@Domain,@303K NorthEast none CdepthHist_TALL_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_C0050_G10M5 CdepthHistBins CdepthHist_TALL      CdepthLin     CdepthHist_C50        CdepthHistSelect none PANEL:c@Domain,@C50   NorthEast none CdepthHist_TALL_CO_C0050_G10M5.jpg
-LinePlot: CO_UP_C0400_G10M5 CdepthHistBins CdepthHist_TALL      CdepthLin     CdepthHist_C400       CdepthHistSelect none PANEL:c@Domain,@C400  NorthEast none CdepthHist_TALL_CO_C0400_G10M5.jpg
-LinePlot: CO_UP_C1600_G10M5 CdepthHistBins CdepthHist_TALL      CdepthLin     CdepthHist_C1600      CdepthHistSelect none PANEL:c@Domain,@C1600 NorthEast none CdepthHist_TALL_CO_C1600_G10M5.jpg
+#LinePlot: CO_UP_C0050_G10M5 CdepthHistBins CdepthHist_TALL      CdepthLin     CdepthHist_C50        CdepthHistSelect none PANEL:c@Domain,@C50   NorthEast none CdepthHist_TALL_CO_C0050_G10M5.jpg
+#LinePlot: CO_UP_C0400_G10M5 CdepthHistBins CdepthHist_TALL      CdepthLin     CdepthHist_C400       CdepthHistSelect none PANEL:c@Domain,@C400  NorthEast none CdepthHist_TALL_CO_C0400_G10M5.jpg
+#LinePlot: CO_UP_C1600_G10M5 CdepthHistBins CdepthHist_TALL      CdepthLin     CdepthHist_C1600      CdepthHistSelect none PANEL:c@Domain,@C1600 NorthEast none CdepthHist_TALL_CO_C1600_G10M5.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CdepthHistBins CdepthStrnpHist_TALL CdepthLin     CdepthStrnpHist_293 CdepthHistSelect none PANEL:d@SNP,293K NorthEast none CdepthStrnpHist_TALL_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CdepthHistBins CdepthStrnpHist_TALL CdepthLin     CdepthStrnpHist_298 CdepthHistSelect none PANEL:e@SNP,298K NorthEast none CdepthStrnpHist_TALL_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CdepthHistBins CdepthStrnpHist_TALL CdepthLin     CdepthStrnpHist_303 CdepthHistSelect none PANEL:f@SNP,303K NorthEast none CdepthStrnpHist_TALL_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CdepthHistBins CdepthStrnpHist_TALL CdepthLin     CdepthStrnpHist_293 CdepthHistSelect none PANEL:d@SNP,293K NorthEast none CdepthStrnpHist_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CdepthHistBins CdepthStrnpHist_TALL CdepthLin     CdepthStrnpHist_298 CdepthHistSelect none PANEL:e@SNP,298K NorthEast none CdepthStrnpHist_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CdepthHistBins CdepthStrnpHist_TALL CdepthLin     CdepthStrnpHist_303 CdepthHistSelect none PANEL:f@SNP,303K NorthEast none CdepthStrnpHist_TALL_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CdepthHistBins CdepthStratHist_TALL CdepthLin     CdepthStratHist_293 CdepthHistSelect none PANEL:g@ST,@293K NorthEast none CdepthStratHist_TALL_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CdepthHistBins CdepthStratHist_TALL CdepthLin     CdepthStratHist_298 CdepthHistSelect none PANEL:h@ST,@298K NorthEast none CdepthStratHist_TALL_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CdepthHistBins CdepthStratHist_TALL CdepthLin     CdepthStratHist_303 CdepthHistSelect none PANEL:i@ST,@303K NorthEast none CdepthStratHist_TALL_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CdepthHistBins CdepthStratHist_TALL CdepthLin     CdepthStratHist_293 CdepthHistSelect none PANEL:g@ST,@293K NorthEast none CdepthStratHist_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CdepthHistBins CdepthStratHist_TALL CdepthLin     CdepthStratHist_298 CdepthHistSelect none PANEL:h@ST,@298K NorthEast none CdepthStratHist_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CdepthHistBins CdepthStratHist_TALL CdepthLin     CdepthStratHist_303 CdepthHistSelect none PANEL:i@ST,@303K NorthEast none CdepthStratHist_TALL_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_C0050_G10M5 CdepthHistBins CdepthStratHist_TALL      CdepthLin     CdepthHist_C50        CdepthHistSelect none PANEL:c@ST,@C50   NorthEast none CdepthStratHist_TALL_CO_C0050_G10M5.jpg
-LinePlot: CO_UP_C0400_G10M5 CdepthHistBins CdepthStratHist_TALL      CdepthLin     CdepthHist_C400       CdepthHistSelect none PANEL:c@ST,@C400  NorthEast none CdepthStratHist_TALL_CO_C0400_G10M5.jpg
-LinePlot: CO_UP_C1600_G10M5 CdepthHistBins CdepthStratHist_TALL      CdepthLin     CdepthHist_C1600      CdepthHistSelect none PANEL:c@ST,@C1600 NorthEast none CdepthStratHist_TALL_CO_C1600_G10M5.jpg
+#LinePlot: CO_UP_C0050_G10M5 CdepthHistBins CdepthStratHist_TALL      CdepthLin     CdepthHist_C50        CdepthHistSelect none PANEL:c@ST,@C50   NorthEast none CdepthStratHist_TALL_CO_C0050_G10M5.jpg
+#LinePlot: CO_UP_C0400_G10M5 CdepthHistBins CdepthStratHist_TALL      CdepthLin     CdepthHist_C400       CdepthHistSelect none PANEL:c@ST,@C400  NorthEast none CdepthStratHist_TALL_CO_C0400_G10M5.jpg
+#LinePlot: CO_UP_C1600_G10M5 CdepthHistBins CdepthStratHist_TALL      CdepthLin     CdepthHist_C1600      CdepthHistSelect none PANEL:c@ST,@C1600 NorthEast none CdepthStratHist_TALL_CO_C1600_G10M5.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL CdepthHistBins CdepthCumulHist_TALL CdepthLin     CdepthCumulHist_293 CdepthHistSelect none PANEL:j@CV,@293K NorthWest none CdepthCumulHist_TALL_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL CdepthHistBins CdepthCumulHist_TALL CdepthLin     CdepthCumulHist_298 CdepthHistSelect none PANEL:k@CV,@298K NorthWest none CdepthCumulHist_TALL_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL CdepthHistBins CdepthCumulHist_TALL CdepthLin     CdepthCumulHist_303 CdepthHistSelect none PANEL:l@CV,@303K NorthWest none CdepthCumulHist_TALL_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL CdepthHistBins CdepthCumulHist_TALL CdepthLin     CdepthCumulHist_293 CdepthHistSelect none PANEL:j@CV,@293K NorthWest none CdepthCumulHist_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL CdepthHistBins CdepthCumulHist_TALL CdepthLin     CdepthCumulHist_298 CdepthHistSelect none PANEL:k@CV,@298K NorthWest none CdepthCumulHist_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL CdepthHistBins CdepthCumulHist_TALL CdepthLin     CdepthCumulHist_303 CdepthHistSelect none PANEL:l@CV,@303K NorthWest none CdepthCumulHist_TALL_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CG_UP_C0050_S298 CdepthHistBins CdepthStratHist_TALL      CdepthLin     CdepthHist_C50        CdepthHistSelect none PANEL:c@ST,@C50   NorthEast none CdepthStratHist_TALL_CG_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298 CdepthHistBins CdepthStratHist_TALL      CdepthLin     CdepthHist_C400       CdepthHistSelect none PANEL:c@ST,@C400  NorthEast none CdepthStratHist_TALL_CG_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298 CdepthHistBins CdepthStratHist_TALL      CdepthLin     CdepthHist_C1600      CdepthHistSelect none PANEL:c@ST,@C1600 NorthEast none CdepthStratHist_TALL_CG_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298 CdepthHistBins CdepthStratHist_TALL      CdepthLin     CdepthHist_C50        CdepthHistSelect none PANEL:c@ST,@C50   NorthEast none CdepthStratHist_TALL_CG_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298 CdepthHistBins CdepthStratHist_TALL      CdepthLin     CdepthHist_C400       CdepthHistSelect none PANEL:c@ST,@C400  NorthEast none CdepthStratHist_TALL_CG_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298 CdepthHistBins CdepthStratHist_TALL      CdepthLin     CdepthHist_C1600      CdepthHistSelect none PANEL:c@ST,@C1600 NorthEast none CdepthStratHist_TALL_CG_C1600_S298.jpg
 
 ####################### PDF ##############################
 ### Cloud optical thickness, PDF
@@ -1279,51 +1279,87 @@ LinePlot: CG_UP_C1600_S298 CdepthHistBins CdepthStratHist_TALL      CdepthLin   
 ### TURBULENCE STATS ###
 ### w mean
 # no filter
-#LinePlot: CO_UP_S293_G10M5_ALL  WmeanTall TurbHeights Wmean_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none Wmean_TALL_CO_S293_G10M5_ALL.jpg
-#LinePlot: CO_UP_S298_G10M5_ALL  WmeanTall TurbHeights Wmean_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none Wmean_TALL_CO_S298_G10M5_ALL.jpg
-#LinePlot: CO_UP_S303_G10M5_ALL  WmeanTall TurbHeights Wmean_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none Wmean_TALL_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  WmeanTall TurbHeights Wmean_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none Wmean_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WmeanTall TurbHeights Wmean_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none Wmean_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WmeanTall TurbHeights Wmean_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none Wmean_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_C0050_G10M5  WmeanTall TurbHeights Wmean_303 HeightKm TurbSelect none PANEL:a@C50      NorthEast none Wmean_TALL_CO_C0050_G10M5.jpg
+LinePlot: CO_UP_C0400_G10M5  WmeanTall TurbHeights Wmean_303 HeightKm TurbSelect none PANEL:b@C400     NorthEast none Wmean_TALL_CO_C0400_G10M5.jpg
+LinePlot: CO_UP_C1600_G10M5  WmeanTall TurbHeights Wmean_303 HeightKm TurbSelect none PANEL:c@C1600    NorthEast none Wmean_TALL_CO_C1600_G10M5.jpg
 
 # st circ filter
-#LinePlot: CO_UP_S293_G10M5_ALL  WmeanStCircTall TurbHeights WmeanStCirc_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none WmeanStCirc_TALL_CO_S293_G10M5_ALL.jpg
-#LinePlot: CO_UP_S298_G10M5_ALL  WmeanStCircTall TurbHeights WmeanStCirc_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none WmeanStCirc_TALL_CO_S298_G10M5_ALL.jpg
-#LinePlot: CO_UP_S303_G10M5_ALL  WmeanStCircTall TurbHeights WmeanStCirc_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none WmeanStCirc_TALL_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  WmeanStCircTall TurbHeights WmeanStCirc_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none WmeanStCirc_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WmeanStCircTall TurbHeights WmeanStCirc_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none WmeanStCirc_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WmeanStCircTall TurbHeights WmeanStCirc_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none WmeanStCirc_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_C0050_G10M5  WmeanStCircTall TurbHeights WmeanStCirc_303 HeightKm TurbSelect none PANEL:a@C50      NorthEast none WmeanStCirc_TALL_CO_C0050_G10M5.jpg
+LinePlot: CO_UP_C0400_G10M5  WmeanStCircTall TurbHeights WmeanStCirc_303 HeightKm TurbSelect none PANEL:b@C400     NorthEast none WmeanStCirc_TALL_CO_C0400_G10M5.jpg
+LinePlot: CO_UP_C1600_G10M5  WmeanStCircTall TurbHeights WmeanStCirc_303 HeightKm TurbSelect none PANEL:c@C1600    NorthEast none WmeanStCirc_TALL_CO_C1600_G10M5.jpg
 
 # cv circ filter
-#LinePlot: CO_UP_S293_G10M5_ALL  WmeanCvCircTall TurbHeights WmeanCvCirc_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none WmeanCvCirc_TALL_CO_S293_G10M5_ALL.jpg
-#LinePlot: CO_UP_S298_G10M5_ALL  WmeanCvCircTall TurbHeights WmeanCvCirc_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none WmeanCvCirc_TALL_CO_S298_G10M5_ALL.jpg
-#LinePlot: CO_UP_S303_G10M5_ALL  WmeanCvCircTall TurbHeights WmeanCvCirc_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none WmeanCvCirc_TALL_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  WmeanCvCircTall TurbHeights WmeanCvCirc_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none WmeanCvCirc_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WmeanCvCircTall TurbHeights WmeanCvCirc_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none WmeanCvCirc_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WmeanCvCircTall TurbHeights WmeanCvCirc_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none WmeanCvCirc_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_C0050_G10M5  WmeanCvCircTall TurbHeights WmeanCvCirc_293 HeightKm TurbSelect none PANEL:a@C50      NorthEast none WmeanCvCirc_TALL_CO_C0050_G10M5.jpg
+LinePlot: CO_UP_C0400_G10M5  WmeanCvCircTall TurbHeights WmeanCvCirc_298 HeightKm TurbSelect none PANEL:b@C400     NorthEast none WmeanCvCirc_TALL_CO_C0400_G10M5.jpg
+LinePlot: CO_UP_C1600_G10M5  WmeanCvCircTall TurbHeights WmeanCvCirc_303 HeightKm TurbSelect none PANEL:c@C1600    NorthEast none WmeanCvCirc_TALL_CO_C1600_G10M5.jpg
 
 ### w var
 # no filter
-#LinePlot: CO_UP_S293_G10M5_ALL  WvarTall TurbHeights Wvar_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none Wvar_TALL_CO_S293_G10M5_ALL.jpg
-#LinePlot: CO_UP_S298_G10M5_ALL  WvarTall TurbHeights Wvar_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none Wvar_TALL_CO_S298_G10M5_ALL.jpg
-#LinePlot: CO_UP_S303_G10M5_ALL  WvarTall TurbHeights Wvar_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none Wvar_TALL_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  WvarTall TurbHeights Wvar_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none Wvar_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WvarTall TurbHeights Wvar_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none Wvar_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WvarTall TurbHeights Wvar_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none Wvar_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_C0050_G10M5  WvarTall TurbHeights Wvar_303 HeightKm TurbSelect none PANEL:a@C50      NorthEast none Wvar_TALL_CO_C0050_G10M5.jpg
+LinePlot: CO_UP_C0400_G10M5  WvarTall TurbHeights Wvar_303 HeightKm TurbSelect none PANEL:b@C400     NorthEast none Wvar_TALL_CO_C0400_G10M5.jpg
+LinePlot: CO_UP_C1600_G10M5  WvarTall TurbHeights Wvar_303 HeightKm TurbSelect none PANEL:c@C1600    NorthEast none Wvar_TALL_CO_C1600_G10M5.jpg
 
 # st circ filter
-#LinePlot: CO_UP_S293_G10M5_ALL  WvarStCircTall TurbHeights WvarStCirc_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none WvarStCirc_TALL_CO_S293_G10M5_ALL.jpg
-#LinePlot: CO_UP_S298_G10M5_ALL  WvarStCircTall TurbHeights WvarStCirc_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none WvarStCirc_TALL_CO_S298_G10M5_ALL.jpg
-#LinePlot: CO_UP_S303_G10M5_ALL  WvarStCircTall TurbHeights WvarStCirc_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none WvarStCirc_TALL_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  WvarStCircTall TurbHeights WvarStCirc_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none WvarStCirc_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WvarStCircTall TurbHeights WvarStCirc_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none WvarStCirc_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WvarStCircTall TurbHeights WvarStCirc_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none WvarStCirc_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_C0050_G10M5  WvarStCircTall TurbHeights WvarStCirc_303 HeightKm TurbSelect none PANEL:a@C50      NorthEast none WvarStCirc_TALL_CO_C0050_G10M5.jpg
+LinePlot: CO_UP_C0400_G10M5  WvarStCircTall TurbHeights WvarStCirc_303 HeightKm TurbSelect none PANEL:b@C400     NorthEast none WvarStCirc_TALL_CO_C0400_G10M5.jpg
+LinePlot: CO_UP_C1600_G10M5  WvarStCircTall TurbHeights WvarStCirc_303 HeightKm TurbSelect none PANEL:c@C1600    NorthEast none WvarStCirc_TALL_CO_C1600_G10M5.jpg
 
 # cv circ filter
-#LinePlot: CO_UP_S293_G10M5_ALL  WvarCvCircTall TurbHeights WvarCvCirc_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none WvarCvCirc_TALL_CO_S293_G10M5_ALL.jpg
-#LinePlot: CO_UP_S298_G10M5_ALL  WvarCvCircTall TurbHeights WvarCvCirc_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none WvarCvCirc_TALL_CO_S298_G10M5_ALL.jpg
-#LinePlot: CO_UP_S303_G10M5_ALL  WvarCvCircTall TurbHeights WvarCvCirc_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none WvarCvCirc_TALL_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  WvarCvCircTall TurbHeights WvarCvCirc_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none WvarCvCirc_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WvarCvCircTall TurbHeights WvarCvCirc_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none WvarCvCirc_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WvarCvCircTall TurbHeights WvarCvCirc_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none WvarCvCirc_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_C0050_G10M5  WvarCvCircTall TurbHeights WvarCvCirc_293 HeightKm TurbSelect none PANEL:a@C50      NorthEast none WvarCvCirc_TALL_CO_C0050_G10M5.jpg
+LinePlot: CO_UP_C0400_G10M5  WvarCvCircTall TurbHeights WvarCvCirc_298 HeightKm TurbSelect none PANEL:b@C400     NorthEast none WvarCvCirc_TALL_CO_C0400_G10M5.jpg
+LinePlot: CO_UP_C1600_G10M5  WvarCvCircTall TurbHeights WvarCvCirc_303 HeightKm TurbSelect none PANEL:c@C1600    NorthEast none WvarCvCirc_TALL_CO_C1600_G10M5.jpg
 
 ### w skew
 # no filter
-#LinePlot: CO_UP_S293_G10M5_ALL  WskewTall TurbHeights Wskew_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none Wskew_TALL_CO_S293_G10M5_ALL.jpg
-#LinePlot: CO_UP_S298_G10M5_ALL  WskewTall TurbHeights Wskew_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none Wskew_TALL_CO_S298_G10M5_ALL.jpg
-#LinePlot: CO_UP_S303_G10M5_ALL  WskewTall TurbHeights Wskew_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none Wskew_TALL_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  WskewTall TurbHeights Wskew_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none Wskew_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WskewTall TurbHeights Wskew_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none Wskew_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WskewTall TurbHeights Wskew_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none Wskew_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_C0050_G10M5  WskewTall TurbHeights Wskew_303 HeightKm TurbSelect none PANEL:a@C50      NorthEast none Wskew_TALL_CO_C0050_G10M5.jpg
+LinePlot: CO_UP_C0400_G10M5  WskewTall TurbHeights Wskew_303 HeightKm TurbSelect none PANEL:b@C400     NorthEast none Wskew_TALL_CO_C0400_G10M5.jpg
+LinePlot: CO_UP_C1600_G10M5  WskewTall TurbHeights Wskew_303 HeightKm TurbSelect none PANEL:c@C1600    NorthEast none Wskew_TALL_CO_C1600_G10M5.jpg
 
 # st circ filter
-#LinePlot: CO_UP_S293_G10M5_ALL  WskewStCircTall TurbHeights WskewStCirc_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none WskewStCirc_TALL_CO_S293_G10M5_ALL.jpg
-#LinePlot: CO_UP_S298_G10M5_ALL  WskewStCircTall TurbHeights WskewStCirc_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none WskewStCirc_TALL_CO_S298_G10M5_ALL.jpg
-#LinePlot: CO_UP_S303_G10M5_ALL  WskewStCircTall TurbHeights WskewStCirc_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none WskewStCirc_TALL_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  WskewStCircTall TurbHeights WskewStCirc_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none WskewStCirc_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WskewStCircTall TurbHeights WskewStCirc_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none WskewStCirc_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WskewStCircTall TurbHeights WskewStCirc_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none WskewStCirc_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_C0050_G10M5  WskewStCircTall TurbHeights WskewStCirc_303 HeightKm TurbSelect none PANEL:a@C50      NorthEast none WskewStCirc_TALL_CO_C0050_G10M5.jpg
+LinePlot: CO_UP_C0400_G10M5  WskewStCircTall TurbHeights WskewStCirc_303 HeightKm TurbSelect none PANEL:b@C400     NorthEast none WskewStCirc_TALL_CO_C0400_G10M5.jpg
+LinePlot: CO_UP_C1600_G10M5  WskewStCircTall TurbHeights WskewStCirc_303 HeightKm TurbSelect none PANEL:c@C1600    NorthEast none WskewStCirc_TALL_CO_C1600_G10M5.jpg
 
 # cv circ filter
-#LinePlot: CO_UP_S293_G10M5_ALL  WskewCvCircTall TurbHeights WskewCvCirc_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none WskewCvCirc_TALL_CO_S293_G10M5_ALL.jpg
-#LinePlot: CO_UP_S298_G10M5_ALL  WskewCvCircTall TurbHeights WskewCvCirc_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none WskewCvCirc_TALL_CO_S298_G10M5_ALL.jpg
-#LinePlot: CO_UP_S303_G10M5_ALL  WskewCvCircTall TurbHeights WskewCvCirc_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none WskewCvCirc_TALL_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  WskewCvCircTall TurbHeights WskewCvCirc_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none WskewCvCirc_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WskewCvCircTall TurbHeights WskewCvCirc_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none WskewCvCirc_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WskewCvCircTall TurbHeights WskewCvCirc_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none WskewCvCirc_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_C0050_G10M5  WskewCvCircTall TurbHeights WskewCvCirc_293 HeightKm TurbSelect none PANEL:a@C50      NorthEast none WskewCvCirc_TALL_CO_C0050_G10M5.jpg
+LinePlot: CO_UP_C0400_G10M5  WskewCvCircTall TurbHeights WskewCvCirc_298 HeightKm TurbSelect none PANEL:b@C400     NorthEast none WskewCvCirc_TALL_CO_C0400_G10M5.jpg
+LinePlot: CO_UP_C1600_G10M5  WskewCvCircTall TurbHeights WskewCvCirc_303 HeightKm TurbSelect none PANEL:c@C1600    NorthEast none WskewCvCirc_TALL_CO_C1600_G10M5.jpg
 
 
 

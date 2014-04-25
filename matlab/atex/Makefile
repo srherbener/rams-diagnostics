@@ -32,6 +32,7 @@ SCRIPTS = $(DEST)/ExtractSample.m \
           $(DEST)/GenTurbData.m \
           $(DEST)/GenWcfads.m \
           $(DEST)/GenWcfadsJoin.m \
+          $(DEST)/GenWturbPlots.m \
           $(DEST)/GenWmoments.m \
           $(DEST)/GenSfcDiv.m \
           $(DEST)/PlotMultiPanelSample.m \
