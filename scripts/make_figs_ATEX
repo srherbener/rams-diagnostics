@@ -417,13 +417,10 @@ montage -tile 1x1 -geometry ${Jsize}+2+100 \
 # FigureTsBlStats.jpg
 
 echo "Figure: Time series: Zi, Zt, CFmax, all cases, CCN only"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
+montage -tile 3x2 -geometry ${Jsize}+2+100 \
  InvHeight_CO_S293_G10M5_ALL.jpg \
  InvHeight_CO_S298_G10M5_ALL.jpg \
  InvHeight_CO_S303_G10M5_ALL.jpg \
- CloudCldTop_CO_S293_G10M5_ALL.jpg \
- CloudCldTop_CO_S298_G10M5_ALL.jpg \
- CloudCldTop_CO_S303_G10M5_ALL.jpg \
  CloudFrac_CO_S293_G10M5_ALL.jpg \
  CloudFrac_CO_S298_G10M5_ALL.jpg \
  CloudFrac_CO_S303_G10M5_ALL.jpg \
@@ -616,6 +613,7 @@ montage -tile 2x2 -geometry ${Jsize}+2+100 \
  CotStratHist_TALL_CO_S293_G10M5_ALL.jpg \
  PrateStratHist_TALL_CO_S293_G10M5_ALL.jpg \
  CdepthStratHist_TALL_CO_S293_G10M5_ALL.jpg \
+ WturbStCirc_TALL_CO_S293_G10M5_ALL.jpg \
  FigureStratStats_S293.jpg
 
 echo "Figure: ST: COT hist, PR hist, CD hist, CCN only, 298K"
@@ -623,6 +621,7 @@ montage -tile 2x2 -geometry ${Jsize}+2+100 \
  CotStratHist_TALL_CO_S298_G10M5_ALL.jpg \
  PrateStratHist_TALL_CO_S298_G10M5_ALL.jpg \
  CdepthStratHist_TALL_CO_S298_G10M5_ALL.jpg \
+ WturbStCirc_TALL_CO_S298_G10M5_ALL.jpg \
  FigureStratStats_S298.jpg
 
 echo "Figure: ST: COT hist, PR hist, CD hist, CCN only, 303K"
@@ -630,6 +629,7 @@ montage -tile 2x2 -geometry ${Jsize}+2+100 \
  CotStratHist_TALL_CO_S303_G10M5_ALL.jpg \
  PrateStratHist_TALL_CO_S303_G10M5_ALL.jpg \
  CdepthStratHist_TALL_CO_S303_G10M5_ALL.jpg \
+ WturbStCirc_TALL_CO_S303_G10M5_ALL.jpg \
  FigureStratStats_S303.jpg
 
 echo "Figure: ST: COT hist, PR hist, CD hist, CCN only, C50"
@@ -637,6 +637,7 @@ montage -tile 2x2 -geometry ${Jsize}+2+100 \
  CotStratHist_TALL_CO_C0050_G10M5.jpg \
  PrateStratHist_TALL_CO_C0050_G10M5.jpg \
  CdepthStratHist_TALL_CO_C0050_G10M5.jpg \
+ WturbStCirc_TALL_CO_C0050_G10M5.jpg \
  FigureStratStats_C50.jpg
 
 echo "Figure: ST: COT hist, PR hist, CD hist, CCN only, C400"
@@ -644,6 +645,7 @@ montage -tile 2x2 -geometry ${Jsize}+2+100 \
  CotStratHist_TALL_CO_C0400_G10M5.jpg \
  PrateStratHist_TALL_CO_C0400_G10M5.jpg \
  CdepthStratHist_TALL_CO_C0400_G10M5.jpg \
+ WturbStCirc_TALL_CO_C0400_G10M5.jpg \
  FigureStratStats_C400.jpg
 
 echo "Figure: ST: COT hist, PR hist, CD hist, CCN only, C1600"
@@ -651,6 +653,7 @@ montage -tile 2x2 -geometry ${Jsize}+2+100 \
  CotStratHist_TALL_CO_C1600_G10M5.jpg \
  PrateStratHist_TALL_CO_C1600_G10M5.jpg \
  CdepthStratHist_TALL_CO_C1600_G10M5.jpg \
+ WturbStCirc_TALL_CO_C1600_G10M5.jpg \
  FigureStratStats_C1600.jpg
 
 #echo "Figure: Hist Strat PR, LWP, COT: CCN only"
