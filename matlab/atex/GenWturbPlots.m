@@ -9,6 +9,7 @@ function [ ] = GenWturbPlots(ConfigFile)
     Pdir = Config.PlotDir;
 
     Fsize = 25;
+    LegFsize = 15;
 
     % PlotDefs
     %
@@ -20,6 +21,7 @@ function [ ] = GenWturbPlots(ConfigFile)
     %   x axis (variance) spec
     %   x axis (variance) spec
     %   y axis spec
+    %   Legend location
     %   output file name
     %
     %   Axis spec:
@@ -29,12 +31,78 @@ function [ ] = GenWturbPlots(ConfigFile)
       'turb_stats'
       'w-w_st_circ_all'
       'w-w-w_st_circ_all'
-      'CO_UP_C0400_G10M5'
-      '(a) C400'
+      'CO_UP_C0050_G10M5'
+      '(d) ST, C50'
       { [-5 5] 1e3  '<w\primew\prime> (m^2 s^-^2 x 10^-^3)' }
       { [-5 5] 1e3  '<w\primew\primew\prime> (m^3 s^-^3 x 10^-^3)' }
       { [ 0 4] 1e-3 'Height (km)' }
-      'WturbStCirc_CO_C0400_G10M5_TALL.jpg'
+      'NorthWest'
+      'WturbStCirc_TALL_CO_C0050_G10M5.jpg'
+      }
+
+      {
+      'turb_stats'
+      'w-w_st_circ_all'
+      'w-w-w_st_circ_all'
+      'CO_UP_C0400_G10M5'
+      '(d) ST, C400'
+      { [-5 5] 1e3  '<w\primew\prime> (m^2 s^-^2 x 10^-^3)' }
+      { [-5 5] 1e3  '<w\primew\primew\prime> (m^3 s^-^3 x 10^-^3)' }
+      { [ 0 4] 1e-3 'Height (km)' }
+      'NorthWest'
+      'WturbStCirc_TALL_CO_C0400_G10M5.jpg'
+      }
+
+      {
+      'turb_stats'
+      'w-w_st_circ_all'
+      'w-w-w_st_circ_all'
+      'CO_UP_C1600_G10M5'
+      '(d) ST, C1600'
+      { [-5 5] 1e3  '<w\primew\prime> (m^2 s^-^2 x 10^-^3)' }
+      { [-5 5] 1e3  '<w\primew\primew\prime> (m^3 s^-^3 x 10^-^3)' }
+      { [ 0 4] 1e-3 'Height (km)' }
+      'NorthWest'
+      'WturbStCirc_TALL_CO_C1600_G10M5.jpg'
+      }
+
+      {
+      'turb_stats'
+      'w-w_st_circ_all'
+      'w-w-w_st_circ_all'
+      'CO_UP_S293_G10M5_ALL'
+      '(d) ST, S293'
+      { [-2 2] 1e3  '<w\primew\prime> (m^2 s^-^2 x 10^-^3)' }
+      { [-3 3] 1e4  '<w\primew\primew\prime> (m^3 s^-^3 x 10^-^4)' }
+      { [ 0 4] 1e-3 'Height (km)' }
+      'NorthWest'
+      'WturbStCirc_TALL_CO_S293_G10M5_ALL.jpg'
+      }
+
+      {
+      'turb_stats'
+      'w-w_st_circ_all'
+      'w-w-w_st_circ_all'
+      'CO_UP_S298_G10M5_ALL'
+      '(d) ST, S298'
+      { [-5 5] 1e3  '<w\primew\prime> (m^2 s^-^2 x 10^-^3)' }
+      { [-5 5] 1e3  '<w\primew\primew\prime> (m^3 s^-^3 x 10^-^3)' }
+      { [ 0 4] 1e-3 'Height (km)' }
+      'NorthWest'
+      'WturbStCirc_TALL_CO_S298_G10M5_ALL.jpg'
+      }
+
+      {
+      'turb_stats'
+      'w-w_st_circ_all'
+      'w-w-w_st_circ_all'
+      'CO_UP_S303_G10M5_ALL'
+      '(d) ST, S303'
+      { [-5 5] 1e3  '<w\primew\prime> (m^2 s^-^2 x 10^-^3)' }
+      { [-5 5] 1e3  '<w\primew\primew\prime> (m^3 s^-^3 x 10^-^3)' }
+      { [ 0 4] 1e-3 'Height (km)' }
+      'NorthWest'
+      'WturbStCirc_TALL_CO_S303_G10M5_ALL.jpg'
       }
 
       };
@@ -54,7 +122,8 @@ function [ ] = GenWturbPlots(ConfigFile)
       Ylim        = PlotDefs{iplot}{8}{1};
       Yscale      = PlotDefs{iplot}{8}{2};
       Ylabel      = PlotDefs{iplot}{8}{3};
-      OutFname    = PlotDefs{iplot}{9};
+      LegLoc      = PlotDefs{iplot}{9};
+      OutFname    = PlotDefs{iplot}{10};
 
       fprintf('**************************************************************************\n');
       fprintf('Generating W tubulence statistics plot:\n');
@@ -110,7 +179,10 @@ function [ ] = GenWturbPlots(ConfigFile)
       % First plot the variance. Get the font sizes, labels, title, etc. all placed before
       % copying the axis to build the skew plot. This will get the axes positioned correctly
       % before copying them for the skew plot.
-      plot(WVAR, Z, 'LineStyle', '-', 'LineWidth', 2);
+      h_lines = plot(WVAR, Z, 'LineStyle', '-', 'LineWidth', 2);
+      for il = 1:length(h_lines)
+        set(h_lines(il), 'Color', str2rgb(LineColors{il}));
+      end
       xlim(XvarLim);
       ylim(Ylim);
 
@@ -126,6 +198,9 @@ function [ ] = GenWturbPlots(ConfigFile)
 
       xlabel(XvarLabel);
       ylabel(Ylabel);
+
+      legend(LegText, 'Location', char(LegLoc), 'FontSize', LegFsize);
+      legend boxoff;
 
       % Shrink plot area so that double x-axis will fit
       Ppos = get(gca, 'Position'); % position of plot area
@@ -147,7 +222,10 @@ function [ ] = GenWturbPlots(ConfigFile)
       % Color = none makes the plot area transparent so var plots can be seen
       SkewAxis = axes('Position', AxisPos, 'XaxisLocation', 'top', ...
          'YaxisLocation', 'right', 'Color', 'none');
-      line(WSKEW, Z, 'Parent', SkewAxis, 'LineStyle', '--', 'LineWidth', 2);
+      h_lines = line(WSKEW, Z, 'Parent', SkewAxis, 'LineStyle', '--', 'LineWidth', 2);
+      for il = 1:length(h_lines)
+        set(h_lines(il), 'Color', str2rgb(LineColors{il}));
+      end
 
       set(SkewAxis, 'FontSize', Fsize);
       set(SkewAxis, 'Xlim', XskewLim, 'Ylim', Ylim);
