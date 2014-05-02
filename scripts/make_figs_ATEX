@@ -564,7 +564,8 @@ montage -tile 2x2 -geometry ${Jsize}+2+100 \
  bars_avg_ctype_TALL_CO_S293.jpg \
  bars_avg_ctype_TALL_CO_S298.jpg \
  bars_avg_ctype_TALL_CO_S303.jpg \
- FigureBgraphCtype.jpg
+ bars_avg_cfrac_strat_TALL_CO.jpg \
+ FigureBgraphCtypeDist.jpg
 
 echo "Figure: COT hist, PR hist, CD hist, CCN only, 293K"
 montage -tile 2x2 -geometry ${Jsize}+2+100 \
