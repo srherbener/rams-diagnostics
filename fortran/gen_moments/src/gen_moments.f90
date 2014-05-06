@@ -140,6 +140,7 @@ program gen_moments
   real :: v1, v2, v3, v4
   real :: s_temp
   integer :: Nx, Ny, Nz, Nt
+  integer :: FilterNz
 
   character (len=LargeString), dimension(MaxVars) :: InFiles, InVarNames
   type (Rhdf5Var), dimension(MaxVars) :: InVars
@@ -227,11 +228,14 @@ program gen_moments
   if (UseFilter) then
     Filter%vname = 'filter'
     call rhdf5_read_init(FilterFile, Filter)
+    FilterNz = Filter%dims(3)
 
-   if (.not. DimsMatch(InVars(1), Filter)) then
-     write (*,*) 'ERROR: dimensions of filter do not match the variables: '
-     BadDims = .true.
-   endif
+    if (.not. DimsMatch(InVars(1), Filter)) then
+      write (*,*) 'ERROR: dimensions of filter do not match the variables: '
+      BadDims = .true.
+    endif
+  else
+    FilterNz = 0
   endif
 
   if (BadDims) then
@@ -376,9 +380,8 @@ program gen_moments
     !   The ivar dimension represent the "order" of the term stored in that column. The order
     !   is 1 for sum(Xi) terms, the order is 2 for sum(Xi * Xj) terms, etc.
     do iz = 1, Nz
-      if (Nz .eq. 1) then
-        ! Use z = 2 for the filter (first model level above zero)
-        filter_z = 2
+      if (FilterNz .eq. 1) then
+        filter_z = 1
       else
         filter_z = iz
       endif
