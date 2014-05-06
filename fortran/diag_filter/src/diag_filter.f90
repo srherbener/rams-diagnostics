@@ -236,7 +236,9 @@ program diag_filter
         BadDims = .true.
       endif
     endif
+  enddo
 
+  do i = 1, Nfilters
     ! Prepare for reading
     Vars(i)%ndims = Vars(i)%ndims - 1
 
