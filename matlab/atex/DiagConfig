@@ -1013,9 +1013,9 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 
 ############# Time series ###################
 ### Inversion height
-LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL InvHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:a@S293 NorthEastOutside none InvHeight_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL InvHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:b@S298 NorthEastOutside none InvHeight_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL InvHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:c@S303 NorthEastOutside none InvHeight_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL InvHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:a@S293 NorthEastOutside none InvHeight_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL InvHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:b@S298 NorthEastOutside none InvHeight_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL InvHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:c@S303 NorthEastOutside none InvHeight_CO_S303_G10M5_ALL.jpg
 
 #LinePlot: CO_UP_S293_G10M5 SimTimeBL InvHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:a@S293 SouthEast none InvHeight_CO_S293_G10M5.jpg
 #LinePlot: CO_UP_S298_G10M5 SimTimeBL InvHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:b@S298 SouthEast none InvHeight_CO_S298_G10M5.jpg
@@ -1305,6 +1305,33 @@ LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL InvHeight SimTimeHr HeightKm TsAll_T12_
 #LinePlot: CO_UP_C0400_G10M5  WmeanCvCircTall TurbHeights WmeanCvCirc_298 HeightKm TurbSelect none PANEL:b@C400     NorthEast none WmeanCvCirc_TALL_CO_C0400_G10M5.jpg
 #LinePlot: CO_UP_C1600_G10M5  WmeanCvCircTall TurbHeights WmeanCvCirc_303 HeightKm TurbSelect none PANEL:c@C1600    NorthEast none WmeanCvCirc_TALL_CO_C1600_G10M5.jpg
 
+# up_dn filter
+LinePlot: CO_UP_S293_G10M5_ALL  WmeanUd10Tall TurbHeights WmeanUd10_293 HeightKm TurbSelect none PANEL:a@S293    NorthEast none WmeanUd10_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WmeanUd10Tall TurbHeights WmeanUd10_298 HeightKm TurbSelect none PANEL:b@S298    NorthEast none WmeanUd10_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WmeanUd10Tall TurbHeights WmeanUd10_303 HeightKm TurbSelect none PANEL:c@S303    NorthEast none WmeanUd10_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_C0050_G10M5  WmeanUd10Tall TurbHeights WmeanUd10_293 HeightKm TurbSelect none PANEL:a@C50      NorthEast none WmeanUd10_TALL_CO_C0050_G10M5.jpg
+LinePlot: CO_UP_C0400_G10M5  WmeanUd10Tall TurbHeights WmeanUd10_293 HeightKm TurbSelect none PANEL:b@C400     NorthEast none WmeanUd10_TALL_CO_C0400_G10M5.jpg
+LinePlot: CO_UP_C1600_G10M5  WmeanUd10Tall TurbHeights WmeanUd10_293 HeightKm TurbSelect none PANEL:c@C1600    NorthEast none WmeanUd10_TALL_CO_C1600_G10M5.jpg
+
+# up filter
+LinePlot: CO_UP_S293_G10M5_ALL  WmeanUp10Tall TurbHeights WmeanUp10_293 HeightKm TurbSelect none PANEL:a@S293    NorthEast none WmeanUp10_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WmeanUp10Tall TurbHeights WmeanUp10_298 HeightKm TurbSelect none PANEL:b@S298    NorthEast none WmeanUp10_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WmeanUp10Tall TurbHeights WmeanUp10_303 HeightKm TurbSelect none PANEL:c@S303    NorthEast none WmeanUp10_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_C0050_G10M5  WmeanUp10Tall TurbHeights WmeanUp10_303 HeightKm TurbSelect none PANEL:a@C50      NorthEast none WmeanUp10_TALL_CO_C0050_G10M5.jpg
+LinePlot: CO_UP_C0400_G10M5  WmeanUp10Tall TurbHeights WmeanUp10_303 HeightKm TurbSelect none PANEL:b@C400     NorthEast none WmeanUp10_TALL_CO_C0400_G10M5.jpg
+LinePlot: CO_UP_C1600_G10M5  WmeanUp10Tall TurbHeights WmeanUp10_303 HeightKm TurbSelect none PANEL:c@C1600    NorthEast none WmeanUp10_TALL_CO_C1600_G10M5.jpg
+
+# dn filter
+LinePlot: CO_UP_S293_G10M5_ALL  WmeanDn10Tall TurbHeights WmeanDn10_293 HeightKm TurbSelect none PANEL:a@S293    NorthWest none WmeanDn10_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WmeanDn10Tall TurbHeights WmeanDn10_298 HeightKm TurbSelect none PANEL:b@S298    NorthWest none WmeanDn10_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WmeanDn10Tall TurbHeights WmeanDn10_303 HeightKm TurbSelect none PANEL:c@S303    NorthWest none WmeanDn10_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_C0050_G10M5  WmeanDn10Tall TurbHeights WmeanDn10_303 HeightKm TurbSelect none PANEL:a@C50      NorthWest none WmeanDn10_TALL_CO_C0050_G10M5.jpg
+LinePlot: CO_UP_C0400_G10M5  WmeanDn10Tall TurbHeights WmeanDn10_303 HeightKm TurbSelect none PANEL:b@C400     NorthWest none WmeanDn10_TALL_CO_C0400_G10M5.jpg
+LinePlot: CO_UP_C1600_G10M5  WmeanDn10Tall TurbHeights WmeanDn10_303 HeightKm TurbSelect none PANEL:c@C1600    NorthWest none WmeanDn10_TALL_CO_C1600_G10M5.jpg
+
 ### w var
 # no filter
 #LinePlot: CO_UP_S293_G10M5_ALL  WvarTall TurbHeights Wvar_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none Wvar_TALL_CO_S293_G10M5_ALL.jpg
@@ -1332,6 +1359,33 @@ LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL InvHeight SimTimeHr HeightKm TsAll_T12_
 #LinePlot: CO_UP_C0050_G10M5  WvarCvCircTall TurbHeights WvarCvCirc_293 HeightKm TurbSelect none PANEL:a@C50      NorthEast none WvarCvCirc_TALL_CO_C0050_G10M5.jpg
 #LinePlot: CO_UP_C0400_G10M5  WvarCvCircTall TurbHeights WvarCvCirc_298 HeightKm TurbSelect none PANEL:b@C400     NorthEast none WvarCvCirc_TALL_CO_C0400_G10M5.jpg
 #LinePlot: CO_UP_C1600_G10M5  WvarCvCircTall TurbHeights WvarCvCirc_303 HeightKm TurbSelect none PANEL:c@C1600    NorthEast none WvarCvCirc_TALL_CO_C1600_G10M5.jpg
+
+# up-dn filter
+LinePlot: CO_UP_S293_G10M5_ALL  WvarUd10Tall TurbHeights WvarUd10_293 HeightKm TurbSelect none PANEL:a@S293    NorthEast none WvarUd10_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WvarUd10Tall TurbHeights WvarUd10_298 HeightKm TurbSelect none PANEL:b@S298    NorthEast none WvarUd10_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WvarUd10Tall TurbHeights WvarUd10_303 HeightKm TurbSelect none PANEL:c@S303    NorthEast none WvarUd10_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_C0050_G10M5  WvarUd10Tall TurbHeights WvarUd10_293 HeightKm TurbSelect none PANEL:a@C50      NorthEast none WvarUd10_TALL_CO_C0050_G10M5.jpg
+LinePlot: CO_UP_C0400_G10M5  WvarUd10Tall TurbHeights WvarUd10_298 HeightKm TurbSelect none PANEL:b@C400     NorthEast none WvarUd10_TALL_CO_C0400_G10M5.jpg
+LinePlot: CO_UP_C1600_G10M5  WvarUd10Tall TurbHeights WvarUd10_303 HeightKm TurbSelect none PANEL:c@C1600    NorthEast none WvarUd10_TALL_CO_C1600_G10M5.jpg
+
+# up filter
+LinePlot: CO_UP_S293_G10M5_ALL  WvarUp10Tall TurbHeights WvarUp10_293 HeightKm TurbSelect none PANEL:a@S293    NorthEast none WvarUp10_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WvarUp10Tall TurbHeights WvarUp10_298 HeightKm TurbSelect none PANEL:a@S298    NorthEast none WvarUp10_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WvarUp10Tall TurbHeights WvarUp10_303 HeightKm TurbSelect none PANEL:a@S303    NorthEast none WvarUp10_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_C0050_G10M5  WvarUp10Tall TurbHeights WvarUp10_303 HeightKm TurbSelect none PANEL:a@C50      NorthEast none WvarUp10_TALL_CO_C0050_G10M5.jpg
+LinePlot: CO_UP_C0400_G10M5  WvarUp10Tall TurbHeights WvarUp10_303 HeightKm TurbSelect none PANEL:a@C400     NorthEast none WvarUp10_TALL_CO_C0400_G10M5.jpg
+LinePlot: CO_UP_C1600_G10M5  WvarUp10Tall TurbHeights WvarUp10_303 HeightKm TurbSelect none PANEL:a@C1600    NorthEast none WvarUp10_TALL_CO_C1600_G10M5.jpg
+
+# dn filter
+LinePlot: CO_UP_S293_G10M5_ALL  WvarDn10Tall TurbHeights WvarDn10_293 HeightKm TurbSelect none PANEL:c@S293    NorthEast none WvarDn10_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WvarDn10Tall TurbHeights WvarDn10_298 HeightKm TurbSelect none PANEL:c@S298    NorthEast none WvarDn10_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WvarDn10Tall TurbHeights WvarDn10_303 HeightKm TurbSelect none PANEL:c@S303    NorthEast none WvarDn10_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_C0050_G10M5  WvarDn10Tall TurbHeights WvarDn10_303 HeightKm TurbSelect none PANEL:c@C50      NorthEast none WvarDn10_TALL_CO_C0050_G10M5.jpg
+LinePlot: CO_UP_C0400_G10M5  WvarDn10Tall TurbHeights WvarDn10_303 HeightKm TurbSelect none PANEL:c@C400     NorthEast none WvarDn10_TALL_CO_C0400_G10M5.jpg
+LinePlot: CO_UP_C1600_G10M5  WvarDn10Tall TurbHeights WvarDn10_303 HeightKm TurbSelect none PANEL:c@C1600    NorthEast none WvarDn10_TALL_CO_C1600_G10M5.jpg
 
 ### w skew
 # no filter
@@ -1361,6 +1415,87 @@ LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL InvHeight SimTimeHr HeightKm TsAll_T12_
 #LinePlot: CO_UP_C0400_G10M5  WskewCvCircTall TurbHeights WskewCvCirc_298 HeightKm TurbSelect none PANEL:b@C400     NorthEast none WskewCvCirc_TALL_CO_C0400_G10M5.jpg
 #LinePlot: CO_UP_C1600_G10M5  WskewCvCircTall TurbHeights WskewCvCirc_303 HeightKm TurbSelect none PANEL:c@C1600    NorthEast none WskewCvCirc_TALL_CO_C1600_G10M5.jpg
 
+# up-dn filter
+LinePlot: CO_UP_S293_G10M5_ALL  WskewUd10Tall TurbHeights WskewUd10_293 HeightKm TurbSelect none PANEL:a@S293    NorthEast none WskewUd10_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WskewUd10Tall TurbHeights WskewUd10_298 HeightKm TurbSelect none PANEL:b@S298    NorthEast none WskewUd10_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WskewUd10Tall TurbHeights WskewUd10_303 HeightKm TurbSelect none PANEL:c@S303    NorthEast none WskewUd10_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_C0050_G10M5  WskewUd10Tall TurbHeights WskewUd10_293 HeightKm TurbSelect none PANEL:a@C50      NorthEast none WskewUd10_TALL_CO_C0050_G10M5.jpg
+LinePlot: CO_UP_C0400_G10M5  WskewUd10Tall TurbHeights WskewUd10_298 HeightKm TurbSelect none PANEL:b@C400     NorthEast none WskewUd10_TALL_CO_C0400_G10M5.jpg
+LinePlot: CO_UP_C1600_G10M5  WskewUd10Tall TurbHeights WskewUd10_303 HeightKm TurbSelect none PANEL:c@C1600    NorthEast none WskewUd10_TALL_CO_C1600_G10M5.jpg
+
+# up filter
+LinePlot: CO_UP_S293_G10M5_ALL  WskewUp10Tall TurbHeights WskewUp10_293 HeightKm TurbSelect none PANEL:a@S293    NorthEast none WskewUp10_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WskewUp10Tall TurbHeights WskewUp10_298 HeightKm TurbSelect none PANEL:b@S298    NorthEast none WskewUp10_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WskewUp10Tall TurbHeights WskewUp10_303 HeightKm TurbSelect none PANEL:c@S303    NorthEast none WskewUp10_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_C0050_G10M5  WskewUp10Tall TurbHeights WskewUp10_303 HeightKm TurbSelect none PANEL:a@C50      NorthEast none WskewUp10_TALL_CO_C0050_G10M5.jpg
+LinePlot: CO_UP_C0400_G10M5  WskewUp10Tall TurbHeights WskewUp10_303 HeightKm TurbSelect none PANEL:b@C400     NorthEast none WskewUp10_TALL_CO_C0400_G10M5.jpg
+LinePlot: CO_UP_C1600_G10M5  WskewUp10Tall TurbHeights WskewUp10_303 HeightKm TurbSelect none PANEL:c@C1600    NorthEast none WskewUp10_TALL_CO_C1600_G10M5.jpg
+
+# dn filter
+LinePlot: CO_UP_S293_G10M5_ALL  WskewDn10Tall TurbHeights WskewDn10_293 HeightKm TurbSelect none PANEL:a@S293    NorthWest none WskewDn10_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WskewDn10Tall TurbHeights WskewDn10_298 HeightKm TurbSelect none PANEL:b@S298    NorthWest none WskewDn10_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WskewDn10Tall TurbHeights WskewDn10_303 HeightKm TurbSelect none PANEL:c@S303    NorthWest none WskewDn10_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_C0050_G10M5  WskewDn10Tall TurbHeights WskewDn10_303 HeightKm TurbSelect none PANEL:a@C50      NorthWest none WskewDn10_TALL_CO_C0050_G10M5.jpg
+LinePlot: CO_UP_C0400_G10M5  WskewDn10Tall TurbHeights WskewDn10_303 HeightKm TurbSelect none PANEL:b@C400     NorthWest none WskewDn10_TALL_CO_C0400_G10M5.jpg
+LinePlot: CO_UP_C1600_G10M5  WskewDn10Tall TurbHeights WskewDn10_303 HeightKm TurbSelect none PANEL:c@C1600    NorthWest none WskewDn10_TALL_CO_C1600_G10M5.jpg
+
+### w-theta_v flux
+# no filter
+#LinePlot: CO_UP_S293_G10M5_ALL  WthetavTall TurbHeights Wthetav_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none Wthetav_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL  WthetavTall TurbHeights Wthetav_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none Wthetav_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL  WthetavTall TurbHeights Wthetav_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none Wthetav_TALL_CO_S303_G10M5_ALL.jpg
+
+#LinePlot: CO_UP_C0050_G10M5  WthetavTall TurbHeights Wthetav_303 HeightKm TurbSelect none PANEL:a@C50      NorthEast none Wthetav_TALL_CO_C0050_G10M5.jpg
+#LinePlot: CO_UP_C0400_G10M5  WthetavTall TurbHeights Wthetav_303 HeightKm TurbSelect none PANEL:b@C400     NorthEast none Wthetav_TALL_CO_C0400_G10M5.jpg
+#LinePlot: CO_UP_C1600_G10M5  WthetavTall TurbHeights Wthetav_303 HeightKm TurbSelect none PANEL:c@C1600    NorthEast none Wthetav_TALL_CO_C1600_G10M5.jpg
+
+# st circ filter
+#LinePlot: CO_UP_S293_G10M5_ALL  WthetavStCircTall TurbHeights WthetavStCirc_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none WthetavStCirc_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL  WthetavStCircTall TurbHeights WthetavStCirc_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none WthetavStCirc_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL  WthetavStCircTall TurbHeights WthetavStCirc_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none WthetavStCirc_TALL_CO_S303_G10M5_ALL.jpg
+
+#LinePlot: CO_UP_C0050_G10M5  WthetavStCircTall TurbHeights WthetavStCirc_303 HeightKm TurbSelect none PANEL:a@C50      NorthEast none WthetavStCirc_TALL_CO_C0050_G10M5.jpg
+#LinePlot: CO_UP_C0400_G10M5  WthetavStCircTall TurbHeights WthetavStCirc_303 HeightKm TurbSelect none PANEL:b@C400     NorthEast none WthetavStCirc_TALL_CO_C0400_G10M5.jpg
+#LinePlot: CO_UP_C1600_G10M5  WthetavStCircTall TurbHeights WthetavStCirc_303 HeightKm TurbSelect none PANEL:c@C1600    NorthEast none WthetavStCirc_TALL_CO_C1600_G10M5.jpg
+
+# cv circ filter
+#LinePlot: CO_UP_S293_G10M5_ALL  WthetavCvCircTall TurbHeights WthetavCvCirc_293 HeightKm TurbSelect none PANEL:a@293K    NorthEast none WthetavCvCirc_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL  WthetavCvCircTall TurbHeights WthetavCvCirc_298 HeightKm TurbSelect none PANEL:b@298K    NorthEast none WthetavCvCirc_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL  WthetavCvCircTall TurbHeights WthetavCvCirc_303 HeightKm TurbSelect none PANEL:c@303K    NorthEast none WthetavCvCirc_TALL_CO_S303_G10M5_ALL.jpg
+
+#LinePlot: CO_UP_C0050_G10M5  WthetavCvCircTall TurbHeights WthetavCvCirc_293 HeightKm TurbSelect none PANEL:a@C50      NorthEast none WthetavCvCirc_TALL_CO_C0050_G10M5.jpg
+#LinePlot: CO_UP_C0400_G10M5  WthetavCvCircTall TurbHeights WthetavCvCirc_298 HeightKm TurbSelect none PANEL:b@C400     NorthEast none WthetavCvCirc_TALL_CO_C0400_G10M5.jpg
+#LinePlot: CO_UP_C1600_G10M5  WthetavCvCircTall TurbHeights WthetavCvCirc_303 HeightKm TurbSelect none PANEL:c@C1600    NorthEast none WthetavCvCirc_TALL_CO_C1600_G10M5.jpg
+
+# up-dn filter
+LinePlot: CO_UP_S293_G10M5_ALL  WthetavUd10Tall TurbHeights WthetavUd10_293 HeightKm TurbSelect none PANEL:a@S293    NorthWest none WthetavUd10_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WthetavUd10Tall TurbHeights WthetavUd10_298 HeightKm TurbSelect none PANEL:b@S298    NorthWest none WthetavUd10_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WthetavUd10Tall TurbHeights WthetavUd10_303 HeightKm TurbSelect none PANEL:c@S303    NorthWest none WthetavUd10_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_C0050_G10M5  WthetavUd10Tall TurbHeights WthetavUd10_293 HeightKm TurbSelect none PANEL:a@C50      NorthWest none WthetavUd10_TALL_CO_C0050_G10M5.jpg
+LinePlot: CO_UP_C0400_G10M5  WthetavUd10Tall TurbHeights WthetavUd10_298 HeightKm TurbSelect none PANEL:b@C400     NorthWest none WthetavUd10_TALL_CO_C0400_G10M5.jpg
+LinePlot: CO_UP_C1600_G10M5  WthetavUd10Tall TurbHeights WthetavUd10_303 HeightKm TurbSelect none PANEL:c@C1600    NorthWest none WthetavUd10_TALL_CO_C1600_G10M5.jpg
+
+# up filter
+LinePlot: CO_UP_S293_G10M5_ALL  WthetavUp10Tall TurbHeights WthetavUp10_293 HeightKm TurbSelect none PANEL:b@S293    NorthWest none WthetavUp10_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WthetavUp10Tall TurbHeights WthetavUp10_298 HeightKm TurbSelect none PANEL:b@S298    NorthWest none WthetavUp10_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WthetavUp10Tall TurbHeights WthetavUp10_303 HeightKm TurbSelect none PANEL:b@S303    NorthWest none WthetavUp10_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_C0050_G10M5  WthetavUp10Tall TurbHeights WthetavUp10_303 HeightKm TurbSelect none PANEL:b@C50      NorthWest none WthetavUp10_TALL_CO_C0050_G10M5.jpg
+LinePlot: CO_UP_C0400_G10M5  WthetavUp10Tall TurbHeights WthetavUp10_303 HeightKm TurbSelect none PANEL:b@C400     NorthWest none WthetavUp10_TALL_CO_C0400_G10M5.jpg
+LinePlot: CO_UP_C1600_G10M5  WthetavUp10Tall TurbHeights WthetavUp10_303 HeightKm TurbSelect none PANEL:b@C1600    NorthWest none WthetavUp10_TALL_CO_C1600_G10M5.jpg
+
+# dn filter
+LinePlot: CO_UP_S293_G10M5_ALL  WthetavDn10Tall TurbHeights WthetavDn10_293 HeightKm TurbSelect none PANEL:d@S293    NorthWest none WthetavDn10_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WthetavDn10Tall TurbHeights WthetavDn10_298 HeightKm TurbSelect none PANEL:d@S298    NorthWest none WthetavDn10_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WthetavDn10Tall TurbHeights WthetavDn10_303 HeightKm TurbSelect none PANEL:d@S303    NorthWest none WthetavDn10_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_C0050_G10M5  WthetavDn10Tall TurbHeights WthetavDn10_303 HeightKm TurbSelect none PANEL:d@C50      NorthWest none WthetavDn10_TALL_CO_C0050_G10M5.jpg
+LinePlot: CO_UP_C0400_G10M5  WthetavDn10Tall TurbHeights WthetavDn10_303 HeightKm TurbSelect none PANEL:d@C400     NorthWest none WthetavDn10_TALL_CO_C0400_G10M5.jpg
+LinePlot: CO_UP_C1600_G10M5  WthetavDn10Tall TurbHeights WthetavDn10_303 HeightKm TurbSelect none PANEL:d@C1600    NorthWest none WthetavDn10_TALL_CO_C1600_G10M5.jpg
 
 
 ### Horizontal domain cloud fraction 
@@ -2436,9 +2571,9 @@ LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL InvHeight SimTimeHr HeightKm TsAll_T12_
 #### 1um GCCN median radius ####
 
 # Vary CCN, hold SST constant
-LinePlot: CO_UP_S293_G10M5_ALL  SimTime Cfrac SimTimeHr Fraction TsAll none PANEL:d@S293  NorthEastOutside none CloudFrac_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL  SimTime Cfrac SimTimeHr Fraction TsAll none PANEL:e@S298  NorthEastOutside none CloudFrac_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL  SimTime Cfrac SimTimeHr Fraction TsAll none PANEL:f@S303  NorthEastOutside none CloudFrac_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL  SimTime Cfrac SimTimeHr Fraction TsAll none PANEL:d@S293  NorthEastOutside none CloudFrac_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL  SimTime Cfrac SimTimeHr Fraction TsAll none PANEL:e@S298  NorthEastOutside none CloudFrac_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL  SimTime Cfrac SimTimeHr Fraction TsAll none PANEL:f@S303  NorthEastOutside none CloudFrac_CO_S303_G10M5_ALL.jpg
 
 #LinePlot: CO_UP_S293_G10M5  SimTime Cfrac SimTimeHr Fraction TsAll none PANEL:a@S293  SouthWest none CloudFrac_CO_S293_G10M5.jpg
 #LinePlot: CO_UP_S298_G10M5  SimTime Cfrac SimTimeHr Fraction TsAll none PANEL:a@S298  SouthWest none CloudFrac_CO_S298_G10M5.jpg
@@ -3418,16 +3553,45 @@ PlotVar: SimTimeAVG  t_coords     DIAGS/avg_ts_ctype_cot  Simulation@Time  h  2.
 PlotVar: WmeanTall         w_all         DIAGS/turb_stats   <w> cm@s^-^1  100
 PlotVar: WmeanStCircTall   w_st_circ_all DIAGS/turb_stats   <w> cm@s^-^1  100
 PlotVar: WmeanCvCircTall   w_cv_circ_all DIAGS/turb_stats   <w>  m@s^-^1    1
+#PlotVar: WmeanUd10Tall     w_ud0p10_all  DIAGS/turb_stats   <w> cm@s^-^1  100
+#PlotVar: WmeanUp10Tall     w_up0p10_all  DIAGS/turb_stats   <w> cm@s^-^1  100
+#PlotVar: WmeanDn10Tall     w_dn0p10_all  DIAGS/turb_stats   <w> cm@s^-^1  100
+PlotVar: WmeanUd10Tall     w_ud0p10_all  DIAGS/moments   <w> cm@s^-^1  100
+PlotVar: WmeanUp10Tall     w_up0p10_all  DIAGS/moments   <w> cm@s^-^1  100
+PlotVar: WmeanDn10Tall     w_dn0p10_all  DIAGS/moments   <w> cm@s^-^1  100
 
 ### Vertical Velocity Variance ###
 PlotVar: WvarTall         w-w_all         DIAGS/turb_stats   <w'w'>  m^2@s^-^2    1
 PlotVar: WvarStCircTall   w-w_st_circ_all DIAGS/turb_stats   <w'w'>  m^2@s^-^2    1
 PlotVar: WvarCvCircTall   w-w_cv_circ_all DIAGS/turb_stats   <w'w'>  m^2@s^-^2    1
+#PlotVar: WvarUd10Tall     w-w_ud0p10_all  DIAGS/turb_stats   <w'w'>  m^2@s^-^2    1
+#PlotVar: WvarUp10Tall     w-w_up0p10_all  DIAGS/turb_stats   <w'w'>  m^2@s^-^2    1
+#PlotVar: WvarDn10Tall     w-w_dn0p10_all  DIAGS/turb_stats   <w'w'>  m^2@s^-^2    1
+PlotVar: WvarUd10Tall     w-w_ud0p10_all  DIAGS/moments   <w'w'>  m^2@s^-^2    1
+PlotVar: WvarUp10Tall     w-w_up0p10_all  DIAGS/moments   <w'w'>  m^2@s^-^2    1
+PlotVar: WvarDn10Tall     w-w_dn0p10_all  DIAGS/moments   <w'w'>  m^2@s^-^2    1
 
 ### Vertical Velocity Skew ###
 PlotVar: WskewTall         w-w-w_all         DIAGS/turb_stats   <w'w'w'>  m^3@s^-^3    1
 PlotVar: WskewStCircTall   w-w-w_st_circ_all DIAGS/turb_stats   <w'w'w'>  m^3@s^-^3    1
 PlotVar: WskewCvCircTall   w-w-w_cv_circ_all DIAGS/turb_stats   <w'w'w'>  m^3@s^-^3    1
+#PlotVar: WskewUd10Tall     w-w-w_ud0p10_all  DIAGS/turb_stats   <w'w'w'>  m^3@s^-^3    1
+#PlotVar: WskewUp10Tall     w-w-w_up0p10_all  DIAGS/turb_stats   <w'w'w'>  m^3@s^-^3    1
+#PlotVar: WskewDn10Tall     w-w-w_dn0p10_all  DIAGS/turb_stats   <w'w'w'>  m^3@s^-^3    1
+PlotVar: WskewUd10Tall     w-w-w_ud0p10_all  DIAGS/moments   <w'w'w'>  m^3@s^-^3    1
+PlotVar: WskewUp10Tall     w-w-w_up0p10_all  DIAGS/moments   <w'w'w'>  m^3@s^-^3    1
+PlotVar: WskewDn10Tall     w-w-w_dn0p10_all  DIAGS/moments   <w'w'w'>  m^3@s^-^3    1
+
+### w-theta_v flux ###
+PlotVar: WthetavTall         w-theta_v_all         DIAGS/turb_stats   <w'\theta_v'>  K@m@s^-^1    1
+PlotVar: WthetavStCircTall   w-theta_v_st_circ_all DIAGS/turb_stats   <w'\theta_v'>  K@m@s^-^1    1
+PlotVar: WthetavCvCircTall   w-theta_v_cv_circ_all DIAGS/turb_stats   <w'\theta_v'>  K@m@s^-^1    1
+#PlotVar: WthetavUd10Tall     w-theta_v_ud0p10_all  DIAGS/turb_stats   <w'\theta_v'>  K@m@s^-^1    1
+#PlotVar: WthetavUp10Tall     w-theta_v_up0p10_all  DIAGS/turb_stats   <w'\theta_v'>  K@m@s^-^1    1
+#PlotVar: WthetavDn10Tall     w-theta_v_dn0p10_all  DIAGS/turb_stats   <w'\theta_v'>  K@m@s^-^1    1
+PlotVar: WthetavUd10Tall     w-theta_v_ud0p10_all  DIAGS/moments   <w'\theta_v'>  K@m@s^-^1    1
+PlotVar: WthetavUp10Tall     w-theta_v_up0p10_all  DIAGS/moments   <w'\theta_v'>  K@m@s^-^1    1
+PlotVar: WthetavDn10Tall     w-theta_v_dn0p10_all  DIAGS/moments   <w'\theta_v'>  K@m@s^-^1    1
 
 ############## Cloud Mass (mixing ratio) ############################
 # no filter
@@ -4095,26 +4259,6 @@ PlotAxis: CotCumulHist_293    0    0.1 linear
 PlotAxis: CotCumulHist_298    0      3 linear
 PlotAxis: CotCumulHist_303    0      6 linear
 
-PlotAxis: Wmean_293         -0.02 0.02 linear
-PlotAxis: Wmean_298         -0.02 0.02 linear
-PlotAxis: Wmean_303         -0.02 0.02 linear
-PlotAxis: WmeanStCirc_293      -2    2 linear
-PlotAxis: WmeanStCirc_298      -2    2 linear
-PlotAxis: WmeanStCirc_303      -2    2 linear
-PlotAxis: WmeanCvCirc_293      -1    2 linear
-PlotAxis: WmeanCvCirc_298      -1    2 linear
-PlotAxis: WmeanCvCirc_303      -1    2 linear
-
-PlotAxis: Wvar_293         -0.001  0.001 linear
-PlotAxis: Wvar_298         -0.001  0.020 linear
-PlotAxis: Wvar_303         -0.001  0.050 linear
-PlotAxis: WvarStCirc_293   -0.001  0.004 linear
-PlotAxis: WvarStCirc_298   -0.001  0.010 linear
-PlotAxis: WvarStCirc_303   -0.001  0.010 linear
-PlotAxis: WvarCvCirc_293     -0.1    1.5 linear
-PlotAxis: WvarCvCirc_298     -0.1    1.5 linear
-PlotAxis: WvarCvCirc_303     -0.1    1.5 linear
-
 PlotAxis: CotStrnpHist_293    0   0.01 linear
 PlotAxis: CotStrnpHist_298    0    0.2 linear
 PlotAxis: CotStrnpHist_303    0      2 linear
@@ -4134,6 +4278,15 @@ PlotAxis: WmeanStCirc_303      -2    2 linear
 PlotAxis: WmeanCvCirc_293      -1    2 linear
 PlotAxis: WmeanCvCirc_298      -1    2 linear
 PlotAxis: WmeanCvCirc_303      -1    2 linear
+PlotAxis: WmeanUd10_293       -50   50 linear
+PlotAxis: WmeanUd10_298       -50   50 linear
+PlotAxis: WmeanUd10_303       -50   50 linear
+PlotAxis: WmeanUp10_293         9   50 linear
+PlotAxis: WmeanUp10_298         9   50 linear
+PlotAxis: WmeanUp10_303         9   50 linear
+PlotAxis: WmeanDn10_293       -50   -9 linear
+PlotAxis: WmeanDn10_298       -50   -9 linear
+PlotAxis: WmeanDn10_303       -50   -9 linear
 
 PlotAxis: Wvar_293         -0.001  0.001 linear
 PlotAxis: Wvar_298         -0.001  0.020 linear
@@ -4141,9 +4294,18 @@ PlotAxis: Wvar_303         -0.001  0.050 linear
 PlotAxis: WvarStCirc_293   -0.001  0.004 linear
 PlotAxis: WvarStCirc_298   -0.001  0.010 linear
 PlotAxis: WvarStCirc_303   -0.001  0.010 linear
-PlotAxis: WvarCvCirc_293     -0.1    1.5 linear
-PlotAxis: WvarCvCirc_298     -0.1    1.5 linear
-PlotAxis: WvarCvCirc_303     -0.1    1.5 linear
+PlotAxis: WvarCvCirc_293    -0.01    0.2 linear
+PlotAxis: WvarCvCirc_298    -0.01    0.2 linear
+PlotAxis: WvarCvCirc_303    -0.01    0.2 linear
+PlotAxis: WvarUd10_293     -0.001   0.04 linear
+PlotAxis: WvarUd10_298      -0.01    0.5 linear
+PlotAxis: WvarUd10_303      -0.01    0.8 linear
+PlotAxis: WvarUp10_293     -0.001   0.04 linear
+PlotAxis: WvarUp10_298      -0.01    0.5 linear
+PlotAxis: WvarUp10_303      -0.01    0.8 linear
+PlotAxis: WvarDn10_293     -0.001   0.03 linear
+PlotAxis: WvarDn10_298      -0.01    0.3 linear
+PlotAxis: WvarDn10_303      -0.01    0.3 linear
 
 PlotAxis: Wskew_293        -0.0001 0.0001 linear
 PlotAxis: Wskew_298         -0.001  0.005 linear
@@ -4154,6 +4316,34 @@ PlotAxis: WskewStCirc_303   -0.005  0.005 linear
 PlotAxis: WskewCvCirc_293     -0.1      1 linear
 PlotAxis: WskewCvCirc_298     -0.1      1 linear
 PlotAxis: WskewCvCirc_303     -0.1      1 linear
+PlotAxis: WskewUd10_293       -1.0    1.0 linear
+PlotAxis: WskewUd10_298       -1.0    2.0 linear
+PlotAxis: WskewUd10_303       -1.0    5.0 linear
+PlotAxis: WskewUp10_293     -0.001   0.02 linear
+PlotAxis: WskewUp10_298      -0.01    2.0 linear
+PlotAxis: WskewUp10_303      -0.01    5.0 linear
+PlotAxis: WskewDn10_293      -0.02  0.001 linear
+PlotAxis: WskewDn10_298       -1.0   0.01 linear
+PlotAxis: WskewDn10_303       -1.0   0.01 linear
+
+PlotAxis: Wthetav_293         -0.001 0.001 linear
+PlotAxis: Wthetav_298         -0.001 0.001 linear
+PlotAxis: Wthetav_303         -0.001 0.001 linear
+PlotAxis: WthetavStCirc_293   -0.001 0.001 linear
+PlotAxis: WthetavStCirc_298   -0.001 0.001 linear
+PlotAxis: WthetavStCirc_303   -0.001 0.001 linear
+PlotAxis: WthetavCvCirc_293       -1     1 linear
+PlotAxis: WthetavCvCirc_298       -1     1 linear
+PlotAxis: WthetavCvCirc_303       -1     1 linear
+PlotAxis: WthetavUd10_293       -0.1    0.1 linear
+PlotAxis: WthetavUd10_298       -0.3    0.3 linear
+PlotAxis: WthetavUd10_303       -0.4    0.4 linear
+PlotAxis: WthetavUp10_293       -0.1    0.1 linear
+PlotAxis: WthetavUp10_298       -0.3    0.3 linear
+PlotAxis: WthetavUp10_303       -0.4    0.4 linear
+PlotAxis: WthetavDn10_293       -0.1    0.1 linear
+PlotAxis: WthetavDn10_298       -0.2    0.2 linear
+PlotAxis: WthetavDn10_303       -0.3    0.3 linear
 
 PlotAxis: SimTimeHr  10     40 linear
 PlotAxis: HeightKm    0      4 linear
