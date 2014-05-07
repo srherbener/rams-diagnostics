@@ -98,356 +98,361 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'bars_avg_cot_TALL_CO.jpg'
        }
 
-       % PR averages, all time points, CCN only
-       {
-       'PR Avg TALL CCN only, grouped by SST'
-       'bgraph_pcprr.h5'
-       { 'a' 'Domain' }
-       'N_a (# cm^-^3)'
-       'Precip Rate (mm h^-^1)'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
-       'grouped'
-       { 'Averages' 1 { [4] [1:3] [1:6] [1] } 1 'CCN' 0 0.12 }
-       'bars_avg_pcprr_TALL_CO.jpg'
-       }
-
-       % LWP averages, all time points, CCN only
-       {
-       'LWP Avg TALL CCN only, grouped by SST'
-       'bgraph_lwp.h5'
-       { 'a' 'Domain' }
-       'N_a (# cm^-^3)'
-       'LWP (mm)'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
-       'grouped'
-       { 'Averages' 1 { [4] [1:3] [1:6] [1] } 1 'CCN' 0 0.25 }
-       'bars_avg_lwp_TALL_CO.jpg'
-       }
-
-       % Cloud depth averages, all time points, CCN only
-       {
-       'Cloud Depth Avg TALL CCN only, grouped by SST'
-       'bgraph_cdepth.h5'
-       { 'a' 'Domain' }
-       'N_a (# cm^-^3)'
-       'Cloud Depth (m)'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
-       'grouped'
-       { 'Averages' 1 { [4] [1:3] [1:6] [1] } 1 'CCN' 0 900 }
-       'bars_avg_cdepth_TALL_CO.jpg'
-       }
-
-       % Stratiform (non-precipitating) cloud types, COT averages, all time points, CCN only
-       {
-       'Stratiform (NP) Avg TALL CCN only, grouped by SST'
-       'bgraph_cot.h5'
-       { 'a' 'SNP' }
-       'N_a (# cm^-^3)'
-       '\tau_c'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
-       'grouped'
-       { 'Averages' 1 { [8] [1:3] [1:6] [1] } 1 'CCN' 0 1.5 }
-       'bars_avg_cot_strnp_TALL_CO.jpg'
-       }
-
-       % Stratiform (non-precipitating) cloud types, PR averages, all time points, CCN only
-       {
-       'Stratiform (NP) PR Avg TALL CCN only, grouped by SST'
-       'bgraph_pcprr.h5'
-       { 'a' 'SNP' }
-       'N_a (# cm^-^3)'
-       'Precip Rate (mm h^-^1)'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
-       'grouped'
-       { 'Averages' 1 { [8] [1:3] [1:6] [1] } 1 'CCN' 0 0.001 }
-       'bars_avg_pcprr_strnp_TALL_CO.jpg'
-       }
-
-       % Stratiform (non-precipitating) cloud types, LWP averages, all time points, CCN only
-       {
-       'Stratiform (NP) LWP Avg TALL CCN only, grouped by SST'
-       'bgraph_lwp.h5'
-       { 'a' 'SNP' }
-       'N_a (# cm^-^3)'
-       'LWP (mm)'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
-       'grouped'
-       { 'Averages' 1 { [8] [1:3] [1:6] [1] } 1 'CCN' 0 0.035 }
-       'bars_avg_lwp_strnp_TALL_CO.jpg'
-       }
-
-       % Stratiform (non-precipitating) cloud types, Cloud depth averages, all time points, CCN only
-       {
-       'Stratiform (NP) Cloud Depth Avg TALL CCN only, grouped by SST'
-       'bgraph_cdepth.h5'
-       { 'a' 'SNP' }
-       'N_a (# cm^-^3)'
-       'Cloud Depth (m)'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
-       'grouped'
-       { 'Averages' 1 { [8] [1:3] [1:6] [1] } 1 'CCN' 0 180 }
-       'bars_avg_cdepth_strnp_TALL_CO.jpg'
-       }
-
-       % Stratiform (precipitating) cloud types, COT averages, all time points, CCN only
-       {
-       'Stratiform Avg TALL CCN only, grouped by SST'
-       'bgraph_cot.h5'
-       { 'a' 'ST' }
-       'N_a (# cm^-^3)'
-       '\tau_c'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
-       'grouped'
-       { 'Averages' 1 { [12] [1:3] [1:6] [1] } 1 'CCN' 0 5 }
-       'bars_avg_cot_strat_TALL_CO.jpg'
-       }
-
-       % Stratiform (precipitating) cloud types, PR averages, all time points, CCN only
-       {
-       'Stratiform PR Avg TALL CCN only, grouped by SST'
-       'bgraph_pcprr.h5'
-       { 'a' 'ST' }
-       'N_a (# cm^-^3)'
-       'Precip Rate (mm h^-^1)'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
-       'grouped'
-       { 'Averages' 1 { [12] [1:3] [1:6] [1] } 1 'CCN' 0 0.15 }
-       'bars_avg_pcprr_strat_TALL_CO.jpg'
-       }
-
-       % Stratiform (precipitating) cloud types, LWP averages, all time points, CCN only
-       {
-       'Stratiform LWP Avg TALL CCN only, grouped by SST'
-       'bgraph_lwp.h5'
-       { 'a' 'ST' }
-       'N_a (# cm^-^3)'
-       'LWP (mm)'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
-       'grouped'
-       { 'Averages' 1 { [12] [1:3] [1:6] [1] } 1 'CCN' 0 0.5 }
-       'bars_avg_lwp_strat_TALL_CO.jpg'
-       }
-
-       % Stratiform (precipitating) cloud types, Cloud depth averages, all time points, CCN only
-       {
-       'Stratiform Cloud Depth Avg TALL CCN only, grouped by SST'
-       'bgraph_cdepth.h5'
-       { 'a' 'ST' }
-       'N_a (# cm^-^3)'
-       'Cloud Depth (m)'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
-       'grouped'
-       { 'Averages' 1 { [12] [1:3] [1:6] [1] } 1 'CCN' 0 900 }
-       'bars_avg_cdepth_strat_TALL_CO.jpg'
-       }
-
-       % Convective cloud types, COT averages, all time points, CCN only
-       {
-       'Convective Avg TALL CCN only, grouped by SST'
-       'bgraph_cot.h5'
-       { 'a' 'CV' }
-       'N_a (# cm^-^3)'
-       '\tau_c'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
-       'grouped'
-       { 'Averages' 1 { [16] [1:3] [1:6] [1] } 1 'CCN' 0 120 }
-       'bars_avg_cot_cumul_TALL_CO.jpg'
-       }
-
-       % Convective cloud types, PR averages, all time points, CCN only
-       {
-       'Convective PR Avg TALL CCN only, grouped by SST'
-       'bgraph_pcprr.h5'
-       { 'a' 'CV' }
-      'N_a (# cm^-^3)'
-       'Precip Rate (mm h^-^1)'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
-       'grouped'
-       { 'Averages' 1 { [16] [1:3] [1:6] [1] } 1 'CCN' 0 30 }
-       'bars_avg_pcprr_cumul_TALL_CO.jpg'
-       }
-
-       % Convective cloud types, LWP averages, all time points, CCN only
-       {
-       'Convective LWP Avg TALL CCN only, grouped by SST'
-       'bgraph_lwp.h5'
-       { 'a' 'CV' }
-       'N_a (# cm^-^3)'
-       'LWP (mm)'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
-       'grouped'
-       { 'Averages' 1 { [16] [1:3] [1:6] [1] } 1 'CCN' 0 5 }
-       'bars_avg_lwp_cumul_TALL_CO.jpg'
-       }
-
-       % Convective cloud types, Cloud depth averages, all time points, CCN only
-       {
-       'Convective Cloud Depth Avg TALL CCN only, grouped by SST'
-       'bgraph_cdepth.h5'
-       { 'a' 'CV' }
-       'N_a (# cm^-^3)'
-       'Cloud Depth (m)'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
-       'grouped'
-       { 'Averages' 1 { [16] [1:3] [1:6] [1] } 1 'CCN' 0 4000 }
-       'bars_avg_cdepth_cumul_TALL_CO.jpg'
-       }
-
-       % All cloud types, COT averages, all time points, CCN only
-       {
-       'All Clouds Avg TALL CCN only, grouped by SST'
-       'bgraph_cot.h5'
-       { 'a' 'All Clouds' }
-       'N_a (# cm^-^3)'
-       '\tau_c'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
-       'grouped'
-       { 'Averages' 1 { [20] [1:3] [1:6] [1] } 1 'CCN' 0 6 }
-       'bars_avg_cot_all_cld_TALL_CO.jpg'
-       }
-
-       % All cloud types, PR averages, all time points, CCN only
-       {
-       'All Clouds PR Avg TALL CCN only, grouped by SST'
-       'bgraph_pcprr.h5'
-       { 'a' 'All Clouds' }
-       'N_a (# cm^-^3)'
-       'Precip Rate (mm h^-^1)'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
-       'grouped'
-       { 'Averages' 1 { [20] [1:3] [1:6] [1] } 1 'CCN' 0 0.3 }
-       'bars_avg_pcprr_all_cld_TALL_CO.jpg'
-       }
-
-       % All cloud types, LWP averages, all time points, CCN only
-       {
-       'All Clouds LWP Avg TALL CCN only, grouped by SST'
-       'bgraph_lwp.h5'
-       { 'a' 'All Clouds' }
-       'N_a (# cm^-^3)'
-       'LWP (mm)'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
-       'grouped'
-       { 'Averages' 1 { [20] [1:3] [1:6] [1] } 1 'CCN' 0 0.25 }
-       'bars_avg_lwp_all_cld_TALL_CO.jpg'
-       }
-
-       % All cloud types, Cloud depth averages, all time points, CCN only
-       {
-       'All Clouds Cloud Depth Avg TALL CCN only, grouped by SST'
-       'bgraph_cdepth.h5'
-       { 'a' 'All Clouds' }
-       'N_a (# cm^-^3)'
-       'Cloud Depth (m)'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
-       'grouped'
-       { 'Averages' 1 { [20] [1:3] [1:6] [1] } 1 'CCN' 0 900 }
-       'bars_avg_cdepth_all_cld_TALL_CO.jpg'
-       }
-
-       % Cloud fraction averages, all time points, CCN only
-       {
-       'Cloud Fraction Avg TALL CCN only, grouped by SST'
-       'bgraph_cfrac.h5'
-       { 'a' 'Domain' }
-       'N_a (# cm^-^3)'
-       'Cloud Fraction'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
-       'grouped'
-       { 'Averages' 1 { [4] [1:3] [1:6] [1] } 1 'CCN' 0 1.2 }
-       'bars_avg_cfrac_TALL_CO.jpg'
-       }
-
-       % Stratiform (NP) Cloud fraction averages, all time points, CCN only
-       {
-       'Stratiform (NP) Cloud Fraction Avg TALL CCN only, grouped by SST'
-       'bgraph_cfrac.h5'
-       { 'a' 'SNP' }
-       'N_a (# cm^-^3)'
-       'Cloud Fraction'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
-       'grouped'
-       { 'Averages' 1 { [8] [1:3] [1:6] [1] } 1 'CCN' 0 1.2 }
-       'bars_avg_cfrac_strnp_TALL_CO.jpg'
-       }
-
-       % Stratiform Cloud fraction averages, all time points, CCN only
-       {
-       'Cloud Fraction Avg TALL CCN only, grouped by SST'
-       'bgraph_cfrac.h5'
-       { 'd' 'ST' }
-       'N_a (# cm^-^3)'
-       'Cloud Fraction'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
-       'grouped'
-       { 'Averages' 1 { [12] [1:3] [1:6] [1] } 1 'CCN' 0 1.2 }
-       'bars_avg_cfrac_strat_TALL_CO.jpg'
-       }
-
-       % Convective Cloud fraction averages, all time points, CCN only
-       {
-       'Convective Cloud Fraction Avg TALL CCN only, grouped by SST'
-       'bgraph_cfrac.h5'
-       { 'a' 'CV' }
-       'N_a (# cm^-^3)'
-       'Cloud Fraction'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
-       'grouped'
-       { 'Averages' 1 { [16] [1:3] [1:6] [1] } 1 'CCN' 0 1.2 }
-       'bars_avg_cfrac_cumul_TALL_CO.jpg'
-       }
-
-       % Stratiform NP-P mix Cloud fraction averages, all time points, CCN only
-       {
-       'Stratiform NP-P mix Cloud Fraction Avg TALL CCN only, grouped by SST'
-       'bgraph_cfrac.h5'
-       { 'a' 'STM' }
-       'N_a (# cm^-^3)'
-       'Cloud Fraction'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
-       'grouped'
-       { 'Averages' 1 { [20] [1:3] [1:6] [1] } 1 'CCN' 0 1.2 }
-       'bars_avg_cfrac_stmix_TALL_CO.jpg'
-       }
-
-       % Stratiform-Convective mix Clouds Cloud fraction averages, all time points, CCN only
-       {
-       'All Clouds Cloud Fraction Avg TALL CCN only, grouped by SST'
-       'bgraph_cfrac.h5'
-       { 'a' 'SC' }
-       'N_a (# cm^-^3)'
-       'Cloud Fraction'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
-       'grouped'
-       { 'Averages' 1 { [24] [1:3] [1:6] [1] } 1 'CCN' 0 1.2 }
-       'bars_avg_cfrac_scmix_TALL_CO.jpg'
-       }
-
+%       % PR averages, all time points, CCN only
+%       {
+%       'PR Avg TALL CCN only, grouped by SST'
+%       'bgraph_pcprr.h5'
+%       { 'a' 'Domain' }
+%       'N_a (# cm^-^3)'
+%       'Precip Rate (mm h^-^1)'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [4] [1:3] [1:6] [1] } 1 'CCN' 0 0.12 }
+%       'bars_avg_pcprr_TALL_CO.jpg'
+%       }
+%
+%       % LWP averages, all time points, CCN only
+%       {
+%       'LWP Avg TALL CCN only, grouped by SST'
+%       'bgraph_lwp.h5'
+%       { 'a' 'Domain' }
+%       'N_a (# cm^-^3)'
+%       'LWP (mm)'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [4] [1:3] [1:6] [1] } 1 'CCN' 0 0.25 }
+%       'bars_avg_lwp_TALL_CO.jpg'
+%       }
+%
+%       % Cloud depth averages, all time points, CCN only
+%       {
+%       'Cloud Depth Avg TALL CCN only, grouped by SST'
+%       'bgraph_cdepth.h5'
+%       { 'a' 'Domain' }
+%       'N_a (# cm^-^3)'
+%       'Cloud Depth (m)'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [4] [1:3] [1:6] [1] } 1 'CCN' 0 900 }
+%       'bars_avg_cdepth_TALL_CO.jpg'
+%       }
+%
+%       % Stratiform (non-precipitating) cloud types, COT averages, all time points, CCN only
+%       {
+%       'Stratiform (NP) Avg TALL CCN only, grouped by SST'
+%       'bgraph_cot.h5'
+%       { 'a' 'SNP' }
+%       'N_a (# cm^-^3)'
+%       '\tau_c'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [8] [1:3] [1:6] [1] } 1 'CCN' 0 1.5 }
+%       'bars_avg_cot_strnp_TALL_CO.jpg'
+%       }
+%
+%       % Stratiform (non-precipitating) cloud types, PR averages, all time points, CCN only
+%       {
+%       'Stratiform (NP) PR Avg TALL CCN only, grouped by SST'
+%       'bgraph_pcprr.h5'
+%       { 'a' 'SNP' }
+%       'N_a (# cm^-^3)'
+%       'Precip Rate (mm h^-^1)'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [8] [1:3] [1:6] [1] } 1 'CCN' 0 0.001 }
+%       'bars_avg_pcprr_strnp_TALL_CO.jpg'
+%       }
+%
+%       % Stratiform (non-precipitating) cloud types, LWP averages, all time points, CCN only
+%       {
+%       'Stratiform (NP) LWP Avg TALL CCN only, grouped by SST'
+%       'bgraph_lwp.h5'
+%       { 'a' 'SNP' }
+%       'N_a (# cm^-^3)'
+%       'LWP (mm)'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [8] [1:3] [1:6] [1] } 1 'CCN' 0 0.035 }
+%       'bars_avg_lwp_strnp_TALL_CO.jpg'
+%       }
+%
+%       % Stratiform (non-precipitating) cloud types, Cloud depth averages, all time points, CCN only
+%       {
+%       'Stratiform (NP) Cloud Depth Avg TALL CCN only, grouped by SST'
+%       'bgraph_cdepth.h5'
+%       { 'a' 'SNP' }
+%       'N_a (# cm^-^3)'
+%       'Cloud Depth (m)'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [8] [1:3] [1:6] [1] } 1 'CCN' 0 180 }
+%       'bars_avg_cdepth_strnp_TALL_CO.jpg'
+%       }
+%
+%       % Stratiform (precipitating) cloud types, COT averages, all time points, CCN only
+%       {
+%       'Stratiform Avg TALL CCN only, grouped by SST'
+%       'bgraph_cot.h5'
+%       { 'a' 'ST' }
+%       'N_a (# cm^-^3)'
+%       '\tau_c'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [12] [1:3] [1:6] [1] } 1 'CCN' 0 5 }
+%       'bars_avg_cot_strat_TALL_CO.jpg'
+%       }
+%
+%       % Stratiform (precipitating) cloud types, PR averages, all time points, CCN only
+%       {
+%       'Stratiform PR Avg TALL CCN only, grouped by SST'
+%       'bgraph_pcprr.h5'
+%       { 'a' 'ST' }
+%       'N_a (# cm^-^3)'
+%       'Precip Rate (mm h^-^1)'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [12] [1:3] [1:6] [1] } 1 'CCN' 0 0.15 }
+%       'bars_avg_pcprr_strat_TALL_CO.jpg'
+%       }
+%
+%       % Stratiform (precipitating) cloud types, LWP averages, all time points, CCN only
+%       {
+%       'Stratiform LWP Avg TALL CCN only, grouped by SST'
+%       'bgraph_lwp.h5'
+%       { 'a' 'ST' }
+%       'N_a (# cm^-^3)'
+%       'LWP (mm)'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [12] [1:3] [1:6] [1] } 1 'CCN' 0 0.5 }
+%       'bars_avg_lwp_strat_TALL_CO.jpg'
+%       }
+%
+%       % Stratiform (precipitating) cloud types, Cloud depth averages, all time points, CCN only
+%       {
+%       'Stratiform Cloud Depth Avg TALL CCN only, grouped by SST'
+%       'bgraph_cdepth.h5'
+%       { 'a' 'ST' }
+%       'N_a (# cm^-^3)'
+%       'Cloud Depth (m)'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [12] [1:3] [1:6] [1] } 1 'CCN' 0 900 }
+%       'bars_avg_cdepth_strat_TALL_CO.jpg'
+%       }
+%
+%       % Convective cloud types, COT averages, all time points, CCN only
+%       {
+%       'Convective Avg TALL CCN only, grouped by SST'
+%       'bgraph_cot.h5'
+%       { 'a' 'CV' }
+%       'N_a (# cm^-^3)'
+%       '\tau_c'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [16] [1:3] [1:6] [1] } 1 'CCN' 0 120 }
+%       'bars_avg_cot_cumul_TALL_CO.jpg'
+%       }
+%
+%       % Convective cloud types, PR averages, all time points, CCN only
+%       {
+%       'Convective PR Avg TALL CCN only, grouped by SST'
+%       'bgraph_pcprr.h5'
+%       { 'a' 'CV' }
+%      'N_a (# cm^-^3)'
+%       'Precip Rate (mm h^-^1)'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [16] [1:3] [1:6] [1] } 1 'CCN' 0 30 }
+%       'bars_avg_pcprr_cumul_TALL_CO.jpg'
+%       }
+%
+%       % Convective cloud types, LWP averages, all time points, CCN only
+%       {
+%       'Convective LWP Avg TALL CCN only, grouped by SST'
+%       'bgraph_lwp.h5'
+%       { 'a' 'CV' }
+%       'N_a (# cm^-^3)'
+%       'LWP (mm)'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [16] [1:3] [1:6] [1] } 1 'CCN' 0 5 }
+%       'bars_avg_lwp_cumul_TALL_CO.jpg'
+%       }
+%
+%       % Convective cloud types, Cloud depth averages, all time points, CCN only
+%       {
+%       'Convective Cloud Depth Avg TALL CCN only, grouped by SST'
+%       'bgraph_cdepth.h5'
+%       { 'a' 'CV' }
+%       'N_a (# cm^-^3)'
+%       'Cloud Depth (m)'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [16] [1:3] [1:6] [1] } 1 'CCN' 0 4000 }
+%       'bars_avg_cdepth_cumul_TALL_CO.jpg'
+%       }
+%
+%       % All cloud types, COT averages, all time points, CCN only
+%       {
+%       'All Clouds Avg TALL CCN only, grouped by SST'
+%       'bgraph_cot.h5'
+%       { 'a' 'All Clouds' }
+%       'N_a (# cm^-^3)'
+%       '\tau_c'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [20] [1:3] [1:6] [1] } 1 'CCN' 0 6 }
+%       'bars_avg_cot_all_cld_TALL_CO.jpg'
+%       }
+%
+%       % All cloud types, PR averages, all time points, CCN only
+%       {
+%       'All Clouds PR Avg TALL CCN only, grouped by SST'
+%       'bgraph_pcprr.h5'
+%       { 'a' 'All Clouds' }
+%       'N_a (# cm^-^3)'
+%       'Precip Rate (mm h^-^1)'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [20] [1:3] [1:6] [1] } 1 'CCN' 0 0.3 }
+%       'bars_avg_pcprr_all_cld_TALL_CO.jpg'
+%       }
+%
+%       % All cloud types, LWP averages, all time points, CCN only
+%       {
+%       'All Clouds LWP Avg TALL CCN only, grouped by SST'
+%       'bgraph_lwp.h5'
+%       { 'a' 'All Clouds' }
+%       'N_a (# cm^-^3)'
+%       'LWP (mm)'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [20] [1:3] [1:6] [1] } 1 'CCN' 0 0.25 }
+%       'bars_avg_lwp_all_cld_TALL_CO.jpg'
+%       }
+%
+%       % All cloud types, Cloud depth averages, all time points, CCN only
+%       {
+%       'All Clouds Cloud Depth Avg TALL CCN only, grouped by SST'
+%       'bgraph_cdepth.h5'
+%       { 'a' 'All Clouds' }
+%       'N_a (# cm^-^3)'
+%       'Cloud Depth (m)'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [20] [1:3] [1:6] [1] } 1 'CCN' 0 900 }
+%       'bars_avg_cdepth_all_cld_TALL_CO.jpg'
+%       }
+%
+%       % Cloud fraction averages, all time points, CCN only
+%       {
+%       'Cloud Fraction Avg TALL CCN only, grouped by SST'
+%       'bgraph_cfrac.h5'
+%       { 'a' 'Domain' }
+%       'N_a (# cm^-^3)'
+%       'Cloud Fraction'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [4] [1:3] [1:6] [1] } 1 'CCN' 0 1.2 }
+%       'bars_avg_cfrac_TALL_CO.jpg'
+%       }
+%
+%       % Stratiform (NP) Cloud fraction averages, all time points, CCN only
+%       {
+%       'Stratiform (NP) Cloud Fraction Avg TALL CCN only, grouped by SST'
+%       'bgraph_cfrac.h5'
+%       { 'a' 'SNP' }
+%       'N_a (# cm^-^3)'
+%       'Cloud Fraction'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [8] [1:3] [1:6] [1] } 1 'CCN' 0 1.2 }
+%       'bars_avg_cfrac_strnp_TALL_CO.jpg'
+%       }
+%
+%       % Stratiform Cloud fraction averages, all time points, CCN only
+%       {
+%       'Cloud Fraction Avg TALL CCN only, grouped by SST'
+%       'bgraph_cfrac.h5'
+%       { 'd' 'ST' }
+%       'N_a (# cm^-^3)'
+%       'Cloud Fraction'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [12] [1:3] [1:6] [1] } 1 'CCN' 0 1.2 }
+%       'bars_avg_cfrac_strat_TALL_CO.jpg'
+%       }
+%
+%       % Convective Cloud fraction averages, all time points, CCN only
+%       {
+%       'Convective Cloud Fraction Avg TALL CCN only, grouped by SST'
+%       'bgraph_cfrac.h5'
+%       { 'a' 'CV' }
+%       'N_a (# cm^-^3)'
+%       'Cloud Fraction'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [16] [1:3] [1:6] [1] } 1 'CCN' 0 1.2 }
+%       'bars_avg_cfrac_cumul_TALL_CO.jpg'
+%       }
+%
+%       % Stratiform NP-P mix Cloud fraction averages, all time points, CCN only
+%       {
+%       'Stratiform NP-P mix Cloud Fraction Avg TALL CCN only, grouped by SST'
+%       'bgraph_cfrac.h5'
+%       { 'a' 'STM' }
+%       'N_a (# cm^-^3)'
+%       'Cloud Fraction'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [20] [1:3] [1:6] [1] } 1 'CCN' 0 1.2 }
+%       'bars_avg_cfrac_stmix_TALL_CO.jpg'
+%       }
+%
+%       % Stratiform-Convective mix Clouds Cloud fraction averages, all time points, CCN only
+%       {
+%       'All Clouds Cloud Fraction Avg TALL CCN only, grouped by SST'
+%       'bgraph_cfrac.h5'
+%       { 'a' 'SC' }
+%       'N_a (# cm^-^3)'
+%       'Cloud Fraction'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [24] [1:3] [1:6] [1] } 1 'CCN' 0 1.2 }
+%       'bars_avg_cfrac_scmix_TALL_CO.jpg'
+%       }
+%
+       % In subsequent code, extra actions are taken according to the first
+       % entry here containing "Cloud Distribution"
+       %    The first three columns are added together to form an ST type
+       %         (SNP + STM + ST)
+       %    The result is subtracted from 100 to form a Clear type
        % Cloud type, npoints (relative amounts), TALL, CCN only, SST 293
        {
        'Cloud Distribution TALL CCN only, 293K'
@@ -455,8 +460,8 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'a' 'Domain, S293' }
        'N_a (# cm^-^3)'
        'Cloud Distribution (%)'
-       { 'cyan' 'green' 'blue' 'yellow' 'magenta' 'white' }
-       { { 'SNP' 'STM' 'ST' 'SC' 'CV' 'Clear' } 'NorthWest' }
+       { 'cyan' 'blue' 'magenta' 'white' }
+       { { 'ST' 'SC' 'CV' 'Clear' } 'NorthWest' }
        'stacked'
        { 'Averages' 100 { [8 20 12 24 16] [1] [1:6] [1] } 1 'CCN' 0 120 }
        'bars_avg_ctype_TALL_CO_S293.jpg'
@@ -469,8 +474,8 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'b' 'Domain, S298' }
        'N_a (# cm^-^3)'
        'Cloud Distribution (%)'
-       { 'cyan' 'green' 'blue' 'yellow' 'magenta' 'white' }
-       { { 'SNP' 'STM' 'ST' 'SC' 'CV' 'Clear' } 'NorthWest' }
+       { 'cyan' 'blue' 'magenta' 'white' }
+       { { 'ST' 'SC' 'CV' 'Clear' } 'NorthWest' }
        'stacked'
        { 'Averages' 100 { [8 20 12 24 16] [2] [1:6] [1] } 1 'CCN' 0 120 }
        'bars_avg_ctype_TALL_CO_S298.jpg'
@@ -483,8 +488,8 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'c' 'Domain, S303' }
        'N_a (# cm^-^3)'
        'Cloud Distribution (%)'
-       { 'cyan' 'green' 'blue' 'yellow' 'magenta' 'white' }
-       { { 'SNP' 'STM' 'ST' 'SC' 'CV' 'Clear' } 'NorthWest' }
+       { 'cyan' 'blue' 'magenta' 'white' }
+       { { 'ST' 'SC' 'CV' 'Clear' } 'NorthWest' }
        'stacked'
        { 'Averages' 100 { [8 20 12 24 16] [3] [1:6] [1] } 1 'CCN' 0 120 }
        'bars_avg_ctype_TALL_CO_S303.jpg'
@@ -551,11 +556,13 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 
     XVAR  = hdf5read(InFile, Vname);
 
-    % If doing cloud distribution, add a count of clear space so that all
-    % bars stack up to 100%.
+    % If doing cloud distribution:
+    %   Sum up the first three columns (SNP, STM, ST)
+    %   Add a count of clear space so that all bars stack up to 100%.
     % NOTE: this assumes that you've specified this plot to create percent values
     % in BDATA.
     if (regexp(PdName, '^Cloud Distribution'))
+      BDATA = [ sum(BDATA(:,1:3),2) BDATA(:,4:5) ];
       % Sum up across variables (v) and subtract from 100 to get the clear
       % column counts. Then append the clear counts to the end of BDATA.
       CLEAR = 100 - nansum(BDATA, 2);
