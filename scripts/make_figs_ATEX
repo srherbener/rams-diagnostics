@@ -4,15 +4,147 @@
 
 Jsize="1200x900"
 
-#echo "Figure: ATEX sounding"
-#montage -tile 1x1 -geometry ${Jsize}+2+100 \
-# InitialSounding.jpg \
-# FigSounding.jpg
+echo "Figure: ATEX sounding"
+montage -tile 1x1 -geometry ${Jsize}+2+100 \
+ InitialSounding.jpg \
+ FigSounding.jpg
 
 echo "Figure: Aerosol profiles"
 montage -tile 1x1 -geometry ${Jsize}+2+100 \
  InitialCcnProfile.jpg \
  FigAerosolProfiles.jpg
+
+echo "Figure: Time series: Zi, Zt, CFmax, all cases, CCN only"
+montage -tile 3x2 -geometry ${Jsize}+2+100 \
+ InvHeight_CO_S293_G10M5_ALL.jpg \
+ InvHeight_CO_S298_G10M5_ALL.jpg \
+ InvHeight_CO_S303_G10M5_ALL.jpg \
+ CloudFrac_CO_S293_G10M5_ALL.jpg \
+ CloudFrac_CO_S298_G10M5_ALL.jpg \
+ CloudFrac_CO_S303_G10M5_ALL.jpg \
+ FigureTsBlStats_ALL.jpg
+
+echo "Figure: Time series: Precip Rate, LWP, Cloud Opt Thick, all cases, CCN only"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ AvgPrate_CO_S293_G10M5_ALL.jpg \
+ AvgPrate_CO_S298_G10M5_ALL.jpg \
+ AvgPrate_CO_S303_G10M5_ALL.jpg \
+ AvgLwp_CO_S293_G10M5_ALL.jpg \
+ AvgLwp_CO_S298_G10M5_ALL.jpg \
+ AvgLwp_CO_S303_G10M5_ALL.jpg \
+ AvgCot_CO_S293_G10M5_ALL.jpg \
+ AvgCot_CO_S298_G10M5_ALL.jpg \
+ AvgCot_CO_S303_G10M5_ALL.jpg \
+ FigureTsCloudStats_ALL.jpg
+
+echo "Figure: Bgraph COT : CCN only"
+montage -tile 1x1 -geometry ${Jsize}+2+100 \
+ bars_avg_cot_TALL_CO.jpg \
+ FigureBgraphCot.jpg
+
+echo "Figure: Bgraph Cloud Distribution : CCN only"
+montage -tile 3x1 -geometry ${Jsize}+2+100 \
+ bars_avg_ctype_TALL_CO_S293.jpg \
+ bars_avg_ctype_TALL_CO_S298.jpg \
+ bars_avg_ctype_TALL_CO_S303.jpg \
+ FigureBgraphCtypeDist.jpg
+
+echo "Figure: COT hist, PR hist, CD hist, CCN only, 293K"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ CotHist_TALL_CO_S293_G10M5_ALL.jpg \
+ PrateHist_TALL_CO_S293_G10M5_ALL.jpg \
+ LwpHist_TALL_CO_S293_G10M5_ALL.jpg \
+ CdepthHist_TALL_CO_S293_G10M5_ALL.jpg \
+ FigureDomainStats_S293.jpg
+
+echo "Figure: COT hist, PR hist, CD hist, CCN only, 298K"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ CotHist_TALL_CO_S298_G10M5_ALL.jpg \
+ PrateHist_TALL_CO_S298_G10M5_ALL.jpg \
+ LwpHist_TALL_CO_S298_G10M5_ALL.jpg \
+ CdepthHist_TALL_CO_S298_G10M5_ALL.jpg \
+ FigureDomainStats_S298.jpg
+
+echo "Figure: COT hist, PR hist, CD hist, CCN only, 303K"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ CotHist_TALL_CO_S303_G10M5_ALL.jpg \
+ PrateHist_TALL_CO_S303_G10M5_ALL.jpg \
+ LwpHist_TALL_CO_S303_G10M5_ALL.jpg \
+ CdepthHist_TALL_CO_S303_G10M5_ALL.jpg \
+ FigureDomainStats_S303.jpg
+
+echo "Figure: COT hist, PR hist, CD hist, CCN only, C50"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ CotHist_TALL_CO_C0050_G10M5.jpg \
+ PrateHist_TALL_CO_C0050_G10M5.jpg \
+ LwpHist_TALL_CO_C0050_G10M5.jpg \
+ CdepthHist_TALL_CO_C0050_G10M5.jpg \
+ FigureDomainStats_C50.jpg
+
+echo "Figure: COT hist, PR hist, CD hist, CCN only, C400"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ CotHist_TALL_CO_C0400_G10M5.jpg \
+ PrateHist_TALL_CO_C0400_G10M5.jpg \
+ LwpHist_TALL_CO_C0400_G10M5.jpg \
+ CdepthHist_TALL_CO_C0400_G10M5.jpg \
+ FigureDomainStats_C400.jpg
+
+echo "Figure: COT hist, PR hist, CD hist, CCN only, C1600"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ CotHist_TALL_CO_C1600_G10M5.jpg \
+ PrateHist_TALL_CO_C1600_G10M5.jpg \
+ LwpHist_TALL_CO_C1600_G10M5.jpg \
+ CdepthHist_TALL_CO_C1600_G10M5.jpg \
+ FigureDomainStats_C1600.jpg
+
+echo "Figure: UD: Wvar, Wthetav"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ WvarUd10_TALL_CO_S293_G10M5_ALL.jpg \
+ WskewUd10_TALL_CO_S293_G10M5_ALL.jpg \
+ WthetavUd10_TALL_CO_S293_G10M5_ALL.jpg \
+ WvaporUd10_TALL_CO_S293_G10M5_ALL.jpg \
+ FigureTurbStats_UD_S293.jpg
+
+echo "Figure: UD: Wvar, Wthetav"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ WvarUd10_TALL_CO_S298_G10M5_ALL.jpg \
+ WskewUd10_TALL_CO_S298_G10M5_ALL.jpg \
+ WthetavUd10_TALL_CO_S298_G10M5_ALL.jpg \
+ WvaporUd10_TALL_CO_S298_G10M5_ALL.jpg \
+ FigureTurbStats_UD_S298.jpg
+
+echo "Figure: UD: Wvar, Wthetav"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ WvarUd10_TALL_CO_S303_G10M5_ALL.jpg \
+ WskewUd10_TALL_CO_S303_G10M5_ALL.jpg \
+ WthetavUd10_TALL_CO_S303_G10M5_ALL.jpg \
+ WvaporUd10_TALL_CO_S303_G10M5_ALL.jpg \
+ FigureTurbStats_UD_S303.jpg
+
+echo "Figure: UD: Wvar, Wthetav"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ WvarUd10_TALL_CO_C0050_G10M5.jpg \
+ WskewUd10_TALL_CO_C0050_G10M5.jpg \
+ WthetavUd10_TALL_CO_C0050_G10M5.jpg \
+ WvaporUd10_TALL_CO_C0050_G10M5.jpg \
+ FigureTurbStats_UD_C50.jpg
+
+echo "Figure: UD: Wvar, Wthetav"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ WvarUd10_TALL_CO_C0400_G10M5.jpg \
+ WskewUd10_TALL_CO_C0400_G10M5.jpg \
+ WthetavUd10_TALL_CO_C0400_G10M5.jpg \
+ WvaporUd10_TALL_CO_C0400_G10M5.jpg \
+ FigureTurbStats_UD_C400.jpg
+
+echo "Figure: UD: Wvar, Wthetav"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ WvarUd10_TALL_CO_C1600_G10M5.jpg \
+ WskewUd10_TALL_CO_C1600_G10M5.jpg \
+ WthetavUd10_TALL_CO_C1600_G10M5.jpg \
+ WvaporUd10_TALL_CO_C1600_G10M5.jpg \
+ FigureTurbStats_UD_C1600.jpg
+
 
 #echo "Figure: Bar graphs, COT, CCN only, LWP Thresholds"
 #montage -tile 2x2 -geometry ${Jsize}+2+100 \
@@ -415,248 +547,220 @@ montage -tile 1x1 -geometry ${Jsize}+2+100 \
 # CloudFrac_CO_S298_G10M5.jpg \
 # CloudFrac_CO_S303_G10M5.jpg \
 # FigureTsBlStats.jpg
+#
+#echo "Figure: Time series: Zi, all cases, CCN only"
+#montage -tile 3x1 -geometry ${Jsize}+2+100 \
+# InvHeight_CO_S293_G10M5_ALL.jpg \
+# InvHeight_CO_S298_G10M5_ALL.jpg \
+# InvHeight_CO_S303_G10M5_ALL.jpg \
+# FigureTsZinversion_ALL.jpg
+#
+#echo "Figure: Time series: CF, all cases, CCN only"
+#montage -tile 3x1 -geometry ${Jsize}+2+100 \
+# CloudFrac_CO_S293_G10M5_ALL.jpg \
+# CloudFrac_CO_S298_G10M5_ALL.jpg \
+# CloudFrac_CO_S303_G10M5_ALL.jpg \
+# FigureTsCloudFrac_ALL.jpg
+#
+#echo "Figure: Time series: CD, all cases, CCN only"
+#montage -tile 3x1 -geometry ${Jsize}+2+100 \
+# AvgCdepth_CO_S293_G10M5_ALL.jpg \
+# AvgCdepth_CO_S298_G10M5_ALL.jpg \
+# AvgCdepth_CO_S303_G10M5_ALL.jpg \
+# FigureTsCloudDepth_ALL.jpg
+#
+#echo "Figure: Hist Prate: CCN only"
+#montage -tile 3x4 -geometry ${Jsize}+2+100 \
+# PrateHist_TALL_CO_S293_G10M5_ALL.jpg \
+# PrateHist_TALL_CO_S298_G10M5_ALL.jpg \
+# PrateHist_TALL_CO_S303_G10M5_ALL.jpg \
+# PrateStrnpHist_TALL_CO_S293_G10M5_ALL.jpg \
+# PrateStrnpHist_TALL_CO_S298_G10M5_ALL.jpg \
+# PrateStrnpHist_TALL_CO_S303_G10M5_ALL.jpg \
+# PrateStratHist_TALL_CO_S293_G10M5_ALL.jpg \
+# PrateStratHist_TALL_CO_S298_G10M5_ALL.jpg \
+# PrateStratHist_TALL_CO_S303_G10M5_ALL.jpg \
+# PrateCumulHist_TALL_CO_S293_G10M5_ALL.jpg \
+# PrateCumulHist_TALL_CO_S298_G10M5_ALL.jpg \
+# PrateCumulHist_TALL_CO_S303_G10M5_ALL.jpg \
+# FigureHistPrate.jpg
+#
+#echo "Figure: Hist LWP: CCN only"
+#montage -tile 3x4 -geometry ${Jsize}+2+100 \
+# LwpHist_TALL_CO_S293_G10M5_ALL.jpg \
+# LwpHist_TALL_CO_S298_G10M5_ALL.jpg \
+# LwpHist_TALL_CO_S303_G10M5_ALL.jpg \
+# LwpStrnpHist_TALL_CO_S293_G10M5_ALL.jpg \
+# LwpStrnpHist_TALL_CO_S298_G10M5_ALL.jpg \
+# LwpStrnpHist_TALL_CO_S303_G10M5_ALL.jpg \
+# LwpStratHist_TALL_CO_S293_G10M5_ALL.jpg \
+# LwpStratHist_TALL_CO_S298_G10M5_ALL.jpg \
+# LwpStratHist_TALL_CO_S303_G10M5_ALL.jpg \
+# LwpCumulHist_TALL_CO_S293_G10M5_ALL.jpg \
+# LwpCumulHist_TALL_CO_S298_G10M5_ALL.jpg \
+# LwpCumulHist_TALL_CO_S303_G10M5_ALL.jpg \
+# FigureHistLwp.jpg
+#
+#echo "Figure: Hist COT: CCN only"
+#montage -tile 3x4 -geometry ${Jsize}+2+100 \
+# CotHist_TALL_CO_S293_G10M5_ALL.jpg \
+# CotHist_TALL_CO_S298_G10M5_ALL.jpg \
+# CotHist_TALL_CO_S303_G10M5_ALL.jpg \
+# CotStrnpHist_TALL_CO_S293_G10M5_ALL.jpg \
+# CotStrnpHist_TALL_CO_S298_G10M5_ALL.jpg \
+# CotStrnpHist_TALL_CO_S303_G10M5_ALL.jpg \
+# CotStratHist_TALL_CO_S293_G10M5_ALL.jpg \
+# CotStratHist_TALL_CO_S298_G10M5_ALL.jpg \
+# CotStratHist_TALL_CO_S303_G10M5_ALL.jpg \
+# CotCumulHist_TALL_CO_S293_G10M5_ALL.jpg \
+# CotCumulHist_TALL_CO_S298_G10M5_ALL.jpg \
+# CotCumulHist_TALL_CO_S303_G10M5_ALL.jpg \
+# FigureHistCot.jpg
+#
+#echo "Figure: Hist Cloud Depth: CCN only"
+#montage -tile 3x4 -geometry ${Jsize}+2+100 \
+# CdepthHist_TALL_CO_S293_G10M5_ALL.jpg \
+# CdepthHist_TALL_CO_S298_G10M5_ALL.jpg \
+# CdepthHist_TALL_CO_S303_G10M5_ALL.jpg \
+# CdepthStrnpHist_TALL_CO_S293_G10M5_ALL.jpg \
+# CdepthStrnpHist_TALL_CO_S298_G10M5_ALL.jpg \
+# CdepthStrnpHist_TALL_CO_S303_G10M5_ALL.jpg \
+# CdepthStratHist_TALL_CO_S293_G10M5_ALL.jpg \
+# CdepthStratHist_TALL_CO_S298_G10M5_ALL.jpg \
+# CdepthStratHist_TALL_CO_S303_G10M5_ALL.jpg \
+# CdepthCumulHist_TALL_CO_S293_G10M5_ALL.jpg \
+# CdepthCumulHist_TALL_CO_S298_G10M5_ALL.jpg \
+# CdepthCumulHist_TALL_CO_S303_G10M5_ALL.jpg \
+# FigureHistCdepth.jpg
+#
+#echo "Figure: Bgraph PR, Cdepth : CCN only"
+#montage -tile 2x1 -geometry ${Jsize}+2+100 \
+# bars_avg_pcprr_TALL_CO.jpg \
+# bars_avg_cdepth_TALL_CO.jpg \
+# FigureBgraphPrateCdepth.jpg
+#
+#echo "Figure: Bgraph All Clouds PR, Cdepth : CCN only"
+#montage -tile 2x1 -geometry ${Jsize}+2+100 \
+# bars_avg_pcprr_all_cld_TALL_CO.jpg \
+# bars_avg_cdepth_all_cld_TALL_CO.jpg \
+# FigureBgraphPrateCdepthAllCld.jpg
+#
+#echo "Figure: Bgraph Strnp PR, Cdepth : CCN only"
+#montage -tile 2x1 -geometry ${Jsize}+2+100 \
+# bars_avg_pcprr_strnp_TALL_CO.jpg \
+# bars_avg_cdepth_strnp_TALL_CO.jpg \
+# FigureBgraphPrateCdepthStrnp.jpg
+#
+#echo "Figure: Bgraph Strat PR, Cdepth : CCN only"
+#montage -tile 2x1 -geometry ${Jsize}+2+100 \
+# bars_avg_pcprr_strat_TALL_CO.jpg \
+# bars_avg_cdepth_strat_TALL_CO.jpg \
+# FigureBgraphPrateCdepthStrat.jpg
+#
+#echo "Figure: Bgraph Cumul PR, Cdepth : CCN only"
+#montage -tile 2x1 -geometry ${Jsize}+2+100 \
+# bars_avg_pcprr_cumul_TALL_CO.jpg \
+# bars_avg_cdepth_cumul_TALL_CO.jpg \
+# FigureBgraphPrateCdepthCumul.jpg
+#
+#echo "Figure: ST: COT hist, PR hist, CD hist, CCN only, 293K"
+#montage -tile 2x2 -geometry ${Jsize}+2+100 \
+# CotStratHist_TALL_CO_S293_G10M5_ALL.jpg \
+# PrateStratHist_TALL_CO_S293_G10M5_ALL.jpg \
+# LwpStratHist_TALL_CO_S293_G10M5_ALL.jpg \
+# CdepthStratHist_TALL_CO_S293_G10M5_ALL.jpg \
+# FigureStratStats_S293.jpg
+#
+#echo "Figure: ST: COT hist, PR hist, CD hist, CCN only, 298K"
+#montage -tile 2x2 -geometry ${Jsize}+2+100 \
+# CotStratHist_TALL_CO_S298_G10M5_ALL.jpg \
+# PrateStratHist_TALL_CO_S298_G10M5_ALL.jpg \
+# LwpStratHist_TALL_CO_S298_G10M5_ALL.jpg \
+# CdepthStratHist_TALL_CO_S298_G10M5_ALL.jpg \
+# FigureStratStats_S298.jpg
+#
+#echo "Figure: ST: COT hist, PR hist, CD hist, CCN only, 303K"
+#montage -tile 2x2 -geometry ${Jsize}+2+100 \
+# CotStratHist_TALL_CO_S303_G10M5_ALL.jpg \
+# PrateStratHist_TALL_CO_S303_G10M5_ALL.jpg \
+# LwpStratHist_TALL_CO_S303_G10M5_ALL.jpg \
+# CdepthStratHist_TALL_CO_S303_G10M5_ALL.jpg \
+# FigureStratStats_S303.jpg
+#
+#echo "Figure: ST: COT hist, PR hist, CD hist, CCN only, C50"
+#montage -tile 2x2 -geometry ${Jsize}+2+100 \
+# CotStratHist_TALL_CO_C0050_G10M5.jpg \
+# PrateStratHist_TALL_CO_C0050_G10M5.jpg \
+# LwpStratHist_TALL_CO_C0050_G10M5.jpg \
+# CdepthStratHist_TALL_CO_C0050_G10M5.jpg \
+# FigureStratStats_C50.jpg
+#
+#echo "Figure: ST: COT hist, PR hist, CD hist, CCN only, C400"
+#montage -tile 2x2 -geometry ${Jsize}+2+100 \
+# CotStratHist_TALL_CO_C0400_G10M5.jpg \
+# PrateStratHist_TALL_CO_C0400_G10M5.jpg \
+# LwpStratHist_TALL_CO_C0400_G10M5.jpg \
+# CdepthStratHist_TALL_CO_C0400_G10M5.jpg \
+# FigureStratStats_C400.jpg
+#
+#echo "Figure: ST: COT hist, PR hist, CD hist, CCN only, C1600"
+#montage -tile 2x2 -geometry ${Jsize}+2+100 \
+# CotStratHist_TALL_CO_C1600_G10M5.jpg \
+# PrateStratHist_TALL_CO_C1600_G10M5.jpg \
+# LwpStratHist_TALL_CO_C1600_G10M5.jpg \
+# CdepthStratHist_TALL_CO_C1600_G10M5.jpg \
+# FigureStratStats_C1600.jpg
+#
 
-echo "Figure: Time series: Zi, Zt, CFmax, all cases, CCN only"
-montage -tile 3x2 -geometry ${Jsize}+2+100 \
- InvHeight_CO_S293_G10M5_ALL.jpg \
- InvHeight_CO_S298_G10M5_ALL.jpg \
- InvHeight_CO_S303_G10M5_ALL.jpg \
- CloudFrac_CO_S293_G10M5_ALL.jpg \
- CloudFrac_CO_S298_G10M5_ALL.jpg \
- CloudFrac_CO_S303_G10M5_ALL.jpg \
- FigureTsBlStats_ALL.jpg
 
-echo "Figure: Time series: Zi, all cases, CCN only"
-montage -tile 3x1 -geometry ${Jsize}+2+100 \
- InvHeight_CO_S293_G10M5_ALL.jpg \
- InvHeight_CO_S298_G10M5_ALL.jpg \
- InvHeight_CO_S303_G10M5_ALL.jpg \
- FigureTsZinversion_ALL.jpg
-
-echo "Figure: Time series: CF, all cases, CCN only"
-montage -tile 3x1 -geometry ${Jsize}+2+100 \
- CloudFrac_CO_S293_G10M5_ALL.jpg \
- CloudFrac_CO_S298_G10M5_ALL.jpg \
- CloudFrac_CO_S303_G10M5_ALL.jpg \
- FigureTsCloudFrac_ALL.jpg
-
-echo "Figure: Time series: CD, all cases, CCN only"
-montage -tile 3x1 -geometry ${Jsize}+2+100 \
- AvgCdepth_CO_S293_G10M5_ALL.jpg \
- AvgCdepth_CO_S298_G10M5_ALL.jpg \
- AvgCdepth_CO_S303_G10M5_ALL.jpg \
- FigureTsCloudDepth_ALL.jpg
-
-echo "Figure: Time series: Precip Rate, LWP, Cloud Opt Thick, all cases, CCN only"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- AvgPrate_CO_S293_G10M5_ALL.jpg \
- AvgPrate_CO_S298_G10M5_ALL.jpg \
- AvgPrate_CO_S303_G10M5_ALL.jpg \
- AvgLwp_CO_S293_G10M5_ALL.jpg \
- AvgLwp_CO_S298_G10M5_ALL.jpg \
- AvgLwp_CO_S303_G10M5_ALL.jpg \
- AvgCot_CO_S293_G10M5_ALL.jpg \
- AvgCot_CO_S298_G10M5_ALL.jpg \
- AvgCot_CO_S303_G10M5_ALL.jpg \
- FigureTsCloudStats_ALL.jpg
-
-echo "Figure: Hist Prate: CCN only"
-montage -tile 3x4 -geometry ${Jsize}+2+100 \
- PrateHist_TALL_CO_S293_G10M5_ALL.jpg \
- PrateHist_TALL_CO_S298_G10M5_ALL.jpg \
- PrateHist_TALL_CO_S303_G10M5_ALL.jpg \
- PrateStrnpHist_TALL_CO_S293_G10M5_ALL.jpg \
- PrateStrnpHist_TALL_CO_S298_G10M5_ALL.jpg \
- PrateStrnpHist_TALL_CO_S303_G10M5_ALL.jpg \
- PrateStratHist_TALL_CO_S293_G10M5_ALL.jpg \
- PrateStratHist_TALL_CO_S298_G10M5_ALL.jpg \
- PrateStratHist_TALL_CO_S303_G10M5_ALL.jpg \
- PrateCumulHist_TALL_CO_S293_G10M5_ALL.jpg \
- PrateCumulHist_TALL_CO_S298_G10M5_ALL.jpg \
- PrateCumulHist_TALL_CO_S303_G10M5_ALL.jpg \
- FigureHistPrate.jpg
-
-echo "Figure: Hist LWP: CCN only"
-montage -tile 3x4 -geometry ${Jsize}+2+100 \
- LwpHist_TALL_CO_S293_G10M5_ALL.jpg \
- LwpHist_TALL_CO_S298_G10M5_ALL.jpg \
- LwpHist_TALL_CO_S303_G10M5_ALL.jpg \
- LwpStrnpHist_TALL_CO_S293_G10M5_ALL.jpg \
- LwpStrnpHist_TALL_CO_S298_G10M5_ALL.jpg \
- LwpStrnpHist_TALL_CO_S303_G10M5_ALL.jpg \
- LwpStratHist_TALL_CO_S293_G10M5_ALL.jpg \
- LwpStratHist_TALL_CO_S298_G10M5_ALL.jpg \
- LwpStratHist_TALL_CO_S303_G10M5_ALL.jpg \
- LwpCumulHist_TALL_CO_S293_G10M5_ALL.jpg \
- LwpCumulHist_TALL_CO_S298_G10M5_ALL.jpg \
- LwpCumulHist_TALL_CO_S303_G10M5_ALL.jpg \
- FigureHistLwp.jpg
-
-echo "Figure: Hist COT: CCN only"
-montage -tile 3x4 -geometry ${Jsize}+2+100 \
- CotHist_TALL_CO_S293_G10M5_ALL.jpg \
- CotHist_TALL_CO_S298_G10M5_ALL.jpg \
- CotHist_TALL_CO_S303_G10M5_ALL.jpg \
- CotStrnpHist_TALL_CO_S293_G10M5_ALL.jpg \
- CotStrnpHist_TALL_CO_S298_G10M5_ALL.jpg \
- CotStrnpHist_TALL_CO_S303_G10M5_ALL.jpg \
- CotStratHist_TALL_CO_S293_G10M5_ALL.jpg \
- CotStratHist_TALL_CO_S298_G10M5_ALL.jpg \
- CotStratHist_TALL_CO_S303_G10M5_ALL.jpg \
- CotCumulHist_TALL_CO_S293_G10M5_ALL.jpg \
- CotCumulHist_TALL_CO_S298_G10M5_ALL.jpg \
- CotCumulHist_TALL_CO_S303_G10M5_ALL.jpg \
- FigureHistCot.jpg
-
-echo "Figure: Hist Cloud Depth: CCN only"
-montage -tile 3x4 -geometry ${Jsize}+2+100 \
- CdepthHist_TALL_CO_S293_G10M5_ALL.jpg \
- CdepthHist_TALL_CO_S298_G10M5_ALL.jpg \
- CdepthHist_TALL_CO_S303_G10M5_ALL.jpg \
- CdepthStrnpHist_TALL_CO_S293_G10M5_ALL.jpg \
- CdepthStrnpHist_TALL_CO_S298_G10M5_ALL.jpg \
- CdepthStrnpHist_TALL_CO_S303_G10M5_ALL.jpg \
- CdepthStratHist_TALL_CO_S293_G10M5_ALL.jpg \
- CdepthStratHist_TALL_CO_S298_G10M5_ALL.jpg \
- CdepthStratHist_TALL_CO_S303_G10M5_ALL.jpg \
- CdepthCumulHist_TALL_CO_S293_G10M5_ALL.jpg \
- CdepthCumulHist_TALL_CO_S298_G10M5_ALL.jpg \
- CdepthCumulHist_TALL_CO_S303_G10M5_ALL.jpg \
- FigureHistCdepth.jpg
-
-echo "Figure: Bgraph COT : CCN only"
-montage -tile 1x1 -geometry ${Jsize}+2+100 \
- bars_avg_cot_TALL_CO.jpg \
- FigureBgraphCot.jpg
-
-echo "Figure: Bgraph PR, Cdepth : CCN only"
-montage -tile 2x1 -geometry ${Jsize}+2+100 \
- bars_avg_pcprr_TALL_CO.jpg \
- bars_avg_cdepth_TALL_CO.jpg \
- FigureBgraphPrateCdepth.jpg
-
-echo "Figure: Bgraph All Clouds PR, Cdepth : CCN only"
-montage -tile 2x1 -geometry ${Jsize}+2+100 \
- bars_avg_pcprr_all_cld_TALL_CO.jpg \
- bars_avg_cdepth_all_cld_TALL_CO.jpg \
- FigureBgraphPrateCdepthAllCld.jpg
-
-echo "Figure: Bgraph Strnp PR, Cdepth : CCN only"
-montage -tile 2x1 -geometry ${Jsize}+2+100 \
- bars_avg_pcprr_strnp_TALL_CO.jpg \
- bars_avg_cdepth_strnp_TALL_CO.jpg \
- FigureBgraphPrateCdepthStrnp.jpg
-
-echo "Figure: Bgraph Strat PR, Cdepth : CCN only"
-montage -tile 2x1 -geometry ${Jsize}+2+100 \
- bars_avg_pcprr_strat_TALL_CO.jpg \
- bars_avg_cdepth_strat_TALL_CO.jpg \
- FigureBgraphPrateCdepthStrat.jpg
-
-echo "Figure: Bgraph Cumul PR, Cdepth : CCN only"
-montage -tile 2x1 -geometry ${Jsize}+2+100 \
- bars_avg_pcprr_cumul_TALL_CO.jpg \
- bars_avg_cdepth_cumul_TALL_CO.jpg \
- FigureBgraphPrateCdepthCumul.jpg
-
-echo "Figure: Bgraph Cloud Distribution : CCN only"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
- bars_avg_ctype_TALL_CO_S293.jpg \
- bars_avg_ctype_TALL_CO_S298.jpg \
- bars_avg_ctype_TALL_CO_S303.jpg \
- bars_avg_cfrac_strat_TALL_CO.jpg \
- FigureBgraphCtypeDist.jpg
-
-echo "Figure: COT hist, PR hist, CD hist, CCN only, 293K"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
- CotHist_TALL_CO_S293_G10M5_ALL.jpg \
- PrateHist_TALL_CO_S293_G10M5_ALL.jpg \
- CdepthHist_TALL_CO_S293_G10M5_ALL.jpg \
- FigureDomainStats_S293.jpg
-
-echo "Figure: COT hist, PR hist, CD hist, CCN only, 298K"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
- CotHist_TALL_CO_S298_G10M5_ALL.jpg \
- PrateHist_TALL_CO_S298_G10M5_ALL.jpg \
- CdepthHist_TALL_CO_S298_G10M5_ALL.jpg \
- FigureDomainStats_S298.jpg
-
-echo "Figure: COT hist, PR hist, CD hist, CCN only, 303K"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
- CotHist_TALL_CO_S303_G10M5_ALL.jpg \
- PrateHist_TALL_CO_S303_G10M5_ALL.jpg \
- CdepthHist_TALL_CO_S303_G10M5_ALL.jpg \
- FigureDomainStats_S303.jpg
-
-echo "Figure: COT hist, PR hist, CD hist, CCN only, C50"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
- CotHist_TALL_CO_C0050_G10M5.jpg \
- PrateHist_TALL_CO_C0050_G10M5.jpg \
- CdepthHist_TALL_CO_C0050_G10M5.jpg \
- FigureDomainStats_C50.jpg
-
-echo "Figure: COT hist, PR hist, CD hist, CCN only, C400"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
- CotHist_TALL_CO_C0400_G10M5.jpg \
- PrateHist_TALL_CO_C0400_G10M5.jpg \
- CdepthHist_TALL_CO_C0400_G10M5.jpg \
- FigureDomainStats_C400.jpg
-
-echo "Figure: COT hist, PR hist, CD hist, CCN only, C1600"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
- CotHist_TALL_CO_C1600_G10M5.jpg \
- PrateHist_TALL_CO_C1600_G10M5.jpg \
- CdepthHist_TALL_CO_C1600_G10M5.jpg \
- FigureDomainStats_C1600.jpg
-
-echo "Figure: ST: COT hist, PR hist, CD hist, CCN only, 293K"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
- CotStratHist_TALL_CO_S293_G10M5_ALL.jpg \
- PrateStratHist_TALL_CO_S293_G10M5_ALL.jpg \
- CdepthStratHist_TALL_CO_S293_G10M5_ALL.jpg \
- WturbStCirc_TALL_CO_S293_G10M5_ALL.jpg \
- FigureStratStats_S293.jpg
-
-echo "Figure: ST: COT hist, PR hist, CD hist, CCN only, 298K"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
- CotStratHist_TALL_CO_S298_G10M5_ALL.jpg \
- PrateStratHist_TALL_CO_S298_G10M5_ALL.jpg \
- CdepthStratHist_TALL_CO_S298_G10M5_ALL.jpg \
- WturbStCirc_TALL_CO_S298_G10M5_ALL.jpg \
- FigureStratStats_S298.jpg
-
-echo "Figure: ST: COT hist, PR hist, CD hist, CCN only, 303K"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
- CotStratHist_TALL_CO_S303_G10M5_ALL.jpg \
- PrateStratHist_TALL_CO_S303_G10M5_ALL.jpg \
- CdepthStratHist_TALL_CO_S303_G10M5_ALL.jpg \
- WturbStCirc_TALL_CO_S303_G10M5_ALL.jpg \
- FigureStratStats_S303.jpg
-
-echo "Figure: ST: COT hist, PR hist, CD hist, CCN only, C50"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
- CotStratHist_TALL_CO_C0050_G10M5.jpg \
- PrateStratHist_TALL_CO_C0050_G10M5.jpg \
- CdepthStratHist_TALL_CO_C0050_G10M5.jpg \
- WturbStCirc_TALL_CO_C0050_G10M5.jpg \
- FigureStratStats_C50.jpg
-
-echo "Figure: ST: COT hist, PR hist, CD hist, CCN only, C400"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
- CotStratHist_TALL_CO_C0400_G10M5.jpg \
- PrateStratHist_TALL_CO_C0400_G10M5.jpg \
- CdepthStratHist_TALL_CO_C0400_G10M5.jpg \
- WturbStCirc_TALL_CO_C0400_G10M5.jpg \
- FigureStratStats_C400.jpg
-
-echo "Figure: ST: COT hist, PR hist, CD hist, CCN only, C1600"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
- CotStratHist_TALL_CO_C1600_G10M5.jpg \
- PrateStratHist_TALL_CO_C1600_G10M5.jpg \
- CdepthStratHist_TALL_CO_C1600_G10M5.jpg \
- WturbStCirc_TALL_CO_C1600_G10M5.jpg \
- FigureStratStats_C1600.jpg
-
+#echo "Figure: UP,DN: Wvar, Wthetav"
+#montage -tile 2x2 -geometry ${Jsize}+2+100 \
+# WvarUp10_TALL_CO_S293_G10M5_ALL.jpg \
+# WthetavUp10_TALL_CO_S293_G10M5_ALL.jpg \
+# WvarDn10_TALL_CO_S293_G10M5_ALL.jpg \
+# WthetavDn10_TALL_CO_S293_G10M5_ALL.jpg \
+# FigureTurbStats_S293.jpg
+#
+#echo "Figure: UP,DN: Wvar, Wthetav"
+#montage -tile 2x2 -geometry ${Jsize}+2+100 \
+# WvarUp10_TALL_CO_S298_G10M5_ALL.jpg \
+# WthetavUp10_TALL_CO_S298_G10M5_ALL.jpg \
+# WvarDn10_TALL_CO_S298_G10M5_ALL.jpg \
+# WthetavDn10_TALL_CO_S298_G10M5_ALL.jpg \
+# FigureTurbStats_S298.jpg
+#
+#echo "Figure: UP,DN: Wvar, Wthetav"
+#montage -tile 2x2 -geometry ${Jsize}+2+100 \
+# WvarUp10_TALL_CO_S303_G10M5_ALL.jpg \
+# WthetavUp10_TALL_CO_S303_G10M5_ALL.jpg \
+# WvarDn10_TALL_CO_S303_G10M5_ALL.jpg \
+# WthetavDn10_TALL_CO_S303_G10M5_ALL.jpg \
+# FigureTurbStats_S303.jpg
+#
+#echo "Figure: UP,DN: Wvar, Wthetav"
+#montage -tile 2x2 -geometry ${Jsize}+2+100 \
+# WvarUp10_TALL_CO_C0050_G10M5.jpg \
+# WthetavUp10_TALL_CO_C0050_G10M5.jpg \
+# WvarDn10_TALL_CO_C0050_G10M5.jpg \
+# WthetavDn10_TALL_CO_C0050_G10M5.jpg \
+# FigureTurbStats_C50.jpg
+#
+#echo "Figure: UP,DN: Wvar, Wthetav"
+#montage -tile 2x2 -geometry ${Jsize}+2+100 \
+# WvarUp10_TALL_CO_C0400_G10M5.jpg \
+# WthetavUp10_TALL_CO_C0400_G10M5.jpg \
+# WvarDn10_TALL_CO_C0400_G10M5.jpg \
+# WthetavDn10_TALL_CO_C0400_G10M5.jpg \
+# FigureTurbStats_C400.jpg
+#
+#echo "Figure: UP,DN: Wvar, Wthetav"
+#montage -tile 2x2 -geometry ${Jsize}+2+100 \
+# WvarUp10_TALL_CO_C1600_G10M5.jpg \
+# WthetavUp10_TALL_CO_C1600_G10M5.jpg \
+# WvarDn10_TALL_CO_C1600_G10M5.jpg \
+# WthetavDn10_TALL_CO_C1600_G10M5.jpg \
+# FigureTurbStats_C1600.jpg
+#
 #echo "Figure: Hist Strat PR, LWP, COT: CCN only"
 #montage -tile 3x3 -geometry ${Jsize}+2+100 \
 # PrateStratHist_TALL_CO_S293_G10M5_ALL.jpg \
@@ -777,45 +881,45 @@ montage -tile 2x2 -geometry ${Jsize}+2+100 \
 # W_CFAD_C400_S298_0p01_T36_z.atex.ccn0400.sst298.gcn10m0.3um.jpg \
 # FigureWcfadC400_S298.jpg
 #
-echo "Figure: W stats all time points"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- Wmean_TALL_CO_S293_G10M5_ALL.jpg \
- Wmean_TALL_CO_S298_G10M5_ALL.jpg \
- Wmean_TALL_CO_S303_G10M5_ALL.jpg \
- Wvar_TALL_CO_S293_G10M5_ALL.jpg \
- Wvar_TALL_CO_S298_G10M5_ALL.jpg \
- Wvar_TALL_CO_S303_G10M5_ALL.jpg \
- Wskew_TALL_CO_S293_G10M5_ALL.jpg \
- Wskew_TALL_CO_S298_G10M5_ALL.jpg \
- Wskew_TALL_CO_S303_G10M5_ALL.jpg \
- FigureWstatsTall.jpg
-
-echo "Figure: W stats, st circ, all time points"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- WmeanStCirc_TALL_CO_S293_G10M5_ALL.jpg \
- WmeanStCirc_TALL_CO_S298_G10M5_ALL.jpg \
- WmeanStCirc_TALL_CO_S303_G10M5_ALL.jpg \
- WvarStCirc_TALL_CO_S293_G10M5_ALL.jpg \
- WvarStCirc_TALL_CO_S298_G10M5_ALL.jpg \
- WvarStCirc_TALL_CO_S303_G10M5_ALL.jpg \
- WskewStCirc_TALL_CO_S293_G10M5_ALL.jpg \
- WskewStCirc_TALL_CO_S298_G10M5_ALL.jpg \
- WskewStCirc_TALL_CO_S303_G10M5_ALL.jpg \
- FigureWstatsStCircTall.jpg
-
-echo "Figure: W stats, cv circ, all time points"
-montage -tile 3x3 -geometry ${Jsize}+2+100 \
- WmeanCvCirc_TALL_CO_S293_G10M5_ALL.jpg \
- WmeanCvCirc_TALL_CO_S298_G10M5_ALL.jpg \
- WmeanCvCirc_TALL_CO_S303_G10M5_ALL.jpg \
- WvarCvCirc_TALL_CO_S293_G10M5_ALL.jpg \
- WvarCvCirc_TALL_CO_S298_G10M5_ALL.jpg \
- WvarCvCirc_TALL_CO_S303_G10M5_ALL.jpg \
- WskewCvCirc_TALL_CO_S293_G10M5_ALL.jpg \
- WskewCvCirc_TALL_CO_S298_G10M5_ALL.jpg \
- WskewCvCirc_TALL_CO_S303_G10M5_ALL.jpg \
- FigureWstatsCvCircTall.jpg
-
+#echo "Figure: W stats all time points"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# Wmean_TALL_CO_S293_G10M5_ALL.jpg \
+# Wmean_TALL_CO_S298_G10M5_ALL.jpg \
+# Wmean_TALL_CO_S303_G10M5_ALL.jpg \
+# Wvar_TALL_CO_S293_G10M5_ALL.jpg \
+# Wvar_TALL_CO_S298_G10M5_ALL.jpg \
+# Wvar_TALL_CO_S303_G10M5_ALL.jpg \
+# Wskew_TALL_CO_S293_G10M5_ALL.jpg \
+# Wskew_TALL_CO_S298_G10M5_ALL.jpg \
+# Wskew_TALL_CO_S303_G10M5_ALL.jpg \
+# FigureWstatsTall.jpg
+#
+#echo "Figure: W stats, st circ, all time points"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# WmeanStCirc_TALL_CO_S293_G10M5_ALL.jpg \
+# WmeanStCirc_TALL_CO_S298_G10M5_ALL.jpg \
+# WmeanStCirc_TALL_CO_S303_G10M5_ALL.jpg \
+# WvarStCirc_TALL_CO_S293_G10M5_ALL.jpg \
+# WvarStCirc_TALL_CO_S298_G10M5_ALL.jpg \
+# WvarStCirc_TALL_CO_S303_G10M5_ALL.jpg \
+# WskewStCirc_TALL_CO_S293_G10M5_ALL.jpg \
+# WskewStCirc_TALL_CO_S298_G10M5_ALL.jpg \
+# WskewStCirc_TALL_CO_S303_G10M5_ALL.jpg \
+# FigureWstatsStCircTall.jpg
+#
+#echo "Figure: W stats, cv circ, all time points"
+#montage -tile 3x3 -geometry ${Jsize}+2+100 \
+# WmeanCvCirc_TALL_CO_S293_G10M5_ALL.jpg \
+# WmeanCvCirc_TALL_CO_S298_G10M5_ALL.jpg \
+# WmeanCvCirc_TALL_CO_S303_G10M5_ALL.jpg \
+# WvarCvCirc_TALL_CO_S293_G10M5_ALL.jpg \
+# WvarCvCirc_TALL_CO_S298_G10M5_ALL.jpg \
+# WvarCvCirc_TALL_CO_S303_G10M5_ALL.jpg \
+# WskewCvCirc_TALL_CO_S293_G10M5_ALL.jpg \
+# WskewCvCirc_TALL_CO_S298_G10M5_ALL.jpg \
+# WskewCvCirc_TALL_CO_S303_G10M5_ALL.jpg \
+# FigureWstatsCvCircTall.jpg
+#
 #echo "Figure: COT pdfs with LWP bin 1, CCN only"
 #montage -tile 3x4 -geometry ${Jsize}+2+100 \
 # CotPdf_lwp_b1_TSTART_CO_S293_G10M5_ALL.jpg \
