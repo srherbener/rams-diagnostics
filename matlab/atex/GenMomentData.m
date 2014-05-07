@@ -22,8 +22,8 @@ function [ ] = GenMomentData(ConfigFile)
 
       { 'w_theta_flux'          'w-theta'   2 1 'theta'          }
       { 'w_theta_flux_ud0p10'   'w-theta'   2 1 'theta_ud0p10'   }
-%      { 'w_theta_flux_up0p10'   'w-theta'   2 1 'theta_up0p10'   }
-%      { 'w_theta_flux_dn0p10'   'w-theta'   2 1 'theta_dn0p10'   }
+      { 'w_theta_flux_up0p10'   'w-theta'   2 1 'theta_up0p10'   }
+      { 'w_theta_flux_dn0p10'   'w-theta'   2 1 'theta_dn0p10'   }
 
       { 'theta_e_M1'            'theta_e'   1 1 'theta_e'        }
       { 'theta_e_M1_ud0p10'     'theta_e'   1 1 'theta_e_ud0p10' }
@@ -37,13 +37,13 @@ function [ ] = GenMomentData(ConfigFile)
 
       { 'w_vapor_flux'          'w-vapor'   2 1 'vapor'          }
       { 'w_vapor_flux_ud0p10'   'w-vapor'   2 1 'vapor_ud0p10'   }
-%      { 'w_vapor_flux_up0p10'   'w-vapor'   2 1 'vapor_up0p10'   }
-%      { 'w_vapor_flux_dn0p10'   'w-vapor'   2 1 'vapor_dn0p10'   }
+      { 'w_vapor_flux_up0p10'   'w-vapor'   2 1 'vapor_up0p10'   }
+      { 'w_vapor_flux_dn0p10'   'w-vapor'   2 1 'vapor_dn0p10'   }
 
       { 'w_speed_flux'          'w-speed'   2 1 'speed'          }
       { 'w_speed_flux_ud0p10'   'w-speed'   2 1 'speed_ud0p10'   }
-%      { 'w_speed_flux_up0p10'   'w-speed'   2 1 'speed_up0p10'   }
-%      { 'w_speed_flux_dn0p10'   'w-speed'   2 1 'speed_dn0p10'   }
+      { 'w_speed_flux_up0p10'   'w-speed'   2 1 'speed_up0p10'   }
+      { 'w_speed_flux_dn0p10'   'w-speed'   2 1 'speed_dn0p10'   }
 
       { 'cloud_M1'              'cloud'     1 1 'cloud'          }
       { 'cloud_M1_c0p01'        'cloud'     1 1 'cloud_c0p01'    }
@@ -58,18 +58,18 @@ function [ ] = GenMomentData(ConfigFile)
 
       { 'w_theta_flux'           'w-theta'   1 2 'w-theta'            }
       { 'w_theta_flux_ud0p10'    'w-theta'   1 2 'w-theta_ud0p10'     }
-%      { 'w_theta_flux_up0p10'    'w-theta'   1 2 'w-theta_up0p10'     }
-%      { 'w_theta_flux_dn0p10'    'w-theta'   1 2 'w-theta_dn0p10'     }
+      { 'w_theta_flux_up0p10'    'w-theta'   1 2 'w-theta_up0p10'     }
+      { 'w_theta_flux_dn0p10'    'w-theta'   1 2 'w-theta_dn0p10'     }
 
       { 'w_vapor_flux'           'w-vapor'   1 2 'w-vapor'            }
       { 'w_vapor_flux_ud0p10'    'w-vapor'   1 2 'w-vapor_ud0p10'     }
-%      { 'w_vapor_flux_up0p10'    'w-vapor'   1 2 'w-vapor_up0p10'     }
-%      { 'w_vapor_flux_dn0p10'    'w-vapor'   1 2 'w-vapor_dn0p10'     }
+      { 'w_vapor_flux_up0p10'    'w-vapor'   1 2 'w-vapor_up0p10'     }
+      { 'w_vapor_flux_dn0p10'    'w-vapor'   1 2 'w-vapor_dn0p10'     }
 
       { 'w_speed_flux'           'w-speed'   1 2 'w-speed'            }
       { 'w_speed_flux_ud0p10'    'w-speed'   1 2 'w-speed_ud0p10'     }
-%      { 'w_speed_flux_up0p10'    'w-speed'   1 2 'w-speed_up0p10'     }
-%      { 'w_speed_flux_dn0p10'    'w-speed'   1 2 'w-speed_dn0p10'     }
+      { 'w_speed_flux_up0p10'    'w-speed'   1 2 'w-speed_up0p10'     }
+      { 'w_speed_flux_dn0p10'    'w-speed'   1 2 'w-speed_dn0p10'     }
 
       % variances
       { 'w_M3'                          'w-w-w'     1 2 'w-w'         }
