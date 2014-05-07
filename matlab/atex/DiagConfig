@@ -3530,7 +3530,7 @@ PlotVar: CotHist_TALL         cot_hist_TALL          DIAGS/pdf_ctype_cot   Count
 PlotVar: CotStrnpHist_TALL    cot_strnp_hist_TALL    DIAGS/pdf_ctype_cot   Count     x10^4 1e-4
 PlotVar: CotStratHist_TALL    cot_strat_hist_TALL    DIAGS/pdf_ctype_cot   Count     x10^6 1e-6
 PlotVar: CotCumulHist_TALL    cot_cumul_hist_TALL    DIAGS/pdf_ctype_cot   Count     x10^3 1e-3
-PlotVar: CotHistBins          x_coords               DIAGS/pdf_ctype_cot   Cloud@OT      @ 1
+PlotVar: CotHistBins          x_coords               DIAGS/pdf_ctype_cot   \tau_c        @ 1
 
 PlotVar: PrateHist_TALL         pcprr_hist_TALL          DIAGS/pdf_ctype_pcprr   Count        x10^5    1e-5
 PlotVar: PrateStrnpHist_TALL    pcprr_strnp_hist_TALL    DIAGS/pdf_ctype_pcprr   Count        x10^4    1e-4
