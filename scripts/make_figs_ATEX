@@ -50,100 +50,64 @@ montage -tile 3x1 -geometry ${Jsize}+2+100 \
  FigureBgraphCtypeDist.jpg
 
 echo "Figure: COT hist, PR hist, CD hist, CCN only, 293K"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
+montage -tile 3x2 -geometry ${Jsize}+2+100 \
  CotHist_TALL_CO_S293_G10M5_ALL.jpg \
  PrateHist_TALL_CO_S293_G10M5_ALL.jpg \
- LwpHist_TALL_CO_S293_G10M5_ALL.jpg \
  CdepthHist_TALL_CO_S293_G10M5_ALL.jpg \
+ WvarUd10_TALL_CO_S293_G10M5_ALL.jpg \
+ WthetavUd10_TALL_CO_S293_G10M5_ALL.jpg \
+ WvaporUd10_TALL_CO_S293_G10M5_ALL.jpg \
  FigureDomainStats_S293.jpg
 
 echo "Figure: COT hist, PR hist, CD hist, CCN only, 298K"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
+montage -tile 3x2 -geometry ${Jsize}+2+100 \
  CotHist_TALL_CO_S298_G10M5_ALL.jpg \
  PrateHist_TALL_CO_S298_G10M5_ALL.jpg \
- LwpHist_TALL_CO_S298_G10M5_ALL.jpg \
  CdepthHist_TALL_CO_S298_G10M5_ALL.jpg \
+ WvarUd10_TALL_CO_S298_G10M5_ALL.jpg \
+ WthetavUd10_TALL_CO_S298_G10M5_ALL.jpg \
+ WvaporUd10_TALL_CO_S298_G10M5_ALL.jpg \
  FigureDomainStats_S298.jpg
 
 echo "Figure: COT hist, PR hist, CD hist, CCN only, 303K"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
+montage -tile 3x2 -geometry ${Jsize}+2+100 \
  CotHist_TALL_CO_S303_G10M5_ALL.jpg \
  PrateHist_TALL_CO_S303_G10M5_ALL.jpg \
- LwpHist_TALL_CO_S303_G10M5_ALL.jpg \
  CdepthHist_TALL_CO_S303_G10M5_ALL.jpg \
+ WvarUd10_TALL_CO_S303_G10M5_ALL.jpg \
+ WthetavUd10_TALL_CO_S303_G10M5_ALL.jpg \
+ WvaporUd10_TALL_CO_S303_G10M5_ALL.jpg \
  FigureDomainStats_S303.jpg
 
 echo "Figure: COT hist, PR hist, CD hist, CCN only, C50"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
+montage -tile 3x2 -geometry ${Jsize}+2+100 \
  CotHist_TALL_CO_C0050_G10M5.jpg \
  PrateHist_TALL_CO_C0050_G10M5.jpg \
- LwpHist_TALL_CO_C0050_G10M5.jpg \
  CdepthHist_TALL_CO_C0050_G10M5.jpg \
+ WvarUd10_TALL_CO_C0050_G10M5.jpg \
+ WthetavUd10_TALL_CO_C0050_G10M5.jpg \
+ WvaporUd10_TALL_CO_C0050_G10M5.jpg \
  FigureDomainStats_C50.jpg
 
 echo "Figure: COT hist, PR hist, CD hist, CCN only, C400"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
+montage -tile 3x2 -geometry ${Jsize}+2+100 \
  CotHist_TALL_CO_C0400_G10M5.jpg \
  PrateHist_TALL_CO_C0400_G10M5.jpg \
- LwpHist_TALL_CO_C0400_G10M5.jpg \
  CdepthHist_TALL_CO_C0400_G10M5.jpg \
+ WvarUd10_TALL_CO_C0400_G10M5.jpg \
+ WthetavUd10_TALL_CO_C0400_G10M5.jpg \
+ WvaporUd10_TALL_CO_C0400_G10M5.jpg \
  FigureDomainStats_C400.jpg
 
 echo "Figure: COT hist, PR hist, CD hist, CCN only, C1600"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
+montage -tile 3x2 -geometry ${Jsize}+2+100 \
  CotHist_TALL_CO_C1600_G10M5.jpg \
  PrateHist_TALL_CO_C1600_G10M5.jpg \
- LwpHist_TALL_CO_C1600_G10M5.jpg \
  CdepthHist_TALL_CO_C1600_G10M5.jpg \
- FigureDomainStats_C1600.jpg
-
-echo "Figure: UD: Wvar, Wthetav"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
- WvarUd10_TALL_CO_S293_G10M5_ALL.jpg \
- WskewUd10_TALL_CO_S293_G10M5_ALL.jpg \
- WthetavUd10_TALL_CO_S293_G10M5_ALL.jpg \
- WvaporUd10_TALL_CO_S293_G10M5_ALL.jpg \
- FigureTurbStats_UD_S293.jpg
-
-echo "Figure: UD: Wvar, Wthetav"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
- WvarUd10_TALL_CO_S298_G10M5_ALL.jpg \
- WskewUd10_TALL_CO_S298_G10M5_ALL.jpg \
- WthetavUd10_TALL_CO_S298_G10M5_ALL.jpg \
- WvaporUd10_TALL_CO_S298_G10M5_ALL.jpg \
- FigureTurbStats_UD_S298.jpg
-
-echo "Figure: UD: Wvar, Wthetav"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
- WvarUd10_TALL_CO_S303_G10M5_ALL.jpg \
- WskewUd10_TALL_CO_S303_G10M5_ALL.jpg \
- WthetavUd10_TALL_CO_S303_G10M5_ALL.jpg \
- WvaporUd10_TALL_CO_S303_G10M5_ALL.jpg \
- FigureTurbStats_UD_S303.jpg
-
-echo "Figure: UD: Wvar, Wthetav"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
- WvarUd10_TALL_CO_C0050_G10M5.jpg \
- WskewUd10_TALL_CO_C0050_G10M5.jpg \
- WthetavUd10_TALL_CO_C0050_G10M5.jpg \
- WvaporUd10_TALL_CO_C0050_G10M5.jpg \
- FigureTurbStats_UD_C50.jpg
-
-echo "Figure: UD: Wvar, Wthetav"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
- WvarUd10_TALL_CO_C0400_G10M5.jpg \
- WskewUd10_TALL_CO_C0400_G10M5.jpg \
- WthetavUd10_TALL_CO_C0400_G10M5.jpg \
- WvaporUd10_TALL_CO_C0400_G10M5.jpg \
- FigureTurbStats_UD_C400.jpg
-
-echo "Figure: UD: Wvar, Wthetav"
-montage -tile 2x2 -geometry ${Jsize}+2+100 \
  WvarUd10_TALL_CO_C1600_G10M5.jpg \
- WskewUd10_TALL_CO_C1600_G10M5.jpg \
  WthetavUd10_TALL_CO_C1600_G10M5.jpg \
  WvaporUd10_TALL_CO_C1600_G10M5.jpg \
- FigureTurbStats_UD_C1600.jpg
+ FigureDomainStats_C1600.jpg
 
 
 #echo "Figure: Bar graphs, COT, CCN only, LWP Thresholds"
