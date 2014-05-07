@@ -3526,25 +3526,29 @@ PlotVar: TurbHeights      z_coords  DIAGS/turb_stats           Height km   1e-3
 #PlotVar: HfracCloud_303      hfrac_cloud DIAGS/hfrac_cloud_T12_T36   Cloud@Fraction @     0 0.8 1
 
 ############### Histogram #####################################
-PlotVar: CotHist_TALL         cot_hist_TALL          DIAGS/pdf_ctype_cot   Count     x10^6 1e-6
+#PlotVar: CotHist_TALL         cot_hist_TALL          DIAGS/pdf_ctype_cot   Count     x10^6 1e-6
+PlotVar: CotHist_TALL         cot_hist_TALL          DIAGS/pdf_ctype_cot   Count         @ 1
 PlotVar: CotStrnpHist_TALL    cot_strnp_hist_TALL    DIAGS/pdf_ctype_cot   Count     x10^4 1e-4
 PlotVar: CotStratHist_TALL    cot_strat_hist_TALL    DIAGS/pdf_ctype_cot   Count     x10^6 1e-6
 PlotVar: CotCumulHist_TALL    cot_cumul_hist_TALL    DIAGS/pdf_ctype_cot   Count     x10^3 1e-3
 PlotVar: CotHistBins          x_coords               DIAGS/pdf_ctype_cot   \tau_c        @ 1
 
-PlotVar: PrateHist_TALL         pcprr_hist_TALL          DIAGS/pdf_ctype_pcprr   Count        x10^5    1e-5
+#PlotVar: PrateHist_TALL         pcprr_hist_TALL          DIAGS/pdf_ctype_pcprr   Count        x10^5    1e-5
+PlotVar: PrateHist_TALL         pcprr_hist_TALL          DIAGS/pdf_ctype_pcprr   Count            @    1
 PlotVar: PrateStrnpHist_TALL    pcprr_strnp_hist_TALL    DIAGS/pdf_ctype_pcprr   Count        x10^4    1e-4
 PlotVar: PrateStratHist_TALL    pcprr_strat_hist_TALL    DIAGS/pdf_ctype_pcprr   Count        x10^5    1e-5
 PlotVar: PrateCumulHist_TALL    pcprr_cumul_hist_TALL    DIAGS/pdf_ctype_pcprr   Count        x10^3    1e-3
 PlotVar: PrateHistBins          x_coords                 DIAGS/pdf_ctype_pcprr   Precip@Rate  mm@h^-^1 1
 
-PlotVar: LwpHist_TALL         lwp_hist_TALL          DIAGS/pdf_ctype_lwp   Count   x10^6  1e-6
+#PlotVar: LwpHist_TALL         lwp_hist_TALL          DIAGS/pdf_ctype_lwp   Count   x10^6  1e-6
+PlotVar: LwpHist_TALL         lwp_hist_TALL          DIAGS/pdf_ctype_lwp   Count       @  1
 PlotVar: LwpStrnpHist_TALL    lwp_strnp_hist_TALL    DIAGS/pdf_ctype_lwp   Count   x10^4  1e-4
 PlotVar: LwpStratHist_TALL    lwp_strat_hist_TALL    DIAGS/pdf_ctype_lwp   Count   x10^6  1e-6
 PlotVar: LwpCumulHist_TALL    lwp_cumul_hist_TALL    DIAGS/pdf_ctype_lwp   Count   x10^3  1e-3
 PlotVar: LwpHistBins          x_coords               DIAGS/pdf_ctype_lwp   LWP        mm  1
 
-PlotVar: CdepthHist_TALL         cd_hist_TALL          DIAGS/pdf_ctype_cd   Count  x10^6  1e-6
+#PlotVar: CdepthHist_TALL         cd_hist_TALL          DIAGS/pdf_ctype_cd   Count  x10^6  1e-6
+PlotVar: CdepthHist_TALL         cd_hist_TALL          DIAGS/pdf_ctype_cd   Count      @  1
 PlotVar: CdepthStrnpHist_TALL    cd_strnp_hist_TALL    DIAGS/pdf_ctype_cd   Count  x10^4  1e-4
 PlotVar: CdepthStratHist_TALL    cd_strat_hist_TALL    DIAGS/pdf_ctype_cd   Count  x10^6  1e-6
 PlotVar: CdepthCumulHist_TALL    cd_cumul_hist_TALL    DIAGS/pdf_ctype_cd   Count  x10^3  1e-3
@@ -4393,12 +4397,18 @@ PlotAxis: AvgPrateAllCld  0    0.5 linear
 
 PlotAxis: AvgAlbedo       0    0.3 linear
 
-PlotAxis: PrateHist_293        0     15 linear
-PlotAxis: PrateHist_298        0     10 linear
-PlotAxis: PrateHist_303        0      7 linear
-PlotAxis: PrateHist_C50        0     15 linear
-PlotAxis: PrateHist_C400       0     15 linear
-PlotAxis: PrateHist_C1600      0     15 linear
+#PlotAxis: PrateHist_293        0     15 linear
+#PlotAxis: PrateHist_298        0     10 linear
+#PlotAxis: PrateHist_303        0      7 linear
+#PlotAxis: PrateHist_C50        0     15 linear
+#PlotAxis: PrateHist_C400       0     15 linear
+#PlotAxis: PrateHist_C1600      0     15 linear
+PlotAxis: PrateHist_293        1e0     1e8 log
+PlotAxis: PrateHist_298        1e0     1e8 log
+PlotAxis: PrateHist_303        1e0     1e8 log
+PlotAxis: PrateHist_C50        1e0     1e8 log
+PlotAxis: PrateHist_C400       1e0     1e8 log
+PlotAxis: PrateHist_C1600      1e0     1e8 log
 PlotAxis: PrateStrnpHist_293   0   0.02 linear
 PlotAxis: PrateStrnpHist_298   0    0.2 linear
 PlotAxis: PrateStrnpHist_303   0      1 linear
@@ -4409,12 +4419,18 @@ PlotAxis: PrateCumulHist_293   0    0.2 linear
 PlotAxis: PrateCumulHist_298   0      3 linear
 PlotAxis: PrateCumulHist_303   0      6 linear
 
-PlotAxis: LwpHist_293          0      5 linear
-PlotAxis: LwpHist_298          0      2 linear
-PlotAxis: LwpHist_303          0      1 linear
-PlotAxis: LwpHist_C50          0      5 linear
-PlotAxis: LwpHist_C400         0      5 linear
-PlotAxis: LwpHist_C1600        0      5 linear
+#PlotAxis: LwpHist_293          0      5 linear
+#PlotAxis: LwpHist_298          0      2 linear
+#PlotAxis: LwpHist_303          0      1 linear
+#PlotAxis: LwpHist_C50          0      5 linear
+#PlotAxis: LwpHist_C400         0      5 linear
+#PlotAxis: LwpHist_C1600        0      5 linear
+PlotAxis: LwpHist_293          1e0      1e8 log
+PlotAxis: LwpHist_298          1e0      1e8 log
+PlotAxis: LwpHist_303          1e0      1e8 log
+PlotAxis: LwpHist_C50          1e0      1e8 log
+PlotAxis: LwpHist_C400         1e0      1e8 log
+PlotAxis: LwpHist_C1600        1e0      1e8 log
 PlotAxis: LwpStrnpHist_293     0   0.02 linear
 PlotAxis: LwpStrnpHist_298     0    0.2 linear
 PlotAxis: LwpStrnpHist_303     0      1 linear
@@ -4425,12 +4441,18 @@ PlotAxis: LwpCumulHist_293     0    0.1 linear
 PlotAxis: LwpCumulHist_298     0    2.5 linear
 PlotAxis: LwpCumulHist_303     0      4 linear
 
-PlotAxis: CdepthHist_293         0    20 linear
-PlotAxis: CdepthHist_298         0    20 linear
-PlotAxis: CdepthHist_303         0    10 linear
-PlotAxis: CdepthHist_C50         0    20 linear
-PlotAxis: CdepthHist_C400        0    20 linear
-PlotAxis: CdepthHist_C1600       0    20 linear
+#PlotAxis: CdepthHist_293         0    20 linear
+#PlotAxis: CdepthHist_298         0    20 linear
+#PlotAxis: CdepthHist_303         0    10 linear
+#PlotAxis: CdepthHist_C50         0    20 linear
+#PlotAxis: CdepthHist_C400        0    20 linear
+#PlotAxis: CdepthHist_C1600       0    20 linear
+PlotAxis: CdepthHist_293         1e0    1e8 log
+PlotAxis: CdepthHist_298         1e0    1e8 log
+PlotAxis: CdepthHist_303         1e0    1e8 log
+PlotAxis: CdepthHist_C50         1e0    1e8 log
+PlotAxis: CdepthHist_C400        1e0    1e8 log
+PlotAxis: CdepthHist_C1600       1e0    1e8 log
 PlotAxis: CdepthStrnpHist_293    0    10 linear
 PlotAxis: CdepthStrnpHist_298    0    10 linear
 PlotAxis: CdepthStrnpHist_303    0    10 linear
@@ -4441,22 +4463,18 @@ PlotAxis: CdepthCumulHist_293    0    10 linear
 PlotAxis: CdepthCumulHist_298    0    10 linear
 PlotAxis: CdepthCumulHist_303    0    10 linear
 
-PlotAxis: CotHist_293         0      6 linear
-PlotAxis: CotHist_298         0      2 linear
-PlotAxis: CotHist_303         0      1 linear
-PlotAxis: CotHist_C50         0      6 linear
-PlotAxis: CotHist_C400        0      6 linear
-PlotAxis: CotHist_C1600       0      6 linear
-PlotAxis: CotStrnpHist_293    0   0.01 linear
-PlotAxis: CotStrnpHist_298    0    0.2 linear
-PlotAxis: CotStrnpHist_303    0      2 linear
-PlotAxis: CotStratHist_293    0      6 linear
-PlotAxis: CotStratHist_298    0      3 linear
-PlotAxis: CotStratHist_303    0      1 linear
-PlotAxis: CotCumulHist_293    0    0.1 linear
-PlotAxis: CotCumulHist_298    0      3 linear
-PlotAxis: CotCumulHist_303    0      6 linear
-
+#PlotAxis: CotHist_293         0      6 linear
+#PlotAxis: CotHist_298         0      2 linear
+#PlotAxis: CotHist_303         0      1 linear
+#PlotAxis: CotHist_C50         0      6 linear
+#PlotAxis: CotHist_C400        0      6 linear
+#PlotAxis: CotHist_C1600       0      6 linear
+PlotAxis: CotHist_293         1e0      1e8 log
+PlotAxis: CotHist_298         1e0      1e8 log
+PlotAxis: CotHist_303         1e0      1e8 log
+PlotAxis: CotHist_C50         1e0      1e8 log
+PlotAxis: CotHist_C400        1e0      1e8 log
+PlotAxis: CotHist_C1600       1e0      1e8 log
 PlotAxis: CotStrnpHist_293    0   0.01 linear
 PlotAxis: CotStrnpHist_298    0    0.2 linear
 PlotAxis: CotStrnpHist_303    0      2 linear
