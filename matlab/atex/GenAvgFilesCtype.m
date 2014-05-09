@@ -17,6 +17,8 @@ function [ ] = GenAvgFilesCtype(ConfigFile)
     { 'hda_vint_cond'       { 'lwp'    'lwp_strnp'    'lwp_strat'    'lwp_cumul'    'lwp_all_cld'    } 'avg_ctype_lwp'    }
 
     { 'hda_cloud_mask'      { 'cfrac'  'cfrac_strnp'  'cfrac_strat'  'cfrac_cumul'  'cfrac_stmix' 'cfrac_scmix'  } 'avg_ctype_cfrac'  }
+
+    { 'hda_lcl'             { 'lcl'                                                                              } 'avg_ctype_lcl'  }
     };
   Nset = length(VarSets);
 
@@ -60,7 +62,11 @@ function [ ] = GenAvgFilesCtype(ConfigFile)
           InVarName = InVname;
         end
 
-        InFile = sprintf('%s/hda_%s_%s.h5', Tdir, OutVarName , Case);
+        if (regexp(OutVarName, '^lcl'))  % grab hda_lcl file from Ddir instead of Tdir
+          InFile = sprintf('%s/hda_%s_%s.h5', Ddir, OutVarName , Case);
+        else
+          InFile = sprintf('%s/hda_%s_%s.h5', Tdir, OutVarName , Case);
+        end
         fprintf('      %s --> %s\n', InFile, InVarName);
 
         % grab the hda data and the t coordinates

@@ -98,6 +98,20 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'bars_avg_cot_TALL_CO.jpg'
        }
 
+       % LCL averages, all time points, CCN only
+       {
+       'LCL Avg TALL CCN only, grouped by SST'
+       'bgraph_lcl.h5'
+       { 'a' 'Domain' }
+       'N_a (# cm^-^3)'
+       'LCL (m)'
+       { 'blue' 'cyan' 'magenta' }
+       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [4] [1:3] [1:6] [1] } 1 'CCN' 0 1000 }
+       'bars_avg_lcl_TALL_CO.jpg'
+       }
+
 %       % PR averages, all time points, CCN only
 %       {
 %       'PR Avg TALL CCN only, grouped by SST'

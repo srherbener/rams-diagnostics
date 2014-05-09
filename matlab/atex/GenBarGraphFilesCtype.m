@@ -148,6 +148,17 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
         'bgraph_cfrac'
       }
 
+      { % lifted condensation level
+        'avg_ctype_lcl'
+        {
+           'lcl_TSTART'
+           'lcl_TMID'
+           'lcl_TEND'
+           'lcl_TALL'
+        }
+        'bgraph_lcl'
+      }
+
       };
     Nvarsets = length(VarSets);
 
