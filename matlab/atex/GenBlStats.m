@@ -11,8 +11,20 @@ function [ ] = GenBlStats(ConfigFile)
   % Generate
   %   No filter on theta
   %   Filter clouds based on cloud mix ratios >= 0.01 g/kg
+  % Third string denotes the type of the remaining input files:
+  %     'turb_cov'    --> tsavg, 'turb_cov' function
+  %     'gen_moments' --> gen_moments run with 2 input variables
   VarList = {
-    { 'cloud_M1_c0p01' 'cloud' 'turb_cov_w_theta' 'turb_cov_theta' 'turb_cov_w_vapor' 'turb_cov_vapor' 'turb_cov_w_theta_v' 'turb_cov_theta_v' }
+% FOR NOW can only do one of the below
+%    { 'cloud_M1_c0p01' 'cloud' 'turb_cov' 'turb_cov_w_theta' 'turb_cov_theta' 'turb_cov_w_vapor' 'turb_cov_vapor' 'turb_cov_w_theta_v' 'turb_cov_theta_v' }
+
+    { 'cloud_M1_c0p01' 'cloud' 'gen_moments' 'w_theta_flux' 'w-theta' 'w_vapor_flux' 'w-vapor' 'w_theta_v_flux' 'w-theta_v' }
+%
+%  THESE PRODUCE NANS: due to sampling points instead of columns
+%    { 'cloud_M1_c0p01' 'cloud' 'gen_moments' 'w_theta_flux_ud0p10' 'w-theta' 'w_vapor_flux_ud0p10' 'w-vapor' 'w_theta_v_flux_ud0p10' 'w-theta_v' }
+%    { 'cloud_M1_c0p01' 'cloud' 'gen_moments' 'w_theta_flux_up0p10' 'w-theta' 'w_vapor_flux_up0p10' 'w-vapor' 'w_theta_v_flux_up0p10' 'w-theta_v' }
+%    { 'cloud_M1_c0p01' 'cloud' 'gen_moments' 'w_theta_flux_dn0p10' 'w-theta' 'w_vapor_flux_dn0p10' 'w-vapor' 'w_theta_v_flux_dn0p10' 'w-theta_v' }
+
     };
 
   OutFprefixList = {
@@ -29,14 +41,27 @@ function [ ] = GenBlStats(ConfigFile)
     for ivar = 1:length(VarList)
       Case = Config.Cases(icase).Cname;
   
+      % Always get cloud file from Ddir
       CldFile = sprintf('%s/%s_%s.h5', Ddir, VarList{ivar}{1}, Case);
-      CldVar  = VarList{ivar}{2};
-      W_ThFile  = sprintf('%s/%s_%s.h5', Tdir, VarList{ivar}{3}, Case);
-      W_ThVar   = VarList{ivar}{4};
-      W_VapFile  = sprintf('%s/%s_%s.h5', Tdir, VarList{ivar}{5}, Case);
-      W_VapVar   = VarList{ivar}{6};
-      W_ThvFile  = sprintf('%s/%s_%s.h5', Tdir, VarList{ivar}{7}, Case);
-      W_ThvVar   = VarList{ivar}{8};
+      CldVar   = VarList{ivar}{2};
+
+      % If the w-theta file has a 'turb_cov_' prefix, assume all the covariance files
+      % (remainder on the list) are the tsavg 'turb_cov' type. Otherwise assume they
+      % are the gen_moments type generated with 2 variables
+      IsTurbType = strcmp(VarList{ivar}{3}, 'turb_cov');
+      if(IsTurbType)
+        InDir = Tdir;
+      else
+        InDir = Ddir;
+      end
+
+      W_ThFile  = sprintf('%s/%s_%s.h5', InDir, VarList{ivar}{4}, Case);
+      W_VapFile = sprintf('%s/%s_%s.h5', InDir, VarList{ivar}{6}, Case);
+      W_ThvFile = sprintf('%s/%s_%s.h5', InDir, VarList{ivar}{8}, Case);
+
+      W_ThVar  = VarList{ivar}{5};
+      W_VapVar = VarList{ivar}{7};
+      W_ThvVar = VarList{ivar}{9};
       
       OutFile = sprintf('%s/%s_%s.h5', Ddir, OutFprefixList{ivar}, Case);
   
@@ -55,6 +80,13 @@ function [ ] = GenBlStats(ConfigFile)
       fprintf('  Output file: %s\n', OutFile);
       fprintf('\n');
   
+      % coordinates
+      Z = hdf5read(CldFile, 'z_coords');
+      T = hdf5read(CldFile, 't_coords');
+
+      Nz = length(Z);
+      Nt = length(T);
+
       % Cloud, Vapor mixing ratio is in g/kg
       % Theta is in K
       %
@@ -72,40 +104,79 @@ function [ ] = GenBlStats(ConfigFile)
  
       CF = CLD_NPTS ./ NhorizPts; % cloud fraction per level
   
-      W_TH_TERMS = squeeze(hdf5read(W_ThFile, W_ThVar));
-      TH_SUMS   = squeeze(W_TH_TERMS(2, :, :));
-      W_TH_SUMS = squeeze(W_TH_TERMS(3, :, :));
-      W_TH_NPTS = squeeze(W_TH_TERMS(4, :, :));
-      TH = TH_SUMS ./ W_TH_NPTS;
+      % need to generate the moments differently depending upon the input type
+      if (IsTurbType)
+        % output from tsavg 'turb_cov'
+        W_TH_TERMS = squeeze(hdf5read(W_ThFile, W_ThVar));
+        TH_SUMS   = squeeze(W_TH_TERMS(2, :, :));
+        W_TH_SUMS = squeeze(W_TH_TERMS(3, :, :));
+        W_TH_NPTS = squeeze(W_TH_TERMS(4, :, :));
+        TH = TH_SUMS ./ W_TH_NPTS;
+        W_TH = W_TH_SUMS ./ W_TH_NPTS;
+
+        W_VAP_TERMS = squeeze(hdf5read(W_VapFile, W_VapVar));
+        VAP_SUMS   = squeeze(W_VAP_TERMS(2, :, :));
+        W_VAP_SUMS = squeeze(W_VAP_TERMS(3, :, :));
+        W_VAP_NPTS = squeeze(W_VAP_TERMS(4, :, :));
+        VAP = VAP_SUMS ./ W_VAP_NPTS;
+        W_VAP = W_VAP_SUMS ./ W_VAP_NPTS;
+
+        W_THV_TERMS = squeeze(hdf5read(W_ThvFile, W_ThvVar));
+        THV_SUMS   = squeeze(W_THV_TERMS(2, :, :));
+        W_THV_SUMS = squeeze(W_THV_TERMS(3, :, :));
+        W_THV_NPTS = squeeze(W_THV_TERMS(4, :, :));
+        THV = THV_SUMS ./ W_THV_NPTS;
+        W_THV = W_THV_SUMS ./ W_THV_NPTS;
+      else
+        % output from gen_moments using 2 variables
+        W_TH_TERMS = squeeze(hdf5read(W_ThFile, W_ThVar));
+        W_TH_NPTS  = squeeze(hdf5read(W_ThFile, 'num_points'));
+        TH   = zeros([ Nz Nt ]);
+        W_TH = zeros([ Nz Nt ]);
+
+        W_VAP_TERMS = squeeze(hdf5read(W_VapFile, W_VapVar));
+        W_VAP_NPTS  = squeeze(hdf5read(W_VapFile, 'num_points'));
+        VAP   = zeros([ Nz Nt ]);
+        W_VAP = zeros([ Nz Nt ]);
+
+        W_THV_TERMS = squeeze(hdf5read(W_ThvFile, W_ThvVar));
+        W_THV_NPTS  = squeeze(hdf5read(W_ThvFile, 'num_points'));
+        THV   = zeros([ Nz Nt ]);
+        W_THV = zeros([ Nz Nt ]);
+        
+        for i = 1:Nt
+          % last argument says whether or not to do averaging across time first (before spatial averaging)
+          % since doing one time steper per iteration, it's more efficient to set this to '1'
+          % MOMENTS will be formed as: (Term, Order, z)
+          %    (Term is term number, Order is order of terms)
+          %    For two variables: w, theta
+          %
+          %    Term,  Order-->    1                 2
+          %      1              mean(w)        cov(w,theta)
+          %      2              mean(theta)    0
+          %
+          [ MOMENTS OUT_NPTS ] = GenMoments(W_TH_TERMS, W_TH_NPTS, i, i, 1);
+          TH(:,i)   = squeeze(MOMENTS(2, 1, :));
+          W_TH(:,i) = squeeze(MOMENTS(1, 2, :));
+
+          [ MOMENTS OUT_NPTS ] = GenMoments(W_VAP_TERMS, W_VAP_NPTS, i, i, 1);
+          VAP(:,i)   = squeeze(MOMENTS(2, 1, :));
+          W_VAP(:,i) = squeeze(MOMENTS(1, 2, :));
+
+          [ MOMENTS OUT_NPTS ] = GenMoments(W_THV_TERMS, W_THV_NPTS, i, i, 1);
+          THV(:,i)   = squeeze(MOMENTS(2, 1, :));
+          W_THV(:,i) = squeeze(MOMENTS(1, 2, :));
+        end
+      end
+
       TH(isnan(TH)) = 0;
-      W_TH = W_TH_SUMS ./ W_TH_NPTS;
       W_TH(isnan(W_TH)) = 0;
 
-      W_VAP_TERMS = squeeze(hdf5read(W_VapFile, W_VapVar));
-      VAP_SUMS   = squeeze(W_VAP_TERMS(2, :, :));
-      W_VAP_SUMS = squeeze(W_VAP_TERMS(3, :, :));
-      W_VAP_NPTS = squeeze(W_VAP_TERMS(4, :, :));
-      VAP = VAP_SUMS ./ W_VAP_NPTS;
       VAP(isnan(VAP)) = 0;
-      W_VAP = W_VAP_SUMS ./ W_VAP_NPTS;
       W_VAP(isnan(W_VAP)) = 0;
 
-      W_THV_TERMS = squeeze(hdf5read(W_ThvFile, W_ThvVar));
-      THV_SUMS   = squeeze(W_THV_TERMS(2, :, :));
-      W_THV_SUMS = squeeze(W_THV_TERMS(3, :, :));
-      W_THV_NPTS = squeeze(W_THV_TERMS(4, :, :));
-      THV = THV_SUMS ./ W_THV_NPTS;
       THV(isnan(THV)) = 0;
-      W_THV = W_THV_SUMS ./ W_THV_NPTS;
       W_THV(isnan(W_THV)) = 0;
-
-
-      % coordinates
-      Z = hdf5read(CldFile, 'z_coords');
-      T = hdf5read(CldFile, 't_coords');
-
-      Nz = length(Z);
-      Nt = length(T);
 
       % Find inversion level (Zi) by locating max dtheta/dz in vertical
       %

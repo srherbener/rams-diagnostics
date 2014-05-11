@@ -8,6 +8,9 @@ function [ ] = GenAvgLCL(ConfigFile)
     % level where sfc_temp and sfc_dewptc are measured
     Z_BASE = 50;  % 50m AGL
 
+    BINS_LCL = 0:10:4000;
+    Nb = length(BINS_LCL);
+
     Ddir = Config.DiagDir;
     Tdir = Config.TsavgDir;
     Hdir = 'HDF5';
@@ -52,6 +55,7 @@ function [ ] = GenAvgLCL(ConfigFile)
         % Output needs to be 4D (x,y,z,t) where x and z have size 1, y has size 2
         % and t has size Nt. y(1) holds the sums and y(2) holds the number of points.
         HDA_LCL  = zeros([ 2 Nt ]);
+        HIST_LCL  = zeros([ Nb Nt ]);
         for it = 1:Nt
           % record the sum of LCL values across the domain
           % and the number of points so that averages can
@@ -74,10 +78,11 @@ function [ ] = GenAvgLCL(ConfigFile)
           % record sum and npts
           HDA_LCL(1,it) = sum(LCL(:));
           HDA_LCL(2,it) = length(LCL(:));
+
+          HIST_LCL(:,it) = histc(LCL(:), BINS_LCL);
         end
 
         % output --> Use REVU format, 4D var, *_coords
-        X = 1;
         Y = [ 1 2 ];
         Z = 50; % first model level above ground
 
@@ -87,7 +92,10 @@ function [ ] = GenAvgLCL(ConfigFile)
         Ovar = reshape(HDA_LCL, [ 1 2 1 Nt ]);
         hdf5write(OutFile, '/hda_lcl', Ovar);
 
-        hdf5write(OutFile, 'x_coords', X, 'WriteMode', 'append');
+        Ovar = reshape(HIST_LCL, [ Nb 1 1 Nt ]);
+        hdf5write(OutFile, '/hist_lcl', Ovar, 'WriteMode', 'append');
+
+        hdf5write(OutFile, 'x_coords', BINS_LCL, 'WriteMode', 'append');
         hdf5write(OutFile, 'y_coords', Y, 'WriteMode', 'append');
         hdf5write(OutFile, 'z_coords', Z, 'WriteMode', 'append');
         hdf5write(OutFile, 't_coords', T, 'WriteMode', 'append');
