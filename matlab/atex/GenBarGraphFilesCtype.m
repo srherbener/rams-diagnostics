@@ -159,6 +159,16 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
         'bgraph_lcl'
       }
 
+      { % Entrainment velocities
+        'bl_stats_0p01'
+        {
+           'ThetaWe_TALL'
+           'ThetaV_We_TALL'
+           'VaporWe_TALL'
+        }
+        'bgraph_we'
+      }
+
       };
     Nvarsets = length(VarSets);
 
@@ -202,7 +212,11 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
       fprintf('  Variables:\n');
       fprintf('\n');
       for ivar = 1:Nvars
-        fprintf('    %s --> %s, %s\n', VarList{ivar}, AvgVarList{ivar}, NptsVarList{ivar});
+        if (regexp(InFprefix, '^bl_stats_'))
+          fprintf('    %s\n', VarList{ivar});
+        else
+          fprintf('    %s --> %s, %s\n', VarList{ivar}, AvgVarList{ivar}, NptsVarList{ivar});
+        end
       end
       fprintf('\n');
       fprintf('  Input files:\n');
@@ -220,13 +234,18 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
               % use the histogram counts and bin values to calculate an average
               % then place the average into the output array
               for ivar = 1:Nvars
-                AVG = squeeze(hdf5read(InFile, AvgVarList{ivar}));
-                OutNpts(ivar,isst,iccn,igccn) = squeeze(hdf5read(InFile, NptsVarList{ivar}));
-
-                if (isnan(AVG))
-                  OutAvgs(ivar,isst,iccn,igccn) = 0;
+                if (regexp(InFprefix, '^bl_stats_'))
+                  OutAvgs(ivar,isst,iccn,igccn) = squeeze(hdf5read(InFile, VarList{ivar}));
+                  OutNpts(ivar,isst,iccn,igccn) = 0;
                 else
-                  OutAvgs(ivar,isst,iccn,igccn) = AVG;
+                  AVG = squeeze(hdf5read(InFile, AvgVarList{ivar}));
+                  OutNpts(ivar,isst,iccn,igccn) = squeeze(hdf5read(InFile, NptsVarList{ivar}));
+  
+                  if (isnan(AVG))
+                    OutAvgs(ivar,isst,iccn,igccn) = 0;
+                  else
+                    OutAvgs(ivar,isst,iccn,igccn) = AVG;
+                  end
                 end
               end
             end

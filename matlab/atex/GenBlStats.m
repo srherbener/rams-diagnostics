@@ -19,8 +19,9 @@ function [ ] = GenBlStats(ConfigFile)
 %    { 'cloud_M1_c0p01' 'cloud' 'turb_cov' 'turb_cov_w_theta' 'turb_cov_theta' 'turb_cov_w_vapor' 'turb_cov_vapor' 'turb_cov_w_theta_v' 'turb_cov_theta_v' }
 
     { 'cloud_M1_c0p01' 'cloud' 'gen_moments' 'w_theta_flux' 'w-theta' 'w_vapor_flux' 'w-vapor' 'w_theta_v_flux' 'w-theta_v' }
-%
-%  THESE PRODUCE NANS: due to sampling points instead of columns
+
+% THESE CAUSE problems with theta and consequently Zi, and all We calculations
+%  Not sure why: but theta comes out serverly distorted.
 %    { 'cloud_M1_c0p01' 'cloud' 'gen_moments' 'w_theta_flux_ud0p10' 'w-theta' 'w_vapor_flux_ud0p10' 'w-vapor' 'w_theta_v_flux_ud0p10' 'w-theta_v' }
 %    { 'cloud_M1_c0p01' 'cloud' 'gen_moments' 'w_theta_flux_up0p10' 'w-theta' 'w_vapor_flux_up0p10' 'w-vapor' 'w_theta_v_flux_up0p10' 'w-theta_v' }
 %    { 'cloud_M1_c0p01' 'cloud' 'gen_moments' 'w_theta_flux_dn0p10' 'w-theta' 'w_vapor_flux_dn0p10' 'w-vapor' 'w_theta_v_flux_dn0p10' 'w-theta_v' }
@@ -146,7 +147,7 @@ function [ ] = GenBlStats(ConfigFile)
         
         for i = 1:Nt
           % last argument says whether or not to do averaging across time first (before spatial averaging)
-          % since doing one time steper per iteration, it's more efficient to set this to '1'
+          % since doing one time step per iteration, it's more efficient to set this to '1'
           % MOMENTS will be formed as: (Term, Order, z)
           %    (Term is term number, Order is order of terms)
           %    For two variables: w, theta
@@ -156,7 +157,7 @@ function [ ] = GenBlStats(ConfigFile)
           %      2              mean(theta)    0
           %
           [ MOMENTS OUT_NPTS ] = GenMoments(W_TH_TERMS, W_TH_NPTS, i, i, 1);
-          TH(:,i)   = squeeze(MOMENTS(2, 1, :));
+          TH(:,i) = squeeze(MOMENTS(2, 1, :));
           W_TH(:,i) = squeeze(MOMENTS(1, 2, :));
 
           [ MOMENTS OUT_NPTS ] = GenMoments(W_VAP_TERMS, W_VAP_NPTS, i, i, 1);
@@ -167,16 +168,37 @@ function [ ] = GenBlStats(ConfigFile)
           THV(:,i)   = squeeze(MOMENTS(2, 1, :));
           W_THV(:,i) = squeeze(MOMENTS(1, 2, :));
         end
+
+        % Get averages over the 24-hour analysis period
+        [ MOMENTS OUT_NPTS ] = GenMoments(W_TH_TERMS, W_TH_NPTS, 145, 433, 1);
+        TH_TALL = squeeze(MOMENTS(2, 1, :));
+        W_TH_TALL = squeeze(MOMENTS(1, 2, :));
+
+        [ MOMENTS OUT_NPTS ] = GenMoments(W_VAP_TERMS, W_VAP_NPTS, 145, 433, 1);
+        VAP_TALL   = squeeze(MOMENTS(2, 1, :));
+        W_VAP_TALL = squeeze(MOMENTS(1, 2, :));
+
+        [ MOMENTS OUT_NPTS ] = GenMoments(W_THV_TERMS, W_THV_NPTS, 145, 433, 1);
+        THV_TALL   = squeeze(MOMENTS(2, 1, :));
+        W_THV_TALL = squeeze(MOMENTS(1, 2, :));
       end
 
-      TH(isnan(TH)) = 0;
-      W_TH(isnan(W_TH)) = 0;
+      % Profile arrays are organized as: (z,t)
+      %
+      % For the data that is conditionally sampled at points, it is possible
+      % to get zero counts (with an associated zero sum) that will have
+      % produced a nan in these arrays. It won't work to just leave the nan
+      % in the array, and it won't work to substitute all nans in a given
+      % array with a constant value. Instead, use an average of the
+      % points above and below the nan.
+      TH = InpaintNanColumns(TH);
+      W_TH = InpaintNanColumns(W_TH);
 
-      VAP(isnan(VAP)) = 0;
-      W_VAP(isnan(W_VAP)) = 0;
+      VAP = InpaintNanColumns(VAP);
+      W_VAP = InpaintNanColumns(W_VAP);
 
-      THV(isnan(THV)) = 0;
-      W_THV(isnan(W_THV)) = 0;
+      THV = InpaintNanColumns(THV);
+      W_THV = InpaintNanColumns(W_THV);
 
       % Find inversion level (Zi) by locating max dtheta/dz in vertical
       %
@@ -184,6 +206,9 @@ function [ ] = GenBlStats(ConfigFile)
       DZ  = Z(2:end) - Z(1:end-1);
       DZ_FULL = repmat(DZ, [ 1 Nt ]);
       DTH_DZ = DTH ./ DZ_FULL;
+
+      DTH_TALL = TH_TALL(2:end, :) - TH_TALL(1:end-1, :);
+      DTH_DZ_TALL = DTH_TALL ./ DZ;
 
       Zinv = zeros([ 1 Nt ]);
       ZtopCf = zeros([ 1 Nt ]);
@@ -204,6 +229,16 @@ function [ ] = GenBlStats(ConfigFile)
                                                              % where max Dtheta/Dz was found
 
         Zinv(i) = (Z(ZinvInd) + Z(ZinvInd+1)) / 2; % Set Zi to average of bottom and top of interval
+
+        if (i == Nt)
+          % do the time averaged version of We calculations.
+          DTH_DZ_I_TALL = smooth(DTH_DZ_TALL, Nfilter);
+          DTH_DZ_MAX_TALL = max(DTH_DZ_I_TALL);
+          ZinvInd_TALL = find(DTH_DZ_I_TALL == DTH_DZ_MAX_TALL, 1 , 'first'); % Index is set to the bottom of the interval
+                                                                         % where max Dtheta/Dz was found
+
+          Zinv_TALL = (Z(ZinvInd_TALL) + Z(ZinvInd_TALL+1)) / 2; % Set Zi to average of bottom and top of interval
+        end
 
         % For cloud top and bottom:
         % Find top and bottom using cloud fraction, and cloud mixing ratio
@@ -264,6 +299,25 @@ function [ ] = GenBlStats(ConfigFile)
         D_THV = THV_I(ZinvInd+1) - THV_I(ZinvInd);
         W_THV_FLUX = (W_THV_I(ZinvInd+1) + W_THV_I(ZinvInd)) * 0.5;
         ThetaV_We(i) = W_THV_FLUX / D_THV;
+
+        if (i == Nt)
+          % Time averaged values
+
+          % Heat entrainment velocity (theta)
+          D_TH_TALL = TH_TALL(ZinvInd+1) - TH_TALL(ZinvInd);
+          W_TH_FLUX_TALL= (W_TH_TALL(ZinvInd+1) + W_TH_TALL(ZinvInd)) * 0.5;
+          ThetaWe_TALL = W_TH_FLUX_TALL / D_TH_TALL;
+
+          % Moisture entrainment velocity (vapor)
+          D_VAP_TALL = VAP_TALL(ZinvInd+1) - VAP_TALL(ZinvInd);
+          W_VAP_FLUX_TALL= (W_VAP_TALL(ZinvInd+1) + W_VAP_TALL(ZinvInd)) * 0.5;
+          VaporWe_TALL = W_VAP_FLUX_TALL / D_VAP_TALL;
+
+          % Bouyancy entrainment velocity (theta_v)
+          D_THV_TALL = THV_TALL(ZinvInd+1) - THV_TALL(ZinvInd);
+          W_THV_FLUX_TALL= (W_THV_TALL(ZinvInd+1) + W_THV_TALL(ZinvInd)) * 0.5;
+          ThetaV_We_TALL = W_THV_FLUX_TALL / D_THV_TALL;
+        end
 
         % Find the max value of cloud fraction, also record the height at which this occurs
         CF_I = squeeze(CF(:,i));
@@ -338,11 +392,38 @@ function [ ] = GenBlStats(ConfigFile)
       OutVar = reshape(CfMaxHeightSmooth, [ 1 1 1 Nt ]);
       hdf5write(OutFile, 'CfMaxHeightSmooth', OutVar, 'WriteMode', 'append');
 
+      hdf5write(OutFile, 'ThetaWe_TALL', ThetaWe_TALL, 'WriteMode', 'append');
+      hdf5write(OutFile, 'VaporWe_TALL', VaporWe_TALL, 'WriteMode', 'append');
+      hdf5write(OutFile, 'ThetaV_We_TALL', ThetaV_We_TALL, 'WriteMode', 'append');
+
       hdf5write(OutFile, 'x_coords', Xdummy, 'WriteMode', 'append');
       hdf5write(OutFile, 'y_coords', Ydummy, 'WriteMode', 'append');
       hdf5write(OutFile, 'z_coords', Zdummy, 'WriteMode', 'append');
       hdf5write(OutFile, 't_coords', T,      'WriteMode', 'append');
       fprintf('\n');
+    end
+  end
+end
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+function [ OUT ] = InpaintNanColumns(IN)
+% InpaintNanColumns call inpaintn on each column separately in a 2d array
+
+% inpaintn is a function that replaces nans with values interpolated from it's neighbors
+
+  [ Nr Nc ] = size(IN);
+
+  OUT = zeros([ Nr Nc ]);
+  for i = 1:Nc
+    COL = squeeze(IN(:,i));
+    if (sum(~isnan(COL)) == 0)
+      % all entries are nan, just set to zeros
+      OUT(:,i) = zeros([ Nr 1 ]);
+    else
+      OUT(:,i) = inpaintn(COL,10);
     end
   end
 end

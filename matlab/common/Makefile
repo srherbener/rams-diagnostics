@@ -7,6 +7,7 @@ DEST = $(HOME)/etc/matlab/common
 SCRIPTS = \
           $(DEST)/export_fig.m \
           $(DEST)/figmerge.m \
+          $(DEST)/inpaintn.m \
           $(DEST)/print2array.m \
           $(DEST)/str2rgb.m \
           $(DEST)/screen2jpeg.m \
