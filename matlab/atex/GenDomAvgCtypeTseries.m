@@ -15,7 +15,7 @@ function [ ] = GenDomAvgCtypeTseries(ConfigFile)
     { { 'hda_cot'    'hda_cot_strnp'    'hda_cot_strat'    'hda_cot_cumul'    'hda_cot_all_cld'    } 'hda_cloud_opt_thick' 'avg_ts_ctype_cot'    }
     { { 'hda_cdepth' 'hda_cdepth_strnp' 'hda_cdepth_strat' 'hda_cdepth_cumul' 'hda_cdepth_all_cld' } 'hda_cloud_depth'     'avg_ts_ctype_cdepth' }
     { { 'hda_lwp'    'hda_lwp_strnp'    'hda_lwp_strat'    'hda_lwp_cumul'    'hda_lwp_all_cld'    } 'hda_vint_cond'       'avg_ts_ctype_lwp'    }
-    { { 'hda_lcl'                                                                                  } 'hda_lcl'             'avg_ts_ctype_lcl'    }
+    { { 'hda_lcl'    'hda_lcl_stall'                                                               } 'hda_lcl'             'avg_ts_ctype_lcl'    }
     };
   Nset = length(VarSets);
 

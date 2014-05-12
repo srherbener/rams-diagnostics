@@ -82,6 +82,34 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
   %    22 _scmix_TMID
   %    23 _scmix_TEND
   %    24 _scmix_TALL
+  %
+  % Added LCL, these are in the bgraph_lcl fiels which have variables ordered as:
+  % 
+  %     1 lcl_TSTART
+  %     2 lcl_TMID
+  %     3 lcl_TEND
+  %     4 lcl_TALL
+  %
+  %     5 lcl_stall_TSTART
+  %     6 lcl_stall_TMID
+  %     7 lcl_stall_TEND
+  %     8 lcl_stall_TALL
+  %
+  % Added entrainment velocities, these are in the bgraph_we files which have
+  % variables ordered as:
+  %
+  %     1 ThetaWe_turb_all_TALL
+  %     2 ThetaV_We_turb_all_TALL
+  %     3 VaporWe_turb_all_TALL
+  %
+  %     4 ThetaWe_gm_all_TALL
+  %     5 ThetaV_We_gm_all_TALL
+  %     6 VaporWe_gm_all_TALL
+  %
+  %     7 ThetaWe_gm_stall_TALL
+  %     8 ThetaV_We_gm_stall_TALL
+  %     9 VaporWe_gm_stall_TALL
+  %
 
   PlotDefs = {
        % COT averages, all time points, CCN only
@@ -98,7 +126,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'bars_avg_cot_TALL_CO.jpg'
        }
 
-       % LCL averages, all time points, CCN only
+       % LCL averages, DOMAIN all time points, CCN only
        {
        'LCL Avg TALL CCN only, grouped by SST'
        'bgraph_lcl.h5'
@@ -112,9 +140,65 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'bars_avg_lcl_TALL_CO.jpg'
        }
 
+       % LCL averages, ST all time points, CCN only
+       {
+       'LCL Avg TALL CCN only, grouped by SST'
+       'bgraph_lcl.h5'
+       { 'a' 'ST' }
+       'N_a (# cm^-^3)'
+       'LCL (m)'
+       { 'blue' 'cyan' 'magenta' }
+       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [8] [1:3] [1:6] [1] } 1 'CCN' 0 1000 }
+       'bars_avg_lcl_stall_TALL_CO.jpg'
+       }
+
        % Theta We averages, all time points, CCN only
        {
-       'We theta Avg TALL CCN only, grouped by SST'
+       'We theta Avg, ST TALL CCN only, grouped by SST'
+       'bgraph_we.h5'
+       { 'a' 'ST' }
+       'N_a (# cm^-^3)'
+       '\theta W_e ()'
+       { 'blue' 'cyan' 'magenta' }
+       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [7] [1:3] [1:6] [1] } 1 'CCN' 0 0.015 }
+       'bars_avg_theta_we_stall_TALL_CO.jpg'
+       }
+
+       % ThetaV We averages, all time points, CCN only
+       {
+       'We theta_v Avg, ST TALL CCN only, grouped by SST'
+       'bgraph_we.h5'
+       { 'a' 'ST' }
+       'N_a (# cm^-^3)'
+       '\theta_v W_e ()'
+       { 'blue' 'cyan' 'magenta' }
+       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [8] [1:3] [1:6] [1] } 1 'CCN' 0 0.015 }
+       'bars_avg_theta_v_we_stall_TALL_CO.jpg'
+       }
+
+       % Vapor We averages, all time points, CCN only
+       {
+       'We vapor Avg, ST TALL CCN only, grouped by SST'
+       'bgraph_we.h5'
+       { 'a' 'ST' }
+       'N_a (# cm^-^3)'
+       'q_v W_e ()'
+       { 'blue' 'cyan' 'magenta' }
+       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [9] [1:3] [1:6] [1] } 1 'CCN' -0.005 0.25 }
+       'bars_avg_vapor_we_stall_TALL_CO.jpg'
+       }
+
+       % Theta We averages, all time points, CCN only
+       {
+       'We theta Avg, DOMAIN TALL CCN only, grouped by SST'
        'bgraph_we.h5'
        { 'a' 'Domain' }
        'N_a (# cm^-^3)'
@@ -122,13 +206,13 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'blue' 'cyan' 'magenta' }
        { { 'S293', 'S298', 'S303' } 'NorthWest' }
        'grouped'
-       { 'Averages' 1 { [1] [1:3] [1:6] [1] } 1 'CCN' -0.01 0.04 }
+       { 'Averages' 1 { [4] [1:3] [1:6] [1] } 1 'CCN' 0 0.03 }
        'bars_avg_theta_we_TALL_CO.jpg'
        }
 
        % ThetaV We averages, all time points, CCN only
        {
-       'We theta_v Avg TALL CCN only, grouped by SST'
+       'We theta_v Avg, DOMAIN TALL CCN only, grouped by SST'
        'bgraph_we.h5'
        { 'a' 'Domain' }
        'N_a (# cm^-^3)'
@@ -136,13 +220,13 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'blue' 'cyan' 'magenta' }
        { { 'S293', 'S298', 'S303' } 'NorthWest' }
        'grouped'
-       { 'Averages' 1 { [2] [1:3] [1:6] [1] } 1 'CCN' -0.01 0.07 }
+       { 'Averages' 1 { [5] [1:3] [1:6] [1] } 1 'CCN' 0 0.06 }
        'bars_avg_theta_v_we_TALL_CO.jpg'
        }
 
        % Vapor We averages, all time points, CCN only
        {
-       'We vapor Avg TALL CCN only, grouped by SST'
+       'We vapor Avg, DOMAIN TALL CCN only, grouped by SST'
        'bgraph_we.h5'
        { 'a' 'Domain' }
        'N_a (# cm^-^3)'
@@ -150,7 +234,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'blue' 'cyan' 'magenta' }
        { { 'S293', 'S298', 'S303' } 'NorthWest' }
        'grouped'
-       { 'Averages' 1 { [3] [1:3] [1:6] [1] } 1 'CCN' -0.05 0.02 }
+       { 'Averages' 1 { [6] [1:3] [1:6] [1] } 1 'CCN' -0.1 0.05 }
        'bars_avg_vapor_we_TALL_CO.jpg'
        }
 

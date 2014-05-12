@@ -158,20 +158,36 @@ LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL InvHeight SimTimeHr HeightKm TsAll_T12_
 LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL InvHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:b@S298 NorthEastOutside none InvHeight_CO_S298_G10M5_ALL.jpg
 LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL InvHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:c@S303 NorthEastOutside none InvHeight_CO_S303_G10M5_ALL.jpg
 
+LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL InvHeightStall SimTimeHr HeightKm TsAll_T12_T36 none PANEL:a@S293 NorthEastOutside none InvHeightStall_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL InvHeightStall SimTimeHr HeightKm TsAll_T12_T36 none PANEL:b@S298 NorthEastOutside none InvHeightStall_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL InvHeightStall SimTimeHr HeightKm TsAll_T12_T36 none PANEL:c@S303 NorthEastOutside none InvHeightStall_CO_S303_G10M5_ALL.jpg
+
 ### Heat entrainment velocity (theta)
 LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL ThetaWe SimTimeHr ThetaWe_293 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaWe_CO_S293_G10M5_ALL.jpg
 LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL ThetaWe SimTimeHr ThetaWe_298 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaWe_CO_S298_G10M5_ALL.jpg
 LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL ThetaWe SimTimeHr ThetaWe_303 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaWe_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL ThetaWeStall SimTimeHr ThetaWe_293 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaWeStall_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL ThetaWeStall SimTimeHr ThetaWe_298 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaWeStall_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL ThetaWeStall SimTimeHr ThetaWe_303 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaWeStall_CO_S303_G10M5_ALL.jpg
 
 ### Moisture entrainment velocity (vapor)
 LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL VaporWe SimTimeHr VaporWe_293 TsAll_T12_T36 none PANEL:a NorthEastOutside none VaporWe_CO_S293_G10M5_ALL.jpg
 LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL VaporWe SimTimeHr VaporWe_298 TsAll_T12_T36 none PANEL:a NorthEastOutside none VaporWe_CO_S298_G10M5_ALL.jpg
 LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL VaporWe SimTimeHr VaporWe_303 TsAll_T12_T36 none PANEL:a NorthEastOutside none VaporWe_CO_S303_G10M5_ALL.jpg
 
+LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL VaporWeStall SimTimeHr VaporWe_293 TsAll_T12_T36 none PANEL:a NorthEastOutside none VaporWeStall_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL VaporWeStall SimTimeHr VaporWe_298 TsAll_T12_T36 none PANEL:a NorthEastOutside none VaporWeStall_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL VaporWeStall SimTimeHr VaporWe_303 TsAll_T12_T36 none PANEL:a NorthEastOutside none VaporWeStall_CO_S303_G10M5_ALL.jpg
+
 ### Buoyancy entrainment velocity (theta_v)
 LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL ThetaV_We SimTimeHr ThetaV_We_293 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaV_We_CO_S293_G10M5_ALL.jpg
 LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL ThetaV_We SimTimeHr ThetaV_We_298 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaV_We_CO_S298_G10M5_ALL.jpg
 LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL ThetaV_We SimTimeHr ThetaV_We_303 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaV_We_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL ThetaV_WeStall SimTimeHr ThetaV_We_293 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaV_WeStall_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL ThetaV_WeStall SimTimeHr ThetaV_We_298 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaV_WeStall_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL ThetaV_WeStall SimTimeHr ThetaV_We_303 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaV_WeStall_CO_S303_G10M5_ALL.jpg
 
 ### Domain average cloud optical thickness
 #LinePlot: CO_UP_S293_G10M5_ALL SimTime AvgCot SimTimeHr AvgCot TsAll_T12_T36 none PANEL:a@S293 NorthWest none AvgCot_CO_S293_G10M5_ALL.jpg
@@ -189,9 +205,13 @@ LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL ThetaV_We SimTimeHr ThetaV_We_303 TsAll
 #LinePlot: CO_UP_S303_G10M5_ALL SimTime AvgPrate SimTimeHr AvgPrate TsAll_T12_T36 none PANEL:a@S303 NorthWest none AvgPrate_CO_S303_G10M5_ALL.jpg
 
 ### Domain average lifted condensation level
-#LinePlot: CO_UP_S293_G10M5_ALL SimTime AvgLcl SimTimeHr AvgLcl TsAll_T12_T36 none PANEL:a@S293 NorthWest none AvgLcl_CO_S293_G10M5_ALL.jpg
-#LinePlot: CO_UP_S298_G10M5_ALL SimTime AvgLcl SimTimeHr AvgLcl TsAll_T12_T36 none PANEL:a@S298 NorthWest none AvgLcl_CO_S298_G10M5_ALL.jpg
-#LinePlot: CO_UP_S303_G10M5_ALL SimTime AvgLcl SimTimeHr AvgLcl TsAll_T12_T36 none PANEL:a@S303 NorthWest none AvgLcl_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL SimTime AvgLcl SimTimeHr AvgLcl TsAll_T12_T36 none PANEL:a@S293 NorthWest none AvgLcl_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL SimTime AvgLcl SimTimeHr AvgLcl TsAll_T12_T36 none PANEL:a@S298 NorthWest none AvgLcl_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL SimTime AvgLcl SimTimeHr AvgLcl TsAll_T12_T36 none PANEL:a@S303 NorthWest none AvgLcl_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_S293_G10M5_ALL SimTime AvgLclStall SimTimeHr AvgLcl TsAll_T12_T36 none PANEL:a@S293 NorthWest none AvgLclStall_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL SimTime AvgLclStall SimTimeHr AvgLcl TsAll_T12_T36 none PANEL:a@S298 NorthWest none AvgLclStall_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL SimTime AvgLclStall SimTimeHr AvgLcl TsAll_T12_T36 none PANEL:a@S303 NorthWest none AvgLclStall_CO_S303_G10M5_ALL.jpg
 
 
 #### Cloud fraction - time series
@@ -1642,18 +1662,22 @@ PlotVar: LwpScmixPdf_TALL   lwp_scmix_pdf_TALL  DIAGS/pdf_ctype_lwp   @    @ 1
 PlotVar: LwpPdfBins         x_coords            DIAGS/pdf_ctype_lwp   LWP mm 1
 
 ############## BL stats #####################
-PlotVar: InvHeight      InversionHeightSmooth   DIAGS/bl_stats_0p01 Z_i  km  1e-3
-PlotVar: CloudCfTop     CloudTopCfSmooth        DIAGS/bl_stats_0p01 Z_t  km  1e-3
-PlotVar: CloudCfBot     CloudBotCfSmooth        DIAGS/bl_stats_0p01 Z_b  km  1e-3
-PlotVar: CloudCldTop    CloudTopCldSmooth       DIAGS/bl_stats_0p01 Z_t  km  1e-3
-PlotVar: CloudCldBot    CloudBotCldSmooth       DIAGS/bl_stats_0p01 Z_b  km  1e-3
+PlotVar: InvHeight      InversionHeightSmooth_gm_all   DIAGS/bl_stats_0p01 Z_i  km  1e-3
+PlotVar: InvHeightStall InversionHeightSmooth_gm_stall DIAGS/bl_stats_0p01 Z_i  km  1e-3
+PlotVar: CloudCfTop     CloudTopCfSmooth_gm_all        DIAGS/bl_stats_0p01 Z_t  km  1e-3
+PlotVar: CloudCfBot     CloudBotCfSmooth_gm_all        DIAGS/bl_stats_0p01 Z_b  km  1e-3
+PlotVar: CloudCldTop    CloudTopCldSmooth_gm_all       DIAGS/bl_stats_0p01 Z_t  km  1e-3
+PlotVar: CloudCldBot    CloudBotCldSmooth_gm_all       DIAGS/bl_stats_0p01 Z_b  km  1e-3
 
-PlotVar: ThetaWe        ThetaWeSmooth           DIAGS/bl_stats_0p01 W_e_\theta    cm@s^-^1  100
-PlotVar: VaporWe        VaporWeSmooth           DIAGS/bl_stats_0p01 W_e_r         cm@s^-^1  100
-PlotVar: ThetaV_We      ThetaV_WeSmooth         DIAGS/bl_stats_0p01 W_e_\theta_v  cm@s^-^1  100
+PlotVar: ThetaWe        ThetaWeSmooth_gm_all           DIAGS/bl_stats_0p01 W_e_\theta    cm@s^-^1  100
+PlotVar: ThetaWeStall   ThetaWeSmooth_gm_stall         DIAGS/bl_stats_0p01 W_e_\theta    cm@s^-^1  100
+PlotVar: VaporWe        VaporWeSmooth_gm_all           DIAGS/bl_stats_0p01 W_e_r         cm@s^-^1  100
+PlotVar: VaporWeStall   VaporWeSmooth_gm_stall         DIAGS/bl_stats_0p01 W_e_r         cm@s^-^1  100
+PlotVar: ThetaV_We      ThetaV_WeSmooth_gm_all         DIAGS/bl_stats_0p01 W_e_\theta_v  cm@s^-^1  100
+PlotVar: ThetaV_WeStall ThetaV_WeSmooth_gm_stall       DIAGS/bl_stats_0p01 W_e_\theta_v  cm@s^-^1  100
 
-PlotVar: CfMax          CfMaxSmooth             DIAGS/bl_stats_0p01 CF_m_a_x             @  1
-PlotVar: CfMaxHeight    CfMaxHeightSmooth       DIAGS/bl_stats_0p01 CF_m_a_x@Height     km  1e-3
+PlotVar: CfMax          CfMaxSmooth_gm_all             DIAGS/bl_stats_0p01 CF_m_a_x             @  1
+PlotVar: CfMaxHeight    CfMaxHeightSmooth_gm_all       DIAGS/bl_stats_0p01 CF_m_a_x@Height     km  1e-3
 
 PlotVar: AvgCot       cot_avg            DIAGS/avg_ts_ctype_cot   COT  @   1
 PlotVar: AvgCotStrnp  cot_strnp_avg      DIAGS/avg_ts_ctype_cot   COT  @   1
@@ -1680,6 +1704,7 @@ PlotVar: AvgPrateCumul   pcprr_cumul_avg    DIAGS/avg_ts_ctype_pcprr  Precip@Rat
 PlotVar: AvgPrateAllCld  pcprr_all_cld_avg  DIAGS/avg_ts_ctype_pcprr  Precip@Rate mm@h^-^1   1
 
 PlotVar: AvgLcl          lcl_avg            DIAGS/avg_ts_ctype_lcl    LCL         m          1
+PlotVar: AvgLclStall     lcl_stall_avg      DIAGS/avg_ts_ctype_lcl    LCL         m          1
 
 PlotVar: AvgAlbedo   albedo_avg   DIAGS/avg_ts_ctype_albedo Albedo             @   1
 
@@ -2607,8 +2632,8 @@ PlotAxis: Fraction    0    1.1 linear
 #   y - dummy, set to 1
 #   z - dummy, set to 1
 #   t - time in seconds
-PlotDselect: TsAll_T12_T36   1 1 1 1 -50  50 43200 129600
-PlotDselect: TsAll           1 1 1 1 -50  50     0 129600
+PlotDselect: TsAll_T12_T36   1 1 1 1 -50  1 43200 129600
+PlotDselect: TsAll           1 1 1 1 -50  1     0 129600
 
 PlotDselect: Prof_T12_T36   1 1 1 1 0 4000  1 1
 PlotDselect: MOMENT_SELECT  1 1 1 1 0 4000  1 1

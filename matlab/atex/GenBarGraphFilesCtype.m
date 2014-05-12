@@ -155,6 +155,10 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
            'lcl_TMID'
            'lcl_TEND'
            'lcl_TALL'
+           'lcl_stall_TSTART'
+           'lcl_stall_TMID'
+           'lcl_stall_TEND'
+           'lcl_stall_TALL'
         }
         'bgraph_lcl'
       }
@@ -162,9 +166,15 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
       { % Entrainment velocities
         'bl_stats_0p01'
         {
-           'ThetaWe_TALL'
-           'ThetaV_We_TALL'
-           'VaporWe_TALL'
+           'ThetaWe_turb_all_TALL'
+           'ThetaV_We_turb_all_TALL'
+           'VaporWe_turb_all_TALL'
+           'ThetaWe_gm_all_TALL'
+           'ThetaV_We_gm_all_TALL'
+           'VaporWe_gm_all_TALL'
+           'ThetaWe_gm_stall_TALL'
+           'ThetaV_We_gm_stall_TALL'
+           'VaporWe_gm_stall_TALL'
         }
         'bgraph_we'
       }

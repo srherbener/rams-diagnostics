@@ -13,6 +13,7 @@ function [ ] = GenAvgLCL(ConfigFile)
 
     Ddir = Config.DiagDir;
     Tdir = Config.TsavgDir;
+    Fdir = 'FILTERS';
     Hdir = 'HDF5';
 
     UndefVal = Config.UndefVal;
@@ -22,10 +23,14 @@ function [ ] = GenAvgLCL(ConfigFile)
     TDname = 'dewptc';
     TDfprefix = 'sfc_dewptc';
 
+    Fname    = 'filter';
+    Ffprefix = 'stall';
+
     for icase = 1:length(Config.Cases)
 	Case = Config.Cases(icase).Cname;
 	Tfile = sprintf('%s/%s-%s-AS-1999-02-10-040000-g1.h5', Hdir, Tfprefix, Case);
 	TDfile = sprintf('%s/%s-%s-AS-1999-02-10-040000-g1.h5', Hdir, TDfprefix, Case);
+	Ffile = sprintf('%s/%s_%s.h5', Fdir, Ffprefix, Case);
 
         fprintf('***************************************************************\n');
         fprintf('Generating horizontal domain average LCL:\n');
@@ -34,18 +39,16 @@ function [ ] = GenAvgLCL(ConfigFile)
         fprintf('    Var name: %s\n', Tname);
         fprintf('  Input dewpoint file: %s\n', TDfile);
         fprintf('    Var name: %s\n', TDname);
+        fprintf('  Input filter file: %s\n', Ffile);
+        fprintf('    Var name: %s\n', Fname);
         fprintf('\n');
 
-        % Use nctoolbox in order to walk through the data per time step
-        TEMP_DS = ncgeodataset(Tfile);
-        TEMP_VAR = TEMP_DS.geovariable(Tname);
-        T_VAR = TEMP_DS.geovariable('t_coords');
 
-        TEMPD_DS = ncgeodataset(TDfile);
-        TEMPD_VAR = TEMPD_DS.geovariable(TDname);
+        TEMP_ALL   = squeeze(hdf5read(Tfile, Tname));
+        TEMPD_ALL  = squeeze(hdf5read(TDfile, TDname));
+        FILTER_ALL = squeeze(hdf5read(Ffile, Fname));
 
-        % get time coordinate values
-        T = T_VAR.data(:);
+        T = squeeze(hdf5read(Tfile, 't_coords'));
         Nt = length(T);
 
         % Mimic the manner in which the "hda" averaging function in tsavg creates
@@ -63,8 +66,9 @@ function [ ] = GenAvgLCL(ConfigFile)
           % time steps
           %
           % exclude the lateral boundaries
-          TEMP  = TEMP_VAR.data(it,:,2:end-1,2:end-1) + 273.15;    % TEMP, TEMPD will be (y,x)
-          TEMPD = TEMPD_VAR.data(it,:,2:end-1,2:end-1) + 273.15;   % convert to Kelvin
+          TEMP   = squeeze(TEMP_ALL(2:end-1,2:end-1,it)) + 273.15;   % TEMP, TEMPD will be (x,y)
+          TEMPD  = squeeze(TEMPD_ALL(2:end-1,2:end-1,it)) + 273.15;  % convert to Kelvin
+          FILTER = squeeze(FILTER_ALL(2:end-1,2:end-1,it));
 
           % temp of adiabatically lifted parcel at condensation level
           % formula is from Bolton, 1980 MWR "The Computation of Equivalent Potential Temperature"
@@ -76,10 +80,18 @@ function [ ] = GenAvgLCL(ConfigFile)
           LCL = Z_BASE + ((TEMP - T_LCL) .* 102);
 
           % record sum and npts
-          HDA_LCL(1,it) = sum(LCL(:));
-          HDA_LCL(2,it) = length(LCL(:));
+          LCL = LCL(:);
+          FILTER = FILTER(:);
 
-          HIST_LCL(:,it) = histc(LCL(:), BINS_LCL);
+          LCL_FILT = LCL(FILTER == 1);
+   
+          HDA_LCL(1,it) = sum(LCL);
+          HDA_LCL(2,it) = length(LCL);
+          HIST_LCL(:,it) = histc(LCL, BINS_LCL);
+
+          HDA_LCL_FILT(1,it) = sum(LCL_FILT);
+          HDA_LCL_FILT(2,it) = length(LCL_FILT);
+          HIST_LCL_FILT(:,it) = histc(LCL_FILT, BINS_LCL);
         end
 
         % output --> Use REVU format, 4D var, *_coords
@@ -99,6 +111,22 @@ function [ ] = GenAvgLCL(ConfigFile)
         hdf5write(OutFile, 'y_coords', Y, 'WriteMode', 'append');
         hdf5write(OutFile, 'z_coords', Z, 'WriteMode', 'append');
         hdf5write(OutFile, 't_coords', T, 'WriteMode', 'append');
-    fprintf('\n');
+        fprintf('\n');
+
+
+        OutFile = sprintf('%s/hda_lcl_stall_%s.h5', Ddir, Case);
+        fprintf('Writing: %s\n', OutFile);
+
+        Ovar = reshape(HDA_LCL_FILT, [ 1 2 1 Nt ]);
+        hdf5write(OutFile, '/hda_lcl', Ovar);
+
+        Ovar = reshape(HIST_LCL_FILT, [ Nb 1 1 Nt ]);
+        hdf5write(OutFile, '/hist_lcl', Ovar, 'WriteMode', 'append');
+
+        hdf5write(OutFile, 'x_coords', BINS_LCL, 'WriteMode', 'append');
+        hdf5write(OutFile, 'y_coords', Y, 'WriteMode', 'append');
+        hdf5write(OutFile, 'z_coords', Z, 'WriteMode', 'append');
+        hdf5write(OutFile, 't_coords', T, 'WriteMode', 'append');
+        fprintf('\n');
     end
 end

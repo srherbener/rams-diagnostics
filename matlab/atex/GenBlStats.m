@@ -15,22 +15,20 @@ function [ ] = GenBlStats(ConfigFile)
   %     'turb_cov'    --> tsavg, 'turb_cov' function
   %     'gen_moments' --> gen_moments run with 2 input variables
   VarList = {
-% FOR NOW can only do one of the below
-%    { 'cloud_M1_c0p01' 'cloud' 'turb_cov' 'turb_cov_w_theta' 'turb_cov_theta' 'turb_cov_w_vapor' 'turb_cov_vapor' 'turb_cov_w_theta_v' 'turb_cov_theta_v' }
-
-    { 'cloud_M1_c0p01' 'cloud' 'gen_moments' 'w_theta_flux' 'w-theta' 'w_vapor_flux' 'w-vapor' 'w_theta_v_flux' 'w-theta_v' }
+    { 'cloud_M1_c0p01' 'cloud' 'turb_cov' 'turb_cov_w_theta' 'turb_cov_theta' 'turb_cov_w_vapor' 'turb_cov_vapor' 'turb_cov_w_theta_v' 'turb_cov_theta_v' 'turb_all' }
+    { 'cloud_M1_c0p01' 'cloud' 'gen_moments' 'w_theta_flux' 'w-theta' 'w_vapor_flux' 'w-vapor' 'w_theta_v_flux' 'w-theta_v' 'gm_all'}
+    { 'cloud_M1_c0p01' 'cloud' 'gen_moments' 'w_theta_flux_stall' 'w-theta' 'w_vapor_flux_stall' 'w-vapor' 'w_theta_v_flux_stall' 'w-theta_v' 'gm_stall' }
 
 % THESE CAUSE problems with theta and consequently Zi, and all We calculations
-%  Not sure why: but theta comes out serverly distorted.
+%  Not sure why: but theta comes out serverly distorted - probably due to the data selection in these being done at discrete points
+%  instead of whole columns.
 %    { 'cloud_M1_c0p01' 'cloud' 'gen_moments' 'w_theta_flux_ud0p10' 'w-theta' 'w_vapor_flux_ud0p10' 'w-vapor' 'w_theta_v_flux_ud0p10' 'w-theta_v' }
 %    { 'cloud_M1_c0p01' 'cloud' 'gen_moments' 'w_theta_flux_up0p10' 'w-theta' 'w_vapor_flux_up0p10' 'w-vapor' 'w_theta_v_flux_up0p10' 'w-theta_v' }
 %    { 'cloud_M1_c0p01' 'cloud' 'gen_moments' 'w_theta_flux_dn0p10' 'w-theta' 'w_vapor_flux_dn0p10' 'w-vapor' 'w_theta_v_flux_dn0p10' 'w-theta_v' }
 
     };
 
-  OutFprefixList = {
-    'bl_stats_0p01'
-    };
+  OutFprefixList = 'bl_stats_0p01';
 
   NumPtsVar = 'num_points';
 
@@ -39,9 +37,17 @@ function [ ] = GenBlStats(ConfigFile)
   NhorizPts = 398 * 398;  % 400 x 400 domain with the outer edges stripped off
 
   for icase = 1:length(Config.Cases)
-    for ivar = 1:length(VarList)
-      Case = Config.Cases(icase).Cname;
+    Case = Config.Cases(icase).Cname;
+    fprintf('***************************************************************\n');
+    fprintf('Generating BL stats:\n');
+    fprintf('  Case: %s\n', Case);
   
+    OutFile = sprintf('%s/%s_%s.h5', Ddir, OutFprefixList, Case);
+    fprintf('  Output file: %s\n', OutFile);
+    fprintf('\n');
+    hdf5write(OutFile, 'header', 'ATEX');
+
+    for ivar = 1:length(VarList)
       % Always get cloud file from Ddir
       CldFile = sprintf('%s/%s_%s.h5', Ddir, VarList{ivar}{1}, Case);
       CldVar   = VarList{ivar}{2};
@@ -63,12 +69,9 @@ function [ ] = GenBlStats(ConfigFile)
       W_ThVar  = VarList{ivar}{5};
       W_VapVar = VarList{ivar}{7};
       W_ThvVar = VarList{ivar}{9};
+
+      VarTag = VarList{ivar}{10};
       
-      OutFile = sprintf('%s/%s_%s.h5', Ddir, OutFprefixList{ivar}, Case);
-  
-      fprintf('***************************************************************\n');
-      fprintf('Generating BL stats:\n');
-      fprintf('  Case: %s\n', Case);
       fprintf('  Input cloud mixing ratio file: %s\n', CldFile);
       fprintf('    Variable name: %s\n', CldVar);
       fprintf('  Input w-theta file: %s\n', W_ThFile);
@@ -78,9 +81,6 @@ function [ ] = GenBlStats(ConfigFile)
       fprintf('  Input w-theta_v file: %s\n', W_ThvFile);
       fprintf('    Variable name: %s\n', W_ThvVar);
       
-      fprintf('  Output file: %s\n', OutFile);
-      fprintf('\n');
-  
       % coordinates
       Z = hdf5read(CldFile, 'z_coords');
       T = hdf5read(CldFile, 't_coords');
@@ -128,6 +128,16 @@ function [ ] = GenBlStats(ConfigFile)
         W_THV_NPTS = squeeze(W_THV_TERMS(4, :, :));
         THV = THV_SUMS ./ W_THV_NPTS;
         W_THV = W_THV_SUMS ./ W_THV_NPTS;
+ 
+        % need to add code for these - average over time interval
+        TH_TALL   = nan([Nz 1]);
+        W_TH_TALL = nan([Nz 1]);
+
+        VAP_TALL   = nan([Nz 1]);
+        W_VAP_TALL = nan([Nz 1]);
+
+        THV_TALL   = nan([Nz 1]);
+        W_THV_TALL = nan([Nz 1]);
       else
         % output from gen_moments using 2 variables
         W_TH_TERMS = squeeze(hdf5read(W_ThFile, W_ThVar));
@@ -202,15 +212,10 @@ function [ ] = GenBlStats(ConfigFile)
 
       % Find inversion level (Zi) by locating max dtheta/dz in vertical
       %
-      DTH = TH(2:end, :) - TH(1:end-1, :);
-      DZ  = Z(2:end) - Z(1:end-1);
-      DZ_FULL = repmat(DZ, [ 1 Nt ]);
-      DTH_DZ = DTH ./ DZ_FULL;
+      [ Zinv ZinvInd ] = FindInversion(TH, Z);
 
-      DTH_TALL = TH_TALL(2:end, :) - TH_TALL(1:end-1, :);
-      DTH_DZ_TALL = DTH_TALL ./ DZ;
+      [ Zinv_TALL ZinvInd_TALL ] = FindInversion(TH, Z);
 
-      Zinv = zeros([ 1 Nt ]);
       ZtopCf = zeros([ 1 Nt ]);
       ZbotCf = zeros([ 1 Nt ]);
       ZtopCld = zeros([ 1 Nt ]);
@@ -221,25 +226,6 @@ function [ ] = GenBlStats(ConfigFile)
       MaxCf = zeros([ 1 Nt ]);
       MaxCfHeight = zeros([ 1 Nt ]);
       for i = 1:Nt
-        % inversion
-        % use smooth() to eliminate "blips" in Dtheta/Dz, ie make the largest inversion region stand out
-        DTH_DZ_I = smooth(squeeze(DTH_DZ(:,i)), Nfilter);
-        DTH_DZ_MAX = max(DTH_DZ_I);
-        ZinvInd = find(DTH_DZ_I == DTH_DZ_MAX, 1 , 'first'); % Index is set to the bottom of the interval
-                                                             % where max Dtheta/Dz was found
-
-        Zinv(i) = (Z(ZinvInd) + Z(ZinvInd+1)) / 2; % Set Zi to average of bottom and top of interval
-
-        if (i == Nt)
-          % do the time averaged version of We calculations.
-          DTH_DZ_I_TALL = smooth(DTH_DZ_TALL, Nfilter);
-          DTH_DZ_MAX_TALL = max(DTH_DZ_I_TALL);
-          ZinvInd_TALL = find(DTH_DZ_I_TALL == DTH_DZ_MAX_TALL, 1 , 'first'); % Index is set to the bottom of the interval
-                                                                         % where max Dtheta/Dz was found
-
-          Zinv_TALL = (Z(ZinvInd_TALL) + Z(ZinvInd_TALL+1)) / 2; % Set Zi to average of bottom and top of interval
-        end
-
         % For cloud top and bottom:
         % Find top and bottom using cloud fraction, and cloud mixing ratio
         % Find the max value of both of these and use 0.5 * Max as threshold to find top and bottom
@@ -282,40 +268,40 @@ function [ ] = GenBlStats(ConfigFile)
         % Heat entrainment velocity (theta)
         TH_I = squeeze(TH(:,i));
         W_TH_I = squeeze(W_TH(:,i));
-        D_TH = TH_I(ZinvInd+1) - TH_I(ZinvInd);
-        W_TH_FLUX = (W_TH_I(ZinvInd+1) + W_TH_I(ZinvInd)) * 0.5;
+        D_TH = TH_I(ZinvInd(i)+1) - TH_I(ZinvInd(i));
+        W_TH_FLUX = (W_TH_I(ZinvInd(i)+1) + W_TH_I(ZinvInd(i))) * 0.5;
         ThetaWe(i) = W_TH_FLUX / D_TH;
 
         % Moisture entrainment velocity (vapor)
         VAP_I = squeeze(VAP(:,i));
         W_VAP_I = squeeze(W_VAP(:,i));
-        D_VAP = VAP_I(ZinvInd+1) - VAP_I(ZinvInd);
-        W_VAP_FLUX = (W_VAP_I(ZinvInd+1) + W_VAP_I(ZinvInd)) * 0.5;
+        D_VAP = VAP_I(ZinvInd(i)+1) - VAP_I(ZinvInd(i));
+        W_VAP_FLUX = (W_VAP_I(ZinvInd(i)+1) + W_VAP_I(ZinvInd(i))) * 0.5;
         VaporWe(i) = W_VAP_FLUX / D_VAP;
 
         % Bouyancy entrainment velocity (theta_v)
         THV_I = squeeze(THV(:,i));
         W_THV_I = squeeze(W_THV(:,i));
-        D_THV = THV_I(ZinvInd+1) - THV_I(ZinvInd);
-        W_THV_FLUX = (W_THV_I(ZinvInd+1) + W_THV_I(ZinvInd)) * 0.5;
+        D_THV = THV_I(ZinvInd(i)+1) - THV_I(ZinvInd(i));
+        W_THV_FLUX = (W_THV_I(ZinvInd(i)+1) + W_THV_I(ZinvInd(i))) * 0.5;
         ThetaV_We(i) = W_THV_FLUX / D_THV;
 
         if (i == Nt)
           % Time averaged values
 
           % Heat entrainment velocity (theta)
-          D_TH_TALL = TH_TALL(ZinvInd+1) - TH_TALL(ZinvInd);
-          W_TH_FLUX_TALL= (W_TH_TALL(ZinvInd+1) + W_TH_TALL(ZinvInd)) * 0.5;
+          D_TH_TALL = TH_TALL(ZinvInd_TALL(i)+1) - TH_TALL(ZinvInd_TALL(i));
+          W_TH_FLUX_TALL= (W_TH_TALL(ZinvInd_TALL(i)+1) + W_TH_TALL(ZinvInd_TALL(i))) * 0.5;
           ThetaWe_TALL = W_TH_FLUX_TALL / D_TH_TALL;
 
           % Moisture entrainment velocity (vapor)
-          D_VAP_TALL = VAP_TALL(ZinvInd+1) - VAP_TALL(ZinvInd);
-          W_VAP_FLUX_TALL= (W_VAP_TALL(ZinvInd+1) + W_VAP_TALL(ZinvInd)) * 0.5;
+          D_VAP_TALL = VAP_TALL(ZinvInd_TALL(i)+1) - VAP_TALL(ZinvInd_TALL(i));
+          W_VAP_FLUX_TALL= (W_VAP_TALL(ZinvInd_TALL(i)+1) + W_VAP_TALL(ZinvInd_TALL(i))) * 0.5;
           VaporWe_TALL = W_VAP_FLUX_TALL / D_VAP_TALL;
 
           % Bouyancy entrainment velocity (theta_v)
-          D_THV_TALL = THV_TALL(ZinvInd+1) - THV_TALL(ZinvInd);
-          W_THV_FLUX_TALL= (W_THV_TALL(ZinvInd+1) + W_THV_TALL(ZinvInd)) * 0.5;
+          D_THV_TALL = THV_TALL(ZinvInd_TALL(i)+1) - THV_TALL(ZinvInd_TALL(i));
+          W_THV_FLUX_TALL= (W_THV_TALL(ZinvInd_TALL(i)+1) + W_THV_TALL(ZinvInd_TALL(i))) * 0.5;
           ThetaV_We_TALL = W_THV_FLUX_TALL / D_THV_TALL;
         end
 
@@ -341,71 +327,134 @@ function [ ] = GenBlStats(ConfigFile)
       % Save the diameters (in Y) and characteristic diameters (convert m to um)
       Xdummy = 1;
       Ydummy = 1;
-      Zdummy = 1;
       OutVar = reshape(Zinv, [ 1 1 1 Nt ]);
-      hdf5write(OutFile, 'InversionHeight', OutVar);
+      OutVname = sprintf('InversionHeight_%s', VarTag);
+      hdf5write(OutFile, OutVname, OutVar, 'WriteMode', 'append');
       OutVar = reshape(ZinvSmooth, [ 1 1 1 Nt ]);
-      hdf5write(OutFile, 'InversionHeightSmooth', OutVar, 'WriteMode', 'append');
+      OutVname = sprintf('InversionHeightSmooth_%s', VarTag);
+      hdf5write(OutFile, OutVname, OutVar, 'WriteMode', 'append');
 
       OutVar = reshape(ZtopCf, [ 1 1 1 Nt ]);
-      hdf5write(OutFile, 'CloudTopCf', OutVar, 'WriteMode', 'append');
+      OutVname = sprintf('CloudTopCf_%s', VarTag);
+      hdf5write(OutFile, OutVname, OutVar, 'WriteMode', 'append');
       OutVar = reshape(ZtopCfSmooth, [ 1 1 1 Nt ]);
-      hdf5write(OutFile, 'CloudTopCfSmooth', OutVar, 'WriteMode', 'append');
+      OutVname = sprintf('CloudTopCfSmooth_%s', VarTag);
+      hdf5write(OutFile, OutVname, OutVar, 'WriteMode', 'append');
 
       OutVar = reshape(ZbotCf, [ 1 1 1 Nt ]);
-      hdf5write(OutFile, 'CloudBotCf', OutVar, 'WriteMode', 'append');
+      OutVname = sprintf('CloudBotCf_%s', VarTag);
+      hdf5write(OutFile, OutVname, OutVar, 'WriteMode', 'append');
       OutVar = reshape(ZbotCfSmooth, [ 1 1 1 Nt ]);
-      hdf5write(OutFile, 'CloudBotCfSmooth', OutVar, 'WriteMode', 'append');
+      OutVname = sprintf('CloudBotCfSmooth_%s', VarTag);
+      hdf5write(OutFile, OutVname, OutVar, 'WriteMode', 'append');
 
       OutVar = reshape(ZtopCld, [ 1 1 1 Nt ]);
-      hdf5write(OutFile, 'CloudTopCld', OutVar, 'WriteMode', 'append');
+      OutVname = sprintf('CloudTopCld_%s', VarTag);
+      hdf5write(OutFile, OutVname, OutVar, 'WriteMode', 'append');
       OutVar = reshape(ZtopCldSmooth, [ 1 1 1 Nt ]);
-      hdf5write(OutFile, 'CloudTopCldSmooth', OutVar, 'WriteMode', 'append');
+      OutVname = sprintf('CloudTopCldSmooth_%s', VarTag);
+      hdf5write(OutFile, OutVname, OutVar, 'WriteMode', 'append');
 
       OutVar = reshape(ZbotCld, [ 1 1 1 Nt ]);
-      hdf5write(OutFile, 'CloudBotCld', OutVar, 'WriteMode', 'append');
+      OutVname = sprintf('CloudBotCld_%s', VarTag);
+      hdf5write(OutFile, OutVname, OutVar, 'WriteMode', 'append');
       OutVar = reshape(ZbotCldSmooth, [ 1 1 1 Nt ]);
-      hdf5write(OutFile, 'CloudBotCldSmooth', OutVar, 'WriteMode', 'append');
+      OutVname = sprintf('CloudBotCldSmooth_%s', VarTag);
+      hdf5write(OutFile, OutVname, OutVar, 'WriteMode', 'append');
 
       OutVar = reshape(ThetaWe, [ 1 1 1 Nt ]);
-      hdf5write(OutFile, 'ThetaWe', OutVar, 'WriteMode', 'append');
+      OutVname = sprintf('ThetaWe_%s', VarTag);
+      hdf5write(OutFile, OutVname, OutVar, 'WriteMode', 'append');
       OutVar = reshape(ThetaWeSmooth, [ 1 1 1 Nt ]);
-      hdf5write(OutFile, 'ThetaWeSmooth', OutVar, 'WriteMode', 'append');
+      OutVname = sprintf('ThetaWeSmooth_%s', VarTag);
+      hdf5write(OutFile, OutVname, OutVar, 'WriteMode', 'append');
 
       OutVar = reshape(VaporWe, [ 1 1 1 Nt ]);
-      hdf5write(OutFile, 'VaporWe', OutVar, 'WriteMode', 'append');
+      OutVname = sprintf('VaporWe_%s', VarTag);
+      hdf5write(OutFile, OutVname, OutVar, 'WriteMode', 'append');
       OutVar = reshape(VaporWeSmooth, [ 1 1 1 Nt ]);
-      hdf5write(OutFile, 'VaporWeSmooth', OutVar, 'WriteMode', 'append');
+      OutVname = sprintf('VaporWeSmooth_%s', VarTag);
+      hdf5write(OutFile, OutVname, OutVar, 'WriteMode', 'append');
 
       OutVar = reshape(ThetaV_We, [ 1 1 1 Nt ]);
-      hdf5write(OutFile, 'ThetaV_We', OutVar, 'WriteMode', 'append');
+      OutVname = sprintf('ThetaV_We_%s', VarTag);
+      hdf5write(OutFile, OutVname, OutVar, 'WriteMode', 'append');
       OutVar = reshape(ThetaV_WeSmooth, [ 1 1 1 Nt ]);
-      hdf5write(OutFile, 'ThetaV_WeSmooth', OutVar, 'WriteMode', 'append');
+      OutVname = sprintf('ThetaV_WeSmooth_%s', VarTag);
+      hdf5write(OutFile, OutVname, OutVar, 'WriteMode', 'append');
 
       OutVar = reshape(CfMax, [ 1 1 1 Nt ]);
-      hdf5write(OutFile, 'CfMax', OutVar, 'WriteMode', 'append');
+      OutVname = sprintf('CfMax_%s', VarTag);
+      hdf5write(OutFile, OutVname, OutVar, 'WriteMode', 'append');
       OutVar = reshape(CfMaxSmooth, [ 1 1 1 Nt ]);
-      hdf5write(OutFile, 'CfMaxSmooth', OutVar, 'WriteMode', 'append');
+      OutVname = sprintf('CfMaxSmooth_%s', VarTag);
+      hdf5write(OutFile, OutVname, OutVar, 'WriteMode', 'append');
 
       OutVar = reshape(CfMaxHeight, [ 1 1 1 Nt ]);
-      hdf5write(OutFile, 'CfMaxHeight', OutVar, 'WriteMode', 'append');
+      OutVname = sprintf('CfMaxHeight_%s', VarTag);
+      hdf5write(OutFile, OutVname, OutVar, 'WriteMode', 'append');
       OutVar = reshape(CfMaxHeightSmooth, [ 1 1 1 Nt ]);
-      hdf5write(OutFile, 'CfMaxHeightSmooth', OutVar, 'WriteMode', 'append');
+      OutVname = sprintf('CfMaxHeightSmooth_%s', VarTag);
+      hdf5write(OutFile, OutVname, OutVar, 'WriteMode', 'append');
 
-      hdf5write(OutFile, 'ThetaWe_TALL', ThetaWe_TALL, 'WriteMode', 'append');
-      hdf5write(OutFile, 'VaporWe_TALL', VaporWe_TALL, 'WriteMode', 'append');
-      hdf5write(OutFile, 'ThetaV_We_TALL', ThetaV_We_TALL, 'WriteMode', 'append');
+      TallVarTag = sprintf('%s_TALL', VarTag);
+      OutVname = sprintf('ThetaWe_%s', TallVarTag);
+      hdf5write(OutFile, OutVname, ThetaWe_TALL, 'WriteMode', 'append');
+      OutVname = sprintf('VaporWe_%s', TallVarTag);
+      hdf5write(OutFile, OutVname, VaporWe_TALL, 'WriteMode', 'append');
+      OutVname = sprintf('ThetaV_We_%s', TallVarTag);
+      hdf5write(OutFile, OutVname, ThetaV_We_TALL, 'WriteMode', 'append');
 
-      hdf5write(OutFile, 'x_coords', Xdummy, 'WriteMode', 'append');
-      hdf5write(OutFile, 'y_coords', Ydummy, 'WriteMode', 'append');
-      hdf5write(OutFile, 'z_coords', Zdummy, 'WriteMode', 'append');
-      hdf5write(OutFile, 't_coords', T,      'WriteMode', 'append');
+      OutVname = sprintf('TH_%s', TallVarTag);
+      hdf5write(OutFile, OutVname, TH_TALL, 'WriteMode', 'append');
+      OutVname = sprintf('VAP_%s', TallVarTag);
+      hdf5write(OutFile, OutVname, VAP_TALL, 'WriteMode', 'append');
+      OutVname = sprintf('THV_%s', TallVarTag);
+      hdf5write(OutFile, OutVname, THV_TALL, 'WriteMode', 'append');
+
+      OutVname = sprintf('TH_%s', VarTag);
+      hdf5write(OutFile, OutVname, TH, 'WriteMode', 'append');
+      OutVname = sprintf('VAP_%s', VarTag);
+      hdf5write(OutFile, OutVname, VAP, 'WriteMode', 'append');
+      OutVname = sprintf('THV_%s', VarTag);
+      hdf5write(OutFile, OutVname, THV, 'WriteMode', 'append');
+
       fprintf('\n');
     end
+    hdf5write(OutFile, 'x_coords', Xdummy, 'WriteMode', 'append');
+    hdf5write(OutFile, 'y_coords', Ydummy, 'WriteMode', 'append');
+    hdf5write(OutFile, 'z_coords', Z,      'WriteMode', 'append');
+    hdf5write(OutFile, 't_coords', T,      'WriteMode', 'append');
   end
 end
 
+%%%%%%%%%%%%%%%%%%%%%%%%
+function [ Zinv ZinvInd ] = FindInversion(TH, Z)
+% FindInversion given theta and z, find the region of maximum dtheta/dz
 
+  % TH is (z,t)
+  [ Nz Nt ] = size(TH);
+
+  % Remove kinks from theta so the subsequent find does not get confused
+  TH_SMOOTH = zeros([ Nz Nt ]);
+  for i = 1:Nt
+    TH_SMOOTH(:,i) = smooth(TH(:,i), 3);
+  end
+
+  DTH = TH_SMOOTH(2:end, :) - TH_SMOOTH(1:end-1, :);
+  DZ  = Z(2:end) - Z(1:end-1);
+  DZ_FULL = repmat(DZ, [ 1 Nt ]);
+  DTH_DZ = DTH ./ DZ_FULL;
+
+  % ZinvInd will be index of Z at the bottom of the interval where
+  % max DthDz exists.
+  ZinvInd = zeros([ 1 Nt ]);
+  Zinv    = zeros([ 1 Nt ]);
+  for i = 1:Nt
+    [ Val ZinvInd(i) ] = max(DTH_DZ(:,i));
+    Zinv(i) = Z(ZinvInd(i));
+  end
+end
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%

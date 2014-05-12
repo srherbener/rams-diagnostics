@@ -18,7 +18,7 @@ function [ ] = GenAvgFilesCtype(ConfigFile)
 
     { 'hda_cloud_mask'      { 'cfrac'  'cfrac_strnp'  'cfrac_strat'  'cfrac_cumul'  'cfrac_stmix' 'cfrac_scmix'  } 'avg_ctype_cfrac'  }
 
-    { 'hda_lcl'             { 'lcl'                                                                              } 'avg_ctype_lcl'  }
+    { 'hda_lcl'             { 'lcl'    'lcl_stall'                                                               } 'avg_ctype_lcl'  }
     };
   Nset = length(VarSets);
 
