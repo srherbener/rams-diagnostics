@@ -126,117 +126,329 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'bars_avg_cot_TALL_CO.jpg'
        }
 
-       % LCL averages, DOMAIN all time points, CCN only
+%       % LCL averages, DOMAIN all time points, CCN only
+%       {
+%       'LCL Avg TALL CCN only, grouped by SST'
+%       'bgraph_lcl.h5'
+%       { 'a' 'Domain' }
+%       'N_a (# cm^-^3)'
+%       'LCL (m)'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [4] [1:3] [1:6] [1] } 1 'CCN' 0 1000 }
+%       'bars_avg_lcl_TALL_CO.jpg'
+%       }
+%
+%       % Theta We averages, all time points, CCN only
+%       {
+%       'We theta Avg, DOMAIN TALL CCN only, grouped by SST'
+%       'bgraph_we.h5'
+%       { 'a' 'Domain' }
+%       'N_a (# cm^-^3)'
+%       '\theta W_e (m s^-^1)'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [4] [1:3] [1:6] [1] } 1 'CCN' 0 0.03 }
+%       'bars_avg_theta_we_TALL_CO.jpg'
+%       }
+%
+%       % ThetaV We averages, all time points, CCN only
+%       {
+%       'We theta_v Avg, DOMAIN TALL CCN only, grouped by SST'
+%       'bgraph_we.h5'
+%       { 'a' 'Domain' }
+%       'N_a (# cm^-^3)'
+%       '\theta_v W_e (m s^-^1)'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [5] [1:3] [1:6] [1] } 1 'CCN' 0 0.06 }
+%       'bars_avg_theta_v_we_TALL_CO.jpg'
+%       }
+%
+%       % Vapor We averages, all time points, CCN only
+%       {
+%       'We vapor Avg, DOMAIN TALL CCN only, grouped by SST'
+%       'bgraph_we.h5'
+%       { 'a' 'Domain' }
+%       'N_a (# cm^-^3)'
+%       'q_v W_e (m s^-^1)'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [6] [1:3] [1:6] [1] } 1 'CCN' -0.1 0.05 }
+%       'bars_avg_vapor_we_TALL_CO.jpg'
+%       }
+%
+
+%       % LCL averages, ST all time points, CCN only
+%       {
+%       'LCL Avg TALL CCN only, grouped by SST'
+%       'bgraph_lcl.h5'
+%       { 'a' 'ST' }
+%       'N_a (# cm^-^3)'
+%       'LCL (m)'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [8] [1:3] [1:6] [1] } 1 'CCN' 0 1000 }
+%       'bars_avg_lcl_stall_TALL_CO.jpg'
+%       }
+
+       % LCL averages, ST all time points, CCN only, S293
        {
-       'LCL Avg TALL CCN only, grouped by SST'
+       'LCL Avg TALL CCN only, S293'
        'bgraph_lcl.h5'
-       { 'a' 'Domain' }
+       { 'a' 'ST, S293' }
        'N_a (# cm^-^3)'
        'LCL (m)'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+       { 'cyan' }
+       { { 'NoLegend' } 'NorthWest' }
        'grouped'
-       { 'Averages' 1 { [4] [1:3] [1:6] [1] } 1 'CCN' 0 1000 }
-       'bars_avg_lcl_TALL_CO.jpg'
+       { 'Averages' 1 { [8] [1] [1:6] [1] } 1 'CCN' 0 400 }
+       'bars_avg_lcl_stall_TALL_CO_S293.jpg'
        }
 
-       % LCL averages, ST all time points, CCN only
+       % LCL averages, ST all time points, CCN only, S298
        {
-       'LCL Avg TALL CCN only, grouped by SST'
+       'LCL Avg TALL CCN only, S298'
        'bgraph_lcl.h5'
-       { 'a' 'ST' }
+       { 'a' 'ST, S298' }
        'N_a (# cm^-^3)'
        'LCL (m)'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+       { 'cyan' }
+       { { 'NoLegend' } 'NorthWest' }
        'grouped'
-       { 'Averages' 1 { [8] [1:3] [1:6] [1] } 1 'CCN' 0 1000 }
-       'bars_avg_lcl_stall_TALL_CO.jpg'
+       { 'Averages' 1 { [8] [2] [1:6] [1] } 1 'CCN' 0 600 }
+       'bars_avg_lcl_stall_TALL_CO_S298.jpg'
        }
 
-       % Theta We averages, all time points, CCN only
+       % LCL averages, ST all time points, CCN only, S303
        {
-       'We theta Avg, ST TALL CCN only, grouped by SST'
-       'bgraph_we.h5'
-       { 'a' 'ST' }
+       'LCL Avg TALL CCN only, S303'
+       'bgraph_lcl.h5'
+       { 'a' 'ST, S303' }
        'N_a (# cm^-^3)'
-       '\theta W_e ()'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+       'LCL (m)'
+       { 'cyan' }
+       { { 'NoLegend' } 'NorthWest' }
        'grouped'
-       { 'Averages' 1 { [7] [1:3] [1:6] [1] } 1 'CCN' 0 0.015 }
-       'bars_avg_theta_we_stall_TALL_CO.jpg'
+       { 'Averages' 1 { [8] [3] [1:6] [1] } 1 'CCN' 0 900 }
+       'bars_avg_lcl_stall_TALL_CO_S303.jpg'
        }
 
-       % ThetaV We averages, all time points, CCN only
+%       % Theta We averages, all time points, CCN only
+%       {
+%       'We theta Avg, ST TALL CCN only, grouped by SST'
+%       'bgraph_we.h5'
+%       { 'a' 'ST' }
+%       'N_a (# cm^-^3)'
+%       '\theta W_e (m s^-^1)'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [7] [1:3] [1:6] [1] } 1 'CCN' 0 0.015 }
+%       'bars_avg_theta_we_stall_TALL_CO.jpg'
+%       }
+
+%       % ThetaV We averages, all time points, CCN only
+%       {
+%       'We theta_v Avg, ST TALL CCN only, grouped by SST'
+%       'bgraph_we.h5'
+%       { 'a' 'ST' }
+%       'N_a (# cm^-^3)'
+%       '\theta_v W_e (m s^-^1)'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [8] [1:3] [1:6] [1] } 1 'CCN' 0 0.015 }
+%       'bars_avg_theta_v_we_stall_TALL_CO.jpg'
+%       }
+
+       % ThetaV We averages, all time points, CCN only, S293
        {
-       'We theta_v Avg, ST TALL CCN only, grouped by SST'
+       'We theta_v Avg, ST TALL CCN only, S293'
        'bgraph_we.h5'
-       { 'a' 'ST' }
+       { 'f' 'ST, S293' }
        'N_a (# cm^-^3)'
-       '\theta_v W_e ()'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+       '\theta_v W_e (cm s^-^1)'
+       { 'cyan' }
+       { { 'NoLegend' } 'NorthWest' }
        'grouped'
-       { 'Averages' 1 { [8] [1:3] [1:6] [1] } 1 'CCN' 0 0.015 }
-       'bars_avg_theta_v_we_stall_TALL_CO.jpg'
+       { 'Averages' 100 { [8] [1] [1:6] [1] } 1 'CCN' 0 0.45 }
+       'bars_avg_theta_v_we_stall_TALL_CO_S293.jpg'
        }
 
-       % Vapor We averages, all time points, CCN only
+       % ThetaV We averages, all time points, CCN only, S298
        {
-       'We vapor Avg, ST TALL CCN only, grouped by SST'
+       'We theta_v Avg, ST TALL CCN only, S298'
        'bgraph_we.h5'
-       { 'a' 'ST' }
+       { 'f' 'ST, S298' }
        'N_a (# cm^-^3)'
-       'q_v W_e ()'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+       '\theta_v W_e (cm s^-^1)'
+       { 'cyan' }
+       { { 'NoLegend' } 'NorthWest' }
        'grouped'
-       { 'Averages' 1 { [9] [1:3] [1:6] [1] } 1 'CCN' -0.005 0.25 }
-       'bars_avg_vapor_we_stall_TALL_CO.jpg'
+       { 'Averages' 100 { [8] [2] [1:6] [1] } 1 'CCN' 0 1.3 }
+       'bars_avg_theta_v_we_stall_TALL_CO_S298.jpg'
        }
 
-       % Theta We averages, all time points, CCN only
+       % ThetaV We averages, all time points, CCN only, S303
        {
-       'We theta Avg, DOMAIN TALL CCN only, grouped by SST'
+       'We theta_v Avg, ST TALL CCN only, S303'
        'bgraph_we.h5'
-       { 'a' 'Domain' }
+       { 'f' 'ST, S303' }
        'N_a (# cm^-^3)'
-       '\theta W_e ()'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+       '\theta_v W_e (cm s^-^1)'
+       { 'cyan' }
+       { { 'NoLegend' } 'NorthWest' }
        'grouped'
-       { 'Averages' 1 { [4] [1:3] [1:6] [1] } 1 'CCN' 0 0.03 }
-       'bars_avg_theta_we_TALL_CO.jpg'
+       { 'Averages' 100 { [8] [3] [1:6] [1] } 1 'CCN' 0 1.3 }
+       'bars_avg_theta_v_we_stall_TALL_CO_S303.jpg'
        }
 
-       % ThetaV We averages, all time points, CCN only
+       % ThetaV We averages, all time points, CCN only, C50
        {
-       'We theta_v Avg, DOMAIN TALL CCN only, grouped by SST'
+       'We theta_v Avg, ST TALL CCN only, C50'
        'bgraph_we.h5'
-       { 'a' 'Domain' }
-       'N_a (# cm^-^3)'
-       '\theta_v W_e ()'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+       { 'f' 'ST, C50' }
+       'SST (K)'
+       '\theta_v W_e (cm s^-^1)'
+       { 'cyan' }
+       { { 'NoLegend' } 'NorthWest' }
        'grouped'
-       { 'Averages' 1 { [5] [1:3] [1:6] [1] } 1 'CCN' 0 0.06 }
-       'bars_avg_theta_v_we_TALL_CO.jpg'
+       { 'Averages' 100 { [8] [1:3] [1] [1] } 1 'SST' 0 1.3 }
+       'bars_avg_theta_v_we_stall_TALL_CO_C50.jpg'
        }
 
-       % Vapor We averages, all time points, CCN only
+       % ThetaV We averages, all time points, CCN only, C400
        {
-       'We vapor Avg, DOMAIN TALL CCN only, grouped by SST'
+       'We theta_v Avg, ST TALL CCN only, C400'
        'bgraph_we.h5'
-       { 'a' 'Domain' }
-       'N_a (# cm^-^3)'
-       'q_v W_e ()'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+       { 'f' 'ST, C400' }
+       'SST (K)'
+       '\theta_v W_e (cm s^-^1)'
+       { 'cyan' }
+       { { 'NoLegend' } 'NorthWest' }
        'grouped'
-       { 'Averages' 1 { [6] [1:3] [1:6] [1] } 1 'CCN' -0.1 0.05 }
-       'bars_avg_vapor_we_TALL_CO.jpg'
+       { 'Averages' 100 { [8] [1:3] [4] [1] } 1 'SST' 0 1.3 }
+       'bars_avg_theta_v_we_stall_TALL_CO_C400.jpg'
        }
+
+       % ThetaV We averages, all time points, CCN only, C1600
+       {
+       'We theta_v Avg, ST TALL CCN only, C1600'
+       'bgraph_we.h5'
+       { 'f' 'ST, C1600' }
+       'SST (K)'
+       '\theta_v W_e (cm s^-^1)'
+       { 'cyan' }
+       { { 'NoLegend' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 100 { [8] [1:3] [6] [1] } 1 'SST' 0 1.3 }
+       'bars_avg_theta_v_we_stall_TALL_CO_C1600.jpg'
+       }
+
+%       % Vapor We averages, all time points, CCN only
+%       {
+%       'We vapor Avg, ST TALL CCN only, grouped by SST'
+%       'bgraph_we.h5'
+%       { 'a' 'ST' }
+%       'N_a (# cm^-^3)'
+%       'q_v W_e (m s^-^1)'
+%       { 'blue' 'cyan' 'magenta' }
+%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+%       'grouped'
+%       { 'Averages' 1 { [9] [1:3] [1:6] [1] } 1 'CCN' -0.005 0.25 }
+%       'bars_avg_vapor_we_stall_TALL_CO.jpg'
+%       }
+
+       % Vapor We averages, all time points, CCN only, S293
+       {
+       'We vapor Avg, ST TALL CCN only, S293'
+       'bgraph_we.h5'
+       { 'h' 'ST, S293' }
+       'N_a (# cm^-^3)'
+       'q_v W_e (cm s^-^1)'
+       { 'cyan' }
+       { { 'NoLegend' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 100 { [9] [1] [1:6] [1] } 1 'CCN' 0 0.4 }
+       'bars_avg_vapor_we_stall_TALL_CO_S293.jpg'
+       }
+
+       % Vapor We averages, all time points, CCN only, S298
+       {
+       'We vapor Avg, ST TALL CCN only, S298'
+       'bgraph_we.h5'
+       { 'h' 'ST, S298' }
+       'N_a (# cm^-^3)'
+       'q_v W_e (cm s^-^1)'
+       { 'cyan' }
+       { { 'NoLegend' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 100 { [9] [2] [1:6] [1] } 1 'CCN' 0 2 }
+       'bars_avg_vapor_we_stall_TALL_CO_S298.jpg'
+       }
+
+       % Vapor We averages, all time points, CCN only, S303
+       {
+       'We vapor Avg, ST TALL CCN only, S303'
+       'bgraph_we.h5'
+       { 'h' 'ST, S303' }
+       'N_a (# cm^-^3)'
+       'q_v W_e (cm s^-^1)'
+       { 'cyan' }
+       { { 'NoLegend' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 100 { [9] [3] [1:6] [1] } 1 'CCN' -1 22 }
+       'bars_avg_vapor_we_stall_TALL_CO_S303.jpg'
+       }
+
+       % Vapor We averages, all time points, CCN only, C50
+       {
+       'We vapor Avg, ST TALL CCN only, C50'
+       'bgraph_we.h5'
+       { 'h' 'ST, C50' }
+       'SST (K)'
+       'q_v W_e (cm s^-^1)'
+       { 'cyan' }
+       { { 'NoLegend' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 100 { [9] [1:3] [1] [1] } 1 'SST' -0.2 0.7 }
+       'bars_avg_vapor_we_stall_TALL_CO_C50.jpg'
+       }
+
+       % Vapor We averages, all time points, CCN only, C400
+       {
+       'We vapor Avg, ST TALL CCN only, C400'
+       'bgraph_we.h5'
+       { 'h' 'ST, C400' }
+       'SST (K)'
+       'q_v W_e (cm s^-^1)'
+       { 'cyan' }
+       { { 'NoLegend' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 100 { [9] [1:3] [4] [1] } 1 'SST' 0 8 }
+       'bars_avg_vapor_we_stall_TALL_CO_C400.jpg'
+       }
+
+       % Vapor We averages, all time points, CCN only, C1600
+       {
+       'We vapor Avg, ST TALL CCN only, C1600'
+       'bgraph_we.h5'
+       { 'h' 'ST, C1600' }
+       'SST (K)'
+       'q_v W_e (cm s^-^1)'
+       { 'cyan' }
+       { { 'NoLegend' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 100 { [9] [1:3] [6] [1] } 1 'SST' 0 7 }
+       'bars_avg_vapor_we_stall_TALL_CO_C1600.jpg'
+       }
+
 
 %       % PR averages, all time points, CCN only
 %       {
@@ -588,52 +800,52 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'bars_avg_cfrac_scmix_TALL_CO.jpg'
 %       }
 %
-       % In subsequent code, extra actions are taken according to the first
-       % entry here containing "Cloud Distribution"
-       %    The first three columns are added together to form an ST type
-       %         (SNP + STM + ST)
-       %    The result is subtracted from 100 to form a Clear type
-       % Cloud type, npoints (relative amounts), TALL, CCN only, SST 293
-       {
-       'Cloud Distribution TALL CCN only, 293K'
-       'bgraph_cfrac.h5'
-       { 'a' 'Domain, S293' }
-       'N_a (# cm^-^3)'
-       'Cloud Distribution (%)'
-       { 'cyan' 'blue' 'magenta' 'white' }
-       { { 'ST' 'SC' 'CV' 'Clear' } 'NorthWest' }
-       'stacked'
-       { 'Averages' 100 { [8 20 12 24 16] [1] [1:6] [1] } 1 'CCN' 0 120 }
-       'bars_avg_ctype_TALL_CO_S293.jpg'
-       }
-
-       % Cloud type, npoints (relative amounts), TALL, CCN only, SST 298
-       {
-       'Cloud Distribution TALL CCN only, 298K'
-       'bgraph_cfrac.h5'
-       { 'b' 'Domain, S298' }
-       'N_a (# cm^-^3)'
-       'Cloud Distribution (%)'
-       { 'cyan' 'blue' 'magenta' 'white' }
-       { { 'ST' 'SC' 'CV' 'Clear' } 'NorthWest' }
-       'stacked'
-       { 'Averages' 100 { [8 20 12 24 16] [2] [1:6] [1] } 1 'CCN' 0 120 }
-       'bars_avg_ctype_TALL_CO_S298.jpg'
-       }
-
-       % Cloud type, npoints (relative amounts), TALL, CCN only, SST 303
-       {
-       'Cloud Distribution TALL CCN only, 300K'
-       'bgraph_cfrac.h5'
-       { 'c' 'Domain, S303' }
-       'N_a (# cm^-^3)'
-       'Cloud Distribution (%)'
-       { 'cyan' 'blue' 'magenta' 'white' }
-       { { 'ST' 'SC' 'CV' 'Clear' } 'NorthWest' }
-       'stacked'
-       { 'Averages' 100 { [8 20 12 24 16] [3] [1:6] [1] } 1 'CCN' 0 120 }
-       'bars_avg_ctype_TALL_CO_S303.jpg'
-       }
+%       % In subsequent code, extra actions are taken according to the first
+%       % entry here containing "Cloud Distribution"
+%       %    The first three columns are added together to form an ST type
+%       %         (SNP + STM + ST)
+%       %    The result is subtracted from 100 to form a Clear type
+%       % Cloud type, npoints (relative amounts), TALL, CCN only, SST 293
+%       {
+%       'Cloud Distribution TALL CCN only, 293K'
+%       'bgraph_cfrac.h5'
+%       { 'a' 'Domain, S293' }
+%       'N_a (# cm^-^3)'
+%       'Cloud Distribution (%)'
+%       { 'cyan' 'blue' 'magenta' 'white' }
+%       { { 'ST' 'SC' 'CV' 'Clear' } 'NorthWest' }
+%       'stacked'
+%       { 'Averages' 100 { [8 20 12 24 16] [1] [1:6] [1] } 1 'CCN' 0 120 }
+%       'bars_avg_ctype_TALL_CO_S293.jpg'
+%       }
+%
+%       % Cloud type, npoints (relative amounts), TALL, CCN only, SST 298
+%       {
+%       'Cloud Distribution TALL CCN only, 298K'
+%       'bgraph_cfrac.h5'
+%       { 'b' 'Domain, S298' }
+%       'N_a (# cm^-^3)'
+%       'Cloud Distribution (%)'
+%       { 'cyan' 'blue' 'magenta' 'white' }
+%       { { 'ST' 'SC' 'CV' 'Clear' } 'NorthWest' }
+%       'stacked'
+%       { 'Averages' 100 { [8 20 12 24 16] [2] [1:6] [1] } 1 'CCN' 0 120 }
+%       'bars_avg_ctype_TALL_CO_S298.jpg'
+%       }
+%
+%       % Cloud type, npoints (relative amounts), TALL, CCN only, SST 303
+%       {
+%       'Cloud Distribution TALL CCN only, 300K'
+%       'bgraph_cfrac.h5'
+%       { 'c' 'Domain, S303' }
+%       'N_a (# cm^-^3)'
+%       'Cloud Distribution (%)'
+%       { 'cyan' 'blue' 'magenta' 'white' }
+%       { { 'ST' 'SC' 'CV' 'Clear' } 'NorthWest' }
+%       'stacked'
+%       { 'Averages' 100 { [8 20 12 24 16] [3] [1:6] [1] } 1 'CCN' 0 120 }
+%       'bars_avg_ctype_TALL_CO_S303.jpg'
+%       }
 
      };
 
@@ -718,8 +930,8 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
     AxisProps(iaxis).Val  = 20;
 
     % x-axis labeling
-    if (strcmp(Vname, 'CCN'))
-      % label tick marks with CCN value
+    if (strcmp(Vname, 'CCN') | strcmp(Vname, 'SST'))
+      % label tick marks with CCN or SST value
       Nvar = length(XVAR);
       X = 1:Nvar;      % use these for x-axis values -> evenly spaced integers creates evenly spaced bars
       clear XTIckLabels;

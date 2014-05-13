@@ -35,8 +35,10 @@ for i = 1:Nprops
   set(gca, AxisProps(i).Name, AxisProps(i).Val);
 end
 
-legend(LegText, 'Location', char(LegLoc), 'Orientation', 'horizontal', 'FontSize', 20);
-legend boxoff;
+if (~strcmp(LegText{1}, 'NoLegend'))
+  legend(LegText, 'Location', char(LegLoc), 'Orientation', 'horizontal', 'FontSize', 20);
+  legend boxoff;
+end
 
 if (~strcmp(Ptitle, ' '))
   if (PanelTitle)
