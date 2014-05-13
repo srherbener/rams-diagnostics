@@ -32,6 +32,10 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
            'cot_all_cld_TMID'
            'cot_all_cld_TEND'
            'cot_all_cld_TALL'
+           'cot_stall_TSTART'
+           'cot_stall_TMID'
+           'cot_stall_TEND'
+           'cot_stall_TALL'
         }
         'bgraph_cot'
       }
@@ -59,6 +63,10 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
            'cdepth_all_cld_TMID'
            'cdepth_all_cld_TEND'
            'cdepth_all_cld_TALL'
+           'cdepth_stall_TSTART'
+           'cdepth_stall_TMID'
+           'cdepth_stall_TEND'
+           'cdepth_stall_TALL'
         }
         'bgraph_cdepth'
       }
@@ -86,6 +94,10 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
            'lwp_all_cld_TMID'
            'lwp_all_cld_TEND'
            'lwp_all_cld_TALL'
+           'lwp_stall_TSTART'
+           'lwp_stall_TMID'
+           'lwp_stall_TEND'
+           'lwp_stall_TALL'
         }
         'bgraph_lwp'
       }
@@ -113,6 +125,10 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
            'pcprr_all_cld_TMID'
            'pcprr_all_cld_TEND'
            'pcprr_all_cld_TALL'
+           'pcprr_stall_TSTART'
+           'pcprr_stall_TMID'
+           'pcprr_stall_TEND'
+           'pcprr_stall_TALL'
         }
         'bgraph_pcprr'
       }

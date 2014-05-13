@@ -11,14 +11,14 @@ function [ ] = GenAvgFilesCtype(ConfigFile)
   FileHeader = 'ATEX PDF data';
 
   VarSets = {
-    { 'hda_pcprr'           { 'pcprr'  'pcprr_strnp'  'pcprr_strat'  'pcprr_cumul'  'pcprr_all_cld'  } 'avg_ctype_pcprr'  }
-    { 'hda_cloud_opt_thick' { 'cot'    'cot_strnp'    'cot_strat'    'cot_cumul'    'cot_all_cld'    } 'avg_ctype_cot'    }
-    { 'hda_cloud_depth'     { 'cdepth' 'cdepth_strnp' 'cdepth_strat' 'cdepth_cumul' 'cdepth_all_cld' } 'avg_ctype_cdepth' }
-    { 'hda_vint_cond'       { 'lwp'    'lwp_strnp'    'lwp_strat'    'lwp_cumul'    'lwp_all_cld'    } 'avg_ctype_lwp'    }
+    { 'hda_pcprr'           { 'pcprr'  'pcprr_strnp'  'pcprr_strat'  'pcprr_cumul'  'pcprr_all_cld'  'pcprr_stall'  } 'avg_ctype_pcprr'  }
+    { 'hda_cloud_opt_thick' { 'cot'    'cot_strnp'    'cot_strat'    'cot_cumul'    'cot_all_cld'    'cot_stall'    } 'avg_ctype_cot'    }
+    { 'hda_cloud_depth'     { 'cdepth' 'cdepth_strnp' 'cdepth_strat' 'cdepth_cumul' 'cdepth_all_cld' 'cdepth_stall' } 'avg_ctype_cdepth' }
+    { 'hda_vint_cond'       { 'lwp'    'lwp_strnp'    'lwp_strat'    'lwp_cumul'    'lwp_all_cld'    'lwp_stall'    } 'avg_ctype_lwp'    }
 
-    { 'hda_cloud_mask'      { 'cfrac'  'cfrac_strnp'  'cfrac_strat'  'cfrac_cumul'  'cfrac_stmix' 'cfrac_scmix'  } 'avg_ctype_cfrac'  }
+    { 'hda_cloud_mask'      { 'cfrac'  'cfrac_strnp'  'cfrac_strat'  'cfrac_cumul'  'cfrac_stmix' 'cfrac_scmix'     } 'avg_ctype_cfrac'  }
 
-    { 'hda_lcl'             { 'lcl'    'lcl_stall'                                                               } 'avg_ctype_lcl'  }
+    { 'hda_lcl'             { 'lcl'    'lcl_stall'                                                                  } 'avg_ctype_lcl'  }
     };
   Nset = length(VarSets);
 

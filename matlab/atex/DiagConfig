@@ -158,36 +158,36 @@ LinePlot: CO_UP_C1600_G10M5 CdepthHistBins CdepthHist_TALL      CdepthLin     Cd
 #LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL InvHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:b@S298 NorthEastOutside none InvHeight_CO_S298_G10M5_ALL.jpg
 #LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL InvHeight SimTimeHr HeightKm TsAll_T12_T36 none PANEL:c@S303 NorthEastOutside none InvHeight_CO_S303_G10M5_ALL.jpg
 
-#LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL InvHeightStall SimTimeHr HeightKm TsAll_T12_T36 none PANEL:a@S293 NorthEastOutside none InvHeightStall_CO_S293_G10M5_ALL.jpg
-#LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL InvHeightStall SimTimeHr HeightKm TsAll_T12_T36 none PANEL:b@S298 NorthEastOutside none InvHeightStall_CO_S298_G10M5_ALL.jpg
-#LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL InvHeightStall SimTimeHr HeightKm TsAll_T12_T36 none PANEL:c@S303 NorthEastOutside none InvHeightStall_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL InvHeightStall SimTimeHr HeightKm TsAll_T12_T36 none PANEL:a@S293 NorthEastOutside none InvHeightStall_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL InvHeightStall SimTimeHr HeightKm TsAll_T12_T36 none PANEL:b@S298 NorthEastOutside none InvHeightStall_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL InvHeightStall SimTimeHr HeightKm TsAll_T12_T36 none PANEL:c@S303 NorthEastOutside none InvHeightStall_CO_S303_G10M5_ALL.jpg
 
 ### Heat entrainment velocity (theta)
 #LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL ThetaWe SimTimeHr ThetaWe_293 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaWe_CO_S293_G10M5_ALL.jpg
 #LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL ThetaWe SimTimeHr ThetaWe_298 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaWe_CO_S298_G10M5_ALL.jpg
 #LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL ThetaWe SimTimeHr ThetaWe_303 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaWe_CO_S303_G10M5_ALL.jpg
 
-#LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL ThetaWeStall SimTimeHr ThetaWe_293 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaWeStall_CO_S293_G10M5_ALL.jpg
-#LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL ThetaWeStall SimTimeHr ThetaWe_298 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaWeStall_CO_S298_G10M5_ALL.jpg
-#LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL ThetaWeStall SimTimeHr ThetaWe_303 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaWeStall_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL ThetaWeStall SimTimeHr ThetaWe_293 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaWeStall_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL ThetaWeStall SimTimeHr ThetaWe_298 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaWeStall_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL ThetaWeStall SimTimeHr ThetaWe_303 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaWeStall_CO_S303_G10M5_ALL.jpg
 
 ### Moisture entrainment velocity (vapor)
 #LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL VaporWe SimTimeHr VaporWe_293 TsAll_T12_T36 none PANEL:a NorthEastOutside none VaporWe_CO_S293_G10M5_ALL.jpg
 #LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL VaporWe SimTimeHr VaporWe_298 TsAll_T12_T36 none PANEL:a NorthEastOutside none VaporWe_CO_S298_G10M5_ALL.jpg
 #LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL VaporWe SimTimeHr VaporWe_303 TsAll_T12_T36 none PANEL:a NorthEastOutside none VaporWe_CO_S303_G10M5_ALL.jpg
 
-#LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL VaporWeStall SimTimeHr VaporWe_293 TsAll_T12_T36 none PANEL:a NorthEastOutside none VaporWeStall_CO_S293_G10M5_ALL.jpg
-#LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL VaporWeStall SimTimeHr VaporWe_298 TsAll_T12_T36 none PANEL:a NorthEastOutside none VaporWeStall_CO_S298_G10M5_ALL.jpg
-#LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL VaporWeStall SimTimeHr VaporWe_303 TsAll_T12_T36 none PANEL:a NorthEastOutside none VaporWeStall_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL VaporWeStall SimTimeHr VaporWe_293 TsAll_T12_T36 none PANEL:a NorthEastOutside none VaporWeStall_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL VaporWeStall SimTimeHr VaporWe_298 TsAll_T12_T36 none PANEL:a NorthEastOutside none VaporWeStall_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL VaporWeStall SimTimeHr VaporWe_303 TsAll_T12_T36 none PANEL:a NorthEastOutside none VaporWeStall_CO_S303_G10M5_ALL.jpg
 
 ### Buoyancy entrainment velocity (theta_v)
 #LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL ThetaV_We SimTimeHr ThetaV_We_293 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaV_We_CO_S293_G10M5_ALL.jpg
 #LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL ThetaV_We SimTimeHr ThetaV_We_298 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaV_We_CO_S298_G10M5_ALL.jpg
 #LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL ThetaV_We SimTimeHr ThetaV_We_303 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaV_We_CO_S303_G10M5_ALL.jpg
 
-#LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL ThetaV_WeStall SimTimeHr ThetaV_We_293 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaV_WeStall_CO_S293_G10M5_ALL.jpg
-#LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL ThetaV_WeStall SimTimeHr ThetaV_We_298 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaV_WeStall_CO_S298_G10M5_ALL.jpg
-#LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL ThetaV_WeStall SimTimeHr ThetaV_We_303 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaV_WeStall_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL SimTimeBL ThetaV_WeStall SimTimeHr ThetaV_We_293 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaV_WeStall_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL SimTimeBL ThetaV_WeStall SimTimeHr ThetaV_We_298 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaV_WeStall_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL SimTimeBL ThetaV_WeStall SimTimeHr ThetaV_We_303 TsAll_T12_T36 none PANEL:a NorthEastOutside none ThetaV_WeStall_CO_S303_G10M5_ALL.jpg
 
 ### Domain average cloud optical thickness
 #LinePlot: CO_UP_S293_G10M5_ALL SimTime AvgCot SimTimeHr AvgCot TsAll_T12_T36 none PANEL:a@S293 NorthWest none AvgCot_CO_S293_G10M5_ALL.jpg

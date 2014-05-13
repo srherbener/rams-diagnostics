@@ -261,47 +261,57 @@ function [ ] = GenBlStats(ConfigFile)
         ZbotCld(i) = Z(ZbotCldInd);
 
         % entrainment velocity
-        %   form jump conditions (delta) from ZinvInd and ZinvInd+1 levels
-        %   use average of flux from ZinvInd and ZinvInd+1 levels
+        %   form jump conditions (delta) from ZinvInd-1 and ZinvInd+1 levels
+        %   use average of flux from ZinvInd-1 and ZinvInd+1 levels
         %   entrainment velocity is flux / (jump conditions)
+        Z1 = ZinvInd(i) - 1;
+        if (Z1 < 1)
+          Z1 = 1;
+        end
+        Z2 = ZinvInd(i) + 1;
 
         % Heat entrainment velocity (theta)
         TH_I = squeeze(TH(:,i));
         W_TH_I = squeeze(W_TH(:,i));
-        D_TH = TH_I(ZinvInd(i)+1) - TH_I(ZinvInd(i));
-        W_TH_FLUX = (W_TH_I(ZinvInd(i)+1) + W_TH_I(ZinvInd(i))) * 0.5;
+        D_TH = TH_I(Z2) - TH_I(Z1);
+        W_TH_FLUX = (W_TH_I(Z2) + W_TH_I(Z1)) * 0.5;
         ThetaWe(i) = W_TH_FLUX / D_TH;
 
         % Moisture entrainment velocity (vapor)
         VAP_I = squeeze(VAP(:,i));
         W_VAP_I = squeeze(W_VAP(:,i));
-        D_VAP = VAP_I(ZinvInd(i)+1) - VAP_I(ZinvInd(i));
-        W_VAP_FLUX = (W_VAP_I(ZinvInd(i)+1) + W_VAP_I(ZinvInd(i))) * 0.5;
+        D_VAP = VAP_I(Z2) - VAP_I(Z1);
+        W_VAP_FLUX = (W_VAP_I(Z2) + W_VAP_I(Z1)) * 0.5;
         VaporWe(i) = W_VAP_FLUX / D_VAP;
 
         % Bouyancy entrainment velocity (theta_v)
         THV_I = squeeze(THV(:,i));
         W_THV_I = squeeze(W_THV(:,i));
-        D_THV = THV_I(ZinvInd(i)+1) - THV_I(ZinvInd(i));
-        W_THV_FLUX = (W_THV_I(ZinvInd(i)+1) + W_THV_I(ZinvInd(i))) * 0.5;
+        D_THV = THV_I(Z2) - THV_I(Z1);
+        W_THV_FLUX = (W_THV_I(Z2) + W_THV_I(Z1)) * 0.5;
         ThetaV_We(i) = W_THV_FLUX / D_THV;
 
         if (i == Nt)
           % Time averaged values
+          Z1_TALL = ZinvInd_TALL(i) - 1;
+          if (Z1_TALL < 1)
+            Z1_TALL = 1;
+          end
+          Z2_TALL = ZinvInd_TALL(i) + 1;
 
           % Heat entrainment velocity (theta)
-          D_TH_TALL = TH_TALL(ZinvInd_TALL(i)+1) - TH_TALL(ZinvInd_TALL(i));
-          W_TH_FLUX_TALL= (W_TH_TALL(ZinvInd_TALL(i)+1) + W_TH_TALL(ZinvInd_TALL(i))) * 0.5;
+          D_TH_TALL = TH_TALL(Z2_TALL) - TH_TALL(Z1_TALL);
+          W_TH_FLUX_TALL= (W_TH_TALL(Z2_TALL) + W_TH_TALL(Z1_TALL)) * 0.5;
           ThetaWe_TALL = W_TH_FLUX_TALL / D_TH_TALL;
 
           % Moisture entrainment velocity (vapor)
-          D_VAP_TALL = VAP_TALL(ZinvInd_TALL(i)+1) - VAP_TALL(ZinvInd_TALL(i));
-          W_VAP_FLUX_TALL= (W_VAP_TALL(ZinvInd_TALL(i)+1) + W_VAP_TALL(ZinvInd_TALL(i))) * 0.5;
+          D_VAP_TALL = VAP_TALL(Z2_TALL) - VAP_TALL(Z1_TALL);
+          W_VAP_FLUX_TALL= (W_VAP_TALL(Z2_TALL) + W_VAP_TALL(Z1_TALL)) * 0.5;
           VaporWe_TALL = W_VAP_FLUX_TALL / D_VAP_TALL;
 
           % Bouyancy entrainment velocity (theta_v)
-          D_THV_TALL = THV_TALL(ZinvInd_TALL(i)+1) - THV_TALL(ZinvInd_TALL(i));
-          W_THV_FLUX_TALL= (W_THV_TALL(ZinvInd_TALL(i)+1) + W_THV_TALL(ZinvInd_TALL(i))) * 0.5;
+          D_THV_TALL = THV_TALL(Z2_TALL) - THV_TALL(Z1_TALL);
+          W_THV_FLUX_TALL= (W_THV_TALL(Z2_TALL) + W_THV_TALL(Z1_TALL)) * 0.5;
           ThetaV_We_TALL = W_THV_FLUX_TALL / D_THV_TALL;
         end
 
