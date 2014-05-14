@@ -16,6 +16,8 @@ function [ ] = GenAvgFilesCtype(ConfigFile)
     { 'hda_cloud_depth'     { 'cdepth' 'cdepth_strnp' 'cdepth_strat' 'cdepth_cumul' 'cdepth_all_cld' 'cdepth_stall' } 'avg_ctype_cdepth' }
     { 'hda_vint_cond'       { 'lwp'    'lwp_strnp'    'lwp_strat'    'lwp_cumul'    'lwp_all_cld'    'lwp_stall'    } 'avg_ctype_lwp'    }
 
+    { 'hda_lwp2cdepth'      { 'lwp2cdepth' 'lwp2cdepth_strnp' 'lwp2cdepth_strat' 'lwp2cdepth_cumul' 'lwp2cdepth_all_cld' 'lwp2cdepth_stall' } 'avg_ctype_lwp2cdepth'    }
+
     { 'hda_cloud_mask'      { 'cfrac'  'cfrac_strnp'  'cfrac_strat'  'cfrac_cumul'  'cfrac_stmix' 'cfrac_scmix'     } 'avg_ctype_cfrac'  }
 
     { 'hda_lcl'             { 'lcl'    'lcl_stall'                                                                  } 'avg_ctype_lcl'  }
