@@ -195,7 +195,11 @@ program hdata_op
       else if (Op .eq. OP_MULT) then
         OutVar%vdata(i) = Var1%vdata(i) * Var2%vdata(i)
       else if (Op .eq. OP_DIV) then
-        OutVar%vdata(i) = Var1%vdata(i) / Var2%vdata(i)
+        if (Var2%vdata(i) .eq. 0.0) then
+          OutVar%vdata(i) = UndefVal
+        else
+          OutVar%vdata(i) = Var1%vdata(i) / Var2%vdata(i)
+        endif
       else if (Op .eq. OP_AND) then
         if ((anint(Var1%vdata(i)) .eq. 1.0) .and. (anint(Var2%vdata(i)) .eq. 1.0)) then
           OutVar%vdata(i) = 1.0
