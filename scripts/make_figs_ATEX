@@ -57,9 +57,9 @@ montage -tile 2x4 -geometry ${Jsize}+2+100 \
  PrateHist_TALL_CO_S293_G10M5_ALL.jpg \
  WvaporStall_TALL_CO_S293_G10M5_ALL.jpg \
  CdepthHist_TALL_CO_S293_G10M5_ALL.jpg \
- bars_avg_theta_v_we_stall_TALL_CO_S293.jpg \
+ bars_avg_cdepth_stall_TALL_CO_S293.jpg \
  WvarStall_TALL_CO_S293_G10M5_ALL.jpg \
- bars_avg_vapor_we_stall_TALL_CO_S293.jpg \
+ bars_avg_lwp2cdepth_stall_TALL_CO_S293.jpg \
  FigureDomainStats_S293.jpg
 
 echo "Figure: COT hist, PR hist, CD hist, CCN only, 298K"
@@ -69,9 +69,9 @@ montage -tile 2x4 -geometry ${Jsize}+2+100 \
  PrateHist_TALL_CO_S298_G10M5_ALL.jpg \
  WvaporStall_TALL_CO_S298_G10M5_ALL.jpg \
  CdepthHist_TALL_CO_S298_G10M5_ALL.jpg \
- bars_avg_theta_v_we_stall_TALL_CO_S298.jpg \
+ bars_avg_cdepth_stall_TALL_CO_S298.jpg \
  WvarStall_TALL_CO_S298_G10M5_ALL.jpg \
- bars_avg_vapor_we_stall_TALL_CO_S298.jpg \
+ bars_avg_lwp2cdepth_stall_TALL_CO_S298.jpg \
  FigureDomainStats_S298.jpg
 
 echo "Figure: COT hist, PR hist, CD hist, CCN only, 303K"
@@ -81,9 +81,9 @@ montage -tile 2x4 -geometry ${Jsize}+2+100 \
  PrateHist_TALL_CO_S303_G10M5_ALL.jpg \
  WvaporStall_TALL_CO_S303_G10M5_ALL.jpg \
  CdepthHist_TALL_CO_S303_G10M5_ALL.jpg \
- bars_avg_theta_v_we_stall_TALL_CO_S303.jpg \
+ bars_avg_cdepth_stall_TALL_CO_S303.jpg \
  WvarStall_TALL_CO_S303_G10M5_ALL.jpg \
- bars_avg_vapor_we_stall_TALL_CO_S303.jpg \
+ bars_avg_lwp2cdepth_stall_TALL_CO_S303.jpg \
  FigureDomainStats_S303.jpg
 
 echo "Figure: COT hist, PR hist, CD hist, CCN only, C50"
@@ -93,9 +93,9 @@ montage -tile 2x4 -geometry ${Jsize}+2+100 \
  PrateHist_TALL_CO_C0050_G10M5.jpg \
  WvaporStall_TALL_CO_C0050_G10M5.jpg \
  CdepthHist_TALL_CO_C0050_G10M5.jpg \
- bars_avg_theta_v_we_stall_TALL_CO_C50.jpg \
+ bars_avg_cdepth_stall_TALL_CO_C50.jpg \
  WvarStall_TALL_CO_C0050_G10M5.jpg \
- bars_avg_vapor_we_stall_TALL_CO_C50.jpg \
+ bars_avg_lwp2cdepth_stall_TALL_CO_C50.jpg \
  FigureDomainStats_C50.jpg
 
 echo "Figure: COT hist, PR hist, CD hist, CCN only, C400"
@@ -105,9 +105,9 @@ montage -tile 2x4 -geometry ${Jsize}+2+100 \
  PrateHist_TALL_CO_C0400_G10M5.jpg \
  WvaporStall_TALL_CO_C0400_G10M5.jpg \
  CdepthHist_TALL_CO_C0400_G10M5.jpg \
- bars_avg_theta_v_we_stall_TALL_CO_C400.jpg \
+ bars_avg_cdepth_stall_TALL_CO_C400.jpg \
  WvarStall_TALL_CO_C0400_G10M5.jpg \
- bars_avg_vapor_we_stall_TALL_CO_C400.jpg \
+ bars_avg_lwp2cdepth_stall_TALL_CO_C400.jpg \
  FigureDomainStats_C400.jpg
 
 echo "Figure: COT hist, PR hist, CD hist, CCN only, C1600"
@@ -117,9 +117,9 @@ montage -tile 2x4 -geometry ${Jsize}+2+100 \
  PrateHist_TALL_CO_C1600_G10M5.jpg \
  WvaporStall_TALL_CO_C1600_G10M5.jpg \
  CdepthHist_TALL_CO_C1600_G10M5.jpg \
- bars_avg_theta_v_we_stall_TALL_CO_C1600.jpg \
+ bars_avg_cdepth_stall_TALL_CO_C1600.jpg \
  WvarStall_TALL_CO_C1600_G10M5.jpg \
- bars_avg_vapor_we_stall_TALL_CO_C1600.jpg \
+ bars_avg_lwp2cdepth_stall_TALL_CO_C1600.jpg \
  FigureDomainStats_C1600.jpg
 
 
