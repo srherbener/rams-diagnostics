@@ -102,6 +102,37 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
         'bgraph_lwp'
       }
 
+      { % ratio of liquid water path to cloud depth
+        'avg_ctype_lwp2cdepth'
+        {
+           'lwp2cdepth_TSTART'
+           'lwp2cdepth_TMID'
+           'lwp2cdepth_TEND'
+           'lwp2cdepth_TALL'
+           'lwp2cdepth_strnp_TSTART'
+           'lwp2cdepth_strnp_TMID'
+           'lwp2cdepth_strnp_TEND'
+           'lwp2cdepth_strnp_TALL'
+           'lwp2cdepth_strat_TSTART'
+           'lwp2cdepth_strat_TMID'
+           'lwp2cdepth_strat_TEND'
+           'lwp2cdepth_strat_TALL'
+           'lwp2cdepth_cumul_TSTART'
+           'lwp2cdepth_cumul_TMID'
+           'lwp2cdepth_cumul_TEND'
+           'lwp2cdepth_cumul_TALL'
+           'lwp2cdepth_all_cld_TSTART'
+           'lwp2cdepth_all_cld_TMID'
+           'lwp2cdepth_all_cld_TEND'
+           'lwp2cdepth_all_cld_TALL'
+           'lwp2cdepth_stall_TSTART'
+           'lwp2cdepth_stall_TMID'
+           'lwp2cdepth_stall_TEND'
+           'lwp2cdepth_stall_TALL'
+        }
+        'bgraph_lwp2cdepth'
+      }
+
       { % precip rate
         'avg_ctype_pcprr'
         {

@@ -18,6 +18,7 @@ function [ ] = GenBlStats(ConfigFile)
     { 'cloud_M1_c0p01' 'cloud' 'turb_cov' 'turb_cov_w_theta' 'turb_cov_theta' 'turb_cov_w_vapor' 'turb_cov_vapor' 'turb_cov_w_theta_v' 'turb_cov_theta_v' 'turb_all' }
     { 'cloud_M1_c0p01' 'cloud' 'gen_moments' 'w_theta_flux' 'w-theta' 'w_vapor_flux' 'w-vapor' 'w_theta_v_flux' 'w-theta_v' 'gm_all'}
     { 'cloud_M1_c0p01' 'cloud' 'gen_moments' 'w_theta_flux_stall' 'w-theta' 'w_vapor_flux_stall' 'w-vapor' 'w_theta_v_flux_stall' 'w-theta_v' 'gm_stall' }
+    { 'cloud_M1_c0p01' 'cloud' 'gen_moments' 'w_theta_flux_all_cld' 'w-theta' 'w_vapor_flux_all_cld' 'w-vapor' 'w_theta_v_flux_all_cld' 'w-theta_v' 'gm_all_cld' }
 
 % THESE CAUSE problems with theta and consequently Zi, and all We calculations
 %  Not sure why: but theta comes out serverly distorted - probably due to the data selection in these being done at discrete points

@@ -61,10 +61,16 @@ function [ ] = GenAvgLwpToCdepthFilesCtype(ConfigFile)
 
       % grab the hda data for LWP and Cdepth
       % hda data is: (y,t) where y is size 2
-      %   y(1) -> sums
-      %   y(2) -> counts 
+      %   y(1) -> Sum
+      %   y(2) -> N 
       %
-      % divide the lwp sums by the cdepth sums, but copy just the counts from lwp
+      % want to end up with:
+      %
+      %    (Sum(LWP)/Nlwp) / (Sum(CD)/Ncd) = (Sum(LWP)/Sum(CD)) / (Nlpw/Ncd)
+      %
+      % so just divide the sums and Ns and pass it on through to the rest
+      % of the code (that divides sum/n
+      %
       LWP_HDA  = squeeze(hdf5read(LwpInFile, LwpInVarName));
       CD_HDA  = squeeze(hdf5read(CdepthInFile, CdepthInVarName));
       T = squeeze(hdf5read(LwpInFile, 't_coords'))/3600; % hours
@@ -72,7 +78,7 @@ function [ ] = GenAvgLwpToCdepthFilesCtype(ConfigFile)
 
       HDA = zeros([ 2 Nt ]);
       SUMS = squeeze(LWP_HDA(1,:)) ./ squeeze(CD_HDA(1,:));
-      NPTS = squeeze(LWP_HDA(2,:));
+      NPTS = squeeze(LWP_HDA(2,:)) ./ squeeze(CD_HDA(2,:));
 
       HDA(1,:) = SUMS;
       HDA(2,:) = NPTS;
