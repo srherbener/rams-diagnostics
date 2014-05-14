@@ -76,15 +76,24 @@ program hdata_op
 
   Nx = Var1%dims(1)
   Ny = Var1%dims(2)
-  Nz = Var1%dims(3)
-  Nt = Var1%dims(4)
+  if (Var1%ndims .eq. 3) then
+    Nz = 1
+    Nt = Var1%dims(3)
+  else
+    Nz = Var1%dims(3)
+    Nt = Var1%dims(4)
+  endif
 
   Nelems = Nx * Ny * Nz ! number of elements in spatial field
 
   BadDims = Var2%dims(1) .ne. Nx
   BadDims = BadDims .or. (Var2%dims(2) .ne. Ny)
-  BadDims = BadDims .or. (Var2%dims(3) .ne. Nz)
-  BadDims = BadDims .or. (Var2%dims(4) .ne. Nt)
+  if (Var1%ndims .eq. 3) then
+    BadDims = BadDims .or. (Var2%dims(3) .ne. Nt)
+  else
+    BadDims = BadDims .or. (Var2%dims(3) .ne. Nz)
+    BadDims = BadDims .or. (Var2%dims(4) .ne. Nt)
+  endif
 
   if (BadDims) then
     write (*,*) 'ERROR: dimensions of variables from input files do not match'
