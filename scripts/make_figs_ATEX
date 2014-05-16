@@ -24,6 +24,12 @@ montage -tile 3x2 -geometry ${Jsize}+2+100 \
  CloudFrac_CO_S303_G10M5_ALL.jpg \
  FigureTsBlStats_ALL.jpg
 
+echo "Figure: Time series: Zi, Zt, CFmax, all cases, GCCN"
+montage -tile 2x1 -geometry ${Jsize}+2+100 \
+ InvHeightStall_CG_C50_C1600_S298.jpg \
+ CloudFrac_CG_C50_C1600_S298.jpg \
+ FigureTsBlStats_GCCN.jpg
+
 echo "Figure: Time series: Precip Rate, LWP, Cloud Opt Thick, all cases, CCN only"
 montage -tile 3x3 -geometry ${Jsize}+2+100 \
  AvgPrate_CO_S293_G10M5_ALL.jpg \
@@ -38,10 +44,14 @@ montage -tile 3x3 -geometry ${Jsize}+2+100 \
  FigureTsCloudStats_ALL.jpg
 
 echo "Figure: Bgraph COT : CCN only"
-montage -tile 1x2 -geometry ${Jsize}+2+100 \
+montage -tile 1x1 -geometry ${Jsize}+2+100 \
  bars_avg_cot_TALL_CO.jpg \
- bars_avg_cot_all_cld_TALL_CO.jpg \
  FigureBgraphCot.jpg
+
+echo "Figure: Bgraph COT : GCCN"
+montage -tile 1x1 -geometry ${Jsize}+2+100 \
+ bars_avg_cot_TALL_CO_S298_GCCN.jpg \
+ FigureBgraphCot_GCCN.jpg
 
 echo "Figure: Bgraph Cloud Distribution : CCN only"
 montage -tile 3x1 -geometry ${Jsize}+2+100 \
@@ -122,6 +132,18 @@ montage -tile 2x4 -geometry ${Jsize}+2+100 \
  bars_avg_lwp2cdepth_stall_TALL_CO_C1600.jpg \
  FigureDomainStats_C1600.jpg
 
+
+echo "Figure: COT hist, PR hist, CD hist, GCCN, 298K"
+montage -tile 2x4 -geometry ${Jsize}+2+100 \
+ CotHist_TALL_CG_C50_C1600_S298.jpg \
+ WthetavStall_TALL_CG_C50_C1600_S298.jpg \
+ PrateHist_TALL_CG_C50_C1600_S298.jpg \
+ WvaporStall_TALL_CG_C50_C1600_S298.jpg \
+ CdepthHist_TALL_CG_C50_C1600_S298.jpg \
+ bars_avg_cdepth_stall_TALL_CO_S298_GCCN.jpg \
+ WvarStall_TALL_CG_C50_C1600_S298.jpg \
+ bars_avg_lwp2cdepth_stall_TALL_CO_S298_GCCN.jpg \
+ FigureDomainStats_S298_GCCN.jpg
 
 #echo "Figure: Bar graphs, COT, CCN only, LWP Thresholds"
 #montage -tile 2x2 -geometry ${Jsize}+2+100 \
