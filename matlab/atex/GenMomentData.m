@@ -58,6 +58,8 @@ function [ ] = GenMomentData(ConfigFile)
       { 'cloud_M1'              'cloud'     1 1 'cloud'          }
       { 'cloud_M1_c0p01'        'cloud'     1 1 'cloud_c0p01'    }
       { 'cloud_M1_c0p10'        'cloud'     1 1 'cloud_c0p10'    }
+      { 'cloud_M1_c0p01_stall'  'cloud'     1 1 'cloud_c0p01_stall'    }
+      { 'cloud_M1_c0p10_stall'  'cloud'     1 1 'cloud_c0p10_stall'    }
 
 
       % fluxes (covariances)

@@ -274,95 +274,95 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'bars_avg_cdepth_stall_TALL_CO.jpg'
 %       }
 %
-%       % Cloud depth averages, stall, all time points, CCN only, S293
-%       {
-%       'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, S293'
-%       'bgraph_cdepth.h5'
-%       { 'f' 'ST, S293' }
-%       'N_a (# cm^-^3)'
-%       'Cloud Depth (m)'
-%       { 'cyan' }
-%       { { 'NoLegend'} 'NorthWest' }
-%       'grouped'
-%       { 'Averages' 1 { [24] [1] [1:6] [1] } 1 'CCN' 0 800 }
-%       'bars_avg_cdepth_stall_TALL_CO_S293.jpg'
-%       }
-%
-%       % Cloud depth averages, stall, all time points, CCN only, S298
-%       {
-%       'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, S298'
-%       'bgraph_cdepth.h5'
-%       { 'f' 'ST, S298' }
-%       'N_a (# cm^-^3)'
-%       'Cloud Depth (m)'
-%       { 'cyan' }
-%       { { 'NoLegend'} 'NorthWest' }
-%       'grouped'
-%       { 'Averages' 1 { [24] [2] [1:6] [1] } 1 'CCN' 0 700 }
-%       'bars_avg_cdepth_stall_TALL_CO_S298.jpg'
-%       }
-%
-%       % Cloud depth averages, stall, all time points, CCN only, S303
-%       {
-%       'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, S303'
-%       'bgraph_cdepth.h5'
-%       { 'f' 'ST, S303' }
-%       'N_a (# cm^-^3)'
-%       'Cloud Depth (m)'
-%       { 'cyan' }
-%       { { 'NoLegend'} 'NorthWest' }
-%       'grouped'
-%       { 'Averages' 1 { [24] [3] [1:6] [1] } 1 'CCN' 0 400 }
-%       'bars_avg_cdepth_stall_TALL_CO_S303.jpg'
-%       }
-%
-%       % Cloud depth averages, stall, all time points, CCN only, C50
-%       {
-%       'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, C50'
-%       'bgraph_cdepth.h5'
-%       { 'f' 'ST, C50' }
-%       'N_a (# cm^-^3)'
-%       'Cloud Depth (m)'
-%       { 'cyan' }
-%       { { 'NoLegend'} 'NorthWest' }
-%       'grouped'
-%       { 'Averages' 1 { [24] [1:3] [1] [1] } 1 'SST' 0 700 }
-%       'bars_avg_cdepth_stall_TALL_CO_C50.jpg'
-%       }
-%
-%       % Cloud depth averages, stall, all time points, CCN only, C400
-%       {
-%       'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, C400'
-%       'bgraph_cdepth.h5'
-%       { 'f' 'ST, C400' }
-%       'N_a (# cm^-^3)'
-%       'Cloud Depth (m)'
-%       { 'cyan' }
-%       { { 'NoLegend'} 'NorthWest' }
-%       'grouped'
-%       { 'Averages' 1 { [24] [1:3] [4] [1] } 1 'SST' 0 700 }
-%       'bars_avg_cdepth_stall_TALL_CO_C400.jpg'
-%       }
-%
-%       % Cloud depth averages, stall, all time points, CCN only, C1600
-%       {
-%       'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, C1600'
-%       'bgraph_cdepth.h5'
-%       { 'f' 'ST, C1600' }
-%       'N_a (# cm^-^3)'
-%       'Cloud Depth (m)'
-%       { 'cyan' }
-%       { { 'NoLegend'} 'NorthWest' }
-%       'grouped'
-%       { 'Averages' 1 { [24] [1:3] [6] [1] } 1 'SST' 0 700 }
-%       'bars_avg_cdepth_stall_TALL_CO_C1600.jpg'
-%       }
-%
+       % Cloud depth averages, stall, all time points, CCN only, S293
+       {
+       'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, S293'
+       'bgraph_cdepth.h5'
+       { 'a' 'ST, S293' }
+       'N_a (# cm^-^3)'
+       'Cloud Depth (m)'
+       { 'cyan' }
+       { { 'NoLegend'} 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [24] [1] [1:6] [1] } 1 'CCN' 0 800 }
+       'bars_avg_cdepth_stall_TALL_CO_S293.jpg'
+       }
+
+       % Cloud depth averages, stall, all time points, CCN only, S298
+       {
+       'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, S298'
+       'bgraph_cdepth.h5'
+       { 'c' 'ST, S298' }
+       'N_a (# cm^-^3)'
+       'Cloud Depth (m)'
+       { 'cyan' }
+       { { 'NoLegend'} 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [24] [2] [1:6] [1] } 1 'CCN' 0 700 }
+       'bars_avg_cdepth_stall_TALL_CO_S298.jpg'
+       }
+
+       % Cloud depth averages, stall, all time points, CCN only, S303
+       {
+       'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, S303'
+       'bgraph_cdepth.h5'
+       { 'e' 'ST, S303' }
+       'N_a (# cm^-^3)'
+       'Cloud Depth (m)'
+       { 'cyan' }
+       { { 'NoLegend'} 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [24] [3] [1:6] [1] } 1 'CCN' 0 400 }
+       'bars_avg_cdepth_stall_TALL_CO_S303.jpg'
+       }
+
+       % Cloud depth averages, stall, all time points, CCN only, C50
+       {
+       'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, C50'
+       'bgraph_cdepth.h5'
+       { 'a' 'ST, C50' }
+       'N_a (# cm^-^3)'
+       'Cloud Depth (m)'
+       { 'cyan' }
+       { { 'NoLegend'} 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [24] [1:3] [1] [1] } 1 'SST' 0 700 }
+       'bars_avg_cdepth_stall_TALL_CO_C50.jpg'
+       }
+
+       % Cloud depth averages, stall, all time points, CCN only, C400
+       {
+       'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, C400'
+       'bgraph_cdepth.h5'
+       { 'a' 'ST, C400' }
+       'N_a (# cm^-^3)'
+       'Cloud Depth (m)'
+       { 'cyan' }
+       { { 'NoLegend'} 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [24] [1:3] [4] [1] } 1 'SST' 0 700 }
+       'bars_avg_cdepth_stall_TALL_CO_C400.jpg'
+       }
+
+       % Cloud depth averages, stall, all time points, CCN only, C1600
+       {
+       'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, C1600'
+       'bgraph_cdepth.h5'
+       { 'a' 'ST, C1600' }
+       'N_a (# cm^-^3)'
+       'Cloud Depth (m)'
+       { 'cyan' }
+       { { 'NoLegend'} 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [24] [1:3] [6] [1] } 1 'SST' 0 700 }
+       'bars_avg_cdepth_stall_TALL_CO_C1600.jpg'
+       }
+
        % Cloud depth averages, stall, all time points, CCN, GCCN , S298
        {
        'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, S298'
        'bgraph_cdepth.h5'
-       { 'f' 'ST, S298' }
+       { 'a' 'ST, S298' }
        'N_a (# cm^-^3)'
        'Cloud Depth (m)'
        { 'blue' 'cyan' 'magenta' }
@@ -376,7 +376,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        {
        'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, S303'
        'bgraph_cdepth.h5'
-       { 'f' 'ST, S303' }
+       { 'a' 'ST, S303' }
        'N_a (# cm^-^3)'
        'Cloud Depth (m)'
        { 'blue' 'cyan' 'magenta' }
@@ -429,95 +429,95 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'bars_avg_lwp2cdepth_stall_TALL_CO.jpg'
 %       }
 %
-%       % LWP2CDEPTH averages, stall, time points, CCN only, S293
-%       {
-%       'LWP2CDEPTH Avg, ST, TALL CCN only, grouped by SST, S293'
-%       'bgraph_lwp2cdepth.h5'
-%       { 'h' 'ST, S293' }
-%       'N_a (# cm^-^3)'
-%       'LWP/Cdepth (mm m^-^1 x 10^3)'
-%       { 'cyan' }
-%       { { 'NoLegend' } 'NorthWest' }
-%       'grouped'
-%       { 'Averages' 1000 { [24] [1] [1:6] [1] } 1 'CCN' 0 0.4 }
-%       'bars_avg_lwp2cdepth_stall_TALL_CO_S293.jpg'
-%       }
-%
-%       % LWP2CDEPTH averages, stall, time points, CCN only, S298
-%       {
-%       'LWP2CDEPTH Avg, ST, TALL CCN only, grouped by SST, S298'
-%       'bgraph_lwp2cdepth.h5'
-%       { 'h' 'ST, S298' }
-%       'N_a (# cm^-^3)'
-%       'LWP/Cdepth (mm m^-^1 x 10^3)'
-%       { 'cyan' }
-%       { { 'NoLegend' } 'NorthWest' }
-%       'grouped'
-%       { 'Averages' 1000 { [24] [2] [1:6] [1] } 1 'CCN' 0 0.4 }
-%       'bars_avg_lwp2cdepth_stall_TALL_CO_S298.jpg'
-%       }
-%
-%       % LWP2CDEPTH averages, stall, time points, CCN only, S303
-%       {
-%       'LWP2CDEPTH Avg, ST, TALL CCN only, grouped by SST, S303'
-%       'bgraph_lwp2cdepth.h5'
-%       { 'h' 'ST, S303' }
-%       'N_a (# cm^-^3)'
-%       'LWP/Cdepth (mm m^-^1 x 10^3)'
-%       { 'cyan' }
-%       { { 'NoLegend' } 'NorthWest' }
-%       'grouped'
-%       { 'Averages' 1000 { [24] [3] [1:6] [1] } 1 'CCN' 0 0.4 }
-%       'bars_avg_lwp2cdepth_stall_TALL_CO_S303.jpg'
-%       }
-%
-%       % LWP2CDEPTH averages, stall, time points, CCN only, C50
-%       {
-%       'LWP2CDEPTH Avg, ST, TALL CCN only, grouped by SST, C50'
-%       'bgraph_lwp2cdepth.h5'
-%       { 'h' 'ST, C50' }
-%       'N_a (# cm^-^3)'
-%       'LWP/Cdepth (mm m^-^1 x 10^3)'
-%       { 'cyan' }
-%       { { 'NoLegend' } 'NorthWest' }
-%       'grouped'
-%       { 'Averages' 1000 { [24] [1:3] [1] [1] } 1 'SST' 0 0.4 }
-%       'bars_avg_lwp2cdepth_stall_TALL_CO_C50.jpg'
-%       }
-%
-%       % LWP2CDEPTH averages, stall, time points, CCN only, C400
-%       {
-%       'LWP2CDEPTH Avg, ST, TALL CCN only, grouped by SST, C400'
-%       'bgraph_lwp2cdepth.h5'
-%       { 'h' 'ST, C400' }
-%       'N_a (# cm^-^3)'
-%       'LWP/Cdepth (mm m^-^1 x 10^3)'
-%       { 'cyan' }
-%       { { 'NoLegend' } 'NorthWest' }
-%       'grouped'
-%       { 'Averages' 1000 { [24] [1:3] [4] [1] } 1 'SST' 0 0.4 }
-%       'bars_avg_lwp2cdepth_stall_TALL_CO_C400.jpg'
-%       }
-%
-%       % LWP2CDEPTH averages, stall, time points, CCN only, C1600
-%       {
-%       'LWP2CDEPTH Avg, ST, TALL CCN only, grouped by SST, C1600'
-%       'bgraph_lwp2cdepth.h5'
-%       { 'h' 'ST, C1600' }
-%       'N_a (# cm^-^3)'
-%       'LWP/Cdepth (mm m^-^1 x 10^3)'
-%       { 'cyan' }
-%       { { 'NoLegend' } 'NorthWest' }
-%       'grouped'
-%       { 'Averages' 1000 { [24] [1:3] [6] [1] } 1 'SST' 0 0.4 }
-%       'bars_avg_lwp2cdepth_stall_TALL_CO_C1600.jpg'
-%       }
-%
+       % LWP2CDEPTH averages, stall, time points, CCN only, S293
+       {
+       'LWP2CDEPTH Avg, ST, TALL CCN only, grouped by SST, S293'
+       'bgraph_lwp2cdepth.h5'
+       { 'b' 'ST, S293' }
+       'N_a (# cm^-^3)'
+       'LWP/Cdepth (mm m^-^1 x 10^3)'
+       { 'cyan' }
+       { { 'NoLegend' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1000 { [24] [1] [1:6] [1] } 1 'CCN' 0 0.4 }
+       'bars_avg_lwp2cdepth_stall_TALL_CO_S293.jpg'
+       }
+
+       % LWP2CDEPTH averages, stall, time points, CCN only, S298
+       {
+       'LWP2CDEPTH Avg, ST, TALL CCN only, grouped by SST, S298'
+       'bgraph_lwp2cdepth.h5'
+       { 'd' 'ST, S298' }
+       'N_a (# cm^-^3)'
+       'LWP/Cdepth (mm m^-^1 x 10^3)'
+       { 'cyan' }
+       { { 'NoLegend' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1000 { [24] [2] [1:6] [1] } 1 'CCN' 0 0.4 }
+       'bars_avg_lwp2cdepth_stall_TALL_CO_S298.jpg'
+       }
+
+       % LWP2CDEPTH averages, stall, time points, CCN only, S303
+       {
+       'LWP2CDEPTH Avg, ST, TALL CCN only, grouped by SST, S303'
+       'bgraph_lwp2cdepth.h5'
+       { 'f' 'ST, S303' }
+       'N_a (# cm^-^3)'
+       'LWP/Cdepth (mm m^-^1 x 10^3)'
+       { 'cyan' }
+       { { 'NoLegend' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1000 { [24] [3] [1:6] [1] } 1 'CCN' 0 0.4 }
+       'bars_avg_lwp2cdepth_stall_TALL_CO_S303.jpg'
+       }
+
+       % LWP2CDEPTH averages, stall, time points, CCN only, C50
+       {
+       'LWP2CDEPTH Avg, ST, TALL CCN only, grouped by SST, C50'
+       'bgraph_lwp2cdepth.h5'
+       { 'b' 'ST, C50' }
+       'N_a (# cm^-^3)'
+       'LWP/Cdepth (mm m^-^1 x 10^3)'
+       { 'cyan' }
+       { { 'NoLegend' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1000 { [24] [1:3] [1] [1] } 1 'SST' 0 0.4 }
+       'bars_avg_lwp2cdepth_stall_TALL_CO_C50.jpg'
+       }
+
+       % LWP2CDEPTH averages, stall, time points, CCN only, C400
+       {
+       'LWP2CDEPTH Avg, ST, TALL CCN only, grouped by SST, C400'
+       'bgraph_lwp2cdepth.h5'
+       { 'b' 'ST, C400' }
+       'N_a (# cm^-^3)'
+       'LWP/Cdepth (mm m^-^1 x 10^3)'
+       { 'cyan' }
+       { { 'NoLegend' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1000 { [24] [1:3] [4] [1] } 1 'SST' 0 0.4 }
+       'bars_avg_lwp2cdepth_stall_TALL_CO_C400.jpg'
+       }
+
+       % LWP2CDEPTH averages, stall, time points, CCN only, C1600
+       {
+       'LWP2CDEPTH Avg, ST, TALL CCN only, grouped by SST, C1600'
+       'bgraph_lwp2cdepth.h5'
+       { 'b' 'ST, C1600' }
+       'N_a (# cm^-^3)'
+       'LWP/Cdepth (mm m^-^1 x 10^3)'
+       { 'cyan' }
+       { { 'NoLegend' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1000 { [24] [1:3] [6] [1] } 1 'SST' 0 0.4 }
+       'bars_avg_lwp2cdepth_stall_TALL_CO_C1600.jpg'
+       }
+
        % LWP2CDEPTH averages, stall, all time points, CCN, GCCN , S298
        {
        'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, S298'
        'bgraph_lwp2cdepth.h5'
-       { 'h' 'ST, S298' }
+       { 'b' 'ST, S298' }
        'N_a (# cm^-^3)'
        'LWP/Cdepth (mm m^-^1 x 10^3)'
        { 'blue' 'cyan' 'magenta' }
@@ -531,7 +531,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        {
        'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, S303'
        'bgraph_lwp2cdepth.h5'
-       { 'h' 'ST, S303' }
+       { 'b' 'ST, S303' }
        'N_a (# cm^-^3)'
        'LWP/Cdepth (mm m^-^1 x 10^3)'
        { 'blue' 'cyan' 'magenta' }

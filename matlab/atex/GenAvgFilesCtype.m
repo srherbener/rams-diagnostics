@@ -21,6 +21,9 @@ function [ ] = GenAvgFilesCtype(ConfigFile)
     { 'hda_cloud_mask'      { 'cfrac'  'cfrac_strnp'  'cfrac_strat'  'cfrac_cumul'  'cfrac_stmix' 'cfrac_scmix'     } 'avg_ctype_cfrac'  }
 
     { 'hda_lcl'             { 'lcl'    'lcl_stall'                                                                  } 'avg_ctype_lcl'  }
+
+    { 'hda_vapcldt'         { 'cloud_cond_stall'                                                                    } 'avg_ctype_cloud_cond'  }
+    { 'hda_vapcldt'         { 'cloud_evap_stall'                                                                    } 'avg_ctype_cloud_evap'  }
     };
   Nset = length(VarSets);
 
@@ -74,6 +77,7 @@ function [ ] = GenAvgFilesCtype(ConfigFile)
         % grab the hda data and the t coordinates
         HDA  = squeeze(hdf5read(InFile, InVarName));
         T = squeeze(hdf5read(InFile, 't_coords'))/3600; % hours
+        Z = squeeze(hdf5read(InFile, 'z_coords'));
 
         OutAvgName  = sprintf('%s_avg', OutVarName);
         OutNptsName = sprintf('%s_npts', OutVarName);
@@ -106,14 +110,18 @@ function [ ] = GenAvgFilesCtype(ConfigFile)
       % output coords so that ReadSelectXyzt can handle the output files
       Xdummy = 1;
       Ydummy = 1;
-      Zdummy = 1;
+      if (strcmp(OutFprefix, 'avg_ctype_cloud_cond') | strcmp(OutFprefix, 'avg_ctype_cloud_evap'))
+        Zout = Z;
+      else
+        Zout = 1;
+      end
       Tdummy = 1;
 
       fprintf('    Writing: %s\n', OutFile);
 
       hdf5write(OutFile, '/x_coords', Xdummy, 'WriteMode', 'append');
       hdf5write(OutFile, '/y_coords', Ydummy, 'WriteMode', 'append');
-      hdf5write(OutFile, '/z_coords', Zdummy, 'WriteMode', 'append');
+      hdf5write(OutFile, '/z_coords', Zout,   'WriteMode', 'append');
       hdf5write(OutFile, '/t_coords', Tdummy, 'WriteMode', 'append');
 
       fprintf('\n');
