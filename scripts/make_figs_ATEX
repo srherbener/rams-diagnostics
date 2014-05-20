@@ -60,90 +60,132 @@ montage -tile 3x1 -geometry ${Jsize}+2+100 \
  bars_avg_ctype_TALL_CO_S303.jpg \
  FigureBgraphCtypeDist.jpg
 
+
+
+
 echo "Figure: COT hist, PR hist, CD hist, CCN only, 293K"
 montage -tile 2x4 -geometry ${Jsize}+2+100 \
  CotHist_TALL_CO_S293_G10M5_ALL.jpg \
- WthetavStall_TALL_CO_S293_G10M5_ALL.jpg \
- PrateHist_TALL_CO_S293_G10M5_ALL.jpg \
- WvaporStall_TALL_CO_S293_G10M5_ALL.jpg \
- CdepthHist_TALL_CO_S293_G10M5_ALL.jpg \
- bars_avg_cdepth_stall_TALL_CO_S293.jpg \
  WvarStall_TALL_CO_S293_G10M5_ALL.jpg \
- bars_avg_lwp2cdepth_stall_TALL_CO_S293.jpg \
+ PrateHist_TALL_CO_S293_G10M5_ALL.jpg \
+ WthetavStall_TALL_CO_S293_G10M5_ALL.jpg \
+ CdepthHist_TALL_CO_S293_G10M5_ALL.jpg \
+ CloudCondStall_TALL_CO_S293_G10M5_ALL.jpg \
+ CfracProfStall_TALL_CO_S293_G10M5_ALL.jpg \
+ CloudEvapStall_TALL_CO_S293_G10M5_ALL.jpg \
  FigureDomainStats_S293.jpg
 
 echo "Figure: COT hist, PR hist, CD hist, CCN only, 298K"
 montage -tile 2x4 -geometry ${Jsize}+2+100 \
  CotHist_TALL_CO_S298_G10M5_ALL.jpg \
- WthetavStall_TALL_CO_S298_G10M5_ALL.jpg \
- PrateHist_TALL_CO_S298_G10M5_ALL.jpg \
- WvaporStall_TALL_CO_S298_G10M5_ALL.jpg \
- CdepthHist_TALL_CO_S298_G10M5_ALL.jpg \
- bars_avg_cdepth_stall_TALL_CO_S298.jpg \
  WvarStall_TALL_CO_S298_G10M5_ALL.jpg \
- bars_avg_lwp2cdepth_stall_TALL_CO_S298.jpg \
+ PrateHist_TALL_CO_S298_G10M5_ALL.jpg \
+ WthetavStall_TALL_CO_S298_G10M5_ALL.jpg \
+ CdepthHist_TALL_CO_S298_G10M5_ALL.jpg \
+ CloudCondStall_TALL_CO_S298_G10M5_ALL.jpg \
+ CfracProfStall_TALL_CO_S298_G10M5_ALL.jpg \
+ CloudEvapStall_TALL_CO_S298_G10M5_ALL.jpg \
  FigureDomainStats_S298.jpg
 
 echo "Figure: COT hist, PR hist, CD hist, CCN only, 303K"
 montage -tile 2x4 -geometry ${Jsize}+2+100 \
  CotHist_TALL_CO_S303_G10M5_ALL.jpg \
- WthetavStall_TALL_CO_S303_G10M5_ALL.jpg \
- PrateHist_TALL_CO_S303_G10M5_ALL.jpg \
- WvaporStall_TALL_CO_S303_G10M5_ALL.jpg \
- CdepthHist_TALL_CO_S303_G10M5_ALL.jpg \
- bars_avg_cdepth_stall_TALL_CO_S303.jpg \
  WvarStall_TALL_CO_S303_G10M5_ALL.jpg \
- bars_avg_lwp2cdepth_stall_TALL_CO_S303.jpg \
+ PrateHist_TALL_CO_S303_G10M5_ALL.jpg \
+ WthetavStall_TALL_CO_S303_G10M5_ALL.jpg \
+ CdepthHist_TALL_CO_S303_G10M5_ALL.jpg \
+ CloudCondStall_TALL_CO_S303_G10M5_ALL.jpg \
+ CfracProfStall_TALL_CO_S303_G10M5_ALL.jpg \
+ CloudEvapStall_TALL_CO_S303_G10M5_ALL.jpg \
  FigureDomainStats_S303.jpg
+
+echo "Figure: AVG Cdepth, LWP/Cdepth, CCN"
+montage -tile 2x3 -geometry ${Jsize}+2+100 \
+ bars_avg_cdepth_stall_TALL_CO_S293.jpg \
+ bars_avg_lwp2cdepth_stall_TALL_CO_S293.jpg \
+ bars_avg_cdepth_stall_TALL_CO_S298.jpg \
+ bars_avg_lwp2cdepth_stall_TALL_CO_S298.jpg \
+ bars_avg_cdepth_stall_TALL_CO_S303.jpg \
+ bars_avg_lwp2cdepth_stall_TALL_CO_S303.jpg \
+ FigureAvgCdepthLwp2Cdepth_CCN.jpg
+
+
+
 
 echo "Figure: COT hist, PR hist, CD hist, CCN only, C50"
 montage -tile 2x4 -geometry ${Jsize}+2+100 \
  CotHist_TALL_CO_C0050_G10M5.jpg \
- WthetavStall_TALL_CO_C0050_G10M5.jpg \
- PrateHist_TALL_CO_C0050_G10M5.jpg \
- WvaporStall_TALL_CO_C0050_G10M5.jpg \
- CdepthHist_TALL_CO_C0050_G10M5.jpg \
- bars_avg_cdepth_stall_TALL_CO_C50.jpg \
  WvarStall_TALL_CO_C0050_G10M5.jpg \
- bars_avg_lwp2cdepth_stall_TALL_CO_C50.jpg \
+ PrateHist_TALL_CO_C0050_G10M5.jpg \
+ WthetavStall_TALL_CO_C0050_G10M5.jpg \
+ CdepthHist_TALL_CO_C0050_G10M5.jpg \
+ CloudCondStall_TALL_CO_C0050_G10M5.jpg \
+ CfracProfStall_TALL_CO_C0050_G10M5.jpg \
+ CloudEvapStall_TALL_CO_C0050_G10M5.jpg \
  FigureDomainStats_C50.jpg
 
 echo "Figure: COT hist, PR hist, CD hist, CCN only, C400"
 montage -tile 2x4 -geometry ${Jsize}+2+100 \
  CotHist_TALL_CO_C0400_G10M5.jpg \
- WthetavStall_TALL_CO_C0400_G10M5.jpg \
- PrateHist_TALL_CO_C0400_G10M5.jpg \
- WvaporStall_TALL_CO_C0400_G10M5.jpg \
- CdepthHist_TALL_CO_C0400_G10M5.jpg \
- bars_avg_cdepth_stall_TALL_CO_C400.jpg \
  WvarStall_TALL_CO_C0400_G10M5.jpg \
- bars_avg_lwp2cdepth_stall_TALL_CO_C400.jpg \
+ PrateHist_TALL_CO_C0400_G10M5.jpg \
+ WthetavStall_TALL_CO_C0400_G10M5.jpg \
+ CdepthHist_TALL_CO_C0400_G10M5.jpg \
+ CloudCondStall_TALL_CO_C0400_G10M5.jpg \
+ CfracProfStall_TALL_CO_C0400_G10M5.jpg \
+ CloudEvapStall_TALL_CO_C0400_G10M5.jpg \
  FigureDomainStats_C400.jpg
 
 echo "Figure: COT hist, PR hist, CD hist, CCN only, C1600"
 montage -tile 2x4 -geometry ${Jsize}+2+100 \
  CotHist_TALL_CO_C1600_G10M5.jpg \
- WthetavStall_TALL_CO_C1600_G10M5.jpg \
- PrateHist_TALL_CO_C1600_G10M5.jpg \
- WvaporStall_TALL_CO_C1600_G10M5.jpg \
- CdepthHist_TALL_CO_C1600_G10M5.jpg \
- bars_avg_cdepth_stall_TALL_CO_C1600.jpg \
  WvarStall_TALL_CO_C1600_G10M5.jpg \
- bars_avg_lwp2cdepth_stall_TALL_CO_C1600.jpg \
+ PrateHist_TALL_CO_C1600_G10M5.jpg \
+ WthetavStall_TALL_CO_C1600_G10M5.jpg \
+ CdepthHist_TALL_CO_C1600_G10M5.jpg \
+ CloudCondStall_TALL_CO_C1600_G10M5.jpg \
+ CfracProfStall_TALL_CO_C1600_G10M5.jpg \
+ CloudEvapStall_TALL_CO_C1600_G10M5.jpg \
  FigureDomainStats_C1600.jpg
+
+echo "Figure: AVG Cdepth, LWP/Cdepth, C50, SST"
+montage -tile 2x1 -geometry ${Jsize}+2+100 \
+ bars_avg_cdepth_stall_TALL_CO_C50.jpg \
+ bars_avg_lwp2cdepth_stall_TALL_CO_C50.jpg \
+ FigureAvgCdepthLwp2Cdepth_C50_SST.jpg
+
+echo "Figure: AVG Cdepth, LWP/Cdepth, C400, SST"
+montage -tile 2x1 -geometry ${Jsize}+2+100 \
+ bars_avg_cdepth_stall_TALL_CO_C400.jpg \
+ bars_avg_lwp2cdepth_stall_TALL_CO_C400.jpg \
+ FigureAvgCdepthLwp2Cdepth_C400_SST.jpg
+
+echo "Figure: AVG Cdepth, LWP/Cdepth, C1600, SST"
+montage -tile 2x1 -geometry ${Jsize}+2+100 \
+ bars_avg_cdepth_stall_TALL_CO_C1600.jpg \
+ bars_avg_lwp2cdepth_stall_TALL_CO_C1600.jpg \
+ FigureAvgCdepthLwp2Cdepth_C1600_SST.jpg
+
+
 
 
 echo "Figure: COT hist, PR hist, CD hist, GCCN, 298K"
 montage -tile 2x4 -geometry ${Jsize}+2+100 \
  CotHist_TALL_CG_C50_C1600_S298.jpg \
- WthetavStall_TALL_CG_C50_C1600_S298.jpg \
- PrateHist_TALL_CG_C50_C1600_S298.jpg \
- WvaporStall_TALL_CG_C50_C1600_S298.jpg \
- CdepthHist_TALL_CG_C50_C1600_S298.jpg \
- bars_avg_cdepth_stall_TALL_CO_S298_GCCN.jpg \
  WvarStall_TALL_CG_C50_C1600_S298.jpg \
- bars_avg_lwp2cdepth_stall_TALL_CO_S298_GCCN.jpg \
+ PrateHist_TALL_CG_C50_C1600_S298.jpg \
+ WthetavStall_TALL_CG_C50_C1600_S298.jpg \
+ CdepthHist_TALL_CG_C50_C1600_S298.jpg \
+ CloudCondStall_TALL_CG_C50_C1600_S298.jpg \
+ CfracProfStall_TALL_CG_C50_C1600_S298.jpg \
+ CloudEvapStall_TALL_CG_C50_C1600_S298.jpg \
  FigureDomainStats_S298_GCCN.jpg
+
+echo "Figure: AVG Cdepth, LWP/Cdepth, C1600, GCCN"
+montage -tile 2x1 -geometry ${Jsize}+2+100 \
+ bars_avg_cdepth_stall_TALL_CO_S298_GCCN.jpg \
+ bars_avg_lwp2cdepth_stall_TALL_CO_S298_GCCN.jpg \
+ FigureAvgCdepthLwp2Cdepth_S298_GCCN.jpg
 
 #echo "Figure: Bar graphs, COT, CCN only, LWP Thresholds"
 #montage -tile 2x2 -geometry ${Jsize}+2+100 \
