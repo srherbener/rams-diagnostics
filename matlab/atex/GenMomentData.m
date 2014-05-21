@@ -20,33 +20,39 @@ function [ ] = GenMomentData(ConfigFile)
       { 'w_M3_up0p10'           'w-w-w'     1 1 'w_up0p10'       }
       { 'w_M3_dn0p10'           'w-w-w'     1 1 'w_dn0p10'       }
       { 'w_M3_stall'            'w-w-w'     1 1 'w_stall'        }
+      { 'w_M3_up0p10_stall'     'w-w-w'     1 1 'w_up0p10_stall' }
+      { 'w_M3_dn0p10_stall'     'w-w-w'     1 1 'w_dn0p10_stall' }
       { 'w_M3_all_cld'          'w-w-w'     1 1 'w_all_cld'      }
 
-      { 'w_theta_flux'          'w-theta'   2 1 'theta'          }
-      { 'w_theta_flux_ud0p10'   'w-theta'   2 1 'theta_ud0p10'   }
-      { 'w_theta_flux_up0p10'   'w-theta'   2 1 'theta_up0p10'   }
-      { 'w_theta_flux_dn0p10'   'w-theta'   2 1 'theta_dn0p10'   }
-      { 'w_theta_flux_stall'    'w-theta'   2 1 'theta_stall'    }
-      { 'w_theta_flux_all_cld'  'w-theta'   2 1 'theta_all_cld'  }
+      { 'w_theta_flux'              'w-theta'   2 1 'theta'              }
+      { 'w_theta_flux_ud0p10'       'w-theta'   2 1 'theta_ud0p10'       }
+      { 'w_theta_flux_up0p10'       'w-theta'   2 1 'theta_up0p10'       }
+      { 'w_theta_flux_dn0p10'       'w-theta'   2 1 'theta_dn0p10'       }
+      { 'w_theta_flux_stall'        'w-theta'   2 1 'theta_stall'        }
+      { 'w_theta_flux_all_cld'      'w-theta'   2 1 'theta_all_cld'      }
 
       { 'theta_e_M1'            'theta_e'   1 1 'theta_e'        }
       { 'theta_e_M1_ud0p10'     'theta_e'   1 1 'theta_e_ud0p10' }
 %      { 'theta_e_M1_up0p10'     'theta_e'   1 1 'theta_e_up0p10' }
 %      { 'theta_e_M1_dn0p10'     'theta_e'   1 1 'theta_e_dn0p10' }
 
-      { 'w_theta_v_flux'         'w-theta_v' 2 1 'theta_v'         }
-      { 'w_theta_v_flux_ud0p10'  'w-theta_v' 2 1 'theta_v_ud0p10'  }
-      { 'w_theta_v_flux_up0p10'  'w-theta_v' 2 1 'theta_v_up0p10'  }
-      { 'w_theta_v_flux_dn0p10'  'w-theta_v' 2 1 'theta_v_dn0p10'  }
-      { 'w_theta_v_flux_stall'   'w-theta_v' 2 1 'theta_v_stall'   }
-      { 'w_theta_v_flux_all_cld' 'w-theta_v' 2 1 'theta_v_all_cld' }
+      { 'w_theta_v_flux'              'w-theta_v' 2 1 'theta_v'              }
+      { 'w_theta_v_flux_ud0p10'       'w-theta_v' 2 1 'theta_v_ud0p10'       }
+      { 'w_theta_v_flux_up0p10'       'w-theta_v' 2 1 'theta_v_up0p10'       }
+      { 'w_theta_v_flux_dn0p10'       'w-theta_v' 2 1 'theta_v_dn0p10'       }
+      { 'w_theta_v_flux_stall'        'w-theta_v' 2 1 'theta_v_stall'        }
+      { 'w_theta_v_flux_up0p10_stall' 'w-theta_v' 2 1 'theta_v_up0p10_stall' }
+      { 'w_theta_v_flux_dn0p10_stall' 'w-theta_v' 2 1 'theta_v_dn0p10_stall' }
+      { 'w_theta_v_flux_all_cld'      'w-theta_v' 2 1 'theta_v_all_cld'      }
 
-      { 'w_vapor_flux'          'w-vapor'   2 1 'vapor'          }
-      { 'w_vapor_flux_ud0p10'   'w-vapor'   2 1 'vapor_ud0p10'   }
-      { 'w_vapor_flux_up0p10'   'w-vapor'   2 1 'vapor_up0p10'   }
-      { 'w_vapor_flux_dn0p10'   'w-vapor'   2 1 'vapor_dn0p10'   }
-      { 'w_vapor_flux_stall'    'w-vapor'   2 1 'vapor_stall'    }
-      { 'w_vapor_flux_all_cld'  'w-vapor'   2 1 'vapor_all_cld'  }
+      { 'w_vapor_flux'              'w-vapor'   2 1 'vapor'              }
+      { 'w_vapor_flux_ud0p10'       'w-vapor'   2 1 'vapor_ud0p10'       }
+      { 'w_vapor_flux_up0p10'       'w-vapor'   2 1 'vapor_up0p10'       }
+      { 'w_vapor_flux_dn0p10'       'w-vapor'   2 1 'vapor_dn0p10'       }
+      { 'w_vapor_flux_stall'        'w-vapor'   2 1 'vapor_stall'        }
+      { 'w_vapor_flux_up0p10_stall' 'w-vapor'   2 1 'vapor_up0p10_stall' }
+      { 'w_vapor_flux_dn0p10_stall' 'w-vapor'   2 1 'vapor_dn0p10_stall' }
+      { 'w_vapor_flux_all_cld'      'w-vapor'   2 1 'vapor_all_cld'      }
 
       { 'w_speed_flux'          'w-speed'   2 1 'speed'          }
       { 'w_speed_flux_ud0p10'   'w-speed'   2 1 'speed_ud0p10'   }
@@ -63,12 +69,14 @@ function [ ] = GenMomentData(ConfigFile)
 
 
       % fluxes (covariances)
-      { 'w_theta_v_flux'         'w-theta_v' 1 2 'w-theta_v'          }
-      { 'w_theta_v_flux_ud0p10'  'w-theta_v' 1 2 'w-theta_v_ud0p10'   }
-      { 'w_theta_v_flux_up0p10'  'w-theta_v' 1 2 'w-theta_v_up0p10'   }
-      { 'w_theta_v_flux_dn0p10'  'w-theta_v' 1 2 'w-theta_v_dn0p10'   }
-      { 'w_theta_v_flux_stall'   'w-theta_v' 1 2 'w-theta_v_stall'    }
-      { 'w_theta_v_flux_all_cld' 'w-theta_v' 1 2 'w-theta_v_all_cld'  }
+      { 'w_theta_v_flux'              'w-theta_v' 1 2 'w-theta_v'              }
+      { 'w_theta_v_flux_ud0p10'       'w-theta_v' 1 2 'w-theta_v_ud0p10'       }
+      { 'w_theta_v_flux_up0p10'       'w-theta_v' 1 2 'w-theta_v_up0p10'       }
+      { 'w_theta_v_flux_dn0p10'       'w-theta_v' 1 2 'w-theta_v_dn0p10'       }
+      { 'w_theta_v_flux_stall'        'w-theta_v' 1 2 'w-theta_v_stall'        }
+      { 'w_theta_v_flux_up0p10_stall' 'w-theta_v' 1 2 'w-theta_v_up0p10_stall' }
+      { 'w_theta_v_flux_dn0p10_stall' 'w-theta_v' 1 2 'w-theta_v_dn0p10_stall' }
+      { 'w_theta_v_flux_all_cld'      'w-theta_v' 1 2 'w-theta_v_all_cld'      }
 
       { 'w_theta_flux'           'w-theta'   1 2 'w-theta'            }
       { 'w_theta_flux_ud0p10'    'w-theta'   1 2 'w-theta_ud0p10'     }
@@ -77,12 +85,14 @@ function [ ] = GenMomentData(ConfigFile)
       { 'w_theta_flux_stall'     'w-theta'   1 2 'w-theta_stall'      }
       { 'w_theta_flux_all_cld'   'w-theta'   1 2 'w-theta_all_cld'    }
 
-      { 'w_vapor_flux'           'w-vapor'   1 2 'w-vapor'            }
-      { 'w_vapor_flux_ud0p10'    'w-vapor'   1 2 'w-vapor_ud0p10'     }
-      { 'w_vapor_flux_up0p10'    'w-vapor'   1 2 'w-vapor_up0p10'     }
-      { 'w_vapor_flux_dn0p10'    'w-vapor'   1 2 'w-vapor_dn0p10'     }
-      { 'w_vapor_flux_stall'     'w-vapor'   1 2 'w-vapor_stall'      }
-      { 'w_vapor_flux_all_cld'   'w-vapor'   1 2 'w-vapor_all_cld'    }
+      { 'w_vapor_flux'              'w-vapor'   1 2 'w-vapor'              }
+      { 'w_vapor_flux_ud0p10'       'w-vapor'   1 2 'w-vapor_ud0p10'       }
+      { 'w_vapor_flux_up0p10'       'w-vapor'   1 2 'w-vapor_up0p10'       }
+      { 'w_vapor_flux_dn0p10'       'w-vapor'   1 2 'w-vapor_dn0p10'       }
+      { 'w_vapor_flux_stall'        'w-vapor'   1 2 'w-vapor_stall'        }
+      { 'w_vapor_flux_up0p10_stall' 'w-vapor'   1 2 'w-vapor_up0p10_stall' }
+      { 'w_vapor_flux_dn0p10_stall' 'w-vapor'   1 2 'w-vapor_dn0p10_stall' }
+      { 'w_vapor_flux_all_cld'      'w-vapor'   1 2 'w-vapor_all_cld'      }
 
       { 'w_speed_flux'           'w-speed'   1 2 'w-speed'            }
       { 'w_speed_flux_ud0p10'    'w-speed'   1 2 'w-speed_ud0p10'     }
@@ -92,20 +102,24 @@ function [ ] = GenMomentData(ConfigFile)
       { 'w_speed_flux_all_cld'   'w-speed'   1 2 'w-speed_all_cld'    }
 
       % variances
-      { 'w_M3'                          'w-w-w'     1 2 'w-w'         }
-      { 'w_M3_ud0p10'                   'w-w-w'     1 2 'w-w_ud0p10'  }
-      { 'w_M3_up0p10'                   'w-w-w'     1 2 'w-w_up0p10'  }
-      { 'w_M3_dn0p10'                   'w-w-w'     1 2 'w-w_dn0p10'  }
-      { 'w_M3_stall'                    'w-w-w'     1 2 'w-w_stall'   }
-      { 'w_M3_all_cld'                  'w-w-w'     1 2 'w-w_all_cld' }
+      { 'w_M3'                     'w-w-w'     1 2 'w-w'              }
+      { 'w_M3_ud0p10'              'w-w-w'     1 2 'w-w_ud0p10'       }
+      { 'w_M3_up0p10'              'w-w-w'     1 2 'w-w_up0p10'       }
+      { 'w_M3_dn0p10'              'w-w-w'     1 2 'w-w_dn0p10'       }
+      { 'w_M3_stall'               'w-w-w'     1 2 'w-w_stall'        }
+      { 'w_M3_up0p10_stall'        'w-w-w'     1 2 'w-w_up0p10_stall' }
+      { 'w_M3_dn0p10_stall'        'w-w-w'     1 2 'w-w_dn0p10_stall' }
+      { 'w_M3_all_cld'             'w-w-w'     1 2 'w-w_all_cld'      }
 
       % skews
-      { 'w_M3'                          'w-w-w'     1 3 'w-w-w'         }
-      { 'w_M3_ud0p10'                   'w-w-w'     1 3 'w-w-w_ud0p10'  }
-      { 'w_M3_up0p10'                   'w-w-w'     1 3 'w-w-w_up0p10'  }
-      { 'w_M3_dn0p10'                   'w-w-w'     1 3 'w-w-w_dn0p10'  }
-      { 'w_M3_stall'                    'w-w-w'     1 3 'w-w-w_stall'   }
-      { 'w_M3_all_cld'                  'w-w-w'     1 3 'w-w-w_all_cld' }
+      { 'w_M3'                     'w-w-w'     1 3 'w-w-w'              }
+      { 'w_M3_ud0p10'              'w-w-w'     1 3 'w-w-w_ud0p10'       }
+      { 'w_M3_up0p10'              'w-w-w'     1 3 'w-w-w_up0p10'       }
+      { 'w_M3_dn0p10'              'w-w-w'     1 3 'w-w-w_dn0p10'       }
+      { 'w_M3_stall'               'w-w-w'     1 3 'w-w-w_stall'        }
+      { 'w_M3_up0p10_stall'        'w-w-w'     1 3 'w-w-w_up0p10_stall' }
+      { 'w_M3_all_cld'             'w-w-w'     1 3 'w-w-w_all_cld'      }
+
       };
 
     % do one hour time average at beginning, middle and end of sampling period

@@ -164,7 +164,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        {
        'COT Avg, DOMAIN TALL CCN, grouped by GCCN, S298'
        'bgraph_cot.h5'
-       { '' 'Domain, S298' }
+       { 'a' 'Domain, S298' }
        'N_a (# cm^-^3)'
        '\tau_c'
        { 'blue' 'cyan' 'magenta' }
@@ -292,7 +292,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        {
        'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, S298'
        'bgraph_cdepth.h5'
-       { 'c' 'ST, S298' }
+       { 'b' 'ST, S298' }
        'N_a (# cm^-^3)'
        'Cloud Depth (m)'
        { 'cyan' }
@@ -306,7 +306,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        {
        'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, S303'
        'bgraph_cdepth.h5'
-       { 'e' 'ST, S303' }
+       { 'c' 'ST, S303' }
        'N_a (# cm^-^3)'
        'Cloud Depth (m)'
        { 'cyan' }
@@ -334,7 +334,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        {
        'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, C400'
        'bgraph_cdepth.h5'
-       { 'a' 'ST, C400' }
+       { 'b' 'ST, C400' }
        'N_a (# cm^-^3)'
        'Cloud Depth (m)'
        { 'cyan' }
@@ -348,7 +348,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        {
        'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, C1600'
        'bgraph_cdepth.h5'
-       { 'a' 'ST, C1600' }
+       { 'c' 'ST, C1600' }
        'N_a (# cm^-^3)'
        'Cloud Depth (m)'
        { 'cyan' }
@@ -433,7 +433,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        {
        'LWP2CDEPTH Avg, ST, TALL CCN only, grouped by SST, S293'
        'bgraph_lwp2cdepth.h5'
-       { 'b' 'ST, S293' }
+       { 'd' 'ST, S293' }
        'N_a (# cm^-^3)'
        'LWP/Cdepth (mm m^-^1 x 10^3)'
        { 'cyan' }
@@ -447,7 +447,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        {
        'LWP2CDEPTH Avg, ST, TALL CCN only, grouped by SST, S298'
        'bgraph_lwp2cdepth.h5'
-       { 'd' 'ST, S298' }
+       { 'e' 'ST, S298' }
        'N_a (# cm^-^3)'
        'LWP/Cdepth (mm m^-^1 x 10^3)'
        { 'cyan' }
@@ -475,7 +475,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        {
        'LWP2CDEPTH Avg, ST, TALL CCN only, grouped by SST, C50'
        'bgraph_lwp2cdepth.h5'
-       { 'b' 'ST, C50' }
+       { 'd' 'ST, C50' }
        'N_a (# cm^-^3)'
        'LWP/Cdepth (mm m^-^1 x 10^3)'
        { 'cyan' }
@@ -489,7 +489,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        {
        'LWP2CDEPTH Avg, ST, TALL CCN only, grouped by SST, C400'
        'bgraph_lwp2cdepth.h5'
-       { 'b' 'ST, C400' }
+       { 'e' 'ST, C400' }
        'N_a (# cm^-^3)'
        'LWP/Cdepth (mm m^-^1 x 10^3)'
        { 'cyan' }
@@ -503,7 +503,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        {
        'LWP2CDEPTH Avg, ST, TALL CCN only, grouped by SST, C1600'
        'bgraph_lwp2cdepth.h5'
-       { 'b' 'ST, C1600' }
+       { 'f' 'ST, C1600' }
        'N_a (# cm^-^3)'
        'LWP/Cdepth (mm m^-^1 x 10^3)'
        { 'cyan' }
