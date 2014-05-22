@@ -242,7 +242,9 @@ for i = 1:size(InLines,1)
         Cdata.PlotSets(i_pset).Cases(ips).Lcolor  = Fields{j+2};
         Cdata.PlotSets(i_pset).Cases(ips).Lstyle  = Fields{j+3};
         Cdata.PlotSets(i_pset).Cases(ips).Lgscale = sscanf(Fields{j+4}, '%f');
-        j = j + 5;
+        Cdata.PlotSets(i_pset).Cases(ips).Xzoom   = sscanf(Fields{j+5}, '%f');
+        Cdata.PlotSets(i_pset).Cases(ips).Yzoom   = sscanf(Fields{j+6}, '%f');
+        j = j + 7;
       end
     case 'PlotVar:'
       i_pvar = i_pvar + 1;

@@ -366,7 +366,7 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 #LinePlot: CG_UP_C0400_S298  WvarUpStallTall TurbHeights WvarUpStall_298 HeightKm TurbSelect none PANEL:d@ST,@UP,@C400,@S298     NorthEastOutside none WvarUpStall_TALL_CG_C0400_S298.jpg
 #LinePlot: CG_UP_C1600_S298  WvarUpStallTall TurbHeights WvarUpStall_298 HeightKm TurbSelect none PANEL:d@ST,@UP,@C1600,@S298    NorthEastOutside none WvarUpStall_TALL_CG_C1600_S298.jpg
 
-#LinePlot: CG_UP_C50_C1600_S298  WvarUpStallTall TurbHeights WvarUpStall_298 HeightKm TurbSelect none PANEL:d@ST,@UP,@S298    NorthEastOutside none WvarUpStall_TALL_CG_C50_C1600_S298.jpg
+LinePlot: CG_UP_C50_C1600_S298  WvarUpStallTall TurbHeights WvarUpStall_298 HeightKm TurbSelect none PANEL:d@ST,@UP,@S298    NorthEastOutside none WvarUpStall_TALL_CG_C50_C1600_S298.jpg
 
 # downdraft stall filter
 #LinePlot: CO_UP_S293_G10M5_ALL  WvarDownStallTall TurbHeights WvarDownStall_293 HeightKm TurbSelect none PANEL:e@ST,@DN,@S293    NorthEastOutside none WvarDownStall_TALL_CO_S293_G10M5_ALL.jpg
@@ -381,7 +381,7 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 #LinePlot: CG_UP_C0400_S298  WvarDownStallTall TurbHeights WvarDownStall_298 HeightKm TurbSelect none PANEL:e@ST,@DN,@C400,@S298     NorthEastOutside none WvarDownStall_TALL_CG_C0400_S298.jpg
 #LinePlot: CG_UP_C1600_S298  WvarDownStallTall TurbHeights WvarDownStall_298 HeightKm TurbSelect none PANEL:e@ST,@DN,@C1600,@S298    NorthEastOutside none WvarDownStall_TALL_CG_C1600_S298.jpg
 
-#LinePlot: CG_UP_C50_C1600_S298  WvarDownStallTall TurbHeights WvarDownStall_298 HeightKm TurbSelect none PANEL:e@ST,@DN,@S298    NorthEastOutside none WvarDownStall_TALL_CG_C50_C1600_S298.jpg
+LinePlot: CG_UP_C50_C1600_S298  WvarDownStallTall TurbHeights WvarDownStall_298 HeightKm TurbSelect none PANEL:e@ST,@DN,@S298    NorthEastOutside none WvarDownStall_TALL_CG_C50_C1600_S298.jpg
 
 ### w skew
 # up-dn filter
@@ -476,7 +476,7 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 #LinePlot: CG_UP_C0400_S298  WthetavUpStallTall TurbHeights WthetavUpStall_298 HeightKm TurbSelect none PANEL:f@ST,@UP,@C400,@S298     NorthEastOutside none WthetavUpStall_TALL_CG_C0400_S298.jpg
 #LinePlot: CG_UP_C1600_S298  WthetavUpStallTall TurbHeights WthetavUpStall_298 HeightKm TurbSelect none PANEL:f@ST,@UP,@C1600,@S298    NorthEastOutside none WthetavUpStall_TALL_CG_C1600_S298.jpg
 
-#LinePlot: CG_UP_C50_C1600_S298  WthetavUpStallTall TurbHeights WthetavUpStall_298 HeightKm TurbSelect none PANEL:f@ST,@UP,@S298    NorthEastOutside none WthetavUpStall_TALL_CG_C50_C1600_S298.jpg
+LinePlot: CG_UP_C50_C1600_S298  WthetavUpStallTall TurbHeights WthetavUpStall_298 HeightKm TurbSelect none PANEL:f@ST,@UP,@S298    NorthEastOutside none WthetavUpStall_TALL_CG_C50_C1600_S298.jpg
 
 # downdraft stall filter
 #LinePlot: CO_UP_S293_G10M5_ALL  WthetavDownStallTall TurbHeights WthetavDownStall_293 HeightKm TurbSelect none PANEL:g@ST,@DN,@S293    NorthEastOutside none WthetavDownStall_TALL_CO_S293_G10M5_ALL.jpg
@@ -574,32 +574,32 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 #LinePlot: CG_UP_C50_C1600_S298  WvaporStallTall TurbHeights WvaporStall_298 HeightKm TurbSelect none PANEL:g@ST,@S298    NorthEastOutside none WvaporStall_TALL_CG_C50_C1600_S298.jpg
 
 # updraft stall filter
-LinePlot: CO_UP_S293_G10M5_ALL  WvaporUpStallTall TurbHeights WvaporUpStall_293 HeightKm TurbSelect none PANEL:h@ST,@UP,@S293    NorthEastOutside none WvaporUpStall_TALL_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL  WvaporUpStallTall TurbHeights WvaporUpStall_298 HeightKm TurbSelect none PANEL:h@ST,@UP,@S298    NorthEastOutside none WvaporUpStall_TALL_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL  WvaporUpStallTall TurbHeights WvaporUpStall_303 HeightKm TurbSelect none PANEL:h@ST,@UP,@S303    NorthEastOutside none WvaporUpStall_TALL_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL  WvaporUpStallTall TurbHeights WvaporUpStall_293 HeightKm TurbSelect none PANEL:h@ST,@UP,@S293    NorthEastOutside none WvaporUpStall_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL  WvaporUpStallTall TurbHeights WvaporUpStall_298 HeightKm TurbSelect none PANEL:h@ST,@UP,@S298    NorthEastOutside none WvaporUpStall_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL  WvaporUpStallTall TurbHeights WvaporUpStall_303 HeightKm TurbSelect none PANEL:h@ST,@UP,@S303    NorthEastOutside none WvaporUpStall_TALL_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_C0050_G10M5  WvaporUpStallTall TurbHeights WvaporUpStall_303 HeightKm TurbSelect none PANEL:h@ST,@UP,@C50      NorthEastOutside none WvaporUpStall_TALL_CO_C0050_G10M5.jpg
-LinePlot: CO_UP_C0400_G10M5  WvaporUpStallTall TurbHeights WvaporUpStall_303 HeightKm TurbSelect none PANEL:h@ST,@UP,@C400     NorthEastOutside none WvaporUpStall_TALL_CO_C0400_G10M5.jpg
-LinePlot: CO_UP_C1600_G10M5  WvaporUpStallTall TurbHeights WvaporUpStall_303 HeightKm TurbSelect none PANEL:h@ST,@UP,@C1600    NorthEastOutside none WvaporUpStall_TALL_CO_C1600_G10M5.jpg
+#LinePlot: CO_UP_C0050_G10M5  WvaporUpStallTall TurbHeights WvaporUpStall_303 HeightKm TurbSelect none PANEL:h@ST,@UP,@C50      NorthEastOutside none WvaporUpStall_TALL_CO_C0050_G10M5.jpg
+#LinePlot: CO_UP_C0400_G10M5  WvaporUpStallTall TurbHeights WvaporUpStall_303 HeightKm TurbSelect none PANEL:h@ST,@UP,@C400     NorthEastOutside none WvaporUpStall_TALL_CO_C0400_G10M5.jpg
+#LinePlot: CO_UP_C1600_G10M5  WvaporUpStallTall TurbHeights WvaporUpStall_303 HeightKm TurbSelect none PANEL:h@ST,@UP,@C1600    NorthEastOutside none WvaporUpStall_TALL_CO_C1600_G10M5.jpg
 
-LinePlot: CG_UP_C0050_S298  WvaporUpStallTall TurbHeights WvaporUpStall_298 HeightKm TurbSelect none PANEL:h@ST,@UP,@C50,@S298      NorthEastOutside none WvaporUpStall_TALL_CG_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298  WvaporUpStallTall TurbHeights WvaporUpStall_298 HeightKm TurbSelect none PANEL:h@ST,@UP,@C400,@S298     NorthEastOutside none WvaporUpStall_TALL_CG_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298  WvaporUpStallTall TurbHeights WvaporUpStall_298 HeightKm TurbSelect none PANEL:h@ST,@UP,@C1600,@S298    NorthEastOutside none WvaporUpStall_TALL_CG_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298  WvaporUpStallTall TurbHeights WvaporUpStall_298 HeightKm TurbSelect none PANEL:h@ST,@UP,@C50,@S298      NorthEastOutside none WvaporUpStall_TALL_CG_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298  WvaporUpStallTall TurbHeights WvaporUpStall_298 HeightKm TurbSelect none PANEL:h@ST,@UP,@C400,@S298     NorthEastOutside none WvaporUpStall_TALL_CG_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298  WvaporUpStallTall TurbHeights WvaporUpStall_298 HeightKm TurbSelect none PANEL:h@ST,@UP,@C1600,@S298    NorthEastOutside none WvaporUpStall_TALL_CG_C1600_S298.jpg
 
 LinePlot: CG_UP_C50_C1600_S298  WvaporUpStallTall TurbHeights WvaporUpStall_298 HeightKm TurbSelect none PANEL:h@ST,@UP,@S298    NorthEastOutside none WvaporUpStall_TALL_CG_C50_C1600_S298.jpg
 
 # downdraft stall filter
-LinePlot: CO_UP_S293_G10M5_ALL  WvaporDownStallTall TurbHeights WvaporDownStall_293 HeightKm TurbSelect none PANEL:i@ST,@DN,@S293    NorthEastOutside none WvaporDownStall_TALL_CO_S293_G10M5_ALL.jpg
-LinePlot: CO_UP_S298_G10M5_ALL  WvaporDownStallTall TurbHeights WvaporDownStall_298 HeightKm TurbSelect none PANEL:i@ST,@DN,@S298    NorthEastOutside none WvaporDownStall_TALL_CO_S298_G10M5_ALL.jpg
-LinePlot: CO_UP_S303_G10M5_ALL  WvaporDownStallTall TurbHeights WvaporDownStall_303 HeightKm TurbSelect none PANEL:i@ST,@DN,@S303    NorthEastOutside none WvaporDownStall_TALL_CO_S303_G10M5_ALL.jpg
+#LinePlot: CO_UP_S293_G10M5_ALL  WvaporDownStallTall TurbHeights WvaporDownStall_293 HeightKm TurbSelect none PANEL:i@ST,@DN,@S293    NorthEastOutside none WvaporDownStall_TALL_CO_S293_G10M5_ALL.jpg
+#LinePlot: CO_UP_S298_G10M5_ALL  WvaporDownStallTall TurbHeights WvaporDownStall_298 HeightKm TurbSelect none PANEL:i@ST,@DN,@S298    NorthEastOutside none WvaporDownStall_TALL_CO_S298_G10M5_ALL.jpg
+#LinePlot: CO_UP_S303_G10M5_ALL  WvaporDownStallTall TurbHeights WvaporDownStall_303 HeightKm TurbSelect none PANEL:i@ST,@DN,@S303    NorthEastOutside none WvaporDownStall_TALL_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_C0050_G10M5  WvaporDownStallTall TurbHeights WvaporDownStall_303 HeightKm TurbSelect none PANEL:i@ST,@DN,@C50      NorthEastOutside none WvaporDownStall_TALL_CO_C0050_G10M5.jpg
-LinePlot: CO_UP_C0400_G10M5  WvaporDownStallTall TurbHeights WvaporDownStall_303 HeightKm TurbSelect none PANEL:i@ST,@DN,@C400     NorthEastOutside none WvaporDownStall_TALL_CO_C0400_G10M5.jpg
-LinePlot: CO_UP_C1600_G10M5  WvaporDownStallTall TurbHeights WvaporDownStall_303 HeightKm TurbSelect none PANEL:i@ST,@DN,@C1600    NorthEastOutside none WvaporDownStall_TALL_CO_C1600_G10M5.jpg
+#LinePlot: CO_UP_C0050_G10M5  WvaporDownStallTall TurbHeights WvaporDownStall_303 HeightKm TurbSelect none PANEL:i@ST,@DN,@C50      NorthEastOutside none WvaporDownStall_TALL_CO_C0050_G10M5.jpg
+#LinePlot: CO_UP_C0400_G10M5  WvaporDownStallTall TurbHeights WvaporDownStall_303 HeightKm TurbSelect none PANEL:i@ST,@DN,@C400     NorthEastOutside none WvaporDownStall_TALL_CO_C0400_G10M5.jpg
+#LinePlot: CO_UP_C1600_G10M5  WvaporDownStallTall TurbHeights WvaporDownStall_303 HeightKm TurbSelect none PANEL:i@ST,@DN,@C1600    NorthEastOutside none WvaporDownStall_TALL_CO_C1600_G10M5.jpg
 
-LinePlot: CG_UP_C0050_S298  WvaporDownStallTall TurbHeights WvaporDownStall_298 HeightKm TurbSelect none PANEL:i@ST,@DN,@C50,@S298      NorthEastOutside none WvaporDownStall_TALL_CG_C0050_S298.jpg
-LinePlot: CG_UP_C0400_S298  WvaporDownStallTall TurbHeights WvaporDownStall_298 HeightKm TurbSelect none PANEL:i@ST,@DN,@C400,@S298     NorthEastOutside none WvaporDownStall_TALL_CG_C0400_S298.jpg
-LinePlot: CG_UP_C1600_S298  WvaporDownStallTall TurbHeights WvaporDownStall_298 HeightKm TurbSelect none PANEL:i@ST,@DN,@C1600,@S298    NorthEastOutside none WvaporDownStall_TALL_CG_C1600_S298.jpg
+#LinePlot: CG_UP_C0050_S298  WvaporDownStallTall TurbHeights WvaporDownStall_298 HeightKm TurbSelect none PANEL:i@ST,@DN,@C50,@S298      NorthEastOutside none WvaporDownStall_TALL_CG_C0050_S298.jpg
+#LinePlot: CG_UP_C0400_S298  WvaporDownStallTall TurbHeights WvaporDownStall_298 HeightKm TurbSelect none PANEL:i@ST,@DN,@C400,@S298     NorthEastOutside none WvaporDownStall_TALL_CG_C0400_S298.jpg
+#LinePlot: CG_UP_C1600_S298  WvaporDownStallTall TurbHeights WvaporDownStall_298 HeightKm TurbSelect none PANEL:i@ST,@DN,@C1600,@S298    NorthEastOutside none WvaporDownStall_TALL_CG_C1600_S298.jpg
 
 LinePlot: CG_UP_C50_C1600_S298  WvaporDownStallTall TurbHeights WvaporDownStall_298 HeightKm TurbSelect none PANEL:i@ST,@DN,@S298    NorthEastOutside none WvaporDownStall_TALL_CG_C50_C1600_S298.jpg
 
@@ -1673,94 +1673,94 @@ PcolorPlot: DIAGS/hist2d_lwp_b4_cot      1 1e5 10:1000:100000 log _ LWP_(mm) Clo
 ####################### Plot Sets ############################
 
 #### For Update/Paper
-PlotSet: CO_UP_C0050_G10M5 3 z.atex.ccn0050.sst293.gcn10m5.1um S293 black - 0.0 z.atex.ccn0050.sst298.gcn10m5.1um S298 cyan - 0.0 z.atex.ccn0050.sst303.gcn10m5.1um S303 magenta - 0.0
-PlotSet: CO_UP_C0100_G10M5 3 z.atex.ccn0100.sst293.gcn10m5.1um S293 black - 0.0 z.atex.ccn0100.sst298.gcn10m5.1um S298 cyan - 0.0 z.atex.ccn0100.sst303.gcn10m5.1um S303 magenta - 0.0
-PlotSet: CO_UP_C0200_G10M5 3 z.atex.ccn0200.sst293.gcn10m5.1um S293 black - 0.0 z.atex.ccn0200.sst298.gcn10m5.1um S298 cyan - 0.0 z.atex.ccn0200.sst303.gcn10m5.1um S303 magenta - 0.0
-PlotSet: CO_UP_C0400_G10M5 3 z.atex.ccn0400.sst293.gcn10m5.1um S293 black - 0.0 z.atex.ccn0400.sst298.gcn10m5.1um S298 cyan - 0.0 z.atex.ccn0400.sst303.gcn10m5.1um S303 magenta - 0.0
-PlotSet: CO_UP_C0800_G10M5 3 z.atex.ccn0800.sst293.gcn10m5.1um S293 black - 0.0 z.atex.ccn0800.sst298.gcn10m5.1um S298 cyan - 0.0 z.atex.ccn0800.sst303.gcn10m5.1um S303 magenta - 0.0
-PlotSet: CO_UP_C1200_G10M5 3 z.atex.ccn1200.sst293.gcn10m5.1um S293 black - 0.0 z.atex.ccn1200.sst298.gcn10m5.1um S298 cyan - 0.0 z.atex.ccn1200.sst303.gcn10m5.1um S303 magenta - 0.0
-PlotSet: CO_UP_C1600_G10M5 3 z.atex.ccn1600.sst293.gcn10m5.1um S293 black - 0.0 z.atex.ccn1600.sst298.gcn10m5.1um S298 cyan - 0.0 z.atex.ccn1600.sst303.gcn10m5.1um S303 magenta - 0.0
+PlotSet: CO_UP_C0050_G10M5 3 z.atex.ccn0050.sst293.gcn10m5.1um S293 black - 0.0 1 1 z.atex.ccn0050.sst298.gcn10m5.1um S298 cyan - 0.0 1 1 z.atex.ccn0050.sst303.gcn10m5.1um S303 magenta - 0.0 1 1
+PlotSet: CO_UP_C0100_G10M5 3 z.atex.ccn0100.sst293.gcn10m5.1um S293 black - 0.0 1 1 z.atex.ccn0100.sst298.gcn10m5.1um S298 cyan - 0.0 1 1 z.atex.ccn0100.sst303.gcn10m5.1um S303 magenta - 0.0 1 1
+PlotSet: CO_UP_C0200_G10M5 3 z.atex.ccn0200.sst293.gcn10m5.1um S293 black - 0.0 1 1 z.atex.ccn0200.sst298.gcn10m5.1um S298 cyan - 0.0 1 1 z.atex.ccn0200.sst303.gcn10m5.1um S303 magenta - 0.0 1 1
+PlotSet: CO_UP_C0400_G10M5 3 z.atex.ccn0400.sst293.gcn10m5.1um S293 black - 0.0 1 1 z.atex.ccn0400.sst298.gcn10m5.1um S298 cyan - 0.0 1 1 z.atex.ccn0400.sst303.gcn10m5.1um S303 magenta - 0.0 1 1
+PlotSet: CO_UP_C0800_G10M5 3 z.atex.ccn0800.sst293.gcn10m5.1um S293 black - 0.0 1 1 z.atex.ccn0800.sst298.gcn10m5.1um S298 cyan - 0.0 1 1 z.atex.ccn0800.sst303.gcn10m5.1um S303 magenta - 0.0 1 1
+PlotSet: CO_UP_C1200_G10M5 3 z.atex.ccn1200.sst293.gcn10m5.1um S293 black - 0.0 1 1 z.atex.ccn1200.sst298.gcn10m5.1um S298 cyan - 0.0 1 1 z.atex.ccn1200.sst303.gcn10m5.1um S303 magenta - 0.0 1 1
+PlotSet: CO_UP_C1600_G10M5 3 z.atex.ccn1600.sst293.gcn10m5.1um S293 black - 0.0 1 1 z.atex.ccn1600.sst298.gcn10m5.1um S298 cyan - 0.0 1 1 z.atex.ccn1600.sst303.gcn10m5.1um S303 magenta - 0.0 1 1
 
-PlotSet: CO_UP_S293_G10M5 3 z.atex.ccn0050.sst293.gcn10m5.1um C50 black - 0.0 z.atex.ccn0400.sst293.gcn10m5.1um C400 cyan - 0.0 z.atex.ccn1600.sst293.gcn10m5.1um C1600 magenta - 0.0
-PlotSet: CO_UP_S298_G10M5 3 z.atex.ccn0050.sst298.gcn10m5.1um C50 black - 0.0 z.atex.ccn0400.sst298.gcn10m5.1um C400 cyan - 0.0 z.atex.ccn1600.sst298.gcn10m5.1um C1600 magenta - 0.0
-PlotSet: CO_UP_S303_G10M5 3 z.atex.ccn0050.sst303.gcn10m5.1um C50 black - 0.0 z.atex.ccn0400.sst303.gcn10m5.1um C400 cyan - 0.0 z.atex.ccn1600.sst303.gcn10m5.1um C1600 magenta - 0.0
+PlotSet: CO_UP_S293_G10M5 3 z.atex.ccn0050.sst293.gcn10m5.1um C50 black - 0.0 1 1 z.atex.ccn0400.sst293.gcn10m5.1um C400 cyan - 0.0 1 1 z.atex.ccn1600.sst293.gcn10m5.1um C1600 magenta - 0.0 1 1
+PlotSet: CO_UP_S298_G10M5 3 z.atex.ccn0050.sst298.gcn10m5.1um C50 black - 0.0 1 1 z.atex.ccn0400.sst298.gcn10m5.1um C400 cyan - 0.0 1 1 z.atex.ccn1600.sst298.gcn10m5.1um C1600 magenta - 0.0 1 1
+PlotSet: CO_UP_S303_G10M5 3 z.atex.ccn0050.sst303.gcn10m5.1um C50 black - 0.0 1 1 z.atex.ccn0400.sst303.gcn10m5.1um C400 cyan - 0.0 1 1 z.atex.ccn1600.sst303.gcn10m5.1um C1600 magenta - 0.0 1 1
 
-PlotSet: CO_UP_S293_G10M5_L 4 z.atex.ccn0050.sst293.gcn10m5.1um C50 black - 0.0 z.atex.ccn0100.sst293.gcn10m5.1um C100 cyan - 0.0 z.atex.ccn0200.sst293.gcn10m5.1um C200 magenta - 0.0 z.atex.ccn0400.sst293.gcn10m5.1um C400 b - 0.0
-PlotSet: CO_UP_S298_G10M5_L 4 z.atex.ccn0050.sst298.gcn10m5.1um C50 black - 0.0 z.atex.ccn0100.sst298.gcn10m5.1um C100 cyan - 0.0 z.atex.ccn0200.sst298.gcn10m5.1um C200 magenta - 0.0 z.atex.ccn0400.sst298.gcn10m5.1um C400 b - 0.0
-PlotSet: CO_UP_S303_G10M5_L 4 z.atex.ccn0050.sst303.gcn10m5.1um C50 black - 0.0 z.atex.ccn0100.sst303.gcn10m5.1um C100 cyan - 0.0 z.atex.ccn0200.sst303.gcn10m5.1um C200 magenta - 0.0 z.atex.ccn0400.sst303.gcn10m5.1um C400 b - 0.0
+PlotSet: CO_UP_S293_G10M5_L 4 z.atex.ccn0050.sst293.gcn10m5.1um C50 black - 0.0 1 1 z.atex.ccn0100.sst293.gcn10m5.1um C100 cyan - 0.0 1 1 z.atex.ccn0200.sst293.gcn10m5.1um C200 magenta - 0.0 1 1 z.atex.ccn0400.sst293.gcn10m5.1um C400 b - 0.0 1 1
+PlotSet: CO_UP_S298_G10M5_L 4 z.atex.ccn0050.sst298.gcn10m5.1um C50 black - 0.0 1 1 z.atex.ccn0100.sst298.gcn10m5.1um C100 cyan - 0.0 1 1 z.atex.ccn0200.sst298.gcn10m5.1um C200 magenta - 0.0 1 1 z.atex.ccn0400.sst298.gcn10m5.1um C400 b - 0.0 1 1
+PlotSet: CO_UP_S303_G10M5_L 4 z.atex.ccn0050.sst303.gcn10m5.1um C50 black - 0.0 1 1 z.atex.ccn0100.sst303.gcn10m5.1um C100 cyan - 0.0 1 1 z.atex.ccn0200.sst303.gcn10m5.1um C200 magenta - 0.0 1 1 z.atex.ccn0400.sst303.gcn10m5.1um C400 b - 0.0 1 1
 
-#PlotSet: CO_UP_S293_G10M5_ALL 7 z.atex.ccn0050.sst293.gcn10m5.1um C50 black - 0.0 z.atex.ccn0100.sst293.gcn10m5.1um C100 green - 0.0 z.atex.ccn0200.sst293.gcn10m5.1um C200 blue - 0.0 z.atex.ccn0400.sst293.gcn10m5.1um C400 cyan - 0.0 z.atex.ccn0800.sst293.gcn10m5.1um C800 red - 0.0 z.atex.ccn1200.sst293.gcn10m5.1um C1200 yellow - 0.0 z.atex.ccn1600.sst293.gcn10m5.1um C1600 magenta - 0.0
-#PlotSet: CO_UP_S298_G10M5_ALL 7 z.atex.ccn0050.sst298.gcn10m5.1um C50 black - 0.0 z.atex.ccn0100.sst298.gcn10m5.1um C100 green - 0.0 z.atex.ccn0200.sst298.gcn10m5.1um C200 blue - 0.0 z.atex.ccn0400.sst298.gcn10m5.1um C400 cyan - 0.0 z.atex.ccn0800.sst298.gcn10m5.1um C800 red - 0.0 z.atex.ccn1200.sst298.gcn10m5.1um C1200 yellow - 0.0 z.atex.ccn1600.sst298.gcn10m5.1um C1600 magenta - 0.0
-#PlotSet: CO_UP_S303_G10M5_ALL 7 z.atex.ccn0050.sst303.gcn10m5.1um C50 black - 0.0 z.atex.ccn0100.sst303.gcn10m5.1um C100 green - 0.0 z.atex.ccn0200.sst303.gcn10m5.1um C200 blue - 0.0 z.atex.ccn0400.sst303.gcn10m5.1um C400 cyan - 0.0 z.atex.ccn0800.sst303.gcn10m5.1um C800 red - 0.0 z.atex.ccn1200.sst303.gcn10m5.1um C1200 yellow - 0.0 z.atex.ccn1600.sst303.gcn10m5.1um C1600 magenta - 0.0
+#PlotSet: CO_UP_S293_G10M5_ALL 7 z.atex.ccn0050.sst293.gcn10m5.1um C50 black - 0.0 1 1 z.atex.ccn0100.sst293.gcn10m5.1um C100 green - 0.0 1 1 z.atex.ccn0200.sst293.gcn10m5.1um C200 blue - 0.0 1 1 z.atex.ccn0400.sst293.gcn10m5.1um C400 cyan - 0.0 1 1 z.atex.ccn0800.sst293.gcn10m5.1um C800 red - 0.0 1 1 z.atex.ccn1200.sst293.gcn10m5.1um C1200 yellow - 0.0 1 1 z.atex.ccn1600.sst293.gcn10m5.1um C1600 magenta - 0.0 1 1
+#PlotSet: CO_UP_S298_G10M5_ALL 7 z.atex.ccn0050.sst298.gcn10m5.1um C50 black - 0.0 1 1 z.atex.ccn0100.sst298.gcn10m5.1um C100 green - 0.0 1 1 z.atex.ccn0200.sst298.gcn10m5.1um C200 blue - 0.0 1 1 z.atex.ccn0400.sst298.gcn10m5.1um C400 cyan - 0.0 1 1 z.atex.ccn0800.sst298.gcn10m5.1um C800 red - 0.0 1 1 z.atex.ccn1200.sst298.gcn10m5.1um C1200 yellow - 0.0 1 1 z.atex.ccn1600.sst298.gcn10m5.1um C1600 magenta - 0.0 1 1
+#PlotSet: CO_UP_S303_G10M5_ALL 7 z.atex.ccn0050.sst303.gcn10m5.1um C50 black - 0.0 1 1 z.atex.ccn0100.sst303.gcn10m5.1um C100 green - 0.0 1 1 z.atex.ccn0200.sst303.gcn10m5.1um C200 blue - 0.0 1 1 z.atex.ccn0400.sst303.gcn10m5.1um C400 cyan - 0.0 1 1 z.atex.ccn0800.sst303.gcn10m5.1um C800 red - 0.0 1 1 z.atex.ccn1200.sst303.gcn10m5.1um C1200 yellow - 0.0 1 1 z.atex.ccn1600.sst303.gcn10m5.1um C1600 magenta - 0.0 1 1
 
 # skip the CCN 1200 case - have enough with the other cases
-PlotSet: CO_UP_S293_G10M5_ALL 6 z.atex.ccn0050.sst293.gcn10m5.1um C50 black - 0.0 z.atex.ccn0100.sst293.gcn10m5.1um C100 green - 0.0 z.atex.ccn0200.sst293.gcn10m5.1um C200 blue - 0.0 z.atex.ccn0400.sst293.gcn10m5.1um C400 cyan - 0.0 z.atex.ccn0800.sst293.gcn10m5.1um C800 red - 0.0 z.atex.ccn1600.sst293.gcn10m5.1um C1600 magenta - 0.0
-PlotSet: CO_UP_S298_G10M5_ALL 6 z.atex.ccn0050.sst298.gcn10m5.1um C50 black - 0.0 z.atex.ccn0100.sst298.gcn10m5.1um C100 green - 0.0 z.atex.ccn0200.sst298.gcn10m5.1um C200 blue - 0.0 z.atex.ccn0400.sst298.gcn10m5.1um C400 cyan - 0.0 z.atex.ccn0800.sst298.gcn10m5.1um C800 red - 0.0 z.atex.ccn1600.sst298.gcn10m5.1um C1600 magenta - 0.0
-PlotSet: CO_UP_S303_G10M5_ALL 6 z.atex.ccn0050.sst303.gcn10m5.1um C50 black - 0.0 z.atex.ccn0100.sst303.gcn10m5.1um C100 green - 0.0 z.atex.ccn0200.sst303.gcn10m5.1um C200 blue - 0.0 z.atex.ccn0400.sst303.gcn10m5.1um C400 cyan - 0.0 z.atex.ccn0800.sst303.gcn10m5.1um C800 red - 0.0 z.atex.ccn1600.sst303.gcn10m5.1um C1600 magenta - 0.0
+PlotSet: CO_UP_S293_G10M5_ALL 6 z.atex.ccn0050.sst293.gcn10m5.1um C50 black - 0.0 1 1 z.atex.ccn0100.sst293.gcn10m5.1um C100 green - 0.0 1 1 z.atex.ccn0200.sst293.gcn10m5.1um C200 blue - 0.0 1 1 z.atex.ccn0400.sst293.gcn10m5.1um C400 cyan - 0.0 1 1 z.atex.ccn0800.sst293.gcn10m5.1um C800 red - 0.0 1 1 z.atex.ccn1600.sst293.gcn10m5.1um C1600 magenta - 0.0 1 1
+PlotSet: CO_UP_S298_G10M5_ALL 6 z.atex.ccn0050.sst298.gcn10m5.1um C50 black - 0.0 1 1 z.atex.ccn0100.sst298.gcn10m5.1um C100 green - 0.0 1 1 z.atex.ccn0200.sst298.gcn10m5.1um C200 blue - 0.0 1 1 z.atex.ccn0400.sst298.gcn10m5.1um C400 cyan - 0.0 1 1 z.atex.ccn0800.sst298.gcn10m5.1um C800 red - 0.0 1 1 z.atex.ccn1600.sst298.gcn10m5.1um C1600 magenta - 0.0 1 1
+PlotSet: CO_UP_S303_G10M5_ALL 6 z.atex.ccn0050.sst303.gcn10m5.1um C50 black - 0.0 1 1 z.atex.ccn0100.sst303.gcn10m5.1um C100 green - 0.0 1 1 z.atex.ccn0200.sst303.gcn10m5.1um C200 blue - 0.0 1 1 z.atex.ccn0400.sst303.gcn10m5.1um C400 cyan - 0.0 1 1 z.atex.ccn0800.sst303.gcn10m5.1um C800 red - 0.0 1 1 z.atex.ccn1600.sst303.gcn10m5.1um C1600 magenta - 0.0 1 1
 
 # Vary GCCN
-PlotSet: CG_UP_C0050_S298 3 z.atex.ccn0050.sst298.gcn10m4.3um G10M4 black - 0.0 z.atex.ccn0050.sst298.gcn10m2.3um G10M2 cyan - 0.0 z.atex.ccn0050.sst298.gcn10m0.3um G10M0 magenta - 0.0
-PlotSet: CG_UP_C0400_S298 3 z.atex.ccn0400.sst298.gcn10m4.3um G10M4 black - 0.0 z.atex.ccn0400.sst298.gcn10m2.3um G10M2 cyan - 0.0 z.atex.ccn0400.sst298.gcn10m0.3um G10M0 magenta - 0.0
-PlotSet: CG_UP_C1600_S298 3 z.atex.ccn1600.sst298.gcn10m4.3um G10M4 black - 0.0 z.atex.ccn1600.sst298.gcn10m2.3um G10M2 cyan - 0.0 z.atex.ccn1600.sst298.gcn10m0.3um G10M0 magenta - 0.0
+PlotSet: CG_UP_C0050_S298 3 z.atex.ccn0050.sst298.gcn10m4.3um G10M4 black - 0.0 1 1 z.atex.ccn0050.sst298.gcn10m2.3um G10M2 cyan - 0.0 1 1 z.atex.ccn0050.sst298.gcn10m0.3um G10M0 magenta - 0.0 1 1
+PlotSet: CG_UP_C0400_S298 3 z.atex.ccn0400.sst298.gcn10m4.3um G10M4 black - 0.0 1 1 z.atex.ccn0400.sst298.gcn10m2.3um G10M2 cyan - 0.0 1 1 z.atex.ccn0400.sst298.gcn10m0.3um G10M0 magenta - 0.0 1 1
+PlotSet: CG_UP_C1600_S298 3 z.atex.ccn1600.sst298.gcn10m4.3um G10M4 black - 0.0 1 1 z.atex.ccn1600.sst298.gcn10m2.3um G10M2 cyan - 0.0 1 1 z.atex.ccn1600.sst298.gcn10m0.3um G10M0 magenta - 0.0 1 1
 
-PlotSet: CG_UP_C50_C1600_S298 4 z.atex.ccn0050.sst298.gcn10m4.3um C50,G10M4 black - 0.0 z.atex.ccn0050.sst298.gcn10m0.3um C50,G10M0 black -- 0.0 z.atex.ccn1600.sst298.gcn10m4.3um C1600,G10M4 magenta - 0.0 z.atex.ccn1600.sst298.gcn10m0.3um C1600,G10M0 magenta -- 0.0
+PlotSet: CG_UP_C50_C1600_S298 4 z.atex.ccn0050.sst298.gcn10m4.3um C50,G10M4 black - 0.0 2 1 z.atex.ccn0050.sst298.gcn10m0.3um C50,G10M0 black -- 0.0 2 1 z.atex.ccn1600.sst298.gcn10m4.3um C1600,G10M4 magenta - 0.0 1 1 z.atex.ccn1600.sst298.gcn10m0.3um C1600,G10M0 magenta -- 0.0 1 1
 
 #### 1um GCCN median radius ####
 
 # Vary CCN, hold SST constant
-PlotSet: CO_S293_G10M5 7 z.atex.ccn0050.sst293.gcn10m5.1um 50/cc black - 0.0 z.atex.ccn0100.sst293.gcn10m5.1um 100/cc black -- 0.0 z.atex.ccn0200.sst293.gcn10m5.1um 200/cc cyan - 0.0 z.atex.ccn0400.sst293.gcn10m5.1um 400/cc cyan -- 0.0 z.atex.ccn0800.sst293.gcn10m5.1um 800/cc magenta - 0.0 z.atex.ccn1200.sst293.gcn10m5.1um 1200/cc magenta -- 0.0 z.atex.ccn1600.sst293.gcn10m5.1um 1600/cc blue - 0.0
-PlotSet: CO_S298_G10M5 7 z.atex.ccn0050.sst298.gcn10m5.1um 50/cc black - 0.0 z.atex.ccn0100.sst298.gcn10m5.1um 100/cc black -- 0.0 z.atex.ccn0200.sst298.gcn10m5.1um 200/cc cyan - 0.0 z.atex.ccn0400.sst298.gcn10m5.1um 400/cc cyan -- 0.0 z.atex.ccn0800.sst298.gcn10m5.1um 800/cc magenta - 0.0 z.atex.ccn1200.sst298.gcn10m5.1um 1200/cc magenta -- 0.0 z.atex.ccn1600.sst298.gcn10m5.1um 1600/cc blue - 0.0
-PlotSet: CO_S303_G10M5 7 z.atex.ccn0050.sst303.gcn10m5.1um 50/cc black - 0.0 z.atex.ccn0100.sst303.gcn10m5.1um 100/cc black -- 0.0 z.atex.ccn0200.sst303.gcn10m5.1um 200/cc cyan - 0.0 z.atex.ccn0400.sst303.gcn10m5.1um 400/cc cyan -- 0.0 z.atex.ccn0800.sst303.gcn10m5.1um 800/cc magenta - 0.0 z.atex.ccn1200.sst303.gcn10m5.1um 1200/cc magenta -- 0.0 z.atex.ccn1600.sst303.gcn10m5.1um 1600/cc blue - 0.0
+PlotSet: CO_S293_G10M5 7 z.atex.ccn0050.sst293.gcn10m5.1um 50/cc black - 0.0 1 1 z.atex.ccn0100.sst293.gcn10m5.1um 100/cc black -- 0.0 1 1 z.atex.ccn0200.sst293.gcn10m5.1um 200/cc cyan - 0.0 1 1 z.atex.ccn0400.sst293.gcn10m5.1um 400/cc cyan -- 0.0 1 1 z.atex.ccn0800.sst293.gcn10m5.1um 800/cc magenta - 0.0 1 1 z.atex.ccn1200.sst293.gcn10m5.1um 1200/cc magenta -- 0.0 1 1 z.atex.ccn1600.sst293.gcn10m5.1um 1600/cc blue - 0.0 1 1
+PlotSet: CO_S298_G10M5 7 z.atex.ccn0050.sst298.gcn10m5.1um 50/cc black - 0.0 1 1 z.atex.ccn0100.sst298.gcn10m5.1um 100/cc black -- 0.0 1 1 z.atex.ccn0200.sst298.gcn10m5.1um 200/cc cyan - 0.0 1 1 z.atex.ccn0400.sst298.gcn10m5.1um 400/cc cyan -- 0.0 1 1 z.atex.ccn0800.sst298.gcn10m5.1um 800/cc magenta - 0.0 1 1 z.atex.ccn1200.sst298.gcn10m5.1um 1200/cc magenta -- 0.0 1 1 z.atex.ccn1600.sst298.gcn10m5.1um 1600/cc blue - 0.0 1 1
+PlotSet: CO_S303_G10M5 7 z.atex.ccn0050.sst303.gcn10m5.1um 50/cc black - 0.0 1 1 z.atex.ccn0100.sst303.gcn10m5.1um 100/cc black -- 0.0 1 1 z.atex.ccn0200.sst303.gcn10m5.1um 200/cc cyan - 0.0 1 1 z.atex.ccn0400.sst303.gcn10m5.1um 400/cc cyan -- 0.0 1 1 z.atex.ccn0800.sst303.gcn10m5.1um 800/cc magenta - 0.0 1 1 z.atex.ccn1200.sst303.gcn10m5.1um 1200/cc magenta -- 0.0 1 1 z.atex.ccn1600.sst303.gcn10m5.1um 1600/cc blue - 0.0 1 1
 
 # Vary SST, hold CCN constant
-PlotSet: CO_C0050_G10M5 3 z.atex.ccn0050.sst293.gcn10m5.1um 293K black - 0.0 z.atex.ccn0050.sst298.gcn10m5.1um 298K black -- 0.0 z.atex.ccn0050.sst303.gcn10m5.1um 303K cyan - 0.0
-PlotSet: CO_C0100_G10M5 3 z.atex.ccn0100.sst293.gcn10m5.1um 293K black - 0.0 z.atex.ccn0100.sst298.gcn10m5.1um 298K black -- 0.0 z.atex.ccn0100.sst303.gcn10m5.1um 303K cyan - 0.0
-PlotSet: CO_C0200_G10M5 3 z.atex.ccn0200.sst293.gcn10m5.1um 293K black - 0.0 z.atex.ccn0200.sst298.gcn10m5.1um 298K black -- 0.0 z.atex.ccn0200.sst303.gcn10m5.1um 303K cyan - 0.0
-PlotSet: CO_C0400_G10M5 3 z.atex.ccn0400.sst293.gcn10m5.1um 293K black - 0.0 z.atex.ccn0400.sst298.gcn10m5.1um 298K black -- 0.0 z.atex.ccn0400.sst303.gcn10m5.1um 303K cyan - 0.0
-PlotSet: CO_C0800_G10M5 3 z.atex.ccn0800.sst293.gcn10m5.1um 293K black - 0.0 z.atex.ccn0800.sst298.gcn10m5.1um 298K black -- 0.0 z.atex.ccn0800.sst303.gcn10m5.1um 303K cyan - 0.0
-PlotSet: CO_C1200_G10M5 3 z.atex.ccn1200.sst293.gcn10m5.1um 293K black - 0.0 z.atex.ccn1200.sst298.gcn10m5.1um 298K black -- 0.0 z.atex.ccn1200.sst303.gcn10m5.1um 303K cyan - 0.0
-PlotSet: CO_C1600_G10M5 3 z.atex.ccn1600.sst293.gcn10m5.1um 293K black - 0.0 z.atex.ccn1600.sst298.gcn10m5.1um 298K black -- 0.0 z.atex.ccn1600.sst303.gcn10m5.1um 303K cyan - 0.0
+PlotSet: CO_C0050_G10M5 3 z.atex.ccn0050.sst293.gcn10m5.1um 293K black - 0.0 1 1 z.atex.ccn0050.sst298.gcn10m5.1um 298K black -- 0.0 1 1 z.atex.ccn0050.sst303.gcn10m5.1um 303K cyan - 0.0 1 1
+PlotSet: CO_C0100_G10M5 3 z.atex.ccn0100.sst293.gcn10m5.1um 293K black - 0.0 1 1 z.atex.ccn0100.sst298.gcn10m5.1um 298K black -- 0.0 1 1 z.atex.ccn0100.sst303.gcn10m5.1um 303K cyan - 0.0 1 1
+PlotSet: CO_C0200_G10M5 3 z.atex.ccn0200.sst293.gcn10m5.1um 293K black - 0.0 1 1 z.atex.ccn0200.sst298.gcn10m5.1um 298K black -- 0.0 1 1 z.atex.ccn0200.sst303.gcn10m5.1um 303K cyan - 0.0 1 1
+PlotSet: CO_C0400_G10M5 3 z.atex.ccn0400.sst293.gcn10m5.1um 293K black - 0.0 1 1 z.atex.ccn0400.sst298.gcn10m5.1um 298K black -- 0.0 1 1 z.atex.ccn0400.sst303.gcn10m5.1um 303K cyan - 0.0 1 1
+PlotSet: CO_C0800_G10M5 3 z.atex.ccn0800.sst293.gcn10m5.1um 293K black - 0.0 1 1 z.atex.ccn0800.sst298.gcn10m5.1um 298K black -- 0.0 1 1 z.atex.ccn0800.sst303.gcn10m5.1um 303K cyan - 0.0 1 1
+PlotSet: CO_C1200_G10M5 3 z.atex.ccn1200.sst293.gcn10m5.1um 293K black - 0.0 1 1 z.atex.ccn1200.sst298.gcn10m5.1um 298K black -- 0.0 1 1 z.atex.ccn1200.sst303.gcn10m5.1um 303K cyan - 0.0 1 1
+PlotSet: CO_C1600_G10M5 3 z.atex.ccn1600.sst293.gcn10m5.1um 293K black - 0.0 1 1 z.atex.ccn1600.sst298.gcn10m5.1um 298K black -- 0.0 1 1 z.atex.ccn1600.sst303.gcn10m5.1um 303K cyan - 0.0 1 1
 
 # For POP smeas
-PlotSet: CO_POP_G10M5 7 CO_C0050_G10M5 C0050 black - 0.0 CO_C0100_G10M5 C0100 black - 0.0 CO_C0200_G10M5 C0200 cyan - 0.0 CO_C0400_G10M5 C0400 cyan - 0.0 CO_C0800_G10M5 C0800 magenta - 0.0 CO_C1200_G10M5 C1200 magenta - 0.0 CO_C1600_G10M5 C1600 blue - 0.0
+PlotSet: CO_POP_G10M5 7 CO_C0050_G10M5 C0050 black - 0.0 1 1 CO_C0100_G10M5 C0100 black - 0.0 1 1 CO_C0200_G10M5 C0200 cyan - 0.0 1 1 CO_C0400_G10M5 C0400 cyan - 0.0 1 1 CO_C0800_G10M5 C0800 magenta - 0.0 1 1 CO_C1200_G10M5 C1200 magenta - 0.0 1 1 CO_C1600_G10M5 C1600 blue - 0.0 1 1
 
 #### 3um GCCN median radius ####
 
 # Vary GCCN (3um mean radius)
-PlotSet: CG_C0050_S298 3 z.atex.ccn0050.sst298.gcn10m0.3um 1/cc black - 0.0 z.atex.ccn0050.sst298.gcn10m2.3um 10e-2/cc black -- 0.0 z.atex.ccn0050.sst298.gcn10m4.3um 10e-4/cc cyan - 0.0
-PlotSet: CG_C0400_S298 3 z.atex.ccn0400.sst298.gcn10m0.3um 1/cc black - 0.0 z.atex.ccn0400.sst298.gcn10m2.3um 10e-2/cc black -- 0.0 z.atex.ccn0400.sst298.gcn10m4.3um 10e-4/cc cyan - 0.0
-PlotSet: CG_C1600_S298 3 z.atex.ccn1600.sst298.gcn10m0.3um 1/cc black - 0.0 z.atex.ccn1600.sst298.gcn10m2.3um 10e-2/cc black -- 0.0 z.atex.ccn1600.sst298.gcn10m4.3um 10e-4/cc cyan - 0.0
+PlotSet: CG_C0050_S298 3 z.atex.ccn0050.sst298.gcn10m0.3um 1/cc black - 0.0 1 1 z.atex.ccn0050.sst298.gcn10m2.3um 10e-2/cc black -- 0.0 1 1 z.atex.ccn0050.sst298.gcn10m4.3um 10e-4/cc cyan - 0.0 1 1
+PlotSet: CG_C0400_S298 3 z.atex.ccn0400.sst298.gcn10m0.3um 1/cc black - 0.0 1 1 z.atex.ccn0400.sst298.gcn10m2.3um 10e-2/cc black -- 0.0 1 1 z.atex.ccn0400.sst298.gcn10m4.3um 10e-4/cc cyan - 0.0 1 1
+PlotSet: CG_C1600_S298 3 z.atex.ccn1600.sst298.gcn10m0.3um 1/cc black - 0.0 1 1 z.atex.ccn1600.sst298.gcn10m2.3um 10e-2/cc black -- 0.0 1 1 z.atex.ccn1600.sst298.gcn10m4.3um 10e-4/cc cyan - 0.0 1 1
 
-PlotSet: CG_C0400_S303 3 z.atex.ccn0400.sst303.gcn10m0.3um 1/cc black - 0.0 z.atex.ccn0400.sst303.gcn10m2.3um 10e-2/cc black -- 0.0 z.atex.ccn0400.sst303.gcn10m4.3um 10e-4/cc cyan - 0.0
+PlotSet: CG_C0400_S303 3 z.atex.ccn0400.sst303.gcn10m0.3um 1/cc black - 0.0 1 1 z.atex.ccn0400.sst303.gcn10m2.3um 10e-2/cc black -- 0.0 1 1 z.atex.ccn0400.sst303.gcn10m4.3um 10e-4/cc cyan - 0.0 1 1
 
 # Vary SST (only on the CCN = 400/cc case)
-PlotSet: CG_C0400_G10M0 2 z.atex.ccn0400.sst298.gcn10m0.3um 298K black - 0.0 z.atex.ccn0400.sst303.gcn10m0.3um 303K black -- 0.0
-PlotSet: CG_C0400_G10M2 2 z.atex.ccn0400.sst298.gcn10m2.3um 298K black - 0.0 z.atex.ccn0400.sst303.gcn10m2.3um 303K black -- 0.0
-PlotSet: CG_C0400_G10M4 2 z.atex.ccn0400.sst298.gcn10m4.3um 298K black - 0.0 z.atex.ccn0400.sst303.gcn10m4.3um 303K black -- 0.0
+PlotSet: CG_C0400_G10M0 2 z.atex.ccn0400.sst298.gcn10m0.3um 298K black - 0.0 1 1 z.atex.ccn0400.sst303.gcn10m0.3um 303K black -- 0.0 1 1
+PlotSet: CG_C0400_G10M2 2 z.atex.ccn0400.sst298.gcn10m2.3um 298K black - 0.0 1 1 z.atex.ccn0400.sst303.gcn10m2.3um 303K black -- 0.0 1 1
+PlotSet: CG_C0400_G10M4 2 z.atex.ccn0400.sst298.gcn10m4.3um 298K black - 0.0 1 1 z.atex.ccn0400.sst303.gcn10m4.3um 303K black -- 0.0 1 1
 
 # Vary CCN
-PlotSet: CG_S298_G10M0 3 z.atex.ccn0050.sst298.gcn10m0.3um 50/cc black - 0.0 z.atex.ccn0400.sst298.gcn10m0.3um 400/cc black -- 0.0 z.atex.ccn1600.sst298.gcn10m0.3um 1600/cc cyan - 0.0
-PlotSet: CG_S298_G10M2 3 z.atex.ccn0050.sst298.gcn10m2.3um 50/cc black - 0.0 z.atex.ccn0400.sst298.gcn10m2.3um 400/cc black -- 0.0 z.atex.ccn1600.sst298.gcn10m2.3um 1600/cc cyan - 0.0
-PlotSet: CG_S298_G10M4 3 z.atex.ccn0050.sst298.gcn10m4.3um 50/cc black - 0.0 z.atex.ccn0400.sst298.gcn10m4.3um 400/cc black -- 0.0 z.atex.ccn1600.sst298.gcn10m4.3um 1600/cc cyan - 0.0
+PlotSet: CG_S298_G10M0 3 z.atex.ccn0050.sst298.gcn10m0.3um 50/cc black - 0.0 1 1 z.atex.ccn0400.sst298.gcn10m0.3um 400/cc black -- 0.0 1 1 z.atex.ccn1600.sst298.gcn10m0.3um 1600/cc cyan - 0.0 1 1
+PlotSet: CG_S298_G10M2 3 z.atex.ccn0050.sst298.gcn10m2.3um 50/cc black - 0.0 1 1 z.atex.ccn0400.sst298.gcn10m2.3um 400/cc black -- 0.0 1 1 z.atex.ccn1600.sst298.gcn10m2.3um 1600/cc cyan - 0.0 1 1
+PlotSet: CG_S298_G10M4 3 z.atex.ccn0050.sst298.gcn10m4.3um 50/cc black - 0.0 1 1 z.atex.ccn0400.sst298.gcn10m4.3um 400/cc black -- 0.0 1 1 z.atex.ccn1600.sst298.gcn10m4.3um 1600/cc cyan - 0.0 1 1
 
 # For LTSS sample
-PlotSet: LTSS_SAMPLE 6 z.atex.ccn0050.sst293.gcn10m5.1um C0050-S293 black - 0.0 z.atex.ccn1600.sst293.gcn10m5.1um C1600-S293 black -- 0.0 z.atex.ccn0050.sst298.gcn10m5.1um C0050-S298 cyan - 0.0 z.atex.ccn1600.sst298.gcn10m5.1um C1600-S298 cyan -- 0.0 z.atex.ccn0050.sst303.gcn10m5.1um C0050-S303 magenta - 0.00 z.atex.ccn1600.sst303.gcn10m5.1um C1600-S303 magenta -- 0.00 
+PlotSet: LTSS_SAMPLE 6 z.atex.ccn0050.sst293.gcn10m5.1um C0050-S293 black - 0.0 1 1 z.atex.ccn1600.sst293.gcn10m5.1um C1600-S293 black -- 0.0 1 1 z.atex.ccn0050.sst298.gcn10m5.1um C0050-S298 cyan - 0.0 1 1 z.atex.ccn1600.sst298.gcn10m5.1um C1600-S298 cyan -- 0.0 1 1 z.atex.ccn0050.sst303.gcn10m5.1um C0050-S303 magenta - 0.00 1 1 z.atex.ccn1600.sst303.gcn10m5.1um C1600-S303 magenta -- 0.00  1 1
 
 # For Slope1dPlots
-PlotSet: CO_POP_SST_G10M5 3 smeas1d_pop_CO_S293_G10M5 293 black - 0.0 smeas1d_pop_CO_S298_G10M5 298 black - 0.0 smeas1d_pop_CO_S303_G10M5 303 cyan - 0.0
+PlotSet: CO_POP_SST_G10M5 3 smeas1d_pop_CO_S293_G10M5 293 black - 0.0 1 1 smeas1d_pop_CO_S298_G10M5 298 black - 0.0 1 1 smeas1d_pop_CO_S303_G10M5 303 cyan - 0.0 1 1
 
 # For albedo, surface divergence plots
-PlotSet: ContourPsetCCN 21 z.atex.ccn0050.sst293.gcn10m5.1um 293K black - 0.0 z.atex.ccn0050.sst298.gcn10m5.1um 298K black - 0.0 z.atex.ccn0050.sst303.gcn10m5.1um 303K black - 0.0 z.atex.ccn0100.sst293.gcn10m5.1um 293K black - 0.0 z.atex.ccn0100.sst298.gcn10m5.1um 298K black - 0.0 z.atex.ccn0100.sst303.gcn10m5.1um 303K black - 0.0 z.atex.ccn0200.sst293.gcn10m5.1um 293K black - 0.0 z.atex.ccn0200.sst298.gcn10m5.1um 298K black - 0.0 z.atex.ccn0200.sst303.gcn10m5.1um 303K black - 0.0 z.atex.ccn0400.sst293.gcn10m5.1um 293K black - 0.0 z.atex.ccn0400.sst298.gcn10m5.1um 298K black - 0.0 z.atex.ccn0400.sst303.gcn10m5.1um 303K black - 0.0 z.atex.ccn0800.sst293.gcn10m5.1um 293K black - 0.0 z.atex.ccn0800.sst298.gcn10m5.1um 298K black - 0.0 z.atex.ccn0800.sst303.gcn10m5.1um 303K black - 0.0 z.atex.ccn1200.sst293.gcn10m5.1um 293K black - 0.0 z.atex.ccn1200.sst298.gcn10m5.1um 298K black - 0.0 z.atex.ccn1200.sst303.gcn10m5.1um 303K black - 0.0 z.atex.ccn1600.sst293.gcn10m5.1um 293K black - 0.0 z.atex.ccn1600.sst298.gcn10m5.1um 298K black - 0.0 z.atex.ccn1600.sst303.gcn10m5.1um 303K black - 0.0
+PlotSet: ContourPsetCCN 21 z.atex.ccn0050.sst293.gcn10m5.1um 293K black - 0.0 1 1 z.atex.ccn0050.sst298.gcn10m5.1um 298K black - 0.0 1 1 z.atex.ccn0050.sst303.gcn10m5.1um 303K black - 0.0 1 1 z.atex.ccn0100.sst293.gcn10m5.1um 293K black - 0.0 1 1 z.atex.ccn0100.sst298.gcn10m5.1um 298K black - 0.0 1 1 z.atex.ccn0100.sst303.gcn10m5.1um 303K black - 0.0 1 1 z.atex.ccn0200.sst293.gcn10m5.1um 293K black - 0.0 1 1 z.atex.ccn0200.sst298.gcn10m5.1um 298K black - 0.0 1 1 z.atex.ccn0200.sst303.gcn10m5.1um 303K black - 0.0 1 1 z.atex.ccn0400.sst293.gcn10m5.1um 293K black - 0.0 1 1 z.atex.ccn0400.sst298.gcn10m5.1um 298K black - 0.0 1 1 z.atex.ccn0400.sst303.gcn10m5.1um 303K black - 0.0 1 1 z.atex.ccn0800.sst293.gcn10m5.1um 293K black - 0.0 1 1 z.atex.ccn0800.sst298.gcn10m5.1um 298K black - 0.0 1 1 z.atex.ccn0800.sst303.gcn10m5.1um 303K black - 0.0 1 1 z.atex.ccn1200.sst293.gcn10m5.1um 293K black - 0.0 1 1 z.atex.ccn1200.sst298.gcn10m5.1um 298K black - 0.0 1 1 z.atex.ccn1200.sst303.gcn10m5.1um 303K black - 0.0 1 1 z.atex.ccn1600.sst293.gcn10m5.1um 293K black - 0.0 1 1 z.atex.ccn1600.sst298.gcn10m5.1um 298K black - 0.0 1 1 z.atex.ccn1600.sst303.gcn10m5.1um 303K black - 0.0 1 1
 
-PlotSet: ContourPset_CO_EXTREMES 2 z.atex.ccn0050.sst293.gcn10m5.1um 293K black - 0.0 z.atex.ccn1600.sst303.gcn10m5.1um 303K black - 0.0
+PlotSet: ContourPset_CO_EXTREMES 2 z.atex.ccn0050.sst293.gcn10m5.1um 293K black - 0.0 1 1 z.atex.ccn1600.sst303.gcn10m5.1um 303K black - 0.0 1 1
 
-PlotSet: ContourPset_C400 3 z.atex.ccn0400.sst293.gcn10m5.1um 293K black - 0.0 z.atex.ccn0400.sst298.gcn10m5.1um 298K black - 0.0 z.atex.ccn0400.sst303.gcn10m5.1um 303K black - 0.0
+PlotSet: ContourPset_C400 3 z.atex.ccn0400.sst293.gcn10m5.1um 293K black - 0.0 1 1 z.atex.ccn0400.sst298.gcn10m5.1um 298K black - 0.0 1 1 z.atex.ccn0400.sst303.gcn10m5.1um 303K black - 0.0 1 1
 
-PlotSet: ContourPset_S298 3 z.atex.ccn0050.sst298.gcn10m5.1um 298K black - 0.0 z.atex.ccn0400.sst298.gcn10m5.1um 298K black - 0.0 z.atex.ccn1600.sst298.gcn10m5.1um 298K black - 0.0
+PlotSet: ContourPset_S298 3 z.atex.ccn0050.sst298.gcn10m5.1um 298K black - 0.0 1 1 z.atex.ccn0400.sst298.gcn10m5.1um 298K black - 0.0 1 1 z.atex.ccn1600.sst298.gcn10m5.1um 298K black - 0.0 1 1
 
-PlotSet: ContourPsetGCCN 12 z.atex.ccn0050.sst298.gcn10m0.3um 1/cc black - 0.0 z.atex.ccn0050.sst298.gcn10m2.3um 10e-2/cc black - 0.0 z.atex.ccn0050.sst298.gcn10m4.3um 10e-4/cc black - 0.0 z.atex.ccn0400.sst298.gcn10m0.3um 1/cc black - 0.0 z.atex.ccn0400.sst298.gcn10m2.3um 10e-2/cc black - 0.0 z.atex.ccn0400.sst298.gcn10m4.3um 10e-4/cc black - 0.0 z.atex.ccn1600.sst298.gcn10m0.3um 1/cc black - 0.0 z.atex.ccn1600.sst298.gcn10m2.3um 10e-2/cc black - 0.0 z.atex.ccn1600.sst298.gcn10m4.3um 10e-4/cc black - 0.0 z.atex.ccn0400.sst303.gcn10m0.3um 1/cc black - 0.0 z.atex.ccn0400.sst303.gcn10m2.3um 10e-2/cc black - 0.0 z.atex.ccn0400.sst303.gcn10m4.3um 10e-4/cc black - 0.0
+PlotSet: ContourPsetGCCN 12 z.atex.ccn0050.sst298.gcn10m0.3um 1/cc black - 0.0 1 1 z.atex.ccn0050.sst298.gcn10m2.3um 10e-2/cc black - 0.0 1 1 z.atex.ccn0050.sst298.gcn10m4.3um 10e-4/cc black - 0.0 1 1 z.atex.ccn0400.sst298.gcn10m0.3um 1/cc black - 0.0 1 1 z.atex.ccn0400.sst298.gcn10m2.3um 10e-2/cc black - 0.0 1 1 z.atex.ccn0400.sst298.gcn10m4.3um 10e-4/cc black - 0.0 1 1 z.atex.ccn1600.sst298.gcn10m0.3um 1/cc black - 0.0 1 1 z.atex.ccn1600.sst298.gcn10m2.3um 10e-2/cc black - 0.0 1 1 z.atex.ccn1600.sst298.gcn10m4.3um 10e-4/cc black - 0.0 1 1 z.atex.ccn0400.sst303.gcn10m0.3um 1/cc black - 0.0 1 1 z.atex.ccn0400.sst303.gcn10m2.3um 10e-2/cc black - 0.0 1 1 z.atex.ccn0400.sst303.gcn10m4.3um 10e-4/cc black - 0.0 1 1
 
-PlotSet: ContourPset_C400_S298 3 z.atex.ccn0400.sst298.gcn10m5.1um 10e-5/cc black - 0.0 z.atex.ccn0400.sst298.gcn10m2.3um 10e-2/cc black - 0.0 z.atex.ccn0400.sst298.gcn10m0.3um 1/cc black - 0.0
+PlotSet: ContourPset_C400_S298 3 z.atex.ccn0400.sst298.gcn10m5.1um 10e-5/cc black - 0.0 1 1 z.atex.ccn0400.sst298.gcn10m2.3um 10e-2/cc black - 0.0 1 1 z.atex.ccn0400.sst298.gcn10m0.3um 1/cc black - 0.0 1 1
 
 ####################### Plot Vars ################################
 # PlotVar: <name> <vname> <file_prefix> <label> <units> <axis_min> <axis_max> <scale>
@@ -2923,7 +2923,7 @@ PlotAxis: WvaporStall_293       -0.007  0.009 linear
 PlotAxis: WvaporStall_298       -0.02   0.02 linear
 PlotAxis: WvaporStall_303       -0.05   0.13 linear
 PlotAxis: WvaporUpStall_293        -0.05   0.03  linear
-PlotAxis: WvaporUpStall_298        -0.02   0.15  linear
+PlotAxis: WvaporUpStall_298        -0.05   0.15  linear
 PlotAxis: WvaporUpStall_303        -0.05   0.60  linear
 PlotAxis: WvaporDownStall_293      -0.02   0.01  linear
 PlotAxis: WvaporDownStall_298      -0.30   0.02  linear

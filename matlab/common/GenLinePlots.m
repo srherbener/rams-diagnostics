@@ -145,10 +145,12 @@ for iplot = 1:length(Config.LinePlots)
       LineColors{icase} = Config.PlotSets(ips).Cases(icase).Lcolor;
       LineStyles{icase} = Config.PlotSets(ips).Cases(icase).Lstyle;
       LineGscales(icase) = Config.PlotSets(ips).Cases(icase).Lgscale;
+      Xzoom = Config.PlotSets(ips).Cases(icase).Xzoom;
+      Yzoom = Config.PlotSets(ips).Cases(icase).Yzoom;
 
       Xfile = sprintf('%s_%s.h5', Xfprefix, Case);
       fprintf('Reading HDF5 file: %s\n', Xfile);
-      Xdata = ReadSelectXyzt(Xfile, Xvname, Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, Tmin, Tmax);
+      Xdata = ReadSelectXyzt(Xfile, Xvname, Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, Tmin, Tmax) .* Xzoom;
       Xdata(Xdata == UndefVal) = nan;
       if (strcmp(Smooth,'x') || strcmp(Smooth,'xy'))
         Xdata = SmoothFillTseries(Xdata, length(Xdata), Flen);
@@ -157,7 +159,7 @@ for iplot = 1:length(Config.LinePlots)
   
       Yfile = sprintf('%s_%s.h5', Yfprefix, Case);
       fprintf('Reading HDF5 file: %s\n', Yfile);
-      Ydata = ReadSelectXyzt(Yfile, Yvname, Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, Tmin, Tmax);
+      Ydata = ReadSelectXyzt(Yfile, Yvname, Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, Tmin, Tmax) .* Yzoom;
       Ydata(Ydata == UndefVal) = nan;
       if (strcmp(Smooth,'y') || strcmp(Smooth,'xy'))
         Ydata = SmoothFillTseries(Ydata, length(Ydata), Flen);
