@@ -56,17 +56,23 @@ function [ U, V, T, Zg, RH ] = GenInitDpFiles(Case)
   Ny = length(LAT);
   Nz = length(PRESS);
 
-  % Generate winds from analytic formulas
-  [ U V ] = GenInitWindField(LON, LAT, PRESS, Case);
+  % First generate 2D fields (lat,p) for all variables, then replicate for all longitudes.
+
+  % Generate zonal wind from analytic formulas. 
+  [ U_2D V_2D ] = GenInitWindField(LAT, PRESS, Case);
 
   T  = zeros([ Nx Ny Nz ]);
   Zg = zeros([ Nx Ny Nz ]);
   RH = zeros([ Nx Ny Nz ]);
+
+  % Replicate 2D fields (lat,p) for all longitude
+  U = repmat(reshape(U_2D, [ 1 Ny Nz ]), [ Nx 1 1 ]);
+  V = repmat(reshape(V_2D, [ 1 Ny Nz ]), [ Nx 1 1 ]);
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [ U V ] = GenInitWindField(Lon, Lat, Press, Case)
-% GenWindField generate initial wind field
+function [ U V ] = GenInitWindField(Lat, Press, Case)
+% GenWindField generate initial wind field in 2d (lat,p)
 
   % Parameters from Polvani and Esler, 2007
   U0 = 45;      % max jet speed (m/s)
@@ -97,12 +103,11 @@ function [ U V ] = GenInitWindField(Lon, Lat, Press, Case)
   %     US is a meridonal shear term
   %   V2 = 0;
 
-  Nx = length(Lon);
   Ny = length(Lat);
   Nz = length(Press);
 
-  U = zeros([ Nx Ny Nz ]);
-  V = zeros([ Nx Ny Nz ]);
+  U = zeros([ Ny Nz ]);
+  V = zeros([ Ny Nz ]);
 
   % Create log-pressure heights -> Z, and scaled heights -> Zscale = Z/Zt
   Z = H .* log(P0 ./ Press);
@@ -123,9 +128,7 @@ function [ U V ] = GenInitWindField(Lon, Lat, Press, Case)
   F = repmat(F, [ 1 Nz ]);
 
   % form 2D wind field in lat and z directions
-  % then repeat for all lon
-  U_2D = U0 .* F .* Zscale .* exp(-((Zscale).^2 - 1)./2);
-  U = repmat(reshape(U_2D, [ 1 Ny Nz ]), [ Nx 1 1 ]);
+  U = U0 .* F .* Zscale .* exp(-((Zscale).^2 - 1)./2);
 
   % If doing LC2, then add in the meridonal shear term
   if (Case == 2)
@@ -138,8 +141,7 @@ function [ U V ] = GenInitWindField(Lon, Lat, Press, Case)
     F = repmat(F', [ 1 Nz ]); % Note transpose on F inside repmat()
     
     % Create shear term in 2D, then replicate for all lon
-    US_2D = -Us .* exp(-Zscale) .* F;
-    US = repmat(reshape(US_2D, [ 1 Ny Nz]), [ Nx 1 1 ]);
+    US = -Us .* exp(-Zscale) .* F;
 
     U = U + US;
   end
