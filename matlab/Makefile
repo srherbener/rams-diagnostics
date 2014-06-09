@@ -5,7 +5,7 @@
 # Targets
 #
 
-all: atex/Makefile common/Makefile m_map/Makefile metpack/Makefile nctoolbox/Makefile obj_anal/Makefile tc_seed/Makefile ts_debby/Makefile tempest/Makefile
+all: atex/Makefile common/Makefile ideal_etc/Makefile m_map/Makefile metpack/Makefile nctoolbox/Makefile obj_anal/Makefile tc_seed/Makefile ts_debby/Makefile tempest/Makefile
 
 %/Makefile: .FORCE
 	$(MAKE) -C $(@D)
