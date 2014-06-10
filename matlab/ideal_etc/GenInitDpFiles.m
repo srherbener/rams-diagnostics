@@ -1,4 +1,4 @@
-function [ U, V, T, Zg, RH ] = GenInitDpFiles(Case)
+function [ U, V, T, Zg, RH, LAT, PRESS ] = GenInitDpFiles(Case)
 % GenInitDpFiles generate initial conditions in a dp file format for RAMS
 
   % Initialization is based on techniques described in
@@ -41,6 +41,24 @@ function [ U, V, T, Zg, RH ] = GenInitDpFiles(Case)
   Month = 1;
   Day = 1;
   Hour = 1200;
+ 
+  % Parameters from Polvani and Esler, 2007
+  U0 = 45;            % max jet speed (m/s)
+  Zt = 13000;         % temperature scale height (m)
+  Us = 45;            % m/s
+  Phi_s = 35;         % degrees
+  Delta_s = 20;       % degrees
+  Zs = 10000;         % m
+  T0 = 280;           % K, surface temp at 45N
+  Gamma0 = -0.0065;   % K/m, roughly moist adiabatic lapse rate
+  Alpha = 10;         % dimensionless
+  R = 287;            % J/kg/K
+  Omega = 7.297e-5;   % 1/s
+  RadEarth = 6.371e6; % m
+
+  H = 7500;  % m
+  P0 = 1000; % mb
+  
 
   % Grid:
   %   one degree in lat and lon
@@ -52,6 +70,10 @@ function [ U, V, T, Zg, RH ] = GenInitDpFiles(Case)
   LON = -180:179;
   PRESS = [ 1000 975 950 925 900 850 800 750 700 650 600 550 500 450 400 350 300 250 200 150 100 70 50 30 20 10 ];
 
+  
+  % Create log-pressure heights
+  Z = H .* log(P0 ./ PRESS);
+  
   Nx = length(LON);
   Ny = length(LAT);
   Nz = length(PRESS);
@@ -59,31 +81,22 @@ function [ U, V, T, Zg, RH ] = GenInitDpFiles(Case)
   % First generate 2D fields (lat,p) for all variables, then replicate for all longitudes.
 
   % Generate zonal wind from analytic formulas. 
-  [ U_2D V_2D ] = GenInitWindField(LAT, PRESS, Case);
+  [ U V ] = GenInitWindField(LAT, Z, Case, U0, Zt, Us, Phi_s, Delta_s, Zs);
+  
+  % Generate temperature field that is in thermal balance with U
+  [ T ] = GenTempBalanced(LAT, Z, PRESS, U, T0, Gamma0, Zt, Alpha, R, Omega, RadEarth);
 
-  T  = zeros([ Nx Ny Nz ]);
-  Zg = zeros([ Nx Ny Nz ]);
-  RH = zeros([ Nx Ny Nz ]);
+  Zg = zeros([ Ny Nz ]);
+  RH = zeros([ Ny Nz ]);
 
   % Replicate 2D fields (lat,p) for all longitude
-  U = repmat(reshape(U_2D, [ 1 Ny Nz ]), [ Nx 1 1 ]);
-  V = repmat(reshape(V_2D, [ 1 Ny Nz ]), [ Nx 1 1 ]);
+  %U = repmat(reshape(U_2D, [ 1 Ny Nz ]), [ Nx 1 1 ]);
+  %V = repmat(reshape(V_2D, [ 1 Ny Nz ]), [ Nx 1 1 ]);
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [ U V ] = GenInitWindField(Lat, Press, Case)
-% GenWindField generate initial wind field in 2d (lat,p)
-
-  % Parameters from Polvani and Esler, 2007
-  U0 = 45;      % max jet speed (m/s)
-  Zt = 13000;   % temperature scale height (m)
-  H  = 7500;    % atmospheric scale height (m)
-  P0 = 1000;    % reference pressure (mb)
-
-  Us = 45;      % m/s
-  Phi_s = 35;   % degrees
-  Delta_s = 20; % degrees
-  Zs = 10000;   % m
+function [ U V ] = GenInitWindField(Lat, Z, Case, U0, Zt, Us, Phi_s, Delta_s, Zs)
+% GenWindField generate initial wind field in 2d (lat,z)
 
   % Use formulas from Polvani and Esler, 2007 for the 2 Thorncroft et al., 1993 ETC cases
   %   Case == 1 --> LC1
@@ -104,13 +117,9 @@ function [ U V ] = GenInitWindField(Lat, Press, Case)
   %   V2 = 0;
 
   Ny = length(Lat);
-  Nz = length(Press);
+  Nz = length(Z);
 
-  U = zeros([ Ny Nz ]);
-  V = zeros([ Ny Nz ]);
-
-  % Create log-pressure heights -> Z, and scaled heights -> Zscale = Z/Zt
-  Z = H .* log(P0 ./ Press);
+  % Create scaled heights -> Zscale = Z/Zt
   Zscale = repmat((Z ./ Zt), [ Ny 1 ]);
 
   % Create latitude in radians
@@ -138,6 +147,7 @@ function [ U V ] = GenInitWindField(Lat, Press, Case)
     % Lat dependent factor of Thorncroft et al. formula for US
     LatScale = (Lat - Phi_s) ./ Delta_s;  % use lat in degrees
     F = sin(2.*LatRad).^2 .* LatScale .* exp(-(LatScale.^2));
+    F(LatRad < 0) = 0;
     F = repmat(F', [ 1 Nz ]); % Note transpose on F inside repmat()
     
     % Create shear term in 2D, then replicate for all lon
@@ -145,4 +155,65 @@ function [ U V ] = GenInitWindField(Lat, Press, Case)
 
     U = U + US;
   end
+  
+  V = zeros([ Ny Nz ]);
 end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+function [ T ] = GenTempBalanced(Lat, Z, Press, U, T0, Gamma0, Zt, Alpha, R, Omega, RadEarth)
+% GenTempBalance - generate a temperature field that is thermally balanced with U
+  
+  Ny = length(Lat);
+  Nz = length(Z);
+  
+  % Methods of creating balanced temperature field is from Polvani
+  % and Esler, 1993, except doing this in pressure coordinates instead
+  % of sigma (p/p0) coordinates.
+
+  % Create latitude in radians
+  LatRad = (pi / 180) .* Lat;
+
+  
+  % T = Tref + Tbal
+
+  % Reference temperature profile, Tref
+  Tref = T0 + (Gamma0 ./ ((Zt^-Alpha + Z.^-Alpha).^(1/Alpha)));
+  Tref = repmat(Tref, [ Ny 1 ]);
+  
+  % Tbal is an integral formulated from balancing the initial wind
+  % field with temperature using the primitive equations on a sphere.
+  %
+  %  Tbal = integral[ (p/R) * (a*2*omega*sin(lat) + 2*u*tan(lat)) * (du/dp) ] dlat
+  %
+  PR = repmat(Press, [ Ny 1 ]) ./ R;
+
+  SinLat = repmat(reshape(sin(LatRad), [ Ny 1 ]), [ 1 Nz ]);
+  TanLat = repmat(reshape(tan(LatRad), [ Ny 1 ]), [ 1 Nz ]);
+  Geom = (RadEarth .* 2 .* Omega .* SinLat) + (2 .* U .* TanLat);
+  
+  % du/dp
+  %  1) repeat top and bottom values in Press and U
+  %  2) take averages between vertical entries in Press and U
+  %  3) form du/dp by differences of averages from 2)
+  %
+  Ptemp = [ Press(1) Press Press(end) ];
+  Utemp = [ U(:,1) U U(:,end) ];
+  Pavg = (Ptemp(1:end-1) + Ptemp(2:end)) .* 0.5;
+  Uavg = (Utemp(:,1:end-1) + Utemp(:,2:end)) .* 0.5;
+  DuDp = (Uavg(:,2:end) - Uavg(:,1:end-1)) ./ repmat((Pavg(2:end) - Pavg(1:end-1)), [ Ny 1 ]);
+
+  % Dlat
+  Dlat = LatRad(2:end) - LatRad(1:end-1);
+  Dlat = [ Dlat Dlat(end) ];
+  Dlat = repmat(Dlat', [ 1 Nz ]);
+
+  % integrand
+  Integrand = PR .* Geom .* DuDp .* Dlat;
+
+  % integral goes from 0 to Lat so do a cumulative sum along the
+  % columns of Integrand to get the integral value.
+  Tint = cumsum(Integrand, 1);
+
+  T = Tref + Tint;
+end
+
