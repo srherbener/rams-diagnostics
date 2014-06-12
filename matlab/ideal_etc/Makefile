@@ -6,6 +6,7 @@ DEST = $(HOME)/etc/matlab/ideal_etc
 #DIAG_DIR = /Volumes/tasman1/sherbener/data/RAMS/MarinePrecip/ATEX
 
 SCRIPTS = $(DEST)/GenInitFields.m \
+          $(DEST)/GenInitDpFiles.m \
           $(DEST)/SetPath.m
 
 #CONFIGS = $(DIAG_DIR)/DiagConfig

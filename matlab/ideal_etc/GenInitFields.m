@@ -1,4 +1,4 @@
-function [ U, V, T, Zg, RH, LAT, PRESS ] = GenInitFields(Case)
+function [ U, V, T, Zg, RH, LON, LAT, PRESS ] = GenInitFields(Case)
 % GenInitFields generate initial conditions bases on Thorncroft et al, 1993 (LC1 and LC2)
 
   % Initialization is based on techniques described in
@@ -80,6 +80,12 @@ function [ U, V, T, Zg, RH, LAT, PRESS ] = GenInitFields(Case)
   % Generate geopotential heights
   [ Zg ] = GenGeoPotField(LAT, PRESS, T, R, G0);
 
+  % Create homogeneous fields in the zonal direction
+  U  = repmat(reshape(U,  [ 1 Ny Nz ]), [ Nx 1 1]);
+  V  = repmat(reshape(V,  [ 1 Ny Nz ]), [ Nx 1 1]);
+  T  = repmat(reshape(T,  [ 1 Ny Nz ]), [ Nx 1 1]);
+  Zg = repmat(reshape(Zg, [ 1 Ny Nz ]), [ Nx 1 1]);
+  RH = repmat(reshape(RH, [ 1 Ny Nz ]), [ Nx 1 1]);
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
