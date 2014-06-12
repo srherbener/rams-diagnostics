@@ -1,5 +1,5 @@
-function [ U, V, T, Zg, RH, LAT, PRESS ] = GenInitDpFiles(Case)
-% GenInitDpFiles generate initial conditions in a dp file format for RAMS
+function [ U, V, T, Zg, RH, LAT, PRESS ] = GenInitFields(Case)
+% GenInitFields generate initial conditions bases on Thorncroft et al, 1993 (LC1 and LC2)
 
   % Initialization is based on techniques described in
   %   Boutle et al., 2010
@@ -23,25 +23,12 @@ function [ U, V, T, Zg, RH, LAT, PRESS ] = GenInitDpFiles(Case)
   %
   % There are 5 atmospheric variables:
   %    u velocity  (zonal, m/s)
-  %    v velocity  (meridonal, m/s)
+  %    v velocity  (meridional, m/s)
   %    temperature (K)
   %    geopotential height (m)
   %    relative humidity (fraction)
   %
-  % and 6 soil variables:
-  %    top soil level volumetric soil moisture (m^3/m^3)
-  %    next level down volumetric soil moisture (m^3/m^3)
-  %    top soil level soil temperature (K)
-  %    next level down soil temperature (K)
-  %    snow water equivalent (kg/m^2)
-  %    snow depth (m)
 
-  % Emulating a winter-time storm: use Jan 1, 2014, 12Z as the start time
-  Year = 2014;
-  Month = 1;
-  Day = 1;
-  Hour = 1200;
- 
   % Parameters from Polvani and Esler, 2007
   U0 = 45;            % max jet speed (m/s)
   Zt = 13000;         % temperature scale height (m)
@@ -55,6 +42,7 @@ function [ U, V, T, Zg, RH, LAT, PRESS ] = GenInitDpFiles(Case)
   R = 287;            % J/kg/K
   Omega = 7.297e-5;   % 1/s
   RadEarth = 6.371e6; % m
+  G0 = 9.8;           % m/s^2
 
   H = 7500;  % m
   P0 = 1000; % mb
@@ -86,12 +74,12 @@ function [ U, V, T, Zg, RH, LAT, PRESS ] = GenInitDpFiles(Case)
   % Generate temperature field that is in thermal balance with U
   [ T ] = GenTempBalanced(LAT, Z, PRESS, U, T0, Gamma0, Zt, Alpha, R, Omega, RadEarth);
 
-  Zg = zeros([ Ny Nz ]);
-  RH = zeros([ Ny Nz ]);
+  % Generate initial moisture field
+  [ RH ] = GenInitRelHumField(LAT, Z, Zt);
 
-  % Replicate 2D fields (lat,p) for all longitude
-  %U = repmat(reshape(U_2D, [ 1 Ny Nz ]), [ Nx 1 1 ]);
-  %V = repmat(reshape(V_2D, [ 1 Ny Nz ]), [ Nx 1 1 ]);
+  % Generate geopotential heights
+  [ Zg ] = GenGeoPotField(LAT, PRESS, T, R, G0);
+
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -217,3 +205,67 @@ function [ T ] = GenTempBalanced(Lat, Z, Press, U, T0, Gamma0, Zt, Alpha, R, Ome
   T = Tref + Tint;
 end
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+function [ RH ] = GenInitRelHumField(Lat, Z, Zt)
+% GenInitRelHumField - generate a relative humidity field
+
+  Ny = length(Lat);
+  Nz = length(Z);
+
+  % Use method in Boutle et al., 2010
+
+  % latitudinal variation
+  %   R = 1                          Lat < 25N
+  %   R = 0.5                        Lat > 65N
+  %   R = 1 - 0.5 * ((Lat-25)/40)    25 <= Lat <= 65
+  %
+  R = 1 - (0.5 .* ((Lat-25)./40));
+  R(Lat < 25) = 1;
+  R(Lat > 65) = 0.5;
+
+  R = repmat(reshape(R, [ Ny 1]), [ 1 Nz ]);
+
+  % RH calculation (as a fraction instead of percent)
+  %   RH = 0.80 * (1-0.9R*(Z/Zt)^(5/4))        Z <  Zt
+  %   RH = 0.05                                Z >= Zt
+  %
+  Z_2D = repmat(Z, [ Ny 1 ]);
+  Zfact = (Z_2D ./ Zt).^(1.25);
+  RH = 0.8 .* (1 - (0.9 .* R .* Zfact));
+  RH(Z_2D >= Zt) = 0.05;
+end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+function [ Zg ] = GenGeoPotField(Lat, Press, T, R, G0)
+% GenGeoPotField - generate a geopotential height field
+
+  Ny = length(Lat);
+  Nz = length(Press);
+
+  % Assume near surface that the geopotential and actual height are equal.
+  % Use CRC formula for height as a function of pressure to determine
+  % the lowest level geopotential height.
+  %
+  % Then use hypsometric equation to determine all other geopotential
+  % heights.
+
+  Zg = zeros([ Ny Nz ]);
+
+  % First level - CRC formula:
+  %   z = 44331.5 - 4946.62 * p^0.190263
+  %   p in pascals, z in meters
+  %
+  % Note Press is in mb (hPa)
+  %
+  Zg(:,1) = 44331.5 - (4946.62 .* ((Press(1) .* ones([ Ny 1]) .* 100).^0.190263));
+
+  % 2 though Nz levels - Hypsometric eqn:
+  %   z2 - z1 = R/G0 * Tavg * ln(p1/p2)
+  %               OR
+  %   z2 = z1 + R/G0 * Tavg * ln(p1/p2)
+  Tavg  = (T(:,1:end-1) + T(:,2:end)) .* 0.5;
+  Pfact = repmat(log(Press(1:end-1) ./ Press(2:end)), [ Ny 1 ]);
+  for i = 2:Nz
+    Zg(:,i) = Zg(:,i-1) + ((R/G0) .* Tavg(:,i-1) .* Pfact(:,i-1));
+  end
+end
