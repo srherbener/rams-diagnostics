@@ -82,17 +82,10 @@ function [ ] = WriteDpVar(Var, Nx, Ny, Nz, k, Fid)
 
   NumPerLine = 10;
 
-  n = 1;
-  for i = 1:Nx
-    for j = 1:Ny
+  for j = 1:Ny
+    for i = 1:Nx
        fprintf(Fid, ' %f', Var(i,j,k));
-       if (mod(n, NumPerLine) == 0)
-         fprintf(Fid, '\n');
-       end
-       n = n + 1;
     end
-  end
-  if (mod(n, NumPerLine) ~= 0)
     fprintf(Fid, '\n');
   end
 end

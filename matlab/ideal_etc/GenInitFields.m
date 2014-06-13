@@ -36,13 +36,17 @@ function [ U, V, T, Zg, RH, LON, LAT, PRESS ] = GenInitFields(Case)
   Phi_s = 35;         % degrees
   Delta_s = 20;       % degrees
   Zs = 10000;         % m
-  T0 = 280;           % K, surface temp at 45N
+  T0 = 300;           % K, surface temp at 45N
   Gamma0 = -0.0065;   % K/m, roughly moist adiabatic lapse rate
   Alpha = 10;         % dimensionless
   R = 287;            % J/kg/K
   Omega = 7.297e-5;   % 1/s
   RadEarth = 6.371e6; % m
   G0 = 9.8;           % m/s^2
+
+  That = 1;           % temp perturbation magnitude
+  LatHat = 45;        % latitude of center of temp perturbation
+  WaveNum = 6;        % zonal wave number of temp perturbation
 
   H = 7500;  % m
   P0 = 1000; % mb
@@ -86,6 +90,9 @@ function [ U, V, T, Zg, RH, LON, LAT, PRESS ] = GenInitFields(Case)
   T  = repmat(reshape(T,  [ 1 Ny Nz ]), [ Nx 1 1]);
   Zg = repmat(reshape(Zg, [ 1 Ny Nz ]), [ Nx 1 1]);
   RH = repmat(reshape(RH, [ 1 Ny Nz ]), [ Nx 1 1]);
+
+  % Apply temperature perturbation (which is 3D)
+  T = T + GenInitTperturb(LON, LAT, PRESS, That, LatHat, WaveNum);
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
