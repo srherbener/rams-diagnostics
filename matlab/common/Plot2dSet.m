@@ -1,4 +1,4 @@
-function [ ] = Plot2dSet( X, Y, Ptitle, Pmarkers, Xlabel, Ylabel, Lcolors, Lstyles, Gscales, LegText, LegLoc, AxisProps, AddMeas, OutFile )
+function [ ] = Plot2dSet( X, Y, Ptitle, Pmarkers, Xlabel, Ylabel, Lcolors, Lstyles, Gscales, LegText, LegLoc, AxisProps, AddMeas, Fig )
 %Plot2dSet Plot a set of 2D line plots on the same panel
 %   This function will take data contained in X and Y and plot them on a
 %   single panel.
@@ -12,9 +12,9 @@ function [ ] = Plot2dSet( X, Y, Ptitle, Pmarkers, Xlabel, Ylabel, Lcolors, Lstyl
 %   OutFile is the path to the file that contains the image of the plot.
 %
 
-Fig = figure;
+figure(Fig);
 
-Lwidth = 3;
+Lwidth = 2;
 LegFsize = 20;
 Nprops = length(AxisProps);
 Nplots = size(Y,1);
@@ -51,8 +51,10 @@ for i = 2:Nplots % each row is a separate curve for plotting
     plot(X(i,:), Y(i,:), 'Color', Lcolor, 'LineStyle', Lstyles{i}, 'LineWidth', Lwidth);
 end
 
-legend(LegText, 'Location', char(LegLoc), 'FontSize', LegFsize);
-legend boxoff;
+if (~strcmp(LegLoc, 'none'))
+  legend(LegText, 'Location', char(LegLoc), 'FontSize', LegFsize);
+  legend boxoff;
+end
 
 if (~strcmp(Ptitle, ' '))
   if (PanelTitle)
@@ -100,10 +102,7 @@ Ppos(3) = Ppos(3) * 0.90;
 Ppos(4) = Ppos(4) * 0.90;
 set(gca, 'Position', Ppos);
 
-saveas(Fig, OutFile);
-
 hold off;
-close(Fig);
 
 end
 
