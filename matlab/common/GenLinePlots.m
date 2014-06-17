@@ -54,6 +54,8 @@ for iplot = 1:length(Config.LinePlots)
       continue;
     end
 
+    XAshow = Config.LinePlots(iplot).XAshow;
+    YAshow = Config.LinePlots(iplot).YAshow;
     Smooth = Config.LinePlots(iplot).Smooth;
     AddMeas = Config.LinePlots(iplot).AddMeas;
     Ptitle = Config.LinePlots(iplot).Title.Main;
@@ -63,15 +65,24 @@ for iplot = 1:length(Config.LinePlots)
 
     i_ap = 1;
     AxisProps(i_ap).Name = 'FontSize';
-    AxisProps(i_ap).Val = 20;
+    AxisProps(i_ap).Val = 25;
     i_ap = i_ap + 1;
 
     % X variable, axis specs
     Xvname   = Config.PlotVars(ixv).Var;
-    if (strcmp(Config.PlotVars(ixv).Units, ' '))
-      Xlabel   = sprintf('%s', Config.PlotVars(ixv).Label);
+    if (XAshow > 0)
+      % show x-axis
+      if (strcmp(Config.PlotVars(ixv).Units, ' '))
+        Xlabel   = sprintf('%s', Config.PlotVars(ixv).Label);
+      else
+        Xlabel   = sprintf('%s (%s)', Config.PlotVars(ixv).Label, Config.PlotVars(ixv).Units);
+      end
     else
-      Xlabel   = sprintf('%s (%s)', Config.PlotVars(ixv).Label, Config.PlotVars(ixv).Units);
+      % "hide" x-axis: no label, erase tick labels, keep tick marks
+      Xlabel = '';
+      AxisProps(i_ap).Name = 'XTickLabel';
+      AxisProps(i_ap).Val  = {};
+      i_ap = i_ap + 1;
     end
     Xfprefix = Config.PlotVars(ixv).Fprefix;
     Xscale   = Config.PlotVars(ixv).Scale;
@@ -97,10 +108,19 @@ for iplot = 1:length(Config.LinePlots)
 
     % Y variable, axis specs
     Yvname   = Config.PlotVars(iyv).Var;
-    if (strcmp(Config.PlotVars(iyv).Units, ' '))
-      Ylabel   = sprintf('%s', Config.PlotVars(iyv).Label);
+    if (YAshow > 0)
+      % show y-axis
+      if (strcmp(Config.PlotVars(iyv).Units, ' '))
+        Ylabel   = sprintf('%s', Config.PlotVars(iyv).Label);
+      else
+        Ylabel   = sprintf('%s (%s)', Config.PlotVars(iyv).Label, Config.PlotVars(iyv).Units);
+      end
     else
-      Ylabel   = sprintf('%s (%s)', Config.PlotVars(iyv).Label, Config.PlotVars(iyv).Units);
+      % "hide" y-axis: no label, erase tick labels, keep tick marks
+      Ylabel = '';
+      AxisProps(i_ap).Name = 'YTickLabel';
+      AxisProps(i_ap).Val  = {};
+      i_ap = i_ap + 1;
     end
     Yfprefix = Config.PlotVars(iyv).Fprefix;
     Yscale   = Config.PlotVars(iyv).Scale;
@@ -123,6 +143,14 @@ for iplot = 1:length(Config.LinePlots)
     AxisProps(i_ap).Name = 'Yscale';
     AxisProps(i_ap).Val  = Config.PlotAxes(iya).Scale;
     i_ap = i_ap + 1;
+
+    % show axis, erase tick labels, keep tick marks
+    if (YAshow == 0)
+      AxisProps(i_ap).Name = 'YTickLabel';
+      AxisProps(i_ap).Val  = {};
+      i_ap = i_ap + 1;
+    end
+
 
     % Data selection specs
     Xmin = Config.PlotDselects(ids).Xmin;

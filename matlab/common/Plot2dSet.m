@@ -72,8 +72,12 @@ if (~strcmp(Ptitle, ' '))
       title(Ptitle);
   end
 end
-xlabel(Xlabel);
-ylabel(Ylabel);
+if (~isempty(Xlabel))
+  xlabel(Xlabel);
+end
+if (~isempty(Ylabel))
+  ylabel(Ylabel);
+end
 
 % Add in the temporal phases if requested
 if (strcmp(AddMeas, 'Tphases'))
