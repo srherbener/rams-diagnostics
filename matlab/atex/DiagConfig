@@ -1703,7 +1703,7 @@ PlotSet: CG_UP_C0050_S298 3 z.atex.ccn0050.sst298.gcn10m4.3um G10M4 black - 0.0 
 PlotSet: CG_UP_C0400_S298 3 z.atex.ccn0400.sst298.gcn10m4.3um G10M4 black - 0.0 1 1 z.atex.ccn0400.sst298.gcn10m2.3um G10M2 cyan - 0.0 1 1 z.atex.ccn0400.sst298.gcn10m0.3um G10M0 magenta - 0.0 1 1
 PlotSet: CG_UP_C1600_S298 3 z.atex.ccn1600.sst298.gcn10m4.3um G10M4 black - 0.0 1 1 z.atex.ccn1600.sst298.gcn10m2.3um G10M2 cyan - 0.0 1 1 z.atex.ccn1600.sst298.gcn10m0.3um G10M0 magenta - 0.0 1 1
 
-PlotSet: CG_UP_C50_C1600_S298 4 z.atex.ccn0050.sst298.gcn10m4.3um C50,G10M4 black - 0.0 2 1 z.atex.ccn0050.sst298.gcn10m0.3um C50,G10M0 black -- 0.0 2 1 z.atex.ccn1600.sst298.gcn10m4.3um C1600,G10M4 magenta - 0.0 1 1 z.atex.ccn1600.sst298.gcn10m0.3um C1600,G10M0 magenta -- 0.0 1 1
+PlotSet: CG_UP_C50_C1600_S298 4 z.atex.ccn0050.sst298.gcn10m4.3um C50,GL black - 0.0 2 1 z.atex.ccn0050.sst298.gcn10m0.3um C50,GH black -- 0.0 2 1 z.atex.ccn1600.sst298.gcn10m4.3um C1600,GL magenta - 0.0 1 1 z.atex.ccn1600.sst298.gcn10m0.3um C1600,GH magenta -- 0.0 1 1
 
 #### 1um GCCN median radius ####
 
