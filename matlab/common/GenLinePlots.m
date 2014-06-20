@@ -86,8 +86,10 @@ for iplot = 1:length(Config.LinePlots)
     end
     Xfprefix = Config.PlotVars(ixv).Fprefix;
     Xscale   = Config.PlotVars(ixv).Scale;
+    Xoffset  = Config.PlotVars(ixv).Offset;
     Xamin    = Config.PlotAxes(ixa).Min;
     Xamax    = Config.PlotAxes(ixa).Max;
+    Xticks   = Config.PlotAxes(ixa).Ticks;
     if (Xamin > Xamax)
       AxisProps(i_ap).Name = 'Xlim';
       AxisProps(i_ap).Val = [ Xamax Xamin ]; 
@@ -105,6 +107,12 @@ for iplot = 1:length(Config.LinePlots)
     AxisProps(i_ap).Name = 'Xscale';
     AxisProps(i_ap).Val  = Config.PlotAxes(ixa).Scale;
     i_ap = i_ap + 1;
+    % axis tick marks
+    if (~isempty(Xticks))
+      AxisProps(i_ap).Name = 'XTick';
+      AxisProps(i_ap).Val  = Xticks;
+      i_ap = i_ap + 1;
+    end
 
     % Y variable, axis specs
     Yvname   = Config.PlotVars(iyv).Var;
@@ -124,8 +132,10 @@ for iplot = 1:length(Config.LinePlots)
     end
     Yfprefix = Config.PlotVars(iyv).Fprefix;
     Yscale   = Config.PlotVars(iyv).Scale;
+    Yoffset  = Config.PlotVars(iyv).Offset;
     Yamin    = Config.PlotAxes(iya).Min;
     Yamax    = Config.PlotAxes(iya).Max;
+    Yticks   = Config.PlotAxes(iya).Ticks;
     if (Yamin > Yamax)
       AxisProps(i_ap).Name = 'Ylim';
       AxisProps(i_ap).Val = [ Yamax Yamin ]; 
@@ -143,14 +153,12 @@ for iplot = 1:length(Config.LinePlots)
     AxisProps(i_ap).Name = 'Yscale';
     AxisProps(i_ap).Val  = Config.PlotAxes(iya).Scale;
     i_ap = i_ap + 1;
-
-    % show axis, erase tick labels, keep tick marks
-    if (YAshow == 0)
-      AxisProps(i_ap).Name = 'YTickLabel';
-      AxisProps(i_ap).Val  = {};
+    % axis tick marks
+    if (~isempty(Yticks))
+      AxisProps(i_ap).Name = 'YTick';
+      AxisProps(i_ap).Val  = Yticks;
       i_ap = i_ap + 1;
     end
-
 
     % Data selection specs
     Xmin = Config.PlotDselects(ids).Xmin;
@@ -183,7 +191,7 @@ for iplot = 1:length(Config.LinePlots)
       if (strcmp(Smooth,'x') || strcmp(Smooth,'xy'))
         Xdata = SmoothFillTseries(Xdata, length(Xdata), Flen);
       end
-      Xall(icase,:) = Xdata * Xscale;
+      Xall(icase,:) = (Xdata .* Xscale) + Xoffset;
   
       Yfile = sprintf('%s_%s.h5', Yfprefix, Case);
       fprintf('Reading HDF5 file: %s\n', Yfile);
@@ -192,7 +200,7 @@ for iplot = 1:length(Config.LinePlots)
       if (strcmp(Smooth,'y') || strcmp(Smooth,'xy'))
         Ydata = SmoothFillTseries(Ydata, length(Ydata), Flen);
       end
-      Yall(icase,:) = Ydata * Yscale;
+      Yall(icase,:) = (Ydata .* Yscale) + Yoffset;
 
       % If AddMeas is one of the known strings, calculate the appropriate measurement and
       % append that value to the legend text so that it will show up on the plot

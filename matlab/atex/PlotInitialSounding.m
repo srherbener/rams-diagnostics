@@ -45,7 +45,7 @@ WDIR(WDIR >= 360) = WDIR(WDIR >= 360) - 360;   % 0 to 360
 
 % Use the metpack code
 % zoom in on plot since the simulation top is 4000 m AGL
-Fsize = 30;
+Fsize = 20;
 Wfilter = 20;
 OutFile = sprintf('%s/InitialSounding.jpg', Pdir);
 

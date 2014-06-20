@@ -14,7 +14,7 @@ if (exist(Pdir, 'dir') ~= 7)
   mkdir(Pdir);
 end
 
-Fsize = 20;
+Fsize = 25;
 Lwidth = 2;
 
 % list of specs for each legend
@@ -26,9 +26,9 @@ Lwidth = 2;
 %      Wscale is multiplied by the image width
 %      Hscale is multiplied by the image height
 LegendList = {
-  { 'CO_UP_S293_G10M5_ALL' 3 0.95 0.10 'Legend_CO_CCN.jpg' }
-  { 'CO_UP_C0050_G10M5'    3 0.50 0.10 'Legend_CO_SST.jpg' }
-  { 'CG_UP_C50_C1600_S298' 2 0.85 0.10 'Legend_CG_CCN.jpg' }
+  { 'CO_UP_S293_G10M5_ALL' 3 1.08 0.10 'Legend_CO_CCN.jpg' }
+  { 'CO_UP_C0050_G10M5'    3 0.55 0.10 'Legend_CO_SST.jpg' }
+  { 'CG_UP_C50_C1600_S298' 2 1.25 0.10 'Legend_CG_CCN.jpg' }
 
   };
 Nleg = length(LegendList);

@@ -123,7 +123,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'COT Avg, DOMAIN TALL CCN only, grouped by SST'
        'bgraph_cot.h5'
        { '' 'Domain' }
-       'N_a (# cm^-^3)'
+       'Number Concentration (cm^-^3)'
        '\tau_c'
        { 'blue' 'cyan' 'magenta' }
        { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -137,7 +137,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'COT Avg, ALL_CLD TALL CCN only, grouped by SST'
 %       'bgraph_cot.h5'
 %       { 'b' 'All Clouds' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       '\tau_c'
 %       { 'blue' 'cyan' 'magenta' }
 %       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -151,7 +151,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'COT Avg, ST TALL CCN only, grouped by SST'
 %       'bgraph_cot.h5'
 %       { 'a' 'ST' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       '\tau_c'
 %       { 'blue' 'cyan' 'magenta' }
 %       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -165,7 +165,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'COT Avg, DOMAIN TALL CCN, grouped by GCCN, S298'
        'bgraph_cot.h5'
        { 'a' 'Domain, S298' }
-       'N_a (# cm^-^3)'
+       'Number Concentration (cm^-^3)'
        '\tau_c'
        { 'blue' 'cyan' 'magenta' }
        { { 'G10M4', 'G10M2', 'G10M0' } 'NorthWest' }
@@ -179,7 +179,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'COT Avg, DOMAIN TALL CCN, grouped by GCCN, S303'
        'bgraph_cot.h5'
        { '' 'Domain, S303' }
-       'N_a (# cm^-^3)'
+       'Number Concentration (cm^-^3)'
        '\tau_c'
        { 'blue' 'cyan' 'magenta' }
        { { 'G10M4', 'G10M2', 'G10M0' } 'NorthWest' }
@@ -194,7 +194,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'LWP Avg, Domain, TALL CCN only, grouped by SST'
 %       'bgraph_lwp.h5'
 %       { 'a' 'Domain' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       'LWP (mm)'
 %       { 'blue' 'cyan' 'magenta' }
 %       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -208,7 +208,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'LWP Avg, ALL_CLD, TALL CCN only, grouped by SST'
 %       'bgraph_lwp.h5'
 %       { 'a' 'All Clouds' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       'LWP (mm)'
 %       { 'blue' 'cyan' 'magenta' }
 %       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -222,7 +222,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'LWP Avg, ST, TALL CCN only, grouped by SST'
 %       'bgraph_lwp.h5'
 %       { 'a' 'ST' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       'LWP (mm)'
 %       { 'blue' 'cyan' 'magenta' }
 %       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -237,7 +237,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'Cloud Depth Avg, Domain, TALL CCN only, grouped by SST'
 %       'bgraph_cdepth.h5'
 %       { 'a' 'Domain' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       'Cloud Depth (m)'
 %       { 'blue' 'cyan' 'magenta' }
 %       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -251,7 +251,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'Cloud Depth Avg, ALL_CLD, TALL CCN only, grouped by SST'
 %       'bgraph_cdepth.h5'
 %       { 'a' 'All Clouds' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       'Cloud Depth (m)'
 %       { 'blue' 'cyan' 'magenta' }
 %       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -265,7 +265,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'Cloud Depth Avg, stall, TALL CCN only, grouped by SST'
 %       'bgraph_cdepth.h5'
 %       { 'a' 'ST' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       'Cloud Depth (m)'
 %       { 'blue' 'cyan' 'magenta' }
 %       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -279,7 +279,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, S293'
        'bgraph_cdepth.h5'
        { 'a' 'ST, S293' }
-       'N_a (# cm^-^3)'
+       'Number Concentration (cm^-^3)'
        'Cloud Depth (m)'
        { 'cyan' }
        { { 'NoLegend'} 'NorthWest' }
@@ -293,7 +293,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, S298'
        'bgraph_cdepth.h5'
        { 'a' 'ST, S298' }
-       'N_a (# cm^-^3)'
+       'Number Concentration (cm^-^3)'
        'Cloud Depth (m)'
        { 'cyan' }
        { { 'NoLegend'} 'NorthWest' }
@@ -307,7 +307,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, S303'
        'bgraph_cdepth.h5'
        { 'a' 'ST, S303' }
-       'N_a (# cm^-^3)'
+       'Number Concentration (cm^-^3)'
        'Cloud Depth (m)'
        { 'cyan' }
        { { 'NoLegend'} 'NorthWest' }
@@ -321,7 +321,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, C50'
        'bgraph_cdepth.h5'
        { 'a' 'ST, C50' }
-       'N_a (# cm^-^3)'
+       'Number Concentration (cm^-^3)'
        'Cloud Depth (m)'
        { 'cyan' }
        { { 'NoLegend'} 'NorthWest' }
@@ -335,7 +335,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, C400'
        'bgraph_cdepth.h5'
        { 'a' 'ST, C400' }
-       'N_a (# cm^-^3)'
+       'Number Concentration (cm^-^3)'
        'Cloud Depth (m)'
        { 'cyan' }
        { { 'NoLegend'} 'NorthWest' }
@@ -349,7 +349,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, C1600'
        'bgraph_cdepth.h5'
        { 'a' 'ST, C1600' }
-       'N_a (# cm^-^3)'
+       'Number Concentration (cm^-^3)'
        'Cloud Depth (m)'
        { 'cyan' }
        { { 'NoLegend'} 'NorthWest' }
@@ -363,7 +363,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, S298'
        'bgraph_cdepth.h5'
        { 'a' 'ST, S298' }
-       'N_a (# cm^-^3)'
+       'Number Concentration (cm^-^3)'
        'Cloud Depth (m)'
        { 'blue' 'cyan' 'magenta' }
        { { 'G10M4' 'G10M2' 'G10M0' } 'NorthWest' }
@@ -377,7 +377,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, S303'
        'bgraph_cdepth.h5'
        { 'a' 'ST, S303' }
-       'N_a (# cm^-^3)'
+       'Number Concentration (cm^-^3)'
        'Cloud Depth (m)'
        { 'blue' 'cyan' 'magenta' }
        { { 'G10M4' 'G10M2' 'G10M0' } 'NorthWest' }
@@ -395,7 +395,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'LWC Avg, Domain, TALL CCN only, grouped by SST'
 %       'bgraph_lwp2cdepth.h5'
 %       { 'b' 'Domain' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       'LWC (g kg^-^1)'
 %       { 'blue' 'cyan' 'magenta' }
 %       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -409,7 +409,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'LWC Avg, ALL_CLD, TALL CCN only, grouped by SST'
 %       'bgraph_lwp2cdepth.h5'
 %       { 'b' 'All Clouds' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       'LWC (g kg^-^1)'
 %       { 'blue' 'cyan' 'magenta' }
 %       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -423,7 +423,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'LWC Avg, ST, TALL CCN only, grouped by SST'
 %       'bgraph_lwp2cdepth.h5'
 %       { 'b' 'ST' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       'LWC (g kg^-^1)'
 %       { 'blue' 'cyan' 'magenta' }
 %       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -437,7 +437,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'LWC Avg, ST, TALL CCN only, grouped by SST, S293'
        'bgraph_lwp2cdepth.h5'
        { 'b' 'ST, S293' }
-       'N_a (# cm^-^3)'
+       'Number Concentration (cm^-^3)'
        'LWC (g kg^-^1)'
        { 'cyan' }
        { { 'NoLegend' } 'NorthWest' }
@@ -451,7 +451,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'LWC Avg, ST, TALL CCN only, grouped by SST, S298'
        'bgraph_lwp2cdepth.h5'
        { 'b' 'ST, S298' }
-       'N_a (# cm^-^3)'
+       'Number Concentration (cm^-^3)'
        'LWC (g kg^-^1)'
        { 'cyan' }
        { { 'NoLegend' } 'NorthWest' }
@@ -465,7 +465,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'LWC Avg, ST, TALL CCN only, grouped by SST, S303'
        'bgraph_lwp2cdepth.h5'
        { 'b' 'ST, S303' }
-       'N_a (# cm^-^3)'
+       'Number Concentration (cm^-^3)'
        'LWC (g kg^-^1)'
        { 'cyan' }
        { { 'NoLegend' } 'NorthWest' }
@@ -479,7 +479,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'LWC Avg, ST, TALL CCN only, grouped by SST, C50'
        'bgraph_lwp2cdepth.h5'
        { 'b' 'ST, C50' }
-       'N_a (# cm^-^3)'
+       'Number Concentration (cm^-^3)'
        'LWC (g kg^-^1)'
        { 'cyan' }
        { { 'NoLegend' } 'NorthWest' }
@@ -493,7 +493,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'LWC Avg, ST, TALL CCN only, grouped by SST, C400'
        'bgraph_lwp2cdepth.h5'
        { 'b' 'ST, C400' }
-       'N_a (# cm^-^3)'
+       'Number Concentration (cm^-^3)'
        'LWC (g kg^-^1)'
        { 'cyan' }
        { { 'NoLegend' } 'NorthWest' }
@@ -507,7 +507,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'LWC Avg, ST, TALL CCN only, grouped by SST, C1600'
        'bgraph_lwp2cdepth.h5'
        { 'b' 'ST, C1600' }
-       'N_a (# cm^-^3)'
+       'Number Concentration (cm^-^3)'
        'LWC (g kg^-^1)'
        { 'cyan' }
        { { 'NoLegend' } 'NorthWest' }
@@ -521,7 +521,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, S298'
        'bgraph_lwp2cdepth.h5'
        { 'b' 'ST, S298' }
-       'N_a (# cm^-^3)'
+       'Number Concentration (cm^-^3)'
        'LWC (g kg^-^1)'
        { 'blue' 'cyan' 'magenta' }
        { { 'G10M4' 'G10M2' 'G10M0' } 'NorthWest' }
@@ -535,7 +535,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'Cloud Depth Avg, stall, TALL CCN only, grouped by SST, S303'
        'bgraph_lwp2cdepth.h5'
        { 'b' 'ST, S303' }
-       'N_a (# cm^-^3)'
+       'Number Concentration (cm^-^3)'
        'LWC (g kg^-^1)'
        { 'blue' 'cyan' 'magenta' }
        { { 'G10M4' 'G10M2' 'G10M0' } 'NorthWest' }
@@ -550,7 +550,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'PR Avg, Domain, TALL CCN only, grouped by SST'
 %       'bgraph_pcprr.h5'
 %       { 'a' 'Domain' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       'Precip Rate (mm h^-^1)'
 %       { 'blue' 'cyan' 'magenta' }
 %       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -564,7 +564,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'PR Avg, ALL_CLD, TALL CCN only, grouped by SST'
 %       'bgraph_pcprr.h5'
 %       { 'a' 'All Clouds' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       'Precip Rate (mm h^-^1)'
 %       { 'blue' 'cyan' 'magenta' }
 %       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -578,7 +578,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'PR Avg, Stall, TALL CCN only, grouped by SST'
 %       'bgraph_pcprr.h5'
 %       { 'a' 'ST' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       'Precip Rate (mm h^-^1)'
 %       { 'blue' 'cyan' 'magenta' }
 %       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -593,7 +593,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'LCL Avg TALL CCN only, grouped by SST'
 %       'bgraph_lcl.h5'
 %       { 'a' 'Domain' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       'LCL (m)'
 %       { 'blue' 'cyan' 'magenta' }
 %       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -607,7 +607,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'We theta Avg, DOMAIN TALL CCN only, grouped by SST'
 %       'bgraph_we.h5'
 %       { 'a' 'Domain' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       '\theta W_e (m s^-^1)'
 %       { 'blue' 'cyan' 'magenta' }
 %       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -621,7 +621,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'We theta_v Avg, DOMAIN TALL CCN only, grouped by SST'
 %       'bgraph_we.h5'
 %       { 'a' 'Domain' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       '\theta_v W_e (m s^-^1)'
 %       { 'blue' 'cyan' 'magenta' }
 %       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -635,7 +635,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'We vapor Avg, DOMAIN TALL CCN only, grouped by SST'
 %       'bgraph_we.h5'
 %       { 'a' 'Domain' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       'q_v W_e (m s^-^1)'
 %       { 'blue' 'cyan' 'magenta' }
 %       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -650,7 +650,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'LCL Avg TALL CCN only, grouped by SST'
 %       'bgraph_lcl.h5'
 %       { 'a' 'ST' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       'LCL (m)'
 %       { 'blue' 'cyan' 'magenta' }
 %       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -664,7 +664,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'LCL Avg TALL CCN only, S293'
 %       'bgraph_lcl.h5'
 %       { 'a' 'ST, S293' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       'LCL (m)'
 %       { 'cyan' }
 %       { { 'NoLegend' } 'NorthWest' }
@@ -678,7 +678,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'LCL Avg TALL CCN only, S298'
 %       'bgraph_lcl.h5'
 %       { 'a' 'ST, S298' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       'LCL (m)'
 %       { 'cyan' }
 %       { { 'NoLegend' } 'NorthWest' }
@@ -692,7 +692,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'LCL Avg TALL CCN only, S303'
 %       'bgraph_lcl.h5'
 %       { 'a' 'ST, S303' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       'LCL (m)'
 %       { 'cyan' }
 %       { { 'NoLegend' } 'NorthWest' }
@@ -706,7 +706,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'We theta Avg, ST TALL CCN only, grouped by SST'
 %       'bgraph_we.h5'
 %       { 'a' 'ST' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       '\theta W_e (m s^-^1)'
 %       { 'blue' 'cyan' 'magenta' }
 %       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -720,7 +720,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'We theta_v Avg, ST TALL CCN only, grouped by SST'
 %       'bgraph_we.h5'
 %       { 'a' 'ST' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       '\theta_v W_e (cm s^-^1)'
 %       { 'blue' 'cyan' 'magenta' }
 %       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -734,7 +734,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'We theta_v Avg, ST TALL CCN only, S293'
 %       'bgraph_we.h5'
 %       { 'f' 'ST, S293' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       '\theta_v W_e (cm s^-^1)'
 %       { 'cyan' }
 %       { { 'NoLegend' } 'NorthWest' }
@@ -748,7 +748,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'We theta_v Avg, ST TALL CCN only, S298'
 %       'bgraph_we.h5'
 %       { 'f' 'ST, S298' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       '\theta_v W_e (cm s^-^1)'
 %       { 'cyan' }
 %       { { 'NoLegend' } 'NorthWest' }
@@ -762,7 +762,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'We theta_v Avg, ST TALL CCN only, S303'
 %       'bgraph_we.h5'
 %       { 'f' 'ST, S303' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       '\theta_v W_e (cm s^-^1)'
 %       { 'cyan' }
 %       { { 'NoLegend' } 'NorthWest' }
@@ -818,7 +818,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'We vapor Avg, ST TALL CCN only, grouped by SST'
 %       'bgraph_we.h5'
 %       { 'a' 'ST' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       'q_v W_e (cm s^-^1)'
 %       { 'blue' 'cyan' 'magenta' }
 %       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -832,7 +832,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'We vapor Avg, ST TALL CCN only, S293'
 %       'bgraph_we.h5'
 %       { 'h' 'ST, S293' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       'q_v W_e (cm s^-^1)'
 %       { 'cyan' }
 %       { { 'NoLegend' } 'NorthWest' }
@@ -846,7 +846,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'We vapor Avg, ST TALL CCN only, S298'
 %       'bgraph_we.h5'
 %       { 'h' 'ST, S298' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       'q_v W_e (cm s^-^1)'
 %       { 'cyan' }
 %       { { 'NoLegend' } 'NorthWest' }
@@ -860,7 +860,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'We vapor Avg, ST TALL CCN only, S303'
 %       'bgraph_we.h5'
 %       { 'h' 'ST, S303' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       'q_v W_e (cm s^-^1)'
 %       { 'cyan' }
 %       { { 'NoLegend' } 'NorthWest' }
@@ -921,7 +921,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'Cloud Distribution TALL CCN only, 293K'
 %       'bgraph_cfrac.h5'
 %       { 'a' 'Domain, S293' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       'Cloud Distribution (%)'
 %       { 'cyan' 'blue' 'magenta' 'white' }
 %       { { 'ST' 'SC' 'CV' 'Clear' } 'NorthWest' }
@@ -935,7 +935,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'Cloud Distribution TALL CCN only, 298K'
 %       'bgraph_cfrac.h5'
 %       { 'b' 'Domain, S298' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       'Cloud Distribution (%)'
 %       { 'cyan' 'blue' 'magenta' 'white' }
 %       { { 'ST' 'SC' 'CV' 'Clear' } 'NorthWest' }
@@ -949,7 +949,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       'Cloud Distribution TALL CCN only, 300K'
 %       'bgraph_cfrac.h5'
 %       { 'c' 'Domain, S303' }
-%       'N_a (# cm^-^3)'
+%       'Number Concentration (cm^-^3)'
 %       'Cloud Distribution (%)'
 %       { 'cyan' 'blue' 'magenta' 'white' }
 %       { { 'ST' 'SC' 'CV' 'Clear' } 'NorthWest' }
@@ -963,7 +963,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'Cloud Distribution TALL CCN, G10M4, 298K'
        'bgraph_cfrac.h5'
        { 'b' 'Domain, S298, G10M4' }
-       'N_a (# cm^-^3)'
+       'Number Concentration (cm^-^3)'
        'Cloud Distribution (%)'
        { 'cyan' 'blue' 'magenta' 'white' }
        { { 'ST' 'SC' 'CV' 'Clear' } 'NorthWest' }
@@ -977,7 +977,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'Cloud Distribution TALL CCN, G10M0, 298K'
        'bgraph_cfrac.h5'
        { 'b' 'Domain, S298, G10M0' }
-       'N_a (# cm^-^3)'
+       'Number Concentration (cm^-^3)'
        'Cloud Distribution (%)'
        { 'cyan' 'blue' 'magenta' 'white' }
        { { 'ST' 'SC' 'CV' 'Clear' } 'NorthWest' }
@@ -991,7 +991,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'Cloud Distribution TALL CCN, G10M4, 300K'
        'bgraph_cfrac.h5'
        { 'c' 'Domain, S303, G10M4' }
-       'N_a (# cm^-^3)'
+       'Number Concentration (cm^-^3)'
        'Cloud Distribution (%)'
        { 'cyan' 'blue' 'magenta' 'white' }
        { { 'ST' 'SC' 'CV' 'Clear' } 'NorthWest' }
@@ -1005,7 +1005,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'Cloud Distribution TALL CCN, G10M0, 300K'
        'bgraph_cfrac.h5'
        { 'c' 'Domain, S303, G10M0' }
-       'N_a (# cm^-^3)'
+       'Number Concentration (cm^-^3)'
        'Cloud Distribution (%)'
        { 'cyan' 'blue' 'magenta' 'white' }
        { { 'ST' 'SC' 'CV' 'Clear' } 'NorthWest' }
@@ -1019,7 +1019,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %%%       'Stratiform (NP) Avg TALL CCN only, grouped by SST'
 %%%       'bgraph_cot.h5'
 %%%       { 'a' 'SNP' }
-%%%       'N_a (# cm^-^3)'
+%%%       'Number Concentration (cm^-^3)'
 %%%       '\tau_c'
 %%%       { 'blue' 'cyan' 'magenta' }
 %%%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -1033,7 +1033,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %%%       'Stratiform (NP) PR Avg TALL CCN only, grouped by SST'
 %%%       'bgraph_pcprr.h5'
 %%%       { 'a' 'SNP' }
-%%%       'N_a (# cm^-^3)'
+%%%       'Number Concentration (cm^-^3)'
 %%%       'Precip Rate (mm h^-^1)'
 %%%       { 'blue' 'cyan' 'magenta' }
 %%%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -1047,7 +1047,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %%%       'Stratiform (NP) LWP Avg TALL CCN only, grouped by SST'
 %%%       'bgraph_lwp.h5'
 %%%       { 'a' 'SNP' }
-%%%       'N_a (# cm^-^3)'
+%%%       'Number Concentration (cm^-^3)'
 %%%       'LWP (mm)'
 %%%       { 'blue' 'cyan' 'magenta' }
 %%%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -1061,7 +1061,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %%%       'Stratiform (NP) Cloud Depth Avg TALL CCN only, grouped by SST'
 %%%       'bgraph_cdepth.h5'
 %%%       { 'a' 'SNP' }
-%%%       'N_a (# cm^-^3)'
+%%%       'Number Concentration (cm^-^3)'
 %%%       'Cloud Depth (m)'
 %%%       { 'blue' 'cyan' 'magenta' }
 %%%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -1075,7 +1075,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %%%       'Stratiform Avg TALL CCN only, grouped by SST'
 %%%       'bgraph_cot.h5'
 %%%       { 'a' 'ST' }
-%%%       'N_a (# cm^-^3)'
+%%%       'Number Concentration (cm^-^3)'
 %%%       '\tau_c'
 %%%       { 'blue' 'cyan' 'magenta' }
 %%%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -1089,7 +1089,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %%%       'Stratiform PR Avg TALL CCN only, grouped by SST'
 %%%       'bgraph_pcprr.h5'
 %%%       { 'a' 'ST' }
-%%%       'N_a (# cm^-^3)'
+%%%       'Number Concentration (cm^-^3)'
 %%%       'Precip Rate (mm h^-^1)'
 %%%       { 'blue' 'cyan' 'magenta' }
 %%%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -1103,7 +1103,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %%%       'Stratiform LWP Avg TALL CCN only, grouped by SST'
 %%%       'bgraph_lwp.h5'
 %%%       { 'a' 'ST' }
-%%%       'N_a (# cm^-^3)'
+%%%       'Number Concentration (cm^-^3)'
 %%%       'LWP (mm)'
 %%%       { 'blue' 'cyan' 'magenta' }
 %%%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -1117,7 +1117,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %%%       'Stratiform Cloud Depth Avg TALL CCN only, grouped by SST'
 %%%       'bgraph_cdepth.h5'
 %%%       { 'a' 'ST' }
-%%%       'N_a (# cm^-^3)'
+%%%       'Number Concentration (cm^-^3)'
 %%%       'Cloud Depth (m)'
 %%%       { 'blue' 'cyan' 'magenta' }
 %%%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -1131,7 +1131,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %%%       'Convective Avg TALL CCN only, grouped by SST'
 %%%       'bgraph_cot.h5'
 %%%       { 'a' 'CV' }
-%%%       'N_a (# cm^-^3)'
+%%%       'Number Concentration (cm^-^3)'
 %%%       '\tau_c'
 %%%       { 'blue' 'cyan' 'magenta' }
 %%%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -1145,7 +1145,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %%%       'Convective PR Avg TALL CCN only, grouped by SST'
 %%%       'bgraph_pcprr.h5'
 %%%       { 'a' 'CV' }
-%%%      'N_a (# cm^-^3)'
+%%%      'Number Concentration (cm^-^3)'
 %%%       'Precip Rate (mm h^-^1)'
 %%%       { 'blue' 'cyan' 'magenta' }
 %%%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -1159,7 +1159,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %%%       'Convective LWP Avg TALL CCN only, grouped by SST'
 %%%       'bgraph_lwp.h5'
 %%%       { 'a' 'CV' }
-%%%       'N_a (# cm^-^3)'
+%%%       'Number Concentration (cm^-^3)'
 %%%       'LWP (mm)'
 %%%       { 'blue' 'cyan' 'magenta' }
 %%%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -1173,7 +1173,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %%%       'Convective Cloud Depth Avg TALL CCN only, grouped by SST'
 %%%       'bgraph_cdepth.h5'
 %%%       { 'a' 'CV' }
-%%%       'N_a (# cm^-^3)'
+%%%       'Number Concentration (cm^-^3)'
 %%%       'Cloud Depth (m)'
 %%%       { 'blue' 'cyan' 'magenta' }
 %%%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -1187,7 +1187,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %%%       'All Clouds Avg TALL CCN only, grouped by SST'
 %%%       'bgraph_cot.h5'
 %%%       { 'a' 'All Clouds' }
-%%%       'N_a (# cm^-^3)'
+%%%       'Number Concentration (cm^-^3)'
 %%%       '\tau_c'
 %%%       { 'blue' 'cyan' 'magenta' }
 %%%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -1201,7 +1201,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %%%       'Cloud Fraction Avg TALL CCN only, grouped by SST'
 %%%       'bgraph_cfrac.h5'
 %%%       { 'a' 'Domain' }
-%%%       'N_a (# cm^-^3)'
+%%%       'Number Concentration (cm^-^3)'
 %%%       'Cloud Fraction'
 %%%       { 'blue' 'cyan' 'magenta' }
 %%%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -1215,7 +1215,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %%%       'Stratiform (NP) Cloud Fraction Avg TALL CCN only, grouped by SST'
 %%%       'bgraph_cfrac.h5'
 %%%       { 'a' 'SNP' }
-%%%       'N_a (# cm^-^3)'
+%%%       'Number Concentration (cm^-^3)'
 %%%       'Cloud Fraction'
 %%%       { 'blue' 'cyan' 'magenta' }
 %%%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -1229,7 +1229,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %%%       'Cloud Fraction Avg TALL CCN only, grouped by SST'
 %%%       'bgraph_cfrac.h5'
 %%%       { 'd' 'ST' }
-%%%       'N_a (# cm^-^3)'
+%%%       'Number Concentration (cm^-^3)'
 %%%       'Cloud Fraction'
 %%%       { 'blue' 'cyan' 'magenta' }
 %%%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -1243,7 +1243,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %%%       'Convective Cloud Fraction Avg TALL CCN only, grouped by SST'
 %%%       'bgraph_cfrac.h5'
 %%%       { 'a' 'CV' }
-%%%       'N_a (# cm^-^3)'
+%%%       'Number Concentration (cm^-^3)'
 %%%       'Cloud Fraction'
 %%%       { 'blue' 'cyan' 'magenta' }
 %%%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -1257,7 +1257,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %%%       'Stratiform NP-P mix Cloud Fraction Avg TALL CCN only, grouped by SST'
 %%%       'bgraph_cfrac.h5'
 %%%       { 'a' 'STM' }
-%%%       'N_a (# cm^-^3)'
+%%%       'Number Concentration (cm^-^3)'
 %%%       'Cloud Fraction'
 %%%       { 'blue' 'cyan' 'magenta' }
 %%%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
@@ -1271,7 +1271,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %%%       'All Clouds Cloud Fraction Avg TALL CCN only, grouped by SST'
 %%%       'bgraph_cfrac.h5'
 %%%       { 'a' 'SC' }
-%%%       'N_a (# cm^-^3)'
+%%%       'Number Concentration (cm^-^3)'
 %%%       'Cloud Fraction'
 %%%       { 'blue' 'cyan' 'magenta' }
 %%%       { { 'S293', 'S298', 'S303' } 'NorthWest' }

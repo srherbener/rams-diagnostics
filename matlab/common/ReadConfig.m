@@ -254,12 +254,14 @@ for i = 1:size(InLines,1)
       Cdata.PlotVars(i_pvar).Label   = regexprep(Fields{5}, '@', ' ');
       Cdata.PlotVars(i_pvar).Units   = regexprep(Fields{6}, '@', ' ');
       Cdata.PlotVars(i_pvar).Scale   = sscanf(Fields{7}, '%f');
+      Cdata.PlotVars(i_pvar).Offset  = sscanf(Fields{8}, '%f');
     case 'PlotAxis:'
       i_paxis = i_paxis + 1;
       Cdata.PlotAxes(i_paxis).Name    = Fields{2};
       Cdata.PlotAxes(i_paxis).Min     = sscanf(Fields{3}, '%f');
       Cdata.PlotAxes(i_paxis).Max     = sscanf(Fields{4}, '%f');
       Cdata.PlotAxes(i_paxis).Scale   = Fields{5};
+      Cdata.PlotAxes(i_paxis).Ticks   = eval(regexprep(Fields{6}, '_', ' '));
     case 'PlotDselect:'
       i_pds = i_pds + 1;
       Cdata.PlotDselects(i_pds).Name = Fields{2};

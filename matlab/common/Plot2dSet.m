@@ -14,7 +14,7 @@ function [ ] = Plot2dSet( X, Y, Ptitle, Pmarkers, Xlabel, Ylabel, Lcolors, Lstyl
 
 figure(Fig);
 
-Lwidth = 2;
+Lwidth = 3;
 LegFsize = 20;
 Nprops = length(AxisProps);
 Nplots = size(Y,1);
@@ -100,10 +100,10 @@ end
 
 % Fix up the positioning
 Ppos = get(gca, 'Position'); % position of plot area
-Ppos(1) = Ppos(1) * 1.00;
+Ppos(1) = Ppos(1) * 0.90;
 Ppos(2) = Ppos(2) * 1.00;
-Ppos(3) = Ppos(3) * 0.90;
-Ppos(4) = Ppos(4) * 0.90;
+Ppos(3) = Ppos(3) * 1.10;
+Ppos(4) = Ppos(4) * 0.95;
 set(gca, 'Position', Ppos);
 
 hold off;
