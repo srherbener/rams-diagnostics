@@ -122,44 +122,44 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        {
        'COT Avg, DOMAIN TALL CCN only, grouped by SST'
        'bgraph_cot.h5'
-       { '' 'Domain' }
+       { 'a' 'Domain' }
        'Number Concentration (cm^-^3)'
        '\tau_c'
-       { 'blue' 'cyan' 'magenta' }
+       { 'blue' 'green' 'yellow' }
        { { 'S293', 'S298', 'S303' } 'NorthWest' }
        'grouped'
        { 'Averages' 1 { [4] [1:3] [1:6] [1] } 1 'CCN' 0 4.5 }
        'bars_avg_cot_TALL_CO.jpg'
        }
-%
-%       % COT averages, all clouds, all time points, CCN only
-%       {
-%       'COT Avg, ALL_CLD TALL CCN only, grouped by SST'
-%       'bgraph_cot.h5'
-%       { 'b' 'All Clouds' }
-%       'Number Concentration (cm^-^3)'
-%       '\tau_c'
-%       { 'blue' 'cyan' 'magenta' }
-%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
-%       'grouped'
-%       { 'Averages' 1 { [20] [1:3] [1:6] [1] } 1 'CCN' 0 6 }
-%       'bars_avg_cot_all_cld_TALL_CO.jpg'
-%       }
-%
-%       % COT averages, stall, all time points, CCN only
-%       {
-%       'COT Avg, ST TALL CCN only, grouped by SST'
-%       'bgraph_cot.h5'
-%       { 'a' 'ST' }
-%       'Number Concentration (cm^-^3)'
-%       '\tau_c'
-%       { 'blue' 'cyan' 'magenta' }
-%       { { 'S293', 'S298', 'S303' } 'NorthWest' }
-%       'grouped'
-%       { 'Averages' 1 { [24] [1:3] [1:6] [1] } 1 'CCN' 0 4.5 }
-%       'bars_avg_cot_stall_TALL_CO.jpg'
-%       }
-%
+
+       % COT averages, all clouds, all time points, CCN only
+       {
+       'COT Avg, ALL_CLD TALL CCN only, grouped by SST'
+       'bgraph_cot.h5'
+       { 'b' 'All Clouds' }
+       'Number Concentration (cm^-^3)'
+       '\tau_c'
+       { 'blue' 'green' 'yellow' }
+       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [20] [1:3] [1:6] [1] } 1 'CCN' 0 6 }
+       'bars_avg_cot_all_cld_TALL_CO.jpg'
+       }
+
+       % COT averages, stall, all time points, CCN only
+       {
+       'COT Avg, ST TALL CCN only, grouped by SST'
+       'bgraph_cot.h5'
+       { 'c' 'ST' }
+       'Number Concentration (cm^-^3)'
+       '\tau_c'
+       { 'blue' 'green' 'yellow' }
+       { { 'S293', 'S298', 'S303' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [24] [1:3] [1:6] [1] } 1 'CCN' 0 4.5 }
+       'bars_avg_cot_stall_TALL_CO.jpg'
+       }
+
        % COT averages, domain, all time points, CCN + GCCN
        {
        'COT Avg, DOMAIN TALL CCN, grouped by GCCN, S298'
@@ -167,8 +167,8 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'a' 'Domain, S298' }
        'Number Concentration (cm^-^3)'
        '\tau_c'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'G10M4', 'G10M2', 'G10M0' } 'NorthWest' }
+       { 'blue' 'green' 'yellow' }
+       { { 'Glow', 'Gmed', 'Ghigh' } 'NorthWest' }
        'grouped'
        { 'Averages' 1 { [4] [2] [1:6] [2:4] } 0 'CCN' 0 4.5 }
        'bars_avg_cot_TALL_CO_S298_GCCN.jpg'
@@ -181,8 +181,8 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { '' 'Domain, S303' }
        'Number Concentration (cm^-^3)'
        '\tau_c'
-       { 'blue' 'cyan' 'magenta' }
-       { { 'G10M4', 'G10M2', 'G10M0' } 'NorthWest' }
+       { 'blue' 'green' 'yellow' }
+       { { 'Glow', 'Gmed', 'Ghigh' } 'NorthWest' }
        'grouped'
        { 'Averages' 1 { [4] [3] [1:6] [2:4] } 0 'CCN' 0 4.5 }
        'bars_avg_cot_TALL_CO_S303_GCCN.jpg'
@@ -281,7 +281,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'a' 'ST, S293' }
        'Number Concentration (cm^-^3)'
        'Cloud Depth (m)'
-       { 'cyan' }
+       { 'blue' }
        { { 'NoLegend'} 'NorthWest' }
        'grouped'
        { 'Averages' 1 { [24] [1] [1:6] [1] } 1 'CCN' 0 800 }
@@ -295,7 +295,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'a' 'ST, S298' }
        'Number Concentration (cm^-^3)'
        'Cloud Depth (m)'
-       { 'cyan' }
+       { 'blue' }
        { { 'NoLegend'} 'NorthWest' }
        'grouped'
        { 'Averages' 1 { [24] [2] [1:6] [1] } 1 'CCN' 0 700 }
@@ -309,7 +309,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'a' 'ST, S303' }
        'Number Concentration (cm^-^3)'
        'Cloud Depth (m)'
-       { 'cyan' }
+       { 'blue' }
        { { 'NoLegend'} 'NorthWest' }
        'grouped'
        { 'Averages' 1 { [24] [3] [1:6] [1] } 1 'CCN' 0 400 }
@@ -323,7 +323,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'a' 'ST, C50' }
        'Number Concentration (cm^-^3)'
        'Cloud Depth (m)'
-       { 'cyan' }
+       { 'blue' }
        { { 'NoLegend'} 'NorthWest' }
        'grouped'
        { 'Averages' 1 { [24] [1:3] [1] [1] } 1 'SST' 0 700 }
@@ -337,7 +337,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'a' 'ST, C400' }
        'Number Concentration (cm^-^3)'
        'Cloud Depth (m)'
-       { 'cyan' }
+       { 'blue' }
        { { 'NoLegend'} 'NorthWest' }
        'grouped'
        { 'Averages' 1 { [24] [1:3] [4] [1] } 1 'SST' 0 700 }
@@ -351,7 +351,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'a' 'ST, C1600' }
        'Number Concentration (cm^-^3)'
        'Cloud Depth (m)'
-       { 'cyan' }
+       { 'blue' }
        { { 'NoLegend'} 'NorthWest' }
        'grouped'
        { 'Averages' 1 { [24] [1:3] [6] [1] } 1 'SST' 0 700 }
@@ -365,7 +365,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'a' 'ST, S298' }
        'Number Concentration (cm^-^3)'
        'Cloud Depth (m)'
-       { 'blue' 'cyan' 'magenta' }
+       { 'blue' 'green' 'yellow' }
        { { 'G10M4' 'G10M2' 'G10M0' } 'NorthWest' }
        'grouped'
        { 'Averages' 1 { [24] [2] [1:6] [2:4] } 0 'CCN' 0 700 }
@@ -379,7 +379,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'a' 'ST, S303' }
        'Number Concentration (cm^-^3)'
        'Cloud Depth (m)'
-       { 'blue' 'cyan' 'magenta' }
+       { 'blue' 'green' 'yellow' }
        { { 'G10M4' 'G10M2' 'G10M0' } 'NorthWest' }
        'grouped'
        { 'Averages' 1 { [24] [3] [1:6] [2:4] } 0 'CCN' 0 700 }
@@ -439,7 +439,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'b' 'ST, S293' }
        'Number Concentration (cm^-^3)'
        'LWC (g kg^-^1)'
-       { 'cyan' }
+       { 'blue' }
        { { 'NoLegend' } 'NorthWest' }
        'grouped'
        { 'Averages' 1000 { [24] [1] [1:6] [1] } 1 'CCN' 0 0.4 }
@@ -453,7 +453,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'b' 'ST, S298' }
        'Number Concentration (cm^-^3)'
        'LWC (g kg^-^1)'
-       { 'cyan' }
+       { 'blue' }
        { { 'NoLegend' } 'NorthWest' }
        'grouped'
        { 'Averages' 1000 { [24] [2] [1:6] [1] } 1 'CCN' 0 0.4 }
@@ -467,7 +467,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'b' 'ST, S303' }
        'Number Concentration (cm^-^3)'
        'LWC (g kg^-^1)'
-       { 'cyan' }
+       { 'blue' }
        { { 'NoLegend' } 'NorthWest' }
        'grouped'
        { 'Averages' 1000 { [24] [3] [1:6] [1] } 1 'CCN' 0 0.4 }
@@ -481,7 +481,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'b' 'ST, C50' }
        'Number Concentration (cm^-^3)'
        'LWC (g kg^-^1)'
-       { 'cyan' }
+       { 'blue' }
        { { 'NoLegend' } 'NorthWest' }
        'grouped'
        { 'Averages' 1000 { [24] [1:3] [1] [1] } 1 'SST' 0 0.4 }
@@ -495,7 +495,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'b' 'ST, C400' }
        'Number Concentration (cm^-^3)'
        'LWC (g kg^-^1)'
-       { 'cyan' }
+       { 'blue' }
        { { 'NoLegend' } 'NorthWest' }
        'grouped'
        { 'Averages' 1000 { [24] [1:3] [4] [1] } 1 'SST' 0 0.4 }
@@ -509,7 +509,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'b' 'ST, C1600' }
        'Number Concentration (cm^-^3)'
        'LWC (g kg^-^1)'
-       { 'cyan' }
+       { 'blue' }
        { { 'NoLegend' } 'NorthWest' }
        'grouped'
        { 'Averages' 1000 { [24] [1:3] [6] [1] } 1 'SST' 0 0.4 }
@@ -523,7 +523,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'b' 'ST, S298' }
        'Number Concentration (cm^-^3)'
        'LWC (g kg^-^1)'
-       { 'blue' 'cyan' 'magenta' }
+       { 'blue' 'green' 'yellow' }
        { { 'G10M4' 'G10M2' 'G10M0' } 'NorthWest' }
        'grouped'
        { 'Averages' 1000 { [24] [2] [1:6] [2:4] } 0 'CCN' 0 0.4 }
@@ -537,7 +537,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'b' 'ST, S303' }
        'Number Concentration (cm^-^3)'
        'LWC (g kg^-^1)'
-       { 'blue' 'cyan' 'magenta' }
+       { 'blue' 'green' 'yellow' }
        { { 'G10M4' 'G10M2' 'G10M0' } 'NorthWest' }
        'grouped'
        { 'Averages' 1000 { [24] [3] [1:6] [2:4] } 0 'CCN' 0 0.4 }
@@ -917,46 +917,46 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 %       %         (SNP + STM + ST)
 %       %    The result is subtracted from 100 to form a Clear type
 %       % Cloud type, npoints (relative amounts), TALL, CCN only, SST 293
-%       {
-%       'Cloud Distribution TALL CCN only, 293K'
-%       'bgraph_cfrac.h5'
-%       { 'a' 'Domain, S293' }
-%       'Number Concentration (cm^-^3)'
-%       'Cloud Distribution (%)'
-%       { 'cyan' 'blue' 'magenta' 'white' }
-%       { { 'ST' 'SC' 'CV' 'Clear' } 'NorthWest' }
-%       'stacked'
-%       { 'Averages' 100 { [8 20 12 24 16] [1] [1:6] [1] } 1 'CCN' 0 120 }
-%       'bars_avg_ctype_TALL_CO_S293.jpg'
-%       }
-%
-%       % Cloud type, npoints (relative amounts), TALL, CCN only, SST 298
-%       {
-%       'Cloud Distribution TALL CCN only, 298K'
-%       'bgraph_cfrac.h5'
-%       { 'b' 'Domain, S298' }
-%       'Number Concentration (cm^-^3)'
-%       'Cloud Distribution (%)'
-%       { 'cyan' 'blue' 'magenta' 'white' }
-%       { { 'ST' 'SC' 'CV' 'Clear' } 'NorthWest' }
-%       'stacked'
-%       { 'Averages' 100 { [8 20 12 24 16] [2] [1:6] [1] } 1 'CCN' 0 120 }
-%       'bars_avg_ctype_TALL_CO_S298.jpg'
-%       }
-%
-%       % Cloud type, npoints (relative amounts), TALL, CCN only, SST 303
-%       {
-%       'Cloud Distribution TALL CCN only, 300K'
-%       'bgraph_cfrac.h5'
-%       { 'c' 'Domain, S303' }
-%       'Number Concentration (cm^-^3)'
-%       'Cloud Distribution (%)'
-%       { 'cyan' 'blue' 'magenta' 'white' }
-%       { { 'ST' 'SC' 'CV' 'Clear' } 'NorthWest' }
-%       'stacked'
-%       { 'Averages' 100 { [8 20 12 24 16] [3] [1:6] [1] } 1 'CCN' 0 120 }
-%       'bars_avg_ctype_TALL_CO_S303.jpg'
-%       }
+        {
+        'Cloud Distribution TALL CCN only, 293K'
+        'bgraph_cfrac.h5'
+        { 'a' 'Domain, S293' }
+        'Number Concentration (cm^-^3)'
+        'Cloud Distribution (%)'
+        { 'blue' 'green' 'yellow' 'white' }
+        { { 'ST' 'SC' 'CV' 'Clear' } 'NorthWest' }
+        'stacked'
+        { 'Averages' 100 { [8 20 12 24 16] [1] [1:6] [1] } 1 'CCN' 0 120 }
+        'bars_avg_ctype_TALL_CO_S293.jpg'
+        }
+ 
+        % Cloud type, npoints (relative amounts), TALL, CCN only, SST 298
+        {
+        'Cloud Distribution TALL CCN only, 298K'
+        'bgraph_cfrac.h5'
+        { 'b' 'Domain, S298' }
+        'Number Concentration (cm^-^3)'
+        'Cloud Distribution (%)'
+        { 'blue' 'green' 'yellow' 'white' }
+        { { 'ST' 'SC' 'CV' 'Clear' } 'NorthWest' }
+        'stacked'
+        { 'Averages' 100 { [8 20 12 24 16] [2] [1:6] [1] } 1 'CCN' 0 120 }
+        'bars_avg_ctype_TALL_CO_S298.jpg'
+        }
+ 
+        % Cloud type, npoints (relative amounts), TALL, CCN only, SST 303
+        {
+        'Cloud Distribution TALL CCN only, 300K'
+        'bgraph_cfrac.h5'
+        { 'c' 'Domain, S303' }
+        'Number Concentration (cm^-^3)'
+        'Cloud Distribution (%)'
+        { 'blue' 'green' 'yellow' 'white' }
+        { { 'ST' 'SC' 'CV' 'Clear' } 'NorthWest' }
+        'stacked'
+        { 'Averages' 100 { [8 20 12 24 16] [3] [1:6] [1] } 1 'CCN' 0 120 }
+        'bars_avg_ctype_TALL_CO_S303.jpg'
+        }
 
        % Cloud type, npoints (relative amounts), TALL, CCN G10M4, SST 298
        {
@@ -965,7 +965,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'b' 'Domain, S298, G10M4' }
        'Number Concentration (cm^-^3)'
        'Cloud Distribution (%)'
-       { 'cyan' 'blue' 'magenta' 'white' }
+       { 'blue' 'green' 'yellow' 'white' }
        { { 'ST' 'SC' 'CV' 'Clear' } 'NorthWest' }
        'stacked'
        { 'Averages' 100 { [8 20 12 24 16] [2] [1:6] [2] } 1 'CCN' 0 120 }
@@ -979,7 +979,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'b' 'Domain, S298, G10M0' }
        'Number Concentration (cm^-^3)'
        'Cloud Distribution (%)'
-       { 'cyan' 'blue' 'magenta' 'white' }
+       { 'blue' 'green' 'yellow' 'white' }
        { { 'ST' 'SC' 'CV' 'Clear' } 'NorthWest' }
        'stacked'
        { 'Averages' 100 { [8 20 12 24 16] [2] [1:6] [4] } 1 'CCN' 0 120 }
@@ -993,7 +993,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'c' 'Domain, S303, G10M4' }
        'Number Concentration (cm^-^3)'
        'Cloud Distribution (%)'
-       { 'cyan' 'blue' 'magenta' 'white' }
+       { 'blue' 'green' 'yellow' 'white' }
        { { 'ST' 'SC' 'CV' 'Clear' } 'NorthWest' }
        'stacked'
        { 'Averages' 100 { [8 20 12 24 16] [3] [1:6] [2] } 1 'CCN' 0 120 }
@@ -1007,7 +1007,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'c' 'Domain, S303, G10M0' }
        'Number Concentration (cm^-^3)'
        'Cloud Distribution (%)'
-       { 'cyan' 'blue' 'magenta' 'white' }
+       { 'blue' 'green' 'yellow' 'white' }
        { { 'ST' 'SC' 'CV' 'Clear' } 'NorthWest' }
        'stacked'
        { 'Averages' 100 { [8 20 12 24 16] [3] [1:6] [4] } 1 'CCN' 0 120 }
@@ -1360,7 +1360,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 
     iaxis = iaxis + 1;
     AxisProps(iaxis).Name = 'FontSize';
-    AxisProps(iaxis).Val  = 20;
+    AxisProps(iaxis).Val  = 25;
 
     % x-axis labeling
     if (strcmp(Vname, 'CCN') | strcmp(Vname, 'SST'))
@@ -1387,7 +1387,20 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
     OutFile = sprintf('%s/%s', Pdir, OutFname);
     fprintf('      %s\n', OutFile);
 
-    PlotBarSet(X, BDATA, Ptitle, Pmark, Xlabel, Ylabel, Bcolors, Pstyle, LegText, LegLoc, AxisProps, OutFile);
+    Fig = figure;
+
+    PlotBarSet(X, BDATA, Ptitle, Pmark, Xlabel, Ylabel, Bcolors, Pstyle, LegText, LegLoc, AxisProps, Fig);
+
+    % Fix up the positioning
+    Ppos = get(gca, 'Position'); % position of plot area
+    Ppos(1) = Ppos(1) * 0.90;
+    Ppos(2) = Ppos(2) * 1.00;
+    Ppos(3) = Ppos(3) * 1.20;
+    Ppos(4) = Ppos(4) * 1.08;
+    set(gca, 'Position', Ppos);
+
+    saveas(Fig, OutFile);
+    close(Fig);
 
     fprintf('\n');
 

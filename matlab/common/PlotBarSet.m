@@ -1,4 +1,4 @@
-function [ ] = PlotBarSet( X, Y, Ptitle, Pmarker, Xlabel, Ylabel, Bcolors, Pstyle, LegText, LegLoc, AxisProps, OutFile )
+function [ ] = PlotBarSet( X, Y, Ptitle, Pmarker, Xlabel, Ylabel, Bcolors, Pstyle, LegText, LegLoc, AxisProps, Fig )
 %PlotBarSet Plot a set of bar plots on the same panel
 %   This function will take data contained in X and Y and plot them on a
 %   single panel.
@@ -11,10 +11,12 @@ function [ ] = PlotBarSet( X, Y, Ptitle, Pmarker, Xlabel, Ylabel, Bcolors, Pstyl
 %   AxisProps is a structure contain a list of axis property names and
 %   associated values that are desired to be set.
 %
-%   OutFile is the path to the file that contains the image of the plot.
+%   Fig is handle for axes where the plot is to be drawn
 %
 
-Fig = figure;
+LegFsize = 20;
+
+figure(Fig);
 
 Nprops = length(AxisProps);
 Nplots = size(Y,1);
@@ -36,7 +38,7 @@ for i = 1:Nprops
 end
 
 if (~strcmp(LegText{1}, 'NoLegend'))
-  legend(LegText, 'Location', char(LegLoc), 'Orientation', 'horizontal', 'FontSize', 20);
+  legend(LegText, 'Location', char(LegLoc), 'Orientation', 'horizontal', 'FontSize', LegFsize);
   legend boxoff;
 end
 
@@ -67,9 +69,7 @@ Ppos(3) = Ppos(3) * 0.90;
 Ppos(4) = Ppos(4) * 0.90;
 set(gca, 'Position', Ppos);
 
-saveas(Fig, OutFile);
 
 hold off;
-close(Fig);
 
 end
