@@ -74,7 +74,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
   %    24  _stall_TALL
   %
   % Cloud fraction is an exception to this rule, where there is no _all_cld. Instead
-  % there is an stmix and scmix case:
+  % there are:
   %
   %    ...
   %
@@ -87,6 +87,21 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
   %    22 _scmix_TMID
   %    23 _scmix_TEND
   %    24 _scmix_TALL
+  %
+  %    25 _stnopr_TSTART
+  %    26 _stnopr_TMID
+  %    27 _stnopr_TEND
+  %    28 _stnopr_TALL
+  %
+  %    29 _stdriz_TSTART
+  %    30 _stdriz_TMID
+  %    31 _stdriz_TEND
+  %    32 _stdriz_TALL
+  %
+  %    33 _strain_TSTART
+  %    34 _strain_TMID
+  %    35 _strain_TEND
+  %    36 _strain_TALL
   %
   % Added LCL, these are in the bgraph_lcl fiels which have variables ordered as:
   % 
@@ -1014,6 +1029,95 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'bars_avg_ctype_TALL_CO_S303_G10M0.jpg'
        }
 
+
+
+       % cloud type (new categories), npoints (relative amounts), TALL, CCN only, SST 293
+       {
+       'New All Cloud Distribution TALL CCN only, 293K'
+       'bgraph_cfrac.h5'
+       { 'a' 'Domain, S293' }
+       'Number Concentration (cm^-^3)'
+       'Cloud Distribution (%)'
+       { 'blue' 'green' 'yellow' 'white' }
+       { { 'SNP' 'SDZ' 'SRN' 'Clear' } 'NorthWest' }
+       'stacked'
+       { 'Averages' 100 { [28 32 36] [1] [1:6] [1] } 1 'CCN' 0 120 }
+       'bars_avg_ctype_newall_TALL_CO_S293.jpg'
+       }
+
+       % cloud type (new categories), npoints (relative amounts), TALL, CCN only, SST 298
+       {
+       'New All Cloud Distribution TALL CCN only, 298K'
+       'bgraph_cfrac.h5'
+       { 'b' 'Domain, S298' }
+       'Number Concentration (cm^-^3)'
+       'Cloud Distribution (%)'
+       { 'blue' 'green' 'yellow' 'white' }
+       { { 'SNP' 'SDZ' 'SRN' 'Clear' } 'NorthWest' }
+       'stacked'
+       { 'Averages' 100 { [28 32 36] [2] [1:6] [1] } 1 'CCN' 0 120 }
+       'bars_avg_ctype_newall_TALL_CO_S298.jpg'
+       }
+
+       % cloud type (new categories), npoints (relative amounts), TALL, CCN only, SST 303
+       {
+       'New All Cloud Distribution TALL CCN only, 300K'
+       'bgraph_cfrac.h5'
+       { 'c' 'Domain, S303' }
+       'Number Concentration (cm^-^3)'
+       'Cloud Distribution (%)'
+       { 'blue' 'green' 'yellow' 'white' }
+       { { 'SNP' 'SDZ' 'SRN' 'Clear' } 'NorthWest' }
+       'stacked'
+       { 'Averages' 100 { [28 32 36] [3] [1:6] [1] } 1 'CCN' 0 120 }
+       'bars_avg_ctype_newall_TALL_CO_S303.jpg'
+       }
+
+
+
+       % cloud type (new categories - combine SNP+SDZ), npoints (relative amounts), TALL, CCN only, SST 293
+       {
+       'New Cloud Distribution TALL CCN only, 293K'
+       'bgraph_cfrac.h5'
+       { 'a' 'Domain, S293' }
+       'Number Concentration (cm^-^3)'
+       'Cloud Distribution (%)'
+       { 'green' 'yellow' 'white' }
+       { { 'SDZ' 'SRN' 'Clear' } 'NorthWest' }
+       'stacked'
+       { 'Averages' 100 { [28 32 36] [1] [1:6] [1] } 1 'CCN' 0 120 }
+       'bars_avg_ctype_new_TALL_CO_S293.jpg'
+       }
+
+       % cloud type (new categories - combine SNP+SDZ), npoints (relative amounts), TALL, CCN only, SST 298
+       {
+       'New Cloud Distribution TALL CCN only, 298K'
+       'bgraph_cfrac.h5'
+       { 'b' 'Domain, S298' }
+       'Number Concentration (cm^-^3)'
+       'Cloud Distribution (%)'
+       { 'green' 'yellow' 'white' }
+       { { 'SDZ' 'SRN' 'Clear' } 'NorthWest' }
+       'stacked'
+       { 'Averages' 100 { [28 32 36] [2] [1:6] [1] } 1 'CCN' 0 120 }
+       'bars_avg_ctype_new_TALL_CO_S298.jpg'
+       }
+
+       % cloud type (new categories - combine SNP+SDZ), npoints (relative amounts), TALL, CCN only, SST 303
+       {
+       'New Cloud Distribution TALL CCN only, 300K'
+       'bgraph_cfrac.h5'
+       { 'c' 'Domain, S303' }
+       'Number Concentration (cm^-^3)'
+       'Cloud Distribution (%)'
+       { 'green' 'yellow' 'white' }
+       { { 'SDZ' 'SRN' 'Clear' } 'NorthWest' }
+       'stacked'
+       { 'Averages' 100 { [28 32 36] [3] [1:6] [1] } 1 'CCN' 0 120 }
+       'bars_avg_ctype_new_TALL_CO_S303.jpg'
+       }
+
+
 %%%       % Stratiform (non-precipitating) cloud types, COT averages, all time points, CCN only
 %%%       {
 %%%       'Stratiform (NP) Avg TALL CCN only, grouped by SST'
@@ -1342,12 +1446,19 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
     XVAR  = hdf5read(InFile, Vname);
 
     % If doing cloud distribution:
-    %   Sum up the first three columns (SNP, STM, ST)
+    %   old categories:
+    %     Sum up the first three columns (SNP, STM, ST)
+    %   new categories, combine nopr and driz
+    %     Sum up the first two columns (SNP, SDZ)
     %   Add a count of clear space so that all bars stack up to 100%.
     % NOTE: this assumes that you've specified this plot to create percent values
     % in BDATA.
-    if (regexp(PdName, '^Cloud Distribution'))
-      BDATA = [ sum(BDATA(:,1:3),2) BDATA(:,4:5) ];
+    if (regexp(PdName, 'Cloud Distribution'))
+      if (regexp(PdName, '^Cloud Distribution'))
+        BDATA = [ sum(BDATA(:,1:3),2) BDATA(:,4:5) ];
+      elseif (regexp(PdName, '^New Cloud Distribution'))
+        BDATA = [ sum(BDATA(:,1:2),2) BDATA(:,3) ];
+      end
       % Sum up across variables (v) and subtract from 100 to get the clear
       % column counts. Then append the clear counts to the end of BDATA.
       CLEAR = 100 - nansum(BDATA, 2);

@@ -191,6 +191,18 @@ function [ ] = GenBarGraphFilesCtype(ConfigFile)
            'cfrac_scmix_TMID'
            'cfrac_scmix_TEND'
            'cfrac_scmix_TALL'
+           'cfrac_stnopr_TSTART'
+           'cfrac_stnopr_TSTART'
+           'cfrac_stnopr_TMID'
+           'cfrac_stnopr_TEND'
+           'cfrac_stdriz_TALL'
+           'cfrac_stdriz_TMID'
+           'cfrac_stdriz_TEND'
+           'cfrac_stdriz_TALL'
+           'cfrac_strain_TSTART'
+           'cfrac_strain_TMID'
+           'cfrac_strain_TEND'
+           'cfrac_strain_TALL'
         }
         'bgraph_cfrac'
       }
