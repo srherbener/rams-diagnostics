@@ -55,12 +55,26 @@ montage -tile 1x1 -geometry ${Jsize}${Pgap} \
  bars_avg_cot_TALL_CO_S298_GCCN.jpg \
  FigureBgraphCot_GCCN.jpg
 
-echo "Figure: Bgraph Cloud Distribution : CCN only"
+echo "Figure: Bgraph Cloud Distribution (ST,SC,CV): CCN only"
 montage -tile 3x1 -geometry ${Jsize}${Pgap} \
  bars_avg_ctype_TALL_CO_S293.jpg \
  bars_avg_ctype_TALL_CO_S298.jpg \
  bars_avg_ctype_TALL_CO_S303.jpg \
  FigureBgraphCtypeDist.jpg
+
+echo "Figure: Bgraph Cloud Distribution (SNP,SDZ,SRN): CCN only"
+montage -tile 3x1 -geometry ${Jsize}${Pgap} \
+ bars_avg_ctype_newall_TALL_CO_S293.jpg \
+ bars_avg_ctype_newall_TALL_CO_S298.jpg \
+ bars_avg_ctype_newall_TALL_CO_S303.jpg \
+ FigureBgraphCtypeDistNewAll.jpg
+
+echo "Figure: Bgraph Cloud Distribution (SDA,SRN): CCN only"
+montage -tile 3x1 -geometry ${Jsize}${Pgap} \
+ bars_avg_ctype_new_TALL_CO_S293.jpg \
+ bars_avg_ctype_new_TALL_CO_S298.jpg \
+ bars_avg_ctype_new_TALL_CO_S303.jpg \
+ FigureBgraphCtypeDistNew.jpg
 
 
 
