@@ -1035,11 +1035,11 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        {
        'New All Cloud Distribution TALL CCN only, 293K'
        'bgraph_cfrac.h5'
-       { 'a' 'Domain, S293' }
+       { 'a' 'S293' }
        'Number Concentration (cm^-^3)'
        'Cloud Distribution (%)'
-       { 'cyan' 'dodgerblue' 'navy' 'white' }
-       { { 'SNP' 'SDZ' 'SRN' 'Clear' } 'NorthWest' }
+       { 'cyan' 'dodgerblue' 'navy' }
+       { { 'SNP' 'SDZ' 'SRN' } 'NorthWest' }
        'stacked'
        { 'Averages' 100 { [28 32 36] [1] [1:6] [1] } 1 'CCN' 0 120 }
        'bars_avg_ctype_newall_TALL_CO_S293.jpg'
@@ -1049,11 +1049,11 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        {
        'New All Cloud Distribution TALL CCN only, 298K'
        'bgraph_cfrac.h5'
-       { 'b' 'Domain, S298' }
+       { 'b' 'S298' }
        'Number Concentration (cm^-^3)'
        'Cloud Distribution (%)'
-       { 'cyan' 'dodgerblue' 'navy' 'white' }
-       { { 'SNP' 'SDZ' 'SRN' 'Clear' } 'NorthWest' }
+       { 'cyan' 'dodgerblue' 'navy' }
+       { { 'SNP' 'SDZ' 'SRN' } 'NorthWest' }
        'stacked'
        { 'Averages' 100 { [28 32 36] [2] [1:6] [1] } 1 'CCN' 0 120 }
        'bars_avg_ctype_newall_TALL_CO_S298.jpg'
@@ -1063,11 +1063,11 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        {
        'New All Cloud Distribution TALL CCN only, 300K'
        'bgraph_cfrac.h5'
-       { 'c' 'Domain, S303' }
+       { 'c' 'S303' }
        'Number Concentration (cm^-^3)'
        'Cloud Distribution (%)'
-       { 'cyan' 'dodgerblue' 'navy' 'white' }
-       { { 'SNP' 'SDZ' 'SRN' 'Clear' } 'NorthWest' }
+       { 'cyan' 'dodgerblue' 'navy' }
+       { { 'SNP' 'SDZ' 'SRN' } 'NorthWest' }
        'stacked'
        { 'Averages' 100 { [28 32 36] [3] [1:6] [1] } 1 'CCN' 0 120 }
        'bars_avg_ctype_newall_TALL_CO_S303.jpg'
@@ -1079,11 +1079,11 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        {
        'New Cloud Distribution TALL CCN only, 293K'
        'bgraph_cfrac.h5'
-       { 'a' 'Domain, S293' }
+       { 'a' 'S293' }
        'Number Concentration (cm^-^3)'
        'Cloud Distribution (%)'
-       { 'dodgerblue' 'navy' 'white' }
-       { { 'SDZ' 'SRN' 'Clear' } 'NorthWest' }
+       { 'dodgerblue' 'navy' }
+       { { 'SDZ' 'SRN' } 'NorthWest' }
        'stacked'
        { 'Averages' 100 { [28 32 36] [1] [1:6] [1] } 1 'CCN' 0 120 }
        'bars_avg_ctype_new_TALL_CO_S293.jpg'
@@ -1093,11 +1093,11 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        {
        'New Cloud Distribution TALL CCN only, 298K'
        'bgraph_cfrac.h5'
-       { 'b' 'Domain, S298' }
+       { 'b' 'S298' }
        'Number Concentration (cm^-^3)'
        'Cloud Distribution (%)'
-       { 'dodgerblue' 'navy' 'white' }
-       { { 'SDZ' 'SRN' 'Clear' } 'NorthWest' }
+       { 'dodgerblue' 'navy' }
+       { { 'SDZ' 'SRN' } 'NorthWest' }
        'stacked'
        { 'Averages' 100 { [28 32 36] [2] [1:6] [1] } 1 'CCN' 0 120 }
        'bars_avg_ctype_new_TALL_CO_S298.jpg'
@@ -1107,11 +1107,11 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        {
        'New Cloud Distribution TALL CCN only, 300K'
        'bgraph_cfrac.h5'
-       { 'c' 'Domain, S303' }
+       { 'c' 'S303' }
        'Number Concentration (cm^-^3)'
        'Cloud Distribution (%)'
-       { 'dodgerblue' 'navy' 'white' }
-       { { 'SDZ' 'SRN' 'Clear' } 'NorthWest' }
+       { 'dodgerblue' 'navy' }
+       { { 'SDZ' 'SRN' } 'NorthWest' }
        'stacked'
        { 'Averages' 100 { [28 32 36] [3] [1:6] [1] } 1 'CCN' 0 120 }
        'bars_avg_ctype_new_TALL_CO_S303.jpg'
@@ -1459,10 +1459,13 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
       elseif (regexp(PdName, '^New Cloud Distribution'))
         BDATA = [ sum(BDATA(:,1:2),2) BDATA(:,3) ];
       end
+
       % Sum up across variables (v) and subtract from 100 to get the clear
       % column counts. Then append the clear counts to the end of BDATA.
-      CLEAR = 100 - nansum(BDATA, 2);
-      BDATA = [ BDATA CLEAR ];
+      if (regexp(PdName, '^Cloud Distribution'))
+        CLEAR = 100 - nansum(BDATA, 2);
+        BDATA = [ BDATA CLEAR ];
+      end
     end
 
     % do the plot
