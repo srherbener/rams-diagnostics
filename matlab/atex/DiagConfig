@@ -270,6 +270,11 @@ LinePlot: CO_UP_S303_G10M5_ALL  AnalTime Cfrac AnalTimeHr 1 Fraction 0 BlStat_T1
 
 LinePlot: CG_UP_C50_C1600_S298  AnalTime Cfrac AnalTimeHr 1 Fraction 1 BlStat_T12_T36 none PANEL:c@S298  none none CloudFrac_CG_C50_C1600_S298.jpg
 
+#### LTSS time series ####
+LinePlot: CO_UP_C0050_G10M5  AnalTime LTSS AnalTimeHr 1 LTSS 1 LtssSelect none C50   SouthWest none LTSS_CO_C0050_G10M5.jpg
+LinePlot: CO_UP_C0400_G10M5  AnalTime LTSS AnalTimeHr 1 LTSS 1 LtssSelect none C400  SouthWest none LTSS_CO_C0400_G10M5.jpg
+LinePlot: CO_UP_C1600_G10M5  AnalTime LTSS AnalTimeHr 1 LTSS 1 LtssSelect none C1600 SouthWest none LTSS_CO_C1600_G10M5.jpg
+
 ####################### PROFILES ##############################
 
 ### TURBULENCE STATS ###
@@ -1775,6 +1780,8 @@ PlotSet: ContourPset_C400_S298 3 z.atex.ccn0400.sst298.gcn10m5.1um 10e-5/cc blac
 #PlotVar: Ctop  hda_ctop_tempc TsAveragedData/hda_ctop_tempc Cloud@Top@Temp  Deg@C       15       5  1 0
 PlotVar: Cfrac cloud_frac DIAGS/hda_ts_cf CF      @   1 0
 
+PlotVar: LTSS ltss TsAveragedData/ltss LTSS   K  1 0
+
 #PlotVar: MaxCdepth max_cloud_depth TsAveragedData/max_cdepth Max@Cloud@Depth              m   -100.0  4100.0  1 0
 
 PlotVar: AnalTime   t_coords TsAveragedData/hda_cfrac Analysis@Time  h  2.77777778e-4 -12.0
@@ -2659,6 +2666,8 @@ PlotAxis: PrateScmix      1   10 log [_]
 
 PlotAxis: PratePdf   1e-8   1 log [_]
 
+PlotAxis: LTSS         0   20 linear [0_5_10_15_20]
+
 PlotAxis: Alb      0    1 linear [_]
 PlotAxis: AlbPdf   1e-8 1 log [_]
 
@@ -2997,6 +3006,8 @@ PlotDselect: Prof_T12_T36   1 1 1 1 0 4000  1 1
 PlotDselect: MOMENT_SELECT  1 1 1 1 0 4000  1 1
 
 PlotDselect: TurbSelect    nan nan nan nan 0 4000  nan nan
+
+PlotDselect: LtssSelect    nan nan nan nan nan nan 0 129600
 
 PlotDselect: CloudCondSelect    nan nan nan nan 0 4000  nan nan
 PlotDselect: CloudEvapSelect    nan nan nan nan 0 4000  nan nan
