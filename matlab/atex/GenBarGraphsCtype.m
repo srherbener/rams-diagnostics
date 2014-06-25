@@ -394,10 +394,10 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'a' 'ST, S298' }
        'Number Concentration (cm^-^3)'
        'Cloud Depth (m)'
-       { 'blue' 'green' 'yellow' }
-       { { 'G10M4' 'G10M2' 'G10M0' } 'NorthWest' }
+       { 'navy' 'cyan' }
+       { { 'Glow' 'Ghigh' } 'NorthWest' }
        'grouped'
-       { 'Averages' 1 { [24] [2] [1:6] [2:4] } 0 'CCN' 0 700 }
+       { 'Averages' 1 { [24] [2] [1:6] [2 4] } 0 'CCN' 0 700 }
        'bars_avg_cdepth_stall_TALL_CO_S298_GCCN.jpg'
        }
 
@@ -408,10 +408,10 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'a' 'ST, S303' }
        'Number Concentration (cm^-^3)'
        'Cloud Depth (m)'
-       { 'blue' 'green' 'yellow' }
-       { { 'G10M4' 'G10M2' 'G10M0' } 'NorthWest' }
+       { 'navy' 'cyan' }
+       { { 'Glow' 'Ghigh' } 'NorthWest' }
        'grouped'
-       { 'Averages' 1 { [24] [3] [1:6] [2:4] } 0 'CCN' 0 700 }
+       { 'Averages' 1 { [24] [3] [1:6] [2 4] } 0 'CCN' 0 700 }
        'bars_avg_cdepth_stall_TALL_CO_S303_GCCN.jpg'
        }
 
@@ -552,10 +552,10 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'b' 'ST, S298' }
        'Number Concentration (cm^-^3)'
        'LWC (g kg^-^1)'
-       { 'blue' 'green' 'yellow' }
-       { { 'G10M4' 'G10M2' 'G10M0' } 'NorthWest' }
+       { 'navy' 'cyan' }
+       { { 'Glow' 'Ghigh' } 'NorthWest' }
        'grouped'
-       { 'Averages' 1000 { [24] [2] [1:6] [2:4] } 0 'CCN' 0 0.4 }
+       { 'Averages' 1000 { [24] [2] [1:6] [2 4] } 0 'CCN' 0 0.4 }
        'bars_avg_lwc_stall_TALL_CO_S298_GCCN.jpg'
        }
 
@@ -566,10 +566,10 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'b' 'ST, S303' }
        'Number Concentration (cm^-^3)'
        'LWC (g kg^-^1)'
-       { 'blue' 'green' 'yellow' }
-       { { 'G10M4' 'G10M2' 'G10M0' } 'NorthWest' }
+       { 'navy' 'cyan' }
+       { { 'Glow' 'Ghigh' } 'NorthWest' }
        'grouped'
-       { 'Averages' 1000 { [24] [3] [1:6] [2:4] } 0 'CCN' 0 0.4 }
+       { 'Averages' 1000 { [24] [3] [1:6] [2 4] } 0 'CCN' 0 0.4 }
        'bars_avg_lwc_stall_TALL_CO_S303_GCCN.jpg'
        }
 
