@@ -30,6 +30,12 @@ montage -tile 3x2 -geometry ${Jsize}${Pgap} \
  CloudFrac_CO_S303_G10M5_ALL.jpg \
  FigureTsBlStats_ALL.jpg
 
+echo "Figure: COT, all cases, GCCN"
+montage -tile 2x1 -geometry ${Jsize}${Pgap} \
+ bars_avg_cot_TALL_CO_S298_GCCN.jpg \
+ bars_avg_cot_all_cld_TALL_CO_S298_GCCN.jpg \
+ FigureTsBlStats_GCCN_Presentation.jpg
+
 echo "Figure: COT, Time series: Zi, Zt, CFmax, all cases, GCCN"
 montage -tile 2x2 -geometry ${Jsize}${Pgap} \
  bars_avg_cot_TALL_CO_S298_GCCN.jpg \
