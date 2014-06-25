@@ -119,6 +119,13 @@ montage -tile 3x3 -geometry ${Jsize}${Pgap} \
  WvaporDownStall_TALL_CO_S293_G10M5_ALL.jpg \
  FigureDomainStats_S293.jpg
 
+echo "Figure: COT hist, PR hist, CD hist, CCN only, 293K, PRESENTATION"
+montage -tile 3x1 -geometry ${Jsize}${Pgap} \
+ PrateHist_TALL_CO_S293_G10M5_ALL.jpg \
+ CfracProfStall_TALL_CO_S293_G10M5_ALL.jpg \
+ WvarUpStall_TALL_CO_S293_G10M5_ALL.jpg \
+ FigureDomainStats_S293_Presentation.jpg
+
 echo "Figure: COT hist, PR hist, CD hist, CCN only, 298K"
 montage -tile 3x3 -geometry ${Jsize}${Pgap} \
  CotHist_TALL_CO_S298_G10M5_ALL.jpg \
@@ -131,6 +138,13 @@ montage -tile 3x3 -geometry ${Jsize}${Pgap} \
  WvaporUpStall_TALL_CO_S298_G10M5_ALL.jpg \
  WvaporDownStall_TALL_CO_S298_G10M5_ALL.jpg \
  FigureDomainStats_S298.jpg
+
+echo "Figure: COT hist, PR hist, CD hist, CCN only, 298K, PRESENTATAION"
+montage -tile 3x1 -geometry ${Jsize}${Pgap} \
+ PrateHist_TALL_CO_S298_G10M5_ALL.jpg \
+ CfracProfStall_TALL_CO_S298_G10M5_ALL.jpg \
+ WvarUpStall_TALL_CO_S298_G10M5_ALL.jpg \
+ FigureDomainStats_S298_Presentation.jpg
 
 echo "Figure: COT hist, PR hist, CD hist, CCN only, 303K"
 montage -tile 3x3 -geometry ${Jsize}${Pgap} \
