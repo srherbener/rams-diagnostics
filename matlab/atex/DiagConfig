@@ -184,7 +184,7 @@ LinePlot: CO_UP_S303_G10M5_ALL AnalTimeBL InvHeightStall AnalTimeHr 0 HeightKm 0
 #LinePlot: CG_UP_C0400_S298 AnalTimeBL InvHeightStall AnalTimeHr HeightKm BlStat_T12_T36 none PANEL:b@C400,@S298  none none InvHeightStall_CG_C0400_S298.jpg
 #LinePlot: CG_UP_C1600_S298 AnalTimeBL InvHeightStall AnalTimeHr HeightKm BlStat_T12_T36 none PANEL:c@C1600,@S298 none none InvHeightStall_CG_C1600_S298.jpg
 
-LinePlot: CG_UP_C50_C1600_S298 AnalTimeBL InvHeightStall AnalTimeHr 1 HeightKm 1 BlStat_T12_T36 none PANEL:b@S298 none none InvHeightStall_CG_C50_C1600_S298.jpg
+LinePlot: CG_UP_C50_C1600_S298 AnalTimeBL InvHeightStall AnalTimeHr 1 HeightKm 1 BlStat_T12_T36 none PANEL:c@S298 none none InvHeightStall_CG_C50_C1600_S298.jpg
 
 ### Heat entrainment velocity (theta)
 ###LinePlot: CO_UP_S293_G10M5_ALL AnalTimeBL ThetaWe AnalTimeHr ThetaWe_293 TsAll_T12_T36 none PANEL:a none none ThetaWe_CO_S293_G10M5_ALL.jpg
@@ -268,7 +268,7 @@ LinePlot: CO_UP_S303_G10M5_ALL  AnalTime Cfrac AnalTimeHr 1 Fraction 0 BlStat_T1
 #LinePlot: CG_UP_C0400_S298  AnalTime Cfrac AnalTimeHr Fraction BlStat_T12_T36 none PANEL:e@C400,@S298   none none CloudFrac_CG_C0400_S298.jpg
 #LinePlot: CG_UP_C1600_S298  AnalTime Cfrac AnalTimeHr Fraction BlStat_T12_T36 none PANEL:f@C1600,@S298  none none CloudFrac_CG_C1600_S298.jpg
 
-LinePlot: CG_UP_C50_C1600_S298  AnalTime Cfrac AnalTimeHr 1 Fraction 1 BlStat_T12_T36 none PANEL:c@S298  none none CloudFrac_CG_C50_C1600_S298.jpg
+LinePlot: CG_UP_C50_C1600_S298  AnalTime Cfrac AnalTimeHr 1 Fraction 1 BlStat_T12_T36 none PANEL:d@S298  none none CloudFrac_CG_C50_C1600_S298.jpg
 
 #### LTSS time series ####
 LinePlot: CO_UP_C0050_G10M5  AnalTime LTSS AnalTimeHr 1 LTSS 1 LtssSelect none C50   SouthWest none LTSS_CO_C0050_G10M5.jpg

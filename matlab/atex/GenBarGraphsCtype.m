@@ -189,6 +189,20 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'bars_avg_cot_TALL_CO_S298_GCCN.jpg'
        }
 
+       % COT averages, all clouds, all time points, CCN + GCCN
+       {
+       'COT Avg, ALL_CLD TALL CCN, grouped by GCCN, S298'
+       'bgraph_cot.h5'
+       { 'b' 'All Clouds, S298' }
+       'Number Concentration (cm^-^3)'
+       '\tau_c'
+       { 'navy' 'dodgerblue' 'cyan' }
+       { { 'Glow', 'Gmed', 'Ghigh' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [20] [2] [1:6] [2:4] } 0 'CCN' 0 4.5 }
+       'bars_avg_cot_all_cld_TALL_CO_S298_GCCN.jpg'
+       }
+
        % COT averages, domain, all time points, CCN + GCCN
        {
        'COT Avg, DOMAIN TALL CCN, grouped by GCCN, S303'
