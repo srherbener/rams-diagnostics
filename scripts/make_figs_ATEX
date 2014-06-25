@@ -31,8 +31,9 @@ montage -tile 3x2 -geometry ${Jsize}${Pgap} \
  FigureTsBlStats_ALL.jpg
 
 echo "Figure: COT, Time series: Zi, Zt, CFmax, all cases, GCCN"
-montage -tile 3x1 -geometry ${Jsize}${Pgap} \
+montage -tile 2x2 -geometry ${Jsize}${Pgap} \
  bars_avg_cot_TALL_CO_S298_GCCN.jpg \
+ bars_avg_cot_all_cld_TALL_CO_S298_GCCN.jpg \
  InvHeightStall_CG_C50_C1600_S298.jpg \
  CloudFrac_CG_C50_C1600_S298.jpg \
  FigureTsBlStats_GCCN.jpg
@@ -45,24 +46,6 @@ montage -tile 3x3 -geometry ${Jsize}${Pgap} \
  AvgLwp_CO_S293_G10M5_ALL.jpg \
  AvgLwp_CO_S298_G10M5_ALL.jpg \
  AvgLwp_CO_S303_G10M5_ALL.jpg \
-
-
-echo "Figure: Time series: Zi, Zt, CFmax, all cases, CCN only"
-montage -tile 3x2 -geometry ${Jsize}${Pgap} \
- InvHeightStall_CO_S293_G10M5_ALL.jpg \
- InvHeightStall_CO_S298_G10M5_ALL.jpg \
- InvHeightStall_CO_S303_G10M5_ALL.jpg \
- CloudFrac_CO_S293_G10M5_ALL.jpg \
- CloudFrac_CO_S298_G10M5_ALL.jpg \
- CloudFrac_CO_S303_G10M5_ALL.jpg \
- FigureTsBlStats_ALL.jpg
-
-echo "Figure: COT, Time series: Zi, Zt, CFmax, all cases, GCCN"
-montage -tile 3x1 -geometry ${Jsize}${Pgap} \
- bars_avg_cot_TALL_CO_S298_GCCN.jpg \
- InvHeightStall_CG_C50_C1600_S298.jpg \
- CloudFrac_CG_C50_C1600_S298.jpg \
- FigureTsBlStats_GCCN.jpg
 
 echo "Figure: Time series: Precip Rate, LWP, Cloud Opt Thick, all cases, CCN only"
 montage -tile 3x3 -geometry ${Jsize}${Pgap} \
