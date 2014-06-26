@@ -217,6 +217,64 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        'bars_avg_cot_TALL_CO_S303_GCCN.jpg'
        }
 
+
+       % COT averages, domain, all time points, CCN only, S293
+       {
+       'COT Avg, ST TALL CCN only, S293'
+       'bgraph_cot.h5'
+       { 'd' 'Domain' }
+       'Number Concentration (cm^-^3)'
+       '\tau_c'
+       { 'cyan' }
+       { { 'S293' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [4] [1] [1:6] [1] } 1 'CCN' 0 4.5 }
+       'bars_avg_cot_TALL_CO_S293.jpg'
+       }
+
+       % COT averages, domain, all time points, CCN only, S298
+       {
+       'COT Avg, ST TALL CCN only, S298'
+       'bgraph_cot.h5'
+       { 'd' 'Domain' }
+       'Number Concentration (cm^-^3)'
+       '\tau_c'
+       { 'cyan' }
+       { { 'S298' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [4] [2] [1:6] [1] } 1 'CCN' 0 4.5 }
+       'bars_avg_cot_TALL_CO_S298.jpg'
+       }
+
+       % COT averages, stall, all time points, CCN only, S293
+       {
+       'COT Avg, ST TALL CCN only, S293'
+       'bgraph_cot.h5'
+       { 'd' 'ST' }
+       'Number Concentration (cm^-^3)'
+       '\tau_c'
+       { 'cyan' }
+       { { 'S293' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [24] [1] [1:6] [1] } 1 'CCN' 0 4.5 }
+       'bars_avg_cot_stall_TALL_CO_S293.jpg'
+       }
+
+       % COT averages, stall, all time points, CCN only, S298
+       {
+       'COT Avg, ST TALL CCN only, S298'
+       'bgraph_cot.h5'
+       { 'd' 'ST' }
+       'Number Concentration (cm^-^3)'
+       '\tau_c'
+       { 'cyan' }
+       { { 'S298' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [24] [2] [1:6] [1] } 1 'CCN' 0 4.5 }
+       'bars_avg_cot_stall_TALL_CO_S298.jpg'
+       }
+
+
 %       %%%%%%%%%%%% LIQUID WATER PATH %%%%%%%%%%%%%%%%%%%
 %       % LWP averages, domain, all time points, CCN only
 %       {
@@ -1132,6 +1190,35 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        }
 
 
+
+       % ST cloud type (new categories - combine SNP+SDZ), npoints (relative amounts), TALL, CCN only, SST 293
+       {
+       'Stratiform Cloud Distribution TALL CCN only, 293K'
+       'bgraph_cfrac.h5'
+       { 'c' 'S293' }
+       'Number Concentration (cm^-^3)'
+       'Cloud Fraction'
+       { 'dodgerblue' }
+       { { 'ST' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [28 32 36] [1] [1:6] [1] } 1 'CCN' 0 1.2 }
+       'bars_avg_cfrac_stall_TALL_CO_S293.jpg'
+       }
+
+       % ST cloud type (new categories - combine SNP+SDZ), npoints (relative amounts), TALL, CCN only, SST 298
+       {
+       'Stratiform Cloud Distribution TALL CCN only, 298K'
+       'bgraph_cfrac.h5'
+       { 'c' 'S298' }
+       'Number Concentration (cm^-^3)'
+       'Cloud Fraction'
+       { 'dodgerblue' }
+       { { 'ST' } 'NorthWest' }
+       'grouped'
+       { 'Averages' 1 { [28 32 36] [2] [1:6] [1] } 1 'CCN' 0 1.2 }
+       'bars_avg_cfrac_stall_TALL_CO_S298.jpg'
+       }
+
 %%%       % Stratiform (non-precipitating) cloud types, COT averages, all time points, CCN only
 %%%       {
 %%%       'Stratiform (NP) Avg TALL CCN only, grouped by SST'
@@ -1472,6 +1559,8 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
         BDATA = [ sum(BDATA(:,1:3),2) BDATA(:,4:5) ];
       elseif (regexp(PdName, '^New Cloud Distribution'))
         BDATA = [ sum(BDATA(:,1:2),2) BDATA(:,3) ];
+      elseif (regexp(PdName, '^Stratiform Cloud Distribution'))
+        BDATA = [ sum(BDATA(:,1:3),2) ];
       end
 
       % Sum up across variables (v) and subtract from 100 to get the clear
