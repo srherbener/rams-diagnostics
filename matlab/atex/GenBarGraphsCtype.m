@@ -222,7 +222,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        {
        'COT Avg, ST TALL CCN only, S293'
        'bgraph_cot.h5'
-       { 'd' 'Domain' }
+       { '' 'Domain' }
        'Number Concentration (cm^-^3)'
        '\tau_c'
        { 'cyan' }
@@ -236,7 +236,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        {
        'COT Avg, ST TALL CCN only, S298'
        'bgraph_cot.h5'
-       { 'd' 'Domain' }
+       { '' 'Domain' }
        'Number Concentration (cm^-^3)'
        '\tau_c'
        { 'cyan' }
@@ -250,7 +250,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        {
        'COT Avg, ST TALL CCN only, S293'
        'bgraph_cot.h5'
-       { 'd' 'ST' }
+       { '' 'ST' }
        'Number Concentration (cm^-^3)'
        '\tau_c'
        { 'cyan' }
@@ -264,7 +264,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        {
        'COT Avg, ST TALL CCN only, S298'
        'bgraph_cot.h5'
-       { 'd' 'ST' }
+       { '' 'ST' }
        'Number Concentration (cm^-^3)'
        '\tau_c'
        { 'cyan' }
