@@ -10,6 +10,7 @@ SCRIPTS = $(DEST)/ExtractSample.m \
           $(DEST)/ReportAvgCtypeCfrac.m \
           $(DEST)/ReportEnsLtss.m \
           $(DEST)/GenEnsembleData.m \
+          $(DEST)/GenCloudFracPlots.m \
           $(DEST)/GenFigures.m \
           $(DEST)/GenLegendPlots.m \
           $(DEST)/GenAvgCloudDepth.m \

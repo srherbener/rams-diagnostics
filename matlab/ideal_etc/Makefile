@@ -7,6 +7,7 @@ DEST = $(HOME)/etc/matlab/ideal_etc
 
 SCRIPTS = $(DEST)/GenInitFields.m \
           $(DEST)/GenInitDpFiles.m \
+          $(DEST)/GenInitPlots.m \
           $(DEST)/GenInitTperturb.m \
           $(DEST)/SetPath.m
 
