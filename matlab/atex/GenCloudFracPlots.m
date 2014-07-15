@@ -33,10 +33,40 @@ function [ ] = GenCloudFracPlots(ConfigFile)
     { 'd' 'S293' }
     { [0 24]  'linear' [0 5 10 15 20]        1 'Analysis Time (h)' }
     { [0 1.1] 'linear' [0 0.2 0.4 0.6 0.8 1] 1 'CF'                }
-    { 'black' 'black' 'black' }
-    { '--' ':' '-' }
+    { 'blue' 'orangered' 'black' }
+    { '-' '-' '-' }
     { { 'Min' 'Max' 'Avg' }  'SouthWest' }
     'ens_avg_cfrac_TALL_CO_S293.jpg'
+    }
+
+    {
+    'S298'
+    'cloud_frac_298_ens_min'
+    'cloud_frac_298_ens_max'
+    'cloud_frac_298_ens_avg'
+    { 12 36 }
+    { 'd' 'S298' }
+    { [0 24]  'linear' [0 5 10 15 20]        1 'Analysis Time (h)' }
+    { [0 1.1] 'linear' [0 0.2 0.4 0.6 0.8 1] 1 'CF'                }
+    { 'blue' 'orangered' 'black' }
+    { '-' '-' '-' }
+    { { 'Min' 'Max' 'Avg' }  'SouthWest' }
+    'ens_avg_cfrac_TALL_CO_S298.jpg'
+    }
+
+    {
+    'S303'
+    'cloud_frac_303_ens_min'
+    'cloud_frac_303_ens_max'
+    'cloud_frac_303_ens_avg'
+    { 12 36 }
+    { 'd' 'S303' }
+    { [0 24]  'linear' [0 5 10 15 20]        1 'Analysis Time (h)' }
+    { [0 1.1] 'linear' [0 0.2 0.4 0.6 0.8 1] 1 'CF'                }
+    { 'blue' 'orangered' 'black' }
+    { '-' '-' '-' }
+    { { 'Min' 'Max' 'Avg' }  'SouthWest' }
+    'ens_avg_cfrac_TALL_CO_S303.jpg'
     }
 
     };
@@ -103,7 +133,23 @@ function [ ] = GenCloudFracPlots(ConfigFile)
     i_ap = 1;
     AxisProps(i_ap).Name = 'FontSize';
     AxisProps(i_ap).Val = 25;
-    iap = i_ap + 1;
+    i_ap = i_ap + 1;
+
+    AxisProps(i_ap).Name = 'Xlim';
+    AxisProps(i_ap).Val = Xlim;
+    i_ap = i_ap + 1;
+
+    AxisProps(i_ap).Name = 'XTick';
+    AxisProps(i_ap).Val = Xticks;
+    i_ap = i_ap + 1;
+
+    AxisProps(i_ap).Name = 'Ylim';
+    AxisProps(i_ap).Val = Ylim;
+    i_ap = i_ap + 1;
+
+    AxisProps(i_ap).Name = 'YTick';
+    AxisProps(i_ap).Val = Yticks;
+    i_ap = i_ap + 1;
 
     fprintf ('  Writing: %s\n', OutFile);
     Fig = figure;
