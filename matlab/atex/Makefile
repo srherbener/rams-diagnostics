@@ -9,6 +9,8 @@ SCRIPTS = $(DEST)/ExtractSample.m \
           $(DEST)/CombineStCloudTypes.m \
           $(DEST)/ReportAvgCtypeCfrac.m \
           $(DEST)/ReportEnsLtss.m \
+          $(DEST)/GenTkeTavg.m \
+          $(DEST)/GenWvarTavg.m \
           $(DEST)/GenEnsembleData.m \
           $(DEST)/GenCloudFracPlots.m \
           $(DEST)/GenFigures.m \
