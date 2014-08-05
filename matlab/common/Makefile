@@ -56,6 +56,7 @@ SCRIPTS = \
           $(DEST)/TileFigs.m \
           $(DEST)/TimeToString.m \
           $(DEST)/WriteCoordData.m \
+          $(DEST)/WriteDpFile.m \
           $(DEST)/Xyzt2EofArray.m
 
 #
