@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [ ] = WriteDpFile(U, V, T, Zg, RH, Lon, Lat, Press, Year, Month, Day, Time, Fid)
+function [ ] = WriteDpFile(U, V, T, Zg, RH, Lon, Lat, Press, Year, Month, Day, Time, DpFile)
 % WriteDpFile create a RAMS DP file with initial atmoshperic fields
 
   % The file format is described in CSU-RAMS manual:
@@ -32,6 +32,10 @@ function [ ] = WriteDpFile(U, V, T, Zg, RH, Lon, Lat, Press, Year, Month, Day, T
   Ny = length(Lat);
   Nz = length(Press);
 
+  % Use the 'W' (upper case W) on fopen to avoid "out of memory" issues, also
+  % fprintf's run much faster when using 'W'
+  Fid = fopen(DpFile, 'Wt');
+
   % Header
   fprintf(Fid, '999999 2\n');
   fprintf(Fid, '%d %d %d %d 0 %d %d %d\n', Year, Month, Day, Time, Nz, Nx, Ny);
@@ -51,6 +55,7 @@ function [ ] = WriteDpFile(U, V, T, Zg, RH, Lon, Lat, Press, Year, Month, Day, T
     WriteDpVar(RH, Nx, Ny, Nz, k, Fid);
   end
 
+  fclose(Fid);
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

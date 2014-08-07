@@ -14,8 +14,6 @@ function [ ] = GenInitDpFiles(Case, DpFile)
   % Generate the fields, then dump into the file
   % Use the 'W' (upper case W) on fopen to avoid "out of memory" issues, also
   % fprintf's run much faster when using 'W'
-  Fid = fopen(DpFile, 'Wt');
   [ U V T Zg RH Lon Lat Press ] = GenInitFields(Case);
-  WriteDpFile(U, V, T, Zg, RH, Lon, Lat, Press, Year, Month, Day, Time, Fid);
-  fclose(Fid);
+  WriteDpFile(U, V, T, Zg, RH, Lon, Lat, Press, Year, Month, Day, Time, DpFile);
 end

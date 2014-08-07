@@ -57,6 +57,7 @@ SCRIPTS = \
           $(DEST)/TimeToString.m \
           $(DEST)/WriteCoordData.m \
           $(DEST)/WriteDpFile.m \
+          $(DEST)/ReadDpFile.m \
           $(DEST)/Xyzt2EofArray.m
 
 #
