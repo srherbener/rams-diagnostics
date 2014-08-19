@@ -35,8 +35,7 @@ function [ ] = GenMoistDpFiles()
   DP_FILES = dir(DinPattern);
   Nfiles = length(DP_FILES);
 
-%  for i = 1:Nfiles
-  for i = 1:1
+  for i = 1:Nfiles
     DpFile = DP_FILES(i).name;
     InFile = sprintf('%s/%s', DinDir, DpFile);
     OutFile = sprintf('%s/%s', DoutDir, DpFile);
@@ -70,6 +69,8 @@ function [ ] = GenMoistDpFiles()
 
     fprintf('    Adding moisture\n');
     MOIST_RH = RH;
+    MOIST_T  = T;
+    MOIST_Zg = Zg;
     for k = P1:P2
       MASK = squeeze(RH(:,:,k)) < RhLimit; % 0's where RH >= RhLimit, 1's where RH < RhLimit
       MASK = MASK & INTERP_AREA;    % Limit MASK to Atlantic region west of Africa
@@ -80,10 +81,19 @@ function [ ] = GenMoistDpFiles()
       HDAT(HDAT<0) = 0;
       MOIST_RH(:,:,k) = HDAT;
 
+      HDAT = squeeze(MOIST_T(:,:,k));
+      HDAT(MASK) = nan;
+      HDAT = inpaintn(HDAT);
+      MOIST_T(:,:,k) = HDAT;
+
+      HDAT = squeeze(MOIST_Zg(:,:,k));
+      HDAT(MASK) = nan;
+      HDAT = inpaintn(HDAT);
+      MOIST_Zg(:,:,k) = HDAT;
     end
 
     fprintf('    Writing:%s\n', OutFile);
-    WriteDpFile(U, V, T, Zg, MOIST_RH, Lon, Lat, Press, Year, Month, Day, Time, OutFile);
+    WriteDpFile(U, V, MOIST_T, MOIST_Zg, MOIST_RH, Lon, Lat, Press, Year, Month, Day, Time, OutFile);
 
     fprintf('\n');
   end
