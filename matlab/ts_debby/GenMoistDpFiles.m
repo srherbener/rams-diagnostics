@@ -64,6 +64,9 @@ function [ ] = GenMoistDpFiles()
 
     % Create a mask of where the SAL is located based on RH being less than a threshold
     % Do this level by level since the region of low RH will vary from level to level
+    % Find the SAL location using RH
+    % Modify RH and T by interpolating in the region of low RH
+    % Modify Zg using the Hypsometric equation
     P1 = find(Press <= Pmax, 1, 'first');
     P2 = find(Press >= Pmin, 1, 'last');
 
@@ -75,21 +78,45 @@ function [ ] = GenMoistDpFiles()
       MASK = squeeze(RH(:,:,k)) < RhLimit; % 0's where RH >= RhLimit, 1's where RH < RhLimit
       MASK = MASK & INTERP_AREA;    % Limit MASK to Atlantic region west of Africa
 
+      % Adjust RH
       HDAT = squeeze(MOIST_RH(:,:,k));
       HDAT(MASK) = nan;
       HDAT = inpaintn(HDAT);
       HDAT(HDAT<0) = 0;
       MOIST_RH(:,:,k) = HDAT;
 
+      % Adjust T
       HDAT = squeeze(MOIST_T(:,:,k));
       HDAT(MASK) = nan;
       HDAT = inpaintn(HDAT);
       MOIST_T(:,:,k) = HDAT;
 
-      HDAT = squeeze(MOIST_Zg(:,:,k));
-      HDAT(MASK) = nan;
-      HDAT = inpaintn(HDAT);
-      MOIST_Zg(:,:,k) = HDAT;
+      % Adjust Zg
+      %
+      % Use the change in T in the Hypsometric Equation to calculate the change in Zg
+      %
+      % Hypsometric equation:
+      %    Z - Z0 = ((Tbar * Rd) / g)  * ln(p0/p)
+      %      Z0, T0, p0 are at reference level
+      %      Z, T, p are at level of interest
+      %      Tbar = (T + T0) / 2
+      %
+      % Since modifying in the region from 1km to 5km AGL
+      %    Assume g = g0
+      %    Assume Z = Zg
+      %
+      % Rd = 287 J kg^-1 K^-1
+      % g0 = 9.81 m s^-2
+      %
+      % Applying Hpysometric Equation at the before (T1) and after (T2) temperatures:
+      %
+      %    Change in height = DeltaZg = ((DeltaTbar * R)/g0) * ln(p0/p)
+      %
+      % Use p0 = 1000 mb which is first entry in the Press array
+      % DeltaTbar = ((T2 + T0) / 2)   - ((T1 + T0) / 2) = (T2 - T1) / 2
+      DTbar = (squeeze(MOIST_T(:,:,k)) - squeeze(T(:,:,k))) .* 0.5;
+      DZg = ((DTbar .* 287) ./ 9.81) .* log(Press(1)/Press(k));
+      MOIST_Zg(:,:,k) = MOIST_Zg(:,:,k) + DZg;
     end
 
     fprintf('    Writing:%s\n', OutFile);
