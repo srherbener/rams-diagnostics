@@ -9,7 +9,7 @@ function [ ] = GenMoistDpFiles()
   Pmin     = 550;   % 550mb -> 5km
 
   % From Dunion & Marron (2008). Values for the non-SAL mean RH profile for August (their Fig. 6)
-  % Dunion & Marron (2008) Fig. 3 only goes up to 200 mb, so only fill in these values.
+  % Dunion & Marron (2008) Fig. 6 only goes up to 200 mb, so only fill in these values.
   %   Should be okay since the SAL doesn't even get close to the 200 mb height.
   % Keep this in sync with pressure levels in Dprep file:
   %       i   Press(i)    Non-SAL Aug profile(i) (%)
