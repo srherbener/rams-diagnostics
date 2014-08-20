@@ -5,9 +5,42 @@ function [ ] = GenMoistDpFiles()
   DoutDir = 'DP_FILES/MOIST';
 
   % Limits for finding SAL
-  RhLimit  = 0.45;
   Pmax     = 900;   % 900mb -> 1km
   Pmin     = 550;   % 550mb -> 5km
+
+  % From Dunion & Marron (2008). Values for the non-SAL mean RH profile for August (their Fig. 6)
+  % Dunion & Marron (2008) Fig. 3 only goes up to 200 mb, so only fill in these values.
+  %   Should be okay since the SAL doesn't even get close to the 200 mb height.
+  % Keep this in sync with pressure levels in Dprep file:
+  %       i   Press(i)    Non-SAL Aug profile(i) (%)
+  %       1    1000                 83
+  %       2     975                 83
+  %       3     950                 83
+  %       4     925                 83
+  %       5     900                 82
+  %       6     850                 76
+  %       7     800                 73
+  %       8     750                 67
+  %       9     700                 63
+  %      10     650                 58
+  %      11     600                 53
+  %      12     550                 50
+  %      13     500                 46
+  %      14     450                 43
+  %      15     400                 40
+  %      16     350                 40
+  %      17     300                 40
+  %      18     250                 39
+  %      19     200                 38
+  %      20     150                  -
+  %      21     100                  -
+  %      22      70                  -
+  %      23      50                  -
+  %      24      30                  -
+  %      25      20                  -
+  %      26      10                  -
+  %
+  RhLimitList = [ 83 83 83 83 82 76 73 67 63 58 53 50 46 43 40 40 40 39 38 ] .* 0.01; % Dprep uses fraction instead of %
 
   % Use the built-in topography map to define continents so that data over Africa can be
   % left alone.
@@ -75,6 +108,7 @@ function [ ] = GenMoistDpFiles()
     MOIST_T  = T;
     MOIST_Zg = Zg;
     for k = P1:P2
+      RhLimit = RhLimitList(k);
       MASK = squeeze(RH(:,:,k)) < RhLimit; % 0's where RH >= RhLimit, 1's where RH < RhLimit
       MASK = MASK & INTERP_AREA;    % Limit MASK to Atlantic region west of Africa
 
