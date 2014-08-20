@@ -10,31 +10,45 @@ function [ ] = GenWvarTavg(ConfigFile)
     T1 = 145; % 12 h
     T2 = 433; % 36 h
 
-    InVar = '/w-w_all';
+    InVarList  = {
+      { 'moments' '/w-w_all'          'avg_wvar'         }
+      { 'moments' '/w-w_up0p10_all'   'avg_wvar_up0p10'  }
+      { 'moments' '/w-w_dn0p10_all'   'avg_wvar_dn0p10'  }
+      { 'moments' '/w-w-w_all'        'avg_wskew'        }
+      { 'moments' '/w-w-w_up0p10_all' 'avg_wskew_up0p10' }
+      { 'moments' '/w-w-w_dn0p10_all' 'avg_wskew_dn0p10' }
+      };
 
     for icase = 1:length(Config.Cases)
       Case = Config.Cases(icase).Cname;
-      InFile = sprintf('%s/moments_%s.h5', Ddir, Case);
-      OutFile = sprintf('%s/avg_wvar_%s.txt', Ddir, Case);
-
       fprintf('***************************************************************\n');
-      fprintf('Generating time averaged W variance profile:\n');
+      fprintf('Generating time averaged W variance/skew profiles:\n');
       fprintf('  Case: %s\n', Case);
-      fprintf('  Input file: %s (%s)\n', InFile, InVar);
       fprintf('\n');
 
-      WVAR = squeeze(h5read(InFile, InVar));
-      Z   = squeeze(h5read(InFile, '/z_coords'));
-      Nz = length(Z);
+      for ivar = 1:length(InVarList)
+        InFprefix  = InVarList{ivar}{1};
+        InVar      = InVarList{ivar}{2};
+        OutFprefix = InVarList{ivar}{3};
 
-      % write out z and tke values in text form
-      fprintf('  Writing: %s\n', OutFile);
+        InFile = sprintf('%s/%s_%s.h5', Ddir, InFprefix, Case);
+        OutFile = sprintf('%s/%s_%s.txt', Ddir, OutFprefix, Case);
 
-      fid = fopen(OutFile, 'wt');
-      for i = 1:Nz
-        fprintf(fid, '%e %e\n', Z(i), WVAR(i));
+        fprintf('  Input file: %s (%s)\n', InFile, InVar);
+
+        WVAR = squeeze(h5read(InFile, InVar));
+        Z   = squeeze(h5read(InFile, '/z_coords'));
+        Nz = length(Z);
+
+        % write out z and tke values in text form
+        fprintf('  Writing: %s\n', OutFile);
+
+        fid = fopen(OutFile, 'wt');
+        for i = 1:Nz
+          fprintf(fid, '%e %e\n', Z(i), WVAR(i));
+        end
+        fclose(fid);
+
+        fprintf('\n');
       end
-      fclose(fid);
-
-      fprintf('\n');
     end
