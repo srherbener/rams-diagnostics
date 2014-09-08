@@ -52,13 +52,17 @@ function [ ] = GenMoistRamsInit()
     % create clouds.
     RH_VALS(RH_VALS > 0.999) = 0.999;
 
+    NPTS = length(RH_VALS);
+
     % Output separate vectors for each grid
+    OutVar = sprintf('G%d_NPTS', igrid);
+    hdf5write(OutFile, OutVar, int32(NPTS), 'WriteMode', 'append');
     OutVar = sprintf('G%d_I', igrid);
-    hdf5write(OutFile, OutVar, I_VALS, 'WriteMode', 'append');
+    hdf5write(OutFile, OutVar, int32(I_VALS), 'WriteMode', 'append');
     OutVar = sprintf('G%d_J', igrid);
-    hdf5write(OutFile, OutVar, J_VALS, 'WriteMode', 'append');
+    hdf5write(OutFile, OutVar, int32(J_VALS), 'WriteMode', 'append');
     OutVar = sprintf('G%d_K', igrid);
-    hdf5write(OutFile, OutVar, K_VALS, 'WriteMode', 'append');
+    hdf5write(OutFile, OutVar, int32(K_VALS), 'WriteMode', 'append');
     OutVar = sprintf('G%d_RH', igrid);
     hdf5write(OutFile, OutVar, RH_VALS, 'WriteMode', 'append');
   end
