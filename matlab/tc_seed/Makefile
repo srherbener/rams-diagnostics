@@ -39,6 +39,9 @@ SCRIPTS = \
           $(DEST)/PlotVr.m \
           $(DEST)/PlotVt.m \
           $(DEST)/PrepVaporData.m \
+          $(DEST)/CCN_GifAnim.m \
+          $(DEST)/CWP_GifAnim.m \
+          $(DEST)/PlotCwp40.m \
           $(DEST)/SetPath.m
 
 CONFIGS = \
