@@ -122,6 +122,11 @@ Filter: all w:w cylvol:sea_press:sea_press:0.0:500.0:0.0:6.3:0.0:25000.0
 #Tsavg: storm_int storm_int  all
 #Tsavg: max_azwind max_azwind none
 
+####################### Contour plots ############################
+# ContourPlot: <xspec> <yspec> <zspec> <data_select_spec> <title> <fill> <color_bar> <num_contour_levels> <contour_scale> <color_map> <out_file>
+#
+ContourPlot: ControlPlot HvZonalKm HvSimTimeDays HvPrecipWater HvSelectHoriz PANEL:a@CNTL 1 1 40 none default PrecipWaterHov
+
 ####################### Line plots ############################
 # LinePlot: <plotset> <xspec> <yspec> <x_axis_spec> <show_x_axis> <y_axis_spec> <show_y_axis> <data_select_spec> <smoothing> <title> <legend_loc> <add_measurement> <out_file>
 #
@@ -132,7 +137,7 @@ Filter: all w:w cylvol:sea_press:sea_press:0.0:500.0:0.0:6.3:0.0:25000.0
 #   'IntVol' - report the volume under the surface after rotating the radial curve 360 degrees
 #              form that surface.
 #   'Tphases' - add the marking of temporal phases (hardwired for iedealized TC sims).
-LinePlot: ControlPlot SimTimeDays PrecipWater SimTime 1 PrecipWater 1  SelectAllTseries none PANEL:a@CTRL none none ControlAvgPrepipWaterTseries.jpg
+LinePlot: ControlPlot SimTimeDays PrecipWater SimTime 1 PrecipWater 1  SelectAllTseries none PANEL:a@CNTL none none ControlAvgPrepipWaterTseries.jpg
 
 ####################### Plot Sets ############################
 # PlotSet: <name> <number_of_cases> <case_spec> ...
@@ -151,9 +156,13 @@ PlotSet: ControlPlot 1 RCE1 CTRL black - 0.0 1 1
 #  b is <offset>.
 #
 PlotVar: PrecipWater precip_water DIAGS/avg_precip_water PW        mm 1            0
-PlotVar: SimTimeDays t_coords     DIAGS/avg_precip_water Sim@Time  d  1.1574074e-5  0
+PlotVar: SimTimeDays t_coords     DIAGS/avg_precip_water Sim@Time  d  1.1574074e-5 0
 
-####################### Plot Vars ################################
+PlotVar: HvPrecipWater precip_water DIAGS/hov_precip_water PW        mm 1            0
+PlotVar: HvZonalKm     x_coords     DIAGS/hov_precip_water km        @  1            0
+PlotVar: HvSimTimeDays t_coords     DIAGS/hov_precip_water Sim@Time  d  1.1574074e-5 0
+
+####################### Plot Axes ################################
 # PlotAxis: <name> <min> <max> <scale> <ticks>
 #
 #  <scale> is 'linear' or 'log'
@@ -163,6 +172,10 @@ PlotVar: SimTimeDays t_coords     DIAGS/avg_precip_water Sim@Time  d  1.1574074e
 #
 PlotAxis: PrecipWater 0 70 linear [_]
 PlotAxis: SimTime     0 80 linear [_]
+
+PlotAxis: HvPrecipWater 0   70 linear [_]
+PlotAxis: HvZonalKm     0 3000 linear [_]
+PlotAxis: HvSimTime     0   80 linear [_]
 
 ######################## Selection specs #########################
 # PlotDselect: <name> <xmin> <xmax> <ymin> <ymax> <zmin> <zmax> <tmin> <tmax>
@@ -179,7 +192,7 @@ PlotAxis: SimTime     0 80 linear [_]
 #
 # nan's mean that the corresponding dimension does not exist in the input file
 #
-# Sims go from 0 h to 100 h ->  0 s to 360000 s
-PlotDselect: SelectAllHoriz -13.5 13.5 -0.9 0.9 nan nan 0 360000
-PlotDselect: SelectAllTseries nan nan nan nan nan nan 0 360000
+# Sims go from 0 d to 60 d ->  0 s to 5184000 s
+PlotDselect: HvSelectHoriz 0 3000 nan nan nan nan 0 5184000
+PlotDselect: SelectAllTseries nan nan nan nan nan nan 0 5184000
 

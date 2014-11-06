@@ -51,15 +51,7 @@ end
 % create the plot
 if (Fill == 1)
   % filled contours
-  contourf(X, Y, Z, Clevs);
-  shading flat;
-else
-  % line contours
-  contour(X, Y, Z, Clevs);
-end
-
-if (~isempty(ColorMap))
-  colormap(ColorMap);
+  contourf(X, Y, Z, Clevs, 'LineColor', 'none');
 end
 
 if (~isempty(Crange))

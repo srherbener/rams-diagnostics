@@ -74,7 +74,8 @@ for iplot = 1:length(Config.ContourPlots)
     Zvname   = Config.PlotVars(izv).Var;
     Zfprefix = Config.PlotVars(izv).Fprefix;
     Zscale   = Config.PlotVars(izv).Scale;
-    Crange   = [ Config.PlotVars(izv).Min Config.PlotVars(izv).Max ];
+%    Crange   = [ Config.PlotVars(izv).Min Config.PlotVars(izv).Max ];
+    Crange   = [ 50 65 ];
 
     % Data selection specs
     Xmin = Config.PlotDselects(ids).Xmin;

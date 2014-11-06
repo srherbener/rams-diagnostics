@@ -7,6 +7,7 @@ DIAG_DIR = /Volumes/tasman1/sherbener/data/RAMS/RCE
 
 SCRIPTS = \
   $(DEST)/GenDomAvgTseries.m \
+  $(DEST)/Gen2dHovmoller.m \
   $(DEST)/SetPath.m
 
 CONFIGS = \
