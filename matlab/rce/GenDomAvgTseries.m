@@ -15,7 +15,7 @@ function [ ] = GenDomAvgTseries(ConfigFile)
   % input_file input_dataset case_name outfile_prefix output_dataset
   VarSets = {
     { 'HDF5/vint_vapor-a-AS-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE1' 'avg_precip_water' 'precip_water' }
-    { 'HDF5/MATT-debug-a-AS-2012-01-01-000000-g1.h5' 'vertint_vapor' 'MATT_RCE1' 'avg_precip_water' 'precip_water' }
+    { 'HDF5/MATT-vint_vapor-a-AS-2012-01-01-000000-g1.h5' 'vertint_vapor' 'MATT_RCE1' 'avg_precip_water' 'precip_water' }
     };
   Nset = length(VarSets);
 
@@ -43,9 +43,6 @@ function [ ] = GenDomAvgTseries(ConfigFile)
  
     HDATA = squeeze(hdf5read(InFile, InVname));
     Z     = squeeze(hdf5read(InFile, 'z_coords'));
-if (strcmp(Case, 'MATT_RCE1'))
- Z = 1;
-end
     T     = squeeze(hdf5read(InFile, 't_coords'));
     Nz = length(Z);
     Nt = length(T);
