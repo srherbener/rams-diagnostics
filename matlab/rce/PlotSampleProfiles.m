@@ -66,11 +66,13 @@ function [ ] = PlotSampleProfiles(ConfigFile)
     CLOUD = squeeze(CLOUD(Z1:Z2,T1));
     VAPOR = squeeze(VAPOR(Z1:Z2,T1));
 
+    CLOUD = CLOUD .* 100; % so it shows up on the scale
+
     Z = Z(Z1:Z2);
     
     % Create the plot
     PDATA = [ TEMP CLOUD VAPOR ];
-    LegendText = { 'T (deg C)' 'Qc (g/kg)' 'Qv (g/kg)' };
+    LegendText = { 'T (deg C)' 'Qc (100 * g/kg)' 'Qv (g/kg)' };
 
     Ptitle = sprintf('%s, t = %d h', Ptitle, SelTime);
 
