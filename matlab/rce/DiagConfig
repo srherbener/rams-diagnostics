@@ -202,6 +202,8 @@ PlotAxis: HvSimTime     0   80 linear [_]
 # nan's mean that the corresponding dimension does not exist in the input file
 #
 # Sims go from 0 d to 60 d ->  0 s to 5184000 s
-PlotDselect: HvSelectHoriz 0 3000 nan nan nan nan 0 5184000
+#PlotDselect: HvSelectHoriz 0 3000 nan nan nan nan 0 5184000
+# 10 days
+PlotDselect: HvSelectHoriz 0 3000 nan nan nan nan 0 864000
 PlotDselect: SelectAllTseries nan nan nan nan nan nan 0 5184000
 
