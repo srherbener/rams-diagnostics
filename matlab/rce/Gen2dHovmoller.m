@@ -17,6 +17,7 @@ function [ ] = Gen2dHovmoller(ConfigFile)
     { 'HDF5/RCE70_OLD_RI/vint_vapor-a-AS-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE70_OLD_RI' 'midy' 1 'hov_precip_water' 'precip_water' }
     { 'HDF5/MATT/vint_vapor-a-AS-2012-01-01-000000-g1.h5'         'vertint_vapor' 'MATT'         'midy' 1 'hov_precip_water' 'precip_water' }
     { 'HDF5/RCE50_NEW_RI/vint_vapor-a-AS-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE50_NEW_RI' 'midy' 1 'hov_precip_water' 'precip_water' }
+    { 'HDF5/RCE50_OLD_RI/vint_vapor-a-AS-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE50_OLD_RI' 'midy' 1 'hov_precip_water' 'precip_water' }
     };
   Nset = length(VarSets);
 
