@@ -14,8 +14,9 @@ function [ ] = GenDomAvgTseries(ConfigFile)
 
   % input_file input_dataset case_name outfile_prefix output_dataset
   VarSets = {
-    { 'HDF5/vint_vapor-a-AS-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE1' 'avg_precip_water' 'precip_water' }
-    { 'HDF5/MATT-vint_vapor-a-AS-2012-01-01-000000-g1.h5' 'vertint_vapor' 'MATT_RCE1' 'avg_precip_water' 'precip_water' }
+    { 'HDF5/RCE70_OLD_RI/vint_vapor-a-AS-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE70_OLD_RI' 'avg_precip_water' 'precip_water' }
+    { 'HDF5/MATT/vint_vapor-a-AS-2012-01-01-000000-g1.h5'         'vertint_vapor' 'MATT'         'avg_precip_water' 'precip_water' }
+    { 'HDF5/RCE50_NEW_RI/vint_vapor-a-AS-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE50_NEW_RI' 'avg_precip_water' 'precip_water' }
     };
   Nset = length(VarSets);
 

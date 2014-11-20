@@ -125,8 +125,9 @@ Filter: all w:w cylvol:sea_press:sea_press:0.0:500.0:0.0:6.3:0.0:25000.0
 ####################### Contour plots ############################
 # ContourPlot: <xspec> <yspec> <zspec> <data_select_spec> <title> <fill> <color_bar> <num_contour_levels> <contour_scale> <color_map> <out_file>
 #
-ContourPlot: ControlPlot HvZonalKm HvSimTimeDays HvPrecipWater HvSelectHoriz PANEL:a@CNTL 1 1 40 none default PrecipWaterHov
-ContourPlot: MattPlot    HvZonalKm HvSimTimeDays HvPrecipWater HvSelectHoriz PANEL:a@MATT 1 1 40 none default PrecipWaterHov
+ContourPlot: RCE70_OLD_RI  HvZonalKm HvSimTimeDays HvPrecipWater HvSelectHoriz PANEL:a@SLZ@70,@OLD@RI 1 1 40 none default PrecipWaterHov
+ContourPlot: MATT          HvZonalKm HvSimTimeDays HvPrecipWater HvSelectHoriz PANEL:a@MATT           1 1 40 none default PrecipWaterHov
+ContourPlot: RCE50_NEW_RI  HvZonalKm HvSimTimeDays HvPrecipWater HvSelectHoriz PANEL:a@SLZ@50,@NEW@RI 1 1 40 none default PrecipWaterHov
 
 ####################### Line plots ############################
 # LinePlot: <plotset> <xspec> <yspec> <x_axis_spec> <show_x_axis> <y_axis_spec> <show_y_axis> <data_select_spec> <smoothing> <title> <legend_loc> <add_measurement> <out_file>
@@ -138,16 +139,18 @@ ContourPlot: MattPlot    HvZonalKm HvSimTimeDays HvPrecipWater HvSelectHoriz PAN
 #   'IntVol' - report the volume under the surface after rotating the radial curve 360 degrees
 #              form that surface.
 #   'Tphases' - add the marking of temporal phases (hardwired for iedealized TC sims).
-LinePlot: ControlPlot SimTimeDays PrecipWater SimTime 1 PrecipWater 1  SelectAllTseries none PANEL:a@CNTL none none AvgPrepipWaterTseries_CNTL.jpg
-LinePlot: MattPlot    SimTimeDays PrecipWater SimTime 1 PrecipWater 1  SelectAllTseries none PANEL:a@MATT none none AvgPrepipWaterTseries_MATT.jpg
+LinePlot: RCE70_OLD_RI SimTimeDays PrecipWater SimTime 1 PrecipWater 1  SelectAllTseries none PANEL:a@SLZ@70,@OLD@RI none none AvgPrepipWaterTseries_RCE70_OLD_RI.jpg
+LinePlot: MATT         SimTimeDays PrecipWater SimTime 1 PrecipWater 1  SelectAllTseries none PANEL:a@MATT           none none AvgPrepipWaterTseries_MATT.jpg
+LinePlot: RCE50_NEW_RI SimTimeDays PrecipWater SimTime 1 PrecipWater 1  SelectAllTseries none PANEL:a@SLZ@50,@NEW@RI none none AvgPrepipWaterTseries_RCE50_NEW_RI.jpg
 
 ####################### Plot Sets ############################
 # PlotSet: <name> <number_of_cases> <case_spec> ...
 #
 #    <case_spec> := <case_name> <legend_name> <line_color> <line_style> <gray_scale> <x_zoom> <y_zoom>
 #
-PlotSet: ControlPlot 1 RCE1      CTRL black - 0.0 1 1 
-PlotSet: MattPlot    1 MATT_RCE1 CTRL black - 0.0 1 1 
+PlotSet: RCE70_OLD_RI 1 RCE70_OLD_RI SLZ70_OLD_RI black - 0.0 1 1 
+PlotSet: MATT         1 MATT         MATT         black - 0.0 1 1 
+PlotSet: RCE50_NEW_RI 1 RCE50_NEW_RI SLZ50_NEW_RI black - 0.0 1 1 
 
 ####################### Plot Vars ################################
 # PlotVar: <name> <vname> <file_prefix> <label> <units> <scale> <offset>
