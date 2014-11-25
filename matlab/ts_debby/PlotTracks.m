@@ -10,6 +10,8 @@ end
 %Case = 'TSD_3GRIDS';
 %Case = 'TSD_DRY_NODUST';
 %Case = 'TSD_DRY_DUST';
+%Case = 'TSD_MOIST_NODUST';
+%Case = 'TSD_MOIST_DUST';
 
 % for the TS Debby simulations:
 LatBounds = [ 5 26 ];

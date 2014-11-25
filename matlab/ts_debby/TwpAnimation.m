@@ -21,7 +21,7 @@ function [ ] = TwpAnimation(InFile, InVar, OutFile)
   Fsize = 25;
 
   % first establish a graphics context (axis, etc)
-  contourf(LON, LAT, TWP, Clevs);
+  contourf(LON, LAT, TWP, Clevs, 'LineStyle', 'none');
   shading flat;
 %  axis tight;
 %  set(gca,'nextplot','replacechildren','visible','off');
@@ -40,7 +40,7 @@ function [ ] = TwpAnimation(InFile, InVar, OutFile)
   % capture frames for the animation
   for it = 1:Nt
     TWP = squeeze(TWP_VAR.data(it,:,:));
-    contourf(LON, LAT, TWP, Clevs);
+    contourf(LON, LAT, TWP, Clevs, 'LineStyle', 'none');
     shading flat;
     colorbar;
     caxis(Clims);
