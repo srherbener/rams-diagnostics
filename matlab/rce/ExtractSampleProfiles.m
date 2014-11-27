@@ -23,15 +23,15 @@ function [ ] = ExtractSampleProfiles(ConfigFile)
         100
       }
 
-%      {
-%        { 'HDF5/RCE50_NEW_RI/tempc-a-AS-2012-01-01-000000-g1.h5' 'tempc' }
-%        { 'HDF5/RCE50_NEW_RI/cloud-a-AS-2012-01-01-000000-g1.h5' 'cloud' }
-%        { 'HDF5/RCE50_NEW_RI/vapor-a-AS-2012-01-01-000000-g1.h5' 'vapor' }
-%        'RCE50_NEW_RI_MID'
-%        1500
-%        100
-%      }
-%
+      {
+        { 'HDF5/RCE50_NEW_RI/tempc-a-AS-2012-01-01-000000-g1.h5' 'tempc' }
+        { 'HDF5/RCE50_NEW_RI/cloud-a-AS-2012-01-01-000000-g1.h5' 'cloud' }
+        { 'HDF5/RCE50_NEW_RI/vapor-a-AS-2012-01-01-000000-g1.h5' 'vapor' }
+        'RCE50_NEW_RI_MID'
+        1500
+        100
+      }
+
 %      {
 %        { 'HDF5/RCE50_OLD_RI/tempc-a-AS-2012-01-01-000000-g1.h5' 'tempc' }
 %        { 'HDF5/RCE50_OLD_RI/cloud-a-AS-2012-01-01-000000-g1.h5' 'cloud' }

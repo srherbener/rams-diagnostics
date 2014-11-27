@@ -204,6 +204,6 @@ PlotAxis: HvSimTime     0   80 linear [_]
 # Sims go from 0 d to 60 d ->  0 s to 5184000 s
 #PlotDselect: HvSelectHoriz 0 3000 nan nan nan nan 0 5184000
 # 10 days
-PlotDselect: HvSelectHoriz 0 3000 nan nan nan nan 0 864000
+PlotDselect: HvSelectHoriz 0 3000 nan nan nan nan 0 1224000
 PlotDselect: SelectAllTseries nan nan nan nan nan nan 0 5184000
 
