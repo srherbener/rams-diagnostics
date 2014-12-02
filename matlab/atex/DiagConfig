@@ -117,9 +117,9 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 
 #################### HISTOGRAMS ####################
 ### Precip rate, histogram
-#PAPER#LinePlot: CO_UP_S293_G10M5_ALL PrateHistBins PrateHist_TALL      Prate 1      PrateHist_293 1      PrateHistSelect none PANEL:a@S293 none none PrateHist_TALL_CO_S293_G10M5_ALL.jpg
-#PAPER#LinePlot: CO_UP_S298_G10M5_ALL PrateHistBins PrateHist_TALL      Prate 1      PrateHist_298 1      PrateHistSelect none PANEL:a@S298 none none PrateHist_TALL_CO_S298_G10M5_ALL.jpg
-#PAPER#LinePlot: CO_UP_S303_G10M5_ALL PrateHistBins PrateHist_TALL      Prate 1      PrateHist_303 1      PrateHistSelect none PANEL:a@S303 none none PrateHist_TALL_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL PrateHistBins PrateHist_TALL      Prate 1      PrateHist_293 1      PrateHistSelect none PANEL:a@S293 none none PrateHist_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL PrateHistBins PrateHist_TALL      Prate 1      PrateHist_298 1      PrateHistSelect none PANEL:a@S298 none none PrateHist_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL PrateHistBins PrateHist_TALL      Prate 1      PrateHist_303 1      PrateHistSelect none PANEL:a@S303 none none PrateHist_TALL_CO_S303_G10M5_ALL.jpg
 
 #PAPER#LinePlot: CO_UP_C0050_G10M5 PrateHistBins PrateHist_TALL      Prate 1      PrateHist_C50 1        PrateHistSelect none PANEL:a@C50   none none PrateHist_TALL_CO_C0050_G10M5.jpg
 #PAPER#LinePlot: CO_UP_C0400_G10M5 PrateHistBins PrateHist_TALL      Prate 1      PrateHist_C400 1       PrateHistSelect none PANEL:a@C400  none none PrateHist_TALL_CO_C0400_G10M5.jpg
@@ -132,9 +132,9 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 #PAPER#LinePlot: CG_UP_C50_C1600_S298 PrateHistBins PrateHist_TALL      Prate 1      PrateHist_298 1        PrateHistSelect none PANEL:a@S298   none none PrateHist_TALL_CG_C50_C1600_S298.jpg
 
 ### Cloud optical thickness, histogram
-#PAPER#LinePlot: CO_UP_S293_G10M5_ALL CotHistBins CotHist_TALL      CotLog 1     CotHist_293 1      CotHistSelect none PANEL:a@S293 none none CotHist_TALL_CO_S293_G10M5_ALL.jpg
-#PAPER#LinePlot: CO_UP_S298_G10M5_ALL CotHistBins CotHist_TALL      CotLog 1     CotHist_298 1      CotHistSelect none PANEL:a@S298 none none CotHist_TALL_CO_S298_G10M5_ALL.jpg
-#PAPER#LinePlot: CO_UP_S303_G10M5_ALL CotHistBins CotHist_TALL      CotLog 1     CotHist_303 1      CotHistSelect none PANEL:a@S303 none none CotHist_TALL_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL CotHistBins CotHist_TALL      CotLog 1     CotHist_293 1      CotHistSelect none PANEL:a@S293 none none CotHist_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL CotHistBins CotHist_TALL      CotLog 1     CotHist_298 1      CotHistSelect none PANEL:a@S298 none none CotHist_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL CotHistBins CotHist_TALL      CotLog 1     CotHist_303 1      CotHistSelect none PANEL:a@S303 none none CotHist_TALL_CO_S303_G10M5_ALL.jpg
 
 #PAPER#LinePlot: CO_UP_C0050_G10M5 CotHistBins CotHist_TALL      CotLog 1     CotHist_C50 1        CotHistSelect none PANEL:a@C50   none none CotHist_TALL_CO_C0050_G10M5.jpg
 #PAPER#LinePlot: CO_UP_C0400_G10M5 CotHistBins CotHist_TALL      CotLog 1     CotHist_C400 1       CotHistSelect none PANEL:a@C400  none none CotHist_TALL_CO_C0400_G10M5.jpg
@@ -176,9 +176,13 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 ###LinePlot: CO_UP_S298_G10M5_ALL AnalTimeBL InvHeight AnalTimeHr HeightKm TsAll_T12_T36 none PANEL:b@S298 none none InvHeight_CO_S298_G10M5_ALL.jpg
 ###LinePlot: CO_UP_S303_G10M5_ALL AnalTimeBL InvHeight AnalTimeHr HeightKm TsAll_T12_T36 none PANEL:c@S303 none none InvHeight_CO_S303_G10M5_ALL.jpg
 
-#PAPER#LinePlot: CO_UP_S293_G10M5_ALL AnalTimeBL InvHeightStall AnalTimeHr 1 HeightKm 1 BlStat_T12_T36 none PANEL:a@S293 none none InvHeightStall_CO_S293_G10M5_ALL.jpg
-#PAPER#LinePlot: CO_UP_S298_G10M5_ALL AnalTimeBL InvHeightStall AnalTimeHr 1 HeightKm 1 BlStat_T12_T36 none PANEL:c@S298 none none InvHeightStall_CO_S298_G10M5_ALL.jpg
-#PAPER#LinePlot: CO_UP_S303_G10M5_ALL AnalTimeBL InvHeightStall AnalTimeHr 1 HeightKm 1 BlStat_T12_T36 none PANEL:e@S303 none none InvHeightStall_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL AnalTimeBL InvHeightStall AnalTimeHr 1 HeightKm 1 BlStat_T12_T36 none PANEL:a@S293 none none InvHeightStall_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL AnalTimeBL InvHeightStall AnalTimeHr 1 HeightKm 1 BlStat_T12_T36 none PANEL:c@S298 none none InvHeightStall_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL AnalTimeBL InvHeightStall AnalTimeHr 1 HeightKm 1 BlStat_T12_T36 none PANEL:e@S303 none none InvHeightStall_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_S293_G10M5_ALL AnalTimeBL InvHeightAllCloud AnalTimeHr 1 HeightKm 1 BlStat_T12_T36 none PANEL:a@S293 none none InvHeightAllCloud_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL AnalTimeBL InvHeightAllCloud AnalTimeHr 1 HeightKm 1 BlStat_T12_T36 none PANEL:c@S298 none none InvHeightAllCloud_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL AnalTimeBL InvHeightAllCloud AnalTimeHr 1 HeightKm 1 BlStat_T12_T36 none PANEL:e@S303 none none InvHeightAllCloud_CO_S303_G10M5_ALL.jpg
 
 #LinePlot: CG_UP_C0050_S298 AnalTimeBL InvHeightStall AnalTimeHr HeightKm BlStat_T12_T36 none PANEL:a@C50,@S298   none none InvHeightStall_CG_C0050_S298.jpg
 #LinePlot: CG_UP_C0400_S298 AnalTimeBL InvHeightStall AnalTimeHr HeightKm BlStat_T12_T36 none PANEL:b@C400,@S298  none none InvHeightStall_CG_C0400_S298.jpg
@@ -260,9 +264,9 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 #### 1um GCCN median radius ####
 
 # Vary CCN, hold SST constant
-#PAPER#LinePlot: CO_UP_S293_G10M5_ALL  AnalTime Cfrac AnalTimeHr 1 Fraction 1 BlStat_T12_T36 none PANEL:b@S293  none none CloudFrac_CO_S293_G10M5_ALL.jpg
-#PAPER#LinePlot: CO_UP_S298_G10M5_ALL  AnalTime Cfrac AnalTimeHr 1 Fraction 1 BlStat_T12_T36 none PANEL:d@S298  none none CloudFrac_CO_S298_G10M5_ALL.jpg
-#PAPER#LinePlot: CO_UP_S303_G10M5_ALL  AnalTime Cfrac AnalTimeHr 1 Fraction 1 BlStat_T12_T36 none PANEL:f@S303  none none CloudFrac_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  AnalTime Cfrac AnalTimeHr 1 Fraction 1 BlStat_T12_T36 none PANEL:b@S293  none none CloudFrac_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  AnalTime Cfrac AnalTimeHr 1 Fraction 1 BlStat_T12_T36 none PANEL:d@S298  none none CloudFrac_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  AnalTime Cfrac AnalTimeHr 1 Fraction 1 BlStat_T12_T36 none PANEL:f@S303  none none CloudFrac_CO_S303_G10M5_ALL.jpg
 
 #LinePlot: CG_UP_C0050_S298  AnalTime Cfrac AnalTimeHr Fraction BlStat_T12_T36 none PANEL:d@C50,@S298    none none CloudFrac_CG_C0050_S298.jpg
 #LinePlot: CG_UP_C0400_S298  AnalTime Cfrac AnalTimeHr Fraction BlStat_T12_T36 none PANEL:e@C400,@S298   none none CloudFrac_CG_C0400_S298.jpg
@@ -359,9 +363,13 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 #LinePlot: CG_UP_C50_C1600_S298_ZOOM  WvarStallTall TurbHeights WvarStall_298 HeightKm TurbSelect none PANEL:d@ST,@S298    none none WvarStall_TALL_CG_C50_C1600_S298.jpg
 
 # updraft stall filter
-#PAPER#LinePlot: CO_UP_S293_G10M5_ALL  WvarUpStallTall TurbHeights WvarUpStall_293 1 HeightKm 1 TurbSelect none PANEL:c@ST,@UP,@S293    none none WvarUpStall_TALL_CO_S293_G10M5_ALL.jpg
-#PAPER#LinePlot: CO_UP_S298_G10M5_ALL  WvarUpStallTall TurbHeights WvarUpStall_298 1 HeightKm 1 TurbSelect none PANEL:c@ST,@UP,@S298    none none WvarUpStall_TALL_CO_S298_G10M5_ALL.jpg
-#PAPER#LinePlot: CO_UP_S303_G10M5_ALL  WvarUpStallTall TurbHeights WvarUpStall_303 1 HeightKm 1 TurbSelect none PANEL:c@ST,@UP,@S303    none none WvarUpStall_TALL_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  WvarUpStallTall TurbHeights WvarUpStall_293 1 HeightKm 1 TurbSelect none PANEL:c@ST,@UP,@S293    none none WvarUpStall_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WvarUpStallTall TurbHeights WvarUpStall_298 1 HeightKm 1 TurbSelect none PANEL:c@ST,@UP,@S298    none none WvarUpStall_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WvarUpStallTall TurbHeights WvarUpStall_303 1 HeightKm 1 TurbSelect none PANEL:c@ST,@UP,@S303    none none WvarUpStall_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_S293_G10M5_ALL  WvarUpAllCloudTall TurbHeights WvarUpAllCloud_293 1 HeightKm 1 TurbSelect none PANEL:c@All@Clouds,@UP,@S293    none none WvarUpAllCloud_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WvarUpAllCloudTall TurbHeights WvarUpAllCloud_298 1 HeightKm 1 TurbSelect none PANEL:c@All@Clouds,@UP,@S298    none none WvarUpAllCloud_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WvarUpAllCloudTall TurbHeights WvarUpAllCloud_303 1 HeightKm 1 TurbSelect none PANEL:c@All@Clouds,@UP,@S303    none none WvarUpAllCloud_TALL_CO_S303_G10M5_ALL.jpg
 
 #PAPER#LinePlot: CO_UP_C0050_G10M5  WvarUpStallTall TurbHeights WvarUpStall_303 1 HeightKm 1 TurbSelect none PANEL:c@ST,@UP,@C50      none none WvarUpStall_TALL_CO_C0050_G10M5.jpg
 #PAPER#LinePlot: CO_UP_C0400_G10M5  WvarUpStallTall TurbHeights WvarUpStall_303 1 HeightKm 1 TurbSelect none PANEL:c@ST,@UP,@C400     none none WvarUpStall_TALL_CO_C0400_G10M5.jpg
@@ -374,9 +382,13 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 #PAPER#LinePlot: CG_UP_C50_C1600_S298_ZOOM  WvarUpStallTall TurbHeights WvarUpStall_298 1 HeightKm 1 TurbSelect none PANEL:c@ST,@UP,@S298    none none WvarUpStall_TALL_CG_C50_C1600_S298.jpg
 
 # downdraft stall filter
-#PAPER#LinePlot: CO_UP_S293_G10M5_ALL  WvarDownStallTall TurbHeights WvarDownStall_293 1 HeightKm 1 TurbSelect none PANEL:d@ST,@DN,@S293    none none WvarDownStall_TALL_CO_S293_G10M5_ALL.jpg
-#PAPER#LinePlot: CO_UP_S298_G10M5_ALL  WvarDownStallTall TurbHeights WvarDownStall_298 1 HeightKm 1 TurbSelect none PANEL:d@ST,@DN,@S298    none none WvarDownStall_TALL_CO_S298_G10M5_ALL.jpg
-#PAPER#LinePlot: CO_UP_S303_G10M5_ALL  WvarDownStallTall TurbHeights WvarDownStall_303 1 HeightKm 1 TurbSelect none PANEL:d@ST,@DN,@S303    none none WvarDownStall_TALL_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  WvarDownStallTall TurbHeights WvarDownStall_293 1 HeightKm 1 TurbSelect none PANEL:d@ST,@DN,@S293    none none WvarDownStall_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WvarDownStallTall TurbHeights WvarDownStall_298 1 HeightKm 1 TurbSelect none PANEL:d@ST,@DN,@S298    none none WvarDownStall_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WvarDownStallTall TurbHeights WvarDownStall_303 1 HeightKm 1 TurbSelect none PANEL:d@ST,@DN,@S303    none none WvarDownStall_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_S293_G10M5_ALL  WvarDownAllCloudTall TurbHeights WvarDownAllCloud_293 1 HeightKm 1 TurbSelect none PANEL:d@All@Clouds,@DN,@S293    none none WvarDownAllCloud_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WvarDownAllCloudTall TurbHeights WvarDownAllCloud_298 1 HeightKm 1 TurbSelect none PANEL:d@All@Clouds,@DN,@S298    none none WvarDownAllCloud_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WvarDownAllCloudTall TurbHeights WvarDownAllCloud_303 1 HeightKm 1 TurbSelect none PANEL:d@All@Clouds,@DN,@S303    none none WvarDownAllCloud_TALL_CO_S303_G10M5_ALL.jpg
 
 #PAPER#LinePlot: CO_UP_C0050_G10M5  WvarDownStallTall TurbHeights WvarDownStall_303 1 HeightKm 1 TurbSelect none PANEL:d@ST,@DN,@C50      none none WvarDownStall_TALL_CO_C0050_G10M5.jpg
 #PAPER#LinePlot: CO_UP_C0400_G10M5  WvarDownStallTall TurbHeights WvarDownStall_303 1 HeightKm 1 TurbSelect none PANEL:d@ST,@DN,@C400     none none WvarDownStall_TALL_CO_C0400_G10M5.jpg
@@ -469,9 +481,13 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 #LinePlot: CG_UP_C50_C1600_S298_ZOOM  WthetavStallTall TurbHeights WthetavStall_298 HeightKm TurbSelect none PANEL:e@ST,@S298    none none WthetavStall_TALL_CG_C50_C1600_S298.jpg
 
 # updraft stall filter
-#PAPER#LinePlot: CO_UP_S293_G10M5_ALL  WthetavUpStallTall TurbHeights WthetavUpStall_293 1 HeightKm 1 TurbSelect none PANEL:e@ST,@UP,@S293    none none WthetavUpStall_TALL_CO_S293_G10M5_ALL.jpg
-#PAPER#LinePlot: CO_UP_S298_G10M5_ALL  WthetavUpStallTall TurbHeights WthetavUpStall_298 1 HeightKm 1 TurbSelect none PANEL:e@ST,@UP,@S298    none none WthetavUpStall_TALL_CO_S298_G10M5_ALL.jpg
-#PAPER#LinePlot: CO_UP_S303_G10M5_ALL  WthetavUpStallTall TurbHeights WthetavUpStall_303 1 HeightKm 1 TurbSelect none PANEL:e@ST,@UP,@S303    none none WthetavUpStall_TALL_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  WthetavUpStallTall TurbHeights WthetavUpStall_293 1 HeightKm 1 TurbSelect none PANEL:e@ST,@UP,@S293    none none WthetavUpStall_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WthetavUpStallTall TurbHeights WthetavUpStall_298 1 HeightKm 1 TurbSelect none PANEL:e@ST,@UP,@S298    none none WthetavUpStall_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WthetavUpStallTall TurbHeights WthetavUpStall_303 1 HeightKm 1 TurbSelect none PANEL:e@ST,@UP,@S303    none none WthetavUpStall_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_S293_G10M5_ALL  WthetavUpAllCloudTall TurbHeights WthetavUpAllCloud_293 1 HeightKm 1 TurbSelect none PANEL:e@All@Clouds,@UP,@S293    none none WthetavUpAllCloud_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WthetavUpAllCloudTall TurbHeights WthetavUpAllCloud_298 1 HeightKm 1 TurbSelect none PANEL:e@All@Clouds,@UP,@S298    none none WthetavUpAllCloud_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WthetavUpAllCloudTall TurbHeights WthetavUpAllCloud_303 1 HeightKm 1 TurbSelect none PANEL:e@All@Clouds,@UP,@S303    none none WthetavUpAllCloud_TALL_CO_S303_G10M5_ALL.jpg
 
 #PAPER#LinePlot: CO_UP_C0050_G10M5  WthetavUpStallTall TurbHeights WthetavUpStall_303 1 HeightKm 1 TurbSelect none PANEL:e@ST,@UP,@C50      none none WthetavUpStall_TALL_CO_C0050_G10M5.jpg
 #PAPER#LinePlot: CO_UP_C0400_G10M5  WthetavUpStallTall TurbHeights WthetavUpStall_303 1 HeightKm 1 TurbSelect none PANEL:e@ST,@UP,@C400     none none WthetavUpStall_TALL_CO_C0400_G10M5.jpg
@@ -484,9 +500,13 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 #PAPER#LinePlot: CG_UP_C50_C1600_S298_ZOOM  WthetavUpStallTall TurbHeights WthetavUpStall_298 1 HeightKm 1 TurbSelect none PANEL:e@ST,@UP,@S298    none none WthetavUpStall_TALL_CG_C50_C1600_S298.jpg
 
 # downdraft stall filter
-#PAPER#LinePlot: CO_UP_S293_G10M5_ALL  WthetavDownStallTall TurbHeights WthetavDownStall_293 1 HeightKm 1 TurbSelect none PANEL:f@ST,@DN,@S293    none none WthetavDownStall_TALL_CO_S293_G10M5_ALL.jpg
-#PAPER#LinePlot: CO_UP_S298_G10M5_ALL  WthetavDownStallTall TurbHeights WthetavDownStall_298 1 HeightKm 1 TurbSelect none PANEL:f@ST,@DN,@S298    none none WthetavDownStall_TALL_CO_S298_G10M5_ALL.jpg
-#PAPER#LinePlot: CO_UP_S303_G10M5_ALL  WthetavDownStallTall TurbHeights WthetavDownStall_303 1 HeightKm 1 TurbSelect none PANEL:f@ST,@DN,@S303    none none WthetavDownStall_TALL_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  WthetavDownStallTall TurbHeights WthetavDownStall_293 1 HeightKm 1 TurbSelect none PANEL:f@ST,@DN,@S293    none none WthetavDownStall_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WthetavDownStallTall TurbHeights WthetavDownStall_298 1 HeightKm 1 TurbSelect none PANEL:f@ST,@DN,@S298    none none WthetavDownStall_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WthetavDownStallTall TurbHeights WthetavDownStall_303 1 HeightKm 1 TurbSelect none PANEL:f@ST,@DN,@S303    none none WthetavDownStall_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_S293_G10M5_ALL  WthetavDownAllCloudTall TurbHeights WthetavDownAllCloud_293 1 HeightKm 1 TurbSelect none PANEL:f@All@Clouds,@DN,@S293    none none WthetavDownAllCloud_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WthetavDownAllCloudTall TurbHeights WthetavDownAllCloud_298 1 HeightKm 1 TurbSelect none PANEL:f@All@Clouds,@DN,@S298    none none WthetavDownAllCloud_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WthetavDownAllCloudTall TurbHeights WthetavDownAllCloud_303 1 HeightKm 1 TurbSelect none PANEL:f@All@Clouds,@DN,@S303    none none WthetavDownAllCloud_TALL_CO_S303_G10M5_ALL.jpg
 
 #PAPER#LinePlot: CO_UP_C0050_G10M5  WthetavDownStallTall TurbHeights WthetavDownStall_303 1 HeightKm 1 TurbSelect none PANEL:f@ST,@DN,@C50      none none WthetavDownStall_TALL_CO_C0050_G10M5.jpg
 #PAPER#LinePlot: CO_UP_C0400_G10M5  WthetavDownStallTall TurbHeights WthetavDownStall_303 1 HeightKm 1 TurbSelect none PANEL:f@ST,@DN,@C400     none none WthetavDownStall_TALL_CO_C0400_G10M5.jpg
@@ -579,9 +599,13 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 #LinePlot: CG_UP_C50_C1600_S298_ZOOM  WvaporStallTall TurbHeights WvaporStall_298 HeightKm TurbSelect none PANEL:g@ST,@S298    none none WvaporStall_TALL_CG_C50_C1600_S298.jpg
 
 # updraft stall filter
-#PAPER#LinePlot: CO_UP_S293_G10M5_ALL  WvaporUpStallTall TurbHeights WvaporUpStall_293 1 HeightKm 1 TurbSelect none PANEL:g@ST,@UP,@S293    none none WvaporUpStall_TALL_CO_S293_G10M5_ALL.jpg
-#PAPER#LinePlot: CO_UP_S298_G10M5_ALL  WvaporUpStallTall TurbHeights WvaporUpStall_298 1 HeightKm 1 TurbSelect none PANEL:g@ST,@UP,@S298    none none WvaporUpStall_TALL_CO_S298_G10M5_ALL.jpg
-#PAPER#LinePlot: CO_UP_S303_G10M5_ALL  WvaporUpStallTall TurbHeights WvaporUpStall_303 1 HeightKm 1 TurbSelect none PANEL:g@ST,@UP,@S303    none none WvaporUpStall_TALL_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  WvaporUpStallTall TurbHeights WvaporUpStall_293 1 HeightKm 1 TurbSelect none PANEL:g@ST,@UP,@S293    none none WvaporUpStall_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WvaporUpStallTall TurbHeights WvaporUpStall_298 1 HeightKm 1 TurbSelect none PANEL:g@ST,@UP,@S298    none none WvaporUpStall_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WvaporUpStallTall TurbHeights WvaporUpStall_303 1 HeightKm 1 TurbSelect none PANEL:g@ST,@UP,@S303    none none WvaporUpStall_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_S293_G10M5_ALL  WvaporUpAllCloudTall TurbHeights WvaporUpAllCloud_293 1 HeightKm 1 TurbSelect none PANEL:g@All@Clouds,@UP,@S293    none none WvaporUpAllCloud_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WvaporUpAllCloudTall TurbHeights WvaporUpAllCloud_298 1 HeightKm 1 TurbSelect none PANEL:g@All@Clouds,@UP,@S298    none none WvaporUpAllCloud_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WvaporUpAllCloudTall TurbHeights WvaporUpAllCloud_303 1 HeightKm 1 TurbSelect none PANEL:g@All@Clouds,@UP,@S303    none none WvaporUpAllCloud_TALL_CO_S303_G10M5_ALL.jpg
 
 #PAPER#LinePlot: CO_UP_C0050_G10M5  WvaporUpStallTall TurbHeights WvaporUpStall_303 1 HeightKm 1 TurbSelect none PANEL:g@ST,@UP,@C50      none none WvaporUpStall_TALL_CO_C0050_G10M5.jpg
 #PAPER#LinePlot: CO_UP_C0400_G10M5  WvaporUpStallTall TurbHeights WvaporUpStall_303 1 HeightKm 1 TurbSelect none PANEL:g@ST,@UP,@C400     none none WvaporUpStall_TALL_CO_C0400_G10M5.jpg
@@ -594,9 +618,13 @@ TsPlotSpecs: 433 0 0.083333333 hr 1 1999:02:10:01:30:00 55 144
 #PAPER#LinePlot: CG_UP_C50_C1600_S298_ZOOM  WvaporUpStallTall TurbHeights WvaporUpStall_298 1 HeightKm 1 TurbSelect none PANEL:g@ST,@UP,@S298    none none WvaporUpStall_TALL_CG_C50_C1600_S298.jpg
 
 # downdraft stall filter
-#PAPER#LinePlot: CO_UP_S293_G10M5_ALL  WvaporDownStallTall TurbHeights WvaporDownStall_293 1 HeightKm 1 TurbSelect none PANEL:h@ST,@DN,@S293    none none WvaporDownStall_TALL_CO_S293_G10M5_ALL.jpg
-#PAPER#LinePlot: CO_UP_S298_G10M5_ALL  WvaporDownStallTall TurbHeights WvaporDownStall_298 1 HeightKm 1 TurbSelect none PANEL:h@ST,@DN,@S298    none none WvaporDownStall_TALL_CO_S298_G10M5_ALL.jpg
-#PAPER#LinePlot: CO_UP_S303_G10M5_ALL  WvaporDownStallTall TurbHeights WvaporDownStall_303 1 HeightKm 1 TurbSelect none PANEL:h@ST,@DN,@S303    none none WvaporDownStall_TALL_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  WvaporDownStallTall TurbHeights WvaporDownStall_293 1 HeightKm 1 TurbSelect none PANEL:h@ST,@DN,@S293    none none WvaporDownStall_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WvaporDownStallTall TurbHeights WvaporDownStall_298 1 HeightKm 1 TurbSelect none PANEL:h@ST,@DN,@S298    none none WvaporDownStall_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WvaporDownStallTall TurbHeights WvaporDownStall_303 1 HeightKm 1 TurbSelect none PANEL:h@ST,@DN,@S303    none none WvaporDownStall_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CO_UP_S293_G10M5_ALL  WvaporDownAllCloudTall TurbHeights WvaporDownAllCloud_293 1 HeightKm 1 TurbSelect none PANEL:h@All@Clouds,@DN,@S293    none none WvaporDownAllCloud_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  WvaporDownAllCloudTall TurbHeights WvaporDownAllCloud_298 1 HeightKm 1 TurbSelect none PANEL:h@All@Clouds,@DN,@S298    none none WvaporDownAllCloud_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  WvaporDownAllCloudTall TurbHeights WvaporDownAllCloud_303 1 HeightKm 1 TurbSelect none PANEL:h@All@Clouds,@DN,@S303    none none WvaporDownAllCloud_TALL_CO_S303_G10M5_ALL.jpg
 
 #PAPER#LinePlot: CO_UP_C0050_G10M5  WvaporDownStallTall TurbHeights WvaporDownStall_303 1 HeightKm 1 TurbSelect none PANEL:h@ST,@DN,@C50      none none WvaporDownStall_TALL_CO_C0050_G10M5.jpg
 #PAPER#LinePlot: CO_UP_C0400_G10M5  WvaporDownStallTall TurbHeights WvaporDownStall_303 1 HeightKm 1 TurbSelect none PANEL:h@ST,@DN,@C400     none none WvaporDownStall_TALL_CO_C0400_G10M5.jpg
@@ -711,9 +739,9 @@ LinePlot: CO_UP_S303_G10M5_ALL  LatCoolAllCloudTall LatCoolHeights LatCoolAllClo
 #LinePlot: CO_UP_S303_G10M5_ALL  ColLatHeatCoolTall LatHeatCoolHeights ColLatHeatCool_303 1 HeightKm 1 LatHeatCoolSelect none PANEL:f@S303    none none ColLatHeatCool_TALL_CO_S303_G10M5_ALL.jpg
 
 # cloud fraction
-#PAPER#LinePlot: CO_UP_S293_G10M5_ALL  CfracProfTall MomentHeights CfracProf 1 HeightKm_2 1 CfracProfSelect none PANEL:b@S293    none none CfracProf_TALL_CO_S293_G10M5_ALL.jpg
-#PAPER#LinePlot: CO_UP_S298_G10M5_ALL  CfracProfTall MomentHeights CfracProf 1 HeightKm 1 CfracProfSelect none PANEL:b@S298    none none CfracProf_TALL_CO_S298_G10M5_ALL.jpg
-#PAPER#LinePlot: CO_UP_S303_G10M5_ALL  CfracProfTall MomentHeights CfracProf 1 HeightKm 1 CfracProfSelect none PANEL:b@S303    none none CfracProf_TALL_CO_S303_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  CfracProfTall MomentHeights CfracProf 1 HeightKm_2 1 CfracProfSelect none PANEL:b@S293    none none CfracProf_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  CfracProfTall MomentHeights CfracProf 1 HeightKm 1 CfracProfSelect none PANEL:b@S298    none none CfracProf_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  CfracProfTall MomentHeights CfracProf 1 HeightKm 1 CfracProfSelect none PANEL:b@S303    none none CfracProf_TALL_CO_S303_G10M5_ALL.jpg
 
 #PAPER#LinePlot: CO_UP_C0050_G10M5  CfracProfTall MomentHeights CfracProf 1 HeightKm 1 CfracProfSelect none PANEL:b@C50      none none CfracProf_TALL_CO_C0050_G10M5.jpg
 #PAPER#LinePlot: CO_UP_C0400_G10M5  CfracProfTall MomentHeights CfracProf 1 HeightKm 1 CfracProfSelect none PANEL:b@C400     none none CfracProf_TALL_CO_C0400_G10M5.jpg
@@ -1978,12 +2006,13 @@ PlotVar: LwpScmixPdf_TALL   lwp_scmix_pdf_TALL  DIAGS/pdf_ctype_lwp   @    @ 1 0
 PlotVar: LwpPdfBins         x_coords            DIAGS/pdf_ctype_lwp   LWP mm 1 0
 
 ############## BL stats #####################
-PlotVar: InvHeight      InversionHeightSmooth_gm_all   DIAGS/bl_stats_0p01 Zinv  km  1e-3 0
-PlotVar: InvHeightStall InversionHeightSmooth_gm_stall DIAGS/bl_stats_0p01 Zinv  km  1e-3 0
-PlotVar: CloudCfTop     CloudTopCfSmooth_gm_all        DIAGS/bl_stats_0p01 Ztop  km  1e-3 0
-PlotVar: CloudCfBot     CloudBotCfSmooth_gm_all        DIAGS/bl_stats_0p01 Zbot  km  1e-3 0
-PlotVar: CloudCldTop    CloudTopCldSmooth_gm_all       DIAGS/bl_stats_0p01 Ztop  km  1e-3 0
-PlotVar: CloudCldBot    CloudBotCldSmooth_gm_all       DIAGS/bl_stats_0p01 Zbot  km  1e-3 0
+PlotVar: InvHeight         InversionHeightSmooth_gm_all     DIAGS/bl_stats_0p01 Zinv  km  1e-3 0
+PlotVar: InvHeightStall    InversionHeightSmooth_gm_stall   DIAGS/bl_stats_0p01 Zinv  km  1e-3 0
+PlotVar: InvHeightAllCloud InversionHeightSmooth_gm_all_cld DIAGS/bl_stats_0p01 Zinv  km  1e-3 0
+PlotVar: CloudCfTop        CloudTopCfSmooth_gm_all          DIAGS/bl_stats_0p01 Ztop  km  1e-3 0
+PlotVar: CloudCfBot        CloudBotCfSmooth_gm_all          DIAGS/bl_stats_0p01 Zbot  km  1e-3 0
+PlotVar: CloudCldTop       CloudTopCldSmooth_gm_all         DIAGS/bl_stats_0p01 Ztop  km  1e-3 0
+PlotVar: CloudCldBot       CloudBotCldSmooth_gm_all         DIAGS/bl_stats_0p01 Zbot  km  1e-3 0
 
 PlotVar: ThetaWe        ThetaWeSmooth_gm_all           DIAGS/bl_stats_0p01 W_e_\theta    cm@s^-^1  100 0
 PlotVar: ThetaWeStall   ThetaWeSmooth_gm_stall         DIAGS/bl_stats_0p01 W_e_\theta    cm@s^-^1  100 0
@@ -2052,6 +2081,8 @@ PlotVar: WvarDn10Tall     w-w_dn0p10_all  DIAGS/moments   <w'w'>  m^2@s^-^2    1
 PlotVar: WvarStallTall     w-w_stall_all          DIAGS/moments   <w'w'>  m^2@s^-^2    1 0
 PlotVar: WvarUpStallTall   w-w_up0p10_stall_all   DIAGS/moments   <w'w'>  m^2@s^-^2    1 0
 PlotVar: WvarDownStallTall w-w_dn0p10_stall_all   DIAGS/moments   <w'w'>  m^2@s^-^2    1 0
+PlotVar: WvarUpAllCloudTall   w-w_up0p10_all_cld_all   DIAGS/moments   <w'w'>  m^2@s^-^2    1 0
+PlotVar: WvarDownAllCloudTall w-w_dn0p10_all_cld_all   DIAGS/moments   <w'w'>  m^2@s^-^2    1 0
 
 ### Vertical Velocity Skew ###
 PlotVar: WskewTall         w-w-w_all         DIAGS/turb_stats   <w'w'w'>  m^3@s^-^3    1 0
@@ -2078,6 +2109,8 @@ PlotVar: WthetavDn10Tall     w-theta_v_dn0p10_all  DIAGS/moments   <w'\thetav'> 
 PlotVar: WthetavStallTall     w-theta_v_stall_all          DIAGS/moments   <w'\thetav'>  K@m@s^-^1    1 0
 PlotVar: WthetavUpStallTall   w-theta_v_up0p10_stall_all   DIAGS/moments   <w'\thetav'>  K@m@s^-^1    1 0
 PlotVar: WthetavDownStallTall w-theta_v_dn0p10_stall_all   DIAGS/moments   <w'\thetav'>  K@m@s^-^1    1 0
+PlotVar: WthetavUpAllCloudTall   w-theta_v_up0p10_all_cld_all   DIAGS/moments   <w'\thetav'>  K@m@s^-^1    1 0
+PlotVar: WthetavDownAllCloudTall w-theta_v_dn0p10_all_cld_all   DIAGS/moments   <w'\thetav'>  K@m@s^-^1    1 0
 
 ### w-theta flux ###
 PlotVar: WthetaTall         w-theta_all         DIAGS/turb_stats   <w'\theta'>  K@m@s^-^1    1 0
@@ -2104,6 +2137,8 @@ PlotVar: WvaporDn10Tall     w-vapor_dn0p10_all  DIAGS/moments   <w'q'>  g@kg^-^1
 PlotVar: WvaporStallTall     w-vapor_stall_all          DIAGS/moments   <w'q'>  g@kg^-^1@m@s^-^1    1 0
 PlotVar: WvaporUpStallTall   w-vapor_up0p10_stall_all   DIAGS/moments   <w'q'>  g@kg^-^1@m@s^-^1    1 0
 PlotVar: WvaporDownStallTall w-vapor_dn0p10_stall_all   DIAGS/moments   <w'q'>  g@kg^-^1@m@s^-^1    1 0
+PlotVar: WvaporUpAllCloudTall   w-vapor_up0p10_all_cld_all   DIAGS/moments   <w'q'>  g@kg^-^1@m@s^-^1    1 0
+PlotVar: WvaporDownAllCloudTall w-vapor_dn0p10_all_cld_all   DIAGS/moments   <w'q'>  g@kg^-^1@m@s^-^1    1 0
 
 ### w-speed flux ###
 PlotVar: WspeedTall         w-speed_all         DIAGS/turb_stats   <w'v'>  m^2@s^-^2    1 0
@@ -2908,6 +2943,12 @@ PlotAxis: WvarUpStall_303     -0.05    0.60  linear [0_0.2_0.4]
 PlotAxis: WvarDownStall_293   -0.001   0.015 linear [0_0.005_0.01]
 PlotAxis: WvarDownStall_298   -0.01    0.20  linear [0_0.05_0.1_0.15]
 PlotAxis: WvarDownStall_303   -0.05    0.25  linear [0_0.1_0.2]
+PlotAxis: WvarUpAllCloud_293     -0.001   0.04  linear [_]
+PlotAxis: WvarUpAllCloud_298     -0.01    0.50  linear [_]
+PlotAxis: WvarUpAllCloud_303     -0.10    1.50  linear [_]
+PlotAxis: WvarDownAllCloud_293   -0.001   0.02  linear [_]
+PlotAxis: WvarDownAllCloud_298   -0.01    0.20  linear [_]
+PlotAxis: WvarDownAllCloud_303   -0.05    0.50  linear [_]
 
 PlotAxis: Wskew_293        -0.0001 0.0001 linear [_]
 PlotAxis: Wskew_298         -0.001  0.005 linear [_]
@@ -2958,6 +2999,12 @@ PlotAxis: WthetavUpStall_303       -0.10   0.28 linear [0_0.1_0.2]
 PlotAxis: WthetavDownStall_293     -0.015  0.015 linear [-0.01_0_0.01]
 PlotAxis: WthetavDownStall_298     -0.08   0.15 linear [-0.05_0_0.05_0.1]
 PlotAxis: WthetavDownStall_303     -0.10   0.12 linear [-0.05_0_0.05]
+PlotAxis: WthetavUpAllCloud_293       -0.02   0.07 linear [0_0.02_0.04_0.06]
+PlotAxis: WthetavUpAllCloud_298       -0.05   0.08 linear [-0.025_0_0.025_0.05]
+PlotAxis: WthetavUpAllCloud_303       -0.10   0.28 linear [0_0.1_0.2]
+PlotAxis: WthetavDownAllCloud_293     -0.015  0.015 linear [-0.01_0_0.01]
+PlotAxis: WthetavDownAllCloud_298     -0.08   0.15 linear [-0.05_0_0.05_0.1]
+PlotAxis: WthetavDownAllCloud_303     -0.10   0.12 linear [-0.05_0_0.05]
 
 PlotAxis: Wtheta_293         -0.001 0.001 linear [_]
 PlotAxis: Wtheta_298         -0.001 0.001 linear [_]
@@ -3008,6 +3055,12 @@ PlotAxis: WvaporUpStall_303        -0.05   0.50  linear [0_0.1_0.2_0.3_0.4]
 PlotAxis: WvaporDownStall_293      -0.015  0.013 linear [-0.01_0_0.01]
 PlotAxis: WvaporDownStall_298      -0.25   0.03  linear [-0.2_-0.1_0]
 PlotAxis: WvaporDownStall_303      -0.30   0.05  linear [-0.2_-0.1_0]
+PlotAxis: WvaporUpAllCloud_293        -0.04   0.025 linear [-0.02_0_0.02]
+PlotAxis: WvaporUpAllCloud_298        -0.03   0.15  linear [0_0.05_0.1]
+PlotAxis: WvaporUpAllCloud_303        -0.05   0.50  linear [0_0.1_0.2_0.3_0.4]
+PlotAxis: WvaporDownAllCloud_293      -0.015  0.013 linear [-0.01_0_0.01]
+PlotAxis: WvaporDownAllCloud_298      -0.25   0.03  linear [-0.2_-0.1_0]
+PlotAxis: WvaporDownAllCloud_303      -0.30   0.05  linear [-0.2_-0.1_0]
 
 PlotAxis: Wspeed_293         -0.001 0.001 linear [_]
 PlotAxis: Wspeed_298         -0.001 0.001 linear [_]

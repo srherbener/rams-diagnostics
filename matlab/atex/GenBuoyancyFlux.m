@@ -8,7 +8,7 @@ function [ ] = GenBuoyancyFlux(ConfigFile)
     Ddir = Config.DiagDir;
 
     VarSets = {
-      { 'moments' { 'col_up0p10_all' 'col_dn0p10_all' 'col_ud0p10_all' 'all_cld_all' } 'buoy_flux' }
+      { 'moments' { 'col_up0p10_all' 'col_dn0p10_all' 'col_ud0p10_all' 'all_cld_all' 'up0p10_all_cld_all' 'dn0p10_all_cld_all' 'ud0p10_all_cld_all' } 'buoy_flux' }
       };
 
     Nvsets = length(VarSets);
