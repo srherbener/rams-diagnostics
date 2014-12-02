@@ -23,6 +23,9 @@ function [ ] = GenMomentData(ConfigFile)
       { 'w_M3_up0p10_stall'     'w-w-w'     1 1 'w_up0p10_stall' }
       { 'w_M3_dn0p10_stall'     'w-w-w'     1 1 'w_dn0p10_stall' }
       { 'w_M3_all_cld'          'w-w-w'     1 1 'w_all_cld'      }
+      { 'w_M3_col_up0p10'       'w-w-w'     1 1 'w_col_up0p10'   }
+      { 'w_M3_col_dn0p10'       'w-w-w'     1 1 'w_col_dn0p10'   }
+      { 'w_M3_col_ud0p10'       'w-w-w'     1 1 'w_col_ud0p10'   }
 
       { 'w_theta_flux'              'w-theta'   2 1 'theta'              }
       { 'w_theta_flux_ud0p10'       'w-theta'   2 1 'theta_ud0p10'       }
@@ -44,6 +47,9 @@ function [ ] = GenMomentData(ConfigFile)
       { 'w_theta_v_flux_up0p10_stall' 'w-theta_v' 2 1 'theta_v_up0p10_stall' }
       { 'w_theta_v_flux_dn0p10_stall' 'w-theta_v' 2 1 'theta_v_dn0p10_stall' }
       { 'w_theta_v_flux_all_cld'      'w-theta_v' 2 1 'theta_v_all_cld'      }
+      { 'w_theta_v_flux_col_up0p10'   'w-theta_v' 2 1 'theta_v_col_up0p10'   }
+      { 'w_theta_v_flux_col_dn0p10'   'w-theta_v' 2 1 'theta_v_col_dn0p10'   }
+      { 'w_theta_v_flux_col_ud0p10'   'w-theta_v' 2 1 'theta_v_col_ud0p10'   }
 
       { 'w_vapor_flux'              'w-vapor'   2 1 'vapor'              }
       { 'w_vapor_flux_ud0p10'       'w-vapor'   2 1 'vapor_ud0p10'       }
@@ -53,6 +59,9 @@ function [ ] = GenMomentData(ConfigFile)
       { 'w_vapor_flux_up0p10_stall' 'w-vapor'   2 1 'vapor_up0p10_stall' }
       { 'w_vapor_flux_dn0p10_stall' 'w-vapor'   2 1 'vapor_dn0p10_stall' }
       { 'w_vapor_flux_all_cld'      'w-vapor'   2 1 'vapor_all_cld'      }
+      { 'w_vapor_flux_col_up0p10'   'w-vapor'   2 1 'vapor_col_up0p10'   }
+      { 'w_vapor_flux_col_dn0p10'   'w-vapor'   2 1 'vapor_col_dn0p10'   }
+      { 'w_vapor_flux_col_ud0p10'   'w-vapor'   2 1 'vapor_col_ud0p10'   }
 
       { 'w_speed_flux'          'w-speed'   2 1 'speed'          }
       { 'w_speed_flux_ud0p10'   'w-speed'   2 1 'speed_ud0p10'   }
@@ -66,6 +75,7 @@ function [ ] = GenMomentData(ConfigFile)
       { 'cloud_M1_c0p10'        'cloud'     1 1 'cloud_c0p10'    }
       { 'cloud_M1_c0p01_stall'  'cloud'     1 1 'cloud_c0p01_stall'    }
       { 'cloud_M1_c0p10_stall'  'cloud'     1 1 'cloud_c0p10_stall'    }
+      { 'cloud_M1_col_cld'      'cloud'     1 1 'cloud_col_cld'        }
 
 
       % fluxes (covariances)
@@ -77,6 +87,9 @@ function [ ] = GenMomentData(ConfigFile)
       { 'w_theta_v_flux_up0p10_stall' 'w-theta_v' 1 2 'w-theta_v_up0p10_stall' }
       { 'w_theta_v_flux_dn0p10_stall' 'w-theta_v' 1 2 'w-theta_v_dn0p10_stall' }
       { 'w_theta_v_flux_all_cld'      'w-theta_v' 1 2 'w-theta_v_all_cld'      }
+      { 'w_theta_v_flux_col_up0p10'   'w-theta_v' 1 2 'w-theta_v_col_up0p10' }
+      { 'w_theta_v_flux_col_dn0p10'   'w-theta_v' 1 2 'w-theta_v_col_dn0p10' }
+      { 'w_theta_v_flux_col_ud0p10'   'w-theta_v' 1 2 'w-theta_v_col_ud0p10' }
 
       { 'w_theta_flux'           'w-theta'   1 2 'w-theta'            }
       { 'w_theta_flux_ud0p10'    'w-theta'   1 2 'w-theta_ud0p10'     }
@@ -93,6 +106,9 @@ function [ ] = GenMomentData(ConfigFile)
       { 'w_vapor_flux_up0p10_stall' 'w-vapor'   1 2 'w-vapor_up0p10_stall' }
       { 'w_vapor_flux_dn0p10_stall' 'w-vapor'   1 2 'w-vapor_dn0p10_stall' }
       { 'w_vapor_flux_all_cld'      'w-vapor'   1 2 'w-vapor_all_cld'      }
+      { 'w_vapor_flux_col_up0p10'   'w-vapor'   1 2 'w-vapor_col_up0p10'   }
+      { 'w_vapor_flux_col_dn0p10'   'w-vapor'   1 2 'w-vapor_col_dn0p10'   }
+      { 'w_vapor_flux_col_ud0p10'   'w-vapor'   1 2 'w-vapor_col_ud0p10'   }
 
       { 'w_speed_flux'           'w-speed'   1 2 'w-speed'            }
       { 'w_speed_flux_ud0p10'    'w-speed'   1 2 'w-speed_ud0p10'     }
@@ -110,6 +126,9 @@ function [ ] = GenMomentData(ConfigFile)
       { 'w_M3_up0p10_stall'        'w-w-w'     1 2 'w-w_up0p10_stall' }
       { 'w_M3_dn0p10_stall'        'w-w-w'     1 2 'w-w_dn0p10_stall' }
       { 'w_M3_all_cld'             'w-w-w'     1 2 'w-w_all_cld'      }
+      { 'w_M3_col_up0p10'          'w-w-w'     1 2 'w-w_col_up0p10'   }
+      { 'w_M3_col_dn0p10'          'w-w-w'     1 2 'w-w_col_dn0p10'   }
+      { 'w_M3_col_ud0p10'          'w-w-w'     1 2 'w-w_col_ud0p10'   }
 
       % skews
       { 'w_M3'                     'w-w-w'     1 3 'w-w-w'              }
@@ -119,6 +138,9 @@ function [ ] = GenMomentData(ConfigFile)
       { 'w_M3_stall'               'w-w-w'     1 3 'w-w-w_stall'        }
       { 'w_M3_up0p10_stall'        'w-w-w'     1 3 'w-w-w_up0p10_stall' }
       { 'w_M3_all_cld'             'w-w-w'     1 3 'w-w-w_all_cld'      }
+      { 'w_M3_col_up0p10'          'w-w-w'     1 3 'w-w-w_col_up0p10'   }
+      { 'w_M3_col_dn0p10'          'w-w-w'     1 3 'w-w-w_col_dn0p10'   }
+      { 'w_M3_col_ud0p10'          'w-w-w'     1 3 'w-w-w_col_ud0p10'   }
 
       };
 

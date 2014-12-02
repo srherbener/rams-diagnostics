@@ -7,71 +7,73 @@ function [ ] = GenBuoyancyFlux(ConfigFile)
 
     Ddir = Config.DiagDir;
 
-    WpTvpName = 'w-theta_v';
-    TbName = 'theta';
-
-    WpTvpFprefix = 'w_thetav_M2_T12_T36';
-    TbFprefix = 'theta_M1_T12_T36';
-
-    Filters = {
-      'none'
-      'lwp0p01'
-      'lwp0p10'
-      'lwp1p00'
+    VarSets = {
+      { 'moments' { 'col_up0p10_all' 'col_dn0p10_all' 'col_ud0p10_all' 'all_cld_all' } 'buoy_flux' }
       };
+
+    Nvsets = length(VarSets);
 
     g = 9.8;
 
     for icase = 1:length(Config.Cases)
         Case = Config.Cases(icase).Cname;
 
-        for ifilt = 1:length(Filters)
-            Filter = Filters{ifilt};
+        for ivset = 1:Nvsets
+            InFilePrefix  = VarSets{ivset}{1};
+            InVlist       = VarSets{ivset}{2};
+            OutFilePrefix = VarSets{ivset}{3};
 
-            if (strcmp(Filter, 'none'))
-                WpTvpFile = sprintf('%s/%s_%s.h5', Ddir, WpTvpFprefix, Case);
-                TbFile = sprintf('%s/%s_%s.h5', Ddir, TbFprefix, Case);
-                OutFile = sprintf('%s/buoy_flux_T12_T36_%s.h5', Ddir, Case);
-            else
-                WpTvpFile = sprintf('%s/%s_%s_%s.h5', Ddir, WpTvpFprefix, Filter, Case);
-                TbFile = sprintf('%s/%s_%s_%s.h5', Ddir, TbFprefix, Filter, Case);
-                OutFile = sprintf('%s/buoy_flux_%s_T12_T36_%s.h5', Ddir, Filter, Case);
-            end
-    
+            InFile = sprintf('%s/%s_%s.h5', Ddir, InFilePrefix, Case);
+            OutFile = sprintf('%s/%s_%s.h5', Ddir, OutFilePrefix, Case);
+
             fprintf('***************************************************************\n');
             fprintf('Generating buoyancy flux:\n');
             fprintf('  Case: %s\n', Case);
-            fprintf('  Input virtual potential temp flux file: %s\n', WpTvpFile);
-            fprintf('    Var name: %s\n', WpTvpName);
-            fprintf('  Input mean potential temp file: %s\n', TbFile);
-            fprintf('    Var name: %s\n', TbName);
+            fprintf('  Reading: %s\n', InFile);
+            fprintf('  Writing: %s\n', OutFile);
             fprintf('\n');
+
+            % Write a header so that a new file is created, and 
+            % the writes in the following loop can use 'append' mode.
+            hdf5write(OutFile, '/Header', 'Buoyancy Flux');
+
+            for ivar = 1:length(InVlist)
+              InVsuffix = InVlist{ivar};
+
+              TbVname    = sprintf('theta_v_%s', InVsuffix);   % mean theta_v
+              TvpVname   = sprintf('w-theta_v_%s', InVsuffix); % w-theta_v covariance
+              BfluxVname = sprintf('buoy_flux_%s', InVsuffix); % buoyance flux
     
-            % Buoyancy flux:
-            %   B = (g/ThetaBar) * (Wprime*ThetavPrime)
-            %
-            WP_TVP = squeeze(hdf5read(WpTvpFile, WpTvpName));
-            TB     = squeeze(hdf5read(TbFile, TbName));
+              fprintf('    Vars: %s, %s --> %s\n', TvpVname, TbVname, BfluxVname);
     
-            % Grab height coordinates
-            Z = hdf5read(WpTvpFile, 'z_coords');
-            Nz = length(Z);
-            
-            BF = (g ./ TB) .* WP_TVP;
-    
-            % output --> Use REVU format, 4D var, *_coords
+              % Buoyancy flux:
+              %   B = (g/ThetaBar) * (Wprime*ThetavPrime)
+              %
+              WP_TVP = squeeze(hdf5read(InFile, TvpVname));
+              TB     = squeeze(hdf5read(InFile, TbVname));
+      
+              % Grab height coordinates
+              Z = hdf5read(InFile, 'z_coords');
+              Nz = length(Z);
+              
+              BF = (g ./ TB) .* WP_TVP;
+      
+              % output --> Use REVU format, 4D var, *_coords
+              Ovar = reshape(BF, [ 1 1 Nz 1 ]);
+              
+              hdf5write(OutFile, BfluxVname, Ovar, 'WriteMode', 'append');
+            end
+
+            % write out the coordinates
             % fabricate x, y, t coords
             X = 1;
             Y = 1;
             T = 1;
-            Ovar = reshape(BF, [ 1 1 Nz 1 ]);
-            
-            fprintf('Writing: %s\n', OutFile);
-            hdf5write(OutFile, '/BUOY_FLUX', Ovar);
-            hdf5write(OutFile, 'x_coords', X, 'WriteMode', 'append');
-            hdf5write(OutFile, 'y_coords', Y, 'WriteMode', 'append');
-            hdf5write(OutFile, 'z_coords', Z, 'WriteMode', 'append');
-            hdf5write(OutFile, 't_coords', T, 'WriteMode', 'append');
+
+            hdf5write(OutFile, 'x_coords', X,    'WriteMode', 'append');
+            hdf5write(OutFile, 'y_coords', Y,    'WriteMode', 'append');
+            hdf5write(OutFile, 'z_coords', Z,    'WriteMode', 'append');
+            hdf5write(OutFile, 't_coords', T,    'WriteMode', 'append');
             fprintf('\n');
         end
     end

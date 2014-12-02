@@ -15,11 +15,14 @@ function [ ] = PlotSampleProfiles(ConfigFile)
 
   % case_name temp_var_name cloud_var_name vapor_var_name select_time (hrs) plot_title
   PlotSets = {
-      { 'RCE50_NEW_RI_MID' 'tempc' 'cloud' 'vapor' 340 'SZA 50, New Ri' }
-      { 'RCE50_OLD_RI_MID' 'tempc' 'cloud' 'vapor' 340 'SZA 50, Old Ri' }
-      { 'RCE70_OLD_RI_MID' 'tempc' 'cloud' 'vapor' 340 'SZA 70, Old Ri' }
+%      { 'RCE50_NEW_RI_MID' 'tempc' 'cloud' 'vapor' 340 'SZA 50, New Ri' }
+%      { 'RCE50_OLD_RI_MID' 'tempc' 'cloud' 'vapor' 340 'SZA 50, Old Ri' }
+%      { 'RCE70_OLD_RI_MID' 'tempc' 'cloud' 'vapor' 340 'SZA 70, Old Ri' }
 
-      { 'RCE50_NEW_RI_800' 'tempc' 'cloud' 'vapor' 340 'SZA 50, New Ri, High PW' }
+%      { 'RCE50_NEW_RI_800' 'tempc' 'cloud' 'vapor' 340 'SZA 50, New Ri, High PW' }
+
+      { 'RCE50_NEW_RI_800' 'tempc' 'cloud' 'vapor' 1034 'SZA 50, New Ri, High PW' }
+      { 'RCE50_NEW_RI_MID' 'tempc' 'cloud' 'vapor' 1034 'SZA 50, New Ri' }
     };
   Nset = length(PlotSets);
 
@@ -50,8 +53,8 @@ function [ ] = PlotSampleProfiles(ConfigFile)
     fprintf('\n');
 
     TEMP = squeeze(hdf5read(InFile, TempVar));
-    CLOUD = squeeze(hdf5read(InFile, CloudVar));
-    VAPOR = squeeze(hdf5read(InFile, VaporVar));
+%    CLOUD = squeeze(hdf5read(InFile, CloudVar));
+%    VAPOR = squeeze(hdf5read(InFile, VaporVar));
 
     Z = squeeze(hdf5read(InFile, 'z_coords')) ./ 1000;  % km
     T = squeeze(hdf5read(InFile, 't_coords')) ./ 3600;  % h
@@ -65,16 +68,18 @@ function [ ] = PlotSampleProfiles(ConfigFile)
     T1 = find(T >= SelTime, 1, 'first');
 
     TEMP = squeeze(TEMP(Z1:Z2,T1));
-    CLOUD = squeeze(CLOUD(Z1:Z2,T1));
-    VAPOR = squeeze(VAPOR(Z1:Z2,T1));
+%    CLOUD = squeeze(CLOUD(Z1:Z2,T1));
+%    VAPOR = squeeze(VAPOR(Z1:Z2,T1));
 
-    CLOUD = CLOUD .* 100; % so it shows up on the scale
+%    CLOUD = CLOUD .* 100; % so it shows up on the scale
 
     Z = Z(Z1:Z2);
     
     % Create the plot
-    PDATA = [ TEMP CLOUD VAPOR ];
-    LegendText = { 'T (deg C)' 'Qc (100 * g/kg)' 'Qv (g/kg)' };
+%    PDATA = [ TEMP CLOUD VAPOR ];
+%    LegendText = { 'T (deg C)' 'Qc (100 * g/kg)' 'Qv (g/kg)' };
+    PDATA = TEMP;
+    LegendText = { 'T (deg C)' };
 
     Ptitle = sprintf('%s, t = %d h', Ptitle, SelTime);
 

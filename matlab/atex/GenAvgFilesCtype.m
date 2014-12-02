@@ -22,8 +22,13 @@ function [ ] = GenAvgFilesCtype(ConfigFile)
 
     { 'hda_lcl'             { 'lcl'    'lcl_stall'                                                                  } 'avg_ctype_lcl'  }
 
-    { 'hda_vapcldt'         { 'cloud_cond_stall'                                                                    } 'avg_ctype_cloud_cond'  }
-    { 'hda_vapcldt'         { 'cloud_evap_stall'                                                                    } 'avg_ctype_cloud_evap'  }
+    { 'hda_vapcldt'         { 'cloud_cond_stall'    'col_cloud_cond' 'cloud_cond_all_cld'                           } 'avg_ctype_cloud_cond'  }
+    { 'hda_vapcldt'         { 'cloud_evap_stall'    'col_cloud_evap' 'cloud_evap_all_cld'                           } 'avg_ctype_cloud_evap'  }
+    { 'hda_vapcldt'         { 'col_cloud_cond_evap'                                                                 } 'avg_ctype_cloud_cond_evap'  }
+
+    { 'hda_lh_vapt'         { 'col_lat_heat'      'lat_heat_all_cld'                                                } 'avg_ctype_lat_heat'  }
+    { 'hda_lh_vapt'         { 'col_lat_cool'      'lat_cool_all_cld'                                                } 'avg_ctype_lat_cool'  }
+    { 'hda_lh_vapt'         { 'col_lat_heat_cool'                                                                   } 'avg_ctype_lat_heat_cool'  }
     };
   Nset = length(VarSets);
 
@@ -99,8 +104,7 @@ function [ ] = GenAvgFilesCtype(ConfigFile)
           % processes that the AVG is empty.
 
           OutName = sprintf('%s_%s', OutAvgName, Tname);
-          hdf5write(OutFile, OutName, AVG, 'WriteMode', 'append');
-
+          hdf5write(OutFile, OutName, AVG, 'WriteMode', 'append'); 
           OutName = sprintf('%s_%s', OutNptsName, Tname);
           hdf5write(OutFile, OutName, NPTS, 'WriteMode', 'append');
         end
@@ -110,7 +114,12 @@ function [ ] = GenAvgFilesCtype(ConfigFile)
       % output coords so that ReadSelectXyzt can handle the output files
       Xdummy = 1;
       Ydummy = 1;
-      if (strcmp(OutFprefix, 'avg_ctype_cloud_cond') | strcmp(OutFprefix, 'avg_ctype_cloud_evap'))
+      if (strcmp(OutFprefix, 'avg_ctype_cloud_cond') || ...
+          strcmp(OutFprefix, 'avg_ctype_cloud_evap') || ...
+          strcmp(OutFprefix, 'avg_ctype_cloud_cond_evap') || ...
+          strcmp(OutFprefix, 'avg_ctype_lat_heat') || ...
+          strcmp(OutFprefix, 'avg_ctype_lat_cool') || ...
+          strcmp(OutFprefix, 'avg_ctype_lat_heat_cool'))
         Zout = Z;
       else
         Zout = 1;

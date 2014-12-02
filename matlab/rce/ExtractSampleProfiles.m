@@ -60,11 +60,11 @@ function [ ] = ExtractSampleProfiles(ConfigFile)
     TempFile   = VarSets{iset}{1}{1};
     TempVar    = VarSets{iset}{1}{2};
 
-    CloudFile  = VarSets{iset}{2}{1};
-    CloudVar   = VarSets{iset}{2}{2};
+%    CloudFile  = VarSets{iset}{2}{1};
+%    CloudVar   = VarSets{iset}{2}{2};
 
-    VaporFile  = VarSets{iset}{3}{1};
-    VaporVar   = VarSets{iset}{3}{2};
+%    VaporFile  = VarSets{iset}{3}{1};
+%    VaporVar   = VarSets{iset}{3}{2};
 
     Case       = VarSets{iset}{4};
     Isamp      = VarSets{iset}{5};
@@ -79,12 +79,12 @@ function [ ] = ExtractSampleProfiles(ConfigFile)
 
     % Set up for extracting using nctools
     TEMP_DS = ncgeodataset(TempFile);
-    CLOUD_DS = ncgeodataset(CloudFile);
-    VAPOR_DS = ncgeodataset(VaporFile);
+%    CLOUD_DS = ncgeodataset(CloudFile);
+%    VAPOR_DS = ncgeodataset(VaporFile);
 
     TEMP_VAR = TEMP_DS.geovariable(TempVar);
-    CLOUD_VAR = CLOUD_DS.geovariable(CloudVar);
-    VAPOR_VAR = VAPOR_DS.geovariable(VaporVar);
+%    CLOUD_VAR = CLOUD_DS.geovariable(CloudVar);
+%    VAPOR_VAR = VAPOR_DS.geovariable(VaporVar);
 
     Z_VAR = TEMP_DS.geovariable('z_coords');
     T_VAR = TEMP_DS.geovariable('t_coords');
@@ -94,11 +94,11 @@ function [ ] = ExtractSampleProfiles(ConfigFile)
     fprintf('    Reading: %s (%s)\n', TempFile, TempVar);
     TEMP = TEMP_VAR.data(:,:,Jsamp,Isamp);
 
-    fprintf('    Reading: %s (%s)\n', CloudFile, CloudVar);
-    CLOUD = CLOUD_VAR.data(:,:,Jsamp,Isamp);
+%    fprintf('    Reading: %s (%s)\n', CloudFile, CloudVar);
+%    CLOUD = CLOUD_VAR.data(:,:,Jsamp,Isamp);
     
-    fprintf('    Reading: %s (%s)\n', VaporFile, VaporVar);
-    VAPOR = VAPOR_VAR.data(:,:,Jsamp,Isamp);
+%    fprintf('    Reading: %s (%s)\n', VaporFile, VaporVar);
+%    VAPOR = VAPOR_VAR.data(:,:,Jsamp,Isamp);
 
     Z = Z_VAR.data(:);
     T = T_VAR.data(:);
@@ -114,11 +114,11 @@ function [ ] = ExtractSampleProfiles(ConfigFile)
     TEMP = permute(TEMP, [ 2 1 ]);
     TEMP = reshape(TEMP, [ Nx Ny Nz Nt ]);
 
-    CLOUD = permute(CLOUD, [ 2 1 ]);
-    CLOUD = reshape(CLOUD, [ Nx Ny Nz Nt ]);
+%    CLOUD = permute(CLOUD, [ 2 1 ]);
+%    CLOUD = reshape(CLOUD, [ Nx Ny Nz Nt ]);
 
-    VAPOR = permute(VAPOR, [ 2 1 ]);
-    VAPOR = reshape(VAPOR, [ Nx Ny Nz Nt ]);
+%    VAPOR = permute(VAPOR, [ 2 1 ]);
+%    VAPOR = reshape(VAPOR, [ Nx Ny Nz Nt ]);
 
     % Write out the extracted profiles
     fprintf('    Writing: %s\n', OutFile);
@@ -128,8 +128,8 @@ function [ ] = ExtractSampleProfiles(ConfigFile)
     Ydummy = 1;
 
     hdf5write(OutFile, TempVar, TEMP); 
-    hdf5write(OutFile, CloudVar, CLOUD, 'WriteMode', 'append'); 
-    hdf5write(OutFile, VaporVar, VAPOR, 'WriteMode', 'append'); 
+%    hdf5write(OutFile, CloudVar, CLOUD, 'WriteMode', 'append'); 
+%    hdf5write(OutFile, VaporVar, VAPOR, 'WriteMode', 'append'); 
 
     hdf5write(OutFile, '/x_coords', Xdummy, 'WriteMode', 'append');
     hdf5write(OutFile, '/y_coords', Ydummy, 'WriteMode', 'append');
