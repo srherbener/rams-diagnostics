@@ -39,19 +39,7 @@ montage -tile 2x3 -geometry ${Jsize}${Pgap} \
  ${PLOT_DIR}/SfcConv_T24_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
  ${FIG_DIR}/Figure4_CloudSamples.jpg
 
-#echo "Figure 5: PR hist, CD hist, CCN only, C400"
-#montage -tile 2x4 -geometry ${Jsize}${Pgap} \
-# ${PLOT_DIR}/PrateHist_TALL_CO_C0400_G10M5.jpg \
-# ${PLOT_DIR}/CfracProf_TALL_CO_C0400_G10M5.jpg \
-# ${PLOT_DIR}/WvarUpAllCloud_TALL_CO_C0400_G10M5.jpg \
-# ${PLOT_DIR}/WvarDownAllCloud_TALL_CO_C0400_G10M5.jpg \
-# ${PLOT_DIR}/WthetavUpAllCloud_TALL_CO_C0400_G10M5.jpg \
-# ${PLOT_DIR}/WthetavDownAllCloud_TALL_CO_C0400_G10M5.jpg \
-# ${PLOT_DIR}/WvaporUpAllCloud_TALL_CO_C0400_G10M5.jpg \
-# ${PLOT_DIR}/WvaporDownAllCloud_TALL_CO_C0400_G10M5.jpg \
-# ${FIG_DIR}/Figure5_HistProfs_C400.jpg
-
-echo "Figure 6: PR hist, CD hist, CCN only, 293K"
+echo "Figure 5: PR hist, CD hist, CCN only, 293K"
 montage -tile 2x4 -geometry ${Jsize}${Pgap} \
  ${PLOT_DIR}/PrateHist_TALL_CO_S293_G10M5_ALL.jpg \
  ${PLOT_DIR}/CfracProf_TALL_CO_S293_G10M5_ALL.jpg \
@@ -61,7 +49,15 @@ montage -tile 2x4 -geometry ${Jsize}${Pgap} \
  ${PLOT_DIR}/BuoyFluxDownAllCloud_TALL_CO_S293_G10M5_ALL.jpg \
  ${PLOT_DIR}/WvaporUpAllCloud_TALL_CO_S293_G10M5_ALL.jpg \
  ${PLOT_DIR}/WvaporDownAllCloud_TALL_CO_S293_G10M5_ALL.jpg \
- ${FIG_DIR}/Figure6_HistProfs_S293.jpg
+ ${FIG_DIR}/Figure5_HistProfs_S293.jpg
+
+echo "Figure 6: PR hist, CD hist, CCN only, C400"
+montage -tile 2x2 -geometry ${Jsize}${Pgap} \
+ ${PLOT_DIR}/CloudCondAllCloud_TALL_CO_S293_G10M5_ALL.jpg \
+ ${PLOT_DIR}/CloudEvapAllCloud_TALL_CO_S293_G10M5_ALL.jpg \
+ ${PLOT_DIR}/LatHeatAllCloud_TALL_CO_S293_G10M5_ALL.jpg \
+ ${PLOT_DIR}/LatCoolAllCloud_TALL_CO_S293_G10M5_ALL.jpg \
+ ${FIG_DIR}/Figure6_MicroPhys_S293.jpg
 
 echo "Figure 7: Avg Cdepth, Avg LWC, CCN"
 montage -tile 1x2 -geometry ${Jsize}${Pgap} \
@@ -81,21 +77,29 @@ montage -tile 2x4 -geometry ${Jsize}${Pgap} \
  ${PLOT_DIR}/WvaporDownAllCloud_TALL_CO_S298_G10M5_ALL.jpg \
  ${FIG_DIR}/Figure8_HistProfs_S298.jpg
 
-echo "Figure 9: Avg Cdepth, Avg LWC, CCN"
+echo "Figure 9: PR hist, CD hist, CCN only, C400"
+montage -tile 2x2 -geometry ${Jsize}${Pgap} \
+ ${PLOT_DIR}/CloudCondAllCloud_TALL_CO_S298_G10M5_ALL.jpg \
+ ${PLOT_DIR}/CloudEvapAllCloud_TALL_CO_S298_G10M5_ALL.jpg \
+ ${PLOT_DIR}/LatHeatAllCloud_TALL_CO_S298_G10M5_ALL.jpg \
+ ${PLOT_DIR}/LatCoolAllCloud_TALL_CO_S298_G10M5_ALL.jpg \
+ ${FIG_DIR}/Figure9_MicroPhys_S298.jpg
+
+echo "Figure 10: Avg Cdepth, Avg LWC, CCN"
 montage -tile 1x2 -geometry ${Jsize}${Pgap} \
  ${PLOT_DIR}/bars_avg_cdepth_all_cld_TALL_CO_S298.jpg \
  ${PLOT_DIR}/bars_avg_lwc_all_cld_TALL_CO_S298.jpg \
- ${FIG_DIR}/Figure9_CdepthLwc_S298.jpg
+ ${FIG_DIR}/Figure10_CdepthLwc_S298.jpg
 
-echo "Figure 10: COT, Time series: Zi, Zt, CFmax, all cases, GCCN"
+echo "Figure 11: COT, Time series: Zi, Zt, CFmax, all cases, GCCN"
 montage -tile 2x2 -geometry ${Jsize}${Pgap} \
  ${PLOT_DIR}/bars_avg_cot_TALL_CO_S298_GCCN.jpg \
  ${PLOT_DIR}/bars_avg_cot_all_cld_TALL_CO_S298_GCCN.jpg \
  ${PLOT_DIR}/InvHeightAllCloud_CG_C50_C1600_S298.jpg \
  ${PLOT_DIR}/CloudFrac_CG_C50_C1600_S298.jpg \
- ${FIG_DIR}/Figure10_TsBlStats_GCCN.jpg
+ ${FIG_DIR}/Figure11_TsBlStats_GCCN.jpg
 
-echo "Figure 11: COT hist, PR hist, CD hist, GCCN, 298K"
+echo "Figure 12: COT hist, PR hist, CD hist, GCCN, 298K"
 montage -tile 2x4 -geometry ${Jsize}${Pgap} \
  ${PLOT_DIR}/PrateHist_TALL_CG_C50_C1600_S298.jpg \
  ${PLOT_DIR}/CfracProf_TALL_CG_C50_C1600_S298.jpg \
@@ -105,13 +109,21 @@ montage -tile 2x4 -geometry ${Jsize}${Pgap} \
  ${PLOT_DIR}/BuoyFluxDownAllCloud_TALL_CG_C50_C1600_S298.jpg \
  ${PLOT_DIR}/WvaporUpAllCloud_TALL_CG_C50_C1600_S298.jpg \
  ${PLOT_DIR}/WvaporDownAllCloud_TALL_CG_C50_C1600_S298.jpg \
- ${FIG_DIR}/Figure11_HistProfs_S298_GCCN.jpg
+ ${FIG_DIR}/Figure12_HistProfs_S298_GCCN.jpg
 
-echo "Figure 12: Avg Cdepth, Avg LWP/Cdepth, GCCN"
+echo "Figure 13: PR hist, CD hist, CCN only, C400"
+montage -tile 2x2 -geometry ${Jsize}${Pgap} \
+ ${PLOT_DIR}/CloudCondAllCloud_TALL_CG_C50_C1600_S298.jpg \
+ ${PLOT_DIR}/CloudEvapAllCloud_TALL_CG_C50_C1600_S298.jpg \
+ ${PLOT_DIR}/LatHeatAllCloud_TALL_CG_C50_C1600_S298.jpg \
+ ${PLOT_DIR}/LatCoolAllCloud_TALL_CG_C50_C1600_S298.jpg \
+ ${FIG_DIR}/Figure13_MicroPhys_S298_GCCN.jpg
+
+echo "Figure 14: Avg Cdepth, Avg LWP/Cdepth, GCCN"
 montage -tile 1x2 -geometry ${Jsize}${Pgap} \
  ${PLOT_DIR}/bars_avg_cdepth_all_cld_TALL_CO_S298_GCCN.jpg \
  ${PLOT_DIR}/bars_avg_lwc_all_cld_TALL_CO_S298_GCCN.jpg \
- ${FIG_DIR}/Figure12_CdepthLwc_GCCN.jpg
+ ${FIG_DIR}/Figure14_CdepthLwc_GCCN.jpg
 
 
 
