@@ -29,12 +29,15 @@ montage -tile 2x3 -geometry ${Jsize}${Pgap} \
  ${PLOT_DIR}/CloudFrac_CO_S303_G10M5_ALL.jpg \
  ${FIG_DIR}/Figure3_TsBlStats_ALL.jpg
 
-#echo "Figure 4: Bgraph Cloud Distribution (SDA,SRN): CCN only"
-#montage -tile 1x3 -geometry ${Jsize}${Pgap} \
-# ${PLOT_DIR}/bars_avg_ctype_new_TALL_CO_S293.jpg \
-# ${PLOT_DIR}/bars_avg_ctype_new_TALL_CO_S298.jpg \
-# ${PLOT_DIR}/bars_avg_ctype_new_TALL_CO_S303.jpg \
-# ${FIG_DIR}/Figure4_BgraphCtypeDist.jpg
+echo "Figure 4: Cloud samples: C400: S293 and S298"
+montage -tile 2x3 -geometry ${Jsize}${Pgap} \
+ ${PLOT_DIR}/Cloud_C400_S293_T24.jpg \
+ ${PLOT_DIR}/Cloud_C400_S298_T24.jpg \
+ ${PLOT_DIR}/Albedo_T24_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+ ${PLOT_DIR}/Albedo_T24_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ ${PLOT_DIR}/SfcConv_T24_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
+ ${PLOT_DIR}/SfcConv_T24_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
+ ${FIG_DIR}/Figure4_CloudSamples.jpg
 
 #echo "Figure 5: PR hist, CD hist, CCN only, C400"
 #montage -tile 2x4 -geometry ${Jsize}${Pgap} \
