@@ -8,10 +8,10 @@ Pgap="+2+10"
 PLOT_DIR="./Plots"
 FIG_DIR="./Figures"
 
-echo "Figure 1: ATEX sounding"
+echo "Figure 1: ATEX initial conditions"
 montage -tile 1x1 -geometry ${Jsize}${Pgap} \
- ${PLOT_DIR}/InitialSounding.jpg \
- ${FIG_DIR}/Figure1_Sounding.jpg
+ ${PLOT_DIR}/InitialConditions.jpg \
+ ${FIG_DIR}/Figure1_InitalConditions.jpg
 
 echo "Figure 2: Bgraph COT (domain and cloud) : CCN only"
 montage -tile 1x2 -geometry ${Jsize}${Pgap} \
@@ -54,8 +54,8 @@ montage -tile 2x4 -geometry ${Jsize}${Pgap} \
  ${PLOT_DIR}/CfracProf_TALL_CO_S293_G10M5_ALL.jpg \
  ${PLOT_DIR}/WvarUpAllCloud_TALL_CO_S293_G10M5_ALL.jpg \
  ${PLOT_DIR}/WvarDownAllCloud_TALL_CO_S293_G10M5_ALL.jpg \
- ${PLOT_DIR}/WthetavUpAllCloud_TALL_CO_S293_G10M5_ALL.jpg \
- ${PLOT_DIR}/WthetavDownAllCloud_TALL_CO_S293_G10M5_ALL.jpg \
+ ${PLOT_DIR}/BuoyFluxUpAllCloud_TALL_CO_S293_G10M5_ALL.jpg \
+ ${PLOT_DIR}/BuoyFluxDownAllCloud_TALL_CO_S293_G10M5_ALL.jpg \
  ${PLOT_DIR}/WvaporUpAllCloud_TALL_CO_S293_G10M5_ALL.jpg \
  ${PLOT_DIR}/WvaporDownAllCloud_TALL_CO_S293_G10M5_ALL.jpg \
  ${FIG_DIR}/Figure6_HistProfs_S293.jpg
@@ -72,8 +72,8 @@ montage -tile 2x4 -geometry ${Jsize}${Pgap} \
  ${PLOT_DIR}/CfracProf_TALL_CO_S298_G10M5_ALL.jpg \
  ${PLOT_DIR}/WvarUpAllCloud_TALL_CO_S298_G10M5_ALL.jpg \
  ${PLOT_DIR}/WvarDownAllCloud_TALL_CO_S298_G10M5_ALL.jpg \
- ${PLOT_DIR}/WthetavUpAllCloud_TALL_CO_S298_G10M5_ALL.jpg \
- ${PLOT_DIR}/WthetavDownAllCloud_TALL_CO_S298_G10M5_ALL.jpg \
+ ${PLOT_DIR}/BuoyFluxUpAllCloud_TALL_CO_S298_G10M5_ALL.jpg \
+ ${PLOT_DIR}/BuoyFluxDownAllCloud_TALL_CO_S298_G10M5_ALL.jpg \
  ${PLOT_DIR}/WvaporUpAllCloud_TALL_CO_S298_G10M5_ALL.jpg \
  ${PLOT_DIR}/WvaporDownAllCloud_TALL_CO_S298_G10M5_ALL.jpg \
  ${FIG_DIR}/Figure8_HistProfs_S298.jpg
@@ -98,8 +98,8 @@ montage -tile 2x4 -geometry ${Jsize}${Pgap} \
  ${PLOT_DIR}/CfracProf_TALL_CG_C50_C1600_S298.jpg \
  ${PLOT_DIR}/WvarUpAllCloud_TALL_CG_C50_C1600_S298.jpg \
  ${PLOT_DIR}/WvarDownAllCloud_TALL_CG_C50_C1600_S298.jpg \
- ${PLOT_DIR}/WthetavUpAllCloud_TALL_CG_C50_C1600_S298.jpg \
- ${PLOT_DIR}/WthetavDownAllCloud_TALL_CG_C50_C1600_S298.jpg \
+ ${PLOT_DIR}/BuoyFluxUpAllCloud_TALL_CG_C50_C1600_S298.jpg \
+ ${PLOT_DIR}/BuoyFluxDownAllCloud_TALL_CG_C50_C1600_S298.jpg \
  ${PLOT_DIR}/WvaporUpAllCloud_TALL_CG_C50_C1600_S298.jpg \
  ${PLOT_DIR}/WvaporDownAllCloud_TALL_CG_C50_C1600_S298.jpg \
  ${FIG_DIR}/Figure11_HistProfs_S298_GCCN.jpg
