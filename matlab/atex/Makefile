@@ -61,7 +61,7 @@ SCRIPTS = $(DEST)/ExtractSample.m \
           $(DEST)/GenTopSwup.m \
           $(DEST)/MakeSinglePanelFigs.m \
           $(DEST)/PlotDistSet.m \
-          $(DEST)/PlotInitialSounding.m \
+          $(DEST)/PlotInitialConditions.m \
           $(DEST)/PlotInitialAerosols.m \
           $(DEST)/SetPath.m
 
