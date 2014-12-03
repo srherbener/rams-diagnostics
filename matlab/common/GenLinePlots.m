@@ -65,7 +65,7 @@ for iplot = 1:length(Config.LinePlots)
 
     i_ap = 1;
     AxisProps(i_ap).Name = 'FontSize';
-    AxisProps(i_ap).Val = 25;
+    AxisProps(i_ap).Val = 20;
     i_ap = i_ap + 1;
 
     % X variable, axis specs

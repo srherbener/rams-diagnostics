@@ -1689,7 +1689,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
 
     iaxis = iaxis + 1;
     AxisProps(iaxis).Name = 'FontSize';
-    AxisProps(iaxis).Val  = 25;
+    AxisProps(iaxis).Val  = 20;
 
     % x-axis labeling
     if (strcmp(Vname, 'CCN') | strcmp(Vname, 'SST'))
