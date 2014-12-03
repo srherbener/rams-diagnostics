@@ -27,7 +27,7 @@ if (strcmp(Cmap, 'LightGray'))
 
   x1 = 1;
   x2 = 64;
-  y1 = 0.3; % <-- g  (0.3 seems to get good contrast without making the overall picture too dark)
+  y1 = 0.4; % <-- g  (0.3 seems to get good contrast without making the overall picture too dark)
   y2 = 1.0;
 
   m = (y2 - y1) / (x2 - x1);
@@ -53,6 +53,8 @@ if (Fill == 1)
   % filled contours
   contourf(X, Y, Z, Clevs, 'LineColor', 'none');
 end
+
+colormap(ColorMap);
 
 if (~isempty(Crange))
   caxis(Crange);

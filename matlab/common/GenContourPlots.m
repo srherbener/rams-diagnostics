@@ -12,6 +12,9 @@ for iplot = 1:length(Config.ContourPlots)
     ixv = Config.ContourPlots(iplot).XVnum;
     iyv = Config.ContourPlots(iplot).YVnum;
     izv = Config.ContourPlots(iplot).ZVnum;
+    ixa = Config.ContourPlots(iplot).XAnum;
+    iya = Config.ContourPlots(iplot).YAnum;
+    iza = Config.ContourPlots(iplot).ZAnum;
     ids = Config.ContourPlots(iplot).DSnum;
     ips = Config.ContourPlots(iplot).PSnum;
     if (ixv == 0)
@@ -24,6 +27,18 @@ for iplot = 1:length(Config.ContourPlots)
     end
     if (izv == 0)
       fprintf('WARNING: skipping ContourPlot number %d due to no associated PlotVar (z)\n', iplot)
+      continue;
+    end
+    if (ixa == 0)
+      fprintf('WARNING: skipping ContourPlot number %d due to no associated PlotAxis (x)\n', iplot)
+      continue;
+    end
+    if (iya == 0)
+      fprintf('WARNING: skipping ContourPlot number %d due to no associated PlotAxis (y)\n', iplot)
+      continue;
+    end
+    if (iza == 0)
+      fprintf('WARNING: skipping ContourPlot number %d due to no associated PlotAxis (z)\n', iplot)
       continue;
     end
     if (ids == 0)
@@ -74,9 +89,7 @@ for iplot = 1:length(Config.ContourPlots)
     Zvname   = Config.PlotVars(izv).Var;
     Zfprefix = Config.PlotVars(izv).Fprefix;
     Zscale   = Config.PlotVars(izv).Scale;
-%    Crange   = [ Config.PlotVars(izv).Min Config.PlotVars(izv).Max ];
-%    Crange   = [ 50 65 ];
-    Crange   = [ 50 75 ];
+    Crange   = [ Config.PlotAxes(iza).Min Config.PlotAxes(iza).Max ];
 
     % Data selection specs
     Xmin = Config.PlotDselects(ids).Xmin;

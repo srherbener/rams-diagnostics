@@ -1214,12 +1214,12 @@ LinePlot: CG_UP_C50_C1600_S298  CfracProfTall MomentHeights CfracProf 1 HeightKm
 
 ### Albedo
 #ContourPlot: ContourPsetCCN AlbedoLon_T12 AlbedoLat_T12 Albedo_T12 ContourSelect_T12 PANEL:a@t@=@12@h 1 1 40 none LightGray Albedo_T12
-#ContourPlot: ContourPsetCCN AlbedoLon_T24 AlbedoLat_T24 Albedo_T24 ContourSelect_T24 PANEL:b@t@=@24@h 1 1 40 none LightGray Albedo_T24
+ContourPlot: ContourPset_C400 AlbedoLon_T24 AlbedoLat_T24 Albedo_T24 LonRange 1 LatRange 1 Alb 1 ContourSelect_T24 PANEL:c:d:e@t@=@24@h 1 1 40 none LightGray Albedo_T24
 #ContourPlot: ContourPsetCCN AlbedoLon_T36 AlbedoLat_T36 Albedo_T36 ContourSelect_T36 PANEL:c@t@=@36@h 1 1 40 none LightGray Albedo_T36
 
-### Surface divergence
+### Surface convergence
 #ContourPlot: ContourPsetCCN SfcConvLon_T12 SfcConvLat_T12 SfcConv_T12 ContourSelect_T12 PANEL:d@t@=@12@h 1 1 40 none redblue SfcConv_T12
-#ContourPlot: ContourPsetCCN SfcConvLon_T24 SfcConvLat_T24 SfcConv_T24 ContourSelect_T24 PANEL:e@t@=@24@h 1 1 40 none redblue SfcConv_T24
+ContourPlot: ContourPset_C400 SfcConvLon_T24 SfcConvLat_T24 SfcConv_T24 LonRange 1 LatRange 1 SfcConv 1 ContourSelect_T24 PANEL:e:f:g@t@=@24@h 1 1 40 none redblue SfcConv_T24
 #ContourPlot: ContourPsetCCN SfcConvLon_T36 SfcConvLat_T36 SfcConv_T36 ContourSelect_T36 PANEL:f@t@=@36@h 1 1 40 none redblue SfcConv_T36
 
 ### W CFADS
@@ -2736,9 +2736,9 @@ PlotVar: CfracProfStallTall  cloud_c0p01_stall_frac_all  DIAGS/moments Cloud@Fra
 #PlotVar: AlbedoLon_T12 x_coords  DIAGS/albedo_T12 Longitude   @      -180 180 1 0
 #PlotVar: AlbedoLat_T12 y_coords  DIAGS/albedo_T12 Latitude    @      -180 180 1 0
 #PlotVar: Albedo_T12    albedo    DIAGS/albedo_T12 Albedo      @         0   1 1 0
-#PlotVar: AlbedoLon_T24 x_coords  DIAGS/albedo_T24 Longitude   @      -180 180 1 0
-#PlotVar: AlbedoLat_T24 y_coords  DIAGS/albedo_T24 Latitude    @      -180 180 1 0
-#PlotVar: Albedo_T24    albedo    DIAGS/albedo_T24 Albedo      @         0   1 1 0
+PlotVar: AlbedoLon_T24 x_coords  DIAGS/albedo_T24 Longitude   @      1 0
+PlotVar: AlbedoLat_T24 y_coords  DIAGS/albedo_T24 Latitude    @      1 0
+PlotVar: Albedo_T24    albedo    DIAGS/albedo_T24 Albedo      @      1 0
 #PlotVar: AlbedoLon_T36 x_coords  DIAGS/albedo_T36 Longitude   @      -180 180 1 0
 #PlotVar: AlbedoLat_T36 y_coords  DIAGS/albedo_T36 Latitude    @      -180 180 1 0
 #PlotVar: Albedo_T36    albedo    DIAGS/albedo_T36 Albedo      @         0   1 1 0
@@ -2747,9 +2747,9 @@ PlotVar: CfracProfStallTall  cloud_c0p01_stall_frac_all  DIAGS/moments Cloud@Fra
 #PlotVar: SfcConvLon_T12 x_coords  DIAGS/sfc_div_T12 Longitude         @      -180  180 1 0
 #PlotVar: SfcConvLat_T12 y_coords  DIAGS/sfc_div_T12 Latitude          @      -180  180 1 0
 #PlotVar: SfcConv_T12    sfc_div   DIAGS/sfc_div_T12 Sfc.@Convergence  s^-1  -0.5e-2 0.5e-2 -1 0
-#PlotVar: SfcConvLon_T24 x_coords  DIAGS/sfc_div_T24 Longitude         @      -180  180 1 0
-#PlotVar: SfcConvLat_T24 y_coords  DIAGS/sfc_div_T24 Latitude          @      -180  180 1 0
-#PlotVar: SfcConv_T24    sfc_div   DIAGS/sfc_div_T24 Sfc.@Convergence  s^-1  -0.5e-2 0.51e-2 -1 0
+PlotVar: SfcConvLon_T24 x_coords  DIAGS/sfc_div_T24 Longitude         @      1 0
+PlotVar: SfcConvLat_T24 y_coords  DIAGS/sfc_div_T24 Latitude          @      1 0
+PlotVar: SfcConv_T24    sfc_div   DIAGS/sfc_div_T24 Sfc.@Convergence  s^-1  -1 0
 #PlotVar: SfcConvLon_T36 x_coords  DIAGS/sfc_div_T36 Longitude         @      -180  180 1 0
 #PlotVar: SfcConvLat_T36 y_coords  DIAGS/sfc_div_T36 Latitude          @      -180  180 1 0
 #PlotVar: SfcConv_T36    sfc_div   DIAGS/sfc_div_T36 Sfc.@Convergence  s^-1  -0.51e-2 0.51e-2 -1 0
@@ -2773,6 +2773,10 @@ PlotVar: CfracProfStallTall  cloud_c0p01_stall_frac_all  DIAGS/moments Cloud@Fra
 #          empty means let MATLAB specify tick marks
 #          use '_' to separate values ('_' becomes a space)
 #
+
+PlotAxis: LonRange     -180    180 linear [_]
+PlotAxis: LatRange      -90     90 linear [_]
+
 PlotAxis: Cot             0    300 linear [_]
 PlotAxis: CotLog       1e-2    300 log    [0.1_1_10_100]
 PlotAxis: Cot_293         0    100 linear [_]
@@ -2813,6 +2817,8 @@ PlotAxis: LTSS         0   20 linear [0_5_10_15_20]
 
 PlotAxis: Alb      0    1 linear [_]
 PlotAxis: AlbPdf   1e-8 1 log [_]
+
+PlotAxis: SfcConv  -2e-3    2e-3 linear [_]
 
 PlotAxis: Lwp             0  20 linear [_]
 PlotAxis: LwpLog       1e-3  20 log [_]

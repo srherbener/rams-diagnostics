@@ -330,18 +330,27 @@ for i = 1:size(InLines,1)
       Cdata.ContourPlots(i_cplot).XVname     = Fields{3};
       Cdata.ContourPlots(i_cplot).YVname     = Fields{4};
       Cdata.ContourPlots(i_cplot).ZVname     = Fields{5};
-      Cdata.ContourPlots(i_cplot).DSname     = Fields{6};
-      Cdata.ContourPlots(i_cplot).Title      = ParseTitle(Fields{7});
-      Cdata.ContourPlots(i_cplot).Fill       = sscanf(Fields{8}, '%i');
-      Cdata.ContourPlots(i_cplot).Cbar       = sscanf(Fields{9}, '%i');
-      Cdata.ContourPlots(i_cplot).Cnlevs     = sscanf(Fields{10}, '%i');
-      Cdata.ContourPlots(i_cplot).Cscale     = Fields{11};
-      Cdata.ContourPlots(i_cplot).Cmap       = Fields{12};
-      Cdata.ContourPlots(i_cplot).OutFprefix = Fields{13};
+      Cdata.ContourPlots(i_cplot).XAname     = Fields{6};
+      Cdata.ContourPlots(i_cplot).XAshow     = sscanf(Fields{7}, '%d');
+      Cdata.ContourPlots(i_cplot).YAname     = Fields{8};
+      Cdata.ContourPlots(i_cplot).YAshow     = sscanf(Fields{9}, '%d');
+      Cdata.ContourPlots(i_cplot).ZAname     = Fields{10};
+      Cdata.ContourPlots(i_cplot).ZAshow     = sscanf(Fields{11}, '%d');
+      Cdata.ContourPlots(i_cplot).DSname     = Fields{12};
+      Cdata.ContourPlots(i_cplot).Title      = ParseTitle(Fields{13});
+      Cdata.ContourPlots(i_cplot).Fill       = sscanf(Fields{14}, '%i');
+      Cdata.ContourPlots(i_cplot).Cbar       = sscanf(Fields{15}, '%i');
+      Cdata.ContourPlots(i_cplot).Cnlevs     = sscanf(Fields{16}, '%i');
+      Cdata.ContourPlots(i_cplot).Cscale     = Fields{17};
+      Cdata.ContourPlots(i_cplot).Cmap       = Fields{18};
+      Cdata.ContourPlots(i_cplot).OutFprefix = Fields{19};
 
       Cdata.ContourPlots(i_cplot).XVnum   = -1;
       Cdata.ContourPlots(i_cplot).YVnum   = -1;
       Cdata.ContourPlots(i_cplot).ZVnum   = -1;
+      Cdata.ContourPlots(i_cplot).XAnum   = -1;
+      Cdata.ContourPlots(i_cplot).YAnum   = -1;
+      Cdata.ContourPlots(i_cplot).ZAnum   = -1;
       Cdata.ContourPlots(i_cplot).DSnum   = -1;
       Cdata.ContourPlots(i_cplot).PSnum   = -1;
     case 'HmeasPlot3d:'
@@ -532,10 +541,13 @@ end
 
 % Make the association between ContourPlots and the PlotVars, PlotDselects
 if (isfield(Cdata, 'ContourPlots'))
-  Cdata.ContourPlots = AssociateStructs( Cdata.ContourPlots, Cdata.PlotSets, 'PS', 'PlotSet', 'ContourPlot' );
-  Cdata.ContourPlots = AssociateStructs( Cdata.ContourPlots, Cdata.PlotVars, 'XV', 'PlotVar', 'ContourPlot' ); 
-  Cdata.ContourPlots = AssociateStructs( Cdata.ContourPlots, Cdata.PlotVars, 'YV', 'PlotVar', 'ContourPlot' ); 
-  Cdata.ContourPlots = AssociateStructs( Cdata.ContourPlots, Cdata.PlotVars, 'ZV', 'PlotVar', 'ContourPlot' ); 
+  Cdata.ContourPlots = AssociateStructs( Cdata.ContourPlots, Cdata.PlotSets, 'PS', 'PlotSet',  'ContourPlot' );
+  Cdata.ContourPlots = AssociateStructs( Cdata.ContourPlots, Cdata.PlotVars, 'XV', 'PlotVar',  'ContourPlot' ); 
+  Cdata.ContourPlots = AssociateStructs( Cdata.ContourPlots, Cdata.PlotVars, 'YV', 'PlotVar',  'ContourPlot' ); 
+  Cdata.ContourPlots = AssociateStructs( Cdata.ContourPlots, Cdata.PlotVars, 'ZV', 'PlotVar',  'ContourPlot' ); 
+  Cdata.ContourPlots = AssociateStructs( Cdata.ContourPlots, Cdata.PlotAxes, 'XA', 'PlotAxis', 'ContourPlot' ); 
+  Cdata.ContourPlots = AssociateStructs( Cdata.ContourPlots, Cdata.PlotAxes, 'YA', 'PlotAxis', 'ContourPlot' ); 
+  Cdata.ContourPlots = AssociateStructs( Cdata.ContourPlots, Cdata.PlotAxes, 'ZA', 'PlotAxis', 'ContourPlot' ); 
   Cdata.ContourPlots = AssociateStructs( Cdata.ContourPlots, Cdata.PlotDselects, 'DS', 'PlotDselect', 'ContourPlot' ); 
 end
   
