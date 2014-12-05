@@ -1222,12 +1222,14 @@ LinePlot: CG_UP_C50_C1600_S298  CfracProfTall MomentHeights CfracProf 1 HeightKm
 
 ### Albedo
 #ContourPlot: ContourPsetCCN AlbedoLon_T12 AlbedoLat_T12 Albedo_T12 ContourSelect_T12 PANEL:a@t@=@12@h 1 1 40 none LightGray Albedo_T12
-ContourPlot: ContourPset_C400 AlbedoLon_T24 AlbedoLat_T24 Albedo_T24 LonRange 1 LatRange 1 Alb 1 ContourSelect_T24 PANEL:c:d:e@t@=@24@h 1 1 40 none LightGray Albedo_T24
+ContourPlot: ContourPset_S293_C400 AlbedoLon_T24 AlbedoLat_T24 Albedo_T24 LonRange 1 LatRange 1 Alb 1 ContourSelect_T24 PANEL:c@S293,@t@=@24@h 1 1 40 none LightGray Albedo_T24
+ContourPlot: ContourPset_S298_C400 AlbedoLon_T24 AlbedoLat_T24 Albedo_T24 LonRange 1 LatRange 1 Alb 1 ContourSelect_T24 PANEL:d@S298,@t@=@24@h 1 1 40 none LightGray Albedo_T24
 #ContourPlot: ContourPsetCCN AlbedoLon_T36 AlbedoLat_T36 Albedo_T36 ContourSelect_T36 PANEL:c@t@=@36@h 1 1 40 none LightGray Albedo_T36
 
 ### Surface convergence
 #ContourPlot: ContourPsetCCN SfcConvLon_T12 SfcConvLat_T12 SfcConv_T12 ContourSelect_T12 PANEL:d@t@=@12@h 1 1 40 none redblue SfcConv_T12
-ContourPlot: ContourPset_C400 SfcConvLon_T24 SfcConvLat_T24 SfcConv_T24 LonRange 1 LatRange 1 SfcConv 1 ContourSelect_T24 PANEL:e:f:g@t@=@24@h 1 1 40 none redblue SfcConv_T24
+ContourPlot: ContourPset_S293_C400 SfcConvLon_T24 SfcConvLat_T24 SfcConv_T24 LonRange 1 LatRange 1 SfcConv 1 ContourSelect_T24 PANEL:e@S293,@t@=@24@h 1 1 40 none redblue SfcConv_T24
+ContourPlot: ContourPset_S298_C400 SfcConvLon_T24 SfcConvLat_T24 SfcConv_T24 LonRange 1 LatRange 1 SfcConv 1 ContourSelect_T24 PANEL:f@S298,@t@=@24@h 1 1 40 none redblue SfcConv_T24
 #ContourPlot: ContourPsetCCN SfcConvLon_T36 SfcConvLat_T36 SfcConv_T36 ContourSelect_T36 PANEL:f@t@=@36@h 1 1 40 none redblue SfcConv_T36
 
 ### W CFADS
@@ -1870,6 +1872,8 @@ PlotSet: ContourPsetCCN 21 z.atex.ccn0050.sst293.gcn10m5.1um 293K black - 0.0 1 
 PlotSet: ContourPset_CO_EXTREMES 2 z.atex.ccn0050.sst293.gcn10m5.1um 293K black - 0.0 1 1 z.atex.ccn1600.sst303.gcn10m5.1um 303K black - 0.0 1 1
 
 PlotSet: ContourPset_C400 3 z.atex.ccn0400.sst293.gcn10m5.1um 293K black - 0.0 1 1 z.atex.ccn0400.sst298.gcn10m5.1um 298K black - 0.0 1 1 z.atex.ccn0400.sst303.gcn10m5.1um 303K black - 0.0 1 1
+PlotSet: ContourPset_S293_C400 1 z.atex.ccn0400.sst293.gcn10m5.1um 293K black - 0.0 1 1
+PlotSet: ContourPset_S298_C400 1 z.atex.ccn0400.sst298.gcn10m5.1um 293K black - 0.0 1 1
 
 PlotSet: ContourPset_S298 3 z.atex.ccn0050.sst298.gcn10m5.1um 298K black - 0.0 1 1 z.atex.ccn0400.sst298.gcn10m5.1um 298K black - 0.0 1 1 z.atex.ccn1600.sst298.gcn10m5.1um 298K black - 0.0 1 1
 
