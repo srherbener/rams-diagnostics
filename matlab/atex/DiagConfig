@@ -707,11 +707,17 @@ LinePlot: CG_UP_C50_C1600_S298_ZOOM  WvaporDownAllCloudTall TurbHeights WvaporDo
 #LinePlot: CO_UP_S298_G10M5_ALL  ColCloudCondTall CloudCondHeights ColCloudCond_298 1 HeightKm 1 CloudCondSelect none PANEL:f@S298    none none ColCloudCond_TALL_CO_S298_G10M5_ALL.jpg
 #LinePlot: CO_UP_S303_G10M5_ALL  ColCloudCondTall CloudCondHeights ColCloudCond_303 1 HeightKm 1 CloudCondSelect none PANEL:f@S303    none none ColCloudCond_TALL_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL  CloudCondAllCloudTall CloudCondHeights CloudCondAllCloud_293 1 HeightKm_2 1 CloudCondSelect none PANEL:a@All@Clouds,@S293    none none CloudCondAllCloud_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  CloudCondAllCloudTall CloudCondHeights CloudCondAllCloud_293 1 HeightKm 1 CloudCondSelect none PANEL:a@All@Clouds,@S293    none none CloudCondAllCloud_TALL_CO_S293_G10M5_ALL.jpg
 LinePlot: CO_UP_S298_G10M5_ALL  CloudCondAllCloudTall CloudCondHeights CloudCondAllCloud_298 1 HeightKm   1 CloudCondSelect none PANEL:a@All@Clouds,@S298    none none CloudCondAllCloud_TALL_CO_S298_G10M5_ALL.jpg
 LinePlot: CO_UP_S303_G10M5_ALL  CloudCondAllCloudTall CloudCondHeights CloudCondAllCloud_303 1 HeightKm   1 CloudCondSelect none PANEL:a@All@Clouds,@S303    none none CloudCondAllCloud_TALL_CO_S303_G10M5_ALL.jpg
 
 LinePlot: CG_UP_C50_C1600_S298_ZOOM  CloudCondAllCloudTall CloudCondHeights CloudCondAllCloud_298 1 HeightKm 1 CloudCondSelect none PANEL:a@All@Clouds,@S298    none none CloudCondAllCloud_TALL_CG_C50_C1600_S298.jpg
+
+LinePlot: CO_UP_S293_G10M5_ALL  CloudCondInCloudTall CloudCondHeights CloudCondInCloud_293 1 HeightKm 1 CloudCondSelect none PANEL:a@In@Cloud,@S293    none none CloudCondInCloud_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  CloudCondInCloudTall CloudCondHeights CloudCondInCloud_298 1 HeightKm   1 CloudCondSelect none PANEL:a@In@Cloud,@S298    none none CloudCondInCloud_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  CloudCondInCloudTall CloudCondHeights CloudCondInCloud_303 1 HeightKm   1 CloudCondSelect none PANEL:a@In@Cloud,@S303    none none CloudCondInCloud_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CG_UP_C50_C1600_S298_ZOOM  CloudCondInCloudTall CloudCondHeights CloudCondInCloud_298 1 HeightKm 1 CloudCondSelect none PANEL:a@In@Cloud,@S298    none none CloudCondInCloud_TALL_CG_C50_C1600_S298.jpg
 
 # cloud evaporation
 #LinePlot: CO_UP_S293_G10M5_ALL  CloudEvapStallTall CloudEvapHeights CloudEvapStall_293 HeightKm_2 CloudEvapSelect none PANEL:g@ST,@S293    none none CloudEvapStall_TALL_CO_S293_G10M5_ALL.jpg
@@ -732,11 +738,17 @@ LinePlot: CG_UP_C50_C1600_S298_ZOOM  CloudCondAllCloudTall CloudCondHeights Clou
 #LinePlot: CO_UP_S298_G10M5_ALL  ColCloudEvapTall CloudEvapHeights ColCloudEvap_298 1 HeightKm 1 CloudEvapSelect none PANEL:f@ST,@S298    none none ColCloudEvap_TALL_CO_S298_G10M5_ALL.jpg
 #LinePlot: CO_UP_S303_G10M5_ALL  ColCloudEvapTall CloudEvapHeights ColCloudEvap_303 1 HeightKm 1 CloudEvapSelect none PANEL:f@ST,@S303    none none ColCloudEvap_TALL_CO_S303_G10M5_ALL.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL  CloudEvapAllCloudTall CloudEvapHeights CloudEvapAllCloud_293 1 HeightKm_2 1 CloudEvapSelect none PANEL:b@All@Clouds,@S293    none none CloudEvapAllCloud_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  CloudEvapAllCloudTall CloudEvapHeights CloudEvapAllCloud_293 1 HeightKm 1 CloudEvapSelect none PANEL:b@All@Clouds,@S293    none none CloudEvapAllCloud_TALL_CO_S293_G10M5_ALL.jpg
 LinePlot: CO_UP_S298_G10M5_ALL  CloudEvapAllCloudTall CloudEvapHeights CloudEvapAllCloud_298 1 HeightKm   1 CloudEvapSelect none PANEL:b@All@Clouds,@S298    none none CloudEvapAllCloud_TALL_CO_S298_G10M5_ALL.jpg
 LinePlot: CO_UP_S303_G10M5_ALL  CloudEvapAllCloudTall CloudEvapHeights CloudEvapAllCloud_303 1 HeightKm   1 CloudEvapSelect none PANEL:b@All@Clouds,@S303    none none CloudEvapAllCloud_TALL_CO_S303_G10M5_ALL.jpg
 
 LinePlot: CG_UP_C50_C1600_S298_ZOOM  CloudEvapAllCloudTall CloudEvapHeights CloudEvapAllCloud_298 1 HeightKm 1 CloudEvapSelect none PANEL:b@All@Clouds,@S298    none none CloudEvapAllCloud_TALL_CG_C50_C1600_S298.jpg
+
+LinePlot: CO_UP_S293_G10M5_ALL  CloudEvapInCloudTall CloudEvapHeights CloudEvapInCloud_293 1 HeightKm 1 CloudEvapSelect none PANEL:b@In@Cloud,@S293    none none CloudEvapInCloud_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  CloudEvapInCloudTall CloudEvapHeights CloudEvapInCloud_298 1 HeightKm   1 CloudEvapSelect none PANEL:b@In@Cloud,@S298    none none CloudEvapInCloud_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  CloudEvapInCloudTall CloudEvapHeights CloudEvapInCloud_303 1 HeightKm   1 CloudEvapSelect none PANEL:b@In@Cloud,@S303    none none CloudEvapInCloud_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CG_UP_C50_C1600_S298_ZOOM  CloudEvapInCloudTall CloudEvapHeights CloudEvapInCloud_298 1 HeightKm 1 CloudEvapSelect none PANEL:b@In@Cloud,@S298    none none CloudEvapInCloud_TALL_CG_C50_C1600_S298.jpg
 
 # cloud condensational growth and evaporation
 #LinePlot: CO_UP_S293_G10M5_ALL  ColCloudCondEvapTall CloudCondEvapHeights ColCloudCondEvap_293 1 HeightKm 1 CloudCondEvapSelect none PANEL:f@S293    none none ColCloudCondEvap_TALL_CO_S293_G10M5_ALL.jpg
@@ -744,17 +756,30 @@ LinePlot: CG_UP_C50_C1600_S298_ZOOM  CloudEvapAllCloudTall CloudEvapHeights Clou
 #LinePlot: CO_UP_S303_G10M5_ALL  ColCloudCondEvapTall CloudCondEvapHeights ColCloudCondEvap_303 1 HeightKm 1 CloudCondEvapSelect none PANEL:f@S303    none none ColCloudCondEvap_TALL_CO_S303_G10M5_ALL.jpg
 
 # latent heating and cooling
-LinePlot: CO_UP_S293_G10M5_ALL  LatHeatAllCloudTall LatHeatHeights LatHeatAllCloud_293 1 HeightKm_2 1 LatHeatSelect none PANEL:c@All@Clouds,@S293    none none LatHeatAllCloud_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  LatHeatAllCloudTall LatHeatHeights LatHeatAllCloud_293 1 HeightKm 1 LatHeatSelect none PANEL:c@All@Clouds,@S293    none none LatHeatAllCloud_TALL_CO_S293_G10M5_ALL.jpg
 LinePlot: CO_UP_S298_G10M5_ALL  LatHeatAllCloudTall LatHeatHeights LatHeatAllCloud_298 1 HeightKm   1 LatHeatSelect none PANEL:c@All@Clouds,@S298    none none LatHeatAllCloud_TALL_CO_S298_G10M5_ALL.jpg
 LinePlot: CO_UP_S303_G10M5_ALL  LatHeatAllCloudTall LatHeatHeights LatHeatAllCloud_303 1 HeightKm   1 LatHeatSelect none PANEL:c@All@Clouds,@S303    none none LatHeatAllCloud_TALL_CO_S303_G10M5_ALL.jpg
 
 LinePlot: CG_UP_C50_C1600_S298_ZOOM  LatHeatAllCloudTall LatHeatHeights LatHeatAllCloud_298 1 HeightKm 1 LatHeatSelect none PANEL:c@All@Clouds,@S298    none none LatHeatAllCloud_TALL_CG_C50_C1600_S298.jpg
 
-LinePlot: CO_UP_S293_G10M5_ALL  LatCoolAllCloudTall LatCoolHeights LatCoolAllCloud_293 1 HeightKm_2 1 LatCoolSelect none PANEL:d@All@Clouds,@S293    none none LatCoolAllCloud_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  LatCoolAllCloudTall LatCoolHeights LatCoolAllCloud_293 1 HeightKm 1 LatCoolSelect none PANEL:d@All@Clouds,@S293    none none LatCoolAllCloud_TALL_CO_S293_G10M5_ALL.jpg
 LinePlot: CO_UP_S298_G10M5_ALL  LatCoolAllCloudTall LatCoolHeights LatCoolAllCloud_298 1 HeightKm   1 LatCoolSelect none PANEL:d@All@Clouds,@S298    none none LatCoolAllCloud_TALL_CO_S298_G10M5_ALL.jpg
 LinePlot: CO_UP_S303_G10M5_ALL  LatCoolAllCloudTall LatCoolHeights LatCoolAllCloud_303 1 HeightKm   1 LatCoolSelect none PANEL:d@All@Clouds,@S303    none none LatCoolAllCloud_TALL_CO_S303_G10M5_ALL.jpg
 
 LinePlot: CG_UP_C50_C1600_S298_ZOOM  LatCoolAllCloudTall LatCoolHeights LatCoolAllCloud_298 1 HeightKm 1 LatCoolSelect none PANEL:d@All@Clouds,@S298    none none LatCoolAllCloud_TALL_CG_C50_C1600_S298.jpg
+
+
+LinePlot: CO_UP_S293_G10M5_ALL  LatHeatInCloudTall LatHeatHeights LatHeatInCloud_293 1 HeightKm 1 LatHeatSelect none PANEL:c@In@Cloud,@S293    none none LatHeatInCloud_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  LatHeatInCloudTall LatHeatHeights LatHeatInCloud_298 1 HeightKm   1 LatHeatSelect none PANEL:c@In@Cloud,@S298    none none LatHeatInCloud_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  LatHeatInCloudTall LatHeatHeights LatHeatInCloud_303 1 HeightKm   1 LatHeatSelect none PANEL:c@In@Cloud,@S303    none none LatHeatInCloud_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CG_UP_C50_C1600_S298_ZOOM  LatHeatInCloudTall LatHeatHeights LatHeatInCloud_298 1 HeightKm 1 LatHeatSelect none PANEL:c@In@Cloud,@S298    none none LatHeatInCloud_TALL_CG_C50_C1600_S298.jpg
+
+LinePlot: CO_UP_S293_G10M5_ALL  LatCoolInCloudTall LatCoolHeights LatCoolInCloud_293 1 HeightKm 1 LatCoolSelect none PANEL:d@In@Cloud,@S293    none none LatCoolInCloud_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S298_G10M5_ALL  LatCoolInCloudTall LatCoolHeights LatCoolInCloud_298 1 HeightKm   1 LatCoolSelect none PANEL:d@In@Cloud,@S298    none none LatCoolInCloud_TALL_CO_S298_G10M5_ALL.jpg
+LinePlot: CO_UP_S303_G10M5_ALL  LatCoolInCloudTall LatCoolHeights LatCoolInCloud_303 1 HeightKm   1 LatCoolSelect none PANEL:d@In@Cloud,@S303    none none LatCoolInCloud_TALL_CO_S303_G10M5_ALL.jpg
+
+LinePlot: CG_UP_C50_C1600_S298_ZOOM  LatCoolInCloudTall LatCoolHeights LatCoolInCloud_298 1 HeightKm 1 LatCoolSelect none PANEL:d@In@Cloud,@S298    none none LatCoolInCloud_TALL_CG_C50_C1600_S298.jpg
 
 #LinePlot: CO_UP_S293_G10M5_ALL  ColLatHeatCoolTall LatHeatCoolHeights ColLatHeatCool_293 1 HeightKm 1 LatHeatCoolSelect none PANEL:f@S293    none none ColLatHeatCool_TALL_CO_S293_G10M5_ALL.jpg
 #LinePlot: CO_UP_S298_G10M5_ALL  ColLatHeatCoolTall LatHeatCoolHeights ColLatHeatCool_298 1 HeightKm 1 LatHeatCoolSelect none PANEL:f@S298    none none ColLatHeatCool_TALL_CO_S298_G10M5_ALL.jpg
@@ -762,7 +787,7 @@ LinePlot: CG_UP_C50_C1600_S298_ZOOM  LatCoolAllCloudTall LatCoolHeights LatCoolA
 
 ### Buoyancy Flux
 # up and down
-LinePlot: CO_UP_S293_G10M5_ALL  BuoyFluxAllCloudTall BuoyFluxHeights BuoyFluxAllCloud_293 1 HeightKm_2 1 BuoyFluxSelect none PANEL:f@All@Clouds,@S293    none none BuoyFluxAllCloud_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  BuoyFluxAllCloudTall BuoyFluxHeights BuoyFluxAllCloud_293 1 HeightKm 1 BuoyFluxSelect none PANEL:f@All@Clouds,@S293    none none BuoyFluxAllCloud_TALL_CO_S293_G10M5_ALL.jpg
 LinePlot: CO_UP_S298_G10M5_ALL  BuoyFluxAllCloudTall BuoyFluxHeights BuoyFluxAllCloud_298 1 HeightKm   1 BuoyFluxSelect none PANEL:f@All@Clouds,@S298    none none BuoyFluxAllCloud_TALL_CO_S298_G10M5_ALL.jpg
 LinePlot: CO_UP_S303_G10M5_ALL  BuoyFluxAllCloudTall BuoyFluxHeights BuoyFluxAllCloud_303 1 HeightKm   1 BuoyFluxSelect none PANEL:f@All@Clouds,@S303    none none BuoyFluxAllCloud_TALL_CO_S303_G10M5_ALL.jpg
 
@@ -786,7 +811,7 @@ LinePlot: CO_UP_S298_G10M5_ALL  BuoyFluxUpDownAllCloudTall TurbHeights BuoyFluxU
 LinePlot: CO_UP_S303_G10M5_ALL  BuoyFluxUpDownAllCloudTall TurbHeights BuoyFluxUpDownAllCloud_303 1 HeightKm 1 TurbSelect none PANEL:c@All@Clouds,@UP,@DN,@S303    none none BuoyFluxUpDownAllCloud_TALL_CO_S303_G10M5_ALL.jpg
 
 # cloud fraction
-LinePlot: CO_UP_S293_G10M5_ALL  CfracProfTall MomentHeights CfracProf 1 HeightKm_2 1 CfracProfSelect none PANEL:b@S293    none none CfracProf_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  CfracProfTall MomentHeights CfracProf 1 HeightKm 1 CfracProfSelect none PANEL:b@S293    none none CfracProf_TALL_CO_S293_G10M5_ALL.jpg
 LinePlot: CO_UP_S298_G10M5_ALL  CfracProfTall MomentHeights CfracProf 1 HeightKm 1 CfracProfSelect none PANEL:b@S298    none none CfracProf_TALL_CO_S298_G10M5_ALL.jpg
 LinePlot: CO_UP_S303_G10M5_ALL  CfracProfTall MomentHeights CfracProf 1 HeightKm 1 CfracProfSelect none PANEL:b@S303    none none CfracProf_TALL_CO_S303_G10M5_ALL.jpg
 
@@ -2205,17 +2230,19 @@ PlotVar: WspeedStallTall    w-speed_stall_all   DIAGS/moments   <w'v'>  m^2@s^-^
 
 ### cloud condesational growth
 # time step in ATEX sims is 5 min, so multiply by 12 to get rate per hour
-PlotVar: CloudCondStallTall    cloud_cond_stall_avg_TALL   DIAGS/avg_ctype_cloud_cond Cloud@Condensation  g@kg^-^1@h^-^1    12 0
-PlotVar: CloudCondAllCloudTall cloud_cond_all_cld_avg_TALL DIAGS/avg_ctype_cloud_cond Cloud@Condensation  g@kg^-^1@h^-^1    12 0
-PlotVar: ColCloudCondTall      col_cloud_cond_avg_TALL     DIAGS/avg_ctype_cloud_cond Cloud@Condensation  g@kg^-^1@h^-^1    12 0
-PlotVar: CloudCondHeights      z_coords                    DIAGS/avg_ctype_cloud_cond Height      km                1e-3 0
+PlotVar: CloudCondStallTall    cloud_cond_stall_avg_TALL    DIAGS/avg_ctype_cloud_cond Cloud@Condensation  g@kg^-^1@h^-^1    12 0
+PlotVar: CloudCondAllCloudTall cloud_cond_all_cld_avg_TALL  DIAGS/avg_ctype_cloud_cond Cloud@Condensation  g@kg^-^1@h^-^1    12 0
+PlotVar: CloudCondInCloudTall  cond_in_cloud_nz_avg_TALL    DIAGS/avg_ctype_cloud_cond Cloud@Condensation  g@kg^-^1@h^-^1    12 0
+PlotVar: ColCloudCondTall      col_cloud_cond_avg_TALL      DIAGS/avg_ctype_cloud_cond Cloud@Condensation  g@kg^-^1@h^-^1    12 0
+PlotVar: CloudCondHeights      z_coords                     DIAGS/avg_ctype_cloud_cond Height      km                1e-3 0
 
 ### cloud evaporation
 # time step in ATEX sims is 5 min, so multiply by 12 to get rate per hour
-PlotVar: CloudEvapStallTall    cloud_evap_stall_avg_TALL   DIAGS/avg_ctype_cloud_evap Cloud@Evaporation  g@kg^-^1@h^-^1    12 0
-PlotVar: CloudEvapAllCloudTall cloud_evap_all_cld_avg_TALL DIAGS/avg_ctype_cloud_evap Cloud@Evaporation  g@kg^-^1@h^-^1    12 0
-PlotVar: ColCloudEvapTall      col_cloud_evap_avg_TALL     DIAGS/avg_ctype_cloud_evap Cloud@Evaporation  g@kg^-^1@h^-^1    12 0
-PlotVar: CloudEvapHeights      z_coords                    DIAGS/avg_ctype_cloud_evap Height      km                1e-3 0
+PlotVar: CloudEvapStallTall    cloud_evap_stall_avg_TALL    DIAGS/avg_ctype_cloud_evap Cloud@Evaporation  g@kg^-^1@h^-^1    12 0
+PlotVar: CloudEvapAllCloudTall cloud_evap_all_cld_avg_TALL  DIAGS/avg_ctype_cloud_evap Cloud@Evaporation  g@kg^-^1@h^-^1    12 0
+PlotVar: CloudEvapInCloudTall  evap_in_cloud_nz_avg_TALL    DIAGS/avg_ctype_cloud_evap Cloud@Evaporation  g@kg^-^1@h^-^1    12 0
+PlotVar: ColCloudEvapTall      col_cloud_evap_avg_TALL      DIAGS/avg_ctype_cloud_evap Cloud@Evaporation  g@kg^-^1@h^-^1    12 0
+PlotVar: CloudEvapHeights      z_coords                     DIAGS/avg_ctype_cloud_evap Height      km                1e-3 0
 
 ### cloud condensational growth and evaporation
 # time step in ATEX sims is 5 min, so multiply by 12 to get rate per hour
@@ -2224,15 +2251,17 @@ PlotVar: CloudCondEvapHeights    z_coords                        DIAGS/avg_ctype
 
 ### latent heating
 # time step in ATEX sims is 5 min, so multiply by 12 to get rate per hour
-PlotVar: ColLatHeatTall      col_lat_heat_avg_TALL     DIAGS/avg_ctype_lat_heat Latent@Heating  K@h^-^1    12 0
-PlotVar: LatHeatAllCloudTall lat_heat_all_cld_avg_TALL DIAGS/avg_ctype_lat_heat Latent@Heating  K@h^-^1    12 0
-PlotVar: LatHeatHeights      z_coords                  DIAGS/avg_ctype_lat_heat Height          km         1e-3 0
+PlotVar: ColLatHeatTall      col_lat_heat_avg_TALL      DIAGS/avg_ctype_lat_heat Latent@Heating  K@h^-^1    12 0
+PlotVar: LatHeatAllCloudTall lat_heat_all_cld_avg_TALL  DIAGS/avg_ctype_lat_heat Latent@Heating  K@h^-^1    12 0
+PlotVar: LatHeatInCloudTall  lat_heat_in_cloud_nz_avg_TALL DIAGS/avg_ctype_lat_heat Latent@Heating  K@h^-^1    12 0
+PlotVar: LatHeatHeights      z_coords                   DIAGS/avg_ctype_lat_heat Height          km         1e-3 0
 
 ### latent cooling
 # time step in ATEX sims is 5 min, so multiply by 12 to get rate per hour
-PlotVar: ColLatCoolTall      col_lat_cool_avg_TALL     DIAGS/avg_ctype_lat_cool Latent@Cooling  K@h^-^1    12 0
-PlotVar: LatCoolAllCloudTall lat_cool_all_cld_avg_TALL DIAGS/avg_ctype_lat_cool Latent@Cooling  K@h^-^1    12 0
-PlotVar: LatCoolHeights      z_coords                  DIAGS/avg_ctype_lat_cool Height          km         1e-3 0
+PlotVar: ColLatCoolTall      col_lat_cool_avg_TALL      DIAGS/avg_ctype_lat_cool Latent@Cooling  K@h^-^1    12 0
+PlotVar: LatCoolAllCloudTall lat_cool_all_cld_avg_TALL  DIAGS/avg_ctype_lat_cool Latent@Cooling  K@h^-^1    12 0
+PlotVar: LatCoolInCloudTall  lat_cool_in_cloud_nz_avg_TALL DIAGS/avg_ctype_lat_cool Latent@Cooling  K@h^-^1    12 0
+PlotVar: LatCoolHeights      z_coords                   DIAGS/avg_ctype_lat_cool Height          km         1e-3 0
 
 ### latent heating and cooling
 # time step in ATEX sims is 5 min, so multiply by 12 to get rate per hour
@@ -3163,6 +3192,10 @@ PlotAxis: CloudCondAllCloud_293       -0.1  2.5 linear [_]
 PlotAxis: CloudCondAllCloud_298       -0.5 10.0 linear [_]
 PlotAxis: CloudCondAllCloud_303       -0.5  8.0 linear [_]
 
+PlotAxis: CloudCondInCloud_293       -0.1  2.5 linear [_]
+PlotAxis: CloudCondInCloud_298       -0.5 10.0 linear [_]
+PlotAxis: CloudCondInCloud_303       -0.5 10.0 linear [_]
+
 PlotAxis: CloudEvapStall_293       -3.0  0.1 linear [_]
 PlotAxis: CloudEvapStall_298      -10.0  0.1 linear [_]
 PlotAxis: CloudEvapStall_303      -10.0  0.1 linear [_]
@@ -3170,6 +3203,10 @@ PlotAxis: CloudEvapStall_303      -10.0  0.1 linear [_]
 PlotAxis: CloudEvapAllCloud_293       -3.0  0.1 linear [_]
 PlotAxis: CloudEvapAllCloud_298       -9.0  0.5 linear [_]
 PlotAxis: CloudEvapAllCloud_303       -6.0  0.5 linear [_]
+
+PlotAxis: CloudEvapInCloud_293       -4.0  0.1 linear [_]
+PlotAxis: CloudEvapInCloud_298      -18.0  0.5 linear [_]
+PlotAxis: CloudEvapInCloud_303       -8.0  0.5 linear [_]
 
 PlotAxis: ColCloudCond_293       -0.1  2.5 linear [_]
 PlotAxis: ColCloudCond_298       -0.1 10.0 linear [_]
@@ -3191,9 +3228,17 @@ PlotAxis: LatHeatAllCloud_293      -1  12.0 linear [_]
 PlotAxis: LatHeatAllCloud_298      -1  30.0 linear [_]
 PlotAxis: LatHeatAllCloud_303      -1  30.0 linear [_]
 
+PlotAxis: LatHeatInCloud_293      -1  12.0 linear [_]
+PlotAxis: LatHeatInCloud_298      -1  30.0 linear [_]
+PlotAxis: LatHeatInCloud_303      -1  30.0 linear [_]
+
 PlotAxis: LatCoolAllCloud_293       -8.0  1 linear [_]
 PlotAxis: LatCoolAllCloud_298      -18.0  1 linear [_]
 PlotAxis: LatCoolAllCloud_303      -18.0  1 linear [_]
+
+PlotAxis: LatCoolInCloud_293      -10.0  1 linear [_]
+PlotAxis: LatCoolInCloud_298      -44.0  1 linear [_]
+PlotAxis: LatCoolInCloud_303      -20.0  1 linear [_]
 
 PlotAxis: BuoyFluxAllCloud_293      -0.0002  0.0004 linear [_]
 PlotAxis: BuoyFluxAllCloud_298      -0.0003  0.0010 linear [_]
