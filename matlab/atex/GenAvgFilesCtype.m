@@ -22,19 +22,24 @@ function [ ] = GenAvgFilesCtype(ConfigFile)
 %
 %    { 'hda_lcl'             { 'lcl'    'lcl_stall'                                                                  } 'avg_ctype_lcl'  }
 
-    { 'hda_vapcldt'  { 'cloud_cond_stall'    'col_cloud_cond' 'cloud_cond_all_cld' 'cond_in_cloud' 'cond_in_cloud_nz'    } 'avg_ctype_cloud_cond'  }
-    { 'hda_vapcldt'  { 'cloud_evap_stall'    'col_cloud_evap' 'cloud_evap_all_cld' 'evap_in_cloud' 'evap_in_cloud_nz'    } 'avg_ctype_cloud_evap'  }
+
+
+
+%    { 'hda_vapcldt'  { 'cloud_cond_stall'    'col_cloud_cond' 'cloud_cond_all_cld' 'cond_in_cloud' 'cond_in_cloud_nz'    } 'avg_ctype_cloud_cond'  }
+%    { 'hda_vapcldt'  { 'cloud_evap_stall'    'col_cloud_evap' 'cloud_evap_all_cld' 'evap_in_cloud' 'evap_in_cloud_nz'    } 'avg_ctype_cloud_evap'  }
 %    { 'hda_vapcldt'         { 'col_cloud_cond_evap'                                                                 } 'avg_ctype_cloud_cond_evap'  }
 
-    { 'hda_vapraint'  { 'rain_cond_all_cld' } 'avg_ctype_rain_cond'  }
-    { 'hda_vapraint'  { 'rain_evap_all_cld' } 'avg_ctype_rain_evap'  }
+%    { 'hda_vapraint'  { 'rain_cond_all_cld' } 'avg_ctype_rain_cond'  }
+%    { 'hda_vapraint'  { 'rain_evap_all_cld' } 'avg_ctype_rain_evap'  }
 
-    { 'hda_vapdrizt'  { 'driz_cond_all_cld' } 'avg_ctype_driz_cond'  }
-    { 'hda_vapdrizt'  { 'driz_evap_all_cld' } 'avg_ctype_driz_evap'  }
+%    { 'hda_vapdrizt'  { 'driz_cond_all_cld' } 'avg_ctype_driz_cond'  }
+%    { 'hda_vapdrizt'  { 'driz_evap_all_cld' } 'avg_ctype_driz_evap'  }
 
-    { 'hda_lh_vapt'  { 'col_lat_heat'      'lat_heat_all_cld' 'lat_heat_in_cloud' 'lat_heat_in_cloud_nz'     } 'avg_ctype_lat_heat'  }
-    { 'hda_lh_vapt'  { 'col_lat_cool'      'lat_cool_all_cld' 'lat_cool_in_cloud' 'lat_cool_in_cloud_nz'     } 'avg_ctype_lat_cool'  }
+%    { 'hda_lh_vapt'  { 'col_lat_heat'      'lat_heat_all_cld' 'lat_heat_in_cloud' 'lat_heat_in_cloud_nz'     } 'avg_ctype_lat_heat'  }
+%    { 'hda_lh_vapt'  { 'col_lat_cool'      'lat_cool_all_cld' 'lat_cool_in_cloud' 'lat_cool_in_cloud_nz'     } 'avg_ctype_lat_cool'  }
 %    { 'hda_lh_vapt'         { 'col_lat_heat_cool'                                                                   } 'avg_ctype_lat_heat_cool'  }
+
+    { 'hda_net_lw_flux'  { 'lw_flux_all_cld'     } 'avg_ctype_net_lw_flux'  }
     };
   Nset = length(VarSets);
 
@@ -130,6 +135,7 @@ function [ ] = GenAvgFilesCtype(ConfigFile)
           strcmp(OutFprefix, 'avg_ctype_rain_evap') || ...
           strcmp(OutFprefix, 'avg_ctype_lat_heat') || ...
           strcmp(OutFprefix, 'avg_ctype_lat_cool') || ...
+          strcmp(OutFprefix, 'avg_ctype_net_lw_flux') || ...
           strcmp(OutFprefix, 'avg_ctype_lat_heat_cool'))
         Zout = Z;
       else
