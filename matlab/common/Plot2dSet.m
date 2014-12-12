@@ -79,8 +79,8 @@ if (~isempty(Ylabel))
   ylabel(Ylabel);
 end
 
-% Add in the temporal phases if requested
 if (strcmp(AddMeas, 'Tphases'))
+    % Add in the temporal phases
     Ylims = ylim;
     Yrange = Ylims(2) - Ylims(1);
     Yinc = 0.04 * Yrange;
@@ -92,10 +92,25 @@ if (strcmp(AddMeas, 'Tphases'))
         % text goes on top
         Ty = Ylims(1) + 0.95 * Yrange;
     end
-    
     %DrawTmark( 40,  60, 5, Ty, Yinc, 'RI');
     %DrawTmark( 80, 100, 5, Ty, Yinc, 'TR');
     DrawTmark(120, 140, 3, Ty, Yinc, 'SS');
+
+elseif (strcmp(AddMeas, 'Zinv293'))
+    % Add in inversion base for S293 case
+    %  Inversion base is 1350 m
+    LineX = get(gca, 'Xlim');
+    LineY = [ 1.350 1.350 ];
+    line(LineX, LineY, 'LineStyle', '--', 'Color', 'k', 'LineWidth', 2);
+
+elseif (strcmp(AddMeas, 'Zinv298'))
+    % Add in inversion base for S298 case
+    % Inversion base ranges from 1550 to 1750 m
+    LineX = get(gca, 'Xlim');
+    LineY = [ 1.550 1.550 ];
+    line(LineX, LineY, 'LineStyle', '--', 'Color', 'k', 'LineWidth', 2);
+    LineY = [ 1.750 1.750 ];
+    line(LineX, LineY, 'LineStyle', '--', 'Color', 'k', 'LineWidth', 2);
 end
 
 % Fix up the positioning
