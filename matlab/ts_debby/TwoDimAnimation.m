@@ -19,11 +19,21 @@ function [ ] = TwoDimAnimation(InFile, InVar, OutFile)
     Clevs = 0.5:0.5:10.5;
     Clims = [ 0.1 5.0 ];
   elseif (strcmp(InVar, 'pi'))
-    Clevs = 1000:1:1010;
-    Clims = [ 1000 1010 ];
+    % Grid 1
+    Clevs = 970:2:1010;
+    Clims = [ 970 1010 ];
+
+    % Grids 2, 3
+    %Clevs = 1000:1:1010;
+    %Clims = [ 1000 1010 ];
   elseif (strcmp(InVar, 'theta'))
-    Clevs = 295:1:305;
-    Clims = [ 290 305 ];
+    % Grid 1 
+    Clevs = 285:2:315;
+    Clims = [ 285 315 ];
+
+    % Grids 2, 3
+    %Clevs = 295:1:305;
+    %Clims = [ 290 305 ];
   elseif (strcmp(InVar, 'vapor'))
     Clevs = 0:1:20;
     Clims = [ 0 20 ];
