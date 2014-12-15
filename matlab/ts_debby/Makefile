@@ -21,7 +21,7 @@ SCRIPTS = \
   $(DEST)/PlotTracks.m \
   $(DEST)/PlotTracksAll.m \
   $(DEST)/PlotWinds.m \
-  $(DEST)/TwpAnimation.m \
+  $(DEST)/TwoDimAnimation.m \
   $(DEST)/SetPath.m
 
 CONFIGS = \

@@ -1,5 +1,5 @@
-function [ ] = TwpAnimation(InFile, InVar, OutFile)
-% function to create a GIF animation of the contents of the vint_cond (TWP) file
+function [ ] = TwoDimAnimation(InFile, InVar, OutFile)
+% function to create a GIF animation of the contents of a 2D extracted variable
 
   TWP_DS = ncgeodataset(InFile);
   TWP_VAR = TWP_DS.geovariable(InVar);
@@ -15,8 +15,20 @@ function [ ] = TwpAnimation(InFile, InVar, OutFile)
   Ny = S(2);
   Nx = S(3);
 
-  Clevs = 0.5:0.5:10.5;
-  Clims = [ 0.1 5.0 ];
+  if (strcmp(InVar, 'vertint_cond_nd'))
+    Clevs = 0.5:0.5:10.5;
+    Clims = [ 0.1 5.0 ];
+  elseif (strcmp(InVar, 'pi'))
+    Clevs = 1000:1:1010;
+    Clims = [ 1000 1010 ];
+  elseif (strcmp(InVar, 'theta'))
+    Clevs = 295:1:305;
+    Clims = [ 290 305 ];
+  elseif (strcmp(InVar, 'vapor'))
+    Clevs = 0:1:20;
+    Clims = [ 0 20 ];
+  end
+
   DelayTime = 0.1;
   Fsize = 25;
 
