@@ -64,7 +64,7 @@ program diag_filter
 
   integer :: Nfilters
 
-  integer :: i, ipress
+  integer :: i, icylvol
   integer :: imodel, OutNdims, FilterNdims
   real :: TempZ
   integer :: ix, iy, iz, it
@@ -72,12 +72,9 @@ program diag_filter
   integer :: Nx, Ny, Nz, Nt
   integer :: NhElems
   logical :: BadDims
-  logical :: DoingCylVol
 
   type (Rhdf5Var), dimension(MaxFilters) :: Vars
   character (len=RHDF5_MAX_STRING), dimension(MaxFilters) :: InFiles
-  character (len=RHDF5_MAX_STRING) :: FsFilterFile
-  type (Rhdf5Var) :: FsFilterVar
 
   character (len=RHDF5_MAX_STRING) :: FileAcc
   integer, dimension(MaxFilters) :: InFileIds
@@ -91,13 +88,10 @@ program diag_filter
   real :: Xstart, Xinc, Ystart, Yinc
   real, dimension(:), allocatable :: XcoordsKm, YcoordsKm
 
-  type (Rhdf5Var) :: Radius, MinP, StormX, StormY, MaxRadius, StormXidx, StormYidx
-  real :: Rval, Pval, Zval, MaxRval
+  type (Rhdf5Var) :: MinP, Radius, Phi, StormXindex, StormYindex
   integer :: StmIx, StmIy
 
   logical :: FilterVal, SelectThisPoint
-  logical :: UseFsFilter
-  type (FilterDescrip) :: FsFilter
 
   logical :: AndFilters
   logical :: OrFilters
@@ -106,29 +100,27 @@ program diag_filter
   logical :: DoingUpDrafts
   logical :: DoingDnDrafts
   logical :: DoingUpDnDrafts
+  logical :: DoinCylVol
   integer :: UDfnum
 
   ! Get the command line arguments
-  call GetMyArgs(LargeString, MaxFilters, InDir, InSuffix, OutFile, FsFilter, CombSense, Filters, Nfilters)
+  call GetMyArgs(LargeString, MaxFilters, InDir, InSuffix, OutFile, CombSense, Filters, Nfilters)
 
   ! Record which combination sense for the filters was selected
   ! GetMyArgs already checked to make sure one of 'and' or 'or' was selected for CombSense
   AndFilters = (CombSense .eq. 'and')
   OrFilters = (CombSense .eq. 'or')
 
-  DoingCylVol = .false.
   DoingUpDrafts = .false.
   DoingDnDrafts = .false.
   DoingUpDnDrafts = .false.
+
+  icylvol = 0 ! if remains zero -> signifies cylvol not being used to code downstream
+
   write (*,*) 'Creating HDF5 data filter:'
   write (*,*) '  Input directory: ', trim(InDir)
   write (*,*) '  Input file name suffix: ', trim(InSuffix)
   write (*,*) '  Output file name:  ', trim(OutFile)
-  write (*,*) '  Find storm filter:'
-  write (*,*) '    Filter type:  ', trim(FsFilter%Fname)
-  write (*,*) '    Variable name:  ', trim(FsFilter%Vname)
-  write (*,*) '    File prefix: ', trim(FsFilter%Vfprefix)
-  write (*,*) '    Treshold: ', FsFilter%x1
   write (*,*) '  Data selection specs: '
   if (AndFilters) then
     write (*,*) '    Filters will be logically and-ed together'
@@ -137,19 +129,16 @@ program diag_filter
   endif
   do i = 1, Nfilters
     if (Filters(i)%Ftype .eq. FTYPE_CYLVOL) then
-      DoingCylVol = .true.
-      ipress = i
+      icylvol = i
       write (*,*) '    Cylindrical volume:'
-      write (*,*) '      Pressure variable: ', trim(Filters(i)%Vname)
-      write (*,*) '      Pressure file prefix: ', trim(Filters(i)%Vfprefix)
+      write (*,*) '      Storm center variable: ', trim(Filters(i)%Vname)
+      write (*,*) '      Storm center file prefix: ', trim(Filters(i)%Vfprefix)
       write (*,*) '      Minimum radius: ', Filters(i)%x1
       write (*,*) '      Maximum radius: ', Filters(i)%x2
       write (*,*) '      Minimum angle: ', Filters(i)%y1
       write (*,*) '      Maximum angle: ', Filters(i)%y2
       write (*,*) '      Minimum height: ', Filters(i)%z1
       write (*,*) '      Maximum height: ', Filters(i)%z2
-
-      MaxRval = Filters(i)%x2
     else if (Filters(i)%Ftype .eq. FTYPE_GE) then
       write (*,*) '    Greater than or equal:'
       write (*,*) '      Variable: ', trim(Filters(i)%Vname)
@@ -225,7 +214,33 @@ program diag_filter
   ! 2D output regarless of dimensions of the associate filter variable.
   do i = 1, Nfilters
     InFiles(i) = trim(InDir) // '/' // trim(Filters(i)%Vfprefix) // trim(InSuffix)
-    Vars(i)%vname = trim(Filters(i)%Vname)
+
+    if (i .eq. icylvol) then
+      ! put radius information into Vars(i) for the dimension size check
+      Vars(i)%vname = 'radius'
+
+      ! set up the extra vars
+      ! go ahead and read in the entire timeseries vars
+      MinP%vname = 'min_press'
+      call rhdf5_read_init(InFiles(i), MinP)
+      call rhdf5_read(InFiles(i), MinP);
+
+      Radius%vname = 'radius'
+      call rhdf5_read_init(InFiles(i), Radius)
+
+      Phi%vname = 'phi'
+      call rhdf5_read_init(InFiles(i), Phi)
+
+      StormXindex%vname = trim(Filters(i)%Vname) // '_x_index'
+      call rhdf5_read_init(InFiles(i), StormXindex)
+      call rhdf5_read(InFiles(i), StormXindex);
+
+      StormYindex%vname = trim(Filters(i)%Vname) // '_y_index'
+      call rhdf5_read_init(InFiles(i), StormYindex)
+      call rhdf5_read(InFiles(i), StormYindex);
+    else
+      Vars(i)%vname = trim(Filters(i)%Vname)
+    endif
 
     call rhdf5_read_init(InFiles(i), Vars(i))
 
@@ -242,7 +257,16 @@ program diag_filter
     ! Prepare for reading
     Vars(i)%ndims = Vars(i)%ndims - 1
 
+    ! Adjust the cylvol extra vars dimensions, but only for the 2D
+    ! variables. The time series variables have already been read in their entirety
+    ! so there is no need to condition them for reading one time step at a time.
+    if (i .eq. icylvol) then
+       Radius%ndims = Radius%ndims - 1
+       Phi%ndims = Phi%ndims - 1
+    endif
+
     ! Record var with maximum number of dimensions --> output dims
+    ! NOTE: Vars(i) for cylvol has data corresponding to the 'radius' variable (2D)
     if ((Filters(i)%Ftype .eq. FTYPE_UP) .or. (Filters(i)%Ftype .eq. FTYPE_DN) .or. &
         (Filters(i)%Ftype .eq. FTYPE_UP_DN) .or. (Filters(i)%Ftype .eq. FTYPE_CYLVOL)) then
       FilterNdims = 2
@@ -265,33 +289,6 @@ program diag_filter
       endif
     endif
   enddo
-
-  ! Check to see if we are using the find storm "hints". It is only used by
-  ! the cylvol filter in the call to FindStormCenter with the purpose of keeping the
-  ! the search for the storm center over the ocean.
-  UseFsFilter = .false.
-  if (DoingCylVol) then
-    if (FsFilter%Ftype .ne. FTYPE_NONE) then
-      UseFsFilter = .true.
-      FsFilterFile = trim(InDir) // '/' // trim(FsFilter%Vfprefix) // trim(InSuffix)
-      FsFilterVar%vname = trim(FsFilter%Vname)
-      call rhdf5_read_init(FsFilterFile, FsFilterVar)
-
-      ! check dimensions and prepare for reading
-      if ((trim(FsFilterVar%Vname) .eq. 'sfclat') .or. (trim(FsFilterVar%Vname) .eq. 'sfclon')) then
-        ! just check horizontal dims (not time)
-        if ((FsFilterVar%dims(1) .ne. Vars(1)%dims(1)) .or. (FsFilterVar%dims(2) .ne. Vars(1)%dims(2))) then
-          write (*,*) 'ERROR: horizontal and time dimensions of find storm variable do not match the first filter variable: ', trim(FsFilterVar%vname)
-          BadDims = .true.
-        endif
-      else
-        if (.not. DimsMatch(Vars(1), FsFilterVar)) then
-          write (*,*) 'ERROR: horizontal and time dimensions of find storm variable do not match the first filter variable: ', trim(FsFilterVar%vname)
-          BadDims = .true.
-        endif
-      endif
-    endif
-  endif
 
   if (BadDims) then
     stop
@@ -369,57 +366,6 @@ program diag_filter
   OutFilter%descrip = 'data selection locations'
   allocate(OutFilter%vdata(Nx*Ny*Nz))
 
-  if (DoingCylVol) then
-    ! prepare for writing the radius values into the output file.
-    Radius%vname = 'radius'
-    Radius%ndims = 2
-    Radius%dims(1) = Nx
-    Radius%dims(2) = Ny
-    Radius%dimnames(1) = 'x'
-    Radius%dimnames(2) = 'y'
-    Radius%units = 'km'
-    Radius%descrip = 'radius from storm center'
-    allocate(Radius%vdata(Nx*Ny))
-
-    ! ndims == 0 means this var will be a time series, f(t)
-    MinP%vname = 'min_press'
-    MinP%ndims = 0
-    MinP%units = 'mb'
-    MinP%descrip = 'minimum SLP of storm'
-    allocate(MinP%vdata(1))
-
-    StormX%vname = 'min_press_xloc'
-    StormX%ndims = 0
-    StormX%units = 'deg lon'
-    StormX%descrip = 'longitude location of minimum SLP of storm'
-    allocate(StormX%vdata(1))
-    
-    StormY%vname = 'min_press_yloc'
-    StormY%ndims = 0
-    StormY%units = 'deg lat'
-    StormY%descrip = 'latitude location of minimum SLP of storm'
-    allocate(StormY%vdata(1))
-
-    StormXidx%vname = 'min_press_x_index'
-    StormXidx%ndims = 0
-    StormXidx%units = 'lon index'
-    StormXidx%descrip = 'longitude index of minimum SLP of storm'
-    allocate(StormXidx%vdata(1))
-    
-    StormYidx%vname = 'min_press_y_index'
-    StormYidx%ndims = 0
-    StormYidx%units = 'lat index'
-    StormYidx%descrip = 'latitude index of minimum SLP of storm'
-    allocate(StormYidx%vdata(1))
-
-    MaxRadius%vname = 'max_radius'
-    MaxRadius%ndims = 0 
-    MaxRadius%units = 'km'
-    MaxRadius%descrip = 'maximum radius across domain and time'
-    allocate(MaxRadius%vdata(1))
-    MaxRadius%vdata(1) = MaxRval ! use the maximum radius spec from the command line
-  endif
-
   ! Check up and down draft filtering
   if (DoingUpDrafts .and. DoingDnDrafts) then
     write (*,*) 'ERROR: cannot use both updraft and downdraft filtering'
@@ -442,10 +388,6 @@ program diag_filter
     call rhdf5_open_file(InFiles(i), FileAcc, 0, InFileIds(i))
     write (*,*) 'Reading HDF5 file: ', trim(InFiles(i))
   enddo
-  if (UseFsFilter) then
-    call rhdf5_open_file(FsFilterFile, FileAcc, 0, rh5f_fsf__fid)
-    write (*,*) 'Reading HDF5 file: ', trim(FsFilterFile)
-  endif
   write (*,*) ''
 
   FileAcc = 'W'
@@ -464,39 +406,16 @@ program diag_filter
   do it = 1, Nt
     ! read the input vars
     do i = 1, Nfilters
-      call rhdf5_read_variable(InFileIds(i), Vars(i)%vname, Vars(i)%ndims, it, Vars(i)%dims, rdata=Vars(i)%vdata)
+      if (i .eq. icylvol) then
+        call rhdf5_read_variable(InFileIds(i), Radius%vname, Radius%ndims, it, Radius%dims, rdata=Radius%vdata)
+        call rhdf5_read_variable(InFileIds(i), Phi%vname, Phi%ndims, it, Phi%dims, rdata=Phi%vdata)
+
+        StmIx = nint(StormXindex%vdata(it))
+        StmIy = nint(StormYindex%vdata(it))
+      else
+        call rhdf5_read_variable(InFileIds(i), Vars(i)%vname, Vars(i)%ndims, it, Vars(i)%dims, rdata=Vars(i)%vdata)
+      endif
     enddo
-
-    ! In the case that we are doing cylvol, the above loop will have read in the pressure
-    ! data, and ipress will point to the index of the pressure data. Find the storm center
-    ! to prepare for the InsideCylVol call.
-    if (DoingCylVol) then
-      ! zero out radius
-      do ih2d = 1, NhElems
-        Radius%vdata(ih2d) = 0.0
-      enddo
-
-      ! Find the storm center
-      if (UseFsFilter) then
-        if ((trim(FsFilterVar%Vname) .eq. 'sfclat') .or. (trim(FsFilterVar%Vname) .eq. 'sfclon')) then
-          call rhdf5_read_variable(rh5f_fsf__fid, FsFilterVar%vname, FsFilterVar%ndims, 0, FsFilterVar%dims, rdata=FsFilterVar%vdata)
-        else
-          call rhdf5_read_variable(rh5f_fsf__fid, FsFilterVar%vname, FsFilterVar%ndims, it, FsFilterVar%dims, rdata=FsFilterVar%vdata)
-        endif
-      endif
-      call FindStormCenter(Nx, Ny, Vars(ipress)%vdata, UseFsFilter, FsFilter, FsFilterVar%vdata, StmIx, StmIy, MinP%vdata(1))
-
-      ! Record the lat,lon of the storm center
-      StormX%vdata(1) = Xcoords%vdata(StmIx)
-      StormY%vdata(1) = Ycoords%vdata(StmIy)
-      StormXidx%vdata(1) = float(StmIx)
-      StormYidx%vdata(1) = float(StmIy)
-
-      ! clean up
-      if (UseFsFilter) then
-        deallocate(FsFilterVar%vdata)
-      endif
-    endif
 
     ! If doing up- or down-draft filtering, build the mask
     ! Note that last argument is a code telling subrouting which mask to build:
@@ -542,8 +461,14 @@ program diag_filter
             ! Apply the current filter
             if (Filters(i)%Ftype .eq. FTYPE_CYLVOL) then
               ! select if inside the cylindrical volume
-              FilterVal = InsideCylVol(Nx, Ny, Nz, ix, iy, iz, Filters(i)%x1, Filters(i)%x2, Filters(i)%y1, Filters(i)%y2, &
-                    Filters(i)%z1, Filters(i)%z2, StmIx, StmIy, XcoordsKm, YcoordsKm, Zcoords%vdata, Rval, Pval, Zval) 
+              FilterVal =                 (Radius%vdata(ih2d) .ge. Filters(i)%x1)  ! x1 -> min radius
+              FilterVal = FilterVal .and. (Radius%vdata(ih2d) .le. Filters(i)%x2)  ! x2 -> max radius
+
+              FilterVal = FilterVal .and. (Phi%vdata(ih2d) .ge. Filters(i)%y1)     ! y1 -> min phi
+              FilterVal = FilterVal .and. (Phi%vdata(ih2d) .le. Filters(i)%y2)     ! y2 -> max phi
+
+              FilterVal = FilterVal .and. (Zcoords%vdata(iz) .ge. Filters(i)%z1)   ! z1 -> min height
+              FilterVal = FilterVal .and. (Zcoords%vdata(iz) .le. Filters(i)%z2)   ! z2 -> max height
 
             else if (Filters(i)%Ftype .eq. FTYPE_GT) then
               ! select if var > threshold
@@ -606,11 +531,6 @@ program diag_filter
             endif
           enddo
 
-          if ((DoingCylVol) .and. (iz .eq. 1)) then
-            ! save the radius value
-            Radius%vdata(ih2d) = Rval
-          endif
-
           if (SelectThisPoint) then
             OutFilter%vdata(ih3d) = 1.0
           else
@@ -623,39 +543,26 @@ program diag_filter
     ! Write the filter data, and storm info if doing cylvol selection, to the output file
     call rhdf5_write_variable(OutFileId, OutFilter%vname, OutFilter%ndims, it, OutFilter%dims, &
       OutFilter%units, OutFilter%descrip, OutFilter%dimnames, rdata=OutFilter%vdata)
-    if (DoingCylVol) then
-      call rhdf5_write_variable(OutFileId, Radius%vname, Radius%ndims, it, Radius%dims, &
-        Radius%units, Radius%descrip, Radius%dimnames, rdata=Radius%vdata)
-      call rhdf5_write_variable(OutFileId, MinP%vname, MinP%ndims, it, MinP%dims, &
-        MinP%units, MinP%descrip, MinP%dimnames, rdata=MinP%vdata)
-      call rhdf5_write_variable(OutFileId, StormX%vname, StormX%ndims, it, StormX%dims, &
-        StormX%units, StormX%descrip, StormX%dimnames, rdata=StormX%vdata)
-      call rhdf5_write_variable(OutFileId, StormY%vname, StormY%ndims, it, StormY%dims, &
-        StormY%units, StormY%descrip, StormY%dimnames, rdata=StormY%vdata)
-      call rhdf5_write_variable(OutFileId, StormXidx%vname, StormXidx%ndims, it, StormXidx%dims, &
-        StormXidx%units, StormXidx%descrip, StormXidx%dimnames, rdata=StormXidx%vdata)
-      call rhdf5_write_variable(OutFileId, StormYidx%vname, StormYidx%ndims, it, StormYidx%dims, &
-        StormYidx%units, StormYidx%descrip, StormYidx%dimnames, rdata=StormYidx%vdata)
-      ! This repeats the max radius value for each time step, however this keeps the size of
-      ! the data array consistent with the size of t_coords
-      call rhdf5_write_variable(OutFileId, MaxRadius%vname, MaxRadius%ndims, it, MaxRadius%dims, &
-        MaxRadius%units, MaxRadius%descrip, MaxRadius%dimnames, rdata=MaxRadius%vdata)
-    endif
 
     ! cleanup
     do i = 1, Nfilters
-      deallocate(Vars(i)%vdata)
+      if (i .eq. icylvol) then
+        deallocate(Radius%vdata)
+        deallocate(Phi%vdata)
+      else
+        deallocate(Vars(i)%vdata)
+      endif
     enddo
 
-    ! Write out status to screen every 100 timesteps so that the user can see that a long
+    ! Write out status to screen every 50 timesteps so that the user can see that a long
     ! running job is progressing okay.
-    if (modulo(it,100) .eq. 0) then
+    if (modulo(it,50) .eq. 0) then
       write (*,*) 'Working: Timestep: ', it
 
-      if (DoingCylVol) then
+      if (icylvol .gt. 0) then
         write (*,'(a,i3,a,i3,a,g,a,g,a)') '    Storm Center: (', StmIx, ', ', StmIy, &
          ') --> (', XcoordsKm(StmIx), ', ', YcoordsKm(StmIy), ')'
-        write (*,*) '   Minumum pressure: ', MinP%vdata(1)
+        write (*,*) '   Minumum pressure: ', MinP%vdata(it)
       endif
 
       write (*,*) ''
@@ -682,17 +589,6 @@ program diag_filter
   ! attach the dimension specs to the output variable
   call rhdf5_attach_dimensions(OutFile, OutFilter)
 
-  if (DoingCylVol) then
-    ! Attach dims to the auxillary data
-    call rhdf5_attach_dimensions(OutFile, MinP)
-    call rhdf5_attach_dimensions(OutFile, StormX)
-    call rhdf5_attach_dimensions(OutFile, StormY)
-    call rhdf5_attach_dimensions(OutFile, StormXidx)
-    call rhdf5_attach_dimensions(OutFile, StormYidx)
-    call rhdf5_attach_dimensions(OutFile, Radius)
-    call rhdf5_attach_dimensions(OutFile, MaxRadius)
-  endif
-
   ! cleanup
   call rhdf5_close_file(OutFileId)
   do i = 1, Nfilters
@@ -713,7 +609,7 @@ contains
 ! GetMyArgs()
 !
 
- subroutine GetMyArgs(Nstr, Nfilt, InDir, InSuffix, OutFile, FsFilter, CombSense, Filters, NumFilters)
+ subroutine GetMyArgs(Nstr, Nfilt, InDir, InSuffix, OutFile, CombSense, Filters, NumFilters)
   implicit none
 
   integer, parameter :: MaxFields = 15
@@ -721,7 +617,6 @@ contains
   character (len=Nstr) :: InDir, InSuffix, OutFile, CombSense
   integer :: Nstr, Nfilt, NumFilters
   type (FilterDescrip), dimension(Nfilt) :: Filters
-  type (FilterDescrip) :: FsFilter
 
   integer :: iargc, i, j, Nargs, Nfld
   character (len=Nstr) :: Arg
@@ -759,36 +654,6 @@ contains
       OutFile = Arg
       i = i + 1
     else if (i .eq. 4) then
-      call String2List(Arg, ':', Fields, MaxFields, Nfld, 'find storm')
-      i = i + 1
-
-      FsFilter%Fname    = Fields(1)
-      ! for now just support 'ge', 'gt', 'le' and 'lt'
-      if (Fields(1) .eq. 'none') then
-        FsFilter%Ftype = FTYPE_NONE
-      else if (Fields(1) .eq. 'ge') then
-        FsFilter%Ftype = FTYPE_GE
-      else if (Fields(1) .eq. 'gt') then
-        FsFilter%Ftype = FTYPE_GT
-      else if (Fields(1) .eq. 'le') then
-        FsFilter%Ftype = FTYPE_LE
-      else if (Fields(1) .eq. 'lt') then
-        FsFilter%Ftype = FTYPE_LT
-      else
-        write (*,*) 'ERROR: <ftype> for <2d_find_storm_filter> must be one of: "none", "ge", "gt", "le" or "le"'
-        BadArgs = .true.
-      endif
-      FsFilter%Vname    = Fields(2)
-      FsFilter%Vfprefix = Fields(3)
-
-      ! 'le', 'ge', 'lt', and 'gt' only need one parameter
-      read(Fields(4), '(f)') FsFilter%x1
-      FsFilter%x2 = 0
-      FsFilter%y1 = 0
-      FsFilter%y2 = 0
-      FsFilter%z1 = 0
-      FsFilter%z2 = 0
-    else if (i .eq. 5) then
       CombSense = Arg
 
       if ((CombSense .ne. 'and') .and. (CombSense .ne. 'or')) then
@@ -1062,20 +927,11 @@ contains
   endif
 
   if (BadArgs) then
-    write (*,*) 'USAGE: diag_filter <in_dir> <in_suffix> <out_file> <2d_find_storm_filter> <comb_sense> <filter_spec> [<filter_spec>...]'
+    write (*,*) 'USAGE: diag_filter <in_dir> <in_suffix> <out_file> <storm_center_file> <comb_sense> <filter_spec> [<filter_spec>...]'
     write (*,*) '        <in_dir>: directory containing input files'
     write (*,*) '        <in_suffix>: suffix to tag onto the end of input file names'
     write (*,*) '           Note: input file names become: <in_dir>/<var_name><in_suffix>'
     write (*,*) '        <out_file>: output hdf5 file name'
-    write (*,*) '        <2d_find_storm_filter>: <ftype>:<vname>:<vfprefix>:<val>'
-    write (*,*) '            <ftype>:'
-    write (*,*) '                gt: select point if value >  <val>'
-    write (*,*) '                ge: select point if value >= <val>'
-    write (*,*) '                lt: select point if value <  <val>'
-    write (*,*) '                le: select point if value <= <val>'
-    write (*,*) '            <vname>: hdf5 variable'
-    write (*,*) '            <vfprefix>: file name prefix (goes with <in_suffix> to form the whole file name)' 
-    write (*,*) '            <val>'
     write (*,*) '        <comb_sense>: one of "and", "or"'
     write (*,*) '            and: multiple filter specs are and-ed together' 
     write (*,*) '            or: multiple filter specs are or-ed together' 
@@ -1111,72 +967,6 @@ contains
 
   return
 end subroutine GetMyArgs
-
-!**********************************************************************
-! FindStormCenter
-!
-! This routine will locate the storm center using the simple hueristic
-! of the center being where the minimum surface pressure exists.
-!
-! Argument it holds the time step that you want to analyze. (iStmCtr, jStmCtr)
-! hold the grid position of the minumum pressure value on the first vertical
-! level (iz = 1).
-!
-
-subroutine FindStormCenter(Nx, Ny, Press, UseFsFilter, FsFilter, Fs, StmCtrX, StmCtrY, MinP)
-  implicit none
-
-  integer :: Nx, Ny
-  real, dimension(Nx,Ny) :: Press, Fs
-  type(FilterDescrip) :: FsFilter
-  integer :: StmCtrX, StmCtrY
-  real :: MinP
-  logical :: UseFsFilter
-
-  integer :: ix, iy
-  logical :: SelectPoint
-
-  MinP = 1e10 ! ridiculously large pressure
-  StmCtrX = 0 
-  StmCtrY = 0 
-
-  do ix = 1, Nx
-    do iy = 1, Ny
-      ! Figure out if we want to consider this point
-      SelectPoint = .true.
-      if (UseFsFilter) then
-        SelectPoint = .false.
-        if (FsFilter%Ftype .eq. FTYPE_GT) then
-          if (Fs(ix,iy) .gt. FsFilter%x1) then
-            SelectPoint = .true.
-          endif
-        elseif (FsFilter%Ftype .eq. FTYPE_GE) then
-          if (Fs(ix,iy) .ge. FsFilter%x1) then
-            SelectPoint = .true.
-          endif
-        elseif (FsFilter%Ftype .eq. FTYPE_LT) then
-          if (Fs(ix,iy) .lt. FsFilter%x1) then
-            SelectPoint = .true.
-          endif
-        elseif (FsFilter%Ftype .eq. FTYPE_LE) then
-          if (Fs(ix,iy) .le. FsFilter%x1) then
-            SelectPoint = .true.
-          endif
-        endif
-      endif
-
-      if (SelectPoint) then 
-        if (Press(ix,iy) .lt. MinP) then
-          MinP = Press(ix,iy)
-          StmCtrX = ix
-          StmCtrY = iy
-        endif
-      endif
-    enddo
-  enddo
-  
-  return
-end subroutine FindStormCenter
 
 !**********************************************************************
 ! BuildUpDnMask()
