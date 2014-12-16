@@ -26,11 +26,14 @@ program find_tc_center
   character (len=LargeString) :: PressFile, PressVar, TopoFile, TopoVar, OutFile
 
   type (Rhdf5Var) :: Press, Topo, Xcoords, Ycoords, Zcoords, Tcoords
-  type (Rhdf5Var) :: Radius, MinP, StormX, StormY, StormXidx, StormYidx
+  type (Rhdf5Var) :: Radius, MinPress, MinPressX, MinPressY, MinPressXidx, MinPressYidx
+  type (Rhdf5Var) :: PressCentX, PressCentY, PressCentXidx, PressCentYidx
   real, dimension(:), allocatable :: XcoordsKm, YcoordsKm
   real :: DeltaX, DeltaY, MaxElev
   real :: MinLat, MinLon, MaxLat, MaxLon
-  integer :: StmIx, StmIy
+  real :: PressRad
+  integer :: MinPressIx, MinPressIy
+  integer :: PressCentIx, PressCentIy
 
   integer :: Nx, Ny, Nz, Nt
   integer :: iz, it
@@ -38,17 +41,7 @@ program find_tc_center
   integer :: PfileId, TfileId, OfileId
 
   ! Get the command line arguments
-  call GetMyArgs(LargeString, PressFile, PressVar, TopoFile, TopoVar, OutFile)
-  ! Don't consider points that have elevation > MaxElev
-  MaxElev = 1.0
-  ! Define box to restrict search for min pressure
-  !     Lat range: 10 to 23
-  !     Lon range: -39 to -21
-  MinLat = 10.0
-  MaxLat = 23.0
-
-  MinLon = -39.0
-  MaxLon = -21.0
+  call GetMyArgs(LargeString, PressFile, PressVar, TopoFile, TopoVar, MaxElev, MinLat, MaxLat, MinLon, MaxLon, PressRad, OutFile)
 
   print'(a)',       'Creating HDF5 TC center data:'
   print'(a)',       ''
@@ -61,9 +54,10 @@ program find_tc_center
   print'(a,x,a)',   '     Variable:', trim(TopoVar)
   print'(a)',       ''
   print'(a)',       '  Thresholds: '
-  print'(a,f8.2)',  '     Maximum Elevation:', MaxElev
-  print'(a,2f8.2)', '     Latitude Range:', MinLat, MaxLat
-  print'(a,2f8.2)', '     Longitude Range:', MinLon, MaxLon
+  print'(a,f8.2)',  '     Maximum Elevation (m):', MaxElev
+  print'(a,2f8.2)', '     Latitude Range (degrees):', MinLat, MaxLat
+  print'(a,2f8.2)', '     Longitude Range (degrees):', MinLon, MaxLon
+  print'(a,f8.2)',  '     Radius for Environmental Pressure (km):', PressRad
   print'(a)',       ''
   print'(a,x,a)',   '  Output file name:  ', trim(OutFile)
   print'(a)',       ''
@@ -153,35 +147,62 @@ program find_tc_center
   allocate(Radius%vdata(Nx*Ny))
 
   ! ndims == 0 means this var will be a time series, f(t)
-  MinP%vname = 'min_press'
-  MinP%ndims = 0
-  MinP%units = 'mb'
-  MinP%descrip = 'minimum SLP of storm'
-  allocate(MinP%vdata(1))
 
-  StormX%vname = 'min_press_xloc'
-  StormX%ndims = 0
-  StormX%units = 'deg lon'
-  StormX%descrip = 'longitude location of minimum SLP of storm'
-  allocate(StormX%vdata(1))
-  
-  StormY%vname = 'min_press_yloc'
-  StormY%ndims = 0
-  StormY%units = 'deg lat'
-  StormY%descrip = 'latitude location of minimum SLP of storm'
-  allocate(StormY%vdata(1))
+  ! Minimum Pressure value and location
+  MinPress%vname = 'min_press'
+  MinPress%ndims = 0
+  MinPress%units = 'mb'
+  MinPress%descrip = 'minimum SLP of storm'
+  allocate(MinPress%vdata(1))
 
-  StormXidx%vname = 'min_press_x_index'
-  StormXidx%ndims = 0
-  StormXidx%units = 'lon index'
-  StormXidx%descrip = 'longitude index of minimum SLP of storm'
-  allocate(StormXidx%vdata(1))
+  MinPressX%vname = 'min_press_xloc'
+  MinPressX%ndims = 0
+  MinPressX%units = 'deg lon'
+  MinPressX%descrip = 'longitude location of minimum SLP of storm'
+  allocate(MinPressX%vdata(1))
   
-  StormYidx%vname = 'min_press_y_index'
-  StormYidx%ndims = 0
-  StormYidx%units = 'lat index'
-  StormYidx%descrip = 'latitude index of minimum SLP of storm'
-  allocate(StormYidx%vdata(1))
+  MinPressY%vname = 'min_press_yloc'
+  MinPressY%ndims = 0
+  MinPressY%units = 'deg lat'
+  MinPressY%descrip = 'latitude location of minimum SLP of storm'
+  allocate(MinPressY%vdata(1))
+
+  MinPressXidx%vname = 'min_press_x_index'
+  MinPressXidx%ndims = 0
+  MinPressXidx%units = 'lon index'
+  MinPressXidx%descrip = 'longitude index of minimum SLP of storm'
+  allocate(MinPressXidx%vdata(1))
+  
+  MinPressYidx%vname = 'min_press_y_index'
+  MinPressYidx%ndims = 0
+  MinPressYidx%units = 'lat index'
+  MinPressYidx%descrip = 'latitude index of minimum SLP of storm'
+  allocate(MinPressYidx%vdata(1))
+
+  ! Pressure Centroid location
+  PressCentX%vname = 'press_cent_xloc'
+  PressCentX%ndims = 0
+  PressCentX%units = 'deg lon'
+  PressCentX%descrip = 'longitude location of minimum SLP of storm'
+  allocate(PressCentX%vdata(1))
+  
+  PressCentY%vname = 'press_cent_yloc'
+  PressCentY%ndims = 0
+  PressCentY%units = 'deg lat'
+  PressCentY%descrip = 'latitude location of minimum SLP of storm'
+  allocate(PressCentY%vdata(1))
+
+  PressCentXidx%vname = 'press_cent_x_index'
+  PressCentXidx%ndims = 0
+  PressCentXidx%units = 'lon index'
+  PressCentXidx%descrip = 'longitude index of minimum SLP of storm'
+  allocate(PressCentXidx%vdata(1))
+  
+  PressCentYidx%vname = 'press_cent_y_index'
+  PressCentYidx%ndims = 0
+  PressCentYidx%units = 'lat index'
+  PressCentYidx%descrip = 'latitude index of minimum SLP of storm'
+  allocate(PressCentYidx%vdata(1))
 
   ! Open the input files and the output file
   FileAcc = 'R'
@@ -210,46 +231,74 @@ program find_tc_center
     call rhdf5_read_variable(PfileId, Press%vname, Press%ndims, it, Press%dims, rdata=Press%vdata)
     call rhdf5_read_variable(TfileId, Topo%vname,  Topo%ndims,  it, Topo%dims,  rdata=Topo%vdata)
 
-    ! zero out radius
-    Radius%vdata = 0.0
+    ! Find the storm center using minumum pressure - this is the guess that seeds the
+    ! pressure centroid calculation
+    call FindMinPressure(Nx, Ny, Press%vdata, Topo%vdata, Xcoords%vdata, Ycoords%vdata, &
+            MaxElev, MinLat, MaxLat, MinLon, MaxLon, MinPressIx, MinPressIy, MinPress%vdata(1))
 
-    ! Find the storm center
-    call FindStormCenter(Nx, Ny, Press%vdata, Topo%vdata, Xcoords%vdata, Ycoords%vdata, &
-            MaxElev, MinLat, MaxLat, MinLon, MaxLon, StmIx, StmIy, MinP%vdata(1))
+    ! Record the lat,lon of the miniumum pressure
+    MinPressX%vdata(1) = Xcoords%vdata(MinPressIx)
+    MinPressY%vdata(1) = Ycoords%vdata(MinPressIy)
+    MinPressXidx%vdata(1) = float(MinPressIx)
+    MinPressYidx%vdata(1) = float(MinPressIy)
 
-    ! Record the lat,lon of the storm center
-    StormX%vdata(1) = Xcoords%vdata(StmIx)
-    StormY%vdata(1) = Ycoords%vdata(StmIy)
-    StormXidx%vdata(1) = float(StmIx)
-    StormYidx%vdata(1) = float(StmIy)
+    ! Calculate the radius of all horizontal points from the minimum pressure
+    call CalcHorizRadius(Nx, Ny, Radius%vdata, XcoordsKm, YcoordsKm, MinPressIx, MinPressIy)
+
+    ! Find the pressure centroid
+    call FindPressureCent(Nx, Ny, Press%vdata, Topo%vdata, Radius%vdata, XcoordsKm, YcoordsKm, &
+            Xcoords%vdata, Ycoords%vdata, MaxElev, MinLat, MaxLat, MinLon, MaxLon, PressRad, &
+            PressCentIx, PressCentIy)
+
+    ! Record the lat,lon of the pressure centroid
+    PressCentX%vdata(1) = Xcoords%vdata(PressCentIx)
+    PressCentY%vdata(1) = Ycoords%vdata(PressCentIy)
+    PressCentXidx%vdata(1) = float(PressCentIx)
+    PressCentYidx%vdata(1) = float(PressCentIy)
+
+    ! Calculate the radius of all horizontal points from the pressure centroid
+    call CalcHorizRadius(Nx, Ny, Radius%vdata, XcoordsKm, YcoordsKm, PressCentIx, PressCentIy)
 
     ! Write out the results
+    ! Radius (from pressure centroid)
     call rhdf5_write_variable(OfileId, Radius%vname, Radius%ndims, it, Radius%dims, &
       Radius%units, Radius%descrip, Radius%dimnames, rdata=Radius%vdata)
-    call rhdf5_write_variable(OfileId, MinP%vname, MinP%ndims, it, MinP%dims, &
-      MinP%units, MinP%descrip, MinP%dimnames, rdata=MinP%vdata)
-    call rhdf5_write_variable(OfileId, StormX%vname, StormX%ndims, it, StormX%dims, &
-      StormX%units, StormX%descrip, StormX%dimnames, rdata=StormX%vdata)
-    call rhdf5_write_variable(OfileId, StormY%vname, StormY%ndims, it, StormY%dims, &
-      StormY%units, StormY%descrip, StormY%dimnames, rdata=StormY%vdata)
-    call rhdf5_write_variable(OfileId, StormXidx%vname, StormXidx%ndims, it, StormXidx%dims, &
-      StormXidx%units, StormXidx%descrip, StormXidx%dimnames, rdata=StormXidx%vdata)
-    call rhdf5_write_variable(OfileId, StormYidx%vname, StormYidx%ndims, it, StormYidx%dims, &
-      StormYidx%units, StormYidx%descrip, StormYidx%dimnames, rdata=StormYidx%vdata)
+
+    ! Minimum pressure
+    call rhdf5_write_variable(OfileId, MinPress%vname, MinPress%ndims, it, MinPress%dims, &
+      MinPress%units, MinPress%descrip, MinPress%dimnames, rdata=MinPress%vdata)
+    call rhdf5_write_variable(OfileId, MinPressX%vname, MinPressX%ndims, it, MinPressX%dims, &
+      MinPressX%units, MinPressX%descrip, MinPressX%dimnames, rdata=MinPressX%vdata)
+    call rhdf5_write_variable(OfileId, MinPressY%vname, MinPressY%ndims, it, MinPressY%dims, &
+      MinPressY%units, MinPressY%descrip, MinPressY%dimnames, rdata=MinPressY%vdata)
+    call rhdf5_write_variable(OfileId, MinPressXidx%vname, MinPressXidx%ndims, it, MinPressXidx%dims, &
+      MinPressXidx%units, MinPressXidx%descrip, MinPressXidx%dimnames, rdata=MinPressXidx%vdata)
+    call rhdf5_write_variable(OfileId, MinPressYidx%vname, MinPressYidx%ndims, it, MinPressYidx%dims, &
+      MinPressYidx%units, MinPressYidx%descrip, MinPressYidx%dimnames, rdata=MinPressYidx%vdata)
+
+    ! Pressure centroid
+    call rhdf5_write_variable(OfileId, PressCentX%vname, PressCentX%ndims, it, PressCentX%dims, &
+      PressCentX%units, PressCentX%descrip, PressCentX%dimnames, rdata=PressCentX%vdata)
+    call rhdf5_write_variable(OfileId, PressCentY%vname, PressCentY%ndims, it, PressCentY%dims, &
+      PressCentY%units, PressCentY%descrip, PressCentY%dimnames, rdata=PressCentY%vdata)
+    call rhdf5_write_variable(OfileId, PressCentXidx%vname, PressCentXidx%ndims, it, PressCentXidx%dims, &
+      PressCentXidx%units, PressCentXidx%descrip, PressCentXidx%dimnames, rdata=PressCentXidx%vdata)
+    call rhdf5_write_variable(OfileId, PressCentYidx%vname, PressCentYidx%ndims, it, PressCentYidx%dims, &
+      PressCentYidx%units, PressCentYidx%descrip, PressCentYidx%dimnames, rdata=PressCentYidx%vdata)
 
     ! cleanup
     deallocate(Press%vdata)
     deallocate(Topo%vdata)
 
 
-    ! Write out status to screen every 100 timesteps so that the user can see that a long
+    ! Write out status to screen every 50 timesteps so that the user can see that a long
     ! running job is progressing okay.
-    if (modulo(it,100) .eq. 0) then
+    if (modulo(it,50) .eq. 0) then
       print*, 'Working: Timestep: ', it
 
-      print'(a,i3,a,i3,a,g,a,g,a)', '    Storm Center: (', StmIx, ', ', StmIy, &
-       ') --> (', XcoordsKm(StmIx), ', ', YcoordsKm(StmIy), ')'
-      print*, '   Minumum pressure: ', MinP%vdata(1)
+      print'(a,i3,a,i3,a,g,a,g,a)', '    Pressure Centroid: (', PressCentIx, ', ', PressCentIy, &
+       ') --> (', XcoordsKm(PressCentIx), ', ', YcoordsKm(PressCentIy), ')'
+      print*, '   Minumum Pressure: ', MinPress%vdata(1)
 
       print*, ''
     endif
@@ -273,12 +322,18 @@ program find_tc_center
   call rhdf5_set_dimension(OutFile, Tcoords, 't')
 
   ! attach the dimension specs to the output variable
-  call rhdf5_attach_dimensions(OutFile, MinP)
-  call rhdf5_attach_dimensions(OutFile, StormX)
-  call rhdf5_attach_dimensions(OutFile, StormY)
-  call rhdf5_attach_dimensions(OutFile, StormXidx)
-  call rhdf5_attach_dimensions(OutFile, StormYidx)
   call rhdf5_attach_dimensions(OutFile, Radius)
+
+  call rhdf5_attach_dimensions(OutFile, MinPress)
+  call rhdf5_attach_dimensions(OutFile, MinPressX)
+  call rhdf5_attach_dimensions(OutFile, MinPressY)
+  call rhdf5_attach_dimensions(OutFile, MinPressXidx)
+  call rhdf5_attach_dimensions(OutFile, MinPressYidx)
+
+  call rhdf5_attach_dimensions(OutFile, PressCentX)
+  call rhdf5_attach_dimensions(OutFile, PressCentY)
+  call rhdf5_attach_dimensions(OutFile, PressCentXidx)
+  call rhdf5_attach_dimensions(OutFile, PressCentYidx)
 
   ! cleanup
   call rhdf5_close_file(OfileId)
@@ -299,33 +354,42 @@ contains
 ! GetMyArgs()
 !
 
- subroutine GetMyArgs(Nstr, PressFile, PressVar, TopoFile, TopoVar, OutFile)
+ subroutine GetMyArgs(Nstr, PressFile, PressVar, TopoFile, TopoVar, MaxElev, MinLat, MaxLat, MinLon, MaxLon, PressRad, OutFile)
   implicit none
 
   integer :: Nstr
   character (len=Nstr) :: PressFile, PressVar, TopoFile, TopoVar, OutFile
+  real :: MaxElev, MinLat, MaxLat, MinLon, MaxLon, PressRad
 
   integer :: iargc, i, j, Nargs, Nfld
   character (len=Nstr) :: Arg
-
+  logical :: BadArg
 
   PressFile = ''
-  PressVar = ''
-  TopoFile = ''
-  TopoVar = ''
-  OutFile = ''
+  PressVar  = ''
+  TopoFile  = ''
+  TopoVar   = ''
+  MaxElev   = 0.0
+  MinLat    = 0.0
+  MaxLat    = 0.0
+  MinLon    = 0.0
+  MaxLon    = 0.0
+  OutFile   = ''
 
   Nargs = iargc()
 
-  if (Nargs .ne. 5) then
+  if (Nargs .ne. 11) then
     print'(a)', 'ERROR: must specify exactly 5 argments'
     print'(a)', ''
 
-    print'(a)', 'USAGE: find_tc_center <PressFile> <PressVar> <TopoFile> <TopoVar> <OutFile>'
+    print'(a)', 'USAGE: find_tc_center <PressFile> <PressVar> <TopoFile> <TopoVar> <MaxElev> <MinLat> <MaxLat> <MinLon> <MaxLon> <OutFile>'
     print'(a)', '        <PressFile>: sea level pressure input file'
     print'(a)', '        <PressVar>: sea level pressure input variable name'
     print'(a)', '        <TopoFile>: topography input file'
     print'(a)', '        <TopoVar>: topography input variable name'
+    print'(a)', '        <MaxElev>: only select points with elevation < MaxElev (meters)'
+    print'(a)', '        <MinLat> <MaxLat> <MinLon> <MaxLon>: only select points within the box defined by these arguments (degrees)'
+    print'(a)', '        <PressRad>: radius from storm center for sampling environmental pressure (km)'
     print'(a)', '        <OutFile>: output file name'
     print'(a)', ''
 
@@ -333,6 +397,7 @@ contains
   end if
 
   ! Walk through list of arguments
+  BadArg = .false.
   i = 1
   do while (i .le. Nargs)
     call getarg(i, Arg)
@@ -350,28 +415,65 @@ contains
       TopoVar = Arg
       i = i + 1
     else if (i .eq. 5) then
+      read(Arg,'(f)') MaxElev
+      i = i + 1
+    else if (i .eq. 6) then
+      read(Arg,'(f)') MinLat
+      i = i + 1
+    else if (i .eq. 7) then
+      read(Arg,'(f)') MaxLat
+      i = i + 1
+    else if (i .eq. 8) then
+      read(Arg,'(f)') MinLon
+      i = i + 1
+    else if (i .eq. 9) then
+      read(Arg,'(f)') MaxLon
+      i = i + 1
+    else if (i .eq. 10) then
+      read(Arg,'(f)') PressRad
+      i = i + 1
+    else if (i .eq. 11) then
       OutFile = Arg
       i = i + 1
     endif
   enddo
+
+  if (MaxElev .lt. 0) then
+    print'(a)', 'ERROR: <MaxElev> must be greater than or equal to zero'
+    BadArg = .true.
+  endif
+  if (MinLat .ge. MaxLat) then
+    print'(a)', 'ERROR: <MinLat> must be less than <MaxLat>'
+    BadArg = .true.
+  endif
+  if (MinLon .ge. MaxLon) then
+    print'(a)', 'ERROR: <MinLon> must be less than <MaxLon>'
+    BadArg = .true.
+  endif
+
+  if (BadArg) then
+    stop
+  endif
   
   return
 end subroutine GetMyArgs
 
 !**********************************************************************
-! FindStormCenter
+! FindMinPressure
 !
-! This routine will locate the storm center using the simple hueristic
-! of the center being where the minimum surface pressure exists.
-!
-! Argument it holds the time step that you want to analyze. (iStmCtr, jStmCtr)
-! hold the grid position of the minumum pressure value on the first vertical
-! level (iz = 1).
+! This routine will locate the minumum surface pressure that is 
+! within the storm. There are several aids to help prevent this
+! calculation from straying to false locations. Topography can
+! create problems and other storm phenomena within the grid can
+! also create problems. To handle these cases, the search for the
+! point with minimum pressure is limited to cells that have elevation
+! less than MaxElev, and fall within the box defined by MinLon, MaxLon,
+! MinLat and MaxLat.
 !
 
-subroutine FindStormCenter(Nx, Ny, Press, Topo, Lon, Lat, MaxElev, &
-                           MinLat, MaxLat, MinLon, MaxLon, StmCtrX, &
-                           StmCtrY, MinP)
+subroutine FindMinPressure(Nx, Ny, Press, Topo, Lon, Lat, MaxElev, &
+                           MinLat, MaxLat, MinLon, MaxLon, MinPressIx, &
+                           MinPressIy, MinPress)
   implicit none
 
   integer :: Nx, Ny
@@ -379,15 +481,15 @@ subroutine FindStormCenter(Nx, Ny, Press, Topo, Lon, Lat, MaxElev, &
   real, dimension(Nx) :: Lon
   real, dimension(Ny) :: Lat
   real :: MaxElev, MinLat, MaxLat, MinLon, MaxLon
-  integer :: StmCtrX, StmCtrY
-  real :: MinP
+  integer :: MinPressIx, MinPressIy
+  real :: MinPress
 
   integer :: ix, iy
   logical :: SelectPoint
 
-  MinP = 1e10 ! ridiculously large pressure
-  StmCtrX = 0 
-  StmCtrY = 0 
+  MinPress = 1e10 ! ridiculously large pressure
+  MinPressIx = 0 
+  MinPressIy = 0 
 
   do ix = 1, Nx
     do iy = 1, Ny
@@ -398,16 +500,171 @@ subroutine FindStormCenter(Nx, Ny, Press, Topo, Lon, Lat, MaxElev, &
       SelectPoint = SelectPoint .and. (Lat(iy) .le. MaxLat)
 
       if (SelectPoint) then
-        if (Press(ix,iy) .lt. MinP) then
-          MinP = Press(ix,iy)
-          StmCtrX = ix
-          StmCtrY = iy
+        if (Press(ix,iy) .lt. MinPress) then
+          MinPress = Press(ix,iy)
+          MinPressIx = ix
+          MinPressIy = iy
         endif
       endif
     enddo
   enddo
   
   return
-end subroutine FindStormCenter
+end subroutine FindMinPressure
+
+!**********************************************************************
+! CalcHorizRadius
+!
+! This routine will calculate (in km) the radius from the given center
+! for each point in the horizontal domain.
+!
+
+subroutine CalcHorizRadius(Nx, Ny, Radius, X, Y, CenterIx, CenterIy)
+  implicit none
+
+  integer :: Nx, Ny
+  real, dimension(Nx,Ny) :: Radius
+  real, dimension(Nx) :: X
+  real, dimension(Ny) :: Y
+  integer :: CenterIx, CenterIy
+
+  integer :: i, j
+  real :: dx, dy
+
+  do j = 1, Ny
+    do i = 1, Nx
+      dx = X(i) - X(CenterIx)
+      dy = Y(j) - Y(CenterIy)
+      Radius(i,j) = sqrt(dx*dx + dy*dy)
+    enddo
+  enddo
+
+  return
+end subroutine CalcHorizRadius
+
+!**********************************************************************
+! FindPressureCent
+!
+! This routine will calculate the pressure centroid within the given
+! radius.
+!
+
+subroutine FindPressureCent(Nx, Ny, Press, Topo, Radius, X, Y, Lon, Lat, &
+               MaxElev, MinLat, MaxLat, MinLon, MaxLon, PressRad, PressCentIx, PressCentIy)
+  implicit none
+
+  integer :: Nx, Ny
+  real, dimension(Nx,Ny) :: Press, Topo, Radius
+  real, dimension(Nx) :: X, Lon
+  real, dimension(Ny) :: Y, Lat
+  real :: MaxElev, MinLat, MaxLat, MinLon, MaxLon, PressRad
+  integer :: PressCentIx, PressCentIy
+
+  integer :: i, j, n
+  real :: Penv, Pdiff, SumXpdiff, SumYpdiff, SumPdiff
+  real :: Xcent, Ycent
+  real :: DeltaX
+  logical :: SelectPoint
+
+  DeltaX = X(2) - X(1)  ! assume grid spacing is same in x and y
+  
+  ! Find the environmental pressure which is defined as the
+  ! average pressure located at PressRad distance from the
+  ! miniumum pressure location (Radius holds these distances)
+  n = 0
+  Penv = 0.0
+  do j = 1, Ny
+    do i = 1, Nx
+      SelectPoint = Topo(i,j) .lt. MaxElev
+      SelectPoint = SelectPoint .and. (Lon(i) .ge. MinLon)
+      SelectPoint = SelectPoint .and. (Lon(i) .le. MaxLon)
+      SelectPoint = SelectPoint .and. (Lat(j) .ge. MinLat)
+      SelectPoint = SelectPoint .and. (Lat(j) .le. MaxLat)
+      ! take ~ 2*DeltaX wide band of samples for env. pressure
+      SelectPoint = SelectPoint .and. (abs(Radius(i,j)-PressRad) .lt. DeltaX)
+
+      if (SelectPoint) then
+        n = n + 1
+        Penv = Penv + Press(i,j)
+      endif
+    enddo
+  enddo
+
+  if (n .gt. 0) then
+    Penv = Penv / float(n)
+  else
+    print'(a)', 'ERROR: unable to calculate environmental pressure, no points selected'
+    stop
+  endif
+
+  ! Calculate the centroid
+  !   Pdiff = P - Penv
+  !
+  !    x_cent = sum(x_i * Pdiff_i) / sum(Pdiff_i)
+  !    y_cent = sum(y_i * Pdiff_i) / sum(Pdiff_i)
+  !
+  SumPdiff = 0.0
+  SumXpdiff = 0.0
+  SumYpdiff = 0.0
+  do j = 1, Ny
+    do i = 1, Nx
+      SelectPoint = Topo(i,j) .lt. MaxElev
+      SelectPoint = SelectPoint .and. (Lon(i) .ge. MinLon)
+      SelectPoint = SelectPoint .and. (Lon(i) .le. MaxLon)
+      SelectPoint = SelectPoint .and. (Lat(j) .ge. MinLat)
+      SelectPoint = SelectPoint .and. (Lat(j) .le. MaxLat)
+      ! take all points within PressRad distance from min pressure
+      SelectPoint = SelectPoint .and. (Radius(i,j) .le. PressRad)
+
+      if (SelectPoint) then
+        Pdiff = Penv - Press(i,j)
+        SumPdiff = SumPdiff + Pdiff
+        SumXpdiff = SumXpdiff + (X(i) * Pdiff)
+        SumYpdiff = SumYpdiff + (Y(j) * Pdiff)
+      endif
+    enddo
+  enddo
+
+  Xcent = SumXpdiff / SumPdiff
+  Ycent = SumYpdiff / SumPdiff
+
+  ! convert the centroid to the nearest grid cell x and y
+  call FindCoordMatch(Nx, X, Xcent, PressCentIx)
+  call FindCoordMatch(Ny, Y, Ycent, PressCentIy)
+
+  return
+end subroutine FindPressureCent
+
+!**********************************************************************
+! FindCoordMatch
+!
+! This routine will find which coord value that the given value
+! is closest to, and return the corresponding index into the coord array.
+!
+
+subroutine FindCoordMatch(Nc, Coords, Val, Cindex)
+  implicit none
+
+  integer :: Nc, Cindex
+  real, dimension(Nc) :: Coords
+  real :: Val
+
+  integer :: i
+  real :: Diff, MinDiff
+
+  Cindex = 1
+  MinDiff = abs(Val - Coords(1))
+  do i = 2, Nc
+    Diff = abs(Val - Coords(i))
+    if (Diff .lt. MinDiff) then
+      Cindex = i
+      MinDiff = Diff
+    endif
+  enddo
+
+  return
+end subroutine FindCoordMatch
+
 
 end program find_tc_center
+
