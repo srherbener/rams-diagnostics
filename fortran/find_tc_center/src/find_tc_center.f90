@@ -26,7 +26,7 @@ program find_tc_center
   character (len=LargeString) :: PressFile, PressVar, TopoFile, TopoVar, OutFile
 
   type (Rhdf5Var) :: Press, Topo, Xcoords, Ycoords, Zcoords, Tcoords
-  type (Rhdf5Var) :: Radius, MinPress, MinPressX, MinPressY, MinPressXidx, MinPressYidx
+  type (Rhdf5Var) :: Radius, Phi, MinPress, MinPressX, MinPressY, MinPressXidx, MinPressYidx
   type (Rhdf5Var) :: PressCentX, PressCentY, PressCentXidx, PressCentYidx
   real, dimension(:), allocatable :: XcoordsKm, YcoordsKm
   real :: DeltaX, DeltaY, MaxElev
@@ -137,7 +137,7 @@ program find_tc_center
   Press%ndims = Press%ndims - 1
   Topo%ndims = Topo%ndims - 1
 
-  ! prepare for writing the radius values into the output file.
+  ! prepare for writing the radius and Phi values (polar coords) into the output file.
   Radius%vname = 'radius'
   Radius%ndims = 2
   Radius%dims(1) = Nx
@@ -147,6 +147,16 @@ program find_tc_center
   Radius%units = 'km'
   Radius%descrip = 'radius from storm center'
   allocate(Radius%vdata(Nx*Ny))
+
+  Phi%vname = 'phi'
+  Phi%ndims = 2
+  Phi%dims(1) = Nx
+  Phi%dims(2) = Ny
+  Phi%dimnames(1) = 'x'
+  Phi%dimnames(2) = 'y'
+  Phi%units = 'radians'
+  Phi%descrip = 'angle from storm center'
+  allocate(Phi%vdata(Nx*Ny))
 
   ! ndims == 0 means this var will be a time series, f(t)
 
@@ -253,8 +263,8 @@ program find_tc_center
     MinPressXidx%vdata(1) = float(MinPressIx)
     MinPressYidx%vdata(1) = float(MinPressIy)
 
-    ! Calculate the radius of all horizontal points from the minimum pressure
-    call CalcHorizRadius(Nx, Ny, Radius%vdata, XcoordsKm, YcoordsKm, MinPressIx, MinPressIy)
+    ! Calculate the polar coordinates of all horizontal points from the minimum pressure
+    call CalcPolarCoords(Nx, Ny, Radius%vdata, Phi%vdata, XcoordsKm, YcoordsKm, MinPressIx, MinPressIy)
 
     ! Find the pressure centroid
     call FindPressureCent(Nx, Ny, Press%vdata, SelectGrid, Radius%vdata, XcoordsKm, YcoordsKm, PressRad, PressCentIx, PressCentIy)
@@ -266,12 +276,14 @@ program find_tc_center
     PressCentYidx%vdata(1) = float(PressCentIy)
 
     ! Calculate the radius of all horizontal points from the pressure centroid
-    call CalcHorizRadius(Nx, Ny, Radius%vdata, XcoordsKm, YcoordsKm, PressCentIx, PressCentIy)
+    call CalcPolarCoords(Nx, Ny, Radius%vdata, Phi%vdata, XcoordsKm, YcoordsKm, PressCentIx, PressCentIy)
 
     ! Write out the results
-    ! Radius (from pressure centroid)
+    ! Polor coords (from pressure centroid)
     call rhdf5_write_variable(OfileId, Radius%vname, Radius%ndims, it, Radius%dims, &
       Radius%units, Radius%descrip, Radius%dimnames, rdata=Radius%vdata)
+    call rhdf5_write_variable(OfileId, Phi%vname, Phi%ndims, it, Phi%dims, &
+      Phi%units, Phi%descrip, Phi%dimnames, rdata=Phi%vdata)
 
     ! Minimum pressure
     call rhdf5_write_variable(OfileId, MinPress%vname, MinPress%ndims, it, MinPress%dims, &
@@ -332,6 +344,7 @@ program find_tc_center
 
   ! attach the dimension specs to the output variable
   call rhdf5_attach_dimensions(OutFile, Radius)
+  call rhdf5_attach_dimensions(OutFile, Phi)
 
   call rhdf5_attach_dimensions(OutFile, MinPress)
   call rhdf5_attach_dimensions(OutFile, MinPressX)
@@ -509,17 +522,19 @@ subroutine FindMinPressure(Nx, Ny, Press, SelectGrid, MinPressIx, MinPressIy, Mi
 end subroutine FindMinPressure
 
 !**********************************************************************
-! CalcHorizRadius
+! CalcPolarCoords
 !
-! This routine will calculate (in km) the radius from the given center
-! for each point in the horizontal domain.
+! This routine will calculate polar coordinates [ radius (km), angle (radians) ]
+! from the given center for each point in the horizontal domain.
 !
 
-subroutine CalcHorizRadius(Nx, Ny, Radius, X, Y, CenterIx, CenterIy)
+subroutine CalcPolarCoords(Nx, Ny, Radius, Phi, X, Y, CenterIx, CenterIy)
   implicit none
 
+  real, parameter :: PI = 3.141592654
+
   integer :: Nx, Ny
-  real, dimension(Nx,Ny) :: Radius
+  real, dimension(Nx,Ny) :: Radius, Phi
   real, dimension(Nx) :: X
   real, dimension(Ny) :: Y
   integer :: CenterIx, CenterIy
@@ -531,12 +546,21 @@ subroutine CalcHorizRadius(Nx, Ny, Radius, X, Y, CenterIx, CenterIy)
     do i = 1, Nx
       dx = X(i) - X(CenterIx)
       dy = Y(j) - Y(CenterIy)
+
       Radius(i,j) = sqrt(dx*dx + dy*dy)
+
+      ! atan2 returns a value in radians between -PI and +PI
+      ! convert to value between 0 and 2*PI
+      Phi(i,j) = atan2(dy, dx)
+      if (Phi(i,j) .lt. 0.0) then
+        Phi(i,j) = Phi(i,j) + (2.0 * PI)
+      endif
+      
     enddo
   enddo
 
   return
-end subroutine CalcHorizRadius
+end subroutine CalcPolarCoords
 
 !**********************************************************************
 ! FindPressureCent
