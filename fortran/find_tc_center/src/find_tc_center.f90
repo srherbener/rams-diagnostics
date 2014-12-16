@@ -40,6 +40,8 @@ program find_tc_center
   character (len=RHDF5_MAX_STRING) :: FileAcc
   integer :: PfileId, TfileId, OfileId
 
+  logical, dimension(:,:), allocatable :: SelectGrid
+
   ! Get the command line arguments
   call GetMyArgs(LargeString, PressFile, PressVar, TopoFile, TopoVar, MaxElev, MinLat, MaxLat, MinLon, MaxLon, PressRad, OutFile)
 
@@ -219,6 +221,12 @@ program find_tc_center
   print*, 'Writing HDF5 file: ', trim(OutFile)
   print*, ''
 
+  ! Allocate the selection grid. This is a 2D logical array that will
+  ! contain the results of applying the MaxElev, and the "inside the box"
+  ! tests so that these tests don't have to be repeated multiple times
+  ! in the flow.
+  allocate(SelectGrid(Nx,Ny))
+
   ! Do the filtering one time step at a time.
   !
   ! The necessary input files have been opened, data buffers allocated,
@@ -231,10 +239,13 @@ program find_tc_center
     call rhdf5_read_variable(PfileId, Press%vname, Press%ndims, it, Press%dims, rdata=Press%vdata)
     call rhdf5_read_variable(TfileId, Topo%vname,  Topo%ndims,  it, Topo%dims,  rdata=Topo%vdata)
 
+    ! Mark the points that will be sampled accroding to their elevation, and location within
+    ! the horizontal domain.
+    call SetSelectGrid(Nx, Ny, Topo%vdata, Xcoords%vdata, Ycoords%vdata, MaxElev, MinLat, MaxLat, MinLon, MaxLon, SelectGrid)
+
     ! Find the storm center using minumum pressure - this is the guess that seeds the
     ! pressure centroid calculation
-    call FindMinPressure(Nx, Ny, Press%vdata, Topo%vdata, Xcoords%vdata, Ycoords%vdata, &
-            MaxElev, MinLat, MaxLat, MinLon, MaxLon, MinPressIx, MinPressIy, MinPress%vdata(1))
+    call FindMinPressure(Nx, Ny, Press%vdata, SelectGrid, MinPressIx, MinPressIy, MinPress%vdata(1))
 
     ! Record the lat,lon of the miniumum pressure
     MinPressX%vdata(1) = Xcoords%vdata(MinPressIx)
@@ -246,9 +257,7 @@ program find_tc_center
     call CalcHorizRadius(Nx, Ny, Radius%vdata, XcoordsKm, YcoordsKm, MinPressIx, MinPressIy)
 
     ! Find the pressure centroid
-    call FindPressureCent(Nx, Ny, Press%vdata, Topo%vdata, Radius%vdata, XcoordsKm, YcoordsKm, &
-            Xcoords%vdata, Ycoords%vdata, MaxElev, MinLat, MaxLat, MinLon, MaxLon, PressRad, &
-            PressCentIx, PressCentIy)
+    call FindPressureCent(Nx, Ny, Press%vdata, SelectGrid, Radius%vdata, XcoordsKm, YcoordsKm, PressRad, PressCentIx, PressCentIy)
 
     ! Record the lat,lon of the pressure centroid
     PressCentX%vdata(1) = Xcoords%vdata(PressCentIx)
@@ -471,40 +480,27 @@ end subroutine GetMyArgs
 ! MinLat and MaxLat.
 !
 
-subroutine FindMinPressure(Nx, Ny, Press, Topo, Lon, Lat, MaxElev, &
-                           MinLat, MaxLat, MinLon, MaxLon, MinPressIx, &
-                           MinPressIy, MinPress)
+subroutine FindMinPressure(Nx, Ny, Press, SelectGrid, MinPressIx, MinPressIy, MinPress)
   implicit none
 
   integer :: Nx, Ny
-  real, dimension(Nx,Ny) :: Press, Topo
-  real, dimension(Nx) :: Lon
-  real, dimension(Ny) :: Lat
-  real :: MaxElev, MinLat, MaxLat, MinLon, MaxLon
+  real, dimension(Nx,Ny) :: Press
+  logical, dimension(Nx,Ny) :: SelectGrid
   integer :: MinPressIx, MinPressIy
   real :: MinPress
 
-  integer :: ix, iy
-  logical :: SelectPoint
+  integer :: i, j
 
   MinPress = 1e10 ! ridiculously large pressure
   MinPressIx = 0 
   MinPressIy = 0 
 
-  do ix = 1, Nx
-    do iy = 1, Ny
-      SelectPoint = Topo(ix,iy) .lt. MaxElev
-      SelectPoint = SelectPoint .and. (Lon(ix) .ge. MinLon)
-      SelectPoint = SelectPoint .and. (Lon(ix) .le. MaxLon)
-      SelectPoint = SelectPoint .and. (Lat(iy) .ge. MinLat)
-      SelectPoint = SelectPoint .and. (Lat(iy) .le. MaxLat)
-
-      if (SelectPoint) then
-        if (Press(ix,iy) .lt. MinPress) then
-          MinPress = Press(ix,iy)
-          MinPressIx = ix
-          MinPressIy = iy
-        endif
+  do j = 1, Ny
+    do i = 1, Nx
+      if (SelectGrid(i,j) .and. (Press(i,j) .lt. MinPress)) then
+        MinPress = Press(i,j)
+        MinPressIx = i
+        MinPressIy = j
       endif
     enddo
   enddo
@@ -549,22 +545,21 @@ end subroutine CalcHorizRadius
 ! radius.
 !
 
-subroutine FindPressureCent(Nx, Ny, Press, Topo, Radius, X, Y, Lon, Lat, &
-               MaxElev, MinLat, MaxLat, MinLon, MaxLon, PressRad, PressCentIx, PressCentIy)
+subroutine FindPressureCent(Nx, Ny, Press, SelectGrid, Radius, X, Y, PressRad, PressCentIx, PressCentIy)
   implicit none
 
   integer :: Nx, Ny
-  real, dimension(Nx,Ny) :: Press, Topo, Radius
-  real, dimension(Nx) :: X, Lon
-  real, dimension(Ny) :: Y, Lat
-  real :: MaxElev, MinLat, MaxLat, MinLon, MaxLon, PressRad
+  real, dimension(Nx,Ny) :: Press, Radius
+  logical, dimension(Nx,Ny) :: SelectGrid
+  real, dimension(Nx) :: X
+  real, dimension(Ny) :: Y
+  real :: PressRad
   integer :: PressCentIx, PressCentIy
 
   integer :: i, j, n
   real :: Penv, Pdiff, SumXpdiff, SumYpdiff, SumPdiff
   real :: Xcent, Ycent
   real :: DeltaX
-  logical :: SelectPoint
 
   DeltaX = X(2) - X(1)  ! assume grid spacing is same in x and y
   
@@ -575,15 +570,9 @@ subroutine FindPressureCent(Nx, Ny, Press, Topo, Radius, X, Y, Lon, Lat, &
   Penv = 0.0
   do j = 1, Ny
     do i = 1, Nx
-      SelectPoint = Topo(i,j) .lt. MaxElev
-      SelectPoint = SelectPoint .and. (Lon(i) .ge. MinLon)
-      SelectPoint = SelectPoint .and. (Lon(i) .le. MaxLon)
-      SelectPoint = SelectPoint .and. (Lat(j) .ge. MinLat)
-      SelectPoint = SelectPoint .and. (Lat(j) .le. MaxLat)
-      ! take ~ 2*DeltaX wide band of samples for env. pressure
-      SelectPoint = SelectPoint .and. (abs(Radius(i,j)-PressRad) .lt. DeltaX)
-
-      if (SelectPoint) then
+      ! sample ~ 2*DeltaX wide band of samples for env. pressure
+      ! from points in selection grid
+      if (SelectGrid(i,j) .and. (abs(Radius(i,j)-PressRad) .lt. DeltaX)) then
         n = n + 1
         Penv = Penv + Press(i,j)
       endif
@@ -608,15 +597,9 @@ subroutine FindPressureCent(Nx, Ny, Press, Topo, Radius, X, Y, Lon, Lat, &
   SumYpdiff = 0.0
   do j = 1, Ny
     do i = 1, Nx
-      SelectPoint = Topo(i,j) .lt. MaxElev
-      SelectPoint = SelectPoint .and. (Lon(i) .ge. MinLon)
-      SelectPoint = SelectPoint .and. (Lon(i) .le. MaxLon)
-      SelectPoint = SelectPoint .and. (Lat(j) .ge. MinLat)
-      SelectPoint = SelectPoint .and. (Lat(j) .le. MaxLat)
-      ! take all points within PressRad distance from min pressure
-      SelectPoint = SelectPoint .and. (Radius(i,j) .le. PressRad)
-
-      if (SelectPoint) then
+      ! sample points within PressRad distance from min pressure
+      ! from selection grid
+      if (SelectGrid(i,j) .and. (Radius(i,j) .le. PressRad)) then
         Pdiff = Penv - Press(i,j)
         SumPdiff = SumPdiff + Pdiff
         SumXpdiff = SumXpdiff + (X(i) * Pdiff)
@@ -665,6 +648,40 @@ subroutine FindCoordMatch(Nc, Coords, Val, Cindex)
   return
 end subroutine FindCoordMatch
 
+!**********************************************************************
+! SetSelectGrid
+!
+! This routine will fill in the selection grid (2D) according to the
+! tests that check for each grid cells elevation and location within
+! the horizontal domain.
+!
+subroutine SetSelectGrid(Nx, Ny, Topo, Lon, Lat, MaxElev, MinLat, MaxLat, MinLon, MaxLon, SelectGrid)
+  implicit none
+
+  integer :: Nx, Ny
+  real, dimension(Nx,Ny) :: Topo
+  real, dimension(Nx) :: Lon
+  real, dimension(Ny) :: Lat
+  real :: MaxElev, MinLat, MaxLat, MinLon, MaxLon
+  logical, dimension(Nx,Ny) :: SelectGrid
+
+  integer :: i, j
+
+  do j = 1, Ny
+    do i = 1, Nx
+      ! Select if elevation less than given limit
+      SelectGrid(i,j) = Topo(i,j) .lt. MaxElev
+
+      ! Select if location is withing given limits (lat, lon)
+      SelectGrid(i,j) = SelectGrid(i,j) .and. (Lon(i) .ge. MinLon)
+      SelectGrid(i,j) = SelectGrid(i,j) .and. (Lon(i) .le. MaxLon)
+      SelectGrid(i,j) = SelectGrid(i,j) .and. (Lat(j) .ge. MinLat)
+      SelectGrid(i,j) = SelectGrid(i,j) .and. (Lat(j) .le. MaxLat)
+    enddo
+  enddo
+
+  return
+end subroutine SetSelectGrid
 
 end program find_tc_center
 
