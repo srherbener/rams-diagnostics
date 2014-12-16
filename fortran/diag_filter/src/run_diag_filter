@@ -147,7 +147,7 @@ foreach $Case (sort(keys(%Cases)))
     # then join these files into the main file (above the time directories)
     foreach $Tdir (sort(keys(%TimeDirs)))
       {
-      ($InDir,$InFileSuffix,$OutFile) = &CreateFileNames($Case, $Tdir, $Fname, $FilterDir, $RevuDir, $Fspecs[2]);
+      ($InDir,$InFileSuffix,$OutFile) = &CreateFileNames($Case, $Tdir, $Fname, $FilterDir, $RevuDir, $Fspecs[1]);
 
       print "***************************************************************\n";
       print "Running diag_filter:\n";
