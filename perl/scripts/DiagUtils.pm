@@ -71,10 +71,12 @@ sub ReadConfigFile
       }
     elsif ($f[0] eq "Azavg:")
       {
-      $Config{AZAVG_DIAGS}{$f[1]}{VAR}       = $f[2];
-      $Config{AZAVG_DIAGS}{$f[1]}{DIM}       = $f[3];
-      $Config{AZAVG_DIAGS}{$f[1]}{NBANDS}    = $f[4];
-      $Config{AZAVG_DIAGS}{$f[1]}{FILTER}    = $f[5];
+      $Config{AZAVG_DIAGS}{$f[1]}{V_SPECS}     = $f[2];
+      $Config{AZAVG_DIAGS}{$f[1]}{V_NAME}      = $f[3];
+      $Config{AZAVG_DIAGS}{$f[1]}{NUM_RBANDS}  = $f[4];
+      $Config{AZAVG_DIAGS}{$f[1]}{MAX_RADIUS}  = $f[5];
+      $Config{AZAVG_DIAGS}{$f[1]}{F_PREFIX}    = $f[6];
+      $Config{AZAVG_DIAGS}{$f[1]}{SC_PREFIX}   = $f[7];
       }
     elsif ($f[0] eq "Tsavg:")
       {

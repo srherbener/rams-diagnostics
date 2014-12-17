@@ -26,18 +26,18 @@ contains
 ! z level.
 !
 
-subroutine AzimuthalAverage(Nx, Ny, Nz, AvarNz, NumRbands, NumBins, Avar, AzAvg, &
+subroutine AzimuthalAverage(Nx, Ny, Nz, FilterNz, NumRbands, NumBins, Avar, AzAvg, &
   RbandInc, Filter, Radius, HistBins, DoHist, UndefVal)
 
   implicit none
 
   integer :: Nx, Ny, Nz
-  integer :: AvarNz
+  integer :: FilterNz
   integer :: NumRbands
   integer :: NumBins
-  real, dimension(Nx,Ny,AvarNz) :: Avar
-  real, dimension(NumRbands,NumBins,AvarNz) :: AzAvg
-  real, dimension(Nx,Ny,Nz) :: Filter
+  real, dimension(Nx,Ny,Nz) :: Avar
+  real, dimension(NumRbands,NumBins,Nz) :: AzAvg
+  real, dimension(Nx,Ny,FilterNz) :: Filter
   real, dimension(Nx,Ny) :: Radius
   real, dimension(NumBins) :: HistBins
   real :: RbandInc, UndefVal
@@ -54,7 +54,7 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, AvarNz, NumRbands, NumBins, Avar, AzAvg,
   ! x-y plane on the surface (iz .eq. 1)
 
   ! zero out the output array
-  do iz = 1, AvarNz
+  do iz = 1, Nz
     do ib = 1, NumBins
       do ir = 1, NumRbands
         AzAvg(ir,ib,iz) = 0.0
@@ -62,19 +62,10 @@ subroutine AzimuthalAverage(Nx, Ny, Nz, AvarNz, NumRbands, NumBins, Avar, AzAvg,
     enddo
   enddo
 
-  do iz = 1, AvarNz
-    ! The filter data always comes in as a 3D var, and since RAMS has
-    ! the first z level below the surface, the first z level in the filter
-    ! tends to be all zeros (since it is typically desired to trim this
-    ! level off from diagnostics). When a 2D var comes in, AvarNz will
-    ! be equal to one which is the below surface level in the filter
-    ! data. To work around this, when AvarNz is one (2d var), then force
-    ! this code to look at the second level in the filter (first level
-    ! above surface). Note that it's up to the caller to make sure
-    ! that the 2nd level in the filter (first level above sfc) have
-    ! good data in it.
-    if (AvarNz .eq. 1) then
-      filter_z = 2
+  do iz = 1, Nz
+    ! Filter can be either 2D or 3D, use FilterNz to determine
+    if (FilterNz .eq. 1) then
+      filter_z = 1
     else
       filter_z = iz
     endif

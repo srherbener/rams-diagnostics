@@ -37,12 +37,13 @@ use DiagUtils;
 #
 sub CreateFileNames
   {
-  my ($Case, $Tdir, $Adiag, $Fprefix, $AzavgDir, $FilterDir, $RevuDir) = @_;
+  my ($Case, $Tdir, $Adiag, $VarPrefix, $FilterPrefix, $StormCenterPrefix, $AzavgDir, $FilterDir, $RevuDir) = @_;
   
   my $InDir;
   my $InFileSuffix;
   my $OutFile;
   my $FilterFile;
+  my $StormCenterFile;
 
   my $Pattern;
   my @f;
@@ -71,15 +72,16 @@ sub CreateFileNames
   $InDir = $Case . "/" . $RevuDir . $TdirStr;
 
   # Use the w input file as a sample for finding the input file suffix.
-  $Pattern = $InDir . "/w-*.h5";
+  $Pattern = $InDir . "/$VarPrefix-*.h5";
   @f = glob($Pattern);
   $InFileSuffix = $f[0];
-  $InFileSuffix =~ s/.*\/w-/-/;
+  $InFileSuffix =~ s/.*\/$VarPrefix-/-/;
   
   $OutFile = $AzavgDir . ${TdirStr} . "/" . ${Adiag} . "_" . ${Case} . ".h5";
-  $FilterFile = $FilterDir . ${TdirStr} . "/" . ${Fprefix} . "_" . ${Case} . ".h5";
+  $FilterFile = $FilterDir . ${TdirStr} . "/" . ${FilterPrefix} . "_" . ${Case} . ".h5";
+  $StormCenterFile = $InDir . ${TdirStr} . "/" . ${StormCenterPrefix} . $InFileSuffix;
 
-  return ($InDir, $InFileSuffix, $OutFile, $FilterFile);
+  return ($InDir, $InFileSuffix, $OutFile, $FilterFile, $StormCenterFile);
   }
 
 #######################################################################
@@ -100,23 +102,28 @@ my $RevuDir;
 my @f;
 my $Case;
 my $Tdir;
+
 my $Adiag;
-my $Avar;
-my $AvarName;
-my $RevuVar;
-my $VarDim;
+my $FilterPrefix;
+my $StormCenterPrefix;
 my $Nbands;
-my $Fprefix;
+my $MaxRadius;
+my $VarPrefix;
+my $VarSpecs;
+my $VarName;
+my $VarPrefix;
+
+my $Temp1;
+my $Temp2;
+
 my $InDir;
 my $InFileSuffix;
 my $OutFile;
 my $FilterFile;
-my $Temp1;
-my $Temp2;
+my $StormCenterFile;
 
 my @SysArgs;
 my $OutDir;
-my $GradsControlFile;
 my $JoinInFiles;
 my $JoinOutFile;
 
@@ -151,47 +158,49 @@ foreach $Case (sort(keys(%Cases)))
     {
     $JoinInFiles = "";
 
-    $Avar = $AzavgDiags{$Adiag}{VAR};
-    $VarDim = $AzavgDiags{$Adiag}{DIM};
-    $Nbands = $AzavgDiags{$Adiag}{NBANDS};
-    $Fprefix = $AzavgDiags{$Adiag}{FILTER};
+    $VarSpecs          = $AzavgDiags{$Adiag}{V_SPECS};
+    $VarName           = $AzavgDiags{$Adiag}{V_NAME};
+    $Nbands            = $AzavgDiags{$Adiag}{NUM_RBANDS};
+    $MaxRadius         = $AzavgDiags{$Adiag}{MAX_RADIUS};
+    $FilterPrefix      = $AzavgDiags{$Adiag}{F_PREFIX};
+    $StormCenterPrefix = $AzavgDiags{$Adiag}{SC_PREFIX};
 
-    if (($Avar eq "speed_t") || ($Avar eq "speed_r"))
+    # Set $VarPrefix to a file prefix that needs to exist for this call to azavg.
+    # $VarPrefix will be used by CreatFileNames() to form a pattern with which to
+    # determine the input file suffix.
+    if (($VarSpecs eq "speed_t") || ($VarSpecs eq "speed_r")) 
       {
-      # won't have a corresponding name in %Vars
-      $RevuVar = "HorizSpeed";
-      $AvarName = $Avar;
+      $VarPrefix = "u";
       }
-    elsif ($Avar =~ /^hist:/)
+    elsif ($VarSpecs =~ /^hist:/)
       {
-      ($Temp1, $AvarName, $Temp2) = split(':', $Avar);
-      $RevuVar = $Vars{$AvarName}{REVU_VAR};
+      ($Temp1, $VarPrefix, $Temp2) = split(':', $VarSpecs);
       }
     else
       {
-      $RevuVar = $Vars{$Avar}{REVU_VAR};
-      $AvarName = $Avar;
+      $VarPrefix = $VarSpecs;
       }
 
     # run through each time directory generating the current diagnostic, and
     # then join these files into the main file (above the time directories)
     foreach $Tdir (sort(keys(%TimeDirs)))
       {
-      ($InDir,$InFileSuffix,$OutFile,$FilterFile) =
-          &CreateFileNames($Case, $Tdir, $Adiag,$Fprefix, $AzavgDir, $FilterDir, $RevuDir);
+      ($InDir,$InFileSuffix,$OutFile,$FilterFile,$StormCenterFile) =
+          &CreateFileNames($Case, $Tdir, $Adiag, $VarPrefix, $FilterPrefix, $StormCenterPrefix, $AzavgDir, $FilterDir, $RevuDir);
 
       print "***************************************************************\n";
       print "Running azavg:\n";
       print "  Case: $Case\n";
       print "  Time Directory: $Tdir\n";
-      print "  Variable: $AvarName\n";
-      print "    Variable Dimension: $VarDim\n";
-      print "    Number Radial Bands: $Nbands\n";
-      print "    Filter File Name: $FilterFile\n";
-      print "    Revu Variable Name: $RevuVar\n";
       print "  Input File Directory: $InDir\n";
       print "  Input File Suffix: $InFileSuffix\n";
       print "  Output File: $OutFile\n";
+      print "  Variable Specs: $VarSpecs\n";
+      print "  Variable Name: $VarName\n";
+      print "  Number Radial Bands: $Nbands\n";
+      print "  Maximum Radius: $MaxRadius\n";
+      print "  Filter File Name: $FilterFile\n";
+      print "  Storm Center Name: $StormCenterFile\n";
       print "\n";
 
       # run azavg, make sure the output directory exists
@@ -202,7 +211,7 @@ foreach $Case (sort(keys(%Cases)))
         system(@SysArgs);
         }
 
-      @SysArgs = ("azavg", $InDir, $InFileSuffix, $OutFile, $FilterFile, $Nbands, $Avar, $RevuVar, $VarDim);
+      @SysArgs = ("azavg", $InDir, $InFileSuffix, $OutFile, $FilterFile, $StormCenterFile, $Nbands, $MaxRadius, $VarSpecs, $VarName);
       print "Running: ", join(" ", @SysArgs), "\n\n";
       system(@SysArgs);
 
@@ -227,12 +236,12 @@ foreach $Case (sort(keys(%Cases)))
 
     if ($JoinInFiles ne "NONE")
       {
-      @SysArgs = ("join_hdata", $JoinInFiles, $JoinOutFile, $Avar);
+      @SysArgs = ("join_hdata", $JoinInFiles, $JoinOutFile, $VarName);
       print "***************************************************\n";
       print " Joining HDF5 data:\n";
       print "   Input Files: $JoinInFiles\n";
       print "   Output File: $JoinOutFile\n";
-      print "   GRADS Variable: $Avar\n";
+      print "   GRADS Variable: $VarName\n";
       system(@SysArgs);
       }
     }
