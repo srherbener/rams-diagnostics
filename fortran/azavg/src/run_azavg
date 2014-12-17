@@ -93,7 +93,6 @@ my $Config;
 
 my %Cases;
 my %TimeDirs;
-my %Vars;
 my %AzavgDiags;
 my $AzavgDir;
 my $FilterDir;
@@ -133,7 +132,6 @@ $ConfigFile = $ARGV[0];
 ($Config) = &DiagUtils::ReadConfigFile($ConfigFile);
 %Cases      = %{ $$Config{CASES} };
 %TimeDirs   = %{ $$Config{TIM_DIRS} };
-%Vars       = %{ $$Config{VARS} };
 %AzavgDiags = %{ $$Config{AZAVG_DIAGS} };
 $AzavgDir = $$Config{AZAVG_DIR};
 $FilterDir = $$Config{FILTER_DIR};
