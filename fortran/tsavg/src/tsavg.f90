@@ -60,7 +60,7 @@ program tsavg
   integer :: rh5f_xvar, rh5f_yvar
 
   integer :: id, ib, ix, iy, iz, it
-  integer :: Nx, Ny, Nz, Nt
+  integer :: Nx, Ny, Nz, Nt, FilterNz
   integer :: XvarNz, YvarNz
   real :: DeltaX, DeltaY
   real, dimension(:), allocatable :: InXcoordsKm, InYcoordsKm
@@ -253,13 +253,30 @@ program tsavg
     endif
   endif
 
-  if ((AvgFunc(1:9) .eq. 'horiz_ke:') .or. (AvgFunc(1:11) .eq. 'max_azwind:')) then
-write (*,*) 'ERROR: horiz_ke needs to be fixed:'
-write (*,*) 'ERROR:   Does not handle "uv" type input correctly'
-write (*,*) 'ERROR:   Does not set HkeZthick argument'
-stop
-
+  if (AvgFunc(1:9) .eq. 'horiz_ke:') then
     call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'horiz_ke spec')
+    if (Nfields .eq. 3) then
+      ! got the right amount of fields
+      !   field    value
+      !    1       'horiz_ke'
+      !    2       type of input
+      !    3       thickness
+      AvgFunc    = trim(ArgList(1))
+      VelInType  = trim(ArgList(2))
+      read(ArgList(3), '(f)') HkeZthick
+
+      if ((VelInType .ne. 'uv') .and. (VelInType .ne. 's10')) then
+        write (*,*) 'ERROR: <in_type> for average function horiz_ke must be one of: "uv" or "s10"'
+        stop
+      endif
+    else
+      write (*,*) 'ERROR: average function horiz_ke requires three fields: horiz_ke:<in_type>:<thickness>'
+      stop
+    endif
+  endif
+
+  if (AvgFunc(1:11) .eq. 'max_azwind:') then
+    call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'max_azwind spec')
     if (Nfields .eq. 2) then
       ! got the right amount of fields
       !   field    value
@@ -269,11 +286,11 @@ stop
       VelInType  = trim(ArgList(2))
 
       if ((VelInType .ne. 'uv') .and. (VelInType .ne. 's10')) then
-        write (*,*) 'ERROR: <in_type> for average functions horiz_ke and max_azwind must be one of: "uv" or "s10"'
+        write (*,*) 'ERROR: <in_type> for average functions max_azwind must be one of: "uv" or "s10"'
         stop
       endif
     else
-      write (*,*) 'ERROR: average function ltss requires five fields: ltss:<theta_var>:<theta_file>:<z_bot>:<z_top>'
+      write (*,*) 'ERROR: average function max_azwind requires two fields: max_azwind:<in_type>'
       stop
     endif
   endif
@@ -285,6 +302,9 @@ stop
   write (*,*) '  Averaging function: ', trim(AvgFunc)
   if ((AvgFunc .eq. 'horiz_ke') .or. (AvgFunc .eq. 'max_azwind')) then
     write (*,*) '    Input Type: ', trim(VelInType)
+    if (AvgFunc .eq. 'horiz_ke') then
+      write (*,*) '    Z thickness: ', HkeZthick
+    endif
   else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'turb_mmts')) then
     write (*,*) '    Variable name: ', trim(Var%vname)
     write (*,*) '    File name: ', trim(VarFile)
@@ -389,18 +409,32 @@ stop
     if (AvgFunc .eq. 'max_azwind') then
       call rhdf5_read_init(AzWindFile, AzWind)
 
-      Nx = AzWind%dims(1)
-      Ny = AzWind%dims(2)
-      Nz = AzWind%dims(3)
-      Nt = AzWind%dims(4)
+      if (AzWind%ndims .eq. 4) then
+        Nx = AzWind%dims(1)
+        Ny = AzWind%dims(2)
+        Nz = AzWind%dims(3)
+        Nt = AzWind%dims(4)
+      elseif (AzWind%ndims .eq. 3) then
+        Nx = AzWind%dims(1)
+        Ny = AzWind%dims(2)
+        Nz = 1
+        Nt = AzWind%dims(3)
+      endif
     else
       ! min_azslp
       call rhdf5_read_init(AzSlpFile, AzSlp)
 
-      Nx = AzSlp%dims(1)
-      Ny = AzSlp%dims(2)
-      Nz = AzSlp%dims(3)
-      Nt = AzSlp%dims(4)
+      if (AzSlp%ndims .eq. 4) then
+        Nx = AzSlp%dims(1)
+        Ny = AzSlp%dims(2)
+        Nz = AzSlp%dims(3)
+        Nt = AzSlp%dims(4)
+      elseif (AzSlp%ndims .eq. 3) then
+        Nx = AzSlp%dims(1)
+        Ny = AzSlp%dims(2)
+        Nz = 1
+        Nt = AzSlp%dims(3)
+      endif
     endif
   else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
            (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. &
@@ -545,28 +579,32 @@ stop
     ! Read in the filter and use it to check against all the other variables
     call rhdf5_read_init(FilterFile, Filter)
   
-    Nx = Filter%dims(1)
-    Ny = Filter%dims(2)
-    Nz = Filter%dims(3)
-    Nt = Filter%dims(4)
-
     BadDims = .false.
     if (AvgFunc .eq. 'horiz_ke') then
       call rhdf5_read_init(DensFile, Dens)
       BadDims = BadDims .or. (.not.(DimsMatch(Filter, Dens)))
   
       if (VelInType .eq. 'uv') then
+        ! U, V are 3D variables
         call rhdf5_read_init(Ufile, U)
         BadDims = BadDims .or. (.not.(DimsMatch(Filter, U)))
   
         call rhdf5_read_init(Vfile, V)
         BadDims = BadDims .or. (.not.(DimsMatch(Filter, V)))
+
+        Nx = U%dims(1)
+        Ny = U%dims(2)
+        Nz = U%dims(3)
+        Nt = U%dims(4)
       else if (VelInType .eq. 's10') then
         ! speed10m is a 2D variable
         call rhdf5_read_init(Speed10mFile, Speed10m)
         BadDims = BadDims .or. (.not.(DimsMatch(Filter, Speed10m)))
 
+        Nx = Speed10m%dims(1)
+        Ny = Speed10m%dims(2)
         Nz = 1
+        Nt = Speed10m%dims(3)
       endif
 
       if (BadDims) then
@@ -577,13 +615,23 @@ stop
       ! speed10m is a 2D variable
       call rhdf5_read_init(Speed10mFile, Speed10m)
       BadDims = BadDims .or. (.not.(DimsMatch(Filter, Speed10m)))
+
+      Nx = Speed10m%dims(1)
+      Ny = Speed10m%dims(2)
       Nz = 1
+      Nt = Speed10m%dims(3)
   
       if (BadDims) then
         write (*,*) 'ERROR: dimensions of filter and speed10m do not match'
         stop
       endif
     endif
+  endif
+
+  if (UseFilter) then
+     FilterNz = Filter%dims(3)
+  else
+     FilterNz = 1
   endif
 
   ! Set up the dimensions for reading in the input field data, one time step per read. 
@@ -1117,14 +1165,14 @@ stop
 
         allocate(HorizSpeed(Nx,Ny))
         call UvToSpeed(Nx, Ny, Nz, U%vdata, V%vdata, HorizSpeed)
-        call DoHorizKe(Nx, Ny, Nz, Filter%dims(3), Dens%vdata, HorizSpeed, Filter%vdata, DeltaX, DeltaY, HkeZthick, TserAvg%vdata(1))
+        call DoHorizKe(Nx, Ny, Nz, FilterNz, Dens%vdata, HorizSpeed, Filter%vdata, DeltaX, DeltaY, HkeZthick, TserAvg%vdata(1))
 
         deallocate(U%vdata)
         deallocate(V%vdata)
         deallocate(HorizSpeed)
       else if (VelInType .eq. 's10') then
         call rhdf5_read_variable(rh5f_speed10m, Speed10m%vname, Speed10m%ndims, it, Speed10m%dims, rdata=Speed10m%vdata)
-        call DoHorizKe(Nx, Ny, Nz, Filter%dims(3), Dens%vdata, Speed10m%vdata, Filter%vdata, DeltaX, DeltaY, HkeZthick, TserAvg%vdata(1))
+        call DoHorizKe(Nx, Ny, Nz, FilterNz, Dens%vdata, Speed10m%vdata, Filter%vdata, DeltaX, DeltaY, HkeZthick, TserAvg%vdata(1))
         deallocate(Speed10m%vdata)
       endif
 
@@ -1135,17 +1183,17 @@ stop
       call rhdf5_read_variable(rh5f_var, Var%vname, Var%ndims, it, Var%dims, rdata=Var%vdata)
 
       if (AvgFunc .eq. 'min') then
-        call DoMin(Nx, Ny, Nz, Filter%dims(3), Var%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata(1))
+        call DoMin(Nx, Ny, Nz, FilterNz, Var%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata(1))
       else if (AvgFunc .eq. 'max') then
-        call DoMax(Nx, Ny, Nz, Filter%dims(3), Var%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata(1))
+        call DoMax(Nx, Ny, Nz, FilterNz, Var%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata(1))
       else if (AvgFunc .eq. 'hda') then
-        call DoHda(Nx, Ny, Nz, Filter%dims(3), Var%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata)
+        call DoHda(Nx, Ny, Nz, FilterNz, Var%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata)
       else if (AvgFunc .eq. 'hist') then
-        call DoHist(Nx, Ny, Nz, Filter%dims(3), Xnbins, Var%vdata, Filter%vdata, UseFilter, UndefVal, Xbins, TserAvg%vdata)
+        call DoHist(Nx, Ny, Nz, FilterNz, Xnbins, Var%vdata, Filter%vdata, UseFilter, UndefVal, Xbins, TserAvg%vdata)
       else if (AvgFunc .eq. 'hfrac') then
-        call DoHfrac(Nx, Ny, Nz, Filter%dims(3), HfracThresh, Var%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata)
+        call DoHfrac(Nx, Ny, Nz, FilterNz, HfracThresh, Var%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata)
       else if (AvgFunc .eq. 'turb_mmts') then
-        call DoTurbMmts(Nx, Ny, Nz, Filter%dims(3), Var%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata)
+        call DoTurbMmts(Nx, Ny, Nz, FilterNz, Var%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata)
       endif
 
       deallocate(Var%vdata)
@@ -1154,7 +1202,7 @@ stop
       call rhdf5_read_variable(rh5f_lwp, Lwp%vname, Lwp%ndims, it, Lwp%dims, rdata=Lwp%vdata)
       call rhdf5_read_variable(rh5f_ltss, Ltss%vname, Ltss%ndims, it, Ltss%dims, rdata=Ltss%vdata)
 
-      call DoPop(Nx, Ny, Nz, Filter%dims(3), Xnbins, Ynbins, PrecipRate%vdata, Lwp%vdata, Ltss%vdata(1), Filter%vdata, UseFilter, UndefVal, PrecipRateLimit, Xbins, Ybins, TserAvg%vdata)
+      call DoPop(Nx, Ny, Nz, FilterNz, Xnbins, Ynbins, PrecipRate%vdata, Lwp%vdata, Ltss%vdata(1), Filter%vdata, UseFilter, UndefVal, PrecipRateLimit, Xbins, Ybins, TserAvg%vdata)
 
       deallocate(PrecipRate%vdata)
       deallocate(Lwp%vdata)
@@ -1164,9 +1212,9 @@ stop
       call rhdf5_read_variable(rh5f_yvar, Yvar%vname, Yvar%ndims, it, Yvar%dims, rdata=Yvar%vdata)
 
       if (AvgFunc .eq. 'hist2d') then
-        call DoHist2d(Nx, Ny, Nz, XvarNz, YvarNz, Filter%dims(3), Xnbins, Ynbins, Xvar%vdata, Yvar%vdata, Filter%vdata, UseFilter, UndefVal, Xbins, Ybins, TserAvg%vdata)
+        call DoHist2d(Nx, Ny, Nz, XvarNz, YvarNz, FilterNz, Xnbins, Ynbins, Xvar%vdata, Yvar%vdata, Filter%vdata, UseFilter, UndefVal, Xbins, Ybins, TserAvg%vdata)
       else if (AvgFunc .eq. 'turb_cov') then
-        call DoTurbCov(Nx, Ny, Nz, Filter%dims(3), Xvar%vdata, Yvar%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata)
+        call DoTurbCov(Nx, Ny, Nz, FilterNz, Xvar%vdata, Yvar%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata)
       endif
 
       deallocate(Xvar%vdata)
@@ -1174,12 +1222,12 @@ stop
     else if (AvgFunc .eq. 'ltss') then
       call rhdf5_read_variable(rh5f_theta, Theta%vname, Theta%ndims, it, Theta%dims, rdata=Theta%vdata)
 
-      call DoLtss(Nx, Ny, Nz, Filter%dims(3), Theta%vdata, Filter%vdata, UseFilter, UndefVal, Kbot, Ktop, TserAvg%vdata(1))
+      call DoLtss(Nx, Ny, Nz, FilterNz, Theta%vdata, Filter%vdata, UseFilter, UndefVal, Kbot, Ktop, TserAvg%vdata(1))
 
       deallocate(Theta%vdata)
     else if (AvgFunc .eq. 'storm_int') then
       call rhdf5_read_variable(rh5f_speed10m, Speed10m%vname, Speed10m%ndims, it, Speed10m%dims, rdata=Speed10m%vdata)
-      call DoStormInt(Nx, Ny, Filter%dims(3), Speed10m%vdata, Filter%vdata, TserAvg%vdata(1))
+      call DoStormInt(Nx, Ny, FilterNz, Speed10m%vdata, Filter%vdata, TserAvg%vdata(1))
       deallocate(Speed10m%vdata)
     endif
 
@@ -1346,9 +1394,11 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
     write (*,*) '        <in_suffix>: suffix on input file names'
     write (*,*) '        <out_file>: name of output file, HDF5 format'
     write (*,*) '        <avg_function>: averaging function to use on input data'
-    write (*,*) '            horiz_ke:<in_type> -> total kinetic energy form horizontal winds'
+    write (*,*) '            horiz_ke:<in_type>:<thickness> -> total kinetic energy form horizontal winds'
     write (*,*) '              <in_type>: "uv" calculate from lowest level of u and v fields,'
     write (*,*) '                         "s10" calculate from 10m wind speed field,'
+    write (*,*) '              <thickness>: depth (m) of slab that KE is being calculated in' 
+    write (*,*) '                          Powell and Reinhold, 2007 use 1.0 m'
     write (*,*) '            storm_int -> storm intensity metric from horizontal wind speeds'
     write (*,*) '            max_azwind:<in_type> -> max value of azimuthially averaged wind'
     write (*,*) '              <in_type>: "uv" calculate from lowest level of u and v fields,'
@@ -1662,11 +1712,10 @@ subroutine DoHorizKe(Nx, Ny, Nz, FilterNz, Dens, Speed, Filter, DeltaX, DeltaY, 
   ! The integrated kinetic engery measurement done on hurricanes is taken over the domain on the 10m
   ! level. Just use the first model level above the surface (z == 2) for this measurement which will
   ! be close enough.
+  iz = 2
 
   SumKe = 0.0
   NumPoints = 0
-
-  iz = 2
 
   if (FilterNz .eq. 1) then
     filter_z = 1
