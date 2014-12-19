@@ -92,8 +92,6 @@ sub CreateFileNames
     $Dvar = $DSfunc;
     }
 
-
-print "DEBUG: split Dspec --> $DSfunc $DSvname $DSfprefix $Dvar $DSremain\n";
   # InDir is the directory that the input files come from.
   #
   # InFileSuffix is used to create the names of all the input files. It is
@@ -118,7 +116,6 @@ print "DEBUG: split Dspec --> $DSfunc $DSvname $DSfprefix $Dvar $DSremain\n";
     $InDir = $Case . "/" . $RevuDir . $TdirStr;
     # Use the associate file prefix as a sample for finding the input file suffix.
     $Pattern = "$InDir/$DSfprefix-$Case-*.h5";
-print "DEBUG: Pattern: $Pattern\n";
     @f = glob($Pattern);
     $InFileSuffix = $f[0];
     $InFileSuffix =~ s/.*\/$DSfprefix-/-/;  # leave $Case in the file suffix
