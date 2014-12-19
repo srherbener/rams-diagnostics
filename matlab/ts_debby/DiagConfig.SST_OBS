@@ -16,7 +16,11 @@ UndefVal: -999
 
 # cases (experiment names)
 #  Case: <exp_name> <plot_name>
-Case: TSD_3GRIDS CONTROL
+#Case: TSD_3GRIDS CONTROL
+Case: TSD_DRY_DUST     DD
+Case: TSD_DRY_NODUST   DN
+Case: TSD_MOIST_DUST   MD
+Case: TSD_MOIST_NODUST MN
 
 # Time specs/directories
 # TimeDir: <Dir> <TimeSpecForRevu>

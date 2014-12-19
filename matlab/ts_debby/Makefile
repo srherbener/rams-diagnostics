@@ -11,6 +11,7 @@ SCRIPTS = \
   $(DEST)/GenMoistDpFiles.m \
   $(DEST)/GenMoistRamsInit.m \
   $(DEST)/GenMoistRamsInfo.m \
+  $(DEST)/GenStormMeas.m \
   $(DEST)/PlotHydro.m \
   $(DEST)/PlotMaxWind.m \
   $(DEST)/PlotMaxWindAll.m \
