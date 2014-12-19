@@ -47,6 +47,7 @@ sub CreateFileNames
   my $DSvname;
   my $DSfprefix;
   my $DSremain;
+  my $DSintype;
 
   # If $Tdir is the string "NONE", then do not place a subdirectory
   # in the path to the input and output files
@@ -66,12 +67,33 @@ sub CreateFileNames
     ($DSfunc, $DSvname, $DSfprefix, $DSremain) = split(':', $Dspec);
     $Dvar = $DSfunc . "_" . $DSfprefix;
     }
+  elsif ($Dspec =~ /horiz_ke:/)
+    {
+    ($DSfunc, $DSintype, $DSremain) = split(':', $Dspec);
+    if ($DSintype eq "uv")
+      {
+      $DSvname = "u";
+      $DSfprefix = "u";
+      }
+    elsif ($DSintype eq "s10")
+      {
+      $DSvname = "speed10m";
+      $DSfprefix = "speed10m";
+      }
+
+    $Dvar = $DSfunc;
+    }
   else
     {
     $DSfunc = $Dspec;
-    $Dvar = $Dspec;
+    $DSvname = $Dspec;
+    $DSfprefix = $Dspec;
+
+    $Dvar = $DSfunc;
     }
 
+
+print "DEBUG: split Dspec --> $DSfunc $DSvname $DSfprefix $Dvar $DSremain\n";
   # InDir is the directory that the input files come from.
   #
   # InFileSuffix is used to create the names of all the input files. It is
@@ -94,11 +116,12 @@ sub CreateFileNames
   else
     {
     $InDir = $Case . "/" . $RevuDir . $TdirStr;
-    # Use the w input file as a sample for finding the input file suffix.
-    $Pattern = $InDir . "/w-*.h5";
+    # Use the associate file prefix as a sample for finding the input file suffix.
+    $Pattern = "$InDir/$DSfprefix-$Case-*.h5";
+print "DEBUG: Pattern: $Pattern\n";
     @f = glob($Pattern);
     $InFileSuffix = $f[0];
-    $InFileSuffix =~ s/.*\/w-/-/;
+    $InFileSuffix =~ s/.*\/$DSfprefix-/-/;  # leave $Case in the file suffix
     }
 
   $OutFile = $TsavgDir . ${TdirStr} . "/" . ${Dname} . "_" . ${Case} . ".h5";
