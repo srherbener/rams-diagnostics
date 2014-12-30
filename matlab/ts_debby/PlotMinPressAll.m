@@ -1,4 +1,4 @@
-function [ ] = PlotMaxWindAll(ConfigFile)
+function [ ] = PlotMinPressAll(ConfigFile)
 
   [ Config ] = ReadConfig(ConfigFile);
 
@@ -27,54 +27,53 @@ function [ ] = PlotMaxWindAll(ConfigFile)
   % read in the Vt data
   Nc = length(Cases);
   for icase = 1:Nc
-    %Hfile = sprintf('%s/max_speed25m_%s.h5', Tdir, Cases{icase});
-    %Hdset = '/max_speed25m';
-    Hfile = sprintf('%s/max_speed10m_%s.h5', Tdir, Cases{icase});
-    Hdset = '/max_speed10m';
+    %Hfile = sprintf('%s/min_press25m_%s.h5', Tdir, Cases{icase});
+    %Hdset = '/min_press25m';
+    Hfile = sprintf('%s/min_sea_press_%s.h5', Tdir, Cases{icase});
+    Hdset = '/min_sea_press';
     fprintf('Reading: %s (%s)\n', Hfile, Hdset);
 
-    % Read in time series, S will be a column vector
-    S = squeeze(h5read(Hfile, Hdset));
+    % Read in time series, P will be a column vector
+    P = squeeze(h5read(Hfile, Hdset));
 
     if (icase == 1)
-      Nt = length(S);
+      Nt = length(P);
       TIMES = (squeeze(h5read(Hfile, '/t_coords')) ./3600) - 42.0; % hr
-      SPEED_T = zeros([ Nt Nc ]);
+      PRESS = zeros([ Nt Nc ]);
     end
-    SPEED_T(:,icase) = S;
+    PRESS(:,icase) = P;
   end
 
 
   % NHC Best Track (every six hours) data
   % time step 1 from the simulation is where the NHC data starts
-  % NHC wind is in mph, multiply by 0.447 to convert to m/s
   %
-  %NHC_WIND  = [ 35   35   35   35   35   40   45   50   50   50   50   50   50   ] * 0.447;
-  NHC_WIND  = [ 35   35   35   35   35   40   45   50   50   50   50   ] * 0.447;
+  %NHC_PRESS = [ 1007 1007 1007 1007 1005 1003 1002 1001 1001 1000  999 1000 1000 ];
+  NHC_PRESS = [ 1007 1007 1007 1007 1005 1003 1002 1001 1001 1000  999 ];
   NHC_TIMES = (0:6:60);
 
   % plot
-  OutFile = sprintf('%s/TsDebbyWindAll.jpg', Pdir);
+  OutFile = sprintf('%s/TsDebbyPressAll.jpg', Pdir);
 
   Fsize = 22;
   LineW = 2;
 
   LegendFsize = 15;
 
-  Xrange = [ -6 66 ];
-  Yrange = [  0 25 ];
+  Xrange = [  -6   66 ];
+  Yrange = [ 990 1010 ];
   
   FigWind = figure;
-  SimST = plot(TIMES, SPEED_T, 'LineWidth', LineW);
+  SimST = plot(TIMES, PRESS, 'LineWidth', LineW);
   set(gca, 'FontSize', Fsize);
   hold on;
-%  NhcST = plot(NHC_TIMES, NHC_WIND, '+k', 'LineWidth',  LineW);
-  title('Maximum 10m Wind Speed');
+%  NhcST = plot(NHC_TIMES, NHC_PRESS, '+k', 'LineWidth',  LineW);
+  title('Minimum SLP');
   xlabel('Time');
   xlim (Xrange);
   set(gca,'xtick', (6:24:54));
   set(gca,'xticklabel', { 'Aug22:12Z' 'Aug23:12Z' 'Aug24:12Z' });
-  ylabel('Wind Speed (m s^-^1)');
+  ylabel('Pressure (mb)');
   ylim(Yrange);
 
 %  legend([ NhcST SimST' ], LegText, 'Location', 'SouthEast', 'FontSize', LegendFsize);
