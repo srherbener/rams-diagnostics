@@ -48,7 +48,7 @@ function [ ] = TwoDimAnimation(InFile, InVar, OutFile)
 %  axis tight;
 %  set(gca,'nextplot','replacechildren','visible','off');
   set(gca,'FontSize', Fsize);
-  title('TS Debby (2006)');
+%  title('TS Debby (2006)');
   xlabel('Lon'); 
   ylabel('Lat'); 
   caxis(Clims);
