@@ -14,7 +14,7 @@ function [ ] = PlotAeroProfs(ConfigFile)
   fprintf('****************** Creating aerosol profile plot ******************\n');
 
   %*************************************************************************
-  % Read in and assemble the aerosol profiles for the CLEAN case
+  % Read in and assemble the aerosol profiles for the NO DUST case
   % After the text scan, InData will contain:
   %    InData{1}  ->  'CCN-init'
   %    InData{2}  ->  level number
@@ -43,7 +43,7 @@ function [ ] = PlotAeroProfs(ConfigFile)
   D2_CONC  = zeros([ Nz 1 ]);
 
   % At this point, all quantities are column vectors
-  CLEAN_PDATA = [ CCN_CONC D1_CONC D2_CONC ];
+  NO_DUST_PDATA = [ CCN_CONC D1_CONC D2_CONC ];
 
 
   %*************************************************************************
@@ -102,20 +102,20 @@ function [ ] = PlotAeroProfs(ConfigFile)
   xlim(Xlimits);
   set (gca, 'XTick', Xticks);
 
-  title('DUSTY');
+  title('DUST');
   xlabel(Xlab);
   ylabel(Ylab);
 
 
-  % *** CLEAN ***
+  % *** NO_DUST ***
   subplot(1,2,2);
-  plot(CLEAN_PDATA, Z, 'LineWidth', LineWidth);
+  plot(NO_DUST_PDATA, Z, 'LineWidth', LineWidth);
   set (gca, 'FontSize', Fsize);
   xlim(Xlimits);
   set (gca, 'XTick', Xticks);
 
   % shut off labels on y-axis, will share with left panel
-  title('CLEAN');
+  title('NO DUST');
   xlabel(Xlab);
   set (gca, 'YTickLabel', []);
 

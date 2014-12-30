@@ -9,6 +9,7 @@ SCRIPTS = \
   $(DEST)/LocateSal.m \
   $(DEST)/PlotGrids.m \
   $(DEST)/PlotAeroProfs.m \
+  $(DEST)/PlotSampleSoundings.m \
   $(DEST)/GenMoistDpFiles.m \
   $(DEST)/GenMoistRamsInit.m \
   $(DEST)/GenMoistRamsInfo.m \
