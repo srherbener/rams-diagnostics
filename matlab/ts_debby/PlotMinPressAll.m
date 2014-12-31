@@ -12,16 +12,16 @@ function [ ] = PlotMinPressAll(ConfigFile)
   Cases = {
    'TSD_DRY_DUST'
    'TSD_DRY_NODUST'
-   'TSD_MOIST_NODUST'
    'TSD_MOIST_DUST'
+   'TSD_MOIST_NODUST'
    };
 
   LegText = {
 %   'NHC Best Track'
    'DD'
    'DN'
-   'MN'
    'MD'
+   'MN'
    };
 
   % read in the Vt data

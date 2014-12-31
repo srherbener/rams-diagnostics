@@ -28,6 +28,7 @@ SCRIPTS = \
   $(DEST)/PlotTracks.m \
   $(DEST)/PlotTracksAll.m \
   $(DEST)/PlotWinds.m \
+  $(DEST)/PlotFactSep.m \
   $(DEST)/TwoDimAnimation.m \
   $(DEST)/SetPath.m
 
