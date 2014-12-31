@@ -15,7 +15,7 @@ SCRIPTS = \
   $(DEST)/GenMoistRamsInfo.m \
   $(DEST)/GenStormMeas.m \
   $(DEST)/GenTsSize.m \
-  $(DEST)/GenFactAvgs.m \
+  $(DEST)/GenFactSep.m \
   $(DEST)/PlotHydro.m \
   $(DEST)/PlotMaxWind.m \
   $(DEST)/PlotMaxWindAll.m \
