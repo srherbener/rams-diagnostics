@@ -11,6 +11,7 @@ function [ ] = PlotSlp(ConfigFile)
   
   Case = 'TSD_DRY_DUST';
   SimLabel = 'DD';
+  Sim25Label = 'DD (25m)';
   
   % read in the sea level pressure
   Hfile = sprintf('%s/min_sea_press_%s.h5', Tdir, Case);
@@ -18,6 +19,12 @@ function [ ] = PlotSlp(ConfigFile)
   fprintf('Reading: %s, Dataset: %s\n', Hfile, Hdset);
   PRESS = squeeze(h5read(Hfile, Hdset));
   TIMES = (squeeze(h5read(Hfile, '/t_coords')) ./ 3600) - 42.0;  % hr
+
+  % Read 25m data
+  Hfile = sprintf('%s/min_press25m_%s.h5', Tdir, Case);
+  Hdset = '/min_press25m';
+  fprintf('Reading: %s, Dataset: %s\n', Hfile, Hdset);
+  PRESS_25 = squeeze(h5read(Hfile, Hdset));
   
   % NHC Best Track (every six hours) data
   % time step 1 from the simulation is where the NHC data starts
@@ -37,7 +44,7 @@ function [ ] = PlotSlp(ConfigFile)
   Yrange = [ 995 1010 ];
   
   FigPress = figure;
-  SimPress = plot(TIMES, PRESS, 'LineWidth', LineW);
+  SimPress = plot(TIMES, [ PRESS PRESS_25 ], 'LineWidth', LineW);
   set(gca, 'FontSize', Fsize);
   hold on;
   NhcPress = plot(NHC_TIMES, NHC_PRESS, '+k', 'LineWidth', LineW);
@@ -56,7 +63,7 @@ function [ ] = PlotSlp(ConfigFile)
   set(gca,'xticklabel', { 'Aug22:12Z', 'Aug23:12Z', 'Aug24:12Z' });
   ylabel('Pressure (mb)');
   ylim(Yrange);
-  legend([ NhcPress SimPress ], 'NHC Best Track', SimLabel, 'Location', 'NorthEast');
+  legend([ NhcPress SimPress' ], 'NHC Best Track', SimLabel, Sim25Label, 'Location', 'NorthEast');
   
   fprintf('Writing: %s\n', OutFile);
   saveas(FigPress, OutFile);

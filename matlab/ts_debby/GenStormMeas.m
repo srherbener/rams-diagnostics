@@ -47,7 +47,7 @@ function [ ] = GenStormMeas(ConfigFile)
       fprintf('    Reading: %s (%s)\n', Mfile, Mvname);
       fprintf('    Method: %s\n', Mmethod);
       if (strcmp(Mmethod, 'pct'))
-        fprintf('      Percentile: %.2f\n', Mptile);
+        fprintf('      Percentile: %.4f\n', Mptile);
       end
       fprintf('\n');
 
@@ -92,7 +92,7 @@ function [ ] = GenStormMeas(ConfigFile)
       end
 
       % Write out measurement
-      OutFile = sprintf('%s/%s_%s', Ddir, Mname, Case);
+      OutFile = sprintf('%s/%s_%s.h5', Ddir, Mname, Case);
       fprintf('    Writing: %s\n', OutFile)
       fprintf('\n');
 

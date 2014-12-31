@@ -11,6 +11,7 @@ function [ ] = PlotMaxWind(ConfigFile)
 
   Case = 'TSD_DRY_DUST';
   SimLabel = 'DD';
+  Sim25Label = 'DD (25m)';
   
   % read in the tangential wind
   Hfile = sprintf('%s/max_speed10m_%s.h5', Tdir, Case);
@@ -19,6 +20,12 @@ function [ ] = PlotMaxWind(ConfigFile)
   SPEED = squeeze(h5read(Hfile, Hdset));
   TIMES = (squeeze(h5read(Hfile, '/t_coords')) ./3600) - 42.0; %hr
   
+  % read in the 25m data
+  Hfile = sprintf('%s/max_speed25m_%s.h5', Tdir, Case);
+  Hdset = '/max_speed25m';
+  fprintf('Reading: %s, Dataset: %s\n', Hfile, Hdset);
+  SPEED_25 = squeeze(h5read(Hfile, Hdset));
+
   % NHC Best Track (every six hours) data
   % time step 1 from the simulation is where the NHC data starts
   % NHC wind is in mph, multiply by 0.447 to convert to m/s
@@ -38,7 +45,7 @@ function [ ] = PlotMaxWind(ConfigFile)
   Yrange = [  0 25 ];
   
   FigWind = figure;
-  SimST = plot(TIMES, SPEED, 'LineWidth', LineW);
+  SimST = plot(TIMES, [ SPEED SPEED_25 ], 'LineWidth', LineW);
   set(gca, 'FontSize', Fsize);
   hold on;
   NhcST = plot(NHC_TIMES, NHC_WIND, '+k', 'LineWidth', LineW);
@@ -49,7 +56,7 @@ function [ ] = PlotMaxWind(ConfigFile)
 %  Tpos = get(T, 'Position');
 %  Tpos(1) = 0; % line up with left edge of plot area
 %  set(T, 'Position', Tpos);
-  title('Maximum 10m Wind Speed');
+  title('Maximum Wind Speed');
   
   xlabel('Time');
   xlim(Xrange);
@@ -57,7 +64,7 @@ function [ ] = PlotMaxWind(ConfigFile)
   set(gca,'xticklabel', { 'Aug22:12Z', 'Aug23:12Z', 'Aug24:12Z' });
   ylabel('Wind Speed (m/s)');
   ylim(Yrange);
-  legend([ NhcST SimST ], 'NHC Best Track', SimLabel, 'Location', 'SouthEast');
+  legend([ NhcST SimST' ], 'NHC Best Track', SimLabel, Sim25Label, 'Location', 'SouthEast');
   
   fprintf('Writing: %s\n', OutFile);
   saveas(FigWind, OutFile);
