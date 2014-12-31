@@ -17,6 +17,7 @@ SCRIPTS = \
   $(DEST)/PlotHydro.m \
   $(DEST)/PlotMaxWind.m \
   $(DEST)/PlotMaxWindAll.m \
+  $(DEST)/PlotMinPress.m \
   $(DEST)/PlotMinPressAll.m \
   $(DEST)/PlotPressWind.m \
   $(DEST)/PlotSlp.m \

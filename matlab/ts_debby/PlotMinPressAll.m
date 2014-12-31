@@ -48,8 +48,7 @@ function [ ] = PlotMinPressAll(ConfigFile)
   % NHC Best Track (every six hours) data
   % time step 1 from the simulation is where the NHC data starts
   %
-  %NHC_PRESS = [ 1007 1007 1007 1007 1005 1003 1002 1001 1001 1000  999 1000 1000 ];
-  NHC_PRESS = [ 1007 1007 1007 1007 1005 1003 1002 1001 1001 1000  999 ];
+  NHC_PRESS = [ 1007 1007 1005 1003 1002 1001 1001 1000  999 1000 1000 ];
   NHC_TIMES = (0:6:60);
 
   % plot
@@ -61,7 +60,7 @@ function [ ] = PlotMinPressAll(ConfigFile)
   LegendFsize = 15;
 
   Xrange = [  -6   66 ];
-  Yrange = [ 990 1010 ];
+  Yrange = [ 995 1010 ];
   
   FigWind = figure;
   SimST = plot(TIMES, PRESS, 'LineWidth', LineW);
