@@ -49,8 +49,7 @@ function [ ] = PlotMaxWindAll(ConfigFile)
   % time step 1 from the simulation is where the NHC data starts
   % NHC wind is in mph, multiply by 0.447 to convert to m/s
   %
-  %NHC_WIND  = [ 35   35   35   35   35   40   45   50   50   50   50   50   50   ] * 0.447;
-  NHC_WIND  = [ 35   35   35   35   35   40   45   50   50   50   50   ] * 0.447;
+  NHC_WIND  = [ 35 35 35 40 45 50 50 50 50 50 50 ] * 0.447;
   NHC_TIMES = (0:6:60);
 
   % plot
