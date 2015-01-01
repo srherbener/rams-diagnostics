@@ -69,7 +69,7 @@ function [ ] = PlotTracksAll(ConfigFile)
   m_grid('linestyle','none','box','fancy','tickdir','out');
   NhcTrack = m_line(NhcTrackLons, NhcTrackLats, 'linewi', LineW, 'color', 'k', 'linestyle', 'none', 'marker', '+');
   SimTrack = m_line(SimTrackLons, SimTrackLats, 'linewi', LineW);
-  title('Storm Tracks');
+  %title('Storm Tracks');
   legend( [ NhcTrack SimTrack' ], LegText,'Location', 'SouthWest', 'FontSize', LegendFsize);
   
   OutFile = sprintf('%s/TsDebbyTracksAll.jpg', Pdir);

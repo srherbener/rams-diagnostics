@@ -67,7 +67,7 @@ function [ ] = PlotMinPressAll(ConfigFile)
   set(gca, 'FontSize', Fsize);
   hold on;
 %  NhcST = plot(NHC_TIMES, NHC_PRESS, '+k', 'LineWidth',  LineW);
-  title('Minimum SLP');
+  %title('Minimum SLP');
   xlabel('Time');
   xlim (Xrange);
   set(gca,'xtick', (6:24:54));

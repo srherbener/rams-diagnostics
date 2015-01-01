@@ -68,7 +68,7 @@ function [ ] = PlotMaxWindAll(ConfigFile)
   set(gca, 'FontSize', Fsize);
   hold on;
 %  NhcST = plot(NHC_TIMES, NHC_WIND, '+k', 'LineWidth',  LineW);
-  title('Maximum 10m Wind Speed');
+  %title('Maximum 10m Wind Speed');
   xlabel('Time');
   xlim (Xrange);
   set(gca,'xtick', (6:24:54));

@@ -89,7 +89,7 @@ function [ ] = PlotFactSep(ConfigFile)
     set(gca, 'FontSize', Fsize);
     set(gca, 'XTickLabel', BPLOT_LABELS(SimOrder));
     title ('Change from MN');
-    ylabel('Percent');
+    ylabel('Percent Difference');
 
     subplot(1,2,2);
     bar(FACT_PCT_CHNG(FactOrder));
