@@ -8,6 +8,9 @@ if (exist(Pdir, 'dir') ~= 7)
     mkdir(Pdir);
 end
 
+Fsize = 22;
+LegendFsize = 15;
+
 % for the TS Debby simulations:
 LatBounds = [ -40 60 ];
 LonBounds = [ -120 60 ];
@@ -39,7 +42,7 @@ G3_lons = [ -39 -39 -14 -14 -39 ];
 OutFile = sprintf('%s/TsDebbyGrids.jpg', Pdir);
 
 FigTracks = figure;
-set(gca, 'FontSize', 20);
+set(gca, 'FontSize', Fsize);
 m_proj('miller', 'lat', LatBounds, 'long', LonBounds);
 m_coast('color', 'k'); % k --> black
 m_grid('linestyle','none','box','fancy','tickdir','out');
@@ -47,15 +50,15 @@ Grid1 = m_line(G1_lons, G1_lats, 'linewi', 3, 'color', 'b');
 Grid2 = m_line(G2_lons, G2_lats, 'linewi', 3, 'color', 'r');
 Grid3 = m_line(G3_lons, G3_lats, 'linewi', 3, 'color', 'g');
 
-%title('TS Debby Simulation Grids');
-T = title('(a)');
-set(T, 'Units', 'Normalized');
-set(T, 'HorizontalAlignment', 'Left');
-Tpos = get(T, 'Position');
-Tpos(1) = 0; % line up with left edge of plot area
-set(T, 'Position', Tpos);
+% %title('TS Debby Simulation Grids');
+% T = title('(a)');
+% set(T, 'Units', 'Normalized');
+% set(T, 'HorizontalAlignment', 'Left');
+% Tpos = get(T, 'Position');
+% Tpos(1) = 0; % line up with left edge of plot area
+% set(T, 'Position', Tpos);
 
-legend([ Grid1 Grid2 Grid3 ], 'Grid1', 'Grid2', 'Grid3', 'Location', 'NorthWest');
+legend([ Grid1 Grid2 Grid3 ], { 'Grid1' 'Grid2' 'Grid3' }, 'Location', 'NorthWest', 'FontSize', LegendFsize);
 
 fprintf('Writing: %s\n', OutFile);
 saveas(FigTracks, OutFile);
