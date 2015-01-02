@@ -40,17 +40,27 @@ function [ ] = TwoDimAnimation(InFile, InVar, OutFile)
   end
 
   DelayTime = 0.1;
-  Fsize = 25;
+  Fsize = 22;
+
+  % for Grid3
+  LatBounds = [ 7 24 ];
+  LonBounds = [ -40 -14 ];
+
+  CoastColor = str2rgb('Black');
 
   % first establish a graphics context (axis, etc)
-  contourf(LON, LAT, TWP, Clevs, 'LineStyle', 'none');
-  shading flat;
-%  axis tight;
-%  set(gca,'nextplot','replacechildren','visible','off');
+  % This plot (outside the loop) will be thrown away, but
+  % it is needed to create the "map" variable for the rgb2ind
+  % calls inside the loop.
+  Fig = figure;
   set(gca,'FontSize', Fsize);
-%  title('TS Debby (2006)');
-  xlabel('Lon'); 
-  ylabel('Lat'); 
+
+  hold on;
+  m_proj('miller', 'lat', LatBounds, 'long', LonBounds);
+  m_coast('color', CoastColor, 'linestyle', '-', 'linewidth', 3);
+  m_grid('linestyle','none','box','fancy','tickdir','out');
+  m_contourf(LON, LAT, TWP, Clevs, 'LineStyle', 'none');
+
   caxis(Clims);
   colorbar
 
@@ -59,15 +69,28 @@ function [ ] = TwoDimAnimation(InFile, InVar, OutFile)
   [im,map] = rgb2ind(f.cdata,256,'nodither');
   im(1,1,1,Nt) = 0;
 
+  close(Fig);
+
   % capture frames for the animation
   for it = 1:Nt
+    Fig = figure;
+    set(gca,'FontSize', Fsize);
+
     TWP = squeeze(TWP_VAR.data(it,:,:));
-    contourf(LON, LAT, TWP, Clevs, 'LineStyle', 'none');
-    shading flat;
+
+    hold on;
+    m_proj('miller', 'lat', LatBounds, 'long', LonBounds);
+    m_coast('color', CoastColor, 'linestyle', '-', 'linewidth', 3);
+    m_grid('linestyle','none','box','fancy','tickdir','out');
+    m_contourf(LON,LAT,TWP,Clevs,'LineStyle','none');
+    
     colorbar;
     caxis(Clims);
+
     f = getframe(gcf);
     im(:,:,1,it) = rgb2ind(f.cdata, map, 'nodither');
+
+    close(Fig);
   end  
 
   imwrite(im, map, OutFile, 'DelayTime', DelayTime, 'LoopCount', 0);

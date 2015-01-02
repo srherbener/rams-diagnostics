@@ -49,7 +49,7 @@ function [ ] = PlotSmapleRH(ConfigFile)
   RH_MOIST  = squeeze(RH_VAR.data(T1,Z1,:,:));
 
   %******************************************************************************
-  Fsize = 25;
+  Fsize = 22;
   LegFsize = 15;
 
   % for Grid3
@@ -59,7 +59,7 @@ function [ ] = PlotSmapleRH(ConfigFile)
   Crange = [ 0 100 ];
   Clevs = [ 10 20 30 40 50 60 70 80 90 ];
 
-  CoastColor = str2rgb('WhiteSmoke');
+  CoastColor = str2rgb('Black');
 
   % *** DRY ***
   Fig = figure;
@@ -68,7 +68,7 @@ function [ ] = PlotSmapleRH(ConfigFile)
   m_coast('color', CoastColor, 'linestyle', '-', 'linewidth', 3);
   m_grid('linestyle','none','box','fancy','tickdir','out');
   hold on;
-  m_contourf(LON,LAT,RH_DRY,Clevs);
+  m_contourf(LON,LAT,RH_DRY,Clevs,'LineStyle','none');
   caxis(Crange);
   colorbar;
   title('DRY');
@@ -84,7 +84,7 @@ function [ ] = PlotSmapleRH(ConfigFile)
   m_coast('color', CoastColor, 'linestyle', '-', 'linewidth', 3);
   m_grid('linestyle','none','box','fancy','tickdir','out');
   hold on;
-  m_contourf(LON,LAT,RH_MOIST,Clevs);
+  m_contourf(LON,LAT,RH_MOIST,Clevs,'LineStyle','none');
   caxis(Crange);
   colorbar;
   title('MOIST');
