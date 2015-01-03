@@ -51,7 +51,7 @@ function [ ] = PlotAvgPcprateAll(ConfigFile)
   LegendFsize = 15;
 
   Xrange = [ -6 66 ];
-  Yrange = [  0 8 ];
+  Yrange = [  0  6 ];
   
   Fig = figure;
 

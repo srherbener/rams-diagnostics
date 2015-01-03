@@ -87,14 +87,18 @@ function [ ] = PlotFactSep(ConfigFile)
     subplot(1,2,1);
     bar(SIM_PCT_CHNG(SimOrder));
     set(gca, 'FontSize', Fsize);
-    set(gca, 'XTickLabel', BPLOT_LABELS(SimOrder));
-    title ('Change from MN');
+    set(gca, 'XTick', [ ] );
+    set(gca, 'XTickLabel', { } );
+%    set(gca, 'XTickLabel', BPLOT_LABELS(SimOrder));
+    title ('Simulations');
     ylabel('Percent Difference');
 
     subplot(1,2,2);
     bar(FACT_PCT_CHNG(FactOrder));
     set(gca, 'FontSize', Fsize);
-    set(gca, 'XTickLabel', FACT_LABELS(FactOrder));
+    set(gca, 'XTick', [ ] );
+    set(gca, 'XTickLabel', { } );
+%    set(gca, 'XTickLabel', FACT_LABELS(FactOrder));
     title('SAL Factors');
 
     saveas(Fig, OutFile);
