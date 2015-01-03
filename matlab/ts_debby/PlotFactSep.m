@@ -25,7 +25,7 @@ function [ ] = PlotFactSep(ConfigFile)
     };
   Ns = length(SimList);
   
-  VarList = { 'avg_wind' 'avg_press' 'avg_ike' 'avg_rmw' };
+  VarList = { 'avg_wind' 'avg_press' 'avg_ike' 'avg_rmw' 'avg_pcprate' 'hda_pcprate' };
   Nv = length(VarList);
 
   FACT_LABELS = { 'NO' 'DA' 'DU' 'NC' };

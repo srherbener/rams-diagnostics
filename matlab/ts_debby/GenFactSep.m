@@ -9,10 +9,13 @@ function [ ] = GenFactSep(ConfigFile)
   T1 = 10;
 
   VarList = {
-    { 'avg_wind'  'TsAveragedData/max_speed10m'  '/max_speed10m'  }
-    { 'avg_press' 'TsAveragedData/min_sea_press' '/min_sea_press' }
-    { 'avg_ike'   'TsAveragedData/horiz_ke'      '/horiz_ke'      }
-    { 'avg_rmw'   'DIAGS/ts_size'                '/rmw'           }
+    %  Avg Var           File Prefix                 File Var Name
+    { 'avg_wind'    'TsAveragedData/max_speed10m'  '/max_speed10m'  }
+    { 'avg_press'   'TsAveragedData/min_sea_press' '/min_sea_press' }
+    { 'avg_ike'     'TsAveragedData/horiz_ke'      '/horiz_ke'      }
+    { 'avg_rmw'     'DIAGS/ts_size'                '/rmw'           }
+    { 'avg_pcprate' 'DIAGS/ts_avg_pcprate'         '/avg_pcprate_1' }  % use filtered rates >= 1 mm/h
+    { 'hda_pcprate' 'DIAGS/ts_avg_pcprate'         '/hda_pcprate_1' }  % use filtered rates >= 1 mm/h
     };
 
   Nv = length(VarList);

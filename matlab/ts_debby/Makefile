@@ -8,6 +8,7 @@ DIAG_DIR = /Volumes/tasman1/sherbener/data/RAMS/TsDebby
 SCRIPTS = \
   $(DEST)/LocateSal.m \
   $(DEST)/PlotGrids.m \
+  $(DEST)/PlotHovDiags.m \
   $(DEST)/PlotAeroProfs.m \
   $(DEST)/PlotSampleSoundings.m \
   $(DEST)/PlotSampleRH.m \
@@ -16,12 +17,16 @@ SCRIPTS = \
   $(DEST)/GenMoistRamsInfo.m \
   $(DEST)/GenStormMeas.m \
   $(DEST)/GenTsSize.m \
+  $(DEST)/GenTsPcprate.m \
   $(DEST)/GenFactSep.m \
   $(DEST)/PlotHydro.m \
   $(DEST)/PlotMaxWind.m \
   $(DEST)/PlotMaxWindAll.m \
   $(DEST)/PlotMinPress.m \
   $(DEST)/PlotMinPressAll.m \
+  $(DEST)/PlotRmwAll.m \
+  $(DEST)/PlotIkeAll.m \
+  $(DEST)/PlotAvgPcprateAll.m \
   $(DEST)/PlotPressWind.m \
   $(DEST)/PlotSlp.m \
   $(DEST)/PlotSlpAll.m \
