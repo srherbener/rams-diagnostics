@@ -49,7 +49,13 @@ function [ ] = PlotFactSep(ConfigFile)
     % The MN (4th) entry is the simulation without the SAL features.
     % Covert the entries to percent changes from the
     % fourth (MN) entry for making the plot easier to read.
-    SIM_PCT_CHNG = ((SIM_AVGS - SIM_AVGS(4)) ./ SIM_AVGS(4)) .* 100;
+    if (strcmp(VarName, 'avg_press'))
+      % absolute change
+      SIM_CHANGE = SIM_AVGS - SIM_AVGS(4);
+    else
+      % percent change
+      SIM_CHANGE = ((SIM_AVGS - SIM_AVGS(4)) ./ SIM_AVGS(4)) .* 100;
+    end
 
     % read in the factor separations
     InVar  = sprintf('/FACTOR_SEP/%s_f0', VarName);
@@ -71,7 +77,11 @@ function [ ] = PlotFactSep(ConfigFile)
     FS_DATA = [ F0 F1 F2 F12 ];
     % Express as percent changes from MN, note that
     % factors are already differences.
-    FACT_PCT_CHNG = (FS_DATA ./ SIM_AVGS(4)) .* 100;
+    if (strcmp(VarName, 'avg_press'))
+      FACT_CHANGE = FS_DATA;
+    else
+      FACT_CHANGE = (FS_DATA ./ SIM_AVGS(4)) .* 100;
+    end
 
     fprintf('\n');
 
@@ -85,16 +95,20 @@ function [ ] = PlotFactSep(ConfigFile)
     FactOrder = [ 2 3 4 ];
 
     subplot(1,2,1);
-    bar(SIM_PCT_CHNG(SimOrder));
+    bar(SIM_CHANGE(SimOrder));
     set(gca, 'FontSize', Fsize);
     set(gca, 'XTick', [ ] );
     set(gca, 'XTickLabel', { } );
 %    set(gca, 'XTickLabel', BPLOT_LABELS(SimOrder));
     title ('Simulations');
-    ylabel('Percent Difference');
+    if (strcmp(VarName, 'avg_press'))
+      ylabel('Absolute Difference');
+    else
+      ylabel('Percent Difference');
+    end
 
     subplot(1,2,2);
-    bar(FACT_PCT_CHNG(FactOrder));
+    bar(FACT_CHANGE(FactOrder));
     set(gca, 'FontSize', Fsize);
     set(gca, 'XTick', [ ] );
     set(gca, 'XTickLabel', { } );
