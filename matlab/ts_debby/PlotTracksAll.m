@@ -18,10 +18,10 @@ function [ ] = PlotTracksAll(ConfigFile)
   
   LegText = {
    'NHC Best Track'
-   'DD'
-   'DN'
-   'MD'
-   'MN'
+   'DRY\_DUST'
+   'DRY'
+   'DUST'
+   'BASE'
    };
   
   % for the TS Debby simulations:
