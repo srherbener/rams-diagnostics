@@ -100,7 +100,7 @@ function [ ] = PlotFactSep(ConfigFile)
     set(gca, 'XTick', [ ] );
     set(gca, 'XTickLabel', { } );
 %    set(gca, 'XTickLabel', BPLOT_LABELS(SimOrder));
-    title ('Simulations');
+    title ('Measurements');
     if (strcmp(VarName, 'avg_press'))
       ylabel('Absolute Difference');
     else
@@ -113,7 +113,7 @@ function [ ] = PlotFactSep(ConfigFile)
     set(gca, 'XTick', [ ] );
     set(gca, 'XTickLabel', { } );
 %    set(gca, 'XTickLabel', FACT_LABELS(FactOrder));
-    title('SAL Factors');
+    title('Factor Separation');
 
     saveas(Fig, OutFile);
     close(Fig);
