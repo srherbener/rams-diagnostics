@@ -10,6 +10,7 @@ SCRIPTS = \
   $(DEST)/PlotGrids.m \
   $(DEST)/PlotHovDiags.m \
   $(DEST)/PlotAeroProfs.m \
+  $(DEST)/PlotGrid3Extent.m \
   $(DEST)/PlotSampleSoundings.m \
   $(DEST)/PlotSampleRH.m \
   $(DEST)/GenMoistDpFiles.m \
