@@ -172,7 +172,7 @@ LinePlot: CO_UP_S303_G10M5_ALL  WvaporDownAllCloudTall TurbHeights WvaporDownAll
 #LinePlot: CG_UP_C50_C1600_S298_ZOOM  WvaporDownAllCloudTall TurbHeights WvaporDownAllCloud_CG_298 1 HeightKm 1 TurbSelect none PANEL:h@DN,@S298    none none WvaporDownAllCloud_TALL_CG_C50_C1600_S298.jpg
 
 # Cloud condensational growth
-LinePlot: CO_UP_S293_G10M5_ALL  CloudCondAllCloudTall CloudCondHeights CloudCondAllCloud_293 1 HeightKm 1 CloudCondSelect none PANEL:a@S293    none Zinv293 CloudCondAllCloud_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  CloudCondAllCloudTall CloudCondHeights CloudCondAllCloud_293 1 HeightKm_2 1 CloudCondSelect none PANEL:a@S293    none Zinv293 CloudCondAllCloud_TALL_CO_S293_G10M5_ALL.jpg
 LinePlot: CO_UP_S298_G10M5_ALL  CloudCondAllCloudTall CloudCondHeights CloudCondAllCloud_298 1 HeightKm   1 CloudCondSelect none PANEL:a@S298    none Zinv298 CloudCondAllCloud_TALL_CO_S298_G10M5_ALL.jpg
 LinePlot: CO_UP_S303_G10M5_ALL  CloudCondAllCloudTall CloudCondHeights CloudCondAllCloud_303 1 HeightKm   1 CloudCondSelect none PANEL:a@S303    none none CloudCondAllCloud_TALL_CO_S303_G10M5_ALL.jpg
 
@@ -185,17 +185,17 @@ LinePlot: CO_UP_S303_G10M5_ALL  CloudCondAllCloudTall CloudCondHeights CloudCond
 #LinePlot: CG_UP_C50_C1600_S298_ZOOM  CloudCondInCloudTall CloudCondHeights CloudCondInCloud_298 1 HeightKm 1 CloudCondSelect none PANEL:a@In@Cloud,@S298    none none CloudCondInCloud_TALL_CG_C50_C1600_S298.jpg
 
 # drizzle condensational growth
-LinePlot: CO_UP_S293_G10M5_ALL  DrizCondAllCloudTall DrizCondHeights DrizCondAllCloud_293 1 HeightKm 1 DrizCondSelect none PANEL:c@S293    none Zinv293 DrizCondAllCloud_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  DrizCondAllCloudTall DrizCondHeights DrizCondAllCloud_293 1 HeightKm_2 1 DrizCondSelect none PANEL:c@S293    none Zinv293 DrizCondAllCloud_TALL_CO_S293_G10M5_ALL.jpg
 LinePlot: CO_UP_S298_G10M5_ALL  DrizCondAllCloudTall DrizCondHeights DrizCondAllCloud_298 1 HeightKm   1 DrizCondSelect none PANEL:c@S298    none Zinv298 DrizCondAllCloud_TALL_CO_S298_G10M5_ALL.jpg
 LinePlot: CO_UP_S303_G10M5_ALL  DrizCondAllCloudTall DrizCondHeights DrizCondAllCloud_303 1 HeightKm   1 DrizCondSelect none PANEL:c@S303    none none DrizCondAllCloud_TALL_CO_S303_G10M5_ALL.jpg
 
 # rain condensational growth
-LinePlot: CO_UP_S293_G10M5_ALL  RainCondAllCloudTall RainCondHeights RainCondAllCloud_293 1 HeightKm 1 RainCondSelect none PANEL:e@S293    none Zinv293 RainCondAllCloud_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  RainCondAllCloudTall RainCondHeights RainCondAllCloud_293 1 HeightKm_2 1 RainCondSelect none PANEL:e@S293    none Zinv293 RainCondAllCloud_TALL_CO_S293_G10M5_ALL.jpg
 LinePlot: CO_UP_S298_G10M5_ALL  RainCondAllCloudTall RainCondHeights RainCondAllCloud_298 1 HeightKm   1 RainCondSelect none PANEL:e@S298    none Zinv298 RainCondAllCloud_TALL_CO_S298_G10M5_ALL.jpg
 LinePlot: CO_UP_S303_G10M5_ALL  RainCondAllCloudTall RainCondHeights RainCondAllCloud_303 1 HeightKm   1 RainCondSelect none PANEL:e@S303    none none RainCondAllCloud_TALL_CO_S303_G10M5_ALL.jpg
 
 # cloud evaporation
-LinePlot: CO_UP_S293_G10M5_ALL  CloudEvapAllCloudTall CloudEvapHeights CloudEvapAllCloud_293 1 HeightKm 0 CloudEvapSelect none PANEL:b@S293    none Zinv293 CloudEvapAllCloud_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  CloudEvapAllCloudTall CloudEvapHeights CloudEvapAllCloud_293 1 HeightKm_2 0 CloudEvapSelect none PANEL:b@S293    none Zinv293 CloudEvapAllCloud_TALL_CO_S293_G10M5_ALL.jpg
 LinePlot: CO_UP_S298_G10M5_ALL  CloudEvapAllCloudTall CloudEvapHeights CloudEvapAllCloud_298 1 HeightKm   0 CloudEvapSelect none PANEL:b@S298    none Zinv298 CloudEvapAllCloud_TALL_CO_S298_G10M5_ALL.jpg
 LinePlot: CO_UP_S303_G10M5_ALL  CloudEvapAllCloudTall CloudEvapHeights CloudEvapAllCloud_303 1 HeightKm   0 CloudEvapSelect none PANEL:b@S303    none none CloudEvapAllCloud_TALL_CO_S303_G10M5_ALL.jpg
 
@@ -208,12 +208,12 @@ LinePlot: CO_UP_S303_G10M5_ALL  CloudEvapAllCloudTall CloudEvapHeights CloudEvap
 #LinePlot: CG_UP_C50_C1600_S298_ZOOM  CloudEvapInCloudTall CloudEvapHeights CloudEvapInCloud_298 1 HeightKm 1 CloudEvapSelect none PANEL:b@In@Cloud,@S298    none none CloudEvapInCloud_TALL_CG_C50_C1600_S298.jpg
 
 # drizzle evaporation
-LinePlot: CO_UP_S293_G10M5_ALL  DrizEvapAllCloudTall DrizEvapHeights DrizEvapAllCloud_293 1 HeightKm 0 DrizEvapSelect none PANEL:d@S293    none Zinv293 DrizEvapAllCloud_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  DrizEvapAllCloudTall DrizEvapHeights DrizEvapAllCloud_293 1 HeightKm_2 0 DrizEvapSelect none PANEL:d@S293    none Zinv293 DrizEvapAllCloud_TALL_CO_S293_G10M5_ALL.jpg
 LinePlot: CO_UP_S298_G10M5_ALL  DrizEvapAllCloudTall DrizEvapHeights DrizEvapAllCloud_298 1 HeightKm   0 DrizEvapSelect none PANEL:d@S298    none Zinv298 DrizEvapAllCloud_TALL_CO_S298_G10M5_ALL.jpg
 LinePlot: CO_UP_S303_G10M5_ALL  DrizEvapAllCloudTall DrizEvapHeights DrizEvapAllCloud_303 1 HeightKm   0 DrizEvapSelect none PANEL:d@S303    none none DrizEvapAllCloud_TALL_CO_S303_G10M5_ALL.jpg
 
 # rain evaporation
-LinePlot: CO_UP_S293_G10M5_ALL  RainEvapAllCloudTall RainEvapHeights RainEvapAllCloud_293 1 HeightKm 0 RainEvapSelect none PANEL:f@S293    none Zinv293 RainEvapAllCloud_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  RainEvapAllCloudTall RainEvapHeights RainEvapAllCloud_293 1 HeightKm_2 0 RainEvapSelect none PANEL:f@S293    none Zinv293 RainEvapAllCloud_TALL_CO_S293_G10M5_ALL.jpg
 LinePlot: CO_UP_S298_G10M5_ALL  RainEvapAllCloudTall RainEvapHeights RainEvapAllCloud_298 1 HeightKm   0 RainEvapSelect none PANEL:f@S298    none Zinv298 RainEvapAllCloud_TALL_CO_S298_G10M5_ALL.jpg
 LinePlot: CO_UP_S303_G10M5_ALL  RainEvapAllCloudTall RainEvapHeights RainEvapAllCloud_303 1 HeightKm   0 RainEvapSelect none PANEL:f@S303    none none RainEvapAllCloud_TALL_CO_S303_G10M5_ALL.jpg
 
@@ -282,7 +282,7 @@ LinePlot: CO_UP_S303_G10M5_ALL  CfracProfTall MomentHeights CfracProf 1 HeightKm
 
 
 ### Net LW flux profile
-LinePlot: CO_UP_S293_G10M5_ALL  NetLwAllCloudTall TurbHeights NetLwAllCloud_293 1 HeightKm 1 NetLwSelect none PANEL:g@S293    none Zinv293 NetLwAllCloud_TALL_CO_S293_G10M5_ALL.jpg
+LinePlot: CO_UP_S293_G10M5_ALL  NetLwAllCloudTall TurbHeights NetLwAllCloud_293 1 HeightKm_2 1 NetLwSelect none PANEL:g@S293    none Zinv293 NetLwAllCloud_TALL_CO_S293_G10M5_ALL.jpg
 LinePlot: CO_UP_S298_G10M5_ALL  NetLwAllCloudTall TurbHeights NetLwAllCloud_298 1 HeightKm 1 NetLwSelect none PANEL:g@S298    none Zinv298 NetLwAllCloud_TALL_CO_S298_G10M5_ALL.jpg
 LinePlot: CO_UP_S303_G10M5_ALL  NetLwAllCloudTall TurbHeights NetLwAllCloud_303 1 HeightKm 1 NetLwSelect none PANEL:g@S303    none none NetLwAllCloud_TALL_CO_S303_G10M5_ALL.jpg
 
