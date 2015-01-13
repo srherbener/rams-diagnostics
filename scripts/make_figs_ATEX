@@ -6,17 +6,30 @@ Jsize="1200x900"
 Pgap="+10+10"
 PgapSch="+10+30"
 
+# Single column spec: 3.25 inches wide (975 pixels at 300 dpi)
+# Aspect ratio 4 wide to 3 high
+SingleCol="975x731+0+10"
+SingleColDoubleWidth="1950x1463+0+30"
+
+# Double column spec: 6.5 inches wide (1950 pixels at 300 dpi)
+# Aspect ratio 4 wide to 3 high
+# -->
+#   tile size = (1950 - 40) / 2 =  955
+#   30 comes from 4 boundaries X 10 pixels (each tile has a boundary
+#   10 pixels wide wrapped around it)
+DoubleCol="955x716+10+10"
+
 PLOT_DIR="./Plots"
 FIG_DIR="./Figures"
 SCH_DIR="./Schematic"
 
 echo "Figure 1: ATEX initial conditions"
-montage -tile 1x1 -geometry ${Jsize}${Pgap} \
+montage -tile 1x1 -units PixelsPerInch -density 300 -geometry ${SingleColDoubleWidth} \
  ${PLOT_DIR}/InitialConditions.jpg \
  ${FIG_DIR}/Figure1_InitalConditions.jpg
 
 echo "Figure 2: Cloud samples: C400: S293 and S298"
-montage -tile 2x3 -geometry ${Jsize}${Pgap} \
+montage -tile 2x3 -units PixelsPerInch -density 300 -geometry ${DoubleCol} \
  ${PLOT_DIR}/Cloud_C400_S293_T24.jpg \
  ${PLOT_DIR}/Cloud_C400_S298_T24.jpg \
  ${PLOT_DIR}/Albedo_T24_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
@@ -26,13 +39,13 @@ montage -tile 2x3 -geometry ${Jsize}${Pgap} \
  ${FIG_DIR}/Figure2_CloudSamples.jpg
 
 echo "Figure 3: Bgraph COT (domain and cloud) : CCN only"
-montage -tile 1x2 -geometry ${Jsize}${Pgap} \
+montage -tile 1x2 -units PixelsPerInch -density 300 -geometry ${SingleCol} \
  ${PLOT_DIR}/bars_avg_cot_TALL_CO.jpg \
  ${PLOT_DIR}/bars_avg_cot_all_cld_TALL_CO.jpg \
  ${FIG_DIR}/Figure3_BgraphCotDomCloud.jpg
 
 echo "Figure 4: Time series: Zi, Zt, CFmax, all cases, CCN only"
-montage -tile 2x3 -geometry ${Jsize}${Pgap} \
+montage -tile 2x3 -units PixelsPerInch -density 300 -geometry ${DoubleCol} \
  ${PLOT_DIR}/InvHeightAllCloud_CO_S293_G10M5_ALL.jpg \
  ${PLOT_DIR}/CloudFrac_CO_S293_G10M5_ALL.jpg \
  ${PLOT_DIR}/InvHeightAllCloud_CO_S298_G10M5_ALL.jpg \
@@ -41,8 +54,14 @@ montage -tile 2x3 -geometry ${Jsize}${Pgap} \
  ${PLOT_DIR}/CloudFrac_CO_S303_G10M5_ALL.jpg \
  ${FIG_DIR}/Figure4_TsBlStats_ALL.jpg
 
+echo "Figure 4: Legend"
+montage -tile 1x2 -units PixelsPerInch -density 300 -gravity center -geometry +0+30 \
+ ${FIG_DIR}/Figure4_TsBlStats_ALL.jpg \
+ ${FIG_DIR}/LegendTemplateCCN.jpg \
+ ${FIG_DIR}/Figure4_TsBlStats_ALL_Legend.jpg
+
 echo "Figure 5: PR hist, CD hist, CCN only, 293K"
-montage -tile 2x4 -geometry ${Jsize}${Pgap} \
+montage -tile 2x4 -units PixelsPerInch -density 300 -geometry ${DoubleCol} \
  ${PLOT_DIR}/PrateHist_TALL_CO_S293_G10M5_ALL.jpg \
  ${PLOT_DIR}/CfracProf_TALL_CO_S293_G10M5_ALL.jpg \
  ${PLOT_DIR}/WvarUpAllCloud_TALL_CO_S293_G10M5_ALL.jpg \
@@ -53,8 +72,14 @@ montage -tile 2x4 -geometry ${Jsize}${Pgap} \
  ${PLOT_DIR}/WvaporDownAllCloud_TALL_CO_S293_G10M5_ALL.jpg \
  ${FIG_DIR}/Figure5_HistProfs_S293.jpg
 
+echo "Figure 5: Legend"
+montage -tile 1x2 -units PixelsPerInch -density 300 -gravity center -geometry +0+30 \
+ ${FIG_DIR}/Figure5_HistProfs_S293.jpg \
+ ${FIG_DIR}/LegendTemplateCCN.jpg \
+ ${FIG_DIR}/Figure5_HistProfs_S293_Legend.jpg
+
 echo "Figure 6: Microphysics, 293K"
-montage -tile 2x4 -geometry ${Jsize}${Pgap} \
+montage -tile 2x4 -units PixelsPerInch -density 300 -geometry ${DoubleCol} \
  ${PLOT_DIR}/CloudCondAllCloud_TALL_CO_S293_G10M5_ALL.jpg \
  ${PLOT_DIR}/CloudEvapAllCloud_TALL_CO_S293_G10M5_ALL.jpg \
  ${PLOT_DIR}/DrizCondAllCloud_TALL_CO_S293_G10M5_ALL.jpg \
@@ -64,14 +89,20 @@ montage -tile 2x4 -geometry ${Jsize}${Pgap} \
  ${PLOT_DIR}/NetLwAllCloud_TALL_CO_S293_G10M5_ALL.jpg \
  ${FIG_DIR}/Figure6_MicroPhys_S293.jpg
 
+echo "Figure 6: Legend"
+montage -tile 1x2 -units PixelsPerInch -density 300 -gravity center -geometry +0+30 \
+ ${FIG_DIR}/Figure6_MicroPhys_S293.jpg \
+ ${FIG_DIR}/LegendTemplateCCN.jpg \
+ ${FIG_DIR}/Figure6_MicroPhys_S293_Legend.jpg
+
 echo "Figure 7: Avg Cdepth, Avg LWC, CCN"
-montage -tile 1x2 -geometry ${Jsize}${Pgap} \
+montage -tile 1x2 -units PixelsPerInch -density 300 -geometry ${SingleCol} \
  ${PLOT_DIR}/bars_avg_cdepth_all_cld_TALL_CO_S293.jpg \
  ${PLOT_DIR}/bars_avg_lwc_all_cld_TALL_CO_S293.jpg \
  ${FIG_DIR}/Figure7_CdepthLwc_S293.jpg
 
 echo "Figure 8: PR hist, CD hist, CCN only, 298K"
-montage -tile 2x4 -geometry ${Jsize}${Pgap} \
+montage -tile 2x4 -units PixelsPerInch -density 300 -geometry ${DoubleCol} \
  ${PLOT_DIR}/PrateHist_TALL_CO_S298_G10M5_ALL.jpg \
  ${PLOT_DIR}/CfracProf_TALL_CO_S298_G10M5_ALL.jpg \
  ${PLOT_DIR}/WvarUpAllCloud_TALL_CO_S298_G10M5_ALL.jpg \
@@ -82,8 +113,14 @@ montage -tile 2x4 -geometry ${Jsize}${Pgap} \
  ${PLOT_DIR}/WvaporDownAllCloud_TALL_CO_S298_G10M5_ALL.jpg \
  ${FIG_DIR}/Figure8_HistProfs_S298.jpg
 
+echo "Figure 8: Legend"
+montage -tile 1x2 -units PixelsPerInch -density 300 -gravity center -geometry +0+30 \
+ ${FIG_DIR}/Figure8_HistProfs_S298.jpg \
+ ${FIG_DIR}/LegendTemplateCCN.jpg \
+ ${FIG_DIR}/Figure8_HistProfs_S298_Legend.jpg
+
 echo "Figure 9: Microphysics, 298 K"
-montage -tile 2x4 -geometry ${Jsize}${Pgap} \
+montage -tile 2x4 -units PixelsPerInch -density 300 -geometry ${DoubleCol} \
  ${PLOT_DIR}/CloudCondAllCloud_TALL_CO_S298_G10M5_ALL.jpg \
  ${PLOT_DIR}/CloudEvapAllCloud_TALL_CO_S298_G10M5_ALL.jpg \
  ${PLOT_DIR}/DrizCondAllCloud_TALL_CO_S298_G10M5_ALL.jpg \
@@ -93,14 +130,20 @@ montage -tile 2x4 -geometry ${Jsize}${Pgap} \
  ${PLOT_DIR}/NetLwAllCloud_TALL_CO_S298_G10M5_ALL.jpg \
  ${FIG_DIR}/Figure9_MicroPhys_S298.jpg
 
+echo "Figure 9: Legend"
+montage -tile 1x2 -units PixelsPerInch -density 300 -gravity center -geometry +0+30 \
+ ${FIG_DIR}/Figure9_MicroPhys_S298.jpg \
+ ${FIG_DIR}/LegendTemplateCCN.jpg \
+ ${FIG_DIR}/Figure9_MicroPhys_S298_Legend.jpg
+
 echo "Figure 10: Avg Cdepth, Avg LWC, CCN"
-montage -tile 1x2 -geometry ${Jsize}${Pgap} \
+montage -tile 1x2 -units PixelsPerInch -density 300 -geometry ${SingleCol} \
  ${PLOT_DIR}/bars_avg_cdepth_all_cld_TALL_CO_S298.jpg \
  ${PLOT_DIR}/bars_avg_lwc_all_cld_TALL_CO_S298.jpg \
  ${FIG_DIR}/Figure10_CdepthLwc_S298.jpg
 
 echo "Figure 11: Schematic"
-montage -tile 1x2 -geometry ${Jsize}${PgapSch} \
+montage -tile 1x2 -units PixelsPerInch -density 300 -geometry ${SingleColDoubleWidth} \
  ${SCH_DIR}/Panels/Slide1.jpg \
  ${SCH_DIR}/Panels/Slide2.jpg \
  ${FIG_DIR}/Figure11_Schematic.jpg
