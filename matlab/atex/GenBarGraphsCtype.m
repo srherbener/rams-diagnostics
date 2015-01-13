@@ -140,7 +140,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'a' 'Domain' }
        'Number Concentration (cm^-^3)'
        '\tau_c'
-       { 'navy' 'dodgerblue' 'cyan' }
+       { 'blue' 'orange' 'green' }
        { { 'S293', 'S298', 'S303' } 'NorthWest' }
        'grouped'
        { 'Averages' 1 { [4] [1:3] [1:6] [1] } 1 'CCN' 0 4.5 }
@@ -154,7 +154,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'b' 'All Clouds' }
        'Number Concentration (cm^-^3)'
        '\tau_c'
-       { 'navy' 'dodgerblue' 'cyan' }
+       { 'blue' 'orange' 'green' }
        { { 'S293', 'S298', 'S303' } 'NorthWest' }
        'grouped'
        { 'Averages' 1 { [20] [1:3] [1:6] [1] } 1 'CCN' 0 6 }
@@ -182,7 +182,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'a' 'Domain, S298' }
        'Number Concentration (cm^-^3)'
        '\tau_c'
-       { 'navy' 'dodgerblue' 'cyan' }
+       { 'dodgerblue' 'yellow' 'green' }
        { { 'Glow', 'Gmed', 'Ghigh' } 'NorthWest' }
        'grouped'
        { 'Averages' 1 { [4] [2] [1:6] [2:4] } 0 'CCN' 0 4.5 }
@@ -196,7 +196,7 @@ function [ ] = GenBarGraphsCtype(ConfigFile)
        { 'b' 'All Clouds, S298' }
        'Number Concentration (cm^-^3)'
        '\tau_c'
-       { 'navy' 'dodgerblue' 'cyan' }
+       { 'dodgerblue' 'yellow' 'green' }
        { { 'Glow', 'Gmed', 'Ghigh' } 'NorthWest' }
        'grouped'
        { 'Averages' 1 { [20] [2] [1:6] [2:4] } 0 'CCN' 0 4.5 }
