@@ -30,8 +30,8 @@ montage -tile 1x1 -units PixelsPerInch -density 300 -geometry ${SingleColDoubleW
 
 echo "Figure 2: Cloud samples: C400: S293 and S298"
 montage -tile 2x3 -units PixelsPerInch -density 300 -geometry ${DoubleCol} \
- ${PLOT_DIR}/Cloud_C400_S293_T24.jpg \
- ${PLOT_DIR}/Cloud_C400_S298_T24.jpg \
+ ${PLOT_DIR}/Cloud_C400_S293_T24_White.jpg \
+ ${PLOT_DIR}/Cloud_C400_S298_T24_White.jpg \
  ${PLOT_DIR}/Albedo_T24_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
  ${PLOT_DIR}/Albedo_T24_z.atex.ccn0400.sst298.gcn10m5.1um.jpg \
  ${PLOT_DIR}/SfcConv_T24_z.atex.ccn0400.sst293.gcn10m5.1um.jpg \
