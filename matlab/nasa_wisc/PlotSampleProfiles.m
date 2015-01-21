@@ -15,14 +15,14 @@ function [ ] = PlotSampleProfiles(ConfigFile)
 
   % case_name temp_var_name cloud_var_name vapor_var_name select_time (hrs) plot_title
   PlotSets = {
-%      { 'RCE50_NEW_RI_MID' 'tempc' 'cloud' 'vapor' 340 'SZA 50, New Ri' }
+%      { 'RCE50_RECT_MID' 'tempc' 'cloud' 'vapor' 340 'SZA 50, New Ri' }
 %      { 'RCE50_OLD_RI_MID' 'tempc' 'cloud' 'vapor' 340 'SZA 50, Old Ri' }
 %      { 'RCE70_OLD_RI_MID' 'tempc' 'cloud' 'vapor' 340 'SZA 70, Old Ri' }
 
-%      { 'RCE50_NEW_RI_800' 'tempc' 'cloud' 'vapor' 340 'SZA 50, New Ri, High PW' }
+%      { 'RCE50_RECT_800' 'tempc' 'cloud' 'vapor' 340 'SZA 50, New Ri, High PW' }
 
-      { 'RCE50_NEW_RI_800' 'tempc' 'cloud' 'vapor' 1034 'SZA 50, New Ri, High PW' }
-      { 'RCE50_NEW_RI_MID' 'tempc' 'cloud' 'vapor' 1034 'SZA 50, New Ri' }
+      { 'RCE50_RECT_800' 'tempc' 'cloud' 'vapor' 1034 'SZA 50, New Ri, High PW' }
+      { 'RCE50_RECT_MID' 'tempc' 'cloud' 'vapor' 1034 'SZA 50, New Ri' }
     };
   Nset = length(PlotSets);
 

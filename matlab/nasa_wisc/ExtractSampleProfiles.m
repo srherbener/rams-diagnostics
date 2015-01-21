@@ -15,19 +15,19 @@ function [ ] = ExtractSampleProfiles(ConfigFile)
   % input_file input_dataset case_name outfile_prefix output_dataset
   VarSets = {
       {
-        { 'HDF5/RCE50_NEW_RI/tempc-a-AS-2012-01-01-000000-g1.h5' 'tempc' }
-        { 'HDF5/RCE50_NEW_RI/cloud-a-AS-2012-01-01-000000-g1.h5' 'cloud' }
-        { 'HDF5/RCE50_NEW_RI/vapor-a-AS-2012-01-01-000000-g1.h5' 'vapor' }
-        'RCE50_NEW_RI_800'
+        { 'HDF5/RCE50_RECT/tempc-a-AS-2012-01-01-000000-g1.h5' 'tempc' }
+        { 'HDF5/RCE50_RECT/cloud-a-AS-2012-01-01-000000-g1.h5' 'cloud' }
+        { 'HDF5/RCE50_RECT/vapor-a-AS-2012-01-01-000000-g1.h5' 'vapor' }
+        'RCE50_RECT_800'
         800
         100
       }
 
       {
-        { 'HDF5/RCE50_NEW_RI/tempc-a-AS-2012-01-01-000000-g1.h5' 'tempc' }
-        { 'HDF5/RCE50_NEW_RI/cloud-a-AS-2012-01-01-000000-g1.h5' 'cloud' }
-        { 'HDF5/RCE50_NEW_RI/vapor-a-AS-2012-01-01-000000-g1.h5' 'vapor' }
-        'RCE50_NEW_RI_MID'
+        { 'HDF5/RCE50_RECT/tempc-a-AS-2012-01-01-000000-g1.h5' 'tempc' }
+        { 'HDF5/RCE50_RECT/cloud-a-AS-2012-01-01-000000-g1.h5' 'cloud' }
+        { 'HDF5/RCE50_RECT/vapor-a-AS-2012-01-01-000000-g1.h5' 'vapor' }
+        'RCE50_RECT_MID'
         1500
         100
       }

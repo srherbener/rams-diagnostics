@@ -2,8 +2,8 @@
 # Config
 #
 
-DEST = $(HOME)/etc/matlab/rce
-DIAG_DIR = /Volumes/tasman1/sherbener/data/RAMS/RCE
+DEST = $(HOME)/etc/matlab/nasa_wisc
+DIAG_DIR = /Volumes/tasman1/sherbener/data/RAMS/NasaWisc
 
 SCRIPTS = \
   $(DEST)/GenDomAvgTseries.m \
