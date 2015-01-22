@@ -7,6 +7,7 @@ DIAG_DIR = /Volumes/tasman1/sherbener/data/RAMS/NasaWisc
 
 SCRIPTS = \
   $(DEST)/GenDomAvgTseries.m \
+  $(DEST)/GenEqMeasTseries.m \
   $(DEST)/Gen2dHovmoller.m \
   $(DEST)/ExtractSampleProfiles.m \
   $(DEST)/PlotSampleProfiles.m \
