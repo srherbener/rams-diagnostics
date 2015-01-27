@@ -11,6 +11,7 @@ SCRIPTS = \
   $(DEST)/Gen2dHovmoller.m \
   $(DEST)/ExtractSampleProfiles.m \
   $(DEST)/ReadTogaCoareSound.m \
+  $(DEST)/TogaCoareToRamsSound.m \
   $(DEST)/PlotSampleProfiles.m \
   $(DEST)/SetPath.m
 

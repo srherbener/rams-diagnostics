@@ -72,21 +72,50 @@ function [ ] = ReadTogaCoareSound(SoundDir, SoundDate)
   % Replace P(1) with the SLP average
   P(1) = SLP_AVG;
 
+  % Calculate potential temperature
+  %  THETA = T * (P0 / P) ^ (Rd/Cp)
+  %
+  %    P0 = 1000 mb
+  %    Rd = 1004 J/kg/K
+  %    Cp = 287  J/kg/K
+  %
+  %    --> Rd/Cp = 0.286
+  %
+  %  T needs to be in Kelvin (T + 273.15)
+  %
+  THETA_AVG = (T_AVG + 273.15) .* ((1000 ./ P') .^ (0.286));
+
+  % Adust the theta profile so that the first entry is 300K.
+  %
+  %   Create deleta: TH(1) - 300
+  %   For first five entries: New TH = TH - delta
+  %   Next five entries: New TH = TH - (delta * (10-i)/5)
+  %   Remaining entries: New TH = TH
+  DELTA_TH = THETA_AVG(1) - 300;
+  TH_ADJUST = vertcat( ones([ 5 1]), ([4:-1:0]' ./ 5), zeros([ 31 1 ]) ) .* DELTA_TH;
+  THETA_300 = THETA_AVG - TH_ADJUST;
+
   % Save both the original and average values
-  OutFile = 'DIAGS/TogaCoreSoundings.h5';
+  OutFile = 'DIAGS/TogaCoareSoundings.h5';
   fprintf('  Writing: %s\n', OutFile);
 
-  hdf5write(OutFile, 'SLP_ALL', SLP);
+  hdf5write(OutFile, 'LON', LON);
+  hdf5write(OutFile, 'LAT', LAT, 'WriteMode', 'append');
+  hdf5write(OutFile, 'P',   P,   'WriteMode', 'append');
+   
+  hdf5write(OutFile, 'SLP_ALL', SLP, 'WriteMode', 'append');
   hdf5write(OutFile, 'T_ALL',   T,   'WriteMode', 'append');
   hdf5write(OutFile, 'Q_ALL',   Q,   'WriteMode', 'append');
   hdf5write(OutFile, 'U_ALL',   U,   'WriteMode', 'append');
   hdf5write(OutFile, 'V_ALL',   V,   'WriteMode', 'append');
 
-  hdf5write(OutFile, 'SLP_AVG', SLP_AVG, 'WriteMode', 'append');
-  hdf5write(OutFile, 'T_AVG',   T_AVG,   'WriteMode', 'append');
-  hdf5write(OutFile, 'Q_AVG',   Q_AVG,   'WriteMode', 'append');
-  hdf5write(OutFile, 'U_AVG',   U_AVG,   'WriteMode', 'append');
-  hdf5write(OutFile, 'V_AVG',   V_AVG,   'WriteMode', 'append');
+  hdf5write(OutFile, 'SLP_AVG',   SLP_AVG,   'WriteMode', 'append');
+  hdf5write(OutFile, 'T_AVG',     T_AVG,     'WriteMode', 'append');
+  hdf5write(OutFile, 'THETA_AVG', THETA_AVG, 'WriteMode', 'append');
+  hdf5write(OutFile, 'THETA_300', THETA_300, 'WriteMode', 'append');
+  hdf5write(OutFile, 'Q_AVG',     Q_AVG,     'WriteMode', 'append');
+  hdf5write(OutFile, 'U_AVG',     U_AVG,     'WriteMode', 'append');
+  hdf5write(OutFile, 'V_AVG',     V_AVG,     'WriteMode', 'append');
 
 end
 
