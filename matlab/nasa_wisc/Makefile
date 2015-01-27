@@ -10,6 +10,7 @@ SCRIPTS = \
   $(DEST)/GenEqMeasTseries.m \
   $(DEST)/Gen2dHovmoller.m \
   $(DEST)/ExtractSampleProfiles.m \
+  $(DEST)/ReadTogaCoareSound.m \
   $(DEST)/PlotSampleProfiles.m \
   $(DEST)/SetPath.m
 
