@@ -13,6 +13,7 @@ SCRIPTS = \
   $(DEST)/ReadTogaCoareSound.m \
   $(DEST)/TogaCoareToRamsSound.m \
   $(DEST)/PlotSampleProfiles.m \
+  $(DEST)/PlotEqMeas.m \
   $(DEST)/SetPath.m
 
 CONFIGS = \

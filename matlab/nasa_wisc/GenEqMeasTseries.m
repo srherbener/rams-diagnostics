@@ -14,9 +14,12 @@ function [ ] = GenEqMeasTseries(ConfigFile)
   end
 
   % cases
-  %CaseList = { 'RCE50_RECT' };
-  CaseList = { 'RCE50_RECT_S303' };
-  %CaseList = { 'RCE50_SQ' };
+  CaseList = {
+   'RCE50_RECT'
+   'RCE50_RECT_S300'
+   'RCE50_RECT_S303'
+%  'RCE50_SQ'
+   };
   Nc = length(CaseList);
 
   % input file specs
@@ -149,11 +152,22 @@ function [ ] = GenEqMeasTseries(ConfigFile)
       %
       % Calculate THF, QRAD per column and then take average
       %
+      % Save out the averages of all the component quantities, too.
+      %
       TempVar = SFC_LAT + SFC_SENS;
       THF(it) = mean(TempVar(:));
 
       TempVar = ((TOP_SWUP + TOP_LWUP) - (TOP_SWDN)) - (((SFC_SWDN.*SFC_ALB) + SFC_LWUP) - (SFC_SWDN + SFC_LWDN));
       QRAD(it) = mean(TempVar(:));
+
+
+      AVG_SFC_SWDN(it) = mean(SFC_SWDN(:));
+      AVG_SFC_LWDN(it) = mean(SFC_LWDN(:));
+      AVG_SFC_LWUP(it) = mean(SFC_LWUP(:));
+      AVG_SFC_ALB(it)  = mean(SFC_ALB(:));
+      AVG_TOP_SWDN(it) = mean(TOP_SWDN(:));
+      AVG_TOP_SWUP(it) = mean(TOP_SWUP(:));
+      AVG_TOP_LWUP(it) = mean(TOP_LWUP(:));
 
       if (mod(it,50) == 0)
         fprintf ('  Completed timestep %d out of %d\n', it, Nt);
@@ -161,23 +175,20 @@ function [ ] = GenEqMeasTseries(ConfigFile)
     end
     fprintf('\n');
 
-    % Write out dummy coordinate values to keep ReadSelectXyzt happy
-    Xdummy = 1;
-    Ydummy = 1;
-    Zdummy = 1;
-
     fprintf('    Writing: %s (%s, %s)\n', OutFile, ThfVname, QradVname);
     fprintf('\n');
 
-    OutVar = reshape(THF, [ 1 1 1 Nt ]);
-    hdf5write(OutFile, ThfVname, OutVar); 
+    hdf5write(OutFile, ThfVname, THF); 
+    hdf5write(OutFile, QradVname, QRAD, 'WriteMode', 'append'); 
 
-    OutVar = reshape(QRAD, [ 1 1 1 Nt ]);
-    hdf5write(OutFile, QradVname, OutVar, 'WriteMode', 'append'); 
+    hdf5write(OutFile, '/avg_sfc_swdn', AVG_SFC_SWDN, 'WriteMode', 'append'); 
+    hdf5write(OutFile, '/avg_sfc_lwdn', AVG_SFC_LWDN, 'WriteMode', 'append'); 
+    hdf5write(OutFile, '/avg_sfc_lwup', AVG_SFC_LWUP, 'WriteMode', 'append'); 
+    hdf5write(OutFile, '/avg_sfc_alb',  AVG_SFC_ALB,  'WriteMode', 'append'); 
+    hdf5write(OutFile, '/avg_top_swdn', AVG_TOP_SWDN, 'WriteMode', 'append'); 
+    hdf5write(OutFile, '/avg_top_swup', AVG_TOP_SWUP, 'WriteMode', 'append'); 
+    hdf5write(OutFile, '/avg_top_lwup', AVG_TOP_LWUP, 'WriteMode', 'append'); 
 
-    hdf5write(OutFile, '/x_coords', Xdummy, 'WriteMode', 'append');
-    hdf5write(OutFile, '/y_coords', Ydummy, 'WriteMode', 'append');
-    hdf5write(OutFile, '/z_coords', Zdummy, 'WriteMode', 'append');
     hdf5write(OutFile, '/t_coords', T,      'WriteMode', 'append');
   end
 end
