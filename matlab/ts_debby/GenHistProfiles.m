@@ -11,16 +11,20 @@ function [ ] = GenHistProfiles(ConfigFile)
   end
 
   % Description of profiles
+  %   <file_prefix> <var_name> <reduction_method> <arg_for_reduction_method> <out_var_name> <select_op> <select_val>
   ProfList = {
-    { 'hist_ccn_conc' 'ccn_conc' 'wtmean' 0.5 'prof_ccn_conc' 'ge' 20 }
-    { 'hist_d1_conc'  'd1_conc'  'wtmean' 0.5 'prof_d1_conc'  'ge' 20 }
-    { 'hist_d2_conc'  'd2_conc'  'wtmean' 0.5 'prof_d2_conc'  'ge' 20 }
+    { 'hist_ccn_conc' 'ccn_conc' 'wtmean' 0.5 'prof_ccn_conc'      'ge' 20   }
+    { 'hist_d1_conc'  'd1_conc'  'wtmean' 0.5 'prof_d1_conc'       'ge' 20   }
+    { 'hist_d2_conc'  'd2_conc'  'wtmean' 0.5 'prof_d2_conc'       'ge' 20   }
 
-    { 'hist_lh_vapt'  'lh_vapt'  'wtmean' 0.5 'prof_lat_heat_vapt' 'ge'  10 }
-    { 'hist_lh_vapt'  'lh_vapt'  'wtmean' 0.5 'prof_lat_cool_vapt' 'le' -10 }
+    { 'hist_lh_vapt'  'lh_vapt'  'wtmean' 0.5 'prof_lat_heat_vapt' 'ge'  10  }
+    { 'hist_lh_vapt'  'lh_vapt'  'wtmean' 0.5 'prof_lat_cool_vapt' 'le' -10  }
 
-    { 'hist_lh_frzt'  'lh_frzt'  'wtmean' 0.5 'prof_lat_heat_frzt' 'ge'  1 }
-    { 'hist_lh_frzt'  'lh_frzt'  'wtmean' 0.5 'prof_lat_cool_frzt' 'le' -1 }
+    { 'hist_lh_frzt'  'lh_frzt'  'wtmean' 0.5 'prof_lat_heat_frzt' 'ge'  1   }
+    { 'hist_lh_frzt'  'lh_frzt'  'wtmean' 0.5 'prof_lat_cool_frzt' 'le' -1   }
+
+    { 'hist_w'        'w'        'wtmean' 0.5 'prof_w_up'          'ge'  0.1 }
+    { 'hist_w'        'w'        'wtmean' 0.5 'prof_w_down'        'le' -0.1 }
     };
 
   for icase = 1:length(Config.Cases)
