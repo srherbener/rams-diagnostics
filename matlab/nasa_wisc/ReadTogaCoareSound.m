@@ -85,13 +85,14 @@ function [ ] = ReadTogaCoareSound(SoundDir, SoundDate)
   %
   THETA_AVG = (T_AVG + 273.15) .* ((1000 ./ P') .^ (0.286));
 
-  % Adust the theta profile so that the first entry is 300K.
+  % Adust the theta profile so that the first entry is 298.5 K
+  % This is to be used with SST 300 K.
   %
-  %   Create deleta: TH(1) - 300
+  %   Create deleta: TH(1) - 298.5
   %   For first five entries: New TH = TH - delta
   %   Next five entries: New TH = TH - (delta * (10-i)/5)
   %   Remaining entries: New TH = TH
-  DELTA_TH = THETA_AVG(1) - 300;
+  DELTA_TH = THETA_AVG(1) - 298.5;
   TH_ADJUST = vertcat( ones([ 5 1]), ([4:-1:0]' ./ 5), zeros([ 31 1 ]) ) .* DELTA_TH;
   THETA_300 = THETA_AVG - TH_ADJUST;
 
