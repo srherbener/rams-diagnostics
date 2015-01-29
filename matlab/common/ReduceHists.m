@@ -91,16 +91,14 @@ switch Method
         [ MAXC_V, MAXC_I ] = max(Hdata, [], Hdim);
         Hreduced = squeeze(Bins(MAXC_I));
 
-    case 'com'
-        % Center of mass
+    case 'farea'
+        % fraction of area
         %
         % For every histogram (along dimension Hdim) find the index nearest where
-        % the area under the curve is half the total area under the curve. Then
+        % the area under the curve is (Ptile * total area) under the curve. Then
         % use these indices to place the corresponding bin values into the result.
-        % This will track where the "center of mass" of the histogram distribution
-        % lies.
         %
-        % Accomplish this by subtracting off 1/2 the total sum from the cumulative
+        % Accomplish this by subtracting off (Ptile * total sum) from the cumulative
         % sum, taking the absolute value of the result, and locating the indices
         % where the minimum occurs (closest differece to zero). Then use these
         % indices to build a result that contains the corresponding bin
@@ -115,7 +113,7 @@ switch Method
         RepFactor(Hdim) = Hsize(Hdim);
         SUM = repmat(SUM, RepFactor);
         
-        CSHALF = abs(CSUM - (SUM/2));
+        CSHALF = abs(CSUM - (Ptile .* SUM));
         [ HALF_V, HALF_I ] = min(CSHALF, [], Hdim);
         Hreduced = squeeze(Bins(HALF_I));
 

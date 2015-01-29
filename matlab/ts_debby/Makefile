@@ -20,6 +20,7 @@ SCRIPTS = \
   $(DEST)/GenTsSize.m \
   $(DEST)/GenTsPcprate.m \
   $(DEST)/GenFactSep.m \
+  $(DEST)/GenHistProfiles.m \
   $(DEST)/PlotHydro.m \
   $(DEST)/PlotMaxWind.m \
   $(DEST)/PlotMaxWindAll.m \
