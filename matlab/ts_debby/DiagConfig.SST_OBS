@@ -127,6 +127,9 @@ LinePlot: tsd4 MinLhFrzSimTime MinLhFrz SimTime 1 LhFrz 1 TsAll none PANEL:a Nor
 LinePlot: tsd4 MaxVvelSimTime MaxVvel SimTime 1 Vvel 1 TsAll none PANEL:a SouthEast none MaxVvelTseries.jpg
 LinePlot: tsd4 MinVvelSimTime MinVvel SimTime 1 Vvel 1 TsAll none PANEL:a NorthEast none MinVvelTseries.jpg
 
+LinePlot: tsd4 MaxThetaeSimTime MaxThetae SimTime 1 MaxThetae 1 TsAll none PANEL:a SouthEast none MaxThetaeTseries.jpg
+LinePlot: tsd4 MinThetaeSimTime MinThetae SimTime 1 MinThetae 1 TsAll none PANEL:a NorthEast none MinThetaeTseries.jpg
+
 #LinePlot: tsd1 MaxVt   IKE TsAll xy Storm_Structure_Evolution   Northwest none KeVt.jpg
 #LinePlot: tsd1 SimTime RMW TsAll  y Radius_of_Maximum_Windspeed NorthEast none TS_rmw.jpg
 
@@ -164,6 +167,9 @@ PlotVar: MaxLhFrzSimTime  t_coords     TsAveragedData/max_lh_frzt Simulation@Tim
 PlotVar: MaxVvel          max_w        TsAveragedData/max_w       Max@W            m@s^-^2 1                0
 PlotVar: MaxVvelSimTime   t_coords     TsAveragedData/max_w       Simulation@Time  h       2.77777778e-4  -42
 
+PlotVar: MaxThetae          max_theta_e  TsAveragedData/max_theta_e       Max@\theta_e     K       1                0
+PlotVar: MaxThetaeSimTime   t_coords     TsAveragedData/max_theta_e       Simulation@Time  h       2.77777778e-4  -42
+
 PlotVar: MinLhVap         min_lh_vapt  TsAveragedData/min_lh_vapt Min@LH_v_a_p     K@h^-^1 1                0
 PlotVar: MinLhVapSimTime  t_coords     TsAveragedData/min_lh_vapt Simulation@Time  h       2.77777778e-4  -42
 
@@ -172,6 +178,9 @@ PlotVar: MinLhFrzSimTime  t_coords     TsAveragedData/min_lh_frzt Simulation@Tim
 
 PlotVar: MinVvel          min_w        TsAveragedData/min_w       Min@W            m@s^-^2 1                0
 PlotVar: MinVvelSimTime   t_coords     TsAveragedData/min_w       Simulation@Time  h       2.77777778e-4  -42
+
+PlotVar: MinThetae          min_theta_e  TsAveragedData/min_theta_e       Min@\theta_e     K       1                0
+PlotVar: MinThetaeSimTime   t_coords     TsAveragedData/min_theta_e       Simulation@Time  h       2.77777778e-4  -42
 
 #PlotVar: MaxVt     max_azwind TsAveragedData/max_azwind Max_Vt m/s     5  25     1
 #PlotVar: IKE       horiz_ke   TsAveragedData/horiz_ke   KE     10^9_J  1   3  1e-9
@@ -190,6 +199,9 @@ PlotAxis: LhVap -200 200 linear [_]
 PlotAxis: LhFrz  -50  20 linear [_]
 
 PlotAxis: Vvel -10 10 linear [_]
+
+PlotAxis: MaxThetae 720 760 linear [_]
+PlotAxis: MinThetae 310 350 linear [_]
 
 PlotAxis: SimTime 0 60  linear [_]
 

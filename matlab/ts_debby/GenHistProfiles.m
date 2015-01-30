@@ -25,6 +25,8 @@ function [ ] = GenHistProfiles(ConfigFile)
 
     { 'hist_w'        'w'        'wtmean' 0.5 'prof_w_up'          'ge'  0.1 }
     { 'hist_w'        'w'        'wtmean' 0.5 'prof_w_down'        'le' -0.1 }
+
+    { 'hist_theta_e'  'theta_e'  'wtmean' 0.5 'prof_theta_e'       'ge'  0   }
     };
 
   for icase = 1:length(Config.Cases)
