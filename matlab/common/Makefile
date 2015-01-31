@@ -6,6 +6,9 @@ DEST = $(HOME)/etc/matlab/common
 
 SCRIPTS = \
           $(DEST)/export_fig.m \
+          $(DEST)/WriteStringAttribute.m \
+          $(DEST)/CreateDimensionsXyzt.m \
+          $(DEST)/AttachDimensionsXyzt.m \
           $(DEST)/figmerge.m \
           $(DEST)/gridLegend.m \
           $(DEST)/columnlegend.m \
