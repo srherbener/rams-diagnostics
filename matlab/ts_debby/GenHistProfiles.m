@@ -83,6 +83,9 @@ function [ ] = GenHistProfiles(ConfigFile)
         Z    = squeeze(h5read(InFile, '/z_coords'));
         T    = squeeze(h5read(InFile, '/t_coords'));
 
+        SIM_TIME = (T ./ 3600) - 42; % h, starting with 0
+        T1 = find(SIM_TIME >= 10, 1, 'first');
+
         Nx = length(X);
         Ny = length(Y);
         Nz = length(Z);
@@ -108,6 +111,7 @@ function [ ] = GenHistProfiles(ConfigFile)
       end
 
       PROF = squeeze(ReduceHists(HDATA(:,B1:B2,:,:), 2, BINS(B1:B2), Rmethod, Ptile));
+      TAVG_PROF = nanmean(PROF(:,:,T1:end),3);
 
       % Write out measurement
       fprintf('  Writing: %s (%s)\n', OutFile, OutVname)
@@ -117,6 +121,11 @@ function [ ] = GenHistProfiles(ConfigFile)
       OutVar = reshape(PROF, [ Nx Ny Nz Nt ]);
       h5create(OutFile, OutVname, size(OutVar));
       h5write(OutFile, OutVname, OutVar);
+
+      OutVar = reshape(TAVG_PROF, [ Nx Ny Nz 1 ]);
+      TavgOutVname = sprintf('%s_tavg', OutVname);
+      h5create(OutFile, TavgOutVname, size(OutVar));
+      h5write(OutFile, TavgOutVname, OutVar);
     end
 
     % Create the dimensions
