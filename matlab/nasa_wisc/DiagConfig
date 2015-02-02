@@ -185,7 +185,7 @@ PlotVar: HvSimTimeDays t_coords     DIAGS/hov_precip_water Sim@Time  d  1.157407
 #          empty means let MATLAB specify tick marks
 #          use '_' to separate values ('_' becomes a space)
 #
-PlotAxis: PrecipWater 0 70 linear [_]
+PlotAxis: PrecipWater 0 80 linear [_]
 PlotAxis: SimTime     0 80 linear [_]
 
 PlotAxis: HvPrecipWater 50   75 linear [_]
