@@ -142,45 +142,45 @@ LinePlot: tsd4 MinThetaeSimTime MinThetae SimTime 1 MinThetae 1 TsAll none PANEL
 #ContourPlot: Contour_MOIST_NODUST ContourRadius ContourHeight TavgCcnConc ContourRadius 1 ContourHeight 1 TavgCcnConc 1 RadiusHeightSelect PANEL:a 1 1 20 none default TavgCcnConc
 
 ## Difference plots
-#ContourPlot: Contour_DRY_DUST     ContourRadius ContourHeight DiffCcnConc ContourRadius 1 ContourHeight 1 DiffCcnConc 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffCcnConc
-#ContourPlot: Contour_DRY_NODUST   ContourRadius ContourHeight DiffCcnConc ContourRadius 1 ContourHeight 1 DiffCcnConc 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffCcnConc
-#ContourPlot: Contour_MOIST_DUST   ContourRadius ContourHeight DiffCcnConc ContourRadius 1 ContourHeight 1 DiffCcnConc 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffCcnConc
+ContourPlot: Contour_DRY_DUST     ContourRadius ContourHeight DiffCcnConc ContourRadius 1 ContourHeight 1 DiffCcnConc 1 RadiusHeightSelect PANEL:a@DRY\_DUST   1 1 20 none redblue DiffCcnConc
+ContourPlot: Contour_DRY_NODUST   ContourRadius ContourHeight DiffCcnConc ContourRadius 1 ContourHeight 1 DiffCcnConc 1 RadiusHeightSelect PANEL:b@DRY\_NODUST 1 1 20 none redblue DiffCcnConc
+ContourPlot: Contour_MOIST_DUST   ContourRadius ContourHeight DiffCcnConc ContourRadius 1 ContourHeight 1 DiffCcnConc 1 RadiusHeightSelect PANEL:c@MOIST\_DUST 1 1 20 none redblue DiffCcnConc
 
-#ContourPlot: Contour_DRY_DUST     ContourRadius ContourHeight DiffD1Conc ContourRadius 1 ContourHeight 1 DiffD1Conc 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffD1Conc
-#ContourPlot: Contour_DRY_NODUST   ContourRadius ContourHeight DiffD1Conc ContourRadius 1 ContourHeight 1 DiffD1Conc 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffD1Conc
-#ContourPlot: Contour_MOIST_DUST   ContourRadius ContourHeight DiffD1Conc ContourRadius 1 ContourHeight 1 DiffD1Conc 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffD1Conc
+ContourPlot: Contour_DRY_DUST     ContourRadius ContourHeight DiffD1Conc ContourRadius 1 ContourHeight 1 DiffD1Conc 1 RadiusHeightSelect PANEL:a@DRY\_DUST   1 1 20 none redblue DiffD1Conc
+ContourPlot: Contour_DRY_NODUST   ContourRadius ContourHeight DiffD1Conc ContourRadius 1 ContourHeight 1 DiffD1Conc 1 RadiusHeightSelect PANEL:b@DRY\_NODUST 1 1 20 none redblue DiffD1Conc
+ContourPlot: Contour_MOIST_DUST   ContourRadius ContourHeight DiffD1Conc ContourRadius 1 ContourHeight 1 DiffD1Conc 1 RadiusHeightSelect PANEL:c@MOIST\_DUST 1 1 20 none redblue DiffD1Conc
 
-#ContourPlot: Contour_DRY_DUST     ContourRadius ContourHeight DiffD2Conc ContourRadius 1 ContourHeight 1 DiffD2Conc 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffD2Conc
-#ContourPlot: Contour_DRY_NODUST   ContourRadius ContourHeight DiffD2Conc ContourRadius 1 ContourHeight 1 DiffD2Conc 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffD2Conc
-#ContourPlot: Contour_MOIST_DUST   ContourRadius ContourHeight DiffD2Conc ContourRadius 1 ContourHeight 1 DiffD2Conc 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffD2Conc
+ContourPlot: Contour_DRY_DUST     ContourRadius ContourHeight DiffD2Conc ContourRadius 1 ContourHeight 1 DiffD2Conc 1 RadiusHeightSelect PANEL:a@DRY\_DUST   1 1 20 none redblue DiffD2Conc
+ContourPlot: Contour_DRY_NODUST   ContourRadius ContourHeight DiffD2Conc ContourRadius 1 ContourHeight 1 DiffD2Conc 1 RadiusHeightSelect PANEL:b@DRY\_NODUST 1 1 20 none redblue DiffD2Conc
+ContourPlot: Contour_MOIST_DUST   ContourRadius ContourHeight DiffD2Conc ContourRadius 1 ContourHeight 1 DiffD2Conc 1 RadiusHeightSelect PANEL:c@MOIST\_DUST 1 1 20 none redblue DiffD2Conc
 
-#ContourPlot: Contour_DRY_DUST     ContourRadius ContourHeight DiffLatCoolFrz ContourRadius 1 ContourHeight 1 DiffLatCoolFrz 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffLatCoolFrz
-#ContourPlot: Contour_DRY_NODUST   ContourRadius ContourHeight DiffLatCoolFrz ContourRadius 1 ContourHeight 1 DiffLatCoolFrz 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffLatCoolFrz
-#ContourPlot: Contour_MOIST_DUST   ContourRadius ContourHeight DiffLatCoolFrz ContourRadius 1 ContourHeight 1 DiffLatCoolFrz 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffLatCoolFrz
+ContourPlot: Contour_DRY_DUST     ContourRadius ContourHeight DiffLatCoolFrz ContourRadius 1 ContourHeight 1 DiffLatCoolFrz 1 RadiusHeightSelect PANEL:a@DRY\_DUST   1 1 20 none redblue DiffLatCoolFrz
+ContourPlot: Contour_DRY_NODUST   ContourRadius ContourHeight DiffLatCoolFrz ContourRadius 1 ContourHeight 1 DiffLatCoolFrz 1 RadiusHeightSelect PANEL:b@DRY\_NODUST 1 1 20 none redblue DiffLatCoolFrz
+ContourPlot: Contour_MOIST_DUST   ContourRadius ContourHeight DiffLatCoolFrz ContourRadius 1 ContourHeight 1 DiffLatCoolFrz 1 RadiusHeightSelect PANEL:c@MOIST\_DUST 1 1 20 none redblue DiffLatCoolFrz
 
-#ContourPlot: Contour_DRY_DUST     ContourRadius ContourHeight DiffLatHeatFrz ContourRadius 1 ContourHeight 1 DiffLatHeatFrz 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffLatHeatFrz
-#ContourPlot: Contour_DRY_NODUST   ContourRadius ContourHeight DiffLatHeatFrz ContourRadius 1 ContourHeight 1 DiffLatHeatFrz 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffLatHeatFrz
-#ContourPlot: Contour_MOIST_DUST   ContourRadius ContourHeight DiffLatHeatFrz ContourRadius 1 ContourHeight 1 DiffLatHeatFrz 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffLatHeatFrz
+ContourPlot: Contour_DRY_DUST     ContourRadius ContourHeight DiffLatHeatFrz ContourRadius 1 ContourHeight 1 DiffLatHeatFrz 1 RadiusHeightSelect PANEL:a@DRY\_DUST   1 1 20 none redblue DiffLatHeatFrz
+ContourPlot: Contour_DRY_NODUST   ContourRadius ContourHeight DiffLatHeatFrz ContourRadius 1 ContourHeight 1 DiffLatHeatFrz 1 RadiusHeightSelect PANEL:b@DRY\_NODUST 1 1 20 none redblue DiffLatHeatFrz
+ContourPlot: Contour_MOIST_DUST   ContourRadius ContourHeight DiffLatHeatFrz ContourRadius 1 ContourHeight 1 DiffLatHeatFrz 1 RadiusHeightSelect PANEL:c@MOIST\_DUST 1 1 20 none redblue DiffLatHeatFrz
 
-#ContourPlot: Contour_DRY_DUST     ContourRadius ContourHeight DiffLatCoolVap ContourRadius 1 ContourHeight 1 DiffLatCoolVap 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffLatCoolVap
-#ContourPlot: Contour_DRY_NODUST   ContourRadius ContourHeight DiffLatCoolVap ContourRadius 1 ContourHeight 1 DiffLatCoolVap 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffLatCoolVap
-#ContourPlot: Contour_MOIST_DUST   ContourRadius ContourHeight DiffLatCoolVap ContourRadius 1 ContourHeight 1 DiffLatCoolVap 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffLatCoolVap
+ContourPlot: Contour_DRY_DUST     ContourRadius ContourHeight DiffLatCoolVap ContourRadius 1 ContourHeight 1 DiffLatCoolVap 1 RadiusHeightSelect PANEL:a@DRY\_DUST   1 1 20 none redblue DiffLatCoolVap
+ContourPlot: Contour_DRY_NODUST   ContourRadius ContourHeight DiffLatCoolVap ContourRadius 1 ContourHeight 1 DiffLatCoolVap 1 RadiusHeightSelect PANEL:b@DRY\_NODUST 1 1 20 none redblue DiffLatCoolVap
+ContourPlot: Contour_MOIST_DUST   ContourRadius ContourHeight DiffLatCoolVap ContourRadius 1 ContourHeight 1 DiffLatCoolVap 1 RadiusHeightSelect PANEL:c@MOIST\_DUST 1 1 20 none redblue DiffLatCoolVap
 
-#ContourPlot: Contour_DRY_DUST     ContourRadius ContourHeight DiffLatHeatVap ContourRadius 1 ContourHeight 1 DiffLatHeatVap 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffLatHeatVap
-#ContourPlot: Contour_DRY_NODUST   ContourRadius ContourHeight DiffLatHeatVap ContourRadius 1 ContourHeight 1 DiffLatHeatVap 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffLatHeatVap
-#ContourPlot: Contour_MOIST_DUST   ContourRadius ContourHeight DiffLatHeatVap ContourRadius 1 ContourHeight 1 DiffLatHeatVap 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffLatHeatVap
+ContourPlot: Contour_DRY_DUST     ContourRadius ContourHeight DiffLatHeatVap ContourRadius 1 ContourHeight 1 DiffLatHeatVap 1 RadiusHeightSelect PANEL:a@DRY\_DUST   1 1 20 none redblue DiffLatHeatVap
+ContourPlot: Contour_DRY_NODUST   ContourRadius ContourHeight DiffLatHeatVap ContourRadius 1 ContourHeight 1 DiffLatHeatVap 1 RadiusHeightSelect PANEL:b@DRY\_NODUST 1 1 20 none redblue DiffLatHeatVap
+ContourPlot: Contour_MOIST_DUST   ContourRadius ContourHeight DiffLatHeatVap ContourRadius 1 ContourHeight 1 DiffLatHeatVap 1 RadiusHeightSelect PANEL:c@MOIST\_DUST 1 1 20 none redblue DiffLatHeatVap
 
-ContourPlot: Contour_DRY_DUST     ContourRadius ContourHeight DiffWup ContourRadius 1 ContourHeight 1 DiffWup 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffWup
-ContourPlot: Contour_DRY_NODUST   ContourRadius ContourHeight DiffWup ContourRadius 1 ContourHeight 1 DiffWup 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffWup
-ContourPlot: Contour_MOIST_DUST   ContourRadius ContourHeight DiffWup ContourRadius 1 ContourHeight 1 DiffWup 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffWup
+ContourPlot: Contour_DRY_DUST     ContourRadius ContourHeight DiffWup ContourRadius 1 ContourHeight 1 DiffWup 1 RadiusHeightSelect PANEL:a@DRY\_DUST   1 1 20 none redblue DiffWup
+ContourPlot: Contour_DRY_NODUST   ContourRadius ContourHeight DiffWup ContourRadius 1 ContourHeight 1 DiffWup 1 RadiusHeightSelect PANEL:b@DRY\_NODUST 1 1 20 none redblue DiffWup
+ContourPlot: Contour_MOIST_DUST   ContourRadius ContourHeight DiffWup ContourRadius 1 ContourHeight 1 DiffWup 1 RadiusHeightSelect PANEL:c@MOIST\_DUST 1 1 20 none redblue DiffWup
 
-ContourPlot: Contour_DRY_DUST     ContourRadius ContourHeight DiffWdown ContourRadius 1 ContourHeight 1 DiffWdown 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffWdown
-ContourPlot: Contour_DRY_NODUST   ContourRadius ContourHeight DiffWdown ContourRadius 1 ContourHeight 1 DiffWdown 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffWdown
-ContourPlot: Contour_MOIST_DUST   ContourRadius ContourHeight DiffWdown ContourRadius 1 ContourHeight 1 DiffWdown 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffWdown
+ContourPlot: Contour_DRY_DUST     ContourRadius ContourHeight DiffWdown ContourRadius 1 ContourHeight 1 DiffWdown 1 RadiusHeightSelect PANEL:a@DRY\_DUST   1 1 20 none redblue DiffWdown
+ContourPlot: Contour_DRY_NODUST   ContourRadius ContourHeight DiffWdown ContourRadius 1 ContourHeight 1 DiffWdown 1 RadiusHeightSelect PANEL:b@DRY\_NODUST 1 1 20 none redblue DiffWdown
+ContourPlot: Contour_MOIST_DUST   ContourRadius ContourHeight DiffWdown ContourRadius 1 ContourHeight 1 DiffWdown 1 RadiusHeightSelect PANEL:c@MOIST\_DUST 1 1 20 none redblue DiffWdown
 
-ContourPlot: Contour_DRY_DUST     ContourRadius ContourHeight DiffThetae ContourRadius 1 ContourHeight 1 DiffThetae 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffThetae
-ContourPlot: Contour_DRY_NODUST   ContourRadius ContourHeight DiffThetae ContourRadius 1 ContourHeight 1 DiffThetae 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffThetae
-ContourPlot: Contour_MOIST_DUST   ContourRadius ContourHeight DiffThetae ContourRadius 1 ContourHeight 1 DiffThetae 1 RadiusHeightSelect PANEL:a 1 1 20 none redblue DiffThetae
+ContourPlot: Contour_DRY_DUST     ContourRadius ContourHeight DiffThetae ContourRadius 1 ContourHeight 1 DiffThetae 1 RadiusHeightSelect PANEL:a@DRY\_DUST   1 1 20 none redblue DiffThetae
+ContourPlot: Contour_DRY_NODUST   ContourRadius ContourHeight DiffThetae ContourRadius 1 ContourHeight 1 DiffThetae 1 RadiusHeightSelect PANEL:b@DRY\_NODUST 1 1 20 none redblue DiffThetae
+ContourPlot: Contour_MOIST_DUST   ContourRadius ContourHeight DiffThetae ContourRadius 1 ContourHeight 1 DiffThetae 1 RadiusHeightSelect PANEL:c@MOIST\_DUST 1 1 20 none redblue DiffThetae
 
 ####################### Plot Sets ############################
 # PlotSet: <name> <number_of_cases> <case_spec> ...
