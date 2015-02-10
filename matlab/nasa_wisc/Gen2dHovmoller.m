@@ -16,11 +16,12 @@ function [ ] = Gen2dHovmoller(ConfigFile)
   VarSets = {
 %    { 'HDF5/RCE70_OLD_RI/vint_vapor-a-AS-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE70_OLD_RI' 'midy' 1 'hov_precip_water' 'precip_water' }
 %    { 'HDF5/MATT/vint_vapor-a-AS-2012-01-01-000000-g1.h5'         'vertint_vapor' 'MATT'         'midy' 1 'hov_precip_water' 'precip_water' }
-%    { 'HDF5/RCE50_RECT/vint_vapor-a-AS-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE50_RECT' 'midy' 1 'hov_precip_water' 'precip_water' }
 %    { 'HDF5/RCE50_OLD_RI/vint_vapor-a-AS-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE50_OLD_RI' 'midy' 1 'hov_precip_water' 'precip_water' }
 
+    { 'HDF5/RCE50_RECT/vint_vapor-a-AS-2012-01-01-000000-g1.h5'      'vertint_vapor' 'RCE50_RECT'      'midy' 1 'hov_precip_water' 'precip_water' }
     { 'HDF5/RCE50_RECT_S300/vint_vapor-a-AS-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE50_RECT_S300' 'midy' 1 'hov_precip_water' 'precip_water' }
     { 'HDF5/RCE50_RECT_S303/vint_vapor-a-AS-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE50_RECT_S303' 'midy' 1 'hov_precip_water' 'precip_water' }
+    { 'HDF5/RCE50_SQ/vint_vapor-a-AS-2012-01-01-000000-g1.h5'        'vertint_vapor' 'RCE50_SQ'        'midy' 1 'hov_precip_water' 'precip_water' }
     };
   Nset = length(VarSets);
 

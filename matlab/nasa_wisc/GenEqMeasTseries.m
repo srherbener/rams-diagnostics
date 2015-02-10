@@ -15,11 +15,10 @@ function [ ] = GenEqMeasTseries(ConfigFile)
 
   % cases
   CaseList = {
-%   'RCE50_RECT'
-%  'RCE50_SQ'
-
+   'RCE50_RECT'
    'RCE50_RECT_S300'
    'RCE50_RECT_S303'
+   'RCE50_SQ'
    };
   Nc = length(CaseList);
 
