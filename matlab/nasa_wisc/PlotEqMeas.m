@@ -68,5 +68,38 @@ function [ ] = PlotEqMeas(ConfigFile)
 
     saveas(Fig, OutFile);
     close(Fig);
+
+    % Generate a plot of the components of the measurements
+    fprintf('    Reading measurement components\n');
+    SFC_ALB  = squeeze(h5read(InFile, '/avg_sfc_alb'));
+    SFC_LWDN = squeeze(h5read(InFile, '/avg_sfc_lwdn'));
+    SFC_LWUP = squeeze(h5read(InFile, '/avg_sfc_lwup'));
+    SFC_SWDN = squeeze(h5read(InFile, '/avg_sfc_swdn'));
+    TOP_LWUP = squeeze(h5read(InFile, '/avg_top_lwup'));
+    TOP_SWDN = squeeze(h5read(InFile, '/avg_top_swdn'));
+    TOP_SWUP = squeeze(h5read(InFile, '/avg_top_swup'));
+
+    SFC_SWUP = SFC_ALB .* SFC_SWDN;
+
+    PDATA = [ SFC_SWDN SFC_LWDN SFC_SWUP SFC_LWUP TOP_SWDN TOP_SWUP TOP_LWUP ];
+    LegendText = { 'SFC\_SWDN' 'SFC\_LWDN' 'SFC\_SWUP' 'SFC\_LWUP' 'TOP\_SWDN' 'TOP\_SWUP' 'TOP\_LWUP' };
+
+    Fig = figure;
+
+    PtitleComp = sprintf('%s Components', Ptitle);
+    OutFileComp = sprintf('%s/%s_%s_Comp.jpg', Pdir, OutFprefix,Case);
+
+    plot(T, PDATA, 'LineWidth', 1.5);
+    set(gca, 'FontSize', Fsize);
+    legend(LegendText);
+    title(PtitleComp);
+    xlabel('Simulation Time (d)');
+    ylabel('Flux (W m^2)');
+
+    fprintf('    Writing: %s\n', OutFileComp);
+    fprintf('\n');
+
+    saveas(Fig, OutFileComp);
+    close(Fig);
   end
 end
