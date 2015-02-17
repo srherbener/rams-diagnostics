@@ -19,6 +19,7 @@ function [ ] = GenEqMeasTseries(ConfigFile)
    'RCE50_RECT_S300'
    'RCE50_RECT_S303'
    'RCE50_SQ'
+   'RCE_MATT'
    };
   Nc = length(CaseList);
 
@@ -160,6 +161,8 @@ function [ ] = GenEqMeasTseries(ConfigFile)
       TempVar = ((TOP_SWUP + TOP_LWUP) - (TOP_SWDN)) - (((SFC_SWDN.*SFC_ALB) + SFC_LWUP) - (SFC_SWDN + SFC_LWDN));
       QRAD(it) = mean(TempVar(:));
 
+      AVG_SFC_LAT(it) = mean(SFC_LAT(:));
+      AVG_SFC_SENS(it) = mean(SFC_SENS(:));
 
       AVG_SFC_SWDN(it) = mean(SFC_SWDN(:));
       AVG_SFC_LWDN(it) = mean(SFC_LWDN(:));
@@ -180,6 +183,9 @@ function [ ] = GenEqMeasTseries(ConfigFile)
 
     hdf5write(OutFile, ThfVname, THF); 
     hdf5write(OutFile, QradVname, QRAD, 'WriteMode', 'append'); 
+
+    hdf5write(OutFile, '/avg_sfc_lat',  AVG_SFC_LAT,  'WriteMode', 'append'); 
+    hdf5write(OutFile, '/avg_sfc_sens', AVG_SFC_SENS, 'WriteMode', 'append'); 
 
     hdf5write(OutFile, '/avg_sfc_swdn', AVG_SFC_SWDN, 'WriteMode', 'append'); 
     hdf5write(OutFile, '/avg_sfc_lwdn', AVG_SFC_LWDN, 'WriteMode', 'append'); 

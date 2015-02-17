@@ -19,6 +19,7 @@ function [ ] = PlotEqMeas(ConfigFile)
       { 'RCE50_RECT_S300' 'eq_meas' 'therm_heat_flux' 'rad_flux_div' 'SZA 50, S300' 'EqMeas' }
       { 'RCE50_RECT_S303' 'eq_meas' 'therm_heat_flux' 'rad_flux_div' 'SZA 50, S303' 'EqMeas' }
       { 'RCE50_SQ'        'eq_meas' 'therm_heat_flux' 'rad_flux_div' 'SZA 50, SQ'   'EqMeas' }
+      { 'RCE_MATT'        'eq_meas' 'therm_heat_flux' 'rad_flux_div' 'MATT'         'EqMeas' }
     };
   Nset = length(PlotSets);
 
@@ -69,8 +70,8 @@ function [ ] = PlotEqMeas(ConfigFile)
     saveas(Fig, OutFile);
     close(Fig);
 
-    % Generate a plot of the components of the measurements
-    fprintf('    Reading measurement components\n');
+    % Generate a plot of the components of the Qrad measurement
+    fprintf('    Reading Qrad measurement components\n');
     SFC_ALB  = squeeze(h5read(InFile, '/avg_sfc_alb'));
     SFC_LWDN = squeeze(h5read(InFile, '/avg_sfc_lwdn'));
     SFC_LWUP = squeeze(h5read(InFile, '/avg_sfc_lwup'));
@@ -86,8 +87,34 @@ function [ ] = PlotEqMeas(ConfigFile)
 
     Fig = figure;
 
-    PtitleComp = sprintf('%s Components', Ptitle);
-    OutFileComp = sprintf('%s/%s_%s_Comp.jpg', Pdir, OutFprefix,Case);
+    PtitleComp = sprintf('%s Qrad Components', Ptitle);
+    OutFileComp = sprintf('%s/%s_%s_QradComp.jpg', Pdir, OutFprefix,Case);
+
+    plot(T, PDATA, 'LineWidth', 1.5);
+    set(gca, 'FontSize', Fsize);
+    legend(LegendText);
+    title(PtitleComp);
+    xlabel('Simulation Time (d)');
+    ylabel('Flux (W m^2)');
+
+    fprintf('    Writing: %s\n', OutFileComp);
+    fprintf('\n');
+
+    saveas(Fig, OutFileComp);
+    close(Fig);
+
+    % Generate a plot of the components of the THF measurement
+    fprintf('    Reading THF measurement components\n');
+    SFC_LAT  = squeeze(h5read(InFile, '/avg_sfc_lat'));
+    SFC_SENS = squeeze(h5read(InFile, '/avg_sfc_sens'));
+
+    PDATA = [ SFC_LAT SFC_SENS ];
+    LegendText = { 'SFC\_LAT' 'SFC\_SENS' };
+
+    Fig = figure;
+
+    PtitleComp = sprintf('%s THF Components', Ptitle);
+    OutFileComp = sprintf('%s/%s_%s_ThfComp.jpg', Pdir, OutFprefix,Case);
 
     plot(T, PDATA, 'LineWidth', 1.5);
     set(gca, 'FontSize', Fsize);
