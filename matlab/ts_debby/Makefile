@@ -14,8 +14,11 @@ SCRIPTS = \
   $(DEST)/PlotSampleSoundings.m \
   $(DEST)/PlotSampleRH.m \
   $(DEST)/GenMoistDpFiles.m \
+  $(DEST)/GenNonSalDpFiles.m \
   $(DEST)/GenMoistRamsInit.m \
+  $(DEST)/GenNonSalRamsInit.m \
   $(DEST)/GenMoistRamsInfo.m \
+  $(DEST)/GenNonSalRamsInfo.m \
   $(DEST)/GenStormMeas.m \
   $(DEST)/GenTsSize.m \
   $(DEST)/GenTsPcprate.m \

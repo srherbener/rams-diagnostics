@@ -1,38 +1,40 @@
-function [ ] = GenMoistRamsInit()
-% GenMoistRamsInit function to generate moist environment data for TS Debby RAMS simualations
+function [ ] = GenNonSalRamsInit()
+% GenNonSalRamsInit function to generate moist environment data for TS Debby RAMS simualations
 
-  % Read in RAMS moist sim info (created with GenMoistRamsInfo) and select out the
+  % Read in RAMS moist sim info (created with GenNonSalRamsInfo) and select out the
   % regions of RH that the masks indicate.
 
   Ngrids = 3;
   Hdir = 'HDF5';
 
-  InFile  = sprintf('%s/MoistRamsInfo.h5', Hdir);
-  OutFile = sprintf('%s/TsDebbyMoistInit.h5', Hdir);
+  InFile  = sprintf('%s/NonSalRamsInfo.h5', Hdir);
+  OutFile = sprintf('%s/TsDebbyNonSalInit.h5', Hdir);
 
-  fprintf('*********************************************************************\n');
-  fprintf('Selecting new RH values for RAMS TS Debby moist simulation initialization:\n');
+  fprintf('***************************************************************************************\n');
+  fprintf('Selecting new RH and THETA values for RAMS TS Debby non-SAL simulation initialization:\n');
   fprintf('\n');
 
   fprintf('  Writing init data into: %s\n', OutFile);
   fprintf('\n');
 
-  hdf5write(OutFile, 'Header', 'TS Debby Moist Initialization');
+  hdf5write(OutFile, 'Header', 'TS Debby Non Sal Initialization');
 
   % Read in each grid and interpolate the mask data to that grid. Also, calculate the new RH
   % values from the data in the var files. Write out the interpolated masks and RH values for
   % processing into initialization data for RAMS.
 
   for igrid = 1:Ngrids
-    MaskVar = sprintf('RAMS_MASK_G%d', igrid);
-    RhVar   = sprintf('RAMS_RH_G%d',   igrid);
+    MaskVar  = sprintf('RAMS_MASK_G%d', igrid);
+    RhVar    = sprintf('RAMS_RH_G%d',   igrid);
+    ThetaVar = sprintf('RAMS_THETA_G%d',   igrid);
 
     fprintf('  Grid: %d\n', igrid);
     fprintf('    Reading RAMS info file: %s -> %s, %s\n', InFile, MaskVar, RhVar);
     fprintf('\n');
 
-    MASK = squeeze(hdf5read(InFile, MaskVar));
-    RH   = squeeze(hdf5read(InFile, RhVar));
+    MASK  = squeeze(hdf5read(InFile, MaskVar));
+    RH    = squeeze(hdf5read(InFile, RhVar));
+    THETA = squeeze(hdf5read(InFile, ThetaVar));
 
     [ Nx Ny Nz ] = size(RH);
 
@@ -43,10 +45,11 @@ function [ ] = GenMoistRamsInit()
     % This will create linear arrays (vectors) which is ideal since the RAMS hdf5
     % input routine (shdf5_irec) can be used. This also minimizes the amount of data
     % since only the selected points are saved.
-    I_VALS  = I(MASK == 1);
-    J_VALS  = J(MASK == 1);
-    K_VALS  = K(MASK == 1);
-    RH_VALS = RH(MASK == 1);
+    I_VALS     = I(MASK == 1);
+    J_VALS     = J(MASK == 1);
+    K_VALS     = K(MASK == 1);
+    RH_VALS    = RH(MASK == 1);
+    THETA_VALS = THETA(MASK == 1);
 
     % Don't allow RH to go above 1. Ie, don't allow supersaturation since this could artificially
     % create clouds.
@@ -65,5 +68,7 @@ function [ ] = GenMoistRamsInit()
     hdf5write(OutFile, OutVar, int32(K_VALS), 'WriteMode', 'append');
     OutVar = sprintf('G%d_RH', igrid);
     hdf5write(OutFile, OutVar, RH_VALS, 'WriteMode', 'append');
+    OutVar = sprintf('G%d_THETA', igrid);
+    hdf5write(OutFile, OutVar, THETA_VALS, 'WriteMode', 'append');
   end
 end
