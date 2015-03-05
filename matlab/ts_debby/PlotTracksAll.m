@@ -10,18 +10,29 @@ function [ ] = PlotTracksAll(ConfigFile)
   Hdir = 'HDF5';
   
   Cases = {
-   'TSD_DRY_DUST'
-   'TSD_DRY_NODUST'
-   'TSD_MOIST_DUST'
-   'TSD_MOIST_NODUST'
+%   'TSD_DRY_DUST'
+%   'TSD_DRY_NODUST'
+%   'TSD_MOIST_DUST'
+%   'TSD_MOIST_NODUST'
+
+   'TSD_SAL_DUST'
+   'TSD_SAL_NODUST'
    };
   
   LegText = {
    'NHC Best Track'
-   'DRY\_DUST'
-   'DRY'
-   'DUST'
-   'BASE'
+
+%   'DRY\_DUST'
+%   'DRY\_NODUST'
+%   'MOIST\_DUST'
+%   'MOIST\_NODUST'
+%   'DRY\_DUST'
+%   'DRY'
+%   'DUST'
+%   'BASE'
+
+   'SAL\_DUST'
+   'SAL\_NODUST'
    };
   
   % for the TS Debby simulations:
@@ -44,6 +55,11 @@ function [ ] = PlotTracksAll(ConfigFile)
     % Slons and Slats are (t)
     Slons = squeeze(hdf5read(Hfile, HdsetLon));
     Slats = squeeze(hdf5read(Hfile, HdsetLat));
+
+% Temp fix while simulations are in progress
+Slons = Slons(1:77);
+Slats = Slats(1:77);
+
     if (icase == 1)
       Nt = size(Slons,1);
       SimTrackLons = zeros([ Nt Nc ]);
