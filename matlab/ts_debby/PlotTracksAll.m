@@ -57,8 +57,8 @@ function [ ] = PlotTracksAll(ConfigFile)
     Slats = squeeze(hdf5read(Hfile, HdsetLat));
 
 % Temp fix while simulations are in progress
-Slons = Slons(1:77);
-Slats = Slats(1:77);
+Slons = Slons(1:85);
+Slats = Slats(1:85);
 
     if (icase == 1)
       Nt = size(Slons,1);
