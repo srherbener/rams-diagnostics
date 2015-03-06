@@ -34,6 +34,7 @@ function [ ] = PlotTracksAll(ConfigFile)
    'SAL\_DUST'
    'SAL\_NODUST'
    };
+   Nc = length(Cases);
   
   % for the TS Debby simulations:
   LatBounds = [ 5 26 ];
@@ -41,36 +42,41 @@ function [ ] = PlotTracksAll(ConfigFile)
   
   NhcTrackLats = [ 12.6 13.4 14.2 14.9 15.7 16.7 17.6 18.4 19.2 20.1 20.9 ];
   NhcTrackLons = [ 23.9 25.3 26.7 28.1 29.5 31.0 32.4 33.9 35.5 37.1 38.7 ] * -1; 
+
+  % first find the max number of time steps
+  MaxNt = 0;
+  for icase = 1:Nc
+     Hfile = sprintf('%s/storm_center-%s-AS-2006-08-20-120000-g3.h5', Hdir, Cases{icase});
+     Hinfo = h5info(Hfile, '/t_coords');
+     Tsize = Hinfo.Dataspace.Size;
+     if (Tsize > MaxNt)
+       MaxNt = Tsize;
+     end
+  end
+
+  % allocate array to hold the plot data
+  % initialize to nan so that empty spaces won't produce lines on the plot
+  SimTrackLons = nan([ MaxNt Nc ]);
   
   % read in the Vt data
-  Nc = length(Cases);
   for icase = 1:Nc
     Hfile = sprintf('%s/storm_center-%s-AS-2006-08-20-120000-g3.h5', Hdir, Cases{icase});
-    HdsetLon = 'press_cent_xloc';
-    HdsetLat = 'press_cent_yloc';
+    HdsetLon = '/press_cent_xloc';
+    HdsetLat = '/press_cent_yloc';
     fprintf('Reading: %s\n', Hfile);
     fprintf('  Track longitude: %s\n', HdsetLon);
     fprintf('  Track latitude: %s\n', HdsetLat);
   
     % Slons and Slats are (t)
-    Slons = squeeze(hdf5read(Hfile, HdsetLon));
-    Slats = squeeze(hdf5read(Hfile, HdsetLat));
-
-% Temp fix while simulations are in progress
-Slons = Slons(1:85);
-Slats = Slats(1:85);
-
-    if (icase == 1)
-      Nt = size(Slons,1);
-      SimTrackLons = zeros([ Nt Nc ]);
-      SimTrackLats = zeros([ Nt Nc ]);
-    end
+    Slons = squeeze(h5read(Hfile, HdsetLon));
+    Slats = squeeze(h5read(Hfile, HdsetLat));
+    Nt = size(Slons,1);
   
     % lines go into columns
-    SimTrackLons(:,icase) = Slons;
-    SimTrackLats(:,icase) = Slats;
+    SimTrackLons(1:Nt,icase) = Slons;
+    SimTrackLats(1:Nt,icase) = Slats;
   end
-  
+
   % plot
   FigTracks = figure;
   
@@ -92,5 +98,4 @@ Slats = Slats(1:85);
   fprintf('Writing: %s\n', OutFile);
   saveas(FigTracks, OutFile);
   close(FigTracks);
-
 end
