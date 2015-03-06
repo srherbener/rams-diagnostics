@@ -19,6 +19,7 @@ function [ ] = PlotEqMeas(ConfigFile)
       { 'RCE50_RECT_S300' 'eq_meas' 'therm_heat_flux' 'rad_flux_div' 'SZA 50, S300' 'EqMeas' }
       { 'RCE50_RECT_S303' 'eq_meas' 'therm_heat_flux' 'rad_flux_div' 'SZA 50, S303' 'EqMeas' }
       { 'RCE50_SQ'        'eq_meas' 'therm_heat_flux' 'rad_flux_div' 'SZA 50, SQ'   'EqMeas' }
+      { 'RCE50_2D'        'eq_meas' 'therm_heat_flux' 'rad_flux_div' 'SZA 50, 2D'   'EqMeas' }
       { 'RCE_MATT'        'eq_meas' 'therm_heat_flux' 'rad_flux_div' 'MATT'         'EqMeas' }
     };
   Nset = length(PlotSets);

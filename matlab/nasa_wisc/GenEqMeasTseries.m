@@ -19,6 +19,7 @@ function [ ] = GenEqMeasTseries(ConfigFile)
    'RCE50_RECT_S300'
    'RCE50_RECT_S303'
    'RCE50_SQ'
+   'RCE50_2D'
    'RCE_MATT'
    };
   Nc = length(CaseList);
