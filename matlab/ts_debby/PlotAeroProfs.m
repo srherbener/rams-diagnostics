@@ -45,7 +45,6 @@ function [ ] = PlotAeroProfs(ConfigFile)
   % At this point, all quantities are column vectors
   NO_DUST_PDATA = [ CCN_CONC D1_CONC D2_CONC ];
 
-
   %*************************************************************************
   % Read in and assemble the aerosol profiles for the DUST case
   % After the text scan, InData will contain:
@@ -64,7 +63,8 @@ function [ ] = PlotAeroProfs(ConfigFile)
   fclose(InFileId);
 
   Z        = InData{1} ./ 1000; % km
-  CCN_CONC = InData{2};
+% Use CCN_CONC from no-dust case
+%  CCN_CONC = InData{2};
   D1_CONC  = InData{3};
   D2_CONC  = InData{4};
 
@@ -73,7 +73,8 @@ function [ ] = PlotAeroProfs(ConfigFile)
   Z2 = find(Z <= 10, 1, 'last');
 
   Z        = Z(Z1:Z2);
-  CCN_CONC = CCN_CONC(Z1:Z2);
+% Use CCN_CONC from no-dust case
+%  CCN_CONC = CCN_CONC(Z1:Z2);
   D1_CONC  = D1_CONC(Z1:Z2);
   D2_CONC  = D2_CONC(Z1:Z2);
 
