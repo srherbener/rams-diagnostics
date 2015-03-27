@@ -17,11 +17,14 @@ function [ ] = PlotMaxWindAll(ConfigFile)
 
    'TSD_SAL_DUST'
    'TSD_SAL_NODUST'
+   'TSD_NONSAL_DUST'
+   'TSD_NONSAL_NODUST'
    };
   Nc = length(Cases);
 
   LegText = {
    'NHC Best Track'
+   'TAFB Obs'
 %   'DD'
 %   'DN'
 %   'MD'
@@ -29,12 +32,14 @@ function [ ] = PlotMaxWindAll(ConfigFile)
 
    'SAL\_DUST'
    'SAL\_NODUST'
+   'NONSAL\_DUST'
+   'NONSAL\_NODUST'
    };
 
-%  InFprefix = 'max_speed10m';
-%  InVname = '/max_speed10m';
-   InFprefix = 'max_speed25m';
-   InVname = '/max_speed25m';
+   InFprefix = 'max_speed10m';
+   InVname = '/max_speed10m';
+%   InFprefix = 'max_speed25m';
+%   InVname = '/max_speed25m';
 
   for icase = 1:Nc
     Hfile = sprintf('%s/%s_%s.h5', Tdir, InFprefix, Cases{icase});
@@ -45,8 +50,15 @@ function [ ] = PlotMaxWindAll(ConfigFile)
   % time step 1 from the simulation is where the NHC data starts
   % NHC wind is in mph, multiply by 0.447 to convert to m/s
   %
+  % TAFB - Tropical Analysis and Forecast Branch
+  % TAFB wind is in kts, multiply by 0.514 to convert to m/s
+  %
+  % time == 0 is Aug 22, 2006 at 06Z
+  %
   NHC_WIND  = [ 35 35 35 40 45 50 50 50 50 50 50 ] * 0.447;
+  TAFB_WIND  = [ 30 30 30 35 35 35 35 35 35 35 35 ] * 0.514;
   NHC_TIMES = (0:6:60);
+
 
   % first find the max number of time steps
   MaxNt = 0;
@@ -89,6 +101,7 @@ function [ ] = PlotMaxWindAll(ConfigFile)
   set(gca, 'FontSize', Fsize);
   hold on;
   NhcST = plot(NHC_TIMES, NHC_WIND, '+k', 'LineWidth',  LineW);
+  TafbST = plot(NHC_TIMES, TAFB_WIND, 'ok', 'LineWidth',  LineW);
   %title('Maximum 10m Wind Speed');
   xlabel('Time');
   xlim (Xrange);
@@ -97,7 +110,7 @@ function [ ] = PlotMaxWindAll(ConfigFile)
   ylabel('Wind Speed (m s^-^1)');
   ylim(Yrange);
 
-  legend([ NhcST SimST' ], LegText, 'Location', 'SouthEast', 'FontSize', LegendFsize);
+  legend([ NhcST TafbST SimST' ], LegText, 'Location', 'SouthEast', 'FontSize', LegendFsize);
 %  legend(SimST, LegText, 'Location', 'SouthEast', 'FontSize', LegendFsize);
   
   fprintf('Writing: %s\n', OutFile);
