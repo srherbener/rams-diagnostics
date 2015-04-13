@@ -1,4 +1,4 @@
-function [ Hreduced ] = ReduceHists( Hdata, Hdim, Bins, Method, Ptile )
+function [ Hreduced ] = ReduceHists( Hdata, Hdim, Bins, Method, Param )
 % ReduceHists reduces histogram bins to a single number
 %
 % Method: 'wtmean' - weighted mean
@@ -6,7 +6,7 @@ function [ Hreduced ] = ReduceHists( Hdata, Hdim, Bins, Method, Ptile )
 %         'com'    - center of mass
 %         'pct'    - Percentile of bin values corresponding
 %                    to the non-zero counts, percentile is
-%                    specified in Ptile argument.
+%                    specified in Param argument.
 %
 
 
@@ -47,15 +47,12 @@ BINS = repmat(BINS, RepFactor);
 
 switch Method
     case 'pct'
-        % 90th percentile of the bin values corresponding to the non-zero
-        % histogram counts.
-        %
         % Copy the Bins array into a new array. Set the locations where
         % the counts (Hdata) has zeros to nans. Then run the prctile()
         % command to get the 90th percentile of the bin value distributions.
         BINS_WITH_COUNTS = BINS;
         BINS_WITH_COUNTS(Hdata == 0) = nan;
-        Hreduced = squeeze(prctile(BINS_WITH_COUNTS, [ Ptile ], Hdim));
+        Hreduced = squeeze(prctile(BINS_WITH_COUNTS, [ Param ], Hdim));
 
     case 'wtmean'
         % Weighted mean
@@ -94,28 +91,74 @@ switch Method
     case 'farea'
         % fraction of area
         %
-        % For every histogram (along dimension Hdim) find the index nearest where
-        % the area under the curve is (Ptile * total area) under the curve. Then
-        % use these indices to place the corresponding bin values into the result.
+        % Define the area under the histogram curve assuming that each bin
+        % has a unit width. Then the total area is the sum of the histogram
+        % counts.
         %
-        % Accomplish this by subtracting off (Ptile * total sum) from the cumulative
-        % sum, taking the absolute value of the result, and locating the indices
-        % where the minimum occurs (closest differece to zero). Then use these
-        % indices to build a result that contains the corresponding bin
-        % values.
+        % Form the fractional area that we are looking for as:
+        %   Param .* (sum of histogram counts)
+        %
+        % Form a cumulative sum of the bin counts and find the two bins
+        % where the cumulative sum values bracket the fractional area
+        % value. Then do a linear interpolation of the corresponding bin values
+        % for the output values.
+
+        % Form the cumulative sum array, plus an array matching the size of
+        % Hdata with the fractional area value repeated along the
+        % histogram dimension.
         CSUM = cumsum(Hdata, Hdim);
-        SUM = sum(Hdata, Hdim);
-        
-        % Expand SUM to the same shape as CSUM with copies of the sum
-        % along the histogram dimension.
-        Hsize = size(Hdata);
-        RepFactor = ones([ 1 length(Hsize) ]);
-        RepFactor(Hdim) = Hsize(Hdim);
-        SUM = repmat(SUM, RepFactor);
-        
-        CSHALF = abs(CSUM - (Ptile .* SUM));
-        [ HALF_V, HALF_I ] = min(CSHALF, [], Hdim);
-        Hreduced = squeeze(Bins(HALF_I));
+        PSUM = Param .* sum(Hdata, Hdim);
+
+        % Find the minimum difference between the cumulative sum and
+        % the (Param .* Sum of counts) value.
+        CSDIFF = CSUM - repmat(PSUM, InitSize);
+        [ FRAC_V, FRAC_I ] = min(abs(CSDIFF), [], Hdim);
+
+        % FRAC_I now contains the index along the histogram dimension that
+        % corresponds to the closest element to the (Param .* Sum of Counts)
+        % value. However, still need to determine if the fractional area
+        % lies in the interval before FRAC_I or after FRAC_I. Find the interval
+        % by creating an array that has the cumulative sum value corresponding
+        % to FRAC_I minus the fractional area value. Negative intervals indicate
+        % the desired interval is to the left, otherwise the interval is to
+        % the right.
+        %
+        % Need an array with all dimensions in it that has ones in the histogram
+        % dimension corresponding to the FRAC_I indeces, and zeros elsewhere. This
+        % array can be used to select values out of the CSDIFF array.
+
+        % Repeat the index values along the entire histogram dimension. Form another
+        % array that has 1,2,3,... along the histrogram dimension. Then do a logical
+        % comparison to create the SELECT array that has 1's where the index number
+        % matches what was indicated in FRAC_I.
+        FRAC_I_FULL = repmat(FRAC_I, InitSize);
+        IND_FULL = repmat([ 1:Hsize(Hdim) ], RepFactor);
+        SELECT = (FRAC_I_FULL == IND_FULL);
+
+        % Use SELECT to pick off the corresponding cumulative sum difference
+        % values. Wherever there is a negative difference, subtract one
+        % from FRAC_I so that all entries in FRAC_I denote the bin on the
+        % left side of the interval.
+        CS_DIFFS = sum(CSDIFF .* SELECT,Hdim);
+        NEG_DIFFS = zeros(size(CS_DIFFS));
+        NEG_DIFFS(CS_DIFFS < 0) == 1;
+        ADJ_FRAC_I1 = FRAC_I - NEG_DIFFS;
+
+        % Use the adjusted FRAC_I values to create the corresponding bin values
+        % and cumulative sum values required for the output value interpolation.
+        FRAC_I1_FULL = repmat(ADJ_FRAC_I1, InitSize);
+        FRAC_I2_FULL = repmat((ADJ_FRAC_I1+1), InitSize);
+
+        SELECT1 = (FRAC_I1_FULL == IND_FULL);
+        SELECT2 = (FRAC_I2_FULL == IND_FULL);
+
+        B1 = squeeze(sum(SELECT1 .* BINS,Hdim));
+        B2 = squeeze(sum(SELECT2 .* BINS,Hdim));
+        CS1 = squeeze(sum(SELECT1 .* CSUM,Hdim));
+        CS2 = squeeze(sum(SELECT2 .* CSUM,Hdim));
+       
+        % Return the linear interpolation
+        Hreduced = B1 + ((B2-B1) .* ((squeeze(PSUM)-CS1) ./ (CS2-CS1)));
 
     otherwise
         fprintf('WARNING: ReduceHists: Unrecognized reduction method: %s\n', Method);

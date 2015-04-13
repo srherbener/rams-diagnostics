@@ -48,6 +48,7 @@ SCRIPTS = \
           $(DEST)/ReadAzavgVar.m \
           $(DEST)/ReadSelectXyzt.m \
           $(DEST)/ReduceHists.m \
+          $(DEST)/ReduceHist1D.m \
           $(DEST)/RunAzavgDiffEof.m \
           $(DEST)/SmoothFillTseries.m \
           $(DEST)/SoundingToProfile.m \
