@@ -107,58 +107,42 @@ switch Method
         % Hdata with the fractional area value repeated along the
         % histogram dimension.
         CSUM = cumsum(Hdata, Hdim);
-        PSUM = Param .* sum(Hdata, Hdim);
+        PSUM_HD1 = Param .* sum(Hdata, Hdim);
+        PSUM = repmat(PSUM_HD1, InitSize);
+        DIFF = CSUM - PSUM;
 
-        % Find the minimum difference between the cumulative sum and
-        % the (Param .* Sum of counts) value.
-        CSDIFF = CSUM - repmat(PSUM, InitSize);
-        [ FRAC_V, FRAC_I ] = min(abs(CSDIFF), [], Hdim);
+        % After subtracting PSUM from CSUM, the final negative entry along
+        % the histogram dimension will be the left side of the interval where
+        % PSUM lies, and the first postivie entry is the right side of the
+        % interval where PSUM lies.
+        NEG = DIFF < 0;
+        POS = DIFF >= 0;
 
-        % FRAC_I now contains the index along the histogram dimension that
-        % corresponds to the closest element to the (Param .* Sum of Counts)
-        % value. However, still need to determine if the fractional area
-        % lies in the interval before FRAC_I or after FRAC_I. Find the interval
-        % by creating an array that has the cumulative sum value corresponding
-        % to FRAC_I minus the fractional area value. Negative intervals indicate
-        % the desired interval is to the left, otherwise the interval is to
-        % the right.
-        %
-        % Need an array with all dimensions in it that has ones in the histogram
-        % dimension corresponding to the FRAC_I indeces, and zeros elsewhere. This
-        % array can be used to select values out of the CSDIFF array.
+        % POS has 1's where DIFF was >= 0. Do a cumulative sum and zero
+        % out all the entries greater than 1 which will leave the first
+        % positive entry with a 1, all others zero.
+        RIGHT = cumsum(POS,Hdim);
+        RIGHT(RIGHT > 1) = 0;
 
-        % Repeat the index values along the entire histogram dimension. Form another
-        % array that has 1,2,3,... along the histrogram dimension. Then do a logical
-        % comparison to create the SELECT array that has 1's where the index number
-        % matches what was indicated in FRAC_I.
-        FRAC_I_FULL = repmat(FRAC_I, InitSize);
-        IND_FULL = repmat([ 1:Hsize(Hdim) ], RepFactor);
-        SELECT = (FRAC_I_FULL == IND_FULL);
+        % LEFT side of the interval is a little trickier since cumsum
+        % goes in the wrong direction. A cumsum going from right to left
+        % can be accomplished by subtracting the cumsum from the sum+1 and
+        % zeroing out the result where NEG was also zero (ie, multiply by NEG).
+        NEG_CS = cumsum(NEG,Hdim);
+        NEG_S  = repmat(sum(NEG,2)+1, InitSize);
+        LEFT = (NEG_S-NEG_CS) .* NEG;
+        LEFT(LEFT > 1) = 0;
 
-        % Use SELECT to pick off the corresponding cumulative sum difference
-        % values. Wherever there is a negative difference, subtract one
-        % from FRAC_I so that all entries in FRAC_I denote the bin on the
-        % left side of the interval.
-        CS_DIFFS = sum(CSDIFF .* SELECT,Hdim);
-        NEG_DIFFS = zeros(size(CS_DIFFS));
-        NEG_DIFFS(CS_DIFFS < 0) == 1;
-        ADJ_FRAC_I1 = FRAC_I - NEG_DIFFS;
-
-        % Use the adjusted FRAC_I values to create the corresponding bin values
-        % and cumulative sum values required for the output value interpolation.
-        FRAC_I1_FULL = repmat(ADJ_FRAC_I1, InitSize);
-        FRAC_I2_FULL = repmat((ADJ_FRAC_I1+1), InitSize);
-
-        SELECT1 = (FRAC_I1_FULL == IND_FULL);
-        SELECT2 = (FRAC_I2_FULL == IND_FULL);
-
-        B1 = squeeze(sum(SELECT1 .* BINS,Hdim));
-        B2 = squeeze(sum(SELECT2 .* BINS,Hdim));
-        CS1 = squeeze(sum(SELECT1 .* CSUM,Hdim));
-        CS2 = squeeze(sum(SELECT2 .* CSUM,Hdim));
+        % Now RIGHT has a 1 on the right side of the interval where
+        % Param*Sum lies, and zero's elsewhere. Ditto for LEFT with
+        % respect to the left side of the interval.
+        B1  = squeeze(sum(LEFT  .* BINS,Hdim));
+        B2  = squeeze(sum(RIGHT .* BINS,Hdim));
+        CS1 = squeeze(sum(LEFT  .* CSUM,Hdim));
+        CS2 = squeeze(sum(RIGHT .* CSUM,Hdim));
        
         % Return the linear interpolation
-        Hreduced = B1 + ((B2-B1) .* ((squeeze(PSUM)-CS1) ./ (CS2-CS1)));
+        Hreduced = B1 + ((B2-B1) .* ((squeeze(PSUM_HD1)-CS1) ./ (CS2-CS1)));
 
     otherwise
         fprintf('WARNING: ReduceHists: Unrecognized reduction method: %s\n', Method);

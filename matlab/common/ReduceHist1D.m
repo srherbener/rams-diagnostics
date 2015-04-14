@@ -63,13 +63,17 @@ switch Method
         I1 = find(CumCounts <  Pval, 1, 'last');
         I2 = find(CumCounts >= Pval, 1, 'first');
 
-        B1 = Bins(I1);
-        B2 = Bins(I2);
-        CC1 = CumCounts(I1);
-        CC2 = CumCounts(I2);
-       
-        % Return the linear interpolation
-        Hreduced = B1 + ((B2-B1) .* ((Pval-CC1) ./ (CC2-CC1)));
+        if (~isempty(I1) && ~isempty(I2))
+          B1 = Bins(I1);
+          B2 = Bins(I2);
+          CC1 = CumCounts(I1);
+          CC2 = CumCounts(I2);
+         
+          % Return the linear interpolation
+          Hreduced = B1 + ((B2-B1) .* ((Pval-CC1) ./ (CC2-CC1)));
+        else
+          Hreduced = nan;
+        end
 
     otherwise
         fprintf('WARNING: ReduceHist1D: Unrecognized reduction method: %s\n', Method);

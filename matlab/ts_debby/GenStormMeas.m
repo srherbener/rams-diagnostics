@@ -11,14 +11,22 @@ function [ ] = GenStormMeas(ConfigFile)
     mkdir(Ddir);
   end
 
+  % Cases
+  CaseList = {
+    'TSD_SAL_DUST'
+    'TSD_SAL_NODUST'
+    'TSD_NONSAL_DUST'
+    'TSD_NONSAL_NODUST'
+    };
+
   % Description of measurements
   MeasList = {
-    { 'min_slp'  'azavg_hist' 'hist_press' 'press' 'pct'   1 }
-    { 'max_wind' 'azavg_hist' 'hist_speed' 'speed' 'pct' 100 }
+    { 'min_slp'  'azavg_hist' 'hist_press' 'press' 'farea' 0.10 }
+    { 'max_wind' 'azavg_hist' 'hist_speed' 'speed' 'farea' 0.90 }
     };
 
   for icase = 1:length(Config.Cases)
-    Case = Config.Cases(icase).Cname;
+    Case = CaseList{icase};
 
     fprintf('*****************************************************************\n');
     fprintf('Generating storm measurements:\n');
@@ -31,7 +39,7 @@ function [ ] = GenStormMeas(ConfigFile)
       Mfprefix = MeasList{imeas}{3};
       Mvname   = MeasList{imeas}{4};
       Mmethod  = MeasList{imeas}{5};
-      Mptile   = MeasList{imeas}{6};
+      Mparam   = MeasList{imeas}{6};
 
       if (strncmp(Msource, 'azavg', 5))
         Mfile = sprintf('%s/%s_%s.h5', Adir, Mfprefix, Case);
@@ -47,13 +55,16 @@ function [ ] = GenStormMeas(ConfigFile)
       fprintf('    Reading: %s (%s)\n', Mfile, Mvname);
       fprintf('    Method: %s\n', Mmethod);
       if (strcmp(Mmethod, 'pct'))
-        fprintf('      Percentile: %.4f\n', Mptile);
+        fprintf('      Percentile: %.4f\n', Mparam);
+      end
+      if (strcmp(Mmethod, 'farea'))
+        fprintf('      Fractional area: %.4f\n', Mparam);
       end
       fprintf('\n');
 
       % Read in data, which is coming from either azavg or tsavg, meaning
       % that it will be 4D -> (x,y,z,t) regardless if all four dimensions
-      % are actually use. Mname will indicate what size MDATA is and what
+      % are actually used. Mname will indicate what size MDATA is and what
       % each of X, Y, Z, T represent.
       %
       MDATA = squeeze(h5read(Mfile, Mvname));
@@ -61,6 +72,8 @@ function [ ] = GenStormMeas(ConfigFile)
       Y = squeeze(h5read(Mfile, '/y_coords'));
       Z = squeeze(h5read(Mfile, '/z_coords'));
       T = squeeze(h5read(Mfile, '/t_coords'));
+
+      [ Nx Ny Nz Nt ] = size(MDATA);
 
       if (strcmp(Msource, 'azavg_hist'))
         % have azimuthally selected histogram counts (histograms
@@ -72,10 +85,17 @@ function [ ] = GenStormMeas(ConfigFile)
         %    Z --> height values
         %    T --> time values
         %
-        % Need to call ReduceHists() to change bin counts to 
+        % Need to call ReduceHist1D() to change bin counts to 
         % a single number.
         %
-        RDATA = squeeze(ReduceHists(MDATA, 2, Y, Mmethod, Mptile));
+        RDATA = zeros([ Nx Nz Nt ]);
+        for i = 1:Nx
+          for j = 1:Nz
+            for k = 1:Nt
+               RDATA(i,j,k) = ReduceHist1D(squeeze(MDATA(i,:,j,k)), Y, Mmethod, Mparam);
+            end
+          end
+        end
 
         if (strcmp(Mname, 'min_slp') || strcmp(Mname, 'max_wind'))
           % these measurements need to be taken from the k = 2 level
@@ -95,6 +115,11 @@ function [ ] = GenStormMeas(ConfigFile)
       OutFile = sprintf('%s/%s_%s.h5', Ddir, Mname, Case);
       fprintf('    Writing: %s\n', OutFile)
       fprintf('\n');
+
+      % create a new file
+      if (exist(OutFile, 'file') == 2)
+        delete(OutFile);
+      end
 
       % Write out both RDATA and TSERIES for min_slp and max_wind
       if (strcmp(Mname, 'min_slp') || strcmp(Mname, 'max_wind'))
