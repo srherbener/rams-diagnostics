@@ -85,17 +85,10 @@ function [ ] = GenStormMeas(ConfigFile)
         %    Z --> height values
         %    T --> time values
         %
-        % Need to call ReduceHist1D() to change bin counts to 
+        % Need to call ReduceHists() to change bin counts to 
         % a single number.
         %
-        RDATA = zeros([ Nx Nz Nt ]);
-        for i = 1:Nx
-          for j = 1:Nz
-            for k = 1:Nt
-               RDATA(i,j,k) = ReduceHist1D(squeeze(MDATA(i,:,j,k)), Y, Mmethod, Mparam);
-            end
-          end
-        end
+        RDATA = ReduceHists(MDATA, 2, Y, Mmethod, Mparam);
 
         if (strcmp(Mname, 'min_slp') || strcmp(Mname, 'max_wind'))
           % these measurements need to be taken from the k = 2 level
