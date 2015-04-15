@@ -140,9 +140,19 @@ switch Method
         B2  = squeeze(sum(RIGHT .* BINS,Hdim));
         CS1 = squeeze(sum(LEFT  .* CSUM,Hdim));
         CS2 = squeeze(sum(RIGHT .* CSUM,Hdim));
-       
+
         % Return the linear interpolation
         Hreduced = B1 + ((B2-B1) .* ((squeeze(PSUM_HD1)-CS1) ./ (CS2-CS1)));
+
+        % It is possible for PSUM_HD1 to fall to the left of the first
+        % entry in CSUM or to the right of the last entry of CSUM. If this
+        % happens either LEFT or RIGHT will be all zeros. Check for these
+        % cases and set the output to NAN to denote that a solution wasn't
+        % attainable.
+        SUM_LEFT  = squeeze(sum(LEFT,Hdim));
+        SUM_RIGHT = squeeze(sum(RIGHT,Hdim));
+        Hreduced(SUM_LEFT == 0) = nan;
+        Hreduced(SUM_RIGHT == 0) = nan;
 
     otherwise
         fprintf('WARNING: ReduceHists: Unrecognized reduction method: %s\n', Method);
