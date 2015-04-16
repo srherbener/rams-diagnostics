@@ -504,7 +504,6 @@ subroutine rhdf5_write_variable(id, vname, ndims, itstep, dims, units, descrip, 
   integer :: deflvl
   integer :: dset_ndims
   integer, dimension(ndims+1) :: dset_dims 
-  integer :: i
   integer, dimension(ndims+1) :: ext_dims
   integer, dimension(ndims+1) :: chunk_dims
   character (len=RHDF5_MAX_STRING) :: dnstring
@@ -632,9 +631,6 @@ subroutine rhdf5_build_dims_for_write(itstep, ndims, dims, dimnames, &
   character (len=RHDF5_MAX_STRING) :: dnstring
 
   integer :: i, irev
-  integer :: dummy_int
-  real :: dummy_real
-  character :: dummy_char
 
   ! The array ext_dims holds a 1 (extendable) or 0 (not extendable) to mark which,
   ! if any, dimensions of the variable are to be extendable. For now we just want
@@ -723,7 +719,6 @@ subroutine rhdf5_adjust_chunk_sizes(ndims, chunk_dims, dsize)
   integer, dimension(ndims) :: chunk_dims
 
   integer :: i, chunk_size, new_dim, shrink
-  integer :: rhdf5_find_even_divisor
 
   chunk_size = dsize
   do i = 1, ndims
@@ -940,9 +935,6 @@ subroutine rhdf5_read_variable(id, vname, ndims, itstep, dims, rdata, idata, sda
   integer :: dsetid
   integer, dimension(ndims+1) :: counts, offset
   integer, dimension(ndims) :: md_dims
-  character (len=RHDF5_MAX_STRING) :: dnstring
-  character (len=RHDF5_MAX_STRING) :: arrayorg
-  character (len=RHDF5_MAX_STRING) :: stemp
   integer :: dsize
   integer :: i, irev
   integer :: nelem
@@ -1095,6 +1087,7 @@ subroutine rhdf5_c2f_string(cstring, fstring, ssize)
   integer :: i
   integer :: null_pos
 
+  null_pos = 0
   do i = 1, ssize
     if (ichar(cstring(i:i)) .eq. 0) then
       null_pos = i
@@ -1241,8 +1234,6 @@ subroutine rhdf5_attach_dims_to_var(fileid, vname)
   integer :: i
   integer :: ndims
   integer, dimension(RHDF5_MAX_DIMS) :: dims
-  character (len=RHDF5_MAX_STRING) :: units
-  character (len=RHDF5_MAX_STRING) :: descrip
   character (len=RHDF5_MAX_STRING), dimension(RHDF5_MAX_DIMS) :: dimnames
 
   integer :: hdferr
@@ -1328,8 +1319,6 @@ subroutine rhdf5_detach_dims_from_var(fileid, vname)
   integer :: i
   integer :: ndims
   integer, dimension(RHDF5_MAX_DIMS) :: dims
-  character (len=RHDF5_MAX_STRING) :: units
-  character (len=RHDF5_MAX_STRING) :: descrip
   character (len=RHDF5_MAX_STRING), dimension(RHDF5_MAX_DIMS) :: dimnames
 
   integer :: hdferr

@@ -25,8 +25,10 @@ CMACH = PC_LINUX1
 # in your RAMS and REVU configuration.
 INCLUDES = -I$(HDF5_INCS)
 
-F_COMP = pgf90
-F_OPTS = -Munroll -Mnoframe -O2 -pc 64 -tp x64 -Mfree -fastsse -time
+#F_COMP = pgf90
+#F_OPTS = -Munroll -Mnoframe -O2 -pc 64 -tp x64 -Mfree -fastsse -time
+F_COMP = gfortran
+F_OPTS = -O2 -fno-range-check -Wall
 F_COMMAND = $(F_COMP) -c $(F_OPTS) $(INCLUDES)
 
 C_COMP = gcc
