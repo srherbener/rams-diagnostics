@@ -113,7 +113,7 @@ program sig_proc
   ! Convert lat (x coords) and lon (y coords) to distances in km
   allocate(XcoordsKm(Nx))
   allocate(YcoordsKm(Ny))
-  call ConvertGridCoords(Nx, Ny, Nz, Xcoords%vdata, Ycoords%vdata, XcoordsKm, YcoordsKm)
+  call ConvertGridCoords(Nx, Ny, Xcoords%vdata, Ycoords%vdata, XcoordsKm, YcoordsKm)
 
   DeltaX = (XcoordsKm(2) - XcoordsKm(1)) * 1000.0
   DeltaY = (YcoordsKm(2) - YcoordsKm(1)) * 1000.0
@@ -274,11 +274,11 @@ contains
 
   integer, parameter :: MaxFields = 15
 
-  character (len=MaxStr) :: InFile, InVarName, OutFile, Pvname, Pfprefix
+  character (len=MaxStr) :: InFile, InVarName, OutFile
   integer :: MaxStr, MaxPspecs, NumPspecs
   type (PspecDescrip), dimension(MaxPspecs) :: Pspecs
 
-  integer :: iargc, i, j, Nargs, Nfld
+  integer :: iargc, i, Nargs, Nfld
   character (len=MaxStr) :: Arg
   character (len=MaxStr), dimension(MaxFields) :: Fields
 
@@ -322,8 +322,8 @@ contains
         else
           ! have enough args
           Pspecs(NumPspecs)%Ptype    = Fields(1)
-          read(Fields(2),  '(i)') Pspecs(NumPspecs)%i1
-          read(Fields(3),  '(f)') Pspecs(NumPspecs)%s1
+          read(Fields(2),  '(i15)') Pspecs(NumPspecs)%i1
+          read(Fields(3),  '(f15.7)') Pspecs(NumPspecs)%s1
         endif
       else
         write (*,*) 'ERROR: <ptype>, ', trim(Fields(1)), ', must be one of:'

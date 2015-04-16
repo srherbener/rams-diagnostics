@@ -193,20 +193,19 @@ end subroutine
 ! This routine will convert the longitude, latitude angle values
 ! in the input var to a flat plane (x and y length values)
 !
-subroutine ConvertGridCoords(Nx, Ny, Nz, Lon, Lat, Xcoords, Ycoords)
+subroutine ConvertGridCoords(Nx, Ny, Lon, Lat, Xcoords, Ycoords)
   implicit none
 
   real, parameter :: RadiusEarth = 6378.1  ! km
   real, parameter :: PI = 3.14159
 
-  integer :: Nx, Ny, Nz
+  integer :: Nx, Ny
   real, dimension(Nx) :: Lon
   real, dimension(Ny) :: Lat
   real, dimension(Nx) :: Xcoords
   real, dimension(Ny) :: Ycoords
 
   integer :: ix, iy
-  integer :: Ierror
   real :: ConvDeg2Rad;
   real :: DeltaX, DeltaY
   real :: DeltaT, DeltaP  ! Theta is longitude angle, Phi is latitude angle, radians
@@ -274,7 +273,8 @@ end subroutine
 ! volume relative to the storm center.
 !
 
-logical function InsideCylVol(Nx, Ny, Nz, Ix, Iy, Iz, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ,  StmIx, StmIy, Xcoords, Ycoords, Zcoords, Radius, Phi, Z)
+logical function InsideCylVol(Nx, Ny, Nz, Ix, Iy, Iz, MinR, MaxR, MinPhi, MaxPhi, &
+  MinZ, MaxZ,  StmIx, StmIy, Xcoords, Ycoords, Zcoords, Radius, Phi, Z)
   implicit none
 
   real, parameter :: PI = 3.141592654
@@ -342,6 +342,8 @@ subroutine String2List(InString, Separator, OutList, MaxItems, NumItems, ItemTyp
 
   NumItems = 0
   PrevBetweenSep = 0  ! treat the beginning of the line as separator
+  StrStart = 0
+  BetweenSep = 0
   i = 1
   do
     if (i .gt. len_trim(InString)) exit
@@ -411,7 +413,6 @@ logical function DimsMatch(Var1, Var2)
   implicit none
 
   type (Rhdf5Var) :: Var1, Var2
-  logical :: Is2D
   integer :: ix, iy, it
   integer :: jx, jy, jt
 
@@ -564,8 +565,6 @@ subroutine ConvertStormCenter(Nx, Ny, Lon, Xcoords, StormLon, StormX, &
   real, dimension(Nx) :: Lon, Xcoords
   real, dimension(Ny) :: Lat, Ycoords
   real :: StormLon, StormX, StormLat, StormY
-
-  integer :: ix, iy
 
   StormX = Xcoords(FindIndex(Nx, Lon, StormLon))
   StormY = Ycoords(FindIndex(Ny, Lat, StormLat))
@@ -731,5 +730,86 @@ subroutine Gsmooth2d(Nx, Ny, Npts, X, Sigma, Xsmooth)
 
   return
 end subroutine Gsmooth2d
+
+!*****************************************************************************
+! ReadBinsFile()
+!
+! This subroutine will initialize a 1D array of bins. This is done by
+! reading in a text file in the following format:
+!
+!   n
+!   E1
+!   E2
+!   E3
+!   ...
+!   En
+!
+! First line contains number of edges (n), followed by n lines containing
+! the n edges, in order, defining the bins (one edge value per line).
+!
+subroutine ReadBinsFile(BinsFile, Nbins, Bins)
+  implicit none
+  integer, parameter :: fun = 20
+
+  integer :: Nbins
+  character (len=*) :: BinsFile
+  real, dimension(:), allocatable :: Bins
+
+  integer :: i
+
+  open(fun, file=BinsFile, status='old')
+
+  read(fun, '(i15)') Nbins
+
+  allocate(Bins(Nbins))
+  do i = 1, Nbins
+    read(fun, '(e15.7)') Bins(i)
+  enddo
+
+  close(fun)
+
+  return
+end subroutine ReadBinsFile
+
+!*****************************************************************************
+! FindBin()
+!
+! This function will find the bin that a given data value belongs to. Emulate
+! the matlab binning where the bin values are treated like edges. Val belongs
+! to a bin if:
+!
+!   Bins(ib) <= Val < Bins(i+1)
+!
+! except for the last bin where Val belongs to it if:
+!
+!   Bins(ib) == Val
+!
+integer function FindBin(Nb, Bins, Val)
+  implicit none
+
+  integer :: Nb
+  real, dimension(Nb) :: Bins
+  real :: Val
+
+  integer :: ib
+
+  ! if Val doesn't fall into any bins, FindBin will remain -1
+  FindBin = -1
+  do ib = 1, Nb
+    if (ib .lt. Nb) then
+      if ((Bins(ib) .le. Val) .and. (Val .lt. Bins(ib+1))) then
+        FindBin = ib
+        exit
+      endif
+    else
+      !last bin
+      if (Bins(ib) .eq. Val) then
+        FindBin = ib
+      endif
+    endif
+  enddo
+
+  return
+end function FindBin
 
 end module diag_utils

@@ -13,13 +13,12 @@ program create_bins
   real :: Bstart, Binc
 
   integer :: i
-  logical :: DoLinear
   real :: Bval, Bseries
 
   ! Get the command line arguments
   call GetMyArgs(Nbins, Bstart, Binc, Btype)
 
-  print('(i)'), Nbins
+  print('(i15)'), Nbins
   do i = 1, Nbins
     ! Bseries is either the value for the linear sacle
     ! or the power for the log scales
@@ -37,7 +36,7 @@ program create_bins
       Bval = exp(Bseries)
     endif
 
-    print('(e)'), Bval
+    print('(e15.7)'), Bval
   enddo
 
   stop
@@ -80,13 +79,13 @@ subroutine GetMyArgs(Nbins, Bstart, Binc, Btype)
   BadArgs = .false.
 
   call getarg(1, arg)
-  read(arg, '(i)') Nbins
+  read(arg, '(i15)') Nbins
 
   call getarg(2, arg)
-  read(arg, '(f)') Bstart
+  read(arg, '(f15.7)') Bstart
 
   call getarg(3, arg)
-  read(arg, '(f)') Binc
+  read(arg, '(f15.7)') Binc
 
   call getarg(4, arg)
   if (arg .eq. 'linear') then

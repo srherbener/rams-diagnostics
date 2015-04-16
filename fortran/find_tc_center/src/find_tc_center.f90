@@ -98,7 +98,7 @@ program find_tc_center
   ! Convert lat (x coords) and lon (y coords) to distances in km
   allocate(XcoordsKm(Nx))
   allocate(YcoordsKm(Ny))
-  call ConvertGridCoords(Nx, Ny, Nz, Xcoords%vdata, Ycoords%vdata, XcoordsKm, YcoordsKm)
+  call ConvertGridCoords(Nx, Ny, Xcoords%vdata, Ycoords%vdata, XcoordsKm, YcoordsKm)
 
   DeltaX = (XcoordsKm(2) - XcoordsKm(1)) * 1000.0
   DeltaY = (YcoordsKm(2) - YcoordsKm(1)) * 1000.0
@@ -317,7 +317,7 @@ program find_tc_center
     if (modulo(it,50) .eq. 0) then
       print*, 'Working: Timestep: ', it
 
-      print'(a,i3,a,i3,a,g,a,g,a)', '    Pressure Centroid: (', PressCentIx, ', ', PressCentIy, &
+      print'(a,i3,a,i3,a,g15.2,a,g15.2,a)', '    Pressure Centroid: (', PressCentIx, ', ', PressCentIy, &
        ') --> (', XcoordsKm(PressCentIx), ', ', YcoordsKm(PressCentIy), ')'
       print*, '   Minumum Pressure: ', MinPress%vdata(1)
 
@@ -383,7 +383,7 @@ contains
   character (len=Nstr) :: PressFile, PressVar, TopoFile, TopoVar, OutFile
   real :: MaxElev, MinLat, MaxLat, MinLon, MaxLon, PressRad
 
-  integer :: iargc, i, j, Nargs, Nfld
+  integer :: iargc, i, Nargs
   character (len=Nstr) :: Arg
   logical :: BadArg
 
@@ -437,22 +437,22 @@ contains
       TopoVar = Arg
       i = i + 1
     else if (i .eq. 5) then
-      read(Arg,'(f)') MaxElev
+      read(Arg,'(f15.7)') MaxElev
       i = i + 1
     else if (i .eq. 6) then
-      read(Arg,'(f)') MinLat
+      read(Arg,'(f15.7)') MinLat
       i = i + 1
     else if (i .eq. 7) then
-      read(Arg,'(f)') MaxLat
+      read(Arg,'(f15.7)') MaxLat
       i = i + 1
     else if (i .eq. 8) then
-      read(Arg,'(f)') MinLon
+      read(Arg,'(f15.7)') MinLon
       i = i + 1
     else if (i .eq. 9) then
-      read(Arg,'(f)') MaxLon
+      read(Arg,'(f15.7)') MaxLon
       i = i + 1
     else if (i .eq. 10) then
-      read(Arg,'(f)') PressRad
+      read(Arg,'(f15.7)') PressRad
       i = i + 1
     else if (i .eq. 11) then
       OutFile = Arg

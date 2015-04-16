@@ -42,7 +42,6 @@ program join_hdata
   character (len=RHDF5_MAX_STRING), dimension(RHDF5_MAX_DIMS) :: dimnames
   character (len=LittleString), dimension(RHDF5_MAX_DIMS) :: Cnames
   
-  real :: Xstart, Xinc, Ystart, Yinc
   logical :: BadData
 
   ! Get the command line arguments
@@ -243,11 +242,6 @@ subroutine GetMyArgs(Infiles, OutFile, VarName)
   character (len=*) :: Infiles, OutFile, VarName
 
   integer :: iargc
-  character (len=128) :: arg
-  character (len=128), dimension(MAX_ITEMS) :: ArgList
-  integer :: Nitems
-
-  logical :: BadArgs
 
   if (iargc() .ne. 3) then
     write (*,*) 'ERROR: must supply exactly 3 arguments'

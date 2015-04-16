@@ -125,7 +125,7 @@ program tsavg
       VarFprefix = trim(ArgList(3))
       VarFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
       VarDim     = trim(ArgList(4))
-      read(ArgList(5), '(f)') HfracThresh
+      read(ArgList(5), '(f15.7)') HfracThresh
     else
       write (*,*) 'ERROR: average function hfrac requires five fields: hist:<var>:<file>:<dim>:<threshold>'
       stop
@@ -151,7 +151,7 @@ program tsavg
       PrecipRate%vname  = trim(ArgList(2))
       VarFprefix        = trim(ArgList(3))
       PrecipRateFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
-      read(ArgList(4), '(f)') PrecipRateLimit
+      read(ArgList(4), '(f15.7)') PrecipRateLimit
       Lwp%vname         = trim(ArgList(5))
       VarFprefix        = trim(ArgList(6))
       LwpFile           = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
@@ -245,8 +245,8 @@ program tsavg
       Theta%vname     = trim(ArgList(2))
       VarFprefix        = trim(ArgList(3))
       ThetaFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
-      read(ArgList(4), '(f)') Zbot
-      read(ArgList(5), '(f)') Ztop
+      read(ArgList(4), '(f15.7)') Zbot
+      read(ArgList(5), '(f15.7)') Ztop
     else
       write (*,*) 'ERROR: average function ltss requires five fields: ltss:<theta_var>:<theta_file>:<z_bot>:<z_top>'
       stop
@@ -263,7 +263,7 @@ program tsavg
       !    3       thickness
       AvgFunc    = trim(ArgList(1))
       VelInType  = trim(ArgList(2))
-      read(ArgList(3), '(f)') HkeZthick
+      read(ArgList(3), '(f15.7)') HkeZthick
 
       if ((VelInType .ne. 'uv') .and. (VelInType .ne. 's10')) then
         write (*,*) 'ERROR: <in_type> for average function horiz_ke must be one of: "uv" or "s10"'
@@ -398,6 +398,8 @@ program tsavg
   ! we need to chop of the time dimension to read the filter time step by time step) when we
   ! are not using a filter. When using a filter, Filter%ndims will get set by what's contained
   ! in FilterFile.
+  XvarNz = 0
+  YvarNz = 0
   if ((AvgFunc .eq. 'max_azwind') .or. (AvgFunc .eq. 'min_azslp')) then
     ! max_azwind, min_azslp must not use filter (azavg already applied a filter)
     if (UseFilter) then
@@ -814,12 +816,12 @@ program tsavg
     TserAvg%dims(1) = Xnbins
     TserAvg%dims(2) = Ynbins
     TserAvg%dims(3) = 2
-    TserAvg%units = PrecipRate%units // ':' // Lwp%units
+    TserAvg%units = trim(PrecipRate%units) // ':' // trim(Lwp%units)
   else if (AvgFunc .eq. 'hist2d') then
     TserAvg%dims(1) = Xnbins
     TserAvg%dims(2) = Ynbins
     TserAvg%dims(3) = Nz
-    TserAvg%units = Xvar%units // ':' // Lwp%units
+    TserAvg%units = trim(Xvar%units) // ':' // trim(Lwp%units)
   else if (AvgFunc .eq. 'ltss') then
     ! single point result
     TserAvg%dims(1) = 1
@@ -982,7 +984,7 @@ program tsavg
     enddo
   else
     ! x,y coords are in degrees lon,lat respectively
-    call ConvertGridCoords(Nx, Ny, Nz, InXcoords%vdata, InYcoords%vdata, InXcoordsKm, InYcoordsKm)
+    call ConvertGridCoords(Nx, Ny, InXcoords%vdata, InYcoords%vdata, InXcoordsKm, InYcoordsKm)
   endif
 
   DeltaX = InXcoordsKm(2) - InXcoordsKm(1)
@@ -1381,8 +1383,6 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
   logical :: UseFilter
 
   integer :: iargc
-  character (len=128) :: arg
-  integer :: Nitems
 
   logical :: BadArgs
 
@@ -2208,14 +2208,14 @@ end subroutine DoHist2d
 subroutine DoLtss(Nx, Ny, Nz, FilterNz, Theta, Filter, UseFilter, UndefVal, Kbot, Ktop, Ltss)
   implicit none
 
-  integer :: Nx, Ny, Nz, Nb, FilterNz
+  integer :: Nx, Ny, Nz, FilterNz
   real, dimension(Nx,Ny,Nz) :: Theta
   real, dimension(Nx,Ny,FilterNz) :: Filter
   logical :: UseFilter
   real :: UndefVal, Ltss
   integer :: Kbot, Ktop
 
-  integer :: ib, ix, iy
+  integer :: ix, iy
   integer :: filter_zbot, filter_ztop
   logical :: SelectPoint
   integer :: Npts
@@ -2405,9 +2405,9 @@ subroutine DoTurbCov(Nx, Ny, Nz, FilterNz, Xvar, Yvar, Filter, UseFilter, UndefV
       enddo
     enddo
 
-    DomStats(1,iz) = DomS1
-    DomStats(2,iz) = DomS2
-    DomStats(3,iz) = DomS3
+    DomStats(1,iz) = real(DomS1)
+    DomStats(2,iz) = real(DomS2)
+    DomStats(3,iz) = real(DomS3)
     DomStats(4,iz) = float(NumPoints)
   enddo
 
@@ -2482,9 +2482,9 @@ subroutine DoTurbMmts(Nx, Ny, Nz, FilterNz, Var, Filter, UseFilter, UndefVal, Do
       enddo
     enddo
 
-    DomStats(1,iz) = DomS1
-    DomStats(2,iz) = DomS2
-    DomStats(3,iz) = DomS3
+    DomStats(1,iz) = real(DomS1)
+    DomStats(2,iz) = real(DomS2)
+    DomStats(3,iz) = real(DomS3)
     DomStats(4,iz) = float(NumPoints)
   enddo
 
@@ -2531,87 +2531,6 @@ real function Calc2dMean(Nx, Ny, Nz, Var, ix, iy, iz, xs, xe, ys, ye)
   Calc2dMean = Calc2dMean / Npts
 
 end function Calc2dMean
-
-!*****************************************************************************
-! ReadBinsFile()
-!
-! This subroutine will initialize a 1D array of bins. This is done by
-! reading in a text file in the following format:
-!
-!   n
-!   E1
-!   E2
-!   E3
-!   ...
-!   En
-!
-! First line contains number of edges (n), followed by n lines containing
-! the n edges, in order, defining the bins (one edge value per line).
-!
-subroutine ReadBinsFile(BinsFile, Nbins, Bins)
-  implicit none
-  integer, parameter :: fun = 20
-
-  integer :: Nbins
-  character (len=*) :: BinsFile
-  real, dimension(:), allocatable :: Bins
-
-  integer :: i
-
-  open(fun, file=BinsFile, status='old')
-
-  read(fun, '(i)') Nbins
-
-  allocate(Bins(Nbins))
-  do i = 1, Nbins
-    read(fun, '(e)') Bins(i)
-  enddo
-
-  close(fun)
-
-  return
-end subroutine ReadBinsFile
-
-!*****************************************************************************
-! FindBin()
-!
-! This function will find the bin that a given data value belongs to. Emulate
-! the matlab binning where the bin values are treated like edges. Val belongs
-! to a bin if:
-!
-!   Bins(ib) <= Val < Bins(i+1)
-!
-! except for the last bin where Val belongs to it if:
-!
-!   Bins(ib) == Val
-!
-integer function FindBin(Nb, Bins, Val)
-  implicit none
-
-  integer :: Nb
-  real, dimension(Nb) :: Bins
-  real :: Val
-
-  integer :: ib
-
-  ! if Val doesn't fall into any bins, FindBin will remain -1
-  FindBin = -1
-  do ib = 1, Nb
-    if (ib .lt. Nb) then
-      if ((Bins(ib) .le. Val) .and. (Val .lt. Bins(ib+1))) then
-        FindBin = ib
-        exit
-      endif
-    else
-      !last bin
-      if (Bins(ib) .eq. Val) then
-        FindBin = ib
-      endif
-    endif
-  enddo
-
-  return
-end function FindBin
 
 !************************************************************************
 ! UvToSpeed()

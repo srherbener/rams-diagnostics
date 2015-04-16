@@ -19,9 +19,17 @@ RHDF5_INCS = -I$(RHDF5_DIR)
 # Compiler config
 INCLUDES = $(RHDF5_INCS)
 
-F_COMP = pgf90
-F_OPTS = -Munroll -Mnoframe -O2 -pc 64 -tp x64 -Mfree -fastsse -time
+#F_COMP = pgf90
+#F_OPTS = -Munroll -Mnoframe -O2 -pc 64 -tp x64 -Mfree -fastsse -time
+F_COMP = gfortran
+F_OPTS = -O2 -fno-range-check -Wall -ffree-line-length-none
 F_COMMAND = $(F_COMP) -c $(F_OPTS) $(INCLUDES)
+
+#LOADER = pgf90
+#LOADER_OPTS=-v -ldl -lc -lgcc_eh -lpthread -lsz
+LOADER = gfortran
+LOADER_OPTS =
+LOADER_LIBS = $(RHDF5_LIBS) $(HDF5_LIBS) $(DIAG_LIBS)
 
 C_COMP = gcc
 C_OPTS = -O3 -DUNDERSCORE -DLITTLE -D$(CMACH) $(HDF5_DEFS)

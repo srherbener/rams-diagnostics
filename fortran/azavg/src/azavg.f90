@@ -32,7 +32,6 @@ program azavg
   integer, parameter :: MaxArgFields = 20
 
   integer NumRbands
-  real :: WfilterMin, WfilterMax
   character (len=MediumString) :: InDir
   character (len=MediumString) :: InSuffix
   character (len=MediumString) :: OutFile
@@ -43,8 +42,8 @@ program azavg
   character (len=MediumString), dimension(MaxArgFields) :: ArgList
   integer :: Nfields
   logical :: DoHist
+  character (len=LargeString) :: BinsFile
   integer :: NumBins
-  real :: BinStart, BinSize
   real, dimension(:), allocatable :: HistBins
 
   ! Data arrays: need one for w (vertical velocity), press (pressure)
@@ -58,16 +57,15 @@ program azavg
   type (Rhdf5Var) :: Filter, Radius, StormXindex, StormYindex
   character (len=LittleString) :: rh5f_facc
   integer :: rh5f_filter, rh5f_center, rh5f_u, rh5f_v, rh5f_avar, rh5f_aavg
-  character (len=MediumString) :: Ufile, Vfile, AvarFile, AavgFile
+  character (len=MediumString) :: Ufile, Vfile, AvarFile
   integer :: i_storm, j_storm
   real, dimension(:), allocatable :: XcoordsKm, YcoordsKm
-  real, dimension(:), allocatable :: TempArray
   real :: StormX, StormY, MaxRadius
 
   integer :: i
   integer :: AvarNelems
 
-  integer :: ix, iy, iz, it
+  integer :: ix, iy, it
   integer :: Nx, Ny, Nz, Nt, FilterNz
 
   real :: DeltaX, DeltaY, RbandInc
@@ -78,30 +76,22 @@ program azavg
 
   if (VarToAvg(1:5) .eq. 'hist:') then
     call String2List(VarToAvg, ':', ArgList, MaxArgFields, Nfields, 'hist spec')
-    if (Nfields .eq. 5) then
+    if (Nfields .eq. 3) then
       ! got the right amount of fields
       !   field    value
       !    1       'hist'
       !    2       variable name
-      !    3       number of bins
-      !    4       first bin value
-      !    5       bin size
+      !    3       bins file
       DoHist = .true.
-      VarToAvg   = trim(ArgList(2))
-      read(ArgList(3), '(i)') NumBins
-      read(ArgList(4), '(f)') BinStart
-      read(ArgList(5), '(f)') BinSize
+      VarToAvg = trim(ArgList(2))
+      BinsFile = trim(ArgList(3))
     else
       write (*,*) 'ERROR: average function hist requires five fields: hist:<var>:<num_bins>:<bin_start>:<bin_size>'
       stop
     endif
   else
     ! Not doing histograms
-    !
-    ! Need to set NumBins to one since NumBins is being used to set the size
-    ! of the y dimension in the output variable, Aavg.
     DoHist = .false.
-    NumBins = 1
   endif
 
   ! Do the check for horizontal velocity cases in order to support
@@ -138,9 +128,7 @@ program azavg
   end if
   if (DoHist) then
     write (*,*) '  Creating histogram counts:'
-    write (*,*) '    Number of bins: ', NumBins
-    write (*,*) '    Bin start: ', BinStart
-    write (*,*) '    Bin size: ', BinSize
+    write (*,*) '    Bins File: ', trim(BinsFile)
   endif
   write (*,*) ''
 
@@ -262,24 +250,26 @@ program azavg
 
   write (*,*) ''
 
-  ! Create the histogram bins 'edges'. Emulate the way MATLAB does histograms.
-  ! Each bin is defined to be HistBins(i) <= x < HistBins(i+1) for all bins
-  ! up to the last one. The last bin is defined to be x == HistBins(NumBins)
+  ! If doing histogram, read in the bins and the number of bins. Do this before
+  ! the next section since NumBins is being used to set up the output coordinate values.
   !
-  ! NumBins will be one when not doing histograms. In this case place a zero
-  ! in HistBins. This will allow the code that creates Bcoords (below) to just
-  ! use NumBins and HistBins without checking DoHist.
- allocate(HistBins(NumBins))
+  ! If not doing a histogram, set NumBins to one, and place a zero in HistBins.
+  ! This will allow the code that creates Bcoords (below) to just use NumBins
+  ! and HistBins without checking DoHist.
   if (DoHist) then
+    ! ReadBinsFile will allocate HistBins (it needs to read in NumBins before
+    ! HistBins gets allocated).
+    call ReadBinsFile(BinsFile, NumBins, HistBins)
     write (*,*) 'Histogram Bins:'
-    HistBins(1) = BinStart
-    write (*,*) '  ', HistBins(1)
-    do i = 2, NumBins
-      HistBins(i) = HistBins(i-1) + BinSize
+    do i = 1, NumBins
       write (*,*) '  ', HistBins(i)
     enddo
     write (*,*) ''
   else
+    ! Need to set NumBins to one since NumBins is being used to set the size
+    ! of the y dimension in the output variable, Aavg.
+    NumBins = 1
+    allocate(HistBins(1))
     HistBins(1) = 0.0
   endif
 
@@ -287,7 +277,7 @@ program azavg
   ! XcoordsKm, YcoordsKm are in units of km
   allocate(XcoordsKm(Nx))
   allocate(YcoordsKm(Ny))
-  call ConvertGridCoords(Nx, Ny, Nz, Xcoords%vdata, Ycoords%vdata, XcoordsKm, YcoordsKm)
+  call ConvertGridCoords(Nx, Ny, Xcoords%vdata, Ycoords%vdata, XcoordsKm, YcoordsKm)
 
   write (*,*) 'Horzontal Grid Coordinate Info:'
   write (*,*) '  X Range (min lon, max lon) --> (min x, max x): '
@@ -509,11 +499,9 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, FilterFile, StormCenterFile, NumR
     write (*,*) '                speed_t: horizontal tangential speed'
     write (*,*) '                speed_r: horizontal radial speed'
     write (*,*) '                hist: create histogram counts instead of averages'
-    write (*,*) '                  hist:<var>:<num_bins>:<bin_start>:<bin_size>'
+    write (*,*) '                  hist:<var>:<bins_file>'
     write (*,*) '                     <var>: same as <var_to_average>'
-    write (*,*) '                     <num_bins>: number of bins to use in the histogram creation'
-    write (*,*) '                     <bin_start>: starting value for first bin'
-    write (*,*) '                     <bin_inc>: size of each bin'
+    write (*,*) '                     <bins_file>: file containing the edge values of the bins'
     write (*,*) '        <revu_var_name>: name of variable in the REVU file'
     write (*,*) ''
     stop
@@ -526,10 +514,10 @@ subroutine GetMyArgs(InDir, InSuffix, OutFile, FilterFile, StormCenterFile, NumR
   call getarg(5, StormCenterFile)
 
   call getarg(6, arg)       !this is a string
-  read (arg, '(i)') NumRbands !convert to integer
+  read (arg, '(i15)') NumRbands !convert to integer
 
   call getarg(7, arg)
-  read (arg, '(f)') MaxRadius ! convert to real
+  read (arg, '(f15.7)') MaxRadius ! convert to real
 
   call getarg(8, VarToAvg)
 

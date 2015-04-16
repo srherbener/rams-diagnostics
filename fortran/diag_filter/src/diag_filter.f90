@@ -68,7 +68,7 @@ program diag_filter
   integer :: imodel, OutNdims, FilterNdims
   real :: TempZ
   integer :: ix, iy, iz, it
-  integer :: ih2d, ih3d, ih
+  integer :: ih2d, ih3d
   integer :: Nx, Ny, Nz, Nt
   integer :: NhElems
   logical :: BadDims
@@ -79,13 +79,11 @@ program diag_filter
   character (len=RHDF5_MAX_STRING) :: FileAcc
   integer, dimension(MaxFilters) :: InFileIds
   integer :: OutFileId
-  integer :: rh5f_fsf__fid
 
   type (Rhdf5Var) :: OutFilter
   type (Rhdf5Var) :: Xcoords, Ycoords, Zcoords, Tcoords
 
   real :: DeltaX, DeltaY
-  real :: Xstart, Xinc, Ystart, Yinc
   real, dimension(:), allocatable :: XcoordsKm, YcoordsKm
 
   type (Rhdf5Var) :: MinP, Radius, Phi, StormXindex, StormYindex
@@ -94,13 +92,11 @@ program diag_filter
   logical :: FilterVal, SelectThisPoint
 
   logical :: AndFilters
-  logical :: OrFilters
 
   logical, dimension(:,:), allocatable :: UpDnDraftMask
   logical :: DoingUpDrafts
   logical :: DoingDnDrafts
   logical :: DoingUpDnDrafts
-  logical :: DoinCylVol
   integer :: UDfnum
 
   ! Get the command line arguments
@@ -109,7 +105,6 @@ program diag_filter
   ! Record which combination sense for the filters was selected
   ! GetMyArgs already checked to make sure one of 'and' or 'or' was selected for CombSense
   AndFilters = (CombSense .eq. 'and')
-  OrFilters = (CombSense .eq. 'or')
 
   DoingUpDrafts = .false.
   DoingDnDrafts = .false.
@@ -124,9 +119,10 @@ program diag_filter
   write (*,*) '  Data selection specs: '
   if (AndFilters) then
     write (*,*) '    Filters will be logically and-ed together'
-  else if (OrFilters) then
+  else
     write (*,*) '    Filters will be logically or-ed together'
   endif
+  UDfnum = 0
   do i = 1, Nfilters
     if (Filters(i)%Ftype .eq. FTYPE_CYLVOL) then
       icylvol = i
@@ -253,6 +249,7 @@ program diag_filter
     endif
   enddo
 
+  imodel = 1
   do i = 1, Nfilters
     ! Prepare for reading
     Vars(i)%ndims = Vars(i)%ndims - 1
@@ -273,6 +270,7 @@ program diag_filter
     else
       FilterNdims = Vars(i)%ndims
     endif
+
     if (FilterNdims .gt. OutNdims) then
       imodel = i
       OutNdims = FilterNdims
@@ -317,7 +315,7 @@ program diag_filter
   ! Convert lat (x coords) and lon (y coords) to distances in km
   allocate(XcoordsKm(Nx))
   allocate(YcoordsKm(Ny))
-  call ConvertGridCoords(Nx, Ny, Nz, Xcoords%vdata, Ycoords%vdata, XcoordsKm, YcoordsKm)
+  call ConvertGridCoords(Nx, Ny, Xcoords%vdata, Ycoords%vdata, XcoordsKm, YcoordsKm)
 
   DeltaX = (XcoordsKm(2) - XcoordsKm(1)) * 1000.0
   DeltaY = (YcoordsKm(2) - YcoordsKm(1)) * 1000.0
@@ -451,11 +449,10 @@ program diag_filter
           ih3d = ih3d + 1
           ih2d = ih2d + 1
 
-          if (AndFilters) then
-            SelectThisPoint = .true.
-          else if (OrFilters) then
-            SelectThisPoint = .false.
-          endif
+          ! Either and-ing the filter values or or-ing them. The logical var AndFilters is
+          ! true if and-ing and false if or-ing. Want SelectThisPoint to be initialized
+          ! to true if and-ing and false if or-ing (ie, to the value in AndFilters).
+          SelectThisPoint = AndFilters
 
           do i = 1, Nfilters
             ! Apply the current filter
@@ -526,7 +523,8 @@ program diag_filter
             ! Combine the current filter value with the overall selection according to CombSense
             if (AndFilters) then
               SelectThisPoint = SelectThisPoint .and. FilterVal
-            else if (OrFilters) then
+            else
+              ! or-ing the filters
               SelectThisPoint = SelectThisPoint .or. FilterVal
             endif
           enddo
@@ -560,7 +558,7 @@ program diag_filter
       write (*,*) 'Working: Timestep: ', it
 
       if (icylvol .gt. 0) then
-        write (*,'(a,i3,a,i3,a,g,a,g,a)') '    Storm Center: (', StmIx, ', ', StmIy, &
+        write (*,'(a,i3,a,i3,a,g15.2,a,g15.2,a)') '    Storm Center: (', StmIx, ', ', StmIy, &
          ') --> (', XcoordsKm(StmIx), ', ', YcoordsKm(StmIy), ')'
         write (*,*) '   Minumum pressure: ', MinP%vdata(it)
       endif
@@ -618,7 +616,7 @@ contains
   integer :: Nstr, Nfilt, NumFilters
   type (FilterDescrip), dimension(Nfilt) :: Filters
 
-  integer :: iargc, i, j, Nargs, Nfld
+  integer :: iargc, i, Nargs, Nfld
   character (len=Nstr) :: Arg
   character (len=Nstr), dimension(MaxFields) :: Fields
 
@@ -681,12 +679,12 @@ contains
           Filters(NumFilters)%Vname    = Fields(2)
           Filters(NumFilters)%Vfprefix = Fields(3)
 
-          read(Fields(4), '(f)') Filters(NumFilters)%x1
-          read(Fields(5), '(f)') Filters(NumFilters)%x2
-          read(Fields(6), '(f)') Filters(NumFilters)%y1
-          read(Fields(7), '(f)') Filters(NumFilters)%y2
-          read(Fields(8), '(f)') Filters(NumFilters)%z1
-          read(Fields(9), '(f)') Filters(NumFilters)%z2
+          read(Fields(4), '(f15.7)') Filters(NumFilters)%x1
+          read(Fields(5), '(f15.7)') Filters(NumFilters)%x2
+          read(Fields(6), '(f15.7)') Filters(NumFilters)%y1
+          read(Fields(7), '(f15.7)') Filters(NumFilters)%y2
+          read(Fields(8), '(f15.7)') Filters(NumFilters)%z1
+          read(Fields(9), '(f15.7)') Filters(NumFilters)%z2
         endif
 
         if ((Filters(NumFilters)%x1 .lt. 0.0) .or. (Filters(NumFilters)%x2 .lt. 0.0) .or. (Filters(NumFilters)%x2 .le. Filters(NumFilters)%x1)) then
@@ -720,7 +718,7 @@ contains
           Filters(NumFilters)%Vname    = Fields(2)
           Filters(NumFilters)%Vfprefix = Fields(3)
 
-          read(Fields(4),  '(f)') Filters(NumFilters)%x1
+          read(Fields(4),  '(f15.7)') Filters(NumFilters)%x1
           Filters(NumFilters)%x2 = 0
           Filters(NumFilters)%y1 = 0
           Filters(NumFilters)%y2 = 0
@@ -743,7 +741,7 @@ contains
           Filters(NumFilters)%Vname    = Fields(2)
           Filters(NumFilters)%Vfprefix = Fields(3)
 
-          read(Fields(4),  '(f)') Filters(NumFilters)%x1
+          read(Fields(4),  '(f15.7)') Filters(NumFilters)%x1
           Filters(NumFilters)%x2 = 0
           Filters(NumFilters)%y1 = 0
           Filters(NumFilters)%y2 = 0
@@ -766,7 +764,7 @@ contains
           Filters(NumFilters)%Vname    = Fields(2)
           Filters(NumFilters)%Vfprefix = Fields(3)
 
-          read(Fields(4),  '(f)') Filters(NumFilters)%x1
+          read(Fields(4),  '(f15.7)') Filters(NumFilters)%x1
           Filters(NumFilters)%x2 = 0
           Filters(NumFilters)%y1 = 0
           Filters(NumFilters)%y2 = 0
@@ -789,7 +787,7 @@ contains
           Filters(NumFilters)%Vname    = Fields(2)
           Filters(NumFilters)%Vfprefix = Fields(3)
 
-          read(Fields(4),  '(f)') Filters(NumFilters)%x1
+          read(Fields(4),  '(f15.7)') Filters(NumFilters)%x1
           Filters(NumFilters)%x2 = 0
           Filters(NumFilters)%y1 = 0
           Filters(NumFilters)%y2 = 0
@@ -812,8 +810,8 @@ contains
           Filters(NumFilters)%Vname    = Fields(2)
           Filters(NumFilters)%Vfprefix = Fields(3)
 
-          read(Fields(4),  '(f)') Filters(NumFilters)%x1
-          read(Fields(5),  '(f)') Filters(NumFilters)%x2
+          read(Fields(4),  '(f15.7)') Filters(NumFilters)%x1
+          read(Fields(5),  '(f15.7)') Filters(NumFilters)%x2
           Filters(NumFilters)%y1 = 0
           Filters(NumFilters)%y2 = 0
           Filters(NumFilters)%z1 = 0
@@ -835,8 +833,8 @@ contains
           Filters(NumFilters)%Vname    = Fields(2)
           Filters(NumFilters)%Vfprefix = Fields(3)
 
-          read(Fields(4),  '(f)') Filters(NumFilters)%x1
-          read(Fields(5),  '(f)') Filters(NumFilters)%x2
+          read(Fields(4),  '(f15.7)') Filters(NumFilters)%x1
+          read(Fields(5),  '(f15.7)') Filters(NumFilters)%x2
           Filters(NumFilters)%y1 = 0
           Filters(NumFilters)%y2 = 0
           Filters(NumFilters)%z1 = 0
@@ -855,7 +853,7 @@ contains
           Filters(NumFilters)%Vname    = Fields(2)
           Filters(NumFilters)%Vfprefix = Fields(3)
 
-          read(Fields(4), '(f)') Filters(NumFilters)%x1
+          read(Fields(4), '(f15.7)') Filters(NumFilters)%x1
           Filters(NumFilters)%x2 = 0
           Filters(NumFilters)%y1 = 0
           Filters(NumFilters)%y2 = 0
@@ -875,7 +873,7 @@ contains
           Filters(NumFilters)%Vname    = Fields(2)
           Filters(NumFilters)%Vfprefix = Fields(3)
 
-          read(Fields(4), '(f)') Filters(NumFilters)%x1
+          read(Fields(4), '(f15.7)') Filters(NumFilters)%x1
           Filters(NumFilters)%x2 = 0
           Filters(NumFilters)%y1 = 0
           Filters(NumFilters)%y2 = 0
@@ -895,8 +893,8 @@ contains
           Filters(NumFilters)%Vname    = Fields(2)
           Filters(NumFilters)%Vfprefix = Fields(3)
 
-          read(Fields(4), '(f)') Filters(NumFilters)%x1
-          read(Fields(5), '(f)') Filters(NumFilters)%x2
+          read(Fields(4), '(f15.7)') Filters(NumFilters)%x1
+          read(Fields(5), '(f15.7)') Filters(NumFilters)%x2
           Filters(NumFilters)%y1 = 0
           Filters(NumFilters)%y2 = 0
           Filters(NumFilters)%z1 = 0
@@ -927,7 +925,7 @@ contains
   endif
 
   if (BadArgs) then
-    write (*,*) 'USAGE: diag_filter <in_dir> <in_suffix> <out_file> <storm_center_file> <comb_sense> <filter_spec> [<filter_spec>...]'
+    write (*,*) 'USAGE: diag_filter <in_dir> <in_suffix> <out_file> <comb_sense> <filter_spec> [<filter_spec>...]'
     write (*,*) '        <in_dir>: directory containing input files'
     write (*,*) '        <in_suffix>: suffix to tag onto the end of input file names'
     write (*,*) '           Note: input file names become: <in_dir>/<var_name><in_suffix>'
@@ -1016,7 +1014,7 @@ subroutine BuildUpDnMask(Nx, Ny, Nz, Wvar, Wmask, Thresh1, Thresh2, UpDnCode)
     do iy = 1, Ny
       do ix = 1, Nx
         ! if already found a qualifying w value, skip checking this column
-        if (Wmask(ix,iy) .eq. .false.) then
+        if (Wmask(ix,iy) .eqv. .false.) then
           if ((UpDnCode .eq. 1) .and. (Wvar(ix,iy,iz) .ge. Thresh1)) then
             Wmask(ix,iy) = .true.
           else if ((UpDnCode .eq. 2) .and. (Wvar(ix,iy,iz) .le. Thresh1)) then
