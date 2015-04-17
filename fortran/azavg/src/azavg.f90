@@ -86,7 +86,7 @@ program azavg
       VarToAvg = trim(ArgList(2))
       BinsFile = trim(ArgList(3))
     else
-      write (*,*) 'ERROR: average function hist requires five fields: hist:<var>:<num_bins>:<bin_start>:<bin_size>'
+      write (*,*) 'ERROR: average function hist requires three fields: hist:<var>:<bins_file>'
       stop
     endif
   else
