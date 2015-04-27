@@ -32,16 +32,16 @@ HDF5_LIBS=-L$(HOME)/hdf5-1.8.6-macosx64-static/lib -lhdf5 -lhdf5_hl -lsz -lz -lm
 # in your RAMS and REVU configuration.
 INCLUDES = $(RHDF5_INCS) $(DIAG_INCS)
 
-#F_COMP = pgf90
-#F_OPTS = -Munroll -Mnoframe -O2 -pc 64 -tp x64 -Mfree -fastsse -time
-F_COMP = gfortran
-F_OPTS = -O2 -fno-range-check -Wall -ffree-line-length-none
+F_COMP = pgf90
+F_OPTS = -Munroll -Mnoframe -O2 -pc 64 -tp x64 -Mfree -fastsse -time
+#F_COMP = gfortran
+#F_OPTS = -O2 -fno-range-check -Wall -ffree-line-length-none
 F_COMMAND = $(F_COMP) -c $(F_OPTS) $(INCLUDES)
 
-#LOADER = pgf90
-#LOADER_OPTS=-v -ldl -lc -lgcc_eh -lpthread -lsz
-LOADER = gfortran
-LOADER_OPTS =
+LOADER = pgf90
+LOADER_OPTS=-v -ldl -lc -lgcc_eh -lpthread -lsz
+#LOADER = gfortran
+#LOADER_OPTS =
 LOADER_LIBS = $(RHDF5_LIBS) $(HDF5_LIBS) $(DIAG_LIBS)
 
 
