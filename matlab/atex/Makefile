@@ -50,6 +50,7 @@ SCRIPTS = $(DEST)/ExtractSample.m \
           $(DEST)/PlotProfs.m \
           $(DEST)/PlotSampleData.m \
           $(DEST)/PlotSampleW250.m \
+          $(DEST)/PrepVaporData.m \
           $(DEST)/GenCfrac2dHists.m \
           $(DEST)/GenProfPlots.m \
           $(DEST)/GenRain2CloudRatio.m \
