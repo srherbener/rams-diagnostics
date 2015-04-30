@@ -1,0 +1,544 @@
+# General specs
+#
+AzavgDir: AzAveragedData
+TsavgDir: TsAveragedData
+DiagDir: DIAGS
+PlotDir: Plots
+FigDir: Figures
+EofDir: EofData
+FilterDir: FILTERS
+ExpName: ATEX
+RamsDir: RAMS
+RevuDir: HDF5
+ControlCase: z.atex.ccn0050.sst298.gcn10m5.1um
+UndefVal: -999
+
+# cases (experiment names)
+#  #Case: <exp_name> <plot_name>
+#
+# CCN and SST cases
+Case: z.atex.ccn0050.sst293 C0050_S293
+Case: z.atex.ccn0100.sst293 C0100_S293
+#Case: z.atex.ccn0200.sst293 C0200_S293
+#Case: z.atex.ccn0400.sst293 C0400_S293
+#Case: z.atex.ccn0800.sst293 C0800_S293
+#Case: z.atex.ccn1600.sst293 C1600_S293
+
+Case: z.atex.ccn0050.sst298 C0050_S298
+Case: z.atex.ccn0100.sst298 C0100_S298
+#Case: z.atex.ccn0200.sst298 C0200_S298
+#Case: z.atex.ccn0400.sst298 C0400_S298
+#Case: z.atex.ccn0800.sst298 C0800_S298
+#Case: z.atex.ccn1600.sst298 C1600_S298
+
+###############################################################
+####################### VAR SPECS #############################
+###############################################################
+#  Var: <VarName> <RevuVarName> <TemplateSuffix>
+
+
+###############################################################
+####################### LINE PLOTS ############################
+###############################################################
+# LinePlot: <plotset> <xspec> <yspec> <xaxis_spec> <yaxis_spec> <data_select_spec> <smoothing> <title> <legend_loc> <add_meas> <out_file>
+
+### TESTS
+#LinePlot: S293_TEST CloudMassTime CloudMass CloudMassTimeHr 1 CloudMass 1 CloudMassSelect none PANEL:a@S293 none none AvgCloudMass_S293.jpg
+#LinePlot: S298_TEST CloudMassTime CloudMass CloudMassTimeHr 1 CloudMass 1 CloudMassSelect none PANEL:a@S298 none none AvgCloudMass_S298.jpg
+
+#LinePlot: S293_TEST CloudDiamTime CloudDiam CloudDiamTimeHr 1 CloudDiam 1 CloudDiamSelect none PANEL:a@S293 none none AvgCloudDiam_S293.jpg
+#LinePlot: S298_TEST CloudDiamTime CloudDiam CloudDiamTimeHr 1 CloudDiam 1 CloudDiamSelect none PANEL:a@S298 none none AvgCloudDiam_S298.jpg
+
+#LinePlot: S293_TEST CloudNumTime CloudNum CloudNumTimeHr 1 CloudNum 1 CloudNumSelect none PANEL:a@S293 none none AvgCloudNum_S293.jpg
+#LinePlot: S298_TEST CloudNumTime CloudNum CloudNumTimeHr 1 CloudNum 1 CloudNumSelect none PANEL:a@S298 none none AvgCloudNum_S298.jpg
+
+#LinePlot: S293_TEST RainMassTime RainMass RainMassTimeHr 1 RainMass 1 RainMassSelect none PANEL:a@S293 none none AvgRainMass_S293.jpg
+#LinePlot: S298_TEST RainMassTime RainMass RainMassTimeHr 1 RainMass 1 RainMassSelect none PANEL:a@S298 none none AvgRainMass_S298.jpg
+
+#LinePlot: S293_TEST RainDiamTime RainDiam RainDiamTimeHr 1 RainDiam 1 RainDiamSelect none PANEL:a@S293 none none AvgRainDiam_S293.jpg
+#LinePlot: S298_TEST RainDiamTime RainDiam RainDiamTimeHr 1 RainDiam 1 RainDiamSelect none PANEL:a@S298 none none AvgRainDiam_S298.jpg
+
+LinePlot: S293_TEST RainNumTime RainNum RainNumTimeHr 1 RainNum 1 RainNumSelect none PANEL:a@S293 none none AvgRainNum_S293.jpg
+LinePlot: S298_TEST RainNumTime RainNum RainNumTimeHr 1 RainNum 1 RainNumSelect none PANEL:a@S298 none none AvgRainNum_S298.jpg
+
+### Precip rate, histogram
+#LinePlot: S293_ALL PrateHistBins PrateHist_TALL Prate 1 PrateHist_293 1 PrateHistSelect none PANEL:a@S293 none none PrateHist_S293_ALL.jpg
+#LinePlot: S298_ALL PrateHistBins PrateHist_TALL Prate 1 PrateHist_298 1 PrateHistSelect none PANEL:a@S298 none none PrateHist_S298_ALL.jpg
+
+### Cloud optical thickness, histogram
+#LinePlot: S293_ALL CotHistBins CotHist_TALL      CotLog 1     CotHist_293 1      CotHistSelect none PANEL:a@S293 none none CotHist_S293_ALL.jpg
+#LinePlot: S298_ALL CotHistBins CotHist_TALL      CotLog 1     CotHist_298 1      CotHistSelect none PANEL:a@S298 none none CotHist_S298_ALL.jpg
+
+### Inversion height - time series
+#LinePlot: S293_ALL AnalTimeBL InvHeightAllCloud AnalTimeHr 0 HeightKm 1 BlStat_T12_T36 none PANEL:a@S293 none none InvHeightAllCloud_S293_ALL.jpg
+#LinePlot: S298_ALL AnalTimeBL InvHeightAllCloud AnalTimeHr 0 HeightKm 1 BlStat_T12_T36 none PANEL:c@S298 none none InvHeightAllCloud_S298_ALL.jpg
+
+### Cloud fraction - time series
+#LinePlot: S293_ALL  AnalTime Cfrac AnalTimeHr 0 Fraction 1 BlStat_T12_T36 none PANEL:b@S293  none none CloudFrac_S293_ALL.jpg
+#LinePlot: S298_ALL  AnalTime Cfrac AnalTimeHr 0 Fraction 1 BlStat_T12_T36 none PANEL:d@S298  none none CloudFrac_S298_ALL.jpg
+
+### W variance profile
+# updrafts
+#LinePlot: S293_ALL  WvarUpAllCloudTall TurbHeights WvarUpAllCloud_293 1 HeightKm 1 TurbSelect none PANEL:c@UP,@S293    none Zinv293 WvarUpAllCloud_S293_ALL.jpg
+#LinePlot: S298_ALL  WvarUpAllCloudTall TurbHeights WvarUpAllCloud_298 1 HeightKm 1 TurbSelect none PANEL:c@UP,@S298    none Zinv298 WvarUpAllCloud_S298_ALL.jpg
+
+# downdrafts
+#LinePlot: S293_ALL  WvarDownAllCloudTall TurbHeights WvarDownAllCloud_293 1 HeightKm 0 TurbSelect none PANEL:d@DN,@S293    none Zinv293 WvarDownAllCloud_S293_ALL.jpg
+#LinePlot: S298_ALL  WvarDownAllCloudTall TurbHeights WvarDownAllCloud_298 1 HeightKm 0 TurbSelect none PANEL:d@DN,@S298    none Zinv298 WvarDownAllCloud_S298_ALL.jpg
+
+### W-theta_v flux
+# updrafts
+#LinePlot: S293_ALL  WthetavUpAllCloudTall TurbHeights WthetavUpAllCloud_293 1 HeightKm 1 TurbSelect none PANEL:e@UP,@S293    none Zinv293 WthetavUpAllCloud_S293_ALL.jpg
+#LinePlot: S298_ALL  WthetavUpAllCloudTall TurbHeights WthetavUpAllCloud_298 1 HeightKm 1 TurbSelect none PANEL:e@UP,@S298    none Zinv298 WthetavUpAllCloud_S298_ALL.jpg
+
+# downdrafts
+#LinePlot: S293_ALL  WthetavDownAllCloudTall TurbHeights WthetavDownAllCloud_293 1 HeightKm 0 TurbSelect none PANEL:f@DN,@S293    none Zinv293 WthetavDownAllCloud_S293_ALL.jpg
+#LinePlot: S298_ALL  WthetavDownAllCloudTall TurbHeights WthetavDownAllCloud_298 1 HeightKm 0 TurbSelect none PANEL:f@DN,@S298    none Zinv298 WthetavDownAllCloud_S298_ALL.jpg
+
+### W-vapor flux
+# updrafts
+#LinePlot: S293_ALL  WvaporUpAllCloudTall TurbHeights WvaporUpAllCloud_293 1 HeightKm 1 TurbSelect none PANEL:g@UP,@S293    none Zinv293 WvaporUpAllCloud_S293_ALL.jpg
+#LinePlot: S298_ALL  WvaporUpAllCloudTall TurbHeights WvaporUpAllCloud_298 1 HeightKm 1 TurbSelect none PANEL:g@UP,@S298    none Zinv298 WvaporUpAllCloud_S298_ALL.jpg
+
+# downdrafts
+#LinePlot: S293_ALL  WvaporDownAllCloudTall TurbHeights WvaporDownAllCloud_293 1 HeightKm 0 TurbSelect none PANEL:h@DN,@S293    none Zinv293 WvaporDownAllCloud_S293_ALL.jpg
+#LinePlot: S298_ALL  WvaporDownAllCloudTall TurbHeights WvaporDownAllCloud_298 1 HeightKm 0 TurbSelect none PANEL:h@DN,@S298    none Zinv298 WvaporDownAllCloud_S298_ALL.jpg
+
+### Cloud condensational growth
+#LinePlot: S293_ALL  CloudCondAllCloudTall CloudCondHeights CloudCondAllCloud_293 1 HeightKm_2 1 CloudCondSelect none PANEL:a@S293    none Zinv293 CloudCondAllCloud_S293_ALL.jpg
+#LinePlot: S298_ALL  CloudCondAllCloudTall CloudCondHeights CloudCondAllCloud_298 1 HeightKm   1 CloudCondSelect none PANEL:a@S298    none Zinv298 CloudCondAllCloud_S298_ALL.jpg
+
+### drizzle condensational growth
+#LinePlot: S293_ALL  DrizCondAllCloudTall DrizCondHeights DrizCondAllCloud_293 1 HeightKm_2 1 DrizCondSelect none PANEL:c@S293    none Zinv293 DrizCondAllCloud_S293_ALL.jpg
+#LinePlot: S298_ALL  DrizCondAllCloudTall DrizCondHeights DrizCondAllCloud_298 1 HeightKm   1 DrizCondSelect none PANEL:c@S298    none Zinv298 DrizCondAllCloud_S298_ALL.jpg
+
+### rain condensational growth
+#LinePlot: S293_ALL  RainCondAllCloudTall RainCondHeights RainCondAllCloud_293 1 HeightKm_2 1 RainCondSelect none PANEL:e@S293    none Zinv293 RainCondAllCloud_S293_ALL.jpg
+#LinePlot: S298_ALL  RainCondAllCloudTall RainCondHeights RainCondAllCloud_298 1 HeightKm   1 RainCondSelect none PANEL:e@S298    none Zinv298 RainCondAllCloud_S298_ALL.jpg
+
+### cloud evaporation
+#LinePlot: S293_ALL  CloudEvapAllCloudTall CloudEvapHeights CloudEvapAllCloud_293 1 HeightKm_2 0 CloudEvapSelect none PANEL:b@S293    none Zinv293 CloudEvapAllCloud_S293_ALL.jpg
+#LinePlot: S298_ALL  CloudEvapAllCloudTall CloudEvapHeights CloudEvapAllCloud_298 1 HeightKm   0 CloudEvapSelect none PANEL:b@S298    none Zinv298 CloudEvapAllCloud_S298_ALL.jpg
+
+### drizzle evaporation
+#LinePlot: S293_ALL  DrizEvapAllCloudTall DrizEvapHeights DrizEvapAllCloud_293 1 HeightKm_2 0 DrizEvapSelect none PANEL:d@S293    none Zinv293 DrizEvapAllCloud_S293_ALL.jpg
+#LinePlot: S298_ALL  DrizEvapAllCloudTall DrizEvapHeights DrizEvapAllCloud_298 1 HeightKm   0 DrizEvapSelect none PANEL:d@S298    none Zinv298 DrizEvapAllCloud_S298_ALL.jpg
+
+### rain evaporation
+#LinePlot: S293_ALL  RainEvapAllCloudTall RainEvapHeights RainEvapAllCloud_293 1 HeightKm_2 0 RainEvapSelect none PANEL:f@S293    none Zinv293 RainEvapAllCloud_S293_ALL.jpg
+#LinePlot: S298_ALL  RainEvapAllCloudTall RainEvapHeights RainEvapAllCloud_298 1 HeightKm   0 RainEvapSelect none PANEL:f@S298    none Zinv298 RainEvapAllCloud_S298_ALL.jpg
+
+### Latent Heating
+#LinePlot: S293_ALL  LatHeatAllCloudTall LatHeatHeights LatHeatAllCloud_293 1 HeightKm 1 LatHeatSelect none PANEL:c@S293    none Zinv293 LatHeatAllCloud_S293_ALL.jpg
+#LinePlot: S298_ALL  LatHeatAllCloudTall LatHeatHeights LatHeatAllCloud_298 1 HeightKm 1 LatHeatSelect none PANEL:c@S298    none Zinv298 LatHeatAllCloud_S298_ALL.jpg
+
+### Latent Cooling
+#LinePlot: S293_ALL  LatCoolAllCloudTall LatCoolHeights LatCoolAllCloud_293 1 HeightKm 1 LatCoolSelect none PANEL:d@S293    none Zinv293 LatCoolAllCloud_S293_ALL.jpg
+#LinePlot: S298_ALL  LatCoolAllCloudTall LatCoolHeights LatCoolAllCloud_298 1 HeightKm 1 LatCoolSelect none PANEL:d@S298    none Zinv298 LatCoolAllCloud_S298_ALL.jpg
+
+### Buoyancy Flux
+# updrafts
+#LinePlot: S293_ALL  BuoyFluxUpAllCloudTall TurbHeights BuoyFluxUpAllCloud_293 1 HeightKm 1 TurbSelect none PANEL:e@UP,@S293    none Zinv293 BuoyFluxUpAllCloud_S293_ALL.jpg
+#LinePlot: S298_ALL  BuoyFluxUpAllCloudTall TurbHeights BuoyFluxUpAllCloud_298 1 HeightKm 1 TurbSelect none PANEL:e@UP,@S298    none Zinv298 BuoyFluxUpAllCloud_S298_ALL.jpg
+
+# downdrafts
+#LinePlot: S293_ALL  BuoyFluxDownAllCloudTall TurbHeights BuoyFluxDownAllCloud_293 1 HeightKm 0 TurbSelect none PANEL:f@DN,@S293    none Zinv293 BuoyFluxDownAllCloud_S293_ALL.jpg
+#LinePlot: S298_ALL  BuoyFluxDownAllCloudTall TurbHeights BuoyFluxDownAllCloud_298 1 HeightKm 0 TurbSelect none PANEL:f@DN,@S298    none Zinv298 BuoyFluxDownAllCloud_S298_ALL.jpg
+
+
+### cloud fraction profile
+#LinePlot: S293_ALL  CfracProfTall MomentHeights CfracProf 1 HeightKm 1 CfracProfSelect none PANEL:b@S293    none Zinv293 CfracProf_S293_ALL.jpg
+#LinePlot: S298_ALL  CfracProfTall MomentHeights CfracProf 1 HeightKm 1 CfracProfSelect none PANEL:b@S298    none Zinv298 CfracProf_S298_ALL.jpg
+
+### Net LW flux profile
+#LinePlot: S293_ALL  NetLwAllCloudTall TurbHeights NetLwAllCloud_293 1 HeightKm_2 1 NetLwSelect none PANEL:g@S293    none Zinv293 NetLwAllCloud_S293_ALL.jpg
+#LinePlot: S298_ALL  NetLwAllCloudTall TurbHeights NetLwAllCloud_298 1 HeightKm   1 NetLwSelect none PANEL:g@S298    none Zinv298 NetLwAllCloud_S298_ALL.jpg
+
+
+#############################################################
+##################### CONTOUR PLOTS #########################
+#############################################################
+# ContourPlot: <xspec> <yspec> <zspec> <data_select_spec> <title> <fill> <color_bar> <color_map> <out_file>
+
+########### For Update #############
+
+### Albedo
+#ContourPlot: CONT_S293_C400 AlbedoLon_T24 AlbedoLat_T24 Albedo_T24 LonRange 1 LatRange 1 Alb 1 ContourSelect_T24 PANEL:c@S293,@t@=@24@h 1 1 40 none LightGray Albedo_T24
+#ContourPlot: CONT_S298_C400 AlbedoLon_T24 AlbedoLat_T24 Albedo_T24 LonRange 1 LatRange 1 Alb 1 ContourSelect_T24 PANEL:d@S298,@t@=@24@h 1 1 40 none LightGray Albedo_T24
+
+### Surface convergence
+#ContourPlot: CONT_S293_C400 SfcConvLon_T24 SfcConvLat_T24 SfcConv_T24 LonRange 1 LatRange 1 SfcConv 1 ContourSelect_T24 PANEL:e@S293,@t@=@24@h 1 1 40 none redblue SfcConv_T24
+#ContourPlot: CONT_S298_C400 SfcConvLon_T24 SfcConvLat_T24 SfcConv_T24 LonRange 1 LatRange 1 SfcConv 1 ContourSelect_T24 PANEL:f@S298,@t@=@24@h 1 1 40 none redblue SfcConv_T24
+
+
+
+##############################################################
+####################### Plot Sets ############################
+##############################################################
+
+# Test line plots
+PlotSet: S293_TEST 2 z.atex.ccn0050.sst293 C50 black - 0.0 1 1 z.atex.ccn0100.sst293 C100 blue - 0.0 1 1 z.atex.ccn0200.sst293 C200 green - 0.0 1 1 z.atex.ccn0400.sst293 C400 yellow - 0.0 1 1 z.atex.ccn0800.sst293 C800 orangered - 0.0 1 1 z.atex.ccn1600.sst293 C1600 brown - 0.0 1 1
+PlotSet: S298_TEST 2 z.atex.ccn0050.sst298 C50 black - 0.0 1 1 z.atex.ccn0100.sst298 C100 blue - 0.0 1 1 z.atex.ccn0200.sst293 C200 green - 0.0 1 1 z.atex.ccn0400.sst293 C400 yellow - 0.0 1 1 z.atex.ccn0800.sst293 C800 orangered - 0.0 1 1 z.atex.ccn1600.sst293 C1600 brown - 0.0 1 1
+
+# line plots
+PlotSet: S293_ALL 6 z.atex.ccn0050.sst293 C50 black - 0.0 1 1 z.atex.ccn0100.sst293 C100 blue - 0.0 1 1 z.atex.ccn0200.sst293 C200 green - 0.0 1 1 z.atex.ccn0400.sst293 C400 yellow - 0.0 1 1 z.atex.ccn0800.sst293 C800 orangered - 0.0 1 1 z.atex.ccn1600.sst293 C1600 brown - 0.0 1 1
+PlotSet: S298_ALL 6 z.atex.ccn0050.sst298 C50 black - 0.0 1 1 z.atex.ccn0100.sst298 C100 blue - 0.0 1 1 z.atex.ccn0200.sst298 C200 green - 0.0 1 1 z.atex.ccn0400.sst298 C400 yellow - 0.0 1 1 z.atex.ccn0800.sst298 C800 orangered - 0.0 1 1 z.atex.ccn1600.sst298 C1600 brown - 0.0 1 1
+
+# cloud sample contour plots
+PlotSet: CONT_S293_C400 1 z.atex.ccn0400.sst293 293K black - 0.0 1 1
+PlotSet: CONT_S298_C400 1 z.atex.ccn0400.sst298 293K black - 0.0 1 1
+
+####################### Plot Vars ################################
+# PlotVar: <name> <vname> <file_prefix> <label> <units> <scale> <offset>
+# 
+#  When <units> is set to '@', which turns into a blank, then the units designation is dropped
+#  from the figure.
+#
+#  <scale> and <offset> form a liner translation, y = mx + b, where m is <scale> and
+#  b is <offset>.
+#
+PlotVar: CloudMass     cloud_c0p01_avg_TSERIES DIAGS/avg_ctype_cloud Cloud@Mixing@Ratio g@kg^-^1  1 0
+PlotVar: CloudMassTime t_coords                DIAGS/avg_ctype_cloud Sim@Time           h         1 0
+
+PlotVar: CloudDiam     cloud_diam_c0p01_avg_TSERIES DIAGS/avg_ctype_cloud_diam Cloud@Diameter um 1 0
+PlotVar: CloudDiamTime t_coords                     DIAGS/avg_ctype_cloud_diam Sim@Time       h  1 0 
+
+PlotVar: CloudNum     cloud_num_c0p01_avg_TSERIES DIAGS/avg_ctype_cloud_num Cloud@Number cm^-^3 1 0
+PlotVar: CloudNumTime t_coords                    DIAGS/avg_ctype_cloud_num Sim@Time     h      1 0 
+
+PlotVar: RainMass     rain_r0p01_avg_TSERIES DIAGS/avg_ctype_rain Rain@Mixing@Ratio g@kg^-^1  1 0
+PlotVar: RainMassTime t_coords               DIAGS/avg_ctype_rain Sim@Time          h         1 0
+
+PlotVar: RainDiam     rain_diam_r0p01_avg_TSERIES DIAGS/avg_ctype_rain_diam Rain@Diameter mm 1 0
+PlotVar: RainDiamTime t_coords                    DIAGS/avg_ctype_rain_diam Sim@Time      h  1 0
+
+PlotVar: RainNum     rain_num_r0p01_avg_TSERIES DIAGS/avg_ctype_rain_num Rain@Number X@10^3@m^-^3 1e-3 0
+PlotVar: RainNumTime t_coords                   DIAGS/avg_ctype_rain_num Sim@Time    h            1    0
+
+
+
+
+PlotVar: Cfrac cloud_frac DIAGS/hda_ts_cf CF      @   1 0
+
+PlotVar: AnalTime   t_coords TsAveragedData/hda_cfrac Analysis@Time  h  2.77777778e-4 -12.0
+PlotVar: AnalTimeBL t_coords DIAGS/bl_stats_0p01      Analysis@Time  h  2.77777778e-4 -12.0
+
+PlotVar: MomentHeights    z_coords  DIAGS/moments              Height km   1e-3 0
+PlotVar: TurbHeights      z_coords  DIAGS/turb_stats           Height km   1e-3 0
+
+
+############### Histogram #####################################
+PlotVar: CotHist_TALL         cot_hist_TALL          DIAGS/pdf_ctype_cot   Count         @ 1 0
+PlotVar: CotHistBins          x_coords               DIAGS/pdf_ctype_cot   \tau_c        @ 1 0
+
+PlotVar: PrateHist_TALL         pcprr_hist_TALL          DIAGS/pdf_ctype_pcprr   @                @    1 0
+PlotVar: PrateHistBins          x_coords                 DIAGS/pdf_ctype_pcprr   Precip@Rate  mm@h^-^1 1 0
+
+############## BL stats #####################
+PlotVar: InvHeightAllCloud InversionHeightSmooth_gm_all_cld DIAGS/bl_stats_0p01 Zinv  km  1e-3 0
+PlotVar: CloudCfTop        CloudTopCfSmooth_gm_all          DIAGS/bl_stats_0p01 Ztop  km  1e-3 0
+PlotVar: CloudCfBot        CloudBotCfSmooth_gm_all          DIAGS/bl_stats_0p01 Zbot  km  1e-3 0
+PlotVar: CloudCldTop       CloudTopCldSmooth_gm_all         DIAGS/bl_stats_0p01 Ztop  km  1e-3 0
+PlotVar: CloudCldBot       CloudBotCldSmooth_gm_all         DIAGS/bl_stats_0p01 Zbot  km  1e-3 0
+
+PlotVar: ThetaWe        ThetaWeSmooth_gm_all           DIAGS/bl_stats_0p01 W_e_\theta    cm@s^-^1  100 0
+PlotVar: VaporWe        VaporWeSmooth_gm_all           DIAGS/bl_stats_0p01 W_e_r         cm@s^-^1  100 0
+PlotVar: ThetaV_We      ThetaV_WeSmooth_gm_all         DIAGS/bl_stats_0p01 W_e_\theta_v  cm@s^-^1  100 0
+
+PlotVar: CfMax          CfMaxSmooth_gm_all             DIAGS/bl_stats_0p01 CF_m_a_x             @  1 0
+PlotVar: CfMaxHeight    CfMaxHeightSmooth_gm_all       DIAGS/bl_stats_0p01 CF_m_a_x@Height     km  1e-3 0
+
+PlotVar: AvgCot       cot_avg            DIAGS/avg_ts_ctype_cot   COT  @   1 0
+PlotVar: AvgCotAllCld cot_all_cld_avg    DIAGS/avg_ts_ctype_cot   COT  @   1 0
+
+PlotVar: AvgCdepth         cdepth_avg           DIAGS/avg_ts_ctype_cdepth Cloud@Depth        m   1 0
+PlotVar: AvgCdepthAllCld   cdepth_all_cld_avg   DIAGS/avg_ts_ctype_cdepth Cloud@Depth        m   1 0
+
+PlotVar: AvgLwp        lwp_avg          DIAGS/avg_ts_ctype_lwp    LWP   mm   1 0
+PlotVar: AvgLwpAllCld  lwp_all_cld_avg  DIAGS/avg_ts_ctype_lwp    LWP   mm   1 0
+
+PlotVar: AvgPrate        pcprr_avg          DIAGS/avg_ts_ctype_pcprr  Precip@Rate mm@h^-^1   1 0
+PlotVar: AvgPrateAllCld  pcprr_all_cld_avg  DIAGS/avg_ts_ctype_pcprr  Precip@Rate mm@h^-^1   1 0
+
+PlotVar: AvgLcl          lcl_avg            DIAGS/avg_ts_ctype_lcl    LCL         m          1 0
+
+PlotVar: AvgAlbedo   albedo_avg   DIAGS/avg_ts_ctype_albedo Albedo             @   1 0
+
+
+############## TURBULENCE STATS ###################
+
+### Mean Vertical Velocity ###
+PlotVar: WmeanTall         w_all         DIAGS/turb_stats   <w> cm@s^-^1  100 0
+
+### Vertical Velocity Variance ###
+PlotVar: WvarUpAllCloudTall   w-w_up0p01_all_cld_all   DIAGS/moments   <w'w'>  m^2@s^-^2    1 0
+PlotVar: WvarDownAllCloudTall w-w_dn0p01_all_cld_all   DIAGS/moments   <w'w'>  m^2@s^-^2    1 0
+
+### Vertical Velocity Skew ###
+PlotVar: WskewTall         w-w-w_all         DIAGS/turb_stats   <w'w'w'>  m^3@s^-^3    1 0
+
+### w-theta_v flux ###
+PlotVar: WthetavUpAllCloudTall   w-theta_v_up0p01_all_cld_all   DIAGS/moments   <w'\thetav'>  K@m@s^-^1    1 0
+PlotVar: WthetavDownAllCloudTall w-theta_v_dn0p01_all_cld_all   DIAGS/moments   <w'\thetav'>  K@m@s^-^1    1 0
+
+### w-theta flux ###
+PlotVar: WthetaTall         w-theta_all         DIAGS/turb_stats   <w'\theta'>  K@m@s^-^1    1 0
+
+### w-vapor flux ###
+PlotVar: WvaporUpAllCloudTall   w-vapor_up0p01_all_cld_all   DIAGS/moments   <w'q'>  g@kg^-^1@m@s^-^1    1 0
+PlotVar: WvaporDownAllCloudTall w-vapor_dn0p01_all_cld_all   DIAGS/moments   <w'q'>  g@kg^-^1@m@s^-^1    1 0
+
+### w-speed flux ###
+PlotVar: WspeedTall         w-speed_all         DIAGS/turb_stats   <w'v'>  m^2@s^-^2    1 0
+
+### cloud condesational growth
+# time step in ATEX sims is 5 min, so multiply by 12 to get rate per hour
+PlotVar: CloudCondAllCloudTall cloud_cond_all_cld_avg_TALL  DIAGS/avg_ctype_cloud_cond Cloud@Cond    g@kg^-^1@h^-^1    12 0
+PlotVar: CloudCondHeights      z_coords                     DIAGS/avg_ctype_cloud_cond Height                km                1e-3 0
+
+### drizzle condensational growth
+PlotVar: DrizCondAllCloudTall  driz_cond_all_cld_avg_TALL   DIAGS/avg_ctype_driz_cond Drizzle@Cond  g@kg^-^1@h^-^1    12 0
+PlotVar: DrizCondHeights       z_coords                     DIAGS/avg_ctype_driz_cond Height                km                1e-3 0
+
+### rain condensational growth
+PlotVar: RainCondAllCloudTall  rain_cond_all_cld_avg_TALL   DIAGS/avg_ctype_rain_cond Rain@Cond     g@kg^-^1@h^-^1    12 0
+PlotVar: RainCondHeights       z_coords                     DIAGS/avg_ctype_rain_cond Height                km                1e-3 0
+
+### cloud evaporation
+# time step in ATEX sims is 5 min, so multiply by 12 to get rate per hour
+PlotVar: CloudEvapAllCloudTall cloud_evap_all_cld_avg_TALL  DIAGS/avg_ctype_cloud_evap Cloud@Evap    g@kg^-^1@h^-^1    12 0
+PlotVar: CloudEvapHeights      z_coords                     DIAGS/avg_ctype_cloud_evap Height      km                1e-3 0
+
+### drizzle evaporation
+PlotVar: DrizEvapAllCloudTall  driz_evap_all_cld_avg_TALL   DIAGS/avg_ctype_driz_evap Drizzle@Evap  g@kg^-^1@h^-^1    12 0
+PlotVar: DrizEvapHeights       z_coords                     DIAGS/avg_ctype_driz_evap Height               km                1e-3 0
+
+### rain evaporation
+PlotVar: RainEvapAllCloudTall  rain_evap_all_cld_avg_TALL   DIAGS/avg_ctype_rain_evap Rain@Evap     g@kg^-^1@h^-^1    12 0
+PlotVar: RainEvapHeights       z_coords                     DIAGS/avg_ctype_rain_evap Height               km                1e-3 0
+
+### latent heating
+# time step in ATEX sims is 5 min, so multiply by 12 to get rate per hour
+PlotVar: LatHeatAllCloudTall lat_heat_all_cld_avg_TALL  DIAGS/avg_ctype_lat_heat Latent@Heating  K@h^-^1    12 0
+PlotVar: LatHeatHeights      z_coords                   DIAGS/avg_ctype_lat_heat Height          km         1e-3 0
+
+### latent cooling
+# time step in ATEX sims is 5 min, so multiply by 12 to get rate per hour
+PlotVar: LatCoolAllCloudTall lat_cool_all_cld_avg_TALL  DIAGS/avg_ctype_lat_cool Latent@Cooling  K@h^-^1    12 0
+PlotVar: LatCoolHeights      z_coords                   DIAGS/avg_ctype_lat_cool Height          km         1e-3 0
+
+### buoyancy flux
+# time step in ATEX sims is 5 min, so multiply by 12 to get rate per hour
+PlotVar: BuoyFluxUpAllCloudTall     buoy_flux_up0p01_all_cld_all DIAGS/buoy_flux Buoy@Flux  m^2@s^-^3    1    0
+PlotVar: BuoyFluxDownAllCloudTall   buoy_flux_dn0p01_all_cld_all DIAGS/buoy_flux Buoy@Flux  m^2@s^-^3    1    0
+PlotVar: BuoyFluxHeights            z_coords                     DIAGS/buoy_flux Height         km           1e-3 0
+
+### cloud fraction with height
+PlotVar: CfracProfTall       cloud_c0p01_frac_all        DIAGS/moments CF   @    1 0
+
+### New LW flux
+PlotVar: NetLwAllCloudTall   lw_flux_all_cld_avg_TALL    DIAGS/avg_ctype_net_lw_flux LW@Flux   W@m^-^2    1 0
+
+PlotVar: AlbedoLon_T24 x_coords  DIAGS/albedo_T24 Longitude   @      1 0
+PlotVar: AlbedoLat_T24 y_coords  DIAGS/albedo_T24 Latitude    @      1 0
+PlotVar: Albedo_T24    albedo    DIAGS/albedo_T24 Albedo      @      1 0
+
+PlotVar: SfcConvLon_T24 x_coords  DIAGS/sfc_div_T24 Longitude         @      1 0
+PlotVar: SfcConvLat_T24 y_coords  DIAGS/sfc_div_T24 Latitude          @      1 0
+PlotVar: SfcConv_T24    sfc_div   DIAGS/sfc_div_T24 Sfc.@Convergence  s^-1  -1 0
+
+#############################################################################
+############################ Plot Axis Descriptions #########################
+#############################################################################
+# PlotAxis: <name> <min> <max> <scale> <ticks>
+#
+#  <scale> is 'linear' or 'log'
+#  <ticks> is array with numbers specifying where to place tick marks
+#          empty means let MATLAB specify tick marks
+#          use '_' to separate values ('_' becomes a space)
+#
+
+PlotAxis: CloudMass        0   0.3 linear [_]
+PlotAxis: CloudMassTimeHr  0   40  linear [_]
+
+PlotAxis: CloudDiam        0   35  linear [_]
+PlotAxis: CloudDiamTimeHr  0   40  linear [_]
+
+PlotAxis: CloudNum         0  100  linear [_]
+PlotAxis: CloudNumTimeHr   0   40  linear [_]
+
+PlotAxis: RainMass        0   0.2 linear [_]
+PlotAxis: RainMassTimeHr  0   40  linear [_]
+
+PlotAxis: RainDiam        0   0.5 linear [_]
+PlotAxis: RainDiamTimeHr  0   40  linear [_]
+
+PlotAxis: RainNum         0   20  linear [_]
+PlotAxis: RainNumTimeHr   0   40  linear [_]
+
+
+
+
+
+PlotAxis: LonRange     -180    180 linear [_]
+PlotAxis: LatRange      -90     90 linear [_]
+
+PlotAxis: CotLog       1e-2    300 log    [0.1_1_10_100]
+
+PlotAxis: Cdepth_293         0   4 linear [_]
+PlotAxis: Cdepth_298         0   4 linear [_]
+
+PlotAxis: Cfrac_293         0   1 linear [0_0.2_0.4_0.6_0.8_1]
+PlotAxis: Cfrac_298         0   1 linear [0_0.2_0.4_0.6_0.8_1]
+
+PlotAxis: Prate        1e-5  100 log [1e-4_1e-2_1]
+
+PlotAxis: Alb      0    1 linear [_]
+
+PlotAxis: SfcConv  -2e-3    2e-3 linear [_]
+
+PlotAxis: AvgCdepth       0   1000 linear [_]
+
+PlotAxis: AvgLwp          0    0.5 linear [_]
+
+PlotAxis: AvgPrate        0    0.3 linear [_]
+PlotAxis: AvgPrateAllCld  0    0.5 linear [_]
+
+PlotAxis: AvgAlbedo       0    0.3 linear [_]
+
+PlotAxis: PrateHist_293        1e0     1e8 log [1_1e6]
+PlotAxis: PrateHist_298        1e0     1e8 log [1_1e6]
+
+PlotAxis: CotHist_293         1e0      1e8 log [_]
+PlotAxis: CotHist_298         1e0      1e8 log [_]
+
+PlotAxis: Wmean_293         -0.02 0.02 linear [_]
+PlotAxis: Wmean_298         -0.02 0.02 linear [_]
+
+PlotAxis: WvarUpAllCloud_293     -0.001   0.009 linear [0_0.002_0.004_0.006_0.008]
+PlotAxis: WvarUpAllCloud_298     -0.01    0.12  linear [0_0.05_0.1]
+PlotAxis: WvarDownAllCloud_293   -0.001   0.005 linear [0_0.002_0.004]
+PlotAxis: WvarDownAllCloud_298   -0.001   0.05  linear [0_0.02_0.04]
+
+PlotAxis: Wskew_293        -0.0001 0.0001 linear [_]
+PlotAxis: Wskew_298         -0.001  0.005 linear [_]
+
+PlotAxis: WthetavUpAllCloud_293       -0.02   0.02 linear [_]
+PlotAxis: WthetavUpAllCloud_298       -0.03   0.07 linear [_]
+PlotAxis: WthetavDownAllCloud_293     -0.005  0.015 linear [_]
+PlotAxis: WthetavDownAllCloud_298     -0.03   0.05 linear [_]
+
+PlotAxis: Wtheta_293         -0.001 0.001 linear [_]
+PlotAxis: Wtheta_298         -0.001 0.001 linear [_]
+
+PlotAxis: WvaporUpAllCloud_293        -0.015  0.015 linear [-0.01_0_0.01]
+PlotAxis: WvaporUpAllCloud_298        -0.02   0.08  linear [0_0.03_0.06]
+PlotAxis: WvaporDownAllCloud_293      -0.01   0.01  linear [-0.005_0_0.005]
+PlotAxis: WvaporDownAllCloud_298      -0.09   0.03  linear [-0.06_-0.03_0]
+
+PlotAxis: Wspeed_293         -0.001 0.001 linear [_]
+PlotAxis: Wspeed_298         -0.001 0.001 linear [_]
+
+PlotAxis: CloudCondAllCloud_293       -0.1  2.5 linear [0_1_2]
+PlotAxis: CloudCondAllCloud_298       -0.5 10.0 linear [0_2_4_6_8]
+
+PlotAxis: RainCondAllCloud_293       -0.001  0.02 linear [0_0.005_0.01_0.015]
+PlotAxis: RainCondAllCloud_298       -0.001  0.02 linear [0_0.005_0.01_0.015]
+
+PlotAxis: DrizCondAllCloud_293       -0.01  0.18 linear [_]
+PlotAxis: DrizCondAllCloud_298       -0.01  0.15 linear [0_0.05_0.1]
+
+
+PlotAxis: CloudEvapAllCloud_293       -3.0  0.1 linear [-2_-1_0]
+PlotAxis: CloudEvapAllCloud_298       -9.0  0.5 linear [-8_-6_-4_-2_0]
+
+PlotAxis: RainEvapAllCloud_293       -0.3  0.01 linear [-0.2_-0.1_0]
+PlotAxis: RainEvapAllCloud_298       -0.2  0.01 linear [-0.15_-0.1_-0.05_0]
+
+PlotAxis: DrizEvapAllCloud_293       -0.20  0.01 linear [-0.15_-0.1_-0.05_0]
+PlotAxis: DrizEvapAllCloud_298       -0.10  0.01 linear [-0.08_-0.04_0]
+
+PlotAxis: LatHeatAllCloud_293      -1  12.0 linear [_]
+PlotAxis: LatHeatAllCloud_298      -1  30.0 linear [_]
+
+PlotAxis: LatCoolAllCloud_293       -8.0  1 linear [_]
+PlotAxis: LatCoolAllCloud_298      -18.0  1 linear [_]
+
+PlotAxis: BuoyFluxAllCloud_293      -0.0002  0.0004 linear [_]
+PlotAxis: BuoyFluxAllCloud_298      -0.0003  0.0010 linear [_]
+
+PlotAxis: BuoyFluxUpAllCloud_293      -0.0005  0.0005 linear [-0.0003_0_0.0003]
+PlotAxis: BuoyFluxUpAllCloud_298      -0.0010  0.0022 linear [0_0.0015]
+
+PlotAxis: BuoyFluxDownAllCloud_293      -0.0002  0.0005 linear [0_0.0002_0.0004]
+PlotAxis: BuoyFluxDownAllCloud_298      -0.0010  0.0010 linear [-0.0005_0_0.0005]
+
+PlotAxis: CfracProf                -0.1  1.1 linear [_]
+
+PlotAxis: NetLwAllCloud_293      -1  150 linear [50_100]
+PlotAxis: NetLwAllCloud_298      -1  150 linear [50_100]
+
+PlotAxis: AnalTimeHr  0     24 linear [_]
+PlotAxis: HeightKm    0      4 linear [_]
+PlotAxis: HeightKm_2  0      2 linear [_]
+PlotAxis: HeightM     0   4000 linear [_]
+PlotAxis: Fraction    0    1.1 linear [0_1]
+
+##################################################################
+######################## Selection specs #########################
+##################################################################
+# PlotDselect: <name> <xmin> <xmax> <ymin> <ymax> <zmin> <zmax> <tmin> <tmax>
+#
+#  min,max specs are in the units that exist in the file, typicall
+#  x, y, z are meters and t is seconds
+#
+
+# selecting out time series of averaged data - (x,y,z,t)
+#   x - dummy, set to 1
+#   y - dummy, set to 1
+#   z - dummy, set to 1
+#   t - time in seconds
+
+PlotDselect: CloudMassSelect nan nan nan nan nan nan 0 129600
+PlotDselect: CloudDiamSelect nan nan nan nan nan nan 0 129600
+PlotDselect: CloudNumSelect  nan nan nan nan nan nan 0 129600
+
+PlotDselect: RainMassSelect nan nan nan nan nan nan 0 129600
+PlotDselect: RainDiamSelect nan nan nan nan nan nan 0 129600
+PlotDselect: RainNumSelect  nan nan nan nan nan nan 0 129600
+
+
+PlotDselect: TsAll_T12_T36   1 1 1 1 -50  1 43200 129600
+PlotDselect: TsAll           1 1 1 1 -50  1     0 129600
+PlotDselect: BlStat_T12_T36  nan nan nan nan nan nan 43200 129600
+
+PlotDselect: Prof_T12_T36   1 1 1 1 0 4000  1 1
+PlotDselect: MOMENT_SELECT  1 1 1 1 0 4000  1 1
+
+PlotDselect: TurbSelect    nan nan nan nan 0 4000  nan nan
+
+PlotDselect: CloudCondSelect        nan nan nan nan 0 4000  nan nan
+PlotDselect: CloudEvapSelect        nan nan nan nan 0 4000  nan nan
+
+PlotDselect: RainCondSelect        nan nan nan nan 0 4000  nan nan
+PlotDselect: RainEvapSelect        nan nan nan nan 0 4000  nan nan
+
+PlotDselect: DrizCondSelect        nan nan nan nan 0 4000  nan nan
+PlotDselect: DrizEvapSelect        nan nan nan nan 0 4000  nan nan
+
+PlotDselect: LatHeatSelect        nan nan nan nan 0 4000  nan nan
+PlotDselect: LatCoolSelect        nan nan nan nan 0 4000  nan nan
+PlotDselect: LatHeatCoolSelect    nan nan nan nan 0 4000  nan nan
+
+PlotDselect: BuoyFluxSelect       nan nan nan nan 0 4000  nan nan
+
+PlotDselect: CfracProfSelect  nan nan nan nan 0 4000 nan nan
+
+PlotDselect: NetLwSelect       nan nan nan nan 0 3900  nan nan
+
+PlotDselect: ContourSelect_T12  -36.5 -35.4   14.4 15.4    50.0 50.0    43200  43200
+PlotDselect: ContourSelect_T24  -36.5 -35.4   14.4 15.4    50.0 50.0    86400  86400
+PlotDselect: ContourSelect_T36  -36.5 -35.4   14.4 15.4    50.0 50.0   129600 129600
+
+PlotDselect: CotHistSelect     0  300 nan nan nan nan nan nan
+PlotDselect: PrateHistSelect   0  100 nan nan nan nan nan nan
