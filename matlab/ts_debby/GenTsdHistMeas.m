@@ -62,11 +62,11 @@ function [ ] = GenTsdHistMeas(ConfigFile)
     {
       'Vertical Velocity'
       {
-        { 'hist_w' 'w' 'farea' 0.50 'avg_updraft'     'ge'  0.1   }
-        { 'hist_w' 'w' 'farea' 0.95 'max_updraft'     'ge'  0.1   }
+        { 'hist_up' 'w' 'farea' 0.50 'avg_updraft'     'ge'  0.01   }
+        { 'hist_w'  'w' 'farea' 0.95 'max_updraft'     'ge'  0.05   }
 
-        { 'hist_w' 'w' 'farea' 0.50 'avg_dndraft'     'le' -0.1   }
-        { 'hist_w' 'w' 'farea' 0.05 'max_dndraft'     'le' -0.1   }
+        { 'hist_dn' 'w' 'farea' 0.50 'avg_dndraft'     'le' -0.01   }
+        { 'hist_w'  'w' 'farea' 0.05 'max_dndraft'     'le' -0.05   }
       }
       'hist_meas_w'
     }
