@@ -21,6 +21,7 @@ function [ ] = GenEqMeasTseries(ConfigFile)
    'RCE50_SQ'
    'RCE50_2D'
    'RCE_MATT'
+   'RCE_BASE'
    };
   Nc = length(CaseList);
 
@@ -125,6 +126,17 @@ function [ ] = GenEqMeasTseries(ConfigFile)
     % Variables are either (t,z,y,x) or (t,y,x) where z is size 1
     THF  = zeros([ Nt 1 ]);
     QRAD = zeros([ Nt 1 ]);
+
+    AVG_SFC_LAT  = zeros([ Nt 1 ]);
+    AVG_SFC_SENS = zeros([ Nt 1 ]);
+
+    AVG_SFC_SWDN = zeros([ Nt 1 ]);
+    AVG_SFC_LWDN = zeros([ Nt 1 ]);
+    AVG_SFC_LWUP = zeros([ Nt 1 ]);
+    AVG_SFC_ALB  = zeros([ Nt 1 ]);
+    AVG_TOP_SWDN = zeros([ Nt 1 ]);
+    AVG_TOP_SWUP = zeros([ Nt 1 ]);
+    AVG_TOP_LWUP = zeros([ Nt 1 ]);
 
     for it = 1:Nt
       % Read in the variables -> after squeeze will be (y,x)

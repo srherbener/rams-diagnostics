@@ -129,11 +129,12 @@ Filter: all w:w cylvol:sea_press:sea_press:0.0:500.0:0.0:6.3:0.0:25000.0
 #ContourPlot: MATT          HvZonalKm HvSimTimeDays HvPrecipWater HvSelectHoriz PANEL:a@MATT           1 1 40 none default PrecipWaterHov
 #ContourPlot: RCE50_OLD_RI  HvZonalKm HvSimTimeDays HvPrecipWater HvSelectHoriz PANEL:a@SZA@50,@OLD@RI 1 1 40 none default PrecipWaterHov
 
-ContourPlot: RCE50_RECT       HvZonalKm HvSimTimeDays HvPrecipWater HvZonalKm 1 HvSimTime 1 HvPrecipWater 1 HvSelectHoriz PANEL:a@SZA@50       1 1 40 none default PrecipWaterHov
-ContourPlot: RCE50_RECT_S300  HvZonalKm HvSimTimeDays HvPrecipWater HvZonalKm 1 HvSimTime 1 HvPrecipWater 1 HvSelectHoriz PANEL:a@SZA@50,@S300 1 1 40 none default PrecipWaterHov
-ContourPlot: RCE50_RECT_S303  HvZonalKm HvSimTimeDays HvPrecipWater HvZonalKm 1 HvSimTime 1 HvPrecipWater 1 HvSelectHoriz PANEL:a@SZA@50,@S303 1 1 40 none default PrecipWaterHov
-ContourPlot: RCE50_SQ         HvZonalKm HvSimTimeDays HvPrecipWater HvZonalKm 1 HvSimTime 1 HvPrecipWater 1 HvSelectHoriz PANEL:a@SZA@50,@SQ   1 1 40 none default PrecipWaterHov
+#ContourPlot: RCE50_RECT       HvZonalKm HvSimTimeDays HvPrecipWater HvZonalKm 1 HvSimTime 1 HvPrecipWater 1 HvSelectHoriz PANEL:a@SZA@50       1 1 40 none default PrecipWaterHov
+#ContourPlot: RCE50_RECT_S300  HvZonalKm HvSimTimeDays HvPrecipWater HvZonalKm 1 HvSimTime 1 HvPrecipWater 1 HvSelectHoriz PANEL:a@SZA@50,@S300 1 1 40 none default PrecipWaterHov
+#ContourPlot: RCE50_RECT_S303  HvZonalKm HvSimTimeDays HvPrecipWater HvZonalKm 1 HvSimTime 1 HvPrecipWater 1 HvSelectHoriz PANEL:a@SZA@50,@S303 1 1 40 none default PrecipWaterHov
+#ContourPlot: RCE50_SQ         HvZonalKm HvSimTimeDays HvPrecipWater HvZonalKm 1 HvSimTime 1 HvPrecipWater 1 HvSelectHoriz PANEL:a@SZA@50,@SQ   1 1 40 none default PrecipWaterHov
 ContourPlot: RCE_MATT         HvZonalKm HvSimTimeDays HvPrecipWater HvZonalKm 1 HvSimTime 1 HvPrecipWater 1 HvSelectHoriz PANEL:a@MATT         1 1 40 none default PrecipWaterHov
+ContourPlot: RCE_BASE         HvZonalKm HvSimTimeDays HvPrecipWater HvZonalKm 1 HvSimTime 1 HvPrecipWater 1 HvSelectHoriz PANEL:a@BASE         1 1 40 none default PrecipWaterHov
 
 ####################### Line plots ############################
 # LinePlot: <plotset> <xspec> <yspec> <x_axis_spec> <show_x_axis> <y_axis_spec> <show_y_axis> <data_select_spec> <smoothing> <title> <legend_loc> <add_measurement> <out_file>
@@ -149,11 +150,12 @@ ContourPlot: RCE_MATT         HvZonalKm HvSimTimeDays HvPrecipWater HvZonalKm 1 
 #LinePlot: MATT         SimTimeDays PrecipWater SimTime 1 PrecipWater 1  SelectAllTseries none PANEL:a@MATT           none none AvgPrepipWaterTseries_MATT.jpg
 #LinePlot: RCE50_OLD_RI SimTimeDays PrecipWater SimTime 1 PrecipWater 1  SelectAllTseries none PANEL:a@SZA@50,@OLD@RI none none AvgPrepipWaterTseries_RCE50_OLD_RI.jpg
 
-LinePlot: RCE50_RECT      SimTimeDays PrecipWater SimTime 1 PrecipWater 1  SelectAllTseries none PANEL:a@SZA@50       none none AvgPrepipWaterTseries_RCE50_RECT.jpg
-LinePlot: RCE50_RECT_S300 SimTimeDays PrecipWater SimTime 1 PrecipWater 1  SelectAllTseries none PANEL:a@SZA@50,@S300 none none AvgPrepipWaterTseries_RCE50_RECT_S300.jpg
-LinePlot: RCE50_RECT_S303 SimTimeDays PrecipWater SimTime 1 PrecipWater 1  SelectAllTseries none PANEL:a@SZA@50,@S303 none none AvgPrepipWaterTseries_RCE50_RECT_S303.jpg
-LinePlot: RCE50_SQ        SimTimeDays PrecipWater SimTime 1 PrecipWater 1  SelectAllTseries none PANEL:a@SZA@50,@SQ   none none AvgPrepipWaterTseries_RCE50_SQ.jpg
+#LinePlot: RCE50_RECT      SimTimeDays PrecipWater SimTime 1 PrecipWater 1  SelectAllTseries none PANEL:a@SZA@50       none none AvgPrepipWaterTseries_RCE50_RECT.jpg
+#LinePlot: RCE50_RECT_S300 SimTimeDays PrecipWater SimTime 1 PrecipWater 1  SelectAllTseries none PANEL:a@SZA@50,@S300 none none AvgPrepipWaterTseries_RCE50_RECT_S300.jpg
+#LinePlot: RCE50_RECT_S303 SimTimeDays PrecipWater SimTime 1 PrecipWater 1  SelectAllTseries none PANEL:a@SZA@50,@S303 none none AvgPrepipWaterTseries_RCE50_RECT_S303.jpg
+#LinePlot: RCE50_SQ        SimTimeDays PrecipWater SimTime 1 PrecipWater 1  SelectAllTseries none PANEL:a@SZA@50,@SQ   none none AvgPrepipWaterTseries_RCE50_SQ.jpg
 LinePlot: RCE_MATT        SimTimeDays PrecipWater SimTime 1 PrecipWater 1  SelectAllTseries none PANEL:a@MATT         none none AvgPrepipWaterTseries_RCE_MATT.jpg
+LinePlot: RCE_BASE        SimTimeDays PrecipWater SimTime 1 PrecipWater 1  SelectAllTseries none PANEL:a@BASE         none none AvgPrepipWaterTseries_RCE_BASE.jpg
 
 ####################### Plot Sets ############################
 # PlotSet: <name> <number_of_cases> <case_spec> ...
@@ -169,6 +171,7 @@ PlotSet: RCE50_RECT_S300 1 RCE50_RECT_S300 SZA50_S300 black - 0.0 1 1
 PlotSet: RCE50_RECT_S303 1 RCE50_RECT_S303 SZA50_S303 black - 0.0 1 1 
 PlotSet: RCE50_SQ        1 RCE50_SQ        SZA50_SQ   black - 0.0 1 1 
 PlotSet: RCE_MATT        1 RCE_MATT        MATT       black - 0.0 1 1 
+PlotSet: RCE_BASE        1 RCE_BASE        BASE       black - 0.0 1 1 
 
 ####################### Plot Vars ################################
 # PlotVar: <name> <vname> <file_prefix> <label> <units> <scale> <offset>
@@ -197,7 +200,7 @@ PlotVar: HvSimTimeDays t_coords     DIAGS/hov_precip_water Sim@Time  d  1.157407
 PlotAxis: PrecipWater 0 120 linear [_]
 PlotAxis: SimTime     0  80 linear [_]
 
-PlotAxis: HvPrecipWater 50  100 linear [_]
+PlotAxis: HvPrecipWater 10   80 linear [_]
 PlotAxis: HvZonalKm      0 3000 linear [_]
 PlotAxis: HvSimTime      0   80 linear [_]
 

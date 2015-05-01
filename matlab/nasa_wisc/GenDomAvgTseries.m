@@ -22,7 +22,8 @@ function [ ] = GenDomAvgTseries(ConfigFile)
 %    { 'HDF5/RCE50_RECT_S300/vint_vapor-a-AS-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE50_RECT_S300' 'avg_precip_water' 'precip_water' }
 %    { 'HDF5/RCE50_RECT_S303/vint_vapor-a-AS-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE50_RECT_S303' 'avg_precip_water' 'precip_water' }
 %    { 'HDF5/RCE50_SQ/vint_vapor-a-AS-2012-01-01-000000-g1.h5'        'vertint_vapor' 'RCE50_SQ'        'avg_precip_water' 'precip_water' }
-    { 'HDF5/RCE_MATT/vint_vapor-a-AS-2012-01-01-000000-g1.h5'        'vertint_vapor' 'RCE_MATT'        'avg_precip_water' 'precip_water' }
+%    { 'HDF5/RCE_MATT/vint_vapor-a-AS-2012-01-01-000000-g1.h5'        'vertint_vapor' 'RCE_MATT'        'avg_precip_water' 'precip_water' }
+    { 'HDF5/RCE_BASE/vint_vapor-a-AS-2012-01-01-000000-g1.h5'        'vertint_vapor' 'RCE_BASE'        'avg_precip_water' 'precip_water' }
     };
   Nset = length(VarSets);
 

@@ -21,6 +21,7 @@ function [ ] = PlotEqMeas(ConfigFile)
       { 'RCE50_SQ'        'eq_meas' 'therm_heat_flux' 'rad_flux_div' 'SZA 50, SQ'   'EqMeas' }
       { 'RCE50_2D'        'eq_meas' 'therm_heat_flux' 'rad_flux_div' 'SZA 50, 2D'   'EqMeas' }
       { 'RCE_MATT'        'eq_meas' 'therm_heat_flux' 'rad_flux_div' 'MATT'         'EqMeas' }
+      { 'RCE_BASE'        'eq_meas' 'therm_heat_flux' 'rad_flux_div' 'BASE'         'EqMeas' }
     };
   Nset = length(PlotSets);
 
@@ -60,6 +61,7 @@ function [ ] = PlotEqMeas(ConfigFile)
 
     plot(T, PDATA, 'LineWidth', 1.5);
     set(gca, 'FontSize', Fsize);
+    xlim([ 0 80 ]);
     legend(LegendText);
     title(Ptitle);
     xlabel('Simulation Time (d)');
@@ -93,6 +95,7 @@ function [ ] = PlotEqMeas(ConfigFile)
 
     plot(T, PDATA, 'LineWidth', 1.5);
     set(gca, 'FontSize', Fsize);
+    xlim([ 0 80 ]);
     legend(LegendText);
     title(PtitleComp);
     xlabel('Simulation Time (d)');
@@ -119,6 +122,7 @@ function [ ] = PlotEqMeas(ConfigFile)
 
     plot(T, PDATA, 'LineWidth', 1.5);
     set(gca, 'FontSize', Fsize);
+    xlim([ 0 80 ]);
     legend(LegendText);
     title(PtitleComp);
     xlabel('Simulation Time (d)');
