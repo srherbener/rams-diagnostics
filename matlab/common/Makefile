@@ -6,6 +6,7 @@ DEST = $(HOME)/etc/matlab/common
 
 SCRIPTS = \
           $(DEST)/export_fig.m \
+          $(DEST)/MakeLinePlot.m \
           $(DEST)/WriteStringAttribute.m \
           $(DEST)/CreateDimensionsXyzt.m \
           $(DEST)/AttachDimensionsXyzt.m \
