@@ -1,0 +1,45 @@
+#
+# Instructions for building figures
+#
+
+FigPanel: EqMeasPanel
+  EqMeasPset
+  EqMeasAxes 1 1
+  0
+  PANEL:a
+  SouthEast
+End
+
+
+PlotSet: EqMeasPset 2
+  ThfLine  THF     blue   - 0 1 1 
+  QradLine Q_r_a_d orange - 0 1 1
+End
+
+PlotData: ThfLine
+  # x data - sim time in days
+  t_coords eq_meas_@CASE@.h5 TseriesAll 1 0
+  # y data - thermal heat flux in W/m^2
+  therm_heat_flux eq_meas_@CASE@.h5 TseriesAll 1 0
+End
+  
+PlotData: QradLine
+  # x data - sim time in days
+  t_coords eq_meas_@CASE@.h5 TseriesAll 1 0
+  # y data - radiative flux divergence in W/m^2
+  rad_flux_div eq_meas_@CASE@.h5 TseriesAll 1 0
+End
+
+PlotAxes: EqMeasAxes
+  # x axis - sim time in days
+  Simulation@Time d 0 80 linear [_]
+  # y axis - flux in W/m^2
+  Flux W@m^-^2 0 120 linear [_]
+End
+
+PlotDselect: TseriesAll
+  nan nan
+  nan nan
+  nan nan
+    0  80
+End

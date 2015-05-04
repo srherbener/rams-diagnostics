@@ -17,7 +17,8 @@ SCRIPTS = \
   $(DEST)/SetPath.m
 
 CONFIGS = \
-  $(DIAG_DIR)/DiagConfig 
+  $(DIAG_DIR)/DiagConfig \
+  $(DIAG_DIR)/FigureConfig
 
 #
 # Targets
@@ -31,5 +32,5 @@ $(DEST):
 $(DEST)/%.m: %.m
 	cp $(<) $(@)
 
-$(DIAG_DIR)/DiagConfig: DiagConfig
+$(DIAG_DIR)/%Config: %Config
 	cp $(<) $(@)
