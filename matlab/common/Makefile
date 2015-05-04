@@ -7,6 +7,12 @@ DEST = $(HOME)/etc/matlab/common
 SCRIPTS = \
           $(DEST)/export_fig.m \
           $(DEST)/MakeLinePlot.m \
+          $(DEST)/AssociateStructs.m \
+          $(DEST)/GenFigures.m \
+          $(DEST)/Line2Fields.m \
+          $(DEST)/ParseTitle.m \
+          $(DEST)/ReadFigureConfig.m \
+          $(DEST)/ReadPrepConfigFile.m \
           $(DEST)/WriteStringAttribute.m \
           $(DEST)/CreateDimensionsXyzt.m \
           $(DEST)/AttachDimensionsXyzt.m \

@@ -10,6 +10,8 @@ SCRIPTS = \
           $(DEST)/GenHistOpenSpace.m \
           $(DEST)/GenKeVtPlots.m \
           $(DEST)/GenRadarData.m \
+          $(DEST)/GenPrecipData.m \
+          $(DEST)/PlotPrecip.m \
           $(DEST)/MeasureStorms.m \
           $(DEST)/MakeDataAvgFig.m \
           $(DEST)/MakeFigureJpeg.m \
