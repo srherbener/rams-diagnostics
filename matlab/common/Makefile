@@ -54,6 +54,7 @@ SCRIPTS = \
           $(DEST)/ReadConfig.m \
           $(DEST)/ReadAzavgVar.m \
           $(DEST)/ReadSelectXyzt.m \
+          $(DEST)/ReadSelectHdf5.m \
           $(DEST)/ReduceHists.m \
           $(DEST)/ReduceHist1D.m \
           $(DEST)/RunAzavgDiffEof.m \
