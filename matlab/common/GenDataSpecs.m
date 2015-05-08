@@ -26,14 +26,14 @@ function [ DataSpecs LegText DSokay ] = GenDataSpecs(Config, Case, i_panel, i_ps
 
     % Read specs for X and Y data, substitute for case name in file names
     Xvar    = Config.PlotData(i_pdata).Xvar;
-    Xfile   = regexprep(Config.PlotData(i_pdata).Xfile, '@CASE@', Case);
+    Xfile   = regexprep(Config.PlotData(i_pdata).Xfile, '<CASE>', Case);
     Xselect = Config.PlotData(i_pdata).Xselect;
     Xscale  = Config.PlotData(i_pdata).Xscale;
     Xoffset = Config.PlotData(i_pdata).Xoffset;
     Xzoom   = Config.PlotSets(i_pset).Lines(i_line).Xzoom;
 
     Yvar    = Config.PlotData(i_pdata).Yvar;
-    Yfile   = regexprep(Config.PlotData(i_pdata).Yfile, '@CASE@', Case);
+    Yfile   = regexprep(Config.PlotData(i_pdata).Yfile, '<CASE>', Case);
     Yselect = Config.PlotData(i_pdata).Yselect;
     Yscale  = Config.PlotData(i_pdata).Yscale;
     Yoffset = Config.PlotData(i_pdata).Yoffset;

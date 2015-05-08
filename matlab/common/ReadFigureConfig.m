@@ -6,10 +6,12 @@ function [ Cdata ] = ReadFigureConfig ( Cfile )
 
   % Read through the statements and build the output structure containing
   % the description of figures to create.
-  i_pset = 0;
-  i_pdat = 0;
+  i_fig   = 0;
+  i_cset  = 0;
+  i_pset  = 0;
+  i_pdat  = 0;
   i_paxes = 0;
-  i_fpan = 0;
+  i_fpan  = 0;
 
   % Provide nan as a defalut for the undefined value
   Cdata.UndefVal = nan;
@@ -21,6 +23,16 @@ function [ Cdata ] = ReadFigureConfig ( Cfile )
 
       case 'UndefVal:'
         Cdata.UndefVal = sscanf(Fields{2}, '%f');
+
+      case 'CaseSet:'
+        i_cset = i_cset + 1;
+        Cdata.CaseSets(i_cset).Name   = Fields{2};
+        Cdata.CaseSets(i_cset).Ncases = sscanf(Fields{3}, '%d');;
+        j = 4; % next field
+        for icl = 1:Cdata.CaseSets(i_cset).Ncases
+          Cdata.CaseSets(i_cset).Cases(icl).Cname  = Fields{j};
+          j = j + 1;
+        end
         
       case 'PlotSet:'
         i_pset = i_pset + 1;
@@ -91,6 +103,22 @@ function [ Cdata ] = ReadFigureConfig ( Cfile )
         Cdata.FigPanels(i_fpan).Title    = ParseTitle(Fields{9});
         Cdata.FigPanels(i_fpan).LegLoc   = Fields{10};
         Cdata.FigPanels(i_fpan).LegFsize = sscanf(Fields{11}, '%d');
+
+      case 'Figure:'
+        i_fig = i_fig + 1;
+        Cdata.Figures(i_fig).Name    = Fields{2};
+        Cdata.Figures(i_fig).Npanels = sscanf(Fields{3}, '%d');
+        Cdata.Figures(i_fig).CSname  = Fields{4};
+        Cdata.Figures(i_fig).CSnum   = -1;
+        Cdata.Figures(i_fig).Psize   = eval(regexprep(Fields{5}, '_', ' '));
+        Cdata.Figures(i_fig).OutFile = Fields{6};
+        j = 7; % next field
+        for ifp = 1:Cdata.Figures(i_fig).Npanels
+          Cdata.Figures(i_fig).Panels(ifp).FPname = Fields{j};
+          Cdata.Figures(i_fig).Panels(ifp).FPnum  = -1;
+          Cdata.Figures(i_fig).Panels(ifp).Ploc   = sscanf(Fields{j+1}, '%d');;
+          j = j + 2;
+        end
     end
   end
 
@@ -106,4 +134,13 @@ function [ Cdata ] = ReadFigureConfig ( Cfile )
     Cdata.FigPanels = AssociateStructs( Cdata.FigPanels, Cdata.PlotSets,     'PS', 'PlotSet',     'LinePlot' ); 
     Cdata.FigPanels = AssociateStructs( Cdata.FigPanels, Cdata.PlotAxes,     'PA', 'PlotAxes',    'LinePlot' ); 
   end
+
+  % Make the association between Figures and CaseLists, FigPanels
+  if (isfield(Cdata, 'Figures'))
+    Cdata.Figures = AssociateStructs( Cdata.Figures, Cdata.CaseSets, 'CS', 'Figures', 'CaseSets' ); 
+    for i_fig = 1:length(Cdata.Figures)
+      Cdata.Figures(i_fig).Panels = AssociateStructs( Cdata.Figures(i_fig).Panels, Cdata.FigPanels, 'FP', 'Figures', 'FigPanels' );
+    end
+  end
+
 end

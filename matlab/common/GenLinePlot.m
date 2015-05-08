@@ -1,8 +1,8 @@
-function [ ] = GenLinePlot( Fig, AxisSpecs, DataSpecs, LegendSpecs )
+function [ ] = GenLinePlot( Axes, AxesSpecs, DataSpecs, LegendSpecs )
 %GenLinePlot Plot a set of lines the same panel
 %   Fig - handle to a figure that was opened by the caller
 %
-%   AxisProps - structure containing a list of axis property names and
+%   AxesProps - structure containing a list of axis property names and
 %               associated values that are desired to be set
 %
 %   DataSpecs - structure containing lists of X and Y values describing
@@ -12,20 +12,17 @@ function [ ] = GenLinePlot( Fig, AxisSpecs, DataSpecs, LegendSpecs )
 %
 
   % select the passed in figure
-  figure(Fig);
+  axes(Axes);
 
-  % Create the axes and apply all the passed in properties
-  Axes = axes;
-
-  AxisProps = AxisSpecs.Props;
-  Nprops = length(AxisProps);
+  AxesProps = AxesSpecs.Props;
+  Nprops = length(AxesProps);
   for i = 1:Nprops
-    set(Axes, AxisProps(i).Name, AxisProps(i).Val);
+    set(Axes, AxesProps(i).Name, AxesProps(i).Val);
   end
 
-  title(AxisSpecs.Title);
-  xlabel(AxisSpecs.Xlabel);
-  ylabel(AxisSpecs.Ylabel);
+  title(AxesSpecs.Title);
+  xlabel(AxesSpecs.Xlabel);
+  ylabel(AxesSpecs.Ylabel);
 
   % Draw the lines
   Nlines = length(DataSpecs);
