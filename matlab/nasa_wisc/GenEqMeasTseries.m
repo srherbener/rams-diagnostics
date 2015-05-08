@@ -133,10 +133,12 @@ function [ ] = GenEqMeasTseries(ConfigFile)
     AVG_SFC_SWDN = zeros([ Nt 1 ]);
     AVG_SFC_LWDN = zeros([ Nt 1 ]);
     AVG_SFC_LWUP = zeros([ Nt 1 ]);
-    AVG_SFC_ALB  = zeros([ Nt 1 ]);
+    AVG_SFC_SWUP = zeros([ Nt 1 ]);
     AVG_TOP_SWDN = zeros([ Nt 1 ]);
     AVG_TOP_SWUP = zeros([ Nt 1 ]);
     AVG_TOP_LWUP = zeros([ Nt 1 ]);
+
+    AVG_SFC_ALB  = zeros([ Nt 1 ]);
 
     for it = 1:Nt
       % Read in the variables -> after squeeze will be (y,x)
@@ -151,6 +153,9 @@ function [ ] = GenEqMeasTseries(ConfigFile)
       TOP_SWUP = squeeze(TOP_SWUP_VAR.data(it,:,:,:));
       TOP_LWUP = squeeze(TOP_LWUP_VAR.data(it,:,:,:));
 
+      % SFC_SWUP = SFC_SWDN * SFC_ALB
+      SFC_SWUP = SFC_SWDN .* SFC_ALB;
+
       % Form the THF and QRAD numbers
       %  THF is the sum of the surface lat heat flux and sensible heat flux
       %
@@ -161,9 +166,6 @@ function [ ] = GenEqMeasTseries(ConfigFile)
       %      (Net upward flux at TOA) = (TOP_SWUP + TOP_LWUP) - (TOP_SWDN)
       %      (Net upward flux at surface) = (SFC_SWUP + SFC_LWUP) - (SFC_SWDN + SFC_LWDN)
       %
-      %    where:
-      %      SFC_SWUP = SFC_SWDN * SFC_ALB
-      %
       % Calculate THF, QRAD per column and then take average
       %
       % Save out the averages of all the component quantities, too.
@@ -171,7 +173,7 @@ function [ ] = GenEqMeasTseries(ConfigFile)
       TempVar = SFC_LAT + SFC_SENS;
       THF(it) = mean(TempVar(:));
 
-      TempVar = ((TOP_SWUP + TOP_LWUP) - (TOP_SWDN)) - (((SFC_SWDN.*SFC_ALB) + SFC_LWUP) - (SFC_SWDN + SFC_LWDN));
+      TempVar = ((TOP_SWUP + TOP_LWUP) - (TOP_SWDN)) - ((SFC_SWUP + SFC_LWUP) - (SFC_SWDN + SFC_LWDN));
       QRAD(it) = mean(TempVar(:));
 
       AVG_SFC_LAT(it) = mean(SFC_LAT(:));
@@ -180,10 +182,12 @@ function [ ] = GenEqMeasTseries(ConfigFile)
       AVG_SFC_SWDN(it) = mean(SFC_SWDN(:));
       AVG_SFC_LWDN(it) = mean(SFC_LWDN(:));
       AVG_SFC_LWUP(it) = mean(SFC_LWUP(:));
-      AVG_SFC_ALB(it)  = mean(SFC_ALB(:));
+      AVG_SFC_SWUP(it) = mean(SFC_SWUP(:));
       AVG_TOP_SWDN(it) = mean(TOP_SWDN(:));
       AVG_TOP_SWUP(it) = mean(TOP_SWUP(:));
       AVG_TOP_LWUP(it) = mean(TOP_LWUP(:));
+
+      AVG_SFC_ALB(it)  = mean(SFC_ALB(:));
 
       if (mod(it,50) == 0)
         fprintf ('  Completed timestep %d out of %d\n', it, Nt);
@@ -203,10 +207,12 @@ function [ ] = GenEqMeasTseries(ConfigFile)
     hdf5write(OutFile, '/avg_sfc_swdn', AVG_SFC_SWDN, 'WriteMode', 'append'); 
     hdf5write(OutFile, '/avg_sfc_lwdn', AVG_SFC_LWDN, 'WriteMode', 'append'); 
     hdf5write(OutFile, '/avg_sfc_lwup', AVG_SFC_LWUP, 'WriteMode', 'append'); 
-    hdf5write(OutFile, '/avg_sfc_alb',  AVG_SFC_ALB,  'WriteMode', 'append'); 
+    hdf5write(OutFile, '/avg_sfc_swup', AVG_SFC_SWUP, 'WriteMode', 'append'); 
     hdf5write(OutFile, '/avg_top_swdn', AVG_TOP_SWDN, 'WriteMode', 'append'); 
     hdf5write(OutFile, '/avg_top_swup', AVG_TOP_SWUP, 'WriteMode', 'append'); 
     hdf5write(OutFile, '/avg_top_lwup', AVG_TOP_LWUP, 'WriteMode', 'append'); 
+
+    hdf5write(OutFile, '/avg_sfc_alb',  AVG_SFC_ALB,  'WriteMode', 'append'); 
 
     hdf5write(OutFile, '/t_coords', T,      'WriteMode', 'append');
   end

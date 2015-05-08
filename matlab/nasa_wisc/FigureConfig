@@ -2,33 +2,70 @@
 # Instructions for building figures
 #
 
+######### FIGURES ###################
 Figure: FigRadMeas 3
   TestCases
-  [2_2]
+  [3_1]
   Plots/FigRadMeas_<CASE>.jpg
-  EqMeasPanel 1
-  EqMeasPanel 2
-  EqMeasPanel 3
+  EqMeasPanel   1
+  ThfCompPanel  2
+  QradCompPanel 3
 End 
 
+########### CASES ####################
 CaseSet: TestCases 2
   RCE_BASE
   RCE_MATT
 End
 
+########### PANELS ####################
 FigPanel: EqMeasPanel
   EqMeasPset
-  EqMeasAxes 1 1
+  EqMeasAxes 0 1
   none 5
   PANEL:a
-  SouthEast 20
+  SouthEast 12
 End
 
+FigPanel: ThfCompPanel
+  ThfCompPset
+  ThfCompAxes 0 1
+  none 5
+  PANEL:b
+  NorthEast 12
+End
+
+FigPanel: QradCompPanel
+  QradCompPset
+  QradCompAxes 1 1
+  none 5
+  PANEL:c
+  NorthEast 12
+End
+
+############ PLOT SETS #################
 PlotSet: EqMeasPset 2
   ThfLine  THF     2 blue   - 0 1 1 
-  QradLine Q_r_a_d 2 orange - 0 1 1
+  QradLine Q_r_a_d 2 red    - 0 1 1
 End
 
+PlotSet: ThfCompPset 2
+  SfcLatLine  SFC\_LAT  2 blue   - 0 1 1 
+  SfcSensLine SFC\_SENS 2 red    - 0 1 1
+End
+
+PlotSet: QradCompPset 7
+  SfcLwdnLine SFC\_LWDN 2 blue    - 0 1 1 
+  SfcLwupLine SFC\_LWUP 2 green   - 0 1 1
+  SfcSwdnLine SFC\_SWDN 2 red     - 0 1 1 
+  SfcSwupLine SFC\_SWUP 2 orange  - 0 1 1
+
+  TopLwupLine TOP\_LWUP 2 green   -- 0 1 1
+  TopSwdnLine TOP\_SWDN 2 red     -- 0 1 1 
+  TopSwupLine TOP\_SWUP 2 orange  -- 0 1 1
+End
+
+############ PLOT DATA #################
 PlotData: ThfLine
   # x data - sim time in days
   /t_coords        DIAGS/eq_meas_<CASE>.h5 @ 1 0
@@ -43,9 +80,87 @@ PlotData: QradLine
   /rad_flux_div DIAGS/eq_meas_<CASE>.h5 @ 1 0
 End
 
-PlotAxes: EqMeasAxes 25 2 [0.025_0.025]
+PlotData: SfcLatLine
+  # x data - sim time in days
+  /t_coords     DIAGS/eq_meas_<CASE>.h5 @ 1 0
+  # y data - radiative flux divergence in W/m^2
+  /avg_sfc_lat  DIAGS/eq_meas_<CASE>.h5 @ 1 0
+End
+
+PlotData: SfcSensLine
+  # x data - sim time in days
+  /t_coords     DIAGS/eq_meas_<CASE>.h5 @ 1 0
+  # y data - radiative flux divergence in W/m^2
+  /avg_sfc_sens DIAGS/eq_meas_<CASE>.h5 @ 1 0
+End
+
+PlotData: SfcLwdnLine
+  # x data - sim time in days
+  /t_coords     DIAGS/eq_meas_<CASE>.h5 @ 1 0
+  # y data - radiative flux divergence in W/m^2
+  /avg_sfc_lwdn DIAGS/eq_meas_<CASE>.h5 @ 1 0
+End
+
+PlotData: SfcLwupLine
+  # x data - sim time in days
+  /t_coords     DIAGS/eq_meas_<CASE>.h5 @ 1 0
+  # y data - radiative flux divergence in W/m^2
+  /avg_sfc_lwup DIAGS/eq_meas_<CASE>.h5 @ 1 0
+End
+
+PlotData: SfcSwdnLine
+  # x data - sim time in days
+  /t_coords     DIAGS/eq_meas_<CASE>.h5 @ 1 0
+  # y data - radiative flux divergence in W/m^2
+  /avg_sfc_swdn DIAGS/eq_meas_<CASE>.h5 @ 1 0
+End
+
+PlotData: SfcSwupLine
+  # x data - sim time in days
+  /t_coords     DIAGS/eq_meas_<CASE>.h5 @ 1 0
+  # y data - radiative flux divergence in W/m^2
+  /avg_sfc_swup DIAGS/eq_meas_<CASE>.h5 @ 1 0
+End
+
+PlotData: TopLwupLine
+  # x data - sim time in days
+  /t_coords     DIAGS/eq_meas_<CASE>.h5 @ 1 0
+  # y data - radiative flux divergence in W/m^2
+  /avg_top_lwup DIAGS/eq_meas_<CASE>.h5 @ 1 0
+End
+
+PlotData: TopSwdnLine
+  # x data - sim time in days
+  /t_coords     DIAGS/eq_meas_<CASE>.h5 @ 1 0
+  # y data - radiative flux divergence in W/m^2
+  /avg_top_swdn DIAGS/eq_meas_<CASE>.h5 @ 1 0
+End
+
+PlotData: TopSwupLine
+  # x data - sim time in days
+  /t_coords     DIAGS/eq_meas_<CASE>.h5 @ 1 0
+  # y data - radiative flux divergence in W/m^2
+  /avg_top_swup DIAGS/eq_meas_<CASE>.h5 @ 1 0
+End
+
+############ PLOT AXES #################
+PlotAxes: EqMeasAxes 18 2 [0.025_0.025]
   # x axis - sim time in days
   Simulation@Time d 0 80 linear [_]
   # y axis - flux in W/m^2
   Flux W@m^-^2 0 120 linear [_]
+End
+
+PlotAxes: ThfCompAxes 18 2 [0.025_0.025]
+  # x axis - sim time in days
+  Simulation@Time d 0 80 linear [_]
+  # y axis - flux in W/m^2
+  Flux W@m^-^2 0 120 linear [_]
+End
+
+PlotAxes: QradCompAxes 18 2 [0.025_0.025]
+  # x axis - sim time in days
+  Simulation@Time d 0 80 linear [_]
+  # y axis - flux in W/m^2
+  Flux W@m^-^2 0 500 linear [_]
 End
