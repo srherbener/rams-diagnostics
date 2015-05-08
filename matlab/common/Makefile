@@ -9,6 +9,8 @@ SCRIPTS = \
           $(DEST)/MakeLinePlot.m \
           $(DEST)/AssociateStructs.m \
           $(DEST)/GenFigures.m \
+          $(DEST)/GenAxesSpecs.m \
+          $(DEST)/GenDataSpecs.m \
           $(DEST)/Line2Fields.m \
           $(DEST)/ParseTitle.m \
           $(DEST)/ReadFigureConfig.m \

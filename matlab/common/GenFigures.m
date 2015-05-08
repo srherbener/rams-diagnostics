@@ -1,4 +1,4 @@
-function [ ] = GenFigures(ConfigFile)
+function [ Config AxesSpecs ] = GenFigures(ConfigFile)
 % GenFigures function to generate figures
 
   [ Config ] = ReadFigureConfig(ConfigFile);
@@ -6,45 +6,36 @@ function [ ] = GenFigures(ConfigFile)
 
   fprintf('Generating Figures: %s\n', ConfigFile);
 
-  for ipanel = 1:length(Config.FigPanels)
+  for i_panel = 1:length(Config.FigPanels)
+    % clear out plot structs
+    clear LegendSpecs;
+
+    Pname  = Config.FigPanels(i_panel).Name;
+    Smooth = Config.FigPanels(i_panel).Smooth;
+
     fprintf('  Panel: %s\n', Pname);
 
-    % clear out plot structs, reset axes property counter to 0
-    clear DataSpecs;
-    clear AxesSpecs;
-    clear LegendSpecs;
-    i_ap = 1;
-
-    Pname  = Config.FigPanels(ipanel).Name;
-    XAshow = Config.FigPanels(ipanel).XAshow;
-    YAshow = Config.FigPanels(ipanel).YAshow;
-    Smooth = Config.FigPanels(ipanel).Smooth;
-
-    AxesSpecs.Title   = Config.FigPanels(ipanel).Title.Main;
-    AxesSpecs.Pmarker = Config.FigPanels(ipanel).Title.Pmarkers;
-
-    LegSpecs.Loc   = Config.FigPanels(ipanel).LegLoc;
-    LegSpecs.Fsize = Config.FigPanels(ipanel).LegFsize;
-
     % Check that plot data sets and axes got associated
-    ips = Config.FigPanels(ipanel).PSnum;
-    ipa = Config.FigPanels(ipanel).PAnum;
-    if (ips == 0)
-      fprintf('WARNING: skipping FigPanel number %d due to no associated PlotSet\n', ipanel)
-      continue;
-    end
+    ipa = Config.FigPanels(i_panel).PAnum;
+    ips = Config.FigPanels(i_panel).PSnum;
     if (ipa == 0)
-      fprintf('WARNING: skipping FigPanel number %d due to no associated PlotAxes\n', ipanel)
+      fprintf('WARNING: skipping FigPanel number %d due to no associated PlotAxes\n', i_panel)
+      continue;
+    end
+    if (ips == 0)
+      fprintf('WARNING: skipping FigPanel number %d due to no associated PlotSet\n', i_panel)
       continue;
     end
 
-    % Fill in the DataSpecs and AxesSpecs structures
+    % Fill in the AxesSpecs structure
+    [ AxesSpecs ] = GenAxesSpecs(Config, i_panel, ipa);
 
-    % plot font size
-    i_ap = i_ap + 1;
-    AxesSpecs.Props(i_ap).Name = 'FontSize';
-    AxesSpecs.Props(i_ap).Val  = Config.PlotAxes(ipa).Fsize;
+    % Fill in the DataSpecs structure
+    [ DataSpecs ] = GenDataSpecs(Config, i_panel, ips);
 
+    % Legend specs
+    LegSpecs.Loc   = Config.FigPanels(i_panel).LegLoc;
+    LegSpecs.Fsize = Config.FigPanels(i_panel).LegFsize;
 
 
   end
@@ -56,87 +47,7 @@ function [ ] = GenFigures(ConfigFile)
 %%%  % make the plots
 %%%  for iplot = 1:length(Config.LinePlots)
 %%%  
-%%%      % X variable, axis specs
-%%%      Xvname   = Config.PlotVars(ipd).Var;
-%%%      if (XAshow > 0)
-%%%        % show x-axis
-%%%        if (strcmp(Config.PlotVars(ipd).Units, ' '))
-%%%          AxesSpecs.Xlabel   = sprintf('%s', Config.PlotVars(ipd).Label);
-%%%        else
-%%%          AxesSpecs.Xlabel   = sprintf('%s (%s)', Config.PlotVars(ipd).Label, Config.PlotVars(ipd).Units);
-%%%        end
-%%%      else
-%%%        % "hide" x-axis: no label, erase tick labels, keep tick marks
-%%%        AxesSpecs.Xlabel = '';
-%%%        AxesSpecs.Props(i_ap).Name = 'XTickLabel';
-%%%        AxesSpecs.Props(i_ap).Val  = {};
-%%%        i_ap = i_ap + 1;
-%%%      end
-%%%      Xfprefix = Config.PlotVars(ipd).Fprefix;
-%%%      Xscale   = Config.PlotVars(ipd).Scale;
-%%%      Xoffset  = Config.PlotVars(ipd).Offset;
-%%%      Xamin    = Config.PlotAxes(ixa).Min;
-%%%      Xamax    = Config.PlotAxes(ixa).Max;
-%%%      Xticks   = Config.PlotAxes(ixa).Ticks;
-%%%      if (Xamin > Xamax)
-%%%        AxesSpecs.Props(i_ap).Name = 'Xlim';
-%%%        AxesSpecs.Props(i_ap).Val = [ Xamax Xamin ]; 
-%%%        i_ap = i_ap + 1;
 %%%  
-%%%        AxesSpecs.Props(i_ap).Name = 'XDir';
-%%%        AxesSpecs.Props(i_ap).Val = 'Reverse';
-%%%        i_ap = i_ap + 1;
-%%%      else
-%%%        AxesSpecs.Props(i_ap).Name = 'Xlim';
-%%%        AxesSpecs.Props(i_ap).Val = [ Xamin Xamax ]; 
-%%%        i_ap = i_ap + 1;
-%%%      end
-%%%      % axis scale
-%%%      AxesSpecs.Props(i_ap).Name = 'Xscale';
-%%%      AxesSpecs.Props(i_ap).Val  = Config.PlotAxes(ixa).Scale;
-%%%      i_ap = i_ap + 1;
-%%%      % axis tick marks
-%%%      if (~isempty(Xticks))
-%%%        AxesSpecs.Props(i_ap).Name = 'XTick';
-%%%        AxesSpecs.Props(i_ap).Val  = Xticks;
-%%%        i_ap = i_ap + 1;
-%%%      end
-%%%  
-%%%      % Y variable, axis specs
-%%%      Yvname   = Config.PlotVars(ipa).Var;
-%%%      if (YAshow > 0)
-%%%        % show y-axis
-%%%        if (strcmp(Config.PlotVars(ipa).Units, ' '))
-%%%          Ylabel   = sprintf('%s', Config.PlotVars(ipa).Label);
-%%%        else
-%%%          Ylabel   = sprintf('%s (%s)', Config.PlotVars(ipa).Label, Config.PlotVars(ipa).Units);
-%%%        end
-%%%      else
-%%%        % "hide" y-axis: no label, erase tick labels, keep tick marks
-%%%        Ylabel = '';
-%%%        AxesSpecs.Props(i_ap).Name = 'YTickLabel';
-%%%        AxesSpecs.Props(i_ap).Val  = {};
-%%%        i_ap = i_ap + 1;
-%%%      end
-%%%      Yfprefix = Config.PlotVars(ipa).Fprefix;
-%%%      Yscale   = Config.PlotVars(ipa).Scale;
-%%%      Yoffset  = Config.PlotVars(ipa).Offset;
-%%%      Yamin    = Config.PlotAxes(iya).Min;
-%%%      Yamax    = Config.PlotAxes(iya).Max;
-%%%      Yticks   = Config.PlotAxes(iya).Ticks;
-%%%      if (Yamin > Yamax)
-%%%        AxesSpecs.Props(i_ap).Name = 'Ylim';
-%%%        AxesSpecs.Props(i_ap).Val = [ Yamax Yamin ]; 
-%%%        i_ap = i_ap + 1;
-%%%  
-%%%        AxesSpecs.Props(i_ap).Name = 'YDir';
-%%%        AxesSpecs.Props(i_ap).Val = 'Reverse';
-%%%        i_ap = i_ap + 1;
-%%%      else
-%%%        AxesSpecs.Props(i_ap).Name = 'Ylim';
-%%%        AxesSpecs.Props(i_ap).Val = [ Yamin Yamax ]; 
-%%%        i_ap = i_ap + 1;
-%%%      end
 %%%      % axis scale
 %%%      AxesSpecs.Props(i_ap).Name = 'Yscale';
 %%%      AxesSpecs.Props(i_ap).Val  = Config.PlotAxes(iya).Scale;
