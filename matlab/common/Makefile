@@ -6,11 +6,11 @@ DEST = $(HOME)/etc/matlab/common
 
 SCRIPTS = \
           $(DEST)/export_fig.m \
-          $(DEST)/MakeLinePlot.m \
-          $(DEST)/AssociateStructs.m \
           $(DEST)/GenFigures.m \
           $(DEST)/GenAxesSpecs.m \
           $(DEST)/GenDataSpecs.m \
+          $(DEST)/GenLinePlot.m \
+          $(DEST)/AssociateStructs.m \
           $(DEST)/Line2Fields.m \
           $(DEST)/ParseTitle.m \
           $(DEST)/ReadFigureConfig.m \

@@ -46,13 +46,13 @@ function [ Cdata ] = ReadFigureConfig ( Cfile )
         % X data
         Cdata.PlotData(i_pdat).Xvar    = Fields{3};
         Cdata.PlotData(i_pdat).Xfile   = Fields{4};
-        Cdata.PlotData(i_pdat).XSelect = regexprep(Fields{5}, '@', ' ');;
+        Cdata.PlotData(i_pdat).Xselect = regexprep(Fields{5}, '@', ' ');;
         Cdata.PlotData(i_pdat).Xscale  = sscanf(Fields{6}, '%f');
         Cdata.PlotData(i_pdat).Xoffset = sscanf(Fields{7}, '%f');
         % Y data
         Cdata.PlotData(i_pdat).Yvar    = Fields{8};
         Cdata.PlotData(i_pdat).Yfile   = Fields{9};
-        Cdata.PlotData(i_pdat).YSelect = regexprep(Fields{10}, '@', ' ');;
+        Cdata.PlotData(i_pdat).Yselect = regexprep(Fields{10}, '@', ' ');;
         Cdata.PlotData(i_pdat).Yscale  = sscanf(Fields{11},  '%f');
         Cdata.PlotData(i_pdat).Yoffset = sscanf(Fields{12}, '%f');
         
@@ -87,9 +87,10 @@ function [ Cdata ] = ReadFigureConfig ( Cfile )
         Cdata.FigPanels(i_fpan).XAshow   = sscanf(Fields{5}, '%d');
         Cdata.FigPanels(i_fpan).YAshow   = sscanf(Fields{6}, '%d');
         Cdata.FigPanels(i_fpan).Smooth   = Fields{7};
-        Cdata.FigPanels(i_fpan).Title    = ParseTitle(Fields{8});
-        Cdata.FigPanels(i_fpan).LegLoc   = Fields{9};
-        Cdata.FigPanels(i_fpan).LegFsize = sscanf(Fields{10}, '%d');
+        Cdata.FigPanels(i_fpan).Flength  = sscanf(Fields{8}, '%d');
+        Cdata.FigPanels(i_fpan).Title    = ParseTitle(Fields{9});
+        Cdata.FigPanels(i_fpan).LegLoc   = Fields{10};
+        Cdata.FigPanels(i_fpan).LegFsize = sscanf(Fields{11}, '%d');
     end
   end
 

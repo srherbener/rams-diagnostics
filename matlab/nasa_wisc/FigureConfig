@@ -5,7 +5,7 @@
 FigPanel: EqMeasPanel
   EqMeasPset
   EqMeasAxes 1 1
-  0
+  none 5
   PANEL:a@Hi
   SouthEast 20
 End
@@ -18,16 +18,16 @@ End
 
 PlotData: ThfLine
   # x data - sim time in days
-  t_coords        DIAGS/eq_meas_@CASE@.h5 @ 1 0
+  /t_coords        DIAGS/eq_meas_@CASE@.h5 @ 1 0
   # y data - thermal heat flux in W/m^2
-  therm_heat_flux DIAGS/eq_meas_@CASE@.h5 @ 1 0
+  /therm_heat_flux DIAGS/eq_meas_@CASE@.h5 @ 1 0
 End
   
 PlotData: QradLine
   # x data - sim time in days
-  t_coords     DIAGS/eq_meas_@CASE@.h5 @ 1 0
+  /t_coords     DIAGS/eq_meas_@CASE@.h5 @ 1 0
   # y data - radiative flux divergence in W/m^2
-  rad_flux_div DIAGS/eq_meas_@CASE@.h5 @ 1 0
+  /rad_flux_div DIAGS/eq_meas_@CASE@.h5 @ 1 0
 End
 
 PlotAxes: EqMeasAxes 25 2 [0.025_0.025]

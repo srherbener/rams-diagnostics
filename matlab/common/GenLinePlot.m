@@ -1,12 +1,14 @@
-function [ ] = MakeLinePlot( Fig, AxisSpecs, DataSpecs )
-%MakeLinePlot Plot a set of lines the same panel
+function [ ] = GenLinePlot( Fig, AxisSpecs, DataSpecs, LegendSpecs )
+%GenLinePlot Plot a set of lines the same panel
 %   Fig - handle to a figure that was opened by the caller
 %
 %   AxisProps - structure containing a list of axis property names and
 %               associated values that are desired to be set
 %
-%   DataSpecs - structure containgin lists of X and Y values describing
+%   DataSpecs - structure containing lists of X and Y values describing
 %               lines that are to be drawn on the plot
+%
+%   LegendSpecs - struction containing instructions for making a legend 
 %
 
   % select the passed in figure
@@ -26,15 +28,20 @@ function [ ] = MakeLinePlot( Fig, AxisSpecs, DataSpecs )
   ylabel(AxisSpecs.Ylabel);
 
   % Draw the lines
-  Nlines = length(DataSpecs.X);
+  Nlines = length(DataSpecs);
   for i = 1:Nlines
-    X = DataSpecs.X{i};
-    Y = DataSpecs.Y{i};
-    Lcolor = str2rgb(DataSpecs.Lcolor{i});
-    Lwidth = DataSpecs.Lwidth{i};
-    Lstyle = DataSpecs.Lstyle{i};
+    X = DataSpecs(i).Xdata;
+    Y = DataSpecs(i).Ydata;
+    Lcolor = str2rgb(DataSpecs(i).Lcolor);
+    Lwidth = DataSpecs(i).Lwidth;
+    Lstyle = DataSpecs(i).Lstyle;
 
     line(X, Y, 'LineStyle', Lstyle, 'LineWidth', Lwidth, 'Color', Lcolor);
+  end
+
+  % Place the legend
+  if (~strcmp(LegendSpecs.Loc, 'none'))
+    legend(LegendSpecs.Text, 'Location', LegendSpecs.Loc, 'FontSize', LegendSpecs.Fsize);
   end
 
 end
