@@ -20,7 +20,7 @@ function [ ] = GenEqMeasTseries(ConfigFile)
 %   'RCE50_RECT_S303'
 %   'RCE50_SQ'
 %   'RCE50_2D'
-%   'RCE_MATT'
+   'RCE_MATT'
    'RCE_BASE'
    };
   Nc = length(CaseList);
@@ -142,16 +142,18 @@ function [ ] = GenEqMeasTseries(ConfigFile)
 
     for it = 1:Nt
       % Read in the variables -> after squeeze will be (y,x)
-      SFC_LAT  = squeeze(SFC_LAT_VAR.data(it,:,:));
-      SFC_SENS = squeeze(SFC_SENS_VAR.data(it,:,:));
+      % Throw away the lateral boundaries since these are sometimes
+      % set to zero
+      SFC_LAT  = squeeze(SFC_LAT_VAR.data(it,2:end-1,2:end-1));
+      SFC_SENS = squeeze(SFC_SENS_VAR.data(it,2:end-1,2:end-1));
 
-      SFC_SWDN = squeeze(SFC_SWDN_VAR.data(it,:,:));
-      SFC_LWDN = squeeze(SFC_LWDN_VAR.data(it,:,:));
-      SFC_LWUP = squeeze(SFC_LWUP_VAR.data(it,:,:));
-      SFC_ALB  = squeeze(SFC_ALB_VAR.data(it,:,:));
-      TOP_SWDN = squeeze(TOP_SWDN_VAR.data(it,:,:,:));
-      TOP_SWUP = squeeze(TOP_SWUP_VAR.data(it,:,:,:));
-      TOP_LWUP = squeeze(TOP_LWUP_VAR.data(it,:,:,:));
+      SFC_SWDN = squeeze(SFC_SWDN_VAR.data(it,2:end-1,2:end-1));
+      SFC_LWDN = squeeze(SFC_LWDN_VAR.data(it,2:end-1,2:end-1));
+      SFC_LWUP = squeeze(SFC_LWUP_VAR.data(it,2:end-1,2:end-1));
+      SFC_ALB  = squeeze(SFC_ALB_VAR.data(it,2:end-1,2:end-1));
+      TOP_SWDN = squeeze(TOP_SWDN_VAR.data(it,:,2:end-1,2:end-1));
+      TOP_SWUP = squeeze(TOP_SWUP_VAR.data(it,:,2:end-1,2:end-1));
+      TOP_LWUP = squeeze(TOP_LWUP_VAR.data(it,:,2:end-1,2:end-1));
 
       % SFC_SWUP = SFC_SWDN * SFC_ALB
       SFC_SWUP = SFC_SWDN .* SFC_ALB;
