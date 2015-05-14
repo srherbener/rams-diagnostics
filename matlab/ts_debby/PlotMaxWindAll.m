@@ -32,14 +32,13 @@ function [ ] = PlotMaxWindAll()
    'NONSAL\_NODUST'
    };
 
-   InFprefix = 'max_speed10m';
+   InFprefix = 'hist_meas_speed';
    InVname = '/max_speed10m';
 %   InFprefix = 'max_speed25m';
 %   InVname = '/max_speed25m';
 
   for icase = 1:Nc
-    Hfile = sprintf('TsAveragedData/%s_%s.h5', InFprefix, Cases{icase});
-    InFiles{icase} = Hfile;
+    InFiles{icase} = sprintf('DIAGS/%s_%s.h5', InFprefix, Cases{icase});
   end
 
   % NHC Best Track (every six hours) data
@@ -75,8 +74,9 @@ function [ ] = PlotMaxWindAll()
     Hfile = InFiles{icase};
     fprintf('Reading: %s (%s)\n', Hfile, InVname);
 
-    % Read in time series, S will be a column vector
+    % Read in time series, S will be (r,t)
     S = squeeze(h5read(Hfile, InVname));
+    S = squeeze(max(S, [], 1));
     Nt = length(S);
     SPEED_T(1:Nt,icase) = S;
   end

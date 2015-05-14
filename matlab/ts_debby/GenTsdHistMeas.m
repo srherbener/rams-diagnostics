@@ -1,14 +1,21 @@
-function [ ] = GenTsdHistMeas(ConfigFile)
+function [ ] = GenTsdHistMeas()
 
-  [ Config ] = ReadConfig(ConfigFile);
-
-  Adir = Config.AzavgDir;
-  Ddir = Config.DiagDir;
+  Adir = 'AzAveragedData';
+  Ddir = 'DIAGS';
 
   % make sure output directory exists
   if (exist(Ddir, 'dir') ~= 7)
     mkdir(Ddir);
   end
+
+  % list of simulation cases
+  CaseList = {
+    'TSD_SAL_DUST'
+    'TSD_SAL_NODUST'
+    'TSD_NONSAL_DUST'
+    'TSD_NONSAL_NODUST'
+    };
+  Ncases = length(CaseList);
 
   % Description of measurements
   %   <measure_name> <measure_list> <out_file_prefix>
@@ -17,56 +24,56 @@ function [ ] = GenTsdHistMeas(ConfigFile)
   %     <file_prefix> <var_name> <reduction_method> <arg_for_reduction_method> <out_var_name> <select_op> <select_val>
   MeasSets = {
     % storm speed measurements
-%    {
-%      'Speed'
-%      {
-%        { 'hist_speed' 'speed' 'farea' 0.50 'avg_speed'     'ge' 0   }
-%        { 'hist_speed' 'speed' 'farea' 0.95 'max_speed'     'ge' 0   }
-%  
-%        { 'hist_speed10m' 'speed10m' 'farea' 0.50 'avg_speed10m'     'ge' 0   }
-%        { 'hist_speed10m' 'speed10m' 'farea' 0.95 'max_speed10m'     'ge' 0   }
-%  
-%        { 'hist_speed_t' 'speed_t' 'farea' 0.50 'avg_speed_t'     'ge' 0   }
-%        { 'hist_speed_t' 'speed_t' 'farea' 0.95 'max_speed_t'     'ge' 0   }
-%  
-%        { 'hist_speed_r' 'speed_r' 'farea' 0.50 'avg_speed_r'     'ge' 0   }
-%        { 'hist_speed_r' 'speed_r' 'farea' 0.95 'max_speed_r'     'ge' 0   }
-%      }
-%      'hist_meas_speed'
-%    }
-%  
-%    % storm pressure measurements
-%    {
-%      'Pressure'
-%      {
-%        { 'hist_press' 'press' 'farea' 0.50 'avg_press'     'ge' 0   }
-%        { 'hist_press' 'press' 'farea' 0.05 'min_press'     'ge' 0   }
-%  
-%        { 'hist_sea_press' 'sea_press' 'farea' 0.50 'avg_sea_press'     'ge' 0   }
-%        { 'hist_sea_press' 'sea_press' 'farea' 0.05 'min_sea_press'     'ge' 0   }
-%      }
-%      'hist_meas_press'
-%    }
-%
-%    % precip rate measurements
-%    {
-%      'Precip Rate'
-%      {
-%        { 'hist_pcprate' 'pcprate' 'farea' 0.50 'avg_pcprate'     'ge' 0   }
-%        { 'hist_pcprate' 'pcprate' 'farea' 0.95 'max_pcprate'     'ge' 0   }
-%      }
-%      'hist_meas_pcprate'
-%    }
+    {
+      'Speed'
+      {
+        { 'hist_speed' 'speed' 'farea' 0.50 'avg_speed'     'ge' 0   }
+        { 'hist_speed' 'speed' 'farea' 0.99 'max_speed'     'ge' 0   }
+  
+        { 'hist_speed10m' 'speed10m' 'farea' 0.50 'avg_speed10m'     'ge' 0   }
+        { 'hist_speed10m' 'speed10m' 'farea' 0.99 'max_speed10m'     'ge' 0   }
+  
+        { 'hist_speed_t' 'speed_t' 'farea' 0.50 'avg_speed_t'     'ge' 0   }
+        { 'hist_speed_t' 'speed_t' 'farea' 0.99 'max_speed_t'     'ge' 0   }
+  
+        { 'hist_speed_r' 'speed_r' 'farea' 0.50 'avg_speed_r'     'ge' 0   }
+        { 'hist_speed_r' 'speed_r' 'farea' 0.99 'max_speed_r'     'ge' 0   }
+      }
+      'hist_meas_speed'
+    }
+  
+    % storm pressure measurements
+    {
+      'Pressure'
+      {
+        { 'hist_press' 'press' 'farea' 0.50 'avg_press'     'ge' 0   }
+        { 'hist_press' 'press' 'farea' 0.01 'min_press'     'ge' 0   }
+  
+        { 'hist_sea_press' 'sea_press' 'farea' 0.50 'avg_sea_press'     'ge' 0   }
+        { 'hist_sea_press' 'sea_press' 'farea' 0.01 'min_sea_press'     'ge' 0   }
+      }
+      'hist_meas_press'
+    }
+
+    % precip rate measurements
+    {
+      'Precip Rate'
+      {
+        { 'hist_pcprate' 'pcprate' 'farea' 0.50 'avg_pcprate'     'ge' 0   }
+        { 'hist_pcprate' 'pcprate' 'farea' 0.99 'max_pcprate'     'ge' 0   }
+      }
+      'hist_meas_pcprate'
+    }
 
     % vertical velocity measurements
     {
       'Vertical Velocity'
       {
         { 'hist_up' 'w' 'farea' 0.50 'avg_updraft'     'ge'  0.01   }
-        { 'hist_w'  'w' 'farea' 0.95 'max_updraft'     'ge'  0.05   }
+        { 'hist_w'  'w' 'farea' 0.99 'max_updraft'     'ge'  0.05   }
 
         { 'hist_dn' 'w' 'farea' 0.50 'avg_dndraft'     'le' -0.01   }
-        { 'hist_w'  'w' 'farea' 0.05 'max_dndraft'     'le' -0.05   }
+        { 'hist_w'  'w' 'farea' 0.01 'max_dndraft'     'le' -0.05   }
       }
       'hist_meas_w'
     }
@@ -76,8 +83,8 @@ function [ ] = GenTsdHistMeas(ConfigFile)
 
   Nsets = length(MeasSets);
 
-  for icase = 1:length(Config.Cases)
-    Case = Config.Cases(icase).Cname;
+  for icase = 1:Ncases
+    Case = CaseList{icase};
 
     fprintf('*****************************************************************\n');
     fprintf('Generating histogram measurements:\n');

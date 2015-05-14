@@ -107,30 +107,29 @@ switch Method
         % Hdata with the fractional area value repeated along the
         % histogram dimension.
         CSUM = cumsum(Hdata, Hdim);
-        PSUM_HD1 = Param .* sum(Hdata, Hdim);
-        PSUM = repmat(PSUM_HD1, InitSize);
-        DIFF = CSUM - PSUM;
+        PSUM = Param .* sum(Hdata, Hdim);
+        DIFF = CSUM - repmat(PSUM, InitSize);
 
         % After subtracting PSUM from CSUM, the final negative entry along
         % the histogram dimension will be the left side of the interval where
         % PSUM lies, and the first postivie entry is the right side of the
         % interval where PSUM lies.
-        NEG = DIFF < 0;
-        POS = DIFF >= 0;
+        LEFT = double(DIFF < 0);   % convert logical types to double
+        RIGHT = double(DIFF >= 0);  % for subsequent operations
 
-        % POS has 1's where DIFF was >= 0. Do a cumulative sum and zero
+        % RIGHT has 1's where DIFF was >= 0. Do a cumulative sum and zero
         % out all the entries greater than 1 which will leave the first
         % positive entry with a 1, all others zero.
-        RIGHT = cumsum(POS,Hdim);
+        RIGHT = cumsum(RIGHT,Hdim);
         RIGHT(RIGHT > 1) = 0;
 
         % LEFT side of the interval is a little trickier since cumsum
         % goes in the wrong direction. A cumsum going from right to left
         % can be accomplished by subtracting the cumsum from the sum+1 and
-        % zeroing out the result where NEG was also zero (ie, multiply by NEG).
-        NEG_CS = cumsum(NEG,Hdim);
-        NEG_S  = repmat(sum(NEG,2)+1, InitSize);
-        LEFT = (NEG_S-NEG_CS) .* NEG;
+        % zeroing out the result where LEFT was also zero (ie, multiply by LEFT).
+        LEFT_CS = cumsum(LEFT,Hdim);
+        LEFT_S  = repmat(sum(LEFT,Hdim)+1, InitSize);
+        LEFT = (LEFT_S - LEFT_CS) .* LEFT;
         LEFT(LEFT > 1) = 0;
 
         % Now RIGHT has a 1 on the right side of the interval where
@@ -142,7 +141,7 @@ switch Method
         CS2 = squeeze(sum(RIGHT .* CSUM,Hdim));
 
         % Return the linear interpolation
-        Hreduced = B1 + ((B2-B1) .* ((squeeze(PSUM_HD1)-CS1) ./ (CS2-CS1)));
+        Hreduced = B1 + ((B2-B1) .* ((squeeze(PSUM)-CS1) ./ (CS2-CS1)));
 
         % It is possible for PSUM_HD1 to fall to the left of the first
         % entry in CSUM or to the right of the last entry of CSUM. If this

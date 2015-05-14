@@ -32,14 +32,13 @@ function [ ] = PlotMinPressAll()
    'NONSAL\_NODUST'
    };
 
-   InFprefix = 'min_sea_press';
+   InFprefix = 'hist_meas_press';
    InVname = '/min_sea_press';
 %   InFprefix = 'min_press25m';
 %   InVname = '/min_press25m';
 
   for icase = 1:Nc
-    Hfile = sprintf('TsAveragedData/%s_%s.h5', InFprefix, Cases{icase});
-    InFiles{icase} = Hfile;
+    InFiles{icase} = sprintf('DIAGS/%s_%s.h5', InFprefix, Cases{icase});
   end
 
   % NHC Best Track (every six hours) data
@@ -72,8 +71,9 @@ function [ ] = PlotMinPressAll()
     Hfile = InFiles{icase};
     fprintf('Reading: %s (%s)\n', Hfile, InVname);
 
-    % Read in time series, P will be a column vector
+    % Read in time series, P will be (r,t)
     P = squeeze(h5read(Hfile, InVname));
+    P = squeeze(max(P, [], 1));
     Nt = length(P);
 
     PRESS(1:Nt,icase) = P;
