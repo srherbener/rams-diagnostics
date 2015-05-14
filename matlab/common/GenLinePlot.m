@@ -20,7 +20,7 @@ function [ ] = GenLinePlot( Axes, AxesSpecs, DataSpecs, LegendSpecs )
     set(Axes, AxesProps(i).Name, AxesProps(i).Val);
   end
 
-  title(AxesSpecs.Title);
+  T = title(AxesSpecs.Title);
   xlabel(AxesSpecs.Xlabel);
   ylabel(AxesSpecs.Ylabel);
 
@@ -39,6 +39,11 @@ function [ ] = GenLinePlot( Axes, AxesSpecs, DataSpecs, LegendSpecs )
   % Place the legend
   if (~strcmp(LegendSpecs.Loc, 'none'))
     legend(LegendSpecs.Text, 'Location', LegendSpecs.Loc, 'FontSize', LegendSpecs.Fsize);
+  end
+
+  % If have a panel marker, left justify the title
+  if (AxesSpecs.Panel)
+    LeftJustTitle(T);
   end
 
 end

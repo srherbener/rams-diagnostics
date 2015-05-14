@@ -10,6 +10,7 @@ SCRIPTS = \
           $(DEST)/GenAxesSpecs.m \
           $(DEST)/GenDataSpecs.m \
           $(DEST)/GenLinePlot.m \
+          $(DEST)/LeftJustTitle.m \
           $(DEST)/AssociateStructs.m \
           $(DEST)/Line2Fields.m \
           $(DEST)/ParseTitle.m \

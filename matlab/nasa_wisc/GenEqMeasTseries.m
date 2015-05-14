@@ -20,33 +20,45 @@ function [ ] = GenEqMeasTseries(ConfigFile)
 %   'RCE50_RECT_S303'
 %   'RCE50_SQ'
 %   'RCE50_2D'
-   'RCE_MATT'
+%   'RCE_MATT'
    'RCE_BASE'
    };
   Nc = length(CaseList);
 
   % input file specs
   % thermal heat flux
-  SfcLatFbase  = 'lat_flux-a-AS-2012-01-01-000000-g1.h5';
+%  SfcLatFbase  = 'lat_flux-a-AS-2012-01-01-000000-g1.h5';
+%  SfcSensFbase = 'sens_flux-a-AS-2012-01-01-000000-g1.h5';
+  SfcLatFbase  = 'lat_flux-a-AC-2012-01-01-000000-g1.h5';
+  SfcSensFbase = 'sens_flux-a-AC-2012-01-01-000000-g1.h5';
+
   SfcLatVname  = 'lat_flux';
-  SfcSensFbase = 'sens_flux-a-AS-2012-01-01-000000-g1.h5';
   SfcSensVname = 'sens_flux';
 
   % radiative flux divergence
-  SfcSwdnFbase = 'rshort-a-AS-2012-01-01-000000-g1.h5';
+%  SfcSwdnFbase = 'rshort-a-AS-2012-01-01-000000-g1.h5';
+%  SfcLwdnFbase = 'rlong-a-AS-2012-01-01-000000-g1.h5';
+%  SfcLwupFbase = 'rlongup-a-AS-2012-01-01-000000-g1.h5';
+%  SfcAlbFbase  = 'albedt-a-AS-2012-01-01-000000-g1.h5';
+  SfcSwdnFbase = 'rshort-a-AC-2012-01-01-000000-g1.h5';
+  SfcLwdnFbase = 'rlong-a-AC-2012-01-01-000000-g1.h5';
+  SfcLwupFbase = 'rlongup-a-AC-2012-01-01-000000-g1.h5';
+  SfcAlbFbase  = 'albedt-a-AC-2012-01-01-000000-g1.h5';
+
   SfcSwdnVname = 'rshort';
-  SfcLwdnFbase = 'rlong-a-AS-2012-01-01-000000-g1.h5';
   SfcLwdnVname = 'rlong';
-  SfcLwupFbase = 'rlongup-a-AS-2012-01-01-000000-g1.h5';
   SfcLwupVname = 'rlongup';
-  SfcAlbFbase  = 'albedt-a-AS-2012-01-01-000000-g1.h5';
   SfcAlbVname  = 'albedt';
 
-  TopSwdnFbase = 'swdn_toa-a-AS-2012-01-01-000000-g1.h5';
+%  TopSwdnFbase = 'swdn_toa-a-AS-2012-01-01-000000-g1.h5';
+%  TopSwupFbase = 'swup_toa-a-AS-2012-01-01-000000-g1.h5';
+%  TopLwupFbase = 'lwup_toa-a-AS-2012-01-01-000000-g1.h5';
+  TopSwdnFbase = 'swdn_toa-a-AC-2012-01-01-000000-g1.h5';
+  TopSwupFbase = 'swup_toa-a-AC-2012-01-01-000000-g1.h5';
+  TopLwupFbase = 'lwup_toa-a-AC-2012-01-01-000000-g1.h5';
+
   TopSwdnVname = 'swdn';
-  TopSwupFbase = 'swup_toa-a-AS-2012-01-01-000000-g1.h5';
   TopSwupVname = 'swup';
-  TopLwupFbase = 'lwup_toa-a-AS-2012-01-01-000000-g1.h5';
   TopLwupVname = 'lwup';
 
   % output file specs
@@ -172,24 +184,27 @@ function [ ] = GenEqMeasTseries(ConfigFile)
       %
       % Save out the averages of all the component quantities, too.
       %
+      % Use double precision for the mean calculations since the size of
+      % the vectors can be large.
+      %
       TempVar = SFC_LAT + SFC_SENS;
-      THF(it) = mean(TempVar(:));
+      THF(it) = mean(double(TempVar(:)));
 
       TempVar = ((TOP_SWUP + TOP_LWUP) - (TOP_SWDN)) - ((SFC_SWUP + SFC_LWUP) - (SFC_SWDN + SFC_LWDN));
-      QRAD(it) = mean(TempVar(:));
+      QRAD(it) = mean(double(TempVar(:)));
 
-      AVG_SFC_LAT(it) = mean(SFC_LAT(:));
-      AVG_SFC_SENS(it) = mean(SFC_SENS(:));
+      AVG_SFC_LAT(it) = mean(double(SFC_LAT(:)));
+      AVG_SFC_SENS(it) = mean(double(SFC_SENS(:)));
 
-      AVG_SFC_SWDN(it) = mean(SFC_SWDN(:));
-      AVG_SFC_LWDN(it) = mean(SFC_LWDN(:));
-      AVG_SFC_LWUP(it) = mean(SFC_LWUP(:));
-      AVG_SFC_SWUP(it) = mean(SFC_SWUP(:));
-      AVG_TOP_SWDN(it) = mean(TOP_SWDN(:));
-      AVG_TOP_SWUP(it) = mean(TOP_SWUP(:));
-      AVG_TOP_LWUP(it) = mean(TOP_LWUP(:));
+      AVG_SFC_SWDN(it) = mean(double(SFC_SWDN(:)));
+      AVG_SFC_LWDN(it) = mean(double(SFC_LWDN(:)));
+      AVG_SFC_LWUP(it) = mean(double(SFC_LWUP(:)));
+      AVG_SFC_SWUP(it) = mean(double(SFC_SWUP(:)));
+      AVG_TOP_SWDN(it) = mean(double(TOP_SWDN(:)));
+      AVG_TOP_SWUP(it) = mean(double(TOP_SWUP(:)));
+      AVG_TOP_LWUP(it) = mean(double(TOP_LWUP(:)));
 
-      AVG_SFC_ALB(it)  = mean(SFC_ALB(:));
+      AVG_SFC_ALB(it)  = mean(double(SFC_ALB(:)));
 
       if (mod(it,50) == 0)
         fprintf ('  Completed timestep %d out of %d\n', it, Nt);
