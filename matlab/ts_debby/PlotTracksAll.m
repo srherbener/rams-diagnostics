@@ -1,13 +1,9 @@
-function [ ] = PlotTracksAll(ConfigFile)
+function [ ] = PlotTracksAll()
 
-  [ Config ] = ReadConfig(ConfigFile);
-  
-  Pdir = Config.PlotDir;
+  Pdir = 'Plots';
   if (exist(Pdir, 'dir') ~= 7)
       mkdir(Pdir);
   end
-  
-  Hdir = 'HDF5';
   
   Cases = {
 %   'TSD_DRY_DUST'
@@ -50,12 +46,13 @@ function [ ] = PlotTracksAll(ConfigFile)
   % first find the max number of time steps
   MaxNt = 0;
   for icase = 1:Nc
-     Hfile = sprintf('%s/storm_center-%s-AS-2006-08-20-120000-g3.h5', Hdir, Cases{icase});
-     Hinfo = h5info(Hfile, '/t_coords');
-     Tsize = Hinfo.Dataspace.Size;
-     if (Tsize > MaxNt)
-       MaxNt = Tsize;
-     end
+    Case = Cases{icase};
+    Hfile = sprintf('HDF5/%s/HDF5/storm_center-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
+    Hinfo = h5info(Hfile, '/t_coords');
+    Tsize = Hinfo.Dataspace.Size;
+    if (Tsize > MaxNt)
+      MaxNt = Tsize;
+    end
   end
 
   % allocate array to hold the plot data
@@ -64,7 +61,8 @@ function [ ] = PlotTracksAll(ConfigFile)
   
   % read in the Vt data
   for icase = 1:Nc
-    Hfile = sprintf('%s/storm_center-%s-AS-2006-08-20-120000-g3.h5', Hdir, Cases{icase});
+    Case = Cases{icase};
+    Hfile = sprintf('HDF5/%s/HDF5/storm_center-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
     HdsetLon = '/press_cent_xloc';
     HdsetLat = '/press_cent_yloc';
     fprintf('Reading: %s\n', Hfile);

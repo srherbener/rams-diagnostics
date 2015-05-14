@@ -1,10 +1,6 @@
-function [ ] = PlotMinPressAll(ConfigFile)
+function [ ] = PlotMinPressAll()
 
-  [ Config ] = ReadConfig(ConfigFile);
-
-  Tdir = Config.TsavgDir;
-
-  Pdir = Config.PlotDir;
+  Pdir = 'Plots';
   if (exist(Pdir, 'dir') ~= 7)
     mkdir(Pdir);
   end
@@ -42,7 +38,7 @@ function [ ] = PlotMinPressAll(ConfigFile)
 %   InVname = '/min_press25m';
 
   for icase = 1:Nc
-    Hfile = sprintf('%s/%s_%s.h5', Tdir, InFprefix, Cases{icase});
+    Hfile = sprintf('TsAveragedData/%s_%s.h5', InFprefix, Cases{icase});
     InFiles{icase} = Hfile;
   end
 
