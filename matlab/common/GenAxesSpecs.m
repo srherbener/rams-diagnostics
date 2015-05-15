@@ -2,7 +2,11 @@ function [ AxesSpecs ] = GenAxesSpecs(Config, i_panel, i_paxis)
 % GenAxesSpecs function to generate axes specfifications for plots
 
   Ptitle  = Config.FigPanels(i_panel).Title.Main;
-  Pmarker = Config.FigPanels(i_panel).Title.Pmarkers{1};
+  if (isempty(Config.FigPanels(i_panel).Title.Pmarkers))
+    Pmarker = '';
+  else
+    Pmarker = Config.FigPanels(i_panel).Title.Pmarkers{1};
+  end
 
   XAshow = Config.FigPanels(i_panel).XAshow;
   YAshow = Config.FigPanels(i_panel).YAshow;
@@ -42,7 +46,7 @@ function [ AxesSpecs ] = GenAxesSpecs(Config, i_panel, i_paxis)
   if (AxesSpecs.Panel)
     AxesSpecs.Title = sprintf('(%s) %s', Pmarker, Ptitle);
   else
-    AxesSpecs.Title = '';
+    AxesSpecs.Title = Ptitle;
   end
 
   %%%%%%%% X Axis %%%%%%%%%

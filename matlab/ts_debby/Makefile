@@ -20,6 +20,7 @@ SCRIPTS = \
   $(DEST)/GenMoistRamsInfo.m \
   $(DEST)/GenNonSalRamsInfo.m \
   $(DEST)/GenStormMeas.m \
+  $(DEST)/GenStormMeasTseries.m \
   $(DEST)/GenTsSize.m \
   $(DEST)/GenTsPcprate.m \
   $(DEST)/GenFactSep.m \
@@ -46,6 +47,7 @@ SCRIPTS = \
 
 CONFIGS = \
   $(DIAG_DIR)/SST_CONST/DiagConfig \
+  $(DIAG_DIR)/SST_OBS/FigureConfig \
   $(DIAG_DIR)/SST_OBS/DiagConfig \
   $(DIAG_DIR)/SST_OBS_UBMIN/DiagConfig
 
@@ -65,6 +67,9 @@ $(DIAG_DIR)/SST_CONST/DiagConfig: DiagConfig.SST_CONST
 	cp $(<) $(@)
 
 $(DIAG_DIR)/SST_OBS/DiagConfig: DiagConfig.SST_OBS
+	cp $(<) $(@)
+
+$(DIAG_DIR)/SST_OBS/FigureConfig: FigureConfig
 	cp $(<) $(@)
 
 $(DIAG_DIR)/SST_OBS_UBMIN/DiagConfig: DiagConfig.SST_OBS_UBMIN

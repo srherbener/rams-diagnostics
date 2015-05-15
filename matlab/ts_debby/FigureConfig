@@ -1,0 +1,85 @@
+#
+# Instructions for building figures
+#
+
+######### FIGURES ###################
+Figure: MaxWind 1
+  DummyCases
+  [1_1]
+  Plots/FigMaxWind.jpg
+  MaxWindPanel   1
+End 
+
+Figure: MinSlp 1
+  DummyCases
+  [1_1]
+  Plots/FigMinSlp.jpg
+  MinSlpPanel   1
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  none
+End
+
+########### PANELS ####################
+FigPanel: MaxWindPanel
+  MaxWindLset
+  MaxWindAxes 1 1
+  none 5
+  Max@Wind 
+  SouthEast 12
+End
+
+FigPanel: MinSlpPanel
+  MinSlpLset
+  MinSlpAxes 1 1
+  none 5
+  Min@SLP 
+  SouthEast 12
+End
+
+############ PLOT SETS #################
+LineSet: MaxWindLset 4
+  MaxWindLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0 1 1 
+  MaxWindLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0 1 1 
+  MaxWindLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0 1 1 
+  MaxWindLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0 1 1 
+End
+
+LineSet: MinSlpLset 4
+  MinSlpLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0 1 1 
+  MinSlpLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0 1 1 
+  MinSlpLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0 1 1 
+  MinSlpLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0 1 1 
+End
+
+############ PLOT DATA #################
+PlotData: MaxWindLine
+  # x data - sim time in hours
+  /t_coords DIAGS/storm_meas_tseries_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - 
+  /max_wind DIAGS/storm_meas_tseries_<CASE>.h5 @ 1 0
+End
+  
+PlotData: MinSlpLine
+  # x data - sim time in hours
+  /t_coords DIAGS/storm_meas_tseries_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - 
+  /min_slp  DIAGS/storm_meas_tseries_<CASE>.h5 @ 1 0
+End
+
+############ PLOT AXES #################
+PlotAxes: MaxWindAxes 18 2 [0.025_0.025]
+  # x axis - sim time in hours
+  Simulation@Time d 0 60 linear [_]
+  # y axis - speed in m/s
+  Speed m@s^-^1 0 30 linear [_]
+End
+
+PlotAxes: MinSlpAxes 18 2 [0.025_0.025]
+  # x axis - sim time in hours
+  Simulation@Time d 0 60 linear [_]
+  # y axis - speed in m/s
+  Pressure mb 995 1010 linear [_]
+End
