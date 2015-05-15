@@ -12,9 +12,9 @@ function [ ] = PlotMaxWindAll()
 %   'TSD_MOIST_NODUST'
 
    'TSD_SAL_DUST'
-   'TSD_SAL_NODUST'
-   'TSD_NONSAL_DUST'
-   'TSD_NONSAL_NODUST'
+%   'TSD_SAL_NODUST'
+%   'TSD_NONSAL_DUST'
+%   'TSD_NONSAL_NODUST'
    };
   Nc = length(Cases);
 
@@ -27,18 +27,20 @@ function [ ] = PlotMaxWindAll()
 %   'MN'
 
    'SAL\_DUST'
-   'SAL\_NODUST'
-   'NONSAL\_DUST'
-   'NONSAL\_NODUST'
+%   'SAL\_NODUST'
+%   'NONSAL\_DUST'
+%   'NONSAL\_NODUST'
    };
 
-   InFprefix = 'hist_meas_speed';
+%   InFprefix = 'DIAGS/hist_meas_speed';
+%   InVname = '/avg_speed10m';
+%   InVname = '/max_speed10m';
+
+   InFprefix = 'TsAveragedData/max_speed10m';
    InVname = '/max_speed10m';
-%   InFprefix = 'max_speed25m';
-%   InVname = '/max_speed25m';
 
   for icase = 1:Nc
-    InFiles{icase} = sprintf('DIAGS/%s_%s.h5', InFprefix, Cases{icase});
+    InFiles{icase} = sprintf('%s_%s.h5', InFprefix, Cases{icase});
   end
 
   % NHC Best Track (every six hours) data
@@ -74,9 +76,13 @@ function [ ] = PlotMaxWindAll()
     Hfile = InFiles{icase};
     fprintf('Reading: %s (%s)\n', Hfile, InVname);
 
-    % Read in time series, S will be (r,t)
+    % Read in time series
+    %  If 1D var, (t), then done at this point
+    %  If 2D var, (r,t), find max along R dimension
+    %  If 3D var, (r,z,t), select k=2 level, find max along R dimension
     S = squeeze(h5read(Hfile, InVname));
-    S = squeeze(max(S, [], 1));
+%    S = squeeze(max(S, [], 1));
+%    S = squeeze(max(squeeze(S(:,2,:)), [], 1));
     Nt = length(S);
     SPEED_T(1:Nt,icase) = S;
   end

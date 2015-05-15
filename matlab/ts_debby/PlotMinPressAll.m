@@ -12,9 +12,9 @@ function [ ] = PlotMinPressAll()
 %   'TSD_MOIST_NODUST'
 
    'TSD_SAL_DUST'
-   'TSD_SAL_NODUST'
-   'TSD_NONSAL_DUST'
-   'TSD_NONSAL_NODUST'
+%   'TSD_SAL_NODUST'
+%   'TSD_NONSAL_DUST'
+%   'TSD_NONSAL_NODUST'
    };
   Nc = length(Cases);
 
@@ -27,18 +27,19 @@ function [ ] = PlotMinPressAll()
 %   'MN'
 
    'SAL\_DUST'
-   'SAL\_NODUST'
-   'NONSAL\_DUST'
-   'NONSAL\_NODUST'
+%   'SAL\_NODUST'
+%   'NONSAL\_DUST'
+%   'NONSAL\_NODUST'
    };
 
-   InFprefix = 'hist_meas_press';
+%   InFprefix = 'DIAGS/hist_meas_press';
+%   InVname = '/avg_press';
+
+   InFprefix = 'TsAveragedData/min_sea_press';
    InVname = '/min_sea_press';
-%   InFprefix = 'min_press25m';
-%   InVname = '/min_press25m';
 
   for icase = 1:Nc
-    InFiles{icase} = sprintf('DIAGS/%s_%s.h5', InFprefix, Cases{icase});
+    InFiles{icase} = sprintf('%s_%s.h5', InFprefix, Cases{icase});
   end
 
   % NHC Best Track (every six hours) data
@@ -72,8 +73,12 @@ function [ ] = PlotMinPressAll()
     fprintf('Reading: %s (%s)\n', Hfile, InVname);
 
     % Read in time series, P will be (r,t)
+    %  If 1D var, (t), then done at this point
+    %  If 2D var, (r,t), find min along R dimension
+    %  If 3D var, (r,z,t), select k=2 level, find min along R dimension
     P = squeeze(h5read(Hfile, InVname));
-    P = squeeze(max(P, [], 1));
+%    P = squeeze(min(P, [], 1));
+%    P = squeeze(min(squeeze(P(:,2,:)), [], 1));
     Nt = length(P);
 
     PRESS(1:Nt,icase) = P;
