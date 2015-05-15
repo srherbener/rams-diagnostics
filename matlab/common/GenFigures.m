@@ -21,8 +21,8 @@ function [ ] = GenFigures(ConfigFile)
 
     % Create one figure for each case in the case list
     for i_case = 1:Config.CaseSets(i_cset).Ncases
-      Case = Config.CaseSets(i_cset).Cases(i_case).Cname;
-      fprintf('    Case: %s\n', Case); 
+      FigCase = Config.CaseSets(i_cset).Cases(i_case).Cname;
+      fprintf('    Case: %s\n', FigCase); 
       fprintf('    Panel Rows: %d\n', Prows); 
       fprintf('    Panel Columns: %d\n', Pcols); 
 
@@ -46,13 +46,13 @@ function [ ] = GenFigures(ConfigFile)
     
         % Check that plot data sets and axes got associated
         i_paxis = Config.FigPanels(i_panel).PAnum;
-        i_pset = Config.FigPanels(i_panel).PSnum;
+        i_lset = Config.FigPanels(i_panel).LSnum;
         if (i_paxis == 0)
           fprintf('WARNING: skipping FigPanel number %d due to no associated PlotAxes\n', i_panel)
           continue;
         end
-        if (i_pset == 0)
-          fprintf('WARNING: skipping FigPanel number %d due to no associated PlotSet\n', i_panel)
+        if (i_lset == 0)
+          fprintf('WARNING: skipping FigPanel number %d due to no associated LineSet\n', i_panel)
           continue;
         end
     
@@ -61,7 +61,7 @@ function [ ] = GenFigures(ConfigFile)
     
         % Fill in the DataSpecs structure
         % Last arg is indent spacing for formatting messages.
-        [ DataSpecs LegText DSokay ] = GenDataSpecs(Config, Case, i_panel, i_pset, '        ');
+        [ DataSpecs LegText DSokay ] = GenDataSpecs(Config, FigCase, i_panel, i_lset, '        ');
         fprintf('\n');
         if (DSokay == 0)
           continue;
@@ -76,10 +76,10 @@ function [ ] = GenFigures(ConfigFile)
         Axes = subplot(Prows, Pcols, Ploc);
         GenLinePlot(Axes, AxesSpecs, DataSpecs, LegendSpecs);
       end
-      if (strcmp(Case, 'none'))
+      if (strcmp(FigCase, 'none'))
         OutFile = Config.Figures(i_fig).OutFile;
       else
-        OutFile = regexprep(Config.Figures(i_fig).OutFile, '<CASE>', Case);
+        OutFile = regexprep(Config.Figures(i_fig).OutFile, '<CASE>', FigCase);
       end
       fprintf('      Writing: %s\n', OutFile);
 

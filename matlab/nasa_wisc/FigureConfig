@@ -44,25 +44,25 @@ FigPanel: QradCompPanel
 End
 
 ############ PLOT SETS #################
-PlotSet: EqMeasPset 2
-  ThfLine  THF     2 blue   - 0 1 1 
-  QradLine Q_r_a_d 2 red    - 0 1 1
+LineSet: EqMeasPset 2
+  ThfLine  none THF     2 blue   - 0 1 1 
+  QradLine none Q_r_a_d 2 red    - 0 1 1
 End
 
-PlotSet: ThfCompPset 2
-  SfcLatLine  SFC\_LAT  2 blue   - 0 1 1 
-  SfcSensLine SFC\_SENS 2 red    - 0 1 1
+LineSet: ThfCompPset 2
+  SfcLatLine  none SFC\_LAT  2 blue   - 0 1 1 
+  SfcSensLine none SFC\_SENS 2 red    - 0 1 1
 End
 
-PlotSet: QradCompPset 7
-  SfcLwdnLine SFC\_LWDN 2 blue    - 0 1 1 
-  SfcLwupLine SFC\_LWUP 2 green   - 0 1 1
-  SfcSwdnLine SFC\_SWDN 2 red     - 0 1 1 
-  SfcSwupLine SFC\_SWUP 2 orange  - 0 1 1
+LineSet: QradCompPset 7
+  SfcLwdnLine none SFC\_LWDN 2 blue    - 0 1 1 
+  SfcLwupLine none SFC\_LWUP 2 green   - 0 1 1
+  SfcSwdnLine none SFC\_SWDN 2 red     - 0 1 1 
+  SfcSwupLine none SFC\_SWUP 2 orange  - 0 1 1
 
-  TopLwupLine TOP\_LWUP 2 green   -- 0 1 1
-  TopSwdnLine TOP\_SWDN 2 red     -- 0 1 1 
-  TopSwupLine TOP\_SWUP 2 orange  -- 0 1 1
+  TopLwupLine none TOP\_LWUP 2 green   -- 0 1 1
+  TopSwdnLine none TOP\_SWDN 2 red     -- 0 1 1 
+  TopSwupLine none TOP\_SWUP 2 orange  -- 0 1 1
 End
 
 ############ PLOT DATA #################

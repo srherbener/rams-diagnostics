@@ -8,7 +8,7 @@ function [ Cdata ] = ReadFigureConfig ( Cfile )
   % the description of figures to create.
   i_fig   = 0;
   i_cset  = 0;
-  i_pset  = 0;
+  i_lset  = 0;
   i_pdat  = 0;
   i_paxes = 0;
   i_fpan  = 0;
@@ -34,22 +34,23 @@ function [ Cdata ] = ReadFigureConfig ( Cfile )
           j = j + 1;
         end
         
-      case 'PlotSet:'
-        i_pset = i_pset + 1;
-        Cdata.PlotSets(i_pset).Name   = Fields{2};
-        Cdata.PlotSets(i_pset).Nlines = sscanf(Fields{3}, '%d');
+      case 'LineSet:'
+        i_lset = i_lset + 1;
+        Cdata.LineSets(i_lset).Name   = Fields{2};
+        Cdata.LineSets(i_lset).Nlines = sscanf(Fields{3}, '%d');
         j = 4; % next field
-        for ipl = 1:Cdata.PlotSets(i_pset).Nlines
-          Cdata.PlotSets(i_pset).Lines(ipl).PDname  = Fields{j};
-          Cdata.PlotSets(i_pset).Lines(ipl).PDnum   = -1;
-          Cdata.PlotSets(i_pset).Lines(ipl).Legend  = regexprep(Fields{j+1}, '@', ' ');
-          Cdata.PlotSets(i_pset).Lines(ipl).Lwidth  = sscanf(Fields{j+2}, '%f');
-          Cdata.PlotSets(i_pset).Lines(ipl).Lcolor  = Fields{j+3};
-          Cdata.PlotSets(i_pset).Lines(ipl).Lstyle  = Fields{j+4};
-          Cdata.PlotSets(i_pset).Lines(ipl).Lgscale = sscanf(Fields{j+5}, '%f');
-          Cdata.PlotSets(i_pset).Lines(ipl).Xzoom   = sscanf(Fields{j+6}, '%f');
-          Cdata.PlotSets(i_pset).Lines(ipl).Yzoom   = sscanf(Fields{j+7}, '%f');
-          j = j + 8;
+        for ipl = 1:Cdata.LineSets(i_lset).Nlines
+          Cdata.LineSets(i_lset).Lines(ipl).PDname  = Fields{j};
+          Cdata.LineSets(i_lset).Lines(ipl).PDnum   = -1;
+          Cdata.LineSets(i_lset).Lines(ipl).Case    = Fields{j+1};
+          Cdata.LineSets(i_lset).Lines(ipl).Legend  = regexprep(Fields{j+2}, '@', ' ');
+          Cdata.LineSets(i_lset).Lines(ipl).Lwidth  = sscanf(Fields{j+3}, '%f');
+          Cdata.LineSets(i_lset).Lines(ipl).Lcolor  = Fields{j+4};
+          Cdata.LineSets(i_lset).Lines(ipl).Lstyle  = Fields{j+5};
+          Cdata.LineSets(i_lset).Lines(ipl).Lgscale = sscanf(Fields{j+6}, '%f');
+          Cdata.LineSets(i_lset).Lines(ipl).Xzoom   = sscanf(Fields{j+7}, '%f');
+          Cdata.LineSets(i_lset).Lines(ipl).Yzoom   = sscanf(Fields{j+8}, '%f');
+          j = j + 9;
         end
         
       case 'PlotData:'
@@ -92,8 +93,8 @@ function [ Cdata ] = ReadFigureConfig ( Cfile )
       case 'FigPanel:'
         i_fpan = i_fpan + 1;
         Cdata.FigPanels(i_fpan).Name     = Fields{2};
-        Cdata.FigPanels(i_fpan).PSname   = Fields{3};
-        Cdata.FigPanels(i_fpan).PSnum    = -1;
+        Cdata.FigPanels(i_fpan).LSname   = Fields{3};
+        Cdata.FigPanels(i_fpan).LSnum    = -1;
         Cdata.FigPanels(i_fpan).PAname   = Fields{4};
         Cdata.FigPanels(i_fpan).PAnum    = -1;
         Cdata.FigPanels(i_fpan).XAshow   = sscanf(Fields{5}, '%d');
@@ -122,16 +123,16 @@ function [ Cdata ] = ReadFigureConfig ( Cfile )
     end
   end
 
-  % Make the association between PlotSets and PlotData
-  if (isfield(Cdata, 'PlotSets'))
-    for i_pset = 1:length(Cdata.PlotSets)
-      Cdata.PlotSets(i_pset).Lines = AssociateStructs( Cdata.PlotSets(i_pset).Lines, Cdata.PlotData, 'PD', 'PlotData', 'PlotSets' ); 
+  % Make the association between LineSets and PlotData
+  if (isfield(Cdata, 'LineSets'))
+    for i_lset = 1:length(Cdata.LineSets)
+      Cdata.LineSets(i_lset).Lines = AssociateStructs( Cdata.LineSets(i_lset).Lines, Cdata.PlotData, 'PD', 'PlotData', 'LineSets' ); 
     end
   end
 
-  % Make the association between FigPanels and the PlotSets, PlotData andPlotAxes
+  % Make the association between FigPanels and the LineSets, PlotData andPlotAxes
   if (isfield(Cdata, 'FigPanels'))
-    Cdata.FigPanels = AssociateStructs( Cdata.FigPanels, Cdata.PlotSets,     'PS', 'PlotSet',     'LinePlot' ); 
+    Cdata.FigPanels = AssociateStructs( Cdata.FigPanels, Cdata.LineSets,     'LS', 'LineSet',     'LinePlot' ); 
     Cdata.FigPanels = AssociateStructs( Cdata.FigPanels, Cdata.PlotAxes,     'PA', 'PlotAxes',    'LinePlot' ); 
   end
 

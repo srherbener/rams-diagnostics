@@ -1,14 +1,32 @@
 function [ Hreduced ] = ReduceHists( Hdata, Hdim, Bins, Method, Param )
 % ReduceHists reduces histogram bins to a single number
 %
-% Method: 'wtmean' - weighted mean
-%         'max'    - max
-%         'com'    - center of mass
-%         'pct'    - Percentile of bin values corresponding
-%                    to the non-zero counts, percentile is
-%                    specified in Param argument.
+% Method: 'wtmean' - weighted mean: estimates mean of original data
+%
+%         'max'    - max: estimates the mode of the histogram
+%
+%         'farea'  - "fractional" area of histogram counts. This is like the median
+%                    measurement except you can specify (Param argument) what portion
+%                    of the distribution is to the left and right of the value. Setting
+%                    Param to 0.5 returns the median value (1/2 of the distribution is
+%                    to the left and 1/2 to the right). Setting Param to 0.25 gives the
+%                    value where 1/4 of the distribution is to the left, and 3/4 to the
+%                    right.
+%
+%         'pct'    - Percentile of bin values corresponding to the non-zero counts,
+%                    percentile is specified in Param argument. This is another
+%                    way to do what farea is doing. This seems to produce "block-ier"
+%                    (discretize looking) results.
 %
 
+% Bin values are the edges of the bins where count(i) are the
+% values, x, that were: bin(i) <= x < bin(i+1). The count in
+% final bin, number n, is for x == bin(n). For the calculations
+% below, associate the counts with the average of the bin edges,
+% and for count n, just use bin n value.
+Nb = length(Bins);
+BinVals = (Bins(1:end-1) + Bins(2:end)) .* 0.5;
+BinVals(Nb) = Bins(Nb);
 
 % Create an array the is the same size as Hdata and contains the
 % bin values going down the dimension with the histogram counts.
@@ -38,7 +56,7 @@ RepFactor = Hsize;
 RepFactor(Hdim) = 1;
 
 BINS = ones(InitSize);
-BINS(:) = Bins;
+BINS(:) = BinVals;
 BINS = repmat(BINS, RepFactor);
 
 % BINS now is now the same size as Hdata with the bin values
@@ -47,7 +65,7 @@ BINS = repmat(BINS, RepFactor);
 
 switch Method
     case 'pct'
-        % Copy the Bins array into a new array. Set the locations where
+        % Copy the BINS array into a new array. Set the locations where
         % the counts (Hdata) has zeros to nans. Then run the prctile()
         % command to get the 90th percentile of the bin value distributions.
         BINS_WITH_COUNTS = BINS;
@@ -55,7 +73,7 @@ switch Method
         Hreduced = squeeze(prctile(BINS_WITH_COUNTS, [ Param ], Hdim));
 
     case 'wtmean'
-        % Weighted mean
+        % Weighted mean - this estmates the mean of the original data
         
         % Want to form the average of the bin values weighted by their
         % corresponding counts in the histogram. Ie,
@@ -86,7 +104,7 @@ switch Method
         % value corresponding to the index where the max count
         % existed.
         [ MAXC_V, MAXC_I ] = max(Hdata, [], Hdim);
-        Hreduced = squeeze(Bins(MAXC_I));
+        Hreduced = squeeze(BinVals(MAXC_I));
 
     case 'farea'
         % fraction of area
