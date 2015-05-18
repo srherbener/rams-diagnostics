@@ -59,27 +59,27 @@ PlotData: MaxWindLine
   # x data - sim time in hours
   /t_coords DIAGS/storm_meas_tseries_<CASE>.h5 @ 2.7778e-4 -42
   # y data - 
-  /max_wind DIAGS/storm_meas_tseries_<CASE>.h5 @ 1 0
+  /max_wind_fa DIAGS/storm_meas_tseries_<CASE>.h5 @ 1 0
 End
   
 PlotData: MinSlpLine
   # x data - sim time in hours
   /t_coords DIAGS/storm_meas_tseries_<CASE>.h5 @ 2.7778e-4 -42
   # y data - 
-  /min_slp  DIAGS/storm_meas_tseries_<CASE>.h5 @ 1 0
+  /min_slp_fa  DIAGS/storm_meas_tseries_<CASE>.h5 @ 1 0
 End
 
 ############ PLOT AXES #################
 PlotAxes: MaxWindAxes 18 2 [0.025_0.025]
   # x axis - sim time in hours
-  Simulation@Time d 0 60 linear [_]
+  Simulation@Time h 0 60 linear [_]
   # y axis - speed in m/s
   Speed m@s^-^1 0 30 linear [_]
 End
 
 PlotAxes: MinSlpAxes 18 2 [0.025_0.025]
   # x axis - sim time in hours
-  Simulation@Time d 0 60 linear [_]
+  Simulation@Time h 0 60 linear [_]
   # y axis - speed in m/s
   Pressure mb 995 1010 linear [_]
 End

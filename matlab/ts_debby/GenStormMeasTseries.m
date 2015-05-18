@@ -20,8 +20,13 @@ function [ ] = GenStormMeasTseries()
 
   % Description of measurements
   MeasList = {
-    { 'min_slp'  'DIAGS/hist_meas_press' '/avg_sea_press' '(1:28,:)'      'min' } % selection is R = 0 to 250 km
-    { 'max_wind' 'DIAGS/hist_meas_speed' '/avg_speed_t'   '(1:28,2:14,:)' 'max' } % selection is R = 0 to 250 km, Z = 0 to 1000 m
+    { 'min_slp_fa'  'DIAGS/hist_meas_press' '/avg_sea_press_fa' '(1:28,:)'      'min' } % selection is R = 0 to 250 km
+    { 'min_slp_wm'  'DIAGS/hist_meas_press' '/avg_sea_press_wm' '(1:28,:)'      'min' } % selection is R = 0 to 250 km
+
+    { 'max_wind_fa'     'DIAGS/hist_meas_speed' '/avg_speed_t_fa'   '(1:28,2:14,:)' 'max' } % selection is R = 0 to 250 km, Z = 0 to 1000 m
+    { 'max_wind_wm'     'DIAGS/hist_meas_speed' '/avg_speed_t_wm'   '(1:28,2:14,:)' 'max' } % selection is R = 0 to 250 km, Z = 0 to 1000 m
+    { 'max_wind_10m_fa' 'DIAGS/hist_meas_speed' '/avg_speed10m_fa'  '(1:28,:)'      'max' } % selection is R = 0 to 250 km
+    { 'max_wind_10m_wm' 'DIAGS/hist_meas_speed' '/avg_speed10m_wm'  '(1:28,:)'      'max' } % selection is R = 0 to 250 km
     };
 
   for icase = 1:Ncases
