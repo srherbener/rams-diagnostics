@@ -3,53 +3,27 @@
 #
 
 DEST = $(HOME)/etc/matlab/ts_debby
-DIAG_DIR = /Volumes/tasman1/sherbener/data/RAMS/TsDebby
+DIAG_DIR = /Volumes/tasman1/sherbener/data/RAMS/TsDebby/SST_OBS
 
 SCRIPTS = \
-  $(DEST)/LocateSal.m \
-  $(DEST)/PlotGrids.m \
-  $(DEST)/PlotHovDiags.m \
-  $(DEST)/PlotAeroProfs.m \
-  $(DEST)/PlotGrid3Extent.m \
-  $(DEST)/PlotSampleSoundings.m \
-  $(DEST)/PlotSampleRH.m \
   $(DEST)/GenMoistDpFiles.m \
-  $(DEST)/GenNonSalDpFiles.m \
-  $(DEST)/GenMoistRamsInit.m \
-  $(DEST)/GenNonSalRamsInit.m \
   $(DEST)/GenMoistRamsInfo.m \
+  $(DEST)/GenMoistRamsInit.m \
+  $(DEST)/GenNonSalDpFiles.m \
   $(DEST)/GenNonSalRamsInfo.m \
-  $(DEST)/GenStormMeas.m \
+  $(DEST)/GenNonSalRamsInit.m \
   $(DEST)/GenStormMeasTseries.m \
-  $(DEST)/GenTsSize.m \
-  $(DEST)/GenTsPcprate.m \
-  $(DEST)/GenFactSep.m \
   $(DEST)/GenTsdHistMeas.m \
-  $(DEST)/GenDiffProfiles.m \
-  $(DEST)/PlotHydro.m \
-  $(DEST)/PlotMaxWind.m \
+  $(DEST)/LocateSal.m \
+  $(DEST)/PlotAeroProfs.m \
   $(DEST)/PlotMaxWindAll.m \
-  $(DEST)/PlotMinPress.m \
   $(DEST)/PlotMinPressAll.m \
-  $(DEST)/PlotRmwAll.m \
-  $(DEST)/PlotIkeAll.m \
-  $(DEST)/PlotAvgPcprateAll.m \
-  $(DEST)/PlotPressWind.m \
-  $(DEST)/PlotSlp.m \
-  $(DEST)/PlotSlpAll.m \
-  $(DEST)/PlotSpeedtThetae.m \
-  $(DEST)/PlotTracks.m \
   $(DEST)/PlotTracksAll.m \
-  $(DEST)/PlotWinds.m \
-  $(DEST)/PlotFactSep.m \
   $(DEST)/TwoDimAnimation.m \
   $(DEST)/SetPath.m
 
 CONFIGS = \
-  $(DIAG_DIR)/SST_CONST/DiagConfig \
-  $(DIAG_DIR)/SST_OBS/FigureConfig \
-  $(DIAG_DIR)/SST_OBS/DiagConfig \
-  $(DIAG_DIR)/SST_OBS_UBMIN/DiagConfig
+  $(DIAG_DIR)/FigureConfig
 
 #
 # Targets
@@ -63,14 +37,5 @@ $(DEST):
 $(DEST)/%.m: %.m
 	cp $(<) $(@)
 
-$(DIAG_DIR)/SST_CONST/DiagConfig: DiagConfig.SST_CONST
-	cp $(<) $(@)
-
-$(DIAG_DIR)/SST_OBS/DiagConfig: DiagConfig.SST_OBS
-	cp $(<) $(@)
-
-$(DIAG_DIR)/SST_OBS/FigureConfig: FigureConfig
-	cp $(<) $(@)
-
-$(DIAG_DIR)/SST_OBS_UBMIN/DiagConfig: DiagConfig.SST_OBS_UBMIN
+$(DIAG_DIR)/%Config: %Config
 	cp $(<) $(@)
