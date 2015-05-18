@@ -1,12 +1,8 @@
-function [ ] = PlotEqMeas(ConfigFile)
+function [ ] = PlotEqMeas()
 % PlotEqMeas plot RCE measurements
 
-  % Read the config file to get the structure of how the data is laid out in
-  % the file system.
-  [ Config ] = ReadConfig(ConfigFile);
-
-  Ddir = Config.DiagDir;
-  Pdir = Config.PlotDir;
+  Ddir = 'DIAGS';
+  Pdir = 'Plots';
 
   % make sure output directory exists
   if (exist(Pdir, 'dir') ~= 7)
@@ -21,7 +17,8 @@ function [ ] = PlotEqMeas(ConfigFile)
 %      { 'RCE50_SQ'        'eq_meas' 'therm_heat_flux' 'rad_flux_div' 'SZA 50, SQ'   'EqMeas' }
 %      { 'RCE50_2D'        'eq_meas' 'therm_heat_flux' 'rad_flux_div' 'SZA 50, 2D'   'EqMeas' }
 %      { 'RCE_MATT'        'eq_meas' 'therm_heat_flux' 'rad_flux_div' 'MATT'         'EqMeas' }
-      { 'RCE_BASE'        'eq_meas' 'therm_heat_flux' 'rad_flux_div' 'BASE'         'EqMeas' }
+%      { 'RCE_BASE'        'eq_meas' 'therm_heat_flux' 'rad_flux_div' 'BASE'         'EqMeas' }
+      { 'RCE_CNTL'        'eq_meas' 'therm_heat_flux' 'rad_flux_div' 'BASE'         'EqMeas' }
     };
   Nset = length(PlotSets);
 

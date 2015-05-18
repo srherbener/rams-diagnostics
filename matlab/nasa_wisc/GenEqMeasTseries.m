@@ -1,11 +1,7 @@
-function [ ] = GenEqMeasTseries(ConfigFile)
+function [ ] = GenEqMeasTseries()
 % GenEqMeasTseries generate time series of equllibrium measurements
 
-  % Read the config file to get the structure of how the data is laid out in
-  % the file system.
-  [ Config ] = ReadConfig(ConfigFile);
-
-  Ddir = Config.DiagDir;
+  Ddir = 'DIAGS';
   Hdir = 'HDF5';
 
   % make sure output directory exists
@@ -21,7 +17,8 @@ function [ ] = GenEqMeasTseries(ConfigFile)
 %   'RCE50_SQ'
 %   'RCE50_2D'
 %   'RCE_MATT'
-   'RCE_BASE'
+%   'RCE_BASE'
+   'RCE_CNTL'
    };
   Nc = length(CaseList);
 
@@ -29,8 +26,10 @@ function [ ] = GenEqMeasTseries(ConfigFile)
   % thermal heat flux
 %  SfcLatFbase  = 'lat_flux-a-AS-2012-01-01-000000-g1.h5';
 %  SfcSensFbase = 'sens_flux-a-AS-2012-01-01-000000-g1.h5';
-  SfcLatFbase  = 'lat_flux-a-AC-2012-01-01-000000-g1.h5';
-  SfcSensFbase = 'sens_flux-a-AC-2012-01-01-000000-g1.h5';
+%  SfcLatFbase  = 'lat_flux-a-AC-2012-01-01-000000-g1.h5';
+%  SfcSensFbase = 'sens_flux-a-AC-2012-01-01-000000-g1.h5';
+  SfcLatFbase  = 'lat_flux-RCE_CNTL-AC-2012-01-01-000000-g1.h5';
+  SfcSensFbase = 'sens_flux-RCE_CNTL-AC-2012-01-01-000000-g1.h5';
 
   SfcLatVname  = 'lat_flux';
   SfcSensVname = 'sens_flux';
@@ -40,10 +39,14 @@ function [ ] = GenEqMeasTseries(ConfigFile)
 %  SfcLwdnFbase = 'rlong-a-AS-2012-01-01-000000-g1.h5';
 %  SfcLwupFbase = 'rlongup-a-AS-2012-01-01-000000-g1.h5';
 %  SfcAlbFbase  = 'albedt-a-AS-2012-01-01-000000-g1.h5';
-  SfcSwdnFbase = 'rshort-a-AC-2012-01-01-000000-g1.h5';
-  SfcLwdnFbase = 'rlong-a-AC-2012-01-01-000000-g1.h5';
-  SfcLwupFbase = 'rlongup-a-AC-2012-01-01-000000-g1.h5';
-  SfcAlbFbase  = 'albedt-a-AC-2012-01-01-000000-g1.h5';
+%  SfcSwdnFbase = 'rshort-a-AC-2012-01-01-000000-g1.h5';
+%  SfcLwdnFbase = 'rlong-a-AC-2012-01-01-000000-g1.h5';
+%  SfcLwupFbase = 'rlongup-a-AC-2012-01-01-000000-g1.h5';
+%  SfcAlbFbase  = 'albedt-a-AC-2012-01-01-000000-g1.h5';
+  SfcSwdnFbase = 'rshort-RCE_CNTL-AC-2012-01-01-000000-g1.h5';
+  SfcLwdnFbase = 'rlong-RCE_CNTL-AC-2012-01-01-000000-g1.h5';
+  SfcLwupFbase = 'rlongup-RCE_CNTL-AC-2012-01-01-000000-g1.h5';
+  SfcAlbFbase  = 'albedt-RCE_CNTL-AC-2012-01-01-000000-g1.h5';
 
   SfcSwdnVname = 'rshort';
   SfcLwdnVname = 'rlong';
@@ -53,9 +56,12 @@ function [ ] = GenEqMeasTseries(ConfigFile)
 %  TopSwdnFbase = 'swdn_toa-a-AS-2012-01-01-000000-g1.h5';
 %  TopSwupFbase = 'swup_toa-a-AS-2012-01-01-000000-g1.h5';
 %  TopLwupFbase = 'lwup_toa-a-AS-2012-01-01-000000-g1.h5';
-  TopSwdnFbase = 'swdn_toa-a-AC-2012-01-01-000000-g1.h5';
-  TopSwupFbase = 'swup_toa-a-AC-2012-01-01-000000-g1.h5';
-  TopLwupFbase = 'lwup_toa-a-AC-2012-01-01-000000-g1.h5';
+%  TopSwdnFbase = 'swdn_toa-a-AC-2012-01-01-000000-g1.h5';
+%  TopSwupFbase = 'swup_toa-a-AC-2012-01-01-000000-g1.h5';
+%  TopLwupFbase = 'lwup_toa-a-AC-2012-01-01-000000-g1.h5';
+  TopSwdnFbase = 'swdn_toa-RCE_CNTL-AC-2012-01-01-000000-g1.h5';
+  TopSwupFbase = 'swup_toa-RCE_CNTL-AC-2012-01-01-000000-g1.h5';
+  TopLwupFbase = 'lwup_toa-RCE_CNTL-AC-2012-01-01-000000-g1.h5';
 
   TopSwdnVname = 'swdn';
   TopSwupVname = 'swup';
