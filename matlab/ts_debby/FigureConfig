@@ -17,6 +17,20 @@ Figure: MinSlp 1
   MinSlpPanel   1
 End 
 
+Figure: Ike 1
+  DummyCases
+  [1_1]
+  Plots/FigIke.jpg
+  IkePanel   1
+End 
+
+Figure: Rmw 1
+  DummyCases
+  [1_1]
+  Plots/FigRmw.jpg
+  RmwPanel   1
+End 
+
 ########### CASES ####################
 CaseSet: DummyCases 1
   none
@@ -39,6 +53,22 @@ FigPanel: MinSlpPanel
   SouthEast 12
 End
 
+FigPanel: IkePanel
+  IkeLset
+  IkeAxes 1 1
+  none 5
+  IKE
+  SouthEast 12
+End
+
+FigPanel: RmwPanel
+  RmwLset
+  RmwAxes 1 1
+  none 5
+  RMW
+  SouthEast 12
+End
+
 ############ PLOT SETS #################
 LineSet: MaxWindLset 4
   MaxWindLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0 1 1 
@@ -52,6 +82,20 @@ LineSet: MinSlpLset 4
   MinSlpLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0 1 1 
   MinSlpLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0 1 1 
   MinSlpLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0 1 1 
+End
+
+LineSet: IkeLset 4
+  IkeLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0 1 1 
+  IkeLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0 1 1 
+  IkeLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0 1 1 
+  IkeLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0 1 1 
+End
+
+LineSet: RmwLset 4
+  RmwLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0 1 1 
+  RmwLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0 1 1 
+  RmwLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0 1 1 
+  RmwLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0 1 1 
 End
 
 ############ PLOT DATA #################
@@ -69,6 +113,20 @@ PlotData: MinSlpLine
   /min_slp_fa  DIAGS/storm_meas_tseries_<CASE>.h5 @ 1 0
 End
 
+PlotData: IkeLine
+  # x data - sim time in hours
+  /t_coords DIAGS/storm_meas_tseries_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - 
+  /ike      DIAGS/storm_meas_tseries_<CASE>.h5 @ 1e-6 0
+End
+
+PlotData: RmwLine
+  # x data - sim time in hours
+  /t_coords DIAGS/storm_meas_tseries_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - 
+  /rmw_fa   DIAGS/storm_meas_tseries_<CASE>.h5 @ 1e-3 0
+End
+
 ############ PLOT AXES #################
 PlotAxes: MaxWindAxes 18 2 [0.025_0.025]
   # x axis - sim time in hours
@@ -82,4 +140,18 @@ PlotAxes: MinSlpAxes 18 2 [0.025_0.025]
   Simulation@Time h 0 60 linear [_]
   # y axis - speed in m/s
   Pressure mb 995 1010 linear [_]
+End
+
+PlotAxes: IkeAxes 18 2 [0.025_0.025]
+  # x axis - sim time in hours
+  Simulation@Time h 0 60 linear [_]
+  # y axis - speed in m/s
+  IKE 10^6@J 0 40 linear [_]
+End
+
+PlotAxes: RmwAxes 18 2 [0.025_0.025]
+  # x axis - sim time in hours
+  Simulation@Time h 0 60 linear [_]
+  # y axis - speed in m/s
+  RMW km 30 110 linear [_]
 End

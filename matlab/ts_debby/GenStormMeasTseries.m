@@ -135,6 +135,11 @@ function [ ] = GenStormMeasTseries()
         Tseries = MDATA;
       end
 
+      % Smooth out RMW time series
+      if (strcmp(Mmeas, 'rmw'))
+        Tseries = SmoothFillTseries(Tseries, Nt, 5);
+      end
+
       % Write out each measurement (time series)
       Ovname = sprintf('/%s', Mname);
       h5create(OutFile, Ovname, size(Tseries));
