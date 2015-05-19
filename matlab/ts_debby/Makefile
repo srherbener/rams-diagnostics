@@ -6,6 +6,8 @@ DEST = $(HOME)/etc/matlab/ts_debby
 DIAG_DIR = /Volumes/tasman1/sherbener/data/RAMS/TsDebby/SST_OBS
 
 SCRIPTS = \
+  $(DEST)/GenFsAverages.m \
+  $(DEST)/GenFsFactors.m \
   $(DEST)/GenMoistDpFiles.m \
   $(DEST)/GenMoistRamsInfo.m \
   $(DEST)/GenMoistRamsInit.m \
