@@ -16,10 +16,10 @@ function [ ] = GenFsAverages()
   %    Pre SAL: T = 10 to 30 h (after RI, before encounter SAL)
   %        SAL: T = 40 to 60 h (during SAL)
 
-  PS_T1 = 10;
-  PS_T2 = 30;
-  S_T1  = 40;
-  S_T2  = 60;
+  PreSalTstart = 10;
+  PreSalTend   = 30;
+  SalTstart    = 40;
+  SalTend      = 60;
 
   VarList = {
     %  Avg Var           File Name                          File Var Name
@@ -32,7 +32,7 @@ function [ ] = GenFsAverages()
 %    { 'hda_pcprate' 'DIAGS/ts_avg_pcprate'         '/hda_pcprate_1' }  % use filtered rates >= 1 mm/h
     };
 
-  Nv = length(VarList);
+  Nvars = length(VarList);
 
   % Put all of the results into one output file.
   % If the file exists, remove it so that the HDF5 commands
@@ -51,7 +51,7 @@ function [ ] = GenFsAverages()
     fprintf('  Case: %s\n', Case);
     fprintf('\n');
 
-    for ivar = 1:Nv
+    for ivar = 1:Nvars
       AvgVar   = VarList{ivar}{1};
       InFile   = VarList{ivar}{2};
       InVar    = VarList{ivar}{3};
@@ -61,6 +61,17 @@ function [ ] = GenFsAverages()
       % read in var, form time average, write out result
       fprintf('  Reading: %s (%s)\n', InFile, InVar);
       VAR = squeeze(h5read(InFile, InVar));
+ 
+      % if on the first var, set up the time indices
+      if (ivar == 1)
+        T   = (squeeze(h5read(InFile, '/t_coords')) ./ 3600) - 42;  % hours, 0 h -> sim time 42 h
+
+        PS_T1 = find(T >= PreSalTstart, 1, 'first');
+        PS_T2 = find(T <= PreSalTend,   1, 'last');
+
+        S_T1 = find(T >= SalTstart, 1, 'first');
+        S_T2 = find(T <= SalTend,   1, 'last');
+      end
 
       % calculate the time averages
       PS_AVG = nanmean(VAR(PS_T1:PS_T2));

@@ -98,27 +98,24 @@ function [ ] = GenFactSep()
     F2  = S2 - S0;
     F12 = S12 - (S1 + S2) + S0;
   
-    % Write factors into output file
-    OutVar = sprintf('/%s_f0', FsVar);
-    fprintf('  Writing: %s (%s)\n', OutFile, OutVar)
-    h5create(OutFile, OutVar,  size(F0));
-    h5write( OutFile, OutVar,  F0);
-    
-    OutVar = sprintf('/%s_f1', FsVar);
-    fprintf('  Writing: %s (%s)\n', OutFile, OutVar)
-    h5create(OutFile, OutVar,  size(F1));
-    h5write( OutFile, OutVar,  F1);
-  
-    OutVar = sprintf('/%s_f2', FsVar);
-    fprintf('  Writing: %s (%s)\n', OutFile, OutVar)
-    h5create(OutFile, OutVar,  size(F2));
-    h5write( OutFile, OutVar,  F2);
-  
-    OutVar = sprintf('/%s_f12', FsVar);
-    fprintf('  Writing: %s (%s)\n', OutFile, OutVar)
-    h5create(OutFile, OutVar,  size(F12));
-    h5write( OutFile, OutVar,  F12);
+    % Write simulation values and the factors. Place each of these
+    % into a vector.
+    %   Sim averages: [ S0 S1 S2 S12 ]
+    %   Factors:      [ F0 F1 F2 F12 ]
 
+    S_DATA = [ S0 S1 S2 S12 ];
+    F_DATA = [ F0 F1 F2 F12 ];
+
+    OutVar = sprintf('/%s_averages', FsVar);
+    fprintf('  Writing: %s (%s)\n', OutFile, OutVar)
+    h5create(OutFile, OutVar,  size(S_DATA));
+    h5write( OutFile, OutVar,  S_DATA);
+
+    OutVar = sprintf('/%s_factors', FsVar);
+    fprintf('  Writing: %s (%s)\n', OutFile, OutVar)
+    h5create(OutFile, OutVar,  size(F_DATA));
+    h5write( OutFile, OutVar,  F_DATA);
+    
     fprintf('\n');
   end
 end 
