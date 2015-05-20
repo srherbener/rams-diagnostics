@@ -31,6 +31,14 @@ Figure: Rmw 1
   RmwPanel   1
 End 
 
+Figure: FacSep 2
+  DummyCases
+  [1_2]
+  Plots/FigFsMaxWind.jpg
+  FsMaxWindPanel 1
+  FsIkePanel 2
+End
+
 ########### CASES ####################
 CaseSet: DummyCases 1
   none
@@ -38,7 +46,7 @@ End
 
 ########### PANELS ####################
 FigPanel: MaxWindPanel
-  MaxWindLset
+  MaxWindPset
   MaxWindAxes 1 1
   none 5
   Max@Wind 
@@ -46,7 +54,7 @@ FigPanel: MaxWindPanel
 End
 
 FigPanel: MinSlpPanel
-  MinSlpLset
+  MinSlpPset
   MinSlpAxes 1 1
   none 5
   Min@SLP 
@@ -54,7 +62,7 @@ FigPanel: MinSlpPanel
 End
 
 FigPanel: IkePanel
-  IkeLset
+  IkePset
   IkeAxes 1 1
   none 5
   IKE
@@ -62,69 +70,103 @@ FigPanel: IkePanel
 End
 
 FigPanel: RmwPanel
-  RmwLset
+  RmwPset
   RmwAxes 1 1
   none 5
   RMW
   SouthEast 12
 End
 
+FigPanel: FsMaxWindPanel
+  FsMaxWindPset
+  FsMaxWindAxes 0 1
+  none 5
+  Max@Wind
+  none 12
+End
+
+FigPanel: FsIkePanel
+  FsIkePset
+  FsIkeAxes 0 1
+  none 5
+  IKE
+  none 12
+End
+
 ############ PLOT SETS #################
-LineSet: MaxWindLset 4
+PlotSet: MaxWindPset 4
   MaxWindLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0 1 1 
   MaxWindLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0 1 1 
   MaxWindLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0 1 1 
   MaxWindLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0 1 1 
 End
 
-LineSet: MinSlpLset 4
+PlotSet: MinSlpPset 4
   MinSlpLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0 1 1 
   MinSlpLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0 1 1 
   MinSlpLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0 1 1 
   MinSlpLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0 1 1 
 End
 
-LineSet: IkeLset 4
+PlotSet: IkePset 4
   IkeLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0 1 1 
   IkeLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0 1 1 
   IkeLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0 1 1 
   IkeLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0 1 1 
 End
 
-LineSet: RmwLset 4
+PlotSet: RmwPset 4
   RmwLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0 1 1 
   RmwLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0 1 1 
   RmwLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0 1 1 
   RmwLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0 1 1 
 End
 
+PlotSet: FsMaxWindPset 1
+  MaxWindBar none    none  2 blue   - 0 1 1 
+End
+
+PlotSet: FsIkePset 1
+  IkeBar none    none  2 blue   - 0 1 1 
+End
+
 ############ PLOT DATA #################
-PlotData: MaxWindLine
+PlotData: MaxWindLine line
   # x data - sim time in hours
   /t_coords DIAGS/storm_meas_tseries_<CASE>.h5 @ 2.7778e-4 -42
   # y data - 
   /max_wind_fa DIAGS/storm_meas_tseries_<CASE>.h5 @ 1 0
 End
   
-PlotData: MinSlpLine
+PlotData: MinSlpLine line
   # x data - sim time in hours
   /t_coords DIAGS/storm_meas_tseries_<CASE>.h5 @ 2.7778e-4 -42
   # y data - 
   /min_slp_fa  DIAGS/storm_meas_tseries_<CASE>.h5 @ 1 0
 End
 
-PlotData: IkeLine
+PlotData: IkeLine line
   # x data - sim time in hours
   /t_coords DIAGS/storm_meas_tseries_<CASE>.h5 @ 2.7778e-4 -42
   # y data - 
   /ike      DIAGS/storm_meas_tseries_<CASE>.h5 @ 1e-6 0
 End
 
-PlotData: RmwLine
+PlotData: RmwLine line
   # x data - sim time in hours
   /t_coords DIAGS/storm_meas_tseries_<CASE>.h5 @ 2.7778e-4 -42
   # y data - 
   /rmw_fa   DIAGS/storm_meas_tseries_<CASE>.h5 @ 1e-3 0
+End
+
+PlotData: MaxWindBar bar
+  # x data - factor separation, max wind speed
+  /s_max_wind_factors DIAGS/fs_factors.h5 (2:end) 1 0
+End
+
+PlotData: IkeBar bar
+  # x data - factor separation, integrated kinetic energy
+  /s_ike_factors DIAGS/fs_factors.h5 (2:end) 1e-6 0
 End
 
 ############ PLOT AXES #################
@@ -154,4 +196,18 @@ PlotAxes: RmwAxes 18 2 [0.025_0.025]
   Simulation@Time h 0 60 linear [_]
   # y axis - speed in m/s
   RMW km 30 110 linear [_]
+End
+
+PlotAxes: FsMaxWindAxes 18 2 [0.025_0.025]
+  # x axis - factors
+  Factor @ 1 3 linear [1_2_3]
+  # y axis - speed in m/s
+  Wind@Speed m@s^-^1 -2 2 linear [_]
+End
+
+PlotAxes: FsIkeAxes 18 2 [0.025_0.025]
+  # x axis - factors
+  Factor @ 1 3 linear [1_2_3]
+  # y axis - speed in m/s
+  IKE 10^6@J -10 10 linear [_]
 End
