@@ -2,7 +2,6 @@ function [ ] = GenFigures(ConfigFile)
 % GenFigures function to generate figures
 
   [ Config ] = ReadFigureConfig(ConfigFile);
-  UndefVal = Config.UndefVal;
 
   fprintf('Generating Figures: %s\n', ConfigFile);
 
@@ -46,13 +45,13 @@ function [ ] = GenFigures(ConfigFile)
     
         % Check that plot data sets and axes got associated
         i_paxis = Config.FigPanels(i_panel).PAnum;
-        i_lset = Config.FigPanels(i_panel).LSnum;
+        i_pset = Config.FigPanels(i_panel).PSnum;
         if (i_paxis == 0)
           fprintf('WARNING: skipping FigPanel number %d due to no associated PlotAxes\n', i_panel)
           continue;
         end
-        if (i_lset == 0)
-          fprintf('WARNING: skipping FigPanel number %d due to no associated LineSet\n', i_panel)
+        if (i_pset == 0)
+          fprintf('WARNING: skipping FigPanel number %d due to no associated PlotSet\n', i_panel)
           continue;
         end
     
@@ -61,7 +60,7 @@ function [ ] = GenFigures(ConfigFile)
     
         % Fill in the DataSpecs structure
         % Last arg is indent spacing for formatting messages.
-        [ DataSpecs LegText DSokay ] = GenDataSpecs(Config, FigCase, i_panel, i_lset, '        ');
+        [ DataSpecs, LegText, DSokay ] = GenDataSpecs(Config, FigCase, i_panel, i_pset, '        ');
         fprintf('\n');
         if (DSokay == 0)
           continue;
@@ -73,8 +72,13 @@ function [ ] = GenFigures(ConfigFile)
         LegendSpecs.Fsize = Config.FigPanels(i_panel).LegFsize;
 
         % Create the panel
-        Axes = subplot(Prows, Pcols, Ploc);
-        GenLinePlot(Axes, AxesSpecs, DataSpecs, LegendSpecs);
+        Axes = CreatePlotAxes(Prows, Pcols, Ploc, AxesSpecs);
+        DrawPlotData(Axes, DataSpecs);
+        
+        % Place the legend
+        if (~strcmp(LegendSpecs.Loc, 'none'))
+          legend(LegendSpecs.Text, 'Location', LegendSpecs.Loc, 'FontSize', LegendSpecs.Fsize);
+        end
       end
       if (strcmp(FigCase, 'none'))
         OutFile = Config.Figures(i_fig).OutFile;

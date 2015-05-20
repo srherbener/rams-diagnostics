@@ -6,6 +6,8 @@ DEST = $(HOME)/etc/matlab/common
 
 SCRIPTS = \
           $(DEST)/export_fig.m \
+          $(DEST)/CreatePlotAxes.m \
+          $(DEST)/DrawPlotData.m \
           $(DEST)/GenFigures.m \
           $(DEST)/GenAxesSpecs.m \
           $(DEST)/GenDataSpecs.m \

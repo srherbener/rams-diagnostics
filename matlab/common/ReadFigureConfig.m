@@ -8,7 +8,7 @@ function [ Cdata ] = ReadFigureConfig ( Cfile )
   % the description of figures to create.
   i_fig   = 0;
   i_cset  = 0;
-  i_lset  = 0;
+  i_pset  = 0;
   i_pdat  = 0;
   i_paxes = 0;
   i_fpan  = 0;
@@ -27,47 +27,53 @@ function [ Cdata ] = ReadFigureConfig ( Cfile )
       case 'CaseSet:'
         i_cset = i_cset + 1;
         Cdata.CaseSets(i_cset).Name   = Fields{2};
-        Cdata.CaseSets(i_cset).Ncases = sscanf(Fields{3}, '%d');;
+        Cdata.CaseSets(i_cset).Ncases = sscanf(Fields{3}, '%d');
         j = 4; % next field
         for icl = 1:Cdata.CaseSets(i_cset).Ncases
           Cdata.CaseSets(i_cset).Cases(icl).Cname  = Fields{j};
           j = j + 1;
         end
         
-      case 'LineSet:'
-        i_lset = i_lset + 1;
-        Cdata.LineSets(i_lset).Name   = Fields{2};
-        Cdata.LineSets(i_lset).Nlines = sscanf(Fields{3}, '%d');
+      case 'PlotSet:'
+        i_pset = i_pset + 1;
+        Cdata.PlotSets(i_pset).Name   = Fields{2};
+        Cdata.PlotSets(i_pset).Ndsets = sscanf(Fields{3}, '%d');
         j = 4; % next field
-        for ipl = 1:Cdata.LineSets(i_lset).Nlines
-          Cdata.LineSets(i_lset).Lines(ipl).PDname  = Fields{j};
-          Cdata.LineSets(i_lset).Lines(ipl).PDnum   = -1;
-          Cdata.LineSets(i_lset).Lines(ipl).Case    = Fields{j+1};
-          Cdata.LineSets(i_lset).Lines(ipl).Legend  = regexprep(Fields{j+2}, '@', ' ');
-          Cdata.LineSets(i_lset).Lines(ipl).Lwidth  = sscanf(Fields{j+3}, '%f');
-          Cdata.LineSets(i_lset).Lines(ipl).Lcolor  = Fields{j+4};
-          Cdata.LineSets(i_lset).Lines(ipl).Lstyle  = Fields{j+5};
-          Cdata.LineSets(i_lset).Lines(ipl).Lgscale = sscanf(Fields{j+6}, '%f');
-          Cdata.LineSets(i_lset).Lines(ipl).Xzoom   = sscanf(Fields{j+7}, '%f');
-          Cdata.LineSets(i_lset).Lines(ipl).Yzoom   = sscanf(Fields{j+8}, '%f');
+        for ipl = 1:Cdata.PlotSets(i_pset).Ndsets
+          Cdata.PlotSets(i_pset).DataSets(ipl).PDname  = Fields{j};
+          Cdata.PlotSets(i_pset).DataSets(ipl).PDnum   = -1;
+          Cdata.PlotSets(i_pset).DataSets(ipl).Case    = Fields{j+1};
+          Cdata.PlotSets(i_pset).DataSets(ipl).Legend  = regexprep(Fields{j+2}, '@', ' ');
+          Cdata.PlotSets(i_pset).DataSets(ipl).Lwidth  = sscanf(Fields{j+3}, '%f');
+          Cdata.PlotSets(i_pset).DataSets(ipl).Lcolor  = Fields{j+4};
+          Cdata.PlotSets(i_pset).DataSets(ipl).Lstyle  = Fields{j+5};
+          Cdata.PlotSets(i_pset).DataSets(ipl).Lgscale = sscanf(Fields{j+6}, '%f');
+          Cdata.PlotSets(i_pset).DataSets(ipl).Xzoom   = sscanf(Fields{j+7}, '%f');
+          Cdata.PlotSets(i_pset).DataSets(ipl).Yzoom   = sscanf(Fields{j+8}, '%f');
           j = j + 9;
         end
         
       case 'PlotData:'
         i_pdat = i_pdat + 1;
         Cdata.PlotData(i_pdat).Name   = Fields{2};
+        Cdata.PlotData(i_pdat).Type   = Fields{3};
         % X data
-        Cdata.PlotData(i_pdat).Xvar    = Fields{3};
-        Cdata.PlotData(i_pdat).Xfile   = Fields{4};
-        Cdata.PlotData(i_pdat).Xselect = regexprep(Fields{5}, '@', ' ');;
-        Cdata.PlotData(i_pdat).Xscale  = sscanf(Fields{6}, '%f');
-        Cdata.PlotData(i_pdat).Xoffset = sscanf(Fields{7}, '%f');
+        if (strcmp(Cdata.PlotData(i_pdat).Type, 'line') || ...
+            strcmp(Cdata.PlotData(i_pdat).Type, 'bar'))
+          Cdata.PlotData(i_pdat).Xvar    = Fields{4};
+          Cdata.PlotData(i_pdat).Xfile   = Fields{5};
+          Cdata.PlotData(i_pdat).Xselect = regexprep(Fields{6}, '@', ' ');
+          Cdata.PlotData(i_pdat).Xscale  = sscanf(Fields{7}, '%f');
+          Cdata.PlotData(i_pdat).Xoffset = sscanf(Fields{8}, '%f');
+        end
         % Y data
-        Cdata.PlotData(i_pdat).Yvar    = Fields{8};
-        Cdata.PlotData(i_pdat).Yfile   = Fields{9};
-        Cdata.PlotData(i_pdat).Yselect = regexprep(Fields{10}, '@', ' ');;
-        Cdata.PlotData(i_pdat).Yscale  = sscanf(Fields{11},  '%f');
-        Cdata.PlotData(i_pdat).Yoffset = sscanf(Fields{12}, '%f');
+        if (strcmp(Cdata.PlotData(i_pdat).Type, 'line'))
+          Cdata.PlotData(i_pdat).Yvar    = Fields{9};
+          Cdata.PlotData(i_pdat).Yfile   = Fields{10};
+          Cdata.PlotData(i_pdat).Yselect = regexprep(Fields{11}, '@', ' ');
+          Cdata.PlotData(i_pdat).Yscale  = sscanf(Fields{12},  '%f');
+          Cdata.PlotData(i_pdat).Yoffset = sscanf(Fields{13}, '%f');
+        end
         
       case 'PlotAxes:'
         i_paxes = i_paxes + 1;
@@ -93,8 +99,8 @@ function [ Cdata ] = ReadFigureConfig ( Cfile )
       case 'FigPanel:'
         i_fpan = i_fpan + 1;
         Cdata.FigPanels(i_fpan).Name     = Fields{2};
-        Cdata.FigPanels(i_fpan).LSname   = Fields{3};
-        Cdata.FigPanels(i_fpan).LSnum    = -1;
+        Cdata.FigPanels(i_fpan).PSname   = Fields{3};
+        Cdata.FigPanels(i_fpan).PSnum    = -1;
         Cdata.FigPanels(i_fpan).PAname   = Fields{4};
         Cdata.FigPanels(i_fpan).PAnum    = -1;
         Cdata.FigPanels(i_fpan).XAshow   = sscanf(Fields{5}, '%d');
@@ -117,22 +123,22 @@ function [ Cdata ] = ReadFigureConfig ( Cfile )
         for ifp = 1:Cdata.Figures(i_fig).Npanels
           Cdata.Figures(i_fig).Panels(ifp).FPname = Fields{j};
           Cdata.Figures(i_fig).Panels(ifp).FPnum  = -1;
-          Cdata.Figures(i_fig).Panels(ifp).Ploc   = sscanf(Fields{j+1}, '%d');;
+          Cdata.Figures(i_fig).Panels(ifp).Ploc   = sscanf(Fields{j+1}, '%d');
           j = j + 2;
         end
     end
   end
 
-  % Make the association between LineSets and PlotData
-  if (isfield(Cdata, 'LineSets'))
-    for i_lset = 1:length(Cdata.LineSets)
-      Cdata.LineSets(i_lset).Lines = AssociateStructs( Cdata.LineSets(i_lset).Lines, Cdata.PlotData, 'PD', 'PlotData', 'LineSets' ); 
+  % Make the association between PlotSets and PlotData
+  if (isfield(Cdata, 'PlotSets'))
+    for i_pset = 1:length(Cdata.PlotSets)
+      Cdata.PlotSets(i_pset).DataSets = AssociateStructs( Cdata.PlotSets(i_pset).DataSets, Cdata.PlotData, 'PD', 'PlotData', 'PlotSets' ); 
     end
   end
 
-  % Make the association between FigPanels and the LineSets, PlotData andPlotAxes
+  % Make the association between FigPanels and the PlotSets, PlotData andPlotAxes
   if (isfield(Cdata, 'FigPanels'))
-    Cdata.FigPanels = AssociateStructs( Cdata.FigPanels, Cdata.LineSets,     'LS', 'LineSet',     'LinePlot' ); 
+    Cdata.FigPanels = AssociateStructs( Cdata.FigPanels, Cdata.PlotSets,     'PS', 'PlotSet',     'LinePlot' ); 
     Cdata.FigPanels = AssociateStructs( Cdata.FigPanels, Cdata.PlotAxes,     'PA', 'PlotAxes',    'LinePlot' ); 
   end
 
