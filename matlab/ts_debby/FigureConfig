@@ -175,29 +175,29 @@ End
 
 ############ PLOT AXES #################
 PlotAxes: MaxWindAxes 18 2 [0.025_0.025]
-  # x axis - sim time in hours
-  Simulation@Time h 0 60 linear [_] {_}
+  # x axis - utc time
+  Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
   # y axis - speed in m/s
   Speed m@s^-^1 0 30 linear [_] {_}
 End
 
 PlotAxes: MinSlpAxes 18 2 [0.025_0.025]
-  # x axis - sim time in hours
-  Simulation@Time h 0 60 linear [_] {_}
+  # x axis - utc time
+  Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
   # y axis - speed in m/s
   Pressure mb 995 1010 linear [_] {_}
 End
 
 PlotAxes: IkeAxes 18 2 [0.025_0.025]
-  # x axis - sim time in hours
-  Simulation@Time h 0 60 linear [_] {_}
+  # x axis - utc time
+  Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
   # y axis - speed in m/s
   IKE 10^6@J 0 40 linear [_] {_}
 End
 
 PlotAxes: RmwAxes 18 2 [0.025_0.025]
-  # x axis - sim time in hours
-  Simulation@Time h 0 60 linear [_] {_}
+  # x axis - utc time
+  Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
   # y axis - speed in m/s
   RMW km 30 110 linear [_] {_}
 End
