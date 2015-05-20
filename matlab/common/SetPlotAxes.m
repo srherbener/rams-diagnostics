@@ -1,13 +1,13 @@
-function [ Axes ] = CreatePlotAxes( Prows, Pcols, Ploc, AxesSpecs )
-%CreatePlotAxes create axes for a plot
+function [ Axes ] = SetPlotAxes( Axes, AxesSpecs )
+%SetPlotAxes set axes properties
 %   Axes - handle to a figure that was opened by the caller
 %
 %   AxesProps - structure containing a list of axis property names and
 %               associated values that are desired to be set
 %
 
-  % select the passed in figure
-  Axes = subplot(Prows, Pcols, Ploc);
+  % select the passed in axes
+  axes(Axes);
 
   AxesProps = AxesSpecs.Props;
   Nprops = length(AxesProps);

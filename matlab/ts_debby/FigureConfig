@@ -79,7 +79,7 @@ End
 
 FigPanel: FsMaxWindPanel
   FsMaxWindPset
-  FsMaxWindAxes 0 1
+  FsMaxWindAxes 1 1
   none 5
   Max@Wind
   none 12
@@ -87,127 +87,131 @@ End
 
 FigPanel: FsIkePanel
   FsIkePset
-  FsIkeAxes 0 1
+  FsIkeAxes 1 1
   none 5
   IKE
   none 12
 End
 
 ############ PLOT SETS #################
-PlotSet: MaxWindPset 4
+PlotSet: MaxWindPset line 4
   MaxWindLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0 1 1 
   MaxWindLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0 1 1 
   MaxWindLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0 1 1 
   MaxWindLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0 1 1 
 End
 
-PlotSet: MinSlpPset 4
+PlotSet: MinSlpPset line 4
   MinSlpLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0 1 1 
   MinSlpLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0 1 1 
   MinSlpLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0 1 1 
   MinSlpLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0 1 1 
 End
 
-PlotSet: IkePset 4
+PlotSet: IkePset line 4
   IkeLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0 1 1 
   IkeLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0 1 1 
   IkeLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0 1 1 
   IkeLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0 1 1 
 End
 
-PlotSet: RmwPset 4
+PlotSet: RmwPset line 4
   RmwLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0 1 1 
   RmwLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0 1 1 
   RmwLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0 1 1 
   RmwLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0 1 1 
 End
 
-PlotSet: FsMaxWindPset 1
+PlotSet: FsMaxWindPset bar 1
   MaxWindBar none    none  2 blue   - 0 1 1 
 End
 
-PlotSet: FsIkePset 1
+PlotSet: FsIkePset bar 1
   IkeBar none    none  2 blue   - 0 1 1 
 End
 
 ############ PLOT DATA #################
-PlotData: MaxWindLine line
+PlotData: MaxWindLine
   # x data - sim time in hours
   /t_coords DIAGS/storm_meas_tseries_<CASE>.h5 @ 2.7778e-4 -42
   # y data - 
   /max_wind_fa DIAGS/storm_meas_tseries_<CASE>.h5 @ 1 0
 End
   
-PlotData: MinSlpLine line
+PlotData: MinSlpLine
   # x data - sim time in hours
   /t_coords DIAGS/storm_meas_tseries_<CASE>.h5 @ 2.7778e-4 -42
   # y data - 
   /min_slp_fa  DIAGS/storm_meas_tseries_<CASE>.h5 @ 1 0
 End
 
-PlotData: IkeLine line
+PlotData: IkeLine
   # x data - sim time in hours
   /t_coords DIAGS/storm_meas_tseries_<CASE>.h5 @ 2.7778e-4 -42
   # y data - 
   /ike      DIAGS/storm_meas_tseries_<CASE>.h5 @ 1e-6 0
 End
 
-PlotData: RmwLine line
+PlotData: RmwLine
   # x data - sim time in hours
   /t_coords DIAGS/storm_meas_tseries_<CASE>.h5 @ 2.7778e-4 -42
   # y data - 
   /rmw_fa   DIAGS/storm_meas_tseries_<CASE>.h5 @ 1e-3 0
 End
 
-PlotData: MaxWindBar bar
-  # x data - factor separation, max wind speed
+PlotData: MaxWindBar
+  # x data - dummy counter
+  dummy [1:3] @ 1 0
+  # y data - factor separation, max wind speed
   /s_max_wind_factors DIAGS/fs_factors.h5 (2:end) 1 0
 End
 
-PlotData: IkeBar bar
-  # x data - factor separation, integrated kinetic energy
+PlotData: IkeBar
+  # x data - dummy counter
+  dummy [1:3] @ 1 0
+  # y data - factor separation, integrated kinetic energy
   /s_ike_factors DIAGS/fs_factors.h5 (2:end) 1e-6 0
 End
 
 ############ PLOT AXES #################
 PlotAxes: MaxWindAxes 18 2 [0.025_0.025]
   # x axis - sim time in hours
-  Simulation@Time h 0 60 linear [_]
+  Simulation@Time h 0 60 linear [_] {_}
   # y axis - speed in m/s
-  Speed m@s^-^1 0 30 linear [_]
+  Speed m@s^-^1 0 30 linear [_] {_}
 End
 
 PlotAxes: MinSlpAxes 18 2 [0.025_0.025]
   # x axis - sim time in hours
-  Simulation@Time h 0 60 linear [_]
+  Simulation@Time h 0 60 linear [_] {_}
   # y axis - speed in m/s
-  Pressure mb 995 1010 linear [_]
+  Pressure mb 995 1010 linear [_] {_}
 End
 
 PlotAxes: IkeAxes 18 2 [0.025_0.025]
   # x axis - sim time in hours
-  Simulation@Time h 0 60 linear [_]
+  Simulation@Time h 0 60 linear [_] {_}
   # y axis - speed in m/s
-  IKE 10^6@J 0 40 linear [_]
+  IKE 10^6@J 0 40 linear [_] {_}
 End
 
 PlotAxes: RmwAxes 18 2 [0.025_0.025]
   # x axis - sim time in hours
-  Simulation@Time h 0 60 linear [_]
+  Simulation@Time h 0 60 linear [_] {_}
   # y axis - speed in m/s
-  RMW km 30 110 linear [_]
+  RMW km 30 110 linear [_] {_}
 End
 
 PlotAxes: FsMaxWindAxes 18 2 [0.025_0.025]
   # x axis - factors
-  Factor @ 1 3 linear [1_2_3]
+  Factor @ 0 4 linear [1_2_3] {'NS'_'ND'_'NSD'}
   # y axis - speed in m/s
-  Wind@Speed m@s^-^1 -2 2 linear [_]
+  Wind@Speed m@s^-^1 -4 4 linear [_] {_}
 End
 
 PlotAxes: FsIkeAxes 18 2 [0.025_0.025]
   # x axis - factors
-  Factor @ 1 3 linear [1_2_3]
+  Factor @ 0 4 linear [1_2_3] {'NS'_'ND'_'NSD'}
   # y axis - speed in m/s
-  IKE 10^6@J -10 10 linear [_]
+  IKE 10^6@J -10 10 linear [_] {_}
 End

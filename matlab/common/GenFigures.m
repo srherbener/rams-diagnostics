@@ -72,8 +72,9 @@ function [ ] = GenFigures(ConfigFile)
         LegendSpecs.Fsize = Config.FigPanels(i_panel).LegFsize;
 
         % Create the panel
-        Axes = CreatePlotAxes(Prows, Pcols, Ploc, AxesSpecs);
-        DrawPlotData(Axes, DataSpecs);
+        Axes = subplot(Prows, Pcols, Ploc);
+        DrawPlotData(Axes, DataSpecs, Config.PlotSets(i_pset).Type);
+        SetPlotAxes(Axes, AxesSpecs);
         
         % Place the legend
         if (~strcmp(LegendSpecs.Loc, 'none'))

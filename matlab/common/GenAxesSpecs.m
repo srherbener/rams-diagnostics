@@ -14,19 +14,21 @@ function [ AxesSpecs ] = GenAxesSpecs(Config, i_panel, i_paxis)
   i_ap = 0;
 
   % Fill in the AxesSpecs structure
-  Xlabel = Config.PlotAxes(i_paxis).Xlabel;
-  Xunits = Config.PlotAxes(i_paxis).Xunits;
-  Xmin   = Config.PlotAxes(i_paxis).Xmin;
-  Xmax   = Config.PlotAxes(i_paxis).Xmax;
-  Xscale = Config.PlotAxes(i_paxis).Xscale;
-  Xticks = Config.PlotAxes(i_paxis).Xticks;
+  Xlabel      = Config.PlotAxes(i_paxis).Xlabel;
+  Xunits      = Config.PlotAxes(i_paxis).Xunits;
+  Xmin        = Config.PlotAxes(i_paxis).Xmin;
+  Xmax        = Config.PlotAxes(i_paxis).Xmax;
+  Xscale      = Config.PlotAxes(i_paxis).Xscale;
+  Xticks      = Config.PlotAxes(i_paxis).Xticks;
+  XtickLabels = Config.PlotAxes(i_paxis).XtickLabels;
 
-  Ylabel = Config.PlotAxes(i_paxis).Ylabel;
-  Yunits = Config.PlotAxes(i_paxis).Yunits;
-  Ymin   = Config.PlotAxes(i_paxis).Ymin;
-  Ymax   = Config.PlotAxes(i_paxis).Ymax;
-  Yscale = Config.PlotAxes(i_paxis).Yscale;
-  Yticks = Config.PlotAxes(i_paxis).Yticks;
+  Ylabel      = Config.PlotAxes(i_paxis).Ylabel;
+  Yunits      = Config.PlotAxes(i_paxis).Yunits;
+  Ymin        = Config.PlotAxes(i_paxis).Ymin;
+  Ymax        = Config.PlotAxes(i_paxis).Ymax;
+  Yscale      = Config.PlotAxes(i_paxis).Yscale;
+  Yticks      = Config.PlotAxes(i_paxis).Yticks;
+  YtickLabels = Config.PlotAxes(i_paxis).YtickLabels;
 
   % axes font size
   i_ap = i_ap + 1;
@@ -59,6 +61,20 @@ function [ AxesSpecs ] = GenAxesSpecs(Config, i_panel, i_paxis)
     else
       AxesSpecs.Xlabel   = sprintf('%s (%s)', Xlabel, Xunits);
     end
+
+    % axis tick marks
+    if (~isempty(Xticks))
+      i_ap = i_ap + 1;
+      AxesSpecs.Props(i_ap).Name = 'XTick';
+      AxesSpecs.Props(i_ap).Val  = Xticks;
+    end
+
+    % axis tick labels
+    if (~isempty(XtickLabels))
+      i_ap = i_ap + 1;
+      AxesSpecs.Props(i_ap).Name = 'XTickLabel';
+      AxesSpecs.Props(i_ap).Val  = XtickLabels;
+    end
   else
     % "hide" x-axis: no label, erase tick labels, keep tick marks
     AxesSpecs.Xlabel = '';
@@ -87,13 +103,6 @@ function [ AxesSpecs ] = GenAxesSpecs(Config, i_panel, i_paxis)
   AxesSpecs.Props(i_ap).Name = 'Xscale';
   AxesSpecs.Props(i_ap).Val  = Xscale;
 
-  % axis tick marks
-  if (~isempty(Xticks))
-    i_ap = i_ap + 1;
-    AxesSpecs.Props(i_ap).Name = 'XTick';
-    AxesSpecs.Props(i_ap).Val  = Xticks;
-  end
-
   %%%%%%%% Y Axis %%%%%%%%%
 
   % y axis label, tick marks
@@ -103,6 +112,20 @@ function [ AxesSpecs ] = GenAxesSpecs(Config, i_panel, i_paxis)
       AxesSpecs.Ylabel   = sprintf('%s', Ylabel);
     else
       AxesSpecs.Ylabel   = sprintf('%s (%s)', Ylabel, Yunits);
+    end
+
+    % y axis tick marks
+    if (~isempty(Yticks))
+      i_ap = i_ap + 1;
+      AxesSpecs.Props(i_ap).Name = 'YTick';
+      AxesSpecs.Props(i_ap).Val  = Yticks;
+    end
+
+    % axis tick labels
+    if (~isempty(YtickLabels))
+      i_ap = i_ap + 1;
+      AxesSpecs.Props(i_ap).Name = 'YTickLabel';
+      AxesSpecs.Props(i_ap).Val  = YtickLabels;
     end
   else
     % "hide" y-axis: no label, erase tick labels, keep tick marks
@@ -132,10 +155,4 @@ function [ AxesSpecs ] = GenAxesSpecs(Config, i_panel, i_paxis)
   AxesSpecs.Props(i_ap).Name = 'Yscale';
   AxesSpecs.Props(i_ap).Val  = Yscale;
 
-  % y axis tick marks
-  if (~isempty(Yticks))
-    i_ap = i_ap + 1;
-    AxesSpecs.Props(i_ap).Name = 'YTick';
-    AxesSpecs.Props(i_ap).Val  = Yticks;
-  end
 end

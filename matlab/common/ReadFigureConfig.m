@@ -18,7 +18,7 @@ function [ Cdata ] = ReadFigureConfig ( Cfile )
   
   for is = 1:length(Cstmts)
     Fields = Cstmts{is};
-    
+
     switch(Fields{1})
 
       case 'UndefVal:'
@@ -37,8 +37,9 @@ function [ Cdata ] = ReadFigureConfig ( Cfile )
       case 'PlotSet:'
         i_pset = i_pset + 1;
         Cdata.PlotSets(i_pset).Name   = Fields{2};
-        Cdata.PlotSets(i_pset).Ndsets = sscanf(Fields{3}, '%d');
-        j = 4; % next field
+        Cdata.PlotSets(i_pset).Type   = Fields{3};
+        Cdata.PlotSets(i_pset).Ndsets = sscanf(Fields{4}, '%d');
+        j = 5; % next field
         for ipl = 1:Cdata.PlotSets(i_pset).Ndsets
           Cdata.PlotSets(i_pset).DataSets(ipl).PDname  = Fields{j};
           Cdata.PlotSets(i_pset).DataSets(ipl).PDnum   = -1;
@@ -56,24 +57,18 @@ function [ Cdata ] = ReadFigureConfig ( Cfile )
       case 'PlotData:'
         i_pdat = i_pdat + 1;
         Cdata.PlotData(i_pdat).Name   = Fields{2};
-        Cdata.PlotData(i_pdat).Type   = Fields{3};
         % X data
-        if (strcmp(Cdata.PlotData(i_pdat).Type, 'line') || ...
-            strcmp(Cdata.PlotData(i_pdat).Type, 'bar'))
-          Cdata.PlotData(i_pdat).Xvar    = Fields{4};
-          Cdata.PlotData(i_pdat).Xfile   = Fields{5};
-          Cdata.PlotData(i_pdat).Xselect = regexprep(Fields{6}, '@', ' ');
-          Cdata.PlotData(i_pdat).Xscale  = sscanf(Fields{7}, '%f');
-          Cdata.PlotData(i_pdat).Xoffset = sscanf(Fields{8}, '%f');
-        end
+        Cdata.PlotData(i_pdat).Xvar    = Fields{3};
+        Cdata.PlotData(i_pdat).Xfile   = Fields{4};
+        Cdata.PlotData(i_pdat).Xselect = regexprep(Fields{5}, '@', ' ');
+        Cdata.PlotData(i_pdat).Xscale  = sscanf(Fields{6}, '%f');
+        Cdata.PlotData(i_pdat).Xoffset = sscanf(Fields{7}, '%f');
         % Y data
-        if (strcmp(Cdata.PlotData(i_pdat).Type, 'line'))
-          Cdata.PlotData(i_pdat).Yvar    = Fields{9};
-          Cdata.PlotData(i_pdat).Yfile   = Fields{10};
-          Cdata.PlotData(i_pdat).Yselect = regexprep(Fields{11}, '@', ' ');
-          Cdata.PlotData(i_pdat).Yscale  = sscanf(Fields{12},  '%f');
-          Cdata.PlotData(i_pdat).Yoffset = sscanf(Fields{13}, '%f');
-        end
+        Cdata.PlotData(i_pdat).Yvar    = Fields{8};
+        Cdata.PlotData(i_pdat).Yfile   = Fields{9};
+        Cdata.PlotData(i_pdat).Yselect = regexprep(Fields{10}, '@', ' ');
+        Cdata.PlotData(i_pdat).Yscale  = sscanf(Fields{11},  '%f');
+        Cdata.PlotData(i_pdat).Yoffset = sscanf(Fields{12}, '%f');
         
       case 'PlotAxes:'
         i_paxes = i_paxes + 1;
@@ -82,19 +77,21 @@ function [ Cdata ] = ReadFigureConfig ( Cfile )
         Cdata.PlotAxes(i_paxes).Lwidth  = sscanf(Fields{4}, '%f');
         Cdata.PlotAxes(i_paxes).Tlength = eval(regexprep(Fields{5}, '_', ' '));
         % X axis
-        Cdata.PlotAxes(i_paxes).Xlabel   = regexprep(Fields{6}, '@', ' ');
-        Cdata.PlotAxes(i_paxes).Xunits   = regexprep(Fields{7}, '@', ' ');
-        Cdata.PlotAxes(i_paxes).Xmin     = sscanf(Fields{8}, '%f');
-        Cdata.PlotAxes(i_paxes).Xmax     = sscanf(Fields{9}, '%f');
-        Cdata.PlotAxes(i_paxes).Xscale   = Fields{10};
-        Cdata.PlotAxes(i_paxes).Xticks   = eval(regexprep(Fields{11}, '_', ' '));
+        Cdata.PlotAxes(i_paxes).Xlabel      = regexprep(Fields{6}, '@', ' ');
+        Cdata.PlotAxes(i_paxes).Xunits      = regexprep(Fields{7}, '@', ' ');
+        Cdata.PlotAxes(i_paxes).Xmin        = sscanf(Fields{8}, '%f');
+        Cdata.PlotAxes(i_paxes).Xmax        = sscanf(Fields{9}, '%f');
+        Cdata.PlotAxes(i_paxes).Xscale      = Fields{10};
+        Cdata.PlotAxes(i_paxes).Xticks      = eval(regexprep(Fields{11}, '_', ' '));
+        Cdata.PlotAxes(i_paxes).XtickLabels = eval(regexprep(Fields{12}, '_', ' '));
         % Y axis
-        Cdata.PlotAxes(i_paxes).Ylabel   = regexprep(Fields{12}, '@', ' ');
-        Cdata.PlotAxes(i_paxes).Yunits   = regexprep(Fields{13}, '@', ' ');
-        Cdata.PlotAxes(i_paxes).Ymin     = sscanf(Fields{14}, '%f');
-        Cdata.PlotAxes(i_paxes).Ymax     = sscanf(Fields{15}, '%f');
-        Cdata.PlotAxes(i_paxes).Yscale   = Fields{16};
-        Cdata.PlotAxes(i_paxes).Yticks   = eval(regexprep(Fields{17}, '_', ' '));
+        Cdata.PlotAxes(i_paxes).Ylabel      = regexprep(Fields{13}, '@', ' ');
+        Cdata.PlotAxes(i_paxes).Yunits      = regexprep(Fields{14}, '@', ' ');
+        Cdata.PlotAxes(i_paxes).Ymin        = sscanf(Fields{15}, '%f');
+        Cdata.PlotAxes(i_paxes).Ymax        = sscanf(Fields{16}, '%f');
+        Cdata.PlotAxes(i_paxes).Yscale      = Fields{17};
+        Cdata.PlotAxes(i_paxes).Yticks      = eval(regexprep(Fields{18}, '_', ' '));
+        Cdata.PlotAxes(i_paxes).YtickLabels = eval(regexprep(Fields{19}, '_', ' '));
         
       case 'FigPanel:'
         i_fpan = i_fpan + 1;
