@@ -213,21 +213,10 @@ function [ ] = GenTsdHistMeas()
         Vname = MeasList{imeas}{5};   % use the output var name
         AttachDimensionsXyzt(OutFile, Vname, Xname, Yname, Zname, Tname);
       end
-  
-      % GRADS needs the following attributes on the dimension datasets in order
-      % to recognize which dimensions go with which datasets. These attribute
-      % names and values are following the COARDS convention.
-      WriteStringAttribute(OutFile, Xname, 'axis', 'x');
-      WriteStringAttribute(OutFile, Xname, 'units', 'degrees_east');
-  
-      WriteStringAttribute(OutFile, Yname, 'axis', 'y');
-      WriteStringAttribute(OutFile, Yname, 'units', 'degrees_north');
-  
-      WriteStringAttribute(OutFile, Zname, 'axis', 'z');
-      WriteStringAttribute(OutFile, Zname, 'units', 'meters');
-  
-      WriteStringAttribute(OutFile, Tname, 'axis', 't');
-      WriteStringAttribute(OutFile, Tname, 'units', 'seconds since 2006-08-20 12:00:00 00:00');
+
+      % Add COARDS annotations
+      NotateDimensionsXyzt(OutFile, Xname, Yname, Zname, Tname);
+
     end % sets
   end % cases
 end % function

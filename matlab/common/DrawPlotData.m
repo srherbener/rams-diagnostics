@@ -26,6 +26,12 @@ function [ ] = DrawPlotData( Axes, DataSpecs, Ptype )
       X = DataSpecs(i).Xdata;
       Y = DataSpecs(i).Ydata;
       bar(X,Y);
+    elseif (strcmp(Ptype, 'contourf'))
+      X = DataSpecs(i).Xdata;
+      Y = DataSpecs(i).Ydata;
+      Z = DataSpecs(i).Zdata;
+      contourf(X, Y, Z, 'LineStyle', 'none');
+      colorbar;
     end
   end
   

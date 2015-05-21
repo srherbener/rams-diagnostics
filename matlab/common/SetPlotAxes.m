@@ -25,4 +25,9 @@ function [ Axes ] = SetPlotAxes( Axes, AxesSpecs )
     LeftJustTitle(T);
   end
 
+  % If have color axis limits, set them
+  if (~isempty(AxesSpecs.Clims))
+    caxis(AxesSpecs.Clims);
+  end
+
 end

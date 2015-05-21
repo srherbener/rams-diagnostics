@@ -25,7 +25,7 @@ Figure: Ike 1
 End 
 
 Figure: Rmw 1
-  DummyCases
+ DummyCases
   [1_1]
   Plots/FigRmw.jpg
   RmwPanel   1
@@ -38,6 +38,23 @@ Figure: FacSep 2
   FsMaxWindPanel 1
   FsIkePanel 2
 End
+
+Figure: D1T1 2
+  DummyCases
+  [2_1]
+  Plots/FigDust1Tracer1.jpg
+  Dust1Panel 1
+  Tracer1Panel 2
+End
+
+Figure: D2T2 2
+  DummyCases
+  [2_1]
+  Plots/FigDust2Tracer2.jpg
+  Dust2Panel 1
+  Tracer2Panel 2
+End
+
 
 ########### CASES ####################
 CaseSet: DummyCases 1
@@ -93,125 +110,259 @@ FigPanel: FsIkePanel
   none 12
 End
 
+FigPanel: Dust1Panel
+  Dust1Pset
+  Dust1Contour 0 1
+  none 5
+  Small@Dust@Mode@(g@kg^-^1)
+  none 12
+End
+
+FigPanel: Tracer1Panel
+  Tracer1Pset
+  Tracer1Contour 1 1
+  none 5
+  Tracer@(g@kg^-^1)
+  none 12
+End
+
+FigPanel: Dust2Panel
+  Dust2Pset
+  Dust2Contour 0 1
+  none 5
+  Large@Dust@Mode@(g@kg^-^1)
+  none 12
+End
+
+FigPanel: Tracer2Panel
+  Tracer2Pset
+  Tracer2Contour 1 1
+  none 5
+  Tracer@(g@kg^-^1)
+  none 12
+End
+
 ############ PLOT SETS #################
 PlotSet: MaxWindPset line 4
-  MaxWindLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0 1 1 
-  MaxWindLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0 1 1 
-  MaxWindLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0 1 1 
-  MaxWindLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0 1 1 
+  MaxWindLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0
+  MaxWindLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0
+  MaxWindLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0
+  MaxWindLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0
 End
 
 PlotSet: MinSlpPset line 4
-  MinSlpLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0 1 1 
-  MinSlpLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0 1 1 
-  MinSlpLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0 1 1 
-  MinSlpLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0 1 1 
+  MinSlpLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0
+  MinSlpLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0
+  MinSlpLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0
+  MinSlpLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0
 End
 
 PlotSet: IkePset line 4
-  IkeLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0 1 1 
-  IkeLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0 1 1 
-  IkeLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0 1 1 
-  IkeLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0 1 1 
+  IkeLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0
+  IkeLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0
+  IkeLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0
+  IkeLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0
 End
 
 PlotSet: RmwPset line 4
-  RmwLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0 1 1 
-  RmwLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0 1 1 
-  RmwLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0 1 1 
-  RmwLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0 1 1 
+  RmwLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0
+  RmwLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0
+  RmwLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0
+  RmwLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0
 End
 
 PlotSet: FsMaxWindPset bar 1
-  MaxWindBar none    none  2 blue   - 0 1 1 
+  MaxWindBar none    none  2 blue   - 0
 End
 
 PlotSet: FsIkePset bar 1
-  IkeBar none    none  2 blue   - 0 1 1 
+  IkeBar none    none  2 blue   - 0
+End
+
+PlotSet: Dust1Pset contourf 1
+  Dust1Contour none none 2 blue - 0
+End
+
+PlotSet: Tracer1Pset contourf 1
+  Tracer1Contour none none 2 blue - 0
+End
+
+PlotSet: Dust2Pset contourf 1
+  Dust2Contour none none 2 blue - 0
+End
+
+PlotSet: Tracer2Pset contourf 1
+  Tracer2Contour none none 2 blue - 0
 End
 
 ############ PLOT DATA #################
-PlotData: MaxWindLine
+PlotData: MaxWindLine 2
   # x data - sim time in hours
   /t_coords DIAGS/storm_meas_tseries_<CASE>.h5 @ 2.7778e-4 -42
   # y data - 
   /max_wind_fa DIAGS/storm_meas_tseries_<CASE>.h5 @ 1 0
 End
   
-PlotData: MinSlpLine
+PlotData: MinSlpLine 2
   # x data - sim time in hours
   /t_coords DIAGS/storm_meas_tseries_<CASE>.h5 @ 2.7778e-4 -42
   # y data - 
   /min_slp_fa  DIAGS/storm_meas_tseries_<CASE>.h5 @ 1 0
 End
 
-PlotData: IkeLine
+PlotData: IkeLine 2
   # x data - sim time in hours
   /t_coords DIAGS/storm_meas_tseries_<CASE>.h5 @ 2.7778e-4 -42
   # y data - 
   /ike      DIAGS/storm_meas_tseries_<CASE>.h5 @ 1e-6 0
 End
 
-PlotData: RmwLine
+PlotData: RmwLine 2
   # x data - sim time in hours
   /t_coords DIAGS/storm_meas_tseries_<CASE>.h5 @ 2.7778e-4 -42
   # y data - 
   /rmw_fa   DIAGS/storm_meas_tseries_<CASE>.h5 @ 1e-3 0
 End
 
-PlotData: MaxWindBar
+PlotData: MaxWindBar 2
   # x data - dummy counter
   dummy [1:3] @ 1 0
   # y data - factor separation, max wind speed
   /s_max_wind_factors DIAGS/fs_factors.h5 (2:end) 1 0
 End
 
-PlotData: IkeBar
+PlotData: IkeBar 2
   # x data - dummy counter
   dummy [1:3] @ 1 0
   # y data - factor separation, integrated kinetic energy
   /s_ike_factors DIAGS/fs_factors.h5 (2:end) 1e-6 0
 End
 
+PlotData: Dust1Contour 3
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords      DIAGS/sp_dust1_TSD_NONSAL_DUST.h5 (:)      2.7778e-4 -42
+  # y - height
+  /z_coords      DIAGS/sp_dust1_TSD_NONSAL_DUST.h5 (2:39)        1e-3   0
+  # z - dust1 profile data (z,t)
+  /sp_dust1_mass DIAGS/sp_dust1_TSD_NONSAL_DUST.h5 (2:39,:)         1   0
+End
+
+PlotData: Tracer1Contour 3
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/sp_tracer1_TSD_NONSAL_DUST.h5 (:)      2.7778e-4 -42
+  # y - height
+  /z_coords DIAGS/sp_tracer1_TSD_NONSAL_DUST.h5 (2:39)        1e-3   0
+  # z - tracer1 profile data (z,t)
+  /sp_tr3d1 DIAGS/sp_tracer1_TSD_NONSAL_DUST.h5 (2:39,:)         1   0
+End
+
+PlotData: Dust2Contour 3
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords      DIAGS/sp_dust2_TSD_NONSAL_DUST.h5 (:)      2.7778e-4 -42
+  # y - height
+  /z_coords      DIAGS/sp_dust2_TSD_NONSAL_DUST.h5 (2:39)        1e-3   0
+  # z - dust2 profile data (z,t)
+  /sp_dust2_mass DIAGS/sp_dust2_TSD_NONSAL_DUST.h5 (2:39,:)         1   0
+End
+
+PlotData: Tracer2Contour 3
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/sp_tracer2_TSD_NONSAL_DUST.h5 (:)      2.7778e-4 -42
+  # y - height
+  /z_coords DIAGS/sp_tracer2_TSD_NONSAL_DUST.h5 (2:39)        1e-3   0
+  # z - tracer2 profile data (z,t)
+  /sp_tr3d2 DIAGS/sp_tracer2_TSD_NONSAL_DUST.h5 (2:39,:)         1   0
+End
+
 ############ PLOT AXES #################
-PlotAxes: MaxWindAxes 18 2 [0.025_0.025]
+PlotAxes: MaxWindAxes 2
+  18 2 [0.025_0.025]
   # x axis - utc time
   Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
   # y axis - speed in m/s
   Speed m@s^-^1 0 30 linear [_] {_}
 End
 
-PlotAxes: MinSlpAxes 18 2 [0.025_0.025]
+PlotAxes: MinSlpAxes 2
+  18 2 [0.025_0.025]
   # x axis - utc time
   Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
   # y axis - speed in m/s
   Pressure mb 995 1010 linear [_] {_}
 End
 
-PlotAxes: IkeAxes 18 2 [0.025_0.025]
+PlotAxes: IkeAxes 2
+  18 2 [0.025_0.025]
   # x axis - utc time
   Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
   # y axis - speed in m/s
   IKE 10^6@J 0 40 linear [_] {_}
 End
 
-PlotAxes: RmwAxes 18 2 [0.025_0.025]
+PlotAxes: RmwAxes 2
+  18 2 [0.025_0.025]
   # x axis - utc time
   Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
   # y axis - speed in m/s
   RMW km 30 110 linear [_] {_}
 End
 
-PlotAxes: FsMaxWindAxes 18 2 [0.025_0.025]
+PlotAxes: FsMaxWindAxes 2
+  18 2 [0.025_0.025]
   # x axis - factors
   Factor @ 0 4 linear [1_2_3] {'NS'_'ND'_'NSD'}
   # y axis - speed in m/s
   Wind@Speed m@s^-^1 -4 4 linear [_] {_}
 End
 
-PlotAxes: FsIkeAxes 18 2 [0.025_0.025]
+PlotAxes: FsIkeAxes 2
+  18 2 [0.025_0.025]
   # x axis - factors
   Factor @ 0 4 linear [1_2_3] {'NS'_'ND'_'NSD'}
   # y axis - speed in m/s
   IKE 10^6@J -10 10 linear [_] {_}
+End
+
+PlotAxes: Dust1Contour 3
+  18 2 [0.025_0.025]
+  # x axis - utc time
+  Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
+  # y axis - height
+  Height km 0 10 linear [_] {_}
+  # z axis - dust1 mass
+  Dust1@Mass g@kg^-^1 0 2 linear [_] {_}
+End
+
+PlotAxes: Tracer1Contour 3
+  18 2 [0.025_0.025]
+  # x axis - utc time
+  Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
+  # y axis - height
+  Height km 0 10 linear [_] {_}
+  # z axis - dust1 mass
+  Tracer1@Mass g@kg^-^1 0 2 linear [_] {_}
+End
+
+PlotAxes: Dust2Contour 3
+  18 2 [0.025_0.025]
+  # x axis - utc time
+  Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
+  # y axis - height
+  Height km 0 10 linear [_] {_}
+  # z axis - dust1 mass
+  Dust2@Mass g@kg^-^1 0 700 linear [_] {_}
+End
+
+PlotAxes: Tracer2Contour 3
+  18 2 [0.025_0.025]
+  # x axis - utc time
+  Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
+  # y axis - height
+  Height km 0 10 linear [_] {_}
+  # z axis - dust1 mass
+  Tracer2@Mass g@kg^-^1 0 700 linear [_] {_}
 End

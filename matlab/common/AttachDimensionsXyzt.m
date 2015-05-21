@@ -30,4 +30,5 @@ function [] = AttachDimensionsXyzt(File, Dataset, Xname, Yname, Zname, Tname);
   H5D.close(t_id);
   H5D.close(dset_id);
   H5F.close(file_id);
+
 end

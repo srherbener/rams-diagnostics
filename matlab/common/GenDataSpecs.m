@@ -1,9 +1,10 @@
 function [ DataSpecs, LegText, DSokay ] = GenDataSpecs(Config, FigCase, i_panel, i_pset, Indent)
 % GenDataSpecs function to generate data specfifications for plots
 
-  Smooth  = Config.FigPanels(i_panel).Smooth;
-  Flength = Config.FigPanels(i_panel).Flength;
-  Ndsets  = Config.PlotSets(i_pset).Ndsets;
+  UndefVal = Config.UndefVal;
+  Smooth   = Config.FigPanels(i_panel).Smooth;
+  Flength  = Config.FigPanels(i_panel).Flength;
+  Ndsets   = Config.PlotSets(i_pset).Ndsets;
 
   DSokay = 1;
 
@@ -33,53 +34,54 @@ function [ DataSpecs, LegText, DSokay ] = GenDataSpecs(Config, FigCase, i_panel,
       Case = LineCase;
     end
 
-    % Get specs for x data, substitute for case name in file name
-    Xvar    = Config.PlotData(i_pdata).Xvar;
-    Xfile   = regexprep(Config.PlotData(i_pdata).Xfile, '<CASE>', Case);
-    Xselect = Config.PlotData(i_pdata).Xselect;
-    Xscale  = Config.PlotData(i_pdata).Xscale;
-    Xoffset = Config.PlotData(i_pdata).Xoffset;
-    Xzoom   = Config.PlotSets(i_pset).DataSets(i_dset).Xzoom;
-    
-    % Read in and process X data
-    if (strcmp(Xvar, 'dummy'))
-      % use the pattern in Xfile to generate Xdata
-      fprintf('%sUsing pattern: %s\n', Indent, Xfile);
-      Xdata = eval(Xfile);
-    else
-      % read in Xdata from the file
-      fprintf('%sReading: %s (%s)\n', Indent, Xfile, Xvar);
-      Xdata = ReadSelectHdf5(Xfile, Xvar, Xselect);
-    end
-    Xdata(Xdata == Config.UndefVal) = nan;
-    if (strcmp(Smooth, 'x') || strcmp(Smooth, 'xy'))
-      Xdata = SmoothFillTseries(Xdata, length(Xdata), Flength);
-    end
-    DataSpecs(i_dset).Xdata = (Xdata .* Xscale) + Xoffset;
+    % Nvars indicates how many variables are specified for this
+    % PlotData set. Assume the ordering:
+    %   Vars(1) -> X data
+    %   Vars(2) -> Y data
+    %   Vars(3) -> Z data
+    Nvars = Config.PlotData(i_pdata).Nvars;
 
-    % Get specs for y data, substitute for case name in file name  
-    Yvar    = Config.PlotData(i_pdata).Yvar;
-    Yfile   = regexprep(Config.PlotData(i_pdata).Yfile, '<CASE>', Case);
-    Yselect = Config.PlotData(i_pdata).Yselect;
-    Yscale  = Config.PlotData(i_pdata).Yscale;
-    Yoffset = Config.PlotData(i_pdata).Yoffset;
-    Yzoom   = Config.PlotSets(i_pset).DataSets(i_dset).Yzoom;
-    
-    % Read in and process y data
-    if (strcmp(Yvar, 'dummy'))
-      % use the pattern in Yfile to generate Ydata
-      fprintf('%sUsing pattern: %s\n', Indent, Yfile);
-      Ydata = eval(Yfile);
-    else
-      % read in Xdata from the file
-      fprintf('%sReading: %s (%s)\n', Indent, Yfile, Yvar);
-      Ydata = ReadSelectHdf5(Yfile, Yvar, Yselect);
+    if (Nvars >= 1)
+      DataSpecs(i_dset).Xdata = ReadProcessVarData(Config.PlotData(i_pdata).Vars(1), Case, Smooth, Flength, UndefVal, Indent);
     end
-    Ydata(Ydata == Config.UndefVal) = nan;
-    if (strcmp(Smooth, 'y') || strcmp(Smooth, 'xy'))
-      Ydata = SmoothFillTseries(Ydata, length(Ydata), Flength);
+    if (Nvars >= 2)
+      DataSpecs(i_dset).Ydata = ReadProcessVarData(Config.PlotData(i_pdata).Vars(2), Case, Smooth, Flength, UndefVal, Indent);
     end
-    DataSpecs(i_dset).Ydata = (Ydata .* Yscale) + Yoffset;
-    
+    if (Nvars >= 3)
+      DataSpecs(i_dset).Zdata = ReadProcessVarData(Config.PlotData(i_pdata).Vars(3), Case, Smooth, Flength, UndefVal, Indent);
+    end
   end
+end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ReadProcessVarData()
+%
+% This function will pull the specs for reading data for a variable
+% out of the config structure, read in the variable, apply the
+% appropriate processing and output the result.
+%
+function [ VarData ] = ReadProcessVarData( Var, Case, Smooth, Flength, UndefVal, Indent )
+
+    File   = regexprep(Var.File, '<CASE>', Case);
+    
+    % Read in var data
+    if (strcmp(Var.Vname, 'dummy'))
+      % use the pattern in File to generate VarData
+      fprintf('%sUsing pattern: %s\n', Indent, File);
+      VarData = eval(File);
+    else
+      % read in VarData from the file
+      fprintf('%sReading: %s (%s)\n', Indent, File, Var.Vname);
+      VarData = ReadSelectHdf5(File, Var.Vname, Var.Select);
+    end
+
+    % Apply specifice processing
+    %    linear scaling
+    %    undefined values set to nan
+    VarData = (VarData .* Var.Scale) + Var.Offset;
+    VarData(VarData == UndefVal) = nan;
+    if (strcmp(Smooth, 'x') || strcmp(Smooth, 'xy'))
+      VarData = SmoothFillTseries(VarData, length(VarData), Flength);
+    end
+
 end
