@@ -39,7 +39,7 @@ Figure: FacSep 2
   FsIkePanel 2
 End
 
-Figure: D1T1 2
+Figure: Dust1Tracer1 2
   DummyCases
   [2_1]
   Plots/FigDust1Tracer1.jpg
@@ -47,7 +47,7 @@ Figure: D1T1 2
   Tracer1Panel 2
 End
 
-Figure: D2T2 2
+Figure: Dust2Tracer2 2
   DummyCases
   [2_1]
   Plots/FigDust2Tracer2.jpg
@@ -55,6 +55,16 @@ Figure: D2T2 2
   Tracer2Panel 2
 End
 
+# all four on one figure has issues
+#Figure: DustTracer 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigDustTracer.jpg
+#  Dust1Panel   1
+#  Dust2Panel   2
+#  Tracer1Panel 3
+#  Tracer2Panel 4
+#End
 
 ########### CASES ####################
 CaseSet: DummyCases 1
@@ -98,7 +108,7 @@ FigPanel: FsMaxWindPanel
   FsMaxWindPset
   FsMaxWindAxes 1 1
   none 5
-  Max@Wind
+  PANEL:a@Max@Wind
   none 12
 End
 
@@ -106,7 +116,7 @@ FigPanel: FsIkePanel
   FsIkePset
   FsIkeAxes 1 1
   none 5
-  IKE
+  PANEL:b@IKE
   none 12
 End
 
@@ -114,7 +124,7 @@ FigPanel: Dust1Panel
   Dust1Pset
   Dust1Contour 0 1
   none 5
-  Small@Dust@Mode@(g@kg^-^1)
+  PANEL:a@Small@Dust@Mode@(ug@m^-^3)
   none 12
 End
 
@@ -122,7 +132,7 @@ FigPanel: Tracer1Panel
   Tracer1Pset
   Tracer1Contour 1 1
   none 5
-  Tracer@(g@kg^-^1)
+  PANEL:b@Tracer@(ug@m^-^3)
   none 12
 End
 
@@ -130,7 +140,7 @@ FigPanel: Dust2Panel
   Dust2Pset
   Dust2Contour 0 1
   none 5
-  Large@Dust@Mode@(g@kg^-^1)
+  PANEL:a@Large@Dust@Mode@(ug@m^-^3)
   none 12
 End
 
@@ -138,7 +148,7 @@ FigPanel: Tracer2Panel
   Tracer2Pset
   Tracer2Contour 1 1
   none 5
-  Tracer@(g@kg^-^1)
+  PANEL:b@Tracer@(ug@m^-^3)
   none 12
 End
 
