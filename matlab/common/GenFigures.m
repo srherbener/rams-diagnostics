@@ -56,7 +56,7 @@ function [ ] = GenFigures(ConfigFile)
         end
     
         % Fill in the AxesSpecs structure
-        [ AxesSpecs ] = GenAxesSpecs(Config, i_panel, i_paxis);
+        [ AxesSpecs ] = GenAxesSpecs(Config, i_panel, i_paxis, FigCase);
     
         % Fill in the DataSpecs structure
         % Last arg is indent spacing for formatting messages.

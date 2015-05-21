@@ -1,7 +1,33 @@
-function [ AxesSpecs ] = GenAxesSpecs(Config, i_panel, i_paxis)
+function [ AxesSpecs ] = GenAxesSpecs(Config, i_panel, i_paxis, Case)
 % GenAxesSpecs function to generate axes specfifications for plots
 
+  % Title
   Ptitle  = Config.FigPanels(i_panel).Title.Main;
+  if (~strcmp(Case, 'none'))
+    % preserve underbars in case name
+    %
+    % If the case name is A_B, then want Ptitle to end up with
+    % the string: A\_B. Each time the variable Case is read,
+    % the interpreter replaces all '\<char>' with '<char>'
+    % (ala LINUX backslash substitution). Since the string in Case is
+    % being read by multiple times, need to put in extra backslashes
+    % in the first regexprep. Example:
+    %
+    %    Case is initially 'A_B'
+    %    After the first regexprep, Case becomes 'A\\\\_B'
+    %    The Case part of the string in Ptitle, after the second regexprep
+    %       becomes 'A\\_B' (backslashes 1 and 2 become the first backslash,
+    %       and backslashes 3 and 4 become the second backslash)
+    %    Ptitle is read once more below in this routine, which then leaves
+    %       'A\_B' in AxexSpecs.Title. This is the desired string to
+    %        preserve the '_' when AxesSpec.Title is read once more
+    %        by the title() command in DrawPlotData().
+    %
+    Case = regexprep(Case, '_', '\\\\_');
+    Ptitle = regexprep(Ptitle, '<CASE>', Case);
+  end
+
+  % Panel marker
   if (isempty(Config.FigPanels(i_panel).Title.Pmarkers))
     Pmarker = '';
   else

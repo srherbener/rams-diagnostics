@@ -13,10 +13,11 @@ Figure: FigRadMeas 3
 End 
 
 ########### CASES ####################
-CaseSet: TestCases 3
+CaseSet: TestCases 4
   RCE_BASE
   RCE_MATT
   RCE_CNTL
+  RCE_CNTL_NZ75
 End
 
 ########### PANELS ####################
@@ -24,7 +25,7 @@ FigPanel: EqMeasPanel
   EqMeasPset
   EqMeasAxes 0 1
   none 5
-  PANEL:a@Eq@Measurement
+  PANEL:a@Eq@Measurement@@@@@@@@@@<CASE>
   SouthEast 12
 End
 
@@ -45,99 +46,99 @@ FigPanel: QradCompPanel
 End
 
 ############ PLOT SETS #################
-LineSet: EqMeasPset 2
-  ThfLine  none THF     2 blue   - 0 1 1 
-  QradLine none Q_r_a_d 2 red    - 0 1 1
+PlotSet: EqMeasPset line 2
+  ThfLine  none THF     2 blue   - 0
+  QradLine none Q_r_a_d 2 red    - 0
 End
 
-LineSet: ThfCompPset 2
-  SfcLatLine  none SFC\_LAT  2 blue   - 0 1 1 
-  SfcSensLine none SFC\_SENS 2 red    - 0 1 1
+PlotSet: ThfCompPset line 2
+  SfcLatLine  none SFC\_LAT  2 blue   - 0
+  SfcSensLine none SFC\_SENS 2 red    - 0
 End
 
-LineSet: QradCompPset 7
-  SfcLwdnLine none SFC\_LWDN 2 blue    - 0 1 1 
-  SfcLwupLine none SFC\_LWUP 2 green   - 0 1 1
-  SfcSwdnLine none SFC\_SWDN 2 red     - 0 1 1 
-  SfcSwupLine none SFC\_SWUP 2 orange  - 0 1 1
+PlotSet: QradCompPset line 7
+  SfcLwdnLine none SFC\_LWDN 2 blue    - 0
+  SfcLwupLine none SFC\_LWUP 2 green   - 0
+  SfcSwdnLine none SFC\_SWDN 2 red     - 0
+  SfcSwupLine none SFC\_SWUP 2 orange  - 0
 
-  TopLwupLine none TOP\_LWUP 2 green   -- 0 1 1
-  TopSwdnLine none TOP\_SWDN 2 red     -- 0 1 1 
-  TopSwupLine none TOP\_SWUP 2 orange  -- 0 1 1
+  TopLwupLine none TOP\_LWUP 2 green   -- 0
+  TopSwdnLine none TOP\_SWDN 2 red     -- 0
+  TopSwupLine none TOP\_SWUP 2 orange  -- 0
 End
 
 ############ PLOT DATA #################
-PlotData: ThfLine
+PlotData: ThfLine 2
   # x data - sim time in days
   /t_coords        DIAGS/eq_meas_<CASE>.h5 @ 1 0
   # y data - thermal heat flux in W/m^2
   /therm_heat_flux DIAGS/eq_meas_<CASE>.h5 @ 1 0
 End
   
-PlotData: QradLine
+PlotData: QradLine 2
   # x data - sim time in days
   /t_coords     DIAGS/eq_meas_<CASE>.h5 @ 1 0
   # y data - radiative flux divergence in W/m^2
   /rad_flux_div DIAGS/eq_meas_<CASE>.h5 @ 1 0
 End
 
-PlotData: SfcLatLine
+PlotData: SfcLatLine 2
   # x data - sim time in days
   /t_coords     DIAGS/eq_meas_<CASE>.h5 @ 1 0
   # y data - radiative flux divergence in W/m^2
   /avg_sfc_lat  DIAGS/eq_meas_<CASE>.h5 @ 1 0
 End
 
-PlotData: SfcSensLine
+PlotData: SfcSensLine 2
   # x data - sim time in days
   /t_coords     DIAGS/eq_meas_<CASE>.h5 @ 1 0
   # y data - radiative flux divergence in W/m^2
   /avg_sfc_sens DIAGS/eq_meas_<CASE>.h5 @ 1 0
 End
 
-PlotData: SfcLwdnLine
+PlotData: SfcLwdnLine 2
   # x data - sim time in days
   /t_coords     DIAGS/eq_meas_<CASE>.h5 @ 1 0
   # y data - radiative flux divergence in W/m^2
   /avg_sfc_lwdn DIAGS/eq_meas_<CASE>.h5 @ 1 0
 End
 
-PlotData: SfcLwupLine
+PlotData: SfcLwupLine 2
   # x data - sim time in days
   /t_coords     DIAGS/eq_meas_<CASE>.h5 @ 1 0
   # y data - radiative flux divergence in W/m^2
   /avg_sfc_lwup DIAGS/eq_meas_<CASE>.h5 @ 1 0
 End
 
-PlotData: SfcSwdnLine
+PlotData: SfcSwdnLine 2
   # x data - sim time in days
   /t_coords     DIAGS/eq_meas_<CASE>.h5 @ 1 0
   # y data - radiative flux divergence in W/m^2
   /avg_sfc_swdn DIAGS/eq_meas_<CASE>.h5 @ 1 0
 End
 
-PlotData: SfcSwupLine
+PlotData: SfcSwupLine 2
   # x data - sim time in days
   /t_coords     DIAGS/eq_meas_<CASE>.h5 @ 1 0
   # y data - radiative flux divergence in W/m^2
   /avg_sfc_swup DIAGS/eq_meas_<CASE>.h5 @ 1 0
 End
 
-PlotData: TopLwupLine
+PlotData: TopLwupLine 2
   # x data - sim time in days
   /t_coords     DIAGS/eq_meas_<CASE>.h5 @ 1 0
   # y data - radiative flux divergence in W/m^2
   /avg_top_lwup DIAGS/eq_meas_<CASE>.h5 @ 1 0
 End
 
-PlotData: TopSwdnLine
+PlotData: TopSwdnLine 2
   # x data - sim time in days
   /t_coords     DIAGS/eq_meas_<CASE>.h5 @ 1 0
   # y data - radiative flux divergence in W/m^2
   /avg_top_swdn DIAGS/eq_meas_<CASE>.h5 @ 1 0
 End
 
-PlotData: TopSwupLine
+PlotData: TopSwupLine 2
   # x data - sim time in days
   /t_coords     DIAGS/eq_meas_<CASE>.h5 @ 1 0
   # y data - radiative flux divergence in W/m^2
@@ -145,23 +146,26 @@ PlotData: TopSwupLine
 End
 
 ############ PLOT AXES #################
-PlotAxes: EqMeasAxes 18 2 [0.025_0.025]
+PlotAxes: EqMeasAxes 2
+  18 2 [0.025_0.025]
   # x axis - sim time in days
-  Simulation@Time d 0 80 linear [_]
+  Simulation@Time d 0 80 linear [_] {_}
   # y axis - flux in W/m^2
-  Flux W@m^-^2 0 125 linear [_]
+  Flux W@m^-^2 0 125 linear [_] {_}
 End
 
-PlotAxes: ThfCompAxes 18 2 [0.025_0.025]
+PlotAxes: ThfCompAxes 2
+  18 2 [0.025_0.025]
   # x axis - sim time in days
-  Simulation@Time d 0 80 linear [_]
+  Simulation@Time d 0 80 linear [_] {_}
   # y axis - flux in W/m^2
-  Flux W@m^-^2 0 120 linear [_]
+  Flux W@m^-^2 0 120 linear [_] {_}
 End
 
-PlotAxes: QradCompAxes 18 2 [0.025_0.025]
+PlotAxes: QradCompAxes 2
+  18 2 [0.025_0.025]
   # x axis - sim time in days
-  Simulation@Time d 0 80 linear [_]
+  Simulation@Time d 0 80 linear [_] {_}
   # y axis - flux in W/m^2
-  Flux W@m^-^2 0 500 linear [_]
+  Flux W@m^-^2 0 500 linear [_] {_}
 End
