@@ -9,63 +9,43 @@ function [ ] = GenEqMeasTseries()
     mkdir(Ddir);
   end
 
-  % cases
+  % CaseList names each case and indicates where to find the
+  % input variable files. Each sub list has two entries:
+  %
+  %   CaseName FileNameTemplate
+  %
   CaseList = {
-%   'RCE50_RECT'
-%   'RCE50_RECT_S300'
-%   'RCE50_RECT_S303'
-%   'RCE50_SQ'
-%   'RCE50_2D'
-%   'RCE_MATT'
-%   'RCE_BASE'
-   'RCE_CNTL'
+%    { 'RCE50_RECT'      'HDF5/RCE50_RECT/HDF5/<FPREFIX>-a-AS-2012-01-01-000000-g1.h5'      }
+%    { 'RCE50_RECT_S300' 'HDF5/RCE50_RECT_S300/HDF5/<FPREFIX>-a-AS-2012-01-01-000000-g1.h5' }
+%    { 'RCE50_RECT_S303' 'HDF5/RCE50_RECT_S303/HDF5/<FPREFIX>-a-AS-2012-01-01-000000-g1.h5' }
+%    { 'RCE50_SQ'        'HDF5/RCE50_SQ/HDF5/<FPREFIX>-a-AS-2012-01-01-000000-g1.h5'        }
+%    { 'RCE50_2D'        'HDF5/RCE50_2D/HDF5/<FPREFIX>-a-AS-2012-01-01-000000-g1.h5'        }
+%    { 'RCE_MATT'        'HDF5/RCE_MATT/HDF5/<FPREFIX>-a-AS-2012-01-01-000000-g1.h5'        }
+%    { 'RCE_BASE'        'HDF5/RCE_BASE/HDF5/<FPREFIX>-a-AC-2012-01-01-000000-g1.h5'        }
+    { 'RCE_CNTL'        'HDF5/RCE_CNTL/HDF5/<FPREFIX>-RCE_CNTL-AC-2012-01-01-000000-g1.h5'        }
+    { 'RCE_CNTL_NZ75'   'HDF5/RCE_CNTL/HDF5_NZ75/<FPREFIX>-RCE_CNTL-AC-2012-01-01-000000-g1.h5'   }
    };
-  Nc = length(CaseList);
-
-  % input file specs
-  % thermal heat flux
-%  SfcLatFbase  = 'lat_flux-a-AS-2012-01-01-000000-g1.h5';
-%  SfcSensFbase = 'sens_flux-a-AS-2012-01-01-000000-g1.h5';
-%  SfcLatFbase  = 'lat_flux-a-AC-2012-01-01-000000-g1.h5';
-%  SfcSensFbase = 'sens_flux-a-AC-2012-01-01-000000-g1.h5';
-  SfcLatFbase  = 'lat_flux-RCE_CNTL-AC-2012-01-01-000000-g1.h5';
-  SfcSensFbase = 'sens_flux-RCE_CNTL-AC-2012-01-01-000000-g1.h5';
+  Ncases = length(CaseList);
 
   SfcLatVname  = 'lat_flux';
   SfcSensVname = 'sens_flux';
-
-  % radiative flux divergence
-%  SfcSwdnFbase = 'rshort-a-AS-2012-01-01-000000-g1.h5';
-%  SfcLwdnFbase = 'rlong-a-AS-2012-01-01-000000-g1.h5';
-%  SfcLwupFbase = 'rlongup-a-AS-2012-01-01-000000-g1.h5';
-%  SfcAlbFbase  = 'albedt-a-AS-2012-01-01-000000-g1.h5';
-%  SfcSwdnFbase = 'rshort-a-AC-2012-01-01-000000-g1.h5';
-%  SfcLwdnFbase = 'rlong-a-AC-2012-01-01-000000-g1.h5';
-%  SfcLwupFbase = 'rlongup-a-AC-2012-01-01-000000-g1.h5';
-%  SfcAlbFbase  = 'albedt-a-AC-2012-01-01-000000-g1.h5';
-  SfcSwdnFbase = 'rshort-RCE_CNTL-AC-2012-01-01-000000-g1.h5';
-  SfcLwdnFbase = 'rlong-RCE_CNTL-AC-2012-01-01-000000-g1.h5';
-  SfcLwupFbase = 'rlongup-RCE_CNTL-AC-2012-01-01-000000-g1.h5';
-  SfcAlbFbase  = 'albedt-RCE_CNTL-AC-2012-01-01-000000-g1.h5';
-
   SfcSwdnVname = 'rshort';
   SfcLwdnVname = 'rlong';
   SfcLwupVname = 'rlongup';
   SfcAlbVname  = 'albedt';
-
-%  TopSwdnFbase = 'swdn_toa-a-AS-2012-01-01-000000-g1.h5';
-%  TopSwupFbase = 'swup_toa-a-AS-2012-01-01-000000-g1.h5';
-%  TopLwupFbase = 'lwup_toa-a-AS-2012-01-01-000000-g1.h5';
-%  TopSwdnFbase = 'swdn_toa-a-AC-2012-01-01-000000-g1.h5';
-%  TopSwupFbase = 'swup_toa-a-AC-2012-01-01-000000-g1.h5';
-%  TopLwupFbase = 'lwup_toa-a-AC-2012-01-01-000000-g1.h5';
-  TopSwdnFbase = 'swdn_toa-RCE_CNTL-AC-2012-01-01-000000-g1.h5';
-  TopSwupFbase = 'swup_toa-RCE_CNTL-AC-2012-01-01-000000-g1.h5';
-  TopLwupFbase = 'lwup_toa-RCE_CNTL-AC-2012-01-01-000000-g1.h5';
-
   TopSwdnVname = 'swdn';
   TopSwupVname = 'swup';
   TopLwupVname = 'lwup';
+
+  SfcLatFprefix  = 'lat_flux';
+  SfcSensFprefix = 'sens_flux';
+  SfcSwdnFprefix = 'rshort';
+  SfcLwdnFprefix = 'rlong';
+  SfcLwupFprefix = 'rlongup';
+  SfcAlbFprefix  = 'albedt';
+  TopSwdnFprefix = 'swdn_toa';
+  TopSwupFprefix = 'swup_toa';
+  TopLwupFprefix = 'lwup_toa';
 
   % output file specs
   OutFprefix = 'eq_meas';
@@ -75,25 +55,27 @@ function [ ] = GenEqMeasTseries()
   fprintf('***************************************************************\n');
   fprintf('Generating domain average time series:\n');
 
-  for icase = 1:Nc
-    Case = CaseList{icase};
+  for icase = 1:Ncases
+    Case       = CaseList{icase}{1};
+    InFileTmpl = CaseList{icase}{2};
+
     OutFile = sprintf('%s/%s_%s.h5', Ddir, OutFprefix, Case);
 
     fprintf('  Case: %s\n', Case);
     fprintf('\n');
 
     % Assemble input file names
-    SfcLatFile  = sprintf('%s/%s/%s', Hdir, Case, SfcLatFbase);
-    SfcSensFile = sprintf('%s/%s/%s', Hdir, Case, SfcSensFbase);
+    SfcLatFile  = regexprep(InFileTmpl, '<FPREFIX>', SfcLatFprefix);
+    SfcSensFile = regexprep(InFileTmpl, '<FPREFIX>', SfcSensFprefix);
 
-    SfcSwdnFile = sprintf('%s/%s/%s', Hdir, Case, SfcSwdnFbase);
-    SfcLwdnFile = sprintf('%s/%s/%s', Hdir, Case, SfcLwdnFbase);
-    SfcLwupFile = sprintf('%s/%s/%s', Hdir, Case, SfcLwupFbase);
-    SfcAlbFile  = sprintf('%s/%s/%s', Hdir, Case, SfcAlbFbase);
+    SfcSwdnFile = regexprep(InFileTmpl, '<FPREFIX>', SfcSwdnFprefix);
+    SfcLwdnFile = regexprep(InFileTmpl, '<FPREFIX>', SfcLwdnFprefix);
+    SfcLwupFile = regexprep(InFileTmpl, '<FPREFIX>', SfcLwupFprefix);
+    SfcAlbFile  = regexprep(InFileTmpl, '<FPREFIX>', SfcAlbFprefix);
 
-    TopSwdnFile  = sprintf('%s/%s/%s', Hdir, Case, TopSwdnFbase);
-    TopSwupFile  = sprintf('%s/%s/%s', Hdir, Case, TopSwupFbase);
-    TopLwupFile  = sprintf('%s/%s/%s', Hdir, Case, TopLwupFbase);
+    TopSwdnFile  = regexprep(InFileTmpl, '<FPREFIX>', TopSwdnFprefix);
+    TopSwupFile  = regexprep(InFileTmpl, '<FPREFIX>', TopSwupFprefix);
+    TopLwupFile  = regexprep(InFileTmpl, '<FPREFIX>', TopLwupFprefix);
 
     fprintf('  Reading input files:\n');
     fprintf('    %s (%s)\n', SfcLatFile, SfcLatVname);
@@ -162,16 +144,29 @@ function [ ] = GenEqMeasTseries()
       % Read in the variables -> after squeeze will be (y,x)
       % Throw away the lateral boundaries since these are sometimes
       % set to zero
-      SFC_LAT  = squeeze(SFC_LAT_VAR.data(it,2:end-1,2:end-1));
-      SFC_SENS = squeeze(SFC_SENS_VAR.data(it,2:end-1,2:end-1));
-
-      SFC_SWDN = squeeze(SFC_SWDN_VAR.data(it,2:end-1,2:end-1));
-      SFC_LWDN = squeeze(SFC_LWDN_VAR.data(it,2:end-1,2:end-1));
-      SFC_LWUP = squeeze(SFC_LWUP_VAR.data(it,2:end-1,2:end-1));
-      SFC_ALB  = squeeze(SFC_ALB_VAR.data(it,2:end-1,2:end-1));
-      TOP_SWDN = squeeze(TOP_SWDN_VAR.data(it,:,2:end-1,2:end-1));
-      TOP_SWUP = squeeze(TOP_SWUP_VAR.data(it,:,2:end-1,2:end-1));
-      TOP_LWUP = squeeze(TOP_LWUP_VAR.data(it,:,2:end-1,2:end-1));
+      if (strcmp(Case, 'RCE50_2D'))
+        SFC_LAT  = squeeze(SFC_LAT_VAR.data(it,1,2:end-1));
+        SFC_SENS = squeeze(SFC_SENS_VAR.data(it,1,2:end-1));
+  
+        SFC_SWDN = squeeze(SFC_SWDN_VAR.data(it,1,2:end-1));
+        SFC_LWDN = squeeze(SFC_LWDN_VAR.data(it,1,2:end-1));
+        SFC_LWUP = squeeze(SFC_LWUP_VAR.data(it,1,2:end-1));
+        SFC_ALB  = squeeze(SFC_ALB_VAR.data(it,1,2:end-1));
+        TOP_SWDN = squeeze(TOP_SWDN_VAR.data(it,1,1,2:end-1));
+        TOP_SWUP = squeeze(TOP_SWUP_VAR.data(it,1,1,2:end-1));
+        TOP_LWUP = squeeze(TOP_LWUP_VAR.data(it,1,1,2:end-1));
+      else
+        SFC_LAT  = squeeze(SFC_LAT_VAR.data(it,2:end-1,2:end-1));
+        SFC_SENS = squeeze(SFC_SENS_VAR.data(it,2:end-1,2:end-1));
+  
+        SFC_SWDN = squeeze(SFC_SWDN_VAR.data(it,2:end-1,2:end-1));
+        SFC_LWDN = squeeze(SFC_LWDN_VAR.data(it,2:end-1,2:end-1));
+        SFC_LWUP = squeeze(SFC_LWUP_VAR.data(it,2:end-1,2:end-1));
+        SFC_ALB  = squeeze(SFC_ALB_VAR.data(it,2:end-1,2:end-1));
+        TOP_SWDN = squeeze(TOP_SWDN_VAR.data(it,:,2:end-1,2:end-1));
+        TOP_SWUP = squeeze(TOP_SWUP_VAR.data(it,:,2:end-1,2:end-1));
+        TOP_LWUP = squeeze(TOP_LWUP_VAR.data(it,:,2:end-1,2:end-1));
+      end
 
       % SFC_SWUP = SFC_SWDN * SFC_ALB
       SFC_SWUP = SFC_SWDN .* SFC_ALB;
@@ -212,7 +207,7 @@ function [ ] = GenEqMeasTseries()
 
       AVG_SFC_ALB(it)  = mean(double(SFC_ALB(:)));
 
-      if (mod(it,50) == 0)
+      if (mod(it,10) == 0)
         fprintf ('  Completed timestep %d out of %d\n', it, Nt);
       end
     end

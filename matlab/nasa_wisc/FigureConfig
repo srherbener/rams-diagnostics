@@ -13,11 +13,16 @@ Figure: FigRadMeas 3
 End 
 
 ########### CASES ####################
-CaseSet: TestCases 4
-  RCE_BASE
-  RCE_MATT
+CaseSet: TestCases 1
+#  RCE50_2D
+#  RCE50_RECT
+#  RCE50_RECT_S300
+#  RCE50_RECT_S303
+#  RCE50_SQ
+#  RCE_BASE
+#  RCE_MATT
+#  RCE_CNTL_NZ75
   RCE_CNTL
-  RCE_CNTL_NZ75
 End
 
 ########### PANELS ####################
