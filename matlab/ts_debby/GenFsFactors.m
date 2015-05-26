@@ -97,7 +97,7 @@ function [ ] = GenFactSep()
     F1  = S1 - S0;
     F2  = S2 - S0;
     F12 = S12 - (S1 + S2) + S0;
-  
+
     % Write simulation values and the factors. Place each of these
     % into a vector.
     %   Sim averages: [ S0 S1 S2 S12 ]
@@ -105,6 +105,10 @@ function [ ] = GenFactSep()
 
     S_DATA = [ S0 S1 S2 S12 ];
     F_DATA = [ F0 F1 F2 F12 ];
+
+    % Write out data for a bar plot which shows fractional changes
+    P_DATA = [ F1 F2 (S12-S0) F12 ] ./ S0;
+    
 
     OutVar = sprintf('/%s_averages', FsVar);
     fprintf('  Writing: %s (%s)\n', OutFile, OutVar)
@@ -115,6 +119,11 @@ function [ ] = GenFactSep()
     fprintf('  Writing: %s (%s)\n', OutFile, OutVar)
     h5create(OutFile, OutVar,  size(F_DATA));
     h5write( OutFile, OutVar,  F_DATA);
+
+    OutVar = sprintf('/%s_frac_change', FsVar);
+    fprintf('  Writing: %s (%s)\n', OutFile, OutVar)
+    h5create(OutFile, OutVar,  size(P_DATA));
+    h5write( OutFile, OutVar,  P_DATA);
     
     fprintf('\n');
   end
