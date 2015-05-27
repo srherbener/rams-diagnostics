@@ -11,8 +11,9 @@ function [ ] = DrawPlotData( Axes, DataSpecs, Ptype )
   % select the passed in axes
   axes(Axes);
 
-  % Draw the lines
+  % Draw the plot
   Ndsets = length(DataSpecs);
+  hold on;
   for i = 1:Ndsets
     if (strcmp(Ptype, 'line'))
       X = DataSpecs(i).Xdata;
@@ -22,10 +23,18 @@ function [ ] = DrawPlotData( Axes, DataSpecs, Ptype )
       Lstyle = DataSpecs(i).Lstyle;
 
       line(X, Y, 'LineStyle', Lstyle, 'LineWidth', Lwidth, 'Color', Lcolor);
-    elseif (strcmp(Ptype, 'bar'))
+    elseif (strncmp(Ptype, 'bar', 3))
+      Bcolor = str2rgb(DataSpecs(i).Lcolor);
+
+      Bspecs = strsplit(Ptype, ':');
+      Btype = 'grouped';
+      if (length(Bspecs) > 1)
+        Btype = Bspecs{2};
+      end
+
       X = DataSpecs(i).Xdata;
       Y = DataSpecs(i).Ydata;
-      bar(X,Y);
+      bar(X,Y,Btype, 'FaceColor', Bcolor);
     elseif (strcmp(Ptype, 'contourf'))
       X = DataSpecs(i).Xdata;
       Y = DataSpecs(i).Ydata;
@@ -34,5 +43,6 @@ function [ ] = DrawPlotData( Axes, DataSpecs, Ptype )
       colorbar;
     end
   end
+  hold off;
   
 end
