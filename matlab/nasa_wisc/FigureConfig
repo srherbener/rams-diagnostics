@@ -3,14 +3,24 @@
 #
 
 ######### FIGURES ###################
-Figure: FigRadMeas 3
-  TestCases
-  [3_1]
-  Plots/FigRadMeas_<CASE>.jpg
-  EqMeasPanel   1
-  ThfCompPanel  2
-  QradCompPanel 3
-End 
+#Figure: FigRadMeas 3
+#  TestCases
+#  [3_1]
+#  Plots/FigRadMeas_<CASE>.jpg
+#  EqMeasPanel   1
+#  ThfCompPanel  2
+#  QradCompPanel 3
+#End 
+
+Figure: FigSampleSounding 4
+  DummyCases
+  [2_2]
+  Plots/FigSampleSnd.jpg
+  OldDiffCloudyPanel 1
+  OldDiffClearPanel  2
+  NewDiffCloudyPanel 3
+  NewDiffClearPanel  4
+End
 
 ########### CASES ####################
 CaseSet: TestCases 1
@@ -23,6 +33,10 @@ CaseSet: TestCases 1
 #  RCE_MATT
 #  RCE_CNTL_NZ75
   RCE_CNTL
+End
+
+CaseSet: DummyCases 1
+  none
 End
 
 ########### PANELS ####################
@@ -50,6 +64,38 @@ FigPanel: QradCompPanel
   NorthEast 12
 End
 
+FigPanel: OldDiffCloudyPanel
+  OldDiffCloudyPset
+  SampSoundingAxes 0 1
+  none 5
+  PANEL:a@Old@Diff@Cloudy
+  NorthEast 10
+End
+
+FigPanel: OldDiffClearPanel
+  OldDiffClearPset
+  SampSoundingAxes 0 0
+  none 5
+  PANEL:b@Old@Diff@Clear
+  NorthEast 10
+End
+
+FigPanel: NewDiffCloudyPanel
+  NewDiffCloudyPset
+  SampSoundingAxes 1 1
+  none 5
+  PANEL:c@New@Diff@Cloudy
+  NorthEast 10
+End
+
+FigPanel: NewDiffClearPanel
+  NewDiffClearPset
+  SampSoundingAxes 1 0
+  none 5
+  PANEL:d@New@Diff@Clear
+  NorthEast 10
+End
+
 ############ PLOT SETS #################
 PlotSet: EqMeasPset line 2
   ThfLine  none THF     2 blue   - 0
@@ -70,6 +116,30 @@ PlotSet: QradCompPset line 7
   TopLwupLine none TOP\_LWUP 2 green   -- 0
   TopSwdnLine none TOP\_SWDN 2 red     -- 0
   TopSwupLine none TOP\_SWUP 2 orange  -- 0
+End
+
+PlotSet: OldDiffCloudyPset line 3
+  OldDiffCloudyTemp  none T@(deg@C)        2 blue   - 0
+  OldDiffCloudyCloud none Q_c@(100@X@g/kg) 2 green  - 0
+  OldDiffCloudyVapor none Q_v@(g/kg)       2 red    - 0
+End
+
+PlotSet: OldDiffClearPset line 3
+  OldDiffClearTemp  none T@(deg@C)        2 blue   - 0
+  OldDiffClearCloud none Q_c@(100@X@g/kg) 2 green  - 0
+  OldDiffClearVapor none Q_v@(g/kg)       2 red    - 0
+End
+
+PlotSet: NewDiffCloudyPset line 3
+  NewDiffCloudyTemp  none T@(deg@C)        2 blue   - 0
+  NewDiffCloudyCloud none Q_c@(100@X@g/kg) 2 green  - 0
+  NewDiffCloudyVapor none Q_v@(g/kg)       2 red    - 0
+End
+
+PlotSet: NewDiffClearPset line 3
+  NewDiffClearTemp  none T@(deg@C)        2 blue   - 0
+  NewDiffClearCloud none Q_c@(100@X@g/kg) 2 green  - 0
+  NewDiffClearVapor none Q_v@(g/kg)       2 red    - 0
 End
 
 ############ PLOT DATA #################
@@ -150,6 +220,90 @@ PlotData: TopSwupLine 2
   /avg_top_swup DIAGS/eq_meas_<CASE>.h5 @ 1 0
 End
 
+PlotData: OldDiffCloudyTemp 2
+  # x data - sim time in days
+  /tempc    DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_cloudy.h5 (2:75,32) 1 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_cloudy.h5 (2:75) 1e-3 0
+End
+
+PlotData: OldDiffCloudyCloud 2
+  # x data - sim time in days
+  /cloud    DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_cloudy.h5 (2:75,32) 100 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_cloudy.h5 (2:75)   1e-3 0
+End
+
+PlotData: OldDiffCloudyVapor 2
+  # x data - sim time in days
+  /vapor    DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_cloudy.h5 (2:75,32) 1 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_cloudy.h5 (2:75) 1e-3 0
+End
+
+PlotData: OldDiffClearTemp 2
+  # x data - sim time in days
+  /tempc    DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_clear.h5 (2:75,32) 1 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_clear.h5 (2:75) 1e-3 0
+End
+
+PlotData: OldDiffClearCloud 2
+  # x data - sim time in days
+  /cloud    DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_clear.h5 (2:75,32) 100 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_clear.h5 (2:75)   1e-3 0
+End
+
+PlotData: OldDiffClearVapor 2
+  # x data - sim time in days
+  /vapor    DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_clear.h5 (2:75,32) 1 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_clear.h5 (2:75) 1e-3 0
+End
+
+PlotData: NewDiffCloudyTemp 2
+  # x data - sim time in days
+  /tempc    DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_cloudy.h5 (2:75,32) 1 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_cloudy.h5 (2:75) 1e-3 0
+End
+
+PlotData: NewDiffCloudyCloud 2
+  # x data - sim time in days
+  /cloud    DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_cloudy.h5 (2:75,32) 100 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_cloudy.h5 (2:75)   1e-3 0
+End
+
+PlotData: NewDiffCloudyVapor 2
+  # x data - sim time in days
+  /vapor    DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_cloudy.h5 (2:75,32) 1 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_cloudy.h5 (2:75) 1e-3 0
+End
+
+PlotData: NewDiffClearTemp 2
+  # x data - sim time in days
+  /tempc    DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_clear.h5 (2:75,32) 1 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_clear.h5 (2:75) 1e-3 0
+End
+
+PlotData: NewDiffClearCloud 2
+  # x data - sim time in days
+  /cloud    DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_clear.h5 (2:75,32) 100 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_clear.h5 (2:75)   1e-3 0
+End
+
+PlotData: NewDiffClearVapor 2
+  # x data - sim time in days
+  /vapor    DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_clear.h5 (2:75,32) 1 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_clear.h5 (2:75) 1e-3 0
+End
+
 ############ PLOT AXES #################
 PlotAxes: EqMeasAxes 2
   18 2 [0.025_0.025]
@@ -173,4 +327,12 @@ PlotAxes: QradCompAxes 2
   Simulation@Time d 0 80 linear [_] {_}
   # y axis - flux in W/m^2
   Flux W@m^-^2 0 500 linear [_] {_}
+End
+
+PlotAxes: SampSoundingAxes 2
+  18 2 [0.025_0.025]
+  # x axis - temp, cloud, vapor
+  @ @ -100 50 linear [_] {_}
+  # y axis - height
+  Height km 0 25 linear [_] {_}
 End

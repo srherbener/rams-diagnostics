@@ -1,11 +1,7 @@
-function [ ] = Gen2dHovmoller(ConfigFile)
+function [ ] = Gen2dHovmoller()
 % Gen2dHovmoller generate hovmoller data from time series of 2D fields
 
-  % Read the config file to get the structure of how the data is laid out in
-  % the file system.
-  [ Config ] = ReadConfig(ConfigFile);
-
-  Ddir = Config.DiagDir;
+  Ddir = 'DIAGS';
 
   % make sure output directory exists
   if (exist(Ddir, 'dir') ~= 7)
@@ -23,7 +19,10 @@ function [ ] = Gen2dHovmoller(ConfigFile)
 %    { 'HDF5/RCE50_RECT_S303/vint_vapor-a-AS-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE50_RECT_S303' 'midy' 1 'hov_precip_water' 'precip_water' }
 %    { 'HDF5/RCE50_SQ/vint_vapor-a-AS-2012-01-01-000000-g1.h5'        'vertint_vapor' 'RCE50_SQ'        'midy' 1 'hov_precip_water' 'precip_water' }
 %    { 'HDF5/RCE_MATT/vint_vapor-a-AS-2012-01-01-000000-g1.h5'        'vertint_vapor' 'RCE_MATT'        'midy' 1 'hov_precip_water' 'precip_water' }
-    { 'HDF5/RCE_BASE/vint_vapor-a-AS-2012-01-01-000000-g1.h5'        'vertint_vapor' 'RCE_BASE'        'midy' 1 'hov_precip_water' 'precip_water' }
+%    { 'HDF5/RCE_BASE/vint_vapor-a-AS-2012-01-01-000000-g1.h5'        'vertint_vapor' 'RCE_BASE'        'midy' 1 'hov_precip_water' 'precip_water' }
+
+    { 'HDF5/RCE_CNTL/HDF5_NZ75/vint_vapor-RCE_CNTL-AC-2012-01-01-000000-g1.h5'   'vertint_vapor' 'RCE_CNTL_OLD_DIFF'        'midy' 1 'hov_precip_water' 'precip_water' }
+    { 'HDF5/RCE_CNTL/HDF5/vint_vapor-RCE_CNTL-AC-2012-01-01-000000-g1.h5'        'vertint_vapor' 'RCE_CNTL_NEW_DIFF'        'midy' 1 'hov_precip_water' 'precip_water' }
     };
   Nset = length(VarSets);
 

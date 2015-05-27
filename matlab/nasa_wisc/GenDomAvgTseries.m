@@ -1,11 +1,7 @@
-function [ ] = GenDomAvgTseries(ConfigFile)
+function [ ] = GenDomAvgTseries()
 % GenDomAvgTseries generate time series of domain averages
 
-  % Read the config file to get the structure of how the data is laid out in
-  % the file system.
-  [ Config ] = ReadConfig(ConfigFile);
-
-  Ddir = Config.DiagDir;
+  Ddir = 'DIAGS';
 
   % make sure output directory exists
   if (exist(Ddir, 'dir') ~= 7)
@@ -23,7 +19,10 @@ function [ ] = GenDomAvgTseries(ConfigFile)
 %    { 'HDF5/RCE50_RECT_S303/vint_vapor-a-AS-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE50_RECT_S303' 'avg_precip_water' 'precip_water' }
 %    { 'HDF5/RCE50_SQ/vint_vapor-a-AS-2012-01-01-000000-g1.h5'        'vertint_vapor' 'RCE50_SQ'        'avg_precip_water' 'precip_water' }
 %    { 'HDF5/RCE_MATT/vint_vapor-a-AS-2012-01-01-000000-g1.h5'        'vertint_vapor' 'RCE_MATT'        'avg_precip_water' 'precip_water' }
-    { 'HDF5/RCE_BASE/vint_vapor-a-AS-2012-01-01-000000-g1.h5'        'vertint_vapor' 'RCE_BASE'        'avg_precip_water' 'precip_water' }
+%    { 'HDF5/RCE_BASE/vint_vapor-a-AS-2012-01-01-000000-g1.h5'        'vertint_vapor' 'RCE_BASE'        'avg_precip_water' 'precip_water' }
+
+    { 'HDF5/RCE_CNTL/HDF5_NZ75/vint_vapor-RCE_CNTL-AC-2012-01-01-000000-g1.h5'   'vertint_vapor' 'RCE_CNTL_OLD_DIFF'        'avg_precip_water' 'precip_water' }
+    { 'HDF5/RCE_CNTL/HDF5/vint_vapor-RCE_CNTL-AC-2012-01-01-000000-g1.h5'        'vertint_vapor' 'RCE_CNTL_NEW_DIFF'        'avg_precip_water' 'precip_water' }
     };
   Nset = length(VarSets);
 
