@@ -181,12 +181,14 @@ PlotSet: RmwPset line 4
   RmwLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0
 End
 
-PlotSet: FsMaxWindPset bar 1
-  MaxWindBar none    none  2 blue   - 0
+PlotSet: FsMaxWindPset bar:stacked 2
+  MaxWindFracBar none    none  2 dodgerblue   - 0
+  MaxWindIntBar  none    none  2 cyan    - 0
 End
 
-PlotSet: FsIkePset bar 1
-  IkeBar none    none  2 blue   - 0
+PlotSet: FsIkePset bar:stacked 2
+  IkeFracBar none    none  2 dodgerblue   - 0
+  IkeIntBar  none    none  2 cyan   - 0
 End
 
 PlotSet: Dust1Pset contourf 1
@@ -234,20 +236,36 @@ PlotData: RmwLine 2
   /rmw_fa   DIAGS/storm_meas_tseries_<CASE>.h5 @ 1e-3 0
 End
 
-PlotData: MaxWindBar 2
+PlotData: MaxWindFracBar 2
   # x data - dummy counter
   dummy [1:4] @ 1 0
   # y data - factor separation, max wind speed, fractional change
   #          so multiply by 100 to get percent change
-  /s_max_wind_frac_change DIAGS/fs_factors.h5 @ 100 0
+  /s_max_wind_bar_frac_change DIAGS/fs_factors.h5 @ 100 0
 End
 
-PlotData: IkeBar 2
+PlotData: MaxWindIntBar 2
+  # x data - dummy counter
+  dummy [1:4] @ 1 0
+  # y data - factor separation, max wind speed, fractional change
+  #          so multiply by 100 to get percent change
+  /s_max_wind_bar_int DIAGS/fs_factors.h5 @ 100 0
+End
+
+PlotData: IkeFracBar 2
   # x data - dummy counter
   dummy [1:4] @ 1 0
   # y data - factor separation, integrated kinetic energy, fractional change
   #          so multiply by 100 to get percent change
-  /s_ike_frac_change DIAGS/fs_factors.h5 @ 100 0
+  /s_ike_bar_frac_change DIAGS/fs_factors.h5 @ 100 0
+End
+
+PlotData: IkeIntBar 2
+  # x data - dummy counter
+  dummy [1:4] @ 1 0
+  # y data - factor separation, integrated kinetic energy, fractional change
+  #          so multiply by 100 to get percent change
+  /s_ike_bar_int DIAGS/fs_factors.h5 @ 100 0
 End
 
 PlotData: Dust1Contour 3

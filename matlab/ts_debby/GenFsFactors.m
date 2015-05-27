@@ -107,7 +107,8 @@ function [ ] = GenFactSep()
     F_DATA = [ F0 F1 F2 F12 ];
 
     % Write out data for a bar plot which shows fractional changes
-    P_DATA = [ F1 F2 (S12-S0) F12 ] ./ S0;
+    BF_DATA = [ F1  F2  (S12-S0) nan ] ./ S0;
+    BI_DATA = [ nan nan nan      F12 ] ./ S0;
     
 
     OutVar = sprintf('/%s_averages', FsVar);
@@ -120,10 +121,15 @@ function [ ] = GenFactSep()
     h5create(OutFile, OutVar,  size(F_DATA));
     h5write( OutFile, OutVar,  F_DATA);
 
-    OutVar = sprintf('/%s_frac_change', FsVar);
+    OutVar = sprintf('/%s_bar_frac_change', FsVar);
     fprintf('  Writing: %s (%s)\n', OutFile, OutVar)
-    h5create(OutFile, OutVar,  size(P_DATA));
-    h5write( OutFile, OutVar,  P_DATA);
+    h5create(OutFile, OutVar,  size(BF_DATA));
+    h5write( OutFile, OutVar,  BF_DATA);
+
+    OutVar = sprintf('/%s_bar_int', FsVar);
+    fprintf('  Writing: %s (%s)\n', OutFile, OutVar)
+    h5create(OutFile, OutVar,  size(BI_DATA));
+    h5write( OutFile, OutVar,  BI_DATA);
     
     fprintf('\n');
   end
