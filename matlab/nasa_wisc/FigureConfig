@@ -22,6 +22,23 @@ Figure: FigSampleSounding 4
   NewDiffClearPanel  4
 End
 
+#Figure: FigAvgPw 1
+#  DummyCases
+#  [1_1]
+#  Plots/FigAvgPw.jpg
+#  AvgPwPanel 1
+#End
+
+#Figure: FigHovPw 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigHovPw.jpg
+#  MattHovPwPanel  1
+#  BaseHovPwPanel  2
+#  OdiffHovPwPanel 3
+#  NdiffHovPwPanel 4
+#End
+
 ########### CASES ####################
 CaseSet: TestCases 1
 #  RCE50_2D
@@ -69,7 +86,7 @@ FigPanel: OldDiffCloudyPanel
   SampSoundingAxes 0 1
   none 5
   PANEL:a@Old@Diff@Cloudy
-  NorthEast 10
+  none 10
 End
 
 FigPanel: OldDiffClearPanel
@@ -77,7 +94,7 @@ FigPanel: OldDiffClearPanel
   SampSoundingAxes 0 0
   none 5
   PANEL:b@Old@Diff@Clear
-  NorthEast 10
+  none 10
 End
 
 FigPanel: NewDiffCloudyPanel
@@ -85,7 +102,7 @@ FigPanel: NewDiffCloudyPanel
   SampSoundingAxes 1 1
   none 5
   PANEL:c@New@Diff@Cloudy
-  NorthEast 10
+  none 10
 End
 
 FigPanel: NewDiffClearPanel
@@ -93,7 +110,47 @@ FigPanel: NewDiffClearPanel
   SampSoundingAxes 1 0
   none 5
   PANEL:d@New@Diff@Clear
-  NorthEast 10
+  Best 10
+End
+
+FigPanel: AvgPwPanel
+  AvgPwPset
+  AvgPwAxes 1 1
+  none 5
+  Average@PW
+  SouthEast 10
+End
+
+FigPanel: MattHovPwPanel
+  MattHovPwPset
+  HovPwAxes 0 1
+  none 5
+  PANEL:a@MATT@PW
+  none 10
+End
+
+FigPanel: BaseHovPwPanel
+  BaseHovPwPset
+  HovPwAxes 0 0
+  none 5
+  PANEL:b@BASE@PW
+  none 10
+End
+
+FigPanel: OdiffHovPwPanel
+  OdiffHovPwPset
+  HovPwAxes 1 1
+  none 5
+  PANEL:a@ODIFF@PW
+  none 10
+End
+
+FigPanel: NdiffHovPwPanel
+  NdiffHovPwPset
+  HovPwAxes 1 0
+  none 5
+  PANEL:a@NDIFF@PW
+  none 10
 End
 
 ############ PLOT SETS #################
@@ -119,27 +176,50 @@ PlotSet: QradCompPset line 7
 End
 
 PlotSet: OldDiffCloudyPset line 3
-  OldDiffCloudyTemp  none T@(deg@C)        2 blue   - 0
+  OldDiffCloudyTheta none \theta@(deg@C)        2 blue   - 0
   OldDiffCloudyCloud none Q_c@(100@X@g/kg) 2 green  - 0
   OldDiffCloudyVapor none Q_v@(g/kg)       2 red    - 0
 End
 
 PlotSet: OldDiffClearPset line 3
-  OldDiffClearTemp  none T@(deg@C)        2 blue   - 0
+  OldDiffClearTheta none \theta@(deg@C)        2 blue   - 0
   OldDiffClearCloud none Q_c@(100@X@g/kg) 2 green  - 0
   OldDiffClearVapor none Q_v@(g/kg)       2 red    - 0
 End
 
 PlotSet: NewDiffCloudyPset line 3
-  NewDiffCloudyTemp  none T@(deg@C)        2 blue   - 0
+  NewDiffCloudyTheta none \theta@(deg@C)        2 blue   - 0
   NewDiffCloudyCloud none Q_c@(100@X@g/kg) 2 green  - 0
   NewDiffCloudyVapor none Q_v@(g/kg)       2 red    - 0
 End
 
 PlotSet: NewDiffClearPset line 3
-  NewDiffClearTemp  none T@(deg@C)        2 blue   - 0
+  NewDiffClearTheta none \theta@(deg@C)        2 blue   - 0
   NewDiffClearCloud none Q_c@(100@X@g/kg) 2 green  - 0
   NewDiffClearVapor none Q_v@(g/kg)       2 red    - 0
+End
+
+PlotSet: AvgPwPset line 4
+  AvgPwLine  RCE_MATT          MATT  2 blue   - 0
+  AvgPwLine  RCE_BASE          BASE  2 green  - 0
+  AvgPwLine  RCE_CNTL_OLD_DIFF ODIFF 2 red    - 0
+  AvgPwLine  RCE_CNTL_NEW_DIFF NDIFF 2 orange - 0
+End
+
+PlotSet: MattHovPwPset contourf 1
+  MattHovPwContour none none 2 blue - 0
+End
+
+PlotSet: BaseHovPwPset contourf 1
+  BaseHovPwContour none none 2 blue - 0
+End
+
+PlotSet: OdiffHovPwPset contourf 1
+  OdiffHovPwContour none none 2 blue - 0
+End
+
+PlotSet: NdiffHovPwPset contourf 1
+  NdiffHovPwContour none none 2 blue - 0
 End
 
 ############ PLOT DATA #################
@@ -222,86 +302,161 @@ End
 
 PlotData: OldDiffCloudyTemp 2
   # x data - sim time in days
-  /tempc    DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_cloudy.h5 (2:75,32) 1 0
+  /tempc_avg    DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_cloudy.h5 (2:75,32) 1 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_cloudy.h5 (2:75) 1e-3 0
+End
+
+PlotData: OldDiffCloudyTheta 2
+  # x data - sim time in days
+  /theta_avg    DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_cloudy.h5 (2:75,32) 1 -273.15
   # y data - radiative flux divergence in W/m^2
   /z_coords DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_cloudy.h5 (2:75) 1e-3 0
 End
 
 PlotData: OldDiffCloudyCloud 2
   # x data - sim time in days
-  /cloud    DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_cloudy.h5 (2:75,32) 100 0
+  /cloud_avg    DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_cloudy.h5 (2:75,32) 100 0
   # y data - radiative flux divergence in W/m^2
   /z_coords DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_cloudy.h5 (2:75)   1e-3 0
 End
 
 PlotData: OldDiffCloudyVapor 2
   # x data - sim time in days
-  /vapor    DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_cloudy.h5 (2:75,32) 1 0
+  /vapor_avg    DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_cloudy.h5 (2:75,32) 1 0
   # y data - radiative flux divergence in W/m^2
   /z_coords DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_cloudy.h5 (2:75) 1e-3 0
 End
 
 PlotData: OldDiffClearTemp 2
   # x data - sim time in days
-  /tempc    DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_clear.h5 (2:75,32) 1 0
+  /tempc_avg    DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_clear.h5 (2:75,32) 1 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_clear.h5 (2:75) 1e-3 0
+End
+
+PlotData: OldDiffClearTheta 2
+  # x data - sim time in days
+  /theta_avg    DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_clear.h5 (2:75,32) 1 -273.15
   # y data - radiative flux divergence in W/m^2
   /z_coords DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_clear.h5 (2:75) 1e-3 0
 End
 
 PlotData: OldDiffClearCloud 2
   # x data - sim time in days
-  /cloud    DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_clear.h5 (2:75,32) 100 0
+  /cloud_avg    DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_clear.h5 (2:75,32) 100 0
   # y data - radiative flux divergence in W/m^2
   /z_coords DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_clear.h5 (2:75)   1e-3 0
 End
 
 PlotData: OldDiffClearVapor 2
   # x data - sim time in days
-  /vapor    DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_clear.h5 (2:75,32) 1 0
+  /vapor_avg    DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_clear.h5 (2:75,32) 1 0
   # y data - radiative flux divergence in W/m^2
   /z_coords DIAGS/SampleProfiles_RCE_CNTL_OLD_DIFF_clear.h5 (2:75) 1e-3 0
 End
 
 PlotData: NewDiffCloudyTemp 2
   # x data - sim time in days
-  /tempc    DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_cloudy.h5 (2:75,32) 1 0
+  /tempc_avg    DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_cloudy.h5 (2:75,32) 1 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_cloudy.h5 (2:75) 1e-3 0
+End
+
+PlotData: NewDiffCloudyTheta 2
+  # x data - sim time in days
+  /theta_avg    DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_cloudy.h5 (2:75,32) 1 -273.15
   # y data - radiative flux divergence in W/m^2
   /z_coords DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_cloudy.h5 (2:75) 1e-3 0
 End
 
 PlotData: NewDiffCloudyCloud 2
   # x data - sim time in days
-  /cloud    DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_cloudy.h5 (2:75,32) 100 0
+  /cloud_avg    DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_cloudy.h5 (2:75,32) 100 0
   # y data - radiative flux divergence in W/m^2
   /z_coords DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_cloudy.h5 (2:75)   1e-3 0
 End
 
 PlotData: NewDiffCloudyVapor 2
   # x data - sim time in days
-  /vapor    DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_cloudy.h5 (2:75,32) 1 0
+  /vapor_avg    DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_cloudy.h5 (2:75,32) 1 0
   # y data - radiative flux divergence in W/m^2
   /z_coords DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_cloudy.h5 (2:75) 1e-3 0
 End
 
 PlotData: NewDiffClearTemp 2
   # x data - sim time in days
-  /tempc    DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_clear.h5 (2:75,32) 1 0
+  /tempc_avg    DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_clear.h5 (2:75,32) 1 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_clear.h5 (2:75) 1e-3 0
+End
+
+PlotData: NewDiffClearTheta 2
+  # x data - sim time in days
+  /theta_avg    DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_clear.h5 (2:75,32) 1 -273.15
   # y data - radiative flux divergence in W/m^2
   /z_coords DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_clear.h5 (2:75) 1e-3 0
 End
 
 PlotData: NewDiffClearCloud 2
   # x data - sim time in days
-  /cloud    DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_clear.h5 (2:75,32) 100 0
+  /cloud_avg    DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_clear.h5 (2:75,32) 100 0
   # y data - radiative flux divergence in W/m^2
   /z_coords DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_clear.h5 (2:75)   1e-3 0
 End
 
 PlotData: NewDiffClearVapor 2
   # x data - sim time in days
-  /vapor    DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_clear.h5 (2:75,32) 1 0
+  /vapor_avg    DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_clear.h5 (2:75,32) 1 0
   # y data - radiative flux divergence in W/m^2
   /z_coords DIAGS/SampleProfiles_RCE_CNTL_NEW_DIFF_clear.h5 (2:75) 1e-3 0
+End
+
+PlotData: AvgPwLine 2
+  # x data - sim time in days
+  /t_coords     DIAGS/avg_precip_water_<CASE>.h5 @ 1.1574e-5 0
+  # y data - radiative flux divergence in W/m^2
+  /precip_water DIAGS/avg_precip_water_<CASE>.h5 @         1 0
+End
+
+PlotData: MattHovPwContour 3
+  # select all x, 31 simulated days -> t (1:32)
+  # x data - zonal distance, km
+  /x_coords     DIAGS/hov_precip_water_RCE_MATT.h5 @        1         0
+  # y data - time, sec -> convert to days
+  /t_coords     DIAGS/hov_precip_water_RCE_MATT.h5 (1:32)   1.1574e-5 0
+  # z data - PW, mm
+  /precip_water DIAGS/hov_precip_water_RCE_MATT.h5 (:,1:32) 1         0
+End
+
+PlotData: BaseHovPwContour 3
+  # select all x, 31 simulated days -> t (1:32)
+  # x data - zonal distance, km
+  /x_coords     DIAGS/hov_precip_water_RCE_BASE.h5 @        1         0
+  # y data - time, sec -> convert to days
+  /t_coords     DIAGS/hov_precip_water_RCE_BASE.h5 (1:32)   1.1574e-5 0
+  # z data - PW, mm
+  /precip_water DIAGS/hov_precip_water_RCE_BASE.h5 (:,1:32) 1         0
+End
+
+PlotData: OdiffHovPwContour 3
+  # select all x, 31 simulated days -> t (1:32)
+  # x data - zonal distance, km
+  /x_coords     DIAGS/hov_precip_water_RCE_CNTL_OLD_DIFF.h5 @        1         0
+  # y data - time, sec -> convert to days
+  /t_coords     DIAGS/hov_precip_water_RCE_CNTL_OLD_DIFF.h5 (1:32)   1.1574e-5 0
+  # z data - PW, mm
+  /precip_water DIAGS/hov_precip_water_RCE_CNTL_OLD_DIFF.h5 (:,1:32) 1         0
+End
+
+PlotData: NdiffHovPwContour 3
+  # select all x, 31 simulated days -> t (1:32)
+  # x data - zonal distance, km
+  /x_coords     DIAGS/hov_precip_water_RCE_CNTL_NEW_DIFF.h5 @        1         0
+  # y data - time, sec -> convert to days
+  /t_coords     DIAGS/hov_precip_water_RCE_CNTL_NEW_DIFF.h5 (1:32)   1.1574e-5 0
+  # z data - PW, mm
+  /precip_water DIAGS/hov_precip_water_RCE_CNTL_NEW_DIFF.h5 (:,1:32) 1         0
 End
 
 ############ PLOT AXES #################
@@ -331,8 +486,26 @@ End
 
 PlotAxes: SampSoundingAxes 2
   18 2 [0.025_0.025]
-  # x axis - temp, cloud, vapor
-  @ @ -100 50 linear [_] {_}
+  # x axis - theta, cloud, vapor
+  @ @ -5 70 linear [_] {_}
   # y axis - height
-  Height km 0 25 linear [_] {_}
+  Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: AvgPwAxes 2
+  18 2 [0.025_0.025]
+  # x axis - time
+  Sim@Time d 0 80 linear [_] {_}
+  # y axis - precipitable water
+  PW mm 0 80 linear [_] {_}
+End
+
+PlotAxes: HovPwAxes 3
+  18 2 [0.025_0.025]
+  # x axis - zonal distance
+  Zonal@Distance km 0 3000 linear [1_1500_3000] {_}
+  # y axis - time
+  Sim@Time d 0 31 linear [_] {_}
+  # z axis - precipitable water
+  PW mm 0 70 linear [_] {_}
 End

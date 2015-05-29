@@ -39,6 +39,12 @@ function [ ] = DrawPlotData( Axes, DataSpecs, Ptype )
       X = DataSpecs(i).Xdata;
       Y = DataSpecs(i).Ydata;
       Z = DataSpecs(i).Zdata;
+
+      % check dimension sizes, and transpose Z if necessary
+      if ((length(X) == size(Z,1)) && (length(Y) == size(Z,2)))
+        Z = Z';
+      end
+
       contourf(X, Y, Z, 'LineStyle', 'none');
       colorbar;
     end
