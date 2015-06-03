@@ -1,0 +1,442 @@
+################ CASES ###################
+CaseSet: CasesS293 6
+  z.atex.ccn0050.sst293
+  z.atex.ccn0100.sst293
+  z.atex.ccn0200.sst293
+  z.atex.ccn0400.sst293
+  z.atex.ccn0800.sst293
+  z.atex.ccn1600.sst293
+End
+
+CaseSet: CasesS298 6
+  z.atex.ccn0050.sst298
+  z.atex.ccn0100.sst298
+  z.atex.ccn0200.sst298
+  z.atex.ccn0400.sst298
+  z.atex.ccn0800.sst298
+  z.atex.ccn1600.sst298
+End
+
+CaseSet: DummyCases 1
+  none
+End
+
+############## FIGURES ##################
+# CCN initialization
+Figure: InitCcn 2
+  DummyCases
+  [1_2]
+  Plots/FigInitCcn.jpg
+  InitCcnPanelS293 1
+  InitCcnPanelS298 2
+End
+
+# CLOUD
+Figure: CloudMass 2
+  DummyCases
+  [2_1]
+  Plots/FigCloudMass.jpg
+  CmassPanelS293 1
+  CmassPanelS298 2
+End
+
+Figure: CloudDiam 2
+  DummyCases
+  [2_1]
+  Plots/FigCloudDiam.jpg
+  CdiamPanelS293 1
+  CdiamPanelS298 2
+End
+
+Figure: CloudNum 2
+  DummyCases
+  [2_1]
+  Plots/FigCloudNum.jpg
+  CnumPanelS293 1
+  CnumPanelS298 2
+End
+
+# RAIN
+Figure: RainMass 2
+  DummyCases
+  [2_1]
+  Plots/FigRainMass.jpg
+  RmassPanelS293 1
+  RmassPanelS298 2
+End
+
+Figure: RainDiam 2
+  DummyCases
+  [2_1]
+  Plots/FigRainDiam.jpg
+  RdiamPanelS293 1
+  RdiamPanelS298 2
+End
+
+Figure: RainNum 2
+  DummyCases
+  [2_1]
+  Plots/FigRainNum.jpg
+  RnumPanelS293 1
+  RnumPanelS298 2
+End
+
+############## PANELS ###################
+# CCN initialization
+FigPanel: InitCcnPanelS293
+  InitCcnPsetS293
+  InitCcnAxes 1 1
+  none 5
+  PANEL:a@S293
+  NorthEast 10
+End
+
+FigPanel: InitCcnPanelS298
+  InitCcnPsetS298
+  InitCcnAxes 1 0
+  none 5
+  PANEL:b@S298
+  none 10
+End
+
+# CLOUD
+FigPanel: CmassPanelS293
+  CmassPsetS293
+  CmassAxes 0 1
+  none 5
+  PANEL:a@S293
+  SouthWest 10
+End
+
+FigPanel: CmassPanelS298
+  CmassPsetS298
+  CmassAxes 1 1
+  none 5
+  PANEL:b@S298
+  none 10
+End
+
+FigPanel: CdiamPanelS293
+  CdiamPsetS293
+  CdiamAxes 0 1
+  none 5
+  PANEL:a@S293
+  SouthWest 10
+End
+
+FigPanel: CdiamPanelS298
+  CdiamPsetS298
+  CdiamAxes 1 1
+  none 5
+  PANEL:b@S298
+  none 10
+End
+
+FigPanel: CnumPanelS293
+  CnumPsetS293
+  CnumAxes 0 1
+  none 5
+  PANEL:a@S293
+  SouthWest 10
+End
+
+FigPanel: CnumPanelS298
+  CnumPsetS298
+  CnumAxes 1 1
+  none 5
+  PANEL:b@S298
+  none 10
+End
+
+# RAIN
+FigPanel: RmassPanelS293
+  RmassPsetS293
+  RmassAxes 0 1
+  none 5
+  PANEL:a@S293
+  SouthWest 10
+End
+
+FigPanel: RmassPanelS298
+  RmassPsetS298
+  RmassAxes 1 1
+  none 5
+  PANEL:b@S298
+  none 10
+End
+
+FigPanel: RdiamPanelS293
+  RdiamPsetS293
+  RdiamAxes 0 1
+  none 5
+  PANEL:a@S293
+  SouthWest 10
+End
+
+FigPanel: RdiamPanelS298
+  RdiamPsetS298
+  RdiamAxes 1 1
+  none 5
+  PANEL:b@S298
+  none 10
+End
+
+FigPanel: RnumPanelS293
+  RnumPsetS293
+  RnumAxes 0 1
+  none 5
+  PANEL:a@S293
+  SouthWest 10
+End
+
+FigPanel: RnumPanelS298
+  RnumPsetS298
+  RnumAxes 1 1
+  none 5
+  PANEL:b@S298
+  none 10
+End
+
+############# PLOT SETS ###############
+# CCN initialization
+PlotSet: InitCcnPsetS293 line 6
+  InitCcnLine z.atex.ccn0050.sst293 C0050 2 black     - 0
+  InitCcnLine z.atex.ccn0100.sst293 C0100 2 blue      - 0
+  InitCcnLine z.atex.ccn0200.sst293 C0200 2 green     - 0
+  InitCcnLine z.atex.ccn0400.sst293 C0400 2 yellow    - 0
+  InitCcnLine z.atex.ccn0800.sst293 C0800 2 orangered - 0
+  InitCcnLine z.atex.ccn1600.sst293 C1600 2 brown     - 0
+End
+
+PlotSet: InitCcnPsetS298 line 6
+  InitCcnLine z.atex.ccn0050.sst298 C0050 2 black     - 0
+  InitCcnLine z.atex.ccn0100.sst298 C0100 2 blue      - 0
+  InitCcnLine z.atex.ccn0200.sst298 C0200 2 green     - 0
+  InitCcnLine z.atex.ccn0400.sst298 C0400 2 yellow    - 0
+  InitCcnLine z.atex.ccn0800.sst298 C0800 2 orangered - 0
+  InitCcnLine z.atex.ccn1600.sst298 C1600 2 brown     - 0
+End
+
+# CLOUD
+PlotSet: CmassPsetS293 line 6
+  CloudMassLine z.atex.ccn0050.sst293 C0050 2 black     - 0
+  CloudMassLine z.atex.ccn0100.sst293 C0100 2 blue      - 0
+  CloudMassLine z.atex.ccn0200.sst293 C0200 2 green     - 0
+  CloudMassLine z.atex.ccn0400.sst293 C0400 2 yellow    - 0
+  CloudMassLine z.atex.ccn0800.sst293 C0800 2 orangered - 0
+  CloudMassLine z.atex.ccn1600.sst293 C1600 2 brown     - 0
+End
+
+PlotSet: CmassPsetS298 line 6
+  CloudMassLine z.atex.ccn0050.sst298 C0050 2 black     - 0
+  CloudMassLine z.atex.ccn0100.sst298 C0100 2 blue      - 0
+  CloudMassLine z.atex.ccn0200.sst298 C0200 2 green     - 0
+  CloudMassLine z.atex.ccn0400.sst298 C0400 2 yellow    - 0
+  CloudMassLine z.atex.ccn0800.sst298 C0800 2 orangered - 0
+  CloudMassLine z.atex.ccn1600.sst298 C1600 2 brown     - 0
+End
+
+PlotSet: CdiamPsetS293 line 6
+  CloudDiamLine z.atex.ccn0050.sst293 C0050 2 black     - 0
+  CloudDiamLine z.atex.ccn0100.sst293 C0100 2 blue      - 0
+  CloudDiamLine z.atex.ccn0200.sst293 C0200 2 green     - 0
+  CloudDiamLine z.atex.ccn0400.sst293 C0400 2 yellow    - 0
+  CloudDiamLine z.atex.ccn0800.sst293 C0800 2 orangered - 0
+  CloudDiamLine z.atex.ccn1600.sst293 C1600 2 brown     - 0
+End
+
+PlotSet: CdiamPsetS298 line 6
+  CloudDiamLine z.atex.ccn0050.sst298 C0050 2 black     - 0
+  CloudDiamLine z.atex.ccn0100.sst298 C0100 2 blue      - 0
+  CloudDiamLine z.atex.ccn0200.sst298 C0200 2 green     - 0
+  CloudDiamLine z.atex.ccn0400.sst298 C0400 2 yellow    - 0
+  CloudDiamLine z.atex.ccn0800.sst298 C0800 2 orangered - 0
+  CloudDiamLine z.atex.ccn1600.sst298 C1600 2 brown     - 0
+End
+
+PlotSet: CnumPsetS293 line 6
+  CloudNumLine z.atex.ccn0050.sst293 C0050 2 black     - 0
+  CloudNumLine z.atex.ccn0100.sst293 C0100 2 blue      - 0
+  CloudNumLine z.atex.ccn0200.sst293 C0200 2 green     - 0
+  CloudNumLine z.atex.ccn0400.sst293 C0400 2 yellow    - 0
+  CloudNumLine z.atex.ccn0800.sst293 C0800 2 orangered - 0
+  CloudNumLine z.atex.ccn1600.sst293 C1600 2 brown     - 0
+End
+
+PlotSet: CnumPsetS298 line 6
+  CloudNumLine z.atex.ccn0050.sst298 C0050 2 black     - 0
+  CloudNumLine z.atex.ccn0100.sst298 C0100 2 blue      - 0
+  CloudNumLine z.atex.ccn0200.sst298 C0200 2 green     - 0
+  CloudNumLine z.atex.ccn0400.sst298 C0400 2 yellow    - 0
+  CloudNumLine z.atex.ccn0800.sst298 C0800 2 orangered - 0
+  CloudNumLine z.atex.ccn1600.sst298 C1600 2 brown     - 0
+End
+
+# RAIN
+PlotSet: RmassPsetS293 line 6
+  RainMassLine z.atex.ccn0050.sst293 C0050 2 black     - 0
+  RainMassLine z.atex.ccn0100.sst293 C0100 2 blue      - 0
+  RainMassLine z.atex.ccn0200.sst293 C0200 2 green     - 0
+  RainMassLine z.atex.ccn0400.sst293 C0400 2 yellow    - 0
+  RainMassLine z.atex.ccn0800.sst293 C0800 2 orangered - 0
+  RainMassLine z.atex.ccn1600.sst293 C1600 2 brown     - 0
+End
+
+PlotSet: RmassPsetS298 line 6
+  RainMassLine z.atex.ccn0050.sst298 C0050 2 black     - 0
+  RainMassLine z.atex.ccn0100.sst298 C0100 2 blue      - 0
+  RainMassLine z.atex.ccn0200.sst298 C0200 2 green     - 0
+  RainMassLine z.atex.ccn0400.sst298 C0400 2 yellow    - 0
+  RainMassLine z.atex.ccn0800.sst298 C0800 2 orangered - 0
+  RainMassLine z.atex.ccn1600.sst298 C1600 2 brown     - 0
+End
+
+PlotSet: RdiamPsetS293 line 6
+  RainDiamLine z.atex.ccn0050.sst293 C0050 2 black     - 0
+  RainDiamLine z.atex.ccn0100.sst293 C0100 2 blue      - 0
+  RainDiamLine z.atex.ccn0200.sst293 C0200 2 green     - 0
+  RainDiamLine z.atex.ccn0400.sst293 C0400 2 yellow    - 0
+  RainDiamLine z.atex.ccn0800.sst293 C0800 2 orangered - 0
+  RainDiamLine z.atex.ccn1600.sst293 C1600 2 brown     - 0
+End
+
+PlotSet: RdiamPsetS298 line 6
+  RainDiamLine z.atex.ccn0050.sst298 C0050 2 black     - 0
+  RainDiamLine z.atex.ccn0100.sst298 C0100 2 blue      - 0
+  RainDiamLine z.atex.ccn0200.sst298 C0200 2 green     - 0
+  RainDiamLine z.atex.ccn0400.sst298 C0400 2 yellow    - 0
+  RainDiamLine z.atex.ccn0800.sst298 C0800 2 orangered - 0
+  RainDiamLine z.atex.ccn1600.sst298 C1600 2 brown     - 0
+End
+
+PlotSet: RnumPsetS293 line 6
+  RainNumLine z.atex.ccn0050.sst293 C0050 2 black     - 0
+  RainNumLine z.atex.ccn0100.sst293 C0100 2 blue      - 0
+  RainNumLine z.atex.ccn0200.sst293 C0200 2 green     - 0
+  RainNumLine z.atex.ccn0400.sst293 C0400 2 yellow    - 0
+  RainNumLine z.atex.ccn0800.sst293 C0800 2 orangered - 0
+  RainNumLine z.atex.ccn1600.sst293 C1600 2 brown     - 0
+End
+
+PlotSet: RnumPsetS298 line 6
+  RainNumLine z.atex.ccn0050.sst298 C0050 2 black     - 0
+  RainNumLine z.atex.ccn0100.sst298 C0100 2 blue      - 0
+  RainNumLine z.atex.ccn0200.sst298 C0200 2 green     - 0
+  RainNumLine z.atex.ccn0400.sst298 C0400 2 yellow    - 0
+  RainNumLine z.atex.ccn0800.sst298 C0800 2 orangered - 0
+  RainNumLine z.atex.ccn1600.sst298 C1600 2 brown     - 0
+End
+
+############# PLOT DATA ##############
+# CCN initialization
+PlotData: InitCcnLine 2
+  # x - ccn number concentration, vertical profile sampled from domain center, 1st time step
+  /ccn_concen_cm3 HDF5/<CASE>/HDF5/ccn_init-<CASE>-AC-1999-02-10-040000-g1.h5 (200,200,:,1) 1 0
+  # y - height in km
+  /z_coords       HDF5/<CASE>/HDF5/ccn_init-<CASE>-AC-1999-02-10-040000-g1.h5 @ 1e-3 0
+End
+
+# CLOUD
+PlotData: CloudMassLine 2
+  # x - sim time in hours
+  /t_coords                DIAGS/avg_ctype_cloud_<CASE>.h5 @ 1 0
+  # y - cloud mass (g/kg)
+  /cloud_c0p01_avg_TSERIES DIAGS/avg_ctype_cloud_<CASE>.h5 @ 1 0
+End
+
+PlotData: CloudDiamLine 2
+  # x - sim time in hours
+  /t_coords                     DIAGS/avg_ctype_cloud_diam_<CASE>.h5 @ 1 0
+  # y - cloud mass (g/kg)
+  /cloud_diam_c0p01_avg_TSERIES DIAGS/avg_ctype_cloud_diam_<CASE>.h5 @ 1 0
+End
+
+PlotData: CloudNumLine 2
+  # x - sim time in hours
+  /t_coords                    DIAGS/avg_ctype_cloud_num_<CASE>.h5 @ 1 0
+  # y - cloud mass (g/kg)
+  /cloud_num_c0p01_avg_TSERIES DIAGS/avg_ctype_cloud_num_<CASE>.h5 @ 1 0
+End
+
+# RAIN
+PlotData: RainMassLine 2
+  # x - sim time in hours
+  /t_coords                DIAGS/avg_ctype_rain_<CASE>.h5 @ 1 0
+  # y - rain mass (g/kg)
+  /rain_r0p01_avg_TSERIES DIAGS/avg_ctype_rain_<CASE>.h5 @ 1 0
+End
+
+PlotData: RainDiamLine 2
+  # x - sim time in hours
+  /t_coords                     DIAGS/avg_ctype_rain_diam_<CASE>.h5 @ 1 0
+  # y - rain mass (g/kg)
+  /rain_diam_r0p01_avg_TSERIES DIAGS/avg_ctype_rain_diam_<CASE>.h5 @ 1 0
+End
+
+PlotData: RainNumLine 2
+  # x - sim time in hours
+  /t_coords                    DIAGS/avg_ctype_rain_num_<CASE>.h5 @ 1 0
+  # y - rain mass (g/kg)
+  /rain_num_r0p01_avg_TSERIES DIAGS/avg_ctype_rain_num_<CASE>.h5 @ 1e-3 0
+End
+
+############ PLOT AXES ###############
+# CCN initialization
+PlotAxes: InitCcnAxes 2
+  16 2 [0.025_0.025]
+  # x - ccn number concentration
+  N_a cm^-^3 0 2000 linear [_] {_}
+  # y - height
+  Height km 0 4 linear [_] {_}
+End
+
+# CLOUD
+PlotAxes: CmassAxes 2
+  18 2 [0.025_0.025]
+  # x - sim time
+  Sim@Time h 0 50 linear [_] {_}
+  # y - cloud mixing ratio
+  Cloud@Mass g@kg^-^1 0 0.5 linear [_] {_}
+End
+
+PlotAxes: CdiamAxes 2
+  18 2 [0.025_0.025]
+  # x - sim time
+  Sim@Time h 0 50 linear [_] {_}
+  # y - cloud mixing ratio
+  Cloud@Diam um 0 35 linear [_] {_}
+End
+
+PlotAxes: CnumAxes 2
+  18 2 [0.025_0.025]
+  # x - sim time
+  Sim@Time h 0 50 linear [_] {_}
+  # y - cloud mixing ratio
+  Cloud@Number cm^-^3 0 420 linear [_] {_}
+End
+
+# RAIN
+PlotAxes: RmassAxes 2
+  18 2 [0.025_0.025]
+  # x - sim time
+  Sim@Time h 0 50 linear [_] {_}
+  # y - cloud mixing ratio
+  Rain@Mass g@kg^-^1 0 0.5 linear [_] {_}
+End
+
+PlotAxes: RdiamAxes 2
+  18 2 [0.025_0.025]
+  # x - sim time
+  Sim@Time h 0 50 linear [_] {_}
+  # y - cloud mixing ratio
+  Rain@Diam mm 0 0.8 linear [_] {_}
+End
+
+PlotAxes: RnumAxes 2
+  18 2 [0.025_0.025]
+  # x - sim time
+  Sim@Time h 0 50 linear [_] {_}
+  # y - cloud mixing ratio
+  Rain@Number 10^3@m^-^3 0 20 linear [_] {_}
+End
+

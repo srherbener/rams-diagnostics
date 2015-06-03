@@ -8,7 +8,7 @@ DIAG_DIR = /Volumes/tasman1/sherbener/data/RAMS/MarinePrecip/ATEX2
 SCRIPTS = $(DEST)/GenAvgFiles.m \
           $(DEST)/SetPath.m
 
-CONFIGS = $(DIAG_DIR)/DiagConfig
+CONFIGS = $(DIAG_DIR)/FigureConfig
 
 #
 # Targets
@@ -22,6 +22,6 @@ $(DEST):
 $(DEST)/%.m: %.m
 	cp $(<) $(@)
 
-$(DIAG_DIR)/DiagConfig: DiagConfig
+$(DIAG_DIR)/%Config: %Config
 	cp $(<) $(@)
 

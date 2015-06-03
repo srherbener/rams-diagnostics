@@ -1,12 +1,8 @@
-function [ ] = GenAvgFiles(ConfigFile)
+function [ ] = GenAvgFiles()
 % GenAvgFiles generate averages from tsavg hda files
 
-  % Read the config file to get the structure of how the data is laid out in
-  % the file system.
-  [ Config ] = ReadConfig(ConfigFile);
-
-  Tdir = Config.TsavgDir;
-  Ddir = Config.DiagDir;
+  Tdir = 'TsAveragedData';
+  Ddir = 'DIAGS';
 
   % make sure output directory exists
   if (exist(Ddir, 'dir') ~= 7)
@@ -14,6 +10,23 @@ function [ ] = GenAvgFiles(ConfigFile)
   end
 
   FileHeader = 'ATEX averaged data';
+
+  CaseList = {
+    'z.atex.ccn0050.sst293'
+    'z.atex.ccn0100.sst293'
+    'z.atex.ccn0200.sst293'
+    'z.atex.ccn0400.sst293'
+    'z.atex.ccn0800.sst293'
+    'z.atex.ccn1600.sst293'
+
+    'z.atex.ccn0050.sst298'
+    'z.atex.ccn0100.sst298'
+    'z.atex.ccn0200.sst298'
+    'z.atex.ccn0400.sst298'
+    'z.atex.ccn0800.sst298'
+    'z.atex.ccn1600.sst298'
+    };
+Ncases = length(CaseList);
 
   VarSets = {
 %    { 'hda_pcprr'           { 'pcprr'  'pcprr_strnp'  'pcprr_strat'  'pcprr_cumul'  'pcprr_all_cld'  'pcprr_stall'  } 'avg_ctype_pcprr'  }
@@ -48,27 +61,19 @@ function [ ] = GenAvgFiles(ConfigFile)
 
 
 
-%    { 'hda_cloud'       { 'cloud_c0p01'         } 'avg_ctype_cloud'       }
-%    { 'hda_cloud_diam'  { 'cloud_diam_c0p01'    } 'avg_ctype_cloud_diam'  }
-%    { 'hda_cloud_num'   { 'cloud_num_c0p01'     } 'avg_ctype_cloud_num'   }
-     
-%    { 'hda_rain'       { 'rain_r0p01'         } 'avg_ctype_rain'       }
-%    { 'hda_rain_diam'  { 'rain_diam_r0p01'    } 'avg_ctype_rain_diam'  }
+    { 'hda_cloud'       { 'cloud_c0p01'         } 'avg_ctype_cloud'       }
+    { 'hda_cloud_diam'  { 'cloud_diam_c0p01'    } 'avg_ctype_cloud_diam'  }
+    { 'hda_cloud_num'   { 'cloud_num_c0p01'     } 'avg_ctype_cloud_num'   }
+    
+    { 'hda_rain'       { 'rain_r0p01'         } 'avg_ctype_rain'       }
+    { 'hda_rain_diam'  { 'rain_diam_r0p01'    } 'avg_ctype_rain_diam'  }
     { 'hda_rain_num'   { 'rain_num_r0p01'     } 'avg_ctype_rain_num'   }
 
     };
   Nset = length(VarSets);
 
-  TimeSelects = {
-    { 12    36    'TALL'   }      
-    { 12    13    'TSTART' }
-    { 23.5  24.5  'TMID'   }
-    { 35    36    'TEND'   }
-    };
-  Ntsel = length(TimeSelects);
-
-  for icase = 1:length(Config.Cases)
-    Case = Config.Cases(icase).Cname;
+  for icase = 1:Ncases
+    Case = CaseList{icase};
 
     fprintf('***************************************************************\n');
     fprintf('Generating avg data:\n');
@@ -139,29 +144,29 @@ function [ ] = GenAvgFiles(ConfigFile)
         OutName = sprintf('%s_TSERIES', OutNptsName);
         hdf5write(OutFile, OutName, NPTS, 'WriteMode', 'append');
 
-        % do time averaging
-        for its = 1:Ntsel
-          Tstart = TimeSelects{its}{1};
-          Tend   = TimeSelects{its}{2};
-          Tname  = TimeSelects{its}{3};
-
-          T1 = find(T >= Tstart, 1, 'first');
-          T2 = find(T <= Tend,   1, 'last');
-
-          % sum up bins across selected times, and convert HDA counts to an average
-          [ AVG NPTS ] = CountsToAvg(HDA, T1, T2);
-
-          % With the data selection it is possible to get no data points selected (all counts
-          % equal to zero in hda file). When this happens, get nans in Avg since the sum
-          % is zero. Ie, the AVG entry is 0/0 --> nan.  Change nans back to zeros to help
-          % make plots look nicer.
-          AVG(isnan(AVG)) = 0;
-
-          OutName = sprintf('%s_%s', OutAvgName, Tname);
-          hdf5write(OutFile, OutName, AVG, 'WriteMode', 'append'); 
-          OutName = sprintf('%s_%s', OutNptsName, Tname);
-          hdf5write(OutFile, OutName, NPTS, 'WriteMode', 'append');
-        end
+%        % do time averaging
+%        for its = 1:Ntsel
+%          Tstart = TimeSelects{its}{1};
+%          Tend   = TimeSelects{its}{2};
+%          Tname  = TimeSelects{its}{3};
+%
+%          T1 = find(T >= Tstart, 1, 'first');
+%          T2 = find(T <= Tend,   1, 'last');
+%
+%          % sum up bins across selected times, and convert HDA counts to an average
+%          [ AVG NPTS ] = CountsToAvg(HDA, T1, T2);
+%
+%          % With the data selection it is possible to get no data points selected (all counts
+%          % equal to zero in hda file). When this happens, get nans in Avg since the sum
+%          % is zero. Ie, the AVG entry is 0/0 --> nan.  Change nans back to zeros to help
+%          % make plots look nicer.
+%          AVG(isnan(AVG)) = 0;
+%
+%          OutName = sprintf('%s_%s', OutAvgName, Tname);
+%          hdf5write(OutFile, OutName, AVG, 'WriteMode', 'append'); 
+%          OutName = sprintf('%s_%s', OutNptsName, Tname);
+%          hdf5write(OutFile, OutName, NPTS, 'WriteMode', 'append');
+%        end
       end
       fprintf('\n');
 
