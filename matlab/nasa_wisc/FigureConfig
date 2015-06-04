@@ -12,22 +12,22 @@
 #  QradCompPanel 3
 #End 
 
-Figure: FigSampleSounding 4
-  DummyCases
-  [2_2]
-  Plots/FigSampleSnd.jpg
-  OldDiffCloudyPanel 1
-  OldDiffClearPanel  2
-  NewDiffCloudyPanel 3
-  NewDiffClearPanel  4
-End
-
-#Figure: FigAvgPw 1
+#Figure: FigSampleSounding 4
 #  DummyCases
-#  [1_1]
-#  Plots/FigAvgPw.jpg
-#  AvgPwPanel 1
+#  [2_2]
+#  Plots/FigSampleSnd.jpg
+#  OldDiffCloudyPanel 1
+#  OldDiffClearPanel  2
+#  NewDiffCloudyPanel 3
+#  NewDiffClearPanel  4
 #End
+
+Figure: FigAvgPw 1
+  DummyCases
+  [1_1]
+  Plots/FigAvgPw.jpg
+  AvgPwPanel 1
+End
 
 #Figure: FigHovPw 4
 #  DummyCases
@@ -40,7 +40,7 @@ End
 #End
 
 ########### CASES ####################
-CaseSet: TestCases 1
+CaseSet: TestCases 3
 #  RCE50_2D
 #  RCE50_RECT
 #  RCE50_RECT_S300
@@ -49,7 +49,10 @@ CaseSet: TestCases 1
 #  RCE_BASE
 #  RCE_MATT
 #  RCE_CNTL_NZ75
-  RCE_CNTL
+#  RCE_CNTL
+  RCE_EXP_S50LN
+  RCE_EXP_S70LN
+  RCE_EXP_S70LY
 End
 
 CaseSet: DummyCases 1
@@ -199,11 +202,12 @@ PlotSet: NewDiffClearPset line 3
   NewDiffClearVapor none Q_v@(g/kg)       2 red    - 0
 End
 
-PlotSet: AvgPwPset line 4
-  AvgPwLine  RCE_MATT          MATT  2 blue   - 0
-  AvgPwLine  RCE_BASE          BASE  2 green  - 0
-  AvgPwLine  RCE_CNTL_OLD_DIFF ODIFF 2 red    - 0
-  AvgPwLine  RCE_CNTL_NEW_DIFF NDIFF 2 orange - 0
+PlotSet: AvgPwPset line 5
+  AvgPwLine  RCE_MATT      MATT  2 blue   - 0
+  AvgPwLine  RCE_BASE      BASE  2 green  - 0
+  AvgPwLine  RCE_EXP_S70LN S70LN 2 red    - 0
+  AvgPwLine  RCE_EXP_S70LY S70LY 2 orange - 0
+  AvgPwLine  RCE_EXP_S50LN S50LN 2 brown  - 0
 End
 
 PlotSet: MattHovPwPset contourf 1
