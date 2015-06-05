@@ -10,44 +10,64 @@ function [ ] = ExtractSampleProfiles()
 
   % input_file input_dataset case_name outfile_prefix output_dataset
   VarSets = {
+%      {
+%        { 'HDF5/RCE_EXP_S70LY/HDF5/tempc-RCE_EXP_S70LY-AC-2012-01-01-000000-g1.h5' '/tempc' }
+%        { 'HDF5/RCE_EXP_S70LY/HDF5/theta-RCE_EXP_S70LY-AC-2012-01-01-000000-g1.h5' '/theta' }
+%        { 'HDF5/RCE_EXP_S70LY/HDF5/cloud-RCE_EXP_S70LY-AC-2012-01-01-000000-g1.h5' '/cloud' }
+%        { 'HDF5/RCE_EXP_S70LY/HDF5/vapor-RCE_EXP_S70LY-AC-2012-01-01-000000-g1.h5' '/vapor' }
+%        'RCE_EXP_S70LY_cloudy'
+%        182
+%         13
+%      }
+%
+%      {
+%        { 'HDF5/RCE_EXP_S70LY/HDF5/tempc-RCE_EXP_S70LY-AC-2012-01-01-000000-g1.h5' '/tempc' }
+%        { 'HDF5/RCE_EXP_S70LY/HDF5/theta-RCE_EXP_S70LY-AC-2012-01-01-000000-g1.h5' '/theta' }
+%        { 'HDF5/RCE_EXP_S70LY/HDF5/cloud-RCE_EXP_S70LY-AC-2012-01-01-000000-g1.h5' '/cloud' }
+%        { 'HDF5/RCE_EXP_S70LY/HDF5/vapor-RCE_EXP_S70LY-AC-2012-01-01-000000-g1.h5' '/vapor' }
+%        'RCE_EXP_S70LY_clear'
+%        1500
+%         100
+%      }
+%
+%      {
+%        { 'HDF5/RCE_EXP_S70LN/HDF5/tempc-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/tempc' }
+%        { 'HDF5/RCE_EXP_S70LN/HDF5/theta-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/theta' }
+%        { 'HDF5/RCE_EXP_S70LN/HDF5/cloud-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/cloud' }
+%        { 'HDF5/RCE_EXP_S70LN/HDF5/vapor-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/vapor' }
+%        'RCE_EXP_S70LN_cloudy'
+%        1303
+%          46
+%      }
+%
+%      {
+%        { 'HDF5/RCE_EXP_S70LN/HDF5/tempc-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/tempc' }
+%        { 'HDF5/RCE_EXP_S70LN/HDF5/theta-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/theta' }
+%        { 'HDF5/RCE_EXP_S70LN/HDF5/cloud-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/cloud' }
+%        { 'HDF5/RCE_EXP_S70LN/HDF5/vapor-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/vapor' }
+%        'RCE_EXP_S70LN_clear'
+%        936
+%         43
+%      }
+
       {
-        { 'HDF5/RCE_CNTL/HDF5/tempc-RCE_CNTL-AC-2012-01-01-000000-g1.h5' '/tempc' }
-        { 'HDF5/RCE_CNTL/HDF5/theta-RCE_CNTL-AC-2012-01-01-000000-g1.h5' '/theta' }
-        { 'HDF5/RCE_CNTL/HDF5/cloud-RCE_CNTL-AC-2012-01-01-000000-g1.h5' '/cloud' }
-        { 'HDF5/RCE_CNTL/HDF5/vapor-RCE_CNTL-AC-2012-01-01-000000-g1.h5' '/vapor' }
-        'RCE_CNTL_NEW_DIFF_cloudy'
-        182
-         13
+        { 'HDF5/RCE_EXP_S50LN/HDF5/tempc-RCE_EXP_S50LN-AC-2012-01-01-000000-g1.h5' '/tempc' }
+        { 'HDF5/RCE_EXP_S50LN/HDF5/theta-RCE_EXP_S50LN-AC-2012-01-01-000000-g1.h5' '/theta' }
+        { 'HDF5/RCE_EXP_S50LN/HDF5/cloud-RCE_EXP_S50LN-AC-2012-01-01-000000-g1.h5' '/cloud' }
+        { 'HDF5/RCE_EXP_S50LN/HDF5/vapor-RCE_EXP_S50LN-AC-2012-01-01-000000-g1.h5' '/vapor' }
+        'RCE_EXP_S50LN_cloudy'
+        1986
+          25
       }
 
       {
-        { 'HDF5/RCE_CNTL/HDF5/tempc-RCE_CNTL-AC-2012-01-01-000000-g1.h5' '/tempc' }
-        { 'HDF5/RCE_CNTL/HDF5/theta-RCE_CNTL-AC-2012-01-01-000000-g1.h5' '/theta' }
-        { 'HDF5/RCE_CNTL/HDF5/cloud-RCE_CNTL-AC-2012-01-01-000000-g1.h5' '/cloud' }
-        { 'HDF5/RCE_CNTL/HDF5/vapor-RCE_CNTL-AC-2012-01-01-000000-g1.h5' '/vapor' }
-        'RCE_CNTL_NEW_DIFF_clear'
+        { 'HDF5/RCE_EXP_S50LN/HDF5/tempc-RCE_EXP_S50LN-AC-2012-01-01-000000-g1.h5' '/tempc' }
+        { 'HDF5/RCE_EXP_S50LN/HDF5/theta-RCE_EXP_S50LN-AC-2012-01-01-000000-g1.h5' '/theta' }
+        { 'HDF5/RCE_EXP_S50LN/HDF5/cloud-RCE_EXP_S50LN-AC-2012-01-01-000000-g1.h5' '/cloud' }
+        { 'HDF5/RCE_EXP_S50LN/HDF5/vapor-RCE_EXP_S50LN-AC-2012-01-01-000000-g1.h5' '/vapor' }
+        'RCE_EXP_S50LN_clear'
         1500
          100
-      }
-
-      {
-        { 'HDF5/RCE_CNTL/HDF5_NZ75/tempc-RCE_CNTL-AC-2012-01-01-000000-g1.h5' '/tempc' }
-        { 'HDF5/RCE_CNTL/HDF5_NZ75/theta-RCE_CNTL-AC-2012-01-01-000000-g1.h5' '/theta' }
-        { 'HDF5/RCE_CNTL/HDF5_NZ75/cloud-RCE_CNTL-AC-2012-01-01-000000-g1.h5' '/cloud' }
-        { 'HDF5/RCE_CNTL/HDF5_NZ75/vapor-RCE_CNTL-AC-2012-01-01-000000-g1.h5' '/vapor' }
-        'RCE_CNTL_OLD_DIFF_cloudy'
-        1303
-          46
-      }
-
-      {
-        { 'HDF5/RCE_CNTL/HDF5_NZ75/tempc-RCE_CNTL-AC-2012-01-01-000000-g1.h5' '/tempc' }
-        { 'HDF5/RCE_CNTL/HDF5_NZ75/theta-RCE_CNTL-AC-2012-01-01-000000-g1.h5' '/theta' }
-        { 'HDF5/RCE_CNTL/HDF5_NZ75/cloud-RCE_CNTL-AC-2012-01-01-000000-g1.h5' '/cloud' }
-        { 'HDF5/RCE_CNTL/HDF5_NZ75/vapor-RCE_CNTL-AC-2012-01-01-000000-g1.h5' '/vapor' }
-        'RCE_CNTL_OLD_DIFF_clear'
-        936
-         43
       }
 
     };
