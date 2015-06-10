@@ -31,6 +31,13 @@ Figure: FigSampleSoundingClear 4
   S50LNClearPanel  4
 End
 
+Figure: FigSampleSoundingClear2 1
+  DummyCases
+  [1_1]
+  Plots/FigSampleSndClear2.jpg
+  S70MYClearPanel  1
+End
+
 Figure: FigSampleSoundingCloudy 4
   DummyCases
   [2_2]
@@ -39,6 +46,13 @@ Figure: FigSampleSoundingCloudy 4
   S70LNCloudyPanel 2
   S70LYCloudyPanel 3
   S50LNCloudyPanel 4
+End
+
+Figure: FigSampleSoundingCloudy2 1
+  DummyCases
+  [1_1]
+  Plots/FigSampleSndCloudy2.jpg
+  S70MYCloudyPanel 1
 End
 
 Figure: FigAvgPw 1
@@ -58,12 +72,20 @@ Figure: FigHovPw 4
   S50LNHovPwPanel 4
 End
 
+Figure: FigHovPw2 1
+  DummyCases
+  [1_1]
+  Plots/FigHovPw2.jpg
+  S70MYHovPwPanel 1
+End
+
 ########### CASES ####################
-CaseSet: TestCasesS70 3
+CaseSet: TestCasesS70 4
   RCE_BASE
 #  RCE_MATT
   RCE_EXP_S70LN
   RCE_EXP_S70LY
+  RCE_EXP_S70MY
 End
 
 CaseSet: TestCasesS50 1
@@ -145,6 +167,14 @@ FigPanel: S70LNCloudyPanel
   Best 10
 End
 
+FigPanel: S70MYCloudyPanel
+  S70MYCloudyPset
+  SampSoundingAxes 1 1
+  none 5
+  PANEL:b@S70MY@Cloudy
+  Best 10
+End
+
 FigPanel: S70LYCloudyPanel
   S70LYCloudyPset
   SampSoundingAxes 1 1
@@ -174,6 +204,14 @@ FigPanel: S70LNClearPanel
   SampSoundingAxes 0 0
   none 5
   PANEL:b@S70LN@Clear
+  Best 10
+End
+
+FigPanel: S70MYClearPanel
+  S70MYClearPset
+  SampSoundingAxes 1 1
+  none 5
+  PANEL:b@S70MY@Clear
   Best 10
 End
 
@@ -222,6 +260,14 @@ FigPanel: S70LNHovPwPanel
   HovPwAxes 0 0
   none 5
   PANEL:b@S70LN@PW
+  none 10
+End
+
+FigPanel: S70MYHovPwPanel
+  S70MYHovPwPset
+  HovPwAxes 1 1
+  none 5
+  PANEL:b@S70MY@PW
   none 10
 End
 
@@ -275,6 +321,12 @@ PlotSet: S70LNCloudyPset line 3
   S70LNCloudyVapor none Q_v@(g/kg)       2 red    - 0
 End
 
+PlotSet: S70MYCloudyPset line 3
+  S70MYCloudyTheta none \theta@(deg@C)        2 blue   - 0
+  S70MYCloudyCloud none Q_c@(100@X@g/kg) 2 green  - 0
+  S70MYCloudyVapor none Q_v@(g/kg)       2 red    - 0
+End
+
 PlotSet: S70LYCloudyPset line 3
   S70LYCloudyTheta none \theta@(deg@C)        2 blue   - 0
   S70LYCloudyCloud none Q_c@(100@X@g/kg) 2 green  - 0
@@ -299,6 +351,12 @@ PlotSet: S70LNClearPset line 3
   S70LNClearVapor none Q_v@(g/kg)       2 red    - 0
 End
 
+PlotSet: S70MYClearPset line 3
+  S70MYClearTheta none \theta@(deg@C)        2 blue   - 0
+  S70MYClearCloud none Q_c@(100@X@g/kg) 2 green  - 0
+  S70MYClearVapor none Q_v@(g/kg)       2 red    - 0
+End
+
 PlotSet: S70LYClearPset line 3
   S70LYClearTheta none \theta@(deg@C)        2 blue   - 0
   S70LYClearCloud none Q_c@(100@X@g/kg) 2 green  - 0
@@ -311,12 +369,13 @@ PlotSet: S50LNClearPset line 3
   S50LNClearVapor none Q_v@(g/kg)       2 red    - 0
 End
 
-PlotSet: AvgPwPset line 5
+PlotSet: AvgPwPset line 6
   AvgPwLine  RCE_MATT      MATT  2 blue   - 0
   AvgPwLine  RCE_BASE      BASE  2 green  - 0
   AvgPwLine  RCE_EXP_S70LN S70LN 2 red    - 0
   AvgPwLine  RCE_EXP_S70LY S70LY 2 orange - 0
   AvgPwLine  RCE_EXP_S50LN S50LN 2 brown  - 0
+  AvgPwLine  RCE_EXP_S70MY S70MY 2 black  - 0
 End
 
 PlotSet: MattHovPwPset contourf 1
@@ -329,6 +388,10 @@ End
 
 PlotSet: S70LNHovPwPset contourf 1
   S70LNHovPwContour none none 2 blue - 0
+End
+
+PlotSet: S70MYHovPwPset contourf 1
+  S70MYHovPwContour none none 2 blue - 0
 End
 
 PlotSet: S70LYHovPwPset contourf 1
@@ -529,6 +592,62 @@ PlotData: S70LNClearVapor 2
   /z_coords DIAGS/SampleProfiles_RCE_EXP_S70LN_clear.h5 (2:75) 1e-3 0
 End
 
+PlotData: S70MYCloudyTemp 2
+  # x data - sim time in days
+  /tempc_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75,12) 1 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75) 1e-3 0
+End
+
+PlotData: S70MYCloudyTheta 2
+  # x data - sim time in days
+  /theta_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75,12) 1 -273.15
+  # y data - radiative flux divergence in W/m^2
+  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75) 1e-3 0
+End
+
+PlotData: S70MYCloudyCloud 2
+  # x data - sim time in days
+  /cloud_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75,12) 100 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75)   1e-3 0
+End
+
+PlotData: S70MYCloudyVapor 2
+  # x data - sim time in days
+  /vapor_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75,12) 1 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75) 1e-3 0
+End
+
+PlotData: S70MYClearTemp 2
+  # x data - sim time in days
+  /tempc_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75,12) 1 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75) 1e-3 0
+End
+
+PlotData: S70MYClearTheta 2
+  # x data - sim time in days
+  /theta_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75,12) 1 -273.15
+  # y data - radiative flux divergence in W/m^2
+  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75) 1e-3 0
+End
+
+PlotData: S70MYClearCloud 2
+  # x data - sim time in days
+  /cloud_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75,12) 100 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75)   1e-3 0
+End
+
+PlotData: S70MYClearVapor 2
+  # x data - sim time in days
+  /vapor_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75,12) 1 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75) 1e-3 0
+End
+
 PlotData: S70LYCloudyTemp 2
   # x data - sim time in days
   /tempc_avg    DIAGS/SampleProfiles_RCE_EXP_S70LY_cloudy.h5 (2:75,32) 1 0
@@ -676,6 +795,16 @@ PlotData: S70LNHovPwContour 3
   /t_coords     DIAGS/hov_precip_water_RCE_EXP_S70LN.h5 (1:32)   1.1574e-5 0
   # z data - PW, mm
   /precip_water DIAGS/hov_precip_water_RCE_EXP_S70LN.h5 (:,1:32) 1         0
+End
+
+PlotData: S70MYHovPwContour 3
+  # select all x, 31 simulated days -> t (1:32)
+  # x data - zonal distance, km
+  /x_coords     DIAGS/hov_precip_water_RCE_EXP_S70MY.h5 @        1         0
+  # y data - time, sec -> convert to days
+  /t_coords     DIAGS/hov_precip_water_RCE_EXP_S70MY.h5 (1:12)   1.1574e-5 0
+  # z data - PW, mm
+  /precip_water DIAGS/hov_precip_water_RCE_EXP_S70MY.h5 (:,1:12) 1         0
 End
 
 PlotData: S70LYHovPwContour 3

@@ -30,25 +30,25 @@ function [ ] = ExtractSampleProfiles()
 %         100
 %      }
 %
-%      {
-%        { 'HDF5/RCE_EXP_S70LN/HDF5/tempc-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/tempc' }
-%        { 'HDF5/RCE_EXP_S70LN/HDF5/theta-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/theta' }
-%        { 'HDF5/RCE_EXP_S70LN/HDF5/cloud-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/cloud' }
-%        { 'HDF5/RCE_EXP_S70LN/HDF5/vapor-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/vapor' }
-%        'RCE_EXP_S70LN_cloudy'
-%        1303
-%          46
-%      }
-%
-%      {
-%        { 'HDF5/RCE_EXP_S70LN/HDF5/tempc-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/tempc' }
-%        { 'HDF5/RCE_EXP_S70LN/HDF5/theta-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/theta' }
-%        { 'HDF5/RCE_EXP_S70LN/HDF5/cloud-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/cloud' }
-%        { 'HDF5/RCE_EXP_S70LN/HDF5/vapor-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/vapor' }
-%        'RCE_EXP_S70LN_clear'
-%        936
-%         43
-%      }
+      {
+        { 'HDF5/RCE_EXP_S70LN/HDF5/tempc-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/tempc' }
+        { 'HDF5/RCE_EXP_S70LN/HDF5/theta-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/theta' }
+        { 'HDF5/RCE_EXP_S70LN/HDF5/cloud-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/cloud' }
+        { 'HDF5/RCE_EXP_S70LN/HDF5/vapor-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/vapor' }
+        'RCE_EXP_S70LN_cloudy'
+        1303
+          46
+      }
+
+      {
+        { 'HDF5/RCE_EXP_S70LN/HDF5/tempc-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/tempc' }
+        { 'HDF5/RCE_EXP_S70LN/HDF5/theta-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/theta' }
+        { 'HDF5/RCE_EXP_S70LN/HDF5/cloud-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/cloud' }
+        { 'HDF5/RCE_EXP_S70LN/HDF5/vapor-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/vapor' }
+        'RCE_EXP_S70LN_clear'
+        936
+         43
+      }
 %
 %      {
 %        { 'HDF5/RCE_EXP_S50LN/HDF5/tempc-RCE_EXP_S50LN-AC-2012-01-01-000000-g1.h5' '/tempc' }
@@ -71,24 +71,44 @@ function [ ] = ExtractSampleProfiles()
 %      }
 
       {
-        { 'HDF5/RCE_BASE/HDF5/tempc-a-AC-2012-01-01-000000-g1.h5' '/tempc' }
-        { 'HDF5/RCE_BASE/HDF5/theta-a-AC-2012-01-01-000000-g1.h5' '/theta' }
-        { 'HDF5/RCE_BASE/HDF5/cloud-a-AC-2012-01-01-000000-g1.h5' '/cloud' }
-        { 'HDF5/RCE_BASE/HDF5/vapor-a-AC-2012-01-01-000000-g1.h5' '/vapor' }
-        'RCE_BASE_cloudy'
-        1863
-          86
+        { 'HDF5/RCE_EXP_S70MY/HDF5/tempc-RCE_EXP_S70MY-AC-2012-01-01-000000-g1.h5' '/tempc' }
+        { 'HDF5/RCE_EXP_S70MY/HDF5/theta-RCE_EXP_S70MY-AC-2012-01-01-000000-g1.h5' '/theta' }
+        { 'HDF5/RCE_EXP_S70MY/HDF5/cloud-RCE_EXP_S70MY-AC-2012-01-01-000000-g1.h5' '/cloud' }
+        { 'HDF5/RCE_EXP_S70MY/HDF5/vapor-RCE_EXP_S70MY-AC-2012-01-01-000000-g1.h5' '/vapor' }
+        'RCE_EXP_S70MY_cloudy'
+        1816
+          54
       }
 
       {
-        { 'HDF5/RCE_BASE/HDF5/tempc-a-AC-2012-01-01-000000-g1.h5' '/tempc' }
-        { 'HDF5/RCE_BASE/HDF5/theta-a-AC-2012-01-01-000000-g1.h5' '/theta' }
-        { 'HDF5/RCE_BASE/HDF5/cloud-a-AC-2012-01-01-000000-g1.h5' '/cloud' }
-        { 'HDF5/RCE_BASE/HDF5/vapor-a-AC-2012-01-01-000000-g1.h5' '/vapor' }
-        'RCE_BASE_clear'
-        1420
+        { 'HDF5/RCE_EXP_S70MY/HDF5/tempc-RCE_EXP_S70MY-AC-2012-01-01-000000-g1.h5' '/tempc' }
+        { 'HDF5/RCE_EXP_S70MY/HDF5/theta-RCE_EXP_S70MY-AC-2012-01-01-000000-g1.h5' '/theta' }
+        { 'HDF5/RCE_EXP_S70MY/HDF5/cloud-RCE_EXP_S70MY-AC-2012-01-01-000000-g1.h5' '/cloud' }
+        { 'HDF5/RCE_EXP_S70MY/HDF5/vapor-RCE_EXP_S70MY-AC-2012-01-01-000000-g1.h5' '/vapor' }
+        'RCE_EXP_S70MY_clear'
+        1500
          100
       }
+
+%      {
+%        { 'HDF5/RCE_BASE/HDF5/tempc-a-AC-2012-01-01-000000-g1.h5' '/tempc' }
+%        { 'HDF5/RCE_BASE/HDF5/theta-a-AC-2012-01-01-000000-g1.h5' '/theta' }
+%        { 'HDF5/RCE_BASE/HDF5/cloud-a-AC-2012-01-01-000000-g1.h5' '/cloud' }
+%        { 'HDF5/RCE_BASE/HDF5/vapor-a-AC-2012-01-01-000000-g1.h5' '/vapor' }
+%        'RCE_BASE_cloudy'
+%        1863
+%          86
+%      }
+%
+%      {
+%        { 'HDF5/RCE_BASE/HDF5/tempc-a-AC-2012-01-01-000000-g1.h5' '/tempc' }
+%        { 'HDF5/RCE_BASE/HDF5/theta-a-AC-2012-01-01-000000-g1.h5' '/theta' }
+%        { 'HDF5/RCE_BASE/HDF5/cloud-a-AC-2012-01-01-000000-g1.h5' '/cloud' }
+%        { 'HDF5/RCE_BASE/HDF5/vapor-a-AC-2012-01-01-000000-g1.h5' '/vapor' }
+%        'RCE_BASE_clear'
+%        1420
+%         100
+%      }
 
     };
   Nset = length(VarSets);
