@@ -594,56 +594,56 @@ End
 
 PlotData: S70MYCloudyTemp 2
   # x data - sim time in days
-  /tempc_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75,12) 1 0
+  /tempc_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75,23) 1 0
   # y data - radiative flux divergence in W/m^2
   /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75) 1e-3 0
 End
 
 PlotData: S70MYCloudyTheta 2
   # x data - sim time in days
-  /theta_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75,12) 1 -273.15
+  /theta_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75,23) 1 -273.15
   # y data - radiative flux divergence in W/m^2
   /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75) 1e-3 0
 End
 
 PlotData: S70MYCloudyCloud 2
   # x data - sim time in days
-  /cloud_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75,12) 100 0
+  /cloud_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75,23) 100 0
   # y data - radiative flux divergence in W/m^2
   /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75)   1e-3 0
 End
 
 PlotData: S70MYCloudyVapor 2
   # x data - sim time in days
-  /vapor_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75,12) 1 0
+  /vapor_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75,23) 1 0
   # y data - radiative flux divergence in W/m^2
   /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75) 1e-3 0
 End
 
 PlotData: S70MYClearTemp 2
   # x data - sim time in days
-  /tempc_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75,12) 1 0
+  /tempc_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75,23) 1 0
   # y data - radiative flux divergence in W/m^2
   /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75) 1e-3 0
 End
 
 PlotData: S70MYClearTheta 2
   # x data - sim time in days
-  /theta_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75,12) 1 -273.15
+  /theta_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75,23) 1 -273.15
   # y data - radiative flux divergence in W/m^2
   /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75) 1e-3 0
 End
 
 PlotData: S70MYClearCloud 2
   # x data - sim time in days
-  /cloud_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75,12) 100 0
+  /cloud_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75,23) 100 0
   # y data - radiative flux divergence in W/m^2
   /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75)   1e-3 0
 End
 
 PlotData: S70MYClearVapor 2
   # x data - sim time in days
-  /vapor_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75,12) 1 0
+  /vapor_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75,23) 1 0
   # y data - radiative flux divergence in W/m^2
   /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75) 1e-3 0
 End
@@ -802,9 +802,9 @@ PlotData: S70MYHovPwContour 3
   # x data - zonal distance, km
   /x_coords     DIAGS/hov_precip_water_RCE_EXP_S70MY.h5 @        1         0
   # y data - time, sec -> convert to days
-  /t_coords     DIAGS/hov_precip_water_RCE_EXP_S70MY.h5 (1:12)   1.1574e-5 0
+  /t_coords     DIAGS/hov_precip_water_RCE_EXP_S70MY.h5 (1:23)   1.1574e-5 0
   # z data - PW, mm
-  /precip_water DIAGS/hov_precip_water_RCE_EXP_S70MY.h5 (:,1:12) 1         0
+  /precip_water DIAGS/hov_precip_water_RCE_EXP_S70MY.h5 (:,1:23) 1         0
 End
 
 PlotData: S70LYHovPwContour 3

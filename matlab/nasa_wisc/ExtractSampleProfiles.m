@@ -76,8 +76,8 @@ function [ ] = ExtractSampleProfiles()
         { 'HDF5/RCE_EXP_S70MY/HDF5/cloud-RCE_EXP_S70MY-AC-2012-01-01-000000-g1.h5' '/cloud' }
         { 'HDF5/RCE_EXP_S70MY/HDF5/vapor-RCE_EXP_S70MY-AC-2012-01-01-000000-g1.h5' '/vapor' }
         'RCE_EXP_S70MY_cloudy'
-        1816
-          54
+        1152
+         193
       }
 
       {
