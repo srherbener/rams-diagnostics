@@ -10,6 +10,8 @@ SCRIPTS = \
   $(DEST)/SetPath.m
 
 CONFIGS = \
+  $(DIAG_DIR)/FigMicrophysicsS293_Config \
+  $(DIAG_DIR)/FigMicrophysicsS298_Config \
   $(DIAG_DIR)/FigTestInitCcn_Config \
   $(DIAG_DIR)/FigTestTimeSeries_Config
 

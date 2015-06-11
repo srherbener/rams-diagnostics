@@ -1,0 +1,259 @@
+# Config file for test plots showing time series
+################ CASES ###################
+CaseSet: CasesS298 6
+  z.atex.ccn0050.sst298
+  z.atex.ccn0100.sst298
+  z.atex.ccn0200.sst298
+  z.atex.ccn0400.sst298
+  z.atex.ccn0800.sst298
+  z.atex.ccn1600.sst298
+End
+
+CaseSet: DummyCases 1
+  none
+End
+
+############## FIGURES ##################
+Figure: Microphsics 7
+  DummyCases
+  [4_2]
+  Plots/Figure9_Microphysics_S298.jpg
+  CloudCondPanel 1
+  CloudEvapPanel 2
+  DrizCondPanel  3
+  DrizEvapPanel  4
+  RainCondPanel  5
+  RainEvapPanel  6
+  LwFluxPanel    7
+End
+
+############## PANELS ###################
+FigPanel: CloudCondPanel
+  CloudCondPset
+  CloudCondAxes 1 1
+  none 5
+  PANEL:a@S298
+  none 10
+End
+
+FigPanel: CloudEvapPanel
+  CloudEvapPset
+  CloudEvapAxes 1 0
+  none 5
+  PANEL:b@S298
+  none 10
+End
+
+FigPanel: DrizCondPanel
+  DrizCondPset
+  DrizCondAxes 1 1
+  none 5
+  PANEL:c@S298
+  none 10
+End
+
+FigPanel: DrizEvapPanel
+  DrizEvapPset
+  DrizEvapAxes 1 0
+  none 5
+  PANEL:d@S298
+  none 10
+End
+
+FigPanel: RainCondPanel
+  RainCondPset
+  RainCondAxes 1 1
+  none 5
+  PANEL:e@S298
+  none 10
+End
+
+FigPanel: RainEvapPanel
+  RainEvapPset
+  RainEvapAxes 1 0
+  none 5
+  PANEL:f@S298
+  none 10
+End
+
+FigPanel: LwFluxPanel
+  LwFluxPset
+  LwFluxAxes 1 1
+  none 5
+  PANEL:g@S298
+  none 10
+End
+
+############# PLOT SETS ###############
+PlotSet: CloudCondPset line 6
+  CloudCondLine z.atex.ccn0050.sst298 C0050 1 black     - 0
+  CloudCondLine z.atex.ccn0100.sst298 C0100 1 blue      - 0
+  CloudCondLine z.atex.ccn0200.sst298 C0200 1 green     - 0
+  CloudCondLine z.atex.ccn0400.sst298 C0400 1 yellow    - 0
+  CloudCondLine z.atex.ccn0800.sst298 C0800 1 orangered - 0
+  CloudCondLine z.atex.ccn1600.sst298 C1600 1 brown     - 0
+End
+
+PlotSet: CloudEvapPset line 6
+  CloudEvapLine z.atex.ccn0050.sst298 C0050 1 black     - 0
+  CloudEvapLine z.atex.ccn0100.sst298 C0100 1 blue      - 0
+  CloudEvapLine z.atex.ccn0200.sst298 C0200 1 green     - 0
+  CloudEvapLine z.atex.ccn0400.sst298 C0400 1 yellow    - 0
+  CloudEvapLine z.atex.ccn0800.sst298 C0800 1 orangered - 0
+  CloudEvapLine z.atex.ccn1600.sst298 C1600 1 brown     - 0
+End
+
+PlotSet: DrizCondPset line 6
+  DrizCondLine z.atex.ccn0050.sst298 C0050 1 black     - 0
+  DrizCondLine z.atex.ccn0100.sst298 C0100 1 blue      - 0
+  DrizCondLine z.atex.ccn0200.sst298 C0200 1 green     - 0
+  DrizCondLine z.atex.ccn0400.sst298 C0400 1 yellow    - 0
+  DrizCondLine z.atex.ccn0800.sst298 C0800 1 orangered - 0
+  DrizCondLine z.atex.ccn1600.sst298 C1600 1 brown     - 0
+End
+
+PlotSet: DrizEvapPset line 6
+  DrizEvapLine z.atex.ccn0050.sst298 C0050 1 black     - 0
+  DrizEvapLine z.atex.ccn0100.sst298 C0100 1 blue      - 0
+  DrizEvapLine z.atex.ccn0200.sst298 C0200 1 green     - 0
+  DrizEvapLine z.atex.ccn0400.sst298 C0400 1 yellow    - 0
+  DrizEvapLine z.atex.ccn0800.sst298 C0800 1 orangered - 0
+  DrizEvapLine z.atex.ccn1600.sst298 C1600 1 brown     - 0
+End
+
+PlotSet: RainCondPset line 6
+  RainCondLine z.atex.ccn0050.sst298 C0050 1 black     - 0
+  RainCondLine z.atex.ccn0100.sst298 C0100 1 blue      - 0
+  RainCondLine z.atex.ccn0200.sst298 C0200 1 green     - 0
+  RainCondLine z.atex.ccn0400.sst298 C0400 1 yellow    - 0
+  RainCondLine z.atex.ccn0800.sst298 C0800 1 orangered - 0
+  RainCondLine z.atex.ccn1600.sst298 C1600 1 brown     - 0
+End
+
+PlotSet: RainEvapPset line 6
+  RainEvapLine z.atex.ccn0050.sst298 C0050 1 black     - 0
+  RainEvapLine z.atex.ccn0100.sst298 C0100 1 blue      - 0
+  RainEvapLine z.atex.ccn0200.sst298 C0200 1 green     - 0
+  RainEvapLine z.atex.ccn0400.sst298 C0400 1 yellow    - 0
+  RainEvapLine z.atex.ccn0800.sst298 C0800 1 orangered - 0
+  RainEvapLine z.atex.ccn1600.sst298 C1600 2 brown     - 0
+End
+
+PlotSet: LwFluxPset line 6
+  LwFluxLine z.atex.ccn0050.sst298 C0050 1 black     - 0
+  LwFluxLine z.atex.ccn0100.sst298 C0100 1 blue      - 0
+  LwFluxLine z.atex.ccn0200.sst298 C0200 1 green     - 0
+  LwFluxLine z.atex.ccn0400.sst298 C0400 1 yellow    - 0
+  LwFluxLine z.atex.ccn0800.sst298 C0800 1 orangered - 0
+  LwFluxLine z.atex.ccn1600.sst298 C1600 1 brown     - 0
+End
+
+############# PLOT DATA ##############
+# Units on rates are per 12 minutes. Multiply by 5 to get per hour.
+
+PlotData: CloudCondLine 2
+  # x - cloud condensation rate (g/kg/hr)
+  /cloud_cond_all_cld_avg_TALL DIAGS/avg_cloud_cond_<CASE>.h5 @   12 0
+  # y - height (km)
+  /z_coords                    DIAGS/avg_cloud_cond_<CASE>.h5 @ 1e-3 0
+End
+
+PlotData: CloudEvapLine 2
+  # x - cloud evaporation rate (g/kg/hr)
+  /cloud_evap_all_cld_avg_TALL DIAGS/avg_cloud_evap_<CASE>.h5 @   12 0
+  # y - height (km)
+  /z_coords                    DIAGS/avg_cloud_evap_<CASE>.h5 @ 1e-3 0
+End
+
+PlotData: DrizCondLine 2
+  # x - drizzle condensation rate (g/kg/hr)
+  /driz_cond_all_cld_avg_TALL DIAGS/avg_driz_cond_<CASE>.h5 @   12 0
+  # y - height (km)
+  /z_coords                   DIAGS/avg_driz_cond_<CASE>.h5 @ 1e-3 0
+End
+
+PlotData: DrizEvapLine 2
+  # x - drizzle evaporation rate (g/kg/hr)
+  /driz_evap_all_cld_avg_TALL DIAGS/avg_driz_evap_<CASE>.h5 @   12 0
+  # y - height (km)
+  /z_coords                   DIAGS/avg_driz_evap_<CASE>.h5 @ 1e-3 0
+End
+
+PlotData: RainCondLine 2
+  # x - rain condensation rate (g/kg/hr)
+  /rain_cond_all_cld_avg_TALL DIAGS/avg_rain_cond_<CASE>.h5 @   12 0
+  # y - height (km)
+  /z_coords                   DIAGS/avg_rain_cond_<CASE>.h5 @ 1e-3 0
+End
+
+PlotData: RainEvapLine 2
+  # x - rain evaporation rate (g/kg/hr)
+  /rain_evap_all_cld_avg_TALL DIAGS/avg_rain_evap_<CASE>.h5 @   12 0
+  # y - height (km)
+  /z_coords                   DIAGS/avg_rain_evap_<CASE>.h5 @ 1e-3 0
+End
+
+PlotData: LwFluxLine 2
+  # x - LW flux (W/m^2)
+  /lw_flux_all_cld_avg_TALL DIAGS/avg_net_lw_flux_<CASE>.h5 @    1 0
+  # y - height (km)
+  /z_coords                 DIAGS/avg_net_lw_flux_<CASE>.h5 @ 1e-3 0
+End
+
+############ PLOT AXES ###############
+PlotAxes: CloudCondAxes 2
+  8 1 [0.025_0.025]
+  # x - cloud condensation rate (g/kg/hr)
+  Cloud@Cond g@kg^-^1@h^-^1 -0.5 10 linear [_] {_}
+  # y - height (km)
+  Height     km                0  4 linear [_] {_}
+End
+
+PlotAxes: CloudEvapAxes 2
+  8 1 [0.025_0.025]
+  # x - cloud evaporation rate (g/kg/hr)
+  Cloud@Evap g@kg^-^1@h^-^1 -9 0.5 linear [_] {_}
+  # y - height (km)
+  Height     km              0   4 linear [_] {_}
+End
+
+PlotAxes: DrizCondAxes 2
+  8 1 [0.025_0.025]
+  # x - drizzle condensation rate (g/kg/hr)
+  Drizzle@Cond g@kg^-^1@h^-^1 -0.01 0.15 linear [_] {_}
+  # y - height (km)
+  Height       km                 0    4 linear [_] {_}
+End
+
+PlotAxes: DrizEvapAxes 2
+  8 1 [0.025_0.025]
+  # x - drizzle evaporation rate (g/kg/hr)
+  Drizzle@Evap g@kg^-^1@h^-^1 -0.1 0.01 linear [_] {_}
+  # y - height (km)
+  Height       km                0    4 linear [_] {_}
+End
+
+PlotAxes: RainCondAxes 2
+  8 1 [0.025_0.025]
+  # x - rain condensation rate (g/kg/hr)
+  Rain@Cond g@kg^-^1@h^-^1 -0.001 0.02 linear [_] {_}
+  # y - height (km)
+  Height    km                  0    4 linear [_] {_}
+End
+
+PlotAxes: RainEvapAxes 2
+  8 1 [0.025_0.025]
+  # x - rain evaporation rate (g/kg/hr)
+  Rain@Evap g@kg^-^1@h^-^1 -0.2 0.01 linear [_] {_}
+  # y - height (km)
+  Height    km                0    4 linear [_] {_}
+End
+
+PlotAxes: LwFluxAxes 2
+  8 1 [0.025_0.025]
+  # x - rain evaporation rate (g/kg/hr)
+  LW@Flux W@m^2   -1  150 linear [_] {_}
+  # y - height (km)
+  Height  km       0    4 linear [_] {_}
+End
+
