@@ -29,48 +29,38 @@ function [ ] = GenAvgFiles()
 Ncases = length(CaseList);
 
   VarSets = {
-%    { 'hda_pcprr'           { 'pcprr'  'pcprr_strnp'  'pcprr_strat'  'pcprr_cumul'  'pcprr_all_cld'  'pcprr_stall'  } 'avg_ctype_pcprr'  }
-%    { 'hda_cloud_opt_thick' { 'cot'    'cot_strnp'    'cot_strat'    'cot_cumul'    'cot_all_cld'    'cot_stall'    } 'avg_ctype_cot'    }
-%    { 'hda_cloud_depth'     { 'cdepth' 'cdepth_strnp' 'cdepth_strat' 'cdepth_cumul' 'cdepth_all_cld' 'cdepth_stall' } 'avg_ctype_cdepth' }
-%    { 'hda_vint_cond'       { 'lwp'    'lwp_strnp'    'lwp_strat'    'lwp_cumul'    'lwp_all_cld'    'lwp_stall'    } 'avg_ctype_lwp'    }
-%
-%    { 'hda_lwp2cdepth'      { 'lwp2cdepth' 'lwp2cdepth_strnp' 'lwp2cdepth_strat' 'lwp2cdepth_cumul' 'lwp2cdepth_all_cld' 'lwp2cdepth_stall' } 'avg_ctype_lwp2cdepth'    }
-%
-%    { 'hda_cloud_mask'      { 'cfrac'  'cfrac_strnp'  'cfrac_strat'  'cfrac_cumul'  'cfrac_stmix' 'cfrac_scmix' 'cfrac_stnopr' 'cfrac_stdriz', 'cfrac_strain' } 'avg_ctype_cfrac'  }
-%
-%    { 'hda_lcl'             { 'lcl'    'lcl_stall'                                                                  } 'avg_ctype_lcl'  }
+    { 'hda_cloud_ot'    { 'cot' 'cot_all_cld'  } 'avg_cot'         }
+    { 'hda_cloud_mask'  { 'cloud_frac'  }        'avg_dom_cfrac'   }
 
+    { 'hda_cloud_depth' { 'cdepth_all_cld'     } 'avg_cdepth'      }
+    { 'hda_lwp2cdepth'  { 'lwp2cdepth_all_cld' } 'avg_lwp2cdepth'  }
 
+    { 'hda_vapcldt'     { 'cloud_cond_all_cld' } 'avg_cloud_cond'  }
+    { 'hda_vapcldt'     { 'cloud_evap_all_cld' } 'avg_cloud_evap'  }
 
+    { 'hda_vapraint'    { 'rain_cond_all_cld'  } 'avg_rain_cond'   }
+    { 'hda_vapraint'    { 'rain_evap_all_cld'  } 'avg_rain_evap'   }
 
-%    { 'hda_vapcldt'  { 'cloud_cond_stall'    'col_cloud_cond' 'cloud_cond_all_cld' 'cond_in_cloud' 'cond_in_cloud_nz'    } 'avg_ctype_cloud_cond'  }
-%    { 'hda_vapcldt'  { 'cloud_evap_stall'    'col_cloud_evap' 'cloud_evap_all_cld' 'evap_in_cloud' 'evap_in_cloud_nz'    } 'avg_ctype_cloud_evap'  }
-%    { 'hda_vapcldt'         { 'col_cloud_cond_evap'                                                                 } 'avg_ctype_cloud_cond_evap'  }
+    { 'hda_vapdrizt'    { 'driz_cond_all_cld'  } 'avg_driz_cond'   }
+    { 'hda_vapdrizt'    { 'driz_evap_all_cld'  } 'avg_driz_evap'   }
 
-%    { 'hda_vapraint'  { 'rain_cond_all_cld' } 'avg_ctype_rain_cond'  }
-%    { 'hda_vapraint'  { 'rain_evap_all_cld' } 'avg_ctype_rain_evap'  }
+    { 'hda_net_lw_flux' { 'lw_flux_all_cld'    } 'avg_net_lw_flux' }
 
-%    { 'hda_vapdrizt'  { 'driz_cond_all_cld' } 'avg_ctype_driz_cond'  }
-%    { 'hda_vapdrizt'  { 'driz_evap_all_cld' } 'avg_ctype_driz_evap'  }
-
-%    { 'hda_lh_vapt'  { 'col_lat_heat'      'lat_heat_all_cld' 'lat_heat_in_cloud' 'lat_heat_in_cloud_nz'     } 'avg_ctype_lat_heat'  }
-%    { 'hda_lh_vapt'  { 'col_lat_cool'      'lat_cool_all_cld' 'lat_cool_in_cloud' 'lat_cool_in_cloud_nz'     } 'avg_ctype_lat_cool'  }
-%    { 'hda_lh_vapt'         { 'col_lat_heat_cool'                                                                   } 'avg_ctype_lat_heat_cool'  }
-
-%    { 'hda_net_lw_flux'  { 'lw_flux_all_cld'     } 'avg_ctype_net_lw_flux'  }
-
-
-
-    { 'hda_cloud'       { 'cloud_c0p01'         } 'avg_ctype_cloud'       }
-    { 'hda_cloud_diam'  { 'cloud_diam_c0p01'    } 'avg_ctype_cloud_diam'  }
-    { 'hda_cloud_num'   { 'cloud_num_c0p01'     } 'avg_ctype_cloud_num'   }
+    { 'hda_cloud'       { 'cloud_c0p01'        } 'avg_cloud'       }
+    { 'hda_cloud_diam'  { 'cloud_diam_c0p01'   } 'avg_cloud_diam'  }
+    { 'hda_cloud_num'   { 'cloud_num_c0p01'    } 'avg_cloud_num'   }
     
-    { 'hda_rain'       { 'rain_r0p01'         } 'avg_ctype_rain'       }
-    { 'hda_rain_diam'  { 'rain_diam_r0p01'    } 'avg_ctype_rain_diam'  }
-    { 'hda_rain_num'   { 'rain_num_r0p01'     } 'avg_ctype_rain_num'   }
+    { 'hda_rain'        { 'rain_r0p01'         } 'avg_rain'        }
+    { 'hda_rain_diam'   { 'rain_diam_r0p01'    } 'avg_rain_diam'   }
+    { 'hda_rain_num'    { 'rain_num_r0p01'     } 'avg_rain_num'    }
 
     };
   Nset = length(VarSets);
+
+  % For time averaging
+  Tstart = 24;
+  Tend   = 48;
+  Tname  = 'TALL';
 
   for icase = 1:Ncases
     Case = CaseList{icase};
@@ -139,34 +129,29 @@ Ncases = length(CaseList);
         end
         AVG = AVG ./ NPTS;
         
+        % time series
         OutName = sprintf('%s_TSERIES', OutAvgName);
         hdf5write(OutFile, OutName, AVG, 'WriteMode', 'append'); 
         OutName = sprintf('%s_TSERIES', OutNptsName);
         hdf5write(OutFile, OutName, NPTS, 'WriteMode', 'append');
 
-%        % do time averaging
-%        for its = 1:Ntsel
-%          Tstart = TimeSelects{its}{1};
-%          Tend   = TimeSelects{its}{2};
-%          Tname  = TimeSelects{its}{3};
-%
-%          T1 = find(T >= Tstart, 1, 'first');
-%          T2 = find(T <= Tend,   1, 'last');
-%
-%          % sum up bins across selected times, and convert HDA counts to an average
-%          [ AVG NPTS ] = CountsToAvg(HDA, T1, T2);
-%
-%          % With the data selection it is possible to get no data points selected (all counts
-%          % equal to zero in hda file). When this happens, get nans in Avg since the sum
-%          % is zero. Ie, the AVG entry is 0/0 --> nan.  Change nans back to zeros to help
-%          % make plots look nicer.
-%          AVG(isnan(AVG)) = 0;
-%
-%          OutName = sprintf('%s_%s', OutAvgName, Tname);
-%          hdf5write(OutFile, OutName, AVG, 'WriteMode', 'append'); 
-%          OutName = sprintf('%s_%s', OutNptsName, Tname);
-%          hdf5write(OutFile, OutName, NPTS, 'WriteMode', 'append');
-%        end
+        % time averaging
+        T1 = find(T >= Tstart, 1, 'first');
+        T2 = find(T <= Tend,   1, 'last');
+
+        % sum up bins across selected times, and convert HDA counts to an average
+        [ AVG NPTS ] = CountsToAvg(HDA, T1, T2);
+
+        % With the data selection it is possible to get no data points selected (all counts
+        % equal to zero in hda file). When this happens, get nans in Avg since the sum
+        % is zero. Ie, the AVG entry is 0/0 --> nan.  Change nans back to zeros to help
+        % make plots look nicer.
+        AVG(isnan(AVG)) = 0;
+
+        OutName = sprintf('%s_%s', OutAvgName, Tname);
+        hdf5write(OutFile, OutName, AVG, 'WriteMode', 'append'); 
+        OutName = sprintf('%s_%s', OutNptsName, Tname);
+        hdf5write(OutFile, OutName, NPTS, 'WriteMode', 'append');
       end
       fprintf('\n');
 
