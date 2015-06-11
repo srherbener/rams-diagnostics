@@ -1,0 +1,87 @@
+# Config file for initial ccn profile plots
+
+################ CASES ###################
+CaseSet: CasesS293 6
+  z.atex.ccn0050.sst293
+  z.atex.ccn0100.sst293
+  z.atex.ccn0200.sst293
+  z.atex.ccn0400.sst293
+  z.atex.ccn0800.sst293
+  z.atex.ccn1600.sst293
+End
+
+CaseSet: CasesS298 6
+  z.atex.ccn0050.sst298
+  z.atex.ccn0100.sst298
+  z.atex.ccn0200.sst298
+  z.atex.ccn0400.sst298
+  z.atex.ccn0800.sst298
+  z.atex.ccn1600.sst298
+End
+
+CaseSet: DummyCases 1
+  none
+End
+
+############## FIGURES ##################
+Figure: InitCcn 2
+  DummyCases
+  [1_2]
+  Plots/FigInitCcn.jpg
+  InitCcnPanelS293 1
+  InitCcnPanelS298 2
+End
+
+############## PANELS ###################
+FigPanel: InitCcnPanelS293
+  InitCcnPsetS293
+  InitCcnAxes 1 1
+  none 5
+  PANEL:a@S293
+  NorthEast 10
+End
+
+FigPanel: InitCcnPanelS298
+  InitCcnPsetS298
+  InitCcnAxes 1 0
+  none 5
+  PANEL:b@S298
+  none 10
+End
+
+############# PLOT SETS ###############
+PlotSet: InitCcnPsetS293 line 6
+  InitCcnLine z.atex.ccn0050.sst293 C0050 2 black     - 0
+  InitCcnLine z.atex.ccn0100.sst293 C0100 2 blue      - 0
+  InitCcnLine z.atex.ccn0200.sst293 C0200 2 green     - 0
+  InitCcnLine z.atex.ccn0400.sst293 C0400 2 yellow    - 0
+  InitCcnLine z.atex.ccn0800.sst293 C0800 2 orangered - 0
+  InitCcnLine z.atex.ccn1600.sst293 C1600 2 brown     - 0
+End
+
+PlotSet: InitCcnPsetS298 line 6
+  InitCcnLine z.atex.ccn0050.sst298 C0050 2 black     - 0
+  InitCcnLine z.atex.ccn0100.sst298 C0100 2 blue      - 0
+  InitCcnLine z.atex.ccn0200.sst298 C0200 2 green     - 0
+  InitCcnLine z.atex.ccn0400.sst298 C0400 2 yellow    - 0
+  InitCcnLine z.atex.ccn0800.sst298 C0800 2 orangered - 0
+  InitCcnLine z.atex.ccn1600.sst298 C1600 2 brown     - 0
+End
+
+############# PLOT DATA ##############
+PlotData: InitCcnLine 2
+  # x - ccn number concentration, vertical profile sampled from domain center, 1st time step
+  /ccn_concen_cm3 HDF5/<CASE>/HDF5/ccn_init-<CASE>-AC-1999-02-10-040000-g1.h5 (200,200,:,1) 1 0
+  # y - height in km
+  /z_coords       HDF5/<CASE>/HDF5/ccn_init-<CASE>-AC-1999-02-10-040000-g1.h5 @ 1e-3 0
+End
+
+############ PLOT AXES ###############
+PlotAxes: InitCcnAxes 2
+  16 2 [0.025_0.025]
+  # x - ccn number concentration
+  N_a cm^-^3 0 2000 linear [_] {_}
+  # y - height
+  Height km 0 4 linear [_] {_}
+End
+

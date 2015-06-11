@@ -1,3 +1,4 @@
+# Config file for test plots showing time series
 ################ CASES ###################
 CaseSet: CasesS293 6
   z.atex.ccn0050.sst293
@@ -22,15 +23,6 @@ CaseSet: DummyCases 1
 End
 
 ############## FIGURES ##################
-# CCN initialization
-Figure: InitCcn 2
-  DummyCases
-  [1_2]
-  Plots/FigInitCcn.jpg
-  InitCcnPanelS293 1
-  InitCcnPanelS298 2
-End
-
 # CLOUD
 Figure: CloudMass 2
   DummyCases
@@ -82,23 +74,6 @@ Figure: RainNum 2
 End
 
 ############## PANELS ###################
-# CCN initialization
-FigPanel: InitCcnPanelS293
-  InitCcnPsetS293
-  InitCcnAxes 1 1
-  none 5
-  PANEL:a@S293
-  NorthEast 10
-End
-
-FigPanel: InitCcnPanelS298
-  InitCcnPsetS298
-  InitCcnAxes 1 0
-  none 5
-  PANEL:b@S298
-  none 10
-End
-
 # CLOUD
 FigPanel: CmassPanelS293
   CmassPsetS293
@@ -198,25 +173,6 @@ FigPanel: RnumPanelS298
 End
 
 ############# PLOT SETS ###############
-# CCN initialization
-PlotSet: InitCcnPsetS293 line 6
-  InitCcnLine z.atex.ccn0050.sst293 C0050 2 black     - 0
-  InitCcnLine z.atex.ccn0100.sst293 C0100 2 blue      - 0
-  InitCcnLine z.atex.ccn0200.sst293 C0200 2 green     - 0
-  InitCcnLine z.atex.ccn0400.sst293 C0400 2 yellow    - 0
-  InitCcnLine z.atex.ccn0800.sst293 C0800 2 orangered - 0
-  InitCcnLine z.atex.ccn1600.sst293 C1600 2 brown     - 0
-End
-
-PlotSet: InitCcnPsetS298 line 6
-  InitCcnLine z.atex.ccn0050.sst298 C0050 2 black     - 0
-  InitCcnLine z.atex.ccn0100.sst298 C0100 2 blue      - 0
-  InitCcnLine z.atex.ccn0200.sst298 C0200 2 green     - 0
-  InitCcnLine z.atex.ccn0400.sst298 C0400 2 yellow    - 0
-  InitCcnLine z.atex.ccn0800.sst298 C0800 2 orangered - 0
-  InitCcnLine z.atex.ccn1600.sst298 C1600 2 brown     - 0
-End
-
 # CLOUD
 PlotSet: CmassPsetS293 line 6
   CloudMassLine z.atex.ccn0050.sst293 C0050 2 black     - 0
@@ -328,68 +284,51 @@ PlotSet: RnumPsetS298 line 6
 End
 
 ############# PLOT DATA ##############
-# CCN initialization
-PlotData: InitCcnLine 2
-  # x - ccn number concentration, vertical profile sampled from domain center, 1st time step
-  /ccn_concen_cm3 HDF5/<CASE>/HDF5/ccn_init-<CASE>-AC-1999-02-10-040000-g1.h5 (200,200,:,1) 1 0
-  # y - height in km
-  /z_coords       HDF5/<CASE>/HDF5/ccn_init-<CASE>-AC-1999-02-10-040000-g1.h5 @ 1e-3 0
-End
-
 # CLOUD
 PlotData: CloudMassLine 2
   # x - sim time in hours
-  /t_coords                DIAGS/avg_ctype_cloud_<CASE>.h5 @ 1 0
+  /t_coords                DIAGS/avg_cloud_<CASE>.h5 @ 1 0
   # y - cloud mass (g/kg)
-  /cloud_c0p01_avg_TSERIES DIAGS/avg_ctype_cloud_<CASE>.h5 @ 1 0
+  /cloud_c0p01_avg_TSERIES DIAGS/avg_cloud_<CASE>.h5 @ 1 0
 End
 
 PlotData: CloudDiamLine 2
   # x - sim time in hours
-  /t_coords                     DIAGS/avg_ctype_cloud_diam_<CASE>.h5 @ 1 0
+  /t_coords                     DIAGS/avg_cloud_diam_<CASE>.h5 @ 1 0
   # y - cloud mass (g/kg)
-  /cloud_diam_c0p01_avg_TSERIES DIAGS/avg_ctype_cloud_diam_<CASE>.h5 @ 1 0
+  /cloud_diam_c0p01_avg_TSERIES DIAGS/avg_cloud_diam_<CASE>.h5 @ 1 0
 End
 
 PlotData: CloudNumLine 2
   # x - sim time in hours
-  /t_coords                    DIAGS/avg_ctype_cloud_num_<CASE>.h5 @ 1 0
+  /t_coords                    DIAGS/avg_cloud_num_<CASE>.h5 @ 1 0
   # y - cloud mass (g/kg)
-  /cloud_num_c0p01_avg_TSERIES DIAGS/avg_ctype_cloud_num_<CASE>.h5 @ 1 0
+  /cloud_num_c0p01_avg_TSERIES DIAGS/avg_cloud_num_<CASE>.h5 @ 1 0
 End
 
 # RAIN
 PlotData: RainMassLine 2
   # x - sim time in hours
-  /t_coords                DIAGS/avg_ctype_rain_<CASE>.h5 @ 1 0
+  /t_coords                DIAGS/avg_rain_<CASE>.h5 @ 1 0
   # y - rain mass (g/kg)
-  /rain_r0p01_avg_TSERIES DIAGS/avg_ctype_rain_<CASE>.h5 @ 1 0
+  /rain_r0p01_avg_TSERIES DIAGS/avg_rain_<CASE>.h5 @ 1 0
 End
 
 PlotData: RainDiamLine 2
   # x - sim time in hours
-  /t_coords                     DIAGS/avg_ctype_rain_diam_<CASE>.h5 @ 1 0
+  /t_coords                     DIAGS/avg_rain_diam_<CASE>.h5 @ 1 0
   # y - rain mass (g/kg)
-  /rain_diam_r0p01_avg_TSERIES DIAGS/avg_ctype_rain_diam_<CASE>.h5 @ 1 0
+  /rain_diam_r0p01_avg_TSERIES DIAGS/avg_rain_diam_<CASE>.h5 @ 1 0
 End
 
 PlotData: RainNumLine 2
   # x - sim time in hours
-  /t_coords                    DIAGS/avg_ctype_rain_num_<CASE>.h5 @ 1 0
+  /t_coords                    DIAGS/avg_rain_num_<CASE>.h5 @ 1 0
   # y - rain mass (g/kg)
-  /rain_num_r0p01_avg_TSERIES DIAGS/avg_ctype_rain_num_<CASE>.h5 @ 1e-3 0
+  /rain_num_r0p01_avg_TSERIES DIAGS/avg_rain_num_<CASE>.h5 @ 1e-3 0
 End
 
 ############ PLOT AXES ###############
-# CCN initialization
-PlotAxes: InitCcnAxes 2
-  16 2 [0.025_0.025]
-  # x - ccn number concentration
-  N_a cm^-^3 0 2000 linear [_] {_}
-  # y - height
-  Height km 0 4 linear [_] {_}
-End
-
 # CLOUD
 PlotAxes: CmassAxes 2
   18 2 [0.025_0.025]

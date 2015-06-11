@@ -5,10 +5,13 @@
 DEST = $(HOME)/etc/matlab/atex2
 DIAG_DIR = /Volumes/tasman1/sherbener/data/RAMS/MarinePrecip/ATEX2
 
-SCRIPTS = $(DEST)/GenAvgFiles.m \
-          $(DEST)/SetPath.m
+SCRIPTS = \
+  $(DEST)/GenAvgFiles.m \
+  $(DEST)/SetPath.m
 
-CONFIGS = $(DIAG_DIR)/FigureConfig
+CONFIGS = \
+  $(DIAG_DIR)/FigTestInitCcn_Config \
+  $(DIAG_DIR)/FigTestTimeSeries_Config
 
 #
 # Targets
