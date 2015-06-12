@@ -62,21 +62,46 @@ Figure: FigAvgPw 1
   AvgPwPanel 1
 End
 
-Figure: FigHovPw 4
-  DummyCases
-  [2_2]
-  Plots/FigHovPw.jpg
-  BaseHovPwPanel  1
-  S70LNHovPwPanel 2
-  S70LYHovPwPanel 3
-  S50LNHovPwPanel 4
-End
-
-Figure: FigHovPw2 1
+Figure: FigHovPwMatt 1
   DummyCases
   [1_1]
-  Plots/FigHovPw2.jpg
+  Plots/FigHovPwMatt.jpg
+  MattHovPwPanel 1
+End
+
+Figure: FigHovBase 1
+  DummyCases
+  [1_1]
+  Plots/FigHovPwBase.jpg
+  BaseHovPwPanel  1
+End
+
+Figure: FigHovPwS70LN 1
+  DummyCases
+  [1_1]
+  Plots/FigHovPwS70LN.jpg
+  S70LNHovPwPanel  1
+End
+
+Figure: FigHovPwS70LY 1
+  DummyCases
+  [1_1]
+  Plots/FigHovPwS70LY.jpg
+  S70LYHovPwPanel 1
+End
+
+Figure: FigHovPwS70MY 1
+  DummyCases
+  [1_1]
+  Plots/FigHovPwS70MY.jpg
   S70MYHovPwPanel 1
+End
+
+Figure: FigHovPwS50LN 1
+  DummyCases
+  [1_1]
+  Plots/FigHovPwS50LN.jpg
+  S50LNHovPwPanel 1
 End
 
 ########### CASES ####################
@@ -241,7 +266,7 @@ End
 
 FigPanel: MattHovPwPanel
   MattHovPwPset
-  HovPwAxes 0 1
+  HovPwAxes 1 1
   none 5
   PANEL:a@MATT@PW
   none 10
@@ -249,7 +274,7 @@ End
 
 FigPanel: BaseHovPwPanel
   BaseHovPwPset
-  HovPwAxes 0 1
+  HovPwAxes 1 1
   none 5
   PANEL:b@BASE@PW
   none 10
@@ -257,7 +282,7 @@ End
 
 FigPanel: S70LNHovPwPanel
   S70LNHovPwPset
-  HovPwAxes 0 0
+  HovPwAxes 1 1
   none 5
   PANEL:b@S70LN@PW
   none 10
@@ -281,7 +306,7 @@ End
 
 FigPanel: S50LNHovPwPanel
   S50LNHovPwPset
-  HovPwAxes 1 0
+  HovPwAxes 1 1
   none 5
   PANEL:d@S50LN@PW
   none 10
@@ -594,56 +619,56 @@ End
 
 PlotData: S70MYCloudyTemp 2
   # x data - sim time in days
-  /tempc_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75,23) 1 0
+  /tempc_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75,29) 1 0
   # y data - radiative flux divergence in W/m^2
   /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75) 1e-3 0
 End
 
 PlotData: S70MYCloudyTheta 2
   # x data - sim time in days
-  /theta_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75,23) 1 -273.15
+  /theta_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75,29) 1 -273.15
   # y data - radiative flux divergence in W/m^2
   /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75) 1e-3 0
 End
 
 PlotData: S70MYCloudyCloud 2
   # x data - sim time in days
-  /cloud_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75,23) 100 0
+  /cloud_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75,29) 100 0
   # y data - radiative flux divergence in W/m^2
   /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75)   1e-3 0
 End
 
 PlotData: S70MYCloudyVapor 2
   # x data - sim time in days
-  /vapor_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75,23) 1 0
+  /vapor_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75,29) 1 0
   # y data - radiative flux divergence in W/m^2
   /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75) 1e-3 0
 End
 
 PlotData: S70MYClearTemp 2
   # x data - sim time in days
-  /tempc_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75,23) 1 0
+  /tempc_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75,29) 1 0
   # y data - radiative flux divergence in W/m^2
   /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75) 1e-3 0
 End
 
 PlotData: S70MYClearTheta 2
   # x data - sim time in days
-  /theta_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75,23) 1 -273.15
+  /theta_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75,29) 1 -273.15
   # y data - radiative flux divergence in W/m^2
   /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75) 1e-3 0
 End
 
 PlotData: S70MYClearCloud 2
   # x data - sim time in days
-  /cloud_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75,23) 100 0
+  /cloud_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75,29) 100 0
   # y data - radiative flux divergence in W/m^2
   /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75)   1e-3 0
 End
 
 PlotData: S70MYClearVapor 2
   # x data - sim time in days
-  /vapor_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75,23) 1 0
+  /vapor_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75,29) 1 0
   # y data - radiative flux divergence in W/m^2
   /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75) 1e-3 0
 End
@@ -770,61 +795,61 @@ End
 PlotData: MattHovPwContour 3
   # select all x, 31 simulated days -> t (1:32)
   # x data - zonal distance, km
-  /x_coords     DIAGS/hov_precip_water_RCE_MATT.h5 @        1         0
+  /x_coords     DIAGS/hov_precip_water_RCE_MATT.h5 @   1         0
   # y data - time, sec -> convert to days
-  /t_coords     DIAGS/hov_precip_water_RCE_MATT.h5 (1:32)   1.1574e-5 0
+  /t_coords     DIAGS/hov_precip_water_RCE_MATT.h5 @   1.1574e-5 0
   # z data - PW, mm
-  /precip_water DIAGS/hov_precip_water_RCE_MATT.h5 (:,1:32) 1         0
+  /precip_water DIAGS/hov_precip_water_RCE_MATT.h5 @   1         0
 End
 
 PlotData: BaseHovPwContour 3
   # select all x, 31 simulated days -> t (1:32)
   # x data - zonal distance, km
-  /x_coords     DIAGS/hov_precip_water_RCE_BASE.h5 @        1         0
+  /x_coords     DIAGS/hov_precip_water_RCE_BASE.h5 @    1         0
   # y data - time, sec -> convert to days
-  /t_coords     DIAGS/hov_precip_water_RCE_BASE.h5 (1:32)   1.1574e-5 0
+  /t_coords     DIAGS/hov_precip_water_RCE_BASE.h5 @    1.1574e-5 0
   # z data - PW, mm
-  /precip_water DIAGS/hov_precip_water_RCE_BASE.h5 (:,1:32) 1         0
+  /precip_water DIAGS/hov_precip_water_RCE_BASE.h5 @    1         0
 End
 
 PlotData: S70LNHovPwContour 3
   # select all x, 31 simulated days -> t (1:32)
   # x data - zonal distance, km
-  /x_coords     DIAGS/hov_precip_water_RCE_EXP_S70LN.h5 @        1         0
+  /x_coords     DIAGS/hov_precip_water_RCE_EXP_S70LN.h5 @  1         0
   # y data - time, sec -> convert to days
-  /t_coords     DIAGS/hov_precip_water_RCE_EXP_S70LN.h5 (1:32)   1.1574e-5 0
+  /t_coords     DIAGS/hov_precip_water_RCE_EXP_S70LN.h5 @  1.1574e-5 0
   # z data - PW, mm
-  /precip_water DIAGS/hov_precip_water_RCE_EXP_S70LN.h5 (:,1:32) 1         0
+  /precip_water DIAGS/hov_precip_water_RCE_EXP_S70LN.h5 @  1         0
 End
 
 PlotData: S70MYHovPwContour 3
   # select all x, 31 simulated days -> t (1:32)
   # x data - zonal distance, km
-  /x_coords     DIAGS/hov_precip_water_RCE_EXP_S70MY.h5 @        1         0
+  /x_coords     DIAGS/hov_precip_water_RCE_EXP_S70MY.h5 @  1         0
   # y data - time, sec -> convert to days
-  /t_coords     DIAGS/hov_precip_water_RCE_EXP_S70MY.h5 (1:23)   1.1574e-5 0
+  /t_coords     DIAGS/hov_precip_water_RCE_EXP_S70MY.h5 @  1.1574e-5 0
   # z data - PW, mm
-  /precip_water DIAGS/hov_precip_water_RCE_EXP_S70MY.h5 (:,1:23) 1         0
+  /precip_water DIAGS/hov_precip_water_RCE_EXP_S70MY.h5 @  1         0
 End
 
 PlotData: S70LYHovPwContour 3
   # select all x, 31 simulated days -> t (1:32)
   # x data - zonal distance, km
-  /x_coords     DIAGS/hov_precip_water_RCE_EXP_S70LY.h5 @        1         0
+  /x_coords     DIAGS/hov_precip_water_RCE_EXP_S70LY.h5 @  1         0
   # y data - time, sec -> convert to days
-  /t_coords     DIAGS/hov_precip_water_RCE_EXP_S70LY.h5 (1:32)   1.1574e-5 0
+  /t_coords     DIAGS/hov_precip_water_RCE_EXP_S70LY.h5 @  1.1574e-5 0
   # z data - PW, mm
-  /precip_water DIAGS/hov_precip_water_RCE_EXP_S70LY.h5 (:,1:32) 1         0
+  /precip_water DIAGS/hov_precip_water_RCE_EXP_S70LY.h5 @  1         0
 End
 
 PlotData: S50LNHovPwContour 3
   # select all x, 31 simulated days -> t (1:32)
   # x data - zonal distance, km
-  /x_coords     DIAGS/hov_precip_water_RCE_EXP_S50LN.h5 @        1         0
+  /x_coords     DIAGS/hov_precip_water_RCE_EXP_S50LN.h5 @  1         0
   # y data - time, sec -> convert to days
-  /t_coords     DIAGS/hov_precip_water_RCE_EXP_S50LN.h5 (1:32)   1.1574e-5 0
+  /t_coords     DIAGS/hov_precip_water_RCE_EXP_S50LN.h5 @  1.1574e-5 0
   # z data - PW, mm
-  /precip_water DIAGS/hov_precip_water_RCE_EXP_S50LN.h5 (:,1:32) 1         0
+  /precip_water DIAGS/hov_precip_water_RCE_EXP_S50LN.h5 @  1         0
 End
 
 ############ PLOT AXES #################
@@ -897,7 +922,7 @@ PlotAxes: HovPwAxes 3
   # x axis - zonal distance
   Zonal@Distance km 0 3000 linear [1_1500_3000] {_}
   # y axis - time
-  Sim@Time d 0 31 linear [_] {_}
+  Sim@Time d 0 80 linear [_] {_}
   # z axis - precipitable water
   PW mm 0 70 linear [_] {_}
 End
