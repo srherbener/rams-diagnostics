@@ -287,45 +287,45 @@ End
 # CLOUD
 PlotData: CloudMassLine 2
   # x - sim time in hours
-  /t_coords                DIAGS/avg_cloud_<CASE>.h5 @ 1 0
+  /t_coords         DIAGS/avg_cloud_<CASE>.h5 @ 1 0
   # y - cloud mass (g/kg)
-  /cloud_c0p01_avg_TSERIES DIAGS/avg_cloud_<CASE>.h5 @ 1 0
+  /cloud_c0p01_zavg DIAGS/avg_cloud_<CASE>.h5 @ 1 0
 End
 
 PlotData: CloudDiamLine 2
   # x - sim time in hours
-  /t_coords                     DIAGS/avg_cloud_diam_<CASE>.h5 @ 1 0
+  /t_coords              DIAGS/avg_cloud_diam_<CASE>.h5 @ 1 0
   # y - cloud mass (g/kg)
-  /cloud_diam_c0p01_avg_TSERIES DIAGS/avg_cloud_diam_<CASE>.h5 @ 1 0
+  /cloud_diam_c0p01_zavg DIAGS/avg_cloud_diam_<CASE>.h5 @ 1 0
 End
 
 PlotData: CloudNumLine 2
   # x - sim time in hours
-  /t_coords                    DIAGS/avg_cloud_num_<CASE>.h5 @ 1 0
+  /t_coords             DIAGS/avg_cloud_num_<CASE>.h5 @ 1 0
   # y - cloud mass (g/kg)
-  /cloud_num_c0p01_avg_TSERIES DIAGS/avg_cloud_num_<CASE>.h5 @ 1 0
+  /cloud_num_c0p01_zavg DIAGS/avg_cloud_num_<CASE>.h5 @ 1 0
 End
 
 # RAIN
 PlotData: RainMassLine 2
   # x - sim time in hours
-  /t_coords                DIAGS/avg_rain_<CASE>.h5 @ 1 0
+  /t_coords        DIAGS/avg_rain_<CASE>.h5 @ 1 0
   # y - rain mass (g/kg)
-  /rain_r0p01_avg_TSERIES DIAGS/avg_rain_<CASE>.h5 @ 1 0
+  /rain_r0p01_zavg DIAGS/avg_rain_<CASE>.h5 @ 1 0
 End
 
 PlotData: RainDiamLine 2
   # x - sim time in hours
-  /t_coords                     DIAGS/avg_rain_diam_<CASE>.h5 @ 1 0
+  /t_coords             DIAGS/avg_rain_diam_<CASE>.h5 @ 1 0
   # y - rain mass (g/kg)
-  /rain_diam_r0p01_avg_TSERIES DIAGS/avg_rain_diam_<CASE>.h5 @ 1 0
+  /rain_diam_r0p01_zavg DIAGS/avg_rain_diam_<CASE>.h5 @ 1 0
 End
 
 PlotData: RainNumLine 2
   # x - sim time in hours
-  /t_coords                    DIAGS/avg_rain_num_<CASE>.h5 @ 1 0
+  /t_coords            DIAGS/avg_rain_num_<CASE>.h5 @ 1 0
   # y - rain mass (g/kg)
-  /rain_num_r0p01_avg_TSERIES DIAGS/avg_rain_num_<CASE>.h5 @ 1e-3 0
+  /rain_num_r0p01_zavg DIAGS/avg_rain_num_<CASE>.h5 @ 1e-3 0
 End
 
 ############ PLOT AXES ###############

@@ -35,6 +35,8 @@ Ncases = length(CaseList);
     { 'hda_cloud_depth' { 'cdepth_all_cld'     } 'avg_cdepth'      }
     { 'hda_lwp2cdepth'  { 'lwp2cdepth_all_cld' } 'avg_lwp2cdepth'  }
 
+    { 'hda_theta'       { 'theta'              } 'avg_theta'       }
+
     { 'hda_vapcldt'     { 'cloud_cond_all_cld' } 'avg_cloud_cond'  }
     { 'hda_vapcldt'     { 'cloud_evap_all_cld' } 'avg_cloud_evap'  }
 
@@ -57,10 +59,14 @@ Ncases = length(CaseList);
     };
   Nset = length(VarSets);
 
-  % For time averaging
+  % For time and height averaging
   Tstart = 24;
   Tend   = 48;
-  Tname  = 'TALL';
+  Tname  = 'tavg';
+
+  Zstart = 0;
+  Zend   = 4000;
+  Zname  = 'zavg';
 
   for icase = 1:Ncases
     Case = CaseList{icase};
@@ -109,49 +115,58 @@ Ncases = length(CaseList);
         Nt = length(T); 
         Nz = length(Z);
 
-        OutAvgName  = sprintf('%s_avg', OutVarName);
-        OutNptsName = sprintf('%s_npts', OutVarName);
+        % for height averaging
+        Z1 = find(Z >= Zstart, 1, 'first');
+        Z2 = find(Z <= Zend,   1, 'last');
+
+        % for time averaging
+        T1 = find(T >= Tstart, 1, 'first');
+        T2 = find(T <= Tend,   1, 'last');
 
         % do time series of spatial averaging
         % HDA is either (2,z,t) or (2,t), where along the first dimension
         %   entry 1 are the sums
         %   entry 2 are the counts
         if (ndims(HDA) == 3)
-          AVG  = squeeze(sum(HDA(1,:,:), 2));
-          NPTS = squeeze(sum(HDA(2,:,:), 2));
+          AVG  = squeeze(HDA(1,:,:));
+          NPTS = squeeze(HDA(2,:,:));
+          AVG_ZALL  = squeeze(sum(HDA(1,Z1:Z2,:), 2));
+          NPTS_ZALL = squeeze(sum(HDA(2,Z1:Z2,:), 2));
         elseif (ndims(HDA) == 2)
           AVG  = squeeze(HDA(1,:));
           NPTS = squeeze(HDA(2,:));
+          AVG_ZALL  = AVG;
+          NPTS_ZALL = NPTS;
         else
           % force AVG to be nan
           AVG = 0;
           NPTS = 0;
+          AVG_ZALL  = 0;
+          NPTS_ZALL = 0;
         end
+
+        % Form the averages
         AVG = AVG ./ NPTS;
-        
-        % time series
-        OutName = sprintf('%s_TSERIES', OutAvgName);
+        AVG_ZALL = AVG_ZALL ./ NPTS_ZALL;
+        [ AVG_TALL NPTS_TALL ] = CountsToAvg(HDA, T1, T2);
+
+        % levels and timesteps separated
+        OutName = sprintf('%s_avg', OutVarName);
         hdf5write(OutFile, OutName, AVG, 'WriteMode', 'append'); 
-        OutName = sprintf('%s_TSERIES', OutNptsName);
+        OutName = sprintf('%s_avg_npts', OutVarName);
         hdf5write(OutFile, OutName, NPTS, 'WriteMode', 'append');
 
-        % time averaging
-        T1 = find(T >= Tstart, 1, 'first');
-        T2 = find(T <= Tend,   1, 'last');
+        % levels averaged and timesteps separated
+        OutName = sprintf('%s_%s', OutVarName, Zname);
+        hdf5write(OutFile, OutName, AVG_ZALL, 'WriteMode', 'append'); 
+        OutName = sprintf('%s_%s_npts', OutVarName, Zname);
+        hdf5write(OutFile, OutName, NPTS_ZALL, 'WriteMode', 'append');
 
-        % sum up bins across selected times, and convert HDA counts to an average
-        [ AVG NPTS ] = CountsToAvg(HDA, T1, T2);
-
-        % With the data selection it is possible to get no data points selected (all counts
-        % equal to zero in hda file). When this happens, get nans in Avg since the sum
-        % is zero. Ie, the AVG entry is 0/0 --> nan.  Change nans back to zeros to help
-        % make plots look nicer.
-        AVG(isnan(AVG)) = 0;
-
-        OutName = sprintf('%s_%s', OutAvgName, Tname);
-        hdf5write(OutFile, OutName, AVG, 'WriteMode', 'append'); 
-        OutName = sprintf('%s_%s', OutNptsName, Tname);
-        hdf5write(OutFile, OutName, NPTS, 'WriteMode', 'append');
+        % levels separated and timesteps averaged
+        OutName = sprintf('%s_%s', OutVarName, Tname);
+        hdf5write(OutFile, OutName, AVG_TALL, 'WriteMode', 'append'); 
+        OutName = sprintf('%s_%s_npts', OutVarName, Tname);
+        hdf5write(OutFile, OutName, NPTS_TALL, 'WriteMode', 'append');
       end
       fprintf('\n');
 
