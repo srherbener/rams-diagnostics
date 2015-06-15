@@ -1,0 +1,61 @@
+# Config file for test plots showing time series
+################ CASES ###################
+CaseSet: CasesS293 6
+  z.atex.ccn0050.sst293
+  z.atex.ccn0100.sst293
+  z.atex.ccn0200.sst293
+  z.atex.ccn0400.sst293
+  z.atex.ccn0800.sst293
+  z.atex.ccn1600.sst293
+End
+
+CaseSet: DummyCases 1
+  none
+End
+
+############## FIGURES ##################
+Figure: Profiles 1
+  DummyCases
+  [1_1]
+  Plots/Figure5_Profiles_S293.jpg
+  CloudFracPanel 1
+End
+
+############## PANELS ###################
+FigPanel: CloudFracPanel
+  CloudFracPset
+  CloudFracAxes 1 1
+  none 5
+  PANEL:b@S293
+  none 10
+End
+
+############# PLOT SETS ###############
+PlotSet: CloudFracPset line 6
+  CloudFracLine z.atex.ccn0050.sst293 C0050 1 black     - 0
+  CloudFracLine z.atex.ccn0100.sst293 C0100 1 blue      - 0
+  CloudFracLine z.atex.ccn0200.sst293 C0200 1 green     - 0
+  CloudFracLine z.atex.ccn0400.sst293 C0400 1 yellow    - 0
+  CloudFracLine z.atex.ccn0800.sst293 C0800 1 orangered - 0
+  CloudFracLine z.atex.ccn1600.sst293 C1600 1 brown     - 0
+End
+
+############# PLOT DATA ##############
+# Units on rates are per 12 minutes. Multiply by 5 to get per hour.
+
+PlotData: CloudFracLine 2
+  # x - cloud condensation rate (g/kg/hr)
+  /cloud_c0p01_frac DIAGS/moments_<CASE>.h5 @    1 0
+  # y - height (km)
+  /z_coords         DIAGS/moments_<CASE>.h5 @ 1e-3 0
+End
+
+############ PLOT AXES ###############
+PlotAxes: CloudFracAxes 2
+  8 1 [0.025_0.025]
+  # x - cloud fraction
+  Cloud@Fraction @  0 1 linear [_] {_}
+  # y - height (km)
+  Height         km 0 3 linear [_] {_}
+End
+
