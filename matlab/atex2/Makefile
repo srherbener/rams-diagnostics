@@ -8,6 +8,7 @@ DIAG_DIR = /Volumes/tasman1/sherbener/data/RAMS/MarinePrecip/ATEX2
 SCRIPTS = \
   $(DEST)/GenAvgFiles.m \
   $(DEST)/GenBarGraphFiles.m \
+  $(DEST)/GenBuoyancyFlux.m \
   $(DEST)/GenMomentFiles.m \
   $(DEST)/SetPath.m
 

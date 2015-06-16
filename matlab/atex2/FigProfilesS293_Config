@@ -14,11 +14,17 @@ CaseSet: DummyCases 1
 End
 
 ############## FIGURES ##################
-Figure: Profiles 1
+Figure: Profiles 7
   DummyCases
-  [1_1]
+  [4_2]
   Plots/Figure5_Profiles_S293.jpg
-  CloudFracPanel 1
+  CloudFracPanel 2
+  WvarUpPanel    3
+  WvarDnPanel    4
+  BfluxUpPanel   5
+  BfluxDnPanel   6
+  WvaporUpPanel  7
+  WvaporDnPanel  8
 End
 
 ############## PANELS ###################
@@ -27,6 +33,54 @@ FigPanel: CloudFracPanel
   CloudFracAxes 1 1
   none 5
   PANEL:b@S293
+  none 10
+End
+
+FigPanel: WvarUpPanel
+  WvarUpPset
+  WvarUpAxes 1 1
+  none 5
+  PANEL:c@UP,@S293
+  none 10
+End
+
+FigPanel: WvarDnPanel
+  WvarDnPset
+  WvarDnAxes 1 1
+  none 5
+  PANEL:d@DN,@S293
+  none 10
+End
+
+FigPanel: BfluxUpPanel
+  BfluxUpPset
+  BfluxUpAxes 1 1
+  none 5
+  PANEL:e@UP,@S293
+  none 10
+End
+
+FigPanel: BfluxDnPanel
+  BfluxDnPset
+  BfluxDnAxes 1 1
+  none 5
+  PANEL:f@DN,@S293
+  none 10
+End
+
+FigPanel: WvaporUpPanel
+  WvaporUpPset
+  WvaporUpAxes 1 1
+  none 5
+  PANEL:g@UP,@S293
+  none 10
+End
+
+FigPanel: WvaporDnPanel
+  WvaporDnPset
+  WvaporDnAxes 1 1
+  none 5
+  PANEL:h@DN,@S293
   none 10
 End
 
@@ -40,6 +94,60 @@ PlotSet: CloudFracPset line 6
   CloudFracLine z.atex.ccn1600.sst293 C1600 1 brown     - 0
 End
 
+PlotSet: WvarUpPset line 6
+  WvarUpLine z.atex.ccn0050.sst293 C0050 1 black     - 0
+  WvarUpLine z.atex.ccn0100.sst293 C0100 1 blue      - 0
+  WvarUpLine z.atex.ccn0200.sst293 C0200 1 green     - 0
+  WvarUpLine z.atex.ccn0400.sst293 C0400 1 yellow    - 0
+  WvarUpLine z.atex.ccn0800.sst293 C0800 1 orangered - 0
+  WvarUpLine z.atex.ccn1600.sst293 C1600 1 brown     - 0
+End
+
+PlotSet: WvarDnPset line 6
+  WvarDnLine z.atex.ccn0050.sst293 C0050 1 black     - 0
+  WvarDnLine z.atex.ccn0100.sst293 C0100 1 blue      - 0
+  WvarDnLine z.atex.ccn0200.sst293 C0200 1 green     - 0
+  WvarDnLine z.atex.ccn0400.sst293 C0400 1 yellow    - 0
+  WvarDnLine z.atex.ccn0800.sst293 C0800 1 orangered - 0
+  WvarDnLine z.atex.ccn1600.sst293 C1600 1 brown     - 0
+End
+
+PlotSet: BfluxUpPset line 6
+  BfluxUpLine z.atex.ccn0050.sst293 C0050 1 black     - 0
+  BfluxUpLine z.atex.ccn0100.sst293 C0100 1 blue      - 0
+  BfluxUpLine z.atex.ccn0200.sst293 C0200 1 green     - 0
+  BfluxUpLine z.atex.ccn0400.sst293 C0400 1 yellow    - 0
+  BfluxUpLine z.atex.ccn0800.sst293 C0800 1 orangered - 0
+  BfluxUpLine z.atex.ccn1600.sst293 C1600 1 brown     - 0
+End
+
+PlotSet: BfluxDnPset line 6
+  BfluxDnLine z.atex.ccn0050.sst293 C0050 1 black     - 0
+  BfluxDnLine z.atex.ccn0100.sst293 C0100 1 blue      - 0
+  BfluxDnLine z.atex.ccn0200.sst293 C0200 1 green     - 0
+  BfluxDnLine z.atex.ccn0400.sst293 C0400 1 yellow    - 0
+  BfluxDnLine z.atex.ccn0800.sst293 C0800 1 orangered - 0
+  BfluxDnLine z.atex.ccn1600.sst293 C1600 1 brown     - 0
+End
+
+PlotSet: WvaporUpPset line 6
+  WvaporUpLine z.atex.ccn0050.sst293 C0050 1 black     - 0
+  WvaporUpLine z.atex.ccn0100.sst293 C0100 1 blue      - 0
+  WvaporUpLine z.atex.ccn0200.sst293 C0200 1 green     - 0
+  WvaporUpLine z.atex.ccn0400.sst293 C0400 1 yellow    - 0
+  WvaporUpLine z.atex.ccn0800.sst293 C0800 1 orangered - 0
+  WvaporUpLine z.atex.ccn1600.sst293 C1600 1 brown     - 0
+End
+
+PlotSet: WvaporDnPset line 6
+  WvaporDnLine z.atex.ccn0050.sst293 C0050 1 black     - 0
+  WvaporDnLine z.atex.ccn0100.sst293 C0100 1 blue      - 0
+  WvaporDnLine z.atex.ccn0200.sst293 C0200 1 green     - 0
+  WvaporDnLine z.atex.ccn0400.sst293 C0400 1 yellow    - 0
+  WvaporDnLine z.atex.ccn0800.sst293 C0800 1 orangered - 0
+  WvaporDnLine z.atex.ccn1600.sst293 C1600 1 brown     - 0
+End
+
 ############# PLOT DATA ##############
 # Units on rates are per 12 minutes. Multiply by 5 to get per hour.
 
@@ -50,12 +158,102 @@ PlotData: CloudFracLine 2
   /z_coords         DIAGS/moments_<CASE>.h5 @ 1e-3 0
 End
 
+PlotData: WvarUpLine 2
+  # x - w variance, updrafts (m2/s2)
+  /w-w_up0p01_all_cld DIAGS/moments_<CASE>.h5 @    1 0
+  # y - height (km)
+  /z_coords           DIAGS/moments_<CASE>.h5 @ 1e-3 0
+End
+
+PlotData: WvarDnLine 2
+  # x - w variance, downdrafts (m2/s2)
+  /w-w_dn0p01_all_cld DIAGS/moments_<CASE>.h5 @    1 0
+  # y - height (km)
+  /z_coords           DIAGS/moments_<CASE>.h5 @ 1e-3 0
+End
+
+PlotData: BfluxUpLine 2
+  # x - buoyancy flux, updrafts (m2/s2)
+  /buoy_flux_up0p01_all_cld DIAGS/buoy_flux_<CASE>.h5 @    1 0
+  # y - height (km)
+  /z_coords           DIAGS/buoy_flux_<CASE>.h5 @ 1e-3 0
+End
+
+PlotData: BfluxDnLine 2
+  # x - buoyancy flux, downdrafts (m2/s2)
+  /buoy_flux_dn0p01_all_cld DIAGS/buoy_flux_<CASE>.h5 @    1 0
+  # y - height (km)
+  /z_coords           DIAGS/buoy_flux_<CASE>.h5 @ 1e-3 0
+End
+
+PlotData: WvaporUpLine 2
+  # x - w vapor covariance, updrafts (g/kg/m/s)
+  /w-vapor_up0p01_all_cld DIAGS/moments_<CASE>.h5 @    1 0
+  # y - height (km)
+  /z_coords           DIAGS/moments_<CASE>.h5 @ 1e-3 0
+End
+
+PlotData: WvaporDnLine 2
+  # x - w vapor covariance, downdrafts (g/kg/m/2)
+  /w-vapor_dn0p01_all_cld DIAGS/moments_<CASE>.h5 @    1 0
+  # y - height (km)
+  /z_coords           DIAGS/moments_<CASE>.h5 @ 1e-3 0
+End
+
 ############ PLOT AXES ###############
 PlotAxes: CloudFracAxes 2
   8 1 [0.025_0.025]
   # x - cloud fraction
   Cloud@Fraction @  0 1 linear [_] {_}
   # y - height (km)
-  Height         km 0 3 linear [_] {_}
+  Height         km 0 4 linear [_] {_}
+End
+
+PlotAxes: WvarUpAxes 2
+  8 1 [0.025_0.025]
+  # x - w variance
+  <w'w'> m^2@s^-^2  -0.001 0.04 linear [_] {_}
+  # y - height (km)
+  Height         km 0 4 linear [_] {_}
+End
+
+PlotAxes: WvarDnAxes 2
+  8 1 [0.025_0.025]
+  # x - w variance
+  <w'w'> m^2@s^-^2  -0.001 0.025 linear [_] {_}
+  # y - height (km)
+  Height         km 0 4 linear [_] {_}
+End
+
+PlotAxes: BfluxUpAxes 2
+  8 1 [0.025_0.025]
+  # x - buoyancy flux
+  Buoy@Flux m^2@s^-^3  -0.002 0.001 linear [_] {_}
+  # y - height (km)
+  Height         km 0 4 linear [_] {_}
+End
+
+PlotAxes: BfluxDnAxes 2
+  8 1 [0.025_0.025]
+  # x - buoyancy flux
+  Buoy@Flux m^2@s^-^3  -0.0003 0.003 linear [_] {_}
+  # y - height (km)
+  Height         km 0 4 linear [_] {_}
+End
+
+PlotAxes: WvaporUpAxes 2
+  8 1 [0.025_0.025]
+  # x - w vapor covariance
+  <w'q'> g@kg^-^1@m@s^-^1  -0.005 0.040 linear [_] {_}
+  # y - height (km)
+  Height         km 0 4 linear [_] {_}
+End
+
+PlotAxes: WvaporDnAxes 2
+  8 1 [0.025_0.025]
+  # x - w vapor covariance
+  <w'q'> g@kg^-^1@m@s^-^1  -0.05 0.02 linear [_] {_}
+  # y - height (km)
+  Height         km 0 4 linear [_] {_}
 End
 
