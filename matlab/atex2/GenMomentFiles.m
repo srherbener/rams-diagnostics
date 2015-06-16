@@ -5,19 +5,19 @@ function [ ] = GenMomentFiles()
     Ddir = 'DIAGS';
 
     CaseList = {
-      'z.atex.ccn0050.sst293'
-      'z.atex.ccn0100.sst293'
-      'z.atex.ccn0200.sst293'
-      'z.atex.ccn0400.sst293'
-      'z.atex.ccn0800.sst293'
-      'z.atex.ccn1600.sst293'
+      { 'z.atex.ccn0050.sst293' 24 48 }
+      { 'z.atex.ccn0100.sst293' 24 48 }
+      { 'z.atex.ccn0200.sst293' 24 48 }
+      { 'z.atex.ccn0400.sst293' 24 48 }
+      { 'z.atex.ccn0800.sst293' 24 48 }
+      { 'z.atex.ccn1600.sst293' 24 48 }
 
-      'z.atex.ccn0050.sst298'
-      'z.atex.ccn0100.sst298'
-      'z.atex.ccn0200.sst298'
-      'z.atex.ccn0400.sst298'
-      'z.atex.ccn0800.sst298'
-%      'z.atex.ccn1600.sst298'
+      { 'z.atex.ccn0050.sst298' 24 48 }
+      { 'z.atex.ccn0100.sst298' 24 48 }
+      { 'z.atex.ccn0200.sst298' 24 48 }
+      { 'z.atex.ccn0400.sst298' 24 48 }
+      { 'z.atex.ccn0800.sst298' 24 48 }
+      { 'z.atex.ccn1600.sst298' 24 48 }
       };
     Ncases = length(CaseList);
 
@@ -57,19 +57,21 @@ function [ ] = GenMomentFiles()
 
       };
 
-    % do time average over entire sampling inerval
-    Tstart = 24;
-    Tend = 48;
-
     TotalN = 158404; % excluding borders --> 398 * 398
 
     for icase = 1:Ncases;
-      Case = CaseList{icase};
+      Case   = CaseList{icase}{1};
+      Tstart = CaseList{icase}{2};
+      Tend   = CaseList{icase}{3};
+
       OutFname = sprintf('%s/moments_%s.h5', Ddir, Case);
 
       fprintf('***************************************************************\n');
       fprintf('Generating moment/flux profiles:\n');
       fprintf('  Case: %s\n', Case);
+      fprintf('  Temporal Averaging:\n');
+      fprintf('     Tstart = %f\n', Tstart);
+      fprintf('     Tend   = %f\n', Tend);
       fprintf('  Output file: %s\n', OutFname);
       fprintf('\n');
 

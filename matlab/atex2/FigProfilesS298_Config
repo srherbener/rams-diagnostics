@@ -31,13 +31,13 @@ FigPanel: CloudFracPanel
 End
 
 ############# PLOT SETS ###############
-PlotSet: CloudFracPset line 5
+PlotSet: CloudFracPset line 6
   CloudFracLine z.atex.ccn0050.sst298 C0050 1 black     - 0
   CloudFracLine z.atex.ccn0100.sst298 C0100 1 blue      - 0
   CloudFracLine z.atex.ccn0200.sst298 C0200 1 green     - 0
   CloudFracLine z.atex.ccn0400.sst298 C0400 1 yellow    - 0
   CloudFracLine z.atex.ccn0800.sst298 C0800 1 orangered - 0
-#  CloudFracLine z.atex.ccn1600.sst298 C1600 1 brown     - 0
+  CloudFracLine z.atex.ccn1600.sst298 C1600 1 brown     - 0
 End
 
 ############# PLOT DATA ##############
