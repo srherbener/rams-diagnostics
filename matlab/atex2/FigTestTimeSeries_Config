@@ -23,54 +23,81 @@ CaseSet: DummyCases 1
 End
 
 ############## FIGURES ##################
-# CLOUD
-Figure: CloudMass 2
+## CLOUD
+#Figure: CloudMass 2
+#  DummyCases
+#  [2_1]
+#  Plots/FigCloudMass.jpg
+#  CmassPanelS293 1
+#  CmassPanelS298 2
+#End
+#
+#Figure: CloudDiam 2
+#  DummyCases
+#  [2_1]
+#  Plots/FigCloudDiam.jpg
+#  CdiamPanelS293 1
+#  CdiamPanelS298 2
+#End
+#
+#Figure: CloudNum 2
+#  DummyCases
+#  [2_1]
+#  Plots/FigCloudNum.jpg
+#  CnumPanelS293 1
+#  CnumPanelS298 2
+#End
+#
+## RAIN
+#Figure: RainMass 2
+#  DummyCases
+#  [2_1]
+#  Plots/FigRainMass.jpg
+#  RmassPanelS293 1
+#  RmassPanelS298 2
+#End
+#
+#Figure: RainDiam 2
+#  DummyCases
+#  [2_1]
+#  Plots/FigRainDiam.jpg
+#  RdiamPanelS293 1
+#  RdiamPanelS298 2
+#End
+#
+#Figure: RainNum 2
+#  DummyCases
+#  [2_1]
+#  Plots/FigRainNum.jpg
+#  RnumPanelS293 1
+#  RnumPanelS298 2
+#End
+
+# COT
+Figure: Cot 2
   DummyCases
   [2_1]
-  Plots/FigCloudMass.jpg
-  CmassPanelS293 1
-  CmassPanelS298 2
+  Plots/FigCot.jpg
+  CotPanelS293 1
+  CotPanelS298 2
 End
 
-Figure: CloudDiam 2
+# Cloud depth
+Figure: Cdepth 2
   DummyCases
   [2_1]
-  Plots/FigCloudDiam.jpg
-  CdiamPanelS293 1
-  CdiamPanelS298 2
+  Plots/FigCdepth.jpg
+  CdepthPanelS293 1
+  CdepthPanelS298 2
 End
 
-Figure: CloudNum 2
+# lwc
+Figure: Lwc 2
   DummyCases
   [2_1]
-  Plots/FigCloudNum.jpg
-  CnumPanelS293 1
-  CnumPanelS298 2
-End
-
-# RAIN
-Figure: RainMass 2
-  DummyCases
-  [2_1]
-  Plots/FigRainMass.jpg
-  RmassPanelS293 1
-  RmassPanelS298 2
-End
-
-Figure: RainDiam 2
-  DummyCases
-  [2_1]
-  Plots/FigRainDiam.jpg
-  RdiamPanelS293 1
-  RdiamPanelS298 2
-End
-
-Figure: RainNum 2
-  DummyCases
-  [2_1]
-  Plots/FigRainNum.jpg
-  RnumPanelS293 1
-  RnumPanelS298 2
+  Plots/FigLwc.jpg
+  LwcPanelS293 1
+  LwcPanelS298 2
 End
 
 ############## PANELS ###################
@@ -167,6 +194,57 @@ End
 FigPanel: RnumPanelS298
   RnumPsetS298
   RnumAxes 1 1
+  none 5
+  PANEL:b@S298
+  none 10
+End
+
+# COT
+FigPanel: CotPanelS293
+  CotPsetS293
+  CotAxes 1 1
+  none 5
+  PANEL:b@S293
+  SouthWest 10
+End
+
+FigPanel: CotPanelS298
+  CotPsetS298
+  CotAxes 1 1
+  none 5
+  PANEL:b@S298
+  none 10
+End
+
+# cloud depth
+FigPanel: CdepthPanelS293
+  CdepthPsetS293
+  CdepthAxes 1 1
+  none 5
+  PANEL:b@S293
+  SouthWest 10
+End
+
+FigPanel: CdepthPanelS298
+  CdepthPsetS298
+  CdepthAxes 1 1
+  none 5
+  PANEL:b@S298
+  none 10
+End
+
+# lwc
+FigPanel: LwcPanelS293
+  LwcPsetS293
+  LwcAxes 1 1
+  none 5
+  PANEL:b@S293
+  SouthWest 10
+End
+
+FigPanel: LwcPanelS298
+  LwcPsetS298
+  LwcAxes 1 1
   none 5
   PANEL:b@S298
   none 10
@@ -283,6 +361,63 @@ PlotSet: RnumPsetS298 line 6
   RainNumLine z.atex.ccn1600.sst298 C1600 2 brown     - 0
 End
 
+# COT
+PlotSet: CotPsetS293 line 6
+  CotLine z.atex.ccn0050.sst293 C0050 2 black     - 0
+  CotLine z.atex.ccn0100.sst293 C0100 2 blue      - 0
+  CotLine z.atex.ccn0200.sst293 C0200 2 green     - 0
+  CotLine z.atex.ccn0400.sst293 C0400 2 yellow    - 0
+  CotLine z.atex.ccn0800.sst293 C0800 2 orangered - 0
+  CotLine z.atex.ccn1600.sst293 C1600 2 brown     - 0
+End
+
+PlotSet: CotPsetS298 line 6
+  CotLine z.atex.ccn0050.sst298 C0050 2 black     - 0
+  CotLine z.atex.ccn0100.sst298 C0100 2 blue      - 0
+  CotLine z.atex.ccn0200.sst298 C0200 2 green     - 0
+  CotLine z.atex.ccn0400.sst298 C0400 2 yellow    - 0
+  CotLine z.atex.ccn0800.sst298 C0800 2 orangered - 0
+  CotLine z.atex.ccn1600.sst298 C1600 2 brown     - 0
+End
+
+# cloud depth
+PlotSet: CdepthPsetS293 line 6
+  CdepthLine z.atex.ccn0050.sst293 C0050 2 black     - 0
+  CdepthLine z.atex.ccn0100.sst293 C0100 2 blue      - 0
+  CdepthLine z.atex.ccn0200.sst293 C0200 2 green     - 0
+  CdepthLine z.atex.ccn0400.sst293 C0400 2 yellow    - 0
+  CdepthLine z.atex.ccn0800.sst293 C0800 2 orangered - 0
+  CdepthLine z.atex.ccn1600.sst293 C1600 2 brown     - 0
+End
+
+PlotSet: CdepthPsetS298 line 6
+  CdepthLine z.atex.ccn0050.sst298 C0050 2 black     - 0
+  CdepthLine z.atex.ccn0100.sst298 C0100 2 blue      - 0
+  CdepthLine z.atex.ccn0200.sst298 C0200 2 green     - 0
+  CdepthLine z.atex.ccn0400.sst298 C0400 2 yellow    - 0
+  CdepthLine z.atex.ccn0800.sst298 C0800 2 orangered - 0
+  CdepthLine z.atex.ccn1600.sst298 C1600 2 brown     - 0
+End
+
+# lwc
+PlotSet: LwcPsetS293 line 6
+  LwcLine z.atex.ccn0050.sst293 C0050 2 black     - 0
+  LwcLine z.atex.ccn0100.sst293 C0100 2 blue      - 0
+  LwcLine z.atex.ccn0200.sst293 C0200 2 green     - 0
+  LwcLine z.atex.ccn0400.sst293 C0400 2 yellow    - 0
+  LwcLine z.atex.ccn0800.sst293 C0800 2 orangered - 0
+  LwcLine z.atex.ccn1600.sst293 C1600 2 brown     - 0
+End
+
+PlotSet: LwcPsetS298 line 6
+  LwcLine z.atex.ccn0050.sst298 C0050 2 black     - 0
+  LwcLine z.atex.ccn0100.sst298 C0100 2 blue      - 0
+  LwcLine z.atex.ccn0200.sst298 C0200 2 green     - 0
+  LwcLine z.atex.ccn0400.sst298 C0400 2 yellow    - 0
+  LwcLine z.atex.ccn0800.sst298 C0800 2 orangered - 0
+  LwcLine z.atex.ccn1600.sst298 C1600 2 brown     - 0
+End
+
 ############# PLOT DATA ##############
 # CLOUD
 PlotData: CloudMassLine 2
@@ -326,6 +461,31 @@ PlotData: RainNumLine 2
   /t_coords            DIAGS/avg_rain_num_<CASE>.h5 @ 1 0
   # y - rain mass (g/kg)
   /rain_num_r0p01_zavg DIAGS/avg_rain_num_<CASE>.h5 @ 1e-3 0
+End
+
+# COT
+PlotData: CotLine 2
+  # x - sim time in hours
+  /t_coords DIAGS/avg_cot_<CASE>.h5 @ 1 0
+  # y - rain mass (g/kg)
+  /cot_avg  DIAGS/avg_cot_<CASE>.h5 @ 1 0
+End
+
+# cloud depth
+PlotData: CdepthLine 2
+  # x - sim time in hours
+  /t_coords            DIAGS/avg_cdepth_<CASE>.h5 @ 1 0
+  # y - cloud depth (m)
+  /cdepth_all_cld_avg  DIAGS/avg_cdepth_<CASE>.h5 @ 1 0
+End
+
+# lwc
+PlotData: LwcLine 2
+  # x - sim time in hours
+  /t_coords                DIAGS/avg_lwp2cdepth_<CASE>.h5 @ 1 0
+  # y - lwp/cdepth (kg/kg), multiply by 1000 to get g/kg
+  #     assumes density of water is 1000 kg/m3, and density of air is 1 kg/m3
+  /lwp2cdepth_all_cld_avg  DIAGS/avg_lwp2cdepth_<CASE>.h5 @ 1000 0
 End
 
 ############ PLOT AXES ###############
@@ -377,5 +537,32 @@ PlotAxes: RnumAxes 2
   Sim@Time h 0 50 linear [_] {_}
   # y - cloud mixing ratio
   Rain@Number 10^3@m^-^3 0 20 linear [_] {_}
+End
+
+# COT
+PlotAxes: CotAxes 2
+  18 2 [0.025_0.025]
+  # x - sim time
+  Sim@Time h 0 50 linear [_] {_}
+  # y - cloud mixing ratio
+  \tau_c   @ 0 10 linear [_] {_}
+End
+
+# cloud depth
+PlotAxes: CdepthAxes 2
+  18 2 [0.025_0.025]
+  # x - sim time
+  Sim@Time    h 0   50 linear [_] {_}
+  # y - cloud mixing ratio
+  Cloud@Depth m 0 900 linear [_] {_}
+End
+
+# lwc
+PlotAxes: LwcAxes 2
+  18 2 [0.025_0.025]
+  # x - sim time
+  Sim@Time    h 0   50 linear [_] {_}
+  # y - cloud mixing ratio
+  LWC g@kg^-^1 0.1 0.5 linear [_] {_}
 End
 
