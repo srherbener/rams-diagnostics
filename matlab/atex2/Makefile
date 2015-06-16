@@ -7,6 +7,7 @@ DIAG_DIR = /Volumes/tasman1/sherbener/data/RAMS/MarinePrecip/ATEX2
 
 SCRIPTS = \
   $(DEST)/GenAvgFiles.m \
+  $(DEST)/GenBarGraphFiles.m \
   $(DEST)/GenMomentFiles.m \
   $(DEST)/SetPath.m
 
@@ -15,6 +16,7 @@ CONFIGS = \
   $(DIAG_DIR)/FigMicrophysicsS298_Config \
   $(DIAG_DIR)/FigProfilesS293_Config \
   $(DIAG_DIR)/FigProfilesS298_Config \
+  $(DIAG_DIR)/FigBarGraphs_Config \
   $(DIAG_DIR)/FigTestInitCcn_Config \
   $(DIAG_DIR)/FigTestTimeSeries_Config
 

@@ -1,0 +1,108 @@
+# Config file for test plots showing time series
+################ CASES ###################
+CaseSet: CasesS293 6
+  z.atex.ccn0050.sst293
+  z.atex.ccn0100.sst293
+  z.atex.ccn0200.sst293
+  z.atex.ccn0400.sst293
+  z.atex.ccn0800.sst293
+  z.atex.ccn1600.sst293
+End
+
+CaseSet: CasesS298 6
+  z.atex.ccn0050.sst298
+  z.atex.ccn0100.sst298
+  z.atex.ccn0200.sst298
+  z.atex.ccn0400.sst298
+  z.atex.ccn0800.sst298
+  z.atex.ccn1600.sst298
+End
+
+CaseSet: DummyCases 1
+  none
+End
+
+############## FIGURES ##################
+Figure: CotBarGrapsh 2
+  DummyCases
+  [2_1]
+  Plots/Figure3_Cot.jpg
+  CotBarPanel         1
+  CotBarAllCloudPanel 2
+End
+
+############## PANELS ###################
+FigPanel: CotBarPanel
+  CotBarPset
+  CotBarAxes 1 1
+  none 5
+  PANEL:a@Domain
+  none 10
+End
+
+FigPanel: CotBarAllCloudPanel
+  CotBarAllCloudPset
+  CotBarAllCloudAxes 1 1
+  none 5
+  PANEL:b@All@Clouds
+  none 10
+End
+
+############# PLOT SETS ###############
+PlotSet: CotBarPset bar 2
+  CotBarDataS293 none none 1 orange - 0
+  CotBarDataS298 none none 1 green  - 0
+End
+
+PlotSet: CotBarAllCloudPset bar 2
+  CotBarAllCloudDataS293 none none 1 orange - 0
+  CotBarAllCloudDataS298 none none 1 green  - 0
+End
+
+############# PLOT DATA ##############
+
+PlotData: CotBarDataS293 2
+  # x - dummy counter (to get even spacing)
+  dummy [1:6] @ 1 0
+  # y - COT over domain
+  /cot_avg_s293       DIAGS/bgraph_cot.h5 @ 1 0
+End
+
+PlotData: CotBarDataS298 2
+  # x - dummy counter (to get even spacing)
+  dummy [1:6] @ 1 0
+  # y - COT over domain
+  /cot_avg_s298       DIAGS/bgraph_cot.h5 @ 1 0
+End
+
+PlotData: CotBarAllCloudDataS293 2
+  # x - dummy counter (to get even spacing)
+  dummy [1:6] @ 1 0
+  # y - COT over domain
+  /cot_all_cld_avg_s293       DIAGS/bgraph_cot.h5 @ 1 0
+End
+
+PlotData: CotBarAllCloudDataS298 2
+  # x - dummy counter (to get even spacing)
+  dummy [1:6] @ 1 0
+  # y - COT over domain
+  /cot_all_cld_avg_s298       DIAGS/bgraph_cot.h5 @ 1 0
+End
+
+############ PLOT AXES ###############
+PlotAxes: CotBarAxes 2
+  12 2 [0.010_0.010]
+  # x - CCN concentration
+  Number@Concentration cm^-^3  0  7 linear [1_2_3_4_5_6] {'50'_'100'_'200'_'400'_'800'_'1600'}
+  # y - height (km)
+  \tau_c               @       0  6 linear [_] {_}
+End
+
+PlotAxes: CotBarAllCloudAxes 2
+  12 2 [0.010_0.010]
+  # x - CCN concentration
+  Number@Concentration cm^-^3  0  7 linear [1_2_3_4_5_6] {'50'_'100'_'200'_'400'_'800'_'1600'}
+  # y - height (km)
+  \tau_c               @       0  6 linear [_] {_}
+End
+
