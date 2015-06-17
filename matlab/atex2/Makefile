@@ -9,6 +9,7 @@ SCRIPTS = \
   $(DEST)/GenAvgFiles.m \
   $(DEST)/GenBarGraphFiles.m \
   $(DEST)/GenBuoyancyFlux.m \
+  $(DEST)/GenPdfFiles.m \
   $(DEST)/GenMomentFiles.m \
   $(DEST)/SetPath.m
 

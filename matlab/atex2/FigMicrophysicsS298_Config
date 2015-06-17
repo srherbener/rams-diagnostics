@@ -136,7 +136,7 @@ PlotSet: RainEvapPset line 6
   RainEvapLine z.atex.ccn0200.sst298 C0200 1 green     - 0
   RainEvapLine z.atex.ccn0400.sst298 C0400 1 yellow    - 0
   RainEvapLine z.atex.ccn0800.sst298 C0800 1 orangered - 0
-  RainEvapLine z.atex.ccn1600.sst298 C1600 2 brown     - 0
+  RainEvapLine z.atex.ccn1600.sst298 C1600 1 brown     - 0
 End
 
 PlotSet: LwFluxPset line 6
@@ -220,7 +220,7 @@ End
 PlotAxes: DrizCondAxes 2
   8 1 [0.025_0.025]
   # x - drizzle condensation rate (g/kg/hr)
-  Drizzle@Cond g@kg^-^1@h^-^1 -0.01 0.15 linear [_] {_}
+  Drizzle@Cond g@kg^-^1@h^-^1 -0.01 0.3 linear [_] {_}
   # y - height (km)
   Height       km                 0    4 linear [_] {_}
 End
@@ -228,7 +228,7 @@ End
 PlotAxes: DrizEvapAxes 2
   8 1 [0.025_0.025]
   # x - drizzle evaporation rate (g/kg/hr)
-  Drizzle@Evap g@kg^-^1@h^-^1 -0.1 0.01 linear [_] {_}
+  Drizzle@Evap g@kg^-^1@h^-^1 -0.3 0.01 linear [_] {_}
   # y - height (km)
   Height       km                0    4 linear [_] {_}
 End
@@ -236,7 +236,7 @@ End
 PlotAxes: RainCondAxes 2
   8 1 [0.025_0.025]
   # x - rain condensation rate (g/kg/hr)
-  Rain@Cond g@kg^-^1@h^-^1 -0.001 0.02 linear [_] {_}
+  Rain@Cond g@kg^-^1@h^-^1 -0.01 0.05 linear [_] {_}
   # y - height (km)
   Height    km                  0    4 linear [_] {_}
 End
@@ -244,7 +244,7 @@ End
 PlotAxes: RainEvapAxes 2
   8 1 [0.025_0.025]
   # x - rain evaporation rate (g/kg/hr)
-  Rain@Evap g@kg^-^1@h^-^1 -0.2 0.01 linear [_] {_}
+  Rain@Evap g@kg^-^1@h^-^1 -0.05 0.01 linear [_] {_}
   # y - height (km)
   Height    km                0    4 linear [_] {_}
 End

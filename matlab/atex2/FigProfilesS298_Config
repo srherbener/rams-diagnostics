@@ -14,10 +14,11 @@ CaseSet: DummyCases 1
 End
 
 ############## FIGURES ##################
-Figure: Profiles 7
+Figure: Profiles 8
   DummyCases
   [4_2]
-  Plots/Figure5_Profiles_S298.jpg
+  Plots/Figure8_Profiles_S298.jpg
+  PratePdfPanel  1
   CloudFracPanel 2
   WvarUpPanel    3
   WvarDnPanel    4
@@ -28,6 +29,14 @@ Figure: Profiles 7
 End
 
 ############## PANELS ###################
+FigPanel: PratePdfPanel
+  PratePdfPset
+  PratePdfAxes 1 1
+  none 5
+  PANEL:a@S298
+  none 10
+End
+
 FigPanel: CloudFracPanel
   CloudFracPset
   CloudFracAxes 1 1
@@ -85,6 +94,15 @@ FigPanel: WvaporDnPanel
 End
 
 ############# PLOT SETS ###############
+PlotSet: PratePdfPset line 6
+  PratePdfLine z.atex.ccn0050.sst298 C0050 1 black     - 0
+  PratePdfLine z.atex.ccn0100.sst298 C0100 1 blue      - 0
+  PratePdfLine z.atex.ccn0200.sst298 C0200 1 green     - 0
+  PratePdfLine z.atex.ccn0400.sst298 C0400 1 yellow    - 0
+  PratePdfLine z.atex.ccn0800.sst298 C0800 1 orangered - 0
+  PratePdfLine z.atex.ccn1600.sst298 C1600 1 brown     - 0
+End
+
 PlotSet: CloudFracPset line 6
   CloudFracLine z.atex.ccn0050.sst298 C0050 1 black     - 0
   CloudFracLine z.atex.ccn0100.sst298 C0100 1 blue      - 0
@@ -149,7 +167,12 @@ PlotSet: WvaporDnPset line 6
 End
 
 ############# PLOT DATA ##############
-# Units on rates are per 12 minutes. Multiply by 5 to get per hour.
+PlotData: PratePdfLine 2
+  # x - precip rate bins
+  /Bins           DIAGS/pdfs_<CASE>.h5 @ 1 0
+  # y - precip rate frequencies
+  /pdf_pcprr_tavg DIAGS/pdfs_<CASE>.h5 @ 1 0
+End
 
 PlotData: CloudFracLine 2
   # x - cloud condensation rate (g/kg/hr)
@@ -201,6 +224,14 @@ PlotData: WvaporDnLine 2
 End
 
 ############ PLOT AXES ###############
+PlotAxes: PratePdfAxes 2
+  8 1 [0.025_0.025]
+  # x - precip rate bins
+  Precip@Rate mm@h^-^1  1e-4 100 log [_] {_}
+  # y - precip rate frequencies
+  @           @         1e-7 1   log [_] {_}
+End
+
 PlotAxes: CloudFracAxes 2
   8 1 [0.025_0.025]
   # x - cloud fraction
