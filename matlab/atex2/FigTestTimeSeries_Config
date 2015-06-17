@@ -23,55 +23,55 @@ CaseSet: DummyCases 1
 End
 
 ############## FIGURES ##################
-## CLOUD
-#Figure: CloudMass 2
-#  DummyCases
-#  [2_1]
-#  Plots/FigCloudMass.jpg
-#  CmassPanelS293 1
-#  CmassPanelS298 2
-#End
-#
-#Figure: CloudDiam 2
-#  DummyCases
-#  [2_1]
-#  Plots/FigCloudDiam.jpg
-#  CdiamPanelS293 1
-#  CdiamPanelS298 2
-#End
-#
-#Figure: CloudNum 2
-#  DummyCases
-#  [2_1]
-#  Plots/FigCloudNum.jpg
-#  CnumPanelS293 1
-#  CnumPanelS298 2
-#End
-#
-## RAIN
-#Figure: RainMass 2
-#  DummyCases
-#  [2_1]
-#  Plots/FigRainMass.jpg
-#  RmassPanelS293 1
-#  RmassPanelS298 2
-#End
-#
-#Figure: RainDiam 2
-#  DummyCases
-#  [2_1]
-#  Plots/FigRainDiam.jpg
-#  RdiamPanelS293 1
-#  RdiamPanelS298 2
-#End
-#
-#Figure: RainNum 2
-#  DummyCases
-#  [2_1]
-#  Plots/FigRainNum.jpg
-#  RnumPanelS293 1
-#  RnumPanelS298 2
-#End
+# CLOUD
+Figure: CloudMass 2
+  DummyCases
+  [2_1]
+  Plots/FigCloudMass.jpg
+  CmassPanelS293 1
+  CmassPanelS298 2
+End
+
+Figure: CloudDiam 2
+  DummyCases
+  [2_1]
+  Plots/FigCloudDiam.jpg
+  CdiamPanelS293 1
+  CdiamPanelS298 2
+End
+
+Figure: CloudNum 2
+  DummyCases
+  [2_1]
+  Plots/FigCloudNum.jpg
+  CnumPanelS293 1
+  CnumPanelS298 2
+End
+
+# RAIN
+Figure: RainMass 2
+  DummyCases
+  [2_1]
+  Plots/FigRainMass.jpg
+  RmassPanelS293 1
+  RmassPanelS298 2
+End
+
+Figure: RainDiam 2
+  DummyCases
+  [2_1]
+  Plots/FigRainDiam.jpg
+  RdiamPanelS293 1
+  RdiamPanelS298 2
+End
+
+Figure: RainNum 2
+  DummyCases
+  [2_1]
+  Plots/FigRainNum.jpg
+  RnumPanelS293 1
+  RnumPanelS298 2
+End
 
 # COT
 Figure: Cot 2
