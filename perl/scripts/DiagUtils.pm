@@ -109,4 +109,64 @@ sub ReadConfigFile
   return(\%Config);
   }
 
+###############################################################################
+# ReadRevuConfigFile()
+#
+# This routine will read in info from the REVU configuration file.
+# Hashes will be loaded up with the information and passed back to the caller.
+#
+
+sub ReadRevuConfigFile
+  {
+  my ($ConfigFile) = @_;
+
+  my %Config;
+
+  my @f;
+
+  undef(%Config);
+
+  open(CONFIG, "$ConfigFile") or die "Cannot open '$ConfigFile' for reading: $!";
+  while (<CONFIG>)
+    {
+    @f = split(' ');
+  
+    if ($f[0] eq "AnPref:")
+      {
+      $Config{ANPREF} = $f[1];
+      }
+    elsif ($f[0] eq "RevPref:")
+      {
+      $Config{REVPREF} = $f[1];
+      }
+    elsif ($f[0] eq "AnaType:")
+      {
+      $Config{ANATYPE} = $f[1];
+      }
+    elsif ($f[0] eq "Igrid:")
+      {
+      $Config{IGRID} = $f[1];
+      }
+    elsif ($f[0] eq "Iztran:")
+      {
+      $Config{IZTRAN} = $f[1];
+      }
+    elsif ($f[0] eq "Case:")
+      {
+      $Config{CASES}{$f[1]} = 1;
+      }
+    elsif ($f[0] eq "Var:")
+      {
+      $Config{VARS}{$f[1]}{REVU_VAR} = $f[2];
+      $Config{VARS}{$f[1]}{XVAR}     = $f[3];
+      $Config{VARS}{$f[1]}{YVAR}     = $f[4];
+      $Config{VARS}{$f[1]}{ZVAR}     = $f[5];
+      $Config{VARS}{$f[1]}{TVAR}     = $f[6];
+      }
+    }
+  close(CONFIG);
+
+  return(\%Config);
+  }
+
 1;
