@@ -31,6 +31,7 @@ Ncases = length(CaseList);
   VarSets = {
     { 'hda_cloud_ot'    { 'cot' 'cot_all_cld'  } 'avg_cot'         }
     { 'hda_cloud_mask'  { 'cloud_frac'  }        'avg_dom_cfrac'   }
+    { 'hda_inv_height'  { 'inv_height'  }        'avg_inv_height'  }
 
     { 'hda_cloud_depth' { 'cdepth_all_cld'     } 'avg_cdepth'      }
     { 'hda_lwp2cdepth'  { 'lwp2cdepth_all_cld' } 'avg_lwp2cdepth'  }

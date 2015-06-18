@@ -19,6 +19,7 @@ CONFIGS = \
   $(DIAG_DIR)/FigProfilesS293_Config \
   $(DIAG_DIR)/FigProfilesS298_Config \
   $(DIAG_DIR)/FigBarGraphs_Config \
+  $(DIAG_DIR)/FigBlStats_Config \
   $(DIAG_DIR)/FigTestInitCcn_Config \
   $(DIAG_DIR)/FigTestTimeSeries_Config
 

@@ -1,0 +1,137 @@
+# Config file for boundary layer stats time series plots
+################ CASES ###################
+CaseSet: CasesS293 6
+  z.atex.ccn0050.sst293
+  z.atex.ccn0100.sst293
+  z.atex.ccn0200.sst293
+  z.atex.ccn0400.sst293
+  z.atex.ccn0800.sst293
+  z.atex.ccn1600.sst293
+End
+
+CaseSet: CasesS298 6
+  z.atex.ccn0050.sst298
+  z.atex.ccn0100.sst298
+  z.atex.ccn0200.sst298
+  z.atex.ccn0400.sst298
+  z.atex.ccn0800.sst298
+  z.atex.ccn1600.sst298
+End
+
+CaseSet: DummyCases 1
+  none
+End
+
+############## FIGURES ##################
+Figure: BlStats 4
+  DummyCases
+  [2_2]
+  Plots/Figure4_BlStats.jpg
+  ZinvPanelS293  1
+  CfracPanelS293 2
+  ZinvPanelS298  3
+  CfracPanelS298 4
+End
+
+############## PANELS ###################
+FigPanel: CfracPanelS293
+  CfracPsetS293
+  CfracAxes 0 1
+  none 5
+  PANEL:b@S293
+  none 10
+End
+
+FigPanel: ZinvPanelS293
+  ZinvPsetS293
+  ZinvAxes 0 1
+  none 5
+  PANEL:a@S293
+  none 10
+End
+
+FigPanel: CfracPanelS298
+  CfracPsetS298
+  CfracAxes 1 1
+  none 5
+  PANEL:d@S298
+  none 10
+End
+
+FigPanel: ZinvPanelS298
+  ZinvPsetS298
+  ZinvAxes 1 1
+  none 5
+  PANEL:c@S298
+  none 10
+End
+
+############# PLOT SETS ###############
+PlotSet: CfracPsetS293 line 6
+  CloudFracLine z.atex.ccn0050.sst293 C0050 2 black     - 0
+  CloudFracLine z.atex.ccn0100.sst293 C0100 2 blue      - 0
+  CloudFracLine z.atex.ccn0200.sst293 C0200 2 green     - 0
+  CloudFracLine z.atex.ccn0400.sst293 C0400 2 yellow    - 0
+  CloudFracLine z.atex.ccn0800.sst293 C0800 2 orangered - 0
+  CloudFracLine z.atex.ccn1600.sst293 C1600 2 brown     - 0
+End
+
+PlotSet: ZinvPsetS293 line 6
+  InvHeightLine z.atex.ccn0050.sst293 C0050 2 black     - 0
+  InvHeightLine z.atex.ccn0100.sst293 C0100 2 blue      - 0
+  InvHeightLine z.atex.ccn0200.sst293 C0200 2 green     - 0
+  InvHeightLine z.atex.ccn0400.sst293 C0400 2 yellow    - 0
+  InvHeightLine z.atex.ccn0800.sst293 C0800 2 orangered - 0
+  InvHeightLine z.atex.ccn1600.sst293 C1600 2 brown     - 0
+End
+
+PlotSet: CfracPsetS298 line 6
+  CloudFracLine z.atex.ccn0050.sst298 C0050 2 black     - 0
+  CloudFracLine z.atex.ccn0100.sst298 C0100 2 blue      - 0
+  CloudFracLine z.atex.ccn0200.sst298 C0200 2 green     - 0
+  CloudFracLine z.atex.ccn0400.sst298 C0400 2 yellow    - 0
+  CloudFracLine z.atex.ccn0800.sst298 C0800 2 orangered - 0
+  CloudFracLine z.atex.ccn1600.sst298 C1600 2 brown     - 0
+End
+
+PlotSet: ZinvPsetS298 line 6
+  InvHeightLine z.atex.ccn0050.sst298 C0050 2 black     - 0
+  InvHeightLine z.atex.ccn0100.sst298 C0100 2 blue      - 0
+  InvHeightLine z.atex.ccn0200.sst298 C0200 2 green     - 0
+  InvHeightLine z.atex.ccn0400.sst298 C0400 2 yellow    - 0
+  InvHeightLine z.atex.ccn0800.sst298 C0800 2 orangered - 0
+  InvHeightLine z.atex.ccn1600.sst298 C1600 2 brown     - 0
+End
+
+############# PLOT DATA ##############
+PlotData: CloudFracLine 2
+  # x - sim time in hours
+  /t_coords       DIAGS/avg_dom_cfrac_<CASE>.h5 @ 1 0
+  # y - domain cloud fraction
+  /cloud_frac_avg DIAGS/avg_dom_cfrac_<CASE>.h5 @ 1 0
+End
+
+PlotData: InvHeightLine 2
+  # x - sim time in hours
+  /t_coords       DIAGS/avg_inv_height_<CASE>.h5 @ 1 0
+  # y - inversion height (km)
+  /inv_height_avg DIAGS/avg_inv_height_<CASE>.h5 @ 1e-3 0
+End
+
+############ PLOT AXES ###############
+PlotAxes: CfracAxes 2
+  18 2 [0.025_0.025]
+  # x - sim time
+  Sim@Time h 0 50 linear [_] {_}
+  # y - cloud mixing ratio
+  CF  @  0 1 linear [_] {_}
+End
+
+PlotAxes: ZinvAxes 2
+  18 2 [0.025_0.025]
+  # x - sim time
+  Sim@Time h 0 50 linear [_] {_}
+  # y - cloud mixing ratio
+  Z_i_n_v  km  0 4 linear [_] {_}
+End
+
