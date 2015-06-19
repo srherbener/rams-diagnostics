@@ -17,26 +17,26 @@ function [ ] = GenBarGraphFiles()
     Nvsets = length(VarSets);
 
     CaseSets = {
-      {
-        's293'
-        {
-          'z.atex.ccn0050.sst293'
-          'z.atex.ccn0100.sst293'
-          'z.atex.ccn0200.sst293'
-          'z.atex.ccn0400.sst293'
-          'z.atex.ccn0800.sst293'
-          'z.atex.ccn1600.sst293'
-        }
-      }
+%      {
+%        's293'
+%        {
+%          'z.atex.ccn0050.sst293'
+%          'z.atex.ccn0100.sst293'
+%          'z.atex.ccn0200.sst293'
+%          'z.atex.ccn0400.sst293'
+%          'z.atex.ccn0800.sst293'
+%          'z.atex.ccn1600.sst293'
+%        }
+%      }
 
       {
         's298'
         {
           'z.atex.ccn0050.sst298'
-          'z.atex.ccn0100.sst298'
-          'z.atex.ccn0200.sst298'
-          'z.atex.ccn0400.sst298'
-          'z.atex.ccn0800.sst298'
+%          'z.atex.ccn0100.sst298'
+%          'z.atex.ccn0200.sst298'
+%          'z.atex.ccn0400.sst298'
+%          'z.atex.ccn0800.sst298'
           'z.atex.ccn1600.sst298'
         }
       }

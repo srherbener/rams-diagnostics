@@ -12,18 +12,18 @@ function [ ] = GenAvgFiles()
   FileHeader = 'ATEX averaged data';
 
   CaseList = {
-    'z.atex.ccn0050.sst293'
-    'z.atex.ccn0100.sst293'
-    'z.atex.ccn0200.sst293'
-    'z.atex.ccn0400.sst293'
-    'z.atex.ccn0800.sst293'
-    'z.atex.ccn1600.sst293'
+%    'z.atex.ccn0050.sst293'
+%    'z.atex.ccn0100.sst293'
+%    'z.atex.ccn0200.sst293'
+%    'z.atex.ccn0400.sst293'
+%    'z.atex.ccn0800.sst293'
+%    'z.atex.ccn1600.sst293'
 
     'z.atex.ccn0050.sst298'
-    'z.atex.ccn0100.sst298'
-    'z.atex.ccn0200.sst298'
-    'z.atex.ccn0400.sst298'
-    'z.atex.ccn0800.sst298'
+%    'z.atex.ccn0100.sst298'
+%    'z.atex.ccn0200.sst298'
+%    'z.atex.ccn0400.sst298'
+%    'z.atex.ccn0800.sst298'
     'z.atex.ccn1600.sst298'
     };
 Ncases = length(CaseList);
@@ -34,28 +34,28 @@ Ncases = length(CaseList);
     { 'hda_inv_height'  { 'inv_height'  }        'avg_inv_height'  }
 
     { 'hda_cloud_depth' { 'cdepth_all_cld'     } 'avg_cdepth'      }
-    { 'hda_lwp2cdepth'  { 'lwp2cdepth_all_cld' } 'avg_lwp2cdepth'  }
+%    { 'hda_lwp2cdepth'  { 'lwp2cdepth_all_cld' } 'avg_lwp2cdepth'  }
 
-    { 'hda_theta'       { 'theta'              } 'avg_theta'       }
+%    { 'hda_theta'       { 'theta'              } 'avg_theta'       }
 
-    { 'hda_vapcldt'     { 'cloud_cond_all_cld' } 'avg_cloud_cond'  }
-    { 'hda_vapcldt'     { 'cloud_evap_all_cld' } 'avg_cloud_evap'  }
+%    { 'hda_vapcldt'     { 'cloud_cond_all_cld' } 'avg_cloud_cond'  }
+%    { 'hda_vapcldt'     { 'cloud_evap_all_cld' } 'avg_cloud_evap'  }
 
-    { 'hda_vapraint'    { 'rain_cond_all_cld'  } 'avg_rain_cond'   }
-    { 'hda_vapraint'    { 'rain_evap_all_cld'  } 'avg_rain_evap'   }
+%    { 'hda_vapraint'    { 'rain_cond_all_cld'  } 'avg_rain_cond'   }
+%    { 'hda_vapraint'    { 'rain_evap_all_cld'  } 'avg_rain_evap'   }
 
-    { 'hda_vapdrizt'    { 'driz_cond_all_cld'  } 'avg_driz_cond'   }
-    { 'hda_vapdrizt'    { 'driz_evap_all_cld'  } 'avg_driz_evap'   }
+%    { 'hda_vapdrizt'    { 'driz_cond_all_cld'  } 'avg_driz_cond'   }
+%    { 'hda_vapdrizt'    { 'driz_evap_all_cld'  } 'avg_driz_evap'   }
 
-    { 'hda_net_lw_flux' { 'lw_flux_all_cld'    } 'avg_net_lw_flux' }
+%    { 'hda_net_lw_flux' { 'lw_flux_all_cld'    } 'avg_net_lw_flux' }
 
     { 'hda_cloud'       { 'cloud_c0p01'        } 'avg_cloud'       }
-    { 'hda_cloud_diam'  { 'cloud_diam_c0p01'   } 'avg_cloud_diam'  }
-    { 'hda_cloud_num'   { 'cloud_num_c0p01'    } 'avg_cloud_num'   }
+%    { 'hda_cloud_diam'  { 'cloud_diam_c0p01'   } 'avg_cloud_diam'  }
+%    { 'hda_cloud_num'   { 'cloud_num_c0p01'    } 'avg_cloud_num'   }
     
-    { 'hda_rain'        { 'rain_r0p01'         } 'avg_rain'        }
-    { 'hda_rain_diam'   { 'rain_diam_r0p01'    } 'avg_rain_diam'   }
-    { 'hda_rain_num'    { 'rain_num_r0p01'     } 'avg_rain_num'    }
+%    { 'hda_rain'        { 'rain_r0p01'         } 'avg_rain'        }
+%    { 'hda_rain_diam'   { 'rain_diam_r0p01'    } 'avg_rain_diam'   }
+%    { 'hda_rain_num'    { 'rain_num_r0p01'     } 'avg_rain_num'    }
 
     };
   Nset = length(VarSets);

@@ -2,18 +2,18 @@ function [ ] = GenPdfFilesCtype()
 % GenPdfFilesCtype generate pdfs from cloud type hist data
 
   CaseList = {
-    { 'z.atex.ccn0050.sst293' 24 48 }
-    { 'z.atex.ccn0100.sst293' 24 48 }
-    { 'z.atex.ccn0200.sst293' 24 48 }
-    { 'z.atex.ccn0400.sst293' 24 48 }
-    { 'z.atex.ccn0800.sst293' 24 48 }
-    { 'z.atex.ccn1600.sst293' 24 48 }
+%    { 'z.atex.ccn0050.sst293' 24 48 }
+%    { 'z.atex.ccn0100.sst293' 24 48 }
+%    { 'z.atex.ccn0200.sst293' 24 48 }
+%    { 'z.atex.ccn0400.sst293' 24 48 }
+%    { 'z.atex.ccn0800.sst293' 24 48 }
+%    { 'z.atex.ccn1600.sst293' 24 48 }
 
     { 'z.atex.ccn0050.sst298' 24 48 }
-    { 'z.atex.ccn0100.sst298' 24 48 }
-    { 'z.atex.ccn0200.sst298' 24 48 }
-    { 'z.atex.ccn0400.sst298' 24 48 }
-    { 'z.atex.ccn0800.sst298' 24 48 }
+%    { 'z.atex.ccn0100.sst298' 24 48 }
+%    { 'z.atex.ccn0200.sst298' 24 48 }
+%    { 'z.atex.ccn0400.sst298' 24 48 }
+%    { 'z.atex.ccn0800.sst298' 24 48 }
     { 'z.atex.ccn1600.sst298' 24 48 }
     };
   Ncases = length(CaseList);
