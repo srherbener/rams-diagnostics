@@ -18,7 +18,8 @@ SCRIPTS = \
 
 CONFIGS = \
   $(DIAG_DIR)/DiagConfig \
-  $(DIAG_DIR)/FigureConfig
+  $(DIAG_DIR)/FigureConfig \
+  $(DIAG_DIR)/FigReport062415_Config
 
 #
 # Targets

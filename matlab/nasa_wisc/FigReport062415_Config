@@ -1,0 +1,123 @@
+#
+# Instructions for building figures
+#
+
+######### FIGURES ###################
+Figure: FigRceControlMeas 2
+  DummyCases
+  [2_1]
+  Plots/FigRceControlMeas.jpg
+  AvgPwPanel  1
+  EqMeasPanel 2
+End 
+
+Figure: FigRceControlPwHov 1
+  DummyCases
+  [1_1]
+  Plots/FigRceControlPwHov.jpg
+  HovPwPanel  1
+End
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  none
+End
+
+########### PANELS ####################
+FigPanel: EqMeasPanel
+  EqMeasPset
+  EqMeasAxes 1 1
+  none 5
+  PANEL:b
+  SouthEast 10
+End
+
+FigPanel: AvgPwPanel
+  AvgPwPset
+  AvgPwAxes 1 1
+  none 5
+  PANEL:a
+  none 10
+End
+
+FigPanel: HovPwPanel
+  HovPwPset
+  HovPwAxes 1 1
+  none 5
+  PANEL:a
+  none 10
+End
+
+############ PLOT SETS #################
+PlotSet: EqMeasPset line 2
+  ThfLine  RCE_EXP_S70LN THF     2 blue   - 0
+  QradLine RCE_EXP_S70LN Q_r_a_d 2 red    - 0
+End
+
+PlotSet: AvgPwPset line 1
+  AvgPwLine  RCE_EXP_S70LN S70LN 2 black    - 0
+End
+
+PlotSet: HovPwPset contourf 1
+  HovPwContour RCE_EXP_S70LN S70LN  2 blue - 0
+End
+
+############ PLOT DATA #################
+PlotData: ThfLine 2
+  # x data - sim time in days
+  /t_coords        DIAGS/eq_meas_<CASE>.h5 @ 1 0
+  # y data - thermal heat flux in W/m^2
+  /therm_heat_flux DIAGS/eq_meas_<CASE>.h5 @ 1 0
+End
+  
+PlotData: QradLine 2
+  # x data - sim time in days
+  /t_coords     DIAGS/eq_meas_<CASE>.h5 @ 1 0
+  # y data - radiative flux divergence in W/m^2
+  /rad_flux_div DIAGS/eq_meas_<CASE>.h5 @ 1 0
+End
+
+PlotData: AvgPwLine 2
+  # x data - sim time in days
+  /t_coords     DIAGS/avg_precip_water_<CASE>.h5 @ 1.1574e-5 0
+  # y data - radiative flux divergence in W/m^2
+  /precip_water DIAGS/avg_precip_water_<CASE>.h5 @         1 0
+End
+
+PlotData: HovPwContour 3
+  # select all x, 31 simulated days -> t (1:32)
+  # x data - zonal distance, km
+  /x_coords     DIAGS/hov_precip_water_<CASE>.h5 @  1         0
+  # y data - time, sec -> convert to days
+  /t_coords     DIAGS/hov_precip_water_<CASE>.h5 @  1.1574e-5 0
+  # z data - PW, mm
+  /precip_water DIAGS/hov_precip_water_<CASE>.h5 @  1         0
+End
+
+
+############ PLOT AXES #################
+PlotAxes: EqMeasAxes 2
+  18 2 [0.025_0.025]
+  # x axis - sim time in days
+  Simulation@Time d 0 90 linear [_] {_}
+  # y axis - flux in W/m^2
+  Flux W@m^-^2 0 125 linear [_] {_}
+End
+
+PlotAxes: AvgPwAxes 2
+  18 2 [0.025_0.025]
+  # x axis - time
+  Sim@Time d 0 90 linear [_] {_}
+  # y axis - precipitable water
+  PW mm 0 80 linear [_] {_}
+End
+
+PlotAxes: HovPwAxes 3
+  18 2 [0.025_0.025]
+  # x axis - zonal distance
+  Zonal@Distance km 0 3000 linear [1_1500_3000] {_}
+  # y axis - time
+  Sim@Time d 0 86 linear [_] {_}
+  # z axis - precipitable water
+  PW mm 0 70 linear [_] {_}
+End
