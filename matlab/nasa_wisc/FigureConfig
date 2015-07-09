@@ -12,48 +12,48 @@ Figure: FigRadMeasS70 3
   QradCompPanelS70 3
 End 
 
-Figure: FigRadMeasS50 3
-  TestCasesS50
-  [3_1]
-  Plots/FigRadMeas_<CASE>.jpg
-  EqMeasPanelS50   1
-  ThfCompPanelS50  2
-  QradCompPanelS50 3
-End 
+#Figure: FigRadMeasS50 3
+#  TestCasesS50
+#  [3_1]
+#  Plots/FigRadMeas_<CASE>.jpg
+#  EqMeasPanelS50   1
+#  ThfCompPanelS50  2
+#  QradCompPanelS50 3
+#End 
 
-Figure: FigSampleSoundingClear 4
-  DummyCases
-  [2_2]
-  Plots/FigSampleSndClear.jpg
-  BaseClearPanel   1
-  S70LNClearPanel  2
-  S70LYClearPanel  3
-  S50LNClearPanel  4
-End
-
-Figure: FigSampleSoundingClear2 1
-  DummyCases
-  [1_1]
-  Plots/FigSampleSndClear2.jpg
-  S70MYClearPanel  1
-End
-
-Figure: FigSampleSoundingCloudy 4
-  DummyCases
-  [2_2]
-  Plots/FigSampleSndCloudy.jpg
-  BaseCloudyPanel  1
-  S70LNCloudyPanel 2
-  S70LYCloudyPanel 3
-  S50LNCloudyPanel 4
-End
-
-Figure: FigSampleSoundingCloudy2 1
-  DummyCases
-  [1_1]
-  Plots/FigSampleSndCloudy2.jpg
-  S70MYCloudyPanel 1
-End
+#Figure: FigSampleSoundingClear 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigSampleSndClear.jpg
+#  BaseClearPanel   1
+#  S70LNClearPanel  2
+#  S70LYClearPanel  3
+#  S50LNClearPanel  4
+#End
+#
+#Figure: FigSampleSoundingClear2 1
+#  DummyCases
+#  [1_1]
+#  Plots/FigSampleSndClear2.jpg
+#  S70MYClearPanel  1
+#End
+#
+#Figure: FigSampleSoundingCloudy 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigSampleSndCloudy.jpg
+#  BaseCloudyPanel  1
+#  S70LNCloudyPanel 2
+#  S70LYCloudyPanel 3
+#  S50LNCloudyPanel 4
+#End
+#
+#Figure: FigSampleSoundingCloudy2 1
+#  DummyCases
+#  [1_1]
+#  Plots/FigSampleSndCloudy2.jpg
+#  S70MYCloudyPanel 1
+#End
 
 Figure: FigAvgPw 1
   DummyCases
@@ -62,55 +62,64 @@ Figure: FigAvgPw 1
   AvgPwPanel 1
 End
 
-Figure: FigHovPwMatt 1
-  DummyCases
-  [1_1]
-  Plots/FigHovPwMatt.jpg
-  MattHovPwPanel 1
-End
+#Figure: FigHovPwMatt 1
+#  DummyCases
+#  [1_1]
+#  Plots/FigHovPwMatt.jpg
+#  MattHovPwPanel 1
+#End
+#
+#Figure: FigHovBase 1
+#  DummyCases
+#  [1_1]
+#  Plots/FigHovPwBase.jpg
+#  BaseHovPwPanel  1
+#End
+#
+#Figure: FigHovPwS70LN 1
+#  DummyCases
+#  [1_1]
+#  Plots/FigHovPwS70LN.jpg
+#  S70LNHovPwPanel  1
+#End
+#
+#Figure: FigHovPwS70LY 1
+#  DummyCases
+#  [1_1]
+#  Plots/FigHovPwS70LY.jpg
+#  S70LYHovPwPanel 1
+#End
+#
+#Figure: FigHovPwS70MY 1
+#  DummyCases
+#  [1_1]
+#  Plots/FigHovPwS70MY.jpg
+#  S70MYHovPwPanel 1
+#End
+#
+#Figure: FigHovPwS50LN 1
+#  DummyCases
+#  [1_1]
+#  Plots/FigHovPwS50LN.jpg
+#  S50LNHovPwPanel 1
+#End
 
-Figure: FigHovBase 1
+Figure: FigHovPwS50LN_470 1
   DummyCases
   [1_1]
-  Plots/FigHovPwBase.jpg
-  BaseHovPwPanel  1
-End
-
-Figure: FigHovPwS70LN 1
-  DummyCases
-  [1_1]
-  Plots/FigHovPwS70LN.jpg
-  S70LNHovPwPanel  1
-End
-
-Figure: FigHovPwS70LY 1
-  DummyCases
-  [1_1]
-  Plots/FigHovPwS70LY.jpg
-  S70LYHovPwPanel 1
-End
-
-Figure: FigHovPwS70MY 1
-  DummyCases
-  [1_1]
-  Plots/FigHovPwS70MY.jpg
-  S70MYHovPwPanel 1
-End
-
-Figure: FigHovPwS50LN 1
-  DummyCases
-  [1_1]
-  Plots/FigHovPwS50LN.jpg
-  S50LNHovPwPanel 1
+  Plots/FigHovPwS50LN_470.jpg
+  S50LN_470HovPwPanel 1
 End
 
 ########### CASES ####################
-CaseSet: TestCasesS70 4
-  RCE_BASE
+CaseSet: TestCasesS70 1
+#  RCE_BASE
 #  RCE_MATT
-  RCE_EXP_S70LN
-  RCE_EXP_S70LY
-  RCE_EXP_S70MY
+#  RCE_EXP_S70LN
+#  RCE_EXP_S70LY
+#  RCE_EXP_S70MY
+
+  RCE_EXP_S50LN_470
 End
 
 CaseSet: TestCasesS50 1
@@ -312,6 +321,14 @@ FigPanel: S50LNHovPwPanel
   none 10
 End
 
+FigPanel: S50LN_470HovPwPanel
+  S50LN_470HovPwPset
+  HovPwAxes 1 1
+  none 5
+  PANEL:d@S50LN\_470@PW
+  none 10
+End
+
 ############ PLOT SETS #################
 PlotSet: EqMeasPset line 2
   ThfLine  none THF     2 blue   - 0
@@ -394,13 +411,14 @@ PlotSet: S50LNClearPset line 3
   S50LNClearVapor none Q_v@(g/kg)       2 red    - 0
 End
 
-PlotSet: AvgPwPset line 6
-  AvgPwLine  RCE_MATT      MATT  2 blue   - 0
-  AvgPwLine  RCE_BASE      BASE  2 green  - 0
-  AvgPwLine  RCE_EXP_S70LN S70LN 2 red    - 0
-  AvgPwLine  RCE_EXP_S70LY S70LY 2 orange - 0
-  AvgPwLine  RCE_EXP_S50LN S50LN 2 brown  - 0
-  AvgPwLine  RCE_EXP_S70MY S70MY 2 black  - 0
+PlotSet: AvgPwPset line 7
+  AvgPwLine  RCE_MATT          MATT      2 blue     - 0
+  AvgPwLine  RCE_BASE          BASE      2 green    - 0
+  AvgPwLine  RCE_EXP_S70LN     S70LN     2 red      - 0
+  AvgPwLine  RCE_EXP_S70LY     S70LY     2 orange   - 0
+  AvgPwLine  RCE_EXP_S50LN     S50LN     2 brown    - 0
+  AvgPwLine  RCE_EXP_S70MY     S70MY     2 black    - 0
+  AvgPwLine  RCE_EXP_S50LN_470 S50LN_470 2 magenta  - 0
 End
 
 PlotSet: MattHovPwPset contourf 1
@@ -425,6 +443,10 @@ End
 
 PlotSet: S50LNHovPwPset contourf 1
   S50LNHovPwContour none none 2 blue - 0
+End
+
+PlotSet: S50LN_470HovPwPset contourf 1
+  S50LN_470HovPwContour none none 2 blue - 0
 End
 
 ############ PLOT DATA #################
@@ -850,6 +872,16 @@ PlotData: S50LNHovPwContour 3
   /t_coords     DIAGS/hov_precip_water_RCE_EXP_S50LN.h5 @  1.1574e-5 0
   # z data - PW, mm
   /precip_water DIAGS/hov_precip_water_RCE_EXP_S50LN.h5 @  1         0
+End
+
+PlotData: S50LN_470HovPwContour 3
+  # select all x, 31 simulated days -> t (1:32)
+  # x data - zonal distance, km
+  /x_coords     DIAGS/hov_precip_water_RCE_EXP_S50LN_470.h5 @  1         0
+  # y data - time, sec -> convert to days
+  /t_coords     DIAGS/hov_precip_water_RCE_EXP_S50LN_470.h5 @  1.1574e-5 0
+  # z data - PW, mm
+  /precip_water DIAGS/hov_precip_water_RCE_EXP_S50LN_470.h5 @  1         0
 End
 
 ############ PLOT AXES #################

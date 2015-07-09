@@ -27,8 +27,10 @@ function [ ] = Gen2dHovmoller()
 %    { 'HDF5/RCE_BASE/HDF5/vint_vapor-a-AC-2012-01-01-000000-g1.h5'                  'vertint_vapor' 'RCE_BASE'      'midy' 1 'hov_precip_water' 'precip_water' }
 %    { 'HDF5/RCE_EXP_S50LN/HDF5/vint_vapor-RCE_EXP_S50LN-AC-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE_EXP_S50LN' 'midy' 1 'hov_precip_water' 'precip_water' }
 %    { 'HDF5/RCE_EXP_S70LY/HDF5/vint_vapor-RCE_EXP_S70LY-AC-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE_EXP_S70LY' 'midy' 1 'hov_precip_water' 'precip_water' }
-    { 'HDF5/RCE_EXP_S70LN/HDF5/vint_vapor-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE_EXP_S70LN' 'midy' 1 'hov_precip_water' 'precip_water' }
-    { 'HDF5/RCE_EXP_S70MY/HDF5/vint_vapor-RCE_EXP_S70MY-AC-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE_EXP_S70MY' 'midy' 1 'hov_precip_water' 'precip_water' }
+%    { 'HDF5/RCE_EXP_S70LN/HDF5/vint_vapor-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE_EXP_S70LN' 'midy' 1 'hov_precip_water' 'precip_water' }
+%    { 'HDF5/RCE_EXP_S70MY/HDF5/vint_vapor-RCE_EXP_S70MY-AC-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE_EXP_S70MY' 'midy' 1 'hov_precip_water' 'precip_water' }
+
+    { 'HDF5/RCE_EXP_S50LN_470/HDF5/vint_vapor-RCE_EXP_S50LN_470-AC-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE_EXP_S50LN_470' 'midy' 1 'hov_precip_water' 'precip_water' }
     };
   Nset = length(VarSets);
 
