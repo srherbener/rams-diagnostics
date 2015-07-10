@@ -33,13 +33,21 @@ function [ ] = ExtractSampleProfiles()
 %        { 'HDF5/RCE_EXP_S50LN/HDF5/vint_vapor-RCE_EXP_S50LN-AC-2012-01-01-000000-g1.h5' '/vertint_vapor' }
 %        'RCE_EXP_S50LN'
 %      }
+%
+%      {
+%        { 'HDF5/RCE_EXP_S50LN_470/HDF5/tempc-RCE_EXP_S50LN_470-AC-2012-01-01-000000-g1.h5' '/tempc' }
+%        { 'HDF5/RCE_EXP_S50LN_470/HDF5/theta-RCE_EXP_S50LN_470-AC-2012-01-01-000000-g1.h5' '/theta' }
+%        { 'HDF5/RCE_EXP_S50LN_470/HDF5/total_cond-RCE_EXP_S50LN_470-AC-2012-01-01-000000-g1.h5' '/total_cond' }
+%        { 'HDF5/RCE_EXP_S50LN_470/HDF5/vint_vapor-RCE_EXP_S50LN_470-AC-2012-01-01-000000-g1.h5' '/vertint_vapor' }
+%        'RCE_EXP_S50LN_470'
+%      }
 
       {
-        { 'HDF5/RCE_EXP_S50LN_470/HDF5/tempc-RCE_EXP_S50LN_470-AC-2012-01-01-000000-g1.h5' '/tempc' }
-        { 'HDF5/RCE_EXP_S50LN_470/HDF5/theta-RCE_EXP_S50LN_470-AC-2012-01-01-000000-g1.h5' '/theta' }
-        { 'HDF5/RCE_EXP_S50LN_470/HDF5/total_cond-RCE_EXP_S50LN_470-AC-2012-01-01-000000-g1.h5' '/total_cond' }
-        { 'HDF5/RCE_EXP_S50LN_470/HDF5/vint_vapor-RCE_EXP_S50LN_470-AC-2012-01-01-000000-g1.h5' '/vertint_vapor' }
-        'RCE_EXP_S50LN_470'
+        { 'HDF5/RCE_EXP_S50LN_CG/HDF5/tempc-RCE_EXP_S50LN_CG-AC-2012-01-01-000000-g1.h5' '/tempc' }
+        { 'HDF5/RCE_EXP_S50LN_CG/HDF5/theta-RCE_EXP_S50LN_CG-AC-2012-01-01-000000-g1.h5' '/theta' }
+        { 'HDF5/RCE_EXP_S50LN_CG/HDF5/total_cond-RCE_EXP_S50LN_CG-AC-2012-01-01-000000-g1.h5' '/total_cond' }
+        { 'HDF5/RCE_EXP_S50LN_CG/HDF5/vint_vapor-RCE_EXP_S50LN_CG-AC-2012-01-01-000000-g1.h5' '/vertint_vapor' }
+        'RCE_EXP_S50LN_CG'
       }
 
 %      {

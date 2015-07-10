@@ -30,7 +30,8 @@ function [ ] = GenDomAvgTseries()
 %    { 'HDF5/RCE_EXP_S70LN/HDF5/vint_vapor-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE_EXP_S70LN' 'avg_precip_water' 'precip_water' }
 %    { 'HDF5/RCE_EXP_S70MY/HDF5/vint_vapor-RCE_EXP_S70MY-AC-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE_EXP_S70MY' 'avg_precip_water' 'precip_water' }
 
-    { 'HDF5/RCE_EXP_S50LN_470/HDF5/vint_vapor-RCE_EXP_S50LN_470-AC-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE_EXP_S50LN_470' 'avg_precip_water' 'precip_water' }
+%    { 'HDF5/RCE_EXP_S50LN_470/HDF5/vint_vapor-RCE_EXP_S50LN_470-AC-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE_EXP_S50LN_470' 'avg_precip_water' 'precip_water' }
+    { 'HDF5/RCE_EXP_S50LN_CG/HDF5/vint_vapor-RCE_EXP_S50LN_CG-AC-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE_EXP_S50LN_CG' 'avg_precip_water' 'precip_water' }
     };
   Nset = length(VarSets);
 
