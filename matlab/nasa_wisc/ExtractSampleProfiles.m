@@ -10,50 +10,50 @@ function [ ] = ExtractSampleProfiles()
 
   % input_file input_dataset case_name outfile_prefix output_dataset
   VarSets = {
-      {
-        { 'HDF5/RCE_EXP_S70LY/HDF5/tempc-RCE_EXP_S70LY-AC-2012-01-01-000000-g1.h5' '/tempc' }
-        { 'HDF5/RCE_EXP_S70LY/HDF5/theta-RCE_EXP_S70LY-AC-2012-01-01-000000-g1.h5' '/theta' }
-        { 'HDF5/RCE_EXP_S70LY/HDF5/cloud-RCE_EXP_S70LY-AC-2012-01-01-000000-g1.h5' '/cloud' }
-        { 'HDF5/RCE_EXP_S70LY/HDF5/vint_vapor-RCE_EXP_S70LY-AC-2012-01-01-000000-g1.h5' '/vertint_vapor' }
-        'RCE_EXP_S70LY'
-      }
-
-      {
-        { 'HDF5/RCE_EXP_S70LN/HDF5/tempc-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/tempc' }
-        { 'HDF5/RCE_EXP_S70LN/HDF5/theta-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/theta' }
-        { 'HDF5/RCE_EXP_S70LN/HDF5/cloud-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/cloud' }
-        { 'HDF5/RCE_EXP_S70LN/HDF5/vint_vapor-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/vertint_vapor' }
-        'RCE_EXP_S70LN'
-      }
-
-      {
-        { 'HDF5/RCE_EXP_S50LN/HDF5/tempc-RCE_EXP_S50LN-AC-2012-01-01-000000-g1.h5' '/tempc' }
-        { 'HDF5/RCE_EXP_S50LN/HDF5/theta-RCE_EXP_S50LN-AC-2012-01-01-000000-g1.h5' '/theta' }
-        { 'HDF5/RCE_EXP_S50LN/HDF5/cloud-RCE_EXP_S50LN-AC-2012-01-01-000000-g1.h5' '/cloud' }
-        { 'HDF5/RCE_EXP_S50LN/HDF5/vint_vapor-RCE_EXP_S50LN-AC-2012-01-01-000000-g1.h5' '/vertint_vapor' }
-        'RCE_EXP_S50LN'
-      }
+%      {
+%        { 'HDF5/RCE_EXP_S70LY/HDF5/tempc-RCE_EXP_S70LY-AC-2012-01-01-000000-g1.h5' '/tempc' }
+%        { 'HDF5/RCE_EXP_S70LY/HDF5/theta-RCE_EXP_S70LY-AC-2012-01-01-000000-g1.h5' '/theta' }
+%        { 'HDF5/RCE_EXP_S70LY/HDF5/total_cond-RCE_EXP_S70LY-AC-2012-01-01-000000-g1.h5' '/total_cond' }
+%        { 'HDF5/RCE_EXP_S70LY/HDF5/vint_vapor-RCE_EXP_S70LY-AC-2012-01-01-000000-g1.h5' '/vertint_vapor' }
+%        'RCE_EXP_S70LY'
+%      }
+%
+%      {
+%        { 'HDF5/RCE_EXP_S70LN/HDF5/tempc-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/tempc' }
+%        { 'HDF5/RCE_EXP_S70LN/HDF5/theta-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/theta' }
+%        { 'HDF5/RCE_EXP_S70LN/HDF5/total_cond-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/total_cond' }
+%        { 'HDF5/RCE_EXP_S70LN/HDF5/vint_vapor-RCE_EXP_S70LN-AC-2012-01-01-000000-g1.h5' '/vertint_vapor' }
+%        'RCE_EXP_S70LN'
+%      }
+%
+%      {
+%        { 'HDF5/RCE_EXP_S50LN/HDF5/tempc-RCE_EXP_S50LN-AC-2012-01-01-000000-g1.h5' '/tempc' }
+%        { 'HDF5/RCE_EXP_S50LN/HDF5/theta-RCE_EXP_S50LN-AC-2012-01-01-000000-g1.h5' '/theta' }
+%        { 'HDF5/RCE_EXP_S50LN/HDF5/total_cond-RCE_EXP_S50LN-AC-2012-01-01-000000-g1.h5' '/total_cond' }
+%        { 'HDF5/RCE_EXP_S50LN/HDF5/vint_vapor-RCE_EXP_S50LN-AC-2012-01-01-000000-g1.h5' '/vertint_vapor' }
+%        'RCE_EXP_S50LN'
+%      }
 
       {
         { 'HDF5/RCE_EXP_S50LN_470/HDF5/tempc-RCE_EXP_S50LN_470-AC-2012-01-01-000000-g1.h5' '/tempc' }
         { 'HDF5/RCE_EXP_S50LN_470/HDF5/theta-RCE_EXP_S50LN_470-AC-2012-01-01-000000-g1.h5' '/theta' }
-        { 'HDF5/RCE_EXP_S50LN_470/HDF5/cloud-RCE_EXP_S50LN_470-AC-2012-01-01-000000-g1.h5' '/cloud' }
+        { 'HDF5/RCE_EXP_S50LN_470/HDF5/total_cond-RCE_EXP_S50LN_470-AC-2012-01-01-000000-g1.h5' '/total_cond' }
         { 'HDF5/RCE_EXP_S50LN_470/HDF5/vint_vapor-RCE_EXP_S50LN_470-AC-2012-01-01-000000-g1.h5' '/vertint_vapor' }
         'RCE_EXP_S50LN_470'
       }
 
-      {
-        { 'HDF5/RCE_EXP_S70MY/HDF5/tempc-RCE_EXP_S70MY-AC-2012-01-01-000000-g1.h5' '/tempc' }
-        { 'HDF5/RCE_EXP_S70MY/HDF5/theta-RCE_EXP_S70MY-AC-2012-01-01-000000-g1.h5' '/theta' }
-        { 'HDF5/RCE_EXP_S70MY/HDF5/cloud-RCE_EXP_S70MY-AC-2012-01-01-000000-g1.h5' '/cloud' }
-        { 'HDF5/RCE_EXP_S70MY/HDF5/vint_vapor-RCE_EXP_S70MY-AC-2012-01-01-000000-g1.h5' '/vertint_vapor' }
-        'RCE_EXP_S70MY'
-      }
-
+%      {
+%        { 'HDF5/RCE_EXP_S70MY/HDF5/tempc-RCE_EXP_S70MY-AC-2012-01-01-000000-g1.h5' '/tempc' }
+%        { 'HDF5/RCE_EXP_S70MY/HDF5/theta-RCE_EXP_S70MY-AC-2012-01-01-000000-g1.h5' '/theta' }
+%        { 'HDF5/RCE_EXP_S70MY/HDF5/total_cond-RCE_EXP_S70MY-AC-2012-01-01-000000-g1.h5' '/total_cond' }
+%        { 'HDF5/RCE_EXP_S70MY/HDF5/vint_vapor-RCE_EXP_S70MY-AC-2012-01-01-000000-g1.h5' '/vertint_vapor' }
+%        'RCE_EXP_S70MY'
+%      }
+%
 %      {
 %        { 'HDF5/RCE_BASE/HDF5/tempc-a-AC-2012-01-01-000000-g1.h5' '/tempc' }
 %        { 'HDF5/RCE_BASE/HDF5/theta-a-AC-2012-01-01-000000-g1.h5' '/theta' }
-%        { 'HDF5/RCE_BASE/HDF5/cloud-a-AC-2012-01-01-000000-g1.h5' '/cloud' }
+%        { 'HDF5/RCE_BASE/HDF5/total_cond-a-AC-2012-01-01-000000-g1.h5' '/total_cond' }
 %        { 'HDF5/RCE_BASE/HDF5/vint_vapor-a-AC-2012-01-01-000000-g1.h5' '/vertint_vapor' }
 %        'RCE_BASE'
 %      }
@@ -74,8 +74,8 @@ function [ ] = ExtractSampleProfiles()
     ThetaFile   = VarSets{iset}{2}{1};
     ThetaVar    = VarSets{iset}{2}{2};
 
-    CloudFile  = VarSets{iset}{3}{1};
-    CloudVar   = VarSets{iset}{3}{2};
+    TcondFile  = VarSets{iset}{3}{1};
+    TcondVar   = VarSets{iset}{3}{2};
 
     PwFile  = VarSets{iset}{4}{1};
     PwVar   = VarSets{iset}{4}{2};
@@ -92,12 +92,12 @@ function [ ] = ExtractSampleProfiles()
     % Set up for extracting using nctools
     TEMP_DS = ncgeodataset(TempFile);
     THETA_DS = ncgeodataset(ThetaFile);
-    CLOUD_DS = ncgeodataset(CloudFile);
+    TCOND_DS = ncgeodataset(TcondFile);
     PW_DS = ncgeodataset(PwFile);
 
     TEMP_VAR = TEMP_DS.geovariable(TempVar);
     THETA_VAR = THETA_DS.geovariable(ThetaVar);
-    CLOUD_VAR = CLOUD_DS.geovariable(CloudVar);
+    TCOND_VAR = TCOND_DS.geovariable(TcondVar);
     PW_VAR = PW_DS.geovariable(PwVar);
 
     X_VAR = TEMP_DS.geovariable('x_coords');
@@ -122,7 +122,7 @@ function [ ] = ExtractSampleProfiles()
     % Form and average and record in output.
     fprintf('    Reading: %s (%s)\n', TempFile, TempVar);
     fprintf('    Reading: %s (%s)\n', ThetaFile, ThetaVar);
-    fprintf('    Reading: %s (%s)\n', CloudFile, CloudVar);
+    fprintf('    Reading: %s (%s)\n', TcondFile, TcondVar);
     fprintf('    Reading: %s (%s)\n', PwFile, PwVar);
     fprintf('\n');
 
@@ -130,10 +130,10 @@ function [ ] = ExtractSampleProfiles()
     % HAVG - average of high PW columns
     TEMP_LAVG  = zeros([ Nz Nt ]);
     THETA_LAVG = zeros([ Nz Nt ]);
-    CLOUD_LAVG = zeros([ Nz Nt ]);
+    TCOND_LAVG = zeros([ Nz Nt ]);
     TEMP_HAVG  = zeros([ Nz Nt ]);
     THETA_HAVG = zeros([ Nz Nt ]);
-    CLOUD_HAVG = zeros([ Nz Nt ]);
+    TCOND_HAVG = zeros([ Nz Nt ]);
 
     % work one time step at a time and one level at a time
     % so that memory allocation does not get too big
@@ -144,7 +144,7 @@ function [ ] = ExtractSampleProfiles()
       for iz = 1:Nz
         TEMP  = squeeze(TEMP_VAR.data(it,iz,:,:));
         THETA = squeeze(THETA_VAR.data(it,iz,:,:));
-        CLOUD = squeeze(CLOUD_VAR.data(it,iz,:,:));
+        TCOND = squeeze(TCOND_VAR.data(it,iz,:,:));
 
         TEMP_LAVG(iz,it) = mean(TEMP(PW <= PWthreshold));
         TEMP_HAVG(iz,it) = mean(TEMP(PW >  PWthreshold));
@@ -152,8 +152,8 @@ function [ ] = ExtractSampleProfiles()
         THETA_LAVG(iz,it) = mean(THETA(PW <= PWthreshold));
         THETA_HAVG(iz,it) = mean(THETA(PW >  PWthreshold));
 
-        CLOUD_LAVG(iz,it) = mean(CLOUD(PW <= PWthreshold));
-        CLOUD_HAVG(iz,it) = mean(CLOUD(PW >  PWthreshold));
+        TCOND_LAVG(iz,it) = mean(TCOND(PW <= PWthreshold));
+        TCOND_HAVG(iz,it) = mean(TCOND(PW >  PWthreshold));
       end
 
       if (mod(it,10) == 0)
@@ -183,35 +183,35 @@ function [ ] = ExtractSampleProfiles()
     % Vars are (z,t) at this point.
     TEMP_LAVG  = reshape(TEMP_LAVG,  [ OutNx OutNy OutNz OutNt ]);
     THETA_LAVG = reshape(THETA_LAVG, [ OutNx OutNy OutNz OutNt ]);
-    CLOUD_LAVG = reshape(CLOUD_LAVG, [ OutNx OutNy OutNz OutNt ]);
+    TCOND_LAVG = reshape(TCOND_LAVG, [ OutNx OutNy OutNz OutNt ]);
 
     TEMP_HAVG  = reshape(TEMP_HAVG,  [ OutNx OutNy OutNz OutNt ]);
     THETA_HAVG = reshape(THETA_HAVG, [ OutNx OutNy OutNz OutNt ]);
-    CLOUD_HAVG = reshape(CLOUD_HAVG, [ OutNx OutNy OutNz OutNt ]);
+    TCOND_HAVG = reshape(TCOND_HAVG, [ OutNx OutNy OutNz OutNt ]);
 
     TempLavgVname = sprintf('%s_lavg', TempVar);
     ThetaLavgVname = sprintf('%s_lavg', ThetaVar);
-    CloudLavgVname = sprintf('%s_lavg', CloudVar);
+    TcondLavgVname = sprintf('%s_lavg', TcondVar);
 
     TempHavgVname = sprintf('%s_havg', TempVar);
     ThetaHavgVname = sprintf('%s_havg', ThetaVar);
-    CloudHavgVname = sprintf('%s_havg', CloudVar);
+    TcondHavgVname = sprintf('%s_havg', TcondVar);
 
     h5create(OutFile, TempLavgVname, size(TEMP_LAVG));
     h5create(OutFile, ThetaLavgVname, size(THETA_LAVG));
-    h5create(OutFile, CloudLavgVname, size(CLOUD_LAVG));
+    h5create(OutFile, TcondLavgVname, size(TCOND_LAVG));
 
     h5create(OutFile, TempHavgVname, size(TEMP_HAVG));
     h5create(OutFile, ThetaHavgVname, size(THETA_HAVG));
-    h5create(OutFile, CloudHavgVname, size(CLOUD_HAVG));
+    h5create(OutFile, TcondHavgVname, size(TCOND_HAVG));
 
     h5write(OutFile, TempLavgVname, TEMP_LAVG);
     h5write(OutFile, ThetaLavgVname, THETA_LAVG);
-    h5write(OutFile, CloudLavgVname, CLOUD_LAVG);
+    h5write(OutFile, TcondLavgVname, TCOND_LAVG);
 
     h5write(OutFile, TempHavgVname, TEMP_HAVG);
     h5write(OutFile, ThetaHavgVname, THETA_HAVG);
-    h5write(OutFile, CloudHavgVname, CLOUD_HAVG);
+    h5write(OutFile, TcondHavgVname, TCOND_HAVG);
 
     Xname = '/x_coords';
     Yname = '/y_coords';
@@ -221,10 +221,10 @@ function [ ] = ExtractSampleProfiles()
     CreateDimensionsXyzt(OutFile, OutX, OutY, OutZ, OutT, Xname, Yname, Zname, Tname);
     AttachDimensionsXyzt(OutFile, TempLavgVname, Xname, Yname, Zname, Tname);
     AttachDimensionsXyzt(OutFile, ThetaLavgVname, Xname, Yname, Zname, Tname);
-    AttachDimensionsXyzt(OutFile, CloudLavgVname, Xname, Yname, Zname, Tname);
+    AttachDimensionsXyzt(OutFile, TcondLavgVname, Xname, Yname, Zname, Tname);
     AttachDimensionsXyzt(OutFile, TempHavgVname, Xname, Yname, Zname, Tname);
     AttachDimensionsXyzt(OutFile, ThetaHavgVname, Xname, Yname, Zname, Tname);
-    AttachDimensionsXyzt(OutFile, CloudHavgVname, Xname, Yname, Zname, Tname);
+    AttachDimensionsXyzt(OutFile, TcondHavgVname, Xname, Yname, Zname, Tname);
     NotateDimensionsXyzt(OutFile, Xname, Yname, Zname, Tname);
   end
 end

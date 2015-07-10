@@ -3,14 +3,14 @@
 #
 
 ######### FIGURES ###################
-Figure: FigRadMeasS70 3
-  TestCasesS70
-  [3_1]
-  Plots/FigRadMeas_<CASE>.jpg
-  EqMeasPanelS70   1
-  ThfCompPanelS70  2
-  QradCompPanelS70 3
-End 
+#Figure: FigRadMeasS70 3
+#  TestCasesS70
+#  [3_1]
+#  Plots/FigRadMeas_<CASE>.jpg
+#  EqMeasPanelS70   1
+#  ThfCompPanelS70  2
+#  QradCompPanelS70 3
+#End 
 
 #Figure: FigRadMeasS50 3
 #  TestCasesS50
@@ -21,47 +21,47 @@ End
 #  QradCompPanelS50 3
 #End 
 
-#Figure: FigSampleSoundingClear 4
-#  DummyCases
-#  [2_2]
-#  Plots/FigSampleSndClear.jpg
-#  BaseClearPanel   1
-#  S70LNClearPanel  2
-#  S70LYClearPanel  3
-#  S50LNClearPanel  4
-#End
-#
-#Figure: FigSampleSoundingClear2 1
-#  DummyCases
-#  [1_1]
-#  Plots/FigSampleSndClear2.jpg
-#  S70MYClearPanel  1
-#End
-#
-#Figure: FigSampleSoundingCloudy 4
-#  DummyCases
-#  [2_2]
-#  Plots/FigSampleSndCloudy.jpg
-#  BaseCloudyPanel  1
-#  S70LNCloudyPanel 2
-#  S70LYCloudyPanel 3
-#  S50LNCloudyPanel 4
-#End
-#
-#Figure: FigSampleSoundingCloudy2 1
-#  DummyCases
-#  [1_1]
-#  Plots/FigSampleSndCloudy2.jpg
-#  S70MYCloudyPanel 1
-#End
-
-Figure: FigAvgPw 1
+Figure: FigSampleSoundingHiPw 3
   DummyCases
-  [1_1]
-  Plots/FigAvgPw.jpg
-  AvgPwPanel 1
+  [2_2]
+  Plots/FigSampleSndHiPw.jpg
+  BaseHiPwPanel   1
+  S70LNHiPwPanel  2
+  S70LYHiPwPanel  3
 End
 
+Figure: FigSampleSoundingHiPw2 2
+  DummyCases
+  [2_2]
+  Plots/FigSampleSndHiPw2.jpg
+  S50LNHiPwPanel      1
+  S50LN_470HiPwPanel  2
+End
+
+Figure: FigSampleSoundingLoPw 3
+  DummyCases
+  [2_2]
+  Plots/FigSampleSndLoPw.jpg
+  BaseLoPwPanel  1
+  S70LNLoPwPanel 2
+  S70LYLoPwPanel 3
+End
+
+Figure: FigSampleSoundingLoPw2 2
+  DummyCases
+  [2_2]
+  Plots/FigSampleSndLoPw2.jpg
+  S50LNLoPwPanel     1
+  S50LN_470LoPwPanel 2
+End
+
+#Figure: FigAvgPw 1
+#  DummyCases
+#  [1_1]
+#  Plots/FigAvgPw.jpg
+#  AvgPwPanel 1
+#End
+#
 #Figure: FigHovPwMatt 1
 #  DummyCases
 #  [1_1]
@@ -103,13 +103,13 @@ End
 #  Plots/FigHovPwS50LN.jpg
 #  S50LNHovPwPanel 1
 #End
-
-Figure: FigHovPwS50LN_470 1
-  DummyCases
-  [1_1]
-  Plots/FigHovPwS50LN_470.jpg
-  S50LN_470HovPwPanel 1
-End
+#
+#Figure: FigHovPwS50LN_470 1
+#  DummyCases
+#  [1_1]
+#  Plots/FigHovPwS50LN_470.jpg
+#  S50LN_470HovPwPanel 1
+#End
 
 ########### CASES ####################
 CaseSet: TestCasesS70 1
@@ -185,84 +185,100 @@ FigPanel: QradCompPanelS50
 End
 
 
-FigPanel: BaseCloudyPanel
-  BaseCloudyPset
+FigPanel: BaseLoPwPanel
+  BaseLoPwPset
   SampSoundingAxes 0 1
   none 5
-  PANEL:a@BASE@Cloudy
+  PANEL:a@BASE@LO@PW
   none 10
 End
 
-FigPanel: S70LNCloudyPanel
-  S70LNCloudyPset
+FigPanel: S70LNLoPwPanel
+  S70LNLoPwPset
   SampSoundingAxes 0 0
   none 5
-  PANEL:b@S70LN@Cloudy
+  PANEL:b@S70LN@LO@PW
   Best 10
 End
 
-FigPanel: S70MYCloudyPanel
-  S70MYCloudyPset
+FigPanel: S70MYLoPwPanel
+  S70MYLoPwPset
   SampSoundingAxes 1 1
   none 5
-  PANEL:b@S70MY@Cloudy
+  PANEL:b@S70MY@LO@PW
   Best 10
 End
 
-FigPanel: S70LYCloudyPanel
-  S70LYCloudyPset
+FigPanel: S70LYLoPwPanel
+  S70LYLoPwPset
   SampSoundingAxes 1 1
   none 5
-  PANEL:c@S70LY@Cloudy
+  PANEL:c@S70LY@LO@PW
   none 10
 End
 
-FigPanel: S50LNCloudyPanel
-  S50LNCloudyPset
+FigPanel: S50LNLoPwPanel
+  S50LNLoPwPset
   SampSoundingAxes 1 0
   none 5
-  PANEL:d@S50LN@Cloudy
+  PANEL:d@S50LN@LO@PW
   none 10
 End
 
-FigPanel: BaseClearPanel
-  BaseClearPset
+FigPanel: S50LN_470LoPwPanel
+  S50LN_470LoPwPset
+  SampSoundingAxes 0 0
+  none 5
+  PANEL:b@S50LN\_470@LO@PW
+  Best 10
+End
+
+FigPanel: BaseHiPwPanel
+  BaseHiPwPset
   SampSoundingAxes 0 1
   none 5
-  PANEL:a@Base@Clear
+  PANEL:a@Base@HI@PW
   none 10
 End
 
-FigPanel: S70LNClearPanel
-  S70LNClearPset
+FigPanel: S70LNHiPwPanel
+  S70LNHiPwPset
   SampSoundingAxes 0 0
   none 5
-  PANEL:b@S70LN@Clear
+  PANEL:b@S70LN@HI@PW
   Best 10
 End
 
-FigPanel: S70MYClearPanel
-  S70MYClearPset
+FigPanel: S70MYHiPwPanel
+  S70MYHiPwPset
   SampSoundingAxes 1 1
   none 5
-  PANEL:b@S70MY@Clear
+  PANEL:b@S70MY@HI@PW
   Best 10
 End
 
-FigPanel: S70LYClearPanel
-  S70LYClearPset
+FigPanel: S70LYHiPwPanel
+  S70LYHiPwPset
   SampSoundingAxes 1 1
   none 5
-  PANEL:c@S70LY@Clear
+  PANEL:c@S70LY@HI@PW
   none 10
 End
 
-FigPanel: S50LNClearPanel
-  S50LNClearPset
+FigPanel: S50LNHiPwPanel
+  S50LNHiPwPset
   SampSoundingAxes 1 0
   none 5
-  PANEL:d@S50LN@Clear
+  PANEL:d@S50LN@HI@PW
   none 10
+End
+
+FigPanel: S50LN_470HiPwPanel
+  S50LN_470HiPwPset
+  SampSoundingAxes 0 0
+  none 5
+  PANEL:b@S50LN\_470@HI@PW
+  Best 10
 End
 
 FigPanel: AvgPwPanel
@@ -351,64 +367,64 @@ PlotSet: QradCompPset line 7
   TopSwupLine none TOP\_SWUP 2 orange  -- 0
 End
 
-PlotSet: BaseCloudyPset line 3
-  BaseCloudyTheta none \theta@(deg@C)        2 blue   - 0
-  BaseCloudyCloud none Q_c@(100@X@g/kg) 2 green  - 0
-  BaseCloudyVapor none Q_v@(g/kg)       2 red    - 0
+PlotSet: BaseLoPwPset line 2
+  BaseLoPwTheta none \theta@(deg@C)   2 blue   - 0
+  BaseLoPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
 End
 
-PlotSet: S70LNCloudyPset line 3
-  S70LNCloudyTheta none \theta@(deg@C)        2 blue   - 0
-  S70LNCloudyCloud none Q_c@(100@X@g/kg) 2 green  - 0
-  S70LNCloudyVapor none Q_v@(g/kg)       2 red    - 0
+PlotSet: S70LNLoPwPset line 2
+  S70LNLoPwTheta none \theta@(deg@C)   2 blue   - 0
+  S70LNLoPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
 End
 
-PlotSet: S70MYCloudyPset line 3
-  S70MYCloudyTheta none \theta@(deg@C)        2 blue   - 0
-  S70MYCloudyCloud none Q_c@(100@X@g/kg) 2 green  - 0
-  S70MYCloudyVapor none Q_v@(g/kg)       2 red    - 0
+PlotSet: S70MYLoPwPset line 2
+  S70MYLoPwTheta none \theta@(deg@C)   2 blue   - 0
+  S70MYLoPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
 End
 
-PlotSet: S70LYCloudyPset line 3
-  S70LYCloudyTheta none \theta@(deg@C)        2 blue   - 0
-  S70LYCloudyCloud none Q_c@(100@X@g/kg) 2 green  - 0
-  S70LYCloudyVapor none Q_v@(g/kg)       2 red    - 0
+PlotSet: S70LYLoPwPset line 2
+  S70LYLoPwTheta none \theta@(deg@C)   2 blue   - 0
+  S70LYLoPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
 End
 
-PlotSet: S50LNCloudyPset line 3
-  S50LNCloudyTheta none \theta@(deg@C)        2 blue   - 0
-  S50LNCloudyCloud none Q_c@(100@X@g/kg) 2 green  - 0
-  S50LNCloudyVapor none Q_v@(g/kg)       2 red    - 0
+PlotSet: S50LNLoPwPset line 2
+  S50LNLoPwTheta none \theta@(deg@C)   2 blue   - 0
+  S50LNLoPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
 End
 
-PlotSet: BaseClearPset line 3
-  BaseClearTheta none \theta@(deg@C)        2 blue   - 0
-  BaseClearCloud none Q_c@(100@X@g/kg) 2 green  - 0
-  BaseClearVapor none Q_v@(g/kg)       2 red    - 0
+PlotSet: S50LN_470LoPwPset line 2
+  S50LN_470LoPwTheta none \theta@(deg@C)   2 blue   - 0
+  S50LN_470LoPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
 End
 
-PlotSet: S70LNClearPset line 3
-  S70LNClearTheta none \theta@(deg@C)        2 blue   - 0
-  S70LNClearCloud none Q_c@(100@X@g/kg) 2 green  - 0
-  S70LNClearVapor none Q_v@(g/kg)       2 red    - 0
+PlotSet: BaseHiPwPset line 2
+  BaseHiPwTheta  none \theta@(deg@C)   2 blue   - 0
+  BaseHiPwTcond  none Q_t@(100@X@g/kg) 2 red    - 0
 End
 
-PlotSet: S70MYClearPset line 3
-  S70MYClearTheta none \theta@(deg@C)        2 blue   - 0
-  S70MYClearCloud none Q_c@(100@X@g/kg) 2 green  - 0
-  S70MYClearVapor none Q_v@(g/kg)       2 red    - 0
+PlotSet: S70LNHiPwPset line 2
+  S70LNHiPwTheta none \theta@(deg@C)   2 blue   - 0
+  S70LNHiPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
 End
 
-PlotSet: S70LYClearPset line 3
-  S70LYClearTheta none \theta@(deg@C)        2 blue   - 0
-  S70LYClearCloud none Q_c@(100@X@g/kg) 2 green  - 0
-  S70LYClearVapor none Q_v@(g/kg)       2 red    - 0
+PlotSet: S70MYHiPwPset line 2
+  S70MYHiPwTheta none \theta@(deg@C)   2 blue   - 0
+  S70MYHiPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
 End
 
-PlotSet: S50LNClearPset line 3
-  S50LNClearTheta none \theta@(deg@C)        2 blue   - 0
-  S50LNClearCloud none Q_c@(100@X@g/kg) 2 green  - 0
-  S50LNClearVapor none Q_v@(g/kg)       2 red    - 0
+PlotSet: S70LYHiPwPset line 2
+  S70LYHiPwTheta none \theta@(deg@C)   2 blue   - 0
+  S70LYHiPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
+End
+
+PlotSet: S50LNHiPwPset line 2
+  S50LNHiPwTheta none \theta@(deg@C)   2 blue   - 0
+  S50LNHiPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
+End
+
+PlotSet: S50LN_470HiPwPset line 2
+  S50LN_470HiPwTheta none \theta@(deg@C)   2 blue   - 0
+  S50LN_470HiPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
 End
 
 PlotSet: AvgPwPset line 7
@@ -527,285 +543,440 @@ PlotData: TopSwupLine 2
   /avg_top_swup DIAGS/eq_meas_<CASE>.h5 @ 1 0
 End
 
-PlotData: BaseCloudyTemp 2
+
+
+PlotData: BaseLoPwTemp 2
   # x data - sim time in days
-  /tempc_avg    DIAGS/SampleProfiles_RCE_BASE_cloudy.h5 (2:65,32) 1 0
+  /tempc_lavg DIAGS/SampleProfiles_RCE_BASE.h5 (2:65,32) 1 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_BASE_cloudy.h5 (2:65) 1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_BASE.h5 (2:65) 1e-3 0
 End
 
-PlotData: BaseCloudyTheta 2
+PlotData: BaseLoPwTheta 2
   # x data - sim time in days
-  /theta_avg    DIAGS/SampleProfiles_RCE_BASE_cloudy.h5 (2:65,32) 1 -273.15
+  /theta_lavg DIAGS/SampleProfiles_RCE_BASE.h5 (2:65,32) 1 -273.15
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_BASE_cloudy.h5 (2:65) 1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_BASE.h5 (2:65) 1e-3 0
 End
 
-PlotData: BaseCloudyCloud 2
+PlotData: BaseLoPwCloud 2
   # x data - sim time in days
-  /cloud_avg    DIAGS/SampleProfiles_RCE_BASE_cloudy.h5 (2:65,32) 100 0
+  /cloud_lavg DIAGS/SampleProfiles_RCE_BASE.h5 (2:65,32) 100 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_BASE_cloudy.h5 (2:65)   1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_BASE.h5 (2:65)   1e-3 0
 End
 
-PlotData: BaseCloudyVapor 2
+PlotData: BaseLoPwVapor 2
   # x data - sim time in days
-  /vapor_avg    DIAGS/SampleProfiles_RCE_BASE_cloudy.h5 (2:65,32) 1 0
+  /vapor_lavg DIAGS/SampleProfiles_RCE_BASE.h5 (2:65,32) 1 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_BASE_cloudy.h5 (2:65) 1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_BASE.h5 (2:65) 1e-3 0
 End
 
-PlotData: BaseClearTemp 2
+PlotData: BaseLoPwTcond 2
   # x data - sim time in days
-  /tempc_avg    DIAGS/SampleProfiles_RCE_BASE_clear.h5 (2:65,32) 1 0
+  /total_cond_lavg DIAGS/SampleProfiles_RCE_BASE.h5 (2:65,32) 100 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_BASE_clear.h5 (2:65) 1e-3 0
+  /z_coords        DIAGS/SampleProfiles_RCE_BASE.h5 (2:65) 1e-3 0
 End
 
-PlotData: BaseClearTheta 2
+PlotData: BaseHiPwTemp 2
   # x data - sim time in days
-  /theta_avg    DIAGS/SampleProfiles_RCE_BASE_clear.h5 (2:65,32) 1 -273.15
+  /tempc_havg DIAGS/SampleProfiles_RCE_BASE.h5 (2:65,32) 1 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_BASE_clear.h5 (2:65) 1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_BASE.h5 (2:65) 1e-3 0
 End
 
-PlotData: BaseClearCloud 2
+PlotData: BaseHiPwTheta 2
   # x data - sim time in days
-  /cloud_avg    DIAGS/SampleProfiles_RCE_BASE_clear.h5 (2:65,32) 100 0
+  /theta_havg DIAGS/SampleProfiles_RCE_BASE.h5 (2:65,32) 1 -273.15
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_BASE_clear.h5 (2:65)   1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_BASE.h5 (2:65) 1e-3 0
 End
 
-PlotData: BaseClearVapor 2
+PlotData: BaseHiPwCloud 2
   # x data - sim time in days
-  /vapor_avg    DIAGS/SampleProfiles_RCE_BASE_clear.h5 (2:65,32) 1 0
+  /cloud_havg DIAGS/SampleProfiles_RCE_BASE.h5 (2:65,32) 100 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_BASE_clear.h5 (2:65) 1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_BASE.h5 (2:65)   1e-3 0
 End
 
-PlotData: S70LNCloudyTemp 2
+PlotData: BaseHiPwVapor 2
   # x data - sim time in days
-  /tempc_avg    DIAGS/SampleProfiles_RCE_EXP_S70LN_cloudy.h5 (2:75,32) 1 0
+  /vapor_havg DIAGS/SampleProfiles_RCE_BASE.h5 (2:65,32) 1 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70LN_cloudy.h5 (2:75) 1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_BASE.h5 (2:65) 1e-3 0
 End
 
-PlotData: S70LNCloudyTheta 2
+PlotData: BaseHiPwTcond 2
   # x data - sim time in days
-  /theta_avg    DIAGS/SampleProfiles_RCE_EXP_S70LN_cloudy.h5 (2:75,32) 1 -273.15
+  /total_cond_havg DIAGS/SampleProfiles_RCE_BASE.h5 (2:65,32) 100 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70LN_cloudy.h5 (2:75) 1e-3 0
+  /z_coords        DIAGS/SampleProfiles_RCE_BASE.h5 (2:65) 1e-3 0
 End
 
-PlotData: S70LNCloudyCloud 2
+
+
+
+PlotData: S70LNLoPwTemp 2
   # x data - sim time in days
-  /cloud_avg    DIAGS/SampleProfiles_RCE_EXP_S70LN_cloudy.h5 (2:75,32) 100 0
+  /tempc_lavg DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75,32) 1 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70LN_cloudy.h5 (2:75)   1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75) 1e-3 0
 End
 
-PlotData: S70LNCloudyVapor 2
+PlotData: S70LNLoPwTheta 2
   # x data - sim time in days
-  /vapor_avg    DIAGS/SampleProfiles_RCE_EXP_S70LN_cloudy.h5 (2:75,32) 1 0
+  /theta_lavg DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75,32) 1 -273.15
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70LN_cloudy.h5 (2:75) 1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75) 1e-3 0
 End
 
-PlotData: S70LNClearTemp 2
+PlotData: S70LNLoPwCloud 2
   # x data - sim time in days
-  /tempc_avg    DIAGS/SampleProfiles_RCE_EXP_S70LN_clear.h5 (2:75,32) 1 0
+  /cloud_lavg DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75,32) 100 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70LN_clear.h5 (2:75) 1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75)   1e-3 0
 End
 
-PlotData: S70LNClearTheta 2
+PlotData: S70LNLoPwVapor 2
   # x data - sim time in days
-  /theta_avg    DIAGS/SampleProfiles_RCE_EXP_S70LN_clear.h5 (2:75,32) 1 -273.15
+  /vapor_lavg DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75,32) 1 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70LN_clear.h5 (2:75) 1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75) 1e-3 0
 End
 
-PlotData: S70LNClearCloud 2
+PlotData: S70LNLoPwTcond 2
   # x data - sim time in days
-  /cloud_avg    DIAGS/SampleProfiles_RCE_EXP_S70LN_clear.h5 (2:75,32) 100 0
+  /total_cond_lavg DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75,32) 100 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70LN_clear.h5 (2:75)   1e-3 0
+  /z_coords        DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75) 1e-3 0
 End
 
-PlotData: S70LNClearVapor 2
+PlotData: S70LNHiPwTemp 2
   # x data - sim time in days
-  /vapor_avg    DIAGS/SampleProfiles_RCE_EXP_S70LN_clear.h5 (2:75,32) 1 0
+  /tempc_havg DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75,32) 1 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70LN_clear.h5 (2:75) 1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75) 1e-3 0
 End
 
-PlotData: S70MYCloudyTemp 2
+PlotData: S70LNHiPwTheta 2
   # x data - sim time in days
-  /tempc_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75,29) 1 0
+  /theta_havg DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75,32) 1 -273.15
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75) 1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75) 1e-3 0
 End
 
-PlotData: S70MYCloudyTheta 2
+PlotData: S70LNHiPwCloud 2
   # x data - sim time in days
-  /theta_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75,29) 1 -273.15
+  /cloud_havg DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75,32) 100 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75) 1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75)   1e-3 0
 End
 
-PlotData: S70MYCloudyCloud 2
+PlotData: S70LNHiPwVapor 2
   # x data - sim time in days
-  /cloud_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75,29) 100 0
+  /vapor_havg DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75,32) 1 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75)   1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75) 1e-3 0
 End
 
-PlotData: S70MYCloudyVapor 2
+PlotData: S70LNHiPwTcond 2
   # x data - sim time in days
-  /vapor_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75,29) 1 0
+  /total_cond_havg DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75,32) 100 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_cloudy.h5 (2:75) 1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75) 1e-3 0
 End
 
-PlotData: S70MYClearTemp 2
+
+
+PlotData: S70LYLoPwTemp 2
   # x data - sim time in days
-  /tempc_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75,29) 1 0
+  /tempc_lavg DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75,32) 1 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75) 1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75) 1e-3 0
 End
 
-PlotData: S70MYClearTheta 2
+PlotData: S70LYLoPwTheta 2
   # x data - sim time in days
-  /theta_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75,29) 1 -273.15
+  /theta_lavg DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75,32) 1 -273.15
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75) 1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75) 1e-3 0
 End
 
-PlotData: S70MYClearCloud 2
+PlotData: S70LYLoPwCloud 2
   # x data - sim time in days
-  /cloud_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75,29) 100 0
+  /cloud_lavg DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75,32) 100 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75)   1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75)   1e-3 0
 End
 
-PlotData: S70MYClearVapor 2
+PlotData: S70LYLoPwVapor 2
   # x data - sim time in days
-  /vapor_avg    DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75,29) 1 0
+  /vapor_lavg DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75,32) 1 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70MY_clear.h5 (2:75) 1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75) 1e-3 0
 End
 
-PlotData: S70LYCloudyTemp 2
+PlotData: S70LYLoPwTcond 2
   # x data - sim time in days
-  /tempc_avg    DIAGS/SampleProfiles_RCE_EXP_S70LY_cloudy.h5 (2:75,32) 1 0
+  /total_cond_lavg DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75,32) 100 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70LY_cloudy.h5 (2:75) 1e-3 0
+  /z_coords        DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75) 1e-3 0
 End
 
-PlotData: S70LYCloudyTheta 2
+PlotData: S70LYHiPwTemp 2
   # x data - sim time in days
-  /theta_avg    DIAGS/SampleProfiles_RCE_EXP_S70LY_cloudy.h5 (2:75,32) 1 -273.15
+  /tempc_havg DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75,32) 1 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70LY_cloudy.h5 (2:75) 1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75) 1e-3 0
 End
 
-PlotData: S70LYCloudyCloud 2
+PlotData: S70LYHiPwTheta 2
   # x data - sim time in days
-  /cloud_avg    DIAGS/SampleProfiles_RCE_EXP_S70LY_cloudy.h5 (2:75,32) 100 0
+  /theta_havg DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75,32) 1 -273.15
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70LY_cloudy.h5 (2:75)   1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75) 1e-3 0
 End
 
-PlotData: S70LYCloudyVapor 2
+PlotData: S70LYHiPwCloud 2
   # x data - sim time in days
-  /vapor_avg    DIAGS/SampleProfiles_RCE_EXP_S70LY_cloudy.h5 (2:75,32) 1 0
+  /cloud_havg DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75,32) 100 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70LY_cloudy.h5 (2:75) 1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75)   1e-3 0
 End
 
-PlotData: S70LYClearTemp 2
+PlotData: S70LYHiPwVapor 2
   # x data - sim time in days
-  /tempc_avg    DIAGS/SampleProfiles_RCE_EXP_S70LY_clear.h5 (2:75,32) 1 0
+  /vapor_havg DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75,32) 1 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70LY_clear.h5 (2:75) 1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75) 1e-3 0
 End
 
-PlotData: S70LYClearTheta 2
+PlotData: S70LYHiPwTcond 2
   # x data - sim time in days
-  /theta_avg    DIAGS/SampleProfiles_RCE_EXP_S70LY_clear.h5 (2:75,32) 1 -273.15
+  /total_cond_havg DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75,32) 100 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70LY_clear.h5 (2:75) 1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75) 1e-3 0
 End
 
-PlotData: S70LYClearCloud 2
+
+
+PlotData: S70MYLoPwTemp 2
   # x data - sim time in days
-  /cloud_avg    DIAGS/SampleProfiles_RCE_EXP_S70LY_clear.h5 (2:75,32) 100 0
+  /tempc_lavg DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75,29) 1 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70LY_clear.h5 (2:75)   1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75) 1e-3 0
 End
 
-PlotData: S70LYClearVapor 2
+PlotData: S70MYLoPwTheta 2
   # x data - sim time in days
-  /vapor_avg    DIAGS/SampleProfiles_RCE_EXP_S70LY_clear.h5 (2:75,32) 1 0
+  /theta_lavg DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75,29) 1 -273.15
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S70LY_clear.h5 (2:75) 1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75) 1e-3 0
 End
 
-PlotData: S50LNCloudyTemp 2
+PlotData: S70MYLoPwCloud 2
   # x data - sim time in days
-  /tempc_avg    DIAGS/SampleProfiles_RCE_EXP_S50LN_cloudy.h5 (2:75,32) 1 0
+  /cloud_lavg DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75,29) 100 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S50LN_cloudy.h5 (2:75) 1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75)   1e-3 0
 End
 
-PlotData: S50LNCloudyTheta 2
+PlotData: S70MYLoPwVapor 2
   # x data - sim time in days
-  /theta_avg    DIAGS/SampleProfiles_RCE_EXP_S50LN_cloudy.h5 (2:75,32) 1 -273.15
+  /vapor_lavg DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75,29) 1 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S50LN_cloudy.h5 (2:75) 1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75) 1e-3 0
 End
 
-PlotData: S50LNCloudyCloud 2
+PlotData: S70MYLoPwTcond 2
   # x data - sim time in days
-  /cloud_avg    DIAGS/SampleProfiles_RCE_EXP_S50LN_cloudy.h5 (2:75,32) 100 0
+  /total_cond_lavg DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75,29) 100 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S50LN_cloudy.h5 (2:75)   1e-3 0
+  /z_coords        DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75) 1e-3 0
 End
 
-PlotData: S50LNCloudyVapor 2
+PlotData: S70MYHiPwTemp 2
   # x data - sim time in days
-  /vapor_avg    DIAGS/SampleProfiles_RCE_EXP_S50LN_cloudy.h5 (2:75,32) 1 0
+  /tempc_havg DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75,29) 1 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S50LN_cloudy.h5 (2:75) 1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75) 1e-3 0
 End
 
-PlotData: S50LNClearTemp 2
+PlotData: S70MYHiPwTheta 2
   # x data - sim time in days
-  /tempc_avg    DIAGS/SampleProfiles_RCE_EXP_S50LN_clear.h5 (2:75,32) 1 0
+  /theta_havg DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75,29) 1 -273.15
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S50LN_clear.h5 (2:75) 1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75) 1e-3 0
 End
 
-PlotData: S50LNClearTheta 2
+PlotData: S70MYHiPwCloud 2
   # x data - sim time in days
-  /theta_avg    DIAGS/SampleProfiles_RCE_EXP_S50LN_clear.h5 (2:75,32) 1 -273.15
+  /cloud_havg DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75,29) 100 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S50LN_clear.h5 (2:75) 1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75)   1e-3 0
 End
 
-PlotData: S50LNClearCloud 2
+PlotData: S70MYHiPwVapor 2
   # x data - sim time in days
-  /cloud_avg    DIAGS/SampleProfiles_RCE_EXP_S50LN_clear.h5 (2:75,32) 100 0
+  /vapor_havg DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75,29) 1 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S50LN_clear.h5 (2:75)   1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75) 1e-3 0
 End
 
-PlotData: S50LNClearVapor 2
+PlotData: S70MYHiPwTcond 2
   # x data - sim time in days
-  /vapor_avg    DIAGS/SampleProfiles_RCE_EXP_S50LN_clear.h5 (2:75,32) 1 0
+  /total_cond_havg DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75,29) 100 0
   # y data - radiative flux divergence in W/m^2
-  /z_coords DIAGS/SampleProfiles_RCE_EXP_S50LN_clear.h5 (2:75) 1e-3 0
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75) 1e-3 0
 End
+
+
+
+PlotData: S50LNLoPwTemp 2
+  # x data - sim time in days
+  /tempc_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75,32) 1 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75) 1e-3 0
+End
+
+PlotData: S50LNLoPwTheta 2
+  # x data - sim time in days
+  /theta_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75,32) 1 -273.15
+  # y data - radiative flux divergence in W/m^2
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75) 1e-3 0
+End
+
+PlotData: S50LNLoPwCloud 2
+  # x data - sim time in days
+  /cloud_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75,32) 100 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75)   1e-3 0
+End
+
+PlotData: S50LNLoPwVapor 2
+  # x data - sim time in days
+  /vapor_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75,32) 1 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75) 1e-3 0
+End
+
+PlotData: S50LNLoPwTcond 2
+  # x data - sim time in days
+  /total_cond_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75,32) 100 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords        DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75) 1e-3 0
+End
+
+PlotData: S50LNHiPwTemp 2
+  # x data - sim time in days
+  /tempc_havg DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75,32) 1 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75) 1e-3 0
+End
+
+PlotData: S50LNHiPwTheta 2
+  # x data - sim time in days
+  /theta_havg DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75,32) 1 -273.15
+  # y data - radiative flux divergence in W/m^2
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75) 1e-3 0
+End
+
+PlotData: S50LNHiPwCloud 2
+  # x data - sim time in days
+  /cloud_havg DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75,32) 100 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75)   1e-3 0
+End
+
+PlotData: S50LNHiPwVapor 2
+  # x data - sim time in days
+  /vapor_havg DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75,32) 1 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75) 1e-3 0
+End
+
+PlotData: S50LNHiPwTcond 2
+  # x data - sim time in days
+  /total_cond_havg DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75,32) 100 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75) 1e-3 0
+End
+
+
+
+PlotData: S50LN_470LoPwTemp 2
+  # x data - sim time in days
+  /tempc_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75,29) 1 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75) 1e-3 0
+End
+
+PlotData: S50LN_470LoPwTheta 2
+  # x data - sim time in days
+  /theta_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75,29) 1 -273.15
+  # y data - radiative flux divergence in W/m^2
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75) 1e-3 0
+End
+
+PlotData: S50LN_470LoPwCloud 2
+  # x data - sim time in days
+  /cloud_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75,29) 100 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75)   1e-3 0
+End
+
+PlotData: S50LN_470LoPwVapor 2
+  # x data - sim time in days
+  /vapor_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75,29) 1 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75) 1e-3 0
+End
+
+PlotData: S50LN_470LoPwTcond 2
+  # x data - sim time in days
+  /total_cond_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75,29) 100 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords        DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75) 1e-3 0
+End
+
+PlotData: S50LN_470HiPwTemp 2
+  # x data - sim time in days
+  /tempc_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75,29) 1 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75) 1e-3 0
+End
+
+PlotData: S50LN_470HiPwTheta 2
+  # x data - sim time in days
+  /theta_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75,29) 1 -273.15
+  # y data - radiative flux divergence in W/m^2
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75) 1e-3 0
+End
+
+PlotData: S50LN_470HiPwCloud 2
+  # x data - sim time in days
+  /cloud_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75,29) 100 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75)   1e-3 0
+End
+
+PlotData: S50LN_470HiPwVapor 2
+  # x data - sim time in days
+  /vapor_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75,29) 1 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75) 1e-3 0
+End
+
+PlotData: S50LN_470HiPwTcond 2
+  # x data - sim time in days
+  /total_cond_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75,29) 100 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75) 1e-3 0
+End
+
+
 
 PlotData: AvgPwLine 2
   # x data - sim time in days
