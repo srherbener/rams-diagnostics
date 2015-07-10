@@ -197,7 +197,7 @@ End
 
 FigPanel: BaseLoPwPanel
   BaseLoPwPset
-  SampSoundingAxes 0 1
+  SampSoundingAxes 1 1
   none 5
   PANEL:a@BASE@LO@PW
   none 10
@@ -205,7 +205,7 @@ End
 
 FigPanel: S70LNLoPwPanel
   S70LNLoPwPset
-  SampSoundingAxes 0 0
+  SampSoundingAxes 1 1
   none 5
   PANEL:b@S70LN@LO@PW
   Best 10
@@ -229,7 +229,7 @@ End
 
 FigPanel: S50LNLoPwPanel
   S50LNLoPwPset
-  SampSoundingAxes 1 0
+  SampSoundingAxes 1 1
   none 5
   PANEL:d@S50LN@LO@PW
   none 10
@@ -237,7 +237,7 @@ End
 
 FigPanel: S50LN_470LoPwPanel
   S50LN_470LoPwPset
-  SampSoundingAxes 0 0
+  SampSoundingAxes 1 1
   none 5
   PANEL:b@S50LN\_470@LO@PW
   Best 10
@@ -245,7 +245,7 @@ End
 
 FigPanel: S50LN_CGLoPwPanel
   S50LN_CGLoPwPset
-  SampSoundingAxes 0 0
+  SampSoundingAxes 1 1
   none 5
   PANEL:c@S50LN\_CG@LO@PW
   none 10
@@ -253,7 +253,7 @@ End
 
 FigPanel: BaseHiPwPanel
   BaseHiPwPset
-  SampSoundingAxes 0 1
+  SampSoundingAxes 1 1
   none 5
   PANEL:a@Base@HI@PW
   none 10
@@ -261,7 +261,7 @@ End
 
 FigPanel: S70LNHiPwPanel
   S70LNHiPwPset
-  SampSoundingAxes 0 0
+  SampSoundingAxes 1 1
   none 5
   PANEL:b@S70LN@HI@PW
   Best 10
@@ -285,7 +285,7 @@ End
 
 FigPanel: S50LNHiPwPanel
   S50LNHiPwPset
-  SampSoundingAxes 1 0
+  SampSoundingAxes 1 1
   none 5
   PANEL:d@S50LN@HI@PW
   none 10
@@ -293,7 +293,7 @@ End
 
 FigPanel: S50LN_470HiPwPanel
   S50LN_470HiPwPset
-  SampSoundingAxes 0 0
+  SampSoundingAxes 1 1
   none 5
   PANEL:b@S50LN\_470@HI@PW
   Best 10
@@ -301,7 +301,7 @@ End
 
 FigPanel: S50LN_CGHiPwPanel
   S50LN_CGHiPwPset
-  SampSoundingAxes 0 0
+  SampSoundingAxes 1 1
   none 5
   PANEL:c@S50LN\_CG@HI@PW
   none 10
