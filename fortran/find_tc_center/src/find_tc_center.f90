@@ -28,7 +28,7 @@ program find_tc_center
   type (Rhdf5Var) :: Press, Topo, Xcoords, Ycoords, Zcoords, Tcoords
   type (Rhdf5Var) :: Radius, Phi, MinPress, MinPressX, MinPressY, MinPressXidx, MinPressYidx
   type (Rhdf5Var) :: PressCentX, PressCentY, PressCentXidx, PressCentYidx
-  real, dimension(:), allocatable :: XcoordsKm, YcoordsKm
+  real, dimension(:), allocatable :: XcoordsKm, YcoordsKm, StormX, StormY, SpeedX, SpeedY
   real :: DeltaX, DeltaY, MaxElev
   real :: MinLat, MinLon, MaxLat, MaxLon
   real :: PressRad
@@ -244,7 +244,10 @@ program find_tc_center
   ! of the input variables.
   !
 
-  do it = 1, Nt
+  allocate(StormX(Nt))  ! use these to record storm location in the following loop
+  allocate(StormY(Nt))  ! these will be used after the loop to caclulate storm motion (speed)
+!  do it = 1, Nt
+  do it = 1,3   ! DEBUG
     ! read the input vars
     call rhdf5_read_variable(PfileId, Press%vname, Press%ndims, it, Press%dims, rdata=Press%vdata)
     call rhdf5_read_variable(TfileId, Topo%vname,  Topo%ndims,  it, Topo%dims,  rdata=Topo%vdata)
@@ -274,6 +277,10 @@ program find_tc_center
     PressCentY%vdata(1) = Ycoords%vdata(PressCentIy)
     PressCentXidx%vdata(1) = float(PressCentIx)
     PressCentYidx%vdata(1) = float(PressCentIy)
+
+    ! Record storm location in km
+    StormX(it) = XcoordsKm(PressCentIx)
+    StormY(it) = YcoordsKm(PressCentIy)
 
     ! Calculate the radius of all horizontal points from the pressure centroid
     call CalcPolarCoords(Nx, Ny, Radius%vdata, Phi%vdata, XcoordsKm, YcoordsKm, PressCentIx, PressCentIy)
@@ -329,6 +336,16 @@ program find_tc_center
   ! from 'it' when reporting how many times steps were processed
   write (*,*) 'Finished: Total number of time steps processed: ', it-1
   write (*,*) ''
+
+  ! Now have the time series of the location of the storm center
+  ! Use these locations to caclulate the storm motion (speed). Keep
+  ! the x and y components separated so that downstream processes
+  ! can have access to these components.
+  !
+  ! Calculate storm motion from pressure centroid locations.
+  allocate(SpeedX(Nt))
+  allocate(SpeedY(Nt))
+  call CalcStormSpeed(Nt, StormX, StormY, Tcoords%vdata(1), SpeedX, SpeedY)
 
   ! write out the coordinate data
   call rhdf5_write(OutFile, Xcoords, 1)
@@ -707,5 +724,25 @@ subroutine SetSelectGrid(Nx, Ny, Topo, Lon, Lat, MaxElev, MinLat, MaxLat, MinLon
   return
 end subroutine SetSelectGrid
 
-end program find_tc_center
+!**********************************************************************
+! CalcStormSpeed
+!
+! This routine will calculate storm speed (keeping the x and y components
+! separated) from the storm location and time vectors.
+!
+subroutine CalcStormSpeed(Nt, StormX, StormY, Tcoords, SpeedX, SpeedY)
+  implicit none
 
+  integer :: Nt
+  real, dimension(Nt) :: StormX, StormY, Tcoords, SpeedX, SpeedY
+
+  integer :: it
+
+  do it = 1, Nt
+print'(i7,100f10.2)' 'DEBUG: it, Tcoords, StormX, StormY: ', it, Tcoords(it), StormX(it), StormY(it)
+  enddo
+
+  return
+end subroutine CalcStormSpeed
+
+end program find_tc_center

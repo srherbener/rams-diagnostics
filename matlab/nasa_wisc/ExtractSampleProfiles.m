@@ -66,6 +66,14 @@ function [ ] = ExtractSampleProfiles()
         'RCE_EXP_S50LN_THIN'
       }
 
+      {
+        { 'HDF5/RCE_EXP_S50LN_SM/HDF5/tempc-RCE_EXP_S50LN_SM-AC-2012-01-01-000000-g1.h5' '/tempc' }
+        { 'HDF5/RCE_EXP_S50LN_SM/HDF5/theta-RCE_EXP_S50LN_SM-AC-2012-01-01-000000-g1.h5' '/theta' }
+        { 'HDF5/RCE_EXP_S50LN_SM/HDF5/total_cond-RCE_EXP_S50LN_SM-AC-2012-01-01-000000-g1.h5' '/total_cond' }
+        { 'HDF5/RCE_EXP_S50LN_SM/HDF5/vint_vapor-RCE_EXP_S50LN_SM-AC-2012-01-01-000000-g1.h5' '/vertint_vapor' }
+        'RCE_EXP_S50LN_SM'
+      }
+
 %      {
 %        { 'HDF5/RCE_EXP_S70MY/HDF5/tempc-RCE_EXP_S70MY-AC-2012-01-01-000000-g1.h5' '/tempc' }
 %        { 'HDF5/RCE_EXP_S70MY/HDF5/theta-RCE_EXP_S70MY-AC-2012-01-01-000000-g1.h5' '/theta' }
@@ -181,7 +189,7 @@ function [ ] = ExtractSampleProfiles()
       end
 
       if (mod(it,10) == 0)
-        fprintf('    Working: time step = %d\n', it);
+        fprintf('    Completed timestep %d out of %d\n', it, Nt);
       end
     end
     fprintf('\n');

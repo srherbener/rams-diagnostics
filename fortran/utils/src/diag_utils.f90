@@ -191,7 +191,8 @@ end subroutine
 ! ConvertGridCoords()
 !
 ! This routine will convert the longitude, latitude angle values
-! in the input var to a flat plane (x and y length values)
+! in the input var to corresponding length values (km from the
+! equator and prime meridian).
 !
 subroutine ConvertGridCoords(Nx, Ny, Lon, Lat, Xcoords, Ycoords)
   implicit none
@@ -205,63 +206,46 @@ subroutine ConvertGridCoords(Nx, Ny, Lon, Lat, Xcoords, Ycoords)
   real, dimension(Nx) :: Xcoords
   real, dimension(Ny) :: Ycoords
 
-  integer :: ix, iy
-  real :: ConvDeg2Rad;
-  real :: DeltaX, DeltaY
-  real :: DeltaT, DeltaP  ! Theta is longitude angle, Phi is latitude angle, radians
-  real :: RadiusX
-  real :: PhiN, Phi1, Phi2, Theta1, Theta2
+  integer :: i
+  real :: ConvDeg2Rad
+  real :: AvgLat
+  real :: RadiusAvgLat
 
-  ! The Xcoords in the Gvar structure are longitude angles in degrees
-  ! The Ycoords in the Gvar structure are latitude angles in degrees
+  ! X corresponds to longitude
+  ! Y corresponds to latitude
   !
-  ! To convert, figure out what DeltaX and DeltaY are according to the longitude, latitude
-  ! angles. Call the lower left point of the grid (0,0) and just add in the delta values to
-  ! get the remaining coordinate values. Put the x,y values in km.
+  ! dX = [R * Cos(Lat)] * dLon
+  ! dY = R * dLat
+  !    Lon and Lat in radians
   !
-  ! Technically, the DeltaX values change for each unique latitude angle since DeltaX depends
-  ! on the arm perpendicular to the axis of rotation of the Earth (not the center of Earth).
-  ! However, since the storms are near the equator this arm doesn't change much in length.
-  ! Approximate the spherical surface with a rectangle using the delta x that is an average
-  ! of the deltax you find at the southernmost latidute and northernmost latitude. This will
-  ! greatly simplify the code by allowing the use of just one list of x coordinates for the 
-  ! entire grid.
+  ! [R * Cos(Lat)] is the length from the Earth's axis to the latitude line
+  ! being used to cacluate the longitude values. Assume that LON and LAT
+  ! axes go through the middle of the horizontal domain. Also assume that
+  ! delta-x and delta-y are uniform and equal. These assumptions are
+  ! consistent with RAMS configuration. Therefore take the average of
+  ! the first and last LAT entry for the latitude value used in
+  ! the X calculation.
   !
-  !   DeltaX = (RadiusEarth * cos(Phi)) * DeltaTheta
-  !   DeltaY = RadiusEarth * DeltaPhi
-  !   angle values are in radians
-
-  ! write a warning if the grid is located far away from the equator
-  if ((abs(Lat(Ny)) .gt. 23.0) .or. (abs(Lat(1)) .gt. 23.0)) then
-    write (*,*) 'Warning: extent of grid goes outside tropics, this code assumes grid is near equator'
-    write (*,*) ''
-  end if
+  ! Define that delta lengths and angles are from the origin
+  ! (intersection of equator and prime meridian) so that dX, dY
+  ! dLon and dLat become equal to X, Y, Lon and Lat.
 
   ! convert to radians
   ConvDeg2Rad = (2.0 * PI) / 360.0
-  Theta1 = Lon(1) * ConvDeg2Rad
-  Theta2 = Lon(2) * ConvDeg2Rad
 
-  Phi1 = Lat(1) * ConvDeg2Rad
-  Phi2 = Lat(2) * ConvDeg2Rad
-  PhiN = Lat(Ny) * ConvDeg2Rad
+  ! average latitude for X calculation and radius corresponding to that latitude
+  AvgLat = 0.5 * (Lat(1) + Lat(Ny))
+  RadiusAvgLat = RadiusEarth * cos(AvgLat * ConvDeg2Rad)
 
-  DeltaT = Theta2 - Theta1
-  DeltaP = Phi2 - Phi1
+  ! convert longitude to X
+  do i = 1, Nx
+    Xcoords(i) = RadiusAvgLat * Lon(i) * ConvDeg2Rad
+  enddo
 
-  ! average of the arms at south lat and north lat
-  RadiusX = (RadiusEarth * 0.5) * (cos(Phi1) + cos(PhiN))
-  DeltaX = RadiusX * DeltaT
-  DeltaY = RadiusEarth * DeltaP
-
-  ! DeltaX and DeltaY are in units of RadiusEarth (km for now)
-  do ix = 1, Nx
-    Xcoords(ix) = real(ix - 1) * DeltaX
-  end do
-
-  do iy = 1, Ny
-    Ycoords(iy) = real(iy - 1) * DeltaY
-  end do
+  ! convert latitude to Y
+  do i = 1, Ny
+    Ycoords(i) = RadiusEarth * Lat(i) * ConvDeg2Rad
+  enddo
 
   return
 end subroutine
