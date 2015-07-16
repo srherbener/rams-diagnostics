@@ -28,7 +28,8 @@ program find_tc_center
   type (Rhdf5Var) :: Press, Topo, Xcoords, Ycoords, Zcoords, Tcoords
   type (Rhdf5Var) :: Radius, Phi, MinPress, MinPressX, MinPressY, MinPressXidx, MinPressYidx
   type (Rhdf5Var) :: PressCentX, PressCentY, PressCentXidx, PressCentYidx
-  real, dimension(:), allocatable :: XcoordsKm, YcoordsKm, StormX, StormY, SpeedX, SpeedY
+  type (Rhdf5Var) :: SpeedX, SpeedY
+  real, dimension(:), allocatable :: XcoordsKm, YcoordsKm, StormX, StormY
   real :: DeltaX, DeltaY, MaxElev
   real :: MinLat, MinLon, MaxLat, MaxLon
   real :: PressRad
@@ -246,8 +247,7 @@ program find_tc_center
 
   allocate(StormX(Nt))  ! use these to record storm location in the following loop
   allocate(StormY(Nt))  ! these will be used after the loop to caclulate storm motion (speed)
-!  do it = 1, Nt
-  do it = 1,3   ! DEBUG
+  do it = 1, Nt
     ! read the input vars
     call rhdf5_read_variable(PfileId, Press%vname, Press%ndims, it, Press%dims, rdata=Press%vdata)
     call rhdf5_read_variable(TfileId, Topo%vname,  Topo%ndims,  it, Topo%dims,  rdata=Topo%vdata)
@@ -343,9 +343,26 @@ program find_tc_center
   ! can have access to these components.
   !
   ! Calculate storm motion from pressure centroid locations.
-  allocate(SpeedX(Nt))
-  allocate(SpeedY(Nt))
-  call CalcStormSpeed(Nt, StormX, StormY, Tcoords%vdata(1), SpeedX, SpeedY)
+  SpeedX%vname       = 'storm_speed_x'
+  SpeedX%ndims       = 1
+  SpeedX%dims(1)     = Nt
+  SpeedX%dimnames(1) = 't'
+  SpeedX%units       = 'm/s'
+  SpeedX%descrip     = 'x component of storm speed'
+  allocate(SpeedX%vdata(Nt))
+
+  SpeedY%vname       = 'storm_speed_y'
+  SpeedY%ndims       = 1
+  SpeedY%dims(1)     = Nt
+  SpeedY%dimnames(1) = 't'
+  SpeedY%units       = 'm/s'
+  SpeedY%descrip     = 'y component of storm speed'
+  allocate(SpeedY%vdata(Nt))
+
+  call CalcStormSpeed(Nt, StormX, StormY, Tcoords%vdata(1), SpeedX%vdata(1), SpeedY%vdata(1))
+
+  call rhdf5_write(OutFile, SpeedX, 1)
+  call rhdf5_write(OutFile, SpeedY, 1)
 
   ! write out the coordinate data
   call rhdf5_write(OutFile, Xcoords, 1)
@@ -373,6 +390,9 @@ program find_tc_center
   call rhdf5_attach_dimensions(OutFile, PressCentY)
   call rhdf5_attach_dimensions(OutFile, PressCentXidx)
   call rhdf5_attach_dimensions(OutFile, PressCentYidx)
+
+  call rhdf5_attach_dimensions(OutFile, SpeedX)
+  call rhdf5_attach_dimensions(OutFile, SpeedY)
 
   ! cleanup
   call rhdf5_close_file(OfileId)
@@ -737,9 +757,33 @@ subroutine CalcStormSpeed(Nt, StormX, StormY, Tcoords, SpeedX, SpeedY)
   real, dimension(Nt) :: StormX, StormY, Tcoords, SpeedX, SpeedY
 
   integer :: it
+  real, dimension(Nt-1) :: IntSpeedX, IntSpeedY
+  real :: dt, dx, dy
 
-  do it = 1, Nt
-print'(i7,100f10.2)' 'DEBUG: it, Tcoords, StormX, StormY: ', it, Tcoords(it), StormX(it), StormY(it)
+  ! Form intermediate (between time points) speeds.
+  do it = 1, Nt-1
+    dt = Tcoords(it+1) - Tcoords(it)           ! seconds
+    dx = (StormX(it+1) - StormX(it)) * 1000.0  ! meters
+    dy = (StormY(it+1) - StormY(it)) * 1000.0  ! meters
+    
+    IntSpeedX(it) = dx / dt;  ! m/s
+    IntSpeedY(it) = dy / dt;  ! m/s
+  enddo
+
+  ! Average the intermediate speeds back onto the time points.
+  !
+  ! Assign the adjacent intermediate speeds at the end points
+  ! to the correspoinding end point since there are no "external"
+  ! points to use in the average.
+  SpeedX(1)  = IntSpeedX(1)
+  SpeedX(Nt) = IntSpeedX(Nt-1)
+
+  SpeedY(1)  = IntSpeedY(1)
+  SpeedY(Nt) = IntSpeedY(Nt-1)
+
+  do it = 2, Nt-1
+    SpeedX(it) = 0.5 * (IntSpeedX(it) + IntSpeedX(it-1))
+    SpeedY(it) = 0.5 * (IntSpeedY(it) + IntSpeedY(it-1))
   enddo
 
   return
