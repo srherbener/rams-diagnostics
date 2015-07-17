@@ -173,6 +173,10 @@ foreach $Case (sort(keys(%Cases)))
     elsif ($VarSpecs =~ /^hist:/)
       {
       ($Temp1, $VarPrefix, $Temp2) = split(':', $VarSpecs);
+      if (($VarPrefix eq "speed_t") || ($VarPrefix eq "speed_r"))
+        {
+        $VarPrefix = "u";
+        }
       }
     else
       {
