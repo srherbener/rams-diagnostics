@@ -1586,23 +1586,23 @@ End
 PlotAxes: EqMeasAxesS70 2
   18 2 [0.025_0.025]
   # x axis - sim time in days
-  Simulation@Time d 0 80 linear [_] {_}
+  Simulation@Time d 0 120 linear [_] {_}
   # y axis - flux in W/m^2
-  Flux W@m^-^2 0 125 linear [_] {_}
+  Flux W@m^-^2 0 150 linear [_] {_}
 End
 
 PlotAxes: ThfCompAxesS70 2
   18 2 [0.025_0.025]
   # x axis - sim time in days
-  Simulation@Time d 0 80 linear [_] {_}
+  Simulation@Time d 0 120 linear [_] {_}
   # y axis - flux in W/m^2
-  Flux W@m^-^2 -5 100 linear [_] {_}
+  Flux W@m^-^2 -5 150 linear [_] {_}
 End
 
 PlotAxes: QradCompAxesS70 2
   18 2 [0.025_0.025]
   # x axis - sim time in days
-  Simulation@Time d 0 80 linear [_] {_}
+  Simulation@Time d 0 120 linear [_] {_}
   # y axis - flux in W/m^2
   Flux W@m^-^2 0 500 linear [_] {_}
 End
@@ -1610,7 +1610,7 @@ End
 PlotAxes: EqMeasAxesS50 2
   18 2 [0.025_0.025]
   # x axis - sim time in days
-  Simulation@Time d 0 80 linear [_] {_}
+  Simulation@Time d 0 120 linear [_] {_}
   # y axis - flux in W/m^2
   Flux W@m^-^2 -100 100 linear [_] {_}
 End
@@ -1618,7 +1618,7 @@ End
 PlotAxes: ThfCompAxesS50 2
   18 2 [0.025_0.025]
   # x axis - sim time in days
-  Simulation@Time d 0 80 linear [_] {_}
+  Simulation@Time d 0 120 linear [_] {_}
   # y axis - flux in W/m^2
   Flux W@m^-^2 -5 100 linear [_] {_}
 End
@@ -1626,7 +1626,7 @@ End
 PlotAxes: QradCompAxesS50 2
   18 2 [0.025_0.025]
   # x axis - sim time in days
-  Simulation@Time d 0 80 linear [_] {_}
+  Simulation@Time d 0 120 linear [_] {_}
   # y axis - flux in W/m^2
   Flux W@m^-^2 0 1000 linear [_] {_}
 End
@@ -1642,7 +1642,7 @@ End
 PlotAxes: AvgPwAxes 2
   18 2 [0.025_0.025]
   # x axis - time
-  Sim@Time d 0 80 linear [_] {_}
+  Sim@Time d 0 100 linear [_] {_}
   # y axis - precipitable water
   PW mm 0 80 linear [_] {_}
 End
@@ -1652,7 +1652,7 @@ PlotAxes: HovPwAxes 3
   # x axis - zonal distance
   Zonal@Distance km 0 3000 linear [0_1500_3000] {_}
   # y axis - time
-  Sim@Time d 0 80 linear [_] {_}
+  Sim@Time d 0 100 linear [_] {_}
   # z axis - precipitable water
   PW mm 0 70 linear [_] {_}
 End
@@ -1662,7 +1662,7 @@ PlotAxes: HovWidePwAxes 3
   # x axis - zonal distance
   Zonal@Distance km 0 10000 linear [1000_3000_5000_7000_9000] {_}
   # y axis - time
-  Sim@Time d 0 80 linear [_] {_}
+  Sim@Time d 0 100 linear [_] {_}
   # z axis - precipitable water
   PW mm 0 70 linear [_] {_}
 End
