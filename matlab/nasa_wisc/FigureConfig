@@ -1586,7 +1586,7 @@ End
 PlotAxes: EqMeasAxesS70 2
   18 2 [0.025_0.025]
   # x axis - sim time in days
-  Simulation@Time d 0 120 linear [_] {_}
+  Simulation@Time d 0 150 linear [_] {_}
   # y axis - flux in W/m^2
   Flux W@m^-^2 0 150 linear [_] {_}
 End
@@ -1594,7 +1594,7 @@ End
 PlotAxes: ThfCompAxesS70 2
   18 2 [0.025_0.025]
   # x axis - sim time in days
-  Simulation@Time d 0 120 linear [_] {_}
+  Simulation@Time d 0 150 linear [_] {_}
   # y axis - flux in W/m^2
   Flux W@m^-^2 -5 150 linear [_] {_}
 End
@@ -1602,7 +1602,7 @@ End
 PlotAxes: QradCompAxesS70 2
   18 2 [0.025_0.025]
   # x axis - sim time in days
-  Simulation@Time d 0 120 linear [_] {_}
+  Simulation@Time d 0 150 linear [_] {_}
   # y axis - flux in W/m^2
   Flux W@m^-^2 0 500 linear [_] {_}
 End
@@ -1610,7 +1610,7 @@ End
 PlotAxes: EqMeasAxesS50 2
   18 2 [0.025_0.025]
   # x axis - sim time in days
-  Simulation@Time d 0 120 linear [_] {_}
+  Simulation@Time d 0 150 linear [_] {_}
   # y axis - flux in W/m^2
   Flux W@m^-^2 -100 100 linear [_] {_}
 End
@@ -1618,7 +1618,7 @@ End
 PlotAxes: ThfCompAxesS50 2
   18 2 [0.025_0.025]
   # x axis - sim time in days
-  Simulation@Time d 0 120 linear [_] {_}
+  Simulation@Time d 0 150 linear [_] {_}
   # y axis - flux in W/m^2
   Flux W@m^-^2 -5 100 linear [_] {_}
 End
@@ -1626,7 +1626,7 @@ End
 PlotAxes: QradCompAxesS50 2
   18 2 [0.025_0.025]
   # x axis - sim time in days
-  Simulation@Time d 0 120 linear [_] {_}
+  Simulation@Time d 0 150 linear [_] {_}
   # y axis - flux in W/m^2
   Flux W@m^-^2 0 1000 linear [_] {_}
 End
