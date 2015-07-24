@@ -7,6 +7,9 @@
 %
 function [] = AttachDimensionsXyzt(File, Dataset, Xname, Yname, Zname, Tname);
 
+  DsInfo = h5info(File, Dataset);
+  Ndims = length(DsInfo.Dataspace.Size);
+
   file_id = H5F.open(File, 'H5F_ACC_RDWR', 'H5P_DEFAULT');
   dset_id = H5D.open(file_id, Dataset, 'H5P_DEFAULT'); 
 
@@ -19,10 +22,16 @@ function [] = AttachDimensionsXyzt(File, Dataset, Xname, Yname, Zname, Tname);
   % way. MATLAB is column-major, whereas C is used to write the HDF5
   % file making the file storage row-major.
   %
-  H5DS.attach_scale(dset_id, x_id, 3);
-  H5DS.attach_scale(dset_id, y_id, 2);
-  H5DS.attach_scale(dset_id, z_id, 1);
-  H5DS.attach_scale(dset_id, t_id, 0);
+  if (Ndims == 3)
+    H5DS.attach_scale(dset_id, x_id, 2);
+    H5DS.attach_scale(dset_id, y_id, 1);
+    H5DS.attach_scale(dset_id, t_id, 0);
+  elseif (Ndims == 4)
+    H5DS.attach_scale(dset_id, x_id, 3);
+    H5DS.attach_scale(dset_id, y_id, 2);
+    H5DS.attach_scale(dset_id, z_id, 1);
+    H5DS.attach_scale(dset_id, t_id, 0);
+  end
 
   H5D.close(x_id);
   H5D.close(y_id);
