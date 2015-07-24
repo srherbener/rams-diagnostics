@@ -40,6 +40,7 @@ program azavg
     logical :: DoHist
     logical :: DoHorizVel
     logical :: DoTangential
+    logical :: SubtractSmotion
     integer :: NumRbands
     real :: MaxRadius
     type (FileSpec) :: Output
@@ -62,7 +63,7 @@ program azavg
   ! data files: the first index is the file number, the second index is the
   ! var number
 
-  type (Rhdf5Var) :: U, V, Avar, Aavg, Rcoords, Zcoords, Tcoords, Bcoords, Xcoords, Ycoords
+  type (Rhdf5Var) :: U, V, Ustorm, Vstorm, Avar, Aavg, Rcoords, Zcoords, Tcoords, Bcoords, Xcoords, Ycoords
   type (Rhdf5Var) :: Filter, Radius, StormXindex, StormYindex
   character (len=RHDF5_MAX_STRING) :: rh5f_facc
   integer :: rh5f_filter, rh5f_center, rh5f_u, rh5f_v, rh5f_avar, rh5f_aavg
@@ -84,6 +85,7 @@ program azavg
   write (*,'("Calculating azimuthal average for RAMS data:")')
   write (*,'("  Number of radial bands: ",i4)') Args%NumRbands
   write (*,'("  Maximum radius: ",f10.2)') Args%MaxRadius
+  write (*,'("  Subtracting storm motion from input winds: ",l)') Args%SubtractSmotion
   write (*,'("  Input file specs:")')
   if (Args%DoHorizVel) then
     write (*,'("    U: ",a," (",a,")")') trim(Args%U%fname), trim(Args%U%vname)
@@ -97,7 +99,7 @@ program azavg
 
   if (Args%DoHist) then
     write (*,'("  Creating histogram counts:")')
-    write (*,'("    Bins: ",a)') trim(Args%Bins%fname)
+    write (*,'("    Bins file: ",a)') trim(Args%Bins%fname)
   endif
 
   write (*,*) ''
@@ -163,6 +165,15 @@ program azavg
     Zcoords%vname = 'z_coords'
     call rhdf5_read_init(Args%Avar%fname, Zcoords)
     call rhdf5_read(Args%Avar%fname, Zcoords)
+  endif
+
+  ! If subtracting storm motion, initialize the storm u and v vars
+  if (Args%SubtractSmotion) then
+    Ustorm%vname = 'storm_speed_x'
+    call rhdf5_read_init(Args%StormCenter%fname, Ustorm)
+
+    Vstorm%vname = 'storm_speed_y'
+    call rhdf5_read_init(Args%StormCenter%fname, Vstorm)
   endif
 
   ! check that the variable dimensions (size and coordinate values) match up, if this
@@ -327,6 +338,14 @@ program azavg
   Aavg%descrip = 'azimuthally averaged ' // trim(Args%Output%vname) 
   allocate(Aavg%vdata(Aavg%dims(1)*Aavg%dims(2)*Aavg%dims(3)))
 
+  ! If subtracting out storm motion, read in the storm u and v
+  ! Read in entire dataset (time step number == 0, Argument 4 to rhdf5_read_variable). Because
+  ! we are doing this outside the time step loop, don't alter the number of dimensions on [UV]storm.
+  if (Args%SubtractSmotion) then
+    call rhdf5_read_variable(rh5f_center, Ustorm%vname, Ustorm%ndims, 0, Ustorm%dims, rdata=Ustorm%vdata)
+    call rhdf5_read_variable(rh5f_center, Vstorm%vname, Vstorm%ndims, 0, Vstorm%dims, rdata=Vstorm%vdata)
+  endif
+
   ! Do the averaging - one time step at a time
   do it = 1, Nt
     ! find storm center in km
@@ -343,6 +362,12 @@ program azavg
       call rhdf5_read_variable(rh5f_u, U%vname, U%ndims, it, U%dims, rdata=U%vdata)
       call rhdf5_read_variable(rh5f_v, V%vname, V%ndims, it, V%dims, rdata=V%vdata)
 
+      ! If subtracting storm motion, adjust u and v
+      if (Args%SubtractSmotion) then
+        call TranslateField(Nx, Ny, Nz, U%vdata, Ustorm%vdata(it))
+        call TranslateField(Nx, Ny, Nz, V%vdata, Vstorm%vdata(it))
+      endif
+
       ! convert u,v to tangential or radial
       allocate(Avar%vdata(AvarNelems))
       call ConvertHorizVelocity(Nx, Ny, Nz, U%vdata, V%vdata, StormX, StormY, &
@@ -353,6 +378,15 @@ program azavg
       deallocate(V%vdata)
     else
       call rhdf5_read_variable(rh5f_avar, Avar%vname, Avar%ndims, it, Avar%dims, rdata=Avar%vdata)
+
+      ! If subtracting storm motion, adjust u and v
+      if (Args%SubtractSmotion) then
+        if (trim(Avar%vname) .eq. 'u') then
+          call TranslateField(Nx, Ny, Nz, Avar%vdata, Ustorm%vdata(it))
+        elseif (trim(Avar%vname) .eq. 'v') then
+          call TranslateField(Nx, Ny, Nz, Avar%vdata, Vstorm%vdata(it))
+        endif
+      endif
     endif
 
     ! do the averaging and write out the results to the output file
@@ -373,11 +407,13 @@ program azavg
       write (*,*) 'Working: Timestep, Time: ', it, Tcoords%vdata(it)
 
       write (*,'(a,4f15.4)') '   Storm center: lon, lat, x, y: ', Xcoords%vdata(i_storm), Ycoords%vdata(j_storm), StormX, StormY
+      if (Args%SubtractSmotion) then
+        write (*,'(a,4f15.4)') '   Storm motion: u, v: ', Ustorm%vdata(it), Vstorm%vdata(it)
+      endif
       write (*,*) ''
       flush(6)
     endif
   enddo
-
 
   ! 'it' will be one beyond its loop limit (Nt) so subtract one
   ! from 'it' when reporting how many times steps were processed
@@ -454,6 +490,7 @@ subroutine GetMyArgs(Args)
   Args%DoTangential = .false.
   Args%NumRbands = 50
   Args%MaxRadius = 500.0
+  Args%SubtractSmotion = .false.
 
   ! initialization
   Args%Output%fname = 'none'
@@ -486,7 +523,7 @@ subroutine GetMyArgs(Args)
   !    '.' command line argument (no option)
   BadArgs = .false.
   do
-    optval = getopt('b:hr:t:')
+    optval = getopt('b:hmr:t:')
 
     select case (optval)
       case ('>')  ! finished
@@ -502,6 +539,9 @@ subroutine GetMyArgs(Args)
 
       case ('h')
         Args%DoHist = .true.
+
+      case ('m')
+        Args%SubtractSmotion = .true.
 
       case ('r')
         read(optarg, '(f)') Args%MaxRadius
@@ -598,11 +638,12 @@ subroutine GetMyArgs(Args)
   endif
 
   if (BadArgs) then
-    write (*,*) 'USAGE: azavg [-b <num_radial_bands>] [-r <max_radius>] [-h] [-t <input_type>] <list_of_files>'
+    write (*,*) 'USAGE: azavg [-b <num_radial_bands>] [-r <max_radius>] [-h] [-m] [-t <input_type>] <list_of_files>'
     write (*,*) ''
     write (*,*) '   -b: split radial distance into <num_radial_bands> bands'
     write (*,*) '   -r: select data within <max_radius> for averaging (determines size of radial bands)'
     write (*,*) '   -h: create histogram instead of average (requires a bins file)'
+    write (*,*) '   -m: subtract storm motion from input winds'
     write (*,*) '   -t: for input data processing, valid values of <input_type>:'
     write (*,*) '     "h_tan": do tangential speed of horizontal winds'
     write (*,*) '     "h_rad": do radial speed of horizontal winds'

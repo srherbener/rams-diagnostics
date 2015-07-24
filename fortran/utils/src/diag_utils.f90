@@ -532,6 +532,35 @@ subroutine CreateFilter(Nfiles, FilterFiles, Filter)
 end subroutine CreateFilter
 
 !******************************************************************
+! TranslateField()
+!
+! This subroutine will subtract the given scalar from 
+! all points in the given field.
+!
+! Handles either 2D (Nz = 1) or 3D fields.
+!
+subroutine TranslateField(Nx, Ny, Nz, Field, Scalar)
+  implicit none
+
+  integer :: Nx, Ny, Nz
+  real, dimension(Nx,Ny,Nz) :: Field
+  real :: Scalar
+
+  integer :: i, j, k
+
+  do k = 1, Nz
+    do j = 1, Nz
+      do i = 1, Nx
+        Field(i,j,k) = Field(i,j,k) - Scalar
+      enddo
+    enddo
+  enddo
+
+  return
+end subroutine TranslateField
+
+
+!******************************************************************
 ! ConvertStormCenter()
 !
 ! This subroutine will take the Lat/Lon values for the storm center
