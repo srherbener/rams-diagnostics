@@ -37,13 +37,13 @@ program tsavg
   type (Rhdf5Var) :: AzSlp
   type (Rhdf5var) :: PrecipRate, Lwp, Ltss, Theta
   type (Rhdf5var) :: Xvar, Yvar
-  character (len=MediumString) :: Ufile, Vfile, AzWindFile, Speed10mFile, DensFile, VarFile, InCoordFile
-  character (len=MediumString) :: AzSlpFile
-  character (len=MediumString) :: PrecipRateFile, LwpFile, LtssFile, ThetaFile
-  character (len=MediumString) :: XvarFile, YvarFile
+  character (len=RHDF5_MAX_STRING) :: Ufile, Vfile, AzWindFile, Speed10mFile, DensFile, VarFile, InCoordFile
+  character (len=RHDF5_MAX_STRING) :: AzSlpFile
+  character (len=RHDF5_MAX_STRING) :: PrecipRateFile, LwpFile, LtssFile, ThetaFile
+  character (len=RHDF5_MAX_STRING) :: XvarFile, YvarFile
   character (len=LittleString) :: VarFprefix
   character (len=LittleString) :: VelInType
-  character (len=LittleString) :: rh5f_facc
+  character (len=RHDF5_MAX_STRING) :: rh5f_facc
   real :: PrecipRateLimit, Zbot, Ztop
   integer :: Kbot, Ktop
   real :: HkeZthick

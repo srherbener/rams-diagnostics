@@ -43,7 +43,7 @@ program hdata_op
   ! Dims: x, y, z, t
   type (Rhdf5Var) :: Xcoords, Ycoords, Zcoords, Tcoords
   type (Rhdf5Var) :: Var1, Var2, OutVar
-  character (len=LittleString) :: rh5f_facc
+  character (len=RHDF5_MAX_STRING) :: rh5f_facc
   integer :: rh5f_in1, rh5f_in2, rh5f_out
 
   integer :: i, ix, iy, iz, it, id

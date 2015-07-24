@@ -45,8 +45,8 @@ program gen_flux
   type (Rhdf5Var) :: MixRatio, Velocity, Density
   type (Rhdf5Var) :: Xcoords, Ycoords, Zcoords, Tcoords
   type (Rhdf5Var) :: Flux
-  character (len=MediumString) :: MRfile, Vfile, Dfile
-  character (len=LittleString) :: rh5f_facc
+  character (len=RHDF5_MAX_STRING) :: MRfile, Vfile, Dfile
+  character (len=RHDF5_MAX_STRING) :: rh5f_facc
   integer :: rh5f_d, rh5f_v, rh5f_mr, rh5f_flux
 
   integer :: Nx, Ny, Nz, Nt

@@ -31,18 +31,27 @@ program azavg
   real, parameter :: UndefVal=-999.0
   integer, parameter :: MaxArgFields = 20
 
-  integer NumRbands
-  character (len=MediumString) :: InDir
-  character (len=MediumString) :: InSuffix
-  character (len=MediumString) :: OutFile
-  character (len=MediumString) :: FilterFile
-  character (len=MediumString) :: StormCenterFile
-  character (len=LittleString) :: VarToAvg, RevuVar
-  logical :: DoHorizVel, DoTangential
-  character (len=MediumString), dimension(MaxArgFields) :: ArgList
-  integer :: Nfields
-  logical :: DoHist
-  character (len=LargeString) :: BinsFile
+  type FileSpec
+     character (len=RHDF5_MAX_STRING) :: fname
+     character (len=RHDF5_MAX_STRING) :: vname
+  endtype
+
+  type ArgList
+    logical :: DoHist
+    logical :: DoHorizVel
+    logical :: DoTangential
+    integer :: NumRbands
+    real :: MaxRadius
+    type (FileSpec) :: Output
+    type (FileSpec) :: Filter
+    type (FileSpec) :: StormCenter
+    type (FileSpec) :: Bins
+    type (FileSpec) :: U
+    type (FileSpec) :: V
+    type (FileSpec) :: Avar
+  endtype
+
+  type (ArgList) :: Args
   integer :: NumBins
   real, dimension(:), allocatable :: HistBins
 
@@ -55,12 +64,11 @@ program azavg
 
   type (Rhdf5Var) :: U, V, Avar, Aavg, Rcoords, Zcoords, Tcoords, Bcoords, Xcoords, Ycoords
   type (Rhdf5Var) :: Filter, Radius, StormXindex, StormYindex
-  character (len=LittleString) :: rh5f_facc
+  character (len=RHDF5_MAX_STRING) :: rh5f_facc
   integer :: rh5f_filter, rh5f_center, rh5f_u, rh5f_v, rh5f_avar, rh5f_aavg
-  character (len=MediumString) :: Ufile, Vfile, AvarFile
   integer :: i_storm, j_storm
   real, dimension(:), allocatable :: XcoordsKm, YcoordsKm
-  real :: StormX, StormY, MaxRadius
+  real :: StormX, StormY
 
   integer :: i
   integer :: AvarNelems
@@ -71,141 +79,97 @@ program azavg
   real :: DeltaX, DeltaY, RbandInc
 
   ! Get the command line arguments
-  call GetMyArgs(InDir, InSuffix, OutFile, FilterFile, StormCenterFile, NumRbands, MaxRadius, VarToAvg, &
-    RevuVar)
+  call GetMyArgs(Args)
 
-  if (VarToAvg(1:5) .eq. 'hist:') then
-    call String2List(VarToAvg, ':', ArgList, MaxArgFields, Nfields, 'hist spec')
-    if (Nfields .eq. 3) then
-      ! got the right amount of fields
-      !   field    value
-      !    1       'hist'
-      !    2       variable name
-      !    3       bins file
-      DoHist = .true.
-      VarToAvg = trim(ArgList(2))
-      BinsFile = trim(ArgList(3))
-    else
-      write (*,*) 'ERROR: average function hist requires three fields: hist:<var>:<bins_file>'
-      stop
-    endif
+  write (*,'("Calculating azimuthal average for RAMS data:")')
+  write (*,'("  Number of radial bands: ",i4)') Args%NumRbands
+  write (*,'("  Maximum radius: ",f10.2)') Args%MaxRadius
+  write (*,'("  Input file specs:")')
+  if (Args%DoHorizVel) then
+    write (*,'("    U: ",a," (",a,")")') trim(Args%U%fname), trim(Args%U%vname)
+    write (*,'("    V: ",a," (",a,")")') trim(Args%V%fname), trim(Args%V%vname)
   else
-    ! Not doing histograms
-    DoHist = .false.
+    write (*,'("    Avar: ",a," (",a,")")') trim(Args%Avar%fname), trim(Args%Avar%vname)
+  endif
+  write (*,'("    Output: ",a," (",a,")")') trim(Args%Output%fname), trim(Args%Output%vname)
+  write (*,'("    Filter: ",a," (",a,")")') trim(Args%Filter%fname), trim(Args%Filter%vname)
+  write (*,'("    Storm center: ",a," (",a,")")') trim(Args%StormCenter%fname), trim(Args%StormCenter%vname)
+
+  if (Args%DoHist) then
+    write (*,'("  Creating histogram counts:")')
+    write (*,'("    Bins: ",a)') trim(Args%Bins%fname)
   endif
 
-  ! Do the check for horizontal velocity cases in order to support
-  ! both averaging and creation of a histogram.
-  if (VarToAvg == 'speed_t') then
-    DoHorizVel = .true.
-    DoTangential = .true.
-  else
-    if (VarToAvg == 'speed_r') then
-      DoHorizVel = .true.
-      DoTangential = .false.
-    else
-      DoHorizVel = .false.
-      DoTangential = .false.
-    end if
-  end if
-
-  write (*,*) 'Calculating azimuthal average for RAMS data:'
-  write (*,*) '  Input directory: ', trim(InDir)
-  write (*,*) '  Input file name suffix: ', trim(InSuffix)
-  write (*,*) '  Output file name:  ', trim(OutFile)
-  write (*,*) '  Filter file name: ', trim(FilterFile)
-  write (*,*) '  Storm center file name: ', trim(StormCenterFile)
-  write (*,*) '  Number of radial bands: ', NumRbands
-  if (DoHorizVel) then
-    if (DoTangential) then
-      write (*,*) '  RAMS variable that is being averaged: Tangential Horizontal Velocity'
-    else
-      write (*,*) '  RAMS variable that is being averaged: Radial Horizontal Velocity'
-    end if
-  else
-    write (*,*) '  RAMS variable that is being averaged: ', trim(VarToAvg)
-    write (*,*) '  REVU variable name: ', trim(RevuVar)
-  end if
-  if (DoHist) then
-    write (*,*) '  Creating histogram counts:'
-    write (*,*) '    Bins File: ', trim(BinsFile)
-  endif
   write (*,*) ''
 
   ! Read the variable information from the HDF5 files and check for consistency.
   !
   ! Always use filter file
   !
-  ! If doing horizontal velocity, ie VarToAvg is 'speed_t' or 'speed_r', set up U and V
-  ! otherwise set up the variable named in VarToAvg
-  !
-
-  ! Get variable and coordinate descriptions from FilterFile
+  ! Get variable and coordinate descriptions from the filter file
   ! Get the z coordinate description from the variable file since this
   ! can change between 2D and 3D variables.
-  Filter%vname = 'filter'
+  Filter%vname = trim(Args%Filter%vname)
   Radius%vname = 'radius'
   StormXindex%vname = 'press_cent_x_index'
   StormYindex%vname = 'press_cent_y_index'
   Xcoords%vname = 'x_coords'
   Ycoords%vname = 'y_coords'
   Tcoords%vname = 't_coords'
-  call rhdf5_read_init(FilterFile, Filter)
-  call rhdf5_read_init(FilterFile, Xcoords)
-  call rhdf5_read_init(FilterFile, Ycoords)
-  call rhdf5_read_init(FilterFile, Tcoords)
+  call rhdf5_read_init(Args%Filter%fname, Filter)
+  call rhdf5_read_init(Args%Filter%fname, Xcoords)
+  call rhdf5_read_init(Args%Filter%fname, Ycoords)
+  call rhdf5_read_init(Args%Filter%fname, Tcoords)
 
-  call rhdf5_read_init(StormCenterFile, Radius)
-  call rhdf5_read_init(StormCenterFile, StormXindex)
-  call rhdf5_read_init(StormCenterFile, StormYindex)
+  call rhdf5_read_init(Args%StormCenter%fname, Radius)
+  call rhdf5_read_init(Args%StormCenter%fname, StormXindex)
+  call rhdf5_read_init(Args%StormCenter%fname, StormYindex)
 
   ! Read in the 1D variable data
-  call rhdf5_read(FilterFile, Xcoords)
-  call rhdf5_read(FilterFile, Ycoords)
-  call rhdf5_read(FilterFile, Tcoords)
+  call rhdf5_read(Args%Filter%fname, Xcoords)
+  call rhdf5_read(Args%Filter%fname, Ycoords)
+  call rhdf5_read(Args%Filter%fname, Tcoords)
 
-  call rhdf5_read(StormCenterFile, StormXindex)
-  call rhdf5_read(StormCenterFile, StormYindex)
+  call rhdf5_read(Args%StormCenter%fname, StormXindex)
+  call rhdf5_read(Args%StormCenter%fname, StormYindex)
 
-  if (DoHorizVel) then
-    Ufile = trim(InDir) // '/u' // trim(InSuffix)
-    U%vname = 'u'
-    call rhdf5_read_init(Ufile, U)
+  if (Args%DoHorizVel) then
+    U%vname = trim(Args%U%vname)
+    call rhdf5_read_init(Args%U%fname, U)
 
     Zcoords%vname = 'z_coords'
-    call rhdf5_read_init(Ufile, Zcoords)
-    call rhdf5_read(Ufile, Zcoords)
+    call rhdf5_read_init(Args%U%fname, Zcoords)
+    call rhdf5_read(Args%U%fname, Zcoords)
 
-    Vfile = trim(InDir) // '/v' // trim(InSuffix)
-    V%vname = 'v'
-    call rhdf5_read_init(Vfile, V)
+    V%vname = trim(Args%V%vname)
+    call rhdf5_read_init(Args%V%fname, V)
 
     ! Initialize the elements in Avar
-    Avar%vname = trim(VarToAvg)
     Avar%ndims = U%ndims
     Avar%dims = U%dims
     Avar%dimnames = U%dimnames
     Avar%units = 'm/s'
-    if (DoTangential) then
+    if (Args%DoTangential) then
+      Avar%vname = 'speed_t'
       Avar%descrip = 'tangential wind speed'
     else
+      Avar%vname = 'speed_r'
       Avar%descrip = 'radial wind speed'
     endif
   else
-    AvarFile = trim(InDir) // '/' // trim(VarToAvg) // trim(InSuffix)
-    Avar%vname = trim(RevuVar)
-    call rhdf5_read_init(AvarFile, Avar)
+    Avar%vname = trim(Args%Avar%vname)
+    call rhdf5_read_init(Args%Avar%fname, Avar)
 
     Zcoords%vname = 'z_coords'
-    call rhdf5_read_init(AvarFile, Zcoords)
-    call rhdf5_read(AvarFile, Zcoords)
+    call rhdf5_read_init(Args%Avar%fname, Zcoords)
+    call rhdf5_read(Args%Avar%fname, Zcoords)
   endif
 
   ! check that the variable dimensions (size and coordinate values) match up, if this
   ! isn't true, then the subsequent anlysis will be bogus
   !
   ! third arg of GvarDimsMatch() is true if one of the vars is 2D, else false
-  if (DoHorizVel) then
+  if (Args%DoHorizVel) then
     if (.not. (DimsMatch(Filter, U) .and. DimsMatch(Filter, V) .and. &
                DimsMatch(Filter, Radius))) then
       write (*,*) 'ERROR: dimensions of u, v, filter, and radius do not match'
@@ -213,7 +177,7 @@ program azavg
     endif
   else
     if (.not. (DimsMatch(Filter, Radius) .and. DimsMatch(Filter, Avar))) then
-      write (*,*) 'ERROR: dimensions of filter, radius, and ', trim(VarToAvg), ' do not match'
+      write (*,*) 'ERROR: dimensions of filter, radius, and ', trim(Avar%vname), ' do not match'
       stop
     endif
   endif
@@ -256,10 +220,10 @@ program azavg
   ! If not doing a histogram, set NumBins to one, and place a zero in HistBins.
   ! This will allow the code that creates Bcoords (below) to just use NumBins
   ! and HistBins without checking DoHist.
-  if (DoHist) then
+  if (Args%DoHist) then
     ! ReadBinsFile will allocate HistBins (it needs to read in NumBins before
     ! HistBins gets allocated).
-    call ReadBinsFile(BinsFile, NumBins, HistBins)
+    call ReadBinsFile(Args%Bins%fname, NumBins, HistBins)
     write (*,*) 'Histogram Bins:'
     do i = 1, NumBins
       write (*,*) '  ', HistBins(i)
@@ -286,26 +250,26 @@ program azavg
   write (*,*) '    ', Ycoords%vdata(1), Ycoords%vdata(Ny), YcoordsKm(1), YcoordsKm(Ny)
   write (*,*) ''
 
-  MaxRadius = anint(MaxRadius)           ! round to nearest integer
+  Args%MaxRadius = anint(Args%MaxRadius)           ! round to nearest integer
   DeltaX = XcoordsKm(Nx) - XcoordsKm(1)
   DeltaY = YcoordsKm(Ny) - YcoordsKm(1)
-  RbandInc = MaxRadius / real(NumRbands)
+  RbandInc = Args%MaxRadius / real(Args%NumRbands)
 
   Rcoords%vname = 'x_coords'
   Rcoords%ndims = 1
-  Rcoords%dims(1) = NumRbands
+  Rcoords%dims(1) = Args%NumRbands
   Rcoords%dimnames(1) = 'x'
   Rcoords%units = 'degrees_east'
   Rcoords%descrip = 'radius in meters'
-  allocate (Rcoords%vdata(NumRbands))
-  do ix = 1, NumRbands
+  allocate (Rcoords%vdata(Args%NumRbands))
+  do ix = 1, Args%NumRbands
     Rcoords%vdata(ix) = real(ix) * RbandInc * 1000.0
   enddo
 
   write (*,*) 'Radial band information:'
   write (*,*) '  Delta x of domain:     ', DeltaX
   write (*,*) '  Delta y of domain:     ', DeltaY
-  write (*,*) '  Radial distance:       ', MaxRadius
+  write (*,*) '  Radial distance:       ', Args%MaxRadius
   write (*,*) '  Radial band increment: ', RbandInc
   write (*,*) ''
 
@@ -319,21 +283,21 @@ program azavg
   ! Chop off the time dimensions of the variables that have time dimensions
   !
   rh5f_facc = 'R'
-  call rhdf5_open_file(FilterFile, rh5f_facc, 0, rh5f_filter)
-  call rhdf5_open_file(StormCenterFile, rh5f_facc, 0, rh5f_center)
+  call rhdf5_open_file(Args%Filter%fname, rh5f_facc, 0, rh5f_filter)
+  call rhdf5_open_file(Args%StormCenter%fname, rh5f_facc, 0, rh5f_center)
 
   Filter%ndims = Filter%ndims - 1
   Radius%ndims = Radius%ndims - 1
 
   ! set up the input variable data
   rh5f_facc = 'R'
-  if (DoHorizVel) then
-    call rhdf5_open_file(Ufile, rh5f_facc, 0, rh5f_u)
-    call rhdf5_open_file(Vfile, rh5f_facc, 0, rh5f_v)
+  if (Args%DoHorizVel) then
+    call rhdf5_open_file(Args%U%fname, rh5f_facc, 0, rh5f_u)
+    call rhdf5_open_file(Args%V%fname, rh5f_facc, 0, rh5f_v)
     U%ndims = U%ndims - 1
     V%ndims = V%ndims - 1
   else
-    call rhdf5_open_file(AvarFile, rh5f_facc, 0, rh5f_avar)
+    call rhdf5_open_file(Args%Avar%fname, rh5f_facc, 0, rh5f_avar)
   endif
 
   Avar%ndims = Avar%ndims - 1
@@ -344,23 +308,23 @@ program azavg
 
   ! set up the output variable
   rh5f_facc = 'W'
-  call rhdf5_open_file(OutFile, rh5f_facc, 1, rh5f_aavg)
-  write (*,*) 'Writing HDF5 output: ', trim(OutFile)
+  call rhdf5_open_file(Args%Output%fname, rh5f_facc, 1, rh5f_aavg)
+  write (*,*) 'Writing HDF5 output: ', trim(Args%Output%fname)
   write (*,*) ''
 
   ! NumBins will be one when not doing histograms. Otherwise it will be
   ! the number of bins the user specified.
 
-  Aavg%vname = trim(VarToAvg)
+  Aavg%vname = trim(Args%Output%vname)
   Aavg%ndims = 3
-  Aavg%dims(1) = NumRbands
+  Aavg%dims(1) = Args%NumRbands
   Aavg%dims(2) = NumBins
   Aavg%dims(3) = Nz
   Aavg%dimnames(1) = 'x'
   Aavg%dimnames(2) = 'y'
   Aavg%dimnames(3) = 'z'
   Aavg%units = Avar%units 
-  Aavg%descrip = 'azimuthally averaged ' // trim(VarToAvg) 
+  Aavg%descrip = 'azimuthally averaged ' // trim(Args%Output%vname) 
   allocate(Aavg%vdata(Aavg%dims(1)*Aavg%dims(2)*Aavg%dims(3)))
 
   ! Do the averaging - one time step at a time
@@ -375,14 +339,14 @@ program azavg
     call rhdf5_read_variable(rh5f_filter, Filter%vname, Filter%ndims, it, Filter%dims, rdata=Filter%vdata)
     call rhdf5_read_variable(rh5f_center, Radius%vname, Radius%ndims, it, Radius%dims, rdata=Radius%vdata)
 
-    if (DoHorizVel) then
+    if (Args%DoHorizVel) then
       call rhdf5_read_variable(rh5f_u, U%vname, U%ndims, it, U%dims, rdata=U%vdata)
       call rhdf5_read_variable(rh5f_v, V%vname, V%ndims, it, V%dims, rdata=V%vdata)
 
       ! convert u,v to tangential or radial
       allocate(Avar%vdata(AvarNelems))
       call ConvertHorizVelocity(Nx, Ny, Nz, U%vdata, V%vdata, StormX, StormY, &
-        XcoordsKm, YcoordsKm, Avar%vdata, DoTangential)
+        XcoordsKm, YcoordsKm, Avar%vdata, Args%DoTangential)
 
       ! Free up variable memory
       deallocate(U%vdata)
@@ -392,8 +356,8 @@ program azavg
     endif
 
     ! do the averaging and write out the results to the output file
-    call AzimuthalAverage(Nx, Ny, Nz, FilterNz, NumRbands, NumBins, Avar%vdata, Aavg%vdata, &
-      RbandInc, Filter%vdata, Radius%vdata, HistBins, DoHist, UndefVal)
+    call AzimuthalAverage(Nx, Ny, Nz, FilterNz, Args%NumRbands, NumBins, Avar%vdata, Aavg%vdata, &
+      RbandInc, Filter%vdata, Radius%vdata, HistBins, Args%DoHist, UndefVal)
 
     call rhdf5_write_variable(rh5f_aavg, Aavg%vname, Aavg%ndims, it, Aavg%dims, &
       Aavg%units, Aavg%descrip, Aavg%dimnames, rdata=Aavg%vdata)
@@ -424,7 +388,7 @@ program azavg
   ! close the files
   call rhdf5_close_file(rh5f_filter)
   call rhdf5_close_file(rh5f_center)
-  if (DoHorizVel) then
+  if (Args%DoHorizVel) then
     call rhdf5_close_file(rh5f_u)
     call rhdf5_close_file(rh5f_v)
   else
@@ -447,19 +411,19 @@ program azavg
     Bcoords%vdata(iy) = HistBins(iy)
   enddo
   
-  call rhdf5_write(OutFile, Rcoords, 1)
-  call rhdf5_write(OutFile, Bcoords, 1)
-  call rhdf5_write(OutFile, Zcoords, 1)
-  call rhdf5_write(OutFile, Tcoords, 1)
+  call rhdf5_write(Args%Output%fname, Rcoords, 1)
+  call rhdf5_write(Args%Output%fname, Bcoords, 1)
+  call rhdf5_write(Args%Output%fname, Zcoords, 1)
+  call rhdf5_write(Args%Output%fname, Tcoords, 1)
 
   ! set up four (x,y,z,t) dimensions for use by GRADS
-  call rhdf5_set_dimension(OutFile, Rcoords, 'x')
-  call rhdf5_set_dimension(OutFile, Bcoords, 'y')
-  call rhdf5_set_dimension(OutFile, Zcoords, 'z')
-  call rhdf5_set_dimension(OutFile, Tcoords, 't')
+  call rhdf5_set_dimension(Args%Output%fname, Rcoords, 'x')
+  call rhdf5_set_dimension(Args%Output%fname, Bcoords, 'y')
+  call rhdf5_set_dimension(Args%Output%fname, Zcoords, 'z')
+  call rhdf5_set_dimension(Args%Output%fname, Tcoords, 't')
 
   ! attach the dimension specs to the output variable
-  call rhdf5_attach_dimensions(OutFile, Aavg)
+  call rhdf5_attach_dimensions(Args%Output%fname, Aavg)
 
   stop
 
@@ -471,57 +435,195 @@ Contains
 ! This routine will read in the command line arguments
 !
 
-subroutine GetMyArgs(InDir, InSuffix, OutFile, FilterFile, StormCenterFile, NumRbands, &
-                     MaxRadius, VarToAvg, RevuVar)
+subroutine GetMyArgs(Args)
+
+  use getoptions
 
   implicit none
 
-  integer :: NumRbands
-  real :: MaxRadius
-  character (len=*) :: InDir, InSuffix, OutFile, FilterFile, StormCenterFile, VarToAvg, RevuVar
+  type (ArgList) :: Args
 
-  integer :: iargc
-  character (len=128) :: arg
+  character :: optval
+  logical :: BadArgs
+  character (len=MediumString), dimension(MaxArgFields) :: ArgList
+  integer :: Nfields
 
-  if (iargc() .ne. 9) then
-    write (*,*) 'ERROR: must supply exactly 9 arguments'
+  ! default values
+  Args%DoHist = .false.
+  Args%DoHorizVel = .false.
+  Args%DoTangential = .false.
+  Args%NumRbands = 50
+  Args%MaxRadius = 500.0
+
+  ! initialization
+  Args%Output%fname = 'none'
+  Args%Output%vname = 'none'
+
+  Args%Filter%fname = 'none'
+  Args%Filter%vname = 'none'
+
+  Args%StormCenter%fname = 'none'
+  Args%StormCenter%vname = 'none'
+
+  Args%Bins%fname = 'none'
+  Args%Bins%vname = 'none'
+
+  Args%U%fname = 'none'
+  Args%U%vname = 'none'
+
+  Args%V%fname = 'none'
+  Args%V%vname = 'none'
+
+  Args%Avar%fname = 'none'
+  Args%Avar%vname = 'none'
+
+  ! loop through all of the command line tokens
+  ! optarg is a character string variable that the getoptions module supplies
+  !   optarg gets set to the argument value for an option that uses an argument
+  ! getopt returns single character:
+  !    '>' finished
+  !    '!' unknown option
+  !    '.' command line argument (no option)
+  BadArgs = .false.
+  do
+    optval = getopt('b:hr:t:')
+
+    select case (optval)
+      case ('>')  ! finished
+        exit
+
+      case ('!')  ! unrecognized argument
+        write(*,*) 'ERROR: unknown option: ', trim(optarg)
+        write(*,*) ''
+        BadArgs = .true.
+
+      case ('b')
+        read(optarg, '(i)') Args%NumRbands
+
+      case ('h')
+        Args%DoHist = .true.
+
+      case ('r')
+        read(optarg, '(f)') Args%MaxRadius
+
+      case ('t')
+        Args%DoHorizVel = .true.
+        select case (optarg)
+          case ('h_tan')
+            Args%DoTangential = .true.
+
+          case ('h_rad')
+            Args%DoTangential = .false.
+
+          case default
+            write(*,*) 'ERROR: must use one of "h_tan" or "h_rad" for argement to -t option: ', trim(optarg)
+            write(*,*) ''
+            BadArgs = .true.
+        endselect
+
+      case ('.')
+        ! file spec ->   <file_type>:<file_name>:<variable_name>
+        call String2List(optarg, ':', ArgList, MaxArgFields, Nfields, 'file spec') 
+        if (Nfields .eq. 3) then
+          select case (ArgList(1))
+            case ('filter')
+              Args%Filter%fname = trim(ArgList(2))
+              Args%Filter%vname = trim(ArgList(3))
+
+            case ('storm')
+              Args%StormCenter%fname = trim(ArgList(2))
+              Args%StormCenter%vname = trim(ArgList(3))
+
+            case ('bins')
+              Args%Bins%fname = trim(ArgList(2))
+              Args%Bins%vname = trim(ArgList(3))
+
+            case ('avar')
+              Args%Avar%fname = trim(ArgList(2))
+              Args%Avar%vname = trim(ArgList(3))
+
+            case ('u')
+              Args%U%fname = trim(ArgList(2))
+              Args%U%vname = trim(ArgList(3))
+
+            case ('v')
+              Args%V%fname = trim(ArgList(2))
+              Args%V%vname = trim(ArgList(3))
+
+            case ('out')
+              Args%Output%fname = trim(ArgList(2))
+              Args%Output%vname = trim(ArgList(3))
+
+            case default
+              write(*,*) 'ERROR: unknown <file_type>: ', trim(ArgList(1))
+              write(*,*) ''
+              BadArgs = .true.
+          endselect
+        else
+          write(*,*) 'ERROR: must use <file_type>:<file_name>:<variable_name> for file specs: ', trim(optarg)
+          write(*,*) ''
+          BadArgs = .true.
+        endif
+    endselect
+  enddo
+
+  ! check for required files
+  if ((trim(Args%Filter%fname) .eq. 'none') .or. (trim(Args%Output%fname) .eq. 'none') .or. &
+      (trim(Args%StormCenter%fname) .eq. 'none')) then
+    write(*,*) 'ERROR: must always specify filter, out, and storm files'
+    write(*,*) ''
+    BadArgs = .true.
+  endif
+
+  if (Args%DoHist) then
+    if (trim(Args%Bins%fname) .eq. 'none') then
+      write(*,*) 'ERROR: must specify bins file when using -h option'
+      write(*,*) ''
+      BadArgs = .true.
+    endif
+  endif
+
+  if (Args%DoHorizVel) then
+    if ((trim(Args%U%fname) .eq. 'none') .or. (trim(Args%V%fname) .eq. 'none')) then
+      write(*,*) 'ERROR: must specify u and v files when using -t option'
+      write(*,*) ''
+      BadArgs = .true.
+    endif
+  else
+    if (trim(Args%Avar%fname) .eq. 'none') then
+      write(*,*) 'ERROR: must specify avar file when not using -t option'
+      write(*,*) ''
+      BadArgs = .true.
+    endif
+  endif
+
+  if (BadArgs) then
+    write (*,*) 'USAGE: azavg [-b <num_radial_bands>] [-r <max_radius>] [-h] [-t <input_type>] <list_of_files>'
     write (*,*) ''
-    write (*,*) 'USAGE: azavg <in_dir> <in_suffix> <out_file> <filter_file> <storm_center_file> <num_radial_bands> <max_radius> <var_to_average> <revu_var_name>'
-    write (*,*) '        <in_dir>: directory where input files live'
-    write (*,*) '        <in_suffix>: suffix on input file names'
-    write (*,*) '        <out_file>: name of output file, HDF5 format'
-    write (*,*) '        <filter_file>: file containing the filter mask data'
-    write (*,*) '        <storm_center_file>: file containing the radius, storm center, min pressure data'
-    write (*,*) '        <num_radial_bands>: number of bands to split data into'
-    write (*,*) '        <max_radius>: maximum radius for averaging (determines size of radial bands)'
-    write (*,*) '        <var_to_average>: name of variable to do the averaging on'
-    write (*,*) '             special var names:'
-    write (*,*) '                speed_t: horizontal tangential speed'
-    write (*,*) '                speed_r: horizontal radial speed'
-    write (*,*) '                hist: create histogram counts instead of averages'
-    write (*,*) '                  hist:<var>:<bins_file>'
-    write (*,*) '                     <var>: same as <var_to_average>'
-    write (*,*) '                     <bins_file>: file containing the edge values of the bins'
-    write (*,*) '        <revu_var_name>: name of variable in the REVU file'
+    write (*,*) '   -b: split radial distance into <num_radial_bands> bands'
+    write (*,*) '   -r: select data within <max_radius> for averaging (determines size of radial bands)'
+    write (*,*) '   -h: create histogram instead of average (requires a bins file)'
+    write (*,*) '   -t: for input data processing, valid values of <input_type>:'
+    write (*,*) '     "h_tan": do tangential speed of horizontal winds'
+    write (*,*) '     "h_rad": do radial speed of horizontal winds'
+    write (*,*) '     both of these values require u and v files'
+    write (*,*) ''
+    write (*,*) '   <list_of_files>: supply specs for input and output files'
+    write (*,*) '     <list_of_files> := <file_spec> ...'
+    write (*,*) '       <file_spec> := <file_type>:<file_name>:<variable_name>'
+    write (*,*) '          <file_type> is one of:'
+    write (*,*) '             "filter": filter mask, required'
+    write (*,*) '             "storm": storm track and motion, required'
+    write (*,*) '             "bins": histogram bin edges, required only if -h used'
+    write (*,*) '             "avar": variable to average, required except when -t is used'
+    write (*,*) '             "u": zonal component of momentum, required only if -t used'
+    write (*,*) '             "v": meridional component of momentum, required only if -t used'
+    write (*,*) '             "out": output file, required'
+    write (*,*) '          <file_name> is the complete path to the file'
+    write (*,*) '          <variable_name> is the name of the variable inside the file'
     write (*,*) ''
     stop
-  end if
-
-  call getarg(1, InDir)
-  call getarg(2, InSuffix)
-  call getarg(3, OutFile)
-  call getarg(4, FilterFile)
-  call getarg(5, StormCenterFile)
-
-  call getarg(6, arg)       !this is a string
-  read (arg, '(i15)') NumRbands !convert to integer
-
-  call getarg(7, arg)
-  read (arg, '(f15.7)') MaxRadius ! convert to real
-
-  call getarg(8, VarToAvg)
-
-  call getarg(9, RevuVar)
+  endif
 
   return
 end subroutine GetMyArgs
