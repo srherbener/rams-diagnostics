@@ -21,7 +21,7 @@ Module rhdf5_utils
 
 ! max limits for arrays, strings, etc, keep these in sync with like named
 ! defines in rhdf5_f2c.c
-integer, parameter :: RHDF5_MAX_STRING = 128
+integer, parameter :: RHDF5_MAX_STRING = 256
 integer, parameter :: RHDF5_MAX_DIMS   =  10
 
 ! integer coding for HDF5 types, keep these in sync with like named defines
@@ -71,7 +71,6 @@ subroutine rhdf5_read_init(fname, rvar)
 
   integer :: fileid
   character (len=RHDF5_MAX_STRING):: facc
-
   facc = 'R'
   call rhdf5_open_file(fname, facc, 0, fileid)
 

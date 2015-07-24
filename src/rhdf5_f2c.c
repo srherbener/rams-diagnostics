@@ -33,7 +33,7 @@
  * Limits for arrays, strings, etc. Need to keep these in sync with like
  * named parameters in rhdf5_utils.f90
 */
-#define RHDF5_MAX_STRING 128
+#define RHDF5_MAX_STRING 256
 #define RHDF5_MAX_DIMS    10
 
 /*
