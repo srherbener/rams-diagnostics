@@ -32,6 +32,7 @@ FORT_INCS = -I$(FORT_LIB_DIR)
 
 # HDF5 library
 HDF5_LIBS=-L$(HOME)/hdf5-1.8.6-macosx64-static/lib -lhdf5 -lhdf5_hl -lsz -lz -lm
+#HDF5_LIBS=-L/home/usr/local/hdf_5-1.8.3/lib -lhdf5 -lhdf5_hl -L/usr/lib64 -lsz -lz -lm
 
 # Compiler configuration. These should match what is being set
 # in your RAMS and REVU configuration.

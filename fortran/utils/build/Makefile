@@ -46,11 +46,14 @@ DEST_MOD = $(DIAG_UTILS_INSTALL_DIR)/$(MOD)
 
 OBJS = $(ARC)($(SRC_DIR)/diag_utils.o)
 
+BIN_DIR = $(HOME)/bin
+SCRIPTS = $(BIN_DIR)/run_diags
+
 #
 # Targets
 #
 
-all: $(ARC) $(MOD) install
+all: $(ARC) $(MOD) install $(SCRIPTS)
 
 $(ARC): $(OBJS)
 
@@ -64,6 +67,9 @@ $(DEST_ARC): $(ARC)
 
 $(DEST_MOD): $(MOD)
 	cp $(MOD) $(DEST_MOD)
+
+$(BIN_DIR)/run_diags: $(SRC_DIR)/run_diags
+	cp $(<) $(@)
 
 clean:
 	rm -f *.a
