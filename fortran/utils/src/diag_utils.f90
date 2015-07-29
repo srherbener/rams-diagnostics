@@ -546,12 +546,12 @@ subroutine TranslateField(Nx, Ny, Nz, Field, Scalar)
   real, dimension(Nx,Ny,Nz) :: Field
   real :: Scalar
 
-  integer :: i, j, k
+  integer :: ix, iy, iz
 
-  do k = 1, Nz
-    do j = 1, Nz
-      do i = 1, Nx
-        Field(i,j,k) = Field(i,j,k) - Scalar
+  do iz = 1, Nz
+    do iy = 1, Ny
+      do ix = 1, Nx
+        Field(ix,iy,iz) = Field(ix,iy,iz) - Scalar
       enddo
     enddo
   enddo
