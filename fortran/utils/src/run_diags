@@ -1,0 +1,139 @@
+#!/usr/bin/env perl
+#
+# Script to run diagnostics on a list of simulation cases
+#
+
+BEGIN { push(@INC, "$ENV{HOME}/etc/perl"); }
+
+use strict;
+use File::Basename;
+use DiagUtils;
+
+#######################################################################
+# SUBROUTINES
+#######################################################################
+
+#######################################################################
+# MAIN
+#######################################################################
+
+my $ConfigFile;
+my $Config;
+
+my @CaseList;
+my $Case;
+
+my %AzavgJobs;
+my $Aname;
+my $NumRbands;
+my $MaxRadius;
+my $DoHist;
+my $SubSmotion;
+my $InType;
+my @FileList;
+my $FileSpec;
+my $ifile;
+
+my @SysArgs;
+my $iarg;
+
+my $ilog;
+my $LogFile;
+my $Pid;
+
+$ConfigFile = $ARGV[0];
+
+# read in info from the config file
+($Config) = &DiagUtils::ReadDiagConfigFile($ConfigFile);
+
+# For each case, submit the entire list of diagnostics in
+# one child process. Use a different child process for each
+# case.
+
+@CaseList = @{ $$Config{CASE_LIST} };
+%AzavgJobs = %{ $$Config{AZAVG} };
+
+
+$ilog = 1;
+foreach $Case (@CaseList)
+  {
+  print "Submitting diagnostic jobs for case: $Case\n";
+
+  # Create numbered log files so each child process gets a unique
+  # one. However, always number from 1 to num_cases so that a 
+  # massive number of files doesn't collect after running this
+  # command a bunch of times. The user will have to understand that
+  # the log files get overwritten each time you run this command.
+
+  $LogFile = sprintf("diags%d.log", $ilog);
+
+  $Pid = fork;
+
+  # Child will run through the list of diagnostics and
+  # quit. The parent will continue in the Case loop
+  # (Pid == 0 for the parent).
+
+  if ($Pid != 0)
+    {
+    # Child
+
+    # Redirect STDOUT and STDERR into the log file
+    open STDOUT, ">",  $LogFile;
+    open STDERR, ">>", $LogFile;
+
+    print "Running diagnostics for case: $Case\n";
+    print "  Child process: $Pid\n";
+    print "\n";
+
+    # run the azavg jobs
+    foreach $Aname (sort(keys(%AzavgJobs)))
+      {
+      $NumRbands  = $AzavgJobs{$Aname}{NUM_RBANDS};
+      $MaxRadius  = $AzavgJobs{$Aname}{MAX_RADIUS};
+      $DoHist     = $AzavgJobs{$Aname}{DO_HIST};
+      $SubSmotion = $AzavgJobs{$Aname}{SUB_SMOTION};
+      $InType     = $AzavgJobs{$Aname}{IN_TYPE};
+      @FileList   = @{ $AzavgJobs{$Aname}{FILE_LIST} };
+
+      $iarg = 0;
+      $SysArgs[$iarg++] = "azavg"; 
+      $SysArgs[$iarg++] = "-b";
+      $SysArgs[$iarg++] = "$NumRbands";
+      $SysArgs[$iarg++] = "-r";
+      $SysArgs[$iarg++] = "$MaxRadius";
+      if ($DoHist =~ /[Yy][Ee][Ss]/)
+        {
+        $SysArgs[$iarg++] = "-h";
+        }
+      if ($SubSmotion =~ /[Yy][Ee][Ss]/)
+        {
+        $SysArgs[$iarg++] = "-m";
+        }
+      if (($InType eq "h_tan") || ($InType eq "h_rad"))
+        {
+        $SysArgs[$iarg++] = "-t";
+        $SysArgs[$iarg++] = "$InType";
+        }
+      foreach $ifile (0 .. $#FileList)
+        {
+        $FileSpec = $FileList[$ifile];
+        $FileSpec =~ s/<CASE>/$Case/g;
+        $SysArgs[$iarg++] = $FileSpec;
+        }
+
+      print "  Running: ", join(" ", @SysArgs), "\n";
+      print "\n";
+
+      system(@SysArgs);
+
+      print "\n";
+      }
+
+    exit 0;
+    }
+
+  # If made it to here, in the parent process
+  $ilog++;
+  }
+
+exit 0;

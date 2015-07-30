@@ -169,4 +169,97 @@ sub ReadRevuConfigFile
   return(\%Config);
   }
 
+
+###############################################################################
+# ReadDiagConfigFile()
+#
+# This routine will read in info from the Diagnostics configuration file, and
+# organize the information for the caller.
+#
+
+sub ReadDiagConfigFile
+  {
+  my ($ConfigFile) = @_;
+
+  my %Config;
+
+  my $Cstmts;
+  my $i;
+  my $j;
+  my @f;
+
+  # reformat the input file into a list of statements
+  ($Cstmts) = &PrepConfigFile($ConfigFile);
+
+  foreach $i (0 .. $#$Cstmts)
+    {
+    @f = @{ $$Cstmts[$i] };
+
+    if ($f[0] eq "CaseSet:")
+      {
+      $Config{CASE_LIST} = [ @f[ 1 .. $#f ] ];
+      }
+    elsif ($f[0] eq "Azavg:")
+      {
+      $Config{AZAVG}{$f[1]}{NUM_RBANDS}  = $f[2];
+      $Config{AZAVG}{$f[1]}{MAX_RADIUS}  = $f[3];
+      $Config{AZAVG}{$f[1]}{DO_HIST}     = $f[4];
+      $Config{AZAVG}{$f[1]}{SUB_SMOTION} = $f[5];
+      $Config{AZAVG}{$f[1]}{IN_TYPE}     = $f[6];
+      $Config{AZAVG}{$f[1]}{FILE_LIST}   = [ @f[7..$#f] ];
+      }
+  }
+
+  return(\%Config);
+  }
+
+###############################################################################
+# PrepConfigFile()
+#
+# This routine will read in a configuration file and reformat it into a list
+# of statements.
+#
+
+sub PrepConfigFile
+  {
+  my ($ConfigFile) = @_;
+
+  my @Cstmts;
+
+  my @f;
+  my $istmnt;
+  my $itoken;
+  my $i;
+
+
+  $istmnt = 0;
+  $itoken = 0;
+  open(CONFIG, "$ConfigFile") or die "Cannot open $ConfigFile for reading: $!";
+  while(<CONFIG>)
+    {
+    # strip off comments
+    s/#.*//;
+
+    # split into tokens and load these into the current statement
+    # if we encounter the token 'End' then move to the next statement
+    @f = split(' ');
+    foreach $i (0..$#f)
+      {
+      if ($f[$i] eq "End")
+        {
+        $istmnt++;
+        $itoken = 0;
+        }
+      else
+        {
+        $Cstmts[$istmnt][$itoken] = $f[$i];
+        $itoken++;
+        }
+      }
+    }
+  close(CONFIG); 
+
+  return (\@Cstmts);
+  }
+
 1;
