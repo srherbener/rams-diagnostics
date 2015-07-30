@@ -47,7 +47,7 @@ DEST_MOD = $(DIAG_UTILS_INSTALL_DIR)/$(MOD)
 OBJS = $(ARC)($(SRC_DIR)/diag_utils.o)
 
 BIN_DIR = $(HOME)/bin
-SCRIPTS = $(BIN_DIR)/run_diags
+#SCRIPTS = $(BIN_DIR)/run_diags
 
 #
 # Targets

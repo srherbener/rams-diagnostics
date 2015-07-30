@@ -1,22 +1,6 @@
 #!/usr/bin/env perl
 #
-# Script to run azavg on the set of diagnostics specified in the config file
-#
-# The config file defines the cases, time dirs and diagnostics that are to be run. Format
-# for lines in the config file are:
-#   Case: <CaseName>
-#   TimeDir: <Dir> <TimeSpec>
-#   Azavg: <Diagnostic> <Nbands> <wfilterMin> <WfilterMax>
-#
-#   <CaseName> corresponds to the simulation name such as TC_SEED_C0100 or SA0SC0.
-#
-#   <Dir> is a subdirectory of the <CaseName>/GRADS directory where the GRADS files live
-#   <TimeSpec> is the revu time spec (in the TVAR(1) spec)
-#
-#   <Diagnositc> is the name of the azavg function
-#   <Nbands> is the number of radial bands to divide the space into
-#   <WfilterMin> is the lower limit on the w filter (take data points with w < WfilterMin>
-#   <WfilterMax> is the upper limit on the w filter (take data points with w > WfilterMax>
+# Script to run azavg on a list of simulation cases
 #
 
 BEGIN { push(@INC, "$ENV{HOME}/etc/perl"); }
@@ -30,223 +14,126 @@ use DiagUtils;
 #######################################################################
 
 #######################################################################
-# CreateFileNames()
-#
-# This routine will take the case, time dir, and diagnostic name
-# and create the file lists (input and output) needed for azavg.
-#
-sub CreateFileNames
-  {
-  my ($Case, $Tdir, $Adiag, $VarPrefix, $FilterPrefix, $StormCenterPrefix, $AzavgDir, $FilterDir, $RevuDir) = @_;
-  
-  my $InDir;
-  my $InFileSuffix;
-  my $OutFile;
-  my $FilterFile;
-  my $StormCenterFile;
-
-  my $Pattern;
-  my @f;
-  my $TdirStr;
-
-  # If $Tdir is the string "NONE", then do not place a subdirectory
-  # in the path to the input and output files
-  if ($Tdir eq "NONE")
-    {
-    $TdirStr = "";
-    }
-  else
-    {
-    $TdirStr = "/" . $Tdir;
-    }
-
-  # InDir is the directory that the input files come from.
-  #
-  # InFileSuffix is used to create the names of all the input files. It is
-  # assumed that the input file names follow the form:
-  #
-  #   <VarName><InFileSuffix>
-  #
-  # OutFile is simply the whole path to the output file.
-  #
-  $InDir = $Case . "/" . $RevuDir . $TdirStr;
-
-  # Use the w input file as a sample for finding the input file suffix.
-  $Pattern = $InDir . "/$VarPrefix-*.h5";
-  @f = glob($Pattern);
-  $InFileSuffix = $f[0];
-  $InFileSuffix =~ s/.*\/$VarPrefix-/-/;
-  
-  $OutFile = $AzavgDir . ${TdirStr} . "/" . ${Adiag} . "_" . ${Case} . ".h5";
-  $FilterFile = $FilterDir . ${TdirStr} . "/" . ${FilterPrefix} . "_" . ${Case} . ".h5";
-  $StormCenterFile = $InDir . ${TdirStr} . "/" . ${StormCenterPrefix} . $InFileSuffix;
-
-  return ($InDir, $InFileSuffix, $OutFile, $FilterFile, $StormCenterFile);
-  }
-
-#######################################################################
 # MAIN
 #######################################################################
 
 my $ConfigFile;
 my $Config;
 
-my %Cases;
-my %TimeDirs;
-my %AzavgDiags;
-my $AzavgDir;
-my $FilterDir;
-my $RevuDir;
-
-my @f;
+my @CaseList;
 my $Case;
-my $Tdir;
 
-my $Adiag;
-my $FilterPrefix;
-my $StormCenterPrefix;
-my $Nbands;
+my %AzavgJobs;
+my $Aname;
+my $NumRbands;
 my $MaxRadius;
-my $VarPrefix;
-my $VarSpecs;
-my $VarName;
-my $VarPrefix;
-
-my $Temp1;
-my $Temp2;
-
-my $InDir;
-my $InFileSuffix;
-my $OutFile;
-my $FilterFile;
-my $StormCenterFile;
+my $DoHist;
+my $SubSmotion;
+my $InType;
+my @FileList;
+my $FileSpec;
+my $ifile;
 
 my @SysArgs;
-my $OutDir;
-my $JoinInFiles;
-my $JoinOutFile;
+my $iarg;
+
+my $ilog;
+my $LogFile;
+my $Pid;
 
 $ConfigFile = $ARGV[0];
 
 # read in info from the config file
-($Config) = &DiagUtils::ReadConfigFile($ConfigFile);
-%Cases      = %{ $$Config{CASES} };
-%TimeDirs   = %{ $$Config{TIM_DIRS} };
-%AzavgDiags = %{ $$Config{AZAVG_DIAGS} };
-$AzavgDir = $$Config{AZAVG_DIR};
-$FilterDir = $$Config{FILTER_DIR};
-$RevuDir = $$Config{REVU_DIR};
+($Config) = &DiagUtils::ReadDiagConfigFile($ConfigFile);
 
-# make sure at least one of each of cases, time_directories and diagnostics has
-# been specified
-if ((! (%Cases)) || (! (%TimeDirs)) || (! (%AzavgDiags)))
-  {
-  print STDERR "ERROR: must specify at least one of each of case, time directory and diagnostic\n";
-  exit 1;
-  }
+# For each case, submit the entire list of diagnostics in
+# one child process. Use a different child process for each
+# case.
 
-# In all cases, except 'speed_t' and 'speed_r', <Diagnostic> matches the name of the
-# variable that you want to average. Also, the variable name matches the prefix of the GRADS
-# control file.
-#
-# Walk through all combinations of cases, time directories, and diagnostics.
-foreach $Case (sort(keys(%Cases)))
+@CaseList = @{ $$Config{CASE_LIST} };
+%AzavgJobs = %{ $$Config{AZAVG} };
+
+
+$ilog = 1;
+foreach $Case (@CaseList)
   {
-  foreach $Adiag (sort(keys(%AzavgDiags)))
+  print "Submitting diagnostic jobs for case: $Case\n";
+
+  # Create numbered log files so each child process gets a unique
+  # one. However, always number from 1 to num_cases so that a 
+  # massive number of files doesn't collect after running this
+  # command a bunch of times. The user will have to understand that
+  # the log files get overwritten each time you run this command.
+
+  $LogFile = sprintf("diags%d.log", $ilog);
+
+  $Pid = fork;
+
+  # Child will run through the list of diagnostics and
+  # quit. The parent will continue in the Case loop
+  # (Pid == 0 for the parent).
+
+  if ($Pid != 0)
     {
-    $JoinInFiles = "";
+    # Child
 
-    $VarSpecs          = $AzavgDiags{$Adiag}{V_SPECS};
-    $VarName           = $AzavgDiags{$Adiag}{V_NAME};
-    $Nbands            = $AzavgDiags{$Adiag}{NUM_RBANDS};
-    $MaxRadius         = $AzavgDiags{$Adiag}{MAX_RADIUS};
-    $FilterPrefix      = $AzavgDiags{$Adiag}{F_PREFIX};
-    $StormCenterPrefix = $AzavgDiags{$Adiag}{SC_PREFIX};
+    # Redirect STDOUT and STDERR into the log file
+    open STDOUT, ">",  $LogFile;
+    open STDERR, ">>", $LogFile;
 
-    # Set $VarPrefix to a file prefix that needs to exist for this call to azavg.
-    # $VarPrefix will be used by CreatFileNames() to form a pattern with which to
-    # determine the input file suffix.
-    if (($VarSpecs eq "speed_t") || ($VarSpecs eq "speed_r")) 
+    print "Running diagnostics for case: $Case\n";
+    print "  Child process: $Pid\n";
+    print "\n";
+
+    # run the azavg jobs
+    foreach $Aname (sort(keys(%AzavgJobs)))
       {
-      $VarPrefix = "u";
-      }
-    elsif ($VarSpecs =~ /^hist:/)
-      {
-      ($Temp1, $VarPrefix, $Temp2) = split(':', $VarSpecs);
-      if (($VarPrefix eq "speed_t") || ($VarPrefix eq "speed_r"))
+      $NumRbands  = $AzavgJobs{$Aname}{NUM_RBANDS};
+      $MaxRadius  = $AzavgJobs{$Aname}{MAX_RADIUS};
+      $DoHist     = $AzavgJobs{$Aname}{DO_HIST};
+      $SubSmotion = $AzavgJobs{$Aname}{SUB_SMOTION};
+      $InType     = $AzavgJobs{$Aname}{IN_TYPE};
+      @FileList   = @{ $AzavgJobs{$Aname}{FILE_LIST} };
+
+      $iarg = 0;
+      $SysArgs[$iarg++] = "azavg"; 
+      $SysArgs[$iarg++] = "-b";
+      $SysArgs[$iarg++] = "$NumRbands";
+      $SysArgs[$iarg++] = "-r";
+      $SysArgs[$iarg++] = "$MaxRadius";
+      if ($DoHist =~ /[Yy][Ee][Ss]/)
         {
-        $VarPrefix = "u";
+        $SysArgs[$iarg++] = "-h";
         }
-      }
-    else
-      {
-      $VarPrefix = $VarSpecs;
-      }
+      if ($SubSmotion =~ /[Yy][Ee][Ss]/)
+        {
+        $SysArgs[$iarg++] = "-m";
+        }
+      if (($InType eq "h_tan") || ($InType eq "h_rad"))
+        {
+        $SysArgs[$iarg++] = "-t";
+        $SysArgs[$iarg++] = "$InType";
+        }
+      foreach $ifile (0 .. $#FileList)
+        {
+        $FileSpec = $FileList[$ifile];
+        $FileSpec =~ s/<CASE>/$Case/g;
+        $SysArgs[$iarg++] = $FileSpec;
+        }
 
-    # run through each time directory generating the current diagnostic, and
-    # then join these files into the main file (above the time directories)
-    foreach $Tdir (sort(keys(%TimeDirs)))
-      {
-      ($InDir,$InFileSuffix,$OutFile,$FilterFile,$StormCenterFile) =
-          &CreateFileNames($Case, $Tdir, $Adiag, $VarPrefix, $FilterPrefix, $StormCenterPrefix, $AzavgDir, $FilterDir, $RevuDir);
-
-      print "***************************************************************\n";
-      print "Running azavg:\n";
-      print "  Case: $Case\n";
-      print "  Time Directory: $Tdir\n";
-      print "  Input File Directory: $InDir\n";
-      print "  Input File Suffix: $InFileSuffix\n";
-      print "  Output File: $OutFile\n";
-      print "  Variable Specs: $VarSpecs\n";
-      print "  Variable Name: $VarName\n";
-      print "  Number Radial Bands: $Nbands\n";
-      print "  Maximum Radius: $MaxRadius\n";
-      print "  Filter File Name: $FilterFile\n";
-      print "  Storm Center Name: $StormCenterFile\n";
+      print "  Running: ", join(" ", @SysArgs), "\n";
       print "\n";
 
-      # run azavg, make sure the output directory exists
-      $OutDir = dirname($OutFile);
-      if (! -d $OutDir)
-        {
-        @SysArgs = ("mkdir", "-p", $OutDir);
-        system(@SysArgs);
-        }
-
-      @SysArgs = ("azavg", $InDir, $InFileSuffix, $OutFile, $FilterFile, $StormCenterFile, $Nbands, $MaxRadius, $VarSpecs, $VarName);
-      print "Running: ", join(" ", @SysArgs), "\n\n";
       system(@SysArgs);
 
-      # record the input file for the upcoming join
-      if ($Tdir eq "NONE")
-        {
-        $JoinInFiles = "NONE";
-        }
-      else
-        {
-        if ($JoinInFiles eq "")
-          {
-          $JoinInFiles = $OutFile;
-          $JoinOutFile = $AzavgDir . "/" . basename($OutFile);
-          }
-        else
-          {
-          $JoinInFiles = $JoinInFiles . ":" . $OutFile;
-          }
-        }
+      print "\n";
       }
 
-    if ($JoinInFiles ne "NONE")
-      {
-      @SysArgs = ("join_hdata", $JoinInFiles, $JoinOutFile, $VarName);
-      print "***************************************************\n";
-      print " Joining HDF5 data:\n";
-      print "   Input Files: $JoinInFiles\n";
-      print "   Output File: $JoinOutFile\n";
-      print "   GRADS Variable: $VarName\n";
-      system(@SysArgs);
-      }
+    exit 0;
     }
+
+  # If made it to here, in the parent process
+  $ilog++;
   }
 
 exit 0;
