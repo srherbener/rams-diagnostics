@@ -262,4 +262,85 @@ sub PrepConfigFile
   return (\@Cstmts);
   }
 
+#############################################################################
+# SubmitParallelJobs()
+#
+# This routine will take a list of commands (the jobs to be run), divide
+# then up evenly among the given number of processes, and submit the jobs.
+#
+
+sub SubmitParallelJobs
+  {
+  my ($JobList, $Nprocs, $Dname) = @_;
+
+  my $icmd;
+  my @SysArgs;
+  my $ilist;
+  my @SubLists;
+
+  my $ilog;
+  my $LogFile;
+  my $Pid;
+
+  # Split up list into Nprocs sub-lists making the
+  # sizes of these lists equal (some will have one
+  # more item than others).
+  foreach $icmd (0 .. $#{ $JobList })
+    {
+    $ilist = $icmd % $Nprocs;
+    push @{ $SubLists[$ilist]}, [ @{ $$JobList[$icmd] } ];
+    }
+
+  print "Submitting diagnostic jobs on $Nprocs processes for $Dname\n";
+  print "\n";
+
+  # Run each sublist on a separate process.
+  $ilog = 1;
+  foreach $ilist (0 .. $#SubLists)
+    {
+    # Create numbered log files so each child process gets a unique
+    # one. However, always number from 1 to num_cases so that a 
+    # massive number of files doesn't collect after running this
+    # command a bunch of times. The user will have to understand that
+    # the log files get overwritten each time you run this command.
+
+    $LogFile = sprintf("%s%d.log", $Dname, $ilog);
+
+    $Pid = fork;
+
+    # Child will run through the list of diagnostics and
+    # quit. The parent will continue in the Case loop
+    # (Pid == 0 for the parent).
+
+    if ($Pid != 0)
+      {
+      # Child
+  
+      # Redirect STDOUT and STDERR into the log file
+      open STDOUT, ">",  $LogFile;
+      open STDERR, ">>", $LogFile;
+
+      print "Running diagnostics on child process: $Pid\n";
+      print "\n";
+
+      foreach $icmd (0 .. $#{ $SubLists[$ilist] })
+        {
+        @SysArgs = @{ $SubLists[$ilist][$icmd] };
+        print "Running: ", join(" ", @SysArgs), "\n";
+
+        system(@SysArgs);
+  
+        print "\n";
+        }
+
+      exit 0;
+      }
+
+    # If made it to here, in the parent process
+    $ilog++;
+    }
+
+  return;
+  }
+
 1;
