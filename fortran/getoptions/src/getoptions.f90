@@ -26,7 +26,7 @@
       module getoptions
         implicit none
         save
-        character(len=80) :: optarg
+        character(len=256) :: optarg
         integer :: optind=1
 
         ! this variable should be module private - no plan how to do that
@@ -36,7 +36,7 @@
             character(len=*),intent(IN) :: optstr
 
             integer :: argc
-            character(len=80) :: arg
+            character(len=256) :: arg
             character :: okey
             integer :: found
 
