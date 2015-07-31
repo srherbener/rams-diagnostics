@@ -57,23 +57,23 @@ function [ ] = ExtractSampleProfiles()
 %        { 'HDF5/RCE_EXP_S50LN_CGHZ/HDF5/vint_vapor-RCE_EXP_S50LN_CGHZ-AC-2012-01-01-000000-g1.h5' '/vertint_vapor' }
 %        'RCE_EXP_S50LN_CGHZ'
 %      }
-
-      {
-        { 'HDF5/RCE_EXP_S50LN_THIN/HDF5/tempc-RCE_EXP_S50LN_THIN-AC-2012-01-01-000000-g1.h5' '/tempc' }
-        { 'HDF5/RCE_EXP_S50LN_THIN/HDF5/theta-RCE_EXP_S50LN_THIN-AC-2012-01-01-000000-g1.h5' '/theta' }
-        { 'HDF5/RCE_EXP_S50LN_THIN/HDF5/total_cond-RCE_EXP_S50LN_THIN-AC-2012-01-01-000000-g1.h5' '/total_cond' }
-        { 'HDF5/RCE_EXP_S50LN_THIN/HDF5/vint_vapor-RCE_EXP_S50LN_THIN-AC-2012-01-01-000000-g1.h5' '/vertint_vapor' }
-        'RCE_EXP_S50LN_THIN'
-      }
-
-      {
-        { 'HDF5/RCE_EXP_S50LN_SM/HDF5/tempc-RCE_EXP_S50LN_SM-AC-2012-01-01-000000-g1.h5' '/tempc' }
-        { 'HDF5/RCE_EXP_S50LN_SM/HDF5/theta-RCE_EXP_S50LN_SM-AC-2012-01-01-000000-g1.h5' '/theta' }
-        { 'HDF5/RCE_EXP_S50LN_SM/HDF5/total_cond-RCE_EXP_S50LN_SM-AC-2012-01-01-000000-g1.h5' '/total_cond' }
-        { 'HDF5/RCE_EXP_S50LN_SM/HDF5/vint_vapor-RCE_EXP_S50LN_SM-AC-2012-01-01-000000-g1.h5' '/vertint_vapor' }
-        'RCE_EXP_S50LN_SM'
-      }
-
+%
+%      {
+%        { 'HDF5/RCE_EXP_S50LN_THIN/HDF5/tempc-RCE_EXP_S50LN_THIN-AC-2012-01-01-000000-g1.h5' '/tempc' }
+%        { 'HDF5/RCE_EXP_S50LN_THIN/HDF5/theta-RCE_EXP_S50LN_THIN-AC-2012-01-01-000000-g1.h5' '/theta' }
+%        { 'HDF5/RCE_EXP_S50LN_THIN/HDF5/total_cond-RCE_EXP_S50LN_THIN-AC-2012-01-01-000000-g1.h5' '/total_cond' }
+%        { 'HDF5/RCE_EXP_S50LN_THIN/HDF5/vint_vapor-RCE_EXP_S50LN_THIN-AC-2012-01-01-000000-g1.h5' '/vertint_vapor' }
+%        'RCE_EXP_S50LN_THIN'
+%      }
+%
+%      {
+%        { 'HDF5/RCE_EXP_S50LN_SM/HDF5/tempc-RCE_EXP_S50LN_SM-AC-2012-01-01-000000-g1.h5' '/tempc' }
+%        { 'HDF5/RCE_EXP_S50LN_SM/HDF5/theta-RCE_EXP_S50LN_SM-AC-2012-01-01-000000-g1.h5' '/theta' }
+%        { 'HDF5/RCE_EXP_S50LN_SM/HDF5/total_cond-RCE_EXP_S50LN_SM-AC-2012-01-01-000000-g1.h5' '/total_cond' }
+%        { 'HDF5/RCE_EXP_S50LN_SM/HDF5/vint_vapor-RCE_EXP_S50LN_SM-AC-2012-01-01-000000-g1.h5' '/vertint_vapor' }
+%        'RCE_EXP_S50LN_SM'
+%      }
+%
 %      {
 %        { 'HDF5/RCE_EXP_S70MY/HDF5/tempc-RCE_EXP_S70MY-AC-2012-01-01-000000-g1.h5' '/tempc' }
 %        { 'HDF5/RCE_EXP_S70MY/HDF5/theta-RCE_EXP_S70MY-AC-2012-01-01-000000-g1.h5' '/theta' }
@@ -89,6 +89,38 @@ function [ ] = ExtractSampleProfiles()
 %        { 'HDF5/RCE_BASE/HDF5/vint_vapor-a-AC-2012-01-01-000000-g1.h5' '/vertint_vapor' }
 %        'RCE_BASE'
 %      }
+
+      {
+        { 'HDF5/RCE_S298/HDF5/tempc-RCE_S298-AC-2012-01-01-000000-g1.h5' '/tempc' }
+        { 'HDF5/RCE_S298/HDF5/theta-RCE_S298-AC-2012-01-01-000000-g1.h5' '/theta' }
+        { 'HDF5/RCE_S298/HDF5/total_cond-RCE_S298-AC-2012-01-01-000000-g1.h5' '/total_cond' }
+        { 'HDF5/RCE_S298/HDF5/vint_vapor-RCE_S298-AC-2012-01-01-000000-g1.h5' '/vertint_vapor' }
+        'RCE_S298'
+      }
+
+      {
+        { 'HDF5/RCE_S300/HDF5/tempc-RCE_S300-AC-2012-01-01-000000-g1.h5' '/tempc' }
+        { 'HDF5/RCE_S300/HDF5/theta-RCE_S300-AC-2012-01-01-000000-g1.h5' '/theta' }
+        { 'HDF5/RCE_S300/HDF5/total_cond-RCE_S300-AC-2012-01-01-000000-g1.h5' '/total_cond' }
+        { 'HDF5/RCE_S300/HDF5/vint_vapor-RCE_S300-AC-2012-01-01-000000-g1.h5' '/vertint_vapor' }
+        'RCE_S300'
+      }
+
+      {
+        { 'HDF5/RCE_S300_SM/HDF5/tempc-RCE_S300_SM-AC-2012-01-01-000000-g1.h5' '/tempc' }
+        { 'HDF5/RCE_S300_SM/HDF5/theta-RCE_S300_SM-AC-2012-01-01-000000-g1.h5' '/theta' }
+        { 'HDF5/RCE_S300_SM/HDF5/total_cond-RCE_S300_SM-AC-2012-01-01-000000-g1.h5' '/total_cond' }
+        { 'HDF5/RCE_S300_SM/HDF5/vint_vapor-RCE_S300_SM-AC-2012-01-01-000000-g1.h5' '/vertint_vapor' }
+        'RCE_S300_SM'
+      }
+
+      {
+        { 'HDF5/RCE_S302/HDF5/tempc-RCE_S302-AC-2012-01-01-000000-g1.h5' '/tempc' }
+        { 'HDF5/RCE_S302/HDF5/theta-RCE_S302-AC-2012-01-01-000000-g1.h5' '/theta' }
+        { 'HDF5/RCE_S302/HDF5/total_cond-RCE_S302-AC-2012-01-01-000000-g1.h5' '/total_cond' }
+        { 'HDF5/RCE_S302/HDF5/vint_vapor-RCE_S302-AC-2012-01-01-000000-g1.h5' '/vertint_vapor' }
+        'RCE_S302'
+      }
 
     };
   Nset = length(VarSets);

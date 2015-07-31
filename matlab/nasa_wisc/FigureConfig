@@ -3,77 +3,14 @@
 #
 
 ######### FIGURES ###################
-Figure: FigRadMeasS70 3
-  TestCasesS70
+Figure: FigRadMeas 3
+  RceCases
   [3_1]
   Plots/FigRadMeas_<CASE>.jpg
-  EqMeasPanelS70   1
-  ThfCompPanelS70  2
-  QradCompPanelS70 3
+  EqMeasPanel   1
+  ThfCompPanel  2
+  QradCompPanel 3
 End 
-
-#Figure: FigRadMeasS50 3
-#  TestCasesS50
-#  [3_1]
-#  Plots/FigRadMeas_<CASE>.jpg
-#  EqMeasPanelS50   1
-#  ThfCompPanelS50  2
-#  QradCompPanelS50 3
-#End 
-
-Figure: FigSampleSoundingHiPw 4
-  DummyCases
-  [2_2]
-  Plots/FigSampleSndHiPw.jpg
-  BaseHiPwPanel   1
-  S70LNHiPwPanel  2
-  S70LYHiPwPanel  3
-  S50LNHiPwPanel  4
-End
-
-Figure: FigSampleSoundingHiPw2 4
-  DummyCases
-  [2_2]
-  Plots/FigSampleSndHiPw2.jpg
-  S50LN_470HiPwPanel  1
-  S50LN_CGHiPwPanel   2
-  S50LN_CGHZHiPwPanel 3
-  S50LN_THINHiPwPanel 4
-End
-
-Figure: FigSampleSoundingHiPw3 1
-  DummyCases
-  [2_2]
-  Plots/FigSampleSndHiPw3.jpg
-  S50LN_SMHiPwPanel  1
-End
-
-Figure: FigSampleSoundingLoPw 4
-  DummyCases
-  [2_2]
-  Plots/FigSampleSndLoPw.jpg
-  BaseLoPwPanel  1
-  S70LNLoPwPanel 2
-  S70LYLoPwPanel 3
-  S50LNLoPwPanel 4
-End
-
-Figure: FigSampleSoundingLoPw2 4
-  DummyCases
-  [2_2]
-  Plots/FigSampleSndLoPw2.jpg
-  S50LN_470LoPwPanel  1
-  S50LN_CGLoPwPanel   2
-  S50LN_CGHZLoPwPanel 3
-  S50LN_THINLoPwPanel 4
-End
-
-Figure: FigSampleSoundingLoPw3 1
-  DummyCases
-  [2_2]
-  Plots/FigSampleSndLoPw3.jpg
-  S50LN_SMLoPwPanel  1
-End
 
 Figure: FigAvgPw 1
   DummyCases
@@ -82,105 +19,139 @@ Figure: FigAvgPw 1
   AvgPwPanel 1
 End
 
-#Figure: FigHovPwMatt 1
-#  DummyCases
-#  [1_1]
-#  Plots/FigHovPwMatt.jpg
-#  MattHovPwPanel 1
-#End
-#
-#Figure: FigHovBase 1
-#  DummyCases
-#  [1_1]
-#  Plots/FigHovPwBase.jpg
-#  BaseHovPwPanel  1
-#End
-#
-#Figure: FigHovPwS70LN 1
-#  DummyCases
-#  [1_1]
-#  Plots/FigHovPwS70LN.jpg
-#  S70LNHovPwPanel  1
-#End
-#
-#Figure: FigHovPwS70LY 1
-#  DummyCases
-#  [1_1]
-#  Plots/FigHovPwS70LY.jpg
-#  S70LYHovPwPanel 1
-#End
-#
-#Figure: FigHovPwS70MY 1
-#  DummyCases
-#  [1_1]
-#  Plots/FigHovPwS70MY.jpg
-#  S70MYHovPwPanel 1
-#End
-#
-#Figure: FigHovPwS50LN 1
-#  DummyCases
-#  [1_1]
-#  Plots/FigHovPwS50LN.jpg
-#  S50LNHovPwPanel 1
-#End
-
-Figure: FigHovPwS50LN_470 1
-  DummyCases
+Figure: FigHovPw 1
+  RceCases
   [1_1]
-  Plots/FigHovPwS50LN_470.jpg
-  S50LN_470HovPwPanel 1
+  Plots/FigHovPw_<CASE>.jpg
+  HovPwPanel 1
 End
 
-Figure: FigHovPwS50LN_CG 1
+Figure: FigSampleSoundingLoPwProd 4
   DummyCases
-  [1_1]
-  Plots/FigHovPwS50LN_CG.jpg
-  S50LN_CGHovPwPanel 1
+  [2_2]
+  Plots/FigSampleSndLoPwProd.jpg
+  S298_LoPwPanel     1
+  S300_LoPwPanel     2
+  S302_LoPwPanel     3
+  S300_SM_LoPwPanel  4
 End
 
-Figure: FigHovPwS50LN_CGHZ 1
+Figure: FigSampleSoundingHiPwProd 4
   DummyCases
-  [1_1]
-  Plots/FigHovPwS50LN_CGHZ.jpg
-  S50LN_CGHZHovPwPanel 1
+  [2_2]
+  Plots/FigSampleSndHiPwProd.jpg
+  S298_HiPwPanel     1
+  S300_HiPwPanel     2
+  S302_HiPwPanel     3
+  S300_SM_HiPwPanel  4
 End
 
-Figure: FigHovPwS50LN_THIN 1
-  DummyCases
-  [1_1]
-  Plots/FigHovPwS50LN_THIN.jpg
-  S50LN_THINHovPwPanel 1
-End
 
-Figure: FigHovPwS50LN_SM 1
-  DummyCases
-  [1_1]
-  Plots/FigHovPwS50LN_SM.jpg
-  S50LN_SMHovPwPanel 1
-End
+
+
+#Figure: FigRadMeasWide 3
+#  RceWideExpCases
+#  [3_1]
+#  Plots/FigRadMeas_<CASE>.jpg
+#  EqMeasPanel   1
+#  ThfCompPanel  2
+#  QradCompPanel 3
+#End 
+#
+#Figure: FigAvgPwExp 1
+#  DummyCases
+#  [1_1]
+#  Plots/FigAvgPwExp.jpg
+#  AvgPwExpPanel 1
+#End
+#
+#Figure: FigHovPwWide 1
+#  RceWideExpCases
+#  [1_1]
+#  Plots/FigHovPw_<CASE>.jpg
+#  HovPwWidePanel 1
+#End
+#
+#Figure: FigSampleSoundingHiPw 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigSampleSndHiPw.jpg
+#  BaseHiPwPanel   1
+#  S70LNHiPwPanel  2
+#  S70LYHiPwPanel  3
+#  S50LNHiPwPanel  4
+#End
+#
+#Figure: FigSampleSoundingHiPw2 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigSampleSndHiPw2.jpg
+#  S50LN_470HiPwPanel  1
+#  S50LN_CGHiPwPanel   2
+#  S50LN_CGHZHiPwPanel 3
+#  S50LN_THINHiPwPanel 4
+#End
+#
+#Figure: FigSampleSoundingHiPw3 1
+#  DummyCases
+#  [2_2]
+#  Plots/FigSampleSndHiPw3.jpg
+#  S50LN_SMHiPwPanel  1
+#End
+#
+#Figure: FigSampleSoundingLoPw 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigSampleSndLoPw.jpg
+#  BaseLoPwPanel  1
+#  S70LNLoPwPanel 2
+#  S70LYLoPwPanel 3
+#  S50LNLoPwPanel 4
+#End
+#
+#Figure: FigSampleSoundingLoPw2 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigSampleSndLoPw2.jpg
+#  S50LN_470LoPwPanel  1
+#  S50LN_CGLoPwPanel   2
+#  S50LN_CGHZLoPwPanel 3
+#  S50LN_THINLoPwPanel 4
+#End
+#
+#Figure: FigSampleSoundingLoPw3 1
+#  DummyCases
+#  [2_2]
+#  Plots/FigSampleSndLoPw3.jpg
+#  S50LN_SMLoPwPanel  1
+#End
 
 ########### CASES ####################
-CaseSet: TestCasesS70 5
-#  RCE_BASE
-#  RCE_MATT
-#  RCE_EXP_S70LN
-#  RCE_EXP_S70LY
-#  RCE_EXP_S70MY
+
+CaseSet: RceCases 4
+  RCE_S298
+  RCE_S300
+  RCE_S302
+  RCE_S300_SM
+End
+
+CaseSet: RceExpCases 10
+  RCE_BASE
+  RCE_MATT
+  RCE_EXP_S70LN
+  RCE_EXP_S70LY
+  RCE_EXP_S70MY
+
+  RCE_EXP_S50LN
 
   RCE_EXP_S50LN_470
   RCE_EXP_S50LN_CG
-  RCE_EXP_S50LN_CGHZ
   RCE_EXP_S50LN_THIN
   RCE_EXP_S50LN_SM
 End
 
-CaseSet: TestCasesS50 1
-#  RCE50_2D
-#  RCE50_RECT
-#  RCE50_RECT_S300
-#  RCE50_RECT_S303
-#  RCE50_SQ
-  RCE_EXP_S50LN
+CaseSet: RceWideExpCases 1
+  RCE_EXP_S50LN_CGHZ
 End
 
 CaseSet: DummyCases 1
@@ -188,52 +159,125 @@ CaseSet: DummyCases 1
 End
 
 ########### PANELS ####################
-FigPanel: EqMeasPanelS70
+
+FigPanel: EqMeasPanel
   EqMeasPset
-  EqMeasAxesS70 0 1
+  EqMeasAxes 0 1
   none 5
   PANEL:a@Eq@Measurement@@@@@@@@@@<CASE>
   SouthEast 12
 End
 
-FigPanel: ThfCompPanelS70
+FigPanel: ThfCompPanel
   ThfCompPset
-  ThfCompAxesS70 0 1
+  ThfCompAxes 0 1
   none 5
   PANEL:b@THF@Components
   NorthEast 12
 End
 
-FigPanel: QradCompPanelS70
+FigPanel: QradCompPanel
   QradCompPset
-  QradCompAxesS70 1 1
+  QradCompAxes 1 1
   none 5
   PANEL:c@Q_r_a_d@Components
   NorthEast 12
 End
 
-FigPanel: EqMeasPanelS50
-  EqMeasPset
-  EqMeasAxesS50 0 1
+FigPanel: AvgPwPanel
+  AvgPwPset
+  AvgPwAxes 1 1
   none 5
-  PANEL:a@Eq@Measurement@@@@@@@@@@<CASE>
-  SouthEast 12
+  Average@PW
+  SouthEast 10
 End
 
-FigPanel: ThfCompPanelS50
-  ThfCompPset
-  ThfCompAxesS50 0 1
+FigPanel: AvgPwExpPanel
+  AvgPwExpPset
+  AvgPwAxes 1 1
   none 5
-  PANEL:b@THF@Components
-  NorthEast 12
+  Average@PW
+  SouthEast 10
 End
 
-FigPanel: QradCompPanelS50
-  QradCompPset
-  QradCompAxesS50 1 1
+FigPanel: HovPwPanel
+  HovPwPset
+  HovPwAxes 1 1
   none 5
-  PANEL:c@Q_r_a_d@Components
-  NorthEast 12
+  PANEL:a@<CASE>@PW
+  none 10
+End
+
+FigPanel: HovPwWidePanel
+  HovPwPset
+  HovPwWideAxes 1 1
+  none 5
+  PANEL:a@<CASE>@PW
+  none 10
+End
+
+FigPanel: S298_LoPwPanel
+  S298_LoPwPset
+  SampSoundingAxes 1 1
+  none 5
+  PANEL:a@S298@LO@PW
+  none 10
+End
+
+FigPanel: S300_LoPwPanel
+  S300_LoPwPset
+  SampSoundingAxes 1 1
+  none 5
+  PANEL:a@S300@LO@PW
+  Best 10
+End
+
+FigPanel: S302_LoPwPanel
+  S302_LoPwPset
+  SampSoundingAxes 1 1
+  none 5
+  PANEL:a@S302@LO@PW
+  none 10
+End
+
+FigPanel: S300_SM_LoPwPanel
+  S300_SM_LoPwPset
+  SampSoundingAxes 1 1
+  none 5
+  PANEL:a@S300\_SM@LO@PW
+  none 10
+End
+
+FigPanel: S298_HiPwPanel
+  S298_HiPwPset
+  SampSoundingAxes 1 1
+  none 5
+  PANEL:a@S298@HI@PW
+  none 10
+End
+
+FigPanel: S300_HiPwPanel
+  S300_HiPwPset
+  SampSoundingAxes 1 1
+  none 5
+  PANEL:a@S300@HI@PW
+  Best 10
+End
+
+FigPanel: S302_HiPwPanel
+  S302_HiPwPset
+  SampSoundingAxes 1 1
+  none 5
+  PANEL:a@S302@HI@PW
+  none 10
+End
+
+FigPanel: S300_SM_HiPwPanel
+  S300_SM_HiPwPset
+  SampSoundingAxes 1 1
+  none 5
+  PANEL:a@S300\_SM@HI@PW
+  none 10
 End
 
 
@@ -397,102 +441,6 @@ FigPanel: S50LN_SMHiPwPanel
   none 10
 End
 
-FigPanel: AvgPwPanel
-  AvgPwPset
-  AvgPwAxes 1 1
-  none 5
-  Average@PW
-  SouthEast 10
-End
-
-FigPanel: MattHovPwPanel
-  MattHovPwPset
-  HovPwAxes 1 1
-  none 5
-  PANEL:a@MATT@PW
-  none 10
-End
-
-FigPanel: BaseHovPwPanel
-  BaseHovPwPset
-  HovPwAxes 1 1
-  none 5
-  PANEL:b@BASE@PW
-  none 10
-End
-
-FigPanel: S70LNHovPwPanel
-  S70LNHovPwPset
-  HovPwAxes 1 1
-  none 5
-  PANEL:b@S70LN@PW
-  none 10
-End
-
-FigPanel: S70MYHovPwPanel
-  S70MYHovPwPset
-  HovPwAxes 1 1
-  none 5
-  PANEL:b@S70MY@PW
-  none 10
-End
-
-FigPanel: S70LYHovPwPanel
-  S70LYHovPwPset
-  HovPwAxes 1 1
-  none 5
-  PANEL:c@S70LY@PW
-  none 10
-End
-
-FigPanel: S50LNHovPwPanel
-  S50LNHovPwPset
-  HovPwAxes 1 1
-  none 5
-  PANEL:d@S50LN@PW
-  none 10
-End
-
-FigPanel: S50LN_470HovPwPanel
-  S50LN_470HovPwPset
-  HovPwAxes 1 1
-  none 5
-  PANEL:d@S50LN\_470@PW
-  none 10
-End
-
-FigPanel: S50LN_CGHovPwPanel
-  S50LN_CGHovPwPset
-  HovPwAxes 1 1
-  none 5
-  PANEL:d@S50LN\_CG@PW
-  none 10
-End
-
-FigPanel: S50LN_CGHZHovPwPanel
-  S50LN_CGHZHovPwPset
-  HovWidePwAxes 1 1
-  none 5
-  PANEL:d@S50LN\_CGHZ@PW
-  none 10
-End
-
-FigPanel: S50LN_THINHovPwPanel
-  S50LN_THINHovPwPset
-  HovPwAxes 1 1
-  none 5
-  PANEL:d@S50LN\_THIN@PW
-  none 10
-End
-
-FigPanel: S50LN_SMHovPwPanel
-  S50LN_SMHovPwPset
-  HovPwAxes 1 1
-  none 5
-  PANEL:d@S50LN\_SM@PW
-  none 10
-End
-
 ############ PLOT SETS #################
 PlotSet: EqMeasPset line 2
   ThfLine  none THF     2 blue   - 0
@@ -515,107 +463,14 @@ PlotSet: QradCompPset line 7
   TopSwupLine none TOP\_SWUP 2 orange  -- 0
 End
 
-PlotSet: BaseLoPwPset line 2
-  BaseLoPwTheta none \theta@(deg@C)   2 blue   - 0
-  BaseLoPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
+PlotSet: AvgPwPset line 4
+  AvgPwLine  RCE_S298    S298    2 green    - 0
+  AvgPwLine  RCE_S300    S300    2 red      - 0
+  AvgPwLine  RCE_S302    S302    2 blue     - 0
+  AvgPwLine  RCE_S300_SM S300-SM 2 magenta  - 0
 End
 
-PlotSet: S70LNLoPwPset line 2
-  S70LNLoPwTheta none \theta@(deg@C)   2 blue   - 0
-  S70LNLoPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
-End
-
-PlotSet: S70MYLoPwPset line 2
-  S70MYLoPwTheta none \theta@(deg@C)   2 blue   - 0
-  S70MYLoPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
-End
-
-PlotSet: S70LYLoPwPset line 2
-  S70LYLoPwTheta none \theta@(deg@C)   2 blue   - 0
-  S70LYLoPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
-End
-
-PlotSet: S50LNLoPwPset line 2
-  S50LNLoPwTheta none \theta@(deg@C)   2 blue   - 0
-  S50LNLoPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
-End
-
-PlotSet: S50LN_470LoPwPset line 2
-  S50LN_470LoPwTheta none \theta@(deg@C)   2 blue   - 0
-  S50LN_470LoPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
-End
-
-PlotSet: S50LN_CGLoPwPset line 2
-  S50LN_CGLoPwTheta none \theta@(deg@C)   2 blue   - 0
-  S50LN_CGLoPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
-End
-
-PlotSet: S50LN_CGHZLoPwPset line 2
-  S50LN_CGHZLoPwTheta none \theta@(deg@C)   2 blue   - 0
-  S50LN_CGHZLoPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
-End
-
-PlotSet: S50LN_THINLoPwPset line 2
-  S50LN_THINLoPwTheta none \theta@(deg@C)   2 blue   - 0
-  S50LN_THINLoPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
-End
-
-PlotSet: S50LN_SMLoPwPset line 2
-  S50LN_SMLoPwTheta none \theta@(deg@C)   2 blue   - 0
-  S50LN_SMLoPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
-End
-
-PlotSet: BaseHiPwPset line 2
-  BaseHiPwTheta  none \theta@(deg@C)   2 blue   - 0
-  BaseHiPwTcond  none Q_t@(100@X@g/kg) 2 red    - 0
-End
-
-PlotSet: S70LNHiPwPset line 2
-  S70LNHiPwTheta none \theta@(deg@C)   2 blue   - 0
-  S70LNHiPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
-End
-
-PlotSet: S70MYHiPwPset line 2
-  S70MYHiPwTheta none \theta@(deg@C)   2 blue   - 0
-  S70MYHiPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
-End
-
-PlotSet: S70LYHiPwPset line 2
-  S70LYHiPwTheta none \theta@(deg@C)   2 blue   - 0
-  S70LYHiPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
-End
-
-PlotSet: S50LNHiPwPset line 2
-  S50LNHiPwTheta none \theta@(deg@C)   2 blue   - 0
-  S50LNHiPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
-End
-
-PlotSet: S50LN_470HiPwPset line 2
-  S50LN_470HiPwTheta none \theta@(deg@C)   2 blue   - 0
-  S50LN_470HiPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
-End
-
-PlotSet: S50LN_CGHiPwPset line 2
-  S50LN_CGHiPwTheta none \theta@(deg@C)   2 blue   - 0
-  S50LN_CGHiPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
-End
-
-PlotSet: S50LN_CGHZHiPwPset line 2
-  S50LN_CGHZHiPwTheta none \theta@(deg@C)   2 blue   - 0
-  S50LN_CGHZHiPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
-End
-
-PlotSet: S50LN_THINHiPwPset line 2
-  S50LN_THINHiPwTheta none \theta@(deg@C)   2 blue   - 0
-  S50LN_THINHiPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
-End
-
-PlotSet: S50LN_SMHiPwPset line 2
-  S50LN_SMHiPwTheta none \theta@(deg@C)   2 blue   - 0
-  S50LN_SMHiPwTcond none Q_t@(100@X@g/kg) 2 red    - 0
-End
-
-PlotSet: AvgPwPset line 7
+PlotSet: AvgPwExpPset line 7
   AvgPwLine  RCE_BASE           BASE       2 green    - 0
   AvgPwLine  RCE_EXP_S70LN      S70LN      2 red      - 0
   AvgPwLine  RCE_EXP_S50LN_470  S50LN-470  2 blue     - 0
@@ -625,48 +480,151 @@ PlotSet: AvgPwPset line 7
   AvgPwLine  RCE_EXP_S50LN_SM   S50LN-SM   2 orange   - 0
 End
 
-PlotSet: MattHovPwPset contourf 1
-  MattHovPwContour none none 2 blue - 0
+PlotSet: HovPwPset contourf 1
+  HovPwContour none none 2 blue - 0
 End
 
-PlotSet: BaseHovPwPset contourf 1
-  BaseHovPwContour none none 2 blue - 0
+PlotSet: S298_LoPwPset line 2
+  LoPwThetaLine RCE_S298 \theta@(deg@C)   2 blue   - 0
+  LoPwTcondLine RCE_S298 Q_t@(100@X@g/kg) 2 red    - 0
 End
 
-PlotSet: S70LNHovPwPset contourf 1
-  S70LNHovPwContour none none 2 blue - 0
+PlotSet: S300_LoPwPset line 2
+  LoPwThetaLine RCE_S300 \theta@(deg@C)   2 blue   - 0
+  LoPwTcondLine RCE_S300 Q_t@(100@X@g/kg) 2 red    - 0
 End
 
-PlotSet: S70MYHovPwPset contourf 1
-  S70MYHovPwContour none none 2 blue - 0
+PlotSet: S302_LoPwPset line 2
+  LoPwThetaLine RCE_S302 \theta@(deg@C)   2 blue   - 0
+  LoPwTcondLine RCE_S302 Q_t@(100@X@g/kg) 2 red    - 0
 End
 
-PlotSet: S70LYHovPwPset contourf 1
-  S70LYHovPwContour none none 2 blue - 0
+PlotSet: S300_SM_LoPwPset line 2
+  LoPwThetaLine RCE_S300_SM \theta@(deg@C)   2 blue   - 0
+  LoPwTcondLine RCE_S300_SM Q_t@(100@X@g/kg) 2 red    - 0
 End
 
-PlotSet: S50LNHovPwPset contourf 1
-  S50LNHovPwContour none none 2 blue - 0
+PlotSet: S298_HiPwPset line 2
+  HiPwThetaLine RCE_S298 \theta@(deg@C)   2 blue   - 0
+  HiPwTcondLine RCE_S298 Q_t@(100@X@g/kg) 2 red    - 0
 End
 
-PlotSet: S50LN_470HovPwPset contourf 1
-  S50LN_470HovPwContour none none 2 blue - 0
+PlotSet: S300_HiPwPset line 2
+  HiPwThetaLine RCE_S300 \theta@(deg@C)   2 blue   - 0
+  HiPwTcondLine RCE_S300 Q_t@(100@X@g/kg) 2 red    - 0
 End
 
-PlotSet: S50LN_CGHovPwPset contourf 1
-  S50LN_CGHovPwContour none none 2 blue - 0
+PlotSet: S302_HiPwPset line 2
+  HiPwThetaLine RCE_S302 \theta@(deg@C)   2 blue   - 0
+  HiPwTcondLine RCE_S302 Q_t@(100@X@g/kg) 2 red    - 0
 End
 
-PlotSet: S50LN_CGHZHovPwPset contourf 1
-  S50LN_CGHZHovPwContour none none 2 blue - 0
+PlotSet: S300_SM_HiPwPset line 2
+  HiPwThetaLine RCE_S300_SM \theta@(deg@C)   2 blue   - 0
+  HiPwTcondLine RCE_S300_SM Q_t@(100@X@g/kg) 2 red    - 0
 End
 
-PlotSet: S50LN_THINHovPwPset contourf 1
-  S50LN_THINHovPwContour none none 2 blue - 0
+
+
+PlotSet: BaseLoPwPset line 2
+  LoPwThetaLine RCE_BASE \theta@(deg@C)   2 blue   - 0
+  LoPwTcondLine RCE_BASE Q_t@(100@X@g/kg) 2 red    - 0
 End
 
-PlotSet: S50LN_SMHovPwPset contourf 1
-  S50LN_SMHovPwContour none none 2 blue - 0
+PlotSet: S70LNLoPwPset line 2
+  LoPwThetaLine RCE_EXP_S70LN \theta@(deg@C)   2 blue   - 0
+  LoPwTcondLine RCE_EXP_S70LN Q_t@(100@X@g/kg) 2 red    - 0
+End
+
+PlotSet: S70MYLoPwPset line 2
+  LoPwThetaLine RCE_EXP_S70MY \theta@(deg@C)   2 blue   - 0
+  LoPwTcondLine RCE_EXP_S70MY Q_t@(100@X@g/kg) 2 red    - 0
+End
+
+PlotSet: S70LYLoPwPset line 2
+  LoPwThetaLine RCE_EXP_S70LY \theta@(deg@C)   2 blue   - 0
+  LoPwTcondLine RCE_EXP_S70LY Q_t@(100@X@g/kg) 2 red    - 0
+End
+
+PlotSet: S50LNLoPwPset line 2
+  LoPwThetaLine RCE_EXP_S50LN \theta@(deg@C)   2 blue   - 0
+  LoPwTcondLine RCE_EXP_S50LN Q_t@(100@X@g/kg) 2 red    - 0
+End
+
+PlotSet: S50LN_470LoPwPset line 2
+  LoPwThetaLine RCE_EXP_S50LN_470 \theta@(deg@C)   2 blue   - 0
+  LoPwTcondLine RCE_EXP_S50LN_470 Q_t@(100@X@g/kg) 2 red    - 0
+End
+
+PlotSet: S50LN_CGLoPwPset line 2
+  LoPwThetaLine RCE_EXP_S50LN_CG \theta@(deg@C)   2 blue   - 0
+  LoPwTcondLine RCE_EXP_S50LN_CG Q_t@(100@X@g/kg) 2 red    - 0
+End
+
+PlotSet: S50LN_CGHZLoPwPset line 2
+  LoPwThetaLine RCE_EXP_S50LN_CGHZ \theta@(deg@C)   2 blue   - 0
+  LoPwTcondLine RCE_EXP_S50LN_CGHZ Q_t@(100@X@g/kg) 2 red    - 0
+End
+
+PlotSet: S50LN_THINLoPwPset line 2
+  LoPwThetaLine RCE_EXP_S50LN_THIN \theta@(deg@C)   2 blue   - 0
+  LoPwTcondLine RCE_EXP_S50LN_THIN Q_t@(100@X@g/kg) 2 red    - 0
+End
+
+PlotSet: S50LN_SMLoPwPset line 2
+  LoPwThetaLine RCE_EXP_S50LN_SM \theta@(deg@C)   2 blue   - 0
+  LoPwTcondLine RCE_EXP_S50LN_SM Q_t@(100@X@g/kg) 2 red    - 0
+End
+
+
+PlotSet: BaseHiPwPset line 2
+  HiPwThetaLine RCE_BASE \theta@(deg@C)   2 blue   - 0
+  HiPwTcondLine RCE_BASE Q_t@(100@X@g/kg) 2 red    - 0
+End
+
+PlotSet: S70LNHiPwPset line 2
+  HiPwThetaLine RCE_EXP_S70LN \theta@(deg@C)   2 blue   - 0
+  HiPwTcondLine RCE_EXP_S70LN Q_t@(100@X@g/kg) 2 red    - 0
+End
+
+PlotSet: S70MYHiPwPset line 2
+  HiPwThetaLine RCE_EXP_S70MY \theta@(deg@C)   2 blue   - 0
+  HiPwTcondLine RCE_EXP_S70MY Q_t@(100@X@g/kg) 2 red    - 0
+End
+
+PlotSet: S70LYHiPwPset line 2
+  HiPwThetaLine RCE_EXP_S70LY \theta@(deg@C)   2 blue   - 0
+  HiPwTcondLine RCE_EXP_S70LY Q_t@(100@X@g/kg) 2 red    - 0
+End
+
+PlotSet: S50LNHiPwPset line 2
+  HiPwThetaLine RCE_EXP_S50LN \theta@(deg@C)   2 blue   - 0
+  HiPwTcondLine RCE_EXP_S50LN Q_t@(100@X@g/kg) 2 red    - 0
+End
+
+PlotSet: S50LN_470HiPwPset line 2
+  HiPwThetaLine RCE_EXP_S50LN_470 \theta@(deg@C)   2 blue   - 0
+  HiPwTcondLine RCE_EXP_S50LN_470 Q_t@(100@X@g/kg) 2 red    - 0
+End
+
+PlotSet: S50LN_CGHiPwPset line 2
+  HiPwThetaLine RCE_EXP_S50LN_CG \theta@(deg@C)   2 blue   - 0
+  HiPwTcondLine RCE_EXP_S50LN_CG Q_t@(100@X@g/kg) 2 red    - 0
+End
+
+PlotSet: S50LN_CGHZHiPwPset line 2
+  HiPwThetaLine RCE_EXP_S50LN_CGHZ \theta@(deg@C)   2 blue   - 0
+  HiPwTcondLine RCE_EXP_S50LN_CGHZ Q_t@(100@X@g/kg) 2 red    - 0
+End
+
+PlotSet: S50LN_THINHiPwPset line 2
+  HiPwThetaLine RCE_EXP_S50LN_THIN \theta@(deg@C)   2 blue   - 0
+  HiPwTcondLine RCE_EXP_S50LN_THIN Q_t@(100@X@g/kg) 2 red    - 0
+End
+
+PlotSet: S50LN_SMHiPwPset line 2
+  HiPwThetaLine RCE_EXP_S50LN_SM \theta@(deg@C)   2 blue   - 0
+  HiPwTcondLine RCE_EXP_S50LN_SM Q_t@(100@X@g/kg) 2 red    - 0
 End
 
 ############ PLOT DATA #################
@@ -747,724 +705,6 @@ PlotData: TopSwupLine 2
   /avg_top_swup DIAGS/eq_meas_<CASE>.h5 @ 1 0
 End
 
-
-
-PlotData: BaseLoPwTemp 2
-  # x data - sim time in days
-  /tempc_lavg DIAGS/SampleProfiles_RCE_BASE.h5 (2:65,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_BASE.h5 (2:65) 1e-3 0
-End
-
-PlotData: BaseLoPwTheta 2
-  # x data - sim time in days
-  /theta_lavg DIAGS/SampleProfiles_RCE_BASE.h5 (2:65,32) 1 -273.15
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_BASE.h5 (2:65) 1e-3 0
-End
-
-PlotData: BaseLoPwCloud 2
-  # x data - sim time in days
-  /cloud_lavg DIAGS/SampleProfiles_RCE_BASE.h5 (2:65,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_BASE.h5 (2:65)   1e-3 0
-End
-
-PlotData: BaseLoPwVapor 2
-  # x data - sim time in days
-  /vapor_lavg DIAGS/SampleProfiles_RCE_BASE.h5 (2:65,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_BASE.h5 (2:65) 1e-3 0
-End
-
-PlotData: BaseLoPwTcond 2
-  # x data - sim time in days
-  /total_cond_lavg DIAGS/SampleProfiles_RCE_BASE.h5 (2:65,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords        DIAGS/SampleProfiles_RCE_BASE.h5 (2:65) 1e-3 0
-End
-
-PlotData: BaseHiPwTemp 2
-  # x data - sim time in days
-  /tempc_havg DIAGS/SampleProfiles_RCE_BASE.h5 (2:65,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_BASE.h5 (2:65) 1e-3 0
-End
-
-PlotData: BaseHiPwTheta 2
-  # x data - sim time in days
-  /theta_havg DIAGS/SampleProfiles_RCE_BASE.h5 (2:65,32) 1 -273.15
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_BASE.h5 (2:65) 1e-3 0
-End
-
-PlotData: BaseHiPwCloud 2
-  # x data - sim time in days
-  /cloud_havg DIAGS/SampleProfiles_RCE_BASE.h5 (2:65,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_BASE.h5 (2:65)   1e-3 0
-End
-
-PlotData: BaseHiPwVapor 2
-  # x data - sim time in days
-  /vapor_havg DIAGS/SampleProfiles_RCE_BASE.h5 (2:65,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_BASE.h5 (2:65) 1e-3 0
-End
-
-PlotData: BaseHiPwTcond 2
-  # x data - sim time in days
-  /total_cond_havg DIAGS/SampleProfiles_RCE_BASE.h5 (2:65,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords        DIAGS/SampleProfiles_RCE_BASE.h5 (2:65) 1e-3 0
-End
-
-
-
-
-PlotData: S70LNLoPwTemp 2
-  # x data - sim time in days
-  /tempc_lavg DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75) 1e-3 0
-End
-
-PlotData: S70LNLoPwTheta 2
-  # x data - sim time in days
-  /theta_lavg DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75,32) 1 -273.15
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75) 1e-3 0
-End
-
-PlotData: S70LNLoPwCloud 2
-  # x data - sim time in days
-  /cloud_lavg DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75)   1e-3 0
-End
-
-PlotData: S70LNLoPwVapor 2
-  # x data - sim time in days
-  /vapor_lavg DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75) 1e-3 0
-End
-
-PlotData: S70LNLoPwTcond 2
-  # x data - sim time in days
-  /total_cond_lavg DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords        DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75) 1e-3 0
-End
-
-PlotData: S70LNHiPwTemp 2
-  # x data - sim time in days
-  /tempc_havg DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75) 1e-3 0
-End
-
-PlotData: S70LNHiPwTheta 2
-  # x data - sim time in days
-  /theta_havg DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75,32) 1 -273.15
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75) 1e-3 0
-End
-
-PlotData: S70LNHiPwCloud 2
-  # x data - sim time in days
-  /cloud_havg DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75)   1e-3 0
-End
-
-PlotData: S70LNHiPwVapor 2
-  # x data - sim time in days
-  /vapor_havg DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75) 1e-3 0
-End
-
-PlotData: S70LNHiPwTcond 2
-  # x data - sim time in days
-  /total_cond_havg DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LN.h5 (2:75) 1e-3 0
-End
-
-
-
-PlotData: S70LYLoPwTemp 2
-  # x data - sim time in days
-  /tempc_lavg DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75) 1e-3 0
-End
-
-PlotData: S70LYLoPwTheta 2
-  # x data - sim time in days
-  /theta_lavg DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75,32) 1 -273.15
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75) 1e-3 0
-End
-
-PlotData: S70LYLoPwCloud 2
-  # x data - sim time in days
-  /cloud_lavg DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75)   1e-3 0
-End
-
-PlotData: S70LYLoPwVapor 2
-  # x data - sim time in days
-  /vapor_lavg DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75) 1e-3 0
-End
-
-PlotData: S70LYLoPwTcond 2
-  # x data - sim time in days
-  /total_cond_lavg DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords        DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75) 1e-3 0
-End
-
-PlotData: S70LYHiPwTemp 2
-  # x data - sim time in days
-  /tempc_havg DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75) 1e-3 0
-End
-
-PlotData: S70LYHiPwTheta 2
-  # x data - sim time in days
-  /theta_havg DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75,32) 1 -273.15
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75) 1e-3 0
-End
-
-PlotData: S70LYHiPwCloud 2
-  # x data - sim time in days
-  /cloud_havg DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75)   1e-3 0
-End
-
-PlotData: S70LYHiPwVapor 2
-  # x data - sim time in days
-  /vapor_havg DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75) 1e-3 0
-End
-
-PlotData: S70LYHiPwTcond 2
-  # x data - sim time in days
-  /total_cond_havg DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70LY.h5 (2:75) 1e-3 0
-End
-
-
-
-PlotData: S70MYLoPwTemp 2
-  # x data - sim time in days
-  /tempc_lavg DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75,29) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75) 1e-3 0
-End
-
-PlotData: S70MYLoPwTheta 2
-  # x data - sim time in days
-  /theta_lavg DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75,29) 1 -273.15
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75) 1e-3 0
-End
-
-PlotData: S70MYLoPwCloud 2
-  # x data - sim time in days
-  /cloud_lavg DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75,29) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75)   1e-3 0
-End
-
-PlotData: S70MYLoPwVapor 2
-  # x data - sim time in days
-  /vapor_lavg DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75,29) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75) 1e-3 0
-End
-
-PlotData: S70MYLoPwTcond 2
-  # x data - sim time in days
-  /total_cond_lavg DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75,29) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords        DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75) 1e-3 0
-End
-
-PlotData: S70MYHiPwTemp 2
-  # x data - sim time in days
-  /tempc_havg DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75,29) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75) 1e-3 0
-End
-
-PlotData: S70MYHiPwTheta 2
-  # x data - sim time in days
-  /theta_havg DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75,29) 1 -273.15
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75) 1e-3 0
-End
-
-PlotData: S70MYHiPwCloud 2
-  # x data - sim time in days
-  /cloud_havg DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75,29) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75)   1e-3 0
-End
-
-PlotData: S70MYHiPwVapor 2
-  # x data - sim time in days
-  /vapor_havg DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75,29) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75) 1e-3 0
-End
-
-PlotData: S70MYHiPwTcond 2
-  # x data - sim time in days
-  /total_cond_havg DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75,29) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S70MY.h5 (2:75) 1e-3 0
-End
-
-
-
-PlotData: S50LNLoPwTemp 2
-  # x data - sim time in days
-  /tempc_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75) 1e-3 0
-End
-
-PlotData: S50LNLoPwTheta 2
-  # x data - sim time in days
-  /theta_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75,32) 1 -273.15
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75) 1e-3 0
-End
-
-PlotData: S50LNLoPwCloud 2
-  # x data - sim time in days
-  /cloud_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75)   1e-3 0
-End
-
-PlotData: S50LNLoPwVapor 2
-  # x data - sim time in days
-  /vapor_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75) 1e-3 0
-End
-
-PlotData: S50LNLoPwTcond 2
-  # x data - sim time in days
-  /total_cond_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords        DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75) 1e-3 0
-End
-
-PlotData: S50LNHiPwTemp 2
-  # x data - sim time in days
-  /tempc_havg DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75) 1e-3 0
-End
-
-PlotData: S50LNHiPwTheta 2
-  # x data - sim time in days
-  /theta_havg DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75,32) 1 -273.15
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75) 1e-3 0
-End
-
-PlotData: S50LNHiPwCloud 2
-  # x data - sim time in days
-  /cloud_havg DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75)   1e-3 0
-End
-
-PlotData: S50LNHiPwVapor 2
-  # x data - sim time in days
-  /vapor_havg DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75) 1e-3 0
-End
-
-PlotData: S50LNHiPwTcond 2
-  # x data - sim time in days
-  /total_cond_havg DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN.h5 (2:75) 1e-3 0
-End
-
-
-
-PlotData: S50LN_470LoPwTemp 2
-  # x data - sim time in days
-  /tempc_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75) 1e-3 0
-End
-
-PlotData: S50LN_470LoPwTheta 2
-  # x data - sim time in days
-  /theta_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75,32) 1 -273.15
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75) 1e-3 0
-End
-
-PlotData: S50LN_470LoPwCloud 2
-  # x data - sim time in days
-  /cloud_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75)   1e-3 0
-End
-
-PlotData: S50LN_470LoPwVapor 2
-  # x data - sim time in days
-  /vapor_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75) 1e-3 0
-End
-
-PlotData: S50LN_470LoPwTcond 2
-  # x data - sim time in days
-  /total_cond_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords        DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75) 1e-3 0
-End
-
-PlotData: S50LN_470HiPwTemp 2
-  # x data - sim time in days
-  /tempc_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75) 1e-3 0
-End
-
-PlotData: S50LN_470HiPwTheta 2
-  # x data - sim time in days
-  /theta_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75,32) 1 -273.15
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75) 1e-3 0
-End
-
-PlotData: S50LN_470HiPwCloud 2
-  # x data - sim time in days
-  /cloud_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75)   1e-3 0
-End
-
-PlotData: S50LN_470HiPwVapor 2
-  # x data - sim time in days
-  /vapor_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75) 1e-3 0
-End
-
-PlotData: S50LN_470HiPwTcond 2
-  # x data - sim time in days
-  /total_cond_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_470.h5 (2:75) 1e-3 0
-End
-
-
-PlotData: S50LN_CGLoPwTemp 2
-  # x data - sim time in days
-  /tempc_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_CG.h5 (2:40,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_CG.h5 (2:40) 1e-3 0
-End
-
-PlotData: S50LN_CGLoPwTheta 2
-  # x data - sim time in days
-  /theta_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_CG.h5 (2:40,32) 1 -273.15
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_CG.h5 (2:40) 1e-3 0
-End
-
-PlotData: S50LN_CGLoPwCloud 2
-  # x data - sim time in days
-  /cloud_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_CG.h5 (2:40,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_CG.h5 (2:40)   1e-3 0
-End
-
-PlotData: S50LN_CGLoPwVapor 2
-  # x data - sim time in days
-  /vapor_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_CG.h5 (2:40,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_CG.h5 (2:40) 1e-3 0
-End
-
-PlotData: S50LN_CGLoPwTcond 2
-  # x data - sim time in days
-  /total_cond_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_CG.h5 (2:40,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords        DIAGS/SampleProfiles_RCE_EXP_S50LN_CG.h5 (2:40) 1e-3 0
-End
-
-PlotData: S50LN_CGHiPwTemp 2
-  # x data - sim time in days
-  /tempc_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_CG.h5 (2:40,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_CG.h5 (2:40) 1e-3 0
-End
-
-PlotData: S50LN_CGHiPwTheta 2
-  # x data - sim time in days
-  /theta_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_CG.h5 (2:40,32) 1 -273.15
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_CG.h5 (2:40) 1e-3 0
-End
-
-PlotData: S50LN_CGHiPwCloud 2
-  # x data - sim time in days
-  /cloud_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_CG.h5 (2:40,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_CG.h5 (2:40)   1e-3 0
-End
-
-PlotData: S50LN_CGHiPwVapor 2
-  # x data - sim time in days
-  /vapor_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_CG.h5 (2:40,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_CG.h5 (2:40) 1e-3 0
-End
-
-PlotData: S50LN_CGHiPwTcond 2
-  # x data - sim time in days
-  /total_cond_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_CG.h5 (2:40,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_CG.h5 (2:40) 1e-3 0
-End
-
-
-PlotData: S50LN_CGHZLoPwTemp 2
-  # x data - sim time in days
-  /tempc_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_CGHZ.h5 (2:40,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_CGHZ.h5 (2:40) 1e-3 0
-End
-
-PlotData: S50LN_CGHZLoPwTheta 2
-  # x data - sim time in days
-  /theta_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_CGHZ.h5 (2:40,32) 1 -273.15
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_CGHZ.h5 (2:40) 1e-3 0
-End
-
-PlotData: S50LN_CGHZLoPwCloud 2
-  # x data - sim time in days
-  /cloud_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_CGHZ.h5 (2:40,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_CGHZ.h5 (2:40)   1e-3 0
-End
-
-PlotData: S50LN_CGHZLoPwVapor 2
-  # x data - sim time in days
-  /vapor_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_CGHZ.h5 (2:40,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_CGHZ.h5 (2:40) 1e-3 0
-End
-
-PlotData: S50LN_CGHZLoPwTcond 2
-  # x data - sim time in days
-  /total_cond_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_CGHZ.h5 (2:40,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords        DIAGS/SampleProfiles_RCE_EXP_S50LN_CGHZ.h5 (2:40) 1e-3 0
-End
-
-PlotData: S50LN_CGHZHiPwTemp 2
-  # x data - sim time in days
-  /tempc_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_CGHZ.h5 (2:40,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_CGHZ.h5 (2:40) 1e-3 0
-End
-
-PlotData: S50LN_CGHZHiPwTheta 2
-  # x data - sim time in days
-  /theta_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_CGHZ.h5 (2:40,32) 1 -273.15
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_CGHZ.h5 (2:40) 1e-3 0
-End
-
-PlotData: S50LN_CGHZHiPwCloud 2
-  # x data - sim time in days
-  /cloud_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_CGHZ.h5 (2:40,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_CGHZ.h5 (2:40)   1e-3 0
-End
-
-PlotData: S50LN_CGHZHiPwVapor 2
-  # x data - sim time in days
-  /vapor_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_CGHZ.h5 (2:40,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_CGHZ.h5 (2:40) 1e-3 0
-End
-
-PlotData: S50LN_CGHZHiPwTcond 2
-  # x data - sim time in days
-  /total_cond_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_CGHZ.h5 (2:40,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_CGHZ.h5 (2:40) 1e-3 0
-End
-
-
-PlotData: S50LN_THINLoPwTemp 2
-  # x data - sim time in days
-  /tempc_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_THIN.h5 (2:75,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_THIN.h5 (2:75) 1e-3 0
-End
-
-PlotData: S50LN_THINLoPwTheta 2
-  # x data - sim time in days
-  /theta_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_THIN.h5 (2:75,32) 1 -273.15
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_THIN.h5 (2:75) 1e-3 0
-End
-
-PlotData: S50LN_THINLoPwCloud 2
-  # x data - sim time in days
-  /cloud_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_THIN.h5 (2:75,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_THIN.h5 (2:75)   1e-3 0
-End
-
-PlotData: S50LN_THINLoPwVapor 2
-  # x data - sim time in days
-  /vapor_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_THIN.h5 (2:75,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_THIN.h5 (2:75) 1e-3 0
-End
-
-PlotData: S50LN_THINLoPwTcond 2
-  # x data - sim time in days
-  /total_cond_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_THIN.h5 (2:75,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords        DIAGS/SampleProfiles_RCE_EXP_S50LN_THIN.h5 (2:75) 1e-3 0
-End
-
-PlotData: S50LN_THINHiPwTemp 2
-  # x data - sim time in days
-  /tempc_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_THIN.h5 (2:75,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_THIN.h5 (2:75) 1e-3 0
-End
-
-PlotData: S50LN_THINHiPwTheta 2
-  # x data - sim time in days
-  /theta_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_THIN.h5 (2:75,32) 1 -273.15
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_THIN.h5 (2:75) 1e-3 0
-End
-
-PlotData: S50LN_THINHiPwCloud 2
-  # x data - sim time in days
-  /cloud_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_THIN.h5 (2:75,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_THIN.h5 (2:75)   1e-3 0
-End
-
-PlotData: S50LN_THINHiPwVapor 2
-  # x data - sim time in days
-  /vapor_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_THIN.h5 (2:75,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_THIN.h5 (2:75) 1e-3 0
-End
-
-PlotData: S50LN_THINHiPwTcond 2
-  # x data - sim time in days
-  /total_cond_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_THIN.h5 (2:75,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_THIN.h5 (2:75) 1e-3 0
-End
-
-
-PlotData: S50LN_SMLoPwTemp 2
-  # x data - sim time in days
-  /tempc_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_SM.h5 (2:75,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_SM.h5 (2:75) 1e-3 0
-End
-
-PlotData: S50LN_SMLoPwTheta 2
-  # x data - sim time in days
-  /theta_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_SM.h5 (2:75,32) 1 -273.15
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_SM.h5 (2:75) 1e-3 0
-End
-
-PlotData: S50LN_SMLoPwCloud 2
-  # x data - sim time in days
-  /cloud_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_SM.h5 (2:75,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_SM.h5 (2:75)   1e-3 0
-End
-
-PlotData: S50LN_SMLoPwVapor 2
-  # x data - sim time in days
-  /vapor_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_SM.h5 (2:75,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_SM.h5 (2:75) 1e-3 0
-End
-
-PlotData: S50LN_SMLoPwTcond 2
-  # x data - sim time in days
-  /total_cond_lavg DIAGS/SampleProfiles_RCE_EXP_S50LN_SM.h5 (2:75,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords        DIAGS/SampleProfiles_RCE_EXP_S50LN_SM.h5 (2:75) 1e-3 0
-End
-
-PlotData: S50LN_SMHiPwTemp 2
-  # x data - sim time in days
-  /tempc_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_SM.h5 (2:75,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_SM.h5 (2:75) 1e-3 0
-End
-
-PlotData: S50LN_SMHiPwTheta 2
-  # x data - sim time in days
-  /theta_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_SM.h5 (2:75,32) 1 -273.15
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_SM.h5 (2:75) 1e-3 0
-End
-
-PlotData: S50LN_SMHiPwCloud 2
-  # x data - sim time in days
-  /cloud_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_SM.h5 (2:75,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_SM.h5 (2:75)   1e-3 0
-End
-
-PlotData: S50LN_SMHiPwVapor 2
-  # x data - sim time in days
-  /vapor_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_SM.h5 (2:75,32) 1 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_SM.h5 (2:75) 1e-3 0
-End
-
-PlotData: S50LN_SMHiPwTcond 2
-  # x data - sim time in days
-  /total_cond_havg DIAGS/SampleProfiles_RCE_EXP_S50LN_SM.h5 (2:75,32) 100 0
-  # y data - radiative flux divergence in W/m^2
-  /z_coords   DIAGS/SampleProfiles_RCE_EXP_S50LN_SM.h5 (2:75) 1e-3 0
-End
-
-
 PlotData: AvgPwLine 2
   # x data - sim time in days
   /t_coords     DIAGS/avg_precip_water_<CASE>.h5 @ 1.1574e-5 0
@@ -1472,118 +712,46 @@ PlotData: AvgPwLine 2
   /precip_water DIAGS/avg_precip_water_<CASE>.h5 @         1 0
 End
 
-PlotData: MattHovPwContour 3
+PlotData: HovPwContour 3
   # select all x, 31 simulated days -> t (1:32)
   # x data - zonal distance, km
-  /x_coords     DIAGS/hov_precip_water_RCE_MATT.h5 @   1         0
+  /x_coords     DIAGS/hov_precip_water_<CASE>.h5 @   1         0
   # y data - time, sec -> convert to days
-  /t_coords     DIAGS/hov_precip_water_RCE_MATT.h5 @   1.1574e-5 0
+  /t_coords     DIAGS/hov_precip_water_<CASE>.h5 @   1.1574e-5 0
   # z data - PW, mm
-  /precip_water DIAGS/hov_precip_water_RCE_MATT.h5 @   1         0
+  /precip_water DIAGS/hov_precip_water_<CASE>.h5 @   1         0
 End
 
-PlotData: BaseHovPwContour 3
-  # select all x, 31 simulated days -> t (1:32)
-  # x data - zonal distance, km
-  /x_coords     DIAGS/hov_precip_water_RCE_BASE.h5 @    1         0
-  # y data - time, sec -> convert to days
-  /t_coords     DIAGS/hov_precip_water_RCE_BASE.h5 @    1.1574e-5 0
-  # z data - PW, mm
-  /precip_water DIAGS/hov_precip_water_RCE_BASE.h5 @    1         0
+PlotData: LoPwThetaLine 2
+  # x data - sim time in days
+  /theta_lavg DIAGS/SampleProfiles_<CASE>.h5 (2:end,20) 1 -273.15
+  # y data - radiative flux divergence in W/m^2
+  /z_coords   DIAGS/SampleProfiles_<CASE>.h5 (2:end) 1e-3 0
 End
 
-PlotData: S70LNHovPwContour 3
-  # select all x, 31 simulated days -> t (1:32)
-  # x data - zonal distance, km
-  /x_coords     DIAGS/hov_precip_water_RCE_EXP_S70LN.h5 @  1         0
-  # y data - time, sec -> convert to days
-  /t_coords     DIAGS/hov_precip_water_RCE_EXP_S70LN.h5 @  1.1574e-5 0
-  # z data - PW, mm
-  /precip_water DIAGS/hov_precip_water_RCE_EXP_S70LN.h5 @  1         0
+PlotData: LoPwTcondLine 2
+  # x data - sim time in days
+  /total_cond_lavg DIAGS/SampleProfiles_<CASE>.h5 (2:end,20) 100 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords        DIAGS/SampleProfiles_<CASE>.h5 (2:end) 1e-3 0
 End
 
-PlotData: S70MYHovPwContour 3
-  # select all x, 31 simulated days -> t (1:32)
-  # x data - zonal distance, km
-  /x_coords     DIAGS/hov_precip_water_RCE_EXP_S70MY.h5 @  1         0
-  # y data - time, sec -> convert to days
-  /t_coords     DIAGS/hov_precip_water_RCE_EXP_S70MY.h5 @  1.1574e-5 0
-  # z data - PW, mm
-  /precip_water DIAGS/hov_precip_water_RCE_EXP_S70MY.h5 @  1         0
+PlotData: HiPwThetaLine 2
+  # x data - sim time in days
+  /theta_havg DIAGS/SampleProfiles_<CASE>.h5 (2:end,20) 1 -273.15
+  # y data - radiative flux divergence in W/m^2
+  /z_coords   DIAGS/SampleProfiles_<CASE>.h5 (2:end) 1e-3 0
 End
 
-PlotData: S70LYHovPwContour 3
-  # select all x, 31 simulated days -> t (1:32)
-  # x data - zonal distance, km
-  /x_coords     DIAGS/hov_precip_water_RCE_EXP_S70LY.h5 @  1         0
-  # y data - time, sec -> convert to days
-  /t_coords     DIAGS/hov_precip_water_RCE_EXP_S70LY.h5 @  1.1574e-5 0
-  # z data - PW, mm
-  /precip_water DIAGS/hov_precip_water_RCE_EXP_S70LY.h5 @  1         0
-End
-
-PlotData: S50LNHovPwContour 3
-  # select all x, 31 simulated days -> t (1:32)
-  # x data - zonal distance, km
-  /x_coords     DIAGS/hov_precip_water_RCE_EXP_S50LN.h5 @  1         0
-  # y data - time, sec -> convert to days
-  /t_coords     DIAGS/hov_precip_water_RCE_EXP_S50LN.h5 @  1.1574e-5 0
-  # z data - PW, mm
-  /precip_water DIAGS/hov_precip_water_RCE_EXP_S50LN.h5 @  1         0
-End
-
-PlotData: S50LN_470HovPwContour 3
-  # select all x, 31 simulated days -> t (1:32)
-  # x data - zonal distance, km
-  /x_coords     DIAGS/hov_precip_water_RCE_EXP_S50LN_470.h5 @  1         0
-  # y data - time, sec -> convert to days
-  /t_coords     DIAGS/hov_precip_water_RCE_EXP_S50LN_470.h5 @  1.1574e-5 0
-  # z data - PW, mm
-  /precip_water DIAGS/hov_precip_water_RCE_EXP_S50LN_470.h5 @  1         0
-End
-
-PlotData: S50LN_CGHovPwContour 3
-  # select all x, 31 simulated days -> t (1:32)
-  # x data - zonal distance, km
-  /x_coords     DIAGS/hov_precip_water_RCE_EXP_S50LN_CG.h5 @  1         0
-  # y data - time, sec -> convert to days
-  /t_coords     DIAGS/hov_precip_water_RCE_EXP_S50LN_CG.h5 @  1.1574e-5 0
-  # z data - PW, mm
-  /precip_water DIAGS/hov_precip_water_RCE_EXP_S50LN_CG.h5 @  1         0
-End
-
-PlotData: S50LN_CGHZHovPwContour 3
-  # select all x, 31 simulated days -> t (1:32)
-  # x data - zonal distance, km
-  /x_coords     DIAGS/hov_precip_water_RCE_EXP_S50LN_CGHZ.h5 @  1         0
-  # y data - time, sec -> convert to days
-  /t_coords     DIAGS/hov_precip_water_RCE_EXP_S50LN_CGHZ.h5 @  1.1574e-5 0
-  # z data - PW, mm
-  /precip_water DIAGS/hov_precip_water_RCE_EXP_S50LN_CGHZ.h5 @  1         0
-End
-
-PlotData: S50LN_THINHovPwContour 3
-  # select all x, 31 simulated days -> t (1:32)
-  # x data - zonal distance, km
-  /x_coords     DIAGS/hov_precip_water_RCE_EXP_S50LN_THIN.h5 @  1         0
-  # y data - time, sec -> convert to days
-  /t_coords     DIAGS/hov_precip_water_RCE_EXP_S50LN_THIN.h5 @  1.1574e-5 0
-  # z data - PW, mm
-  /precip_water DIAGS/hov_precip_water_RCE_EXP_S50LN_THIN.h5 @  1         0
-End
-
-PlotData: S50LN_SMHovPwContour 3
-  # select all x, 31 simulated days -> t (1:32)
-  # x data - zonal distance, km
-  /x_coords     DIAGS/hov_precip_water_RCE_EXP_S50LN_SM.h5 @  1         0
-  # y data - time, sec -> convert to days
-  /t_coords     DIAGS/hov_precip_water_RCE_EXP_S50LN_SM.h5 @  1.1574e-5 0
-  # z data - PW, mm
-  /precip_water DIAGS/hov_precip_water_RCE_EXP_S50LN_SM.h5 @  1         0
+PlotData: HiPwTcondLine 2
+  # x data - sim time in days
+  /total_cond_havg DIAGS/SampleProfiles_<CASE>.h5 (2:end,20) 100 0
+  # y data - radiative flux divergence in W/m^2
+  /z_coords        DIAGS/SampleProfiles_<CASE>.h5 (2:end) 1e-3 0
 End
 
 ############ PLOT AXES #################
-PlotAxes: EqMeasAxesS70 2
+PlotAxes: EqMeasAxes 2
   18 2 [0.025_0.025]
   # x axis - sim time in days
   Simulation@Time d 0 150 linear [_] {_}
@@ -1591,7 +759,7 @@ PlotAxes: EqMeasAxesS70 2
   Flux W@m^-^2 0 150 linear [_] {_}
 End
 
-PlotAxes: ThfCompAxesS70 2
+PlotAxes: ThfCompAxes 2
   18 2 [0.025_0.025]
   # x axis - sim time in days
   Simulation@Time d 0 150 linear [_] {_}
@@ -1599,44 +767,12 @@ PlotAxes: ThfCompAxesS70 2
   Flux W@m^-^2 -5 150 linear [_] {_}
 End
 
-PlotAxes: QradCompAxesS70 2
+PlotAxes: QradCompAxes 2
   18 2 [0.025_0.025]
   # x axis - sim time in days
   Simulation@Time d 0 150 linear [_] {_}
   # y axis - flux in W/m^2
   Flux W@m^-^2 0 500 linear [_] {_}
-End
-
-PlotAxes: EqMeasAxesS50 2
-  18 2 [0.025_0.025]
-  # x axis - sim time in days
-  Simulation@Time d 0 150 linear [_] {_}
-  # y axis - flux in W/m^2
-  Flux W@m^-^2 -100 100 linear [_] {_}
-End
-
-PlotAxes: ThfCompAxesS50 2
-  18 2 [0.025_0.025]
-  # x axis - sim time in days
-  Simulation@Time d 0 150 linear [_] {_}
-  # y axis - flux in W/m^2
-  Flux W@m^-^2 -5 100 linear [_] {_}
-End
-
-PlotAxes: QradCompAxesS50 2
-  18 2 [0.025_0.025]
-  # x axis - sim time in days
-  Simulation@Time d 0 150 linear [_] {_}
-  # y axis - flux in W/m^2
-  Flux W@m^-^2 0 1000 linear [_] {_}
-End
-
-PlotAxes: SampSoundingAxes 2
-  16 2 [0.025_0.025]
-  # x axis - theta, cloud, vapor
-  @ @ -5 100 linear [_] {_}
-  # y axis - height
-  Height km 0 20 linear [_] {_}
 End
 
 PlotAxes: AvgPwAxes 2
@@ -1657,7 +793,7 @@ PlotAxes: HovPwAxes 3
   PW mm 0 70 linear [_] {_}
 End
 
-PlotAxes: HovWidePwAxes 3
+PlotAxes: HovPwWideAxes 3
   18 2 [0.025_0.025]
   # x axis - zonal distance
   Zonal@Distance km 0 10000 linear [1000_3000_5000_7000_9000] {_}
@@ -1665,5 +801,13 @@ PlotAxes: HovWidePwAxes 3
   Sim@Time d 0 100 linear [_] {_}
   # z axis - precipitable water
   PW mm 0 70 linear [_] {_}
+End
+
+PlotAxes: SampSoundingAxes 2
+  16 2 [0.025_0.025]
+  # x axis - theta, cloud, vapor
+  @ @ -5 100 linear [_] {_}
+  # y axis - height
+  Height km 0 20 linear [_] {_}
 End
 
