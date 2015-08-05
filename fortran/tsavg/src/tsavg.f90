@@ -19,709 +19,293 @@ program tsavg
 
   real, parameter :: UndefVal = -999.0
 
-  character (len=MediumString) :: InDir
-  character (len=MediumString) :: InSuffix
-  character (len=MediumString) :: OutFile
-  character (len=MediumString) :: FilterFile
-  character (len=LittleString) :: AvgFunc
-  character (len=MediumString), dimension(MaxArgFields) :: ArgList
-  integer :: Nfields
-  character (len=LittleString) :: VarDim, XvarDim, YvarDim
-  logical :: UseFilter
+  type FileSpec
+    character (len=RHDF5_MAX_STRING) :: fname
+    character (len=RHDF5_MAX_STRING) :: vname
+  endtype
+
+  type ArgList
+    character (len=LittleString) :: AvgFunc
+    character (len=LittleString) :: VelInType
+    real :: HkeZthick
+    real :: HfracLimit
+    real :: Zbot
+    real :: Ztop
+    real :: PcprateLimit
+    type (FileSpec) :: Output
+    type (FileSpec) :: Filter
+    type (FileSpec) :: StormCenter
+    type (FileSpec) :: V1bins
+    type (FileSpec) :: V2bins
+    type (FileSpec) :: Var1
+    type (FileSpec) :: Var2
+    type (FileSpec) :: Var3
+    type (FileSpec) :: Dens
+  endtype
+
+  type (ArgList) :: Args
 
   ! Data arrays
   ! Dims: x, y, z, t
   type (Rhdf5Var) :: InXcoords, InYcoords, InZcoords, InTcoords
   type (Rhdf5Var) :: OutXcoords, OutYcoords, OutZcoords, OrigDimSize
-  type (Rhdf5Var) :: U, V, AzWind, Speed10m, Dens, Var, Filter, TserAvg, RadMaxWind, Rad34ktWind, Rad50ktWind, Rad64ktWind
-  type (Rhdf5Var) :: AzSlp
-  type (Rhdf5var) :: PrecipRate, Lwp, Ltss, Theta
-  type (Rhdf5var) :: Xvar, Yvar
-  character (len=RHDF5_MAX_STRING) :: Ufile, Vfile, AzWindFile, Speed10mFile, DensFile, VarFile, InCoordFile
-  character (len=RHDF5_MAX_STRING) :: AzSlpFile
-  character (len=RHDF5_MAX_STRING) :: PrecipRateFile, LwpFile, LtssFile, ThetaFile
-  character (len=RHDF5_MAX_STRING) :: XvarFile, YvarFile
-  character (len=LittleString) :: VarFprefix
-  character (len=LittleString) :: VelInType
+  type (Rhdf5Var) :: Var1, Var2, Var3, Filter, StormCenter, Dens, TserAvg, RadMaxWind, Rad34ktWind, Rad50ktWind, Rad64ktWind
+  character (len=RHDF5_MAX_STRING) :: InCoordFile
   character (len=RHDF5_MAX_STRING) :: rh5f_facc
-  real :: PrecipRateLimit, Zbot, Ztop
   integer :: Kbot, Ktop
-  real :: HkeZthick
+
+  logical :: UseFilter, UseStormCenter, UseVar2, UseVar3, UseDens
+  logical :: Var1Is3d, Var2Is3d
   
-  character (len=LargeString) :: XbinsFile, YbinsFile
-  integer :: Xnbins, Ynbins
-  real, dimension(:), allocatable :: Xbins, Ybins
-  real :: HfracThresh
+  integer :: V1nbins, V2nbins
+  real, dimension(:), allocatable :: V1bins, V2bins
 
   real, dimension(:,:), allocatable :: HorizSpeed
 
-  integer :: rh5f_azwind, rh5f_azslp, rh5f_u, rh5f_v, rh5f_speed10m, rh5f_dens, rh5f_var, rh5f_filter, rh5f_out
-  integer :: rh5f_pcprate, rh5f_lwp, rh5f_ltss, rh5f_theta
-  integer :: rh5f_xvar, rh5f_yvar
+  integer :: rh5f_var1, rh5f_var2, rh5f_var3, rh5f_dens, rh5f_filter, rh5f_scenter, rh5f_out
 
   integer :: id, ib, ix, iy, iz, it
   integer :: Nx, Ny, Nz, Nt, FilterNz
-  integer :: XvarNz, YvarNz
+  integer :: Var1Nz, Var2Nz
   real :: DeltaX, DeltaY
   real, dimension(:), allocatable :: InXcoordsKm, InYcoordsKm
   logical :: BadDims
 
   ! Get the command line arguments
-  call GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
-  if ((AvgFunc(1:4) .eq. 'min:') .or. (AvgFunc(1:4) .eq. 'max:') .or. (AvgFunc(1:4) .eq. 'hda:') .or. (AvgFunc(1:10) .eq. 'turb_mmts:')) then
-    call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'avg spec')
-    if (Nfields .eq. 4) then
-      ! got the right amount of fields
-      !   field    value
-      !    1       'min', 'max', or 'hda' 
-      !    2       name of variable inside the REVU file
-      !    3       prefix for the REVU file name
-      !    4       dimensionality of variable
-      AvgFunc    = trim(ArgList(1))
-      Var%vname  = trim(ArgList(2))
-      VarFprefix = trim(ArgList(3))
-      VarFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
-      VarDim     = trim(ArgList(4))
-    else
-      write (*,*) 'ERROR: average function requires four fields: <avg_func>:<var>:<file>:<dim>'
-      stop
-    endif
-  endif
+  call GetMyArgs(Args)
 
-  if (AvgFunc(1:5) .eq. 'hist:') then
-    call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'hist spec')
-    if (Nfields .eq. 5) then
-      ! got the right amount of fields
-      !   field    value
-      !    1       'hist'
-      !    2       name of variable inside the REVU file
-      !    3       prefix for the REVU file name
-      !    4       dimensionality of variable
-      !    5       bins file
-      AvgFunc    = trim(ArgList(1))
-      Var%vname  = trim(ArgList(2))
-      VarFprefix = trim(ArgList(3))
-      VarFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
-      VarDim     = trim(ArgList(4))
-      XbinsFile  = trim(ArgList(5))
-    else
-      write (*,*) 'ERROR: average function hist requires five fields: hist:<var>:<file>:<dim>:<bins_file>'
-      stop
-    endif
-  endif
-
-  if (AvgFunc(1:6) .eq. 'hfrac:') then
-    call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'hfrac spec')
-    if (Nfields .eq. 5) then
-      ! got the right amount of fields
-      !   field    value
-      !    1       'hfrac'
-      !    2       name of variable inside the REVU file
-      !    3       prefix for the REVU file name
-      !    4       dimensionality of variable
-      !    5       threshold for determining numerator count
-      AvgFunc    = trim(ArgList(1))
-      Var%vname  = trim(ArgList(2))
-      VarFprefix = trim(ArgList(3))
-      VarFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
-      VarDim     = trim(ArgList(4))
-      read(ArgList(5), '(f15.7)') HfracThresh
-    else
-      write (*,*) 'ERROR: average function hfrac requires five fields: hist:<var>:<file>:<dim>:<threshold>'
-      stop
-    endif
-  endif
-
-  if (AvgFunc(1:4) .eq. 'pop:') then
-    call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'pop spec')
-    if (Nfields .eq. 10) then
-      ! got the right amount of fields
-      !   field    value
-      !    1       'pop'
-      !    2       name of precip rate variable inside the REVU file
-      !    3       prefix for the REVU file name containing the precip rate
-      !    4       precip rate threshold to deteriming if rainging or not
-      !    5       name of lwp variable inside the REVU file
-      !    6       prefix for the REVU file name containing the lwp
-      !    7       lwp: bins file
-      !    8       name of ltss variable inside the REVU file
-      !    9       prefix for the REVU file name containing the ltss
-      !   10       ltss: bins file
-      AvgFunc           = trim(ArgList(1))
-      PrecipRate%vname  = trim(ArgList(2))
-      VarFprefix        = trim(ArgList(3))
-      PrecipRateFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
-      read(ArgList(4), '(f15.7)') PrecipRateLimit
-      Lwp%vname         = trim(ArgList(5))
-      VarFprefix        = trim(ArgList(6))
-      LwpFile           = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
-      XbinsFile         = trim(ArgList(7))
-      Ltss%vname        = trim(ArgList(8))
-      VarFprefix        = trim(ArgList(9))
-      LtssFile          = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
-      YbinsFile         = trim(ArgList(10))
-    else
-      write (*,*) 'ERROR: average function pop requires ten fields:'
-      write (*,*) 'ERROR:   pop:<pcp_var>:<pcp_file>:<pcp_limit>:<lwp_var>:<lwp_file>:<lwp_bins_file>:'
-      write (*,*) 'ERROR:       <ltss_var>:<ltss_file>:<ltss_bins_file>'
-      stop
-    endif
-  endif
-
-  if (AvgFunc(1:7) .eq. 'hist2d:') then
-    call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'hist2d spec')
-    if (Nfields .eq. 9) then
-      ! got the right amount of fields
-      !   field    value
-      !    1       'hist2d'
-      !    2       name of x variable inside the REVU file
-      !    3       prefix for the REVU file name containing the x variable
-      !    4       dimensionalitiy of x variable (2d or 3d)
-      !    5       x: bins file
-      !    6       name of y variable inside the REVU file
-      !    7       prefix for the REVU file name containing the y variable
-      !    8       dimensionalitiy of y variable (2d or 3d)
-      !    9       y: bins file
-      AvgFunc     = trim(ArgList(1))
-      Xvar%vname  = trim(ArgList(2))
-      VarFprefix  = trim(ArgList(3))
-      XvarFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
-      XvarDim     = trim(ArgList(4))
-      XbinsFile   = trim(ArgList(5))
-      Yvar%vname  = trim(ArgList(6))
-      VarFprefix  = trim(ArgList(7))
-      YvarFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
-      YvarDim     = trim(ArgList(8))
-      YbinsFile   = trim(ArgList(9))
-    else
-      write (*,*) 'ERROR: average function hist2d requires nine fields:'
-      write (*,*) 'ERROR:   hist2d:<x_var>:<x_file>:<x_dim>:<x_bins_file>:<y_var>:<y_file>:<y_dim>:<y_bins_file>'
-      stop
-    endif
-  endif
-
-  if (AvgFunc(1:9) .eq. 'turb_cov:') then
-    call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'turb_cov spec')
-    if (Nfields .eq. 7) then
-      ! got the right amount of fields
-      !   field    value
-      !    1       'turb_cov'
-      !    2       name of x variable inside the REVU file
-      !    3       prefix for the REVU file name containing the x variable
-      !    4       dimensionalitiy of x variable (2d or 3d)
-      !    5       name of y variable inside the REVU file
-      !    6       prefix for the REVU file name containing the y variable
-      !    7       dimensionalitiy of y variable (2d or 3d)
-      AvgFunc     = trim(ArgList(1))
-
-      Xvar%vname  = trim(ArgList(2))
-      VarFprefix  = trim(ArgList(3))
-      XvarFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
-      XvarDim     = trim(ArgList(4))
-
-      Yvar%vname  = trim(ArgList(5))
-      VarFprefix  = trim(ArgList(6))
-      YvarFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
-      YvarDim     = trim(ArgList(7))
-
-    else
-      write (*,*) 'ERROR: average function turb_cov requires seven fields:'
-      write (*,*) 'ERROR:   turb_cov:<x_var>:<x_file>:<x_dim>:<y_var>:<y_file>:<y_dim>'
-      stop
-    endif
-  endif
-
-  if (AvgFunc(1:5) .eq. 'ltss:') then
-    call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'pop spec')
-    if (Nfields .eq. 5) then
-      ! got the right amount of fields
-      !   field    value
-      !    1       'ltss'
-      !    2       name of theta variable inside the REVU file
-      !    3       prefix for the REVU file name containing theta
-      !    4       Z (m) of bottom level for taking theta diff
-      !    5       Z (m) of top level for taking theta diff
-      AvgFunc           = trim(ArgList(1))
-      Theta%vname     = trim(ArgList(2))
-      VarFprefix        = trim(ArgList(3))
-      ThetaFile    = trim(InDir) // '/' //trim(VarFprefix) // trim(InSuffix)
-      read(ArgList(4), '(f15.7)') Zbot
-      read(ArgList(5), '(f15.7)') Ztop
-    else
-      write (*,*) 'ERROR: average function ltss requires five fields: ltss:<theta_var>:<theta_file>:<z_bot>:<z_top>'
-      stop
-    endif
-  endif
-
-  if (AvgFunc(1:9) .eq. 'horiz_ke:') then
-    call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'horiz_ke spec')
-    if (Nfields .eq. 3) then
-      ! got the right amount of fields
-      !   field    value
-      !    1       'horiz_ke'
-      !    2       type of input
-      !    3       thickness
-      AvgFunc    = trim(ArgList(1))
-      VelInType  = trim(ArgList(2))
-      read(ArgList(3), '(f15.7)') HkeZthick
-
-      if ((VelInType .ne. 'uv') .and. (VelInType .ne. 's10')) then
-        write (*,*) 'ERROR: <in_type> for average function horiz_ke must be one of: "uv" or "s10"'
-        stop
-      endif
-    else
-      write (*,*) 'ERROR: average function horiz_ke requires three fields: horiz_ke:<in_type>:<thickness>'
-      stop
-    endif
-  endif
-
-  if (AvgFunc(1:11) .eq. 'max_azwind:') then
-    call String2List(AvgFunc, ':', ArgList, MaxArgFields, Nfields, 'max_azwind spec')
-    if (Nfields .eq. 2) then
-      ! got the right amount of fields
-      !   field    value
-      !    1       'horiz_ke'
-      !    2       type of input
-      AvgFunc    = trim(ArgList(1))
-      VelInType  = trim(ArgList(2))
-
-      if ((VelInType .ne. 'uv') .and. (VelInType .ne. 's10')) then
-        write (*,*) 'ERROR: <in_type> for average functions max_azwind must be one of: "uv" or "s10"'
-        stop
-      endif
-    else
-      write (*,*) 'ERROR: average function max_azwind requires two fields: max_azwind:<in_type>'
-      stop
-    endif
-  endif
+  ! For convenience
+  UseFilter      = (trim(Args%Filter%fname) .ne. 'none')
+  UseStormCenter = (trim(Args%StormCenter%fname) .ne. 'none')
+  UseVar2        = (trim(Args%Var2%fname) .ne. 'none')
+  UseVar3        = (trim(Args%Var3%fname) .ne. 'none')
+  UseDens        = (trim(Args%Dens%fname) .ne. 'none')
 
   write (*,*) 'Time seris of average for RAMS data:'
-  write (*,*) '  Input directory: ', trim(InDir)
-  write (*,*) '  Input file suffix: ', trim(InSuffix)
-  write (*,*) '  Output file:  ', trim(OutFile)
-  write (*,*) '  Averaging function: ', trim(AvgFunc)
-  if ((AvgFunc .eq. 'horiz_ke') .or. (AvgFunc .eq. 'max_azwind')) then
-    write (*,*) '    Input Type: ', trim(VelInType)
-    if (AvgFunc .eq. 'horiz_ke') then
-      write (*,*) '    Z thickness: ', HkeZthick
-    endif
-  else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'turb_mmts')) then
-    write (*,*) '    Variable name: ', trim(Var%vname)
-    write (*,*) '    File name: ', trim(VarFile)
-    write (*,*) '    Dimensionality: ', trim(VarDim)
-  else if (AvgFunc .eq. 'hist') then
-    write (*,*) '    Variable name: ', trim(Var%vname)
-    write (*,*) '    File name: ', trim(VarFile)
-    write (*,*) '    Dimensionality: ', trim(VarDim)
-    write (*,*) '    Bins File: ', trim(XbinsFile)
-  else if (AvgFunc .eq. 'hfrac') then
-    write (*,*) '    Variable name: ', trim(Var%vname)
-    write (*,*) '    File name: ', trim(VarFile)
-    write (*,*) '    Dimensionality: ', trim(VarDim)
-    write (*,*) '    Threshold for fraction calculation: ', HfracThresh 
-  else if (AvgFunc .eq. 'pop') then
-    write (*,*) '    Precip rate variable name: ', trim(PrecipRate%vname)
-    write (*,*) '    Precip rate File name: ', trim(PrecipRateFile)
-    write (*,*) '    Liquid water path variable name: ', trim(Lwp%vname)
-    write (*,*) '    Liquid water path file name: ', trim(LwpFile)
-    write (*,*) '    Lower troposhperic static stability variable name: ', trim(Ltss%vname)
-    write (*,*) '    Lower troposhperic static stability file name: ', trim(LtssFile)
-    write (*,*) '    Precip rate threshold: ', PrecipRateLimit
-    write (*,*) '    Liquid water path bins file: ', trim(XbinsFile)
-    write (*,*) '    Lower tropospheric static stability bins file: ', trim(YbinsFile)
-  else if (AvgFunc .eq. 'hist2d') then
-    write (*,*) '    X variable name: ', trim(Xvar%vname)
-    write (*,*) '    X file name: ', trim(XvarFile)
-    write (*,*) '    X variable dimensionality: ', trim(XvarDim)
-    write (*,*) '    X variable bins file: ', trim(XbinsFile)
-    write (*,*) '    Y variable name: ', trim(Yvar%vname)
-    write (*,*) '    Y file name: ', trim(YvarFile)
-    write (*,*) '    Y variable dimensionality: ', trim(YvarDim)
-    write (*,*) '    Y variable bins file: ', trim(YbinsFile)
-  else if (AvgFunc .eq. 'turb_cov') then
-    write (*,*) '    X variable name: ', trim(Xvar%vname)
-    write (*,*) '    X file name: ', trim(XvarFile)
-    write (*,*) '    X variable dimensionality: ', trim(XvarDim)
-    write (*,*) '    Y variable name: ', trim(Yvar%vname)
-    write (*,*) '    Y file name: ', trim(YvarFile)
-    write (*,*) '    Y variable dimensionality: ', trim(YvarDim)
-  else if (AvgFunc .eq. 'ltss') then
-    write (*,*) '    Theta variable name: ', trim(Theta%vname)
-    write (*,*) '    Theta file name: ', trim(ThetaFile)
-    write (*,*) '    Z at bottom: ', Zbot
-    write (*,*) '    Z at top: ', Ztop
+  write (*,*) '  Output file:  ', trim(Args%Output%fname)
+  write (*,*) '  Averaging function: ', trim(Args%AvgFunc)
+  if (trim(Args%AvgFunc) .eq. 'horiz_ke') then
+    write (*,*) '    Input Type: ', trim(Args%VelInType)
+    write (*,*) '    Z thickness: ', Args%HkeZthick
+  else if ((trim(Args%AvgFunc) .eq. 'min') .or. (trim(Args%AvgFunc) .eq. 'max') .or. (trim(Args%AvgFunc) .eq. 'hda') .or. (trim(Args%AvgFunc) .eq. 'turb_mmts')) then
+    write (*,*) '    Variable name: ', trim(Args%Var1%vname)
+    write (*,*) '    File name: ', trim(Args%Var1%fname)
+  else if (trim(Args%AvgFunc) .eq. 'hist') then
+    write (*,*) '    Variable name: ', trim(Args%Var1%vname)
+    write (*,*) '    File name: ', trim(Args%Var1%fname)
+    write (*,*) '    Bins File: ', trim(Args%V1bins%fname)
+  else if (trim(Args%AvgFunc) .eq. 'hfrac') then
+    write (*,*) '    Variable name: ', trim(Args%Var1%vname)
+    write (*,*) '    File name: ', trim(Args%Var1%fname)
+    write (*,*) '    Limit for fraction calculation: ', Args%HfracLimit 
+  else if (trim(Args%AvgFunc) .eq. 'pop') then
+    write (*,*) '    Precip rate variable name: ', trim(Args%Var1%vname)
+    write (*,*) '    Precip rate File name: ', trim(Args%Var1%fname)
+    write (*,*) '    Liquid water path variable name: ', trim(Args%Var2%vname)
+    write (*,*) '    Liquid water path file name: ', trim(Args%Var2%fname)
+    write (*,*) '    Lower troposhperic static stability variable name: ', trim(Args%Var3%vname)
+    write (*,*) '    Lower troposhperic static stability file name: ', trim(Args%Var3%fname)
+    write (*,*) '    Precip rate threshold: ', Args%PcprateLimit
+    write (*,*) '    Liquid water path bins file: ', trim(Args%V1bins%fname)
+    write (*,*) '    Lower tropospheric static stability bins file: ', trim(Args%V2bins%fname)
+  else if (trim(Args%AvgFunc) .eq. 'hist2d') then
+    write (*,*) '    X variable name: ', trim(Args%Var1%vname)
+    write (*,*) '    X file name: ', trim(Args%Var1%fname)
+    write (*,*) '    X variable bins file: ', trim(Args%V1bins%fname)
+    write (*,*) '    Y variable name: ', trim(Args%Var2%vname)
+    write (*,*) '    Y file name: ', trim(Args%Var2%vname)
+    write (*,*) '    Y variable bins file: ', trim(Args%V2bins%fname)
+  else if (trim(Args%AvgFunc) .eq. 'turb_cov') then
+    write (*,*) '    X variable name: ', trim(Args%Var1%vname)
+    write (*,*) '    X file name: ', trim(Args%Var1%fname)
+    write (*,*) '    Y variable name: ', trim(Args%Var2%vname)
+    write (*,*) '    Y file name: ', trim(Args%V2bins%fname)
+  else if (trim(Args%AvgFunc) .eq. 'ltss') then
+    write (*,*) '    Theta variable name: ', trim(Args%Var1%vname)
+    write (*,*) '    Theta file name: ', trim(Args%Var1%fname)
+    write (*,*) '    Z at bottom: ', Args%Zbot
+    write (*,*) '    Z at top: ', Args%Ztop
   endif
-  write (*,*) '  Filter file: ', trim(FilterFile)
-  write (*,*) '    Using filter: ', UseFilter
+  if (UseFilter) then
+    write (*,*) '  Filter file: ', trim(Args%Filter%fname)
+  endif
+  if (UseStormCenter) then
+    write (*,*) '  Storm center file: ', trim(Args%StormCenter%fname)
+  endif
   write (*,*) ''
   flush(6)
 
-  ! set up file and variable names
-  if (VelInType .eq. 'uv') then
-    AzWindFile = trim(InDir) // '/speed_t' // trim(InSuffix)
-    AzWind%vname = 'speed_t'
-  else if (VelInType .eq. 's10') then
-    AzWindFile = trim(InDir) // '/speed10m' // trim(InSuffix)
-    AzWind%vname = 'speed10m'
-  endif
+  ! set up input variables
+  Filter%vname = Args%Filter%vname
+  StormCenter%vname = Args%StormCenter%vname
 
-  AzSlpFile = trim(InDir) // '/sea_press' // trim(InSuffix)
-  AzSlp%vname = 'sea_press'
+  Var1%vname = Args%Var1%vname
+  Var2%vname = Args%Var2%vname
+  Var3%vname = Args%Var3%vname
 
-  ! FilterFile is set by command line arguments
-  Filter%vname = 'filter'
-
-  DensFile = trim(InDir) // '/dn0' // trim(InSuffix)
-  Dens%vname = 'dn0'
-
-  Ufile = trim(InDir) // '/u' // trim(InSuffix)
-  U%vname = 'u'
-
-  Vfile = trim(InDir) // '/v' // trim(InSuffix)
-  V%vname = 'v'
-
-  Speed10mFile = trim(InDir) // '/speed10m' // trim(InSuffix)
-  Speed10m%vname = 'speed10m'
+  Dens%vname = Args%Dens%vname
 
   ! Check that the dimensions are consistent between the variables needed for
   ! the selected averaging function.
   !
-  ! There is no associated filter with max_azwind and min_azslp since a filter has already been
-  ! applied by the azavg program (which created the azwind data). All other functions
-  ! need the filter data.
-  !
   ! Expect 3D vars to be: (x,y,z,t)
   !        2D vars to be: (x,y,t)
-  !
-
-  ! Set Filter%ndims to one here. This will result with Filter%ndims being equal to zero (since
-  ! we need to chop of the time dimension to read the filter time step by time step) when we
-  ! are not using a filter. When using a filter, Filter%ndims will get set by what's contained
-  ! in FilterFile.
-  XvarNz = 0
-  YvarNz = 0
-  if ((AvgFunc .eq. 'max_azwind') .or. (AvgFunc .eq. 'min_azslp')) then
-    ! max_azwind, min_azslp must not use filter (azavg already applied a filter)
-    if (UseFilter) then
-      write (*,*) 'ERROR: cannot use a filter with function: max_azwind, min_azslp'
-      stop
-    endif
-    
-    ! Read in the filter and use it to check against all the other variables
-    if (AvgFunc .eq. 'max_azwind') then
-      call rhdf5_read_init(AzWindFile, AzWind)
-
-      if (AzWind%ndims .eq. 4) then
-        Nx = AzWind%dims(1)
-        Ny = AzWind%dims(2)
-        Nz = AzWind%dims(3)
-        Nt = AzWind%dims(4)
-      elseif (AzWind%ndims .eq. 3) then
-        Nx = AzWind%dims(1)
-        Ny = AzWind%dims(2)
-        Nz = 1
-        Nt = AzWind%dims(3)
-      endif
-    else
-      ! min_azslp
-      call rhdf5_read_init(AzSlpFile, AzSlp)
-
-      if (AzSlp%ndims .eq. 4) then
-        Nx = AzSlp%dims(1)
-        Ny = AzSlp%dims(2)
-        Nz = AzSlp%dims(3)
-        Nt = AzSlp%dims(4)
-      elseif (AzSlp%ndims .eq. 3) then
-        Nx = AzSlp%dims(1)
-        Ny = AzSlp%dims(2)
-        Nz = 1
-        Nt = AzSlp%dims(3)
-      endif
-    endif
-  else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
-           (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. &
-           (AvgFunc .eq. 'hfrac') .or. (AvgFunc .eq. 'turb_mmts')) then
-    call rhdf5_read_init(VarFile, Var)
-
-    if (VarDim .eq. '2d') then
-      Nx = Var%dims(1)
-      Ny = Var%dims(2)
-      Nz = 1
-      Nt = Var%dims(3)
-    else
-      Nx = Var%dims(1)
-      Ny = Var%dims(2)
-      Nz = Var%dims(3)
-      Nt = Var%dims(4)
-    endif
-
-    ! filter is optional
-    if (UseFilter) then
-      call rhdf5_read_init(FilterFile, Filter)
-      if (.not.(DimsMatch(Filter, Var))) then
-        write (*,*) 'ERROR: dimensions of filter do not match dimensions of input variable: ', trim(Var%vname)
-        stop
-      endif
-    endif
-  else if (AvgFunc .eq. 'pop') then
-    ! check that the horzontal dimensions of precip rate and lwp match
-    call rhdf5_read_init(PrecipRateFile, PrecipRate)
-    call rhdf5_read_init(LwpFile, Lwp)
-
-    if (.not.(DimsMatch(PrecipRate, Lwp))) then
-      write (*,*) 'ERROR: dimensions of precip rate variable do not match dimensions of liquid water path variable'
-      stop
-    endif
-
-    ! get info for the LTSS data - this will be 1D (single number for each time step)
-    call rhdf5_read_init(LtssFile, Ltss)
-
-    ! record dims - 2d data
-    Nx = PrecipRate%dims(1)
-    Ny = PrecipRate%dims(2)
+  BadDims = .false.
+  
+  ! always have var1, use var1 to set Nx,Ny,Nz,Nt
+  call rhdf5_read_init(Args%Var1%fname, Var1)
+  if (Var1%ndims .eq. 4) then
+    Nx = Var1%dims(1)
+    Ny = Var1%dims(2)
+    Nz = Var1%dims(3)
+    Nt = Var1%dims(4)
+    Var1Is3d = .true.
+  else
+    Nx = Var1%dims(1)
+    Ny = Var1%dims(2)
     Nz = 1
-    Nt = PrecipRate%dims(3)
+    Nt = Var1%dims(3)
+    Var1Is3d = .false.
+  endif
+  Var1Nz = Nz
 
-    ! filter is optional
-    if (UseFilter) then
-      call rhdf5_read_init(FilterFile, Filter)
-      if (.not.(DimsMatch(Filter, PrecipRate))) then
-        write (*,*) 'ERROR: dimensions of filter do not match dimensions of precip rate variable'
-        stop
+  ! if using a filter, check it against Var1
+  if (UseFilter) then
+    call rhdf5_read_init(Args%Filter%fname, Filter)
+    FilterNz = Filter%dims(3)
+
+    if (.not.(DimsMatch(Var1, Filter))) then
+      write (*,*) 'ERROR: dimensions do not match between var1 and filter: ', trim(Var1%vname), trim(Filter%vname)
+      BadDims = .true.
+    endif
+  else
+    FilterNz = 1
+  endif
+
+  select case (trim(Args%AvgFunc))
+    case ('horiz_ke')
+      call rhdf5_read_init(Args%Dens%fname, Dens)
+      if (.not.(DimsMatch(Var1, Dens))) then
+        write (*,*) 'ERROR: dimensions do not match between var1 and dens: ', trim(Var1%vname), trim(Dens%vname)
+        BadDims = .true.
       endif
-    endif
-  else if ((AvgFunc .eq. 'hist2d') .or. (AvgFunc .eq. 'turb_cov')) then
-    ! check that the horzontal dimensions of x and y match
-    call rhdf5_read_init(XvarFile, Xvar)
-    call rhdf5_read_init(YvarFile, Yvar)
 
-    if (.not.(DimsMatch(Xvar, Yvar))) then
-      write (*,*) 'ERROR: dimensions of x and y variables do not match'
-      stop
-    endif
+      if (trim(Args%VelInType) .eq. 'uv') then
+        call rhdf5_read_init(Args%Var2%fname, Var2)
+        if (.not.(DimsMatch(Var1, Var2))) then
+          write (*,*) 'ERROR: dimensions do not match between var1 and var2: ', trim(Var1%vname), trim(Var2%vname)
+          BadDims = .true.
+        endif
+      endif
 
-    ! Record dims: if we got to here, then x and y have matching x, y and t dimensions
-    ! so get these from the x variable.
-    !
-    ! Want to allow for x and y to be 2d or 3d. To do this record the z dimensions
-    ! separately for x and y. If either of x and y are 3d, then make the output 3d
-    ! (do histograms for each level).
-    Nx = Xvar%dims(1)
-    Ny = Xvar%dims(2)
-    Nz = 1                       ! Assume both x and y are 2d, if either is 3d then
-                                 ! set Nz to the 3d size. If both are 3d, there is a
-                                 ! check that x and y have matching z dimensions so it
-                                 ! doesn't matter if Nz gets set from x or y.
-    if (XvarDim .eq. '2d') then
-      XvarNz = 1
-      Nt = Xvar%dims(3)
+    case ('turb_cov')
+      call rhdf5_read_init(Args%Var2%fname, Var2)
+      if (.not.(DimsMatch(Var1, Var2))) then
+        write (*,*) 'ERROR: dimensions do not match between var1 and var2: ', trim(Var1%vname), trim(Var2%vname)
+        BadDims = .true.
+      endif
+
+    case ('hist2d')
+      call rhdf5_read_init(Args%Var2%fname, Var2)
+      if (.not.(DimsMatch(Var1, Var2))) then
+        write (*,*) 'ERROR: dimensions do not match between var1 and var2: ', trim(Var1%vname), trim(Var2%vname)
+        BadDims = .true.
+      endif
+
+    case ('pop')
+      call rhdf5_read_init(Args%Var2%fname, Var2) ! lwp, 2D (var1 is pcprate, 2D), so check these two variables
+      call rhdf5_read_init(Args%Var3%fname, Var3) ! ltss, 1D so don't need to check dims
+
+      if (.not.(DimsMatch(Var1, Var2))) then
+        write (*,*) 'ERROR: dimensions do not match between var1 and var2: ', trim(Var1%vname), trim(Var2%vname)
+        BadDims = .true.
+      endif
+
+  endselect
+
+  ! check the z dimensions of Var1 vs Var2 when Var2 is being used
+  if (trim(Args%Var2%fname) .ne. 'none') then
+    if (Var2%ndims .eq. 4) then
+      Var2Nz = Var2%dims(3)
+      Var2Is3d = .true.
     else
-      XvarNz = Xvar%dims(3)
-      Nt = Xvar%dims(4)
-
-      Nz = XvarNz
-    endif
-    if (YvarDim .eq. '2d') then
-      YvarNz = 1
-    else
-      YvarNz = Yvar%dims(3)
-
-      Nz = YvarNz
+      Var2Nz = 1
+      Var2Is3d = .false.
     endif
 
-    ! make sure if x and y are both 3d, that their z dimensions match
-    if ((XvarDim .eq. '3d') .and. (YvarDim .eq. '3d')) then
-      if (XvarNz .ne. YvarNz) then
-        write (*,*) 'ERROR: x and y variables are both 3d, but their z dimensions do not match'
-        stop
+    ! If both Var1 and Var2 are 3D, then make sure the z dims match
+    if (Var1Is3d .and. Var2Is3d) then
+      if (Var1Nz .ne. Var2Nz) then
+        write (*,*) 'ERROR: var1 and var2 are both 3d, but their z dimensions do not match'
+        BadDims = .true.
       endif
     endif
 
-    ! make sure if doing turb_cov, that x and y z dimensions match
-    if (AvgFunc .eq. 'turb_cov') then
-      if (XvarNz .ne. YvarNz) then
-        write (*,*) 'ERROR: x and y variables need to have their z dimensions match for "turb_cov" function'
-        stop
+    ! Make sure if doing turb_cov, that var1 and var2 z dimensions match
+    if (trim(Args%AvgFunc) .eq. 'turb_cov') then
+      if (Var1Nz .ne. Var2Nz) then
+        write (*,*) 'ERROR: var1 and var2 need to have their z dimensions match for "turb_cov" function'
+        BadDims = .true.
       endif
     endif
 
-    ! filter is optional
-    if (UseFilter) then
-      call rhdf5_read_init(FilterFile, Filter)
-      if (.not.(DimsMatch(Filter, Xvar))) then
-        write (*,*) 'ERROR: dimensions of filter do not match dimensions of x and y variables'
-        stop
-      endif
-    endif
-  else if (AvgFunc .eq. 'ltss') then
-    ! get dimensions from theta file
-    call rhdf5_read_init(ThetaFile, Theta)
-
-    ! record dims - 3d data
-    Nx = Theta%dims(1)
-    Ny = Theta%dims(2)
-    Nz = Theta%dims(3)
-    Nt = Theta%dims(4)
-
-    ! filter is optional
-    if (UseFilter) then
-      call rhdf5_read_init(FilterFile, Filter)
-      if (.not.(DimsMatch(Filter, Theta))) then
-        write (*,*) 'ERROR: dimensions of filter do not match dimensions of theta variable'
-        stop
-      endif
-    endif
-  else if ((AvgFunc .eq. 'horiz_ke') .or. (AvgFunc .eq. 'storm_int')) then
-    ! horiz_ke and storm_int require a filter
-    if (.not. UseFilter) then
-      write (*,*) 'ERROR: must use a filter with functions: horiz_ke and storm_int'
-      stop
-    endif
-    
-    ! Read in the filter and use it to check against all the other variables
-    call rhdf5_read_init(FilterFile, Filter)
-  
-    BadDims = .false.
-    if (AvgFunc .eq. 'horiz_ke') then
-      call rhdf5_read_init(DensFile, Dens)
-      BadDims = BadDims .or. (.not.(DimsMatch(Filter, Dens)))
-  
-      if (VelInType .eq. 'uv') then
-        ! U, V are 3D variables
-        call rhdf5_read_init(Ufile, U)
-        BadDims = BadDims .or. (.not.(DimsMatch(Filter, U)))
-  
-        call rhdf5_read_init(Vfile, V)
-        BadDims = BadDims .or. (.not.(DimsMatch(Filter, V)))
-
-        Nx = U%dims(1)
-        Ny = U%dims(2)
-        Nz = U%dims(3)
-        Nt = U%dims(4)
-      else if (VelInType .eq. 's10') then
-        ! speed10m is a 2D variable
-        call rhdf5_read_init(Speed10mFile, Speed10m)
-        BadDims = BadDims .or. (.not.(DimsMatch(Filter, Speed10m)))
-
-        Nx = Speed10m%dims(1)
-        Ny = Speed10m%dims(2)
-        Nz = 1
-        Nt = Speed10m%dims(3)
-      endif
-
-      if (BadDims) then
-        write (*,*) 'ERROR: dimensions of filter, dn0, u and v do not match'
-        stop
-      endif
-    else if (AvgFunc .eq. 'storm_int') then
-      ! speed10m is a 2D variable
-      call rhdf5_read_init(Speed10mFile, Speed10m)
-      BadDims = BadDims .or. (.not.(DimsMatch(Filter, Speed10m)))
-
-      Nx = Speed10m%dims(1)
-      Ny = Speed10m%dims(2)
-      Nz = 1
-      Nt = Speed10m%dims(3)
-  
-      if (BadDims) then
-        write (*,*) 'ERROR: dimensions of filter and speed10m do not match'
-        stop
-      endif
+    ! At this point Nz is set to Var1Nz. Make sure that Nz is set to the greater
+    ! of Var1Nz and Var2Nz. This will allow for a mix of 2d and 3d variables for
+    ! the hist2d function.
+    if (Var2Nz .gt. Var1Nz) then
+      Nz = Var2Nz
     endif
   endif
 
-  if (UseFilter) then
-     FilterNz = Filter%dims(3)
-  else
-     FilterNz = 1
+  if (BadDims) then
+    stop
   endif
 
   ! Set up the dimensions for reading in the input field data, one time step per read. 
   ! In other words, remove the time dimension from the input dimensions since we will 
   ! be incrementing through every time step in a loop. The time dimension is always the
   ! last dimension so what this boils down to is to decrement number of dimensions by one.
-  write (*,*) 'Input variable information:'
-  if (AvgFunc .eq. 'max_azwind') then
-    AzWind%ndims = AzWind%ndims - 1
-    write (*,*) '  Number of dimensions: ', AzWind%ndims
-    write (*,*) '  Dimension sizes:'
-    do id = 1, AzWind%ndims
-      write (*,*), '    ', trim(AzWind%dimnames(id)), ': ', AzWind%dims(id)
-    enddo
-  else if (AvgFunc .eq. 'min_azslp') then
-    AzSlp%ndims = AzSlp%ndims - 1
-    write (*,*) '  Number of dimensions: ', AzSlp%ndims
-    write (*,*) '  Dimension sizes:'
-    do id = 1, AzSlp%ndims
-      write (*,*), '    ', trim(AzSlp%dimnames(id)), ': ', AzSlp%dims(id)
-    enddo
-  else if (AvgFunc .eq. 'horiz_ke') then
-    Dens%ndims = Dens%ndims - 1
-    if (VelInType .eq. 'uv') then
-      U%ndims = U%ndims - 1
-      V%ndims = V%ndims - 1
-    else if (VelInType .eq. 's10') then
-      Speed10m%ndims = Speed10m%ndims - 1
-    endif
-    write (*,*) '  Number of dimensions: ', Dens%ndims
-    write (*,*) '  Dimension sizes:'
-    do id = 1, Dens%ndims
-      write (*,*), '    ', trim(Dens%dimnames(id)), ': ', Dens%dims(id)
-    enddo
-  else if (AvgFunc .eq. 'storm_int') then
-    Speed10m%ndims = Speed10m%ndims - 1
-    write (*,*) '  Number of dimensions: ', Speed10m%ndims
-    write (*,*) '  Dimension sizes:'
-    do id = 1, Speed10m%ndims
-      write (*,*), '    ', trim(Speed10m%dimnames(id)), ': ', Speed10m%dims(id)
-    enddo
-  else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
-           (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. &
-           (AvgFunc .eq. 'hfrac') .or. (AvgFunc .eq. 'turb_mmts')) then
-    Var%ndims = Var%ndims - 1
-    write (*,*) '  Number of dimensions: ', Var%ndims
-    write (*,*) '  Dimension sizes:'
-    do id = 1, Var%ndims
-      write (*,*), '    ', trim(Var%dimnames(id)), ': ', Var%dims(id)
-    enddo
-  else if (AvgFunc .eq. 'pop') then
-    PrecipRate%ndims = PrecipRate%ndims - 1
-    Lwp%ndims = Lwp%ndims - 1
-    Ltss%ndims = Ltss%ndims - 1
-    write (*,*) '  Number of dimensions: ', PrecipRate%ndims
-    write (*,*) '  Dimension sizes:'
-    do id = 1, PrecipRate%ndims
-      write (*,*), '    ', trim(PrecipRate%dimnames(id)), ': ', PrecipRate%dims(id)
-    enddo
-  else if ((AvgFunc .eq. 'hist2d') .or. (AvgFunc .eq. 'turb_cov')) then
-    Xvar%ndims = Xvar%ndims - 1
-    Yvar%ndims = Yvar%ndims - 1
-    write (*,*) '  X variable: '
-    write (*,*) '    Number of dimensions: ', Xvar%ndims
-    write (*,*) '    Dimension sizes:'
-    do id = 1, Xvar%ndims
-      write (*,*), '      ', trim(Xvar%dimnames(id)), ': ', Xvar%dims(id)
-    enddo
-    write (*,*) '  Y variable: '
-    write (*,*) '    Number of dimensions: ', Yvar%ndims
-    write (*,*) '    Dimension sizes:'
-    do id = 1, Yvar%ndims
-      write (*,*), '      ', trim(Yvar%dimnames(id)), ': ', Yvar%dims(id)
-    enddo
-  else if (AvgFunc .eq. 'ltss') then
-    Theta%ndims = Theta%ndims - 1
-    write (*,*) '  Number of dimensions: ', Theta%ndims
-    write (*,*) '  Dimension sizes:'
-    do id = 1, Theta%ndims
-      write (*,*), '    ', trim(Theta%dimnames(id)), ': ', Theta%dims(id)
-    enddo
-  endif
+  
+  ! Always have var1
+  Var1%ndims = Var1%ndims - 1
+  write (*,*) 'Var1 information'
+  write (*,*) '  Dataset name: ', trim(Var1%vname)
+  write (*,*) '  Number of dimensions: ', Var1%ndims
+  write (*,*) '  Dimension sizes:'
+  do id = 1, Var1%ndims
+    write (*,*), '    ', trim(Var1%dimnames(id)), ': ', Var1%dims(id)
+  enddo
   write (*,*) ''
 
-  if (UseFilter) then
-    Filter%ndims = Filter%ndims - 1
+  ! Check for existence of other vars
+  if (trim(Args%Var2%fname) .ne. 'none') then
+    Var2%ndims = Var2%ndims - 1
+    write (*,*) 'Var2 information'
+    write (*,*) '  Dataset name: ', trim(Var2%vname)
+    write (*,*) '  Number of dimensions: ', Var2%ndims
+    write (*,*) '  Dimension sizes:'
+    do id = 1, Var2%ndims
+      write (*,*), '    ', trim(Var2%dimnames(id)), ': ', Var2%dims(id)
+    enddo
+    write (*,*) ''
+  endif
 
-    write (*,*) 'Filter variable information:'
+  if (trim(Args%Var3%fname) .ne. 'none') then
+    Var3%ndims = Var3%ndims - 1
+    write (*,*) 'Var3 information'
+    write (*,*) '  Dataset name: ', trim(Var3%vname)
+    write (*,*) '  Number of dimensions: ', Var3%ndims
+    write (*,*) '  Dimension sizes:'
+    do id = 1, Var3%ndims
+      write (*,*), '    ', trim(Var3%dimnames(id)), ': ', Var3%dims(id)
+    enddo
+    write (*,*) ''
+  endif
+
+  if (trim(Args%Filter%fname) .ne. 'none') then
+    Filter%ndims = Filter%ndims - 1
+    write (*,*) 'Filter information'
+    write (*,*) '  Dataset name: ', trim(Filter%vname)
     write (*,*) '  Number of dimensions: ', Filter%ndims
     write (*,*) '  Dimension sizes:'
     do id = 1, Filter%ndims
@@ -730,12 +314,37 @@ program tsavg
     write (*,*) ''
   endif
 
-  ! If doing 'hist', read in the bins. Do it before the next section since Xnbins is being
+  if (trim(Args%StormCenter%fname) .ne. 'none') then
+    StormCenter%ndims = StormCenter%ndims - 1
+    write (*,*) 'Storm center information'
+    write (*,*) '  Dataset name: ', trim(StormCenter%vname)
+    write (*,*) '  Number of dimensions: ', StormCenter%ndims
+    write (*,*) '  Dimension sizes:'
+    do id = 1, StormCenter%ndims
+      write (*,*), '    ', trim(StormCenter%dimnames(id)), ': ', StormCenter%dims(id)
+    enddo
+    write (*,*) ''
+  endif
+
+  if (trim(Args%Dens%fname) .ne. 'none') then
+    Dens%ndims = Dens%ndims - 1
+    write (*,*) 'Density information'
+    write (*,*) '  Dataset name: ', trim(Dens%vname)
+    write (*,*) '  Number of dimensions: ', Dens%ndims
+    write (*,*) '  Dimension sizes:'
+    do id = 1, Dens%ndims
+      write (*,*), '    ', trim(Dens%dimnames(id)), ': ', Dens%dims(id)
+    enddo
+    write (*,*) ''
+  endif
+
+
+  ! If doing 'hist', read in the bins. Do it before the next section since V1nbins is being
   ! use to set up the output variable coordinates.
-  if ((AvgFunc .eq. 'hist') .or. (AvgFunc .eq. 'pop') .or. (AvgFunc .eq. 'hist2d')) then
-    call ReadBinsFile(XbinsFile, Xnbins, Xbins)
-    if ((AvgFunc .eq. 'pop') .or. (AvgFunc .eq. 'hist2d')) then
-      call ReadBinsFile(YbinsFile, Ynbins, Ybins)
+  if ((Args%AvgFunc .eq. 'hist') .or. (Args%AvgFunc .eq. 'pop') .or. (Args%AvgFunc .eq. 'hist2d')) then
+    call ReadBinsFile(Args%V1bins%fname, V1nbins, V1bins)
+    if ((Args%AvgFunc .eq. 'pop') .or. (Args%AvgFunc .eq. 'hist2d')) then
+      call ReadBinsFile(Args%V2bins%fname, V2nbins, V2bins)
     endif
   endif
 
@@ -744,45 +353,34 @@ program tsavg
   ! be read into GRADS which expects 3D variables. Always have (x,y,z) for the
   ! dimension names, but set the sizes of the dimensions according to the averaging
   ! function asked for.
-  TserAvg%vname = trim(AvgFunc)
-  if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
-      (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. &
-      (AvgFunc .eq. 'hfrac') .or. (AvgFunc .eq. 'turb_mmts') .or. &
-      (AvgFunc .eq. 'turb_cov')) then
-    TserAvg%vname = trim(TserAvg%vname) // '_' // trim(VarFprefix)
+  TserAvg%vname = trim(Args%AvgFunc)
+  if ((Args%AvgFunc .eq. 'min') .or. (Args%AvgFunc .eq. 'max') .or. &
+      (Args%AvgFunc .eq. 'hda') .or. (Args%AvgFunc .eq. 'hist') .or. &
+      (Args%AvgFunc .eq. 'hfrac') .or. (Args%AvgFunc .eq. 'turb_mmts') .or. &
+      (Args%AvgFunc .eq. 'turb_cov')) then
+    TserAvg%vname = trim(TserAvg%vname) // '_' // trim(Var1%vname)
   endif
-  TserAvg%descrip = 'time series averaged ' // trim(AvgFunc) 
+  TserAvg%descrip = 'time series averaged ' // trim(Args%AvgFunc) 
   TserAvg%ndims = 3 
   TserAvg%dimnames(1) = 'x' 
   TserAvg%dimnames(2) = 'y' 
   TserAvg%dimnames(3) = 'z' 
 
-  if (AvgFunc .eq. 'max_azwind') then
+  if ((Args%AvgFunc .eq. 'min') .or. (Args%AvgFunc .eq. 'max') .or. &
+      (Args%AvgFunc .eq. 'max_azwind') .or. (Args%AvgFunc .eq. 'min_azslp')) then
     ! single point result
     TserAvg%dims(1) = 1
     TserAvg%dims(2) = 1
     TserAvg%dims(3) = 1
-    TserAvg%units = 'm/s'
-  else if (AvgFunc .eq. 'min_azslp') then
-    ! single point result
-    TserAvg%dims(1) = 1
-    TserAvg%dims(2) = 1
-    TserAvg%dims(3) = 1
-    TserAvg%units = 'mb'
-  else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max')) then
-    ! single point result
-    TserAvg%dims(1) = 1
-    TserAvg%dims(2) = 1
-    TserAvg%dims(3) = 1
-    TserAvg%units = Var%units
-  else if ((AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hfrac')) then
+    TserAvg%units = Var1%units
+  else if ((Args%AvgFunc .eq. 'hda') .or. (Args%AvgFunc .eq. 'hfrac')) then
     ! y has size 2, one for the sum and the other for the count
     ! all z levels
     TserAvg%dims(1) = 1
     TserAvg%dims(2) = 2
     TserAvg%dims(3) = Nz
-    TserAvg%units = Var%units
-  else if ((AvgFunc .eq. 'turb_cov') .or. (AvgFunc .eq. 'turb_mmts')) then
+    TserAvg%units = Var1%units
+  else if ((Args%AvgFunc .eq. 'turb_cov') .or. (Args%AvgFunc .eq. 'turb_mmts')) then
     ! y has size 4
     !   For turb_cov
     !     y(1) - sum of mean values of x
@@ -798,43 +396,43 @@ program tsavg
     TserAvg%dims(1) = 1
     TserAvg%dims(2) = 4
     TserAvg%dims(3) = Nz
-    if (AvgFunc .eq. 'turb_cov') then
-      TserAvg%units = trim(Xvar%units) // ' ' // trim(Yvar%units)
-    else if (AvgFunc .eq. 'turb_mmts') then
-      TserAvg%units = Var%units
+    if (Args%AvgFunc .eq. 'turb_cov') then
+      TserAvg%units = trim(Var1%units) // ' ' // trim(Var2%units)
+    else if (Args%AvgFunc .eq. 'turb_mmts') then
+      TserAvg%units = Var1%units
     endif
-  else if (AvgFunc .eq. 'hist') then
+  else if (Args%AvgFunc .eq. 'hist') then
     ! put bin values in the x dimension
-    TserAvg%dims(1) = Xnbins
+    TserAvg%dims(1) = V1nbins
     TserAvg%dims(2) = 1
     TserAvg%dims(3) = Nz
-    TserAvg%units = Var%units
-  else if (AvgFunc .eq. 'pop') then
+    TserAvg%units = Var1%units
+  else if (Args%AvgFunc .eq. 'pop') then
     ! put LWP bin values in the x dimension
     ! put LTSS bin values in the y dimension
     ! put Nr and Nt results in z dimension
-    TserAvg%dims(1) = Xnbins
-    TserAvg%dims(2) = Ynbins
+    TserAvg%dims(1) = V1nbins
+    TserAvg%dims(2) = V2nbins
     TserAvg%dims(3) = 2
-    TserAvg%units = trim(PrecipRate%units) // ':' // trim(Lwp%units)
-  else if (AvgFunc .eq. 'hist2d') then
-    TserAvg%dims(1) = Xnbins
-    TserAvg%dims(2) = Ynbins
+    TserAvg%units = trim(Var1%units) // ':' // trim(Var2%units)
+  else if (Args%AvgFunc .eq. 'hist2d') then
+    TserAvg%dims(1) = V1nbins
+    TserAvg%dims(2) = V2nbins
     TserAvg%dims(3) = Nz
-    TserAvg%units = trim(Xvar%units) // ':' // trim(Lwp%units)
-  else if (AvgFunc .eq. 'ltss') then
+    TserAvg%units = trim(Var1%units) // ':' // trim(Var2%units)
+  else if (Args%AvgFunc .eq. 'ltss') then
     ! single point result
     TserAvg%dims(1) = 1
     TserAvg%dims(2) = 1
     TserAvg%dims(3) = 1
-    TserAvg%units = Theta%units
-  else if (AvgFunc .eq. 'horiz_ke') then
+    TserAvg%units = Var1%units
+  else if (Args%AvgFunc .eq. 'horiz_ke') then
     ! single point result
     TserAvg%dims(1) = 1
     TserAvg%dims(2) = 1
     TserAvg%dims(3) = 1
     TserAvg%units = 'Joules'
-  else if (AvgFunc .eq. 'storm_int') then
+  else if (Args%AvgFunc .eq. 'storm_int') then
     ! single point result
     TserAvg%dims(1) = 1
     TserAvg%dims(2) = 1
@@ -845,9 +443,9 @@ program tsavg
   allocate(TserAvg%vdata(TserAvg%dims(1)*TserAvg%dims(2)*TserAvg%dims(3)))
 
   ! If doing max_azwind, set up the output var for the radius of max wind
-  if (AvgFunc .eq. 'max_azwind') then
+  if (Args%AvgFunc .eq. 'max_azwind') then
     RadMaxWind%vname = 'rmw'
-    RadMaxWind%descrip = 'time series averaged ' // trim(AvgFunc) 
+    RadMaxWind%descrip = 'time series averaged ' // trim(Args%AvgFunc) 
     RadMaxWind%units = 'km'
     RadMaxWind%ndims = 3 
     RadMaxWind%dimnames(1) = 'x' 
@@ -859,7 +457,7 @@ program tsavg
     allocate(RadMaxWind%vdata(RadMaxWind%dims(1)*RadMaxWind%dims(2)*RadMaxWind%dims(3)))
 
     Rad34ktWind%vname = 'r34kt'
-    Rad34ktWind%descrip = 'time series averaged ' // trim(AvgFunc) 
+    Rad34ktWind%descrip = 'time series averaged ' // trim(Args%AvgFunc) 
     Rad34ktWind%units = 'km'
     Rad34ktWind%ndims = 3 
     Rad34ktWind%dimnames(1) = 'x' 
@@ -871,7 +469,7 @@ program tsavg
     allocate(Rad34ktWind%vdata(Rad34ktWind%dims(1)*Rad34ktWind%dims(2)*Rad34ktWind%dims(3)))
 
     Rad50ktWind%vname = 'r50kt'
-    Rad50ktWind%descrip = 'time series averaged ' // trim(AvgFunc) 
+    Rad50ktWind%descrip = 'time series averaged ' // trim(Args%AvgFunc) 
     Rad50ktWind%units = 'km'
     Rad50ktWind%ndims = 3 
     Rad50ktWind%dimnames(1) = 'x' 
@@ -883,7 +481,7 @@ program tsavg
     allocate(Rad50ktWind%vdata(Rad50ktWind%dims(1)*Rad50ktWind%dims(2)*Rad50ktWind%dims(3)))
 
     Rad64ktWind%vname = 'r64kt'
-    Rad64ktWind%descrip = 'time series averaged ' // trim(AvgFunc) 
+    Rad64ktWind%descrip = 'time series averaged ' // trim(Args%AvgFunc) 
     Rad64ktWind%units = 'km'
     Rad64ktWind%ndims = 3 
     Rad64ktWind%dimnames(1) = 'x' 
@@ -910,36 +508,11 @@ program tsavg
   write (*,*) ''
   flush(6)
 
-  ! Read in the input coordinates
-  if (AvgFunc .eq. 'max_azwind') then
-    InCoordFile = trim(AzWindFile)
-  else if (AvgFunc .eq. 'min_azslp') then
-    InCoordFile = trim(AzSlpFile)
-  else if (AvgFunc .eq. 'horiz_ke') then
-    InCoordFile = trim(DensFile)
-  else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
-           (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. &
-           (AvgFunc .eq. 'hfrac') .or. (AvgFunc .eq. 'turb_mmts')) then
-    InCoordFile = trim(VarFile)
-  else if (AvgFunc .eq. 'pop') then
-    InCoordFile = trim(PrecipRateFile)
-  else if ((AvgFunc .eq. 'hist2d') .or. (AvgFunc .eq. 'turb_cov')) then
-    ! Want to end up using a 3d var if one of x and y is 3d, that is use 2d only
-    ! if both x and y are 2d. Set InCoordFile to x, and switch to y only if y is 3d.
-    ! This gives you:
-    !     x   y    InCoordFile
-    !    2d  2d       2d  (x)
-    !    2d  3d       3d  (y)
-    !    3d  2d       3d  (x)
-    !    3d  3d       3d  (y)
-    InCoordFile = trim(XvarFile)
-    if (YvarDim .eq. '3d') then
-      InCoordFile = trim(YvarFile)
-    endif
-  else if (AvgFunc .eq. 'ltss') then
-    InCoordFile = trim(ThetaFile)
-  else if (AvgFunc .eq. 'storm_int') then
-    InCoordFile = trim(Speed10mFile)
+  ! Read in the input coordinates. Make sure to use a 3D variable if
+  ! one is available.
+  InCoordFile = trim(Args%Var1%fname)
+  if ((.not. Var1Is3d) .and. Var2Is3d) then
+    InCoordFile = trim(Args%Var2%fname)
   endif
 
   InXcoords%vname = 'x_coords'
@@ -950,7 +523,7 @@ program tsavg
   call rhdf5_read_init(InCoordFile, InYcoords)
   call rhdf5_read(InCoordFile, InYcoords)
 
-  if (AvgFunc .eq. 'storm_int') then
+  if (Args%AvgFunc .eq. 'storm_int') then
     ! fake it for the storm intensity metric
     InZcoords%vname = 'z_coords'
     InZcoords%ndims = 1
@@ -974,7 +547,7 @@ program tsavg
   ! for DoHorizKe to be able to calculate volume * density -> mass
   allocate(InXcoordsKm(Nx))
   allocate(InYcoordsKm(Ny))
-  if ((AvgFunc .eq. 'max_azwind') .or. (AvgFunc .eq. 'min_azslp')) then
+  if ((Args%AvgFunc .eq. 'max_azwind') .or. (Args%AvgFunc .eq. 'min_azslp')) then
     ! x,y coords are in meters, convert to km
     do ix = 1, Nx
       InXcoordsKm(ix) = InXcoords%vdata(ix) / 1000.0
@@ -1004,25 +577,25 @@ program tsavg
   flush(6)
 
   ! if doing ltss, find the indices associated with Zbot and Ztop
-  if (AvgFunc .eq. 'ltss') then
+  if (Args%AvgFunc .eq. 'ltss') then
     Kbot = Nt
     do iz = Nz,1,-1
-      if (InZcoords%vdata(iz) .ge. Zbot) then
+      if (InZcoords%vdata(iz) .ge. Args%Zbot) then
         Kbot = iz
       endif
     enddo
 
     Ktop = 1
     do iz = 1,Nz
-      if (InZcoords%vdata(iz) .le. Ztop) then
+      if (InZcoords%vdata(iz) .le. Args%Ztop) then
         Ktop = iz
       endif
     enddo
 
     write (*,*) 'Height indices for LTSS calculation:'
-    write (*,*) '   Zbot: ', Zbot
+    write (*,*) '   Zbot: ', Args%Zbot
     write (*,*) '     Index for Zbot: ', Kbot
-    write (*,*) '   Ztop: ', Ztop
+    write (*,*) '   Ztop: ', Args%Ztop
     write (*,*) '     Index for Ztop: ', Ktop
     write (*,*) ''
   endif
@@ -1037,11 +610,11 @@ program tsavg
   OutXcoords%dimnames(1) = 'x'
   OutXcoords%units = 'degrees_east'
   OutXcoords%descrip = 'longitude'
-  if ((AvgFunc .eq. 'hist') .or. (AvgFunc .eq. 'pop') .or. (AvgFunc .eq. 'hist2d')) then
-    OutXcoords%dims(1) = Xnbins
-    allocate(OutXcoords%vdata(Xnbins))
-    do ib = 1, Xnbins
-      OutXcoords%vdata(ib) = Xbins(ib)
+  if ((Args%AvgFunc .eq. 'hist') .or. (Args%AvgFunc .eq. 'pop') .or. (Args%AvgFunc .eq. 'hist2d')) then
+    OutXcoords%dims(1) = V1nbins
+    allocate(OutXcoords%vdata(V1nbins))
+    do ib = 1, V1nbins
+      OutXcoords%vdata(ib) = V1bins(ib)
     enddo
   else
     OutXcoords%dims(1) = 1
@@ -1054,18 +627,18 @@ program tsavg
   OutYcoords%dimnames(1) = 'y'
   OutYcoords%units = 'degrees_north'
   OutYcoords%descrip = 'latitude'
-  if ((AvgFunc .eq. 'pop') .or. (AvgFunc .eq. 'hist2d')) then
-    OutYcoords%dims(1) = Ynbins
-    allocate(OutYcoords%vdata(Ynbins))
-    do ib = 1, Ynbins
-      OutYcoords%vdata(ib) = Ybins(ib)
+  if ((Args%AvgFunc .eq. 'pop') .or. (Args%AvgFunc .eq. 'hist2d')) then
+    OutYcoords%dims(1) = V2nbins
+    allocate(OutYcoords%vdata(V2nbins))
+    do ib = 1, V2nbins
+      OutYcoords%vdata(ib) = V2bins(ib)
     enddo
-  elseif ((AvgFunc .eq. 'hfrac') .or. (AvgFunc .eq. 'hda')) then
+  elseif ((Args%AvgFunc .eq. 'hfrac') .or. (Args%AvgFunc .eq. 'hda')) then
     OutYcoords%dims(1) = 2
     allocate(OutYcoords%vdata(2))
     OutYcoords%vdata(1) = 1.0
     OutYcoords%vdata(2) = 2.0
-  elseif ((AvgFunc .eq. 'turb_cov') .or. (AvgFunc .eq. 'turb_mmts')) then
+  elseif ((Args%AvgFunc .eq. 'turb_cov') .or. (Args%AvgFunc .eq. 'turb_mmts')) then
     OutYcoords%dims(1) = 4
     allocate(OutYcoords%vdata(4))
     OutYcoords%vdata(1) = 1.0
@@ -1083,14 +656,14 @@ program tsavg
   OutZcoords%dimnames(1) = 'z'
   OutZcoords%units = 'meter'
   OutZcoords%descrip = 'sigma-z'
-  if ((AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. (AvgFunc .eq. 'hist2d') .or.  &
-      (AvgFunc .eq. 'hfrac') .or. (AvgFunc .eq. 'turb_cov') .or. (AvgFunc .eq. 'turb_mmts')) then
+  if ((Args%AvgFunc .eq. 'hda') .or. (Args%AvgFunc .eq. 'hist') .or. (Args%AvgFunc .eq. 'hist2d') .or.  &
+      (Args%AvgFunc .eq. 'hfrac') .or. (Args%AvgFunc .eq. 'turb_cov') .or. (Args%AvgFunc .eq. 'turb_mmts')) then
     OutZcoords%dims(1) = Nz
     allocate(OutZcoords%vdata(Nz))
     do iz = 1, Nz
       OutZcoords%vdata(iz) = InZcoords%vdata(iz)
     enddo
-  elseif (AvgFunc .eq. 'pop') then
+  elseif (Args%AvgFunc .eq. 'pop') then
     ! need a size of 2 for the z dimension
     !   index 1 --> number of grids that are raining
     !   index 2 --> number of total grids (selected per bin on lwp)
@@ -1107,141 +680,123 @@ program tsavg
 
   ! Perform the averaging function.
   rh5f_facc = 'W'
-  call rhdf5_open_file(OutFile, rh5f_facc, 1, rh5f_out)
+  call rhdf5_open_file(Args%Output%fname, rh5f_facc, 1, rh5f_out)
 
   rh5f_facc = 'R'
-  if (UseFilter) then
-    call rhdf5_open_file(FilterFile, rh5f_facc, 1, rh5f_filter)
+
+  call rhdf5_open_file(Args%Var1%fname, rh5f_facc, 1, rh5f_var1)
+  if (UseVar2) then
+    call rhdf5_open_file(Args%Var2%fname, rh5f_facc, 1, rh5f_var2)
   endif
-  if (AvgFunc .eq. 'max_azwind') then
-    call rhdf5_open_file(AzWindFile, rh5f_facc, 1, rh5f_azwind)
-  else if (AvgFunc .eq. 'min_azslp') then
-    call rhdf5_open_file(AzSlpFile, rh5f_facc, 1, rh5f_azslp)
-  else if (AvgFunc .eq. 'horiz_ke') then
-    call rhdf5_open_file(DensFile, rh5f_facc, 1, rh5f_dens)
-    if (VelInType .eq. 'uv') then
-      call rhdf5_open_file(Ufile, rh5f_facc, 1, rh5f_u)
-      call rhdf5_open_file(Vfile, rh5f_facc, 1, rh5f_v)
-    else if (VelInType .eq. 's10') then
-      call rhdf5_open_file(Speed10mFile, rh5f_facc, 1, rh5f_speed10m)
-    endif
-  else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
-           (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. &
-           (AvgFunc .eq. 'hfrac') .or. (AvgFunc .eq. 'turb_mmts')) then
-    call rhdf5_open_file(VarFile, rh5f_facc, 1, rh5f_var)
-  else if (AvgFunc .eq. 'pop') then
-    call rhdf5_open_file(PrecipRateFile, rh5f_facc, 1, rh5f_pcprate)
-    call rhdf5_open_file(LwpFile, rh5f_facc, 1, rh5f_lwp)
-    call rhdf5_open_file(LtssFile, rh5f_facc, 1, rh5f_ltss)
-  else if ((AvgFunc .eq. 'hist2d') .or. (AvgFunc .eq. 'turb_cov')) then
-    call rhdf5_open_file(XvarFile, rh5f_facc, 1, rh5f_xvar)
-    call rhdf5_open_file(YvarFile, rh5f_facc, 1, rh5f_yvar)
-  else if (AvgFunc .eq. 'ltss') then
-    call rhdf5_open_file(ThetaFile, rh5f_facc, 1, rh5f_theta)
-  else if (AvgFunc .eq. 'storm_int') then
-    call rhdf5_open_file(Speed10mFile, rh5f_facc, 1, rh5f_speed10m)
+  if (UseVar3) then
+    call rhdf5_open_file(Args%Var3%fname, rh5f_facc, 1, rh5f_var3)
+  endif
+  if (UseFilter) then
+    call rhdf5_open_file(Args%Filter%fname, rh5f_facc, 1, rh5f_filter)
+  endif
+  if (UseStormCenter) then
+    call rhdf5_open_file(Args%StormCenter%fname, rh5f_facc, 1, rh5f_scenter)
+  endif
+  if (UseDens) then
+    call rhdf5_open_file(Args%Dens%fname, rh5f_facc, 1, rh5f_dens)
   endif
 
   do it = 1, Nt
-    ! if using a filter read in the data
+    ! read the input files
+    call rhdf5_read_variable(rh5f_var1, Var1%vname, Var1%ndims, it, Var1%dims, rdata=Var1%vdata)
+    if (UseVar2) then
+      call rhdf5_read_variable(rh5f_var2, Var2%vname, Var2%ndims, it, Var2%dims, rdata=Var2%vdata)
+    endif
+    if (UseVar3) then
+      call rhdf5_read_variable(rh5f_var3, Var3%vname, Var3%ndims, it, Var3%dims, rdata=Var3%vdata)
+    endif
     if (UseFilter) then
       call rhdf5_read_variable(rh5f_filter, Filter%vname, Filter%ndims, it, Filter%dims, rdata=Filter%vdata)
     endif
-
-    ! do the averaging function
-    if (AvgFunc .eq. 'max_azwind') then
-      call rhdf5_read_variable(rh5f_azwind, AzWind%vname, AzWind%ndims, it, AzWind%dims, rdata=AzWind%vdata)
-      call DoMaxAzWind(Nx, Ny, Nz, AzWind%vdata, InXcoordsKm, UndefVal, TserAvg%vdata(1), RadMaxWind%vdata(1), &
-                      Rad34ktWind%vdata(1), Rad50ktWind%vdata(1), Rad64ktWind%vdata(1))
-      deallocate(AzWind%vdata)
-    else if (AvgFunc .eq. 'min_azslp') then
-      call rhdf5_read_variable(rh5f_azslp, AzSlp%vname, AzSlp%ndims, it, AzSlp%dims, rdata=AzSlp%vdata)
-      call DoMinAzSlp(Nx, Ny, Nz, AzSlp%vdata, UndefVal, TserAvg%vdata(1))
-      deallocate(AzSlp%vdata)
-    else if (AvgFunc .eq. 'horiz_ke') then
+    if (UseStormCenter) then
+      call rhdf5_read_variable(rh5f_Scenter, StormCenter%vname, StormCenter%ndims, it, StormCenter%dims, rdata=StormCenter%vdata)
+    endif
+    if (UseDens) then
       call rhdf5_read_variable(rh5f_dens, Dens%vname, Dens%ndims, it, Dens%dims, rdata=Dens%vdata)
-
-      if (VelInType .eq. 'uv') then
-        call rhdf5_read_variable(rh5f_u, U%vname, U%ndims, it, U%dims, rdata=U%vdata)
-        call rhdf5_read_variable(rh5f_v, V%vname, V%ndims, it, V%dims, rdata=V%vdata)
-
-        allocate(HorizSpeed(Nx,Ny))
-        call UvToSpeed(Nx, Ny, Nz, U%vdata, V%vdata, HorizSpeed)
-        call DoHorizKe(Nx, Ny, Nz, FilterNz, Dens%vdata, HorizSpeed, Filter%vdata, DeltaX, DeltaY, HkeZthick, TserAvg%vdata(1))
-
-        deallocate(U%vdata)
-        deallocate(V%vdata)
-        deallocate(HorizSpeed)
-      else if (VelInType .eq. 's10') then
-        call rhdf5_read_variable(rh5f_speed10m, Speed10m%vname, Speed10m%ndims, it, Speed10m%dims, rdata=Speed10m%vdata)
-        call DoHorizKe(Nx, Ny, Nz, FilterNz, Dens%vdata, Speed10m%vdata, Filter%vdata, DeltaX, DeltaY, HkeZthick, TserAvg%vdata(1))
-        deallocate(Speed10m%vdata)
-      endif
-
-      deallocate(Dens%vdata)
-    else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
-             (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. &
-             (AvgFunc .eq. 'hfrac') .or. (AvgFunc .eq. 'turb_mmts')) then
-      call rhdf5_read_variable(rh5f_var, Var%vname, Var%ndims, it, Var%dims, rdata=Var%vdata)
-
-      if (AvgFunc .eq. 'min') then
-        call DoMin(Nx, Ny, Nz, FilterNz, Var%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata(1))
-      else if (AvgFunc .eq. 'max') then
-        call DoMax(Nx, Ny, Nz, FilterNz, Var%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata(1))
-      else if (AvgFunc .eq. 'hda') then
-        call DoHda(Nx, Ny, Nz, FilterNz, Var%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata)
-      else if (AvgFunc .eq. 'hist') then
-        call DoHist(Nx, Ny, Nz, FilterNz, Xnbins, Var%vdata, Filter%vdata, UseFilter, UndefVal, Xbins, TserAvg%vdata)
-      else if (AvgFunc .eq. 'hfrac') then
-        call DoHfrac(Nx, Ny, Nz, FilterNz, HfracThresh, Var%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata)
-      else if (AvgFunc .eq. 'turb_mmts') then
-        call DoTurbMmts(Nx, Ny, Nz, FilterNz, Var%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata)
-      endif
-
-      deallocate(Var%vdata)
-    else if (AvgFunc .eq. 'pop') then
-      call rhdf5_read_variable(rh5f_pcprate, PrecipRate%vname, PrecipRate%ndims, it, PrecipRate%dims, rdata=PrecipRate%vdata)
-      call rhdf5_read_variable(rh5f_lwp, Lwp%vname, Lwp%ndims, it, Lwp%dims, rdata=Lwp%vdata)
-      call rhdf5_read_variable(rh5f_ltss, Ltss%vname, Ltss%ndims, it, Ltss%dims, rdata=Ltss%vdata)
-
-      call DoPop(Nx, Ny, Nz, FilterNz, Xnbins, Ynbins, PrecipRate%vdata, Lwp%vdata, Ltss%vdata(1), Filter%vdata, UseFilter, UndefVal, PrecipRateLimit, Xbins, Ybins, TserAvg%vdata)
-
-      deallocate(PrecipRate%vdata)
-      deallocate(Lwp%vdata)
-      deallocate(Ltss%vdata)
-    else if ((AvgFunc .eq. 'hist2d') .or. (AvgFunc .eq. 'turb_cov')) then
-      call rhdf5_read_variable(rh5f_xvar, Xvar%vname, Xvar%ndims, it, Xvar%dims, rdata=Xvar%vdata)
-      call rhdf5_read_variable(rh5f_yvar, Yvar%vname, Yvar%ndims, it, Yvar%dims, rdata=Yvar%vdata)
-
-      if (AvgFunc .eq. 'hist2d') then
-        call DoHist2d(Nx, Ny, Nz, XvarNz, YvarNz, FilterNz, Xnbins, Ynbins, Xvar%vdata, Yvar%vdata, Filter%vdata, UseFilter, UndefVal, Xbins, Ybins, TserAvg%vdata)
-      else if (AvgFunc .eq. 'turb_cov') then
-        call DoTurbCov(Nx, Ny, Nz, FilterNz, Xvar%vdata, Yvar%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata)
-      endif
-
-      deallocate(Xvar%vdata)
-      deallocate(Yvar%vdata)
-    else if (AvgFunc .eq. 'ltss') then
-      call rhdf5_read_variable(rh5f_theta, Theta%vname, Theta%ndims, it, Theta%dims, rdata=Theta%vdata)
-
-      call DoLtss(Nx, Ny, Nz, FilterNz, Theta%vdata, Filter%vdata, UseFilter, UndefVal, Kbot, Ktop, TserAvg%vdata(1))
-
-      deallocate(Theta%vdata)
-    else if (AvgFunc .eq. 'storm_int') then
-      call rhdf5_read_variable(rh5f_speed10m, Speed10m%vname, Speed10m%ndims, it, Speed10m%dims, rdata=Speed10m%vdata)
-      call DoStormInt(Nx, Ny, FilterNz, Speed10m%vdata, Filter%vdata, TserAvg%vdata(1))
-      deallocate(Speed10m%vdata)
     endif
 
-    ! if using a filter, deallocate the space for the next time around
+    ! do the averaging function
+    select case (trim(Args%AvgFunc))
+
+      case ('max_azwind')
+        call DoMaxAzWind(Nx, Ny, Nz, Var1%vdata, InXcoordsKm, UndefVal, TserAvg%vdata(1), RadMaxWind%vdata(1), &
+                         Rad34ktWind%vdata(1), Rad50ktWind%vdata(1), Rad64ktWind%vdata(1))
+
+      case ('min_azslp')
+        call DoMinAzSlp(Nx, Ny, Nz, Var1%vdata, UndefVal, TserAvg%vdata(1))
+
+      case ('horiz_ke')
+        if (trim(Args%VelInType) .eq. 'uv') then
+          allocate(HorizSpeed(Nx,Ny))
+          call UvToSpeed(Nx, Ny, Nz, Var1%vdata, Var2%vdata, HorizSpeed)
+          call DoHorizKe(Nx, Ny, Nz, FilterNz, Dens%vdata, HorizSpeed, Filter%vdata, DeltaX, DeltaY, Args%HkeZthick, TserAvg%vdata(1))
+          deallocate(HorizSpeed)
+        elseif (trim(Args%VelInType) .eq. 's10') then
+          call DoHorizKe(Nx, Ny, Nz, FilterNz, Dens%vdata, Var1%vdata, Filter%vdata, DeltaX, DeltaY, Args%HkeZthick, TserAvg%vdata(1))
+        endif
+
+      case ('min')
+        call DoMin(Nx, Ny, Nz, FilterNz, Var1%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata(1))
+
+      case ('max')
+        call DoMax(Nx, Ny, Nz, FilterNz, Var1%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata(1))
+
+      case ('hda')
+        call DoHda(Nx, Ny, Nz, FilterNz, Var1%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata)
+
+      case ('hist')
+        call DoHist(Nx, Ny, Nz, FilterNz, V1nbins, Var1%vdata, Filter%vdata, UseFilter, UndefVal, V1bins, TserAvg%vdata)
+
+      case ('hfrac')
+        call DoHfrac(Nx, Ny, Nz, FilterNz, Args%HfracLimit, Var1%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata)
+
+      case ('turb_mmts')
+        call DoTurbMmts(Nx, Ny, Nz, FilterNz, Var1%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata)
+
+      case ('pop')
+        call DoPop(Nx, Ny, Nz, FilterNz, V1nbins, V2nbins, Var1%vdata, Var2%vdata, Var3%vdata(1), Filter%vdata, UseFilter, UndefVal, Args%PcprateLimit, V1bins, V2bins, TserAvg%vdata)
+
+      case ('hist2d')
+        call DoHist2d(Nx, Ny, Nz, Var1Nz, Var2Nz, FilterNz, V1nbins, V2nbins, Var1%vdata, Var2%vdata, Filter%vdata, UseFilter, UndefVal, V1bins, V2bins, TserAvg%vdata)
+
+      case ('turb_cov')
+        call DoTurbCov(Nx, Ny, Nz, FilterNz, Var1%vdata, Var2%vdata, Filter%vdata, UseFilter, UndefVal, TserAvg%vdata)
+
+      case ('ltss')
+        call DoLtss(Nx, Ny, Nz, FilterNz, Var1%vdata, Filter%vdata, UseFilter, UndefVal, Kbot, Ktop, TserAvg%vdata(1))
+
+      case ('storm_int')
+        call DoStormInt(Nx, Ny, FilterNz, Var1%vdata, Filter%vdata, TserAvg%vdata(1))
+
+    endselect
+
+    ! Deallocate the variable data memory
+    deallocate(Var1%vdata)
+    if (UseVar2) then
+      deallocate(Var2%vdata)
+    endif
+    if (UseVar3) then
+      deallocate(Var3%vdata)
+    endif
     if (UseFilter) then
       deallocate(Filter%vdata)
+    endif
+    if (UseStormCenter) then
+      deallocate(StormCenter%vdata)
+    endif
+    if (UseDens) then
+      deallocate(Dens%vdata)
     endif
 
     ! write out the averaged data
     call rhdf5_write_variable(rh5f_out, TserAvg%vname, TserAvg%ndims, it, TserAvg%dims, &
        TserAvg%units, TserAvg%descrip, TserAvg%dimnames, rdata=TserAvg%vdata)
-    if (AvgFunc .eq. 'max_azwind') then
+    if (Args%AvgFunc .eq. 'max_azwind') then
       call rhdf5_write_variable(rh5f_out, RadMaxWind%vname, RadMaxWind%ndims, it, RadMaxWind%dims, &
          RadMaxWind%units, RadMaxWind%descrip, RadMaxWind%dimnames, rdata=RadMaxWind%vdata)
       call rhdf5_write_variable(rh5f_out, Rad34ktWind%vname, Rad34ktWind%ndims, it, Rad34ktWind%dims, &
@@ -1263,36 +818,21 @@ program tsavg
   call rhdf5_close_file(rh5f_out)
 
   rh5f_facc = 'R'
+  call rhdf5_close_file(rh5f_var1)
+  if (UseVar2) then
+    call rhdf5_close_file(rh5f_var2)
+  endif
+  if (UseVar3) then
+    call rhdf5_close_file(rh5f_var3)
+  endif
   if (UseFilter) then
     call rhdf5_close_file(rh5f_filter)
   endif
-  if (AvgFunc .eq. 'max_azwind') then
-    call rhdf5_close_file(rh5f_azwind)
-  else if (AvgFunc .eq. 'max_azslp') then
-    call rhdf5_close_file(rh5f_azslp)
-  else if (AvgFunc .eq. 'horiz_ke') then
+  if (UseStormCenter) then
+    call rhdf5_close_file(rh5f_scenter)
+  endif
+  if (UseDens) then
     call rhdf5_close_file(rh5f_dens)
-    if (VelInType .eq. 'uv') then
-      call rhdf5_close_file(rh5f_u)
-      call rhdf5_close_file(rh5f_v)
-    else if (VelInType .eq. 's10') then
-      call rhdf5_close_file(rh5f_speed10m)
-    endif
-  else if ((AvgFunc .eq. 'min') .or. (AvgFunc .eq. 'max') .or. &
-           (AvgFunc .eq. 'hda') .or. (AvgFunc .eq. 'hist') .or. &
-           (AvgFunc .eq. 'hfrac') .or. (AvgFunc .eq. 'turb_mmts')) then
-    call rhdf5_close_file(rh5f_var)
-  else if (AvgFunc .eq. 'pop') then
-    call rhdf5_close_file(rh5f_pcprate)
-    call rhdf5_close_file(rh5f_lwp)
-    call rhdf5_close_file(rh5f_ltss)
-  else if ((AvgFunc .eq. 'hist2d') .or. (AvgFunc .eq. 'turb_cov')) then
-    call rhdf5_close_file(rh5f_xvar)
-    call rhdf5_close_file(rh5f_yvar)
-  else if (AvgFunc .eq. 'ltss') then
-    call rhdf5_close_file(rh5f_theta)
-  else if (AvgFunc .eq. 'storm_int') then
-    call rhdf5_close_file(rh5f_speed10m)
   endif
  
   ! 'it' will be one beyond its loop limit (Nt) so subtract one
@@ -1302,16 +842,16 @@ program tsavg
 
   ! Finish off output file
   ! write out the coordinate data
-  call rhdf5_write(OutFile, OutXcoords, 1)
-  call rhdf5_write(OutFile, OutYcoords, 1)
-  call rhdf5_write(OutFile, OutZcoords, 1)
-  call rhdf5_write(OutFile, InTcoords, 1)
+  call rhdf5_write(Args%Output%fname, OutXcoords, 1)
+  call rhdf5_write(Args%Output%fname, OutYcoords, 1)
+  call rhdf5_write(Args%Output%fname, OutZcoords, 1)
+  call rhdf5_write(Args%Output%fname, InTcoords, 1)
 
   ! If doing hist function, write out the input dimension sizes
   ! for downstream analyses. Eg. if you want to do fractional
   ! area calculations then the counts in the histogram do not
   ! tell you how many total points are in the domain.
-  if ((AvgFunc .eq. 'hist') .or. (AvgFunc .eq. 'hist2d')) then
+  if ((Args%AvgFunc .eq. 'hist') .or. (Args%AvgFunc .eq. 'hist2d')) then
     ! common settings
     OrigDimSize%ndims = 1
     OrigDimSize%dims(1) = 1
@@ -1323,45 +863,45 @@ program tsavg
     OrigDimSize%dimnames(1) = 'x'
     OrigDimSize%descrip = 'number of domain x points'
     OrigDimSize%vdata(1) = float(Nx)
-    call rhdf5_write(OutFile, OrigDimSize, 1)
+    call rhdf5_write(Args%Output%fname, OrigDimSize, 1)
 
     ! Y
     OrigDimSize%vname = 'Ny'
     OrigDimSize%dimnames(1) = 'y'
     OrigDimSize%descrip = 'number of domain y points'
     OrigDimSize%vdata(1) = float(Ny)
-    call rhdf5_write(OutFile, OrigDimSize, 1)
+    call rhdf5_write(Args%Output%fname, OrigDimSize, 1)
 
     ! Z
     OrigDimSize%vname = 'Nz'
     OrigDimSize%dimnames(1) = 'z'
     OrigDimSize%descrip = 'number of domain z points'
     OrigDimSize%vdata(1) = float(Nz)
-    call rhdf5_write(OutFile, OrigDimSize, 1)
+    call rhdf5_write(Args%Output%fname, OrigDimSize, 1)
 
     ! T
     OrigDimSize%vname = 'Nt'
     OrigDimSize%dimnames(1) = 't'
     OrigDimSize%descrip = 'number of domain t points'
     OrigDimSize%vdata(1) = float(Nt)
-    call rhdf5_write(OutFile, OrigDimSize, 1)
+    call rhdf5_write(Args%Output%fname, OrigDimSize, 1)
 
     deallocate(OrigDimSize%vdata)
   endif
 
   ! set up four (x,y,z,t) dimensions for use by GRADS
-  call rhdf5_set_dimension(OutFile, OutXcoords, 'x')
-  call rhdf5_set_dimension(OutFile, OutYcoords, 'y')
-  call rhdf5_set_dimension(OutFile, OutZcoords, 'z')
-  call rhdf5_set_dimension(OutFile, InTcoords, 't')
+  call rhdf5_set_dimension(Args%Output%fname, OutXcoords, 'x')
+  call rhdf5_set_dimension(Args%Output%fname, OutYcoords, 'y')
+  call rhdf5_set_dimension(Args%Output%fname, OutZcoords, 'z')
+  call rhdf5_set_dimension(Args%Output%fname, InTcoords, 't')
 
   ! attach the dimension specs to the output variable
-  call rhdf5_attach_dimensions(OutFile, TserAvg)
-  if (AvgFunc .eq. 'max_azwind') then
-    call rhdf5_attach_dimensions(OutFile, RadMaxWind)
-    call rhdf5_attach_dimensions(OutFile, Rad34ktWind)
-    call rhdf5_attach_dimensions(OutFile, Rad50ktWind)
-    call rhdf5_attach_dimensions(OutFile, Rad64ktWind)
+  call rhdf5_attach_dimensions(Args%Output%fname, TserAvg)
+  if (Args%AvgFunc .eq. 'max_azwind') then
+    call rhdf5_attach_dimensions(Args%Output%fname, RadMaxWind)
+    call rhdf5_attach_dimensions(Args%Output%fname, Rad34ktWind)
+    call rhdf5_attach_dimensions(Args%Output%fname, Rad50ktWind)
+    call rhdf5_attach_dimensions(Args%Output%fname, Rad64ktWind)
   endif
   
   stop
@@ -1376,141 +916,382 @@ contains
 !
 ! This routine will read in the command line arguments
 !
-subroutine GetMyArgs(InDir, InSuffix, OutFile, AvgFunc, FilterFile, UseFilter)
+subroutine GetMyArgs(Args)
+  use getoptions
+
   implicit none
 
-  character (len=*) :: InDir, InSuffix, OutFile, AvgFunc, FilterFile
-  logical :: UseFilter
+  type (ArgList) :: Args
 
-  integer :: iargc
-
+  character :: optval
   logical :: BadArgs
+  logical :: FirstParam
+  character (len=MediumString), dimension(MaxArgFields) :: ArgList
+  integer :: Nfields
 
-  if (iargc() .ne. 5) then
-    write (*,*) 'ERROR: must supply exactly 5 arguments'
-    write (*,*) ''
-    write (*,*) 'USAGE: tsavg <in_dir> <in_suffix> <out_file> <avg_function> <filter_file>'
-    write (*,*) '        <in_dir>: directory where input files live'
-    write (*,*) '        <in_suffix>: suffix on input file names'
-    write (*,*) '        <out_file>: name of output file, HDF5 format'
-    write (*,*) '        <avg_function>: averaging function to use on input data'
-    write (*,*) '            horiz_ke:<in_type>:<thickness> -> total kinetic energy form horizontal winds'
-    write (*,*) '              <in_type>: "uv" calculate from lowest level of u and v fields,'
-    write (*,*) '                         "s10" calculate from 10m wind speed field,'
-    write (*,*) '              <thickness>: depth (m) of slab that KE is being calculated in' 
-    write (*,*) '                          Powell and Reinhold, 2007 use 1.0 m'
-    write (*,*) '            storm_int -> storm intensity metric from horizontal wind speeds'
-    write (*,*) '            max_azwind:<in_type> -> max value of azimuthially averaged wind'
-    write (*,*) '              <in_type>: "uv" calculate from lowest level of u and v fields,'
-    write (*,*) '                         "s10" calculate from 10m wind speed field,'
-    write (*,*) '            min_azslp -> min value of azimuthially averaged sea-level pressure'
-    write (*,*) '            min:<var>:<file>:<dim> -> domain minimum for <var>'
-    write (*,*) '              <var>: revu var name inside the file'
-    write (*,*) '              <file>: prefix for the revu file'
-    write (*,*) '              <dim>: dimensionality of variable, either "2d" or "3d"'
-    write (*,*) '            max:<var>:<file>:<dim> -> domain maximum for <var>'
-    write (*,*) '              <var>: revu var name inside the file'
-    write (*,*) '              <file>: prefix for the revu file'
-    write (*,*) '              <dim>: dimensionality of variable, either "2d" or "3d"'
-    write (*,*) '            hda:<var>:<file>:<dim> -> horizontal domain average at each z level for <var>'
-    write (*,*) '              <var>: revu var name inside the file'
-    write (*,*) '              <file>: prefix for the revu file'
-    write (*,*) '              <dim>: dimensionality of variable, either "2d" or "3d"'
-    write (*,*) '            hist:<var>:<file>:<dim>:<bins_file>'
-    write (*,*) '              <var>,<file>,<dim> same as for hda'
-    write (*,*) '              <bins_file>: file containing the edge values of the bins'
-    write (*,*) '            hfrac:<var>:<file>:<dim>:<thresh>'
-    write (*,*) '              <var>,<file>,<dim> same as for hda'
-    write (*,*) '              <threshold>: if var > threshold, that hoizontal grid cell gets a 1, otherwise a zero.'
-    write (*,*) '                           Then the fraction for that level = Number of cells with 1s divided by total Number of cells'
-    write (*,*) '            pop:<pcp_var>:<pcp_file>:<pcp_limit>:<lwp_var>:<lwp_file>:<lwp_bins_file>:<ltss_var>:<ltss_file>:<ltss_bins_file>'
-    write (*,*) '              precip rate variable (2d):'
-    write (*,*) '                <pcp_var>: revu var name inside the file'
-    write (*,*) '                <pcp_file>: prefix for the revu file'
-    write (*,*) '                <pcp_limit>: threshold to determine if raining'
-    write (*,*) '                  precip rate >= threshold --> raining'
-    write (*,*) '                  precip rate <  threshold --> not raining'
-    write (*,*) '              liquid water path variable (2d):'
-    write (*,*) '                <lwp_var>: revu var name inside the file'
-    write (*,*) '                <lwp_file>: prefix for the revu file'
-    write (*,*) '                <lwp_bins_file>: file containing the edge values of the bins'
-    write (*,*) '              lower tropospheric static stabilty variable (1d):'
-    write (*,*) '                <ltss_var>: revu var name inside the file'
-    write (*,*) '                <ltss_file>: prefix for the revu file'
-    write (*,*) '                <ltss_bins_file>: file containing the edge values of the bins'
-    write (*,*) '            ltss:<theta_var>:<theta_file>:<k_bot>:<k_top>'
-    write (*,*) '                <theta_var>: revu var name inside the file'
-    write (*,*) '                <theta_file>: prefix for the revu file'
-    write (*,*) '                <z_bot>: height (Z) for bottom'
-    write (*,*) '                <z_top>: height (Z) for top'
-    write (*,*) '            hist2d:<x_var>:<x_file>:<x_dim>:<x_bins_file>:<y_var>:<y_file>:<y_dim>:<y_bins_file>'
-    write (*,*) '              for both X and Y bins:'
-    write (*,*) '                <*_var>: revu var name inside the file'
-    write (*,*) '                <*_file>: prefix for the revu file'
-    write (*,*) '                <*_dim>: dimensionality of variable, either "2d" or "3d"'
-    write (*,*) '                <*_bins_file>: file containing the edge values of the bins'
-    write (*,*) '            turb_cov:<x_var>:<x_file>:<x_dim>:<y_var>:<y_file>:<y_dim>'
-    write (*,*) '                <[xy]_var>: revu var name inside the file'
-    write (*,*) '                <[xy]_file>: prefix for the revu file'
-    write (*,*) '                <[xy]_dim>: dimensionality of variable, either "2d" or "3d"'
-    write (*,*) '            turb_mmts:<x_var>:<x_file>:<x_dim>'
-    write (*,*) '                <x_var>: revu var name inside the file'
-    write (*,*) '                <x_file>: prefix for the revu file'
-    write (*,*) '                <x_dim>: dimensionality of variable, either "2d" or "3d"'
-    write (*,*) '        <filter_file>: file containing the filter mask'
-    stop
-  end if
+  logical :: SubtractSmotion
 
-  call getarg(1, InDir)
-  call getarg(2, InSuffix)
-  call getarg(3, OutFile)
-  call getarg(4, AvgFunc)
-  call getarg(5, FilterFile)
+  ! Initialization
+  Args%AvgFunc = 'none'
 
-  if ((FilterFile .eq. 'none') .or. (FilterFile .eq. 'NONE')) then
-    UseFilter = .false.
-  else
-    UseFilter = .true.
-  endif
+  Args%HkeZthick = 0.0
+  Args%HfracLimit = 0.0
+  Args%Zbot = 0.0
+  Args%Ztop = 0.0
+  Args%PcprateLimit = 0.0
+  Args%VelInType = 'none'
 
+  Args%Output%fname = 'none'
+  Args%Output%vname = 'none'
+
+  Args%Filter%fname = 'none'
+  Args%Filter%vname = 'none'
+
+  Args%StormCenter%fname = 'none'
+  Args%StormCenter%vname = 'none'
+
+  Args%V1bins%fname = 'none'
+  Args%V1bins%vname = 'none'
+
+  Args%V2bins%fname = 'none'
+  Args%V2bins%vname = 'none'
+
+  Args%Var1%fname = 'none'
+  Args%Var1%vname = 'none'
+  
+  Args%Var2%fname = 'none'
+  Args%Var2%vname = 'none'
+  
+  Args%Var3%fname = 'none'
+  Args%Var3%vname = 'none'
+
+  Args%Dens%fname = 'none'
+  Args%Dens%vname = 'none'
+
+  ! loop through all of the command line tokens
+  ! optarg is a character string variable that the getoptions module supplies
+  !   optarg gets set to the argument value for an option that uses an argument
+  ! getopt returns single character:
+  !    '>' finished
+  !    '!' unknown option
+  !    '.' command line argument (no option)
   BadArgs = .false.
+  FirstParam = .true.
+  SubtractSmotion = .false.
+  do
+    optval = getopt('m')
 
-  if ((AvgFunc(1:9)  .ne. 'horiz_ke:')    .and. &
-      (AvgFunc(1:4)  .ne. 'min:')         .and. &
-      (AvgFunc(1:4)  .ne. 'max:')         .and. &
-      (AvgFunc(1:4)  .ne. 'hda:')         .and. &
-      (AvgFunc(1:5)  .ne. 'hist:')        .and. &
-      (AvgFunc(1:9)  .ne. 'turb_cov:')    .and. &
-      (AvgFunc(1:10) .ne. 'turb_mmts:')   .and. &
-      (AvgFunc(1:6)  .ne. 'hfrac:')       .and. &
-      (AvgFunc(1:4)  .ne. 'pop:')         .and. &
-      (AvgFunc(1:7)  .ne. 'hist2d:')      .and. &
-      (AvgFunc(1:5)  .ne. 'ltss:')        .and. &
-      (AvgFunc(1:10) .ne. 'storm_int:')   .and. &
-      (AvgFunc(1:9)  .ne. 'min_azslp')   .and. &
-      (AvgFunc(1:11) .ne. 'max_azwind:')) then
-    write (*,*) 'ERROR: <avg_function> must be one of:'
-    write (*,*) '          horiz_ke:<in_type>'
-    write (*,*) '          min:<var>:<file>:<dim>'
-    write (*,*) '          max:<var>:<file>:<dim>'
-    write (*,*) '          hda:<var>:<file>:<dim>'
-    write (*,*) '          hist:<var>:<file>:<dim>:<bins_file>'
-    write (*,*) '          turb_cov:<x_var>:<x_file>:<x_dim>:<y_var>:<y_file>:<y_dim>'
-    write (*,*) '          turb_mmts:<x_var>:<x_file>:<x_dim>'
-    write (*,*) '          hfrac:<var>:<file>:<dim>:<threshold>'
-    write (*,*) '          pop:<pcp_var>:<pcp_file>:<pcp_limit>:<lwp_var>:<lwp_file>:<lwp_bins_file>:<ltss_var>:<ltss_file>:<ltss_bins_file>'
-    write (*,*) '          hist2d:<x_var>:<x_file>:<x_dim>:<x_bins_file>:<y_var>:<y_file>:<y_dim>:<y_bins_file>'
-    write (*,*) '          ltss:<theta_var>:<theta_file>:<k_bot>:<k_top>'
-    write (*,*) '          storm_int'
-    write (*,*) '          min_azslp'
-    write (*,*) '          max_azwind:<in_type>'
+    select case (optval)
+      case ('>')  ! finished
+        exit
+
+      case ('!')  ! unrecognized argument
+        write(*,*) 'ERROR: unknown option: ', trim(optarg)
+        write(*,*) ''
+        BadArgs = .true.
+
+      case ('m')
+        SubtractSmotion = .true.
+
+      case ('.')
+        if (FirstParam) then
+          ! first parameter -> <arg_func>[:<args>]
+          call String2List(optarg, ':', ArgList, MaxArgFields, Nfields, 'avgerage function spec')
+          Args%AvgFunc = trim(ArgList(1))
+
+          ! Grab args for those functions that use them
+          select case (trim(Args%AvgFunc))
+            case ('horiz_ke')
+              if (Nfields .eq. 3) then
+                Args%VelInType = trim(ArgList(2))
+                read(ArgList(3), '(f)') Args%HkeZthick
+              else
+                write (*,*) 'ERROR: average function horiz_ke requires three fields: horiz_ke:<in_type>:<thickness>'
+                write(*,*) ''
+                BadArgs = .true.
+              endif
+
+            case ('hfrac')
+              if (Nfields .eq. 2) then
+                read(ArgList(2), '(f)') Args%HfracLimit
+              else
+                write (*,*) 'ERROR: average function hfrac requires two fields: hfrac:<limit>'
+                write(*,*) ''
+                BadArgs = .true.
+              endif
+
+            case ('ltss')
+              if (Nfields .eq. 3) then
+                read(ArgList(2), '(f)') Args%Zbot
+                read(ArgList(3), '(f)') Args%Ztop
+              else
+                write (*,*) 'ERROR: average function ltss requires three fields: hfrac:<z_bot>:<z_top>'
+                write(*,*) ''
+                BadArgs = .true.
+              endif
+ 
+            case ('pop')
+              if (Nfields .eq. 2) then
+                read(ArgList(2), '(f)') Args%PcprateLimit
+              else
+                write (*,*) 'ERROR: average function pop requires two fields: pop:<pcp_limit>'
+                write(*,*) ''
+                BadArgs = .true.
+              endif
+
+          endselect
+
+          FirstParam = .false.
+        else
+          ! file spec ->   <file_type>:<file_name>:<variable_name>
+          call String2List(optarg, ':', ArgList, MaxArgFields, Nfields, 'file spec') 
+          if (Nfields .eq. 3) then
+            select case (trim(ArgList(1)))
+              case ('filter')
+                Args%Filter%fname = trim(ArgList(2))
+                Args%Filter%vname = trim(ArgList(3))
+  
+              case ('storm')
+                Args%StormCenter%fname = trim(ArgList(2))
+                Args%StormCenter%vname = trim(ArgList(3))
+  
+              case ('v1bins')
+                Args%V1bins%fname = trim(ArgList(2))
+                Args%V1bins%vname = trim(ArgList(3))
+  
+              case ('v2bins')
+                Args%V2bins%fname = trim(ArgList(2))
+                Args%V2bins%vname = trim(ArgList(3))
+  
+              case ('var1')
+                Args%Var1%fname = trim(ArgList(2))
+                Args%Var1%vname = trim(ArgList(3))
+  
+              case ('var2')
+                Args%Var2%fname = trim(ArgList(2))
+                Args%Var2%vname = trim(ArgList(3))
+  
+              case ('var3')
+                Args%Var3%fname = trim(ArgList(2))
+                Args%Var3%vname = trim(ArgList(3))
+  
+              case ('dens')
+                Args%Dens%fname = trim(ArgList(2))
+                Args%Dens%vname = trim(ArgList(3))
+  
+              case ('out')
+                Args%Output%fname = trim(ArgList(2))
+                Args%Output%vname = trim(ArgList(3))
+  
+              case default
+                write(*,*) 'ERROR: unknown <file_type>: ', trim(ArgList(1))
+                write(*,*) ''
+                BadArgs = .true.
+
+            endselect
+          else
+            write(*,*) 'ERROR: must use <file_type>:<file_name>:<variable_name> for file specs: ', trim(optarg)
+            write(*,*) ''
+            BadArgs = .true.
+          endif
+        endif
+
+    endselect
+  enddo
+
+  ! Check for required files
+  ! Leave empty cases so that default can throw error if an unknown avg func is used
+  if ((trim(Args%Var1%fname) .eq. 'none') .or. (trim(Args%Output%fname) .eq. 'none')) then
+    write (*,*) 'ERROR: must always specify var1 and out files'
     write (*,*) ''
     BadArgs = .true.
-  end if
+  endif
+
+  if (SubtractSmotion) then
+    if (trim(Args%StormCenter%fname) .eq. 'none') then
+      write (*,*) 'ERROR: must specify storm center file when using -m option'
+      write (*,*) ''
+      BadArgs = .true.
+    endif
+  endif
+
+  select case (trim(Args%AvgFunc))
+    case ('horiz_ke')
+      if (trim(Args%Dens%fname) .eq. 'none') then
+        write (*,*) 'ERROR: must specify dens file with horiz_ke'
+        write (*,*) ''
+        BadArgs = .true.
+      endif
+
+      if (trim(Args%VelInType) .eq. 'uv') then
+        if (trim(Args%Var2%fname) .eq. 'none') then
+          write (*,*) 'ERROR: must specify var2 file with horiz_ke and <in_type> == "uv"'
+          write (*,*) ''
+          BadArgs = .true.
+        endif
+      endif
+
+    case ('min')
+
+    case ('max')
+
+    case ('hda')
+
+    case ('hist')
+      if (trim(Args%V1bins%fname) .eq. 'none') then
+        write (*,*) 'ERROR: must specify v1bins file with hist'
+        write (*,*) ''
+        BadArgs = .true.
+      endif
+
+    case ('turb_cov')
+      if (trim(Args%Var2%fname) .eq. 'none') then
+        write (*,*) 'ERROR: must specify var2 file with turb_cov'
+        write (*,*) ''
+        BadArgs = .true.
+      endif
+
+    case ('turb_mmts')
+
+    case ('hfrac')
+
+    case ('hist2d')
+      if ((trim(Args%Var2%fname) .eq. 'none') .or. &
+          (trim(Args%V1bins%fname) .eq. 'none') .or. &
+          (trim(Args%V2bins%fname) .eq. 'none')) then
+        write (*,*) 'ERROR: must always specify var2, v1bins and v2bins files with hist2d'
+        write (*,*) ''
+        BadArgs = .true.
+      endif
+
+    case ('ltss')
+
+    case ('min_azslp')
+      if (UseFilter) then
+        write (*,*) 'ERROR: cannot use a filter with function: min_azslp'
+        write (*,*) ''
+        BadArgs = .true.
+      endif
+
+    case ('max_azwind')
+      if (UseFilter) then
+        write (*,*) 'ERROR: cannot use a filter with function: max_azwind'
+        write (*,*) ''
+        BadArgs = .true.
+      endif
+
+    case ('pop')
+      if ((trim(Args%Var2%fname) .eq. 'none') .or. &
+          (trim(Args%Var3%fname) .eq. 'none') .or. &
+          (trim(Args%V1bins%fname) .eq. 'none') .or. &
+          (trim(Args%V2bins%fname) .eq. 'none')) then
+        write (*,*) 'ERROR: must specify var2, var3, v1bins and v2bins files with pop'
+        write (*,*) ''
+        BadArgs = .true.
+      endif
+
+    case default
+      write (*,*) 'ERROR: <avg_function> must be one of:'
+      write (*,*) '          horiz_ke'
+      write (*,*) '          min'
+      write (*,*) '          max'
+      write (*,*) '          hda'
+      write (*,*) '          hist'
+      write (*,*) '          turb_cov'
+      write (*,*) '          turb_mmts'
+      write (*,*) '          hfrac'
+      write (*,*) '          hist2d'
+      write (*,*) '          ltss'
+      write (*,*) '          storm_int'
+      write (*,*) '          min_azslp'
+      write (*,*) '          max_azwind'
+      write (*,*) '          pop'
+      write (*,*) ''
+      BadArgs = .true.
+
+  endselect
+
+  ! check other specs for valid values
+  if (Args%VelInType .ne. 'none') then
+    if ((Args%VelInType .ne. 'uv') .and. (Args%VelInType .ne. 's10')) then
+      write (*,*) 'ERROR: <in_type> for average functions must be one of: "uv" or "s10"'
+      write (*,*) ''
+      BadArgs = .true.
+    endif
+  endif
 
   if (BadArgs) then
+    write (*,*) 'USAGE: tsavg [-m] <avg_function> <file_list>'
+    write (*,*) ''
+    write (*,*) '   -m: subtract storm motion from input winds'
+    write (*,*) ''
+    write (*,*) '   <avg_function>: averaging function to use on input data'
+    write (*,*) '            horiz_ke:<in_type>:<thickness> -> total kinetic energy form horizontal winds'
+    write (*,*) '              <in_type>: "uv" calculate from lowest level of u and v fields, set var1 to u, var2 to v'
+    write (*,*) '                         "s10" calculate from 10m wind speed field, set var1 to speed10m'
+    write (*,*) '              <thickness>: depth (m) of slab that KE is being calculated in' 
+    write (*,*) '                          Powell and Reinhold, 2007 use 1.0 m'
+    write (*,*) ''
+    write (*,*) '            min -> domain minimum'
+    write (*,*) ''
+    write (*,*) '            max -> domain maximum'
+    write (*,*) ''
+    write (*,*) '            hda -> horizontal domain average at each z level'
+    write (*,*) ''
+    write (*,*) '            hist -> histogram across each z level'
+    write (*,*) ''
+    write (*,*) '            turb_cov -> calculate turbulence covariance for each z level'
+    write (*,*) ''
+    write (*,*) '            turb_mmts -> calculate turbulence moments for each z level'
+    write (*,*) ''
+    write (*,*) '            hfrac:<limit> -> fractional occurrence across each z level'
+    write (*,*) '              <limit>: if var > threshold, that hoizontal grid cell gets a 1, otherwise a zero.'
+    write (*,*) '                       Then the fraction for that level = Number of cells with 1s divided by total Number of cells'
+    write (*,*) ''
+    write (*,*) '            hist2d -> construct 2d histogram'
+    write (*,*) ''
+    write (*,*) '            ltss::<z_bot>:<z_top> -> calculate lower tropospheric static stability'
+    write (*,*) '              var1 must be set to theta variable (3d)'
+    write (*,*) '              <z_bot>: height (Z) for bottom'
+    write (*,*) '              <z_top>: height (Z) for top'
+    write (*,*) ''
+    write (*,*) '            storm_int -> storm intensity metric from horizontal wind speeds'
+    write (*,*) ''
+    write (*,*) '            max_azwind -> max value of azimuthially averaged wind'
+    write (*,*) '              <in_type>: "uv" calculate from lowest level of u and v fields,'
+    write (*,*) '                         "s10" calculate from 10m wind speed field,'
+    write (*,*) ''
+    write (*,*) '            min_azslp -> min value of azimuthially averaged sea-level pressure'
+    write (*,*) ''
+    write (*,*) '            pop:<pcp_limit>'
+    write (*,*) '              var1 must be set to precip rate variable (2d):'
+    write (*,*) '                <pcp_limit>: threshold to determine if raining'
+    write (*,*) '                  precip rate >= <pcp_limit> --> raining'
+    write (*,*) '                  precip rate <  <pcp_limit> --> not raining'
+    write (*,*) '              var2 must be set to liquid water path variable (2d):'
+    write (*,*) '              var3 must be set to lower tropospheric static stabilty variable (1d):'
+    write (*,*) ''
+    write (*,*) '   <file_list>: supply specs for input and output files'
+    write (*,*) '     <file_list> := <file_spec> ...'
+    write (*,*) '       <file_spec> := <file_type>:<file_name>:<variable_name>'
+    write (*,*) '          <file_type> is one of:'
+    write (*,*) '             "filter": filter mask, optional'
+    write (*,*) '             "storm": storm track and motion, required only if -m used'
+    write (*,*) '             "v1bins": histogram bin edges, required for <avg_function>: hist pop hist2d'
+    write (*,*) '             "v2bins": histogram bin edges, required for <avg_function>: pop hist2d'
+    write (*,*) '             "var1": variable to average'
+    write (*,*) '             "var2": variable to average'
+    write (*,*) '             "var3": variable to average'
+    write (*,*) '             "u": zonal component of momentum, required only if -t used'
+    write (*,*) '             "v": meridional component of momentum, required only if -t used'
+    write (*,*) '             "dens": density'
+    write (*,*) '             "out": output file, required'
+    write (*,*) '          <file_name> is the complete path to the file'
+    write (*,*) '          <variable_name> is the name of the variable inside the file'
+    write (*,*) ''
+
     stop
-  end if
+  endif
 
   return
 end subroutine GetMyArgs
@@ -2124,18 +1905,18 @@ end subroutine DoPop
 !
 ! This routine will create a 2D histogram.
 !
-subroutine DoHist2d(Nx, Ny, Nz, XvarNz, YvarNz, FilterNz, Xnbins, Ynbins, Xvar, Yvar, Filter, UseFilter, UndefVal, Xbins, Ybins, Counts)
+subroutine DoHist2d(Nx, Ny, Nz, Var1Nz, Var2Nz, FilterNz, V1nbins, V2nbins, Xvar, Yvar, Filter, UseFilter, UndefVal, V1bins, V2bins, Counts)
   implicit none
 
-  integer :: Nx, Ny, Nz, XvarNz, YvarNz, FilterNz, Xnbins, Ynbins
-  real, dimension(Nx,Ny,XvarNz) :: Xvar
-  real, dimension(Nx,Ny,YvarNz) :: Yvar
+  integer :: Nx, Ny, Nz, Var1Nz, Var2Nz, FilterNz, V1nbins, V2nbins
+  real, dimension(Nx,Ny,Var1Nz) :: Xvar
+  real, dimension(Nx,Ny,Var2Nz) :: Yvar
   real, dimension(Nx,Ny,FilterNz) :: Filter
   logical :: UseFilter
   real :: UndefVal
-  real, dimension(Xnbins) :: Xbins
-  real, dimension(Ynbins) :: Ybins
-  real, dimension(Xnbins,Ynbins,Nz) :: Counts
+  real, dimension(V1nbins) :: V1bins
+  real, dimension(V2nbins) :: V2bins
+  real, dimension(V1nbins,V2nbins,Nz) :: Counts
 
   integer :: ix, iy, iz, iz_x, iz_y, iz_filter
   integer :: ib_x, ib_y
@@ -2145,21 +1926,21 @@ subroutine DoHist2d(Nx, Ny, Nz, XvarNz, YvarNz, FilterNz, Xnbins, Ynbins, Xvar, 
   ! go level by level
   do iz = 1, Nz
     ! zero out the counts
-    do ib_x = 1, Xnbins
-      do ib_y = 1, Ynbins
+    do ib_x = 1, V1nbins
+      do ib_y = 1, V2nbins
         Counts(ib_x,ib_y,iz) = 0.0
       enddo
     enddo
 
     ! Since Xvar and Yvar can have differing z dimensions, check to make sure we are not
     ! going past the max z coordinate.
-    if (iz .gt. XvarNz) then
-      iz_x = XvarNz
+    if (iz .gt. Var1Nz) then
+      iz_x = Var1Nz
     else
       iz_x = iz
     endif
-    if (iz .gt. YvarNz) then
-      iz_y = YvarNz
+    if (iz .gt. Var2Nz) then
+      iz_y = Var2Nz
     else
       iz_y = iz
     endif
@@ -2185,8 +1966,8 @@ subroutine DoHist2d(Nx, Ny, Nz, XvarNz, YvarNz, FilterNz, Xnbins, Ynbins, Xvar, 
         endif
 
         ! get the bins and only count if both x and y bins were found
-        ib_x = FindBin(Xnbins, Xbins, Xvar(ix,iy,iz_x))
-        ib_y = FindBin(Ynbins, Ybins, Yvar(ix,iy,iz_y))
+        ib_x = FindBin(V1nbins, V1bins, Xvar(ix,iy,iz_x))
+        ib_y = FindBin(V2nbins, V2bins, Yvar(ix,iy,iz_y))
         SelectPoint = SelectPoint .and. (ib_x .ne. -1) .and. (ib_y .ne. -1)
         
         if (SelectPoint) then
@@ -2557,484 +2338,5 @@ subroutine UvToSpeed(Nx, Ny, Nz, U, V, HorizSpeed)
 
   return
 end subroutine UvToSpeed
-
-!!! !*****************************************************************************
-!!! ! DoCloud()
-!!! !
-!!! ! This subroutine will perform the cloud droplet total mass time series
-!!! ! averaging. Can select between supercooled or warm rain droplets.
-!!! !
-!!! 
-!!! subroutine DoCloud(DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, DoSc, Cloud, TempC, Dens, CintLiq, TserAvg)
-!!!   use gdata_utils
-!!!   use azavg_utils
-!!!   implicit none
-!!! 
-!!!   logical :: DoSc
-!!!   real :: DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, CilThresh
-!!!   type (GradsVar) :: Cloud, TempC, Dens, CintLiq, TserAvg
-!!!   integer, dimension(1:Cloud%Nt) :: StmIx, StmIy
-!!!   real, dimension(1:Cloud%Nx) :: Xcoords
-!!!   real, dimension(1:Cloud%Ny) :: Ycoords
-!!!   real, dimension(1:Cloud%Nz) :: Zcoords
-!!! 
-!!!   real, dimension(0:Cloud%Nz) :: ZmHeights
-!!!   integer :: ix, iy, iz, it, NumPoints
-!!! 
-!!!   call SetZmHeights (Cloud%Nz, ZmHeights)
-!!! 
-!!!   ! Convert the cloud mixing ratio to mass for each grid point. 
-!!!   !
-!!!   ! Mixing ratios in GRADS files are g/kg
-!!!   ! Density is in kg/m**3
-!!!   ! Heights are in m
-!!!   ! So, express the mass value in g using the formula
-!!!   !   (mix ratio) * (density) * (layer thickness) * (layer horiz area)
-!!!   ! The layer thickness for layer k is: ZmHeights(k) - ZmHeights(k-1)
-!!! 
-!!!   do it = 1, Cloud%Nt
-!!!     ! Sum up the cloud droplet mass over the specified radial band. Only include the
-!!!     ! grid points where tempc is 0 or less (supercooled)
-!!! 
-!!!     TserAvg%Vdata(it,1,1,1) = 0.0
-!!!     NumPoints = 0
-!!! 
-!!!     do iz = 1, Cloud%Nz
-!!!       do ix = 1, Cloud%Nx
-!!!         do iy = 1, Cloud%Ny
-!!!           if ((InsideCylVol(Cloud%Nx, Cloud%Ny, Cloud%Nz, Cloud%Nt, ix, iy, iz, it, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords))  .and. (CintLiq%Vdata(it,1,ix,iy) .ge. CilThresh)) then
-!!!             if (DoSc) then
-!!!               if (TempC%Vdata(it,iz,ix,iy) .le. 0.0) then
-!!!                 TserAvg%Vdata(it,1,1,1) = TserAvg%Vdata(it,1,1,1) + (Cloud%Vdata(it,iz,ix,iy) * Dens%Vdata(it,iz,ix,iy) * (ZmHeights(iz)-ZmHeights(iz-1)))
-!!!                 NumPoints = NumPoints + 1
-!!!               end if
-!!!             else
-!!!               if (TempC%Vdata(it,iz,ix,iy) .gt. 0.0) then
-!!!                 TserAvg%Vdata(it,1,1,1) = TserAvg%Vdata(it,1,1,1) + (Cloud%Vdata(it,iz,ix,iy) * Dens%Vdata(it,iz,ix,iy) * (ZmHeights(iz)-ZmHeights(iz-1)))
-!!!                 NumPoints = NumPoints + 1
-!!!               end if
-!!!             end if
-!!!           end if
-!!!         end do
-!!!       end do
-!!!     end do
-!!! 
-!!!     ! At this point TserAvg%Vdata(it,1,1,1) holds g/m**2, multiply by grid cell horizontal area. Note this assumes
-!!!     ! each grid cell has the same horizontal area.
-!!! 
-!!!     TserAvg%Vdata(it,1,1,1) = TserAvg%Vdata(it,1,1,1) * DeltaX * DeltaY
-!!!     if (NumPoints .eq. 0) then
-!!!       write (*,*) 'WARNING: no data points selected for time step: ', it
-!!!     else
-!!!       write (*,*) 'ScCloud: Timestep:', it, ', Number of points selected: ', NumPoints
-!!!     endif
-!!!   end do
-!!! end subroutine
-!!! 
-!!! !************************************************************************************
-!!! ! DoWup()
-!!! !
-!!! ! This subroutine will do the average vertical velocity in regions of significant
-!!! ! updrafts.
-!!! !
-!!! 
-!!! subroutine DoWup(DeltaX, DeltaY, Wthreshold, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, W, TserAvg)
-!!!   use gdata_utils
-!!!   use azavg_utils
-!!!   implicit none
-!!! 
-!!!   real :: DeltaX, DeltaY, Wthreshold, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ
-!!!   type (GradsVar) :: W, TserAvg
-!!!   integer, dimension(1:W%Nt) :: StmIx, StmIy
-!!!   real, dimension(1:W%Nx) :: Xcoords
-!!!   real, dimension(1:W%Ny) :: Ycoords
-!!!   real, dimension(1:W%Nz) :: Zcoords
-!!! 
-!!!   integer ix,iy,iz,it, NumPoints
-!!! 
-!!!   do it = 1, W%Nt
-!!!     ! Average w over regions where significant updrafts occur
-!!! 
-!!!     TserAvg%Vdata(it,1,1,1) = 0.0
-!!!     NumPoints = 0
-!!! 
-!!!     do iz = 1, W%Nz
-!!!       do ix = 1, W%Nx
-!!!         do iy = 1, W%Ny
-!!!           if (InsideCylVol(W%Nx, W%Ny, W%Nz, W%Nt, ix, iy, iz, it, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords)) then
-!!!             if (W%Vdata(it,iz,ix,iy) .ge. Wthreshold) then
-!!!               TserAvg%Vdata(it,1,1,1) = TserAvg%Vdata(it,1,1,1) + W%Vdata(it,iz,ix,iy)
-!!!               NumPoints = NumPoints + 1
-!!!             end if
-!!!           end if
-!!!         end do
-!!!       end do
-!!!     end do
-!!! 
-!!!     if (NumPoints .eq. 0) then
-!!!       TserAvg%Vdata(it,1,1,1) = 0.0
-!!!       write (*,*) 'WARNING: no data points selected for time step: ', it
-!!!     else
-!!!       TserAvg%Vdata(it,1,1,1) = TserAvg%Vdata(it,1,1,1) / float(NumPoints)
-!!!       write (*,*) 'Wup: Timestep:', it, ', Number of points selected: ', NumPoints
-!!!     end if
-!!!   end do
-!!! 
-!!! end subroutine
-!!! 
-!!! 
-!!! !************************************************************************************
-!!! ! DoCloudDiam()
-!!! !
-!!! ! This routine will calculate an averaged cloud droplet diameter. Can select between
-!!! ! warm rain droplets or supercooled droplets.
-!!! 
-!!! subroutine DoCloudDiam(DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, DoSc, Cloud, TempC, CloudDiam, CintLiq, TserAvg)
-!!!   use gdata_utils
-!!!   use azavg_utils
-!!!   implicit none
-!!! 
-!!!   logical :: DoSc
-!!!   real :: DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, CilThresh
-!!!   type (GradsVar) :: Cloud, TempC, CloudDiam, CintLiq, TserAvg
-!!!   integer, dimension(1:CloudDiam%Nt) :: StmIx, StmIy
-!!!   real, dimension(1:CloudDiam%Nx) :: Xcoords
-!!!   real, dimension(1:CloudDiam%Ny) :: Ycoords
-!!!   real, dimension(1:CloudDiam%Nz) :: Zcoords
-!!! 
-!!!   integer ix,iy,iz,it, NumPoints
-!!!   real SumQ, SumQD
-!!!   real MaxQ, Climit, SumD
-!!! 
-!!!   do it = 1, CloudDiam%Nt
-!!!     ! Calculate a mass-weighted mean diameter for supercooled cloud droplets.
-!!!     ! 
-!!!     !    Mean diameter (TserAvg value) = Sum(cloud * cloud_d) / Sum(cloud)
-!!!     !    where cloud and cloud_d are only included in the sum when tempc is <= 0
-!!!     !
-!!!     ! Find the max Q (mass) value and use it to filter data - select data points if
-!!!     ! the Q is within 20% of the max Q (.2 to 1.0). Then form the average of the diameters
-!!!     ! of the selected points.
-!!!     SumQD = 0.0
-!!!     SumQ = 0.0
-!!!     SumD = 0.0
-!!!     NumPoints = 0
-!!!     do iz = 1, CloudDiam%Nz
-!!!       do ix = 1, CloudDiam%Nx
-!!!         do iy = 1, CloudDiam%Ny
-!!!           if ((InsideCylVol(CloudDiam%Nx, CloudDiam%Ny, CloudDiam%Nz, CloudDiam%Nt, ix, iy, iz, it, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords)) .and. (CintLiq%Vdata(it,1,ix,iy) .ge. CilThresh)) then
-!!!             if (DoSc) then
-!!!               if (TempC%Vdata(it,iz,ix,iy) .le. 0.0) then
-!!!                  SumQD = SumQD + (Cloud%Vdata(it,iz,ix,iy) * CloudDiam%Vdata(it,iz,ix,iy))
-!!!                  SumQ = SumQ + Cloud%Vdata(it,iz,ix,iy)
-!!!                  SumD = SumD + CloudDiam%Vdata(it,iz,ix,iy)
-!!!                  NumPoints = NumPoints + 1
-!!!               end if
-!!!             else
-!!!               if (TempC%Vdata(it,iz,ix,iy) .gt. 0.0) then
-!!!                  SumQD = SumQD + (Cloud%Vdata(it,iz,ix,iy) * CloudDiam%Vdata(it,iz,ix,iy))
-!!!                  SumQ = SumQ + Cloud%Vdata(it,iz,ix,iy)
-!!!                  SumD = SumD + CloudDiam%Vdata(it,iz,ix,iy)
-!!!                  NumPoints = NumPoints + 1
-!!!               end if
-!!!             end if
-!!!           end if
-!!!         end do
-!!!       end do
-!!!     end do
-!!! 
-!!!     if (SumQ .eq. 0.0) then
-!!!       TserAvg%Vdata(it,1,1,1) = 0.0
-!!!       write (*,*) 'WARNING: no data points selected for time step: ', it
-!!!     else
-!!!       TserAvg%Vdata(it,1,1,1) = SumQD / SumQ
-!!!       write (*,*) 'ScCloudDiam: Ts:', it, ', NumPoints: ', NumPoints
-!!!     end if
-!!! 
-!!!   end do
-!!! end subroutine
-!!! 
-!!! !************************************************************************************
-!!! ! DoCloudConc()
-!!! !
-!!! ! This subroutine will do the average cloud droplet concentration
-!!! 
-!!! subroutine DoCloudConc(DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, DoSc, TempC, CloudConc, TserAvg)
-!!!   use gdata_utils
-!!!   use azavg_utils
-!!!   implicit none
-!!! 
-!!!   real :: DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ
-!!!   type (GradsVar) :: CloudConc, TempC, TserAvg
-!!!   integer, dimension(1:CloudConc%Nt) :: StmIx, StmIy
-!!!   real, dimension(1:CloudConc%Nx) :: Xcoords
-!!!   real, dimension(1:CloudConc%Ny) :: Ycoords
-!!!   real, dimension(1:CloudConc%Nz) :: Zcoords
-!!!   logical :: DoSc
-!!! 
-!!!   integer ix,iy,iz,it
-!!!   integer NumPoints
-!!!   real SumCloudConc
-!!! 
-!!!   ! Calculate the average cloud droplet concentration near the eyewall region.
-!!!   ! 
-!!!   ! Call the cloud base to be between 1000m and 1200m. The z level corresponding to
-!!!   ! that is z = 4 which is 1138m. Cover from surface to the cloud base level. This
-!!!   ! results in using z = 1 to z = 4.
-!!! 
-!!!   do it = 1, CloudConc%Nt
-!!!     SumCloudConc = 0.0
-!!!     NumPoints = 0
-!!! 
-!!!     do iz = 1, CloudConc%Nz
-!!!       do ix = 1, CloudConc%Nx
-!!!         do iy = 1, CloudConc%Ny
-!!!           if (InsideCylVol(CloudConc%Nx, CloudConc%Ny, CloudConc%Nz, CloudConc%Nt, ix, iy, iz, it, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords)) then
-!!!             if (DoSc) then
-!!!               if (TempC%Vdata(it,iz,ix,iy) .le. 0.0) then
-!!!                 SumCloudConc = SumCloudConc + CloudConc%Vdata(it,iz,ix,iy)
-!!!                 NumPoints = NumPoints + 1
-!!!               end if
-!!!             else
-!!!               if (TempC%Vdata(it,iz,ix,iy) .gt. 0.0) then
-!!!                 SumCloudConc = SumCloudConc + CloudConc%Vdata(it,iz,ix,iy)
-!!!                 NumPoints = NumPoints + 1
-!!!               end if
-!!!             end if
-!!!           end if
-!!!         end do
-!!!       end do
-!!!     end do
-!!! 
-!!!     if (NumPoints .eq. 0) then
-!!!       TserAvg%Vdata(it,1,1,1) = 0.0
-!!!       write (*,*) 'WARNING: no data points selected for time step: ', it
-!!!     else
-!!!       TserAvg%Vdata(it,1,1,1) = SumCloudConc / float(NumPoints)
-!!!       write (*,*) 'CloudConc: Timestep:', it, ', Number of points selected: ', NumPoints
-!!!     end if
-!!!   end do
-!!! end subroutine
-!!! 
-!!! !************************************************************************************
-!!! ! DoPrecipR()
-!!! !
-!!! ! This subroutine will do the average cloud droplet concentration near the eyewall
-!!! ! region.
-!!! 
-!!! subroutine DoPrecipR(DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CilThresh, PrecipR, CintLiq, TserAvg)
-!!!   use gdata_utils
-!!!   use azavg_utils
-!!!   implicit none
-!!! 
-!!!   real :: DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, CilThresh
-!!!   ! PrecipR is 2D var
-!!!   type (GradsVar) :: PrecipR, CintLiq, TserAvg
-!!!   integer, dimension(1:PrecipR%Nt) :: StmIx, StmIy
-!!!   real, dimension(1:PrecipR%Nx) :: Xcoords
-!!!   real, dimension(1:PrecipR%Ny) :: Ycoords
-!!!   real, dimension(1:PrecipR%Nz) :: Zcoords
-!!! 
-!!!   integer :: ix,iy,iz,it
-!!!   integer :: NumPoints
-!!!   real :: SumPrecip
-!!! 
-!!!   do it = 1, PrecipR%Nt
-!!!     SumPrecip = 0.0
-!!!     NumPoints = 0
-!!! 
-!!!     do ix = 1, PrecipR%Nx
-!!!       do iy = 1, PrecipR%Ny
-!!!         if (InsideCylVol(PrecipR%Nx, PrecipR%Ny, PrecipR%Nz, PrecipR%Nt, ix, iy, 1, it, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords) .and. (CintLiq%Vdata(it,1,ix,iy) .ge. CilThresh)) then
-!!!           SumPrecip = SumPrecip + PrecipR%Vdata(it,1,ix,iy)
-!!!           NumPoints = NumPoints + 1
-!!!         end if
-!!!       end do
-!!!     end do
-!!! 
-!!!     if (NumPoints .eq. 0) then
-!!!       TserAvg%Vdata(it,1,1,1) = 0.0
-!!!       write (*,*) '  WARNING: no data points selected for this time step'
-!!!     else
-!!!       ! At this point TserAvg%Vdata(it,1,1,1) holds mm/hr, multiply by grid cell horizontal area.
-!!!       ! Note this assumes each grid cell has the same horizontal area. What this does
-!!!       ! is convert mm/hr to kg/hr when assuming that the density of water is 1000kg/m**3.
-!!!       !   mm/hr * m**2 * 1000 kg/m**3 * 0.001 m/mm -> kg/hr
-!!!       TserAvg%Vdata(it,1,1,1) = (SumPrecip / float(NumPoints)) * DeltaX * DeltaY
-!!!       write (*,*) 'Precip: Timestep:', it, ', Number of points selected: ', NumPoints
-!!!     end if
-!!!     write (*,*) ''
-!!!     flush(6)
-!!!   end do
-!!! end subroutine
-!!! 
-!!! !************************************************************************************
-!!! ! DoCcnConc()
-!!! !
-!!! ! This subroutine will do the average CCN concentration.
-!!! !
-!!! 
-!!! subroutine DoCcnConc(DeltaX, DeltaY, Wthreshold, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, CcnConc, TserAvg)
-!!!   use gdata_utils
-!!!   use azavg_utils
-!!!   implicit none
-!!! 
-!!!   real :: DeltaX, DeltaY, Wthreshold, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ
-!!!   type (GradsVar) :: CcnConc, TserAvg
-!!!   integer, dimension(1:CcnConc%Nt) :: StmIx, StmIy
-!!!   real, dimension(1:CcnConc%Nx) :: Xcoords
-!!!   real, dimension(1:CcnConc%Ny) :: Ycoords
-!!!   real, dimension(1:CcnConc%Nz) :: Zcoords
-!!! 
-!!!   integer ix,iy,iz,it, NumPoints
-!!! 
-!!!   do it = 1, CcnConc%Nt
-!!!     ! Average w over regions where significant updrafts occur
-!!! 
-!!!     TserAvg%Vdata(it,1,1,1) = 0.0
-!!!     NumPoints = 0
-!!! 
-!!!     do iz = 1, CcnConc%Nz
-!!!       do ix = 1, CcnConc%Nx
-!!!         do iy = 1, CcnConc%Ny
-!!!           if (InsideCylVol(CcnConc%Nx, CcnConc%Ny, CcnConc%Nz, CcnConc%Nt, ix, iy, iz, it, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords)) then
-!!!             TserAvg%Vdata(it,1,1,1) = TserAvg%Vdata(it,1,1,1) + CcnConc%Vdata(it,iz,ix,iy)
-!!!             NumPoints = NumPoints + 1
-!!!           end if
-!!!         end do
-!!!       end do
-!!!     end do
-!!! 
-!!!     if (NumPoints .eq. 0) then
-!!!       TserAvg%Vdata(it,1,1,1) = 0.0
-!!!       write (*,*) 'WARNING: no data points selected for time step: ', it
-!!!     else
-!!!       TserAvg%Vdata(it,1,1,1) = TserAvg%Vdata(it,1,1,1) / float(NumPoints)
-!!!       write (*,*) 'Wup: Timestep:', it, ', Number of points selected: ', NumPoints
-!!!     end if
-!!!   end do
-!!! 
-!!! end subroutine
-!!! 
-!!! !************************************************************************************
-!!! ! DoTestCvs()
-!!! !
-!!! ! This subroutine will perform a test on the cylindrical volume selection routine.
-!!! ! Just runs through the entire grid and outputs a '1' when selection occurs otherwise
-!!! ! outputs a '0'. Then view the result in grads and see if selection is correct.
-!!! 
-!!! subroutine DoTestCvs(DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords, TestSelect)
-!!!   use gdata_utils
-!!!   use azavg_utils
-!!!   implicit none
-!!! 
-!!!   real :: DeltaX, DeltaY, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ
-!!!   type (GradsVar) :: TestSelect
-!!!   integer, dimension(1:TestSelect%Nt) :: StmIx, StmIy
-!!!   real, dimension(1:TestSelect%Nx) :: Xcoords
-!!!   real, dimension(1:TestSelect%Ny) :: Ycoords
-!!!   real, dimension(1:TestSelect%Nz) :: Zcoords
-!!! 
-!!!   integer ix,iy,iz,it
-!!!   integer NumPoints
-!!! 
-!!!   write (*,*) 'Testing cylindrical volume selection:'
-!!!   do it = 1, TestSelect%Nt
-!!!     NumPoints = 0
-!!!     do iz = 1, TestSelect%Nz
-!!!       do ix = 1, TestSelect%Nx
-!!!         do iy = 1, TestSelect%Ny
-!!!           if (InsideCylVol(TestSelect%Nx, TestSelect%Ny, TestSelect%Nz, TestSelect%Nt, ix, iy, iz, it, MinR, MaxR, MinPhi, MaxPhi, MinZ, MaxZ, StmIx, StmIy, Xcoords, Ycoords, Zcoords)) then
-!!!             TestSelect%Vdata(it,iz,ix,iy) = 1.0
-!!!             NumPoints = NumPoints + 1
-!!!           else
-!!!             TestSelect%Vdata(it,iz,ix,iy) = 0.0
-!!!           end if
-!!!         end do
-!!!       end do
-!!!     end do
-!!!     ! mark the storm center
-!!!     TestSelect%Vdata(it,iz,StmIx(it),StmIy(it)) = 2.0
-!!!     write (*,*) '  Timestep, Number of points selected: ', it, NumPoints
-!!!   end do
-!!! end subroutine
-!!! 
-!!! !******************************************************************************
-!!! ! ConvertTinc()
-!!! !
-!!! ! This function will convert the time increment spec'd in the GRAD control
-!!! ! file into a number of seconds.
-!!! !
-!!! 
-!!! real function ConvertTinc(Tinc)
-!!!   implicit none
-!!! 
-!!!   character (len=*) :: Tinc
-!!! 
-!!!   character (len=128) :: Tval, Tunits, Tfmt
-!!!   integer :: i, Uloc, Tlen, Itval
-!!!   
-!!!   ! Walk through the Tinc string. Concatenate the numbers onto Tval and
-!!!   ! the alaph characters onto Tunits. This algorithm assumes that GRADS
-!!!   ! will use a format like <numeric_value><units> for Tinc where <units>
-!!!   ! is a string like 'hr' or 'mn'.
-!!!   Uloc = 0
-!!!   Tlen = len_trim(Tinc)
-!!!   do i = 1, Tlen
-!!!     if ((Tinc(i:i) .ge. 'A') .and. (Tinc(i:i) .le. 'z')) then
-!!!       if (Uloc .eq. 0) then
-!!!         ! the first alpha character is the beginning of the spec for units
-!!!         Uloc = i
-!!!       end if
-!!!     end if
-!!!   end do
-!!! 
-!!!   write (Tfmt, '(a,i2.2,a,i2.2,a)') '(a', (Uloc-1), 'a' , ((Tlen-Uloc)+1), ')'
-!!!   read (Tinc, Tfmt) Tval, Tunits
-!!! 
-!!!   read(Tval, '(i)') Itval
-!!!   if (Tunits .eq. 'hr') then
-!!!     ConvertTinc = float(Itval) * 3600.0
-!!!   else
-!!!     if (Tunits .eq. 'mn') then
-!!!       ConvertTinc = float(Itval) * 60.0
-!!!     else
-!!!       ConvertTinc = float(Itval)
-!!!     end if
-!!!   end if
-!!!   return
-!!! end function
-!!! 
-!!! !******************************************************************************
-!!! ! CalcRates()
-!!! !
-!!! ! This routine will calculate time derivatives of the input data using
-!!! ! a centered difference method.
-!!! !
-!!! 
-!!! subroutine CalcRates(DeltaT, TserAvg, Rates)
-!!!   use gdata_utils
-!!!   implicit none
-!!! 
-!!!   type (GradsVar) :: TserAvg, Rates
-!!!   real :: DeltaT
-!!! 
-!!!   real :: f1, f2
-!!!   integer :: ix, iy, iz, it
-!!! 
-!!!   ! use a centered difference, uses points at t-1, t and t+1
-!!!   do ix = 1, TserAvg%Nx
-!!!     do iy = 1, TserAvg%Ny
-!!!       do iz = 1, TserAvg%Nz
-!!!         do it = 2, TserAvg%Nt-1
-!!!           f1 = (TserAvg%Vdata(it,1,1,1) + TserAvg%Vdata(it-1,1,1,1)) / 2.0
-!!!           f2 = (TserAvg%Vdata(it+1,1,1,1) + TserAvg%Vdata(it,1,1,1)) / 2.0
-!!! 
-!!!           Rates%Vdata(it-1,1,1,1) = (f2 - f1) / DeltaT
-!!!         end do
-!!!       end do
-!!!     end do
-!!!   end do
-!!! end subroutine
 
 end program tsavg
