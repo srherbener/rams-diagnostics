@@ -208,6 +208,12 @@ sub ReadDiagConfigFile
       $Config{AZAVG}{$f[1]}{IN_TYPE}     = $f[6];
       $Config{AZAVG}{$f[1]}{FILE_LIST}   = [ @f[7..$#f] ];
       }
+    elsif ($f[0] eq "Tsavg:")
+      {
+      $Config{TSAVG}{$f[1]}{AVG_FUNC}    = $f[2];
+      $Config{TSAVG}{$f[1]}{SUB_SMOTION} = $f[3];
+      $Config{TSAVG}{$f[1]}{FILE_LIST}   = [ @f[4..$#f] ];
+      }
   }
 
   return(\%Config);

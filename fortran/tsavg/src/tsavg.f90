@@ -32,6 +32,7 @@ program tsavg
     real :: Zbot
     real :: Ztop
     real :: PcprateLimit
+    logical :: SubtractSmotion
     type (FileSpec) :: Output
     type (FileSpec) :: Filter
     type (FileSpec) :: StormCenter
@@ -50,6 +51,7 @@ program tsavg
   type (Rhdf5Var) :: InXcoords, InYcoords, InZcoords, InTcoords
   type (Rhdf5Var) :: OutXcoords, OutYcoords, OutZcoords, OrigDimSize
   type (Rhdf5Var) :: Var1, Var2, Var3, Filter, StormCenter, Dens, TserAvg, RadMaxWind, Rad34ktWind, Rad50ktWind, Rad64ktWind
+  type (Rhdf5Var) :: Ustorm, Vstorm
   character (len=RHDF5_MAX_STRING) :: InCoordFile
   character (len=RHDF5_MAX_STRING) :: rh5f_facc
   integer :: Kbot, Ktop
@@ -62,7 +64,7 @@ program tsavg
 
   real, dimension(:,:), allocatable :: HorizSpeed
 
-  integer :: rh5f_var1, rh5f_var2, rh5f_var3, rh5f_dens, rh5f_filter, rh5f_scenter, rh5f_out
+  integer :: rh5f_var1, rh5f_var2, rh5f_var3, rh5f_dens, rh5f_filter, rh5f_out
 
   integer :: id, ib, ix, iy, iz, it
   integer :: Nx, Ny, Nz, Nt, FilterNz
@@ -224,7 +226,7 @@ program tsavg
   endselect
 
   ! check the z dimensions of Var1 vs Var2 when Var2 is being used
-  if (trim(Args%Var2%fname) .ne. 'none') then
+  if (UseVar2) then
     if (Var2%ndims .eq. 4) then
       Var2Nz = Var2%dims(3)
       Var2Is3d = .true.
@@ -261,6 +263,20 @@ program tsavg
     stop
   endif
 
+  ! If subtracting the storm motion, read in the entire time series for the storm
+  ! motion (from the storm center file). The storm motion is stored in the file
+  ! as one dimenion, (t), so it's more efficient to read in the entire time
+  ! series in one shot.
+  if (Args%SubtractSmotion) then
+    Ustorm%vname = 'storm_speed_x'
+    call rhdf5_read_init(Args%StormCenter%fname, Ustorm)
+    call rhdf5_read(Args%StormCenter%fname, Ustorm)
+
+    Vstorm%vname = 'storm_speed_y'
+    call rhdf5_read_init(Args%StormCenter%fname, Vstorm)
+    call rhdf5_read(Args%StormCenter%fname, Vstorm)
+  endif
+
   ! Set up the dimensions for reading in the input field data, one time step per read. 
   ! In other words, remove the time dimension from the input dimensions since we will 
   ! be incrementing through every time step in a loop. The time dimension is always the
@@ -278,7 +294,7 @@ program tsavg
   write (*,*) ''
 
   ! Check for existence of other vars
-  if (trim(Args%Var2%fname) .ne. 'none') then
+  if (UseVar2) then
     Var2%ndims = Var2%ndims - 1
     write (*,*) 'Var2 information'
     write (*,*) '  Dataset name: ', trim(Var2%vname)
@@ -290,7 +306,7 @@ program tsavg
     write (*,*) ''
   endif
 
-  if (trim(Args%Var3%fname) .ne. 'none') then
+  if (UseVar3) then
     Var3%ndims = Var3%ndims - 1
     write (*,*) 'Var3 information'
     write (*,*) '  Dataset name: ', trim(Var3%vname)
@@ -302,7 +318,7 @@ program tsavg
     write (*,*) ''
   endif
 
-  if (trim(Args%Filter%fname) .ne. 'none') then
+  if (UseFilter) then
     Filter%ndims = Filter%ndims - 1
     write (*,*) 'Filter information'
     write (*,*) '  Dataset name: ', trim(Filter%vname)
@@ -314,19 +330,7 @@ program tsavg
     write (*,*) ''
   endif
 
-  if (trim(Args%StormCenter%fname) .ne. 'none') then
-    StormCenter%ndims = StormCenter%ndims - 1
-    write (*,*) 'Storm center information'
-    write (*,*) '  Dataset name: ', trim(StormCenter%vname)
-    write (*,*) '  Number of dimensions: ', StormCenter%ndims
-    write (*,*) '  Dimension sizes:'
-    do id = 1, StormCenter%ndims
-      write (*,*), '    ', trim(StormCenter%dimnames(id)), ': ', StormCenter%dims(id)
-    enddo
-    write (*,*) ''
-  endif
-
-  if (trim(Args%Dens%fname) .ne. 'none') then
+  if (UseDens) then
     Dens%ndims = Dens%ndims - 1
     write (*,*) 'Density information'
     write (*,*) '  Dataset name: ', trim(Dens%vname)
@@ -353,14 +357,8 @@ program tsavg
   ! be read into GRADS which expects 3D variables. Always have (x,y,z) for the
   ! dimension names, but set the sizes of the dimensions according to the averaging
   ! function asked for.
-  TserAvg%vname = trim(Args%AvgFunc)
-  if ((Args%AvgFunc .eq. 'min') .or. (Args%AvgFunc .eq. 'max') .or. &
-      (Args%AvgFunc .eq. 'hda') .or. (Args%AvgFunc .eq. 'hist') .or. &
-      (Args%AvgFunc .eq. 'hfrac') .or. (Args%AvgFunc .eq. 'turb_mmts') .or. &
-      (Args%AvgFunc .eq. 'turb_cov')) then
-    TserAvg%vname = trim(TserAvg%vname) // '_' // trim(Var1%vname)
-  endif
-  TserAvg%descrip = 'time series averaged ' // trim(Args%AvgFunc) 
+  TserAvg%vname = trim(Args%Output%vname)
+  TserAvg%descrip = 'time series averaged ' // trim(TserAvg%vname) 
   TserAvg%ndims = 3 
   TserAvg%dimnames(1) = 'x' 
   TserAvg%dimnames(2) = 'y' 
@@ -694,9 +692,6 @@ program tsavg
   if (UseFilter) then
     call rhdf5_open_file(Args%Filter%fname, rh5f_facc, 1, rh5f_filter)
   endif
-  if (UseStormCenter) then
-    call rhdf5_open_file(Args%StormCenter%fname, rh5f_facc, 1, rh5f_scenter)
-  endif
   if (UseDens) then
     call rhdf5_open_file(Args%Dens%fname, rh5f_facc, 1, rh5f_dens)
   endif
@@ -713,11 +708,26 @@ program tsavg
     if (UseFilter) then
       call rhdf5_read_variable(rh5f_filter, Filter%vname, Filter%ndims, it, Filter%dims, rdata=Filter%vdata)
     endif
-    if (UseStormCenter) then
-      call rhdf5_read_variable(rh5f_Scenter, StormCenter%vname, StormCenter%ndims, it, StormCenter%dims, rdata=StormCenter%vdata)
-    endif
     if (UseDens) then
       call rhdf5_read_variable(rh5f_dens, Dens%vname, Dens%ndims, it, Dens%dims, rdata=Dens%vdata)
+    endif
+
+    ! If subtracting storm motion, GetMyArgs has already checked that Var1 and Var2 are
+    ! restricted to combinations of "u" and "v". Allow for Var1 and Var2 to be either
+    ! of "u" or "v" here. This will allow for changes in the restrictions in GetMyArgs
+    ! (as long as they stick with combinations of "u" and "v") without updating this code.
+    if (Args%SubtractSmotion) then
+      if (trim(Var1%vname) .eq. 'u') then
+        call TranslateField(Nx, Ny, Nz, Var1%vdata, Ustorm%vdata(it))
+      elseif (trim(Var1%vname) .eq. 'v') then
+        call TranslateField(Nx, Ny, Nz, Var1%vdata, Vstorm%vdata(it))
+      endif
+
+      if (trim(Var2%vname) .eq. 'u') then
+        call TranslateField(Nx, Ny, Nz, Var2%vdata, Ustorm%vdata(it))
+      elseif (trim(Var2%vname) .eq. 'v') then
+        call TranslateField(Nx, Ny, Nz, Var2%vdata, Vstorm%vdata(it))
+      endif
     endif
 
     ! do the averaging function
@@ -732,6 +742,7 @@ program tsavg
 
       case ('horiz_ke')
         if (trim(Args%VelInType) .eq. 'uv') then
+          ! Convert U and V to velocity magnitude, and then calculate horizontal KE
           allocate(HorizSpeed(Nx,Ny))
           call UvToSpeed(Nx, Ny, Nz, Var1%vdata, Var2%vdata, HorizSpeed)
           call DoHorizKe(Nx, Ny, Nz, FilterNz, Dens%vdata, HorizSpeed, Filter%vdata, DeltaX, DeltaY, Args%HkeZthick, TserAvg%vdata(1))
@@ -786,9 +797,6 @@ program tsavg
     if (UseFilter) then
       deallocate(Filter%vdata)
     endif
-    if (UseStormCenter) then
-      deallocate(StormCenter%vdata)
-    endif
     if (UseDens) then
       deallocate(Dens%vdata)
     endif
@@ -827,9 +835,6 @@ program tsavg
   endif
   if (UseFilter) then
     call rhdf5_close_file(rh5f_filter)
-  endif
-  if (UseStormCenter) then
-    call rhdf5_close_file(rh5f_scenter)
   endif
   if (UseDens) then
     call rhdf5_close_file(rh5f_dens)
@@ -929,7 +934,8 @@ subroutine GetMyArgs(Args)
   character (len=MediumString), dimension(MaxArgFields) :: ArgList
   integer :: Nfields
 
-  logical :: SubtractSmotion
+  ! Default
+  Args%SubtractSmotion = .false.
 
   ! Initialization
   Args%AvgFunc = 'none'
@@ -977,7 +983,6 @@ subroutine GetMyArgs(Args)
   !    '.' command line argument (no option)
   BadArgs = .false.
   FirstParam = .true.
-  SubtractSmotion = .false.
   do
     optval = getopt('m')
 
@@ -991,7 +996,7 @@ subroutine GetMyArgs(Args)
         BadArgs = .true.
 
       case ('m')
-        SubtractSmotion = .true.
+        Args%SubtractSmotion = .true.
 
       case ('.')
         if (FirstParam) then
@@ -1107,7 +1112,7 @@ subroutine GetMyArgs(Args)
     BadArgs = .true.
   endif
 
-  if (SubtractSmotion) then
+  if (Args%SubtractSmotion) then
     if (trim(Args%StormCenter%fname) .eq. 'none') then
       write (*,*) 'ERROR: must specify storm center file when using -m option'
       write (*,*) ''
@@ -1210,6 +1215,27 @@ subroutine GetMyArgs(Args)
       BadArgs = .true.
 
   endselect
+
+  ! Check to make sure u and v are being used with the -m option.
+  ! For single var averaging functions, Var1 can be be either u or v.
+  ! For two var averaging functions, Var1 must be u and Var2 must be v.
+  if (Args%SubtractSmotion) then
+    if (trim(Args%Var2%vname) .eq. 'none') then
+      ! Single var averaging function
+      if ((trim(Args%Var1%vname) .ne. 'u') .and. (trim(Args%Var1%vname) .ne. 'v')) then
+        write (*,*) 'ERROR: must specify var1 as "u" or "v" when using -m option'
+        write (*,*) ''
+        BadArgs = .true.
+      endif
+    else
+      ! Two var averaging functions
+      if ((trim(Args%Var1%vname) .ne. 'u') .or. (trim(Args%Var2%vname) .ne. 'v')) then
+        write (*,*) 'ERROR: must specify var1 as "u" and var2 as "v" when using -m option'
+        write (*,*) ''
+        BadArgs = .true.
+      endif
+    endif
+  endif
 
   ! check other specs for valid values
   if (Args%VelInType .ne. 'none') then

@@ -1,17 +1,6 @@
 #!/usr/bin/env perl
 #
-# Script to run tsavg on the set of cases specified in the config file
-#
-# The config file defines the cases, time dirs and diagnostics that are to be run. Format
-# for lines in the config file are:
-#   Case: <CaseName>
-#   TimeDir: <Dir> <TimeSpec>
-#   Diag: tsavg <TsavgArgs>
-#
-#   <CaseName> corresponds to the simulation name such as TC_SEED_C0100 or SA0SC0.
-#
-#   <Dir> is a subdirectory of the <CaseName>/GRADS directory where the GRADS files live
-#   <TimeSpec> is the revu time spec (in the TVAR(1) spec)
+# Script to run tsavg on a list of simulation cases
 #
 
 BEGIN { push(@INC, "$ENV{HOME}/etc/perl"); }
@@ -25,248 +14,90 @@ use DiagUtils;
 #######################################################################
 
 #######################################################################
-# CreateFileNames()
-#
-# This routine will take the case, time dir, and diagnostic name
-# and create the file lists (input and output) needed for tsavg.
-#
-sub CreateFileNames
-  {
-  my ($Case, $Tdir, $Dname, $Dspec, $FfilePrefix, $AzavgDir, $TsavgDir, $FilterDir, $RevuDir) = @_;
-  
-  my $InDir;
-  my $InFileSuffix;
-  my $OutFile;
-  my $FilterFile;
-  my $Dvar;
-
-  my $Pattern;
-  my @f;
-  my $TdirStr;
-  my $DSfunc;
-  my $DSvname;
-  my $DSfprefix;
-  my $DSremain;
-  my $DSintype;
-
-  # If $Tdir is the string "NONE", then do not place a subdirectory
-  # in the path to the input and output files
-  if ($Tdir eq "NONE")
-    {
-    $TdirStr = "";
-    }
-  else
-    {
-    $TdirStr = "/" . $Tdir;
-    }
-
-  # If $Dspec contains mulitple parameters (colon separated) then separate out the
-  # individual value, <function>:<var>:<file_prefix>:<more_params>
-  if (($Dspec =~ /min:/) || ($Dspec =~ /max:/) || ($Dspec =~ /hda:/) || ($Dspec =~ /hist:/))
-    {
-    ($DSfunc, $DSvname, $DSfprefix, $DSremain) = split(':', $Dspec);
-    $Dvar = $DSfunc . "_" . $DSfprefix;
-    }
-  elsif ($Dspec =~ /horiz_ke:/)
-    {
-    ($DSfunc, $DSintype, $DSremain) = split(':', $Dspec);
-    if ($DSintype eq "uv")
-      {
-      $DSvname = "u";
-      $DSfprefix = "u";
-      }
-    elsif ($DSintype eq "s10")
-      {
-      $DSvname = "speed10m";
-      $DSfprefix = "speed10m";
-      }
-
-    $Dvar = $DSfunc;
-    }
-  else
-    {
-    $DSfunc = $Dspec;
-    $DSvname = $Dspec;
-    $DSfprefix = $Dspec;
-
-    $Dvar = $DSfunc;
-    }
-
-  # InDir is the directory that the input files come from.
-  #
-  # InFileSuffix is used to create the names of all the input files. It is
-  # assumed that the input file names follow the form:
-  #
-  #   <VarName><InFileSuffix>
-  #
-  # OutFile is simply the whole path to the output file.
-  #
-  if ($Dname =~ /^max_azwind/)
-    {
-    $InDir = $AzavgDir . $TdirStr;
-    $InFileSuffix = "_" . $Case . ".h5";
-    }
-  elsif ($Dname =~ /^min_azslp/)
-    {
-    $InDir = $AzavgDir . $TdirStr;
-    $InFileSuffix = "_" . $Case . ".h5";
-    }
-  else
-    {
-    $InDir = $Case . "/" . $RevuDir . $TdirStr;
-    # Use the associate file prefix as a sample for finding the input file suffix.
-    $Pattern = "$InDir/$DSfprefix-$Case-*.h5";
-    @f = glob($Pattern);
-    $InFileSuffix = $f[0];
-    $InFileSuffix =~ s/.*\/$DSfprefix-/-/;  # leave $Case in the file suffix
-    }
-
-  $OutFile = $TsavgDir . ${TdirStr} . "/" . ${Dname} . "_" . ${Case} . ".h5";
-  if (($FfilePrefix eq "none") || ($FfilePrefix eq "NONE"))
-    {
-    $FilterFile = $FfilePrefix;
-    }
-  else
-    {
-    $FilterFile = $FilterDir . ${TdirStr} . "/" . ${FfilePrefix} . "_" . ${Case} . ".h5";
-    }
-
-  return ($InDir, $InFileSuffix, $OutFile, $FilterFile, $DSfunc, $Dvar);
-  }
-
-#######################################################################
 # MAIN
 #######################################################################
 
 my $ConfigFile;
+my $Nprocs;
 
 my $Config;
 
-my %Cases;
-my %TimeDirs;
-my %TsavgDiags;
-my $AzavgDir;
-my $TsavgDir;
-my $FilterDir;
-my $RevuDir;
-
-my @f;
+my @CaseList;
 my $Case;
-my $Tdir;
-my $Dname;
-my $Dspec;
-my $Dfunc;
-my $RevuVar;
-my $MaxRadius;
-my $VarDim;
-my $Nbands;
-my $Wmin;
-my $Wmax;
-my $InDir;
-my $InFileSuffix;
-my $OutFile;
-my $FilterFile;
-my $FfilePrefix;
-my $Dvar;
+
+my %TsavgJobs;
+my $Tname;
+my $AvgFunc;
+my $SubSmotion;
+my @FileList;
+my $FileSpec;
+my $ifile;
+
+my @TsavgCmds;
+my $icmd;
 
 my @SysArgs;
-my $OutDir;
-my $JoinInFiles;
-my $JoinOutFile;
+my $iarg;
+
+if ($#ARGV != 1)
+  {
+  print "ERROR: must supply exactly two arguments\n";
+  print "\n";
+  print "USAGE: run_tsavg <ConfigFile> <NumberProcesses>\n";
+  exit -1;
+  }
 
 $ConfigFile = $ARGV[0];
+$Nprocs = $ARGV[1];
 
-# read in info from the config file
-($Config) = &DiagUtils::ReadConfigFile($ConfigFile);
+print "Run tsavg diagnostic jobs\n";
+print "  Configuration file: $ConfigFile\n";
+print "  Number of processes: $Nprocs\n";
+print "\n";
 
-%Cases = %{ $$Config{CASES} };
-%TimeDirs = %{ $$Config{TIM_DIRS} };
-%TsavgDiags = %{ $$Config{TSAVG_DIAGS} };
+# Read in info from the config file.
+($Config) = &DiagUtils::ReadDiagConfigFile($ConfigFile);
 
-$AzavgDir = $$Config{AZAVG_DIR};
-$TsavgDir = $$Config{TSAVG_DIR};
-$FilterDir = $$Config{FILTER_DIR};
-$RevuDir = $$Config{REVU_DIR};
+# Walk through all cases and all tsavg jobs and construct the
+# corresponding list of tsavg commands. 
+#
+# Divide the total number of tsavg commands evenly by the 
+# requested number of processes and run each subset in
+# separate processes.
 
-# make sure at least one of each of cases, time_directories and diagnostics has
-# been specified
-if ((! (%Cases)) || (! (%TimeDirs)) || (! (%TsavgDiags)))
+@CaseList = @{ $$Config{CASE_LIST} };
+%TsavgJobs = %{ $$Config{TSAVG} };
+
+foreach $Case (@CaseList)
   {
-  print STDERR "ERROR: must specify at least one of each of case, time directory and diagnostic\n";
-  exit 1;
-  }
-
-# Walk through all combinations of cases, time directories, and diagnostics.
-foreach $Case (sort(keys(%Cases)))
-  {
-  foreach $Dname (sort(keys(%TsavgDiags)))
+  foreach $Tname (sort(keys(%TsavgJobs)))
     {
-    $JoinInFiles = "";
+    # Grab the job specs
+    $AvgFunc    = $TsavgJobs{$Tname}{AVG_FUNC};
+    $SubSmotion = $TsavgJobs{$Tname}{SUB_SMOTION};
+    @FileList   = @{ $TsavgJobs{$Tname}{FILE_LIST} };
 
-    # Grab the filter 
-    $Dspec = $TsavgDiags{$Dname}{DSPEC};
-    $FfilePrefix = $TsavgDiags{$Dname}{FILTER};
-
-    # run through each time directory generating the current diagnostic, and
-    # then join these files into the main file (above the time directories)
-    foreach $Tdir (sort(keys(%TimeDirs)))
+    $iarg = 0;
+    undef @SysArgs;
+    $SysArgs[$iarg++] = "tsavg"; 
+    if ($SubSmotion =~ /[Yy][Ee][Ss]/)
       {
-      ($InDir,$InFileSuffix,$OutFile,$FilterFile,$Dfunc,$Dvar) =
-          &CreateFileNames($Case, $Tdir, $Dname, $Dspec, $FfilePrefix, $AzavgDir, $TsavgDir, $FilterDir, $RevuDir);
-
-      print "***************************************************************\n";
-      print "Running tsavg:\n";
-      print "  Case: $Case\n";
-      print "  Time Directory: $Tdir\n";
-      print "  Tsavg Diagnostic: $Dfunc\n";
-      print "  Input File Directory: $InDir\n";
-      print "  Input File Suffix: $InFileSuffix\n";
-      print "  Filter File: $FilterFile\n";
-      print "  Output File: $OutFile\n";
-
-      # run tsavg, make sure the output directory exists
-      $OutDir = dirname($OutFile);
-      if (! -d $OutDir)
-        {
-        @SysArgs = ("mkdir", "-p", $OutDir);
-        system(@SysArgs);
-        }
-
-      @SysArgs = ("tsavg", $InDir, $InFileSuffix, $OutFile, $Dspec, $FilterFile);
-      print "Running: ", join(" ",@SysArgs), "\n\n";
-      system(@SysArgs);
-
-      # record the input file for the upcoming join
-      if ($Tdir eq "NONE")
-        {
-        $JoinInFiles = "NONE";
-        }
-      else
-        {
-        if ($JoinInFiles eq "")
-          {
-          $JoinInFiles = $OutFile;
-          $JoinOutFile = $TsavgDir . "/" . basename($OutFile);
-          }
-        else
-          {
-          $JoinInFiles = $JoinInFiles . ":" . $OutFile;
-          }
-        }
+      $SysArgs[$iarg++] = "-m";
+      }
+    $SysArgs[$iarg++] = $AvgFunc;
+    foreach $ifile (0 .. $#FileList)
+      {
+      $FileSpec = $FileList[$ifile];
+      $FileSpec =~ s/<CASE>/$Case/g;
+      $SysArgs[$iarg++] = $FileSpec;
       }
 
-    if ($JoinInFiles ne "NONE")
-      {
-      @SysArgs = ("join_hdata", $JoinInFiles, $JoinOutFile, $Dvar);
-      print "***************************************************\n";
-      print " Joining HDF5 data:\n";
-      print "   Input Files: $JoinInFiles\n";
-      print "   Output File: $JoinOutFile\n";
-      print "   HDF5 Variable: $Dvar\n";
-      print "Running: ", join(" ",@SysArgs), "\n\n";
-      system(@SysArgs);
-      }
+    # Add the command line to the main list
+    $TsavgCmds[$icmd++] = [ @SysArgs ];
     }
   }
+
+# Submit the jobs
+&DiagUtils::SubmitParallelJobs(\@TsavgCmds, $Nprocs, "tsavg");
 
 exit 0;
