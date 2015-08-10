@@ -724,28 +724,28 @@ End
 
 PlotData: LoPwThetaLine 2
   # x data - sim time in days
-  /theta_lavg DIAGS/SampleProfiles_<CASE>.h5 (2:end,20) 1 -273.15
+  /theta_lavg DIAGS/SampleProfiles_<CASE>.h5 (2:end,32) 1 -273.15
   # y data - radiative flux divergence in W/m^2
   /z_coords   DIAGS/SampleProfiles_<CASE>.h5 (2:end) 1e-3 0
 End
 
 PlotData: LoPwTcondLine 2
   # x data - sim time in days
-  /total_cond_lavg DIAGS/SampleProfiles_<CASE>.h5 (2:end,20) 100 0
+  /total_cond_lavg DIAGS/SampleProfiles_<CASE>.h5 (2:end,32) 100 0
   # y data - radiative flux divergence in W/m^2
   /z_coords        DIAGS/SampleProfiles_<CASE>.h5 (2:end) 1e-3 0
 End
 
 PlotData: HiPwThetaLine 2
   # x data - sim time in days
-  /theta_havg DIAGS/SampleProfiles_<CASE>.h5 (2:end,20) 1 -273.15
+  /theta_havg DIAGS/SampleProfiles_<CASE>.h5 (2:end,32) 1 -273.15
   # y data - radiative flux divergence in W/m^2
   /z_coords   DIAGS/SampleProfiles_<CASE>.h5 (2:end) 1e-3 0
 End
 
 PlotData: HiPwTcondLine 2
   # x data - sim time in days
-  /total_cond_havg DIAGS/SampleProfiles_<CASE>.h5 (2:end,20) 100 0
+  /total_cond_havg DIAGS/SampleProfiles_<CASE>.h5 (2:end,32) 100 0
   # y data - radiative flux divergence in W/m^2
   /z_coords        DIAGS/SampleProfiles_<CASE>.h5 (2:end) 1e-3 0
 End

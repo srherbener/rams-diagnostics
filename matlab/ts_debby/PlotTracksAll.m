@@ -12,9 +12,9 @@ function [ ] = PlotTracksAll()
 %   'TSD_MOIST_NODUST'
 
    'TSD_SAL_DUST'
-   'TSD_SAL_NODUST'
-   'TSD_NONSAL_DUST'
-   'TSD_NONSAL_NODUST'
+%   'TSD_SAL_NODUST'
+%   'TSD_NONSAL_DUST'
+%   'TSD_NONSAL_NODUST'
    };
   
   LegText = {
@@ -30,9 +30,9 @@ function [ ] = PlotTracksAll()
 %   'BASE'
 
    'SAL\_DUST'
-   'SAL\_NODUST'
-   'NONSAL\_DUST'
-   'NONSAL\_NODUST'
+%   'SAL\_NODUST'
+%   'NONSAL\_DUST'
+%   'NONSAL\_NODUST'
    };
    Nc = length(Cases);
   
