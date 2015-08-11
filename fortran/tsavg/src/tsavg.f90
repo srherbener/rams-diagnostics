@@ -1506,9 +1506,8 @@ subroutine DoHorizKe(Nx, Ny, Nz, FilterNz, Dens, Speed, Filter, DeltaX, DeltaY, 
   real :: Zthick
   real :: TserAvg
 
-  integer :: ix,iy,iz
+  integer :: ix,iy
   integer :: filter_z
-  integer :: NumPoints
   real :: SumKe, CurrKe
 
   ! KE is 1/2 * m * v^2
@@ -1516,26 +1515,23 @@ subroutine DoHorizKe(Nx, Ny, Nz, FilterNz, Dens, Speed, Filter, DeltaX, DeltaY, 
   !   - get m by density * volume
   !   - v^2 is based on horiz velocity so is equal to Speed^2
   !
-  ! The integrated kinetic engery measurement done on hurricanes is taken over the domain on the 10m
-  ! level. Just use the first model level above the surface (z == 2) for this measurement which will
+  ! For density, use the first model level above the surface (k = 2) for this measurement which will
   ! be close enough.
-  iz = 2
-
   SumKe = 0.0
-  NumPoints = 0
 
   if (FilterNz .eq. 1) then
+    ! 2D filter
     filter_z = 1
   else
-    filter_z = iz
+    ! 3D filter, use k = 2 level (first level above ground)
+    filter_z = 2
   endif
 
   do iy = 2, Ny-1
     do ix = 2, Nx-1
       if (anint(Filter(ix,iy,filter_z)) .eq. 1.0) then
-        CurrKe = 0.5 * DeltaX * DeltaY * Zthick * Dens(ix,iy,iz) * Speed(ix,iy)**2.
+        CurrKe = 0.5 * DeltaX * DeltaY * Zthick * Dens(ix,iy,2) * Speed(ix,iy)**2.
         SumKe = SumKe + CurrKe
-        NumPoints = NumPoints + 1
       endif
     enddo
   enddo
