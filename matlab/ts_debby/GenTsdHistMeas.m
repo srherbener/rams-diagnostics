@@ -14,6 +14,7 @@ function [ ] = GenTsdHistMeas()
     'TSD_SAL_NODUST'
     'TSD_NONSAL_DUST'
     'TSD_NONSAL_NODUST'
+    'TSD_SAL_DUST_TR'
     };
   Ncases = length(CaseList);
 
@@ -27,21 +28,21 @@ function [ ] = GenTsdHistMeas()
     {
       'Speed'
       {
-        { 'hist_speed' 'speed' 'farea'  0.50 'avg_speed_fa'     'ge' 0   }
-        { 'hist_speed' 'speed' 'wtmean'  0.0 'avg_speed_wm'     'ge' 0   }
-        { 'hist_speed' 'speed' 'farea'  0.99 'max_speed_fa'     'ge' 0   }
+        { 'hist_speed' '/speed' 'farea'  0.50 '/avg_speed_fa'     'ge' 0   }
+        { 'hist_speed' '/speed' 'wtmean'  0.0 '/avg_speed_wm'     'ge' 0   }
+        { 'hist_speed' '/speed' 'farea'  0.99 '/max_speed_fa'     'ge' 0   }
   
-        { 'hist_speed10m' 'speed10m' 'farea'  0.50 'avg_speed10m_fa'     'ge' 0   }
-        { 'hist_speed10m' 'speed10m' 'wtmean'  0.0 'avg_speed10m_wm'     'ge' 0   }
-        { 'hist_speed10m' 'speed10m' 'farea'  0.99 'max_speed10m_fa'     'ge' 0   }
+        { 'hist_speed10m' '/speed10m' 'farea'  0.50 '/avg_speed10m_fa'     'ge' 0   }
+        { 'hist_speed10m' '/speed10m' 'wtmean'  0.0 '/avg_speed10m_wm'     'ge' 0   }
+        { 'hist_speed10m' '/speed10m' 'farea'  0.99 '/max_speed10m_fa'     'ge' 0   }
   
-        { 'hist_speed_t' 'speed_t' 'farea'  0.50 'avg_speed_t_fa'     'ge' 0   }
-        { 'hist_speed_t' 'speed_t' 'wtmean'  0.0 'avg_speed_t_wm'     'ge' 0   }
-        { 'hist_speed_t' 'speed_t' 'farea'  0.99 'max_speed_t_fa'     'ge' 0   }
+        { 'hist_speed_t' '/speed_t' 'farea'  0.50 '/avg_speed_t_fa'     'ge' 0   }
+        { 'hist_speed_t' '/speed_t' 'wtmean'  0.0 '/avg_speed_t_wm'     'ge' 0   }
+        { 'hist_speed_t' '/speed_t' 'farea'  0.99 '/max_speed_t_fa'     'ge' 0   }
   
-        { 'hist_speed_r' 'speed_r' 'farea'  0.50 'avg_speed_r_fa'     'ge' 0   }
-        { 'hist_speed_r' 'speed_r' 'wtmean'  0.0 'avg_speed_r_wm'     'ge' 0   }
-        { 'hist_speed_r' 'speed_r' 'farea'  0.99 'max_speed_r_fa'     'ge' 0   }
+        { 'hist_speed_r' '/speed_r' 'farea'  0.50 '/avg_speed_r_fa'     'ge' 0   }
+        { 'hist_speed_r' '/speed_r' 'wtmean'  0.0 '/avg_speed_r_wm'     'ge' 0   }
+        { 'hist_speed_r' '/speed_r' 'farea'  0.99 '/max_speed_r_fa'     'ge' 0   }
       }
       'hist_meas_speed'
     }
@@ -50,13 +51,13 @@ function [ ] = GenTsdHistMeas()
     {
       'Pressure'
       {
-        { 'hist_press' 'press' 'farea'  0.50 'avg_press_fa'     'ge' 0   }
-        { 'hist_press' 'press' 'wtmean'  0.0 'avg_press_wm'     'ge' 0   }
-        { 'hist_press' 'press' 'farea'  0.01 'min_press_fa'     'ge' 0   }
+        { 'hist_press' '/press' 'farea'  0.50 '/avg_press_fa'     'ge' 0   }
+        { 'hist_press' '/press' 'wtmean'  0.0 '/avg_press_wm'     'ge' 0   }
+        { 'hist_press' '/press' 'farea'  0.01 '/min_press_fa'     'ge' 0   }
   
-        { 'hist_sea_press' 'sea_press' 'farea'  0.50 'avg_sea_press_fa'     'ge' 0   }
-        { 'hist_sea_press' 'sea_press' 'wtmean'  0.0 'avg_sea_press_wm'     'ge' 0   }
-        { 'hist_sea_press' 'sea_press' 'farea'  0.01 'min_sea_press_fa'     'ge' 0   }
+        { 'hist_sea_press' '/sea_press' 'farea'  0.50 '/avg_sea_press_fa'     'ge' 0   }
+        { 'hist_sea_press' '/sea_press' 'wtmean'  0.0 '/avg_sea_press_wm'     'ge' 0   }
+        { 'hist_sea_press' '/sea_press' 'farea'  0.01 '/min_sea_press_fa'     'ge' 0   }
       }
       'hist_meas_press'
     }
@@ -65,9 +66,9 @@ function [ ] = GenTsdHistMeas()
     {
       'Precip Rate'
       {
-        { 'hist_pcprate' 'pcprate' 'farea'  0.50 'avg_pcprate_fa'     'ge' 0   }
-        { 'hist_pcprate' 'pcprate' 'wtmean'  0.0 'avg_pcprate_wm'     'ge' 0   }
-        { 'hist_pcprate' 'pcprate' 'farea'  0.99 'max_pcprate_fa'     'ge' 0   }
+        { 'hist_pcprate' '/pcprate' 'farea'  0.50 '/avg_pcprate_fa'     'ge' 0   }
+        { 'hist_pcprate' '/pcprate' 'wtmean'  0.0 '/avg_pcprate_wm'     'ge' 0   }
+        { 'hist_pcprate' '/pcprate' 'farea'  0.99 '/max_pcprate_fa'     'ge' 0   }
       }
       'hist_meas_pcprate'
     }
@@ -76,13 +77,13 @@ function [ ] = GenTsdHistMeas()
     {
       'Vertical Velocity'
       {
-        { 'hist_up' 'w' 'farea'  0.50 'avg_updraft_fa'     'ge'  0.01   }
-        { 'hist_up' 'w' 'wtmean'  0.0 'avg_updraft_wm'     'ge'  0.01   }
-        { 'hist_w'  'w' 'farea'  0.99 'max_updraft_fa'     'ge'  0.05   }
+        { 'hist_up' '/w' 'farea'  0.50 '/avg_updraft_fa'     'ge'  0.01   }
+        { 'hist_up' '/w' 'wtmean'  0.0 '/avg_updraft_wm'     'ge'  0.01   }
+        { 'hist_w'  '/w' 'farea'  0.99 '/max_updraft_fa'     'ge'  0.05   }
 
-        { 'hist_dn' 'w' 'farea'  0.50 'avg_dndraft_fa'     'le' -0.01   }
-        { 'hist_dn' 'w' 'wtmean'  0.0 'avg_dndraft_wm'     'le' -0.01   }
-        { 'hist_w'  'w' 'farea'  0.01 'max_dndraft_fa'     'le' -0.05   }
+        { 'hist_dn' '/w' 'farea'  0.50 '/avg_dndraft_fa'     'le' -0.01   }
+        { 'hist_dn' '/w' 'wtmean'  0.0 '/avg_dndraft_wm'     'le' -0.01   }
+        { 'hist_w'  '/w' 'farea'  0.01 '/max_dndraft_fa'     'le' -0.05   }
       }
       'hist_meas_w'
     }
@@ -127,10 +128,6 @@ function [ ] = GenTsdHistMeas()
         OutVname  = MeasList{imeas}{5};
         SelectOp  = MeasList{imeas}{6};
         SelectVal = MeasList{imeas}{7};
-  
-        % add on leading '/' for HDF5 routines
-        Vname    = sprintf('/%s', Vname);
-        OutVname = sprintf('/%s', OutVname);
   
         InFile = sprintf('%s/%s_%s.h5', Adir, Fprefix, Case);
   

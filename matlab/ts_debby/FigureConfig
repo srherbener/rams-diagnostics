@@ -3,33 +3,33 @@
 #
 
 ######### FIGURES ###################
-#Figure: MaxWind 1
-#  DummyCases
-#  [1_1]
-#  Plots/FigMaxWind.jpg
-#  MaxWindPanel   1
-#End 
+Figure: MaxWind 1
+  DummyCases
+  [1_1]
+  Plots/FigMaxWind.jpg
+  MaxWindPanel   1
+End 
 
-#Figure: MinSlp 1
-#  DummyCases
-#  [1_1]
-#  Plots/FigMinSlp.jpg
-#  MinSlpPanel   1
-#End 
+Figure: MinSlp 1
+  DummyCases
+  [1_1]
+  Plots/FigMinSlp.jpg
+  MinSlpPanel   1
+End 
 
-#Figure: Ike 1
-#  DummyCases
-#  [1_1]
-#  Plots/FigIke.jpg
-#  IkePanel   1
-#End 
+Figure: Ike 1
+  DummyCases
+  [1_1]
+  Plots/FigIke.jpg
+  IkePanel   1
+End 
 
-#Figure: Rmw 1
-# DummyCases
-#  [1_1]
-#  Plots/FigRmw.jpg
-#  RmwPanel   1
-#End 
+Figure: Rmw 1
+ DummyCases
+  [1_1]
+  Plots/FigRmw.jpg
+  RmwPanel   1
+End 
 
 Figure: FacSep 2
   DummyCases
@@ -39,32 +39,32 @@ Figure: FacSep 2
   FsIkePanel 2
 End
 
-#Figure: Dust1Tracer1 2
-#  DummyCases
-#  [2_1]
-#  Plots/FigDust1Tracer1.jpg
-#  Dust1Panel 1
-#  Tracer1Panel 2
-#End
+Figure: Dust1Tracer1 2
+  DummyCases
+  [2_1]
+  Plots/FigDust1Tracer1.jpg
+  Dust1Panel 1
+  Tracer1Panel 2
+End
 
-#Figure: Dust2Tracer2 2
-#  DummyCases
-#  [2_1]
-#  Plots/FigDust2Tracer2.jpg
-#  Dust2Panel 1
-#  Tracer2Panel 2
-#End
+Figure: Dust2Tracer2 2
+  DummyCases
+  [2_1]
+  Plots/FigDust2Tracer2.jpg
+  Dust2Panel 1
+  Tracer2Panel 2
+End
 
-# all four on one figure has issues
-#Figure: DustTracer 4
-#  DummyCases
-#  [2_2]
-#  Plots/FigDustTracer.jpg
-#  Dust1Panel   1
-#  Dust2Panel   2
-#  Tracer1Panel 3
-#  Tracer2Panel 4
-#End
+ all four on one figure has issues
+Figure: DustTracer 4
+  DummyCases
+  [2_2]
+  Plots/FigDustTracer.jpg
+  Dust1Panel   1
+  Dust2Panel   2
+  Tracer1Panel 3
+  Tracer2Panel 4
+End
 
 ########### CASES ####################
 CaseSet: DummyCases 1
@@ -101,7 +101,7 @@ FigPanel: RmwPanel
   RmwAxes 1 1
   none 5
   RMW
-  SouthEast 12
+  SouthWest 12
 End
 
 FigPanel: FsMaxWindPanel
@@ -330,7 +330,7 @@ PlotAxes: IkeAxes 2
   # x axis - utc time
   Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
   # y axis - speed in m/s
-  IKE 10^6@J 0 40 linear [_] {_}
+  IKE 10^6@J 0 50 linear [_] {_}
 End
 
 PlotAxes: RmwAxes 2
@@ -338,7 +338,7 @@ PlotAxes: RmwAxes 2
   # x axis - utc time
   Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
   # y axis - speed in m/s
-  RMW km 30 110 linear [_] {_}
+  RMW km 0 150 linear [_] {_}
 End
 
 PlotAxes: FsMaxWindAxes 2

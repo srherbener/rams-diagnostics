@@ -13,16 +13,16 @@ function [] = CreateDimensionsXyzt(File, X, Y, Z, T, Xname, Yname, Zname, Tname)
 
   % write out the coordinate values
   h5create(File, Xname, Nx, 'DataType', 'single');
-  h5write(File,  Xname, X);
+  h5write(File,  Xname, single(X));
 
   h5create(File, Yname, Ny, 'DataType', 'single');
-  h5write(File,  Yname, Y);
+  h5write(File,  Yname, single(Y));
 
   h5create(File, Zname, Nz, 'DataType', 'single');
-  h5write(File,  Zname, Z);
+  h5write(File,  Zname, single(Z));
 
   h5create(File, Tname, Nt, 'DataType', 'single');
-  h5write(File,  Tname, T);
+  h5write(File,  Tname, single(T));
 
   % Use low level HDF5 routiens to mark these as dimensions
   file_id = H5F.open(File, 'H5F_ACC_RDWR', 'H5P_DEFAULT');
