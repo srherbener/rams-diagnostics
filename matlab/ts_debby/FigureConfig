@@ -39,31 +39,36 @@ Figure: FacSep 2
   FsIkePanel 2
 End
 
-Figure: Dust1Tracer1 2
+Figure: Dust1Tracer1_NS 2
   DummyCases
   [2_1]
-  Plots/FigDust1Tracer1.jpg
-  Dust1Panel 1
-  Tracer1Panel 2
+  Plots/FigDust1Tracer1_NS.jpg
+  Dust1_NS_Panel 1
+  Tracer1_NS_Panel 2
 End
 
-Figure: Dust2Tracer2 2
+Figure: Dust2Tracer2_NS 2
   DummyCases
   [2_1]
-  Plots/FigDust2Tracer2.jpg
-  Dust2Panel 1
-  Tracer2Panel 2
+  Plots/FigDust2Tracer2_NS.jpg
+  Dust2_NS_Panel 1
+  Tracer2_NS_Panel 2
 End
 
- all four on one figure has issues
-Figure: DustTracer 4
+Figure: Dust1Tracer1_S 2
   DummyCases
-  [2_2]
-  Plots/FigDustTracer.jpg
-  Dust1Panel   1
-  Dust2Panel   2
-  Tracer1Panel 3
-  Tracer2Panel 4
+  [2_1]
+  Plots/FigDust1Tracer1_S.jpg
+  Dust1_S_Panel 1
+  Tracer1_S_Panel 2
+End
+
+Figure: Dust2Tracer2_S 2
+  DummyCases
+  [2_1]
+  Plots/FigDust2Tracer2_S.jpg
+  Dust2_S_Panel 1
+  Tracer2_S_Panel 2
 End
 
 ########### CASES ####################
@@ -120,35 +125,67 @@ FigPanel: FsIkePanel
   none 12
 End
 
-FigPanel: Dust1Panel
-  Dust1Pset
-  Dust1Contour 0 1
+FigPanel: Dust1_NS_Panel
+  Dust1_NS_Pset
+  Dust1_NS_Contour 0 1
   none 5
-  PANEL:a@Small@Dust@Mode@(ug@m^-^3)
+  PANEL:a@NS:@Small@Dust@Mode@(ug@m^-^3)
   none 12
 End
 
-FigPanel: Tracer1Panel
-  Tracer1Pset
-  Tracer1Contour 1 1
+FigPanel: Tracer1_NS_Panel
+  Tracer1_NS_Pset
+  Tracer1_NS_Contour 1 1
   none 5
-  PANEL:b@Tracer@(ug@m^-^3)
+  PANEL:b@NS:@Tracer@(ug@m^-^3)
   none 12
 End
 
-FigPanel: Dust2Panel
-  Dust2Pset
-  Dust2Contour 0 1
+FigPanel: Dust2_NS_Panel
+  Dust2_NS_Pset
+  Dust2_NS_Contour 0 1
   none 5
-  PANEL:a@Large@Dust@Mode@(ug@m^-^3)
+  PANEL:a@NS:@Large@Dust@Mode@(ug@m^-^3)
   none 12
 End
 
-FigPanel: Tracer2Panel
-  Tracer2Pset
-  Tracer2Contour 1 1
+FigPanel: Tracer2_NS_Panel
+  Tracer2_NS_Pset
+  Tracer2_NS_Contour 1 1
   none 5
-  PANEL:b@Tracer@(ug@m^-^3)
+  PANEL:b@NS:@Tracer@(ug@m^-^3)
+  none 12
+End
+
+FigPanel: Dust1_S_Panel
+  Dust1_S_Pset
+  Dust1_S_Contour 0 1
+  none 5
+  PANEL:a@S:@Small@Dust@Mode@(ug@m^-^3)
+  none 12
+End
+
+FigPanel: Tracer1_S_Panel
+  Tracer1_S_Pset
+  Tracer1_S_Contour 1 1
+  none 5
+  PANEL:b@S:@Tracer@(ug@m^-^3)
+  none 12
+End
+
+FigPanel: Dust2_S_Panel
+  Dust2_S_Pset
+  Dust2_S_Contour 0 1
+  none 5
+  PANEL:a@S:@Large@Dust@Mode@(ug@m^-^3)
+  none 12
+End
+
+FigPanel: Tracer2_S_Panel
+  Tracer2_S_Pset
+  Tracer2_S_Contour 1 1
+  none 5
+  PANEL:b@S:@Tracer@(ug@m^-^3)
   none 12
 End
 
@@ -191,20 +228,36 @@ PlotSet: FsIkePset bar:stacked 2
   IkeIntBar  none    none  2 cyan   - 0
 End
 
-PlotSet: Dust1Pset contourf 1
-  Dust1Contour none none 2 blue - 0
+PlotSet: Dust1_NS_Pset contourf 1
+  Dust1_NS_Contour none none 2 blue - 0
 End
 
-PlotSet: Tracer1Pset contourf 1
-  Tracer1Contour none none 2 blue - 0
+PlotSet: Tracer1_NS_Pset contourf 1
+  Tracer1_NS_Contour none none 2 blue - 0
 End
 
-PlotSet: Dust2Pset contourf 1
-  Dust2Contour none none 2 blue - 0
+PlotSet: Dust2_NS_Pset contourf 1
+  Dust2_NS_Contour none none 2 blue - 0
 End
 
-PlotSet: Tracer2Pset contourf 1
-  Tracer2Contour none none 2 blue - 0
+PlotSet: Tracer2_NS_Pset contourf 1
+  Tracer2_NS_Contour none none 2 blue - 0
+End
+
+PlotSet: Dust1_S_Pset contourf 1
+  Dust1_S_Contour none none 2 blue - 0
+End
+
+PlotSet: Tracer1_S_Pset contourf 1
+  Tracer1_S_Contour none none 2 blue - 0
+End
+
+PlotSet: Dust2_S_Pset contourf 1
+  Dust2_S_Contour none none 2 blue - 0
+End
+
+PlotSet: Tracer2_S_Pset contourf 1
+  Tracer2_S_Contour none none 2 blue - 0
 End
 
 ############ PLOT DATA #################
@@ -268,7 +321,7 @@ PlotData: IkeIntBar 2
   /s_ike_bar_int DIAGS/fs_factors.h5 @ 100 0
 End
 
-PlotData: Dust1Contour 3
+PlotData: Dust1_NS_Contour 3
   # select all t, z from 0 to 10km -> 2:39
   # x - time
   /t_coords      DIAGS/sp_dust1_TSD_NONSAL_DUST.h5 (:)      2.7778e-4 -42
@@ -278,7 +331,7 @@ PlotData: Dust1Contour 3
   /sp_dust1_mass DIAGS/sp_dust1_TSD_NONSAL_DUST.h5 (2:39,:)         1   0
 End
 
-PlotData: Tracer1Contour 3
+PlotData: Tracer1_NS_Contour 3
   # select all t, z from 0 to 10km -> 2:39
   # x - time
   /t_coords DIAGS/sp_tracer1_TSD_NONSAL_DUST.h5 (:)      2.7778e-4 -42
@@ -288,7 +341,7 @@ PlotData: Tracer1Contour 3
   /sp_tr3d1 DIAGS/sp_tracer1_TSD_NONSAL_DUST.h5 (2:39,:)         1   0
 End
 
-PlotData: Dust2Contour 3
+PlotData: Dust2_NS_Contour 3
   # select all t, z from 0 to 10km -> 2:39
   # x - time
   /t_coords      DIAGS/sp_dust2_TSD_NONSAL_DUST.h5 (:)      2.7778e-4 -42
@@ -298,7 +351,7 @@ PlotData: Dust2Contour 3
   /sp_dust2_mass DIAGS/sp_dust2_TSD_NONSAL_DUST.h5 (2:39,:)         1   0
 End
 
-PlotData: Tracer2Contour 3
+PlotData: Tracer2_NS_Contour 3
   # select all t, z from 0 to 10km -> 2:39
   # x - time
   /t_coords DIAGS/sp_tracer2_TSD_NONSAL_DUST.h5 (:)      2.7778e-4 -42
@@ -306,6 +359,46 @@ PlotData: Tracer2Contour 3
   /z_coords DIAGS/sp_tracer2_TSD_NONSAL_DUST.h5 (2:39)        1e-3   0
   # z - tracer2 profile data (z,t)
   /sp_tr3d2 DIAGS/sp_tracer2_TSD_NONSAL_DUST.h5 (2:39,:)         1   0
+End
+
+PlotData: Dust1_S_Contour 3
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords      DIAGS/sp_dust1_TSD_SAL_DUST_TR.h5 (:)      2.7778e-4 -42
+  # y - height
+  /z_coords      DIAGS/sp_dust1_TSD_SAL_DUST_TR.h5 (2:39)        1e-3   0
+  # z - dust1 profile data (z,t)
+  /sp_dust1_mass DIAGS/sp_dust1_TSD_SAL_DUST_TR.h5 (2:39,:)         1   0
+End
+
+PlotData: Tracer1_S_Contour 3
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/sp_tracer1_TSD_SAL_DUST_TR.h5 (:)      2.7778e-4 -42
+  # y - height
+  /z_coords DIAGS/sp_tracer1_TSD_SAL_DUST_TR.h5 (2:39)        1e-3   0
+  # z - tracer1 profile data (z,t)
+  /sp_tr3d1 DIAGS/sp_tracer1_TSD_SAL_DUST_TR.h5 (2:39,:)         1   0
+End
+
+PlotData: Dust2_S_Contour 3
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords      DIAGS/sp_dust2_TSD_SAL_DUST_TR.h5 (:)      2.7778e-4 -42
+  # y - height
+  /z_coords      DIAGS/sp_dust2_TSD_SAL_DUST_TR.h5 (2:39)        1e-3   0
+  # z - dust2 profile data (z,t)
+  /sp_dust2_mass DIAGS/sp_dust2_TSD_SAL_DUST_TR.h5 (2:39,:)         1   0
+End
+
+PlotData: Tracer2_S_Contour 3
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/sp_tracer2_TSD_SAL_DUST_TR.h5 (:)      2.7778e-4 -42
+  # y - height
+  /z_coords DIAGS/sp_tracer2_TSD_SAL_DUST_TR.h5 (2:39)        1e-3   0
+  # z - tracer2 profile data (z,t)
+  /sp_tr3d2 DIAGS/sp_tracer2_TSD_SAL_DUST_TR.h5 (2:39,:)         1   0
 End
 
 ############ PLOT AXES #################
@@ -357,7 +450,7 @@ PlotAxes: FsIkeAxes 2
   Difference % -20 30 linear [_] {_}
 End
 
-PlotAxes: Dust1Contour 3
+PlotAxes: Dust1_NS_Contour 3
   18 2 [0.025_0.025]
   # x axis - utc time
   Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
@@ -367,7 +460,7 @@ PlotAxes: Dust1Contour 3
   Dust1@Mass g@kg^-^1 0 2 linear [_] {_}
 End
 
-PlotAxes: Tracer1Contour 3
+PlotAxes: Tracer1_NS_Contour 3
   18 2 [0.025_0.025]
   # x axis - utc time
   Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
@@ -377,7 +470,7 @@ PlotAxes: Tracer1Contour 3
   Tracer1@Mass g@kg^-^1 0 2 linear [_] {_}
 End
 
-PlotAxes: Dust2Contour 3
+PlotAxes: Dust2_NS_Contour 3
   18 2 [0.025_0.025]
   # x axis - utc time
   Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
@@ -387,7 +480,7 @@ PlotAxes: Dust2Contour 3
   Dust2@Mass g@kg^-^1 0 700 linear [_] {_}
 End
 
-PlotAxes: Tracer2Contour 3
+PlotAxes: Tracer2_NS_Contour 3
   18 2 [0.025_0.025]
   # x axis - utc time
   Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
@@ -396,3 +489,44 @@ PlotAxes: Tracer2Contour 3
   # z axis - dust1 mass
   Tracer2@Mass g@kg^-^1 0 700 linear [_] {_}
 End
+
+PlotAxes: Dust1_S_Contour 3
+  18 2 [0.025_0.025]
+  # x axis - utc time
+  Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
+  # y axis - height
+  Height km 0 10 linear [_] {_}
+  # z axis - dust1 mass
+  Dust1@Mass g@kg^-^1 0 2 linear [_] {_}
+End
+
+PlotAxes: Tracer1_S_Contour 3
+  18 2 [0.025_0.025]
+  # x axis - utc time
+  Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
+  # y axis - height
+  Height km 0 10 linear [_] {_}
+  # z axis - dust1 mass
+  Tracer1@Mass g@kg^-^1 0 2 linear [_] {_}
+End
+
+PlotAxes: Dust2_S_Contour 3
+  18 2 [0.025_0.025]
+  # x axis - utc time
+  Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
+  # y axis - height
+  Height km 0 10 linear [_] {_}
+  # z axis - dust1 mass
+  Dust2@Mass g@kg^-^1 0 700 linear [_] {_}
+End
+
+PlotAxes: Tracer2_S_Contour 3
+  18 2 [0.025_0.025]
+  # x axis - utc time
+  Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
+  # y axis - height
+  Height km 0 10 linear [_] {_}
+  # z axis - dust1 mass
+  Tracer2@Mass g@kg^-^1 0 700 linear [_] {_}
+End
+
