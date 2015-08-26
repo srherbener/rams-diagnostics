@@ -30,10 +30,13 @@ Ncases = length(CaseList);
 
   VarSets = {
     { 'hda_cloud_ot'    { 'cot' 'cot_all_cld'  } 'avg_cot'         }
-    { 'hda_cloud_mask'  { 'cloud_frac'  }        'avg_dom_cfrac'   }
-    { 'hda_inv_height'  { 'inv_height'  }        'avg_inv_height'  }
-
+    { 'hda_cloud_mask'  { 'cloud_frac'         } 'avg_dom_cfrac'   }
+    { 'hda_inv_height'  { 'inv_height'         } 'avg_inv_height'  }
     { 'hda_cloud_depth' { 'cdepth_all_cld'     } 'avg_cdepth'      }
+    { 'hda_cloud'       { 'cloud_c0p01'        } 'avg_cloud'       }
+    { 'hda_scbot'       { 'scbot'              } 'avg_scbot'       }
+    { 'hda_sctop'       { 'sctop'              } 'avg_sctop'       }
+
 %    { 'hda_lwp2cdepth'  { 'lwp2cdepth_all_cld' } 'avg_lwp2cdepth'  }
 
 %    { 'hda_theta'       { 'theta'              } 'avg_theta'       }
@@ -49,7 +52,6 @@ Ncases = length(CaseList);
 
 %    { 'hda_net_lw_flux' { 'lw_flux_all_cld'    } 'avg_net_lw_flux' }
 
-    { 'hda_cloud'       { 'cloud_c0p01'        } 'avg_cloud'       }
 %    { 'hda_cloud_diam'  { 'cloud_diam_c0p01'   } 'avg_cloud_diam'  }
 %    { 'hda_cloud_num'   { 'cloud_num_c0p01'    } 'avg_cloud_num'   }
     

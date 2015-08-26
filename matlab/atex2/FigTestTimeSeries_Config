@@ -100,6 +100,33 @@ Figure: Lwc 2
   LwcPanelS298 2
 End
 
+# inv height
+Figure: InvHeight 2
+  DummyCases
+  [2_1]
+  Plots/FigInvHeight.jpg
+  InvHeightPanelS293 1
+  InvHeightPanelS298 2
+End
+
+# Sc cloud top
+Figure: ScCloudTop 2
+  DummyCases
+  [2_1]
+  Plots/FigScCloudTop.jpg
+  ScCloudTopPanelS293 1
+  ScCloudTopPanelS298 2
+End
+
+# Sc cloud bottom
+Figure: ScCloudBot 2
+  DummyCases
+  [2_1]
+  Plots/FigScCloudBot.jpg
+  ScCloudBotPanelS293 1
+  ScCloudBotPanelS298 2
+End
+
 ############## PANELS ###################
 # CLOUD
 FigPanel: CmassPanelS293
@@ -245,6 +272,57 @@ End
 FigPanel: LwcPanelS298
   LwcPsetS298
   LwcAxes 1 1
+  none 5
+  PANEL:b@S298
+  none 10
+End
+
+# inv height
+FigPanel: InvHeightPanelS293
+  InvHeightPsetS293
+  InvHeightAxes 1 1
+  none 5
+  PANEL:b@S293
+  SouthWest 10
+End
+
+FigPanel: InvHeightPanelS298
+  InvHeightPsetS298
+  InvHeightAxes 1 1
+  none 5
+  PANEL:b@S298
+  none 10
+End
+
+# Sc cloud top
+FigPanel: ScCloudTopPanelS293
+  ScCloudTopPsetS293
+  ScCloudTopAxes 1 1
+  none 5
+  PANEL:b@S293
+  SouthWest 10
+End
+
+FigPanel: ScCloudTopPanelS298
+  ScCloudTopPsetS298
+  ScCloudTopAxes 1 1
+  none 5
+  PANEL:b@S298
+  none 10
+End
+
+# Sc cloud bottom
+FigPanel: ScCloudBotPanelS293
+  ScCloudBotPsetS293
+  ScCloudBotAxes 1 1
+  none 5
+  PANEL:b@S293
+  SouthWest 10
+End
+
+FigPanel: ScCloudBotPanelS298
+  ScCloudBotPsetS298
+  ScCloudBotAxes 1 1
   none 5
   PANEL:b@S298
   none 10
@@ -418,6 +496,63 @@ PlotSet: LwcPsetS298 line 6
   LwcLine z.atex.ccn1600.sst298 C1600 2 brown     - 0
 End
 
+# lwc
+PlotSet: InvHeightPsetS293 line 6
+  InvHeightLine z.atex.ccn0050.sst293 C0050 2 black     - 0
+  InvHeightLine z.atex.ccn0100.sst293 C0100 2 blue      - 0
+  InvHeightLine z.atex.ccn0200.sst293 C0200 2 green     - 0
+  InvHeightLine z.atex.ccn0400.sst293 C0400 2 yellow    - 0
+  InvHeightLine z.atex.ccn0800.sst293 C0800 2 orangered - 0
+  InvHeightLine z.atex.ccn1600.sst293 C1600 2 brown     - 0
+End
+
+PlotSet: InvHeightPsetS298 line 6
+  InvHeightLine z.atex.ccn0050.sst298 C0050 2 black     - 0
+  InvHeightLine z.atex.ccn0100.sst298 C0100 2 blue      - 0
+  InvHeightLine z.atex.ccn0200.sst298 C0200 2 green     - 0
+  InvHeightLine z.atex.ccn0400.sst298 C0400 2 yellow    - 0
+  InvHeightLine z.atex.ccn0800.sst298 C0800 2 orangered - 0
+  InvHeightLine z.atex.ccn1600.sst298 C1600 2 brown     - 0
+End
+
+# Sc cloud top
+PlotSet: ScCloudTopPsetS293 line 6
+  ScCloudTopLine z.atex.ccn0050.sst293 C0050 2 black     - 0
+  ScCloudTopLine z.atex.ccn0100.sst293 C0100 2 blue      - 0
+  ScCloudTopLine z.atex.ccn0200.sst293 C0200 2 green     - 0
+  ScCloudTopLine z.atex.ccn0400.sst293 C0400 2 yellow    - 0
+  ScCloudTopLine z.atex.ccn0800.sst293 C0800 2 orangered - 0
+  ScCloudTopLine z.atex.ccn1600.sst293 C1600 2 brown     - 0
+End
+
+PlotSet: ScCloudTopPsetS298 line 6
+  ScCloudTopLine z.atex.ccn0050.sst298 C0050 2 black     - 0
+  ScCloudTopLine z.atex.ccn0100.sst298 C0100 2 blue      - 0
+  ScCloudTopLine z.atex.ccn0200.sst298 C0200 2 green     - 0
+  ScCloudTopLine z.atex.ccn0400.sst298 C0400 2 yellow    - 0
+  ScCloudTopLine z.atex.ccn0800.sst298 C0800 2 orangered - 0
+  ScCloudTopLine z.atex.ccn1600.sst298 C1600 2 brown     - 0
+End
+
+# Sc cloud bot
+PlotSet: ScCloudBotPsetS293 line 6
+  ScCloudBotLine z.atex.ccn0050.sst293 C0050 2 black     - 0
+  ScCloudBotLine z.atex.ccn0100.sst293 C0100 2 blue      - 0
+  ScCloudBotLine z.atex.ccn0200.sst293 C0200 2 green     - 0
+  ScCloudBotLine z.atex.ccn0400.sst293 C0400 2 yellow    - 0
+  ScCloudBotLine z.atex.ccn0800.sst293 C0800 2 orangered - 0
+  ScCloudBotLine z.atex.ccn1600.sst293 C1600 2 brown     - 0
+End
+
+PlotSet: ScCloudBotPsetS298 line 6
+  ScCloudBotLine z.atex.ccn0050.sst298 C0050 2 black     - 0
+  ScCloudBotLine z.atex.ccn0100.sst298 C0100 2 blue      - 0
+  ScCloudBotLine z.atex.ccn0200.sst298 C0200 2 green     - 0
+  ScCloudBotLine z.atex.ccn0400.sst298 C0400 2 yellow    - 0
+  ScCloudBotLine z.atex.ccn0800.sst298 C0800 2 orangered - 0
+  ScCloudBotLine z.atex.ccn1600.sst298 C1600 2 brown     - 0
+End
+
 ############# PLOT DATA ##############
 # CLOUD
 PlotData: CloudMassLine 2
@@ -486,6 +621,30 @@ PlotData: LwcLine 2
   # y - lwp/cdepth (kg/kg), multiply by 1000 to get g/kg
   #     assumes density of water is 1000 kg/m3, and density of air is 1 kg/m3
   /lwp2cdepth_all_cld_avg  DIAGS/avg_lwp2cdepth_<CASE>.h5 @ 1000 0
+End
+
+# inv height
+PlotData: InvHeightLine 2
+  # x - sim time in hours
+  /t_coords        DIAGS/avg_inv_height_<CASE>.h5 @ 1 0
+  # y - inversion height, multiply by 1e-3 to get km
+  /inv_height_avg  DIAGS/avg_inv_height_<CASE>.h5 @ 1e-3 0
+End
+
+# Sc cloud top
+PlotData: ScCloudTopLine 2
+  # x - sim time in hours
+  /t_coords  DIAGS/avg_sctop_<CASE>.h5 @ 1 0
+  # y - inversion height, multiply by 1e-3 to get km
+  /sctop_avg DIAGS/avg_sctop_<CASE>.h5 @ 1e-3 0
+End
+
+# Sc cloud bottom
+PlotData: ScCloudBotLine 2
+  # x - sim time in hours
+  /t_coords  DIAGS/avg_scbot_<CASE>.h5 @ 1 0
+  # y - inversion height, multiply by 1e-3 to get km
+  /scbot_avg DIAGS/avg_scbot_<CASE>.h5 @ 1e-3 0
 End
 
 ############ PLOT AXES ###############
@@ -564,5 +723,32 @@ PlotAxes: LwcAxes 2
   Sim@Time    h 0   50 linear [_] {_}
   # y - cloud mixing ratio
   LWC g@kg^-^1 0.1 0.5 linear [_] {_}
+End
+
+# inv height
+PlotAxes: InvHeightAxes 2
+  18 2 [0.025_0.025]
+  # x - sim time
+  Sim@Time    h 0   50 linear [_] {_}
+  # y - inversion height
+  Z_i_n_v km 0 4 linear [_] {_}
+End
+
+# Sc cloud top
+PlotAxes: ScCloudTopAxes 2
+  18 2 [0.025_0.025]
+  # x - sim time
+  Sim@Time    h 0   50 linear [_] {_}
+  # y - inversion height
+  Z_t km 0 4 linear [_] {_}
+End
+
+# Sc cloud bottom
+PlotAxes: ScCloudBotAxes 2
+  18 2 [0.025_0.025]
+  # x - sim time
+  Sim@Time    h 0   50 linear [_] {_}
+  # y - inversion height
+  Z_b km 0 4 linear [_] {_}
 End
 
