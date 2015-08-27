@@ -9,6 +9,7 @@ SCRIPTS = \
   $(DEST)/GenDomAvgTseries.m \
   $(DEST)/GenEqMeasTseries.m \
   $(DEST)/Gen2dHovmoller.m \
+  $(DEST)/GenMeanHydroParams.m \
   $(DEST)/ExtractSampleProfiles.m \
   $(DEST)/ReadTogaCoareSound.m \
   $(DEST)/TogaCoareToRamsSound.m \
