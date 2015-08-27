@@ -163,7 +163,7 @@ End
 FigPanel: EqMeasPanel
   EqMeasPset
   EqMeasAxes 0 1
-  none 5
+  y 5
   PANEL:a@Eq@Measurement@@@@@@@@@@<CASE>
   SouthEast 12
 End
@@ -171,7 +171,7 @@ End
 FigPanel: ThfCompPanel
   ThfCompPset
   ThfCompAxes 0 1
-  none 5
+  y 5
   PANEL:b@THF@Components
   NorthEast 12
 End
@@ -179,7 +179,7 @@ End
 FigPanel: QradCompPanel
   QradCompPset
   QradCompAxes 1 1
-  none 5
+  y 5
   PANEL:c@Q_r_a_d@Components
   NorthEast 12
 End
@@ -187,7 +187,7 @@ End
 FigPanel: AvgPwPanel
   AvgPwPset
   AvgPwAxes 1 1
-  none 5
+  y 5
   Average@PW
   SouthEast 10
 End

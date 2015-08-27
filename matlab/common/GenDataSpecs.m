@@ -6,6 +6,15 @@ function [ DataSpecs, LegText, DSokay ] = GenDataSpecs(Config, FigCase, i_panel,
   Flength  = Config.FigPanels(i_panel).Flength;
   Ndsets   = Config.PlotSets(i_pset).Ndsets;
 
+  % Figure out which data sets (X, Y, Z) are to be smoothed
+  % Smooth is a string that specifies which data sets to operate on.
+  %   'xyz' -> smooth x y and z sets
+  %   'xz'  -> smooth x and z, but not y
+  %   'y'   -> smooth only y
+  Xsmooth = ~isempty(regexp(Smooth,'x'));
+  Ysmooth = ~isempty(regexp(Smooth,'y'));
+  Zsmooth = ~isempty(regexp(Smooth,'z'));
+
   DSokay = 1;
 
   for i_dset = 1:Ndsets
@@ -42,13 +51,13 @@ function [ DataSpecs, LegText, DSokay ] = GenDataSpecs(Config, FigCase, i_panel,
     Nvars = Config.PlotData(i_pdata).Nvars;
 
     if (Nvars >= 1)
-      DataSpecs(i_dset).Xdata = ReadProcessVarData(Config.PlotData(i_pdata).Vars(1), Case, Smooth, Flength, UndefVal, Indent);
+      DataSpecs(i_dset).Xdata = ReadProcessVarData(Config.PlotData(i_pdata).Vars(1), Case, Xsmooth, Flength, UndefVal, Indent);
     end
     if (Nvars >= 2)
-      DataSpecs(i_dset).Ydata = ReadProcessVarData(Config.PlotData(i_pdata).Vars(2), Case, Smooth, Flength, UndefVal, Indent);
+      DataSpecs(i_dset).Ydata = ReadProcessVarData(Config.PlotData(i_pdata).Vars(2), Case, Ysmooth, Flength, UndefVal, Indent);
     end
     if (Nvars >= 3)
-      DataSpecs(i_dset).Zdata = ReadProcessVarData(Config.PlotData(i_pdata).Vars(3), Case, Smooth, Flength, UndefVal, Indent);
+      DataSpecs(i_dset).Zdata = ReadProcessVarData(Config.PlotData(i_pdata).Vars(3), Case, Zsmooth, Flength, UndefVal, Indent);
     end
   end
 end
@@ -80,7 +89,7 @@ function [ VarData ] = ReadProcessVarData( Var, Case, Smooth, Flength, UndefVal,
     %    undefined values set to nan
     VarData = (VarData .* Var.Scale) + Var.Offset;
     VarData(VarData == UndefVal) = nan;
-    if (strcmp(Smooth, 'x') || strcmp(Smooth, 'xy'))
+    if (Smooth)
       VarData = SmoothFillTseries(VarData, length(VarData), Flength);
     end
 
