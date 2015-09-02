@@ -128,11 +128,13 @@ End
 
 ########### CASES ####################
 
-CaseSet: RceCases 4
+CaseSet: RceCases 6
   RCE_S298
   RCE_S300
   RCE_S302
   RCE_S300_SM
+  RCE_S300_UB5
+  RCE_S300_SM_PARM
 End
 
 CaseSet: RceExpCases 10
@@ -463,11 +465,13 @@ PlotSet: QradCompPset line 7
   TopSwupLine none TOP\_SWUP 2 orange  -- 0
 End
 
-PlotSet: AvgPwPset line 4
-  AvgPwLine  RCE_S298    S298    2 green    - 0
-  AvgPwLine  RCE_S300    S300    2 red      - 0
-  AvgPwLine  RCE_S302    S302    2 blue     - 0
-  AvgPwLine  RCE_S300_SM S300-SM 2 magenta  - 0
+PlotSet: AvgPwPset line 6
+  AvgPwLine  RCE_S298         S298         2 green    - 0
+  AvgPwLine  RCE_S300         S300         2 red      - 0
+  AvgPwLine  RCE_S302         S302         2 blue     - 0
+  AvgPwLine  RCE_S300_SM      S300-SM      2 magenta  - 0
+  AvgPwLine  RCE_S300_UB5     S300-UB5     2 cyan     - 0
+  AvgPwLine  RCE_S300_SM_PARM S300-SM-PARM 2 orange     - 0
 End
 
 PlotSet: AvgPwExpPset line 7

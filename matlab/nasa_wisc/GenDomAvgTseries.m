@@ -36,10 +36,13 @@ function [ ] = GenDomAvgTseries()
 %    { 'HDF5/RCE_EXP_S50LN_THIN/HDF5/vint_vapor-RCE_EXP_S50LN_THIN-AC-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE_EXP_S50LN_THIN' 'avg_precip_water' 'precip_water' }
 %    { 'HDF5/RCE_EXP_S50LN_SM/HDF5/vint_vapor-RCE_EXP_S50LN_SM-AC-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE_EXP_S50LN_SM' 'avg_precip_water' 'precip_water' }
 
-    { 'HDF5/RCE_S298/HDF5/vint_vapor-RCE_S298-AC-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE_S298' 'avg_precip_water' 'precip_water' }
-    { 'HDF5/RCE_S300/HDF5/vint_vapor-RCE_S300-AC-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE_S300' 'avg_precip_water' 'precip_water' }
-    { 'HDF5/RCE_S300_SM/HDF5/vint_vapor-RCE_S300_SM-AC-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE_S300_SM' 'avg_precip_water' 'precip_water' }
-    { 'HDF5/RCE_S302/HDF5/vint_vapor-RCE_S302-AC-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE_S302' 'avg_precip_water' 'precip_water' }
+%    { 'HDF5/RCE_S298/HDF5/vint_vapor-RCE_S298-AC-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE_S298' 'avg_precip_water' 'precip_water' }
+%    { 'HDF5/RCE_S300/HDF5/vint_vapor-RCE_S300-AC-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE_S300' 'avg_precip_water' 'precip_water' }
+%    { 'HDF5/RCE_S300_SM/HDF5/vint_vapor-RCE_S300_SM-AC-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE_S300_SM' 'avg_precip_water' 'precip_water' }
+%    { 'HDF5/RCE_S302/HDF5/vint_vapor-RCE_S302-AC-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE_S302' 'avg_precip_water' 'precip_water' }
+
+    { 'HDF5/RCE_S300_UB5/HDF5/vint_vapor-RCE_S300_UB5-AC-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE_S300_UB5' 'avg_precip_water' 'precip_water' }
+    { 'HDF5/RCE_S300_SM_PARM/HDF5/vint_vapor-RCE_S300_SM_PARM-AC-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE_S300_SM_PARM' 'avg_precip_water' 'precip_water' }
     };
   Nset = length(VarSets);
 

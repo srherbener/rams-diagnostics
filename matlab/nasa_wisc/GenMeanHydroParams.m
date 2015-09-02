@@ -11,9 +11,81 @@ function [ ] = GenMeanHydroParams()
 
   Case = 'RCE_S300';  % 2 moment case
 
-  % mix_ratio_file mix_ratio_dataset number_conc_file number_conc_dataset
-  VarSets = {
-    { 1 'HDF5/TsAveragedData/hda_cloud_0p01_<CASE>.h5' '/hda_cloud' 'HDF5/TsAveragedData/hda_cloud_num_0p01_<CASE>.h5' '/hda_cloud_num' 'avg_param_cloud' '/cloud' }
+  % input_file input_dataset output_file output_dataset hydrometeor_index apply_volume_density_weighting
+  VarSets = ...
+    {
+      % CLOUD
+      { 'HDF5/TsAveragedData/hda_cloud_0p01_<CASE>.h5'      '/hda_cloud'      'DIAGS/avg_cloud_<CASE>.h5'      '/avg_cloud'      1 'hda' }
+      { 'HDF5/TsAveragedData/hda_cloud_num_0p01_<CASE>.h5'  '/hda_cloud_num'  'DIAGS/avg_cloud_num_<CASE>.h5'  '/avg_cloud_num'  1 'hda' }
+      { 'HDF5/TsAveragedData/hda_cloud_diam_0p01_<CASE>.h5' '/hda_cloud_diam' 'DIAGS/avg_cloud_diam_<CASE>.h5' '/avg_cloud_diam' 0 'hda' }
+
+      { 'HDF5/TsAveragedData/hist_cloud_0p01_<CASE>.h5'      '/hist_cloud'      'DIAGS/havg_cloud_<CASE>.h5'      '/avg_cloud'      1 'hist_log' }
+      { 'HDF5/TsAveragedData/hist_cloud_num_0p01_<CASE>.h5'  '/hist_cloud_num'  'DIAGS/havg_cloud_num_<CASE>.h5'  '/avg_cloud_num'  1 'hist_log' }
+      { 'HDF5/TsAveragedData/hist_cloud_diam_0p01_<CASE>.h5' '/hist_cloud_diam' 'DIAGS/havg_cloud_diam_<CASE>.h5' '/avg_cloud_diam' 0 'hist_log' }
+  
+      % DRIZZLE
+      { 'HDF5/TsAveragedData/hda_driz_0p01_<CASE>.h5'      '/hda_driz'      'DIAGS/avg_driz_<CASE>.h5'      '/avg_driz'      1 'hda' }
+      { 'HDF5/TsAveragedData/hda_driz_num_0p01_<CASE>.h5'  '/hda_driz_num'  'DIAGS/avg_driz_num_<CASE>.h5'  '/avg_driz_num'  1 'hda' }
+      { 'HDF5/TsAveragedData/hda_driz_diam_0p01_<CASE>.h5' '/hda_driz_diam' 'DIAGS/avg_driz_diam_<CASE>.h5' '/avg_driz_diam' 0 'hda' }
+  
+      { 'HDF5/TsAveragedData/hist_driz_0p01_<CASE>.h5'      '/hist_driz'      'DIAGS/havg_driz_<CASE>.h5'      '/avg_driz'      1 'hist_log' }
+      { 'HDF5/TsAveragedData/hist_driz_num_0p01_<CASE>.h5'  '/hist_driz_num'  'DIAGS/havg_driz_num_<CASE>.h5'  '/avg_driz_num'  1 'hist_log' }
+      { 'HDF5/TsAveragedData/hist_driz_diam_0p01_<CASE>.h5' '/hist_driz_diam' 'DIAGS/havg_driz_diam_<CASE>.h5' '/avg_driz_diam' 0 'hist_log' }
+  
+      % RAIN
+      { 'HDF5/TsAveragedData/hda_rain_0p01_<CASE>.h5'      '/hda_rain'      'DIAGS/avg_rain_<CASE>.h5'      '/avg_rain'      1 'hda' }
+      { 'HDF5/TsAveragedData/hda_rain_num_0p01_<CASE>.h5'  '/hda_rain_num'  'DIAGS/avg_rain_num_<CASE>.h5'  '/avg_rain_num'  1 'hda' }
+      { 'HDF5/TsAveragedData/hda_rain_diam_0p01_<CASE>.h5' '/hda_rain_diam' 'DIAGS/avg_rain_diam_<CASE>.h5' '/avg_rain_diam' 0 'hda' }
+  
+      { 'HDF5/TsAveragedData/hist_rain_0p01_<CASE>.h5'      '/hist_rain'      'DIAGS/havg_rain_<CASE>.h5'      '/avg_rain'      1 'hist_log' }
+      { 'HDF5/TsAveragedData/hist_rain_num_0p01_<CASE>.h5'  '/hist_rain_num'  'DIAGS/havg_rain_num_<CASE>.h5'  '/avg_rain_num'  1 'hist_log' }
+      { 'HDF5/TsAveragedData/hist_rain_diam_0p01_<CASE>.h5' '/hist_rain_diam' 'DIAGS/havg_rain_diam_<CASE>.h5' '/avg_rain_diam' 0 'hist_log' }
+  
+      % PRIS
+      { 'HDF5/TsAveragedData/hda_pris_0p01_<CASE>.h5'      '/hda_pris'      'DIAGS/avg_pris_<CASE>.h5'      '/avg_pris'      1 'hda' }
+      { 'HDF5/TsAveragedData/hda_pris_num_0p01_<CASE>.h5'  '/hda_pris_num'  'DIAGS/avg_pris_num_<CASE>.h5'  '/avg_pris_num'  1 'hda' }
+      { 'HDF5/TsAveragedData/hda_pris_diam_0p01_<CASE>.h5' '/hda_pris_diam' 'DIAGS/avg_pris_diam_<CASE>.h5' '/avg_pris_diam' 0 'hda' }
+  
+      { 'HDF5/TsAveragedData/hist_pris_0p01_<CASE>.h5'      '/hist_pris'      'DIAGS/havg_pris_<CASE>.h5'      '/avg_pris'      1 'hist_log' }
+      { 'HDF5/TsAveragedData/hist_pris_num_0p01_<CASE>.h5'  '/hist_pris_num'  'DIAGS/havg_pris_num_<CASE>.h5'  '/avg_pris_num'  1 'hist_log' }
+      { 'HDF5/TsAveragedData/hist_pris_diam_0p01_<CASE>.h5' '/hist_pris_diam' 'DIAGS/havg_pris_diam_<CASE>.h5' '/avg_pris_diam' 0 'hist_log' }
+  
+      % SNOW
+      { 'HDF5/TsAveragedData/hda_snow_0p01_<CASE>.h5'      '/hda_snow'      'DIAGS/avg_snow_<CASE>.h5'      '/avg_snow'      1 'hda' }
+      { 'HDF5/TsAveragedData/hda_snow_num_0p01_<CASE>.h5'  '/hda_snow_num'  'DIAGS/avg_snow_num_<CASE>.h5'  '/avg_snow_num'  1 'hda' }
+      { 'HDF5/TsAveragedData/hda_snow_diam_0p01_<CASE>.h5' '/hda_snow_diam' 'DIAGS/avg_snow_diam_<CASE>.h5' '/avg_snow_diam' 0 'hda' }
+  
+      { 'HDF5/TsAveragedData/hist_snow_0p01_<CASE>.h5'      '/hist_snow'      'DIAGS/havg_snow_<CASE>.h5'      '/avg_snow'      1 'hist_log' }
+      { 'HDF5/TsAveragedData/hist_snow_num_0p01_<CASE>.h5'  '/hist_snow_num'  'DIAGS/havg_snow_num_<CASE>.h5'  '/avg_snow_num'  1 'hist_log' }
+      { 'HDF5/TsAveragedData/hist_snow_diam_0p01_<CASE>.h5' '/hist_snow_diam' 'DIAGS/havg_snow_diam_<CASE>.h5' '/avg_snow_diam' 0 'hist_log' }
+  
+      % AGGREGATES
+      { 'HDF5/TsAveragedData/hda_aggr_0p01_<CASE>.h5'      '/hda_aggr'      'DIAGS/avg_aggr_<CASE>.h5'      '/avg_aggr'      1 'hda' }
+      { 'HDF5/TsAveragedData/hda_aggr_num_0p01_<CASE>.h5'  '/hda_aggr_num'  'DIAGS/avg_aggr_num_<CASE>.h5'  '/avg_aggr_num'  1 'hda' }
+      { 'HDF5/TsAveragedData/hda_aggr_diam_0p01_<CASE>.h5' '/hda_aggr_diam' 'DIAGS/avg_aggr_diam_<CASE>.h5' '/avg_aggr_diam' 0 'hda' }
+  
+      { 'HDF5/TsAveragedData/hist_aggr_0p01_<CASE>.h5'      '/hist_aggr'      'DIAGS/havg_aggr_<CASE>.h5'      '/avg_aggr'      1 'hist_log' }
+      { 'HDF5/TsAveragedData/hist_aggr_num_0p01_<CASE>.h5'  '/hist_aggr_num'  'DIAGS/havg_aggr_num_<CASE>.h5'  '/avg_aggr_num'  1 'hist_log' }
+      { 'HDF5/TsAveragedData/hist_aggr_diam_0p01_<CASE>.h5' '/hist_aggr_diam' 'DIAGS/havg_aggr_diam_<CASE>.h5' '/avg_aggr_diam' 0 'hist_log' }
+  
+      % GRAUPEL
+      { 'HDF5/TsAveragedData/hda_graup_0p01_<CASE>.h5'      '/hda_graup'      'DIAGS/avg_graup_<CASE>.h5'      '/avg_graup'      1 'hda' }
+      { 'HDF5/TsAveragedData/hda_graup_num_0p01_<CASE>.h5'  '/hda_graup_num'  'DIAGS/avg_graup_num_<CASE>.h5'  '/avg_graup_num'  1 'hda' }
+      { 'HDF5/TsAveragedData/hda_graup_diam_0p01_<CASE>.h5' '/hda_graup_diam' 'DIAGS/avg_graup_diam_<CASE>.h5' '/avg_graup_diam' 0 'hda' }
+  
+      { 'HDF5/TsAveragedData/hist_graup_0p01_<CASE>.h5'      '/hist_graup'      'DIAGS/havg_graup_<CASE>.h5'      '/avg_graup'      1 'hist_log' }
+      { 'HDF5/TsAveragedData/hist_graup_num_0p01_<CASE>.h5'  '/hist_graup_num'  'DIAGS/havg_graup_num_<CASE>.h5'  '/avg_graup_num'  1 'hist_log' }
+      { 'HDF5/TsAveragedData/hist_graup_diam_0p01_<CASE>.h5' '/hist_graup_diam' 'DIAGS/havg_graup_diam_<CASE>.h5' '/avg_graup_diam' 0 'hist_log' }
+  
+      % HAIL
+      { 'HDF5/TsAveragedData/hda_hail_0p01_<CASE>.h5'      '/hda_hail'      'DIAGS/avg_hail_<CASE>.h5'      '/avg_hail'      1 'hda' }
+      { 'HDF5/TsAveragedData/hda_hail_num_0p01_<CASE>.h5'  '/hda_hail_num'  'DIAGS/avg_hail_num_<CASE>.h5'  '/avg_hail_num'  1 'hda' }
+      { 'HDF5/TsAveragedData/hda_hail_diam_0p01_<CASE>.h5' '/hda_hail_diam' 'DIAGS/avg_hail_diam_<CASE>.h5' '/avg_hail_diam' 0 'hda' }
+
+      { 'HDF5/TsAveragedData/hist_hail_0p01_<CASE>.h5'      '/hist_hail'      'DIAGS/havg_hail_<CASE>.h5'      '/avg_hail'      1 'hist_log' }
+      { 'HDF5/TsAveragedData/hist_hail_num_0p01_<CASE>.h5'  '/hist_hail_num'  'DIAGS/havg_hail_num_<CASE>.h5'  '/avg_hail_num'  1 'hist_log' }
+      { 'HDF5/TsAveragedData/hist_hail_diam_0p01_<CASE>.h5' '/hist_hail_diam' 'DIAGS/havg_hail_diam_<CASE>.h5' '/avg_hail_diam' 0 'hist_log' }
+  
     };
   Nset = length(VarSets);
 
@@ -96,57 +168,6 @@ function [ ] = GenMeanHydroParams()
     0.039
     ];
 
-  % RAMS settings for power law mass-diameter relationships for hydrometeors
-  % 
-  % ! shape      cfmas   pwmas      cfvt    pwvt     dmb0      dmb1
-  % !---------------------------------------------------------------------- 
-  %     .5,      524.,     3.,    3173.,     2.,   2.e-6,   50.e-6,  & !cloud
-  %     .5,      524.,     3.,     149.,     .5,   .1e-3,    5.e-3,  & !rain
-  %   .179,     110.8,   2.91,  5.769e5,   1.88,  15.e-6,  125.e-6,  & !pris col
-  %   .179,  2.739e-3,   1.74,  188.146,   .933,   .1e-3,   10.e-3,  & !snow col
-  %     .5,      .496,    2.4,    3.084,     .2,   .1e-3,   10.e-3,  & !aggreg
-  %     .5,      157.,     3.,     93.3,     .5,   .1e-3,    5.e-3,  & !graup
-  %     .5,      471.,     3.,     161.,     .5,   .8e-3,   10.e-3,  & !hail 
-  %   .429,     .8854,    2.5,     316.,   1.01,      00,       00,  & !pris hex
-  %  .3183,   .377e-2,     2.,     316.,   1.01,      00,       00,  & !pris den
-  %  .1803,   1.23e-3,    1.8,  5.769e5,   1.88,      00,       00,  & !pris ndl
-  %     .5,     .1001,  2.256,   3.19e4,   1.66,      00,       00,  & !pris ros
-  %   .429,     .8854,    2.5,    4.836,    .25,      00,       00,  & !snow hex
-  %  .3183,   .377e-2,     2.,    4.836,    .25,      00,       00,  & !snow den
-  %  .1803,   1.23e-3,    1.8,  188.146,   .933,      00,       00,  & !snow ndl
-  %     .5,     .1001,  2.256,  1348.38,  1.241,      00,       00,  & !snow ros
-  %     .5,      524.,     3.,    3173.,     2.,  65.e-6,  100.e-6/    !drizzle
-  %  
-  % Use pris col and snow den habits
-  %   1 cloud
-  %   2 rain
-  %   3 pris
-  %   4 snow
-  %   5 aggregates
-  %   6 grapel
-  %   7 hail
-  %   8 drizzle
-  Coeffs = [
-    524.0
-    524.0
-    110.8
-      0.377e-2
-      0.496
-    157.0
-    471.0
-      0.8854
-    ];
-  Powers = [
-    3.0
-    3.0
-    2.91
-    2.0
-    2.4
-    3.0
-    3.0
-    2.5
-    ];
-
   fprintf('***************************************************************\n');
   fprintf('Generating parameter averages:\n');
   fprintf('  Case: %s\n', Case);
@@ -154,94 +175,131 @@ function [ ] = GenMeanHydroParams()
 
 
   for iset = 1:Nset
-    Index      = VarSets{iset}{1};
-    MassFile   = regexprep(VarSets{iset}{2}, '<CASE>', Case);
-    MassVname  = VarSets{iset}{3};
-    NumFile    = regexprep(VarSets{iset}{4}, '<CASE>', Case);
-    NumVname   = VarSets{iset}{5};
-    OutFile    = sprintf('%s/%s_%s.h5', Ddir, VarSets{iset}{6}, Case);
-    OutVprefix = VarSets{iset}{7};
-
-    OutDiamVname = sprintf('%s_diam', OutVprefix);
-    OutNumVname  = sprintf('%s_num', OutVprefix);
-
-    OutDiamProfVname = sprintf('%s_prof', OutDiamVname);
-    OutNumProfVname = sprintf('%s_prof', OutNumVname);
-
-    Cf  = Coeffs(Index);
-    Pwr = Powers(Index);
-
-    fprintf('  Hydrometeor Index: %d\n', Index);
-    fprintf('    Coefficient: %f\n', Cf);
-    fprintf('    Power: %f\n', Pwr);
-    fprintf('\n');
+    InFile     = regexprep(VarSets{iset}{1}, '<CASE>', Case);
+    InVname    = VarSets{iset}{2};
+    OutFile    = regexprep(VarSets{iset}{3}, '<CASE>', Case);
+    OutVname   = VarSets{iset}{4};
+    UseWeights = VarSets{iset}{5};
+    InType     = VarSets{iset}{6};
 
     % Read in averages, format is (2,z,t) where
     %   (1,z,t) are the sums (per level)
     %   (2,z,t) are the counts (per level)
-    fprintf('  Reading: %s (%s)\n', MassFile, MassVname);
-    fprintf('  Reading: %s (%s)\n', NumFile, NumVname);
+    fprintf('  Reading (%s): %s (%s)\n', InType, InFile, InVname);
     fprintf('\n');
 
-    MDATA = squeeze(h5read(MassFile, MassVname));
-    NDATA = squeeze(h5read(NumFile, NumVname));
-    Z     = squeeze(h5read(NumFile, '/z_coords'));
+    HDATA = squeeze(h5read(InFile, InVname));
+    X     = squeeze(h5read(InFile, '/x_coords'));
+    Y     = squeeze(h5read(InFile, '/y_coords'));
+    Z     = squeeze(h5read(InFile, '/z_coords'));
+    T     = squeeze(h5read(InFile, '/t_coords'));
+    Nx    = length(X);
+    Nz    = length(Z);
+    Nt    = length(T);
 
-    MIXR  = squeeze(MDATA(1,:,:));  % sum of mass for each level and each time step
-    CONC  = squeeze(NDATA(1,:,:));  % sum of number concentration for each level and each time step
-    Nconc = squeeze(NDATA(2,:,:));  % count of selected grids that went into CONC
-
-    MIXR = MIXR .* 1e-3; % convert from g/kg to kg/kg
-
-    [ Nz, Nt ] = size(MIXR);
+    % Select all time points for now.
+    T1 = 1;
+    T2 = Nt;
 
     % Get stretched vertical grid spacing
     DeltaZ = Z(2:end) - Z(1:end-1);
     DeltaZ = [ DeltaZ(1) DeltaZ' ]';  % just repeat the lower delta for the first entry
 
-    % MIXR is kg/kg(air) and CONC is #/kg(air). The horizontal grid space is constant
-    % everywhere, but the vertical grid space varies. Also the density varies with height.
-    % In order to account for this create weights for averaging that are based on the
-    % relative amounts of air at each vertical level. The volume changes by a factor of
-    % DeltaZ(k)/DeltaZ(1) at each level, and the density changes by a factor of
+    % Mixing ratio is kg/kg(air) and number concentration is #/kg(air). The horizontal grid
+    % space is constant everywhere, but the vertical grid space varies. Also the density
+    % varies with height. In order to account for this create weights for averaging that
+    % are based on the relative amounts of air at each vertical level. The volume changes by
+    % a factor of DeltaZ(k)/DeltaZ(1) at each level, and the density changes by a factor of
     % Dens(k)/Dens(1) at each level. The overall factor is then:
     %
-    %     Factor(k) = [ DeltaZ(k) * Dens(k) ] / [ DeltaZ(1) * Dens(1) ]
+    %     Weights(k) = [ DeltaZ(k) * Dens(k) ] / [ DeltaZ(1) * Dens(1) ]
     %
-    % Create WEIGHTS array with Factor as first dimension repeated along Time as
-    % second dimension, that is (z,t). 
-    Factor = (DeltaZ .* Dens) ./ (DeltaZ(1) * Dens(1));
-    WEIGHTS = repmat(Factor, [ 1 Nt ]);
+    if (UseWeights == 1)
+      % using weights
+      WEIGHTS = (DeltaZ .* Dens) ./ (DeltaZ(1) * Dens(1));
+    else
+      % not using weights, set WEIGHTS to all ones
+      WEIGHTS = ones([ Nz 1 ]);
+    end
 
-    % The volume of grid cells and the density of air are constant for a given
-    % level, so don't apply the weights to get the profiles. But do apply weights
-    % For total domain averages.
-
-    % Assume power law for mass-diameter relationships. 
-    %  m = Cf * D ^ Pwr
+    % Calculate the averages. Understand three types of input of which all come
+    % runnign tsavg.
     %
-    %  D = ( m / Cf ) ^ (1/Pwr)
-    %    m = MIXR / CONC (average mass per particle, D will then be mean diameter)
+    %   'hda' -> horizontal domain average
+    %   'hist_lin' -> histogram with linear bin edges
+    %   'hist_log' -> histogram with logrithmic bin edges
     %
-    % MIXR, CONC, and Nconc are (z,t)
-    AVG_MASS = MIXR ./ CONC;
+    if (strcmp(InType, 'hda'))
+      % Horzontal domain averages
 
-    AVG_DIAM_PROF = ( AVG_MASS ./ Cf) .^ (1 / Pwr);
-    AVG_CONC_PROF = CONC ./ Nconc; 
+      % Input data is organized as (2,z,t), where first dimension is:
+      %     (1,z,t) -> sums
+      %     (2,z,t) -> counts
 
-    % Calculate average of domain mass by dividing the weighted sum of mixing ratio
-    % over the domain by the weighted sum of number concentration over the domain
-    % (as opposed to a weighted mean of mass calculated at every grid cell).
-    AVG_DOM_MASS = squeeze(sum((MIXR .* WEIGHTS), 1)) ./ squeeze(sum((CONC .* WEIGHTS), 1));
- 
-    AVG_DIAM = (AVG_DOM_MASS ./ Cf) .^ (1 / Pwr);
-    AVG_CONC  = squeeze(sum((CONC .* WEIGHTS), 1)) ./ squeeze(sum(WEIGHTS, 1));
+      % extract sum and count values, also select time range for averaging
+      SUM   = squeeze(HDATA(1,:,T1:T2));    % sum 
+      COUNT = squeeze(HDATA(2,:,T1:T2));  % count
+
+      % SUM and COUNT are both (z,t), sum up both of these across
+      % the time dimension yielding vectors of length Nz.
+      SUM   = sum(SUM,2);
+      COUNT = sum(COUNT,2);
+  
+      % The volume of grid cells and the density of air are constant for a given
+      % level, so don't apply the weights to get the profiles. But do apply weights
+      % for total domain averages.
+      %
+      % For total domain averages: divide the weighted average of SUM across all levels
+      % by weighted average of COUNT across all levels. This yields:
+      %
+      %    { sum(SUM * WEIGHTS) / sum( WEIGHTS) } / { sum(COUNT * WEIGHTS) / sum(WEIGHTS) }
+      %
+      % The sum(WEIGHTS) terms cancel, leaving:
+      %
+      %     sum(SUM * WEIGHTS) / sum(COUNT * WEIGHTS)
+      %
+      AVG_PROF = SUM ./ COUNT;
+      AVG_DOM = squeeze(sum(SUM .* WEIGHTS)) / squeeze(sum(COUNT .* WEIGHTS));
+    elseif (strncmp(InType, 'hist', 4))
+      % Histograms
+
+      % Input data is organized as (x,z,t) where x contains the bin values
+      %
+      % If have logrithmic bin values, do the averaging on the logrithm of the
+      % bin values and after the averaging take the anit-logrithm for the result.
+      %
+      if (strcmp(InType, 'hist_log'))
+        BINS = log10(X);
+      elseif (strcmp(InType, 'hist_lin'))
+        BINS = X;
+      end
+
+      % Sum up counts along the time dimension to get a vertical profile of histograms.
+      % Then do a weighted average along the vertical to get a single domain histogram.
+      %
+      % Use the fractional area with a parameter of 0.5 when reducing the histograms.
+      % This will produce the median value.
+      HIST_WEIGHTS = repmat(WEIGHTS', [ Nx 1 ]);
+      HIST_PROF = sum(HDATA,3);
+      HIST = sum((HIST_PROF .* HIST_WEIGHTS), 2) ./ sum(HIST_WEIGHTS, 2);
+
+      AVG_PROF = ReduceHists(HIST_PROF, 1, BINS, 'farea', 0.5);
+      AVG_DOM  = ReduceHists(HIST, 1, BINS, 'farea', 0.5);
+
+      % If the input type is 'hist_log', then the results in AVG_PROF and AVG_DOM
+      % are base 10 logarithm values. Convert these back to actual values.
+      if (strcmp(InType, 'hist_log'))
+        AVG_PROF = 10 .^ AVG_PROF;
+        AVG_DOM  = 10 ^ AVG_DOM;
+      end
+      
+    end
 
     % Output
-    fprintf('  Writing: %s (%s)\n', OutFile, OutDiamVname);
-    fprintf('  Writing: %s (%s)\n', OutFile, OutNumVname);
-    fprintf('  Writing: %s (%s)\n', OutFile, OutDiamProfVname);
-    fprintf('  Writing: %s (%s)\n', OutFile, OutNumProfVname);
+    OutProfVname = sprintf('%s_prof', OutVname);
+
+    fprintf('  Writing: %s (%s)\n', OutFile, OutVname);
+    fprintf('  Writing: %s (%s)\n', OutFile, OutProfVname);
     fprintf('\n');
 
     % Remove existing file so that subsequent create/write command will not
@@ -250,14 +308,12 @@ function [ ] = GenMeanHydroParams()
       delete(OutFile);
     end
 
-    h5create(OutFile, OutDiamVname, size(AVG_DIAM));
-    h5create(OutFile, OutNumVname, size(AVG_CONC));
-    h5create(OutFile, OutDiamProfVname, size(AVG_DIAM_PROF));
-    h5create(OutFile, OutNumProfVname, size(AVG_CONC_PROF));
+    h5create(OutFile, OutVname,     size(AVG_DOM));
+    h5create(OutFile, OutProfVname, size(AVG_PROF));
+    h5create(OutFile, '/z_coords',  size(Z));
 
-    h5write(OutFile, OutDiamVname, AVG_DIAM);
-    h5write(OutFile, OutNumVname, AVG_CONC);
-    h5write(OutFile, OutDiamProfVname, AVG_DIAM_PROF);
-    h5write(OutFile, OutNumProfVname, AVG_CONC_PROF);
+    h5write(OutFile, OutVname,     AVG_DOM);
+    h5write(OutFile, OutProfVname, AVG_PROF);
+    h5write(OutFile, '/z_coords',  Z);
   end
 end
