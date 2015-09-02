@@ -9,7 +9,8 @@ function [ ] = GenMeanHydroParams()
     mkdir(Ddir);
   end
 
-  Case = 'RCE_S300';  % 2 moment case
+%  Case = 'RCE_S300';  % 2 moment case
+  Case = 'RCE_S300_UB5';  % 2 moment case with stronger surface interaction
 
   % input_file input_dataset output_file output_dataset hydrometeor_index apply_volume_density_weighting
   VarSets = ...
@@ -199,6 +200,7 @@ function [ ] = GenMeanHydroParams()
 
     % Select all time points for now.
     T1 = 1;
+%    T1 = 50;
     T2 = Nt;
 
     % Get stretched vertical grid spacing
