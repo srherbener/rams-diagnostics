@@ -2,7 +2,7 @@ function [ ] = ExtractSampleProfile()
 %ExtractSampleProfile extract a time series of sampled vertical profiles
 
   CaseList = {
-        'TSD_SAL_DUST_TR'
+        'TSD_SAL_DUST'
         'TSD_NONSAL_DUST'
         };
        Nc = length(CaseList);

@@ -71,6 +71,14 @@ Figure: Dust2Tracer2_S 2
   Tracer2_S_Panel 2
 End
 
+Figure: SalDustTracer 2
+  DummyCases
+  [2_1]
+  Plots/FigSalDustTracer.jpg
+  SalDust_Panel 1
+  SalTracer_Panel 2
+End
+
 ########### CASES ####################
 CaseSet: DummyCases 1
   none
@@ -186,6 +194,22 @@ FigPanel: Tracer2_S_Panel
   Tracer2_S_Contour 1 1
   none 5
   PANEL:b@S:@Tracer@(ug@m^-^3)
+  none 12
+End
+
+FigPanel: SalDust_Panel
+  Dust1_S_Pset
+  Dust1_S_Contour 0 1
+  none 5
+  PANEL:a@SAL@Dust@(ug@m^-^3)
+  none 12
+End
+
+FigPanel: SalTracer_Panel
+  Tracer1_S_Pset
+  Tracer1_S_Contour 1 1
+  none 5
+  PANEL:b@SAL@Dust@Tracer@(ug@m^-^3)
   none 12
 End
 
@@ -364,41 +388,41 @@ End
 PlotData: Dust1_S_Contour 3
   # select all t, z from 0 to 10km -> 2:39
   # x - time
-  /t_coords      DIAGS/sp_dust1_TSD_SAL_DUST_TR.h5 (:)      2.7778e-4 -42
+  /t_coords      DIAGS/sp_dust1_TSD_SAL_DUST.h5 (:)      2.7778e-4 -42
   # y - height
-  /z_coords      DIAGS/sp_dust1_TSD_SAL_DUST_TR.h5 (2:39)        1e-3   0
+  /z_coords      DIAGS/sp_dust1_TSD_SAL_DUST.h5 (2:39)        1e-3   0
   # z - dust1 profile data (z,t)
-  /sp_dust1_mass DIAGS/sp_dust1_TSD_SAL_DUST_TR.h5 (2:39,:)         1   0
+  /sp_dust1_mass DIAGS/sp_dust1_TSD_SAL_DUST.h5 (2:39,:)         1   0
 End
 
 PlotData: Tracer1_S_Contour 3
   # select all t, z from 0 to 10km -> 2:39
   # x - time
-  /t_coords DIAGS/sp_tracer1_TSD_SAL_DUST_TR.h5 (:)      2.7778e-4 -42
+  /t_coords DIAGS/sp_tracer1_TSD_SAL_DUST.h5 (:)      2.7778e-4 -42
   # y - height
-  /z_coords DIAGS/sp_tracer1_TSD_SAL_DUST_TR.h5 (2:39)        1e-3   0
+  /z_coords DIAGS/sp_tracer1_TSD_SAL_DUST.h5 (2:39)        1e-3   0
   # z - tracer1 profile data (z,t)
-  /sp_tr3d1 DIAGS/sp_tracer1_TSD_SAL_DUST_TR.h5 (2:39,:)         1   0
+  /sp_tr3d1 DIAGS/sp_tracer1_TSD_SAL_DUST.h5 (2:39,:)         1   0
 End
 
 PlotData: Dust2_S_Contour 3
   # select all t, z from 0 to 10km -> 2:39
   # x - time
-  /t_coords      DIAGS/sp_dust2_TSD_SAL_DUST_TR.h5 (:)      2.7778e-4 -42
+  /t_coords      DIAGS/sp_dust2_TSD_SAL_DUST.h5 (:)      2.7778e-4 -42
   # y - height
-  /z_coords      DIAGS/sp_dust2_TSD_SAL_DUST_TR.h5 (2:39)        1e-3   0
+  /z_coords      DIAGS/sp_dust2_TSD_SAL_DUST.h5 (2:39)        1e-3   0
   # z - dust2 profile data (z,t)
-  /sp_dust2_mass DIAGS/sp_dust2_TSD_SAL_DUST_TR.h5 (2:39,:)         1   0
+  /sp_dust2_mass DIAGS/sp_dust2_TSD_SAL_DUST.h5 (2:39,:)         1   0
 End
 
 PlotData: Tracer2_S_Contour 3
   # select all t, z from 0 to 10km -> 2:39
   # x - time
-  /t_coords DIAGS/sp_tracer2_TSD_SAL_DUST_TR.h5 (:)      2.7778e-4 -42
+  /t_coords DIAGS/sp_tracer2_TSD_SAL_DUST.h5 (:)      2.7778e-4 -42
   # y - height
-  /z_coords DIAGS/sp_tracer2_TSD_SAL_DUST_TR.h5 (2:39)        1e-3   0
+  /z_coords DIAGS/sp_tracer2_TSD_SAL_DUST.h5 (2:39)        1e-3   0
   # z - tracer2 profile data (z,t)
-  /sp_tr3d2 DIAGS/sp_tracer2_TSD_SAL_DUST_TR.h5 (2:39,:)         1   0
+  /sp_tr3d2 DIAGS/sp_tracer2_TSD_SAL_DUST.h5 (2:39,:)         1   0
 End
 
 ############ PLOT AXES #################

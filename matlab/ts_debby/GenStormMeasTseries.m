@@ -14,7 +14,6 @@ function [ ] = GenStormMeasTseries()
     'TSD_SAL_NODUST'
     'TSD_NONSAL_DUST'
     'TSD_NONSAL_NODUST'
-    'TSD_SAL_DUST_TR'
     };
 
   Ncases = length(CaseList);
