@@ -126,6 +126,8 @@ sub ReadRevuConfigFile
 
   undef(%Config);
 
+  $Config{CFORMAT} = "new";
+
   open(CONFIG, "$ConfigFile") or die "Cannot open '$ConfigFile' for reading: $!";
   while (<CONFIG>)
     {
@@ -154,6 +156,10 @@ sub ReadRevuConfigFile
     elsif ($f[0] eq "Case:")
       {
       $Config{CASES}{$f[1]} = 1;
+      }
+    elsif ($f[0] eq "Cformat:")
+      {
+      $Config{CFORMAT} = $f[1];
       }
     elsif ($f[0] eq "Var:")
       {
