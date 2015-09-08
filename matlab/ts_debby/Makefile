@@ -22,6 +22,7 @@ SCRIPTS = \
   $(DEST)/PlotMaxWindAll.m \
   $(DEST)/PlotMinPressAll.m \
   $(DEST)/PlotTracksAll.m \
+  $(DEST)/PlotStormStruct.m \
   $(DEST)/TwoDimAnimation.m \
   $(DEST)/SetPath.m
 
