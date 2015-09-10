@@ -23,13 +23,12 @@ function [ ] = GenFsAverages()
 
   VarList = {
     %  Avg Var           File Name                          File Var Name
-    { 'max_wind'    'DIAGS/storm_meas_tseries_<CASE>.h5'    '/max_wind_fa'  }
-    { 'min_press'   'DIAGS/storm_meas_tseries_<CASE>.h5'    '/min_slp_fa'   }
+    { 'max_wind'    'DIAGS/storm_meas_tseries_<CASE>.h5'    '/max_wind_wm'  }
+    { 'min_press'   'DIAGS/storm_meas_tseries_<CASE>.h5'    '/min_slp_wm'   }
     { 'ike'         'DIAGS/storm_meas_tseries_<CASE>.h5'    '/ike'          }
-    { 'rmw'         'DIAGS/storm_meas_tseries_<CASE>.h5'    '/rmw_fa'       }
+    { 'rmw'         'DIAGS/storm_meas_tseries_<CASE>.h5'    '/rmw_wm'       }
 
-%    { 'avg_pcprate' 'DIAGS/ts_avg_pcprate'         '/avg_pcprate_1' }  % use filtered rates >= 1 mm/h
-%    { 'hda_pcprate' 'DIAGS/ts_avg_pcprate'         '/hda_pcprate_1' }  % use filtered rates >= 1 mm/h
+    { 'pcprate'     'DIAGS/storm_meas_tseries_<CASE>.h5'    '/pcprate_wm'   }
     };
 
   Nvars = length(VarList);

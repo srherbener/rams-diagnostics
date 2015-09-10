@@ -25,66 +25,100 @@ function [ ] = GenTsdHistMeas()
   MeasSets = {
     % storm speed measurements
     {
-      'Speed'
-      {
-        { 'hist_speed' '/speed' 'farea'  0.50 '/avg_speed_fa'     'ge' 0   }
-        { 'hist_speed' '/speed' 'wtmean'  0.0 '/avg_speed_wm'     'ge' 0   }
-        { 'hist_speed' '/speed' 'farea'  0.99 '/max_speed_fa'     'ge' 0   }
-  
-        { 'hist_speed10m' '/speed10m' 'farea'  0.50 '/avg_speed10m_fa'     'ge' 0   }
-        { 'hist_speed10m' '/speed10m' 'wtmean'  0.0 '/avg_speed10m_wm'     'ge' 0   }
-        { 'hist_speed10m' '/speed10m' 'farea'  0.99 '/max_speed10m_fa'     'ge' 0   }
-  
-        { 'hist_speed_t' '/speed_t' 'farea'  0.50 '/avg_speed_t_fa'     'ge' 0   }
-        { 'hist_speed_t' '/speed_t' 'wtmean'  0.0 '/avg_speed_t_wm'     'ge' 0   }
-        { 'hist_speed_t' '/speed_t' 'farea'  0.99 '/max_speed_t_fa'     'ge' 0   }
-  
-        { 'hist_speed_r' '/speed_r' 'farea'  0.50 '/avg_speed_r_fa'     'ge' 0   }
-        { 'hist_speed_r' '/speed_r' 'wtmean'  0.0 '/avg_speed_r_wm'     'ge' 0   }
-        { 'hist_speed_r' '/speed_r' 'farea'  0.99 '/max_speed_r_fa'     'ge' 0   }
-      }
-      'hist_meas_speed'
-    }
-  
-    % storm pressure measurements
+%      'Speed'
+%      {
+%        { 'hist_speed' '/speed' 'farea'  0.50 '/avg_speed_fa'     'ge' 0   }
+%        { 'hist_speed' '/speed' 'wtmean'  0.0 '/avg_speed_wm'     'ge' 0   }
+%        { 'hist_speed' '/speed' 'farea'  0.99 '/max_speed_fa'     'ge' 0   }
+%  
+%        { 'hist_speed10m' '/speed10m' 'farea'  0.50 '/avg_speed10m_fa'     'ge' 0   }
+%        { 'hist_speed10m' '/speed10m' 'wtmean'  0.0 '/avg_speed10m_wm'     'ge' 0   }
+%        { 'hist_speed10m' '/speed10m' 'farea'  0.99 '/max_speed10m_fa'     'ge' 0   }
+%  
+%        { 'hist_speed_t' '/speed_t' 'farea'  0.50 '/avg_speed_t_fa'     'ge' 0   }
+%        { 'hist_speed_t' '/speed_t' 'wtmean'  0.0 '/avg_speed_t_wm'     'ge' 0   }
+%        { 'hist_speed_t' '/speed_t' 'farea'  0.99 '/max_speed_t_fa'     'ge' 0   }
+%  
+%        { 'hist_speed_r' '/speed_r' 'farea'  0.50 '/avg_speed_r_fa'     'ge' 0   }
+%        { 'hist_speed_r' '/speed_r' 'wtmean'  0.0 '/avg_speed_r_wm'     'ge' 0   }
+%        { 'hist_speed_r' '/speed_r' 'farea'  0.99 '/max_speed_r_fa'     'ge' 0   }
+%      }
+%      'hist_meas_speed'
+%    }
+%  
+%    % storm pressure measurements
+%    {
+%      'Pressure'
+%      {
+%        { 'hist_press' '/press' 'farea'  0.50 '/avg_press_fa'     'ge' 0   }
+%        { 'hist_press' '/press' 'wtmean'  0.0 '/avg_press_wm'     'ge' 0   }
+%        { 'hist_press' '/press' 'farea'  0.01 '/min_press_fa'     'ge' 0   }
+%  
+%        { 'hist_sea_press' '/sea_press' 'farea'  0.50 '/avg_sea_press_fa'     'ge' 0   }
+%        { 'hist_sea_press' '/sea_press' 'wtmean'  0.0 '/avg_sea_press_wm'     'ge' 0   }
+%        { 'hist_sea_press' '/sea_press' 'farea'  0.01 '/min_sea_press_fa'     'ge' 0   }
+%      }
+%      'hist_meas_press'
+%    }
+%
+%    % precip rate measurements
+%    {
+%      'Precip Rate'
+%      {
+%        { 'hist_pcprate' '/pcprate' 'farea'  0.50 '/avg_pcprate_fa'     'ge' 0   }
+%        { 'hist_pcprate' '/pcprate' 'wtmean'  0.0 '/avg_pcprate_wm'     'ge' 0   }
+%        { 'hist_pcprate' '/pcprate' 'farea'  0.99 '/max_pcprate_fa'     'ge' 0   }
+%      }
+%      'hist_meas_pcprate'
+%    }
+%
+%    % vertical velocity measurements
+%    {
+%      'Vertical Velocity'
+%      {
+%        { 'hist_up' '/w' 'farea'  0.50 '/avg_updraft_fa'     'ge'  0.01   }
+%        { 'hist_up' '/w' 'wtmean'  0.0 '/avg_updraft_wm'     'ge'  0.01   }
+%        { 'hist_w'  '/w' 'farea'  0.99 '/max_updraft_fa'     'ge'  0.05   }
+%
+%        { 'hist_dn' '/w' 'farea'  0.50 '/avg_dndraft_fa'     'le' -0.01   }
+%        { 'hist_dn' '/w' 'wtmean'  0.0 '/avg_dndraft_wm'     'le' -0.01   }
+%        { 'hist_w'  '/w' 'farea'  0.01 '/max_dndraft_fa'     'le' -0.05   }
+%      }
+%      'hist_meas_w'
+%    }
+
+    % theta_e measurements
     {
-      'Pressure'
+      'Theta-E'
       {
-        { 'hist_press' '/press' 'farea'  0.50 '/avg_press_fa'     'ge' 0   }
-        { 'hist_press' '/press' 'wtmean'  0.0 '/avg_press_wm'     'ge' 0   }
-        { 'hist_press' '/press' 'farea'  0.01 '/min_press_fa'     'ge' 0   }
-  
-        { 'hist_sea_press' '/sea_press' 'farea'  0.50 '/avg_sea_press_fa'     'ge' 0   }
-        { 'hist_sea_press' '/sea_press' 'wtmean'  0.0 '/avg_sea_press_wm'     'ge' 0   }
-        { 'hist_sea_press' '/sea_press' 'farea'  0.01 '/min_sea_press_fa'     'ge' 0   }
+        { 'hist_theta_e' '/theta_e' 'farea'  0.50 '/avg_theta_e_fa'     'ge' 0   }
+        { 'hist_theta_e' '/theta_e' 'wtmean'  0.0 '/avg_theta_e_wm'     'ge' 0   }
+        { 'hist_theta_e' '/theta_e' 'farea'  0.99 '/max_theta_e_fa'     'ge' 0   }
       }
-      'hist_meas_press'
+      'hist_meas_theta_e'
     }
 
-    % precip rate measurements
+    % dust measurements
     {
-      'Precip Rate'
+      'Dust'
       {
-        { 'hist_pcprate' '/pcprate' 'farea'  0.50 '/avg_pcprate_fa'     'ge' 0   }
-        { 'hist_pcprate' '/pcprate' 'wtmean'  0.0 '/avg_pcprate_wm'     'ge' 0   }
-        { 'hist_pcprate' '/pcprate' 'farea'  0.99 '/max_pcprate_fa'     'ge' 0   }
-      }
-      'hist_meas_pcprate'
-    }
+        { 'hist_d1_mass' '/d1_mass' 'farea'  0.50 '/avg_d1_mass_fa'     'ge' 0   }
+        { 'hist_d1_mass' '/d1_mass' 'wtmean'  0.0 '/avg_d1_mass_wm'     'ge' 0   }
+        { 'hist_d1_mass' '/d1_mass' 'farea'  0.99 '/max_d1_mass_fa'     'ge' 0   }
 
-    % vertical velocity measurements
-    {
-      'Vertical Velocity'
-      {
-        { 'hist_up' '/w' 'farea'  0.50 '/avg_updraft_fa'     'ge'  0.01   }
-        { 'hist_up' '/w' 'wtmean'  0.0 '/avg_updraft_wm'     'ge'  0.01   }
-        { 'hist_w'  '/w' 'farea'  0.99 '/max_updraft_fa'     'ge'  0.05   }
+        { 'hist_d1_num' '/d1_num' 'farea'  0.50 '/avg_d1_num_fa'     'ge' 0   }
+        { 'hist_d1_num' '/d1_num' 'wtmean'  0.0 '/avg_d1_num_wm'     'ge' 0   }
+        { 'hist_d1_num' '/d1_num' 'farea'  0.99 '/max_d1_num_fa'     'ge' 0   }
 
-        { 'hist_dn' '/w' 'farea'  0.50 '/avg_dndraft_fa'     'le' -0.01   }
-        { 'hist_dn' '/w' 'wtmean'  0.0 '/avg_dndraft_wm'     'le' -0.01   }
-        { 'hist_w'  '/w' 'farea'  0.01 '/max_dndraft_fa'     'le' -0.05   }
+        { 'hist_d2_mass' '/d2_mass' 'farea'  0.50 '/avg_d2_mass_fa'     'ge' 0   }
+        { 'hist_d2_mass' '/d2_mass' 'wtmean'  0.0 '/avg_d2_mass_wm'     'ge' 0   }
+        { 'hist_d2_mass' '/d2_mass' 'farea'  0.99 '/max_d2_mass_fa'     'ge' 0   }
+
+        { 'hist_d2_num' '/d2_num' 'farea'  0.50 '/avg_d2_num_fa'     'ge' 0   }
+        { 'hist_d2_num' '/d2_num' 'wtmean'  0.0 '/avg_d2_num_wm'     'ge' 0   }
+        { 'hist_d2_num' '/d2_num' 'farea'  0.99 '/max_d2_num_fa'     'ge' 0   }
       }
-      'hist_meas_w'
+      'hist_meas_dust'
     }
 
 

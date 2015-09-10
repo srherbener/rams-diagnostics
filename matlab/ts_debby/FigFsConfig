@@ -1,0 +1,454 @@
+#
+# Factor separation figures
+#
+
+######### FIGURES ###################
+Figure: FacSepMaxWindSal 1
+  DummyCases
+  [1_1]
+  Plots/FigFsMaxWindSal.jpg
+  FsMaxWindPanelSal 1
+End
+
+Figure: FacSepIkeSal 1
+  DummyCases
+  [1_1]
+  Plots/FigFsIkeSal.jpg
+  FsIkePanelSal 1
+End
+
+Figure: FacSepMinPressSal 1
+  DummyCases
+  [1_1]
+  Plots/FigFsMinPressSal.jpg
+  FsMinPressPanelSal 1
+End
+  
+Figure: FacSepRmwSal 1
+  DummyCases
+  [1_1]
+  Plots/FigFsRmwSal.jpg
+  FsRmwPanelSal 1
+End
+  
+Figure: FacSepPrateSal 1
+  DummyCases
+  [1_1]
+  Plots/FigFsPrateSal.jpg
+  FsPratePanelSal 1
+End
+  
+
+Figure: FacSepMaxWindPreSal 1
+  DummyCases
+  [1_1]
+  Plots/FigFsMaxWindPreSal.jpg
+  FsMaxWindPanelPreSal 1
+End
+
+Figure: FacSepIkePreSal 1
+  DummyCases
+  [1_1]
+  Plots/FigFsIkePreSal.jpg
+  FsIkePanelPreSal 1
+End
+
+Figure: FacSepMinPressPreSal 1
+  DummyCases
+  [1_1]
+  Plots/FigFsMinPressPreSal.jpg
+  FsMinPressPanelPreSal 1
+End
+  
+Figure: FacSepRmwPreSal 1
+  DummyCases
+  [1_1]
+  Plots/FigFsRmwPreSal.jpg
+  FsRmwPanelPreSal 1
+End
+  
+Figure: FacSepPratePreSal 1
+  DummyCases
+  [1_1]
+  Plots/FigFsPratePreSal.jpg
+  FsPratePanelPreSal 1
+End
+  
+########### CASES ####################
+CaseSet: DummyCases 1
+  none
+End
+
+########### PANELS ####################
+FigPanel: FsMaxWindPanelSal
+  FsMaxWindPsetSal
+  FsMaxWindAxesSal 1 1
+  none 5
+  PANEL:a@Max@Wind
+  none 12
+End
+
+FigPanel: FsIkePanelSal
+  FsIkePsetSal
+  FsIkeAxesSal 1 1
+  none 5
+  PANEL:b@IKE
+  none 12
+End
+
+FigPanel: FsMinPressPanelSal
+  FsMinPressPsetSal
+  FsMinPressAxesSal 1 1
+  none 5
+  PANEL:c@Min@Pressure
+  none 12
+End
+
+FigPanel: FsRmwPanelSal
+  FsRmwPsetSal
+  FsRmwAxesSal 1 1
+  none 5
+  PANEL:d@RMW
+  none 12
+End
+
+FigPanel: FsPratePanelSal
+  FsPratePsetSal
+  FsPrateAxesSal 1 1
+  none 5
+  PANEL:d@Precip@Rate
+  none 12
+End
+
+FigPanel: FsMaxWindPanelPreSal
+  FsMaxWindPsetPreSal
+  FsMaxWindAxesPreSal 1 1
+  none 5
+  PANEL:a@Max@Wind
+  none 12
+End
+
+FigPanel: FsIkePanelPreSal
+  FsIkePsetPreSal
+  FsIkeAxesPreSal 1 1
+  none 5
+  PANEL:b@IKE
+  none 12
+End
+
+FigPanel: FsMinPressPanelPreSal
+  FsMinPressPsetPreSal
+  FsMinPressAxesPreSal 1 1
+  none 5
+  PANEL:c@Min@Pressure
+  none 12
+End
+
+FigPanel: FsRmwPanelPreSal
+  FsRmwPsetPreSal
+  FsRmwAxesPreSal 1 1
+  none 5
+  PANEL:d@RMW
+  none 12
+End
+
+FigPanel: FsPratePanelPreSal
+  FsPratePsetPreSal
+  FsPrateAxesPreSal 1 1
+  none 5
+  PANEL:d@Precip@Rate
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: FsMaxWindPsetSal bar:stacked 2
+  MaxWindFracBarSal none    none  2 dodgerblue   - 0
+  MaxWindIntBarSal  none    none  2 cyan    - 0
+End
+
+PlotSet: FsIkePsetSal bar:stacked 2
+  IkeFracBarSal none    none  2 dodgerblue   - 0
+  IkeIntBarSal  none    none  2 cyan   - 0
+End
+
+PlotSet: FsMinPressPsetSal bar:stacked 2
+  MinPressFracBarSal none    none  2 dodgerblue   - 0
+  MinPressIntBarSal  none    none  2 cyan   - 0
+End
+
+PlotSet: FsRmwPsetSal bar:stacked 2
+  RmwFracBarSal none    none  2 dodgerblue   - 0
+  RmwIntBarSal  none    none  2 cyan   - 0
+End
+
+PlotSet: FsPratePsetSal bar:stacked 2
+  PrateFracBarSal none    none  2 dodgerblue   - 0
+  PrateIntBarSal  none    none  2 cyan   - 0
+End
+
+PlotSet: FsMaxWindPsetPreSal bar:stacked 2
+  MaxWindFracBarPreSal none    none  2 dodgerblue   - 0
+  MaxWindIntBarPreSal  none    none  2 cyan    - 0
+End
+
+PlotSet: FsIkePsetPreSal bar:stacked 2
+  IkeFracBarPreSal none    none  2 dodgerblue   - 0
+  IkeIntBarPreSal  none    none  2 cyan   - 0
+End
+
+PlotSet: FsMinPressPsetPreSal bar:stacked 2
+  MinPressFracBarPreSal none    none  2 dodgerblue   - 0
+  MinPressIntBarPreSal  none    none  2 cyan   - 0
+End
+
+PlotSet: FsRmwPsetPreSal bar:stacked 2
+  RmwFracBarPreSal none    none  2 dodgerblue   - 0
+  RmwIntBarPreSal  none    none  2 cyan   - 0
+End
+
+PlotSet: FsPratePsetPreSal bar:stacked 2
+  PrateFracBarPreSal none    none  2 dodgerblue   - 0
+  PrateIntBarPreSal  none    none  2 cyan   - 0
+End
+
+############ PLOT DATA #################
+PlotData: MaxWindFracBarSal 2
+  # x data - dummy counter
+  dummy [1:4] @ 1 0
+  # y data - factor separation, max wind speed, fractional change
+  #          so multiply by 100 to get percent change
+  /s_max_wind_bar_frac_change DIAGS/fs_factors.h5 @ 100 0
+End
+
+PlotData: MaxWindIntBarSal 2
+  # x data - dummy counter
+  dummy [1:4] @ 1 0
+  # y data - factor separation, max wind speed, fractional change
+  #          so multiply by 100 to get percent change
+  /s_max_wind_bar_int DIAGS/fs_factors.h5 @ 100 0
+End
+
+PlotData: IkeFracBarSal 2
+  # x data - dummy counter
+  dummy [1:4] @ 1 0
+  # y data - factor separation, integrated kinetic energy, fractional change
+  #          so multiply by 100 to get percent change
+  /s_ike_bar_frac_change DIAGS/fs_factors.h5 @ 100 0
+End
+
+PlotData: IkeIntBarSal 2
+  # x data - dummy counter
+  dummy [1:4] @ 1 0
+  # y data - factor separation, integrated kinetic energy, fractional change
+  #          so multiply by 100 to get percent change
+  /s_ike_bar_int DIAGS/fs_factors.h5 @ 100 0
+End
+
+PlotData: MinPressFracBarSal 2
+  # x data - dummy counter
+  dummy [1:4] @ 1 0
+  # y data - factor separation, integrated kinetic energy, fractional change
+  #          so multiply by 100 to get percent change
+  /s_min_press_bar_frac_change DIAGS/fs_factors.h5 @ 100 0
+End
+
+PlotData: MinPressIntBarSal 2
+  # x data - dummy counter
+  dummy [1:4] @ 1 0
+  # y data - factor separation, integrated kinetic energy, fractional change
+  #          so multiply by 100 to get percent change
+  /s_min_press_bar_int DIAGS/fs_factors.h5 @ 100 0
+End
+
+PlotData: RmwFracBarSal 2
+  # x data - dummy counter
+  dummy [1:4] @ 1 0
+  # y data - factor separation, integrated kinetic energy, fractional change
+  #          so multiply by 100 to get percent change
+  /s_rmw_bar_frac_change DIAGS/fs_factors.h5 @ 100 0
+End
+
+PlotData: RmwIntBarSal 2
+  # x data - dummy counter
+  dummy [1:4] @ 1 0
+  # y data - factor separation, integrated kinetic energy, fractional change
+  #          so multiply by 100 to get percent change
+  /s_rmw_bar_int DIAGS/fs_factors.h5 @ 100 0
+End
+
+PlotData: PrateFracBarSal 2
+  # x data - dummy counter
+  dummy [1:4] @ 1 0
+  # y data - factor separation, integrated kinetic energy, fractional change
+  #          so multiply by 100 to get percent change
+  /s_pcprate_bar_frac_change DIAGS/fs_factors.h5 @ 100 0
+End
+
+PlotData: PrateIntBarSal 2
+  # x data - dummy counter
+  dummy [1:4] @ 1 0
+  # y data - factor separation, integrated kinetic energy, fractional change
+  #          so multiply by 100 to get percent change
+  /s_pcprate_bar_int DIAGS/fs_factors.h5 @ 100 0
+End
+
+PlotData: MaxWindFracBarPreSal 2
+  # x data - dummy counter
+  dummy [1:4] @ 1 0
+  # y data - factor separation, max wind speed, fractional change
+  #          so multiply by 100 to get percent change
+  /ps_max_wind_bar_frac_change DIAGS/fs_factors.h5 @ 100 0
+End
+
+PlotData: MaxWindIntBarPreSal 2
+  # x data - dummy counter
+  dummy [1:4] @ 1 0
+  # y data - factor separation, max wind speed, fractional change
+  #          so multiply by 100 to get percent change
+  /ps_max_wind_bar_int DIAGS/fs_factors.h5 @ 100 0
+End
+
+PlotData: IkeFracBarPreSal 2
+  # x data - dummy counter
+  dummy [1:4] @ 1 0
+  # y data - factor separation, integrated kinetic energy, fractional change
+  #          so multiply by 100 to get percent change
+  /ps_ike_bar_frac_change DIAGS/fs_factors.h5 @ 100 0
+End
+
+PlotData: IkeIntBarPreSal 2
+  # x data - dummy counter
+  dummy [1:4] @ 1 0
+  # y data - factor separation, integrated kinetic energy, fractional change
+  #          so multiply by 100 to get percent change
+  /ps_ike_bar_int DIAGS/fs_factors.h5 @ 100 0
+End
+
+PlotData: MinPressFracBarPreSal 2
+  # x data - dummy counter
+  dummy [1:4] @ 1 0
+  # y data - factor separation, integrated kinetic energy, fractional change
+  #          so multiply by 100 to get percent change
+  /ps_min_press_bar_frac_change DIAGS/fs_factors.h5 @ 100 0
+End
+
+PlotData: MinPressIntBarPreSal 2
+  # x data - dummy counter
+  dummy [1:4] @ 1 0
+  # y data - factor separation, integrated kinetic energy, fractional change
+  #          so multiply by 100 to get percent change
+  /ps_min_press_bar_int DIAGS/fs_factors.h5 @ 100 0
+End
+
+PlotData: RmwFracBarPreSal 2
+  # x data - dummy counter
+  dummy [1:4] @ 1 0
+  # y data - factor separation, integrated kinetic energy, fractional change
+  #          so multiply by 100 to get percent change
+  /ps_rmw_bar_frac_change DIAGS/fs_factors.h5 @ 100 0
+End
+
+PlotData: RmwIntBarPreSal 2
+  # x data - dummy counter
+  dummy [1:4] @ 1 0
+  # y data - factor separation, integrated kinetic energy, fractional change
+  #          so multiply by 100 to get percent change
+  /ps_rmw_bar_int DIAGS/fs_factors.h5 @ 100 0
+End
+
+PlotData: PrateFracBarPreSal 2
+  # x data - dummy counter
+  dummy [1:4] @ 1 0
+  # y data - factor separation, integrated kinetic energy, fractional change
+  #          so multiply by 100 to get percent change
+  /ps_pcprate_bar_frac_change DIAGS/fs_factors.h5 @ 100 0
+End
+
+PlotData: PrateIntBarPreSal 2
+  # x data - dummy counter
+  dummy [1:4] @ 1 0
+  # y data - factor separation, integrated kinetic energy, fractional change
+  #          so multiply by 100 to get percent change
+  /ps_pcprate_bar_int DIAGS/fs_factors.h5 @ 100 0
+End
+
+############ PLOT AXES #################
+PlotAxes: FsMaxWindAxesSal 2
+  18 2 [0.025_0.025]
+  # x axis - factors
+  Factor @ 0 5 linear [1_2_3_4] {'NS'_'ND'_'NSD'_'INT'}
+  # y axis - speed in m/s
+  Difference % -20 30 linear [_] {_}
+End
+
+PlotAxes: FsIkeAxesSal 2
+  18 2 [0.025_0.025]
+  # x axis - factors
+  Factor @ 0 5 linear [1_2_3_4] {'NS'_'ND'_'NSD'_'INT'}
+  # y axis - speed in m/s
+  Difference % -20 30 linear [_] {_}
+End
+
+PlotAxes: FsMinPressAxesSal 2
+  18 2 [0.025_0.025]
+  # x axis - factors
+  Factor @ 0 5 linear [1_2_3_4] {'NS'_'ND'_'NSD'_'INT'}
+  # y axis - speed in m/s
+  Difference % -0.5 0.5 linear [_] {_}
+End
+
+PlotAxes: FsRmwAxesSal 2
+  18 2 [0.025_0.025]
+  # x axis - factors
+  Factor @ 0 5 linear [1_2_3_4] {'NS'_'ND'_'NSD'_'INT'}
+  # y axis - speed in m/s
+  Difference % -50 50 linear [_] {_}
+End
+
+PlotAxes: FsPrateAxesSal 2
+  18 2 [0.025_0.025]
+  # x axis - factors
+  Factor @ 0 5 linear [1_2_3_4] {'NS'_'ND'_'NSD'_'INT'}
+  # y axis - speed in m/s
+  Difference % -50 50 linear [_] {_}
+End
+
+PlotAxes: FsMaxWindAxesPreSal 2
+  18 2 [0.025_0.025]
+  # x axis - factors
+  Factor @ 0 5 linear [1_2_3_4] {'NS'_'ND'_'NSD'_'INT'}
+  # y axis - speed in m/s
+  Difference % -20 30 linear [_] {_}
+End
+
+PlotAxes: FsIkeAxesPreSal 2
+  18 2 [0.025_0.025]
+  # x axis - factors
+  Factor @ 0 5 linear [1_2_3_4] {'NS'_'ND'_'NSD'_'INT'}
+  # y axis - speed in m/s
+  Difference % -20 30 linear [_] {_}
+End
+
+PlotAxes: FsMinPressAxesPreSal 2
+  18 2 [0.025_0.025]
+  # x axis - factors
+  Factor @ 0 5 linear [1_2_3_4] {'NS'_'ND'_'NSD'_'INT'}
+  # y axis - speed in m/s
+  Difference % -0.5 0.5 linear [_] {_}
+End
+
+PlotAxes: FsRmwAxesPreSal 2
+  18 2 [0.025_0.025]
+  # x axis - factors
+  Factor @ 0 5 linear [1_2_3_4] {'NS'_'ND'_'NSD'_'INT'}
+  # y axis - speed in m/s
+  Difference % -50 50 linear [_] {_}
+End
+
+PlotAxes: FsPrateAxesPreSal 2
+  18 2 [0.025_0.025]
+  # x axis - factors
+  Factor @ 0 5 linear [1_2_3_4] {'NS'_'ND'_'NSD'_'INT'}
+  # y axis - speed in m/s
+  Difference % -50 20 linear [_] {_}
+End

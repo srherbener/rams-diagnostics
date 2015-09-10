@@ -27,6 +27,7 @@ SCRIPTS = \
   $(DEST)/SetPath.m
 
 CONFIGS = \
+  $(DIAG_DIR)/FigFsConfig \
   $(DIAG_DIR)/FigureConfig
 
 #

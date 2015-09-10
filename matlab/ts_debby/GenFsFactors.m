@@ -47,11 +47,13 @@ function [ ] = GenFactSep()
     { 'ps_min_press'   'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_min_press' }
     { 'ps_ike'         'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_ike'       }
     { 'ps_rmw'         'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_rmw'       }
+    { 'ps_pcprate'     'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_pcprate'   }
 
     { 's_max_wind'     'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_max_wind'   }
     { 's_min_press'    'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_min_press'  }
     { 's_ike'          'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_ike'        }
     { 's_rmw'          'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_rmw'        }
+    { 's_pcprate'      'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_pcprate'    }
     };
 
   Nvars = length(VarList);

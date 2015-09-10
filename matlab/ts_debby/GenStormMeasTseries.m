@@ -42,6 +42,9 @@ function [ ] = GenStormMeasTseries()
     { 'rmw_wm'          'DIAGS/hist_meas_speed_<CASE>.h5'  '/avg_speed_t_wm'  3 '(R1:R2,Z1:Z2,:)'  'rmw' }
     { 'rmw_10m_fa'      'DIAGS/hist_meas_speed_<CASE>.h5'  '/avg_speed10m_fa' 2 '(R1:R2,:)'        'rmw' }
     { 'rmw_10m_wm'      'DIAGS/hist_meas_speed_<CASE>.h5'  '/avg_speed10m_wm' 2 '(R1:R2,:)'        'rmw' }
+
+    { 'pcprate_fa'      'DIAGS/hist_meas_pcprate_<CASE>.h5'  '/avg_pcprate_fa'  3 '(R1:R2,:)'  'max' }
+    { 'pcprate_wm'      'DIAGS/hist_meas_pcprate_<CASE>.h5'  '/avg_pcprate_wm'  3 '(R1:R2,:)'  'max' }
     };
 
   for icase = 1:Ncases
