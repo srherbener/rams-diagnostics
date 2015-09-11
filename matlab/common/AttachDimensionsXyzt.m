@@ -1,11 +1,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % AttachDimensionsXyzt()
 %
-% This routine will attach the x,y,z,t dimensions to the
-% given file and dataset. It is assumed that the dataset
-% is organized as (x,y,z,t).
+% This routine will attach the dimensions specified in DimOrder
+% to the given file and dataset.
 %
-function [] = AttachDimensionsXyzt(File, Dataset, Xname, Yname, Zname, Tname);
+function [] = AttachDimensionsXyzt(File, Dataset, DimOrder, Xname, Yname, Zname, Tname);
 
   DsInfo = h5info(File, Dataset);
   Ndims = length(DsInfo.Dataspace.Size);
@@ -22,15 +21,18 @@ function [] = AttachDimensionsXyzt(File, Dataset, Xname, Yname, Zname, Tname);
   % way. MATLAB is column-major, whereas C is used to write the HDF5
   % file making the file storage row-major.
   %
-  if (Ndims == 3)
-    H5DS.attach_scale(dset_id, x_id, 2);
-    H5DS.attach_scale(dset_id, y_id, 1);
-    H5DS.attach_scale(dset_id, t_id, 0);
-  elseif (Ndims == 4)
-    H5DS.attach_scale(dset_id, x_id, 3);
-    H5DS.attach_scale(dset_id, y_id, 2);
-    H5DS.attach_scale(dset_id, z_id, 1);
-    H5DS.attach_scale(dset_id, t_id, 0);
+  Ndims = length(DimOrder);
+  for i = Ndims:-1:1
+    switch(DimOrder{i})
+      case 'x'
+        H5DS.attach_scale(dset_id, x_id, Ndims-i);
+      case 'y'
+        H5DS.attach_scale(dset_id, y_id, Ndims-i);
+      case 'z'
+        H5DS.attach_scale(dset_id, z_id, Ndims-i);
+      case 't'
+        H5DS.attach_scale(dset_id, t_id, Ndims-i);
+    end
   end
 
   H5D.close(x_id);

@@ -16,6 +16,7 @@ SCRIPTS = \
   $(DEST)/GenNonSalRamsInfo.m \
   $(DEST)/GenNonSalRamsInit.m \
   $(DEST)/GenStormMeasTseries.m \
+  $(DEST)/GenStormXsections.m \
   $(DEST)/GenTsdHistMeas.m \
   $(DEST)/LocateSal.m \
   $(DEST)/PlotAeroProfs.m \

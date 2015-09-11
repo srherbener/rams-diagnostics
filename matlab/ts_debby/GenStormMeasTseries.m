@@ -28,23 +28,23 @@ function [ ] = GenStormMeasTseries()
 
   % Description of measurements
   MeasList = {
-    { 'min_slp_fa'  'DIAGS/hist_meas_press_<CASE>.h5' '/avg_sea_press_fa' 2 '(R1:R2,:)'      'min' }
-    { 'min_slp_wm'  'DIAGS/hist_meas_press_<CASE>.h5' '/avg_sea_press_wm' 2 '(R1:R2,:)'      'min' }
+    { 'min_slp_fa'  'DIAGS/hist_meas_press_<CASE>.h5' '/avg_sea_press_fa' 0 250 0 1 'min' }
+    { 'min_slp_wm'  'DIAGS/hist_meas_press_<CASE>.h5' '/avg_sea_press_wm' 0 250 0 1 'min' }
 
-    { 'max_wind_fa'     'DIAGS/hist_meas_speed_<CASE>.h5' '/avg_speed_t_fa'  3  '(R1:R2,Z1:Z2,:)' 'max' }
-    { 'max_wind_wm'     'DIAGS/hist_meas_speed_<CASE>.h5' '/avg_speed_t_wm'  3  '(R1:R2,Z1:Z2,:)' 'max' }
-    { 'max_wind_10m_fa' 'DIAGS/hist_meas_speed_<CASE>.h5' '/avg_speed10m_fa' 2  '(R1:R2,:)'      'max' }
-    { 'max_wind_10m_wm' 'DIAGS/hist_meas_speed_<CASE>.h5' '/avg_speed10m_wm' 2  '(R1:R2,:)'      'max' }
+    { 'max_wind_fa'     'DIAGS/hist_meas_speed_<CASE>.h5' '/avg_speed_t_fa'  0 250 0 1 'max' }
+    { 'max_wind_wm'     'DIAGS/hist_meas_speed_<CASE>.h5' '/avg_speed_t_wm'  0 250 0 1 'max' }
+    { 'max_wind_10m_fa' 'DIAGS/hist_meas_speed_<CASE>.h5' '/avg_speed10m_fa' 0 250 0 1 'max' }
+    { 'max_wind_10m_wm' 'DIAGS/hist_meas_speed_<CASE>.h5' '/avg_speed10m_wm' 0 250 0 1 'max' }
 
-    { 'ike'             'TsAveragedData/horiz_ke_<CASE>.h5' '/horiz_ke' 1  '(:)'      'na' }
+    { 'ike'             'TsAveragedData/horiz_ke_<CASE>.h5' '/horiz_ke' 0 250 0 1 'na' }
 
-    { 'rmw_fa'          'DIAGS/hist_meas_speed_<CASE>.h5'  '/avg_speed_t_fa'  3 '(R1:R2,Z1:Z2,:)'  'rmw' }
-    { 'rmw_wm'          'DIAGS/hist_meas_speed_<CASE>.h5'  '/avg_speed_t_wm'  3 '(R1:R2,Z1:Z2,:)'  'rmw' }
-    { 'rmw_10m_fa'      'DIAGS/hist_meas_speed_<CASE>.h5'  '/avg_speed10m_fa' 2 '(R1:R2,:)'        'rmw' }
-    { 'rmw_10m_wm'      'DIAGS/hist_meas_speed_<CASE>.h5'  '/avg_speed10m_wm' 2 '(R1:R2,:)'        'rmw' }
+    { 'rmw_fa'          'DIAGS/hist_meas_speed_<CASE>.h5'  '/avg_speed_t_fa'  0 250 0 1 'rmw' }
+    { 'rmw_wm'          'DIAGS/hist_meas_speed_<CASE>.h5'  '/avg_speed_t_wm'  0 250 0 1 'rmw' }
+    { 'rmw_10m_fa'      'DIAGS/hist_meas_speed_<CASE>.h5'  '/avg_speed10m_fa' 0 250 0 1 'rmw' }
+    { 'rmw_10m_wm'      'DIAGS/hist_meas_speed_<CASE>.h5'  '/avg_speed10m_wm' 0 250 0 1 'rmw' }
 
-    { 'pcprate_fa'      'DIAGS/hist_meas_pcprate_<CASE>.h5'  '/avg_pcprate_fa'  3 '(R1:R2,:)'  'max' }
-    { 'pcprate_wm'      'DIAGS/hist_meas_pcprate_<CASE>.h5'  '/avg_pcprate_wm'  3 '(R1:R2,:)'  'max' }
+    { 'pcprate_fa'      'DIAGS/hist_meas_pcprate_<CASE>.h5'  '/avg_pcprate_fa'  0 250 0 1 'max' }
+    { 'pcprate_wm'      'DIAGS/hist_meas_pcprate_<CASE>.h5'  '/avg_pcprate_wm'  0 250 0 1 'max' }
     };
 
   for icase = 1:Ncases
@@ -69,16 +69,20 @@ function [ ] = GenStormMeasTseries()
       Mname    = MeasList{imeas}{1};
       Mfile    = MeasList{imeas}{2};
       Mvname   = MeasList{imeas}{3};
-      Ndims    = MeasList{imeas}{4};
-      Mselect  = MeasList{imeas}{5};
-      Mmeas    = MeasList{imeas}{6};
+      Rmin     = MeasList{imeas}{4} .* 1000;  % convert km to m
+      Rmax     = MeasList{imeas}{5} .* 1000;  % convert km to m
+      Zmin     = MeasList{imeas}{6} .* 1000;  % convert km to m
+      Zmax     = MeasList{imeas}{7} .* 1000;  % convert km to m
+      Mmeas    = MeasList{imeas}{8};
 
       Mfile = regexprep(Mfile, '<CASE>', Case);
 
       fprintf('  Measurement: %s\n', Mname);
       fprintf('    Reading: %s (%s)\n', Mfile, Mvname);
-      fprintf('    Number of dimensions: %d\n', Ndims);
-      fprintf('    Selection spec: %s\n', Mselect);
+      fprintf('    Rmin: %.2f\n', Rmin);
+      fprintf('    Rmax: %.2f\n', Rmax);
+      fprintf('    Zmin: %.2f\n', Zmin);
+      fprintf('    Zmax: %.2f\n', Zmax);
       fprintf('    Measurement: %s\n', Mmeas);
       fprintf('\n');
 
@@ -87,19 +91,29 @@ function [ ] = GenStormMeasTseries()
       %    2D: (r,t)
       %    3D: (r,z,t)
       MDATA = squeeze(h5read(Mfile, Mvname));
-      X = squeeze(h5read(Mfile, '/x_coords'));
+      R = squeeze(h5read(Mfile, '/x_coords'));
       Y = squeeze(h5read(Mfile, '/y_coords'));
       Z = squeeze(h5read(Mfile, '/z_coords'));
       T = squeeze(h5read(Mfile, '/t_coords'));
 
-      Nx = length(X);
+      Nx = length(R);
       Ny = length(Y);
       Nz = length(Z);
       Nt = length(T);
 
-      % Apply the data selection
-      SelCmd = sprintf('squeeze(MDATA%s)', Mselect);
-      MDATA = eval(SelCmd);
+      R1 = find(R >= Rmin, 1, 'first');
+      R2 = find(R <= Rmax, 1, 'last');
+      Z1 = find(Z >= Zmin, 1, 'first');
+      Z2 = find(Z <= Zmax, 1, 'last');
+
+      % Grab the number of dimensions. When you have a vector (size is [ 1 n ] or [ n 1 ]),
+      % Ndims will be set to 2 when you really want it to be 1.
+      Ndims = ndims(MDATA);
+      if (Ndims == 2)
+        if ((size(MDATA,1) == 1) || (size(MDATA,2) == 1))
+          Ndims = 1
+        end
+      end
 
       % Reduce data to 1D time series using Mmeas.
       %  If data is 1D, then done
@@ -111,11 +125,11 @@ function [ ] = GenStormMeasTseries()
           if (ndims(MDATA) == 2)
              % 2D -> (r,t)
              %   M_TEST <- (r)
-             M_TEST = squeeze(MDATA(:,it));
+             M_TEST = squeeze(MDATA(R1:R2,it));
           elseif (ndims(MDATA) == 3)
              % 3D -> (r,z,t)
              %   M_TEST <- (r,z)
-             M_TEST = squeeze(MDATA(:,:,it));
+             M_TEST = squeeze(MDATA(R1:R2,Z1:Z2,it));
           end
 
           if (strcmp(Mmeas, 'min'))
@@ -130,7 +144,7 @@ function [ ] = GenStormMeasTseries()
               Tseries(it) = Val(1);
             elseif (strcmp(Mmeas, 'rmw'))
               [ Rind Zind ] = ind2sub(size(M_TEST), Ind(1));
-              Tseries(it) = X(Rind);
+              Tseries(it) = R(Rind);
             end
           end
         end

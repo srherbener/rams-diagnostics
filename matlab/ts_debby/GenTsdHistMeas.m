@@ -23,8 +23,8 @@ function [ ] = GenTsdHistMeas()
   %   where <measure_list> is one or more of:
   %     <file_prefix> <var_name> <reduction_method> <arg_for_reduction_method> <out_var_name> <select_op> <select_val>
   MeasSets = {
-    % storm speed measurements
-    {
+%    % storm speed measurements
+%    {
 %      'Speed'
 %      {
 %        { 'hist_speed' '/speed' 'farea'  0.50 '/avg_speed_fa'     'ge' 0   }
@@ -239,9 +239,10 @@ function [ ] = GenTsdHistMeas()
       CreateDimensionsXyzt(OutFile, X, Y, AllZ, T, Xname, Yname, Zname, Tname);
   
       % Attach dimensions to all variables
+      DimOrder = { 'x' 'y' 'z' 't' };
       for imeas = 1:Nmeas
         Vname = MeasList{imeas}{5};   % use the output var name
-        AttachDimensionsXyzt(OutFile, Vname, Xname, Yname, Zname, Tname);
+        AttachDimensionsXyzt(OutFile, Vname, DimOrder, Xname, Yname, Zname, Tname);
       end
 
       % Add COARDS annotations
