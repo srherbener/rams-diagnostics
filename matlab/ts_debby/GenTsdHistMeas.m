@@ -86,41 +86,161 @@ function [ ] = GenTsdHistMeas()
 %      }
 %      'hist_meas_w'
 %    }
+%
+%    % theta_e measurements
+%    {
+%      'Theta-E'
+%      {
+%        { 'hist_theta_e' '/theta_e' 'farea'  0.50 '/avg_theta_e_fa'     'ge' 0   }
+%        { 'hist_theta_e' '/theta_e' 'wtmean'  0.0 '/avg_theta_e_wm'     'ge' 0   }
+%        { 'hist_theta_e' '/theta_e' 'farea'  0.99 '/max_theta_e_fa'     'ge' 0   }
+%      }
+%      'hist_meas_theta_e'
+%    }
+%
+%    % dust measurements
+%    {
+%      'Dust'
+%      {
+%        { 'hist_d1_mass' '/d1_mass' 'farea'  0.50 '/avg_d1_mass_fa'     'ge' 0   }
+%        { 'hist_d1_mass' '/d1_mass' 'wtmean'  0.0 '/avg_d1_mass_wm'     'ge' 0   }
+%        { 'hist_d1_mass' '/d1_mass' 'farea'  0.99 '/max_d1_mass_fa'     'ge' 0   }
+%
+%        { 'hist_d1_num' '/d1_num' 'farea'  0.50 '/avg_d1_num_fa'     'ge' 0   }
+%        { 'hist_d1_num' '/d1_num' 'wtmean'  0.0 '/avg_d1_num_wm'     'ge' 0   }
+%        { 'hist_d1_num' '/d1_num' 'farea'  0.99 '/max_d1_num_fa'     'ge' 0   }
+%
+%        { 'hist_d2_mass' '/d2_mass' 'farea'  0.50 '/avg_d2_mass_fa'     'ge' 0   }
+%        { 'hist_d2_mass' '/d2_mass' 'wtmean'  0.0 '/avg_d2_mass_wm'     'ge' 0   }
+%        { 'hist_d2_mass' '/d2_mass' 'farea'  0.99 '/max_d2_mass_fa'     'ge' 0   }
+%
+%        { 'hist_d2_num' '/d2_num' 'farea'  0.50 '/avg_d2_num_fa'     'ge' 0   }
+%        { 'hist_d2_num' '/d2_num' 'wtmean'  0.0 '/avg_d2_num_wm'     'ge' 0   }
+%        { 'hist_d2_num' '/d2_num' 'farea'  0.99 '/max_d2_num_fa'     'ge' 0   }
+%      }
+%      'hist_meas_dust'
+%    }
 
-    % theta_e measurements
+    % cloud
     {
-      'Theta-E'
-      {
-        { 'hist_theta_e' '/theta_e' 'farea'  0.50 '/avg_theta_e_fa'     'ge' 0   }
-        { 'hist_theta_e' '/theta_e' 'wtmean'  0.0 '/avg_theta_e_wm'     'ge' 0   }
-        { 'hist_theta_e' '/theta_e' 'farea'  0.99 '/max_theta_e_fa'     'ge' 0   }
+      'Cloud'
+     {
+        { 'hist_cloud' '/cloud' 'farea'  0.50 '/avg_cloud_fa'     'ge' 0.01   }
+        { 'hist_cloud' '/cloud' 'wtmean'  0.0 '/avg_cloud_wm'     'ge' 0.01   }
+        { 'hist_cloud' '/cloud' 'farea'  0.99 '/max_cloud_fa'     'ge' 0.01   }
       }
-      'hist_meas_theta_e'
+      'hist_meas_cloud'
     }
 
-    % dust measurements
+    % rain
     {
-      'Dust'
-      {
-        { 'hist_d1_mass' '/d1_mass' 'farea'  0.50 '/avg_d1_mass_fa'     'ge' 0   }
-        { 'hist_d1_mass' '/d1_mass' 'wtmean'  0.0 '/avg_d1_mass_wm'     'ge' 0   }
-        { 'hist_d1_mass' '/d1_mass' 'farea'  0.99 '/max_d1_mass_fa'     'ge' 0   }
-
-        { 'hist_d1_num' '/d1_num' 'farea'  0.50 '/avg_d1_num_fa'     'ge' 0   }
-        { 'hist_d1_num' '/d1_num' 'wtmean'  0.0 '/avg_d1_num_wm'     'ge' 0   }
-        { 'hist_d1_num' '/d1_num' 'farea'  0.99 '/max_d1_num_fa'     'ge' 0   }
-
-        { 'hist_d2_mass' '/d2_mass' 'farea'  0.50 '/avg_d2_mass_fa'     'ge' 0   }
-        { 'hist_d2_mass' '/d2_mass' 'wtmean'  0.0 '/avg_d2_mass_wm'     'ge' 0   }
-        { 'hist_d2_mass' '/d2_mass' 'farea'  0.99 '/max_d2_mass_fa'     'ge' 0   }
-
-        { 'hist_d2_num' '/d2_num' 'farea'  0.50 '/avg_d2_num_fa'     'ge' 0   }
-        { 'hist_d2_num' '/d2_num' 'wtmean'  0.0 '/avg_d2_num_wm'     'ge' 0   }
-        { 'hist_d2_num' '/d2_num' 'farea'  0.99 '/max_d2_num_fa'     'ge' 0   }
+      'Rain'
+     {
+        { 'hist_rain' '/rain' 'farea'  0.50 '/avg_rain_fa'     'ge' 0.01   }
+        { 'hist_rain' '/rain' 'wtmean'  0.0 '/avg_rain_wm'     'ge' 0.01   }
+        { 'hist_rain' '/rain' 'farea'  0.99 '/max_rain_fa'     'ge' 0.01   }
       }
-      'hist_meas_dust'
+      'hist_meas_rain'
     }
 
+    % pristine
+    {
+      'Pristine'
+     {
+        { 'hist_pris' '/pris' 'farea'  0.50 '/avg_pris_fa'     'ge' 0.01   }
+        { 'hist_pris' '/pris' 'wtmean'  0.0 '/avg_pris_wm'     'ge' 0.01   }
+        { 'hist_pris' '/pris' 'farea'  0.99 '/max_pris_fa'     'ge' 0.01   }
+      }
+      'hist_meas_pris'
+    }
+
+    % snow
+    {
+      'Snow'
+     {
+        { 'hist_snow' '/snow' 'farea'  0.50 '/avg_snow_fa'     'ge' 0.01   }
+        { 'hist_snow' '/snow' 'wtmean'  0.0 '/avg_snow_wm'     'ge' 0.01   }
+        { 'hist_snow' '/snow' 'farea'  0.99 '/max_snow_fa'     'ge' 0.01   }
+      }
+      'hist_meas_snow'
+    }
+
+    % aggregates
+    {
+      'Aggregates'
+     {
+        { 'hist_aggr' '/aggr' 'farea'  0.50 '/avg_aggr_fa'     'ge' 0.01   }
+        { 'hist_aggr' '/aggr' 'wtmean'  0.0 '/avg_aggr_wm'     'ge' 0.01   }
+        { 'hist_aggr' '/aggr' 'farea'  0.99 '/max_aggr_fa'     'ge' 0.01   }
+      }
+      'hist_meas_aggr'
+    }
+
+    % graupel
+    {
+      'Graupel'
+     {
+        { 'hist_graup' '/graup' 'farea'  0.50 '/avg_graup_fa'     'ge' 0.01   }
+        { 'hist_graup' '/graup' 'wtmean'  0.0 '/avg_graup_wm'     'ge' 0.01   }
+        { 'hist_graup' '/graup' 'farea'  0.99 '/max_graup_fa'     'ge' 0.01   }
+      }
+      'hist_meas_graup'
+    }
+
+    % hail
+    {
+      'Hail'
+     {
+        { 'hist_hail' '/hail' 'farea'  0.50 '/avg_hail_fa'     'ge' 0.01   }
+        { 'hist_hail' '/hail' 'wtmean'  0.0 '/avg_hail_wm'     'ge' 0.01   }
+        { 'hist_hail' '/hail' 'farea'  0.99 '/max_hail_fa'     'ge' 0.01   }
+      }
+      'hist_meas_hail'
+    }
+
+    % cooling via latent heat of freezing
+    {
+      'LHF Cooling'
+     {
+        { 'hist_lhf_cool' '/lhf_cool' 'farea'  0.50 '/avg_lhf_cool_fa'     'le' 0   }
+        { 'hist_lhf_cool' '/lhf_cool' 'wtmean'  0.0 '/avg_lhf_cool_wm'     'le' 0   }
+        { 'hist_lhf_cool' '/lhf_cool' 'farea'  0.99 '/max_lhf_cool_fa'     'le' 0   }
+      }
+      'hist_meas_lhf_cool'
+    }
+
+    % heating via latent heat of freezing
+    {
+      'LHF Heating'
+     {
+        { 'hist_lhf_heat' '/lhf_heat' 'farea'  0.50 '/avg_lhf_heat_fa'     'ge' 0   }
+        { 'hist_lhf_heat' '/lhf_heat' 'wtmean'  0.0 '/avg_lhf_heat_wm'     'ge' 0   }
+        { 'hist_lhf_heat' '/lhf_heat' 'farea'  0.99 '/max_lhf_heat_fa'     'ge' 0   }
+      }
+      'hist_meas_lhf_heat'
+    }
+
+    % cooling via latent heat of vaporization
+    {
+      'LHV Cooling'
+     {
+        { 'hist_lhv_cool' '/lhv_cool' 'farea'  0.50 '/avg_lhv_cool_fa'     'le' 0   }
+        { 'hist_lhv_cool' '/lhv_cool' 'wtmean'  0.0 '/avg_lhv_cool_wm'     'le' 0   }
+        { 'hist_lhv_cool' '/lhv_cool' 'farea'  0.99 '/max_lhv_cool_fa'     'le' 0   }
+      }
+      'hist_meas_lhv_cool'
+    }
+
+    % heating via latent heat of vaporization
+    {
+      'LHV Heating'
+     {
+        { 'hist_lhv_heat' '/lhv_heat' 'farea'  0.50 '/avg_lhv_heat_fa'     'ge' 0   }
+        { 'hist_lhv_heat' '/lhv_heat' 'wtmean'  0.0 '/avg_lhv_heat_wm'     'ge' 0   }
+        { 'hist_lhv_heat' '/lhv_heat' 'farea'  0.99 '/max_lhv_heat_fa'     'ge' 0   }
+      }
+      'hist_meas_lhv_heat'
+    }
 
     };
 
