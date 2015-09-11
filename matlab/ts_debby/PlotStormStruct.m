@@ -20,15 +20,6 @@ function [ ] = PlotStormStruct()
    'NONSAL\_NODUST'
    };
 
-  % Two time periods:
-  %    Pre SAL: T = 10 to 30 h (after RI, before encounter SAL)
-  %        SAL: T = 40 to 60 h (during SAL)
-
-  PreSalTstart = 10;
-  PreSalTend   = 30;
-  SalTstart    = 40;
-  SalTend      = 60;
-
   % Trim down spatial range to focus on just the storm
   Zbot = 0;  % km
   Ztop = 10; % km
@@ -43,14 +34,13 @@ function [ ] = PlotStormStruct()
   DnClevs = [ -2:0.02:0 ];
 
   % Want azimuthally averaged tangential speed and vertical velocity for each panel
-  VtFileTemplate  = 'DIAGS/hist_meas_speed_<CASE>.h5';
-  VtVname = '/avg_speed_t_wm';
-
-  UpFileTemplate  = 'DIAGS/hist_meas_w_<CASE>.h5';
-  UpVname = '/avg_updraft_wm';
-
-  DnFileTemplate  = 'DIAGS/hist_meas_w_<CASE>.h5';
-  DnVname = '/avg_dndraft_wm';
+  InFileTemplate = 'DIAGS/storm_xsections_<CASE>.h5';
+  PreSalVtVname  = '/ps_speed_t_wm';
+  SalVtVname     = '/s_speed_t_wm';
+  PreSalUpVname  = '/ps_updraft_wm';
+  SalUpVname     = '/s_updraft_wm';
+  PreSalDnVname  = '/ps_dndraft_wm';
+  SalDnVname     = '/s_dndraft_wm';
 
   PreSalOfileTemplate = 'Plots/PreSalStormStruct_<CASE>.jpg';
   SalOfileTemplate = 'Plots/SalStormStruct_<CASE>.jpg';
@@ -65,25 +55,27 @@ function [ ] = PlotStormStruct()
     fprintf('Case: %s\n', Case);
     fprintf('\n');
 
-    VtFile  = regexprep(VtFileTemplate, '<CASE>', Case);
-    UpFile  = regexprep(UpFileTemplate, '<CASE>', Case);
-    DnFile  = regexprep(DnFileTemplate, '<CASE>', Case);
+    InFile = regexprep(InFileTemplate, '<CASE>', Case);
 
     PreSalOutFile = regexprep(PreSalOfileTemplate, '<CASE>', Case);
     SalOutFile    = regexprep(SalOfileTemplate, '<CASE>', Case);
 
-    fprintf('  Reading: %s (%s)\n', VtFile, VtVname);
-    fprintf('  Reading: %s (%s)\n', UpFile, UpVname);
+    fprintf('  Reading: %s (%s, %s)\n', InFile, PreSalVtVname, SalVtVname);
+    fprintf('  Reading: %s (%s, %s)\n', InFile, PreSalUpVname, SalUpVname);
+    fprintf('  Reading: %s (%s, %s)\n', InFile, PreSalDnVname, SalDnVname);
     fprintf('\n');
 
     % Read in vars. Vars are organized as (r,z,t) where
     % r is the radius, z is the height, and t is time.
-    VT = squeeze(h5read(VtFile, VtVname));
-    R  = squeeze(h5read(VtFile, '/x_coords')) ./ 1000; % radius in km
-    Z  = squeeze(h5read(VtFile, '/z_coords')) ./ 1000; % height in km
-    T  = (squeeze(h5read(VtFile, '/t_coords')) ./ 3600) - 42; % time in hours, 0h -> sim time 42h
-    UP = squeeze(h5read(UpFile, UpVname));
-    DN = squeeze(h5read(DnFile, DnVname));
+    P_VT = squeeze(h5read(InFile, PreSalVtVname));
+    S_VT = squeeze(h5read(InFile, SalVtVname));
+    P_UP = squeeze(h5read(InFile, PreSalUpVname));
+    S_UP = squeeze(h5read(InFile, SalUpVname));
+    P_DN = squeeze(h5read(InFile, PreSalDnVname));
+    S_DN = squeeze(h5read(InFile, SalDnVname));
+    R  = squeeze(h5read(InFile, '/x_coords')) ./ 1000; % radius in km
+    Z  = squeeze(h5read(InFile, '/z_coords')) ./ 1000; % height in km
+    T  = (squeeze(h5read(InFile, '/t_coords')) ./ 3600) - 42; % time in hours, 0h -> sim time 42h
 
     % Find indicies corresponding to selection
     R1 = find(R >= Rinside,  1, 'first');
@@ -92,20 +84,14 @@ function [ ] = PlotStormStruct()
     Z1 = find(Z >= Zbot, 1, 'first');
     Z2 = find(Z <= Ztop, 1, 'last');
 
-    PT1 = find(T >= PreSalTstart, 1, 'first');
-    PT2 = find(T <= PreSalTend,   1, 'last');
-    
-    ST1 = find(T >= SalTstart, 1, 'first');
-    ST2 = find(T <= SalTend,   1, 'last');
+    % Vars are (r,z)
+    P_VT = P_VT(R1:R2,Z1:Z2);
+    P_UP = P_UP(R1:R2,Z1:Z2);
+    P_DN = P_DN(R1:R2,Z1:Z2);
 
-    % vars will be (r,z) after mean is performed
-    P_VT = squeeze(mean(VT(R1:R2,Z1:Z2,PT1:PT2),3));
-    P_UP = squeeze(mean(UP(R1:R2,Z1:Z2,PT1:PT2),3));
-    P_DN = squeeze(mean(DN(R1:R2,Z1:Z2,PT1:PT2),3));
-
-    S_VT = squeeze(mean(VT(R1:R2,Z1:Z2,ST1:ST2),3));
-    S_UP = squeeze(mean(UP(R1:R2,Z1:Z2,ST1:ST2),3));
-    S_DN = squeeze(mean(DN(R1:R2,Z1:Z2,ST1:ST2),3));
+    S_VT = S_VT(R1:R2,Z1:Z2);
+    S_UP = S_UP(R1:R2,Z1:Z2);
+    S_DN = S_DN(R1:R2,Z1:Z2);
 
     % adjust the coordinates to match what was selected out of the vars
     R = R(R1:R2);
