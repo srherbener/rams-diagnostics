@@ -262,15 +262,8 @@ function [ ] = ExtractSampleProfiles()
     OutNz = length(OutZ);
     OutNt = length(OutT);
 
-    % Reshape the data to (x,y,z,t)
     % Vars are (z,t) at this point.
-    TEMP_LAVG  = reshape(TEMP_LAVG,  [ OutNx OutNy OutNz OutNt ]);
-    THETA_LAVG = reshape(THETA_LAVG, [ OutNx OutNy OutNz OutNt ]);
-    TCOND_LAVG = reshape(TCOND_LAVG, [ OutNx OutNy OutNz OutNt ]);
-
-    TEMP_HAVG  = reshape(TEMP_HAVG,  [ OutNx OutNy OutNz OutNt ]);
-    THETA_HAVG = reshape(THETA_HAVG, [ OutNx OutNy OutNz OutNt ]);
-    TCOND_HAVG = reshape(TCOND_HAVG, [ OutNx OutNy OutNz OutNt ]);
+    DimOrder = { 'z' 't' };
 
     TempLavgVname = sprintf('%s_lavg', TempVar);
     ThetaLavgVname = sprintf('%s_lavg', ThetaVar);
@@ -302,12 +295,12 @@ function [ ] = ExtractSampleProfiles()
     Tname = '/t_coords';
 
     CreateDimensionsXyzt(OutFile, OutX, OutY, OutZ, OutT, Xname, Yname, Zname, Tname);
-    AttachDimensionsXyzt(OutFile, TempLavgVname, Xname, Yname, Zname, Tname);
-    AttachDimensionsXyzt(OutFile, ThetaLavgVname, Xname, Yname, Zname, Tname);
-    AttachDimensionsXyzt(OutFile, TcondLavgVname, Xname, Yname, Zname, Tname);
-    AttachDimensionsXyzt(OutFile, TempHavgVname, Xname, Yname, Zname, Tname);
-    AttachDimensionsXyzt(OutFile, ThetaHavgVname, Xname, Yname, Zname, Tname);
-    AttachDimensionsXyzt(OutFile, TcondHavgVname, Xname, Yname, Zname, Tname);
+    AttachDimensionsXyzt(OutFile, TempLavgVname,  DimOrder, Xname, Yname, Zname, Tname);
+    AttachDimensionsXyzt(OutFile, ThetaLavgVname, DimOrder, Xname, Yname, Zname, Tname);
+    AttachDimensionsXyzt(OutFile, TcondLavgVname, DimOrder, Xname, Yname, Zname, Tname);
+    AttachDimensionsXyzt(OutFile, TempHavgVname,  DimOrder, Xname, Yname, Zname, Tname);
+    AttachDimensionsXyzt(OutFile, ThetaHavgVname, DimOrder, Xname, Yname, Zname, Tname);
+    AttachDimensionsXyzt(OutFile, TcondHavgVname, DimOrder, Xname, Yname, Zname, Tname);
     NotateDimensionsXyzt(OutFile, Xname, Yname, Zname, Tname);
   end
 end

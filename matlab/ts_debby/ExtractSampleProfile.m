@@ -126,9 +126,6 @@ function [ ] = ExtractSampleProfile()
           fprintf('\n');
         
         
-          % Write output so that grads can read in the file:
-          %  4D -> (x,y,z,t), and x and y are dummy variables.
-        
           % Set coordinates, X and Y are dummy values since these have been
           % eliminated by the averaging.
           X = 1; 
@@ -140,15 +137,15 @@ function [ ] = ExtractSampleProfile()
           Ny = 1;
         
           % PROF_TS is (z,t)
-          OutVar = reshape(PROF_TS, [ Nx Ny Nz Nt] );
+          DimOrder = { 'z' 't' };
         
           fprintf('  Writing: %s (%s)\n', OutFile, OutVname);
           if (exist(OutFile, 'file') == 2)
             delete(OutFile);
           end
         
-          h5create(OutFile, OutVname, size(OutVar));
-          h5write (OutFile, OutVname, OutVar);
+          h5create(OutFile, OutVname, size(PROF_TS));
+          h5write (OutFile, OutVname, PROF_TS);
         
           Xname = '/x_coords';
           Yname = '/y_coords';
@@ -156,7 +153,7 @@ function [ ] = ExtractSampleProfile()
           Tname = '/t_coords';
           
           CreateDimensionsXyzt(OutFile, X, Y, Z, T, Xname, Yname, Zname, Tname);
-          AttachDimensionsXyzt(OutFile, OutVname, Xname, Yname, Zname, Tname);
+          AttachDimensionsXyzt(OutFile, OutVname, DimOrder, Xname, Yname, Zname, Tname);
           NotateDimensionsXyzt(OutFile, Xname, Yname, Zname, Tname);
 
           fprintf('\n');

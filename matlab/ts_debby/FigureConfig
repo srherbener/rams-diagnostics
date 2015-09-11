@@ -31,14 +31,6 @@ Figure: Rmw 1
   RmwPanel   1
 End 
 
-Figure: FacSep 2
-  DummyCases
-  [1_2]
-  Plots/FigFsMaxWind.jpg
-  FsMaxWindPanel 1
-  FsIkePanel 2
-End
-
 Figure: Dust1Tracer1_NS 2
   DummyCases
   [2_1]
@@ -115,22 +107,6 @@ FigPanel: RmwPanel
   none 5
   RMW
   SouthWest 12
-End
-
-FigPanel: FsMaxWindPanel
-  FsMaxWindPset
-  FsMaxWindAxes 1 1
-  none 5
-  PANEL:a@Max@Wind
-  none 12
-End
-
-FigPanel: FsIkePanel
-  FsIkePset
-  FsIkeAxes 1 0
-  none 5
-  PANEL:b@IKE
-  none 12
 End
 
 FigPanel: Dust1_NS_Panel
@@ -242,16 +218,6 @@ PlotSet: RmwPset line 4
   RmwLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0
 End
 
-PlotSet: FsMaxWindPset bar:stacked 2
-  MaxWindFracBar none    none  2 dodgerblue   - 0
-  MaxWindIntBar  none    none  2 cyan    - 0
-End
-
-PlotSet: FsIkePset bar:stacked 2
-  IkeFracBar none    none  2 dodgerblue   - 0
-  IkeIntBar  none    none  2 cyan   - 0
-End
-
 PlotSet: Dust1_NS_Pset contourf 1
   Dust1_NS_Contour none none 2 blue - 0
 End
@@ -311,38 +277,6 @@ PlotData: RmwLine 2
   /t_coords DIAGS/storm_meas_tseries_<CASE>.h5 @ 2.7778e-4 -42
   # y data - 
   /rmw_fa   DIAGS/storm_meas_tseries_<CASE>.h5 @ 1e-3 0
-End
-
-PlotData: MaxWindFracBar 2
-  # x data - dummy counter
-  dummy [1:4] @ 1 0
-  # y data - factor separation, max wind speed, fractional change
-  #          so multiply by 100 to get percent change
-  /s_max_wind_bar_frac_change DIAGS/fs_factors.h5 @ 100 0
-End
-
-PlotData: MaxWindIntBar 2
-  # x data - dummy counter
-  dummy [1:4] @ 1 0
-  # y data - factor separation, max wind speed, fractional change
-  #          so multiply by 100 to get percent change
-  /s_max_wind_bar_int DIAGS/fs_factors.h5 @ 100 0
-End
-
-PlotData: IkeFracBar 2
-  # x data - dummy counter
-  dummy [1:4] @ 1 0
-  # y data - factor separation, integrated kinetic energy, fractional change
-  #          so multiply by 100 to get percent change
-  /s_ike_bar_frac_change DIAGS/fs_factors.h5 @ 100 0
-End
-
-PlotData: IkeIntBar 2
-  # x data - dummy counter
-  dummy [1:4] @ 1 0
-  # y data - factor separation, integrated kinetic energy, fractional change
-  #          so multiply by 100 to get percent change
-  /s_ike_bar_int DIAGS/fs_factors.h5 @ 100 0
 End
 
 PlotData: Dust1_NS_Contour 3
@@ -456,22 +390,6 @@ PlotAxes: RmwAxes 2
   Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
   # y axis - speed in m/s
   RMW km 0 150 linear [_] {_}
-End
-
-PlotAxes: FsMaxWindAxes 2
-  18 2 [0.025_0.025]
-  # x axis - factors
-  Factor @ 0 5 linear [1_2_3_4] {'NS'_'ND'_'NSD'_'INT'}
-  # y axis - speed in m/s
-  Difference % -20 30 linear [_] {_}
-End
-
-PlotAxes: FsIkeAxes 2
-  18 2 [0.025_0.025]
-  # x axis - factors
-  Factor @ 0 5 linear [1_2_3_4] {'NS'_'ND'_'NSD'_'INT'}
-  # y axis - speed in m/s
-  Difference % -20 30 linear [_] {_}
 End
 
 PlotAxes: Dust1_NS_Contour 3
