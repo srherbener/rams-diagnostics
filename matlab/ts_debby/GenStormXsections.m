@@ -39,6 +39,9 @@ function [ ] = GenStormXsections()
     { 'DIAGS/hist_meas_pcprate_<CASE>.h5' '/avg_pcprate_fa' '/ps_pcprate_fa' '/s_pcprate_fa' }
     { 'DIAGS/hist_meas_pcprate_<CASE>.h5' '/avg_pcprate_wm' '/ps_pcprate_wm' '/s_pcprate_wm' }
 
+    { 'DIAGS/hist_meas_vint_cond_<CASE>.h5' '/avg_vint_cond_fa' '/ps_vint_cond_fa' '/s_vint_cond_fa' }
+    { 'DIAGS/hist_meas_vint_cond_<CASE>.h5' '/avg_vint_cond_wm' '/ps_vint_cond_wm' '/s_vint_cond_wm' }
+
     { 'DIAGS/hist_meas_dust_<CASE>.h5' '/avg_d1_mass_fa' '/ps_d1_mass_fa' '/s_d1_mass_fa' }
     { 'DIAGS/hist_meas_dust_<CASE>.h5' '/avg_d1_mass_wm' '/ps_d1_mass_wm' '/s_d1_mass_wm' }
     { 'DIAGS/hist_meas_dust_<CASE>.h5' '/avg_d1_num_fa'  '/ps_d1_num_fa'  '/s_d1_num_fa' }

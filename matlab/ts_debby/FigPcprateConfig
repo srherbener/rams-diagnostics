@@ -1,0 +1,82 @@
+#
+# Precip rate figures.
+#
+
+######### FIGURES ###################
+Figure: Pcprate 2
+  DummyCases
+  [2_1]
+  Plots/FigPcprate.jpg
+  PcpratePreSalPanel   1
+  PcprateSalPanel      2
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  none
+End
+
+########### PANELS ####################
+FigPanel: PcpratePreSalPanel
+  PcpratePreSalPset
+  PcpratePreSalAxes 1 1
+  none 5
+  Pre-SAL 
+  NorthEast 10
+End
+
+FigPanel: PcprateSalPanel
+  PcprateSalPset
+  PcprateSalAxes 1 1
+  none 5
+  SAL
+  NorthEast 10
+End
+
+############ PLOT SETS #################
+PlotSet: PcpratePreSalPset line 4
+  PcpratePreSalLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0
+  PcpratePreSalLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0
+  PcpratePreSalLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0
+  PcpratePreSalLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0
+End
+
+PlotSet: PcprateSalPset line 4
+  PcprateSalLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0
+  PcprateSalLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0
+  PcprateSalLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0
+  PcprateSalLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0
+End
+
+############ PLOT DATA #################
+PlotData: PcpratePreSalLine 2
+  # x data - radius in km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - 
+  /ps_pcprate_wm DIAGS/storm_xsections_<CASE>.h5 @ 1 0
+End
+
+PlotData: PcprateSalLine 2
+  # x data - radius in km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - 
+  /s_pcprate_wm DIAGS/storm_xsections_<CASE>.h5 @ 1 0
+End
+
+############ PLOT AXES #################
+PlotAxes: PcpratePreSalAxes 2
+  16 2 [0.025_0.025]
+  # x axis - utc time
+  Radius km 0 450 linear [_] {_}
+  # y axis - speed in m/s
+  Precip@Rate mm@h^-^1 0 6 linear [_] {_}
+End
+
+PlotAxes: PcprateSalAxes 2
+  16 2 [0.025_0.025]
+  # x axis - utc time
+  Radius km 0 450 linear [_] {_}
+  # y axis - speed in m/s
+  Precip@Rate mm@h^-^1 0 3 linear [_] {_}
+End
+

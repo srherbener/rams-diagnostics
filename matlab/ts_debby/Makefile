@@ -29,6 +29,8 @@ SCRIPTS = \
 
 CONFIGS = \
   $(DIAG_DIR)/FigFsConfig \
+  $(DIAG_DIR)/FigPcprateConfig \
+  $(DIAG_DIR)/FigVintCondConfig \
   $(DIAG_DIR)/FigureConfig
 
 #
