@@ -1,0 +1,168 @@
+#
+# Hovmoller diagrams
+#
+
+######### FIGURES ###################
+Figure: PcprateHov 4
+  DummyCases
+  [2_2]
+  Plots/FigPcprateHov.jpg
+  PcprateHovSDPanel   1
+  PcprateHovSNDPanel   2
+  PcprateHovNSDPanel   3
+  PcprateHovNSNDPanel   4
+End 
+
+Figure: VintCondHov 4
+  DummyCases
+  [2_2]
+  Plots/FigVintCondHov.jpg
+  VintCondHovSDPanel   1
+  VintCondHovSNDPanel   2
+  VintCondHovNSDPanel   3
+  VintCondHovNSNDPanel   4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: PcprateHovSDPanel
+  PcprateHovSDPset
+  PcprateHovAxes 1 1
+  none 5
+  SAL\_DUST 
+  none 12
+End
+
+FigPanel: PcprateHovSNDPanel
+  PcprateHovSNDPset
+  PcprateHovAxes 1 1
+  none 5
+  SAL\_NODUST 
+  none 12
+End
+
+FigPanel: PcprateHovNSDPanel
+  PcprateHovNSDPset
+  PcprateHovAxes 1 1
+  none 5
+  NONSAL\_DUST 
+  none 12
+End
+
+FigPanel: PcprateHovNSNDPanel
+  PcprateHovNSNDPset
+  PcprateHovAxes 1 1
+  none 5
+  NONSAL\_NODUST 
+  none 12
+End
+
+FigPanel: VintCondHovSDPanel
+  VintCondHovSDPset
+  VintCondHovAxes 1 1
+  none 5
+  SAL\_DUST 
+  none 12
+End
+
+FigPanel: VintCondHovSNDPanel
+  VintCondHovSNDPset
+  VintCondHovAxes 1 1
+  none 5
+  SAL\_NODUST 
+  none 12
+End
+
+FigPanel: VintCondHovNSDPanel
+  VintCondHovNSDPset
+  VintCondHovAxes 1 1
+  none 5
+  NONSAL\_DUST 
+  none 12
+End
+
+FigPanel: VintCondHovNSNDPanel
+  VintCondHovNSNDPset
+  VintCondHovAxes 1 1
+  none 5
+  NONSAL\_NODUST 
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: PcprateHovSDPset contourf 1
+  PcprateHovContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: PcprateHovSNDPset contourf 1
+  PcprateHovContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: PcprateHovNSDPset contourf 1
+  PcprateHovContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: PcprateHovNSNDPset contourf 1
+  PcprateHovContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: VintCondHovSDPset contourf 1
+  VintCondHovContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: VintCondHovSNDPset contourf 1
+  VintCondHovContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: VintCondHovNSDPset contourf 1
+  VintCondHovContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: VintCondHovNSNDPset contourf 1
+  VintCondHovContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+PlotData: PcprateHovContour 3
+  # x data - radius, km
+  /x_coords DIAGS/hist_meas_pcprate_<CASE>.h5 @ 1e-3 -42
+  # y data - sim time in hours
+  /t_coords DIAGS/hist_meas_pcprate_<CASE>.h5 @ 2.7778e-4 -42
+  # z data -  precip rate, mm/h
+  /avg_pcprate_wm DIAGS/hist_meas_pcprate_<CASE>.h5 @ 1 0
+End
+  
+PlotData: VintCondHovContour 3
+  # x data - radius, km
+  /x_coords DIAGS/hist_meas_vint_cond_<CASE>.h5 @ 1e-3 -42
+  # y data - sim time in hours
+  /t_coords DIAGS/hist_meas_vint_cond_<CASE>.h5 @ 2.7778e-4 -42
+  # z data -  vertically integrated condensate, mm
+  /avg_vint_cond_wm DIAGS/hist_meas_vint_cond_<CASE>.h5 @ 1 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: PcprateHovAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 300 linear [_] {_}
+  # y axis - utc time
+  Sim@Time h 0 60 linear [_] {_}
+  # z axis - pcprate in mm/h
+  Precip@Rate mm@h^-^1 0 6 linear [_] {_}
+End
+
+PlotAxes: VintCondHovAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 300 linear [_] {_}
+  # y axis - utc time
+  Sim@Time h 0 60 linear [_] {_}
+  # z axis - pcprate in mm/h
+  Condensate mm 0 4 linear [_] {_}
+End
+
