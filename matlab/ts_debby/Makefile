@@ -32,6 +32,7 @@ CONFIGS = \
   $(DIAG_DIR)/FigPcprateConfig \
   $(DIAG_DIR)/FigVintCondConfig \
   $(DIAG_DIR)/FigHovmollerConfig \
+  $(DIAG_DIR)/FigXsectionConfig \
   $(DIAG_DIR)/FigureConfig
 
 #

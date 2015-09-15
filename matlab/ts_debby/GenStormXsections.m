@@ -13,6 +13,8 @@ function [ ] = GenStormXsections()
    };
   Ncases = length(Cases);
 
+  ControlCase = 'TSD_SAL_DUST';
+
   % Two time periods:
   %    Pre SAL: T = 10 to 30 h (after RI, before encounter SAL)
   %        SAL: T = 40 to 60 h (during SAL)
@@ -106,14 +108,22 @@ function [ ] = GenStormXsections()
       PreSalVname = XsectionList{iset}{3};
       SalVname    = XsectionList{iset}{4};
 
+      ControlInFile = regexprep(XsectionList{iset}{1}, '<CASE>', ControlCase);
+
+      PreSalDiffVname = sprintf('%s_diff', PreSalVname);
+      SalDiffVname    = sprintf('%s_diff', SalVname);
+
       % Read in the variables, split into pre-SAL and SAL sections
       fprintf('  Reading: %s (%s)\n', InFile, InVname);
+      fprintf('  Reading: %s (%s)\n', ControlInFile, InVname);
 
       VAR = squeeze(h5read(InFile, InVname));
       X   = squeeze(h5read(InFile, '/x_coords'));
       Y   = squeeze(h5read(InFile, '/y_coords'));
       Z   = squeeze(h5read(InFile, '/z_coords'));
       T   = squeeze(h5read(InFile, '/t_coords'));
+
+      CNTL_VAR = squeeze(h5read(ControlInFile, InVname));
 
       Nx = length(X);
       Ny = length(Y);
@@ -161,6 +171,9 @@ function [ ] = GenStormXsections()
           P_VAR = squeeze(mean(VAR(PT1:PT2)));
           S_VAR = squeeze(mean(VAR(ST1:ST2)));
 
+          P_CNTL_VAR = squeeze(mean(CNTL_VAR(PT1:PT2)));
+          S_CNTL_VAR = squeeze(mean(CNTL_VAR(ST1:ST2)));
+
           Vsize = 1;
           DimOrder = { };
         case 2
@@ -168,6 +181,9 @@ function [ ] = GenStormXsections()
           % result is (x)
           P_VAR = squeeze(mean(VAR(:,PT1:PT2),2));
           S_VAR = squeeze(mean(VAR(:,ST1:ST2),2));
+
+          P_CNTL_VAR = squeeze(mean(CNTL_VAR(:,PT1:PT2),2));
+          S_CNTL_VAR = squeeze(mean(CNTL_VAR(:,ST1:ST2),2));
 
           Vsize = Nx;
           DimOrder = { 'x' };
@@ -177,9 +193,15 @@ function [ ] = GenStormXsections()
           P_VAR = squeeze(mean(VAR(:,:,PT1:PT2),3));
           S_VAR = squeeze(mean(VAR(:,:,ST1:ST2),3));
 
+          P_CNTL_VAR = squeeze(mean(CNTL_VAR(:,:,PT1:PT2),3));
+          S_CNTL_VAR = squeeze(mean(CNTL_VAR(:,:,ST1:ST2),3));
+
           Vsize = size(P_VAR);
           DimOrder = { 'x' 'z' };
       end
+
+      P_DIFF_VAR = P_VAR - P_CNTL_VAR;
+      S_DIFF_VAR = S_VAR - S_CNTL_VAR;
 
       % Collect output vars into one case specific file.
       fprintf('  Writing: %s (%s, %s)\n', OutFile, PreSalVname, SalVname);
@@ -189,8 +211,19 @@ function [ ] = GenStormXsections()
       h5write(OutFile, PreSalVname, P_VAR);
       h5write(OutFile, SalVname,    S_VAR);
 
+      fprintf('  Writing: %s (%s, %s)\n', OutFile, PreSalDiffVname, SalDiffVname);
+      h5create(OutFile, PreSalDiffVname, Vsize);
+      h5create(OutFile, SalDiffVname,    Vsize);
+
+      h5write(OutFile, PreSalDiffVname, P_DIFF_VAR);
+      h5write(OutFile, SalDiffVname,    S_DIFF_VAR);
+
+
       AttachDimensionsXyzt(OutFile, PreSalVname, DimOrder, Xname, Yname, Zname, Tname);
       AttachDimensionsXyzt(OutFile, SalVname,    DimOrder, Xname, Yname, Zname, Tname);
+
+      AttachDimensionsXyzt(OutFile, PreSalDiffVname, DimOrder, Xname, Yname, Zname, Tname);
+      AttachDimensionsXyzt(OutFile, SalDiffVname,    DimOrder, Xname, Yname, Zname, Tname);
 
       fprintf('\n');
     end

@@ -6,6 +6,11 @@ DEST = $(HOME)/etc/matlab/common
 
 SCRIPTS = \
           $(DEST)/export_fig.m \
+          $(DEST)/freezeColors.m \
+          $(DEST)/unfreezeColors.m \
+          $(DEST)/cbfreeze.m \
+          $(DEST)/cbhandle.m \
+          $(DEST)/test_freezeColors.m \
           $(DEST)/SetPlotAxes.m \
           $(DEST)/DrawPlotData.m \
           $(DEST)/GenFigures.m \

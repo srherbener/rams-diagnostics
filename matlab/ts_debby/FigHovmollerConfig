@@ -129,7 +129,7 @@ End
 ############ PLOT DATA #################
 PlotData: PcprateHovContour 3
   # x data - radius, km
-  /x_coords DIAGS/hist_meas_pcprate_<CASE>.h5 @ 1e-3 -42
+  /x_coords DIAGS/hist_meas_pcprate_<CASE>.h5 @ 1e-3 0
   # y data - sim time in hours
   /t_coords DIAGS/hist_meas_pcprate_<CASE>.h5 @ 2.7778e-4 -42
   # z data -  precip rate, mm/h
@@ -138,7 +138,7 @@ End
   
 PlotData: VintCondHovContour 3
   # x data - radius, km
-  /x_coords DIAGS/hist_meas_vint_cond_<CASE>.h5 @ 1e-3 -42
+  /x_coords DIAGS/hist_meas_vint_cond_<CASE>.h5 @ 1e-3 0
   # y data - sim time in hours
   /t_coords DIAGS/hist_meas_vint_cond_<CASE>.h5 @ 2.7778e-4 -42
   # z data -  vertically integrated condensate, mm

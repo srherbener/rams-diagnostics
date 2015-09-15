@@ -73,8 +73,9 @@ function [ ] = DrawPlotData( Axes, DataSpecs, Ptype )
       Bcolor = str2rgb(DataSpecs(i).Lcolor);
       bgraph(i).FaceColor = Bcolor;
     end
-  elseif (strcmp(Ptype, 'contourf'))
+  elseif (regexp(Ptype, 'contour'))
     % contour plot
+    Nclevs = 20;
 
     % assume only one dataset
     X = DataSpecs(1).Xdata;
@@ -86,8 +87,19 @@ function [ ] = DrawPlotData( Axes, DataSpecs, Ptype )
       Z = Z';
     end
 
-    contourf(X, Y, Z, 'LineStyle', 'none');
-    colorbar;
+    if (regexp(Ptype, 'contourf'))
+      contourf(X, Y, Z, Nclevs, 'LineStyle', 'none');
+    else
+      contour(X, Y, Z, Nclevs, 'LineStyle', 'none');
+    end
+
+    % used red/blue for difference plots
+    if (strcmp(Ptype, 'diff_contourf'))
+      colormap(Axes, redblue);
+    else
+      colormap(Axes, 'default');
+    end
+    cb = colorbar;
   end
 
 end
