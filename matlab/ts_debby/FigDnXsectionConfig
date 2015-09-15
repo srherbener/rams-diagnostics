@@ -1,0 +1,206 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: DnXsectionPreSal 4
+  DummyCases
+  [2_2]
+  Plots/FigDnXsectionPreSal.jpg
+  DnXsectionSDPreSalPanel         1
+  DnXsectionSNDdiffPreSalPanel    2
+  DnXsectionNSDdiffPreSalPanel    3
+  DnXsectionNSNDdiffPreSalPanel   4
+End 
+
+Figure: DnXsectionSal 4
+  DummyCases
+  [2_2]
+  Plots/FigDnXsectionSal.jpg
+  DnXsectionSDSalPanel         1
+  DnXsectionSNDdiffSalPanel    2
+  DnXsectionNSDdiffSalPanel    3
+  DnXsectionNSNDdiffSalPanel   4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: DnXsectionSDPreSalPanel
+  DnXsectionSDPreSalPset
+  DnXsectionPreSalAxes 1 1
+  none 5
+  SD 
+  none 12
+End
+
+FigPanel: DnXsectionSNDdiffPreSalPanel
+  DnXsectionSNDdiffPreSalPset
+  DnXsectionDiffPreSalAxes 1 1
+  none 5
+  SND@-@SD
+  none 12
+End
+
+FigPanel: DnXsectionNSDdiffPreSalPanel
+  DnXsectionNSDdiffPreSalPset
+  DnXsectionDiffPreSalAxes 1 1
+  none 5
+  NSD@-@SD 
+  none 12
+End
+
+FigPanel: DnXsectionNSNDdiffPreSalPanel
+  DnXsectionNSNDdiffPreSalPset
+  DnXsectionDiffPreSalAxes 1 1
+  none 5
+  NSND@-@SD
+  none 12
+End
+
+FigPanel: DnXsectionSDSalPanel
+  DnXsectionSDSalPset
+  DnXsectionSalAxes 1 1
+  none 5
+  SD 
+  none 12
+End
+
+FigPanel: DnXsectionSNDdiffSalPanel
+  DnXsectionSNDdiffSalPset
+  DnXsectionDiffSalAxes 1 1
+  none 5
+  SND@-@SD
+  none 12
+End
+
+FigPanel: DnXsectionNSDdiffSalPanel
+  DnXsectionNSDdiffSalPset
+  DnXsectionDiffSalAxes 1 1
+  none 5
+  NSD@-@SD 
+  none 12
+End
+
+FigPanel: DnXsectionNSNDdiffSalPanel
+  DnXsectionNSNDdiffSalPset
+  DnXsectionDiffSalAxes 1 1
+  none 5
+  NSND@-@SD
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: DnXsectionSDPreSalPset contourf 1
+  DnXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: DnXsectionSNDdiffPreSalPset diff_contourf 1
+  DnXsectionPreSalDiffContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: DnXsectionNSDdiffPreSalPset diff_contourf 1
+  DnXsectionPreSalDiffContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: DnXsectionNSNDdiffPreSalPset diff_contourf 1
+  DnXsectionPreSalDiffContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: DnXsectionSDSalPset contourf 1
+  DnXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: DnXsectionSNDdiffSalPset diff_contourf 1
+  DnXsectionSalDiffContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: DnXsectionNSDdiffSalPset diff_contourf 1
+  DnXsectionSalDiffContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: DnXsectionNSNDdiffSalPset diff_contourf 1
+  DnXsectionSalDiffContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+PlotData: DnXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  dndraft, m/s
+  /ps_dndraft_wm DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: DnXsectionPreSalDiffContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  dndraft, m/s
+  /ps_dndraft_wm_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: DnXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  dndraft, m/s
+  /s_dndraft_wm DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: DnXsectionSalDiffContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  dndraft, m/s
+  /s_dndraft_wm_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: DnXsectionPreSalAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 450 linear [_] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - dndraft - m/s
+  Downdraft m@s^-^1 -0.2 0 linear [_] {_}
+End
+
+PlotAxes: DnXsectionDiffPreSalAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 450 linear [_] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - dndraft - m/s
+  Downdraft m@s^-^1 -0.05 0.05 linear [_] {_}
+End
+
+PlotAxes: DnXsectionSalAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 450 linear [_] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - dndraft - m/s
+  Downdraft m@s^-^1 -0.1 0 linear [_] {_}
+End
+
+PlotAxes: DnXsectionDiffSalAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 450 linear [_] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - dndraft - m/s
+  Downdraft m@s^-^1 -0.05 0.05 linear [_] {_}
+End
+
