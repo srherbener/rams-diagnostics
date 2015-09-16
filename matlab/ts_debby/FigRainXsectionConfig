@@ -1,0 +1,206 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: RainXsectionPreSal 4
+  DummyCases
+  [2_2]
+  Plots/FigRainXsectionPreSal.jpg
+  RainXsectionSDPreSalPanel         1
+  RainXsectionSNDdiffPreSalPanel    2
+  RainXsectionNSDdiffPreSalPanel    3
+  RainXsectionNSNDdiffPreSalPanel   4
+End 
+
+Figure: RainXsectionSal 4
+  DummyCases
+  [2_2]
+  Plots/FigRainXsectionSal.jpg
+  RainXsectionSDSalPanel         1
+  RainXsectionSNDdiffSalPanel    2
+  RainXsectionNSDdiffSalPanel    3
+  RainXsectionNSNDdiffSalPanel   4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: RainXsectionSDPreSalPanel
+  RainXsectionSDPreSalPset
+  RainXsectionPreSalAxes 1 1
+  none 5
+  SD 
+  none 12
+End
+
+FigPanel: RainXsectionSNDdiffPreSalPanel
+  RainXsectionSNDdiffPreSalPset
+  RainXsectionDiffPreSalAxes 1 1
+  none 5
+  SND@-@SD
+  none 12
+End
+
+FigPanel: RainXsectionNSDdiffPreSalPanel
+  RainXsectionNSDdiffPreSalPset
+  RainXsectionDiffPreSalAxes 1 1
+  none 5
+  NSD@-@SD 
+  none 12
+End
+
+FigPanel: RainXsectionNSNDdiffPreSalPanel
+  RainXsectionNSNDdiffPreSalPset
+  RainXsectionDiffPreSalAxes 1 1
+  none 5
+  NSND@-@SD
+  none 12
+End
+
+FigPanel: RainXsectionSDSalPanel
+  RainXsectionSDSalPset
+  RainXsectionSalAxes 1 1
+  none 5
+  SD 
+  none 12
+End
+
+FigPanel: RainXsectionSNDdiffSalPanel
+  RainXsectionSNDdiffSalPset
+  RainXsectionDiffSalAxes 1 1
+  none 5
+  SND@-@SD
+  none 12
+End
+
+FigPanel: RainXsectionNSDdiffSalPanel
+  RainXsectionNSDdiffSalPset
+  RainXsectionDiffSalAxes 1 1
+  none 5
+  NSD@-@SD 
+  none 12
+End
+
+FigPanel: RainXsectionNSNDdiffSalPanel
+  RainXsectionNSNDdiffSalPset
+  RainXsectionDiffSalAxes 1 1
+  none 5
+  NSND@-@SD
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: RainXsectionSDPreSalPset contourf 1
+  RainXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RainXsectionSNDdiffPreSalPset diff_contourf 1
+  RainXsectionPreSalDiffContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RainXsectionNSDdiffPreSalPset diff_contourf 1
+  RainXsectionPreSalDiffContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RainXsectionNSNDdiffPreSalPset diff_contourf 1
+  RainXsectionPreSalDiffContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RainXsectionSDSalPset contourf 1
+  RainXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RainXsectionSNDdiffSalPset diff_contourf 1
+  RainXsectionSalDiffContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RainXsectionNSDdiffSalPset diff_contourf 1
+  RainXsectionSalDiffContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RainXsectionNSNDdiffSalPset diff_contourf 1
+  RainXsectionSalDiffContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+PlotData: RainXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  rain, g/kg
+  /ps_rain_wm DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: RainXsectionPreSalDiffContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  rain, g/kg
+  /ps_rain_wm_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: RainXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  rain, g/kg
+  /s_rain_wm DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: RainXsectionSalDiffContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  rain, g/kg
+  /s_rain_wm_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: RainXsectionPreSalAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 450 linear [_] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - rain - g/kg
+  Rain g@kg^-^1 0 0.4 linear [_] {_}
+End
+
+PlotAxes: RainXsectionDiffPreSalAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 450 linear [_] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - rain - g/kg
+  Rain g@kg^-^1 -0.1 0.1 linear [_] {_}
+End
+
+PlotAxes: RainXsectionSalAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 450 linear [_] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - rain - g/kg
+  Rain g@kg^-^1 0 0.2 linear [_] {_}
+End
+
+PlotAxes: RainXsectionDiffSalAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 450 linear [_] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - rain - g/kg
+  Rain g@kg^-^1 -0.1 0.1 linear [_] {_}
+End
+

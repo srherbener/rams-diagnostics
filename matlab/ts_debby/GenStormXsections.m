@@ -29,6 +29,8 @@ function [ ] = GenStormXsections()
     % in_file in_var pre_sal_out_var sal_out_var
     { 'DIAGS/hist_meas_speed_<CASE>.h5' '/avg_speed_t_fa' '/ps_speed_t_fa' '/s_speed_t_fa' }
     { 'DIAGS/hist_meas_speed_<CASE>.h5' '/avg_speed_t_wm' '/ps_speed_t_wm' '/s_speed_t_wm' }
+    { 'DIAGS/hist_meas_speed_<CASE>.h5' '/avg_speed_r_fa' '/ps_speed_r_fa' '/s_speed_r_fa' }
+    { 'DIAGS/hist_meas_speed_<CASE>.h5' '/avg_speed_r_wm' '/ps_speed_r_wm' '/s_speed_r_wm' }
 
     { 'DIAGS/hist_meas_w_<CASE>.h5' '/avg_updraft_fa' '/ps_updraft_fa' '/s_updraft_fa' }
     { 'DIAGS/hist_meas_w_<CASE>.h5' '/avg_updraft_wm' '/ps_updraft_wm' '/s_updraft_wm' }

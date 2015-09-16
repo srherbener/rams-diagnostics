@@ -35,8 +35,12 @@ CONFIGS = \
   $(DIAG_DIR)/FigThetaEXsectionConfig \
   $(DIAG_DIR)/FigCoolXsectionConfig \
   $(DIAG_DIR)/FigHeatXsectionConfig \
+  $(DIAG_DIR)/FigCloudXsectionConfig \
+  $(DIAG_DIR)/FigRainXsectionConfig \
   $(DIAG_DIR)/FigDnXsectionConfig \
   $(DIAG_DIR)/FigUpXsectionConfig \
+  $(DIAG_DIR)/FigVtXsectionConfig \
+  $(DIAG_DIR)/FigVrXsectionConfig \
   $(DIAG_DIR)/FigureConfig
 
 #

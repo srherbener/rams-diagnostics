@@ -1,0 +1,206 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: CloudXsectionPreSal 4
+  DummyCases
+  [2_2]
+  Plots/FigCloudXsectionPreSal.jpg
+  CloudXsectionSDPreSalPanel         1
+  CloudXsectionSNDdiffPreSalPanel    2
+  CloudXsectionNSDdiffPreSalPanel    3
+  CloudXsectionNSNDdiffPreSalPanel   4
+End 
+
+Figure: CloudXsectionSal 4
+  DummyCases
+  [2_2]
+  Plots/FigCloudXsectionSal.jpg
+  CloudXsectionSDSalPanel         1
+  CloudXsectionSNDdiffSalPanel    2
+  CloudXsectionNSDdiffSalPanel    3
+  CloudXsectionNSNDdiffSalPanel   4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: CloudXsectionSDPreSalPanel
+  CloudXsectionSDPreSalPset
+  CloudXsectionPreSalAxes 1 1
+  none 5
+  SD 
+  none 12
+End
+
+FigPanel: CloudXsectionSNDdiffPreSalPanel
+  CloudXsectionSNDdiffPreSalPset
+  CloudXsectionDiffPreSalAxes 1 1
+  none 5
+  SND@-@SD
+  none 12
+End
+
+FigPanel: CloudXsectionNSDdiffPreSalPanel
+  CloudXsectionNSDdiffPreSalPset
+  CloudXsectionDiffPreSalAxes 1 1
+  none 5
+  NSD@-@SD 
+  none 12
+End
+
+FigPanel: CloudXsectionNSNDdiffPreSalPanel
+  CloudXsectionNSNDdiffPreSalPset
+  CloudXsectionDiffPreSalAxes 1 1
+  none 5
+  NSND@-@SD
+  none 12
+End
+
+FigPanel: CloudXsectionSDSalPanel
+  CloudXsectionSDSalPset
+  CloudXsectionSalAxes 1 1
+  none 5
+  SD 
+  none 12
+End
+
+FigPanel: CloudXsectionSNDdiffSalPanel
+  CloudXsectionSNDdiffSalPset
+  CloudXsectionDiffSalAxes 1 1
+  none 5
+  SND@-@SD
+  none 12
+End
+
+FigPanel: CloudXsectionNSDdiffSalPanel
+  CloudXsectionNSDdiffSalPset
+  CloudXsectionDiffSalAxes 1 1
+  none 5
+  NSD@-@SD 
+  none 12
+End
+
+FigPanel: CloudXsectionNSNDdiffSalPanel
+  CloudXsectionNSNDdiffSalPset
+  CloudXsectionDiffSalAxes 1 1
+  none 5
+  NSND@-@SD
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: CloudXsectionSDPreSalPset contourf 1
+  CloudXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CloudXsectionSNDdiffPreSalPset diff_contourf 1
+  CloudXsectionPreSalDiffContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: CloudXsectionNSDdiffPreSalPset diff_contourf 1
+  CloudXsectionPreSalDiffContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CloudXsectionNSNDdiffPreSalPset diff_contourf 1
+  CloudXsectionPreSalDiffContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: CloudXsectionSDSalPset contourf 1
+  CloudXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CloudXsectionSNDdiffSalPset diff_contourf 1
+  CloudXsectionSalDiffContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: CloudXsectionNSDdiffSalPset diff_contourf 1
+  CloudXsectionSalDiffContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CloudXsectionNSNDdiffSalPset diff_contourf 1
+  CloudXsectionSalDiffContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+PlotData: CloudXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  cloud, g/kg
+  /ps_cloud_wm DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: CloudXsectionPreSalDiffContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  cloud, g/kg
+  /ps_cloud_wm_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: CloudXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  cloud, g/kg
+  /s_cloud_wm DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: CloudXsectionSalDiffContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  cloud, g/kg
+  /s_cloud_wm_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: CloudXsectionPreSalAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 450 linear [_] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - cloud - g/kg
+  Cloud g@kg^-^1 0 0.3 linear [_] {_}
+End
+
+PlotAxes: CloudXsectionDiffPreSalAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 450 linear [_] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - cloud - g/kg
+  Cloud g@kg^-^1 -0.1 0.1 linear [_] {_}
+End
+
+PlotAxes: CloudXsectionSalAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 450 linear [_] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - cloud - g/kg
+  Cloud g@kg^-^1 0 0.3 linear [_] {_}
+End
+
+PlotAxes: CloudXsectionDiffSalAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 450 linear [_] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - cloud - g/kg
+  Cloud g@kg^-^1 -0.1 0.1 linear [_] {_}
+End
+
