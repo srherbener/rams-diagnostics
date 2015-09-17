@@ -53,14 +53,14 @@ PlotData: VintCondPreSalLine 2
   # x data - radius in km
   /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
   # y data - 
-  /ps_vint_cond_wm DIAGS/storm_xsections_<CASE>.h5 @ 1 0
+  /ps_vint_cond DIAGS/storm_xsections_<CASE>.h5 @ 1 0
 End
 
 PlotData: VintCondSalLine 2
   # x data - radius in km
   /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
   # y data - 
-  /s_vint_cond_wm DIAGS/storm_xsections_<CASE>.h5 @ 1 0
+  /s_vint_cond DIAGS/storm_xsections_<CASE>.h5 @ 1 0
 End
 
 ############ PLOT AXES #################

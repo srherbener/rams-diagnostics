@@ -133,7 +133,7 @@ PlotData: DnXsectionPreSalContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  dndraft, m/s
-  /ps_dndraft_wm DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+  /ps_dndraft DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 PlotData: DnXsectionPreSalDiffContour 3
@@ -142,7 +142,7 @@ PlotData: DnXsectionPreSalDiffContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  dndraft, m/s
-  /ps_dndraft_wm_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+  /ps_dndraft_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 PlotData: DnXsectionSalContour 3
@@ -151,7 +151,7 @@ PlotData: DnXsectionSalContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  dndraft, m/s
-  /s_dndraft_wm DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+  /s_dndraft DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 PlotData: DnXsectionSalDiffContour 3
@@ -160,7 +160,7 @@ PlotData: DnXsectionSalDiffContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  dndraft, m/s
-  /s_dndraft_wm_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+  /s_dndraft_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 ############ PLOT AXES #################

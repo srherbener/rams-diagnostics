@@ -133,7 +133,7 @@ PlotData: UpXsectionPreSalContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  updraft, m/s
-  /ps_updraft_wm DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+  /ps_updraft DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 PlotData: UpXsectionPreSalDiffContour 3
@@ -142,7 +142,7 @@ PlotData: UpXsectionPreSalDiffContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  updraft, m/s
-  /ps_updraft_wm_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+  /ps_updraft_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 PlotData: UpXsectionSalContour 3
@@ -151,7 +151,7 @@ PlotData: UpXsectionSalContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  updraft, m/s
-  /s_updraft_wm DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+  /s_updraft DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 PlotData: UpXsectionSalDiffContour 3
@@ -160,7 +160,7 @@ PlotData: UpXsectionSalDiffContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  updraft, m/s
-  /s_updraft_wm_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+  /s_updraft_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 ############ PLOT AXES #################

@@ -253,7 +253,7 @@ PlotData: LhvCoolXsectionPreSalContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:36) 1e-3 0
   # z data -  lhv_cool, K/hr
-  /ps_lhv_cool_wm DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 2 0
+  /ps_lhv_cool DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 2 0
 End
   
 PlotData: LhvCoolXsectionPreSalDiffContour 3
@@ -262,7 +262,7 @@ PlotData: LhvCoolXsectionPreSalDiffContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:36) 1e-3 0
   # z data -  lhv_cool, K/hr
-  /ps_lhv_cool_wm_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 2 0
+  /ps_lhv_cool_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 2 0
 End
   
 PlotData: LhvCoolXsectionSalContour 3
@@ -271,7 +271,7 @@ PlotData: LhvCoolXsectionSalContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:36) 1e-3 0
   # z data -  lhv_cool, K/hr
-  /s_lhv_cool_wm DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 2 0
+  /s_lhv_cool DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 2 0
 End
   
 PlotData: LhvCoolXsectionSalDiffContour 3
@@ -280,7 +280,7 @@ PlotData: LhvCoolXsectionSalDiffContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:36) 1e-3 0
   # z data -  lhv_cool, K/hr
-  /s_lhv_cool_wm_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 2 0
+  /s_lhv_cool_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 2 0
 End
   
 
@@ -290,7 +290,7 @@ PlotData: LhfCoolXsectionPreSalContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:36) 1e-3 0
   # z data -  lhf_cool, K/hr
-  /ps_lhf_cool_wm DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 2 0
+  /ps_lhf_cool DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 2 0
 End
   
 PlotData: LhfCoolXsectionPreSalDiffContour 3
@@ -299,7 +299,7 @@ PlotData: LhfCoolXsectionPreSalDiffContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:36) 1e-3 0
   # z data -  lhf_cool, K/hr
-  /ps_lhf_cool_wm_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 2 0
+  /ps_lhf_cool_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 2 0
 End
   
 PlotData: LhfCoolXsectionSalContour 3
@@ -308,7 +308,7 @@ PlotData: LhfCoolXsectionSalContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:36) 1e-3 0
   # z data -  lhf_cool, K/hr
-  /s_lhf_cool_wm DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 2 0
+  /s_lhf_cool DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 2 0
 End
   
 PlotData: LhfCoolXsectionSalDiffContour 3
@@ -317,7 +317,7 @@ PlotData: LhfCoolXsectionSalDiffContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:36) 1e-3 0
   # z data -  lhf_cool, K/hr
-  /s_lhf_cool_wm_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 2 0
+  /s_lhf_cool_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 2 0
 End
   
 ############ PLOT AXES #################

@@ -133,7 +133,7 @@ PlotData: RainXsectionPreSalContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  rain, g/kg
-  /ps_rain_wm DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+  /ps_rain DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 PlotData: RainXsectionPreSalDiffContour 3
@@ -142,7 +142,7 @@ PlotData: RainXsectionPreSalDiffContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  rain, g/kg
-  /ps_rain_wm_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+  /ps_rain_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 PlotData: RainXsectionSalContour 3
@@ -151,7 +151,7 @@ PlotData: RainXsectionSalContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  rain, g/kg
-  /s_rain_wm DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+  /s_rain DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 PlotData: RainXsectionSalDiffContour 3
@@ -160,7 +160,7 @@ PlotData: RainXsectionSalDiffContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  rain, g/kg
-  /s_rain_wm_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+  /s_rain_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 ############ PLOT AXES #################

@@ -53,14 +53,14 @@ PlotData: PcpratePreSalLine 2
   # x data - radius in km
   /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
   # y data - 
-  /ps_pcprate_wm DIAGS/storm_xsections_<CASE>.h5 @ 1 0
+  /ps_pcprate DIAGS/storm_xsections_<CASE>.h5 @ 1 0
 End
 
 PlotData: PcprateSalLine 2
   # x data - radius in km
   /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
   # y data - 
-  /s_pcprate_wm DIAGS/storm_xsections_<CASE>.h5 @ 1 0
+  /s_pcprate DIAGS/storm_xsections_<CASE>.h5 @ 1 0
 End
 
 ############ PLOT AXES #################
