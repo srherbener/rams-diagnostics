@@ -113,7 +113,7 @@ End
 PlotAxes: CloudDiffPreSalAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud mix ratio, g/kg
-  Cloud g@kg^-^1 -0.10 0.15 linear [_] {_}
+  Cloud g@kg^-^1 -0.20 0.20 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End
@@ -129,7 +129,7 @@ End
 PlotAxes: CloudDiffSalAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud mix ratio, g/kg
-  Cloud g@kg^-^1 -0.20 0.25 linear [_] {_}
+  Cloud g@kg^-^1 -0.20 0.20 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End

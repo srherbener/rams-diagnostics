@@ -44,6 +44,11 @@ CONFIGS = \
   $(DIAG_DIR)/FigVrXsectionConfig \
   $(DIAG_DIR)/FigCloudProfileConfig \
   $(DIAG_DIR)/FigRainProfileConfig \
+  $(DIAG_DIR)/FigPrisProfileConfig \
+  $(DIAG_DIR)/FigSnowProfileConfig \
+  $(DIAG_DIR)/FigAggrProfileConfig \
+  $(DIAG_DIR)/FigGraupProfileConfig \
+  $(DIAG_DIR)/FigHailProfileConfig \
   $(DIAG_DIR)/FigureConfig
 
 #
