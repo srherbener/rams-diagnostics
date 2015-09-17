@@ -42,19 +42,19 @@ CONFIGS = \
   $(DIAG_DIR)/FigUpXsectionConfig \
   $(DIAG_DIR)/FigVtXsectionConfig \
   $(DIAG_DIR)/FigVrXsectionConfig \
-  $(DIAG_DIR)/FigCloudProfileConfig \
-  $(DIAG_DIR)/FigRainProfileConfig \
-  $(DIAG_DIR)/FigPrisProfileConfig \
-  $(DIAG_DIR)/FigSnowProfileConfig \
-  $(DIAG_DIR)/FigAggrProfileConfig \
-  $(DIAG_DIR)/FigGraupProfileConfig \
-  $(DIAG_DIR)/FigHailProfileConfig \
-  $(DIAG_DIR)/FigLhfCoolProfileConfig \
-  $(DIAG_DIR)/FigLhfHeatProfileConfig \
-  $(DIAG_DIR)/FigLhvCoolProfileConfig \
-  $(DIAG_DIR)/FigLhvHeatProfileConfig \
-  $(DIAG_DIR)/FigDnProfileConfig \
-  $(DIAG_DIR)/FigUpProfileConfig \
+  $(DIAG_DIR)/FigCloudCoreProfileConfig \
+  $(DIAG_DIR)/FigRainCoreProfileConfig \
+  $(DIAG_DIR)/FigPrisCoreProfileConfig \
+  $(DIAG_DIR)/FigSnowCoreProfileConfig \
+  $(DIAG_DIR)/FigAggrCoreProfileConfig \
+  $(DIAG_DIR)/FigGraupCoreProfileConfig \
+  $(DIAG_DIR)/FigHailCoreProfileConfig \
+  $(DIAG_DIR)/FigLhfCoolCoreProfileConfig \
+  $(DIAG_DIR)/FigLhfHeatCoreProfileConfig \
+  $(DIAG_DIR)/FigLhvCoolCoreProfileConfig \
+  $(DIAG_DIR)/FigLhvHeatCoreProfileConfig \
+  $(DIAG_DIR)/FigDnDraftCoreProfileConfig \
+  $(DIAG_DIR)/FigUpDraftCoreProfileConfig \
   $(DIAG_DIR)/FigureConfig
 
 #
