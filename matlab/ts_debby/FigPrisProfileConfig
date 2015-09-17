@@ -3,14 +3,14 @@
 #
 
 ######### FIGURES ###################
-Figure: PrisProfile 4
+Figure: PrisCoreProfile 4
   DummyCases
   [2_2]
-  Plots/FigPrisProfile.jpg
-  PrisCntlPreSalPanel  1
-  PrisCntlSalPanel     2
-  PrisDiffPreSalPanel  3
-  PrisDiffSalPanel     4
+  Plots/FigPrisCoreProfile.jpg
+  PrisCntlPreSalCorePanel  1
+  PrisCntlSalCorePanel     2
+  PrisDiffPreSalCorePanel  3
+  PrisDiffSalCorePanel     4
 End 
 
 ########### CASES ####################
@@ -19,82 +19,82 @@ CaseSet: DummyCases 1
 End
 
 ########### PANELS ####################
-FigPanel: PrisCntlPreSalPanel
-  PrisCntlPreSalPset
-  PrisCntlPreSalAxes 1 1
+FigPanel: PrisCntlPreSalCorePanel
+  PrisCntlPreSalCorePset
+  PrisCntlPreSalCoreAxes 1 1
   none 5
-  Pre@SAL 
+  Pre@SAL@Core 
   SouthEast 12
 End
 
-FigPanel: PrisDiffPreSalPanel
-  PrisDiffPreSalPset
-  PrisDiffPreSalAxes 1 1
+FigPanel: PrisDiffPreSalCorePanel
+  PrisDiffPreSalCorePset
+  PrisDiffPreSalCoreAxes 1 1
   none 5
-  Pre@SAL@(diffs)
+  Pre@SAL@Core@(diffs)
   SouthEast 12
 End
 
-FigPanel: PrisCntlSalPanel
-  PrisCntlSalPset
-  PrisCntlSalAxes 1 1
+FigPanel: PrisCntlSalCorePanel
+  PrisCntlSalCorePset
+  PrisCntlSalCoreAxes 1 1
   none 5
-  SAL 
+  SAL@Core 
   SouthEast 12
 End
 
-FigPanel: PrisDiffSalPanel
-  PrisDiffSalPset
-  PrisDiffSalAxes 1 1
+FigPanel: PrisDiffSalCorePanel
+  PrisDiffSalCorePset
+  PrisDiffSalCoreAxes 1 1
   none 5
-  SAL@(diffs)
+  SAL@Core@(diffs)
   SouthEast 12
 End
 
 ############ PLOT SETS #################
-PlotSet: PrisCntlPreSalPset line 1
-  PrisPreSalLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: PrisCntlPreSalCorePset line 1
+  PrisPreSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
 End
 
-PlotSet: PrisDiffPreSalPset line 3
-  PrisDiffPreSalLine TSD_SAL_NODUST    SND  2 blue   - 0
-  PrisDiffPreSalLine TSD_NONSAL_DUST   NSD  2 red    - 0
-  PrisDiffPreSalLine TSD_NONSAL_NODUST NSND 2 green  - 0
+PlotSet: PrisDiffPreSalCorePset line 3
+  PrisDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  PrisDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  PrisDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: PrisCntlSalPset line 1
-  PrisSalLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: PrisCntlSalCorePset line 1
+  PrisSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
 End
 
-PlotSet: PrisDiffSalPset line 3
-  PrisDiffSalLine TSD_SAL_NODUST    SND  2 blue   - 0
-  PrisDiffSalLine TSD_NONSAL_DUST   NSD  2 red    - 0
-  PrisDiffSalLine TSD_NONSAL_NODUST NSND 2 green  - 0
+PlotSet: PrisDiffSalCorePset line 3
+  PrisDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  PrisDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  PrisDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
 ############ PLOT DATA #################
-PlotData: PrisPreSalLine 2
+PlotData: PrisPreSalCoreLine 2
   # x data - pris mix ratio, g/kg
   /ps_core_pris DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
-PlotData: PrisSalLine 2
+PlotData: PrisSalCoreLine 2
   # x data - pris mix ratio, g/kg
   /s_core_pris DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
-PlotData: PrisDiffPreSalLine 2
+PlotData: PrisDiffPreSalCoreLine 2
   # x data - pris mix ratio, g/kg
   /ps_core_pris_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
-PlotData: PrisDiffSalLine 2
+PlotData: PrisDiffSalCoreLine 2
   # x data - pris mix ratio, g/kg
   /s_core_pris_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
@@ -102,7 +102,7 @@ PlotData: PrisDiffSalLine 2
 End
   
 ############ PLOT AXES #################
-PlotAxes: PrisCntlPreSalAxes 2
+PlotAxes: PrisCntlPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - pris mix ratio, g/kg
   Pristine@Ice g@kg^-^1 0 0.04 linear [_] {_}
@@ -110,7 +110,7 @@ PlotAxes: PrisCntlPreSalAxes 2
   Height km 0 15 linear [_] {_}
 End
 
-PlotAxes: PrisDiffPreSalAxes 2
+PlotAxes: PrisDiffPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - pris mix ratio, g/kg
   Pristine@Ice g@kg^-^1 -0.01 0.02 linear [_] {_}
@@ -118,7 +118,7 @@ PlotAxes: PrisDiffPreSalAxes 2
   Height km 0 15 linear [_] {_}
 End
 
-PlotAxes: PrisCntlSalAxes 2
+PlotAxes: PrisCntlSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - pris mix ratio, g/kg
   Pristine@Ice g@kg^-^1 0 0.04 linear [_] {_}
@@ -126,7 +126,7 @@ PlotAxes: PrisCntlSalAxes 2
   Height km 0 15 linear [_] {_}
 End
 
-PlotAxes: PrisDiffSalAxes 2
+PlotAxes: PrisDiffSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - pris mix ratio, g/kg
   Pristine@Ice g@kg^-^1 -0.01 0.02 linear [_] {_}

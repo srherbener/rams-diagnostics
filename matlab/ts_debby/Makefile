@@ -53,6 +53,8 @@ CONFIGS = \
   $(DIAG_DIR)/FigLhfHeatProfileConfig \
   $(DIAG_DIR)/FigLhvCoolProfileConfig \
   $(DIAG_DIR)/FigLhvHeatProfileConfig \
+  $(DIAG_DIR)/FigDnProfileConfig \
+  $(DIAG_DIR)/FigUpProfileConfig \
   $(DIAG_DIR)/FigureConfig
 
 #

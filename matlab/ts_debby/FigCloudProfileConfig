@@ -3,14 +3,14 @@
 #
 
 ######### FIGURES ###################
-Figure: CloudProfile 4
+Figure: CloudCoreProfile 4
   DummyCases
   [2_2]
-  Plots/FigCloudProfile.jpg
-  CloudCntlPreSalPanel  1
-  CloudCntlSalPanel     2
-  CloudDiffPreSalPanel  3
-  CloudDiffSalPanel     4
+  Plots/FigCloudCoreProfile.jpg
+  CloudCntlPreSalCorePanel  1
+  CloudCntlSalCorePanel     2
+  CloudDiffPreSalCorePanel  3
+  CloudDiffSalCorePanel     4
 End 
 
 ########### CASES ####################
@@ -19,82 +19,82 @@ CaseSet: DummyCases 1
 End
 
 ########### PANELS ####################
-FigPanel: CloudCntlPreSalPanel
-  CloudCntlPreSalPset
-  CloudCntlPreSalAxes 1 1
+FigPanel: CloudCntlPreSalCorePanel
+  CloudCntlPreSalCorePset
+  CloudCntlPreSalCoreAxes 1 1
   none 5
-  Pre@SAL 
+  Pre@SAL@Core 
   NorthEast 12
 End
 
-FigPanel: CloudDiffPreSalPanel
-  CloudDiffPreSalPset
-  CloudDiffPreSalAxes 1 1
+FigPanel: CloudDiffPreSalCorePanel
+  CloudDiffPreSalCorePset
+  CloudDiffPreSalCoreAxes 1 1
   none 5
-  Pre@SAL@(diffs)
+  Pre@SAL@Core@(diffs)
   NorthEast 12
 End
 
-FigPanel: CloudCntlSalPanel
-  CloudCntlSalPset
-  CloudCntlSalAxes 1 1
+FigPanel: CloudCntlSalCorePanel
+  CloudCntlSalCorePset
+  CloudCntlSalCoreAxes 1 1
   none 5
-  SAL 
+  SAL@Core 
   NorthEast 12
 End
 
-FigPanel: CloudDiffSalPanel
-  CloudDiffSalPset
-  CloudDiffSalAxes 1 1
+FigPanel: CloudDiffSalCorePanel
+  CloudDiffSalCorePset
+  CloudDiffSalCoreAxes 1 1
   none 5
-  SAL@(diffs)
+  SAL@Core@(diffs)
   NorthEast 12
 End
 
 ############ PLOT SETS #################
-PlotSet: CloudCntlPreSalPset line 1
-  CloudPreSalLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: CloudCntlPreSalCorePset line 1
+  CloudPreSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
 End
 
-PlotSet: CloudDiffPreSalPset line 3
-  CloudDiffPreSalLine TSD_SAL_NODUST    SND  2 blue   - 0
-  CloudDiffPreSalLine TSD_NONSAL_DUST   NSD  2 red    - 0
-  CloudDiffPreSalLine TSD_NONSAL_NODUST NSND 2 green  - 0
+PlotSet: CloudDiffPreSalCorePset line 3
+  CloudDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: CloudCntlSalPset line 1
-  CloudSalLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: CloudCntlSalCorePset line 1
+  CloudSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
 End
 
-PlotSet: CloudDiffSalPset line 3
-  CloudDiffSalLine TSD_SAL_NODUST    SND  2 blue   - 0
-  CloudDiffSalLine TSD_NONSAL_DUST   NSD  2 red    - 0
-  CloudDiffSalLine TSD_NONSAL_NODUST NSND 2 green  - 0
+PlotSet: CloudDiffSalCorePset line 3
+  CloudDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
 ############ PLOT DATA #################
-PlotData: CloudPreSalLine 2
+PlotData: CloudPreSalCoreLine 2
   # x data - cloud mix ratio, g/kg
   /ps_core_cloud DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
-PlotData: CloudSalLine 2
+PlotData: CloudSalCoreLine 2
   # x data - cloud mix ratio, g/kg
   /s_core_cloud DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
-PlotData: CloudDiffPreSalLine 2
+PlotData: CloudDiffPreSalCoreLine 2
   # x data - cloud mix ratio, g/kg
   /ps_core_cloud_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
-PlotData: CloudDiffSalLine 2
+PlotData: CloudDiffSalCoreLine 2
   # x data - cloud mix ratio, g/kg
   /s_core_cloud_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
@@ -102,7 +102,7 @@ PlotData: CloudDiffSalLine 2
 End
   
 ############ PLOT AXES #################
-PlotAxes: CloudCntlPreSalAxes 2
+PlotAxes: CloudCntlPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud mix ratio, g/kg
   Cloud g@kg^-^1 0 0.5 linear [_] {_}
@@ -110,7 +110,7 @@ PlotAxes: CloudCntlPreSalAxes 2
   Height km 0 15 linear [_] {_}
 End
 
-PlotAxes: CloudDiffPreSalAxes 2
+PlotAxes: CloudDiffPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud mix ratio, g/kg
   Cloud g@kg^-^1 -0.20 0.20 linear [_] {_}
@@ -118,7 +118,7 @@ PlotAxes: CloudDiffPreSalAxes 2
   Height km 0 15 linear [_] {_}
 End
 
-PlotAxes: CloudCntlSalAxes 2
+PlotAxes: CloudCntlSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud mix ratio, g/kg
   Cloud g@kg^-^1 0 0.5 linear [_] {_}
@@ -126,7 +126,7 @@ PlotAxes: CloudCntlSalAxes 2
   Height km 0 15 linear [_] {_}
 End
 
-PlotAxes: CloudDiffSalAxes 2
+PlotAxes: CloudDiffSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud mix ratio, g/kg
   Cloud g@kg^-^1 -0.20 0.20 linear [_] {_}

@@ -3,14 +3,14 @@
 #
 
 ######### FIGURES ###################
-Figure: SnowProfile 4
+Figure: SnowCoreProfile 4
   DummyCases
   [2_2]
-  Plots/FigSnowProfile.jpg
-  SnowCntlPreSalPanel  1
-  SnowCntlSalPanel     2
-  SnowDiffPreSalPanel  3
-  SnowDiffSalPanel     4
+  Plots/FigSnowCoreProfile.jpg
+  SnowCntlPreSalCorePanel  1
+  SnowCntlSalCorePanel     2
+  SnowDiffPreSalCorePanel  3
+  SnowDiffSalCorePanel     4
 End 
 
 ########### CASES ####################
@@ -19,82 +19,82 @@ CaseSet: DummyCases 1
 End
 
 ########### PANELS ####################
-FigPanel: SnowCntlPreSalPanel
-  SnowCntlPreSalPset
-  SnowCntlPreSalAxes 1 1
+FigPanel: SnowCntlPreSalCorePanel
+  SnowCntlPreSalCorePset
+  SnowCntlPreSalCoreAxes 1 1
   none 5
-  Pre@SAL 
+  Pre@SAL@Core 
   SouthEast 12
 End
 
-FigPanel: SnowDiffPreSalPanel
-  SnowDiffPreSalPset
-  SnowDiffPreSalAxes 1 1
+FigPanel: SnowDiffPreSalCorePanel
+  SnowDiffPreSalCorePset
+  SnowDiffPreSalCoreAxes 1 1
   none 5
-  Pre@SAL@(diffs)
+  Pre@SAL@Core@(diffs)
   SouthEast 12
 End
 
-FigPanel: SnowCntlSalPanel
-  SnowCntlSalPset
-  SnowCntlSalAxes 1 1
+FigPanel: SnowCntlSalCorePanel
+  SnowCntlSalCorePset
+  SnowCntlSalCoreAxes 1 1
   none 5
-  SAL 
+  SAL@Core 
   SouthEast 12
 End
 
-FigPanel: SnowDiffSalPanel
-  SnowDiffSalPset
-  SnowDiffSalAxes 1 1
+FigPanel: SnowDiffSalCorePanel
+  SnowDiffSalCorePset
+  SnowDiffSalCoreAxes 1 1
   none 5
-  SAL@(diffs)
+  SAL@Core@(diffs)
   SouthEast 12
 End
 
 ############ PLOT SETS #################
-PlotSet: SnowCntlPreSalPset line 1
-  SnowPreSalLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: SnowCntlPreSalCorePset line 1
+  SnowPreSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
 End
 
-PlotSet: SnowDiffPreSalPset line 3
-  SnowDiffPreSalLine TSD_SAL_NODUST    SND  2 blue   - 0
-  SnowDiffPreSalLine TSD_NONSAL_DUST   NSD  2 red    - 0
-  SnowDiffPreSalLine TSD_NONSAL_NODUST NSND 2 green  - 0
+PlotSet: SnowDiffPreSalCorePset line 3
+  SnowDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  SnowDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  SnowDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: SnowCntlSalPset line 1
-  SnowSalLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: SnowCntlSalCorePset line 1
+  SnowSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
 End
 
-PlotSet: SnowDiffSalPset line 3
-  SnowDiffSalLine TSD_SAL_NODUST    SND  2 blue   - 0
-  SnowDiffSalLine TSD_NONSAL_DUST   NSD  2 red    - 0
-  SnowDiffSalLine TSD_NONSAL_NODUST NSND 2 green  - 0
+PlotSet: SnowDiffSalCorePset line 3
+  SnowDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  SnowDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  SnowDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
 ############ PLOT DATA #################
-PlotData: SnowPreSalLine 2
+PlotData: SnowPreSalCoreLine 2
   # x data - snow mix ratio, g/kg
   /ps_core_snow DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
-PlotData: SnowSalLine 2
+PlotData: SnowSalCoreLine 2
   # x data - snow mix ratio, g/kg
   /s_core_snow DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
-PlotData: SnowDiffPreSalLine 2
+PlotData: SnowDiffPreSalCoreLine 2
   # x data - snow mix ratio, g/kg
   /ps_core_snow_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
-PlotData: SnowDiffSalLine 2
+PlotData: SnowDiffSalCoreLine 2
   # x data - snow mix ratio, g/kg
   /s_core_snow_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
@@ -102,7 +102,7 @@ PlotData: SnowDiffSalLine 2
 End
   
 ############ PLOT AXES #################
-PlotAxes: SnowCntlPreSalAxes 2
+PlotAxes: SnowCntlPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - snow mix ratio, g/kg
   Snow g@kg^-^1 0 0.1 linear [_] {_}
@@ -110,7 +110,7 @@ PlotAxes: SnowCntlPreSalAxes 2
   Height km 0 15 linear [_] {_}
 End
 
-PlotAxes: SnowDiffPreSalAxes 2
+PlotAxes: SnowDiffPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - snow mix ratio, g/kg
   Snow g@kg^-^1 -0.05 0.05 linear [_] {_}
@@ -118,7 +118,7 @@ PlotAxes: SnowDiffPreSalAxes 2
   Height km 0 15 linear [_] {_}
 End
 
-PlotAxes: SnowCntlSalAxes 2
+PlotAxes: SnowCntlSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - snow mix ratio, g/kg
   Snow g@kg^-^1 0 0.1 linear [_] {_}
@@ -126,7 +126,7 @@ PlotAxes: SnowCntlSalAxes 2
   Height km 0 15 linear [_] {_}
 End
 
-PlotAxes: SnowDiffSalAxes 2
+PlotAxes: SnowDiffSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - snow mix ratio, g/kg
   Snow g@kg^-^1 -0.05 0.05 linear [_] {_}

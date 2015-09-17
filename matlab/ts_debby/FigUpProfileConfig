@@ -1,0 +1,136 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: UpDraftCoreProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigUpDraftCoreProfile.jpg
+  UpDraftCntlPreSalCorePanel  1
+  UpDraftCntlSalCorePanel     2
+  UpDraftDiffPreSalCorePanel  3
+  UpDraftDiffSalCorePanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: UpDraftCntlPreSalCorePanel
+  UpDraftCntlPreSalCorePset
+  UpDraftCntlPreSalCoreAxes 1 1
+  none 5
+  Pre@SAL@Core 
+  NorthEast 12
+End
+
+FigPanel: UpDraftDiffPreSalCorePanel
+  UpDraftDiffPreSalCorePset
+  UpDraftDiffPreSalCoreAxes 1 1
+  none 5
+  Pre@SAL@Core@(diffs)
+  SouthWest 12
+End
+
+FigPanel: UpDraftCntlSalCorePanel
+  UpDraftCntlSalCorePset
+  UpDraftCntlSalCoreAxes 1 1
+  none 5
+  SAL@Core 
+  NorthEast 12
+End
+
+FigPanel: UpDraftDiffSalCorePanel
+  UpDraftDiffSalCorePset
+  UpDraftDiffSalCoreAxes 1 1
+  none 5
+  SAL@Core@(diffs)
+  SouthEast 12
+End
+
+############ PLOT SETS #################
+PlotSet: UpDraftCntlPreSalCorePset line 1
+  UpDraftPreSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
+End
+
+PlotSet: UpDraftDiffPreSalCorePset line 3
+  UpDraftDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  UpDraftDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  UpDraftDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: UpDraftCntlSalCorePset line 1
+  UpDraftSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
+End
+
+PlotSet: UpDraftDiffSalCorePset line 3
+  UpDraftDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  UpDraftDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  UpDraftDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: UpDraftPreSalCoreLine 2
+  # x data - updraft, m/s
+  /ps_core_updraft DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: UpDraftSalCoreLine 2
+  # x data - updraft, m/s
+  /s_core_updraft DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: UpDraftDiffPreSalCoreLine 2
+  # x data - updraft, m/s
+  /ps_core_updraft_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: UpDraftDiffSalCoreLine 2
+  # x data - updraft, m/s
+  /s_core_updraft_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: UpDraftCntlPreSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - updraft, m/s
+  UpDraft m@s^-^1 -0.01 0.5 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: UpDraftDiffPreSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - updraft, m/s
+  UpDraft m@s^-^1 -0.3 0.3 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: UpDraftCntlSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - updraft, m/s
+  UpDraft m@s^-^1 -0.01 0.5 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: UpDraftDiffSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - updraft, m/s
+  UpDraft m@s^-^1 -0.3 0.3 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+

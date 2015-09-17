@@ -3,14 +3,14 @@
 #
 
 ######### FIGURES ###################
-Figure: RainProfile 4
+Figure: RainCoreProfile 4
   DummyCases
   [2_2]
-  Plots/FigRainProfile.jpg
-  RainCntlPreSalPanel  1
-  RainCntlSalPanel     2
-  RainDiffPreSalPanel  3
-  RainDiffSalPanel     4
+  Plots/FigRainCoreProfile.jpg
+  RainCntlPreSalCorePanel  1
+  RainCntlSalCorePanel     2
+  RainDiffPreSalCorePanel  3
+  RainDiffSalCorePanel     4
 End 
 
 ########### CASES ####################
@@ -19,82 +19,82 @@ CaseSet: DummyCases 1
 End
 
 ########### PANELS ####################
-FigPanel: RainCntlPreSalPanel
-  RainCntlPreSalPset
-  RainCntlPreSalAxes 1 1
+FigPanel: RainCntlPreSalCorePanel
+  RainCntlPreSalCorePset
+  RainCntlPreSalCoreAxes 1 1
   none 5
-  Pre@SAL
+  Pre@SAL@Core
   NorthEast 12
 End
 
-FigPanel: RainDiffPreSalPanel
-  RainDiffPreSalPset
-  RainDiffPreSalAxes 1 1
+FigPanel: RainDiffPreSalCorePanel
+  RainDiffPreSalCorePset
+  RainDiffPreSalCoreAxes 1 1
   none 5
-  Pre@SAL@(diffs)
+  Pre@SAL@Core@(diffs)
   NorthEast 12
 End
 
-FigPanel: RainCntlSalPanel
-  RainCntlSalPset
-  RainCntlSalAxes 1 1
+FigPanel: RainCntlSalCorePanel
+  RainCntlSalCorePset
+  RainCntlSalCoreAxes 1 1
   none 5
-  SAL
+  SAL@Core
   NorthEast 12
 End
 
-FigPanel: RainDiffSalPanel
-  RainDiffSalPset
-  RainDiffSalAxes 1 1
+FigPanel: RainDiffSalCorePanel
+  RainDiffSalCorePset
+  RainDiffSalCoreAxes 1 1
   none 5
-  SAL@(diffs)
+  SAL@Core@(diffs)
   NorthEast 12
 End
 
 ############ PLOT SETS #################
-PlotSet: RainCntlPreSalPset line 1
-  RainPreSalLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: RainCntlPreSalCorePset line 1
+  RainPreSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
 End
 
-PlotSet: RainDiffPreSalPset line 3
-  RainDiffPreSalLine TSD_SAL_NODUST    SND  2 blue   - 0
-  RainDiffPreSalLine TSD_NONSAL_DUST   NSD  2 red    - 0
-  RainDiffPreSalLine TSD_NONSAL_NODUST NSND 2 green  - 0
+PlotSet: RainDiffPreSalCorePset line 3
+  RainDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  RainDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  RainDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: RainCntlSalPset line 1
-  RainSalLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: RainCntlSalCorePset line 1
+  RainSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
 End
 
-PlotSet: RainDiffSalPset line 3
-  RainDiffSalLine TSD_SAL_NODUST    SND  2 blue   - 0
-  RainDiffSalLine TSD_NONSAL_DUST   NSD  2 red    - 0
-  RainDiffSalLine TSD_NONSAL_NODUST NSND 2 green  - 0
+PlotSet: RainDiffSalCorePset line 3
+  RainDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  RainDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  RainDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
 ############ PLOT DATA #################
-PlotData: RainPreSalLine 2
+PlotData: RainPreSalCoreLine 2
   # x data - rain mix ratio, g/kg
   /ps_core_rain DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
-PlotData: RainSalLine 2
+PlotData: RainSalCoreLine 2
   # x data - rain mix ratio, g/kg
   /s_core_rain DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
-PlotData: RainDiffPreSalLine 2
+PlotData: RainDiffPreSalCoreLine 2
   # x data - rain mix ratio, g/kg
   /ps_core_rain_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
-PlotData: RainDiffSalLine 2
+PlotData: RainDiffSalCoreLine 2
   # x data - rain mix ratio, g/kg
   /s_core_rain_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
@@ -102,7 +102,7 @@ PlotData: RainDiffSalLine 2
 End
   
 ############ PLOT AXES #################
-PlotAxes: RainCntlPreSalAxes 2
+PlotAxes: RainCntlPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - rain mix ratio, g/kg
   Rain g@kg^-^1 0 0.5 linear [_] {_}
@@ -110,7 +110,7 @@ PlotAxes: RainCntlPreSalAxes 2
   Height km 0 15 linear [_] {_}
 End
 
-PlotAxes: RainDiffPreSalAxes 2
+PlotAxes: RainDiffPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - rain mix ratio, g/kg
   Rain g@kg^-^1 -0.10 0.10 linear [_] {_}
@@ -118,7 +118,7 @@ PlotAxes: RainDiffPreSalAxes 2
   Height km 0 15 linear [_] {_}
 End
 
-PlotAxes: RainCntlSalAxes 2
+PlotAxes: RainCntlSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - rain mix ratio, g/kg
   Rain g@kg^-^1 0 0.5 linear [_] {_}
@@ -126,7 +126,7 @@ PlotAxes: RainCntlSalAxes 2
   Height km 0 15 linear [_] {_}
 End
 
-PlotAxes: RainDiffSalAxes 2
+PlotAxes: RainDiffSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - rain mix ratio, g/kg
   Rain g@kg^-^1 -0.10 0.10 linear [_] {_}
