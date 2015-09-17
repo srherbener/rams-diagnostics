@@ -49,6 +49,10 @@ CONFIGS = \
   $(DIAG_DIR)/FigAggrProfileConfig \
   $(DIAG_DIR)/FigGraupProfileConfig \
   $(DIAG_DIR)/FigHailProfileConfig \
+  $(DIAG_DIR)/FigLhfCoolProfileConfig \
+  $(DIAG_DIR)/FigLhfHeatProfileConfig \
+  $(DIAG_DIR)/FigLhvCoolProfileConfig \
+  $(DIAG_DIR)/FigLhvHeatProfileConfig \
   $(DIAG_DIR)/FigureConfig
 
 #

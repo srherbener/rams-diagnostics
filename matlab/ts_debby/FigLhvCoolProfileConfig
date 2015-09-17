@@ -1,0 +1,140 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: LhvCoolProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigLhvCoolProfile.jpg
+  LhvCoolCntlPreSalPanel  1
+  LhvCoolCntlSalPanel     2
+  LhvCoolDiffPreSalPanel  3
+  LhvCoolDiffSalPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: LhvCoolCntlPreSalPanel
+  LhvCoolCntlPreSalPset
+  LhvCoolCntlPreSalAxes 1 1
+  none 5
+  Pre@SAL 
+  NorthWest 12
+End
+
+FigPanel: LhvCoolDiffPreSalPanel
+  LhvCoolDiffPreSalPset
+  LhvCoolDiffPreSalAxes 1 1
+  none 5
+  Pre@SAL@(diffs)
+  NorthWest 12
+End
+
+FigPanel: LhvCoolCntlSalPanel
+  LhvCoolCntlSalPset
+  LhvCoolCntlSalAxes 1 1
+  none 5
+  SAL 
+  NorthWest 12
+End
+
+FigPanel: LhvCoolDiffSalPanel
+  LhvCoolDiffSalPset
+  LhvCoolDiffSalAxes 1 1
+  none 5
+  SAL@(diffs)
+  NorthWest 12
+End
+
+############ PLOT SETS #################
+PlotSet: LhvCoolCntlPreSalPset line 1
+  LhvCoolPreSalLine TSD_SAL_DUST SD  2 blue   - 0
+End
+
+PlotSet: LhvCoolDiffPreSalPset line 3
+  LhvCoolDiffPreSalLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhvCoolDiffPreSalLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhvCoolDiffPreSalLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: LhvCoolCntlSalPset line 1
+  LhvCoolSalLine TSD_SAL_DUST SD  2 blue   - 0
+End
+
+PlotSet: LhvCoolDiffSalPset line 3
+  LhvCoolDiffSalLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhvCoolDiffSalLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhvCoolDiffSalLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+# RAMS files are saved on 30 minute intervals, meaning
+# that the values in them are heating rates in units
+# of K/30minutes. Multiply the heating rates by 2 in
+# order to make the units K/h.
+PlotData: LhvCoolPreSalLine 2
+  # x data - lhv_cool mix ratio, K/h
+  /ps_core_lhv_cool DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhvCoolSalLine 2
+  # x data - lhv_cool mix ratio, K/h
+  /s_core_lhv_cool DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhvCoolDiffPreSalLine 2
+  # x data - lhv_cool mix ratio, K/h
+  /ps_core_lhv_cool_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhvCoolDiffSalLine 2
+  # x data - lhv_cool mix ratio, K/h
+  /s_core_lhv_cool_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: LhvCoolCntlPreSalAxes 2
+  14 2 [0.025_0.025]
+  # x axis - lhv_cool mix ratio, K/h
+  LhvCool K@h^-^1 -15 0.1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: LhvCoolDiffPreSalAxes 2
+  14 2 [0.025_0.025]
+  # x axis - lhv_cool mix ratio, K/h
+  LhvCool K@h^-^1 -6 6 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: LhvCoolCntlSalAxes 2
+  14 2 [0.025_0.025]
+  # x axis - lhv_cool mix ratio, K/h
+  LhvCool K@h^-^1 -15 0.1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: LhvCoolDiffSalAxes 2
+  14 2 [0.025_0.025]
+  # x axis - lhv_cool mix ratio, K/h
+  LhvCool K@h^-^1 -6 6 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
