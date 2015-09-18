@@ -109,7 +109,7 @@ End
 PlotAxes: LhfCoolCntlPreSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - lhf_cool mix ratio, K/h
-  LhfCool K@h^-^1 -1 0.1 linear [_] {_}
+  LhfCool K@h^-^1 -0.5 0.1 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End
@@ -117,7 +117,7 @@ End
 PlotAxes: LhfCoolDiffPreSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - lhf_cool mix ratio, K/h
-  LhfCool K@h^-^1 -1 1 linear [_] {_}
+  LhfCool K@h^-^1 -0.5 0.5 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End
@@ -125,7 +125,7 @@ End
 PlotAxes: LhfCoolCntlSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - lhf_cool mix ratio, K/h
-  LhfCool K@h^-^1 -1 0.1 linear [_] {_}
+  LhfCool K@h^-^1 -0.5 0.1 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End
@@ -133,7 +133,7 @@ End
 PlotAxes: LhfCoolDiffSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - lhf_cool mix ratio, K/h
-  LhfCool K@h^-^1 -1 1 linear [_] {_}
+  LhfCool K@h^-^1 -0.5 0.5 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End

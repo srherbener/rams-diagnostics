@@ -48,7 +48,7 @@ FigPanel: UpDraftDiffSalRbandPanel
   UpDraftDiffSalRbandAxes 1 1
   none 5
   SAL@Rband@(diffs)
-  SouthEast 12
+  SouthWest 12
 End
 
 ############ PLOT SETS #################
@@ -105,32 +105,32 @@ End
 PlotAxes: UpDraftCntlPreSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - updraft, m/s
-  UpDraft m@s^-^1 -0.01 0.5 linear [_] {_}
+  UpDraft m@s^-^1 -0.01 0.4 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 20 linear [_] {_}
 End
 
 PlotAxes: UpDraftDiffPreSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - updraft, m/s
-  UpDraft m@s^-^1 -0.3 0.3 linear [_] {_}
+  UpDraft m@s^-^1 -0.2 0.1 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 20 linear [_] {_}
 End
 
 PlotAxes: UpDraftCntlSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - updraft, m/s
-  UpDraft m@s^-^1 -0.01 0.5 linear [_] {_}
+  UpDraft m@s^-^1 -0.01 0.4 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 20 linear [_] {_}
 End
 
 PlotAxes: UpDraftDiffSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - updraft, m/s
-  UpDraft m@s^-^1 -0.3 0.3 linear [_] {_}
+  UpDraft m@s^-^1 -0.2 0.1 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 20 linear [_] {_}
 End
 

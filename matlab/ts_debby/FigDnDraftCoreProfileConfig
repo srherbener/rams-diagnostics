@@ -105,32 +105,32 @@ End
 PlotAxes: DnDraftCntlPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - dndraft, m/s
-  Down@Draft m@s^-^1 -0.3 0.01 linear [_] {_}
+  Down@Draft m@s^-^1 -0.2 0.01 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 20 linear [_] {_}
 End
 
 PlotAxes: DnDraftDiffPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - dndraft, m/s
-  Down@Draft m@s^-^1 -0.2 0.2 linear [_] {_}
+  Down@Draft m@s^-^1 -0.1 0.2 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 20 linear [_] {_}
 End
 
 PlotAxes: DnDraftCntlSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - dndraft, m/s
-  Down@Draft m@s^-^1 -0.3 0.01 linear [_] {_}
+  Down@Draft m@s^-^1 -0.2 0.01 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 20 linear [_] {_}
 End
 
 PlotAxes: DnDraftDiffSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - dndraft, m/s
-  Down@Draft m@s^-^1 -0.2 0.2 linear [_] {_}
+  Down@Draft m@s^-^1 -0.2 0.1 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 20 linear [_] {_}
 End
 
