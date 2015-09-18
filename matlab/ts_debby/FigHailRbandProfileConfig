@@ -1,0 +1,136 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: HailRbandProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigHailRbandProfile.jpg
+  HailCntlPreSalRbandPanel  1
+  HailCntlSalRbandPanel     2
+  HailDiffPreSalRbandPanel  3
+  HailDiffSalRbandPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: HailCntlPreSalRbandPanel
+  HailCntlPreSalRbandPset
+  HailCntlPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband 
+  NorthEast 12
+End
+
+FigPanel: HailDiffPreSalRbandPanel
+  HailDiffPreSalRbandPset
+  HailDiffPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband@(diffs)
+  NorthEast 12
+End
+
+FigPanel: HailCntlSalRbandPanel
+  HailCntlSalRbandPset
+  HailCntlSalRbandAxes 1 1
+  none 5
+  SAL@Rband 
+  NorthEast 12
+End
+
+FigPanel: HailDiffSalRbandPanel
+  HailDiffSalRbandPset
+  HailDiffSalRbandAxes 1 1
+  none 5
+  SAL@Rband@(diffs)
+  NorthEast 12
+End
+
+############ PLOT SETS #################
+PlotSet: HailCntlPreSalRbandPset line 1
+  HailPreSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+End
+
+PlotSet: HailDiffPreSalRbandPset line 3
+  HailDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  HailDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  HailDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: HailCntlSalRbandPset line 1
+  HailSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+End
+
+PlotSet: HailDiffSalRbandPset line 3
+  HailDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  HailDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  HailDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: HailPreSalRbandLine 2
+  # x data - hail mix ratio, g/kg
+  /ps_rb_hail DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: HailSalRbandLine 2
+  # x data - hail mix ratio, g/kg
+  /s_rb_hail DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: HailDiffPreSalRbandLine 2
+  # x data - hail mix ratio, g/kg
+  /ps_rb_hail_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: HailDiffSalRbandLine 2
+  # x data - hail mix ratio, g/kg
+  /s_rb_hail_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: HailCntlPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - hail mix ratio, g/kg
+  Hail g@kg^-^1 0 0.1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: HailDiffPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - hail mix ratio, g/kg
+  Hail g@kg^-^1 -0.05 0.05 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: HailCntlSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - hail mix ratio, g/kg
+  Hail g@kg^-^1 0 0.1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: HailDiffSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - hail mix ratio, g/kg
+  Hail g@kg^-^1 -0.05 0.05 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+

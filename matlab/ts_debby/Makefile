@@ -55,6 +55,19 @@ CONFIGS = \
   $(DIAG_DIR)/FigLhvHeatCoreProfileConfig \
   $(DIAG_DIR)/FigDnDraftCoreProfileConfig \
   $(DIAG_DIR)/FigUpDraftCoreProfileConfig \
+  $(DIAG_DIR)/FigCloudRbandProfileConfig \
+  $(DIAG_DIR)/FigRainRbandProfileConfig \
+  $(DIAG_DIR)/FigPrisRbandProfileConfig \
+  $(DIAG_DIR)/FigSnowRbandProfileConfig \
+  $(DIAG_DIR)/FigAggrRbandProfileConfig \
+  $(DIAG_DIR)/FigGraupRbandProfileConfig \
+  $(DIAG_DIR)/FigHailRbandProfileConfig \
+  $(DIAG_DIR)/FigLhfCoolRbandProfileConfig \
+  $(DIAG_DIR)/FigLhfHeatRbandProfileConfig \
+  $(DIAG_DIR)/FigLhvCoolRbandProfileConfig \
+  $(DIAG_DIR)/FigLhvHeatRbandProfileConfig \
+  $(DIAG_DIR)/FigDnDraftRbandProfileConfig \
+  $(DIAG_DIR)/FigUpDraftRbandProfileConfig \
   $(DIAG_DIR)/FigureConfig
 
 #

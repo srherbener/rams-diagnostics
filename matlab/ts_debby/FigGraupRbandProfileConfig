@@ -1,0 +1,136 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: GraupRbandProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigGraupRbandProfile.jpg
+  GraupCntlPreSalRbandPanel  1
+  GraupCntlSalRbandPanel     2
+  GraupDiffPreSalRbandPanel  3
+  GraupDiffSalRbandPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: GraupCntlPreSalRbandPanel
+  GraupCntlPreSalRbandPset
+  GraupCntlPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband 
+  SouthEast 12
+End
+
+FigPanel: GraupDiffPreSalRbandPanel
+  GraupDiffPreSalRbandPset
+  GraupDiffPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband@(diffs)
+  SouthEast 12
+End
+
+FigPanel: GraupCntlSalRbandPanel
+  GraupCntlSalRbandPset
+  GraupCntlSalRbandAxes 1 1
+  none 5
+  SAL@Rband 
+  SouthEast 12
+End
+
+FigPanel: GraupDiffSalRbandPanel
+  GraupDiffSalRbandPset
+  GraupDiffSalRbandAxes 1 1
+  none 5
+  SAL@Rband@(diffs)
+  SouthEast 12
+End
+
+############ PLOT SETS #################
+PlotSet: GraupCntlPreSalRbandPset line 1
+  GraupPreSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+End
+
+PlotSet: GraupDiffPreSalRbandPset line 3
+  GraupDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  GraupDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  GraupDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: GraupCntlSalRbandPset line 1
+  GraupSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+End
+
+PlotSet: GraupDiffSalRbandPset line 3
+  GraupDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  GraupDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  GraupDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: GraupPreSalRbandLine 2
+  # x data - graup mix ratio, g/kg
+  /ps_rb_graup DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: GraupSalRbandLine 2
+  # x data - graup mix ratio, g/kg
+  /s_rb_graup DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: GraupDiffPreSalRbandLine 2
+  # x data - graup mix ratio, g/kg
+  /ps_rb_graup_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: GraupDiffSalRbandLine 2
+  # x data - graup mix ratio, g/kg
+  /s_rb_graup_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: GraupCntlPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - graup mix ratio, g/kg
+  Graupel g@kg^-^1 0 0.1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: GraupDiffPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - graup mix ratio, g/kg
+  Graupel g@kg^-^1 -0.05 0.05 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: GraupCntlSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - graup mix ratio, g/kg
+  Graupel g@kg^-^1 0 0.1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: GraupDiffSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - graup mix ratio, g/kg
+  Graupel g@kg^-^1 -0.05 0.05 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+

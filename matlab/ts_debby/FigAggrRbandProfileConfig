@@ -1,0 +1,136 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: AggrRbandProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigAggrRbandProfile.jpg
+  AggrCntlPreSalRbandPanel  1
+  AggrCntlSalRbandPanel     2
+  AggrDiffPreSalRbandPanel  3
+  AggrDiffSalRbandPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: AggrCntlPreSalRbandPanel
+  AggrCntlPreSalRbandPset
+  AggrCntlPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband
+  SouthEast 12
+End
+
+FigPanel: AggrDiffPreSalRbandPanel
+  AggrDiffPreSalRbandPset
+  AggrDiffPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband@(diffs)
+  SouthEast 12
+End
+
+FigPanel: AggrCntlSalRbandPanel
+  AggrCntlSalRbandPset
+  AggrCntlSalRbandAxes 1 1
+  none 5
+  SAL@Rband 
+  SouthEast 12
+End
+
+FigPanel: AggrDiffSalRbandPanel
+  AggrDiffSalRbandPset
+  AggrDiffSalRbandAxes 1 1
+  none 5
+  SAL@Rband@(diffs)
+  SouthEast 12
+End
+
+############ PLOT SETS #################
+PlotSet: AggrCntlPreSalRbandPset line 1
+  AggrPreSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+End
+
+PlotSet: AggrDiffPreSalRbandPset line 3
+  AggrDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  AggrDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  AggrDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: AggrCntlSalRbandPset line 1
+  AggrSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+End
+
+PlotSet: AggrDiffSalRbandPset line 3
+  AggrDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  AggrDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  AggrDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: AggrPreSalRbandLine 2
+  # x data - aggr mix ratio, g/kg
+  /ps_rb_aggr DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: AggrSalRbandLine 2
+  # x data - aggr mix ratio, g/kg
+  /s_rb_aggr DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: AggrDiffPreSalRbandLine 2
+  # x data - aggr mix ratio, g/kg
+  /ps_rb_aggr_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: AggrDiffSalRbandLine 2
+  # x data - aggr mix ratio, g/kg
+  /s_rb_aggr_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: AggrCntlPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - aggr mix ratio, g/kg
+  Aggregates g@kg^-^1 0 0.3 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: AggrDiffPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - aggr mix ratio, g/kg
+  Aggregates g@kg^-^1 -0.15 0.15 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: AggrCntlSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - aggr mix ratio, g/kg
+  Aggregates g@kg^-^1 0 0.3 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: AggrDiffSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - aggr mix ratio, g/kg
+  Aggregates g@kg^-^1 -0.15 0.15 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+

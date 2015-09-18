@@ -1,0 +1,136 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: PrisRbandProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigPrisRbandProfile.jpg
+  PrisCntlPreSalRbandPanel  1
+  PrisCntlSalRbandPanel     2
+  PrisDiffPreSalRbandPanel  3
+  PrisDiffSalRbandPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: PrisCntlPreSalRbandPanel
+  PrisCntlPreSalRbandPset
+  PrisCntlPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband 
+  SouthEast 12
+End
+
+FigPanel: PrisDiffPreSalRbandPanel
+  PrisDiffPreSalRbandPset
+  PrisDiffPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband@(diffs)
+  SouthEast 12
+End
+
+FigPanel: PrisCntlSalRbandPanel
+  PrisCntlSalRbandPset
+  PrisCntlSalRbandAxes 1 1
+  none 5
+  SAL@Rband 
+  SouthEast 12
+End
+
+FigPanel: PrisDiffSalRbandPanel
+  PrisDiffSalRbandPset
+  PrisDiffSalRbandAxes 1 1
+  none 5
+  SAL@Rband@(diffs)
+  SouthEast 12
+End
+
+############ PLOT SETS #################
+PlotSet: PrisCntlPreSalRbandPset line 1
+  PrisPreSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+End
+
+PlotSet: PrisDiffPreSalRbandPset line 3
+  PrisDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  PrisDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  PrisDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: PrisCntlSalRbandPset line 1
+  PrisSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+End
+
+PlotSet: PrisDiffSalRbandPset line 3
+  PrisDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  PrisDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  PrisDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: PrisPreSalRbandLine 2
+  # x data - pris mix ratio, g/kg
+  /ps_rb_pris DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: PrisSalRbandLine 2
+  # x data - pris mix ratio, g/kg
+  /s_rb_pris DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: PrisDiffPreSalRbandLine 2
+  # x data - pris mix ratio, g/kg
+  /ps_rb_pris_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: PrisDiffSalRbandLine 2
+  # x data - pris mix ratio, g/kg
+  /s_rb_pris_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: PrisCntlPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - pris mix ratio, g/kg
+  Pristine@Ice g@kg^-^1 0 0.04 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: PrisDiffPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - pris mix ratio, g/kg
+  Pristine@Ice g@kg^-^1 -0.01 0.02 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: PrisCntlSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - pris mix ratio, g/kg
+  Pristine@Ice g@kg^-^1 0 0.04 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: PrisDiffSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - pris mix ratio, g/kg
+  Pristine@Ice g@kg^-^1 -0.01 0.02 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+

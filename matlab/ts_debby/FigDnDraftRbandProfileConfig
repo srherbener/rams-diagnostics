@@ -1,0 +1,136 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: DnDraftRbandProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigDnDraftRbandProfile.jpg
+  DnDraftCntlPreSalRbandPanel  1
+  DnDraftCntlSalRbandPanel     2
+  DnDraftDiffPreSalRbandPanel  3
+  DnDraftDiffSalRbandPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: DnDraftCntlPreSalRbandPanel
+  DnDraftCntlPreSalRbandPset
+  DnDraftCntlPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband 
+  NorthWest 12
+End
+
+FigPanel: DnDraftDiffPreSalRbandPanel
+  DnDraftDiffPreSalRbandPset
+  DnDraftDiffPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband@(diffs)
+  NorthEast 12
+End
+
+FigPanel: DnDraftCntlSalRbandPanel
+  DnDraftCntlSalRbandPset
+  DnDraftCntlSalRbandAxes 1 1
+  none 5
+  SAL@Rband 
+  NorthWest 12
+End
+
+FigPanel: DnDraftDiffSalRbandPanel
+  DnDraftDiffSalRbandPset
+  DnDraftDiffSalRbandAxes 1 1
+  none 5
+  SAL@Rband@(diffs)
+  NorthWest 12
+End
+
+############ PLOT SETS #################
+PlotSet: DnDraftCntlPreSalRbandPset line 1
+  DnDraftPreSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+End
+
+PlotSet: DnDraftDiffPreSalRbandPset line 3
+  DnDraftDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  DnDraftDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  DnDraftDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: DnDraftCntlSalRbandPset line 1
+  DnDraftSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+End
+
+PlotSet: DnDraftDiffSalRbandPset line 3
+  DnDraftDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  DnDraftDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  DnDraftDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: DnDraftPreSalRbandLine 2
+  # x data - dndraft, m/s
+  /ps_rb_dndraft DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: DnDraftSalRbandLine 2
+  # x data - dndraft, m/s
+  /s_rb_dndraft DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: DnDraftDiffPreSalRbandLine 2
+  # x data - dndraft, m/s
+  /ps_rb_dndraft_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: DnDraftDiffSalRbandLine 2
+  # x data - dndraft, m/s
+  /s_rb_dndraft_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: DnDraftCntlPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - dndraft, m/s
+  Down@Draft m@s^-^1 -0.3 0.01 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: DnDraftDiffPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - dndraft, m/s
+  Down@Draft m@s^-^1 -0.2 0.2 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: DnDraftCntlSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - dndraft, m/s
+  Down@Draft m@s^-^1 -0.3 0.01 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: DnDraftDiffSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - dndraft, m/s
+  Down@Draft m@s^-^1 -0.2 0.2 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+

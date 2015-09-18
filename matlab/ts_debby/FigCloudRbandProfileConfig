@@ -1,0 +1,136 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: CloudRbandProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigCloudRbandProfile.jpg
+  CloudCntlPreSalRbandPanel  1
+  CloudCntlSalRbandPanel     2
+  CloudDiffPreSalRbandPanel  3
+  CloudDiffSalRbandPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: CloudCntlPreSalRbandPanel
+  CloudCntlPreSalRbandPset
+  CloudCntlPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband 
+  NorthEast 12
+End
+
+FigPanel: CloudDiffPreSalRbandPanel
+  CloudDiffPreSalRbandPset
+  CloudDiffPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband@(diffs)
+  NorthEast 12
+End
+
+FigPanel: CloudCntlSalRbandPanel
+  CloudCntlSalRbandPset
+  CloudCntlSalRbandAxes 1 1
+  none 5
+  SAL@Rband 
+  NorthEast 12
+End
+
+FigPanel: CloudDiffSalRbandPanel
+  CloudDiffSalRbandPset
+  CloudDiffSalRbandAxes 1 1
+  none 5
+  SAL@Rband@(diffs)
+  NorthEast 12
+End
+
+############ PLOT SETS #################
+PlotSet: CloudCntlPreSalRbandPset line 1
+  CloudPreSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+End
+
+PlotSet: CloudDiffPreSalRbandPset line 3
+  CloudDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudCntlSalRbandPset line 1
+  CloudSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+End
+
+PlotSet: CloudDiffSalRbandPset line 3
+  CloudDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: CloudPreSalRbandLine 2
+  # x data - cloud mix ratio, g/kg
+  /ps_rb_cloud DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudSalRbandLine 2
+  # x data - cloud mix ratio, g/kg
+  /s_rb_cloud DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudDiffPreSalRbandLine 2
+  # x data - cloud mix ratio, g/kg
+  /ps_rb_cloud_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudDiffSalRbandLine 2
+  # x data - cloud mix ratio, g/kg
+  /s_rb_cloud_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: CloudCntlPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud mix ratio, g/kg
+  Cloud g@kg^-^1 0 0.5 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: CloudDiffPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud mix ratio, g/kg
+  Cloud g@kg^-^1 -0.20 0.20 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: CloudCntlSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud mix ratio, g/kg
+  Cloud g@kg^-^1 0 0.5 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: CloudDiffSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud mix ratio, g/kg
+  Cloud g@kg^-^1 -0.20 0.20 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+

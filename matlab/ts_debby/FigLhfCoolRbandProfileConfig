@@ -1,0 +1,140 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: LhfCoolRbandProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigLhfCoolRbandProfile.jpg
+  LhfCoolCntlPreSalRbandPanel  1
+  LhfCoolCntlSalRbandPanel     2
+  LhfCoolDiffPreSalRbandPanel  3
+  LhfCoolDiffSalRbandPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: LhfCoolCntlPreSalRbandPanel
+  LhfCoolCntlPreSalRbandPset
+  LhfCoolCntlPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband 
+  NorthWest 12
+End
+
+FigPanel: LhfCoolDiffPreSalRbandPanel
+  LhfCoolDiffPreSalRbandPset
+  LhfCoolDiffPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband@(diffs)
+  NorthWest 12
+End
+
+FigPanel: LhfCoolCntlSalRbandPanel
+  LhfCoolCntlSalRbandPset
+  LhfCoolCntlSalRbandAxes 1 1
+  none 5
+  SAL@Rband 
+  NorthWest 12
+End
+
+FigPanel: LhfCoolDiffSalRbandPanel
+  LhfCoolDiffSalRbandPset
+  LhfCoolDiffSalRbandAxes 1 1
+  none 5
+  SAL@Rband@(diffs)
+  NorthWest 12
+End
+
+############ PLOT SETS #################
+PlotSet: LhfCoolCntlPreSalRbandPset line 1
+  LhfCoolPreSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+End
+
+PlotSet: LhfCoolDiffPreSalRbandPset line 3
+  LhfCoolDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhfCoolDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhfCoolDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: LhfCoolCntlSalRbandPset line 1
+  LhfCoolSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+End
+
+PlotSet: LhfCoolDiffSalRbandPset line 3
+  LhfCoolDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhfCoolDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhfCoolDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+# RAMS files are saved on 30 minute intervals, meaning
+# that the values in them are heating rates in units
+# of K/30minutes. Multiply the heating rates by 2 in
+# order to make the units K/h.
+PlotData: LhfCoolPreSalRbandLine 2
+  # x data - lhf_cool mix ratio, K/h
+  /ps_rb_lhf_cool DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhfCoolSalRbandLine 2
+  # x data - lhf_cool mix ratio, K/h
+  /s_rb_lhf_cool DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhfCoolDiffPreSalRbandLine 2
+  # x data - lhf_cool mix ratio, K/h
+  /ps_rb_lhf_cool_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhfCoolDiffSalRbandLine 2
+  # x data - lhf_cool mix ratio, K/h
+  /s_rb_lhf_cool_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: LhfCoolCntlPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - lhf_cool mix ratio, K/h
+  LhfCool K@h^-^1 -1 0.1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: LhfCoolDiffPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - lhf_cool mix ratio, K/h
+  LhfCool K@h^-^1 -1 1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: LhfCoolCntlSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - lhf_cool mix ratio, K/h
+  LhfCool K@h^-^1 -1 0.1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: LhfCoolDiffSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - lhf_cool mix ratio, K/h
+  LhfCool K@h^-^1 -1 1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+

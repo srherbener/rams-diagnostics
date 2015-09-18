@@ -1,0 +1,136 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: SnowRbandProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigSnowRbandProfile.jpg
+  SnowCntlPreSalRbandPanel  1
+  SnowCntlSalRbandPanel     2
+  SnowDiffPreSalRbandPanel  3
+  SnowDiffSalRbandPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: SnowCntlPreSalRbandPanel
+  SnowCntlPreSalRbandPset
+  SnowCntlPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband 
+  SouthEast 12
+End
+
+FigPanel: SnowDiffPreSalRbandPanel
+  SnowDiffPreSalRbandPset
+  SnowDiffPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband@(diffs)
+  SouthEast 12
+End
+
+FigPanel: SnowCntlSalRbandPanel
+  SnowCntlSalRbandPset
+  SnowCntlSalRbandAxes 1 1
+  none 5
+  SAL@Rband 
+  SouthEast 12
+End
+
+FigPanel: SnowDiffSalRbandPanel
+  SnowDiffSalRbandPset
+  SnowDiffSalRbandAxes 1 1
+  none 5
+  SAL@Rband@(diffs)
+  SouthEast 12
+End
+
+############ PLOT SETS #################
+PlotSet: SnowCntlPreSalRbandPset line 1
+  SnowPreSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+End
+
+PlotSet: SnowDiffPreSalRbandPset line 3
+  SnowDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  SnowDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  SnowDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: SnowCntlSalRbandPset line 1
+  SnowSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+End
+
+PlotSet: SnowDiffSalRbandPset line 3
+  SnowDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  SnowDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  SnowDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: SnowPreSalRbandLine 2
+  # x data - snow mix ratio, g/kg
+  /ps_rb_snow DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: SnowSalRbandLine 2
+  # x data - snow mix ratio, g/kg
+  /s_rb_snow DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: SnowDiffPreSalRbandLine 2
+  # x data - snow mix ratio, g/kg
+  /ps_rb_snow_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: SnowDiffSalRbandLine 2
+  # x data - snow mix ratio, g/kg
+  /s_rb_snow_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: SnowCntlPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - snow mix ratio, g/kg
+  Snow g@kg^-^1 0 0.1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: SnowDiffPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - snow mix ratio, g/kg
+  Snow g@kg^-^1 -0.05 0.05 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: SnowCntlSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - snow mix ratio, g/kg
+  Snow g@kg^-^1 0 0.1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: SnowDiffSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - snow mix ratio, g/kg
+  Snow g@kg^-^1 -0.05 0.05 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
