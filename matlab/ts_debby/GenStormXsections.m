@@ -67,6 +67,9 @@ function [ ] = GenStormXsections()
     { 'DIAGS/hist_meas_hail_<CASE>.h5' '/ps_avg_hail'  '/ps_hail' }
     { 'DIAGS/hist_meas_hail_<CASE>.h5' '/s_avg_hail'  '/s_hail' }
 
+    { 'DIAGS/hist_meas_tcond_<CASE>.h5' '/ps_avg_tcond'  '/ps_tcond' }
+    { 'DIAGS/hist_meas_tcond_<CASE>.h5' '/s_avg_tcond'  '/s_tcond' }
+
     { 'DIAGS/hist_meas_lhf_cool_<CASE>.h5' '/ps_avg_lhf_cool'  '/ps_lhf_cool' }
     { 'DIAGS/hist_meas_lhf_heat_<CASE>.h5' '/ps_avg_lhf_heat'  '/ps_lhf_heat' }
     { 'DIAGS/hist_meas_lhf_cool_<CASE>.h5' '/s_avg_lhf_cool'  '/s_lhf_cool' }

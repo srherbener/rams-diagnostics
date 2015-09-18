@@ -1,0 +1,136 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: TcondCoreProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigTcondCoreProfile.jpg
+  TcondCntlPreSalCorePanel  1
+  TcondCntlSalCorePanel     2
+  TcondDiffPreSalCorePanel  3
+  TcondDiffSalCorePanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: TcondCntlPreSalCorePanel
+  TcondCntlPreSalCorePset
+  TcondCntlPreSalCoreAxes 1 1
+  none 5
+  Pre@SAL@Core 
+  NorthEast 12
+End
+
+FigPanel: TcondDiffPreSalCorePanel
+  TcondDiffPreSalCorePset
+  TcondDiffPreSalCoreAxes 1 1
+  none 5
+  Pre@SAL@Core@(diffs)
+  NorthWest 12
+End
+
+FigPanel: TcondCntlSalCorePanel
+  TcondCntlSalCorePset
+  TcondCntlSalCoreAxes 1 1
+  none 5
+  SAL@Core 
+  NorthEast 12
+End
+
+FigPanel: TcondDiffSalCorePanel
+  TcondDiffSalCorePset
+  TcondDiffSalCoreAxes 1 1
+  none 5
+  SAL@Core@(diffs)
+  NorthWest 12
+End
+
+############ PLOT SETS #################
+PlotSet: TcondCntlPreSalCorePset line 1
+  TcondPreSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
+End
+
+PlotSet: TcondDiffPreSalCorePset line 3
+  TcondDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  TcondDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  TcondDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: TcondCntlSalCorePset line 1
+  TcondSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
+End
+
+PlotSet: TcondDiffSalCorePset line 3
+  TcondDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  TcondDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  TcondDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: TcondPreSalCoreLine 2
+  # x data - tcond mix ratio, g/kg
+  /ps_core_tcond DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: TcondSalCoreLine 2
+  # x data - tcond mix ratio, g/kg
+  /s_core_tcond DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: TcondDiffPreSalCoreLine 2
+  # x data - tcond mix ratio, g/kg
+  /ps_core_tcond_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: TcondDiffSalCoreLine 2
+  # x data - tcond mix ratio, g/kg
+  /s_core_tcond_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: TcondCntlPreSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - tcond mix ratio, g/kg
+  Tcond g@kg^-^1 0 1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: TcondDiffPreSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - tcond mix ratio, g/kg
+  Tcond g@kg^-^1 -0.5 0.5 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: TcondCntlSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - tcond mix ratio, g/kg
+  Tcond g@kg^-^1 0 1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: TcondDiffSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - tcond mix ratio, g/kg
+  Tcond g@kg^-^1 -0.5 0.5 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+

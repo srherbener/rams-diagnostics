@@ -108,6 +108,11 @@ function [ ] = GenStormProfiles()
     { 'DIAGS/hist_meas_hail_<CASE>.h5' '/s_core_avg_hail'  '/s_core_hail'  }
     { 'DIAGS/hist_meas_hail_<CASE>.h5' '/s_rb_avg_hail'  '/s_rb_hail'  }
 
+    { 'DIAGS/hist_meas_tcond_<CASE>.h5' '/ps_core_avg_tcond'  '/ps_core_tcond'  }
+    { 'DIAGS/hist_meas_tcond_<CASE>.h5' '/ps_rb_avg_tcond'  '/ps_rb_tcond'  }
+    { 'DIAGS/hist_meas_tcond_<CASE>.h5' '/s_core_avg_tcond'  '/s_core_tcond'  }
+    { 'DIAGS/hist_meas_tcond_<CASE>.h5' '/s_rb_avg_tcond'  '/s_rb_tcond'  }
+
     { 'DIAGS/hist_meas_lhf_cool_<CASE>.h5' '/ps_core_avg_lhf_cool'  '/ps_core_lhf_cool'  }
     { 'DIAGS/hist_meas_lhf_cool_<CASE>.h5' '/ps_rb_avg_lhf_cool'  '/ps_rb_lhf_cool'  }
     { 'DIAGS/hist_meas_lhf_cool_<CASE>.h5' '/s_core_avg_lhf_cool'  '/s_core_lhf_cool'  }

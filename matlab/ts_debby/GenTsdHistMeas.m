@@ -203,109 +203,124 @@ function [ ] = GenTsdHistMeas()
 %      'DIAGS/hist_meas_dust_<CASE>.h5'
 %    }
 %
-    % cloud
-    {
-      'Cloud'
-     {
-        { 'AzAveragedData/hist_cloud_<CASE>.h5' '/cloud' 'wtmean'  0.0  '/avg_cloud'         'all'        0 450   0 60 'ge' 0.01 }
-        { 'AzAveragedData/hist_cloud_<CASE>.h5' '/cloud' 'wtmean'  0.0  '/ps_avg_cloud'      'xsection'   0 450  10 30 'ge' 0.01 }
-        { 'AzAveragedData/hist_cloud_<CASE>.h5' '/cloud' 'wtmean'  0.0  '/s_avg_cloud'       'xsection'   0 450  40 60 'ge' 0.01 }
-        { 'AzAveragedData/hist_cloud_<CASE>.h5' '/cloud' 'wtmean'  0.0  '/ps_core_avg_cloud' 'profile'    0 100  10 30 'ge' 0.01 }
-        { 'AzAveragedData/hist_cloud_<CASE>.h5' '/cloud' 'wtmean'  0.0  '/s_core_avg_cloud'  'profile'    0 100  40 60 'ge' 0.01 }
-        { 'AzAveragedData/hist_cloud_<CASE>.h5' '/cloud' 'wtmean'  0.0  '/ps_rb_avg_cloud'   'profile'  100 250  10 30 'ge' 0.01 }
-        { 'AzAveragedData/hist_cloud_<CASE>.h5' '/cloud' 'wtmean'  0.0  '/s_rb_avg_cloud'    'profile'  100 250  40 60 'ge' 0.01 }
-      }
-      'DIAGS/hist_meas_cloud_<CASE>.h5'
-    }
+%    % cloud
+%    {
+%      'Cloud'
+%     {
+%        { 'AzAveragedData/hist_cloud_<CASE>.h5' '/cloud' 'wtmean'  0.0  '/avg_cloud'         'all'        0 450   0 60 'ge' 0.01 }
+%        { 'AzAveragedData/hist_cloud_<CASE>.h5' '/cloud' 'wtmean'  0.0  '/ps_avg_cloud'      'xsection'   0 450  10 30 'ge' 0.01 }
+%        { 'AzAveragedData/hist_cloud_<CASE>.h5' '/cloud' 'wtmean'  0.0  '/s_avg_cloud'       'xsection'   0 450  40 60 'ge' 0.01 }
+%        { 'AzAveragedData/hist_cloud_<CASE>.h5' '/cloud' 'wtmean'  0.0  '/ps_core_avg_cloud' 'profile'    0 100  10 30 'ge' 0.01 }
+%        { 'AzAveragedData/hist_cloud_<CASE>.h5' '/cloud' 'wtmean'  0.0  '/s_core_avg_cloud'  'profile'    0 100  40 60 'ge' 0.01 }
+%        { 'AzAveragedData/hist_cloud_<CASE>.h5' '/cloud' 'wtmean'  0.0  '/ps_rb_avg_cloud'   'profile'  100 250  10 30 'ge' 0.01 }
+%        { 'AzAveragedData/hist_cloud_<CASE>.h5' '/cloud' 'wtmean'  0.0  '/s_rb_avg_cloud'    'profile'  100 250  40 60 'ge' 0.01 }
+%      }
+%      'DIAGS/hist_meas_cloud_<CASE>.h5'
+%    }
+%
+%    % rain
+%    {
+%      'Rain'
+%     {
+%        { 'AzAveragedData/hist_rain_<CASE>.h5' '/rain' 'wtmean'  0.0  '/avg_rain'         'all'        0 450   0 60 'ge' 0.01 }
+%        { 'AzAveragedData/hist_rain_<CASE>.h5' '/rain' 'wtmean'  0.0  '/ps_avg_rain'      'xsection'   0 450  10 30 'ge' 0.01 }
+%        { 'AzAveragedData/hist_rain_<CASE>.h5' '/rain' 'wtmean'  0.0  '/s_avg_rain'       'xsection'   0 450  40 60 'ge' 0.01 }
+%        { 'AzAveragedData/hist_rain_<CASE>.h5' '/rain' 'wtmean'  0.0  '/ps_core_avg_rain' 'profile'    0 100  10 30 'ge' 0.01 }
+%        { 'AzAveragedData/hist_rain_<CASE>.h5' '/rain' 'wtmean'  0.0  '/s_core_avg_rain'  'profile'    0 100  40 60 'ge' 0.01 }
+%        { 'AzAveragedData/hist_rain_<CASE>.h5' '/rain' 'wtmean'  0.0  '/ps_rb_avg_rain'   'profile'  100 250  10 30 'ge' 0.01 }
+%        { 'AzAveragedData/hist_rain_<CASE>.h5' '/rain' 'wtmean'  0.0  '/s_rb_avg_rain'    'profile'  100 250  40 60 'ge' 0.01 }
+%      }
+%      'DIAGS/hist_meas_rain_<CASE>.h5'
+%    }
+%
+%    % pristine ice
+%    {
+%      'Pristine'
+%     {
+%        { 'AzAveragedData/hist_pris_<CASE>.h5' '/pris' 'wtmean'  0.0  '/avg_pris'         'all'        0 450   0 60 'ge' 0.01 }
+%        { 'AzAveragedData/hist_pris_<CASE>.h5' '/pris' 'wtmean'  0.0  '/ps_avg_pris'      'xsection'   0 450  10 30 'ge' 0.01 }
+%        { 'AzAveragedData/hist_pris_<CASE>.h5' '/pris' 'wtmean'  0.0  '/s_avg_pris'       'xsection'   0 450  40 60 'ge' 0.01 }
+%        { 'AzAveragedData/hist_pris_<CASE>.h5' '/pris' 'wtmean'  0.0  '/ps_core_avg_pris' 'profile'    0 100  10 30 'ge' 0.01 }
+%        { 'AzAveragedData/hist_pris_<CASE>.h5' '/pris' 'wtmean'  0.0  '/s_core_avg_pris'  'profile'    0 100  40 60 'ge' 0.01 }
+%        { 'AzAveragedData/hist_pris_<CASE>.h5' '/pris' 'wtmean'  0.0  '/ps_rb_avg_pris'   'profile'  100 250  10 30 'ge' 0.01 }
+%        { 'AzAveragedData/hist_pris_<CASE>.h5' '/pris' 'wtmean'  0.0  '/s_rb_avg_pris'    'profile'  100 250  40 60 'ge' 0.01 }
+%      }
+%      'DIAGS/hist_meas_pris_<CASE>.h5'
+%    }
+%
+%    % aggregates
+%    {
+%      'Aggregates'
+%     {
+%        { 'AzAveragedData/hist_aggr_<CASE>.h5' '/aggr' 'wtmean'  0.0  '/avg_aggr'         'all'        0 450   0 60 'ge' 0.01 }
+%        { 'AzAveragedData/hist_aggr_<CASE>.h5' '/aggr' 'wtmean'  0.0  '/ps_avg_aggr'      'xsection'   0 450  10 30 'ge' 0.01 }
+%        { 'AzAveragedData/hist_aggr_<CASE>.h5' '/aggr' 'wtmean'  0.0  '/s_avg_aggr'       'xsection'   0 450  40 60 'ge' 0.01 }
+%        { 'AzAveragedData/hist_aggr_<CASE>.h5' '/aggr' 'wtmean'  0.0  '/ps_core_avg_aggr' 'profile'    0 100  10 30 'ge' 0.01 }
+%        { 'AzAveragedData/hist_aggr_<CASE>.h5' '/aggr' 'wtmean'  0.0  '/s_core_avg_aggr'  'profile'    0 100  40 60 'ge' 0.01 }
+%        { 'AzAveragedData/hist_aggr_<CASE>.h5' '/aggr' 'wtmean'  0.0  '/ps_rb_avg_aggr'   'profile'  100 250  10 30 'ge' 0.01 }
+%        { 'AzAveragedData/hist_aggr_<CASE>.h5' '/aggr' 'wtmean'  0.0  '/s_rb_avg_aggr'    'profile'  100 250  40 60 'ge' 0.01 }
+%      }
+%      'DIAGS/hist_meas_aggr_<CASE>.h5'
+%    }
+%
+%    % snow
+%    {
+%      'Snow'
+%     {
+%        { 'AzAveragedData/hist_snow_<CASE>.h5' '/snow' 'wtmean'  0.0  '/avg_snow'         'all'        0 450   0 60 'ge' 0.01 }
+%        { 'AzAveragedData/hist_snow_<CASE>.h5' '/snow' 'wtmean'  0.0  '/ps_avg_snow'      'xsection'   0 450  10 30 'ge' 0.01 }
+%        { 'AzAveragedData/hist_snow_<CASE>.h5' '/snow' 'wtmean'  0.0  '/s_avg_snow'       'xsection'   0 450  40 60 'ge' 0.01 }
+%        { 'AzAveragedData/hist_snow_<CASE>.h5' '/snow' 'wtmean'  0.0  '/ps_core_avg_snow' 'profile'    0 100  10 30 'ge' 0.01 }
+%        { 'AzAveragedData/hist_snow_<CASE>.h5' '/snow' 'wtmean'  0.0  '/s_core_avg_snow'  'profile'    0 100  40 60 'ge' 0.01 }
+%        { 'AzAveragedData/hist_snow_<CASE>.h5' '/snow' 'wtmean'  0.0  '/ps_rb_avg_snow'   'profile'  100 250  10 30 'ge' 0.01 }
+%        { 'AzAveragedData/hist_snow_<CASE>.h5' '/snow' 'wtmean'  0.0  '/s_rb_avg_snow'    'profile'  100 250  40 60 'ge' 0.01 }
+%      }
+%      'DIAGS/hist_meas_snow_<CASE>.h5'
+%    }
+%
+%    % graupel
+%    {
+%      'Graupel'
+%     {
+%        { 'AzAveragedData/hist_graup_<CASE>.h5' '/graup' 'wtmean'  0.0  '/avg_graup'         'all'        0 450   0 60 'ge' 0.01 }
+%        { 'AzAveragedData/hist_graup_<CASE>.h5' '/graup' 'wtmean'  0.0  '/ps_avg_graup'      'xsection'   0 450  10 30 'ge' 0.01 }
+%        { 'AzAveragedData/hist_graup_<CASE>.h5' '/graup' 'wtmean'  0.0  '/s_avg_graup'       'xsection'   0 450  40 60 'ge' 0.01 }
+%        { 'AzAveragedData/hist_graup_<CASE>.h5' '/graup' 'wtmean'  0.0  '/ps_core_avg_graup' 'profile'    0 100  10 30 'ge' 0.01 }
+%        { 'AzAveragedData/hist_graup_<CASE>.h5' '/graup' 'wtmean'  0.0  '/s_core_avg_graup'  'profile'    0 100  40 60 'ge' 0.01 }
+%        { 'AzAveragedData/hist_graup_<CASE>.h5' '/graup' 'wtmean'  0.0  '/ps_rb_avg_graup'   'profile'  100 250  10 30 'ge' 0.01 }
+%        { 'AzAveragedData/hist_graup_<CASE>.h5' '/graup' 'wtmean'  0.0  '/s_rb_avg_graup'    'profile'  100 250  40 60 'ge' 0.01 }
+%      }
+%      'DIAGS/hist_meas_graup_<CASE>.h5'
+%    }
+%
+%    % hail
+%    {
+%      'Hail'
+%     {
+%        { 'AzAveragedData/hist_hail_<CASE>.h5' '/hail' 'wtmean'  0.0  '/avg_hail'         'all'        0 450   0 60 'ge' 0.01 }
+%        { 'AzAveragedData/hist_hail_<CASE>.h5' '/hail' 'wtmean'  0.0  '/ps_avg_hail'      'xsection'   0 450  10 30 'ge' 0.01 }
+%        { 'AzAveragedData/hist_hail_<CASE>.h5' '/hail' 'wtmean'  0.0  '/s_avg_hail'       'xsection'   0 450  40 60 'ge' 0.01 }
+%        { 'AzAveragedData/hist_hail_<CASE>.h5' '/hail' 'wtmean'  0.0  '/ps_core_avg_hail' 'profile'    0 100  10 30 'ge' 0.01 }
+%        { 'AzAveragedData/hist_hail_<CASE>.h5' '/hail' 'wtmean'  0.0  '/s_core_avg_hail'  'profile'    0 100  40 60 'ge' 0.01 }
+%        { 'AzAveragedData/hist_hail_<CASE>.h5' '/hail' 'wtmean'  0.0  '/ps_rb_avg_hail'   'profile'  100 250  10 30 'ge' 0.01 }
+%        { 'AzAveragedData/hist_hail_<CASE>.h5' '/hail' 'wtmean'  0.0  '/s_rb_avg_hail'    'profile'  100 250  40 60 'ge' 0.01 }
+%      }
+%      'DIAGS/hist_meas_hail_<CASE>.h5'
+%    }
 
-    % rain
+    % total condensate
     {
-      'Rain'
+      'Total Condensate'
      {
-        { 'AzAveragedData/hist_rain_<CASE>.h5' '/rain' 'wtmean'  0.0  '/avg_rain'         'all'        0 450   0 60 'ge' 0.01 }
-        { 'AzAveragedData/hist_rain_<CASE>.h5' '/rain' 'wtmean'  0.0  '/ps_avg_rain'      'xsection'   0 450  10 30 'ge' 0.01 }
-        { 'AzAveragedData/hist_rain_<CASE>.h5' '/rain' 'wtmean'  0.0  '/s_avg_rain'       'xsection'   0 450  40 60 'ge' 0.01 }
-        { 'AzAveragedData/hist_rain_<CASE>.h5' '/rain' 'wtmean'  0.0  '/ps_core_avg_rain' 'profile'    0 100  10 30 'ge' 0.01 }
-        { 'AzAveragedData/hist_rain_<CASE>.h5' '/rain' 'wtmean'  0.0  '/s_core_avg_rain'  'profile'    0 100  40 60 'ge' 0.01 }
-        { 'AzAveragedData/hist_rain_<CASE>.h5' '/rain' 'wtmean'  0.0  '/ps_rb_avg_rain'   'profile'  100 250  10 30 'ge' 0.01 }
-        { 'AzAveragedData/hist_rain_<CASE>.h5' '/rain' 'wtmean'  0.0  '/s_rb_avg_rain'    'profile'  100 250  40 60 'ge' 0.01 }
+        { 'AzAveragedData/hist_tcond_<CASE>.h5' '/tcond' 'wtmean'  0.0  '/avg_tcond'         'all'        0 450   0 60 'ge' 0.01 }
+        { 'AzAveragedData/hist_tcond_<CASE>.h5' '/tcond' 'wtmean'  0.0  '/ps_avg_tcond'      'xsection'   0 450  10 30 'ge' 0.01 }
+        { 'AzAveragedData/hist_tcond_<CASE>.h5' '/tcond' 'wtmean'  0.0  '/s_avg_tcond'       'xsection'   0 450  40 60 'ge' 0.01 }
+        { 'AzAveragedData/hist_tcond_<CASE>.h5' '/tcond' 'wtmean'  0.0  '/ps_core_avg_tcond' 'profile'    0 100  10 30 'ge' 0.01 }
+        { 'AzAveragedData/hist_tcond_<CASE>.h5' '/tcond' 'wtmean'  0.0  '/s_core_avg_tcond'  'profile'    0 100  40 60 'ge' 0.01 }
+        { 'AzAveragedData/hist_tcond_<CASE>.h5' '/tcond' 'wtmean'  0.0  '/ps_rb_avg_tcond'   'profile'  100 250  10 30 'ge' 0.01 }
+        { 'AzAveragedData/hist_tcond_<CASE>.h5' '/tcond' 'wtmean'  0.0  '/s_rb_avg_tcond'    'profile'  100 250  40 60 'ge' 0.01 }
       }
-      'DIAGS/hist_meas_rain_<CASE>.h5'
-    }
-
-    % pristine ice
-    {
-      'Pristine'
-     {
-        { 'AzAveragedData/hist_pris_<CASE>.h5' '/pris' 'wtmean'  0.0  '/avg_pris'         'all'        0 450   0 60 'ge' 0.01 }
-        { 'AzAveragedData/hist_pris_<CASE>.h5' '/pris' 'wtmean'  0.0  '/ps_avg_pris'      'xsection'   0 450  10 30 'ge' 0.01 }
-        { 'AzAveragedData/hist_pris_<CASE>.h5' '/pris' 'wtmean'  0.0  '/s_avg_pris'       'xsection'   0 450  40 60 'ge' 0.01 }
-        { 'AzAveragedData/hist_pris_<CASE>.h5' '/pris' 'wtmean'  0.0  '/ps_core_avg_pris' 'profile'    0 100  10 30 'ge' 0.01 }
-        { 'AzAveragedData/hist_pris_<CASE>.h5' '/pris' 'wtmean'  0.0  '/s_core_avg_pris'  'profile'    0 100  40 60 'ge' 0.01 }
-        { 'AzAveragedData/hist_pris_<CASE>.h5' '/pris' 'wtmean'  0.0  '/ps_rb_avg_pris'   'profile'  100 250  10 30 'ge' 0.01 }
-        { 'AzAveragedData/hist_pris_<CASE>.h5' '/pris' 'wtmean'  0.0  '/s_rb_avg_pris'    'profile'  100 250  40 60 'ge' 0.01 }
-      }
-      'DIAGS/hist_meas_pris_<CASE>.h5'
-    }
-
-    % aggregates
-    {
-      'Aggregates'
-     {
-        { 'AzAveragedData/hist_aggr_<CASE>.h5' '/aggr' 'wtmean'  0.0  '/avg_aggr'         'all'        0 450   0 60 'ge' 0.01 }
-        { 'AzAveragedData/hist_aggr_<CASE>.h5' '/aggr' 'wtmean'  0.0  '/ps_avg_aggr'      'xsection'   0 450  10 30 'ge' 0.01 }
-        { 'AzAveragedData/hist_aggr_<CASE>.h5' '/aggr' 'wtmean'  0.0  '/s_avg_aggr'       'xsection'   0 450  40 60 'ge' 0.01 }
-        { 'AzAveragedData/hist_aggr_<CASE>.h5' '/aggr' 'wtmean'  0.0  '/ps_core_avg_aggr' 'profile'    0 100  10 30 'ge' 0.01 }
-        { 'AzAveragedData/hist_aggr_<CASE>.h5' '/aggr' 'wtmean'  0.0  '/s_core_avg_aggr'  'profile'    0 100  40 60 'ge' 0.01 }
-        { 'AzAveragedData/hist_aggr_<CASE>.h5' '/aggr' 'wtmean'  0.0  '/ps_rb_avg_aggr'   'profile'  100 250  10 30 'ge' 0.01 }
-        { 'AzAveragedData/hist_aggr_<CASE>.h5' '/aggr' 'wtmean'  0.0  '/s_rb_avg_aggr'    'profile'  100 250  40 60 'ge' 0.01 }
-      }
-      'DIAGS/hist_meas_aggr_<CASE>.h5'
-    }
-
-    % snow
-    {
-      'Snow'
-     {
-        { 'AzAveragedData/hist_snow_<CASE>.h5' '/snow' 'wtmean'  0.0  '/avg_snow'         'all'        0 450   0 60 'ge' 0.01 }
-        { 'AzAveragedData/hist_snow_<CASE>.h5' '/snow' 'wtmean'  0.0  '/ps_avg_snow'      'xsection'   0 450  10 30 'ge' 0.01 }
-        { 'AzAveragedData/hist_snow_<CASE>.h5' '/snow' 'wtmean'  0.0  '/s_avg_snow'       'xsection'   0 450  40 60 'ge' 0.01 }
-        { 'AzAveragedData/hist_snow_<CASE>.h5' '/snow' 'wtmean'  0.0  '/ps_core_avg_snow' 'profile'    0 100  10 30 'ge' 0.01 }
-        { 'AzAveragedData/hist_snow_<CASE>.h5' '/snow' 'wtmean'  0.0  '/s_core_avg_snow'  'profile'    0 100  40 60 'ge' 0.01 }
-        { 'AzAveragedData/hist_snow_<CASE>.h5' '/snow' 'wtmean'  0.0  '/ps_rb_avg_snow'   'profile'  100 250  10 30 'ge' 0.01 }
-        { 'AzAveragedData/hist_snow_<CASE>.h5' '/snow' 'wtmean'  0.0  '/s_rb_avg_snow'    'profile'  100 250  40 60 'ge' 0.01 }
-      }
-      'DIAGS/hist_meas_snow_<CASE>.h5'
-    }
-
-    % graupel
-    {
-      'Graupel'
-     {
-        { 'AzAveragedData/hist_graup_<CASE>.h5' '/graup' 'wtmean'  0.0  '/avg_graup'         'all'        0 450   0 60 'ge' 0.01 }
-        { 'AzAveragedData/hist_graup_<CASE>.h5' '/graup' 'wtmean'  0.0  '/ps_avg_graup'      'xsection'   0 450  10 30 'ge' 0.01 }
-        { 'AzAveragedData/hist_graup_<CASE>.h5' '/graup' 'wtmean'  0.0  '/s_avg_graup'       'xsection'   0 450  40 60 'ge' 0.01 }
-        { 'AzAveragedData/hist_graup_<CASE>.h5' '/graup' 'wtmean'  0.0  '/ps_core_avg_graup' 'profile'    0 100  10 30 'ge' 0.01 }
-        { 'AzAveragedData/hist_graup_<CASE>.h5' '/graup' 'wtmean'  0.0  '/s_core_avg_graup'  'profile'    0 100  40 60 'ge' 0.01 }
-        { 'AzAveragedData/hist_graup_<CASE>.h5' '/graup' 'wtmean'  0.0  '/ps_rb_avg_graup'   'profile'  100 250  10 30 'ge' 0.01 }
-        { 'AzAveragedData/hist_graup_<CASE>.h5' '/graup' 'wtmean'  0.0  '/s_rb_avg_graup'    'profile'  100 250  40 60 'ge' 0.01 }
-      }
-      'DIAGS/hist_meas_graup_<CASE>.h5'
-    }
-
-    % hail
-    {
-      'Hail'
-     {
-        { 'AzAveragedData/hist_hail_<CASE>.h5' '/hail' 'wtmean'  0.0  '/avg_hail'         'all'        0 450   0 60 'ge' 0.01 }
-        { 'AzAveragedData/hist_hail_<CASE>.h5' '/hail' 'wtmean'  0.0  '/ps_avg_hail'      'xsection'   0 450  10 30 'ge' 0.01 }
-        { 'AzAveragedData/hist_hail_<CASE>.h5' '/hail' 'wtmean'  0.0  '/s_avg_hail'       'xsection'   0 450  40 60 'ge' 0.01 }
-        { 'AzAveragedData/hist_hail_<CASE>.h5' '/hail' 'wtmean'  0.0  '/ps_core_avg_hail' 'profile'    0 100  10 30 'ge' 0.01 }
-        { 'AzAveragedData/hist_hail_<CASE>.h5' '/hail' 'wtmean'  0.0  '/s_core_avg_hail'  'profile'    0 100  40 60 'ge' 0.01 }
-        { 'AzAveragedData/hist_hail_<CASE>.h5' '/hail' 'wtmean'  0.0  '/ps_rb_avg_hail'   'profile'  100 250  10 30 'ge' 0.01 }
-        { 'AzAveragedData/hist_hail_<CASE>.h5' '/hail' 'wtmean'  0.0  '/s_rb_avg_hail'    'profile'  100 250  40 60 'ge' 0.01 }
-      }
-      'DIAGS/hist_meas_hail_<CASE>.h5'
+      'DIAGS/hist_meas_tcond_<CASE>.h5'
     }
 
 %    % cooling via latent heat of freezing
