@@ -38,6 +38,7 @@ CONFIGS = \
   $(DIAG_DIR)/FigHeatXsectionConfig \
   $(DIAG_DIR)/FigCloudXsectionConfig \
   $(DIAG_DIR)/FigRainXsectionConfig \
+  $(DIAG_DIR)/FigTcondXsectionConfig \
   $(DIAG_DIR)/FigDnXsectionConfig \
   $(DIAG_DIR)/FigUpXsectionConfig \
   $(DIAG_DIR)/FigVtXsectionConfig \
