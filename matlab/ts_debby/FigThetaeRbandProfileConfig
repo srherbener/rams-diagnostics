@@ -1,0 +1,136 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: ThetaeRbandProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigThetaeRbandProfile.jpg
+  ThetaeCntlPreSalRbandPanel  1
+  ThetaeCntlSalRbandPanel     2
+  ThetaeDiffPreSalRbandPanel  3
+  ThetaeDiffSalRbandPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: ThetaeCntlPreSalRbandPanel
+  ThetaeCntlPreSalRbandPset
+  ThetaeCntlPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband 
+  NorthEast 12
+End
+
+FigPanel: ThetaeDiffPreSalRbandPanel
+  ThetaeDiffPreSalRbandPset
+  ThetaeDiffPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband@(diffs)
+  NorthEast 12
+End
+
+FigPanel: ThetaeCntlSalRbandPanel
+  ThetaeCntlSalRbandPset
+  ThetaeCntlSalRbandAxes 1 1
+  none 5
+  SAL@Rband 
+  NorthEast 12
+End
+
+FigPanel: ThetaeDiffSalRbandPanel
+  ThetaeDiffSalRbandPset
+  ThetaeDiffSalRbandAxes 1 1
+  none 5
+  SAL@Rband@(diffs)
+  NorthEast 12
+End
+
+############ PLOT SETS #################
+PlotSet: ThetaeCntlPreSalRbandPset line 1
+  ThetaePreSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+End
+
+PlotSet: ThetaeDiffPreSalRbandPset line 3
+  ThetaeDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaeDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaeDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: ThetaeCntlSalRbandPset line 1
+  ThetaeSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+End
+
+PlotSet: ThetaeDiffSalRbandPset line 3
+  ThetaeDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaeDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaeDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: ThetaePreSalRbandLine 2
+  # x data - theta_e, K
+  /ps_rb_theta_e DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaeSalRbandLine 2
+  # x data - theta_e, K
+  /s_rb_theta_e DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaeDiffPreSalRbandLine 2
+  # x data - theta_e, K
+  /ps_rb_theta_e_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaeDiffSalRbandLine 2
+  # x data - theta_e, K
+  /s_rb_theta_e_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: ThetaeCntlPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - theta_e, K
+  \theta_e g@kg^-^1 300 400 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: ThetaeDiffPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - theta_e, K
+  \theta_e g@kg^-^1 -10 10 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: ThetaeCntlSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - theta_e, K
+  \theta_e g@kg^-^1 300 400 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: ThetaeDiffSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - theta_e, K
+  \theta_e g@kg^-^1 -10 10 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
