@@ -107,15 +107,15 @@ PlotAxes: TcondCntlPreSalCoreAxes 2
   # x axis - tcond mix ratio, g/kg
   Tcond g@kg^-^1 0 1 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 20 linear [_] {_}
 End
 
 PlotAxes: TcondDiffPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - tcond mix ratio, g/kg
-  Tcond g@kg^-^1 -0.5 0.5 linear [_] {_}
+  Tcond g@kg^-^1 -0.5 0.3 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 20 linear [_] {_}
 End
 
 PlotAxes: TcondCntlSalCoreAxes 2
@@ -123,14 +123,14 @@ PlotAxes: TcondCntlSalCoreAxes 2
   # x axis - tcond mix ratio, g/kg
   Tcond g@kg^-^1 0 1 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 20 linear [_] {_}
 End
 
 PlotAxes: TcondDiffSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - tcond mix ratio, g/kg
-  Tcond g@kg^-^1 -0.5 0.5 linear [_] {_}
+  Tcond g@kg^-^1 -0.5 0.3 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 20 linear [_] {_}
 End
 

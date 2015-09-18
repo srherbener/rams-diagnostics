@@ -113,7 +113,7 @@ End
 PlotAxes: RainDiffPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - rain mix ratio, g/kg
-  Rain g@kg^-^1 -0.10 0.10 linear [_] {_}
+  Rain g@kg^-^1 -0.15 0.15 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End

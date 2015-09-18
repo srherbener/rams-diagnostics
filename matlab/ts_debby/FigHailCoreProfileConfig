@@ -105,32 +105,32 @@ End
 PlotAxes: HailCntlPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - hail mix ratio, g/kg
-  Hail g@kg^-^1 0 0.1 linear [_] {_}
+  Hail g@kg^-^1 0 0.2 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 18 linear [_] {_}
 End
 
 PlotAxes: HailDiffPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - hail mix ratio, g/kg
-  Hail g@kg^-^1 -0.05 0.05 linear [_] {_}
+  Hail g@kg^-^1 -0.05 0.1 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 18 linear [_] {_}
 End
 
 PlotAxes: HailCntlSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - hail mix ratio, g/kg
-  Hail g@kg^-^1 0 0.1 linear [_] {_}
+  Hail g@kg^-^1 0 0.2 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 18 linear [_] {_}
 End
 
 PlotAxes: HailDiffSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - hail mix ratio, g/kg
-  Hail g@kg^-^1 -0.05 0.05 linear [_] {_}
+  Hail g@kg^-^1 -0.05 0.10 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 18 linear [_] {_}
 End
 

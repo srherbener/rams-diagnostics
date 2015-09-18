@@ -105,32 +105,32 @@ End
 PlotAxes: PrisCntlPreSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - pris mix ratio, g/kg
-  Pristine@Ice g@kg^-^1 0 0.04 linear [_] {_}
+  Pristine@Ice g@kg^-^1 -0.01 0.1 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 18 linear [_] {_}
 End
 
 PlotAxes: PrisDiffPreSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - pris mix ratio, g/kg
-  Pristine@Ice g@kg^-^1 -0.01 0.02 linear [_] {_}
+  Pristine@Ice g@kg^-^1 -0.02 0.06 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 18 linear [_] {_}
 End
 
 PlotAxes: PrisCntlSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - pris mix ratio, g/kg
-  Pristine@Ice g@kg^-^1 0 0.04 linear [_] {_}
+  Pristine@Ice g@kg^-^1 -0.01 0.1 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 18 linear [_] {_}
 End
 
 PlotAxes: PrisDiffSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - pris mix ratio, g/kg
-  Pristine@Ice g@kg^-^1 -0.01 0.02 linear [_] {_}
+  Pristine@Ice g@kg^-^1 -0.02 0.06 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 18 linear [_] {_}
 End
 

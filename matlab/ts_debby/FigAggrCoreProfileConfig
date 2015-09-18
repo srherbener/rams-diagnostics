@@ -105,32 +105,32 @@ End
 PlotAxes: AggrCntlPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - aggr mix ratio, g/kg
-  Aggregates g@kg^-^1 0 0.3 linear [_] {_}
+  Aggregates g@kg^-^1 0 0.5 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 18 linear [_] {_}
 End
 
 PlotAxes: AggrDiffPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - aggr mix ratio, g/kg
-  Aggregates g@kg^-^1 -0.15 0.15 linear [_] {_}
+  Aggregates g@kg^-^1 -0.20 0.20 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 18 linear [_] {_}
 End
 
 PlotAxes: AggrCntlSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - aggr mix ratio, g/kg
-  Aggregates g@kg^-^1 0 0.3 linear [_] {_}
+  Aggregates g@kg^-^1 0 0.5 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 18 linear [_] {_}
 End
 
 PlotAxes: AggrDiffSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - aggr mix ratio, g/kg
-  Aggregates g@kg^-^1 -0.15 0.15 linear [_] {_}
+  Aggregates g@kg^-^1 -0.20 0.20 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 18 linear [_] {_}
 End
 
