@@ -13,6 +13,26 @@ Figure: CloudCoreProfile 4
   CloudDiffSalCorePanel     4
 End 
 
+Figure: CloudNumCoreProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigCloudNumCoreProfile.jpg
+  CloudNumCntlPreSalCorePanel  1
+  CloudNumCntlSalCorePanel     2
+  CloudNumDiffPreSalCorePanel  3
+  CloudNumDiffSalCorePanel     4
+End 
+
+Figure: CloudDiamCoreProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigCloudDiamCoreProfile.jpg
+  CloudDiamCntlPreSalCorePanel  1
+  CloudDiamCntlSalCorePanel     2
+  CloudDiamDiffPreSalCorePanel  3
+  CloudDiamDiffSalCorePanel     4
+End 
+
 ########### CASES ####################
 CaseSet: DummyCases 1
   Dummy
@@ -51,25 +71,153 @@ FigPanel: CloudDiffSalCorePanel
   NorthEast 12
 End
 
-############ PLOT SETS #################
-PlotSet: CloudCntlPreSalCorePset line 1
-  CloudPreSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
+FigPanel: CloudNumCntlPreSalCorePanel
+  CloudNumCntlPreSalCorePset
+  CloudNumCntlPreSalCoreAxes 1 1
+  none 5
+  Pre@SAL@Core 
+  NorthEast 12
 End
 
-PlotSet: CloudDiffPreSalCorePset line 3
+FigPanel: CloudNumDiffPreSalCorePanel
+  CloudNumDiffPreSalCorePset
+  CloudNumDiffPreSalCoreAxes 1 1
+  none 5
+  Pre@SAL@Core@(diffs)
+  NorthEast 12
+End
+
+FigPanel: CloudNumCntlSalCorePanel
+  CloudNumCntlSalCorePset
+  CloudNumCntlSalCoreAxes 1 1
+  none 5
+  SAL@Core 
+  NorthEast 12
+End
+
+FigPanel: CloudNumDiffSalCorePanel
+  CloudNumDiffSalCorePset
+  CloudNumDiffSalCoreAxes 1 1
+  none 5
+  SAL@Core@(diffs)
+  NorthEast 12
+End
+
+FigPanel: CloudDiamCntlPreSalCorePanel
+  CloudDiamCntlPreSalCorePset
+  CloudDiamCntlPreSalCoreAxes 1 1
+  none 5
+  Pre@SAL@Core 
+  NorthEast 12
+End
+
+FigPanel: CloudDiamDiffPreSalCorePanel
+  CloudDiamDiffPreSalCorePset
+  CloudDiamDiffPreSalCoreAxes 1 1
+  none 5
+  Pre@SAL@Core@(diffs)
+  NorthEast 12
+End
+
+FigPanel: CloudDiamCntlSalCorePanel
+  CloudDiamCntlSalCorePset
+  CloudDiamCntlSalCoreAxes 1 1
+  none 5
+  SAL@Core 
+  NorthEast 12
+End
+
+FigPanel: CloudDiamDiffSalCorePanel
+  CloudDiamDiffSalCorePset
+  CloudDiamDiffSalCoreAxes 1 1
+  none 5
+  SAL@Core@(diffs)
+  NorthEast 12
+End
+
+############ PLOT SETS #################
+PlotSet: CloudCntlPreSalCorePset line 4
+  CloudPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudDiffPreSalCorePset line 4
+  CloudDiffPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
   CloudDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
   CloudDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
   CloudDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: CloudCntlSalCorePset line 1
-  CloudSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: CloudCntlSalCorePset line 4
+  CloudSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: CloudDiffSalCorePset line 3
+PlotSet: CloudDiffSalCorePset line 4
+  CloudDiffSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
   CloudDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
   CloudDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
   CloudDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudNumCntlPreSalCorePset line 4
+  CloudNumPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudNumPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudNumPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudNumPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudNumDiffPreSalCorePset line 4
+  CloudNumDiffPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudNumDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudNumDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudNumDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudNumCntlSalCorePset line 4
+  CloudNumSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudNumSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudNumSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudNumSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudNumDiffSalCorePset line 4
+  CloudNumDiffSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudNumDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudNumDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudNumDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudDiamCntlPreSalCorePset line 4
+  CloudDiamPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudDiamPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudDiamPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudDiamPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudDiamDiffPreSalCorePset line 4
+  CloudDiamDiffPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudDiamDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudDiamDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudDiamDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudDiamCntlSalCorePset line 4
+  CloudDiamSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudDiamSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudDiamSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudDiamSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudDiamDiffSalCorePset line 4
+  CloudDiamDiffSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudDiamDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudDiamDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudDiamDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
 ############ PLOT DATA #################
@@ -97,6 +245,62 @@ End
 PlotData: CloudDiffSalCoreLine 2
   # x data - cloud mix ratio, g/kg
   /s_core_cloud_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudNumPreSalCoreLine 2
+  # x data - cloud number, #/kg
+  /ps_core_cloud_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudNumSalCoreLine 2
+  # x data - cloud number, #/kg
+  /s_core_cloud_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudNumDiffPreSalCoreLine 2
+  # x data - cloud number, #/kg
+  /ps_core_cloud_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudNumDiffSalCoreLine 2
+  # x data - cloud number, #/kg
+  /s_core_cloud_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudDiamPreSalCoreLine 2
+  # x data - cloud diameter, um
+  /ps_core_cloud_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudDiamSalCoreLine 2
+  # x data - cloud diameter, um
+  /s_core_cloud_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudDiamDiffPreSalCoreLine 2
+  # x data - cloud diameter, um
+  /ps_core_cloud_diam_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudDiamDiffSalCoreLine 2
+  # x data - cloud diameter, um
+  /s_core_cloud_diam_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
@@ -130,6 +334,70 @@ PlotAxes: CloudDiffSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud mix ratio, g/kg
   Cloud g@kg^-^1 -0.40 0.40 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: CloudNumCntlPreSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud number, #/cm3
+  N_c N@cm-^3 0 5 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: CloudNumDiffPreSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud number, #/cm3
+  N_c N@cm^-^3 -2 2 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: CloudNumCntlSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud number, #/cm3
+  N_c N@cm^-^3 0 5 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: CloudNumDiffSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud number, #/cm3
+  N_c N@cm^-^3 -4 4 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: CloudDiamCntlPreSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud diamter, um
+  D_c um 0 60 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: CloudDiamDiffPreSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud diamter, um
+  D_c um -50 50 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: CloudDiamCntlSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud diamter, um
+  D_c um 0 60 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: CloudDiamDiffSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud diamter, um
+  D_c um -50 50 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End

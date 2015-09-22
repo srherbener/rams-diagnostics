@@ -52,26 +52,54 @@ function [ ] = GenStormXsections()
     { 'DIAGS/hist_meas_dust_<CASE>.h5' '/s_avg_d2_mass' '/s_d2_mass' }
     { 'DIAGS/hist_meas_dust_<CASE>.h5' '/s_avg_d2_num'  '/s_d2_num'  }
 
-    { 'DIAGS/hist_meas_cloud_<CASE>.h5' '/ps_avg_cloud'  '/ps_cloud' }
-    { 'DIAGS/hist_meas_cloud_<CASE>.h5' '/s_avg_cloud'  '/s_cloud' }
+    { 'DIAGS/hist_meas_cloud_<CASE>.h5' '/ps_avg_cloud'      '/ps_cloud' }
+    { 'DIAGS/hist_meas_cloud_<CASE>.h5' '/s_avg_cloud'       '/s_cloud' }
+    { 'DIAGS/hist_meas_cloud_<CASE>.h5' '/ps_avg_cloud_num'  '/ps_cloud_num' }
+    { 'DIAGS/hist_meas_cloud_<CASE>.h5' '/s_avg_cloud_num'   '/s_cloud_num' }
+    { 'DIAGS/hist_meas_cloud_<CASE>.h5' '/ps_avg_cloud_diam' '/ps_cloud_diam' }
+    { 'DIAGS/hist_meas_cloud_<CASE>.h5' '/s_avg_cloud_diam'  '/s_cloud_diam' }
 
-    { 'DIAGS/hist_meas_rain_<CASE>.h5' '/ps_avg_rain'  '/ps_rain' }
-    { 'DIAGS/hist_meas_rain_<CASE>.h5' '/s_avg_rain'  '/s_rain' }
+    { 'DIAGS/hist_meas_rain_<CASE>.h5' '/ps_avg_rain'      '/ps_rain' }
+    { 'DIAGS/hist_meas_rain_<CASE>.h5' '/s_avg_rain'       '/s_rain' }
+    { 'DIAGS/hist_meas_rain_<CASE>.h5' '/ps_avg_rain_num'  '/ps_rain_num' }
+    { 'DIAGS/hist_meas_rain_<CASE>.h5' '/s_avg_rain_num'   '/s_rain_num' }
+    { 'DIAGS/hist_meas_rain_<CASE>.h5' '/ps_avg_rain_diam' '/ps_rain_diam' }
+    { 'DIAGS/hist_meas_rain_<CASE>.h5' '/s_avg_rain_diam'  '/s_rain_diam' }
 
-    { 'DIAGS/hist_meas_pris_<CASE>.h5' '/ps_avg_pris'  '/ps_pris' }
-    { 'DIAGS/hist_meas_pris_<CASE>.h5' '/s_avg_pris'  '/s_pris' }
+    { 'DIAGS/hist_meas_pris_<CASE>.h5' '/ps_avg_pris'      '/ps_pris' }
+    { 'DIAGS/hist_meas_pris_<CASE>.h5' '/s_avg_pris'       '/s_pris' }
+    { 'DIAGS/hist_meas_pris_<CASE>.h5' '/ps_avg_pris_num'  '/ps_pris_num' }
+    { 'DIAGS/hist_meas_pris_<CASE>.h5' '/s_avg_pris_num'   '/s_pris_num' }
+    { 'DIAGS/hist_meas_pris_<CASE>.h5' '/ps_avg_pris_diam' '/ps_pris_diam' }
+    { 'DIAGS/hist_meas_pris_<CASE>.h5' '/s_avg_pris_diam'  '/s_pris_diam' }
 
-    { 'DIAGS/hist_meas_snow_<CASE>.h5' '/ps_avg_snow'  '/ps_snow' }
-    { 'DIAGS/hist_meas_snow_<CASE>.h5' '/s_avg_snow'  '/s_snow' }
+    { 'DIAGS/hist_meas_snow_<CASE>.h5' '/ps_avg_snow'      '/ps_snow' }
+    { 'DIAGS/hist_meas_snow_<CASE>.h5' '/s_avg_snow'       '/s_snow' }
+    { 'DIAGS/hist_meas_snow_<CASE>.h5' '/ps_avg_snow_num'  '/ps_snow_num' }
+    { 'DIAGS/hist_meas_snow_<CASE>.h5' '/s_avg_snow_num'   '/s_snow_num' }
+    { 'DIAGS/hist_meas_snow_<CASE>.h5' '/ps_avg_snow_diam' '/ps_snow_diam' }
+    { 'DIAGS/hist_meas_snow_<CASE>.h5' '/s_avg_snow_diam'  '/s_snow_diam' }
 
-    { 'DIAGS/hist_meas_aggr_<CASE>.h5' '/ps_avg_aggr'  '/ps_aggr' }
-    { 'DIAGS/hist_meas_aggr_<CASE>.h5' '/s_avg_aggr'  '/s_aggr' }
+    { 'DIAGS/hist_meas_aggr_<CASE>.h5' '/ps_avg_aggr'      '/ps_aggr' }
+    { 'DIAGS/hist_meas_aggr_<CASE>.h5' '/s_avg_aggr'       '/s_aggr' }
+    { 'DIAGS/hist_meas_aggr_<CASE>.h5' '/ps_avg_aggr_num'  '/ps_aggr_num' }
+    { 'DIAGS/hist_meas_aggr_<CASE>.h5' '/s_avg_aggr_num'   '/s_aggr_num' }
+    { 'DIAGS/hist_meas_aggr_<CASE>.h5' '/ps_avg_aggr_diam' '/ps_aggr_diam' }
+    { 'DIAGS/hist_meas_aggr_<CASE>.h5' '/s_avg_aggr_diam'  '/s_aggr_diam' }
 
-    { 'DIAGS/hist_meas_graup_<CASE>.h5' '/ps_avg_graup'  '/ps_graup' }
-    { 'DIAGS/hist_meas_graup_<CASE>.h5' '/s_avg_graup'  '/s_graup' }
+    { 'DIAGS/hist_meas_graup_<CASE>.h5' '/ps_avg_graup'      '/ps_graup' }
+    { 'DIAGS/hist_meas_graup_<CASE>.h5' '/s_avg_graup'       '/s_graup' }
+    { 'DIAGS/hist_meas_graup_<CASE>.h5' '/ps_avg_graup_num'  '/ps_graup_num' }
+    { 'DIAGS/hist_meas_graup_<CASE>.h5' '/s_avg_graup_num'   '/s_graup_num' }
+    { 'DIAGS/hist_meas_graup_<CASE>.h5' '/ps_avg_graup_diam' '/ps_graup_diam' }
+    { 'DIAGS/hist_meas_graup_<CASE>.h5' '/s_avg_graup_diam'  '/s_graup_diam' }
 
-    { 'DIAGS/hist_meas_hail_<CASE>.h5' '/ps_avg_hail'  '/ps_hail' }
-    { 'DIAGS/hist_meas_hail_<CASE>.h5' '/s_avg_hail'  '/s_hail' }
+    { 'DIAGS/hist_meas_hail_<CASE>.h5' '/ps_avg_hail'      '/ps_hail' }
+    { 'DIAGS/hist_meas_hail_<CASE>.h5' '/s_avg_hail'       '/s_hail' }
+    { 'DIAGS/hist_meas_hail_<CASE>.h5' '/ps_avg_hail_num'  '/ps_hail_num' }
+    { 'DIAGS/hist_meas_hail_<CASE>.h5' '/s_avg_hail_num'   '/s_hail_num' }
+    { 'DIAGS/hist_meas_hail_<CASE>.h5' '/ps_avg_hail_diam' '/ps_hail_diam' }
+    { 'DIAGS/hist_meas_hail_<CASE>.h5' '/s_avg_hail_diam'  '/s_hail_diam' }
 
     { 'DIAGS/hist_meas_tcond_<CASE>.h5' '/ps_avg_tcond'  '/ps_tcond' }
     { 'DIAGS/hist_meas_tcond_<CASE>.h5' '/s_avg_tcond'  '/s_tcond' }
@@ -125,7 +153,7 @@ function [ ] = GenStormXsections()
 
       CNTL_VAR = squeeze(h5read(ControlInFile, InVname));
 
-      DIFF_VAR = CNTL_VAR - VAR;
+      DIFF_VAR = VAR - CNTL_VAR;
 
       Nx = length(X);
       Ny = length(Y);

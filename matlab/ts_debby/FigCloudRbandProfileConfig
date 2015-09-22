@@ -13,6 +13,26 @@ Figure: CloudRbandProfile 4
   CloudDiffSalRbandPanel     4
 End 
 
+Figure: CloudNumRbandProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigCloudNumRbandProfile.jpg
+  CloudNumCntlPreSalRbandPanel  1
+  CloudNumCntlSalRbandPanel     2
+  CloudNumDiffPreSalRbandPanel  3
+  CloudNumDiffSalRbandPanel     4
+End 
+
+Figure: CloudDiamRbandProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigCloudDiamRbandProfile.jpg
+  CloudDiamCntlPreSalRbandPanel  1
+  CloudDiamCntlSalRbandPanel     2
+  CloudDiamDiffPreSalRbandPanel  3
+  CloudDiamDiffSalRbandPanel     4
+End 
+
 ########### CASES ####################
 CaseSet: DummyCases 1
   Dummy
@@ -51,25 +71,153 @@ FigPanel: CloudDiffSalRbandPanel
   NorthEast 12
 End
 
-############ PLOT SETS #################
-PlotSet: CloudCntlPreSalRbandPset line 1
-  CloudPreSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+FigPanel: CloudNumCntlPreSalRbandPanel
+  CloudNumCntlPreSalRbandPset
+  CloudNumCntlPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband 
+  NorthEast 12
 End
 
-PlotSet: CloudDiffPreSalRbandPset line 3
+FigPanel: CloudNumDiffPreSalRbandPanel
+  CloudNumDiffPreSalRbandPset
+  CloudNumDiffPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband@(diffs)
+  NorthEast 12
+End
+
+FigPanel: CloudNumCntlSalRbandPanel
+  CloudNumCntlSalRbandPset
+  CloudNumCntlSalRbandAxes 1 1
+  none 5
+  SAL@Rband 
+  NorthEast 12
+End
+
+FigPanel: CloudNumDiffSalRbandPanel
+  CloudNumDiffSalRbandPset
+  CloudNumDiffSalRbandAxes 1 1
+  none 5
+  SAL@Rband@(diffs)
+  NorthEast 12
+End
+
+FigPanel: CloudDiamCntlPreSalRbandPanel
+  CloudDiamCntlPreSalRbandPset
+  CloudDiamCntlPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband 
+  NorthEast 12
+End
+
+FigPanel: CloudDiamDiffPreSalRbandPanel
+  CloudDiamDiffPreSalRbandPset
+  CloudDiamDiffPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband@(diffs)
+  NorthEast 12
+End
+
+FigPanel: CloudDiamCntlSalRbandPanel
+  CloudDiamCntlSalRbandPset
+  CloudDiamCntlSalRbandAxes 1 1
+  none 5
+  SAL@Rband 
+  NorthEast 12
+End
+
+FigPanel: CloudDiamDiffSalRbandPanel
+  CloudDiamDiffSalRbandPset
+  CloudDiamDiffSalRbandAxes 1 1
+  none 5
+  SAL@Rband@(diffs)
+  NorthEast 12
+End
+
+############ PLOT SETS #################
+PlotSet: CloudCntlPreSalRbandPset line 4
+  CloudPreSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudDiffPreSalRbandPset line 4
+  CloudDiffPreSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
   CloudDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
   CloudDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
   CloudDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: CloudCntlSalRbandPset line 1
-  CloudSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: CloudCntlSalRbandPset line 4
+  CloudSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: CloudDiffSalRbandPset line 3
+PlotSet: CloudDiffSalRbandPset line 4
+  CloudDiffSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
   CloudDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
   CloudDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
   CloudDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudNumCntlPreSalRbandPset line 4
+  CloudNumPreSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudNumPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudNumPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudNumPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudNumDiffPreSalRbandPset line 4
+  CloudNumDiffPreSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudNumDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudNumDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudNumDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudNumCntlSalRbandPset line 4
+  CloudNumSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudNumSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudNumSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudNumSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudNumDiffSalRbandPset line 4
+  CloudNumDiffSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudNumDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudNumDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudNumDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudDiamCntlPreSalRbandPset line 4
+  CloudDiamPreSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudDiamPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudDiamPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudDiamPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudDiamDiffPreSalRbandPset line 4
+  CloudDiamDiffPreSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudDiamDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudDiamDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudDiamDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudDiamCntlSalRbandPset line 4
+  CloudDiamSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudDiamSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudDiamSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudDiamSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudDiamDiffSalRbandPset line 4
+  CloudDiamDiffSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudDiamDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudDiamDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudDiamDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
 ############ PLOT DATA #################
@@ -97,6 +245,62 @@ End
 PlotData: CloudDiffSalRbandLine 2
   # x data - cloud mix ratio, g/kg
   /s_rb_cloud_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudNumPreSalRbandLine 2
+  # x data - cloud number, #/kg
+  /ps_rb_cloud_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudNumSalRbandLine 2
+  # x data - cloud number, #/kg
+  /s_rb_cloud_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudNumDiffPreSalRbandLine 2
+  # x data - cloud number, #/kg
+  /ps_rb_cloud_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudNumDiffSalRbandLine 2
+  # x data - cloud number, #/kg
+  /s_rb_cloud_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudDiamPreSalRbandLine 2
+  # x data - cloud diameter, um
+  /ps_rb_cloud_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudDiamSalRbandLine 2
+  # x data - cloud diameter, um
+  /s_rb_cloud_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudDiamDiffPreSalRbandLine 2
+  # x data - cloud diameter, um
+  /ps_rb_cloud_diam_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudDiamDiffSalRbandLine 2
+  # x data - cloud diameter, um
+  /s_rb_cloud_diam_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
@@ -129,7 +333,71 @@ End
 PlotAxes: CloudDiffSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud mix ratio, g/kg
-  Cloud g@kg^-^1 -0.30 0.30 linear [_] {_}
+  Cloud g@kg^-^1 -0.40 0.40 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: CloudNumCntlPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud number, #/cm3
+  N_c N@cm-^3 0 5 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: CloudNumDiffPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud number, #/cm3
+  N_c N@cm^-^3 -2 2 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: CloudNumCntlSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud number, #/cm3
+  N_c N@cm^-^3 0 5 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: CloudNumDiffSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud number, #/cm3
+  N_c N@cm^-^3 -4 4 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: CloudDiamCntlPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud diamter, um
+  D_c um 0 60 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: CloudDiamDiffPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud diamter, um
+  D_c um -50 50 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: CloudDiamCntlSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud diamter, um
+  D_c um 0 60 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: CloudDiamDiffSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud diamter, um
+  D_c um -50 50 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End
