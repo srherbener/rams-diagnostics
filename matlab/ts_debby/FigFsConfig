@@ -84,7 +84,7 @@ FigPanel: FsMaxWindPanelSal
   FsMaxWindPsetSal
   FsMaxWindAxesSal 1 1
   none 5
-  PANEL:a@Max@Wind
+  PANEL:a@Max@Wind@(SAL)
   none 12
 End
 
@@ -92,7 +92,7 @@ FigPanel: FsIkePanelSal
   FsIkePsetSal
   FsIkeAxesSal 1 1
   none 5
-  PANEL:b@IKE
+  PANEL:b@IKE@(SAL)
   none 12
 End
 
@@ -100,7 +100,7 @@ FigPanel: FsMinPressPanelSal
   FsMinPressPsetSal
   FsMinPressAxesSal 1 1
   none 5
-  PANEL:c@Min@Pressure
+  PANEL:c@Min@Pressure@(SAL)
   none 12
 End
 
@@ -108,7 +108,7 @@ FigPanel: FsRmwPanelSal
   FsRmwPsetSal
   FsRmwAxesSal 1 1
   none 5
-  PANEL:d@RMW
+  PANEL:d@RMW@(SAL)
   none 12
 End
 
@@ -116,7 +116,7 @@ FigPanel: FsPratePanelSal
   FsPratePsetSal
   FsPrateAxesSal 1 1
   none 5
-  PANEL:d@Precip@Rate
+  PANEL:d@Precip@Rate@(SAL)
   none 12
 End
 
@@ -124,7 +124,7 @@ FigPanel: FsMaxWindPanelPreSal
   FsMaxWindPsetPreSal
   FsMaxWindAxesPreSal 1 1
   none 5
-  PANEL:a@Max@Wind
+  PANEL:a@Max@Wind@(Pre-SAL)
   none 12
 End
 
@@ -132,7 +132,7 @@ FigPanel: FsIkePanelPreSal
   FsIkePsetPreSal
   FsIkeAxesPreSal 1 1
   none 5
-  PANEL:b@IKE
+  PANEL:b@IKE@(Pre-SAL)
   none 12
 End
 
@@ -140,7 +140,7 @@ FigPanel: FsMinPressPanelPreSal
   FsMinPressPsetPreSal
   FsMinPressAxesPreSal 1 1
   none 5
-  PANEL:c@Min@Pressure
+  PANEL:c@Min@Pressure@(Pre-SAL)
   none 12
 End
 
@@ -148,7 +148,7 @@ FigPanel: FsRmwPanelPreSal
   FsRmwPsetPreSal
   FsRmwAxesPreSal 1 1
   none 5
-  PANEL:d@RMW
+  PANEL:d@RMW@(Pre-SAL)
   none 12
 End
 
@@ -156,7 +156,7 @@ FigPanel: FsPratePanelPreSal
   FsPratePsetPreSal
   FsPrateAxesPreSal 1 1
   none 5
-  PANEL:d@Precip@Rate
+  PANEL:d@Precip@Rate@(Pre-SAL)
   none 12
 End
 

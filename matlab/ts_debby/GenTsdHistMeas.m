@@ -28,44 +28,60 @@ function [ ] = GenTsdHistMeas()
   %         <t_start, t_end> sim time in h  -> full range is 0 60
   MeasSets = {
     % storm speed measurements
-%    {
-%      'Speed'
-%      {
-%        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/avg_speed'         'all'        0 450   0 60 'ge' 0   }
-%        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/ps_avg_speed'      'xsection'   0 450  10 30 'ge' 0   }
-%        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/s_avg_speed'       'xsection'   0 450  40 60 'ge' 0   }
-%        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/ps_core_avg_speed' 'profile'    0 100  10 30 'ge' 0   }
-%        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/s_core_avg_speed'  'profile'    0 100  40 60 'ge' 0   }
-%        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/ps_rb_avg_speed'   'profile'  100 250  10 30 'ge' 0   }
-%        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/s_rb_avg_speed'    'profile'  100 250  40 60 'ge' 0   }
-%
-%        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/avg_speed_t'         'all'        0 450   0 60 'ge' -100   }
-%        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/ps_avg_speed_t'      'xsection'   0 450  10 30 'ge' -100   }
-%        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/s_avg_speed_t'       'xsection'   0 450  40 60 'ge' -100   }
-%        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/ps_core_avg_speed_t' 'profile'    0 100  10 30 'ge' -100   }
-%        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/s_core_avg_speed_t'  'profile'    0 100  40 60 'ge' -100   }
-%        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/ps_rb_avg_speed_t'   'profile'  100 250  10 30 'ge' -100   }
-%        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/s_rb_avg_speed_t'    'profile'  100 250  40 60 'ge' -100   }
-%
-%        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/avg_speed_r'         'all'        0 450   0 60 'ge' -100   }
-%        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/ps_avg_speed_r'      'xsection'   0 450  10 30 'ge' -100   }
-%        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/s_avg_speed_r'       'xsection'   0 450  40 60 'ge' -100   }
-%        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/ps_core_avg_speed_r' 'profile'    0 100  10 30 'ge' -100   }
-%        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/s_core_avg_speed_r'  'profile'    0 100  40 60 'ge' -100   }
-%        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/ps_rb_avg_speed_r'   'profile'  100 250  10 30 'ge' -100   }
-%        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/s_rb_avg_speed_r'    'profile'  100 250  40 60 'ge' -100   }
-%
-%        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'farea'   0.99 '/max_speed'         'all'        0 450   0 60 'ge' 0   }
-%        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'farea'   0.99 '/ps_max_speed'      'xsection'   0 450  10 30 'ge' 0   }
-%        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'farea'   0.99 '/s_max_speed'       'xsection'   0 450  40 60 'ge' 0   }
-%        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'farea'   0.99 '/ps_core_max_speed' 'profile'    0 100  10 30 'ge' 0   }
-%        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'farea'   0.99 '/s_core_max_speed'  'profile'    0 100  40 60 'ge' 0   }
-%        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'farea'   0.99 '/ps_rb_max_speed'   'profile'  100 250  10 30 'ge' 0   }
-%        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'farea'   0.99 '/s_rb_max_speed'    'profile'  100 250  40 60 'ge' 0   }
-%      }
-%      'DIAGS/hist_meas_speed_<CASE>.h5'
-%    }
-%
+    {
+      'Speed'
+      {
+        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/avg_speed'         'all'        0 450   0 60 'ge' 0   }
+        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/ps_avg_speed'      'xsection'   0 450  10 30 'ge' 0   }
+        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/s_avg_speed'       'xsection'   0 450  40 60 'ge' 0   }
+        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/ps_core_avg_speed' 'profile'    0 100  10 30 'ge' 0   }
+        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/s_core_avg_speed'  'profile'    0 100  40 60 'ge' 0   }
+        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/ps_rb_avg_speed'   'profile'  100 250  10 30 'ge' 0   }
+        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/s_rb_avg_speed'    'profile'  100 250  40 60 'ge' 0   }
+
+        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/avg_speed_t'         'all'        0 450   0 60 'ge' -100   }
+        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/ps_avg_speed_t'      'xsection'   0 450  10 30 'ge' -100   }
+        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/s_avg_speed_t'       'xsection'   0 450  40 60 'ge' -100   }
+        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/ps_core_avg_speed_t' 'profile'    0 100  10 30 'ge' -100   }
+        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/s_core_avg_speed_t'  'profile'    0 100  40 60 'ge' -100   }
+        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/ps_rb_avg_speed_t'   'profile'  100 250  10 30 'ge' -100   }
+        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/s_rb_avg_speed_t'    'profile'  100 250  40 60 'ge' -100   }
+
+        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/avg_speed_r'         'all'        0 450   0 60 'ge' -100   }
+        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/ps_avg_speed_r'      'xsection'   0 450  10 30 'ge' -100   }
+        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/s_avg_speed_r'       'xsection'   0 450  40 60 'ge' -100   }
+        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/ps_core_avg_speed_r' 'profile'    0 100  10 30 'ge' -100   }
+        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/s_core_avg_speed_r'  'profile'    0 100  40 60 'ge' -100   }
+        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/ps_rb_avg_speed_r'   'profile'  100 250  10 30 'ge' -100   }
+        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/s_rb_avg_speed_r'    'profile'  100 250  40 60 'ge' -100   }
+
+        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'farea'   0.99 '/max_speed'         'all'        0 450   0 60 'ge' 0   }
+        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'farea'   0.99 '/ps_max_speed'      'xsection'   0 450  10 30 'ge' 0   }
+        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'farea'   0.99 '/s_max_speed'       'xsection'   0 450  40 60 'ge' 0   }
+        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'farea'   0.99 '/ps_core_max_speed' 'profile'    0 100  10 30 'ge' 0   }
+        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'farea'   0.99 '/s_core_max_speed'  'profile'    0 100  40 60 'ge' 0   }
+        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'farea'   0.99 '/ps_rb_max_speed'   'profile'  100 250  10 30 'ge' 0   }
+        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'farea'   0.99 '/s_rb_max_speed'    'profile'  100 250  40 60 'ge' 0   }
+
+        { 'AzAveragedData/hist_speed10m_<CASE>.h5' '/speed10m' 'farea'   0.99 '/max_speed10m'         'all'        0 450   0 60 'ge' 0   }
+        { 'AzAveragedData/hist_speed10m_<CASE>.h5' '/speed10m' 'farea'   0.99 '/ps_max_speed10m'      'xsection'   0 450  10 30 'ge' 0   }
+        { 'AzAveragedData/hist_speed10m_<CASE>.h5' '/speed10m' 'farea'   0.99 '/s_max_speed10m'       'xsection'   0 450  40 60 'ge' 0   }
+        { 'AzAveragedData/hist_speed10m_<CASE>.h5' '/speed10m' 'farea'   0.99 '/ps_core_max_speed10m' 'profile'    0 100  10 30 'ge' 0   }
+        { 'AzAveragedData/hist_speed10m_<CASE>.h5' '/speed10m' 'farea'   0.99 '/s_core_max_speed10m'  'profile'    0 100  40 60 'ge' 0   }
+        { 'AzAveragedData/hist_speed10m_<CASE>.h5' '/speed10m' 'farea'   0.99 '/ps_rb_max_speed10m'   'profile'  100 250  10 30 'ge' 0   }
+        { 'AzAveragedData/hist_speed10m_<CASE>.h5' '/speed10m' 'farea'   0.99 '/s_rb_max_speed10m'    'profile'  100 250  40 60 'ge' 0   }
+
+        { 'AzAveragedData/hist_speed25m_<CASE>.h5' '/speed25m' 'farea'   0.99 '/max_speed25m'         'all'        0 450   0 60 'ge' 0   }
+        { 'AzAveragedData/hist_speed25m_<CASE>.h5' '/speed25m' 'farea'   0.99 '/ps_max_speed25m'      'xsection'   0 450  10 30 'ge' 0   }
+        { 'AzAveragedData/hist_speed25m_<CASE>.h5' '/speed25m' 'farea'   0.99 '/s_max_speed25m'       'xsection'   0 450  40 60 'ge' 0   }
+        { 'AzAveragedData/hist_speed25m_<CASE>.h5' '/speed25m' 'farea'   0.99 '/ps_core_max_speed25m' 'profile'    0 100  10 30 'ge' 0   }
+        { 'AzAveragedData/hist_speed25m_<CASE>.h5' '/speed25m' 'farea'   0.99 '/s_core_max_speed25m'  'profile'    0 100  40 60 'ge' 0   }
+        { 'AzAveragedData/hist_speed25m_<CASE>.h5' '/speed25m' 'farea'   0.99 '/ps_rb_max_speed25m'   'profile'  100 250  10 30 'ge' 0   }
+        { 'AzAveragedData/hist_speed25m_<CASE>.h5' '/speed25m' 'farea'   0.99 '/s_rb_max_speed25m'    'profile'  100 250  40 60 'ge' 0   }
+      }
+      'DIAGS/hist_meas_speed_<CASE>.h5'
+    }
+
 %    {
 %      'Pressure'
 %      {
@@ -307,22 +323,22 @@ function [ ] = GenTsdHistMeas()
 %      }
 %      'DIAGS/hist_meas_hail_<CASE>.h5'
 %    }
-
-    % total condensate
-    {
-      'Total Condensate'
-     {
-        { 'AzAveragedData/hist_tcond_<CASE>.h5' '/tcond' 'wtmean'  0.0  '/avg_tcond'         'all'        0 450   0 60 'ge' 0.01 }
-        { 'AzAveragedData/hist_tcond_<CASE>.h5' '/tcond' 'wtmean'  0.0  '/ps_avg_tcond'      'xsection'   0 450  10 30 'ge' 0.01 }
-        { 'AzAveragedData/hist_tcond_<CASE>.h5' '/tcond' 'wtmean'  0.0  '/s_avg_tcond'       'xsection'   0 450  40 60 'ge' 0.01 }
-        { 'AzAveragedData/hist_tcond_<CASE>.h5' '/tcond' 'wtmean'  0.0  '/ps_core_avg_tcond' 'profile'    0 100  10 30 'ge' 0.01 }
-        { 'AzAveragedData/hist_tcond_<CASE>.h5' '/tcond' 'wtmean'  0.0  '/s_core_avg_tcond'  'profile'    0 100  40 60 'ge' 0.01 }
-        { 'AzAveragedData/hist_tcond_<CASE>.h5' '/tcond' 'wtmean'  0.0  '/ps_rb_avg_tcond'   'profile'  100 250  10 30 'ge' 0.01 }
-        { 'AzAveragedData/hist_tcond_<CASE>.h5' '/tcond' 'wtmean'  0.0  '/s_rb_avg_tcond'    'profile'  100 250  40 60 'ge' 0.01 }
-      }
-      'DIAGS/hist_meas_tcond_<CASE>.h5'
-    }
-
+%
+%    % total condensate
+%    {
+%      'Total Condensate'
+%     {
+%        { 'AzAveragedData/hist_tcond_<CASE>.h5' '/tcond' 'wtmean'  0.0  '/avg_tcond'         'all'        0 450   0 60 'ge' 0.01 }
+%        { 'AzAveragedData/hist_tcond_<CASE>.h5' '/tcond' 'wtmean'  0.0  '/ps_avg_tcond'      'xsection'   0 450  10 30 'ge' 0.01 }
+%        { 'AzAveragedData/hist_tcond_<CASE>.h5' '/tcond' 'wtmean'  0.0  '/s_avg_tcond'       'xsection'   0 450  40 60 'ge' 0.01 }
+%        { 'AzAveragedData/hist_tcond_<CASE>.h5' '/tcond' 'wtmean'  0.0  '/ps_core_avg_tcond' 'profile'    0 100  10 30 'ge' 0.01 }
+%        { 'AzAveragedData/hist_tcond_<CASE>.h5' '/tcond' 'wtmean'  0.0  '/s_core_avg_tcond'  'profile'    0 100  40 60 'ge' 0.01 }
+%        { 'AzAveragedData/hist_tcond_<CASE>.h5' '/tcond' 'wtmean'  0.0  '/ps_rb_avg_tcond'   'profile'  100 250  10 30 'ge' 0.01 }
+%        { 'AzAveragedData/hist_tcond_<CASE>.h5' '/tcond' 'wtmean'  0.0  '/s_rb_avg_tcond'    'profile'  100 250  40 60 'ge' 0.01 }
+%      }
+%      'DIAGS/hist_meas_tcond_<CASE>.h5'
+%    }
+%
 %    % cooling via latent heat of freezing
 %    {
 %      'LHF Cooling'

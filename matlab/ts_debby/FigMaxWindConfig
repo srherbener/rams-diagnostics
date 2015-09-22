@@ -1,0 +1,82 @@
+#
+# Precip rate figures.
+#
+
+######### FIGURES ###################
+Figure: MaxWind 2
+  DummyCases
+  [2_1]
+  Plots/FigMaxWindStruct.jpg
+  MaxWindPreSalPanel   1
+  MaxWindSalPanel      2
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  none
+End
+
+########### PANELS ####################
+FigPanel: MaxWindPreSalPanel
+  MaxWindPreSalPset
+  MaxWindPreSalAxes 1 1
+  none 5
+  Pre-SAL 
+  NorthEast 10
+End
+
+FigPanel: MaxWindSalPanel
+  MaxWindSalPset
+  MaxWindSalAxes 1 1
+  none 5
+  SAL
+  NorthEast 10
+End
+
+############ PLOT SETS #################
+PlotSet: MaxWindPreSalPset line 4
+  MaxWindPreSalLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0
+  MaxWindPreSalLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0
+  MaxWindPreSalLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0
+  MaxWindPreSalLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0
+End
+
+PlotSet: MaxWindSalPset line 4
+  MaxWindSalLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0
+  MaxWindSalLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0
+  MaxWindSalLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0
+  MaxWindSalLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0
+End
+
+############ PLOT DATA #################
+PlotData: MaxWindPreSalLine 2
+  # x data - radius in km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - 
+  /ps_max_speed10m DIAGS/storm_xsections_<CASE>.h5 @ 1 0
+End
+
+PlotData: MaxWindSalLine 2
+  # x data - radius in km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - 
+  /s_max_speed10m DIAGS/storm_xsections_<CASE>.h5 @ 1 0
+End
+
+############ PLOT AXES #################
+PlotAxes: MaxWindPreSalAxes 2
+  16 2 [0.025_0.025]
+  # x axis - utc time
+  Radius km 0 450 linear [_] {_}
+  # y axis - speed in m/s
+  Max@Wind m@s^-^1 5 25 linear [_] {_}
+End
+
+PlotAxes: MaxWindSalAxes 2
+  16 2 [0.025_0.025]
+  # x axis - utc time
+  Radius km 0 450 linear [_] {_}
+  # y axis - speed in m/s
+  Max@Wind m@s^-^1 5 25 linear [_] {_}
+End
+
