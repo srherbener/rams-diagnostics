@@ -23,6 +23,9 @@ function [ ] = GenStormXsections()
     { 'DIAGS/hist_meas_speed_<CASE>.h5' '/s_avg_speed_t' '/s_speed_t' }
     { 'DIAGS/hist_meas_speed_<CASE>.h5' '/s_avg_speed_r' '/s_speed_r' }
 
+    { 'DIAGS/hist_meas_speed_<CASE>.h5' '/ps_max_speed_t' '/ps_max_speed_t' }
+    { 'DIAGS/hist_meas_speed_<CASE>.h5' '/s_max_speed_t' '/s_max_speed_t' }
+
     { 'DIAGS/hist_meas_speed_<CASE>.h5' '/ps_max_speed10m' '/ps_max_speed10m' }
     { 'DIAGS/hist_meas_speed_<CASE>.h5' '/s_max_speed10m' '/s_max_speed10m' }
 
