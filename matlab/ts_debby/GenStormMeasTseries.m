@@ -18,33 +18,19 @@ function [ ] = GenStormMeasTseries()
 
   Ncases = length(CaseList);
 
-  % Select points that fall between 0 and 250 km radii
-  R1 = 1;
-  R2 = 28;
-
-  % Select points that are betwen 0 and 1000 m height
-  Z1 = 2;
-  Z2 = 14;
-
   % Description of measurements
   MeasList = {
-    { 'min_slp_fa'  'DIAGS/hist_meas_press_<CASE>.h5' '/avg_sea_press_fa' 0 250 0 1 'min' }
-    { 'min_slp_wm'  'DIAGS/hist_meas_press_<CASE>.h5' '/avg_sea_press_wm' 0 250 0 1 'min' }
+    { 'min_slp'  'DIAGS/hist_meas_press_<CASE>.h5' '/avg_sea_press' 0 250 0 1 'min' }
 
-    { 'max_wind_fa'     'DIAGS/hist_meas_speed_<CASE>.h5' '/avg_speed_t_fa'  0 250 0 1 'max' }
-    { 'max_wind_wm'     'DIAGS/hist_meas_speed_<CASE>.h5' '/avg_speed_t_wm'  0 250 0 1 'max' }
-    { 'max_wind_10m_fa' 'DIAGS/hist_meas_speed_<CASE>.h5' '/avg_speed10m_fa' 0 250 0 1 'max' }
-    { 'max_wind_10m_wm' 'DIAGS/hist_meas_speed_<CASE>.h5' '/avg_speed10m_wm' 0 250 0 1 'max' }
+    { 'max_wind'     'DIAGS/hist_meas_speed_<CASE>.h5' '/avg_speed_t'  0 250 0 1 'max' }
+    { 'max_wind_10m' 'DIAGS/hist_meas_speed_<CASE>.h5' '/avg_speed10m' 0 250 0 1 'max' }
 
     { 'ike'             'TsAveragedData/horiz_ke_<CASE>.h5' '/horiz_ke' 0 250 0 1 'na' }
 
-    { 'rmw_fa'          'DIAGS/hist_meas_speed_<CASE>.h5'  '/avg_speed_t_fa'  0 250 0 1 'rmw' }
-    { 'rmw_wm'          'DIAGS/hist_meas_speed_<CASE>.h5'  '/avg_speed_t_wm'  0 250 0 1 'rmw' }
-    { 'rmw_10m_fa'      'DIAGS/hist_meas_speed_<CASE>.h5'  '/avg_speed10m_fa' 0 250 0 1 'rmw' }
-    { 'rmw_10m_wm'      'DIAGS/hist_meas_speed_<CASE>.h5'  '/avg_speed10m_wm' 0 250 0 1 'rmw' }
+    { 'rmw'          'DIAGS/hist_meas_speed_<CASE>.h5'  '/avg_speed_t'  0 250 0 1 'rmw' }
+    { 'rmw_10m'      'DIAGS/hist_meas_speed_<CASE>.h5'  '/avg_speed10m' 0 250 0 1 'rmw' }
 
-    { 'pcprate_fa'      'DIAGS/hist_meas_pcprate_<CASE>.h5'  '/avg_pcprate_fa'  0 250 0 1 'max' }
-    { 'pcprate_wm'      'DIAGS/hist_meas_pcprate_<CASE>.h5'  '/avg_pcprate_wm'  0 250 0 1 'max' }
+    { 'pcprate'      'DIAGS/hist_meas_pcprate_<CASE>.h5'  '/avg_pcprate'  0 250 0 1 'max' }
     };
 
   for icase = 1:Ncases

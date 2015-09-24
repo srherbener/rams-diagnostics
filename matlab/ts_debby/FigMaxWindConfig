@@ -53,14 +53,14 @@ PlotData: MaxWindPreSalLine 2
   # x data - radius in km
   /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
   # y data - 
-  /ps_max_speed10m DIAGS/storm_xsections_<CASE>.h5 @ 1 0
+  /ps_avg_speed_t DIAGS/storm_xsections_<CASE>.h5 @ 1 0
 End
 
 PlotData: MaxWindSalLine 2
   # x data - radius in km
   /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
   # y data - 
-  /s_max_speed10m DIAGS/storm_xsections_<CASE>.h5 @ 1 0
+  /s_avg_speed_t DIAGS/storm_xsections_<CASE>.h5 @ 1 0
 End
 
 ############ PLOT AXES #################
@@ -69,7 +69,7 @@ PlotAxes: MaxWindPreSalAxes 2
   # x axis - utc time
   Radius km 0 450 linear [_] {_}
   # y axis - speed in m/s
-  Max@Wind m@s^-^1 5 25 linear [_] {_}
+  Max@Wind m@s^-^1 5 30 linear [_] {_}
 End
 
 PlotAxes: MaxWindSalAxes 2
@@ -77,6 +77,6 @@ PlotAxes: MaxWindSalAxes 2
   # x axis - utc time
   Radius km 0 450 linear [_] {_}
   # y axis - speed in m/s
-  Max@Wind m@s^-^1 5 25 linear [_] {_}
+  Max@Wind m@s^-^1 5 30 linear [_] {_}
 End
 

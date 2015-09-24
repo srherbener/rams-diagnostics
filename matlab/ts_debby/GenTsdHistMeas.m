@@ -15,77 +15,131 @@ function [ ] = GenTsdHistMeas()
     };
   Ncases = length(CaseList);
 
+  % Temporal ranges
+  TstartPreSal = 10;
+  TendPreSal   = 30;
+
+  TstartSal = 40;
+  TendSal   = 60;
+
+  % Radial ranges
+  RstartCore =   0;
+  RendCore   = 100;
+
+  RstartRband = 100;
+  RendRband   = 250;
+
+  % Height ranges
+  Zsfc = 0;
+  Ztop = 1.5; % km
+
+  % Input is a histogram based upon either 2D or 3D field
+  %   2D - input will be of the form (r,b,t)
+  %   3D - input will be of the form (r,b,z,t)
+  %
+  %   where: r - radius
+  %          b - bins (histogram counts)
+  %          z - height
+  %          t - time
+
+  % Output can be specified as one of the following reduction types:
+  %
+  %     type      2D result       3D result
+  %   xsection      N/A            (r,z)
+  %   z_profile     N/A             (z)
+  %   r_profile     (r)             (r)
+  %   
+  %   xsection_ts   N/A            (r,z,t)
+  %   z_profile_ts  N/A             (z,t)
+  %   r_profile_ts  (r,t)           (r,t)
+  %   
+  % The idea for reduction is to combine (sum) all of the histogram counts first, then
+  % reduce the histogram counts once (as opposed to reducing the histogram counts first
+  % followed by averaging to combine along the other dimensions).
+  %
+  % Another notion is to avoid combining counts along the z axis, i.e., preserve
+  % levels. This means that to get an r_profile from a 3D field, a single level
+  % must be selected. 
+  %
+  % The temporal, radial and height ranges above are used for reduction. Temporal and
+  % radial ranges are used for summing histogram counts, and height is used for selecting
+  % a single level.
+  %
+  % Range specs for summing counts:
+  %
+  %    Radial range
+  %      core            RstartCore, RendCore
+  %      rband           RstartRband, RendRband
+  %
+  %    Temporal range
+  %       pre_sal        TstartPreSal, TendPreSal
+  %       sal            TstartSal, TendSal
+  %
+  % Range specs for selecting a level:
+  %
+  %    Height range
+  %       sfc            Zsfc
+  %       maxlev         Go through histogram reduction steps, then select level that
+  %                      contains the maximum value AND lies between Zsfc and Ztop.
+  %       minlev         Same as maxlev, except select the level with the minumum value.
+
   % Description of measurements
   %   <measure_name> <measure_list> <out_file>
   %
   %   where <measure_list> is one or more of:
-  %     <in_file> <var_name> <reduction_method> <arg_for_reduction_method> <out_var_name> <rt_reduction> <r_start> <r_end> <t_start> <t_end> <bin_select_op> <bin_select_val>
-  %         <rt_reduction>:
-  %             'all': only reduce bins, result is (r,z,t)
-  %             'xsection': reduce time and bins, result is (r,z)
-  %             'profile': reduce time, radius and bins, result is (z)
-  %         <r_start, r_end> radius in km -> full range is 0 450
-  %         <t_start, t_end> sim time in h  -> full range is 0 60
+  %     <in_file> <var_name> <reduction_method> <arg_for_reduction_method> <out_var_name> <reduction> <r_range> <t_range> <z_range> <bin_select_op> <bin_select_val>
+  %     ranges are defined above
+
   MeasSets = {
     % storm speed measurements
     {
       'Speed'
       {
-        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/avg_speed'         'all'        0 450   0 60 'ge' 0   }
-        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/ps_avg_speed'      'xsection'   0 450  10 30 'ge' 0   }
-        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/s_avg_speed'       'xsection'   0 450  40 60 'ge' 0   }
-        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/ps_core_avg_speed' 'profile'    0 100  10 30 'ge' 0   }
-        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/s_core_avg_speed'  'profile'    0 100  40 60 'ge' 0   }
-        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/ps_rb_avg_speed'   'profile'  100 250  10 30 'ge' 0   }
-        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/s_rb_avg_speed'    'profile'  100 250  40 60 'ge' 0   }
+        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/speed_ts'         'xsection_ts' ''      ''        ''       'ge' 0   }
+        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/ps_speed'         'xsection'    ''      'pre_sal' ''       'ge' 0   }
+        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/s_speed'          'xsection'    ''      'sal'     ''       'ge' 0   }
+        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/ps_core_speed'    'zprofile'    'core'  'pre_sal' ''       'ge' 0   }
+        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/s_core_speed'     'zprofile'    'core'  'sal'     ''       'ge' 0   }
+        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/ps_rb_speed'      'zprofile'    'rband' 'pre_sal' ''       'ge' 0   }
+        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/s_rb_speed'       'zprofile'    'rband' 'sal'     ''       'ge' 0   }
+        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/ps_speed_sfc'     'rprofile'    ''      'pre_sal' 'sfc'    'ge' 0   }
+        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/s_speed_sfc'      'rprofile'    ''      'sal'     'sfc'    'ge' 0   }
+        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/ps_speed_maxlev'  'rprofile'    ''      'pre_sal' 'maxlev' 'ge' 0   }
+        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/s_speed_maxlev'   'rprofile'    ''      'sal'     'maxlev' 'ge' 0   }
+        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/speed_sfc_ts'     'rprofile_ts' ''      ''        'sfc'    'ge' 0   }
+        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'wtmean'  0.0  '/speed_maxlev_ts'  'rprofile_ts' ''      ''        'maxlev' 'ge' 0   }
 
-        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/avg_speed_t'         'all'        0 450   0 60 'ge' -100   }
-        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/ps_avg_speed_t'      'xsection'   0 450  10 30 'ge' -100   }
-        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/s_avg_speed_t'       'xsection'   0 450  40 60 'ge' -100   }
-        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/ps_core_avg_speed_t' 'profile'    0 100  10 30 'ge' -100   }
-        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/s_core_avg_speed_t'  'profile'    0 100  40 60 'ge' -100   }
-        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/ps_rb_avg_speed_t'   'profile'  100 250  10 30 'ge' -100   }
-        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/s_rb_avg_speed_t'    'profile'  100 250  40 60 'ge' -100   }
+        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/speed_t_ts'         'xsection_ts' ''      ''        ''       'ge' -100 }
+        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/ps_speed_t'         'xsection'    ''      'pre_sal' ''       'ge' -100 }
+        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/s_speed_t'          'xsection'    ''      'sal'     ''       'ge' -100 }
+        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/ps_core_speed_t'    'zprofile'    'core'  'pre_sal' ''       'ge' -100 }
+        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/s_core_speed_t'     'zprofile'    'core'  'sal'     ''       'ge' -100 }
+        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/ps_rb_speed_t'      'zprofile'    'rband' 'pre_sal' ''       'ge' -100 }
+        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/s_rb_speed_t'       'zprofile'    'rband' 'sal'     ''       'ge' -100 }
+        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/ps_speed_t_sfc'     'rprofile'    ''      'pre_sal' 'sfc'    'ge' -100 }
+        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/s_speed_t_sfc'      'rprofile'    ''      'sal'     'sfc'    'ge' -100 }
+        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/ps_speed_t_maxlev'  'rprofile'    ''      'pre_sal' 'maxlev' 'ge' -100 }
+        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/s_speed_t_maxlev'   'rprofile'    ''      'sal'     'maxlev' 'ge' -100 }
+        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/speed_t_sfc_ts'     'rprofile_ts' ''      ''        'sfc'    'ge' -100 }
+        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/speed_t_maxlev_ts'  'rprofile_ts' ''      ''        'maxlev' 'ge' -100 }
 
-        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/avg_speed_r'         'all'        0 450   0 60 'ge' -100   }
-        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/ps_avg_speed_r'      'xsection'   0 450  10 30 'ge' -100   }
-        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/s_avg_speed_r'       'xsection'   0 450  40 60 'ge' -100   }
-        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/ps_core_avg_speed_r' 'profile'    0 100  10 30 'ge' -100   }
-        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/s_core_avg_speed_r'  'profile'    0 100  40 60 'ge' -100   }
-        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/ps_rb_avg_speed_r'   'profile'  100 250  10 30 'ge' -100   }
-        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/s_rb_avg_speed_r'    'profile'  100 250  40 60 'ge' -100   }
+        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/speed_r_ts'         'xsection_ts' ''      ''        ''       'ge' -100 }
+        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/ps_speed_r'         'xsection'    ''      'pre_sal' ''       'ge' -100 }
+        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/s_speed_r'          'xsection'    ''      'sal'     ''       'ge' -100 }
+        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/ps_core_speed_r'    'zprofile'    'core'  'pre_sal' ''       'ge' -100 }
+        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/s_core_speed_r'     'zprofile'    'core'  'sal'     ''       'ge' -100 }
+        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/ps_rb_speed_r'      'zprofile'    'rband' 'pre_sal' ''       'ge' -100 }
+        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/s_rb_speed_r'       'zprofile'    'rband' 'sal'     ''       'ge' -100 }
+        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/ps_speed_r_sfc'     'rprofile'    ''      'pre_sal' 'sfc'    'ge' -100 }
+        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/s_speed_r_sfc'      'rprofile'    ''      'sal'     'sfc'    'ge' -100 }
+        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/ps_speed_r_minlev'  'rprofile'    ''      'pre_sal' 'minlev' 'ge' -100 }
+        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/s_speed_r_minlev'   'rprofile'    ''      'sal'     'minlev' 'ge' -100 }
+        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/speed_r_sfc_ts'     'rprofile_ts' ''      ''        'sfc'    'ge' -100 }
+        { 'AzAveragedData/hist_speed_r_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/speed_r_minlev_ts'  'rprofile_ts' ''      ''        'minlev' 'ge' -100 }
 
-        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'farea'   0.99 '/max_speed'         'all'        0 450   0 60 'ge' 0   }
-        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'farea'   0.99 '/ps_max_speed'      'xsection'   0 450  10 30 'ge' 0   }
-        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'farea'   0.99 '/s_max_speed'       'xsection'   0 450  40 60 'ge' 0   }
-        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'farea'   0.99 '/ps_core_max_speed' 'profile'    0 100  10 30 'ge' 0   }
-        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'farea'   0.99 '/s_core_max_speed'  'profile'    0 100  40 60 'ge' 0   }
-        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'farea'   0.99 '/ps_rb_max_speed'   'profile'  100 250  10 30 'ge' 0   }
-        { 'AzAveragedData/hist_speed_<CASE>.h5' '/speed' 'farea'   0.99 '/s_rb_max_speed'    'profile'  100 250  40 60 'ge' 0   }
-
-        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'farea'   0.99 '/max_speed_t'         'all'        0 450   0 60 'ge' 0   }
-        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'farea'   0.99 '/ps_max_speed_t'      'xsection'   0 450  10 30 'ge' 0   }
-        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'farea'   0.99 '/s_max_speed_t'       'xsection'   0 450  40 60 'ge' 0   }
-        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'farea'   0.99 '/ps_core_max_speed_t' 'profile'    0 100  10 30 'ge' 0   }
-        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'farea'   0.99 '/s_core_max_speed_t'  'profile'    0 100  40 60 'ge' 0   }
-        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'farea'   0.99 '/ps_rb_max_speed_t'   'profile'  100 250  10 30 'ge' 0   }
-        { 'AzAveragedData/hist_speed_t_<CASE>.h5' '/speed_t' 'farea'   0.99 '/s_rb_max_speed_t'    'profile'  100 250  40 60 'ge' 0   }
-
-        { 'AzAveragedData/hist_speed10m_<CASE>.h5' '/speed10m' 'farea'   0.99 '/max_speed10m'         'all'        0 450   0 60 'ge' 0   }
-        { 'AzAveragedData/hist_speed10m_<CASE>.h5' '/speed10m' 'farea'   0.99 '/ps_max_speed10m'      'xsection'   0 450  10 30 'ge' 0   }
-        { 'AzAveragedData/hist_speed10m_<CASE>.h5' '/speed10m' 'farea'   0.99 '/s_max_speed10m'       'xsection'   0 450  40 60 'ge' 0   }
-        { 'AzAveragedData/hist_speed10m_<CASE>.h5' '/speed10m' 'farea'   0.99 '/ps_core_max_speed10m' 'profile'    0 100  10 30 'ge' 0   }
-        { 'AzAveragedData/hist_speed10m_<CASE>.h5' '/speed10m' 'farea'   0.99 '/s_core_max_speed10m'  'profile'    0 100  40 60 'ge' 0   }
-        { 'AzAveragedData/hist_speed10m_<CASE>.h5' '/speed10m' 'farea'   0.99 '/ps_rb_max_speed10m'   'profile'  100 250  10 30 'ge' 0   }
-        { 'AzAveragedData/hist_speed10m_<CASE>.h5' '/speed10m' 'farea'   0.99 '/s_rb_max_speed10m'    'profile'  100 250  40 60 'ge' 0   }
-
-        { 'AzAveragedData/hist_speed25m_<CASE>.h5' '/speed25m' 'farea'   0.99 '/max_speed25m'         'all'        0 450   0 60 'ge' 0   }
-        { 'AzAveragedData/hist_speed25m_<CASE>.h5' '/speed25m' 'farea'   0.99 '/ps_max_speed25m'      'xsection'   0 450  10 30 'ge' 0   }
-        { 'AzAveragedData/hist_speed25m_<CASE>.h5' '/speed25m' 'farea'   0.99 '/s_max_speed25m'       'xsection'   0 450  40 60 'ge' 0   }
-        { 'AzAveragedData/hist_speed25m_<CASE>.h5' '/speed25m' 'farea'   0.99 '/ps_core_max_speed25m' 'profile'    0 100  10 30 'ge' 0   }
-        { 'AzAveragedData/hist_speed25m_<CASE>.h5' '/speed25m' 'farea'   0.99 '/s_core_max_speed25m'  'profile'    0 100  40 60 'ge' 0   }
-        { 'AzAveragedData/hist_speed25m_<CASE>.h5' '/speed25m' 'farea'   0.99 '/ps_rb_max_speed25m'   'profile'  100 250  10 30 'ge' 0   }
-        { 'AzAveragedData/hist_speed25m_<CASE>.h5' '/speed25m' 'farea'   0.99 '/s_rb_max_speed25m'    'profile'  100 250  40 60 'ge' 0   }
+        { 'AzAveragedData/hist_speed10m_<CASE>.h5' '/speed10m' 'wtmean'  0.0  '/ps_speed10m'      'rprofile'    ''      'pre_sal' ''       'ge' 0   }
+        { 'AzAveragedData/hist_speed10m_<CASE>.h5' '/speed10m' 'wtmean'  0.0  '/s_speed10m'       'rprofile'    ''      'sal'     ''       'ge' 0   }
+        { 'AzAveragedData/hist_speed10m_<CASE>.h5' '/speed10m' 'wtmean'  0.0  '/speed10m_ts'      'rprofile_ts' ''      ''        ''       'ge' 0   }
       }
       'DIAGS/hist_meas_speed_<CASE>.h5'
     }
@@ -556,43 +610,115 @@ function [ ] = GenTsdHistMeas()
         Param     = MeasList{imeas}{4};
         OutVname  = MeasList{imeas}{5};
         Rspec     = MeasList{imeas}{6};
-        Rstart    = MeasList{imeas}{7};
-        Rend      = MeasList{imeas}{8};
-        Tstart    = MeasList{imeas}{9};
-        Tend      = MeasList{imeas}{10};
-        SelectOp  = MeasList{imeas}{11};
-        SelectVal = MeasList{imeas}{12};
+        Rrange    = MeasList{imeas}{7};
+        Trange    = MeasList{imeas}{8};
+        Zrange    = MeasList{imeas}{9};
+        SelectOp  = MeasList{imeas}{10};
+        SelectVal = MeasList{imeas}{11};
   
         InFile = regexprep(Ftemplate, '<CASE>', Case);
-  
+
         fprintf('      Reading: %s (%s)\n', InFile, Vname);
         fprintf('        Reduction spec: %s\n', Rspec);
-        fprintf('        Radius reduction range: %.2f to %.2f\n', Rstart, Rend);
-        fprintf('        Time reduction range: %.2f to %.2f\n', Tstart, Tend);
         fprintf('        Bin reduction method: %s (%.2f)\n', Rmethod, Param);
         fprintf('        Bin selection: %s %.2f\n', SelectOp, SelectVal);
   
-        % Read in data which will be 4D -> (x,y,z,t)
+        % Read in data which will be of two forms: (x,y,z,t) or (x,y,t)
         %
-        %     x --> radial bands
-        %     y --> histogram bins
+        %     x --> radial bands, r
+        %     y --> histogram bins, b
         %     z --> height
         %     t --> time
         %
         HDATA = squeeze(h5read(InFile, Vname));
-        BINS  = squeeze(h5read(InFile, '/y_coords'));
+        R     = squeeze(h5read(InFile, '/x_coords'));
+        B     = squeeze(h5read(InFile, '/y_coords'));
+        Z     = squeeze(h5read(InFile, '/z_coords'));
+        T     = squeeze(h5read(InFile, '/t_coords'));
   
-        % Assume same r,z,t values for all measurements
-        X    = squeeze(h5read(InFile, '/x_coords'));
-        Y    = 1; % dummy dimension for output (y represents bins which always get reduced)
-        Z    = squeeze(h5read(InFile, '/z_coords'));
-        T    = squeeze(h5read(InFile, '/t_coords'));
-  
-        Nx = length(X);
-        Ny = length(Y);
+        % Determine dimensionality of input
+        Ndims = ndims(HDATA) - 1;  % number of dimensions minus the time dimension
+                                   %  Ndims == 2 -> input is (r,b,t)
+                                   %  Ndims == 3 -> input is (r,b,z,t)
+
+        % Determine indices corresponding to r,b,z,t range specs
+        % Default is entire range of dimension sizes
+        % RADIUS
+        R_KM = R ./ 1000;
+        R1 = 1;
+        R2 = length(R_KM);
+        switch(Rrange)
+          case 'core'
+            R1 = find(R_KM >= RstartCore, 1, 'first');
+            R2 = find(R_KM <= RendCore,   1, 'last');
+
+          case 'rband'
+            R1 = find(R_KM >= RstartRband, 1, 'first');
+            R2 = find(R_KM <= RendRband,   1, 'last');
+        end
+        fprintf('        Radius selection range: %.2f to %.2f (%d:%d)\n', R_KM(R1), R_KM(R2), R1, R2);
+
+        % BINS
+        B1 = 1;         
+        B2 = length(B);
+        switch(SelectOp)
+          case 'ge'
+            B1 = find(B >= SelectVal, 1, 'first');
+
+          case 'le'
+            B2 = find(B <= SelectVal, 1, 'last');
+        end
+        fprintf('        Bin selection range: %.2f to %.2f (%d:%d)\n', B(B1), B(B2), B1, B2);
+
+        % HEIGHT
+        HEIGHT = Z ./ 1000;
+        Z1 = 1;
+        Z2 = length(HEIGHT);
+        if (Ndims == 3)
+          switch(Zrange)
+            case { 'maxlev' 'minlev' 'sfc' }
+              Z1 = find(HEIGHT >= Zsfc, 1, 'first');
+              Z2 = find(HEIGHT <= Ztop, 1, 'last');
+          end
+        end
+        fprintf('        Height selection range: %.2f to %.2f (%d:%d)\n', HEIGHT(Z1), HEIGHT(Z2), Z1, Z2);
+
+        % TIME
+        SIM_TIME = (T ./ 3600) - 42;
+        T1 = 1;
+        T2 = length(SIM_TIME);
+        switch(Trange)
+          case 'pre_sal'
+            T1 = find(SIM_TIME >= TstartPreSal, 1, 'first');
+            T2 = find(SIM_TIME <= TendPreSal,   1, 'last');
+
+          case 'sal'
+            T1 = find(SIM_TIME >= TstartSal, 1, 'first');
+            T2 = find(SIM_TIME <= TendSal,   1, 'last');
+        end
+        fprintf('        Time selection range: %.2f to %.2f (%d:%d)\n', SIM_TIME(T1), SIM_TIME(T2), T1, T2);
+
+        % Trim down the coordinates according to the selection indices
+        R = R(R1:R2);
+        B = B(B1:B2);
+        Z = Z(Z1:Z2);
+        T = T(T1:T2);
+
+        Nr = length(R);
         Nz = length(Z);
         Nt = length(T);
 
+        % For the output the Y coordinate is a dummy since the bins dimension
+        % always gets reduced. 
+        Y = [ 1 ];
+
+        % Trim down the input data according to the selection indices
+        if (Ndims == 2)
+          HDATA = HDATA(R1:R2,B1:B2,T1:T2);
+        else
+          HDATA = HDATA(R1:R2,B1:B2,Z1:Z2,T1:T2);
+        end
+  
         % If first measurement, then write out coordinates for later
         % use in attaching vars to them.
         if (imeas == 1)
@@ -601,79 +727,119 @@ function [ ] = GenTsdHistMeas()
           Zname = '/z_coords';
           Tname = '/t_coords';
   
-          CreateDimensionsXyzt(OutFile, X, Y, Z, T, Xname, Yname, Zname, Tname);
+          CreateDimensionsXyzt(OutFile, R, Y, Z, T, Xname, Yname, Zname, Tname);
           % Add COARDS annotations
           NotateDimensionsXyzt(OutFile, Xname, Yname, Zname, Tname);
         end
 
-        % Calculate indices for selecting by radius, bins and time.
-        % Do selection on bin values (ge or le)
-        % Select all bin values by default
-        R = X ./ 1000;
-        R1 = find(R >= Rstart, 1, 'first');
-        R2 = find(R <= Rend  , 1, 'last');
+        % Reduce the histograms according to reduction spec
+        if (Ndims == 2)
+          % 2D field input, HDATA is (r,b,t)
+          switch(Rspec)
+            case { 'xsection' 'xsection_ts' 'zprofile' 'zprofile_ts' }
+              fprintf('\n');
+              fprintf('ERROR: Cannot use "%s" reduction with 2D field input, skipping this measurement\n', Rspec);
+              continue;
 
-        B1 = 1;         
-        B2 = length(BINS);
-        if (strcmp(SelectOp, 'ge'))
-          B1 = find(BINS >= SelectVal, 1, 'first');
-        end
-        if (strcmp(SelectOp, 'le'))
-          B2 = find(BINS <= SelectVal, 1, 'last');
-        end
-
-        SIM_TIME = (T ./ 3600) - 42;
-        T1 = find(SIM_TIME >= Tstart, 1, 'first');
-        T2 = find(SIM_TIME <= Tend  , 1, 'last');
-
-        % Reduce the histograms via three different styles:
-        %   all: reduce only bins, result is (r,z,t)
-        %   xsection: reduce bins and time, result is (r,z)
-        %   profile: reduce bins, radius and time, result is (z)
-        switch(Rspec)
-          case 'all'
-            if (Nz == 1)
-              MEAS = squeeze(ReduceHists(HDATA(:,B1:B2,:), 2, BINS(B1:B2), Rmethod, Param));
-              OutSize = [ Nx Nt ];
-              DimOrder = { 'x' 't' };
-            else
-              MEAS = squeeze(ReduceHists(HDATA(:,B1:B2,:,:), 2, BINS(B1:B2), Rmethod, Param));
-              OutSize = [ Nx Nz Nt ];
-              DimOrder = { 'x' 'z' 't' };
-            end
-            
-          case 'xsection'
-            if (Nz == 1)
-              HDATA = squeeze(sum(HDATA(:,:,T1:T2), 3)); % sum up counts in time dimension
-              MEAS = squeeze(ReduceHists(HDATA(:,B1:B2), 2, BINS(B1:B2), Rmethod, Param));
-              OutSize = Nx;
+            case 'rprofile'
+              % (r,b,t) -> (r)
+              HDATA = squeeze(sum(HDATA, 3)); % sum up counts in time dimension
+              MEAS = squeeze(ReduceHists(HDATA, 2, B, Rmethod, Param));
+              OutSize = Nr;
               DimOrder = { 'x' };
-            else
-              HDATA = squeeze(sum(HDATA(:,:,:,T1:T2), 4)); % sum up counts in time dimension
-              MEAS = squeeze(ReduceHists(HDATA(:,B1:B2,:), 2, BINS(B1:B2), Rmethod, Param));
-              OutSize = [ Nx Nz ];
-              DimOrder = { 'x' 'z' };
-            end
 
-          case 'profile'
-            if (Nz == 1)
-              HDATA = squeeze(sum(HDATA(:,:,T1:T2), 3)); % sum up counts in time dimension
-              HDATA = squeeze(sum(HDATA(R1:R2,:), 1)); % sum up counts in radius dimension
-              MEAS = squeeze(ReduceHist1D(HDATA(B1:B2)', BINS(B1:B2), Rmethod, Param));
-              OutSize = 1;
-              DimOrder = { };
-            else
-              HDATA = squeeze(sum(HDATA(:,:,:,T1:T2), 4)); % sum up counts in time dimension
-              HDATA = squeeze(sum(HDATA(R1:R2,:,:), 1)); % sum up counts in radius dimension
-              MEAS = squeeze(ReduceHists(HDATA(B1:B2,:), 1, BINS(B1:B2), Rmethod, Param));
-              OutSize = Nz;
-              DimOrder = { 'z' };
-            end
+            case 'rprofile_ts'
+              % (r,b,t) -> (r,t)
+              MEAS = squeeze(ReduceHists(HDATA, 2, B, Rmethod, Param));
+              OutSize = [ Nr Nt ];
+              DimOrder = { 'x' 't' };
 
-          case default
+            case default
             fprintf('\n');
             fprintf('ERROR: unrecognized reduction spec (%s), skipping this measurement\n', Rspec);
             continue;
+          end
+        else
+          % 3D field input, HDATA is (r,b,z,t)
+          switch(Rspec)
+            case 'xsection'
+              % (r,b,z,t) -> (r,z)
+              HDATA = squeeze(sum(HDATA, 4)); % sum up counts in time dimension
+              MEAS = squeeze(ReduceHists(HDATA, 2, B, Rmethod, Param));
+              OutSize = [ Nr Nz ];
+              DimOrder = { 'x' 'z' };
+
+            case 'zprofile'
+              % (r,b,z,t) -> (z)
+              HDATA = squeeze(sum(HDATA, 4)); % sum up counts in time dimension
+              HDATA = squeeze(sum(HDATA, 1)); % sum up counts in radius dimension
+              MEAS = squeeze(ReduceHists(HDATA, 1, B, Rmethod, Param));
+              OutSize = Nz;
+              DimOrder = { 'z' };
+
+            case 'rprofile'
+              % (r,b,z,t) -> (r)
+              HDATA = squeeze(sum(HDATA, 4)); % sum up counts in time dimension
+              MEAS = squeeze(ReduceHists(HDATA, 2, B, Rmethod, Param));
+
+              % MEAS is (r,z) at this point, with z trimmed down to the range we
+              % are restricting the search for min or max values. Also z == 1
+              % represents the surface. Determine which level needs to be selected.
+              switch(Zrange)
+                case 'sfc'
+                  ZSEL = 1;
+
+                case 'minlev'
+                  [ SVAL ZSEL ] = min(min(MEAS,[],1));
+
+                case 'maxlev'
+                  [ SVAL ZSEL ] = max(max(MEAS,[],1));
+              end
+              fprintf('        Z level selected for rprofile: %.2f (%d)\n', Z(ZSEL), ZSEL);
+              MEAS = squeeze(MEAS(:,ZSEL));
+              OutSize = Nr;
+              DimOrder = { 'x' };
+
+            case 'xsection_ts'
+              % (r,b,z,t) -> (r,z,t)
+              MEAS = squeeze(ReduceHists(HDATA, 2, B, Rmethod, Param));
+              OutSize = [ Nr Nz Nt ];
+              DimOrder = { 'x' 'z' 't' };
+
+            case 'zprofile_ts'
+              % (r,b,z,t) -> (z,t)
+              HDATA = squeeze(sum(HDATA, 1)); % sum up counts in radius dimension
+              MEAS = squeeze(ReduceHists(HDATA, 1, B, Rmethod, Param));
+              OutSize = [ Nz Nt ];
+              DimOrder = { 'z' 't' };
+
+            case 'rprofile_ts'
+              % (r,b,z,t) -> (r,t)
+              MEAS = squeeze(ReduceHists(HDATA, 2, B, Rmethod, Param));
+
+              % MEAS is (r,z,t) at this point, with z trimmed down to the range we
+              % are restricting the search for min or max values. Also z == 1
+              % represents the surface. Determine which level needs to be selected.
+              switch(Zrange)
+                case 'sfc'
+                  ZSEL = 1;
+
+                case 'minlev'
+                  [ SVAL ZSEL ] = min(min(min(MEAS,[],3),[],1));
+
+                case 'maxlev'
+                  [ SVAL ZSEL ] = max(max(max(MEAS,[],3),[],1));
+              end
+              fprintf('        Z level selected for rprofile: %.2f (%d)\n', Z(ZSEL), ZSEL);
+              MEAS = squeeze(MEAS(:,ZSEL,:));
+              OutSize = [ Nr Nt ];
+              DimOrder = { 'x' 't' };
+
+            case default
+              fprintf('\n');
+              fprintf('ERROR: unrecognized reduction spec (%s), skipping this measurement\n', Rspec);
+              continue;
+          end
         end
 
         % Write out measurement
