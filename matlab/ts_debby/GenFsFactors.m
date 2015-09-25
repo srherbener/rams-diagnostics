@@ -43,6 +43,12 @@ function [ ] = GenFactSep()
   % ps_* -> Pre-SAL time period, s_* -> SAL time period
   VarList = {
     %  Avg Var           File Name                          File Var Name
+    { 'max_wind'       'DIAGS/fs_averages.h5'    '/<CASE>/avg_max_wind'     }
+    { 'min_press'      'DIAGS/fs_averages.h5'    '/<CASE>/avg_min_press'    }
+    { 'ike'            'DIAGS/fs_averages.h5'    '/<CASE>/avg_ike'          }
+    { 'rmw'            'DIAGS/fs_averages.h5'    '/<CASE>/avg_rmw'          }
+    { 'pcprate'        'DIAGS/fs_averages.h5'    '/<CASE>/avg_pcprate'      }
+
     { 'ps_max_wind'    'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_max_wind'  }
     { 'ps_min_press'   'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_min_press' }
     { 'ps_ike'         'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_ike'       }
@@ -112,25 +118,24 @@ function [ ] = GenFactSep()
     BF_DATA = [ F1  F2  (S12-S0) nan ] ./ S0;
     BI_DATA = [ nan nan nan      F12 ] ./ S0;
     
-
     OutVar = sprintf('/%s_averages', FsVar);
     fprintf('  Writing: %s (%s)\n', OutFile, OutVar)
-    h5create(OutFile, OutVar,  size(S_DATA));
+    h5create(OutFile, OutVar,  length(S_DATA));
     h5write( OutFile, OutVar,  S_DATA);
 
     OutVar = sprintf('/%s_factors', FsVar);
     fprintf('  Writing: %s (%s)\n', OutFile, OutVar)
-    h5create(OutFile, OutVar,  size(F_DATA));
+    h5create(OutFile, OutVar,  length(F_DATA));
     h5write( OutFile, OutVar,  F_DATA);
 
     OutVar = sprintf('/%s_bar_frac_change', FsVar);
     fprintf('  Writing: %s (%s)\n', OutFile, OutVar)
-    h5create(OutFile, OutVar,  size(BF_DATA));
+    h5create(OutFile, OutVar,  length(BF_DATA));
     h5write( OutFile, OutVar,  BF_DATA);
 
     OutVar = sprintf('/%s_bar_int', FsVar);
     fprintf('  Writing: %s (%s)\n', OutFile, OutVar)
-    h5create(OutFile, OutVar,  size(BI_DATA));
+    h5create(OutFile, OutVar,  length(BI_DATA));
     h5write( OutFile, OutVar,  BI_DATA);
     
     fprintf('\n');
