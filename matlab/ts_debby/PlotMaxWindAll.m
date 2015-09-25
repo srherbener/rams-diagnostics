@@ -32,12 +32,8 @@ function [ ] = PlotMaxWindAll()
 %   'NONSAL\_NODUST'
    };
 
-%   InFprefix = 'DIAGS/hist_meas_speed';
-%   InVname = '/avg_speed10m';
-%   InVname = '/max_speed10m';
-
-   InFprefix = 'TsAveragedData/max_speed10m';
-   InVname = '/max_speed10m';
+   InFprefix = 'DIAGS/storm_meas';
+   InVname = '/max_wind';
 
   for icase = 1:Nc
     InFiles{icase} = sprintf('%s_%s.h5', InFprefix, Cases{icase});

@@ -32,11 +32,8 @@ function [ ] = PlotMinPressAll()
 %   'NONSAL\_NODUST'
    };
 
-%   InFprefix = 'DIAGS/hist_meas_press';
-%   InVname = '/avg_press';
-
-   InFprefix = 'TsAveragedData/min_sea_press';
-   InVname = '/min_sea_press';
+   InFprefix = 'DIAGS/storm_meas';
+   InVname = '/min_slp';
 
   for icase = 1:Nc
     InFiles{icase} = sprintf('%s_%s.h5', InFprefix, Cases{icase});

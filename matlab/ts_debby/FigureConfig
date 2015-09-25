@@ -253,30 +253,30 @@ End
 ############ PLOT DATA #################
 PlotData: MaxWindLine 2
   # x data - sim time in hours
-  /t_coords DIAGS/storm_meas_tseries_<CASE>.h5 @ 2.7778e-4 -42
+  /t_coords DIAGS/storm_meas_<CASE>.h5 @ 2.7778e-4 -42
   # y data - 
-  /max_wind_wm DIAGS/storm_meas_tseries_<CASE>.h5 @ 1 0
+  /max_wind DIAGS/storm_meas_<CASE>.h5 @ 1 0
 End
   
 PlotData: MinSlpLine 2
   # x data - sim time in hours
-  /t_coords DIAGS/storm_meas_tseries_<CASE>.h5 @ 2.7778e-4 -42
+  /t_coords DIAGS/storm_meas_<CASE>.h5 @ 2.7778e-4 -42
   # y data - 
-  /min_slp_wm  DIAGS/storm_meas_tseries_<CASE>.h5 @ 1 0
+  /min_slp  DIAGS/storm_meas_<CASE>.h5 @ 1 0
 End
 
 PlotData: IkeLine 2
   # x data - sim time in hours
-  /t_coords DIAGS/storm_meas_tseries_<CASE>.h5 @ 2.7778e-4 -42
+  /t_coords DIAGS/storm_meas_<CASE>.h5 @ 2.7778e-4 -42
   # y data - 
-  /ike      DIAGS/storm_meas_tseries_<CASE>.h5 @ 1e-6 0
+  /ike      DIAGS/storm_meas_<CASE>.h5 @ 1e-6 0
 End
 
 PlotData: RmwLine 2
   # x data - sim time in hours
-  /t_coords DIAGS/storm_meas_tseries_<CASE>.h5 @ 2.7778e-4 -42
+  /t_coords DIAGS/storm_meas_<CASE>.h5 @ 2.7778e-4 -42
   # y data - 
-  /rmw_wm   DIAGS/storm_meas_tseries_<CASE>.h5 @ 1e-3 0
+  /rmw   DIAGS/storm_meas_<CASE>.h5 @ 1e-3 0
 End
 
 PlotData: Dust1_NS_Contour 3
