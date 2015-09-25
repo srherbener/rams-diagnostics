@@ -52,21 +52,29 @@ FigPanel: ThetaeDiffSalRbandPanel
 End
 
 ############ PLOT SETS #################
-PlotSet: ThetaeCntlPreSalRbandPset line 1
-  ThetaePreSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: ThetaeCntlPreSalRbandPset line 4
+  ThetaePreSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaePreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaePreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaePreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: ThetaeDiffPreSalRbandPset line 3
+PlotSet: ThetaeDiffPreSalRbandPset line 4
+  ThetaeDiffPreSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
   ThetaeDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
   ThetaeDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
   ThetaeDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: ThetaeCntlSalRbandPset line 1
-  ThetaeSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: ThetaeCntlSalRbandPset line 4
+  ThetaeSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaeSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaeSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaeSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: ThetaeDiffSalRbandPset line 3
+PlotSet: ThetaeDiffSalRbandPset line 4
+  ThetaeDiffSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
   ThetaeDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
   ThetaeDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
   ThetaeDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
@@ -105,7 +113,7 @@ End
 PlotAxes: ThetaeCntlPreSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - theta_e, K
-  \theta_e g@kg^-^1 300 400 linear [_] {_}
+  \theta_e g@kg^-^1 340 370 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End
@@ -121,7 +129,7 @@ End
 PlotAxes: ThetaeCntlSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - theta_e, K
-  \theta_e g@kg^-^1 300 400 linear [_] {_}
+  \theta_e g@kg^-^1 340 370 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End

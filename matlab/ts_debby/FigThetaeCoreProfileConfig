@@ -52,21 +52,29 @@ FigPanel: ThetaeDiffSalCorePanel
 End
 
 ############ PLOT SETS #################
-PlotSet: ThetaeCntlPreSalCorePset line 1
-  ThetaePreSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: ThetaeCntlPreSalCorePset line 4
+  ThetaePreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaePreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaePreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaePreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: ThetaeDiffPreSalCorePset line 3
+PlotSet: ThetaeDiffPreSalCorePset line 4
+  ThetaeDiffPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
   ThetaeDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
   ThetaeDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
   ThetaeDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: ThetaeCntlSalCorePset line 1
-  ThetaeSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: ThetaeCntlSalCorePset line 4
+  ThetaeSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaeSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaeSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaeSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: ThetaeDiffSalCorePset line 3
+PlotSet: ThetaeDiffSalCorePset line 4
+  ThetaeDiffSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
   ThetaeDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
   ThetaeDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
   ThetaeDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
@@ -105,7 +113,7 @@ End
 PlotAxes: ThetaeCntlPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - theta_e, K
-  \theta_e g@kg^-^1 300 400 linear [_] {_}
+  \theta_e g@kg^-^1 340 370 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End
@@ -121,7 +129,7 @@ End
 PlotAxes: ThetaeCntlSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - theta_e, K
-  \theta_e g@kg^-^1 300 400 linear [_] {_}
+  \theta_e g@kg^-^1 340 370 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End
