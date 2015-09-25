@@ -133,7 +133,7 @@ PlotData: PcprateHovContour 3
   # y data - sim time in hours
   /t_coords DIAGS/hist_meas_pcprate_<CASE>.h5 @ 2.7778e-4 -42
   # z data -  precip rate, mm/h
-  /avg_pcprate DIAGS/hist_meas_pcprate_<CASE>.h5 @ 1 0
+  /pcprate_ts DIAGS/hist_meas_pcprate_<CASE>.h5 @ 1 0
 End
   
 PlotData: VintCondHovContour 3
@@ -142,7 +142,7 @@ PlotData: VintCondHovContour 3
   # y data - sim time in hours
   /t_coords DIAGS/hist_meas_vint_cond_<CASE>.h5 @ 2.7778e-4 -42
   # z data -  vertically integrated condensate, mm
-  /avg_vint_cond DIAGS/hist_meas_vint_cond_<CASE>.h5 @ 1 0
+  /vint_cond_ts DIAGS/hist_meas_vint_cond_<CASE>.h5 @ 1 0
 End
   
 ############ PLOT AXES #################

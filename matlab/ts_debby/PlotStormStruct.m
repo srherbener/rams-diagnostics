@@ -35,12 +35,12 @@ function [ ] = PlotStormStruct()
 
   % Want azimuthally averaged tangential speed and vertical velocity for each panel
   InFileTemplate = 'DIAGS/storm_xsections_<CASE>.h5';
-  PreSalVtVname  = '/ps_speed_t_wm';
-  SalVtVname     = '/s_speed_t_wm';
-  PreSalUpVname  = '/ps_updraft_wm';
-  SalUpVname     = '/s_updraft_wm';
-  PreSalDnVname  = '/ps_dndraft_wm';
-  SalDnVname     = '/s_dndraft_wm';
+  PreSalVtVname  = '/ps_speed_t';
+  SalVtVname     = '/s_speed_t';
+  PreSalUpVname  = '/ps_updraft';
+  SalUpVname     = '/s_updraft';
+  PreSalDnVname  = '/ps_dndraft';
+  SalDnVname     = '/s_dndraft';
 
   PreSalOfileTemplate = 'Plots/PreSalStormStruct_<CASE>.jpg';
   SalOfileTemplate = 'Plots/SalStormStruct_<CASE>.jpg';
