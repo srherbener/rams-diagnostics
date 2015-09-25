@@ -15,11 +15,10 @@ SCRIPTS = \
   $(DEST)/GenNonSalDpFiles.m \
   $(DEST)/GenNonSalRamsInfo.m \
   $(DEST)/GenNonSalRamsInit.m \
-  $(DEST)/GenStormMeasTseries.m \
+  $(DEST)/GenStormMeas.m \
   $(DEST)/GenStormXsections.m \
   $(DEST)/GenStormProfiles.m \
   $(DEST)/GenTsdHistMeas.m \
-  $(DEST)/GenMaxSpeedMeas.m \
   $(DEST)/LocateSal.m \
   $(DEST)/PlotAeroProfs.m \
   $(DEST)/PlotMaxWindAll.m \
