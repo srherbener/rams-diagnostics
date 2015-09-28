@@ -23,6 +23,26 @@ Figure: VintCondHov 4
   VintCondHovNSNDPanel   4
 End 
 
+Figure: UpDraftCoreHov 4
+  DummyCases
+  [2_2]
+  Plots/FigUpDraftCoreHov.jpg
+  UpDraftCoreHovSDPanel   1
+  UpDraftCoreHovSNDPanel   2
+  UpDraftCoreHovNSDPanel   3
+  UpDraftCoreHovNSNDPanel   4
+End 
+
+Figure: UpDraftRbandHov 4
+  DummyCases
+  [2_2]
+  Plots/FigUpDraftRbandHov.jpg
+  UpDraftRbandHovSDPanel   1
+  UpDraftRbandHovSNDPanel   2
+  UpDraftRbandHovNSDPanel   3
+  UpDraftRbandHovNSNDPanel   4
+End 
+
 ########### CASES ####################
 CaseSet: DummyCases 1
   Dummy
@@ -33,7 +53,7 @@ FigPanel: PcprateHovSDPanel
   PcprateHovSDPset
   PcprateHovAxes 1 1
   none 5
-  SAL\_DUST 
+  SD
   none 12
 End
 
@@ -41,7 +61,7 @@ FigPanel: PcprateHovSNDPanel
   PcprateHovSNDPset
   PcprateHovAxes 1 1
   none 5
-  SAL\_NODUST 
+  SND
   none 12
 End
 
@@ -49,7 +69,7 @@ FigPanel: PcprateHovNSDPanel
   PcprateHovNSDPset
   PcprateHovAxes 1 1
   none 5
-  NONSAL\_DUST 
+  NSD 
   none 12
 End
 
@@ -57,7 +77,7 @@ FigPanel: PcprateHovNSNDPanel
   PcprateHovNSNDPset
   PcprateHovAxes 1 1
   none 5
-  NONSAL\_NODUST 
+  NSND 
   none 12
 End
 
@@ -65,7 +85,7 @@ FigPanel: VintCondHovSDPanel
   VintCondHovSDPset
   VintCondHovAxes 1 1
   none 5
-  SAL\_DUST 
+  SD
   none 12
 End
 
@@ -73,7 +93,7 @@ FigPanel: VintCondHovSNDPanel
   VintCondHovSNDPset
   VintCondHovAxes 1 1
   none 5
-  SAL\_NODUST 
+  SND
   none 12
 End
 
@@ -81,7 +101,7 @@ FigPanel: VintCondHovNSDPanel
   VintCondHovNSDPset
   VintCondHovAxes 1 1
   none 5
-  NONSAL\_DUST 
+  NSD
   none 12
 End
 
@@ -89,7 +109,71 @@ FigPanel: VintCondHovNSNDPanel
   VintCondHovNSNDPset
   VintCondHovAxes 1 1
   none 5
-  NONSAL\_NODUST 
+  NSND
+  none 12
+End
+
+FigPanel: UpDraftCoreHovSDPanel
+  UpDraftCoreHovSDPset
+  UpDraftCoreHovAxes 1 1
+  none 5
+  SD@(CORE)
+  none 12
+End
+
+FigPanel: UpDraftCoreHovSNDPanel
+  UpDraftCoreHovSNDPset
+  UpDraftCoreHovAxes 1 1
+  none 5
+  SND@(CORE)
+  none 12
+End
+
+FigPanel: UpDraftCoreHovNSDPanel
+  UpDraftCoreHovNSDPset
+  UpDraftCoreHovAxes 1 1
+  none 5
+  NSD@(CORE)
+  none 12
+End
+
+FigPanel: UpDraftCoreHovNSNDPanel
+  UpDraftCoreHovNSNDPset
+  UpDraftCoreHovAxes 1 1
+  none 5
+  NSND@(CORE)
+  none 12
+End
+
+FigPanel: UpDraftRbandHovSDPanel
+  UpDraftRbandHovSDPset
+  UpDraftRbandHovAxes 1 1
+  none 5
+  SD@(RB)
+  none 12
+End
+
+FigPanel: UpDraftRbandHovSNDPanel
+  UpDraftRbandHovSNDPset
+  UpDraftRbandHovAxes 1 1
+  none 5
+  SND@(RB)
+  none 12
+End
+
+FigPanel: UpDraftRbandHovNSDPanel
+  UpDraftRbandHovNSDPset
+  UpDraftRbandHovAxes 1 1
+  none 5
+  NSD@(RB)
+  none 12
+End
+
+FigPanel: UpDraftRbandHovNSNDPanel
+  UpDraftRbandHovNSNDPset
+  UpDraftRbandHovAxes 1 1
+  none 5
+  NSND@(RB)
   none 12
 End
 
@@ -126,6 +210,38 @@ PlotSet: VintCondHovNSNDPset contourf 1
   VintCondHovContour TSD_NONSAL_NODUST none  2 blue   - 0
 End
 
+PlotSet: UpDraftCoreHovSDPset contourf 1
+  UpDraftCoreHovContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: UpDraftCoreHovSNDPset contourf 1
+  UpDraftCoreHovContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: UpDraftCoreHovNSDPset contourf 1
+  UpDraftCoreHovContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: UpDraftCoreHovNSNDPset contourf 1
+  UpDraftCoreHovContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: UpDraftRbandHovSDPset contourf 1
+  UpDraftRbandHovContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: UpDraftRbandHovSNDPset contourf 1
+  UpDraftRbandHovContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: UpDraftRbandHovNSDPset contourf 1
+  UpDraftRbandHovContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: UpDraftRbandHovNSNDPset contourf 1
+  UpDraftRbandHovContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
 ############ PLOT DATA #################
 PlotData: PcprateHovContour 3
   # x data - radius, km
@@ -143,6 +259,24 @@ PlotData: VintCondHovContour 3
   /t_coords DIAGS/hist_meas_vint_cond_<CASE>.h5 @ 2.7778e-4 -42
   # z data -  vertically integrated condensate, mm
   /vint_cond_ts DIAGS/hist_meas_vint_cond_<CASE>.h5 @ 1 0
+End
+  
+PlotData: UpDraftCoreHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hist_meas_w_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hist_meas_w_<CASE>.h5 @ 1e-3 0
+  # z data -  updraft speed, m/s
+  /core_updraft_ts DIAGS/hist_meas_w_<CASE>.h5 @ 1 0
+End
+  
+PlotData: UpDraftRbandHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hist_meas_w_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hist_meas_w_<CASE>.h5 @ 1e-3 0
+  # z data -  updraft speed, m/s
+  /rb_updraft_ts DIAGS/hist_meas_w_<CASE>.h5 @ 1 0
 End
   
 ############ PLOT AXES #################
@@ -164,5 +298,25 @@ PlotAxes: VintCondHovAxes 3
   Sim@Time h 0 60 linear [_] {_}
   # z axis - pcprate in mm/h
   Condensate mm 0 4 linear [_] {_}
+End
+
+PlotAxes: UpDraftCoreHovAxes 3
+  14 2 [0.025_0.025]
+  # x axis - utc time
+  Sim@Time h 0 60 linear [_] {_}
+  # y axis - height
+  Height km 0 15 linear [_] {_}
+  # z axis - updraft speed, m/s
+  Updraft m@s^-^1 0 0.4 linear [_] {_}
+End
+
+PlotAxes: UpDraftRbandHovAxes 3
+  14 2 [0.025_0.025]
+  # x axis - utc time
+  Sim@Time h 0 60 linear [_] {_}
+  # y axis - height
+  Height km 0 15 linear [_] {_}
+  # z axis - updraft speed, m/s
+  Updraft m@s^-^1 0 0.3 linear [_] {_}
 End
 
