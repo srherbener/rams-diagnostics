@@ -631,73 +631,124 @@ function [ ] = GenTsdHistMeas()
 %      }
 %      'DIAGS/hist_meas_lhv_heat_<CASE>.h5'
 %    }
+%
+%    % liquid condensation
+%    {
+%      'Liquid Condensation'
+%     {
+%        { 'AzAveragedData/hist_liq_cond_<CASE>.h5' '/liq_cond' 'wtmean'  0.0  '/liq_cond_ts'         'xsection_ts' ''      ''        ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_liq_cond_<CASE>.h5' '/liq_cond' 'wtmean'  0.0  '/ps_liq_cond'         'xsection'    ''      'pre_sal' ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_liq_cond_<CASE>.h5' '/liq_cond' 'wtmean'  0.0  '/s_liq_cond'          'xsection'    ''      'sal'     ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_liq_cond_<CASE>.h5' '/liq_cond' 'wtmean'  0.0  '/core_liq_cond_ts'    'zprofile_ts' 'core'  ''        ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_liq_cond_<CASE>.h5' '/liq_cond' 'wtmean'  0.0  '/rb_liq_cond_ts'      'zprofile_ts' 'rband' ''        ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_liq_cond_<CASE>.h5' '/liq_cond' 'wtmean'  0.0  '/ps_core_liq_cond'    'zprofile'    'core'  'pre_sal' ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_liq_cond_<CASE>.h5' '/liq_cond' 'wtmean'  0.0  '/s_core_liq_cond'     'zprofile'    'core'  'sal'     ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_liq_cond_<CASE>.h5' '/liq_cond' 'wtmean'  0.0  '/ps_rb_liq_cond'      'zprofile'    'rband' 'pre_sal' ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_liq_cond_<CASE>.h5' '/liq_cond' 'wtmean'  0.0  '/s_rb_liq_cond'       'zprofile'    'rband' 'sal'     ''       'ge' 0.01 }
+%      }
+%      'DIAGS/hist_meas_liq_cond_<CASE>.h5'
+%    }
+%
+%    % liquid evaporation
+%    {
+%      'Liquid Evaporation'
+%     {
+%        { 'AzAveragedData/hist_liq_evap_<CASE>.h5' '/liq_evap' 'wtmean'  0.0  '/liq_evap_ts'         'xsection_ts' ''      ''        ''       'le' -0.01 }
+%        { 'AzAveragedData/hist_liq_evap_<CASE>.h5' '/liq_evap' 'wtmean'  0.0  '/ps_liq_evap'         'xsection'    ''      'pre_sal' ''       'le' -0.01 }
+%        { 'AzAveragedData/hist_liq_evap_<CASE>.h5' '/liq_evap' 'wtmean'  0.0  '/s_liq_evap'          'xsection'    ''      'sal'     ''       'le' -0.01 }
+%        { 'AzAveragedData/hist_liq_evap_<CASE>.h5' '/liq_evap' 'wtmean'  0.0  '/core_liq_evap_ts'    'zprofile_ts' 'core'  ''        ''       'le' -0.01 }
+%        { 'AzAveragedData/hist_liq_evap_<CASE>.h5' '/liq_evap' 'wtmean'  0.0  '/rb_liq_evap_ts'      'zprofile_ts' 'rband' ''        ''       'le' -0.01 }
+%        { 'AzAveragedData/hist_liq_evap_<CASE>.h5' '/liq_evap' 'wtmean'  0.0  '/ps_core_liq_evap'    'zprofile'    'core'  'pre_sal' ''       'le' -0.01 }
+%        { 'AzAveragedData/hist_liq_evap_<CASE>.h5' '/liq_evap' 'wtmean'  0.0  '/s_core_liq_evap'     'zprofile'    'core'  'sal'     ''       'le' -0.01 }
+%        { 'AzAveragedData/hist_liq_evap_<CASE>.h5' '/liq_evap' 'wtmean'  0.0  '/ps_rb_liq_evap'      'zprofile'    'rband' 'pre_sal' ''       'le' -0.01 }
+%        { 'AzAveragedData/hist_liq_evap_<CASE>.h5' '/liq_evap' 'wtmean'  0.0  '/s_rb_liq_evap'       'zprofile'    'rband' 'sal'     ''       'le' -0.01 }
+%      }
+%      'DIAGS/hist_meas_liq_evap_<CASE>.h5'
+%    }
+%
+%    % ice deposition
+%    {
+%      'Ice Deposition'
+%     {
+%        { 'AzAveragedData/hist_ice_dep_<CASE>.h5' '/ice_dep' 'wtmean'  0.0  '/ice_dep_ts'         'xsection_ts' ''      ''        ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_ice_dep_<CASE>.h5' '/ice_dep' 'wtmean'  0.0  '/ps_ice_dep'         'xsection'    ''      'pre_sal' ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_ice_dep_<CASE>.h5' '/ice_dep' 'wtmean'  0.0  '/s_ice_dep'          'xsection'    ''      'sal'     ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_ice_dep_<CASE>.h5' '/ice_dep' 'wtmean'  0.0  '/core_ice_dep_ts'    'zprofile_ts' 'core'  ''        ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_ice_dep_<CASE>.h5' '/ice_dep' 'wtmean'  0.0  '/rb_ice_dep_ts'      'zprofile_ts' 'rband' ''        ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_ice_dep_<CASE>.h5' '/ice_dep' 'wtmean'  0.0  '/ps_core_ice_dep'    'zprofile'    'core'  'pre_sal' ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_ice_dep_<CASE>.h5' '/ice_dep' 'wtmean'  0.0  '/s_core_ice_dep'     'zprofile'    'core'  'sal'     ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_ice_dep_<CASE>.h5' '/ice_dep' 'wtmean'  0.0  '/ps_rb_ice_dep'      'zprofile'    'rband' 'pre_sal' ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_ice_dep_<CASE>.h5' '/ice_dep' 'wtmean'  0.0  '/s_rb_ice_dep'       'zprofile'    'rband' 'sal'     ''       'ge' 0.01 }
+%      }
+%      'DIAGS/hist_meas_ice_dep_<CASE>.h5'
+%    }
+%
+%    % ice sublimation
+%    {
+%      'Ice Sublimation'
+%     {
+%        { 'AzAveragedData/hist_ice_sub_<CASE>.h5' '/ice_sub' 'wtmean'  0.0  '/ice_sub_ts'         'xsection_ts' ''      ''        ''       'le' -0.01 }
+%        { 'AzAveragedData/hist_ice_sub_<CASE>.h5' '/ice_sub' 'wtmean'  0.0  '/ps_ice_sub'         'xsection'    ''      'pre_sal' ''       'le' -0.01 }
+%        { 'AzAveragedData/hist_ice_sub_<CASE>.h5' '/ice_sub' 'wtmean'  0.0  '/s_ice_sub'          'xsection'    ''      'sal'     ''       'le' -0.01 }
+%        { 'AzAveragedData/hist_ice_sub_<CASE>.h5' '/ice_sub' 'wtmean'  0.0  '/core_ice_sub_ts'    'zprofile_ts' 'core'  ''        ''       'le' -0.01 }
+%        { 'AzAveragedData/hist_ice_sub_<CASE>.h5' '/ice_sub' 'wtmean'  0.0  '/rb_ice_sub_ts'      'zprofile_ts' 'rband' ''        ''       'le' -0.01 }
+%        { 'AzAveragedData/hist_ice_sub_<CASE>.h5' '/ice_sub' 'wtmean'  0.0  '/ps_core_ice_sub'    'zprofile'    'core'  'pre_sal' ''       'le' -0.01 }
+%        { 'AzAveragedData/hist_ice_sub_<CASE>.h5' '/ice_sub' 'wtmean'  0.0  '/s_core_ice_sub'     'zprofile'    'core'  'sal'     ''       'le' -0.01 }
+%        { 'AzAveragedData/hist_ice_sub_<CASE>.h5' '/ice_sub' 'wtmean'  0.0  '/ps_rb_ice_sub'      'zprofile'    'rband' 'pre_sal' ''       'le' -0.01 }
+%        { 'AzAveragedData/hist_ice_sub_<CASE>.h5' '/ice_sub' 'wtmean'  0.0  '/s_rb_ice_sub'       'zprofile'    'rband' 'sal'     ''       'le' -0.01 }
+%      }
+%      'DIAGS/hist_meas_ice_sub_<CASE>.h5'
+%    }
 
-    % cooling via latent heat of freezing
+    % ice melting
     {
-      'Liquid Condensation'
+      'Ice Melting'
      {
-        { 'AzAveragedData/hist_liq_cond_<CASE>.h5' '/liq_cond' 'wtmean'  0.0  '/liq_cond_ts'         'xsection_ts' ''      ''        ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_liq_cond_<CASE>.h5' '/liq_cond' 'wtmean'  0.0  '/ps_liq_cond'         'xsection'    ''      'pre_sal' ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_liq_cond_<CASE>.h5' '/liq_cond' 'wtmean'  0.0  '/s_liq_cond'          'xsection'    ''      'sal'     ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_liq_cond_<CASE>.h5' '/liq_cond' 'wtmean'  0.0  '/core_liq_cond_ts'    'zprofile_ts' 'core'  ''        ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_liq_cond_<CASE>.h5' '/liq_cond' 'wtmean'  0.0  '/rb_liq_cond_ts'      'zprofile_ts' 'rband' ''        ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_liq_cond_<CASE>.h5' '/liq_cond' 'wtmean'  0.0  '/ps_core_liq_cond'    'zprofile'    'core'  'pre_sal' ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_liq_cond_<CASE>.h5' '/liq_cond' 'wtmean'  0.0  '/s_core_liq_cond'     'zprofile'    'core'  'sal'     ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_liq_cond_<CASE>.h5' '/liq_cond' 'wtmean'  0.0  '/ps_rb_liq_cond'      'zprofile'    'rband' 'pre_sal' ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_liq_cond_<CASE>.h5' '/liq_cond' 'wtmean'  0.0  '/s_rb_liq_cond'       'zprofile'    'rband' 'sal'     ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_ice_melt_<CASE>.h5' '/ice_melt' 'wtmean'  0.0  '/ice_melt_ts'         'xsection_ts' ''      ''        ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_ice_melt_<CASE>.h5' '/ice_melt' 'wtmean'  0.0  '/ps_ice_melt'         'xsection'    ''      'pre_sal' ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_ice_melt_<CASE>.h5' '/ice_melt' 'wtmean'  0.0  '/s_ice_melt'          'xsection'    ''      'sal'     ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_ice_melt_<CASE>.h5' '/ice_melt' 'wtmean'  0.0  '/core_ice_melt_ts'    'zprofile_ts' 'core'  ''        ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_ice_melt_<CASE>.h5' '/ice_melt' 'wtmean'  0.0  '/rb_ice_melt_ts'      'zprofile_ts' 'rband' ''        ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_ice_melt_<CASE>.h5' '/ice_melt' 'wtmean'  0.0  '/ps_core_ice_melt'    'zprofile'    'core'  'pre_sal' ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_ice_melt_<CASE>.h5' '/ice_melt' 'wtmean'  0.0  '/s_core_ice_melt'     'zprofile'    'core'  'sal'     ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_ice_melt_<CASE>.h5' '/ice_melt' 'wtmean'  0.0  '/ps_rb_ice_melt'      'zprofile'    'rband' 'pre_sal' ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_ice_melt_<CASE>.h5' '/ice_melt' 'wtmean'  0.0  '/s_rb_ice_melt'       'zprofile'    'rband' 'sal'     ''       'ge' 0.01 }
       }
-      'DIAGS/hist_meas_liq_cond_<CASE>.h5'
+      'DIAGS/hist_meas_ice_melt_<CASE>.h5'
     }
 
-    % heating via latent heat of freezing
+    % riming, cloud to ice
     {
-      'Liquid Evaporation'
+      'Cloud Riming'
      {
-        { 'AzAveragedData/hist_liq_evap_<CASE>.h5' '/liq_evap' 'wtmean'  0.0  '/liq_evap_ts'         'xsection_ts' ''      ''        ''       'le' -0.01 }
-        { 'AzAveragedData/hist_liq_evap_<CASE>.h5' '/liq_evap' 'wtmean'  0.0  '/ps_liq_evap'         'xsection'    ''      'pre_sal' ''       'le' -0.01 }
-        { 'AzAveragedData/hist_liq_evap_<CASE>.h5' '/liq_evap' 'wtmean'  0.0  '/s_liq_evap'          'xsection'    ''      'sal'     ''       'le' -0.01 }
-        { 'AzAveragedData/hist_liq_evap_<CASE>.h5' '/liq_evap' 'wtmean'  0.0  '/core_liq_evap_ts'    'zprofile_ts' 'core'  ''        ''       'le' -0.01 }
-        { 'AzAveragedData/hist_liq_evap_<CASE>.h5' '/liq_evap' 'wtmean'  0.0  '/rb_liq_evap_ts'      'zprofile_ts' 'rband' ''        ''       'le' -0.01 }
-        { 'AzAveragedData/hist_liq_evap_<CASE>.h5' '/liq_evap' 'wtmean'  0.0  '/ps_core_liq_evap'    'zprofile'    'core'  'pre_sal' ''       'le' -0.01 }
-        { 'AzAveragedData/hist_liq_evap_<CASE>.h5' '/liq_evap' 'wtmean'  0.0  '/s_core_liq_evap'     'zprofile'    'core'  'sal'     ''       'le' -0.01 }
-        { 'AzAveragedData/hist_liq_evap_<CASE>.h5' '/liq_evap' 'wtmean'  0.0  '/ps_rb_liq_evap'      'zprofile'    'rband' 'pre_sal' ''       'le' -0.01 }
-        { 'AzAveragedData/hist_liq_evap_<CASE>.h5' '/liq_evap' 'wtmean'  0.0  '/s_rb_liq_evap'       'zprofile'    'rband' 'sal'     ''       'le' -0.01 }
+        { 'AzAveragedData/hist_cloud_rime_<CASE>.h5' '/cloud_rime' 'wtmean'  0.0  '/cloud_rime_ts'         'xsection_ts' ''      ''        ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_cloud_rime_<CASE>.h5' '/cloud_rime' 'wtmean'  0.0  '/ps_cloud_rime'         'xsection'    ''      'pre_sal' ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_cloud_rime_<CASE>.h5' '/cloud_rime' 'wtmean'  0.0  '/s_cloud_rime'          'xsection'    ''      'sal'     ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_cloud_rime_<CASE>.h5' '/cloud_rime' 'wtmean'  0.0  '/core_cloud_rime_ts'    'zprofile_ts' 'core'  ''        ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_cloud_rime_<CASE>.h5' '/cloud_rime' 'wtmean'  0.0  '/rb_cloud_rime_ts'      'zprofile_ts' 'rband' ''        ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_cloud_rime_<CASE>.h5' '/cloud_rime' 'wtmean'  0.0  '/ps_core_cloud_rime'    'zprofile'    'core'  'pre_sal' ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_cloud_rime_<CASE>.h5' '/cloud_rime' 'wtmean'  0.0  '/s_core_cloud_rime'     'zprofile'    'core'  'sal'     ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_cloud_rime_<CASE>.h5' '/cloud_rime' 'wtmean'  0.0  '/ps_rb_cloud_rime'      'zprofile'    'rband' 'pre_sal' ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_cloud_rime_<CASE>.h5' '/cloud_rime' 'wtmean'  0.0  '/s_rb_cloud_rime'       'zprofile'    'rband' 'sal'     ''       'ge' 0.01 }
       }
-      'DIAGS/hist_meas_liq_evap_<CASE>.h5'
+      'DIAGS/hist_meas_cloud_rime_<CASE>.h5'
     }
 
-    % cooling via latent heat of vaporization
+    % rain to ice
     {
-      'Ice Deposition'
+      'Rain to Ice'
      {
-        { 'AzAveragedData/hist_ice_dep_<CASE>.h5' '/ice_dep' 'wtmean'  0.0  '/ice_dep_ts'         'xsection_ts' ''      ''        ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_ice_dep_<CASE>.h5' '/ice_dep' 'wtmean'  0.0  '/ps_ice_dep'         'xsection'    ''      'pre_sal' ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_ice_dep_<CASE>.h5' '/ice_dep' 'wtmean'  0.0  '/s_ice_dep'          'xsection'    ''      'sal'     ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_ice_dep_<CASE>.h5' '/ice_dep' 'wtmean'  0.0  '/core_ice_dep_ts'    'zprofile_ts' 'core'  ''        ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_ice_dep_<CASE>.h5' '/ice_dep' 'wtmean'  0.0  '/rb_ice_dep_ts'      'zprofile_ts' 'rband' ''        ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_ice_dep_<CASE>.h5' '/ice_dep' 'wtmean'  0.0  '/ps_core_ice_dep'    'zprofile'    'core'  'pre_sal' ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_ice_dep_<CASE>.h5' '/ice_dep' 'wtmean'  0.0  '/s_core_ice_dep'     'zprofile'    'core'  'sal'     ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_ice_dep_<CASE>.h5' '/ice_dep' 'wtmean'  0.0  '/ps_rb_ice_dep'      'zprofile'    'rband' 'pre_sal' ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_ice_dep_<CASE>.h5' '/ice_dep' 'wtmean'  0.0  '/s_rb_ice_dep'       'zprofile'    'rband' 'sal'     ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_rain2ice_<CASE>.h5' '/rain2ice' 'wtmean'  0.0  '/rain2ice_ts'         'xsection_ts' ''      ''        ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_rain2ice_<CASE>.h5' '/rain2ice' 'wtmean'  0.0  '/ps_rain2ice'         'xsection'    ''      'pre_sal' ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_rain2ice_<CASE>.h5' '/rain2ice' 'wtmean'  0.0  '/s_rain2ice'          'xsection'    ''      'sal'     ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_rain2ice_<CASE>.h5' '/rain2ice' 'wtmean'  0.0  '/core_rain2ice_ts'    'zprofile_ts' 'core'  ''        ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_rain2ice_<CASE>.h5' '/rain2ice' 'wtmean'  0.0  '/rb_rain2ice_ts'      'zprofile_ts' 'rband' ''        ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_rain2ice_<CASE>.h5' '/rain2ice' 'wtmean'  0.0  '/ps_core_rain2ice'    'zprofile'    'core'  'pre_sal' ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_rain2ice_<CASE>.h5' '/rain2ice' 'wtmean'  0.0  '/s_core_rain2ice'     'zprofile'    'core'  'sal'     ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_rain2ice_<CASE>.h5' '/rain2ice' 'wtmean'  0.0  '/ps_rb_rain2ice'      'zprofile'    'rband' 'pre_sal' ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_rain2ice_<CASE>.h5' '/rain2ice' 'wtmean'  0.0  '/s_rb_rain2ice'       'zprofile'    'rband' 'sal'     ''       'ge' 0.01 }
       }
-      'DIAGS/hist_meas_ice_dep_<CASE>.h5'
-    }
-
-    % heating via latent heat of vaporization
-    {
-      'Ice Sublimation'
-     {
-        { 'AzAveragedData/hist_ice_sub_<CASE>.h5' '/ice_sub' 'wtmean'  0.0  '/ice_sub_ts'         'xsection_ts' ''      ''        ''       'le' -0.01 }
-        { 'AzAveragedData/hist_ice_sub_<CASE>.h5' '/ice_sub' 'wtmean'  0.0  '/ps_ice_sub'         'xsection'    ''      'pre_sal' ''       'le' -0.01 }
-        { 'AzAveragedData/hist_ice_sub_<CASE>.h5' '/ice_sub' 'wtmean'  0.0  '/s_ice_sub'          'xsection'    ''      'sal'     ''       'le' -0.01 }
-        { 'AzAveragedData/hist_ice_sub_<CASE>.h5' '/ice_sub' 'wtmean'  0.0  '/core_ice_sub_ts'    'zprofile_ts' 'core'  ''        ''       'le' -0.01 }
-        { 'AzAveragedData/hist_ice_sub_<CASE>.h5' '/ice_sub' 'wtmean'  0.0  '/rb_ice_sub_ts'      'zprofile_ts' 'rband' ''        ''       'le' -0.01 }
-        { 'AzAveragedData/hist_ice_sub_<CASE>.h5' '/ice_sub' 'wtmean'  0.0  '/ps_core_ice_sub'    'zprofile'    'core'  'pre_sal' ''       'le' -0.01 }
-        { 'AzAveragedData/hist_ice_sub_<CASE>.h5' '/ice_sub' 'wtmean'  0.0  '/s_core_ice_sub'     'zprofile'    'core'  'sal'     ''       'le' -0.01 }
-        { 'AzAveragedData/hist_ice_sub_<CASE>.h5' '/ice_sub' 'wtmean'  0.0  '/ps_rb_ice_sub'      'zprofile'    'rband' 'pre_sal' ''       'le' -0.01 }
-        { 'AzAveragedData/hist_ice_sub_<CASE>.h5' '/ice_sub' 'wtmean'  0.0  '/s_rb_ice_sub'       'zprofile'    'rband' 'sal'     ''       'le' -0.01 }
-      }
-      'DIAGS/hist_meas_ice_sub_<CASE>.h5'
+      'DIAGS/hist_meas_rain2ice_<CASE>.h5'
     }
 
     };
