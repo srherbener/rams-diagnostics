@@ -52,21 +52,29 @@ FigPanel: AggrDiffSalCorePanel
 End
 
 ############ PLOT SETS #################
-PlotSet: AggrCntlPreSalCorePset line 1
-  AggrPreSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: AggrCntlPreSalCorePset line 4
+  AggrPreSalCoreLine TSD_SAL_DUST SD  2 black   - 0
+  AggrPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  AggrPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  AggrPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: AggrDiffPreSalCorePset line 3
+PlotSet: AggrDiffPreSalCorePset line 4
+  AggrDiffPreSalCoreLine TSD_SAL_DUST SD  2 black   - 0
   AggrDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
   AggrDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
   AggrDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: AggrCntlSalCorePset line 1
-  AggrSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: AggrCntlSalCorePset line 4
+  AggrSalCoreLine TSD_SAL_DUST SD  2 black   - 0
+  AggrSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  AggrSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  AggrSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: AggrDiffSalCorePset line 3
+PlotSet: AggrDiffSalCorePset line 4
+  AggrDiffSalCoreLine TSD_SAL_DUST SD  2 black   - 0
   AggrDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
   AggrDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
   AggrDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
@@ -105,7 +113,7 @@ End
 PlotAxes: AggrCntlPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - aggr mix ratio, g/kg
-  Aggregates g@kg^-^1 0 0.5 linear [_] {_}
+  Aggregates g@kg^-^1 0 0.4 linear [_] {_}
   # y axis - height, km
   Height km 0 18 linear [_] {_}
 End
@@ -113,7 +121,7 @@ End
 PlotAxes: AggrDiffPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - aggr mix ratio, g/kg
-  Aggregates g@kg^-^1 -0.20 0.20 linear [_] {_}
+  Aggregates g@kg^-^1 -0.15 0.20 linear [_] {_}
   # y axis - height, km
   Height km 0 18 linear [_] {_}
 End
@@ -121,7 +129,7 @@ End
 PlotAxes: AggrCntlSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - aggr mix ratio, g/kg
-  Aggregates g@kg^-^1 0 0.5 linear [_] {_}
+  Aggregates g@kg^-^1 0 0.4 linear [_] {_}
   # y axis - height, km
   Height km 0 18 linear [_] {_}
 End
@@ -129,7 +137,7 @@ End
 PlotAxes: AggrDiffSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - aggr mix ratio, g/kg
-  Aggregates g@kg^-^1 -0.20 0.20 linear [_] {_}
+  Aggregates g@kg^-^1 -0.15 0.20 linear [_] {_}
   # y axis - height, km
   Height km 0 18 linear [_] {_}
 End

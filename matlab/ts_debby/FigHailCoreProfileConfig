@@ -52,21 +52,29 @@ FigPanel: HailDiffSalCorePanel
 End
 
 ############ PLOT SETS #################
-PlotSet: HailCntlPreSalCorePset line 1
-  HailPreSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: HailCntlPreSalCorePset line 4
+  HailPreSalCoreLine TSD_SAL_DUST SD  2 black   - 0
+  HailPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  HailPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  HailPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: HailDiffPreSalCorePset line 3
+PlotSet: HailDiffPreSalCorePset line 4
+  HailDiffPreSalCoreLine TSD_SAL_DUST SD  2 black   - 0
   HailDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
   HailDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
   HailDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: HailCntlSalCorePset line 1
-  HailSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: HailCntlSalCorePset line 4
+  HailSalCoreLine TSD_SAL_DUST SD  2 black   - 0
+  HailSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  HailSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  HailSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: HailDiffSalCorePset line 3
+PlotSet: HailDiffSalCorePset line 4
+  HailDiffSalCoreLine TSD_SAL_DUST SD  2 black   - 0
   HailDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
   HailDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
   HailDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
@@ -105,7 +113,7 @@ End
 PlotAxes: HailCntlPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - hail mix ratio, g/kg
-  Hail g@kg^-^1 0 0.2 linear [_] {_}
+  Hail g@kg^-^1 0 0.15 linear [_] {_}
   # y axis - height, km
   Height km 0 18 linear [_] {_}
 End
@@ -113,7 +121,7 @@ End
 PlotAxes: HailDiffPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - hail mix ratio, g/kg
-  Hail g@kg^-^1 -0.05 0.1 linear [_] {_}
+  Hail g@kg^-^1 -0.1 0.1 linear [_] {_}
   # y axis - height, km
   Height km 0 18 linear [_] {_}
 End
@@ -121,7 +129,7 @@ End
 PlotAxes: HailCntlSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - hail mix ratio, g/kg
-  Hail g@kg^-^1 0 0.2 linear [_] {_}
+  Hail g@kg^-^1 0 0.15 linear [_] {_}
   # y axis - height, km
   Height km 0 18 linear [_] {_}
 End
@@ -129,7 +137,7 @@ End
 PlotAxes: HailDiffSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - hail mix ratio, g/kg
-  Hail g@kg^-^1 -0.05 0.10 linear [_] {_}
+  Hail g@kg^-^1 -0.1 0.10 linear [_] {_}
   # y axis - height, km
   Height km 0 18 linear [_] {_}
 End

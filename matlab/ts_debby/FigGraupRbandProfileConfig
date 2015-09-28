@@ -32,7 +32,7 @@ FigPanel: GraupDiffPreSalRbandPanel
   GraupDiffPreSalRbandAxes 1 1
   none 5
   Pre@SAL@Rband@(diffs)
-  SouthEast 12
+  SouthWest 12
 End
 
 FigPanel: GraupCntlSalRbandPanel
@@ -48,25 +48,33 @@ FigPanel: GraupDiffSalRbandPanel
   GraupDiffSalRbandAxes 1 1
   none 5
   SAL@Rband@(diffs)
-  SouthEast 12
+  SouthWest 12
 End
 
 ############ PLOT SETS #################
-PlotSet: GraupCntlPreSalRbandPset line 1
-  GraupPreSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: GraupCntlPreSalRbandPset line 4
+  GraupPreSalRbandLine TSD_SAL_DUST SD  2 black   - 0
+  GraupPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  GraupPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  GraupPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: GraupDiffPreSalRbandPset line 3
+PlotSet: GraupDiffPreSalRbandPset line 4
+  GraupDiffPreSalRbandLine TSD_SAL_DUST SD  2 black   - 0
   GraupDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
   GraupDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
   GraupDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: GraupCntlSalRbandPset line 1
-  GraupSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: GraupCntlSalRbandPset line 4
+  GraupSalRbandLine TSD_SAL_DUST SD  2 black   - 0
+  GraupSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  GraupSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  GraupSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: GraupDiffSalRbandPset line 3
+PlotSet: GraupDiffSalRbandPset line 4
+  GraupDiffSalRbandLine TSD_SAL_DUST SD  2 black   - 0
   GraupDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
   GraupDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
   GraupDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
@@ -105,7 +113,7 @@ End
 PlotAxes: GraupCntlPreSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - graup mix ratio, g/kg
-  Graupel g@kg^-^1 0 0.1 linear [_] {_}
+  Graupel g@kg^-^1 0 0.15 linear [_] {_}
   # y axis - height, km
   Height km 0 18 linear [_] {_}
 End
@@ -113,7 +121,7 @@ End
 PlotAxes: GraupDiffPreSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - graup mix ratio, g/kg
-  Graupel g@kg^-^1 -0.05 0.1 linear [_] {_}
+  Graupel g@kg^-^1 -0.1 0.05 linear [_] {_}
   # y axis - height, km
   Height km 0 18 linear [_] {_}
 End
@@ -121,7 +129,7 @@ End
 PlotAxes: GraupCntlSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - graup mix ratio, g/kg
-  Graupel g@kg^-^1 0 0.1 linear [_] {_}
+  Graupel g@kg^-^1 0 0.15 linear [_] {_}
   # y axis - height, km
   Height km 0 18 linear [_] {_}
 End
@@ -129,7 +137,7 @@ End
 PlotAxes: GraupDiffSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - graup mix ratio, g/kg
-  Graupel g@kg^-^1 -0.05 0.1 linear [_] {_}
+  Graupel g@kg^-^1 -0.1 0.05 linear [_] {_}
   # y axis - height, km
   Height km 0 18 linear [_] {_}
 End

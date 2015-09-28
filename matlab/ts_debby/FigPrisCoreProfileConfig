@@ -32,7 +32,7 @@ FigPanel: PrisDiffPreSalCorePanel
   PrisDiffPreSalCoreAxes 1 1
   none 5
   Pre@SAL@Core@(diffs)
-  SouthEast 12
+  SouthWest 12
 End
 
 FigPanel: PrisCntlSalCorePanel
@@ -48,25 +48,33 @@ FigPanel: PrisDiffSalCorePanel
   PrisDiffSalCoreAxes 1 1
   none 5
   SAL@Core@(diffs)
-  SouthEast 12
+  SouthWest 12
 End
 
 ############ PLOT SETS #################
-PlotSet: PrisCntlPreSalCorePset line 1
-  PrisPreSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: PrisCntlPreSalCorePset line 4
+  PrisPreSalCoreLine TSD_SAL_DUST SD  2 black   - 0
+  PrisPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  PrisPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  PrisPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: PrisDiffPreSalCorePset line 3
+PlotSet: PrisDiffPreSalCorePset line 4
+  PrisDiffPreSalCoreLine TSD_SAL_DUST SD  2 black   - 0
   PrisDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
   PrisDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
   PrisDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: PrisCntlSalCorePset line 1
-  PrisSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: PrisCntlSalCorePset line 4
+  PrisSalCoreLine TSD_SAL_DUST SD  2 black   - 0
+  PrisSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  PrisSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  PrisSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: PrisDiffSalCorePset line 3
+PlotSet: PrisDiffSalCorePset line 4
+  PrisDiffSalCoreLine TSD_SAL_DUST SD  2 black   - 0
   PrisDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
   PrisDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
   PrisDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
@@ -105,7 +113,7 @@ End
 PlotAxes: PrisCntlPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - pris mix ratio, g/kg
-  Pristine@Ice g@kg^-^1 -0.01 0.1 linear [_] {_}
+  Pristine@Ice g@kg^-^1 -0.01 0.08 linear [_] {_}
   # y axis - height, km
   Height km 0 18 linear [_] {_}
 End
@@ -113,7 +121,7 @@ End
 PlotAxes: PrisDiffPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - pris mix ratio, g/kg
-  Pristine@Ice g@kg^-^1 -0.02 0.06 linear [_] {_}
+  Pristine@Ice g@kg^-^1 -0.06 0.02 linear [_] {_}
   # y axis - height, km
   Height km 0 18 linear [_] {_}
 End
@@ -121,7 +129,7 @@ End
 PlotAxes: PrisCntlSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - pris mix ratio, g/kg
-  Pristine@Ice g@kg^-^1 -0.01 0.1 linear [_] {_}
+  Pristine@Ice g@kg^-^1 -0.01 0.08 linear [_] {_}
   # y axis - height, km
   Height km 0 18 linear [_] {_}
 End
@@ -129,7 +137,7 @@ End
 PlotAxes: PrisDiffSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - pris mix ratio, g/kg
-  Pristine@Ice g@kg^-^1 -0.02 0.06 linear [_] {_}
+  Pristine@Ice g@kg^-^1 -0.06 0.02 linear [_] {_}
   # y axis - height, km
   Height km 0 18 linear [_] {_}
 End

@@ -52,21 +52,29 @@ FigPanel: RainDiffSalCorePanel
 End
 
 ############ PLOT SETS #################
-PlotSet: RainCntlPreSalCorePset line 1
-  RainPreSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: RainCntlPreSalCorePset line 4
+  RainPreSalCoreLine TSD_SAL_DUST SD  2 black   - 0
+  RainPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  RainPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  RainPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: RainDiffPreSalCorePset line 3
+PlotSet: RainDiffPreSalCorePset line 4
+  RainDiffPreSalCoreLine TSD_SAL_DUST SD  2 black   - 0
   RainDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
   RainDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
   RainDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: RainCntlSalCorePset line 1
-  RainSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: RainCntlSalCorePset line 4
+  RainSalCoreLine TSD_SAL_DUST SD  2 black   - 0
+  RainSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  RainSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  RainSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: RainDiffSalCorePset line 3
+PlotSet: RainDiffSalCorePset line 4
+  RainDiffSalCoreLine TSD_SAL_DUST SD  2 black   - 0
   RainDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
   RainDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
   RainDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0

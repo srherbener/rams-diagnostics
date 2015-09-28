@@ -52,21 +52,29 @@ FigPanel: AggrDiffSalRbandPanel
 End
 
 ############ PLOT SETS #################
-PlotSet: AggrCntlPreSalRbandPset line 1
-  AggrPreSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: AggrCntlPreSalRbandPset line 4
+  AggrPreSalRbandLine TSD_SAL_DUST SD  2 black   - 0
+  AggrPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  AggrPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  AggrPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: AggrDiffPreSalRbandPset line 3
+PlotSet: AggrDiffPreSalRbandPset line 4
+  AggrDiffPreSalRbandLine TSD_SAL_DUST SD  2 black   - 0
   AggrDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
   AggrDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
   AggrDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: AggrCntlSalRbandPset line 1
-  AggrSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: AggrCntlSalRbandPset line 4
+  AggrSalRbandLine TSD_SAL_DUST SD  2 black   - 0
+  AggrSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  AggrSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  AggrSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: AggrDiffSalRbandPset line 3
+PlotSet: AggrDiffSalRbandPset line 4
+  AggrDiffSalRbandLine TSD_SAL_DUST SD  2 black   - 0
   AggrDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
   AggrDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
   AggrDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0

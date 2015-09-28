@@ -32,7 +32,7 @@ FigPanel: SnowDiffPreSalRbandPanel
   SnowDiffPreSalRbandAxes 1 1
   none 5
   Pre@SAL@Rband@(diffs)
-  SouthEast 12
+  SouthWest 12
 End
 
 FigPanel: SnowCntlSalRbandPanel
@@ -48,25 +48,33 @@ FigPanel: SnowDiffSalRbandPanel
   SnowDiffSalRbandAxes 1 1
   none 5
   SAL@Rband@(diffs)
-  SouthEast 12
+  SouthWest 12
 End
 
 ############ PLOT SETS #################
-PlotSet: SnowCntlPreSalRbandPset line 1
-  SnowPreSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: SnowCntlPreSalRbandPset line 4
+  SnowPreSalRbandLine TSD_SAL_DUST SD  2 black   - 0
+  SnowPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  SnowPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  SnowPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: SnowDiffPreSalRbandPset line 3
+PlotSet: SnowDiffPreSalRbandPset line 4
+  SnowDiffPreSalRbandLine TSD_SAL_DUST SD  2 black   - 0
   SnowDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
   SnowDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
   SnowDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: SnowCntlSalRbandPset line 1
-  SnowSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: SnowCntlSalRbandPset line 4
+  SnowSalRbandLine TSD_SAL_DUST SD  2 black   - 0
+  SnowSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  SnowSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  SnowSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: SnowDiffSalRbandPset line 3
+PlotSet: SnowDiffSalRbandPset line 4
+  SnowDiffSalRbandLine TSD_SAL_DUST SD  2 black   - 0
   SnowDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
   SnowDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
   SnowDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
@@ -105,7 +113,7 @@ End
 PlotAxes: SnowCntlPreSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - snow mix ratio, g/kg
-  Snow g@kg^-^1 0 0.1 linear [_] {_}
+  Snow g@kg^-^1 0 0.15 linear [_] {_}
   # y axis - height, km
   Height km 0 20 linear [_] {_}
 End
@@ -113,7 +121,7 @@ End
 PlotAxes: SnowDiffPreSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - snow mix ratio, g/kg
-  Snow g@kg^-^1 -0.02 0.08 linear [_] {_}
+  Snow g@kg^-^1 -0.08 0.02 linear [_] {_}
   # y axis - height, km
   Height km 0 20 linear [_] {_}
 End
@@ -121,7 +129,7 @@ End
 PlotAxes: SnowCntlSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - snow mix ratio, g/kg
-  Snow g@kg^-^1 0 0.1 linear [_] {_}
+  Snow g@kg^-^1 0 0.15 linear [_] {_}
   # y axis - height, km
   Height km 0 20 linear [_] {_}
 End
@@ -129,7 +137,7 @@ End
 PlotAxes: SnowDiffSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - snow mix ratio, g/kg
-  Snow g@kg^-^1 -0.02 0.08 linear [_] {_}
+  Snow g@kg^-^1 -0.08 0.02 linear [_] {_}
   # y axis - height, km
   Height km 0 20 linear [_] {_}
 End
