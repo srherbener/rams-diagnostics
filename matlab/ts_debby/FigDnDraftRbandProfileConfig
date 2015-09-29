@@ -52,21 +52,29 @@ FigPanel: DnDraftDiffSalRbandPanel
 End
 
 ############ PLOT SETS #################
-PlotSet: DnDraftCntlPreSalRbandPset line 1
-  DnDraftPreSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: DnDraftCntlPreSalRbandPset line 4
+  DnDraftPreSalRbandLine TSD_SAL_DUST SD  2 black   - 0
+  DnDraftPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  DnDraftPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  DnDraftPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: DnDraftDiffPreSalRbandPset line 3
+PlotSet: DnDraftDiffPreSalRbandPset line 4
+  DnDraftDiffPreSalRbandLine TSD_SAL_DUST SD  2 black   - 0
   DnDraftDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
   DnDraftDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
   DnDraftDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: DnDraftCntlSalRbandPset line 1
-  DnDraftSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: DnDraftCntlSalRbandPset line 4
+  DnDraftSalRbandLine TSD_SAL_DUST SD  2 black   - 0
+  DnDraftSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  DnDraftSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  DnDraftSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: DnDraftDiffSalRbandPset line 3
+PlotSet: DnDraftDiffSalRbandPset line 4
+  DnDraftDiffSalRbandLine TSD_SAL_DUST SD  2 black   - 0
   DnDraftDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
   DnDraftDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
   DnDraftDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0

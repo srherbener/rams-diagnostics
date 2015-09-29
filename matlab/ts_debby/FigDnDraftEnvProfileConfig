@@ -1,0 +1,144 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: DnDraftEnvProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigDnDraftEnvProfile.jpg
+  DnDraftCntlPreSalEnvPanel  1
+  DnDraftCntlSalEnvPanel     2
+  DnDraftDiffPreSalEnvPanel  3
+  DnDraftDiffSalEnvPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: DnDraftCntlPreSalEnvPanel
+  DnDraftCntlPreSalEnvPset
+  DnDraftCntlPreSalEnvAxes 1 1
+  none 5
+  Pre@SAL@Env 
+  NorthWest 12
+End
+
+FigPanel: DnDraftDiffPreSalEnvPanel
+  DnDraftDiffPreSalEnvPset
+  DnDraftDiffPreSalEnvAxes 1 1
+  none 5
+  Pre@SAL@Env@(diffs)
+  NorthEast 12
+End
+
+FigPanel: DnDraftCntlSalEnvPanel
+  DnDraftCntlSalEnvPset
+  DnDraftCntlSalEnvAxes 1 1
+  none 5
+  SAL@Env 
+  NorthWest 12
+End
+
+FigPanel: DnDraftDiffSalEnvPanel
+  DnDraftDiffSalEnvPset
+  DnDraftDiffSalEnvAxes 1 1
+  none 5
+  SAL@Env@(diffs)
+  NorthWest 12
+End
+
+############ PLOT SETS #################
+PlotSet: DnDraftCntlPreSalEnvPset line 4
+  DnDraftPreSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  DnDraftPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  DnDraftPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  DnDraftPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: DnDraftDiffPreSalEnvPset line 4
+  DnDraftDiffPreSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  DnDraftDiffPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  DnDraftDiffPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  DnDraftDiffPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: DnDraftCntlSalEnvPset line 4
+  DnDraftSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  DnDraftSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  DnDraftSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  DnDraftSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: DnDraftDiffSalEnvPset line 4
+  DnDraftDiffSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  DnDraftDiffSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  DnDraftDiffSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  DnDraftDiffSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: DnDraftPreSalEnvLine 2
+  # x data - dndraft, m/s
+  /ps_env_dndraft DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: DnDraftSalEnvLine 2
+  # x data - dndraft, m/s
+  /s_env_dndraft DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: DnDraftDiffPreSalEnvLine 2
+  # x data - dndraft, m/s
+  /ps_env_dndraft_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: DnDraftDiffSalEnvLine 2
+  # x data - dndraft, m/s
+  /s_env_dndraft_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: DnDraftCntlPreSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - dndraft, m/s
+  Down@Draft m@s^-^1 -0.2 0.01 linear [_] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+End
+
+PlotAxes: DnDraftDiffPreSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - dndraft, m/s
+  Down@Draft m@s^-^1 -0.1 0.2 linear [_] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+End
+
+PlotAxes: DnDraftCntlSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - dndraft, m/s
+  Down@Draft m@s^-^1 -0.2 0.01 linear [_] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+End
+
+PlotAxes: DnDraftDiffSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - dndraft, m/s
+  Down@Draft m@s^-^1 -0.2 0.1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+End
+

@@ -1,0 +1,144 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: SpeedtEnvProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigSpeedtEnvProfile.jpg
+  SpeedtCntlPreSalEnvPanel  1
+  SpeedtCntlSalEnvPanel     2
+  SpeedtDiffPreSalEnvPanel  3
+  SpeedtDiffSalEnvPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: SpeedtCntlPreSalEnvPanel
+  SpeedtCntlPreSalEnvPset
+  SpeedtCntlPreSalEnvAxes 1 1
+  none 5
+  Pre@SAL@Env 
+  NorthEast 12
+End
+
+FigPanel: SpeedtDiffPreSalEnvPanel
+  SpeedtDiffPreSalEnvPset
+  SpeedtDiffPreSalEnvAxes 1 1
+  none 5
+  Pre@SAL@Env@(diffs)
+  NorthWest 12
+End
+
+FigPanel: SpeedtCntlSalEnvPanel
+  SpeedtCntlSalEnvPset
+  SpeedtCntlSalEnvAxes 1 1
+  none 5
+  SAL@Env 
+  NorthEast 12
+End
+
+FigPanel: SpeedtDiffSalEnvPanel
+  SpeedtDiffSalEnvPset
+  SpeedtDiffSalEnvAxes 1 1
+  none 5
+  SAL@Env@(diffs)
+  NorthEast 12
+End
+
+############ PLOT SETS #################
+PlotSet: SpeedtCntlPreSalEnvPset line 4
+  SpeedtPreSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  SpeedtPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  SpeedtPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  SpeedtPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: SpeedtDiffPreSalEnvPset line 4
+  SpeedtDiffPreSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  SpeedtDiffPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  SpeedtDiffPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  SpeedtDiffPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: SpeedtCntlSalEnvPset line 4
+  SpeedtSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  SpeedtSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  SpeedtSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  SpeedtSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: SpeedtDiffSalEnvPset line 4
+  SpeedtDiffSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  SpeedtDiffSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  SpeedtDiffSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  SpeedtDiffSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: SpeedtPreSalEnvLine 2
+  # x data - speed_t, m/s
+  /ps_env_speed_t DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: SpeedtSalEnvLine 2
+  # x data - speed_t, m/s
+  /s_env_speed_t DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: SpeedtDiffPreSalEnvLine 2
+  # x data - speed_t, m/s
+  /ps_env_speed_t_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: SpeedtDiffSalEnvLine 2
+  # x data - speed_t, m/s
+  /s_env_speed_t_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: SpeedtCntlPreSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - speed_t, m/s
+  Speedt m@s^-^1 -5 20 linear [_] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+End
+
+PlotAxes: SpeedtDiffPreSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - speed_t, m/s
+  Speedt m@s^-^1 -5 3 linear [_] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+End
+
+PlotAxes: SpeedtCntlSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - speed_t, m/s
+  Speedt m@s^-^1 -5 20 linear [_] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+End
+
+PlotAxes: SpeedtDiffSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - speed_t, m/s
+  Speedt m@s^-^1 -3 5 linear [_] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+End
+
