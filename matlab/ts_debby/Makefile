@@ -19,6 +19,7 @@ SCRIPTS = \
   $(DEST)/GenStormXsections.m \
   $(DEST)/GenStormProfiles.m \
   $(DEST)/GenTsdHistMeas.m \
+  $(DEST)/RunGenFigures.m \
   $(DEST)/LocateSal.m \
   $(DEST)/PlotAeroProfs.m \
   $(DEST)/PlotMaxWindAll.m \
