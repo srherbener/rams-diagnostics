@@ -1,8 +1,7 @@
-function [ ] = PlotAeroProfs(ConfigFile)
+function [ ] = PlotAeroProfs()
 
-  [ Config ] = ReadConfig(ConfigFile);
 
-  Pdir = Config.PlotDir;
+  Pdir = 'Plots';
   if (exist(Pdir, 'dir') ~= 7)
     mkdir(Pdir);
   end
