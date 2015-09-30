@@ -31,11 +31,17 @@ function [ ] = GenStormXsections()
     { 'DIAGS/hist_meas_theta_e_<CASE>.h5' '/ps_theta_e' '/ps_theta_e' }
     { 'DIAGS/hist_meas_theta_e_<CASE>.h5' '/s_theta_e' '/s_theta_e' }
 
+    { 'DIAGS/hist_meas_theta_<CASE>.h5' '/ps_theta'  '/ps_theta' }
+    { 'DIAGS/hist_meas_theta_<CASE>.h5' '/s_theta'  '/s_theta' }
+
     { 'DIAGS/hist_meas_pcprate_<CASE>.h5' '/ps_pcprate' '/ps_pcprate' }
     { 'DIAGS/hist_meas_pcprate_<CASE>.h5' '/s_pcprate' '/s_pcprate' }
 
     { 'DIAGS/hist_meas_vint_cond_<CASE>.h5' '/ps_vint_cond' '/ps_vint_cond' }
     { 'DIAGS/hist_meas_vint_cond_<CASE>.h5' '/s_vint_cond' '/s_vint_cond' }
+
+    { 'DIAGS/hist_meas_vapor_<CASE>.h5' '/ps_vapor' '/ps_vapor' }
+    { 'DIAGS/hist_meas_vapor_<CASE>.h5' '/s_vapor' '/s_vapor' }
 
     { 'DIAGS/hist_meas_dust_<CASE>.h5' '/ps_d1_mass' '/ps_d1_mass' }
     { 'DIAGS/hist_meas_dust_<CASE>.h5' '/ps_d1_num'  '/ps_d1_num'  }

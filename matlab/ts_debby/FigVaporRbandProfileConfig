@@ -1,0 +1,144 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: VaporRbandProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigVaporRbandProfile.jpg
+  VaporCntlPreSalRbandPanel  1
+  VaporCntlSalRbandPanel     2
+  VaporDiffPreSalRbandPanel  3
+  VaporDiffSalRbandPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: VaporCntlPreSalRbandPanel
+  VaporCntlPreSalRbandPset
+  VaporCntlPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband 
+  NorthEast 12
+End
+
+FigPanel: VaporDiffPreSalRbandPanel
+  VaporDiffPreSalRbandPset
+  VaporDiffPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband@(diffs)
+  NorthEast 12
+End
+
+FigPanel: VaporCntlSalRbandPanel
+  VaporCntlSalRbandPset
+  VaporCntlSalRbandAxes 1 1
+  none 5
+  SAL@Rband 
+  NorthEast 12
+End
+
+FigPanel: VaporDiffSalRbandPanel
+  VaporDiffSalRbandPset
+  VaporDiffSalRbandAxes 1 1
+  none 5
+  SAL@Rband@(diffs)
+  NorthEast 12
+End
+
+############ PLOT SETS #################
+PlotSet: VaporCntlPreSalRbandPset line 4
+  VaporPreSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  VaporPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  VaporPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  VaporPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: VaporDiffPreSalRbandPset line 4
+  VaporDiffPreSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  VaporDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  VaporDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  VaporDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: VaporCntlSalRbandPset line 4
+  VaporSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  VaporSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  VaporSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  VaporSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: VaporDiffSalRbandPset line 4
+  VaporDiffSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  VaporDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  VaporDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  VaporDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: VaporPreSalRbandLine 2
+  # x data - vapor mix ratio, g/kg
+  /ps_rb_vapor DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: VaporSalRbandLine 2
+  # x data - vapor mix ratio, g/kg
+  /s_rb_vapor DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: VaporDiffPreSalRbandLine 2
+  # x data - vapor mix ratio, g/kg
+  /ps_rb_vapor_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: VaporDiffSalRbandLine 2
+  # x data - vapor mix ratio, g/kg
+  /s_rb_vapor_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: VaporCntlPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - vapor mix ratio, g/kg
+  Vapor g@kg^-^1 0 20 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: VaporDiffPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - vapor mix ratio, g/kg
+  Vapor g@kg^-^1 -1 1.5 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: VaporCntlSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - vapor mix ratio, g/kg
+  Vapor g@kg^-^1 0 20 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: VaporDiffSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - vapor mix ratio, g/kg
+  Vapor g@kg^-^1 -1 1.5 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+

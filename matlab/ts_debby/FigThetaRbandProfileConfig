@@ -1,0 +1,144 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: ThetaRbandProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigThetaRbandProfile.jpg
+  ThetaCntlPreSalRbandPanel  1
+  ThetaCntlSalRbandPanel     2
+  ThetaDiffPreSalRbandPanel  3
+  ThetaDiffSalRbandPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: ThetaCntlPreSalRbandPanel
+  ThetaCntlPreSalRbandPset
+  ThetaCntlPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband 
+  SouthEast 12
+End
+
+FigPanel: ThetaDiffPreSalRbandPanel
+  ThetaDiffPreSalRbandPset
+  ThetaDiffPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband@(diffs)
+  NorthWest 12
+End
+
+FigPanel: ThetaCntlSalRbandPanel
+  ThetaCntlSalRbandPset
+  ThetaCntlSalRbandAxes 1 1
+  none 5
+  SAL@Rband 
+  SouthEast 12
+End
+
+FigPanel: ThetaDiffSalRbandPanel
+  ThetaDiffSalRbandPset
+  ThetaDiffSalRbandAxes 1 1
+  none 5
+  SAL@Rband@(diffs)
+  NorthWest 12
+End
+
+############ PLOT SETS #################
+PlotSet: ThetaCntlPreSalRbandPset line 4
+  ThetaPreSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: ThetaDiffPreSalRbandPset line 4
+  ThetaDiffPreSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: ThetaCntlSalRbandPset line 4
+  ThetaSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: ThetaDiffSalRbandPset line 4
+  ThetaDiffSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: ThetaPreSalRbandLine 2
+  # x data - theta, K
+  /ps_rb_theta DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaSalRbandLine 2
+  # x data - theta, K
+  /s_rb_theta DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaDiffPreSalRbandLine 2
+  # x data - theta, K
+  /ps_rb_theta_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaDiffSalRbandLine 2
+  # x data - theta, K
+  /s_rb_theta_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: ThetaCntlPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - theta, K
+  \theta g@kg^-^1 290 370 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: ThetaDiffPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - theta, K
+  \theta g@kg^-^1 -5 2 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: ThetaCntlSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - theta, K
+  \theta g@kg^-^1 290 370 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: ThetaDiffSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - theta, K
+  \theta g@kg^-^1 -5 2 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+

@@ -35,7 +35,9 @@ CONFIGS = \
   $(DIAG_DIR)/FigMaxWindConfig \
   $(DIAG_DIR)/FigVintCondConfig \
   $(DIAG_DIR)/FigHovmollerConfig \
-  $(DIAG_DIR)/FigThetaEXsectionConfig \
+  $(DIAG_DIR)/FigThetaeXsectionConfig \
+  $(DIAG_DIR)/FigThetaXsectionConfig \
+  $(DIAG_DIR)/FigVaporXsectionConfig \
   $(DIAG_DIR)/FigCoolXsectionConfig \
   $(DIAG_DIR)/FigHeatXsectionConfig \
   $(DIAG_DIR)/FigCloudXsectionConfig \
@@ -61,6 +63,8 @@ CONFIGS = \
   $(DIAG_DIR)/FigUpDraftCoreProfileConfig \
   $(DIAG_DIR)/FigSpeedtCoreProfileConfig \
   $(DIAG_DIR)/FigThetaeCoreProfileConfig \
+  $(DIAG_DIR)/FigThetaCoreProfileConfig \
+  $(DIAG_DIR)/FigVaporCoreProfileConfig \
   $(DIAG_DIR)/FigCloudRbandProfileConfig \
   $(DIAG_DIR)/FigRainRbandProfileConfig \
   $(DIAG_DIR)/FigPrisRbandProfileConfig \
@@ -77,10 +81,14 @@ CONFIGS = \
   $(DIAG_DIR)/FigUpDraftRbandProfileConfig \
   $(DIAG_DIR)/FigSpeedtRbandProfileConfig \
   $(DIAG_DIR)/FigThetaeRbandProfileConfig \
+  $(DIAG_DIR)/FigThetaRbandProfileConfig \
+  $(DIAG_DIR)/FigVaporRbandProfileConfig \
   $(DIAG_DIR)/FigDnDraftEnvProfileConfig \
   $(DIAG_DIR)/FigUpDraftEnvProfileConfig \
   $(DIAG_DIR)/FigSpeedtEnvProfileConfig \
   $(DIAG_DIR)/FigThetaeEnvProfileConfig \
+  $(DIAG_DIR)/FigThetaEnvProfileConfig \
+  $(DIAG_DIR)/FigVaporEnvProfileConfig \
   $(DIAG_DIR)/FigureConfig
 
 #

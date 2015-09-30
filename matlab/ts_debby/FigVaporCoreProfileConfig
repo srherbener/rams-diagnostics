@@ -1,0 +1,143 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: VaporCoreProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigVaporCoreProfile.jpg
+  VaporCntlPreSalCorePanel  1
+  VaporCntlSalCorePanel     2
+  VaporDiffPreSalCorePanel  3
+  VaporDiffSalCorePanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: VaporCntlPreSalCorePanel
+  VaporCntlPreSalCorePset
+  VaporCntlPreSalCoreAxes 1 1
+  none 5
+  Pre@SAL@Core 
+  NorthEast 12
+End
+
+FigPanel: VaporDiffPreSalCorePanel
+  VaporDiffPreSalCorePset
+  VaporDiffPreSalCoreAxes 1 1
+  none 5
+  Pre@SAL@Core@(diffs)
+  NorthEast 12
+End
+
+FigPanel: VaporCntlSalCorePanel
+  VaporCntlSalCorePset
+  VaporCntlSalCoreAxes 1 1
+  none 5
+  SAL@Core 
+  NorthEast 12
+End
+
+FigPanel: VaporDiffSalCorePanel
+  VaporDiffSalCorePset
+  VaporDiffSalCoreAxes 1 1
+  none 5
+  SAL@Core@(diffs)
+  NorthEast 12
+End
+
+############ PLOT SETS #################
+PlotSet: VaporCntlPreSalCorePset line 4
+  VaporPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  VaporPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  VaporPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  VaporPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: VaporDiffPreSalCorePset line 4
+  VaporDiffPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  VaporDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  VaporDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  VaporDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: VaporCntlSalCorePset line 4
+  VaporSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  VaporSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  VaporSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  VaporSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: VaporDiffSalCorePset line 4
+  VaporDiffSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  VaporDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  VaporDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  VaporDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: VaporPreSalCoreLine 2
+  # x data - vapor mix ratio, g/kg
+  /ps_core_vapor DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: VaporSalCoreLine 2
+  # x data - vapor mix ratio, g/kg
+  /s_core_vapor DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: VaporDiffPreSalCoreLine 2
+  # x data - vapor mix ratio, g/kg
+  /ps_core_vapor_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: VaporDiffSalCoreLine 2
+  # x data - vapor mix ratio, g/kg
+  /s_core_vapor_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: VaporCntlPreSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - vapor mix ratio, g/kg
+  Vapor g@kg^-^1 0 20 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: VaporDiffPreSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - vapor mix ratio, g/kg
+  Vapor g@kg^-^1 -1 1.5 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: VaporCntlSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - vapor mix ratio, g/kg
+  Vapor g@kg^-^1 0 20 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: VaporDiffSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - vapor mix ratio, g/kg
+  Vapor g@kg^-^1 -1 1.5 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End

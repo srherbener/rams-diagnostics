@@ -1,0 +1,206 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: VaporXsectionPreSal 4
+  DummyCases
+  [2_2]
+  Plots/FigVaporXsectionPreSal.jpg
+  VaporXsectionSDPreSalPanel         1
+  VaporXsectionSNDdiffPreSalPanel    2
+  VaporXsectionNSDdiffPreSalPanel    3
+  VaporXsectionNSNDdiffPreSalPanel   4
+End 
+
+Figure: VaporXsectionSal 4
+  DummyCases
+  [2_2]
+  Plots/FigVaporXsectionSal.jpg
+  VaporXsectionSDSalPanel         1
+  VaporXsectionSNDdiffSalPanel    2
+  VaporXsectionNSDdiffSalPanel    3
+  VaporXsectionNSNDdiffSalPanel   4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: VaporXsectionSDPreSalPanel
+  VaporXsectionSDPreSalPset
+  VaporXsectionPreSalAxes 1 1
+  none 5
+  SD 
+  none 12
+End
+
+FigPanel: VaporXsectionSNDdiffPreSalPanel
+  VaporXsectionSNDdiffPreSalPset
+  VaporXsectionDiffPreSalAxes 1 1
+  none 5
+  SND@-@SD
+  none 12
+End
+
+FigPanel: VaporXsectionNSDdiffPreSalPanel
+  VaporXsectionNSDdiffPreSalPset
+  VaporXsectionDiffPreSalAxes 1 1
+  none 5
+  NSD@-@SD 
+  none 12
+End
+
+FigPanel: VaporXsectionNSNDdiffPreSalPanel
+  VaporXsectionNSNDdiffPreSalPset
+  VaporXsectionDiffPreSalAxes 1 1
+  none 5
+  NSND@-@SD
+  none 12
+End
+
+FigPanel: VaporXsectionSDSalPanel
+  VaporXsectionSDSalPset
+  VaporXsectionSalAxes 1 1
+  none 5
+  SD 
+  none 12
+End
+
+FigPanel: VaporXsectionSNDdiffSalPanel
+  VaporXsectionSNDdiffSalPset
+  VaporXsectionDiffSalAxes 1 1
+  none 5
+  SND@-@SD
+  none 12
+End
+
+FigPanel: VaporXsectionNSDdiffSalPanel
+  VaporXsectionNSDdiffSalPset
+  VaporXsectionDiffSalAxes 1 1
+  none 5
+  NSD@-@SD 
+  none 12
+End
+
+FigPanel: VaporXsectionNSNDdiffSalPanel
+  VaporXsectionNSNDdiffSalPset
+  VaporXsectionDiffSalAxes 1 1
+  none 5
+  NSND@-@SD
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: VaporXsectionSDPreSalPset contourf 1
+  VaporXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: VaporXsectionSNDdiffPreSalPset diff_contourf 1
+  VaporXsectionPreSalDiffContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: VaporXsectionNSDdiffPreSalPset diff_contourf 1
+  VaporXsectionPreSalDiffContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: VaporXsectionNSNDdiffPreSalPset diff_contourf 1
+  VaporXsectionPreSalDiffContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: VaporXsectionSDSalPset contourf 1
+  VaporXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: VaporXsectionSNDdiffSalPset diff_contourf 1
+  VaporXsectionSalDiffContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: VaporXsectionNSDdiffSalPset diff_contourf 1
+  VaporXsectionSalDiffContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: VaporXsectionNSNDdiffSalPset diff_contourf 1
+  VaporXsectionSalDiffContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+PlotData: VaporXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  vapor, g/kg
+  /ps_vapor DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: VaporXsectionPreSalDiffContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  vapor, g/kg
+  /ps_vapor_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: VaporXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  vapor, g/kg
+  /s_vapor DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: VaporXsectionSalDiffContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  vapor, g/kg
+  /s_vapor_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: VaporXsectionPreSalAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 450 linear [_] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - vapor - g/kg
+  Vapor g@kg^-^1 0 15 linear [_] {_}
+End
+
+PlotAxes: VaporXsectionDiffPreSalAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 450 linear [_] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - vapor - g/kg
+  Vapor g@kg^-^1 -1 1 linear [_] {_}
+End
+
+PlotAxes: VaporXsectionSalAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 450 linear [_] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - vapor - g/kg
+  Vapor g@kg^-^1 0 15 linear [_] {_}
+End
+
+PlotAxes: VaporXsectionDiffSalAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 450 linear [_] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - vapor - g/kg
+  Vapor g@kg^-^1 -1 1 linear [_] {_}
+End
+
