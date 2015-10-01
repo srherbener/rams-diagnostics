@@ -34,6 +34,9 @@ function [ ] = GenStormXsections()
     { 'DIAGS/hist_meas_theta_<CASE>.h5' '/ps_theta'  '/ps_theta' }
     { 'DIAGS/hist_meas_theta_<CASE>.h5' '/s_theta'  '/s_theta' }
 
+    { 'DIAGS/hist_meas_tempc_<CASE>.h5' '/ps_tempc'  '/ps_tempc' }
+    { 'DIAGS/hist_meas_tempc_<CASE>.h5' '/s_tempc'  '/s_tempc' }
+
     { 'DIAGS/hist_meas_pcprate_<CASE>.h5' '/ps_pcprate' '/ps_pcprate' }
     { 'DIAGS/hist_meas_pcprate_<CASE>.h5' '/s_pcprate' '/s_pcprate' }
 

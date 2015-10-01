@@ -1,0 +1,144 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: TempcCoreProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigTempcCoreProfile.jpg
+  TempcCntlPreSalCorePanel  1
+  TempcCntlSalCorePanel     2
+  TempcDiffPreSalCorePanel  3
+  TempcDiffSalCorePanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: TempcCntlPreSalCorePanel
+  TempcCntlPreSalCorePset
+  TempcCntlPreSalCoreAxes 1 1
+  none 5
+  Pre@SAL@Core 
+  NorthEast 12
+End
+
+FigPanel: TempcDiffPreSalCorePanel
+  TempcDiffPreSalCorePset
+  TempcDiffPreSalCoreAxes 1 1
+  none 5
+  Pre@SAL@Core@(diffs)
+  NorthEast 12
+End
+
+FigPanel: TempcCntlSalCorePanel
+  TempcCntlSalCorePset
+  TempcCntlSalCoreAxes 1 1
+  none 5
+  SAL@Core 
+  NorthEast 12
+End
+
+FigPanel: TempcDiffSalCorePanel
+  TempcDiffSalCorePset
+  TempcDiffSalCoreAxes 1 1
+  none 5
+  SAL@Core@(diffs)
+  NorthEast 12
+End
+
+############ PLOT SETS #################
+PlotSet: TempcCntlPreSalCorePset line 4
+  TempcPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  TempcPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  TempcPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  TempcPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: TempcDiffPreSalCorePset line 4
+  TempcDiffPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  TempcDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  TempcDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  TempcDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: TempcCntlSalCorePset line 4
+  TempcSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  TempcSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  TempcSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  TempcSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: TempcDiffSalCorePset line 4
+  TempcDiffSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  TempcDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  TempcDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  TempcDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: TempcPreSalCoreLine 2
+  # x data - tempc, K
+  /ps_core_tempc DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: TempcSalCoreLine 2
+  # x data - tempc, K
+  /s_core_tempc DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: TempcDiffPreSalCoreLine 2
+  # x data - tempc, K
+  /ps_core_tempc_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: TempcDiffSalCoreLine 2
+  # x data - tempc, K
+  /s_core_tempc_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: TempcCntlPreSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - tempc, C
+  Temp C -70 30 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: TempcDiffPreSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - tempc, C
+  Temp C -2 3 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: TempcCntlSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - tempc, C
+  Temp C -70 30 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: TempcDiffSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - tempc, C
+  Temp C -2 3 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+

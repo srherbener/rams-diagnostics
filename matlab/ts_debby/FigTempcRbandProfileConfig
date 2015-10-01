@@ -1,0 +1,144 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: TempcRbandProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigTempcRbandProfile.jpg
+  TempcCntlPreSalRbandPanel  1
+  TempcCntlSalRbandPanel     2
+  TempcDiffPreSalRbandPanel  3
+  TempcDiffSalRbandPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: TempcCntlPreSalRbandPanel
+  TempcCntlPreSalRbandPset
+  TempcCntlPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband 
+  NorthEast 12
+End
+
+FigPanel: TempcDiffPreSalRbandPanel
+  TempcDiffPreSalRbandPset
+  TempcDiffPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband@(diffs)
+  NorthEast 12
+End
+
+FigPanel: TempcCntlSalRbandPanel
+  TempcCntlSalRbandPset
+  TempcCntlSalRbandAxes 1 1
+  none 5
+  SAL@Rband 
+  NorthEast 12
+End
+
+FigPanel: TempcDiffSalRbandPanel
+  TempcDiffSalRbandPset
+  TempcDiffSalRbandAxes 1 1
+  none 5
+  SAL@Rband@(diffs)
+  NorthEast 12
+End
+
+############ PLOT SETS #################
+PlotSet: TempcCntlPreSalRbandPset line 4
+  TempcPreSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  TempcPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  TempcPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  TempcPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: TempcDiffPreSalRbandPset line 4
+  TempcDiffPreSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  TempcDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  TempcDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  TempcDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: TempcCntlSalRbandPset line 4
+  TempcSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  TempcSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  TempcSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  TempcSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: TempcDiffSalRbandPset line 4
+  TempcDiffSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  TempcDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  TempcDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  TempcDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: TempcPreSalRbandLine 2
+  # x data - tempc, K
+  /ps_rb_tempc DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: TempcSalRbandLine 2
+  # x data - tempc, K
+  /s_rb_tempc DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: TempcDiffPreSalRbandLine 2
+  # x data - tempc, K
+  /ps_rb_tempc_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: TempcDiffSalRbandLine 2
+  # x data - tempc, K
+  /s_rb_tempc_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: TempcCntlPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - tempc, C
+  Temp C -70 30 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: TempcDiffPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - tempc, C
+  Temp C -2 3 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: TempcCntlSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - tempc, C
+  Temp C -70 30 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: TempcDiffSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - tempc, C
+  Temp C -2 3 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+

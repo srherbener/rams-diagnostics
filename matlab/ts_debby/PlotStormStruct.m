@@ -20,18 +20,19 @@ function [ ] = PlotStormStruct()
    'NONSAL\_NODUST'
    };
 
-  % Trim down spatial range to focus on just the storm
+  % Spatial range
   Zbot = 0;  % km
   Ztop = 10; % km
 
   Rinside  =   0; % km
-  Routside = 250; % km
+  Routside = 450; % km
 
   Fsize = 22;
 
   VtClim = [ 0 15 ];
-  UpClevs = [ 0:0.02:2 ];
-  DnClevs = [ -2:0.02:0 ];
+  UpClevs = [ 0:0.04:2 ];
+%  ThClevs = [ 300:4:320 ]; %for theta
+  ThClevs = [ 340:1:350 ]; % for theta_e
 
   % Want azimuthally averaged tangential speed and vertical velocity for each panel
   InFileTemplate = 'DIAGS/storm_xsections_<CASE>.h5';
@@ -39,8 +40,8 @@ function [ ] = PlotStormStruct()
   SalVtVname     = '/s_speed_t';
   PreSalUpVname  = '/ps_updraft';
   SalUpVname     = '/s_updraft';
-  PreSalDnVname  = '/ps_dndraft';
-  SalDnVname     = '/s_dndraft';
+  PreSalThVname  = '/ps_theta_e';
+  SalThVname     = '/s_theta_e';
 
   PreSalOfileTemplate = 'Plots/PreSalStormStruct_<CASE>.jpg';
   SalOfileTemplate = 'Plots/SalStormStruct_<CASE>.jpg';
@@ -62,7 +63,7 @@ function [ ] = PlotStormStruct()
 
     fprintf('  Reading: %s (%s, %s)\n', InFile, PreSalVtVname, SalVtVname);
     fprintf('  Reading: %s (%s, %s)\n', InFile, PreSalUpVname, SalUpVname);
-    fprintf('  Reading: %s (%s, %s)\n', InFile, PreSalDnVname, SalDnVname);
+    fprintf('  Reading: %s (%s, %s)\n', InFile, PreSalThVname, SalThVname);
     fprintf('\n');
 
     % Read in vars. Vars are organized as (r,z,t) where
@@ -71,8 +72,8 @@ function [ ] = PlotStormStruct()
     S_VT = squeeze(h5read(InFile, SalVtVname));
     P_UP = squeeze(h5read(InFile, PreSalUpVname));
     S_UP = squeeze(h5read(InFile, SalUpVname));
-    P_DN = squeeze(h5read(InFile, PreSalDnVname));
-    S_DN = squeeze(h5read(InFile, SalDnVname));
+    P_TH = squeeze(h5read(InFile, PreSalThVname));
+    S_TH = squeeze(h5read(InFile, SalThVname));
     R  = squeeze(h5read(InFile, '/x_coords')) ./ 1000; % radius in km
     Z  = squeeze(h5read(InFile, '/z_coords')) ./ 1000; % height in km
     T  = (squeeze(h5read(InFile, '/t_coords')) ./ 3600) - 42; % time in hours, 0h -> sim time 42h
@@ -87,11 +88,11 @@ function [ ] = PlotStormStruct()
     % Vars are (r,z)
     P_VT = P_VT(R1:R2,Z1:Z2);
     P_UP = P_UP(R1:R2,Z1:Z2);
-    P_DN = P_DN(R1:R2,Z1:Z2);
+    P_TH = P_TH(R1:R2,Z1:Z2);
 
     S_VT = S_VT(R1:R2,Z1:Z2);
     S_UP = S_UP(R1:R2,Z1:Z2);
-    S_DN = S_DN(R1:R2,Z1:Z2);
+    S_TH = S_TH(R1:R2,Z1:Z2);
 
     % adjust the coordinates to match what was selected out of the vars
     R = R(R1:R2);
@@ -115,8 +116,8 @@ function [ ] = PlotStormStruct()
     [ Cup Hup ] = contour(R, Z, P_UP', UpClevs, 'LineColor', 'w');
     clabel(Cup, 'Color', 'w');
 
-%    [ Cdn Hdn ] = contour(R, Z, P_DN', DnClevs, 'LineColor', 'w', 'LineStyle', '--');
-%    clabel(Cdn, 'Color', 'w');
+    [ Cth Hth ] = contour(R, Z, P_TH', ThClevs, 'LineColor', 'r', 'LineStyle', '--');
+    clabel(Cth, 'Color', 'r');
 
     title(Ptitle);
     xlabel(Xlabel);
@@ -145,8 +146,8 @@ function [ ] = PlotStormStruct()
     [ Cup Hup ] = contour(R, Z, S_UP', UpClevs, 'LineColor', 'w');
     clabel(Cup, 'Color', 'w');
 
-%    [ Cdn Hdn ] = contour(R, Z, S_DN', DnClevs, 'LineColor', 'w', 'LineStyle', '--');
-%    clabel(Cdn, 'Color', 'w');
+    [ Cth Hth ] = contour(R, Z, S_TH', ThClevs, 'LineColor', 'r', 'LineStyle', '--');
+    clabel(Cth, 'Color', 'r');
 
     title(Ptitle);
     xlabel(Xlabel);

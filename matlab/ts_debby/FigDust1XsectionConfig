@@ -1,0 +1,206 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: Dust1XsectionPreSal 4
+  DummyCases
+  [2_2]
+  Plots/FigDust1XsectionPreSal.jpg
+  Dust1XsectionSDPreSalPanel         1
+  Dust1XsectionSNDdiffPreSalPanel    2
+  Dust1XsectionNSDdiffPreSalPanel    3
+  Dust1XsectionNSNDdiffPreSalPanel   4
+End 
+
+Figure: Dust1XsectionSal 4
+  DummyCases
+  [2_2]
+  Plots/FigDust1XsectionSal.jpg
+  Dust1XsectionSDSalPanel         1
+  Dust1XsectionSNDdiffSalPanel    2
+  Dust1XsectionNSDdiffSalPanel    3
+  Dust1XsectionNSNDdiffSalPanel   4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: Dust1XsectionSDPreSalPanel
+  Dust1XsectionSDPreSalPset
+  Dust1XsectionPreSalAxes 1 1
+  none 5
+  SD 
+  none 12
+End
+
+FigPanel: Dust1XsectionSNDdiffPreSalPanel
+  Dust1XsectionSNDdiffPreSalPset
+  Dust1XsectionDiffPreSalAxes 1 1
+  none 5
+  SND@-@SD
+  none 12
+End
+
+FigPanel: Dust1XsectionNSDdiffPreSalPanel
+  Dust1XsectionNSDdiffPreSalPset
+  Dust1XsectionDiffPreSalAxes 1 1
+  none 5
+  NSD@-@SD 
+  none 12
+End
+
+FigPanel: Dust1XsectionNSNDdiffPreSalPanel
+  Dust1XsectionNSNDdiffPreSalPset
+  Dust1XsectionDiffPreSalAxes 1 1
+  none 5
+  NSND@-@SD
+  none 12
+End
+
+FigPanel: Dust1XsectionSDSalPanel
+  Dust1XsectionSDSalPset
+  Dust1XsectionSalAxes 1 1
+  none 5
+  SD 
+  none 12
+End
+
+FigPanel: Dust1XsectionSNDdiffSalPanel
+  Dust1XsectionSNDdiffSalPset
+  Dust1XsectionDiffSalAxes 1 1
+  none 5
+  SND@-@SD
+  none 12
+End
+
+FigPanel: Dust1XsectionNSDdiffSalPanel
+  Dust1XsectionNSDdiffSalPset
+  Dust1XsectionDiffSalAxes 1 1
+  none 5
+  NSD@-@SD 
+  none 12
+End
+
+FigPanel: Dust1XsectionNSNDdiffSalPanel
+  Dust1XsectionNSNDdiffSalPset
+  Dust1XsectionDiffSalAxes 1 1
+  none 5
+  NSND@-@SD
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: Dust1XsectionSDPreSalPset contourf 1
+  Dust1XsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: Dust1XsectionSNDdiffPreSalPset diff_contourf 1
+  Dust1XsectionPreSalDiffContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: Dust1XsectionNSDdiffPreSalPset diff_contourf 1
+  Dust1XsectionPreSalDiffContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: Dust1XsectionNSNDdiffPreSalPset diff_contourf 1
+  Dust1XsectionPreSalDiffContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: Dust1XsectionSDSalPset contourf 1
+  Dust1XsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: Dust1XsectionSNDdiffSalPset diff_contourf 1
+  Dust1XsectionSalDiffContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: Dust1XsectionNSDdiffSalPset diff_contourf 1
+  Dust1XsectionSalDiffContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: Dust1XsectionNSNDdiffSalPset diff_contourf 1
+  Dust1XsectionSalDiffContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+PlotData: Dust1XsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  d1_mass, g/kg
+  /ps_d1_mass DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: Dust1XsectionPreSalDiffContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  d1_mass, g/kg
+  /ps_d1_mass_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: Dust1XsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  d1_mass, g/kg
+  /s_d1_mass DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: Dust1XsectionSalDiffContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  d1_mass, g/kg
+  /s_d1_mass_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: Dust1XsectionPreSalAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 450 linear [_] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - d1_mass - g/kg
+  Dust1 g@kg^-^1 0 0.5 linear [_] {_}
+End
+
+PlotAxes: Dust1XsectionDiffPreSalAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 450 linear [_] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - d1_mass - g/kg
+  Dust1 g@kg^-^1 -0.1 0.1 linear [_] {_}
+End
+
+PlotAxes: Dust1XsectionSalAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 450 linear [_] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - d1_mass - g/kg
+  Dust1 g@kg^-^1 0 0.5 linear [_] {_}
+End
+
+PlotAxes: Dust1XsectionDiffSalAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 450 linear [_] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - d1_mass - g/kg
+  Dust1 g@kg^-^1 -0.1 0.1 linear [_] {_}
+End
+

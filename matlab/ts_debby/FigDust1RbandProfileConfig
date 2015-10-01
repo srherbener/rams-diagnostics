@@ -1,0 +1,144 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: Dust1RbandProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigDust1RbandProfile.jpg
+  Dust1CntlPreSalRbandPanel  1
+  Dust1CntlSalRbandPanel     2
+  Dust1DiffPreSalRbandPanel  3
+  Dust1DiffSalRbandPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: Dust1CntlPreSalRbandPanel
+  Dust1CntlPreSalRbandPset
+  Dust1CntlPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband 
+  NorthEast 12
+End
+
+FigPanel: Dust1DiffPreSalRbandPanel
+  Dust1DiffPreSalRbandPset
+  Dust1DiffPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband@(diffs)
+  NorthWest 12
+End
+
+FigPanel: Dust1CntlSalRbandPanel
+  Dust1CntlSalRbandPset
+  Dust1CntlSalRbandAxes 1 1
+  none 5
+  SAL@Rband 
+  NorthEast 12
+End
+
+FigPanel: Dust1DiffSalRbandPanel
+  Dust1DiffSalRbandPset
+  Dust1DiffSalRbandAxes 1 1
+  none 5
+  SAL@Rband@(diffs)
+  NorthWest 12
+End
+
+############ PLOT SETS #################
+PlotSet: Dust1CntlPreSalRbandPset line 4
+  Dust1PreSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  Dust1PreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  Dust1PreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  Dust1PreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: Dust1DiffPreSalRbandPset line 4
+  Dust1DiffPreSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  Dust1DiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  Dust1DiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  Dust1DiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: Dust1CntlSalRbandPset line 4
+  Dust1SalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  Dust1SalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  Dust1SalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  Dust1SalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: Dust1DiffSalRbandPset line 4
+  Dust1DiffSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  Dust1DiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  Dust1DiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  Dust1DiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: Dust1PreSalRbandLine 2
+  # x data - d1_mass mix ratio, g/kg
+  /ps_rb_d1_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: Dust1SalRbandLine 2
+  # x data - d1_mass mix ratio, g/kg
+  /s_rb_d1_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: Dust1DiffPreSalRbandLine 2
+  # x data - d1_mass mix ratio, g/kg
+  /ps_rb_d1_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: Dust1DiffSalRbandLine 2
+  # x data - d1_mass mix ratio, g/kg
+  /s_rb_d1_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: Dust1CntlPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d1_mass mix ratio, g/kg
+  Dust1 g@kg^-^1 0 0.4 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: Dust1DiffPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d1_mass mix ratio, g/kg
+  Dust1 g@kg^-^1 -0.15 0.1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: Dust1CntlSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d1_mass mix ratio, g/kg
+  Dust1 g@kg^-^1 0 0.4 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: Dust1DiffSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d1_mass mix ratio, g/kg
+  Dust1 g@kg^-^1 -0.15 0.1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
