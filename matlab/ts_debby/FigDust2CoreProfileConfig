@@ -1,0 +1,143 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: Dust2CoreProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigDust2CoreProfile.jpg
+  Dust2CntlPreSalCorePanel  1
+  Dust2CntlSalCorePanel     2
+  Dust2DiffPreSalCorePanel  3
+  Dust2DiffSalCorePanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: Dust2CntlPreSalCorePanel
+  Dust2CntlPreSalCorePset
+  Dust2CntlPreSalCoreAxes 1 1
+  none 5
+  Pre@SAL@Core 
+  NorthEast 12
+End
+
+FigPanel: Dust2DiffPreSalCorePanel
+  Dust2DiffPreSalCorePset
+  Dust2DiffPreSalCoreAxes 1 1
+  none 5
+  Pre@SAL@Core@(diffs)
+  NorthEast 12
+End
+
+FigPanel: Dust2CntlSalCorePanel
+  Dust2CntlSalCorePset
+  Dust2CntlSalCoreAxes 1 1
+  none 5
+  SAL@Core 
+  NorthEast 12
+End
+
+FigPanel: Dust2DiffSalCorePanel
+  Dust2DiffSalCorePset
+  Dust2DiffSalCoreAxes 1 1
+  none 5
+  SAL@Core@(diffs)
+  NorthEast 12
+End
+
+############ PLOT SETS #################
+PlotSet: Dust2CntlPreSalCorePset line 4
+  Dust2PreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  Dust2PreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  Dust2PreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  Dust2PreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: Dust2DiffPreSalCorePset line 4
+  Dust2DiffPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  Dust2DiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  Dust2DiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  Dust2DiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: Dust2CntlSalCorePset line 4
+  Dust2SalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  Dust2SalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  Dust2SalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  Dust2SalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: Dust2DiffSalCorePset line 4
+  Dust2DiffSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  Dust2DiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  Dust2DiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  Dust2DiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: Dust2PreSalCoreLine 2
+  # x data - d2_mass mix ratio, g/kg
+  /ps_core_d2_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: Dust2SalCoreLine 2
+  # x data - d2_mass mix ratio, g/kg
+  /s_core_d2_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: Dust2DiffPreSalCoreLine 2
+  # x data - d2_mass mix ratio, g/kg
+  /ps_core_d2_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: Dust2DiffSalCoreLine 2
+  # x data - d2_mass mix ratio, g/kg
+  /s_core_d2_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: Dust2CntlPreSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d2_mass mix ratio, g/kg
+  Dust2 g@kg^-^1 0 5 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: Dust2DiffPreSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d2_mass mix ratio, g/kg
+  Dust2 g@kg^-^1 -5 8 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: Dust2CntlSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d2_mass mix ratio, g/kg
+  Dust2 g@kg^-^1 0 5 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: Dust2DiffSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d2_mass mix ratio, g/kg
+  Dust2 g@kg^-^1 -5 8 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End

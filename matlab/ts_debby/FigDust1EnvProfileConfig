@@ -3,14 +3,14 @@
 #
 
 ######### FIGURES ###################
-Figure: VaporEnvProfile 4
+Figure: Dust1EnvProfile 4
   DummyCases
   [2_2]
-  Plots/FigVaporEnvProfile.jpg
-  VaporCntlPreSalEnvPanel  1
-  VaporCntlSalEnvPanel     2
-  VaporDiffPreSalEnvPanel  3
-  VaporDiffSalEnvPanel     4
+  Plots/FigDust1EnvProfile.jpg
+  Dust1CntlPreSalEnvPanel  1
+  Dust1CntlSalEnvPanel     2
+  Dust1DiffPreSalEnvPanel  3
+  Dust1DiffSalEnvPanel     4
 End 
 
 ########### CASES ####################
@@ -19,181 +19,181 @@ CaseSet: DummyCases 1
 End
 
 ########### PANELS ####################
-FigPanel: VaporCntlPreSalEnvPanel
-  VaporCntlPreSalEnvPset
-  VaporCntlPreSalEnvAxes 1 1
+FigPanel: Dust1CntlPreSalEnvPanel
+  Dust1CntlPreSalEnvPset
+  Dust1CntlPreSalEnvAxes 1 1
   none 5
   Pre@SAL@Env 
   NorthEast 12
 End
 
-FigPanel: VaporDiffPreSalEnvPanel
-  VaporDiffPreSalEnvPset
-  VaporDiffPreSalEnvAxes 1 1
+FigPanel: Dust1DiffPreSalEnvPanel
+  Dust1DiffPreSalEnvPset
+  Dust1DiffPreSalEnvAxes 1 1
   none 5
   Pre@SAL@Env@(diffs)
-  NorthEast 12
+  NorthWest 12
 End
 
-FigPanel: VaporCntlSalEnvPanel
-  VaporCntlSalEnvPset
-  VaporCntlSalEnvAxes 1 1
+FigPanel: Dust1CntlSalEnvPanel
+  Dust1CntlSalEnvPset
+  Dust1CntlSalEnvAxes 1 1
   none 5
   SAL@Env 
   NorthEast 12
 End
 
-FigPanel: VaporDiffSalEnvPanel
-  VaporDiffSalEnvPset
-  VaporDiffSalEnvAxes 1 1
+FigPanel: Dust1DiffSalEnvPanel
+  Dust1DiffSalEnvPset
+  Dust1DiffSalEnvAxes 1 1
   none 5
   SAL@Env@(diffs)
-  NorthEast 12
+  NorthWest 12
 End
 
 ############ PLOT SETS #################
-PlotSet: VaporCntlPreSalEnvPset line 4
-  VaporPreSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
-  VaporPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
-  VaporPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
-  VaporPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+PlotSet: Dust1CntlPreSalEnvPset line 4
+  Dust1PreSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
+  Dust1PreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  Dust1PreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  Dust1PreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: VaporDiffPreSalEnvPset line 4
-  VaporDiffPreSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
-  VaporDiffPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
-  VaporDiffPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
-  VaporDiffPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+PlotSet: Dust1DiffPreSalEnvPset line 4
+  Dust1DiffPreSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
+  Dust1DiffPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  Dust1DiffPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  Dust1DiffPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: VaporCntlSalEnvPset line 4
-  VaporSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
-  VaporSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
-  VaporSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
-  VaporSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+PlotSet: Dust1CntlSalEnvPset line 4
+  Dust1SalEnvLine TSD_SAL_DUST      SD   2 black  - 0
+  Dust1SalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  Dust1SalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  Dust1SalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: VaporDiffSalEnvPset line 4
-  VaporDiffSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
-  VaporDiffSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
-  VaporDiffSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
-  VaporDiffSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+PlotSet: Dust1DiffSalEnvPset line 4
+  Dust1DiffSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
+  Dust1DiffSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  Dust1DiffSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  Dust1DiffSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
 ############ PLOT DATA #################
-PlotData: VaporPreSalEnvLine 2
-  # x data - vapor mix ratio, g/kg
-  /ps_env_vapor DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+PlotData: Dust1PreSalEnvLine 2
+  # x data - d1_mass mix ratio, g/kg
+  /ps_env_d1_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
-PlotData: VaporSalEnvLine 2
-  # x data - vapor mix ratio, g/kg
-  /s_env_vapor DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+PlotData: Dust1SalEnvLine 2
+  # x data - d1_mass mix ratio, g/kg
+  /s_env_d1_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
-PlotData: VaporDiffPreSalEnvLine 2
-  # x data - vapor mix ratio, g/kg
-  /ps_env_vapor_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+PlotData: Dust1DiffPreSalEnvLine 2
+  # x data - d1_mass mix ratio, g/kg
+  /ps_env_d1_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
-PlotData: VaporDiffSalEnvLine 2
-  # x data - vapor mix ratio, g/kg
-  /s_env_vapor_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+PlotData: Dust1DiffSalEnvLine 2
+  # x data - d1_mass mix ratio, g/kg
+  /s_env_d1_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
-PlotData: VaporNumPreSalEnvLine 2
-  # x data - vapor number, #/kg
-  /ps_env_vapor_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+PlotData: Dust1NumPreSalEnvLine 2
+  # x data - d1_mass number, #/kg
+  /ps_env_d1_mass_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
-PlotData: VaporNumSalEnvLine 2
-  # x data - vapor number, #/kg
-  /s_env_vapor_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+PlotData: Dust1NumSalEnvLine 2
+  # x data - d1_mass number, #/kg
+  /s_env_d1_mass_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
-PlotData: VaporNumDiffPreSalEnvLine 2
-  # x data - vapor number, #/kg
-  /ps_env_vapor_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+PlotData: Dust1NumDiffPreSalEnvLine 2
+  # x data - d1_mass number, #/kg
+  /ps_env_d1_mass_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
-PlotData: VaporNumDiffSalEnvLine 2
-  # x data - vapor number, #/kg
-  /s_env_vapor_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+PlotData: Dust1NumDiffSalEnvLine 2
+  # x data - d1_mass number, #/kg
+  /s_env_d1_mass_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
-PlotData: VaporDiamPreSalEnvLine 2
-  # x data - vapor diameter, um
-  /ps_env_vapor_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+PlotData: Dust1DiamPreSalEnvLine 2
+  # x data - d1_mass diameter, um
+  /ps_env_d1_mass_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
-PlotData: VaporDiamSalEnvLine 2
-  # x data - vapor diameter, um
-  /s_env_vapor_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+PlotData: Dust1DiamSalEnvLine 2
+  # x data - d1_mass diameter, um
+  /s_env_d1_mass_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
-PlotData: VaporDiamDiffPreSalEnvLine 2
-  # x data - vapor diameter, um
-  /ps_env_vapor_diam_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+PlotData: Dust1DiamDiffPreSalEnvLine 2
+  # x data - d1_mass diameter, um
+  /ps_env_d1_mass_diam_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
-PlotData: VaporDiamDiffSalEnvLine 2
-  # x data - vapor diameter, um
-  /s_env_vapor_diam_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+PlotData: Dust1DiamDiffSalEnvLine 2
+  # x data - d1_mass diameter, um
+  /s_env_d1_mass_diam_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 ############ PLOT AXES #################
-PlotAxes: VaporCntlPreSalEnvAxes 2
+PlotAxes: Dust1CntlPreSalEnvAxes 2
   14 2 [0.025_0.025]
-  # x axis - vapor mix ratio, g/kg
-  Vapor g@kg^-^1 0 20 linear [_] {_}
+  # x axis - d1_mass mix ratio, g/kg
+  Dust1 g@kg^-^1 0 0.7 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End
 
-PlotAxes: VaporDiffPreSalEnvAxes 2
+PlotAxes: Dust1DiffPreSalEnvAxes 2
   14 2 [0.025_0.025]
-  # x axis - vapor mix ratio, g/kg
-  Vapor g@kg^-^1 -1 1.5 linear [_] {_}
+  # x axis - d1_mass mix ratio, g/kg
+  Dust1 g@kg^-^1 -0.5 0.2 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End
 
-PlotAxes: VaporCntlSalEnvAxes 2
+PlotAxes: Dust1CntlSalEnvAxes 2
   14 2 [0.025_0.025]
-  # x axis - vapor mix ratio, g/kg
-  Vapor g@kg^-^1 0 20 linear [_] {_}
+  # x axis - d1_mass mix ratio, g/kg
+  Dust1 g@kg^-^1 0 0.7 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End
 
-PlotAxes: VaporDiffSalEnvAxes 2
+PlotAxes: Dust1DiffSalEnvAxes 2
   14 2 [0.025_0.025]
-  # x axis - vapor mix ratio, g/kg
-  Vapor g@kg^-^1 -1 1.5 linear [_] {_}
+  # x axis - d1_mass mix ratio, g/kg
+  Dust1 g@kg^-^1 -0.5 0.2 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End

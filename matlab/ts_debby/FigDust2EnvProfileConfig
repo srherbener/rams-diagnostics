@@ -1,0 +1,200 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: Dust2EnvProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigDust2EnvProfile.jpg
+  Dust2CntlPreSalEnvPanel  1
+  Dust2CntlSalEnvPanel     2
+  Dust2DiffPreSalEnvPanel  3
+  Dust2DiffSalEnvPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: Dust2CntlPreSalEnvPanel
+  Dust2CntlPreSalEnvPset
+  Dust2CntlPreSalEnvAxes 1 1
+  none 5
+  Pre@SAL@Env 
+  NorthEast 12
+End
+
+FigPanel: Dust2DiffPreSalEnvPanel
+  Dust2DiffPreSalEnvPset
+  Dust2DiffPreSalEnvAxes 1 1
+  none 5
+  Pre@SAL@Env@(diffs)
+  NorthWest 12
+End
+
+FigPanel: Dust2CntlSalEnvPanel
+  Dust2CntlSalEnvPset
+  Dust2CntlSalEnvAxes 1 1
+  none 5
+  SAL@Env 
+  NorthEast 12
+End
+
+FigPanel: Dust2DiffSalEnvPanel
+  Dust2DiffSalEnvPset
+  Dust2DiffSalEnvAxes 1 1
+  none 5
+  SAL@Env@(diffs)
+  NorthWest 12
+End
+
+############ PLOT SETS #################
+PlotSet: Dust2CntlPreSalEnvPset line 4
+  Dust2PreSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
+  Dust2PreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  Dust2PreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  Dust2PreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: Dust2DiffPreSalEnvPset line 4
+  Dust2DiffPreSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
+  Dust2DiffPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  Dust2DiffPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  Dust2DiffPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: Dust2CntlSalEnvPset line 4
+  Dust2SalEnvLine TSD_SAL_DUST      SD   2 black  - 0
+  Dust2SalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  Dust2SalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  Dust2SalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: Dust2DiffSalEnvPset line 4
+  Dust2DiffSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
+  Dust2DiffSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  Dust2DiffSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  Dust2DiffSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: Dust2PreSalEnvLine 2
+  # x data - d2_mass mix ratio, g/kg
+  /ps_env_d2_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: Dust2SalEnvLine 2
+  # x data - d2_mass mix ratio, g/kg
+  /s_env_d2_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: Dust2DiffPreSalEnvLine 2
+  # x data - d2_mass mix ratio, g/kg
+  /ps_env_d2_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: Dust2DiffSalEnvLine 2
+  # x data - d2_mass mix ratio, g/kg
+  /s_env_d2_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: Dust2NumPreSalEnvLine 2
+  # x data - d2_mass number, #/kg
+  /ps_env_d2_mass_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: Dust2NumSalEnvLine 2
+  # x data - d2_mass number, #/kg
+  /s_env_d2_mass_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: Dust2NumDiffPreSalEnvLine 2
+  # x data - d2_mass number, #/kg
+  /ps_env_d2_mass_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: Dust2NumDiffSalEnvLine 2
+  # x data - d2_mass number, #/kg
+  /s_env_d2_mass_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: Dust2DiamPreSalEnvLine 2
+  # x data - d2_mass diameter, um
+  /ps_env_d2_mass_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: Dust2DiamSalEnvLine 2
+  # x data - d2_mass diameter, um
+  /s_env_d2_mass_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: Dust2DiamDiffPreSalEnvLine 2
+  # x data - d2_mass diameter, um
+  /ps_env_d2_mass_diam_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: Dust2DiamDiffSalEnvLine 2
+  # x data - d2_mass diameter, um
+  /s_env_d2_mass_diam_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: Dust2CntlPreSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d2_mass mix ratio, g/kg
+  Dust2 g@kg^-^1 0 250 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: Dust2DiffPreSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d2_mass mix ratio, g/kg
+  Dust2 g@kg^-^1 -250 100 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: Dust2CntlSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d2_mass mix ratio, g/kg
+  Dust2 g@kg^-^1 0 250 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: Dust2DiffSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d2_mass mix ratio, g/kg
+  Dust2 g@kg^-^1 -250 100 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
