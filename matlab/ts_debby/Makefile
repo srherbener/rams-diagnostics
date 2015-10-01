@@ -40,7 +40,9 @@ CONFIGS = \
   $(DIAG_DIR)/FigTempcXsectionConfig \
   $(DIAG_DIR)/FigVaporXsectionConfig \
   $(DIAG_DIR)/FigDust1XsectionConfig \
+  $(DIAG_DIR)/FigDust1NumXsectionConfig \
   $(DIAG_DIR)/FigDust2XsectionConfig \
+  $(DIAG_DIR)/FigDust2NumXsectionConfig \
   $(DIAG_DIR)/FigCoolXsectionConfig \
   $(DIAG_DIR)/FigHeatXsectionConfig \
   $(DIAG_DIR)/FigCloudXsectionConfig \
@@ -70,7 +72,9 @@ CONFIGS = \
   $(DIAG_DIR)/FigTempcCoreProfileConfig \
   $(DIAG_DIR)/FigVaporCoreProfileConfig \
   $(DIAG_DIR)/FigDust1CoreProfileConfig \
+  $(DIAG_DIR)/FigDust1NumCoreProfileConfig \
   $(DIAG_DIR)/FigDust2CoreProfileConfig \
+  $(DIAG_DIR)/FigDust2NumCoreProfileConfig \
   $(DIAG_DIR)/FigCloudRbandProfileConfig \
   $(DIAG_DIR)/FigRainRbandProfileConfig \
   $(DIAG_DIR)/FigPrisRbandProfileConfig \
@@ -91,7 +95,9 @@ CONFIGS = \
   $(DIAG_DIR)/FigTempcRbandProfileConfig \
   $(DIAG_DIR)/FigVaporRbandProfileConfig \
   $(DIAG_DIR)/FigDust1RbandProfileConfig \
+  $(DIAG_DIR)/FigDust1NumRbandProfileConfig \
   $(DIAG_DIR)/FigDust2RbandProfileConfig \
+  $(DIAG_DIR)/FigDust2NumRbandProfileConfig \
   $(DIAG_DIR)/FigDnDraftEnvProfileConfig \
   $(DIAG_DIR)/FigUpDraftEnvProfileConfig \
   $(DIAG_DIR)/FigSpeedtEnvProfileConfig \
@@ -100,7 +106,9 @@ CONFIGS = \
   $(DIAG_DIR)/FigTempcEnvProfileConfig \
   $(DIAG_DIR)/FigVaporEnvProfileConfig \
   $(DIAG_DIR)/FigDust1EnvProfileConfig \
+  $(DIAG_DIR)/FigDust1NumEnvProfileConfig \
   $(DIAG_DIR)/FigDust2EnvProfileConfig \
+  $(DIAG_DIR)/FigDust2NumEnvProfileConfig \
   $(DIAG_DIR)/FigureConfig
 
 #
