@@ -33,6 +33,7 @@ function [ ] = PlotStormStruct()
   UpClevs = [ 0:0.04:2 ];
 %  ThClevs = [ 300:4:320 ]; %for theta
   ThClevs = [ 340:1:350 ]; % for theta_e
+%  ThClevs = [ -30:2:30 ]; % for tempc
 
   % Want azimuthally averaged tangential speed and vertical velocity for each panel
   InFileTemplate = 'DIAGS/storm_xsections_<CASE>.h5';
@@ -40,8 +41,12 @@ function [ ] = PlotStormStruct()
   SalVtVname     = '/s_speed_t';
   PreSalUpVname  = '/ps_updraft';
   SalUpVname     = '/s_updraft';
+%  PreSalThVname  = '/ps_theta';
+%  SalThVname     = '/s_theta';
   PreSalThVname  = '/ps_theta_e';
   SalThVname     = '/s_theta_e';
+%  PreSalThVname  = '/ps_tempc';
+%  SalThVname     = '/s_tempc';
 
   PreSalOfileTemplate = 'Plots/PreSalStormStruct_<CASE>.jpg';
   SalOfileTemplate = 'Plots/SalStormStruct_<CASE>.jpg';
@@ -116,8 +121,8 @@ function [ ] = PlotStormStruct()
     [ Cup Hup ] = contour(R, Z, P_UP', UpClevs, 'LineColor', 'w');
     clabel(Cup, 'Color', 'w');
 
-    [ Cth Hth ] = contour(R, Z, P_TH', ThClevs, 'LineColor', 'r', 'LineStyle', '--');
-    clabel(Cth, 'Color', 'r');
+%    [ Cth Hth ] = contour(R, Z, P_TH', ThClevs, 'LineColor', 'r', 'LineStyle', '--');
+%    clabel(Cth, 'Color', 'r');
 
     title(Ptitle);
     xlabel(Xlabel);
@@ -146,8 +151,8 @@ function [ ] = PlotStormStruct()
     [ Cup Hup ] = contour(R, Z, S_UP', UpClevs, 'LineColor', 'w');
     clabel(Cup, 'Color', 'w');
 
-    [ Cth Hth ] = contour(R, Z, S_TH', ThClevs, 'LineColor', 'r', 'LineStyle', '--');
-    clabel(Cth, 'Color', 'r');
+%    [ Cth Hth ] = contour(R, Z, S_TH', ThClevs, 'LineColor', 'r', 'LineStyle', '--');
+%    clabel(Cth, 'Color', 'r');
 
     title(Ptitle);
     xlabel(Xlabel);
