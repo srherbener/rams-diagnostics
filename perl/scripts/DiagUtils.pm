@@ -220,6 +220,11 @@ sub ReadDiagConfigFile
       $Config{TSAVG}{$f[1]}{SUB_SMOTION} = $f[3];
       $Config{TSAVG}{$f[1]}{FILE_LIST}   = [ @f[4..$#f] ];
       }
+    elsif ($f[0] eq "Filter:")
+      {
+      $Config{FILTER}{$f[1]}{COMB_SENSE}    = $f[2];
+      $Config{FILTER}{$f[1]}{SPEC_LIST}   = [ @f[3..$#f] ];
+      }
   }
 
   return(\%Config);

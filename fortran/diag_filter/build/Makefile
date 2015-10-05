@@ -16,14 +16,19 @@ RHDF5_INCS = -I$(RHDF5_DIR)
 RHDF5_LIB_FILE = $(RHDF5_DIR)/lib$(RHDF5_BASE).a
 RHDF5_MOD_FILE = $(RHDF5_DIR)/$(RHDF5_BASE).mod
 
-# diagnostics utilities library
-DIAG_DIR = $(HOME)/etc/fortran
-DIAG_BASE = diag_utils
-DIAG_LIBS = -L$(DIAG_DIR) -l$(DIAG_BASE)
-DIAG_INCS = -I$(DIAG_DIR)
+# libraries and mod files
+FORT_LIB_DIR = $(HOME)/etc/fortran
 
-DIAG_LIB_FILE = $(DIAG_DIR)/lib$(DIAG_BASE).a
-DIAG_MOD_FILE = $(DIAG_DIR)/$(DIAG_BASE).mod
+DIAG_BASE = diag_utils
+DIAG_LIB_FILE = $(FORT_LIB_DIR)/lib$(DIAG_BASE).a
+DIAG_MOD_FILE = $(FORT_LIB_DIR)/$(DIAG_BASE).mod
+
+GETO_BASE = getoptions
+GETO_LIB_FILE = $(FORT_LIB_DIR)/lib$(GETO_BASE).a
+GETO_MOD_FILE = $(FORT_LIB_DIR)/$(GETO_BASE).mod
+
+FORT_LIBS = -L$(FORT_LIB_DIR) -l$(DIAG_BASE) -l$(GETO_BASE)
+FORT_INCS = -I$(FORT_LIB_DIR)
 
 # HDF5 library
 HDF5_LIBS=-L$(HOME)/hdf5-1.8.6-macosx64-static/lib -lhdf5 -lhdf5_hl -lsz -lz -lm
@@ -43,7 +48,7 @@ LOADER = pgf90
 LOADER_OPTS=-v -ldl -lc -lgcc_eh -lpthread -lsz
 #LOADER = gfortran
 #LOADER_OPTS =
-LOADER_LIBS = $(RHDF5_LIBS) $(HDF5_LIBS) $(DIAG_LIBS)
+LOADER_LIBS = $(RHDF5_LIBS) $(HDF5_LIBS) $(FORT_LIBS)
 
 
 

@@ -23,6 +23,8 @@ program diag_filter
   integer, parameter :: MediumString = 256
   integer, parameter :: LittleString = 128
 
+  integer, parameter :: MaxArgFields = 20
+
   ! Ftype codes for the FilterDescrip type
   ! In the main loop below that is applying the filters
   ! it is advantageous to use integers (representing the filter
@@ -45,11 +47,15 @@ program diag_filter
 
   integer, parameter :: MaxFilters = 10
 
+  type FileSpec
+    character (len=RHDF5_MAX_STRING) :: fname
+    character (len=RHDF5_MAX_STRING) :: vname
+  endtype
+
   type FilterDescrip
     character (len=LittleString) :: Fname
     integer :: Ftype
-    character (len=LittleString) :: Vname
-    character (len=LittleString) :: Vfprefix
+    type (FileSpec) :: Fvar
     real :: x1
     real :: x2
     real :: y1
@@ -58,11 +64,14 @@ program diag_filter
     real :: z2
   end type FilterDescrip
 
-  character (len=LargeString) :: InDir, InSuffix, OutFile
-  type (FilterDescrip), dimension(MaxFilters) :: Filters
-  character (len=LargeString) :: CombSense
+  type ArgList
+    character (len=LittleString) :: CombSense
+    type (FileSpec) :: Output
+    type (FilterDescrip), dimension(MaxFilters) :: Filters
+    integer :: Nfilters
+  endtype
 
-  integer :: Nfilters
+  type (ArgList) :: Args
 
   integer :: i, icylvol
   integer :: imodel, OutNdims, FilterNdims
@@ -74,7 +83,6 @@ program diag_filter
   logical :: BadDims
 
   type (Rhdf5Var), dimension(MaxFilters) :: Vars
-  character (len=RHDF5_MAX_STRING), dimension(MaxFilters) :: InFiles
 
   character (len=RHDF5_MAX_STRING) :: FileAcc
   integer, dimension(MaxFilters) :: InFileIds
@@ -100,11 +108,11 @@ program diag_filter
   integer :: UDfnum
 
   ! Get the command line arguments
-  call GetMyArgs(LargeString, MaxFilters, InDir, InSuffix, OutFile, CombSense, Filters, Nfilters)
+  call GetMyArgs(Args)
 
   ! Record which combination sense for the filters was selected
   ! GetMyArgs already checked to make sure one of 'and' or 'or' was selected for CombSense
-  AndFilters = (CombSense .eq. 'and')
+  AndFilters = (Args%CombSense .eq. 'and')
 
   DoingUpDrafts = .false.
   DoingDnDrafts = .false.
@@ -113,9 +121,8 @@ program diag_filter
   icylvol = 0 ! if remains zero -> signifies cylvol not being used to code downstream
 
   write (*,*) 'Creating HDF5 data filter:'
-  write (*,*) '  Input directory: ', trim(InDir)
-  write (*,*) '  Input file name suffix: ', trim(InSuffix)
-  write (*,*) '  Output file name:  ', trim(OutFile)
+  write (*,*) '  Output file:  ', trim(Args%Output%fname)
+  write (*,*) '    Output variable name:  ', trim(Args%Output%vname)
   write (*,*) '  Data selection specs: '
   if (AndFilters) then
     write (*,*) '    Filters will be logically and-ed together'
@@ -123,72 +130,72 @@ program diag_filter
     write (*,*) '    Filters will be logically or-ed together'
   endif
   UDfnum = 0
-  do i = 1, Nfilters
-    if (Filters(i)%Ftype .eq. FTYPE_CYLVOL) then
+  do i = 1, Args%Nfilters
+    if (Args%Filters(i)%Ftype .eq. FTYPE_CYLVOL) then
       icylvol = i
       write (*,*) '    Cylindrical volume:'
-      write (*,*) '      Storm center variable: ', trim(Filters(i)%Vname)
-      write (*,*) '      Storm center file prefix: ', trim(Filters(i)%Vfprefix)
-      write (*,*) '      Minimum radius: ', Filters(i)%x1
-      write (*,*) '      Maximum radius: ', Filters(i)%x2
-      write (*,*) '      Minimum angle: ', Filters(i)%y1
-      write (*,*) '      Maximum angle: ', Filters(i)%y2
-      write (*,*) '      Minimum height: ', Filters(i)%z1
-      write (*,*) '      Maximum height: ', Filters(i)%z2
-    else if (Filters(i)%Ftype .eq. FTYPE_GE) then
+      write (*,*) '      Storm center variable: ', trim(Args%Filters(i)%Fvar%vname)
+      write (*,*) '      Storm center file: ', trim(Args%Filters(i)%Fvar%fname)
+      write (*,*) '      Minimum radius: ', Args%Filters(i)%x1
+      write (*,*) '      Maximum radius: ', Args%Filters(i)%x2
+      write (*,*) '      Minimum angle: ', Args%Filters(i)%y1
+      write (*,*) '      Maximum angle: ', Args%Filters(i)%y2
+      write (*,*) '      Minimum height: ', Args%Filters(i)%z1
+      write (*,*) '      Maximum height: ', Args%Filters(i)%z2
+    else if (Args%Filters(i)%Ftype .eq. FTYPE_GE) then
       write (*,*) '    Greater than or equal:'
-      write (*,*) '      Variable: ', trim(Filters(i)%Vname)
-      write (*,*) '      Variable file prefix: ', trim(Filters(i)%Vfprefix)
-      write (*,*) '      Threshold: ', Filters(i)%x1
-    else if (Filters(i)%Ftype .eq. FTYPE_GT) then
+      write (*,*) '      Variable: ', trim(Args%Filters(i)%Fvar%vname)
+      write (*,*) '      Variable file: ', trim(Args%Filters(i)%Fvar%fname)
+      write (*,*) '      Threshold: ', Args%Filters(i)%x1
+    else if (Args%Filters(i)%Ftype .eq. FTYPE_GT) then
       write (*,*) '    Greater than:'
-      write (*,*) '      Variable: ', trim(Filters(i)%Vname)
-      write (*,*) '      Variable file prefix: ', trim(Filters(i)%Vfprefix)
-      write (*,*) '      Threshold: ', Filters(i)%x1
-    else if (Filters(i)%Ftype .eq. FTYPE_LE) then
+      write (*,*) '      Variable: ', trim(Args%Filters(i)%Fvar%vname)
+      write (*,*) '      Variable file: ', trim(Args%Filters(i)%Fvar%fname)
+      write (*,*) '      Threshold: ', Args%Filters(i)%x1
+    else if (Args%Filters(i)%Ftype .eq. FTYPE_LE) then
       write (*,*) '    Less than or equal:'
-      write (*,*) '      Variable: ', trim(Filters(i)%Vname)
-      write (*,*) '      Variable file prefix: ', trim(Filters(i)%Vfprefix)
-      write (*,*) '      Threshold: ', Filters(i)%x1
-    else if (Filters(i)%Ftype .eq. FTYPE_LT) then
+      write (*,*) '      Variable: ', trim(Args%Filters(i)%Fvar%vname)
+      write (*,*) '      Variable file: ', trim(Args%Filters(i)%Fvar%fname)
+      write (*,*) '      Threshold: ', Args%Filters(i)%x1
+    else if (Args%Filters(i)%Ftype .eq. FTYPE_LT) then
       write (*,*) '    Less than:'
-      write (*,*) '      Variable: ', trim(Filters(i)%Vname)
-      write (*,*) '      Variable file prefix: ', trim(Filters(i)%Vfprefix)
-      write (*,*) '      Threshold: ', Filters(i)%x1
-    else if (Filters(i)%Ftype .eq. FTYPE_RANGE) then
+      write (*,*) '      Variable: ', trim(Args%Filters(i)%Fvar%vname)
+      write (*,*) '      Variable file: ', trim(Args%Filters(i)%Fvar%fname)
+      write (*,*) '      Threshold: ', Args%Filters(i)%x1
+    else if (Args%Filters(i)%Ftype .eq. FTYPE_RANGE) then
       write (*,*) '    Inside range:'
-      write (*,*) '      Variable: ', trim(Filters(i)%Vname)
-      write (*,*) '      Variable file prefix: ', trim(Filters(i)%Vfprefix)
-      write (*,*) '      Min: ', Filters(i)%x1
-      write (*,*) '      Max: ', Filters(i)%x2
-    else if (Filters(i)%Ftype .eq. FTYPE_ABS_RANGE) then
+      write (*,*) '      Variable: ', trim(Args%Filters(i)%Fvar%vname)
+      write (*,*) '      Variable file: ', trim(Args%Filters(i)%Fvar%fname)
+      write (*,*) '      Min: ', Args%Filters(i)%x1
+      write (*,*) '      Max: ', Args%Filters(i)%x2
+    else if (Args%Filters(i)%Ftype .eq. FTYPE_ABS_RANGE) then
       write (*,*) '    Absolute value inside range:'
-      write (*,*) '      Variable: ', trim(Filters(i)%Vname)
-      write (*,*) '      Variable file prefix: ', trim(Filters(i)%Vfprefix)
-      write (*,*) '      Min: ', Filters(i)%x1
-      write (*,*) '      Max: ', Filters(i)%x2
-    else if (Filters(i)%Ftype .eq. FTYPE_UP) then
+      write (*,*) '      Variable: ', trim(Args%Filters(i)%Fvar%vname)
+      write (*,*) '      Variable file: ', trim(Args%Filters(i)%Fvar%fname)
+      write (*,*) '      Min: ', Args%Filters(i)%x1
+      write (*,*) '      Max: ', Args%Filters(i)%x2
+    else if (Args%Filters(i)%Ftype .eq. FTYPE_UP) then
       DoingUpDrafts = .true.
       UDfnum = i
       write (*,*) '    Updraft:'
-      write (*,*) '      Variable: ', trim(Filters(i)%Vname)
-      write (*,*) '      Variable file prefix: ', trim(Filters(i)%Vfprefix)
-      write (*,*) '      Threshold: ', Filters(i)%x1
-    else if (Filters(i)%Ftype .eq. FTYPE_DN) then
+      write (*,*) '      Variable: ', trim(Args%Filters(i)%Fvar%vname)
+      write (*,*) '      Variable file: ', trim(Args%Filters(i)%Fvar%fname)
+      write (*,*) '      Threshold: ', Args%Filters(i)%x1
+    else if (Args%Filters(i)%Ftype .eq. FTYPE_DN) then
       DoingDnDrafts = .true.
       UDfnum = i
       write (*,*) '    Downdraft:'
-      write (*,*) '      Variable: ', trim(Filters(i)%Vname)
-      write (*,*) '      Variable file prefix: ', trim(Filters(i)%Vfprefix)
-      write (*,*) '      Threshold: ', Filters(i)%x1
-    else if (Filters(i)%Ftype .eq. FTYPE_UP_DN) then
+      write (*,*) '      Variable: ', trim(Args%Filters(i)%Fvar%vname)
+      write (*,*) '      Variable file: ', trim(Args%Filters(i)%Fvar%fname)
+      write (*,*) '      Threshold: ', Args%Filters(i)%x1
+    else if (Args%Filters(i)%Ftype .eq. FTYPE_UP_DN) then
       DoingUpDnDrafts = .true.
       UDfnum = i
       write (*,*) '    Updraft/Downdraft:'
-      write (*,*) '      Variable: ', trim(Filters(i)%Vname)
-      write (*,*) '      Variable file prefix: ', trim(Filters(i)%Vfprefix)
-      write (*,*) '      Updraft Threshold: ', Filters(i)%x1
-      write (*,*) '      Downdraft Threshold: ', Filters(i)%x2
+      write (*,*) '      Variable: ', trim(Args%Filters(i)%Fvar%vname)
+      write (*,*) '      Variable file: ', trim(Args%Filters(i)%Fvar%fname)
+      write (*,*) '      Updraft Threshold: ', Args%Filters(i)%x1
+      write (*,*) '      Downdraft Threshold: ', Args%Filters(i)%x2
     endif
   enddo
   write (*,*) ''
@@ -208,9 +215,7 @@ program diag_filter
   ! The number of dims for the output is determined by the maximum number of dims
   ! of all the input variables. Note that 'up', 'dn', 'up_dn' and 'cylvol' produce
   ! 2D output regarless of dimensions of the associate filter variable.
-  do i = 1, Nfilters
-    InFiles(i) = trim(InDir) // '/' // trim(Filters(i)%Vfprefix) // trim(InSuffix)
-
+  do i = 1, Args%Nfilters
     if (i .eq. icylvol) then
       ! put radius information into Vars(i) for the dimension size check
       Vars(i)%vname = 'radius'
@@ -218,27 +223,27 @@ program diag_filter
       ! set up the extra vars
       ! go ahead and read in the entire timeseries vars
       MinP%vname = 'min_press'
-      call rhdf5_read_init(InFiles(i), MinP)
-      call rhdf5_read(InFiles(i), MinP);
+      call rhdf5_read_init(Args%Filters(i)%Fvar%fname, MinP)
+      call rhdf5_read(Args%Filters(i)%Fvar%fname, MinP);
 
       Radius%vname = 'radius'
-      call rhdf5_read_init(InFiles(i), Radius)
+      call rhdf5_read_init(Args%Filters(i)%Fvar%fname, Radius)
 
       Phi%vname = 'phi'
-      call rhdf5_read_init(InFiles(i), Phi)
+      call rhdf5_read_init(Args%Filters(i)%Fvar%fname, Phi)
 
-      StormXindex%vname = trim(Filters(i)%Vname) // '_x_index'
-      call rhdf5_read_init(InFiles(i), StormXindex)
-      call rhdf5_read(InFiles(i), StormXindex);
+      StormXindex%vname = trim(Args%Filters(i)%Fvar%vname) // '_x_index'
+      call rhdf5_read_init(Args%Filters(i)%Fvar%fname, StormXindex)
+      call rhdf5_read(Args%Filters(i)%Fvar%fname, StormXindex);
 
-      StormYindex%vname = trim(Filters(i)%Vname) // '_y_index'
-      call rhdf5_read_init(InFiles(i), StormYindex)
-      call rhdf5_read(InFiles(i), StormYindex);
+      StormYindex%vname = trim(Args%Filters(i)%Fvar%vname) // '_y_index'
+      call rhdf5_read_init(Args%Filters(i)%Fvar%fname, StormYindex)
+      call rhdf5_read(Args%Filters(i)%Fvar%fname, StormYindex);
     else
-      Vars(i)%vname = trim(Filters(i)%Vname)
+      Vars(i)%vname = trim(Args%Filters(i)%Fvar%vname)
     endif
 
-    call rhdf5_read_init(InFiles(i), Vars(i))
+    call rhdf5_read_init(Args%Filters(i)%Fvar%fname, Vars(i))
 
     ! Check that the horizontal and time dimensions match with the first var. 
     if (i .gt. 1) then
@@ -250,7 +255,7 @@ program diag_filter
   enddo
 
   imodel = 1
-  do i = 1, Nfilters
+  do i = 1, Args%Nfilters
     ! Prepare for reading
     Vars(i)%ndims = Vars(i)%ndims - 1
 
@@ -264,8 +269,8 @@ program diag_filter
 
     ! Record var with maximum number of dimensions --> output dims
     ! NOTE: Vars(i) for cylvol has data corresponding to the 'radius' variable (2D)
-    if ((Filters(i)%Ftype .eq. FTYPE_UP) .or. (Filters(i)%Ftype .eq. FTYPE_DN) .or. &
-        (Filters(i)%Ftype .eq. FTYPE_UP_DN) .or. (Filters(i)%Ftype .eq. FTYPE_CYLVOL)) then
+    if ((Args%Filters(i)%Ftype .eq. FTYPE_UP) .or. (Args%Filters(i)%Ftype .eq. FTYPE_DN) .or. &
+        (Args%Filters(i)%Ftype .eq. FTYPE_UP_DN) .or. (Args%Filters(i)%Ftype .eq. FTYPE_CYLVOL)) then
       FilterNdims = 2
     else
       FilterNdims = Vars(i)%ndims
@@ -298,7 +303,7 @@ program diag_filter
   ! ('up' uses variable 'w' for example). In this case change the Zcoords to a
   ! size of 1 using the value in Zcoords(2) (first level above surface) as the
   ! coordinate value.
-  call SetOutCoords(InFiles(imodel), Xcoords, Ycoords, Zcoords, Tcoords)
+  call SetOutCoords(Args%Filters(imodel)%Fvar%fname, Xcoords, Ycoords, Zcoords, Tcoords)
   if ((OutNdims .eq. 2) .and. (Vars(imodel)%ndims .eq. 3)) then
     TempZ = Zcoords%vdata(2)
 
@@ -382,15 +387,15 @@ program diag_filter
 
   ! Open the input files and the output file
   FileAcc = 'R'
-  do i = 1, Nfilters
-    call rhdf5_open_file(InFiles(i), FileAcc, 0, InFileIds(i))
-    write (*,*) 'Reading HDF5 file: ', trim(InFiles(i))
+  do i = 1, Args%Nfilters
+    call rhdf5_open_file(Args%Filters(i)%Fvar%fname, FileAcc, 0, InFileIds(i))
+    write (*,*) 'Reading HDF5 file: ', trim(Args%Filters(i)%Fvar%fname)
   enddo
   write (*,*) ''
 
   FileAcc = 'W'
-  call rhdf5_open_file(OutFile, FileAcc, 1, OutFileId)
-  write (*,*) 'Writing HDF5 file: ', trim(OutFile)
+  call rhdf5_open_file(Args%Output%fname, FileAcc, 1, OutFileId)
+  write (*,*) 'Writing HDF5 file: ', trim(Args%Output%fname)
   write (*,*) ''
 
   ! Do the filtering one time step at a time.
@@ -403,7 +408,7 @@ program diag_filter
   NhElems = Nx * Ny
   do it = 1, Nt
     ! read the input vars
-    do i = 1, Nfilters
+    do i = 1, Args%Nfilters
       if (i .eq. icylvol) then
         call rhdf5_read_variable(InFileIds(i), Radius%vname, Radius%ndims, it, Radius%dims, rdata=Radius%vdata)
         call rhdf5_read_variable(InFileIds(i), Phi%vname, Phi%ndims, it, Phi%dims, rdata=Phi%vdata)
@@ -421,11 +426,11 @@ program diag_filter
     !    2 - downdraft
     !    3 - up and down drafts
     if (DoingUpDrafts) then
-      call BuildUpDnMask(Nx, Ny, Vars(UDfnum)%dims(3), Vars(UDfnum)%vdata, UpDnDraftMask, Filters(UDfnum)%x1, Filters(UDfnum)%x2, 1)
+      call BuildUpDnMask(Nx, Ny, Vars(UDfnum)%dims(3), Vars(UDfnum)%vdata, UpDnDraftMask, Args%Filters(UDfnum)%x1, Args%Filters(UDfnum)%x2, 1)
     elseif (DoingDnDrafts) then
-      call BuildUpDnMask(Nx, Ny, Vars(UDfnum)%dims(3), Vars(UDfnum)%vdata, UpDnDraftMask, Filters(UDfnum)%x1, Filters(UDfnum)%x2, 2)
+      call BuildUpDnMask(Nx, Ny, Vars(UDfnum)%dims(3), Vars(UDfnum)%vdata, UpDnDraftMask, Args%Filters(UDfnum)%x1, Args%Filters(UDfnum)%x2, 2)
     elseif (DoingUpDnDrafts) then
-      call BuildUpDnMask(Nx, Ny, Vars(UDfnum)%dims(3), Vars(UDfnum)%vdata, UpDnDraftMask, Filters(UDfnum)%x1, Filters(UDfnum)%x2, 3)
+      call BuildUpDnMask(Nx, Ny, Vars(UDfnum)%dims(3), Vars(UDfnum)%vdata, UpDnDraftMask, Args%Filters(UDfnum)%x1, Args%Filters(UDfnum)%x2, 3)
     endif
 
     ! do the filter selection
@@ -454,68 +459,68 @@ program diag_filter
           ! to true if and-ing and false if or-ing (ie, to the value in AndFilters).
           SelectThisPoint = AndFilters
 
-          do i = 1, Nfilters
+          do i = 1, Args%Nfilters
             ! Apply the current filter
-            if (Filters(i)%Ftype .eq. FTYPE_CYLVOL) then
+            if (Args%Filters(i)%Ftype .eq. FTYPE_CYLVOL) then
               ! select if inside the cylindrical volume
-              FilterVal =                 (Radius%vdata(ih2d) .ge. Filters(i)%x1)  ! x1 -> min radius
-              FilterVal = FilterVal .and. (Radius%vdata(ih2d) .le. Filters(i)%x2)  ! x2 -> max radius
+              FilterVal =                 (Radius%vdata(ih2d) .ge. Args%Filters(i)%x1)  ! x1 -> min radius
+              FilterVal = FilterVal .and. (Radius%vdata(ih2d) .le. Args%Filters(i)%x2)  ! x2 -> max radius
 
-              FilterVal = FilterVal .and. (Phi%vdata(ih2d) .ge. Filters(i)%y1)     ! y1 -> min phi
-              FilterVal = FilterVal .and. (Phi%vdata(ih2d) .le. Filters(i)%y2)     ! y2 -> max phi
+              FilterVal = FilterVal .and. (Phi%vdata(ih2d) .ge. Args%Filters(i)%y1)     ! y1 -> min phi
+              FilterVal = FilterVal .and. (Phi%vdata(ih2d) .le. Args%Filters(i)%y2)     ! y2 -> max phi
 
-              FilterVal = FilterVal .and. (Zcoords%vdata(iz) .ge. Filters(i)%z1)   ! z1 -> min height
-              FilterVal = FilterVal .and. (Zcoords%vdata(iz) .le. Filters(i)%z2)   ! z2 -> max height
+              FilterVal = FilterVal .and. (Zcoords%vdata(iz) .ge. Args%Filters(i)%z1)   ! z1 -> min height
+              FilterVal = FilterVal .and. (Zcoords%vdata(iz) .le. Args%Filters(i)%z2)   ! z2 -> max height
 
-            else if (Filters(i)%Ftype .eq. FTYPE_GT) then
+            else if (Args%Filters(i)%Ftype .eq. FTYPE_GT) then
               ! select if var > threshold
               if (Vars(i)%ndims .eq. 2) then
-                FilterVal = (Vars(i)%vdata(ih2d) .gt. Filters(i)%x1)
+                FilterVal = (Vars(i)%vdata(ih2d) .gt. Args%Filters(i)%x1)
               else
-                FilterVal = (Vars(i)%vdata(ih3d) .gt. Filters(i)%x1)
+                FilterVal = (Vars(i)%vdata(ih3d) .gt. Args%Filters(i)%x1)
               endif
 
-            else if (Filters(i)%Ftype .eq. FTYPE_GE) then
+            else if (Args%Filters(i)%Ftype .eq. FTYPE_GE) then
               ! select if var >= threshold
               if (Vars(i)%ndims .eq. 2) then
-                FilterVal = (Vars(i)%vdata(ih2d) .ge. Filters(i)%x1)
+                FilterVal = (Vars(i)%vdata(ih2d) .ge. Args%Filters(i)%x1)
               else
-                FilterVal = (Vars(i)%vdata(ih3d) .ge. Filters(i)%x1)
+                FilterVal = (Vars(i)%vdata(ih3d) .ge. Args%Filters(i)%x1)
               endif
 
-            else if (Filters(i)%Ftype .eq. FTYPE_LT) then
+            else if (Args%Filters(i)%Ftype .eq. FTYPE_LT) then
               ! select if var < threshold
               if (Vars(i)%ndims .eq. 2) then
-                FilterVal = (Vars(i)%vdata(ih2d) .lt. Filters(i)%x1)
+                FilterVal = (Vars(i)%vdata(ih2d) .lt. Args%Filters(i)%x1)
               else
-                FilterVal = (Vars(i)%vdata(ih3d) .lt. Filters(i)%x1)
+                FilterVal = (Vars(i)%vdata(ih3d) .lt. Args%Filters(i)%x1)
               endif
 
-            else if (Filters(i)%Ftype .eq. FTYPE_LE) then
+            else if (Args%Filters(i)%Ftype .eq. FTYPE_LE) then
               ! select if var <= threshold
               if (Vars(i)%ndims .eq. 2) then
-                FilterVal = (Vars(i)%vdata(ih2d) .le. Filters(i)%x1)
+                FilterVal = (Vars(i)%vdata(ih2d) .le. Args%Filters(i)%x1)
               else
-                FilterVal = (Vars(i)%vdata(ih3d) .le. Filters(i)%x1)
+                FilterVal = (Vars(i)%vdata(ih3d) .le. Args%Filters(i)%x1)
               endif
 
-            else if (Filters(i)%Ftype .eq. FTYPE_RANGE) then
+            else if (Args%Filters(i)%Ftype .eq. FTYPE_RANGE) then
               ! select if min <= var <= max
               if (Vars(i)%ndims .eq. 2) then
-                FilterVal = (Vars(i)%vdata(ih2d) .ge. Filters(i)%x1) .and. (Vars(i)%vdata(ih2d) .le. Filters(i)%x2)
+                FilterVal = (Vars(i)%vdata(ih2d) .ge. Args%Filters(i)%x1) .and. (Vars(i)%vdata(ih2d) .le. Args%Filters(i)%x2)
               else
-                FilterVal = (Vars(i)%vdata(ih3d) .ge. Filters(i)%x1) .and. (Vars(i)%vdata(ih3d) .le. Filters(i)%x2)
+                FilterVal = (Vars(i)%vdata(ih3d) .ge. Args%Filters(i)%x1) .and. (Vars(i)%vdata(ih3d) .le. Args%Filters(i)%x2)
               endif
 
-            else if (Filters(i)%Ftype .eq. FTYPE_ABS_RANGE) then
+            else if (Args%Filters(i)%Ftype .eq. FTYPE_ABS_RANGE) then
               ! select if min <= abs(var) <= max
               if (Vars(i)%ndims .eq. 2) then
-                FilterVal = (abs(Vars(i)%vdata(ih2d)) .ge. Filters(i)%x1) .and. (abs(Vars(i)%vdata(ih2d)) .le. Filters(i)%x2)
+                FilterVal = (abs(Vars(i)%vdata(ih2d)) .ge. Args%Filters(i)%x1) .and. (abs(Vars(i)%vdata(ih2d)) .le. Args%Filters(i)%x2)
               else
-                FilterVal = (abs(Vars(i)%vdata(ih3d)) .ge. Filters(i)%x1) .and. (abs(Vars(i)%vdata(ih3d)) .le. Filters(i)%x2)
+                FilterVal = (abs(Vars(i)%vdata(ih3d)) .ge. Args%Filters(i)%x1) .and. (abs(Vars(i)%vdata(ih3d)) .le. Args%Filters(i)%x2)
               endif
 
-            else if ((Filters(i)%Ftype .eq. FTYPE_UP) .or. (Filters(i)%Ftype .eq. FTYPE_DN) .or. (Filters(i)%Ftype .eq. FTYPE_UP_DN)) then
+            else if ((Args%Filters(i)%Ftype .eq. FTYPE_UP) .or. (Args%Filters(i)%Ftype .eq. FTYPE_DN) .or. (Args%Filters(i)%Ftype .eq. FTYPE_UP_DN)) then
               ! select according to up down draft mask
               FilterVal = UpDnDraftMask(ix,iy)
             endif
@@ -543,7 +548,7 @@ program diag_filter
       OutFilter%units, OutFilter%descrip, OutFilter%dimnames, rdata=OutFilter%vdata)
 
     ! cleanup
-    do i = 1, Nfilters
+    do i = 1, Args%Nfilters
       if (i .eq. icylvol) then
         deallocate(Radius%vdata)
         deallocate(Phi%vdata)
@@ -573,23 +578,23 @@ program diag_filter
   write (*,*) ''
 
   ! write out the coordinate data
-  call rhdf5_write(OutFile, Xcoords, 1)
-  call rhdf5_write(OutFile, Ycoords, 1)
-  call rhdf5_write(OutFile, Zcoords, 1)
-  call rhdf5_write(OutFile, Tcoords, 1)
+  call rhdf5_write(Args%Output%fname, Xcoords, 1)
+  call rhdf5_write(Args%Output%fname, Ycoords, 1)
+  call rhdf5_write(Args%Output%fname, Zcoords, 1)
+  call rhdf5_write(Args%Output%fname, Tcoords, 1)
 
   ! set up four (x,y,z,t) dimensions for use by GRADS
-  call rhdf5_set_dimension(OutFile, Xcoords, 'x')
-  call rhdf5_set_dimension(OutFile, Ycoords, 'y')
-  call rhdf5_set_dimension(OutFile, Zcoords, 'z')
-  call rhdf5_set_dimension(OutFile, Tcoords, 't')
+  call rhdf5_set_dimension(Args%Output%fname, Xcoords, 'x')
+  call rhdf5_set_dimension(Args%Output%fname, Ycoords, 'y')
+  call rhdf5_set_dimension(Args%Output%fname, Zcoords, 'z')
+  call rhdf5_set_dimension(Args%Output%fname, Tcoords, 't')
 
   ! attach the dimension specs to the output variable
-  call rhdf5_attach_dimensions(OutFile, OutFilter)
+  call rhdf5_attach_dimensions(Args%Output%fname, OutFilter)
 
   ! cleanup
   call rhdf5_close_file(OutFileId)
-  do i = 1, Nfilters
+  do i = 1, Args%Nfilters
     call rhdf5_close_file(InFileIds(i))
   enddo
 
@@ -607,333 +612,318 @@ contains
 ! GetMyArgs()
 !
 
- subroutine GetMyArgs(Nstr, Nfilt, InDir, InSuffix, OutFile, CombSense, Filters, NumFilters)
+ subroutine GetMyArgs(Args)
+  use getoptions
+
   implicit none
 
-  integer, parameter :: MaxFields = 15
+  type (ArgList) :: Args
 
-  character (len=Nstr) :: InDir, InSuffix, OutFile, CombSense
-  integer :: Nstr, Nfilt, NumFilters
-  type (FilterDescrip), dimension(Nfilt) :: Filters
-
-  integer :: iargc, i, Nargs, Nfld
-  character (len=Nstr) :: Arg
-  character (len=Nstr), dimension(MaxFields) :: Fields
-
+  character :: optval
   logical :: BadArgs
+  character (len=MediumString), dimension(MaxArgFields) :: ArgList
+  integer :: Nfields
+  integer :: ifilt
+
+  ! Default values
+  Args%CombSense = 'and'
+
+  ! Initialization
+  Args%Output%fname = 'none'
+  Args%Output%vname = 'none'
+
+  do ifilt = 1, MaxFilters
+    Args%Filters(i)%Fvar%fname = 'none'
+    Args%Filters(i)%Fvar%vname = 'none'
+  enddo 
 
   BadArgs = .false.
-  InDir = ''
-  InSuffix = ''
-  OutFile = ''
-  NumFilters = 0
 
-  ! walk through the list of arguments
-  !   see the USAGE string at the end of this routine
-  !
-  !   first arg --> InDir
-  !   second arg --> InSuffix
-  !   third arg --> OutFile
-  !
-  !   remaining arguments are the filter specs
+  ifilt = 0
 
-  i = 1
-  Nargs = iargc()
-  do while (i .le. Nargs)
-    call getarg(i, Arg)
+  ! loop through all of the command line tokens
+  ! optarg is a character string variable that the getoptions module supplies
+  !   optarg gets set to the argument value for an option that uses an argument
+  ! getopt returns single character:
+  !    '>' finished
+  !    '!' unknown option
+  !    '.' command line argument (no option)
+  do
+    optval = getopt('c:')
 
-    if (i .eq. 1) then
-      InDir = Arg
-      i = i + 1
-    else if (i .eq. 2) then
-      InSuffix = Arg
-      i = i + 1
-    else if (i .eq. 3) then
-      OutFile = Arg
-      i = i + 1
-    else if (i .eq. 4) then
-      CombSense = Arg
+    select case (optval)
+      case ('>') ! finished
+        exit
 
-      if ((CombSense .ne. 'and') .and. (CombSense .ne. 'or')) then
-        write (*,*) 'ERROR: <comb_sense> must be one of: "and", "or"'
+      case ('!') ! unrecognized argument
+        write(*,*) 'ERROR: unknow option: ', trim(optarg)
+        write(*,*) ''
         BadArgs = .true.
-      endif
-      i = i + 1
-    else
-      call String2List(Arg, ':', Fields, MaxFields, Nfld, 'filter spec')
-      i = i + 1
 
-      !************
-      !* CYLVOL
-      !************
-      if (Fields(1) .eq. 'cylvol') then
-        NumFilters = NumFilters + 1
-
-        if (Nfld .lt. 9) then
-          write (*,*) 'ERROR: not enough arguments to fully specify the cylvol filter'
+      case ('c')
+        Args%CombSense = optarg
+        if ((Args%CombSense .ne. 'and') .and. (Args%CombSense .ne. 'or')) then
+          write (*,*) 'ERROR: <comb_sense> must be one of: "and", "or"'
           BadArgs = .true.
-        else
-          ! have enough args
-          Filters(NumFilters)%Fname    = Fields(1)
-          Filters(NumFilters)%Ftype    = FTYPE_CYLVOL
-          Filters(NumFilters)%Vname    = Fields(2)
-          Filters(NumFilters)%Vfprefix = Fields(3)
-
-          read(Fields(4), '(f15.7)') Filters(NumFilters)%x1
-          read(Fields(5), '(f15.7)') Filters(NumFilters)%x2
-          read(Fields(6), '(f15.7)') Filters(NumFilters)%y1
-          read(Fields(7), '(f15.7)') Filters(NumFilters)%y2
-          read(Fields(8), '(f15.7)') Filters(NumFilters)%z1
-          read(Fields(9), '(f15.7)') Filters(NumFilters)%z2
         endif
 
-        if ((Filters(NumFilters)%x1 .lt. 0.0) .or. (Filters(NumFilters)%x2 .lt. 0.0) .or. (Filters(NumFilters)%x2 .le. Filters(NumFilters)%x1)) then
-          write (*,*) 'ERROR: <x1> and <x2> must be >= 0.0, and <x2> must be > <x1>'
-          write (*,*) ''
-          BadArgs = .true.
-        end if
-        if ((Filters(NumFilters)%y1 .lt. 0.0) .or. (Filters(NumFilters)%y2 .lt. 0.0) .or. (Filters(NumFilters)%y2 .le. Filters(NumFilters)%y1)) then
-          write (*,*) 'ERROR: <y1> and <y2> must be >= 0.0, and <y2> must be > <y1>'
-          write (*,*) ''
-          BadArgs = .true.
-        end if
-        if ((Filters(NumFilters)%z1 .lt. 0.0) .or. (Filters(NumFilters)%z2 .lt. 0.0) .or. (Filters(NumFilters)%z2 .le. Filters(NumFilters)%z1)) then
-          write (*,*) 'ERROR: <z1> and <z2> must be >= 0.0, and <z2> must be > <z1>'
-          write (*,*) ''
-          BadArgs = .true.
-        end if
-      !************
-      !* GE
-      !************
-      else if (Fields(1) .eq. 'ge') then
-        NumFilters = NumFilters + 1
+      case ('.')  ! file and filter specs
+        call String2List(optarg, ':', ArgList, MaxArgFields, Nfields, 'file/filter spec')
+        select case (ArgList(1))
+          case ('out')
+            Args%Output%fname = trim(ArgList(2))
+            Args%Output%vname = trim(ArgList(3))
 
-        if (Nfld .lt. 4) then
-          write (*,*) 'ERROR: not enough arguments to fully specify the ge filter'
-          BadArgs = .true.
-        else
-          ! have enough args
-          Filters(NumFilters)%Fname    = Fields(1)
-          Filters(NumFilters)%Ftype    = FTYPE_GE
-          Filters(NumFilters)%Vname    = Fields(2)
-          Filters(NumFilters)%Vfprefix = Fields(3)
+          case ('filter')
+            ifilt = ifilt + 1
+            select case (ArgList(2))
+              case ('cylvol')
+                if (Nfields .lt. 10) then
+                  write (*,*) 'ERROR: not enough arguments to fully specify the cylvol filter'
+                  BadArgs = .true.
+                else
+                  ! have enough args
+                  Args%Filters(ifilt)%Fname      = ArgList(2)
+                  Args%Filters(ifilt)%Ftype      = FTYPE_CYLVOL
+                  Args%Filters(ifilt)%Fvar%vname = ArgList(3)
+                  Args%Filters(ifilt)%Fvar%fname = ArgList(4)
+        
+                  read(ArgList(5), '(f15.7)') Args%Filters(ifilt)%x1
+                  read(ArgList(6), '(f15.7)') Args%Filters(ifilt)%x2
+                  read(ArgList(7), '(f15.7)') Args%Filters(ifilt)%y1
+                  read(ArgList(8), '(f15.7)') Args%Filters(ifilt)%y2
+                  read(ArgList(9), '(f15.7)') Args%Filters(ifilt)%z1
+                  read(ArgList(10), '(f15.7)') Args%Filters(ifilt)%z2
+                endif
+        
+                if ((Args%Filters(ifilt)%x1 .lt. 0.0) .or. (Args%Filters(ifilt)%x2 .lt. 0.0) .or. (Args%Filters(ifilt)%x2 .le. Args%Filters(ifilt)%x1)) then
+                  write (*,*) 'ERROR: <x1> and <x2> must be >= 0.0, and <x2> must be > <x1>'
+                  write (*,*) ''
+                  BadArgs = .true.
+                endif
+                if ((Args%Filters(ifilt)%y1 .lt. 0.0) .or. (Args%Filters(ifilt)%y2 .lt. 0.0) .or. (Args%Filters(ifilt)%y2 .le. Args%Filters(ifilt)%y1)) then
+                  write (*,*) 'ERROR: <y1> and <y2> must be >= 0.0, and <y2> must be > <y1>'
+                  write (*,*) ''
+                  BadArgs = .true.
+                endif
+                if ((Args%Filters(ifilt)%z1 .lt. 0.0) .or. (Args%Filters(ifilt)%z2 .lt. 0.0) .or. (Args%Filters(ifilt)%z2 .le. Args%Filters(ifilt)%z1)) then
+                  write (*,*) 'ERROR: <z1> and <z2> must be >= 0.0, and <z2> must be > <z1>'
+                  write (*,*) ''
+                  BadArgs = .true.
+                endif
 
-          read(Fields(4),  '(f15.7)') Filters(NumFilters)%x1
-          Filters(NumFilters)%x2 = 0
-          Filters(NumFilters)%y1 = 0
-          Filters(NumFilters)%y2 = 0
-          Filters(NumFilters)%z1 = 0
-          Filters(NumFilters)%z2 = 0
-        endif
-      !************
-      !* GT
-      !************
-      else if (Fields(1) .eq. 'gt') then
-        NumFilters = NumFilters + 1
+              case ('ge')
+                if (Nfields .lt. 5) then
+                  write (*,*) 'ERROR: not enough arguments to fully specify the ge filter'
+                  BadArgs = .true.
+                else
+                  ! have enough args
+                  Args%Filters(ifilt)%Fname      = ArgList(2)
+                  Args%Filters(ifilt)%Ftype      = FTYPE_GE
+                  Args%Filters(ifilt)%Fvar%vname = ArgList(3)
+                  Args%Filters(ifilt)%Fvar%fname = ArgList(4)
+        
+                  read(ArgList(5),  '(f15.7)') Args%Filters(ifilt)%x1
+                  Args%Filters(ifilt)%x2 = 0
+                  Args%Filters(ifilt)%y1 = 0
+                  Args%Filters(ifilt)%y2 = 0
+                  Args%Filters(ifilt)%z1 = 0
+                  Args%Filters(ifilt)%z2 = 0
+                endif
 
-        if (Nfld .lt. 4) then
-          write (*,*) 'ERROR: not enough arguments to fully specify the gt filter'
-          BadArgs = .true.
-        else
-          ! have enough args
-          Filters(NumFilters)%Fname    = Fields(1)
-          Filters(NumFilters)%Ftype    = FTYPE_GT
-          Filters(NumFilters)%Vname    = Fields(2)
-          Filters(NumFilters)%Vfprefix = Fields(3)
+              case ('gt')
+                if (Nfields .lt. 5) then
+                  write (*,*) 'ERROR: not enough arguments to fully specify the gt filter'
+                  BadArgs = .true.
+                else
+                  ! have enough args
+                  Args%Filters(ifilt)%Fname      = ArgList(2)
+                  Args%Filters(ifilt)%Ftype      = FTYPE_GT
+                  Args%Filters(ifilt)%Fvar%vname = ArgList(3)
+                  Args%Filters(ifilt)%Fvar%fname = ArgList(4)
+        
+                  read(ArgList(5),  '(f15.7)') Args%Filters(ifilt)%x1
+                  Args%Filters(ifilt)%x2 = 0
+                  Args%Filters(ifilt)%y1 = 0
+                  Args%Filters(ifilt)%y2 = 0
+                  Args%Filters(ifilt)%z1 = 0
+                  Args%Filters(ifilt)%z2 = 0
+                endif
 
-          read(Fields(4),  '(f15.7)') Filters(NumFilters)%x1
-          Filters(NumFilters)%x2 = 0
-          Filters(NumFilters)%y1 = 0
-          Filters(NumFilters)%y2 = 0
-          Filters(NumFilters)%z1 = 0
-          Filters(NumFilters)%z2 = 0
-        endif
-      !************
-      !* LE
-      !************
-      else if (Fields(1) .eq. 'le') then
-        NumFilters = NumFilters + 1
+              case ('le')
+                if (Nfields .lt. 5) then
+                  write (*,*) 'ERROR: not enough arguments to fully specify the le filter'
+                  BadArgs = .true.
+                else
+                  ! have enough args
+                  Args%Filters(ifilt)%Fname      = ArgList(2)
+                  Args%Filters(ifilt)%Ftype      = FTYPE_LE
+                  Args%Filters(ifilt)%Fvar%vname = ArgList(3)
+                  Args%Filters(ifilt)%Fvar%fname = ArgList(4)
+        
+                  read(ArgList(5),  '(f15.7)') Args%Filters(ifilt)%x1
+                  Args%Filters(ifilt)%x2 = 0
+                  Args%Filters(ifilt)%y1 = 0
+                  Args%Filters(ifilt)%y2 = 0
+                  Args%Filters(ifilt)%z1 = 0
+                  Args%Filters(ifilt)%z2 = 0
+                endif
 
-        if (Nfld .lt. 4) then
-          write (*,*) 'ERROR: not enough arguments to fully specify the le filter'
-          BadArgs = .true.
-        else
-          ! have enough args
-          Filters(NumFilters)%Fname    = Fields(1)
-          Filters(NumFilters)%Ftype    = FTYPE_LE
-          Filters(NumFilters)%Vname    = Fields(2)
-          Filters(NumFilters)%Vfprefix = Fields(3)
+              case ('lt')
+                if (Nfields .lt. 5) then
+                  write (*,*) 'ERROR: not enough arguments to fully specify the lt filter'
+                  BadArgs = .true.
+                else
+                  ! have enough args
+                  Args%Filters(ifilt)%Fname      = ArgList(2)
+                  Args%Filters(ifilt)%Ftype      = FTYPE_LT
+                  Args%Filters(ifilt)%Fvar%vname = ArgList(3)
+                  Args%Filters(ifilt)%Fvar%fname = ArgList(4)
+        
+                  read(ArgList(5),  '(f15.7)') Args%Filters(ifilt)%x1
+                  Args%Filters(ifilt)%x2 = 0
+                  Args%Filters(ifilt)%y1 = 0
+                  Args%Filters(ifilt)%y2 = 0
+                  Args%Filters(ifilt)%z1 = 0
+                  Args%Filters(ifilt)%z2 = 0
+                endif
 
-          read(Fields(4),  '(f15.7)') Filters(NumFilters)%x1
-          Filters(NumFilters)%x2 = 0
-          Filters(NumFilters)%y1 = 0
-          Filters(NumFilters)%y2 = 0
-          Filters(NumFilters)%z1 = 0
-          Filters(NumFilters)%z2 = 0
-        endif
-      !************
-      !* LT
-      !************
-      else if (Fields(1) .eq. 'lt') then
-        NumFilters = NumFilters + 1
+              case ('range')
+                if (Nfields .lt. 6) then
+                  write (*,*) 'ERROR: not enough arguments to fully specify the range filter'
+                  BadArgs = .true.
+                else
+                  ! have enough args
+                  Args%Filters(ifilt)%Fname      = ArgList(2)
+                  Args%Filters(ifilt)%Ftype      = FTYPE_RANGE
+                  Args%Filters(ifilt)%Fvar%vname = ArgList(3)
+                  Args%Filters(ifilt)%Fvar%fname = ArgList(4)
+        
+                  read(ArgList(5),  '(f15.7)') Args%Filters(ifilt)%x1
+                  read(ArgList(6),  '(f15.7)') Args%Filters(ifilt)%x2
+                  Args%Filters(ifilt)%y1 = 0
+                  Args%Filters(ifilt)%y2 = 0
+                  Args%Filters(ifilt)%z1 = 0
+                  Args%Filters(ifilt)%z2 = 0
+                endif
 
-        if (Nfld .lt. 4) then
-          write (*,*) 'ERROR: not enough arguments to fully specify the lt filter'
-          BadArgs = .true.
-        else
-          ! have enough args
-          Filters(NumFilters)%Fname    = Fields(1)
-          Filters(NumFilters)%Ftype    = FTYPE_LT
-          Filters(NumFilters)%Vname    = Fields(2)
-          Filters(NumFilters)%Vfprefix = Fields(3)
+              case ('abs_range')
+                if (Nfields .lt. 6) then
+                  write (*,*) 'ERROR: not enough arguments to fully specify the abs_range filter'
+                  BadArgs = .true.
+                else
+                  ! have enough args
+                  Args%Filters(ifilt)%Fname      = ArgList(2)
+                  Args%Filters(ifilt)%Ftype      = FTYPE_ABS_RANGE
+                  Args%Filters(ifilt)%Fvar%vname = ArgList(3)
+                  Args%Filters(ifilt)%Fvar%fname = ArgList(4)
+        
+                  read(ArgList(5),  '(f15.7)') Args%Filters(ifilt)%x1
+                  read(ArgList(6),  '(f15.7)') Args%Filters(ifilt)%x2
+                  Args%Filters(ifilt)%y1 = 0
+                  Args%Filters(ifilt)%y2 = 0
+                  Args%Filters(ifilt)%z1 = 0
+                  Args%Filters(ifilt)%z2 = 0
+                endif
 
-          read(Fields(4),  '(f15.7)') Filters(NumFilters)%x1
-          Filters(NumFilters)%x2 = 0
-          Filters(NumFilters)%y1 = 0
-          Filters(NumFilters)%y2 = 0
-          Filters(NumFilters)%z1 = 0
-          Filters(NumFilters)%z2 = 0
-        endif
-      !************
-      !* RANGE
-      !************
-      else if (Fields(1) .eq. 'range') then
-        NumFilters = NumFilters + 1
+              case ('up')
+                if (Nfields .lt. 5) then
+                  write (*,*) 'ERROR: not enough arguments to fully specify the updraft filter'
+                  BadArgs = .true.
+                else
+                  ! have enough args
+                  Args%Filters(ifilt)%Fname      = ArgList(2)
+                  Args%Filters(ifilt)%Ftype      = FTYPE_UP
+                  Args%Filters(ifilt)%Fvar%vname = ArgList(3)
+                  Args%Filters(ifilt)%Fvar%fname = ArgList(4)
+        
+                  read(ArgList(5), '(f15.7)') Args%Filters(ifilt)%x1
+                  Args%Filters(ifilt)%x2 = 0
+                  Args%Filters(ifilt)%y1 = 0
+                  Args%Filters(ifilt)%y2 = 0
+                  Args%Filters(ifilt)%z1 = 0
+                  Args%Filters(ifilt)%z2 = 0
+                endif
 
-        if (Nfld .lt. 5) then
-          write (*,*) 'ERROR: not enough arguments to fully specify the range filter'
-          BadArgs = .true.
-        else
-          ! have enough args
-          Filters(NumFilters)%Fname    = Fields(1)
-          Filters(NumFilters)%Ftype    = FTYPE_RANGE
-          Filters(NumFilters)%Vname    = Fields(2)
-          Filters(NumFilters)%Vfprefix = Fields(3)
+              case ('dn')
+                if (Nfields .lt. 5) then
+                  write (*,*) 'ERROR: not enough arguments to fully specify the downdraft filter'
+                  BadArgs = .true.
+                else
+                  ! have enough args
+                  Args%Filters(ifilt)%Fname      = ArgList(2)
+                  Args%Filters(ifilt)%Ftype      = FTYPE_DN
+                  Args%Filters(ifilt)%Fvar%vname = ArgList(3)
+                  Args%Filters(ifilt)%Fvar%fname = ArgList(4)
+        
+                  read(ArgList(5), '(f15.7)') Args%Filters(ifilt)%x1
+                  Args%Filters(ifilt)%x2 = 0
+                  Args%Filters(ifilt)%y1 = 0
+                  Args%Filters(ifilt)%y2 = 0
+                  Args%Filters(ifilt)%z1 = 0
+                  Args%Filters(ifilt)%z2 = 0
+                endif
 
-          read(Fields(4),  '(f15.7)') Filters(NumFilters)%x1
-          read(Fields(5),  '(f15.7)') Filters(NumFilters)%x2
-          Filters(NumFilters)%y1 = 0
-          Filters(NumFilters)%y2 = 0
-          Filters(NumFilters)%z1 = 0
-          Filters(NumFilters)%z2 = 0
-        endif
-      !************
-      !* ABS_RANGE
-      !************
-      else if (Fields(1) .eq. 'abs_range') then
-        NumFilters = NumFilters + 1
+              case ('up_dn')
+                if (Nfields .lt. 6) then
+                  write (*,*) 'ERROR: not enough arguments to fully specify the updraft/downdraft filter'
+                  BadArgs = .true.
+                else
+                  ! have enough args
+                  Args%Filters(ifilt)%Fname      = ArgList(2)
+                  Args%Filters(ifilt)%Ftype      = FTYPE_UP_DN
+                  Args%Filters(ifilt)%Fvar%vname = ArgList(3)
+                  Args%Filters(ifilt)%Fvar%fname = ArgList(4)
+        
+                  read(ArgList(5), '(f15.7)') Args%Filters(ifilt)%x1
+                  read(ArgList(6), '(f15.7)') Args%Filters(ifilt)%x2
+                  Args%Filters(ifilt)%y1 = 0
+                  Args%Filters(ifilt)%y2 = 0
+                  Args%Filters(ifilt)%z1 = 0
+                  Args%Filters(ifilt)%z2 = 0
+                endif
 
-        if (Nfld .lt. 5) then
-          write (*,*) 'ERROR: not enough arguments to fully specify the abs_range filter'
-          BadArgs = .true.
-        else
-          ! have enough args
-          Filters(NumFilters)%Fname    = Fields(1)
-          Filters(NumFilters)%Ftype    = FTYPE_ABS_RANGE
-          Filters(NumFilters)%Vname    = Fields(2)
-          Filters(NumFilters)%Vfprefix = Fields(3)
+              case default
+                write (*,*) 'ERROR: <ftype>, ', trim(ArgList(2)), ', must be one of:'
+                write (*,*) '          cylvol'
+                write (*,*) '          ge'
+                write (*,*) '          gt'
+                write (*,*) '          le'
+                write (*,*) '          lt'
+                write (*,*) '          range'
+                write (*,*) '          abs_range'
+                write (*,*) '          up'
+                write (*,*) '          dn'
+                write (*,*) '          up_dn'
+                write (*,*) ''
+                BadArgs = .true.
+            endselect
 
-          read(Fields(4),  '(f15.7)') Filters(NumFilters)%x1
-          read(Fields(5),  '(f15.7)') Filters(NumFilters)%x2
-          Filters(NumFilters)%y1 = 0
-          Filters(NumFilters)%y2 = 0
-          Filters(NumFilters)%z1 = 0
-          Filters(NumFilters)%z2 = 0
-        endif
-      else if (Fields(1) .eq. 'up') then
-        NumFilters = NumFilters + 1
+          case default
+            write(*,*) 'ERROR: unknown spec type: ', trim(ArgList(1))
+            write(*,*) 'ERROR:   must use one of "out" or "filter"'
+            write(*,*) ''
+            BadArgs = .true.
+        endselect
 
-        if (Nfld .lt. 4) then
-          write (*,*) 'ERROR: not enough arguments to fully specify the updraft filter'
-          BadArgs = .true.
-        else
-          ! have enough args
-          Filters(NumFilters)%Fname    = Fields(1)
-          Filters(NumFilters)%Ftype    = FTYPE_UP
-          Filters(NumFilters)%Vname    = Fields(2)
-          Filters(NumFilters)%Vfprefix = Fields(3)
-
-          read(Fields(4), '(f15.7)') Filters(NumFilters)%x1
-          Filters(NumFilters)%x2 = 0
-          Filters(NumFilters)%y1 = 0
-          Filters(NumFilters)%y2 = 0
-          Filters(NumFilters)%z1 = 0
-          Filters(NumFilters)%z2 = 0
-        endif
-      else if (Fields(1) .eq. 'dn') then
-        NumFilters = NumFilters + 1
-
-        if (Nfld .lt. 4) then
-          write (*,*) 'ERROR: not enough arguments to fully specify the downdraft filter'
-          BadArgs = .true.
-        else
-          ! have enough args
-          Filters(NumFilters)%Fname    = Fields(1)
-          Filters(NumFilters)%Ftype    = FTYPE_DN
-          Filters(NumFilters)%Vname    = Fields(2)
-          Filters(NumFilters)%Vfprefix = Fields(3)
-
-          read(Fields(4), '(f15.7)') Filters(NumFilters)%x1
-          Filters(NumFilters)%x2 = 0
-          Filters(NumFilters)%y1 = 0
-          Filters(NumFilters)%y2 = 0
-          Filters(NumFilters)%z1 = 0
-          Filters(NumFilters)%z2 = 0
-        endif
-      else if (Fields(1) .eq. 'up_dn') then
-        NumFilters = NumFilters + 1
-
-        if (Nfld .lt. 5) then
-          write (*,*) 'ERROR: not enough arguments to fully specify the updraft/downdraft filter'
-          BadArgs = .true.
-        else
-          ! have enough args
-          Filters(NumFilters)%Fname    = Fields(1)
-          Filters(NumFilters)%Ftype    = FTYPE_UP_DN
-          Filters(NumFilters)%Vname    = Fields(2)
-          Filters(NumFilters)%Vfprefix = Fields(3)
-
-          read(Fields(4), '(f15.7)') Filters(NumFilters)%x1
-          read(Fields(5), '(f15.7)') Filters(NumFilters)%x2
-          Filters(NumFilters)%y1 = 0
-          Filters(NumFilters)%y2 = 0
-          Filters(NumFilters)%z1 = 0
-          Filters(NumFilters)%z2 = 0
-        endif
-      else
-        write (*,*) 'ERROR: <ftype>, ', trim(Fields(1)), ', must be one of:'
-        write (*,*) '          cylvol'
-        write (*,*) '          ge'
-        write (*,*) '          gt'
-        write (*,*) '          le'
-        write (*,*) '          lt'
-        write (*,*) '          range'
-        write (*,*) '          abs_range'
-        write (*,*) '          up'
-        write (*,*) '          dn'
-        write (*,*) '          up_dn'
-        write (*,*) ''
-        BadArgs = .true.
-      endif
-    endif
+    endselect
   enddo
-  
-  if (NumFilters .eq. 0) then
+
+  Args%Nfilters = ifilt
+
+  if (Args%Nfilters .eq. 0) then
     write (*,*) 'ERROR: must specify at least one <filter_spec>'
     write (*,*) ''
     BadArgs = .true.
   endif
 
   if (BadArgs) then
-    write (*,*) 'USAGE: diag_filter <in_dir> <in_suffix> <out_file> <comb_sense> <filter_spec> [<filter_spec>...]'
-    write (*,*) '        <in_dir>: directory containing input files'
-    write (*,*) '        <in_suffix>: suffix to tag onto the end of input file names'
-    write (*,*) '           Note: input file names become: <in_dir>/<var_name><in_suffix>'
-    write (*,*) '        <out_file>: output hdf5 file name'
-    write (*,*) '        <comb_sense>: one of "and", "or"'
-    write (*,*) '            and: multiple filter specs are and-ed together' 
-    write (*,*) '            or: multiple filter specs are or-ed together' 
-    write (*,*) '        <filter_spec>: <ftype>:<vname>:<vfprefix>:<x1>:<x2>:<y1>:<y2>:<z1>:<z2>'
+    write (*,*) 'USAGE: diag_filter [-c <cobm_sense>]  <out_file> <filter_spec> [<filter_spec>...]'
+    write (*,*) '        -c: combine filters using <comb_sense> logical operator'
+    write (*,*) '            <comb_sense> must be one of "and", "or"'
+    write (*,*) '              and: multiple filter specs are and-ed together (default)' 
+    write (*,*) '              or: multiple filter specs are or-ed together' 
+    write (*,*) '        <filter_spec>: filter:<ftype>:<vname>:<vfile>:<x1>:<x2>:<y1>:<y2>:<z1>:<z2>'
     write (*,*) ''
     write (*,*) '            <ftype>:'
     write (*,*) '                gt: select point if value >  <x1>'
@@ -954,10 +944,14 @@ contains
     write (*,*) '                   <z2> -> maximum height (in m)'
     write (*,*) ''
     write (*,*) '            <vname>: name of variable inside HDF5 file'
-    write (*,*) '            <vfprefix>: file name prefix (goes with <in_suffix> to form the whole file name)' 
+    write (*,*) '            <vfile>: complete path to file containing variable' 
     write (*,*) ''
-    write (*,*) '        Note that more than one <filter_spec> can be specified. When this is done the data selection'
-    write (*,*) '        becomes the intersection or union of all the filter specs depending on the <comb_sense> spec.'
+    write (*,*) '          Note that more than one <filter_spec> can be specified. When this is done the data selection'
+    write (*,*) '          becomes the intersection or union of all the filter specs depending on the <comb_sense> spec.'
+    write (*,*) ''
+    write (*,*) '        <out_file>: out:<file_name>:<variable_name>'
+    write (*,*) '          <file_name> is the complete path to the file'
+    write (*,*) '          <variable_name> is the name of the variable inside the file'
     write (*,*) ''
 
     stop
