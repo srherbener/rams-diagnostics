@@ -27,6 +27,7 @@ SCRIPTS = \
           $(DEST)/CreateDimensionsXyzt.m \
           $(DEST)/AttachDimensionsXyzt.m \
           $(DEST)/NotateDimensionsXyzt.m \
+          $(DEST)/NotateVariableXyzt.m \
           $(DEST)/figmerge.m \
           $(DEST)/gridLegend.m \
           $(DEST)/columnlegend.m \
