@@ -42,7 +42,7 @@ function [ ] = Gen2dHovmoller()
 %    { 'HDF5/RCE_S302/HDF5/vint_vapor-RCE_S302-AC-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE_S302' 'midy' 1 'hov_precip_water' 'precip_water' }
 
     { 'HDF5/RCE_S300_UB5/HDF5/vint_vapor-RCE_S300_UB5-AC-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE_S300_UB5' 'midy' 1 'hov_precip_water' 'precip_water' }
-    { 'HDF5/RCE_S300_SM_PARM/HDF5/vint_vapor-RCE_S300_SM_PARM-AC-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE_S300_SM_PARM' 'midy' 1 'hov_precip_water' 'precip_water' }
+%    { 'HDF5/RCE_S300_SM_PARM/HDF5/vint_vapor-RCE_S300_SM_PARM-AC-2012-01-01-000000-g1.h5' 'vertint_vapor' 'RCE_S300_SM_PARM' 'midy' 1 'hov_precip_water' 'precip_water' }
     };
   Nset = length(VarSets);
 
