@@ -34,11 +34,11 @@ function [ ] = GenStormXsections()
     { 'DIAGS/hist_meas_theta_<CASE>.h5' '/ps_theta'  '/ps_theta' }
     { 'DIAGS/hist_meas_theta_<CASE>.h5' '/s_theta'  '/s_theta' }
 
-    { 'DIAGS/hist_meas_tempc_<CASE>.h5' '/ps_tempc'  '/ps_tempc' }
-    { 'DIAGS/hist_meas_tempc_<CASE>.h5' '/s_tempc'  '/s_tempc' }
+    { 'DIAGS/hist_meas_az_tempc_<CASE>.h5' '/ps_tempc'  '/ps_tempc' }
+    { 'DIAGS/hist_meas_az_tempc_<CASE>.h5' '/s_tempc'  '/s_tempc' }
 
-    { 'DIAGS/hist_meas_pcprate_<CASE>.h5' '/ps_pcprate' '/ps_pcprate' }
-    { 'DIAGS/hist_meas_pcprate_<CASE>.h5' '/s_pcprate' '/s_pcprate' }
+    { 'DIAGS/hist_meas_az_pcprate_<CASE>.h5' '/ps_pcprate' '/ps_pcprate' }
+    { 'DIAGS/hist_meas_az_pcprate_<CASE>.h5' '/s_pcprate' '/s_pcprate' }
 
     { 'DIAGS/hist_meas_vint_cond_<CASE>.h5' '/ps_vint_cond' '/ps_vint_cond' }
     { 'DIAGS/hist_meas_vint_cond_<CASE>.h5' '/s_vint_cond' '/s_vint_cond' }
@@ -46,14 +46,14 @@ function [ ] = GenStormXsections()
     { 'DIAGS/hist_meas_vapor_<CASE>.h5' '/ps_vapor' '/ps_vapor' }
     { 'DIAGS/hist_meas_vapor_<CASE>.h5' '/s_vapor' '/s_vapor' }
 
-    { 'DIAGS/hist_meas_dust_<CASE>.h5' '/ps_d1_mass' '/ps_d1_mass' }
-    { 'DIAGS/hist_meas_dust_<CASE>.h5' '/ps_d1_num'  '/ps_d1_num'  }
-    { 'DIAGS/hist_meas_dust_<CASE>.h5' '/ps_d2_mass' '/ps_d2_mass' }
-    { 'DIAGS/hist_meas_dust_<CASE>.h5' '/ps_d2_num'  '/ps_d2_num'  }
-    { 'DIAGS/hist_meas_dust_<CASE>.h5' '/s_d1_mass' '/s_d1_mass' }
-    { 'DIAGS/hist_meas_dust_<CASE>.h5' '/s_d1_num'  '/s_d1_num'  }
-    { 'DIAGS/hist_meas_dust_<CASE>.h5' '/s_d2_mass' '/s_d2_mass' }
-    { 'DIAGS/hist_meas_dust_<CASE>.h5' '/s_d2_num'  '/s_d2_num'  }
+    { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/ps_d1_mass' '/ps_d1_mass' }
+    { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/ps_d1_num'  '/ps_d1_num'  }
+    { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/ps_d2_mass' '/ps_d2_mass' }
+    { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/ps_d2_num'  '/ps_d2_num'  }
+    { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/s_d1_mass' '/s_d1_mass' }
+    { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/s_d1_num'  '/s_d1_num'  }
+    { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/s_d2_mass' '/s_d2_mass' }
+    { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/s_d2_num'  '/s_d2_num'  }
 
     { 'DIAGS/hist_meas_cloud_<CASE>.h5' '/ps_cloud'      '/ps_cloud' }
     { 'DIAGS/hist_meas_cloud_<CASE>.h5' '/s_cloud'       '/s_cloud' }
