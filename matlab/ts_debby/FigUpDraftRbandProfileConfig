@@ -113,7 +113,7 @@ End
 PlotAxes: UpDraftCntlPreSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - updraft, m/s
-  UpDraft m@s^-^1 -0.01 0.4 linear [_] {_}
+  UpDraft m@s^-^1 -0.01 0.2 linear [_] {_}
   # y axis - height, km
   Height km 0 20 linear [_] {_}
 End
@@ -121,7 +121,7 @@ End
 PlotAxes: UpDraftDiffPreSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - updraft, m/s
-  UpDraft m@s^-^1 -0.2 0.1 linear [_] {_}
+  UpDraft m@s^-^1 -0.1 0.05 linear [_] {_}
   # y axis - height, km
   Height km 0 20 linear [_] {_}
 End
@@ -129,7 +129,7 @@ End
 PlotAxes: UpDraftCntlSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - updraft, m/s
-  UpDraft m@s^-^1 -0.01 0.4 linear [_] {_}
+  UpDraft m@s^-^1 -0.01 0.2 linear [_] {_}
   # y axis - height, km
   Height km 0 20 linear [_] {_}
 End
@@ -137,7 +137,7 @@ End
 PlotAxes: UpDraftDiffSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - updraft, m/s
-  UpDraft m@s^-^1 -0.2 0.1 linear [_] {_}
+  UpDraft m@s^-^1 -0.1 0.05 linear [_] {_}
   # y axis - height, km
   Height km 0 20 linear [_] {_}
 End

@@ -32,7 +32,7 @@ FigPanel: LhvHeatDiffPreSalCorePanel
   LhvHeatDiffPreSalCoreAxes 1 1
   none 5
   Pre@SAL@Core@(diffs)
-  NorthWest 12
+  NorthEast 12
 End
 
 FigPanel: LhvHeatCntlSalCorePanel
@@ -48,25 +48,33 @@ FigPanel: LhvHeatDiffSalCorePanel
   LhvHeatDiffSalCoreAxes 1 1
   none 5
   SAL@Core@(diffs)
-  NorthWest 12
+  NorthEast 12
 End
 
 ############ PLOT SETS #################
-PlotSet: LhvHeatCntlPreSalCorePset line 1
-  LhvHeatPreSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: LhvHeatCntlPreSalCorePset line 4
+  LhvHeatPreSalCoreLine TSD_SAL_DUST SD  2 black   - 0
+  LhvHeatPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhvHeatPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhvHeatPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: LhvHeatDiffPreSalCorePset line 3
+PlotSet: LhvHeatDiffPreSalCorePset line 4
+  LhvHeatDiffPreSalCoreLine TSD_SAL_DUST SD  2 black   - 0
   LhvHeatDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
   LhvHeatDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
   LhvHeatDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: LhvHeatCntlSalCorePset line 1
-  LhvHeatSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: LhvHeatCntlSalCorePset line 4
+  LhvHeatSalCoreLine TSD_SAL_DUST SD  2 black   - 0
+  LhvHeatSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhvHeatSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhvHeatSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: LhvHeatDiffSalCorePset line 3
+PlotSet: LhvHeatDiffSalCorePset line 4
+  LhvHeatDiffSalCoreLine TSD_SAL_DUST SD  2 black   - 0
   LhvHeatDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
   LhvHeatDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
   LhvHeatDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
@@ -117,7 +125,7 @@ End
 PlotAxes: LhvHeatDiffPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - lhv_heat mix ratio, K/h
-  LhvHeat K@h^-^1 -30 15 linear [_] {_}
+  LhvHeat K@h^-^1 -15 30 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End
@@ -133,7 +141,7 @@ End
 PlotAxes: LhvHeatDiffSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - lhv_heat mix ratio, K/h
-  LhvHeat K@h^-^1 -30 15 linear [_] {_}
+  LhvHeat K@h^-^1 -15 30 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End

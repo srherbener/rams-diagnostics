@@ -52,21 +52,29 @@ FigPanel: LhvCoolDiffSalCorePanel
 End
 
 ############ PLOT SETS #################
-PlotSet: LhvCoolCntlPreSalCorePset line 1
-  LhvCoolPreSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: LhvCoolCntlPreSalCorePset line 4
+  LhvCoolPreSalCoreLine TSD_SAL_DUST SD  2 black   - 0
+  LhvCoolPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhvCoolPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhvCoolPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: LhvCoolDiffPreSalCorePset line 3
+PlotSet: LhvCoolDiffPreSalCorePset line 4
+  LhvCoolDiffPreSalCoreLine TSD_SAL_DUST SD  2 black   - 0
   LhvCoolDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
   LhvCoolDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
   LhvCoolDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: LhvCoolCntlSalCorePset line 1
-  LhvCoolSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: LhvCoolCntlSalCorePset line 4
+  LhvCoolSalCoreLine TSD_SAL_DUST SD  2 black   - 0
+  LhvCoolSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhvCoolSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhvCoolSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: LhvCoolDiffSalCorePset line 3
+PlotSet: LhvCoolDiffSalCorePset line 4
+  LhvCoolDiffSalCoreLine TSD_SAL_DUST SD  2 black   - 0
   LhvCoolDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
   LhvCoolDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
   LhvCoolDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
@@ -117,7 +125,7 @@ End
 PlotAxes: LhvCoolDiffPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - lhv_cool mix ratio, K/h
-  LhvCool K@h^-^1 -6 6 linear [_] {_}
+  LhvCool K@h^-^1 -7 4 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End
@@ -133,7 +141,7 @@ End
 PlotAxes: LhvCoolDiffSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - lhv_cool mix ratio, K/h
-  LhvCool K@h^-^1 -6 6 linear [_] {_}
+  LhvCool K@h^-^1 -8 3 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End

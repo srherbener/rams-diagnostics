@@ -32,7 +32,7 @@ FigPanel: LhfCoolDiffPreSalCorePanel
   LhfCoolDiffPreSalCoreAxes 1 1
   none 5
   Pre@SAL@Core@(diffs)
-  NorthWest 12
+  NorthEast 12
 End
 
 FigPanel: LhfCoolCntlSalCorePanel
@@ -52,21 +52,29 @@ FigPanel: LhfCoolDiffSalCorePanel
 End
 
 ############ PLOT SETS #################
-PlotSet: LhfCoolCntlPreSalCorePset line 1
-  LhfCoolPreSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: LhfCoolCntlPreSalCorePset line 4
+  LhfCoolPreSalCoreLine TSD_SAL_DUST SD  2 black   - 0
+  LhfCoolPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhfCoolPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhfCoolPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: LhfCoolDiffPreSalCorePset line 3
+PlotSet: LhfCoolDiffPreSalCorePset line 4
+  LhfCoolDiffPreSalCoreLine TSD_SAL_DUST SD  2 black   - 0
   LhfCoolDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
   LhfCoolDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
   LhfCoolDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: LhfCoolCntlSalCorePset line 1
-  LhfCoolSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: LhfCoolCntlSalCorePset line 4
+  LhfCoolSalCoreLine TSD_SAL_DUST SD  2 black   - 0
+  LhfCoolSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhfCoolSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhfCoolSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: LhfCoolDiffSalCorePset line 3
+PlotSet: LhfCoolDiffSalCorePset line 4
+  LhfCoolDiffSalCoreLine TSD_SAL_DUST SD  2 black   - 0
   LhfCoolDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
   LhfCoolDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
   LhfCoolDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
@@ -109,7 +117,7 @@ End
 PlotAxes: LhfCoolCntlPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - lhf_cool mix ratio, K/h
-  LhfCool K@h^-^1 -1.5 0.1 linear [_] {_}
+  LhfCool K@h^-^1 -1.0 0.1 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End
@@ -117,7 +125,7 @@ End
 PlotAxes: LhfCoolDiffPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - lhf_cool mix ratio, K/h
-  LhfCool K@h^-^1 -1 0.5 linear [_] {_}
+  LhfCool K@h^-^1 -0.3 0.8 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End
@@ -125,7 +133,7 @@ End
 PlotAxes: LhfCoolCntlSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - lhf_cool mix ratio, K/h
-  LhfCool K@h^-^1 -1.5 0.1 linear [_] {_}
+  LhfCool K@h^-^1 -1.0 0.1 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End
@@ -133,7 +141,7 @@ End
 PlotAxes: LhfCoolDiffSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - lhf_cool mix ratio, K/h
-  LhfCool K@h^-^1 -1 0.5 linear [_] {_}
+  LhfCool K@h^-^1 -0.8 0.3 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End

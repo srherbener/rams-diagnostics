@@ -24,7 +24,7 @@ FigPanel: LhfHeatCntlPreSalCorePanel
   LhfHeatCntlPreSalCoreAxes 1 1
   none 5
   Pre@SAL@Core 
-  NorthEast 12
+  SouthEast 12
 End
 
 FigPanel: LhfHeatDiffPreSalCorePanel
@@ -40,7 +40,7 @@ FigPanel: LhfHeatCntlSalCorePanel
   LhfHeatCntlSalCoreAxes 1 1
   none 5
   SAL@Core 
-  NorthEast 12
+  SouthEast 12
 End
 
 FigPanel: LhfHeatDiffSalCorePanel
@@ -52,21 +52,29 @@ FigPanel: LhfHeatDiffSalCorePanel
 End
 
 ############ PLOT SETS #################
-PlotSet: LhfHeatCntlPreSalCorePset line 1
-  LhfHeatPreSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: LhfHeatCntlPreSalCorePset line 4
+  LhfHeatPreSalCoreLine TSD_SAL_DUST SD  2 black   - 0
+  LhfHeatPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhfHeatPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhfHeatPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: LhfHeatDiffPreSalCorePset line 3
+PlotSet: LhfHeatDiffPreSalCorePset line 4
+  LhfHeatDiffPreSalCoreLine TSD_SAL_DUST SD  2 black   - 0
   LhfHeatDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
   LhfHeatDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
   LhfHeatDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: LhfHeatCntlSalCorePset line 1
-  LhfHeatSalCoreLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: LhfHeatCntlSalCorePset line 4
+  LhfHeatSalCoreLine TSD_SAL_DUST SD  2 black   - 0
+  LhfHeatSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhfHeatSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhfHeatSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: LhfHeatDiffSalCorePset line 3
+PlotSet: LhfHeatDiffSalCorePset line 4
+  LhfHeatDiffSalCoreLine TSD_SAL_DUST SD  2 black   - 0
   LhfHeatDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
   LhfHeatDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
   LhfHeatDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
