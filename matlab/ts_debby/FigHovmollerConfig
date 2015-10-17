@@ -3,44 +3,74 @@
 #
 
 ######### FIGURES ###################
-Figure: PcprateHov 4
+#Figure: PcprateHov 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigPcprateHov.jpg
+#  PcprateHovSDPanel   1
+#  PcprateHovSNDPanel   2
+#  PcprateHovNSDPanel   3
+#  PcprateHovNSNDPanel   4
+#End 
+#
+#Figure: VintCondHov 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigVintCondHov.jpg
+#  VintCondHovSDPanel   1
+#  VintCondHovSNDPanel   2
+#  VintCondHovNSDPanel   3
+#  VintCondHovNSNDPanel   4
+#End 
+#
+#Figure: UpDraftCoreHov 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigUpDraftCoreHov.jpg
+#  UpDraftCoreHovSDPanel   1
+#  UpDraftCoreHovSNDPanel   2
+#  UpDraftCoreHovNSDPanel   3
+#  UpDraftCoreHovNSNDPanel   4
+#End 
+#
+#Figure: UpDraftRbandHov 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigUpDraftRbandHov.jpg
+#  UpDraftRbandHovSDPanel   1
+#  UpDraftRbandHovSNDPanel   2
+#  UpDraftRbandHovNSDPanel   3
+#  UpDraftRbandHovNSNDPanel   4
+#End 
+#
+#Figure: ThetaeSpathHov 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigThetaeSpathHov.jpg
+#  ThetaeSpathHovSDPanel   1
+#  ThetaeSpathHovSNDPanel   2
+#  ThetaeSpathHovNSDPanel   3
+#  ThetaeSpathHovNSNDPanel   4
+#End 
+
+Figure: D1NumSpathHov 4
   DummyCases
   [2_2]
-  Plots/FigPcprateHov.jpg
-  PcprateHovSDPanel   1
-  PcprateHovSNDPanel   2
-  PcprateHovNSDPanel   3
-  PcprateHovNSNDPanel   4
+  Plots/FigD1NumSpathHov.jpg
+  D1NumSpathHovSDPanel   1
+  D1NumSpathHovSNDPanel   2
+  D1NumSpathHovNSDPanel   3
+  D1NumSpathHovNSNDPanel   4
 End 
 
-Figure: VintCondHov 4
+Figure: D2NumSpathHov 4
   DummyCases
   [2_2]
-  Plots/FigVintCondHov.jpg
-  VintCondHovSDPanel   1
-  VintCondHovSNDPanel   2
-  VintCondHovNSDPanel   3
-  VintCondHovNSNDPanel   4
-End 
-
-Figure: UpDraftCoreHov 4
-  DummyCases
-  [2_2]
-  Plots/FigUpDraftCoreHov.jpg
-  UpDraftCoreHovSDPanel   1
-  UpDraftCoreHovSNDPanel   2
-  UpDraftCoreHovNSDPanel   3
-  UpDraftCoreHovNSNDPanel   4
-End 
-
-Figure: UpDraftRbandHov 4
-  DummyCases
-  [2_2]
-  Plots/FigUpDraftRbandHov.jpg
-  UpDraftRbandHovSDPanel   1
-  UpDraftRbandHovSNDPanel   2
-  UpDraftRbandHovNSDPanel   3
-  UpDraftRbandHovNSNDPanel   4
+  Plots/FigD2NumSpathHov.jpg
+  D2NumSpathHovSDPanel   1
+  D2NumSpathHovSNDPanel   2
+  D2NumSpathHovNSDPanel   3
+  D2NumSpathHovNSNDPanel   4
 End 
 
 ########### CASES ####################
@@ -53,7 +83,7 @@ FigPanel: PcprateHovSDPanel
   PcprateHovSDPset
   PcprateHovAxes 1 1
   none 5
-  SD
+  PR@SD
   none 12
 End
 
@@ -61,7 +91,7 @@ FigPanel: PcprateHovSNDPanel
   PcprateHovSNDPset
   PcprateHovAxes 1 1
   none 5
-  SND
+  PR@SND
   none 12
 End
 
@@ -69,7 +99,7 @@ FigPanel: PcprateHovNSDPanel
   PcprateHovNSDPset
   PcprateHovAxes 1 1
   none 5
-  NSD 
+  PR@NSD 
   none 12
 End
 
@@ -77,7 +107,7 @@ FigPanel: PcprateHovNSNDPanel
   PcprateHovNSNDPset
   PcprateHovAxes 1 1
   none 5
-  NSND 
+  PR@NSND 
   none 12
 End
 
@@ -85,7 +115,7 @@ FigPanel: VintCondHovSDPanel
   VintCondHovSDPset
   VintCondHovAxes 1 1
   none 5
-  SD
+  VintCond@SD
   none 12
 End
 
@@ -93,7 +123,7 @@ FigPanel: VintCondHovSNDPanel
   VintCondHovSNDPset
   VintCondHovAxes 1 1
   none 5
-  SND
+  VintCond@SND
   none 12
 End
 
@@ -101,7 +131,7 @@ FigPanel: VintCondHovNSDPanel
   VintCondHovNSDPset
   VintCondHovAxes 1 1
   none 5
-  NSD
+  VintCond@NSD
   none 12
 End
 
@@ -109,7 +139,7 @@ FigPanel: VintCondHovNSNDPanel
   VintCondHovNSNDPset
   VintCondHovAxes 1 1
   none 5
-  NSND
+  VintCond@NSND
   none 12
 End
 
@@ -117,7 +147,7 @@ FigPanel: UpDraftCoreHovSDPanel
   UpDraftCoreHovSDPset
   UpDraftCoreHovAxes 1 1
   none 5
-  SD@(CORE)
+  W_u_p@SD@(CORE)
   none 12
 End
 
@@ -125,7 +155,7 @@ FigPanel: UpDraftCoreHovSNDPanel
   UpDraftCoreHovSNDPset
   UpDraftCoreHovAxes 1 1
   none 5
-  SND@(CORE)
+  W_u_p@SND@(CORE)
   none 12
 End
 
@@ -133,7 +163,7 @@ FigPanel: UpDraftCoreHovNSDPanel
   UpDraftCoreHovNSDPset
   UpDraftCoreHovAxes 1 1
   none 5
-  NSD@(CORE)
+  W_u_p@NSD@(CORE)
   none 12
 End
 
@@ -141,7 +171,7 @@ FigPanel: UpDraftCoreHovNSNDPanel
   UpDraftCoreHovNSNDPset
   UpDraftCoreHovAxes 1 1
   none 5
-  NSND@(CORE)
+  W_u_p@NSND@(CORE)
   none 12
 End
 
@@ -149,7 +179,7 @@ FigPanel: UpDraftRbandHovSDPanel
   UpDraftRbandHovSDPset
   UpDraftRbandHovAxes 1 1
   none 5
-  SD@(RB)
+  W_u_p@SD@(RB)
   none 12
 End
 
@@ -157,7 +187,7 @@ FigPanel: UpDraftRbandHovSNDPanel
   UpDraftRbandHovSNDPset
   UpDraftRbandHovAxes 1 1
   none 5
-  SND@(RB)
+  W_u_p@SND@(RB)
   none 12
 End
 
@@ -165,7 +195,7 @@ FigPanel: UpDraftRbandHovNSDPanel
   UpDraftRbandHovNSDPset
   UpDraftRbandHovAxes 1 1
   none 5
-  NSD@(RB)
+  W_u_p@NSD@(RB)
   none 12
 End
 
@@ -173,7 +203,103 @@ FigPanel: UpDraftRbandHovNSNDPanel
   UpDraftRbandHovNSNDPset
   UpDraftRbandHovAxes 1 1
   none 5
-  NSND@(RB)
+  W_u_p@NSND@(RB)
+  none 12
+End
+
+FigPanel: ThetaeSpathHovSDPanel
+  ThetaeSpathHovSDPset
+  ThetaeSpathHovAxes 1 1
+  none 5
+  \theta_e@SD@(SPATH)
+  none 12
+End
+
+FigPanel: ThetaeSpathHovSNDPanel
+  ThetaeSpathHovSNDPset
+  ThetaeSpathHovAxes 1 1
+  none 5
+  \theta_e@SND@(SPATH)
+  none 12
+End
+
+FigPanel: ThetaeSpathHovNSDPanel
+  ThetaeSpathHovNSDPset
+  ThetaeSpathHovAxes 1 1
+  none 5
+  \theta_e@NSD@(SPATH)
+  none 12
+End
+
+FigPanel: ThetaeSpathHovNSNDPanel
+  ThetaeSpathHovNSNDPset
+  ThetaeSpathHovAxes 1 1
+  none 5
+  \theta_e@NSND@(SPATH)
+  none 12
+End
+
+FigPanel: D1NumSpathHovSDPanel
+  D1NumSpathHovSDPset
+  D1NumSpathHovAxes 1 1
+  none 5
+  N_d_1@SD@(SPATH)
+  none 12
+End
+
+FigPanel: D1NumSpathHovSNDPanel
+  D1NumSpathHovSNDPset
+  D1NumSpathHovAxes 1 1
+  none 5
+  N_d_1@SND@(SPATH)
+  none 12
+End
+
+FigPanel: D1NumSpathHovNSDPanel
+  D1NumSpathHovNSDPset
+  D1NumSpathHovAxes 1 1
+  none 5
+  N_d_1@NSD@(SPATH)
+  none 12
+End
+
+FigPanel: D1NumSpathHovNSNDPanel
+  D1NumSpathHovNSNDPset
+  D1NumSpathHovAxes 1 1
+  none 5
+  N_d_1@NSND@(SPATH)
+  none 12
+End
+
+FigPanel: D2NumSpathHovSDPanel
+  D2NumSpathHovSDPset
+  D2NumSpathHovAxes 1 1
+  none 5
+  N_d_2@SD@(SPATH)
+  none 12
+End
+
+FigPanel: D2NumSpathHovSNDPanel
+  D2NumSpathHovSNDPset
+  D2NumSpathHovAxes 1 1
+  none 5
+  N_d_2@SND@(SPATH)
+  none 12
+End
+
+FigPanel: D2NumSpathHovNSDPanel
+  D2NumSpathHovNSDPset
+  D2NumSpathHovAxes 1 1
+  none 5
+  N_d_2@NSD@(SPATH)
+  none 12
+End
+
+FigPanel: D2NumSpathHovNSNDPanel
+  D2NumSpathHovNSNDPset
+  D2NumSpathHovAxes 1 1
+  none 5
+  N_d_2@NSND@(SPATH)
   none 12
 End
 
@@ -242,41 +368,116 @@ PlotSet: UpDraftRbandHovNSNDPset contourf 1
   UpDraftRbandHovContour TSD_NONSAL_NODUST none  2 blue   - 0
 End
 
+PlotSet: ThetaeSpathHovSDPset contourf 1
+  ThetaeSpathHovContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: ThetaeSpathHovSNDPset contourf 1
+  ThetaeSpathHovContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: ThetaeSpathHovNSDPset contourf 1
+  ThetaeSpathHovContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: ThetaeSpathHovNSNDPset contourf 1
+  ThetaeSpathHovContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: D1NumSpathHovSDPset contourf 1
+  D1NumSpathHovContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: D1NumSpathHovSNDPset contourf 1
+  D1NumSpathHovContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: D1NumSpathHovNSDPset contourf 1
+  D1NumSpathHovContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: D1NumSpathHovNSNDPset contourf 1
+  D1NumSpathHovContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: D2NumSpathHovSDPset contourf 1
+  D2NumSpathHovContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: D2NumSpathHovSNDPset contourf 1
+  D2NumSpathHovContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: D2NumSpathHovNSDPset contourf 1
+  D2NumSpathHovContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: D2NumSpathHovNSNDPset contourf 1
+  D2NumSpathHovContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
 ############ PLOT DATA #################
 PlotData: PcprateHovContour 3
   # x data - radius, km
-  /x_coords DIAGS/hist_meas_pcprate_<CASE>.h5 @ 1e-3 0
+  /x_coords DIAGS/hist_meas_az_pcprate_<CASE>.h5 (1:34) 1e-3 0
   # y data - sim time in hours
-  /t_coords DIAGS/hist_meas_pcprate_<CASE>.h5 @ 2.7778e-4 -42
+  /t_coords DIAGS/hist_meas_az_pcprate_<CASE>.h5 @ 2.7778e-4 -42
   # z data -  precip rate, mm/h
-  /pcprate_ts DIAGS/hist_meas_pcprate_<CASE>.h5 @ 1 0
+  /pcprate_ts DIAGS/hist_meas_az_pcprate_<CASE>.h5 (1:34,:) 1 0
 End
   
 PlotData: VintCondHovContour 3
   # x data - radius, km
-  /x_coords DIAGS/hist_meas_vint_cond_<CASE>.h5 @ 1e-3 0
+  /x_coords DIAGS/hist_meas_vint_cond_<CASE>.h5 (1:34) 1e-3 0
   # y data - sim time in hours
   /t_coords DIAGS/hist_meas_vint_cond_<CASE>.h5 @ 2.7778e-4 -42
   # z data -  vertically integrated condensate, mm
-  /vint_cond_ts DIAGS/hist_meas_vint_cond_<CASE>.h5 @ 1 0
+  /vint_cond_ts DIAGS/hist_meas_vint_cond_<CASE>.h5 (1:34,:) 1 0
 End
   
 PlotData: UpDraftCoreHovContour 3
   # x data - sim time in hours
   /t_coords DIAGS/hist_meas_w_<CASE>.h5 @ 2.7778e-4 -42
   # y data - height, km
-  /z_coords DIAGS/hist_meas_w_<CASE>.h5 @ 1e-3 0
+  /z_coords DIAGS/hist_meas_w_<CASE>.h5 (2:44) 1e-3 0
   # z data -  updraft speed, m/s
-  /core_updraft_ts DIAGS/hist_meas_w_<CASE>.h5 @ 1 0
+  /core_updraft_ts DIAGS/hist_meas_w_<CASE>.h5 (2:44,:) 1 0
 End
   
 PlotData: UpDraftRbandHovContour 3
   # x data - sim time in hours
   /t_coords DIAGS/hist_meas_w_<CASE>.h5 @ 2.7778e-4 -42
   # y data - height, km
-  /z_coords DIAGS/hist_meas_w_<CASE>.h5 @ 1e-3 0
+  /z_coords DIAGS/hist_meas_w_<CASE>.h5 (2:44) 1e-3 0
   # z data -  updraft speed, m/s
-  /rb_updraft_ts DIAGS/hist_meas_w_<CASE>.h5 @ 1 0
+  /rb_updraft_ts DIAGS/hist_meas_w_<CASE>.h5 (2:44,:) 1 0
+End
+  
+PlotData: ThetaeSpathHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hist_meas_ts_theta_e_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hist_meas_ts_theta_e_<CASE>.h5 (2:39) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_theta_e_ts DIAGS/hist_meas_ts_theta_e_<CASE>.h5 (2:39,:) 1 0
+End
+  
+PlotData: D1NumSpathHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:44) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_d1_num_ts DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:44,:) 1 0
+End
+  
+PlotData: D2NumSpathHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:44) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_d2_num_ts DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:44,:) 1 0
 End
   
 ############ PLOT AXES #################
@@ -303,7 +504,7 @@ End
 PlotAxes: UpDraftCoreHovAxes 3
   14 2 [0.025_0.025]
   # x axis - utc time
-  Sim@Time h 0 60 linear [_] {_}
+  Sim@Time h 0 60 linear [10_30_50] {_}
   # y axis - height
   Height km 0 15 linear [_] {_}
   # z axis - updraft speed, m/s
@@ -313,10 +514,40 @@ End
 PlotAxes: UpDraftRbandHovAxes 3
   14 2 [0.025_0.025]
   # x axis - utc time
-  Sim@Time h 0 60 linear [_] {_}
+  Sim@Time h 0 60 linear [10_30_50] {_}
   # y axis - height
   Height km 0 15 linear [_] {_}
   # z axis - updraft speed, m/s
   Updraft m@s^-^1 0 0.3 linear [_] {_}
+End
+
+PlotAxes: ThetaeSpathHovAxes 3
+  14 2 [0.025_0.025]
+  # x axis - sim time, h
+  Sim@Time h 0 60 linear [10_30_50] {_}
+  # y axis - height, km
+  Height km 0 10 linear [_] {_}
+  # z axis - theta_e, K
+  \theta_e K 330 360 linear [_] {_}
+End
+
+PlotAxes: D1NumSpathHovAxes 3
+  14 2 [0.025_0.025]
+  # x axis - sim time, h
+  Sim@Time h 0 60 linear [10_30_50] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+  # z axis - dust1 number, #/cc
+  N_d_1 cm^-^3 0 200 linear [_] {_}
+End
+
+PlotAxes: D2NumSpathHovAxes 3
+  14 2 [0.025_0.025]
+  # x axis - sim time, h
+  Sim@Time h 0 60 linear [10_30_50] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+  # z axis - dust1 number, #/cc
+  N_d_2 cm^-^3 0 100 linear [_] {_}
 End
 

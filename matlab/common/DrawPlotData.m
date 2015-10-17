@@ -90,7 +90,7 @@ function [ ] = DrawPlotData( Axes, DataSpecs, Ptype )
     if (regexp(Ptype, 'contourf'))
       contourf(X, Y, Z, Nclevs, 'LineStyle', 'none');
     else
-      contour(X, Y, Z, Nclevs, 'LineStyle', 'none');
+      contour(X, Y, Z, Nclevs);
     end
 
     % used red/blue for difference plots

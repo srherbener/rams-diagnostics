@@ -113,16 +113,26 @@ function [ ] = GenStormProfiles()
     { 'DIAGS/hist_meas_az_tempc_<CASE>.h5' '/s_core_tempc' '/s_core_tempc'  'z' }
     { 'DIAGS/hist_meas_az_tempc_<CASE>.h5' '/s_rb_tempc' '/s_rb_tempc'  'z' }
 
+    { 'DIAGS/hist_meas_ts_tempc_<CASE>.h5' '/spath_ps_tempc'  '/spath_ps_tempc'  'z' }
+    { 'DIAGS/hist_meas_ts_tempc_<CASE>.h5' '/smaxcp_ps_tempc' '/smaxcp_ps_tempc' 'z' }
+    { 'DIAGS/hist_meas_ts_tempc_<CASE>.h5' '/spath_s_tempc'   '/spath_s_tempc'   'z' }
+    { 'DIAGS/hist_meas_ts_tempc_<CASE>.h5' '/smaxcp_s_tempc'  '/smaxcp_s_tempc'  'z' }
+
     { 'DIAGS/hist_meas_az_pcprate_<CASE>.h5' '/ps_pcprate' '/ps_pcprate'  'r' }
     { 'DIAGS/hist_meas_az_pcprate_<CASE>.h5' '/s_pcprate' '/s_pcprate'  'r' }
 
     { 'DIAGS/hist_meas_vint_cond_<CASE>.h5' '/ps_vint_cond' '/ps_vint_cond'  'r' }
     { 'DIAGS/hist_meas_vint_cond_<CASE>.h5' '/s_vint_cond' '/s_vint_cond'  'r' }
 
-    { 'DIAGS/hist_meas_vapor_<CASE>.h5' '/ps_core_vapor'      '/ps_core_vapor'  'z' }
-    { 'DIAGS/hist_meas_vapor_<CASE>.h5' '/ps_rb_vapor'        '/ps_rb_vapor'  'z' }
-    { 'DIAGS/hist_meas_vapor_<CASE>.h5' '/s_core_vapor'       '/s_core_vapor'  'z' }
-    { 'DIAGS/hist_meas_vapor_<CASE>.h5' '/s_rb_vapor'         '/s_rb_vapor'  'z' }
+    { 'DIAGS/hist_meas_az_vapor_<CASE>.h5' '/ps_core_vapor'      '/ps_core_vapor'  'z' }
+    { 'DIAGS/hist_meas_az_vapor_<CASE>.h5' '/ps_rb_vapor'        '/ps_rb_vapor'  'z' }
+    { 'DIAGS/hist_meas_az_vapor_<CASE>.h5' '/s_core_vapor'       '/s_core_vapor'  'z' }
+    { 'DIAGS/hist_meas_az_vapor_<CASE>.h5' '/s_rb_vapor'         '/s_rb_vapor'  'z' }
+
+    { 'DIAGS/hist_meas_ts_vapor_<CASE>.h5' '/spath_ps_vapor'  '/spath_ps_vapor'  'z' }
+    { 'DIAGS/hist_meas_ts_vapor_<CASE>.h5' '/smaxcp_ps_vapor' '/smaxcp_ps_vapor' 'z' }
+    { 'DIAGS/hist_meas_ts_vapor_<CASE>.h5' '/spath_s_vapor'   '/spath_s_vapor'   'z' }
+    { 'DIAGS/hist_meas_ts_vapor_<CASE>.h5' '/smaxcp_s_vapor'  '/smaxcp_s_vapor'  'z' }
 
     { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/ps_core_d1_mass' '/ps_core_d1_mass'  'z' }
     { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/ps_rb_d1_mass' '/ps_rb_d1_mass'  'z' }
@@ -143,6 +153,26 @@ function [ ] = GenStormProfiles()
     { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/ps_rb_d2_num'  '/ps_rb_d2_num'   'z' }
     { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/s_core_d2_num'  '/s_core_d2_num'   'z' }
     { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/s_rb_d2_num'  '/s_rb_d2_num'   'z' }
+
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_ps_d1_mass'  '/spath_ps_d1_mass'  'z' }
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/smaxcp_ps_d1_mass' '/smaxcp_ps_rb_d1_mass'  'z' }
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_s_d1_mass'   '/spath_s_d1_mass'  'z' }
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/smaxcp_s_d1_mass'  '/smaxcp_s_rb_d1_mass'  'z' }
+
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_ps_d1_num'   '/spath_ps_d1_num'   'z' }
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/smaxcp_ps_d1_num'  '/smaxcp_ps_rb_d1_num'   'z' }
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_s_d1_num'    '/spath_s_d1_num'   'z' }
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/smaxcp_s_d1_num'   '/smaxcp_s_rb_d1_num'   'z' }
+
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_ps_d2_mass'  '/spath_ps_d2_mass'  'z' }
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/smaxcp_ps_d2_mass' '/smaxcp_ps_rb_d2_mass'  'z' }
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_s_d2_mass'   '/spath_s_d2_mass'  'z' }
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/smaxcp_s_d2_mass'  '/smaxcp_s_rb_d2_mass'  'z' }
+
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_ps_d2_num'   '/spath_ps_d2_num'   'z' }
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/smaxcp_ps_d2_num'  '/smaxcp_ps_rb_d2_num'   'z' }
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_s_d2_num'    '/spath_s_d2_num'   'z' }
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/smaxcp_s_d2_num'   '/smaxcp_s_rb_d2_num'   'z' }
 
     { 'DIAGS/hist_meas_cloud_<CASE>.h5' '/ps_core_cloud'      '/ps_core_cloud'  'z' }
     { 'DIAGS/hist_meas_cloud_<CASE>.h5' '/ps_rb_cloud'        '/ps_rb_cloud'  'z' }
@@ -281,8 +311,8 @@ function [ ] = GenStormProfiles()
     { 'DIAGS/hist_meas_az_tempc_<CASE>.h5' '/ps_env_tempc' '/ps_env_tempc'  'z' }
     { 'DIAGS/hist_meas_az_tempc_<CASE>.h5' '/s_env_tempc' '/s_env_tempc'  'z' }
 
-    { 'DIAGS/hist_meas_vapor_<CASE>.h5' '/ps_env_vapor'        '/ps_env_vapor'  'z' }
-    { 'DIAGS/hist_meas_vapor_<CASE>.h5' '/s_env_vapor'         '/s_env_vapor'  'z' }
+    { 'DIAGS/hist_meas_az_vapor_<CASE>.h5' '/ps_env_vapor'        '/ps_env_vapor'  'z' }
+    { 'DIAGS/hist_meas_az_vapor_<CASE>.h5' '/s_env_vapor'         '/s_env_vapor'  'z' }
 
     { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/ps_env_d1_mass' '/ps_env_d1_mass'  'z' }
     { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/s_env_d1_mass' '/s_env_d1_mass'  'z' }

@@ -1,0 +1,143 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: Dust2NumSpathProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigDust2NumSpathProfile.jpg
+  Dust2NumCntlPreSalSpathPanel  1
+  Dust2NumCntlSalSpathPanel     2
+  Dust2NumDiffPreSalSpathPanel  3
+  Dust2NumDiffSalSpathPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: Dust2NumCntlPreSalSpathPanel
+  Dust2NumCntlPreSalSpathPset
+  Dust2NumCntlPreSalSpathAxes 1 1
+  none 5
+  Pre@SAL@Spath 
+  NorthEast 12
+End
+
+FigPanel: Dust2NumDiffPreSalSpathPanel
+  Dust2NumDiffPreSalSpathPset
+  Dust2NumDiffPreSalSpathAxes 1 1
+  none 5
+  Pre@SAL@Spath@(diffs)
+  NorthEast 12
+End
+
+FigPanel: Dust2NumCntlSalSpathPanel
+  Dust2NumCntlSalSpathPset
+  Dust2NumCntlSalSpathAxes 1 1
+  none 5
+  SAL@Spath 
+  NorthEast 12
+End
+
+FigPanel: Dust2NumDiffSalSpathPanel
+  Dust2NumDiffSalSpathPset
+  Dust2NumDiffSalSpathAxes 1 1
+  none 5
+  SAL@Spath@(diffs)
+  NorthEast 12
+End
+
+############ PLOT SETS #################
+PlotSet: Dust2NumCntlPreSalSpathPset line 4
+  Dust2NumPreSalSpathLine TSD_SAL_DUST      SD   2 black  - 0
+  Dust2NumPreSalSpathLine TSD_SAL_NODUST    SND  2 blue   - 0
+  Dust2NumPreSalSpathLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  Dust2NumPreSalSpathLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: Dust2NumDiffPreSalSpathPset line 4
+  Dust2NumDiffPreSalSpathLine TSD_SAL_DUST      SD   2 black  - 0
+  Dust2NumDiffPreSalSpathLine TSD_SAL_NODUST    SND  2 blue   - 0
+  Dust2NumDiffPreSalSpathLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  Dust2NumDiffPreSalSpathLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: Dust2NumCntlSalSpathPset line 4
+  Dust2NumSalSpathLine TSD_SAL_DUST      SD   2 black  - 0
+  Dust2NumSalSpathLine TSD_SAL_NODUST    SND  2 blue   - 0
+  Dust2NumSalSpathLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  Dust2NumSalSpathLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: Dust2NumDiffSalSpathPset line 4
+  Dust2NumDiffSalSpathLine TSD_SAL_DUST      SD   2 black  - 0
+  Dust2NumDiffSalSpathLine TSD_SAL_NODUST    SND  2 blue   - 0
+  Dust2NumDiffSalSpathLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  Dust2NumDiffSalSpathLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: Dust2NumPreSalSpathLine 2
+  # x data - d2_num, #/cm3
+  /spath_ps_d2_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: Dust2NumSalSpathLine 2
+  # x data - d2_num, #/cm3
+  /spath_s_d2_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: Dust2NumDiffPreSalSpathLine 2
+  # x data - d2_num, #/cm3
+  /spath_ps_d2_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: Dust2NumDiffSalSpathLine 2
+  # x data - d2_num, #/cm3
+  /spath_s_d2_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: Dust2NumCntlPreSalSpathAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d2_num, #/cm3
+  Dust2Num N@cm^-^3 0 10 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: Dust2NumDiffPreSalSpathAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d2_num, #/cm3
+  Dust2Num N@cm^-^3 -5 5 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: Dust2NumCntlSalSpathAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d2_num, #/cm3
+  Dust2Num N@cm^-^3 0 10 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: Dust2NumDiffSalSpathAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d2_num, #/cm3
+  Dust2Num N@cm^-^3 -5 5 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
