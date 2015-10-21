@@ -49,6 +49,7 @@ program gen_xsection
   integer :: rh5f_u, rh5f_v, rh5f_var, rh5f_out
   real, dimension(:), allocatable :: XcoordsKm, YcoordsKm
   integer, dimension(:), allocatable :: Xindices, Yindices
+  real :: LineX1, LineY1
 
   integer :: i
   integer :: VarNelems
@@ -242,10 +243,18 @@ program gen_xsection
   allocate(Xsection%vdata(Xsection%dims(1)*Xsection%dims(2)*Xsection%dims(3)))
 
   ! Do the selection - one time step at a time
+  LineX1 = XcoordsKm(Xindices(1))  ! for tangential/radial wind speed
+  LineY1 = YcoordsKm(Yindices(1))
   do it = 1, Nt
     if (Args%DoHorizVel) then
       call rhdf5_read_variable(rh5f_u, U%vname, U%ndims, it, U%dims, rdata=U%vdata)
       call rhdf5_read_variable(rh5f_v, V%vname, V%ndims, it, V%dims, rdata=V%vdata)
+
+      ! Calculate tangential or radial wind speed relative to the starting point of
+      ! the cross section line.
+      allocate(Var%vdata(VarNelems))
+      call ConvertHorizVelocity(Nx, Ny, Nz, U%vdata, V%vdata, LineX1, LineY1, &
+                                XcoordsKm, YcoordsKm, Var%vdata, Args%DoTangential)
 
       ! Free up variable memory
       deallocate(U%vdata)
