@@ -225,6 +225,12 @@ sub ReadDiagConfigFile
       $Config{FILTER}{$f[1]}{COMB_SENSE}    = $f[2];
       $Config{FILTER}{$f[1]}{SPEC_LIST}   = [ @f[3..$#f] ];
       }
+    elsif ($f[0] eq "Xsection:")
+      {
+      $Config{XSECTION}{$f[1]}{IN_TYPE}     = $f[2];
+      $Config{XSECTION}{$f[1]}{LINE_SPEC}   = $f[3];
+      $Config{XSECTION}{$f[1]}{FILE_LIST}   = [ @f[4..$#f] ];
+      }
   }
 
   return(\%Config);
