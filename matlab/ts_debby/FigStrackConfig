@@ -1,0 +1,141 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: StrackThetaeSD 5
+  DummyCases
+  [5_1]
+  Plots/FigStrackThetaeSD.jpg
+  StrackThetaeSD00Panel  1
+  StrackThetaeSD15Panel  2
+  StrackThetaeSD30Panel  3
+  StrackThetaeSD45Panel  4
+  StrackThetaeSD60Panel  5
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: StrackThetaeSD00Panel
+  StrackThetaeSD00Pset
+  StrackThetaeAxes 0 1
+  none 5
+  \theta_e@(SD),@t@=@0h
+  none 12
+End
+
+FigPanel: StrackThetaeSD15Panel
+  StrackThetaeSD15Pset
+  StrackThetaeAxes 0 1
+  none 5
+  t@=@15h
+  none 12
+End
+
+FigPanel: StrackThetaeSD30Panel
+  StrackThetaeSD30Pset
+  StrackThetaeAxes 0 1
+  none 5
+  t@=@30h
+  none 12
+End
+
+FigPanel: StrackThetaeSD45Panel
+  StrackThetaeSD45Pset
+  StrackThetaeAxes 0 1
+  none 5
+  t@=@45h
+  none 12
+End
+
+FigPanel: StrackThetaeSD60Panel
+  StrackThetaeSD60Pset
+  StrackThetaeAxes 1 1
+  none 5
+  t@=@60h
+  none 12
+End
+
+
+############ PLOT SETS #################
+PlotSet: StrackThetaeSD00Pset contourf 1
+  StrackThetaeSD00Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackThetaeSD15Pset contourf 1
+  StrackThetaeSD15Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackThetaeSD30Pset contourf 1
+  StrackThetaeSD30Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackThetaeSD45Pset contourf 1
+  StrackThetaeSD45Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackThetaeSD60Pset contourf 1
+  StrackThetaeSD60Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+PlotData: StrackThetaeSD00Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_theta_e_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_theta_e_<CASE>.h5 (2:39) 1e-3 0
+  # z data -  speed_t, m/s
+  /theta_e  XsectionData/strack_theta_e_<CASE>.h5 (:,2:39,1) 1 0
+End
+  
+PlotData: StrackThetaeSD15Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_theta_e_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_theta_e_<CASE>.h5 (2:39) 1e-3 0
+  # z data -  speed_t, m/s
+  /theta_e  XsectionData/strack_theta_e_<CASE>.h5 (:,2:39,31) 1 0
+End
+  
+PlotData: StrackThetaeSD30Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_theta_e_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_theta_e_<CASE>.h5 (2:39) 1e-3 0
+  # z data -  speed_t, m/s
+  /theta_e  XsectionData/strack_theta_e_<CASE>.h5 (:,2:39,61) 1 0
+End
+  
+PlotData: StrackThetaeSD45Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_theta_e_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_theta_e_<CASE>.h5 (2:39) 1e-3 0
+  # z data -  speed_t, m/s
+  /theta_e  XsectionData/strack_theta_e_<CASE>.h5 (:,2:39,91) 1 0
+End
+  
+PlotData: StrackThetaeSD60Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_theta_e_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_theta_e_<CASE>.h5 (2:39) 1e-3 0
+  # z data -  speed_t, m/s
+  /theta_e  XsectionData/strack_theta_e_<CASE>.h5 (:,2:39,121) 1 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: StrackThetaeAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Linear@Distance km 0 1650 linear [_] {_}
+  # y axis - utc time
+  Z km 0 10 linear [_] {_}
+  # z axis - theta_e, K
+  \theta_e K 330 360 linear [_] {_}
+End
+
