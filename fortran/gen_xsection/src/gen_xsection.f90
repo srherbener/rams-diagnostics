@@ -563,7 +563,11 @@ subroutine CalcLineIndices(Nx, Ny, X, Y, X1, Y1, X2, Y2, Xkm, Ykm, Nl, Xindices,
   iy2 = FindNearestIndex(Ny, Y, Y2)
 
   ! Calulate the number of points in the line
-  Nl = nint(sqrt(float(iabs(ix2-ix1)**2 + iabs(iy2-iy1)**2)))
+  ! MATLAB requires the coordinates of the line (for plotting) to be
+  ! strictly increasing or strictly decreasing. The 0.9 factor in the
+  ! following formula is an attempt to prevent a point in the line
+  ! from being repeated as a result of rounding in the algorithm.
+  Nl = nint(0.9 * sqrt(float(iabs(ix2-ix1)**2 + iabs(iy2-iy1)**2)))
   
   ! Form a line equation between the two endpoint, using the index
   ! values. Then chop up the x range into Nl evenly spaced values
