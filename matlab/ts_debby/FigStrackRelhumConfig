@@ -1,0 +1,353 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: StrackRelhumSD 5
+  DummyCases
+  [5_1]
+  Plots/FigStrackRelhumSD.jpg
+  StrackRelhumSD01Panel  1
+  StrackRelhumSD15Panel  2
+  StrackRelhumSD30Panel  3
+  StrackRelhumSD45Panel  4
+  StrackRelhumSD60Panel  5
+End 
+
+Figure: StrackRelhumNSD 5
+  DummyCases
+  [5_1]
+  Plots/FigStrackRelhumNSD.jpg
+  StrackRelhumNSD01Panel  1
+  StrackRelhumNSD15Panel  2
+  StrackRelhumNSD30Panel  3
+  StrackRelhumNSD45Panel  4
+  StrackRelhumNSD60Panel  5
+End 
+
+Figure: StrackRelhumSND 5
+  DummyCases
+  [5_1]
+  Plots/FigStrackRelhumSND.jpg
+  StrackRelhumSND01Panel  1
+  StrackRelhumSND15Panel  2
+  StrackRelhumSND30Panel  3
+  StrackRelhumSND45Panel  4
+  StrackRelhumSND60Panel  5
+End 
+
+Figure: StrackRelhumNSND 5
+  DummyCases
+  [5_1]
+  Plots/FigStrackRelhumNSND.jpg
+  StrackRelhumNSND01Panel  1
+  StrackRelhumNSND15Panel  2
+  StrackRelhumNSND30Panel  3
+  StrackRelhumNSND45Panel  4
+  StrackRelhumNSND60Panel  5
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: StrackRelhumSD01Panel
+  StrackRelhumSD01Pset
+  StrackRelhumAxes 0 1
+  none 5
+  RH@(SD),@t@=@1h
+  none 12
+End
+
+FigPanel: StrackRelhumSD15Panel
+  StrackRelhumSD15Pset
+  StrackRelhumAxes 0 1
+  none 5
+  t@=@15h
+  none 12
+End
+
+FigPanel: StrackRelhumSD30Panel
+  StrackRelhumSD30Pset
+  StrackRelhumAxes 0 1
+  none 5
+  t@=@30h
+  none 12
+End
+
+FigPanel: StrackRelhumSD45Panel
+  StrackRelhumSD45Pset
+  StrackRelhumAxes 0 1
+  none 5
+  t@=@45h
+  none 12
+End
+
+FigPanel: StrackRelhumSD60Panel
+  StrackRelhumSD60Pset
+  StrackRelhumAxes 1 1
+  none 5
+  t@=@60h
+  none 12
+End
+
+FigPanel: StrackRelhumNSD01Panel
+  StrackRelhumNSD01Pset
+  StrackRelhumAxes 0 1
+  none 5
+  RH@(NSD),@t@=@0h
+  none 12
+End
+
+FigPanel: StrackRelhumNSD15Panel
+  StrackRelhumNSD15Pset
+  StrackRelhumAxes 0 1
+  none 5
+  t@=@15h
+  none 12
+End
+
+FigPanel: StrackRelhumNSD30Panel
+  StrackRelhumNSD30Pset
+  StrackRelhumAxes 0 1
+  none 5
+  t@=@30h
+  none 12
+End
+
+FigPanel: StrackRelhumNSD45Panel
+  StrackRelhumNSD45Pset
+  StrackRelhumAxes 0 1
+  none 5
+  t@=@45h
+  none 12
+End
+
+FigPanel: StrackRelhumNSD60Panel
+  StrackRelhumNSD60Pset
+  StrackRelhumAxes 1 1
+  none 5
+  t@=@60h
+  none 12
+End
+
+FigPanel: StrackRelhumSND01Panel
+  StrackRelhumSND01Pset
+  StrackRelhumAxes 0 1
+  none 5
+  RH@(SND),@t@=@0h
+  none 12
+End
+
+FigPanel: StrackRelhumSND15Panel
+  StrackRelhumSND15Pset
+  StrackRelhumAxes 0 1
+  none 5
+  t@=@15h
+  none 12
+End
+
+FigPanel: StrackRelhumSND30Panel
+  StrackRelhumSND30Pset
+  StrackRelhumAxes 0 1
+  none 5
+  t@=@30h
+  none 12
+End
+
+FigPanel: StrackRelhumSND45Panel
+  StrackRelhumSND45Pset
+  StrackRelhumAxes 0 1
+  none 5
+  t@=@45h
+  none 12
+End
+
+FigPanel: StrackRelhumSND60Panel
+  StrackRelhumSND60Pset
+  StrackRelhumAxes 1 1
+  none 5
+  t@=@60h
+  none 12
+End
+
+FigPanel: StrackRelhumNSND01Panel
+  StrackRelhumNSND01Pset
+  StrackRelhumAxes 0 1
+  none 5
+  RH@(NSND),@t@=@0h
+  none 12
+End
+
+FigPanel: StrackRelhumNSND15Panel
+  StrackRelhumNSND15Pset
+  StrackRelhumAxes 0 1
+  none 5
+  t@=@15h
+  none 12
+End
+
+FigPanel: StrackRelhumNSND30Panel
+  StrackRelhumNSND30Pset
+  StrackRelhumAxes 0 1
+  none 5
+  t@=@30h
+  none 12
+End
+
+FigPanel: StrackRelhumNSND45Panel
+  StrackRelhumNSND45Pset
+  StrackRelhumAxes 0 1
+  none 5
+  t@=@45h
+  none 12
+End
+
+FigPanel: StrackRelhumNSND60Panel
+  StrackRelhumNSND60Pset
+  StrackRelhumAxes 1 1
+  none 5
+  t@=@60h
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: StrackRelhumSD01Pset contourf 1
+  StrackRelhum01Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackRelhumSD15Pset contourf 1
+  StrackRelhum15Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackRelhumSD30Pset contourf 1
+  StrackRelhum30Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackRelhumSD45Pset contourf 1
+  StrackRelhum45Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackRelhumSD60Pset contourf 1
+  StrackRelhum60Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackRelhumNSD01Pset contourf 1
+  StrackRelhum01Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackRelhumNSD15Pset contourf 1
+  StrackRelhum15Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackRelhumNSD30Pset contourf 1
+  StrackRelhum30Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackRelhumNSD45Pset contourf 1
+  StrackRelhum45Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackRelhumNSD60Pset contourf 1
+  StrackRelhum60Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackRelhumSND01Pset contourf 1
+  StrackRelhum01Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackRelhumSND15Pset contourf 1
+  StrackRelhum15Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackRelhumSND30Pset contourf 1
+  StrackRelhum30Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackRelhumSND45Pset contourf 1
+  StrackRelhum45Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackRelhumSND60Pset contourf 1
+  StrackRelhum60Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackRelhumNSND01Pset contourf 1
+  StrackRelhum01Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackRelhumNSND15Pset contourf 1
+  StrackRelhum15Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackRelhumNSND30Pset contourf 1
+  StrackRelhum30Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackRelhumNSND45Pset contourf 1
+  StrackRelhum45Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackRelhumNSND60Pset contourf 1
+  StrackRelhum60Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+PlotData: StrackRelhum01Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_relhum_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_relhum_<CASE>.h5 (2:39) 1e-3 0
+  # z data -  speed_t, m/s
+  /relhum  XsectionData/strack_relhum_<CASE>.h5 (:,2:39,3) 1 0
+End
+  
+PlotData: StrackRelhum15Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_relhum_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_relhum_<CASE>.h5 (2:39) 1e-3 0
+  # z data -  speed_t, m/s
+  /relhum  XsectionData/strack_relhum_<CASE>.h5 (:,2:39,31) 1 0
+End
+  
+PlotData: StrackRelhum30Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_relhum_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_relhum_<CASE>.h5 (2:39) 1e-3 0
+  # z data -  speed_t, m/s
+  /relhum  XsectionData/strack_relhum_<CASE>.h5 (:,2:39,61) 1 0
+End
+  
+PlotData: StrackRelhum45Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_relhum_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_relhum_<CASE>.h5 (2:39) 1e-3 0
+  # z data -  speed_t, m/s
+  /relhum  XsectionData/strack_relhum_<CASE>.h5 (:,2:39,91) 1 0
+End
+  
+PlotData: StrackRelhum60Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_relhum_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_relhum_<CASE>.h5 (2:39) 1e-3 0
+  # z data -  speed_t, m/s
+  /relhum  XsectionData/strack_relhum_<CASE>.h5 (:,2:39,121) 1 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: StrackRelhumAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Linear@Distance km 0 1650 linear [_] {_}
+  # y axis - utc time
+  Z km 0 10 linear [_] {_}
+  # z axis - relhum, %
+  RH % 0 100 linear [_] {_}
+End
+

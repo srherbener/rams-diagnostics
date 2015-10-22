@@ -34,7 +34,11 @@ SCRIPTS = \
 
 CONFIGS = \
   $(DIAG_DIR)/FigFsConfig \
-  $(DIAG_DIR)/FigStrackConfig \
+  $(DIAG_DIR)/FigStrackRelhumConfig \
+  $(DIAG_DIR)/FigStrackSpeedtConfig \
+  $(DIAG_DIR)/FigStrackThetaConfig \
+  $(DIAG_DIR)/FigStrackThetaeConfig \
+  $(DIAG_DIR)/FigStrackVaporConfig \
   $(DIAG_DIR)/FigPcprateConfig \
   $(DIAG_DIR)/FigMaxWindConfig \
   $(DIAG_DIR)/FigVintCondConfig \
