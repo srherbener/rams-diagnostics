@@ -34,6 +34,10 @@ SCRIPTS = \
 
 CONFIGS = \
   $(DIAG_DIR)/FigFsConfig \
+  $(DIAG_DIR)/FigStrackCloudConfig \
+  $(DIAG_DIR)/FigStrackD1NumConfig \
+  $(DIAG_DIR)/FigStrackD2NumConfig \
+  $(DIAG_DIR)/FigStrackRainConfig \
   $(DIAG_DIR)/FigStrackRelhumConfig \
   $(DIAG_DIR)/FigStrackSpeedtConfig \
   $(DIAG_DIR)/FigStrackThetaConfig \

@@ -1,0 +1,353 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: StrackCloudSD 5
+  DummyCases
+  [5_1]
+  Plots/FigStrackCloudSD.jpg
+  StrackCloudSD01Panel  1
+  StrackCloudSD15Panel  2
+  StrackCloudSD30Panel  3
+  StrackCloudSD45Panel  4
+  StrackCloudSD60Panel  5
+End 
+
+Figure: StrackCloudNSD 5
+  DummyCases
+  [5_1]
+  Plots/FigStrackCloudNSD.jpg
+  StrackCloudNSD01Panel  1
+  StrackCloudNSD15Panel  2
+  StrackCloudNSD30Panel  3
+  StrackCloudNSD45Panel  4
+  StrackCloudNSD60Panel  5
+End 
+
+Figure: StrackCloudSND 5
+  DummyCases
+  [5_1]
+  Plots/FigStrackCloudSND.jpg
+  StrackCloudSND01Panel  1
+  StrackCloudSND15Panel  2
+  StrackCloudSND30Panel  3
+  StrackCloudSND45Panel  4
+  StrackCloudSND60Panel  5
+End 
+
+Figure: StrackCloudNSND 5
+  DummyCases
+  [5_1]
+  Plots/FigStrackCloudNSND.jpg
+  StrackCloudNSND01Panel  1
+  StrackCloudNSND15Panel  2
+  StrackCloudNSND30Panel  3
+  StrackCloudNSND45Panel  4
+  StrackCloudNSND60Panel  5
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: StrackCloudSD01Panel
+  StrackCloudSD01Pset
+  StrackCloudAxes 0 1
+  none 5
+  r_r@(SD),@t@=@1h
+  none 12
+End
+
+FigPanel: StrackCloudSD15Panel
+  StrackCloudSD15Pset
+  StrackCloudAxes 0 1
+  none 5
+  t@=@15h
+  none 12
+End
+
+FigPanel: StrackCloudSD30Panel
+  StrackCloudSD30Pset
+  StrackCloudAxes 0 1
+  none 5
+  t@=@30h
+  none 12
+End
+
+FigPanel: StrackCloudSD45Panel
+  StrackCloudSD45Pset
+  StrackCloudAxes 0 1
+  none 5
+  t@=@45h
+  none 12
+End
+
+FigPanel: StrackCloudSD60Panel
+  StrackCloudSD60Pset
+  StrackCloudAxes 1 1
+  none 5
+  t@=@60h
+  none 12
+End
+
+FigPanel: StrackCloudNSD01Panel
+  StrackCloudNSD01Pset
+  StrackCloudAxes 0 1
+  none 5
+  r_r@(NSD),@t@=@0h
+  none 12
+End
+
+FigPanel: StrackCloudNSD15Panel
+  StrackCloudNSD15Pset
+  StrackCloudAxes 0 1
+  none 5
+  t@=@15h
+  none 12
+End
+
+FigPanel: StrackCloudNSD30Panel
+  StrackCloudNSD30Pset
+  StrackCloudAxes 0 1
+  none 5
+  t@=@30h
+  none 12
+End
+
+FigPanel: StrackCloudNSD45Panel
+  StrackCloudNSD45Pset
+  StrackCloudAxes 0 1
+  none 5
+  t@=@45h
+  none 12
+End
+
+FigPanel: StrackCloudNSD60Panel
+  StrackCloudNSD60Pset
+  StrackCloudAxes 1 1
+  none 5
+  t@=@60h
+  none 12
+End
+
+FigPanel: StrackCloudSND01Panel
+  StrackCloudSND01Pset
+  StrackCloudAxes 0 1
+  none 5
+  r_r@(SND),@t@=@0h
+  none 12
+End
+
+FigPanel: StrackCloudSND15Panel
+  StrackCloudSND15Pset
+  StrackCloudAxes 0 1
+  none 5
+  t@=@15h
+  none 12
+End
+
+FigPanel: StrackCloudSND30Panel
+  StrackCloudSND30Pset
+  StrackCloudAxes 0 1
+  none 5
+  t@=@30h
+  none 12
+End
+
+FigPanel: StrackCloudSND45Panel
+  StrackCloudSND45Pset
+  StrackCloudAxes 0 1
+  none 5
+  t@=@45h
+  none 12
+End
+
+FigPanel: StrackCloudSND60Panel
+  StrackCloudSND60Pset
+  StrackCloudAxes 1 1
+  none 5
+  t@=@60h
+  none 12
+End
+
+FigPanel: StrackCloudNSND01Panel
+  StrackCloudNSND01Pset
+  StrackCloudAxes 0 1
+  none 5
+  r_r@(NSND),@t@=@0h
+  none 12
+End
+
+FigPanel: StrackCloudNSND15Panel
+  StrackCloudNSND15Pset
+  StrackCloudAxes 0 1
+  none 5
+  t@=@15h
+  none 12
+End
+
+FigPanel: StrackCloudNSND30Panel
+  StrackCloudNSND30Pset
+  StrackCloudAxes 0 1
+  none 5
+  t@=@30h
+  none 12
+End
+
+FigPanel: StrackCloudNSND45Panel
+  StrackCloudNSND45Pset
+  StrackCloudAxes 0 1
+  none 5
+  t@=@45h
+  none 12
+End
+
+FigPanel: StrackCloudNSND60Panel
+  StrackCloudNSND60Pset
+  StrackCloudAxes 1 1
+  none 5
+  t@=@60h
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: StrackCloudSD01Pset contourf 1
+  StrackCloud01Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackCloudSD15Pset contourf 1
+  StrackCloud15Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackCloudSD30Pset contourf 1
+  StrackCloud30Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackCloudSD45Pset contourf 1
+  StrackCloud45Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackCloudSD60Pset contourf 1
+  StrackCloud60Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackCloudNSD01Pset contourf 1
+  StrackCloud01Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackCloudNSD15Pset contourf 1
+  StrackCloud15Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackCloudNSD30Pset contourf 1
+  StrackCloud30Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackCloudNSD45Pset contourf 1
+  StrackCloud45Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackCloudNSD60Pset contourf 1
+  StrackCloud60Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackCloudSND01Pset contourf 1
+  StrackCloud01Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackCloudSND15Pset contourf 1
+  StrackCloud15Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackCloudSND30Pset contourf 1
+  StrackCloud30Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackCloudSND45Pset contourf 1
+  StrackCloud45Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackCloudSND60Pset contourf 1
+  StrackCloud60Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackCloudNSND01Pset contourf 1
+  StrackCloud01Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackCloudNSND15Pset contourf 1
+  StrackCloud15Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackCloudNSND30Pset contourf 1
+  StrackCloud30Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackCloudNSND45Pset contourf 1
+  StrackCloud45Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackCloudNSND60Pset contourf 1
+  StrackCloud60Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+PlotData: StrackCloud01Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_cloud_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_cloud_<CASE>.h5 (2:39) 1e-3 0
+  # z data -  speed_t, m/s
+  /cloud  XsectionData/strack_cloud_<CASE>.h5 (:,2:39,3) 1 0
+End
+  
+PlotData: StrackCloud15Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_cloud_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_cloud_<CASE>.h5 (2:39) 1e-3 0
+  # z data -  speed_t, m/s
+  /cloud  XsectionData/strack_cloud_<CASE>.h5 (:,2:39,31) 1 0
+End
+  
+PlotData: StrackCloud30Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_cloud_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_cloud_<CASE>.h5 (2:39) 1e-3 0
+  # z data -  speed_t, m/s
+  /cloud  XsectionData/strack_cloud_<CASE>.h5 (:,2:39,61) 1 0
+End
+  
+PlotData: StrackCloud45Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_cloud_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_cloud_<CASE>.h5 (2:39) 1e-3 0
+  # z data -  speed_t, m/s
+  /cloud  XsectionData/strack_cloud_<CASE>.h5 (:,2:39,91) 1 0
+End
+  
+PlotData: StrackCloud60Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_cloud_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_cloud_<CASE>.h5 (2:39) 1e-3 0
+  # z data -  speed_t, m/s
+  /cloud  XsectionData/strack_cloud_<CASE>.h5 (:,2:39,121) 1 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: StrackCloudAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Linear@Distance km 0 1650 linear [_] {_}
+  # y axis - utc time
+  Z km 0 10 linear [_] {_}
+  # z axis - cloud, g/kg
+  r_r g@kg^-^1 0 0.1 linear [_] {_}
+End
+

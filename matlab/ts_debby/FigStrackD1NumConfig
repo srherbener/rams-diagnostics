@@ -1,0 +1,353 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: StrackD1NumSD 5
+  DummyCases
+  [5_1]
+  Plots/FigStrackD1NumSD.jpg
+  StrackD1NumSD01Panel  1
+  StrackD1NumSD15Panel  2
+  StrackD1NumSD30Panel  3
+  StrackD1NumSD45Panel  4
+  StrackD1NumSD60Panel  5
+End 
+
+Figure: StrackD1NumNSD 5
+  DummyCases
+  [5_1]
+  Plots/FigStrackD1NumNSD.jpg
+  StrackD1NumNSD01Panel  1
+  StrackD1NumNSD15Panel  2
+  StrackD1NumNSD30Panel  3
+  StrackD1NumNSD45Panel  4
+  StrackD1NumNSD60Panel  5
+End 
+
+#Figure: StrackD1NumSND 5
+#  DummyCases
+#  [5_1]
+#  Plots/FigStrackD1NumSND.jpg
+#  StrackD1NumSND01Panel  1
+#  StrackD1NumSND15Panel  2
+#  StrackD1NumSND30Panel  3
+#  StrackD1NumSND45Panel  4
+#  StrackD1NumSND60Panel  5
+#End 
+#
+#Figure: StrackD1NumNSND 5
+#  DummyCases
+#  [5_1]
+#  Plots/FigStrackD1NumNSND.jpg
+#  StrackD1NumNSND01Panel  1
+#  StrackD1NumNSND15Panel  2
+#  StrackD1NumNSND30Panel  3
+#  StrackD1NumNSND45Panel  4
+#  StrackD1NumNSND60Panel  5
+#End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: StrackD1NumSD01Panel
+  StrackD1NumSD01Pset
+  StrackD1NumAxes 0 1
+  none 5
+  N_d_1@(SD),@t@=@1h
+  none 12
+End
+
+FigPanel: StrackD1NumSD15Panel
+  StrackD1NumSD15Pset
+  StrackD1NumAxes 0 1
+  none 5
+  t@=@15h
+  none 12
+End
+
+FigPanel: StrackD1NumSD30Panel
+  StrackD1NumSD30Pset
+  StrackD1NumAxes 0 1
+  none 5
+  t@=@30h
+  none 12
+End
+
+FigPanel: StrackD1NumSD45Panel
+  StrackD1NumSD45Pset
+  StrackD1NumAxes 0 1
+  none 5
+  t@=@45h
+  none 12
+End
+
+FigPanel: StrackD1NumSD60Panel
+  StrackD1NumSD60Pset
+  StrackD1NumAxes 1 1
+  none 5
+  t@=@60h
+  none 12
+End
+
+FigPanel: StrackD1NumNSD01Panel
+  StrackD1NumNSD01Pset
+  StrackD1NumAxes 0 1
+  none 5
+  N_d_1@(NSD),@t@=@0h
+  none 12
+End
+
+FigPanel: StrackD1NumNSD15Panel
+  StrackD1NumNSD15Pset
+  StrackD1NumAxes 0 1
+  none 5
+  t@=@15h
+  none 12
+End
+
+FigPanel: StrackD1NumNSD30Panel
+  StrackD1NumNSD30Pset
+  StrackD1NumAxes 0 1
+  none 5
+  t@=@30h
+  none 12
+End
+
+FigPanel: StrackD1NumNSD45Panel
+  StrackD1NumNSD45Pset
+  StrackD1NumAxes 0 1
+  none 5
+  t@=@45h
+  none 12
+End
+
+FigPanel: StrackD1NumNSD60Panel
+  StrackD1NumNSD60Pset
+  StrackD1NumAxes 1 1
+  none 5
+  t@=@60h
+  none 12
+End
+
+FigPanel: StrackD1NumSND01Panel
+  StrackD1NumSND01Pset
+  StrackD1NumAxes 0 1
+  none 5
+  N_d_1@(SND),@t@=@0h
+  none 12
+End
+
+FigPanel: StrackD1NumSND15Panel
+  StrackD1NumSND15Pset
+  StrackD1NumAxes 0 1
+  none 5
+  t@=@15h
+  none 12
+End
+
+FigPanel: StrackD1NumSND30Panel
+  StrackD1NumSND30Pset
+  StrackD1NumAxes 0 1
+  none 5
+  t@=@30h
+  none 12
+End
+
+FigPanel: StrackD1NumSND45Panel
+  StrackD1NumSND45Pset
+  StrackD1NumAxes 0 1
+  none 5
+  t@=@45h
+  none 12
+End
+
+FigPanel: StrackD1NumSND60Panel
+  StrackD1NumSND60Pset
+  StrackD1NumAxes 1 1
+  none 5
+  t@=@60h
+  none 12
+End
+
+FigPanel: StrackD1NumNSND01Panel
+  StrackD1NumNSND01Pset
+  StrackD1NumAxes 0 1
+  none 5
+  N_d_1@(NSND),@t@=@0h
+  none 12
+End
+
+FigPanel: StrackD1NumNSND15Panel
+  StrackD1NumNSND15Pset
+  StrackD1NumAxes 0 1
+  none 5
+  t@=@15h
+  none 12
+End
+
+FigPanel: StrackD1NumNSND30Panel
+  StrackD1NumNSND30Pset
+  StrackD1NumAxes 0 1
+  none 5
+  t@=@30h
+  none 12
+End
+
+FigPanel: StrackD1NumNSND45Panel
+  StrackD1NumNSND45Pset
+  StrackD1NumAxes 0 1
+  none 5
+  t@=@45h
+  none 12
+End
+
+FigPanel: StrackD1NumNSND60Panel
+  StrackD1NumNSND60Pset
+  StrackD1NumAxes 1 1
+  none 5
+  t@=@60h
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: StrackD1NumSD01Pset contourf 1
+  StrackD1Num01Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackD1NumSD15Pset contourf 1
+  StrackD1Num15Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackD1NumSD30Pset contourf 1
+  StrackD1Num30Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackD1NumSD45Pset contourf 1
+  StrackD1Num45Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackD1NumSD60Pset contourf 1
+  StrackD1Num60Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackD1NumNSD01Pset contourf 1
+  StrackD1Num01Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackD1NumNSD15Pset contourf 1
+  StrackD1Num15Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackD1NumNSD30Pset contourf 1
+  StrackD1Num30Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackD1NumNSD45Pset contourf 1
+  StrackD1Num45Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackD1NumNSD60Pset contourf 1
+  StrackD1Num60Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackD1NumSND01Pset contourf 1
+  StrackD1Num01Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackD1NumSND15Pset contourf 1
+  StrackD1Num15Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackD1NumSND30Pset contourf 1
+  StrackD1Num30Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackD1NumSND45Pset contourf 1
+  StrackD1Num45Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackD1NumSND60Pset contourf 1
+  StrackD1Num60Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackD1NumNSND01Pset contourf 1
+  StrackD1Num01Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackD1NumNSND15Pset contourf 1
+  StrackD1Num15Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackD1NumNSND30Pset contourf 1
+  StrackD1Num30Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackD1NumNSND45Pset contourf 1
+  StrackD1Num45Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackD1NumNSND60Pset contourf 1
+  StrackD1Num60Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+PlotData: StrackD1Num01Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_d1_num_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_d1_num_<CASE>.h5 (2:44) 1e-3 0
+  # z data -  speed_t, m/s
+  /d1_num  XsectionData/strack_d1_num_<CASE>.h5 (:,2:44,3) 1 0
+End
+  
+PlotData: StrackD1Num15Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_d1_num_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_d1_num_<CASE>.h5 (2:44) 1e-3 0
+  # z data -  speed_t, m/s
+  /d1_num  XsectionData/strack_d1_num_<CASE>.h5 (:,2:44,31) 1 0
+End
+  
+PlotData: StrackD1Num30Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_d1_num_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_d1_num_<CASE>.h5 (2:44) 1e-3 0
+  # z data -  speed_t, m/s
+  /d1_num  XsectionData/strack_d1_num_<CASE>.h5 (:,2:44,61) 1 0
+End
+  
+PlotData: StrackD1Num45Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_d1_num_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_d1_num_<CASE>.h5 (2:44) 1e-3 0
+  # z data -  speed_t, m/s
+  /d1_num  XsectionData/strack_d1_num_<CASE>.h5 (:,2:44,91) 1 0
+End
+  
+PlotData: StrackD1Num60Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_d1_num_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_d1_num_<CASE>.h5 (2:44) 1e-3 0
+  # z data -  speed_t, m/s
+  /d1_num  XsectionData/strack_d1_num_<CASE>.h5 (:,2:44,121) 1 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: StrackD1NumAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Linear@Distance km 0 1650 linear [_] {_}
+  # y axis - utc time
+  Z km 0 15 linear [_] {_}
+  # z axis - d1_num, #/cm3
+  N_d_1 cm^-^3 0 150 linear [_] {_}
+End
+

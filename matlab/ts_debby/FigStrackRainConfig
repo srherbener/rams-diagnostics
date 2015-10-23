@@ -1,0 +1,353 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: StrackRainSD 5
+  DummyCases
+  [5_1]
+  Plots/FigStrackRainSD.jpg
+  StrackRainSD01Panel  1
+  StrackRainSD15Panel  2
+  StrackRainSD30Panel  3
+  StrackRainSD45Panel  4
+  StrackRainSD60Panel  5
+End 
+
+Figure: StrackRainNSD 5
+  DummyCases
+  [5_1]
+  Plots/FigStrackRainNSD.jpg
+  StrackRainNSD01Panel  1
+  StrackRainNSD15Panel  2
+  StrackRainNSD30Panel  3
+  StrackRainNSD45Panel  4
+  StrackRainNSD60Panel  5
+End 
+
+Figure: StrackRainSND 5
+  DummyCases
+  [5_1]
+  Plots/FigStrackRainSND.jpg
+  StrackRainSND01Panel  1
+  StrackRainSND15Panel  2
+  StrackRainSND30Panel  3
+  StrackRainSND45Panel  4
+  StrackRainSND60Panel  5
+End 
+
+Figure: StrackRainNSND 5
+  DummyCases
+  [5_1]
+  Plots/FigStrackRainNSND.jpg
+  StrackRainNSND01Panel  1
+  StrackRainNSND15Panel  2
+  StrackRainNSND30Panel  3
+  StrackRainNSND45Panel  4
+  StrackRainNSND60Panel  5
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: StrackRainSD01Panel
+  StrackRainSD01Pset
+  StrackRainAxes 0 1
+  none 5
+  r_r@(SD),@t@=@1h
+  none 12
+End
+
+FigPanel: StrackRainSD15Panel
+  StrackRainSD15Pset
+  StrackRainAxes 0 1
+  none 5
+  t@=@15h
+  none 12
+End
+
+FigPanel: StrackRainSD30Panel
+  StrackRainSD30Pset
+  StrackRainAxes 0 1
+  none 5
+  t@=@30h
+  none 12
+End
+
+FigPanel: StrackRainSD45Panel
+  StrackRainSD45Pset
+  StrackRainAxes 0 1
+  none 5
+  t@=@45h
+  none 12
+End
+
+FigPanel: StrackRainSD60Panel
+  StrackRainSD60Pset
+  StrackRainAxes 1 1
+  none 5
+  t@=@60h
+  none 12
+End
+
+FigPanel: StrackRainNSD01Panel
+  StrackRainNSD01Pset
+  StrackRainAxes 0 1
+  none 5
+  r_r@(NSD),@t@=@0h
+  none 12
+End
+
+FigPanel: StrackRainNSD15Panel
+  StrackRainNSD15Pset
+  StrackRainAxes 0 1
+  none 5
+  t@=@15h
+  none 12
+End
+
+FigPanel: StrackRainNSD30Panel
+  StrackRainNSD30Pset
+  StrackRainAxes 0 1
+  none 5
+  t@=@30h
+  none 12
+End
+
+FigPanel: StrackRainNSD45Panel
+  StrackRainNSD45Pset
+  StrackRainAxes 0 1
+  none 5
+  t@=@45h
+  none 12
+End
+
+FigPanel: StrackRainNSD60Panel
+  StrackRainNSD60Pset
+  StrackRainAxes 1 1
+  none 5
+  t@=@60h
+  none 12
+End
+
+FigPanel: StrackRainSND01Panel
+  StrackRainSND01Pset
+  StrackRainAxes 0 1
+  none 5
+  r_r@(SND),@t@=@0h
+  none 12
+End
+
+FigPanel: StrackRainSND15Panel
+  StrackRainSND15Pset
+  StrackRainAxes 0 1
+  none 5
+  t@=@15h
+  none 12
+End
+
+FigPanel: StrackRainSND30Panel
+  StrackRainSND30Pset
+  StrackRainAxes 0 1
+  none 5
+  t@=@30h
+  none 12
+End
+
+FigPanel: StrackRainSND45Panel
+  StrackRainSND45Pset
+  StrackRainAxes 0 1
+  none 5
+  t@=@45h
+  none 12
+End
+
+FigPanel: StrackRainSND60Panel
+  StrackRainSND60Pset
+  StrackRainAxes 1 1
+  none 5
+  t@=@60h
+  none 12
+End
+
+FigPanel: StrackRainNSND01Panel
+  StrackRainNSND01Pset
+  StrackRainAxes 0 1
+  none 5
+  r_r@(NSND),@t@=@0h
+  none 12
+End
+
+FigPanel: StrackRainNSND15Panel
+  StrackRainNSND15Pset
+  StrackRainAxes 0 1
+  none 5
+  t@=@15h
+  none 12
+End
+
+FigPanel: StrackRainNSND30Panel
+  StrackRainNSND30Pset
+  StrackRainAxes 0 1
+  none 5
+  t@=@30h
+  none 12
+End
+
+FigPanel: StrackRainNSND45Panel
+  StrackRainNSND45Pset
+  StrackRainAxes 0 1
+  none 5
+  t@=@45h
+  none 12
+End
+
+FigPanel: StrackRainNSND60Panel
+  StrackRainNSND60Pset
+  StrackRainAxes 1 1
+  none 5
+  t@=@60h
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: StrackRainSD01Pset contourf 1
+  StrackRain01Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackRainSD15Pset contourf 1
+  StrackRain15Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackRainSD30Pset contourf 1
+  StrackRain30Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackRainSD45Pset contourf 1
+  StrackRain45Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackRainSD60Pset contourf 1
+  StrackRain60Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackRainNSD01Pset contourf 1
+  StrackRain01Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackRainNSD15Pset contourf 1
+  StrackRain15Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackRainNSD30Pset contourf 1
+  StrackRain30Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackRainNSD45Pset contourf 1
+  StrackRain45Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackRainNSD60Pset contourf 1
+  StrackRain60Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackRainSND01Pset contourf 1
+  StrackRain01Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackRainSND15Pset contourf 1
+  StrackRain15Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackRainSND30Pset contourf 1
+  StrackRain30Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackRainSND45Pset contourf 1
+  StrackRain45Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackRainSND60Pset contourf 1
+  StrackRain60Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackRainNSND01Pset contourf 1
+  StrackRain01Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackRainNSND15Pset contourf 1
+  StrackRain15Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackRainNSND30Pset contourf 1
+  StrackRain30Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackRainNSND45Pset contourf 1
+  StrackRain45Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackRainNSND60Pset contourf 1
+  StrackRain60Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+PlotData: StrackRain01Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_rain_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_rain_<CASE>.h5 (2:39) 1e-3 0
+  # z data -  speed_t, m/s
+  /rain  XsectionData/strack_rain_<CASE>.h5 (:,2:39,3) 1 0
+End
+  
+PlotData: StrackRain15Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_rain_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_rain_<CASE>.h5 (2:39) 1e-3 0
+  # z data -  speed_t, m/s
+  /rain  XsectionData/strack_rain_<CASE>.h5 (:,2:39,31) 1 0
+End
+  
+PlotData: StrackRain30Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_rain_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_rain_<CASE>.h5 (2:39) 1e-3 0
+  # z data -  speed_t, m/s
+  /rain  XsectionData/strack_rain_<CASE>.h5 (:,2:39,61) 1 0
+End
+  
+PlotData: StrackRain45Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_rain_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_rain_<CASE>.h5 (2:39) 1e-3 0
+  # z data -  speed_t, m/s
+  /rain  XsectionData/strack_rain_<CASE>.h5 (:,2:39,91) 1 0
+End
+  
+PlotData: StrackRain60Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_rain_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_rain_<CASE>.h5 (2:39) 1e-3 0
+  # z data -  speed_t, m/s
+  /rain  XsectionData/strack_rain_<CASE>.h5 (:,2:39,121) 1 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: StrackRainAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Linear@Distance km 0 1650 linear [_] {_}
+  # y axis - utc time
+  Z km 0 10 linear [_] {_}
+  # z axis - rain, g/kg
+  r_r g@kg^-^1 0 0.5 linear [_] {_}
+End
+
