@@ -43,6 +43,13 @@ CONFIGS = \
   $(DIAG_DIR)/FigStrackThetaConfig \
   $(DIAG_DIR)/FigStrackThetaeConfig \
   $(DIAG_DIR)/FigStrackVaporConfig \
+  $(DIAG_DIR)/FigStrackDustCloudConfig \
+  $(DIAG_DIR)/FigStrackDustRainConfig \
+  $(DIAG_DIR)/FigStrackDustPrisConfig \
+  $(DIAG_DIR)/FigStrackDustSnowConfig \
+  $(DIAG_DIR)/FigStrackDustAggrConfig \
+  $(DIAG_DIR)/FigStrackDustGraupConfig \
+  $(DIAG_DIR)/FigStrackDustHailConfig \
   $(DIAG_DIR)/FigPcprateConfig \
   $(DIAG_DIR)/FigMaxWindConfig \
   $(DIAG_DIR)/FigVintCondConfig \

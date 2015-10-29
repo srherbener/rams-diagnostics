@@ -3,18 +3,27 @@ function [ ] = GenStormDustFields()
 
   % Cases
   CaseList = {
-%    'TSD_SAL_DUST'
+    'TSD_SAL_DUST'
     'TSD_NONSAL_DUST'
     };
   Ncases = length(CaseList);
 
   % Description of dust fields
   FileList = {
-%    { 'FILTERS/all_500_TSD_SAL_DUST.h5' '/filter' 'HDF5/<CASE>/HDF5/d1_mass-<CASE>-AS-2006-08-20-120000-g3.h5' '/dust1_mass' 'VAPOR/HDF5/storm_d1_mass_<CASE>.h5', '/d1_mass' }
-    { 'FILTERS/all_500_TSD_SAL_DUST.h5' '/filter' 'HDF5/<CASE>/HDF5/d2_mass-<CASE>-AS-2006-08-20-120000-g3.h5' '/dust2_mass' 'VAPOR/HDF5/storm_d2_mass_<CASE>.h5', '/d2_mass' }
+%    { 'FILTERS/all_500_<CASE>.h5' '/filter' 'HDF5/<CASE>/HDF5/d1_mass-<CASE>-AS-2006-08-20-120000-g3.h5' '/dust1_mass' 'VAPOR/HDF5/storm_d1_mass_<CASE>.h5', '/d1_mass' }
+%    { 'FILTERS/all_500_<CASE>.h5' '/filter' 'HDF5/<CASE>/HDF5/d2_mass-<CASE>-AS-2006-08-20-120000-g3.h5' '/dust2_mass' 'VAPOR/HDF5/storm_d2_mass_<CASE>.h5', '/d2_mass' }
+%
+%    { 'FILTERS/all_500_<CASE>.h5' '/filter' 'HDF5/<CASE>/HDF5/d1_num-<CASE>-AS-2006-08-20-120000-g3.h5' '/dust1_concen' 'VAPOR/HDF5/storm_d1_num_<CASE>.h5', '/d1_num' }
+%    { 'FILTERS/all_500_<CASE>.h5' '/filter' 'HDF5/<CASE>/HDF5/d2_num-<CASE>-AS-2006-08-20-120000-g3.h5' '/dust2_concen' 'VAPOR/HDF5/storm_d2_num_<CASE>.h5', '/d2_num' }
+%
+%    { 'FILTERS/all_500_<CASE>.h5' '/filter' 'HDF5/<CASE>/HDF5/dust_cloud-<CASE>-AS-2006-08-20-120000-g3.h5' '/dust_cloud_mass' 'VAPOR/HDF5/storm_dust_cloud_<CASE>.h5', '/dust_cloud' }
+%    { 'FILTERS/all_500_<CASE>.h5' '/filter' 'HDF5/<CASE>/HDF5/dust_rain-<CASE>-AS-2006-08-20-120000-g3.h5'  '/dust_rain_mass'  'VAPOR/HDF5/storm_dust_rain_<CASE>.h5',  '/dust_rain'  }
 
-    { 'FILTERS/all_500_TSD_SAL_DUST.h5' '/filter' 'HDF5/<CASE>/HDF5/d1_num-<CASE>-AS-2006-08-20-120000-g3.h5' '/dust1_concen' 'VAPOR/HDF5/storm_d1_num_<CASE>.h5', '/d1_num' }
-    { 'FILTERS/all_500_TSD_SAL_DUST.h5' '/filter' 'HDF5/<CASE>/HDF5/d2_num-<CASE>-AS-2006-08-20-120000-g3.h5' '/dust2_concen' 'VAPOR/HDF5/storm_d2_num_<CASE>.h5', '/d2_num' }
+    { 'FILTERS/all_500_<CASE>.h5' '/filter' 'HDF5/<CASE>/HDF5/dust_pris-<CASE>-AS-2006-08-20-120000-g3.h5'  '/dust_pris_mass'  'VAPOR/HDF5/storm_dust_pris_<CASE>.h5',  '/dust_pris'  }
+    { 'FILTERS/all_500_<CASE>.h5' '/filter' 'HDF5/<CASE>/HDF5/dust_snow-<CASE>-AS-2006-08-20-120000-g3.h5'  '/dust_snow_mass'  'VAPOR/HDF5/storm_dust_snow_<CASE>.h5',  '/dust_snow'  }
+    { 'FILTERS/all_500_<CASE>.h5' '/filter' 'HDF5/<CASE>/HDF5/dust_aggr-<CASE>-AS-2006-08-20-120000-g3.h5'  '/dust_aggr_mass'  'VAPOR/HDF5/storm_dust_aggr_<CASE>.h5',  '/dust_aggr'  }
+    { 'FILTERS/all_500_<CASE>.h5' '/filter' 'HDF5/<CASE>/HDF5/dust_graup-<CASE>-AS-2006-08-20-120000-g3.h5'  '/dust_grau_mass'  'VAPOR/HDF5/storm_dust_graup_<CASE>.h5',  '/dust_graup'  }
+    { 'FILTERS/all_500_<CASE>.h5' '/filter' 'HDF5/<CASE>/HDF5/dust_hail-<CASE>-AS-2006-08-20-120000-g3.h5'  '/dust_hail_mass'  'VAPOR/HDF5/storm_dust_hail_<CASE>.h5',  '/dust_hail'  }
     };
   Nfiles = length(FileList);
 

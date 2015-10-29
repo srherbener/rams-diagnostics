@@ -1,0 +1,353 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: StrackDustAggrSD 5
+  DummyCases
+  [5_1]
+  Plots/FigStrackDustAggrSD.jpg
+  StrackDustAggrSD01Panel  1
+  StrackDustAggrSD15Panel  2
+  StrackDustAggrSD30Panel  3
+  StrackDustAggrSD45Panel  4
+  StrackDustAggrSD60Panel  5
+End 
+
+Figure: StrackDustAggrNSD 5
+  DummyCases
+  [5_1]
+  Plots/FigStrackDustAggrNSD.jpg
+  StrackDustAggrNSD01Panel  1
+  StrackDustAggrNSD15Panel  2
+  StrackDustAggrNSD30Panel  3
+  StrackDustAggrNSD45Panel  4
+  StrackDustAggrNSD60Panel  5
+End 
+
+#Figure: StrackDustAggrSND 5
+#  DummyCases
+#  [5_1]
+#  Plots/FigStrackDustAggrSND.jpg
+#  StrackDustAggrSND01Panel  1
+#  StrackDustAggrSND15Panel  2
+#  StrackDustAggrSND30Panel  3
+#  StrackDustAggrSND45Panel  4
+#  StrackDustAggrSND60Panel  5
+#End 
+#
+#Figure: StrackDustAggrNSND 5
+#  DummyCases
+#  [5_1]
+#  Plots/FigStrackDustAggrNSND.jpg
+#  StrackDustAggrNSND01Panel  1
+#  StrackDustAggrNSND15Panel  2
+#  StrackDustAggrNSND30Panel  3
+#  StrackDustAggrNSND45Panel  4
+#  StrackDustAggrNSND60Panel  5
+#End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: StrackDustAggrSD01Panel
+  StrackDustAggrSD01Pset
+  StrackDustAggrAxes 0 1
+  none 5
+  r_d_c@(SD),@t@=@1h
+  none 12
+End
+
+FigPanel: StrackDustAggrSD15Panel
+  StrackDustAggrSD15Pset
+  StrackDustAggrAxes 0 1
+  none 5
+  t@=@15h
+  none 12
+End
+
+FigPanel: StrackDustAggrSD30Panel
+  StrackDustAggrSD30Pset
+  StrackDustAggrAxes 0 1
+  none 5
+  t@=@30h
+  none 12
+End
+
+FigPanel: StrackDustAggrSD45Panel
+  StrackDustAggrSD45Pset
+  StrackDustAggrAxes 0 1
+  none 5
+  t@=@45h
+  none 12
+End
+
+FigPanel: StrackDustAggrSD60Panel
+  StrackDustAggrSD60Pset
+  StrackDustAggrAxes 1 1
+  none 5
+  t@=@60h
+  none 12
+End
+
+FigPanel: StrackDustAggrNSD01Panel
+  StrackDustAggrNSD01Pset
+  StrackDustAggrAxes 0 1
+  none 5
+  r_d_c@(NSD),@t@=@0h
+  none 12
+End
+
+FigPanel: StrackDustAggrNSD15Panel
+  StrackDustAggrNSD15Pset
+  StrackDustAggrAxes 0 1
+  none 5
+  t@=@15h
+  none 12
+End
+
+FigPanel: StrackDustAggrNSD30Panel
+  StrackDustAggrNSD30Pset
+  StrackDustAggrAxes 0 1
+  none 5
+  t@=@30h
+  none 12
+End
+
+FigPanel: StrackDustAggrNSD45Panel
+  StrackDustAggrNSD45Pset
+  StrackDustAggrAxes 0 1
+  none 5
+  t@=@45h
+  none 12
+End
+
+FigPanel: StrackDustAggrNSD60Panel
+  StrackDustAggrNSD60Pset
+  StrackDustAggrAxes 1 1
+  none 5
+  t@=@60h
+  none 12
+End
+
+FigPanel: StrackDustAggrSND01Panel
+  StrackDustAggrSND01Pset
+  StrackDustAggrAxes 0 1
+  none 5
+  r_d_c@(SND),@t@=@0h
+  none 12
+End
+
+FigPanel: StrackDustAggrSND15Panel
+  StrackDustAggrSND15Pset
+  StrackDustAggrAxes 0 1
+  none 5
+  t@=@15h
+  none 12
+End
+
+FigPanel: StrackDustAggrSND30Panel
+  StrackDustAggrSND30Pset
+  StrackDustAggrAxes 0 1
+  none 5
+  t@=@30h
+  none 12
+End
+
+FigPanel: StrackDustAggrSND45Panel
+  StrackDustAggrSND45Pset
+  StrackDustAggrAxes 0 1
+  none 5
+  t@=@45h
+  none 12
+End
+
+FigPanel: StrackDustAggrSND60Panel
+  StrackDustAggrSND60Pset
+  StrackDustAggrAxes 1 1
+  none 5
+  t@=@60h
+  none 12
+End
+
+FigPanel: StrackDustAggrNSND01Panel
+  StrackDustAggrNSND01Pset
+  StrackDustAggrAxes 0 1
+  none 5
+  r_d_c@(NSND),@t@=@0h
+  none 12
+End
+
+FigPanel: StrackDustAggrNSND15Panel
+  StrackDustAggrNSND15Pset
+  StrackDustAggrAxes 0 1
+  none 5
+  t@=@15h
+  none 12
+End
+
+FigPanel: StrackDustAggrNSND30Panel
+  StrackDustAggrNSND30Pset
+  StrackDustAggrAxes 0 1
+  none 5
+  t@=@30h
+  none 12
+End
+
+FigPanel: StrackDustAggrNSND45Panel
+  StrackDustAggrNSND45Pset
+  StrackDustAggrAxes 0 1
+  none 5
+  t@=@45h
+  none 12
+End
+
+FigPanel: StrackDustAggrNSND60Panel
+  StrackDustAggrNSND60Pset
+  StrackDustAggrAxes 1 1
+  none 5
+  t@=@60h
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: StrackDustAggrSD01Pset contourf 1
+  StrackDustAggr01Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustAggrSD15Pset contourf 1
+  StrackDustAggr15Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustAggrSD30Pset contourf 1
+  StrackDustAggr30Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustAggrSD45Pset contourf 1
+  StrackDustAggr45Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustAggrSD60Pset contourf 1
+  StrackDustAggr60Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustAggrNSD01Pset contourf 1
+  StrackDustAggr01Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustAggrNSD15Pset contourf 1
+  StrackDustAggr15Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustAggrNSD30Pset contourf 1
+  StrackDustAggr30Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustAggrNSD45Pset contourf 1
+  StrackDustAggr45Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustAggrNSD60Pset contourf 1
+  StrackDustAggr60Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustAggrSND01Pset contourf 1
+  StrackDustAggr01Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustAggrSND15Pset contourf 1
+  StrackDustAggr15Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustAggrSND30Pset contourf 1
+  StrackDustAggr30Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustAggrSND45Pset contourf 1
+  StrackDustAggr45Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustAggrSND60Pset contourf 1
+  StrackDustAggr60Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustAggrNSND01Pset contourf 1
+  StrackDustAggr01Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustAggrNSND15Pset contourf 1
+  StrackDustAggr15Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustAggrNSND30Pset contourf 1
+  StrackDustAggr30Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustAggrNSND45Pset contourf 1
+  StrackDustAggr45Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustAggrNSND60Pset contourf 1
+  StrackDustAggr60Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+PlotData: StrackDustAggr01Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_dust_aggr_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_dust_aggr_<CASE>.h5 (2:44) 1e-3 0
+  # z data -  speed_t, m/s
+  /dust_aggr  XsectionData/strack_dust_aggr_<CASE>.h5 (:,2:44,3) 1 0
+End
+  
+PlotData: StrackDustAggr15Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_dust_aggr_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_dust_aggr_<CASE>.h5 (2:44) 1e-3 0
+  # z data -  speed_t, m/s
+  /dust_aggr  XsectionData/strack_dust_aggr_<CASE>.h5 (:,2:44,31) 1 0
+End
+  
+PlotData: StrackDustAggr30Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_dust_aggr_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_dust_aggr_<CASE>.h5 (2:44) 1e-3 0
+  # z data -  speed_t, m/s
+  /dust_aggr  XsectionData/strack_dust_aggr_<CASE>.h5 (:,2:44,61) 1 0
+End
+  
+PlotData: StrackDustAggr45Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_dust_aggr_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_dust_aggr_<CASE>.h5 (2:44) 1e-3 0
+  # z data -  speed_t, m/s
+  /dust_aggr  XsectionData/strack_dust_aggr_<CASE>.h5 (:,2:44,91) 1 0
+End
+  
+PlotData: StrackDustAggr60Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_dust_aggr_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_dust_aggr_<CASE>.h5 (2:44) 1e-3 0
+  # z data -  speed_t, m/s
+  /dust_aggr  XsectionData/strack_dust_aggr_<CASE>.h5 (:,2:44,121) 1 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: StrackDustAggrAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Linear@Distance km 0 1650 linear [_] {_}
+  # y axis - utc time
+  Z km 0 15 linear [_] {_}
+  # z axis - dust_aggr, g/kg
+  r_d_c g@kg^-^1 0 5e-4 linear [_] {_}
+End
+

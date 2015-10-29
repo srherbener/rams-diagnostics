@@ -1,0 +1,353 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: StrackDustGraupSD 5
+  DummyCases
+  [5_1]
+  Plots/FigStrackDustGraupSD.jpg
+  StrackDustGraupSD01Panel  1
+  StrackDustGraupSD15Panel  2
+  StrackDustGraupSD30Panel  3
+  StrackDustGraupSD45Panel  4
+  StrackDustGraupSD60Panel  5
+End 
+
+Figure: StrackDustGraupNSD 5
+  DummyCases
+  [5_1]
+  Plots/FigStrackDustGraupNSD.jpg
+  StrackDustGraupNSD01Panel  1
+  StrackDustGraupNSD15Panel  2
+  StrackDustGraupNSD30Panel  3
+  StrackDustGraupNSD45Panel  4
+  StrackDustGraupNSD60Panel  5
+End 
+
+#Figure: StrackDustGraupSND 5
+#  DummyCases
+#  [5_1]
+#  Plots/FigStrackDustGraupSND.jpg
+#  StrackDustGraupSND01Panel  1
+#  StrackDustGraupSND15Panel  2
+#  StrackDustGraupSND30Panel  3
+#  StrackDustGraupSND45Panel  4
+#  StrackDustGraupSND60Panel  5
+#End 
+#
+#Figure: StrackDustGraupNSND 5
+#  DummyCases
+#  [5_1]
+#  Plots/FigStrackDustGraupNSND.jpg
+#  StrackDustGraupNSND01Panel  1
+#  StrackDustGraupNSND15Panel  2
+#  StrackDustGraupNSND30Panel  3
+#  StrackDustGraupNSND45Panel  4
+#  StrackDustGraupNSND60Panel  5
+#End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: StrackDustGraupSD01Panel
+  StrackDustGraupSD01Pset
+  StrackDustGraupAxes 0 1
+  none 5
+  r_d_c@(SD),@t@=@1h
+  none 12
+End
+
+FigPanel: StrackDustGraupSD15Panel
+  StrackDustGraupSD15Pset
+  StrackDustGraupAxes 0 1
+  none 5
+  t@=@15h
+  none 12
+End
+
+FigPanel: StrackDustGraupSD30Panel
+  StrackDustGraupSD30Pset
+  StrackDustGraupAxes 0 1
+  none 5
+  t@=@30h
+  none 12
+End
+
+FigPanel: StrackDustGraupSD45Panel
+  StrackDustGraupSD45Pset
+  StrackDustGraupAxes 0 1
+  none 5
+  t@=@45h
+  none 12
+End
+
+FigPanel: StrackDustGraupSD60Panel
+  StrackDustGraupSD60Pset
+  StrackDustGraupAxes 1 1
+  none 5
+  t@=@60h
+  none 12
+End
+
+FigPanel: StrackDustGraupNSD01Panel
+  StrackDustGraupNSD01Pset
+  StrackDustGraupAxes 0 1
+  none 5
+  r_d_c@(NSD),@t@=@0h
+  none 12
+End
+
+FigPanel: StrackDustGraupNSD15Panel
+  StrackDustGraupNSD15Pset
+  StrackDustGraupAxes 0 1
+  none 5
+  t@=@15h
+  none 12
+End
+
+FigPanel: StrackDustGraupNSD30Panel
+  StrackDustGraupNSD30Pset
+  StrackDustGraupAxes 0 1
+  none 5
+  t@=@30h
+  none 12
+End
+
+FigPanel: StrackDustGraupNSD45Panel
+  StrackDustGraupNSD45Pset
+  StrackDustGraupAxes 0 1
+  none 5
+  t@=@45h
+  none 12
+End
+
+FigPanel: StrackDustGraupNSD60Panel
+  StrackDustGraupNSD60Pset
+  StrackDustGraupAxes 1 1
+  none 5
+  t@=@60h
+  none 12
+End
+
+FigPanel: StrackDustGraupSND01Panel
+  StrackDustGraupSND01Pset
+  StrackDustGraupAxes 0 1
+  none 5
+  r_d_c@(SND),@t@=@0h
+  none 12
+End
+
+FigPanel: StrackDustGraupSND15Panel
+  StrackDustGraupSND15Pset
+  StrackDustGraupAxes 0 1
+  none 5
+  t@=@15h
+  none 12
+End
+
+FigPanel: StrackDustGraupSND30Panel
+  StrackDustGraupSND30Pset
+  StrackDustGraupAxes 0 1
+  none 5
+  t@=@30h
+  none 12
+End
+
+FigPanel: StrackDustGraupSND45Panel
+  StrackDustGraupSND45Pset
+  StrackDustGraupAxes 0 1
+  none 5
+  t@=@45h
+  none 12
+End
+
+FigPanel: StrackDustGraupSND60Panel
+  StrackDustGraupSND60Pset
+  StrackDustGraupAxes 1 1
+  none 5
+  t@=@60h
+  none 12
+End
+
+FigPanel: StrackDustGraupNSND01Panel
+  StrackDustGraupNSND01Pset
+  StrackDustGraupAxes 0 1
+  none 5
+  r_d_c@(NSND),@t@=@0h
+  none 12
+End
+
+FigPanel: StrackDustGraupNSND15Panel
+  StrackDustGraupNSND15Pset
+  StrackDustGraupAxes 0 1
+  none 5
+  t@=@15h
+  none 12
+End
+
+FigPanel: StrackDustGraupNSND30Panel
+  StrackDustGraupNSND30Pset
+  StrackDustGraupAxes 0 1
+  none 5
+  t@=@30h
+  none 12
+End
+
+FigPanel: StrackDustGraupNSND45Panel
+  StrackDustGraupNSND45Pset
+  StrackDustGraupAxes 0 1
+  none 5
+  t@=@45h
+  none 12
+End
+
+FigPanel: StrackDustGraupNSND60Panel
+  StrackDustGraupNSND60Pset
+  StrackDustGraupAxes 1 1
+  none 5
+  t@=@60h
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: StrackDustGraupSD01Pset contourf 1
+  StrackDustGraup01Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustGraupSD15Pset contourf 1
+  StrackDustGraup15Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustGraupSD30Pset contourf 1
+  StrackDustGraup30Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustGraupSD45Pset contourf 1
+  StrackDustGraup45Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustGraupSD60Pset contourf 1
+  StrackDustGraup60Contour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustGraupNSD01Pset contourf 1
+  StrackDustGraup01Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustGraupNSD15Pset contourf 1
+  StrackDustGraup15Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustGraupNSD30Pset contourf 1
+  StrackDustGraup30Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustGraupNSD45Pset contourf 1
+  StrackDustGraup45Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustGraupNSD60Pset contourf 1
+  StrackDustGraup60Contour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustGraupSND01Pset contourf 1
+  StrackDustGraup01Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustGraupSND15Pset contourf 1
+  StrackDustGraup15Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustGraupSND30Pset contourf 1
+  StrackDustGraup30Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustGraupSND45Pset contourf 1
+  StrackDustGraup45Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustGraupSND60Pset contourf 1
+  StrackDustGraup60Contour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustGraupNSND01Pset contourf 1
+  StrackDustGraup01Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustGraupNSND15Pset contourf 1
+  StrackDustGraup15Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustGraupNSND30Pset contourf 1
+  StrackDustGraup30Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustGraupNSND45Pset contourf 1
+  StrackDustGraup45Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: StrackDustGraupNSND60Pset contourf 1
+  StrackDustGraup60Contour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+PlotData: StrackDustGraup01Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_dust_graup_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_dust_graup_<CASE>.h5 (2:44) 1e-3 0
+  # z data -  speed_t, m/s
+  /dust_graup  XsectionData/strack_dust_graup_<CASE>.h5 (:,2:44,3) 1 0
+End
+  
+PlotData: StrackDustGraup15Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_dust_graup_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_dust_graup_<CASE>.h5 (2:44) 1e-3 0
+  # z data -  speed_t, m/s
+  /dust_graup  XsectionData/strack_dust_graup_<CASE>.h5 (:,2:44,31) 1 0
+End
+  
+PlotData: StrackDustGraup30Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_dust_graup_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_dust_graup_<CASE>.h5 (2:44) 1e-3 0
+  # z data -  speed_t, m/s
+  /dust_graup  XsectionData/strack_dust_graup_<CASE>.h5 (:,2:44,61) 1 0
+End
+  
+PlotData: StrackDustGraup45Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_dust_graup_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_dust_graup_<CASE>.h5 (2:44) 1e-3 0
+  # z data -  speed_t, m/s
+  /dust_graup  XsectionData/strack_dust_graup_<CASE>.h5 (:,2:44,91) 1 0
+End
+  
+PlotData: StrackDustGraup60Contour 3
+  # x data - linear distance, km
+  /x_coords XsectionData/strack_dust_graup_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords XsectionData/strack_dust_graup_<CASE>.h5 (2:44) 1e-3 0
+  # z data -  speed_t, m/s
+  /dust_graup  XsectionData/strack_dust_graup_<CASE>.h5 (:,2:44,121) 1 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: StrackDustGraupAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Linear@Distance km 0 1650 linear [_] {_}
+  # y axis - utc time
+  Z km 0 15 linear [_] {_}
+  # z axis - dust_graup, g/kg
+  r_d_c g@kg^-^1 0 0.05 linear [_] {_}
+End
+
