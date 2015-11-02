@@ -3,17 +3,17 @@ function [ ] = GenPdfFilesCtype()
 
   CaseList = {
     { 'z.atex.ccn0050.sst293' 12 36 }
-%    { 'z.atex.ccn0100.sst293' 12 36 }
-%    { 'z.atex.ccn0200.sst293' 12 36 }
-%    { 'z.atex.ccn0400.sst293' 12 36 }
-%    { 'z.atex.ccn0800.sst293' 12 36 }
+    { 'z.atex.ccn0100.sst293' 12 36 }
+    { 'z.atex.ccn0200.sst293' 12 36 }
+    { 'z.atex.ccn0400.sst293' 12 36 }
+    { 'z.atex.ccn0800.sst293' 12 36 }
     { 'z.atex.ccn1600.sst293' 12 36 }
 
     { 'z.atex.ccn0050.sst298' 12 36 }
-%    { 'z.atex.ccn0100.sst298' 12 36 }
-%    { 'z.atex.ccn0200.sst298' 12 36 }
-%    { 'z.atex.ccn0400.sst298' 12 36 }
-%    { 'z.atex.ccn0800.sst298' 12 36 }
+    { 'z.atex.ccn0100.sst298' 12 36 }
+    { 'z.atex.ccn0200.sst298' 12 36 }
+    { 'z.atex.ccn0400.sst298' 12 36 }
+    { 'z.atex.ccn0800.sst298' 12 36 }
     { 'z.atex.ccn1600.sst298' 12 36 }
     };
   Ncases = length(CaseList);

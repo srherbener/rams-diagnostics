@@ -12,49 +12,49 @@ function [ ] = GenAvgFiles()
   FileHeader = 'ATEX averaged data';
 
   CaseList = {
-%    'z.atex.ccn0050.sst293'
-%    'z.atex.ccn0100.sst293'
-%    'z.atex.ccn0200.sst293'
-%    'z.atex.ccn0400.sst293'
-%    'z.atex.ccn0800.sst293'
-%    'z.atex.ccn1600.sst293'
+    'z.atex.ccn0050.sst293'
+    'z.atex.ccn0100.sst293'
+    'z.atex.ccn0200.sst293'
+    'z.atex.ccn0400.sst293'
+    'z.atex.ccn0800.sst293'
+    'z.atex.ccn1600.sst293'
 
     'z.atex.ccn0050.sst298'
-%    'z.atex.ccn0100.sst298'
-%    'z.atex.ccn0200.sst298'
-%    'z.atex.ccn0400.sst298'
-%    'z.atex.ccn0800.sst298'
+    'z.atex.ccn0100.sst298'
+    'z.atex.ccn0200.sst298'
+    'z.atex.ccn0400.sst298'
+    'z.atex.ccn0800.sst298'
     'z.atex.ccn1600.sst298'
     };
 Ncases = length(CaseList);
 
   VarSets = {
     { 'hda_cloud_ot'    { 'cot' 'cot_all_cld'  } 'avg_cot'         }
-    { 'hda_cloud_mask'  { 'cloud_frac'         } 'avg_dom_cfrac'   }
+    { 'hda_cloud_frac'  { 'cloud_frac'         } 'avg_dom_cfrac'   }
     { 'hda_inv_height'  { 'inv_height'         } 'avg_inv_height'  }
-    { 'hda_cloud_depth' { 'cdepth_all_cld'     } 'avg_cdepth'      }
-    { 'hda_cloud'       { 'cloud_c0p01'        } 'avg_cloud'       }
-    { 'hda_scbot'       { 'scbot'              } 'avg_scbot'       }
-    { 'hda_sctop'       { 'sctop'              } 'avg_sctop'       }
+    { 'hda_cdepth'      { 'cdepth_all_cld'     } 'avg_cdepth'      }
+%    { 'hda_cloud'       { 'cloud_c0p01'        } 'avg_cloud'       }
+%    { 'hda_scbot'       { 'scbot'              } 'avg_scbot'       }
+%    { 'hda_sctop'       { 'sctop'              } 'avg_sctop'       }
 
-%    { 'hda_lwp2cdepth'  { 'lwp2cdepth_all_cld' } 'avg_lwp2cdepth'  }
+    { 'hda_lwp2cdepth'  { 'lwp2cdepth_all_cld' } 'avg_lwp2cdepth'  }
 
 %    { 'hda_theta'       { 'theta'              } 'avg_theta'       }
 
-%    { 'hda_vapcldt'     { 'cloud_cond_all_cld' } 'avg_cloud_cond'  }
-%    { 'hda_vapcldt'     { 'cloud_evap_all_cld' } 'avg_cloud_evap'  }
+    { 'hda_cloud_cond'  { 'cloud_cond_all_cld' } 'avg_cloud_cond'  }
+    { 'hda_cloud_evap'  { 'cloud_evap_all_cld' } 'avg_cloud_evap'  }
 
-%    { 'hda_vapraint'    { 'rain_cond_all_cld'  } 'avg_rain_cond'   }
-%    { 'hda_vapraint'    { 'rain_evap_all_cld'  } 'avg_rain_evap'   }
+    { 'hda_rain_cond'   { 'rain_cond_all_cld'  } 'avg_rain_cond'   }
+    { 'hda_rain_evap'   { 'rain_evap_all_cld'  } 'avg_rain_evap'   }
 
-%    { 'hda_vapdrizt'    { 'driz_cond_all_cld'  } 'avg_driz_cond'   }
-%    { 'hda_vapdrizt'    { 'driz_evap_all_cld'  } 'avg_driz_evap'   }
+    { 'hda_driz_cond'   { 'driz_cond_all_cld'  } 'avg_driz_cond'   }
+    { 'hda_driz_evap'   { 'driz_evap_all_cld'  } 'avg_driz_evap'   }
 
-%    { 'hda_net_lw_flux' { 'lw_flux_all_cld'    } 'avg_net_lw_flux' }
+    { 'hda_lw_flux'     { 'lw_flux_all_cld'    } 'avg_net_lw_flux' }
 
 %    { 'hda_cloud_diam'  { 'cloud_diam_c0p01'   } 'avg_cloud_diam'  }
 %    { 'hda_cloud_num'   { 'cloud_num_c0p01'    } 'avg_cloud_num'   }
-    
+   
 %    { 'hda_rain'        { 'rain_r0p01'         } 'avg_rain'        }
 %    { 'hda_rain_diam'   { 'rain_diam_r0p01'    } 'avg_rain_diam'   }
 %    { 'hda_rain_num'    { 'rain_num_r0p01'     } 'avg_rain_num'    }
@@ -102,13 +102,14 @@ Ncases = length(CaseList);
         else
           InVarName = InVname;
         end
+        InVarName = sprintf('/%s', InVarName);
 
         if (regexp(OutVarName, '^lcl'))  % grab hda_lcl file from Ddir instead of Tdir
           InFile = sprintf('%s/hda_%s_%s.h5', Ddir, OutVarName , Case);
         else
           InFile = sprintf('%s/hda_%s_%s.h5', Tdir, OutVarName , Case);
         end
-        fprintf('      %s --> %s\n', InFile, InVarName);
+        fprintf('      %s (%s)\n', InFile, InVarName);
 
         % grab the hda data and the t coordinates
         HDA  = squeeze(hdf5read(InFile, InVarName));

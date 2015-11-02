@@ -6,17 +6,17 @@ function [ ] = GenMomentFiles()
 
     CaseList = {
       { 'z.atex.ccn0050.sst293' 12 36 }
-%      { 'z.atex.ccn0100.sst293' 12 36 }
-%      { 'z.atex.ccn0200.sst293' 12 36 }
-%      { 'z.atex.ccn0400.sst293' 12 36 }
-%      { 'z.atex.ccn0800.sst293' 12 36 }
+      { 'z.atex.ccn0100.sst293' 12 36 }
+      { 'z.atex.ccn0200.sst293' 12 36 }
+      { 'z.atex.ccn0400.sst293' 12 36 }
+      { 'z.atex.ccn0800.sst293' 12 36 }
       { 'z.atex.ccn1600.sst293' 12 36 }
 
       { 'z.atex.ccn0050.sst298' 12 36 }
-%      { 'z.atex.ccn0100.sst298' 12 36 }
-%      { 'z.atex.ccn0200.sst298' 12 36 }
-%      { 'z.atex.ccn0400.sst298' 12 36 }
-%      { 'z.atex.ccn0800.sst298' 12 36 }
+      { 'z.atex.ccn0100.sst298' 12 36 }
+      { 'z.atex.ccn0200.sst298' 12 36 }
+      { 'z.atex.ccn0400.sst298' 12 36 }
+      { 'z.atex.ccn0800.sst298' 12 36 }
       { 'z.atex.ccn1600.sst298' 12 36 }
       };
     Ncases = length(CaseList);
@@ -31,29 +31,29 @@ function [ ] = GenMomentFiles()
       % means
       { 'cloud_M1_c0p01'        'cloud'     1 1 'cloud_c0p01'    }
 
-%      { 'w_M3_up0p01_all_cld'   'w-w-w'     1 1 'w_up0p01_all_cld' }
-%      { 'w_M3_dn0p01_all_cld'   'w-w-w'     1 1 'w_dn0p01_all_cld' }
+      { 'w_M3_up0p01_all_cld'   'w-w-w'     1 1 'w_up0p01_all_cld' }
+      { 'w_M3_dn0p01_all_cld'   'w-w-w'     1 1 'w_dn0p01_all_cld' }
 
-%      { 'w_theta_v_flux_up0p01_all_cld' 'w-theta_v' 2 1 'theta_v_up0p01_all_cld'   }
-%      { 'w_theta_v_flux_dn0p01_all_cld' 'w-theta_v' 2 1 'theta_v_dn0p01_all_cld'   }
+      { 'w_theta_v_flux_up0p01_all_cld' 'w-theta_v' 2 1 'theta_v_up0p01_all_cld'   }
+      { 'w_theta_v_flux_dn0p01_all_cld' 'w-theta_v' 2 1 'theta_v_dn0p01_all_cld'   }
 
-%      { 'w_vapor_flux_up0p01_all_cld' 'w-vapor'   2 1 'vapor_up0p01_all_cld'   }
-%      { 'w_vapor_flux_dn0p01_all_cld' 'w-vapor'   2 1 'vapor_dn0p01_all_cld'   }
+      { 'w_vapor_flux_up0p01_all_cld' 'w-vapor'   2 1 'vapor_up0p01_all_cld'   }
+      { 'w_vapor_flux_dn0p01_all_cld' 'w-vapor'   2 1 'vapor_dn0p01_all_cld'   }
 
       % fluxes (covariances)
-%      { 'w_theta_v_flux_up0p01_all_cld' 'w-theta_v' 1 2 'w-theta_v_up0p01_all_cld' }
-%      { 'w_theta_v_flux_dn0p01_all_cld' 'w-theta_v' 1 2 'w-theta_v_dn0p01_all_cld' }
+      { 'w_theta_v_flux_up0p01_all_cld' 'w-theta_v' 1 2 'w-theta_v_up0p01_all_cld' }
+      { 'w_theta_v_flux_dn0p01_all_cld' 'w-theta_v' 1 2 'w-theta_v_dn0p01_all_cld' }
 
-%      { 'w_vapor_flux_up0p01_all_cld' 'w-vapor'   1 2 'w-vapor_up0p01_all_cld'   }
-%      { 'w_vapor_flux_dn0p01_all_cld' 'w-vapor'   1 2 'w-vapor_dn0p01_all_cld'   }
+      { 'w_vapor_flux_up0p01_all_cld' 'w-vapor'   1 2 'w-vapor_up0p01_all_cld'   }
+      { 'w_vapor_flux_dn0p01_all_cld' 'w-vapor'   1 2 'w-vapor_dn0p01_all_cld'   }
 
       % variances
-%      { 'w_M3_up0p01_all_cld'      'w-w-w'     1 2 'w-w_up0p01_all_cld'   }
-%      { 'w_M3_dn0p01_all_cld'      'w-w-w'     1 2 'w-w_dn0p01_all_cld'   }
+      { 'w_M3_up0p01_all_cld'      'w-w-w'     1 2 'w-w_up0p01_all_cld'   }
+      { 'w_M3_dn0p01_all_cld'      'w-w-w'     1 2 'w-w_dn0p01_all_cld'   }
 
       % skews
-%      { 'w_M3_up0p01_all_cld'      'w-w-w'     1 3 'w-w-w_up0p01_all_cld'   }
-%      { 'w_M3_dn0p01_all_cld'      'w-w-w'     1 3 'w-w-w_dn0p01_all_cld'   }
+      { 'w_M3_up0p01_all_cld'      'w-w-w'     1 3 'w-w-w_up0p01_all_cld'   }
+      { 'w_M3_dn0p01_all_cld'      'w-w-w'     1 3 'w-w-w_dn0p01_all_cld'   }
 
       };
 
