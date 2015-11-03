@@ -10,6 +10,7 @@ SCRIPTS = \
   $(DEST)/GenEqMeasTseries.m \
   $(DEST)/Gen2dHovmoller.m \
   $(DEST)/GenMeanHydroParams.m \
+  $(DEST)/GenRceHistMeas.m \
   $(DEST)/ExtractSampleProfiles.m \
   $(DEST)/ReadTogaCoareSound.m \
   $(DEST)/TogaCoareToRamsSound.m \
