@@ -117,6 +117,7 @@ CONFIGS = \
   $(DIAG_DIR)/FigDust1NumRbandProfileConfig \
   $(DIAG_DIR)/FigDust2RbandProfileConfig \
   $(DIAG_DIR)/FigDust2NumRbandProfileConfig \
+  $(DIAG_DIR)/FigCloudEnvProfileConfig \
   $(DIAG_DIR)/FigDnDraftEnvProfileConfig \
   $(DIAG_DIR)/FigUpDraftEnvProfileConfig \
   $(DIAG_DIR)/FigSpeedtEnvProfileConfig \

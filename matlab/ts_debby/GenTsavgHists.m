@@ -13,8 +13,12 @@ function [ ] = GenTsavgHists()
   % Description of measurements
   FileList = {
 %    { 'HDF5/<CASE>/HDF5/lead_tempc25m_anom-<CASE>-AS-2006-08-20-120000-g3.h5' '/tempc' [ -5:.1:0 ] 'TsAveragedData/hist_lead_cpools_<CASE>.h5', '/cpools' }
-    { 'HDF5/<CASE>/HDF5/spath_tempc25m_anom-<CASE>-AS-2006-08-20-120000-g3.h5' '/tempc' [ -5:.1:0 ] 'TsAveragedData/hist_spath_cpools_<CASE>.h5', '/cpools' }
-    { 'HDF5/<CASE>/HDF5/smaxcp_tempc25m_anom-<CASE>-AS-2006-08-20-120000-g3.h5' '/tempc' [ -5:.1:0 ] 'TsAveragedData/hist_smaxcp_cpools_<CASE>.h5', '/cpools' }
+%    { 'HDF5/<CASE>/HDF5/spath_tempc25m_anom-<CASE>-AS-2006-08-20-120000-g3.h5' '/tempc' [ -5:.1:0 ] 'TsAveragedData/hist_spath_cpools_<CASE>.h5', '/cpools' }
+%    { 'HDF5/<CASE>/HDF5/smaxcp_tempc25m_anom-<CASE>-AS-2006-08-20-120000-g3.h5' '/tempc' [ -5:.1:0 ] 'TsAveragedData/hist_smaxcp_cpools_<CASE>.h5', '/cpools' }
+
+    { 'HDF5/<CASE>/HDF5/core_tempc25m_anom-<CASE>-AS-2006-08-20-120000-g3.h5' '/tempc' [ -10:.1:0 ] 'TsAveragedData/hist_core_cpools_<CASE>.h5', '/cpools' }
+    { 'HDF5/<CASE>/HDF5/rb_tempc25m_anom-<CASE>-AS-2006-08-20-120000-g3.h5' '/tempc' [ -10:.1:0 ] 'TsAveragedData/hist_rb_cpools_<CASE>.h5', '/cpools' }
+    { 'HDF5/<CASE>/HDF5/env_tempc25m_anom-<CASE>-AS-2006-08-20-120000-g3.h5' '/tempc' [ -10:.1:0 ] 'TsAveragedData/hist_env_cpools_<CASE>.h5', '/cpools' }
     };
   Nfiles = length(FileList);
 

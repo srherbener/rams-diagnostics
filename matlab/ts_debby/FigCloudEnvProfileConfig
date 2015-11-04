@@ -1,0 +1,404 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+#Figure: CloudEnvProfile 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigCloudEnvProfile.jpg
+#  CloudCntlPreSalEnvPanel  1
+#  CloudCntlSalEnvPanel     2
+#  CloudDiffPreSalEnvPanel  3
+#  CloudDiffSalEnvPanel     4
+#End 
+
+Figure: CloudNumEnvProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigCloudNumEnvProfile.jpg
+  CloudNumCntlPreSalEnvPanel  1
+  CloudNumCntlSalEnvPanel     2
+  CloudNumDiffPreSalEnvPanel  3
+  CloudNumDiffSalEnvPanel     4
+End 
+
+Figure: CloudDiamEnvProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigCloudDiamEnvProfile.jpg
+  CloudDiamCntlPreSalEnvPanel  1
+  CloudDiamCntlSalEnvPanel     2
+  CloudDiamDiffPreSalEnvPanel  3
+  CloudDiamDiffSalEnvPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: CloudCntlPreSalEnvPanel
+  CloudCntlPreSalEnvPset
+  CloudCntlPreSalEnvAxes 1 1
+  none 5
+  Pre@SAL@Env 
+  NorthEast 12
+End
+
+FigPanel: CloudDiffPreSalEnvPanel
+  CloudDiffPreSalEnvPset
+  CloudDiffPreSalEnvAxes 1 1
+  none 5
+  Pre@SAL@Env@(diffs)
+  NorthEast 12
+End
+
+FigPanel: CloudCntlSalEnvPanel
+  CloudCntlSalEnvPset
+  CloudCntlSalEnvAxes 1 1
+  none 5
+  SAL@Env 
+  NorthEast 12
+End
+
+FigPanel: CloudDiffSalEnvPanel
+  CloudDiffSalEnvPset
+  CloudDiffSalEnvAxes 1 1
+  none 5
+  SAL@Env@(diffs)
+  NorthEast 12
+End
+
+FigPanel: CloudNumCntlPreSalEnvPanel
+  CloudNumCntlPreSalEnvPset
+  CloudNumCntlPreSalEnvAxes 1 1
+  none 5
+  Pre@SAL@Env 
+  NorthEast 12
+End
+
+FigPanel: CloudNumDiffPreSalEnvPanel
+  CloudNumDiffPreSalEnvPset
+  CloudNumDiffPreSalEnvAxes 1 1
+  none 5
+  Pre@SAL@Env@(diffs)
+  NorthEast 12
+End
+
+FigPanel: CloudNumCntlSalEnvPanel
+  CloudNumCntlSalEnvPset
+  CloudNumCntlSalEnvAxes 1 1
+  none 5
+  SAL@Env 
+  NorthEast 12
+End
+
+FigPanel: CloudNumDiffSalEnvPanel
+  CloudNumDiffSalEnvPset
+  CloudNumDiffSalEnvAxes 1 1
+  none 5
+  SAL@Env@(diffs)
+  NorthEast 12
+End
+
+FigPanel: CloudDiamCntlPreSalEnvPanel
+  CloudDiamCntlPreSalEnvPset
+  CloudDiamCntlPreSalEnvAxes 1 1
+  none 5
+  Pre@SAL@Env 
+  SouthWest 12
+End
+
+FigPanel: CloudDiamDiffPreSalEnvPanel
+  CloudDiamDiffPreSalEnvPset
+  CloudDiamDiffPreSalEnvAxes 1 1
+  none 5
+  Pre@SAL@Env@(diffs)
+  SouthWest 12
+End
+
+FigPanel: CloudDiamCntlSalEnvPanel
+  CloudDiamCntlSalEnvPset
+  CloudDiamCntlSalEnvAxes 1 1
+  none 5
+  SAL@Env 
+  SouthWest 12
+End
+
+FigPanel: CloudDiamDiffSalEnvPanel
+  CloudDiamDiffSalEnvPset
+  CloudDiamDiffSalEnvAxes 1 1
+  none 5
+  SAL@Env@(diffs)
+  SouthWest 12
+End
+
+############ PLOT SETS #################
+PlotSet: CloudCntlPreSalEnvPset line 4
+  CloudPreSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudDiffPreSalEnvPset line 4
+  CloudDiffPreSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudDiffPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudDiffPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudDiffPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudCntlSalEnvPset line 4
+  CloudSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudDiffSalEnvPset line 4
+  CloudDiffSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudDiffSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudDiffSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudDiffSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudNumCntlPreSalEnvPset line 4
+  CloudNumPreSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudNumPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudNumPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudNumPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudNumDiffPreSalEnvPset line 4
+  CloudNumDiffPreSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudNumDiffPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudNumDiffPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudNumDiffPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudNumCntlSalEnvPset line 4
+  CloudNumSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudNumSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudNumSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudNumSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudNumDiffSalEnvPset line 4
+  CloudNumDiffSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudNumDiffSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudNumDiffSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudNumDiffSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudDiamCntlPreSalEnvPset line 4
+  CloudDiamPreSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudDiamPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudDiamPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudDiamPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudDiamDiffPreSalEnvPset line 4
+  CloudDiamDiffPreSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudDiamDiffPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudDiamDiffPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudDiamDiffPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudDiamCntlSalEnvPset line 4
+  CloudDiamSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudDiamSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudDiamSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudDiamSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudDiamDiffSalEnvPset line 4
+  CloudDiamDiffSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudDiamDiffSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudDiamDiffSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudDiamDiffSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: CloudPreSalEnvLine 2
+  # x data - cloud mix ratio, g/kg
+  /env_ps_cloud DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudSalEnvLine 2
+  # x data - cloud mix ratio, g/kg
+  /env_s_cloud DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudDiffPreSalEnvLine 2
+  # x data - cloud mix ratio, g/kg
+  /env_ps_cloud_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudDiffSalEnvLine 2
+  # x data - cloud mix ratio, g/kg
+  /env_s_cloud_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudNumPreSalEnvLine 2
+  # x data - cloud number, #/kg
+  /env_ps_cloud_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudNumSalEnvLine 2
+  # x data - cloud number, #/kg
+  /env_s_cloud_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudNumDiffPreSalEnvLine 2
+  # x data - cloud number, #/kg
+  /env_ps_cloud_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudNumDiffSalEnvLine 2
+  # x data - cloud number, #/kg
+  /env_s_cloud_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudDiamPreSalEnvLine 2
+  # x data - cloud diameter, um
+  /env_ps_cloud_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudDiamSalEnvLine 2
+  # x data - cloud diameter, um
+  /env_s_cloud_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudDiamDiffPreSalEnvLine 2
+  # x data - cloud diameter, um
+  /env_ps_cloud_diam_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudDiamDiffSalEnvLine 2
+  # x data - cloud diameter, um
+  /env_s_cloud_diam_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: CloudCntlPreSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud mix ratio, g/kg
+  Cloud g@kg^-^1 0 0.5 linear [_] {_}
+  # y axis - height, km
+  Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: CloudDiffPreSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud mix ratio, g/kg
+  Cloud g@kg^-^1 -0.20 0.20 linear [_] {_}
+  # y axis - height, km
+  Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: CloudCntlSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud mix ratio, g/kg
+  Cloud g@kg^-^1 0 0.5 linear [_] {_}
+  # y axis - height, km
+  Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: CloudDiffSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud mix ratio, g/kg
+  Cloud g@kg^-^1 -0.40 0.40 linear [_] {_}
+  # y axis - height, km
+  Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: CloudNumCntlPreSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud number, #/cm3
+  N_c N@cm-^3 -1 70 linear [_] {_}
+  # y axis - height, km
+  Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: CloudNumDiffPreSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud number, #/cm3
+  N_c N@cm^-^3 -50 50 linear [_] {_}
+  # y axis - height, km
+  Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: CloudNumCntlSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud number, #/cm3
+  N_c N@cm^-^3 -1 70 linear [_] {_}
+  # y axis - height, km
+  Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: CloudNumDiffSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud number, #/cm3
+  N_c N@cm^-^3 -50 50 linear [_] {_}
+  # y axis - height, km
+  Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: CloudDiamCntlPreSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud diamter, um
+  D_c um -1 50 linear [_] {_}
+  # y axis - height, km
+  Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: CloudDiamDiffPreSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud diamter, um
+  D_c um -50 50 linear [_] {_}
+  # y axis - height, km
+  Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: CloudDiamCntlSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud diamter, um
+  D_c um -1 50 linear [_] {_}
+  # y axis - height, km
+  Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: CloudDiamDiffSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud diamter, um
+  D_c um -50 50 linear [_] {_}
+  # y axis - height, km
+  Height km 0 10 linear [_] {_}
+End
+

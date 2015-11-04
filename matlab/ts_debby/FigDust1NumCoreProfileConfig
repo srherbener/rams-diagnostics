@@ -52,59 +52,51 @@ FigPanel: Dust1NumDiffSalCorePanel
 End
 
 ############ PLOT SETS #################
-PlotSet: Dust1NumCntlPreSalCorePset line 4
+PlotSet: Dust1NumCntlPreSalCorePset line 2
   Dust1NumPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
-  Dust1NumPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
   Dust1NumPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
-  Dust1NumPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: Dust1NumDiffPreSalCorePset line 4
+PlotSet: Dust1NumDiffPreSalCorePset line 2
   Dust1NumDiffPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
-  Dust1NumDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
   Dust1NumDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
-  Dust1NumDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: Dust1NumCntlSalCorePset line 4
+PlotSet: Dust1NumCntlSalCorePset line 2
   Dust1NumSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
-  Dust1NumSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
   Dust1NumSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
-  Dust1NumSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: Dust1NumDiffSalCorePset line 4
+PlotSet: Dust1NumDiffSalCorePset line 2
   Dust1NumDiffSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
-  Dust1NumDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
   Dust1NumDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
-  Dust1NumDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
 ############ PLOT DATA #################
 PlotData: Dust1NumPreSalCoreLine 2
   # x data - d1_num, #/cm3
-  /ps_core_d1_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /core_ps_d1_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: Dust1NumSalCoreLine 2
   # x data - d1_num, #/cm3
-  /s_core_d1_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /core_s_d1_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: Dust1NumDiffPreSalCoreLine 2
   # x data - d1_num, #/cm3
-  /ps_core_d1_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /core_ps_d1_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: Dust1NumDiffSalCoreLine 2
   # x data - d1_num, #/cm3
-  /s_core_d1_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /core_s_d1_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
@@ -113,7 +105,7 @@ End
 PlotAxes: Dust1NumCntlPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - d1_num, #/cm3
-  Dust1Num N@cm^-^3 0 10 linear [_] {_}
+  Dust1Num N@cm^-^3 -1 30 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End
@@ -121,7 +113,7 @@ End
 PlotAxes: Dust1NumDiffPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - d1_num, #/cm3
-  Dust1Num N@cm^-^3 -5 5 linear [_] {_}
+  Dust1Num N@cm^-^3 -5 15 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End
@@ -129,7 +121,7 @@ End
 PlotAxes: Dust1NumCntlSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - d1_num, #/cm3
-  Dust1Num N@cm^-^3 0 10 linear [_] {_}
+  Dust1Num N@cm^-^3 -1 15 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End
@@ -137,7 +129,7 @@ End
 PlotAxes: Dust1NumDiffSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - d1_num, #/cm3
-  Dust1Num N@cm^-^3 -5 5 linear [_] {_}
+  Dust1Num N@cm^-^3 -10 10 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End

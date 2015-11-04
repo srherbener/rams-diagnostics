@@ -3,15 +3,15 @@
 #
 
 ######### FIGURES ###################
-Figure: CloudCoreProfile 4
-  DummyCases
-  [2_2]
-  Plots/FigCloudCoreProfile.jpg
-  CloudCntlPreSalCorePanel  1
-  CloudCntlSalCorePanel     2
-  CloudDiffPreSalCorePanel  3
-  CloudDiffSalCorePanel     4
-End 
+#Figure: CloudCoreProfile 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigCloudCoreProfile.jpg
+#  CloudCntlPreSalCorePanel  1
+#  CloudCntlSalCorePanel     2
+#  CloudDiffPreSalCorePanel  3
+#  CloudDiffSalCorePanel     4
+#End 
 
 Figure: CloudNumCoreProfile 4
   DummyCases
@@ -223,84 +223,84 @@ End
 ############ PLOT DATA #################
 PlotData: CloudPreSalCoreLine 2
   # x data - cloud mix ratio, g/kg
-  /ps_core_cloud DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /core_ps_cloud DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudSalCoreLine 2
   # x data - cloud mix ratio, g/kg
-  /s_core_cloud DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /core_s_cloud DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudDiffPreSalCoreLine 2
   # x data - cloud mix ratio, g/kg
-  /ps_core_cloud_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /core_ps_cloud_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudDiffSalCoreLine 2
   # x data - cloud mix ratio, g/kg
-  /s_core_cloud_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /core_s_cloud_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudNumPreSalCoreLine 2
   # x data - cloud number, #/kg
-  /ps_core_cloud_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /core_ps_cloud_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudNumSalCoreLine 2
   # x data - cloud number, #/kg
-  /s_core_cloud_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /core_s_cloud_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudNumDiffPreSalCoreLine 2
   # x data - cloud number, #/kg
-  /ps_core_cloud_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /core_ps_cloud_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudNumDiffSalCoreLine 2
   # x data - cloud number, #/kg
-  /s_core_cloud_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /core_s_cloud_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudDiamPreSalCoreLine 2
   # x data - cloud diameter, um
-  /ps_core_cloud_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /core_ps_cloud_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudDiamSalCoreLine 2
   # x data - cloud diameter, um
-  /s_core_cloud_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /core_s_cloud_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudDiamDiffPreSalCoreLine 2
   # x data - cloud diameter, um
-  /ps_core_cloud_diam_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /core_ps_cloud_diam_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudDiamDiffSalCoreLine 2
   # x data - cloud diameter, um
-  /s_core_cloud_diam_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /core_s_cloud_diam_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
@@ -311,7 +311,7 @@ PlotAxes: CloudCntlPreSalCoreAxes 2
   # x axis - cloud mix ratio, g/kg
   Cloud g@kg^-^1 0 0.5 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 10 linear [_] {_}
 End
 
 PlotAxes: CloudDiffPreSalCoreAxes 2
@@ -319,7 +319,7 @@ PlotAxes: CloudDiffPreSalCoreAxes 2
   # x axis - cloud mix ratio, g/kg
   Cloud g@kg^-^1 -0.20 0.20 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 10 linear [_] {_}
 End
 
 PlotAxes: CloudCntlSalCoreAxes 2
@@ -327,7 +327,7 @@ PlotAxes: CloudCntlSalCoreAxes 2
   # x axis - cloud mix ratio, g/kg
   Cloud g@kg^-^1 0 0.5 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 10 linear [_] {_}
 End
 
 PlotAxes: CloudDiffSalCoreAxes 2
@@ -335,70 +335,70 @@ PlotAxes: CloudDiffSalCoreAxes 2
   # x axis - cloud mix ratio, g/kg
   Cloud g@kg^-^1 -0.40 0.40 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 10 linear [_] {_}
 End
 
 PlotAxes: CloudNumCntlPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud number, #/cm3
-  N_c N@cm-^3 0 5 linear [_] {_}
+  N_c N@cm-^3 -0.1 8 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 10 linear [_] {_}
 End
 
 PlotAxes: CloudNumDiffPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud number, #/cm3
-  N_c N@cm^-^3 -2 2 linear [_] {_}
+  N_c N@cm^-^3 -5 5 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 10 linear [_] {_}
 End
 
 PlotAxes: CloudNumCntlSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud number, #/cm3
-  N_c N@cm^-^3 0 5 linear [_] {_}
+  N_c N@cm^-^3 -0.1 8 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 10 linear [_] {_}
 End
 
 PlotAxes: CloudNumDiffSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud number, #/cm3
-  N_c N@cm^-^3 -4 4 linear [_] {_}
+  N_c N@cm^-^3 -5 5 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 10 linear [_] {_}
 End
 
 PlotAxes: CloudDiamCntlPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud diamter, um
-  D_c um 0 60 linear [_] {_}
+  D_c um -1 60 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 10 linear [_] {_}
 End
 
 PlotAxes: CloudDiamDiffPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud diamter, um
-  D_c um -50 50 linear [_] {_}
+  D_c um -55 55 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 10 linear [_] {_}
 End
 
 PlotAxes: CloudDiamCntlSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud diamter, um
-  D_c um 0 60 linear [_] {_}
+  D_c um -1 60 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 10 linear [_] {_}
 End
 
 PlotAxes: CloudDiamDiffSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud diamter, um
-  D_c um -50 50 linear [_] {_}
+  D_c um -55 55 linear [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 10 linear [_] {_}
 End
 
