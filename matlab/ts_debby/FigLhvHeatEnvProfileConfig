@@ -1,0 +1,148 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: LhvHeatEnvProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigLhvHeatEnvProfile.jpg
+  LhvHeatCntlPreSalEnvPanel  1
+  LhvHeatCntlSalEnvPanel     2
+  LhvHeatDiffPreSalEnvPanel  3
+  LhvHeatDiffSalEnvPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: LhvHeatCntlPreSalEnvPanel
+  LhvHeatCntlPreSalEnvPset
+  LhvHeatCntlPreSalEnvAxes 1 1
+  none 5
+  Pre@SAL@Env 
+  NorthEast 12
+End
+
+FigPanel: LhvHeatDiffPreSalEnvPanel
+  LhvHeatDiffPreSalEnvPset
+  LhvHeatDiffPreSalEnvAxes 1 1
+  none 5
+  Pre@SAL@Env@(diffs)
+  NorthEast 12
+End
+
+FigPanel: LhvHeatCntlSalEnvPanel
+  LhvHeatCntlSalEnvPset
+  LhvHeatCntlSalEnvAxes 1 1
+  none 5
+  SAL@Env 
+  NorthEast 12
+End
+
+FigPanel: LhvHeatDiffSalEnvPanel
+  LhvHeatDiffSalEnvPset
+  LhvHeatDiffSalEnvAxes 1 1
+  none 5
+  SAL@Env@(diffs)
+  NorthEast 12
+End
+
+############ PLOT SETS #################
+PlotSet: LhvHeatCntlPreSalEnvPset line 4
+  LhvHeatPreSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  LhvHeatPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhvHeatPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhvHeatPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: LhvHeatDiffPreSalEnvPset line 4
+  LhvHeatDiffPreSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  LhvHeatDiffPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhvHeatDiffPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhvHeatDiffPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: LhvHeatCntlSalEnvPset line 4
+  LhvHeatSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  LhvHeatSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhvHeatSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhvHeatSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: LhvHeatDiffSalEnvPset line 4
+  LhvHeatDiffSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  LhvHeatDiffSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhvHeatDiffSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhvHeatDiffSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+# RAMS files are saved on 30 minute intervals, meaning
+# that the values in them are heating rates in units
+# of K/30minutes. Multiply the heating rates by 2 in
+# order to make the units K/h.
+PlotData: LhvHeatPreSalEnvLine 2
+  # x data - lhv_heat mix ratio, K/h
+  /env_ps_lhv_heat DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhvHeatSalEnvLine 2
+  # x data - lhv_heat mix ratio, K/h
+  /env_s_lhv_heat DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhvHeatDiffPreSalEnvLine 2
+  # x data - lhv_heat mix ratio, K/h
+  /env_ps_lhv_heat_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhvHeatDiffSalEnvLine 2
+  # x data - lhv_heat mix ratio, K/h
+  /env_s_lhv_heat_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: LhvHeatCntlPreSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - lhv_heat mix ratio, K/h
+  LhvHeat K@h^-^1 -1 30 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: LhvHeatDiffPreSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - lhv_heat mix ratio, K/h
+  LhvHeat K@h^-^1 -15 30 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: LhvHeatCntlSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - lhv_heat mix ratio, K/h
+  LhvHeat K@h^-^1 -1 30 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: LhvHeatDiffSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - lhv_heat mix ratio, K/h
+  LhvHeat K@h^-^1 -15 30 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+

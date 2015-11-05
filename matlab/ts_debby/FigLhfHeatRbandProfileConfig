@@ -24,7 +24,7 @@ FigPanel: LhfHeatCntlPreSalRbandPanel
   LhfHeatCntlPreSalRbandAxes 1 1
   none 5
   Pre@SAL@Rband 
-  NorthEast 12
+  SouthEast 12
 End
 
 FigPanel: LhfHeatDiffPreSalRbandPanel
@@ -32,7 +32,7 @@ FigPanel: LhfHeatDiffPreSalRbandPanel
   LhfHeatDiffPreSalRbandAxes 1 1
   none 5
   Pre@SAL@Rband@(diffs)
-  NorthEast 12
+  SouthEast 12
 End
 
 FigPanel: LhfHeatCntlSalRbandPanel
@@ -40,7 +40,7 @@ FigPanel: LhfHeatCntlSalRbandPanel
   LhfHeatCntlSalRbandAxes 1 1
   none 5
   SAL@Rband 
-  NorthEast 12
+  SouthEast 12
 End
 
 FigPanel: LhfHeatDiffSalRbandPanel
@@ -48,25 +48,33 @@ FigPanel: LhfHeatDiffSalRbandPanel
   LhfHeatDiffSalRbandAxes 1 1
   none 5
   SAL@Rband@(diffs)
-  NorthEast 12
+  SouthEast 12
 End
 
 ############ PLOT SETS #################
-PlotSet: LhfHeatCntlPreSalRbandPset line 1
-  LhfHeatPreSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: LhfHeatCntlPreSalRbandPset line 4
+  LhfHeatPreSalRbandLine TSD_SAL_DUST SD  2 black   - 0
+  LhfHeatPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhfHeatPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhfHeatPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: LhfHeatDiffPreSalRbandPset line 3
+PlotSet: LhfHeatDiffPreSalRbandPset line 4
+  LhfHeatDiffPreSalRbandLine TSD_SAL_DUST SD  2 black   - 0
   LhfHeatDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
   LhfHeatDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
   LhfHeatDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: LhfHeatCntlSalRbandPset line 1
-  LhfHeatSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: LhfHeatCntlSalRbandPset line 4
+  LhfHeatSalRbandLine TSD_SAL_DUST SD  2 black   - 0
+  LhfHeatSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhfHeatSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhfHeatSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: LhfHeatDiffSalRbandPset line 3
+PlotSet: LhfHeatDiffSalRbandPset line 4
+  LhfHeatDiffSalRbandLine TSD_SAL_DUST SD  2 black   - 0
   LhfHeatDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
   LhfHeatDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
   LhfHeatDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
@@ -79,28 +87,28 @@ End
 # order to make the units K/h.
 PlotData: LhfHeatPreSalRbandLine 2
   # x data - lhf_heat mix ratio, K/h
-  /ps_rb_lhf_heat DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  /rb_ps_lhf_heat DIAGS/storm_profiles_<CASE>.h5 @ 2 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: LhfHeatSalRbandLine 2
   # x data - lhf_heat mix ratio, K/h
-  /s_rb_lhf_heat DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  /rb_s_lhf_heat DIAGS/storm_profiles_<CASE>.h5 @ 2 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: LhfHeatDiffPreSalRbandLine 2
   # x data - lhf_heat mix ratio, K/h
-  /ps_rb_lhf_heat_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  /rb_ps_lhf_heat_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: LhfHeatDiffSalRbandLine 2
   # x data - lhf_heat mix ratio, K/h
-  /s_rb_lhf_heat_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  /rb_s_lhf_heat_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
@@ -109,7 +117,7 @@ End
 PlotAxes: LhfHeatCntlPreSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - lhf_heat mix ratio, K/h
-  LhfHeat K@h^-^1 -0.1 0.5 linear [_] {_}
+  LhfHeat K@h^-^1 -0.01 0.3 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End
@@ -117,7 +125,7 @@ End
 PlotAxes: LhfHeatDiffPreSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - lhf_heat mix ratio, K/h
-  LhfHeat K@h^-^1 -0.3 0.5 linear [_] {_}
+  LhfHeat K@h^-^1 -0.2 0.3 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End
@@ -125,7 +133,7 @@ End
 PlotAxes: LhfHeatCntlSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - lhf_heat mix ratio, K/h
-  LhfHeat K@h^-^1 -0.1 0.5 linear [_] {_}
+  LhfHeat K@h^-^1 -0.01 0.3 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End
@@ -133,7 +141,7 @@ End
 PlotAxes: LhfHeatDiffSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - lhf_heat mix ratio, K/h
-  LhfHeat K@h^-^1 -0.3 0.5 linear [_] {_}
+  LhfHeat K@h^-^1 -0.2 0.3 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End

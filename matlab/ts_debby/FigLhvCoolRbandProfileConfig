@@ -52,21 +52,29 @@ FigPanel: LhvCoolDiffSalRbandPanel
 End
 
 ############ PLOT SETS #################
-PlotSet: LhvCoolCntlPreSalRbandPset line 1
-  LhvCoolPreSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: LhvCoolCntlPreSalRbandPset line 4
+  LhvCoolPreSalRbandLine TSD_SAL_DUST SD  2 black   - 0
+  LhvCoolPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhvCoolPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhvCoolPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: LhvCoolDiffPreSalRbandPset line 3
+PlotSet: LhvCoolDiffPreSalRbandPset line 4
+  LhvCoolDiffPreSalRbandLine TSD_SAL_DUST SD  2 black   - 0
   LhvCoolDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
   LhvCoolDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
   LhvCoolDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: LhvCoolCntlSalRbandPset line 1
-  LhvCoolSalRbandLine TSD_SAL_DUST SD  2 blue   - 0
+PlotSet: LhvCoolCntlSalRbandPset line 4
+  LhvCoolSalRbandLine TSD_SAL_DUST SD  2 black   - 0
+  LhvCoolSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhvCoolSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhvCoolSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: LhvCoolDiffSalRbandPset line 3
+PlotSet: LhvCoolDiffSalRbandPset line 4
+  LhvCoolDiffSalRbandLine TSD_SAL_DUST SD  2 black   - 0
   LhvCoolDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
   LhvCoolDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
   LhvCoolDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
@@ -79,28 +87,28 @@ End
 # order to make the units K/h.
 PlotData: LhvCoolPreSalRbandLine 2
   # x data - lhv_cool mix ratio, K/h
-  /ps_rb_lhv_cool DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  /rb_ps_lhv_cool DIAGS/storm_profiles_<CASE>.h5 @ 2 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: LhvCoolSalRbandLine 2
   # x data - lhv_cool mix ratio, K/h
-  /s_rb_lhv_cool DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  /rb_s_lhv_cool DIAGS/storm_profiles_<CASE>.h5 @ 2 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: LhvCoolDiffPreSalRbandLine 2
   # x data - lhv_cool mix ratio, K/h
-  /ps_rb_lhv_cool_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  /rb_ps_lhv_cool_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: LhvCoolDiffSalRbandLine 2
   # x data - lhv_cool mix ratio, K/h
-  /s_rb_lhv_cool_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  /rb_s_lhv_cool_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End

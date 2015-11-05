@@ -87,28 +87,28 @@ End
 # order to make the units K/h.
 PlotData: LhvCoolPreSalCoreLine 2
   # x data - lhv_cool mix ratio, K/h
-  /ps_core_lhv_cool DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  /core_ps_lhv_cool DIAGS/storm_profiles_<CASE>.h5 @ 2 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: LhvCoolSalCoreLine 2
   # x data - lhv_cool mix ratio, K/h
-  /s_core_lhv_cool DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  /core_s_lhv_cool DIAGS/storm_profiles_<CASE>.h5 @ 2 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: LhvCoolDiffPreSalCoreLine 2
   # x data - lhv_cool mix ratio, K/h
-  /ps_core_lhv_cool_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  /core_ps_lhv_cool_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: LhvCoolDiffSalCoreLine 2
   # x data - lhv_cool mix ratio, K/h
-  /s_core_lhv_cool_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  /core_s_lhv_cool_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End

@@ -107,6 +107,34 @@ function [ ] = GenStormProfiles()
     { 'DIAGS/hist_meas_az_cloud_<CASE>.h5' '/env_ps_cloud_diam'  '/env_ps_cloud_diam'   'z' }
     { 'DIAGS/hist_meas_az_cloud_<CASE>.h5' '/env_s_cloud_diam'   '/env_s_cloud_diam'    'z' }
 
+    { 'DIAGS/hist_meas_az_lhf_cool_<CASE>.h5' '/core_ps_lhf_cool' '/core_ps_lhf_cool' 'z' }
+    { 'DIAGS/hist_meas_az_lhf_cool_<CASE>.h5' '/core_s_lhf_cool'  '/core_s_lhf_cool'  'z' }
+    { 'DIAGS/hist_meas_az_lhf_cool_<CASE>.h5' '/rb_ps_lhf_cool'   '/rb_ps_lhf_cool'   'z' }
+    { 'DIAGS/hist_meas_az_lhf_cool_<CASE>.h5' '/rb_s_lhf_cool'    '/rb_s_lhf_cool'    'z' }
+    { 'DIAGS/hist_meas_az_lhf_cool_<CASE>.h5' '/env_ps_lhf_cool'  '/env_ps_lhf_cool'  'z' }
+    { 'DIAGS/hist_meas_az_lhf_cool_<CASE>.h5' '/env_s_lhf_cool'   '/env_s_lhf_cool'   'z' }
+
+    { 'DIAGS/hist_meas_az_lhf_heat_<CASE>.h5' '/core_ps_lhf_heat' '/core_ps_lhf_heat' 'z' }
+    { 'DIAGS/hist_meas_az_lhf_heat_<CASE>.h5' '/core_s_lhf_heat'  '/core_s_lhf_heat'  'z' }
+    { 'DIAGS/hist_meas_az_lhf_heat_<CASE>.h5' '/rb_ps_lhf_heat'   '/rb_ps_lhf_heat'   'z' }
+    { 'DIAGS/hist_meas_az_lhf_heat_<CASE>.h5' '/rb_s_lhf_heat'    '/rb_s_lhf_heat'    'z' }
+    { 'DIAGS/hist_meas_az_lhf_heat_<CASE>.h5' '/env_ps_lhf_heat'  '/env_ps_lhf_heat'  'z' }
+    { 'DIAGS/hist_meas_az_lhf_heat_<CASE>.h5' '/env_s_lhf_heat'   '/env_s_lhf_heat'   'z' }
+
+    { 'DIAGS/hist_meas_az_lhv_cool_<CASE>.h5' '/core_ps_lhv_cool' '/core_ps_lhv_cool' 'z' }
+    { 'DIAGS/hist_meas_az_lhv_cool_<CASE>.h5' '/core_s_lhv_cool'  '/core_s_lhv_cool'  'z' }
+    { 'DIAGS/hist_meas_az_lhv_cool_<CASE>.h5' '/rb_ps_lhv_cool'   '/rb_ps_lhv_cool'   'z' }
+    { 'DIAGS/hist_meas_az_lhv_cool_<CASE>.h5' '/rb_s_lhv_cool'    '/rb_s_lhv_cool'    'z' }
+    { 'DIAGS/hist_meas_az_lhv_cool_<CASE>.h5' '/env_ps_lhv_cool'  '/env_ps_lhv_cool'  'z' }
+    { 'DIAGS/hist_meas_az_lhv_cool_<CASE>.h5' '/env_s_lhv_cool'   '/env_s_lhv_cool'   'z' }
+
+    { 'DIAGS/hist_meas_az_lhv_heat_<CASE>.h5' '/core_ps_lhv_heat' '/core_ps_lhv_heat' 'z' }
+    { 'DIAGS/hist_meas_az_lhv_heat_<CASE>.h5' '/core_s_lhv_heat'  '/core_s_lhv_heat'  'z' }
+    { 'DIAGS/hist_meas_az_lhv_heat_<CASE>.h5' '/rb_ps_lhv_heat'   '/rb_ps_lhv_heat'   'z' }
+    { 'DIAGS/hist_meas_az_lhv_heat_<CASE>.h5' '/rb_s_lhv_heat'    '/rb_s_lhv_heat'    'z' }
+    { 'DIAGS/hist_meas_az_lhv_heat_<CASE>.h5' '/env_ps_lhv_heat'  '/env_ps_lhv_heat'  'z' }
+    { 'DIAGS/hist_meas_az_lhv_heat_<CASE>.h5' '/env_s_lhv_heat'   '/env_s_lhv_heat'   'z' }
+
 
 
 
@@ -269,27 +297,6 @@ function [ ] = GenStormProfiles()
 %    { 'DIAGS/hist_meas_tcond_<CASE>.h5' '/ps_rb_tcond'  '/ps_rb_tcond'   'z' }
 %    { 'DIAGS/hist_meas_tcond_<CASE>.h5' '/s_core_tcond'  '/s_core_tcond'   'z' }
 %    { 'DIAGS/hist_meas_tcond_<CASE>.h5' '/s_rb_tcond'  '/s_rb_tcond'   'z' }
-%
-%    { 'DIAGS/hist_meas_lhf_cool_<CASE>.h5' '/ps_core_lhf_cool'  '/ps_core_lhf_cool'   'z' }
-%    { 'DIAGS/hist_meas_lhf_cool_<CASE>.h5' '/ps_rb_lhf_cool'  '/ps_rb_lhf_cool'   'z' }
-%    { 'DIAGS/hist_meas_lhf_cool_<CASE>.h5' '/s_core_lhf_cool'  '/s_core_lhf_cool'   'z' }
-%    { 'DIAGS/hist_meas_lhf_cool_<CASE>.h5' '/s_rb_lhf_cool'  '/s_rb_lhf_cool'   'z' }
-%
-%    { 'DIAGS/hist_meas_lhf_heat_<CASE>.h5' '/ps_core_lhf_heat'  '/ps_core_lhf_heat'   'z' }
-%    { 'DIAGS/hist_meas_lhf_heat_<CASE>.h5' '/ps_rb_lhf_heat'  '/ps_rb_lhf_heat'   'z' }
-%    { 'DIAGS/hist_meas_lhf_heat_<CASE>.h5' '/s_core_lhf_heat'  '/s_core_lhf_heat'   'z' }
-%    { 'DIAGS/hist_meas_lhf_heat_<CASE>.h5' '/s_rb_lhf_heat'  '/s_rb_lhf_heat'   'z' }
-%
-%    { 'DIAGS/hist_meas_lhv_cool_<CASE>.h5' '/ps_core_lhv_cool'  '/ps_core_lhv_cool'   'z' }
-%    { 'DIAGS/hist_meas_lhv_cool_<CASE>.h5' '/ps_rb_lhv_cool'  '/ps_rb_lhv_cool'   'z' }
-%    { 'DIAGS/hist_meas_lhv_cool_<CASE>.h5' '/s_core_lhv_cool'  '/s_core_lhv_cool'   'z' }
-%    { 'DIAGS/hist_meas_lhv_cool_<CASE>.h5' '/s_rb_lhv_cool'  '/s_rb_lhv_cool'   'z' }
-%
-%    { 'DIAGS/hist_meas_lhv_heat_<CASE>.h5' '/ps_core_lhv_heat'  '/ps_core_lhv_heat'   'z' }
-%    { 'DIAGS/hist_meas_lhv_heat_<CASE>.h5' '/ps_rb_lhv_heat'  '/ps_rb_lhv_heat'   'z' }
-%    { 'DIAGS/hist_meas_lhv_heat_<CASE>.h5' '/s_core_lhv_heat'  '/s_core_lhv_heat'   'z' }
-%    { 'DIAGS/hist_meas_lhv_heat_<CASE>.h5' '/s_rb_lhv_heat'  '/s_rb_lhv_heat'   'z' }
-%
 %
 %    % Env region profiles
 %    { 'DIAGS/hist_meas_speed_<CASE>.h5' '/ps_env_speed_t' '/ps_env_speed_t'  'z' }
