@@ -28,18 +28,118 @@ function [ ] = GenAvgFiles()
     };
 Ncases = length(CaseList);
 
+% air density (kg/m3) corresponding to ATEX grid levels
+Rho = [ 1.2274
+    1.2226
+    1.2179
+    1.2133
+    1.2086
+    1.2040
+    1.1994
+    1.1948
+    1.1902
+    1.1857
+    1.1812
+    1.1767
+    1.1722
+    1.1677
+    1.1633
+    1.1589
+    1.1545
+    1.1501
+    1.1457
+    1.1414
+    1.1371
+    1.1328
+    1.1285
+    1.1243
+    1.1200
+    1.1158
+    1.1116
+    1.1074
+    1.1033
+    1.0991
+    1.0950
+    1.0909
+    1.0868
+    1.0828
+    1.0787
+    1.0747
+    1.0707
+    1.0667
+    1.0627
+    1.0588
+    1.0549
+    1.0509
+    1.0470
+    1.0432
+    1.0393
+    1.0355
+    1.0316
+    1.0278
+    1.0240
+    1.0203
+    1.0165
+    1.0128
+    1.0090
+    1.0053
+    1.0016
+    0.9980
+    0.9943
+    0.9907
+    0.9870
+    0.9834
+    0.9798
+    0.9763
+    0.9727
+    0.9692
+    0.9656
+    0.9621
+    0.9586
+    0.9552
+    0.9517
+    0.9482
+    0.9448
+    0.9414
+    0.9380
+    0.9346
+    0.9312
+    0.9279
+    0.9245
+    0.9212
+    0.9179
+    0.9146
+    0.9113
+    0.9080
+    0.9048
+    0.9015
+    0.8983
+    0.8951
+    0.8919
+    0.8887
+    0.8856
+    0.8824
+    0.8793
+    0.8761
+    0.8730
+    0.8699
+    0.8668
+    0.8638
+    0.8607
+    0.8577
+    0.8546
+    0.8516
+    0.8486
+    ];
+
   VarSets = {
     { 'hda_cloud_ot'    { 'cot' 'cot_all_cld'  } 'avg_cot'         }
     { 'hda_cloud_frac'  { 'cloud_frac'         } 'avg_dom_cfrac'   }
     { 'hda_inv_height'  { 'inv_height'         } 'avg_inv_height'  }
     { 'hda_cdepth'      { 'cdepth_all_cld'     } 'avg_cdepth'      }
-%    { 'hda_cloud'       { 'cloud_c0p01'        } 'avg_cloud'       }
-%    { 'hda_scbot'       { 'scbot'              } 'avg_scbot'       }
-%    { 'hda_sctop'       { 'sctop'              } 'avg_sctop'       }
 
     { 'hda_lwp2cdepth'  { 'lwp2cdepth_all_cld' } 'avg_lwp2cdepth'  }
 
-%    { 'hda_theta'       { 'theta'              } 'avg_theta'       }
 
     { 'hda_cloud_cond'  { 'cloud_cond_all_cld' } 'avg_cloud_cond'  }
     { 'hda_cloud_evap'  { 'cloud_evap_all_cld' } 'avg_cloud_evap'  }
@@ -52,12 +152,19 @@ Ncases = length(CaseList);
 
     { 'hda_lw_flux'     { 'lw_flux_all_cld'    } 'avg_net_lw_flux' }
 
-%    { 'hda_cloud_diam'  { 'cloud_diam_c0p01'   } 'avg_cloud_diam'  }
-%    { 'hda_cloud_num'   { 'cloud_num_c0p01'    } 'avg_cloud_num'   }
+
+    { 'hda_theta'       { 'theta'       } 'avg_theta'       }
+
+    { 'hda_scbot'       { 'scbot'       } 'avg_scbot'       }
+    { 'hda_sctop'       { 'sctop'       } 'avg_sctop'       }
+
+    { 'hda_cloud'       { 'cloud'       } 'avg_cloud'       }
+    { 'hda_cloud_diam'  { 'cloud_diam'  } 'avg_cloud_diam'  }
+    { 'hda_cloud_num'   { 'cloud_num'   } 'avg_cloud_num'   }
    
-%    { 'hda_rain'        { 'rain_r0p01'         } 'avg_rain'        }
-%    { 'hda_rain_diam'   { 'rain_diam_r0p01'    } 'avg_rain_diam'   }
-%    { 'hda_rain_num'    { 'rain_num_r0p01'     } 'avg_rain_num'    }
+    { 'hda_rain'        { 'rain'        } 'avg_rain'        }
+    { 'hda_rain_diam'   { 'rain_diam'   } 'avg_rain_diam'   }
+    { 'hda_rain_num'    { 'rain_num'    } 'avg_rain_num'    }
 
     };
   Nset = length(VarSets);
@@ -126,6 +233,23 @@ Ncases = length(CaseList);
         % for time averaging
         T1 = find(T >= Tstart, 1, 'first');
         T2 = find(T <= Tend,   1, 'last');
+
+        % If doing a hydrometeor number concentration, the
+        % HDA units are #/kg. Convert to #/cm3 using:
+        %
+        %   #/cm3 = #/kg * Rho (kg/m3) * 1e-6 (m3/cm3)
+        %
+        if (strcmp(InVarName, '/hda_cloud_num') || ...
+            strcmp(InVarName, '/hda_rain_num'))
+          if (ndims(HDA) == 3)
+            % HDA is (2,z,t)
+            HDA(1,:,:) = squeeze(HDA(1,:,:)) .* repmat(Rho,[1 Nt]) .* 1e-6;
+          elseif (ndims(HDA) == 2)
+            % HDA is (2,t)
+            % Rho(2) is first level above the surface
+            HDA(1,:) = squeeze(HDA(1,:)) .* Rho(2) .* 1e-6;
+          end
+        end
 
         % do time series of spatial averaging
         % HDA is either (2,z,t) or (2,t), where along the first dimension

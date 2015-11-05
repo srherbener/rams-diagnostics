@@ -251,7 +251,7 @@ End
 PlotAxes: WvarDnAxes 2
   8 1 [0.025_0.025]
   # x - w variance
-  <w'w'> m^2@s^-^2  -0.001 0.025 linear [_] {_}
+  <w'w'> m^2@s^-^2  -0.001 0.1 linear [_] {_}
   # y - height (km)
   Height         km 0 4 linear [_] {_}
 End
@@ -259,7 +259,7 @@ End
 PlotAxes: BfluxUpAxes 2
   8 1 [0.025_0.025]
   # x - buoyancy flux
-  Buoy@Flux m^2@s^-^3  -0.002 0.001 linear [_] {_}
+  Buoy@Flux m^2@s^-^3  -0.005 0.005 linear [_] {_}
   # y - height (km)
   Height         km 0 4 linear [_] {_}
 End
@@ -267,7 +267,7 @@ End
 PlotAxes: BfluxDnAxes 2
   8 1 [0.025_0.025]
   # x - buoyancy flux
-  Buoy@Flux m^2@s^-^3  -0.0003 0.003 linear [_] {_}
+  Buoy@Flux m^2@s^-^3  -0.005 0.005 linear [_] {_}
   # y - height (km)
   Height         km 0 4 linear [_] {_}
 End
@@ -275,7 +275,7 @@ End
 PlotAxes: WvaporUpAxes 2
   8 1 [0.025_0.025]
   # x - w vapor covariance
-  <w'q'> g@kg^-^1@m@s^-^1  -0.005 0.040 linear [_] {_}
+  <w'q'> g@kg^-^1@m@s^-^1  -0.1 0.1 linear [_] {_}
   # y - height (km)
   Height         km 0 4 linear [_] {_}
 End
@@ -283,7 +283,7 @@ End
 PlotAxes: WvaporDnAxes 2
   8 1 [0.025_0.025]
   # x - w vapor covariance
-  <w'q'> g@kg^-^1@m@s^-^1  -0.05 0.02 linear [_] {_}
+  <w'q'> g@kg^-^1@m@s^-^1  -0.1 0.1 linear [_] {_}
   # y - height (km)
   Height         km 0 4 linear [_] {_}
 End

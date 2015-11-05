@@ -134,7 +134,7 @@ FigPanel: CmassPanelS293
   CmassAxes 0 1
   none 5
   PANEL:a@S293
-  SouthWest 10
+  NorthEast 10
 End
 
 FigPanel: CmassPanelS298
@@ -150,7 +150,7 @@ FigPanel: CdiamPanelS293
   CdiamAxes 0 1
   none 5
   PANEL:a@S293
-  SouthWest 10
+  NorthEast 10
 End
 
 FigPanel: CdiamPanelS298
@@ -166,7 +166,7 @@ FigPanel: CnumPanelS293
   CnumAxes 0 1
   none 5
   PANEL:a@S293
-  SouthWest 10
+  NorthEast 10
 End
 
 FigPanel: CnumPanelS298
@@ -183,7 +183,7 @@ FigPanel: RmassPanelS293
   RmassAxes 0 1
   none 5
   PANEL:a@S293
-  SouthWest 10
+  NorthEast 10
 End
 
 FigPanel: RmassPanelS298
@@ -199,7 +199,7 @@ FigPanel: RdiamPanelS293
   RdiamAxes 0 1
   none 5
   PANEL:a@S293
-  SouthWest 10
+  NorthEast 10
 End
 
 FigPanel: RdiamPanelS298
@@ -215,7 +215,7 @@ FigPanel: RnumPanelS293
   RnumAxes 0 1
   none 5
   PANEL:a@S293
-  SouthWest 10
+  NorthEast 10
 End
 
 FigPanel: RnumPanelS298
@@ -232,7 +232,7 @@ FigPanel: CotPanelS293
   CotAxes 1 1
   none 5
   PANEL:b@S293
-  SouthWest 10
+  NorthEast 10
 End
 
 FigPanel: CotPanelS298
@@ -249,7 +249,7 @@ FigPanel: CdepthPanelS293
   CdepthAxes 1 1
   none 5
   PANEL:b@S293
-  SouthWest 10
+  NorthEast 10
 End
 
 FigPanel: CdepthPanelS298
@@ -266,7 +266,7 @@ FigPanel: LwcPanelS293
   LwcAxes 1 1
   none 5
   PANEL:b@S293
-  SouthWest 10
+  NorthEast 10
 End
 
 FigPanel: LwcPanelS298
@@ -283,7 +283,7 @@ FigPanel: InvHeightPanelS293
   InvHeightAxes 1 1
   none 5
   PANEL:b@S293
-  SouthWest 10
+  NorthEast 10
 End
 
 FigPanel: InvHeightPanelS298
@@ -300,7 +300,7 @@ FigPanel: ScCloudTopPanelS293
   ScCloudTopAxes 1 1
   none 5
   PANEL:b@S293
-  SouthWest 10
+  NorthEast 10
 End
 
 FigPanel: ScCloudTopPanelS298
@@ -317,7 +317,7 @@ FigPanel: ScCloudBotPanelS293
   ScCloudBotAxes 1 1
   none 5
   PANEL:b@S293
-  SouthWest 10
+  NorthEast 10
 End
 
 FigPanel: ScCloudBotPanelS298
@@ -559,21 +559,21 @@ PlotData: CloudMassLine 2
   # x - sim time in hours
   /t_coords         DIAGS/avg_cloud_<CASE>.h5 @ 1 0
   # y - cloud mass (g/kg)
-  /cloud_c0p01_zavg DIAGS/avg_cloud_<CASE>.h5 @ 1 0
+  /cloud_zavg DIAGS/avg_cloud_<CASE>.h5 @ 1 0
 End
 
 PlotData: CloudDiamLine 2
   # x - sim time in hours
   /t_coords              DIAGS/avg_cloud_diam_<CASE>.h5 @ 1 0
   # y - cloud mass (g/kg)
-  /cloud_diam_c0p01_zavg DIAGS/avg_cloud_diam_<CASE>.h5 @ 1 0
+  /cloud_diam_zavg DIAGS/avg_cloud_diam_<CASE>.h5 @ 1 0
 End
 
 PlotData: CloudNumLine 2
   # x - sim time in hours
   /t_coords             DIAGS/avg_cloud_num_<CASE>.h5 @ 1 0
   # y - cloud mass (g/kg)
-  /cloud_num_c0p01_zavg DIAGS/avg_cloud_num_<CASE>.h5 @ 1 0
+  /cloud_num_zavg DIAGS/avg_cloud_num_<CASE>.h5 @ 1 0
 End
 
 # RAIN
@@ -581,21 +581,21 @@ PlotData: RainMassLine 2
   # x - sim time in hours
   /t_coords        DIAGS/avg_rain_<CASE>.h5 @ 1 0
   # y - rain mass (g/kg)
-  /rain_r0p01_zavg DIAGS/avg_rain_<CASE>.h5 @ 1 0
+  /rain_zavg DIAGS/avg_rain_<CASE>.h5 @ 1 0
 End
 
 PlotData: RainDiamLine 2
   # x - sim time in hours
   /t_coords             DIAGS/avg_rain_diam_<CASE>.h5 @ 1 0
   # y - rain mass (g/kg)
-  /rain_diam_r0p01_zavg DIAGS/avg_rain_diam_<CASE>.h5 @ 1 0
+  /rain_diam_zavg DIAGS/avg_rain_diam_<CASE>.h5 @ 1 0
 End
 
 PlotData: RainNumLine 2
   # x - sim time in hours
   /t_coords            DIAGS/avg_rain_num_<CASE>.h5 @ 1 0
   # y - rain mass (g/kg)
-  /rain_num_r0p01_zavg DIAGS/avg_rain_num_<CASE>.h5 @ 1e-3 0
+  /rain_num_zavg DIAGS/avg_rain_num_<CASE>.h5 @ 1e-3 0
 End
 
 # COT

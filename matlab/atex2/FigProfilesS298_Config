@@ -235,7 +235,7 @@ End
 PlotAxes: CloudFracAxes 2
   8 1 [0.025_0.025]
   # x - cloud fraction
-  Cloud@Fraction @  0 0.4 linear [_] {_}
+  Cloud@Fraction @  0 0.6 linear [_] {_}
   # y - height (km)
   Height         km 0   4 linear [_] {_}
 End
@@ -251,7 +251,7 @@ End
 PlotAxes: WvarDnAxes 2
   8 1 [0.025_0.025]
   # x - w variance
-  <w'w'> m^2@s^-^2  -0.01 0.1 linear [_] {_}
+  <w'w'> m^2@s^-^2  -0.01 0.3 linear [_] {_}
   # y - height (km)
   Height         km 0 4 linear [_] {_}
 End
@@ -259,7 +259,7 @@ End
 PlotAxes: BfluxUpAxes 2
   8 1 [0.025_0.025]
   # x - buoyancy flux
-  Buoy@Flux m^2@s^-^3  -0.001 0.004 linear [_] {_}
+  Buoy@Flux m^2@s^-^3  -0.003 0.003 linear [_] {_}
   # y - height (km)
   Height         km 0 4 linear [_] {_}
 End
@@ -267,7 +267,7 @@ End
 PlotAxes: BfluxDnAxes 2
   8 1 [0.025_0.025]
   # x - buoyancy flux
-  Buoy@Flux m^2@s^-^3  -0.001 0.002 linear [_] {_}
+  Buoy@Flux m^2@s^-^3  -0.003 0.003 linear [_] {_}
   # y - height (km)
   Height         km 0 4 linear [_] {_}
 End

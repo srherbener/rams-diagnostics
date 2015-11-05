@@ -95,7 +95,7 @@ PlotAxes: CotBarAxes 2
   # x - CCN concentration
   Number@Concentration cm^-^3  0  7 linear [1_2_3_4_5_6] {'50'_'100'_'200'_'400'_'800'_'1600'}
   # y - height (km)
-  \tau_c               @       0  6 linear [_] {_}
+  \tau_c               @       0  8 linear [_] {_}
 End
 
 PlotAxes: CotBarAllCloudAxes 2
@@ -103,6 +103,6 @@ PlotAxes: CotBarAllCloudAxes 2
   # x - CCN concentration
   Number@Concentration cm^-^3  0  7 linear [1_2_3_4_5_6] {'50'_'100'_'200'_'400'_'800'_'1600'}
   # y - height (km)
-  \tau_c               @       0  6 linear [_] {_}
+  \tau_c               @       0  8 linear [_] {_}
 End
 
