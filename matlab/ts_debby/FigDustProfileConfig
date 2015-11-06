@@ -1,0 +1,193 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: DustProfile 6
+  DummyCases
+  [2_3]
+  Plots/FigDustProfile.jpg
+  Dust1NumSalCorePanel  1
+  Dust1NumSalRbandPanel 2
+  Dust1NumSalEnvPanel   3
+  Dust2NumSalCorePanel  4
+  Dust2NumSalRbandPanel 5
+  Dust2NumSalEnvPanel   6
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: Dust1NumSalCorePanel
+  Dust1NumSalCorePset
+  Dust1NumSalCoreAxes 1 1
+  none 5
+  SAL:@Core 
+  NorthEast 12
+End
+
+FigPanel: Dust1NumSalRbandPanel
+  Dust1NumSalRbandPset
+  Dust1NumSalRbandAxes 1 1
+  none 5
+  SAL:@Rband 
+  NorthEast 12
+End
+
+FigPanel: Dust1NumSalEnvPanel
+  Dust1NumSalEnvPset
+  Dust1NumSalEnvAxes 1 1
+  none 5
+  SAL:@Env
+  NorthEast 12
+End
+
+FigPanel: Dust2NumSalCorePanel
+  Dust2NumSalCorePset
+  Dust2NumSalCoreAxes 1 1
+  none 5
+  SAL:@Core
+  NorthEast 12
+End
+
+FigPanel: Dust2NumSalRbandPanel
+  Dust2NumSalRbandPset
+  Dust2NumSalRbandAxes 1 1
+  none 5
+  SAL:@Rband
+  NorthEast 12
+End
+
+FigPanel: Dust2NumSalEnvPanel
+  Dust2NumSalEnvPset
+  Dust2NumSalEnvAxes 1 1
+  none 5
+  SAL:@Env
+  NorthEast 12
+End
+
+############ PLOT SETS #################
+PlotSet: Dust1NumSalCorePset line 2
+  Dust1NumSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  Dust1NumSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+End
+
+PlotSet: Dust1NumSalRbandPset line 2
+  Dust1NumSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  Dust1NumSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+End
+
+PlotSet: Dust1NumSalEnvPset line 2
+  Dust1NumSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
+  Dust1NumSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+End
+
+PlotSet: Dust2NumSalCorePset line 2
+  Dust2NumSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  Dust2NumSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+End
+
+PlotSet: Dust2NumSalRbandPset line 2
+  Dust2NumSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  Dust2NumSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+End
+
+PlotSet: Dust2NumSalEnvPset line 2
+  Dust2NumSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
+  Dust2NumSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+End
+
+############ PLOT DATA #################
+PlotData: Dust1NumSalCoreLine 2
+  # x data - d1_num, #/cm3
+  /core_s_d1_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: Dust1NumSalRbandLine 2
+  # x data - d1_num, #/cm3
+  /rb_s_d1_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: Dust1NumSalEnvLine 2
+  # x data - d1_num, #/cm3
+  /env_s_d1_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: Dust2NumSalCoreLine 2
+  # x data - d1_num, #/cm3
+  /core_s_d2_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: Dust2NumSalRbandLine 2
+  # x data - d1_num, #/cm3
+  /rb_s_d2_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: Dust2NumSalEnvLine 2
+  # x data - d1_num, #/cm3
+  /env_s_d2_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: Dust1NumSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d1_num, #/cm3
+  Dust1@Num N@cm^-^3 0 100 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: Dust1NumSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d1_num, #/cm3
+  Dust1@Num N@cm^-^3 0 100 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: Dust1NumSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d1_diam, um
+  Dust1@Num N@cm^-^3 0 100 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: Dust2NumSalCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d2_num, #/cm3
+  Dust2@Num N@cm^-^3 0 100 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: Dust2NumSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d2_num, #/cm3
+  Dust2@Num N@cm^-^3 0 100 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: Dust2NumSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d2_diam, um
+  Dust2@Num N@cm^-^3 0 100 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End

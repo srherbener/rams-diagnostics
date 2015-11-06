@@ -1,0 +1,144 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: CloudNumDiamProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigCloudNumDiamProfile.jpg
+  CloudNumSalRbandPanel  1
+  CloudNumSalEnvPanel     2
+  CloudDiamSalRbandPanel  3
+  CloudDiamSalEnvPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: CloudNumSalRbandPanel
+  CloudNumSalRbandPset
+  CloudNumSalRbandAxes 1 1
+  none 5
+  SAL:@Rband 
+  NorthEast 12
+End
+
+FigPanel: CloudNumSalEnvPanel
+  CloudNumSalEnvPset
+  CloudNumSalEnvAxes 1 1
+  none 5
+  SAL:@Env 
+  NorthEast 12
+End
+
+FigPanel: CloudDiamSalRbandPanel
+  CloudDiamSalRbandPset
+  CloudDiamSalRbandAxes 1 1
+  none 5
+  SAL:@Rband 
+  SouthWest 12
+End
+
+FigPanel: CloudDiamSalEnvPanel
+  CloudDiamSalEnvPset
+  CloudDiamSalEnvAxes 1 1
+  none 5
+  SAL:@Env 
+  SouthWest 12
+End
+
+############ PLOT SETS #################
+PlotSet: CloudNumSalRbandPset line 4
+  CloudNumSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudNumSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudNumSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudNumSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudNumSalEnvPset line 4
+  CloudNumSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudNumSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudNumSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudNumSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudDiamSalRbandPset line 4
+  CloudDiamSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudDiamSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudDiamSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudDiamSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudDiamSalEnvPset line 4
+  CloudDiamSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudDiamSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudDiamSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudDiamSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: CloudNumSalRbandLine 2
+  # x data - cloud number, N/cm3
+  /rb_s_cloud_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+
+PlotData: CloudNumSalEnvLine 2
+  # x data - cloud number, N/cm3
+  /env_s_cloud_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+
+PlotData: CloudDiamSalRbandLine 2
+  # x data - cloud diameter, um
+  /rb_s_cloud_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+
+PlotData: CloudDiamSalEnvLine 2
+  # x data - cloud diameter, um
+  /env_s_cloud_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+
+############ PLOT AXES #################
+PlotAxes: CloudNumSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud number, N/cm3
+  N_c N@cm^-^3 -1 50 linear [_] {_}
+  # y axis - height, km
+  Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: CloudNumSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud number, N/cm3
+  N_c N@cm^-^3 -1 50 linear [_] {_}
+  # y axis - height, km
+  Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: CloudDiamSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud number, N/cm3
+  D_c um -1 50 linear [_] {_}
+  # y axis - height, km
+  Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: CloudDiamSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud number, N/cm3
+  D_c um -1 50 linear [_] {_}
+  # y axis - height, km
+  Height km 0 10 linear [_] {_}
+End
+

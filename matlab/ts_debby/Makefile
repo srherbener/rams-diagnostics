@@ -135,6 +135,8 @@ CONFIGS = \
   $(DIAG_DIR)/FigLhfHeatEnvProfileConfig \
   $(DIAG_DIR)/FigLhvCoolEnvProfileConfig \
   $(DIAG_DIR)/FigLhvHeatEnvProfileConfig \
+  $(DIAG_DIR)/FigDustProfileConfig \
+  $(DIAG_DIR)/FigCloudNumDiamProfileConfig \
   $(DIAG_DIR)/FigureConfig
 
 #
