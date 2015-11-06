@@ -1,0 +1,184 @@
+#
+# Vertical profiles
+#
+
+######### FIGURES ###################
+#Figure: LhfProfile 2
+#  DummyCases
+#  [1_2]
+#  Plots/FigLhfProfile.jpg
+#  LhfCoolPanel  1
+#  LhfHeatPanel  2
+#End 
+#
+#Figure: LhvProfile 2
+#  DummyCases
+#  [1_2]
+#  Plots/FigLhvProfile.jpg
+#  LhvCoolPanel  1
+#  LhvHeatPanel  2
+#End 
+
+Figure: LatHeatProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigLatHeatProfile.jpg
+  LhfCoolPanel  1
+  LhfHeatPanel  2
+  LhvCoolPanel  3
+  LhvHeatPanel  4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: LhfCoolPanel
+  LhfCoolPset
+  LhfCoolAxes 1 1
+  none 5
+  PANEL:a
+  NorthWest 12
+End
+
+FigPanel: LhfHeatPanel
+  LhfHeatPset
+  LhfHeatAxes 1 1
+  none 5
+  PANEL:b
+  NorthEast 12
+End
+
+FigPanel: LhvCoolPanel
+  LhvCoolPset
+  LhvCoolAxes 1 1
+  none 5
+  PANEL:c
+  NorthWest 12
+End
+
+FigPanel: LhvHeatPanel
+  LhvHeatPset
+  LhvHeatAxes 1 1
+  none 5
+  PANEL:d
+  NorthEast 12
+End
+
+############ PLOT SETS #################
+PlotSet: LhfCoolPset line 2
+  LhfCoolHpwLine RCE_S300_CONV H@PR  2 blue  - 0
+  LhfCoolLpwLine RCE_S300_CONV L@PR  2 green - 0
+End
+
+PlotSet: LhfHeatPset line 2
+  LhfHeatHpwLine RCE_S300_CONV H@PR  2 red    - 0
+  LhfHeatLpwLine RCE_S300_CONV L@PR  2 orange - 0
+End
+
+PlotSet: LhvCoolPset line 2
+  LhvCoolHpwLine RCE_S300_CONV H@PR  2 blue  - 0
+  LhvCoolLpwLine RCE_S300_CONV L@PR  2 green - 0
+End
+
+PlotSet: LhvHeatPset line 2
+  LhvHeatHpwLine RCE_S300_CONV H@PR  2 red    - 0
+  LhvHeatLpwLine RCE_S300_CONV L@PR  2 orange - 0
+End
+
+############ PLOT DATA #################
+# RAMS files are saved on 30 second intervals, meaning
+# that the values in them are heating rates in units
+# of K/30s. Multiply the heating rates by 120 in
+# order to make the units K/h.
+PlotData: LhfCoolHpwLine 2
+  # x data - lhf_cool mix ratio, K/h
+  /lhf_cool_hp DIAGS/hist_meas_ts_lat_heat_<CASE>.h5 @ 120 0
+  # y data - height, km
+  /z_coords DIAGS/hist_meas_ts_lat_heat_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhfCoolLpwLine 2
+  # x data - lhf_cool mix ratio, K/h
+  /lhf_cool_lp DIAGS/hist_meas_ts_lat_heat_<CASE>.h5 @ 120 0
+  # y data - height, km
+  /z_coords DIAGS/hist_meas_ts_lat_heat_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhfHeatHpwLine 2
+  # x data - lhf_cool mix ratio, K/h
+  /lhf_heat_hp DIAGS/hist_meas_ts_lat_heat_<CASE>.h5 @ 120 0
+  # y data - height, km
+  /z_coords DIAGS/hist_meas_ts_lat_heat_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhfHeatLpwLine 2
+  # x data - lhf_cool mix ratio, K/h
+  /lhf_heat_lp DIAGS/hist_meas_ts_lat_heat_<CASE>.h5 @ 120 0
+  # y data - height, km
+  /z_coords DIAGS/hist_meas_ts_lat_heat_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhvCoolHpwLine 2
+  # x data - lhv_cool mix ratio, K/h
+  /lhv_cool_hp DIAGS/hist_meas_ts_lat_heat_<CASE>.h5 @ 120 0
+  # y data - height, km
+  /z_coords DIAGS/hist_meas_ts_lat_heat_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhvCoolLpwLine 2
+  # x data - lhv_cool mix ratio, K/h
+  /lhv_cool_lp DIAGS/hist_meas_ts_lat_heat_<CASE>.h5 @ 120 0
+  # y data - height, km
+  /z_coords DIAGS/hist_meas_ts_lat_heat_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhvHeatHpwLine 2
+  # x data - lhv_cool mix ratio, K/h
+  /lhv_heat_hp DIAGS/hist_meas_ts_lat_heat_<CASE>.h5 @ 120 0
+  # y data - height, km
+  /z_coords DIAGS/hist_meas_ts_lat_heat_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhvHeatLpwLine 2
+  # x data - lhv_cool mix ratio, K/h
+  /lhv_heat_lp DIAGS/hist_meas_ts_lat_heat_<CASE>.h5 @ 120 0
+  # y data - height, km
+  /z_coords DIAGS/hist_meas_ts_lat_heat_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: LhfCoolAxes 2
+  14 2 [0.025_0.025]
+  # x axis - lhf_cool mix ratio, K/h
+  LH@Frz@Cooling K@h^-^1 -0.5 0.01 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: LhfHeatAxes 2
+  14 2 [0.025_0.025]
+  # x axis - lhf_cool mix ratio, K/h
+  LH@Frz@Heating K@h^-^1 -0.1 4 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: LhvCoolAxes 2
+  14 2 [0.025_0.025]
+  # x axis - lhf_cool mix ratio, K/h
+  LH@Vap@Cooling K@h^-^1 -20 1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: LhvHeatAxes 2
+  14 2 [0.025_0.025]
+  # x axis - lhf_cool mix ratio, K/h
+  LH@Vap@Heating K@h^-^1 -1 80 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
