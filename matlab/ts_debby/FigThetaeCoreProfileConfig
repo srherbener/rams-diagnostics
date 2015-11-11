@@ -7,8 +7,8 @@ Figure: ThetaeCoreProfile 4
   DummyCases
   [2_2]
   Plots/FigThetaeCoreProfile.jpg
-  ThetaeCntlPreSalCorePanel  1
-  ThetaeCntlSalCorePanel     2
+  ThetaePreSalCorePanel  1
+  ThetaeSalCorePanel     2
   ThetaeDiffPreSalCorePanel  3
   ThetaeDiffSalCorePanel     4
 End 
@@ -17,10 +17,70 @@ Figure: ThetaeCoreLlevProfile 4
   DummyCases
   [2_2]
   Plots/FigThetaeCoreLlevProfile.jpg
-  ThetaeCntlPreSalCoreLlevPanel  1
-  ThetaeCntlSalCoreLlevPanel     2
+  ThetaePreSalCoreLlevPanel  1
+  ThetaeSalCoreLlevPanel     2
   ThetaeDiffPreSalCoreLlevPanel  3
   ThetaeDiffSalCoreLlevPanel     4
+End 
+
+Figure: ThetaeLeadCoreProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigThetaeLeadCoreProfile.jpg
+  ThetaeLeadPreSalCorePanel  1
+  ThetaeLeadSalCorePanel     2
+  ThetaeLeadDiffPreSalCorePanel  3
+  ThetaeLeadDiffSalCorePanel     4
+End 
+
+Figure: ThetaeLeadCoreLlevProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigThetaeLeadCoreLlevProfile.jpg
+  ThetaeLeadPreSalCoreLlevPanel  1
+  ThetaeLeadSalCoreLlevPanel     2
+  ThetaeLeadDiffPreSalCoreLlevPanel  3
+  ThetaeLeadDiffSalCoreLlevPanel     4
+End 
+
+Figure: ThetaePrecipCoreProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigThetaePrecipCoreProfile.jpg
+  ThetaePrecipPreSalCorePanel  1
+  ThetaePrecipSalCorePanel     2
+  ThetaePrecipDiffPreSalCorePanel  3
+  ThetaePrecipDiffSalCorePanel     4
+End 
+
+Figure: ThetaePrecipCoreLlevProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigThetaePrecipCoreLlevProfile.jpg
+  ThetaePrecipPreSalCoreLlevPanel  1
+  ThetaePrecipSalCoreLlevPanel     2
+  ThetaePrecipDiffPreSalCoreLlevPanel  3
+  ThetaePrecipDiffSalCoreLlevPanel     4
+End 
+
+Figure: ThetaePrecipLeadCoreProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigThetaePrecipLeadCoreProfile.jpg
+  ThetaePrecipLeadPreSalCorePanel  1
+  ThetaePrecipLeadSalCorePanel     2
+  ThetaePrecipLeadDiffPreSalCorePanel  3
+  ThetaePrecipLeadDiffSalCorePanel     4
+End 
+
+Figure: ThetaePrecipLeadCoreLlevProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigThetaePrecipLeadCoreLlevProfile.jpg
+  ThetaePrecipLeadPreSalCoreLlevPanel  1
+  ThetaePrecipLeadSalCoreLlevPanel     2
+  ThetaePrecipLeadDiffPreSalCoreLlevPanel  3
+  ThetaePrecipLeadDiffSalCoreLlevPanel     4
 End 
 
 ########### CASES ####################
@@ -29,9 +89,9 @@ CaseSet: DummyCases 1
 End
 
 ########### PANELS ####################
-FigPanel: ThetaeCntlPreSalCorePanel
-  ThetaeCntlPreSalCorePset
-  ThetaeCntlPreSalCoreAxes 1 1
+FigPanel: ThetaePreSalCorePanel
+  ThetaePreSalCorePset
+  ThetaePreSalCoreAxes 1 1
   none 5
   Pre@SAL@Core 
   NorthEast 12
@@ -45,9 +105,9 @@ FigPanel: ThetaeDiffPreSalCorePanel
   NorthEast 12
 End
 
-FigPanel: ThetaeCntlSalCorePanel
-  ThetaeCntlSalCorePset
-  ThetaeCntlSalCoreAxes 1 1
+FigPanel: ThetaeSalCorePanel
+  ThetaeSalCorePset
+  ThetaeSalCoreAxes 1 1
   none 5
   SAL@Core 
   NorthEast 12
@@ -61,9 +121,9 @@ FigPanel: ThetaeDiffSalCorePanel
   NorthEast 12
 End
 
-FigPanel: ThetaeCntlPreSalCoreLlevPanel
-  ThetaeCntlPreSalCorePset
-  ThetaeCntlPreSalCoreLlevAxes 1 1
+FigPanel: ThetaePreSalCoreLlevPanel
+  ThetaePreSalCorePset
+  ThetaePreSalCoreLlevAxes 1 1
   none 5
   Pre@SAL@Core 
   NorthEast 12
@@ -77,9 +137,9 @@ FigPanel: ThetaeDiffPreSalCoreLlevPanel
   NorthEast 12
 End
 
-FigPanel: ThetaeCntlSalCoreLlevPanel
-  ThetaeCntlSalCorePset
-  ThetaeCntlSalCoreLlevAxes 1 1
+FigPanel: ThetaeSalCoreLlevPanel
+  ThetaeSalCorePset
+  ThetaeSalCoreLlevAxes 1 1
   none 5
   SAL@Core 
   NorthEast 12
@@ -93,8 +153,200 @@ FigPanel: ThetaeDiffSalCoreLlevPanel
   NorthEast 12
 End
 
+FigPanel: ThetaeLeadPreSalCorePanel
+  ThetaeLeadPreSalCorePset
+  ThetaePreSalCoreAxes 1 1
+  none 5
+  Pre@SAL@Lead@Core 
+  NorthEast 12
+End
+
+FigPanel: ThetaeLeadDiffPreSalCorePanel
+  ThetaeLeadDiffPreSalCorePset
+  ThetaeDiffPreSalCoreAxes 1 1
+  none 5
+  Pre@SAL@Lead@Core@(diffs)
+  NorthEast 12
+End
+
+FigPanel: ThetaeLeadSalCorePanel
+  ThetaeLeadSalCorePset
+  ThetaeSalCoreAxes 1 1
+  none 5
+  SAL@Lead@Core 
+  NorthEast 12
+End
+
+FigPanel: ThetaeLeadDiffSalCorePanel
+  ThetaeLeadDiffSalCorePset
+  ThetaeDiffSalCoreAxes 1 1
+  none 5
+  SAL@Lead@Core@(diffs)
+  NorthEast 12
+End
+
+FigPanel: ThetaeLeadPreSalCoreLlevPanel
+  ThetaeLeadPreSalCorePset
+  ThetaePreSalCoreLlevAxes 1 1
+  none 5
+  Pre@SAL@Lead@Core 
+  NorthEast 12
+End
+
+FigPanel: ThetaeLeadDiffPreSalCoreLlevPanel
+  ThetaeLeadDiffPreSalCorePset
+  ThetaeDiffPreSalCoreLlevAxes 1 1
+  none 5
+  Pre@SAL@Lead@Core@(diffs)
+  NorthEast 12
+End
+
+FigPanel: ThetaeLeadSalCoreLlevPanel
+  ThetaeLeadSalCorePset
+  ThetaeSalCoreLlevAxes 1 1
+  none 5
+  SAL@Lead@Core 
+  NorthEast 12
+End
+
+FigPanel: ThetaeLeadDiffSalCoreLlevPanel
+  ThetaeLeadDiffSalCorePset
+  ThetaeDiffSalCoreLlevAxes 1 1
+  none 5
+  SAL@Lead@Core@(diffs)
+  NorthEast 12
+End
+
+FigPanel: ThetaePrecipPreSalCorePanel
+  ThetaePrecipPreSalCorePset
+  ThetaePreSalCoreAxes 1 1
+  none 5
+  Pre@SAL@Precip@Core 
+  NorthEast 12
+End
+
+FigPanel: ThetaePrecipDiffPreSalCorePanel
+  ThetaePrecipDiffPreSalCorePset
+  ThetaeDiffPreSalCoreAxes 1 1
+  none 5
+  Pre@SAL@Precip@Core@(diffs)
+  NorthEast 12
+End
+
+FigPanel: ThetaePrecipSalCorePanel
+  ThetaePrecipSalCorePset
+  ThetaeSalCoreAxes 1 1
+  none 5
+  SAL@Precip@Core 
+  NorthEast 12
+End
+
+FigPanel: ThetaePrecipDiffSalCorePanel
+  ThetaePrecipDiffSalCorePset
+  ThetaeDiffSalCoreAxes 1 1
+  none 5
+  SAL@Precip@Core@(diffs)
+  NorthEast 12
+End
+
+FigPanel: ThetaePrecipPreSalCoreLlevPanel
+  ThetaePrecipPreSalCorePset
+  ThetaePreSalCoreLlevAxes 1 1
+  none 5
+  Pre@SAL@Precip@Core 
+  NorthEast 12
+End
+
+FigPanel: ThetaePrecipDiffPreSalCoreLlevPanel
+  ThetaePrecipDiffPreSalCorePset
+  ThetaeDiffPreSalCoreLlevAxes 1 1
+  none 5
+  Pre@SAL@Precip@Core@(diffs)
+  NorthEast 12
+End
+
+FigPanel: ThetaePrecipSalCoreLlevPanel
+  ThetaePrecipSalCorePset
+  ThetaeSalCoreLlevAxes 1 1
+  none 5
+  SAL@Precip@Core 
+  NorthEast 12
+End
+
+FigPanel: ThetaePrecipDiffSalCoreLlevPanel
+  ThetaePrecipDiffSalCorePset
+  ThetaeDiffSalCoreLlevAxes 1 1
+  none 5
+  SAL@Precip@Core@(diffs)
+  NorthEast 12
+End
+
+FigPanel: ThetaePrecipLeadPreSalCorePanel
+  ThetaePrecipLeadPreSalCorePset
+  ThetaePreSalCoreAxes 1 1
+  none 5
+  Pre@SAL@Precip@Lead@Core 
+  NorthEast 12
+End
+
+FigPanel: ThetaePrecipLeadDiffPreSalCorePanel
+  ThetaePrecipLeadDiffPreSalCorePset
+  ThetaeDiffPreSalCoreAxes 1 1
+  none 5
+  Pre@SAL@Precip@Lead@Core@(diffs)
+  NorthEast 12
+End
+
+FigPanel: ThetaePrecipLeadSalCorePanel
+  ThetaePrecipLeadSalCorePset
+  ThetaeSalCoreAxes 1 1
+  none 5
+  SAL@Precip@Lead@Core 
+  NorthEast 12
+End
+
+FigPanel: ThetaePrecipLeadDiffSalCorePanel
+  ThetaePrecipLeadDiffSalCorePset
+  ThetaeDiffSalCoreAxes 1 1
+  none 5
+  SAL@Precip@Lead@Core@(diffs)
+  NorthEast 12
+End
+
+FigPanel: ThetaePrecipLeadPreSalCoreLlevPanel
+  ThetaePrecipLeadPreSalCorePset
+  ThetaePreSalCoreLlevAxes 1 1
+  none 5
+  Pre@SAL@Precip@Lead@Core 
+  NorthEast 12
+End
+
+FigPanel: ThetaePrecipLeadDiffPreSalCoreLlevPanel
+  ThetaePrecipLeadDiffPreSalCorePset
+  ThetaeDiffPreSalCoreLlevAxes 1 1
+  none 5
+  Pre@SAL@Precip@Lead@Core@(diffs)
+  NorthEast 12
+End
+
+FigPanel: ThetaePrecipLeadSalCoreLlevPanel
+  ThetaePrecipLeadSalCorePset
+  ThetaeSalCoreLlevAxes 1 1
+  none 5
+  SAL@Precip@Lead@Core 
+  NorthEast 12
+End
+
+FigPanel: ThetaePrecipLeadDiffSalCoreLlevPanel
+  ThetaePrecipLeadDiffSalCorePset
+  ThetaeDiffSalCoreLlevAxes 1 1
+  none 5
+  SAL@Precip@Lead@Core@(diffs)
+  NorthEast 12
+End
+
 ############ PLOT SETS #################
-PlotSet: ThetaeCntlPreSalCorePset line 4
+PlotSet: ThetaePreSalCorePset line 4
   ThetaePreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
   ThetaePreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
   ThetaePreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
@@ -108,7 +360,7 @@ PlotSet: ThetaeDiffPreSalCorePset line 4
   ThetaeDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
-PlotSet: ThetaeCntlSalCorePset line 4
+PlotSet: ThetaeSalCorePset line 4
   ThetaeSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
   ThetaeSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
   ThetaeSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
@@ -120,6 +372,90 @@ PlotSet: ThetaeDiffSalCorePset line 4
   ThetaeDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
   ThetaeDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
   ThetaeDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: ThetaeLeadPreSalCorePset line 4
+  ThetaeLeadPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaeLeadPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaeLeadPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaeLeadPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: ThetaeLeadDiffPreSalCorePset line 4
+  ThetaeLeadDiffPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaeLeadDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaeLeadDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaeLeadDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: ThetaeLeadSalCorePset line 4
+  ThetaeLeadSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaeLeadSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaeLeadSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaeLeadSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: ThetaeLeadDiffSalCorePset line 4
+  ThetaeLeadDiffSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaeLeadDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaeLeadDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaeLeadDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: ThetaePrecipPreSalCorePset line 4
+  ThetaePrecipPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaePrecipPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaePrecipPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaePrecipPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: ThetaePrecipDiffPreSalCorePset line 4
+  ThetaePrecipDiffPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaePrecipDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaePrecipDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaePrecipDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: ThetaePrecipSalCorePset line 4
+  ThetaePrecipSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaePrecipSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaePrecipSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaePrecipSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: ThetaePrecipDiffSalCorePset line 4
+  ThetaePrecipDiffSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaePrecipDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaePrecipDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaePrecipDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: ThetaePrecipLeadPreSalCorePset line 4
+  ThetaePrecipLeadPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaePrecipLeadPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaePrecipLeadPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaePrecipLeadPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: ThetaePrecipLeadDiffPreSalCorePset line 4
+  ThetaePrecipLeadDiffPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaePrecipLeadDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaePrecipLeadDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaePrecipLeadDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: ThetaePrecipLeadSalCorePset line 4
+  ThetaePrecipLeadSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaePrecipLeadSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaePrecipLeadSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaePrecipLeadSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: ThetaePrecipLeadDiffSalCorePset line 4
+  ThetaePrecipLeadDiffSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaePrecipLeadDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaePrecipLeadDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaePrecipLeadDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
 End
 
 ############ PLOT DATA #################
@@ -151,8 +487,92 @@ PlotData: ThetaeDiffSalCoreLine 2
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
+PlotData: ThetaeLeadPreSalCoreLine 2
+  # x data - theta_e, K
+  /lead_core_ps_theta_e DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaeLeadSalCoreLine 2
+  # x data - theta_e, K
+  /lead_core_s_theta_e DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaeLeadDiffPreSalCoreLine 2
+  # x data - theta_e, K
+  /lead_core_ps_theta_e_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaeLeadDiffSalCoreLine 2
+  # x data - theta_e, K
+  /lead_core_s_theta_e_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaePrecipPreSalCoreLine 2
+  # x data - theta_e, K
+  /precip_all_core_ps_theta_e DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaePrecipSalCoreLine 2
+  # x data - theta_e, K
+  /precip_all_core_s_theta_e DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaePrecipDiffPreSalCoreLine 2
+  # x data - theta_e, K
+  /precip_all_core_ps_theta_e_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaePrecipDiffSalCoreLine 2
+  # x data - theta_e, K
+  /precip_all_core_s_theta_e_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaePrecipLeadPreSalCoreLine 2
+  # x data - theta_e, K
+  /precip_lead_core_ps_theta_e DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaePrecipLeadSalCoreLine 2
+  # x data - theta_e, K
+  /precip_lead_core_s_theta_e DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaePrecipLeadDiffPreSalCoreLine 2
+  # x data - theta_e, K
+  /precip_lead_core_ps_theta_e_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaePrecipLeadDiffSalCoreLine 2
+  # x data - theta_e, K
+  /precip_lead_core_s_theta_e_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
 ############ PLOT AXES #################
-PlotAxes: ThetaeCntlPreSalCoreAxes 2
+PlotAxes: ThetaePreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - theta_e, K
   \theta_e g@kg^-^1 340 370 linear [_] {_}
@@ -168,7 +588,7 @@ PlotAxes: ThetaeDiffPreSalCoreAxes 2
   Height km 0 15 linear [_] {_}
 End
 
-PlotAxes: ThetaeCntlSalCoreAxes 2
+PlotAxes: ThetaeSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - theta_e, K
   \theta_e g@kg^-^1 340 370 linear [_] {_}
@@ -184,9 +604,7 @@ PlotAxes: ThetaeDiffSalCoreAxes 2
   Height km 0 15 linear [_] {_}
 End
 
-
-
-PlotAxes: ThetaeCntlPreSalCoreLlevAxes 2
+PlotAxes: ThetaePreSalCoreLlevAxes 2
   14 2 [0.025_0.025]
   # x axis - theta_e, K
   \theta_e g@kg^-^1 340 355 linear [_] {_}
@@ -202,7 +620,7 @@ PlotAxes: ThetaeDiffPreSalCoreLlevAxes 2
   Height km 0 1 linear [_] {_}
 End
 
-PlotAxes: ThetaeCntlSalCoreLlevAxes 2
+PlotAxes: ThetaeSalCoreLlevAxes 2
   14 2 [0.025_0.025]
   # x axis - theta_e, K
   \theta_e g@kg^-^1 340 355 linear [_] {_}
