@@ -1,0 +1,144 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: ThetaRhoEnvProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigThetaRhoEnvProfile.jpg
+  ThetaRhoCntlPreSalEnvPanel  1
+  ThetaRhoCntlSalEnvPanel     2
+  ThetaRhoDiffPreSalEnvPanel  3
+  ThetaRhoDiffSalEnvPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: ThetaRhoCntlPreSalEnvPanel
+  ThetaRhoCntlPreSalEnvPset
+  ThetaRhoCntlPreSalEnvAxes 1 1
+  none 5
+  Pre@SAL@Env 
+  SouthEast 12
+End
+
+FigPanel: ThetaRhoDiffPreSalEnvPanel
+  ThetaRhoDiffPreSalEnvPset
+  ThetaRhoDiffPreSalEnvAxes 1 1
+  none 5
+  Pre@SAL@Env@(diffs)
+  NorthWest 12
+End
+
+FigPanel: ThetaRhoCntlSalEnvPanel
+  ThetaRhoCntlSalEnvPset
+  ThetaRhoCntlSalEnvAxes 1 1
+  none 5
+  SAL@Env 
+  SouthEast 12
+End
+
+FigPanel: ThetaRhoDiffSalEnvPanel
+  ThetaRhoDiffSalEnvPset
+  ThetaRhoDiffSalEnvAxes 1 1
+  none 5
+  SAL@Env@(diffs)
+  NorthWest 12
+End
+
+############ PLOT SETS #################
+PlotSet: ThetaRhoCntlPreSalEnvPset line 4
+  ThetaRhoPreSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaRhoPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaRhoPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaRhoPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: ThetaRhoDiffPreSalEnvPset line 4
+  ThetaRhoDiffPreSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaRhoDiffPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaRhoDiffPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaRhoDiffPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: ThetaRhoCntlSalEnvPset line 4
+  ThetaRhoSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaRhoSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaRhoSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaRhoSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: ThetaRhoDiffSalEnvPset line 4
+  ThetaRhoDiffSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaRhoDiffSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaRhoDiffSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaRhoDiffSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: ThetaRhoPreSalEnvLine 2
+  # x data - theta_rho, K
+  /all_env_ps_theta_rho DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaRhoSalEnvLine 2
+  # x data - theta_rho, K
+  /all_env_s_theta_rho DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaRhoDiffPreSalEnvLine 2
+  # x data - theta_rho, K
+  /all_env_ps_theta_rho_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaRhoDiffSalEnvLine 2
+  # x data - theta_rho, K
+  /all_env_s_theta_rho_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: ThetaRhoCntlPreSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - theta_rho, K
+  \theta_\rho g@kg^-^1 290 370 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: ThetaRhoDiffPreSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - theta_rho, K
+  \theta_\rho g@kg^-^1 -5 3 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: ThetaRhoCntlSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - theta_rho, K
+  \theta_\rho g@kg^-^1 290 370 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: ThetaRhoDiffSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - theta_rho, K
+  \theta_\rho g@kg^-^1 -5 3 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+

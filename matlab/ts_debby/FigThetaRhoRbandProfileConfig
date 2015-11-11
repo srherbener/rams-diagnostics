@@ -1,0 +1,144 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: ThetaRhoRbandProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigThetaRhoRbandProfile.jpg
+  ThetaRhoCntlPreSalRbandPanel  1
+  ThetaRhoCntlSalRbandPanel     2
+  ThetaRhoDiffPreSalRbandPanel  3
+  ThetaRhoDiffSalRbandPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: ThetaRhoCntlPreSalRbandPanel
+  ThetaRhoCntlPreSalRbandPset
+  ThetaRhoCntlPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband 
+  SouthEast 12
+End
+
+FigPanel: ThetaRhoDiffPreSalRbandPanel
+  ThetaRhoDiffPreSalRbandPset
+  ThetaRhoDiffPreSalRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband@(diffs)
+  NorthWest 12
+End
+
+FigPanel: ThetaRhoCntlSalRbandPanel
+  ThetaRhoCntlSalRbandPset
+  ThetaRhoCntlSalRbandAxes 1 1
+  none 5
+  SAL@Rband 
+  SouthEast 12
+End
+
+FigPanel: ThetaRhoDiffSalRbandPanel
+  ThetaRhoDiffSalRbandPset
+  ThetaRhoDiffSalRbandAxes 1 1
+  none 5
+  SAL@Rband@(diffs)
+  NorthWest 12
+End
+
+############ PLOT SETS #################
+PlotSet: ThetaRhoCntlPreSalRbandPset line 4
+  ThetaRhoPreSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaRhoPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaRhoPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaRhoPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: ThetaRhoDiffPreSalRbandPset line 4
+  ThetaRhoDiffPreSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaRhoDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaRhoDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaRhoDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: ThetaRhoCntlSalRbandPset line 4
+  ThetaRhoSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaRhoSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaRhoSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaRhoSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: ThetaRhoDiffSalRbandPset line 4
+  ThetaRhoDiffSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaRhoDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaRhoDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaRhoDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: ThetaRhoPreSalRbandLine 2
+  # x data - theta_rho, K
+  /all_rb_ps_theta_rho DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaRhoSalRbandLine 2
+  # x data - theta_rho, K
+  /all_rb_s_theta_rho DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaRhoDiffPreSalRbandLine 2
+  # x data - theta_rho, K
+  /all_rb_ps_theta_rho_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaRhoDiffSalRbandLine 2
+  # x data - theta_rho, K
+  /all_rb_s_theta_rho_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: ThetaRhoCntlPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - theta_rho, K
+  \theta_\rho g@kg^-^1 290 370 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: ThetaRhoDiffPreSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - theta_rho, K
+  \theta_\rho g@kg^-^1 -5 3 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: ThetaRhoCntlSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - theta_rho, K
+  \theta_\rho g@kg^-^1 290 370 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: ThetaRhoDiffSalRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - theta_rho, K
+  \theta_\rho g@kg^-^1 -5 3 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+

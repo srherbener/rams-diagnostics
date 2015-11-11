@@ -1,0 +1,120 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: CpoolDist 4
+  DummyCases
+  [2_2]
+  Plots/FigCpoolDist.jpg
+  CpoolCoreDistPanel  1
+  CpoolRbandDistPanel 2
+  CpoolEnvDistPanel   3
+  CpoolLeadDistPanel  4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: CpoolCoreDistPanel
+  CpoolCoreDistPset
+  CpoolDistAxes 1 1
+  none 5
+  SAL:@Core
+  NorthWest 12
+End
+
+FigPanel: CpoolRbandDistPanel
+  CpoolRbandDistPset
+  CpoolDistAxes 1 1
+  none 5
+  SAL:@Rband
+  none 12
+End
+
+FigPanel: CpoolEnvDistPanel
+  CpoolEnvDistPset
+  CpoolDistAxes 1 1
+  none 5
+  SAL:@Env
+  none 12
+End
+
+FigPanel: CpoolLeadDistPanel
+  CpoolLeadDistPset
+  CpoolDistAxes 1 1
+  none 5
+  SAL:@Lead
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: CpoolCoreDistPset line 4
+  CpoolCoreDistLine TSD_SAL_DUST      SD   2 black  - 0
+  CpoolCoreDistLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CpoolCoreDistLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CpoolCoreDistLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CpoolRbandDistPset line 4
+  CpoolRbandDistLine TSD_SAL_DUST      SD   2 black  - 0
+  CpoolRbandDistLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CpoolRbandDistLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CpoolRbandDistLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CpoolEnvDistPset line 4
+  CpoolEnvDistLine TSD_SAL_DUST      SD   2 black  - 0
+  CpoolEnvDistLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CpoolEnvDistLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CpoolEnvDistLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CpoolLeadDistPset line 4
+  CpoolLeadDistLine TSD_SAL_DUST      SD   2 black  - 0
+  CpoolLeadDistLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CpoolLeadDistLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CpoolLeadDistLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: CpoolCoreDistLine 2
+  # x data - bins temp anomalies
+  /x_coords DIAGS/hist_meas_ts_cpools_<CASE>.h5 @ 1 0
+  # y data - frequency
+  /hist_core_s_cpools DIAGS/hist_meas_ts_cpools_<CASE>.h5 @ 1 0
+End
+
+PlotData: CpoolRbandDistLine 2
+  # x data - bins temp anomalies
+  /x_coords DIAGS/hist_meas_ts_cpools_<CASE>.h5 @ 1 0
+  # y data - frequency
+  /hist_rb_s_cpools DIAGS/hist_meas_ts_cpools_<CASE>.h5 @ 1 0
+End
+
+PlotData: CpoolEnvDistLine 2
+  # x data - bins temp anomalies
+  /x_coords DIAGS/hist_meas_ts_cpools_<CASE>.h5 @ 1 0
+  # y data - frequency
+  /hist_env_s_cpools DIAGS/hist_meas_ts_cpools_<CASE>.h5 @ 1 0
+End
+
+PlotData: CpoolLeadDistLine 2
+  # x data - bins temp anomalies
+  /x_coords DIAGS/hist_meas_ts_cpools_<CASE>.h5 @ 1 0
+  # y data - frequency
+  /hist_lead_s_cpools DIAGS/hist_meas_ts_cpools_<CASE>.h5 @ 1 0
+End
+
+############ PLOT AXES #################
+PlotAxes: CpoolDistAxes 2
+  14 2 [0.025_0.025]
+  # x axis - temp anomalies, deg C
+  Temperature@Anomaly deg@C -3 -0.1 linear [_] {_}
+  # y axis - frequency
+  Frequency @ 0 1e7 log [_] {_}
+End
+
