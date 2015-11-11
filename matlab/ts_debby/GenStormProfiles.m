@@ -264,6 +264,22 @@ function [ ] = GenStormProfiles()
     { 'DIAGS/hist_meas_az_theta_<CASE>.h5' '/lead_env_s_theta'   '/lead_env_s_theta'   'z' }
 
 
+    % Region: All, selected by precip rate > 0.01 mm/h
+    { 'DIAGS/hist_meas_az_theta_e_<CASE>.h5' '/precip_all_core_ps_theta_e' '/precip_all_core_ps_theta_e' 'z' }
+    { 'DIAGS/hist_meas_az_theta_e_<CASE>.h5' '/precip_all_core_s_theta_e'  '/precip_all_core_s_theta_e'  'z' }
+    { 'DIAGS/hist_meas_az_theta_e_<CASE>.h5' '/precip_all_rb_ps_theta_e'   '/precip_all_rb_ps_theta_e'   'z' }
+    { 'DIAGS/hist_meas_az_theta_e_<CASE>.h5' '/precip_all_rb_s_theta_e'    '/precip_all_rb_s_theta_e'    'z' }
+    { 'DIAGS/hist_meas_az_theta_e_<CASE>.h5' '/precip_all_env_ps_theta_e'  '/precip_all_env_ps_theta_e'  'z' }
+    { 'DIAGS/hist_meas_az_theta_e_<CASE>.h5' '/precip_all_env_s_theta_e'   '/precip_all_env_s_theta_e'   'z' }
+
+    % Region: Lead, selected by precip rate > 0.01 mm/h
+    { 'DIAGS/hist_meas_az_theta_e_<CASE>.h5' '/precip_lead_core_ps_theta_e' '/precip_lead_core_ps_theta_e' 'z' }
+    { 'DIAGS/hist_meas_az_theta_e_<CASE>.h5' '/precip_lead_core_s_theta_e'  '/precip_lead_core_s_theta_e'  'z' }
+    { 'DIAGS/hist_meas_az_theta_e_<CASE>.h5' '/precip_lead_rb_ps_theta_e'   '/precip_lead_rb_ps_theta_e'   'z' }
+    { 'DIAGS/hist_meas_az_theta_e_<CASE>.h5' '/precip_lead_rb_s_theta_e'    '/precip_lead_rb_s_theta_e'    'z' }
+    { 'DIAGS/hist_meas_az_theta_e_<CASE>.h5' '/precip_lead_env_ps_theta_e'  '/precip_lead_env_ps_theta_e'  'z' }
+    { 'DIAGS/hist_meas_az_theta_e_<CASE>.h5' '/precip_lead_env_s_theta_e'   '/precip_lead_env_s_theta_e'   'z' }
+
 
 
 

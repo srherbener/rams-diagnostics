@@ -13,6 +13,16 @@ Figure: ThetaeEnvProfile 4
   ThetaeDiffSalEnvPanel     4
 End 
 
+Figure: ThetaeEnvLlevProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigThetaeEnvLlevProfile.jpg
+  ThetaeCntlPreSalEnvLlevPanel  1
+  ThetaeCntlSalEnvLlevPanel     2
+  ThetaeDiffPreSalEnvLlevPanel  3
+  ThetaeDiffSalEnvLlevPanel     4
+End 
+
 ########### CASES ####################
 CaseSet: DummyCases 1
   Dummy
@@ -51,6 +61,38 @@ FigPanel: ThetaeDiffSalEnvPanel
   NorthEast 12
 End
 
+FigPanel: ThetaeCntlPreSalEnvLlevPanel
+  ThetaeCntlPreSalEnvPset
+  ThetaeCntlPreSalEnvLlevAxes 1 1
+  none 5
+  Pre@SAL@Env 
+  NorthEast 12
+End
+
+FigPanel: ThetaeDiffPreSalEnvLlevPanel
+  ThetaeDiffPreSalEnvPset
+  ThetaeDiffPreSalEnvLlevAxes 1 1
+  none 5
+  Pre@SAL@Env@(diffs)
+  NorthEast 12
+End
+
+FigPanel: ThetaeCntlSalEnvLlevPanel
+  ThetaeCntlSalEnvPset
+  ThetaeCntlSalEnvLlevAxes 1 1
+  none 5
+  SAL@Env 
+  NorthEast 12
+End
+
+FigPanel: ThetaeDiffSalEnvLlevPanel
+  ThetaeDiffSalEnvPset
+  ThetaeDiffSalEnvLlevAxes 1 1
+  none 5
+  SAL@Env@(diffs)
+  NorthEast 12
+End
+
 ############ PLOT SETS #################
 PlotSet: ThetaeCntlPreSalEnvPset line 4
   ThetaePreSalEnvLine TSD_SAL_DUST      SD   2 black  - 0
@@ -83,28 +125,28 @@ End
 ############ PLOT DATA #################
 PlotData: ThetaePreSalEnvLine 2
   # x data - theta_e, K
-  /ps_env_theta_e DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_env_ps_theta_e DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: ThetaeSalEnvLine 2
   # x data - theta_e, K
-  /s_env_theta_e DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_env_s_theta_e DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: ThetaeDiffPreSalEnvLine 2
   # x data - theta_e, K
-  /ps_env_theta_e_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_env_ps_theta_e_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: ThetaeDiffSalEnvLine 2
   # x data - theta_e, K
-  /s_env_theta_e_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_env_s_theta_e_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
@@ -140,5 +182,39 @@ PlotAxes: ThetaeDiffSalEnvAxes 2
   \theta_e g@kg^-^1 -10 10 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
+End
+
+
+
+PlotAxes: ThetaeCntlPreSalEnvLlevAxes 2
+  14 2 [0.025_0.025]
+  # x axis - theta_e, K
+  \theta_e g@kg^-^1 340 355 linear [_] {_}
+  # y axis - height, km
+  Height km 0 1 linear [_] {_}
+End
+
+PlotAxes: ThetaeDiffPreSalEnvLlevAxes 2
+  14 2 [0.025_0.025]
+  # x axis - theta_e, K
+  \theta_e g@kg^-^1 -5 5 linear [_] {_}
+  # y axis - height, km
+  Height km 0 1 linear [_] {_}
+End
+
+PlotAxes: ThetaeCntlSalEnvLlevAxes 2
+  14 2 [0.025_0.025]
+  # x axis - theta_e, K
+  \theta_e g@kg^-^1 340 355 linear [_] {_}
+  # y axis - height, km
+  Height km 0 1 linear [_] {_}
+End
+
+PlotAxes: ThetaeDiffSalEnvLlevAxes 2
+  14 2 [0.025_0.025]
+  # x axis - theta_e, K
+  \theta_e g@kg^-^1 -5 5 linear [_] {_}
+  # y axis - height, km
+  Height km 0 1 linear [_] {_}
 End
 

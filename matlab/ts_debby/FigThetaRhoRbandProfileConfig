@@ -13,6 +13,16 @@ Figure: ThetaRhoRbandProfile 4
   ThetaRhoDiffSalRbandPanel     4
 End 
 
+Figure: ThetaRhoRbandLlevProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigThetaRhoRbandLlevProfile.jpg
+  ThetaRhoCntlPreSalRbandLlevPanel  1
+  ThetaRhoCntlSalRbandLlevPanel     2
+  ThetaRhoDiffPreSalRbandLlevPanel  3
+  ThetaRhoDiffSalRbandLlevPanel     4
+End 
+
 ########### CASES ####################
 CaseSet: DummyCases 1
   Dummy
@@ -24,7 +34,7 @@ FigPanel: ThetaRhoCntlPreSalRbandPanel
   ThetaRhoCntlPreSalRbandAxes 1 1
   none 5
   Pre@SAL@Rband 
-  SouthEast 12
+  NorthWest 12
 End
 
 FigPanel: ThetaRhoDiffPreSalRbandPanel
@@ -32,7 +42,7 @@ FigPanel: ThetaRhoDiffPreSalRbandPanel
   ThetaRhoDiffPreSalRbandAxes 1 1
   none 5
   Pre@SAL@Rband@(diffs)
-  NorthWest 12
+  NorthEast 12
 End
 
 FigPanel: ThetaRhoCntlSalRbandPanel
@@ -40,7 +50,7 @@ FigPanel: ThetaRhoCntlSalRbandPanel
   ThetaRhoCntlSalRbandAxes 1 1
   none 5
   SAL@Rband 
-  SouthEast 12
+  NorthWest 12
 End
 
 FigPanel: ThetaRhoDiffSalRbandPanel
@@ -48,7 +58,39 @@ FigPanel: ThetaRhoDiffSalRbandPanel
   ThetaRhoDiffSalRbandAxes 1 1
   none 5
   SAL@Rband@(diffs)
+  NorthEast 12
+End
+
+FigPanel: ThetaRhoCntlPreSalRbandLlevPanel
+  ThetaRhoCntlPreSalRbandPset
+  ThetaRhoCntlPreSalRbandLlevAxes 1 1
+  none 5
+  Pre@SAL@Rband 
   NorthWest 12
+End
+
+FigPanel: ThetaRhoDiffPreSalRbandLlevPanel
+  ThetaRhoDiffPreSalRbandPset
+  ThetaRhoDiffPreSalRbandLlevAxes 1 1
+  none 5
+  Pre@SAL@Rband@(diffs)
+  NorthEast 12
+End
+
+FigPanel: ThetaRhoCntlSalRbandLlevPanel
+  ThetaRhoCntlSalRbandPset
+  ThetaRhoCntlSalRbandLlevAxes 1 1
+  none 5
+  SAL@Rband 
+  NorthWest 12
+End
+
+FigPanel: ThetaRhoDiffSalRbandLlevPanel
+  ThetaRhoDiffSalRbandPset
+  ThetaRhoDiffSalRbandLlevAxes 1 1
+  none 5
+  SAL@Rband@(diffs)
+  NorthEast 12
 End
 
 ############ PLOT SETS #################
@@ -113,7 +155,7 @@ End
 PlotAxes: ThetaRhoCntlPreSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - theta_rho, K
-  \theta_\rho g@kg^-^1 290 370 linear [_] {_}
+  \theta_\rho g@kg^-^1 295 365 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End
@@ -121,7 +163,7 @@ End
 PlotAxes: ThetaRhoDiffPreSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - theta_rho, K
-  \theta_\rho g@kg^-^1 -5 3 linear [_] {_}
+  \theta_\rho g@kg^-^1 -5 5 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End
@@ -129,7 +171,7 @@ End
 PlotAxes: ThetaRhoCntlSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - theta_rho, K
-  \theta_\rho g@kg^-^1 290 370 linear [_] {_}
+  \theta_\rho g@kg^-^1 295 365 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End
@@ -137,8 +179,42 @@ End
 PlotAxes: ThetaRhoDiffSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - theta_rho, K
-  \theta_\rho g@kg^-^1 -5 3 linear [_] {_}
+  \theta_\rho g@kg^-^1 -5 5 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
+End
+
+
+
+PlotAxes: ThetaRhoCntlPreSalRbandLlevAxes 2
+  14 2 [0.025_0.025]
+  # x axis - theta_rho, K
+  \theta_\rho g@kg^-^1 295 305 linear [_] {_}
+  # y axis - height, km
+  Height km 0 1 linear [_] {_}
+End
+
+PlotAxes: ThetaRhoDiffPreSalRbandLlevAxes 2
+  14 2 [0.025_0.025]
+  # x axis - theta_rho, K
+  \theta_\rho g@kg^-^1 -1 1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 1 linear [_] {_}
+End
+
+PlotAxes: ThetaRhoCntlSalRbandLlevAxes 2
+  14 2 [0.025_0.025]
+  # x axis - theta_rho, K
+  \theta_\rho g@kg^-^1 295 305 linear [_] {_}
+  # y axis - height, km
+  Height km 0 1 linear [_] {_}
+End
+
+PlotAxes: ThetaRhoDiffSalRbandLlevAxes 2
+  14 2 [0.025_0.025]
+  # x axis - theta_rho, K
+  \theta_\rho g@kg^-^1 -1 1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 1 linear [_] {_}
 End
 
