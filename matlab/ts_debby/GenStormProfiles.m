@@ -94,6 +94,13 @@ function [ ] = GenStormProfiles()
     { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/all_env_ps_d2_num'   '/all_env_ps_d2_num'   'z' }
     { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/all_env_s_d2_num'    '/all_env_s_d2_num'    'z' }
 
+    { 'DIAGS/hist_meas_az_cloud_<CASE>.h5' '/all_core_ps_cloud_mass'  '/all_core_ps_cloud_mass'  'z' }
+    { 'DIAGS/hist_meas_az_cloud_<CASE>.h5' '/all_core_s_cloud_mass'   '/all_core_s_cloud_mass'   'z' }
+    { 'DIAGS/hist_meas_az_cloud_<CASE>.h5' '/all_rb_ps_cloud_mass'    '/all_rb_ps_cloud_mass'    'z' }
+    { 'DIAGS/hist_meas_az_cloud_<CASE>.h5' '/all_rb_s_cloud_mass'     '/all_rb_s_cloud_mass'     'z' }
+    { 'DIAGS/hist_meas_az_cloud_<CASE>.h5' '/all_env_ps_cloud_mass'   '/all_env_ps_cloud_mass'   'z' }
+    { 'DIAGS/hist_meas_az_cloud_<CASE>.h5' '/all_env_s_cloud_mass'    '/all_env_s_cloud_mass'    'z' }
+
     { 'DIAGS/hist_meas_az_cloud_<CASE>.h5' '/all_core_ps_cloud_num'  '/all_core_ps_cloud_num'  'z' }
     { 'DIAGS/hist_meas_az_cloud_<CASE>.h5' '/all_core_s_cloud_num'   '/all_core_s_cloud_num'   'z' }
     { 'DIAGS/hist_meas_az_cloud_<CASE>.h5' '/all_rb_ps_cloud_num'    '/all_rb_ps_cloud_num'    'z' }
@@ -185,6 +192,13 @@ function [ ] = GenStormProfiles()
     { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/lead_rb_s_d2_num'     '/lead_rb_s_d2_num'     'z' }
     { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/lead_env_ps_d2_num'   '/lead_env_ps_d2_num'   'z' }
     { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/lead_env_s_d2_num'    '/lead_env_s_d2_num'    'z' }
+
+    { 'DIAGS/hist_meas_az_cloud_<CASE>.h5' '/lead_core_ps_cloud_mass'  '/lead_core_ps_cloud_mass'  'z' }
+    { 'DIAGS/hist_meas_az_cloud_<CASE>.h5' '/lead_core_s_cloud_mass'   '/lead_core_s_cloud_mass'   'z' }
+    { 'DIAGS/hist_meas_az_cloud_<CASE>.h5' '/lead_rb_ps_cloud_mass'    '/lead_rb_ps_cloud_mass'    'z' }
+    { 'DIAGS/hist_meas_az_cloud_<CASE>.h5' '/lead_rb_s_cloud_mass'     '/lead_rb_s_cloud_mass'     'z' }
+    { 'DIAGS/hist_meas_az_cloud_<CASE>.h5' '/lead_env_ps_cloud_mass'   '/lead_env_ps_cloud_mass'   'z' }
+    { 'DIAGS/hist_meas_az_cloud_<CASE>.h5' '/lead_env_s_cloud_mass'    '/lead_env_s_cloud_mass'    'z' }
 
     { 'DIAGS/hist_meas_az_cloud_<CASE>.h5' '/lead_core_ps_cloud_num'  '/lead_core_ps_cloud_num'  'z' }
     { 'DIAGS/hist_meas_az_cloud_<CASE>.h5' '/lead_core_s_cloud_num'   '/lead_core_s_cloud_num'   'z' }

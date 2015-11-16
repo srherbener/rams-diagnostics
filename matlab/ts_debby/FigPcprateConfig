@@ -107,59 +107,59 @@ End
 
 ############ PLOT SETS #################
 PlotSet: PcpratePreSalPset line 4
-  PcpratePreSalLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0
-  PcpratePreSalLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0
-  PcpratePreSalLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0
-  PcpratePreSalLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0
+  PcpratePreSalLine TSD_SAL_DUST      SD   2 black - 0
+  PcpratePreSalLine TSD_SAL_NODUST    SND  2 blue  - 0
+  PcpratePreSalLine TSD_NONSAL_DUST   NSD  2 red   - 0
+  PcpratePreSalLine TSD_NONSAL_NODUST NSND 2 green - 0
 End
 
 PlotSet: PcprateSalPset line 4
-  PcprateSalLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0
-  PcprateSalLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0
-  PcprateSalLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0
-  PcprateSalLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0
+  PcprateSalLine TSD_SAL_DUST      SD   2 black - 0
+  PcprateSalLine TSD_SAL_NODUST    SND  2 blue  - 0
+  PcprateSalLine TSD_NONSAL_DUST   NSD  2 red   - 0
+  PcprateSalLine TSD_NONSAL_NODUST NSND 2 green - 0
 End
 
 PlotSet: PcpratePreSalSpathPset line 4
-  PcpratePreSalSpathLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0
-  PcpratePreSalSpathLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0
-  PcpratePreSalSpathLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0
-  PcpratePreSalSpathLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0
+  PcpratePreSalSpathLine TSD_SAL_DUST      SD   2 black - 0
+  PcpratePreSalSpathLine TSD_SAL_NODUST    SND  2 blue  - 0
+  PcpratePreSalSpathLine TSD_NONSAL_DUST   NSD  2 red   - 0
+  PcpratePreSalSpathLine TSD_NONSAL_NODUST NSND 2 green - 0
 End
 
 PlotSet: PcprateSalSpathPset line 4
-  PcprateSalSpathLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0
-  PcprateSalSpathLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0
-  PcprateSalSpathLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0
-  PcprateSalSpathLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0
+  PcprateSalSpathLine TSD_SAL_DUST      SD   2 black - 0
+  PcprateSalSpathLine TSD_SAL_NODUST    SND  2 blue  - 0
+  PcprateSalSpathLine TSD_NONSAL_DUST   NSD  2 red   - 0
+  PcprateSalSpathLine TSD_NONSAL_NODUST NSND 2 green - 0
 End
 
 PlotSet: PcpratePreSalSmaxcpPset line 4
-  PcpratePreSalSmaxcpLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0
-  PcpratePreSalSmaxcpLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0
-  PcpratePreSalSmaxcpLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0
-  PcpratePreSalSmaxcpLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0
+  PcpratePreSalSmaxcpLine TSD_SAL_DUST      SD   2 black - 0
+  PcpratePreSalSmaxcpLine TSD_SAL_NODUST    SND  2 blue  - 0
+  PcpratePreSalSmaxcpLine TSD_NONSAL_DUST   NSD  2 red   - 0
+  PcpratePreSalSmaxcpLine TSD_NONSAL_NODUST NSND 2 green - 0
 End
 
 PlotSet: PcprateSalSmaxcpPset line 4
-  PcprateSalSmaxcpLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0
-  PcprateSalSmaxcpLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0
-  PcprateSalSmaxcpLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0
-  PcprateSalSmaxcpLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0
+  PcprateSalSmaxcpLine TSD_SAL_DUST      SD   2 black - 0
+  PcprateSalSmaxcpLine TSD_SAL_NODUST    SND  2 blue  - 0
+  PcprateSalSmaxcpLine TSD_NONSAL_DUST   NSD  2 red   - 0
+  PcprateSalSmaxcpLine TSD_NONSAL_NODUST NSND 2 green - 0
 End
 
 PlotSet: PcpratePreSalLeadPset line 4
-  PcpratePreSalLeadLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0
-  PcpratePreSalLeadLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0
-  PcpratePreSalLeadLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0
-  PcpratePreSalLeadLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0
+  PcpratePreSalLeadLine TSD_SAL_DUST      SD   2 black - 0
+  PcpratePreSalLeadLine TSD_SAL_NODUST    SND  2 blue  - 0
+  PcpratePreSalLeadLine TSD_NONSAL_DUST   NSD  2 red   - 0
+  PcpratePreSalLeadLine TSD_NONSAL_NODUST NSND 2 green - 0
 End
 
 PlotSet: PcprateSalLeadPset line 4
-  PcprateSalLeadLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0
-  PcprateSalLeadLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0
-  PcprateSalLeadLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0
-  PcprateSalLeadLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0
+  PcprateSalLeadLine TSD_SAL_DUST      SD   2 black - 0
+  PcprateSalLeadLine TSD_SAL_NODUST    SND  2 blue  - 0
+  PcprateSalLeadLine TSD_NONSAL_DUST   NSD  2 red   - 0
+  PcprateSalLeadLine TSD_NONSAL_NODUST NSND 2 green - 0
 End
 
 ############ PLOT DATA #################
@@ -167,14 +167,14 @@ PlotData: PcpratePreSalLine 2
   # x data - radius in km
   /x_coords DIAGS/hist_meas_az_pcprate_<CASE>.h5 @ 1e-3 0
   # y data - 
-  /ps_pcprate DIAGS/hist_meas_az_pcprate_<CASE>.h5 @ 1 0
+  /all_ps_pcprate DIAGS/hist_meas_az_pcprate_<CASE>.h5 @ 1 0
 End
 
 PlotData: PcprateSalLine 2
   # x data - radius in km
   /x_coords DIAGS/hist_meas_az_pcprate_<CASE>.h5 @ 1e-3 0
   # y data - 
-  /s_pcprate DIAGS/hist_meas_az_pcprate_<CASE>.h5 @ 1 0
+  /all_s_pcprate DIAGS/hist_meas_az_pcprate_<CASE>.h5 @ 1 0
 End
 
 PlotData: PcpratePreSalSpathLine 2

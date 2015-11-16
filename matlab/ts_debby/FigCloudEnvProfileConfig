@@ -3,15 +3,15 @@
 #
 
 ######### FIGURES ###################
-#Figure: CloudEnvProfile 4
-#  DummyCases
-#  [2_2]
-#  Plots/FigCloudEnvProfile.jpg
-#  CloudCntlPreSalEnvPanel  1
-#  CloudCntlSalEnvPanel     2
-#  CloudDiffPreSalEnvPanel  3
-#  CloudDiffSalEnvPanel     4
-#End 
+Figure: CloudEnvProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigCloudEnvProfile.jpg
+  CloudCntlPreSalEnvPanel  1
+  CloudCntlSalEnvPanel     2
+  CloudDiffPreSalEnvPanel  3
+  CloudDiffSalEnvPanel     4
+End 
 
 Figure: CloudNumEnvProfile 4
   DummyCases
@@ -44,7 +44,7 @@ FigPanel: CloudCntlPreSalEnvPanel
   CloudCntlPreSalEnvAxes 1 1
   none 5
   Pre@SAL@Env 
-  NorthEast 12
+  none 12
 End
 
 FigPanel: CloudDiffPreSalEnvPanel
@@ -52,7 +52,7 @@ FigPanel: CloudDiffPreSalEnvPanel
   CloudDiffPreSalEnvAxes 1 1
   none 5
   Pre@SAL@Env@(diffs)
-  NorthEast 12
+  none 12
 End
 
 FigPanel: CloudCntlSalEnvPanel
@@ -60,7 +60,7 @@ FigPanel: CloudCntlSalEnvPanel
   CloudCntlSalEnvAxes 1 1
   none 5
   SAL@Env 
-  NorthEast 12
+  none 12
 End
 
 FigPanel: CloudDiffSalEnvPanel
@@ -68,7 +68,7 @@ FigPanel: CloudDiffSalEnvPanel
   CloudDiffSalEnvAxes 1 1
   none 5
   SAL@Env@(diffs)
-  NorthEast 12
+  NorthWest 12
 End
 
 FigPanel: CloudNumCntlPreSalEnvPanel
@@ -223,84 +223,84 @@ End
 ############ PLOT DATA #################
 PlotData: CloudPreSalEnvLine 2
   # x data - cloud mix ratio, g/kg
-  /env_ps_cloud DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_env_ps_cloud_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudSalEnvLine 2
   # x data - cloud mix ratio, g/kg
-  /env_s_cloud DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_env_s_cloud_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudDiffPreSalEnvLine 2
   # x data - cloud mix ratio, g/kg
-  /env_ps_cloud_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_env_ps_cloud_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudDiffSalEnvLine 2
   # x data - cloud mix ratio, g/kg
-  /env_s_cloud_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_env_s_cloud_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudNumPreSalEnvLine 2
   # x data - cloud number, #/kg
-  /env_ps_cloud_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_env_ps_cloud_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudNumSalEnvLine 2
   # x data - cloud number, #/kg
-  /env_s_cloud_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_env_s_cloud_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudNumDiffPreSalEnvLine 2
   # x data - cloud number, #/kg
-  /env_ps_cloud_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_env_ps_cloud_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudNumDiffSalEnvLine 2
   # x data - cloud number, #/kg
-  /env_s_cloud_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_env_s_cloud_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudDiamPreSalEnvLine 2
   # x data - cloud diameter, um
-  /env_ps_cloud_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_env_ps_cloud_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudDiamSalEnvLine 2
   # x data - cloud diameter, um
-  /env_s_cloud_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_env_s_cloud_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudDiamDiffPreSalEnvLine 2
   # x data - cloud diameter, um
-  /env_ps_cloud_diam_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_env_ps_cloud_diam_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudDiamDiffSalEnvLine 2
   # x data - cloud diameter, um
-  /env_s_cloud_diam_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_env_s_cloud_diam_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End

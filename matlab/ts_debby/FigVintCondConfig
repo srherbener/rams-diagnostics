@@ -35,17 +35,17 @@ End
 
 ############ PLOT SETS #################
 PlotSet: VintCondPreSalPset line 4
-  VintCondPreSalLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0
-  VintCondPreSalLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0
-  VintCondPreSalLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0
-  VintCondPreSalLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0
+  VintCondPreSalLine TSD_SAL_DUST      SD   2 black - 0
+  VintCondPreSalLine TSD_SAL_NODUST    SND  2 blue  - 0
+  VintCondPreSalLine TSD_NONSAL_DUST   NSD  2 red   - 0
+  VintCondPreSalLine TSD_NONSAL_NODUST NSND 2 green - 0
 End
 
 PlotSet: VintCondSalPset line 4
-  VintCondSalLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0
-  VintCondSalLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0
-  VintCondSalLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0
-  VintCondSalLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0
+  VintCondSalLine TSD_SAL_DUST      SD   2 black - 0
+  VintCondSalLine TSD_SAL_NODUST    SND  2 blue  - 0
+  VintCondSalLine TSD_NONSAL_DUST   NSD  2 red   - 0
+  VintCondSalLine TSD_NONSAL_NODUST NSND 2 green - 0
 End
 
 ############ PLOT DATA #################
@@ -69,7 +69,7 @@ PlotAxes: VintCondPreSalAxes 2
   # x axis - utc time
   Radius km 0 450 linear [_] {_}
   # y axis - speed in m/s
-  Condensate mm 0 6 linear [_] {_}
+  Condensate mm 0 4 linear [_] {_}
 End
 
 PlotAxes: VintCondSalAxes 2

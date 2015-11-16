@@ -35,17 +35,17 @@ End
 
 ############ PLOT SETS #################
 PlotSet: MaxWindPreSalPset line 4
-  MaxWindPreSalLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0
-  MaxWindPreSalLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0
-  MaxWindPreSalLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0
-  MaxWindPreSalLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0
+  MaxWindPreSalLine TSD_SAL_DUST      SD   2 black - 0
+  MaxWindPreSalLine TSD_SAL_NODUST    SND  2 blue  - 0
+  MaxWindPreSalLine TSD_NONSAL_DUST   NSD  2 red   - 0
+  MaxWindPreSalLine TSD_NONSAL_NODUST NSND 2 green - 0
 End
 
 PlotSet: MaxWindSalPset line 4
-  MaxWindSalLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0
-  MaxWindSalLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0
-  MaxWindSalLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0
-  MaxWindSalLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0
+  MaxWindSalLine TSD_SAL_DUST      SD   2 black - 0
+  MaxWindSalLine TSD_SAL_NODUST    SND  2 blue  - 0
+  MaxWindSalLine TSD_NONSAL_DUST   NSD  2 red   - 0
+  MaxWindSalLine TSD_NONSAL_NODUST NSND 2 green - 0
 End
 
 ############ PLOT DATA #################

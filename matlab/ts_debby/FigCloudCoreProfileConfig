@@ -3,15 +3,15 @@
 #
 
 ######### FIGURES ###################
-#Figure: CloudCoreProfile 4
-#  DummyCases
-#  [2_2]
-#  Plots/FigCloudCoreProfile.jpg
-#  CloudCntlPreSalCorePanel  1
-#  CloudCntlSalCorePanel     2
-#  CloudDiffPreSalCorePanel  3
-#  CloudDiffSalCorePanel     4
-#End 
+Figure: CloudCoreProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigCloudCoreProfile.jpg
+  CloudCntlPreSalCorePanel  1
+  CloudCntlSalCorePanel     2
+  CloudDiffPreSalCorePanel  3
+  CloudDiffSalCorePanel     4
+End 
 
 Figure: CloudNumCoreProfile 4
   DummyCases
@@ -223,84 +223,84 @@ End
 ############ PLOT DATA #################
 PlotData: CloudPreSalCoreLine 2
   # x data - cloud mix ratio, g/kg
-  /core_ps_cloud DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_ps_cloud_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudSalCoreLine 2
   # x data - cloud mix ratio, g/kg
-  /core_s_cloud DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_s_cloud_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudDiffPreSalCoreLine 2
   # x data - cloud mix ratio, g/kg
-  /core_ps_cloud_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_ps_cloud_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudDiffSalCoreLine 2
   # x data - cloud mix ratio, g/kg
-  /core_s_cloud_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_s_cloud_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudNumPreSalCoreLine 2
   # x data - cloud number, #/kg
-  /core_ps_cloud_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_ps_cloud_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudNumSalCoreLine 2
   # x data - cloud number, #/kg
-  /core_s_cloud_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_s_cloud_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudNumDiffPreSalCoreLine 2
   # x data - cloud number, #/kg
-  /core_ps_cloud_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_ps_cloud_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudNumDiffSalCoreLine 2
   # x data - cloud number, #/kg
-  /core_s_cloud_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_s_cloud_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudDiamPreSalCoreLine 2
   # x data - cloud diameter, um
-  /core_ps_cloud_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_ps_cloud_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudDiamSalCoreLine 2
   # x data - cloud diameter, um
-  /core_s_cloud_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_s_cloud_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudDiamDiffPreSalCoreLine 2
   # x data - cloud diameter, um
-  /core_ps_cloud_diam_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_ps_cloud_diam_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudDiamDiffSalCoreLine 2
   # x data - cloud diameter, um
-  /core_s_cloud_diam_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_s_cloud_diam_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End

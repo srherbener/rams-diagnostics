@@ -3,15 +3,15 @@
 #
 
 ######### FIGURES ###################
-#Figure: CloudRbandProfile 4
-#  DummyCases
-#  [2_2]
-#  Plots/FigCloudRbandProfile.jpg
-#  CloudCntlPreSalRbandPanel  1
-#  CloudCntlSalRbandPanel     2
-#  CloudDiffPreSalRbandPanel  3
-#  CloudDiffSalRbandPanel     4
-#End 
+Figure: CloudRbandProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigCloudRbandProfile.jpg
+  CloudCntlPreSalRbandPanel  1
+  CloudCntlSalRbandPanel     2
+  CloudDiffPreSalRbandPanel  3
+  CloudDiffSalRbandPanel     4
+End 
 
 Figure: CloudNumRbandProfile 4
   DummyCases
@@ -44,7 +44,7 @@ FigPanel: CloudCntlPreSalRbandPanel
   CloudCntlPreSalRbandAxes 1 1
   none 5
   Pre@SAL@Rband 
-  NorthEast 12
+  SouthEast 12
 End
 
 FigPanel: CloudDiffPreSalRbandPanel
@@ -52,7 +52,7 @@ FigPanel: CloudDiffPreSalRbandPanel
   CloudDiffPreSalRbandAxes 1 1
   none 5
   Pre@SAL@Rband@(diffs)
-  NorthEast 12
+  none 12
 End
 
 FigPanel: CloudCntlSalRbandPanel
@@ -60,7 +60,7 @@ FigPanel: CloudCntlSalRbandPanel
   CloudCntlSalRbandAxes 1 1
   none 5
   SAL@Rband 
-  NorthEast 12
+  none 12
 End
 
 FigPanel: CloudDiffSalRbandPanel
@@ -68,7 +68,7 @@ FigPanel: CloudDiffSalRbandPanel
   CloudDiffSalRbandAxes 1 1
   none 5
   SAL@Rband@(diffs)
-  NorthEast 12
+  none 12
 End
 
 FigPanel: CloudNumCntlPreSalRbandPanel
@@ -223,84 +223,84 @@ End
 ############ PLOT DATA #################
 PlotData: CloudPreSalRbandLine 2
   # x data - cloud mix ratio, g/kg
-  /rb_ps_cloud DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_rb_ps_cloud_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudSalRbandLine 2
   # x data - cloud mix ratio, g/kg
-  /rb_s_cloud DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_rb_s_cloud_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudDiffPreSalRbandLine 2
   # x data - cloud mix ratio, g/kg
-  /rb_ps_cloud_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_rb_ps_cloud_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudDiffSalRbandLine 2
   # x data - cloud mix ratio, g/kg
-  /rb_s_cloud_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_rb_s_cloud_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudNumPreSalRbandLine 2
   # x data - cloud number, #/kg
-  /rb_ps_cloud_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_rb_ps_cloud_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudNumSalRbandLine 2
   # x data - cloud number, #/kg
-  /rb_s_cloud_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_rb_s_cloud_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudNumDiffPreSalRbandLine 2
   # x data - cloud number, #/kg
-  /rb_ps_cloud_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_rb_ps_cloud_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudNumDiffSalRbandLine 2
   # x data - cloud number, #/kg
-  /rb_s_cloud_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_rb_s_cloud_num_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudDiamPreSalRbandLine 2
   # x data - cloud diameter, um
-  /rb_ps_cloud_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_rb_ps_cloud_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudDiamSalRbandLine 2
   # x data - cloud diameter, um
-  /rb_s_cloud_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_rb_s_cloud_diam DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudDiamDiffPreSalRbandLine 2
   # x data - cloud diameter, um
-  /rb_ps_cloud_diam_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_rb_ps_cloud_diam_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: CloudDiamDiffSalRbandLine 2
   # x data - cloud diameter, um
-  /rb_s_cloud_diam_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_rb_s_cloud_diam_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End

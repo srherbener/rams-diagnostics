@@ -191,31 +191,31 @@ End
 
 ############ PLOT SETS #################
 PlotSet: MaxWindPset line 4
-  MaxWindLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0
-  MaxWindLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0
-  MaxWindLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0
-  MaxWindLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0
+  MaxWindLine TSD_SAL_DUST      SD   2 black - 0
+  MaxWindLine TSD_SAL_NODUST    SND  2 blue  - 0
+  MaxWindLine TSD_NONSAL_DUST   NSD  2 red   - 0
+  MaxWindLine TSD_NONSAL_NODUST NSND 2 green - 0
 End
 
 PlotSet: MinSlpPset line 4
-  MinSlpLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0
-  MinSlpLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0
-  MinSlpLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0
-  MinSlpLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0
+  MinSlpLine TSD_SAL_DUST      SD   2 black - 0
+  MinSlpLine TSD_SAL_NODUST    SND  2 blue  - 0
+  MinSlpLine TSD_NONSAL_DUST   NSD  2 red   - 0
+  MinSlpLine TSD_NONSAL_NODUST NSND 2 green - 0
 End
 
 PlotSet: IkePset line 4
-  IkeLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0
-  IkeLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0
-  IkeLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0
-  IkeLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0
+  IkeLine TSD_SAL_DUST      SD   2 black - 0
+  IkeLine TSD_SAL_NODUST    SND  2 blue  - 0
+  IkeLine TSD_NONSAL_DUST   NSD  2 red   - 0
+  IkeLine TSD_NONSAL_NODUST NSND 2 green - 0
 End
 
 PlotSet: RmwPset line 4
-  RmwLine TSD_SAL_DUST      SAL\_DUST      2 blue   - 0
-  RmwLine TSD_SAL_NODUST    SAL\_NODUST    2 red    - 0
-  RmwLine TSD_NONSAL_DUST   NONSAL\_DUST   2 green  - 0
-  RmwLine TSD_NONSAL_NODUST NONSAL\_NODUST 2 orange - 0
+  RmwLine TSD_SAL_DUST      SD   2 black - 0
+  RmwLine TSD_SAL_NODUST    SND  2 blue  - 0
+  RmwLine TSD_NONSAL_DUST   NSD  2 red   - 0
+  RmwLine TSD_NONSAL_NODUST NSND 2 green - 0
 End
 
 PlotSet: Dust1_NS_Pset contourf 1
