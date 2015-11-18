@@ -133,7 +133,7 @@ PlotData: VaporXsectionPreSalContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  vapor, g/kg
-  /ps_vapor DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+  /all_ps_vapor DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 PlotData: VaporXsectionPreSalDiffContour 3
@@ -142,7 +142,7 @@ PlotData: VaporXsectionPreSalDiffContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  vapor, g/kg
-  /ps_vapor_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+  /all_ps_vapor_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 PlotData: VaporXsectionSalContour 3
@@ -151,7 +151,7 @@ PlotData: VaporXsectionSalContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  vapor, g/kg
-  /s_vapor DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+  /all_s_vapor DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 PlotData: VaporXsectionSalDiffContour 3
@@ -160,7 +160,7 @@ PlotData: VaporXsectionSalDiffContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  vapor, g/kg
-  /s_vapor_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+  /all_s_vapor_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 ############ PLOT AXES #################

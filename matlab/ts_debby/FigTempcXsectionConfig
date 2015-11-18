@@ -133,7 +133,7 @@ PlotData: TempcXsectionPreSalContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:36) 1e-3 0
   # z data -  tempc, K
-  /ps_tempc DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
+  /all_ps_tempc DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
 End
   
 PlotData: TempcXsectionPreSalDiffContour 3
@@ -142,7 +142,7 @@ PlotData: TempcXsectionPreSalDiffContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:36) 1e-3 0
   # z data -  tempc, K
-  /ps_tempc_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
+  /all_ps_tempc_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
 End
   
 PlotData: TempcXsectionSalContour 3
@@ -151,7 +151,7 @@ PlotData: TempcXsectionSalContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:36) 1e-3 0
   # z data -  tempc, K
-  /s_tempc DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
+  /all_s_tempc DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
 End
   
 PlotData: TempcXsectionSalDiffContour 3
@@ -160,7 +160,7 @@ PlotData: TempcXsectionSalDiffContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:36) 1e-3 0
   # z data -  tempc, K
-  /s_tempc_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
+  /all_s_tempc_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
 End
   
 ############ PLOT AXES #################

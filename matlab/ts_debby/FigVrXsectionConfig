@@ -133,7 +133,7 @@ PlotData: VrXsectionPreSalContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  speed_r, m/s
-  /ps_speed_r DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+  /all_ps_speed_r DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 PlotData: VrXsectionPreSalDiffContour 3
@@ -142,7 +142,7 @@ PlotData: VrXsectionPreSalDiffContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  speed_r, m/s
-  /ps_speed_r_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+  /all_ps_speed_r_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 PlotData: VrXsectionSalContour 3
@@ -151,7 +151,7 @@ PlotData: VrXsectionSalContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  speed_r, m/s
-  /s_speed_r DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+  /all_s_speed_r DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 PlotData: VrXsectionSalDiffContour 3
@@ -160,7 +160,7 @@ PlotData: VrXsectionSalDiffContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  speed_r, m/s
-  /s_speed_r_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+  /all_s_speed_r_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 ############ PLOT AXES #################

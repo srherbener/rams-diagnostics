@@ -3,24 +3,20 @@
 #
 
 ######### FIGURES ###################
-Figure: Dust2NumXsectionPreSal 4
+Figure: Dust2NumXsectionPreSal 2
   DummyCases
-  [2_2]
+  [2_1]
   Plots/FigDust2NumXsectionPreSal.jpg
   Dust2NumXsectionSDPreSalPanel         1
-  Dust2NumXsectionSNDdiffPreSalPanel    2
-  Dust2NumXsectionNSDdiffPreSalPanel    3
-  Dust2NumXsectionNSNDdiffPreSalPanel   4
+  Dust2NumXsectionNSDdiffPreSalPanel    2
 End 
 
-Figure: Dust2NumXsectionSal 4
+Figure: Dust2NumXsectionSal 2
   DummyCases
-  [2_2]
+  [2_1]
   Plots/FigDust2NumXsectionSal.jpg
   Dust2NumXsectionSDSalPanel         1
-  Dust2NumXsectionSNDdiffSalPanel    2
-  Dust2NumXsectionNSDdiffSalPanel    3
-  Dust2NumXsectionNSNDdiffSalPanel   4
+  Dust2NumXsectionNSDdiffSalPanel    2
 End 
 
 ########### CASES ####################
@@ -133,7 +129,7 @@ PlotData: Dust2NumXsectionPreSalContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  d2_num, #/cm3
-  /ps_d2_num DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+  /all_ps_d2_num DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 PlotData: Dust2NumXsectionPreSalDiffContour 3
@@ -142,7 +138,7 @@ PlotData: Dust2NumXsectionPreSalDiffContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  d2_num, #/cm3
-  /ps_d2_num_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+  /all_ps_d2_num_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 PlotData: Dust2NumXsectionSalContour 3
@@ -151,7 +147,7 @@ PlotData: Dust2NumXsectionSalContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  d2_num, #/cm3
-  /s_d2_num DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+  /all_s_d2_num DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 PlotData: Dust2NumXsectionSalDiffContour 3
@@ -160,7 +156,7 @@ PlotData: Dust2NumXsectionSalDiffContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  d2_num, #/cm3
-  /s_d2_num_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+  /all_s_d2_num_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 ############ PLOT AXES #################

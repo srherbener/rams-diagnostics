@@ -133,7 +133,7 @@ PlotData: ThetaXsectionPreSalContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:36) 1e-3 0
   # z data -  theta, K
-  /ps_theta DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
+  /all_ps_theta DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
 End
   
 PlotData: ThetaXsectionPreSalDiffContour 3
@@ -142,7 +142,7 @@ PlotData: ThetaXsectionPreSalDiffContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:36) 1e-3 0
   # z data -  theta, K
-  /ps_theta_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
+  /all_ps_theta_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
 End
   
 PlotData: ThetaXsectionSalContour 3
@@ -151,7 +151,7 @@ PlotData: ThetaXsectionSalContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:36) 1e-3 0
   # z data -  theta, K
-  /s_theta DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
+  /all_s_theta DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
 End
   
 PlotData: ThetaXsectionSalDiffContour 3
@@ -160,7 +160,7 @@ PlotData: ThetaXsectionSalDiffContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:36) 1e-3 0
   # z data -  theta, K
-  /s_theta_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
+  /all_s_theta_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
 End
   
 ############ PLOT AXES #################

@@ -133,7 +133,7 @@ PlotData: CloudXsectionPreSalContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  cloud, g/kg
-  /ps_cloud DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+  /all_ps_cloud_mass DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 PlotData: CloudXsectionPreSalDiffContour 3
@@ -142,7 +142,7 @@ PlotData: CloudXsectionPreSalDiffContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  cloud, g/kg
-  /ps_cloud_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+  /all_ps_cloud_mass_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 PlotData: CloudXsectionSalContour 3
@@ -151,7 +151,7 @@ PlotData: CloudXsectionSalContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  cloud, g/kg
-  /s_cloud DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+  /all_s_cloud_mass DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 PlotData: CloudXsectionSalDiffContour 3
@@ -160,7 +160,7 @@ PlotData: CloudXsectionSalDiffContour 3
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  cloud, g/kg
-  /s_cloud_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+  /all_s_cloud_mass_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 ############ PLOT AXES #################

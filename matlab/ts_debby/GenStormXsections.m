@@ -34,17 +34,17 @@ function [ ] = GenStormXsections()
     { 'DIAGS/hist_meas_az_theta_<CASE>.h5' '/all_ps_theta'  '/all_ps_theta' }
     { 'DIAGS/hist_meas_az_theta_<CASE>.h5' '/all_s_theta'  '/all_s_theta' }
 
-%    { 'DIAGS/hist_meas_az_tempc_<CASE>.h5' '/all_ps_tempc'  '/all_ps_tempc' }
-%    { 'DIAGS/hist_meas_az_tempc_<CASE>.h5' '/all_s_tempc'  '/all_s_tempc' }
+    { 'DIAGS/hist_meas_az_tempc_<CASE>.h5' '/all_ps_tempc'  '/all_ps_tempc' }
+    { 'DIAGS/hist_meas_az_tempc_<CASE>.h5' '/all_s_tempc'  '/all_s_tempc' }
 
     { 'DIAGS/hist_meas_az_pcprate_<CASE>.h5' '/all_ps_pcprate' '/all_ps_pcprate' }
     { 'DIAGS/hist_meas_az_pcprate_<CASE>.h5' '/all_s_pcprate' '/all_s_pcprate' }
 
-%    { 'DIAGS/hist_meas_az_vint_cond_<CASE>.h5' '/all_ps_vint_cond' '/all_ps_vint_cond' }
-%    { 'DIAGS/hist_meas_az_vint_cond_<CASE>.h5' '/all_s_vint_cond' '/all_s_vint_cond' }
+    { 'DIAGS/hist_meas_az_vint_cond_<CASE>.h5' '/all_ps_vint_cond' '/all_ps_vint_cond' }
+    { 'DIAGS/hist_meas_az_vint_cond_<CASE>.h5' '/all_s_vint_cond' '/all_s_vint_cond' }
 
-%    { 'DIAGS/hist_meas_az_vapor_<CASE>.h5' '/all_ps_vapor' '/all_ps_vapor' }
-%    { 'DIAGS/hist_meas_az_vapor_<CASE>.h5' '/all_s_vapor' '/all_s_vapor' }
+    { 'DIAGS/hist_meas_az_vapor_<CASE>.h5' '/all_ps_vapor' '/all_ps_vapor' }
+    { 'DIAGS/hist_meas_az_vapor_<CASE>.h5' '/all_s_vapor' '/all_s_vapor' }
 
 %    { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/all_ps_d1_mass' '/all_ps_d1_mass' }
 %    { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/all_ps_d2_mass' '/all_ps_d2_mass' }
@@ -62,50 +62,50 @@ function [ ] = GenStormXsections()
     { 'DIAGS/hist_meas_az_cloud_<CASE>.h5' '/all_ps_cloud_diam' '/all_ps_cloud_diam' }
     { 'DIAGS/hist_meas_az_cloud_<CASE>.h5' '/all_s_cloud_diam'  '/all_s_cloud_diam' }
 
-%    { 'DIAGS/hist_meas_az_rain_<CASE>.h5' '/all_ps_rain_mass'      '/all_ps_rain_mass' }
-%    { 'DIAGS/hist_meas_az_rain_<CASE>.h5' '/all_s_rain_mass'       '/all_s_rain_mass' }
+    { 'DIAGS/hist_meas_az_rain_<CASE>.h5' '/all_ps_rain_mass'      '/all_ps_rain_mass' }
+    { 'DIAGS/hist_meas_az_rain_<CASE>.h5' '/all_s_rain_mass'       '/all_s_rain_mass' }
 %    { 'DIAGS/hist_meas_az_rain_<CASE>.h5' '/all_ps_rain_num'  '/all_ps_rain_num' }
 %    { 'DIAGS/hist_meas_az_rain_<CASE>.h5' '/all_s_rain_num'   '/all_s_rain_num' }
 %    { 'DIAGS/hist_meas_az_rain_<CASE>.h5' '/all_ps_rain_diam' '/all_ps_rain_diam' }
 %    { 'DIAGS/hist_meas_az_rain_<CASE>.h5' '/all_s_rain_diam'  '/all_s_rain_diam' }
-%
-%    { 'DIAGS/hist_meas_az_pris_<CASE>.h5' '/all_ps_pris_mass'      '/all_ps_pris_mass' }
-%    { 'DIAGS/hist_meas_az_pris_<CASE>.h5' '/all_s_pris_mass'       '/all_s_pris_mass' }
+
+    { 'DIAGS/hist_meas_az_pris_<CASE>.h5' '/all_ps_pris_mass'      '/all_ps_pris_mass' }
+    { 'DIAGS/hist_meas_az_pris_<CASE>.h5' '/all_s_pris_mass'       '/all_s_pris_mass' }
 %    { 'DIAGS/hist_meas_az_pris_<CASE>.h5' '/all_ps_pris_num'  '/all_ps_pris_num' }
 %    { 'DIAGS/hist_meas_az_pris_<CASE>.h5' '/all_s_pris_num'   '/all_s_pris_num' }
 %    { 'DIAGS/hist_meas_az_pris_<CASE>.h5' '/all_ps_pris_diam' '/all_ps_pris_diam' }
 %    { 'DIAGS/hist_meas_az_pris_<CASE>.h5' '/all_s_pris_diam'  '/all_s_pris_diam' }
-%
-%    { 'DIAGS/hist_meas_az_snow_<CASE>.h5' '/all_ps_snow_mass'      '/all_ps_snow_mass' }
-%    { 'DIAGS/hist_meas_az_snow_<CASE>.h5' '/all_s_snow_mass'       '/all_s_snow_mass' }
+
+    { 'DIAGS/hist_meas_az_snow_<CASE>.h5' '/all_ps_snow_mass'      '/all_ps_snow_mass' }
+    { 'DIAGS/hist_meas_az_snow_<CASE>.h5' '/all_s_snow_mass'       '/all_s_snow_mass' }
 %    { 'DIAGS/hist_meas_az_snow_<CASE>.h5' '/all_ps_snow_num'  '/all_ps_snow_num' }
 %    { 'DIAGS/hist_meas_az_snow_<CASE>.h5' '/all_s_snow_num'   '/all_s_snow_num' }
 %    { 'DIAGS/hist_meas_az_snow_<CASE>.h5' '/all_ps_snow_diam' '/all_ps_snow_diam' }
 %    { 'DIAGS/hist_meas_az_snow_<CASE>.h5' '/all_s_snow_diam'  '/all_s_snow_diam' }
-%
-%    { 'DIAGS/hist_meas_az_aggr_<CASE>.h5' '/all_ps_aggr_mass'      '/all_ps_aggr_mass' }
-%    { 'DIAGS/hist_meas_az_aggr_<CASE>.h5' '/all_s_aggr_mass'       '/all_s_aggr_mass' }
+
+    { 'DIAGS/hist_meas_az_aggr_<CASE>.h5' '/all_ps_aggr_mass'      '/all_ps_aggr_mass' }
+    { 'DIAGS/hist_meas_az_aggr_<CASE>.h5' '/all_s_aggr_mass'       '/all_s_aggr_mass' }
 %    { 'DIAGS/hist_meas_az_aggr_<CASE>.h5' '/all_ps_aggr_num'  '/all_ps_aggr_num' }
 %    { 'DIAGS/hist_meas_az_aggr_<CASE>.h5' '/all_s_aggr_num'   '/all_s_aggr_num' }
 %    { 'DIAGS/hist_meas_az_aggr_<CASE>.h5' '/all_ps_aggr_diam' '/all_ps_aggr_diam' }
 %    { 'DIAGS/hist_meas_az_aggr_<CASE>.h5' '/all_s_aggr_diam'  '/all_s_aggr_diam' }
-%
-%    { 'DIAGS/hist_meas_az_graup_<CASE>.h5' '/all_ps_graup_mass'      '/all_ps_graup_mass' }
-%    { 'DIAGS/hist_meas_az_graup_<CASE>.h5' '/all_s_graup_mass'       '/all_s_graup_mass' }
+
+    { 'DIAGS/hist_meas_az_graup_<CASE>.h5' '/all_ps_graup_mass'      '/all_ps_graup_mass' }
+    { 'DIAGS/hist_meas_az_graup_<CASE>.h5' '/all_s_graup_mass'       '/all_s_graup_mass' }
 %    { 'DIAGS/hist_meas_az_graup_<CASE>.h5' '/all_ps_graup_num'  '/all_ps_graup_num' }
 %    { 'DIAGS/hist_meas_az_graup_<CASE>.h5' '/all_s_graup_num'   '/all_s_graup_num' }
 %    { 'DIAGS/hist_meas_az_graup_<CASE>.h5' '/all_ps_graup_diam' '/all_ps_graup_diam' }
 %    { 'DIAGS/hist_meas_az_graup_<CASE>.h5' '/all_s_graup_diam'  '/all_s_graup_diam' }
-%
-%    { 'DIAGS/hist_meas_az_hail_<CASE>.h5' '/all_ps_hail_mass'      '/all_ps_hail_mass' }
-%    { 'DIAGS/hist_meas_az_hail_<CASE>.h5' '/all_s_hail_mass'       '/all_s_hail_mass' }
+
+    { 'DIAGS/hist_meas_az_hail_<CASE>.h5' '/all_ps_hail_mass'      '/all_ps_hail_mass' }
+    { 'DIAGS/hist_meas_az_hail_<CASE>.h5' '/all_s_hail_mass'       '/all_s_hail_mass' }
 %    { 'DIAGS/hist_meas_az_hail_<CASE>.h5' '/all_ps_hail_num'  '/all_ps_hail_num' }
 %    { 'DIAGS/hist_meas_az_hail_<CASE>.h5' '/all_s_hail_num'   '/all_s_hail_num' }
 %    { 'DIAGS/hist_meas_az_hail_<CASE>.h5' '/all_ps_hail_diam' '/all_ps_hail_diam' }
 %    { 'DIAGS/hist_meas_az_hail_<CASE>.h5' '/all_s_hail_diam'  '/all_s_hail_diam' }
-%
-%    { 'DIAGS/hist_meas_az_tcond_<CASE>.h5' '/all_ps_tcond' '/all_ps_tcond' }
-%    { 'DIAGS/hist_meas_az_tcond_<CASE>.h5' '/all_s_tcond'  '/all_s_tcond' }
+
+    { 'DIAGS/hist_meas_az_tcond_<CASE>.h5' '/all_ps_tcond_mass' '/all_ps_tcond_mass' }
+    { 'DIAGS/hist_meas_az_tcond_<CASE>.h5' '/all_s_tcond_mass'  '/all_s_tcond_mass' }
 
     { 'DIAGS/hist_meas_az_lhf_cool_<CASE>.h5' '/all_ps_lhf_cool' '/all_ps_lhf_cool' }
     { 'DIAGS/hist_meas_az_lhf_heat_<CASE>.h5' '/all_ps_lhf_heat' '/all_ps_lhf_heat' }
