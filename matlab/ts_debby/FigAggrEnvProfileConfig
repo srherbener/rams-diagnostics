@@ -1,0 +1,144 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: AggrEnvProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigAggrEnvProfile.jpg
+  AggrCntlPreSalEnvPanel  1
+  AggrCntlSalEnvPanel     2
+  AggrDiffPreSalEnvPanel  3
+  AggrDiffSalEnvPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: AggrCntlPreSalEnvPanel
+  AggrCntlPreSalEnvPset
+  AggrCntlPreSalEnvAxes 1 1
+  none 5
+  Pre@SAL@Env
+  SouthEast 12
+End
+
+FigPanel: AggrDiffPreSalEnvPanel
+  AggrDiffPreSalEnvPset
+  AggrDiffPreSalEnvAxes 1 1
+  none 5
+  Pre@SAL@Env@(diffs)
+  SouthEast 12
+End
+
+FigPanel: AggrCntlSalEnvPanel
+  AggrCntlSalEnvPset
+  AggrCntlSalEnvAxes 1 1
+  none 5
+  SAL@Env 
+  SouthEast 12
+End
+
+FigPanel: AggrDiffSalEnvPanel
+  AggrDiffSalEnvPset
+  AggrDiffSalEnvAxes 1 1
+  none 5
+  SAL@Env@(diffs)
+  SouthEast 12
+End
+
+############ PLOT SETS #################
+PlotSet: AggrCntlPreSalEnvPset line 4
+  AggrPreSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  AggrPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  AggrPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  AggrPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: AggrDiffPreSalEnvPset line 4
+  AggrDiffPreSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  AggrDiffPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  AggrDiffPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  AggrDiffPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: AggrCntlSalEnvPset line 4
+  AggrSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  AggrSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  AggrSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  AggrSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: AggrDiffSalEnvPset line 4
+  AggrDiffSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  AggrDiffSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  AggrDiffSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  AggrDiffSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: AggrPreSalEnvLine 2
+  # x data - aggr mix ratio, g/kg
+  /all_env_ps_aggr_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: AggrSalEnvLine 2
+  # x data - aggr mix ratio, g/kg
+  /all_env_s_aggr_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: AggrDiffPreSalEnvLine 2
+  # x data - aggr mix ratio, g/kg
+  /all_env_ps_aggr_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: AggrDiffSalEnvLine 2
+  # x data - aggr mix ratio, g/kg
+  /all_env_s_aggr_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: AggrCntlPreSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - aggr mix ratio, g/kg
+  Aggregates g@kg^-^1 0 0.3 linear [_] {_}
+  # y axis - height, km
+  Height km 0 18 linear [_] {_}
+End
+
+PlotAxes: AggrDiffPreSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - aggr mix ratio, g/kg
+  Aggregates g@kg^-^1 -0.15 0.15 linear [_] {_}
+  # y axis - height, km
+  Height km 0 18 linear [_] {_}
+End
+
+PlotAxes: AggrCntlSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - aggr mix ratio, g/kg
+  Aggregates g@kg^-^1 0 0.3 linear [_] {_}
+  # y axis - height, km
+  Height km 0 18 linear [_] {_}
+End
+
+PlotAxes: AggrDiffSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - aggr mix ratio, g/kg
+  Aggregates g@kg^-^1 -0.15 0.15 linear [_] {_}
+  # y axis - height, km
+  Height km 0 18 linear [_] {_}
+End
+

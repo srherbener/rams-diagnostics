@@ -1,0 +1,144 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: HailEnvProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigHailEnvProfile.jpg
+  HailCntlPreSalEnvPanel  1
+  HailCntlSalEnvPanel     2
+  HailDiffPreSalEnvPanel  3
+  HailDiffSalEnvPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: HailCntlPreSalEnvPanel
+  HailCntlPreSalEnvPset
+  HailCntlPreSalEnvAxes 1 1
+  none 5
+  Pre@SAL@Env 
+  NorthEast 12
+End
+
+FigPanel: HailDiffPreSalEnvPanel
+  HailDiffPreSalEnvPset
+  HailDiffPreSalEnvAxes 1 1
+  none 5
+  Pre@SAL@Env@(diffs)
+  NorthEast 12
+End
+
+FigPanel: HailCntlSalEnvPanel
+  HailCntlSalEnvPset
+  HailCntlSalEnvAxes 1 1
+  none 5
+  SAL@Env 
+  NorthEast 12
+End
+
+FigPanel: HailDiffSalEnvPanel
+  HailDiffSalEnvPset
+  HailDiffSalEnvAxes 1 1
+  none 5
+  SAL@Env@(diffs)
+  NorthEast 12
+End
+
+############ PLOT SETS #################
+PlotSet: HailCntlPreSalEnvPset line 4
+  HailPreSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  HailPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  HailPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  HailPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: HailDiffPreSalEnvPset line 4
+  HailDiffPreSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  HailDiffPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  HailDiffPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  HailDiffPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: HailCntlSalEnvPset line 4
+  HailSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  HailSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  HailSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  HailSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: HailDiffSalEnvPset line 4
+  HailDiffSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  HailDiffSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  HailDiffSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  HailDiffSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: HailPreSalEnvLine 2
+  # x data - hail mix ratio, g/kg
+  /all_env_ps_hail_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: HailSalEnvLine 2
+  # x data - hail mix ratio, g/kg
+  /all_env_s_hail_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: HailDiffPreSalEnvLine 2
+  # x data - hail mix ratio, g/kg
+  /all_env_ps_hail_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: HailDiffSalEnvLine 2
+  # x data - hail mix ratio, g/kg
+  /all_env_s_hail_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: HailCntlPreSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - hail mix ratio, g/kg
+  Hail g@kg^-^1 0 0.15 linear [_] {_}
+  # y axis - height, km
+  Height km 0 18 linear [_] {_}
+End
+
+PlotAxes: HailDiffPreSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - hail mix ratio, g/kg
+  Hail g@kg^-^1 -0.08 0.08 linear [_] {_}
+  # y axis - height, km
+  Height km 0 18 linear [_] {_}
+End
+
+PlotAxes: HailCntlSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - hail mix ratio, g/kg
+  Hail g@kg^-^1 0 0.15 linear [_] {_}
+  # y axis - height, km
+  Height km 0 18 linear [_] {_}
+End
+
+PlotAxes: HailDiffSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - hail mix ratio, g/kg
+  Hail g@kg^-^1 -0.08 0.08 linear [_] {_}
+  # y axis - height, km
+  Height km 0 18 linear [_] {_}
+End
+

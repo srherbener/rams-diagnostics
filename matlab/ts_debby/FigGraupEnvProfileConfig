@@ -1,0 +1,144 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: GraupEnvProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigGraupEnvProfile.jpg
+  GraupCntlPreSalEnvPanel  1
+  GraupCntlSalEnvPanel     2
+  GraupDiffPreSalEnvPanel  3
+  GraupDiffSalEnvPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: GraupCntlPreSalEnvPanel
+  GraupCntlPreSalEnvPset
+  GraupCntlPreSalEnvAxes 1 1
+  none 5
+  Pre@SAL@Env 
+  SouthEast 12
+End
+
+FigPanel: GraupDiffPreSalEnvPanel
+  GraupDiffPreSalEnvPset
+  GraupDiffPreSalEnvAxes 1 1
+  none 5
+  Pre@SAL@Env@(diffs)
+  SouthWest 12
+End
+
+FigPanel: GraupCntlSalEnvPanel
+  GraupCntlSalEnvPset
+  GraupCntlSalEnvAxes 1 1
+  none 5
+  SAL@Env 
+  SouthEast 12
+End
+
+FigPanel: GraupDiffSalEnvPanel
+  GraupDiffSalEnvPset
+  GraupDiffSalEnvAxes 1 1
+  none 5
+  SAL@Env@(diffs)
+  SouthWest 12
+End
+
+############ PLOT SETS #################
+PlotSet: GraupCntlPreSalEnvPset line 4
+  GraupPreSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  GraupPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  GraupPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  GraupPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: GraupDiffPreSalEnvPset line 4
+  GraupDiffPreSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  GraupDiffPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  GraupDiffPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  GraupDiffPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: GraupCntlSalEnvPset line 4
+  GraupSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  GraupSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  GraupSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  GraupSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: GraupDiffSalEnvPset line 4
+  GraupDiffSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  GraupDiffSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  GraupDiffSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  GraupDiffSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: GraupPreSalEnvLine 2
+  # x data - graup mix ratio, g/kg
+  /all_env_ps_graup_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: GraupSalEnvLine 2
+  # x data - graup mix ratio, g/kg
+  /all_env_s_graup_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: GraupDiffPreSalEnvLine 2
+  # x data - graup mix ratio, g/kg
+  /all_env_ps_graup_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: GraupDiffSalEnvLine 2
+  # x data - graup mix ratio, g/kg
+  /all_env_s_graup_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: GraupCntlPreSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - graup mix ratio, g/kg
+  Graupel g@kg^-^1 0 0.15 linear [_] {_}
+  # y axis - height, km
+  Height km 0 18 linear [_] {_}
+End
+
+PlotAxes: GraupDiffPreSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - graup mix ratio, g/kg
+  Graupel g@kg^-^1 -0.1 0.05 linear [_] {_}
+  # y axis - height, km
+  Height km 0 18 linear [_] {_}
+End
+
+PlotAxes: GraupCntlSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - graup mix ratio, g/kg
+  Graupel g@kg^-^1 0 0.15 linear [_] {_}
+  # y axis - height, km
+  Height km 0 18 linear [_] {_}
+End
+
+PlotAxes: GraupDiffSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - graup mix ratio, g/kg
+  Graupel g@kg^-^1 -0.1 0.05 linear [_] {_}
+  # y axis - height, km
+  Height km 0 18 linear [_] {_}
+End
+

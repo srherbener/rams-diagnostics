@@ -167,7 +167,7 @@ End
 PlotAxes: RainXsectionPreSalAxes 3
   14 2 [0.025_0.025]
   # x axis - radius
-  Radius km 0 450 linear [_] {_}
+  Radius km 0 500 linear [_] {_}
   # y axis - utc time
   Height km 0 15 linear [_] {_}
   # z axis - rain - g/kg
@@ -177,7 +177,7 @@ End
 PlotAxes: RainXsectionDiffPreSalAxes 3
   14 2 [0.025_0.025]
   # x axis - radius
-  Radius km 0 450 linear [_] {_}
+  Radius km 0 500 linear [_] {_}
   # y axis - utc time
   Height km 0 15 linear [_] {_}
   # z axis - rain - g/kg
@@ -187,7 +187,7 @@ End
 PlotAxes: RainXsectionSalAxes 3
   14 2 [0.025_0.025]
   # x axis - radius
-  Radius km 0 450 linear [_] {_}
+  Radius km 0 500 linear [_] {_}
   # y axis - utc time
   Height km 0 15 linear [_] {_}
   # z axis - rain - g/kg
@@ -197,7 +197,7 @@ End
 PlotAxes: RainXsectionDiffSalAxes 3
   14 2 [0.025_0.025]
   # x axis - radius
-  Radius km 0 450 linear [_] {_}
+  Radius km 0 500 linear [_] {_}
   # y axis - utc time
   Height km 0 15 linear [_] {_}
   # z axis - rain - g/kg

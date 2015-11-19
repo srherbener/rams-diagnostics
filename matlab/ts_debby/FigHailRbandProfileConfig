@@ -83,28 +83,28 @@ End
 ############ PLOT DATA #################
 PlotData: HailPreSalRbandLine 2
   # x data - hail mix ratio, g/kg
-  /ps_rb_hail DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_rb_ps_hail_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: HailSalRbandLine 2
   # x data - hail mix ratio, g/kg
-  /s_rb_hail DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_rb_s_hail_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: HailDiffPreSalRbandLine 2
   # x data - hail mix ratio, g/kg
-  /ps_rb_hail_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_rb_ps_hail_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: HailDiffSalRbandLine 2
   # x data - hail mix ratio, g/kg
-  /s_rb_hail_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_rb_s_hail_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End

@@ -1,9 +1,7 @@
-function [ ] = PlotGrids(ConfigFile)
+function [ ] = PlotGrids()
 % PlotGrids function to plot the grids used in TS Debby simulations
 
-[ Config ] = ReadConfig(ConfigFile);
-
-Pdir = Config.PlotDir;
+Pdir = 'Plots';
 if (exist(Pdir, 'dir') ~= 7)
     mkdir(Pdir);
 end
@@ -39,7 +37,7 @@ G3_lons = [ -39 -39 -14 -14 -39 ];
 
 
 % plot
-OutFile = sprintf('%s/TsDebbyGrids.jpg', Pdir);
+OutFile = sprintf('%s/Fig2_ModelGrids.jpg', Pdir);
 
 FigTracks = figure;
 set(gca, 'FontSize', Fsize);

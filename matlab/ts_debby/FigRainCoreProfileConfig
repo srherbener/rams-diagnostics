@@ -83,28 +83,28 @@ End
 ############ PLOT DATA #################
 PlotData: RainPreSalCoreLine 2
   # x data - rain mix ratio, g/kg
-  /ps_core_rain DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_ps_rain_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: RainSalCoreLine 2
   # x data - rain mix ratio, g/kg
-  /s_core_rain DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_s_rain_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: RainDiffPreSalCoreLine 2
   # x data - rain mix ratio, g/kg
-  /ps_core_rain_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_ps_rain_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: RainDiffSalCoreLine 2
   # x data - rain mix ratio, g/kg
-  /s_core_rain_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_s_rain_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End

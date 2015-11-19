@@ -83,28 +83,28 @@ End
 ############ PLOT DATA #################
 PlotData: GraupPreSalCoreLine 2
   # x data - graup mix ratio, g/kg
-  /ps_core_graup DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_ps_graup_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: GraupSalCoreLine 2
   # x data - graup mix ratio, g/kg
-  /s_core_graup DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_s_graup_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: GraupDiffPreSalCoreLine 2
   # x data - graup mix ratio, g/kg
-  /ps_core_graup_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_ps_graup_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: GraupDiffSalCoreLine 2
   # x data - graup mix ratio, g/kg
-  /s_core_graup_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_s_graup_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End

@@ -324,7 +324,7 @@ End
 PlotAxes: LhvCoolXsectionPreSalAxes 3
   14 2 [0.025_0.025]
   # x axis - radius
-  Radius km 0 450 linear [_] {_}
+  Radius km 0 500 linear [_] {_}
   # y axis - utc time
   Height km 0 8 linear [_] {_}
   # z axis - lhv_cool - K/hr
@@ -334,7 +334,7 @@ End
 PlotAxes: LhvCoolXsectionDiffPreSalAxes 3
   14 2 [0.025_0.025]
   # x axis - radius
-  Radius km 0 450 linear [_] {_}
+  Radius km 0 500 linear [_] {_}
   # y axis - utc time
   Height km 0 8 linear [_] {_}
   # z axis - lhv_cool - K/hr
@@ -344,7 +344,7 @@ End
 PlotAxes: LhvCoolXsectionSalAxes 3
   14 2 [0.025_0.025]
   # x axis - radius
-  Radius km 0 450 linear [_] {_}
+  Radius km 0 500 linear [_] {_}
   # y axis - utc time
   Height km 0 8 linear [_] {_}
   # z axis - lhv_cool - K/hr
@@ -354,7 +354,7 @@ End
 PlotAxes: LhvCoolXsectionDiffSalAxes 3
   14 2 [0.025_0.025]
   # x axis - radius
-  Radius km 0 450 linear [_] {_}
+  Radius km 0 500 linear [_] {_}
   # y axis - utc time
   Height km 0 8 linear [_] {_}
   # z axis - lhv_cool - K/hr
@@ -365,7 +365,7 @@ End
 PlotAxes: LhfCoolXsectionPreSalAxes 3
   14 2 [0.025_0.025]
   # x axis - radius
-  Radius km 0 450 linear [_] {_}
+  Radius km 0 500 linear [_] {_}
   # y axis - utc time
   Height km 0 8 linear [_] {_}
   # z axis - lhv_cool - K/hr
@@ -375,7 +375,7 @@ End
 PlotAxes: LhfCoolXsectionDiffPreSalAxes 3
   14 2 [0.025_0.025]
   # x axis - radius
-  Radius km 0 450 linear [_] {_}
+  Radius km 0 500 linear [_] {_}
   # y axis - utc time
   Height km 0 8 linear [_] {_}
   # z axis - lhv_cool - K/hr
@@ -385,7 +385,7 @@ End
 PlotAxes: LhfCoolXsectionSalAxes 3
   14 2 [0.025_0.025]
   # x axis - radius
-  Radius km 0 450 linear [_] {_}
+  Radius km 0 500 linear [_] {_}
   # y axis - utc time
   Height km 0 8 linear [_] {_}
   # z axis - lhv_cool - K/hr
@@ -395,7 +395,7 @@ End
 PlotAxes: LhfCoolXsectionDiffSalAxes 3
   14 2 [0.025_0.025]
   # x axis - radius
-  Radius km 0 450 linear [_] {_}
+  Radius km 0 500 linear [_] {_}
   # y axis - utc time
   Height km 0 8 linear [_] {_}
   # z axis - lhv_cool - K/hr

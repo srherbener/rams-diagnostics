@@ -1,0 +1,144 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: SnowEnvProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigSnowEnvProfile.jpg
+  SnowCntlPreSalEnvPanel  1
+  SnowCntlSalEnvPanel     2
+  SnowDiffPreSalEnvPanel  3
+  SnowDiffSalEnvPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: SnowCntlPreSalEnvPanel
+  SnowCntlPreSalEnvPset
+  SnowCntlPreSalEnvAxes 1 1
+  none 5
+  Pre@SAL@Env 
+  SouthEast 12
+End
+
+FigPanel: SnowDiffPreSalEnvPanel
+  SnowDiffPreSalEnvPset
+  SnowDiffPreSalEnvAxes 1 1
+  none 5
+  Pre@SAL@Env@(diffs)
+  SouthWest 12
+End
+
+FigPanel: SnowCntlSalEnvPanel
+  SnowCntlSalEnvPset
+  SnowCntlSalEnvAxes 1 1
+  none 5
+  SAL@Env 
+  SouthEast 12
+End
+
+FigPanel: SnowDiffSalEnvPanel
+  SnowDiffSalEnvPset
+  SnowDiffSalEnvAxes 1 1
+  none 5
+  SAL@Env@(diffs)
+  SouthWest 12
+End
+
+############ PLOT SETS #################
+PlotSet: SnowCntlPreSalEnvPset line 4
+  SnowPreSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  SnowPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  SnowPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  SnowPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: SnowDiffPreSalEnvPset line 4
+  SnowDiffPreSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  SnowDiffPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  SnowDiffPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  SnowDiffPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: SnowCntlSalEnvPset line 4
+  SnowSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  SnowSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  SnowSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  SnowSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: SnowDiffSalEnvPset line 4
+  SnowDiffSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  SnowDiffSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  SnowDiffSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  SnowDiffSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: SnowPreSalEnvLine 2
+  # x data - snow mix ratio, g/kg
+  /all_env_ps_snow_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: SnowSalEnvLine 2
+  # x data - snow mix ratio, g/kg
+  /all_env_s_snow_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: SnowDiffPreSalEnvLine 2
+  # x data - snow mix ratio, g/kg
+  /all_env_ps_snow_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: SnowDiffSalEnvLine 2
+  # x data - snow mix ratio, g/kg
+  /all_env_s_snow_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: SnowCntlPreSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - snow mix ratio, g/kg
+  Snow g@kg^-^1 0 0.15 linear [_] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+End
+
+PlotAxes: SnowDiffPreSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - snow mix ratio, g/kg
+  Snow g@kg^-^1 -0.08 0.02 linear [_] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+End
+
+PlotAxes: SnowCntlSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - snow mix ratio, g/kg
+  Snow g@kg^-^1 0 0.15 linear [_] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+End
+
+PlotAxes: SnowDiffSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - snow mix ratio, g/kg
+  Snow g@kg^-^1 -0.08 0.02 linear [_] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+End
+

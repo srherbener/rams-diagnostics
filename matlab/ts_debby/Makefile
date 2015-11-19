@@ -6,6 +6,7 @@ DEST = $(HOME)/etc/matlab/ts_debby
 DIAG_DIR = /Volumes/tasman1/sherbener/data/RAMS/TsDebby/SST_OBS
 
 SCRIPTS = \
+  $(DEST)/PlotGrids.m \
   $(DEST)/ExtractSampleProfile.m \
   $(DEST)/GenStormDustFields.m \
   $(DEST)/GenTempAnomalies.m \
@@ -58,9 +59,7 @@ CONFIGS = \
   $(DIAG_DIR)/FigThetaXsectionConfig \
   $(DIAG_DIR)/FigTempcXsectionConfig \
   $(DIAG_DIR)/FigVaporXsectionConfig \
-  $(DIAG_DIR)/FigDust1XsectionConfig \
   $(DIAG_DIR)/FigDust1NumXsectionConfig \
-  $(DIAG_DIR)/FigDust2XsectionConfig \
   $(DIAG_DIR)/FigDust2NumXsectionConfig \
   $(DIAG_DIR)/FigCoolXsectionConfig \
   $(DIAG_DIR)/FigHeatXsectionConfig \
@@ -120,6 +119,12 @@ CONFIGS = \
   $(DIAG_DIR)/FigDust2RbandProfileConfig \
   $(DIAG_DIR)/FigDust2NumRbandProfileConfig \
   $(DIAG_DIR)/FigCloudEnvProfileConfig \
+  $(DIAG_DIR)/FigRainEnvProfileConfig \
+  $(DIAG_DIR)/FigPrisEnvProfileConfig \
+  $(DIAG_DIR)/FigSnowEnvProfileConfig \
+  $(DIAG_DIR)/FigAggrEnvProfileConfig \
+  $(DIAG_DIR)/FigGraupEnvProfileConfig \
+  $(DIAG_DIR)/FigHailEnvProfileConfig \
   $(DIAG_DIR)/FigDnDraftEnvProfileConfig \
   $(DIAG_DIR)/FigUpDraftEnvProfileConfig \
   $(DIAG_DIR)/FigSpeedtEnvProfileConfig \

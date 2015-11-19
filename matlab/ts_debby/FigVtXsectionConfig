@@ -167,7 +167,7 @@ End
 PlotAxes: VtXsectionPreSalAxes 3
   14 2 [0.025_0.025]
   # x axis - radius
-  Radius km 0 450 linear [_] {_}
+  Radius km 0 500 linear [_] {_}
   # y axis - utc time
   Height km 0 8 linear [_] {_}
   # z axis - speed_t - m/s
@@ -177,7 +177,7 @@ End
 PlotAxes: VtXsectionDiffPreSalAxes 3
   14 2 [0.025_0.025]
   # x axis - radius
-  Radius km 0 450 linear [_] {_}
+  Radius km 0 500 linear [_] {_}
   # y axis - utc time
   Height km 0 8 linear [_] {_}
   # z axis - speed_t - m/s
@@ -187,7 +187,7 @@ End
 PlotAxes: VtXsectionSalAxes 3
   14 2 [0.025_0.025]
   # x axis - radius
-  Radius km 0 450 linear [_] {_}
+  Radius km 0 500 linear [_] {_}
   # y axis - utc time
   Height km 0 8 linear [_] {_}
   # z axis - speed_t - m/s
@@ -197,7 +197,7 @@ End
 PlotAxes: VtXsectionDiffSalAxes 3
   14 2 [0.025_0.025]
   # x axis - radius
-  Radius km 0 450 linear [_] {_}
+  Radius km 0 500 linear [_] {_}
   # y axis - utc time
   Height km 0 8 linear [_] {_}
   # z axis - speed_t - m/s

@@ -1,0 +1,144 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: PrisEnvProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigPrisEnvProfile.jpg
+  PrisCntlPreSalEnvPanel  1
+  PrisCntlSalEnvPanel     2
+  PrisDiffPreSalEnvPanel  3
+  PrisDiffSalEnvPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: PrisCntlPreSalEnvPanel
+  PrisCntlPreSalEnvPset
+  PrisCntlPreSalEnvAxes 1 1
+  none 5
+  Pre@SAL@Env 
+  SouthEast 12
+End
+
+FigPanel: PrisDiffPreSalEnvPanel
+  PrisDiffPreSalEnvPset
+  PrisDiffPreSalEnvAxes 1 1
+  none 5
+  Pre@SAL@Env@(diffs)
+  SouthWest 12
+End
+
+FigPanel: PrisCntlSalEnvPanel
+  PrisCntlSalEnvPset
+  PrisCntlSalEnvAxes 1 1
+  none 5
+  SAL@Env 
+  SouthEast 12
+End
+
+FigPanel: PrisDiffSalEnvPanel
+  PrisDiffSalEnvPset
+  PrisDiffSalEnvAxes 1 1
+  none 5
+  SAL@Env@(diffs)
+  SouthWest 12
+End
+
+############ PLOT SETS #################
+PlotSet: PrisCntlPreSalEnvPset line 4
+  PrisPreSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  PrisPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  PrisPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  PrisPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: PrisDiffPreSalEnvPset line 4
+  PrisDiffPreSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  PrisDiffPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  PrisDiffPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  PrisDiffPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: PrisCntlSalEnvPset line 4
+  PrisSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  PrisSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  PrisSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  PrisSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: PrisDiffSalEnvPset line 4
+  PrisDiffSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  PrisDiffSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  PrisDiffSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  PrisDiffSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: PrisPreSalEnvLine 2
+  # x data - pris mix ratio, g/kg
+  /all_env_ps_pris_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: PrisSalEnvLine 2
+  # x data - pris mix ratio, g/kg
+  /all_env_s_pris_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: PrisDiffPreSalEnvLine 2
+  # x data - pris mix ratio, g/kg
+  /all_env_ps_pris_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: PrisDiffSalEnvLine 2
+  # x data - pris mix ratio, g/kg
+  /all_env_s_pris_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: PrisCntlPreSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - pris mix ratio, g/kg
+  Pristine@Ice g@kg^-^1 -0.01 0.08 linear [_] {_}
+  # y axis - height, km
+  Height km 0 18 linear [_] {_}
+End
+
+PlotAxes: PrisDiffPreSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - pris mix ratio, g/kg
+  Pristine@Ice g@kg^-^1 -0.06 0.02 linear [_] {_}
+  # y axis - height, km
+  Height km 0 18 linear [_] {_}
+End
+
+PlotAxes: PrisCntlSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - pris mix ratio, g/kg
+  Pristine@Ice g@kg^-^1 -0.01 0.08 linear [_] {_}
+  # y axis - height, km
+  Height km 0 18 linear [_] {_}
+End
+
+PlotAxes: PrisDiffSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - pris mix ratio, g/kg
+  Pristine@Ice g@kg^-^1 -0.06 0.02 linear [_] {_}
+  # y axis - height, km
+  Height km 0 18 linear [_] {_}
+End
+

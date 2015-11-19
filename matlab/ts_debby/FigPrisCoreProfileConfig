@@ -83,28 +83,28 @@ End
 ############ PLOT DATA #################
 PlotData: PrisPreSalCoreLine 2
   # x data - pris mix ratio, g/kg
-  /ps_core_pris DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_ps_pris_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: PrisSalCoreLine 2
   # x data - pris mix ratio, g/kg
-  /s_core_pris DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_s_pris_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: PrisDiffPreSalCoreLine 2
   # x data - pris mix ratio, g/kg
-  /ps_core_pris_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_ps_pris_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: PrisDiffSalCoreLine 2
   # x data - pris mix ratio, g/kg
-  /s_core_pris_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_s_pris_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End

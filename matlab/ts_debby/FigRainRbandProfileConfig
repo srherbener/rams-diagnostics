@@ -32,7 +32,7 @@ FigPanel: RainDiffPreSalRbandPanel
   RainDiffPreSalRbandAxes 1 1
   none 5
   Pre@SAL@Rband@(diffs)
-  NorthEast 12
+  NorthWest 12
 End
 
 FigPanel: RainCntlSalRbandPanel
@@ -48,7 +48,7 @@ FigPanel: RainDiffSalRbandPanel
   RainDiffSalRbandAxes 1 1
   none 5
   SAL@Rband@(diffs)
-  NorthEast 12
+  NorthWest 12
 End
 
 ############ PLOT SETS #################
@@ -83,28 +83,28 @@ End
 ############ PLOT DATA #################
 PlotData: RainPreSalRbandLine 2
   # x data - rain mix ratio, g/kg
-  /ps_rb_rain DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_rb_ps_rain_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: RainSalRbandLine 2
   # x data - rain mix ratio, g/kg
-  /s_rb_rain DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_rb_s_rain_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: RainDiffPreSalRbandLine 2
   # x data - rain mix ratio, g/kg
-  /ps_rb_rain_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_rb_ps_rain_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: RainDiffSalRbandLine 2
   # x data - rain mix ratio, g/kg
-  /s_rb_rain_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_rb_s_rain_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
@@ -113,7 +113,7 @@ End
 PlotAxes: RainCntlPreSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - rain mix ratio, g/kg
-  Rain g@kg^-^1 0 0.5 linear [_] {_}
+  Rain g@kg^-^1 -0.01 0.2 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End
@@ -121,7 +121,7 @@ End
 PlotAxes: RainDiffPreSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - rain mix ratio, g/kg
-  Rain g@kg^-^1 -0.10 0.10 linear [_] {_}
+  Rain g@kg^-^1 -0.05 0.04 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End
@@ -129,7 +129,7 @@ End
 PlotAxes: RainCntlSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - rain mix ratio, g/kg
-  Rain g@kg^-^1 0 0.5 linear [_] {_}
+  Rain g@kg^-^1 -0.01 0.2 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End
@@ -137,7 +137,7 @@ End
 PlotAxes: RainDiffSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - rain mix ratio, g/kg
-  Rain g@kg^-^1 -0.10 0.10 linear [_] {_}
+  Rain g@kg^-^1 -0.05 0.04 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End

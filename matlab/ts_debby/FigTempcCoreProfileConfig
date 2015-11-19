@@ -83,28 +83,28 @@ End
 ############ PLOT DATA #################
 PlotData: TempcPreSalCoreLine 2
   # x data - tempc, K
-  /ps_core_tempc DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_ps_tempc DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: TempcSalCoreLine 2
   # x data - tempc, K
-  /s_core_tempc DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_s_tempc DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: TempcDiffPreSalCoreLine 2
   # x data - tempc, K
-  /ps_core_tempc_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_ps_tempc_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: TempcDiffSalCoreLine 2
   # x data - tempc, K
-  /s_core_tempc_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_s_tempc_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End

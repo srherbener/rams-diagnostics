@@ -83,28 +83,28 @@ End
 ############ PLOT DATA #################
 PlotData: AggrPreSalCoreLine 2
   # x data - aggr mix ratio, g/kg
-  /ps_core_aggr DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_ps_aggr_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: AggrSalCoreLine 2
   # x data - aggr mix ratio, g/kg
-  /s_core_aggr DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_s_aggr_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: AggrDiffPreSalCoreLine 2
   # x data - aggr mix ratio, g/kg
-  /ps_core_aggr_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_ps_aggr_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: AggrDiffSalCoreLine 2
   # x data - aggr mix ratio, g/kg
-  /s_core_aggr_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_core_s_aggr_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End

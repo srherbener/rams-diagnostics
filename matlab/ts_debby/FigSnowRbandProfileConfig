@@ -83,28 +83,28 @@ End
 ############ PLOT DATA #################
 PlotData: SnowPreSalRbandLine 2
   # x data - snow mix ratio, g/kg
-  /ps_rb_snow DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_rb_ps_snow_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: SnowSalRbandLine 2
   # x data - snow mix ratio, g/kg
-  /s_rb_snow DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_rb_s_snow_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: SnowDiffPreSalRbandLine 2
   # x data - snow mix ratio, g/kg
-  /ps_rb_snow_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_rb_ps_snow_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
 PlotData: SnowDiffSalRbandLine 2
   # x data - snow mix ratio, g/kg
-  /s_rb_snow_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  /all_rb_s_snow_mass_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
   # y data - height, km
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
