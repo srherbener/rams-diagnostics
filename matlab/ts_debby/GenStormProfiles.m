@@ -94,6 +94,104 @@ function [ ] = GenStormProfiles()
     { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/all_env_ps_d2_num'   '/all_env_ps_d2_num'   'z' }
     { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/all_env_s_d2_num'    '/all_env_s_d2_num'    'z' }
 
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_core_ps_dust_cloud'  '/all_core_ps_dust_cloud'  'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_core_s_dust_cloud'   '/all_core_s_dust_cloud'   'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_rb_ps_dust_cloud'    '/all_rb_ps_dust_cloud'    'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_rb_s_dust_cloud'     '/all_rb_s_dust_cloud'     'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_env_ps_dust_cloud'   '/all_env_ps_dust_cloud'   'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_env_s_dust_cloud'    '/all_env_s_dust_cloud'    'z' }
+
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_core_ps_dust_rain'  '/all_core_ps_dust_rain'  'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_core_s_dust_rain'   '/all_core_s_dust_rain'   'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_rb_ps_dust_rain'    '/all_rb_ps_dust_rain'    'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_rb_s_dust_rain'     '/all_rb_s_dust_rain'     'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_env_ps_dust_rain'   '/all_env_ps_dust_rain'   'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_env_s_dust_rain'    '/all_env_s_dust_rain'    'z' }
+
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_core_ps_dust_pris'  '/all_core_ps_dust_pris'  'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_core_s_dust_pris'   '/all_core_s_dust_pris'   'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_rb_ps_dust_pris'    '/all_rb_ps_dust_pris'    'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_rb_s_dust_pris'     '/all_rb_s_dust_pris'     'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_env_ps_dust_pris'   '/all_env_ps_dust_pris'   'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_env_s_dust_pris'    '/all_env_s_dust_pris'    'z' }
+
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_core_ps_dust_snow'  '/all_core_ps_dust_snow'  'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_core_s_dust_snow'   '/all_core_s_dust_snow'   'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_rb_ps_dust_snow'    '/all_rb_ps_dust_snow'    'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_rb_s_dust_snow'     '/all_rb_s_dust_snow'     'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_env_ps_dust_snow'   '/all_env_ps_dust_snow'   'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_env_s_dust_snow'    '/all_env_s_dust_snow'    'z' }
+
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_core_ps_dust_aggr'  '/all_core_ps_dust_aggr'  'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_core_s_dust_aggr'   '/all_core_s_dust_aggr'   'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_rb_ps_dust_aggr'    '/all_rb_ps_dust_aggr'    'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_rb_s_dust_aggr'     '/all_rb_s_dust_aggr'     'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_env_ps_dust_aggr'   '/all_env_ps_dust_aggr'   'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_env_s_dust_aggr'    '/all_env_s_dust_aggr'    'z' }
+
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_core_ps_dust_graup'  '/all_core_ps_dust_graup'  'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_core_s_dust_graup'   '/all_core_s_dust_graup'   'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_rb_ps_dust_graup'    '/all_rb_ps_dust_graup'    'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_rb_s_dust_graup'     '/all_rb_s_dust_graup'     'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_env_ps_dust_graup'   '/all_env_ps_dust_graup'   'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_env_s_dust_graup'    '/all_env_s_dust_graup'    'z' }
+
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_core_ps_dust_hail'  '/all_core_ps_dust_hail'  'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_core_s_dust_hail'   '/all_core_s_dust_hail'   'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_rb_ps_dust_hail'    '/all_rb_ps_dust_hail'    'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_rb_s_dust_hail'     '/all_rb_s_dust_hail'     'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_env_ps_dust_hail'   '/all_env_ps_dust_hail'   'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_env_s_dust_hail'    '/all_env_s_dust_hail'    'z' }
+
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_core_ps_dustifn_cloud'  '/all_core_ps_dustifn_cloud'  'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_core_s_dustifn_cloud'   '/all_core_s_dustifn_cloud'   'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_rb_ps_dustifn_cloud'    '/all_rb_ps_dustifn_cloud'    'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_rb_s_dustifn_cloud'     '/all_rb_s_dustifn_cloud'     'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_env_ps_dustifn_cloud'   '/all_env_ps_dustifn_cloud'   'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_env_s_dustifn_cloud'    '/all_env_s_dustifn_cloud'    'z' }
+
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_core_ps_dustifn_rain'  '/all_core_ps_dustifn_rain'  'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_core_s_dustifn_rain'   '/all_core_s_dustifn_rain'   'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_rb_ps_dustifn_rain'    '/all_rb_ps_dustifn_rain'    'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_rb_s_dustifn_rain'     '/all_rb_s_dustifn_rain'     'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_env_ps_dustifn_rain'   '/all_env_ps_dustifn_rain'   'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_env_s_dustifn_rain'    '/all_env_s_dustifn_rain'    'z' }
+
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_core_ps_dustifn_pris'  '/all_core_ps_dustifn_pris'  'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_core_s_dustifn_pris'   '/all_core_s_dustifn_pris'   'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_rb_ps_dustifn_pris'    '/all_rb_ps_dustifn_pris'    'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_rb_s_dustifn_pris'     '/all_rb_s_dustifn_pris'     'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_env_ps_dustifn_pris'   '/all_env_ps_dustifn_pris'   'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_env_s_dustifn_pris'    '/all_env_s_dustifn_pris'    'z' }
+
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_core_ps_dustifn_snow'  '/all_core_ps_dustifn_snow'  'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_core_s_dustifn_snow'   '/all_core_s_dustifn_snow'   'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_rb_ps_dustifn_snow'    '/all_rb_ps_dustifn_snow'    'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_rb_s_dustifn_snow'     '/all_rb_s_dustifn_snow'     'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_env_ps_dustifn_snow'   '/all_env_ps_dustifn_snow'   'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_env_s_dustifn_snow'    '/all_env_s_dustifn_snow'    'z' }
+
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_core_ps_dustifn_aggr'  '/all_core_ps_dustifn_aggr'  'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_core_s_dustifn_aggr'   '/all_core_s_dustifn_aggr'   'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_rb_ps_dustifn_aggr'    '/all_rb_ps_dustifn_aggr'    'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_rb_s_dustifn_aggr'     '/all_rb_s_dustifn_aggr'     'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_env_ps_dustifn_aggr'   '/all_env_ps_dustifn_aggr'   'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_env_s_dustifn_aggr'    '/all_env_s_dustifn_aggr'    'z' }
+
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_core_ps_dustifn_graup'  '/all_core_ps_dustifn_graup'  'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_core_s_dustifn_graup'   '/all_core_s_dustifn_graup'   'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_rb_ps_dustifn_graup'    '/all_rb_ps_dustifn_graup'    'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_rb_s_dustifn_graup'     '/all_rb_s_dustifn_graup'     'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_env_ps_dustifn_graup'   '/all_env_ps_dustifn_graup'   'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_env_s_dustifn_graup'    '/all_env_s_dustifn_graup'    'z' }
+
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_core_ps_dustifn_hail'  '/all_core_ps_dustifn_hail'  'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_core_s_dustifn_hail'   '/all_core_s_dustifn_hail'   'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_rb_ps_dustifn_hail'    '/all_rb_ps_dustifn_hail'    'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_rb_s_dustifn_hail'     '/all_rb_s_dustifn_hail'     'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_env_ps_dustifn_hail'   '/all_env_ps_dustifn_hail'   'z' }
+    { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_env_s_dustifn_hail'    '/all_env_s_dustifn_hail'    'z' }
+
     { 'DIAGS/hist_meas_az_cloud_<CASE>.h5' '/all_core_ps_cloud_mass'  '/all_core_ps_cloud_mass'  'z' }
     { 'DIAGS/hist_meas_az_cloud_<CASE>.h5' '/all_core_s_cloud_mass'   '/all_core_s_cloud_mass'   'z' }
     { 'DIAGS/hist_meas_az_cloud_<CASE>.h5' '/all_rb_ps_cloud_mass'    '/all_rb_ps_cloud_mass'    'z' }
@@ -399,160 +497,11 @@ function [ ] = GenStormProfiles()
 %    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_s_d2_num'    '/spath_s_d2_num'   'z' }
 %    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/smaxcp_s_d2_num'   '/smaxcp_rb_s_d2_num'   'z' }
 %
-%    { 'DIAGS/hist_meas_pris_<CASE>.h5' '/core_ps_pris'      '/pcore_s_pris'   'z' }
-%    { 'DIAGS/hist_meas_pris_<CASE>.h5' '/rb_ps_pris'        '/rb_ps_pris'   'z' }
-%    { 'DIAGS/hist_meas_pris_<CASE>.h5' '/core_s_pris'       '/core_s_pris'   'z' }
-%    { 'DIAGS/hist_meas_pris_<CASE>.h5' '/rb_s_pris'         '/rb_s_pris'   'z' }
-%    { 'DIAGS/hist_meas_pris_<CASE>.h5' '/core_ps_pris_num'  '/pcore_s_pris_num'  'z' }
-%    { 'DIAGS/hist_meas_pris_<CASE>.h5' '/rb_ps_pris_num'    '/rb_ps_pris_num'  'z' }
-%    { 'DIAGS/hist_meas_pris_<CASE>.h5' '/core_s_pris_num'   '/core_s_pris_num'  'z' }
-%    { 'DIAGS/hist_meas_pris_<CASE>.h5' '/rb_s_pris_num'     '/rb_s_pris_num'  'z' }
-%    { 'DIAGS/hist_meas_pris_<CASE>.h5' '/core_ps_pris_diam' '/pcore_s_pris_diam'  'z' }
-%    { 'DIAGS/hist_meas_pris_<CASE>.h5' '/rb_ps_pris_diam'   '/rb_ps_pris_diam'  'z' }
-%    { 'DIAGS/hist_meas_pris_<CASE>.h5' '/core_s_pris_diam'  '/core_s_pris_diam'  'z' }
-%    { 'DIAGS/hist_meas_pris_<CASE>.h5' '/rb_s_pris_diam'    '/rb_s_pris_diam'  'z' }
-%
-%    { 'DIAGS/hist_meas_snow_<CASE>.h5' '/core_ps_snow'      '/pcore_s_snow'   'z' }
-%    { 'DIAGS/hist_meas_snow_<CASE>.h5' '/rb_ps_snow'        '/rb_ps_snow'   'z' }
-%    { 'DIAGS/hist_meas_snow_<CASE>.h5' '/core_s_snow'       '/core_s_snow'   'z' }
-%    { 'DIAGS/hist_meas_snow_<CASE>.h5' '/rb_s_snow'         '/rb_s_snow'   'z' }
-%    { 'DIAGS/hist_meas_snow_<CASE>.h5' '/core_ps_snow_num'  '/pcore_s_snow_num'  'z' }
-%    { 'DIAGS/hist_meas_snow_<CASE>.h5' '/rb_ps_snow_num'    '/rb_ps_snow_num'  'z' }
-%    { 'DIAGS/hist_meas_snow_<CASE>.h5' '/core_s_snow_num'   '/core_s_snow_num'  'z' }
-%    { 'DIAGS/hist_meas_snow_<CASE>.h5' '/rb_s_snow_num'     '/rb_s_snow_num'  'z' }
-%    { 'DIAGS/hist_meas_snow_<CASE>.h5' '/core_ps_snow_diam' '/pcore_s_snow_diam'  'z' }
-%    { 'DIAGS/hist_meas_snow_<CASE>.h5' '/rb_ps_snow_diam'   '/rb_ps_snow_diam'  'z' }
-%    { 'DIAGS/hist_meas_snow_<CASE>.h5' '/core_s_snow_diam'  '/core_s_snow_diam'  'z' }
-%    { 'DIAGS/hist_meas_snow_<CASE>.h5' '/rb_s_snow_diam'    '/rb_s_snow_diam'  'z' }
-%
-%    { 'DIAGS/hist_meas_aggr_<CASE>.h5' '/core_ps_aggr'      '/pcore_s_aggr'   'z' }
-%    { 'DIAGS/hist_meas_aggr_<CASE>.h5' '/rb_ps_aggr'        '/rb_ps_aggr'   'z' }
-%    { 'DIAGS/hist_meas_aggr_<CASE>.h5' '/core_s_aggr'       '/core_s_aggr'   'z' }
-%    { 'DIAGS/hist_meas_aggr_<CASE>.h5' '/rb_s_aggr'         '/rb_s_aggr'   'z' }
-%    { 'DIAGS/hist_meas_aggr_<CASE>.h5' '/core_ps_aggr_num'  '/pcore_s_aggr_num'  'z' }
-%    { 'DIAGS/hist_meas_aggr_<CASE>.h5' '/rb_ps_aggr_num'    '/rb_ps_aggr_num'  'z' }
-%    { 'DIAGS/hist_meas_aggr_<CASE>.h5' '/core_s_aggr_num'   '/core_s_aggr_num'  'z' }
-%    { 'DIAGS/hist_meas_aggr_<CASE>.h5' '/rb_s_aggr_num'     '/rb_s_aggr_num'  'z' }
-%    { 'DIAGS/hist_meas_aggr_<CASE>.h5' '/core_ps_aggr_diam' '/pcore_s_aggr_diam'  'z' }
-%    { 'DIAGS/hist_meas_aggr_<CASE>.h5' '/rb_ps_aggr_diam'   '/rb_ps_aggr_diam'  'z' }
-%    { 'DIAGS/hist_meas_aggr_<CASE>.h5' '/core_s_aggr_diam'  '/core_s_aggr_diam'  'z' }
-%    { 'DIAGS/hist_meas_aggr_<CASE>.h5' '/rb_s_aggr_diam'    '/rb_s_aggr_diam'  'z' }
-%
-%    { 'DIAGS/hist_meas_graup_<CASE>.h5' '/core_ps_graup'      '/pcore_s_graup'   'z' }
-%    { 'DIAGS/hist_meas_graup_<CASE>.h5' '/rb_ps_graup'        '/rb_ps_graup'   'z' }
-%    { 'DIAGS/hist_meas_graup_<CASE>.h5' '/core_s_graup'       '/core_s_graup'   'z' }
-%    { 'DIAGS/hist_meas_graup_<CASE>.h5' '/rb_s_graup'         '/rb_s_graup'   'z' }
-%    { 'DIAGS/hist_meas_graup_<CASE>.h5' '/core_ps_graup_num'  '/pcore_s_graup_num'  'z' }
-%    { 'DIAGS/hist_meas_graup_<CASE>.h5' '/rb_ps_graup_num'    '/rb_ps_graup_num'  'z' }
-%    { 'DIAGS/hist_meas_graup_<CASE>.h5' '/core_s_graup_num'   '/core_s_graup_num'  'z' }
-%    { 'DIAGS/hist_meas_graup_<CASE>.h5' '/rb_s_graup_num'     '/rb_s_graup_num'  'z' }
-%    { 'DIAGS/hist_meas_graup_<CASE>.h5' '/core_ps_graup_diam' '/pcore_s_graup_diam'  'z' }
-%    { 'DIAGS/hist_meas_graup_<CASE>.h5' '/rb_ps_graup_diam'   '/rb_ps_graup_diam'  'z' }
-%    { 'DIAGS/hist_meas_graup_<CASE>.h5' '/core_s_graup_diam'  '/core_s_graup_diam'  'z' }
-%    { 'DIAGS/hist_meas_graup_<CASE>.h5' '/rb_s_graup_diam'    '/rb_s_graup_diam'  'z' }
-%
-%    { 'DIAGS/hist_meas_hail_<CASE>.h5' '/core_ps_hail'      '/pcore_s_hail'   'z' }
-%    { 'DIAGS/hist_meas_hail_<CASE>.h5' '/rb_ps_hail'        '/rb_ps_hail'   'z' }
-%    { 'DIAGS/hist_meas_hail_<CASE>.h5' '/core_s_hail'       '/core_s_hail'   'z' }
-%    { 'DIAGS/hist_meas_hail_<CASE>.h5' '/rb_s_hail'         '/rb_s_hail'   'z' }
-%    { 'DIAGS/hist_meas_hail_<CASE>.h5' '/core_ps_hail_num'  '/pcore_s_hail_num'  'z' }
-%    { 'DIAGS/hist_meas_hail_<CASE>.h5' '/rb_ps_hail_num'    '/rb_ps_hail_num'  'z' }
-%    { 'DIAGS/hist_meas_hail_<CASE>.h5' '/core_s_hail_num'   '/core_s_hail_num'  'z' }
-%    { 'DIAGS/hist_meas_hail_<CASE>.h5' '/rb_s_hail_num'     '/rb_s_hail_num'  'z' }
-%    { 'DIAGS/hist_meas_hail_<CASE>.h5' '/core_ps_hail_diam' '/pcore_s_hail_diam'  'z' }
-%    { 'DIAGS/hist_meas_hail_<CASE>.h5' '/rb_ps_hail_diam'   '/rb_ps_hail_diam'  'z' }
-%    { 'DIAGS/hist_meas_hail_<CASE>.h5' '/core_s_hail_diam'  '/core_s_hail_diam'  'z' }
-%    { 'DIAGS/hist_meas_hail_<CASE>.h5' '/rb_s_hail_diam'    '/rb_s_hail_diam'  'z' }
 %
 %    { 'DIAGS/hist_meas_tcond_<CASE>.h5' '/core_ps_tcond'  '/pcore_s_tcond'   'z' }
 %    { 'DIAGS/hist_meas_tcond_<CASE>.h5' '/rb_ps_tcond'  '/rb_ps_tcond'   'z' }
 %    { 'DIAGS/hist_meas_tcond_<CASE>.h5' '/core_s_tcond'  '/core_s_tcond'   'z' }
 %    { 'DIAGS/hist_meas_tcond_<CASE>.h5' '/rb_s_tcond'  '/rb_s_tcond'   'z' }
-%
-%    % Env region profiles
-%    { 'DIAGS/hist_meas_speed_<CASE>.h5' '/env_ps_speed_t' '/penv_s_speed_t'  'z' }
-%    { 'DIAGS/hist_meas_speed_<CASE>.h5' '/env_s_speed_t' '/s_env_speed_t'  'z' }
-%    { 'DIAGS/hist_meas_speed_<CASE>.h5' '/env_ps_speed_r' '/penv_s_speed_r'  'z' }
-%    { 'DIAGS/hist_meas_speed_<CASE>.h5' '/env_s_speed_r' '/s_env_speed_r'  'z' }
-%
-%    { 'DIAGS/hist_meas_w_<CASE>.h5' '/env_ps_updraft' '/penv_s_updraft'  'z' }
-%    { 'DIAGS/hist_meas_w_<CASE>.h5' '/env_s_updraft' '/s_env_updraft'  'z' }
-%    { 'DIAGS/hist_meas_w_<CASE>.h5' '/env_ps_dndraft' '/penv_s_dndraft'  'z' }
-%    { 'DIAGS/hist_meas_w_<CASE>.h5' '/env_s_dndraft' '/s_env_dndraft'  'z' }
-%
-%    { 'DIAGS/hist_meas_theta_e_<CASE>.h5' '/env_ps_theta_e' '/penv_s_theta_e'  'z' }
-%    { 'DIAGS/hist_meas_theta_e_<CASE>.h5' '/env_s_theta_e' '/s_env_theta_e'  'z' }
-%
-%    { 'DIAGS/hist_meas_theta_<CASE>.h5' '/env_ps_theta' '/penv_s_theta'  'z' }
-%    { 'DIAGS/hist_meas_theta_<CASE>.h5' '/env_s_theta' '/s_env_theta'  'z' }
-%
-%    { 'DIAGS/hist_meas_az_tempc_<CASE>.h5' '/env_ps_tempc' '/penv_s_tempc'  'z' }
-%    { 'DIAGS/hist_meas_az_tempc_<CASE>.h5' '/env_s_tempc' '/s_env_tempc'  'z' }
-%
-%    { 'DIAGS/hist_meas_az_vapor_<CASE>.h5' '/env_ps_vapor'        '/penv_s_vapor'  'z' }
-%    { 'DIAGS/hist_meas_az_vapor_<CASE>.h5' '/env_s_vapor'         '/s_env_vapor'  'z' }
-%
-%    { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/env_ps_d1_mass' '/penv_s_d1_mass'  'z' }
-%    { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/env_s_d1_mass' '/s_env_d1_mass'  'z' }
-%    { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/env_ps_d1_num'  '/penv_s_d1_num'   'z' }
-%    { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/env_s_d1_num'  '/s_env_d1_num'   'z' }
-%    { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/env_ps_d2_mass' '/penv_s_d2_mass'  'z' }
-%    { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/env_s_d2_mass' '/s_env_d2_mass'  'z' }
-%    { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/env_ps_d2_num'  '/penv_s_d2_num'   'z' }
-%    { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/env_s_d2_num'  '/s_env_d2_num'   'z' }
-%
-%    { 'DIAGS/hist_meas_cloud_<CASE>.h5' '/env_ps_cloud'        '/penv_s_cloud'  'z' }
-%    { 'DIAGS/hist_meas_cloud_<CASE>.h5' '/env_s_cloud'         '/s_env_cloud'  'z' }
-%    { 'DIAGS/hist_meas_cloud_<CASE>.h5' '/env_ps_cloud_num'    '/penv_s_cloud_num'  'z' }
-%    { 'DIAGS/hist_meas_cloud_<CASE>.h5' '/env_s_cloud_num'     '/s_env_cloud_num'  'z' }
-%    { 'DIAGS/hist_meas_cloud_<CASE>.h5' '/env_ps_cloud_diam'   '/penv_s_cloud_diam'  'z' }
-%    { 'DIAGS/hist_meas_cloud_<CASE>.h5' '/env_s_cloud_diam'    '/s_env_cloud_diam'  'z' }
-%
-%    { 'DIAGS/hist_meas_rain_<CASE>.h5' '/env_ps_rain'        '/penv_s_rain'   'z' }
-%    { 'DIAGS/hist_meas_rain_<CASE>.h5' '/env_s_rain'         '/s_env_rain'   'z' }
-%    { 'DIAGS/hist_meas_rain_<CASE>.h5' '/env_ps_rain_num'    '/penv_s_rain_num'  'z' }
-%    { 'DIAGS/hist_meas_rain_<CASE>.h5' '/env_s_rain_num'     '/s_env_rain_num'  'z' }
-%    { 'DIAGS/hist_meas_rain_<CASE>.h5' '/env_ps_rain_diam'   '/penv_s_rain_diam'  'z' }
-%    { 'DIAGS/hist_meas_rain_<CASE>.h5' '/env_s_rain_diam'    '/s_env_rain_diam'  'z' }
-%
-%    { 'DIAGS/hist_meas_pris_<CASE>.h5' '/env_ps_pris'        '/penv_s_pris'   'z' }
-%    { 'DIAGS/hist_meas_pris_<CASE>.h5' '/env_s_pris'         '/s_env_pris'   'z' }
-%    { 'DIAGS/hist_meas_pris_<CASE>.h5' '/env_ps_pris_num'    '/penv_s_pris_num'  'z' }
-%    { 'DIAGS/hist_meas_pris_<CASE>.h5' '/env_s_pris_num'     '/s_env_pris_num'  'z' }
-%    { 'DIAGS/hist_meas_pris_<CASE>.h5' '/env_ps_pris_diam'   '/penv_s_pris_diam'  'z' }
-%    { 'DIAGS/hist_meas_pris_<CASE>.h5' '/env_s_pris_diam'    '/s_env_pris_diam'  'z' }
-%
-%    { 'DIAGS/hist_meas_snow_<CASE>.h5' '/env_ps_snow'        '/penv_s_snow'   'z' }
-%    { 'DIAGS/hist_meas_snow_<CASE>.h5' '/env_s_snow'         '/s_env_snow'   'z' }
-%    { 'DIAGS/hist_meas_snow_<CASE>.h5' '/env_ps_snow_num'    '/penv_s_snow_num'  'z' }
-%    { 'DIAGS/hist_meas_snow_<CASE>.h5' '/env_s_snow_num'     '/s_env_snow_num'  'z' }
-%    { 'DIAGS/hist_meas_snow_<CASE>.h5' '/env_ps_snow_diam'   '/penv_s_snow_diam'  'z' }
-%    { 'DIAGS/hist_meas_snow_<CASE>.h5' '/env_s_snow_diam'    '/s_env_snow_diam'  'z' }
-%
-%    { 'DIAGS/hist_meas_aggr_<CASE>.h5' '/env_ps_aggr'        '/penv_s_aggr'   'z' }
-%    { 'DIAGS/hist_meas_aggr_<CASE>.h5' '/env_s_aggr'         '/s_env_aggr'   'z' }
-%    { 'DIAGS/hist_meas_aggr_<CASE>.h5' '/env_ps_aggr_num'    '/penv_s_aggr_num'  'z' }
-%    { 'DIAGS/hist_meas_aggr_<CASE>.h5' '/env_s_aggr_num'     '/s_env_aggr_num'  'z' }
-%    { 'DIAGS/hist_meas_aggr_<CASE>.h5' '/env_ps_aggr_diam'   '/penv_s_aggr_diam'  'z' }
-%    { 'DIAGS/hist_meas_aggr_<CASE>.h5' '/env_s_aggr_diam'    '/s_env_aggr_diam'  'z' }
-%
-%    { 'DIAGS/hist_meas_graup_<CASE>.h5' '/env_ps_graup'        '/penv_s_graup'   'z' }
-%    { 'DIAGS/hist_meas_graup_<CASE>.h5' '/env_s_graup'         '/s_env_graup'   'z' }
-%    { 'DIAGS/hist_meas_graup_<CASE>.h5' '/env_ps_graup_num'    '/penv_s_graup_num'  'z' }
-%    { 'DIAGS/hist_meas_graup_<CASE>.h5' '/env_s_graup_num'     '/s_env_graup_num'  'z' }
-%    { 'DIAGS/hist_meas_graup_<CASE>.h5' '/env_ps_graup_diam'   '/penv_s_graup_diam'  'z' }
-%    { 'DIAGS/hist_meas_graup_<CASE>.h5' '/env_s_graup_diam'    '/s_env_graup_diam'  'z' }
-%
-%    { 'DIAGS/hist_meas_hail_<CASE>.h5' '/env_ps_hail'        '/penv_s_hail'   'z' }
-%    { 'DIAGS/hist_meas_hail_<CASE>.h5' '/env_s_hail'         '/s_env_hail'   'z' }
-%    { 'DIAGS/hist_meas_hail_<CASE>.h5' '/env_ps_hail_num'    '/penv_s_hail_num'  'z' }
-%    { 'DIAGS/hist_meas_hail_<CASE>.h5' '/env_s_hail_num'     '/s_env_hail_num'  'z' }
-%    { 'DIAGS/hist_meas_hail_<CASE>.h5' '/env_ps_hail_diam'   '/penv_s_hail_diam'  'z' }
-%    { 'DIAGS/hist_meas_hail_<CASE>.h5' '/env_s_hail_diam'    '/s_env_hail_diam'  'z' }
-%
-%    { 'DIAGS/hist_meas_tcond_<CASE>.h5' '/env_ps_tcond'  '/penv_s_tcond'   'z' }
-%    { 'DIAGS/hist_meas_tcond_<CASE>.h5' '/env_s_tcond'  '/s_env_tcond'   'z' }
-
     };
   Nsets = length(ProfileList);
 
@@ -580,7 +529,8 @@ function [ ] = GenStormProfiles()
       ProfDim  = ProfileList{iset}{4};
 
       % skip this profile set if doing dust and on a NODUST case
-      if ((~isempty(regexp(Case, 'NODUST'))) && (~isempty(regexp(InVname, 'd[12]_num'))))
+      if ((~isempty(regexp(Case, 'NODUST'))) && ...
+          ((~isempty(regexp(InVname, 'd[12]_num'))) || (~isempty(regexp(InVname, '_dust_'))) || (~isempty(regexp(InVname, '_dustifn_')))))
         continue
       else
         icount = icount + 1;
