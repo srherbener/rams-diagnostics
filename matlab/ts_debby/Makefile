@@ -69,8 +69,8 @@ CONFIGS = \
   $(DIAG_DIR)/FigUpXsectionConfig \
   $(DIAG_DIR)/FigVtXsectionConfig \
   $(DIAG_DIR)/FigVrXsectionConfig \
-  $(DIAG_DIR)/FigCloudCoreProfileConfig \
-  $(DIAG_DIR)/FigRainCoreProfileConfig \
+  $(DIAG_DIR)/FigCloudProfileConfig \
+  $(DIAG_DIR)/FigRainProfileConfig \
   $(DIAG_DIR)/FigPrisCoreProfileConfig \
   $(DIAG_DIR)/FigSnowCoreProfileConfig \
   $(DIAG_DIR)/FigAggrCoreProfileConfig \
@@ -93,8 +93,6 @@ CONFIGS = \
   $(DIAG_DIR)/FigDust1NumCoreProfileConfig \
   $(DIAG_DIR)/FigDust2CoreProfileConfig \
   $(DIAG_DIR)/FigDust2NumCoreProfileConfig \
-  $(DIAG_DIR)/FigCloudRbandProfileConfig \
-  $(DIAG_DIR)/FigRainRbandProfileConfig \
   $(DIAG_DIR)/FigPrisRbandProfileConfig \
   $(DIAG_DIR)/FigSnowRbandProfileConfig \
   $(DIAG_DIR)/FigAggrRbandProfileConfig \
@@ -117,8 +115,6 @@ CONFIGS = \
   $(DIAG_DIR)/FigDust1NumRbandProfileConfig \
   $(DIAG_DIR)/FigDust2RbandProfileConfig \
   $(DIAG_DIR)/FigDust2NumRbandProfileConfig \
-  $(DIAG_DIR)/FigCloudEnvProfileConfig \
-  $(DIAG_DIR)/FigRainEnvProfileConfig \
   $(DIAG_DIR)/FigPrisEnvProfileConfig \
   $(DIAG_DIR)/FigSnowEnvProfileConfig \
   $(DIAG_DIR)/FigAggrEnvProfileConfig \
@@ -143,7 +139,6 @@ CONFIGS = \
   $(DIAG_DIR)/FigLhvCoolEnvProfileConfig \
   $(DIAG_DIR)/FigLhvHeatEnvProfileConfig \
   $(DIAG_DIR)/FigDustProfileConfig \
-  $(DIAG_DIR)/FigCloudNumDiamProfileConfig \
   $(DIAG_DIR)/FigCpoolDistConfig \
   $(DIAG_DIR)/FigureConfig
 
