@@ -1,0 +1,1022 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: CloudXsectionPreSal 4
+  DummyCases
+  [2_2]
+  Plots/FigCloudXsectionPreSal.jpg
+  CloudXsectionSDPreSalPanel     1
+  CloudXsectionSNDPreSalPanel    2
+  CloudXsectionNSDPreSalPanel    3
+  CloudXsectionNSNDPreSalPanel   4
+End 
+
+Figure: CloudXsectionSal 4
+  DummyCases
+  [2_2]
+  Plots/FigCloudXsectionSal.jpg
+  CloudXsectionSDSalPanel     1
+  CloudXsectionSNDSalPanel    2
+  CloudXsectionNSDSalPanel    3
+  CloudXsectionNSNDSalPanel   4
+End 
+
+Figure: RainXsectionPreSal 4
+  DummyCases
+  [2_2]
+  Plots/FigRainXsectionPreSal.jpg
+  RainXsectionSDPreSalPanel     1
+  RainXsectionSNDPreSalPanel    2
+  RainXsectionNSDPreSalPanel    3
+  RainXsectionNSNDPreSalPanel   4
+End 
+
+Figure: RainXsectionSal 4
+  DummyCases
+  [2_2]
+  Plots/FigRainXsectionSal.jpg
+  RainXsectionSDSalPanel     1
+  RainXsectionSNDSalPanel    2
+  RainXsectionNSDSalPanel    3
+  RainXsectionNSNDSalPanel   4
+End 
+
+Figure: PrisXsectionPreSal 4
+  DummyCases
+  [2_2]
+  Plots/FigPrisXsectionPreSal.jpg
+  PrisXsectionSDPreSalPanel     1
+  PrisXsectionSNDPreSalPanel    2
+  PrisXsectionNSDPreSalPanel    3
+  PrisXsectionNSNDPreSalPanel   4
+End 
+
+Figure: PrisXsectionSal 4
+  DummyCases
+  [2_2]
+  Plots/FigPrisXsectionSal.jpg
+  PrisXsectionSDSalPanel     1
+  PrisXsectionSNDSalPanel    2
+  PrisXsectionNSDSalPanel    3
+  PrisXsectionNSNDSalPanel   4
+End 
+
+Figure: SnowXsectionPreSal 4
+  DummyCases
+  [2_2]
+  Plots/FigSnowXsectionPreSal.jpg
+  SnowXsectionSDPreSalPanel     1
+  SnowXsectionSNDPreSalPanel    2
+  SnowXsectionNSDPreSalPanel    3
+  SnowXsectionNSNDPreSalPanel   4
+End 
+
+Figure: SnowXsectionSal 4
+  DummyCases
+  [2_2]
+  Plots/FigSnowXsectionSal.jpg
+  SnowXsectionSDSalPanel     1
+  SnowXsectionSNDSalPanel    2
+  SnowXsectionNSDSalPanel    3
+  SnowXsectionNSNDSalPanel   4
+End 
+
+Figure: AggrXsectionPreSal 4
+  DummyCases
+  [2_2]
+  Plots/FigAggrXsectionPreSal.jpg
+  AggrXsectionSDPreSalPanel     1
+  AggrXsectionSNDPreSalPanel    2
+  AggrXsectionNSDPreSalPanel    3
+  AggrXsectionNSNDPreSalPanel   4
+End 
+
+Figure: AggrXsectionSal 4
+  DummyCases
+  [2_2]
+  Plots/FigAggrXsectionSal.jpg
+  AggrXsectionSDSalPanel     1
+  AggrXsectionSNDSalPanel    2
+  AggrXsectionNSDSalPanel    3
+  AggrXsectionNSNDSalPanel   4
+End 
+
+Figure: GraupXsectionPreSal 4
+  DummyCases
+  [2_2]
+  Plots/FigGraupXsectionPreSal.jpg
+  GraupXsectionSDPreSalPanel     1
+  GraupXsectionSNDPreSalPanel    2
+  GraupXsectionNSDPreSalPanel    3
+  GraupXsectionNSNDPreSalPanel   4
+End 
+
+Figure: GraupXsectionSal 4
+  DummyCases
+  [2_2]
+  Plots/FigGraupXsectionSal.jpg
+  GraupXsectionSDSalPanel     1
+  GraupXsectionSNDSalPanel    2
+  GraupXsectionNSDSalPanel    3
+  GraupXsectionNSNDSalPanel   4
+End 
+
+Figure: HailXsectionPreSal 4
+  DummyCases
+  [2_2]
+  Plots/FigHailXsectionPreSal.jpg
+  HailXsectionSDPreSalPanel     1
+  HailXsectionSNDPreSalPanel    2
+  HailXsectionNSDPreSalPanel    3
+  HailXsectionNSNDPreSalPanel   4
+End 
+
+Figure: HailXsectionSal 4
+  DummyCases
+  [2_2]
+  Plots/FigHailXsectionSal.jpg
+  HailXsectionSDSalPanel     1
+  HailXsectionSNDSalPanel    2
+  HailXsectionNSDSalPanel    3
+  HailXsectionNSNDSalPanel   4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: CloudXsectionSDPreSalPanel
+  CloudXsectionSDPreSalPset
+  CloudXsectionAxes 1 1
+  none 5
+  PreSAL:@SD@Cloud
+  none 12
+End
+
+FigPanel: CloudXsectionSNDPreSalPanel
+  CloudXsectionSNDPreSalPset
+  CloudXsectionAxes 1 1
+  none 5
+  PreSAL:@SND@Cloud
+  none 12
+End
+
+FigPanel: CloudXsectionNSDPreSalPanel
+  CloudXsectionNSDPreSalPset
+  CloudXsectionAxes 1 1
+  none 5
+  PreSAL:@NSD@Cloud
+  none 12
+End
+
+FigPanel: CloudXsectionNSNDPreSalPanel
+  CloudXsectionNSNDPreSalPset
+  CloudXsectionAxes 1 1
+  none 5
+  PreSAL:@NSND@Cloud
+  none 12
+End
+
+FigPanel: CloudXsectionSDSalPanel
+  CloudXsectionSDSalPset
+  CloudXsectionAxes 1 1
+  none 5
+  SAL:@SD@Cloud
+  none 12
+End
+
+FigPanel: CloudXsectionSNDSalPanel
+  CloudXsectionSNDSalPset
+  CloudXsectionAxes 1 1
+  none 5
+  SAL:@SND@Cloud
+  none 12
+End
+
+FigPanel: CloudXsectionNSDSalPanel
+  CloudXsectionNSDSalPset
+  CloudXsectionAxes 1 1
+  none 5
+  SAL:@NSD@Cloud
+  none 12
+End
+
+FigPanel: CloudXsectionNSNDSalPanel
+  CloudXsectionNSNDSalPset
+  CloudXsectionAxes 1 1
+  none 5
+  SAL:@NSND@Cloud
+  none 12
+End
+
+FigPanel: RainXsectionSDPreSalPanel
+  RainXsectionSDPreSalPset
+  RainXsectionAxes 1 1
+  none 5
+  PreSAL:@SD@Rain
+  none 12
+End
+
+FigPanel: RainXsectionSNDPreSalPanel
+  RainXsectionSNDPreSalPset
+  RainXsectionAxes 1 1
+  none 5
+  PreSAL:@SND@Rain
+  none 12
+End
+
+FigPanel: RainXsectionNSDPreSalPanel
+  RainXsectionNSDPreSalPset
+  RainXsectionAxes 1 1
+  none 5
+  PreSAL:@NSD@Rain
+  none 12
+End
+
+FigPanel: RainXsectionNSNDPreSalPanel
+  RainXsectionNSNDPreSalPset
+  RainXsectionAxes 1 1
+  none 5
+  PreSAL:@NSND@Rain
+  none 12
+End
+
+FigPanel: RainXsectionSDSalPanel
+  RainXsectionSDSalPset
+  RainXsectionAxes 1 1
+  none 5
+  SAL:@SD@Rain
+  none 12
+End
+
+FigPanel: RainXsectionSNDSalPanel
+  RainXsectionSNDSalPset
+  RainXsectionAxes 1 1
+  none 5
+  SAL:@SND@Rain
+  none 12
+End
+
+FigPanel: RainXsectionNSDSalPanel
+  RainXsectionNSDSalPset
+  RainXsectionAxes 1 1
+  none 5
+  SAL:@NSD@Rain
+  none 12
+End
+
+FigPanel: RainXsectionNSNDSalPanel
+  RainXsectionNSNDSalPset
+  RainXsectionAxes 1 1
+  none 5
+  SAL:@NSND@Rain
+  none 12
+End
+
+FigPanel: PrisXsectionSDPreSalPanel
+  PrisXsectionSDPreSalPset
+  PrisXsectionAxes 1 1
+  none 5
+  PreSAL:@SD@Pris
+  none 12
+End
+
+FigPanel: PrisXsectionSNDPreSalPanel
+  PrisXsectionSNDPreSalPset
+  PrisXsectionAxes 1 1
+  none 5
+  PreSAL:@SND@Pris
+  none 12
+End
+
+FigPanel: PrisXsectionNSDPreSalPanel
+  PrisXsectionNSDPreSalPset
+  PrisXsectionAxes 1 1
+  none 5
+  PreSAL:@NSD@Pris
+  none 12
+End
+
+FigPanel: PrisXsectionNSNDPreSalPanel
+  PrisXsectionNSNDPreSalPset
+  PrisXsectionAxes 1 1
+  none 5
+  PreSAL:@NSND@Pris
+  none 12
+End
+
+FigPanel: PrisXsectionSDSalPanel
+  PrisXsectionSDSalPset
+  PrisXsectionAxes 1 1
+  none 5
+  SAL:@SD@Pris
+  none 12
+End
+
+FigPanel: PrisXsectionSNDSalPanel
+  PrisXsectionSNDSalPset
+  PrisXsectionAxes 1 1
+  none 5
+  SAL:@SND@Pris
+  none 12
+End
+
+FigPanel: PrisXsectionNSDSalPanel
+  PrisXsectionNSDSalPset
+  PrisXsectionAxes 1 1
+  none 5
+  SAL:@NSD@Pris
+  none 12
+End
+
+FigPanel: PrisXsectionNSNDSalPanel
+  PrisXsectionNSNDSalPset
+  PrisXsectionAxes 1 1
+  none 5
+  SAL:@NSND@Pris
+  none 12
+End
+
+FigPanel: SnowXsectionSDPreSalPanel
+  SnowXsectionSDPreSalPset
+  SnowXsectionAxes 1 1
+  none 5
+  PreSAL:@SD@Snow
+  none 12
+End
+
+FigPanel: SnowXsectionSNDPreSalPanel
+  SnowXsectionSNDPreSalPset
+  SnowXsectionAxes 1 1
+  none 5
+  PreSAL:@SND@Snow
+  none 12
+End
+
+FigPanel: SnowXsectionNSDPreSalPanel
+  SnowXsectionNSDPreSalPset
+  SnowXsectionAxes 1 1
+  none 5
+  PreSAL:@NSD@Snow
+  none 12
+End
+
+FigPanel: SnowXsectionNSNDPreSalPanel
+  SnowXsectionNSNDPreSalPset
+  SnowXsectionAxes 1 1
+  none 5
+  PreSAL:@NSND@Snow
+  none 12
+End
+
+FigPanel: SnowXsectionSDSalPanel
+  SnowXsectionSDSalPset
+  SnowXsectionAxes 1 1
+  none 5
+  SAL:@SD@Snow
+  none 12
+End
+
+FigPanel: SnowXsectionSNDSalPanel
+  SnowXsectionSNDSalPset
+  SnowXsectionAxes 1 1
+  none 5
+  SAL:@SND@Snow
+  none 12
+End
+
+FigPanel: SnowXsectionNSDSalPanel
+  SnowXsectionNSDSalPset
+  SnowXsectionAxes 1 1
+  none 5
+  SAL:@NSD@Snow
+  none 12
+End
+
+FigPanel: SnowXsectionNSNDSalPanel
+  SnowXsectionNSNDSalPset
+  SnowXsectionAxes 1 1
+  none 5
+  SAL:@NSND@Snow
+  none 12
+End
+
+FigPanel: AggrXsectionSDPreSalPanel
+  AggrXsectionSDPreSalPset
+  AggrXsectionAxes 1 1
+  none 5
+  PreSAL:@SD@Aggr
+  none 12
+End
+
+FigPanel: AggrXsectionSNDPreSalPanel
+  AggrXsectionSNDPreSalPset
+  AggrXsectionAxes 1 1
+  none 5
+  PreSAL:@SND@Aggr
+  none 12
+End
+
+FigPanel: AggrXsectionNSDPreSalPanel
+  AggrXsectionNSDPreSalPset
+  AggrXsectionAxes 1 1
+  none 5
+  PreSAL:@NSD@Aggr
+  none 12
+End
+
+FigPanel: AggrXsectionNSNDPreSalPanel
+  AggrXsectionNSNDPreSalPset
+  AggrXsectionAxes 1 1
+  none 5
+  PreSAL:@NSND@Aggr
+  none 12
+End
+
+FigPanel: AggrXsectionSDSalPanel
+  AggrXsectionSDSalPset
+  AggrXsectionAxes 1 1
+  none 5
+  SAL:@SD@Aggr
+  none 12
+End
+
+FigPanel: AggrXsectionSNDSalPanel
+  AggrXsectionSNDSalPset
+  AggrXsectionAxes 1 1
+  none 5
+  SAL:@SND@Aggr
+  none 12
+End
+
+FigPanel: AggrXsectionNSDSalPanel
+  AggrXsectionNSDSalPset
+  AggrXsectionAxes 1 1
+  none 5
+  SAL:@NSD@Aggr
+  none 12
+End
+
+FigPanel: AggrXsectionNSNDSalPanel
+  AggrXsectionNSNDSalPset
+  AggrXsectionAxes 1 1
+  none 5
+  SAL:@NSND@Aggr
+  none 12
+End
+
+FigPanel: GraupXsectionSDPreSalPanel
+  GraupXsectionSDPreSalPset
+  GraupXsectionAxes 1 1
+  none 5
+  PreSAL:@SD@Graup
+  none 12
+End
+
+FigPanel: GraupXsectionSNDPreSalPanel
+  GraupXsectionSNDPreSalPset
+  GraupXsectionAxes 1 1
+  none 5
+  PreSAL:@SND@Graup
+  none 12
+End
+
+FigPanel: GraupXsectionNSDPreSalPanel
+  GraupXsectionNSDPreSalPset
+  GraupXsectionAxes 1 1
+  none 5
+  PreSAL:@NSD@Graup
+  none 12
+End
+
+FigPanel: GraupXsectionNSNDPreSalPanel
+  GraupXsectionNSNDPreSalPset
+  GraupXsectionAxes 1 1
+  none 5
+  PreSAL:@NSND@Graup
+  none 12
+End
+
+FigPanel: GraupXsectionSDSalPanel
+  GraupXsectionSDSalPset
+  GraupXsectionAxes 1 1
+  none 5
+  SAL:@SD@Graup
+  none 12
+End
+
+FigPanel: GraupXsectionSNDSalPanel
+  GraupXsectionSNDSalPset
+  GraupXsectionAxes 1 1
+  none 5
+  SAL:@SND@Graup
+  none 12
+End
+
+FigPanel: GraupXsectionNSDSalPanel
+  GraupXsectionNSDSalPset
+  GraupXsectionAxes 1 1
+  none 5
+  SAL:@NSD@Graup
+  none 12
+End
+
+FigPanel: GraupXsectionNSNDSalPanel
+  GraupXsectionNSNDSalPset
+  GraupXsectionAxes 1 1
+  none 5
+  SAL:@NSND@Graup
+  none 12
+End
+
+FigPanel: HailXsectionSDPreSalPanel
+  HailXsectionSDPreSalPset
+  HailXsectionAxes 1 1
+  none 5
+  PreSAL:@SD@Hail
+  none 12
+End
+
+FigPanel: HailXsectionSNDPreSalPanel
+  HailXsectionSNDPreSalPset
+  HailXsectionAxes 1 1
+  none 5
+  PreSAL:@SND@Hail
+  none 12
+End
+
+FigPanel: HailXsectionNSDPreSalPanel
+  HailXsectionNSDPreSalPset
+  HailXsectionAxes 1 1
+  none 5
+  PreSAL:@NSD@Hail
+  none 12
+End
+
+FigPanel: HailXsectionNSNDPreSalPanel
+  HailXsectionNSNDPreSalPset
+  HailXsectionAxes 1 1
+  none 5
+  PreSAL:@NSND@Hail
+  none 12
+End
+
+FigPanel: HailXsectionSDSalPanel
+  HailXsectionSDSalPset
+  HailXsectionAxes 1 1
+  none 5
+  SAL:@SD@Hail
+  none 12
+End
+
+FigPanel: HailXsectionSNDSalPanel
+  HailXsectionSNDSalPset
+  HailXsectionAxes 1 1
+  none 5
+  SAL:@SND@Hail
+  none 12
+End
+
+FigPanel: HailXsectionNSDSalPanel
+  HailXsectionNSDSalPset
+  HailXsectionAxes 1 1
+  none 5
+  SAL:@NSD@Hail
+  none 12
+End
+
+FigPanel: HailXsectionNSNDSalPanel
+  HailXsectionNSNDSalPset
+  HailXsectionAxes 1 1
+  none 5
+  SAL:@NSND@Hail
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: CloudXsectionSDPreSalPset contourf 1
+  CloudXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CloudXsectionSNDPreSalPset contourf 1
+  CloudXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: CloudXsectionNSDPreSalPset contourf 1
+  CloudXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CloudXsectionNSNDPreSalPset contourf 1
+  CloudXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: CloudXsectionSDSalPset contourf 1
+  CloudXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CloudXsectionSNDSalPset contourf 1
+  CloudXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: CloudXsectionNSDSalPset contourf 1
+  CloudXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CloudXsectionNSNDSalPset contourf 1
+  CloudXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RainXsectionSDPreSalPset contourf 1
+  RainXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RainXsectionSNDPreSalPset contourf 1
+  RainXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RainXsectionNSDPreSalPset contourf 1
+  RainXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RainXsectionNSNDPreSalPset contourf 1
+  RainXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RainXsectionSDSalPset contourf 1
+  RainXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RainXsectionSNDSalPset contourf 1
+  RainXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RainXsectionNSDSalPset contourf 1
+  RainXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RainXsectionNSNDSalPset contourf 1
+  RainXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: PrisXsectionSDPreSalPset contourf 1
+  PrisXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: PrisXsectionSNDPreSalPset contourf 1
+  PrisXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: PrisXsectionNSDPreSalPset contourf 1
+  PrisXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: PrisXsectionNSNDPreSalPset contourf 1
+  PrisXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: PrisXsectionSDSalPset contourf 1
+  PrisXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: PrisXsectionSNDSalPset contourf 1
+  PrisXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: PrisXsectionNSDSalPset contourf 1
+  PrisXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: PrisXsectionNSNDSalPset contourf 1
+  PrisXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: SnowXsectionSDPreSalPset contourf 1
+  SnowXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: SnowXsectionSNDPreSalPset contourf 1
+  SnowXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: SnowXsectionNSDPreSalPset contourf 1
+  SnowXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: SnowXsectionNSNDPreSalPset contourf 1
+  SnowXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: SnowXsectionSDSalPset contourf 1
+  SnowXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: SnowXsectionSNDSalPset contourf 1
+  SnowXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: SnowXsectionNSDSalPset contourf 1
+  SnowXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: SnowXsectionNSNDSalPset contourf 1
+  SnowXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: AggrXsectionSDPreSalPset contourf 1
+  AggrXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: AggrXsectionSNDPreSalPset contourf 1
+  AggrXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: AggrXsectionNSDPreSalPset contourf 1
+  AggrXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: AggrXsectionNSNDPreSalPset contourf 1
+  AggrXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: AggrXsectionSDSalPset contourf 1
+  AggrXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: AggrXsectionSNDSalPset contourf 1
+  AggrXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: AggrXsectionNSDSalPset contourf 1
+  AggrXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: AggrXsectionNSNDSalPset contourf 1
+  AggrXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: GraupXsectionSDPreSalPset contourf 1
+  GraupXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: GraupXsectionSNDPreSalPset contourf 1
+  GraupXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: GraupXsectionNSDPreSalPset contourf 1
+  GraupXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: GraupXsectionNSNDPreSalPset contourf 1
+  GraupXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: GraupXsectionSDSalPset contourf 1
+  GraupXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: GraupXsectionSNDSalPset contourf 1
+  GraupXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: GraupXsectionNSDSalPset contourf 1
+  GraupXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: GraupXsectionNSNDSalPset contourf 1
+  GraupXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: HailXsectionSDPreSalPset contourf 1
+  HailXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: HailXsectionSNDPreSalPset contourf 1
+  HailXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: HailXsectionNSDPreSalPset contourf 1
+  HailXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: HailXsectionNSNDPreSalPset contourf 1
+  HailXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: HailXsectionSDSalPset contourf 1
+  HailXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: HailXsectionSNDSalPset contourf 1
+  HailXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: HailXsectionNSDSalPset contourf 1
+  HailXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: HailXsectionNSNDSalPset contourf 1
+  HailXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+PlotData: CloudXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  cloud, g/kg
+  /all_ps_cloud_mass DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: CloudXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  cloud, g/kg
+  /all_s_cloud_mass DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: RainXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  rain, g/kg
+  /all_ps_rain_mass DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: RainXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  rain, g/kg
+  /all_s_rain_mass DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: PrisXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  pris, g/kg
+  /all_ps_pris_mass DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: PrisXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  pris, g/kg
+  /all_s_pris_mass DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: SnowXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  snow, g/kg
+  /all_ps_snow_mass DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: SnowXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  snow, g/kg
+  /all_s_snow_mass DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: AggrXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  aggr, g/kg
+  /all_ps_aggr_mass DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: AggrXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  aggr, g/kg
+  /all_s_aggr_mass DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: GraupXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  graup, g/kg
+  /all_ps_graup_mass DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: GraupXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  graup, g/kg
+  /all_s_graup_mass DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: HailXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  hail, g/kg
+  /all_ps_hail_mass DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: HailXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  hail, g/kg
+  /all_s_hail_mass DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: CloudXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - cloud - g/kg
+  Cloud g@kg^-^1 0 0.3 linear [_] {_}
+End
+
+PlotAxes: RainXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - cloud - g/kg
+  Rain g@kg^-^1 0 0.3 linear [_] {_}
+End
+
+PlotAxes: PrisXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - cloud - g/kg
+  Pris g@kg^-^1 0 0.07 linear [_] {_}
+End
+
+PlotAxes: SnowXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - cloud - g/kg
+  Snow g@kg^-^1 0 0.1 linear [_] {_}
+End
+
+PlotAxes: AggrXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - cloud - g/kg
+  Aggr g@kg^-^1 0 0.3 linear [_] {_}
+End
+
+PlotAxes: GraupXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - cloud - g/kg
+  Graup g@kg^-^1 0 0.1 linear [_] {_}
+End
+
+PlotAxes: HailXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - cloud - g/kg
+  Hail g@kg^-^1 0 0.1 linear [_] {_}
+End
+

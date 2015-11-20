@@ -61,12 +61,10 @@ CONFIGS = \
   $(DIAG_DIR)/FigVaporXsectionConfig \
   $(DIAG_DIR)/FigDust1NumXsectionConfig \
   $(DIAG_DIR)/FigDust2NumXsectionConfig \
+  $(DIAG_DIR)/FigHydroXsectionConfig \
   $(DIAG_DIR)/FigDustHydroXsectionConfig \
   $(DIAG_DIR)/FigCoolXsectionConfig \
   $(DIAG_DIR)/FigHeatXsectionConfig \
-  $(DIAG_DIR)/FigCloudXsectionConfig \
-  $(DIAG_DIR)/FigRainXsectionConfig \
-  $(DIAG_DIR)/FigTcondXsectionConfig \
   $(DIAG_DIR)/FigDnXsectionConfig \
   $(DIAG_DIR)/FigUpXsectionConfig \
   $(DIAG_DIR)/FigVtXsectionConfig \
