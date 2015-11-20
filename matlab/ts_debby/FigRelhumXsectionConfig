@@ -1,0 +1,158 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: RelhumXsectionPreSal 4
+  DummyCases
+  [2_2]
+  Plots/FigRelhumXsectionPreSal.jpg
+  RelhumXsectionSDPreSalPanel         1
+  RelhumXsectionSNDPreSalPanel    2
+  RelhumXsectionNSDPreSalPanel    3
+  RelhumXsectionNSNDPreSalPanel   4
+End 
+
+Figure: RelhumXsectionSal 4
+  DummyCases
+  [2_2]
+  Plots/FigRelhumXsectionSal.jpg
+  RelhumXsectionSDSalPanel         1
+  RelhumXsectionSNDSalPanel    2
+  RelhumXsectionNSDSalPanel    3
+  RelhumXsectionNSNDSalPanel   4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: RelhumXsectionSDPreSalPanel
+  RelhumXsectionSDPreSalPset
+  RelhumXsectionAxes 1 1
+  none 5
+  PreSal:@SD@RH
+  none 12
+End
+
+FigPanel: RelhumXsectionSNDPreSalPanel
+  RelhumXsectionSNDPreSalPset
+  RelhumXsectionAxes 1 1
+  none 5
+  PreSal:@SND@RH
+  none 12
+End
+
+FigPanel: RelhumXsectionNSDPreSalPanel
+  RelhumXsectionNSDPreSalPset
+  RelhumXsectionAxes 1 1
+  none 5
+  PreSal:@NSD@RH
+  none 12
+End
+
+FigPanel: RelhumXsectionNSNDPreSalPanel
+  RelhumXsectionNSNDPreSalPset
+  RelhumXsectionAxes 1 1
+  none 5
+  PreSal:@NSND@RH
+  none 12
+End
+
+FigPanel: RelhumXsectionSDSalPanel
+  RelhumXsectionSDSalPset
+  RelhumXsectionAxes 1 1
+  none 5
+  SAL:@SD@RH
+  none 12
+End
+
+FigPanel: RelhumXsectionSNDSalPanel
+  RelhumXsectionSNDSalPset
+  RelhumXsectionAxes 1 1
+  none 5
+  SAL:@SND@RH
+  none 12
+End
+
+FigPanel: RelhumXsectionNSDSalPanel
+  RelhumXsectionNSDSalPset
+  RelhumXsectionAxes 1 1
+  none 5
+  SAL:@NSD@RH
+  none 12
+End
+
+FigPanel: RelhumXsectionNSNDSalPanel
+  RelhumXsectionNSNDSalPset
+  RelhumXsectionAxes 1 1
+  none 5
+  SAL:@NSND@RH
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: RelhumXsectionSDPreSalPset contourf 1
+  RelhumXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RelhumXsectionSNDPreSalPset contourf 1
+  RelhumXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RelhumXsectionNSDPreSalPset contourf 1
+  RelhumXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RelhumXsectionNSNDPreSalPset contourf 1
+  RelhumXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RelhumXsectionSDSalPset contourf 1
+  RelhumXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RelhumXsectionSNDSalPset contourf 1
+  RelhumXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RelhumXsectionNSDSalPset contourf 1
+  RelhumXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RelhumXsectionNSNDSalPset contourf 1
+  RelhumXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+PlotData: RelhumXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:36) 1e-3 0
+  # z data -  relhum, K
+  /all_ps_relhum DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
+End
+  
+PlotData: RelhumXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:36) 1e-3 0
+  # z data -  relhum, K
+  /all_s_relhum DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: RelhumXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 8 linear [_] {_}
+  # z axis - relhum - K
+  RH % 0 100 linear [_] {_}
+End
+

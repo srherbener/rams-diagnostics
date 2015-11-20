@@ -37,6 +37,9 @@ function [ ] = GenStormXsections()
     { 'DIAGS/hist_meas_az_tempc_<CASE>.h5' '/all_ps_tempc'  '/all_ps_tempc' }
     { 'DIAGS/hist_meas_az_tempc_<CASE>.h5' '/all_s_tempc'  '/all_s_tempc' }
 
+    { 'DIAGS/hist_meas_az_relhum_<CASE>.h5' '/all_ps_relhum'  '/all_ps_relhum' }
+    { 'DIAGS/hist_meas_az_relhum_<CASE>.h5' '/all_s_relhum'  '/all_s_relhum' }
+
     { 'DIAGS/hist_meas_az_pcprate_<CASE>.h5' '/all_ps_pcprate' '/all_ps_pcprate' }
     { 'DIAGS/hist_meas_az_pcprate_<CASE>.h5' '/all_s_pcprate' '/all_s_pcprate' }
 
