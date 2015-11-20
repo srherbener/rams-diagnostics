@@ -19,6 +19,46 @@ Figure: DustRainXsectionSal 2
   DustRainXsectionNSDSalPanel    2
 End 
 
+Figure: DustPrisXsectionSal 2
+  DummyCases
+  [2_1]
+  Plots/FigDustPrisXsectionSal.jpg
+  DustPrisXsectionSDSalPanel         1
+  DustPrisXsectionNSDSalPanel    2
+End 
+
+Figure: DustSnowXsectionSal 2
+  DummyCases
+  [2_1]
+  Plots/FigDustSnowXsectionSal.jpg
+  DustSnowXsectionSDSalPanel         1
+  DustSnowXsectionNSDSalPanel    2
+End 
+
+Figure: DustAggrXsectionSal 2
+  DummyCases
+  [2_1]
+  Plots/FigDustAggrXsectionSal.jpg
+  DustAggrXsectionSDSalPanel         1
+  DustAggrXsectionNSDSalPanel    2
+End 
+
+Figure: DustGraupXsectionSal 2
+  DummyCases
+  [2_1]
+  Plots/FigDustGraupXsectionSal.jpg
+  DustGraupXsectionSDSalPanel         1
+  DustGraupXsectionNSDSalPanel    2
+End 
+
+Figure: DustHailXsectionSal 2
+  DummyCases
+  [2_1]
+  Plots/FigDustHailXsectionSal.jpg
+  DustHailXsectionSDSalPanel         1
+  DustHailXsectionNSDSalPanel    2
+End 
+
 ########### CASES ####################
 CaseSet: DummyCases 1
   Dummy
@@ -57,6 +97,86 @@ FigPanel: DustRainXsectionNSDSalPanel
   none 12
 End
 
+FigPanel: DustPrisXsectionSDSalPanel
+  DustPrisXsectionSDSalPset
+  DustPrisXsectionSalAxes 1 1
+  none 5
+  SD 
+  none 12
+End
+
+FigPanel: DustPrisXsectionNSDSalPanel
+  DustPrisXsectionNSDSalPset
+  DustPrisXsectionSalAxes 1 1
+  none 5
+  NSD
+  none 12
+End
+
+FigPanel: DustSnowXsectionSDSalPanel
+  DustSnowXsectionSDSalPset
+  DustSnowXsectionSalAxes 1 1
+  none 5
+  SD 
+  none 12
+End
+
+FigPanel: DustSnowXsectionNSDSalPanel
+  DustSnowXsectionNSDSalPset
+  DustSnowXsectionSalAxes 1 1
+  none 5
+  NSD
+  none 12
+End
+
+FigPanel: DustAggrXsectionSDSalPanel
+  DustAggrXsectionSDSalPset
+  DustAggrXsectionSalAxes 1 1
+  none 5
+  SD 
+  none 12
+End
+
+FigPanel: DustAggrXsectionNSDSalPanel
+  DustAggrXsectionNSDSalPset
+  DustAggrXsectionSalAxes 1 1
+  none 5
+  NSD
+  none 12
+End
+
+FigPanel: DustGraupXsectionSDSalPanel
+  DustGraupXsectionSDSalPset
+  DustGraupXsectionSalAxes 1 1
+  none 5
+  SD 
+  none 12
+End
+
+FigPanel: DustGraupXsectionNSDSalPanel
+  DustGraupXsectionNSDSalPset
+  DustGraupXsectionSalAxes 1 1
+  none 5
+  NSD
+  none 12
+End
+
+FigPanel: DustHailXsectionSDSalPanel
+  DustHailXsectionSDSalPset
+  DustHailXsectionSalAxes 1 1
+  none 5
+  SD 
+  none 12
+End
+
+FigPanel: DustHailXsectionNSDSalPanel
+  DustHailXsectionNSDSalPset
+  DustHailXsectionSalAxes 1 1
+  none 5
+  NSD
+  none 12
+End
+
 ############ PLOT SETS #################
 PlotSet: DustCloudXsectionSDSalPset contourf 1
   DustCloudXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
@@ -72,6 +192,46 @@ End
 
 PlotSet: DustRainXsectionNSDSalPset contourf 1
   DustRainXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: DustPrisXsectionSDSalPset contourf 1
+  DustPrisXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: DustPrisXsectionNSDSalPset contourf 1
+  DustPrisXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: DustSnowXsectionSDSalPset contourf 1
+  DustSnowXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: DustSnowXsectionNSDSalPset contourf 1
+  DustSnowXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: DustAggrXsectionSDSalPset contourf 1
+  DustAggrXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: DustAggrXsectionNSDSalPset contourf 1
+  DustAggrXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: DustGraupXsectionSDSalPset contourf 1
+  DustGraupXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: DustGraupXsectionNSDSalPset contourf 1
+  DustGraupXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: DustHailXsectionSDSalPset contourf 1
+  DustHailXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: DustHailXsectionNSDSalPset contourf 1
+  DustHailXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
 End
 
 ############ PLOT DATA #################
@@ -93,6 +253,51 @@ PlotData: DustRainXsectionSalContour 3
   /all_s_dust_rain DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
+PlotData: DustPrisXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  d1_mass, g/kg
+  /all_s_dust_pris DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: DustSnowXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  d1_mass, g/kg
+  /all_s_dust_snow DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: DustAggrXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  d1_mass, g/kg
+  /all_s_dust_aggr DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: DustGraupXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  d1_mass, g/kg
+  /all_s_dust_graup DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: DustHailXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  d1_mass, g/kg
+  /all_s_dust_hail DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
 ############ PLOT AXES #################
 PlotAxes: DustCloudXsectionSalAxes 3
   14 2 [0.025_0.025]
@@ -112,5 +317,55 @@ PlotAxes: DustRainXsectionSalAxes 3
   Height km 0 15 linear [_] {_}
   # z axis - d1_mass - g/kg
   Dust@in@Rain \mug@m^-^3 0 0.08 linear [_] {_}
+End
+
+PlotAxes: DustPrisXsectionSalAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [_] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - d1_mass - g/kg
+  Dust@in@Pris \mug@m^-^3 0 0.0005 linear [_] {_}
+End
+
+PlotAxes: DustSnowXsectionSalAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [_] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - d1_mass - g/kg
+  Dust@in@Snow \mug@m^-^3 0 0.0005 linear [_] {_}
+End
+
+PlotAxes: DustAggrXsectionSalAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [_] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - d1_mass - g/kg
+  Dust@in@Aggr \mug@m^-^3 0 0.0008 linear [_] {_}
+End
+
+PlotAxes: DustGraupXsectionSalAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [_] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - d1_mass - g/kg
+  Dust@in@Graup \mug@m^-^3 0 0.02 linear [_] {_}
+End
+
+PlotAxes: DustHailXsectionSalAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [_] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - d1_mass - g/kg
+  Dust@in@Hail \mug@m^-^3 0 0.003 linear [_] {_}
 End
 
