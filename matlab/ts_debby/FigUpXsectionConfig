@@ -8,9 +8,9 @@ Figure: UpXsectionPreSal 4
   [2_2]
   Plots/FigUpXsectionPreSal.jpg
   UpXsectionSDPreSalPanel         1
-  UpXsectionSNDdiffPreSalPanel    2
-  UpXsectionNSDdiffPreSalPanel    3
-  UpXsectionNSNDdiffPreSalPanel   4
+  UpXsectionSNDPreSalPanel    2
+  UpXsectionNSDPreSalPanel    3
+  UpXsectionNSNDPreSalPanel   4
 End 
 
 Figure: UpXsectionSal 4
@@ -18,9 +18,9 @@ Figure: UpXsectionSal 4
   [2_2]
   Plots/FigUpXsectionSal.jpg
   UpXsectionSDSalPanel         1
-  UpXsectionSNDdiffSalPanel    2
-  UpXsectionNSDdiffSalPanel    3
-  UpXsectionNSNDdiffSalPanel   4
+  UpXsectionSNDSalPanel    2
+  UpXsectionNSDSalPanel    3
+  UpXsectionNSNDSalPanel   4
 End 
 
 ########### CASES ####################
@@ -31,65 +31,65 @@ End
 ########### PANELS ####################
 FigPanel: UpXsectionSDPreSalPanel
   UpXsectionSDPreSalPset
-  UpXsectionPreSalAxes 1 1
+  UpXsectionAxes 1 1
   none 5
-  SD 
+  PreSAL:@SD@W_u_p
   none 12
 End
 
-FigPanel: UpXsectionSNDdiffPreSalPanel
-  UpXsectionSNDdiffPreSalPset
-  UpXsectionDiffPreSalAxes 1 1
+FigPanel: UpXsectionSNDPreSalPanel
+  UpXsectionSNDPreSalPset
+  UpXsectionAxes 1 1
   none 5
-  SND@-@SD
+  PreSAL:@SND@W_u_p
   none 12
 End
 
-FigPanel: UpXsectionNSDdiffPreSalPanel
-  UpXsectionNSDdiffPreSalPset
-  UpXsectionDiffPreSalAxes 1 1
+FigPanel: UpXsectionNSDPreSalPanel
+  UpXsectionNSDPreSalPset
+  UpXsectionAxes 1 1
   none 5
-  NSD@-@SD 
+  PreSAL:@NSD@W_u_p
   none 12
 End
 
-FigPanel: UpXsectionNSNDdiffPreSalPanel
-  UpXsectionNSNDdiffPreSalPset
-  UpXsectionDiffPreSalAxes 1 1
+FigPanel: UpXsectionNSNDPreSalPanel
+  UpXsectionNSNDPreSalPset
+  UpXsectionAxes 1 1
   none 5
-  NSND@-@SD
+  PreSAL:@NSND@W_u_p
   none 12
 End
 
 FigPanel: UpXsectionSDSalPanel
   UpXsectionSDSalPset
-  UpXsectionSalAxes 1 1
+  UpXsectionAxes 1 1
   none 5
-  SD 
+  SAL:@SD@W_u_p
   none 12
 End
 
-FigPanel: UpXsectionSNDdiffSalPanel
-  UpXsectionSNDdiffSalPset
-  UpXsectionDiffSalAxes 1 1
+FigPanel: UpXsectionSNDSalPanel
+  UpXsectionSNDSalPset
+  UpXsectionAxes 1 1
   none 5
-  SND@-@SD
+  SAL:@SND@W_u_p
   none 12
 End
 
-FigPanel: UpXsectionNSDdiffSalPanel
-  UpXsectionNSDdiffSalPset
-  UpXsectionDiffSalAxes 1 1
+FigPanel: UpXsectionNSDSalPanel
+  UpXsectionNSDSalPset
+  UpXsectionAxes 1 1
   none 5
-  NSD@-@SD 
+  SAL:@NSD@W_u_p
   none 12
 End
 
-FigPanel: UpXsectionNSNDdiffSalPanel
-  UpXsectionNSNDdiffSalPset
-  UpXsectionDiffSalAxes 1 1
+FigPanel: UpXsectionNSNDSalPanel
+  UpXsectionNSNDSalPset
+  UpXsectionAxes 1 1
   none 5
-  NSND@-@SD
+  SAL:@NSND@W_u_p
   none 12
 End
 
@@ -98,32 +98,32 @@ PlotSet: UpXsectionSDPreSalPset contourf 1
   UpXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
 End
 
-PlotSet: UpXsectionSNDdiffPreSalPset diff_contourf 1
-  UpXsectionPreSalDiffContour TSD_SAL_NODUST none  2 blue   - 0
+PlotSet: UpXsectionSNDPreSalPset contourf 1
+  UpXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
 End
 
-PlotSet: UpXsectionNSDdiffPreSalPset diff_contourf 1
-  UpXsectionPreSalDiffContour TSD_NONSAL_DUST none  2 blue   - 0
+PlotSet: UpXsectionNSDPreSalPset contourf 1
+  UpXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
 End
 
-PlotSet: UpXsectionNSNDdiffPreSalPset diff_contourf 1
-  UpXsectionPreSalDiffContour TSD_NONSAL_NODUST none  2 blue   - 0
+PlotSet: UpXsectionNSNDPreSalPset contourf 1
+  UpXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
 End
 
 PlotSet: UpXsectionSDSalPset contourf 1
   UpXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
 End
 
-PlotSet: UpXsectionSNDdiffSalPset diff_contourf 1
-  UpXsectionSalDiffContour TSD_SAL_NODUST none  2 blue   - 0
+PlotSet: UpXsectionSNDSalPset contourf 1
+  UpXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
 End
 
-PlotSet: UpXsectionNSDdiffSalPset diff_contourf 1
-  UpXsectionSalDiffContour TSD_NONSAL_DUST none  2 blue   - 0
+PlotSet: UpXsectionNSDSalPset contourf 1
+  UpXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
 End
 
-PlotSet: UpXsectionNSNDdiffSalPset diff_contourf 1
-  UpXsectionSalDiffContour TSD_NONSAL_NODUST none  2 blue   - 0
+PlotSet: UpXsectionNSNDSalPset contourf 1
+  UpXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
 End
 
 ############ PLOT DATA #################
@@ -136,15 +136,6 @@ PlotData: UpXsectionPreSalContour 3
   /all_ps_updraft DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
-PlotData: UpXsectionPreSalDiffContour 3
-  # x data - radius, km
-  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
-  # y data - height, km
-  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
-  # z data -  updraft, m/s
-  /all_ps_updraft_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
-End
-  
 PlotData: UpXsectionSalContour 3
   # x data - radius, km
   /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
@@ -154,53 +145,14 @@ PlotData: UpXsectionSalContour 3
   /all_s_updraft DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
-PlotData: UpXsectionSalDiffContour 3
-  # x data - radius, km
-  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
-  # y data - height, km
-  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
-  # z data -  updraft, m/s
-  /all_s_updraft_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
-End
-  
 ############ PLOT AXES #################
-PlotAxes: UpXsectionPreSalAxes 3
+PlotAxes: UpXsectionAxes 3
   14 2 [0.025_0.025]
   # x axis - radius
-  Radius km 0 500 linear [_] {_}
+  Radius km 0 500 linear [100_300_500] {_}
   # y axis - utc time
   Height km 0 15 linear [_] {_}
   # z axis - updraft - m/s
-  Updraft m@s^-^1 0 0.4 linear [_] {_}
-End
-
-PlotAxes: UpXsectionDiffPreSalAxes 3
-  14 2 [0.025_0.025]
-  # x axis - radius
-  Radius km 0 500 linear [_] {_}
-  # y axis - utc time
-  Height km 0 15 linear [_] {_}
-  # z axis - updraft - m/s
-  Updraft m@s^-^1 -0.1 0.1 linear [_] {_}
-End
-
-PlotAxes: UpXsectionSalAxes 3
-  14 2 [0.025_0.025]
-  # x axis - radius
-  Radius km 0 500 linear [_] {_}
-  # y axis - utc time
-  Height km 0 15 linear [_] {_}
-  # z axis - updraft - m/s
-  Updraft m@s^-^1 0 0.2 linear [_] {_}
-End
-
-PlotAxes: UpXsectionDiffSalAxes 3
-  14 2 [0.025_0.025]
-  # x axis - radius
-  Radius km 0 500 linear [_] {_}
-  # y axis - utc time
-  Height km 0 15 linear [_] {_}
-  # z axis - updraft - m/s
-  Updraft m@s^-^1 -0.1 0.1 linear [_] {_}
+  Updraft m@s^-^1 0 0.3 linear [_] {_}
 End
 
