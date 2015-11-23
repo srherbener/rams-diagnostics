@@ -70,6 +70,9 @@ CONFIGS = \
   $(DIAG_DIR)/FigVtXsectionConfig \
   $(DIAG_DIR)/FigVrXsectionConfig \
   $(DIAG_DIR)/FigHydroProfileConfig \
+  $(DIAG_DIR)/FigThetaProfileConfig \
+  $(DIAG_DIR)/FigThetaeProfileConfig \
+  $(DIAG_DIR)/FigThetaRhoProfileConfig \
   $(DIAG_DIR)/FigLhfCoolCoreProfileConfig \
   $(DIAG_DIR)/FigLhfHeatCoreProfileConfig \
   $(DIAG_DIR)/FigLhvCoolCoreProfileConfig \
@@ -77,9 +80,6 @@ CONFIGS = \
   $(DIAG_DIR)/FigDnDraftCoreProfileConfig \
   $(DIAG_DIR)/FigUpDraftCoreProfileConfig \
   $(DIAG_DIR)/FigSpeedtCoreProfileConfig \
-  $(DIAG_DIR)/FigThetaeCoreProfileConfig \
-  $(DIAG_DIR)/FigThetaCoreProfileConfig \
-  $(DIAG_DIR)/FigThetaRhoCoreProfileConfig \
   $(DIAG_DIR)/FigTempcCoreProfileConfig \
   $(DIAG_DIR)/FigVaporCoreProfileConfig \
   $(DIAG_DIR)/FigDust1CoreProfileConfig \
@@ -93,9 +93,6 @@ CONFIGS = \
   $(DIAG_DIR)/FigDnDraftRbandProfileConfig \
   $(DIAG_DIR)/FigUpDraftRbandProfileConfig \
   $(DIAG_DIR)/FigSpeedtRbandProfileConfig \
-  $(DIAG_DIR)/FigThetaeRbandProfileConfig \
-  $(DIAG_DIR)/FigThetaRbandProfileConfig \
-  $(DIAG_DIR)/FigThetaRhoRbandProfileConfig \
   $(DIAG_DIR)/FigTempcRbandProfileConfig \
   $(DIAG_DIR)/FigVaporRbandProfileConfig \
   $(DIAG_DIR)/FigDust1RbandProfileConfig \
@@ -105,9 +102,6 @@ CONFIGS = \
   $(DIAG_DIR)/FigDnDraftEnvProfileConfig \
   $(DIAG_DIR)/FigUpDraftEnvProfileConfig \
   $(DIAG_DIR)/FigSpeedtEnvProfileConfig \
-  $(DIAG_DIR)/FigThetaeEnvProfileConfig \
-  $(DIAG_DIR)/FigThetaEnvProfileConfig \
-  $(DIAG_DIR)/FigThetaRhoEnvProfileConfig \
   $(DIAG_DIR)/FigTempcEnvProfileConfig \
   $(DIAG_DIR)/FigVaporEnvProfileConfig \
   $(DIAG_DIR)/FigDust1EnvProfileConfig \

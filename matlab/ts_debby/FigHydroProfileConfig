@@ -63,6 +63,14 @@ Figure: CloudDiamRbandProfile 4
   CloudDiamDiffSalRbandPanel     4
 End 
 
+Figure: CloudNumDiamProfile 2
+  DummyCases
+  [1_2]
+  Plots/FigCloudNumDiamProfile.jpg
+  CloudNumSalRbandPanel  1
+  CloudDiamSalRbandPanel  2
+End 
+
 Figure: RainCoreProfile 4
   DummyCases
   [2_2]
@@ -181,6 +189,26 @@ Figure: HailRbandProfile 4
   HailSalRbandPanel     2
   HailDiffPreSalRbandPanel  3
   HailDiffSalRbandPanel     4
+End 
+
+Figure: RainCoreLlevProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigRainCoreLlevProfile.jpg
+  RainPreSalCoreLlevPanel  1
+  RainSalCoreLlevPanel     2
+  RainDiffPreSalCoreLlevPanel  3
+  RainDiffSalCoreLlevPanel     4
+End 
+
+Figure: RainRbandLlevProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigRainRbandLlevProfile.jpg
+  RainPreSalRbandLlevPanel  1
+  RainSalRbandLlevPanel     2
+  RainDiffPreSalRbandLlevPanel  3
+  RainDiffSalRbandLlevPanel     4
 End 
 
 ########### CASES ####################
@@ -370,7 +398,7 @@ FigPanel: CloudDiamSalRbandPanel
   CloudDiamSalRbandAxes 1 1
   none 5
   SAL@Rband 
-  NorthWest 12
+  SouthWest 12
 End
 
 FigPanel: CloudDiamDiffSalRbandPanel
@@ -760,6 +788,70 @@ End
 FigPanel: HailDiffSalRbandPanel
   HailDiffSalRbandPset
   HailDiffSalRbandAxes 1 1
+  none 5
+  SAL@Rband@(diffs)
+  none 12
+End
+
+FigPanel: RainPreSalCoreLlevPanel
+  RainPreSalCorePset
+  RainPreSalCoreLlevAxes 1 1
+  none 5
+  Pre@SAL@Core
+  NorthWest 12
+End
+
+FigPanel: RainDiffPreSalCoreLlevPanel
+  RainDiffPreSalCorePset
+  RainDiffPreSalCoreLlevAxes 1 1
+  none 5
+  Pre@SAL@Core@(diffs)
+  none 12
+End
+
+FigPanel: RainSalCoreLlevPanel
+  RainSalCorePset
+  RainSalCoreLlevAxes 1 1
+  none 5
+  SAL@Core
+  none 12
+End
+
+FigPanel: RainDiffSalCoreLlevPanel
+  RainDiffSalCorePset
+  RainDiffSalCoreLlevAxes 1 1
+  none 5
+  SAL@Core@(diffs)
+  none 12
+End
+
+FigPanel: RainPreSalRbandLlevPanel
+  RainPreSalRbandPset
+  RainPreSalRbandLlevAxes 1 1
+  none 5
+  Pre@SAL@Rband
+  NorthEast 12
+End
+
+FigPanel: RainDiffPreSalRbandLlevPanel
+  RainDiffPreSalRbandPset
+  RainDiffPreSalRbandLlevAxes 1 1
+  none 5
+  Pre@SAL@Rband@(diffs)
+  none 12
+End
+
+FigPanel: RainSalRbandLlevPanel
+  RainSalRbandPset
+  RainSalRbandLlevAxes 1 1
+  none 5
+  SAL@Rband
+  none 12
+End
+
+FigPanel: RainDiffSalRbandLlevPanel
+  RainDiffSalRbandPset
+  RainDiffSalRbandLlevAxes 1 1
   none 5
   SAL@Rband@(diffs)
   none 12
@@ -2350,5 +2442,69 @@ PlotAxes: HailDiffSalRbandAxes 2
   Hail g@kg^-^1 -0.08 0.08 linear [_] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: RainPreSalCoreLlevAxes 2
+  14 2 [0.025_0.025]
+  # x axis - rain mix ratio, g/kg
+  Rain g@kg^-^1 0 0.25 linear [_] {_}
+  # y axis - height, km
+  Height km 0 1 linear [_] {_}
+End
+
+PlotAxes: RainDiffPreSalCoreLlevAxes 2
+  14 2 [0.025_0.025]
+  # x axis - rain mix ratio, g/kg
+  Rain g@kg^-^1 -0.05 0.05 linear [_] {_}
+  # y axis - height, km
+  Height km 0 1 linear [_] {_}
+End
+
+PlotAxes: RainSalCoreLlevAxes 2
+  14 2 [0.025_0.025]
+  # x axis - rain mix ratio, g/kg
+  Rain g@kg^-^1 0 0.25 linear [_] {_}
+  # y axis - height, km
+  Height km 0 1 linear [_] {_}
+End
+
+PlotAxes: RainDiffSalCoreLlevAxes 2
+  14 2 [0.025_0.025]
+  # x axis - rain mix ratio, g/kg
+  Rain g@kg^-^1 -0.05 0.05 linear [_] {_}
+  # y axis - height, km
+  Height km 0 1 linear [_] {_}
+End
+
+PlotAxes: RainPreSalRbandLlevAxes 2
+  14 2 [0.025_0.025]
+  # x axis - rain mix ratio, g/kg
+  Rain g@kg^-^1 0 0.1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 1 linear [_] {_}
+End
+
+PlotAxes: RainDiffPreSalRbandLlevAxes 2
+  14 2 [0.025_0.025]
+  # x axis - rain mix ratio, g/kg
+  Rain g@kg^-^1 -0.03 0.03 linear [_] {_}
+  # y axis - height, km
+  Height km 0 1 linear [_] {_}
+End
+
+PlotAxes: RainSalRbandLlevAxes 2
+  14 2 [0.025_0.025]
+  # x axis - rain mix ratio, g/kg
+  Rain g@kg^-^1 0 0.1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 1 linear [_] {_}
+End
+
+PlotAxes: RainDiffSalRbandLlevAxes 2
+  14 2 [0.025_0.025]
+  # x axis - rain mix ratio, g/kg
+  Rain g@kg^-^1 -0.03 0.03 linear [_] {_}
+  # y axis - height, km
+  Height km 0 1 linear [_] {_}
 End
 

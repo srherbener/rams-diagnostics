@@ -1,0 +1,226 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: ThetaRhoCoreProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigThetaRhoCoreProfile.jpg
+  ThetaRhoPreSalCorePanel  1
+  ThetaRhoSalCorePanel     2
+  ThetaRhoDiffPreSalCorePanel  3
+  ThetaRhoDiffSalCorePanel     4
+End 
+
+Figure: ThetaRhoRbandProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigThetaRhoRbandProfile.jpg
+  ThetaRhoPreSalRbandPanel  1
+  ThetaRhoSalRbandPanel     2
+  ThetaRhoDiffPreSalRbandPanel  3
+  ThetaRhoDiffSalRbandPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: ThetaRhoPreSalCorePanel
+  ThetaRhoPreSalCorePset
+  ThetaRhoAxes 1 1
+  none 5
+  Pre@SAL@Core 
+  NorthWest 12
+End
+
+FigPanel: ThetaRhoDiffPreSalCorePanel
+  ThetaRhoDiffPreSalCorePset
+  ThetaRhoDiffAxes 1 1
+  none 5
+  Pre@SAL@Core@(diffs)
+  none 12
+End
+
+FigPanel: ThetaRhoSalCorePanel
+  ThetaRhoSalCorePset
+  ThetaRhoAxes 1 1
+  none 5
+  SAL@Core 
+  none 12
+End
+
+FigPanel: ThetaRhoDiffSalCorePanel
+  ThetaRhoDiffSalCorePset
+  ThetaRhoDiffAxes 1 1
+  none 5
+  SAL@Core@(diffs)
+  none 12
+End
+
+FigPanel: ThetaRhoPreSalRbandPanel
+  ThetaRhoPreSalRbandPset
+  ThetaRhoAxes 1 1
+  none 5
+  Pre@SAL@Rband 
+  NorthWest 12
+End
+
+FigPanel: ThetaRhoDiffPreSalRbandPanel
+  ThetaRhoDiffPreSalRbandPset
+  ThetaRhoDiffAxes 1 1
+  none 5
+  Pre@SAL@Rband@(diffs)
+  none 12
+End
+
+FigPanel: ThetaRhoSalRbandPanel
+  ThetaRhoSalRbandPset
+  ThetaRhoAxes 1 1
+  none 5
+  SAL@Rband 
+  none 12
+End
+
+FigPanel: ThetaRhoDiffSalRbandPanel
+  ThetaRhoDiffSalRbandPset
+  ThetaRhoDiffAxes 1 1
+  none 5
+  SAL@Rband@(diffs)
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: ThetaRhoPreSalCorePset line 4
+  ThetaRhoPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaRhoPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaRhoPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaRhoPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: ThetaRhoDiffPreSalCorePset line 4
+  ThetaRhoDiffPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaRhoDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaRhoDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaRhoDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: ThetaRhoSalCorePset line 4
+  ThetaRhoSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaRhoSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaRhoSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaRhoSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: ThetaRhoDiffSalCorePset line 4
+  ThetaRhoDiffSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaRhoDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaRhoDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaRhoDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: ThetaRhoPreSalRbandPset line 4
+  ThetaRhoPreSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaRhoPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaRhoPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaRhoPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: ThetaRhoDiffPreSalRbandPset line 4
+  ThetaRhoDiffPreSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaRhoDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaRhoDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaRhoDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: ThetaRhoSalRbandPset line 4
+  ThetaRhoSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaRhoSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaRhoSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaRhoSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: ThetaRhoDiffSalRbandPset line 4
+  ThetaRhoDiffSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  ThetaRhoDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  ThetaRhoDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  ThetaRhoDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: ThetaRhoPreSalCoreLine 2
+  # x data - theta_rho, K
+  /all_core_ps_theta_rho DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaRhoSalCoreLine 2
+  # x data - theta_rho, K
+  /all_core_s_theta_rho DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaRhoDiffPreSalCoreLine 2
+  # x data - theta_rho, K
+  /all_core_ps_theta_rho_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaRhoDiffSalCoreLine 2
+  # x data - theta_rho, K
+  /all_core_s_theta_rho_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaRhoPreSalRbandLine 2
+  # x data - theta_rho, K
+  /all_rb_ps_theta_rho DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaRhoSalRbandLine 2
+  # x data - theta_rho, K
+  /all_rb_s_theta_rho DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaRhoDiffPreSalRbandLine 2
+  # x data - theta_rho, K
+  /all_rb_ps_theta_rho_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: ThetaRhoDiffSalRbandLine 2
+  # x data - theta_rho, K
+  /all_rb_s_theta_rho_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: ThetaRhoAxes 2
+  14 2 [0.025_0.025]
+  # x axis - theta_rho, K
+  \theta_\rho g@kg^-^1 295 365 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: ThetaRhoDiffAxes 2
+  14 2 [0.025_0.025]
+  # x axis - theta_rho, K
+  \theta_\rho g@kg^-^1 -5 5 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
