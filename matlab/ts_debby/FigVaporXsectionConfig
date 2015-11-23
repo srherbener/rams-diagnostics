@@ -8,9 +8,9 @@ Figure: VaporXsectionPreSal 4
   [2_2]
   Plots/FigVaporXsectionPreSal.jpg
   VaporXsectionSDPreSalPanel         1
-  VaporXsectionSNDdiffPreSalPanel    2
-  VaporXsectionNSDdiffPreSalPanel    3
-  VaporXsectionNSNDdiffPreSalPanel   4
+  VaporXsectionSNDPreSalPanel    2
+  VaporXsectionNSDPreSalPanel    3
+  VaporXsectionNSNDPreSalPanel   4
 End 
 
 Figure: VaporXsectionSal 4
@@ -18,9 +18,9 @@ Figure: VaporXsectionSal 4
   [2_2]
   Plots/FigVaporXsectionSal.jpg
   VaporXsectionSDSalPanel         1
-  VaporXsectionSNDdiffSalPanel    2
-  VaporXsectionNSDdiffSalPanel    3
-  VaporXsectionNSNDdiffSalPanel   4
+  VaporXsectionSNDSalPanel    2
+  VaporXsectionNSDSalPanel    3
+  VaporXsectionNSNDSalPanel   4
 End 
 
 ########### CASES ####################
@@ -31,65 +31,65 @@ End
 ########### PANELS ####################
 FigPanel: VaporXsectionSDPreSalPanel
   VaporXsectionSDPreSalPset
-  VaporXsectionPreSalAxes 1 1
+  VaporXsectionAxes 1 1
   none 5
-  SD 
+  PreSAL:@SD@Vapor 
   none 12
 End
 
-FigPanel: VaporXsectionSNDdiffPreSalPanel
-  VaporXsectionSNDdiffPreSalPset
-  VaporXsectionDiffPreSalAxes 1 1
+FigPanel: VaporXsectionSNDPreSalPanel
+  VaporXsectionSNDPreSalPset
+  VaporXsectionAxes 1 1
   none 5
-  SND@-@SD
+  PreSAL:@SND@Vapor
   none 12
 End
 
-FigPanel: VaporXsectionNSDdiffPreSalPanel
-  VaporXsectionNSDdiffPreSalPset
-  VaporXsectionDiffPreSalAxes 1 1
+FigPanel: VaporXsectionNSDPreSalPanel
+  VaporXsectionNSDPreSalPset
+  VaporXsectionAxes 1 1
   none 5
-  NSD@-@SD 
+  PreSAL:@NSD@Vapor
   none 12
 End
 
-FigPanel: VaporXsectionNSNDdiffPreSalPanel
-  VaporXsectionNSNDdiffPreSalPset
-  VaporXsectionDiffPreSalAxes 1 1
+FigPanel: VaporXsectionNSNDPreSalPanel
+  VaporXsectionNSNDPreSalPset
+  VaporXsectionAxes 1 1
   none 5
-  NSND@-@SD
+  PreSAL:@NSND@Vapor
   none 12
 End
 
 FigPanel: VaporXsectionSDSalPanel
   VaporXsectionSDSalPset
-  VaporXsectionSalAxes 1 1
+  VaporXsectionAxes 1 1
   none 5
-  SD 
+  SAL:@SD@Vapor 
   none 12
 End
 
-FigPanel: VaporXsectionSNDdiffSalPanel
-  VaporXsectionSNDdiffSalPset
-  VaporXsectionDiffSalAxes 1 1
+FigPanel: VaporXsectionSNDSalPanel
+  VaporXsectionSNDSalPset
+  VaporXsectionAxes 1 1
   none 5
-  SND@-@SD
+  SAL:@SND@Vapor
   none 12
 End
 
-FigPanel: VaporXsectionNSDdiffSalPanel
-  VaporXsectionNSDdiffSalPset
-  VaporXsectionDiffSalAxes 1 1
+FigPanel: VaporXsectionNSDSalPanel
+  VaporXsectionNSDSalPset
+  VaporXsectionAxes 1 1
   none 5
-  NSD@-@SD 
+  SAL:@NSD@Vapor
   none 12
 End
 
-FigPanel: VaporXsectionNSNDdiffSalPanel
-  VaporXsectionNSNDdiffSalPset
-  VaporXsectionDiffSalAxes 1 1
+FigPanel: VaporXsectionNSNDSalPanel
+  VaporXsectionNSNDSalPset
+  VaporXsectionAxes 1 1
   none 5
-  NSND@-@SD
+  SAL:@NSND@Vapor
   none 12
 End
 
@@ -98,32 +98,32 @@ PlotSet: VaporXsectionSDPreSalPset contourf 1
   VaporXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
 End
 
-PlotSet: VaporXsectionSNDdiffPreSalPset diff_contourf 1
-  VaporXsectionPreSalDiffContour TSD_SAL_NODUST none  2 blue   - 0
+PlotSet: VaporXsectionSNDPreSalPset contourf 1
+  VaporXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
 End
 
-PlotSet: VaporXsectionNSDdiffPreSalPset diff_contourf 1
-  VaporXsectionPreSalDiffContour TSD_NONSAL_DUST none  2 blue   - 0
+PlotSet: VaporXsectionNSDPreSalPset contourf 1
+  VaporXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
 End
 
-PlotSet: VaporXsectionNSNDdiffPreSalPset diff_contourf 1
-  VaporXsectionPreSalDiffContour TSD_NONSAL_NODUST none  2 blue   - 0
+PlotSet: VaporXsectionNSNDPreSalPset contourf 1
+  VaporXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
 End
 
 PlotSet: VaporXsectionSDSalPset contourf 1
   VaporXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
 End
 
-PlotSet: VaporXsectionSNDdiffSalPset diff_contourf 1
-  VaporXsectionSalDiffContour TSD_SAL_NODUST none  2 blue   - 0
+PlotSet: VaporXsectionSNDSalPset contourf 1
+  VaporXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
 End
 
-PlotSet: VaporXsectionNSDdiffSalPset diff_contourf 1
-  VaporXsectionSalDiffContour TSD_NONSAL_DUST none  2 blue   - 0
+PlotSet: VaporXsectionNSDSalPset contourf 1
+  VaporXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
 End
 
-PlotSet: VaporXsectionNSNDdiffSalPset diff_contourf 1
-  VaporXsectionSalDiffContour TSD_NONSAL_NODUST none  2 blue   - 0
+PlotSet: VaporXsectionNSNDSalPset contourf 1
+  VaporXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
 End
 
 ############ PLOT DATA #################
@@ -136,15 +136,6 @@ PlotData: VaporXsectionPreSalContour 3
   /all_ps_vapor DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
-PlotData: VaporXsectionPreSalDiffContour 3
-  # x data - radius, km
-  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
-  # y data - height, km
-  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
-  # z data -  vapor, g/kg
-  /all_ps_vapor_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
-End
-  
 PlotData: VaporXsectionSalContour 3
   # x data - radius, km
   /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
@@ -154,53 +145,14 @@ PlotData: VaporXsectionSalContour 3
   /all_s_vapor DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
-PlotData: VaporXsectionSalDiffContour 3
-  # x data - radius, km
-  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
-  # y data - height, km
-  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
-  # z data -  vapor, g/kg
-  /all_s_vapor_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
-End
-  
 ############ PLOT AXES #################
-PlotAxes: VaporXsectionPreSalAxes 3
+PlotAxes: VaporXsectionAxes 3
   14 2 [0.025_0.025]
   # x axis - radius
-  Radius km 0 500 linear [_] {_}
+  Radius km 0 500 linear [100_300_500] {_}
   # y axis - utc time
   Height km 0 15 linear [_] {_}
   # z axis - vapor - g/kg
   Vapor g@kg^-^1 0 15 linear [_] {_}
-End
-
-PlotAxes: VaporXsectionDiffPreSalAxes 3
-  14 2 [0.025_0.025]
-  # x axis - radius
-  Radius km 0 500 linear [_] {_}
-  # y axis - utc time
-  Height km 0 15 linear [_] {_}
-  # z axis - vapor - g/kg
-  Vapor g@kg^-^1 -1 1 linear [_] {_}
-End
-
-PlotAxes: VaporXsectionSalAxes 3
-  14 2 [0.025_0.025]
-  # x axis - radius
-  Radius km 0 500 linear [_] {_}
-  # y axis - utc time
-  Height km 0 15 linear [_] {_}
-  # z axis - vapor - g/kg
-  Vapor g@kg^-^1 0 15 linear [_] {_}
-End
-
-PlotAxes: VaporXsectionDiffSalAxes 3
-  14 2 [0.025_0.025]
-  # x axis - radius
-  Radius km 0 500 linear [_] {_}
-  # y axis - utc time
-  Height km 0 15 linear [_] {_}
-  # z axis - vapor - g/kg
-  Vapor g@kg^-^1 -1 1 linear [_] {_}
 End
 

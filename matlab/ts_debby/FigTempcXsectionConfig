@@ -8,9 +8,9 @@ Figure: TempcXsectionPreSal 4
   [2_2]
   Plots/FigTempcXsectionPreSal.jpg
   TempcXsectionSDPreSalPanel         1
-  TempcXsectionSNDdiffPreSalPanel    2
-  TempcXsectionNSDdiffPreSalPanel    3
-  TempcXsectionNSNDdiffPreSalPanel   4
+  TempcXsectionSNDPreSalPanel    2
+  TempcXsectionNSDPreSalPanel    3
+  TempcXsectionNSNDPreSalPanel   4
 End 
 
 Figure: TempcXsectionSal 4
@@ -18,9 +18,9 @@ Figure: TempcXsectionSal 4
   [2_2]
   Plots/FigTempcXsectionSal.jpg
   TempcXsectionSDSalPanel         1
-  TempcXsectionSNDdiffSalPanel    2
-  TempcXsectionNSDdiffSalPanel    3
-  TempcXsectionNSNDdiffSalPanel   4
+  TempcXsectionSNDSalPanel    2
+  TempcXsectionNSDSalPanel    3
+  TempcXsectionNSNDSalPanel   4
 End 
 
 ########### CASES ####################
@@ -31,65 +31,65 @@ End
 ########### PANELS ####################
 FigPanel: TempcXsectionSDPreSalPanel
   TempcXsectionSDPreSalPset
-  TempcXsectionPreSalAxes 1 1
+  TempcXsectionAxes 1 1
   none 5
-  SD 
+  PreSAL:@SD@Tempc 
   none 12
 End
 
-FigPanel: TempcXsectionSNDdiffPreSalPanel
-  TempcXsectionSNDdiffPreSalPset
-  TempcXsectionDiffPreSalAxes 1 1
+FigPanel: TempcXsectionSNDPreSalPanel
+  TempcXsectionSNDPreSalPset
+  TempcXsectionAxes 1 1
   none 5
-  SND@-@SD
+  PreSAL:@SND@Tempc
   none 12
 End
 
-FigPanel: TempcXsectionNSDdiffPreSalPanel
-  TempcXsectionNSDdiffPreSalPset
-  TempcXsectionDiffPreSalAxes 1 1
+FigPanel: TempcXsectionNSDPreSalPanel
+  TempcXsectionNSDPreSalPset
+  TempcXsectionAxes 1 1
   none 5
-  NSD@-@SD 
+  PreSAL:@NSD@Tempc
   none 12
 End
 
-FigPanel: TempcXsectionNSNDdiffPreSalPanel
-  TempcXsectionNSNDdiffPreSalPset
-  TempcXsectionDiffPreSalAxes 1 1
+FigPanel: TempcXsectionNSNDPreSalPanel
+  TempcXsectionNSNDPreSalPset
+  TempcXsectionAxes 1 1
   none 5
-  NSND@-@SD
+  PreSAL:@NSND@Tempc
   none 12
 End
 
 FigPanel: TempcXsectionSDSalPanel
   TempcXsectionSDSalPset
-  TempcXsectionSalAxes 1 1
+  TempcXsectionAxes 1 1
   none 5
-  SD 
+  SAL:@SD@Tempc 
   none 12
 End
 
-FigPanel: TempcXsectionSNDdiffSalPanel
-  TempcXsectionSNDdiffSalPset
-  TempcXsectionDiffSalAxes 1 1
+FigPanel: TempcXsectionSNDSalPanel
+  TempcXsectionSNDSalPset
+  TempcXsectionAxes 1 1
   none 5
-  SND@-@SD
+  SAL:@SND@Tempc
   none 12
 End
 
-FigPanel: TempcXsectionNSDdiffSalPanel
-  TempcXsectionNSDdiffSalPset
-  TempcXsectionDiffSalAxes 1 1
+FigPanel: TempcXsectionNSDSalPanel
+  TempcXsectionNSDSalPset
+  TempcXsectionAxes 1 1
   none 5
-  NSD@-@SD 
+  SAL:@NSD@Tempc
   none 12
 End
 
-FigPanel: TempcXsectionNSNDdiffSalPanel
-  TempcXsectionNSNDdiffSalPset
-  TempcXsectionDiffSalAxes 1 1
+FigPanel: TempcXsectionNSNDSalPanel
+  TempcXsectionNSNDSalPset
+  TempcXsectionAxes 1 1
   none 5
-  NSND@-@SD
+  SAL:@NSND@Tempc
   none 12
 End
 
@@ -98,32 +98,32 @@ PlotSet: TempcXsectionSDPreSalPset contourf 1
   TempcXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
 End
 
-PlotSet: TempcXsectionSNDdiffPreSalPset diff_contourf 1
-  TempcXsectionPreSalDiffContour TSD_SAL_NODUST none  2 blue   - 0
+PlotSet: TempcXsectionSNDPreSalPset contourf 1
+  TempcXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
 End
 
-PlotSet: TempcXsectionNSDdiffPreSalPset diff_contourf 1
-  TempcXsectionPreSalDiffContour TSD_NONSAL_DUST none  2 blue   - 0
+PlotSet: TempcXsectionNSDPreSalPset contourf 1
+  TempcXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
 End
 
-PlotSet: TempcXsectionNSNDdiffPreSalPset diff_contourf 1
-  TempcXsectionPreSalDiffContour TSD_NONSAL_NODUST none  2 blue   - 0
+PlotSet: TempcXsectionNSNDPreSalPset contourf 1
+  TempcXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
 End
 
 PlotSet: TempcXsectionSDSalPset contourf 1
   TempcXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
 End
 
-PlotSet: TempcXsectionSNDdiffSalPset diff_contourf 1
-  TempcXsectionSalDiffContour TSD_SAL_NODUST none  2 blue   - 0
+PlotSet: TempcXsectionSNDSalPset contourf 1
+  TempcXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
 End
 
-PlotSet: TempcXsectionNSDdiffSalPset diff_contourf 1
-  TempcXsectionSalDiffContour TSD_NONSAL_DUST none  2 blue   - 0
+PlotSet: TempcXsectionNSDSalPset contourf 1
+  TempcXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
 End
 
-PlotSet: TempcXsectionNSNDdiffSalPset diff_contourf 1
-  TempcXsectionSalDiffContour TSD_NONSAL_NODUST none  2 blue   - 0
+PlotSet: TempcXsectionNSNDSalPset contourf 1
+  TempcXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
 End
 
 ############ PLOT DATA #################
@@ -136,15 +136,6 @@ PlotData: TempcXsectionPreSalContour 3
   /all_ps_tempc DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
 End
   
-PlotData: TempcXsectionPreSalDiffContour 3
-  # x data - radius, km
-  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
-  # y data - height, km
-  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:36) 1e-3 0
-  # z data -  tempc, K
-  /all_ps_tempc_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
-End
-  
 PlotData: TempcXsectionSalContour 3
   # x data - radius, km
   /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
@@ -154,53 +145,14 @@ PlotData: TempcXsectionSalContour 3
   /all_s_tempc DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
 End
   
-PlotData: TempcXsectionSalDiffContour 3
-  # x data - radius, km
-  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
-  # y data - height, km
-  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:36) 1e-3 0
-  # z data -  tempc, K
-  /all_s_tempc_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
-End
-  
 ############ PLOT AXES #################
-PlotAxes: TempcXsectionPreSalAxes 3
+PlotAxes: TempcXsectionAxes 3
   14 2 [0.025_0.025]
   # x axis - radius
-  Radius km 0 500 linear [_] {_}
+  Radius km 0 500 linear [100_300_500] {_}
   # y axis - utc time
   Height km 0 8 linear [_] {_}
   # z axis - tempc - K
   Temp C -30 30 linear [_] {_}
-End
-
-PlotAxes: TempcXsectionDiffPreSalAxes 3
-  14 2 [0.025_0.025]
-  # x axis - radius
-  Radius km 0 500 linear [_] {_}
-  # y axis - utc time
-  Height km 0 8 linear [_] {_}
-  # z axis - tempc - K
-  Temp C -2 2 linear [_] {_}
-End
-
-PlotAxes: TempcXsectionSalAxes 3
-  14 2 [0.025_0.025]
-  # x axis - radius
-  Radius km 0 500 linear [_] {_}
-  # y axis - utc time
-  Height km 0 8 linear [_] {_}
-  # z axis - tempc - K
-  Temp C -30 30 linear [_] {_}
-End
-
-PlotAxes: TempcXsectionDiffSalAxes 3
-  14 2 [0.025_0.025]
-  # x axis - radius
-  Radius km 0 500 linear [_] {_}
-  # y axis - utc time
-  Height km 0 8 linear [_] {_}
-  # z axis - tempc - K
-  Temp C -2 2 linear [_] {_}
 End
 

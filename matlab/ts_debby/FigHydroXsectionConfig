@@ -143,6 +143,26 @@ Figure: HailXsectionSal 4
   HailXsectionNSNDSalPanel   4
 End 
 
+Figure: TcondXsectionPreSal 4
+  DummyCases
+  [2_2]
+  Plots/FigTcondXsectionPreSal.jpg
+  TcondXsectionSDPreSalPanel     1
+  TcondXsectionSNDPreSalPanel    2
+  TcondXsectionNSDPreSalPanel    3
+  TcondXsectionNSNDPreSalPanel   4
+End 
+
+Figure: TcondXsectionSal 4
+  DummyCases
+  [2_2]
+  Plots/FigTcondXsectionSal.jpg
+  TcondXsectionSDSalPanel     1
+  TcondXsectionSNDSalPanel    2
+  TcondXsectionNSDSalPanel    3
+  TcondXsectionNSNDSalPanel   4
+End 
+
 ########### CASES ####################
 CaseSet: DummyCases 1
   Dummy
@@ -597,6 +617,70 @@ FigPanel: HailXsectionNSNDSalPanel
   none 12
 End
 
+FigPanel: TcondXsectionSDPreSalPanel
+  TcondXsectionSDPreSalPset
+  TcondXsectionAxes 1 1
+  none 5
+  PreSAL:@SD@Tcond
+  none 12
+End
+
+FigPanel: TcondXsectionSNDPreSalPanel
+  TcondXsectionSNDPreSalPset
+  TcondXsectionAxes 1 1
+  none 5
+  PreSAL:@SND@Tcond
+  none 12
+End
+
+FigPanel: TcondXsectionNSDPreSalPanel
+  TcondXsectionNSDPreSalPset
+  TcondXsectionAxes 1 1
+  none 5
+  PreSAL:@NSD@Tcond
+  none 12
+End
+
+FigPanel: TcondXsectionNSNDPreSalPanel
+  TcondXsectionNSNDPreSalPset
+  TcondXsectionAxes 1 1
+  none 5
+  PreSAL:@NSND@Tcond
+  none 12
+End
+
+FigPanel: TcondXsectionSDSalPanel
+  TcondXsectionSDSalPset
+  TcondXsectionAxes 1 1
+  none 5
+  SAL:@SD@Tcond
+  none 12
+End
+
+FigPanel: TcondXsectionSNDSalPanel
+  TcondXsectionSNDSalPset
+  TcondXsectionAxes 1 1
+  none 5
+  SAL:@SND@Tcond
+  none 12
+End
+
+FigPanel: TcondXsectionNSDSalPanel
+  TcondXsectionNSDSalPset
+  TcondXsectionAxes 1 1
+  none 5
+  SAL:@NSD@Tcond
+  none 12
+End
+
+FigPanel: TcondXsectionNSNDSalPanel
+  TcondXsectionNSNDSalPset
+  TcondXsectionAxes 1 1
+  none 5
+  SAL:@NSND@Tcond
+  none 12
+End
+
 ############ PLOT SETS #################
 PlotSet: CloudXsectionSDPreSalPset contourf 1
   CloudXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
@@ -822,6 +906,38 @@ PlotSet: HailXsectionNSNDSalPset contourf 1
   HailXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
 End
 
+PlotSet: TcondXsectionSDPreSalPset contourf 1
+  TcondXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: TcondXsectionSNDPreSalPset contourf 1
+  TcondXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: TcondXsectionNSDPreSalPset contourf 1
+  TcondXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: TcondXsectionNSNDPreSalPset contourf 1
+  TcondXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: TcondXsectionSDSalPset contourf 1
+  TcondXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: TcondXsectionSNDSalPset contourf 1
+  TcondXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: TcondXsectionNSDSalPset contourf 1
+  TcondXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: TcondXsectionNSNDSalPset contourf 1
+  TcondXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
 ############ PLOT DATA #################
 PlotData: CloudXsectionPreSalContour 3
   # x data - radius, km
@@ -949,6 +1065,24 @@ PlotData: HailXsectionSalContour 3
   /all_s_hail_mass DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
+PlotData: TcondXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  tcond, g/kg
+  /all_ps_tcond_mass DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: TcondXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  tcond, g/kg
+  /all_s_tcond_mass DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
 ############ PLOT AXES #################
 PlotAxes: CloudXsectionAxes 3
   14 2 [0.025_0.025]
@@ -1018,5 +1152,15 @@ PlotAxes: HailXsectionAxes 3
   Height km 0 15 linear [_] {_}
   # z axis - cloud - g/kg
   Hail g@kg^-^1 0 0.1 linear [_] {_}
+End
+
+PlotAxes: TcondXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - cloud - g/kg
+  Tcond g@kg^-^1 0 0.5 linear [_] {_}
 End
 

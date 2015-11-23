@@ -8,9 +8,9 @@ Figure: VtXsectionPreSal 4
   [2_2]
   Plots/FigVtXsectionPreSal.jpg
   VtXsectionSDPreSalPanel         1
-  VtXsectionSNDdiffPreSalPanel    2
-  VtXsectionNSDdiffPreSalPanel    3
-  VtXsectionNSNDdiffPreSalPanel   4
+  VtXsectionSNDPreSalPanel    2
+  VtXsectionNSDPreSalPanel    3
+  VtXsectionNSNDPreSalPanel   4
 End 
 
 Figure: VtXsectionSal 4
@@ -18,9 +18,9 @@ Figure: VtXsectionSal 4
   [2_2]
   Plots/FigVtXsectionSal.jpg
   VtXsectionSDSalPanel         1
-  VtXsectionSNDdiffSalPanel    2
-  VtXsectionNSDdiffSalPanel    3
-  VtXsectionNSNDdiffSalPanel   4
+  VtXsectionSNDSalPanel    2
+  VtXsectionNSDSalPanel    3
+  VtXsectionNSNDSalPanel   4
 End 
 
 ########### CASES ####################
@@ -31,65 +31,65 @@ End
 ########### PANELS ####################
 FigPanel: VtXsectionSDPreSalPanel
   VtXsectionSDPreSalPset
-  VtXsectionPreSalAxes 1 1
+  VtXsectionAxes 1 1
   none 5
-  SD 
+  PreSAL:@SD@V_t 
   none 12
 End
 
-FigPanel: VtXsectionSNDdiffPreSalPanel
-  VtXsectionSNDdiffPreSalPset
-  VtXsectionDiffPreSalAxes 1 1
+FigPanel: VtXsectionSNDPreSalPanel
+  VtXsectionSNDPreSalPset
+  VtXsectionAxes 1 1
   none 5
-  SND@-@SD
+  PreSAL:@SND@V_t
   none 12
 End
 
-FigPanel: VtXsectionNSDdiffPreSalPanel
-  VtXsectionNSDdiffPreSalPset
-  VtXsectionDiffPreSalAxes 1 1
+FigPanel: VtXsectionNSDPreSalPanel
+  VtXsectionNSDPreSalPset
+  VtXsectionAxes 1 1
   none 5
-  NSD@-@SD 
+  PreSAL:@NSD@V_t
   none 12
 End
 
-FigPanel: VtXsectionNSNDdiffPreSalPanel
-  VtXsectionNSNDdiffPreSalPset
-  VtXsectionDiffPreSalAxes 1 1
+FigPanel: VtXsectionNSNDPreSalPanel
+  VtXsectionNSNDPreSalPset
+  VtXsectionAxes 1 1
   none 5
-  NSND@-@SD
+  PreSAL:@NSND@V_t
   none 12
 End
 
 FigPanel: VtXsectionSDSalPanel
   VtXsectionSDSalPset
-  VtXsectionSalAxes 1 1
+  VtXsectionAxes 1 1
   none 5
-  SD 
+  PreSAL:@SD@V_t 
   none 12
 End
 
-FigPanel: VtXsectionSNDdiffSalPanel
-  VtXsectionSNDdiffSalPset
-  VtXsectionDiffSalAxes 1 1
+FigPanel: VtXsectionSNDSalPanel
+  VtXsectionSNDSalPset
+  VtXsectionAxes 1 1
   none 5
-  SND@-@SD
+  PreSAL:@SND@V_t
   none 12
 End
 
-FigPanel: VtXsectionNSDdiffSalPanel
-  VtXsectionNSDdiffSalPset
-  VtXsectionDiffSalAxes 1 1
+FigPanel: VtXsectionNSDSalPanel
+  VtXsectionNSDSalPset
+  VtXsectionAxes 1 1
   none 5
-  NSD@-@SD 
+  PreSAL:@NSD@V_t
   none 12
 End
 
-FigPanel: VtXsectionNSNDdiffSalPanel
-  VtXsectionNSNDdiffSalPset
-  VtXsectionDiffSalAxes 1 1
+FigPanel: VtXsectionNSNDSalPanel
+  VtXsectionNSNDSalPset
+  VtXsectionAxes 1 1
   none 5
-  NSND@-@SD
+  PreSAL:@NSND@V_t
   none 12
 End
 
@@ -98,32 +98,32 @@ PlotSet: VtXsectionSDPreSalPset contourf 1
   VtXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
 End
 
-PlotSet: VtXsectionSNDdiffPreSalPset diff_contourf 1
-  VtXsectionPreSalDiffContour TSD_SAL_NODUST none  2 blue   - 0
+PlotSet: VtXsectionSNDPreSalPset contourf 1
+  VtXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
 End
 
-PlotSet: VtXsectionNSDdiffPreSalPset diff_contourf 1
-  VtXsectionPreSalDiffContour TSD_NONSAL_DUST none  2 blue   - 0
+PlotSet: VtXsectionNSDPreSalPset contourf 1
+  VtXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
 End
 
-PlotSet: VtXsectionNSNDdiffPreSalPset diff_contourf 1
-  VtXsectionPreSalDiffContour TSD_NONSAL_NODUST none  2 blue   - 0
+PlotSet: VtXsectionNSNDPreSalPset contourf 1
+  VtXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
 End
 
 PlotSet: VtXsectionSDSalPset contourf 1
   VtXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
 End
 
-PlotSet: VtXsectionSNDdiffSalPset diff_contourf 1
-  VtXsectionSalDiffContour TSD_SAL_NODUST none  2 blue   - 0
+PlotSet: VtXsectionSNDSalPset contourf 1
+  VtXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
 End
 
-PlotSet: VtXsectionNSDdiffSalPset diff_contourf 1
-  VtXsectionSalDiffContour TSD_NONSAL_DUST none  2 blue   - 0
+PlotSet: VtXsectionNSDSalPset contourf 1
+  VtXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
 End
 
-PlotSet: VtXsectionNSNDdiffSalPset diff_contourf 1
-  VtXsectionSalDiffContour TSD_NONSAL_NODUST none  2 blue   - 0
+PlotSet: VtXsectionNSNDSalPset contourf 1
+  VtXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
 End
 
 ############ PLOT DATA #################
@@ -136,15 +136,6 @@ PlotData: VtXsectionPreSalContour 3
   /all_ps_speed_t DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
 End
   
-PlotData: VtXsectionPreSalDiffContour 3
-  # x data - radius, km
-  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
-  # y data - height, km
-  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:36) 1e-3 0
-  # z data -  speed_t, m/s
-  /all_ps_speed_t_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
-End
-  
 PlotData: VtXsectionSalContour 3
   # x data - radius, km
   /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
@@ -154,53 +145,14 @@ PlotData: VtXsectionSalContour 3
   /all_s_speed_t DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
 End
   
-PlotData: VtXsectionSalDiffContour 3
-  # x data - radius, km
-  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
-  # y data - height, km
-  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:36) 1e-3 0
-  # z data -  speed_t, m/s
-  /all_s_speed_t_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
-End
-  
 ############ PLOT AXES #################
-PlotAxes: VtXsectionPreSalAxes 3
+PlotAxes: VtXsectionAxes 3
   14 2 [0.025_0.025]
   # x axis - radius
-  Radius km 0 500 linear [_] {_}
+  Radius km 0 500 linear [100_300_500] {_}
   # y axis - utc time
   Height km 0 8 linear [_] {_}
   # z axis - speed_t - m/s
   Vt m@s^-^1 0 15 linear [_] {_}
-End
-
-PlotAxes: VtXsectionDiffPreSalAxes 3
-  14 2 [0.025_0.025]
-  # x axis - radius
-  Radius km 0 500 linear [_] {_}
-  # y axis - utc time
-  Height km 0 8 linear [_] {_}
-  # z axis - speed_t - m/s
-  Vt m@s^-^1 -2 2 linear [_] {_}
-End
-
-PlotAxes: VtXsectionSalAxes 3
-  14 2 [0.025_0.025]
-  # x axis - radius
-  Radius km 0 500 linear [_] {_}
-  # y axis - utc time
-  Height km 0 8 linear [_] {_}
-  # z axis - speed_t - m/s
-  Vt m@s^-^1 0 15 linear [_] {_}
-End
-
-PlotAxes: VtXsectionDiffSalAxes 3
-  14 2 [0.025_0.025]
-  # x axis - radius
-  Radius km 0 500 linear [_] {_}
-  # y axis - utc time
-  Height km 0 8 linear [_] {_}
-  # z axis - speed_t - m/s
-  Vt m@s^-^1 -2 2 linear [_] {_}
 End
 

@@ -8,9 +8,9 @@ Figure: ThetaXsectionPreSal 4
   [2_2]
   Plots/FigThetaXsectionPreSal.jpg
   ThetaXsectionSDPreSalPanel         1
-  ThetaXsectionSNDdiffPreSalPanel    2
-  ThetaXsectionNSDdiffPreSalPanel    3
-  ThetaXsectionNSNDdiffPreSalPanel   4
+  ThetaXsectionSNDPreSalPanel    2
+  ThetaXsectionNSDPreSalPanel    3
+  ThetaXsectionNSNDPreSalPanel   4
 End 
 
 Figure: ThetaXsectionSal 4
@@ -18,9 +18,9 @@ Figure: ThetaXsectionSal 4
   [2_2]
   Plots/FigThetaXsectionSal.jpg
   ThetaXsectionSDSalPanel         1
-  ThetaXsectionSNDdiffSalPanel    2
-  ThetaXsectionNSDdiffSalPanel    3
-  ThetaXsectionNSNDdiffSalPanel   4
+  ThetaXsectionSNDSalPanel    2
+  ThetaXsectionNSDSalPanel    3
+  ThetaXsectionNSNDSalPanel   4
 End 
 
 ########### CASES ####################
@@ -31,65 +31,65 @@ End
 ########### PANELS ####################
 FigPanel: ThetaXsectionSDPreSalPanel
   ThetaXsectionSDPreSalPset
-  ThetaXsectionPreSalAxes 1 1
+  ThetaXsectionAxes 1 1
   none 5
-  SD 
+  PreSAL:@SD@\theta 
   none 12
 End
 
-FigPanel: ThetaXsectionSNDdiffPreSalPanel
-  ThetaXsectionSNDdiffPreSalPset
-  ThetaXsectionDiffPreSalAxes 1 1
+FigPanel: ThetaXsectionSNDPreSalPanel
+  ThetaXsectionSNDPreSalPset
+  ThetaXsectionAxes 1 1
   none 5
-  SND@-@SD
+  PreSAL:@SND@\theta
   none 12
 End
 
-FigPanel: ThetaXsectionNSDdiffPreSalPanel
-  ThetaXsectionNSDdiffPreSalPset
-  ThetaXsectionDiffPreSalAxes 1 1
+FigPanel: ThetaXsectionNSDPreSalPanel
+  ThetaXsectionNSDPreSalPset
+  ThetaXsectionAxes 1 1
   none 5
-  NSD@-@SD 
+  PreSAL:@NSD@\theta
   none 12
 End
 
-FigPanel: ThetaXsectionNSNDdiffPreSalPanel
-  ThetaXsectionNSNDdiffPreSalPset
-  ThetaXsectionDiffPreSalAxes 1 1
+FigPanel: ThetaXsectionNSNDPreSalPanel
+  ThetaXsectionNSNDPreSalPset
+  ThetaXsectionAxes 1 1
   none 5
-  NSND@-@SD
+  PreSAL:@NSND@\theta
   none 12
 End
 
 FigPanel: ThetaXsectionSDSalPanel
   ThetaXsectionSDSalPset
-  ThetaXsectionSalAxes 1 1
+  ThetaXsectionAxes 1 1
   none 5
-  SD 
+  PreSAL:@SD@\theta 
   none 12
 End
 
-FigPanel: ThetaXsectionSNDdiffSalPanel
-  ThetaXsectionSNDdiffSalPset
-  ThetaXsectionDiffSalAxes 1 1
+FigPanel: ThetaXsectionSNDSalPanel
+  ThetaXsectionSNDSalPset
+  ThetaXsectionAxes 1 1
   none 5
-  SND@-@SD
+  PreSAL:@SND@\theta
   none 12
 End
 
-FigPanel: ThetaXsectionNSDdiffSalPanel
-  ThetaXsectionNSDdiffSalPset
-  ThetaXsectionDiffSalAxes 1 1
+FigPanel: ThetaXsectionNSDSalPanel
+  ThetaXsectionNSDSalPset
+  ThetaXsectionAxes 1 1
   none 5
-  NSD@-@SD 
+  PreSAL:@NSD@\theta
   none 12
 End
 
-FigPanel: ThetaXsectionNSNDdiffSalPanel
-  ThetaXsectionNSNDdiffSalPset
-  ThetaXsectionDiffSalAxes 1 1
+FigPanel: ThetaXsectionNSNDSalPanel
+  ThetaXsectionNSNDSalPset
+  ThetaXsectionAxes 1 1
   none 5
-  NSND@-@SD
+  PreSAL:@NSND@\theta
   none 12
 End
 
@@ -98,32 +98,32 @@ PlotSet: ThetaXsectionSDPreSalPset contourf 1
   ThetaXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
 End
 
-PlotSet: ThetaXsectionSNDdiffPreSalPset diff_contourf 1
-  ThetaXsectionPreSalDiffContour TSD_SAL_NODUST none  2 blue   - 0
+PlotSet: ThetaXsectionSNDPreSalPset contourf 1
+  ThetaXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
 End
 
-PlotSet: ThetaXsectionNSDdiffPreSalPset diff_contourf 1
-  ThetaXsectionPreSalDiffContour TSD_NONSAL_DUST none  2 blue   - 0
+PlotSet: ThetaXsectionNSDPreSalPset contourf 1
+  ThetaXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
 End
 
-PlotSet: ThetaXsectionNSNDdiffPreSalPset diff_contourf 1
-  ThetaXsectionPreSalDiffContour TSD_NONSAL_NODUST none  2 blue   - 0
+PlotSet: ThetaXsectionNSNDPreSalPset contourf 1
+  ThetaXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
 End
 
 PlotSet: ThetaXsectionSDSalPset contourf 1
   ThetaXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
 End
 
-PlotSet: ThetaXsectionSNDdiffSalPset diff_contourf 1
-  ThetaXsectionSalDiffContour TSD_SAL_NODUST none  2 blue   - 0
+PlotSet: ThetaXsectionSNDSalPset contourf 1
+  ThetaXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
 End
 
-PlotSet: ThetaXsectionNSDdiffSalPset diff_contourf 1
-  ThetaXsectionSalDiffContour TSD_NONSAL_DUST none  2 blue   - 0
+PlotSet: ThetaXsectionNSDSalPset contourf 1
+  ThetaXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
 End
 
-PlotSet: ThetaXsectionNSNDdiffSalPset diff_contourf 1
-  ThetaXsectionSalDiffContour TSD_NONSAL_NODUST none  2 blue   - 0
+PlotSet: ThetaXsectionNSNDSalPset contourf 1
+  ThetaXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
 End
 
 ############ PLOT DATA #################
@@ -136,15 +136,6 @@ PlotData: ThetaXsectionPreSalContour 3
   /all_ps_theta DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
 End
   
-PlotData: ThetaXsectionPreSalDiffContour 3
-  # x data - radius, km
-  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
-  # y data - height, km
-  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:36) 1e-3 0
-  # z data -  theta, K
-  /all_ps_theta_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
-End
-  
 PlotData: ThetaXsectionSalContour 3
   # x data - radius, km
   /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
@@ -154,53 +145,14 @@ PlotData: ThetaXsectionSalContour 3
   /all_s_theta DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
 End
   
-PlotData: ThetaXsectionSalDiffContour 3
-  # x data - radius, km
-  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
-  # y data - height, km
-  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:36) 1e-3 0
-  # z data -  theta, K
-  /all_s_theta_diff DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
-End
-  
 ############ PLOT AXES #################
-PlotAxes: ThetaXsectionPreSalAxes 3
+PlotAxes: ThetaXsectionAxes 3
   14 2 [0.025_0.025]
   # x axis - radius
-  Radius km 0 500 linear [_] {_}
+  Radius km 0 500 linear [100_300_500] {_}
   # y axis - utc time
   Height km 0 8 linear [_] {_}
   # z axis - theta - K
   \theta K 300 330 linear [_] {_}
-End
-
-PlotAxes: ThetaXsectionDiffPreSalAxes 3
-  14 2 [0.025_0.025]
-  # x axis - radius
-  Radius km 0 500 linear [_] {_}
-  # y axis - utc time
-  Height km 0 8 linear [_] {_}
-  # z axis - theta - K
-  \theta K -5 5 linear [_] {_}
-End
-
-PlotAxes: ThetaXsectionSalAxes 3
-  14 2 [0.025_0.025]
-  # x axis - radius
-  Radius km 0 500 linear [_] {_}
-  # y axis - utc time
-  Height km 0 8 linear [_] {_}
-  # z axis - theta - K
-  \theta K 300 330 linear [_] {_}
-End
-
-PlotAxes: ThetaXsectionDiffSalAxes 3
-  14 2 [0.025_0.025]
-  # x axis - radius
-  Radius km 0 500 linear [_] {_}
-  # y axis - utc time
-  Height km 0 8 linear [_] {_}
-  # z axis - theta - K
-  \theta K -5 5 linear [_] {_}
 End
 
