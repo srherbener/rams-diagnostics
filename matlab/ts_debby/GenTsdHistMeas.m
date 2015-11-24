@@ -298,115 +298,115 @@ function [ ] = GenTsdHistMeas()
 %      }
 %      'DIAGS/hist_meas_az_cloud_<CASE>.h5'
 %    }
-%
-%    % cooling via latent heat of freezing
-%    {
-%      'LHF Cooling'
-%     {
-%        { 'AzAveragedData/hist_all_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/all_lhf_cool_ts'         'RbZT' ''      ''        ''       'le' 0 }
-%        { 'AzAveragedData/hist_all_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/all_ps_lhf_cool'         'RbZt' ''      'pre_sal' ''       'le' 0 }
-%        { 'AzAveragedData/hist_all_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/all_s_lhf_cool'          'RbZt' ''      'sal'     ''       'le' 0 }
-%        { 'AzAveragedData/hist_all_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/all_core_lhf_cool_ts'    'rbZT' 'core'  ''        ''       'le' 0 }
-%        { 'AzAveragedData/hist_all_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/all_core_ps_lhf_cool'    'rbZt' 'core'  'pre_sal' ''       'le' 0 }
-%        { 'AzAveragedData/hist_all_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/all_core_s_lhf_cool'     'rbZt' 'core'  'sal'     ''       'le' 0 }
-%        { 'AzAveragedData/hist_all_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/all_rb_lhf_cool_ts'      'rbZT' 'rband' ''        ''       'le' 0 }
-%        { 'AzAveragedData/hist_all_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/all_rb_ps_lhf_cool'      'rbZt' 'rband' 'pre_sal' ''       'le' 0 }
-%        { 'AzAveragedData/hist_all_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/all_rb_s_lhf_cool'       'rbZt' 'rband' 'sal'     ''       'le' 0 }
-%
-%        { 'AzAveragedData/hist_lead_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/lead_lhf_cool_ts'         'RbZT' ''      ''        ''       'le' 0 }
-%        { 'AzAveragedData/hist_lead_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/lead_ps_lhf_cool'         'RbZt' ''      'pre_sal' ''       'le' 0 }
-%        { 'AzAveragedData/hist_lead_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/lead_s_lhf_cool'          'RbZt' ''      'sal'     ''       'le' 0 }
-%        { 'AzAveragedData/hist_lead_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/lead_core_lhf_cool_ts'    'rbZT' 'core'  ''        ''       'le' 0 }
-%        { 'AzAveragedData/hist_lead_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/lead_core_ps_lhf_cool'    'rbZt' 'core'  'pre_sal' ''       'le' 0 }
-%        { 'AzAveragedData/hist_lead_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/lead_core_s_lhf_cool'     'rbZt' 'core'  'sal'     ''       'le' 0 }
-%        { 'AzAveragedData/hist_lead_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/lead_rb_lhf_cool_ts'      'rbZT' 'rband' ''        ''       'le' 0 }
-%        { 'AzAveragedData/hist_lead_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/lead_rb_ps_lhf_cool'      'rbZt' 'rband' 'pre_sal' ''       'le' 0 }
-%        { 'AzAveragedData/hist_lead_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/lead_rb_s_lhf_cool'       'rbZt' 'rband' 'sal'     ''       'le' 0 }
-%      }
-%      'DIAGS/hist_meas_az_lhf_cool_<CASE>.h5'
-%    }
-%
-%    % heating via latent heat of freezing
-%    {
-%      'LHF Heating'
-%     {
-%        { 'AzAveragedData/hist_all_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/all_lhf_heat_ts'         'RbZT' ''      ''        ''       'ge' 0 }
-%        { 'AzAveragedData/hist_all_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/all_ps_lhf_heat'         'RbZt' ''      'pre_sal' ''       'ge' 0 }
-%        { 'AzAveragedData/hist_all_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/all_s_lhf_heat'          'RbZt' ''      'sal'     ''       'ge' 0 }
-%        { 'AzAveragedData/hist_all_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/all_core_lhf_heat_ts'    'rbZT' 'core'  ''        ''       'ge' 0 }
-%        { 'AzAveragedData/hist_all_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/all_core_ps_lhf_heat'    'rbZt' 'core'  'pre_sal' ''       'ge' 0 }
-%        { 'AzAveragedData/hist_all_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/all_core_s_lhf_heat'     'rbZt' 'core'  'sal'     ''       'ge' 0 }
-%        { 'AzAveragedData/hist_all_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/all_rb_lhf_heat_ts'      'rbZT' 'rband' ''        ''       'ge' 0 }
-%        { 'AzAveragedData/hist_all_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/all_rb_ps_lhf_heat'      'rbZt' 'rband' 'pre_sal' ''       'ge' 0 }
-%        { 'AzAveragedData/hist_all_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/all_rb_s_lhf_heat'       'rbZt' 'rband' 'sal'     ''       'ge' 0 }
-%
-%        { 'AzAveragedData/hist_lead_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/lead_lhf_heat_ts'         'RbZT' ''      ''        ''       'ge' 0 }
-%        { 'AzAveragedData/hist_lead_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/lead_ps_lhf_heat'         'RbZt' ''      'pre_sal' ''       'ge' 0 }
-%        { 'AzAveragedData/hist_lead_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/lead_s_lhf_heat'          'RbZt' ''      'sal'     ''       'ge' 0 }
-%        { 'AzAveragedData/hist_lead_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/lead_core_lhf_heat_ts'    'rbZT' 'core'  ''        ''       'ge' 0 }
-%        { 'AzAveragedData/hist_lead_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/lead_core_ps_lhf_heat'    'rbZt' 'core'  'pre_sal' ''       'ge' 0 }
-%        { 'AzAveragedData/hist_lead_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/lead_core_s_lhf_heat'     'rbZt' 'core'  'sal'     ''       'ge' 0 }
-%        { 'AzAveragedData/hist_lead_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/lead_rb_lhf_heat_ts'      'rbZT' 'rband' ''        ''       'ge' 0 }
-%        { 'AzAveragedData/hist_lead_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/lead_rb_ps_lhf_heat'      'rbZt' 'rband' 'pre_sal' ''       'ge' 0 }
-%        { 'AzAveragedData/hist_lead_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/lead_rb_s_lhf_heat'       'rbZt' 'rband' 'sal'     ''       'ge' 0 }
-%      }
-%      'DIAGS/hist_meas_az_lhf_heat_<CASE>.h5'
-%    }
-%
-%    % cooling via latent heat of vaporization
-%    {
-%      'LHV Cooling'
-%     {
-%        { 'AzAveragedData/hist_all_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/all_lhv_cool_ts'         'RbZT' ''      ''        ''       'le' 0 }
-%        { 'AzAveragedData/hist_all_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/all_ps_lhv_cool'         'RbZt' ''      'pre_sal' ''       'le' 0 }
-%        { 'AzAveragedData/hist_all_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/all_s_lhv_cool'          'RbZt' ''      'sal'     ''       'le' 0 }
-%        { 'AzAveragedData/hist_all_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/all_core_lhv_cool_ts'    'rbZT' 'core'  ''        ''       'le' 0 }
-%        { 'AzAveragedData/hist_all_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/all_core_ps_lhv_cool'    'rbZt' 'core'  'pre_sal' ''       'le' 0 }
-%        { 'AzAveragedData/hist_all_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/all_core_s_lhv_cool'     'rbZt' 'core'  'sal'     ''       'le' 0 }
-%        { 'AzAveragedData/hist_all_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/all_rb_lhv_cool_ts'      'rbZT' 'rband' ''        ''       'le' 0 }
-%        { 'AzAveragedData/hist_all_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/all_rb_ps_lhv_cool'      'rbZt' 'rband' 'pre_sal' ''       'le' 0 }
-%        { 'AzAveragedData/hist_all_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/all_rb_s_lhv_cool'       'rbZt' 'rband' 'sal'     ''       'le' 0 }
-%
-%        { 'AzAveragedData/hist_lead_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/lead_lhv_cool_ts'         'RbZT' ''      ''        ''       'le' 0 }
-%        { 'AzAveragedData/hist_lead_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/lead_ps_lhv_cool'         'RbZt' ''      'pre_sal' ''       'le' 0 }
-%        { 'AzAveragedData/hist_lead_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/lead_s_lhv_cool'          'RbZt' ''      'sal'     ''       'le' 0 }
-%        { 'AzAveragedData/hist_lead_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/lead_core_lhv_cool_ts'    'rbZT' 'core'  ''        ''       'le' 0 }
-%        { 'AzAveragedData/hist_lead_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/lead_core_ps_lhv_cool'    'rbZt' 'core'  'pre_sal' ''       'le' 0 }
-%        { 'AzAveragedData/hist_lead_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/lead_core_s_lhv_cool'     'rbZt' 'core'  'sal'     ''       'le' 0 }
-%        { 'AzAveragedData/hist_lead_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/lead_rb_lhv_cool_ts'      'rbZT' 'rband' ''        ''       'le' 0 }
-%        { 'AzAveragedData/hist_lead_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/lead_rb_ps_lhv_cool'      'rbZt' 'rband' 'pre_sal' ''       'le' 0 }
-%        { 'AzAveragedData/hist_lead_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/lead_rb_s_lhv_cool'       'rbZt' 'rband' 'sal'     ''       'le' 0 }
-%      }
-%      'DIAGS/hist_meas_az_lhv_cool_<CASE>.h5'
-%    }
-%
-%    % heating via latent heat of vaporization
-%    {
-%      'LHV Heating'
-%     {
-%        { 'AzAveragedData/hist_all_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/all_lhv_heat_ts'         'RbZT' ''      ''        ''       'ge' 0 }
-%        { 'AzAveragedData/hist_all_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/all_ps_lhv_heat'         'RbZt' ''      'pre_sal' ''       'ge' 0 }
-%        { 'AzAveragedData/hist_all_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/all_s_lhv_heat'          'RbZt' ''      'sal'     ''       'ge' 0 }
-%        { 'AzAveragedData/hist_all_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/all_core_lhv_heat_ts'    'rbZT' 'core'  ''        ''       'ge' 0 }
-%        { 'AzAveragedData/hist_all_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/all_core_ps_lhv_heat'    'rbZt' 'core'  'pre_sal' ''       'ge' 0 }
-%        { 'AzAveragedData/hist_all_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/all_core_s_lhv_heat'     'rbZt' 'core'  'sal'     ''       'ge' 0 }
-%        { 'AzAveragedData/hist_all_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/all_rb_lhv_heat_ts'      'rbZT' 'rband' ''        ''       'ge' 0 }
-%        { 'AzAveragedData/hist_all_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/all_rb_ps_lhv_heat'      'rbZt' 'rband' 'pre_sal' ''       'ge' 0 }
-%        { 'AzAveragedData/hist_all_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/all_rb_s_lhv_heat'       'rbZt' 'rband' 'sal'     ''       'ge' 0 }
-%
-%        { 'AzAveragedData/hist_lead_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/lead_lhv_heat_ts'         'RbZT' ''      ''        ''       'ge' 0 }
-%        { 'AzAveragedData/hist_lead_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/lead_ps_lhv_heat'         'RbZt' ''      'pre_sal' ''       'ge' 0 }
-%        { 'AzAveragedData/hist_lead_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/lead_s_lhv_heat'          'RbZt' ''      'sal'     ''       'ge' 0 }
-%        { 'AzAveragedData/hist_lead_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/lead_core_lhv_heat_ts'    'rbZT' 'core'  ''        ''       'ge' 0 }
-%        { 'AzAveragedData/hist_lead_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/lead_core_ps_lhv_heat'    'rbZt' 'core'  'pre_sal' ''       'ge' 0 }
-%        { 'AzAveragedData/hist_lead_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/lead_core_s_lhv_heat'     'rbZt' 'core'  'sal'     ''       'ge' 0 }
-%        { 'AzAveragedData/hist_lead_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/lead_rb_lhv_heat_ts'      'rbZT' 'rband' ''        ''       'ge' 0 }
-%        { 'AzAveragedData/hist_lead_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/lead_rb_ps_lhv_heat'      'rbZt' 'rband' 'pre_sal' ''       'ge' 0 }
-%        { 'AzAveragedData/hist_lead_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/lead_rb_s_lhv_heat'       'rbZt' 'rband' 'sal'     ''       'ge' 0 }
-%      }
-%      'DIAGS/hist_meas_az_lhv_heat_<CASE>.h5'
-%    }
-%
+
+    % cooling via latent heat of freezing
+    {
+      'LHF Cooling'
+     {
+        { 'AzAveragedData/hist_all_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/all_lhf_cool_ts'         'RbZT' ''      ''        ''       'le' -0.01 }
+        { 'AzAveragedData/hist_all_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/all_ps_lhf_cool'         'RbZt' ''      'pre_sal' ''       'le' -0.01 }
+        { 'AzAveragedData/hist_all_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/all_s_lhf_cool'          'RbZt' ''      'sal'     ''       'le' -0.01 }
+        { 'AzAveragedData/hist_all_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/all_core_lhf_cool_ts'    'rbZT' 'core'  ''        ''       'le' -0.01 }
+        { 'AzAveragedData/hist_all_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/all_core_ps_lhf_cool'    'rbZt' 'core'  'pre_sal' ''       'le' -0.01 }
+        { 'AzAveragedData/hist_all_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/all_core_s_lhf_cool'     'rbZt' 'core'  'sal'     ''       'le' -0.01 }
+        { 'AzAveragedData/hist_all_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/all_rb_lhf_cool_ts'      'rbZT' 'rband' ''        ''       'le' -0.01 }
+        { 'AzAveragedData/hist_all_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/all_rb_ps_lhf_cool'      'rbZt' 'rband' 'pre_sal' ''       'le' -0.01 }
+        { 'AzAveragedData/hist_all_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/all_rb_s_lhf_cool'       'rbZt' 'rband' 'sal'     ''       'le' -0.01 }
+
+        { 'AzAveragedData/hist_lead_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/lead_lhf_cool_ts'         'RbZT' ''      ''        ''       'le' -0.01 }
+        { 'AzAveragedData/hist_lead_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/lead_ps_lhf_cool'         'RbZt' ''      'pre_sal' ''       'le' -0.01 }
+        { 'AzAveragedData/hist_lead_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/lead_s_lhf_cool'          'RbZt' ''      'sal'     ''       'le' -0.01 }
+        { 'AzAveragedData/hist_lead_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/lead_core_lhf_cool_ts'    'rbZT' 'core'  ''        ''       'le' -0.01 }
+        { 'AzAveragedData/hist_lead_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/lead_core_ps_lhf_cool'    'rbZt' 'core'  'pre_sal' ''       'le' -0.01 }
+        { 'AzAveragedData/hist_lead_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/lead_core_s_lhf_cool'     'rbZt' 'core'  'sal'     ''       'le' -0.01 }
+        { 'AzAveragedData/hist_lead_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/lead_rb_lhf_cool_ts'      'rbZT' 'rband' ''        ''       'le' -0.01 }
+        { 'AzAveragedData/hist_lead_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/lead_rb_ps_lhf_cool'      'rbZt' 'rband' 'pre_sal' ''       'le' -0.01 }
+        { 'AzAveragedData/hist_lead_lhf_cool_<CASE>.h5' '/lhf_cool' 'wtmean'  0.0  '/lead_rb_s_lhf_cool'       'rbZt' 'rband' 'sal'     ''       'le' -0.01 }
+      }
+      'DIAGS/hist_meas_az_lhf_cool_<CASE>.h5'
+    }
+
+    % heating via latent heat of freezing
+    {
+      'LHF Heating'
+     {
+        { 'AzAveragedData/hist_all_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/all_lhf_heat_ts'         'RbZT' ''      ''        ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_all_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/all_ps_lhf_heat'         'RbZt' ''      'pre_sal' ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_all_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/all_s_lhf_heat'          'RbZt' ''      'sal'     ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_all_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/all_core_lhf_heat_ts'    'rbZT' 'core'  ''        ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_all_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/all_core_ps_lhf_heat'    'rbZt' 'core'  'pre_sal' ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_all_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/all_core_s_lhf_heat'     'rbZt' 'core'  'sal'     ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_all_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/all_rb_lhf_heat_ts'      'rbZT' 'rband' ''        ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_all_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/all_rb_ps_lhf_heat'      'rbZt' 'rband' 'pre_sal' ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_all_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/all_rb_s_lhf_heat'       'rbZt' 'rband' 'sal'     ''       'ge' 0.01 }
+
+        { 'AzAveragedData/hist_lead_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/lead_lhf_heat_ts'         'RbZT' ''      ''        ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_lead_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/lead_ps_lhf_heat'         'RbZt' ''      'pre_sal' ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_lead_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/lead_s_lhf_heat'          'RbZt' ''      'sal'     ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_lead_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/lead_core_lhf_heat_ts'    'rbZT' 'core'  ''        ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_lead_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/lead_core_ps_lhf_heat'    'rbZt' 'core'  'pre_sal' ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_lead_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/lead_core_s_lhf_heat'     'rbZt' 'core'  'sal'     ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_lead_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/lead_rb_lhf_heat_ts'      'rbZT' 'rband' ''        ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_lead_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/lead_rb_ps_lhf_heat'      'rbZt' 'rband' 'pre_sal' ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_lead_lhf_heat_<CASE>.h5' '/lhf_heat' 'wtmean'  0.0  '/lead_rb_s_lhf_heat'       'rbZt' 'rband' 'sal'     ''       'ge' 0.01 }
+      }
+      'DIAGS/hist_meas_az_lhf_heat_<CASE>.h5'
+    }
+
+    % cooling via latent heat of vaporization
+    {
+      'LHV Cooling'
+     {
+        { 'AzAveragedData/hist_all_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/all_lhv_cool_ts'         'RbZT' ''      ''        ''       'le' -0.01 }
+        { 'AzAveragedData/hist_all_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/all_ps_lhv_cool'         'RbZt' ''      'pre_sal' ''       'le' -0.01 }
+        { 'AzAveragedData/hist_all_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/all_s_lhv_cool'          'RbZt' ''      'sal'     ''       'le' -0.01 }
+        { 'AzAveragedData/hist_all_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/all_core_lhv_cool_ts'    'rbZT' 'core'  ''        ''       'le' -0.01 }
+        { 'AzAveragedData/hist_all_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/all_core_ps_lhv_cool'    'rbZt' 'core'  'pre_sal' ''       'le' -0.01 }
+        { 'AzAveragedData/hist_all_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/all_core_s_lhv_cool'     'rbZt' 'core'  'sal'     ''       'le' -0.01 }
+        { 'AzAveragedData/hist_all_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/all_rb_lhv_cool_ts'      'rbZT' 'rband' ''        ''       'le' -0.01 }
+        { 'AzAveragedData/hist_all_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/all_rb_ps_lhv_cool'      'rbZt' 'rband' 'pre_sal' ''       'le' -0.01 }
+        { 'AzAveragedData/hist_all_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/all_rb_s_lhv_cool'       'rbZt' 'rband' 'sal'     ''       'le' -0.01 }
+
+        { 'AzAveragedData/hist_lead_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/lead_lhv_cool_ts'         'RbZT' ''      ''        ''       'le' -0.01 }
+        { 'AzAveragedData/hist_lead_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/lead_ps_lhv_cool'         'RbZt' ''      'pre_sal' ''       'le' -0.01 }
+        { 'AzAveragedData/hist_lead_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/lead_s_lhv_cool'          'RbZt' ''      'sal'     ''       'le' -0.01 }
+        { 'AzAveragedData/hist_lead_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/lead_core_lhv_cool_ts'    'rbZT' 'core'  ''        ''       'le' -0.01 }
+        { 'AzAveragedData/hist_lead_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/lead_core_ps_lhv_cool'    'rbZt' 'core'  'pre_sal' ''       'le' -0.01 }
+        { 'AzAveragedData/hist_lead_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/lead_core_s_lhv_cool'     'rbZt' 'core'  'sal'     ''       'le' -0.01 }
+        { 'AzAveragedData/hist_lead_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/lead_rb_lhv_cool_ts'      'rbZT' 'rband' ''        ''       'le' -0.01 }
+        { 'AzAveragedData/hist_lead_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/lead_rb_ps_lhv_cool'      'rbZt' 'rband' 'pre_sal' ''       'le' -0.01 }
+        { 'AzAveragedData/hist_lead_lhv_cool_<CASE>.h5' '/lhv_cool' 'wtmean'  0.0  '/lead_rb_s_lhv_cool'       'rbZt' 'rband' 'sal'     ''       'le' -0.01 }
+      }
+      'DIAGS/hist_meas_az_lhv_cool_<CASE>.h5'
+    }
+
+    % heating via latent heat of vaporization
+    {
+      'LHV Heating'
+     {
+        { 'AzAveragedData/hist_all_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/all_lhv_heat_ts'         'RbZT' ''      ''        ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_all_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/all_ps_lhv_heat'         'RbZt' ''      'pre_sal' ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_all_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/all_s_lhv_heat'          'RbZt' ''      'sal'     ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_all_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/all_core_lhv_heat_ts'    'rbZT' 'core'  ''        ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_all_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/all_core_ps_lhv_heat'    'rbZt' 'core'  'pre_sal' ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_all_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/all_core_s_lhv_heat'     'rbZt' 'core'  'sal'     ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_all_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/all_rb_lhv_heat_ts'      'rbZT' 'rband' ''        ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_all_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/all_rb_ps_lhv_heat'      'rbZt' 'rband' 'pre_sal' ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_all_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/all_rb_s_lhv_heat'       'rbZt' 'rband' 'sal'     ''       'ge' 0.01 }
+
+        { 'AzAveragedData/hist_lead_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/lead_lhv_heat_ts'         'RbZT' ''      ''        ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_lead_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/lead_ps_lhv_heat'         'RbZt' ''      'pre_sal' ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_lead_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/lead_s_lhv_heat'          'RbZt' ''      'sal'     ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_lead_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/lead_core_lhv_heat_ts'    'rbZT' 'core'  ''        ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_lead_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/lead_core_ps_lhv_heat'    'rbZt' 'core'  'pre_sal' ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_lead_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/lead_core_s_lhv_heat'     'rbZt' 'core'  'sal'     ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_lead_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/lead_rb_lhv_heat_ts'      'rbZT' 'rband' ''        ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_lead_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/lead_rb_ps_lhv_heat'      'rbZt' 'rband' 'pre_sal' ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_lead_lhv_heat_<CASE>.h5' '/lhv_heat' 'wtmean'  0.0  '/lead_rb_s_lhv_heat'       'rbZt' 'rband' 'sal'     ''       'ge' 0.01 }
+      }
+      'DIAGS/hist_meas_az_lhv_heat_<CASE>.h5'
+    }
+
 %
 %    % theta_e measurements
 %    {
@@ -1292,23 +1292,23 @@ function [ ] = GenTsdHistMeas()
 %      }
 %      'DIAGS/hist_meas_az_rain2ice_<CASE>.h5'
 %    }
-
-    % relhum measurements
-    {
-      'RH Azavg'
-      {
-        { 'AzAveragedData/hist_all_relhum_<CASE>.h5' '/relhum' 'wtmean'  0.0  '/all_relhum_ts'         'RbZT' ''      ''        ''       'ge' 0 }
-        { 'AzAveragedData/hist_all_relhum_<CASE>.h5' '/relhum' 'wtmean'  0.0  '/all_ps_relhum'         'RbZt'    ''      'pre_sal' ''       'ge' 0 }
-        { 'AzAveragedData/hist_all_relhum_<CASE>.h5' '/relhum' 'wtmean'  0.0  '/all_s_relhum'          'RbZt'    ''      'sal'     ''       'ge' 0 }
-        { 'AzAveragedData/hist_all_relhum_<CASE>.h5' '/relhum' 'wtmean'  0.0  '/all_core_relhum_ts'    'rbZT' 'core'  ''        ''       'ge' 0 }
-        { 'AzAveragedData/hist_all_relhum_<CASE>.h5' '/relhum' 'wtmean'  0.0  '/all_rb_relhum_ts'      'rbZT' 'rband' ''        ''       'ge' 0 }
-        { 'AzAveragedData/hist_all_relhum_<CASE>.h5' '/relhum' 'wtmean'  0.0  '/all_core_ps_relhum'    'rbZt'    'core'  'pre_sal' ''       'ge' 0 }
-        { 'AzAveragedData/hist_all_relhum_<CASE>.h5' '/relhum' 'wtmean'  0.0  '/all_core_s_relhum'     'rbZt'    'core'  'sal'     ''       'ge' 0 }
-        { 'AzAveragedData/hist_all_relhum_<CASE>.h5' '/relhum' 'wtmean'  0.0  '/all_rb_ps_relhum'      'rbZt'    'rband' 'pre_sal' ''       'ge' 0 }
-        { 'AzAveragedData/hist_all_relhum_<CASE>.h5' '/relhum' 'wtmean'  0.0  '/all_rb_s_relhum'       'rbZt'    'rband' 'sal'     ''       'ge' 0 }
-      }
-      'DIAGS/hist_meas_az_relhum_<CASE>.h5'
-    }
+%
+%    % relhum measurements
+%    {
+%      'RH Azavg'
+%      {
+%        { 'AzAveragedData/hist_all_relhum_<CASE>.h5' '/relhum' 'wtmean'  0.0  '/all_relhum_ts'         'RbZT' ''      ''        ''       'ge' 0 }
+%        { 'AzAveragedData/hist_all_relhum_<CASE>.h5' '/relhum' 'wtmean'  0.0  '/all_ps_relhum'         'RbZt'    ''      'pre_sal' ''       'ge' 0 }
+%        { 'AzAveragedData/hist_all_relhum_<CASE>.h5' '/relhum' 'wtmean'  0.0  '/all_s_relhum'          'RbZt'    ''      'sal'     ''       'ge' 0 }
+%        { 'AzAveragedData/hist_all_relhum_<CASE>.h5' '/relhum' 'wtmean'  0.0  '/all_core_relhum_ts'    'rbZT' 'core'  ''        ''       'ge' 0 }
+%        { 'AzAveragedData/hist_all_relhum_<CASE>.h5' '/relhum' 'wtmean'  0.0  '/all_rb_relhum_ts'      'rbZT' 'rband' ''        ''       'ge' 0 }
+%        { 'AzAveragedData/hist_all_relhum_<CASE>.h5' '/relhum' 'wtmean'  0.0  '/all_core_ps_relhum'    'rbZt'    'core'  'pre_sal' ''       'ge' 0 }
+%        { 'AzAveragedData/hist_all_relhum_<CASE>.h5' '/relhum' 'wtmean'  0.0  '/all_core_s_relhum'     'rbZt'    'core'  'sal'     ''       'ge' 0 }
+%        { 'AzAveragedData/hist_all_relhum_<CASE>.h5' '/relhum' 'wtmean'  0.0  '/all_rb_ps_relhum'      'rbZt'    'rband' 'pre_sal' ''       'ge' 0 }
+%        { 'AzAveragedData/hist_all_relhum_<CASE>.h5' '/relhum' 'wtmean'  0.0  '/all_rb_s_relhum'       'rbZt'    'rband' 'sal'     ''       'ge' 0 }
+%      }
+%      'DIAGS/hist_meas_az_relhum_<CASE>.h5'
+%    }
 
 
 

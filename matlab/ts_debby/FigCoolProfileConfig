@@ -1,0 +1,590 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: LhfCoolCoreProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigLhfCoolCoreProfile.jpg
+  LhfCoolPreSalCorePanel      1
+  LhfCoolSalCorePanel         2
+  LhfCoolDiffPreSalCorePanel  3
+  LhfCoolDiffSalCorePanel     4
+End 
+
+Figure: LhfCoolRbandProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigLhfCoolRbandProfile.jpg
+  LhfCoolPreSalRbandPanel      1
+  LhfCoolSalRbandPanel         2
+  LhfCoolDiffPreSalRbandPanel  3
+  LhfCoolDiffSalRbandPanel     4
+End 
+
+Figure: LhvCoolCoreProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigLhvCoolCoreProfile.jpg
+  LhvCoolPreSalCorePanel      1
+  LhvCoolSalCorePanel         2
+  LhvCoolDiffPreSalCorePanel  3
+  LhvCoolDiffSalCorePanel     4
+End 
+
+Figure: LhvCoolRbandProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigLhvCoolRbandProfile.jpg
+  LhvCoolPreSalRbandPanel      1
+  LhvCoolSalRbandPanel         2
+  LhvCoolDiffPreSalRbandPanel  3
+  LhvCoolDiffSalRbandPanel     4
+End 
+
+Figure: LhvCoolCoreLlevProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigLhvCoolCoreLlevProfile.jpg
+  LhvCoolPreSalCoreLlevPanel      1
+  LhvCoolSalCoreLlevPanel         2
+  LhvCoolDiffPreSalCoreLlevPanel  3
+  LhvCoolDiffSalCoreLlevPanel     4
+End 
+
+Figure: LhvCoolRbandLlevProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigLhvCoolRbandLlevProfile.jpg
+  LhvCoolPreSalRbandLlevPanel      1
+  LhvCoolSalRbandLlevPanel         2
+  LhvCoolDiffPreSalRbandLlevPanel  3
+  LhvCoolDiffSalRbandLlevPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: LhfCoolPreSalCorePanel
+  LhfCoolPreSalCorePset
+  LhfCoolCoreAxes 1 1
+  none 5
+  Pre@SAL@Core 
+  NorthWest 12
+End
+
+FigPanel: LhfCoolDiffPreSalCorePanel
+  LhfCoolDiffPreSalCorePset
+  LhfCoolDiffCoreAxes 1 1
+  none 5
+  Pre@SAL@Core@(diffs)
+  none 12
+End
+
+FigPanel: LhfCoolSalCorePanel
+  LhfCoolSalCorePset
+  LhfCoolCoreAxes 1 1
+  none 5
+  SAL@Core 
+  none 12
+End
+
+FigPanel: LhfCoolDiffSalCorePanel
+  LhfCoolDiffSalCorePset
+  LhfCoolDiffCoreAxes 1 1
+  none 5
+  SAL@Core@(diffs)
+  none 12
+End
+
+FigPanel: LhfCoolPreSalRbandPanel
+  LhfCoolPreSalRbandPset
+  LhfCoolRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband 
+  NorthWest 12
+End
+
+FigPanel: LhfCoolDiffPreSalRbandPanel
+  LhfCoolDiffPreSalRbandPset
+  LhfCoolDiffRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband@(diffs)
+  none 12
+End
+
+FigPanel: LhfCoolSalRbandPanel
+  LhfCoolSalRbandPset
+  LhfCoolRbandAxes 1 1
+  none 5
+  SAL@Rband 
+  none 12
+End
+
+FigPanel: LhfCoolDiffSalRbandPanel
+  LhfCoolDiffSalRbandPset
+  LhfCoolDiffRbandAxes 1 1
+  none 5
+  SAL@Core@(diffs)
+  none 12
+End
+
+FigPanel: LhvCoolPreSalCorePanel
+  LhvCoolPreSalCorePset
+  LhvCoolCoreAxes 1 1
+  none 5
+  Pre@SAL@Core 
+  NorthWest 12
+End
+
+FigPanel: LhvCoolDiffPreSalCorePanel
+  LhvCoolDiffPreSalCorePset
+  LhvCoolDiffCoreAxes 1 1
+  none 5
+  Pre@SAL@Core@(diffs)
+  none 12
+End
+
+FigPanel: LhvCoolSalCorePanel
+  LhvCoolSalCorePset
+  LhvCoolCoreAxes 1 1
+  none 5
+  SAL@Core 
+  none 12
+End
+
+FigPanel: LhvCoolDiffSalCorePanel
+  LhvCoolDiffSalCorePset
+  LhvCoolDiffCoreAxes 1 1
+  none 5
+  SAL@Core@(diffs)
+  none 12
+End
+
+FigPanel: LhvCoolPreSalRbandPanel
+  LhvCoolPreSalRbandPset
+  LhvCoolRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband 
+  NorthWest 12
+End
+
+FigPanel: LhvCoolDiffPreSalRbandPanel
+  LhvCoolDiffPreSalRbandPset
+  LhvCoolDiffRbandAxes 1 1
+  none 5
+  Pre@SAL@Rband@(diffs)
+  none 12
+End
+
+FigPanel: LhvCoolSalRbandPanel
+  LhvCoolSalRbandPset
+  LhvCoolRbandAxes 1 1
+  none 5
+  SAL@Rband 
+  none 12
+End
+
+FigPanel: LhvCoolDiffSalRbandPanel
+  LhvCoolDiffSalRbandPset
+  LhvCoolDiffRbandAxes 1 1
+  none 5
+  SAL@Core@(diffs)
+  none 12
+End
+
+FigPanel: LhvCoolPreSalCoreLlevPanel
+  LhvCoolPreSalCorePset
+  LhvCoolCoreLlevAxes 1 1
+  none 5
+  Pre@SAL@Core 
+  SouthWest 12
+End
+
+FigPanel: LhvCoolDiffPreSalCoreLlevPanel
+  LhvCoolDiffPreSalCorePset
+  LhvCoolDiffCoreLlevAxes 1 1
+  none 5
+  Pre@SAL@Core@(diffs)
+  none 12
+End
+
+FigPanel: LhvCoolSalCoreLlevPanel
+  LhvCoolSalCorePset
+  LhvCoolCoreLlevAxes 1 1
+  none 5
+  SAL@Core 
+  none 12
+End
+
+FigPanel: LhvCoolDiffSalCoreLlevPanel
+  LhvCoolDiffSalCorePset
+  LhvCoolDiffCoreLlevAxes 1 1
+  none 5
+  SAL@Core@(diffs)
+  none 12
+End
+
+FigPanel: LhvCoolPreSalRbandLlevPanel
+  LhvCoolPreSalRbandPset
+  LhvCoolRbandLlevAxes 1 1
+  none 5
+  Pre@SAL@Rband 
+  SouthWest 12
+End
+
+FigPanel: LhvCoolDiffPreSalRbandLlevPanel
+  LhvCoolDiffPreSalRbandPset
+  LhvCoolDiffRbandLlevAxes 1 1
+  none 5
+  Pre@SAL@Rband@(diffs)
+  none 12
+End
+
+FigPanel: LhvCoolSalRbandLlevPanel
+  LhvCoolSalRbandPset
+  LhvCoolRbandLlevAxes 1 1
+  none 5
+  SAL@Rband 
+  none 12
+End
+
+FigPanel: LhvCoolDiffSalRbandLlevPanel
+  LhvCoolDiffSalRbandPset
+  LhvCoolDiffRbandLlevAxes 1 1
+  none 5
+  SAL@Rband@(diffs)
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: LhfCoolPreSalCorePset line 4
+  LhfCoolPreSalCoreLine TSD_SAL_DUST SD  2 black   - 0
+  LhfCoolPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhfCoolPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhfCoolPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: LhfCoolDiffPreSalCorePset line 4
+  LhfCoolDiffPreSalCoreLine TSD_SAL_DUST SD  2 black   - 0
+  LhfCoolDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhfCoolDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhfCoolDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: LhfCoolSalCorePset line 4
+  LhfCoolSalCoreLine TSD_SAL_DUST SD  2 black   - 0
+  LhfCoolSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhfCoolSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhfCoolSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: LhfCoolDiffSalCorePset line 4
+  LhfCoolDiffSalCoreLine TSD_SAL_DUST SD  2 black   - 0
+  LhfCoolDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhfCoolDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhfCoolDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: LhfCoolPreSalRbandPset line 4
+  LhfCoolPreSalRbandLine TSD_SAL_DUST SD  2 black   - 0
+  LhfCoolPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhfCoolPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhfCoolPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: LhfCoolDiffPreSalRbandPset line 4
+  LhfCoolDiffPreSalRbandLine TSD_SAL_DUST SD  2 black   - 0
+  LhfCoolDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhfCoolDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhfCoolDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: LhfCoolSalRbandPset line 4
+  LhfCoolSalRbandLine TSD_SAL_DUST SD  2 black   - 0
+  LhfCoolSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhfCoolSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhfCoolSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: LhfCoolDiffSalRbandPset line 4
+  LhfCoolDiffSalRbandLine TSD_SAL_DUST SD  2 black   - 0
+  LhfCoolDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhfCoolDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhfCoolDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: LhvCoolPreSalCorePset line 4
+  LhvCoolPreSalCoreLine TSD_SAL_DUST SD  2 black   - 0
+  LhvCoolPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhvCoolPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhvCoolPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: LhvCoolDiffPreSalCorePset line 4
+  LhvCoolDiffPreSalCoreLine TSD_SAL_DUST SD  2 black   - 0
+  LhvCoolDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhvCoolDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhvCoolDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: LhvCoolSalCorePset line 4
+  LhvCoolSalCoreLine TSD_SAL_DUST SD  2 black   - 0
+  LhvCoolSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhvCoolSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhvCoolSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: LhvCoolDiffSalCorePset line 4
+  LhvCoolDiffSalCoreLine TSD_SAL_DUST SD  2 black   - 0
+  LhvCoolDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhvCoolDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhvCoolDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: LhvCoolPreSalRbandPset line 4
+  LhvCoolPreSalRbandLine TSD_SAL_DUST SD  2 black   - 0
+  LhvCoolPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhvCoolPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhvCoolPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: LhvCoolDiffPreSalRbandPset line 4
+  LhvCoolDiffPreSalRbandLine TSD_SAL_DUST SD  2 black   - 0
+  LhvCoolDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhvCoolDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhvCoolDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: LhvCoolSalRbandPset line 4
+  LhvCoolSalRbandLine TSD_SAL_DUST SD  2 black   - 0
+  LhvCoolSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhvCoolSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhvCoolSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: LhvCoolDiffSalRbandPset line 4
+  LhvCoolDiffSalRbandLine TSD_SAL_DUST SD  2 black   - 0
+  LhvCoolDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LhvCoolDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LhvCoolDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+# RAMS files are saved on 30 minute intervals, meaning
+# that the values in them are heating rates in units
+# of K/30minutes. Multiply the heating rates by 2 in
+# order to make the units K/h.
+PlotData: LhfCoolPreSalCoreLine 2
+  # x data - lhf_cool mix ratio, K/h
+  /all_core_ps_lhf_cool DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhfCoolSalCoreLine 2
+  # x data - lhf_cool mix ratio, K/h
+  /all_core_s_lhf_cool DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhfCoolDiffPreSalCoreLine 2
+  # x data - lhf_cool mix ratio, K/h
+  /all_core_ps_lhf_cool_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhfCoolDiffSalCoreLine 2
+  # x data - lhf_cool mix ratio, K/h
+  /all_core_s_lhf_cool_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhfCoolPreSalRbandLine 2
+  # x data - lhf_cool mix ratio, K/h
+  /all_rb_ps_lhf_cool DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhfCoolSalRbandLine 2
+  # x data - lhf_cool mix ratio, K/h
+  /all_rb_s_lhf_cool DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhfCoolDiffPreSalRbandLine 2
+  # x data - lhf_cool mix ratio, K/h
+  /all_rb_ps_lhf_cool_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhfCoolDiffSalRbandLine 2
+  # x data - lhf_cool mix ratio, K/h
+  /all_rb_s_lhf_cool_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhvCoolPreSalCoreLine 2
+  # x data - lhv_cool mix ratio, K/h
+  /all_core_ps_lhv_cool DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhvCoolSalCoreLine 2
+  # x data - lhv_cool mix ratio, K/h
+  /all_core_s_lhv_cool DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhvCoolDiffPreSalCoreLine 2
+  # x data - lhv_cool mix ratio, K/h
+  /all_core_ps_lhv_cool_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhvCoolDiffSalCoreLine 2
+  # x data - lhv_cool mix ratio, K/h
+  /all_core_s_lhv_cool_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhvCoolPreSalRbandLine 2
+  # x data - lhv_cool mix ratio, K/h
+  /all_rb_ps_lhv_cool DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhvCoolSalRbandLine 2
+  # x data - lhv_cool mix ratio, K/h
+  /all_rb_s_lhv_cool DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhvCoolDiffPreSalRbandLine 2
+  # x data - lhv_cool mix ratio, K/h
+  /all_rb_ps_lhv_cool_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LhvCoolDiffSalRbandLine 2
+  # x data - lhv_cool mix ratio, K/h
+  /all_rb_s_lhv_cool_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: LhfCoolCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - lhf_cool mix ratio, K/h
+  LhfCool K@h^-^1 -1.0 0.1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: LhfCoolDiffCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - lhf_cool mix ratio, K/h
+  LhfCool K@h^-^1 -0.5 0.5 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: LhfCoolRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - lhf_cool mix ratio, K/h
+  LhfCool K@h^-^1 -0.5 0.01 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: LhfCoolDiffRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - lhf_cool mix ratio, K/h
+  LhfCool K@h^-^1 -0.2 0.2 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: LhvCoolCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - lhf_cool mix ratio, K/h
+  LhvCool K@h^-^1 -15.0 0.1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: LhvCoolDiffCoreAxes 2
+  14 2 [0.025_0.025]
+  # x axis - lhf_cool mix ratio, K/h
+  LhvCool K@h^-^1 -5 8 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: LhvCoolRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - lhf_cool mix ratio, K/h
+  LhvCool K@h^-^1 -15.0 0.01 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: LhvCoolDiffRbandAxes 2
+  14 2 [0.025_0.025]
+  # x axis - lhf_cool mix ratio, K/h
+  LhvCool K@h^-^1 -5 8 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: LhvCoolCoreLlevAxes 2
+  14 2 [0.025_0.025]
+  # x axis - lhf_cool mix ratio, K/h
+  LhvCool K@h^-^1 -5.0 0.1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 1 linear [_] {_}
+End
+
+PlotAxes: LhvCoolDiffCoreLlevAxes 2
+  14 2 [0.025_0.025]
+  # x axis - lhf_cool mix ratio, K/h
+  LhvCool K@h^-^1 -2 2 linear [_] {_}
+  # y axis - height, km
+  Height km 0 1 linear [_] {_}
+End
+
+PlotAxes: LhvCoolRbandLlevAxes 2
+  14 2 [0.025_0.025]
+  # x axis - lhf_cool mix ratio, K/h
+  LhvCool K@h^-^1 -5.0 0.01 linear [_] {_}
+  # y axis - height, km
+  Height km 0 1 linear [_] {_}
+End
+
+PlotAxes: LhvCoolDiffRbandLlevAxes 2
+  14 2 [0.025_0.025]
+  # x axis - lhf_cool mix ratio, K/h
+  LhvCool K@h^-^1 -2 2 linear [_] {_}
+  # y axis - height, km
+  Height km 0 1 linear [_] {_}
+End
+
