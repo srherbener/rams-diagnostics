@@ -22,6 +22,7 @@ program hdata_op
   integer, parameter :: OP_AND  = 5
   integer, parameter :: OP_OR   = 6
   integer, parameter :: OP_INV  = 7
+  integer, parameter :: OP_ABS  = 8
 
   integer, parameter :: LargeString  = 512
   integer, parameter :: MediumString = 256
@@ -218,6 +219,8 @@ program hdata_op
         else
           OutVar%vdata(i) = 0.0
         endif
+      else if (Op .eq. OP_ABS) then
+        OutVar%vdata(i) = abs(Var1%vdata(i))
       endif
     enddo
 
@@ -304,6 +307,7 @@ subroutine GetMyArgs(InFile1, VarName1, InFile2, VarName2, OutFile, OutVarName, 
     write (*,*) '            and  -> logical and values in <in_file1> with those in <in_file2>'
     write (*,*) '            or   -> logical or values in <in_file1> with those in <in_file2>'
     write (*,*) '            inv  -> logical inversion of values in <in_file1>'
+    write (*,*) '            abs  -> absolute value of values in <in_file1>'
     stop
   end if
 
@@ -331,6 +335,8 @@ subroutine GetMyArgs(InFile1, VarName1, InFile2, VarName2, OutFile, OutVarName, 
     Op = OP_OR
   else if (OpName .eq. 'inv') then
     Op = OP_INV
+  else if (OpName .eq. 'abs') then
+    Op = OP_ABS
   else
     write (*,*) 'ERROR: <operator> must be one of:'
     write (*,*) '          add'
@@ -340,6 +346,7 @@ subroutine GetMyArgs(InFile1, VarName1, InFile2, VarName2, OutFile, OutVarName, 
     write (*,*) '          and'
     write (*,*) '          or'
     write (*,*) '          inv'
+    write (*,*) '          abs'
     write (*,*) ''
     BadArgs = .true.
   end if

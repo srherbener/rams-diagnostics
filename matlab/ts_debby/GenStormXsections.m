@@ -102,14 +102,23 @@ function [ ] = GenStormXsections()
     { 'DIAGS/hist_meas_az_tcond_<CASE>.h5' '/all_s_tcond_mass'  '/all_s_tcond_mass' }
 
     { 'DIAGS/hist_meas_az_lhf_cool_<CASE>.h5' '/all_ps_lhf_cool' '/all_ps_lhf_cool' }
-    { 'DIAGS/hist_meas_az_lhf_heat_<CASE>.h5' '/all_ps_lhf_heat' '/all_ps_lhf_heat' }
     { 'DIAGS/hist_meas_az_lhf_cool_<CASE>.h5' '/all_s_lhf_cool'  '/all_s_lhf_cool' }
+
+    { 'DIAGS/hist_meas_az_lhf_heat_<CASE>.h5' '/all_ps_lhf_heat' '/all_ps_lhf_heat' }
     { 'DIAGS/hist_meas_az_lhf_heat_<CASE>.h5' '/all_s_lhf_heat'  '/all_s_lhf_heat' }
 
     { 'DIAGS/hist_meas_az_lhv_cool_<CASE>.h5' '/all_ps_lhv_cool' '/all_ps_lhv_cool' }
-    { 'DIAGS/hist_meas_az_lhv_heat_<CASE>.h5' '/all_ps_lhv_heat' '/all_ps_lhv_heat' }
     { 'DIAGS/hist_meas_az_lhv_cool_<CASE>.h5' '/all_s_lhv_cool'  '/all_s_lhv_cool' }
+
+    { 'DIAGS/hist_meas_az_lhv_heat_<CASE>.h5' '/all_ps_lhv_heat' '/all_ps_lhv_heat' }
     { 'DIAGS/hist_meas_az_lhv_heat_<CASE>.h5' '/all_s_lhv_heat'  '/all_s_lhv_heat' }
+
+    { 'DIAGS/hist_meas_az_liq_evap_<CASE>.h5' '/all_ps_liq_evap' '/all_ps_liq_evap' }
+    { 'DIAGS/hist_meas_az_liq_evap_<CASE>.h5' '/all_s_liq_evap'  '/all_s_liq_evap' }
+
+    { 'DIAGS/hist_meas_az_liq_cond_<CASE>.h5' '/all_ps_liq_cond' '/all_ps_liq_cond' }
+    { 'DIAGS/hist_meas_az_liq_cond_<CASE>.h5' '/all_s_liq_cond'  '/all_s_liq_cond' }
+
     };
   Nsets = length(XsectionList);
 

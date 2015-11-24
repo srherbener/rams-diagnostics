@@ -225,6 +225,16 @@ function [ ] = GenStormProfiles()
     { 'DIAGS/hist_meas_az_lhv_heat_<CASE>.h5' '/all_rb_ps_lhv_heat'   '/all_rb_ps_lhv_heat'   'z' }
     { 'DIAGS/hist_meas_az_lhv_heat_<CASE>.h5' '/all_rb_s_lhv_heat'    '/all_rb_s_lhv_heat'    'z' }
 
+    { 'DIAGS/hist_meas_az_liq_evap_<CASE>.h5' '/all_core_ps_liq_evap' '/all_core_ps_liq_evap' 'z' }
+    { 'DIAGS/hist_meas_az_liq_evap_<CASE>.h5' '/all_core_s_liq_evap'  '/all_core_s_liq_evap'  'z' }
+    { 'DIAGS/hist_meas_az_liq_evap_<CASE>.h5' '/all_rb_ps_liq_evap'   '/all_rb_ps_liq_evap'   'z' }
+    { 'DIAGS/hist_meas_az_liq_evap_<CASE>.h5' '/all_rb_s_liq_evap'    '/all_rb_s_liq_evap'    'z' }
+
+    { 'DIAGS/hist_meas_az_liq_cond_<CASE>.h5' '/all_core_ps_liq_cond' '/all_core_ps_liq_cond' 'z' }
+    { 'DIAGS/hist_meas_az_liq_cond_<CASE>.h5' '/all_core_s_liq_cond'  '/all_core_s_liq_cond'  'z' }
+    { 'DIAGS/hist_meas_az_liq_cond_<CASE>.h5' '/all_rb_ps_liq_cond'   '/all_rb_ps_liq_cond'   'z' }
+    { 'DIAGS/hist_meas_az_liq_cond_<CASE>.h5' '/all_rb_s_liq_cond'    '/all_rb_s_liq_cond'    'z' }
+
     { 'DIAGS/hist_meas_az_w_<CASE>.h5' '/all_core_ps_updraft' '/all_core_ps_updraft' 'z' }
     { 'DIAGS/hist_meas_az_w_<CASE>.h5' '/all_core_s_updraft'  '/all_core_s_updraft'  'z' }
     { 'DIAGS/hist_meas_az_w_<CASE>.h5' '/all_rb_ps_updraft'   '/all_rb_ps_updraft'   'z' }
@@ -300,6 +310,16 @@ function [ ] = GenStormProfiles()
     { 'DIAGS/hist_meas_az_lhv_heat_<CASE>.h5' '/lead_core_s_lhv_heat'  '/lead_core_s_lhv_heat'  'z' }
     { 'DIAGS/hist_meas_az_lhv_heat_<CASE>.h5' '/lead_rb_ps_lhv_heat'   '/lead_rb_ps_lhv_heat'   'z' }
     { 'DIAGS/hist_meas_az_lhv_heat_<CASE>.h5' '/lead_rb_s_lhv_heat'    '/lead_rb_s_lhv_heat'    'z' }
+
+    { 'DIAGS/hist_meas_az_liq_evap_<CASE>.h5' '/lead_core_ps_liq_evap' '/lead_core_ps_liq_evap' 'z' }
+    { 'DIAGS/hist_meas_az_liq_evap_<CASE>.h5' '/lead_core_s_liq_evap'  '/lead_core_s_liq_evap'  'z' }
+    { 'DIAGS/hist_meas_az_liq_evap_<CASE>.h5' '/lead_rb_ps_liq_evap'   '/lead_rb_ps_liq_evap'   'z' }
+    { 'DIAGS/hist_meas_az_liq_evap_<CASE>.h5' '/lead_rb_s_liq_evap'    '/lead_rb_s_liq_evap'    'z' }
+
+    { 'DIAGS/hist_meas_az_liq_cond_<CASE>.h5' '/lead_core_ps_liq_cond' '/lead_core_ps_liq_cond' 'z' }
+    { 'DIAGS/hist_meas_az_liq_cond_<CASE>.h5' '/lead_core_s_liq_cond'  '/lead_core_s_liq_cond'  'z' }
+    { 'DIAGS/hist_meas_az_liq_cond_<CASE>.h5' '/lead_rb_ps_liq_cond'   '/lead_rb_ps_liq_cond'   'z' }
+    { 'DIAGS/hist_meas_az_liq_cond_<CASE>.h5' '/lead_rb_s_liq_cond'    '/lead_rb_s_liq_cond'    'z' }
 
     { 'DIAGS/hist_meas_az_w_<CASE>.h5' '/lead_core_ps_updraft' '/lead_core_ps_updraft' 'z' }
     { 'DIAGS/hist_meas_az_w_<CASE>.h5' '/lead_core_s_updraft'  '/lead_core_s_updraft'  'z' }
