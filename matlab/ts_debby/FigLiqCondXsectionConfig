@@ -1,0 +1,158 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: LiqCondXsectionPreSal 4
+  DummyCases
+  [2_2]
+  Plots/FigLiqCondXsectionPreSal.jpg
+  LiqCondXsectionSDPreSalPanel         1
+  LiqCondXsectionSNDPreSalPanel    2
+  LiqCondXsectionNSDPreSalPanel    3
+  LiqCondXsectionNSNDPreSalPanel   4
+End 
+
+Figure: LiqCondXsectionSal 4
+  DummyCases
+  [2_2]
+  Plots/FigLiqCondXsectionSal.jpg
+  LiqCondXsectionSDSalPanel         1
+  LiqCondXsectionSNDSalPanel    2
+  LiqCondXsectionNSDSalPanel    3
+  LiqCondXsectionNSNDSalPanel   4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: LiqCondXsectionSDPreSalPanel
+  LiqCondXsectionSDPreSalPset
+  LiqCondXsectionAxes 1 1
+  none 5
+  PreSAL:@SD@LiqCond
+  none 12
+End
+
+FigPanel: LiqCondXsectionSNDPreSalPanel
+  LiqCondXsectionSNDPreSalPset
+  LiqCondXsectionAxes 1 1
+  none 5
+  PreSAL:@SND@LiqCond
+  none 12
+End
+
+FigPanel: LiqCondXsectionNSDPreSalPanel
+  LiqCondXsectionNSDPreSalPset
+  LiqCondXsectionAxes 1 1
+  none 5
+  PreSAL:@NSD@LiqCond
+  none 12
+End
+
+FigPanel: LiqCondXsectionNSNDPreSalPanel
+  LiqCondXsectionNSNDPreSalPset
+  LiqCondXsectionAxes 1 1
+  none 5
+  PreSAL:@NSND@LiqCond
+  none 12
+End
+
+FigPanel: LiqCondXsectionSDSalPanel
+  LiqCondXsectionSDSalPset
+  LiqCondXsectionAxes 1 1
+  none 5
+  SAL:@SD@LiqCond
+  none 12
+End
+
+FigPanel: LiqCondXsectionSNDSalPanel
+  LiqCondXsectionSNDSalPset
+  LiqCondXsectionAxes 1 1
+  none 5
+  SAL:@SND@LiqCond
+  none 12
+End
+
+FigPanel: LiqCondXsectionNSDSalPanel
+  LiqCondXsectionNSDSalPset
+  LiqCondXsectionAxes 1 1
+  none 5
+  SAL:@NSD@LiqCond
+  none 12
+End
+
+FigPanel: LiqCondXsectionNSNDSalPanel
+  LiqCondXsectionNSNDSalPset
+  LiqCondXsectionAxes 1 1
+  none 5
+  SAL:@NSND@LiqCond
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: LiqCondXsectionSDPreSalPset contourf 1
+  LiqCondXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: LiqCondXsectionSNDPreSalPset contourf 1
+  LiqCondXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: LiqCondXsectionNSDPreSalPset contourf 1
+  LiqCondXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: LiqCondXsectionNSNDPreSalPset contourf 1
+  LiqCondXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: LiqCondXsectionSDSalPset contourf 1
+  LiqCondXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: LiqCondXsectionSNDSalPset contourf 1
+  LiqCondXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: LiqCondXsectionNSDSalPset contourf 1
+  LiqCondXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: LiqCondXsectionNSNDSalPset contourf 1
+  LiqCondXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+PlotData: LiqCondXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  liq_cond, g/kg
+  /all_ps_liq_cond DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: LiqCondXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  liq_cond, g/kg
+  /all_s_liq_cond DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: LiqCondXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - liq_cond - g/kg
+  LiqCond g@kg^-^1 0 2.0 linear [_] {_}
+End
+

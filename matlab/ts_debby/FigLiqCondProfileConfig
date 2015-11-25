@@ -1,0 +1,226 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: LiqCondCoreProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigLiqCondCoreProfile.jpg
+  LiqCondPreSalCorePanel  1
+  LiqCondSalCorePanel     2
+  LiqCondDiffPreSalCorePanel  3
+  LiqCondDiffSalCorePanel     4
+End 
+
+Figure: LiqCondRbandProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigLiqCondRbandProfile.jpg
+  LiqCondPreSalRbandPanel  1
+  LiqCondSalRbandPanel     2
+  LiqCondDiffPreSalRbandPanel  3
+  LiqCondDiffSalRbandPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: LiqCondPreSalCorePanel
+  LiqCondPreSalCorePset
+  LiqCondAxes 1 1
+  none 5
+  Pre@SAL@Core 
+  NorthEast 12
+End
+
+FigPanel: LiqCondDiffPreSalCorePanel
+  LiqCondDiffPreSalCorePset
+  LiqCondDiffAxes 1 1
+  none 5
+  Pre@SAL@Core@(diffs)
+  none 12
+End
+
+FigPanel: LiqCondSalCorePanel
+  LiqCondSalCorePset
+  LiqCondAxes 1 1
+  none 5
+  SAL@Core 
+  none 12
+End
+
+FigPanel: LiqCondDiffSalCorePanel
+  LiqCondDiffSalCorePset
+  LiqCondDiffAxes 1 1
+  none 5
+  SAL@Core@(diffs)
+  none 12
+End
+
+FigPanel: LiqCondPreSalRbandPanel
+  LiqCondPreSalRbandPset
+  LiqCondAxes 1 1
+  none 5
+  Pre@SAL@Rband 
+  NorthEast 12
+End
+
+FigPanel: LiqCondDiffPreSalRbandPanel
+  LiqCondDiffPreSalRbandPset
+  LiqCondDiffAxes 1 1
+  none 5
+  Pre@SAL@Rband@(diffs)
+  none 12
+End
+
+FigPanel: LiqCondSalRbandPanel
+  LiqCondSalRbandPset
+  LiqCondAxes 1 1
+  none 5
+  SAL@Rband 
+  none 12
+End
+
+FigPanel: LiqCondDiffSalRbandPanel
+  LiqCondDiffSalRbandPset
+  LiqCondDiffAxes 1 1
+  none 5
+  SAL@Rband@(diffs)
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: LiqCondPreSalCorePset line 4
+  LiqCondPreSalCoreLine TSD_SAL_DUST SD  2 black   - 0
+  LiqCondPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LiqCondPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LiqCondPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: LiqCondDiffPreSalCorePset line 4
+  LiqCondDiffPreSalCoreLine TSD_SAL_DUST SD  2 black   - 0
+  LiqCondDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LiqCondDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LiqCondDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: LiqCondSalCorePset line 4
+  LiqCondSalCoreLine TSD_SAL_DUST SD  2 black   - 0
+  LiqCondSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LiqCondSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LiqCondSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: LiqCondDiffSalCorePset line 4
+  LiqCondDiffSalCoreLine TSD_SAL_DUST SD  2 black   - 0
+  LiqCondDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LiqCondDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LiqCondDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: LiqCondPreSalRbandPset line 4
+  LiqCondPreSalRbandLine TSD_SAL_DUST SD  2 black   - 0
+  LiqCondPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LiqCondPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LiqCondPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: LiqCondDiffPreSalRbandPset line 4
+  LiqCondDiffPreSalRbandLine TSD_SAL_DUST SD  2 black   - 0
+  LiqCondDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LiqCondDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LiqCondDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: LiqCondSalRbandPset line 4
+  LiqCondSalRbandLine TSD_SAL_DUST SD  2 black   - 0
+  LiqCondSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LiqCondSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LiqCondSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: LiqCondDiffSalRbandPset line 4
+  LiqCondDiffSalRbandLine TSD_SAL_DUST SD  2 black   - 0
+  LiqCondDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  LiqCondDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  LiqCondDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: LiqCondPreSalCoreLine 2
+  # x data - liq_cond, m/s
+  /all_core_ps_liq_cond DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LiqCondSalCoreLine 2
+  # x data - liq_cond, m/s
+  /all_core_s_liq_cond DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LiqCondDiffPreSalCoreLine 2
+  # x data - liq_cond, m/s
+  /all_core_ps_liq_cond_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LiqCondDiffSalCoreLine 2
+  # x data - liq_cond, m/s
+  /all_core_s_liq_cond_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LiqCondPreSalRbandLine 2
+  # x data - liq_cond, m/s
+  /all_rb_ps_liq_cond DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LiqCondSalRbandLine 2
+  # x data - liq_cond, m/s
+  /all_rb_s_liq_cond DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LiqCondDiffPreSalRbandLine 2
+  # x data - liq_cond, m/s
+  /all_rb_ps_liq_cond_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: LiqCondDiffSalRbandLine 2
+  # x data - liq_cond, m/s
+  /all_rb_s_liq_cond_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: LiqCondAxes 2
+  14 2 [0.025_0.025]
+  # x axis - liq_cond, g/kg
+  LiqCond g@kg^-^1 -0.1 3 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: LiqCondDiffAxes 2
+  14 2 [0.025_0.025]
+  # x axis - liq_cond, g/kg
+  LiqCond g@kg^-^1 -4 4 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+

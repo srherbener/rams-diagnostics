@@ -65,6 +65,8 @@ CONFIGS = \
   $(DIAG_DIR)/FigDustHydroXsectionConfig \
   $(DIAG_DIR)/FigCoolXsectionConfig \
   $(DIAG_DIR)/FigHeatXsectionConfig \
+  $(DIAG_DIR)/FigLiqCondXsectionConfig \
+  $(DIAG_DIR)/FigLiqEvapXsectionConfig \
   $(DIAG_DIR)/FigDnXsectionConfig \
   $(DIAG_DIR)/FigUpXsectionConfig \
   $(DIAG_DIR)/FigVtXsectionConfig \
@@ -77,6 +79,8 @@ CONFIGS = \
   $(DIAG_DIR)/FigDnDraftCoreProfileConfig \
   $(DIAG_DIR)/FigCoolProfileConfig \
   $(DIAG_DIR)/FigHeatProfileConfig \
+  $(DIAG_DIR)/FigLiqCondProfileConfig \
+  $(DIAG_DIR)/FigLiqEvapProfileConfig \
   $(DIAG_DIR)/FigSpeedtCoreProfileConfig \
   $(DIAG_DIR)/FigTempcCoreProfileConfig \
   $(DIAG_DIR)/FigVaporCoreProfileConfig \

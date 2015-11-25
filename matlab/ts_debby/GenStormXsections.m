@@ -5,6 +5,66 @@ function [ ] = GenStormXsections()
     mkdir(Ddir);
   end
 
+  % From TSD_SAL_DUST RAMS output (Reference density)
+  RhoAir = [
+    1.196
+    1.191
+    1.185
+    1.179
+    1.172
+    1.165
+    1.157
+    1.147
+    1.136
+    1.124
+    1.111
+    1.097
+    1.082
+    1.066
+    1.051
+    1.034
+    1.017
+    1.000
+    0.982
+    0.963
+    0.945
+    0.925
+    0.905
+    0.883
+    0.860
+    0.833
+    0.804
+    0.773
+    0.741
+    0.711
+    0.679
+    0.647
+    0.612
+    0.577
+    0.541
+    0.505
+    0.469
+    0.432
+    0.394
+    0.355
+    0.316
+    0.279
+    0.244
+    0.210
+    0.179
+    0.150
+    0.126
+    0.105
+    0.087
+    0.073
+    0.062
+    0.052
+    0.044
+    0.038
+    0.032
+    0.027
+    ];
+
   Cases = {
    'TSD_SAL_DUST'
    'TSD_SAL_NODUST'
@@ -80,8 +140,12 @@ function [ ] = GenStormXsections()
     { 'DIAGS/hist_meas_az_cloud_<CASE>.h5' '/all_ps_cloud_diam' '/all_ps_cloud_diam' }
     { 'DIAGS/hist_meas_az_cloud_<CASE>.h5' '/all_s_cloud_diam'  '/all_s_cloud_diam' }
 
-    { 'DIAGS/hist_meas_az_rain_<CASE>.h5' '/all_ps_rain_mass'      '/all_ps_rain_mass' }
-    { 'DIAGS/hist_meas_az_rain_<CASE>.h5' '/all_s_rain_mass'       '/all_s_rain_mass' }
+    { 'DIAGS/hist_meas_az_rain_<CASE>.h5' '/all_ps_rain_mass' '/all_ps_rain_mass' }
+    { 'DIAGS/hist_meas_az_rain_<CASE>.h5' '/all_s_rain_mass'  '/all_s_rain_mass' }
+    { 'DIAGS/hist_meas_az_rain_<CASE>.h5' '/all_ps_rain_num'  '/all_ps_rain_num' }
+    { 'DIAGS/hist_meas_az_rain_<CASE>.h5' '/all_s_rain_num'   '/all_s_rain_num' }
+    { 'DIAGS/hist_meas_az_rain_<CASE>.h5' '/all_ps_rain_diam' '/all_ps_rain_diam' }
+    { 'DIAGS/hist_meas_az_rain_<CASE>.h5' '/all_s_rain_diam'  '/all_s_rain_diam' }
 
     { 'DIAGS/hist_meas_az_pris_<CASE>.h5' '/all_ps_pris_mass'      '/all_ps_pris_mass' }
     { 'DIAGS/hist_meas_az_pris_<CASE>.h5' '/all_s_pris_mass'       '/all_s_pris_mass' }
@@ -174,6 +238,19 @@ function [ ] = GenStormXsections()
       Ny = length(Y);
       Nz = length(Z);
       Nt = length(T);
+
+      % If a hydrometeor number concentration, then convert #/kg to #/cm^2.
+      % VAR and DIFF_VAR are (x,z) so repeat RhoAir along the x dimension.
+      if (~isempty(regexp(InVname, 'cloud_num')) || ...
+          ~isempty(regexp(InVname, 'rain_num'))  || ...
+          ~isempty(regexp(InVname, 'pris_num'))  || ...
+          ~isempty(regexp(InVname, 'snow_num'))  || ...
+          ~isempty(regexp(InVname, 'aggr_num'))  || ...
+          ~isempty(regexp(InVname, 'graup_num')) || ...
+          ~isempty(regexp(InVname, 'hail_num')))
+        VAR      = VAR .* repmat(RhoAir', [ Nx 1 ]) .* 1e-6;
+        DIFF_VAR = DIFF_VAR .* repmat(RhoAir', [ Nx 1 ]) .* 1e-6;
+      end
 
       % If this is the first set, write out the coordinates into the output file
       % so that subsequent variables can have these coordinates attached.
