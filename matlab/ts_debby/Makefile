@@ -22,6 +22,7 @@ SCRIPTS = \
   $(DEST)/GenStormMeas.m \
   $(DEST)/GenStormXsections.m \
   $(DEST)/GenStormProfiles.m \
+  $(DEST)/GenStrackProfiles.m \
   $(DEST)/GenTsdHistMeas.m \
   $(DEST)/RunGenFigures.m \
   $(DEST)/LocateSal.m \
@@ -30,6 +31,7 @@ SCRIPTS = \
   $(DEST)/PlotMinPressAll.m \
   $(DEST)/PlotTracksAll.m \
   $(DEST)/PlotStormStruct.m \
+  $(DEST)/PlotWindVectors.m \
   $(DEST)/TwoDimAnimation.m \
   $(DEST)/SetPath.m
 

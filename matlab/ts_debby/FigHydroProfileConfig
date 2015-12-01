@@ -3,132 +3,134 @@
 #
 
 ######### FIGURES ###################
-Figure: CloudCoreProfile 4
+#Figure: CloudCoreProfile 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigCloudCoreProfile.jpg
+#  CloudPreSalCorePanel  1
+#  CloudSalCorePanel     2
+#  CloudDiffPreSalCorePanel  3
+#  CloudDiffSalCorePanel     4
+#End 
+#
+#Figure: CloudNumCoreProfile 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigCloudNumCoreProfile.jpg
+#  CloudNumPreSalCorePanel  1
+#  CloudNumSalCorePanel     2
+#  CloudNumDiffPreSalCorePanel  3
+#  CloudNumDiffSalCorePanel     4
+#End 
+#
+#Figure: CloudDiamCoreProfile 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigCloudDiamCoreProfile.jpg
+#  CloudDiamPreSalCorePanel  1
+#  CloudDiamSalCorePanel     2
+#  CloudDiamDiffPreSalCorePanel  3
+#  CloudDiamDiffSalCorePanel     4
+#End 
+#
+#Figure: CloudRbandProfile 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigCloudRbandProfile.jpg
+#  CloudPreSalRbandPanel  1
+#  CloudSalRbandPanel     2
+#  CloudDiffPreSalRbandPanel  3
+#  CloudDiffSalRbandPanel     4
+#End 
+#
+#Figure: CloudNumRbandProfile 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigCloudNumRbandProfile.jpg
+#  CloudNumPreSalRbandPanel  1
+#  CloudNumSalRbandPanel     2
+#  CloudNumDiffPreSalRbandPanel  3
+#  CloudNumDiffSalRbandPanel     4
+#End 
+#
+#Figure: CloudDiamRbandProfile 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigCloudDiamRbandProfile.jpg
+#  CloudDiamPreSalRbandPanel  1
+#  CloudDiamSalRbandPanel     2
+#  CloudDiamDiffPreSalRbandPanel  3
+#  CloudDiamDiffSalRbandPanel     4
+#End 
+#
+#Figure: RainCoreProfile 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigRainCoreProfile.jpg
+#  RainPreSalCorePanel  1
+#  RainSalCorePanel     2
+#  RainDiffPreSalCorePanel  3
+#  RainDiffSalCorePanel     4
+#End 
+#
+#Figure: RainNumCoreProfile 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigRainNumCoreProfile.jpg
+#  RainNumPreSalCorePanel  1
+#  RainNumSalCorePanel     2
+#  RainNumDiffPreSalCorePanel  3
+#  RainNumDiffSalCorePanel     4
+#End 
+#
+#Figure: RainDiamCoreProfile 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigRainDiamCoreProfile.jpg
+#  RainDiamPreSalCorePanel  1
+#  RainDiamSalCorePanel     2
+#  RainDiamDiffPreSalCorePanel  3
+#  RainDiamDiffSalCorePanel     4
+#End 
+#
+#Figure: RainRbandProfile 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigRainRbandProfile.jpg
+#  RainPreSalRbandPanel  1
+#  RainSalRbandPanel     2
+#  RainDiffPreSalRbandPanel  3
+#  RainDiffSalRbandPanel     4
+#End 
+#
+#Figure: RainNumRbandProfile 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigRainNumRbandProfile.jpg
+#  RainNumPreSalRbandPanel  1
+#  RainNumSalRbandPanel     2
+#  RainNumDiffPreSalRbandPanel  3
+#  RainNumDiffSalRbandPanel     4
+#End 
+#
+#Figure: RainDiamRbandProfile 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigRainDiamRbandProfile.jpg
+#  RainDiamPreSalRbandPanel  1
+#  RainDiamSalRbandPanel     2
+#  RainDiamDiffPreSalRbandPanel  3
+#  RainDiamDiffSalRbandPanel     4
+#End 
+
+Figure: RainCloudNumDiamProfile 4
   DummyCases
   [2_2]
-  Plots/FigCloudCoreProfile.jpg
-  CloudPreSalCorePanel  1
-  CloudSalCorePanel     2
-  CloudDiffPreSalCorePanel  3
-  CloudDiffSalCorePanel     4
-End 
-
-Figure: CloudNumCoreProfile 4
-  DummyCases
-  [2_2]
-  Plots/FigCloudNumCoreProfile.jpg
-  CloudNumPreSalCorePanel  1
-  CloudNumSalCorePanel     2
-  CloudNumDiffPreSalCorePanel  3
-  CloudNumDiffSalCorePanel     4
-End 
-
-Figure: CloudDiamCoreProfile 4
-  DummyCases
-  [2_2]
-  Plots/FigCloudDiamCoreProfile.jpg
-  CloudDiamPreSalCorePanel  1
-  CloudDiamSalCorePanel     2
-  CloudDiamDiffPreSalCorePanel  3
-  CloudDiamDiffSalCorePanel     4
-End 
-
-Figure: CloudRbandProfile 4
-  DummyCases
-  [2_2]
-  Plots/FigCloudRbandProfile.jpg
-  CloudPreSalRbandPanel  1
-  CloudSalRbandPanel     2
-  CloudDiffPreSalRbandPanel  3
-  CloudDiffSalRbandPanel     4
-End 
-
-Figure: CloudNumRbandProfile 4
-  DummyCases
-  [2_2]
-  Plots/FigCloudNumRbandProfile.jpg
-  CloudNumPreSalRbandPanel  1
-  CloudNumSalRbandPanel     2
-  CloudNumDiffPreSalRbandPanel  3
-  CloudNumDiffSalRbandPanel     4
-End 
-
-Figure: CloudDiamRbandProfile 4
-  DummyCases
-  [2_2]
-  Plots/FigCloudDiamRbandProfile.jpg
-  CloudDiamPreSalRbandPanel  1
-  CloudDiamSalRbandPanel     2
-  CloudDiamDiffPreSalRbandPanel  3
-  CloudDiamDiffSalRbandPanel     4
-End 
-
-Figure: CloudNumDiamProfile 2
-  DummyCases
-  [1_2]
-  Plots/FigCloudNumDiamProfile.jpg
-  CloudNumSalRbandPanel  1
-  CloudDiamSalRbandPanel  2
-End 
-
-Figure: RainCoreProfile 4
-  DummyCases
-  [2_2]
-  Plots/FigRainCoreProfile.jpg
-  RainPreSalCorePanel  1
-  RainSalCorePanel     2
-  RainDiffPreSalCorePanel  3
-  RainDiffSalCorePanel     4
-End 
-
-Figure: RainNumCoreProfile 4
-  DummyCases
-  [2_2]
-  Plots/FigRainNumCoreProfile.jpg
-  RainNumPreSalCorePanel  1
-  RainNumSalCorePanel     2
-  RainNumDiffPreSalCorePanel  3
-  RainNumDiffSalCorePanel     4
-End 
-
-Figure: RainDiamCoreProfile 4
-  DummyCases
-  [2_2]
-  Plots/FigRainDiamCoreProfile.jpg
-  RainDiamPreSalCorePanel  1
-  RainDiamSalCorePanel     2
-  RainDiamDiffPreSalCorePanel  3
-  RainDiamDiffSalCorePanel     4
-End 
-
-Figure: RainRbandProfile 4
-  DummyCases
-  [2_2]
-  Plots/FigRainRbandProfile.jpg
-  RainPreSalRbandPanel  1
-  RainSalRbandPanel     2
-  RainDiffPreSalRbandPanel  3
-  RainDiffSalRbandPanel     4
-End 
-
-Figure: RainNumRbandProfile 4
-  DummyCases
-  [2_2]
-  Plots/FigRainNumRbandProfile.jpg
-  RainNumPreSalRbandPanel  1
-  RainNumSalRbandPanel     2
-  RainNumDiffPreSalRbandPanel  3
-  RainNumDiffSalRbandPanel     4
-End 
-
-Figure: RainDiamRbandProfile 4
-  DummyCases
-  [2_2]
-  Plots/FigRainDiamRbandProfile.jpg
-  RainDiamPreSalRbandPanel  1
-  RainDiamSalRbandPanel     2
-  RainDiamDiffPreSalRbandPanel  3
-  RainDiamDiffSalRbandPanel     4
+  Plots/FigRainCloudNumDiamProfile.jpg
+  CloudNumSalRbandLlevPanel  1
+  RainNumSalRbandLlevPanel   2
+  CloudDiamSalRbandLlevPanel 3
+  RainDiamSalRbandLlevPanel  4
 End 
 
 #Figure: PrisCoreProfile 4
@@ -654,8 +656,46 @@ FigPanel: RainDiamDiffSalRbandPanel
   RainDiamDiffSalRbandAxes 1 1
   none 5
   SAL@Rband@(diffs)
-  West 12
+  SouthWest 12
 End
+
+
+
+
+FigPanel: CloudNumSalRbandLlevPanel
+  CloudNumSalRbandPset
+  CloudNumSalRbandLlevAxes 1 1
+  none 5
+  SAL@Rband 
+  NorthEast 12
+End
+
+FigPanel: CloudDiamSalRbandLlevPanel
+  CloudDiamSalRbandPset
+  CloudDiamSalRbandLlevAxes 1 1
+  none 5
+  SAL@Rband 
+  none 12
+End
+
+FigPanel: RainNumSalRbandLlevPanel
+  RainNumSalRbandPset
+  RainNumSalRbandLlevAxes 1 1
+  none 5
+  SAL@Rband 
+  none 12
+End
+
+FigPanel: RainDiamSalRbandLlevPanel
+  RainDiamSalRbandPset
+  RainDiamSalRbandLlevAxes 1 1
+  none 5
+  SAL@Rband 
+  none 12
+End
+
+
+
 
 FigPanel: PrisSalCorePanel
   PrisSalCorePset
@@ -2487,7 +2527,7 @@ End
 PlotAxes: RainNumPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud number, #/cm3
-  N_r N@cm-^3 -0.1 8 linear [_] {_}
+  N_r N@cm-^3 0 0.05 linear [_] {_}
   # y axis - height, km
   Height km 0 10 linear [_] {_}
 End
@@ -2495,7 +2535,7 @@ End
 PlotAxes: RainNumDiffPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud number, #/cm3
-  N_r N@cm^-^3 -5 5 linear [_] {_}
+  N_r N@cm^-^3 -0.05 0.05 linear [_] {_}
   # y axis - height, km
   Height km 0 10 linear [_] {_}
 End
@@ -2503,7 +2543,7 @@ End
 PlotAxes: RainNumSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud number, #/cm3
-  N_r N@cm^-^3 -0.1 8 linear [_] {_}
+  N_r N@cm^-^3 0 0.05 linear [_] {_}
   # y axis - height, km
   Height km 0 10 linear [_] {_}
 End
@@ -2511,7 +2551,7 @@ End
 PlotAxes: RainNumDiffSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud number, #/cm3
-  N_r N@cm^-^3 -5 5 linear [_] {_}
+  N_r N@cm^-^3 -0.05 0.05 linear [_] {_}
   # y axis - height, km
   Height km 0 10 linear [_] {_}
 End
@@ -2519,7 +2559,7 @@ End
 PlotAxes: RainDiamPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud diamter, um
-  D_r um -1 60 linear [_] {_}
+  D_r mm 0 0.5 linear [_] {_}
   # y axis - height, km
   Height km 0 10 linear [_] {_}
 End
@@ -2527,7 +2567,7 @@ End
 PlotAxes: RainDiamDiffPreSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud diamter, um
-  D_r um -55 55 linear [_] {_}
+  D_r mm -0.5 0.5 linear [_] {_}
   # y axis - height, km
   Height km 0 10 linear [_] {_}
 End
@@ -2535,7 +2575,7 @@ End
 PlotAxes: RainDiamSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud diamter, um
-  D_r um -1 60 linear [_] {_}
+  D_r mm 0 0.5 linear [_] {_}
   # y axis - height, km
   Height km 0 10 linear [_] {_}
 End
@@ -2543,7 +2583,7 @@ End
 PlotAxes: RainDiamDiffSalCoreAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud diamter, um
-  D_r um -55 55 linear [_] {_}
+  D_r mm -0.5 0.5 linear [_] {_}
   # y axis - height, km
   Height km 0 10 linear [_] {_}
 End
@@ -2583,7 +2623,7 @@ End
 PlotAxes: RainNumPreSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud number, #/cm3
-  N_r N@cm-^3 -1 80 linear [_] {_}
+  N_r N@cm-^3 0 0.05 linear [_] {_}
   # y axis - height, km
   Height km 0 10 linear [_] {_}
 End
@@ -2591,7 +2631,7 @@ End
 PlotAxes: RainNumDiffPreSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud number, #/cm3
-  N_r N@cm^-^3 -50 10 linear [_] {_}
+  N_r N@cm^-^3 -0.05 0.05 linear [_] {_}
   # y axis - height, km
   Height km 0 10 linear [_] {_}
 End
@@ -2599,7 +2639,7 @@ End
 PlotAxes: RainNumSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud number, #/cm3
-  N_r N@cm^-^3 -1 80 linear [_] {_}
+  N_r N@cm^-^3 0 0.05 linear [_] {_}
   # y axis - height, km
   Height km 0 10 linear [_] {_}
 End
@@ -2607,7 +2647,7 @@ End
 PlotAxes: RainNumDiffSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud number, #/cm3
-  N_r N@cm^-^3 -50 10 linear [_] {_}
+  N_r N@cm^-^3 -0.05 0.05 linear [_] {_}
   # y axis - height, km
   Height km 0 10 linear [_] {_}
 End
@@ -2615,7 +2655,7 @@ End
 PlotAxes: RainDiamPreSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud diamter, um
-  D_r um -1 60 linear [_] {_}
+  D_r mm 0 0.5 linear [_] {_}
   # y axis - height, km
   Height km 0 10 linear [_] {_}
 End
@@ -2623,7 +2663,7 @@ End
 PlotAxes: RainDiamDiffPreSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud diamter, um
-  D_r um -55 55 linear [_] {_}
+  D_r mm -0.5 0.5 linear [_] {_}
   # y axis - height, km
   Height km 0 10 linear [_] {_}
 End
@@ -2631,7 +2671,7 @@ End
 PlotAxes: RainDiamSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud diamter, um
-  D_r um -1 60 linear [_] {_}
+  D_r mm 0 0.5 linear [_] {_}
   # y axis - height, km
   Height km 0 10 linear [_] {_}
 End
@@ -2639,9 +2679,41 @@ End
 PlotAxes: RainDiamDiffSalRbandAxes 2
   14 2 [0.025_0.025]
   # x axis - cloud diamter, um
-  D_r um -55 55 linear [_] {_}
+  D_r mm -0.5 0.5 linear [_] {_}
   # y axis - height, km
   Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: CloudNumSalRbandLlevAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud number, #/cm3
+  N_c N@cm^-^3 -1 80 linear [_] {_}
+  # y axis - height, km
+  Height km 0 5 linear [_] {_}
+End
+
+PlotAxes: CloudDiamSalRbandLlevAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud diamter, um
+  D_c um -1 60 linear [_] {_}
+  # y axis - height, km
+  Height km 0 5 linear [_] {_}
+End
+
+PlotAxes: RainNumSalRbandLlevAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud number, #/cm3
+  N_r N@cm^-^3 0 0.05 linear [_] {_}
+  # y axis - height, km
+  Height km 0 5 linear [_] {_}
+End
+
+PlotAxes: RainDiamSalRbandLlevAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud diamter, um
+  D_r mm 0 0.5 linear [_] {_}
+  # y axis - height, km
+  Height km 0 5 linear [_] {_}
 End
 
 PlotAxes: PrisPreSalCoreAxes 2

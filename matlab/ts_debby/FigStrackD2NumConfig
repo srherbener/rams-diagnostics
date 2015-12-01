@@ -57,7 +57,7 @@ FigPanel: StrackD2NumSD01Panel
   StrackD2NumSD01Pset
   StrackD2NumAxes 0 1
   none 5
-  N_d_1@(SD),@t@=@1h
+  N_d_2@(SD),@t@=@1h
   none 12
 End
 
@@ -97,7 +97,7 @@ FigPanel: StrackD2NumNSD01Panel
   StrackD2NumNSD01Pset
   StrackD2NumAxes 0 1
   none 5
-  N_d_1@(NSD),@t@=@0h
+  N_d_2@(NSD),@t@=@0h
   none 12
 End
 
