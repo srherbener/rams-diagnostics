@@ -21,6 +21,7 @@ SCRIPTS = \
   $(DEST)/GenNonSalRamsInit.m \
   $(DEST)/GenStormMeas.m \
   $(DEST)/GenStormXsections.m \
+  $(DEST)/GenStormDiffXsections.m \
   $(DEST)/GenStormProfiles.m \
   $(DEST)/GenStrackProfiles.m \
   $(DEST)/GenTsdHistMeas.m \
@@ -66,6 +67,14 @@ CONFIGS = \
   $(DIAG_DIR)/FigHydroXsectionConfig \
   $(DIAG_DIR)/FigDustHydroXsectionConfig \
   $(DIAG_DIR)/FigMphysXsectionConfig \
+  $(DIAG_DIR)/FigCloudNumXsectionConfig \
+  $(DIAG_DIR)/FigCloudDiamXsectionConfig \
+  $(DIAG_DIR)/FigCloudCondXsectionConfig \
+  $(DIAG_DIR)/FigCloudEvapXsectionConfig \
+  $(DIAG_DIR)/FigRainNumXsectionConfig \
+  $(DIAG_DIR)/FigRainDiamXsectionConfig \
+  $(DIAG_DIR)/FigRainCondXsectionConfig \
+  $(DIAG_DIR)/FigRainEvapXsectionConfig \
   $(DIAG_DIR)/FigCoolXsectionConfig \
   $(DIAG_DIR)/FigHeatXsectionConfig \
   $(DIAG_DIR)/FigLiqCondXsectionConfig \

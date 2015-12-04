@@ -1,0 +1,244 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: CloudCondXsectionPreSal 6
+  DummyCases
+  [3_2]
+  Plots/FigCloudCondXsectionPreSal.jpg
+  CloudCondXsection_SD_PreSalPanel           1
+  CloudCondXsection_SND_PreSalPanel          2
+  CloudCondXsection_NSD_PreSalPanel          3
+  CloudCondXsection_NSND_PreSalPanel         4
+  CloudCondDiffXsection_NSD_SD_PreSalPanel   5
+  CloudCondDiffXsection_NSND_SND_PreSalPanel 6
+End 
+
+Figure: CloudCondXsectionSal 6
+  DummyCases
+  [3_2]
+  Plots/FigCloudCondXsectionSal.jpg
+  CloudCondXsection_SD_SalPanel           1
+  CloudCondXsection_NSD_SalPanel          2
+  CloudCondXsection_SND_SalPanel          3
+  CloudCondXsection_NSND_SalPanel         4
+  CloudCondDiffXsection_SND_SD_SalPanel   5
+  CloudCondDiffXsection_NSND_NSD_SalPanel 6
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: CloudCondXsection_SD_PreSalPanel
+  CloudCondXsection_SD_PreSalPset
+  CloudCondXsectionAxes 0 1
+  none 5
+  PS:@SD@Cond_c 
+  none 12
+End
+
+FigPanel: CloudCondXsection_NSD_PreSalPanel
+  CloudCondXsection_NSD_PreSalPset
+  CloudCondXsectionAxes 0 1
+  none 5
+  PS:@NSD@Cond_c
+  none 12
+End
+
+FigPanel: CloudCondDiffXsection_NSD_SD_PreSalPanel
+  CloudCondDiffXsection_NSD_SD_PreSalPset
+  CloudCondDiffXsectionAxes 1 1
+  none 5
+  PS:@NSD-SD@Cond_c
+  none 12
+End
+
+FigPanel: CloudCondXsection_SND_PreSalPanel
+  CloudCondXsection_SND_PreSalPset
+  CloudCondXsectionAxes 0 0
+  none 5
+  PS:@SND@Cond_c
+  none 12
+End
+
+FigPanel: CloudCondXsection_NSND_PreSalPanel
+  CloudCondXsection_NSND_PreSalPset
+  CloudCondXsectionAxes 0 0
+  none 5
+  PS:@NSND@Cond_c
+  none 12
+End
+
+FigPanel: CloudCondDiffXsection_NSND_SND_PreSalPanel
+  CloudCondDiffXsection_NSND_SND_PreSalPset
+  CloudCondDiffXsectionAxes 1 0
+  none 5
+  PS:@NSND-SND@Cond_c
+  none 12
+End
+
+
+
+FigPanel: CloudCondXsection_SD_SalPanel
+  CloudCondXsection_SD_SalPset
+  CloudCondXsectionAxes 0 1
+  none 5
+  S:@SD@Cond_c 
+  none 12
+End
+
+FigPanel: CloudCondXsection_SND_SalPanel
+  CloudCondXsection_SND_SalPset
+  CloudCondXsectionAxes 0 1
+  none 5
+  S:@SND@Cond_c
+  none 12
+End
+
+FigPanel: CloudCondDiffXsection_SND_SD_SalPanel
+  CloudCondDiffXsection_SND_SD_SalPset
+  CloudCondDiffXsectionAxes 1 1
+  none 5
+  S:@SND-SD@Cond_c 
+  none 12
+End
+
+FigPanel: CloudCondXsection_NSD_SalPanel
+  CloudCondXsection_NSD_SalPset
+  CloudCondXsectionAxes 0 0
+  none 5
+  S:@NSD@Cond_c
+  none 12
+End
+
+FigPanel: CloudCondXsection_NSND_SalPanel
+  CloudCondXsection_NSND_SalPset
+  CloudCondXsectionAxes 0 0
+  none 5
+  S:@NSND@Cond_c
+  none 12
+End
+
+FigPanel: CloudCondDiffXsection_NSND_NSD_SalPanel
+  CloudCondDiffXsection_NSND_NSD_SalPset
+  CloudCondDiffXsectionAxes 1 0
+  none 5
+  S:@NSND-NSD@Cond_c 
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: CloudCondXsection_SD_PreSalPset contourf 1
+  CloudCondXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CloudCondXsection_NSD_PreSalPset contourf 1
+  CloudCondXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CloudCondDiffXsection_NSD_SD_PreSalPset diff_contourf 1
+  CloudCondDiffXsectionPreSalContour NSD_SD none  2 blue   - 0
+End
+
+PlotSet: CloudCondXsection_SND_PreSalPset contourf 1
+  CloudCondXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: CloudCondXsection_NSND_PreSalPset contourf 1
+  CloudCondXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: CloudCondDiffXsection_NSND_SND_PreSalPset diff_contourf 1
+  CloudCondDiffXsectionPreSalContour NSND_SND none  2 blue   - 0
+End
+
+
+
+PlotSet: CloudCondXsection_SD_SalPset contourf 1
+  CloudCondXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CloudCondXsection_SND_SalPset contourf 1
+  CloudCondXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: CloudCondDiffXsection_SND_SD_SalPset diff_contourf 1
+  CloudCondDiffXsectionSalContour SND_SD none  2 blue   - 0
+End
+
+PlotSet: CloudCondXsection_NSD_SalPset contourf 1
+  CloudCondXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CloudCondXsection_NSND_SalPset contourf 1
+  CloudCondXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: CloudCondDiffXsection_NSND_NSD_SalPset diff_contourf 1
+  CloudCondDiffXsectionSalContour NSND_NSD none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+# Units in files are g/kg/30minutes. Multiply
+# by to to convert to g/kg/h
+PlotData: CloudCondXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  cloud_cond, K
+  /all_ps_cloud_cond DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: CloudCondDiffXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  cloud_cond, K
+  /all_ps_cloud_cond_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: CloudCondXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  cloud_cond, K
+  /all_s_cloud_cond DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: CloudCondDiffXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  cloud_cond, K
+  /all_s_cloud_cond_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: CloudCondXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - cloud_cond - K
+  CloudCond g@kg^-^1@h^-^1 0 4 linear [_] {_}
+End
+
+PlotAxes: CloudCondDiffXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - cloud_cond - K
+  CloudCond g@kg^-^1@h^-^1 -0.5 0.5 linear [_] {_}
+End
+

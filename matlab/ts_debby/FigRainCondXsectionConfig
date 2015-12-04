@@ -1,0 +1,244 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: RainCondXsectionPreSal 6
+  DummyCases
+  [3_2]
+  Plots/FigRainCondXsectionPreSal.jpg
+  RainCondXsection_SD_PreSalPanel           1
+  RainCondXsection_SND_PreSalPanel          2
+  RainCondXsection_NSD_PreSalPanel          3
+  RainCondXsection_NSND_PreSalPanel         4
+  RainCondDiffXsection_NSD_SD_PreSalPanel   5
+  RainCondDiffXsection_NSND_SND_PreSalPanel 6
+End 
+
+Figure: RainCondXsectionSal 6
+  DummyCases
+  [3_2]
+  Plots/FigRainCondXsectionSal.jpg
+  RainCondXsection_SD_SalPanel           1
+  RainCondXsection_NSD_SalPanel          2
+  RainCondXsection_SND_SalPanel          3
+  RainCondXsection_NSND_SalPanel         4
+  RainCondDiffXsection_SND_SD_SalPanel   5
+  RainCondDiffXsection_NSND_NSD_SalPanel 6
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: RainCondXsection_SD_PreSalPanel
+  RainCondXsection_SD_PreSalPset
+  RainCondXsectionAxes 0 1
+  none 5
+  PS:@SD@Cond_r 
+  none 12
+End
+
+FigPanel: RainCondXsection_NSD_PreSalPanel
+  RainCondXsection_NSD_PreSalPset
+  RainCondXsectionAxes 0 1
+  none 5
+  PS:@NSD@Cond_r
+  none 12
+End
+
+FigPanel: RainCondDiffXsection_NSD_SD_PreSalPanel
+  RainCondDiffXsection_NSD_SD_PreSalPset
+  RainCondDiffXsectionAxes 1 1
+  none 5
+  PS:@NSD-SD@Cond_r
+  none 12
+End
+
+FigPanel: RainCondXsection_SND_PreSalPanel
+  RainCondXsection_SND_PreSalPset
+  RainCondXsectionAxes 0 0
+  none 5
+  PS:@SND@Cond_r
+  none 12
+End
+
+FigPanel: RainCondXsection_NSND_PreSalPanel
+  RainCondXsection_NSND_PreSalPset
+  RainCondXsectionAxes 0 0
+  none 5
+  PS:@NSND@Cond_r
+  none 12
+End
+
+FigPanel: RainCondDiffXsection_NSND_SND_PreSalPanel
+  RainCondDiffXsection_NSND_SND_PreSalPset
+  RainCondDiffXsectionAxes 1 0
+  none 5
+  PS:@NSND-SND@Cond_r
+  none 12
+End
+
+
+
+FigPanel: RainCondXsection_SD_SalPanel
+  RainCondXsection_SD_SalPset
+  RainCondXsectionAxes 0 1
+  none 5
+  S:@SD@Cond_r 
+  none 12
+End
+
+FigPanel: RainCondXsection_SND_SalPanel
+  RainCondXsection_SND_SalPset
+  RainCondXsectionAxes 0 1
+  none 5
+  S:@SND@Cond_r
+  none 12
+End
+
+FigPanel: RainCondDiffXsection_SND_SD_SalPanel
+  RainCondDiffXsection_SND_SD_SalPset
+  RainCondDiffXsectionAxes 1 1
+  none 5
+  S:@SND-SD@Cond_r 
+  none 12
+End
+
+FigPanel: RainCondXsection_NSD_SalPanel
+  RainCondXsection_NSD_SalPset
+  RainCondXsectionAxes 0 0
+  none 5
+  S:@NSD@Cond_r
+  none 12
+End
+
+FigPanel: RainCondXsection_NSND_SalPanel
+  RainCondXsection_NSND_SalPset
+  RainCondXsectionAxes 0 0
+  none 5
+  S:@NSND@Cond_r
+  none 12
+End
+
+FigPanel: RainCondDiffXsection_NSND_NSD_SalPanel
+  RainCondDiffXsection_NSND_NSD_SalPset
+  RainCondDiffXsectionAxes 1 0
+  none 5
+  S:@NSND-NSD@Cond_r 
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: RainCondXsection_SD_PreSalPset contourf 1
+  RainCondXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RainCondXsection_NSD_PreSalPset contourf 1
+  RainCondXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RainCondDiffXsection_NSD_SD_PreSalPset diff_contourf 1
+  RainCondDiffXsectionPreSalContour NSD_SD none  2 blue   - 0
+End
+
+PlotSet: RainCondXsection_SND_PreSalPset contourf 1
+  RainCondXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RainCondXsection_NSND_PreSalPset contourf 1
+  RainCondXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RainCondDiffXsection_NSND_SND_PreSalPset diff_contourf 1
+  RainCondDiffXsectionPreSalContour NSND_SND none  2 blue   - 0
+End
+
+
+
+PlotSet: RainCondXsection_SD_SalPset contourf 1
+  RainCondXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RainCondXsection_SND_SalPset contourf 1
+  RainCondXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RainCondDiffXsection_SND_SD_SalPset diff_contourf 1
+  RainCondDiffXsectionSalContour SND_SD none  2 blue   - 0
+End
+
+PlotSet: RainCondXsection_NSD_SalPset contourf 1
+  RainCondXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RainCondXsection_NSND_SalPset contourf 1
+  RainCondXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RainCondDiffXsection_NSND_NSD_SalPset diff_contourf 1
+  RainCondDiffXsectionSalContour NSND_NSD none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+# Units in files are g/kg/30minutes. Multiply
+# by to to convert to g/kg/h
+PlotData: RainCondXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  rain_cond, K
+  /all_ps_rain_cond DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: RainCondDiffXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  rain_cond, K
+  /all_ps_rain_cond_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: RainCondXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  rain_cond, K
+  /all_s_rain_cond DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: RainCondDiffXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  rain_cond, K
+  /all_s_rain_cond_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: RainCondXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - rain_cond - K
+  RainCond g@kg^-^1@h^-^1 0 0.35 linear [_] {_}
+End
+
+PlotAxes: RainCondDiffXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - rain_cond - K
+  RainCond g@kg^-^1@h^-^1 -0.1 0.1 linear [_] {_}
+End
+

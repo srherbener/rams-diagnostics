@@ -1,0 +1,244 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: CloudEvapXsectionPreSal 6
+  DummyCases
+  [3_2]
+  Plots/FigCloudEvapXsectionPreSal.jpg
+  CloudEvapXsection_SD_PreSalPanel           1
+  CloudEvapXsection_SND_PreSalPanel          2
+  CloudEvapXsection_NSD_PreSalPanel          3
+  CloudEvapXsection_NSND_PreSalPanel         4
+  CloudEvapDiffXsection_NSD_SD_PreSalPanel   5
+  CloudEvapDiffXsection_NSND_SND_PreSalPanel 6
+End 
+
+Figure: CloudEvapXsectionSal 6
+  DummyCases
+  [3_2]
+  Plots/FigCloudEvapXsectionSal.jpg
+  CloudEvapXsection_SD_SalPanel           1
+  CloudEvapXsection_NSD_SalPanel          2
+  CloudEvapXsection_SND_SalPanel          3
+  CloudEvapXsection_NSND_SalPanel         4
+  CloudEvapDiffXsection_SND_SD_SalPanel   5
+  CloudEvapDiffXsection_NSND_NSD_SalPanel 6
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: CloudEvapXsection_SD_PreSalPanel
+  CloudEvapXsection_SD_PreSalPset
+  CloudEvapXsectionAxes 0 1
+  none 5
+  PS:@SD@Evap_c 
+  none 12
+End
+
+FigPanel: CloudEvapXsection_NSD_PreSalPanel
+  CloudEvapXsection_NSD_PreSalPset
+  CloudEvapXsectionAxes 0 1
+  none 5
+  PS:@NSD@Evap_c
+  none 12
+End
+
+FigPanel: CloudEvapDiffXsection_NSD_SD_PreSalPanel
+  CloudEvapDiffXsection_NSD_SD_PreSalPset
+  CloudEvapDiffXsectionAxes 1 1
+  none 5
+  PS:@NSD-SD@Evap_c
+  none 12
+End
+
+FigPanel: CloudEvapXsection_SND_PreSalPanel
+  CloudEvapXsection_SND_PreSalPset
+  CloudEvapXsectionAxes 0 0
+  none 5
+  PS:@SND@Evap_c
+  none 12
+End
+
+FigPanel: CloudEvapXsection_NSND_PreSalPanel
+  CloudEvapXsection_NSND_PreSalPset
+  CloudEvapXsectionAxes 0 0
+  none 5
+  PS:@NSND@Evap_c
+  none 12
+End
+
+FigPanel: CloudEvapDiffXsection_NSND_SND_PreSalPanel
+  CloudEvapDiffXsection_NSND_SND_PreSalPset
+  CloudEvapDiffXsectionAxes 1 0
+  none 5
+  PS:@NSND-SND@Evap_c
+  none 12
+End
+
+
+
+FigPanel: CloudEvapXsection_SD_SalPanel
+  CloudEvapXsection_SD_SalPset
+  CloudEvapXsectionAxes 0 1
+  none 5
+  S:@SD@Evap_c 
+  none 12
+End
+
+FigPanel: CloudEvapXsection_SND_SalPanel
+  CloudEvapXsection_SND_SalPset
+  CloudEvapXsectionAxes 0 1
+  none 5
+  S:@SND@Evap_c
+  none 12
+End
+
+FigPanel: CloudEvapDiffXsection_SND_SD_SalPanel
+  CloudEvapDiffXsection_SND_SD_SalPset
+  CloudEvapDiffXsectionAxes 1 1
+  none 5
+  S:@SND-SD@Evap_c 
+  none 12
+End
+
+FigPanel: CloudEvapXsection_NSD_SalPanel
+  CloudEvapXsection_NSD_SalPset
+  CloudEvapXsectionAxes 0 0
+  none 5
+  S:@NSD@Evap_c
+  none 12
+End
+
+FigPanel: CloudEvapXsection_NSND_SalPanel
+  CloudEvapXsection_NSND_SalPset
+  CloudEvapXsectionAxes 0 0
+  none 5
+  S:@NSND@Evap_c
+  none 12
+End
+
+FigPanel: CloudEvapDiffXsection_NSND_NSD_SalPanel
+  CloudEvapDiffXsection_NSND_NSD_SalPset
+  CloudEvapDiffXsectionAxes 1 0
+  none 5
+  S:@NSND-NSD@Evap_c 
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: CloudEvapXsection_SD_PreSalPset contourf 1
+  CloudEvapXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CloudEvapXsection_NSD_PreSalPset contourf 1
+  CloudEvapXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CloudEvapDiffXsection_NSD_SD_PreSalPset diff_contourf 1
+  CloudEvapDiffXsectionPreSalContour NSD_SD none  2 blue   - 0
+End
+
+PlotSet: CloudEvapXsection_SND_PreSalPset contourf 1
+  CloudEvapXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: CloudEvapXsection_NSND_PreSalPset contourf 1
+  CloudEvapXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: CloudEvapDiffXsection_NSND_SND_PreSalPset diff_contourf 1
+  CloudEvapDiffXsectionPreSalContour NSND_SND none  2 blue   - 0
+End
+
+
+
+PlotSet: CloudEvapXsection_SD_SalPset contourf 1
+  CloudEvapXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CloudEvapXsection_SND_SalPset contourf 1
+  CloudEvapXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: CloudEvapDiffXsection_SND_SD_SalPset diff_contourf 1
+  CloudEvapDiffXsectionSalContour SND_SD none  2 blue   - 0
+End
+
+PlotSet: CloudEvapXsection_NSD_SalPset contourf 1
+  CloudEvapXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CloudEvapXsection_NSND_SalPset contourf 1
+  CloudEvapXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: CloudEvapDiffXsection_NSND_NSD_SalPset diff_contourf 1
+  CloudEvapDiffXsectionSalContour NSND_NSD none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+# Units in files are g/kg/30minutes. Multiply
+# by to to convert to g/kg/h
+PlotData: CloudEvapXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  cloud_evap, K
+  /all_ps_cloud_evap DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: CloudEvapDiffXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  cloud_evap, K
+  /all_ps_cloud_evap_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: CloudEvapXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  cloud_evap, K
+  /all_s_cloud_evap DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: CloudEvapDiffXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  cloud_evap, K
+  /all_s_cloud_evap_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: CloudEvapXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - cloud_evap - K
+  CloudEvap g@kg^-^1@h^-^1 -4 0 linear [_] {_}
+End
+
+PlotAxes: CloudEvapDiffXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - cloud_evap - K
+  CloudEvap g@kg^-^1@h^-^1 -0.5 0.5 linear [_] {_}
+End
+

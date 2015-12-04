@@ -73,8 +73,6 @@ function [ ] = GenStormXsections()
    };
   Ncases = length(Cases);
 
-  ControlCase = 'TSD_SAL_DUST';
-
   % Description of cross sections
   XsectionList = {
     % in_file in_var pre_sal_out_var sal_out_var
@@ -226,13 +224,8 @@ function [ ] = GenStormXsections()
         icount = icount + 1;
       end
 
-      ControlInFile = regexprep(XsectionList{iset}{1}, '<CASE>', ControlCase);
-
-      OutDiffVname = sprintf('%s_diff', OutVname);
-
       % Read in the variables
       fprintf('  Reading: %s (%s)\n', InFile, InVname);
-      fprintf('  Reading: %s (%s)\n', ControlInFile, InVname);
 
       VAR = squeeze(h5read(InFile, InVname));
       X   = squeeze(h5read(InFile, '/x_coords'));
@@ -240,17 +233,13 @@ function [ ] = GenStormXsections()
       Z   = squeeze(h5read(InFile, '/z_coords'));
       T   = squeeze(h5read(InFile, '/t_coords'));
 
-      CNTL_VAR = squeeze(h5read(ControlInFile, InVname));
-
-      DIFF_VAR = VAR - CNTL_VAR;
-
       Nx = length(X);
       Ny = length(Y);
       Nz = length(Z);
       Nt = length(T);
 
       % If a hydrometeor number concentration, then convert #/kg to #/cm^2.
-      % VAR and DIFF_VAR are (x,z) so repeat RhoAir along the x dimension.
+      % VAR is (x,z) so repeat RhoAir along the x dimension.
       if (~isempty(regexp(InVname, 'cloud_num')) || ...
           ~isempty(regexp(InVname, 'rain_num'))  || ...
           ~isempty(regexp(InVname, 'pris_num'))  || ...
@@ -259,7 +248,6 @@ function [ ] = GenStormXsections()
           ~isempty(regexp(InVname, 'graup_num')) || ...
           ~isempty(regexp(InVname, 'hail_num')))
         VAR      = VAR .* repmat(RhoAir', [ Nx 1 ]) .* 1e-6;
-        DIFF_VAR = DIFF_VAR .* repmat(RhoAir', [ Nx 1 ]) .* 1e-6;
       end
 
       % If this is the first set, write out the coordinates into the output file
@@ -304,12 +292,7 @@ function [ ] = GenStormXsections()
       h5create(OutFile, OutVname, Vsize);
       h5write(OutFile, OutVname, VAR);
 
-      fprintf('  Writing: %s (%s)\n', OutFile, OutDiffVname);
-      h5create(OutFile, OutDiffVname, Vsize);
-      h5write(OutFile, OutDiffVname, DIFF_VAR);
-
       AttachDimensionsXyzt(OutFile, OutVname, DimOrder, Xname, Yname, Zname, Tname);
-      AttachDimensionsXyzt(OutFile, OutDiffVname, DimOrder, Xname, Yname, Zname, Tname);
 
       fprintf('\n');
     end

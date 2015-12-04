@@ -1,0 +1,244 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: CloudDiamXsectionPreSal 6
+  DummyCases
+  [3_2]
+  Plots/FigCloudDiamXsectionPreSal.jpg
+  CloudDiamXsection_SD_PreSalPanel           1
+  CloudDiamXsection_SND_PreSalPanel          2
+  CloudDiamXsection_NSD_PreSalPanel          3
+  CloudDiamXsection_NSND_PreSalPanel         4
+  CloudDiamDiffXsection_NSD_SD_PreSalPanel   5
+  CloudDiamDiffXsection_NSND_SND_PreSalPanel 6
+End 
+
+Figure: CloudDiamXsectionSal 6
+  DummyCases
+  [3_2]
+  Plots/FigCloudDiamXsectionSal.jpg
+  CloudDiamXsection_SD_SalPanel           1
+  CloudDiamXsection_NSD_SalPanel          2
+  CloudDiamXsection_SND_SalPanel          3
+  CloudDiamXsection_NSND_SalPanel         4
+  CloudDiamDiffXsection_SND_SD_SalPanel   5
+  CloudDiamDiffXsection_NSND_NSD_SalPanel 6
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: CloudDiamXsection_SD_PreSalPanel
+  CloudDiamXsection_SD_PreSalPset
+  CloudDiamXsectionAxes 0 1
+  none 5
+  PS:@SD@D_c 
+  none 12
+End
+
+FigPanel: CloudDiamXsection_NSD_PreSalPanel
+  CloudDiamXsection_NSD_PreSalPset
+  CloudDiamXsectionAxes 0 1
+  none 5
+  PS:@NSD@D_c
+  none 12
+End
+
+FigPanel: CloudDiamDiffXsection_NSD_SD_PreSalPanel
+  CloudDiamDiffXsection_NSD_SD_PreSalPset
+  CloudDiamDiffXsectionAxes 1 1
+  none 5
+  PS:@NSD-SD@D_c
+  none 12
+End
+
+FigPanel: CloudDiamXsection_SND_PreSalPanel
+  CloudDiamXsection_SND_PreSalPset
+  CloudDiamXsectionAxes 0 0
+  none 5
+  PS:@SND@D_c
+  none 12
+End
+
+FigPanel: CloudDiamXsection_NSND_PreSalPanel
+  CloudDiamXsection_NSND_PreSalPset
+  CloudDiamXsectionAxes 0 0
+  none 5
+  PS:@NSND@D_c
+  none 12
+End
+
+FigPanel: CloudDiamDiffXsection_NSND_SND_PreSalPanel
+  CloudDiamDiffXsection_NSND_SND_PreSalPset
+  CloudDiamDiffXsectionAxes 1 0
+  none 5
+  PS:@NSND-SND@D_c
+  none 12
+End
+
+
+
+FigPanel: CloudDiamXsection_SD_SalPanel
+  CloudDiamXsection_SD_SalPset
+  CloudDiamXsectionAxes 0 1
+  none 5
+  S:@SD@D_c 
+  none 12
+End
+
+FigPanel: CloudDiamXsection_SND_SalPanel
+  CloudDiamXsection_SND_SalPset
+  CloudDiamXsectionAxes 0 1
+  none 5
+  S:@SND@D_c
+  none 12
+End
+
+FigPanel: CloudDiamDiffXsection_SND_SD_SalPanel
+  CloudDiamDiffXsection_SND_SD_SalPset
+  CloudDiamDiffXsectionAxes 1 1
+  none 5
+  S:@SND-SD@D_c 
+  none 12
+End
+
+FigPanel: CloudDiamXsection_NSD_SalPanel
+  CloudDiamXsection_NSD_SalPset
+  CloudDiamXsectionAxes 0 0
+  none 5
+  S:@NSD@D_c
+  none 12
+End
+
+FigPanel: CloudDiamXsection_NSND_SalPanel
+  CloudDiamXsection_NSND_SalPset
+  CloudDiamXsectionAxes 0 0
+  none 5
+  S:@NSND@D_c
+  none 12
+End
+
+FigPanel: CloudDiamDiffXsection_NSND_NSD_SalPanel
+  CloudDiamDiffXsection_NSND_NSD_SalPset
+  CloudDiamDiffXsectionAxes 1 0
+  none 5
+  S:@NSND-NSD@D_c 
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: CloudDiamXsection_SD_PreSalPset contourf 1
+  CloudDiamXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CloudDiamXsection_NSD_PreSalPset contourf 1
+  CloudDiamXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CloudDiamDiffXsection_NSD_SD_PreSalPset diff_contourf 1
+  CloudDiamDiffXsectionPreSalContour NSD_SD none  2 blue   - 0
+End
+
+PlotSet: CloudDiamXsection_SND_PreSalPset contourf 1
+  CloudDiamXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: CloudDiamXsection_NSND_PreSalPset contourf 1
+  CloudDiamXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: CloudDiamDiffXsection_NSND_SND_PreSalPset diff_contourf 1
+  CloudDiamDiffXsectionPreSalContour NSND_SND none  2 blue   - 0
+End
+
+
+
+PlotSet: CloudDiamXsection_SD_SalPset contourf 1
+  CloudDiamXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CloudDiamXsection_SND_SalPset contourf 1
+  CloudDiamXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: CloudDiamDiffXsection_SND_SD_SalPset diff_contourf 1
+  CloudDiamDiffXsectionSalContour SND_SD none  2 blue   - 0
+End
+
+PlotSet: CloudDiamXsection_NSD_SalPset contourf 1
+  CloudDiamXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CloudDiamXsection_NSND_SalPset contourf 1
+  CloudDiamXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: CloudDiamDiffXsection_NSND_NSD_SalPset diff_contourf 1
+  CloudDiamDiffXsectionSalContour NSND_NSD none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+# Units in files are g/kg/30minutes. Multiply
+# by to to convert to g/kg/h
+PlotData: CloudDiamXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  cloud_diam, K
+  /all_ps_cloud_diam DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: CloudDiamDiffXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  cloud_diam, K
+  /all_ps_cloud_diam_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: CloudDiamXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  cloud_diam, K
+  /all_s_cloud_diam DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: CloudDiamDiffXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  cloud_diam, K
+  /all_s_cloud_diam_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: CloudDiamXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - cloud_diam - K
+  D_c \um 70 100 linear [_] {_}
+End
+
+PlotAxes: CloudDiamDiffXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - cloud_diam - K
+  D_c \mum -5 5 linear [_] {_}
+End
+

@@ -1,0 +1,244 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: RainEvapXsectionPreSal 6
+  DummyCases
+  [3_2]
+  Plots/FigRainEvapXsectionPreSal.jpg
+  RainEvapXsection_SD_PreSalPanel           1
+  RainEvapXsection_SND_PreSalPanel          2
+  RainEvapXsection_NSD_PreSalPanel          3
+  RainEvapXsection_NSND_PreSalPanel         4
+  RainEvapDiffXsection_NSD_SD_PreSalPanel   5
+  RainEvapDiffXsection_NSND_SND_PreSalPanel 6
+End 
+
+Figure: RainEvapXsectionSal 6
+  DummyCases
+  [3_2]
+  Plots/FigRainEvapXsectionSal.jpg
+  RainEvapXsection_SD_SalPanel           1
+  RainEvapXsection_NSD_SalPanel          2
+  RainEvapXsection_SND_SalPanel          3
+  RainEvapXsection_NSND_SalPanel         4
+  RainEvapDiffXsection_SND_SD_SalPanel   5
+  RainEvapDiffXsection_NSND_NSD_SalPanel 6
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: RainEvapXsection_SD_PreSalPanel
+  RainEvapXsection_SD_PreSalPset
+  RainEvapXsectionAxes 0 1
+  none 5
+  PS:@SD@Evap_c 
+  none 12
+End
+
+FigPanel: RainEvapXsection_NSD_PreSalPanel
+  RainEvapXsection_NSD_PreSalPset
+  RainEvapXsectionAxes 0 1
+  none 5
+  PS:@NSD@Evap_c
+  none 12
+End
+
+FigPanel: RainEvapDiffXsection_NSD_SD_PreSalPanel
+  RainEvapDiffXsection_NSD_SD_PreSalPset
+  RainEvapDiffXsectionAxes 1 1
+  none 5
+  PS:@NSD-SD@Evap_c
+  none 12
+End
+
+FigPanel: RainEvapXsection_SND_PreSalPanel
+  RainEvapXsection_SND_PreSalPset
+  RainEvapXsectionAxes 0 0
+  none 5
+  PS:@SND@Evap_c
+  none 12
+End
+
+FigPanel: RainEvapXsection_NSND_PreSalPanel
+  RainEvapXsection_NSND_PreSalPset
+  RainEvapXsectionAxes 0 0
+  none 5
+  PS:@NSND@Evap_c
+  none 12
+End
+
+FigPanel: RainEvapDiffXsection_NSND_SND_PreSalPanel
+  RainEvapDiffXsection_NSND_SND_PreSalPset
+  RainEvapDiffXsectionAxes 1 0
+  none 5
+  PS:@NSND-SND@Evap_c
+  none 12
+End
+
+
+
+FigPanel: RainEvapXsection_SD_SalPanel
+  RainEvapXsection_SD_SalPset
+  RainEvapXsectionAxes 0 1
+  none 5
+  S:@SD@Evap_c 
+  none 12
+End
+
+FigPanel: RainEvapXsection_SND_SalPanel
+  RainEvapXsection_SND_SalPset
+  RainEvapXsectionAxes 0 1
+  none 5
+  S:@SND@Evap_c
+  none 12
+End
+
+FigPanel: RainEvapDiffXsection_SND_SD_SalPanel
+  RainEvapDiffXsection_SND_SD_SalPset
+  RainEvapDiffXsectionAxes 1 1
+  none 5
+  S:@SND-SD@Evap_c 
+  none 12
+End
+
+FigPanel: RainEvapXsection_NSD_SalPanel
+  RainEvapXsection_NSD_SalPset
+  RainEvapXsectionAxes 0 0
+  none 5
+  S:@NSD@Evap_c
+  none 12
+End
+
+FigPanel: RainEvapXsection_NSND_SalPanel
+  RainEvapXsection_NSND_SalPset
+  RainEvapXsectionAxes 0 0
+  none 5
+  S:@NSND@Evap_c
+  none 12
+End
+
+FigPanel: RainEvapDiffXsection_NSND_NSD_SalPanel
+  RainEvapDiffXsection_NSND_NSD_SalPset
+  RainEvapDiffXsectionAxes 1 0
+  none 5
+  S:@NSND-NSD@Evap_c 
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: RainEvapXsection_SD_PreSalPset contourf 1
+  RainEvapXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RainEvapXsection_NSD_PreSalPset contourf 1
+  RainEvapXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RainEvapDiffXsection_NSD_SD_PreSalPset diff_contourf 1
+  RainEvapDiffXsectionPreSalContour NSD_SD none  2 blue   - 0
+End
+
+PlotSet: RainEvapXsection_SND_PreSalPset contourf 1
+  RainEvapXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RainEvapXsection_NSND_PreSalPset contourf 1
+  RainEvapXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RainEvapDiffXsection_NSND_SND_PreSalPset diff_contourf 1
+  RainEvapDiffXsectionPreSalContour NSND_SND none  2 blue   - 0
+End
+
+
+
+PlotSet: RainEvapXsection_SD_SalPset contourf 1
+  RainEvapXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RainEvapXsection_SND_SalPset contourf 1
+  RainEvapXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RainEvapDiffXsection_SND_SD_SalPset diff_contourf 1
+  RainEvapDiffXsectionSalContour SND_SD none  2 blue   - 0
+End
+
+PlotSet: RainEvapXsection_NSD_SalPset contourf 1
+  RainEvapXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RainEvapXsection_NSND_SalPset contourf 1
+  RainEvapXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RainEvapDiffXsection_NSND_NSD_SalPset diff_contourf 1
+  RainEvapDiffXsectionSalContour NSND_NSD none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+# Units in files are g/kg/30minutes. Multiply
+# by to to convert to g/kg/h
+PlotData: RainEvapXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  rain_evap, K
+  /all_ps_rain_evap DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: RainEvapDiffXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  rain_evap, K
+  /all_ps_rain_evap_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: RainEvapXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  rain_evap, K
+  /all_s_rain_evap DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: RainEvapDiffXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  rain_evap, K
+  /all_s_rain_evap_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: RainEvapXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - rain_evap - K
+  RainEvap g@kg^-^1@h^-^1 -2 0 linear [_] {_}
+End
+
+PlotAxes: RainEvapDiffXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - rain_evap - K
+  RainEvap g@kg^-^1@h^-^1 -0.5 0.5 linear [_] {_}
+End
+
