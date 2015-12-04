@@ -1,4 +1,4 @@
-function [ AxesSpecs ] = GenAxesSpecs(Config, i_panel, i_paxis, Case)
+function [ AxesSpecs ] = GenAxesSpecs(Config, i_panel, i_paxis, i_pset, Case)
 % GenAxesSpecs function to generate axes specfifications for plots
 
   % Title
@@ -67,6 +67,7 @@ function [ AxesSpecs ] = GenAxesSpecs(Config, i_panel, i_paxis, Case)
   %  Axis number 3 --> z axis specs
   %
   Naxes = Config.PlotAxes(i_paxis).Naxes;
+  Ptype = Config.PlotSets(i_pset).Type;
 
   if (Naxes >= 1)
     % have a spec for the x axis 
@@ -194,6 +195,13 @@ function [ AxesSpecs ] = GenAxesSpecs(Config, i_panel, i_paxis, Case)
 
   if (Naxes >= 3)
     % have a spec for the z axis 
+    %
+    % Contour plots need to be handled as special cases in regard to Zscale.
+    % Technically, contour plots do not have a z axis since they are 2D so it does
+    % not work to set Zscale to 'log'. Instead, the data itself needs to be converted
+    % to logarithmic values. If on a contour plot, don't set Zscale, and make the
+    % adjustment to the data in the GenDataSpecs routine. Need to apply log to
+    % Zmin and Zmax as well for contour plots
 
     Zlabel      = Config.PlotAxes(i_paxis).Axes(3).Label;
     Zunits      = Config.PlotAxes(i_paxis).Axes(3).Units;
@@ -203,20 +211,39 @@ function [ AxesSpecs ] = GenAxesSpecs(Config, i_panel, i_paxis, Case)
     Zticks      = Config.PlotAxes(i_paxis).Axes(3).Ticks;
     ZtickLabels = Config.PlotAxes(i_paxis).Axes(3).TickLabels;
 
-    % direction and limits of z axis
+
     if (Zmin > Zmax)
-      AxesSpecs.Clims = [ Zmax Zmin ]; 
-  
-      i_ap = i_ap + 1;
+      Temp = Zmin; % swap so Zmin is < Zmax
+      Zmin = Zmax;
+      Zmax = Temp;
+
+      i_ap = i_ap + 1;  % reverse direction on the axis
       AxesSpecs.Props(i_ap).Name = 'ZDir';
       AxesSpecs.Props(i_ap).Val = 'Reverse';
-    else
-      AxesSpecs.Clims = [ Zmin Zmax ]; 
     end
-  
-    % z axis scale
-    i_ap = i_ap + 1;
-    AxesSpecs.Props(i_ap).Name = 'Zscale';
-    AxesSpecs.Props(i_ap).Val  = Zscale;
+
+    if (~isempty(regexp(Ptype, 'contour')))
+      % doing a 2D contour plot
+
+      % if z-axis is log scale.
+      if (~isempty(regexp(Zscale, 'log')))
+        Zmin = log10(Zmin);
+        Zmax = log10(Zmax);
+      end
+
+      % Copy the ticks and tick marks for the contour colorbar
+      AxesSpecs.Cbar.Ticks = Zticks;
+      AxesSpecs.Cbar.TickLabels = ZtickLabels;
+    else
+      % doing something other than a 2D contour plot
+
+      % z axis scale
+      i_ap = i_ap + 1;
+      AxesSpecs.Props(i_ap).Name = 'Zscale';
+      AxesSpecs.Props(i_ap).Val  = Zscale;
+    end
+
+    % limits of z axis
+    AxesSpecs.Clims = [ Zmin Zmax ];
   end
 end

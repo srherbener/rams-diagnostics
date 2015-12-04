@@ -56,11 +56,11 @@ function [ ] = GenFigures(ConfigFile)
         end
     
         % Fill in the AxesSpecs structure
-        [ AxesSpecs ] = GenAxesSpecs(Config, i_panel, i_paxis, FigCase);
+        [ AxesSpecs ] = GenAxesSpecs(Config, i_panel, i_paxis, i_pset, FigCase);
     
         % Fill in the DataSpecs structure
         % Last arg is indent spacing for formatting messages.
-        [ DataSpecs, LegText, DSokay ] = GenDataSpecs(Config, FigCase, i_panel, i_pset, '        ');
+        [ DataSpecs, LegText, DSokay ] = GenDataSpecs(Config, FigCase, i_panel, i_paxis, i_pset, '        ');
         fprintf('\n');
         if (DSokay == 0)
           continue;
@@ -73,7 +73,7 @@ function [ ] = GenFigures(ConfigFile)
 
         % Create the panel
         Axes = subplot(Prows, Pcols, Ploc);
-        DrawPlotData(Axes, DataSpecs, Config.PlotSets(i_pset).Type);
+        DrawPlotData(Axes, DataSpecs, AxesSpecs, Config.PlotSets(i_pset).Type);
         SetPlotAxes(Axes, AxesSpecs);
         
         % Place the legend

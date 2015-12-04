@@ -1,10 +1,11 @@
-function [ DataSpecs, LegText, DSokay ] = GenDataSpecs(Config, FigCase, i_panel, i_pset, Indent)
+function [ DataSpecs, LegText, DSokay ] = GenDataSpecs(Config, FigCase, i_panel, i_paxis, i_pset, Indent)
 % GenDataSpecs function to generate data specfifications for plots
 
   UndefVal = Config.UndefVal;
   Smooth   = Config.FigPanels(i_panel).Smooth;
   Flength  = Config.FigPanels(i_panel).Flength;
   Ndsets   = Config.PlotSets(i_pset).Ndsets;
+  Ptype    = Config.PlotSets(i_pset).Type;
 
   % Figure out which data sets (X, Y, Z) are to be smoothed
   % Smooth is a string that specifies which data sets to operate on.
@@ -48,6 +49,10 @@ function [ DataSpecs, LegText, DSokay ] = GenDataSpecs(Config, FigCase, i_panel,
     %   Vars(1) -> X data
     %   Vars(2) -> Y data
     %   Vars(3) -> Z data
+    %
+    % Contour plots cannot display log scaling on the colormap by setting the
+    % the Zscale axes property to 'log' (contour plots are 2D so there is no z-axis).
+    % Instead, need to apply log() to the Zdata.
     Nvars = Config.PlotData(i_pdata).Nvars;
 
     if (Nvars >= 1)
@@ -58,6 +63,13 @@ function [ DataSpecs, LegText, DSokay ] = GenDataSpecs(Config, FigCase, i_panel,
     end
     if (Nvars >= 3)
       DataSpecs(i_dset).Zdata = ReadProcessVarData(Config.PlotData(i_pdata).Vars(3), Case, Zsmooth, Flength, UndefVal, Indent);
+      if (regexp(Ptype, 'contour'))
+        % Assume have a z-axis spec if we made it here
+        Zscale = Config.PlotAxes(i_paxis).Axes(3).Scale;
+        if (regexp(Zscale, 'log'))
+           DataSpecs(i_dset).Zdata = log10(DataSpecs(i_dset).Zdata);
+        end
+      end
     end
   end
 end

@@ -1,4 +1,4 @@
-function [ ] = DrawPlotData( Axes, DataSpecs, Ptype )
+function [ ] = DrawPlotData( Axes, DataSpecs, AxesSpecs, Ptype )
 %DrawPlotData draw a set of lines/bars/etc on a given set of axes
 %   Axes - handle to a set of axes created by the caller
 %
@@ -10,6 +10,10 @@ function [ ] = DrawPlotData( Axes, DataSpecs, Ptype )
 
   % select the passed in axes
   axes(Axes);
+
+  % colorbar specs
+  Cticks = AxesSpecs.Cbar.Ticks;
+  CtickLabels = AxesSpecs.Cbar.TickLabels;
 
   % Draw the plot
   Ndsets = length(DataSpecs);
@@ -100,6 +104,12 @@ function [ ] = DrawPlotData( Axes, DataSpecs, Ptype )
       colormap(Axes, 'default');
     end
     cb = colorbar;
+    if (~isempty(Cticks))
+      set(cb, 'Ticks', Cticks);
+    end
+    if (~isempty(CtickLabels))
+      set(cb, 'TickLabels', CtickLabels);
+    end
   end
 
 end
