@@ -125,6 +125,11 @@ function [ ] = GenStormProfiles()
     { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_rb_ps_dust_hail'    '/all_rb_ps_dust_hail'    'z' }
     { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_rb_s_dust_hail'     '/all_rb_s_dust_hail'     'z' }
 
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_core_ps_dust_hydro'  '/all_core_ps_dust_hydro'  'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_core_s_dust_hydro'   '/all_core_s_dust_hydro'   'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_rb_ps_dust_hydro'    '/all_rb_ps_dust_hydro'    'z' }
+    { 'DIAGS/hist_meas_az_dust_hydro_<CASE>.h5' '/all_rb_s_dust_hydro'     '/all_rb_s_dust_hydro'     'z' }
+
     { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_core_ps_dustifn_cloud'  '/all_core_ps_dustifn_cloud'  'z' }
     { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_core_s_dustifn_cloud'   '/all_core_s_dustifn_cloud'   'z' }
     { 'DIAGS/hist_meas_az_dustifn_hydro_<CASE>.h5' '/all_rb_ps_dustifn_cloud'    '/all_rb_ps_dustifn_cloud'    'z' }
@@ -244,6 +249,26 @@ function [ ] = GenStormProfiles()
     { 'DIAGS/hist_meas_az_liq_cond_<CASE>.h5' '/all_core_s_liq_cond'  '/all_core_s_liq_cond'  'z' }
     { 'DIAGS/hist_meas_az_liq_cond_<CASE>.h5' '/all_rb_ps_liq_cond'   '/all_rb_ps_liq_cond'   'z' }
     { 'DIAGS/hist_meas_az_liq_cond_<CASE>.h5' '/all_rb_s_liq_cond'    '/all_rb_s_liq_cond'    'z' }
+
+    { 'DIAGS/hist_meas_az_cloud_evap_<CASE>.h5' '/all_core_ps_cloud_evap' '/all_core_ps_cloud_evap' 'z' }
+    { 'DIAGS/hist_meas_az_cloud_evap_<CASE>.h5' '/all_core_s_cloud_evap'  '/all_core_s_cloud_evap'  'z' }
+    { 'DIAGS/hist_meas_az_cloud_evap_<CASE>.h5' '/all_rb_ps_cloud_evap'   '/all_rb_ps_cloud_evap'   'z' }
+    { 'DIAGS/hist_meas_az_cloud_evap_<CASE>.h5' '/all_rb_s_cloud_evap'    '/all_rb_s_cloud_evap'    'z' }
+
+    { 'DIAGS/hist_meas_az_cloud_cond_<CASE>.h5' '/all_core_ps_cloud_cond' '/all_core_ps_cloud_cond' 'z' }
+    { 'DIAGS/hist_meas_az_cloud_cond_<CASE>.h5' '/all_core_s_cloud_cond'  '/all_core_s_cloud_cond'  'z' }
+    { 'DIAGS/hist_meas_az_cloud_cond_<CASE>.h5' '/all_rb_ps_cloud_cond'   '/all_rb_ps_cloud_cond'   'z' }
+    { 'DIAGS/hist_meas_az_cloud_cond_<CASE>.h5' '/all_rb_s_cloud_cond'    '/all_rb_s_cloud_cond'    'z' }
+
+    { 'DIAGS/hist_meas_az_rain_evap_<CASE>.h5' '/all_core_ps_rain_evap' '/all_core_ps_rain_evap' 'z' }
+    { 'DIAGS/hist_meas_az_rain_evap_<CASE>.h5' '/all_core_s_rain_evap'  '/all_core_s_rain_evap'  'z' }
+    { 'DIAGS/hist_meas_az_rain_evap_<CASE>.h5' '/all_rb_ps_rain_evap'   '/all_rb_ps_rain_evap'   'z' }
+    { 'DIAGS/hist_meas_az_rain_evap_<CASE>.h5' '/all_rb_s_rain_evap'    '/all_rb_s_rain_evap'    'z' }
+
+    { 'DIAGS/hist_meas_az_rain_cond_<CASE>.h5' '/all_core_ps_rain_cond' '/all_core_ps_rain_cond' 'z' }
+    { 'DIAGS/hist_meas_az_rain_cond_<CASE>.h5' '/all_core_s_rain_cond'  '/all_core_s_rain_cond'  'z' }
+    { 'DIAGS/hist_meas_az_rain_cond_<CASE>.h5' '/all_rb_ps_rain_cond'   '/all_rb_ps_rain_cond'   'z' }
+    { 'DIAGS/hist_meas_az_rain_cond_<CASE>.h5' '/all_rb_s_rain_cond'    '/all_rb_s_rain_cond'    'z' }
 
     { 'DIAGS/hist_meas_az_w_<CASE>.h5' '/all_core_ps_updraft' '/all_core_ps_updraft' 'z' }
     { 'DIAGS/hist_meas_az_w_<CASE>.h5' '/all_core_s_updraft'  '/all_core_s_updraft'  'z' }
@@ -376,6 +401,21 @@ function [ ] = GenStormProfiles()
     { 'DIAGS/hist_meas_az_tempc_<CASE>.h5' '/lead_rb_ps_tempc'   '/lead_rb_ps_tempc'   'z' }
     { 'DIAGS/hist_meas_az_tempc_<CASE>.h5' '/lead_rb_s_tempc'    '/lead_rb_s_tempc'    'z' }
 
+    % Region: spath - area inside SAL region, that is in the path of the storm
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_ps_d1_mass'  '/spath_ps_d1_mass' 'z' }
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_s_d1_mass'   '/spath_s_d1_mass'  'z' }
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_ps_d1_num'   '/spath_ps_d1_num'  'z' }
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_s_d1_num'    '/spath_s_d1_num'   'z' }
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_ps_d2_mass'  '/spath_ps_d2_mass' 'z' }
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_s_d2_mass'   '/spath_s_d2_mass'  'z' }
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_ps_d2_num'   '/spath_ps_d2_num'  'z' }
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_s_d2_num'    '/spath_s_d2_num'   'z' }
+
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_ps_tracer1'  '/spath_ps_tracer1' 'z' }
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_s_tracer1'   '/spath_s_tracer1'  'z' }
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_ps_tracer2'  '/spath_ps_tracer2' 'z' }
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_s_tracer2'   '/spath_s_tracer2'  'z' }
+
     % Region: All, selected by precip rate > 0.01 mm/h
     { 'DIAGS/hist_meas_az_theta_e_<CASE>.h5' '/precip_all_core_ps_theta_e' '/precip_all_core_ps_theta_e' 'z' }
     { 'DIAGS/hist_meas_az_theta_e_<CASE>.h5' '/precip_all_core_s_theta_e'  '/precip_all_core_s_theta_e'  'z' }
@@ -417,27 +457,14 @@ function [ ] = GenStormProfiles()
 %    { 'DIAGS/hist_meas_ts_vapor_<CASE>.h5' '/spath_s_vapor'   '/spath_s_vapor'   'z' }
 %    { 'DIAGS/hist_meas_ts_vapor_<CASE>.h5' '/smaxcp_s_vapor'  '/smaxcp_s_vapor'  'z' }
 %
-%
-%    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_ps_d1_mass'  '/spath_ps_d1_mass'  'z' }
 %    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/smaxcp_ps_d1_mass' '/smaxcp_rb_ps_d1_mass'  'z' }
-%    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_s_d1_mass'   '/spath_s_d1_mass'  'z' }
 %    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/smaxcp_s_d1_mass'  '/smaxcp_rb_s_d1_mass'  'z' }
-%
-%    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_ps_d1_num'   '/spath_ps_d1_num'   'z' }
 %    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/smaxcp_ps_d1_num'  '/smaxcp_rb_ps_d1_num'   'z' }
-%    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_s_d1_num'    '/spath_s_d1_num'   'z' }
 %    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/smaxcp_s_d1_num'   '/smaxcp_rb_s_d1_num'   'z' }
-%
-%    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_ps_d2_mass'  '/spath_ps_d2_mass'  'z' }
 %    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/smaxcp_ps_d2_mass' '/smaxcp_rb_ps_d2_mass'  'z' }
-%    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_s_d2_mass'   '/spath_s_d2_mass'  'z' }
 %    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/smaxcp_s_d2_mass'  '/smaxcp_rb_s_d2_mass'  'z' }
-%
-%    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_ps_d2_num'   '/spath_ps_d2_num'   'z' }
 %    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/smaxcp_ps_d2_num'  '/smaxcp_rb_ps_d2_num'   'z' }
-%    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_s_d2_num'    '/spath_s_d2_num'   'z' }
 %    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/smaxcp_s_d2_num'   '/smaxcp_rb_s_d2_num'   'z' }
-%
 %
 %    { 'DIAGS/hist_meas_tcond_<CASE>.h5' '/core_ps_tcond'  '/pcore_s_tcond'   'z' }
 %    { 'DIAGS/hist_meas_tcond_<CASE>.h5' '/rb_ps_tcond'  '/rb_ps_tcond'   'z' }
@@ -471,7 +498,11 @@ function [ ] = GenStormProfiles()
 
       % skip this profile set if doing dust and on a NODUST case
       if ((~isempty(regexp(Case, 'NODUST'))) && ...
-          ((~isempty(regexp(InVname, 'd[12]_num'))) || (~isempty(regexp(InVname, '_dust_'))) || (~isempty(regexp(InVname, '_dustifn_')))))
+          ((~isempty(regexp(InVname, 'd[12]_num'))) || ...
+           (~isempty(regexp(InVname, 'd[12]_mass'))) || ...
+           (~isempty(regexp(InVname, '_dust_'))) || ...
+           (~isempty(regexp(InVname, '_dustifn_'))) || ...
+           (~isempty(regexp(InVname, '_tracer[12]')))))
         continue
       else
         icount = icount + 1;

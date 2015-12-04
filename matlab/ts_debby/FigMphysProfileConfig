@@ -1,0 +1,864 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: CloudCondCoreProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigCloudCondCoreProfile.jpg
+  CloudCondPreSalCorePanel  1
+  CloudCondSalCorePanel     2
+  CloudCondDiffPreSalCorePanel  3
+  CloudCondDiffSalCorePanel     4
+End 
+
+Figure: CloudEvapCoreProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigCloudEvapCoreProfile.jpg
+  CloudEvapPreSalCorePanel  1
+  CloudEvapSalCorePanel     2
+  CloudEvapDiffPreSalCorePanel  3
+  CloudEvapDiffSalCorePanel     4
+End 
+
+Figure: CloudCondRbandProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigCloudCondRbandProfile.jpg
+  CloudCondPreSalRbandPanel  1
+  CloudCondSalRbandPanel     2
+  CloudCondDiffPreSalRbandPanel  3
+  CloudCondDiffSalRbandPanel     4
+End 
+
+Figure: CloudEvapRbandProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigCloudEvapRbandProfile.jpg
+  CloudEvapPreSalRbandPanel  1
+  CloudEvapSalRbandPanel     2
+  CloudEvapDiffPreSalRbandPanel  3
+  CloudEvapDiffSalRbandPanel     4
+End 
+
+Figure: RainCondCoreProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigRainCondCoreProfile.jpg
+  RainCondPreSalCorePanel  1
+  RainCondSalCorePanel     2
+  RainCondDiffPreSalCorePanel  3
+  RainCondDiffSalCorePanel     4
+End 
+
+Figure: RainEvapCoreProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigRainEvapCoreProfile.jpg
+  RainEvapPreSalCorePanel  1
+  RainEvapSalCorePanel     2
+  RainEvapDiffPreSalCorePanel  3
+  RainEvapDiffSalCorePanel     4
+End 
+
+Figure: RainCondRbandProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigRainCondRbandProfile.jpg
+  RainCondPreSalRbandPanel  1
+  RainCondSalRbandPanel     2
+  RainCondDiffPreSalRbandPanel  3
+  RainCondDiffSalRbandPanel     4
+End 
+
+Figure: RainEvapRbandProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigRainEvapRbandProfile.jpg
+  RainEvapPreSalRbandPanel  1
+  RainEvapSalRbandPanel     2
+  RainEvapDiffPreSalRbandPanel  3
+  RainEvapDiffSalRbandPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: CloudCondPreSalCorePanel
+  CloudCondPreSalCorePset
+  CloudCondAxes 1 1
+  none 5
+  Pre@SAL@Core 
+  SouthEast 12
+End
+
+FigPanel: CloudCondDiffPreSalCorePanel
+  CloudCondDiffPreSalCorePset
+  CloudCondDiffAxes 1 1
+  none 5
+  Pre@SAL@Core@(diffs)
+  none 12
+End
+
+FigPanel: CloudCondSalCorePanel
+  CloudCondSalCorePset
+  CloudCondAxes 1 1
+  none 5
+  SAL@Core 
+  none 12
+End
+
+FigPanel: CloudCondDiffSalCorePanel
+  CloudCondDiffSalCorePset
+  CloudCondDiffAxes 1 1
+  none 5
+  SAL@Core@(diffs)
+  none 12
+End
+
+FigPanel: CloudEvapPreSalCorePanel
+  CloudEvapPreSalCorePset
+  CloudEvapAxes 1 1
+  none 5
+  Pre@SAL@Core 
+  SouthWest 12
+End
+
+FigPanel: CloudEvapDiffPreSalCorePanel
+  CloudEvapDiffPreSalCorePset
+  CloudEvapDiffAxes 1 1
+  none 5
+  Pre@SAL@Core@(diffs)
+  none 12
+End
+
+FigPanel: CloudEvapSalCorePanel
+  CloudEvapSalCorePset
+  CloudEvapAxes 1 1
+  none 5
+  SAL@Core 
+  none 12
+End
+
+FigPanel: CloudEvapDiffSalCorePanel
+  CloudEvapDiffSalCorePset
+  CloudEvapDiffAxes 1 1
+  none 5
+  SAL@Core@(diffs)
+  none 12
+End
+
+FigPanel: CloudCondPreSalRbandPanel
+  CloudCondPreSalRbandPset
+  CloudCondAxes 1 1
+  none 5
+  Pre@SAL@Rband 
+  SouthEast 12
+End
+
+FigPanel: CloudCondDiffPreSalRbandPanel
+  CloudCondDiffPreSalRbandPset
+  CloudCondDiffAxes 1 1
+  none 5
+  Pre@SAL@Rband@(diffs)
+  none 12
+End
+
+FigPanel: CloudCondSalRbandPanel
+  CloudCondSalRbandPset
+  CloudCondAxes 1 1
+  none 5
+  SAL@Rband 
+  none 12
+End
+
+FigPanel: CloudCondDiffSalRbandPanel
+  CloudCondDiffSalRbandPset
+  CloudCondDiffAxes 1 1
+  none 5
+  SAL@Rband@(diffs)
+  none 12
+End
+
+FigPanel: CloudEvapPreSalRbandPanel
+  CloudEvapPreSalRbandPset
+  CloudEvapAxes 1 1
+  none 5
+  Pre@SAL@Rband 
+  SouthWest 12
+End
+
+FigPanel: CloudEvapDiffPreSalRbandPanel
+  CloudEvapDiffPreSalRbandPset
+  CloudEvapDiffAxes 1 1
+  none 5
+  Pre@SAL@Rband@(diffs)
+  none 12
+End
+
+FigPanel: CloudEvapSalRbandPanel
+  CloudEvapSalRbandPset
+  CloudEvapAxes 1 1
+  none 5
+  SAL@Rband 
+  none 12
+End
+
+FigPanel: CloudEvapDiffSalRbandPanel
+  CloudEvapDiffSalRbandPset
+  CloudEvapDiffAxes 1 1
+  none 5
+  SAL@Rband@(diffs)
+  none 12
+End
+
+FigPanel: RainCondPreSalCorePanel
+  RainCondPreSalCorePset
+  RainCondAxes 1 1
+  none 5
+  Pre@SAL@Core 
+  SouthEast 12
+End
+
+FigPanel: RainCondDiffPreSalCorePanel
+  RainCondDiffPreSalCorePset
+  RainCondDiffAxes 1 1
+  none 5
+  Pre@SAL@Core@(diffs)
+  none 12
+End
+
+FigPanel: RainCondSalCorePanel
+  RainCondSalCorePset
+  RainCondAxes 1 1
+  none 5
+  SAL@Core 
+  none 12
+End
+
+FigPanel: RainCondDiffSalCorePanel
+  RainCondDiffSalCorePset
+  RainCondDiffAxes 1 1
+  none 5
+  SAL@Core@(diffs)
+  none 12
+End
+
+FigPanel: RainEvapPreSalCorePanel
+  RainEvapPreSalCorePset
+  RainEvapAxes 1 1
+  none 5
+  Pre@SAL@Core 
+  SouthWest 12
+End
+
+FigPanel: RainEvapDiffPreSalCorePanel
+  RainEvapDiffPreSalCorePset
+  RainEvapDiffAxes 1 1
+  none 5
+  Pre@SAL@Core@(diffs)
+  none 12
+End
+
+FigPanel: RainEvapSalCorePanel
+  RainEvapSalCorePset
+  RainEvapAxes 1 1
+  none 5
+  SAL@Core 
+  none 12
+End
+
+FigPanel: RainEvapDiffSalCorePanel
+  RainEvapDiffSalCorePset
+  RainEvapDiffAxes 1 1
+  none 5
+  SAL@Core@(diffs)
+  none 12
+End
+
+FigPanel: RainCondPreSalRbandPanel
+  RainCondPreSalRbandPset
+  RainCondAxes 1 1
+  none 5
+  Pre@SAL@Rband 
+  SouthEast 12
+End
+
+FigPanel: RainCondDiffPreSalRbandPanel
+  RainCondDiffPreSalRbandPset
+  RainCondDiffAxes 1 1
+  none 5
+  Pre@SAL@Rband@(diffs)
+  none 12
+End
+
+FigPanel: RainCondSalRbandPanel
+  RainCondSalRbandPset
+  RainCondAxes 1 1
+  none 5
+  SAL@Rband 
+  none 12
+End
+
+FigPanel: RainCondDiffSalRbandPanel
+  RainCondDiffSalRbandPset
+  RainCondDiffAxes 1 1
+  none 5
+  SAL@Rband@(diffs)
+  none 12
+End
+
+FigPanel: RainEvapPreSalRbandPanel
+  RainEvapPreSalRbandPset
+  RainEvapAxes 1 1
+  none 5
+  Pre@SAL@Rband 
+  SouthWest 12
+End
+
+FigPanel: RainEvapDiffPreSalRbandPanel
+  RainEvapDiffPreSalRbandPset
+  RainEvapDiffAxes 1 1
+  none 5
+  Pre@SAL@Rband@(diffs)
+  none 12
+End
+
+FigPanel: RainEvapSalRbandPanel
+  RainEvapSalRbandPset
+  RainEvapAxes 1 1
+  none 5
+  SAL@Rband 
+  none 12
+End
+
+FigPanel: RainEvapDiffSalRbandPanel
+  RainEvapDiffSalRbandPset
+  RainEvapDiffAxes 1 1
+  none 5
+  SAL@Rband@(diffs)
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: CloudCondPreSalCorePset line 4
+  CloudCondPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudCondPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudCondPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudCondPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudCondDiffPreSalCorePset line 4
+  CloudCondDiffPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudCondDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudCondDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudCondDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudCondSalCorePset line 4
+  CloudCondSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudCondSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudCondSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudCondSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudCondDiffSalCorePset line 4
+  CloudCondDiffSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudCondDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudCondDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudCondDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudEvapPreSalCorePset line 4
+  CloudEvapPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudEvapPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudEvapPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudEvapPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudEvapDiffPreSalCorePset line 4
+  CloudEvapDiffPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudEvapDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudEvapDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudEvapDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudEvapSalCorePset line 4
+  CloudEvapSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudEvapSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudEvapSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudEvapSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudEvapDiffSalCorePset line 4
+  CloudEvapDiffSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudEvapDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudEvapDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudEvapDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudCondPreSalRbandPset line 4
+  CloudCondPreSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudCondPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudCondPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudCondPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudCondDiffPreSalRbandPset line 4
+  CloudCondDiffPreSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudCondDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudCondDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudCondDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudCondSalRbandPset line 4
+  CloudCondSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudCondSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudCondSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudCondSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudCondDiffSalRbandPset line 4
+  CloudCondDiffSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudCondDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudCondDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudCondDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudEvapPreSalRbandPset line 4
+  CloudEvapPreSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudEvapPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudEvapPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudEvapPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudEvapDiffPreSalRbandPset line 4
+  CloudEvapDiffPreSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudEvapDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudEvapDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudEvapDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudEvapSalRbandPset line 4
+  CloudEvapSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudEvapSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudEvapSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudEvapSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: CloudEvapDiffSalRbandPset line 4
+  CloudEvapDiffSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  CloudEvapDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  CloudEvapDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  CloudEvapDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: RainCondPreSalCorePset line 4
+  RainCondPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  RainCondPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  RainCondPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  RainCondPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: RainCondDiffPreSalCorePset line 4
+  RainCondDiffPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  RainCondDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  RainCondDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  RainCondDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: RainCondSalCorePset line 4
+  RainCondSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  RainCondSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  RainCondSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  RainCondSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: RainCondDiffSalCorePset line 4
+  RainCondDiffSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  RainCondDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  RainCondDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  RainCondDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: RainEvapPreSalCorePset line 4
+  RainEvapPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  RainEvapPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  RainEvapPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  RainEvapPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: RainEvapDiffPreSalCorePset line 4
+  RainEvapDiffPreSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  RainEvapDiffPreSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  RainEvapDiffPreSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  RainEvapDiffPreSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: RainEvapSalCorePset line 4
+  RainEvapSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  RainEvapSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  RainEvapSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  RainEvapSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: RainEvapDiffSalCorePset line 4
+  RainEvapDiffSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
+  RainEvapDiffSalCoreLine TSD_SAL_NODUST    SND  2 blue   - 0
+  RainEvapDiffSalCoreLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  RainEvapDiffSalCoreLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: RainCondPreSalRbandPset line 4
+  RainCondPreSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  RainCondPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  RainCondPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  RainCondPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: RainCondDiffPreSalRbandPset line 4
+  RainCondDiffPreSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  RainCondDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  RainCondDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  RainCondDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: RainCondSalRbandPset line 4
+  RainCondSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  RainCondSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  RainCondSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  RainCondSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: RainCondDiffSalRbandPset line 4
+  RainCondDiffSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  RainCondDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  RainCondDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  RainCondDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: RainEvapPreSalRbandPset line 4
+  RainEvapPreSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  RainEvapPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  RainEvapPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  RainEvapPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: RainEvapDiffPreSalRbandPset line 4
+  RainEvapDiffPreSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  RainEvapDiffPreSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  RainEvapDiffPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  RainEvapDiffPreSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: RainEvapSalRbandPset line 4
+  RainEvapSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  RainEvapSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  RainEvapSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  RainEvapSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: RainEvapDiffSalRbandPset line 4
+  RainEvapDiffSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
+  RainEvapDiffSalRbandLine TSD_SAL_NODUST    SND  2 blue   - 0
+  RainEvapDiffSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  RainEvapDiffSalRbandLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+# Data units are g/kg/30minutes. Multiply by 2 to convert
+# to g/kg/h.
+PlotData: CloudCondPreSalCoreLine 2
+  # x data - cloud cond, g/kg/h
+  /all_core_ps_cloud_cond DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudCondSalCoreLine 2
+  # x data - cloud cond, g/kg/h
+  /all_core_s_cloud_cond DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudCondDiffPreSalCoreLine 2
+  # x data - cloud cond, g/kg/h
+  /all_core_ps_cloud_cond_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudCondDiffSalCoreLine 2
+  # x data - cloud cond, g/kg/h
+  /all_core_s_cloud_cond_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudEvapPreSalCoreLine 2
+  # x data - cloud evap, g/kg/h
+  /all_core_ps_cloud_evap DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudEvapSalCoreLine 2
+  # x data - cloud evap, g/kg/h
+  /all_core_s_cloud_evap DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudEvapDiffPreSalCoreLine 2
+  # x data - cloud evap, g/kg/h
+  /all_core_ps_cloud_evap_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudEvapDiffSalCoreLine 2
+  # x data - cloud evap, g/kg/h
+  /all_core_s_cloud_evap_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudCondPreSalRbandLine 2
+  # x data - cloud cond, g/kg/h
+  /all_rb_ps_cloud_cond DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudCondSalRbandLine 2
+  # x data - cloud cond, g/kg/h
+  /all_rb_s_cloud_cond DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudCondDiffPreSalRbandLine 2
+  # x data - cloud cond, g/kg/h
+  /all_rb_ps_cloud_cond_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudCondDiffSalRbandLine 2
+  # x data - cloud cond, g/kg/h
+  /all_rb_s_cloud_cond_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudEvapPreSalRbandLine 2
+  # x data - cloud evap, g/kg/h
+  /all_rb_ps_cloud_evap DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudEvapSalRbandLine 2
+  # x data - cloud evap, g/kg/h
+  /all_rb_s_cloud_evap DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudEvapDiffPreSalRbandLine 2
+  # x data - cloud evap, g/kg/h
+  /all_rb_ps_cloud_evap_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: CloudEvapDiffSalRbandLine 2
+  # x data - cloud evap, g/kg/h
+  /all_rb_s_cloud_evap_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: RainCondPreSalCoreLine 2
+  # x data - rain cond, g/kg/h
+  /all_core_ps_rain_cond DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: RainCondSalCoreLine 2
+  # x data - rain cond, g/kg/h
+  /all_core_s_rain_cond DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: RainCondDiffPreSalCoreLine 2
+  # x data - rain cond, g/kg/h
+  /all_core_ps_rain_cond_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: RainCondDiffSalCoreLine 2
+  # x data - rain cond, g/kg/h
+  /all_core_s_rain_cond_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: RainEvapPreSalCoreLine 2
+  # x data - rain evap, g/kg/h
+  /all_core_ps_rain_evap DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: RainEvapSalCoreLine 2
+  # x data - rain evap, g/kg/h
+  /all_core_s_rain_evap DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: RainEvapDiffPreSalCoreLine 2
+  # x data - rain evap, g/kg/h
+  /all_core_ps_rain_evap_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: RainEvapDiffSalCoreLine 2
+  # x data - rain evap, g/kg/h
+  /all_core_s_rain_evap_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: RainCondPreSalRbandLine 2
+  # x data - rain cond, g/kg/h
+  /all_rb_ps_rain_cond DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: RainCondSalRbandLine 2
+  # x data - rain cond, g/kg/h
+  /all_rb_s_rain_cond DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: RainCondDiffPreSalRbandLine 2
+  # x data - rain cond, g/kg/h
+  /all_rb_ps_rain_cond_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: RainCondDiffSalRbandLine 2
+  # x data - rain cond, g/kg/h
+  /all_rb_s_rain_cond_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: RainEvapPreSalRbandLine 2
+  # x data - rain evap, g/kg/h
+  /all_rb_ps_rain_evap DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: RainEvapSalRbandLine 2
+  # x data - rain evap, g/kg/h
+  /all_rb_s_rain_evap DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: RainEvapDiffPreSalRbandLine 2
+  # x data - rain evap, g/kg/h
+  /all_rb_ps_rain_evap_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: RainEvapDiffSalRbandLine 2
+  # x data - rain evap, g/kg/h
+  /all_rb_s_rain_evap_diff DIAGS/storm_profiles_<CASE>.h5 @ 2 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: CloudCondAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud cond, g/kg/h
+  COND_c g@kg^-^1@h^-^1 0 8 linear [_] {_}
+  # y axis - height, km
+  Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: CloudCondDiffAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud cond, g/kg/h
+  COND_c g@kg^-^1@h^-^1 -4 8 linear [_] {_}
+  # y axis - height, km
+  Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: CloudEvapAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud evap, g/kg/h
+  EVAP_c g@kg^-^1@h^-^1 -6 0 linear [_] {_}
+  # y axis - height, km
+  Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: CloudEvapDiffAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud evap, g/kg/h
+  EVAP_c g@kg^-^1@h^-^1 -6 3 linear [_] {_}
+  # y axis - height, km
+  Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: RainCondAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud cond, g/kg/h
+  COND_r g@kg^-^1@h^-^1 0 1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: RainCondDiffAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud cond, g/kg/h
+  COND_r g@kg^-^1@h^-^1 -1 1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: RainEvapAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud evap, g/kg/h
+  EVAP_r g@kg^-^1@h^-^1 -3 0 linear [_] {_}
+  # y axis - height, km
+  Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: RainEvapDiffAxes 2
+  14 2 [0.025_0.025]
+  # x axis - cloud evap, g/kg/h
+  EVAP_r g@kg^-^1@h^-^1 -1 1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 10 linear [_] {_}
+End
+

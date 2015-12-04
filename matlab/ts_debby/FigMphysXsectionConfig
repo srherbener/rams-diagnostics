@@ -1,0 +1,594 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: CloudCondXsectionPreSal 4
+  DummyCases
+  [2_2]
+  Plots/FigCloudCondXsectionPreSal.jpg
+  CloudCondXsectionSDPreSalPanel     1
+  CloudCondXsectionSNDPreSalPanel    2
+  CloudCondXsectionNSDPreSalPanel    3
+  CloudCondXsectionNSNDPreSalPanel   4
+End 
+
+Figure: CloudCondXsectionSal 4
+  DummyCases
+  [2_2]
+  Plots/FigCloudCondXsectionSal.jpg
+  CloudCondXsectionSDSalPanel     1
+  CloudCondXsectionSNDSalPanel    2
+  CloudCondXsectionNSDSalPanel    3
+  CloudCondXsectionNSNDSalPanel   4
+End 
+
+Figure: CloudEvapXsectionPreSal 4
+  DummyCases
+  [2_2]
+  Plots/FigCloudEvapXsectionPreSal.jpg
+  CloudEvapXsectionSDPreSalPanel     1
+  CloudEvapXsectionSNDPreSalPanel    2
+  CloudEvapXsectionNSDPreSalPanel    3
+  CloudEvapXsectionNSNDPreSalPanel   4
+End 
+
+Figure: CloudEvapXsectionSal 4
+  DummyCases
+  [2_2]
+  Plots/FigCloudEvapXsectionSal.jpg
+  CloudEvapXsectionSDSalPanel     1
+  CloudEvapXsectionSNDSalPanel    2
+  CloudEvapXsectionNSDSalPanel    3
+  CloudEvapXsectionNSNDSalPanel   4
+End 
+
+Figure: RainCondXsectionPreSal 4
+  DummyCases
+  [2_2]
+  Plots/FigRainCondXsectionPreSal.jpg
+  RainCondXsectionSDPreSalPanel     1
+  RainCondXsectionSNDPreSalPanel    2
+  RainCondXsectionNSDPreSalPanel    3
+  RainCondXsectionNSNDPreSalPanel   4
+End 
+
+Figure: RainCondXsectionSal 4
+  DummyCases
+  [2_2]
+  Plots/FigRainCondXsectionSal.jpg
+  RainCondXsectionSDSalPanel     1
+  RainCondXsectionSNDSalPanel    2
+  RainCondXsectionNSDSalPanel    3
+  RainCondXsectionNSNDSalPanel   4
+End 
+
+Figure: RainEvapXsectionPreSal 4
+  DummyCases
+  [2_2]
+  Plots/FigRainEvapXsectionPreSal.jpg
+  RainEvapXsectionSDPreSalPanel     1
+  RainEvapXsectionSNDPreSalPanel    2
+  RainEvapXsectionNSDPreSalPanel    3
+  RainEvapXsectionNSNDPreSalPanel   4
+End 
+
+Figure: RainEvapXsectionSal 4
+  DummyCases
+  [2_2]
+  Plots/FigRainEvapXsectionSal.jpg
+  RainEvapXsectionSDSalPanel     1
+  RainEvapXsectionSNDSalPanel    2
+  RainEvapXsectionNSDSalPanel    3
+  RainEvapXsectionNSNDSalPanel   4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+
+FigPanel: CloudCondXsectionSDPreSalPanel
+  CloudCondXsectionSDPreSalPset
+  CloudCondXsectionAxes 1 1
+  none 5
+  PreSAL:@SD@CloudCond
+  none 12
+End
+
+FigPanel: CloudCondXsectionSNDPreSalPanel
+  CloudCondXsectionSNDPreSalPset
+  CloudCondXsectionAxes 1 1
+  none 5
+  PreSAL:@SND@CloudCond
+  none 12
+End
+
+FigPanel: CloudCondXsectionNSDPreSalPanel
+  CloudCondXsectionNSDPreSalPset
+  CloudCondXsectionAxes 1 1
+  none 5
+  PreSAL:@NSD@CloudCond
+  none 12
+End
+
+FigPanel: CloudCondXsectionNSNDPreSalPanel
+  CloudCondXsectionNSNDPreSalPset
+  CloudCondXsectionAxes 1 1
+  none 5
+  PreSAL:@NSND@CloudCond
+  none 12
+End
+
+FigPanel: CloudCondXsectionSDSalPanel
+  CloudCondXsectionSDSalPset
+  CloudCondXsectionAxes 1 1
+  none 5
+  SAL:@SD@CloudCond
+  none 12
+End
+
+FigPanel: CloudCondXsectionSNDSalPanel
+  CloudCondXsectionSNDSalPset
+  CloudCondXsectionAxes 1 1
+  none 5
+  SAL:@SND@CloudCond
+  none 12
+End
+
+FigPanel: CloudCondXsectionNSDSalPanel
+  CloudCondXsectionNSDSalPset
+  CloudCondXsectionAxes 1 1
+  none 5
+  SAL:@NSD@CloudCond
+  none 12
+End
+
+FigPanel: CloudCondXsectionNSNDSalPanel
+  CloudCondXsectionNSNDSalPset
+  CloudCondXsectionAxes 1 1
+  none 5
+  SAL:@NSND@CloudCond
+  none 12
+End
+
+FigPanel: CloudEvapXsectionSDPreSalPanel
+  CloudEvapXsectionSDPreSalPset
+  CloudEvapXsectionAxes 1 1
+  none 5
+  PreSAL:@SD@CloudEvap
+  none 12
+End
+
+FigPanel: CloudEvapXsectionSNDPreSalPanel
+  CloudEvapXsectionSNDPreSalPset
+  CloudEvapXsectionAxes 1 1
+  none 5
+  PreSAL:@SND@CloudEvap
+  none 12
+End
+
+FigPanel: CloudEvapXsectionNSDPreSalPanel
+  CloudEvapXsectionNSDPreSalPset
+  CloudEvapXsectionAxes 1 1
+  none 5
+  PreSAL:@NSD@CloudEvap
+  none 12
+End
+
+FigPanel: CloudEvapXsectionNSNDPreSalPanel
+  CloudEvapXsectionNSNDPreSalPset
+  CloudEvapXsectionAxes 1 1
+  none 5
+  PreSAL:@NSND@CloudEvap
+  none 12
+End
+
+FigPanel: CloudEvapXsectionSDSalPanel
+  CloudEvapXsectionSDSalPset
+  CloudEvapXsectionAxes 1 1
+  none 5
+  SAL:@SD@CloudEvap
+  none 12
+End
+
+FigPanel: CloudEvapXsectionSNDSalPanel
+  CloudEvapXsectionSNDSalPset
+  CloudEvapXsectionAxes 1 1
+  none 5
+  SAL:@SND@CloudEvap
+  none 12
+End
+
+FigPanel: CloudEvapXsectionNSDSalPanel
+  CloudEvapXsectionNSDSalPset
+  CloudEvapXsectionAxes 1 1
+  none 5
+  SAL:@NSD@CloudEvap
+  none 12
+End
+
+FigPanel: CloudEvapXsectionNSNDSalPanel
+  CloudEvapXsectionNSNDSalPset
+  CloudEvapXsectionAxes 1 1
+  none 5
+  SAL:@NSND@CloudEvap
+  none 12
+End
+
+FigPanel: RainCondXsectionSDPreSalPanel
+  RainCondXsectionSDPreSalPset
+  RainCondXsectionAxes 1 1
+  none 5
+  PreSAL:@SD@RainCond
+  none 12
+End
+
+FigPanel: RainCondXsectionSNDPreSalPanel
+  RainCondXsectionSNDPreSalPset
+  RainCondXsectionAxes 1 1
+  none 5
+  PreSAL:@SND@RainCond
+  none 12
+End
+
+FigPanel: RainCondXsectionNSDPreSalPanel
+  RainCondXsectionNSDPreSalPset
+  RainCondXsectionAxes 1 1
+  none 5
+  PreSAL:@NSD@RainCond
+  none 12
+End
+
+FigPanel: RainCondXsectionNSNDPreSalPanel
+  RainCondXsectionNSNDPreSalPset
+  RainCondXsectionAxes 1 1
+  none 5
+  PreSAL:@NSND@RainCond
+  none 12
+End
+
+FigPanel: RainCondXsectionSDSalPanel
+  RainCondXsectionSDSalPset
+  RainCondXsectionAxes 1 1
+  none 5
+  SAL:@SD@RainCond
+  none 12
+End
+
+FigPanel: RainCondXsectionSNDSalPanel
+  RainCondXsectionSNDSalPset
+  RainCondXsectionAxes 1 1
+  none 5
+  SAL:@SND@RainCond
+  none 12
+End
+
+FigPanel: RainCondXsectionNSDSalPanel
+  RainCondXsectionNSDSalPset
+  RainCondXsectionAxes 1 1
+  none 5
+  SAL:@NSD@RainCond
+  none 12
+End
+
+FigPanel: RainCondXsectionNSNDSalPanel
+  RainCondXsectionNSNDSalPset
+  RainCondXsectionAxes 1 1
+  none 5
+  SAL:@NSND@RainCond
+  none 12
+End
+
+FigPanel: RainEvapXsectionSDPreSalPanel
+  RainEvapXsectionSDPreSalPset
+  RainEvapXsectionAxes 1 1
+  none 5
+  PreSAL:@SD@RainEvap
+  none 12
+End
+
+FigPanel: RainEvapXsectionSNDPreSalPanel
+  RainEvapXsectionSNDPreSalPset
+  RainEvapXsectionAxes 1 1
+  none 5
+  PreSAL:@SND@RainEvap
+  none 12
+End
+
+FigPanel: RainEvapXsectionNSDPreSalPanel
+  RainEvapXsectionNSDPreSalPset
+  RainEvapXsectionAxes 1 1
+  none 5
+  PreSAL:@NSD@RainEvap
+  none 12
+End
+
+FigPanel: RainEvapXsectionNSNDPreSalPanel
+  RainEvapXsectionNSNDPreSalPset
+  RainEvapXsectionAxes 1 1
+  none 5
+  PreSAL:@NSND@RainEvap
+  none 12
+End
+
+FigPanel: RainEvapXsectionSDSalPanel
+  RainEvapXsectionSDSalPset
+  RainEvapXsectionAxes 1 1
+  none 5
+  SAL:@SD@RainEvap
+  none 12
+End
+
+FigPanel: RainEvapXsectionSNDSalPanel
+  RainEvapXsectionSNDSalPset
+  RainEvapXsectionAxes 1 1
+  none 5
+  SAL:@SND@RainEvap
+  none 12
+End
+
+FigPanel: RainEvapXsectionNSDSalPanel
+  RainEvapXsectionNSDSalPset
+  RainEvapXsectionAxes 1 1
+  none 5
+  SAL:@NSD@RainEvap
+  none 12
+End
+
+FigPanel: RainEvapXsectionNSNDSalPanel
+  RainEvapXsectionNSNDSalPset
+  RainEvapXsectionAxes 1 1
+  none 5
+  SAL:@NSND@RainEvap
+  none 12
+End
+
+############ PLOT SETS #################
+
+PlotSet: CloudCondXsectionSDPreSalPset contourf 1
+  CloudCondXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CloudCondXsectionSNDPreSalPset contourf 1
+  CloudCondXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: CloudCondXsectionNSDPreSalPset contourf 1
+  CloudCondXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CloudCondXsectionNSNDPreSalPset contourf 1
+  CloudCondXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: CloudCondXsectionSDSalPset contourf 1
+  CloudCondXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CloudCondXsectionSNDSalPset contourf 1
+  CloudCondXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: CloudCondXsectionNSDSalPset contourf 1
+  CloudCondXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CloudCondXsectionNSNDSalPset contourf 1
+  CloudCondXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: CloudEvapXsectionSDPreSalPset contourf 1
+  CloudEvapXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CloudEvapXsectionSNDPreSalPset contourf 1
+  CloudEvapXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: CloudEvapXsectionNSDPreSalPset contourf 1
+  CloudEvapXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CloudEvapXsectionNSNDPreSalPset contourf 1
+  CloudEvapXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: CloudEvapXsectionSDSalPset contourf 1
+  CloudEvapXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CloudEvapXsectionSNDSalPset contourf 1
+  CloudEvapXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: CloudEvapXsectionNSDSalPset contourf 1
+  CloudEvapXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CloudEvapXsectionNSNDSalPset contourf 1
+  CloudEvapXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RainCondXsectionSDPreSalPset contourf 1
+  RainCondXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RainCondXsectionSNDPreSalPset contourf 1
+  RainCondXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RainCondXsectionNSDPreSalPset contourf 1
+  RainCondXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RainCondXsectionNSNDPreSalPset contourf 1
+  RainCondXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RainCondXsectionSDSalPset contourf 1
+  RainCondXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RainCondXsectionSNDSalPset contourf 1
+  RainCondXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RainCondXsectionNSDSalPset contourf 1
+  RainCondXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RainCondXsectionNSNDSalPset contourf 1
+  RainCondXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RainEvapXsectionSDPreSalPset contourf 1
+  RainEvapXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RainEvapXsectionSNDPreSalPset contourf 1
+  RainEvapXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RainEvapXsectionNSDPreSalPset contourf 1
+  RainEvapXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RainEvapXsectionNSNDPreSalPset contourf 1
+  RainEvapXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RainEvapXsectionSDSalPset contourf 1
+  RainEvapXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RainEvapXsectionSNDSalPset contourf 1
+  RainEvapXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RainEvapXsectionNSDSalPset contourf 1
+  RainEvapXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RainEvapXsectionNSNDSalPset contourf 1
+  RainEvapXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+# Data is in units of g/kg/30minutes. Multiply by 2
+# to get g/kg/hr.
+PlotData: CloudCondXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  cloud, g/kg/h
+  /all_ps_cloud_cond DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: CloudCondXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  cloud, g/kg/h
+  /all_s_cloud_cond DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: CloudEvapXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  cloud, g/kg/h
+  /all_ps_cloud_evap DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: CloudEvapXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  cloud, g/kg/h
+  /all_s_cloud_evap DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: RainCondXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  rain, g/kg/h
+  /all_ps_rain_cond DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: RainCondXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  rain, g/kg/h
+  /all_s_rain_cond DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: RainEvapXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  rain, g/kg/h
+  /all_ps_rain_evap DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: RainEvapXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  rain, g/kg/h
+  /all_s_rain_evap DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: CloudCondXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - cloud - g/kg/h
+  CloudCond g@kg^-^1@h^-^1 0 5 linear [_] {_}
+End
+
+PlotAxes: CloudEvapXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - cloud - g/kg/h
+  CloudEvap g@kg^-^1@h^-^1 -5 0 linear [_] {_}
+End
+
+PlotAxes: RainCondXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - cloud - g/kg/h
+  RainCond g@kg^-^1@h^-^1 0 0.8 linear [_] {_}
+End
+
+PlotAxes: RainEvapXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - cloud - g/kg/h
+  RainEvap g@kg^-^1@h^-^1 -2 0 linear [_] {_}
+End
+
