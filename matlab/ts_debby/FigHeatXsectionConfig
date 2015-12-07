@@ -3,44 +3,52 @@
 #
 
 ######### FIGURES ###################
-Figure: LhvHeatXsectionPreSal 4
+Figure: LhfHeatXsectionPreSal 6
   DummyCases
-  [2_2]
-  Plots/FigLhvHeatXsectionPreSal.jpg
-  LhvHeatXsectionSDPreSalPanel         1
-  LhvHeatXsectionSNDPreSalPanel    2
-  LhvHeatXsectionNSDPreSalPanel    3
-  LhvHeatXsectionNSNDPreSalPanel   4
-End 
-
-Figure: LhvHeatXsectionSal 4
-  DummyCases
-  [2_2]
-  Plots/FigLhvHeatXsectionSal.jpg
-  LhvHeatXsectionSDSalPanel         1
-  LhvHeatXsectionSNDSalPanel    2
-  LhvHeatXsectionNSDSalPanel    3
-  LhvHeatXsectionNSNDSalPanel   4
-End 
-
-Figure: LhfHeatXsectionPreSal 4
-  DummyCases
-  [2_2]
+  [3_2]
   Plots/FigLhfHeatXsectionPreSal.jpg
-  LhfHeatXsectionSDPreSalPanel         1
-  LhfHeatXsectionSNDPreSalPanel    2
-  LhfHeatXsectionNSDPreSalPanel    3
-  LhfHeatXsectionNSNDPreSalPanel   4
+  LhfHeatXsection_SD_PreSalPanel           1
+  LhfHeatXsection_SND_PreSalPanel          2
+  LhfHeatXsection_NSD_PreSalPanel          3
+  LhfHeatXsection_NSND_PreSalPanel         4
+  LhfHeatDiffXsection_NSD_SD_PreSalPanel   5
+  LhfHeatDiffXsection_NSND_SND_PreSalPanel 6
 End 
 
-Figure: LhfHeatXsectionSal 4
+Figure: LhfHeatXsectionSal 6
   DummyCases
-  [2_2]
+  [3_2]
   Plots/FigLhfHeatXsectionSal.jpg
-  LhfHeatXsectionSDSalPanel         1
-  LhfHeatXsectionSNDSalPanel    2
-  LhfHeatXsectionNSDSalPanel    3
-  LhfHeatXsectionNSNDSalPanel   4
+  LhfHeatXsection_SD_SalPanel           1
+  LhfHeatXsection_NSD_SalPanel          2
+  LhfHeatXsection_SND_SalPanel          3
+  LhfHeatXsection_NSND_SalPanel         4
+  LhfHeatDiffXsection_SND_SD_SalPanel   5
+  LhfHeatDiffXsection_NSND_NSD_SalPanel 6
+End 
+
+Figure: LhvHeatXsectionPreSal 6
+  DummyCases
+  [3_2]
+  Plots/FigLhvHeatXsectionPreSal.jpg
+  LhvHeatXsection_SD_PreSalPanel           1
+  LhvHeatXsection_SND_PreSalPanel          2
+  LhvHeatXsection_NSD_PreSalPanel          3
+  LhvHeatXsection_NSND_PreSalPanel         4
+  LhvHeatDiffXsection_NSD_SD_PreSalPanel   5
+  LhvHeatDiffXsection_NSND_SND_PreSalPanel 6
+End 
+
+Figure: LhvHeatXsectionSal 6
+  DummyCases
+  [3_2]
+  Plots/FigLhvHeatXsectionSal.jpg
+  LhvHeatXsection_SD_SalPanel           1
+  LhvHeatXsection_NSD_SalPanel          2
+  LhvHeatXsection_SND_SalPanel          3
+  LhvHeatXsection_NSND_SalPanel         4
+  LhvHeatDiffXsection_SND_SD_SalPanel   5
+  LhvHeatDiffXsection_NSND_NSD_SalPanel 6
 End 
 
 ########### CASES ####################
@@ -49,229 +57,320 @@ CaseSet: DummyCases 1
 End
 
 ########### PANELS ####################
-FigPanel: LhvHeatXsectionSDPreSalPanel
-  LhvHeatXsectionSDPreSalPset
-  LhvHeatXsectionAxes 1 1
+FigPanel: LhfHeatXsection_SD_PreSalPanel
+  LhfHeatXsection_SD_PreSalPset
+  LhfHeatXsectionAxes 0 1
   none 5
-  PreSAL:@SD@LHvap
+  PS:@SD@LH_f 
   none 12
 End
 
-FigPanel: LhvHeatXsectionSNDPreSalPanel
-  LhvHeatXsectionSNDPreSalPset
-  LhvHeatXsectionAxes 1 1
+FigPanel: LhfHeatXsection_NSD_PreSalPanel
+  LhfHeatXsection_NSD_PreSalPset
+  LhfHeatXsectionAxes 0 1
   none 5
-  PreSAL:@SND@LHvap
+  PS:@NSD@LH_f
   none 12
 End
 
-FigPanel: LhvHeatXsectionNSDPreSalPanel
-  LhvHeatXsectionNSDPreSalPset
-  LhvHeatXsectionAxes 1 1
+FigPanel: LhfHeatDiffXsection_NSD_SD_PreSalPanel
+  LhfHeatDiffXsection_NSD_SD_PreSalPset
+  LhfHeatDiffXsectionAxes 1 1
   none 5
-  PreSAL:@NSD@LHvap
+  PS:@NSD-SD@LH_f
   none 12
 End
 
-FigPanel: LhvHeatXsectionNSNDPreSalPanel
-  LhvHeatXsectionNSNDPreSalPset
-  LhvHeatXsectionAxes 1 1
+FigPanel: LhfHeatXsection_SND_PreSalPanel
+  LhfHeatXsection_SND_PreSalPset
+  LhfHeatXsectionAxes 0 0
   none 5
-  PreSAL:@NSND@LHvap
+  PS:@SND@LH_f
   none 12
 End
 
-FigPanel: LhvHeatXsectionSDSalPanel
-  LhvHeatXsectionSDSalPset
-  LhvHeatXsectionAxes 1 1
+FigPanel: LhfHeatXsection_NSND_PreSalPanel
+  LhfHeatXsection_NSND_PreSalPset
+  LhfHeatXsectionAxes 0 0
   none 5
-  SAL:@SD@LHvap
+  PS:@NSND@LH_f
   none 12
 End
 
-FigPanel: LhvHeatXsectionSNDSalPanel
-  LhvHeatXsectionSNDSalPset
-  LhvHeatXsectionAxes 1 1
+FigPanel: LhfHeatDiffXsection_NSND_SND_PreSalPanel
+  LhfHeatDiffXsection_NSND_SND_PreSalPset
+  LhfHeatDiffXsectionAxes 1 0
   none 5
-  SAL:@SND@LHvap
+  PS:@NSND-SND@LH_f
   none 12
 End
 
-FigPanel: LhvHeatXsectionNSDSalPanel
-  LhvHeatXsectionNSDSalPset
-  LhvHeatXsectionAxes 1 1
+FigPanel: LhfHeatXsection_SD_SalPanel
+  LhfHeatXsection_SD_SalPset
+  LhfHeatXsectionAxes 0 1
   none 5
-  SAL:@NSD@LHvap
+  S:@SD@LH_f 
   none 12
 End
 
-FigPanel: LhvHeatXsectionNSNDSalPanel
-  LhvHeatXsectionNSNDSalPset
-  LhvHeatXsectionAxes 1 1
+FigPanel: LhfHeatXsection_SND_SalPanel
+  LhfHeatXsection_SND_SalPset
+  LhfHeatXsectionAxes 0 1
   none 5
-  SAL:@NSND@LHvap
+  S:@SND@LH_f
   none 12
 End
 
-FigPanel: LhfHeatXsectionSDPreSalPanel
-  LhfHeatXsectionSDPreSalPset
-  LhfHeatXsectionAxes 1 1
+FigPanel: LhfHeatDiffXsection_SND_SD_SalPanel
+  LhfHeatDiffXsection_SND_SD_SalPset
+  LhfHeatDiffXsectionAxes 1 1
   none 5
-  PreSAL:@SD@LHfrz
+  S:@SND-SD@LH_f 
   none 12
 End
 
-FigPanel: LhfHeatXsectionSNDPreSalPanel
-  LhfHeatXsectionSNDPreSalPset
-  LhfHeatXsectionAxes 1 1
+FigPanel: LhfHeatXsection_NSD_SalPanel
+  LhfHeatXsection_NSD_SalPset
+  LhfHeatXsectionAxes 0 0
   none 5
-  PreSAL:@SND@LHfrz
+  S:@NSD@LH_f
   none 12
 End
 
-FigPanel: LhfHeatXsectionNSDPreSalPanel
-  LhfHeatXsectionNSDPreSalPset
-  LhfHeatXsectionAxes 1 1
+FigPanel: LhfHeatXsection_NSND_SalPanel
+  LhfHeatXsection_NSND_SalPset
+  LhfHeatXsectionAxes 0 0
   none 5
-  PreSAL:@NSD@LHfrz
+  S:@NSND@LH_f
   none 12
 End
 
-FigPanel: LhfHeatXsectionNSNDPreSalPanel
-  LhfHeatXsectionNSNDPreSalPset
-  LhfHeatXsectionAxes 1 1
+FigPanel: LhfHeatDiffXsection_NSND_NSD_SalPanel
+  LhfHeatDiffXsection_NSND_NSD_SalPset
+  LhfHeatDiffXsectionAxes 1 0
   none 5
-  PreSAL:@NSND@LHfrz
+  S:@NSND-NSD@LH_f 
   none 12
 End
 
-FigPanel: LhfHeatXsectionSDSalPanel
-  LhfHeatXsectionSDSalPset
-  LhfHeatXsectionAxes 1 1
+
+
+
+FigPanel: LhvHeatXsection_SD_PreSalPanel
+  LhvHeatXsection_SD_PreSalPset
+  LhvHeatXsectionAxes 0 1
   none 5
-  SAL:@SD@LHfrz
+  PS:@SD@LH_v 
   none 12
 End
 
-FigPanel: LhfHeatXsectionSNDSalPanel
-  LhfHeatXsectionSNDSalPset
-  LhfHeatXsectionAxes 1 1
+FigPanel: LhvHeatXsection_NSD_PreSalPanel
+  LhvHeatXsection_NSD_PreSalPset
+  LhvHeatXsectionAxes 0 1
   none 5
-  SAL:@SND@LHfrz
+  PS:@NSD@LH_v
   none 12
 End
 
-FigPanel: LhfHeatXsectionNSDSalPanel
-  LhfHeatXsectionNSDSalPset
-  LhfHeatXsectionAxes 1 1
+FigPanel: LhvHeatDiffXsection_NSD_SD_PreSalPanel
+  LhvHeatDiffXsection_NSD_SD_PreSalPset
+  LhvHeatDiffXsectionAxes 1 1
   none 5
-  SAL:@NSD@LHfrz
+  PS:@NSD-SD@LH_v
   none 12
 End
 
-FigPanel: LhfHeatXsectionNSNDSalPanel
-  LhfHeatXsectionNSNDSalPset
-  LhfHeatXsectionAxes 1 1
+FigPanel: LhvHeatXsection_SND_PreSalPanel
+  LhvHeatXsection_SND_PreSalPset
+  LhvHeatXsectionAxes 0 0
   none 5
-  SAL:@NSND@LHfrz
+  PS:@SND@LH_v
+  none 12
+End
+
+FigPanel: LhvHeatXsection_NSND_PreSalPanel
+  LhvHeatXsection_NSND_PreSalPset
+  LhvHeatXsectionAxes 0 0
+  none 5
+  PS:@NSND@LH_v
+  none 12
+End
+
+FigPanel: LhvHeatDiffXsection_NSND_SND_PreSalPanel
+  LhvHeatDiffXsection_NSND_SND_PreSalPset
+  LhvHeatDiffXsectionAxes 1 0
+  none 5
+  PS:@NSND-SND@LH_v
+  none 12
+End
+
+FigPanel: LhvHeatXsection_SD_SalPanel
+  LhvHeatXsection_SD_SalPset
+  LhvHeatXsectionAxes 0 1
+  none 5
+  S:@SD@LH_v 
+  none 12
+End
+
+FigPanel: LhvHeatXsection_SND_SalPanel
+  LhvHeatXsection_SND_SalPset
+  LhvHeatXsectionAxes 0 1
+  none 5
+  S:@SND@LH_v
+  none 12
+End
+
+FigPanel: LhvHeatDiffXsection_SND_SD_SalPanel
+  LhvHeatDiffXsection_SND_SD_SalPset
+  LhvHeatDiffXsectionAxes 1 1
+  none 5
+  S:@SND-SD@LH_v 
+  none 12
+End
+
+FigPanel: LhvHeatXsection_NSD_SalPanel
+  LhvHeatXsection_NSD_SalPset
+  LhvHeatXsectionAxes 0 0
+  none 5
+  S:@NSD@LH_v
+  none 12
+End
+
+FigPanel: LhvHeatXsection_NSND_SalPanel
+  LhvHeatXsection_NSND_SalPset
+  LhvHeatXsectionAxes 0 0
+  none 5
+  S:@NSND@LH_v
+  none 12
+End
+
+FigPanel: LhvHeatDiffXsection_NSND_NSD_SalPanel
+  LhvHeatDiffXsection_NSND_NSD_SalPset
+  LhvHeatDiffXsectionAxes 1 0
+  none 5
+  S:@NSND-NSD@LH_v 
   none 12
 End
 
 ############ PLOT SETS #################
-PlotSet: LhvHeatXsectionSDPreSalPset contourf 1
-  LhvHeatXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
-End
-
-PlotSet: LhvHeatXsectionSNDPreSalPset contourf 1
-  LhvHeatXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
-End
-
-PlotSet: LhvHeatXsectionNSDPreSalPset contourf 1
-  LhvHeatXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
-End
-
-PlotSet: LhvHeatXsectionNSNDPreSalPset contourf 1
-  LhvHeatXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
-End
-
-PlotSet: LhvHeatXsectionSDSalPset contourf 1
-  LhvHeatXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
-End
-
-PlotSet: LhvHeatXsectionSNDSalPset contourf 1
-  LhvHeatXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
-End
-
-PlotSet: LhvHeatXsectionNSDSalPset contourf 1
-  LhvHeatXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
-End
-
-PlotSet: LhvHeatXsectionNSNDSalPset contourf 1
-  LhvHeatXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
-End
-
-PlotSet: LhfHeatXsectionSDPreSalPset contourf 1
+PlotSet: LhfHeatXsection_SD_PreSalPset contourf 1
   LhfHeatXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
 End
 
-PlotSet: LhfHeatXsectionSNDPreSalPset contourf 1
-  LhfHeatXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
-End
-
-PlotSet: LhfHeatXsectionNSDPreSalPset contourf 1
+PlotSet: LhfHeatXsection_NSD_PreSalPset contourf 1
   LhfHeatXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
 End
 
-PlotSet: LhfHeatXsectionNSNDPreSalPset contourf 1
+PlotSet: LhfHeatDiffXsection_NSD_SD_PreSalPset diff_contourf 1
+  LhfHeatDiffXsectionPreSalContour NSD_SD none  2 blue   - 0
+End
+
+PlotSet: LhfHeatXsection_SND_PreSalPset contourf 1
+  LhfHeatXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: LhfHeatXsection_NSND_PreSalPset contourf 1
   LhfHeatXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
 End
 
-PlotSet: LhfHeatXsectionSDSalPset contourf 1
+PlotSet: LhfHeatDiffXsection_NSND_SND_PreSalPset diff_contourf 1
+  LhfHeatDiffXsectionPreSalContour NSND_SND none  2 blue   - 0
+End
+
+PlotSet: LhfHeatXsection_SD_SalPset contourf 1
   LhfHeatXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
 End
 
-PlotSet: LhfHeatXsectionSNDSalPset contourf 1
+PlotSet: LhfHeatXsection_SND_SalPset contourf 1
   LhfHeatXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
 End
 
-PlotSet: LhfHeatXsectionNSDSalPset contourf 1
+PlotSet: LhfHeatDiffXsection_SND_SD_SalPset diff_contourf 1
+  LhfHeatDiffXsectionSalContour SND_SD none  2 blue   - 0
+End
+
+PlotSet: LhfHeatXsection_NSD_SalPset contourf 1
   LhfHeatXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
 End
 
-PlotSet: LhfHeatXsectionNSNDSalPset contourf 1
+PlotSet: LhfHeatXsection_NSND_SalPset contourf 1
   LhfHeatXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
 End
 
-############ PLOT DATA #################
-# latent heat/cool data is in K per 30 minutes since
-# RAMS files are saved every 30 minutes. To covert to
-# K/h multiply by 2.
+PlotSet: LhfHeatDiffXsection_NSND_NSD_SalPset diff_contourf 1
+  LhfHeatDiffXsectionSalContour NSND_NSD none  2 blue   - 0
+End
 
-PlotData: LhvHeatXsectionPreSalContour 3
-  # x data - radius, km
-  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
-  # y data - height, km
-  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
-  # z data -  lhv_heat, K/hr
-  /all_ps_lhv_heat DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+
+
+
+PlotSet: LhvHeatXsection_SD_PreSalPset contourf 1
+  LhvHeatXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
 End
-  
-PlotData: LhvHeatXsectionSalContour 3
-  # x data - radius, km
-  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
-  # y data - height, km
-  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
-  # z data -  lhv_heat, K/hr
-  /all_s_lhv_heat DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+
+PlotSet: LhvHeatXsection_NSD_PreSalPset contourf 1
+  LhvHeatXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
 End
-  
+
+PlotSet: LhvHeatDiffXsection_NSD_SD_PreSalPset diff_contourf 1
+  LhvHeatDiffXsectionPreSalContour NSD_SD none  2 blue   - 0
+End
+
+PlotSet: LhvHeatXsection_SND_PreSalPset contourf 1
+  LhvHeatXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: LhvHeatXsection_NSND_PreSalPset contourf 1
+  LhvHeatXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: LhvHeatDiffXsection_NSND_SND_PreSalPset diff_contourf 1
+  LhvHeatDiffXsectionPreSalContour NSND_SND none  2 blue   - 0
+End
+
+PlotSet: LhvHeatXsection_SD_SalPset contourf 1
+  LhvHeatXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: LhvHeatXsection_SND_SalPset contourf 1
+  LhvHeatXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: LhvHeatDiffXsection_SND_SD_SalPset diff_contourf 1
+  LhvHeatDiffXsectionSalContour SND_SD none  2 blue   - 0
+End
+
+PlotSet: LhvHeatXsection_NSD_SalPset contourf 1
+  LhvHeatXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: LhvHeatXsection_NSND_SalPset contourf 1
+  LhvHeatXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: LhvHeatDiffXsection_NSND_NSD_SalPset diff_contourf 1
+  LhvHeatDiffXsectionSalContour NSND_NSD none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+# Units in files are K/30minutes. Multiply
+# by 2 to convert to K/h
 PlotData: LhfHeatXsectionPreSalContour 3
   # x data - radius, km
   /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
-  # z data -  lhf_heat, K/hr
+  # z data -  lhf_heat, K
   /all_ps_lhf_heat DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: LhfHeatDiffXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  lhf_heat, K
+  /all_ps_lhf_heat_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 2 0
 End
   
 PlotData: LhfHeatXsectionSalContour 3
@@ -279,28 +378,100 @@ PlotData: LhfHeatXsectionSalContour 3
   /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
   # y data - height, km
   /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
-  # z data -  lhf_heat, K/hr
+  # z data -  lhf_heat, K
   /all_s_lhf_heat DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
 End
   
-############ PLOT AXES #################
-PlotAxes: LhvHeatXsectionAxes 3
-  14 2 [0.025_0.025]
-  # x axis - radius
-  Radius km 0 500 linear [100_300_500] {_}
-  # y axis - utc time
-  Height km 0 15 linear [_] {_}
-  # z axis - lhv_heat - K/hr
-  LHV@Heating K@h^-^1 0 20 linear [_] {_}
+PlotData: LhfHeatDiffXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  lhf_heat, K
+  /all_s_lhf_heat_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 2 0
 End
+  
 
+
+
+
+PlotData: LhvHeatXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  lhv_heat, K
+  /all_ps_lhv_heat DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: LhvHeatDiffXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  lhv_heat, K
+  /all_ps_lhv_heat_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: LhvHeatXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  lhv_heat, K
+  /all_s_lhv_heat DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: LhvHeatDiffXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  lhv_heat, K
+  /all_s_lhv_heat_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+############ PLOT AXES #################
 PlotAxes: LhfHeatXsectionAxes 3
   14 2 [0.025_0.025]
   # x axis - radius
   Radius km 0 500 linear [100_300_500] {_}
   # y axis - utc time
   Height km 0 15 linear [_] {_}
-  # z axis - lhv_heat - K/hr
-  LHF@Heating K@h^-^1 0 0.5 linear [_] {_}
+  # z axis - lhf_heat - K
+  LhfHeat K@h^-^1 0 0.8 linear [_] {_}
+End
+
+PlotAxes: LhfHeatDiffXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - lhf_heat - K
+  LhfHeat K@h^-^1 -0.3 0.3 linear [_] {_}
+End
+
+
+
+
+PlotAxes: LhvHeatXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - lhf_heat - K
+  LhvHeat K@h^-^1 0 20 linear [_] {_}
+End
+
+PlotAxes: LhvHeatDiffXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - lhf_heat - K
+  LhvHeat K@h^-^1 -5 5 linear [_] {_}
 End
 
