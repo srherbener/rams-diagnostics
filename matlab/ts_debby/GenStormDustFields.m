@@ -16,6 +16,9 @@ function [ ] = GenStormDustFields()
     { 'FILTERS/all_500_<CASE>.h5' '/filter' 'HDF5/<CASE>/HDF5/d1_num-<CASE>-AS-2006-08-20-120000-g3.h5' '/dust1_concen' 'VAPOR/HDF5/storm_d1_num_<CASE>.h5', '/d1_num' }
     { 'FILTERS/all_500_<CASE>.h5' '/filter' 'HDF5/<CASE>/HDF5/d2_num-<CASE>-AS-2006-08-20-120000-g3.h5' '/dust2_concen' 'VAPOR/HDF5/storm_d2_num_<CASE>.h5', '/d2_num' }
 
+    { 'FILTERS/all_500_<CASE>.h5' '/filter' 'HDF5/<CASE>/HDF5/trdust1_diff-<CASE>-AS-2006-08-20-120000-g3.h5' '/trdust1_diff' 'VAPOR/HDF5/storm_trdust1_diff_<CASE>.h5', '/trdust1_diff' }
+    { 'FILTERS/all_500_<CASE>.h5' '/filter' 'HDF5/<CASE>/HDF5/trdust2_diff-<CASE>-AS-2006-08-20-120000-g3.h5' '/trdust2_diff' 'VAPOR/HDF5/storm_trdust2_diff_<CASE>.h5', '/trdust2_diff' }
+
     { 'FILTERS/all_500_<CASE>.h5' '/filter' 'HDF5/<CASE>/HDF5/dust_cloud-<CASE>-AS-2006-08-20-120000-g3.h5' '/dust_cloud_mass' 'VAPOR/HDF5/storm_dust_cloud_<CASE>.h5', '/dust_cloud' }
     { 'FILTERS/all_500_<CASE>.h5' '/filter' 'HDF5/<CASE>/HDF5/dust_rain-<CASE>-AS-2006-08-20-120000-g3.h5'  '/dust_rain_mass'  'VAPOR/HDF5/storm_dust_rain_<CASE>.h5',  '/dust_rain'  }
 
@@ -81,38 +84,27 @@ function [ ] = GenStormDustFields()
       DimOrder = { 'x' 'y' 'z' 't' };
       Vsize = [ Nx Ny Nz Inf ];
       Csize = [ Nx Ny 1 1 ];
-      h5create(OutFile, Ovname, Vsize, 'ChunkSize', Csize, 'Deflate', 6, 'Shuffle', true);
-
-      % prep for reading input files one timestep at a time
-      FILTER_DS = ncgeodataset(FilterFile);
-      DUST_DS   = ncgeodataset(DustFile);
-
-      FILTER_VAR = FILTER_DS.geovariable(Fvname);
-      DUST_VAR   = DUST_DS.geovariable(Dvname);
+      h5create(OutFile, Ovname, Vsize, 'DataType', 'single', 'ChunkSize', Csize, 'Deflate', 6, 'Shuffle', true);
 
       % Do one time step at a time to help keep memory requirements lower.
-      %
-      % DUST_VAR has size of (Nx,Ny,Nz,Nt) and FILTER_VAR has size of (Nx,Ny,1,Nt) so
-      % the single in FILTER_VAR needs to be replicated Nz times.
+      %   Filter is (x,y,t)
+      %   Data is (x,y,z,t)
       for it = 1:Nt
-        % nctoolbox, for a single timestep, returns dimensions as
-        % (z,y,x) or (y,x). Run permute to put these into (x,y,z) and (x,y) order.
-        FILTER = squeeze(FILTER_VAR.data(it,:,:,:));
-        DUST   = squeeze(DUST_VAR.data(it,:,:,:));
+        Start = [ 1 1 1 it ];
+        Fcount = [ Nx Ny  1 1 ];
+        Dcount = [ Nx Ny Nz 1 ];
 
-        FILTER = permute(FILTER, [ 2 1 ]);
-        DUST = permute(DUST, [ 3 2 1 ]);
+        FILTER = squeeze(h5read(FilterFile, Fvname, Start, Fcount));
+        DUST   = squeeze(h5read(DustFile,   Dvname, Start, Dcount));
 
-        % Replicate levels
+        % Replicate levels in the filter so it matches up with the data
         FILTER = repmat(FILTER, [ 1 1 Nz ]);
 
         % Select dust only where filter has 1's (filter entries are either 1's or 0's)
         DUST = DUST .* FILTER;
 
         % Write DUST to output file. 
-        Dstart = [ 1 1 1 it ];
-        Dcount = [ Nx Ny Nz 1 ];
-        h5write (OutFile, Ovname, DUST, Dstart, Dcount);
+        h5write (OutFile, Ovname, DUST, Start, Dcount);
 
         if (mod(it, 10) == 0)
           fprintf('  Completed timestep: %d\n', it);

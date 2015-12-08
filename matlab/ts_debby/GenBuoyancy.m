@@ -12,7 +12,8 @@ function [ ] = GenBuoyancy()
 
   % Description of measurements
   FileList = {
-    { 'FILTERS/core_all_<CASE>.h5' '/filter' 'HDF5/<CASE>/HDF5/theta_rho-<CASE>-AS-2006-08-20-120000-g3.h5' '/theta_rho' 'HDF5/<CASE>/HDF5/buoy_acc-<CASE>-AS-2006-08-20-120000-g3.h5' '/buoy_acc' 'm/s2' 'buoyancy_acceleration' }
+    { 'FILTERS/core_all_<CASE>.h5' '/filter' 'HDF5/<CASE>/HDF5/theta_rho-<CASE>-AS-2006-08-20-120000-g3.h5' '/theta_rho' 'HDF5/<CASE>/HDF5/core_buoy_acc-<CASE>-AS-2006-08-20-120000-g3.h5' '/buoy_acc' 'm/s2' 'buoyancy_acceleration' }
+    { 'FILTERS/rband_all_<CASE>.h5' '/filter' 'HDF5/<CASE>/HDF5/theta_rho-<CASE>-AS-2006-08-20-120000-g3.h5' '/theta_rho' 'HDF5/<CASE>/HDF5/rband_buoy_acc-<CASE>-AS-2006-08-20-120000-g3.h5' '/buoy_acc' 'm/s2' 'buoyancy_acceleration' }
     };
   Nfiles = length(FileList);
 
@@ -67,7 +68,7 @@ function [ ] = GenBuoyancy()
 
       % Create the output dataset, give time dimension ability to continuously expand
       Vsize = [ Nx Ny Nz Inf ];
-      h5create(OutFile, Ovname, Vsize, 'ChunkSize', [ Nx Ny 1 1 ], 'Deflate', 1, 'Shuffle', 1);
+      h5create(OutFile, Ovname, Vsize, 'DataType', 'single', 'ChunkSize', [ Nx Ny 1 1 ], 'Deflate', 1, 'Shuffle', 1);
 
       % Do one time step at a time in order to not overwhelm the memory usage.
       for it = 1:Nt
@@ -100,7 +101,13 @@ function [ ] = GenBuoyancy()
 
         % Write the data for this time step
         h5write (OutFile, Ovname, BUOY, Start, Tcount);
+
+        % report progress to user
+        if (mod(it,10) == 0)
+          fprintf('    Working, time step = %d\n', it);
+        end
       end
+      fprintf('\n');
 
       % Write coordinates into the output file
       Xname = '/x_coords';
