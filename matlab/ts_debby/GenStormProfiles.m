@@ -270,6 +270,56 @@ function [ ] = GenStormProfiles()
     { 'DIAGS/hist_meas_az_rain_cond_<CASE>.h5' '/all_rb_ps_rain_cond'   '/all_rb_ps_rain_cond'   'z' }
     { 'DIAGS/hist_meas_az_rain_cond_<CASE>.h5' '/all_rb_s_rain_cond'    '/all_rb_s_rain_cond'    'z' }
 
+    { 'DIAGS/hist_meas_az_pris_sub_<CASE>.h5' '/all_core_ps_pris_sub' '/all_core_ps_pris_sub' 'z' }
+    { 'DIAGS/hist_meas_az_pris_sub_<CASE>.h5' '/all_core_s_pris_sub'  '/all_core_s_pris_sub'  'z' }
+    { 'DIAGS/hist_meas_az_pris_sub_<CASE>.h5' '/all_rb_ps_pris_sub'   '/all_rb_ps_pris_sub'   'z' }
+    { 'DIAGS/hist_meas_az_pris_sub_<CASE>.h5' '/all_rb_s_pris_sub'    '/all_rb_s_pris_sub'    'z' }
+
+    { 'DIAGS/hist_meas_az_pris_dep_<CASE>.h5' '/all_core_ps_pris_dep' '/all_core_ps_pris_dep' 'z' }
+    { 'DIAGS/hist_meas_az_pris_dep_<CASE>.h5' '/all_core_s_pris_dep'  '/all_core_s_pris_dep'  'z' }
+    { 'DIAGS/hist_meas_az_pris_dep_<CASE>.h5' '/all_rb_ps_pris_dep'   '/all_rb_ps_pris_dep'   'z' }
+    { 'DIAGS/hist_meas_az_pris_dep_<CASE>.h5' '/all_rb_s_pris_dep'    '/all_rb_s_pris_dep'    'z' }
+
+    { 'DIAGS/hist_meas_az_snow_sub_<CASE>.h5' '/all_core_ps_snow_sub' '/all_core_ps_snow_sub' 'z' }
+    { 'DIAGS/hist_meas_az_snow_sub_<CASE>.h5' '/all_core_s_snow_sub'  '/all_core_s_snow_sub'  'z' }
+    { 'DIAGS/hist_meas_az_snow_sub_<CASE>.h5' '/all_rb_ps_snow_sub'   '/all_rb_ps_snow_sub'   'z' }
+    { 'DIAGS/hist_meas_az_snow_sub_<CASE>.h5' '/all_rb_s_snow_sub'    '/all_rb_s_snow_sub'    'z' }
+
+    { 'DIAGS/hist_meas_az_snow_dep_<CASE>.h5' '/all_core_ps_snow_dep' '/all_core_ps_snow_dep' 'z' }
+    { 'DIAGS/hist_meas_az_snow_dep_<CASE>.h5' '/all_core_s_snow_dep'  '/all_core_s_snow_dep'  'z' }
+    { 'DIAGS/hist_meas_az_snow_dep_<CASE>.h5' '/all_rb_ps_snow_dep'   '/all_rb_ps_snow_dep'   'z' }
+    { 'DIAGS/hist_meas_az_snow_dep_<CASE>.h5' '/all_rb_s_snow_dep'    '/all_rb_s_snow_dep'    'z' }
+
+    { 'DIAGS/hist_meas_az_aggr_sub_<CASE>.h5' '/all_core_ps_aggr_sub' '/all_core_ps_aggr_sub' 'z' }
+    { 'DIAGS/hist_meas_az_aggr_sub_<CASE>.h5' '/all_core_s_aggr_sub'  '/all_core_s_aggr_sub'  'z' }
+    { 'DIAGS/hist_meas_az_aggr_sub_<CASE>.h5' '/all_rb_ps_aggr_sub'   '/all_rb_ps_aggr_sub'   'z' }
+    { 'DIAGS/hist_meas_az_aggr_sub_<CASE>.h5' '/all_rb_s_aggr_sub'    '/all_rb_s_aggr_sub'    'z' }
+
+    { 'DIAGS/hist_meas_az_aggr_dep_<CASE>.h5' '/all_core_ps_aggr_dep' '/all_core_ps_aggr_dep' 'z' }
+    { 'DIAGS/hist_meas_az_aggr_dep_<CASE>.h5' '/all_core_s_aggr_dep'  '/all_core_s_aggr_dep'  'z' }
+    { 'DIAGS/hist_meas_az_aggr_dep_<CASE>.h5' '/all_rb_ps_aggr_dep'   '/all_rb_ps_aggr_dep'   'z' }
+    { 'DIAGS/hist_meas_az_aggr_dep_<CASE>.h5' '/all_rb_s_aggr_dep'    '/all_rb_s_aggr_dep'    'z' }
+
+    { 'DIAGS/hist_meas_az_graup_sub_<CASE>.h5' '/all_core_ps_graup_sub' '/all_core_ps_graup_sub' 'z' }
+    { 'DIAGS/hist_meas_az_graup_sub_<CASE>.h5' '/all_core_s_graup_sub'  '/all_core_s_graup_sub'  'z' }
+    { 'DIAGS/hist_meas_az_graup_sub_<CASE>.h5' '/all_rb_ps_graup_sub'   '/all_rb_ps_graup_sub'   'z' }
+    { 'DIAGS/hist_meas_az_graup_sub_<CASE>.h5' '/all_rb_s_graup_sub'    '/all_rb_s_graup_sub'    'z' }
+
+    { 'DIAGS/hist_meas_az_graup_dep_<CASE>.h5' '/all_core_ps_graup_dep' '/all_core_ps_graup_dep' 'z' }
+    { 'DIAGS/hist_meas_az_graup_dep_<CASE>.h5' '/all_core_s_graup_dep'  '/all_core_s_graup_dep'  'z' }
+    { 'DIAGS/hist_meas_az_graup_dep_<CASE>.h5' '/all_rb_ps_graup_dep'   '/all_rb_ps_graup_dep'   'z' }
+    { 'DIAGS/hist_meas_az_graup_dep_<CASE>.h5' '/all_rb_s_graup_dep'    '/all_rb_s_graup_dep'    'z' }
+
+    { 'DIAGS/hist_meas_az_hail_sub_<CASE>.h5' '/all_core_ps_hail_sub' '/all_core_ps_hail_sub' 'z' }
+    { 'DIAGS/hist_meas_az_hail_sub_<CASE>.h5' '/all_core_s_hail_sub'  '/all_core_s_hail_sub'  'z' }
+    { 'DIAGS/hist_meas_az_hail_sub_<CASE>.h5' '/all_rb_ps_hail_sub'   '/all_rb_ps_hail_sub'   'z' }
+    { 'DIAGS/hist_meas_az_hail_sub_<CASE>.h5' '/all_rb_s_hail_sub'    '/all_rb_s_hail_sub'    'z' }
+
+    { 'DIAGS/hist_meas_az_hail_dep_<CASE>.h5' '/all_core_ps_hail_dep' '/all_core_ps_hail_dep' 'z' }
+    { 'DIAGS/hist_meas_az_hail_dep_<CASE>.h5' '/all_core_s_hail_dep'  '/all_core_s_hail_dep'  'z' }
+    { 'DIAGS/hist_meas_az_hail_dep_<CASE>.h5' '/all_rb_ps_hail_dep'   '/all_rb_ps_hail_dep'   'z' }
+    { 'DIAGS/hist_meas_az_hail_dep_<CASE>.h5' '/all_rb_s_hail_dep'    '/all_rb_s_hail_dep'    'z' }
+
     { 'DIAGS/hist_meas_az_w_<CASE>.h5' '/all_core_ps_updraft' '/all_core_ps_updraft' 'z' }
     { 'DIAGS/hist_meas_az_w_<CASE>.h5' '/all_core_s_updraft'  '/all_core_s_updraft'  'z' }
     { 'DIAGS/hist_meas_az_w_<CASE>.h5' '/all_rb_ps_updraft'   '/all_rb_ps_updraft'   'z' }

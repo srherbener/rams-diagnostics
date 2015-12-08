@@ -1,0 +1,244 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: AggrSubXsectionPreSal 6
+  DummyCases
+  [3_2]
+  Plots/FigAggrSubXsectionPreSal.jpg
+  AggrSubXsection_SD_PreSalPanel           1
+  AggrSubXsection_SND_PreSalPanel          2
+  AggrSubXsection_NSD_PreSalPanel          3
+  AggrSubXsection_NSND_PreSalPanel         4
+  AggrSubDiffXsection_NSD_SD_PreSalPanel   5
+  AggrSubDiffXsection_NSND_SND_PreSalPanel 6
+End 
+
+Figure: AggrSubXsectionSal 6
+  DummyCases
+  [3_2]
+  Plots/FigAggrSubXsectionSal.jpg
+  AggrSubXsection_SD_SalPanel           1
+  AggrSubXsection_NSD_SalPanel          2
+  AggrSubXsection_SND_SalPanel          3
+  AggrSubXsection_NSND_SalPanel         4
+  AggrSubDiffXsection_SND_SD_SalPanel   5
+  AggrSubDiffXsection_NSND_NSD_SalPanel 6
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: AggrSubXsection_SD_PreSalPanel
+  AggrSubXsection_SD_PreSalPset
+  AggrSubXsectionAxes 0 1
+  none 5
+  PS:@SD@Sub_a 
+  none 12
+End
+
+FigPanel: AggrSubXsection_NSD_PreSalPanel
+  AggrSubXsection_NSD_PreSalPset
+  AggrSubXsectionAxes 0 1
+  none 5
+  PS:@NSD@Sub_a
+  none 12
+End
+
+FigPanel: AggrSubDiffXsection_NSD_SD_PreSalPanel
+  AggrSubDiffXsection_NSD_SD_PreSalPset
+  AggrSubDiffXsectionAxes 1 1
+  none 5
+  PS:@NSD-SD@Sub_a
+  none 12
+End
+
+FigPanel: AggrSubXsection_SND_PreSalPanel
+  AggrSubXsection_SND_PreSalPset
+  AggrSubXsectionAxes 0 0
+  none 5
+  PS:@SND@Sub_a
+  none 12
+End
+
+FigPanel: AggrSubXsection_NSND_PreSalPanel
+  AggrSubXsection_NSND_PreSalPset
+  AggrSubXsectionAxes 0 0
+  none 5
+  PS:@NSND@Sub_a
+  none 12
+End
+
+FigPanel: AggrSubDiffXsection_NSND_SND_PreSalPanel
+  AggrSubDiffXsection_NSND_SND_PreSalPset
+  AggrSubDiffXsectionAxes 1 0
+  none 5
+  PS:@NSND-SND@Sub_a
+  none 12
+End
+
+
+
+FigPanel: AggrSubXsection_SD_SalPanel
+  AggrSubXsection_SD_SalPset
+  AggrSubXsectionAxes 0 1
+  none 5
+  S:@SD@Sub_a 
+  none 12
+End
+
+FigPanel: AggrSubXsection_SND_SalPanel
+  AggrSubXsection_SND_SalPset
+  AggrSubXsectionAxes 0 1
+  none 5
+  S:@SND@Sub_a
+  none 12
+End
+
+FigPanel: AggrSubDiffXsection_SND_SD_SalPanel
+  AggrSubDiffXsection_SND_SD_SalPset
+  AggrSubDiffXsectionAxes 1 1
+  none 5
+  S:@SND-SD@Sub_a 
+  none 12
+End
+
+FigPanel: AggrSubXsection_NSD_SalPanel
+  AggrSubXsection_NSD_SalPset
+  AggrSubXsectionAxes 0 0
+  none 5
+  S:@NSD@Sub_a
+  none 12
+End
+
+FigPanel: AggrSubXsection_NSND_SalPanel
+  AggrSubXsection_NSND_SalPset
+  AggrSubXsectionAxes 0 0
+  none 5
+  S:@NSND@Sub_a
+  none 12
+End
+
+FigPanel: AggrSubDiffXsection_NSND_NSD_SalPanel
+  AggrSubDiffXsection_NSND_NSD_SalPset
+  AggrSubDiffXsectionAxes 1 0
+  none 5
+  S:@NSND-NSD@Sub_a 
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: AggrSubXsection_SD_PreSalPset contourf 1
+  AggrSubXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: AggrSubXsection_NSD_PreSalPset contourf 1
+  AggrSubXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: AggrSubDiffXsection_NSD_SD_PreSalPset diff_contourf 1
+  AggrSubDiffXsectionPreSalContour NSD_SD none  2 blue   - 0
+End
+
+PlotSet: AggrSubXsection_SND_PreSalPset contourf 1
+  AggrSubXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: AggrSubXsection_NSND_PreSalPset contourf 1
+  AggrSubXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: AggrSubDiffXsection_NSND_SND_PreSalPset diff_contourf 1
+  AggrSubDiffXsectionPreSalContour NSND_SND none  2 blue   - 0
+End
+
+
+
+PlotSet: AggrSubXsection_SD_SalPset contourf 1
+  AggrSubXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: AggrSubXsection_SND_SalPset contourf 1
+  AggrSubXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: AggrSubDiffXsection_SND_SD_SalPset diff_contourf 1
+  AggrSubDiffXsectionSalContour SND_SD none  2 blue   - 0
+End
+
+PlotSet: AggrSubXsection_NSD_SalPset contourf 1
+  AggrSubXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: AggrSubXsection_NSND_SalPset contourf 1
+  AggrSubXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: AggrSubDiffXsection_NSND_NSD_SalPset diff_contourf 1
+  AggrSubDiffXsectionSalContour NSND_NSD none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+# Units in files are g/kg/30minutes. Multiply
+# by 2 to convert to g/kg/h
+PlotData: AggrSubXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  aggr_sub, K
+  /all_ps_aggr_sub DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: AggrSubDiffXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  aggr_sub, K
+  /all_ps_aggr_sub_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: AggrSubXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  aggr_sub, K
+  /all_s_aggr_sub DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: AggrSubDiffXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  aggr_sub, K
+  /all_s_aggr_sub_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: AggrSubXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - aggr_sub - K
+  AggrSub g@kg^-^1@h^-^1 -2 0 linear [_] {_}
+End
+
+PlotAxes: AggrSubDiffXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - aggr_sub - K
+  AggrSub g@kg^-^1@h^-^1 -0.5 0.5 linear [_] {_}
+End
+

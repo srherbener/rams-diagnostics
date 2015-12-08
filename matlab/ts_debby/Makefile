@@ -25,6 +25,7 @@ SCRIPTS = \
   $(DEST)/GenStormProfiles.m \
   $(DEST)/GenStrackProfiles.m \
   $(DEST)/GenTsdHistMeas.m \
+  $(DEST)/GenBuoyancy.m \
   $(DEST)/RunGenFigures.m \
   $(DEST)/LocateSal.m \
   $(DEST)/PlotAeroProfs.m \
@@ -60,6 +61,7 @@ CONFIGS = \
   $(DIAG_DIR)/FigHovmollerConfig \
   $(DIAG_DIR)/FigThetaeXsectionConfig \
   $(DIAG_DIR)/FigThetaXsectionConfig \
+  $(DIAG_DIR)/FigThetaRhoXsectionConfig \
   $(DIAG_DIR)/FigTempcXsectionConfig \
   $(DIAG_DIR)/FigRelhumXsectionConfig \
   $(DIAG_DIR)/FigVaporXsectionConfig \
@@ -75,6 +77,16 @@ CONFIGS = \
   $(DIAG_DIR)/FigRainDiamXsectionConfig \
   $(DIAG_DIR)/FigRainCondXsectionConfig \
   $(DIAG_DIR)/FigRainEvapXsectionConfig \
+  $(DIAG_DIR)/FigAggrDepXsectionConfig \
+  $(DIAG_DIR)/FigAggrSubXsectionConfig \
+  $(DIAG_DIR)/FigPrisDepXsectionConfig \
+  $(DIAG_DIR)/FigPrisSubXsectionConfig \
+  $(DIAG_DIR)/FigSnowDepXsectionConfig \
+  $(DIAG_DIR)/FigSnowSubXsectionConfig \
+  $(DIAG_DIR)/FigGraupDepXsectionConfig \
+  $(DIAG_DIR)/FigGraupSubXsectionConfig \
+  $(DIAG_DIR)/FigHailDepXsectionConfig \
+  $(DIAG_DIR)/FigHailSubXsectionConfig \
   $(DIAG_DIR)/FigCoolXsectionConfig \
   $(DIAG_DIR)/FigHeatXsectionConfig \
   $(DIAG_DIR)/FigLiqCondXsectionConfig \

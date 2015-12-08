@@ -1,0 +1,244 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: PrisSubXsectionPreSal 6
+  DummyCases
+  [3_2]
+  Plots/FigPrisSubXsectionPreSal.jpg
+  PrisSubXsection_SD_PreSalPanel           1
+  PrisSubXsection_SND_PreSalPanel          2
+  PrisSubXsection_NSD_PreSalPanel          3
+  PrisSubXsection_NSND_PreSalPanel         4
+  PrisSubDiffXsection_NSD_SD_PreSalPanel   5
+  PrisSubDiffXsection_NSND_SND_PreSalPanel 6
+End 
+
+Figure: PrisSubXsectionSal 6
+  DummyCases
+  [3_2]
+  Plots/FigPrisSubXsectionSal.jpg
+  PrisSubXsection_SD_SalPanel           1
+  PrisSubXsection_NSD_SalPanel          2
+  PrisSubXsection_SND_SalPanel          3
+  PrisSubXsection_NSND_SalPanel         4
+  PrisSubDiffXsection_SND_SD_SalPanel   5
+  PrisSubDiffXsection_NSND_NSD_SalPanel 6
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: PrisSubXsection_SD_PreSalPanel
+  PrisSubXsection_SD_PreSalPset
+  PrisSubXsectionAxes 0 1
+  none 5
+  PS:@SD@Sub_p 
+  none 12
+End
+
+FigPanel: PrisSubXsection_NSD_PreSalPanel
+  PrisSubXsection_NSD_PreSalPset
+  PrisSubXsectionAxes 0 1
+  none 5
+  PS:@NSD@Sub_p
+  none 12
+End
+
+FigPanel: PrisSubDiffXsection_NSD_SD_PreSalPanel
+  PrisSubDiffXsection_NSD_SD_PreSalPset
+  PrisSubDiffXsectionAxes 1 1
+  none 5
+  PS:@NSD-SD@Sub_p
+  none 12
+End
+
+FigPanel: PrisSubXsection_SND_PreSalPanel
+  PrisSubXsection_SND_PreSalPset
+  PrisSubXsectionAxes 0 0
+  none 5
+  PS:@SND@Sub_p
+  none 12
+End
+
+FigPanel: PrisSubXsection_NSND_PreSalPanel
+  PrisSubXsection_NSND_PreSalPset
+  PrisSubXsectionAxes 0 0
+  none 5
+  PS:@NSND@Sub_p
+  none 12
+End
+
+FigPanel: PrisSubDiffXsection_NSND_SND_PreSalPanel
+  PrisSubDiffXsection_NSND_SND_PreSalPset
+  PrisSubDiffXsectionAxes 1 0
+  none 5
+  PS:@NSND-SND@Sub_p
+  none 12
+End
+
+
+
+FigPanel: PrisSubXsection_SD_SalPanel
+  PrisSubXsection_SD_SalPset
+  PrisSubXsectionAxes 0 1
+  none 5
+  S:@SD@Sub_p 
+  none 12
+End
+
+FigPanel: PrisSubXsection_SND_SalPanel
+  PrisSubXsection_SND_SalPset
+  PrisSubXsectionAxes 0 1
+  none 5
+  S:@SND@Sub_p
+  none 12
+End
+
+FigPanel: PrisSubDiffXsection_SND_SD_SalPanel
+  PrisSubDiffXsection_SND_SD_SalPset
+  PrisSubDiffXsectionAxes 1 1
+  none 5
+  S:@SND-SD@Sub_p 
+  none 12
+End
+
+FigPanel: PrisSubXsection_NSD_SalPanel
+  PrisSubXsection_NSD_SalPset
+  PrisSubXsectionAxes 0 0
+  none 5
+  S:@NSD@Sub_p
+  none 12
+End
+
+FigPanel: PrisSubXsection_NSND_SalPanel
+  PrisSubXsection_NSND_SalPset
+  PrisSubXsectionAxes 0 0
+  none 5
+  S:@NSND@Sub_p
+  none 12
+End
+
+FigPanel: PrisSubDiffXsection_NSND_NSD_SalPanel
+  PrisSubDiffXsection_NSND_NSD_SalPset
+  PrisSubDiffXsectionAxes 1 0
+  none 5
+  S:@NSND-NSD@Sub_p 
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: PrisSubXsection_SD_PreSalPset contourf 1
+  PrisSubXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: PrisSubXsection_NSD_PreSalPset contourf 1
+  PrisSubXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: PrisSubDiffXsection_NSD_SD_PreSalPset diff_contourf 1
+  PrisSubDiffXsectionPreSalContour NSD_SD none  2 blue   - 0
+End
+
+PlotSet: PrisSubXsection_SND_PreSalPset contourf 1
+  PrisSubXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: PrisSubXsection_NSND_PreSalPset contourf 1
+  PrisSubXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: PrisSubDiffXsection_NSND_SND_PreSalPset diff_contourf 1
+  PrisSubDiffXsectionPreSalContour NSND_SND none  2 blue   - 0
+End
+
+
+
+PlotSet: PrisSubXsection_SD_SalPset contourf 1
+  PrisSubXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: PrisSubXsection_SND_SalPset contourf 1
+  PrisSubXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: PrisSubDiffXsection_SND_SD_SalPset diff_contourf 1
+  PrisSubDiffXsectionSalContour SND_SD none  2 blue   - 0
+End
+
+PlotSet: PrisSubXsection_NSD_SalPset contourf 1
+  PrisSubXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: PrisSubXsection_NSND_SalPset contourf 1
+  PrisSubXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: PrisSubDiffXsection_NSND_NSD_SalPset diff_contourf 1
+  PrisSubDiffXsectionSalContour NSND_NSD none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+# Units in files are g/kg/30minutes. Multiply
+# by 2 to convert to g/kg/h
+PlotData: PrisSubXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  pris_sub, K
+  /all_ps_pris_sub DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: PrisSubDiffXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  pris_sub, K
+  /all_ps_pris_sub_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: PrisSubXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  pris_sub, K
+  /all_s_pris_sub DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: PrisSubDiffXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  pris_sub, K
+  /all_s_pris_sub_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: PrisSubXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - pris_sub - K
+  PrisSub g@kg^-^1@h^-^1 -0.5 0 linear [_] {_}
+End
+
+PlotAxes: PrisSubDiffXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - pris_sub - K
+  PrisSub g@kg^-^1@h^-^1 -0.001 0.001 linear [_] {_}
+End
+

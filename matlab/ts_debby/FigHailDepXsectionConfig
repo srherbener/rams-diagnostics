@@ -1,0 +1,244 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: HailDepXsectionPreSal 6
+  DummyCases
+  [3_2]
+  Plots/FigHailDepXsectionPreSal.jpg
+  HailDepXsection_SD_PreSalPanel           1
+  HailDepXsection_SND_PreSalPanel          2
+  HailDepXsection_NSD_PreSalPanel          3
+  HailDepXsection_NSND_PreSalPanel         4
+  HailDepDiffXsection_NSD_SD_PreSalPanel   5
+  HailDepDiffXsection_NSND_SND_PreSalPanel 6
+End 
+
+Figure: HailDepXsectionSal 6
+  DummyCases
+  [3_2]
+  Plots/FigHailDepXsectionSal.jpg
+  HailDepXsection_SD_SalPanel           1
+  HailDepXsection_NSD_SalPanel          2
+  HailDepXsection_SND_SalPanel          3
+  HailDepXsection_NSND_SalPanel         4
+  HailDepDiffXsection_SND_SD_SalPanel   5
+  HailDepDiffXsection_NSND_NSD_SalPanel 6
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: HailDepXsection_SD_PreSalPanel
+  HailDepXsection_SD_PreSalPset
+  HailDepXsectionAxes 0 1
+  none 5
+  PS:@SD@Dep_h 
+  none 12
+End
+
+FigPanel: HailDepXsection_NSD_PreSalPanel
+  HailDepXsection_NSD_PreSalPset
+  HailDepXsectionAxes 0 1
+  none 5
+  PS:@NSD@Dep_h
+  none 12
+End
+
+FigPanel: HailDepDiffXsection_NSD_SD_PreSalPanel
+  HailDepDiffXsection_NSD_SD_PreSalPset
+  HailDepDiffXsectionAxes 1 1
+  none 5
+  PS:@NSD-SD@Dep_h
+  none 12
+End
+
+FigPanel: HailDepXsection_SND_PreSalPanel
+  HailDepXsection_SND_PreSalPset
+  HailDepXsectionAxes 0 0
+  none 5
+  PS:@SND@Dep_h
+  none 12
+End
+
+FigPanel: HailDepXsection_NSND_PreSalPanel
+  HailDepXsection_NSND_PreSalPset
+  HailDepXsectionAxes 0 0
+  none 5
+  PS:@NSND@Dep_h
+  none 12
+End
+
+FigPanel: HailDepDiffXsection_NSND_SND_PreSalPanel
+  HailDepDiffXsection_NSND_SND_PreSalPset
+  HailDepDiffXsectionAxes 1 0
+  none 5
+  PS:@NSND-SND@Dep_h
+  none 12
+End
+
+
+
+FigPanel: HailDepXsection_SD_SalPanel
+  HailDepXsection_SD_SalPset
+  HailDepXsectionAxes 0 1
+  none 5
+  S:@SD@Dep_h 
+  none 12
+End
+
+FigPanel: HailDepXsection_SND_SalPanel
+  HailDepXsection_SND_SalPset
+  HailDepXsectionAxes 0 1
+  none 5
+  S:@SND@Dep_h
+  none 12
+End
+
+FigPanel: HailDepDiffXsection_SND_SD_SalPanel
+  HailDepDiffXsection_SND_SD_SalPset
+  HailDepDiffXsectionAxes 1 1
+  none 5
+  S:@SND-SD@Dep_h 
+  none 12
+End
+
+FigPanel: HailDepXsection_NSD_SalPanel
+  HailDepXsection_NSD_SalPset
+  HailDepXsectionAxes 0 0
+  none 5
+  S:@NSD@Dep_h
+  none 12
+End
+
+FigPanel: HailDepXsection_NSND_SalPanel
+  HailDepXsection_NSND_SalPset
+  HailDepXsectionAxes 0 0
+  none 5
+  S:@NSND@Dep_h
+  none 12
+End
+
+FigPanel: HailDepDiffXsection_NSND_NSD_SalPanel
+  HailDepDiffXsection_NSND_NSD_SalPset
+  HailDepDiffXsectionAxes 1 0
+  none 5
+  S:@NSND-NSD@Dep_h 
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: HailDepXsection_SD_PreSalPset contourf 1
+  HailDepXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: HailDepXsection_NSD_PreSalPset contourf 1
+  HailDepXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: HailDepDiffXsection_NSD_SD_PreSalPset diff_contourf 1
+  HailDepDiffXsectionPreSalContour NSD_SD none  2 blue   - 0
+End
+
+PlotSet: HailDepXsection_SND_PreSalPset contourf 1
+  HailDepXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: HailDepXsection_NSND_PreSalPset contourf 1
+  HailDepXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: HailDepDiffXsection_NSND_SND_PreSalPset diff_contourf 1
+  HailDepDiffXsectionPreSalContour NSND_SND none  2 blue   - 0
+End
+
+
+
+PlotSet: HailDepXsection_SD_SalPset contourf 1
+  HailDepXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: HailDepXsection_SND_SalPset contourf 1
+  HailDepXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: HailDepDiffXsection_SND_SD_SalPset diff_contourf 1
+  HailDepDiffXsectionSalContour SND_SD none  2 blue   - 0
+End
+
+PlotSet: HailDepXsection_NSD_SalPset contourf 1
+  HailDepXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: HailDepXsection_NSND_SalPset contourf 1
+  HailDepXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: HailDepDiffXsection_NSND_NSD_SalPset diff_contourf 1
+  HailDepDiffXsectionSalContour NSND_NSD none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+# Units in files are g/kg/30minutes. Multiply
+# by 2 to convert to g/kg/h
+PlotData: HailDepXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  hail_dep, K
+  /all_ps_hail_dep DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: HailDepDiffXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  hail_dep, K
+  /all_ps_hail_dep_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: HailDepXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  hail_dep, K
+  /all_s_hail_dep DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: HailDepDiffXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  hail_dep, K
+  /all_s_hail_dep_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: HailDepXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - hail_dep - K
+  HailDep g@kg^-^1@h^-^1 0 0.5 linear [_] {_}
+End
+
+PlotAxes: HailDepDiffXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - hail_dep - K
+  HailDep g@kg^-^1@h^-^1 -0.1 0.1 linear [_] {_}
+End
+

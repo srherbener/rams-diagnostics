@@ -1,0 +1,244 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: GraupDepXsectionPreSal 6
+  DummyCases
+  [3_2]
+  Plots/FigGraupDepXsectionPreSal.jpg
+  GraupDepXsection_SD_PreSalPanel           1
+  GraupDepXsection_SND_PreSalPanel          2
+  GraupDepXsection_NSD_PreSalPanel          3
+  GraupDepXsection_NSND_PreSalPanel         4
+  GraupDepDiffXsection_NSD_SD_PreSalPanel   5
+  GraupDepDiffXsection_NSND_SND_PreSalPanel 6
+End 
+
+Figure: GraupDepXsectionSal 6
+  DummyCases
+  [3_2]
+  Plots/FigGraupDepXsectionSal.jpg
+  GraupDepXsection_SD_SalPanel           1
+  GraupDepXsection_NSD_SalPanel          2
+  GraupDepXsection_SND_SalPanel          3
+  GraupDepXsection_NSND_SalPanel         4
+  GraupDepDiffXsection_SND_SD_SalPanel   5
+  GraupDepDiffXsection_NSND_NSD_SalPanel 6
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: GraupDepXsection_SD_PreSalPanel
+  GraupDepXsection_SD_PreSalPset
+  GraupDepXsectionAxes 0 1
+  none 5
+  PS:@SD@Dep_g 
+  none 12
+End
+
+FigPanel: GraupDepXsection_NSD_PreSalPanel
+  GraupDepXsection_NSD_PreSalPset
+  GraupDepXsectionAxes 0 1
+  none 5
+  PS:@NSD@Dep_g
+  none 12
+End
+
+FigPanel: GraupDepDiffXsection_NSD_SD_PreSalPanel
+  GraupDepDiffXsection_NSD_SD_PreSalPset
+  GraupDepDiffXsectionAxes 1 1
+  none 5
+  PS:@NSD-SD@Dep_g
+  none 12
+End
+
+FigPanel: GraupDepXsection_SND_PreSalPanel
+  GraupDepXsection_SND_PreSalPset
+  GraupDepXsectionAxes 0 0
+  none 5
+  PS:@SND@Dep_g
+  none 12
+End
+
+FigPanel: GraupDepXsection_NSND_PreSalPanel
+  GraupDepXsection_NSND_PreSalPset
+  GraupDepXsectionAxes 0 0
+  none 5
+  PS:@NSND@Dep_g
+  none 12
+End
+
+FigPanel: GraupDepDiffXsection_NSND_SND_PreSalPanel
+  GraupDepDiffXsection_NSND_SND_PreSalPset
+  GraupDepDiffXsectionAxes 1 0
+  none 5
+  PS:@NSND-SND@Dep_g
+  none 12
+End
+
+
+
+FigPanel: GraupDepXsection_SD_SalPanel
+  GraupDepXsection_SD_SalPset
+  GraupDepXsectionAxes 0 1
+  none 5
+  S:@SD@Dep_g 
+  none 12
+End
+
+FigPanel: GraupDepXsection_SND_SalPanel
+  GraupDepXsection_SND_SalPset
+  GraupDepXsectionAxes 0 1
+  none 5
+  S:@SND@Dep_g
+  none 12
+End
+
+FigPanel: GraupDepDiffXsection_SND_SD_SalPanel
+  GraupDepDiffXsection_SND_SD_SalPset
+  GraupDepDiffXsectionAxes 1 1
+  none 5
+  S:@SND-SD@Dep_g 
+  none 12
+End
+
+FigPanel: GraupDepXsection_NSD_SalPanel
+  GraupDepXsection_NSD_SalPset
+  GraupDepXsectionAxes 0 0
+  none 5
+  S:@NSD@Dep_g
+  none 12
+End
+
+FigPanel: GraupDepXsection_NSND_SalPanel
+  GraupDepXsection_NSND_SalPset
+  GraupDepXsectionAxes 0 0
+  none 5
+  S:@NSND@Dep_g
+  none 12
+End
+
+FigPanel: GraupDepDiffXsection_NSND_NSD_SalPanel
+  GraupDepDiffXsection_NSND_NSD_SalPset
+  GraupDepDiffXsectionAxes 1 0
+  none 5
+  S:@NSND-NSD@Dep_g 
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: GraupDepXsection_SD_PreSalPset contourf 1
+  GraupDepXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: GraupDepXsection_NSD_PreSalPset contourf 1
+  GraupDepXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: GraupDepDiffXsection_NSD_SD_PreSalPset diff_contourf 1
+  GraupDepDiffXsectionPreSalContour NSD_SD none  2 blue   - 0
+End
+
+PlotSet: GraupDepXsection_SND_PreSalPset contourf 1
+  GraupDepXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: GraupDepXsection_NSND_PreSalPset contourf 1
+  GraupDepXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: GraupDepDiffXsection_NSND_SND_PreSalPset diff_contourf 1
+  GraupDepDiffXsectionPreSalContour NSND_SND none  2 blue   - 0
+End
+
+
+
+PlotSet: GraupDepXsection_SD_SalPset contourf 1
+  GraupDepXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: GraupDepXsection_SND_SalPset contourf 1
+  GraupDepXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: GraupDepDiffXsection_SND_SD_SalPset diff_contourf 1
+  GraupDepDiffXsectionSalContour SND_SD none  2 blue   - 0
+End
+
+PlotSet: GraupDepXsection_NSD_SalPset contourf 1
+  GraupDepXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: GraupDepXsection_NSND_SalPset contourf 1
+  GraupDepXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: GraupDepDiffXsection_NSND_NSD_SalPset diff_contourf 1
+  GraupDepDiffXsectionSalContour NSND_NSD none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+# Units in files are g/kg/30minutes. Multiply
+# by 2 to convert to g/kg/h
+PlotData: GraupDepXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  graup_dep, K
+  /all_ps_graup_dep DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: GraupDepDiffXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  graup_dep, K
+  /all_ps_graup_dep_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: GraupDepXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  graup_dep, K
+  /all_s_graup_dep DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: GraupDepDiffXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  graup_dep, K
+  /all_s_graup_dep_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: GraupDepXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - graup_dep - K
+  GraupDep g@kg^-^1@h^-^1 0 0.5 linear [_] {_}
+End
+
+PlotAxes: GraupDepDiffXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - graup_dep - K
+  GraupDep g@kg^-^1@h^-^1 -0.1 0.1 linear [_] {_}
+End
+

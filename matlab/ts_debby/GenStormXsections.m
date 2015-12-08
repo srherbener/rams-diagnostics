@@ -92,6 +92,9 @@ function [ ] = GenStormXsections()
     { 'DIAGS/hist_meas_az_theta_<CASE>.h5' '/all_ps_theta'  '/all_ps_theta' }
     { 'DIAGS/hist_meas_az_theta_<CASE>.h5' '/all_s_theta'  '/all_s_theta' }
 
+    { 'DIAGS/hist_meas_az_theta_rho_<CASE>.h5' '/all_ps_theta_rho' '/all_ps_theta_rho' }
+    { 'DIAGS/hist_meas_az_theta_rho_<CASE>.h5' '/all_s_theta_rho' '/all_s_theta_rho' }
+
     { 'DIAGS/hist_meas_az_tempc_<CASE>.h5' '/all_ps_tempc'  '/all_ps_tempc' }
     { 'DIAGS/hist_meas_az_tempc_<CASE>.h5' '/all_s_tempc'  '/all_s_tempc' }
 
@@ -190,6 +193,36 @@ function [ ] = GenStormXsections()
 
     { 'DIAGS/hist_meas_az_rain_cond_<CASE>.h5' '/all_ps_rain_cond' '/all_ps_rain_cond' }
     { 'DIAGS/hist_meas_az_rain_cond_<CASE>.h5' '/all_s_rain_cond'  '/all_s_rain_cond' }
+
+    { 'DIAGS/hist_meas_az_pris_sub_<CASE>.h5' '/all_ps_pris_sub' '/all_ps_pris_sub' }
+    { 'DIAGS/hist_meas_az_pris_sub_<CASE>.h5' '/all_s_pris_sub'  '/all_s_pris_sub' }
+
+    { 'DIAGS/hist_meas_az_pris_dep_<CASE>.h5' '/all_ps_pris_dep' '/all_ps_pris_dep' }
+    { 'DIAGS/hist_meas_az_pris_dep_<CASE>.h5' '/all_s_pris_dep'  '/all_s_pris_dep' }
+
+    { 'DIAGS/hist_meas_az_snow_sub_<CASE>.h5' '/all_ps_snow_sub' '/all_ps_snow_sub' }
+    { 'DIAGS/hist_meas_az_snow_sub_<CASE>.h5' '/all_s_snow_sub'  '/all_s_snow_sub' }
+
+    { 'DIAGS/hist_meas_az_snow_dep_<CASE>.h5' '/all_ps_snow_dep' '/all_ps_snow_dep' }
+    { 'DIAGS/hist_meas_az_snow_dep_<CASE>.h5' '/all_s_snow_dep'  '/all_s_snow_dep' }
+
+    { 'DIAGS/hist_meas_az_aggr_sub_<CASE>.h5' '/all_ps_aggr_sub' '/all_ps_aggr_sub' }
+    { 'DIAGS/hist_meas_az_aggr_sub_<CASE>.h5' '/all_s_aggr_sub'  '/all_s_aggr_sub' }
+
+    { 'DIAGS/hist_meas_az_aggr_dep_<CASE>.h5' '/all_ps_aggr_dep' '/all_ps_aggr_dep' }
+    { 'DIAGS/hist_meas_az_aggr_dep_<CASE>.h5' '/all_s_aggr_dep'  '/all_s_aggr_dep' }
+
+    { 'DIAGS/hist_meas_az_graup_sub_<CASE>.h5' '/all_ps_graup_sub' '/all_ps_graup_sub' }
+    { 'DIAGS/hist_meas_az_graup_sub_<CASE>.h5' '/all_s_graup_sub'  '/all_s_graup_sub' }
+
+    { 'DIAGS/hist_meas_az_graup_dep_<CASE>.h5' '/all_ps_graup_dep' '/all_ps_graup_dep' }
+    { 'DIAGS/hist_meas_az_graup_dep_<CASE>.h5' '/all_s_graup_dep'  '/all_s_graup_dep' }
+
+    { 'DIAGS/hist_meas_az_hail_sub_<CASE>.h5' '/all_ps_hail_sub' '/all_ps_hail_sub' }
+    { 'DIAGS/hist_meas_az_hail_sub_<CASE>.h5' '/all_s_hail_sub'  '/all_s_hail_sub' }
+
+    { 'DIAGS/hist_meas_az_hail_dep_<CASE>.h5' '/all_ps_hail_dep' '/all_ps_hail_dep' }
+    { 'DIAGS/hist_meas_az_hail_dep_<CASE>.h5' '/all_s_hail_dep'  '/all_s_hail_dep' }
 
     };
   Nsets = length(XsectionList);

@@ -1,0 +1,242 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: ThetaRhoXsectionPreSal 6
+  DummyCases
+  [3_2]
+  Plots/FigThetaRhoXsectionPreSal.jpg
+  ThetaRhoXsection_SD_PreSalPanel           1
+  ThetaRhoXsection_SND_PreSalPanel          2
+  ThetaRhoXsection_NSD_PreSalPanel          3
+  ThetaRhoXsection_NSND_PreSalPanel         4
+  ThetaRhoDiffXsection_NSD_SD_PreSalPanel   5
+  ThetaRhoDiffXsection_NSND_SND_PreSalPanel 6
+End 
+
+Figure: ThetaRhoXsectionSal 6
+  DummyCases
+  [3_2]
+  Plots/FigThetaRhoXsectionSal.jpg
+  ThetaRhoXsection_SD_SalPanel           1
+  ThetaRhoXsection_NSD_SalPanel          2
+  ThetaRhoXsection_SND_SalPanel          3
+  ThetaRhoXsection_NSND_SalPanel         4
+  ThetaRhoDiffXsection_SND_SD_SalPanel   5
+  ThetaRhoDiffXsection_NSND_NSD_SalPanel 6
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: ThetaRhoXsection_SD_PreSalPanel
+  ThetaRhoXsection_SD_PreSalPset
+  ThetaRhoXsectionAxes 0 1
+  none 5
+  PS:@SD@\theta_\rho 
+  none 12
+End
+
+FigPanel: ThetaRhoXsection_NSD_PreSalPanel
+  ThetaRhoXsection_NSD_PreSalPset
+  ThetaRhoXsectionAxes 0 1
+  none 5
+  PS:@NSD@\theta_\rho
+  none 12
+End
+
+FigPanel: ThetaRhoDiffXsection_NSD_SD_PreSalPanel
+  ThetaRhoDiffXsection_NSD_SD_PreSalPset
+  ThetaRhoDiffXsectionAxes 1 1
+  none 5
+  PS:@NSD-SD@\theta_\rho
+  none 12
+End
+
+FigPanel: ThetaRhoXsection_SND_PreSalPanel
+  ThetaRhoXsection_SND_PreSalPset
+  ThetaRhoXsectionAxes 0 0
+  none 5
+  PS:@SND@\theta_\rho
+  none 12
+End
+
+FigPanel: ThetaRhoXsection_NSND_PreSalPanel
+  ThetaRhoXsection_NSND_PreSalPset
+  ThetaRhoXsectionAxes 0 0
+  none 5
+  PS:@NSND@\theta_\rho
+  none 12
+End
+
+FigPanel: ThetaRhoDiffXsection_NSND_SND_PreSalPanel
+  ThetaRhoDiffXsection_NSND_SND_PreSalPset
+  ThetaRhoDiffXsectionAxes 1 0
+  none 5
+  PS:@NSND-SND@\theta_\rho
+  none 12
+End
+
+
+
+FigPanel: ThetaRhoXsection_SD_SalPanel
+  ThetaRhoXsection_SD_SalPset
+  ThetaRhoXsectionAxes 0 1
+  none 5
+  S:@SD@\theta_\rho 
+  none 12
+End
+
+FigPanel: ThetaRhoXsection_SND_SalPanel
+  ThetaRhoXsection_SND_SalPset
+  ThetaRhoXsectionAxes 0 1
+  none 5
+  S:@SND@\theta_\rho
+  none 12
+End
+
+FigPanel: ThetaRhoDiffXsection_SND_SD_SalPanel
+  ThetaRhoDiffXsection_SND_SD_SalPset
+  ThetaRhoDiffXsectionAxes 1 1
+  none 5
+  S:@SND-SD@\theta_\rho 
+  none 12
+End
+
+FigPanel: ThetaRhoXsection_NSD_SalPanel
+  ThetaRhoXsection_NSD_SalPset
+  ThetaRhoXsectionAxes 0 0
+  none 5
+  S:@NSD@\theta_\rho
+  none 12
+End
+
+FigPanel: ThetaRhoXsection_NSND_SalPanel
+  ThetaRhoXsection_NSND_SalPset
+  ThetaRhoXsectionAxes 0 0
+  none 5
+  S:@NSND@\theta_\rho
+  none 12
+End
+
+FigPanel: ThetaRhoDiffXsection_NSND_NSD_SalPanel
+  ThetaRhoDiffXsection_NSND_NSD_SalPset
+  ThetaRhoDiffXsectionAxes 1 0
+  none 5
+  S:@NSND-NSD@\theta_\rho 
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: ThetaRhoXsection_SD_PreSalPset contourf 1
+  ThetaRhoXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: ThetaRhoXsection_NSD_PreSalPset contourf 1
+  ThetaRhoXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: ThetaRhoDiffXsection_NSD_SD_PreSalPset diff_contourf 1
+  ThetaRhoDiffXsectionPreSalContour NSD_SD none  2 blue   - 0
+End
+
+PlotSet: ThetaRhoXsection_SND_PreSalPset contourf 1
+  ThetaRhoXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: ThetaRhoXsection_NSND_PreSalPset contourf 1
+  ThetaRhoXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: ThetaRhoDiffXsection_NSND_SND_PreSalPset diff_contourf 1
+  ThetaRhoDiffXsectionPreSalContour NSND_SND none  2 blue   - 0
+End
+
+
+
+PlotSet: ThetaRhoXsection_SD_SalPset contourf 1
+  ThetaRhoXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: ThetaRhoXsection_SND_SalPset contourf 1
+  ThetaRhoXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: ThetaRhoDiffXsection_SND_SD_SalPset diff_contourf 1
+  ThetaRhoDiffXsectionSalContour SND_SD none  2 blue   - 0
+End
+
+PlotSet: ThetaRhoXsection_NSD_SalPset contourf 1
+  ThetaRhoXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: ThetaRhoXsection_NSND_SalPset contourf 1
+  ThetaRhoXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: ThetaRhoDiffXsection_NSND_NSD_SalPset diff_contourf 1
+  ThetaRhoDiffXsectionSalContour NSND_NSD none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+PlotData: ThetaRhoXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  theta_rho, K
+  /all_ps_theta_rho DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: ThetaRhoDiffXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  theta_rho, K
+  /all_ps_theta_rho_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: ThetaRhoXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  theta_rho, K
+  /all_s_theta_rho DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: ThetaRhoDiffXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  theta_rho, K
+  /all_s_theta_rho_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: ThetaRhoXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - theta_rho - K
+  \theta_\rho K 300 350 linear [_] {_}
+End
+
+PlotAxes: ThetaRhoDiffXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - theta_rho - K
+  \theta_\rho K -2 2 linear [_] {_}
+End
+

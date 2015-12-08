@@ -1,0 +1,244 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: SnowSubXsectionPreSal 6
+  DummyCases
+  [3_2]
+  Plots/FigSnowSubXsectionPreSal.jpg
+  SnowSubXsection_SD_PreSalPanel           1
+  SnowSubXsection_SND_PreSalPanel          2
+  SnowSubXsection_NSD_PreSalPanel          3
+  SnowSubXsection_NSND_PreSalPanel         4
+  SnowSubDiffXsection_NSD_SD_PreSalPanel   5
+  SnowSubDiffXsection_NSND_SND_PreSalPanel 6
+End 
+
+Figure: SnowSubXsectionSal 6
+  DummyCases
+  [3_2]
+  Plots/FigSnowSubXsectionSal.jpg
+  SnowSubXsection_SD_SalPanel           1
+  SnowSubXsection_NSD_SalPanel          2
+  SnowSubXsection_SND_SalPanel          3
+  SnowSubXsection_NSND_SalPanel         4
+  SnowSubDiffXsection_SND_SD_SalPanel   5
+  SnowSubDiffXsection_NSND_NSD_SalPanel 6
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: SnowSubXsection_SD_PreSalPanel
+  SnowSubXsection_SD_PreSalPset
+  SnowSubXsectionAxes 0 1
+  none 5
+  PS:@SD@Sub_s 
+  none 12
+End
+
+FigPanel: SnowSubXsection_NSD_PreSalPanel
+  SnowSubXsection_NSD_PreSalPset
+  SnowSubXsectionAxes 0 1
+  none 5
+  PS:@NSD@Sub_s
+  none 12
+End
+
+FigPanel: SnowSubDiffXsection_NSD_SD_PreSalPanel
+  SnowSubDiffXsection_NSD_SD_PreSalPset
+  SnowSubDiffXsectionAxes 1 1
+  none 5
+  PS:@NSD-SD@Sub_s
+  none 12
+End
+
+FigPanel: SnowSubXsection_SND_PreSalPanel
+  SnowSubXsection_SND_PreSalPset
+  SnowSubXsectionAxes 0 0
+  none 5
+  PS:@SND@Sub_s
+  none 12
+End
+
+FigPanel: SnowSubXsection_NSND_PreSalPanel
+  SnowSubXsection_NSND_PreSalPset
+  SnowSubXsectionAxes 0 0
+  none 5
+  PS:@NSND@Sub_s
+  none 12
+End
+
+FigPanel: SnowSubDiffXsection_NSND_SND_PreSalPanel
+  SnowSubDiffXsection_NSND_SND_PreSalPset
+  SnowSubDiffXsectionAxes 1 0
+  none 5
+  PS:@NSND-SND@Sub_s
+  none 12
+End
+
+
+
+FigPanel: SnowSubXsection_SD_SalPanel
+  SnowSubXsection_SD_SalPset
+  SnowSubXsectionAxes 0 1
+  none 5
+  S:@SD@Sub_s 
+  none 12
+End
+
+FigPanel: SnowSubXsection_SND_SalPanel
+  SnowSubXsection_SND_SalPset
+  SnowSubXsectionAxes 0 1
+  none 5
+  S:@SND@Sub_s
+  none 12
+End
+
+FigPanel: SnowSubDiffXsection_SND_SD_SalPanel
+  SnowSubDiffXsection_SND_SD_SalPset
+  SnowSubDiffXsectionAxes 1 1
+  none 5
+  S:@SND-SD@Sub_s 
+  none 12
+End
+
+FigPanel: SnowSubXsection_NSD_SalPanel
+  SnowSubXsection_NSD_SalPset
+  SnowSubXsectionAxes 0 0
+  none 5
+  S:@NSD@Sub_s
+  none 12
+End
+
+FigPanel: SnowSubXsection_NSND_SalPanel
+  SnowSubXsection_NSND_SalPset
+  SnowSubXsectionAxes 0 0
+  none 5
+  S:@NSND@Sub_s
+  none 12
+End
+
+FigPanel: SnowSubDiffXsection_NSND_NSD_SalPanel
+  SnowSubDiffXsection_NSND_NSD_SalPset
+  SnowSubDiffXsectionAxes 1 0
+  none 5
+  S:@NSND-NSD@Sub_s 
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: SnowSubXsection_SD_PreSalPset contourf 1
+  SnowSubXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: SnowSubXsection_NSD_PreSalPset contourf 1
+  SnowSubXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: SnowSubDiffXsection_NSD_SD_PreSalPset diff_contourf 1
+  SnowSubDiffXsectionPreSalContour NSD_SD none  2 blue   - 0
+End
+
+PlotSet: SnowSubXsection_SND_PreSalPset contourf 1
+  SnowSubXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: SnowSubXsection_NSND_PreSalPset contourf 1
+  SnowSubXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: SnowSubDiffXsection_NSND_SND_PreSalPset diff_contourf 1
+  SnowSubDiffXsectionPreSalContour NSND_SND none  2 blue   - 0
+End
+
+
+
+PlotSet: SnowSubXsection_SD_SalPset contourf 1
+  SnowSubXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: SnowSubXsection_SND_SalPset contourf 1
+  SnowSubXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: SnowSubDiffXsection_SND_SD_SalPset diff_contourf 1
+  SnowSubDiffXsectionSalContour SND_SD none  2 blue   - 0
+End
+
+PlotSet: SnowSubXsection_NSD_SalPset contourf 1
+  SnowSubXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: SnowSubXsection_NSND_SalPset contourf 1
+  SnowSubXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: SnowSubDiffXsection_NSND_NSD_SalPset diff_contourf 1
+  SnowSubDiffXsectionSalContour NSND_NSD none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+# Units in files are g/kg/30minutes. Multiply
+# by 2 to convert to g/kg/h
+PlotData: SnowSubXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  snow_sub, K
+  /all_ps_snow_sub DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: SnowSubDiffXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  snow_sub, K
+  /all_ps_snow_sub_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: SnowSubXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  snow_sub, K
+  /all_s_snow_sub DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+PlotData: SnowSubDiffXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 @ 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  snow_sub, K
+  /all_s_snow_sub_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 2 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: SnowSubXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - snow_sub - K
+  SnowSub g@kg^-^1@h^-^1 -1 0 linear [_] {_}
+End
+
+PlotAxes: SnowSubDiffXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 500 linear [100_300_500] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - snow_sub - K
+  SnowSub g@kg^-^1@h^-^1 -0.1 0.1 linear [_] {_}
+End
+
