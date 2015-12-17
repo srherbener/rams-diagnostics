@@ -106,6 +106,7 @@ function [ ] = PlotAeroProfs()
   xlabel(Xlab);
   ylabel(Ylab);
 
+  legend({ 'Sulfate' 'Small Dust' 'Large Dust' }, 'FontSize', LegFsize);
 
   % *** NO_DUST ***
   subplot(1,2,2);

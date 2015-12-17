@@ -12,8 +12,13 @@ function [ ] = DrawPlotData( Axes, DataSpecs, AxesSpecs, Ptype )
   axes(Axes);
 
   % colorbar specs
-  Cticks = AxesSpecs.Cbar.Ticks;
-  CtickLabels = AxesSpecs.Cbar.TickLabels;
+  if (isfield(AxesSpecs, 'Cbar'))
+    Cticks = AxesSpecs.Cbar.Ticks;
+    CtickLabels = AxesSpecs.Cbar.TickLabels;
+  else
+    Cticks = [ ];
+    CtickLabels = { };
+  end
 
   % Draw the plot
   Ndsets = length(DataSpecs);

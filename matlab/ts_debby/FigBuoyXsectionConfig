@@ -1,0 +1,477 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: CorePosBuoyXsectionPreSal 6
+  DummyCases
+  [3_2]
+  Plots/FigCorePosBuoyXsectionPreSal.jpg
+  CorePosBuoyXsection_SD_PreSalPanel           1
+  CorePosBuoyXsection_SND_PreSalPanel          2
+  CorePosBuoyXsection_NSD_PreSalPanel          3
+  CorePosBuoyXsection_NSND_PreSalPanel         4
+  CorePosBuoyDiffXsection_NSD_SD_PreSalPanel   5
+  CorePosBuoyDiffXsection_NSND_SND_PreSalPanel 6
+End 
+
+Figure: CorePosBuoyXsectionSal 6
+  DummyCases
+  [3_2]
+  Plots/FigCorePosBuoyXsectionSal.jpg
+  CorePosBuoyXsection_SD_SalPanel           1
+  CorePosBuoyXsection_NSD_SalPanel          2
+  CorePosBuoyXsection_SND_SalPanel          3
+  CorePosBuoyXsection_NSND_SalPanel         4
+  CorePosBuoyDiffXsection_SND_SD_SalPanel   5
+  CorePosBuoyDiffXsection_NSND_NSD_SalPanel 6
+End 
+
+Figure: RbandPosBuoyXsectionPreSal 6
+  DummyCases
+  [3_2]
+  Plots/FigRbandPosBuoyXsectionPreSal.jpg
+  RbandPosBuoyXsection_SD_PreSalPanel           1
+  RbandPosBuoyXsection_SND_PreSalPanel          2
+  RbandPosBuoyXsection_NSD_PreSalPanel          3
+  RbandPosBuoyXsection_NSND_PreSalPanel         4
+  RbandPosBuoyDiffXsection_NSD_SD_PreSalPanel   5
+  RbandPosBuoyDiffXsection_NSND_SND_PreSalPanel 6
+End 
+
+Figure: RbandPosBuoyXsectionSal 6
+  DummyCases
+  [3_2]
+  Plots/FigRbandPosBuoyXsectionSal.jpg
+  RbandPosBuoyXsection_SD_SalPanel           1
+  RbandPosBuoyXsection_NSD_SalPanel          2
+  RbandPosBuoyXsection_SND_SalPanel          3
+  RbandPosBuoyXsection_NSND_SalPanel         4
+  RbandPosBuoyDiffXsection_SND_SD_SalPanel   5
+  RbandPosBuoyDiffXsection_NSND_NSD_SalPanel 6
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: CorePosBuoyXsection_SD_PreSalPanel
+  CorePosBuoyXsection_SD_PreSalPset
+  CorePosBuoyXsectionAxes 0 1
+  none 5
+  PS:@SD@Buoy_p_c 
+  none 12
+End
+
+FigPanel: CorePosBuoyXsection_NSD_PreSalPanel
+  CorePosBuoyXsection_NSD_PreSalPset
+  CorePosBuoyXsectionAxes 0 1
+  none 5
+  PS:@NSD@Buoy_p_c
+  none 12
+End
+
+FigPanel: CorePosBuoyDiffXsection_NSD_SD_PreSalPanel
+  CorePosBuoyDiffXsection_NSD_SD_PreSalPset
+  CorePosBuoyDiffXsectionAxes 1 1
+  none 5
+  PS:@NSD-SD@Buoy_p_c
+  none 12
+End
+
+FigPanel: CorePosBuoyXsection_SND_PreSalPanel
+  CorePosBuoyXsection_SND_PreSalPset
+  CorePosBuoyXsectionAxes 0 0
+  none 5
+  PS:@SND@Buoy_p_c
+  none 12
+End
+
+FigPanel: CorePosBuoyXsection_NSND_PreSalPanel
+  CorePosBuoyXsection_NSND_PreSalPset
+  CorePosBuoyXsectionAxes 0 0
+  none 5
+  PS:@NSND@Buoy_p_c
+  none 12
+End
+
+FigPanel: CorePosBuoyDiffXsection_NSND_SND_PreSalPanel
+  CorePosBuoyDiffXsection_NSND_SND_PreSalPset
+  CorePosBuoyDiffXsectionAxes 1 0
+  none 5
+  PS:@NSND-SND@Buoy_p_c
+  none 12
+End
+
+FigPanel: CorePosBuoyXsection_SD_SalPanel
+  CorePosBuoyXsection_SD_SalPset
+  CorePosBuoyXsectionAxes 0 1
+  none 5
+  S:@SD@Buoy_p_c 
+  none 12
+End
+
+FigPanel: CorePosBuoyXsection_SND_SalPanel
+  CorePosBuoyXsection_SND_SalPset
+  CorePosBuoyXsectionAxes 0 1
+  none 5
+  S:@SND@Buoy_p_c
+  none 12
+End
+
+FigPanel: CorePosBuoyDiffXsection_SND_SD_SalPanel
+  CorePosBuoyDiffXsection_SND_SD_SalPset
+  CorePosBuoyDiffXsectionAxes 1 1
+  none 5
+  S:@SND-SD@Buoy_p_c 
+  none 12
+End
+
+FigPanel: CorePosBuoyXsection_NSD_SalPanel
+  CorePosBuoyXsection_NSD_SalPset
+  CorePosBuoyXsectionAxes 0 0
+  none 5
+  S:@NSD@Buoy_p_c
+  none 12
+End
+
+FigPanel: CorePosBuoyXsection_NSND_SalPanel
+  CorePosBuoyXsection_NSND_SalPset
+  CorePosBuoyXsectionAxes 0 0
+  none 5
+  S:@NSND@Buoy_p_c
+  none 12
+End
+
+FigPanel: CorePosBuoyDiffXsection_NSND_NSD_SalPanel
+  CorePosBuoyDiffXsection_NSND_NSD_SalPset
+  CorePosBuoyDiffXsectionAxes 1 0
+  none 5
+  S:@NSND-NSD@Buoy_p_c 
+  none 12
+End
+
+
+
+
+FigPanel: RbandPosBuoyXsection_SD_PreSalPanel
+  RbandPosBuoyXsection_SD_PreSalPset
+  RbandPosBuoyXsectionAxes 0 1
+  none 5
+  PS:@SD@Buoy_p_r 
+  none 12
+End
+
+FigPanel: RbandPosBuoyXsection_NSD_PreSalPanel
+  RbandPosBuoyXsection_NSD_PreSalPset
+  RbandPosBuoyXsectionAxes 0 1
+  none 5
+  PS:@NSD@Buoy_p_r
+  none 12
+End
+
+FigPanel: RbandPosBuoyDiffXsection_NSD_SD_PreSalPanel
+  RbandPosBuoyDiffXsection_NSD_SD_PreSalPset
+  RbandPosBuoyDiffXsectionAxes 1 1
+  none 5
+  PS:@NSD-SD@Buoy_p_r
+  none 12
+End
+
+FigPanel: RbandPosBuoyXsection_SND_PreSalPanel
+  RbandPosBuoyXsection_SND_PreSalPset
+  RbandPosBuoyXsectionAxes 0 0
+  none 5
+  PS:@SND@Buoy_p_r
+  none 12
+End
+
+FigPanel: RbandPosBuoyXsection_NSND_PreSalPanel
+  RbandPosBuoyXsection_NSND_PreSalPset
+  RbandPosBuoyXsectionAxes 0 0
+  none 5
+  PS:@NSND@Buoy_p_r
+  none 12
+End
+
+FigPanel: RbandPosBuoyDiffXsection_NSND_SND_PreSalPanel
+  RbandPosBuoyDiffXsection_NSND_SND_PreSalPset
+  RbandPosBuoyDiffXsectionAxes 1 0
+  none 5
+  PS:@NSND-SND@Buoy_p_r
+  none 12
+End
+
+FigPanel: RbandPosBuoyXsection_SD_SalPanel
+  RbandPosBuoyXsection_SD_SalPset
+  RbandPosBuoyXsectionAxes 0 1
+  none 5
+  S:@SD@Buoy_p_r 
+  none 12
+End
+
+FigPanel: RbandPosBuoyXsection_SND_SalPanel
+  RbandPosBuoyXsection_SND_SalPset
+  RbandPosBuoyXsectionAxes 0 1
+  none 5
+  S:@SND@Buoy_p_r
+  none 12
+End
+
+FigPanel: RbandPosBuoyDiffXsection_SND_SD_SalPanel
+  RbandPosBuoyDiffXsection_SND_SD_SalPset
+  RbandPosBuoyDiffXsectionAxes 1 1
+  none 5
+  S:@SND-SD@Buoy_p_r 
+  none 12
+End
+
+FigPanel: RbandPosBuoyXsection_NSD_SalPanel
+  RbandPosBuoyXsection_NSD_SalPset
+  RbandPosBuoyXsectionAxes 0 0
+  none 5
+  S:@NSD@Buoy_p_r
+  none 12
+End
+
+FigPanel: RbandPosBuoyXsection_NSND_SalPanel
+  RbandPosBuoyXsection_NSND_SalPset
+  RbandPosBuoyXsectionAxes 0 0
+  none 5
+  S:@NSND@Buoy_p_r
+  none 12
+End
+
+FigPanel: RbandPosBuoyDiffXsection_NSND_NSD_SalPanel
+  RbandPosBuoyDiffXsection_NSND_NSD_SalPset
+  RbandPosBuoyDiffXsectionAxes 1 0
+  none 5
+  S:@NSND-NSD@Buoy_p_r 
+  none 12
+End
+
+############ PLOT SETS #################
+PlotSet: CorePosBuoyXsection_SD_PreSalPset contourf 1
+  CorePosBuoyXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CorePosBuoyXsection_NSD_PreSalPset contourf 1
+  CorePosBuoyXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CorePosBuoyDiffXsection_NSD_SD_PreSalPset diff_contourf 1
+  CorePosBuoyDiffXsectionPreSalContour NSD_SD none  2 blue   - 0
+End
+
+PlotSet: CorePosBuoyXsection_SND_PreSalPset contourf 1
+  CorePosBuoyXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: CorePosBuoyXsection_NSND_PreSalPset contourf 1
+  CorePosBuoyXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: CorePosBuoyDiffXsection_NSND_SND_PreSalPset diff_contourf 1
+  CorePosBuoyDiffXsectionPreSalContour NSND_SND none  2 blue   - 0
+End
+
+PlotSet: CorePosBuoyXsection_SD_SalPset contourf 1
+  CorePosBuoyXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CorePosBuoyXsection_SND_SalPset contourf 1
+  CorePosBuoyXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: CorePosBuoyDiffXsection_SND_SD_SalPset diff_contourf 1
+  CorePosBuoyDiffXsectionSalContour SND_SD none  2 blue   - 0
+End
+
+PlotSet: CorePosBuoyXsection_NSD_SalPset contourf 1
+  CorePosBuoyXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: CorePosBuoyXsection_NSND_SalPset contourf 1
+  CorePosBuoyXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: CorePosBuoyDiffXsection_NSND_NSD_SalPset diff_contourf 1
+  CorePosBuoyDiffXsectionSalContour NSND_NSD none  2 blue   - 0
+End
+
+
+
+
+PlotSet: RbandPosBuoyXsection_SD_PreSalPset contourf 1
+  RbandPosBuoyXsectionPreSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RbandPosBuoyXsection_NSD_PreSalPset contourf 1
+  RbandPosBuoyXsectionPreSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RbandPosBuoyDiffXsection_NSD_SD_PreSalPset diff_contourf 1
+  RbandPosBuoyDiffXsectionPreSalContour NSD_SD none  2 blue   - 0
+End
+
+PlotSet: RbandPosBuoyXsection_SND_PreSalPset contourf 1
+  RbandPosBuoyXsectionPreSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RbandPosBuoyXsection_NSND_PreSalPset contourf 1
+  RbandPosBuoyXsectionPreSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RbandPosBuoyDiffXsection_NSND_SND_PreSalPset diff_contourf 1
+  RbandPosBuoyDiffXsectionPreSalContour NSND_SND none  2 blue   - 0
+End
+
+PlotSet: RbandPosBuoyXsection_SD_SalPset contourf 1
+  RbandPosBuoyXsectionSalContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RbandPosBuoyXsection_SND_SalPset contourf 1
+  RbandPosBuoyXsectionSalContour TSD_SAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RbandPosBuoyDiffXsection_SND_SD_SalPset diff_contourf 1
+  RbandPosBuoyDiffXsectionSalContour SND_SD none  2 blue   - 0
+End
+
+PlotSet: RbandPosBuoyXsection_NSD_SalPset contourf 1
+  RbandPosBuoyXsectionSalContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: RbandPosBuoyXsection_NSND_SalPset contourf 1
+  RbandPosBuoyXsectionSalContour TSD_NONSAL_NODUST none  2 blue   - 0
+End
+
+PlotSet: RbandPosBuoyDiffXsection_NSND_NSD_SalPset diff_contourf 1
+  RbandPosBuoyDiffXsectionSalContour NSND_NSD none  2 blue   - 0
+End
+
+############ PLOT DATA #################
+# Units in files are K/30minutes. Multiply
+# by 2 to convert to K/h
+PlotData: CorePosBuoyXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 (1:20) 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  buoy_pos_acc, K
+  /all_core_ps_buoy_pos_acc DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: CorePosBuoyDiffXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:20) 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  buoy_pos_acc, K
+  /all_core_ps_buoy_pos_acc_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: CorePosBuoyXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 (1:20) 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  buoy_pos_acc, K
+  /all_core_s_buoy_pos_acc DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: CorePosBuoyDiffXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:20) 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  buoy_pos_acc, K
+  /all_core_s_buoy_pos_acc_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+
+
+
+
+PlotData: RbandPosBuoyXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 (30:40) 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  buoy_pos, K
+  /all_rb_ps_buoy_pos_acc DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: RbandPosBuoyDiffXsectionPreSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 (30:40) 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  buoy_pos_acc, K
+  /all_rb_ps_buoy_pos_acc_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: RbandPosBuoyXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_xsections_<CASE>.h5 (30:40) 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  buoy_pos_acc, K
+  /all_rb_s_buoy_pos_acc DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+PlotData: RbandPosBuoyDiffXsectionSalContour 3
+  # x data - radius, km
+  /x_coords DIAGS/storm_diff_xsections_<CASE>.h5 (30:40) 1e-3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_diff_xsections_<CASE>.h5 (1:44) 1e-3 0
+  # z data -  buoy_pos_acc, K
+  /all_rb_s_buoy_pos_acc_diff DIAGS/storm_diff_xsections_<CASE>.h5 (:,1:44) 1 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: CorePosBuoyXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 200 linear [50_100_150] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - buoy_pos_acc - K
+  CorePosBuoy m@s^-^2 0 0.01 linear [_] {_}
+End
+
+PlotAxes: CorePosBuoyDiffXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 0 200 linear [50_100_150] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - buoy_pos_acc - K
+  CorePosBuoy m@s^-^2 -0.01 0.01 linear [_] {_}
+End
+
+
+
+
+PlotAxes: RbandPosBuoyXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 300 400 linear [325_350_375] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - buoy_pos_acc - K
+  RbandPosBuoy m@s^-^2 0 0.01 linear [_] {_}
+End
+
+PlotAxes: RbandPosBuoyDiffXsectionAxes 3
+  14 2 [0.025_0.025]
+  # x axis - radius
+  Radius km 300 400 linear [325_350_375] {_}
+  # y axis - utc time
+  Height km 0 15 linear [_] {_}
+  # z axis - buoy_pos_acc - K
+  RbandPosBuoy m@s^-^2 -0.01 0.01 linear [_] {_}
+End
+

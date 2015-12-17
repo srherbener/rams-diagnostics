@@ -98,6 +98,16 @@ function [ ] = GenStormXsections()
     { 'DIAGS/hist_meas_az_tempc_<CASE>.h5' '/all_ps_tempc'  '/all_ps_tempc' }
     { 'DIAGS/hist_meas_az_tempc_<CASE>.h5' '/all_s_tempc'  '/all_s_tempc' }
 
+    { 'DIAGS/hist_meas_az_buoy_acc_<CASE>.h5' '/all_core_ps_buoy_pos_acc_xsect'  '/all_core_ps_buoy_pos_acc' }
+    { 'DIAGS/hist_meas_az_buoy_acc_<CASE>.h5' '/all_core_s_buoy_pos_acc_xsect'   '/all_core_s_buoy_pos_acc'  }
+    { 'DIAGS/hist_meas_az_buoy_acc_<CASE>.h5' '/all_rb_ps_buoy_pos_acc_xsect'    '/all_rb_ps_buoy_pos_acc'   }
+    { 'DIAGS/hist_meas_az_buoy_acc_<CASE>.h5' '/all_rb_s_buoy_pos_acc_xsect'     '/all_rb_s_buoy_pos_acc'    }
+
+    { 'DIAGS/hist_meas_az_buoy_acc_<CASE>.h5' '/all_core_ps_buoy_neg_acc_xsect'  '/all_core_ps_buoy_neg_acc' }
+    { 'DIAGS/hist_meas_az_buoy_acc_<CASE>.h5' '/all_core_s_buoy_neg_acc_xsect'   '/all_core_s_buoy_neg_acc'  }
+    { 'DIAGS/hist_meas_az_buoy_acc_<CASE>.h5' '/all_rb_ps_buoy_neg_acc_xsect'    '/all_rb_ps_buoy_neg_acc'   }
+    { 'DIAGS/hist_meas_az_buoy_acc_<CASE>.h5' '/all_rb_s_buoy_neg_acc_xsect'     '/all_rb_s_buoy_neg_acc'    }
+
     { 'DIAGS/hist_meas_az_relhum_<CASE>.h5' '/all_ps_relhum'  '/all_ps_relhum' }
     { 'DIAGS/hist_meas_az_relhum_<CASE>.h5' '/all_s_relhum'  '/all_s_relhum' }
 

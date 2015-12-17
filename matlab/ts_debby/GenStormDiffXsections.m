@@ -7,11 +7,11 @@ function [ ] = GenStormDiffXsections()
 
   % Description of diff pairs
   DiffList = {
-    { '^all_ps' 'TSD_NONSAL_DUST'   'NSD'  'TSD_SAL_DUST'   'SD'  }
-    { '^all_ps' 'TSD_NONSAL_NODUST' 'NSND' 'TSD_SAL_NODUST' 'SND' }
+    { '^all.*_ps_' 'TSD_NONSAL_DUST'   'NSD'  'TSD_SAL_DUST'   'SD'  }
+    { '^all.*_ps_' 'TSD_NONSAL_NODUST' 'NSND' 'TSD_SAL_NODUST' 'SND' }
 
-    { '^all_s' 'TSD_SAL_NODUST'    'SND'  'TSD_SAL_DUST'    'SD'  }
-    { '^all_s' 'TSD_NONSAL_NODUST' 'NSND' 'TSD_NONSAL_DUST' 'NSD' }
+    { '^all.*_s_'  'TSD_SAL_NODUST'    'SND'  'TSD_SAL_DUST'    'SD'  }
+    { '^all.*_s_'  'TSD_NONSAL_NODUST' 'NSND' 'TSD_NONSAL_DUST' 'NSD' }
     };
 
   Ndiffs = length(DiffList);
@@ -43,7 +43,7 @@ function [ ] = GenStormDiffXsections()
     OutFile = regexprep(OutFileTemplate, '<CASE1>', Case1Label);
     OutFile = regexprep(OutFile,         '<CASE2>', Case2Label);
 
-    fprintf('  Writing: %s\n', InFile2);
+    fprintf('  Writing: %s\n', OutFile);
 
     if (exist(OutFile, 'file') == 2)
       delete(OutFile);

@@ -23,6 +23,13 @@ Figure: VtXsectionSal 4
   VtXsectionNSNDSalPanel   4
 End 
 
+Figure: VtXsectionSampleSal 1
+  DummyCases
+  [1_1]
+  Plots/FigVtXsectionSampleSal.jpg
+  VtXsectionSDSalPanel         1
+End 
+
 ########### CASES ####################
 CaseSet: DummyCases 1
   Dummy
@@ -65,7 +72,7 @@ FigPanel: VtXsectionSDSalPanel
   VtXsectionSDSalPset
   VtXsectionAxes 1 1
   none 5
-  PreSAL:@SD@V_t 
+  SAL:@SD@V_t 
   none 12
 End
 
@@ -73,7 +80,7 @@ FigPanel: VtXsectionSNDSalPanel
   VtXsectionSNDSalPset
   VtXsectionAxes 1 1
   none 5
-  PreSAL:@SND@V_t
+  SAL:@SND@V_t
   none 12
 End
 
@@ -81,7 +88,7 @@ FigPanel: VtXsectionNSDSalPanel
   VtXsectionNSDSalPset
   VtXsectionAxes 1 1
   none 5
-  PreSAL:@NSD@V_t
+  SAL:@NSD@V_t
   none 12
 End
 
@@ -89,7 +96,7 @@ FigPanel: VtXsectionNSNDSalPanel
   VtXsectionNSNDSalPset
   VtXsectionAxes 1 1
   none 5
-  PreSAL:@NSND@V_t
+  SAL:@NSND@V_t
   none 12
 End
 
@@ -131,18 +138,18 @@ PlotData: VtXsectionPreSalContour 3
   # x data - radius, km
   /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
   # y data - height, km
-  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:36) 1e-3 0
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  speed_t, m/s
-  /all_ps_speed_t DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
+  /all_ps_speed_t DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 PlotData: VtXsectionSalContour 3
   # x data - radius, km
   /x_coords DIAGS/storm_xsections_<CASE>.h5 @ 1e-3 0
   # y data - height, km
-  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:36) 1e-3 0
+  /z_coords DIAGS/storm_xsections_<CASE>.h5 (1:44) 1e-3 0
   # z data -  speed_t, m/s
-  /all_s_speed_t DIAGS/storm_xsections_<CASE>.h5 (:,1:36) 1 0
+  /all_s_speed_t DIAGS/storm_xsections_<CASE>.h5 (:,1:44) 1 0
 End
   
 ############ PLOT AXES #################
@@ -151,8 +158,8 @@ PlotAxes: VtXsectionAxes 3
   # x axis - radius
   Radius km 0 500 linear [100_300_500] {_}
   # y axis - utc time
-  Height km 0 8 linear [_] {_}
+  Height km 0 15 linear [_] {_}
   # z axis - speed_t - m/s
-  Vt m@s^-^1 0 15 linear [_] {_}
+  Vt m@s^-^1 -5 15 linear [_] {_}
 End
 

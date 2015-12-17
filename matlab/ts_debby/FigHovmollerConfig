@@ -157,12 +157,30 @@
 #  DustHailSpathHovNSDPanel   2
 #End 
 
-Figure: DustHydroSpathHov 2
+
+
+#Figure: DustHydroSpathHov 2
+#  DummyCases
+#  [2_1]
+#  Plots/FigDustHydroSpathHov.jpg
+#  DustHydroSpathHovSDPanel   1
+#  DustHydroSpathHovNSDPanel   2
+#End 
+#
+#Figure: DustIfnHydroSpathHov 2
+#  DummyCases
+#  [2_1]
+#  Plots/FigDustIfnHydroSpathHov.jpg
+#  DustIfnHydroSpathHovSDPanel   1
+#  DustIfnHydroSpathHovNSDPanel   2
+#End 
+
+Figure: TrDustDiffSpathHov 2
   DummyCases
   [2_1]
-  Plots/FigDustHydroSpathHov.jpg
-  DustHydroSpathHovSDPanel   1
-  DustHydroSpathHovNSDPanel   2
+  Plots/FigTrDustDiffSpathHov.jpg
+  TrDust1DiffSpathHovPanel   1
+  TrDust2DiffSpathHovPanel   2
 End 
 
 ########### CASES ####################
@@ -651,6 +669,38 @@ FigPanel: DustHydroSpathHovNSDPanel
   none 12
 End
 
+FigPanel: DustIfnHydroSpathHovSDPanel
+  DustIfnHydroSpathHovSDPset
+  DustIfnHydroSpathHovAxes 1 1
+  none 5
+  M_d_i_h_y@SD@(SPATH)
+  none 12
+End
+
+FigPanel: DustIfnHydroSpathHovNSDPanel
+  DustIfnHydroSpathHovNSDPset
+  DustIfnHydroSpathHovAxes 1 1
+  none 5
+  M_d_i_h_y@NSD@(SPATH)
+  none 12
+End
+
+FigPanel: TrDust1DiffSpathHovPanel
+  TrDust1DiffSpathHovPset
+  TrDust1DiffSpathHovAxes 1 1
+  none 5
+  M_t_d_1@SD@(SPATH)
+  none 12
+End
+
+FigPanel: TrDust2DiffSpathHovPanel
+  TrDust2DiffSpathHovPset
+  TrDust2DiffSpathHovAxes 1 1
+  none 5
+  M_t_d_2@SD@(SPATH)
+  none 12
+End
+
 ############ PLOT SETS #################
 PlotSet: PcprateHovSDPset contourf 1
   PcprateHovContour TSD_SAL_DUST none  2 blue   - 0
@@ -893,6 +943,22 @@ PlotSet: DustHydroSpathHovNSDPset contourf 1
   DustHydroSpathHovContour TSD_NONSAL_DUST none  2 blue   - 0
 End
 
+PlotSet: DustIfnHydroSpathHovSDPset contourf 1
+  DustIfnHydroSpathHovContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: DustIfnHydroSpathHovNSDPset contourf 1
+  DustIfnHydroSpathHovContour TSD_NONSAL_DUST none  2 blue   - 0
+End
+
+PlotSet: TrDust1DiffSpathHovPset contourf 1
+  TrDust1DiffSpathHovContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: TrDust2DiffSpathHovPset contourf 1
+  TrDust2DiffSpathHovContour TSD_SAL_DUST none  2 blue   - 0
+End
+
 ############ PLOT DATA #################
 PlotData: PcprateHovContour 3
   # x data - radius, km
@@ -943,126 +1009,153 @@ PlotData: D1MassSpathHovContour 3
   # x data - sim time in hours
   /t_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 @ 2.7778e-4 -42
   # y data - height, km
-  /z_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:44) 1e-3 0
+  /z_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:49) 1e-3 0
   # z data -  updraft speed, m/s
-  /spath_d1_mass_ts DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:44,:) 1 0
+  /spath_d1_mass_ts DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:49,:) 1 0
 End
   
 PlotData: D1NumSpathHovContour 3
   # x data - sim time in hours
   /t_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 @ 2.7778e-4 -42
   # y data - height, km
-  /z_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:44) 1e-3 0
+  /z_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:49) 1e-3 0
   # z data -  updraft speed, m/s
-  /spath_d1_num_ts DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:44,:) 1 0
+  /spath_d1_num_ts DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:49,:) 1 0
 End
   
 PlotData: D2MassSpathHovContour 3
   # x data - sim time in hours
   /t_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 @ 2.7778e-4 -42
   # y data - height, km
-  /z_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:44) 1e-3 0
+  /z_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:49) 1e-3 0
   # z data -  updraft speed, m/s
-  /spath_d2_mass_ts DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:44,:) 1 0
+  /spath_d2_mass_ts DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:49,:) 1 0
 End
   
 PlotData: D2NumSpathHovContour 3
   # x data - sim time in hours
   /t_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 @ 2.7778e-4 -42
   # y data - height, km
-  /z_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:44) 1e-3 0
+  /z_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:49) 1e-3 0
   # z data -  updraft speed, m/s
-  /spath_d2_num_ts DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:44,:) 1 0
+  /spath_d2_num_ts DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:49,:) 1 0
 End
   
 PlotData: Tracer1SpathHovContour 3
   # x data - sim time in hours
   /t_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 @ 2.7778e-4 -42
   # y data - height, km
-  /z_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:44) 1e-3 0
+  /z_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:49) 1e-3 0
   # z data -  updraft speed, m/s
-  /spath_tracer1_ts DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:44,:) 1 0
+  /spath_tracer1_ts DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:49,:) 1 0
 End
   
 PlotData: Tracer2SpathHovContour 3
   # x data - sim time in hours
   /t_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 @ 2.7778e-4 -42
   # y data - height, km
-  /z_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:44) 1e-3 0
+  /z_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:49) 1e-3 0
   # z data -  updraft speed, m/s
-  /spath_tracer2_ts DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:44,:) 1 0
+  /spath_tracer2_ts DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:49,:) 1 0
 End
   
 PlotData: DustCloudSpathHovContour 3
   # x data - sim time in hours
   /t_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 @ 2.7778e-4 -42
   # y data - height, km
-  /z_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:44) 1e-3 0
+  /z_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49) 1e-3 0
   # z data -  updraft speed, m/s
-  /spath_dust_cloud_ts DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:44,:) 1 0
+  /spath_dust_cloud_ts DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49,:) 1 0
 End
   
 PlotData: DustRainSpathHovContour 3
   # x data - sim time in hours
   /t_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 @ 2.7778e-4 -42
   # y data - height, km
-  /z_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:44) 1e-3 0
+  /z_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49) 1e-3 0
   # z data -  updraft speed, m/s
-  /spath_dust_rain_ts DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:44,:) 1 0
+  /spath_dust_rain_ts DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49,:) 1 0
 End
   
 PlotData: DustPrisSpathHovContour 3
   # x data - sim time in hours
   /t_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 @ 2.7778e-4 -42
   # y data - height, km
-  /z_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:44) 1e-3 0
+  /z_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49) 1e-3 0
   # z data -  updraft speed, m/s
-  /spath_dust_pris_ts DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:44,:) 1 0
+  /spath_dust_pris_ts DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49,:) 1 0
 End
   
 PlotData: DustSnowSpathHovContour 3
   # x data - sim time in hours
   /t_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 @ 2.7778e-4 -42
   # y data - height, km
-  /z_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:44) 1e-3 0
+  /z_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49) 1e-3 0
   # z data -  updraft speed, m/s
-  /spath_dust_snow_ts DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:44,:) 1 0
+  /spath_dust_snow_ts DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49,:) 1 0
 End
   
 PlotData: DustAggrSpathHovContour 3
   # x data - sim time in hours
   /t_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 @ 2.7778e-4 -42
   # y data - height, km
-  /z_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:44) 1e-3 0
+  /z_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49) 1e-3 0
   # z data -  updraft speed, m/s
-  /spath_dust_aggr_ts DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:44,:) 1 0
+  /spath_dust_aggr_ts DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49,:) 1 0
 End
   
 PlotData: DustGraupSpathHovContour 3
   # x data - sim time in hours
   /t_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 @ 2.7778e-4 -42
   # y data - height, km
-  /z_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:44) 1e-3 0
+  /z_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49) 1e-3 0
   # z data -  updraft speed, m/s
-  /spath_dust_graup_ts DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:44,:) 1 0
+  /spath_dust_graup_ts DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49,:) 1 0
 End
   
 PlotData: DustHailSpathHovContour 3
   # x data - sim time in hours
   /t_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 @ 2.7778e-4 -42
   # y data - height, km
-  /z_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:44) 1e-3 0
+  /z_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49) 1e-3 0
   # z data -  updraft speed, m/s
-  /spath_dust_hail_ts DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:44,:) 1 0
+  /spath_dust_hail_ts DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49,:) 1 0
 End
   
 PlotData: DustHydroSpathHovContour 3
   # x data - sim time in hours
   /t_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 @ 2.7778e-4 -42
   # y data - height, km
-  /z_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:44) 1e-3 0
+  /z_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49) 1e-3 0
   # z data -  updraft speed, m/s
-  /spath_dust_hydro_ts DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:44,:) 1 0
+  /spath_dust_hydro_ts DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49,:) 1 0
+End
+  
+PlotData: DustIfnHydroSpathHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hist_meas_ts_dustifn_hydro_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hist_meas_ts_dustifn_hydro_<CASE>.h5 (2:49) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_dustifn_hydro_ts DIAGS/hist_meas_ts_dustifn_hydro_<CASE>.h5 (2:49,:) 1 0
+End
+  
+PlotData: TrDust1DiffSpathHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:49) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_trdust1_diff_ts DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:49,:) 1 0
+End
+  
+PlotData: TrDust2DiffSpathHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:49) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_trdust2_diff_ts DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:49,:) 1 0
 End
   
 ############ PLOT AXES #################
@@ -1121,9 +1214,10 @@ PlotAxes: D1MassSpathHovAxes 3
   # x axis - sim time, h
   Sim@Time h 0 60 linear [10_30_50] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 20 linear [_] {_}
   # z axis - dust1 number, #/cc
-  N_d_1 \mug@m^-^3 0 1 linear [_] {_}
+#  N_d_1 \mug@m^-^3 0 1 linear [_] {_}
+  N_d_1 \mug@m^-^3 0.001 1 log [-3_-2_-1_0] {0.001_0.01_0.1_1}
 End
 
 PlotAxes: D1NumSpathHovAxes 3
@@ -1131,9 +1225,10 @@ PlotAxes: D1NumSpathHovAxes 3
   # x axis - sim time, h
   Sim@Time h 0 60 linear [10_30_50] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 20 linear [_] {_}
   # z axis - dust1 number, #/cc
-  N_d_1 cm^-^3 0 200 linear [_] {_}
+#  N_d_1 cm^-^3 0 200 linear [_] {_}
+  N_d_1 cm^-^3 1 200 log [0_1_2] {1_10_100}
 End
 
 PlotAxes: D2MassSpathHovAxes 3
@@ -1141,9 +1236,10 @@ PlotAxes: D2MassSpathHovAxes 3
   # x axis - sim time, h
   Sim@Time h 0 60 linear [10_30_50] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 20 linear [_] {_}
   # z axis - dust1 number, #/cc
-  N_d_2 \mug@m^-^3 0 500 linear [_] {_}
+#  N_d_2 \mug@m^-^3 0 500 linear [_] {_}
+  N_d_2 \mug@m^-^3 0.01 500 log [-2_-1_0_1_2] {0.01_0.1_1_10_100}
 End
 
 PlotAxes: D2NumSpathHovAxes 3
@@ -1151,9 +1247,10 @@ PlotAxes: D2NumSpathHovAxes 3
   # x axis - sim time, h
   Sim@Time h 0 60 linear [10_30_50] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 20 linear [_] {_}
   # z axis - dust1 number, #/cc
-  N_d_2 cm^-^3 0 100 linear [_] {_}
+#  N_d_2 cm^-^3 0 100 linear [_] {_}
+  N_d_2 cm^-^3 1 100 log [0_1_2] {1_10_100}
 End
 
 PlotAxes: Tracer1SpathHovAxes 3
@@ -1161,9 +1258,10 @@ PlotAxes: Tracer1SpathHovAxes 3
   # x axis - sim time, h
   Sim@Time h 0 60 linear [10_30_50] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 20 linear [_] {_}
   # z axis - dust1 number, #/cc
-  M_t_1 \mug@m^-^3 0 1 linear [_] {_}
+#  M_t_1 \mug@m^-^3 0 1 linear [_] {_}
+  M_t_1 \mug@m^-^3 0.001 1 log [-3_-2_-1_0] {0.001_0.01_0.1_1}
 End
 
 PlotAxes: Tracer2SpathHovAxes 3
@@ -1171,9 +1269,10 @@ PlotAxes: Tracer2SpathHovAxes 3
   # x axis - sim time, h
   Sim@Time h 0 60 linear [10_30_50] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 20 linear [_] {_}
   # z axis - dust1 number, #/cc
-  M_t_2 \mug@m^-^3 0 500 linear [_] {_}
+#  M_t_2 \mug@m^-^3 0 500 linear [_] {_}
+  M_t_2 \mug@m^-^3 0.01 500 log [-2_-1_0_1_2] {0.01_0.1_1_10_100}
 End
 
 PlotAxes: DustCloudSpathHovAxes 3
@@ -1181,9 +1280,10 @@ PlotAxes: DustCloudSpathHovAxes 3
   # x axis - sim time, h
   Sim@Time h 0 60 linear [10_30_50] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 20 linear [_] {_}
   # z axis - dust1 number, ug/m3
-  M_d_c ug@m^-^3 0 5 linear [_] {_}
+#  M_d_c ug@m^-^3 0 5 linear [_] {_}
+  M_d_c ug@m^-^3 1e-3 1 log [-3_-2_-1_0] {0.001_0.01_0.1_1}
 End
 
 PlotAxes: DustRainSpathHovAxes 3
@@ -1191,9 +1291,10 @@ PlotAxes: DustRainSpathHovAxes 3
   # x axis - sim time, h
   Sim@Time h 0 60 linear [10_30_50] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 20 linear [_] {_}
   # z axis - dust1 number, ug/m3
-  M_d_r ug@m^-^3 0 0.1 linear [_] {_}
+#  M_d_r ug@m^-^3 0 0.1 linear [_] {_}
+  M_d_r ug@m^-^3 1e-3 1 log [-3_-2_-1_0] {0.001_0.01_0.1_1}
 End
 
 PlotAxes: DustPrisSpathHovAxes 3
@@ -1201,9 +1302,10 @@ PlotAxes: DustPrisSpathHovAxes 3
   # x axis - sim time, h
   Sim@Time h 0 60 linear [10_30_50] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 20 linear [_] {_}
   # z axis - dust1 number, ug/m3
-  M_d_p ug@m^-^3 0 0.003 linear [_] {_}
+#  M_d_p ug@m^-^3 0 0.003 linear [_] {_}
+  M_d_p ug@m^-^3 1e-3 1 log [-3_-2_-1_0] {0.001_0.01_0.1_1}
 End
 
 PlotAxes: DustSnowSpathHovAxes 3
@@ -1211,9 +1313,10 @@ PlotAxes: DustSnowSpathHovAxes 3
   # x axis - sim time, h
   Sim@Time h 0 60 linear [10_30_50] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 20 linear [_] {_}
   # z axis - dust1 number, ug/m3
-  M_d_a ug@m^-^3 0 0.003 linear [_] {_}
+#  M_d_a ug@m^-^3 0 0.003 linear [_] {_}
+  M_d_a ug@m^-^3 1e-3 1 log [-3_-2_-1_0] {0.001_0.01_0.1_1}
 End
 
 PlotAxes: DustAggrSpathHovAxes 3
@@ -1221,9 +1324,10 @@ PlotAxes: DustAggrSpathHovAxes 3
   # x axis - sim time, h
   Sim@Time h 0 60 linear [10_30_50] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 20 linear [_] {_}
   # z axis - dust1 number, ug/m3
-  M_d_a ug@m^-^3 0 0.003 linear [_] {_}
+#  M_d_a ug@m^-^3 0 0.003 linear [_] {_}
+  M_d_a ug@m^-^3 1e-3 1 log [-3_-2_-1_0] {0.001_0.01_0.1_1}
 End
 
 PlotAxes: DustGraupSpathHovAxes 3
@@ -1231,9 +1335,10 @@ PlotAxes: DustGraupSpathHovAxes 3
   # x axis - sim time, h
   Sim@Time h 0 60 linear [10_30_50] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 20 linear [_] {_}
   # z axis - dust1 number, ug/m3
-  M_d_g ug@m^-^3 0 0.05 linear [_] {_}
+#  M_d_g ug@m^-^3 0 0.05 linear [_] {_}
+  M_d_g ug@m^-^3 1e-3 1 log [-3_-2_-1_0] {0.001_0.01_0.1_1}
 End
 
 PlotAxes: DustHailSpathHovAxes 3
@@ -1241,9 +1346,10 @@ PlotAxes: DustHailSpathHovAxes 3
   # x axis - sim time, h
   Sim@Time h 0 60 linear [10_30_50] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 20 linear [_] {_}
   # z axis - dust1 number, ug/m3
-  M_d_h ug@m^-^3 0 0.01 linear [_] {_}
+#  M_d_h ug@m^-^3 0 0.01 linear [_] {_}
+  M_d_h ug@m^-^3 1e-3 1 log [-3_-2_-1_0] {0.001_0.01_0.1_1}
 End
 
 PlotAxes: DustHydroSpathHovAxes 3
@@ -1251,8 +1357,38 @@ PlotAxes: DustHydroSpathHovAxes 3
   # x axis - sim time, h
   Sim@Time h 0 60 linear [10_30_50] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 20 linear [_] {_}
   # z axis - dust1 number, ug/m3
   M_d_h_y ug@m^-^3 0.005 5 log [-2_-1_0] {0.01_0.1_1}
+End
+
+PlotAxes: DustIfnHydroSpathHovAxes 3
+  14 2 [0.025_0.025]
+  # x axis - sim time, h
+  Sim@Time h 0 60 linear [10_30_50] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+  # z axis - dust1 number, ug/m3
+  M_d_i_h_y \mug@m^-^3 1e-6 1e-3 log [-6_-5_-4_-3] {'10^-^6'_'10^-^5'_'10^-^4'_'10^-^3'}
+End
+
+PlotAxes: TrDust1DiffSpathHovAxes 3
+  14 2 [0.025_0.025]
+  # x axis - sim time, h
+  Sim@Time h 0 60 linear [10_30_50] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+  # z axis - dust1 number, ug/m3
+  M_t_d_1 \mug@m^-^3 0.1 1 log [log10(0.1)_log10(0.2)_log10(0.3)_log10(0.5)_log10(0.7)_log10(1)] {0.1_0.2_0.3_0.5_0.7_1}
+End
+
+PlotAxes: TrDust2DiffSpathHovAxes 3
+  14 2 [0.025_0.025]
+  # x axis - sim time, h
+  Sim@Time h 0 60 linear [10_30_50] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+  # z axis - dust1 number, ug/m3
+  M_t_d_2 \mug@m^-^3 10 100 log [log10(10)_log10(20)_log10(30)_log10(50)_log10(70)_log10(100)] {10_20_30_50_70_100}
 End
 

@@ -23,6 +23,13 @@ Figure: VrXsectionSal 4
   VrXsectionNSNDSalPanel   4
 End 
 
+Figure: VrXsectionSampleSal 1
+  DummyCases
+  [1_1]
+  Plots/FigVrXsectionSampleSal.jpg
+  VrXsectionSDSalPanel         1
+End 
+
 ########### CASES ####################
 CaseSet: DummyCases 1
   Dummy

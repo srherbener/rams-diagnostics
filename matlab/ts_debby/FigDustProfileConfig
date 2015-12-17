@@ -3,136 +3,151 @@
 #
 
 ######### FIGURES ###################
-Figure: DustSalProfile 4
-  DummyCases
-  [2_2]
-  Plots/FigDustSalProfile.jpg
-  Dust1NumSalCorePanel  1
-  Dust1NumSalRbandPanel 2
-  Dust2NumSalCorePanel  3
-  Dust2NumSalRbandPanel 4
-End 
+#Figure: DustSalProfile 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigDustSalProfile.jpg
+#  Dust1NumSalCorePanel  1
+#  Dust1NumSalRbandPanel 2
+#  Dust2NumSalCorePanel  3
+#  Dust2NumSalRbandPanel 4
+#End 
+#
+#Figure: DustCloudSalProfile 2
+#  DummyCases
+#  [1_2]
+#  Plots/FigDustCloudSalProfile.jpg
+#  DustCloudSalCorePanel  1
+#  DustCloudSalRbandPanel 2
+#End 
+#
+#Figure: DustRainSalProfile 2
+#  DummyCases
+#  [1_2]
+#  Plots/FigDustRainSalProfile.jpg
+#  DustRainSalCorePanel  1
+#  DustRainSalRbandPanel 2
+#End 
+#
+#Figure: DustPrisSalProfile 2
+#  DummyCases
+#  [1_2]
+#  Plots/FigDustPrisSalProfile.jpg
+#  DustPrisSalCorePanel  1
+#  DustPrisSalRbandPanel 2
+#End 
+#
+#Figure: DustSnowSalProfile 2
+#  DummyCases
+#  [1_2]
+#  Plots/FigDustSnowSalProfile.jpg
+#  DustSnowSalCorePanel  1
+#  DustSnowSalRbandPanel 2
+#End 
+#
+#Figure: DustAggrSalProfile 2
+#  DummyCases
+#  [1_2]
+#  Plots/FigDustAggrSalProfile.jpg
+#  DustAggrSalCorePanel  1
+#  DustAggrSalRbandPanel 2
+#End 
+#
+#Figure: DustGraupSalProfile 2
+#  DummyCases
+#  [1_2]
+#  Plots/FigDustGraupSalProfile.jpg
+#  DustGraupSalCorePanel  1
+#  DustGraupSalRbandPanel 2
+#End 
+#
+#Figure: DustHailSalProfile 2
+#  DummyCases
+#  [1_2]
+#  Plots/FigDustHailSalProfile.jpg
+#  DustHailSalCorePanel  1
+#  DustHailSalRbandPanel 2
+#End 
+#
+#Figure: DustPreSalProfile 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigDustPreSalProfile.jpg
+#  Dust1NumPreSalCorePanel  1
+#  Dust1NumPreSalRbandPanel 2
+#  Dust2NumPreSalCorePanel  3
+#  Dust2NumPreSalRbandPanel 4
+#End 
+#
+#Figure: DustCloudPreSalProfile 2
+#  DummyCases
+#  [1_2]
+#  Plots/FigDustCloudPreSalProfile.jpg
+#  DustCloudPreSalCorePanel  1
+#  DustCloudPreSalRbandPanel 2
+#End 
+#
+#Figure: DustRainPreSalProfile 2
+#  DummyCases
+#  [1_2]
+#  Plots/FigDustRainPreSalProfile.jpg
+#  DustRainPreSalCorePanel  1
+#  DustRainPreSalRbandPanel 2
+#End 
+#
+#Figure: DustPrisPreSalProfile 2
+#  DummyCases
+#  [1_2]
+#  Plots/FigDustPrisPreSalProfile.jpg
+#  DustPrisPreSalCorePanel  1
+#  DustPrisPreSalRbandPanel 2
+#End 
+#
+#Figure: DustSnowPreSalProfile 2
+#  DummyCases
+#  [1_2]
+#  Plots/FigDustSnowPreSalProfile.jpg
+#  DustSnowPreSalCorePanel  1
+#  DustSnowPreSalRbandPanel 2
+#End 
+#
+#Figure: DustAggrPreSalProfile 2
+#  DummyCases
+#  [1_2]
+#  Plots/FigDustAggrPreSalProfile.jpg
+#  DustAggrPreSalCorePanel  1
+#  DustAggrPreSalRbandPanel 2
+#End 
+#
+#Figure: DustGraupPreSalProfile 2
+#  DummyCases
+#  [1_2]
+#  Plots/FigDustGraupPreSalProfile.jpg
+#  DustGraupPreSalCorePanel  1
+#  DustGraupPreSalRbandPanel 2
+#End 
+#
+#Figure: DustHailPreSalProfile 2
+#  DummyCases
+#  [1_2]
+#  Plots/FigDustHailPreSalProfile.jpg
+#  DustHailPreSalCorePanel  1
+#  DustHailPreSalRbandPanel 2
+#End 
 
-Figure: DustCloudSalProfile 2
+Figure: DustNumMassSalProfile 2
   DummyCases
   [1_2]
-  Plots/FigDustCloudSalProfile.jpg
-  DustCloudSalCorePanel  1
-  DustCloudSalRbandPanel 2
+  Plots/FigDustNumMassSalProfile.jpg
+  DustNumberSalPanel 1
+  DustMassSalPanel   2
 End 
 
-Figure: DustRainSalProfile 2
+Figure: TrDustDiffSalProfile 1
   DummyCases
-  [1_2]
-  Plots/FigDustRainSalProfile.jpg
-  DustRainSalCorePanel  1
-  DustRainSalRbandPanel 2
-End 
-
-Figure: DustPrisSalProfile 2
-  DummyCases
-  [1_2]
-  Plots/FigDustPrisSalProfile.jpg
-  DustPrisSalCorePanel  1
-  DustPrisSalRbandPanel 2
-End 
-
-Figure: DustSnowSalProfile 2
-  DummyCases
-  [1_2]
-  Plots/FigDustSnowSalProfile.jpg
-  DustSnowSalCorePanel  1
-  DustSnowSalRbandPanel 2
-End 
-
-Figure: DustAggrSalProfile 2
-  DummyCases
-  [1_2]
-  Plots/FigDustAggrSalProfile.jpg
-  DustAggrSalCorePanel  1
-  DustAggrSalRbandPanel 2
-End 
-
-Figure: DustGraupSalProfile 2
-  DummyCases
-  [1_2]
-  Plots/FigDustGraupSalProfile.jpg
-  DustGraupSalCorePanel  1
-  DustGraupSalRbandPanel 2
-End 
-
-Figure: DustHailSalProfile 2
-  DummyCases
-  [1_2]
-  Plots/FigDustHailSalProfile.jpg
-  DustHailSalCorePanel  1
-  DustHailSalRbandPanel 2
-End 
-
-Figure: DustPreSalProfile 4
-  DummyCases
-  [2_2]
-  Plots/FigDustPreSalProfile.jpg
-  Dust1NumPreSalCorePanel  1
-  Dust1NumPreSalRbandPanel 2
-  Dust2NumPreSalCorePanel  3
-  Dust2NumPreSalRbandPanel 4
-End 
-
-Figure: DustCloudPreSalProfile 2
-  DummyCases
-  [1_2]
-  Plots/FigDustCloudPreSalProfile.jpg
-  DustCloudPreSalCorePanel  1
-  DustCloudPreSalRbandPanel 2
-End 
-
-Figure: DustRainPreSalProfile 2
-  DummyCases
-  [1_2]
-  Plots/FigDustRainPreSalProfile.jpg
-  DustRainPreSalCorePanel  1
-  DustRainPreSalRbandPanel 2
-End 
-
-Figure: DustPrisPreSalProfile 2
-  DummyCases
-  [1_2]
-  Plots/FigDustPrisPreSalProfile.jpg
-  DustPrisPreSalCorePanel  1
-  DustPrisPreSalRbandPanel 2
-End 
-
-Figure: DustSnowPreSalProfile 2
-  DummyCases
-  [1_2]
-  Plots/FigDustSnowPreSalProfile.jpg
-  DustSnowPreSalCorePanel  1
-  DustSnowPreSalRbandPanel 2
-End 
-
-Figure: DustAggrPreSalProfile 2
-  DummyCases
-  [1_2]
-  Plots/FigDustAggrPreSalProfile.jpg
-  DustAggrPreSalCorePanel  1
-  DustAggrPreSalRbandPanel 2
-End 
-
-Figure: DustGraupPreSalProfile 2
-  DummyCases
-  [1_2]
-  Plots/FigDustGraupPreSalProfile.jpg
-  DustGraupPreSalCorePanel  1
-  DustGraupPreSalRbandPanel 2
-End 
-
-Figure: DustHailPreSalProfile 2
-  DummyCases
-  [1_2]
-  Plots/FigDustHailPreSalProfile.jpg
-  DustHailPreSalCorePanel  1
-  DustHailPreSalRbandPanel 2
+  [1_1]
+  Plots/FigTrDustDiffSalProfile.jpg
+  TrDustDiffSalPanel 1
 End 
 
 ########### CASES ####################
@@ -429,6 +444,30 @@ FigPanel: DustHailPreSalRbandPanel
   NorthEast 12
 End
 
+FigPanel: DustNumberSalPanel
+  DustNumberSalPset
+  DustNumberSalAxes 1 1
+  none 5
+  SAL:@Dust@Number
+  none 12
+End
+
+FigPanel: DustMassSalPanel
+  DustMassSalPset
+  DustMassSalAxes 1 1
+  none 5
+  SAL:@Dust@Mass
+  NorthEast 12
+End
+
+FigPanel: TrDustDiffSalPanel
+  TrDustDiffSalPset
+  TrDustDiffSalAxes 1 1
+  none 5
+  SAL:@Tracer-Dust
+  NorthEast 12
+End
+
 ############ PLOT SETS #################
 PlotSet: Dust1NumSalCorePset line 2
   Dust1NumSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
@@ -608,6 +647,21 @@ End
 PlotSet: DustHailPreSalRbandPset line 2
   DustHailPreSalRbandLine TSD_SAL_DUST      SD   2 black  - 0
   DustHailPreSalRbandLine TSD_NONSAL_DUST   NSD  2 red    - 0
+End
+
+PlotSet: DustNumberSalPset line 2
+  Dust1NumberSalLine TSD_SAL_DUST  Small@Dust   2 black  - 0
+  Dust2NumberSalLine TSD_SAL_DUST  Large@Dust   2 red    - 0
+End
+
+PlotSet: DustMassSalPset line 2
+  Dust1MassSalLine TSD_SAL_DUST  Small@Dust   2 black  - 0
+  Dust2MassSalLine TSD_SAL_DUST  Large@Dust   2 red    - 0
+End
+
+PlotSet: TrDustDiffSalPset line 2
+  TrDust1DiffSalLine TSD_SAL_DUST  Small@Dust   2 black  - 0
+  TrDust2DiffSalLine TSD_SAL_DUST  Large@Dust   2 red    - 0
 End
 
 ############ PLOT DATA #################
@@ -863,6 +917,48 @@ PlotData: DustHailPreSalRbandLine 2
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
+PlotData: Dust1NumberSalLine 2
+  # x data - d1_num, #/cm3
+  /all_whole_s_d1_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+
+PlotData: Dust2NumberSalLine 2
+  # x data - d1_num, #/cm3
+  /all_whole_s_d2_num DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: Dust1MassSalLine 2
+  # x data - d1_num, #/cm3
+  /all_whole_s_d1_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+
+PlotData: Dust2MassSalLine 2
+  # x data - d1_num, #/cm3
+  /all_whole_s_d2_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: TrDust1DiffSalLine 2
+  # x data - d1_num, #/cm3
+  /all_whole_s_trdust1_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: TrDust2DiffSalLine 2
+  # x data - d1_num, #/cm3
+  /all_whole_s_trdust2_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
 ############ PLOT AXES #################
 PlotAxes: Dust1NumSalCoreAxes 2
   14 2 [0.025_0.025]
@@ -1036,6 +1132,30 @@ PlotAxes: DustHailPreSalAxes 2
   14 2 [0.025_0.025]
   # x axis - d1_num, #/cm3
   Dust@in@Hail \mug@m^-^3 0 0.03 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: DustNumberSalAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d1_num, #/cm3
+  N_d cm^-^3 0.01 100 log [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: DustMassSalAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d1_num, #/cm3
+  M_d \mug@m^-^3 0.01 1000 log [0.1_1_10_100] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: TrDustDiffSalAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d1_num, #/cm3
+  M_t_d \mug@m^-^3 0.01 1000 log [0.1_1_10_100] {_}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
 End

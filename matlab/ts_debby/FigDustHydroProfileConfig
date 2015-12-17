@@ -1,0 +1,210 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: DustHydroSalProfile 4
+  DummyCases
+  [1_4]
+  Plots/FigDustHydroSalProfile.jpg
+  DustSmallIceSalPanel  1
+  DustLargeIceSalPanel  2
+  DustRainSalPanel      3
+  DustCloudSalPanel     4
+End 
+
+Figure: DustHydroAllSalProfile 1
+  DummyCases
+  [1_1]
+  Plots/FigDustHydroAllSalProfile.jpg
+  DustHydroAllSalPanel  1
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: DustSmallIceSalPanel
+  DustSmallIceSalPset
+  DustSmallIceSalAxes 1 1
+  none 5
+  SAL:@Small@Ice 
+  NorthEast 12
+End
+
+FigPanel: DustLargeIceSalPanel
+  DustLargeIceSalPset
+  DustLargeIceSalAxes 1 1
+  none 5
+  Large@Ice 
+  NorthEast 12
+End
+
+FigPanel: DustRainSalPanel
+  DustRainSalPset
+  DustRainSalAxes 1 1
+  none 5
+  Rain
+  NorthEast 12
+End
+
+FigPanel: DustCloudSalPanel
+  DustCloudSalPset
+  DustCloudSalAxes 1 1
+  none 5
+  Cloud
+  NorthEast 12
+End
+
+FigPanel: DustHydroAllSalPanel
+  DustHydroAllSalPset
+  DustHydroAllSalAxes 1 1
+  none 5
+  Dust@In@Hydrometeors
+  NorthEast 12
+End
+
+############ PLOT SETS #################
+PlotSet: DustSmallIceSalPset line 3
+  DustAggrSal1000xLine TSD_SAL_DUST  Aggr   2 black - 0
+  DustSnowSal1000xLine TSD_SAL_DUST  Snow   2 blue  - 0
+  DustPrisSal1000xLine TSD_SAL_DUST  Pris   2 cyan  - 0
+End
+
+PlotSet: DustLargeIceSalPset line 2
+  DustGraupSalLine TSD_SAL_DUST  Graup  2 green  - 0
+  DustHailSalLine  TSD_SAL_DUST  Hail   2 orange - 0
+End
+
+PlotSet: DustRainSalPset line 1
+  DustRainSalLine  TSD_SAL_DUST  Rain   2 magenta - 0
+End
+
+PlotSet: DustCloudSalPset line 1
+  DustCloudSalLine TSD_SAL_DUST  Cloud  2 red     - 0
+End
+
+PlotSet: DustHydroAllSalPset line 7
+  DustCloudSalLine TSD_SAL_DUST  Cloud  2 red     - 0
+  DustRainSalLine  TSD_SAL_DUST  Rain   2 magenta - 0
+  DustAggrSalLine  TSD_SAL_DUST  Aggr   2 black - 0
+  DustSnowSalLine  TSD_SAL_DUST  Snow   2 blue  - 0
+  DustPrisSalLine  TSD_SAL_DUST  Pris   2 cyan  - 0
+  DustGraupSalLine TSD_SAL_DUST  Graup  2 green  - 0
+  DustHailSalLine  TSD_SAL_DUST  Hail   2 orange - 0
+End
+
+############ PLOT DATA #################
+PlotData: DustCloudSalLine 2
+  # x data - d1_num, #/cm3
+  /all_whole_s_dust_cloud DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: DustRainSalLine 2
+  # x data - d1_num, #/cm3
+  /all_whole_s_dust_rain DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: DustPrisSalLine 2
+  # x data - d1_num, #/cm3
+  /all_whole_s_dust_pris DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: DustSnowSalLine 2
+  # x data - d1_num, #/cm3
+  /all_whole_s_dust_snow DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: DustAggrSalLine 2
+  # x data - d1_num, #/cm3
+  /all_whole_s_dust_aggr DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: DustPrisSal1000xLine 2
+  # x data - d1_num, #/cm3
+  /all_whole_s_dust_pris DIAGS/storm_profiles_<CASE>.h5 @ 1e3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: DustSnowSal1000xLine 2
+  # x data - d1_num, #/cm3
+  /all_whole_s_dust_snow DIAGS/storm_profiles_<CASE>.h5 @ 1e3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: DustAggrSal1000xLine 2
+  # x data - d1_num, #/cm3
+  /all_whole_s_dust_aggr DIAGS/storm_profiles_<CASE>.h5 @ 1e3 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: DustGraupSalLine 2
+  # x data - d1_num, #/cm3
+  /all_whole_s_dust_graup DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: DustHailSalLine 2
+  # x data - d1_num, #/cm3
+  /all_whole_s_dust_hail DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: DustSmallIceSalAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d1_num, #/cm3
+  M_d \mug@m^-^3@x@10^-^3 0 5 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: DustLargeIceSalAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d1_num, #/cm3
+  M_d \mug@m^-^3 0 0.05 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: DustCloudSalAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d1_num, #/cm3
+  M_d \mug@m^-^3 0 1.5 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: DustRainSalAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d1_num, #/cm3
+  M_d \mug@m^-^3 0 0.1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: DustHydroAllSalAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d1_num, #/cm3
+  M_d \mug@m^-^3 1e-4 10 log [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+

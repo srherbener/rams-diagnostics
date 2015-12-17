@@ -89,6 +89,7 @@ CONFIGS = \
   $(DIAG_DIR)/FigHailSubXsectionConfig \
   $(DIAG_DIR)/FigCoolXsectionConfig \
   $(DIAG_DIR)/FigHeatXsectionConfig \
+  $(DIAG_DIR)/FigBuoyXsectionConfig \
   $(DIAG_DIR)/FigLiqCondXsectionConfig \
   $(DIAG_DIR)/FigLiqEvapXsectionConfig \
   $(DIAG_DIR)/FigDnXsectionConfig \
@@ -132,6 +133,7 @@ CONFIGS = \
   $(DIAG_DIR)/FigDust1NumSampProfileConfig \
   $(DIAG_DIR)/FigDust2NumSampProfileConfig \
   $(DIAG_DIR)/FigDustProfileConfig \
+  $(DIAG_DIR)/FigDustHydroProfileConfig \
   $(DIAG_DIR)/FigCpoolDistConfig \
   $(DIAG_DIR)/FigureConfig
 
