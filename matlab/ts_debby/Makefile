@@ -8,6 +8,7 @@ DIAG_DIR = /Volumes/tasman1/sherbener/data/RAMS/TsDebby/SST_OBS
 SCRIPTS = \
   $(DEST)/PlotGrids.m \
   $(DEST)/ExtractSampleProfile.m \
+  $(DEST)/GenAccumSfcDust.m \
   $(DEST)/GenStormDustFields.m \
   $(DEST)/GenTempAnomalies.m \
   $(DEST)/GenTsavgHists.m \

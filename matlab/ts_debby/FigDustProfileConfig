@@ -134,20 +134,29 @@
 #  DustHailPreSalCorePanel  1
 #  DustHailPreSalRbandPanel 2
 #End 
+#
+#Figure: DustNumMassSalProfile 2
+#  DummyCases
+#  [1_2]
+#  Plots/FigDustNumMassSalProfile.jpg
+#  DustNumberSalPanel 1
+#  DustMassSalPanel   2
+#End 
+#
+#Figure: TrDustDiffSalProfile 1
+#  DummyCases
+#  [1_1]
+#  Plots/FigTrDustDiffSalProfile.jpg
+#  TrDustDiffSalPanel 1
+#End 
 
-Figure: DustNumMassSalProfile 2
+Figure: DustAdvSpathProfiles 3
   DummyCases
-  [1_2]
-  Plots/FigDustNumMassSalProfile.jpg
-  DustNumberSalPanel 1
-  DustMassSalPanel   2
-End 
-
-Figure: TrDustDiffSalProfile 1
-  DummyCases
-  [1_1]
-  Plots/FigTrDustDiffSalProfile.jpg
-  TrDustDiffSalPanel 1
+  [1_3]
+  Plots/FigDustAdvSpathProfiles.jpg
+  DustAdvSpathInitPanel   1
+  DustAdvSpathPreSalPanel 2
+  DustAdvSpathSalPanel    3
 End 
 
 ########### CASES ####################
@@ -468,6 +477,30 @@ FigPanel: TrDustDiffSalPanel
   NorthEast 12
 End
 
+FigPanel: DustAdvSpathInitPanel
+  DustAdvSpathInitPset
+  DustAdvSpathAxes 1 1
+  none 5
+  @
+  none 12
+End
+
+FigPanel: DustAdvSpathPreSalPanel
+  DustAdvSpathPreSalPset
+  DustAdvSpathAxes 1 1
+  none 5
+  @
+  none 12
+End
+
+FigPanel: DustAdvSpathSalPanel
+  DustAdvSpathSalPset
+  DustAdvSpathAxes 1 1
+  none 5
+  @
+  none 12
+End
+
 ############ PLOT SETS #################
 PlotSet: Dust1NumSalCorePset line 2
   Dust1NumSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
@@ -662,6 +695,18 @@ End
 PlotSet: TrDustDiffSalPset line 2
   TrDust1DiffSalLine TSD_SAL_DUST  Small@Dust   2 black  - 0
   TrDust2DiffSalLine TSD_SAL_DUST  Large@Dust   2 red    - 0
+End
+
+PlotSet: DustAdvSpathInitPset line 1
+  DustAdvSpathInitLine TSD_SAL_DUST  @  2 black  - 0
+End
+
+PlotSet: DustAdvSpathPreSalPset line 1
+  DustAdvSpathPreSalLine TSD_SAL_DUST  @  2 black  - 0
+End
+
+PlotSet: DustAdvSpathSalPset line 1
+  DustAdvSpathSalLine TSD_SAL_DUST  @  2 black  - 0
 End
 
 ############ PLOT DATA #################
@@ -959,6 +1004,27 @@ PlotData: TrDust2DiffSalLine 2
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
+PlotData: DustAdvSpathInitLine 2
+  # x data - d1_num, #/cm3
+  /spath_i_dust_adv DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: DustAdvSpathPreSalLine 2
+  # x data - d1_num, #/cm3
+  /spath_ps_dust_adv DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: DustAdvSpathSalLine 2
+  # x data - d1_num, #/cm3
+  /spath_s_dust_adv DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
 ############ PLOT AXES #################
 PlotAxes: Dust1NumSalCoreAxes 2
   14 2 [0.025_0.025]
@@ -1141,7 +1207,7 @@ PlotAxes: DustNumberSalAxes 2
   # x axis - d1_num, #/cm3
   N_d cm^-^3 0.01 100 log [_] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 20 linear [_] {_}
 End
 
 PlotAxes: DustMassSalAxes 2
@@ -1149,7 +1215,7 @@ PlotAxes: DustMassSalAxes 2
   # x axis - d1_num, #/cm3
   M_d \mug@m^-^3 0.01 1000 log [0.1_1_10_100] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 20 linear [_] {_}
 End
 
 PlotAxes: TrDustDiffSalAxes 2
@@ -1157,6 +1223,14 @@ PlotAxes: TrDustDiffSalAxes 2
   # x axis - d1_num, #/cm3
   M_t_d \mug@m^-^3 0.01 1000 log [0.1_1_10_100] {_}
   # y axis - height, km
-  Height km 0 15 linear [_] {_}
+  Height km 0 20 linear [_] {_}
+End
+
+PlotAxes: DustAdvSpathAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d1_num, #/cm3
+  M_d_a_d_v \mug@m^-^3 0.01 1000 log [1_100] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
 End
 

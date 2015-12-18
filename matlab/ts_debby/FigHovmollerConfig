@@ -174,13 +174,69 @@
 #  DustIfnHydroSpathHovSDPanel   1
 #  DustIfnHydroSpathHovNSDPanel   2
 #End 
+#
+#Figure: TrDustDiffSpathHov 2
+#  DummyCases
+#  [2_1]
+#  Plots/FigTrDustDiffSpathHov.jpg
+#  TrDust1DiffSpathHovPanel   1
+#  TrDust2DiffSpathHovPanel   2
+#End 
 
-Figure: TrDustDiffSpathHov 2
+Figure: DustAdvSpathHov 1
   DummyCases
   [2_1]
-  Plots/FigTrDustDiffSpathHov.jpg
-  TrDust1DiffSpathHovPanel   1
-  TrDust2DiffSpathHovPanel   2
+  Plots/FigDustAdvSpathHov.jpg
+  DustAdvSpathHovPanel   1
+End 
+
+Figure: DustProcSpathHov 1
+  DummyCases
+  [2_1]
+  Plots/FigDustProcSpathHov.jpg
+  DustProcSpathHovPanel  1
+End 
+
+
+Figure: DustRedistSpathHov 2
+  DummyCases
+  [2_1]
+  Plots/FigDustRedistSpathHov.jpg
+  DustAdvSpathHovPanel   1
+  DustProcSpathHovPanel  2
+End 
+
+Figure: DustLiquidProcSpathHov 3
+  DummyCases
+  [3_1]
+  Plots/FigDustLiquidProcSpathHov.jpg
+  DustCloudProcSpathHovPanel  1
+  DustRainProcSpathHovPanel   2
+  AccumSfcDustPanel           3
+End 
+
+Figure: DustSmallIceProcSpathHov 3
+  DummyCases
+  [3_1]
+  Plots/FigDustSmallIceProcSpathHov.jpg
+  DustPrisProcSpathHovPanel  1
+  DustSnowProcSpathHovPanel  2
+  DustAggrProcSpathHovPanel  3
+End 
+
+Figure: DustLargeIceProcSpathHov 2
+  DummyCases
+  [2_1]
+  Plots/FigDustLargeIceProcSpathHov.jpg
+  DustGraupProcSpathHovPanel  1
+  DustHailProcSpathHovPanel   2
+End 
+
+Figure: DustRainProcSpathHov 1
+  DummyCases
+  [2_1]
+  Plots/FigDustRainProcSpathHov.jpg
+  DustRainProcSpathHovPanel   1
 End 
 
 ########### CASES ####################
@@ -685,11 +741,13 @@ FigPanel: DustIfnHydroSpathHovNSDPanel
   none 12
 End
 
+
+
 FigPanel: TrDust1DiffSpathHovPanel
   TrDust1DiffSpathHovPset
   TrDust1DiffSpathHovAxes 1 1
   none 5
-  M_t_d_1@SD@(SPATH)
+  SPATH:@M_t_d_1@(\mug@m^-^3)
   none 12
 End
 
@@ -697,7 +755,87 @@ FigPanel: TrDust2DiffSpathHovPanel
   TrDust2DiffSpathHovPset
   TrDust2DiffSpathHovAxes 1 1
   none 5
-  M_t_d_2@SD@(SPATH)
+  SPATH:@M_t_d_2@(\mug@m^-^3)
+  none 12
+End
+
+FigPanel: DustAdvSpathHovPanel
+  DustAdvSpathHovPset
+  DustAdvSpathHovAxes 1 1
+  none 5
+  SPATH:@M_d_a_d_v@(\mug@m^-^3)
+  none 12
+End
+
+FigPanel: DustProcSpathHovPanel
+  DustProcSpathHovPset
+  DustProcSpathHovAxes 1 1
+  none 5
+  SPATH:@M_d_p_r_o_c@(\mug@m^-^3)
+  none 12
+End
+
+FigPanel: DustCloudProcSpathHovPanel
+  DustCloudProcSpathHovPset
+  DustProcSpathHovAxes 0 1
+  none 5
+  SPATH:@M_d_c@(\mug@m^-^3)
+  none 12
+End
+
+FigPanel: DustRainProcSpathHovPanel
+  DustRainProcSpathHovPset
+  DustProcSpathHovAxes 1 1
+  none 5
+  SPATH:@M_d_r@(\mug@m^-^3)
+  none 12
+End
+
+FigPanel: DustPrisProcSpathHovPanel
+  DustPrisProcSpathHovPset
+  DustProcSpathHovAxes 1 1
+  none 5
+  SPATH:@M_d_p@(\mug@m^-^3)
+  none 12
+End
+
+FigPanel: DustSnowProcSpathHovPanel
+  DustSnowProcSpathHovPset
+  DustProcSpathHovAxes 1 1
+  none 5
+  SPATH:@M_d_s@(\mug@m^-^3)
+  none 12
+End
+
+FigPanel: DustAggrProcSpathHovPanel
+  DustAggrProcSpathHovPset
+  DustProcSpathHovAxes 1 1
+  none 5
+  SPATH:@M_d_a@(\mug@m^-^3)
+  none 12
+End
+
+FigPanel: DustGraupProcSpathHovPanel
+  DustGraupProcSpathHovPset
+  DustProcSpathHovAxes 1 1
+  none 5
+  SPATH:@M_d_g@(\mug@m^-^3)
+  none 12
+End
+
+FigPanel: DustHailProcSpathHovPanel
+  DustHailProcSpathHovPset
+  DustProcSpathHovAxes 1 1
+  none 5
+  SPATH:@M_d_h@(\mug@m^-^3)
+  none 12
+End
+
+FigPanel: AccumSfcDustPanel
+  AccumSfcDustPset
+  AccumSfcDustAxes 1 1
+  none 5
+  @
   none 12
 End
 
@@ -959,6 +1097,46 @@ PlotSet: TrDust2DiffSpathHovPset contourf 1
   TrDust2DiffSpathHovContour TSD_SAL_DUST none  2 blue   - 0
 End
 
+PlotSet: DustAdvSpathHovPset contourf 1
+  DustAdvSpathHovContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: DustProcSpathHovPset contourf 1
+  DustProcSpathHovContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: DustCloudProcSpathHovPset contourf 1
+  DustCloudProcSpathHovContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: DustRainProcSpathHovPset contourf 1
+  DustRainProcSpathHovContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: DustPrisProcSpathHovPset contourf 1
+  DustPrisProcSpathHovContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: DustSnowProcSpathHovPset contourf 1
+  DustSnowProcSpathHovContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: DustAggrProcSpathHovPset contourf 1
+  DustAggrProcSpathHovContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: DustGraupProcSpathHovPset contourf 1
+  DustGraupProcSpathHovContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: DustHailProcSpathHovPset contourf 1
+  DustHailProcSpathHovContour TSD_SAL_DUST none  2 blue   - 0
+End
+
+PlotSet: AccumSfcDustPset line 1
+  AccumSfcDustLine none none 2 blue - 0
+End
+
 ############ PLOT DATA #################
 PlotData: PcprateHovContour 3
   # x data - radius, km
@@ -1158,6 +1336,95 @@ PlotData: TrDust2DiffSpathHovContour 3
   /spath_trdust2_diff_ts DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:49,:) 1 0
 End
   
+PlotData: DustAdvSpathHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:49) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_dust_adv_ts DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:49,:) 1 0
+End
+  
+PlotData: DustProcSpathHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_dust_proc_ts DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49,:) 1 0
+End
+  
+PlotData: DustCloudProcSpathHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_dust_cloud_proc_ts DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49,:) 1 0
+End
+  
+PlotData: DustRainProcSpathHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_dust_rain_proc_ts DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49,:) 1 0
+End
+  
+PlotData: DustPrisProcSpathHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_dust_pris_proc_ts DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49,:) 1 0
+End
+  
+PlotData: DustSnowProcSpathHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_dust_snow_proc_ts DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49,:) 1 0
+End
+  
+PlotData: DustAggrProcSpathHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_dust_aggr_proc_ts DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49,:) 1 0
+End
+  
+PlotData: DustGraupProcSpathHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_dust_graup_proc_ts DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49,:) 1 0
+End
+  
+PlotData: DustHailProcSpathHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_dust_hail_proc_ts DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5 (2:49,:) 1 0
+End
+  
+PlotData: AccumSfcDustLine 2
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/hist_meas_ts_dust_sfc_TSD_SAL_DUST.h5       @ 2.7778e-4 -42
+  # y - height
+  /spath_dust_sfc DIAGS/hist_meas_ts_dust_sfc_TSD_SAL_DUST.h5 @      1e-4   0
+End
+
 ############ PLOT AXES #################
 PlotAxes: PcprateHovAxes 3
   14 2 [0.025_0.025]
@@ -1390,5 +1657,34 @@ PlotAxes: TrDust2DiffSpathHovAxes 3
   Height km 0 20 linear [_] {_}
   # z axis - dust1 number, ug/m3
   M_t_d_2 \mug@m^-^3 10 100 log [log10(10)_log10(20)_log10(30)_log10(50)_log10(70)_log10(100)] {10_20_30_50_70_100}
+End
+
+PlotAxes: DustAdvSpathHovAxes 3
+  14 2 [0.025_0.025]
+  # x axis - sim time, h
+  Sim@Time h 0 60 linear [10_30_50] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+  # z axis - dust1 number, ug/m3
+  M_d_a \mug@m^-^3 0.1 1000 log [-1_0_1_2_3] {0.1_1_10_100_1000}
+End
+
+PlotAxes: DustProcSpathHovAxes 3
+  14 2 [0.025_0.025]
+  # x axis - sim time, h
+  Sim@Time h 0 60 linear [10_30_50] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+  # z axis - dust1 number, ug/m3
+  M_d_p \mug@m^-^3 0.001 1 log [-3_-2_-1_0] {0.001_0.01_0.1_1}
+End
+
+PlotAxes: AccumSfcDustAxes 2
+  18 2 [0.025_0.025]
+  # x axis - utc time
+#  Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
+  Sim@Time h 0 60 linear [_] {_}
+  # y axis - height
+  M_d \mug@m^-^2 30 50 linear [_] {_}
 End
 
