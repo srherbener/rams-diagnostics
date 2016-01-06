@@ -24,6 +24,7 @@ SCRIPTS = \
   $(DEST)/GenStormXsections.m \
   $(DEST)/GenStormDiffXsections.m \
   $(DEST)/GenStormProfiles.m \
+  $(DEST)/GenStormHovmollers.m \
   $(DEST)/GenStrackProfiles.m \
   $(DEST)/GenTsdHistMeas.m \
   $(DEST)/GenTsdHdaMeas.m \
@@ -31,6 +32,7 @@ SCRIPTS = \
   $(DEST)/RunGenFigures.m \
   $(DEST)/LocateSal.m \
   $(DEST)/PlotAeroProfs.m \
+  $(DEST)/PlotDustProfs.m \
   $(DEST)/PlotMaxWindAll.m \
   $(DEST)/PlotMinPressAll.m \
   $(DEST)/PlotTracksAll.m \

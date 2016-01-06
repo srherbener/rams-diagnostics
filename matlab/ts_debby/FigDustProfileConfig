@@ -149,14 +149,24 @@
 #  Plots/FigTrDustDiffSalProfile.jpg
 #  TrDustDiffSalPanel 1
 #End 
+#
+#Figure: DustAdvSpathProfiles 3
+#  DummyCases
+#  [1_3]
+#  Plots/FigDustAdvSpathProfiles.jpg
+#  DustAdvSpathInitPanel   1
+#  DustAdvSpathPreSalPanel 2
+#  DustAdvSpathSalPanel    3
+#End 
 
-Figure: DustAdvSpathProfiles 3
+
+
+Figure: SpathAeroProfiles 2
   DummyCases
-  [1_3]
-  Plots/FigDustAdvSpathProfiles.jpg
-  DustAdvSpathInitPanel   1
-  DustAdvSpathPreSalPanel 2
-  DustAdvSpathSalPanel    3
+  [1_2]
+  Plots/FigSpathAeroProfiles.jpg
+  SpathAeroPanel       1
+  SpathAeroDeltaPanel  2
 End 
 
 ########### CASES ####################
@@ -501,6 +511,50 @@ FigPanel: DustAdvSpathSalPanel
   none 12
 End
 
+
+
+
+FigPanel: SpathAeroInitPanel
+  SpathAeroInitPset
+  SpathAeroAxes 1 1
+  none 5
+  @
+  none 12
+End
+
+FigPanel: SpathAeroMidPanel
+  SpathAeroMidPset
+  SpathAeroAxes 1 1
+  none 5
+  @
+  none 12
+End
+
+FigPanel: SpathAeroFinalPanel
+  SpathAeroFinalPset
+  SpathAeroAxes 1 1
+  none 5
+  @
+  none 12
+End
+
+FigPanel: SpathAeroPanel
+  SpathAeroPset
+  SpathAeroAxes 1 1
+  none 5
+  @
+  NorthEast 12
+End
+
+FigPanel: SpathAeroDeltaPanel
+  SpathAeroDeltaPset
+  SpathAeroDeltaAxes 1 0
+  none 5
+  @
+  NorthWest 12
+End
+
+
 ############ PLOT SETS #################
 PlotSet: Dust1NumSalCorePset line 2
   Dust1NumSalCoreLine TSD_SAL_DUST      SD   2 black  - 0
@@ -707,6 +761,30 @@ End
 
 PlotSet: DustAdvSpathSalPset line 1
   DustAdvSpathSalLine TSD_SAL_DUST  @  2 black  - 0
+End
+
+
+
+PlotSet: SpathAeroInitPset line 1
+  SpathAeroInitLine TSD_SAL_DUST  @  2 black  - 0
+End
+
+PlotSet: SpathAeroMidPset line 1
+  SpathAeroMidLine TSD_SAL_DUST  @  2 black  - 0
+End
+
+PlotSet: SpathAeroFinalPset line 1
+  SpathAeroFinalLine TSD_SAL_DUST  @  2 black  - 0
+End
+
+PlotSet: SpathAeroPset line 3
+  SpathAeroInitLine  TSD_SAL_DUST  Aug@22@2006@06Z  2 black  - 0
+  SpathAeroMidLine   TSD_SAL_DUST  Aug@23@2006@16Z  2 green  - 0
+  SpathAeroFinalLine TSD_SAL_DUST  Aug@24@2006@18Z  2 blue   - 0
+End
+
+PlotSet: SpathAeroDeltaPset line 1
+  SpathAeroDeltaLine TSD_SAL_DUST  DIFF  2 red  - 0
 End
 
 ############ PLOT DATA #################
@@ -1025,6 +1103,36 @@ PlotData: DustAdvSpathSalLine 2
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
+
+
+PlotData: SpathAeroInitLine 2
+  # x data - aero_mass, ug/m3
+  /spath_i_aero_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: SpathAeroMidLine 2
+  # x data - aero_mass, ug/m3
+  /spath_m_aero_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: SpathAeroFinalLine 2
+  # x data - aero_mass, ug/m3
+  /spath_f_aero_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: SpathAeroDeltaLine 2
+  # x data - aero_mass, ug/m3
+  /spath_f_aero_mass_delta DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
 ############ PLOT AXES #################
 PlotAxes: Dust1NumSalCoreAxes 2
   14 2 [0.025_0.025]
@@ -1232,5 +1340,26 @@ PlotAxes: DustAdvSpathAxes 2
   M_d_a_d_v \mug@m^-^3 0.01 1000 log [1_100] {_}
   # y axis - height, km
   Height km 0 20 linear [_] {_}
+End
+
+
+
+
+PlotAxes: SpathAeroAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d1_num, #/cm3
+#  M_d \mug@m^-^3 1 1e3 log [1_100] {'10^0'_'10^2'}
+  M_d \mug@m^-^3 0 800 linear [_] {_}
+  # y axis - height, km
+  Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: SpathAeroDeltaAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d1_num, #/cm3
+#  M_d \mug@m^-^3 1e-2 1e3 log [-2_0_2] {'10^-^2'_'10^0'_'10^2'}
+  M_d \mug@m^-^3 -600 100 linear [_] {_}
+  # y axis - height, km
+  Height km 0 10 linear [_] {_}
 End
 
