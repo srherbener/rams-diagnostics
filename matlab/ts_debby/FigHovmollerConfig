@@ -182,62 +182,118 @@
 #  TrDust1DiffSpathHovPanel   1
 #  TrDust2DiffSpathHovPanel   2
 #End 
+#
+#Figure: DustAdvSpathHov 1
+#  DummyCases
+#  [2_1]
+#  Plots/FigDustAdvSpathHov.jpg
+#  DustAdvSpathHovPanel   1
+#End 
+#
+#Figure: DustProcSpathHov 1
+#  DummyCases
+#  [2_1]
+#  Plots/FigDustProcSpathHov.jpg
+#  DustProcSpathHovPanel  1
+#End 
+#
+#
+#Figure: DustRedistSpathHov 2
+#  DummyCases
+#  [2_1]
+#  Plots/FigDustRedistSpathHov.jpg
+#  DustAdvSpathHovPanel   1
+#  DustProcSpathHovPanel  2
+#End 
+#
+#Figure: DustLiquidProcSpathHov 3
+#  DummyCases
+#  [3_1]
+#  Plots/FigDustLiquidProcSpathHov.jpg
+#  DustCloudProcSpathHovPanel  1
+#  DustRainProcSpathHovPanel   2
+#  AccumSfcDustPanel           3
+#End 
+#
+#Figure: DustSmallIceProcSpathHov 3
+#  DummyCases
+#  [3_1]
+#  Plots/FigDustSmallIceProcSpathHov.jpg
+#  DustPrisProcSpathHovPanel  1
+#  DustSnowProcSpathHovPanel  2
+#  DustAggrProcSpathHovPanel  3
+#End 
+#
+#Figure: DustLargeIceProcSpathHov 2
+#  DummyCases
+#  [2_1]
+#  Plots/FigDustLargeIceProcSpathHov.jpg
+#  DustGraupProcSpathHovPanel  1
+#  DustHailProcSpathHovPanel   2
+#End 
+#
+#Figure: DustRainProcSpathHov 1
+#  DummyCases
+#  [2_1]
+#  Plots/FigDustRainProcSpathHov.jpg
+#  DustRainProcSpathHovPanel   1
+#End 
 
-Figure: DustAdvSpathHov 1
+Figure: DustSpathHdaHov 2
   DummyCases
   [2_1]
-  Plots/FigDustAdvSpathHov.jpg
-  DustAdvSpathHovPanel   1
+  Plots/FigDustSpathHdaHov.jpg
+  DustSpathHdaHovPanel        1
+  DustHydroSpathHdaHovPanel   2
 End 
 
-Figure: DustProcSpathHov 1
+Figure: RegenSpathHdaHov 1
+  DummyCases
+  [1_1]
+  Plots/FigRegenSpathHdaHov.jpg
+  RegenSpathHdaHovPanel   1
+End 
+
+Figure: CcnSpathHdaHov 1
+  DummyCases
+  [1_1]
+  Plots/FigCcnSpathHdaHov.jpg
+  CcnSpathHdaHovPanel   1
+End 
+
+Figure: AeroSpathHdaHov 2
   DummyCases
   [2_1]
-  Plots/FigDustProcSpathHov.jpg
-  DustProcSpathHovPanel  1
+  Plots/FigAeroSpathHdaHov.jpg
+  AeroSpathHdaHovPanel        1
+  AeroHydroSpathHdaHovPanel   2
 End 
 
-
-Figure: DustRedistSpathHov 2
+Figure: AeroLiqSpathHdaHov 2
   DummyCases
   [2_1]
-  Plots/FigDustRedistSpathHov.jpg
-  DustAdvSpathHovPanel   1
-  DustProcSpathHovPanel  2
+  Plots/FigAeroLiqSpathHdaHov.jpg
+  AeroCloudSpathHdaHovPanel   1
+  AeroRainSpathHdaHovPanel   2
 End 
 
-Figure: DustLiquidProcSpathHov 3
+Figure: AeroSmallIceSpathHdaHov 3
   DummyCases
   [3_1]
-  Plots/FigDustLiquidProcSpathHov.jpg
-  DustCloudProcSpathHovPanel  1
-  DustRainProcSpathHovPanel   2
-  AccumSfcDustPanel           3
+  Plots/FigAeroSmallIceSpathHdaHov.jpg
+  AeroPrisSpathHdaHovPanel   1
+  AeroSnowSpathHdaHovPanel   2
+  AeroAggrSpathHdaHovPanel   3
 End 
 
-Figure: DustSmallIceProcSpathHov 3
-  DummyCases
-  [3_1]
-  Plots/FigDustSmallIceProcSpathHov.jpg
-  DustPrisProcSpathHovPanel  1
-  DustSnowProcSpathHovPanel  2
-  DustAggrProcSpathHovPanel  3
-End 
-
-Figure: DustLargeIceProcSpathHov 2
+Figure: AeroLargeIceSpathHdaHov 2
   DummyCases
   [2_1]
-  Plots/FigDustLargeIceProcSpathHov.jpg
-  DustGraupProcSpathHovPanel  1
-  DustHailProcSpathHovPanel   2
+  Plots/FigAeroLargeIceSpathHdaHov.jpg
+  AeroGraupSpathHdaHovPanel   1
+  AeroHailSpathHdaHovPanel   2
 End 
 
-Figure: DustRainProcSpathHov 1
-  DummyCases
-  [2_1]
-  Plots/FigDustRainProcSpathHov.jpg
-  DustRainProcSpathHovPanel   1
-End 
 
 ########### CASES ####################
 CaseSet: DummyCases 1
@@ -839,6 +895,110 @@ FigPanel: AccumSfcDustPanel
   none 12
 End
 
+FigPanel: DustSpathHdaHovPanel
+  DustSpathHdaHovPset
+  AeroMassSpathHdaHovAxes 1 1
+  none 5
+  M_d@(\mug@m^-^3)
+  none 12
+End
+
+FigPanel: RegenSpathHdaHovPanel
+  RegenSpathHdaHovPset
+  AeroMassSpathHdaHovAxes 1 1
+  none 5
+  M_r@(\mug@m^-^3)
+  none 12
+End
+
+FigPanel: CcnSpathHdaHovPanel
+  CcnSpathHdaHovPset
+  AeroMassSpathHdaHovAxes 1 1
+  none 5
+  M_c@(\mug@m^-^3)
+  none 12
+End
+
+FigPanel: AeroSpathHdaHovPanel
+  AeroSpathHdaHovPset
+  AeroMassSpathHdaHovAxes 1 1
+  none 5
+  M_a@(\mug@m^-^3)
+  none 12
+End
+
+FigPanel: DustHydroSpathHdaHovPanel
+  DustHydroSpathHdaHovPset
+  AeroHydroMassSpathHdaHovAxes 1 1
+  none 5
+  M_d_h@(\mug@m^-^3)
+  none 12
+End
+
+FigPanel: AeroHydroSpathHdaHovPanel
+  AeroHydroSpathHdaHovPset
+  AeroHydroMassSpathHdaHovAxes 1 1
+  none 5
+  M_a_h@(\mug@m^-^3)
+  none 12
+End
+
+FigPanel: AeroCloudSpathHdaHovPanel
+  AeroCloudSpathHdaHovPset
+  AeroCloudSpathHdaHovAxes 1 1
+  none 5
+  M_a_c@(\mug@m^-^3)
+  none 12
+End
+
+FigPanel: AeroRainSpathHdaHovPanel
+  AeroRainSpathHdaHovPset
+  AeroRainSpathHdaHovAxes 1 1
+  none 5
+  M_a_r@(\mug@m^-^3)
+  none 12
+End
+
+FigPanel: AeroPrisSpathHdaHovPanel
+  AeroPrisSpathHdaHovPset
+  AeroPrisSpathHdaHovAxes 1 1
+  none 5
+  M_a_p@(\mug@m^-^3)
+  none 12
+End
+
+FigPanel: AeroSnowSpathHdaHovPanel
+  AeroSnowSpathHdaHovPset
+  AeroSnowSpathHdaHovAxes 1 1
+  none 5
+  M_a_s@(\mug@m^-^3)
+  none 12
+End
+
+FigPanel: AeroAggrSpathHdaHovPanel
+  AeroAggrSpathHdaHovPset
+  AeroAggrSpathHdaHovAxes 1 1
+  none 5
+  M_a_a@(\mug@m^-^3)
+  none 12
+End
+
+FigPanel: AeroGraupSpathHdaHovPanel
+  AeroGraupSpathHdaHovPset
+  AeroGraupSpathHdaHovAxes 1 1
+  none 5
+  M_a_g@(\mug@m^-^3)
+  none 12
+End
+
+FigPanel: AeroHailSpathHdaHovPanel
+  AeroHailSpathHdaHovPset
+  AeroHailSpathHdaHovAxes 1 1
+  none 5
+  M_a_h@(\mug@m^-^3)
+  none 12
+End
+
 ############ PLOT SETS #################
 PlotSet: PcprateHovSDPset contourf 1
   PcprateHovContour TSD_SAL_DUST none  2 blue   - 0
@@ -1137,6 +1297,59 @@ PlotSet: AccumSfcDustPset line 1
   AccumSfcDustLine none none 2 blue - 0
 End
 
+PlotSet: DustSpathHdaHovPset contourf 1
+  DustSpathHdaHovContour TSD_SAL_DUST none 2 blue - 0
+End
+
+PlotSet: RegenSpathHdaHovPset contourf 1
+  RegenSpathHdaHovContour TSD_SAL_DUST none 2 blue - 0
+End
+
+PlotSet: CcnSpathHdaHovPset contourf 1
+  CcnSpathHdaHovContour TSD_SAL_DUST none 2 blue - 0
+End
+
+PlotSet: AeroSpathHdaHovPset contourf 1
+  AeroSpathHdaHovContour TSD_SAL_DUST none 2 blue - 0
+End
+
+PlotSet: DustHydroSpathHdaHovPset contourf 1
+  DustHydroSpathHdaHovContour TSD_SAL_DUST none 2 blue - 0
+End
+
+PlotSet: AeroHydroSpathHdaHovPset contourf 1
+  AeroHydroSpathHdaHovContour TSD_SAL_DUST none 2 blue - 0
+End
+
+PlotSet: AeroCloudSpathHdaHovPset contourf 1
+  AeroCloudSpathHdaHovContour TSD_SAL_DUST none 2 blue - 0
+End
+
+PlotSet: AeroRainSpathHdaHovPset contourf 1
+  AeroRainSpathHdaHovContour TSD_SAL_DUST none 2 blue - 0
+End
+
+PlotSet: AeroPrisSpathHdaHovPset contourf 1
+  AeroPrisSpathHdaHovContour TSD_SAL_DUST none 2 blue - 0
+End
+
+PlotSet: AeroSnowSpathHdaHovPset contourf 1
+  AeroSnowSpathHdaHovContour TSD_SAL_DUST none 2 blue - 0
+End
+
+PlotSet: AeroAggrSpathHdaHovPset contourf 1
+  AeroAggrSpathHdaHovContour TSD_SAL_DUST none 2 blue - 0
+End
+
+PlotSet: AeroGraupSpathHdaHovPset contourf 1
+  AeroGraupSpathHdaHovContour TSD_SAL_DUST none 2 blue - 0
+End
+
+PlotSet: AeroHailSpathHdaHovPset contourf 1
+  AeroHailSpathHdaHovContour TSD_SAL_DUST none 2 blue - 0
+End
+
+
 ############ PLOT DATA #################
 PlotData: PcprateHovContour 3
   # x data - radius, km
@@ -1425,6 +1638,123 @@ PlotData: AccumSfcDustLine 2
   /spath_dust_sfc DIAGS/hist_meas_ts_dust_sfc_TSD_SAL_DUST.h5 @      1e-4   0
 End
 
+PlotData: DustSpathHdaHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hda_meas_ts_dust_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hda_meas_ts_dust_<CASE>.h5 (2:49) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_dust_mass_ts DIAGS/hda_meas_ts_dust_<CASE>.h5 (2:49,:) 1 0
+End
+  
+PlotData: RegenSpathHdaHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hda_meas_ts_ra_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hda_meas_ts_ra_<CASE>.h5 (2:49) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_ra_mass_ts DIAGS/hda_meas_ts_ra_<CASE>.h5 (2:49,:) 1 0
+End
+  
+PlotData: CcnSpathHdaHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hda_meas_ts_ccn_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hda_meas_ts_ccn_<CASE>.h5 (2:49) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_ccn_mass_ts DIAGS/hda_meas_ts_ccn_<CASE>.h5 (2:49,:) 1 0
+End
+  
+PlotData: AeroSpathHdaHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hda_meas_ts_aero_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hda_meas_ts_aero_<CASE>.h5 (2:49) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_aero_mass_ts DIAGS/hda_meas_ts_aero_<CASE>.h5 (2:49,:) 1 0
+End
+  
+PlotData: DustHydroSpathHdaHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hda_meas_ts_dust_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hda_meas_ts_dust_<CASE>.h5 (2:49) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_dust_hydro_ts DIAGS/hda_meas_ts_dust_<CASE>.h5 (2:49,:) 1 0
+End
+  
+PlotData: AeroHydroSpathHdaHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hda_meas_ts_aero_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hda_meas_ts_aero_<CASE>.h5 (2:49) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_aero_hydro_ts DIAGS/hda_meas_ts_aero_<CASE>.h5 (2:49,:) 1 0
+End
+  
+PlotData: AeroCloudSpathHdaHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hda_meas_ts_aero_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hda_meas_ts_aero_<CASE>.h5 (2:49) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_aero_cloud_ts DIAGS/hda_meas_ts_aero_<CASE>.h5 (2:49,:) 1 0
+End
+  
+PlotData: AeroRainSpathHdaHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hda_meas_ts_aero_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hda_meas_ts_aero_<CASE>.h5 (2:49) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_aero_rain_ts DIAGS/hda_meas_ts_aero_<CASE>.h5 (2:49,:) 1 0
+End
+  
+PlotData: AeroPrisSpathHdaHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hda_meas_ts_aero_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hda_meas_ts_aero_<CASE>.h5 (2:49) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_aero_pris_ts DIAGS/hda_meas_ts_aero_<CASE>.h5 (2:49,:) 1 0
+End
+  
+PlotData: AeroSnowSpathHdaHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hda_meas_ts_aero_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hda_meas_ts_aero_<CASE>.h5 (2:49) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_aero_snow_ts DIAGS/hda_meas_ts_aero_<CASE>.h5 (2:49,:) 1 0
+End
+  
+PlotData: AeroAggrSpathHdaHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hda_meas_ts_aero_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hda_meas_ts_aero_<CASE>.h5 (2:49) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_aero_aggr_ts DIAGS/hda_meas_ts_aero_<CASE>.h5 (2:49,:) 1 0
+End
+  
+PlotData: AeroGraupSpathHdaHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hda_meas_ts_aero_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hda_meas_ts_aero_<CASE>.h5 (2:49) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_aero_graup_ts DIAGS/hda_meas_ts_aero_<CASE>.h5 (2:49,:) 1 0
+End
+  
+PlotData: AeroHailSpathHdaHovContour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/hda_meas_ts_aero_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/hda_meas_ts_aero_<CASE>.h5 (2:49) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_aero_hail_ts DIAGS/hda_meas_ts_aero_<CASE>.h5 (2:49,:) 1 0
+End
+  
 ############ PLOT AXES #################
 PlotAxes: PcprateHovAxes 3
   14 2 [0.025_0.025]
@@ -1686,5 +2016,95 @@ PlotAxes: AccumSfcDustAxes 2
   Sim@Time h 0 60 linear [_] {_}
   # y axis - height
   M_d \mug@m^-^2 30 50 linear [_] {_}
+End
+
+PlotAxes: AeroMassSpathHdaHovAxes 3
+  14 2 [0.025_0.025]
+  # x axis - sim time, h
+  Sim@Time h 0 60 linear [10_30_50] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+  # z axis - dust1 number, ug/m3
+  M_a \mug@m^-^3 1e-2 1e2 log [-2_0_2] {'10^-^2'_'10^0'_'10^2'}
+End
+
+PlotAxes: AeroHydroMassSpathHdaHovAxes 3
+  14 2 [0.025_0.025]
+  # x axis - sim time, h
+  Sim@Time h 0 60 linear [10_30_50] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+  # z axis - dust1 number, ug/m3
+  M_a_h \mug@m^-^3 1e-2 1e2 log [-2_0_2] {'10^-^2'_'10^0'_'10^2'}
+End
+
+PlotAxes: AeroCloudSpathHdaHovAxes 3
+  14 2 [0.025_0.025]
+  # x axis - sim time, h
+  Sim@Time h 0 60 linear [10_30_50] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+  # z axis - dust1 number, ug/m3
+  M_a_c \mug@m^-^3 1e-2 1e2 log [-2_0_2] {'10^-^2'_'10^0'_'10^2'}
+End
+
+PlotAxes: AeroRainSpathHdaHovAxes 3
+  14 2 [0.025_0.025]
+  # x axis - sim time, h
+  Sim@Time h 0 60 linear [10_30_50] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+  # z axis - dust1 number, ug/m3
+  M_a_r \mug@m^-^3 1e-2 1e2 log [-2_0_2] {'10^-^2'_'10^0'_'10^2'}
+End
+
+PlotAxes: AeroPrisSpathHdaHovAxes 3
+  14 2 [0.025_0.025]
+  # x axis - sim time, h
+  Sim@Time h 0 60 linear [10_30_50] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+  # z axis - dust1 number, ug/m3
+  M_a_p \mug@m^-^3 1e-2 1e2 log [-2_0_2] {'10^-^2'_'10^0'_'10^2'}
+End
+
+PlotAxes: AeroSnowSpathHdaHovAxes 3
+  14 2 [0.025_0.025]
+  # x axis - sim time, h
+  Sim@Time h 0 60 linear [10_30_50] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+  # z axis - dust1 number, ug/m3
+  M_a_s \mug@m^-^3 1e-2 1e2 log [-2_0_2] {'10^-^2'_'10^0'_'10^2'}
+End
+
+PlotAxes: AeroAggrSpathHdaHovAxes 3
+  14 2 [0.025_0.025]
+  # x axis - sim time, h
+  Sim@Time h 0 60 linear [10_30_50] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+  # z axis - dust1 number, ug/m3
+  M_a_a \mug@m^-^3 1e-2 1e2 log [-2_0_2] {'10^-^2'_'10^0'_'10^2'}
+End
+
+PlotAxes: AeroGraupSpathHdaHovAxes 3
+  14 2 [0.025_0.025]
+  # x axis - sim time, h
+  Sim@Time h 0 60 linear [10_30_50] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+  # z axis - dust1 number, ug/m3
+  M_a_g \mug@m^-^3 1e-4 1e-2 log [-4_-2] {'10^-^4'_'10^-^2'}
+End
+
+PlotAxes: AeroHailSpathHdaHovAxes 3
+  14 2 [0.025_0.025]
+  # x axis - sim time, h
+  Sim@Time h 0 60 linear [10_30_50] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+  # z axis - dust1 number, ug/m3
+  M_a_h \mug@m^-^3 1e-4 1e-2 log [-4_-2] {'10^-^4'_'10^-^2'}
 End
 

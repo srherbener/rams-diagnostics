@@ -26,6 +26,7 @@ SCRIPTS = \
   $(DEST)/GenStormProfiles.m \
   $(DEST)/GenStrackProfiles.m \
   $(DEST)/GenTsdHistMeas.m \
+  $(DEST)/GenTsdHdaMeas.m \
   $(DEST)/GenBuoyancy.m \
   $(DEST)/RunGenFigures.m \
   $(DEST)/LocateSal.m \

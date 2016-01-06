@@ -10,6 +10,9 @@ function [ ] = PlotAeroProfs()
   NoDustInFile = 'z.NO_DUST_aerosols.txt';
   OutFile = sprintf('%s/NAMMA_aerosol_profiles.jpg', Pdir);
 
+  Zmin =  0; %km
+  Zmax = 15; %km
+
   fprintf('****************** Creating aerosol profile plot ******************\n');
 
   %*************************************************************************
@@ -31,9 +34,9 @@ function [ ] = PlotAeroProfs()
   Z        = InData{3} ./ 1000; % km
   CCN_CONC = InData{5}; % #/cc
 
-  % Plot from 0 to 10km AGL
-  Z1 = find(Z >= 0, 1, 'first');
-  Z2 = find(Z <= 10, 1, 'last');
+  % Plot from 0 to 20km AGL
+  Z1 = find(Z >= Zmin, 1, 'first');
+  Z2 = find(Z <= Zmax, 1, 'last');
 
   Z        = Z(Z1:Z2);
   Nz       = length(Z);
@@ -67,9 +70,9 @@ function [ ] = PlotAeroProfs()
   D1_CONC  = InData{3};
   D2_CONC  = InData{4};
 
-  % Plot from 0 to 10km AGL
-  Z1 = find(Z >= 0, 1, 'first');
-  Z2 = find(Z <= 10, 1, 'last');
+  % Plot from 0 to 20km AGL
+  Z1 = find(Z >= Zmin, 1, 'first');
+  Z2 = find(Z <= Zmax, 1, 'last');
 
   Z        = Z(Z1:Z2);
 % Use CCN_CONC from no-dust case
