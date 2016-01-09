@@ -8,6 +8,14 @@ function [ ] = GenAccumSfcDust()
     };
   Ncases = length(CaseList);
 
+  % Counts for creating an average value
+  %   AzAveragedData -> storm region with 500 km radius, each cell is 9 km2 (3x3)
+  %       785,000 km2 -> 87,222 cells
+  %   TsAveragedData -> 4 x 4 degrees -> 110 km per degree, cell is 9 km2
+  %       193,600 km2 -> 21,511 cells
+  AzCount = 87222;
+  TsCount = 21511;
+
   % Description of measurements
   FileList = {
 
@@ -77,6 +85,13 @@ function [ ] = GenAccumSfcDust()
         DDATA = squeeze(sum(DDATA,1));
       end
       ADUST = squeeze(sum((DDATA .* BVALS),1));
+  
+      % Create average value by dividing by the count of cells in the region measurement was taken
+      if (~isempty(regexp(InFile, 'AzAveragedData')))
+        ADUST = ADUST ./ AzCount;
+      else
+        ADUST = ADUST ./ TsCount;
+      end
 
       % Write out anomaly data
       fprintf('  Writing: %s (%s)\n', OutFile, Ovname)

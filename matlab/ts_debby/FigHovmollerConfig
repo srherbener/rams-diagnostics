@@ -296,26 +296,40 @@
 
 
 
-#Figure: SpathHovDust 1
-#  DummyCases
-#  [1_1]
-#  Plots/FigSpathHovDust.jpg
-#  SpathHovDustPanel        1
-#End 
-#
-#Figure: SpathHovRegen 1
-#  DummyCases
-#  [1_1]
-#  Plots/FigSpathHovRegen.jpg
-#  SpathHovRegenPanel   1
-#End 
-#
-#Figure: SpathCcnHov 1
-#  DummyCases
-#  [1_1]
-#  Plots/FigSpathHovCcn.jpg
-#  SpathHovCcnPanel   1
-#End 
+Figure: SpathHovDust1 1
+  DummyCases
+  [1_1]
+  Plots/FigSpathHovDust1.jpg
+  SpathHovDust1Panel        1
+End 
+
+Figure: SpathHovDust2 1
+  DummyCases
+  [1_1]
+  Plots/FigSpathHovDust2.jpg
+  SpathHovDust2Panel        1
+End 
+
+Figure: SpathHovDust 1
+  DummyCases
+  [1_1]
+  Plots/FigSpathHovDust.jpg
+  SpathHovDustPanel        1
+End 
+
+Figure: SpathHovRegen 1
+  DummyCases
+  [1_1]
+  Plots/FigSpathHovRegen.jpg
+  SpathHovRegenPanel   1
+End 
+
+Figure: SpathCcnHov 1
+  DummyCases
+  [1_1]
+  Plots/FigSpathHovCcn.jpg
+  SpathHovCcnPanel   1
+End 
 
 Figure: SpathAeroHov 1
   DummyCases
@@ -1088,99 +1102,115 @@ End
 
 
 
+FigPanel: SpathHovDust1Panel
+  SpathHovDust1Pset
+  SpathHovSmallAeroAxes 1 1
+  none 5
+  SPATH:@M_d@(\mug@m^-^3)
+  none 12
+End
+
+FigPanel: SpathHovDust2Panel
+  SpathHovDust2Pset
+  SpathHovLargeAeroAxes 1 1
+  none 5
+  SPATH:@M_d@(\mug@m^-^3)
+  none 12
+End
+
 FigPanel: SpathHovDustPanel
   SpathHovDustPset
-  SpathHovAmassAxes 1 1
+  SpathHovLargeAeroAxes 1 1
   none 5
-  M_d@(\mug@m^-^3)
+  SPATH:@M_d@(\mug@m^-^3)
   none 12
 End
 
 FigPanel: SpathHovCcnPanel
   SpathHovCcnPset
-  SpathHovAmassAxes 1 1
+  SpathHovSmallAeroAxes 1 1
   none 5
-  M_c@(\mug@m^-^3)
+  SPATH:@M_c@(\mug@m^-^3)
   none 12
 End
 
 FigPanel: SpathHovRegenPanel
   SpathHovRegenPset
-  SpathHovAmassAxes 1 1
+  SpathHovSmallAeroAxes 1 1
   none 5
-  M_r_a@(\mug@m^-^3)
+  SPATH:@M_r_a@(\mug@m^-^3)
   none 12
 End
 
 FigPanel: SpathHovAeroPanel
   SpathHovAeroPset
-  SpathHovAmassAxes 1 1
+  SpathHovLargeAeroAxes 1 1
   none 5
-  M_d@(\mug@m^-^3)
+  SPATH:@M_d@(\mug@m^-^3)
   none 12
 End
 
 FigPanel: SpathHovDustHydroPanel
   SpathHovDustHydroPset
-  SpathHovDustHydroAxes 1 1
+  SpathHovSmallAeroAxes 1 1
   none 5
-  M_d_h_y@(\mug@m^-^3)
+  SPATH:@M_d_h_y@(\mug@m^-^3)
   none 12
 End
 
 FigPanel: SpathHovDustCloudPanel
   SpathHovDustCloudPset
-  SpathHovDustHydroAxes 1 1
+  SpathHovSmallAeroAxes 1 1
   none 5
-  M_d_c@(\mug@m^-^3)
+  SPATH:@M_d_c@(\mug@m^-^3)
   none 12
 End
 
 FigPanel: SpathHovDustRainPanel
   SpathHovDustRainPset
-  SpathHovDustHydroAxes 1 1
+  SpathHovSmallAeroAxes 1 1
   none 5
-  M_d_r@(\mug@m^-^3)
+  SPATH:@M_d_r@(\mug@m^-^3)
   none 12
 End
 
 FigPanel: SpathHovDustPrisPanel
   SpathHovDustPrisPset
-  SpathHovDustHydroAxes 1 1
+  SpathHovSmallAeroAxes 1 1
   none 5
-  M_d_p@(\mug@m^-^3)
+  SPATH:@M_d_p@(\mug@m^-^3)
   none 12
 End
 
 FigPanel: SpathHovDustSnowPanel
   SpathHovDustSnowPset
-  SpathHovDustHydroAxes 1 1
+  SpathHovSmallAeroAxes 1 1
   none 5
-  M_d_s@(\mug@m^-^3)
+  SPATH:@M_d_s@(\mug@m^-^3)
   none 12
 End
 
 FigPanel: SpathHovDustAggrPanel
   SpathHovDustAggrPset
-  SpathHovDustHydroAxes 1 1
+  SpathHovSmallAeroAxes 1 1
   none 5
-  M_d_a@(\mug@m^-^3)
+  SPATH:@M_d_a@(\mug@m^-^3)
   none 12
 End
 
 FigPanel: SpathHovDustGraupPanel
   SpathHovDustGraupPset
-  SpathHovDustHydroAxes 1 1
+  SpathHovSmallAeroAxes 1 1
   none 5
-  M_d_g@(\mug@m^-^3)
+  SPATH:@M_d_g@(\mug@m^-^3)
   none 12
 End
 
 FigPanel: SpathHovDustHailPanel
   SpathHovDustHailPset
-  SpathHovDustHydroAxes 1 1
+  SpathHovSmallAeroAxes 1 1
   none 5
-  M_d_h@(\mug@m^-^3)
+  SPATH:@M_d_h@(\mug@m^-^3)
   none 12
 End
 
@@ -1535,6 +1565,14 @@ PlotSet: AeroHailSpathHdaHovPset contourf 1
 End
 
 
+
+PlotSet: SpathHovDust1Pset contourf 1
+  SpathHovDust1Contour TSD_SAL_DUST none 2 blue - 0
+End
+
+PlotSet: SpathHovDust2Pset contourf 1
+  SpathHovDust2Contour TSD_SAL_DUST none 2 blue - 0
+End
 
 PlotSet: SpathHovDustPset contourf 1
   SpathHovDustContour TSD_SAL_DUST none 2 blue - 0
@@ -1992,31 +2030,49 @@ End
 
 
   
+PlotData: SpathHovDust1Contour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/storm_hovmollers_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/storm_hovmollers_<CASE>.h5 (2:44) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_d1_mass DIAGS/storm_hovmollers_<CASE>.h5 (2:44,:) 1 0
+End
+  
+PlotData: SpathHovDust2Contour 3
+  # x data - sim time in hours
+  /t_coords DIAGS/storm_hovmollers_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - height, km
+  /z_coords DIAGS/storm_hovmollers_<CASE>.h5 (2:44) 1e-3 0
+  # z data -  updraft speed, m/s
+  /spath_d2_mass DIAGS/storm_hovmollers_<CASE>.h5 (2:44,:) 1 0
+End
+  
 PlotData: SpathHovDustContour 3
   # x data - sim time in hours
-  /t_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 @ 2.7778e-4 -42
+  /t_coords DIAGS/storm_hovmollers_<CASE>.h5 @ 2.7778e-4 -42
   # y data - height, km
-  /z_coords DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:44) 1e-3 0
+  /z_coords DIAGS/storm_hovmollers_<CASE>.h5 (2:44) 1e-3 0
   # z data -  updraft speed, m/s
-  /spath_dust_mass_ts DIAGS/hist_meas_ts_dust_<CASE>.h5 (2:44,:) 1 0
+  /spath_dust_mass DIAGS/storm_hovmollers_<CASE>.h5 (2:44,:) 1 0
 End
   
 PlotData: SpathHovCcnContour 3
   # x data - sim time in hours
-  /t_coords DIAGS/hist_meas_ts_ccn_<CASE>.h5 @ 2.7778e-4 -42
+  /t_coords DIAGS/storm_hovmollers_<CASE>.h5 @ 2.7778e-4 -42
   # y data - height, km
-  /z_coords DIAGS/hist_meas_ts_ccn_<CASE>.h5 (2:44) 1e-3 0
+  /z_coords DIAGS/storm_hovmollers_<CASE>.h5 (2:44) 1e-3 0
   # z data -  updraft speed, m/s
-  /spath_ccn_mass_ts DIAGS/hist_meas_ts_ccn_<CASE>.h5 (2:44,:) 1 0
+  /spath_ccn_mass DIAGS/storm_hovmollers_<CASE>.h5 (2:44,:) 1 0
 End
   
 PlotData: SpathHovRegenContour 3
   # x data - sim time in hours
-  /t_coords DIAGS/hist_meas_ts_ra_<CASE>.h5 @ 2.7778e-4 -42
+  /t_coords DIAGS/storm_hovmollers_<CASE>.h5 @ 2.7778e-4 -42
   # y data - height, km
-  /z_coords DIAGS/hist_meas_ts_ra_<CASE>.h5 (2:44) 1e-3 0
+  /z_coords DIAGS/storm_hovmollers_<CASE>.h5 (2:44) 1e-3 0
   # z data -  updraft speed, m/s
-  /spath_ra_mass_ts DIAGS/hist_meas_ts_ra_<CASE>.h5 (2:44,:) 1 0
+  /spath_ra_mass DIAGS/storm_hovmollers_<CASE>.h5 (2:44,:) 1 0
 End
   
 PlotData: SpathHovAeroContour 3
@@ -2453,10 +2509,10 @@ PlotAxes: AeroHailSpathHdaHovAxes 3
   M_a_h \mug@m^-^3 1e-4 1e-2 log [-4_-2] {'10^-^4'_'10^-^2'}
 End
 
-PlotAxes: SpathHovAmassAxes 3
+PlotAxes: SpathHovLargeAeroAxes 3
   14 2 [0.025_0.025]
   # x axis - sim time, h
-  Time @ 0 60 linear [18_42] {'Aug_23_2006_00Z'_'Aug_24_2006_00Z'}
+  Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
   # y axis - height, km
   Height km 0 10 linear [_] {_}
   # z axis - dust1 number, ug/m3
@@ -2464,14 +2520,14 @@ PlotAxes: SpathHovAmassAxes 3
   M_a \mug@m^-^3 0 800 linear [_] {_}
 End
 
-PlotAxes: SpathHovDustHydroAxes 3
+PlotAxes: SpathHovSmallAeroAxes 3
   14 2 [0.025_0.025]
   # x axis - sim time, h
-  Time @ 0 60 linear [18_42] {'Aug_23_2006_00Z'_'Aug_24_2006_00Z'}
+  Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
   # y axis - height, km
   Height km 0 15 linear [_] {_}
   # z axis - dust1 number, ug/m3
-  M_a \mug@m^-^3 1e-3 10 log [-2_0] {'10^-^2'_'10^0'}
+  M_a \mug@m^-^3 1e-3 1 log [-2_0] {'10^-^2'_'10^0'}
 #  M_a \mug@m^-^3 0 5 linear [_] {_}
 End
 

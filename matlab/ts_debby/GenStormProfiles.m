@@ -401,6 +401,14 @@ function [ ] = GenStormProfiles()
     { 'DIAGS/hist_meas_ts_aero_<CASE>.h5' '/spath_m_aero_mass'   '/spath_m_aero_mass'  'z' }
     { 'DIAGS/hist_meas_ts_aero_<CASE>.h5' '/spath_f_aero_mass'   '/spath_f_aero_mass'  'z' }
 
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_i_tracer_mass'   '/spath_i_tracer_mass'  'z' }
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_m_tracer_mass'   '/spath_m_tracer_mass'  'z' }
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_f_tracer_mass'   '/spath_f_tracer_mass'  'z' }
+
+    { 'DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5' '/spath_i_dust_hydro'   '/spath_i_dust_hydro'  'z' }
+    { 'DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5' '/spath_m_dust_hydro'   '/spath_m_dust_hydro'  'z' }
+    { 'DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5' '/spath_f_dust_hydro'   '/spath_f_dust_hydro'  'z' }
+
     % Region: All, selected by precip rate > 0.01 mm/h
     { 'DIAGS/hist_meas_az_theta_e_<CASE>.h5' '/precip_all_core_ps_theta_e' '/precip_all_core_ps_theta_e' 'z' }
     { 'DIAGS/hist_meas_az_theta_e_<CASE>.h5' '/precip_all_core_s_theta_e'  '/precip_all_core_s_theta_e'  'z' }

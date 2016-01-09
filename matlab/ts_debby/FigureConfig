@@ -73,7 +73,7 @@
 
 Figure: AccumSfcDust 1
   DummyCases
-  [3_1]
+  [1_1]
   Plots/FigAccumSfcDust.jpg
   AccumSfcDustPanel 1
 End
@@ -428,8 +428,8 @@ PlotData: AccumSfcDustLine 2
   # select all t, z from 0 to 10km -> 2:39
   # x - time
   /t_coords DIAGS/hist_meas_ts_dust_sfc_TSD_SAL_DUST.h5       @ 2.7778e-4 -42
-  # y - height
-  /spath_dust_sfc DIAGS/hist_meas_ts_dust_sfc_TSD_SAL_DUST.h5 @      1e-4   0
+  # y - accum dust, ug/cm2
+  /spath_dust_sfc DIAGS/hist_meas_ts_dust_sfc_TSD_SAL_DUST.h5 @         1   0
 End
 
 PlotData: VintDustSeq1Contour 3
@@ -578,10 +578,10 @@ End
 PlotAxes: AccumSfcDustAxes 2
   18 2 [0.025_0.025]
   # x axis - utc time
-#  Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
-  Time @ 0 60 linear [_] {_}
-  # y axis - height
-  M_d \mug@m^-^2 30 50 linear [_] {_}
+  Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
+#  Time @ 0 60 linear [_] {_}
+  # y axis - accum dust, ug/cm2
+  M_d \mug@cm^-^2 10 25 linear [_] {_}
 End
 
 PlotAxes: VintDustSeqAxes 3

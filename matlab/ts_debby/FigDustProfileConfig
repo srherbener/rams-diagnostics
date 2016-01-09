@@ -161,13 +161,45 @@
 
 
 
-Figure: SpathAeroProfiles 2
+#Figure: SpathAeroProfiles 2
+#  DummyCases
+#  [1_2]
+#  Plots/FigSpathAeroProfiles.jpg
+#  SpathAeroPanel       1
+#  SpathAeroDeltaPanel  2
+#End 
+#
+#Figure: SpathAeroHlevProfiles 2
+#  DummyCases
+#  [1_2]
+#  Plots/FigSpathAeroHlevProfiles.jpg
+#  SpathAeroHlevPanel       1
+#  SpathAeroDeltaHlevPanel  2
+#End 
+#
+#Figure: SpathDustHydroProfiles 1
+#  DummyCases
+#  [1_2]
+#  Plots/FigSpathDustHydroProfiles.jpg
+#  SpathDustHydroPanel     1
+#End 
+#
+#Figure: SpathTracerProfiles 2
+#  DummyCases
+#  [1_2]
+#  Plots/FigSpathTracerProfiles.jpg
+#  SpathTracerPanel       1
+#  SpathTracerHlevPanel   2
+#End 
+
+Figure: SpathDustHlevProfiles 2
   DummyCases
   [1_2]
-  Plots/FigSpathAeroProfiles.jpg
-  SpathAeroPanel       1
-  SpathAeroDeltaPanel  2
+  Plots/FigSpathDustHlevProfiles.jpg
+  SpathDustHydroHlevelPanel 1
+  SpathAeroHlevelPanel      2
 End 
+
 
 ########### CASES ####################
 CaseSet: DummyCases 1
@@ -518,7 +550,7 @@ FigPanel: SpathAeroInitPanel
   SpathAeroInitPset
   SpathAeroAxes 1 1
   none 5
-  @
+  SPATH
   none 12
 End
 
@@ -526,7 +558,7 @@ FigPanel: SpathAeroMidPanel
   SpathAeroMidPset
   SpathAeroAxes 1 1
   none 5
-  @
+  SPATH
   none 12
 End
 
@@ -534,7 +566,7 @@ FigPanel: SpathAeroFinalPanel
   SpathAeroFinalPset
   SpathAeroAxes 1 1
   none 5
-  @
+  SPATH
   none 12
 End
 
@@ -542,7 +574,7 @@ FigPanel: SpathAeroPanel
   SpathAeroPset
   SpathAeroAxes 1 1
   none 5
-  @
+  SPATH
   NorthEast 12
 End
 
@@ -550,8 +582,64 @@ FigPanel: SpathAeroDeltaPanel
   SpathAeroDeltaPset
   SpathAeroDeltaAxes 1 0
   none 5
-  @
+  SPATH
   NorthWest 12
+End
+
+FigPanel: SpathAeroHlevPanel
+  SpathAeroPset
+  SpathAeroHlevAxes 1 1
+  none 5
+  SPATH
+  NorthEast 12
+End
+
+FigPanel: SpathAeroDeltaHlevPanel
+  SpathAeroDeltaPset
+  SpathAeroDeltaHlevAxes 1 0
+  none 5
+  SPATH
+  NorthEast 12
+End
+
+FigPanel: SpathDustHydroPanel
+  SpathDustHydroPset
+  SpathDustHydroAxes 1 1
+  none 5
+  SPATH
+  NorthEast 12
+End
+
+FigPanel: SpathAeroHlevelPanel
+  SpathAeroHlevelPset
+  SpathAeroHlevelAxes 1 1
+  none 5
+  SPATH
+  NorthEast 12
+End
+
+FigPanel: SpathDustHydroHlevelPanel
+  SpathDustHydroHlevelPset
+  SpathDustHydroHlevelAxes 1 1
+  none 5
+  SPATH
+  NorthEast 12
+End
+
+FigPanel: SpathTracerPanel
+  SpathTracerPset
+  SpathTracerAxes 1 1
+  none 5
+  SPATH
+  NorthEast 12
+End
+
+FigPanel: SpathTracerHlevPanel
+  SpathTracerPset
+  SpathTracerHlevAxes 1 1
+  none 5
+  SPATH
+  NorthEast 12
 End
 
 
@@ -777,14 +865,30 @@ PlotSet: SpathAeroFinalPset line 1
   SpathAeroFinalLine TSD_SAL_DUST  @  2 black  - 0
 End
 
-PlotSet: SpathAeroPset line 3
-  SpathAeroInitLine  TSD_SAL_DUST  Aug@22@2006@06Z  2 black  - 0
-  SpathAeroMidLine   TSD_SAL_DUST  Aug@23@2006@16Z  2 green  - 0
-  SpathAeroFinalLine TSD_SAL_DUST  Aug@24@2006@18Z  2 blue   - 0
+PlotSet: SpathAeroPset line 2
+  SpathAeroInitLine  TSD_SAL_DUST  Aug@22:@06Z  2 orange  - 0
+  SpathAeroFinalLine TSD_SAL_DUST  Aug@24:@18Z  2 blue    - 0
 End
 
 PlotSet: SpathAeroDeltaPset line 1
   SpathAeroDeltaLine TSD_SAL_DUST  DIFF  2 red  - 0
+End
+
+PlotSet: SpathDustHydroPset line 1
+  SpathDustHydroFinalLine TSD_SAL_DUST  Aug@24:@18Z  2 blue  - 0
+End
+
+PlotSet: SpathTracerPset line 2
+  SpathTracerInitLine  TSD_SAL_DUST  Aug@22:@06Z  2 orange  - 0
+  SpathTracerFinalLine TSD_SAL_DUST  Aug@24:@18Z  2 blue  - 0
+End
+
+PlotSet: SpathAeroHlevelPset line 1
+  SpathAeroFinalLine TSD_SAL_DUST  Aug@24:@18Z  2 blue    - 0
+End
+
+PlotSet: SpathDustHydroHlevelPset line 1
+  SpathDustHydroFinalLine TSD_SAL_DUST  Aug@24:@18Z  2 blue    - 0
 End
 
 ############ PLOT DATA #################
@@ -1133,6 +1237,27 @@ PlotData: SpathAeroDeltaLine 2
   /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
 End
   
+PlotData: SpathDustHydroFinalLine 2
+  # x data - aero_mass, ug/m3
+  /spath_f_dust_hydro DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: SpathTracerInitLine 2
+  # x data - aero_mass, ug/m3
+  /spath_i_tracer_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: SpathTracerFinalLine 2
+  # x data - aero_mass, ug/m3
+  /spath_f_tracer_mass DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
 ############ PLOT AXES #################
 PlotAxes: Dust1NumSalCoreAxes 2
   14 2 [0.025_0.025]
@@ -1361,5 +1486,68 @@ PlotAxes: SpathAeroDeltaAxes 2
   M_d \mug@m^-^3 -600 100 linear [_] {_}
   # y axis - height, km
   Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: SpathAeroHlevAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d1_num, #/cm3
+#  M_d \mug@m^-^3 1 1e3 log [1_100] {'10^0'_'10^2'}
+  M_d \mug@m^-^3 0 1 linear [_] {_}
+  # y axis - height, km
+  Height km 7 15 linear [_] {_}
+End
+
+PlotAxes: SpathAeroDeltaHlevAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d1_num, #/cm3
+#  M_d \mug@m^-^3 1e-2 1e3 log [-2_0_2] {'10^-^2'_'10^0'_'10^2'}
+  M_d \mug@m^-^3 -1 1 linear [_] {_}
+  # y axis - height, km
+  Height km 7 15 linear [_] {_}
+End
+
+PlotAxes: SpathDustHydroAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d1_num, #/cm3
+#  M_d \mug@m^-^3 1e-3 1 log [0.01_1] {'10^-^2'_'10^0'}
+  M_d \mug@m^-^3 0 2 linear [_] {_}
+  # y axis - height, km
+  Height km 0 15 linear [_] {_}
+End
+
+PlotAxes: SpathAeroHlevelAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d1_num, #/cm3
+#  M_d \mug@m^-^3 1e-3 10 log [0.001_0.1_10] {'10^-^3'_'10^-^1'_'10^1'}
+  M_d \mug@m^-^3 0 3 linear [_] {_}
+  # y axis - height, km
+  Height km 6 15 linear [_] {_}
+End
+
+PlotAxes: SpathDustHydroHlevelAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d1_num, #/cm3
+#  M_d_h_y \mug@m^-^3 1e-3 10 log [0.001_0.1_10] {'10^-^3'_'10^-^1'_'10^1'}
+  M_d_h_y \mug@m^-^3 0 0.01 linear [_] {_}
+  # y axis - height, km
+  Height km 6 15 linear [_] {_}
+End
+
+PlotAxes: SpathTracerAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d1_num, #/cm3
+#  M_d \mug@m^-^3 1 1e3 log [1_100] {'10^0'_'10^2'}
+  M_d \mug@m^-^3 0 800 linear [_] {_}
+  # y axis - height, km
+  Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: SpathTracerHlevAxes 2
+  14 2 [0.025_0.025]
+  # x axis - d1_num, #/cm3
+#  M_d \mug@m^-^3 1 1e3 log [1_100] {'10^0'_'10^2'}
+  M_d \mug@m^-^3 0 5 linear [_] {_}
+  # y axis - height, km
+  Height km 7 15 linear [_] {_}
 End
 

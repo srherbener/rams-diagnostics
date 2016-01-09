@@ -83,7 +83,14 @@ function [ ] = GenStormHovmollers()
     { 'DIAGS/hist_meas_az_aero_<CASE>.h5' '/all_whole_aero_mass_ts' '/all_whole_aero_mass' 1 1000 }
 
     % Region: SPATH
-    { 'DIAGS/hist_meas_ts_aero_<CASE>.h5' '/spath_aero_mass_ts' '/spath_aero_mass' 1 1000 }
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_d1_mass_ts'     '/spath_d1_mass'     0.001 1000 }
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_d2_mass_ts'     '/spath_d2_mass'     1     1000 }
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_dust_mass_ts'   '/spath_dust_mass'   1     1000 }
+    { 'DIAGS/hist_meas_ts_ra_<CASE>.h5'   '/spath_ra_mass_ts'     '/spath_ra_mass'     0.01  1000 }
+    { 'DIAGS/hist_meas_ts_ccn_<CASE>.h5'  '/spath_ccn_mass_ts'    '/spath_ccn_mass'    0.001 1000 }
+    { 'DIAGS/hist_meas_ts_aero_<CASE>.h5' '/spath_aero_mass_ts'   '/spath_aero_mass'   0.01  1000 }
+    { 'DIAGS/hist_meas_ts_dust_<CASE>.h5' '/spath_tracer_mass_ts' '/spath_tracer_mass' 0.01  1000 }
+
 
     { 'DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5' '/spath_dust_hydro_ts' '/spath_dust_hydro' 0.001 1000 }
     { 'DIAGS/hist_meas_ts_dust_hydro_<CASE>.h5' '/spath_dust_cloud_ts' '/spath_dust_cloud' 0.001 1000 }
