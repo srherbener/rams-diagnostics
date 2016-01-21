@@ -71,6 +71,9 @@
 #  SalTracer_Panel 2
 #End
 
+
+
+
 Figure: AccumSfcDust 1
   DummyCases
   [1_1]
@@ -87,6 +90,48 @@ Figure: VintDustSeq 3
   VintDustSeq3Panel 3
 End
 
+Figure: DustHydroTseries 1
+  DummyCases
+  [1_1]
+  Plots/FigDustHydroTseries.jpg
+  DustHydroTseriesPanel 1
+End
+
+Figure: DustLiqHydroTseries 1
+  DummyCases
+  [1_1]
+  Plots/FigDustLiqHydroTseries.jpg
+  DustLiqHydroTseriesPanel 1
+End
+
+Figure: DustIceHydroTseries 1
+  DummyCases
+  [1_1]
+  Plots/FigDustIceHydroTseries.jpg
+  DustIceHydroTseriesPanel 1
+End
+
+Figure: AeroTseries 1
+  DummyCases
+  [1_1]
+  Plots/FigAeroTseries.jpg
+  AeroTseriesPanel 1
+End
+
+
+Figure: DustHydroTseriesHlev 1
+  DummyCases
+  [1_1]
+  Plots/FigDustHydroTseriesHlev.jpg
+  DustHydroTseriesHlevPanel 1
+End
+
+Figure: AeroTseriesHlev 1
+  DummyCases
+  [1_1]
+  Plots/FigAeroTseriesHlev.jpg
+  AeroTseriesHlevPanel 1
+End
 
 ########### CASES ####################
 CaseSet: DummyCases 1
@@ -218,7 +263,7 @@ FigPanel: VintDustSeq1Panel
   VintDustSeq1Pset
   VintDustSeqAxes 0 1
   none 5
-  Aug@22@2006@06Z
+  PANEL:b@Aug22:06Z
   none 12
 End
 
@@ -226,7 +271,7 @@ FigPanel: VintDustSeq2Panel
   VintDustSeq2Pset
   VintDustSeqAxes 0 1
   none 5
-  Aug@23@2006@12Z
+  PANEL:d@Aug23:12Z
   none 12
 End
 
@@ -234,8 +279,57 @@ FigPanel: VintDustSeq3Panel
   VintDustSeq3Pset
   VintDustSeqAxes 1 1
   none 5
-  Aug@24@2006@18Z
+  PANEL:f@Aug24:18Z
   none 12
+End
+
+FigPanel: DustHydroTseriesPanel
+  DustHydroTseriesPset
+  DustHydroTseriesAxes 1 1
+  none 5
+  @
+  none 12
+End
+
+FigPanel: DustLiqHydroTseriesPanel
+  DustLiqHydroTseriesPset
+  DustLiqHydroTseriesAxes 1 1
+  none 5
+  @
+  NorthEast 12
+End
+
+FigPanel: DustIceHydroTseriesPanel
+  DustIceHydroTseriesPset
+  DustIceHydroTseriesAxes 1 1
+  none 5
+  @
+  NorthEast 12
+End
+
+FigPanel: AeroTseriesPanel
+  AeroTseriesPset
+  AeroTseriesAxes 1 1
+  none 5
+  @
+  NorthEast 12
+End
+
+
+FigPanel: DustHydroTseriesHlevPanel
+  DustHydroTseriesHlevPset
+  DustHydroTseriesHlevAxes 1 1
+  none 5
+  @
+  none 12
+End
+
+FigPanel: AeroTseriesHlevPanel
+  AeroTseriesHlevPset
+  AeroTseriesHlevAxes 1 1
+  none 5
+  @
+  NorthEast 12
 End
 
 ############ PLOT SETS #################
@@ -313,6 +407,42 @@ End
 
 PlotSet: VintDustSeq3Pset contourf 1
   VintDustSeq3Contour none none 2 blue - 0
+End
+
+PlotSet: DustHydroTseriesPset line 1
+  DustHydroTseriesLine none none 2 blue - 0
+End
+
+PlotSet: DustLiqHydroTseriesPset line 2
+  DustCloudTseriesLine TSD_SAL_DUST Cloud 2 blue - 0
+  DustRainTseriesLine  TSD_SAL_DUST Rain  2 red  - 0
+End
+
+PlotSet: DustIceHydroTseriesPset line 5
+  DustPrisTseriesLine  TSD_SAL_DUST Pris  2 blue   - 0
+  DustSnowTseriesLine  TSD_SAL_DUST Snow  2 green  - 0
+  DustAggrTseriesLine  TSD_SAL_DUST Aggr  2 red    - 0
+  DustGraupTseriesLine TSD_SAL_DUST Graup 2 orange - 0
+  DustHailTseriesLine  TSD_SAL_DUST Hail  2 cyan   - 0
+End
+
+PlotSet: AeroTseriesPset line 4
+  AeroTseriesLine   TSD_SAL_DUST Aero   2 blue   - 0
+  CcnTseriesLine    TSD_SAL_DUST CCN    2 green  - 0
+  RegenTseriesLine  TSD_SAL_DUST Regen  2 red    - 0
+  TracerTseriesLine TSD_SAL_DUST Tracer 2 orange - 0
+End
+
+
+PlotSet: DustHydroTseriesHlevPset line 1
+  DustHydroTseriesHlevLine none none 2 blue - 0
+End
+
+PlotSet: AeroTseriesHlevPset line 4
+  AeroTseriesHlevLine   TSD_SAL_DUST Aero   2 blue   - 0
+  CcnTseriesHlevLine    TSD_SAL_DUST CCN    2 green  - 0
+  RegenTseriesHlevLine  TSD_SAL_DUST Regen  2 red    - 0
+  TracerTseriesHlevLine TSD_SAL_DUST Tracer 2 orange - 0
 End
 
 ############ PLOT DATA #################
@@ -462,6 +592,143 @@ PlotData: VintDustSeq3Contour 3
   /vertint_dust HDF5/TSD_SAL_DUST/HDF5/vint_dust-TSD_SAL_DUST-AS-2006-08-20-120000-g3.h5 (:,:,121) 1 0
 End
 
+PlotData: DustHydroTseriesLine 2
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/vint_meas_TSD_SAL_DUST.h5       @ 2.7778e-4 -42
+  # y - accum dust, ug/cm2
+  /spath_dust_hydro DIAGS/vint_meas_TSD_SAL_DUST.h5 @         1   0
+End
+
+PlotData: DustCloudTseriesLine 2
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/vint_meas_TSD_SAL_DUST.h5       @ 2.7778e-4 -42
+  # y - accum dust, ug/cm2
+  /spath_dust_cloud DIAGS/vint_meas_TSD_SAL_DUST.h5 @         1   0
+End
+
+PlotData: DustRainTseriesLine 2
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/vint_meas_TSD_SAL_DUST.h5       @ 2.7778e-4 -42
+  # y - accum dust, ug/cm2
+  /spath_dust_rain DIAGS/vint_meas_TSD_SAL_DUST.h5 @         1   0
+End
+
+PlotData: DustPrisTseriesLine 2
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/vint_meas_TSD_SAL_DUST.h5       @ 2.7778e-4 -42
+  # y - accum dust, ug/cm2
+  /spath_dust_pris DIAGS/vint_meas_TSD_SAL_DUST.h5 @         1   0
+End
+
+PlotData: DustSnowTseriesLine 2
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/vint_meas_TSD_SAL_DUST.h5       @ 2.7778e-4 -42
+  # y - accum dust, ug/cm2
+  /spath_dust_snow DIAGS/vint_meas_TSD_SAL_DUST.h5 @         1   0
+End
+
+PlotData: DustAggrTseriesLine 2
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/vint_meas_TSD_SAL_DUST.h5       @ 2.7778e-4 -42
+  # y - accum dust, ug/cm2
+  /spath_dust_aggr DIAGS/vint_meas_TSD_SAL_DUST.h5 @         1   0
+End
+
+PlotData: DustGraupTseriesLine 2
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/vint_meas_TSD_SAL_DUST.h5       @ 2.7778e-4 -42
+  # y - accum dust, ug/cm2
+  /spath_dust_graup DIAGS/vint_meas_TSD_SAL_DUST.h5 @         1   0
+End
+
+PlotData: DustHailTseriesLine 2
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/vint_meas_TSD_SAL_DUST.h5       @ 2.7778e-4 -42
+  # y - accum dust, ug/cm2
+  /spath_dust_hail DIAGS/vint_meas_TSD_SAL_DUST.h5 @         1   0
+End
+
+PlotData: AeroTseriesLine 2
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/vint_meas_TSD_SAL_DUST.h5       @ 2.7778e-4 -42
+  # y - accum dust, ug/cm2
+  /spath_aero_mass DIAGS/vint_meas_TSD_SAL_DUST.h5 @         1   0
+End
+
+PlotData: CcnTseriesLine 2
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/vint_meas_TSD_SAL_DUST.h5       @ 2.7778e-4 -42
+  # y - accum dust, ug/cm2
+  /spath_ccn_mass DIAGS/vint_meas_TSD_SAL_DUST.h5 @         1   0
+End
+
+PlotData: RegenTseriesLine 2
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/vint_meas_TSD_SAL_DUST.h5       @ 2.7778e-4 -42
+  # y - accum dust, ug/cm2
+  /spath_ra_mass DIAGS/vint_meas_TSD_SAL_DUST.h5 @         1   0
+End
+
+PlotData: TracerTseriesLine 2
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/vint_meas_TSD_SAL_DUST.h5       @ 2.7778e-4 -42
+  # y - accum dust, ug/cm2
+  /spath_tracer_mass DIAGS/vint_meas_TSD_SAL_DUST.h5 @         1   0
+End
+
+
+PlotData: DustHydroTseriesHlevLine 2
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/vint_meas_TSD_SAL_DUST.h5       @ 2.7778e-4 -42
+  # y - accum dust, ug/cm2
+  /spath_dust_hydro_hlev DIAGS/vint_meas_TSD_SAL_DUST.h5 @         1   0
+End
+
+PlotData: AeroTseriesHlevLine 2
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/vint_meas_TSD_SAL_DUST.h5       @ 2.7778e-4 -42
+  # y - accum dust, ug/cm2
+  /spath_aero_mass_hlev DIAGS/vint_meas_TSD_SAL_DUST.h5 @         1   0
+End
+
+PlotData: CcnTseriesHlevLine 2
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/vint_meas_TSD_SAL_DUST.h5       @ 2.7778e-4 -42
+  # y - accum dust, ug/cm2
+  /spath_ccn_mass_hlev DIAGS/vint_meas_TSD_SAL_DUST.h5 @         1   0
+End
+
+PlotData: RegenTseriesHlevLine 2
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/vint_meas_TSD_SAL_DUST.h5       @ 2.7778e-4 -42
+  # y - accum dust, ug/cm2
+  /spath_ra_mass_hlev DIAGS/vint_meas_TSD_SAL_DUST.h5 @         1   0
+End
+
+PlotData: TracerTseriesHlevLine 2
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/vint_meas_TSD_SAL_DUST.h5       @ 2.7778e-4 -42
+  # y - accum dust, ug/cm2
+  /spath_tracer_mass_hlev DIAGS/vint_meas_TSD_SAL_DUST.h5 @         1   0
+End
+
 ############ PLOT AXES #################
 PlotAxes: MaxWindAxes 2
   18 2 [0.025_0.025]
@@ -581,7 +848,7 @@ PlotAxes: AccumSfcDustAxes 2
   Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
 #  Time @ 0 60 linear [_] {_}
   # y axis - accum dust, ug/cm2
-  M_d \mug@cm^-^2 10 25 linear [_] {_}
+  M_d \mug@cm^-^2 0 25 linear [_] {_}
 End
 
 PlotAxes: VintDustSeqAxes 3
@@ -591,6 +858,55 @@ PlotAxes: VintDustSeqAxes 3
   # y axis - height
   Lat \circ 7 24 linear [_] {_}
   # z axis - dust1 mass
-  M_d ug@m^-^3 1e-2 1e6 log [-2_2_6] {'10^-^2'_'10^2'_'10^6'}
+  M_d ug@m^-^3 1e-2 1e6 log [-1_2_5] {'10^-^1'_'10^2'_'10^5'}
+End
+
+PlotAxes: DustHydroTseriesAxes 2
+  18 2 [0.025_0.025]
+  # x axis - utc time
+  Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
+  # y axis - accum dust, ug/cm2
+  M_d_h_y \mug@cm^-^2 0 1.1 linear [_] {_}
+End
+
+PlotAxes: DustLiqHydroTseriesAxes 2
+  18 2 [0.025_0.025]
+  # x axis - utc time
+  Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
+  # y axis - accum dust, ug/cm2
+  M_d \mug@cm^-^2 0 1.1 linear [_] {_}
+End
+
+PlotAxes: DustIceHydroTseriesAxes 2
+  18 2 [0.025_0.025]
+  # x axis - utc time
+  Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
+  # y axis - accum dust, ug/cm2
+  M_d \mug@cm^-^2 0 0.05 linear [_] {_}
+End
+
+PlotAxes: AeroTseriesAxes 2
+  18 2 [0.025_0.025]
+  # x axis - utc time
+  Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
+  # y axis - accum dust, ug/cm2
+  M_d \mug@cm^-^2 0 200 linear [_] {_}
+End
+
+
+PlotAxes: DustHydroTseriesHlevAxes 2
+  18 2 [0.025_0.025]
+  # x axis - utc time
+  Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
+  # y axis - accum dust, ug/cm2
+  M_d_h_y \mug@cm^-^2 0 0.06 linear [_] {_}
+End
+
+PlotAxes: AeroTseriesHlevAxes 2
+  18 2 [0.025_0.025]
+  # x axis - utc time
+  Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
+  # y axis - accum dust, ug/cm2
+  M_d \mug@cm^-^2 0 2 linear [_] {_}
 End
 
