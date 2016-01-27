@@ -173,6 +173,17 @@ function [ ] = GenTsdHdaMeas()
         { 'TsAveragedData/hda_spath_dust_hail_<CASE>.h5' '/dust_hail' '/spath_ps_dust_hail'  '_hZt'   'pre_sal' '' }
         { 'TsAveragedData/hda_spath_dust_hail_<CASE>.h5' '/dust_hail' '/spath_s_dust_hail'   '_hZt'   'sal'     '' }
 
+        { 'TsAveragedData/hda_spath_dust_mass_<CASE>.h5'   '/dust_mass'   '/spath_sum_dust_mass'    '_HZT'   ''        '' }
+        { 'TsAveragedData/hda_spath_dust_hydro_<CASE>.h5'  '/dust_hydro'  '/spath_sum_dust_hydro'   '_HZT'   ''        '' }
+        { 'TsAveragedData/hda_spath_tracer_mass_<CASE>.h5' '/tracer_mass' '/spath_sum_tracer_mass'  '_HZT'   ''        '' }
+        { 'TsAveragedData/hda_spath_dust_sfc_<CASE>.h5'    '/dust_sfc'    '/spath_sum_dust_sfc'     '_H_T'   ''        '' }
+
+        % SAL sample region (large)
+        { 'TsAveragedData/hda_sal_dust_mass_<CASE>.h5'   '/dust_mass'   '/sal_sum_dust_mass'   '_HZT'   ''        '' }
+        { 'TsAveragedData/hda_sal_dust_hydro_<CASE>.h5'  '/dust_hydro'  '/sal_sum_dust_hydro'  '_HZT'   ''        '' }
+        { 'TsAveragedData/hda_sal_tracer_mass_<CASE>.h5' '/tracer_mass' '/sal_sum_tracer_mass' '_HZT'   ''        '' }
+        { 'TsAveragedData/hda_sal_dust_sfc_<CASE>.h5'    '/dust_sfc'    '/sal_sum_dust_sfc'    '_H_T'   ''        '' }
+
         % region of storm
         { 'TsAveragedData/hda_all_d1_mass_<CASE>.h5' '/d1_mass' '/all_d1_mass_ts'  '_hZT'   ''        '' }
         { 'TsAveragedData/hda_all_d1_mass_<CASE>.h5' '/d1_mass' '/all_i_d1_mass'   '_hZt'   'init'    '' }
@@ -242,6 +253,11 @@ function [ ] = GenTsdHdaMeas()
         { 'TsAveragedData/hda_spath_ccn_mass_<CASE>.h5' '/ccn_mass' '/spath_ps_ccn_mass'  '_hZt'   'pre_sal' '' }
         { 'TsAveragedData/hda_spath_ccn_mass_<CASE>.h5' '/ccn_mass' '/spath_s_ccn_mass'   '_hZt'   'sal'     '' }
 
+        { 'TsAveragedData/hda_spath_ccn_mass_<CASE>.h5' '/ccn_mass' '/spath_sum_ccn_mass'  '_HZT'   ''        '' }
+
+        % SAL sample region (large)
+        { 'TsAveragedData/hda_sal_ccn_mass_<CASE>.h5'    '/ccn_mass'    '/sal_sum_ccn_mass'    '_HZT'   ''        '' }
+
         % storm region
         { 'TsAveragedData/hda_all_ccn_mass_<CASE>.h5' '/ccn_mass' '/all_ccn_mass_ts'  '_hZT'   ''        '' }
         { 'TsAveragedData/hda_all_ccn_mass_<CASE>.h5' '/ccn_mass' '/all_i_ccn_mass'   '_hZt'   'init'    '' }
@@ -270,6 +286,11 @@ function [ ] = GenTsdHdaMeas()
         { 'TsAveragedData/hda_spath_ra_mass_<CASE>.h5' '/ra_mass' '/spath_i_ra_mass'   '_hZt'   'init'    '' }
         { 'TsAveragedData/hda_spath_ra_mass_<CASE>.h5' '/ra_mass' '/spath_ps_ra_mass'  '_hZt'   'pre_sal' '' }
         { 'TsAveragedData/hda_spath_ra_mass_<CASE>.h5' '/ra_mass' '/spath_s_ra_mass'   '_hZt'   'sal'     '' }
+
+        { 'TsAveragedData/hda_spath_ra_mass_<CASE>.h5' '/ra_mass' '/spath_sum_ra_mass'  '_HZT'   ''        '' }
+
+        % SAL sample region (large)
+        { 'TsAveragedData/hda_sal_ra_mass_<CASE>.h5'     '/ra_mass'     '/sal_sum_ra_mass'     '_HZT'   ''        '' }
 
         % storm region
         { 'TsAveragedData/hda_all_ra1_mass_<CASE>.h5' '/ra1_mass' '/all_ra1_mass_ts'  '_hZT'   ''        '' }
@@ -339,6 +360,11 @@ function [ ] = GenTsdHdaMeas()
         { 'TsAveragedData/hda_spath_aero_hail_<CASE>.h5' '/aero_hail' '/spath_i_aero_hail'   '_hZt'   'init'    '' }
         { 'TsAveragedData/hda_spath_aero_hail_<CASE>.h5' '/aero_hail' '/spath_ps_aero_hail'  '_hZt'   'pre_sal' '' }
         { 'TsAveragedData/hda_spath_aero_hail_<CASE>.h5' '/aero_hail' '/spath_s_aero_hail'   '_hZt'   'sal'     '' }
+
+        { 'TsAveragedData/hda_spath_aero_mass_<CASE>.h5' '/aero_mass' '/spath_sum_aero_mass'  '_HZT'   ''        '' }
+
+        % SAL sample region (large)
+        { 'TsAveragedData/hda_sal_aero_mass_<CASE>.h5'   '/aero_mass'   '/sal_sum_aero_mass'   '_HZT'   ''        '' }
 
         % storm region
         { 'TsAveragedData/hda_all_aero_mass_<CASE>.h5' '/aero_mass' '/all_aero_mass_ts'  '_hZT'   ''        '' }
@@ -754,6 +780,18 @@ function [ ] = GenTsdHdaMeas()
 
         % Attach dimensions
         AttachDimensionsXyzt(OutFile, OutVname, DimOrder, Xname, Yname, Zname, Tname);
+
+        % if writing out sums (Hreduce is false), then also write out the counts
+        if (~Hreduce)
+          OutVnameCounts = sprintf('%s_counts', OutVname);
+          fprintf('      Writing: %s (%s)\n', OutFile, OutVnameCounts)
+
+          h5create(OutFile, OutVnameCounts, OutSize);
+          h5write(OutFile, OutVnameCounts, COUNT);
+          AttachDimensionsXyzt(OutFile, OutVnameCounts, DimOrder, Xname, Yname, Zname, Tname);
+        end
+        fprintf('\n');
+
       end % measurements
     end % sets
   end % cases
