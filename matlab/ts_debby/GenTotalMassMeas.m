@@ -99,14 +99,17 @@ function [ ] = GenTotalMassMeas()
 
         % Do the vertical integration (summation)
         MEAS = sum(HDATA .* DELTA_Z);
+        MEAS_LLEV = sum(HDATA(1:Z1-1,:) .* DELTA_Z(1:Z1-1,:));
         MEAS_HLEV = sum(HDATA(Z1:end,:) .* DELTA_Z(Z1:end,:));
       else
         MEAS = HDATA;
+        MEAS_LLEV = HDATA; % dummy placeholder since no z structure
         MEAS_HLEV = HDATA; % dummy placeholder since no z structure
       end
 
       % Do the horizontal integration
       MEAS = MEAS .* HorizArea;
+      MEAS_LLEV = MEAS_LLEV .* HorizArea;
       MEAS_HLEV = MEAS_HLEV .* HorizArea;
 
       % If this is the first set, write out the coordinates into the output file
@@ -129,12 +132,18 @@ function [ ] = GenTotalMassMeas()
       h5create(OutFile, OutVname, Vsize);
       h5write(OutFile, OutVname, MEAS);
 
+      OutLlevVname = sprintf('%s_llev', OutVname);
+      fprintf('  Writing: %s (%s)\n', OutFile, OutLlevVname);
+      h5create(OutFile, OutLlevVname, Vsize);
+      h5write(OutFile, OutLlevVname, MEAS_LLEV);
+
       OutHlevVname = sprintf('%s_hlev', OutVname);
       fprintf('  Writing: %s (%s)\n', OutFile, OutHlevVname);
       h5create(OutFile, OutHlevVname, Vsize);
       h5write(OutFile, OutHlevVname, MEAS_HLEV);
 
       AttachDimensionsXyzt(OutFile, OutVname, DimOrder, Xname, Yname, Zname, Tname);
+      AttachDimensionsXyzt(OutFile, OutLlevVname, DimOrder, Xname, Yname, Zname, Tname);
       AttachDimensionsXyzt(OutFile, OutHlevVname, DimOrder, Xname, Yname, Zname, Tname);
 
       fprintf('\n');

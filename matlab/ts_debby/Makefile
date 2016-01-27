@@ -7,7 +7,6 @@ DIAG_DIR = /Volumes/tasman1/sherbener/data/RAMS/TsDebby/SST_OBS
 
 SCRIPTS = \
   $(DEST)/PlotGrids.m \
-  $(DEST)/PlotDpFigSimConfig.m \
   $(DEST)/PlotDpFigStormSeq.m \
   $(DEST)/ExtractSampleProfile.m \
   $(DEST)/GenTotalMassMeas.m \
@@ -49,6 +48,7 @@ SCRIPTS = \
 
 CONFIGS = \
   $(DIAG_DIR)/FigFsConfig \
+  $(DIAG_DIR)/FigDpPaperConfig \
   $(DIAG_DIR)/FigStrackCloudConfig \
   $(DIAG_DIR)/FigStrackD1NumConfig \
   $(DIAG_DIR)/FigStrackD2NumConfig \
@@ -145,6 +145,7 @@ CONFIGS = \
   $(DIAG_DIR)/FigDustProfileConfig \
   $(DIAG_DIR)/FigDustHydroProfileConfig \
   $(DIAG_DIR)/FigCpoolDistConfig \
+  $(DIAG_DIR)/FigTseriesConfig \
   $(DIAG_DIR)/FigureConfig
 
 #

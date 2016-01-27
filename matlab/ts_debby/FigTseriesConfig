@@ -1,0 +1,178 @@
+#
+# Instructions for building figures
+#
+
+######### FIGURES ###################
+
+Figure: DustSfcTmass 1
+  DummyCases
+  [1_1]
+  Plots/FigTseriesDustSfcTmass.jpg
+  DustSfcTmassPanel 1
+End
+
+Figure: AeroTmass 1
+  DummyCases
+  [1_1]
+  Plots/FigTseriesAeroTmass.jpg
+  AeroTmassPanel 1
+End
+
+Figure: DustHydroTmass 1
+  DummyCases
+  [1_1]
+  Plots/FigTseriesDustHydroTmass.jpg
+  DustHydroTmassPanel 1
+End
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  none
+End
+
+########### PANELS ####################
+FigPanel: DustSfcTmassPanel
+  DustSfcTmassPset
+  DustSfcTmassAxes 1 1
+  none 5
+  @
+  NorthWest 12
+End
+
+FigPanel: AeroTmassPanel
+  AeroTmassPset
+  AeroTmassAxes 1 1
+  none 5
+  @
+  NorthEast 12
+End
+
+FigPanel: DustHydroTmassPanel
+  DustHydroTmassPset
+  DustHydroTmassAxes 1 1
+  none 5
+  @
+  NorthEast 12
+End
+
+
+############ PLOT SETS #################
+PlotSet: DustSfcTmassPset line 3
+  DustSfcTmassSpathLine TSD_SAL_DUST SPATH 2 blue  - 0
+  DustSfcTmassSalLine   TSD_SAL_DUST SAL   2 red   - 0
+  DustSfcTmassStormLine TSD_SAL_DUST STORM 2 green - 0
+End
+
+PlotSet: AeroTmassPset line 3
+  AeroTmassSpathLine TSD_SAL_DUST SPATH 2 blue  - 0
+  AeroTmassSalLine   TSD_SAL_DUST SAL   2 red   - 0
+  AeroTmassStormLine TSD_SAL_DUST STORM 2 green - 0
+End
+
+PlotSet: DustHydroTmassPset line 3
+  DustHydroTmassSpathLine TSD_SAL_DUST SPATH 2 blue  - 0
+  DustHydroTmassSalLine   TSD_SAL_DUST SAL   2 red   - 0
+  DustHydroTmassStormLine TSD_SAL_DUST STORM 2 green - 0
+End
+
+############ PLOT DATA #################
+PlotData: DustSfcTmassSpathLine 2
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/total_mass_TSD_SAL_DUST.h5       @ 2.7778e-4 -42
+  # y - accum dust, kg X 1e9
+  /spath_dust_sfc_total_mass DIAGS/total_mass_TSD_SAL_DUST.h5 @    1e-12   0
+End
+
+PlotData: DustSfcTmassSalLine 2
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/total_mass_TSD_SAL_DUST.h5       @ 2.7778e-4 -42
+  # y - accum dust, kg X 1e9
+  /sal_dust_sfc_total_mass DIAGS/total_mass_TSD_SAL_DUST.h5 @    1e-12   0
+End
+
+PlotData: DustSfcTmassStormLine 2
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/total_mass_TSD_SAL_DUST.h5       @ 2.7778e-4 -42
+  # y - accum dust, kg X 1e9
+  /storm_dust_sfc_total_mass DIAGS/total_mass_TSD_SAL_DUST.h5 @    1e-12   0
+End
+
+PlotData: AeroTmassSpathLine 2
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/total_mass_TSD_SAL_DUST.h5       @ 2.7778e-4 -42
+  # y - accum dust, kg X 1e9
+  /spath_aero_total_mass DIAGS/total_mass_TSD_SAL_DUST.h5 @    1e-12   0
+End
+
+PlotData: AeroTmassSalLine 2
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/total_mass_TSD_SAL_DUST.h5       @ 2.7778e-4 -42
+  # y - accum dust, kg X 1e9
+  /sal_aero_total_mass DIAGS/total_mass_TSD_SAL_DUST.h5 @    1e-12   0
+End
+
+PlotData: AeroTmassStormLine 2
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/total_mass_TSD_SAL_DUST.h5       @ 2.7778e-4 -42
+  # y - accum dust, kg X 1e9
+  /storm_aero_total_mass DIAGS/total_mass_TSD_SAL_DUST.h5 @    1e-12   0
+End
+
+PlotData: DustHydroTmassSpathLine 2
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/total_mass_TSD_SAL_DUST.h5       @ 2.7778e-4 -42
+  # y - accum dust, kg X 1e6
+  /spath_dust_hydro_total_mass DIAGS/total_mass_TSD_SAL_DUST.h5 @    1e-9   0
+End
+
+PlotData: DustHydroTmassSalLine 2
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/total_mass_TSD_SAL_DUST.h5       @ 2.7778e-4 -42
+  # y - accum dust, kg X 1e6
+  /sal_dust_hydro_total_mass DIAGS/total_mass_TSD_SAL_DUST.h5 @    1e-9   0
+End
+
+PlotData: DustHydroTmassStormLine 2
+  # select all t, z from 0 to 10km -> 2:39
+  # x - time
+  /t_coords DIAGS/total_mass_TSD_SAL_DUST.h5       @ 2.7778e-4 -42
+  # y - accum dust, kg X 1e6
+  /storm_dust_hydro_total_mass DIAGS/total_mass_TSD_SAL_DUST.h5 @    1e-9   0
+End
+
+############ PLOT AXES #################
+PlotAxes: DustSfcTmassAxes 2
+  18 2 [0.025_0.025]
+  # x axis - utc time
+  Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
+#  Time @ 0 60 linear [_] {_}
+  # y axis - accum dust, kg X 1e9
+  M_d kg@X@10^9 0 7 linear [_] {_}
+End
+
+PlotAxes: AeroTmassAxes 2
+  18 2 [0.025_0.025]
+  # x axis - utc time
+  Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
+#  Time @ 0 60 linear [_] {_}
+  # y axis - accum dust, kg X 1e9
+  M_d kg@X@10^9 0 25 linear [_] {_}
+End
+
+PlotAxes: DustHydroTmassAxes 2
+  18 2 [0.025_0.025]
+  # x axis - utc time
+  Time @ 0 60 linear [6_30_54] {'Aug22:12Z'_'Aug23:12Z'_'Aug24:12Z'}
+#  Time @ 0 60 linear [_] {_}
+  # y axis - accum dust, kg X 1e9
+  M_d_h_y kg@X@10^6 0 35 linear [_] {_}
+End
+
