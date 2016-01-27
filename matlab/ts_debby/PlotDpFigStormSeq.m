@@ -1,4 +1,4 @@
-function [ ] = PlotDpFig1()
+function [ ] = PlotDpFigStormSeq()
 % PlotDpFig1 
 
   Pdir = 'Plots';
