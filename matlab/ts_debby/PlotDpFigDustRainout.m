@@ -7,6 +7,7 @@ function [ ] = PlotDpFigDustRainout()
   end
 
   Fsize = 13;
+  Ylim = [ 0 6 ];
   
   % Hovmoller data for dust-in-hydrometeors
   InFile = 'DIAGS/storm_hovmollers_TSD_SAL_DUST.h5';
@@ -54,99 +55,18 @@ function [ ] = PlotDpFigDustRainout()
 
   % create the Hovmoller of sal_dust_hydro
   Paxes = subplot(4,1,1);
-  PlotDustHov(Paxes, T, Z, HOV_DUST, 'a', '', Fsize, 0, 1);
+  PlotDpFigDustHov(Paxes, T, Z, HOV_DUST, 'a', '', Fsize, 0, 1, Ylim);
   
   Paxes = subplot(4,1,2);
-  PlotDpTseries(Paxes, T, TS_SAL_MDHY, 'b', '', 'M_d_h_y (10^6 kg)', Fsize, 0, 1);
+  PlotDpFigTseries(Paxes, T, TS_SAL_MDHY, 'b', '', 'M_d_h_y (10^6 kg)', Fsize, 0, 1);
 
   Paxes = subplot(4,1,3);
-  PlotDpTseries(Paxes, T, TS_SAL_PR, 'c', '', 'PR (mm h^-^1)', Fsize, 0, 1);
+  PlotDpFigTseries(Paxes, T, TS_SAL_PR, 'c', '', 'PR (mm h^-^1)', Fsize, 0, 1);
 
   Paxes = subplot(4,1,4);
-  PlotDpTseries(Paxes, T, TS_SAL_DSFC, 'd', '', 'M_d (10^9 kg)', Fsize, 1, 1);
+  PlotDpFigTseries(Paxes, T, TS_SAL_DSFC, 'd', '', 'M_d (10^9 kg)', Fsize, 1, 1);
 
   fprintf('Writing: %s\n', OutFile);
   saveas(Fig, OutFile);
   close(Fig);
-end
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-function [] = PlotDustHov(Paxes, X, Y, Z, Pmarker, Ptitle, Fsize, ShowX, ShowY)
-
-  axes(Paxes);
-
-  contourf(X, Y, Z, 20, 'LineStyle', 'none');
-
-  % place colorbar beneath contour plot, but don't allow matlab to put in large gaps
-  GapSize = 0.05;
-  PaxesLoc = get(Paxes, 'Position'); % open up a small gap below plot
-  CbarLoc = PaxesLoc;
-  PaxesLoc(2) = PaxesLoc(2) + GapSize;
-  PaxesLoc(4) = PaxesLoc(4) - GapSize;
-  set(Paxes, 'Position', PaxesLoc);
-  
-  CbarLoc(4) = GapSize * 0.8;  % Force colorbar into the above gap
-  Cbar = colorbar('Location', 'SouthOutside', 'Position', CbarLoc);
-  caxis([ -3 0 ]);
-  ylim([ 0 6 ]);
-
-  set(Cbar, 'Ticks', [ -2 -1 0 ]);
-  set(Cbar, 'TickLabels', { '10^-^2' '10^-^1' '1' });
-
-  set(Paxes, 'FontSize', Fsize);
-  set(Paxes, 'LineWidth', 2);
-  set(Paxes, 'TickLength', [ 0.025 0.025 ]);
-
-  set(Paxes, 'XTick', [ 6 30 54 ]);
-  if (ShowX > 0)
-    set(Paxes, 'XTickLabel', { ' 12Z\newline22Aug' ' 12Z\newline23Aug' ' 12Z\newline24Aug' });
-  else
-    set(Paxes, 'XTickLabel', {});
-  end
-
-  set(Paxes, 'YTick', [ 0 5 10 15 ]);
-  if (ShowY > 0)
-    ylabel('Height (km)');
-  else
-    set(Paxes, 'YTickLabel', {});
-  end
-
-  if (isempty(Pmarker))
-    title(Ptitle);
-  else
-    T = title(sprintf('(%s) %s', Pmarker, Ptitle));
-    LeftJustTitle(T);
-  end
-
-end
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-function [] = PlotDpTseries(Paxes, X, Y, Pmarker, Ptitle, Ylabel, Fsize, ShowX, ShowY)
-
-  axes(Paxes);
-
-  plot(X, Y, 'LineWidth', 2);
-
-  set(Paxes, 'FontSize', Fsize);
-  set(Paxes, 'LineWidth', 2);
-  set(Paxes, 'TickLength', [ 0.025 0.025 ]);
-
-  set(Paxes, 'XTick', [ 6 30 54 ]);
-  if (ShowX > 0)
-    set(Paxes, 'XTickLabel', { ' 12Z\newline22Aug' ' 12Z\newline23Aug' ' 12Z\newline24Aug' });
-  else
-    set(Paxes, 'XTickLabel', {});
-  end
-
-  ylabel(Ylabel);
-
-  if (isempty(Pmarker))
-    title(Ptitle);
-  else
-    T = title(sprintf('(%s) %s', Pmarker, Ptitle));
-    LeftJustTitle(T);
-  end
-
 end

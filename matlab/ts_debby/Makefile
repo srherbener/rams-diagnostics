@@ -9,6 +9,9 @@ SCRIPTS = \
   $(DEST)/PlotGrids.m \
   $(DEST)/PlotDpFigStormSeq.m \
   $(DEST)/PlotDpFigDustRainout.m \
+  $(DEST)/PlotDpFigDustTransport.m \
+  $(DEST)/PlotDpFigDustHov.m \
+  $(DEST)/PlotDpFigTseries.m \
   $(DEST)/ExtractSampleProfile.m \
   $(DEST)/GenTotalMassMeas.m \
   $(DEST)/GenAzHistSumsCounts.m \
