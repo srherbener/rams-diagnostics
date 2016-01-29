@@ -1,7 +1,10 @@
-function [] = PlotDpFigDustHov(Paxes, X, Y, Z, Pmarker, Ptitle, Fsize, ShowX, ShowY, Ylim)
+function [] = PlotDpFigDustHov(Paxes, X, Y, Z, Pmarker, Ptitle, Fsize, ShowX, ShowY, ShowLev, CaxisRange)
 
   axes(Paxes);
 
+  if (CaxisRange == 0)
+    Z = log10(Z);   % convert to log values
+  end
   contourf(X, Y, Z, 20, 'LineStyle', 'none');
 
   % place colorbar beneath contour plot, but don't allow matlab to put in large gaps
@@ -14,11 +17,29 @@ function [] = PlotDpFigDustHov(Paxes, X, Y, Z, Pmarker, Ptitle, Fsize, ShowX, Sh
   
   CbarLoc(4) = GapSize * 0.8;  % Force colorbar into the above gap
   Cbar = colorbar('Location', 'SouthOutside', 'Position', CbarLoc);
-  caxis([ -3 0 ]);
-  ylim(Ylim);
+  % CaxisRange
+  %   0 : log scale 1e-3 to 1
+  %   1 : linear scale 0 500
+  if (CaxisRange == 0)
+    caxis([ -3 0 ]);
+    set(Cbar, 'Ticks', [ -2 -1 0 ]);
+    set(Cbar, 'TickLabels', { '10^-^2' '10^-^1' '1' });
+  else
+    caxis([ 0 500 ]);
+    set(Cbar, 'Ticks', [ 0 100 200 300 400 500 ]);
+  end
 
-  set(Cbar, 'Ticks', [ -2 -1 0 ]);
-  set(Cbar, 'TickLabels', { '10^-^2' '10^-^1' '1' });
+  % ShowLev
+  %   < 0  : 0  6 km
+  %  == 0  : 0 13 km
+  %   > 0  : 6 13 km
+  if (ShowLev < 0)
+    ylim([ 0 6 ]);
+  elseif (ShowLev == 0)
+    ylim([ 0 10 ]);
+  else
+    ylim([ 6 13 ]);
+  end
 
   set(Paxes, 'FontSize', Fsize);
   set(Paxes, 'LineWidth', 2);
@@ -31,7 +52,6 @@ function [] = PlotDpFigDustHov(Paxes, X, Y, Z, Pmarker, Ptitle, Fsize, ShowX, Sh
     set(Paxes, 'XTickLabel', {});
   end
 
-  set(Paxes, 'YTick', [ 0 5 10 15 ]);
   if (ShowY > 0)
     ylabel('Height (km)');
   else

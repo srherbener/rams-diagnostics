@@ -7,7 +7,6 @@ function [ ] = PlotDpFigDustRainout()
   end
 
   Fsize = 13;
-  Ylim = [ 0 6 ];
   
   % Hovmoller data for dust-in-hydrometeors
   InFile = 'DIAGS/storm_hovmollers_TSD_SAL_DUST.h5';
@@ -15,15 +14,8 @@ function [ ] = PlotDpFigDustRainout()
   fprintf('Reading: %s (%s)\n', InFile, InVname);
 
   HOV_DUST = squeeze(h5read(InFile, InVname));
-  Z    = squeeze(h5read(InFile, '/z_coords'));
-  T    = squeeze(h5read(InFile, '/t_coords'));
-
-  % Do Hovmoller on log scale. Declaring color axis as logrithmic doesn't
-  % work right with colorbar markings so instead apply log scaling to
-  % data and force the appropriate tick labels on the colorbar.
-  HOV_DUST = log10(HOV_DUST);   % logarithmic scaling
-  Z = Z ./ 1000;        % km
-  T = (T ./ 3600) - 42; % convert to simulation hours
+  Z    = squeeze(h5read(InFile, '/z_coords'))./1000;
+  T    = squeeze(h5read(InFile, '/t_coords'))./3600 - 42;
 
   % Time series of lower level Mdhy
   InFile = 'DIAGS/total_mass_TSD_SAL_DUST.h5';
@@ -55,7 +47,7 @@ function [ ] = PlotDpFigDustRainout()
 
   % create the Hovmoller of sal_dust_hydro
   Paxes = subplot(4,1,1);
-  PlotDpFigDustHov(Paxes, T, Z, HOV_DUST, 'a', '', Fsize, 0, 1, Ylim);
+  PlotDpFigDustHov(Paxes, T, Z, HOV_DUST, 'a', '', Fsize, 0, 1, -1, 0);
   
   Paxes = subplot(4,1,2);
   PlotDpFigTseries(Paxes, T, TS_SAL_MDHY, 'b', '', 'M_d_h_y (10^6 kg)', Fsize, 0, 1);
