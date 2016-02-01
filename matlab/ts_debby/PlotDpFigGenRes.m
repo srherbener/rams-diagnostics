@@ -45,10 +45,10 @@ function [ ] = PlotDpFigGenRes()
   PlotDpFigTrack(Paxes, SimTrackLons, SimTrackLats, 'a', '', Fsize);
   
   Paxes = subplot(3,1,2);
-  PlotDpFigDustHov(Paxes, T, Z, HOV_DUST, 'b', '', Fsize, 0, 1, 0, 1);
+  PlotDpFigDustHov(Paxes, T, Z, HOV_DUST, 'b', 'SAL', Fsize, 0, 1, 0, 1);
 
   Paxes = subplot(3,1,3);
-  PlotDpFigTseries(Paxes, T, TS_SAL_MD, 'c', '', 'M_d (10^9 kg)', Fsize, 1, 1);
+  PlotDpFigTseries(Paxes, T, TS_SAL_MD, 'c', 'SAL', 'M_d (10^9 kg)', Fsize, 1, 1);
   
   OutFile = sprintf('%s/DpFigGenRes.jpg', Pdir);
   fprintf('Writing: %s\n', OutFile);

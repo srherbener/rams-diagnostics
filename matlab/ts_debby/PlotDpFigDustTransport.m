@@ -47,16 +47,16 @@ function [ ] = PlotDpFigDustTransport()
 
   % create the Hovmoller of storm_dust_hydro
   Paxes = subplot(4,1,1);
-  PlotDpFigDustHov(Paxes, T, Z, HOV_MD, 'a', '', Fsize, 0, 1, 1, 0);
+  PlotDpFigDustHov(Paxes, T, Z, HOV_MD, 'a', 'STORM', Fsize, 0, 1, 1, 0);
   
   Paxes = subplot(4,1,2);
-  PlotDpFigTseries(Paxes, T, TS_STORM_MD, 'b', '', 'M_d (10^6 kg)', Fsize, 0, 1);
+  PlotDpFigTseries(Paxes, T, TS_STORM_MD, 'b', 'STORM', 'M_d (10^6 kg)', Fsize, 0, 1);
 
   Paxes = subplot(4,1,3);
-  PlotDpFigDustHov(Paxes, T, Z, HOV_MDHY, 'c', '', Fsize, 0, 1, 1, 0);
+  PlotDpFigDustHov(Paxes, T, Z, HOV_MDHY, 'c', 'STORM', Fsize, 0, 1, 1, 0);
   
   Paxes = subplot(4,1,4);
-  PlotDpFigTseries(Paxes, T, TS_STORM_MDHY, 'd', '', 'M_d_h_y (10^6 kg)', Fsize, 1, 1);
+  PlotDpFigTseries(Paxes, T, TS_STORM_MDHY, 'd', 'STORM', 'M_d_h_y (10^6 kg)', Fsize, 1, 1);
 
   fprintf('Writing: %s\n', OutFile);
   saveas(Fig, OutFile);
