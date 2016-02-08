@@ -35,7 +35,7 @@ function [ ] = PlotDpFigGenRes()
   fprintf('Reading: %s (%s)\n', InFile, InVname);
 
   TS_SAL_MD = squeeze(h5read(InFile, InVname)); % g
-  TS_SAL_MD = TS_SAL_MD .* 1e-12;  % convert to billions of kg
+  TS_SAL_MD = TS_SAL_MD .* 1e-12;  % convert to Tg
 
 
   % plot
@@ -48,7 +48,7 @@ function [ ] = PlotDpFigGenRes()
   PlotDpFigDustHov(Paxes, T, Z, HOV_DUST, 'b', 'SAL', Fsize, 0, 1, 0, 1);
 
   Paxes = subplot(3,1,3);
-  PlotDpFigTseries(Paxes, T, TS_SAL_MD, 'c', 'SAL', 'M_d (10^9 kg)', Fsize, 1, 1);
+  PlotDpFigTseries(Paxes, T, TS_SAL_MD, 'c', 'SAL', 'M_d (Tg)', Fsize, 1, 1);
   
   OutFile = sprintf('%s/DpFigGenRes.jpg', Pdir);
   fprintf('Writing: %s\n', OutFile);

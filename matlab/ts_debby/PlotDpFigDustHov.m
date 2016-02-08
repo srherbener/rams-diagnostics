@@ -36,7 +36,7 @@ function [] = PlotDpFigDustHov(Paxes, X, Y, Z, Pmarker, Ptitle, Fsize, ShowX, Sh
   if (ShowLev < 0)
     ylim([ 0 6 ]);
   elseif (ShowLev == 0)
-    ylim([ 0 10 ]);
+    ylim([ 0 13 ]);
   else
     ylim([ 6 13 ]);
   end
@@ -64,5 +64,8 @@ function [] = PlotDpFigDustHov(Paxes, X, Y, Z, Pmarker, Ptitle, Fsize, ShowX, Sh
     T = title(sprintf('(%s) %s', Pmarker, Ptitle));
     LeftJustTitle(T);
   end
+
+  % Mark the freezing level (5.5 km elevation)
+  line([ 0 60 ], [ 5.5 5.5 ], 'Color', 'w', 'LineStyle', '--', 'LineWidth', 2);
 
 end

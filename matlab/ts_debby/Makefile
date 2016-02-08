@@ -9,7 +9,7 @@ SCRIPTS = \
   $(DEST)/PlotGrids.m \
   $(DEST)/PlotDpFigGenRes.m \
   $(DEST)/PlotDpFigStormSeq.m \
-  $(DEST)/PlotDpFigDustRainout.m \
+  $(DEST)/PlotDpFigDustRemoval.m \
   $(DEST)/PlotDpFigDustTransport.m \
   $(DEST)/PlotDpFigDustHov.m \
   $(DEST)/PlotDpFigTseries.m \
