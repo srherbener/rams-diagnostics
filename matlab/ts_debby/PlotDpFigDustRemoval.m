@@ -1,5 +1,5 @@
-function [ ] = PlotDpFigDustRainout()
-% PlotDpFigDustRainout 
+function [ ] = PlotDpFigDustRemoval()
+% PlotDpFigDustRemoval 
 
   Pdir = 'Plots';
   if (exist(Pdir, 'dir') ~= 7)
@@ -41,7 +41,7 @@ function [ ] = PlotDpFigDustRainout()
   TS_SAL_DSFC = TS_SAL_DSFC .* 1e-12;  % convert to Tg
 
   % plot, 4 panels (2x2)
-  OutFile = sprintf('%s/DpFigDustRainout.jpg', Pdir);
+  OutFile = sprintf('%s/DpFigDustRemoval.jpg', Pdir);
   
   Fig = figure;
 

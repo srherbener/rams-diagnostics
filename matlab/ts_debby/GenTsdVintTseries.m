@@ -10,7 +10,7 @@ function [ ] = GenVintTseries()
     };
   Ncases = length(CaseList);
 
-  Zlev = 6; % km
+  Zlev = 5.5; % km
 
   % Description of measurements
   MeasList = {

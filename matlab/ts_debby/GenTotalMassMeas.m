@@ -39,7 +39,7 @@ function [ ] = GenTotalMassMeas()
     };
   Nfiles = length(FileList);
 
-  Zlev = 6000; % m
+  Zlev = 5500; % m
 
   HorizArea = 9000 * 9000; % horizontal grid cell area, 3km X 3km
 

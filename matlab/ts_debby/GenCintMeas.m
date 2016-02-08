@@ -20,7 +20,7 @@ function [ ] = GenCintMeas()
     };
   Nfiles = length(FileList);
 
-  Zlev = 6; % km
+  Zlev = 5.5; % km
 
   for icase = 1:Ncases
     Case = CaseList{icase};
