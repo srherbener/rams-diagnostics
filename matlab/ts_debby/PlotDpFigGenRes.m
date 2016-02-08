@@ -76,7 +76,12 @@ function [ ] = PlotDpFigGenRes()
   PlotDpFigTrack(Paxes, SimTrackLons(T1:T2), SimTrackLats(T1:T2), 'a', '', Fsize);
   
   % Initial dust profiles
+  % Doesn't quite fit in the vertical center of the subplot region. Needs to get
+  % bumped upward just a little bit.
   Paxes = subplot(3,2,2);
+  Ploc = get(Paxes, 'Position');
+  Ploc(2) = Ploc(2) + 0.02;
+  set(Paxes, 'Position', Ploc);
   PlotDpFigInitDust(Paxes, DUST_CONC, Znamma, 'b', '', Fsize);
 
   % aero mass hovmoller
@@ -101,11 +106,11 @@ function [] = PlotDpFigInitDust(Paxes, DUST, Z, Pmarker, Ptitle, Fsize)
   Zmax = 13; %km
 
   % Make the plot
-  Xlab = 'N_a (cm^-^3)';
+  Xlab = 'N_d (cm^-^3)';
   Ylab = 'Height (km)';
 
-  Xlimits = [ -10 300 ];
-  Xticks = [ 0 150 300 ];
+  Xlimits = [ -10 250 ];
+  Xticks = [ 0 100 200 ];
 
   LegFsize = 10;
   LineWidth = 2;
