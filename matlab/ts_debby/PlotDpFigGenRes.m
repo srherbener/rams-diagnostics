@@ -86,7 +86,7 @@ function [ ] = PlotDpFigGenRes()
 
   % aero mass hovmoller
   Paxes = subplot(3,2,[3 4]);
-  PlotDpFigDustHov(Paxes, T, Z, HOV_DUST, 'c', 'SAL', Fsize, 0, 1, 0, 1);
+  PlotDpFigDustHov(Paxes, T, Z, HOV_DUST, 'c', 'SAL', Fsize, 0, 1, 0, 2);
 
   % Total aero mass time series
   Paxes = subplot(3,2,[5 6]);

@@ -2,7 +2,7 @@ function [] = PlotDpFigDustHov(Paxes, X, Y, Z, Pmarker, Ptitle, Fsize, ShowX, Sh
 
   axes(Paxes);
 
-  if (CaxisRange == 0)
+  if (CaxisRange <= 1)
     Z = log10(Z);   % convert to log values
   end
   contourf(X, Y, Z, 20, 'LineStyle', 'none');
@@ -18,12 +18,17 @@ function [] = PlotDpFigDustHov(Paxes, X, Y, Z, Pmarker, Ptitle, Fsize, ShowX, Sh
   CbarLoc(4) = GapSize * 0.8;  % Force colorbar into the above gap
   Cbar = colorbar('Location', 'SouthOutside', 'Position', CbarLoc);
   % CaxisRange
-  %   0 : log scale 1e-3 to 1
-  %   1 : linear scale 0 500
+  %   0 : log scale 1e-3 to  1
+  %   1 : log scale 1e-1 to 100
+  %   2 : linear scale 0 500
   if (CaxisRange == 0)
     caxis([ -3 0 ]);
     set(Cbar, 'Ticks', [ -2 -1 0 ]);
     set(Cbar, 'TickLabels', { '10^-^2' '10^-^1' '1' });
+  elseif (CaxisRange == 1)
+    caxis([ -0.8 2.2 ]);
+    set(Cbar, 'Ticks', [ 0 1 2 ]);
+    set(Cbar, 'TickLabels', { '1' '10' '10^2' });
   else
     caxis([ 0 500 ]);
     set(Cbar, 'Ticks', [ 0 100 200 300 400 500 ]);
