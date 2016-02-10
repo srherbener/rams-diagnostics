@@ -243,177 +243,197 @@ function [ ] = GenTsdHdaMeas()
       'DIAGS/hda_meas_ts_dust_<CASE>.h5'
     }
 
-    % CCN
-    {
-      'CCN Tsavg'
-      {
-        % region in SAL that is in the storm path
-        { 'TsAveragedData/hda_spath_ccn_mass_<CASE>.h5' '/ccn_mass' '/spath_ccn_mass_ts'  '_hZT'   ''        '' }
-        { 'TsAveragedData/hda_spath_ccn_mass_<CASE>.h5' '/ccn_mass' '/spath_i_ccn_mass'   '_hZt'   'init'    '' }
-        { 'TsAveragedData/hda_spath_ccn_mass_<CASE>.h5' '/ccn_mass' '/spath_ps_ccn_mass'  '_hZt'   'pre_sal' '' }
-        { 'TsAveragedData/hda_spath_ccn_mass_<CASE>.h5' '/ccn_mass' '/spath_s_ccn_mass'   '_hZt'   'sal'     '' }
-
-        { 'TsAveragedData/hda_spath_ccn_mass_<CASE>.h5' '/ccn_mass' '/spath_sum_ccn_mass'  '_HZT'   ''        '' }
-
-        % SAL sample region (large)
-        { 'TsAveragedData/hda_sal_ccn_mass_<CASE>.h5'    '/ccn_mass'    '/sal_sum_ccn_mass'    '_HZT'   ''        '' }
-
-        % storm region
-        { 'TsAveragedData/hda_all_ccn_mass_<CASE>.h5' '/ccn_mass' '/all_ccn_mass_ts'  '_hZT'   ''        '' }
-        { 'TsAveragedData/hda_all_ccn_mass_<CASE>.h5' '/ccn_mass' '/all_i_ccn_mass'   '_hZt'   'init'    '' }
-        { 'TsAveragedData/hda_all_ccn_mass_<CASE>.h5' '/ccn_mass' '/all_ps_ccn_mass'  '_hZt'   'pre_sal' '' }
-        { 'TsAveragedData/hda_all_ccn_mass_<CASE>.h5' '/ccn_mass' '/all_s_ccn_mass'   '_hZt'   'sal'     '' }
-      }
-      'DIAGS/hda_meas_ts_ccn_<CASE>.h5'
-    }
-
-    % Regen
-    {
-      'Regen Tsavg'
-      {
-        % region in SAL that is in the storm path
-        { 'TsAveragedData/hda_spath_ra1_mass_<CASE>.h5' '/ra1_mass' '/spath_ra1_mass_ts'  '_hZT'   ''        '' }
-        { 'TsAveragedData/hda_spath_ra1_mass_<CASE>.h5' '/ra1_mass' '/spath_i_ra1_mass'   '_hZt'   'init'    '' }
-        { 'TsAveragedData/hda_spath_ra1_mass_<CASE>.h5' '/ra1_mass' '/spath_ps_ra1_mass'  '_hZt'   'pre_sal' '' }
-        { 'TsAveragedData/hda_spath_ra1_mass_<CASE>.h5' '/ra1_mass' '/spath_s_ra1_mass'   '_hZt'   'sal'     '' }
-
-        { 'TsAveragedData/hda_spath_ra2_mass_<CASE>.h5' '/ra2_mass' '/spath_ra2_mass_ts'  '_hZT'   ''        '' }
-        { 'TsAveragedData/hda_spath_ra2_mass_<CASE>.h5' '/ra2_mass' '/spath_i_ra2_mass'   '_hZt'   'init'    '' }
-        { 'TsAveragedData/hda_spath_ra2_mass_<CASE>.h5' '/ra2_mass' '/spath_ps_ra2_mass'  '_hZt'   'pre_sal' '' }
-        { 'TsAveragedData/hda_spath_ra2_mass_<CASE>.h5' '/ra2_mass' '/spath_s_ra2_mass'   '_hZt'   'sal'     '' }
-
-        { 'TsAveragedData/hda_spath_ra_mass_<CASE>.h5' '/ra_mass' '/spath_ra_mass_ts'  '_hZT'   ''        '' }
-        { 'TsAveragedData/hda_spath_ra_mass_<CASE>.h5' '/ra_mass' '/spath_i_ra_mass'   '_hZt'   'init'    '' }
-        { 'TsAveragedData/hda_spath_ra_mass_<CASE>.h5' '/ra_mass' '/spath_ps_ra_mass'  '_hZt'   'pre_sal' '' }
-        { 'TsAveragedData/hda_spath_ra_mass_<CASE>.h5' '/ra_mass' '/spath_s_ra_mass'   '_hZt'   'sal'     '' }
-
-        { 'TsAveragedData/hda_spath_ra_mass_<CASE>.h5' '/ra_mass' '/spath_sum_ra_mass'  '_HZT'   ''        '' }
-
-        % SAL sample region (large)
-        { 'TsAveragedData/hda_sal_ra_mass_<CASE>.h5'     '/ra_mass'     '/sal_sum_ra_mass'     '_HZT'   ''        '' }
-
-        % storm region
-        { 'TsAveragedData/hda_all_ra1_mass_<CASE>.h5' '/ra1_mass' '/all_ra1_mass_ts'  '_hZT'   ''        '' }
-        { 'TsAveragedData/hda_all_ra1_mass_<CASE>.h5' '/ra1_mass' '/all_i_ra1_mass'   '_hZt'   'init'    '' }
-        { 'TsAveragedData/hda_all_ra1_mass_<CASE>.h5' '/ra1_mass' '/all_ps_ra1_mass'  '_hZt'   'pre_sal' '' }
-        { 'TsAveragedData/hda_all_ra1_mass_<CASE>.h5' '/ra1_mass' '/all_s_ra1_mass'   '_hZt'   'sal'     '' }
-
-        { 'TsAveragedData/hda_all_ra2_mass_<CASE>.h5' '/ra2_mass' '/all_ra2_mass_ts'  '_hZT'   ''        '' }
-        { 'TsAveragedData/hda_all_ra2_mass_<CASE>.h5' '/ra2_mass' '/all_i_ra2_mass'   '_hZt'   'init'    '' }
-        { 'TsAveragedData/hda_all_ra2_mass_<CASE>.h5' '/ra2_mass' '/all_ps_ra2_mass'  '_hZt'   'pre_sal' '' }
-        { 'TsAveragedData/hda_all_ra2_mass_<CASE>.h5' '/ra2_mass' '/all_s_ra2_mass'   '_hZt'   'sal'     '' }
-
-        { 'TsAveragedData/hda_all_ra_mass_<CASE>.h5' '/ra_mass' '/all_ra_mass_ts'  '_hZT'   ''        '' }
-        { 'TsAveragedData/hda_all_ra_mass_<CASE>.h5' '/ra_mass' '/all_i_ra_mass'   '_hZt'   'init'    '' }
-        { 'TsAveragedData/hda_all_ra_mass_<CASE>.h5' '/ra_mass' '/all_ps_ra_mass'  '_hZt'   'pre_sal' '' }
-        { 'TsAveragedData/hda_all_ra_mass_<CASE>.h5' '/ra_mass' '/all_s_ra_mass'   '_hZt'   'sal'     '' }
-      }
-      'DIAGS/hda_meas_ts_ra_<CASE>.h5'
-    }
-
-    % All aerosols
-    {
-      'Aero Tsavg'
-      {
-        % region in SAL that is in the storm path
-        { 'TsAveragedData/hda_spath_aero_mass_<CASE>.h5' '/aero_mass' '/spath_aero_mass_ts'  '_hZT'   ''        '' }
-        { 'TsAveragedData/hda_spath_aero_mass_<CASE>.h5' '/aero_mass' '/spath_i_aero_mass'   '_hZt'   'init'    '' }
-        { 'TsAveragedData/hda_spath_aero_mass_<CASE>.h5' '/aero_mass' '/spath_ps_aero_mass'  '_hZt'   'pre_sal' '' }
-        { 'TsAveragedData/hda_spath_aero_mass_<CASE>.h5' '/aero_mass' '/spath_s_aero_mass'   '_hZt'   'sal'     '' }
-
-        { 'TsAveragedData/hda_spath_aero_hydro_<CASE>.h5' '/aero_hydro' '/spath_aero_hydro_ts'  '_hZT'   ''        '' }
-        { 'TsAveragedData/hda_spath_aero_hydro_<CASE>.h5' '/aero_hydro' '/spath_i_aero_hydro'   '_hZt'   'init'    '' }
-        { 'TsAveragedData/hda_spath_aero_hydro_<CASE>.h5' '/aero_hydro' '/spath_ps_aero_hydro'  '_hZt'   'pre_sal' '' }
-        { 'TsAveragedData/hda_spath_aero_hydro_<CASE>.h5' '/aero_hydro' '/spath_s_aero_hydro'   '_hZt'   'sal'     '' }
-
-        { 'TsAveragedData/hda_spath_aero_cloud_<CASE>.h5' '/aero_cloud' '/spath_aero_cloud_ts'  '_hZT'   ''        '' }
-        { 'TsAveragedData/hda_spath_aero_cloud_<CASE>.h5' '/aero_cloud' '/spath_i_aero_cloud'   '_hZt'   'init'    '' }
-        { 'TsAveragedData/hda_spath_aero_cloud_<CASE>.h5' '/aero_cloud' '/spath_ps_aero_cloud'  '_hZt'   'pre_sal' '' }
-        { 'TsAveragedData/hda_spath_aero_cloud_<CASE>.h5' '/aero_cloud' '/spath_s_aero_cloud'   '_hZt'   'sal'     '' }
-
-        { 'TsAveragedData/hda_spath_aero_rain_<CASE>.h5' '/aero_rain' '/spath_aero_rain_ts'  '_hZT'   ''        '' }
-        { 'TsAveragedData/hda_spath_aero_rain_<CASE>.h5' '/aero_rain' '/spath_i_aero_rain'   '_hZt'   'init'    '' }
-        { 'TsAveragedData/hda_spath_aero_rain_<CASE>.h5' '/aero_rain' '/spath_ps_aero_rain'  '_hZt'   'pre_sal' '' }
-        { 'TsAveragedData/hda_spath_aero_rain_<CASE>.h5' '/aero_rain' '/spath_s_aero_rain'   '_hZt'   'sal'     '' }
-
-        { 'TsAveragedData/hda_spath_aero_pris_<CASE>.h5' '/aero_pris' '/spath_aero_pris_ts'  '_hZT'   ''        '' }
-        { 'TsAveragedData/hda_spath_aero_pris_<CASE>.h5' '/aero_pris' '/spath_i_aero_pris'   '_hZt'   'init'    '' }
-        { 'TsAveragedData/hda_spath_aero_pris_<CASE>.h5' '/aero_pris' '/spath_ps_aero_pris'  '_hZt'   'pre_sal' '' }
-        { 'TsAveragedData/hda_spath_aero_pris_<CASE>.h5' '/aero_pris' '/spath_s_aero_pris'   '_hZt'   'sal'     '' }
-
-        { 'TsAveragedData/hda_spath_aero_snow_<CASE>.h5' '/aero_snow' '/spath_aero_snow_ts'  '_hZT'   ''        '' }
-        { 'TsAveragedData/hda_spath_aero_snow_<CASE>.h5' '/aero_snow' '/spath_i_aero_snow'   '_hZt'   'init'    '' }
-        { 'TsAveragedData/hda_spath_aero_snow_<CASE>.h5' '/aero_snow' '/spath_ps_aero_snow'  '_hZt'   'pre_sal' '' }
-        { 'TsAveragedData/hda_spath_aero_snow_<CASE>.h5' '/aero_snow' '/spath_s_aero_snow'   '_hZt'   'sal'     '' }
-
-        { 'TsAveragedData/hda_spath_aero_aggr_<CASE>.h5' '/aero_aggr' '/spath_aero_aggr_ts'  '_hZT'   ''        '' }
-        { 'TsAveragedData/hda_spath_aero_aggr_<CASE>.h5' '/aero_aggr' '/spath_i_aero_aggr'   '_hZt'   'init'    '' }
-        { 'TsAveragedData/hda_spath_aero_aggr_<CASE>.h5' '/aero_aggr' '/spath_ps_aero_aggr'  '_hZt'   'pre_sal' '' }
-        { 'TsAveragedData/hda_spath_aero_aggr_<CASE>.h5' '/aero_aggr' '/spath_s_aero_aggr'   '_hZt'   'sal'     '' }
-
-        { 'TsAveragedData/hda_spath_aero_graup_<CASE>.h5' '/aero_graup' '/spath_aero_graup_ts'  '_hZT'   ''        '' }
-        { 'TsAveragedData/hda_spath_aero_graup_<CASE>.h5' '/aero_graup' '/spath_i_aero_graup'   '_hZt'   'init'    '' }
-        { 'TsAveragedData/hda_spath_aero_graup_<CASE>.h5' '/aero_graup' '/spath_ps_aero_graup'  '_hZt'   'pre_sal' '' }
-        { 'TsAveragedData/hda_spath_aero_graup_<CASE>.h5' '/aero_graup' '/spath_s_aero_graup'   '_hZt'   'sal'     '' }
-
-        { 'TsAveragedData/hda_spath_aero_hail_<CASE>.h5' '/aero_hail' '/spath_aero_hail_ts'  '_hZT'   ''        '' }
-        { 'TsAveragedData/hda_spath_aero_hail_<CASE>.h5' '/aero_hail' '/spath_i_aero_hail'   '_hZt'   'init'    '' }
-        { 'TsAveragedData/hda_spath_aero_hail_<CASE>.h5' '/aero_hail' '/spath_ps_aero_hail'  '_hZt'   'pre_sal' '' }
-        { 'TsAveragedData/hda_spath_aero_hail_<CASE>.h5' '/aero_hail' '/spath_s_aero_hail'   '_hZt'   'sal'     '' }
-
-        { 'TsAveragedData/hda_spath_aero_mass_<CASE>.h5' '/aero_mass' '/spath_sum_aero_mass'  '_HZT'   ''        '' }
-
-        % SAL sample region (large)
-        { 'TsAveragedData/hda_sal_aero_mass_<CASE>.h5'   '/aero_mass'   '/sal_sum_aero_mass'   '_HZT'   ''        '' }
-
-        % storm region
-        { 'TsAveragedData/hda_all_aero_mass_<CASE>.h5' '/aero_mass' '/all_aero_mass_ts'  '_hZT'   ''        '' }
-        { 'TsAveragedData/hda_all_aero_mass_<CASE>.h5' '/aero_mass' '/all_i_aero_mass'   '_hZt'   'init'    '' }
-        { 'TsAveragedData/hda_all_aero_mass_<CASE>.h5' '/aero_mass' '/all_ps_aero_mass'  '_hZt'   'pre_sal' '' }
-        { 'TsAveragedData/hda_all_aero_mass_<CASE>.h5' '/aero_mass' '/all_s_aero_mass'   '_hZt'   'sal'     '' }
-
-        { 'TsAveragedData/hda_all_aero_hydro_<CASE>.h5' '/aero_hydro' '/all_aero_hydro_ts'  '_hZT'   ''        '' }
-        { 'TsAveragedData/hda_all_aero_hydro_<CASE>.h5' '/aero_hydro' '/all_i_aero_hydro'   '_hZt'   'init'    '' }
-        { 'TsAveragedData/hda_all_aero_hydro_<CASE>.h5' '/aero_hydro' '/all_ps_aero_hydro'  '_hZt'   'pre_sal' '' }
-        { 'TsAveragedData/hda_all_aero_hydro_<CASE>.h5' '/aero_hydro' '/all_s_aero_hydro'   '_hZt'   'sal'     '' }
-
-        { 'TsAveragedData/hda_all_aero_cloud_<CASE>.h5' '/aero_cloud' '/all_aero_cloud_ts'  '_hZT'   ''        '' }
-        { 'TsAveragedData/hda_all_aero_cloud_<CASE>.h5' '/aero_cloud' '/all_i_aero_cloud'   '_hZt'   'init'    '' }
-        { 'TsAveragedData/hda_all_aero_cloud_<CASE>.h5' '/aero_cloud' '/all_ps_aero_cloud'  '_hZt'   'pre_sal' '' }
-        { 'TsAveragedData/hda_all_aero_cloud_<CASE>.h5' '/aero_cloud' '/all_s_aero_cloud'   '_hZt'   'sal'     '' }
-
-        { 'TsAveragedData/hda_all_aero_rain_<CASE>.h5' '/aero_rain' '/all_aero_rain_ts'  '_hZT'   ''        '' }
-        { 'TsAveragedData/hda_all_aero_rain_<CASE>.h5' '/aero_rain' '/all_i_aero_rain'   '_hZt'   'init'    '' }
-        { 'TsAveragedData/hda_all_aero_rain_<CASE>.h5' '/aero_rain' '/all_ps_aero_rain'  '_hZt'   'pre_sal' '' }
-        { 'TsAveragedData/hda_all_aero_rain_<CASE>.h5' '/aero_rain' '/all_s_aero_rain'   '_hZt'   'sal'     '' }
-
-        { 'TsAveragedData/hda_all_aero_pris_<CASE>.h5' '/aero_pris' '/all_aero_pris_ts'  '_hZT'   ''        '' }
-        { 'TsAveragedData/hda_all_aero_pris_<CASE>.h5' '/aero_pris' '/all_i_aero_pris'   '_hZt'   'init'    '' }
-        { 'TsAveragedData/hda_all_aero_pris_<CASE>.h5' '/aero_pris' '/all_ps_aero_pris'  '_hZt'   'pre_sal' '' }
-        { 'TsAveragedData/hda_all_aero_pris_<CASE>.h5' '/aero_pris' '/all_s_aero_pris'   '_hZt'   'sal'     '' }
-
-        { 'TsAveragedData/hda_all_aero_snow_<CASE>.h5' '/aero_snow' '/all_aero_snow_ts'  '_hZT'   ''        '' }
-        { 'TsAveragedData/hda_all_aero_snow_<CASE>.h5' '/aero_snow' '/all_i_aero_snow'   '_hZt'   'init'    '' }
-        { 'TsAveragedData/hda_all_aero_snow_<CASE>.h5' '/aero_snow' '/all_ps_aero_snow'  '_hZt'   'pre_sal' '' }
-        { 'TsAveragedData/hda_all_aero_snow_<CASE>.h5' '/aero_snow' '/all_s_aero_snow'   '_hZt'   'sal'     '' }
-
-        { 'TsAveragedData/hda_all_aero_aggr_<CASE>.h5' '/aero_aggr' '/all_aero_aggr_ts'  '_hZT'   ''        '' }
-        { 'TsAveragedData/hda_all_aero_aggr_<CASE>.h5' '/aero_aggr' '/all_i_aero_aggr'   '_hZt'   'init'    '' }
-        { 'TsAveragedData/hda_all_aero_aggr_<CASE>.h5' '/aero_aggr' '/all_ps_aero_aggr'  '_hZt'   'pre_sal' '' }
-        { 'TsAveragedData/hda_all_aero_aggr_<CASE>.h5' '/aero_aggr' '/all_s_aero_aggr'   '_hZt'   'sal'     '' }
-
-        { 'TsAveragedData/hda_all_aero_graup_<CASE>.h5' '/aero_graup' '/all_aero_graup_ts'  '_hZT'   ''        '' }
-        { 'TsAveragedData/hda_all_aero_graup_<CASE>.h5' '/aero_graup' '/all_i_aero_graup'   '_hZt'   'init'    '' }
-        { 'TsAveragedData/hda_all_aero_graup_<CASE>.h5' '/aero_graup' '/all_ps_aero_graup'  '_hZt'   'pre_sal' '' }
-        { 'TsAveragedData/hda_all_aero_graup_<CASE>.h5' '/aero_graup' '/all_s_aero_graup'   '_hZt'   'sal'     '' }
-
-        { 'TsAveragedData/hda_all_aero_hail_<CASE>.h5' '/aero_hail' '/all_aero_hail_ts'  '_hZT'   ''        '' }
-        { 'TsAveragedData/hda_all_aero_hail_<CASE>.h5' '/aero_hail' '/all_i_aero_hail'   '_hZt'   'init'    '' }
-        { 'TsAveragedData/hda_all_aero_hail_<CASE>.h5' '/aero_hail' '/all_ps_aero_hail'  '_hZt'   'pre_sal' '' }
-        { 'TsAveragedData/hda_all_aero_hail_<CASE>.h5' '/aero_hail' '/all_s_aero_hail'   '_hZt'   'sal'     '' }
-      }
-      'DIAGS/hda_meas_ts_aero_<CASE>.h5'
-    }
+%    % CCN
+%    {
+%      'CCN Tsavg'
+%      {
+%        % region in SAL that is in the storm path
+%        { 'TsAveragedData/hda_spath_ccn_mass_<CASE>.h5' '/ccn_mass' '/spath_ccn_mass_ts'  '_hZT'   ''        '' }
+%        { 'TsAveragedData/hda_spath_ccn_mass_<CASE>.h5' '/ccn_mass' '/spath_i_ccn_mass'   '_hZt'   'init'    '' }
+%        { 'TsAveragedData/hda_spath_ccn_mass_<CASE>.h5' '/ccn_mass' '/spath_ps_ccn_mass'  '_hZt'   'pre_sal' '' }
+%        { 'TsAveragedData/hda_spath_ccn_mass_<CASE>.h5' '/ccn_mass' '/spath_s_ccn_mass'   '_hZt'   'sal'     '' }
+%
+%        { 'TsAveragedData/hda_spath_ccn_mass_<CASE>.h5' '/ccn_mass' '/spath_sum_ccn_mass'  '_HZT'   ''        '' }
+%
+%        % SAL sample region (large)
+%        { 'TsAveragedData/hda_sal_ccn_mass_<CASE>.h5'    '/ccn_mass'    '/sal_sum_ccn_mass'    '_HZT'   ''        '' }
+%
+%        % storm region
+%        { 'TsAveragedData/hda_all_ccn_mass_<CASE>.h5' '/ccn_mass' '/all_ccn_mass_ts'  '_hZT'   ''        '' }
+%        { 'TsAveragedData/hda_all_ccn_mass_<CASE>.h5' '/ccn_mass' '/all_i_ccn_mass'   '_hZt'   'init'    '' }
+%        { 'TsAveragedData/hda_all_ccn_mass_<CASE>.h5' '/ccn_mass' '/all_ps_ccn_mass'  '_hZt'   'pre_sal' '' }
+%        { 'TsAveragedData/hda_all_ccn_mass_<CASE>.h5' '/ccn_mass' '/all_s_ccn_mass'   '_hZt'   'sal'     '' }
+%      }
+%      'DIAGS/hda_meas_ts_ccn_<CASE>.h5'
+%    }
+%
+%    % Regen
+%    {
+%      'Regen Tsavg'
+%      {
+%        % region in SAL that is in the storm path
+%        { 'TsAveragedData/hda_spath_ra1_mass_<CASE>.h5' '/ra1_mass' '/spath_ra1_mass_ts'  '_hZT'   ''        '' }
+%        { 'TsAveragedData/hda_spath_ra1_mass_<CASE>.h5' '/ra1_mass' '/spath_i_ra1_mass'   '_hZt'   'init'    '' }
+%        { 'TsAveragedData/hda_spath_ra1_mass_<CASE>.h5' '/ra1_mass' '/spath_ps_ra1_mass'  '_hZt'   'pre_sal' '' }
+%        { 'TsAveragedData/hda_spath_ra1_mass_<CASE>.h5' '/ra1_mass' '/spath_s_ra1_mass'   '_hZt'   'sal'     '' }
+%
+%        { 'TsAveragedData/hda_spath_ra2_mass_<CASE>.h5' '/ra2_mass' '/spath_ra2_mass_ts'  '_hZT'   ''        '' }
+%        { 'TsAveragedData/hda_spath_ra2_mass_<CASE>.h5' '/ra2_mass' '/spath_i_ra2_mass'   '_hZt'   'init'    '' }
+%        { 'TsAveragedData/hda_spath_ra2_mass_<CASE>.h5' '/ra2_mass' '/spath_ps_ra2_mass'  '_hZt'   'pre_sal' '' }
+%        { 'TsAveragedData/hda_spath_ra2_mass_<CASE>.h5' '/ra2_mass' '/spath_s_ra2_mass'   '_hZt'   'sal'     '' }
+%
+%        { 'TsAveragedData/hda_spath_ra_mass_<CASE>.h5' '/ra_mass' '/spath_ra_mass_ts'  '_hZT'   ''        '' }
+%        { 'TsAveragedData/hda_spath_ra_mass_<CASE>.h5' '/ra_mass' '/spath_i_ra_mass'   '_hZt'   'init'    '' }
+%        { 'TsAveragedData/hda_spath_ra_mass_<CASE>.h5' '/ra_mass' '/spath_ps_ra_mass'  '_hZt'   'pre_sal' '' }
+%        { 'TsAveragedData/hda_spath_ra_mass_<CASE>.h5' '/ra_mass' '/spath_s_ra_mass'   '_hZt'   'sal'     '' }
+%
+%        { 'TsAveragedData/hda_spath_ra_mass_<CASE>.h5' '/ra_mass' '/spath_sum_ra_mass'  '_HZT'   ''        '' }
+%
+%        % SAL sample region (large)
+%        { 'TsAveragedData/hda_sal_ra_mass_<CASE>.h5'     '/ra_mass'     '/sal_sum_ra_mass'     '_HZT'   ''        '' }
+%
+%        % storm region
+%        { 'TsAveragedData/hda_all_ra1_mass_<CASE>.h5' '/ra1_mass' '/all_ra1_mass_ts'  '_hZT'   ''        '' }
+%        { 'TsAveragedData/hda_all_ra1_mass_<CASE>.h5' '/ra1_mass' '/all_i_ra1_mass'   '_hZt'   'init'    '' }
+%        { 'TsAveragedData/hda_all_ra1_mass_<CASE>.h5' '/ra1_mass' '/all_ps_ra1_mass'  '_hZt'   'pre_sal' '' }
+%        { 'TsAveragedData/hda_all_ra1_mass_<CASE>.h5' '/ra1_mass' '/all_s_ra1_mass'   '_hZt'   'sal'     '' }
+%
+%        { 'TsAveragedData/hda_all_ra2_mass_<CASE>.h5' '/ra2_mass' '/all_ra2_mass_ts'  '_hZT'   ''        '' }
+%        { 'TsAveragedData/hda_all_ra2_mass_<CASE>.h5' '/ra2_mass' '/all_i_ra2_mass'   '_hZt'   'init'    '' }
+%        { 'TsAveragedData/hda_all_ra2_mass_<CASE>.h5' '/ra2_mass' '/all_ps_ra2_mass'  '_hZt'   'pre_sal' '' }
+%        { 'TsAveragedData/hda_all_ra2_mass_<CASE>.h5' '/ra2_mass' '/all_s_ra2_mass'   '_hZt'   'sal'     '' }
+%
+%        { 'TsAveragedData/hda_all_ra_mass_<CASE>.h5' '/ra_mass' '/all_ra_mass_ts'  '_hZT'   ''        '' }
+%        { 'TsAveragedData/hda_all_ra_mass_<CASE>.h5' '/ra_mass' '/all_i_ra_mass'   '_hZt'   'init'    '' }
+%        { 'TsAveragedData/hda_all_ra_mass_<CASE>.h5' '/ra_mass' '/all_ps_ra_mass'  '_hZt'   'pre_sal' '' }
+%        { 'TsAveragedData/hda_all_ra_mass_<CASE>.h5' '/ra_mass' '/all_s_ra_mass'   '_hZt'   'sal'     '' }
+%      }
+%      'DIAGS/hda_meas_ts_ra_<CASE>.h5'
+%    }
+%
+%    % All aerosols
+%    {
+%      'Aero Tsavg'
+%      {
+%        % region in SAL that is in the storm path
+%        { 'TsAveragedData/hda_spath_aero_mass_<CASE>.h5' '/aero_mass' '/spath_aero_mass_ts'  '_hZT'   ''        '' }
+%        { 'TsAveragedData/hda_spath_aero_mass_<CASE>.h5' '/aero_mass' '/spath_i_aero_mass'   '_hZt'   'init'    '' }
+%        { 'TsAveragedData/hda_spath_aero_mass_<CASE>.h5' '/aero_mass' '/spath_ps_aero_mass'  '_hZt'   'pre_sal' '' }
+%        { 'TsAveragedData/hda_spath_aero_mass_<CASE>.h5' '/aero_mass' '/spath_s_aero_mass'   '_hZt'   'sal'     '' }
+%
+%        { 'TsAveragedData/hda_spath_aero_hydro_<CASE>.h5' '/aero_hydro' '/spath_aero_hydro_ts'  '_hZT'   ''        '' }
+%        { 'TsAveragedData/hda_spath_aero_hydro_<CASE>.h5' '/aero_hydro' '/spath_i_aero_hydro'   '_hZt'   'init'    '' }
+%        { 'TsAveragedData/hda_spath_aero_hydro_<CASE>.h5' '/aero_hydro' '/spath_ps_aero_hydro'  '_hZt'   'pre_sal' '' }
+%        { 'TsAveragedData/hda_spath_aero_hydro_<CASE>.h5' '/aero_hydro' '/spath_s_aero_hydro'   '_hZt'   'sal'     '' }
+%
+%        { 'TsAveragedData/hda_spath_aero_cloud_<CASE>.h5' '/aero_cloud' '/spath_aero_cloud_ts'  '_hZT'   ''        '' }
+%        { 'TsAveragedData/hda_spath_aero_cloud_<CASE>.h5' '/aero_cloud' '/spath_i_aero_cloud'   '_hZt'   'init'    '' }
+%        { 'TsAveragedData/hda_spath_aero_cloud_<CASE>.h5' '/aero_cloud' '/spath_ps_aero_cloud'  '_hZt'   'pre_sal' '' }
+%        { 'TsAveragedData/hda_spath_aero_cloud_<CASE>.h5' '/aero_cloud' '/spath_s_aero_cloud'   '_hZt'   'sal'     '' }
+%
+%        { 'TsAveragedData/hda_spath_aero_rain_<CASE>.h5' '/aero_rain' '/spath_aero_rain_ts'  '_hZT'   ''        '' }
+%        { 'TsAveragedData/hda_spath_aero_rain_<CASE>.h5' '/aero_rain' '/spath_i_aero_rain'   '_hZt'   'init'    '' }
+%        { 'TsAveragedData/hda_spath_aero_rain_<CASE>.h5' '/aero_rain' '/spath_ps_aero_rain'  '_hZt'   'pre_sal' '' }
+%        { 'TsAveragedData/hda_spath_aero_rain_<CASE>.h5' '/aero_rain' '/spath_s_aero_rain'   '_hZt'   'sal'     '' }
+%
+%        { 'TsAveragedData/hda_spath_aero_pris_<CASE>.h5' '/aero_pris' '/spath_aero_pris_ts'  '_hZT'   ''        '' }
+%        { 'TsAveragedData/hda_spath_aero_pris_<CASE>.h5' '/aero_pris' '/spath_i_aero_pris'   '_hZt'   'init'    '' }
+%        { 'TsAveragedData/hda_spath_aero_pris_<CASE>.h5' '/aero_pris' '/spath_ps_aero_pris'  '_hZt'   'pre_sal' '' }
+%        { 'TsAveragedData/hda_spath_aero_pris_<CASE>.h5' '/aero_pris' '/spath_s_aero_pris'   '_hZt'   'sal'     '' }
+%
+%        { 'TsAveragedData/hda_spath_aero_snow_<CASE>.h5' '/aero_snow' '/spath_aero_snow_ts'  '_hZT'   ''        '' }
+%        { 'TsAveragedData/hda_spath_aero_snow_<CASE>.h5' '/aero_snow' '/spath_i_aero_snow'   '_hZt'   'init'    '' }
+%        { 'TsAveragedData/hda_spath_aero_snow_<CASE>.h5' '/aero_snow' '/spath_ps_aero_snow'  '_hZt'   'pre_sal' '' }
+%        { 'TsAveragedData/hda_spath_aero_snow_<CASE>.h5' '/aero_snow' '/spath_s_aero_snow'   '_hZt'   'sal'     '' }
+%
+%        { 'TsAveragedData/hda_spath_aero_aggr_<CASE>.h5' '/aero_aggr' '/spath_aero_aggr_ts'  '_hZT'   ''        '' }
+%        { 'TsAveragedData/hda_spath_aero_aggr_<CASE>.h5' '/aero_aggr' '/spath_i_aero_aggr'   '_hZt'   'init'    '' }
+%        { 'TsAveragedData/hda_spath_aero_aggr_<CASE>.h5' '/aero_aggr' '/spath_ps_aero_aggr'  '_hZt'   'pre_sal' '' }
+%        { 'TsAveragedData/hda_spath_aero_aggr_<CASE>.h5' '/aero_aggr' '/spath_s_aero_aggr'   '_hZt'   'sal'     '' }
+%
+%        { 'TsAveragedData/hda_spath_aero_graup_<CASE>.h5' '/aero_graup' '/spath_aero_graup_ts'  '_hZT'   ''        '' }
+%        { 'TsAveragedData/hda_spath_aero_graup_<CASE>.h5' '/aero_graup' '/spath_i_aero_graup'   '_hZt'   'init'    '' }
+%        { 'TsAveragedData/hda_spath_aero_graup_<CASE>.h5' '/aero_graup' '/spath_ps_aero_graup'  '_hZt'   'pre_sal' '' }
+%        { 'TsAveragedData/hda_spath_aero_graup_<CASE>.h5' '/aero_graup' '/spath_s_aero_graup'   '_hZt'   'sal'     '' }
+%
+%        { 'TsAveragedData/hda_spath_aero_hail_<CASE>.h5' '/aero_hail' '/spath_aero_hail_ts'  '_hZT'   ''        '' }
+%        { 'TsAveragedData/hda_spath_aero_hail_<CASE>.h5' '/aero_hail' '/spath_i_aero_hail'   '_hZt'   'init'    '' }
+%        { 'TsAveragedData/hda_spath_aero_hail_<CASE>.h5' '/aero_hail' '/spath_ps_aero_hail'  '_hZt'   'pre_sal' '' }
+%        { 'TsAveragedData/hda_spath_aero_hail_<CASE>.h5' '/aero_hail' '/spath_s_aero_hail'   '_hZt'   'sal'     '' }
+%
+%        { 'TsAveragedData/hda_spath_aero_mass_<CASE>.h5' '/aero_mass' '/spath_sum_aero_mass'  '_HZT'   ''        '' }
+%
+%        % SAL sample region (large)
+%        { 'TsAveragedData/hda_sal_aero_mass_<CASE>.h5'   '/aero_mass'   '/sal_sum_aero_mass'   '_HZT'   ''        '' }
+%
+%        % storm region
+%        { 'TsAveragedData/hda_all_aero_mass_<CASE>.h5' '/aero_mass' '/all_aero_mass_ts'  '_hZT'   ''        '' }
+%        { 'TsAveragedData/hda_all_aero_mass_<CASE>.h5' '/aero_mass' '/all_i_aero_mass'   '_hZt'   'init'    '' }
+%        { 'TsAveragedData/hda_all_aero_mass_<CASE>.h5' '/aero_mass' '/all_ps_aero_mass'  '_hZt'   'pre_sal' '' }
+%        { 'TsAveragedData/hda_all_aero_mass_<CASE>.h5' '/aero_mass' '/all_s_aero_mass'   '_hZt'   'sal'     '' }
+%
+%        { 'TsAveragedData/hda_all_aero_hydro_<CASE>.h5' '/aero_hydro' '/all_aero_hydro_ts'  '_hZT'   ''        '' }
+%        { 'TsAveragedData/hda_all_aero_hydro_<CASE>.h5' '/aero_hydro' '/all_i_aero_hydro'   '_hZt'   'init'    '' }
+%        { 'TsAveragedData/hda_all_aero_hydro_<CASE>.h5' '/aero_hydro' '/all_ps_aero_hydro'  '_hZt'   'pre_sal' '' }
+%        { 'TsAveragedData/hda_all_aero_hydro_<CASE>.h5' '/aero_hydro' '/all_s_aero_hydro'   '_hZt'   'sal'     '' }
+%
+%        { 'TsAveragedData/hda_all_aero_cloud_<CASE>.h5' '/aero_cloud' '/all_aero_cloud_ts'  '_hZT'   ''        '' }
+%        { 'TsAveragedData/hda_all_aero_cloud_<CASE>.h5' '/aero_cloud' '/all_i_aero_cloud'   '_hZt'   'init'    '' }
+%        { 'TsAveragedData/hda_all_aero_cloud_<CASE>.h5' '/aero_cloud' '/all_ps_aero_cloud'  '_hZt'   'pre_sal' '' }
+%        { 'TsAveragedData/hda_all_aero_cloud_<CASE>.h5' '/aero_cloud' '/all_s_aero_cloud'   '_hZt'   'sal'     '' }
+%
+%        { 'TsAveragedData/hda_all_aero_rain_<CASE>.h5' '/aero_rain' '/all_aero_rain_ts'  '_hZT'   ''        '' }
+%        { 'TsAveragedData/hda_all_aero_rain_<CASE>.h5' '/aero_rain' '/all_i_aero_rain'   '_hZt'   'init'    '' }
+%        { 'TsAveragedData/hda_all_aero_rain_<CASE>.h5' '/aero_rain' '/all_ps_aero_rain'  '_hZt'   'pre_sal' '' }
+%        { 'TsAveragedData/hda_all_aero_rain_<CASE>.h5' '/aero_rain' '/all_s_aero_rain'   '_hZt'   'sal'     '' }
+%
+%        { 'TsAveragedData/hda_all_aero_pris_<CASE>.h5' '/aero_pris' '/all_aero_pris_ts'  '_hZT'   ''        '' }
+%        { 'TsAveragedData/hda_all_aero_pris_<CASE>.h5' '/aero_pris' '/all_i_aero_pris'   '_hZt'   'init'    '' }
+%        { 'TsAveragedData/hda_all_aero_pris_<CASE>.h5' '/aero_pris' '/all_ps_aero_pris'  '_hZt'   'pre_sal' '' }
+%        { 'TsAveragedData/hda_all_aero_pris_<CASE>.h5' '/aero_pris' '/all_s_aero_pris'   '_hZt'   'sal'     '' }
+%
+%        { 'TsAveragedData/hda_all_aero_snow_<CASE>.h5' '/aero_snow' '/all_aero_snow_ts'  '_hZT'   ''        '' }
+%        { 'TsAveragedData/hda_all_aero_snow_<CASE>.h5' '/aero_snow' '/all_i_aero_snow'   '_hZt'   'init'    '' }
+%        { 'TsAveragedData/hda_all_aero_snow_<CASE>.h5' '/aero_snow' '/all_ps_aero_snow'  '_hZt'   'pre_sal' '' }
+%        { 'TsAveragedData/hda_all_aero_snow_<CASE>.h5' '/aero_snow' '/all_s_aero_snow'   '_hZt'   'sal'     '' }
+%
+%        { 'TsAveragedData/hda_all_aero_aggr_<CASE>.h5' '/aero_aggr' '/all_aero_aggr_ts'  '_hZT'   ''        '' }
+%        { 'TsAveragedData/hda_all_aero_aggr_<CASE>.h5' '/aero_aggr' '/all_i_aero_aggr'   '_hZt'   'init'    '' }
+%        { 'TsAveragedData/hda_all_aero_aggr_<CASE>.h5' '/aero_aggr' '/all_ps_aero_aggr'  '_hZt'   'pre_sal' '' }
+%        { 'TsAveragedData/hda_all_aero_aggr_<CASE>.h5' '/aero_aggr' '/all_s_aero_aggr'   '_hZt'   'sal'     '' }
+%
+%        { 'TsAveragedData/hda_all_aero_graup_<CASE>.h5' '/aero_graup' '/all_aero_graup_ts'  '_hZT'   ''        '' }
+%        { 'TsAveragedData/hda_all_aero_graup_<CASE>.h5' '/aero_graup' '/all_i_aero_graup'   '_hZt'   'init'    '' }
+%        { 'TsAveragedData/hda_all_aero_graup_<CASE>.h5' '/aero_graup' '/all_ps_aero_graup'  '_hZt'   'pre_sal' '' }
+%        { 'TsAveragedData/hda_all_aero_graup_<CASE>.h5' '/aero_graup' '/all_s_aero_graup'   '_hZt'   'sal'     '' }
+%
+%        { 'TsAveragedData/hda_all_aero_hail_<CASE>.h5' '/aero_hail' '/all_aero_hail_ts'  '_hZT'   ''        '' }
+%        { 'TsAveragedData/hda_all_aero_hail_<CASE>.h5' '/aero_hail' '/all_i_aero_hail'   '_hZt'   'init'    '' }
+%        { 'TsAveragedData/hda_all_aero_hail_<CASE>.h5' '/aero_hail' '/all_ps_aero_hail'  '_hZt'   'pre_sal' '' }
+%        { 'TsAveragedData/hda_all_aero_hail_<CASE>.h5' '/aero_hail' '/all_s_aero_hail'   '_hZt'   'sal'     '' }
+%      }
+%      'DIAGS/hda_meas_ts_aero_<CASE>.h5'
+%    }
+%
+%    % Condensate
+%    {
+%      'Total Condendsate Tsavg'
+%      {
+%        % SAL sample region (large)
+%        { 'TsAveragedData/hda_sal_tcond_<CASE>.h5'    '/tcond'    '/sal_sum_tcond_mass'    '_HZT'   ''        '' }
+%      }
+%      'DIAGS/hda_meas_ts_cond_<CASE>.h5'
+%    }
+%
+%    % accum precip
+%    {
+%      'Accumulated Precip Tsavg'
+%      {
+%        % SAL sample region (large)
+%        { 'TsAveragedData/hda_sal_accpcp_<CASE>.h5'    '/accpcp'    '/sal_sum_accpcp_mass'    '_H_T'   ''        '' }
+%      }
+%      'DIAGS/hda_meas_ts_precip_<CASE>.h5'
+%    }
 
     };
 
