@@ -71,7 +71,7 @@ function [ ] = PlotDpFigGenRes()
   % bumped upward just a little bit.
   Paxes = subplot(3,2,1);
   Ploc = get(Paxes, 'Position');
-  Ploc(2) = Ploc(2) + 0.02;
+  Ploc(2) = Ploc(2) + 0.03;
   set(Paxes, 'Position', Ploc);
   PlotDpFigTrack(Paxes, SimTrackLons(T1:T2), SimTrackLats(T1:T2), 'a', '', Fsize);
   
@@ -80,13 +80,13 @@ function [ ] = PlotDpFigGenRes()
   % bumped upward just a little bit.
   Paxes = subplot(3,2,2);
   Ploc = get(Paxes, 'Position');
-  Ploc(2) = Ploc(2) + 0.02;
+  Ploc(2) = Ploc(2) + 0.03;
   set(Paxes, 'Position', Ploc);
   PlotDpFigInitDust(Paxes, DUST_CONC, Znamma, 'b', '', Fsize);
 
   % aero mass hovmoller
   Paxes = subplot(3,2,[3 4]);
-  PlotDpFigDustHov(Paxes, T, Z, HOV_DUST, 'c', 'SAL', Fsize, 0, 1, 0, 2);
+  PlotDpFigDustHov(Paxes, T, Z, HOV_DUST, 'c', 'SAL: M_d', Fsize, 0, 1, 0, 2);
 
   % Total aero mass time series
   Paxes = subplot(3,2,[5 6]);
@@ -177,6 +177,10 @@ function [] = PlotDpFigTrack(Paxes, SimTrackLons, SimTrackLats, Pmarker, Ptitle,
   % Add SAL analysis region
 %  m_line(SalRegionLons, SalRegionLats, 'linewi', LineW, 'color', 'r');
   linem(SalRegionLats, SalRegionLons, 'LineWidth', LineW, 'Color', 'r');
+  textm(22, -29, 'SAL', 'FontSize', 10, 'Color', 'r');
+
+  % Mark Africa
+  textm(14, -12, 'Africa', 'FontSize', 10, 'Color', 'k', 'Rotation', 90);
 
   legend( [ NhcTrack SimTrack' ], LegText,'Location', 'SouthEast', 'FontSize', LegendFsize);
 

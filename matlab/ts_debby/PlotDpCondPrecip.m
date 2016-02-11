@@ -33,7 +33,7 @@ function [ ] = PlotDpCondPrecip()
 
   % create the Hovmoller of sal_dust_hydro
   Paxes = subplot(2,1,1);
-  PlotDpFigTseries(Paxes, T, TS_SAL_TCOND, 'a', 'SAL', 'M_t_c_o_n_d (10^3 Tg)', Fsize, 0, 1);
+  PlotDpFigTseries(Paxes, T, TS_SAL_TCOND, 'a', 'SAL', 'M_c_o_n_d (10^3 Tg)', Fsize, 0, 1);
   
   Paxes = subplot(2,1,2);
   PlotDpFigTseries(Paxes, T, TS_SAL_ACCPCP, 'b', 'SAL', 'M_p_r_e_c_i_p (10^3 Tg)', Fsize, 1, 1);

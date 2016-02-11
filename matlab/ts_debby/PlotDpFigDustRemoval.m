@@ -47,7 +47,7 @@ function [ ] = PlotDpFigDustRemoval()
 
   % create the Hovmoller of sal_dust_hydro
   Paxes = subplot(4,1,1);
-  PlotDpFigDustHov(Paxes, T, Z, HOV_DUST, 'a', 'SAL', Fsize, 0, 1, 0, 0);
+  PlotDpFigDustHov(Paxes, T, Z, HOV_DUST, 'a', 'SAL: M_d_h_y', Fsize, 0, 1, 0, 0);
   
   Paxes = subplot(4,1,2);
   PlotDpFigTseries(Paxes, T, TS_SAL_MDHY, 'b', 'SAL', 'M_d_h_y (Tg)', Fsize, 0, 1);
@@ -56,7 +56,7 @@ function [ ] = PlotDpFigDustRemoval()
   PlotDpFigTseries(Paxes, T, TS_SAL_PR, 'c', 'SAL', 'PR (mm h^-^1)', Fsize, 0, 1);
 
   Paxes = subplot(4,1,4);
-  PlotDpFigTseries(Paxes, T, TS_SAL_DSFC, 'd', 'SAL', 'M_d (Tg)', Fsize, 1, 1);
+  PlotDpFigTseries(Paxes, T, TS_SAL_DSFC, 'd', 'SAL', 'M_d_s_f_c (Tg)', Fsize, 1, 1);
 
   fprintf('Writing: %s\n', OutFile);
   saveas(Fig, OutFile);
