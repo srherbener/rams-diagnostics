@@ -86,11 +86,11 @@ function [ ] = PlotDpFigGenRes()
 
   % aero mass hovmoller
   Paxes = subplot(3,2,[3 4]);
-  PlotDpFigDustHov(Paxes, T, Z, HOV_DUST, 'c', 'SAL: M_d', Fsize, 0, 1, 0, 2);
+  PlotDpFigDustHov(Paxes, T, Z, HOV_DUST, 'c', 'SAL\_AR: M_d', Fsize, 0, 1, 0, 2);
 
   % Total aero mass time series
   Paxes = subplot(3,2,[5 6]);
-  PlotDpFigTseries(Paxes, T, TS_SAL_MD, 'd', 'SAL', 'M_d (Tg)', Fsize, 1, 1);
+  PlotDpFigTseries(Paxes, T, TS_SAL_MD, 'd', 'SAL\_AR', 'M_d (Tg)', Fsize, 1, 1);
   
   OutFile = sprintf('%s/DpFigGenRes.jpg', Pdir);
   fprintf('Writing: %s\n', OutFile);
@@ -177,7 +177,7 @@ function [] = PlotDpFigTrack(Paxes, SimTrackLons, SimTrackLats, Pmarker, Ptitle,
   % Add SAL analysis region
 %  m_line(SalRegionLons, SalRegionLats, 'linewi', LineW, 'color', 'r');
   linem(SalRegionLats, SalRegionLons, 'LineWidth', LineW, 'Color', 'r');
-  textm(22, -29, 'SAL', 'FontSize', 10, 'Color', 'r');
+  textm(22, -35, 'SAL\_AR', 'FontSize', 10, 'Color', 'r');
 
   % Mark Africa
   textm(14, -12, 'Africa', 'FontSize', 10, 'Color', 'k', 'Rotation', 90);
