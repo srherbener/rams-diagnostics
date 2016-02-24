@@ -3,48 +3,94 @@
 #
 
 ######### FIGURES ###################
-Figure: FigRadMeas 3
-  RceCases
+#Figure: FigRadMeas 3
+#  RceCases
+#  [3_1]
+#  Plots/FigRadMeas_<CASE>.jpg
+#  EqMeasPanel   1
+#  ThfCompPanel  2
+#  QradCompPanel 3
+#End 
+#
+#Figure: FigAvgPw 1
+#  DummyCases
+#  [1_1]
+#  Plots/FigAvgPw.jpg
+#  AvgPwPanel 1
+#End
+#
+#Figure: FigHovPw 1
+#  RceCases
+#  [1_1]
+#  Plots/FigHovPw_<CASE>.jpg
+#  HovPwPanel 1
+#End
+
+#Figure: FigRadMeas_HS 3
+#  RceCases_HS
+#  [3_1]
+#  Plots/FigRadMeas_<CASE>.jpg
+#  EqMeasPanel_HS   1
+#  ThfCompPanel_HS  2
+#  QradCompPanel_HS 3
+#End 
+#
+#Figure: FigAvgPw_HS 1
+#  DummyCases
+#  [1_1]
+#  Plots/FigAvgPw_HS.jpg
+#  AvgPwPanel_HS 1
+#End
+#
+#Figure: FigHovPw_HS 1
+#  RceCases_HS
+#  [1_1]
+#  Plots/FigHovPw_<CASE>.jpg
+#  HovPwPanel_HS 1
+#End
+
+Figure: FigRadMeas_5M24H 3
+  RceCases_5M24H
   [3_1]
   Plots/FigRadMeas_<CASE>.jpg
-  EqMeasPanel   1
-  ThfCompPanel  2
-  QradCompPanel 3
+  EqMeasPanel_5M24H   1
+  ThfCompPanel_5M24H  2
+  QradCompPanel_5M24H 3
 End 
 
-Figure: FigAvgPw 1
-  DummyCases
-  [1_1]
-  Plots/FigAvgPw.jpg
-  AvgPwPanel 1
-End
+#Figure: FigAvgPw_5M24H 1
+#  DummyCases
+#  [1_1]
+#  Plots/FigAvgPw_5M24H.jpg
+#  AvgPwPanel_5M24H 1
+#End
+#
+#Figure: FigHovPw_5M24H 1
+#  RceCases_5M24H
+#  [1_1]
+#  Plots/FigHovPw_<CASE>.jpg
+#  HovPwPanel_5M24H 1
+#End
 
-Figure: FigHovPw 1
-  RceCases
-  [1_1]
-  Plots/FigHovPw_<CASE>.jpg
-  HovPwPanel 1
-End
-
-Figure: FigSampleSoundingLoPwProd 4
-  DummyCases
-  [2_2]
-  Plots/FigSampleSndLoPwProd.jpg
-  S298_LoPwPanel     1
-  S300_LoPwPanel     2
-  S302_LoPwPanel     3
-  S300_SM_LoPwPanel  4
-End
-
-Figure: FigSampleSoundingHiPwProd 4
-  DummyCases
-  [2_2]
-  Plots/FigSampleSndHiPwProd.jpg
-  S298_HiPwPanel     1
-  S300_HiPwPanel     2
-  S302_HiPwPanel     3
-  S300_SM_HiPwPanel  4
-End
+#Figure: FigSampleSoundingLoPwProd 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigSampleSndLoPwProd.jpg
+#  S298_LoPwPanel     1
+#  S300_LoPwPanel     2
+#  S302_LoPwPanel     3
+#  S300_SM_LoPwPanel  4
+#End
+#
+#Figure: FigSampleSoundingHiPwProd 4
+#  DummyCases
+#  [2_2]
+#  Plots/FigSampleSndHiPwProd.jpg
+#  S298_HiPwPanel     1
+#  S300_HiPwPanel     2
+#  S302_HiPwPanel     3
+#  S300_SM_HiPwPanel  4
+#End
 
 
 
@@ -137,6 +183,18 @@ CaseSet: RceCases 6
   RCE_S300_SM_PARM
 End
 
+CaseSet: RceCases_HS 3
+  RCE_S298_HS
+  RCE_S300_HS
+  RCE_S302_HS
+End
+
+CaseSet: RceCases_5M24H 3
+  RCE_S298_5M24H
+  RCE_S300_5M24H
+  RCE_S302_5M24H
+End
+
 CaseSet: RceExpCases 10
   RCE_BASE
   RCE_MATT
@@ -170,9 +228,41 @@ FigPanel: EqMeasPanel
   SouthEast 12
 End
 
+FigPanel: EqMeasPanel_HS
+  EqMeasPset
+  EqMeasAxes_HS 0 1
+  y 5
+  PANEL:a@Eq@Measurement@@@@@@@@@@<CASE>
+  SouthEast 12
+End
+
+FigPanel: EqMeasPanel_5M24H
+  EqMeasPset
+  EqMeasAxes_5M24H 0 1
+  y 5
+  PANEL:a@Eq@Measurement@@@@@@@@@@<CASE>
+  SouthEast 12
+End
+
 FigPanel: ThfCompPanel
   ThfCompPset
   ThfCompAxes 0 1
+  y 5
+  PANEL:b@THF@Components
+  NorthEast 12
+End
+
+FigPanel: ThfCompPanel_HS
+  ThfCompPset
+  ThfCompAxes_HS 0 1
+  y 5
+  PANEL:b@THF@Components
+  NorthEast 12
+End
+
+FigPanel: ThfCompPanel_5M24H
+  ThfCompPset
+  ThfCompAxes_5M24H 0 1
   y 5
   PANEL:b@THF@Components
   NorthEast 12
@@ -186,9 +276,41 @@ FigPanel: QradCompPanel
   NorthEast 12
 End
 
+FigPanel: QradCompPanel_HS
+  QradCompPset
+  QradCompAxes_HS 1 1
+  y 5
+  PANEL:c@Q_r_a_d@Components
+  NorthEast 12
+End
+
+FigPanel: QradCompPanel_5M24H
+  QradCompPset
+  QradCompAxes_5M24H 1 1
+  y 5
+  PANEL:c@Q_r_a_d@Components
+  NorthEast 12
+End
+
 FigPanel: AvgPwPanel
   AvgPwPset
   AvgPwAxes 1 1
+  y 5
+  Average@PW
+  SouthEast 10
+End
+
+FigPanel: AvgPwPanel_HS
+  AvgPwPset_HS
+  AvgPwAxes_HS 1 1
+  y 5
+  Average@PW
+  SouthEast 10
+End
+
+FigPanel: AvgPwPanel_5M24H
+  AvgPwPset_5M24H
+  AvgPwAxes_5M24H 1 1
   y 5
   Average@PW
   SouthEast 10
@@ -205,6 +327,22 @@ End
 FigPanel: HovPwPanel
   HovPwPset
   HovPwAxes 1 1
+  none 5
+  PANEL:a@<CASE>@PW
+  none 10
+End
+
+FigPanel: HovPwPanel_HS
+  HovPwPset
+  HovPwAxes_HS 1 1
+  none 5
+  PANEL:a@<CASE>@PW
+  none 10
+End
+
+FigPanel: HovPwPanel_5M24H
+  HovPwPset
+  HovPwAxes_5M24H 1 1
   none 5
   PANEL:a@<CASE>@PW
   none 10
@@ -472,6 +610,18 @@ PlotSet: AvgPwPset line 6
   AvgPwLine  RCE_S300_SM      S300-SM      2 magenta  - 0
   AvgPwLine  RCE_S300_UB5     S300-UB5     2 cyan     - 0
   AvgPwLine  RCE_S300_SM_PARM S300-SM-PARM 2 orange     - 0
+End
+
+PlotSet: AvgPwPset_HS line 3
+  AvgPwLine  RCE_S298_HS  S298-HS   2 green    - 0
+  AvgPwLine  RCE_S300_HS  S300-HS   2 red      - 0
+  AvgPwLine  RCE_S302_HS  S302-HS   2 blue     - 0
+End
+
+PlotSet: AvgPwPset_5M24H line 3
+  AvgPwLine  RCE_S298_5M24H  S298-5M24H   2 green    - 0
+  AvgPwLine  RCE_S300_5M24H  S300-5M24H   2 red      - 0
+  AvgPwLine  RCE_S302_5M24H  S302-5M24H   2 blue     - 0
 End
 
 PlotSet: AvgPwExpPset line 7
@@ -763,10 +913,42 @@ PlotAxes: EqMeasAxes 2
   Flux W@m^-^2 0 150 linear [_] {_}
 End
 
+PlotAxes: EqMeasAxes_HS 2
+  18 2 [0.025_0.025]
+  # x axis - sim time in days
+  Simulation@Time d 50 60 linear [_] {_}
+  # y axis - flux in W/m^2
+  Flux W@m^-^2 0 150 linear [_] {_}
+End
+
+PlotAxes: EqMeasAxes_5M24H 2
+  18 2 [0.025_0.025]
+  # x axis - sim time in days
+  Simulation@Time d 50 75 linear [_] {_}
+  # y axis - flux in W/m^2
+  Flux W@m^-^2 0 150 linear [_] {_}
+End
+
 PlotAxes: ThfCompAxes 2
   18 2 [0.025_0.025]
   # x axis - sim time in days
   Simulation@Time d 0 150 linear [_] {_}
+  # y axis - flux in W/m^2
+  Flux W@m^-^2 -5 150 linear [_] {_}
+End
+
+PlotAxes: ThfCompAxes_HS 2
+  18 2 [0.025_0.025]
+  # x axis - sim time in days
+  Simulation@Time d 50 60  linear [_] {_}
+  # y axis - flux in W/m^2
+  Flux W@m^-^2 -5 150 linear [_] {_}
+End
+
+PlotAxes: ThfCompAxes_5M24H 2
+  18 2 [0.025_0.025]
+  # x axis - sim time in days
+  Simulation@Time d 50 75 linear [_] {_}
   # y axis - flux in W/m^2
   Flux W@m^-^2 -5 150 linear [_] {_}
 End
@@ -779,10 +961,42 @@ PlotAxes: QradCompAxes 2
   Flux W@m^-^2 0 500 linear [_] {_}
 End
 
+PlotAxes: QradCompAxes_HS 2
+  18 2 [0.025_0.025]
+  # x axis - sim time in days
+  Simulation@Time d 50 60 linear [_] {_}
+  # y axis - flux in W/m^2
+  Flux W@m^-^2 0 500 linear [_] {_}
+End
+
+PlotAxes: QradCompAxes_5M24H 2
+  18 2 [0.025_0.025]
+  # x axis - sim time in days
+  Simulation@Time d 50 75 linear [_] {_}
+  # y axis - flux in W/m^2
+  Flux W@m^-^2 0 500 linear [_] {_}
+End
+
 PlotAxes: AvgPwAxes 2
   18 2 [0.025_0.025]
   # x axis - time
   Sim@Time d 0 100 linear [_] {_}
+  # y axis - precipitable water
+  PW mm 0 80 linear [_] {_}
+End
+
+PlotAxes: AvgPwAxes_HS 2
+  18 2 [0.025_0.025]
+  # x axis - time
+  Sim@Time d 50 55 linear [_] {_}
+  # y axis - precipitable water
+  PW mm 0 80 linear [_] {_}
+End
+
+PlotAxes: AvgPwAxes_5M24H 2
+  18 2 [0.025_0.025]
+  # x axis - time
+  Sim@Time d 52 67 linear [_] {_}
   # y axis - precipitable water
   PW mm 0 80 linear [_] {_}
 End
@@ -793,6 +1007,26 @@ PlotAxes: HovPwAxes 3
   Zonal@Distance km 0 3000 linear [0_1500_3000] {_}
   # y axis - time
   Sim@Time d 0 100 linear [_] {_}
+  # z axis - precipitable water
+  PW mm 0 70 linear [_] {_}
+End
+
+PlotAxes: HovPwAxes_HS 3
+  18 2 [0.025_0.025]
+  # x axis - zonal distance
+  Zonal@Distance km 0 3000 linear [0_1500_3000] {_}
+  # y axis - time
+  Sim@Time d 50 55 linear [_] {_}
+  # z axis - precipitable water
+  PW mm 0 70 linear [_] {_}
+End
+
+PlotAxes: HovPwAxes_5M24H 3
+  18 2 [0.025_0.025]
+  # x axis - zonal distance
+  Zonal@Distance km 0 3000 linear [0_1500_3000] {_}
+  # y axis - time
+  Sim@Time d 52 67 linear [_] {_}
   # z axis - precipitable water
   PW mm 0 70 linear [_] {_}
 End
