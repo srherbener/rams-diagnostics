@@ -3,7 +3,7 @@
 #
 
 DEST = $(HOME)/etc/matlab/nasa_wisc
-DIAG_DIR = /Volumes/tasman1/sherbener/data/RAMS/NasaWisc
+DIAG_DIR = $(HOME)/projects/NasaWisc/Work
 
 SCRIPTS = \
   $(DEST)/GenDomAvgTseries.m \

@@ -3,7 +3,7 @@
 #
 
 DEST = $(HOME)/etc/matlab/ts_debby
-DIAG_DIR = /Volumes/tasman1/sherbener/data/RAMS/TsDebby/SST_OBS
+DIAG_DIR = $(HOME)/projects/NsfCollab/Work/SST_OBS
 
 SCRIPTS = \
   $(DEST)/PlotGrids.m \
