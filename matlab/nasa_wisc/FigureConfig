@@ -3,22 +3,22 @@
 #
 
 ######### FIGURES ###################
-#Figure: FigRadMeas 3
-#  RceCases
-#  [3_1]
-#  Plots/FigRadMeas_<CASE>.jpg
-#  EqMeasPanel   1
-#  ThfCompPanel  2
-#  QradCompPanel 3
-#End 
-#
-#Figure: FigAvgPw 1
-#  DummyCases
-#  [1_1]
-#  Plots/FigAvgPw.jpg
-#  AvgPwPanel 1
-#End
-#
+Figure: FigRadMeas 3
+  RceCases
+  [3_1]
+  Plots/FigRadMeas_<CASE>.jpg
+  EqMeasPanel   1
+  ThfCompPanel  2
+  QradCompPanel 3
+End 
+
+Figure: FigAvgPw 1
+  DummyCases
+  [1_1]
+  Plots/FigAvgPw.jpg
+  AvgPwPanel 1
+End
+
 #Figure: FigHovPw 1
 #  RceCases
 #  [1_1]
@@ -26,22 +26,22 @@
 #  HovPwPanel 1
 #End
 
-#Figure: FigRadMeas_HS 3
-#  RceCases_HS
-#  [3_1]
-#  Plots/FigRadMeas_<CASE>.jpg
-#  EqMeasPanel_HS   1
-#  ThfCompPanel_HS  2
-#  QradCompPanel_HS 3
-#End 
-#
-#Figure: FigAvgPw_HS 1
-#  DummyCases
-#  [1_1]
-#  Plots/FigAvgPw_HS.jpg
-#  AvgPwPanel_HS 1
-#End
-#
+Figure: FigRadMeas_HS 3
+  RceCases_HS
+  [3_1]
+  Plots/FigRadMeas_<CASE>.jpg
+  EqMeasPanel_HS   1
+  ThfCompPanel_HS  2
+  QradCompPanel_HS 3
+End 
+
+Figure: FigAvgPw_HS 1
+  DummyCases
+  [1_1]
+  Plots/FigAvgPw_HS.jpg
+  AvgPwPanel_HS 1
+End
+
 #Figure: FigHovPw_HS 1
 #  RceCases_HS
 #  [1_1]
@@ -58,13 +58,13 @@ Figure: FigRadMeas_5M24H 3
   QradCompPanel_5M24H 3
 End 
 
-#Figure: FigAvgPw_5M24H 1
-#  DummyCases
-#  [1_1]
-#  Plots/FigAvgPw_5M24H.jpg
-#  AvgPwPanel_5M24H 1
-#End
-#
+Figure: FigAvgPw_5M24H 1
+  DummyCases
+  [1_1]
+  Plots/FigAvgPw_5M24H.jpg
+  AvgPwPanel_5M24H 1
+End
+
 #Figure: FigHovPw_5M24H 1
 #  RceCases_5M24H
 #  [1_1]
@@ -223,7 +223,7 @@ End
 FigPanel: EqMeasPanel
   EqMeasPset
   EqMeasAxes 0 1
-  y 5
+  none 5
   PANEL:a@Eq@Measurement@@@@@@@@@@<CASE>
   SouthEast 12
 End
@@ -231,7 +231,7 @@ End
 FigPanel: EqMeasPanel_HS
   EqMeasPset
   EqMeasAxes_HS 0 1
-  y 5
+  none 5
   PANEL:a@Eq@Measurement@@@@@@@@@@<CASE>
   SouthEast 12
 End
@@ -239,7 +239,7 @@ End
 FigPanel: EqMeasPanel_5M24H
   EqMeasPset
   EqMeasAxes_5M24H 0 1
-  y 5
+  none 5
   PANEL:a@Eq@Measurement@@@@@@@@@@<CASE>
   SouthEast 12
 End
@@ -247,7 +247,7 @@ End
 FigPanel: ThfCompPanel
   ThfCompPset
   ThfCompAxes 0 1
-  y 5
+  none 5
   PANEL:b@THF@Components
   NorthEast 12
 End
@@ -255,7 +255,7 @@ End
 FigPanel: ThfCompPanel_HS
   ThfCompPset
   ThfCompAxes_HS 0 1
-  y 5
+  none 5
   PANEL:b@THF@Components
   NorthEast 12
 End
@@ -263,7 +263,7 @@ End
 FigPanel: ThfCompPanel_5M24H
   ThfCompPset
   ThfCompAxes_5M24H 0 1
-  y 5
+  none 5
   PANEL:b@THF@Components
   NorthEast 12
 End
@@ -271,7 +271,7 @@ End
 FigPanel: QradCompPanel
   QradCompPset
   QradCompAxes 1 1
-  y 5
+  none 5
   PANEL:c@Q_r_a_d@Components
   NorthEast 12
 End
@@ -279,7 +279,7 @@ End
 FigPanel: QradCompPanel_HS
   QradCompPset
   QradCompAxes_HS 1 1
-  y 5
+  none 5
   PANEL:c@Q_r_a_d@Components
   NorthEast 12
 End
@@ -287,7 +287,7 @@ End
 FigPanel: QradCompPanel_5M24H
   QradCompPset
   QradCompAxes_5M24H 1 1
-  y 5
+  none 5
   PANEL:c@Q_r_a_d@Components
   NorthEast 12
 End
@@ -295,7 +295,7 @@ End
 FigPanel: AvgPwPanel
   AvgPwPset
   AvgPwAxes 1 1
-  y 5
+  none 5
   Average@PW
   SouthEast 10
 End
@@ -303,7 +303,7 @@ End
 FigPanel: AvgPwPanel_HS
   AvgPwPset_HS
   AvgPwAxes_HS 1 1
-  y 5
+  none 5
   Average@PW
   SouthEast 10
 End
@@ -311,7 +311,7 @@ End
 FigPanel: AvgPwPanel_5M24H
   AvgPwPset_5M24H
   AvgPwAxes_5M24H 1 1
-  y 5
+  none 5
   Average@PW
   SouthEast 10
 End

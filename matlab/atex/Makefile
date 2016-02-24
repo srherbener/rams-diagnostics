@@ -3,7 +3,7 @@
 #
 
 DEST = $(HOME)/etc/matlab/atex
-DIAG_DIR = /Volumes/tasman1/sherbener/data/RAMS/MarinePrecip/ATEX
+DIAG_DIR = $(HOME)/projects/MarinePrecip/Work/ATEX
 
 SCRIPTS = $(DEST)/ExtractSample.m \
           $(DEST)/CombineStCloudTypes.m \

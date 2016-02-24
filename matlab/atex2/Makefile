@@ -3,7 +3,7 @@
 #
 
 DEST = $(HOME)/etc/matlab/atex2
-DIAG_DIR = /Volumes/tasman1/sherbener/data/RAMS/MarinePrecip/ATEX2
+DIAG_DIR = $(HOME)/projects/MarinePrecip/Work/ATEX2
 
 SCRIPTS = \
   $(DEST)/GenAvgFiles.m \
