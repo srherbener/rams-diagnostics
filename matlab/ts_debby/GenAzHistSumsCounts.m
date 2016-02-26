@@ -25,6 +25,8 @@ function [ ] = GenAzHistSumsCounts()
       {
 
         % Region of storm (500 km radius)
+        { 'AzAveragedData/hist_all_d1_mass_<CASE>.h5'     '/d1_mass'     '/all_sum_d1_mass'     } 
+        { 'AzAveragedData/hist_all_d2_mass_<CASE>.h5'     '/d2_mass'     '/all_sum_d2_mass'     } 
         { 'AzAveragedData/hist_all_dust_mass_<CASE>.h5'   '/dust_mass'   '/all_sum_dust_mass'   } 
         { 'AzAveragedData/hist_all_dust_hydro_<CASE>.h5'  '/dust_hydro'  '/all_sum_dust_hydro'  }
         { 'AzAveragedData/hist_all_tracer_mass_<CASE>.h5' '/tracer_mass' '/all_sum_tracer_mass' }

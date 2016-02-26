@@ -14,6 +14,8 @@ function [ ] = GenTotalMassMeas()
   % third argument is scaling factor to convert to g/m2 or g/m3
   FileList = {
     { 'DIAGS/hda_meas_ts_dust_<CASE>.h5'   '/sal_sum_dust_sfc'      1e-2  '/sal_dust_sfc_total_mass'     7000 }  % units are ug/cm2 so scale by 1e-2 to get g/m2
+    { 'DIAGS/hda_meas_ts_dust_<CASE>.h5'   '/sal_sum_d1_mass'       1e-6  '/sal_d1_total_mass'           7000 }  % units are ug/m3 so scale by 1e-6 to get g/m3
+    { 'DIAGS/hda_meas_ts_dust_<CASE>.h5'   '/sal_sum_d2_mass'       1e-6  '/sal_d2_total_mass'           7000 }  % units are ug/m3 so scale by 1e-6 to get g/m3
     { 'DIAGS/hda_meas_ts_dust_<CASE>.h5'   '/sal_sum_dust_mass'     1e-6  '/sal_dust_total_mass'         7000 }  % units are ug/m3 so scale by 1e-6 to get g/m3
     { 'DIAGS/hda_meas_ts_dust_<CASE>.h5'   '/sal_sum_tracer_mass'   1e-6  '/sal_tracer_total_mass'       7000 }  % units are ug/m3 so scale by 1e-6 to get g/m3
     { 'DIAGS/hda_meas_ts_dust_<CASE>.h5'   '/sal_sum_dust_hydro'    1e-6  '/sal_dust_hydro_total_mass'   7000 }  % units are ug/m3 so scale by 1e-6 to get g/m3
@@ -24,9 +26,22 @@ function [ ] = GenTotalMassMeas()
     { 'DIAGS/hda_meas_ts_cond_<CASE>.h5'   '/sal_sum_tcond_mass'    'rho' '/sal_tcond_total_mass'        7000 }  % units are g/kg so scale by rho (density) to get g/m3
     { 'DIAGS/hda_meas_ts_precip_<CASE>.h5' '/sal_sum_accpcp_mass'   1e3   '/sal_accpcp_total_mass'       7000 }  % units are mm (=kg/m2, assuming density of water
                                                                                                                  %   to be 1000 kg/m3) so scale by 1e3 to get g/m2
+
+    { 'DIAGS/hda_meas_ts_dust_<CASE>.h5'   '/sal_ar_sum_dust_sfc'      1e-2  '/sal_ar_dust_sfc_total_mass'     7000 }  % units are ug/cm2 so scale by 1e-2 to get g/m2
+    { 'DIAGS/hda_meas_ts_dust_<CASE>.h5'   '/sal_ar_sum_d1_mass'       1e-6  '/sal_ar_d1_total_mass'           7000 }  % units are ug/m3 so scale by 1e-6 to get g/m3
+    { 'DIAGS/hda_meas_ts_dust_<CASE>.h5'   '/sal_ar_sum_d2_mass'       1e-6  '/sal_ar_d2_total_mass'           7000 }  % units are ug/m3 so scale by 1e-6 to get g/m3
+    { 'DIAGS/hda_meas_ts_dust_<CASE>.h5'   '/sal_ar_sum_dust_mass'     1e-6  '/sal_ar_dust_total_mass'         7000 }  % units are ug/m3 so scale by 1e-6 to get g/m3
+    { 'DIAGS/hda_meas_ts_dust_<CASE>.h5'   '/sal_ar_sum_tracer_mass'   1e-6  '/sal_ar_tracer_total_mass'       7000 }  % units are ug/m3 so scale by 1e-6 to get g/m3
+    { 'DIAGS/hda_meas_ts_dust_<CASE>.h5'   '/sal_ar_sum_dust_hydro'    1e-6  '/sal_ar_dust_hydro_total_mass'   7000 }  % units are ug/m3 so scale by 1e-6 to get g/m3
+    { 'DIAGS/hda_meas_ts_aero_<CASE>.h5'   '/sal_ar_sum_aero_mass'     1e-6  '/sal_ar_aero_total_mass'         7000 }  % units are ug/m3 so scale by 1e-6 to get g/m3
+    { 'DIAGS/hda_meas_ts_ccn_<CASE>.h5'    '/sal_ar_sum_ccn_mass'      1e-6  '/sal_ar_ccn_total_mass'          7000 }  % units are ug/m3 so scale by 1e-6 to get g/m3
+    { 'DIAGS/hda_meas_ts_ra_<CASE>.h5'     '/sal_ar_sum_ra_mass'       1e-6  '/sal_ar_ra_total_mass'           7000 }  % units are ug/m3 so scale by 1e-6 to get g/m3
+
  
     { 'DIAGS/hda_meas_ts_dust_<CASE>.h5'   '/spath_sum_dust_sfc'    1e-2 '/spath_dust_sfc_total_mass'   7000 }  % units are ug/cm2 so scale by 1e-2 to get g/m2
     { 'DIAGS/hda_meas_ts_dust_<CASE>.h5'   '/spath_sum_dust_mass'   1e-6 '/spath_dust_total_mass'       7000 }  % units are ug/m3 so scale by 1e-6 to get g/m3
+    { 'DIAGS/hda_meas_ts_dust_<CASE>.h5'   '/spath_sum_d1_mass'     1e-6 '/spath_d1_total_mass'         7000 }  % units are ug/m3 so scale by 1e-6 to get g/m3
+    { 'DIAGS/hda_meas_ts_dust_<CASE>.h5'   '/spath_sum_d2_mass'     1e-6 '/spath_d2_total_mass'         7000 }  % units are ug/m3 so scale by 1e-6 to get g/m3
     { 'DIAGS/hda_meas_ts_dust_<CASE>.h5'   '/spath_sum_tracer_mass' 1e-6 '/spath_tracer_total_mass'     7000 }  % units are ug/m3 so scale by 1e-6 to get g/m3
     { 'DIAGS/hda_meas_ts_dust_<CASE>.h5'   '/spath_sum_dust_hydro'  1e-6 '/spath_dust_hydro_total_mass' 7000 }  % units are ug/m3 so scale by 1e-6 to get g/m3
     { 'DIAGS/hda_meas_ts_aero_<CASE>.h5'   '/spath_sum_aero_mass'   1e-6 '/spath_aero_total_mass'       7000 }  % units are ug/m3 so scale by 1e-6 to get g/m3
@@ -35,6 +50,8 @@ function [ ] = GenTotalMassMeas()
 
     { 'DIAGS/hist_sums_az_dust_<CASE>.h5'  '/all_sum_dust_sfc'      1e-2 '/storm_dust_sfc_total_mass'   7000 }  % units are ug/cm2 so scale by 1e-2 to get g/m2
     { 'DIAGS/hist_sums_az_dust_<CASE>.h5'  '/all_sum_dust_mass'     1e-6 '/storm_dust_total_mass'       7000 }  % units are ug/m3 so scale by 1e-6 to get g/m3
+    { 'DIAGS/hist_sums_az_dust_<CASE>.h5'  '/all_sum_d1_mass'       1e-6 '/storm_d1_total_mass'         7000 }  % units are ug/m3 so scale by 1e-6 to get g/m3
+    { 'DIAGS/hist_sums_az_dust_<CASE>.h5'  '/all_sum_d2_mass'       1e-6 '/storm_d2_total_mass'         7000 }  % units are ug/m3 so scale by 1e-6 to get g/m3
     { 'DIAGS/hist_sums_az_dust_<CASE>.h5'  '/all_sum_tracer_mass'   1e-6 '/storm_tracer_total_mass'     7000 }  % units are ug/m3 so scale by 1e-6 to get g/m3
     { 'DIAGS/hist_sums_az_dust_<CASE>.h5'  '/all_sum_dust_hydro'    1e-6 '/storm_dust_hydro_total_mass' 7000 }  % units are ug/m3 so scale by 1e-6 to get g/m3
     { 'DIAGS/hist_sums_az_aero_<CASE>.h5'  '/all_sum_aero_mass'     1e-6 '/storm_aero_total_mass'       7000 }  % units are ug/m3 so scale by 1e-6 to get g/m3
