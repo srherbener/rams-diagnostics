@@ -13,6 +13,7 @@ SCRIPTS = \
   $(DEST)/PlotDpFigDustRemoval.m \
   $(DEST)/PlotDpFigDustTransport.m \
   $(DEST)/PlotDpFigDustHov.m \
+  $(DEST)/PlotDpFigHlevDust.m \
   $(DEST)/PlotDpFigTseries.m \
   $(DEST)/ExtractSampleProfile.m \
   $(DEST)/GenTotalMassMeas.m \

@@ -50,13 +50,13 @@ function [ ] = PlotDpFigDustTransport()
   PlotDpFigDustHov(Paxes, T, Z, HOV_MD, 'a', 'TC\_AR: M_d', Fsize, 0, 1, 0, 1);
   
   Paxes = subplot(4,1,2);
-  PlotDpFigTseries(Paxes, T, TS_TC_MD, 'b', 'TC\_AR', 'M_d (10^-^3 Tg)', Fsize, 0, 1);
+  PlotDpFigTseries(Paxes, T, TS_TC_MD, 'b', 'TC\_AR', 'M_d (10^-^3 Tg)', Fsize, 0, 1, { }, 'none');
 
   Paxes = subplot(4,1,3);
   PlotDpFigDustHov(Paxes, T, Z, HOV_MDHY, 'c', 'TC\_AR: M_d_h_y', Fsize, 0, 1, 0, 0);
   
   Paxes = subplot(4,1,4);
-  PlotDpFigTseries(Paxes, T, TS_TC_MDHY, 'd', 'TC\_AR', 'M_d_h_y (10^-^3 Tg)', Fsize, 1, 1);
+  PlotDpFigTseries(Paxes, T, TS_TC_MDHY, 'd', 'TC\_AR', 'M_d_h_y (10^-^3 Tg)', Fsize, 1, 1, { }, 'none');
 
   fprintf('Writing: %s\n', OutFile);
   saveas(Fig, OutFile);

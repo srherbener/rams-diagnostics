@@ -90,7 +90,7 @@ function [ ] = PlotDpFigGenRes()
 
   % Total aero mass time series
   Paxes = subplot(3,2,[5 6]);
-  PlotDpFigTseries(Paxes, T, TS_SAL_MD, 'd', 'SAL\_AR', 'M_d (Tg)', Fsize, 1, 1);
+  PlotDpFigTseries(Paxes, T, TS_SAL_MD, 'd', 'SAL\_AR', 'M_d (Tg)', Fsize, 1, 1, { }, 'none');
   
   OutFile = sprintf('%s/DpFigGenRes.jpg', Pdir);
   fprintf('Writing: %s\n', OutFile);

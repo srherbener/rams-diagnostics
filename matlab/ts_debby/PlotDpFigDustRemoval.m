@@ -23,7 +23,7 @@ function [ ] = PlotDpFigDustRemoval()
   fprintf('Reading: %s (%s)\n', InFile, InVname);
 
   TS_SAL_MDHY = squeeze(h5read(InFile, InVname)); % g
-  TS_SAL_MDHY = TS_SAL_MDHY .* 1e-12;  % convert to Tg
+  TS_SAL_MDHY = TS_SAL_MDHY .* 1e-9;  % convert to 1e-3 Tg
 
   % Time series of precip rate
   InFile = 'DIAGS/hist_meas_ts_pcprate_TSD_SAL_DUST.h5';
@@ -50,13 +50,13 @@ function [ ] = PlotDpFigDustRemoval()
   PlotDpFigDustHov(Paxes, T, Z, HOV_DUST, 'a', 'SAL\_AR: M_d_h_y', Fsize, 0, 1, 0, 0);
   
   Paxes = subplot(4,1,2);
-  PlotDpFigTseries(Paxes, T, TS_SAL_MDHY, 'b', 'SAL\_AR', 'M_d_h_y (Tg)', Fsize, 0, 1);
+  PlotDpFigTseries(Paxes, T, TS_SAL_MDHY, 'b', 'SAL\_AR', 'M_d_h_y (10^-^3 Tg)', Fsize, 0, 1, { }, 'none');
 
   Paxes = subplot(4,1,3);
-  PlotDpFigTseries(Paxes, T, TS_SAL_PR, 'c', 'SAL\_AR', 'PR (mm h^-^1)', Fsize, 0, 1);
+  PlotDpFigTseries(Paxes, T, TS_SAL_PR, 'c', 'SAL\_AR', 'PR (mm h^-^1)', Fsize, 0, 1, { }, 'none');
 
   Paxes = subplot(4,1,4);
-  PlotDpFigTseries(Paxes, T, TS_SAL_DSFC, 'd', 'SAL\_AR', 'M_d_s_f_c (Tg)', Fsize, 1, 1);
+  PlotDpFigTseries(Paxes, T, TS_SAL_DSFC, 'd', 'SAL\_AR', 'M_d_s_f_c (Tg)', Fsize, 1, 1, { }, 'none');
 
   fprintf('Writing: %s\n', OutFile);
   saveas(Fig, OutFile);

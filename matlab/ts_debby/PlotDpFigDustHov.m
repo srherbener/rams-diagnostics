@@ -50,9 +50,9 @@ function [] = PlotDpFigDustHov(Paxes, X, Y, Z, Pmarker, Ptitle, Fsize, ShowX, Sh
   set(Paxes, 'LineWidth', 2);
   set(Paxes, 'TickLength', [ 0.025 0.025 ]);
 
-  set(Paxes, 'XTick', [ 6 30 54 ]);
+  set(Paxes, 'XTick', [ 6 18 30 42 54 ]);
   if (ShowX > 0)
-    set(Paxes, 'XTickLabel', { ' 12Z\newline22Aug' ' 12Z\newline23Aug' ' 12Z\newline24Aug' });
+    set(Paxes, 'XTickLabel', { ' 12Z\newline22Aug' '  0Z\newline23Aug' ' 12Z\newline23Aug' '  0Z\newline24Aug' ' 12Z\newline24Aug' });
   else
     set(Paxes, 'XTickLabel', {});
   end
@@ -70,7 +70,7 @@ function [] = PlotDpFigDustHov(Paxes, X, Y, Z, Pmarker, Ptitle, Fsize, ShowX, Sh
     LeftJustTitle(T);
   end
 
-  % Mark the freezing level (5.5 km elevation)
-  line([ 0 60 ], [ 5.5 5.5 ], 'Color', 'w', 'LineStyle', '--', 'LineWidth', 2);
+  % Mark the separation level (7 km elevation)
+  line([ 0 60 ], [ 7 7 ], 'Color', 'w', 'LineStyle', '--', 'LineWidth', 2);
 
 end
