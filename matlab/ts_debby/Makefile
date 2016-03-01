@@ -18,6 +18,7 @@ SCRIPTS = \
   $(DEST)/PlotDpFigTseries.m \
   $(DEST)/ExtractSampleProfile.m \
   $(DEST)/GenTotalMassMeas.m \
+  $(DEST)/GenResidualMassMeas.m \
   $(DEST)/GenAzHistSumsCounts.m \
   $(DEST)/GenCintMeas.m \
   $(DEST)/GenTsdVintTseries.m \

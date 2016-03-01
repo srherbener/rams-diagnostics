@@ -42,6 +42,14 @@ function [ ] = PlotDpFig7kmTropTseries()
   TS_SAL_MD2 = squeeze(h5read(InFile, InVname)); % g
   TS_SAL_MD2 = TS_SAL_MD2 .* 1e-9;  % convert 1e-3 Tg
 
+  % Time series of upper level Mdadv (residual)
+  InFile = 'DIAGS/residual_mass_TSD_SAL_DUST.h5';
+  InVname = '/sal_residual_total_mass_hlev';
+  fprintf('Reading: %s (%s)\n', InFile, InVname);
+
+  TS_SAL_MDRES = squeeze(h5read(InFile, InVname)); % g
+  TS_SAL_MDRES = TS_SAL_MDRES .* 1e-9;  % convert 1e-3 Tg
+
   % Combine all of the time series into one panel
   TS_SAL_DUST = [ TS_SAL_MD1 TS_SAL_MD2 TS_SAL_MDHY TS_SAL_MDREGEN ];
   LegText = { 'M_d_1' 'M_d_2' 'M_d_h_y' 'M_d_r_g' };
@@ -62,7 +70,18 @@ function [ ] = PlotDpFig7kmTropTseries()
   Fig = figure;
 
   Paxes = subplot(4,1,1);
-  PlotDpFigTseries(Paxes, T, TS_SAL_MDREGEN, 'b', 'SAL\_AR (Upper Levels)', 'M_d_r_g (10^-^3 Tg)', Fsize, 0, 1, { }, 'none');
+  PlotDpFigTseries(Paxes, T, TS_SAL_MDREGEN, 'b', 'SAL\_AR (Upper Levels)', 'M_d_r_g (10^-^3 Tg)', Fsize, 1, 1, { }, 'none');
+
+  fprintf('Writing: %s\n', OutFile);
+  saveas(Fig, OutFile);
+  close(Fig);
+
+  % regenerated dust
+  OutFile = sprintf('%s/DpFig7kmTropMdadv.jpg', Pdir);
+  Fig = figure;
+
+  Paxes = subplot(4,1,1);
+  PlotDpFigTseries(Paxes, T, TS_SAL_MDRES, 'c', 'SAL\_AR (Upper Levels)', 'M_d_a_d_v (10^-^3 Tg)', Fsize, 1, 1, { }, 'none');
 
   fprintf('Writing: %s\n', OutFile);
   saveas(Fig, OutFile);
