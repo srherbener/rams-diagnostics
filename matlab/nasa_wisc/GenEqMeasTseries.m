@@ -61,9 +61,9 @@ function [ ] = GenEqMeasTseries()
   SfcLwdnVname = 'rlong';
   SfcLwupVname = 'rlongup';
   SfcAlbVname  = 'albedt';
-  TopSwdnVname = 'swdn';
-  TopSwupVname = 'swup';
-  TopLwupVname = 'lwup';
+  TopSwdnVname = 'swdntop';
+  TopSwupVname = 'swuptop';
+  TopLwupVname = 'olr';
 
   SfcLatFprefix  = 'lat_flux';
   SfcSensFprefix = 'sens_flux';
@@ -191,9 +191,9 @@ function [ ] = GenEqMeasTseries()
         SFC_LWDN = squeeze(SFC_LWDN_VAR.data(it,2:end-1,2:end-1));
         SFC_LWUP = squeeze(SFC_LWUP_VAR.data(it,2:end-1,2:end-1));
         SFC_ALB  = squeeze(SFC_ALB_VAR.data(it,2:end-1,2:end-1));
-        TOP_SWDN = squeeze(TOP_SWDN_VAR.data(it,:,2:end-1,2:end-1));
-        TOP_SWUP = squeeze(TOP_SWUP_VAR.data(it,:,2:end-1,2:end-1));
-        TOP_LWUP = squeeze(TOP_LWUP_VAR.data(it,:,2:end-1,2:end-1));
+        TOP_SWDN = squeeze(TOP_SWDN_VAR.data(it,2:end-1,2:end-1));
+        TOP_SWUP = squeeze(TOP_SWUP_VAR.data(it,2:end-1,2:end-1));
+        TOP_LWUP = squeeze(TOP_LWUP_VAR.data(it,2:end-1,2:end-1));
       end
 
       % SFC_SWUP = SFC_SWDN * SFC_ALB
