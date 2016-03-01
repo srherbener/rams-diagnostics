@@ -8,12 +8,13 @@ DIAG_DIR = $(HOME)/projects/NsfCollab/Work/SST_OBS
 SCRIPTS = \
   $(DEST)/PlotGrids.m \
   $(DEST)/PlotDpCondPrecip.m \
+  $(DEST)/PlotDpFig7kmTropTseries.m \
+  $(DEST)/PlotDpFigSfcTropTseries.m \
   $(DEST)/PlotDpFigGenRes.m \
   $(DEST)/PlotDpFigStormSeq.m \
   $(DEST)/PlotDpFigDustRemoval.m \
   $(DEST)/PlotDpFigDustTransport.m \
   $(DEST)/PlotDpFigDustHov.m \
-  $(DEST)/PlotDpFigHlevDust.m \
   $(DEST)/PlotDpFigTseries.m \
   $(DEST)/ExtractSampleProfile.m \
   $(DEST)/GenTotalMassMeas.m \

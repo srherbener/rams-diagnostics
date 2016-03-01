@@ -10,8 +10,8 @@ function [ ] = GenTotalMassMeas()
     };
   Ncases = length(CaseList);
 
-  Ztop = 15000; % m
-  Zsep =  7000; % m
+  Ztop = 16500; % m, tropopause
+  Zsep =  7000; % m, level that separates SAL and storm outflow
 
   % Description of measurements
   % third argument is scaling factor to convert to g/m2 or g/m3
@@ -131,6 +131,10 @@ function [ ] = GenTotalMassMeas()
     fprintf('*****************************************************************\n');
     fprintf('Generating total mass measurements:\n');
     fprintf('  Case: %s\n', Case);
+    fprintf('  Vertical integration levels:\n');
+    fprintf('    Separation between SAL and outflow: %f (km)\n', Zsep/1000);
+    fprintf('    Top (tropopause): %f (km)\n', Ztop/1000);
+    fprintf('  Horizontal grid cell area (constant): %f (km^2)\n', HorizArea * 1e-6);
     fprintf('\n');
 
     % Place all measurements into one case specific output file.
@@ -194,8 +198,9 @@ function [ ] = GenTotalMassMeas()
         DELTA_Z = repmat(DELTA_Z, [ 1 Nt ]);
 
         % Do the vertical integration (summation)
-        MEAS = sum(HDATA(1:Z2,:) .* DELTA_Z(1:Z2,:));
-        MEAS_LLEV = sum(HDATA(1:Z1-1,:) .* DELTA_Z(1:Z1-1,:));
+        % k = 2 is first level above surface
+        MEAS = sum(HDATA(2:Z2,:) .* DELTA_Z(2:Z2,:));
+        MEAS_LLEV = sum(HDATA(2:Z1-1,:) .* DELTA_Z(2:Z1-1,:));
         MEAS_HLEV = sum(HDATA(Z1:Z2,:) .* DELTA_Z(Z1:Z2,:));
       else
         MEAS = HDATA;
@@ -219,6 +224,22 @@ function [ ] = GenTotalMassMeas()
         CreateDimensionsXyzt(OutFile, X, Y, Z, T, Xname, Yname, Zname, Tname);
         % Add COARDS annotations
         NotateDimensionsXyzt(OutFile, Xname, Yname, Zname, Tname);
+
+        % write out specs: vertical integration levels, assumed horizontal area
+        Vname = '/Zsep';
+        fprintf('  Writing: %s (%s)\n', OutFile, Vname);
+        h5create(OutFile, Vname, 1);
+        h5write(OutFile, Vname, Zsep);
+
+        Vname = '/Ztop';
+        fprintf('  Writing: %s (%s)\n', OutFile, Vname);
+        h5create(OutFile, Vname, 1);
+        h5write(OutFile, Vname, Ztop);
+
+        Vname = '/HorizArea';
+        fprintf('  Writing: %s (%s)\n', OutFile, Vname);
+        h5create(OutFile, Vname, 1);
+        h5write(OutFile, Vname, HorizArea);
       end
 
       Vsize = Nt;
