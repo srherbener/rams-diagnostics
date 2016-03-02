@@ -43,6 +43,7 @@ SCRIPTS = \
   $(DEST)/GenTsdHistMeas.m \
   $(DEST)/GenTsdHdaMeas.m \
   $(DEST)/GenBuoyancy.m \
+  $(DEST)/ReportIntMassNumbers.m \
   $(DEST)/RunGenFigures.m \
   $(DEST)/LocateSal.m \
   $(DEST)/PlotAeroProfs.m \
