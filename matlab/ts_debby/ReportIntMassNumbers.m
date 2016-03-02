@@ -37,6 +37,7 @@ function [ ] = ReportIntMassNumbers()
     { 'DIAGS/residual_mass_<CASE>.h5' '/storm_residual_total_mass'   'STORM (500km), Advected (residual):'  }
     };
   Nfiles = length(FileList);
+  LineSpace = 5; % put in a line space after every fifth line - matches grouping in FileList
 
   for icase = 1:Ncases
     Case = CaseList{icase};
@@ -70,20 +71,27 @@ function [ ] = ReportIntMassNumbers()
       RDATA{ifile} = { Descrip Mstart Mend Mdiff };
     end
     fprintf('\n');
-    fprintf('\n');
 
     % Dump out report
-    OutFile = fopen('DIAGS/IntMassReport.txt', 'w');
+    OutFile = sprintf('DIAGS/IntMassReport_%s.txt', Case);
+    fprintf('  Writing: %s\n', OutFile);
 
-    fprintf(OutFile, '%-40s %10s %10s %10s\n', '        Mass Quantity', 'Start', 'End', 'Diff');
-    fprintf(OutFile, '\n');
+    OutFid = fopen(OutFile, 'w');
+
+    fprintf(OutFid, '%-40s %10s %10s %10s\n', '        Mass Quantity', 'Start', 'End', 'Diff');
+    fprintf(OutFid, '\n');
     for imeas = 1:length(RDATA)
       Descrip = RDATA{imeas}{1};
       Mstart  = RDATA{imeas}{2};
       Mend    = RDATA{imeas}{3};
       Mdiff   = RDATA{imeas}{4};
-      fprintf(OutFile, '  %-40s %10f %10f %10f \n', Descrip, Mstart, Mend, Mdiff);
+      fprintf(OutFid, '  %-40s %10f %10f %10f \n', Descrip, Mstart, Mend, Mdiff);
+
+      if (mod(imeas, LineSpace) == 0)
+        fprintf(OutFid, '\n');
+      end
     end
-    fclose(OutFile);
+    fclose(OutFid);
+    fprintf('\n');
   end
 end 
