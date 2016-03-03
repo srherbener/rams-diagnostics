@@ -8,55 +8,53 @@ function [ ] = PlotDpFigDustRemoval()
 
   Fsize = 13;
   
-  % Hovmoller data for dust-in-hydrometeors
-  InFile = 'DIAGS/storm_hovmollers_TSD_SAL_DUST.h5';
-  InVname = '/sal_dust_hydro';
+
+  % Time series of Md
+  InFile = 'DIAGS/total_mass_TSD_SAL_DUST.h5';
+  InVname = '/sal_ar_dust_total_mass';
   fprintf('Reading: %s (%s)\n', InFile, InVname);
 
-  HOV_DUST = squeeze(h5read(InFile, InVname));
-  Z    = squeeze(h5read(InFile, '/z_coords'))./1000;
+  TS_SAL_MD = squeeze(h5read(InFile, InVname)); % g
   T    = squeeze(h5read(InFile, '/t_coords'))./3600 - 42;
 
-  % Time series of lower level Mdhy
+  % Time series of Mdhy
   InFile = 'DIAGS/total_mass_TSD_SAL_DUST.h5';
-  InVname = '/sal_dust_hydro_total_mass_llev';
+  InVname = '/sal_ar_dust_hydro_total_mass';
   fprintf('Reading: %s (%s)\n', InFile, InVname);
 
   TS_SAL_MDHY = squeeze(h5read(InFile, InVname)); % g
-  TS_SAL_MDHY = TS_SAL_MDHY .* 1e-9;  % convert to 1e-3 Tg
 
-  % Time series of precip rate
-  InFile = 'DIAGS/hist_meas_ts_pcprate_TSD_SAL_DUST.h5';
-  InVname = '/sal_pcprate_ts';
-  fprintf('Reading: %s (%s)\n', InFile, InVname);
-
-  TS_SAL_PR = squeeze(h5read(InFile, InVname)); % mm/h
-
-  % Time series of surface dust accumulation
+  % Time series of Mdrgn
   InFile = 'DIAGS/total_mass_TSD_SAL_DUST.h5';
-  InVname = '/sal_dust_sfc_total_mass';
+  InVname = '/sal_ar_ra_total_mass';
   fprintf('Reading: %s (%s)\n', InFile, InVname);
 
-  TS_SAL_DSFC = squeeze(h5read(InFile, InVname)); % g
-  TS_SAL_DSFC = TS_SAL_DSFC .* 1e-12;  % convert to Tg
+  TS_SAL_MDRGN = squeeze(h5read(InFile, InVname)); % g
+
+  % Time series of Mdsfc
+  InFile = 'DIAGS/total_mass_TSD_SAL_DUST.h5';
+  InVname = '/sal_ar_dust_sfc_total_mass';
+  fprintf('Reading: %s (%s)\n', InFile, InVname);
+
+  TS_SAL_MDSFC = squeeze(h5read(InFile, InVname)); % g
+
+  % Time series of Mdadv
+  InFile = 'DIAGS/residual_mass_TSD_SAL_DUST.h5';
+  InVname = '/sal_ar_residual_total_mass';
+  fprintf('Reading: %s (%s)\n', InFile, InVname);
+
+  TS_SAL_MDADV = squeeze(h5read(InFile, InVname)); % g
+
+  TS_DUST = [ TS_SAL_MD TS_SAL_MDHY TS_SAL_MDRGN TS_SAL_MDADV TS_SAL_MDSFC ] .* 1e-12; % convert to Tg
+  LegText = { 'M_d' 'M_d_h_y' 'M_d_r_g_n' 'M_d_a_d_v' 'M_d_s_f_c' };
+  LegLoc = 'NorthEast';
 
   % plot, 4 panels (2x2)
-  OutFile = sprintf('%s/DpFigDustRemoval.jpg', Pdir);
+  OutFile = sprintf('%s/DpFig2_DustRemoval.jpg', Pdir);
   
   Fig = figure;
 
-  % create the Hovmoller of sal_dust_hydro
-  Paxes = subplot(4,1,1);
-  PlotDpFigDustHov(Paxes, T, Z, HOV_DUST, 'a', 'SAL\_AR: M_d_h_y', Fsize, 0, 1, 0, 0);
-  
-  Paxes = subplot(4,1,2);
-  PlotDpFigTseries(Paxes, T, TS_SAL_MDHY, 'b', 'SAL\_AR', 'M_d_h_y (10^-^3 Tg)', Fsize, 0, 1, { }, 'none');
-
-  Paxes = subplot(4,1,3);
-  PlotDpFigTseries(Paxes, T, TS_SAL_PR, 'c', 'SAL\_AR', 'PR (mm h^-^1)', Fsize, 0, 1, { }, 'none');
-
-  Paxes = subplot(4,1,4);
-  PlotDpFigTseries(Paxes, T, TS_SAL_DSFC, 'd', 'SAL\_AR', 'M_d_s_f_c (Tg)', Fsize, 1, 1, { }, 'none');
+  PlotDpFigTseries(gca, T, TS_DUST, 'a', '', 'Mass (Tg)', 'log', [ 1e-4 1e2 ], Fsize, 1, 1, LegText, LegLoc);
 
   fprintf('Writing: %s\n', OutFile);
   saveas(Fig, OutFile);

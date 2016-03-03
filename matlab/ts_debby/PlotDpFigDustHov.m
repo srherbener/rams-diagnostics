@@ -26,24 +26,24 @@ function [] = PlotDpFigDustHov(Paxes, X, Y, Z, Pmarker, Ptitle, Fsize, ShowX, Sh
     set(Cbar, 'Ticks', [ -2 -1 0 ]);
     set(Cbar, 'TickLabels', { '10^-^2' '10^-^1' '1' });
   elseif (CaxisRange == 1)
-    caxis([ -0.8 2.2 ]);
+    caxis([ -1 2 ]);
     set(Cbar, 'Ticks', [ 0 1 2 ]);
     set(Cbar, 'TickLabels', { '1' '10' '10^2' });
   else
     caxis([ 0 500 ]);
-    set(Cbar, 'Ticks', [ 0 100 200 300 400 500 ]);
+    set(Cbar, 'Ticks', [ 200 300 400 500 ]);
   end
 
   % ShowLev
-  %   < 0  : 0  6 km
-  %  == 0  : 0 13 km
-  %   > 0  : 6 13 km
+  %   < 0  : 0  7   km
+  %  == 0  : 0 16.5 km
+  %   > 0  : 7 16.5 km
   if (ShowLev < 0)
-    ylim([ 0 6 ]);
+    ylim([ 0 7 ]);
   elseif (ShowLev == 0)
-    ylim([ 0 13 ]);
+    ylim([ 0 16.5 ]);
   else
-    ylim([ 6 13 ]);
+    ylim([ 7 6.5 ]);
   end
 
   set(Paxes, 'FontSize', Fsize);

@@ -1,8 +1,12 @@
-function [] = PlotDpFigTseries(Paxes, X, Y, Pmarker, Ptitle, Ylabel, Fsize, ShowX, ShowY, LegText, LegLoc)
+function [] = PlotDpFigTseries(Paxes, X, Y, Pmarker, Ptitle, Ylabel, Yscale, Ylim, Fsize, ShowX, ShowY, LegText, LegLoc)
 
   axes(Paxes);
 
-  plot(X, Y, 'LineWidth', 2);
+  if (strcmp(Yscale, 'log'))
+    semilogy(X, Y, 'LineWidth', 2);
+  else
+    plot(X, Y, 'LineWidth', 2);
+  end
 
   set(Paxes, 'FontSize', Fsize);
   set(Paxes, 'LineWidth', 2);
@@ -16,6 +20,7 @@ function [] = PlotDpFigTseries(Paxes, X, Y, Pmarker, Ptitle, Ylabel, Fsize, Show
   end
 
   ylabel(Ylabel);
+  ylim(Ylim);
 
   if (isempty(Pmarker))
     title(Ptitle);

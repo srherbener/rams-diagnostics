@@ -39,60 +39,68 @@ function [ ] = PlotDpFigGenRes()
   Znamma   = InData{1} ./ 1000; % km
   DUST_CONC = [ InData{3} InData{4} ];
 
-  % Hovmoller data for dust
+  % Hovmoller data for Md
   InFile = 'DIAGS/storm_hovmollers_TSD_SAL_DUST.h5';
-  InVname = '/sal_aero_mass';
+  InVname = '/sal_ar_dust_mass';
   fprintf('Reading: %s (%s)\n', InFile, InVname);
-
   HOV_DUST = squeeze(h5read(InFile, InVname));
   Z    = squeeze(h5read(InFile, '/z_coords'))./1000;         % convert to km
   T    = squeeze(h5read(InFile, '/t_coords'))./3600 - 42;    % convert to sim time in hours
 
-  % For plotting track, use simulation track data from Aug 22, 18Z
-  % through Aug 24, 18Z. This corresponds to the best track locations
-  % that reside inside the SAL analysis region. These times correspond
-  % to simulation times 12 h and 60 h.
-  T1 = find(T >= 12, 1, 'first');
-  T2 = find(T <= 60, 1, 'last');
-
-  % Time series of Md
-  InFile = 'DIAGS/total_mass_TSD_SAL_DUST.h5';
-  InVname = '/sal_aero_total_mass';
+  % Hovmoller data for Mdhy
+  InFile = 'DIAGS/storm_hovmollers_TSD_SAL_DUST.h5';
+  InVname = '/sal_ar_dust_hydro';
   fprintf('Reading: %s (%s)\n', InFile, InVname);
+  HOV_DHY = squeeze(h5read(InFile, InVname));
 
-  TS_SAL_MD = squeeze(h5read(InFile, InVname)); % g
-  TS_SAL_MD = TS_SAL_MD .* 1e-12;  % convert to Tg
-
+  % Hovmoller data for Mdrgn
+  InFile = 'DIAGS/storm_hovmollers_TSD_SAL_DUST.h5';
+  InVname = '/sal_ar_ra_mass';
+  fprintf('Reading: %s (%s)\n', InFile, InVname);
+  HOV_DRGN = squeeze(h5read(InFile, InVname));
 
   % plot
   Fig = figure;
 
   % Map doesn't quite fit in the vertical center of the subplot region. Needs to get
   % bumped upward just a little bit.
-  Paxes = subplot(3,2,1);
+  Paxes = subplot(4,2,1);
   Ploc = get(Paxes, 'Position');
   Ploc(2) = Ploc(2) + 0.03;
   set(Paxes, 'Position', Ploc);
-  PlotDpFigTrack(Paxes, SimTrackLons(T1:T2), SimTrackLats(T1:T2), 'a', '', Fsize);
+  PlotDpFigTrack(Paxes, SimTrackLons, SimTrackLats, 'a', '', Fsize);
   
   % Initial dust profiles
   % Doesn't quite fit in the vertical center of the subplot region. Needs to get
   % bumped upward just a little bit.
-  Paxes = subplot(3,2,2);
+  Paxes = subplot(4,2,2);
   Ploc = get(Paxes, 'Position');
   Ploc(2) = Ploc(2) + 0.03;
   set(Paxes, 'Position', Ploc);
   PlotDpFigInitDust(Paxes, DUST_CONC, Znamma, 'b', '', Fsize);
 
-  % aero mass hovmoller
-  Paxes = subplot(3,2,[3 4]);
+  % Md
+  Paxes = subplot(4,2,[3 4]);
+  Ploc = get(Paxes, 'Position');
+  Ploc(2) = Ploc(2) - 0.03;
+  set(Paxes, 'Position', Ploc);
   PlotDpFigDustHov(Paxes, T, Z, HOV_DUST, 'c', 'SAL\_AR: M_d', Fsize, 0, 1, 0, 2);
 
-  % Total aero mass time series
-  Paxes = subplot(3,2,[5 6]);
-  PlotDpFigTseries(Paxes, T, TS_SAL_MD, 'd', 'SAL\_AR', 'M_d (Tg)', Fsize, 1, 1, { }, 'none');
+  % Mdhy
+  Paxes = subplot(4,2,[5 6]);
+  Ploc = get(Paxes, 'Position');
+  Ploc(2) = Ploc(2) - 0.04;
+  set(Paxes, 'Position', Ploc);
+  PlotDpFigDustHov(Paxes, T, Z, HOV_DHY, 'd', 'SAL\_AR: M_d_h_y', Fsize, 0, 1, 0, 0);
+
+  % Mdrgn
+  Paxes = subplot(4,2,[7 8]);
+  Ploc = get(Paxes, 'Position');
+  Ploc(2) = Ploc(2) - 0.05;
+  set(Paxes, 'Position', Ploc);
+  PlotDpFigDustHov(Paxes, T, Z, HOV_DRGN, 'e', 'SAL\_AR: M_d_r_g_n', Fsize, 0, 1, 0, 1);
   
-  OutFile = sprintf('%s/DpFigGenRes.jpg', Pdir);
+  OutFile = sprintf('%s/DpFig1_GenRes.jpg', Pdir);
   fprintf('Writing: %s\n', OutFile);
   saveas(Fig, OutFile);
   close(Fig);
@@ -148,18 +156,14 @@ function [] = PlotDpFigTrack(Paxes, SimTrackLons, SimTrackLats, Pmarker, Ptitle,
   LatBounds = [ 5 26 ];
   LonBounds = [ -42 -8 ];
   
-  % East side of SAL region was picked to be 24W. The first Best Track inside the SAL
-  % region corresponds to Aug 22, 18Z. The simulation runs from Aug 22, 6Z to Aug 24, 18Z.
+  % The simulation runs from Aug 22, 6Z to Aug 24, 18Z.
   %
-  % Plot out the common time between the Best Track data and the simulation data. This would
-  % start at Aug 22, 18Z and end at Aug 24, 18Z.
-  
-  % Locations from NHC report: Aug 22, 18Z through Aug 24, 18Z.
-  NhcTrackLats = [ 14.2 14.9 15.7 16.7 17.6 18.4 19.2 20.1 20.9 ];
-  NhcTrackLons = [ 26.7 28.1 29.5 31.0 32.4 33.9 35.5 37.1 38.7 ] * -1; 
+  % Locations from NHC report: Aug 22, 6Z through Aug 24, 18Z.
+  NhcTrackLats = [ 12.6 13.4 14.2 14.9 15.7 16.7 17.6 18.4 19.2 20.1 20.9 ];
+  NhcTrackLons = [ 23.9 25.3 26.7 28.1 29.5 31.0 32.4 33.9 35.5 37.1 38.7 ] * -1; 
 
-  SalRegionLats = [ 12 24 24 12 12 ];
-  SalRegionLons = [ 41 41 24 24 41 ] * -1; 
+  SalRegionLats = [ 12.0 24.0 24.0 12.0 12.0 ];
+  SalRegionLons = [ 36.5 36.5 25.0 25.0 36.5 ] * -1; 
 
   set(Paxes, 'FontSize', Fsize);
 %  m_proj('miller', 'lat', LatBounds, 'long', LonBounds);
