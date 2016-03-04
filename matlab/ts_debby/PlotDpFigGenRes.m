@@ -39,33 +39,30 @@ function [ ] = PlotDpFigGenRes()
   Znamma   = InData{1} ./ 1000; % km
   DUST_CONC = [ InData{3} InData{4} ];
 
-  % Hovmoller data for Md
-  InFile = 'DIAGS/storm_hovmollers_TSD_SAL_DUST.h5';
-  InVname = '/sal_ar_dust_mass';
-  fprintf('Reading: %s (%s)\n', InFile, InVname);
-  HOV_DUST = squeeze(h5read(InFile, InVname));
-  Z    = squeeze(h5read(InFile, '/z_coords'))./1000;         % convert to km
-  T    = squeeze(h5read(InFile, '/t_coords'))./3600 - 42;    % convert to sim time in hours
+  % SAL strength image
+  SalPic = 'IMAGES/SAL_Aug23_12Z.png';
 
-  % Hovmoller data for Mdhy
-  InFile = 'DIAGS/storm_hovmollers_TSD_SAL_DUST.h5';
-  InVname = '/sal_ar_dust_hydro';
-  fprintf('Reading: %s (%s)\n', InFile, InVname);
-  HOV_DHY = squeeze(h5read(InFile, InVname));
+  % Vertically integrated dust mass
+  VintDustFile = 'HDF5/TSD_SAL_DUST/HDF5/vint_dust-TSD_SAL_DUST-AS-2006-08-20-120000-g3.h5';
+  VintDustVname = '/vertint_dust';
 
-  % Hovmoller data for Mdrgn
-  InFile = 'DIAGS/storm_hovmollers_TSD_SAL_DUST.h5';
-  InVname = '/sal_ar_ra_mass';
-  fprintf('Reading: %s (%s)\n', InFile, InVname);
-  HOV_DRGN = squeeze(h5read(InFile, InVname));
+  % Read in and create a snapshot of the vertically integrated dust field at Aug23, 12Z
+  fprintf('Reading: %s (%s)\n', VintDustFile, VintDustVname);
+  DUST = squeeze(h5read(VintDustFile, VintDustVname));
+  X    = squeeze(h5read(VintDustFile, '/x_coords'));
+  Y    = squeeze(h5read(VintDustFile, '/y_coords'));
+
+  % DUST is (x,y,t)
+  VINT_DUST = squeeze(DUST(:,:,61)); % t = 61 corresponds to Aug23, 12Z
 
   % plot
   Fig = figure;
 
   % Map doesn't quite fit in the vertical center of the subplot region. Needs to get
   % bumped upward just a little bit.
-  Paxes = subplot(4,2,1);
+  Paxes = subplot(2,2,1);
   Ploc = get(Paxes, 'Position');
+  Ploc(1) = Ploc(1) - 0.05;
   Ploc(2) = Ploc(2) + 0.03;
   set(Paxes, 'Position', Ploc);
   PlotDpFigTrack(Paxes, SimTrackLons, SimTrackLats, 'a', '', Fsize);
@@ -73,33 +70,20 @@ function [ ] = PlotDpFigGenRes()
   % Initial dust profiles
   % Doesn't quite fit in the vertical center of the subplot region. Needs to get
   % bumped upward just a little bit.
-  Paxes = subplot(4,2,2);
+  Paxes = subplot(2,2,2);
   Ploc = get(Paxes, 'Position');
   Ploc(2) = Ploc(2) + 0.03;
   set(Paxes, 'Position', Ploc);
   PlotDpFigInitDust(Paxes, DUST_CONC, Znamma, 'b', '', Fsize);
 
-  % Md
-  Paxes = subplot(4,2,[3 4]);
-  Ploc = get(Paxes, 'Position');
-  Ploc(2) = Ploc(2) - 0.03;
-  set(Paxes, 'Position', Ploc);
-  PlotDpFigDustHov(Paxes, T, Z, HOV_DUST, 'c', 'SAL\_AR: M_d', Fsize, 0, 1, 0, 2);
+  % SAL strength image
+  Paxes = subplot(2,2,3);
+  PlaceSalImage(Paxes, SalPic, 'c', '12Z, Aug23', Fsize);
 
-  % Mdhy
-  Paxes = subplot(4,2,[5 6]);
-  Ploc = get(Paxes, 'Position');
-  Ploc(2) = Ploc(2) - 0.04;
-  set(Paxes, 'Position', Ploc);
-  PlotDpFigDustHov(Paxes, T, Z, HOV_DHY, 'd', 'SAL\_AR: M_d_h_y', Fsize, 0, 1, 0, 0);
+  % Vertically integrated dust mass
+  Paxes = subplot(2,2,4);
+  PlotVintDust(Paxes, X, Y, VINT_DUST, 'd', '12Z, Aug23', Fsize, 1, 1);
 
-  % Mdrgn
-  Paxes = subplot(4,2,[7 8]);
-  Ploc = get(Paxes, 'Position');
-  Ploc(2) = Ploc(2) - 0.05;
-  set(Paxes, 'Position', Ploc);
-  PlotDpFigDustHov(Paxes, T, Z, HOV_DRGN, 'e', 'SAL\_AR: M_d_r_g_n', Fsize, 0, 1, 0, 1);
-  
   OutFile = sprintf('%s/DpFig1_GenRes.jpg', Pdir);
   fprintf('Writing: %s\n', OutFile);
   saveas(Fig, OutFile);
@@ -166,27 +150,145 @@ function [] = PlotDpFigTrack(Paxes, SimTrackLons, SimTrackLats, Pmarker, Ptitle,
   SalRegionLons = [ 36.5 36.5 25.0 25.0 36.5 ] * -1; 
 
   set(Paxes, 'FontSize', Fsize);
-%  m_proj('miller', 'lat', LatBounds, 'long', LonBounds);
-%  m_coast('color', 'k'); % k --> black
-%  m_grid('linestyle','none','box','fancy','tickdir','out');
   worldmap(LatBounds, LonBounds);
+  setm(Paxes, 'MapProjection', 'miller');
   load coast;  % creates vars "lat" and "long" that contain coast lines
   plotm(lat, long, 'Color', 'k', 'LineWidth', LineW);
 
-%  NhcTrack = m_line(NhcTrackLons, NhcTrackLats, 'linewi', LineW, 'color', 'k', 'linestyle', 'none', 'marker', '+');
-%  SimTrack = m_line(SimTrackLons, SimTrackLats, 'linewi', LineW);
   NhcTrack = linem(NhcTrackLats, NhcTrackLons, 'LineWidth', LineW, 'Color', 'k', 'LineStyle', 'none', 'Marker', '+');
   SimTrack = linem(double(SimTrackLats), double(SimTrackLons), 'LineWidth', LineW);
 
   % Add SAL analysis region
-%  m_line(SalRegionLons, SalRegionLats, 'linewi', LineW, 'color', 'r');
   linem(SalRegionLats, SalRegionLons, 'LineWidth', LineW, 'Color', 'r');
   textm(22, -35, 'SAL\_AR', 'FontSize', 10, 'Color', 'r');
 
   % Mark Africa
   textm(14, -12, 'Africa', 'FontSize', 10, 'Color', 'k', 'Rotation', 90);
 
-  legend( [ NhcTrack SimTrack' ], LegText,'Location', 'SouthEast', 'FontSize', LegendFsize);
+  legend( [ NhcTrack SimTrack' ], LegText,'Location', 'SouthWest', 'FontSize', LegendFsize);
+
+  if (isempty(Pmarker))
+    title(Ptitle);
+  else
+    T = title(sprintf('(%s) %s', Pmarker, Ptitle));
+    LeftJustTitle(T);
+  end
+end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+function [] = PlaceSalImage(Paxes, ImFile, Pmarker, Ptitle, Fsize)
+
+  axes(Paxes);
+  % Axes position is the location of the axes within the entire figure.
+  % 0 -> left side, or bottom
+  % 1 -> right side, or top
+  %  position -> [ left_x bottom_y width_x height_y ]
+  Apos = get(Paxes, 'Position');
+  ImgScale = 1.2; % make image 12% larger
+  Apos(1) = 0.05;                % shift to the left
+  Apos(2) = Apos(2) - 0.02;      % shift downward
+  Apos(3) = Apos(3) * ImgScale;
+  Apos(4) = Apos(4) * ImgScale;
+
+  set(Paxes, 'Position', Apos);
+  imshow(ImFile);
+
+  set(Paxes, 'FontSize', Fsize);
+
+  if (isempty(Pmarker))
+    title(Ptitle);
+  else
+    T = title(sprintf('(%s) %s', Pmarker, Ptitle));
+    LeftJustTitle(T);
+  end
+
+end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+function [] = PlotVintDust(Paxes, X, Y, Z, Pmarker, Ptitle, Fsize, ShowX, ShowY)
+
+  LatBounds = [ 5 26 ];
+  LonBounds = [ -42 -8 ];
+
+  LineW = 2;
+
+  axes(Paxes);
+
+  % create a gap for the colorbar
+  Gap = 0.05;
+  Ploc = get(Paxes, 'Position');
+  CbarLoc = Ploc;
+
+  % move the plot up a bit
+  Ploc(2) = Ploc(2) + Gap;
+  Ploc(4) = Ploc(4) - Gap;
+  set(Paxes, 'Position', Ploc);
+
+  % define the region for the colorbar in the gap
+  CbarLoc(4) = Gap * 0.5;
+
+  set(Paxes, 'FontSize', Fsize);
+  worldmap(LatBounds, LonBounds);
+  setm(Paxes, 'MapProjection', 'miller');
+
+  % X is LON, Y is LAT
+  % Want to show log values of Z, but there is not a built-in
+  % method for this.
+  %   1. send contourfm the log values
+  %      this means you have to work in log values for the caxis
+  %      and tick marks, etc.
+  %      e.g., caxis [ -2 6 ] translates to 1e-2 to 1e6
+  %   2. contourfm/contourcmap create a colorbar with
+  %      the selected colors for the contour levels displayed
+  %      like tiles and a scaled tick mark value that places
+  %      integer values at the center of each color. This makes
+  %      the edges of the tiles equal to tick values like 0.5 1.5 2.5 ...
+  %      where the centers of the tiles are equal to tick values
+  %      1 2 3 ... n where n is the number of contour levels.
+  % 
+  % So, in this example the range for Z is 1e-2 to 1e6. This
+  % calls for:
+  %   caxis: -2 to 6
+  %   contour levels: -2:0.5:6 (sixteen levels)
+  %   color bar axes: center of tiles have values 1 2 3 ... 16
+  %                   edges have values 0.5 1.5 2.5 ... 16.5
+  %
+  %   This means that there is a linear scale between the colorbar
+  %   tick mark values and the actual values in the plot:
+  %
+  %      tick value        plot value    origninal value
+  %         0.5               -2            0.01
+  %         1.5               -1.5
+  %         2.5               -1            0.1
+  %         3.5               -0.5
+  %         4.5                0            1
+  %         ...                ...
+  %        15.5                5.5
+  %        16.6                6            1000000
+  %                  
+  %
+  
+  Clevs = [ -2:0.5:6 ];
+  Cticks = [ 2.5 6.5 10.5 14.5 ];
+  CtickLabels = { '10^-^1' '10^1' '10^3' '10^5' };
+  contourfm(double(Y), double(X), double(log10(Z))', Clevs, 'LineStyle', 'none'); 
+  caxis(Paxes, [ -2 6 ]);
+
+  % "parula" is the default colormap
+  Cbar = contourcmap('parula', 'ColorBar', 'on', 'Location', 'horizontal' );
+  set(Cbar, 'Position', CbarLoc);
+  set(Cbar, 'Xtick', Cticks);
+  set(Cbar, 'XTickLabel', CtickLabels);
+
+  % Draw the coast after the contourfm call so that coast lines will appear on top
+  % of the contour plot
+  Coast = load('coast');
+  plotm(Coast.lat, Coast.long, 'Color', 'k', 'LineWidth', LineW);
+
+  % Mark Africa
+  textm(14, -12, 'Africa', 'FontSize', 10, 'Color', 'k', 'Rotation', 90);
 
   if (isempty(Pmarker))
     title(Ptitle);

@@ -7,17 +7,21 @@ function [] = PlotDpFigDustHov(Paxes, X, Y, Z, Pmarker, Ptitle, Fsize, ShowX, Sh
   end
   contourf(X, Y, Z, 20, 'LineStyle', 'none');
 
-  % place colorbar beneath contour plot, but don't allow matlab to put in large gaps
-  GapSize = 0.05;
-  PaxesLoc = get(Paxes, 'Position'); % open up a small gap below plot
-  CbarLoc = PaxesLoc;
-  PaxesLoc(2) = PaxesLoc(2) + GapSize;
-  PaxesLoc(4) = PaxesLoc(4) - GapSize;
-  set(Paxes, 'Position', PaxesLoc);
-  
-  CbarLoc(4) = GapSize * 0.8;  % Force colorbar into the above gap
-  Cbar = colorbar('Location', 'SouthOutside', 'Position', CbarLoc);
-  % CaxisRange
+%  % place colorbar beneath contour plot, but don't allow matlab to put in large gaps
+%  GapSize = 0.05;
+%  PaxesLoc = get(Paxes, 'Position'); % open up a small gap below plot
+%  CbarLoc = PaxesLoc;
+%  PaxesLoc(2) = PaxesLoc(2) + GapSize;
+%  PaxesLoc(4) = PaxesLoc(4) - GapSize;
+%  set(Paxes, 'Position', PaxesLoc);
+%
+%  CbarLoc(4) = GapSize * 0.8;  % Force colorbar into the above gap
+%  Cbar = colorbar('Location', 'SouthOutside', 'Position', CbarLoc);
+%  % CaxisRange
+
+  % Place colorbar on right side
+  Cbar = colorbar;
+
   %   0 : log scale 1e-3 to  1
   %   1 : log scale 1e-1 to 100
   %   2 : linear scale 0 500

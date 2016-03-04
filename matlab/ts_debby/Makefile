@@ -11,7 +11,9 @@ SCRIPTS = \
   $(DEST)/PlotDpFig7kmTropTseries.m \
   $(DEST)/PlotDpFigSfcTropTseries.m \
   $(DEST)/PlotDpFigGenRes.m \
+  $(DEST)/PlotDpFigHovmollers.m \
   $(DEST)/PlotDpFigStormSeq.m \
+  $(DEST)/PlotDpFigDustMassTseries.m \
   $(DEST)/PlotDpFigDustRemoval.m \
   $(DEST)/PlotDpFigDustTransport.m \
   $(DEST)/PlotDpFigDustHov.m \
