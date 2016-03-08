@@ -14,6 +14,7 @@ SCRIPTS = \
   $(DEST)/PlotDpFigHovmollers.m \
   $(DEST)/PlotDpFigStormSeq.m \
   $(DEST)/PlotDpFigDustMassTseries.m \
+  $(DEST)/PlotDpFigDustMassRateTseries.m \
   $(DEST)/PlotDpFigDustRemoval.m \
   $(DEST)/PlotDpFigDustTransport.m \
   $(DEST)/PlotDpFigDustHov.m \

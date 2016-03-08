@@ -41,7 +41,7 @@ function [ ] = PlotDpFigDustMassTseries()
 
   % Time series of Mdadv
   InFile = 'DIAGS/residual_mass_TSD_SAL_DUST.h5';
-  InVname = '/sal_ar_residual_total_mass';
+  InVname = '/sal_ar_residual_rmvd_total_mass';
   fprintf('Reading: %s (%s)\n', InFile, InVname);
 
   TS_SAL_MDADV = squeeze(h5read(InFile, InVname)); % g
@@ -58,7 +58,6 @@ function [ ] = PlotDpFigDustMassTseries()
   InVname = '/sal_ar_dust_total_mass_hlev';
   fprintf('Reading: %s (%s)\n', InFile, InVname);
   TS_SAL_MD = squeeze(h5read(InFile, InVname)); % g
-  T    = squeeze(h5read(InFile, '/t_coords'))./3600 -42;
 
   % Time series of upper level Mdhy
   InFile = 'DIAGS/total_mass_TSD_SAL_DUST.h5';
@@ -74,7 +73,7 @@ function [ ] = PlotDpFigDustMassTseries()
 
   % Time series of upper level Mdadv
   InFile = 'DIAGS/residual_mass_TSD_SAL_DUST.h5';
-  InVname = '/sal_ar_residual_total_mass_hlev';
+  InVname = '/sal_ar_residual_rmvd_total_mass_hlev';
   fprintf('Reading: %s (%s)\n', InFile, InVname);
   TS_SAL_MDADV = squeeze(h5read(InFile, InVname)); % g
 
@@ -86,14 +85,15 @@ function [ ] = PlotDpFigDustMassTseries()
 
   % plot, 4 panels (2x2)
   OutFile = sprintf('%s/DpFig3_DustMassTseries.jpg', Pdir);
+  Lcolors = { 'blue' 'orangered' 'goldenrod' 'purple' 'forestgreen' };
   
   Fig = figure;
 
   Paxes = subplot(2,1,1);
-  PlotDpFigTseries(Paxes, T, TS_DUST_AL, 'a', 'All Levels', 'Mass (Tg)', 'log', [ 1e-4 1e1 ], Fsize, 0, 1, LegTextAl, LegLocAl);
+  PlotDpFigTseries(Paxes, T, TS_DUST_AL, Lcolors, 'a', 'All Levels', 'Mass (Tg)', 'log', [ 1e-4 1e1 ], Fsize, 0, 1, LegTextAl, LegLocAl);
 
   Paxes = subplot(2,1,2);
-  PlotDpFigTseries(Paxes, T, TS_DUST_UL, 'a', 'Upper Levels', 'Mass (10^-^3 Tg)', 'linear', [ -0.5 3.5 ], Fsize, 1, 1, LegTextUl, LegLocUl);
+  PlotDpFigTseries(Paxes, T, TS_DUST_UL, Lcolors, 'b', 'Upper Levels', 'Mass (10^-^3 Tg)', 'linear', [ -0.5 3.5 ], Fsize, 1, 1, LegTextUl, LegLocUl);
 
   fprintf('Writing: %s\n', OutFile);
   saveas(Fig, OutFile);

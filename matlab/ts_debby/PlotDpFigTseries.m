@@ -1,11 +1,20 @@
-function [] = PlotDpFigTseries(Paxes, X, Y, Pmarker, Ptitle, Ylabel, Yscale, Ylim, Fsize, ShowX, ShowY, LegText, LegLoc)
+function [] = PlotDpFigTseries(Paxes, X, Y, Lcolors, Pmarker, Ptitle, Ylabel, Yscale, Ylim, Fsize, ShowX, ShowY, LegText, LegLoc)
 
   axes(Paxes);
 
+  Ysize = size(Y);
+  Nlines = Ysize(2);
+
+  set(Paxes, 'Yscale', Yscale);
+  hold on;
   if (strcmp(Yscale, 'log'))
-    semilogy(X, Y, 'LineWidth', 2);
+    for iline = 1:Nlines
+      line(X, Y(:,iline), 'LineWidth', 2, 'Color', str2rgb(Lcolors{iline}));
+    end
   else
-    plot(X, Y, 'LineWidth', 2);
+    for iline = 1:Nlines
+      line(X, Y(:,iline), 'LineWidth', 2, 'Color', str2rgb(Lcolors{iline}));
+    end
   end
 
   set(Paxes, 'FontSize', Fsize);
@@ -33,4 +42,5 @@ function [] = PlotDpFigTseries(Paxes, X, Y, Pmarker, Ptitle, Ylabel, Yscale, Yli
     legend(LegText, 'Location', LegLoc);
   end
 
+  hold off;
 end

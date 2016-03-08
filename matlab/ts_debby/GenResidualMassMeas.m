@@ -104,6 +104,13 @@ function [ ] = GenResidualMassMeas()
 
       TS_MDRES_RMVD = TS_MD_RMVD - (TS_MDRGN + TS_MDHY + TS_MDSFC);
       TS_MDRES_RMVD_HLEV = TS_MD_RMVD_HLEV - (TS_MDRGN_HLEV + TS_MDHY_HLEV);
+
+      % Calculate rates: d(residual) / d(time)
+      TS_MDRES_RATE = (TS_MDRES(2:end) - TS_MDRES(1:end-1)) ./ (T(2:end) - T(1:end-1));
+      TS_MDRES_HLEV_RATE = (TS_MDRES_HLEV(2:end) - TS_MDRES_HLEV(1:end-1)) ./ (T(2:end) - T(1:end-1));
+
+      TS_MDRES_RMVD_RATE = (TS_MDRES_RMVD(2:end) - TS_MDRES_RMVD(1:end-1)) ./ (T(2:end) - T(1:end-1));
+      TS_MDRES_RMVD_HLEV_RATE = (TS_MDRES_RMVD_HLEV(2:end) - TS_MDRES_RMVD_HLEV(1:end-1)) ./ (T(2:end) - T(1:end-1));
   
       % Write out results
       Vsize = Nt;
@@ -147,6 +154,36 @@ function [ ] = GenResidualMassMeas()
       fprintf('  Writing: %s (%s)\n', OutFile, OutVname);
       h5create(OutFile, OutVname, Vsize);
       h5write(OutFile, OutVname, TS_MDRES_RMVD_HLEV);
+      AttachDimensionsXyzt(OutFile, OutVname, DimOrder, Xname, Yname, Zname, Tname);
+
+      %%%%% RATES %%%%%%
+      Vsize = Nt-1;
+      % residual, all levels
+      OutVname = sprintf('/%s_residual_total_mass_rate', Vprefix);
+      fprintf('  Writing: %s (%s)\n', OutFile, OutVname);
+      h5create(OutFile, OutVname, Vsize);
+      h5write(OutFile, OutVname, TS_MDRES_RATE);
+      AttachDimensionsXyzt(OutFile, OutVname, DimOrder, Xname, Yname, Zname, Tname);
+  
+      % residual, upper levels
+      OutVname = sprintf('/%s_residual_total_mass_hlev_rate', Vprefix);
+      fprintf('  Writing: %s (%s)\n', OutFile, OutVname);
+      h5create(OutFile, OutVname, Vsize);
+      h5write(OutFile, OutVname, TS_MDRES_HLEV_RATE);
+      AttachDimensionsXyzt(OutFile, OutVname, DimOrder, Xname, Yname, Zname, Tname);
+  
+      % residual removed, all levels
+      OutVname = sprintf('/%s_residual_rmvd_total_mass_rate', Vprefix);
+      fprintf('  Writing: %s (%s)\n', OutFile, OutVname);
+      h5create(OutFile, OutVname, Vsize);
+      h5write(OutFile, OutVname, TS_MDRES_RMVD_RATE);
+      AttachDimensionsXyzt(OutFile, OutVname, DimOrder, Xname, Yname, Zname, Tname);
+  
+      % residual, upper levels
+      OutVname = sprintf('/%s_residual_rmvd_total_mass_hlev_rate', Vprefix);
+      fprintf('  Writing: %s (%s)\n', OutFile, OutVname);
+      h5create(OutFile, OutVname, Vsize);
+      h5write(OutFile, OutVname, TS_MDRES_RMVD_HLEV_RATE);
       AttachDimensionsXyzt(OutFile, OutVname, DimOrder, Xname, Yname, Zname, Tname);
 
       fprintf('\n');

@@ -16,52 +16,52 @@ function [ ] = ReportIntMassNumbers()
     { 'DIAGS/total_mass_<CASE>.h5'    '/sal_dust_sfc_total_mass'   'SAL_AR_L (Sfc to Trop), Deposited to surface:' }
     { 'DIAGS/total_mass_<CASE>.h5'    '/sal_dust_hydro_total_mass' 'SAL_AR_L (Sfc to Trop), Inside hydrometeors:'  }
     { 'DIAGS/total_mass_<CASE>.h5'    '/sal_ra_total_mass'         'SAL_AR_L (Sfc to Trop), Regenerated:'          }
-    { 'DIAGS/residual_mass_<CASE>.h5' '/sal_residual_total_mass'   'SAL_AR_L (Sfc to Trop), Advected (residual):'  }
+    { 'DIAGS/residual_mass_<CASE>.h5' '/sal_residual_rmvd_total_mass'   'SAL_AR_L (Sfc to Trop), Advected (residual):'  }
     { 'LineSpace' '' '' }
 
     { 'DIAGS/total_mass_<CASE>.h5'    '/sal_ar_dust_total_mass'       'SAL_AR_M (Sfc to Trop), Unactivated:'          }
     { 'DIAGS/total_mass_<CASE>.h5'    '/sal_ar_dust_sfc_total_mass'   'SAL_AR_M (Sfc to Trop), Deposited to surface:' }
     { 'DIAGS/total_mass_<CASE>.h5'    '/sal_ar_dust_hydro_total_mass' 'SAL_AR_M (Sfc to Trop), Inside hydrometeors:'  }
     { 'DIAGS/total_mass_<CASE>.h5'    '/sal_ar_ra_total_mass'         'SAL_AR_M (Sfc to Trop), Regenerated:'          }
-    { 'DIAGS/residual_mass_<CASE>.h5' '/sal_ar_residual_total_mass'   'SAL_AR_M (Sfc to Trop), Advected (residual):'  }
+    { 'DIAGS/residual_mass_<CASE>.h5' '/sal_ar_residual_rmvd_total_mass'   'SAL_AR_M (Sfc to Trop), Advected (residual):'  }
     { 'LineSpace' '' '' }
 
     { 'DIAGS/total_mass_<CASE>.h5'    '/spath_dust_total_mass'       'SPATH (Sfc to Trop), Unactivated:'          }
     { 'DIAGS/total_mass_<CASE>.h5'    '/spath_dust_sfc_total_mass'   'SPATH (Sfc to Trop), Deposited to surface:' }
     { 'DIAGS/total_mass_<CASE>.h5'    '/spath_dust_hydro_total_mass' 'SPATH (Sfc to Trop), Inside hydrometeors:'  }
     { 'DIAGS/total_mass_<CASE>.h5'    '/spath_ra_total_mass'         'SPATH (Sfc to Trop), Regenerated:'          }
-    { 'DIAGS/residual_mass_<CASE>.h5' '/spath_residual_total_mass'   'SPATH (Sfc to Trop), Advected (residual):'  }
+    { 'DIAGS/residual_mass_<CASE>.h5' '/spath_residual_rmvd_total_mass'   'SPATH (Sfc to Trop), Advected (residual):'  }
     { 'LineSpace' '' '' }
 
     { 'DIAGS/total_mass_<CASE>.h5'    '/storm_dust_total_mass'       'STORM (Sfc to Trop), Unactivated:'          }
     { 'DIAGS/total_mass_<CASE>.h5'    '/storm_dust_sfc_total_mass'   'STORM (Sfc to Trop), Deposited to surface:' }
     { 'DIAGS/total_mass_<CASE>.h5'    '/storm_dust_hydro_total_mass' 'STORM (Sfc to Trop), Inside hydrometeors:'  }
     { 'DIAGS/total_mass_<CASE>.h5'    '/storm_ra_total_mass'         'STORM (Sfc to Trop), Regenerated:'          }
-    { 'DIAGS/residual_mass_<CASE>.h5' '/storm_residual_total_mass'   'STORM (Sfc to Trop), Advected (residual):'  }
+    { 'DIAGS/residual_mass_<CASE>.h5' '/storm_residual_rmvd_total_mass'   'STORM (Sfc to Trop), Advected (residual):'  }
     { 'LineSpace' '' '' }
 
     { 'DIAGS/total_mass_<CASE>.h5'    '/sal_dust_total_mass_hlev'       'SAL_AR_L (7km to Trop), Unactivated:'          }
     { 'DIAGS/total_mass_<CASE>.h5'    '/sal_dust_hydro_total_mass_hlev' 'SAL_AR_L (7km to Trop), Inside hydrometeors:'  }
     { 'DIAGS/total_mass_<CASE>.h5'    '/sal_ra_total_mass_hlev'         'SAL_AR_L (7km to Trop), Regenerated:'          }
-    { 'DIAGS/residual_mass_<CASE>.h5' '/sal_residual_total_mass_hlev'   'SAL_AR_L (7km to Trop), Advected (residual):'  }
+    { 'DIAGS/residual_mass_<CASE>.h5' '/sal_residual_rmvd_total_mass_hlev'   'SAL_AR_L (7km to Trop), Advected (residual):'  }
     { 'LineSpace' '' '' }
 
     { 'DIAGS/total_mass_<CASE>.h5'    '/sal_ar_dust_total_mass_hlev'       'SAL_AR_M (7km to Trop), Unactivated:'          }
     { 'DIAGS/total_mass_<CASE>.h5'    '/sal_ar_dust_hydro_total_mass_hlev' 'SAL_AR_M (7km to Trop), Inside hydrometeors:'  }
     { 'DIAGS/total_mass_<CASE>.h5'    '/sal_ar_ra_total_mass_hlev'         'SAL_AR_M (7km to Trop), Regenerated:'          }
-    { 'DIAGS/residual_mass_<CASE>.h5' '/sal_ar_residual_total_mass_hlev'   'SAL_AR_M (7km to Trop), Advected (residual):'  }
+    { 'DIAGS/residual_mass_<CASE>.h5' '/sal_ar_residual_rmvd_total_mass_hlev'   'SAL_AR_M (7km to Trop), Advected (residual):'  }
     { 'LineSpace' '' '' }
 
     { 'DIAGS/total_mass_<CASE>.h5'    '/spath_dust_total_mass_hlev'       'SPATH (7km to Trop), Unactivated:'          }
     { 'DIAGS/total_mass_<CASE>.h5'    '/spath_dust_hydro_total_mass_hlev' 'SPATH (7km to Trop), Inside hydrometeors:'  }
     { 'DIAGS/total_mass_<CASE>.h5'    '/spath_ra_total_mass_hlev'         'SPATH (7km to Trop), Regenerated:'          }
-    { 'DIAGS/residual_mass_<CASE>.h5' '/spath_residual_total_mass_hlev'   'SPATH (7km to Trop), Advected (residual):'  }
+    { 'DIAGS/residual_mass_<CASE>.h5' '/spath_residual_rmvd_total_mass_hlev'   'SPATH (7km to Trop), Advected (residual):'  }
     { 'LineSpace' '' '' }
 
     { 'DIAGS/total_mass_<CASE>.h5'    '/storm_dust_total_mass_hlev'       'STORM (7km to Trop), Unactivated:'          }
     { 'DIAGS/total_mass_<CASE>.h5'    '/storm_dust_hydro_total_mass_hlev' 'STORM (7km to Trop), Inside hydrometeors:'  }
     { 'DIAGS/total_mass_<CASE>.h5'    '/storm_ra_total_mass_hlev'         'STORM (7km to Trop), Regenerated:'          }
-    { 'DIAGS/residual_mass_<CASE>.h5' '/storm_residual_total_mass_hlev'   'STORM (7km to Trop), Advected (residual):'  }
+    { 'DIAGS/residual_mass_<CASE>.h5' '/storm_residual_rmvd_total_mass_hlev'   'STORM (7km to Trop), Advected (residual):'  }
     { 'LineSpace' '' '' }
 
     };
