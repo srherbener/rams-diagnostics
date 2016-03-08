@@ -95,6 +95,15 @@ function [ ] = GenResidualMassMeas()
       % Mdsfc is only for sfc to tropopause integrated values
       TS_MDRES = TS_MD - (TS_MDRGN + TS_MDHY + TS_MDSFC);
       TS_MDRES_HLEV = TS_MD_HLEV - (TS_MDRGN_HLEV + TS_MDHY_HLEV);
+
+      % MD_RMVD is time series of removed amount of dust (from original amount)
+      % residual removed is = MD_RMVD - (Mdrgn + Mdhy + Mdsfc)
+      % Mdsfc is only for sfc to tropopause integrated values
+      TS_MD_RMVD = TS_MD(1) - TS_MD;
+      TS_MD_RMVD_HLEV = TS_MD_HLEV(1) - TS_MD_HLEV;
+
+      TS_MDRES_RMVD = TS_MD_RMVD - (TS_MDRGN + TS_MDHY + TS_MDSFC);
+      TS_MDRES_RMVD_HLEV = TS_MD_RMVD_HLEV - (TS_MDRGN_HLEV + TS_MDHY_HLEV);
   
       % Write out results
       Vsize = Nt;
@@ -126,6 +135,20 @@ function [ ] = GenResidualMassMeas()
       h5write(OutFile, OutVname, TS_MDRES_HLEV);
       AttachDimensionsXyzt(OutFile, OutVname, DimOrder, Xname, Yname, Zname, Tname);
   
+      % residual removed, all levels
+      OutVname = sprintf('/%s_residual_rmvd_total_mass', Vprefix);
+      fprintf('  Writing: %s (%s)\n', OutFile, OutVname);
+      h5create(OutFile, OutVname, Vsize);
+      h5write(OutFile, OutVname, TS_MDRES_RMVD);
+      AttachDimensionsXyzt(OutFile, OutVname, DimOrder, Xname, Yname, Zname, Tname);
+  
+      % residual, upper levels
+      OutVname = sprintf('/%s_residual_rmvd_total_mass_hlev', Vprefix);
+      fprintf('  Writing: %s (%s)\n', OutFile, OutVname);
+      h5create(OutFile, OutVname, Vsize);
+      h5write(OutFile, OutVname, TS_MDRES_RMVD_HLEV);
+      AttachDimensionsXyzt(OutFile, OutVname, DimOrder, Xname, Yname, Zname, Tname);
+
       fprintf('\n');
     end
   end

@@ -199,9 +199,9 @@ function [ ] = GenTotalMassMeas()
 
         % Do the vertical integration (summation)
         % k = 2 is first level above surface
-        MEAS = sum(HDATA(2:Z2,:) .* DELTA_Z(2:Z2,:));
-        MEAS_LLEV = sum(HDATA(2:Z1-1,:) .* DELTA_Z(2:Z1-1,:));
-        MEAS_HLEV = sum(HDATA(Z1:Z2,:) .* DELTA_Z(Z1:Z2,:));
+        MEAS = squeeze(sum(HDATA(2:Z2,:) .* DELTA_Z(2:Z2,:)))';            % transpose so dims match those of T
+        MEAS_LLEV = squeeze(sum(HDATA(2:Z1-1,:) .* DELTA_Z(2:Z1-1,:)))';
+        MEAS_HLEV = squeeze(sum(HDATA(Z1:Z2,:) .* DELTA_Z(Z1:Z2,:)))';
       else
         MEAS = HDATA;
         MEAS_LLEV = HDATA; % dummy placeholder since no z structure
@@ -212,6 +212,11 @@ function [ ] = GenTotalMassMeas()
       MEAS = MEAS .* HorizArea;
       MEAS_LLEV = MEAS_LLEV .* HorizArea;
       MEAS_HLEV = MEAS_HLEV .* HorizArea;
+
+      % Calculate rates too, ie the change in dust mass divided by change in time
+      MEAS_RATE = (MEAS(2:end) - MEAS(1:end-1)) ./ (T(2:end) - T(1:end-1));
+      MEAS_LLEV_RATE = (MEAS_LLEV(2:end) - MEAS_LLEV(1:end-1)) ./ (T(2:end) - T(1:end-1));
+      MEAS_HLEV_RATE = (MEAS_HLEV(2:end) - MEAS_HLEV(1:end-1)) ./ (T(2:end) - T(1:end-1));
 
       % If this is the first set, write out the coordinates into the output file
       % so that subsequent variables can have these coordinates attached.
@@ -245,23 +250,45 @@ function [ ] = GenTotalMassMeas()
       Vsize = Nt;
       DimOrder = { 't' };
 
-      fprintf('  Writing: %s (%s)\n', OutFile, OutVname);
-      h5create(OutFile, OutVname, Vsize);
-      h5write(OutFile, OutVname, MEAS);
+      % Instantaneous values
+      Ovname = OutVname;
+      fprintf('  Writing: %s (%s)\n', OutFile, Ovname);
+      h5create(OutFile, Ovname, Vsize);
+      h5write(OutFile, Ovname, MEAS);
+      AttachDimensionsXyzt(OutFile, Ovname, DimOrder, Xname, Yname, Zname, Tname);
 
-      OutLlevVname = sprintf('%s_llev', OutVname);
-      fprintf('  Writing: %s (%s)\n', OutFile, OutLlevVname);
-      h5create(OutFile, OutLlevVname, Vsize);
-      h5write(OutFile, OutLlevVname, MEAS_LLEV);
+      Ovname = sprintf('%s_llev', OutVname);
+      fprintf('  Writing: %s (%s)\n', OutFile, Ovname);
+      h5create(OutFile, Ovname, Vsize);
+      h5write(OutFile, Ovname, MEAS_LLEV);
+      AttachDimensionsXyzt(OutFile, Ovname, DimOrder, Xname, Yname, Zname, Tname);
 
-      OutHlevVname = sprintf('%s_hlev', OutVname);
-      fprintf('  Writing: %s (%s)\n', OutFile, OutHlevVname);
-      h5create(OutFile, OutHlevVname, Vsize);
-      h5write(OutFile, OutHlevVname, MEAS_HLEV);
+      Ovname = sprintf('%s_hlev', OutVname);
+      fprintf('  Writing: %s (%s)\n', OutFile, Ovname);
+      h5create(OutFile, Ovname, Vsize);
+      h5write(OutFile, Ovname, MEAS_HLEV);
+      AttachDimensionsXyzt(OutFile, Ovname, DimOrder, Xname, Yname, Zname, Tname);
 
-      AttachDimensionsXyzt(OutFile, OutVname, DimOrder, Xname, Yname, Zname, Tname);
-      AttachDimensionsXyzt(OutFile, OutLlevVname, DimOrder, Xname, Yname, Zname, Tname);
-      AttachDimensionsXyzt(OutFile, OutHlevVname, DimOrder, Xname, Yname, Zname, Tname);
+      % RATES
+      Vsize = Nt-1;
+
+      Ovname = sprintf('%s_rate', OutVname);
+      fprintf('  Writing: %s (%s)\n', OutFile, Ovname);
+      h5create(OutFile, Ovname, Vsize);
+      h5write(OutFile, Ovname, MEAS_RATE);
+      AttachDimensionsXyzt(OutFile, Ovname, DimOrder, Xname, Yname, Zname, Tname);
+
+      Ovname = sprintf('%s_llev_rate', OutVname);
+      fprintf('  Writing: %s (%s)\n', OutFile, Ovname);
+      h5create(OutFile, Ovname, Vsize);
+      h5write(OutFile, Ovname, MEAS_LLEV_RATE);
+      AttachDimensionsXyzt(OutFile, Ovname, DimOrder, Xname, Yname, Zname, Tname);
+
+      Ovname = sprintf('%s_hlev_rate', OutVname);
+      fprintf('  Writing: %s (%s)\n', OutFile, Ovname);
+      h5create(OutFile, Ovname, Vsize);
+      h5write(OutFile, Ovname, MEAS_HLEV_RATE);
+      AttachDimensionsXyzt(OutFile, Ovname, DimOrder, Xname, Yname, Zname, Tname);
 
       fprintf('\n');
     end
