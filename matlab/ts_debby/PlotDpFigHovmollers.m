@@ -32,15 +32,15 @@ function [ ] = PlotDpFigHovmollers()
 
   % Md
   Paxes = subplot(3,1,1);
-  PlotDpFigDustHov(Paxes, T, Z, HOV_DUST, 'a', 'SAL\_AR: M_d', Fsize, 0, 1, 0, 2);
+  PlotDpFigDustHov(Paxes, T, Z, HOV_DUST, 'a', 'M_d', Fsize, 0, 1, 0, 2);
 
   % Mdhy
   Paxes = subplot(3,1,2);
-  PlotDpFigDustHov(Paxes, T, Z, HOV_DHY, 'b', 'SAL\_AR: M_d_h_y', Fsize, 0, 1, 0, 0);
+  PlotDpFigDustHov(Paxes, T, Z, HOV_DHY, 'b', 'M_d_h_y', Fsize, 0, 1, 0, 0);
 
   % Mdrgn
   Paxes = subplot(3,1,3);
-  PlotDpFigDustHov(Paxes, T, Z, HOV_DRGN, 'c', 'SAL\_AR: M_d_r_g_n', Fsize, 1, 1, 0, 1);
+  PlotDpFigDustHov(Paxes, T, Z, HOV_DRGN, 'c', 'M_d_r_g_n', Fsize, 1, 1, 0, 1);
   
   OutFile = sprintf('%s/DpFig2_Hovmollers.jpg', Pdir);
   fprintf('Writing: %s\n', OutFile);

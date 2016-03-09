@@ -7,14 +7,8 @@ function [] = PlotDpFigTseries(Paxes, X, Y, Lcolors, Pmarker, Ptitle, Ylabel, Ys
 
   set(Paxes, 'Yscale', Yscale);
   hold on;
-  if (strcmp(Yscale, 'log'))
-    for iline = 1:Nlines
-      line(X, Y(:,iline), 'LineWidth', 2, 'Color', str2rgb(Lcolors{iline}));
-    end
-  else
-    for iline = 1:Nlines
-      line(X, Y(:,iline), 'LineWidth', 2, 'Color', str2rgb(Lcolors{iline}));
-    end
+  for iline = 1:Nlines
+    line(X, Y(:,iline), 'LineWidth', 2, 'Color', str2rgb(Lcolors{iline}));
   end
 
   set(Paxes, 'FontSize', Fsize);
@@ -26,6 +20,10 @@ function [] = PlotDpFigTseries(Paxes, X, Y, Lcolors, Pmarker, Ptitle, Ylabel, Ys
     set(Paxes, 'XTickLabel', { ' 12Z\newline22Aug' '  0Z\newline23Aug' ' 12Z\newline23Aug' '  0Z\newline24Aug' ' 12Z\newline24Aug' });
   else
     set(Paxes, 'XTickLabel', {});
+  end
+
+  if (strcmp(Yscale,'log'))
+    set(Paxes, 'Ytick', [ 1e-6 1e-5 1e-4 1e-3 1e-2 1e-1 1 ]);
   end
 
   ylabel(Ylabel);
