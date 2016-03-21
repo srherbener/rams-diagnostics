@@ -1,0 +1,125 @@
+#!/usr/bin/env perl
+#
+# Script to run azavg on a list of simulation cases
+#
+
+BEGIN { push(@INC, "$ENV{HOME}/etc/perl"); }
+
+use strict;
+use File::Basename;
+use DiagUtils;
+
+#######################################################################
+# SUBROUTINES
+#######################################################################
+
+#######################################################################
+# MAIN
+#######################################################################
+
+my $ConfigFile;
+my $Nprocs;
+
+my $Config;
+
+my @CaseList;
+my $Case;
+
+my %AzavgJobs;
+my $Aname;
+my $NumRbands;
+my $MaxRadius;
+my $DoHist;
+my $SubSmotion;
+my $InType;
+my @FileList;
+my $FileSpec;
+my $ifile;
+
+my @AzavgCmds;
+my $icmd;
+
+my @SysArgs;
+my $iarg;
+
+my $ilog;
+my $LogFile;
+my $Pid;
+
+if ($#ARGV != 1)
+  {
+  print "ERROR: must supply exactly two arguments\n";
+  print "\n";
+  print "USAGE: run_azavg <ConfigFile> <NumberProcesses>\n";
+  exit -1;
+  }
+
+$ConfigFile = $ARGV[0];
+$Nprocs = $ARGV[1];
+
+print "Run azavg diagnostic jobs\n";
+print "  Configuration file: $ConfigFile\n";
+print "  Number of processes: $Nprocs\n";
+print "\n";
+
+# Read in info from the config file.
+($Config) = &DiagUtils::ReadDiagConfigFile($ConfigFile);
+
+# Walk through all cases and all azavg jobs and construct the
+# corresponding list of azavg commands. 
+#
+# Divide the total number of azavg commands evenly by the 
+# requested number of processes and run each subset in
+# separate processes.
+
+@CaseList = @{ $$Config{CASE_LIST} };
+%AzavgJobs = %{ $$Config{AZAVG} };
+
+foreach $Case (@CaseList)
+  {
+  foreach $Aname (sort(keys(%AzavgJobs)))
+    {
+    # Grab the job specs
+    $NumRbands  = $AzavgJobs{$Aname}{NUM_RBANDS};
+    $MaxRadius  = $AzavgJobs{$Aname}{MAX_RADIUS};
+    $DoHist     = $AzavgJobs{$Aname}{DO_HIST};
+    $SubSmotion = $AzavgJobs{$Aname}{SUB_SMOTION};
+    $InType     = $AzavgJobs{$Aname}{IN_TYPE};
+    @FileList   = @{ $AzavgJobs{$Aname}{FILE_LIST} };
+
+    $iarg = 0;
+    undef @SysArgs;
+    $SysArgs[$iarg++] = "azavg"; 
+    $SysArgs[$iarg++] = "-b";
+    $SysArgs[$iarg++] = "$NumRbands";
+    $SysArgs[$iarg++] = "-r";
+    $SysArgs[$iarg++] = "$MaxRadius";
+    if ($DoHist =~ /[Yy][Ee][Ss]/)
+      {
+      $SysArgs[$iarg++] = "-h";
+      }
+    if ($SubSmotion =~ /[Yy][Ee][Ss]/)
+      {
+      $SysArgs[$iarg++] = "-m";
+      }
+    if (($InType eq "h_tan") || ($InType eq "h_rad"))
+      {
+      $SysArgs[$iarg++] = "-t";
+      $SysArgs[$iarg++] = "$InType";
+      }
+    foreach $ifile (0 .. $#FileList)
+      {
+      $FileSpec = $FileList[$ifile];
+      $FileSpec =~ s/<CASE>/$Case/g;
+      $SysArgs[$iarg++] = $FileSpec;
+      }
+
+    # Add the command line to the main list
+    $AzavgCmds[$icmd++] = [ @SysArgs ];
+    }
+  }
+
+# Submit the jobs
+&DiagUtils::SubmitParallelJobs(\@AzavgCmds, $Nprocs, "azavg");
+
+exit 0;
