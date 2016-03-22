@@ -156,11 +156,12 @@ program gen_adv
   !  Default is k = 2 and k = Nz - 1 for bottom and top
   !  If zmin is spec'd, then use first k level that is >= to zmin for the bottom
   !  If zmax is spec'd, then use last k level that is <= to zmax for the top
+  !  When searching for Kbot and Ktop, make sure that range is restricted to: 2 through Nz-1
   Kbot = 2
   Ktop = Nz - 1
 
   if (Args%Zmin .ge. 0.0) then
-    do iz = 1, Nz
+    do iz = 2, Nz-1
       if (Zcoords%vdata(iz)/1000.0 .ge. Args%Zmin) then
         exit
       endif
@@ -169,7 +170,7 @@ program gen_adv
   endif
   
   if (Args%Zmax .ge. 0.0) then
-    do iz = Nz, 1, -1
+    do iz = Nz-1, 2, -1
       if (Zcoords%vdata(iz)/1000.0 .le. Args%Zmax) then
         exit
       endif
@@ -503,6 +504,8 @@ end subroutine GetMyArgs
 !
 !  y(1)  - sum of advective terms
 !  y(2)  - count of grids cells used in sum of advective terms
+!
+! Ktop and Kbot have been restricted to the range 2 through Nz-1 so no need to check this.
 
 subroutine SumAdvectionTerms(Nx, Ny, Nz, FilterNz, X, Y, Z, Filter, U, V, W, Var, Advect, Kbot, Ktop);
   implicit none
@@ -519,11 +522,7 @@ subroutine SumAdvectionTerms(Nx, Ny, Nz, FilterNz, X, Y, Z, Filter, U, V, W, Var
   integer :: ix, iy, iz, filter_iz
   logical :: OnWest, OnEast, OnSouth, OnNorth, OnBot, OnTop
   real :: Var1, Var2
-  real :: DeltaX, DeltaY, GridVol
-
-  ! assume that x and y spacing are constant, but z spacing can vary
-  DeltaX = X(2) - X(1)
-  DeltaY = Y(2) - Y(1)
+  real :: DeltaX, DeltaY, DeltaZ, DeltaVar
 
   Advect = 0.0
 
@@ -534,22 +533,48 @@ subroutine SumAdvectionTerms(Nx, Ny, Nz, FilterNz, X, Y, Z, Filter, U, V, W, Var
       filter_iz = iz
     endif
 
-    ! set the 
-    if (iz .eq. Nz) then
-      ! assume at the top of the domain that the z spacing matches
-      ! the level one below
-      GridVol = DeltaX * DeltaY * (Z(Nz) - Z(Nz-1))
-    else
-      GridVol = DeltaX * DeltaY * (Z(iz+1) - Z(iz))
-    endif
+    ! The active region of the domain is from 2 to Nx-1, and 2 to Ny-1.
+    !
+    ! Allow the horizontal edges (x,y directions) to vary, but assume that Kbot and Ktop
+    ! remain constant across the entire top and bottom faces.
+    !
+    ! In x direction, indices 1 and Nx are boundaries which may have 1's in the filter.
+    ! So if sitting on index 2, you want this to be called the West edge if the
+    ! filter has a 1 regardless  of the value in index 1 so test for this case.  Same for
+    ! index Nx-1 and identidification of the East edge.
+    !
+    ! In the x direction the RAMS staggered grid looks like:
+    !             T  U  T  U  T  U  T  U  T  U  T  U
+    ! index:      1  1  2  2  3  3  4  4  5  5  6  6
+    !
+    !   T represents Var
+    !
+    ! In this example Nx = 6. The domain goes from 2 through 5, and indices 1 and 6 are
+    ! the boundaries. Note that the U value at index 6 is extraneous - it's only included
+    ! so that the arrays for T and U are consistent size. For the east edge you want the
+    ! value of U from the cell to the left, U(ix-1), and for the west edge you want the
+    ! value of U from the current cell, U(ix). Then you want to average the surrounding T
+    ! values onto the location of U.
+    !
+    ! If the edge of the filter region is the same as the edge of the active domain, then
+    ! zero-gradient boundary conditions will force the advection terms to zero. Don't want
+    ! this on lateral boundaries so the solution is to calculate the advection between the
+    ! cell you are on and the adjacent cell that is toward the center of the domain
+    ! (away from the boundary). This can be automatically handled by constraining the
+    ! x and y indicies to the range: 3 to N-2. Then the code below that does the advection
+    ! calculation will use the correct edge.
+    ! 
+    ! If Kbot is 2, we would actually want the zero advection values, so it's okay to allow
+    ! Kbot to be 2. It doesn't make sense to place Ktop at Nz-1 since this would likely be
+    ! in the sponge layer.
 
-    do iy = 1, Ny
-      do ix = 1, Nx
-        ! check if on west edge or east face
-        if (ix .eq. 1) then
+    do iy = 3, Ny-2
+      do ix = 3, Nx-2
+        ! check if on west or east edges
+        if (ix .eq. 3) then
           OnWest = (anint(Filter(ix,iy,filter_iz)) .eq. 1.0)
           OnEast = .false.
-        elseif (ix .eq. Nx) then
+        elseif (ix .eq. Nx-2) then
           OnWest = .false.
           OnEast = (anint(Filter(ix,iy,filter_iz)) .eq. 1.0)
         else
@@ -559,11 +584,11 @@ subroutine SumAdvectionTerms(Nx, Ny, Nz, FilterNz, X, Y, Z, Filter, U, V, W, Var
                     (anint(Filter(ix+1,iy,filter_iz)) .eq. 0.0))
         endif
 
-        ! check if on south edge or north face
-        if (iy .eq. 1) then
+        ! check if on south or north edges
+        if (iy .eq. 3) then
           OnSouth = (anint(Filter(ix,iy,filter_iz)) .eq. 1.0)
           OnNorth = .false.
-        elseif (iy .eq. Ny) then
+        elseif (iy .eq. Ny-2) then
           OnSouth = .false.
           OnNorth = (anint(Filter(ix,iy,filter_iz)) .eq. 1.0)
         else
@@ -573,21 +598,62 @@ subroutine SumAdvectionTerms(Nx, Ny, Nz, FilterNz, X, Y, Z, Filter, U, V, W, Var
                     (anint(Filter(ix,iy+1,filter_iz)) .eq. 0.0))
         endif
 
-        ! check if on bottom or top face
+        ! check if on bottom or top edges
         OnBot = ((iz .eq. Kbot) .and. (anint(Filter(ix,iy,filter_iz)) .eq. 1.0))
         OnTop = ((iz .eq. Ktop) .and. (anint(Filter(ix,iy,filter_iz)) .eq. 1.0))
 
         ! If on any of the 6 faces, calculate the grid cell advection term
         ! add to the running sum and count.
-        if (OnWest) then
-          if (ix .eq. 1) then
-            Var1 = Var(ix,iy,iz)
-          else
-            Var1 = (Var(ix-1,iy,iz) + Var(ix,iy,iz)) * 0.5
-          endif
-          Var2 = (Var(ix,iy,iz) + Var(ix+1,iy,iz)) * 0.5
 
-          Advect(1,1,1) = Advect(1,1,1) + (U(ix,iy,iz) * (Var2-Var1)/(DeltaX))
+        ! X - axis
+        if (OnWest) then
+          DeltaX = X(ix) - X(ix-1)
+          DeltaVar = Var(ix,iy,iz) - Var(ix-1,iy,iz)
+
+          Advect(1,1,1) = Advect(1,1,1) + (U(ix-1,iy,iz) * (DeltaVar/DeltaX))
+          Advect(1,2,1) = Advect(1,2,1) + 1.0
+        endif
+
+        if (OnEast) then
+          DeltaX = X(ix+1) - X(ix)
+          DeltaVar = Var(ix+1,iy,iz) - Var(ix,iy,iz)
+
+          Advect(2,1,1) = Advect(2,1,1) + (U(ix,iy,iz) * (DeltaVar/DeltaX))
+          Advect(2,2,1) = Advect(2,2,1) + 1.0
+        endif
+
+        ! Y - axis
+        if (OnSouth) then
+          DeltaY = Y(iy) - Y(iy-1)
+          DeltaVar = Var(ix,iy,iz) - Var(ix,iy-1,iz)
+
+          Advect(3,1,1) = Advect(3,1,1) + (V(ix,iy-1,iz) * (DeltaVar/DeltaY))
+          Advect(3,2,1) = Advect(3,2,1) + 1.0
+        endif
+
+        if (OnNorth) then
+          DeltaY = Y(iy+1) - Y(iy)
+          DeltaVar = Var(ix,iy+1,iz) - Var(ix,iy,iz)
+
+          Advect(4,1,1) = Advect(4,1,1) + (V(ix,iy,iz) * (DeltaVar/DeltaY))
+          Advect(4,2,1) = Advect(4,2,1) + 1.0
+        endif
+
+        ! Z - axis
+        if (OnBot) then
+          DeltaZ = Z(iz) - Z(iz-1)
+          DeltaVar = Var(ix,iy,iz) - Var(ix,iy,iz-1)
+
+          Advect(5,1,1) = Advect(5,1,1) + (W(ix,iy,iz-1) * (DeltaVar/DeltaZ))
+          Advect(5,2,1) = Advect(5,2,1) + 1.0
+        endif
+
+        if (OnTop) then
+          DeltaZ = Z(iz+1) - Z(iz)
+          DeltaVar = Var(ix,iy,iz) - Var(ix,iy,iz+1)
+
+          Advect(6,1,1) = Advect(6,1,1) + (W(ix,iy,iz) * (DeltaVar/DeltaZ))
+          Advect(6,2,1) = Advect(6,2,1) + 1.0
         endif
 
       enddo

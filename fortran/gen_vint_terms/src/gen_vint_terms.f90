@@ -310,38 +310,59 @@ subroutine CalcVintTerms(Nx, Ny, Nz, Xcoords, Ycoords, Zcoords, Var, VintTerms);
 
   integer :: ix, iy, iz
   real :: dX, dY, dZ
-  real :: GridVol
 
-  do iz = 1, Nz
-    ! Use the Nz-1 interval for delta z when at the top
-    ! of the domain. This is the case for 99% of RAMS configurations
-    if (iz .eq. Nz) then
-      dZ = Zcoords(Nz) - Zcoords(Nz-1)
-    else
-      dZ = Zcoords(iz+1) - Zcoords(iz)
-    endif
+  ! dX and dY change slightly across the horizontal domain due to the distortion
+  ! that comes from mapping spherical lat,lon to planar x,y. These changes mess up
+  ! the zero-gradient boundary conditions that were used in the RAMS simulations. To
+  ! correct for this, calculate from 2 to Nx-1 and 2 to Ny-1 and then copy the interior
+  ! rows to their correpsonding boundary rows.
 
-    do iy = 1, Ny
-      ! Use the Ny-1 interval for delta y when at the north edge of the
-      ! of the domain.
-      if (iy .eq. Ny) then
-        dY = Ycoords(Ny) - Ycoords(Ny-1)
-      else
-        dY = Ycoords(iy+1) - Ycoords(iy)
-      endif
+  ! do the active part of the grid
+  do iz = 2, Nz-1
+    ! Z coordinate value is in the center of the grid cell
+    dZ = ((Zcoords(iz+1) + Zcoords(iz)) * 0.5) -  ((Zcoords(iz) + Zcoords(iz-1)) * 0.5)
 
-      do ix = 1, Nx
-        ! Use the Nx-1 interval for delta x when at the east edge of the
-        ! of the domain.
-        if (ix .eq. Nx) then
-          dX = Xcoords(Nx) - Xcoords(Nx-1)
-        else
-          dX = Xcoords(ix+1) - Xcoords(ix)
-        endif
+    do iy = 2, Ny-1
+      ! y coordinate value is in the center of the grid cell
+      dY = ((Ycoords(iy+1) + Ycoords(iy)) * 0.5) -  ((Ycoords(iy) + Ycoords(iy-1)) * 0.5)
+
+      do ix = 2, Nx-1
+        ! x coordinate value is in the center of the grid cell
+        dX = ((Xcoords(ix+1) + Xcoords(ix)) * 0.5) -  ((Xcoords(ix) + Xcoords(ix-1)) * 0.5)
 
         VintTerms(ix,iy,iz) = Var(ix,iy,iz) * dX * dY * dZ
 
       enddo
+    enddo
+  enddo
+
+  ! Copy active grid edges into the adjacent boundary locations.
+  ! Do the horizontal copies first so that the correct values get copied
+  ! to the z = 1 and z = Nz levels.
+  do iz = 2, Nz-1
+    do iy = 2, Ny-1
+      VintTerms(1,iy,iz) = VintTerms(2,iy,iz)
+      VintTerms(Nx,iy,iz) = VintTerms(Nx-1,iy,iz)
+    enddo
+
+    do ix = 2, Nx-1
+      VintTerms(ix,1,iz) = VintTerms(ix,2,iz)
+      VintTerms(ix,Ny,iz) = VintTerms(ix,Ny-1,iz)
+    enddo
+
+    ! fill in the corners, copy from the corner cells of
+    ! the active grid to the corner cells of the total grid
+    VintTerms(1,1,iz) = VintTerms(2,2,iz)
+    VintTerms(1,Ny,iz) = VintTerms(2,Ny-1,iz)
+    VintTerms(Nx,1,iz) = VintTerms(Nx-1,2,iz)
+    VintTerms(Nx,Ny,iz) = VintTerms(Nx-1,Ny-1,iz)
+  enddo
+
+  ! Copy z = 2 level to z = 1, and z = Nz-1 to z = Nz
+  do iy = 1, Ny
+    do ix = 1, Nx
+      VintTerms(ix,iy,1) = VintTerms(ix,iy,2)
+      VintTerms(ix,iy,Nz) = VintTerms(ix,iy,Nz-1)
     enddo
   enddo
   
