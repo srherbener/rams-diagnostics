@@ -20,6 +20,7 @@ SCRIPTS = \
   $(DEST)/PlotDpFigDustHov.m \
   $(DEST)/PlotDpFigTseries.m \
   $(DEST)/ExtractSampleProfile.m \
+  $(DEST)/GenDustAdvection.m \
   $(DEST)/GenTotalMassMeas.m \
   $(DEST)/GenResidualMassMeas.m \
   $(DEST)/GenAzHistSumsCounts.m \
