@@ -231,6 +231,16 @@ sub ReadDiagConfigFile
       $Config{XSECTION}{$f[1]}{LINE_SPEC}   = $f[3];
       $Config{XSECTION}{$f[1]}{FILE_LIST}   = [ @f[4..$#f] ];
       }
+    elsif ($f[0] eq "Advect:")
+      {
+      $Config{ADVECT}{$f[1]}{ZMIN}        = $f[2];
+      $Config{ADVECT}{$f[1]}{ZMAX}        = $f[3];
+      $Config{ADVECT}{$f[1]}{FILE_LIST}   = [ @f[4..$#f] ];
+      }
+    elsif ($f[0] eq "VintTerms:")
+      {
+      $Config{VINT_TERMS}{$f[1]}{FILE_LIST}   = [ @f[2..$#f] ];
+      }
   }
 
   return(\%Config);

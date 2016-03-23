@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 #
-# Script to run azavg on a list of simulation cases
+# Script to run gen_vint_terms on a list of simulation cases
 #
 
 BEGIN { push(@INC, "$ENV{HOME}/etc/perl"); }
@@ -25,18 +25,13 @@ my $Config;
 my @CaseList;
 my $Case;
 
-my %AzavgJobs;
+my %VtermsJobs;
 my $Aname;
-my $NumRbands;
-my $MaxRadius;
-my $DoHist;
-my $SubSmotion;
-my $InType;
 my @FileList;
 my $FileSpec;
 my $ifile;
 
-my @AzavgCmds;
+my @VtermsCmds;
 my $icmd;
 
 my @SysArgs;
@@ -73,40 +68,18 @@ print "\n";
 # separate processes.
 
 @CaseList = @{ $$Config{CASE_LIST} };
-%AzavgJobs = %{ $$Config{AZAVG} };
+%VtermsJobs = %{ $$Config{VINT_TERMS} };
 
 foreach $Case (@CaseList)
   {
-  foreach $Aname (sort(keys(%AzavgJobs)))
+  foreach $Aname (sort(keys(%VtermsJobs)))
     {
     # Grab the job specs
-    $NumRbands  = $AzavgJobs{$Aname}{NUM_RBANDS};
-    $MaxRadius  = $AzavgJobs{$Aname}{MAX_RADIUS};
-    $DoHist     = $AzavgJobs{$Aname}{DO_HIST};
-    $SubSmotion = $AzavgJobs{$Aname}{SUB_SMOTION};
-    $InType     = $AzavgJobs{$Aname}{IN_TYPE};
-    @FileList   = @{ $AzavgJobs{$Aname}{FILE_LIST} };
+    @FileList   = @{ $VtermsJobs{$Aname}{FILE_LIST} };
 
     $iarg = 0;
     undef @SysArgs;
-    $SysArgs[$iarg++] = "azavg"; 
-    $SysArgs[$iarg++] = "-b";
-    $SysArgs[$iarg++] = "$NumRbands";
-    $SysArgs[$iarg++] = "-r";
-    $SysArgs[$iarg++] = "$MaxRadius";
-    if ($DoHist =~ /[Yy][Ee][Ss]/)
-      {
-      $SysArgs[$iarg++] = "-h";
-      }
-    if ($SubSmotion =~ /[Yy][Ee][Ss]/)
-      {
-      $SysArgs[$iarg++] = "-m";
-      }
-    if (($InType eq "h_tan") || ($InType eq "h_rad"))
-      {
-      $SysArgs[$iarg++] = "-t";
-      $SysArgs[$iarg++] = "$InType";
-      }
+    $SysArgs[$iarg++] = "gen_vint_terms"; 
     foreach $ifile (0 .. $#FileList)
       {
       $FileSpec = $FileList[$ifile];
@@ -115,11 +88,11 @@ foreach $Case (@CaseList)
       }
 
     # Add the command line to the main list
-    $AzavgCmds[$icmd++] = [ @SysArgs ];
+    $VtermsCmds[$icmd++] = [ @SysArgs ];
     }
   }
 
 # Submit the jobs
-&DiagUtils::SubmitParallelJobs(\@AzavgCmds, $Nprocs, "azavg");
+&DiagUtils::SubmitParallelJobs(\@VtermsCmds, $Nprocs, "vterms");
 
 exit 0;
