@@ -604,13 +604,21 @@ subroutine SumAdvectionTerms(Nx, Ny, Nz, FilterNz, X, Y, Z, Filter, U, V, W, Var
 
         ! If on any of the 6 faces, calculate the grid cell advection term
         ! add to the running sum and count.
+        ! If at a point on the west face (x-axis) and:
+        !   u > 0, dM/dx > 0 makes their product > 0, but there is a lesser amount
+        !   of M entering the box. Ie, a positive u*dM/dx represents decreasing
+        !   M so add a negative sign to the term: -u*dM/dx.
+        !
+        !   But if this were taking place on the east face, it would mean a lesser
+        !   amount leaving the box. Ie, a postitive u*dM/dx represents increasing
+        !   M so do not add teh negative sign.
 
         ! X - axis
         if (OnWest) then
           DeltaX = X(ix) - X(ix-1)
           DeltaVar = Var(ix,iy,iz) - Var(ix-1,iy,iz)
 
-          Advect(1,1,1) = Advect(1,1,1) + (U(ix-1,iy,iz) * (DeltaVar/DeltaX))
+          Advect(1,1,1) = Advect(1,1,1) - (U(ix-1,iy,iz) * (DeltaVar/DeltaX))
           Advect(1,2,1) = Advect(1,2,1) + 1.0
         endif
 
@@ -627,7 +635,7 @@ subroutine SumAdvectionTerms(Nx, Ny, Nz, FilterNz, X, Y, Z, Filter, U, V, W, Var
           DeltaY = Y(iy) - Y(iy-1)
           DeltaVar = Var(ix,iy,iz) - Var(ix,iy-1,iz)
 
-          Advect(3,1,1) = Advect(3,1,1) + (V(ix,iy-1,iz) * (DeltaVar/DeltaY))
+          Advect(3,1,1) = Advect(3,1,1) - (V(ix,iy-1,iz) * (DeltaVar/DeltaY))
           Advect(3,2,1) = Advect(3,2,1) + 1.0
         endif
 
@@ -644,7 +652,7 @@ subroutine SumAdvectionTerms(Nx, Ny, Nz, FilterNz, X, Y, Z, Filter, U, V, W, Var
           DeltaZ = Z(iz) - Z(iz-1)
           DeltaVar = Var(ix,iy,iz) - Var(ix,iy,iz-1)
 
-          Advect(5,1,1) = Advect(5,1,1) + (W(ix,iy,iz-1) * (DeltaVar/DeltaZ))
+          Advect(5,1,1) = Advect(5,1,1) - (W(ix,iy,iz-1) * (DeltaVar/DeltaZ))
           Advect(5,2,1) = Advect(5,2,1) + 1.0
         endif
 
