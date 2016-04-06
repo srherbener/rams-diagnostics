@@ -40,7 +40,8 @@ function [ ] = PlotDpFigGenRes()
   DUST_CONC = [ InData{3} InData{4} ];
 
   % SAL strength image
-  SalPic = 'IMAGES/SAL_Aug23_12Z.png';
+  %SalPic = 'IMAGES/SAL_Aug23_12Z.png';
+  SalPic = 'IMAGES/SAL_Aug23_12Z_grid3.png';
 
   % Vertically integrated dust mass
   VintDustFile = 'HDF5/TSD_SAL_DUST/HDF5/vint_dust-TSD_SAL_DUST-AS-2006-08-20-120000-g3.h5';
@@ -180,21 +181,37 @@ end
 function [] = PlaceSalImage(Paxes, ImFile, Pmarker, Ptitle, Fsize)
 
   axes(Paxes);
+
+  set(Paxes, 'FontSize', Fsize);
+
+%  LatBounds = [ 5 26 ];
+%  LonBounds = [ -42 -8 ];
+%  worldmap(LatBounds, LonBounds);
+%  setm(Paxes, 'MapProjection', 'miller');
+
   % Axes position is the location of the axes within the entire figure.
   % 0 -> left side, or bottom
   % 1 -> right side, or top
   %  position -> [ left_x bottom_y width_x height_y ]
   Apos = get(Paxes, 'Position');
-  ImgScale = 1.2; % make image 12% larger
+  ImgScale = 1.05; % make image 12% larger
   Apos(1) = 0.05;                % shift to the left
   Apos(2) = Apos(2) - 0.02;      % shift downward
   Apos(3) = Apos(3) * ImgScale;
   Apos(4) = Apos(4) * ImgScale;
 
   set(Paxes, 'Position', Apos);
+
   imshow(ImFile);
 
-  set(Paxes, 'FontSize', Fsize);
+%  % create a gap so that image lines up with vint_dust image
+%  Gap = 0.05;
+%  Ploc = get(Paxes, 'Position');
+%
+%  % move the plot up a bit
+%  Ploc(2) = Ploc(2) + Gap;
+%  Ploc(4) = Ploc(4) - Gap;
+%  set(Paxes, 'Position', Ploc);
 
   if (isempty(Pmarker))
     title(Ptitle);
