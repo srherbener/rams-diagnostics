@@ -40,8 +40,7 @@ function [ ] = PlotDpFigGenRes()
   DUST_CONC = [ InData{3} InData{4} ];
 
   % SAL strength image
-  %SalPic = 'IMAGES/SAL_Aug23_12Z.png';
-  SalPic = 'IMAGES/SAL_Aug23_12Z_grid3.png';
+  SalPic = imread('IMAGES/SAL_Aug23_12Z_grid3.png');
 
   % Vertically integrated dust mass
   VintDustFile = 'HDF5/TSD_SAL_DUST/HDF5/vint_dust-TSD_SAL_DUST-AS-2006-08-20-120000-g3.h5';
@@ -178,40 +177,52 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [] = PlaceSalImage(Paxes, ImFile, Pmarker, Ptitle, Fsize)
+function [] = PlaceSalImage(Paxes, SalImage, Pmarker, Ptitle, Fsize)
 
   axes(Paxes);
 
+  LatBounds = [ 5 26 ];
+  LonBounds = [ -42 -8 ];
+  LineW = 2;
+
+  % create a gap so that image lines up with vint_dust image
+  Gap = 0.05;
+  Ploc = get(Paxes, 'Position');
+
+  % move the plot up a bit
+  Ploc(2) = Ploc(2) + Gap;
+  Ploc(4) = Ploc(4) - Gap;
+  set(Paxes, 'Position', Ploc);
+
   set(Paxes, 'FontSize', Fsize);
+  worldmap(LatBounds, LonBounds);
+  setm(Paxes, 'MapProjection', 'miller');
 
-%  LatBounds = [ 5 26 ];
-%  LonBounds = [ -42 -8 ];
-%  worldmap(LatBounds, LonBounds);
-%  setm(Paxes, 'MapProjection', 'miller');
 
-  % Axes position is the location of the axes within the entire figure.
-  % 0 -> left side, or bottom
-  % 1 -> right side, or top
-  %  position -> [ left_x bottom_y width_x height_y ]
-  Apos = get(Paxes, 'Position');
-  ImgScale = 1.05; % make image 12% larger
-  Apos(1) = 0.05;                % shift to the left
-  Apos(2) = Apos(2) - 0.02;      % shift downward
-  Apos(3) = Apos(3) * ImgScale;
-  Apos(4) = Apos(4) * ImgScale;
+  % Create gridded versions of the latitude and longitude value
+  % that the image covers.
+  [ Nlat Nlon Ncolors ] = size(SalImage);
+  Lat1 = 7.4;
+  Lat2 = 23;
+  Lon1 = -40;
+  Lon2 = -14.2;
 
-  set(Paxes, 'Position', Apos);
+  LatInc = (Lat2-Lat1)/(Nlat-1);
+  LonInc = (Lon2-Lon1)/(Nlon-1);
 
-  imshow(ImFile);
+  LAT = fliplr(Lat1:LatInc:Lat2);
+  LON = Lon1:LonInc:Lon2;
+  [ LonGrid LatGrid ] = meshgrid(LON, LAT);
 
-%  % create a gap so that image lines up with vint_dust image
-%  Gap = 0.05;
-%  Ploc = get(Paxes, 'Position');
-%
-%  % move the plot up a bit
-%  Ploc(2) = Ploc(2) + Gap;
-%  Ploc(4) = Ploc(4) - Gap;
-%  set(Paxes, 'Position', Ploc);
+  geoshow(LatGrid, LonGrid, SalImage);
+
+  % Draw the coast after the contourfm call so that coast lines will appear on top
+  % of the contour plot
+  Coast = load('coast');
+  plotm(Coast.lat, Coast.long, 'Color', 'k', 'LineWidth', LineW);
+
+  % Mark Africa
+  textm(14, -12, 'Africa', 'FontSize', 10, 'Color', 'k', 'Rotation', 90);
 
   if (isempty(Pmarker))
     title(Ptitle);
@@ -226,12 +237,12 @@ end
 
 function [] = PlotVintDust(Paxes, X, Y, Z, Pmarker, Ptitle, Fsize, ShowX, ShowY)
 
+  axes(Paxes);
+
   LatBounds = [ 5 26 ];
   LonBounds = [ -42 -8 ];
 
   LineW = 2;
-
-  axes(Paxes);
 
   % create a gap for the colorbar
   Gap = 0.05;
