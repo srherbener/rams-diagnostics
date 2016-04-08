@@ -35,7 +35,7 @@ function [] = PlotDpFigDustHov(Paxes, X, Y, Z, Pmarker, Ptitle, Fsize, ShowX, Sh
     set(Cbar, 'TickLabels', { '1' '10' '10^2' });
   else
     caxis([ 0 500 ]);
-    set(Cbar, 'Ticks', [ 200 300 400 500 ]);
+    set(Cbar, 'Ticks', [ 100 300 500 ]);
   end
 
   % ShowLev
