@@ -177,8 +177,8 @@ function [ ] = PlotDpFigDustMassTseries()
   PlotDpFigTseries(Paxes, T, TS_DUST_AL, LcolorsAl, 'c', 'All Levels', 'Norm. Mass', 'log', [ 1e-4 2 ], Fsize, 0, 1, LegTextAl, LegLocAl);
 
   Paxes = subplot(4,1,4);
-%  PlotDpFigTseries(Paxes, T, TS_DUST_UL, LcolorsUl, 'd', 'Upper Levels', 'Norm. Mass', 'log', [ 1e-6  1e-2 ], Fsize, 1, 1, LegTextUl, LegLocUl);
-  PlotDpFigTseries(Paxes, T, TS_DUST_UL_ADV, LcolorsUlAdv, 'd', 'Upper Levels', 'Norm. Mass\newline(X 10^-^3)', 'linear', [ -1  2 ], Fsize, 1, 1, LegTextUlAdv, LegLocUlAdv);
+  PlotDpFigTseries(Paxes, T, TS_DUST_UL, LcolorsUl, 'd', 'Upper Levels', 'Norm. Mass', 'log', [ 1e-6  1e-2 ], Fsize, 1, 1, LegTextUl, LegLocUl);
+%  PlotDpFigTseries(Paxes, T, TS_DUST_UL_ADV, LcolorsUlAdv, 'd', 'Upper Levels', 'Norm. Mass\newline(X 10^-^3)', 'linear', [ -1  2 ], Fsize, 1, 1, LegTextUlAdv, LegLocUlAdv);
 
   fprintf('Writing: %s\n', OutFile);
   saveas(Fig, OutFile);
