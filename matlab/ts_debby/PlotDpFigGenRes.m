@@ -78,11 +78,11 @@ function [ ] = PlotDpFigGenRes()
 
   % SAL strength image
   Paxes = subplot(2,2,3);
-  PlaceSalImage(Paxes, SalPic, 'c', '12Z, Aug23', Fsize);
+  PlaceSalImage(Paxes, SalPic, 'c', '12Z, 23Aug', Fsize);
 
   % Vertically integrated dust mass
   Paxes = subplot(2,2,4);
-  PlotVintDust(Paxes, X, Y, VINT_DUST, 'd', '12Z, Aug23', Fsize, 1, 1);
+  PlotVintDust(Paxes, X, Y, VINT_DUST, 'd', '12Z, 23Aug', Fsize, 1, 1);
 
   OutFile = sprintf('%s/DpFig1_GenRes.jpg', Pdir);
   fprintf('Writing: %s\n', OutFile);
