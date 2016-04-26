@@ -19,6 +19,9 @@ SCRIPTS = \
   $(DEST)/PlotDpFigDustTransport.m \
   $(DEST)/PlotDpFigDustHov.m \
   $(DEST)/PlotDpFigTseries.m \
+  $(DEST)/PlotFsFigMaxWind.m \
+  $(DEST)/PlotFsFigTseries.m \
+  $(DEST)/PlotFsFigBgraph.m \
   $(DEST)/ExtractSampleProfile.m \
   $(DEST)/GenDustAdvection.m \
   $(DEST)/GenTotalMassMeas.m \
