@@ -344,7 +344,7 @@ End
 PlotAxes: StrackThetaeAxes 3
   14 2 [0.025_0.025]
   # x axis - radius
-  Linear@Distance km 0 1650 linear [_] {_}
+  Linear@Distance km 0 2100 linear [_] {_}
   # y axis - height
   Z km 0 6 linear [_] {_}
   # z axis - theta_e, K

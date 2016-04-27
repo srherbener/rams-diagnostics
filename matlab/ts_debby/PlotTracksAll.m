@@ -12,9 +12,9 @@ function [ ] = PlotTracksAll()
 %   'TSD_MOIST_NODUST'
 
    'TSD_SAL_DUST'
-%   'TSD_SAL_NODUST'
-%   'TSD_NONSAL_DUST'
-%   'TSD_NONSAL_NODUST'
+   'TSD_SAL_NODUST'
+   'TSD_NONSAL_DUST'
+   'TSD_NONSAL_NODUST'
    };
   
   LegText = {
@@ -29,11 +29,11 @@ function [ ] = PlotTracksAll()
 %   'DUST'
 %   'BASE'
 
-   'Model'
-%   'SAL\_DUST'
-%   'SAL\_NODUST'
-%   'NONSAL\_DUST'
-%   'NONSAL\_NODUST'
+%   'Model'
+   'SAL\_DUST'
+   'SAL\_NODUST'
+   'NONSAL\_DUST'
+   'NONSAL\_NODUST'
    };
    Nc = length(Cases);
   
@@ -96,6 +96,10 @@ function [ ] = PlotTracksAll()
   SimTrack = m_line(SimTrackLons, SimTrackLats, 'linewi', LineW);
   %title('Storm Tracks');
   legend( [ NhcTrack SimTrack' ], LegText,'Location', 'SouthWest', 'FontSize', LegendFsize);
+
+  hold on;
+  m_line( [ -21.3 -39.6 ], [ 13.0 20.1 ], 'Color', 'r', 'LineStyle', '--');
+  hold off;
   
   OutFile = sprintf('%s/TsDebbyTracksAll.jpg', Pdir);
   fprintf('Writing: %s\n', OutFile);

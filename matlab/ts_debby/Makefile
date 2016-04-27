@@ -22,6 +22,7 @@ SCRIPTS = \
   $(DEST)/PlotFsFigMaxWind.m \
   $(DEST)/PlotFsFigTseries.m \
   $(DEST)/PlotFsFigBgraph.m \
+  $(DEST)/PlotFsFigThetaeXsection.m \
   $(DEST)/ExtractSampleProfile.m \
   $(DEST)/GenDustAdvection.m \
   $(DEST)/GenTotalMassMeas.m \
@@ -50,6 +51,7 @@ SCRIPTS = \
   $(DEST)/GenTsdHistMeas.m \
   $(DEST)/GenTsdHdaMeas.m \
   $(DEST)/GenBuoyancy.m \
+  $(DEST)/GenTrackLine.m \
   $(DEST)/ReportIntMassNumbers.m \
   $(DEST)/ReportDpMeas.m \
   $(DEST)/RunGenFigures.m \
