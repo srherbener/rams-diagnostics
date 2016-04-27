@@ -20,9 +20,10 @@ SCRIPTS = \
   $(DEST)/PlotDpFigDustHov.m \
   $(DEST)/PlotDpFigTseries.m \
   $(DEST)/PlotFsFigMaxWind.m \
+  $(DEST)/PlotFsFigThetaeXsection.m \
   $(DEST)/PlotFsFigTseries.m \
   $(DEST)/PlotFsFigBgraph.m \
-  $(DEST)/PlotFsFigThetaeXsection.m \
+  $(DEST)/PlotFsFigXsection.m \
   $(DEST)/ExtractSampleProfile.m \
   $(DEST)/GenDustAdvection.m \
   $(DEST)/GenTotalMassMeas.m \
