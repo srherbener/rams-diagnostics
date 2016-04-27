@@ -63,47 +63,89 @@ function [ ] = PlotFsFigThetaeXsection()
   Ylim = [ 0 5.5 ];
   Clim = [ 330 357 ];
 
+  PlocInc = 0.05;
+
   % TSD_SAL_DUST
   Paxes = subplot(5, 2, 1);
+  Ploc = get(Paxes, 'Position');
+  Ploc(1) = Ploc(1) - PlocInc;
+  Ploc(3) = Ploc(3) + PlocInc;
+  set(Paxes, 'Position', Ploc);
   PDATA = squeeze(THETA_E(1,1,:,:))';
   PlotFsFigXsection(Paxes, X, Z, PDATA, 'a', '06Z, 22Aug (SD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Clim, Fsize, 0, 1);
 
   Paxes = subplot(5, 2, 3);
+  Ploc = get(Paxes, 'Position');
+  Ploc(1) = Ploc(1) - PlocInc;
+  Ploc(3) = Ploc(3) + PlocInc;
+  set(Paxes, 'Position', Ploc);
   PDATA = squeeze(THETA_E(1,2,:,:))';
   PlotFsFigXsection(Paxes, X, Z, PDATA, 'c', '21Z, 22Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Clim, Fsize, 0, 1);
 
   Paxes = subplot(5, 2, 5);
+  Ploc = get(Paxes, 'Position');
+  Ploc(1) = Ploc(1) - PlocInc;
+  Ploc(3) = Ploc(3) + PlocInc;
+  set(Paxes, 'Position', Ploc);
   PDATA = squeeze(THETA_E(1,3,:,:))';
   PlotFsFigXsection(Paxes, X, Z, PDATA, 'e', '12Z, 23Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Clim, Fsize, 0, 1);
 
   Paxes = subplot(5, 2, 7);
+  Ploc = get(Paxes, 'Position');
+  Ploc(1) = Ploc(1) - PlocInc;
+  Ploc(3) = Ploc(3) + PlocInc;
+  set(Paxes, 'Position', Ploc);
   PDATA = squeeze(THETA_E(1,4,:,:))';
   PlotFsFigXsection(Paxes, X, Z, PDATA, 'g', '03Z, 24Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Clim, Fsize, 0, 1);
 
   Paxes = subplot(5, 2, 9);
+  Ploc = get(Paxes, 'Position');
+  Ploc(1) = Ploc(1) - PlocInc;
+  Ploc(3) = Ploc(3) + PlocInc;
+  set(Paxes, 'Position', Ploc);
   PDATA = squeeze(THETA_E(1,5,:,:))';
   PlotFsFigXsection(Paxes, X, Z, PDATA, 'i', '18Z, 24Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Clim, Fsize, 1, 1);
 
   % TSD_NONSAL_DUST
   Paxes = subplot(5, 2, 2);
+  Ploc = get(Paxes, 'Position');
+  Ploc(1) = Ploc(1) - PlocInc;
+  Ploc(3) = Ploc(3) + PlocInc;
+  set(Paxes, 'Position', Ploc);
   PDATA = squeeze(THETA_E(2,1,:,:))';
-  PlotFsFigXsection(Paxes, X, Z, PDATA, 'b', '06Z, 22Aug (NSD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Clim, Fsize, 0, 1);
+  PlotFsFigXsection(Paxes, X, Z, PDATA, 'b', '06Z, 22Aug (NSD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Clim, Fsize, 0, 0);
 
   Paxes = subplot(5, 2, 4);
+  Ploc = get(Paxes, 'Position');
+  Ploc(1) = Ploc(1) - PlocInc;
+  Ploc(3) = Ploc(3) + PlocInc;
+  set(Paxes, 'Position', Ploc);
   PDATA = squeeze(THETA_E(2,2,:,:))';
-  PlotFsFigXsection(Paxes, X, Z, PDATA, 'd', '21Z, 22Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Clim, Fsize, 0, 1);
+  PlotFsFigXsection(Paxes, X, Z, PDATA, 'd', '21Z, 22Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Clim, Fsize, 0, 0);
 
   Paxes = subplot(5, 2, 6);
+  Ploc = get(Paxes, 'Position');
+  Ploc(1) = Ploc(1) - PlocInc;
+  Ploc(3) = Ploc(3) + PlocInc;
+  set(Paxes, 'Position', Ploc);
   PDATA = squeeze(THETA_E(2,3,:,:))';
-  PlotFsFigXsection(Paxes, X, Z, PDATA, 'f', '12Z, 23Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Clim, Fsize, 0, 1);
+  PlotFsFigXsection(Paxes, X, Z, PDATA, 'f', '12Z, 23Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Clim, Fsize, 0, 0);
 
   Paxes = subplot(5, 2, 8);
+  Ploc = get(Paxes, 'Position');
+  Ploc(1) = Ploc(1) - PlocInc;
+  Ploc(3) = Ploc(3) + PlocInc;
+  set(Paxes, 'Position', Ploc);
   PDATA = squeeze(THETA_E(2,4,:,:))';
-  PlotFsFigXsection(Paxes, X, Z, PDATA, 'h', '03Z, 24Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Clim, Fsize, 0, 1);
+  PlotFsFigXsection(Paxes, X, Z, PDATA, 'h', '03Z, 24Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Clim, Fsize, 0, 0);
 
   Paxes = subplot(5, 2, 10);
+  Ploc = get(Paxes, 'Position');
+  Ploc(1) = Ploc(1) - PlocInc;
+  Ploc(3) = Ploc(3) + PlocInc;
+  set(Paxes, 'Position', Ploc);
   PDATA = squeeze(THETA_E(2,5,:,:))';
-  PlotFsFigXsection(Paxes, X, Z, PDATA, 'j', '18Z, 24Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Clim, Fsize, 1, 1);
+  PlotFsFigXsection(Paxes, X, Z, PDATA, 'j', '18Z, 24Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Clim, Fsize, 1, 0);
 
 
   fprintf('Writing: %s\n', OutFile);
