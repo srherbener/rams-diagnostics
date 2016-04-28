@@ -95,10 +95,11 @@ function [ ] = PlotTracksAll()
   NhcTrack = m_line(NhcTrackLons, NhcTrackLats, 'linewi', LineW, 'color', 'k', 'linestyle', 'none', 'marker', '+');
   SimTrack = m_line(SimTrackLons, SimTrackLats, 'linewi', LineW);
   %title('Storm Tracks');
-  legend( [ NhcTrack SimTrack' ], LegText,'Location', 'SouthWest', 'FontSize', LegendFsize);
+%  legend( [ NhcTrack SimTrack' ], LegText,'Location', 'SouthWest', 'FontSize', LegendFsize);
 
   hold on;
-  m_line( [ -21.3 -39.6 ], [ 13.0 20.1 ], 'Color', 'r', 'LineStyle', '--');
+  m_line( [ -21.3 -39.6 ], [ 13.0 20.1 ], 'Color', 'r', 'LineStyle', '--'); % strack line (along storm track)
+  m_line( [ -29.0 -25.0 ], [ 10.0 20.4 ], 'Color', 'k', 'LineStyle', '--'); % ptrack line (perpendicular to storm track)
   hold off;
   
   OutFile = sprintf('%s/TsDebbyTracksAll.jpg', Pdir);
