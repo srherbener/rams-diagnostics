@@ -99,7 +99,7 @@ function [ ] = PlotTracksAll()
 
   hold on;
   m_line( [ -21.3 -39.6 ], [ 13.0 20.1 ], 'Color', 'r', 'LineStyle', '--'); % strack line (along storm track)
-  m_line( [ -29.0 -25.0 ], [ 10.0 20.4 ], 'Color', 'k', 'LineStyle', '--'); % ptrack line (perpendicular to storm track)
+  m_line( [ -30.0 -24.0 ], [  7.4 22.9 ], 'Color', 'k', 'LineStyle', '--'); % ptrack line (perpendicular to storm track)
   hold off;
   
   OutFile = sprintf('%s/TsDebbyTracksAll.jpg', Pdir);
