@@ -25,6 +25,7 @@ SCRIPTS = \
   $(DEST)/PlotFsFigBgraph.m \
   $(DEST)/PlotFsFigXsection.m \
   $(DEST)/ExtractSampleProfile.m \
+  $(DEST)/GenPtrackMomentum.m \
   $(DEST)/GenDustAdvection.m \
   $(DEST)/GenTotalMassMeas.m \
   $(DEST)/GenResidualMassMeas.m \
