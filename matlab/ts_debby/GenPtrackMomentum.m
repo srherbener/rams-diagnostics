@@ -9,6 +9,11 @@ function [ ] = GenPtrackMomentum()
   
   Nc = length(CaseList);
 
+  PreSalStart = 10;  % start, end Pre-SAL time period, sim time in hours
+  PreSalEnd   = 30;
+  SalStart    = 40;  % start, end SAL time period
+  SalEnd      = 60;
+
   Xname = '/x_coords';
   Yname = '/y_coords';
   Zname = '/z_coords';
@@ -42,13 +47,8 @@ function [ ] = GenPtrackMomentum()
     Vfname = sprintf('XsectionData/ptrack_v_%s.h5', Case);
     Vvname = '/v';
 
-    OutFname = sprintf('DIAGS/ptrack_hvelocity_%s.h5', Case);
-    OutUvname = '/u';
-    OutVvname = '/v';
-
     fprintf('  Reading: %s (%s)\n', Ufname, Uvname);
     fprintf('  Reading: %s (%s)\n', Vfname, Vvname);
-    fprintf('  Writing: %s (%s, %s)\n', OutFname, OutUvname, OutVvname);
     fprintf('\n');
 
     % Read in coordinates from u file (v will have same coords)
@@ -62,6 +62,39 @@ function [ ] = GenPtrackMomentum()
     Nz = length(Z);
     Nt = length(T);
 
+    % Find start,end indices for time periods
+    SIM_T = T ./ 3600 - 42;
+    PS_T1 = find(SIM_T >= PreSalStart, 1, 'first');
+    PS_T2 = find(SIM_T <= PreSalEnd,   1, 'last');
+
+    S_T1 = find(SIM_T >= SalStart, 1, 'first');
+    S_T2 = find(SIM_T <= SalEnd,   1, 'last');
+
+    % Read in and translate from domain axes to ptrack axes
+    U_DOM = squeeze(h5read(Ufname, Uvname));
+    V_DOM = squeeze(h5read(Vfname, Vvname));
+
+    % Convert to polar coords (relative to domain axes)
+    MAG   = sqrt(U_DOM.^2 + V_DOM.^2);
+    ANGLE = atan2(V_DOM, U_DOM);
+
+    % Translate to ptrack coords
+    ANGLE = ANGLE - Pangle;
+
+    % Convert to cartesian coords (relative to ptrack axes)
+    U_PTRACK = MAG .* cos(ANGLE);
+    V_PTRACK = MAG .* sin(ANGLE);
+
+    % Create temporal averages
+    PS_U_PTRACK = squeeze(mean(U_PTRACK(:,:,PS_T1:PS_T2),3));
+    PS_V_PTRACK = squeeze(mean(V_PTRACK(:,:,PS_T1:PS_T2),3));
+
+    S_U_PTRACK = squeeze(mean(U_PTRACK(:,:,S_T1:S_T2),3));
+    S_V_PTRACK = squeeze(mean(V_PTRACK(:,:,S_T1:S_T2),3));
+
+    % Output, get rid of the dummy y dimension
+    OutFname = sprintf('DIAGS/ptrack_hvelocity_%s.h5', Case);
+
     % Remove output file if it exists so that new dataset can be written.
     if (exist(OutFname, 'file') == 2)
       delete(OutFname);
@@ -71,48 +104,49 @@ function [ ] = GenPtrackMomentum()
     CreateDimensionsXyzt(OutFname, X, Y, Z, T, Xname, Yname, Zname, Tname);
     NotateDimensionsXyzt(OutFname, Xname, Yname, Zname, Tname);
 
-    % Set up datasets that can have a 3D field written one time step at a time.
-    Vsize = [ Nx Nz Inf ];
-    Csize = [ Nx Nz 1 ];
-    h5create(OutFname, OutUvname, Vsize, 'ChunkSize', Csize, 'Deflate', 6, 'Shuffle', true);
-    h5create(OutFname, OutVvname, Vsize, 'ChunkSize', Csize, 'Deflate', 6, 'Shuffle', true);
-
-    % For output, y is dummy coordinate so remove it in the output file
-    InCount  = [ Nx Ny Nz 1 ];
-    OutCount = [ Nx Nz 1 ];
-    
-    % Read in x-z plane, translate to ptrack coords
-    for it = 1:Nt
-      InStart = [ 1 1 1 it ];
-      U_DOM = squeeze(h5read(Ufname, Uvname, InStart, InCount));
-      V_DOM = squeeze(h5read(Vfname, Vvname, InStart, InCount));
-
-      % Convert to polar coords (relative to domain axes)
-      MAG   = sqrt(U_DOM.^2 + V_DOM.^2);
-      ANGLE = atan2(V_DOM, U_DOM);
-
-      % Translate to ptrack coords
-      ANGLE = ANGLE - Pangle;
-
-      % Convert to cartesian coords (relative to ptrack axes)
-      U_PTRACK = MAG .* cos(ANGLE);
-      V_PTRACK = MAG .* sin(ANGLE);
-
-      % Output is x-z plane
-      OutStart = [ 1 1 it ];
-      h5write(OutFname, OutUvname, U_PTRACK, OutStart, OutCount);
-      h5write(OutFname, OutVvname, V_PTRACK, OutStart, OutCount);
-
-      if (mod(it,10) == 0)
-        fprintf('  Completed time step: %d\n', it);
-      end
-    end
-    fprintf('  Total time steps processed: %d\n', it);
-
-    % Attach dimensions (COARDS format)
+    % Time series
+    Vsize = [ Nx Nz Nt ];
     DimOrder = { 'x' 'z' 't' };
-    AttachDimensionsXyzt(OutFname, OutUvname, DimOrder, Xname, Yname, Zname, Tname);
-    AttachDimensionsXyzt(OutFname, OutVvname, DimOrder, Xname, Yname, Zname, Tname);
+
+    OutVname = '/u';
+    fprintf('  Writing: %s (%s)\n', OutFname, OutVname);
+    h5create(OutFname, OutVname, Vsize)
+    h5write(OutFname, OutVname, U_PTRACK);
+    AttachDimensionsXyzt(OutFname, OutVname, DimOrder, Xname, Yname, Zname, Tname);
+
+    OutVname = '/v';
+    fprintf('  Writing: %s (%s)\n', OutFname, OutVname);
+    h5create(OutFname, OutVname, Vsize)
+    h5write(OutFname, OutVname, V_PTRACK);
+    AttachDimensionsXyzt(OutFname, OutVname, DimOrder, Xname, Yname, Zname, Tname);
+
+    % Temporal Averages
+    Vsize = [ Nx Nz ];
+    DimOrder = { 'x' 'z' };
+
+    OutVname = '/ps_u';
+    fprintf('  Writing: %s (%s)\n', OutFname, OutVname);
+    h5create(OutFname, OutVname, Vsize)
+    h5write(OutFname, OutVname, PS_U_PTRACK);
+    AttachDimensionsXyzt(OutFname, OutVname, DimOrder, Xname, Yname, Zname, Tname);
+
+    OutVname = '/ps_v';
+    fprintf('  Writing: %s (%s)\n', OutFname, OutVname);
+    h5create(OutFname, OutVname, Vsize)
+    h5write(OutFname, OutVname, PS_V_PTRACK);
+    AttachDimensionsXyzt(OutFname, OutVname, DimOrder, Xname, Yname, Zname, Tname);
+
+    OutVname = '/s_u';
+    fprintf('  Writing: %s (%s)\n', OutFname, OutVname);
+    h5create(OutFname, OutVname, Vsize)
+    h5write(OutFname, OutVname, S_U_PTRACK);
+    AttachDimensionsXyzt(OutFname, OutVname, DimOrder, Xname, Yname, Zname, Tname);
+
+    OutVname = '/s_v';
+    fprintf('  Writing: %s (%s)\n', OutFname, OutVname);
+    h5create(OutFname, OutVname, Vsize)
+    h5write(OutFname, OutVname, S_V_PTRACK);
+    AttachDimensionsXyzt(OutFname, OutVname, DimOrder, Xname, Yname, Zname, Tname);
 
     fprintf('\n');
   end
