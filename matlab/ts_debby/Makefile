@@ -21,11 +21,13 @@ SCRIPTS = \
   $(DEST)/PlotDpFigTseries.m \
   $(DEST)/PlotFsFigMaxWind.m \
   $(DEST)/PlotFsFigThetaeXsection.m \
+  $(DEST)/PlotFsFigTempWindXsection.m \
   $(DEST)/PlotFsFigTseries.m \
   $(DEST)/PlotFsFigBgraph.m \
   $(DEST)/PlotFsFigXsection.m \
   $(DEST)/ExtractSampleProfile.m \
   $(DEST)/GenPtrackMomentum.m \
+  $(DEST)/GenPtrackAvgs.m \
   $(DEST)/GenDustAdvection.m \
   $(DEST)/GenTotalMassMeas.m \
   $(DEST)/GenResidualMassMeas.m \

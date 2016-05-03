@@ -1,4 +1,4 @@
-function [] = PlotFsFigXsection(Paxes, X, Y, Z, Pmarker, Ptitle, Xlabel, Xlim, Ylabel, Ylim, Clim, Fsize, ShowX, ShowY)
+function [] = PlotFsFigXsection(Paxes, X, Y, Z, Pmarker, Ptitle, Xlabel, Xlim, Ylabel, Ylim, Cmap, Clim, Clevs, Fsize, ShowX, ShowY)
 
   axes(Paxes);
 
@@ -6,9 +6,13 @@ function [] = PlotFsFigXsection(Paxes, X, Y, Z, Pmarker, Ptitle, Xlabel, Xlim, Y
   set(Paxes, 'LineWidth', 2);
   set(Paxes, 'TickLength', [ 0.025 0.025 ]);
 
-  contourf(X, Y, Z, 'LineStyle', 'none');
+  contourf(X, Y, Z, Clevs, 'LineStyle', 'none');
   colorbar('EastOutside');
   caxis(Clim);
+
+  if (strcmp(Cmap, 'redblue'))
+    colormap(Paxes, redblue);
+  end
 
   if (ShowX == 0)
     set(Paxes, 'XTickLabel', {});
