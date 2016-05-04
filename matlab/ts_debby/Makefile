@@ -22,10 +22,14 @@ SCRIPTS = \
   $(DEST)/PlotFsFigMaxWind.m \
   $(DEST)/PlotFsFigThetaeXsection.m \
   $(DEST)/PlotFsFigTempWindXsection.m \
+  $(DEST)/PlotFsFigStormVt.m \
+  $(DEST)/PlotFsFigStormStruct.m \
   $(DEST)/PlotFsFigTseries.m \
   $(DEST)/PlotFsFigBgraph.m \
   $(DEST)/PlotFsFigXsection.m \
+  $(DEST)/PlotFsFigHwindVectors.m \
   $(DEST)/ExtractSampleProfile.m \
+  $(DEST)/ExtractHorizWinds.m \
   $(DEST)/GenPtrackMomentum.m \
   $(DEST)/GenPtrackAvgs.m \
   $(DEST)/GenDustAdvection.m \
