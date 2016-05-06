@@ -19,8 +19,11 @@ SCRIPTS = \
   $(DEST)/PlotDpFigDustTransport.m \
   $(DEST)/PlotDpFigDustHov.m \
   $(DEST)/PlotDpFigTseries.m \
+  $(DEST)/PlotFsFigModelSetup.m \
   $(DEST)/PlotFsFigMaxWind.m \
   $(DEST)/PlotFsFigThetaeXsection.m \
+  $(DEST)/PlotFsFigThetaXsection.m \
+  $(DEST)/PlotFsFigVaporXsection.m \
   $(DEST)/PlotFsFigTempWindXsection.m \
   $(DEST)/PlotFsFigStormVt.m \
   $(DEST)/PlotFsFigStormStruct.m \
