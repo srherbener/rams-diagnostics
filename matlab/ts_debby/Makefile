@@ -20,6 +20,7 @@ SCRIPTS = \
   $(DEST)/PlotDpFigDustHov.m \
   $(DEST)/PlotDpFigTseries.m \
   $(DEST)/PlotFsFigModelSetup.m \
+  $(DEST)/PlotFsFigIrCond.m \
   $(DEST)/PlotFsFigMaxWind.m \
   $(DEST)/PlotFsFigThetaeXsection.m \
   $(DEST)/PlotFsFigThetaXsection.m \

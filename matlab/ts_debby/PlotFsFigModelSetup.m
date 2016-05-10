@@ -60,7 +60,7 @@ function [ ] = PlotFsFigModelSetup()
   DUST_CONC = [ InData{3} InData{4} ];
 
   % Vertically integrated dust mass
-  VintDustFile = 'HDF5/TSD_SAL_DUST/HDF5/vint_dust-TSD_SAL_DUST-AS-2006-08-20-120000-g3.h5';
+  VintDustFile = 'HDF5/TSD_SAL_DUST/HDF5/vint_dust-TSD_SAL_DUST-AS-2006-08-20-120000-g1.h5';
   VintDustVname = '/vertint_dust';
 
   % Read in and create a snapshot of the initial (06Z, 22Aug)
@@ -215,7 +215,7 @@ function [] = PlotVintDust(Paxes, X, Y, Z, InitLat, InitLon, Pmarker, Ptitle, Fs
 
   % The values of dust in the SAL are the same so cut down the size
   % of ZSAL in order to speed up the contourfm performance.
-  Dinc = 10;
+  Dinc = 1;
   XSAL = X(1:Dinc:end);
   YSAL = Y(1:Dinc:end);
   ZSAL = ZSAL(1:Dinc:end,1:Dinc:end);
@@ -271,15 +271,29 @@ function [] = PlotVintDust(Paxes, X, Y, Z, InitLat, InitLon, Pmarker, Ptitle, Fs
   plotm(Coast.lat, Coast.long, 'Color', 'k', 'LineWidth', LineW);
   textm(20, -35, 'SAL', 'FontSize', 10, 'Color', 'k');
 
+  % Read in and place hurricane symbol where TS Debby is located
+  H_SYMBOL = imread('IMAGES/HurricaneSymbolBlue.png');
+  HsymInc = 2; % make the symbol 4 degrees in diameter
+  HsymLat1 = InitLat - HsymInc;
+  HsymLat2 = InitLat + HsymInc;
+  HsymLon1 = InitLon - HsymInc;
+  HsymLon2 = InitLon + HsymInc;
+
+  [ Nlat Nlon Ncolors ] = size(H_SYMBOL);
+  HsymLatInc = (HsymLat2-HsymLat1) / (Nlat-1);
+  HsymLonInc = (HsymLon2-HsymLon1) / (Nlon-1);
+  HLAT = fliplr(HsymLat1:HsymLatInc:HsymLat2);
+  HLON = HsymLon1:HsymLonInc:HsymLon2;
+  [ HLON_GRID HLAT_GRID ] = meshgrid(HLON, HLAT);
+
+  geoshow(HLAT_GRID, HLON_GRID, H_SYMBOL);
+
   % Mark Africa
   textm(14, -12, 'Africa', 'FontSize', 10, 'Color', 'k', 'Rotation', 90);
 
   % Mark grid 3
   linem(Grid3Lats, Grid3Lons, 'LineWidth', LineW, 'Color', 'r');
   textm(8, -39, 'Grid3', 'FontSize', 12, 'Color', 'r');
-
-  % Mark location of TS Debby
-  linem(double(InitLat), double(InitLon), 'LineWidth', LineW, 'Color', 'k', 'LineStyle', 'none', 'Marker', '+');
 
   if (isempty(Pmarker))
     title(Ptitle);
