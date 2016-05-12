@@ -1,4 +1,4 @@
-function [ ] = PlotFsFigIrCond()
+function [ ] = PlotFsFigObsSimStorm()
 
   Pdir = 'Plots';
   if (exist(Pdir, 'dir') ~= 7)
@@ -83,7 +83,7 @@ function [ ] = PlotFsFigIrCond()
   Paxes = subplot(3,2,6);
   PlotVintCond(Paxes, X, Y, COND_END, 'f', '18Z, 24Aug', Fsize)
 
-  OutFile = sprintf('%s/FsFigIrCond.jpg', Pdir);
+  OutFile = sprintf('%s/FsFigObsSimStorm.jpg', Pdir);
   fprintf('Writing: %s\n', OutFile);
   saveas(Fig, OutFile);
   close(Fig);
