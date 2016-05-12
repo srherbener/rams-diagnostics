@@ -79,15 +79,17 @@ function [ ] = PlotFsFigVisSimStorm()
 
   % Vertically integrated condensate in right column
   Clevs = 0.4:0.2:4.0;
+  Cmap = 'jet';
+  ClabInc = 2;
 
   Paxes = subplot(3,2,2);
-  PlotFsFigDiagWmap(Paxes, X, Y, COND_START, WmapLatBounds, WmapLonBounds, Clevs, 'b', '06Z, 22Aug', Fsize)
+  PlotFsFigDiagWmap(Paxes, X, Y, COND_START, WmapLatBounds, WmapLonBounds, Clevs, Cmap, ClabInc, 'b', '06Z, 22Aug', Fsize)
 
   Paxes = subplot(3,2,4);
-  PlotFsFigDiagWmap(Paxes, X, Y, COND_MID, WmapLatBounds, WmapLonBounds, Clevs, 'd', '12Z, 23Aug', Fsize)
+  PlotFsFigDiagWmap(Paxes, X, Y, COND_MID, WmapLatBounds, WmapLonBounds, Clevs, Cmap, ClabInc, 'd', '12Z, 23Aug', Fsize)
 
   Paxes = subplot(3,2,6);
-  PlotFsFigDiagWmap(Paxes, X, Y, COND_END, WmapLatBounds, WmapLonBounds, Clevs, 'f', '18Z, 24Aug', Fsize)
+  PlotFsFigDiagWmap(Paxes, X, Y, COND_END, WmapLatBounds, WmapLonBounds, Clevs, Cmap, ClabInc, 'f', '18Z, 24Aug', Fsize)
 
   OutFile = sprintf('%s/FsFigVisSimStorm.jpg', Pdir);
   fprintf('Writing: %s\n', OutFile);

@@ -1,4 +1,4 @@
-function [] = PlotFsFigDiagWmap(Paxes, X, Y, Z, LatBounds, LonBounds, Clevs, Pmarker, Ptitle, Fsize)
+function [] = PlotFsFigDiagWmap(Paxes, X, Y, Z, LatBounds, LonBounds, Clevs, Cmap, ClabInc, Pmarker, Ptitle, Fsize)
 
   axes(Paxes);
 
@@ -23,14 +23,13 @@ function [] = PlotFsFigDiagWmap(Paxes, X, Y, Z, LatBounds, LonBounds, Clevs, Pma
   % Put in a colorbar. The colorbar labeling has too many labels and comes out
   % cluttered. Just read in the Ytick and YtickLabel values that contourcmap
   % created, select every nth tick and label, and then reset the colorbar.
-  Cbar = contourcmap('jet', 'ColorBar', 'on', 'Location', 'vertical');
+  Cbar = contourcmap(Cmap, 'ColorBar', 'on', 'Location', 'vertical');
 
   Cticks = get(Cbar, 'Ytick');
   CtickLabels = cellstr(get(Cbar, 'YtickLabel'))';
 
-  CtickInc = 2;
-  Cticks = Cticks(1:CtickInc:end);
-  CtickLabels = { CtickLabels{1:CtickInc:end} };
+  Cticks = Cticks(1:ClabInc:end);
+  CtickLabels = { CtickLabels{1:ClabInc:end} };
 
   set(Cbar, 'Ytick', Cticks);
   set(Cbar, 'YtickLabel', CtickLabels);
