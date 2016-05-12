@@ -20,7 +20,8 @@ SCRIPTS = \
   $(DEST)/PlotDpFigDustHov.m \
   $(DEST)/PlotDpFigTseries.m \
   $(DEST)/PlotFsFigModelSetup.m \
-  $(DEST)/PlotFsFigObsSimStorm.m \
+  $(DEST)/PlotFsFigIrSimStorm.m \
+  $(DEST)/PlotFsFigVisSimStorm.m \
   $(DEST)/PlotFsFigMaxWind.m \
   $(DEST)/PlotFsFigThetaeXsection.m \
   $(DEST)/PlotFsFigThetaXsection.m \
@@ -32,6 +33,8 @@ SCRIPTS = \
   $(DEST)/PlotFsFigBgraph.m \
   $(DEST)/PlotFsFigXsection.m \
   $(DEST)/PlotFsFigHwindVectors.m \
+  $(DEST)/PlotFsFigDiagWmap.m \
+  $(DEST)/PlotFsFigImageWmap.m \
   $(DEST)/ExtractSampleProfile.m \
   $(DEST)/ExtractHorizWinds.m \
   $(DEST)/GenPtrackMomentum.m \
