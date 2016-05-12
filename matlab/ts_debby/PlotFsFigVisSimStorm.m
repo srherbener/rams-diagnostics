@@ -7,18 +7,19 @@ function [ ] = PlotFsFigVisSimStorm()
   
   Fsize = 13;
 
-  % TS IR images, gif files need to read in the image as well as the color map, then
-  % use both to display.
-  [ IrStart IrStartCmap ] = imread('IMAGES/2006AL04_4KMIRIMG_200608220600.GIF');
-  [ IrMid   IrMidCmap   ] = imread('IMAGES/2006AL04_4KMIRIMG_200608231200.GIF');
-  [ IrEnd   IrEndCmap   ] = imread('IMAGES/2006AL04_4KMIRIMG_200608241800.GIF');
+  % TS Debby Visible images. PNG files have true color, so Cmap vars will be empty (which
+  % is exactly what you want for geoshow.
+  % Visible images are composites over one day
+  [ VisStart VisStartCmap ] = imread('IMAGES/MYBGLSR_C05K.A2006234.006.1.3.png');
+  [ VisMid   VisMidCmap   ] = imread('IMAGES/MYBGLSR_C05K.A2006235.006.1.3.png');
+  [ VisEnd   VisEndCmap   ] = imread('IMAGES/MYBGLSR_C05K.A2006236.006.1.3.png');
 
   % Record the Lat,Lon extent of each image so that the image gets placed correctly
   % on the worldmap grid.
   % Format: [ Lat-of-south-edge Lat-of-north-edge Lon-of-west-edge Lon-of-east-edge ]
-  IrStartExt = [  4.0 20.2 -34.1 -11.0 ];
-  IrMidExt   = [  6.4 23.7 -40.9 -17.9 ];
-  IrEndExt   = [ 12.5 27.5 -48.5 -25.5 ];
+  VisStartExt = [  0.0 40.9 -41.7   0.0 ];
+  VisMidExt   = [  0.0 40.9 -41.7   0.0 ];
+  VisEndExt   = [  0.0 40.9 -41.7   0.0 ];
 
   % Vertically integrated condensate
   VcondFname = 'HDF5/TSD_SAL_DUST/HDF5/vint_cond-TSD_SAL_DUST-AS-2006-08-20-120000-g3.h5';
@@ -68,13 +69,13 @@ function [ ] = PlotFsFigVisSimStorm()
   WmapLonBounds = [ -42 -8 ];
 
   Paxes = subplot(3,2,1);
-  PlotFsFigImageWmap(Paxes, IrStart, IrStartCmap, WmapLatBounds, WmapLonBounds, 'a', '06Z, 22Aug (SD)', Fsize, IrStartExt)
+  PlotFsFigImageWmap(Paxes, VisStart, VisStartCmap, WmapLatBounds, WmapLonBounds, 'a', '06Z, 22Aug (SD)', Fsize, VisStartExt)
 
   Paxes = subplot(3,2,3);
-  PlotFsFigImageWmap(Paxes, IrMid, IrMidCmap, WmapLatBounds, WmapLonBounds, 'c', '12Z, 23Aug', Fsize, IrMidExt)
+  PlotFsFigImageWmap(Paxes, VisMid, VisMidCmap, WmapLatBounds, WmapLonBounds, 'c', '12Z, 23Aug', Fsize, VisMidExt)
 
   Paxes = subplot(3,2,5);
-  PlotFsFigImageWmap(Paxes, IrEnd, IrEndCmap, WmapLatBounds, WmapLonBounds, 'e', '18Z, 24Aug', Fsize, IrEndExt)
+  PlotFsFigImageWmap(Paxes, VisEnd, VisEndCmap, WmapLatBounds, WmapLonBounds, 'e', '18Z, 24Aug', Fsize, VisEndExt)
 
   % Vertically integrated condensate in right column
   Clevs = 0.4:0.2:4.0;
