@@ -20,6 +20,7 @@ SCRIPTS = \
   $(DEST)/PlotDpFigDustHov.m \
   $(DEST)/PlotDpFigTseries.m \
   $(DEST)/PlotFsFigModelSetup.m \
+  $(DEST)/PlotFsFigAnalysisSetup.m \
   $(DEST)/PlotFsFigIrSimStorm.m \
   $(DEST)/PlotFsFigVisSimStorm.m \
   $(DEST)/PlotFsFigObsSimDust.m \
