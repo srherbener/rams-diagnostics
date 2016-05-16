@@ -8,10 +8,10 @@ function [ ] = PlotFsFigModelSetup()
   Fsize = 13;
 
   CaseList = {
-    { 'TSD_SAL_DUST'       'SD'   }
-    { 'TSD_NONSAL_DUST'    'NSD'  }
-    { 'TSD_SAL_NODUST'     'SND'  }
-    { 'TSD_NONSAL_NODUST'  'NSND' }
+    { 'TSD_SAL_DUST'       'SD'   'black' }
+    { 'TSD_NONSAL_DUST'    'NSD'  'red'   }
+    { 'TSD_SAL_NODUST'     'SND'  'blue'  }
+    { 'TSD_NONSAL_NODUST'  'NSND' 'green' }
     };
   Nc = length(CaseList);
     
@@ -20,6 +20,7 @@ function [ ] = PlotFsFigModelSetup()
   for ic = 1:Nc
     Case  = CaseList{ic}{1};
     Label = CaseList{ic}{2};
+    Color = CaseList{ic}{3};
 
     Hfile = sprintf('HDF5/%s/HDF5/storm_center-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
     HdsetLon = '/press_cent_xloc';
@@ -32,6 +33,7 @@ function [ ] = PlotFsFigModelSetup()
     SimTrackLons(:,ic) = squeeze(h5read(Hfile, HdsetLon));
     SimTrackLats(:,ic) = squeeze(h5read(Hfile, HdsetLat));
     SimTrackLabels{ic} = Label;
+    SimTrackColors{ic} = Color;
   end
 
   % The lat,lon in the first entry of every storm track will be the same
@@ -81,7 +83,7 @@ function [ ] = PlotFsFigModelSetup()
   Fig = figure;
 
   Paxes = subplot(2,2,[ 1 2 ]);
-  PlotDpFigTrack(Paxes, SimTrackLons, SimTrackLats, SimTrackLabels, 'a', '', Fsize);
+  PlotDpFigTrack(Paxes, SimTrackLons, SimTrackLats, SimTrackLabels, SimTrackColors, 'a', '', Fsize);
   
   % Initial dust profiles
   Paxes = subplot(2,2,3);
@@ -98,7 +100,7 @@ function [ ] = PlotFsFigModelSetup()
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [] = PlotDpFigTrack(Paxes, SimTrackLons, SimTrackLats, SimTrackLabels, Pmarker, Ptitle, Fsize)
+function [] = PlotDpFigTrack(Paxes, SimTrackLons, SimTrackLats, SimTrackLabels, SimTrackColors, Pmarker, Ptitle, Fsize)
 
   axes(Paxes);
 
@@ -106,6 +108,8 @@ function [] = PlotDpFigTrack(Paxes, SimTrackLons, SimTrackLats, SimTrackLabels, 
   
   LegendFsize = 8;
   LineW = 2;
+
+  [ Npts Nlines ] = size(SimTrackLats);
   
   LatBounds = [   5  26 ];
   LonBounds = [ -42  -8 ];
@@ -127,16 +131,22 @@ function [] = PlotDpFigTrack(Paxes, SimTrackLons, SimTrackLats, SimTrackLabels, 
   plotm(lat, long, 'Color', 'k', 'LineWidth', LineW);
 
   NhcTrack = linem(NhcTrackLats, NhcTrackLons, 'LineWidth', LineW, 'Color', 'k', 'LineStyle', 'none', 'Marker', '+');
-  SimTrack = linem(double(SimTrackLats), double(SimTrackLons), 'LineWidth', LineW);
+  for i = 1:Nlines
+    Lats = double(squeeze(SimTrackLats(:,i)));
+    Lons = double(squeeze(SimTrackLons(:,i)));
+    Color = str2rgb(SimTrackColors{i});
+    SimTrack(i) = linem(Lats, Lons, 'Color', Color, 'LineWidth', LineW);
+  end
 
   % Mark Africa
   textm(14, -12, 'Africa', 'FontSize', 10, 'Color', 'k', 'Rotation', 90);
 
   % Mark grid 3
-  linem(Grid3Lats, Grid3Lons, 'LineWidth', LineW, 'Color', 'r');
-  textm(8, -39, 'Grid3', 'FontSize', 12, 'Color', 'r');
+  Grid3Color = str2rgb('gray');
+  linem(Grid3Lats, Grid3Lons, 'LineWidth', LineW, 'LineStyle', '--', 'Color', Grid3Color);
+  textm(8, -39, 'Grid3', 'FontSize', 12, 'Color', Grid3Color);
 
-  legend( [ NhcTrack SimTrack' ], LegText,'Location', 'NorthEastOutside', 'FontSize', LegendFsize);
+  legend( [ NhcTrack SimTrack ], LegText,'Location', 'NorthEastOutside', 'FontSize', LegendFsize);
 
   if (isempty(Pmarker))
     title(Ptitle);
@@ -292,8 +302,9 @@ function [] = PlotVintDust(Paxes, X, Y, Z, InitLat, InitLon, Pmarker, Ptitle, Fs
   textm(14, -12, 'Africa', 'FontSize', 10, 'Color', 'k', 'Rotation', 90);
 
   % Mark grid 3
-  linem(Grid3Lats, Grid3Lons, 'LineWidth', LineW, 'Color', 'r');
-  textm(8, -39, 'Grid3', 'FontSize', 12, 'Color', 'r');
+  Grid3Color = str2rgb('gray');
+  linem(Grid3Lats, Grid3Lons, 'LineWidth', LineW, 'LineStyle', '--', 'Color', Grid3Color);
+  textm(8, -39, 'Grid3', 'FontSize', 12, 'Color', Grid3Color);
 
   if (isempty(Pmarker))
     title(Ptitle);
