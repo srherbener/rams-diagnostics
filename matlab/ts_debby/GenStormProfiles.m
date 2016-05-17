@@ -7,9 +7,9 @@ function [ ] = GenStormProfiles()
 
   Cases = {
    'TSD_SAL_DUST'
-%   'TSD_SAL_NODUST'
-%   'TSD_NONSAL_DUST'
-%   'TSD_NONSAL_NODUST'
+   'TSD_SAL_NODUST'
+   'TSD_NONSAL_DUST'
+   'TSD_NONSAL_NODUST'
    };
   Ncases = length(Cases);
 
@@ -100,9 +100,17 @@ function [ ] = GenStormProfiles()
 
     { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/all_whole_ps_d1_num' '/all_whole_ps_d1_num' 'z' }
     { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/all_whole_s_d1_num'  '/all_whole_s_d1_num'  'z' }
+    { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/all_core_ps_d1_num'  '/all_core_ps_d1_num'  'z' }
+    { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/all_core_s_d1_num'   '/all_core_s_d1_num'   'z' }
+    { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/all_rb_ps_d1_num'    '/all_rb_ps_d1_num'    'z' }
+    { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/all_rb_s_d1_num'     '/all_rb_s_d1_num'     'z' }
 
     { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/all_whole_ps_d2_num' '/all_whole_ps_d2_num' 'z' }
     { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/all_whole_s_d2_num'  '/all_whole_s_d2_num'  'z' }
+    { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/all_core_ps_d2_num'  '/all_core_ps_d2_num'  'z' }
+    { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/all_core_s_d2_num'   '/all_core_s_d2_num'   'z' }
+    { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/all_rb_ps_d2_num'    '/all_rb_ps_d2_num'    'z' }
+    { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/all_rb_s_d2_num'     '/all_rb_s_d2_num'     'z' }
 
     { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/all_whole_ps_d1_mass' '/all_whole_ps_d1_mass' 'z' }
     { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/all_whole_s_d1_mass'  '/all_whole_s_d1_mass'  'z' }
@@ -491,19 +499,16 @@ function [ ] = GenStormProfiles()
 
       OnFinalProf = ~isempty(regexp(InVname, '_f_'));
 
-      % skip this profile set if doing dust and on a NODUST case
-      if ((~isempty(regexp(Case, 'NODUST'))) && ...
-          ((~isempty(regexp(InVname, 'd[12]_num'))) || ...
-           (~isempty(regexp(InVname, 'd[12]_mass'))) || ...
-           (~isempty(regexp(InVname, '_dust_'))) || ...
-           (~isempty(regexp(InVname, '_dustifn_'))) || ...
-           (~isempty(regexp(InVname, '_trdust[12]_'))) || ...
-           (~isempty(regexp(InVname, '_tracer[12]')))))
+      % skip this profile if input file or dataset is missing (eg., NODUST cases don't
+      % have d1_num, d1_mass, etc. extractions)
+      try
+        HINFO = h5info(InFile, InVname);
+      catch
+        fprintf('  Input file/dataset does not exist, skipping: %s (%s)\n', InFile, InVname);
         continue
-      else
-        icount = icount + 1;
       end
-
+      icount = icount + 1;
+      
       ControlInFile = regexprep(ProfileList{iset}{1}, '<CASE>', ControlCase);
 
       OutDiffVname  = sprintf('%s_diff',  OutVname);
