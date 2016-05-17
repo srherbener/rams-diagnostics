@@ -21,6 +21,7 @@ SCRIPTS = \
   $(DEST)/PlotDpFigTseries.m \
   $(DEST)/PlotFsFigModelSetup.m \
   $(DEST)/PlotFsFigDustProfiles.m \
+  $(DEST)/PlotFsFigCloudRainProfiles.m \
   $(DEST)/PlotFsFigAnalysisSetup.m \
   $(DEST)/PlotFsFigIrSimStorm.m \
   $(DEST)/PlotFsFigVisSimStorm.m \

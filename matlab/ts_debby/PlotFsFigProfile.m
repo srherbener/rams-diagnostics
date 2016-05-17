@@ -1,4 +1,4 @@
-function [] = PlotFsFigProfile(Paxes, X, Z, Pmarker, Ptitle, Xlabel, Xlim, Ylabel, Ylim, Fsize, LegText, Colors)
+function [] = PlotFsFigProfile(Paxes, X, Z, Pmarker, Ptitle, Xlabel, Xlim, Ylabel, Ylim, Fsize, LegText, LegLoc, Colors)
 
   axes(Paxes);
 
@@ -20,7 +20,9 @@ function [] = PlotFsFigProfile(Paxes, X, Z, Pmarker, Ptitle, Xlabel, Xlim, Ylabe
   xlabel(Xlabel);
   ylabel(Ylabel);
 
-  legend(Plines, LegText,'Location', 'NorthEast', 'FontSize', LegendFsize);
+  if (~strcmp(LegLoc, 'none'))
+    legend(Plines, LegText,'Location', LegLoc, 'FontSize', LegendFsize);
+  end
 
   if (isempty(Pmarker))
     title(Ptitle);

@@ -53,16 +53,16 @@ function [ ] = PlotFsFigDustProfiles()
   Ylim = [ 0  15 ];
 
   Paxes = subplot(2,2,1);
-  PlotFsFigProfile(Paxes, Dust1Core, Z, 'a', 'SAL: Core', 'Dust1 Num (cm^-^3)', Xlim, 'Height (km)', Ylim, Fsize, LegText, Colors);
+  PlotFsFigProfile(Paxes, Dust1Core, Z, 'a', 'SAL: Core', 'Dust1 Num (cm^-^3)', Xlim, 'Height (km)', Ylim, Fsize, LegText, 'NorthEast', Colors);
 
   Paxes = subplot(2,2,2);
-  PlotFsFigProfile(Paxes, Dust1Rband, Z, 'b', 'SAL: Rband', 'Dust1 Num (cm^-^3)', Xlim, 'Height (km)', Ylim, Fsize, LegText, Colors);
+  PlotFsFigProfile(Paxes, Dust1Rband, Z, 'b', 'SAL: Rband', 'Dust1 Num (cm^-^3)', Xlim, 'Height (km)', Ylim, Fsize, LegText, 'none', Colors);
 
   Paxes = subplot(2,2,3);
-  PlotFsFigProfile(Paxes, Dust2Core, Z, 'c', 'SAL: Core', 'Dust2 Num (cm^-^3)', Xlim, 'Height (km)', Ylim, Fsize, LegText, Colors);
+  PlotFsFigProfile(Paxes, Dust2Core, Z, 'c', 'SAL: Core', 'Dust2 Num (cm^-^3)', Xlim, 'Height (km)', Ylim, Fsize, LegText, 'none', Colors);
 
   Paxes = subplot(2,2,4);
-  PlotFsFigProfile(Paxes, Dust2Rband, Z, 'd', 'SAL: Rband', 'Dust2 Num (cm^-^3)', Xlim, 'Height (km)', Ylim, Fsize, LegText, Colors);
+  PlotFsFigProfile(Paxes, Dust2Rband, Z, 'd', 'SAL: Rband', 'Dust2 Num (cm^-^3)', Xlim, 'Height (km)', Ylim, Fsize, LegText, 'none', Colors);
 
   OutFile = sprintf('%s/FsFigDustProfiles.jpg', Pdir);
   fprintf('Writing: %s\n', OutFile);
