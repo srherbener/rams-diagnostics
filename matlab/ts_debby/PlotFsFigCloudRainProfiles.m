@@ -50,15 +50,15 @@ function [ ] = PlotFsFigCloudRainProfiles()
 
   Paxes = subplot(1,3,1);
   Xlim = [ 0 80 ];
-  PlotFsFigProfile(Paxes, CloudNum, Z, 'a', 'SAL: Rband', 'N_c (cm^-^3)', Xlim, 'Height (km)', Ylim, Fsize, LegText, 'NorthEast', Colors);
+  PlotFsFigLine(Paxes, CloudNum, Z, 'a', 'SAL: Rband', 'N_c (cm^-^3)', Xlim, 1, 'Height (km)', Ylim, 1, Fsize, LegText, 'NorthEast', Colors);
 
   Paxes = subplot(1,3,2);
   Xlim = [ 0 60 ];
-  PlotFsFigProfile(Paxes, CloudDiam, Z, 'b', 'SAL: Rband', 'D_c (\mum)', Xlim, 'Height (km)', Ylim, Fsize, LegText, 'none', Colors);
+  PlotFsFigLine(Paxes, CloudDiam, Z, 'b', 'SAL: Rband', 'D_c (\mum)', Xlim, 1, 'Height (km)', Ylim, 0, Fsize, LegText, 'none', Colors);
 
   Paxes = subplot(1,3,3);
   Xlim = [ 0 0.15 ];
-  PlotFsFigProfile(Paxes, RainMass, Z, 'c', 'SAL: Rband', 'Rain (g kg^-^1)', Xlim, 'Height (km)', Ylim, Fsize, LegText, 'none', Colors);
+  PlotFsFigLine(Paxes, RainMass, Z, 'c', 'SAL: Rband', 'Rain (g kg^-^1)', Xlim, 1, 'Height (km)', Ylim, 0, Fsize, LegText, 'none', Colors);
 
   OutFile = sprintf('%s/FsFigCloudRainProfiles.jpg', Pdir);
   fprintf('Writing: %s\n', OutFile);

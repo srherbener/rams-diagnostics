@@ -39,7 +39,7 @@ SCRIPTS = \
   $(DEST)/PlotFsFigHwindVectors.m \
   $(DEST)/PlotFsFigDiagWmap.m \
   $(DEST)/PlotFsFigImageWmap.m \
-  $(DEST)/PlotFsFigProfile.m \
+  $(DEST)/PlotFsFigLine.m \
   $(DEST)/ExtractSampleProfile.m \
   $(DEST)/ExtractHorizWinds.m \
   $(DEST)/GenPtrackMomentum.m \

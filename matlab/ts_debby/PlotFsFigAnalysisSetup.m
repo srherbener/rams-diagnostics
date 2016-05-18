@@ -5,24 +5,64 @@ function [ ] = PlotFsFigAnalysisSetup()
       mkdir(Pdir);
   end
   
-  Fsize = 25;
+  Fsize = 12;
+
+  CaseList = {
+      { 'TSD_SAL_DUST'       'SD'   'black' }
+      { 'TSD_NONSAL_DUST'    'NSD'  'red'   }
+      { 'TSD_SAL_NODUST'     'SND'  'blue'  }
+      { 'TSD_NONSAL_NODUST'  'NSND' 'green' }
+    };
+  Nc = length(CaseList);
 
   % SD: Storm center locations
-  Hfile = 'HDF5/TSD_SAL_DUST/HDF5/storm_center-TSD_SAL_DUST-AS-2006-08-20-120000-g3.h5';
-  HdsetLon = '/press_cent_xloc';
-  HdsetLat = '/press_cent_yloc';
+  InFname = 'HDF5/TSD_SAL_DUST/HDF5/storm_center-TSD_SAL_DUST-AS-2006-08-20-120000-g3.h5';
+  InVnameLon = '/press_cent_xloc';
+  InVnameLat = '/press_cent_yloc';
 
-  fprintf('Reading: %s\n', Hfile);
-  fprintf('  Track longitude: %s\n', HdsetLon);
-  fprintf('  Track latitude: %s\n', HdsetLat);
+  fprintf('Reading: %s (%s, %s)\n', InFname, InVnameLon, InVnameLat);
 
-  SimTrackLons = squeeze(h5read(Hfile, HdsetLon));
-  SimTrackLats = squeeze(h5read(Hfile, HdsetLat));
+  SimTrackLons = squeeze(h5read(InFname, InVnameLon));
+  SimTrackLats = squeeze(h5read(InFname, InVnameLat));
+
+  % PreSAL and SAL wind structure
+  for i = 1:Nc
+    Case       = CaseList{i}{1};
+    LegText{i} = CaseList{i}{2};
+    Colors{i}  = CaseList{i}{3};
+
+    InFname = sprintf('DIAGS/hist_meas_az_speed_%s.h5', Case);
+    InVname = '/all_ps_speed_maxlev';
+    fprintf('Reading: %s (%s)\n', InFname, InVname);
+    PS_MAXW(:,i) = squeeze(h5read(InFname, InVname));
+
+    if (i == 1)
+      X = squeeze(h5read(InFname, '/x_coords'))./1000; % Radius in km
+    end
+
+    InVname = '/all_s_speed_maxlev';
+    fprintf('Reading: %s (%s)\n', InFname, InVname);
+    S_MAXW(:,i) = squeeze(h5read(InFname, InVname));
+  end
 
   % plot
   Fig = figure;
 
-  PlotTrackXsection(gca, SimTrackLons, SimTrackLats, 'a', '', Fsize);
+  Paxes = subplot(3,1,1);
+  Ploc = get(Paxes, 'Position');
+  Ploc(1) = Ploc(1) + 0.15;
+  Ploc(2) = Ploc(2) - 0.02;
+  Ploc(4) = Ploc(4) + 0.05;
+  set(Paxes, 'Position', Ploc);
+  PlotTrackXsection(Paxes, SimTrackLons, SimTrackLats, 'a', '', Fsize);
+
+  Xlim = [ 0 500 ];
+  Ylim = [ 5  20 ];
+  Paxes = subplot(3,1,2);
+  PlotFsFigLine(Paxes, X, PS_MAXW, 'b', 'Pre-SAL', 'Radius (km)', Xlim, 0, 'Max Wind (m s^-^1)', Ylim, 1, Fsize, LegText, 'none', Colors);
+
+  Paxes = subplot(3,1,3);
+  PlotFsFigLine(Paxes, X, S_MAXW, 'c', 'SAL', 'Radius (km)', Xlim, 1, 'Max Wind (m s^-^1)', Ylim, 1, Fsize, LegText, 'NorthEast', Colors);
 
   OutFile = sprintf('%s/FsFigAnalysisSetup.jpg', Pdir);
   fprintf('Writing: %s\n', OutFile);
@@ -66,22 +106,17 @@ function [] = PlotTrackXsection(Paxes, SimTrackLons, SimTrackLats, Pmarker, Ptit
   Plat2 =  23.0;
   Plon2 = -24.0;
 
-  StrackLats = [  13.0  20.1 ];
-  StrackLons = [ -21.3 -39.6 ];
-  PtrackLats = [   7.4  23.0 ];
-  PtrackLons = [ -30.0 -24.0 ];
-
   Scolor = 'r';
   Pcolor = 'b';
 
-  Strack = linem([ Slat1 Slat2 ], [ Slon1 Slon2 ], 'Color', Scolor, 'LineStyle', '--', 'LineWidth', LineW);
-  textm(Slat1, Slon1+0.1, 'A', 'Color', Scolor, 'FontSize', Fsize);
-  textm(Slat2, Slon2-1.0, 'B', 'Color', Scolor, 'FontSize', Fsize);
-  Ptrack = linem([ Plat1 Plat2 ], [ Plon1 Plon2 ], 'Color', Pcolor, 'LineStyle', '--', 'LineWidth', LineW);
-  textm(Plat1-1.3, Plon1-0.9, 'C', 'Color', Pcolor, 'FontSize', Fsize);
-  textm(Plat2+0.3, Plon2-0.6, 'D', 'Color', Pcolor, 'FontSize', Fsize);
+  Strack = linem([ Slat1 Slat2 ], [ Slon1 Slon2 ], 'Color', Scolor, 'LineStyle', ':', 'LineWidth', LineW);
+  textm(Slat1, Slon1+0.4, 'A', 'Color', Scolor, 'FontSize', Fsize-2);
+  textm(Slat2, Slon2-2.1, 'B', 'Color', Scolor, 'FontSize', Fsize-2);
+  Ptrack = linem([ Plat1 Plat2 ], [ Plon1 Plon2 ], 'Color', Pcolor, 'LineStyle', ':', 'LineWidth', LineW);
+  textm(Plat1-1.3, Plon1-2.7, 'C', 'Color', Pcolor, 'FontSize', Fsize-2);
+  textm(Plat2+1.3, Plon2-0.6, 'D', 'Color', Pcolor, 'FontSize', Fsize-2);
 
-  legend( [ SimTrack' Strack' Ptrack' ], { 'SD' 'STRACK' 'PTRACK' },'Location', 'SouthWest', 'FontSize', LegendFsize);
+  legend( [ SimTrack' Strack' Ptrack' ], { 'SD' 'STRACK' 'PTRACK' },'Location', 'NorthEastOutside', 'FontSize', LegendFsize);
 
   if (isempty(Pmarker))
     title(Ptitle);
