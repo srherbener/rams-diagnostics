@@ -62,13 +62,13 @@ function [ ] = PlotFsFigObsSimDust()
 
   % AOD satellite images in left column
   Paxes = subplot(3,2,1);
-  PlaceAodImage(Paxes, AodStart, AodStartCmap, 'a', '06Z, 22Aug (SD)', Fsize)
+  PlaceAodImage(Paxes, AodStart, AodStartCmap, 'a', '22Aug', Fsize)
 
   Paxes = subplot(3,2,3);
-  PlaceAodImage(Paxes, AodMid, AodMidCmap, 'c', '12Z, 23Aug', Fsize)
+  PlaceAodImage(Paxes, AodMid, AodMidCmap, 'c', '23Aug', Fsize)
 
   Paxes = subplot(3,2,5);
-  PlaceAodImage(Paxes, AodEnd, AodEndCmap, 'e', '18Z, 24Aug', Fsize)
+  PlaceAodImage(Paxes, AodEnd, AodEndCmap, 'e', '24Aug', Fsize)
 
   % Vertically integrated condensate in right column
   Paxes = subplot(3,2,2);

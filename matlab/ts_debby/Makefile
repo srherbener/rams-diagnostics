@@ -25,6 +25,7 @@ SCRIPTS = \
   $(DEST)/PlotFsFigAnalysisSetup.m \
   $(DEST)/PlotFsFigIrSimStorm.m \
   $(DEST)/PlotFsFigVisSimStorm.m \
+  $(DEST)/PlotFsFigSatSimStorm.m \
   $(DEST)/PlotFsFigObsSimDust.m \
   $(DEST)/PlotFsFigMaxWind.m \
   $(DEST)/PlotFsFigThetaeXsection.m \

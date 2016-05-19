@@ -68,7 +68,7 @@ function [ ] = PlotFsFigIrSimStorm()
   WmapLonBounds = [ -42 -8 ];
 
   Paxes = subplot(3,2,1);
-  PlotFsFigImageWmap(Paxes, IrStart, IrStartCmap, WmapLatBounds, WmapLonBounds, 'a', '06Z, 22Aug (SD)', Fsize, IrStartExt)
+  PlotFsFigImageWmap(Paxes, IrStart, IrStartCmap, WmapLatBounds, WmapLonBounds, 'a', '06Z, 22Aug', Fsize, IrStartExt)
 
   Paxes = subplot(3,2,3);
   PlotFsFigImageWmap(Paxes, IrMid, IrMidCmap, WmapLatBounds, WmapLonBounds, 'c', '12Z, 23Aug', Fsize, IrMidExt)

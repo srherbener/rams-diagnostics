@@ -7,6 +7,15 @@ function [ ] = PlotFsFigVisSimStorm()
   
   Fsize = 13;
 
+  % get grid3 extent and make map a little bigger
+  GlocFname = 'GridLocs.txt';
+  Grid3Loc = ReadGridLoc(GlocFname, 'Grid3:');
+
+  MapInc = 4;
+  MapLoc = Grid3Loc + [ -MapInc MapInc -MapInc MapInc ];
+  MapLats = [ MapLoc(1:2) ];
+  MapLons = [ MapLoc(3:4) ];
+
   % TS Debby Visible images. PNG files have true color, so Cmap vars will be empty (which
   % is exactly what you want for geoshow.
   % Visible images are composites over one day
@@ -65,30 +74,28 @@ function [ ] = PlotFsFigVisSimStorm()
   Fig = figure;
 
   % Visible satellite images in left column
-  WmapLatBounds = [ 5 26 ];
-  WmapLonBounds = [ -42 -8 ];
-  Paxes = subplot(3,2,1);
-  PlotFsFigImageWmap(Paxes, VisStart, VisStartCmap, WmapLatBounds, WmapLonBounds, 'a', '22Aug', Fsize, VisStartExt)
+  Paxes = subplot(3,3,1);
+  PlotFsFigImageWmap(Paxes, VisStart, VisStartCmap, MapLats, MapLons, 'a', '22Aug', Fsize, VisStartExt)
 
-  Paxes = subplot(3,2,3);
-  PlotFsFigImageWmap(Paxes, VisMid, VisMidCmap, WmapLatBounds, WmapLonBounds, 'c', '23Aug', Fsize, VisMidExt)
+  Paxes = subplot(3,3,4);
+  PlotFsFigImageWmap(Paxes, VisMid, VisMidCmap, MapLats, MapLons, 'c', '23Aug', Fsize, VisMidExt)
 
-  Paxes = subplot(3,2,5);
-  PlotFsFigImageWmap(Paxes, VisEnd, VisEndCmap, WmapLatBounds, WmapLonBounds, 'e', '24Aug', Fsize, VisEndExt)
+  Paxes = subplot(3,3,7);
+  PlotFsFigImageWmap(Paxes, VisEnd, VisEndCmap, MapLats, MapLons, 'e', '24Aug', Fsize, VisEndExt)
 
   % Vertically integrated condensate in right column
   Clevs = 0.4:0.2:4.0;
   Cmap = 'jet';
   ClabInc = 2;
 
-  Paxes = subplot(3,2,2);
-  PlotFsFigDiagWmap(Paxes, X, Y, COND_START, WmapLatBounds, WmapLonBounds, Clevs, Cmap, ClabInc, 'b', '06Z, 22Aug', Fsize)
+  Paxes = subplot(3,3,3);
+  PlotFsFigDiagWmap(Paxes, X, Y, COND_START, MapLats, MapLons, Clevs, Cmap, ClabInc, 'b', '06Z, 22Aug (SD)', Fsize)
 
-  Paxes = subplot(3,2,4);
-  PlotFsFigDiagWmap(Paxes, X, Y, COND_MID, WmapLatBounds, WmapLonBounds, Clevs, Cmap, ClabInc, 'd', '12Z, 23Aug', Fsize)
+  Paxes = subplot(3,3,6);
+  PlotFsFigDiagWmap(Paxes, X, Y, COND_MID, MapLats, MapLons, Clevs, Cmap, ClabInc, 'd', '12Z, 23Aug', Fsize)
 
-  Paxes = subplot(3,2,6);
-  PlotFsFigDiagWmap(Paxes, X, Y, COND_END, WmapLatBounds, WmapLonBounds, Clevs, Cmap, ClabInc, 'f', '18Z, 24Aug', Fsize)
+  Paxes = subplot(3,3,9);
+  PlotFsFigDiagWmap(Paxes, X, Y, COND_END, MapLats, MapLons, Clevs, Cmap, ClabInc, 'f', '18Z, 24Aug', Fsize)
 
   OutFile = sprintf('%s/FsFigVisSimStorm.jpg', Pdir);
   fprintf('Writing: %s\n', OutFile);
