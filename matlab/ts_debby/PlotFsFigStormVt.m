@@ -79,7 +79,7 @@ function [ ] = PlotFsFigStormVt()
   UpClevs = 0:4:20;
 
   % Plot: 4 panels (2x2)
-  OutFile = sprintf('%s/FsFigStromVt.jpg', Pdir);
+  OutFile = sprintf('%s/FsFigStormVt.jpg', Pdir);
   Fig = figure;
 
   Fsize = 13;

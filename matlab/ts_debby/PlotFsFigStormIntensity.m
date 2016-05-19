@@ -7,21 +7,39 @@ function [ ] = PlotFsFigModelSetup()
   
   Fsize = 13;
 
-  GlocFname = 'GridLocs.txt';
-  Grid1Loc = ReadGridLoc(GlocFname, 'Grid1:');
-  Grid2Loc = ReadGridLoc(GlocFname, 'Grid2:');
-  Grid3Loc = ReadGridLoc(GlocFname, 'Grid3:');
+  CaseList = {
+    { 'TSD_SAL_DUST'       'SD'   'black' }
+    { 'TSD_NONSAL_DUST'    'NSD'  'red'   }
+    { 'TSD_SAL_NODUST'     'SND'  'blue'  }
+    { 'TSD_NONSAL_NODUST'  'NSND' 'green' }
+    };
+  Nc = length(CaseList);
+    
 
-  % Make the map extend a little ways beyond grid1 extent.
-  MapInc = 10;
-  BigMapLoc   = Grid1Loc + [ -MapInc MapInc -MapInc MapInc ];
-  MapInc = 4;
-  SmallMapLoc = Grid3Loc + [ -MapInc MapInc -MapInc MapInc ];
+  % Storm center locations
+  for ic = 1:Nc
+    Case  = CaseList{ic}{1};
+    Label = CaseList{ic}{2};
+    Color = CaseList{ic}{3};
+
+    Hfile = sprintf('HDF5/%s/HDF5/storm_center-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
+    HdsetLon = '/press_cent_xloc';
+    HdsetLat = '/press_cent_yloc';
+
+    fprintf('Reading: %s\n', Hfile);
+    fprintf('  Track longitude: %s\n', HdsetLon);
+    fprintf('  Track latitude: %s\n', HdsetLat);
+
+    SimTrackLons(:,ic) = squeeze(h5read(Hfile, HdsetLon));
+    SimTrackLats(:,ic) = squeeze(h5read(Hfile, HdsetLat));
+    SimTrackLabels{ic} = Label;
+    SimTrackColors{ic} = Color;
+  end
 
   % The lat,lon in the first entry of every storm track will be the same
   % since all sims started from the same history file.
-  InitLat =  13.5;
-  InitLon = -23.4;
+  InitLat = SimTrackLats(1,1);
+  InitLon = SimTrackLons(1,1);
 
   %*************************************************************************
   % Read in and assemble the aerosol profiles for the DUST case
@@ -65,11 +83,7 @@ function [ ] = PlotFsFigModelSetup()
   Fig = figure;
 
   Paxes = subplot(2,2,[ 1 2 ]);
-  Ploc = get(Paxes, 'Position');
-  Ploc(2) = Ploc(2) - 0.07;
-  Ploc(4) = Ploc(4) + 0.10;
-  set(Paxes, 'Position', Ploc);
-  PlotGridLocs(Paxes, BigMapLoc, Grid1Loc, Grid2Loc, Grid3Loc, 'a', '', Fsize);
+  PlotDpFigTrack(Paxes, SimTrackLons, SimTrackLats, SimTrackLabels, SimTrackColors, 'a', '', Fsize);
   
   % Initial dust profiles
   Paxes = subplot(2,2,3);
@@ -77,13 +91,7 @@ function [ ] = PlotFsFigModelSetup()
 
   % Vertically integrated dust mass
   Paxes = subplot(2,2,4);
-  Ploc = get(Paxes, 'Position');
-  Ploc(1) = Ploc(1) - 0.07;
-  Ploc(2) = Ploc(2) - 0.08;
-  Ploc(3) = Ploc(3) + 0.12;
-  Ploc(4) = Ploc(4) + 0.12;
-  set(Paxes, 'Position', Ploc);
-  PlotVintDust(Paxes, SmallMapLoc, Grid3Loc, X, Y, DUST, InitLat, InitLon, 'c', '06Z, 22Aug', Fsize, 1, 1);
+  PlotVintDust(Paxes, X, Y, DUST, InitLat, InitLon, 'c', '06Z, 22Aug', Fsize, 1, 1);
 
   OutFile = sprintf('%s/FsFigModelSetup.jpg', Pdir);
   fprintf('Writing: %s\n', OutFile);
@@ -92,65 +100,53 @@ function [ ] = PlotFsFigModelSetup()
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [] = PlotGridLocs(Paxes, MapLoc, Grid1Loc, Grid2Loc, Grid3Loc, Pmarker, Ptitle, Fsize)
+function [] = PlotDpFigTrack(Paxes, SimTrackLons, SimTrackLats, SimTrackLabels, SimTrackColors, Pmarker, Ptitle, Fsize)
 
   axes(Paxes);
 
-  LegendFsize = 12;
+  LegText = { 'NHC' SimTrackLabels{1:end} };
+  
+  LegendFsize = 8;
   LineW = 2;
 
-  MapLat1 = MapLoc(1);
-  MapLat2 = MapLoc(2);
-  MapLon1 = MapLoc(3);
-  MapLon2 = MapLoc(4);
+  [ Npts Nlines ] = size(SimTrackLats);
+  
+  LatBounds = [   5  26 ];
+  LonBounds = [ -42  -8 ];
 
-  G1_Lat1 = Grid1Loc(1);
-  G1_Lat2 = Grid1Loc(2);
-  G1_Lon1 = Grid1Loc(3);
-  G1_Lon2 = Grid1Loc(4);
-
-  G2_Lat1 = Grid2Loc(1);
-  G2_Lat2 = Grid2Loc(2);
-  G2_Lon1 = Grid2Loc(3);
-  G2_Lon2 = Grid2Loc(4);
-
-  G3_Lat1 = Grid3Loc(1);
-  G3_Lat2 = Grid3Loc(2);
-  G3_Lon1 = Grid3Loc(3);
-  G3_Lon2 = Grid3Loc(4);
-
-  MapLats = [ MapLat1 MapLat2 ];
-  MapLons = [ MapLon1 MapLon2 ];
-
-  % Draw a box for each grid
-  Grid1Lats = [ G1_Lat1 G1_Lat2 G1_Lat2 G1_Lat1 G1_Lat1 ];
-  Grid1Lons = [ G1_Lon1 G1_Lon1 G1_Lon2 G1_Lon2 G1_Lon1 ];
-
-  Grid2Lats = [ G2_Lat1 G2_Lat2 G2_Lat2 G2_Lat1 G2_Lat1 ];
-  Grid2Lons = [ G2_Lon1 G2_Lon1 G2_Lon2 G2_Lon2 G2_Lon1 ];
-
-  Grid3Lats = [ G3_Lat1 G3_Lat2 G3_Lat2 G3_Lat1 G3_Lat1 ];
-  Grid3Lons = [ G3_Lon1 G3_Lon1 G3_Lon2 G3_Lon2 G3_Lon1 ];
+  % rectangle representing grid 3 bounds
+  Grid3Lats = [   7.2  23.2  23.2   7.2   7.2 ];
+  Grid3Lons = [ -39.7 -39.7 -13.9 -13.9 -39.7 ];
+  
+  % The simulation runs from Aug 22, 6Z to Aug 24, 18Z.
+  %
+  % Locations from NHC report: Aug 22, 6Z through Aug 24, 18Z.
+  NhcTrackLats = [ 12.6 13.4 14.2 14.9 15.7 16.7 17.6 18.4 19.2 20.1 20.9 ];
+  NhcTrackLons = [ 23.9 25.3 26.7 28.1 29.5 31.0 32.4 33.9 35.5 37.1 38.7 ] * -1; 
 
   set(Paxes, 'FontSize', Fsize);
-  worldmap(MapLats, MapLons);
+  worldmap(LatBounds, LonBounds);
   setm(Paxes, 'MapProjection', 'miller');
   load coast;  % creates vars "lat" and "long" that contain coast lines
   plotm(lat, long, 'Color', 'k', 'LineWidth', LineW);
 
-  % Plot grid boxes
-  Gcolor = str2rgb('red');
-  G1line = linem(Grid1Lats, Grid1Lons, 'LineWidth', LineW, 'LineStyle', '-', 'Color', Gcolor);
+  NhcTrack = linem(NhcTrackLats, NhcTrackLons, 'LineWidth', LineW, 'Color', 'k', 'LineStyle', 'none', 'Marker', '+');
+  for i = 1:Nlines
+    Lats = double(squeeze(SimTrackLats(:,i)));
+    Lons = double(squeeze(SimTrackLons(:,i)));
+    Color = str2rgb(SimTrackColors{i});
+    SimTrack(i) = linem(Lats, Lons, 'Color', Color, 'LineWidth', LineW);
+  end
 
-  Gcolor = str2rgb('green');
-  G2line = linem(Grid2Lats, Grid2Lons, 'LineWidth', LineW, 'LineStyle', '-', 'Color', Gcolor);
+  % Mark Africa
+  textm(14, -12, 'Africa', 'FontSize', 10, 'Color', 'k', 'Rotation', 90);
 
-  Gcolor = str2rgb('blue');
-  G3line = linem(Grid3Lats, Grid3Lons, 'LineWidth', LineW, 'LineStyle', '-', 'Color', Gcolor);
+  % Mark grid 3
+  Grid3Color = str2rgb('gray');
+  linem(Grid3Lats, Grid3Lons, 'LineWidth', LineW, 'LineStyle', '--', 'Color', Grid3Color);
+  textm(8, -39, 'Grid3', 'FontSize', 12, 'Color', Grid3Color);
 
-  LegLines = [ G1line G2line G3line ];
-  LegText  = { 'Grid1' 'Grid2' 'Grid3' };
-  legend(LegLines, LegText, 'Location', 'EastOutside', 'FontSize', LegendFsize);
+  legend( [ NhcTrack SimTrack ], LegText,'Location', 'NorthEastOutside', 'FontSize', LegendFsize);
 
   if (isempty(Pmarker))
     title(Ptitle);
@@ -199,30 +195,21 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [] = PlotVintDust(Paxes, MapLoc, Grid3Loc, X, Y, Z, InitLat, InitLon, Pmarker, Ptitle, Fsize, ShowX, ShowY)
+function [] = PlotVintDust(Paxes, X, Y, Z, InitLat, InitLon, Pmarker, Ptitle, Fsize, ShowX, ShowY)
 
   axes(Paxes);
 
-  MapLat1 = MapLoc(1);
-  MapLat2 = MapLoc(2);
-  MapLon1 = MapLoc(3);
-  MapLon2 = MapLoc(4);
-
-  MapLats = [ MapLat1 MapLat2 ];
-  MapLons = [ MapLon1 MapLon2 ];
-
-  G3_Lat1 = Grid3Loc(1);
-  G3_Lat2 = Grid3Loc(2);
-  G3_Lon1 = Grid3Loc(3);
-  G3_Lon2 = Grid3Loc(4);
-
-  Grid3Lats = [ G3_Lat1 G3_Lat2 G3_Lat2 G3_Lat1 G3_Lat1 ];
-  Grid3Lons = [ G3_Lon1 G3_Lon1 G3_Lon2 G3_Lon2 G3_Lon1 ];
+  LatBounds = [ 5 26 ];
+  LonBounds = [ -42 -8 ];
 
   LineW = 2;
 
+  % rectangle representing grid 3 bounds
+  Grid3Lats = [   7.2  23.2  23.2   7.2   7.2 ];
+  Grid3Lons = [ -39.7 -39.7 -13.9 -13.9 -39.7 ];
+  
   set(Paxes, 'FontSize', Fsize);
-  worldmap(MapLats, MapLons);
+  worldmap(LatBounds, LonBounds);
   setm(Paxes, 'MapProjection', 'miller');
 
   % Want this plot to show where the initial SAL regin exists within
@@ -315,8 +302,8 @@ function [] = PlotVintDust(Paxes, MapLoc, Grid3Loc, X, Y, Z, InitLat, InitLon, P
   textm(14, -12, 'Africa', 'FontSize', 10, 'Color', 'k', 'Rotation', 90);
 
   % Mark grid 3
-  Grid3Color = str2rgb('blue');
-  linem(Grid3Lats, Grid3Lons, 'LineWidth', LineW, 'LineStyle', '-', 'Color', Grid3Color);
+  Grid3Color = str2rgb('gray');
+  linem(Grid3Lats, Grid3Lons, 'LineWidth', LineW, 'LineStyle', '--', 'Color', Grid3Color);
   textm(8, -39, 'Grid3', 'FontSize', 12, 'Color', Grid3Color);
 
   if (isempty(Pmarker))

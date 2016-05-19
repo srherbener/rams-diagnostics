@@ -31,6 +31,7 @@ SCRIPTS = \
   $(DEST)/PlotFsFigThetaXsection.m \
   $(DEST)/PlotFsFigVaporXsection.m \
   $(DEST)/PlotFsFigTempWindXsection.m \
+  $(DEST)/PlotFsFigStormIntensity.m \
   $(DEST)/PlotFsFigStormVt.m \
   $(DEST)/PlotFsFigStormStruct.m \
   $(DEST)/PlotFsFigTseries.m \
@@ -72,6 +73,7 @@ SCRIPTS = \
   $(DEST)/GenTsdHdaMeas.m \
   $(DEST)/GenBuoyancy.m \
   $(DEST)/GenTrackLine.m \
+  $(DEST)/ReadGridLoc.m \
   $(DEST)/ReportIntMassNumbers.m \
   $(DEST)/ReportDpMeas.m \
   $(DEST)/RunGenFigures.m \
