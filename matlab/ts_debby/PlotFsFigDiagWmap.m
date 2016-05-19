@@ -6,7 +6,7 @@ function [] = PlotFsFigDiagWmap(Paxes, X, Y, Z, LatBounds, LonBounds, Clevs, Cma
 
   set(Paxes, 'FontSize', Fsize);
   worldmap(LatBounds, LonBounds);
-  setm(Paxes, 'MapProjection', 'miller');
+  setm(Paxes, 'MapProjection', 'miller', 'FontSize', 8);
 
   % Color levels and limits
   Cmin = Clevs(1);

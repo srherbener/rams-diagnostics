@@ -6,7 +6,7 @@ function [] = PlotFsFigImageWmap(Paxes, IrImage, IrCmap, LatBounds, LonBounds, P
 
   set(Paxes, 'FontSize', Fsize);
   worldmap(LatBounds, LonBounds);
-  setm(Paxes, 'MapProjection', 'miller');
+  setm(Paxes, 'MapProjection', 'miller', 'FontSize', 8);
 
   % Create gridded versions of the latitude and longitude value
   % that the image covers.
