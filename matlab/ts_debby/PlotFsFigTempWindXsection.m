@@ -52,7 +52,7 @@ function [ ] = PlotFsFigTempWindXsection()
   TempClim = [ 290 320 ];
   TempClimDiff = [ -4 4 ];
   TempClevs = 290:2:320;
-  TempClevsDiff = -4:0.1:4;
+  TempClevsDiff = -4:1:4;
 
 %%  Temp C settings
 %  TempClim = [ -10 25 ];
@@ -60,14 +60,14 @@ function [ ] = PlotFsFigTempWindXsection()
 %  TempClevs = -10:1:25;
 %  TempClevsDiff = -4:0.1:4;
 
-  TempCmap = 'default';
+  TempCmap = 'parula';
   TempCmapDiff = 'redblue';
 
   VelClim = [ -10 20 ];
   VelClimDiff = [ -4 4 ];
   VelClevs = -10:1:20;
-  VelClevsDiff = -4:0.1:4;
-  VelCmap = 'default';
+  VelClevsDiff = -4:1:4;
+  VelCmap = 'jet';
   VelCmapDiff = 'redblue';
 
   PlocInc = 0.055;
@@ -78,7 +78,7 @@ function [ ] = PlotFsFigTempWindXsection()
   Ploc(1) = Ploc(1) - PlocInc;
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
-  PlotFsFigXsection(Paxes, X, Z, PS_T_SD', 'a', 'Pre-SAL (SD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, TempCmap, TempClim, TempClevs, Fsize, 0, 1);
+  PlotFsFigXsection(Paxes, X, Z, PS_T_SD', 'a', 'PTRACK: Pre-SAL (SD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, TempCmap, TempClim, TempClevs, Fsize, 0, 1);
 
   Paxes = subplot(3, 2, 3);
   Ploc = get(Paxes, 'Position'); % cover a wider portion of the subplot region
@@ -93,6 +93,8 @@ function [ ] = PlotFsFigTempWindXsection()
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
   PlotFsFigXsection(Paxes, X, Z, PS_T_DIFF', 'e', 'Pre-SAL (NSD-SD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, VelCmapDiff, TempClimDiff, TempClevsDiff, Fsize, 1, 1);
+  text(0, -1, 'C', 'Color', 'b', 'FontSize', Fsize);
+  text(1700, -1, 'D', 'Color', 'b', 'FontSize', Fsize);
 
   % Tangential velocity in the right column
   Paxes = subplot(3, 2, 2);
@@ -100,7 +102,7 @@ function [ ] = PlotFsFigTempWindXsection()
   Ploc(1) = Ploc(1) - PlocInc;
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
-  PlotFsFigXsection(Paxes, X, Z, PS_V_SD', 'b', 'Pre-SAL (SD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, VelCmap, VelClim, VelClevs, Fsize, 0, 0);
+  PlotFsFigXsection(Paxes, X, Z, PS_V_SD', 'b', 'PTRACK: Pre-SAL (SD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, VelCmap, VelClim, VelClevs, Fsize, 0, 0);
 
   Paxes = subplot(3, 2, 4);
   Ploc = get(Paxes, 'Position'); % cover a wider portion of the subplot region
@@ -115,6 +117,8 @@ function [ ] = PlotFsFigTempWindXsection()
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
   PlotFsFigXsection(Paxes, X, Z, PS_V_DIFF', 'f', 'Pre-SAL (NSD-SD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, VelCmapDiff, VelClimDiff, VelClevsDiff, Fsize, 1, 0);
+  text(0, -1, 'C', 'Color', 'b', 'FontSize', Fsize);
+  text(1700, -1, 'D', 'Color', 'b', 'FontSize', Fsize);
 
   fprintf('Writing: %s\n', OutFile);
   saveas(Fig, OutFile);
