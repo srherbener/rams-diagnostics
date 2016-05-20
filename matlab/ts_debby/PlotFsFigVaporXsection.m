@@ -63,7 +63,7 @@ function [ ] = PlotFsFigVaporXsection()
   Ylim = [ 0 5.5 ];
   Clim = [ 0 18 ];
   Nlevs = 0:3:18;
-  Cmap = 'default';
+  Cmap = 'parula';
 
   PlocInc = 0.05;
 
@@ -74,7 +74,7 @@ function [ ] = PlotFsFigVaporXsection()
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
   PDATA = squeeze(THETA_E(1,1,:,:))';
-  PlotFsFigXsection(Paxes, X, Z, PDATA, 'a', '06Z, 22Aug (SD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Nlevs, Fsize, 0, 1);
+  PlotFsFigXsection(Paxes, X, Z, PDATA, 'a', 'STRACK: 06Z, 22Aug (SD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Nlevs, Fsize, 0, 1);
 
   Paxes = subplot(5, 2, 3);
   Ploc = get(Paxes, 'Position');
@@ -107,6 +107,8 @@ function [ ] = PlotFsFigVaporXsection()
   set(Paxes, 'Position', Ploc);
   PDATA = squeeze(THETA_E(1,5,:,:))';
   PlotFsFigXsection(Paxes, X, Z, PDATA, 'i', '18Z, 24Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Nlevs, Fsize, 1, 1);
+  text(0, -2, 'A', 'Color', 'r', 'FontSize', Fsize);
+  text(2000, -2, 'B', 'Color', 'r', 'FontSize', Fsize);
 
   % TSD_NONSAL_DUST
   Paxes = subplot(5, 2, 2);
@@ -115,7 +117,7 @@ function [ ] = PlotFsFigVaporXsection()
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
   PDATA = squeeze(THETA_E(2,1,:,:))';
-  PlotFsFigXsection(Paxes, X, Z, PDATA, 'b', '06Z, 22Aug (NSD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Nlevs, Fsize, 0, 0);
+  PlotFsFigXsection(Paxes, X, Z, PDATA, 'b', 'STRACK: 06Z, 22Aug (NSD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Nlevs, Fsize, 0, 0);
 
   Paxes = subplot(5, 2, 4);
   Ploc = get(Paxes, 'Position');
@@ -148,6 +150,8 @@ function [ ] = PlotFsFigVaporXsection()
   set(Paxes, 'Position', Ploc);
   PDATA = squeeze(THETA_E(2,5,:,:))';
   PlotFsFigXsection(Paxes, X, Z, PDATA, 'j', '18Z, 24Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Nlevs, Fsize, 1, 0);
+  text(0, -2, 'A', 'Color', 'r', 'FontSize', Fsize);
+  text(2000, -2, 'B', 'Color', 'r', 'FontSize', Fsize);
 
 
   fprintf('Writing: %s\n', OutFile);
