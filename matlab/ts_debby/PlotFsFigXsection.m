@@ -11,7 +11,11 @@ function [] = PlotFsFigXsection(Paxes, X, Y, Z, Pmarker, Ptitle, Xlabel, Xlim, Y
   caxis(Clim);
 
   if (strcmp(Cmap, 'redblue'))
+    % need to call a function for redblue
     colormap(Paxes, redblue);
+  else
+    % expect a built in name
+    colormap(Paxes, Cmap);
   end
 
   if (ShowX == 0)

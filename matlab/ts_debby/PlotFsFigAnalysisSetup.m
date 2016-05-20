@@ -45,24 +45,38 @@ function [ ] = PlotFsFigAnalysisSetup()
     S_MAXW(:,i) = squeeze(h5read(InFname, InVname));
   end
 
+  % Pre-SAL and SAL azimuthally averaged updrafts
+  InFname = 'DIAGS/storm_xsections_TSD_SAL_DUST.h5';
+  InVname = '/all_ps_updraft';
+  fprintf('Reading: %s (%s)\n', InFname, InVname);
+  PS_WUP = squeeze(h5read(InFname, InVname));
+  X = squeeze(h5read(InFname, '/x_coords'))./1000; % radius in km
+  Z = squeeze(h5read(InFname, '/z_coords'))./1000; % height in km
+
+  InVname = '/all_s_updraft';
+  fprintf('Reading: %s (%s)\n', InFname, InVname);
+  S_WUP = squeeze(h5read(InFname, InVname));
+
   % plot
   Fig = figure;
 
-  Paxes = subplot(3,1,1);
-  Ploc = get(Paxes, 'Position');
-  Ploc(1) = Ploc(1) + 0.15;
-  Ploc(2) = Ploc(2) - 0.02;
-  Ploc(4) = Ploc(4) + 0.05;
-  set(Paxes, 'Position', Ploc);
+  Paxes = subplot(2,2,[1 2]);
   PlotTrackXsection(Paxes, SimTrackLons, SimTrackLats, 'a', '', Fsize);
 
+  % Params for the updraft contour plots
   Xlim = [ 0 500 ];
-  Ylim = [ 5  20 ];
-  Paxes = subplot(3,1,2);
-  PlotFsFigLine(Paxes, X, PS_MAXW, 'b', 'Pre-SAL', 'Radius (km)', Xlim, 0, 'Max Wind (m s^-^1)', Ylim, 1, Fsize, LegText, 'none', Colors);
+  Ylim = [ 0  15 ];
+  Cmap = 'jet';
+  Clim = [ 0 0.3 ];
+  Clevs = 0:0.05:0.3;
 
-  Paxes = subplot(3,1,3);
-  PlotFsFigLine(Paxes, X, S_MAXW, 'c', 'SAL', 'Radius (km)', Xlim, 1, 'Max Wind (m s^-^1)', Ylim, 1, Fsize, LegText, 'NorthEast', Colors);
+  Paxes = subplot(2,2,3);
+  PlotFsFigXsection(Paxes, X, Z, PS_WUP', 'b', 'Pre-SAL', 'Radius (km)', Xlim, 'Height (km)', Ylim, Cmap, Clim, Clevs, Fsize, 1, 1);
+  MarkCoreRband(Paxes);
+
+  Paxes = subplot(2,2,4);
+  PlotFsFigXsection(Paxes, X, Z, S_WUP', 'c', 'SAL', 'Radius (km)', Xlim, 'Height (km)', Ylim, Cmap, Clim, Clevs, Fsize, 1, 1);
+  MarkCoreRband(Paxes);
 
   OutFile = sprintf('%s/FsFigAnalysisSetup.jpg', Pdir);
   fprintf('Writing: %s\n', OutFile);
@@ -124,4 +138,21 @@ function [] = PlotTrackXsection(Paxes, SimTrackLons, SimTrackLats, Pmarker, Ptit
     T = title(sprintf('(%s) %s', Pmarker, Ptitle));
     LeftJustTitle(T);
   end
+end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+function [] = MarkCoreRband(Paxes)
+
+  axes(Paxes);
+
+  line([   0 200 ], [ 2 2 ], 'Color', 'w', 'LineWidth', 2);
+  line([  10  10 ], [ 1.5 2.5 ], 'Color', 'w', 'LineWidth', 2);
+  line([ 200 200 ], [ 1.5 2.5 ], 'Color', 'w', 'LineWidth', 2);
+  text(60, 1, 'Core', 'Color', 'w', 'FontSize', 12, 'FontWeight', 'bold');
+
+  line([ 250 450 ], [ 2 2 ], 'Color', 'w', 'LineWidth', 2);
+  line([ 250 250 ], [ 1.5 2.5 ], 'Color', 'w', 'LineWidth', 2);
+  line([ 450 450 ], [ 1.5 2.5 ], 'Color', 'w', 'LineWidth', 2);
+  text(290, 1, 'Rband', 'Color', 'w', 'FontSize', 12, 'FontWeight', 'bold');
+
 end

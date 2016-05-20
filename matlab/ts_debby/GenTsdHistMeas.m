@@ -37,8 +37,8 @@ function [ ] = GenTsdHistMeas()
   RstartCore =   0;
   RendCore   = 200;
 
-  RstartRband = 300;
-  RendRband   = 400;
+  RstartRband = 250;
+  RendRband   = 450;
 
 %  RstartEnv = 300;
 %  RendEnv   = 500;
