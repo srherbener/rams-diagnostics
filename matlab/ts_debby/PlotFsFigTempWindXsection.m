@@ -51,7 +51,7 @@ function [ ] = PlotFsFigTempWindXsection()
 %  Theta settings
   TempClim = [ 290 320 ];
   TempClimDiff = [ -4 4 ];
-  TempClevs = 290:2:320;
+  TempClevs = 290:4:320;
   TempClevsDiff = -4:1:4;
 
 %%  Temp C settings
@@ -65,7 +65,7 @@ function [ ] = PlotFsFigTempWindXsection()
 
   VelClim = [ -10 20 ];
   VelClimDiff = [ -4 4 ];
-  VelClevs = -10:1:20;
+  VelClevs = -10:2:20;
   VelClevsDiff = -4:1:4;
   VelCmap = 'jet';
   VelCmapDiff = 'redblue';
