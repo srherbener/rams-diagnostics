@@ -1,4 +1,4 @@
-function [] = PlotFsFigLine(Paxes, X, Y, Pmarker, Ptitle, Xlabel, Xlim, Xshow, Ylabel, Ylim, Yshow, Fsize, LegText, LegLoc, Colors)
+function [] = PlotFsFigLine(Paxes, X, Y, Pmarker, Ptitle, Xlabel, Xlim, Xscale, Xshow, Ylabel, Ylim, Yscale, Yshow, Fsize, LegText, LegLoc, Colors)
 
   % X and Y need to contain line data in each column. Therefore, the length of the columns
   % (ie, the number of rows) of X and Y need to match. X and Y can either be vectors or
@@ -49,6 +49,9 @@ function [] = PlotFsFigLine(Paxes, X, Y, Pmarker, Ptitle, Xlabel, Xlim, Xshow, Y
     Color = str2rgb(Colors{i});
     Plines(i) = line(Xline, Yline, 'Color', Color, 'LineWidth', LineW);
   end
+
+  set(Paxes, 'Xscale', Xscale);
+  set(Paxes, 'Yscale', Yscale);
 
   xlim(Xlim);
   ylim(Ylim);
