@@ -253,6 +253,16 @@ function [ ] = GenStormProfiles()
     { 'DIAGS/hist_meas_az_lhv_heat_<CASE>.h5' '/all_rb_ps_lhv_heat'   '/all_rb_ps_lhv_heat'   'z' }
     { 'DIAGS/hist_meas_az_lhv_heat_<CASE>.h5' '/all_rb_s_lhv_heat'    '/all_rb_s_lhv_heat'    'z' }
 
+    { 'DIAGS/hist_meas_az_vapor_<CASE>.h5' '/all_core_ps_vapor' '/all_core_ps_vapor' 'z' }
+    { 'DIAGS/hist_meas_az_vapor_<CASE>.h5' '/all_core_s_vapor'  '/all_core_s_vapor'  'z' }
+    { 'DIAGS/hist_meas_az_vapor_<CASE>.h5' '/all_rb_ps_vapor'   '/all_rb_ps_vapor'   'z' }
+    { 'DIAGS/hist_meas_az_vapor_<CASE>.h5' '/all_rb_s_vapor'    '/all_rb_s_vapor'    'z' }
+
+    { 'DIAGS/hist_meas_az_relhum_<CASE>.h5' '/all_core_ps_relhum' '/all_core_ps_relhum' 'z' }
+    { 'DIAGS/hist_meas_az_relhum_<CASE>.h5' '/all_core_s_relhum'  '/all_core_s_relhum'  'z' }
+    { 'DIAGS/hist_meas_az_relhum_<CASE>.h5' '/all_rb_ps_relhum'   '/all_rb_ps_relhum'   'z' }
+    { 'DIAGS/hist_meas_az_relhum_<CASE>.h5' '/all_rb_s_relhum'    '/all_rb_s_relhum'    'z' }
+
     { 'DIAGS/hist_meas_az_liq_evap_<CASE>.h5' '/all_core_ps_liq_evap' '/all_core_ps_liq_evap' 'z' }
     { 'DIAGS/hist_meas_az_liq_evap_<CASE>.h5' '/all_core_s_liq_evap'  '/all_core_s_liq_evap'  'z' }
     { 'DIAGS/hist_meas_az_liq_evap_<CASE>.h5' '/all_rb_ps_liq_evap'   '/all_rb_ps_liq_evap'   'z' }
@@ -262,6 +272,16 @@ function [ ] = GenStormProfiles()
     { 'DIAGS/hist_meas_az_liq_cond_<CASE>.h5' '/all_core_s_liq_cond'  '/all_core_s_liq_cond'  'z' }
     { 'DIAGS/hist_meas_az_liq_cond_<CASE>.h5' '/all_rb_ps_liq_cond'   '/all_rb_ps_liq_cond'   'z' }
     { 'DIAGS/hist_meas_az_liq_cond_<CASE>.h5' '/all_rb_s_liq_cond'    '/all_rb_s_liq_cond'    'z' }
+
+    { 'DIAGS/hist_meas_az_ice_sub_<CASE>.h5' '/all_core_ps_ice_sub' '/all_core_ps_ice_sub' 'z' }
+    { 'DIAGS/hist_meas_az_ice_sub_<CASE>.h5' '/all_core_s_ice_sub'  '/all_core_s_ice_sub'  'z' }
+    { 'DIAGS/hist_meas_az_ice_sub_<CASE>.h5' '/all_rb_ps_ice_sub'   '/all_rb_ps_ice_sub'   'z' }
+    { 'DIAGS/hist_meas_az_ice_sub_<CASE>.h5' '/all_rb_s_ice_sub'    '/all_rb_s_ice_sub'    'z' }
+
+    { 'DIAGS/hist_meas_az_ice_dep_<CASE>.h5' '/all_core_ps_ice_dep' '/all_core_ps_ice_dep' 'z' }
+    { 'DIAGS/hist_meas_az_ice_dep_<CASE>.h5' '/all_core_s_ice_dep'  '/all_core_s_ice_dep'  'z' }
+    { 'DIAGS/hist_meas_az_ice_dep_<CASE>.h5' '/all_rb_ps_ice_dep'   '/all_rb_ps_ice_dep'   'z' }
+    { 'DIAGS/hist_meas_az_ice_dep_<CASE>.h5' '/all_rb_s_ice_dep'    '/all_rb_s_ice_dep'    'z' }
 
     { 'DIAGS/hist_meas_az_cloud_evap_<CASE>.h5' '/all_core_ps_cloud_evap' '/all_core_ps_cloud_evap' 'z' }
     { 'DIAGS/hist_meas_az_cloud_evap_<CASE>.h5' '/all_core_s_cloud_evap'  '/all_core_s_cloud_evap'  'z' }
