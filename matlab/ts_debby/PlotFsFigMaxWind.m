@@ -72,7 +72,7 @@ function [ ] = PlotFsFigMaxWind()
   BDATA = [ PRESAL_FS_WMAX(1:3)' PRESAL_FS_WMAX_INT(4); SAL_FS_WMAX(1:3)' SAL_FS_WMAX_INT(4) ]' .* 100;
   BarColors = { 'dodgerblue' 'cyan' };
   BarLabels = { 'NS' 'ND' 'NSD' 'INT' };
-  BarLegText = { 'Pre-SAL' 'SAL' };
+  BarLegText = { 'PSAP' 'SAP' };
   BarLegLoc = 'NorthEastOutside';
   fprintf('\n');
 
@@ -92,16 +92,16 @@ function [ ] = PlotFsFigMaxWind()
   set(Paxes, 'Position', Ploc);
   PlotFsFigTseries(Paxes, T, WMAX_TS, WmaxColors, 'a', '', 'Speed (ms^-^1)', 'linear', [ 0 25  ], Fsize, 1, 1, WmaxLegText, WmaxLegLoc);
 
-  % Mark the Pre-SAL (10-30 h) and SAL (40-60 h) time periods
+  % Mark the PRESAL (10-30 h) and SAL (40-60 h) time periods
   line([ 10 30 ], [ 5 5 ], 'Color', 'k', 'LineWidth', 2);
   line([ 10 10 ], [ 4 6 ], 'Color', 'k', 'LineWidth', 2);
   line([ 30 30 ], [ 4 6 ], 'Color', 'k', 'LineWidth', 2);
-  text(15, 6, 'Pre-SAL', 'FontSize', Fsize);
+  text(15, 6.5, 'PSAP', 'FontSize', Fsize);
 
   line([ 40 60 ], [ 5 5 ], 'Color', 'k', 'LineWidth', 2);
   line([ 40 40 ], [ 4 6 ], 'Color', 'k', 'LineWidth', 2);
   line([ 60 60 ], [ 4 6 ], 'Color', 'k', 'LineWidth', 2);
-  text(48, 6, 'SAL', 'FontSize', Fsize);
+  text(48, 6.5, 'SAP', 'FontSize', Fsize);
 
   Paxes = subplot(2, 1, 2);
   Ploc = get(Paxes, 'Position');

@@ -71,11 +71,11 @@ function [ ] = PlotFsFigAnalysisSetup()
   Clevs = 0:0.05:0.3;
 
   Paxes = subplot(2,2,3);
-  PlotFsFigXsection(Paxes, X, Z, PS_WUP', 'b', 'Pre-SAL', 'Radius (km)', Xlim, 'Height (km)', Ylim, Cmap, Clim, Clevs, Fsize, 1, 1);
+  PlotFsFigXsection(Paxes, X, Z, PS_WUP', 'b', 'PSAP', 'Radius (km)', Xlim, 'Height (km)', Ylim, Cmap, Clim, Clevs, Fsize, 1, 1);
   MarkCoreRband(Paxes);
 
   Paxes = subplot(2,2,4);
-  PlotFsFigXsection(Paxes, X, Z, S_WUP', 'c', 'SAL', 'Radius (km)', Xlim, 'Height (km)', Ylim, Cmap, Clim, Clevs, Fsize, 1, 1);
+  PlotFsFigXsection(Paxes, X, Z, S_WUP', 'c', 'SAP', 'Radius (km)', Xlim, 'Height (km)', Ylim, Cmap, Clim, Clevs, Fsize, 1, 1);
   MarkCoreRband(Paxes);
 
   OutFile = sprintf('%s/FsFigAnalysisSetup.jpg', Pdir);

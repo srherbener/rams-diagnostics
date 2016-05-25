@@ -57,16 +57,16 @@ function [ ] = PlotFsFigCloudRainProfiles()
   Paxes = subplot(2,2,1);
   Xlim = [ 0 30 ];
   Ylim = [ 0 5 ];
-  PlotFsFigLine(Paxes, CloudNum, Z, 'a', 'SAL: Rband', 'N_c (cm^-^3)', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'NorthEast', Colors);
+  PlotFsFigLine(Paxes, CloudNum, Z, 'a', 'SAP: Rband', 'N_c (cm^-^3)', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'NorthEast', Colors);
 
   Paxes = subplot(2,2,2);
   Xlim = [ 30 50 ];
-  PlotFsFigLine(Paxes, CloudDiam, Z, 'b', 'SAL: Rband', 'D_c (\mum)', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 0, Fsize, LegText, 'none', Colors);
+  PlotFsFigLine(Paxes, CloudDiam, Z, 'b', 'SAP: Rband', 'D_c (\mum)', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 0, Fsize, LegText, 'none', Colors);
 
   Paxes = subplot(2,2,[3 4]);
   Xlim = [ 1e-4 1e2 ];
   Ylim = [ 1e-4   1 ];
-  PlotFsFigLine(Paxes, BINS, PrecipRate, 'c', 'SAL: Rband', 'Precip. Rate (mm h^-^1)', Xlim, 'log', 1, 'Norm. Count', Ylim, 'log', 1, Fsize, LegText, 'none', Colors);
+  PlotFsFigLine(Paxes, BINS, PrecipRate, 'c', 'SAP: Rband', 'Precip. Rate (mm h^-^1)', Xlim, 'log', 1, 'Norm. Count', Ylim, 'log', 1, Fsize, LegText, 'none', Colors);
 
   OutFile = sprintf('%s/FsFigCloudRainProfiles.jpg', Pdir);
   fprintf('Writing: %s\n', OutFile);

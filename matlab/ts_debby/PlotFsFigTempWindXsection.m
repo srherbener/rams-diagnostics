@@ -78,21 +78,21 @@ function [ ] = PlotFsFigTempWindXsection()
   Ploc(1) = Ploc(1) - PlocInc;
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
-  PlotFsFigXsection(Paxes, X, Z, PS_T_SD', 'a', 'PTRACK: Pre-SAL (SD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, TempCmap, TempClim, TempClevs, Fsize, 0, 1);
+  PlotFsFigXsection(Paxes, X, Z, PS_T_SD', 'a', 'PTRACK: PSAP (SD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, TempCmap, TempClim, TempClevs, Fsize, 0, 1);
 
   Paxes = subplot(3, 2, 3);
   Ploc = get(Paxes, 'Position'); % cover a wider portion of the subplot region
   Ploc(1) = Ploc(1) - PlocInc;
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
-  PlotFsFigXsection(Paxes, X, Z, PS_T_NSD', 'c', 'Pre-SAL (NSD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, TempCmap, TempClim, TempClevs, Fsize, 0, 1);
+  PlotFsFigXsection(Paxes, X, Z, PS_T_NSD', 'c', 'PSAP (NSD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, TempCmap, TempClim, TempClevs, Fsize, 0, 1);
 
   Paxes = subplot(3, 2, 5);
   Ploc = get(Paxes, 'Position'); % cover a wider portion of the subplot region
   Ploc(1) = Ploc(1) - PlocInc;
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
-  PlotFsFigXsection(Paxes, X, Z, PS_T_DIFF', 'e', 'Pre-SAL (NSD-SD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, VelCmapDiff, TempClimDiff, TempClevsDiff, Fsize, 1, 1);
+  PlotFsFigXsection(Paxes, X, Z, PS_T_DIFF', 'e', 'PSAP (NSD-SD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, VelCmapDiff, TempClimDiff, TempClevsDiff, Fsize, 1, 1);
   text(0, -1, 'C', 'Color', 'b', 'FontSize', Fsize);
   text(1700, -1, 'D', 'Color', 'b', 'FontSize', Fsize);
 
@@ -102,21 +102,21 @@ function [ ] = PlotFsFigTempWindXsection()
   Ploc(1) = Ploc(1) - PlocInc;
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
-  PlotFsFigXsection(Paxes, X, Z, PS_V_SD', 'b', 'PTRACK: Pre-SAL (SD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, VelCmap, VelClim, VelClevs, Fsize, 0, 0);
+  PlotFsFigXsection(Paxes, X, Z, PS_V_SD', 'b', 'PTRACK: PSAP (SD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, VelCmap, VelClim, VelClevs, Fsize, 0, 0);
 
   Paxes = subplot(3, 2, 4);
   Ploc = get(Paxes, 'Position'); % cover a wider portion of the subplot region
   Ploc(1) = Ploc(1) - PlocInc;
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
-  PlotFsFigXsection(Paxes, X, Z, PS_V_NSD', 'd', 'Pre-SAL (NSD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, VelCmap, VelClim, VelClevs, Fsize, 0, 0);
+  PlotFsFigXsection(Paxes, X, Z, PS_V_NSD', 'd', 'PSAP (NSD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, VelCmap, VelClim, VelClevs, Fsize, 0, 0);
 
   Paxes = subplot(3, 2, 6);
   Ploc = get(Paxes, 'Position'); % cover a wider portion of the subplot region
   Ploc(1) = Ploc(1) - PlocInc;
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
-  PlotFsFigXsection(Paxes, X, Z, PS_V_DIFF', 'f', 'Pre-SAL (NSD-SD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, VelCmapDiff, VelClimDiff, VelClevsDiff, Fsize, 1, 0);
+  PlotFsFigXsection(Paxes, X, Z, PS_V_DIFF', 'f', 'PSAP (NSD-SD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, VelCmapDiff, VelClimDiff, VelClevsDiff, Fsize, 1, 0);
   text(0, -1, 'C', 'Color', 'b', 'FontSize', Fsize);
   text(1700, -1, 'D', 'Color', 'b', 'FontSize', Fsize);
 
