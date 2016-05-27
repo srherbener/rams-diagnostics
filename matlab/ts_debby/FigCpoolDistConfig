@@ -3,14 +3,14 @@
 #
 
 ######### FIGURES ###################
-Figure: CpoolDist 4
+Figure: CpoolDist 2
   DummyCases
-  [2_2]
+  [1_2]
   Plots/FigCpoolDist.jpg
   CpoolCoreDistPanel  1
   CpoolRbandDistPanel 2
-  CpoolEnvDistPanel   3
-  CpoolLeadDistPanel  4
+#  CpoolEnvDistPanel   3
+#  CpoolLeadDistPanel  4
 End 
 
 ########### CASES ####################

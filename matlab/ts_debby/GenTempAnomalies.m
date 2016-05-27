@@ -19,7 +19,7 @@ function [ ] = GenTempAnomalies()
 
     { 'HDF5/<CASE>/HDF5/core_tempc25m-<CASE>-AS-2006-08-20-120000-g3.h5' '/tempc' 'HDF5/<CASE>/HDF5/core_tempc25m_anom-<CASE>-AS-2006-08-20-120000-g3.h5' '/tempc' 'C' 'temperature' 't z y x' }
     { 'HDF5/<CASE>/HDF5/rb_tempc25m-<CASE>-AS-2006-08-20-120000-g3.h5' '/tempc' 'HDF5/<CASE>/HDF5/rb_tempc25m_anom-<CASE>-AS-2006-08-20-120000-g3.h5' '/tempc' 'C' 'temperature' 't z y x' }
-    { 'HDF5/<CASE>/HDF5/env_tempc25m-<CASE>-AS-2006-08-20-120000-g3.h5' '/tempc' 'HDF5/<CASE>/HDF5/env_tempc25m_anom-<CASE>-AS-2006-08-20-120000-g3.h5' '/tempc' 'C' 'temperature' 't z y x' }
+%    { 'HDF5/<CASE>/HDF5/env_tempc25m-<CASE>-AS-2006-08-20-120000-g3.h5' '/tempc' 'HDF5/<CASE>/HDF5/env_tempc25m_anom-<CASE>-AS-2006-08-20-120000-g3.h5' '/tempc' 'C' 'temperature' 't z y x' }
     };
   Nfiles = length(FileList);
 
