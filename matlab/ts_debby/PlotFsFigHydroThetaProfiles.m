@@ -79,12 +79,12 @@ function [ ] = PlotFsFigHydroThetaProfiles()
 
   Paxes = subplot(3,2,1);
   Xlim = [ 0 0.3 ];
-  Ylim = [ 0 1 ];
+  Ylim = [ 0 2 ];
   PlotFsFigLine(Paxes, CloudMass, Z, 'a', 'SAP: Rband', 'M_c (g kg^-^1)', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'NorthEast', Colors);
 
   Paxes = subplot(3,2,2);
   Xlim = [ 0 0.1 ];
-  Ylim = [ 0 1 ];
+  Ylim = [ 0 2 ];
   PlotFsFigLine(Paxes, RainMass, Z, 'a', 'SAP: Rband', 'M_r (g kg^-^1)', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'NorthEast', Colors);
 
 %  Paxes = subplot(3,2,3);
@@ -110,22 +110,22 @@ function [ ] = PlotFsFigHydroThetaProfiles()
 
   Paxes = subplot(3,2,3);
   Xlim = [ 80 100 ];
-  Ylim = [  0   1 ];
+  Ylim = [  0   2 ];
   PlotFsFigLine(Paxes, RelHum, Z, 'd', 'SAP: Rband', 'RH (%)', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'none', Colors);
 
   Paxes = subplot(3,2,4);
   Xlim = [ 12 18 ];
-  Ylim = [  0  1 ];
+  Ylim = [  0  2 ];
   PlotFsFigLine(Paxes, Vapor, Z, 'd', 'SAP: Rband', 'Vapor (g kg^-^1)', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'none', Colors);
 
   Paxes = subplot(3,2,5);
   Xlim = [ -1 0 ];
-  Ylim = [ 0 1 ];
+  Ylim = [ 0 2 ];
   PlotFsFigLine(Paxes, LiqEvap, Z, 'd', 'SAP: Rband', 'Liq. Evap. (g kg^-^1)', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'none', Colors);
 
   Paxes = subplot(3,2,6);
   Xlim = [ 340 355 ];
-  Ylim = [ 0 1 ];
+  Ylim = [ 0 2 ];
   PlotFsFigLine(Paxes, ThetaE, Z, 'd', 'SAP: Rband', '\theta_e (K)', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'none', Colors);
 
   OutFile = sprintf('%s/FsFigHydroThetaProfiles.jpg', Pdir);

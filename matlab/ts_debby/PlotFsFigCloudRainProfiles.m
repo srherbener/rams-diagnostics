@@ -5,7 +5,7 @@ function [ ] = PlotFsFigCloudRainProfiles()
       mkdir(Pdir);
   end
   
-  Fsize = 13;
+  Fsize = 9;
 
   CaseList = {
     { 'TSD_SAL_DUST'       'SD'   'black' }
@@ -34,13 +34,21 @@ function [ ] = PlotFsFigCloudRainProfiles()
     fprintf('Reading: %s (%s)\n', InFname, InVname);
     CloudDiam(:,ic) = squeeze(h5read(InFname, InVname));
 
-    InFname = sprintf('DIAGS/hist_meas_az_pcprate_%s.h5', Case);
-    InVname = '/hist_all_rb_s_pcprate';
+    InVname = '/all_rb_s_cloud_evap';
     fprintf('Reading: %s (%s)\n', InFname, InVname);
-    PrecipRate(:,ic) = squeeze(h5read(InFname, InVname));
-    if (ic == 1)
-      BINS = squeeze(h5read(InFname, '/y_coords'));
-    end
+    CloudEvap(:,ic) = squeeze(h5read(InFname, InVname));
+
+    InVname  = '/all_rb_s_rain_num';
+    fprintf('Reading: %s (%s)\n', InFname, InVname);
+    RainNum(:,ic) = squeeze(h5read(InFname, InVname));
+
+    InVname = '/all_rb_s_rain_diam';
+    fprintf('Reading: %s (%s)\n', InFname, InVname);
+    RainDiam(:,ic) = squeeze(h5read(InFname, InVname));
+
+    InVname = '/all_rb_s_rain_evap';
+    fprintf('Reading: %s (%s)\n', InFname, InVname);
+    RainEvap(:,ic) = squeeze(h5read(InFname, InVname));
 
     LegText{ic} = Label;
     Colors{ic} = Color;
@@ -48,25 +56,35 @@ function [ ] = PlotFsFigCloudRainProfiles()
     fprintf('\n');
   end
 
-  % Normalize the count to the maximum count in the precip rate
-  PrecipRate = PrecipRate ./ max(PrecipRate(:));
-
   % plot
   Fig = figure;
 
-  Paxes = subplot(2,2,1);
+  Paxes = subplot(3,2,1);
   Xlim = [ 0 30 ];
   Ylim = [ 0 5 ];
   PlotFsFigLine(Paxes, CloudNum, Z, 'a', 'SAP: Rband', 'N_c (cm^-^3)', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'NorthEast', Colors);
 
-  Paxes = subplot(2,2,2);
+  Paxes = subplot(3,2,3);
   Xlim = [ 30 50 ];
-  PlotFsFigLine(Paxes, CloudDiam, Z, 'b', 'SAP: Rband', 'D_c (\mum)', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 0, Fsize, LegText, 'none', Colors);
+  PlotFsFigLine(Paxes, CloudDiam, Z, 'c', 'SAP: Rband', 'D_c (\mum)', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'none', Colors);
 
-  Paxes = subplot(2,2,[3 4]);
-  Xlim = [ 1e-4 1e2 ];
-  Ylim = [ 1e-4   1 ];
-  PlotFsFigLine(Paxes, BINS, PrecipRate, 'c', 'SAP: Rband', 'Precip. Rate (mm h^-^1)', Xlim, 'log', 1, 'Norm. Count', Ylim, 'log', 1, Fsize, LegText, 'none', Colors);
+  Paxes = subplot(3,2,5);
+  Xlim = [ -2.5 0 ];
+  PlotFsFigLine(Paxes, CloudEvap, Z, 'e', 'SAP: Rband', 'Cloud Evap. (g kg^-^1)', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'none', Colors);
+
+
+  Paxes = subplot(3,2,2);
+  Xlim = [ 0 0.05 ];
+  PlotFsFigLine(Paxes, RainNum, Z, 'b', 'SAP: Rband', 'N_r (dm^-^3)', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'none', Colors);
+
+  Paxes = subplot(3,2,4);
+  Xlim = [ 0.1 0.3 ];
+  PlotFsFigLine(Paxes, RainDiam, Z, 'd', 'SAP: Rband', 'D_r (mm)', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'none', Colors);
+
+  Paxes = subplot(3,2,6);
+  Xlim = [ -1 0 ];
+  PlotFsFigLine(Paxes, RainEvap, Z, 'f', 'SAP: Rband', 'Rain Evap. (g kg^-^1)', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'none', Colors);
+
 
   OutFile = sprintf('%s/FsFigCloudRainProfiles.jpg', Pdir);
   fprintf('Writing: %s\n', OutFile);
