@@ -69,7 +69,7 @@ function [ ] = PlotFsFigEvapThetaeXsection()
   Ploc(1) = Ploc(1) - PlocInc;
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
-  PlotFsFigXsection(Paxes, X, Z, S_EVAP_SD', 'a', 'Rband: SAP (SD)', 'Radius (km)', Xlim, 'Height (km)', Ylim, EvapCmap, EvapClim, EvapClevs, Fsize, 0, 1);
+  PlotFsFigXsection(Paxes, X, Z, S_EVAP_SD', 'a', 'SAP (SD)', 'Radius (km)', Xlim, 'Height (km)', Ylim, EvapCmap, EvapClim, EvapClevs, Fsize, 0, 1);
 
   Paxes = subplot(3, 2, 3);
   Ploc = get(Paxes, 'Position'); % cover a wider portion of the subplot region
@@ -93,7 +93,7 @@ function [ ] = PlotFsFigEvapThetaeXsection()
   Ploc(1) = Ploc(1) - PlocInc;
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
-  PlotFsFigXsection(Paxes, X, Z, S_THETAE_SD', 'b', 'Rband: SAP (SD)', 'Radius (km)', Xlim, 'Height (km)', Ylim, TempCmap, TempClim, TempClevs, Fsize, 0, 0);
+  PlotFsFigXsection(Paxes, X, Z, S_THETAE_SD', 'b', 'SAP (SD)', 'Radius (km)', Xlim, 'Height (km)', Ylim, TempCmap, TempClim, TempClevs, Fsize, 0, 0);
 
   Paxes = subplot(3, 2, 4);
   Ploc = get(Paxes, 'Position'); % cover a wider portion of the subplot region

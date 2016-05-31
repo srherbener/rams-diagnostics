@@ -75,7 +75,7 @@ function [ ] = PlotFsFigCloudRainProfiles()
 
   Paxes = subplot(3,2,2);
   Xlim = [ 0 0.05 ];
-  PlotFsFigLine(Paxes, RainNum, Z, 'b', 'SAP: Rband', 'N_r (dm^-^3)', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'none', Colors);
+  PlotFsFigLine(Paxes, RainNum, Z, 'b', 'SAP: Rband', 'N_r (cm^-^3)', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'none', Colors);
 
   Paxes = subplot(3,2,4);
   Xlim = [ 0.1 0.3 ];
