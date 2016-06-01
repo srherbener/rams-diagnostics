@@ -11,6 +11,9 @@ function [ ] = GenFactSep()
   %
   %    sal air means the existance of a mid-level dry, warm layer
   %
+  % Scheme relative to the control simulation (SD)
+  %   puts things in perspective of what happens when you remove
+  %   SAL characteristics
   %
   %      Simulations  Sal Air    Dusty Air      Case
   %
@@ -25,18 +28,46 @@ function [ ] = GenFactSep()
   %          F1       Part due to dry air                   F1 = S1 - S0
   %          F2       Part due to dusty air                 F2 = S2 - S0
   %          F12      Part due to combo of dry, dusty air   F12 = S12 - (S1 + S2) + S0
+  %
+  % Scheme relative to the non-SAL, no dust simulation
+  %   puts things in perspective of what happens when you add
+  %   SAL characteristics
+  %
+  %      Simulations  Sal Air    Dusty Air      Case
+  %
+  %          S0        No          No        TSD_NONSAL_NODUST 
+  %          S1        Yes         No        TSD_SAL_NODUST 
+  %          S2        No          Yes       TSD_NONSAL_DUST 
+  %          S12       Yes         Yes       TSD_SAL_DUST 
+  %
+  %      Factors              Descrip                     Formula
+  %
+  %          F0       Part independent of SAL chars.        F0 = S0
+  %          F1       Part due to dry air                   F1 = S1 - S0
+  %          F2       Part due to dusty air                 F2 = S2 - S0
+  %          F12      Part due to combo of dry, dusty air   F12 = S12 - (S1 + S2) + S0
+  
   
   % Cases - list these out in the factor separation order:
   %   S0
   %   S1
   %   S2
   %   S12
+  % perspective of removal of SAL characteristics
   CaseList = {
     'TSD_SAL_DUST'
     'TSD_NONSAL_DUST'
     'TSD_SAL_NODUST'
     'TSD_NONSAL_NODUST'
     };
+%  % perspective of addition of SAL characteristics
+%  CaseList = {
+%    'TSD_NONSAL_NODUST'
+%    'TSD_SAL_NODUST'
+%    'TSD_NONSAL_DUST'
+%    'TSD_SAL_DUST'
+%    };
+
 
   Ncases = length(CaseList);
 
