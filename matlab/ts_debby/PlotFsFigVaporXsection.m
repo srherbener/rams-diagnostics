@@ -50,10 +50,13 @@ function [ ] = PlotFsFigVaporXsection()
     % for each time, extract the x-z slice
     for it = 1:Nst
       T1 = find(T >= SimTimes(it), 1, 'first');
-      THETA_E(icase,it,:,:) = squeeze(h5read(InFname, InVname, [ 1 1 Z1 T1 ], [ Nx 1 Nz 1 ]));
+      VAPOR(icase,it,:,:) = squeeze(h5read(InFname, InVname, [ 1 1 Z1 T1 ], [ Nx 1 Nz 1 ]));
     end
   end
   fprintf('\n');
+
+  % Make difference plots: NSD - SD
+  VAPOR_DIFF = squeeze(VAPOR(2,:,:,:) - VAPOR(1,:,:,:));
 
   % Plot: 10 panels (5x2)
   OutFile = sprintf('%s/FsFigVaporXsection.jpg', Pdir);
@@ -62,96 +65,143 @@ function [ ] = PlotFsFigVaporXsection()
   Xlim = [ 0 2150 ];
   Ylim = [ 0 5.5 ];
   Clim = [ 0 18 ];
-  Nlevs = 0:3:18;
+  Clevs = 0:3:18;
   Cmap = 'parula';
+
+  DiffClim  = [ -4 4 ];
+  DiffClevs = -4:1:4;
+  DiffCmap = 'redblue';
 
   PlocInc = 0.05;
 
   % TSD_SAL_DUST
-  Paxes = subplot(5, 2, 1);
+  Paxes = subplot(5, 3, 1);
   Ploc = get(Paxes, 'Position');
   Ploc(1) = Ploc(1) - PlocInc;
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
-  PDATA = squeeze(THETA_E(1,1,:,:))';
-  PlotFsFigXsection(Paxes, X, Z, PDATA, 'a', 'STRACK: 06Z, 22Aug (SD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Nlevs, Fsize, 0, 1);
+  PDATA = squeeze(VAPOR(1,1,:,:))';
+  PlotFsFigXsection(Paxes, X, Z, PDATA, 'a', '06Z, 22Aug (SD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Clevs, Fsize, 0, 1);
 
-  Paxes = subplot(5, 2, 3);
+  Paxes = subplot(5, 3, 4);
   Ploc = get(Paxes, 'Position');
   Ploc(1) = Ploc(1) - PlocInc;
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
-  PDATA = squeeze(THETA_E(1,2,:,:))';
-  PlotFsFigXsection(Paxes, X, Z, PDATA, 'c', '21Z, 22Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Nlevs, Fsize, 0, 1);
+  PDATA = squeeze(VAPOR(1,2,:,:))';
+  PlotFsFigXsection(Paxes, X, Z, PDATA, 'd', '21Z, 22Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Clevs, Fsize, 0, 1);
 
-  Paxes = subplot(5, 2, 5);
+  Paxes = subplot(5, 3, 7);
   Ploc = get(Paxes, 'Position');
   Ploc(1) = Ploc(1) - PlocInc;
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
-  PDATA = squeeze(THETA_E(1,3,:,:))';
-  PlotFsFigXsection(Paxes, X, Z, PDATA, 'e', '12Z, 23Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Nlevs, Fsize, 0, 1);
+  PDATA = squeeze(VAPOR(1,3,:,:))';
+  PlotFsFigXsection(Paxes, X, Z, PDATA, 'g', '12Z, 23Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Clevs, Fsize, 0, 1);
 
-  Paxes = subplot(5, 2, 7);
+  Paxes = subplot(5, 3, 10);
   Ploc = get(Paxes, 'Position');
   Ploc(1) = Ploc(1) - PlocInc;
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
-  PDATA = squeeze(THETA_E(1,4,:,:))';
-  PlotFsFigXsection(Paxes, X, Z, PDATA, 'g', '03Z, 24Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Nlevs, Fsize, 0, 1);
+  PDATA = squeeze(VAPOR(1,4,:,:))';
+  PlotFsFigXsection(Paxes, X, Z, PDATA, 'j', '03Z, 24Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Clevs, Fsize, 0, 1);
 
-  Paxes = subplot(5, 2, 9);
+  Paxes = subplot(5, 3, 13);
   Ploc = get(Paxes, 'Position');
   Ploc(1) = Ploc(1) - PlocInc;
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
-  PDATA = squeeze(THETA_E(1,5,:,:))';
-  PlotFsFigXsection(Paxes, X, Z, PDATA, 'i', '18Z, 24Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Nlevs, Fsize, 1, 1);
-  text(0, -2, 'A', 'Color', 'r', 'FontSize', Fsize);
-  text(2000, -2, 'B', 'Color', 'r', 'FontSize', Fsize);
+  PDATA = squeeze(VAPOR(1,5,:,:))';
+  PlotFsFigXsection(Paxes, X, Z, PDATA, 'm', '18Z, 24Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Clevs, Fsize, 1, 1);
+  text(0, -3.6, 'A', 'Color', 'r', 'FontSize', Fsize);
+  text(1900, -3.6, 'B', 'Color', 'r', 'FontSize', Fsize);
 
   % TSD_NONSAL_DUST
-  Paxes = subplot(5, 2, 2);
+  Paxes = subplot(5, 3, 2);
   Ploc = get(Paxes, 'Position');
   Ploc(1) = Ploc(1) - PlocInc;
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
-  PDATA = squeeze(THETA_E(2,1,:,:))';
-  PlotFsFigXsection(Paxes, X, Z, PDATA, 'b', 'STRACK: 06Z, 22Aug (NSD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Nlevs, Fsize, 0, 0);
+  PDATA = squeeze(VAPOR(2,1,:,:))';
+  PlotFsFigXsection(Paxes, X, Z, PDATA, 'b', '06Z, 22Aug (NSD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Clevs, Fsize, 0, 0);
 
-  Paxes = subplot(5, 2, 4);
+  Paxes = subplot(5, 3, 5);
   Ploc = get(Paxes, 'Position');
   Ploc(1) = Ploc(1) - PlocInc;
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
-  PDATA = squeeze(THETA_E(2,2,:,:))';
-  PlotFsFigXsection(Paxes, X, Z, PDATA, 'd', '21Z, 22Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Nlevs, Fsize, 0, 0);
+  PDATA = squeeze(VAPOR(2,2,:,:))';
+  PlotFsFigXsection(Paxes, X, Z, PDATA, 'e', '21Z, 22Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Clevs, Fsize, 0, 0);
 
-  Paxes = subplot(5, 2, 6);
+  Paxes = subplot(5, 3, 8);
   Ploc = get(Paxes, 'Position');
   Ploc(1) = Ploc(1) - PlocInc;
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
-  PDATA = squeeze(THETA_E(2,3,:,:))';
-  PlotFsFigXsection(Paxes, X, Z, PDATA, 'f', '12Z, 23Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Nlevs, Fsize, 0, 0);
+  PDATA = squeeze(VAPOR(2,3,:,:))';
+  PlotFsFigXsection(Paxes, X, Z, PDATA, 'h', '12Z, 23Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Clevs, Fsize, 0, 0);
 
-  Paxes = subplot(5, 2, 8);
+  Paxes = subplot(5, 3, 11);
   Ploc = get(Paxes, 'Position');
   Ploc(1) = Ploc(1) - PlocInc;
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
-  PDATA = squeeze(THETA_E(2,4,:,:))';
-  PlotFsFigXsection(Paxes, X, Z, PDATA, 'h', '03Z, 24Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Nlevs, Fsize, 0, 0);
+  PDATA = squeeze(VAPOR(2,4,:,:))';
+  PlotFsFigXsection(Paxes, X, Z, PDATA, 'k', '03Z, 24Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Clevs, Fsize, 0, 0);
 
-  Paxes = subplot(5, 2, 10);
+  Paxes = subplot(5, 3, 14);
   Ploc = get(Paxes, 'Position');
   Ploc(1) = Ploc(1) - PlocInc;
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
-  PDATA = squeeze(THETA_E(2,5,:,:))';
-  PlotFsFigXsection(Paxes, X, Z, PDATA, 'j', '18Z, 24Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Nlevs, Fsize, 1, 0);
-  text(0, -2, 'A', 'Color', 'r', 'FontSize', Fsize);
-  text(2000, -2, 'B', 'Color', 'r', 'FontSize', Fsize);
+  PDATA = squeeze(VAPOR(2,5,:,:))';
+  PlotFsFigXsection(Paxes, X, Z, PDATA, 'n', '18Z, 24Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Clevs, Fsize, 1, 0);
+  text(0, -3.6, 'A', 'Color', 'r', 'FontSize', Fsize);
+  text(1900, -3.6, 'B', 'Color', 'r', 'FontSize', Fsize);
+
+  % DIFFERENCE
+  Paxes = subplot(5, 3, 3);
+  Ploc = get(Paxes, 'Position');
+  Ploc(1) = Ploc(1) - PlocInc;
+  Ploc(3) = Ploc(3) + PlocInc;
+  set(Paxes, 'Position', Ploc);
+  PDATA = squeeze(VAPOR_DIFF(1,:,:))';
+  PlotFsFigXsection(Paxes, X, Z, PDATA, 'c', '06Z, 22Aug (NSD-SD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, DiffCmap, DiffClim, DiffClevs, Fsize, 0, 0);
+
+  Paxes = subplot(5, 3, 6);
+  Ploc = get(Paxes, 'Position');
+  Ploc(1) = Ploc(1) - PlocInc;
+  Ploc(3) = Ploc(3) + PlocInc;
+  set(Paxes, 'Position', Ploc);
+  PDATA = squeeze(VAPOR_DIFF(2,:,:))';
+  PlotFsFigXsection(Paxes, X, Z, PDATA, 'f', '21Z, 22Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, DiffCmap, DiffClim, DiffClevs, Fsize, 0, 0);
+
+  Paxes = subplot(5, 3, 9);
+  Ploc = get(Paxes, 'Position');
+  Ploc(1) = Ploc(1) - PlocInc;
+  Ploc(3) = Ploc(3) + PlocInc;
+  set(Paxes, 'Position', Ploc);
+  PDATA = squeeze(VAPOR_DIFF(3,:,:))';
+  PlotFsFigXsection(Paxes, X, Z, PDATA, 'i', '12Z, 23Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, DiffCmap, DiffClim, DiffClevs, Fsize, 0, 0);
+
+  Paxes = subplot(5, 3, 12);
+  Ploc = get(Paxes, 'Position');
+  Ploc(1) = Ploc(1) - PlocInc;
+  Ploc(3) = Ploc(3) + PlocInc;
+  set(Paxes, 'Position', Ploc);
+  PDATA = squeeze(VAPOR_DIFF(4,:,:))';
+  PlotFsFigXsection(Paxes, X, Z, PDATA, 'l', '03Z, 24Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, DiffCmap, DiffClim, DiffClevs, Fsize, 0, 0);
+
+  Paxes = subplot(5, 3, 15);
+  Ploc = get(Paxes, 'Position');
+  Ploc(1) = Ploc(1) - PlocInc;
+  Ploc(3) = Ploc(3) + PlocInc;
+  set(Paxes, 'Position', Ploc);
+  PDATA = squeeze(VAPOR_DIFF(5,:,:))';
+  PlotFsFigXsection(Paxes, X, Z, PDATA, 'o', '18Z, 24Aug', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, DiffCmap, DiffClim, DiffClevs, Fsize, 1, 0);
+  text(0, -3.6, 'A', 'Color', 'r', 'FontSize', Fsize);
+  text(1900, -3.6, 'B', 'Color', 'r', 'FontSize', Fsize);
 
 
   fprintf('Writing: %s\n', OutFile);
