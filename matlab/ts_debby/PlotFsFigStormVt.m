@@ -88,17 +88,17 @@ function [ ] = PlotFsFigStormVt()
   % SD, left column
   % Using sim time 20 h which correposonds to 2Z on Aug 23.
   Paxes = subplot(2, 2, 1);
-  PlotFsFigHwindVectors(Paxes, WV_X, WV_Y, WV_SD_U, WV_SD_V, 'a', '02Z, 23Aug (SD)', Fsize, Vscale);
+  PlotFsFigStormStruct(Paxes, R, Z, PS_SD_VT', PS_SD_UP', 'c', 'PSAP (SD)', 'Radius (km)', Rlim, 'Z (km)', Zlim, VtCmap, VtClim, VtClevs, UpClevs, Fsize, 1, 1);
 
   Paxes = subplot(2, 2, 3);
-  PlotFsFigStormStruct(Paxes, R, Z, PS_SD_VT', PS_SD_UP', 'c', 'PSAP (SD)', 'Radius (km)', Rlim, 'Z (km)', Zlim, VtCmap, VtClim, VtClevs, UpClevs, Fsize, 1, 1);
+  PlotFsFigHwindVectors(Paxes, WV_X, WV_Y, WV_SD_U, WV_SD_V, 'a', '02Z, 23Aug (SD)', Fsize, Vscale);
 
   % NSD, right column
   Paxes = subplot(2, 2, 2);
-  PlotFsFigHwindVectors(Paxes, WV_X, WV_Y, WV_NSD_U, WV_NSD_V, 'b', '02Z, 23Aug (NSD)', Fsize, Vscale);
+  PlotFsFigStormStruct(Paxes, R, Z, PS_NSD_VT', PS_NSD_UP', 'd', 'PSAP (NSD)', 'Radius (km)', Rlim, 'Z (km)', Zlim, VtCmap, VtClim, VtClevs, UpClevs, Fsize, 1, 0);
 
   Paxes = subplot(2, 2, 4);
-  PlotFsFigStormStruct(Paxes, R, Z, PS_NSD_VT', PS_NSD_UP', 'd', 'PSAP (NSD)', 'Radius (km)', Rlim, 'Z (km)', Zlim, VtCmap, VtClim, VtClevs, UpClevs, Fsize, 1, 0);
+  PlotFsFigHwindVectors(Paxes, WV_X, WV_Y, WV_NSD_U, WV_NSD_V, 'b', '02Z, 23Aug (NSD)', Fsize, Vscale);
 
   fprintf('Writing: %s\n', OutFile);
   saveas(Fig, OutFile);
