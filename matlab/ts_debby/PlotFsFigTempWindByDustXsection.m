@@ -1,4 +1,4 @@
-function [ ] = PlotFsFigTempWindXsection()
+function [ ] = PlotFsFigTempWindByDustXsection()
 
   Pdir = 'Plots';
   if (exist(Pdir, 'dir') ~= 7)
@@ -14,11 +14,11 @@ function [ ] = PlotFsFigTempWindXsection()
   X = squeeze(h5read(InFname, '/x_coords'));         % km
   Z = squeeze(h5read(InFname, '/z_coords')) ./ 1000; % km
 
-  % pre-SAL, NSD, tangential to ptrack velocity
-  InFname = 'DIAGS/ptrack_hvelocity_TSD_NONSAL_DUST.h5';
+  % pre-SAL, SND, tangential to ptrack velocity
+  InFname = 'DIAGS/ptrack_hvelocity_TSD_SAL_NODUST.h5';
   InVname = '/ps_v';
   fprintf('Reading: %s (%s)\n', InFname, InVname);
-  PS_V_NSD = squeeze(h5read(InFname, InVname));
+  PS_V_SND = squeeze(h5read(InFname, InVname));
 
   % pre-SAL, SD, theta
   InFname = 'DIAGS/ptrack_avgs_TSD_SAL_DUST.h5';
@@ -29,19 +29,19 @@ function [ ] = PlotFsFigTempWindXsection()
   X = squeeze(h5read(InFname, '/x_coords'));         % km
   Z = squeeze(h5read(InFname, '/z_coords')) ./ 1000; % km
 
-  % pre-SAL, NSD, theta
-  InFname = 'DIAGS/ptrack_avgs_TSD_NONSAL_DUST.h5';
+  % pre-SAL, SND, theta
+  InFname = 'DIAGS/ptrack_avgs_TSD_SAL_NODUST.h5';
   InVname = '/ps_theta';
   fprintf('Reading: %s (%s)\n', InFname, InVname);
-  PS_T_NSD = squeeze(h5read(InFname, InVname));
+  PS_T_SND = squeeze(h5read(InFname, InVname));
 
 
   % Differences
-  PS_V_DIFF = PS_V_NSD - PS_V_SD;
-  PS_T_DIFF = PS_T_NSD - PS_T_SD;
+  PS_V_DIFF = PS_V_SND - PS_V_SD;
+  PS_T_DIFF = PS_T_SND - PS_T_SD;
 
   % Plot: 6 panels (3x2)
-  OutFile = sprintf('%s/FsFigTempWindXsection.jpg', Pdir);
+  OutFile = sprintf('%s/FsFigTempWindByDustXsection.jpg', Pdir);
   Fig = figure;
 
   Fsize = 13;
@@ -57,7 +57,7 @@ function [ ] = PlotFsFigTempWindXsection()
 %%  Temp C settings
 %  TempClim = [ -10 25 ];
 %  TempClimDiff = [ -4 4 ];
-%  TempClevs = -10:5:25;
+%  TempClevs = -10:1:25;
 %  TempClevsDiff = -4:0.1:4;
 
   TempCmap = 'parula';
@@ -85,14 +85,14 @@ function [ ] = PlotFsFigTempWindXsection()
   Ploc(1) = Ploc(1) - PlocInc;
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
-  PlotFsFigXsection(Paxes, X, Z, PS_T_NSD', 'c', 'PSAP (NSD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, TempCmap, TempClim, TempClevs, Fsize, 0, 1);
+  PlotFsFigXsection(Paxes, X, Z, PS_T_SND', 'c', 'PSAP (SND)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, TempCmap, TempClim, TempClevs, Fsize, 0, 1);
 
   Paxes = subplot(3, 2, 5);
   Ploc = get(Paxes, 'Position'); % cover a wider portion of the subplot region
   Ploc(1) = Ploc(1) - PlocInc;
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
-  PlotFsFigXsection(Paxes, X, Z, PS_T_DIFF', 'e', 'PSAP (NSD-SD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, VelCmapDiff, TempClimDiff, TempClevsDiff, Fsize, 1, 1);
+  PlotFsFigXsection(Paxes, X, Z, PS_T_DIFF', 'e', 'PSAP (SND-SD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, VelCmapDiff, TempClimDiff, TempClevsDiff, Fsize, 1, 1);
   text(0, -1, 'C', 'Color', 'b', 'FontSize', Fsize);
   text(1700, -1, 'D', 'Color', 'b', 'FontSize', Fsize);
 
@@ -109,14 +109,14 @@ function [ ] = PlotFsFigTempWindXsection()
   Ploc(1) = Ploc(1) - PlocInc;
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
-  PlotFsFigXsection(Paxes, X, Z, PS_V_NSD', 'd', 'PSAP (NSD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, VelCmap, VelClim, VelClevs, Fsize, 0, 0);
+  PlotFsFigXsection(Paxes, X, Z, PS_V_SND', 'd', 'PSAP (SND)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, VelCmap, VelClim, VelClevs, Fsize, 0, 0);
 
   Paxes = subplot(3, 2, 6);
   Ploc = get(Paxes, 'Position'); % cover a wider portion of the subplot region
   Ploc(1) = Ploc(1) - PlocInc;
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
-  PlotFsFigXsection(Paxes, X, Z, PS_V_DIFF', 'f', 'PSAP (NSD-SD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, VelCmapDiff, VelClimDiff, VelClevsDiff, Fsize, 1, 0);
+  PlotFsFigXsection(Paxes, X, Z, PS_V_DIFF', 'f', 'PSAP (SND-SD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, VelCmapDiff, VelClimDiff, VelClevsDiff, Fsize, 1, 0);
   text(0, -1, 'C', 'Color', 'b', 'FontSize', Fsize);
   text(1700, -1, 'D', 'Color', 'b', 'FontSize', Fsize);
 
