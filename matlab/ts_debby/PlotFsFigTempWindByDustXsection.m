@@ -26,9 +26,6 @@ function [ ] = PlotFsFigTempWindByDustXsection()
   fprintf('Reading: %s (%s)\n', InFname, InVname);
   PS_T_SD = squeeze(h5read(InFname, InVname));
 
-  X = squeeze(h5read(InFname, '/x_coords'));         % km
-  Z = squeeze(h5read(InFname, '/z_coords')) ./ 1000; % km
-
   % pre-SAL, SND, theta
   InFname = 'DIAGS/ptrack_avgs_TSD_SAL_NODUST.h5';
   InVname = '/ps_theta';
