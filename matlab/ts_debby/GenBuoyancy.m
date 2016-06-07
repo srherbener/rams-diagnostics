@@ -1,5 +1,5 @@
 function [ ] = GenBuoyancy()
-% GenTempAnomalies function to calculate buoyancy from theta rho values
+% GenBuoyancy function to calculate buoyancy from theta rho values
 
   % Cases
   CaseList = {
@@ -13,7 +13,7 @@ function [ ] = GenBuoyancy()
   % Description of measurements
   FileList = {
     { 'FILTERS/core_all_<CASE>.h5' '/filter' 'HDF5/<CASE>/HDF5/theta_rho-<CASE>-AS-2006-08-20-120000-g3.h5' '/theta_rho' 'HDF5/<CASE>/HDF5/core_buoy_acc-<CASE>-AS-2006-08-20-120000-g3.h5' '/buoy_acc' 'm/s2' 'buoyancy_acceleration' }
-    { 'FILTERS/rband_all_<CASE>.h5' '/filter' 'HDF5/<CASE>/HDF5/theta_rho-<CASE>-AS-2006-08-20-120000-g3.h5' '/theta_rho' 'HDF5/<CASE>/HDF5/rband_buoy_acc-<CASE>-AS-2006-08-20-120000-g3.h5' '/buoy_acc' 'm/s2' 'buoyancy_acceleration' }
+    { 'FILTERS/rb_all_<CASE>.h5' '/filter' 'HDF5/<CASE>/HDF5/theta_rho-<CASE>-AS-2006-08-20-120000-g3.h5' '/theta_rho' 'HDF5/<CASE>/HDF5/rband_buoy_acc-<CASE>-AS-2006-08-20-120000-g3.h5' '/buoy_acc' 'm/s2' 'buoyancy_acceleration' }
     };
   Nfiles = length(FileList);
 
