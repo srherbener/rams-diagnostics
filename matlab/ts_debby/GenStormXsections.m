@@ -89,6 +89,9 @@ function [ ] = GenStormXsections()
     { 'DIAGS/hist_meas_az_theta_e_<CASE>.h5' '/all_ps_theta_e' '/all_ps_theta_e' }
     { 'DIAGS/hist_meas_az_theta_e_<CASE>.h5' '/all_s_theta_e' '/all_s_theta_e' }
 
+    { 'DIAGS/hist_meas_az_theta_v_<CASE>.h5' '/all_ps_theta_v' '/all_ps_theta_v' }
+    { 'DIAGS/hist_meas_az_theta_v_<CASE>.h5' '/all_s_theta_v' '/all_s_theta_v' }
+
     { 'DIAGS/hist_meas_az_theta_<CASE>.h5' '/all_ps_theta'  '/all_ps_theta' }
     { 'DIAGS/hist_meas_az_theta_<CASE>.h5' '/all_s_theta'  '/all_s_theta' }
 
@@ -97,6 +100,9 @@ function [ ] = GenStormXsections()
 
     { 'DIAGS/hist_meas_az_tempc_<CASE>.h5' '/all_ps_tempc'  '/all_ps_tempc' }
     { 'DIAGS/hist_meas_az_tempc_<CASE>.h5' '/all_s_tempc'  '/all_s_tempc' }
+
+    { 'DIAGS/hist_meas_az_dewptc_<CASE>.h5' '/all_ps_dewptc'  '/all_ps_dewptc' }
+    { 'DIAGS/hist_meas_az_dewptc_<CASE>.h5' '/all_s_dewptc'  '/all_s_dewptc' }
 
     { 'DIAGS/hist_meas_az_buoy_acc_<CASE>.h5' '/all_core_ps_buoy_pos_acc_xsect'  '/all_core_ps_buoy_pos_acc' }
     { 'DIAGS/hist_meas_az_buoy_acc_<CASE>.h5' '/all_core_s_buoy_pos_acc_xsect'   '/all_core_s_buoy_pos_acc'  }

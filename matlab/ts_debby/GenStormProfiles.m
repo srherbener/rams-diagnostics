@@ -368,6 +368,11 @@ function [ ] = GenStormProfiles()
     { 'DIAGS/hist_meas_az_theta_e_<CASE>.h5' '/all_rb_ps_theta_e'   '/all_rb_ps_theta_e'   'z' }
     { 'DIAGS/hist_meas_az_theta_e_<CASE>.h5' '/all_rb_s_theta_e'    '/all_rb_s_theta_e'    'z' }
 
+    { 'DIAGS/hist_meas_az_theta_v_<CASE>.h5' '/all_core_ps_theta_v' '/all_core_ps_theta_v' 'z' }
+    { 'DIAGS/hist_meas_az_theta_v_<CASE>.h5' '/all_core_s_theta_v'  '/all_core_s_theta_v'  'z' }
+    { 'DIAGS/hist_meas_az_theta_v_<CASE>.h5' '/all_rb_ps_theta_v'   '/all_rb_ps_theta_v'   'z' }
+    { 'DIAGS/hist_meas_az_theta_v_<CASE>.h5' '/all_rb_s_theta_v'    '/all_rb_s_theta_v'    'z' }
+
     { 'DIAGS/hist_meas_az_theta_rho_<CASE>.h5' '/all_core_ps_theta_rho' '/all_core_ps_theta_rho' 'z' }
     { 'DIAGS/hist_meas_az_theta_rho_<CASE>.h5' '/all_core_s_theta_rho'  '/all_core_s_theta_rho'  'z' }
     { 'DIAGS/hist_meas_az_theta_rho_<CASE>.h5' '/all_rb_ps_theta_rho'   '/all_rb_ps_theta_rho'   'z' }
@@ -382,6 +387,11 @@ function [ ] = GenStormProfiles()
     { 'DIAGS/hist_meas_az_tempc_<CASE>.h5' '/all_core_s_tempc'  '/all_core_s_tempc'  'z' }
     { 'DIAGS/hist_meas_az_tempc_<CASE>.h5' '/all_rb_ps_tempc'   '/all_rb_ps_tempc'   'z' }
     { 'DIAGS/hist_meas_az_tempc_<CASE>.h5' '/all_rb_s_tempc'    '/all_rb_s_tempc'    'z' }
+
+    { 'DIAGS/hist_meas_az_dewptc_<CASE>.h5' '/all_core_ps_dewptc' '/all_core_ps_dewptc' 'z' }
+    { 'DIAGS/hist_meas_az_dewptc_<CASE>.h5' '/all_core_s_dewptc'  '/all_core_s_dewptc'  'z' }
+    { 'DIAGS/hist_meas_az_dewptc_<CASE>.h5' '/all_rb_ps_dewptc'   '/all_rb_ps_dewptc'   'z' }
+    { 'DIAGS/hist_meas_az_dewptc_<CASE>.h5' '/all_rb_s_dewptc'    '/all_rb_s_dewptc'    'z' }
 
     { 'DIAGS/hist_meas_az_buoy_acc_<CASE>.h5' '/all_core_ps_buoy_pos_acc' '/all_core_ps_buoy_pos_acc' 'z' }
     { 'DIAGS/hist_meas_az_buoy_acc_<CASE>.h5' '/all_core_s_buoy_pos_acc'  '/all_core_s_buoy_pos_acc'  'z' }
