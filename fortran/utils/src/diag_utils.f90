@@ -825,4 +825,300 @@ integer function FindBin(Nb, Bins, Val)
   return
 end function FindBin
 
+!**********************************************************************
+! FindMinPressure
+!
+! This routine will locate the minumum surface pressure that is 
+! within the storm. There are several aids to help prevent this
+! calculation from straying to false locations. Topography can
+! create problems and other storm phenomena within the grid can
+! also create problems. To handle these cases, the search for the
+! point with minimum pressure is limited to cells that have elevation
+! less than MaxElev, and fall within the box defined by MinLon, MaxLon,
+! MinLat and MaxLat.
+!
+
+subroutine FindMinPressure(Nx, Ny, Press, SelectGrid, MinPressIx, MinPressIy, MinPress)
+  implicit none
+
+  integer :: Nx, Ny
+  real, dimension(Nx,Ny) :: Press
+  logical, dimension(Nx,Ny) :: SelectGrid
+  integer :: MinPressIx, MinPressIy
+  real :: MinPress
+
+  integer :: i, j
+
+  MinPress = 1e10 ! ridiculously large pressure
+  MinPressIx = 0 
+  MinPressIy = 0 
+
+  do j = 1, Ny
+    do i = 1, Nx
+      if (SelectGrid(i,j) .and. (Press(i,j) .lt. MinPress)) then
+        MinPress = Press(i,j)
+        MinPressIx = i
+        MinPressIy = j
+      endif
+    enddo
+  enddo
+  
+  return
+end subroutine FindMinPressure
+
+!**********************************************************************
+! CalcPolarCoords
+!
+! This routine will calculate polar coordinates [ radius (km), angle (radians) ]
+! from the given center for each point in the horizontal domain.
+!
+
+subroutine CalcPolarCoords(Nx, Ny, Radius, Phi, X, Y, CenterIx, CenterIy)
+  implicit none
+
+  real, parameter :: PI = 3.141592654
+
+  integer :: Nx, Ny
+  real, dimension(Nx,Ny) :: Radius, Phi
+  real, dimension(Nx) :: X
+  real, dimension(Ny) :: Y
+  integer :: CenterIx, CenterIy
+
+  integer :: i, j
+  real :: dx, dy
+
+  do j = 1, Ny
+    do i = 1, Nx
+      dx = X(i) - X(CenterIx)
+      dy = Y(j) - Y(CenterIy)
+
+      Radius(i,j) = sqrt(dx*dx + dy*dy)
+
+      ! atan2 returns a value in radians between -PI and +PI
+      ! convert to value between 0 and 2*PI
+      Phi(i,j) = atan2(dy, dx)
+      if (Phi(i,j) .lt. 0.0) then
+        Phi(i,j) = Phi(i,j) + (2.0 * PI)
+      endif
+      
+    enddo
+  enddo
+
+  return
+end subroutine CalcPolarCoords
+
+!**********************************************************************
+! FindPressureCent
+!
+! This routine will calculate the pressure centroid within the given
+! radius.
+!
+
+subroutine FindPressureCent(Nx, Ny, Press, SelectGrid, Radius, X, Y, PressRad, PressCentIx, PressCentIy)
+  implicit none
+
+  integer :: Nx, Ny
+  real, dimension(Nx,Ny) :: Press, Radius
+  logical, dimension(Nx,Ny) :: SelectGrid
+  real, dimension(Nx) :: X
+  real, dimension(Ny) :: Y
+  real :: PressRad
+  integer :: PressCentIx, PressCentIy
+
+  integer :: i, j, n
+  real :: Penv, Pdiff, SumXpdiff, SumYpdiff, SumPdiff
+  real :: Xcent, Ycent
+  real :: DeltaX
+
+  DeltaX = X(2) - X(1)  ! assume grid spacing is same in x and y
+  
+  ! Find the environmental pressure which is defined as the
+  ! average pressure located at PressRad distance from the
+  ! miniumum pressure location (Radius holds these distances)
+  n = 0
+  Penv = 0.0
+  do j = 1, Ny
+    do i = 1, Nx
+      ! sample ~ 2*DeltaX wide band of samples for env. pressure
+      ! from points in selection grid
+      if (SelectGrid(i,j) .and. (abs(Radius(i,j)-PressRad) .lt. DeltaX)) then
+        n = n + 1
+        Penv = Penv + Press(i,j)
+      endif
+    enddo
+  enddo
+
+  if (n .gt. 0) then
+    Penv = Penv / float(n)
+  else
+    print'(a)', 'ERROR: unable to calculate environmental pressure, no points selected'
+    stop
+  endif
+
+  ! Calculate the centroid
+  !   Pdiff = P - Penv
+  !
+  !    x_cent = sum(x_i * Pdiff_i) / sum(Pdiff_i)
+  !    y_cent = sum(y_i * Pdiff_i) / sum(Pdiff_i)
+  !
+  SumPdiff = 0.0
+  SumXpdiff = 0.0
+  SumYpdiff = 0.0
+  do j = 1, Ny
+    do i = 1, Nx
+      ! sample points within PressRad distance from min pressure
+      ! from selection grid
+      if (SelectGrid(i,j) .and. (Radius(i,j) .le. PressRad)) then
+        Pdiff = Penv - Press(i,j)
+        SumPdiff = SumPdiff + Pdiff
+        SumXpdiff = SumXpdiff + (X(i) * Pdiff)
+        SumYpdiff = SumYpdiff + (Y(j) * Pdiff)
+      endif
+    enddo
+  enddo
+
+  Xcent = SumXpdiff / SumPdiff
+  Ycent = SumYpdiff / SumPdiff
+
+  ! convert the centroid to the nearest grid cell x and y
+  call FindCoordMatch(Nx, X, Xcent, PressCentIx)
+  call FindCoordMatch(Ny, Y, Ycent, PressCentIy)
+
+  return
+end subroutine FindPressureCent
+
+!**********************************************************************
+! FindCoordMatch
+!
+! This routine will find which coord value that the given value
+! is closest to, and return the corresponding index into the coord array.
+!
+
+subroutine FindCoordMatch(Nc, Coords, Val, Cindex)
+  implicit none
+
+  integer :: Nc, Cindex
+  real, dimension(Nc) :: Coords
+  real :: Val
+
+  integer :: i
+  real :: Diff, MinDiff
+
+  Cindex = 1
+  MinDiff = abs(Val - Coords(1))
+  do i = 2, Nc
+    Diff = abs(Val - Coords(i))
+    if (Diff .lt. MinDiff) then
+      Cindex = i
+      MinDiff = Diff
+    endif
+  enddo
+
+  return
+end subroutine FindCoordMatch
+
+!**********************************************************************
+! SetSelectGrid
+!
+! This routine will fill in the selection grid (2D) according to the
+! tests that check for each grid cells elevation and location within
+! the horizontal domain.
+!
+subroutine SetSelectGrid(Nx, Ny, Topo, Lon, Lat, MaxElev, MinLat, MaxLat, MinLon, MaxLon, SelectGrid)
+  implicit none
+
+  integer :: Nx, Ny
+  real, dimension(Nx,Ny) :: Topo
+  real, dimension(Nx) :: Lon
+  real, dimension(Ny) :: Lat
+  real :: MaxElev, MinLat, MaxLat, MinLon, MaxLon
+  logical, dimension(Nx,Ny) :: SelectGrid
+
+  integer :: i, j
+
+  do j = 1, Ny
+    do i = 1, Nx
+      ! Select if elevation less than given limit
+      SelectGrid(i,j) = Topo(i,j) .lt. MaxElev
+
+      ! Select if location is withing given limits (lat, lon)
+      SelectGrid(i,j) = SelectGrid(i,j) .and. (Lon(i) .ge. MinLon)
+      SelectGrid(i,j) = SelectGrid(i,j) .and. (Lon(i) .le. MaxLon)
+      SelectGrid(i,j) = SelectGrid(i,j) .and. (Lat(j) .ge. MinLat)
+      SelectGrid(i,j) = SelectGrid(i,j) .and. (Lat(j) .le. MaxLat)
+    enddo
+  enddo
+
+  return
+end subroutine SetSelectGrid
+
+!**********************************************************************
+! CalcStormSpeed
+!
+! This routine will calculate storm speed (keeping the x and y components
+! separated) from the storm location and time vectors.
+!
+subroutine CalcStormSpeed(Nt, StormX, StormY, Tcoords, SpeedX, SpeedY)
+  implicit none
+
+  integer :: Nt
+  real, dimension(Nt) :: StormX, StormY, Tcoords, SpeedX, SpeedY
+
+  integer :: it
+  real, dimension(Nt-1) :: IntSpeedX, IntSpeedY
+  real :: dt, dx, dy
+
+  ! Form intermediate (between time points) speeds.
+  do it = 1, Nt-1
+    dt = Tcoords(it+1) - Tcoords(it)           ! seconds
+    dx = (StormX(it+1) - StormX(it)) * 1000.0  ! meters
+    dy = (StormY(it+1) - StormY(it)) * 1000.0  ! meters
+    
+    IntSpeedX(it) = dx / dt;  ! m/s
+    IntSpeedY(it) = dy / dt;  ! m/s
+  enddo
+
+  ! Average the intermediate speeds back onto the time points.
+  !
+  ! Assign the adjacent intermediate speeds at the end points
+  ! to the correspoinding end point since there are no "external"
+  ! points to use in the average.
+  SpeedX(1)  = IntSpeedX(1)
+  SpeedX(Nt) = IntSpeedX(Nt-1)
+
+  SpeedY(1)  = IntSpeedY(1)
+  SpeedY(Nt) = IntSpeedY(Nt-1)
+
+  do it = 2, Nt-1
+    SpeedX(it) = 0.5 * (IntSpeedX(it) + IntSpeedX(it-1))
+    SpeedY(it) = 0.5 * (IntSpeedY(it) + IntSpeedY(it-1))
+  enddo
+
+  return
+end subroutine CalcStormSpeed
+
+!**********************************************************************
+! CopyHorizData
+!
+! This routine will pull out the horizontal slice defined by Ilev from
+! Var3d and copy this into Var2d
+!
+subroutine CopyHorizData(Nx, Ny, Nz, Var3d, Var2d, Ilev)
+  implicit none
+
+  integer :: Nx, Ny, Nz, Ilev
+  real, dimension(Nx,Ny,Nz) :: Var3d
+  real, dimension(Nx,Ny) :: Var2d
+
+  integer :: ix, iy
+
+  do iy = 1, Ny
+    do ix = 1, Nx
+      Var2d(ix,iy) = Var3d(ix,iy,Ilev)
+    enddo
+  enddo
+
+  return
+end subroutine CopyHorizData
+
 end module diag_utils

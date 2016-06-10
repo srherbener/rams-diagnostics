@@ -14,7 +14,7 @@
 !   field so that it can be applied downstream to either 2D or 3D fields.
 !
 
-program find_tc_center
+program gen_tc_tilt
   use rhdf5_utils
   use diag_utils
   implicit none
@@ -26,10 +26,10 @@ program find_tc_center
   character (len=LargeString) :: PressFile, PressVar, TopoFile, TopoVar, OutFile
 
   type (Rhdf5Var) :: Press, Topo, Xcoords, Ycoords, Zcoords, Tcoords
-  type (Rhdf5Var) :: Radius, Phi, MinPress, MinPressX, MinPressY, MinPressXidx, MinPressYidx
+  type (Rhdf5Var) :: MinPress, MinPressX, MinPressY, MinPressXidx, MinPressYidx
   type (Rhdf5Var) :: PressCentX, PressCentY, PressCentXidx, PressCentYidx
-  type (Rhdf5Var) :: SpeedX, SpeedY
-  real, dimension(:), allocatable :: XcoordsKm, YcoordsKm, StormX, StormY
+  real, dimension(:), allocatable :: XcoordsKm, YcoordsKm
+  real, dimension(:,:), allocatable :: HorizPress, Radius, Phi
   real :: DeltaX, DeltaY, MaxElev
   real :: MinLat, MinLon, MaxLat, MaxLon
   real :: PressRad
@@ -37,7 +37,7 @@ program find_tc_center
   integer :: PressCentIx, PressCentIy
 
   integer :: Nx, Ny, Nz, Nt
-  integer :: iz, it
+  integer :: ix, iy, iz, it
   character (len=RHDF5_MAX_STRING) :: FileAcc
   integer :: PfileId, TfileId, OfileId
 
@@ -46,7 +46,7 @@ program find_tc_center
   ! Get the command line arguments
   call GetMyArgs(LargeString, PressFile, PressVar, TopoFile, TopoVar, MaxElev, MinLat, MaxLat, MinLon, MaxLon, PressRad, OutFile)
 
-  print'(a)',       'Creating HDF5 TC center data:'
+  print'(a)',       'Creating HDF5 TC tilt data:'
   print'(a)',       ''
   print'(a)',       '  Sea level pressure data: '
   print'(a,x,a)',   '     File:', trim(PressFile)
@@ -85,11 +85,11 @@ program find_tc_center
     stop
   endif
 
-  ! 2D vars
+  ! Pressure is 3D, Topography is 2D
   Nx = Press%dims(1)
   Ny = Press%dims(2)
-  Nz = 1
-  Nt = Press%dims(3)
+  Nz = Press%dims(3)
+  Nt = Press%dims(4)
 
   ! Coordinates
   call SetOutCoords(PressFile, Xcoords, Ycoords, Zcoords, Tcoords)
@@ -138,84 +138,79 @@ program find_tc_center
   Press%ndims = Press%ndims - 1
   Topo%ndims = Topo%ndims - 1
 
-  ! prepare for writing the radius and Phi values (polar coords) into the output file.
-  Radius%vname = 'radius'
-  Radius%ndims = 2
-  Radius%dims(1) = Nx
-  Radius%dims(2) = Ny
-  Radius%dimnames(1) = 'x'
-  Radius%dimnames(2) = 'y'
-  Radius%units = 'km'
-  Radius%descrip = 'radius from storm center'
-  allocate(Radius%vdata(Nx*Ny))
-
-  Phi%vname = 'phi'
-  Phi%ndims = 2
-  Phi%dims(1) = Nx
-  Phi%dims(2) = Ny
-  Phi%dimnames(1) = 'x'
-  Phi%dimnames(2) = 'y'
-  Phi%units = 'radians'
-  Phi%descrip = 'angle from storm center'
-  allocate(Phi%vdata(Nx*Ny))
-
-  ! ndims == 0 means this var will be a time series, f(t)
-
   ! Minimum Pressure value and location
   MinPress%vname = 'min_press'
-  MinPress%ndims = 0
+  MinPress%ndims = 1
+  MinPress%dims(1) = Nz
+  MinPress%dimnames(1) = 'z'
   MinPress%units = 'mb'
   MinPress%descrip = 'minimum SLP of storm'
-  allocate(MinPress%vdata(1))
+  allocate(MinPress%vdata(Nz))
 
   MinPressX%vname = 'min_press_xloc'
-  MinPressX%ndims = 0
+  MinPressX%ndims = 1
+  MinPressX%dims(1) = Nz
+  MinPressX%dimnames(1) = 'z'
   MinPressX%units = 'deg lon'
   MinPressX%descrip = 'longitude location of minimum SLP of storm'
-  allocate(MinPressX%vdata(1))
+  allocate(MinPressX%vdata(Nz))
   
   MinPressY%vname = 'min_press_yloc'
-  MinPressY%ndims = 0
+  MinPressY%ndims = 1
+  MinPressY%dims(1) = Nz
+  MinPressY%dimnames(1) = 'z'
   MinPressY%units = 'deg lat'
   MinPressY%descrip = 'latitude location of minimum SLP of storm'
-  allocate(MinPressY%vdata(1))
+  allocate(MinPressY%vdata(Nz))
 
   MinPressXidx%vname = 'min_press_x_index'
-  MinPressXidx%ndims = 0
+  MinPressXidx%ndims = 1
+  MinPressXidx%dims(1) = Nz
+  MinPressXidx%dimnames(1) = 'z'
   MinPressXidx%units = 'lon index'
   MinPressXidx%descrip = 'longitude index of minimum SLP of storm'
-  allocate(MinPressXidx%vdata(1))
+  allocate(MinPressXidx%vdata(Nz))
   
   MinPressYidx%vname = 'min_press_y_index'
-  MinPressYidx%ndims = 0
+  MinPressYidx%ndims = 1
+  MinPressYidx%dims(1) = Nz
+  MinPressYidx%dimnames(1) = 'z'
   MinPressYidx%units = 'lat index'
   MinPressYidx%descrip = 'latitude index of minimum SLP of storm'
-  allocate(MinPressYidx%vdata(1))
+  allocate(MinPressYidx%vdata(Nz))
 
   ! Pressure Centroid location
   PressCentX%vname = 'press_cent_xloc'
-  PressCentX%ndims = 0
+  PressCentX%ndims = 1
+  PressCentX%dims(1) = Nz
+  PressCentX%dimnames(1) = 'z'
   PressCentX%units = 'deg lon'
   PressCentX%descrip = 'longitude location of minimum SLP of storm'
-  allocate(PressCentX%vdata(1))
+  allocate(PressCentX%vdata(Nz))
   
   PressCentY%vname = 'press_cent_yloc'
-  PressCentY%ndims = 0
+  PressCentY%ndims = 1
+  PressCentY%dims(1) = Nz
+  PressCentY%dimnames(1) = 'z'
   PressCentY%units = 'deg lat'
   PressCentY%descrip = 'latitude location of minimum SLP of storm'
-  allocate(PressCentY%vdata(1))
+  allocate(PressCentY%vdata(Nz))
 
   PressCentXidx%vname = 'press_cent_x_index'
-  PressCentXidx%ndims = 0
+  PressCentXidx%ndims = 1
+  PressCentXidx%dims(1) = Nz
+  PressCentXidx%dimnames(1) = 'z'
   PressCentXidx%units = 'lon index'
   PressCentXidx%descrip = 'longitude index of minimum SLP of storm'
-  allocate(PressCentXidx%vdata(1))
+  allocate(PressCentXidx%vdata(Nz))
   
   PressCentYidx%vname = 'press_cent_y_index'
-  PressCentYidx%ndims = 0
+  PressCentYidx%ndims = 1
+  PressCentYidx%dims(1) = Nz
+  PressCentYidx%dimnames(1) = 'z'
   PressCentYidx%units = 'lat index'
   PressCentYidx%descrip = 'latitude index of minimum SLP of storm'
-  allocate(PressCentYidx%vdata(1))
+  allocate(PressCentYidx%vdata(Nz))
 
   ! Open the input files and the output file
   FileAcc = 'R'
@@ -238,6 +233,11 @@ program find_tc_center
   ! in the flow.
   allocate(SelectGrid(Nx,Ny))
 
+  ! Used for doing center finding level-by-level
+  allocate(HorizPress(Nx,Ny))
+  allocate(Radius(Nx,Ny))
+  allocate(Phi(Nx,Ny))
+
   ! Do the filtering one time step at a time.
   !
   ! The necessary input files have been opened, data buffers allocated,
@@ -245,8 +245,6 @@ program find_tc_center
   ! of the input variables.
   !
 
-  allocate(StormX(Nt))  ! use these to record storm location in the following loop
-  allocate(StormY(Nt))  ! these will be used after the loop to caclulate storm motion (speed)
   do it = 1, Nt
     ! read the input vars
     call rhdf5_read_variable(PfileId, Press%vname, Press%ndims, it, Press%dims, rdata=Press%vdata)
@@ -256,41 +254,32 @@ program find_tc_center
     ! the horizontal domain.
     call SetSelectGrid(Nx, Ny, Topo%vdata, Xcoords%vdata, Ycoords%vdata, MaxElev, MinLat, MaxLat, MinLon, MaxLon, SelectGrid)
 
-    ! Find the storm center using minumum pressure - this is the guess that seeds the
-    ! pressure centroid calculation
-    call FindMinPressure(Nx, Ny, Press%vdata, SelectGrid, MinPressIx, MinPressIy, MinPress%vdata(1))
+    do iz = 1, Nz
+      ! Create copy of the current level pressure
+      call CopyHorizData(Nx, Ny, Nz, Press%vdata, HorizPress, iz)
 
-    ! Record the lat,lon of the miniumum pressure
-    MinPressX%vdata(1) = Xcoords%vdata(MinPressIx)
-    MinPressY%vdata(1) = Ycoords%vdata(MinPressIy)
-    MinPressXidx%vdata(1) = float(MinPressIx)
-    MinPressYidx%vdata(1) = float(MinPressIy)
+      ! Find the storm center using minumum pressure - this is the guess that seeds the
+      ! pressure centroid calculation
+      call FindMinPressure(Nx, Ny, HorizPress, SelectGrid, MinPressIx, MinPressIy, MinPress%vdata(iz))
 
-    ! Calculate the polar coordinates of all horizontal points from the minimum pressure
-    call CalcPolarCoords(Nx, Ny, Radius%vdata, Phi%vdata, XcoordsKm, YcoordsKm, MinPressIx, MinPressIy)
+      ! Record the lat,lon of the miniumum pressure
+      MinPressX%vdata(iz) = Xcoords%vdata(MinPressIx)
+      MinPressY%vdata(iz) = Ycoords%vdata(MinPressIy)
+      MinPressXidx%vdata(iz) = float(MinPressIx)
+      MinPressYidx%vdata(iz) = float(MinPressIy)
 
-    ! Find the pressure centroid
-    call FindPressureCent(Nx, Ny, Press%vdata, SelectGrid, Radius%vdata, XcoordsKm, YcoordsKm, PressRad, PressCentIx, PressCentIy)
+      ! Calculate the polar coordinates of all horizontal points from the minimum pressure
+      call CalcPolarCoords(Nx, Ny, Radius, Phi, XcoordsKm, YcoordsKm, MinPressIx, MinPressIy)
 
-    ! Record the lat,lon of the pressure centroid
-    PressCentX%vdata(1) = Xcoords%vdata(PressCentIx)
-    PressCentY%vdata(1) = Ycoords%vdata(PressCentIy)
-    PressCentXidx%vdata(1) = float(PressCentIx)
-    PressCentYidx%vdata(1) = float(PressCentIy)
+      ! Find the pressure centroid
+      call FindPressureCent(Nx, Ny, HorizPress, SelectGrid, Radius, XcoordsKm, YcoordsKm, PressRad, PressCentIx, PressCentIy)
 
-    ! Record storm location in km
-    StormX(it) = XcoordsKm(PressCentIx)
-    StormY(it) = YcoordsKm(PressCentIy)
-
-    ! Calculate the radius of all horizontal points from the pressure centroid
-    call CalcPolarCoords(Nx, Ny, Radius%vdata, Phi%vdata, XcoordsKm, YcoordsKm, PressCentIx, PressCentIy)
-
-    ! Write out the results
-    ! Polor coords (from pressure centroid)
-    call rhdf5_write_variable(OfileId, Radius%vname, Radius%ndims, it, Radius%dims, &
-      Radius%units, Radius%descrip, Radius%dimnames, rdata=Radius%vdata)
-    call rhdf5_write_variable(OfileId, Phi%vname, Phi%ndims, it, Phi%dims, &
-      Phi%units, Phi%descrip, Phi%dimnames, rdata=Phi%vdata)
+      ! Record the lat,lon of the pressure centroid
+      PressCentX%vdata(iz) = Xcoords%vdata(PressCentIx)
+      PressCentY%vdata(iz) = Ycoords%vdata(PressCentIy)
+      PressCentXidx%vdata(iz) = float(PressCentIx)
+      PressCentYidx%vdata(iz) = float(PressCentIy)
+    enddo
 
     ! Minimum pressure
     call rhdf5_write_variable(OfileId, MinPress%vname, MinPress%ndims, it, MinPress%dims, &
@@ -332,37 +321,15 @@ program find_tc_center
     endif
   enddo
 
+  deallocate(SelectGrid)
+  deallocate(HorizPress)
+  deallocate(Radius)
+  deallocate(Phi)
+
   ! 'it' will be one beyond its loop limit (Nt) so subtract one
   ! from 'it' when reporting how many times steps were processed
   write (*,*) 'Finished: Total number of time steps processed: ', it-1
   write (*,*) ''
-
-  ! Now have the time series of the location of the storm center
-  ! Use these locations to caclulate the storm motion (speed). Keep
-  ! the x and y components separated so that downstream processes
-  ! can have access to these components.
-  !
-  ! Calculate storm motion from pressure centroid locations.
-  SpeedX%vname       = 'storm_speed_x'
-  SpeedX%ndims       = 1
-  SpeedX%dims(1)     = Nt
-  SpeedX%dimnames(1) = 't'
-  SpeedX%units       = 'm/s'
-  SpeedX%descrip     = 'x component of storm speed'
-  allocate(SpeedX%vdata(Nt))
-
-  SpeedY%vname       = 'storm_speed_y'
-  SpeedY%ndims       = 1
-  SpeedY%dims(1)     = Nt
-  SpeedY%dimnames(1) = 't'
-  SpeedY%units       = 'm/s'
-  SpeedY%descrip     = 'y component of storm speed'
-  allocate(SpeedY%vdata(Nt))
-
-  call CalcStormSpeed(Nt, StormX, StormY, Tcoords%vdata(1), SpeedX%vdata(1), SpeedY%vdata(1))
-
-  call rhdf5_write(OutFile, SpeedX, 1)
-  call rhdf5_write(OutFile, SpeedY, 1)
 
   ! write out the coordinate data
   call rhdf5_write(OutFile, Xcoords, 1)
@@ -377,9 +344,6 @@ program find_tc_center
   call rhdf5_set_dimension(OutFile, Tcoords, 't')
 
   ! attach the dimension specs to the output variable
-  call rhdf5_attach_dimensions(OutFile, Radius)
-  call rhdf5_attach_dimensions(OutFile, Phi)
-
   call rhdf5_attach_dimensions(OutFile, MinPress)
   call rhdf5_attach_dimensions(OutFile, MinPressX)
   call rhdf5_attach_dimensions(OutFile, MinPressY)
@@ -390,9 +354,6 @@ program find_tc_center
   call rhdf5_attach_dimensions(OutFile, PressCentY)
   call rhdf5_attach_dimensions(OutFile, PressCentXidx)
   call rhdf5_attach_dimensions(OutFile, PressCentYidx)
-
-  call rhdf5_attach_dimensions(OutFile, SpeedX)
-  call rhdf5_attach_dimensions(OutFile, SpeedY)
 
   ! cleanup
   call rhdf5_close_file(OfileId)
@@ -441,7 +402,7 @@ contains
     print'(a)', 'ERROR: must specify exactly 5 argments'
     print'(a)', ''
 
-    print'(a)', 'USAGE: find_tc_center <PressFile> <PressVar> <TopoFile> <TopoVar> <MaxElev> <MinLat> <MaxLat> <MinLon> <MaxLon> <OutFile>'
+    print'(a)', 'USAGE: gen_tc_tilt <PressFile> <PressVar> <TopoFile> <TopoVar> <MaxElev> <MinLat> <MaxLat> <MinLon> <MaxLon> <OutFile>'
     print'(a)', '        <PressFile>: sea level pressure input file'
     print'(a)', '        <PressVar>: sea level pressure input variable name'
     print'(a)', '        <TopoFile>: topography input file'
@@ -517,4 +478,4 @@ contains
   return
 end subroutine GetMyArgs
 
-end program find_tc_center
+end program gen_tc_tilt
