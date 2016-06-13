@@ -71,7 +71,7 @@ function [ ] = PlotFsFigMaxWind()
 
   BDATA = [ PRESAL_FS_WMAX(1:3)' PRESAL_FS_WMAX_INT(4); SAL_FS_WMAX(1:3)' SAL_FS_WMAX_INT(4) ]' .* 100;
   BarColors = { 'dodgerblue' 'cyan' };
-  BarLabels = { 'NS' 'ND' 'NSD' 'INT' };
+  BarLabels = { 'NS' 'ND' 'NSND' 'INT' };
   BarLegText = { 'PSAP' 'SAP' };
   BarLegLoc = 'NorthEastOutside';
   fprintf('\n');
