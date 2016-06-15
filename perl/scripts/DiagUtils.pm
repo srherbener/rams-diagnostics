@@ -241,6 +241,11 @@ sub ReadDiagConfigFile
       {
       $Config{VINT_TERMS}{$f[1]}{FILE_LIST}   = [ @f[2..$#f] ];
       }
+    elsif ($f[0] eq "VtVr:")
+      {
+      $Config{VTVR}{$f[1]}{SUB_SMOTION} = $f[2];
+      $Config{VTVR}{$f[1]}{FILE_LIST}   = [ @f[3..$#f] ];
+      }
   }
 
   return(\%Config);
