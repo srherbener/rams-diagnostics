@@ -55,8 +55,8 @@ function [ ] = PlotFsFigVaporXsection()
   end
   fprintf('\n');
 
-  % Make difference plots: NSD - SD
-  VAPOR_DIFF = squeeze(VAPOR(2,:,:,:) - VAPOR(1,:,:,:));
+  % Make difference plots: SD - NSD
+  VAPOR_DIFF = squeeze(VAPOR(1,:,:,:) - VAPOR(2,:,:,:));
 
   % Plot: 10 panels (5x2)
   OutFile = sprintf('%s/FsFigVaporXsection.jpg', Pdir);
@@ -68,8 +68,8 @@ function [ ] = PlotFsFigVaporXsection()
   Clevs = 0:3:18;
   Cmap = 'parula';
 
-  DiffClim  = [ -4 4 ];
-  DiffClevs = -4:1:4;
+  DiffClim  = [ -5 5 ];
+  DiffClevs = -5:1:5;
   DiffCmap = 'redblue';
 
   PlocInc = 0.05;
@@ -167,7 +167,7 @@ function [ ] = PlotFsFigVaporXsection()
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
   PDATA = squeeze(VAPOR_DIFF(1,:,:))';
-  PlotFsFigXsection(Paxes, X, Z, PDATA, 'c', '06Z, 22Aug (NSD-SD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, DiffCmap, DiffClim, DiffClevs, Fsize, 0, 0);
+  PlotFsFigXsection(Paxes, X, Z, PDATA, 'c', '06Z, 22Aug (SD-NSD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, DiffCmap, DiffClim, DiffClevs, Fsize, 0, 0);
 
   Paxes = subplot(5, 3, 6);
   Ploc = get(Paxes, 'Position');

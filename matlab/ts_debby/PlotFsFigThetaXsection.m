@@ -55,8 +55,8 @@ function [ ] = PlotFsFigThetaXsection()
   end
   fprintf('\n');
 
-  % Make difference plots: NSD - SD
-  THETA_DIFF = squeeze(THETA(2,:,:,:) - THETA(1,:,:,:));
+  % Make difference plots: SD - NSD
+  THETA_DIFF = squeeze(THETA(1,:,:,:) - THETA(2,:,:,:));
 
   % Plot: 10 panels (5x2)
   OutFile = sprintf('%s/FsFigThetaXsection.jpg', Pdir);
@@ -167,7 +167,7 @@ function [ ] = PlotFsFigThetaXsection()
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
   PDATA = squeeze(THETA_DIFF(1,:,:))';
-  PlotFsFigXsection(Paxes, X, Z, PDATA, 'c', '06Z, 22Aug (NSD-SD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, DiffCmap, DiffClim, DiffClevs, Fsize, 0, 0);
+  PlotFsFigXsection(Paxes, X, Z, PDATA, 'c', '06Z, 22Aug (SD-NSD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, DiffCmap, DiffClim, DiffClevs, Fsize, 0, 0);
 
   Paxes = subplot(5, 3, 6);
   Ploc = get(Paxes, 'Position');
