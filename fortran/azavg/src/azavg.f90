@@ -65,6 +65,7 @@ program azavg
 
   type (Rhdf5Var) :: U, V, Ustorm, Vstorm, Avar, Aavg, Rcoords, Zcoords, Tcoords, Bcoords, Xcoords, Ycoords
   type (Rhdf5Var) :: Filter, Radius, StormXindex, StormYindex
+  real, dimension(:,:,:), allocatable :: Vt, Vr
   character (len=RHDF5_MAX_STRING) :: rh5f_facc
   integer :: rh5f_filter, rh5f_center, rh5f_u, rh5f_v, rh5f_avar, rh5f_aavg
   integer :: i_storm, j_storm
@@ -72,7 +73,6 @@ program azavg
   real :: StormX, StormY
 
   integer :: i
-  integer :: AvarNelems
 
   integer :: ix, iy, it
   integer :: Nx, Ny, Nz, Nt, FilterNz
@@ -312,10 +312,6 @@ program azavg
   endif
 
   Avar%ndims = Avar%ndims - 1
-  AvarNelems = 1
-  do i = 1, Avar%ndims
-    AvarNelems = AvarNelems * Avar%dims(i)
-  enddo
 
   ! set up the output variable
   rh5f_facc = 'W'
@@ -369,9 +365,11 @@ program azavg
       endif
 
       ! convert u,v to tangential or radial
-      allocate(Avar%vdata(AvarNelems))
+      allocate(Vt(Nx,Ny,Nz))
+      allocate(Vr(Nx,Ny,Nz))
+
       call ConvertHorizVelocity(Nx, Ny, Nz, U%vdata, V%vdata, StormX, StormY, &
-        XcoordsKm, YcoordsKm, Avar%vdata, Args%DoTangential)
+        XcoordsKm, YcoordsKm, Vt, Vr)
 
       ! Free up variable memory
       deallocate(U%vdata)
@@ -390,8 +388,25 @@ program azavg
     endif
 
     ! do the averaging and write out the results to the output file
-    call AzimuthalAverage(Nx, Ny, Nz, FilterNz, Args%NumRbands, NumBins, Avar%vdata, Aavg%vdata, &
-      RbandInc, Filter%vdata, Radius%vdata, HistBins, Args%DoHist, UndefVal)
+    if (Args%DoHorizVel) then
+      if (Args%DoTangential) then
+        call AzimuthalAverage(Nx, Ny, Nz, FilterNz, Args%NumRbands, NumBins, Vt, Aavg%vdata, &
+          RbandInc, Filter%vdata, Radius%vdata, HistBins, Args%DoHist, UndefVal)
+      else
+        call AzimuthalAverage(Nx, Ny, Nz, FilterNz, Args%NumRbands, NumBins, Vr, Aavg%vdata, &
+          RbandInc, Filter%vdata, Radius%vdata, HistBins, Args%DoHist, UndefVal)
+      endif
+    else
+      call AzimuthalAverage(Nx, Ny, Nz, FilterNz, Args%NumRbands, NumBins, Avar%vdata, Aavg%vdata, &
+        RbandInc, Filter%vdata, Radius%vdata, HistBins, Args%DoHist, UndefVal)
+    endif
+
+    if (Args%DoHorizVel) then
+      deallocate(Vt)
+      deallocate(Vr)
+    else
+      deallocate(Avar%vdata)
+    endif
 
     call rhdf5_write_variable(rh5f_aavg, Aavg%vname, Aavg%ndims, it, Aavg%dims, &
       Aavg%units, Aavg%descrip, Aavg%dimnames, rdata=Aavg%vdata)
@@ -399,7 +414,6 @@ program azavg
     ! Free up variable memory
     deallocate(Filter%vdata)
     deallocate(Radius%vdata)
-    deallocate(Avar%vdata)
     
     ! Write out status to screen every 100 timesteps so that the user can see that a long
     ! running job is progressing okay.

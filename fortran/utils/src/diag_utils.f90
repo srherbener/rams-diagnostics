@@ -141,11 +141,11 @@ end subroutine
 ! into tangential or radial components given the storm center location.
 !
 
-subroutine ConvertHorizVelocity(Nx, Ny, Nz, U, V, StormX, StormY, Xcoords, Ycoords, Avar, DoTangential)
+subroutine ConvertHorizVelocity(Nx, Ny, Nz, U, V, StormX, StormY, Xcoords, Ycoords, Vt, Vr)
   implicit none
 
   integer :: Nx, Ny, Nz
-  real, dimension(Nx,Ny,Nz) :: U, V, Avar
+  real, dimension(Nx,Ny,Nz) :: U, V, Vt, Vr
   real :: StormX, StormY
   real, dimension(Nx) :: Xcoords
   real, dimension(Ny) :: Ycoords
@@ -173,16 +173,11 @@ subroutine ConvertHorizVelocity(Nx, Ny, Nz, U, V, StormX, StormY, Xcoords, Ycoor
 
         WindMag = sqrt(WindX**2 + WindY**2)
         
-        if (DoTangential) then
-          ! Tangential wind
-          Avar(ix,iy,iz) = WindMag * sin(Alpha)
-        else
-          ! Radial wind
-          Avar(ix,iy,iz) = WindMag * cos(Alpha)
-        end if
-      end do
-    end do
-  end do
+        Vt(ix,iy,iz) = WindMag * sin(Alpha)
+        Vr(ix,iy,iz) = WindMag * cos(Alpha)
+      enddo
+    enddo
+  enddo
   
   return
 end subroutine

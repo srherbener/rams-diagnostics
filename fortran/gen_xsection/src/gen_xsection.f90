@@ -45,6 +45,7 @@ program gen_xsection
 
   type (Rhdf5Var) :: U, V, Var, Xcoords, Ycoords, Zcoords, Tcoords
   type (Rhdf5Var) :: Lcoords, Xsection, Dcoords
+  real, dimension(:,:,:), allocatable :: Vt, Vr
   character (len=RHDF5_MAX_STRING) :: rh5f_facc
   integer :: rh5f_u, rh5f_v, rh5f_var, rh5f_out
   real, dimension(:), allocatable :: XcoordsKm, YcoordsKm
@@ -52,7 +53,6 @@ program gen_xsection
   real :: LineX1, LineY1
 
   integer :: i
-  integer :: VarNelems
 
   integer :: ix, iy, iz, it
   integer :: Nx, Ny, Nz, Nt
@@ -219,10 +219,6 @@ program gen_xsection
   endif
 
   Var%ndims = Var%ndims - 1
-  VarNelems = 1
-  do i = 1, Var%ndims
-    VarNelems = VarNelems * Var%dims(i)
-  enddo
 
   ! set up the output variable
   rh5f_facc = 'W'
@@ -252,9 +248,10 @@ program gen_xsection
 
       ! Calculate tangential or radial wind speed relative to the starting point of
       ! the cross section line.
-      allocate(Var%vdata(VarNelems))
+      allocate(Vt(Nx,Ny,Nz))
+      allocate(Vr(Nx,Ny,Nz))
       call ConvertHorizVelocity(Nx, Ny, Nz, U%vdata, V%vdata, LineX1, LineY1, &
-                                XcoordsKm, YcoordsKm, Var%vdata, Args%DoTangential)
+                                XcoordsKm, YcoordsKm, Vt, Vr)
 
       ! Free up variable memory
       deallocate(U%vdata)
@@ -268,7 +265,15 @@ program gen_xsection
        ix = Xindices(il)
        iy = Yindices(il)
        do iz = 1, Nz
-         VarVal = MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Var%vdata)
+         if (Args%DoHorizVel) then
+           if (Args%DoTangential) then
+             VarVal = Vt(ix,iy,iz)
+           else
+             VarVal = Vr(ix,iy,iz)
+           endif
+         else
+           VarVal = MultiDimLookup(Nx, Ny, Nz, ix, iy, iz, Var3d=Var%vdata)
+         endif
          call MultiDimAssign(Nl, 1, Nz, il, 1, iz, VarVal, Var3d=Xsection%vdata)
        enddo
     enddo
@@ -277,7 +282,12 @@ program gen_xsection
       Xsection%units, Xsection%descrip, Xsection%dimnames, rdata=Xsection%vdata)
 
     ! Free up variable memory
-    deallocate(Var%vdata)
+    if (Args%DoHorizVel) then
+      deallocate(Vt)
+      deallocate(Vr)
+    else
+      deallocate(Var%vdata)
+    endif
     
     ! Write out status to screen every 10 timesteps so that the user can see that a long
     ! running job is progressing okay.
