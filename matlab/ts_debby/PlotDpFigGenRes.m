@@ -7,6 +7,19 @@ function [ ] = PlotDpFigGenRes()
   
   Fsize = 13;
 
+  % Get grid 3 location
+  GlocFname = 'GridLocs.txt';
+  Grid3Loc = ReadGridLoc(GlocFname, 'Grid3:');
+
+  % Map location, extend beyond grid3 boundaries
+  MapLoc = Grid3Loc + [ -2 +3 -2 +6 ];
+
+  % Image and vint dust don't quite fit right within grid3 when plotted. Move grid3
+  % up about 0.5 degree to make up for this. Do this after setting the map confines
+  % so that the alignment of the SAL image remains lined up with the coast line of
+  % Africa.
+  Grid3Loc = Grid3Loc + [ +0.25 +0.25 0 0 ];
+
   % Storm center locations
   Hfile = 'HDF5/TSD_SAL_DUST/HDF5/storm_center-TSD_SAL_DUST-AS-2006-08-20-120000-g3.h5';
   HdsetLon = '/press_cent_xloc';
@@ -65,7 +78,7 @@ function [ ] = PlotDpFigGenRes()
   Ploc(1) = Ploc(1) - 0.05;
   Ploc(2) = Ploc(2) + 0.03;
   set(Paxes, 'Position', Ploc);
-  PlotDpFigTrack(Paxes, SimTrackLons, SimTrackLats, 'a', '', Fsize);
+  PlotDpFigTrack(Paxes, MapLoc, Grid3Loc, SimTrackLons, SimTrackLats, 'a', '', Fsize);
   
   % Initial dust profiles
   % Doesn't quite fit in the vertical center of the subplot region. Needs to get
@@ -78,11 +91,11 @@ function [ ] = PlotDpFigGenRes()
 
   % SAL strength image
   Paxes = subplot(2,2,3);
-  PlaceSalImage(Paxes, SalPic, 'c', '12Z, 23Aug', Fsize);
+  PlaceSalImage(Paxes, MapLoc, Grid3Loc, SalPic, 'c', '12Z, 23Aug', Fsize);
 
   % Vertically integrated dust mass
   Paxes = subplot(2,2,4);
-  PlotVintDust(Paxes, X, Y, VINT_DUST, 'd', '12Z, 23Aug', Fsize, 1, 1);
+  PlotVintDust(Paxes, MapLoc, Grid3Loc, X, Y, VINT_DUST, 'd', '12Z, 23Aug', Fsize, 1, 1);
 
   OutFile = sprintf('%s/DpFig1_GenRes.jpg', Pdir);
   fprintf('Writing: %s\n', OutFile);
@@ -128,7 +141,7 @@ function [] = PlotDpFigInitDust(Paxes, DUST, Z, Pmarker, Ptitle, Fsize)
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [] = PlotDpFigTrack(Paxes, SimTrackLons, SimTrackLats, Pmarker, Ptitle, Fsize)
+function [] = PlotDpFigTrack(Paxes, MapLoc, Grid3Loc, SimTrackLons, SimTrackLats, Pmarker, Ptitle, Fsize)
 
   axes(Paxes);
 
@@ -137,8 +150,14 @@ function [] = PlotDpFigTrack(Paxes, SimTrackLons, SimTrackLats, Pmarker, Ptitle,
   LegendFsize = 8;
   LineW = 2;
   
-  LatBounds = [ 5 26 ];
-  LonBounds = [ -42 -8 ];
+  LatBounds = [ MapLoc(1) MapLoc(2) ];
+  LonBounds = [ MapLoc(3) MapLoc(4) ];
+
+  Grid3Lats = [ Grid3Loc(1) Grid3Loc(2) Grid3Loc(2) Grid3Loc(1) Grid3Loc(1) ];
+  Grid3Lons = [ Grid3Loc(3) Grid3Loc(3) Grid3Loc(4) Grid3Loc(4) Grid3Loc(3) ];
+
+  G3color = str2rgb('blue');
+  G3linew = 2.5;
   
   % The simulation runs from Aug 22, 6Z to Aug 24, 18Z.
   %
@@ -146,7 +165,9 @@ function [] = PlotDpFigTrack(Paxes, SimTrackLons, SimTrackLats, Pmarker, Ptitle,
   NhcTrackLats = [ 12.6 13.4 14.2 14.9 15.7 16.7 17.6 18.4 19.2 20.1 20.9 ];
   NhcTrackLons = [ 23.9 25.3 26.7 28.1 29.5 31.0 32.4 33.9 35.5 37.1 38.7 ] * -1; 
 
-  SalRegionLats = [ 12.0 24.0 24.0 12.0 12.0 ];
+  % SAL_AR gets clipped at the top of grid3
+  SalArTop = min( [ 24.0 Grid3Loc(2) ]);
+  SalRegionLats = [ 12.0 SalArTop SalArTop 12.0 12.0 ];
   SalRegionLons = [ 36.5 36.5 25.0 25.0 36.5 ] * -1; 
 
   set(Paxes, 'FontSize', Fsize);
@@ -160,10 +181,14 @@ function [] = PlotDpFigTrack(Paxes, SimTrackLons, SimTrackLats, Pmarker, Ptitle,
 
   % Add SAL analysis region
   linem(SalRegionLats, SalRegionLons, 'LineWidth', LineW, 'Color', 'r');
-  textm(22, -35, 'SAL\_AR', 'FontSize', 10, 'Color', 'r');
+  textm(21, -34, 'SAL\_AR', 'FontSize', 10, 'Color', 'r');
 
   % Mark Africa
   textm(14, -12, 'Africa', 'FontSize', 10, 'Color', 'k', 'Rotation', 90);
+
+  % Mark Grid3
+  linem(Grid3Lats, Grid3Lons, 'LineWidth', G3linew, 'LineStyle', '-', 'Color', G3color);
+  textm( 24.1, -23, 'Grid3', 'Color', G3color, 'FontSize',  10);
 
   legend( [ NhcTrack SimTrack' ], LegText,'Location', 'SouthWest', 'FontSize', LegendFsize);
 
@@ -177,13 +202,20 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [] = PlaceSalImage(Paxes, SalImage, Pmarker, Ptitle, Fsize)
+function [] = PlaceSalImage(Paxes, MapLoc, Grid3Loc, SalImage, Pmarker, Ptitle, Fsize)
 
   axes(Paxes);
 
-  LatBounds = [ 5 26 ];
-  LonBounds = [ -42 -8 ];
   LineW = 2;
+  G3linew = 2.5;
+
+  LatBounds = [ MapLoc(1) MapLoc(2) ];
+  LonBounds = [ MapLoc(3) MapLoc(4) ];
+
+  Grid3Lats = [ Grid3Loc(1) Grid3Loc(2) Grid3Loc(2) Grid3Loc(1) Grid3Loc(1) ];
+  Grid3Lons = [ Grid3Loc(3) Grid3Loc(3) Grid3Loc(4) Grid3Loc(4) Grid3Loc(3) ];
+
+  G3color = str2rgb('blue');
 
   % create a gap so that image lines up with vint_dust image
   Gap = 0.05;
@@ -224,6 +256,10 @@ function [] = PlaceSalImage(Paxes, SalImage, Pmarker, Ptitle, Fsize)
   % Mark Africa
   textm(14, -12, 'Africa', 'FontSize', 10, 'Color', 'k', 'Rotation', 90);
 
+  % Mark Grid3
+  linem(Grid3Lats, Grid3Lons, 'LineWidth', G3linew, 'LineStyle', '-', 'Color', G3color);
+  textm( 24.1, -23, 'Grid3', 'Color', G3color, 'FontSize',  10);
+
   if (isempty(Pmarker))
     title(Ptitle);
   else
@@ -235,14 +271,20 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [] = PlotVintDust(Paxes, X, Y, Z, Pmarker, Ptitle, Fsize, ShowX, ShowY)
+function [] = PlotVintDust(Paxes, MapLoc, Grid3Loc, X, Y, Z, Pmarker, Ptitle, Fsize, ShowX, ShowY)
 
   axes(Paxes);
 
-  LatBounds = [ 5 26 ];
-  LonBounds = [ -42 -8 ];
+  LatBounds = [ MapLoc(1) MapLoc(2) ];
+  LonBounds = [ MapLoc(3) MapLoc(4) ];
+
+  Grid3Lats = [ Grid3Loc(1) Grid3Loc(2) Grid3Loc(2) Grid3Loc(1) Grid3Loc(1) ];
+  Grid3Lons = [ Grid3Loc(3) Grid3Loc(3) Grid3Loc(4) Grid3Loc(4) Grid3Loc(3) ];
+
+  G3color = str2rgb('blue');
 
   LineW = 2;
+  G3linew = 2.5;
 
   % create a gap for the colorbar
   Gap = 0.05;
@@ -317,6 +359,10 @@ function [] = PlotVintDust(Paxes, X, Y, Z, Pmarker, Ptitle, Fsize, ShowX, ShowY)
 
   % Mark Africa
   textm(14, -12, 'Africa', 'FontSize', 10, 'Color', 'k', 'Rotation', 90);
+
+  % Mark Grid3
+  linem(Grid3Lats, Grid3Lons, 'LineWidth', G3linew, 'LineStyle', '-', 'Color', G3color);
+  textm( 24.1, -23, 'Grid3', 'Color', G3color, 'FontSize',  10);
 
   if (isempty(Pmarker))
     title(Ptitle);
