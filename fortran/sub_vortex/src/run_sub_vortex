@@ -1,0 +1,98 @@
+#!/usr/bin/env perl
+#
+# Script to run sub_vortex on a list of simulation cases
+#
+
+BEGIN { push(@INC, "$ENV{HOME}/etc/perl"); }
+
+use strict;
+use File::Basename;
+use DiagUtils;
+
+#######################################################################
+# SUBROUTINES
+#######################################################################
+
+#######################################################################
+# MAIN
+#######################################################################
+
+my $ConfigFile;
+my $Nprocs;
+
+my $Config;
+
+my @CaseList;
+my $Case;
+
+my %SvortJobs;
+my $Aname;
+my @FileList;
+my $FileSpec;
+my $ifile;
+
+my @SvortCmds;
+my $icmd;
+
+my @SysArgs;
+my $iarg;
+
+my $ilog;
+my $LogFile;
+my $Pid;
+
+if ($#ARGV != 1)
+  {
+  print "ERROR: must supply exactly two arguments\n";
+  print "\n";
+  print "USAGE: run_sub_vortex <ConfigFile> <NumberProcesses>\n";
+  exit -1;
+  }
+
+$ConfigFile = $ARGV[0];
+$Nprocs = $ARGV[1];
+
+print "Run sub_vortex diagnostic jobs\n";
+print "  Configuration file: $ConfigFile\n";
+print "  Number of processes: $Nprocs\n";
+print "\n";
+
+# Read in info from the config file.
+($Config) = &DiagUtils::ReadDiagConfigFile($ConfigFile);
+
+# Walk through all cases and all sub_vortex jobs and construct the
+# corresponding list of sub_vortex commands. 
+#
+# Divide the total number of sub_vortex commands evenly by the 
+# requested number of processes and run each subset in
+# separate processes.
+
+@CaseList = @{ $$Config{CASE_LIST} };
+%SvortJobs = %{ $$Config{SVORT} };
+
+foreach $Case (@CaseList)
+  {
+  foreach $Aname (sort(keys(%SvortJobs)))
+    {
+    # Grab the job specs
+    @FileList   = @{ $SvortJobs{$Aname}{FILE_LIST} };
+
+    $iarg = 0;
+    undef @SysArgs;
+    $SysArgs[$iarg++] = "sub_vortex"; 
+    foreach $ifile (0 .. $#FileList)
+      {
+      $FileSpec = $FileList[$ifile];
+      $FileSpec =~ s/<CASE>/$Case/g;
+      $SysArgs[$iarg++] = $FileSpec;
+      }
+
+    # Add the command line to the main list
+    $SvortCmds[$icmd++] = [ @SysArgs ];
+    }
+  }
+
+# Submit the jobs
+&DiagUtils::SubmitParallelJobs(\@SvortCmds, $Nprocs, "svort");
+
+exit 0;
