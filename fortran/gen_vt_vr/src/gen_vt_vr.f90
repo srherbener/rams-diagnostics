@@ -24,6 +24,7 @@ program gen_vt_vr
 
   type ArgList
     logical :: SubtractSmotion
+    logical :: ReverseConv
     type (FileSpec) :: Vt
     type (FileSpec) :: Vr
     type (FileSpec) :: StormCenter
@@ -32,8 +33,7 @@ program gen_vt_vr
   endtype
 
   type (ArgList) :: Args
-  integer :: NumBins
-  real, dimension(:), allocatable :: HistBins
+  integer :: Uv2Tr
 
   ! Data arrays: need one for w (vertical velocity), press (pressure)
   ! and the var we are doing the averaging on
@@ -59,8 +59,17 @@ program gen_vt_vr
   ! Get the command line arguments
   call GetMyArgs(Args)
 
+  if (Args%ReverseConv) then
+    ! do (vt,vr) to (u,v) conversion
+    Uv2Tr = 0
+  else
+    ! do (u,v) to (vt,vr) conversion
+    Uv2Tr = 1
+  endif
+
   write (*,'("Calculating storm relative winds:")')
-  write (*,'("  Subtracting storm motion from input winds: ",l)') Args%SubtractSmotion
+  write (*,'("  Subtract storm motion from input winds: ",l)') Args%SubtractSmotion
+  write (*,'("  Reverse conversion, (vt,vr) to (u,v): ",l)') Args%ReverseConv
   write (*,'("  Input file specs:")')
   write (*,'("    U: ",a," (",a,")")') trim(Args%U%fname), trim(Args%U%vname)
   write (*,'("    V: ",a," (",a,")")') trim(Args%V%fname), trim(Args%V%vname)
@@ -170,9 +179,6 @@ program gen_vt_vr
   write (*,*) 'Writing: ', trim(Args%Vr%fname)
   write (*,*) ''
 
-  ! NumBins will be one when not doing histograms. Otherwise it will be
-  ! the number of bins the user specified.
-
   Vt%vname = trim(Args%Vt%vname)
   Vt%ndims = 3
   Vt%dims(1) = Nx
@@ -222,9 +228,10 @@ program gen_vt_vr
       call TranslateField(Nx, Ny, Nz, V%vdata, Vstorm%vdata(it))
     endif
 
-    ! convert u,v to tangential,radial
+    ! convert u,v to tangential,radial (last arg to ConvertHorizVelocity indicates
+    ! direction of conversion: 1 -> (u,v) to (vt,vr), otherwise (vt,vr) to (u,v)
     call ConvertHorizVelocity(Nx, Ny, Nz, U%vdata, V%vdata, StormX, StormY, &
-      XcoordsKm, YcoordsKm, Vt%vdata, Vr%vdata)
+      XcoordsKm, YcoordsKm, Vt%vdata, Vr%vdata, Uv2Tr)
 
     ! Free up variable memory
     deallocate(U%vdata)
@@ -315,6 +322,7 @@ subroutine GetMyArgs(Args)
 
   ! default values
   Args%SubtractSmotion = .false.
+  Args%ReverseConv     = .false.
 
   ! initialization
   Args%Vt%fname = 'none'
@@ -338,7 +346,7 @@ subroutine GetMyArgs(Args)
   !    '.' command line argument (no option)
   BadArgs = .false.
   do
-    optval = getopt('b:hmr:t:')
+    optval = getopt('mr')
 
     select case (optval)
       case ('>')  ! finished
@@ -351,6 +359,9 @@ subroutine GetMyArgs(Args)
 
       case ('m')
         Args%SubtractSmotion = .true.
+
+      case ('r')
+        Args%ReverseConv = .true.
 
       case ('.')
         ! file spec ->   <file_type>:<file_name>:<variable_name>
@@ -405,6 +416,7 @@ subroutine GetMyArgs(Args)
     write (*,*) 'USAGE: gen_vt_vr [-m] <list_of_files>'
     write (*,*) ''
     write (*,*) '   -m: subtract storm motion from input winds'
+    write (*,*) '   -r: do reverse conversion (vt,vr) to (u,v)'
     write (*,*) ''
     write (*,*) '   <list_of_files>: supply specs for input and output files'
     write (*,*) '     <list_of_files> := <file_spec> ...'

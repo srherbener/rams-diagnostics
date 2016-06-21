@@ -141,15 +141,14 @@ end subroutine
 ! into tangential or radial components given the storm center location.
 !
 
-subroutine ConvertHorizVelocity(Nx, Ny, Nz, U, V, StormX, StormY, Xcoords, Ycoords, Vt, Vr)
+subroutine ConvertHorizVelocity(Nx, Ny, Nz, U, V, StormX, StormY, Xcoords, Ycoords, Vt, Vr, uv2tr)
   implicit none
 
-  integer :: Nx, Ny, Nz
+  integer :: Nx, Ny, Nz, uv2tr
   real, dimension(Nx,Ny,Nz) :: U, V, Vt, Vr
   real :: StormX, StormY
   real, dimension(Nx) :: Xcoords
   real, dimension(Ny) :: Ycoords
-  logical :: DoTangential
 
   integer :: ix, iy, iz
   real :: StmX, StmY         ! x,y location relative to the storm center
@@ -162,19 +161,37 @@ subroutine ConvertHorizVelocity(Nx, Ny, Nz, U, V, StormX, StormY, Xcoords, Ycoor
       do ix = 1, Nx
         StmX = Xcoords(ix) - StormX
 
-        WindX = U(ix,iy,iz)
-        WindY = V(ix,iy,iz)
+        if (uv2tr .eq. 1) then
+          ! Convert (u,v) to (vt,vr)
+          WindX = U(ix,iy,iz)
+          WindY = V(ix,iy,iz)
 
-        Theta = atan2(StmY, StmX) ! Angle of radius line from horizontal
-        Phi = atan2(WindY, WindX) ! Angle of wind vector from horizontal
-        Alpha = Phi - Theta       ! Angle of wind vector from raduis line
-                                  !    radius line is the line from storm center through
-                                  !    the point (StmX, StmY)
+          Theta = atan2(StmY, StmX) ! Angle of radius line from horizontal
+          Phi = atan2(WindY, WindX) ! Angle of wind vector from horizontal
+          Alpha = Phi - Theta       ! Angle of wind vector from raduis line
+                                    !    radius line is the line from storm center through
+                                    !    the point (StmX, StmY)
 
-        WindMag = sqrt(WindX**2 + WindY**2)
+          WindMag = sqrt(WindX**2 + WindY**2)
         
-        Vt(ix,iy,iz) = WindMag * sin(Alpha)
-        Vr(ix,iy,iz) = WindMag * cos(Alpha)
+          Vt(ix,iy,iz) = WindMag * sin(Alpha)
+          Vr(ix,iy,iz) = WindMag * cos(Alpha)
+        else
+          ! Convert (vt,vr) to (u,v)
+          WindX = Vr(ix,iy,iz)
+          WindY = Vt(ix,iy,iz)
+
+          Theta = atan2(StmY, StmX)    ! Angle of radius line from horizontal
+          Alpha = atan2(WindY, WindX)  ! Angle of wind vector from raduis line
+                                       !    radius line is the line from storm center through
+                                       !    the point (StmX, StmY)
+          Phi = Theta + Alpha          ! Angle of wind vector from horizontal
+
+          WindMag = sqrt(WindX**2 + WindY**2)
+        
+          U(ix,iy,iz) = WindMag * cos(Alpha)
+          V(ix,iy,iz) = WindMag * sin(Alpha)
+        endif
       enddo
     enddo
   enddo

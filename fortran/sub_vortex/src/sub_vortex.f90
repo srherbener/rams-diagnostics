@@ -221,7 +221,7 @@ program sub_vortex
   allocate(OutVr%vdata(OutVr%dims(1)*OutVr%dims(2)*OutVr%dims(3)))
 
   ! Do the averaging - one time step at a time
-  do it = 1, 2 !Nt
+  do it = 1, Nt
     ! find storm center in km
     isx = nint(StormXindex%vdata(it))
     isy = nint(StormYindex%vdata(it))

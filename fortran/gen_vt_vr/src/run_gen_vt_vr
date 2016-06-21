@@ -28,6 +28,7 @@ my $Case;
 my %VtvrJobs;
 my $Aname;
 my $SubSmotion;
+my $RevConv;
 my @FileList;
 my $FileSpec;
 my $ifile;
@@ -77,6 +78,7 @@ foreach $Case (@CaseList)
     {
     # Grab the job specs
     $SubSmotion = $VtvrJobs{$Aname}{SUB_SMOTION};
+    $RevConv = $VtvrJobs{$Aname}{REV_CONV};
     @FileList   = @{ $VtvrJobs{$Aname}{FILE_LIST} };
 
     $iarg = 0;
@@ -85,6 +87,10 @@ foreach $Case (@CaseList)
     if ($SubSmotion =~ /[Yy][Ee][Ss]/)
       {
       $SysArgs[$iarg++] = "-m";
+      }
+    if ($RevConv =~ /[Yy][Ee][Ss]/)
+      {
+      $SysArgs[$iarg++] = "-r";
       }
     foreach $ifile (0 .. $#FileList)
       {

@@ -368,8 +368,10 @@ program azavg
       allocate(Vt(Nx,Ny,Nz))
       allocate(Vr(Nx,Ny,Nz))
 
+      ! Last arg to ConvertHorizVelocity indicates direction of conversion:
+      !   1 -> (u,v) to (vt,vr), otherwise (vt,vr) to (u,v)
       call ConvertHorizVelocity(Nx, Ny, Nz, U%vdata, V%vdata, StormX, StormY, &
-        XcoordsKm, YcoordsKm, Vt, Vr)
+        XcoordsKm, YcoordsKm, Vt, Vr, 1)
 
       ! Free up variable memory
       deallocate(U%vdata)
