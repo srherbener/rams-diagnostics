@@ -244,7 +244,8 @@ sub ReadDiagConfigFile
     elsif ($f[0] eq "VtVr:")
       {
       $Config{VTVR}{$f[1]}{SUB_SMOTION} = $f[2];
-      $Config{VTVR}{$f[1]}{FILE_LIST}   = [ @f[3..$#f] ];
+      $Config{VTVR}{$f[1]}{REV_CONV}    = $f[3];
+      $Config{VTVR}{$f[1]}{FILE_LIST}   = [ @f[4..$#f] ];
       }
     elsif ($f[0] eq "SubVort:")
       {
