@@ -1,4 +1,4 @@
-function [ ] = ReduceData(InFile,OutFile,Var,Xinc,Yinc,Zinc,Tinc)
+function [ ] = ReduceData(InFile,OutFile,Var,Xinc,Yinc,Zinc,Tinc,Units,LongName,DimNames)
 % ReduceData - Read in an HDF5 file, Reduce Var, and write out the results
 % 
 % This routine assumes that Var is a 4D variable (x,y,z,t) and that the
@@ -18,6 +18,15 @@ function [ ] = ReduceData(InFile,OutFile,Var,Xinc,Yinc,Zinc,Tinc)
   if (exist(OutFile, 'file') == 2)
     delete(OutFile);
   end
+
+  % Find out size of dataset representing Var
+  Hinfo = h5info(InFile, Var);
+  InVsize = Hinfo.Dataspace.Size;
+
+  % number of dims is for the spatial part of the variable
+  % dataset is either 2D (x,y,t) or 3D (x,y,z,t) 
+  Ndims = length(InVsize) - 1;
+  
   
   % First read in the coordinate data, reduce these according to the
   % increment specs.
@@ -53,17 +62,37 @@ function [ ] = ReduceData(InFile,OutFile,Var,Xinc,Yinc,Zinc,Tinc)
   % Expect Var to be a large dataset. Read one time step at a time to keep
   % memory usage reasonable.
 
-  h5create(OutFile, Var, [ NxOut, NyOut, NzOut, NtOut ]);
+  if (Ndims == 2)
+    Istart = [ 1 1 ];
+    Icount = [ Nx Ny ];
+    Ostart = [ 1 1 ];
+    Ocount = [ NxOut NyOut ];
+    Osize = [ NxOut NyOut NtOut ];
+    DimOrder = { 'x' 'y' 't' };
+  else
+    Istart = [ 1 1 1 ];
+    Icount = [ Nx Ny Nz ];
+    Ostart = [ 1 1 1 ];
+    Ocount = [ NxOut NyOut NzOut ];
+    Osize = [ NxOut NyOut NzOut NtOut ];
+    DimOrder = { 'x' 'y' 'z' 't' };
+  end
 
+  h5create(OutFile, Var, Osize, 'DataType', 'single');
   count = 0;
   for it = 1:Tinc:Nt
-    % VAR will be 3D (x,y,z) after this read
-    VAR = squeeze(h5read(InFile, Var, [ 1 1 1 it ], [ Nx Ny Nz 1 ]));
-
-    VAR_OUT = VAR(1:Xinc:end,1:Yinc:end,1:Zinc:end);
+    VAR = squeeze(h5read(InFile, Var, [ Istart it ], [ Icount 1 ]));
 
     count = count + 1;
-    h5write(OutFile, Var, VAR_OUT, [ 1 1 1 count ], [ NxOut, NyOut, NzOut, 1 ]);
+    if (Ndims == 2)
+      % 2D field
+      VAR_OUT = VAR(1:Xinc:end,1:Yinc:end);
+    else
+      % 3D field
+      VAR_OUT = VAR(1:Xinc:end,1:Yinc:end,1:Zinc:end);
+    end
+
+    h5write(OutFile, Var, VAR_OUT, [ Ostart count ], [ Ocount 1 ]);
 
     if (mod(it, 10) == 0)
       fprintf('  Working... time step: %d\n', it);
@@ -75,7 +104,8 @@ function [ ] = ReduceData(InFile,OutFile,Var,Xinc,Yinc,Zinc,Tinc)
   fprintf('\n');
 
   % Attach dimensions
-  DimOrder = { 'x' 'y' 'z' 't' };
   AttachDimensionsXyzt(OutFile, Var, DimOrder, Xname, Yname, Zname, Tname);
+  % Notate variable
+  NotateVariableXyzt(OutFile, Var, Units, LongName, DimNames);
 
 end % function
