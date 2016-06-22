@@ -11,6 +11,7 @@ SCRIPTS = \
           $(DEST)/cbfreeze.m \
           $(DEST)/cbhandle.m \
           $(DEST)/test_freezeColors.m \
+          $(DEST)/ReduceData.m \
           $(DEST)/SetPlotAxes.m \
           $(DEST)/DrawPlotData.m \
           $(DEST)/GenFigures.m \
