@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 #
-# Script to run gen_vt_vr on a list of simulation cases
+# Script to run gen_u_v on a list of simulation cases
 #
 
 BEGIN { push(@INC, "$ENV{HOME}/etc/perl"); }
@@ -25,14 +25,14 @@ my $Config;
 my @CaseList;
 my $Case;
 
-my %VtvrJobs;
+my %UvJobs;
 my $Aname;
 my $SubSmotion;
 my @FileList;
 my $FileSpec;
 my $ifile;
 
-my @VtvrCmds;
+my @UvCmds;
 my $icmd;
 
 my @SysArgs;
@@ -46,14 +46,14 @@ if ($#ARGV != 1)
   {
   print "ERROR: must supply exactly two arguments\n";
   print "\n";
-  print "USAGE: run_gen_vt_vr <ConfigFile> <NumberProcesses>\n";
+  print "USAGE: run_gen_u_v <ConfigFile> <NumberProcesses>\n";
   exit -1;
   }
 
 $ConfigFile = $ARGV[0];
 $Nprocs = $ARGV[1];
 
-print "Run Vt, Vr generation jobs\n";
+print "Run u,v generation jobs\n";
 print "  Configuration file: $ConfigFile\n";
 print "  Number of processes: $Nprocs\n";
 print "\n";
@@ -69,23 +69,18 @@ print "\n";
 # separate processes.
 
 @CaseList = @{ $$Config{CASE_LIST} };
-%VtvrJobs = %{ $$Config{VTVR} };
+%UvJobs = %{ $$Config{UV} };
 
 foreach $Case (@CaseList)
   {
-  foreach $Aname (sort(keys(%VtvrJobs)))
+  foreach $Aname (sort(keys(%UvJobs)))
     {
     # Grab the job specs
-    $SubSmotion = $VtvrJobs{$Aname}{SUB_SMOTION};
-    @FileList   = @{ $VtvrJobs{$Aname}{FILE_LIST} };
+    @FileList   = @{ $UvJobs{$Aname}{FILE_LIST} };
 
     $iarg = 0;
     undef @SysArgs;
-    $SysArgs[$iarg++] = "gen_vt_vr"; 
-    if ($SubSmotion =~ /[Yy][Ee][Ss]/)
-      {
-      $SysArgs[$iarg++] = "-m";
-      }
+    $SysArgs[$iarg++] = "gen_u_v"; 
     foreach $ifile (0 .. $#FileList)
       {
       $FileSpec = $FileList[$ifile];
@@ -94,11 +89,11 @@ foreach $Case (@CaseList)
       }
 
     # Add the command line to the main list
-    $VtvrCmds[$icmd++] = [ @SysArgs ];
+    $UvCmds[$icmd++] = [ @SysArgs ];
     }
   }
 
 # Submit the jobs
-&DiagUtils::SubmitParallelJobs(\@VtvrCmds, $Nprocs, "vtvr");
+&DiagUtils::SubmitParallelJobs(\@UvCmds, $Nprocs, "uv");
 
 exit 0;

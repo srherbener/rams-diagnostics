@@ -154,7 +154,7 @@ subroutine ConvertHorizVelocity(Nx, Ny, Nz, U, V, StormX, StormY, Xcoords, Ycoor
   real :: StmX, StmY         ! x,y location relative to the storm center
   real :: Theta, Phi, Alpha  ! angle values, in radians
   real :: WindMag, WindX, WindY
-  
+
   do iz = 1, Nz
     do iy = 1, Ny
       StmY = Ycoords(iy) - StormY
@@ -189,12 +189,13 @@ subroutine ConvertHorizVelocity(Nx, Ny, Nz, U, V, StormX, StormY, Xcoords, Ycoor
 
           WindMag = sqrt(WindX**2 + WindY**2)
         
-          U(ix,iy,iz) = WindMag * cos(Alpha)
-          V(ix,iy,iz) = WindMag * sin(Alpha)
+          U(ix,iy,iz) = WindMag * cos(Phi)
+          V(ix,iy,iz) = WindMag * sin(Phi)
         endif
       enddo
     enddo
   enddo
+
   
   return
 end subroutine

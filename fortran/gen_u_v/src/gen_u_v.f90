@@ -1,9 +1,9 @@
 !***************************************************************
-! Program to generate storm relative winds (Vt, Vr) from
-! zonal, meridional winds (u,v).
+! Program to generate zonal, meridional winds (u,v) from storm
+! relative winds (Vt, Vr)
 !
 
-program gen_vt_vr
+program gen_u_v
   use rhdf5_utils
   use diag_utils
 
@@ -23,7 +23,6 @@ program gen_vt_vr
   endtype
 
   type ArgList
-    logical :: SubtractSmotion
     type (FileSpec) :: Vt
     type (FileSpec) :: Vr
     type (FileSpec) :: StormCenter
@@ -57,8 +56,7 @@ program gen_vt_vr
   ! Get the command line arguments
   call GetMyArgs(Args)
 
-  write (*,'("Calculating storm relative winds:")')
-  write (*,'("  Subtract storm motion from input winds: ",l)') Args%SubtractSmotion
+  write (*,'("Calculating zonal, meridional winds:")')
   write (*,'("  Input file specs:")')
   write (*,'("    U: ",a," (",a,")")') trim(Args%U%fname), trim(Args%U%vname)
   write (*,'("    V: ",a," (",a,")")') trim(Args%V%fname), trim(Args%V%vname)
@@ -70,52 +68,42 @@ program gen_vt_vr
   ! Read the variable information from the HDF5 files and check for consistency.
   StormXindex%vname = 'press_cent_x_index'
   StormYindex%vname = 'press_cent_y_index'
+  call rhdf5_read_init(Args%StormCenter%fname, StormXindex)
+  call rhdf5_read_init(Args%StormCenter%fname, StormYindex)
+  call rhdf5_read(Args%StormCenter%fname, StormXindex)
+  call rhdf5_read(Args%StormCenter%fname, StormYindex)
+
+  Vr%vname = trim(Args%Vr%vname)
+  call rhdf5_read_init(Args%Vr%fname, Vr)
+
+  Vt%vname = trim(Args%Vt%vname)
+  call rhdf5_read_init(Args%Vt%fname, Vt)
+
+  ! Read in coordinate values, only for copying to output files
   Xcoords%vname = 'x_coords'
   Ycoords%vname = 'y_coords'
   Zcoords%vname = 'z_coords'
   Tcoords%vname = 't_coords'
-
-  call rhdf5_read_init(Args%StormCenter%fname, StormXindex)
-  call rhdf5_read_init(Args%StormCenter%fname, StormYindex)
-
-  call rhdf5_read(Args%StormCenter%fname, StormXindex)
-  call rhdf5_read(Args%StormCenter%fname, StormYindex)
-
-  U%vname = trim(Args%U%vname)
-  V%vname = trim(Args%V%vname)
-  call rhdf5_read_init(Args%U%fname, U)
-  call rhdf5_read_init(Args%V%fname, V)
-  call rhdf5_read_init(Args%U%fname, Xcoords)
-  call rhdf5_read_init(Args%U%fname, Ycoords)
-  call rhdf5_read_init(Args%U%fname, Zcoords)
-  call rhdf5_read_init(Args%U%fname, Tcoords)
-
-  ! Read in coordinate values, only for copying to output files
-  call rhdf5_read(Args%U%fname, Xcoords)
-  call rhdf5_read(Args%U%fname, Ycoords)
-  call rhdf5_read(Args%U%fname, Zcoords)
-  call rhdf5_read(Args%U%fname, Tcoords)
-
-  ! If subtracting storm motion, initialize the storm u and v vars
-  if (Args%SubtractSmotion) then
-    Ustorm%vname = 'storm_speed_x'
-    call rhdf5_read_init(Args%StormCenter%fname, Ustorm)
-
-    Vstorm%vname = 'storm_speed_y'
-    call rhdf5_read_init(Args%StormCenter%fname, Vstorm)
-  endif
+  call rhdf5_read_init(Args%Vr%fname, Xcoords)
+  call rhdf5_read_init(Args%Vr%fname, Ycoords)
+  call rhdf5_read_init(Args%Vr%fname, Zcoords)
+  call rhdf5_read_init(Args%Vr%fname, Tcoords)
+  call rhdf5_read(Args%Vr%fname, Xcoords)
+  call rhdf5_read(Args%Vr%fname, Ycoords)
+  call rhdf5_read(Args%Vr%fname, Zcoords)
+  call rhdf5_read(Args%Vr%fname, Tcoords)
 
   ! check that the variable dimensions (size and coordinate values) match up, if this
   ! isn't true, then the subsequent anlysis will be bogus
-  if (.not. DimsMatch(U, V)) then
-    write (*,*) 'ERROR: dimensions of u and v do not match'
+  if (.not. DimsMatch(Vr, Vt)) then
+    write (*,*) 'ERROR: dimensions of Vt and Vr do not match'
     stop
   endif
  
-  Nx = U%dims(1)
-  Ny = U%dims(2)
-  Nz = U%dims(3)
-  Nt = U%dims(4)
+  Nx = Vr%dims(1)
+  Ny = Vr%dims(2)
+  Nz = Vr%dims(3)
+  Nt = Vr%dims(4)
 
   write (*,*) 'Gridded data information:'
   write (*,*) '  Number of x (longitude) points:               ', Nx
@@ -155,50 +143,42 @@ program gen_vt_vr
 
   ! set up the input variable data
   rh5f_facc = 'R'
-  call rhdf5_open_file(Args%U%fname, rh5f_facc, 0, rh5f_u)
-  call rhdf5_open_file(Args%V%fname, rh5f_facc, 0, rh5f_v)
-  U%ndims = U%ndims - 1
-  V%ndims = V%ndims - 1
+  call rhdf5_open_file(Args%Vr%fname, rh5f_facc, 0, rh5f_vr)
+  call rhdf5_open_file(Args%Vt%fname, rh5f_facc, 0, rh5f_vt)
+  Vr%ndims = Vr%ndims - 1
+  Vt%ndims = Vt%ndims - 1
 
   ! set up the output variable
   rh5f_facc = 'W'
-  call rhdf5_open_file(Args%Vt%fname, rh5f_facc, 1, rh5f_vt)
-  call rhdf5_open_file(Args%Vr%fname, rh5f_facc, 1, rh5f_vr)
-  write (*,*) 'Writing: ', trim(Args%Vt%fname)
-  write (*,*) 'Writing: ', trim(Args%Vr%fname)
+  call rhdf5_open_file(Args%U%fname, rh5f_facc, 1, rh5f_u)
+  call rhdf5_open_file(Args%V%fname, rh5f_facc, 1, rh5f_v)
+  write (*,*) 'Writing: ', trim(Args%U%fname)
+  write (*,*) 'Writing: ', trim(Args%V%fname)
   write (*,*) ''
 
-  Vt%vname = trim(Args%Vt%vname)
-  Vt%ndims = 3
-  Vt%dims(1) = Nx
-  Vt%dims(2) = Ny
-  Vt%dims(3) = Nz
-  Vt%dimnames(1) = 'x'
-  Vt%dimnames(2) = 'y'
-  Vt%dimnames(3) = 'z'
-  Vt%units = U%units 
-  Vt%descrip = 'Storm Vt'
-  allocate(Vt%vdata(Vt%dims(1)*Vt%dims(2)*Vt%dims(3)))
+  U%vname = trim(Args%U%vname)
+  U%ndims = 3
+  U%dims(1) = Nx
+  U%dims(2) = Ny
+  U%dims(3) = Nz
+  U%dimnames(1) = 'x'
+  U%dimnames(2) = 'y'
+  U%dimnames(3) = 'z'
+  U%units = Vr%units 
+  U%descrip = 'zonal wind'
+  allocate(U%vdata(U%dims(1)*U%dims(2)*U%dims(3)))
 
-  Vr%vname = trim(Args%Vr%vname)
-  Vr%ndims = 3
-  Vr%dims(1) = Nx
-  Vr%dims(2) = Ny
-  Vr%dims(3) = Nz
-  Vr%dimnames(1) = 'x'
-  Vr%dimnames(2) = 'y'
-  Vr%dimnames(3) = 'z'
-  Vr%units = U%units 
-  Vr%descrip = 'Storm Vr'
-  allocate(Vr%vdata(Vr%dims(1)*Vr%dims(2)*Vr%dims(3)))
-
-  ! If subtracting out storm motion, read in the storm u and v
-  ! Read in entire dataset (time step number == 0, Argument 4 to rhdf5_read_variable). Because
-  ! we are doing this outside the time step loop, don't alter the number of dimensions on [UV]storm.
-  if (Args%SubtractSmotion) then
-    call rhdf5_read_variable(rh5f_center, Ustorm%vname, Ustorm%ndims, 0, Ustorm%dims, rdata=Ustorm%vdata)
-    call rhdf5_read_variable(rh5f_center, Vstorm%vname, Vstorm%ndims, 0, Vstorm%dims, rdata=Vstorm%vdata)
-  endif
+  V%vname = trim(Args%V%vname)
+  V%ndims = 3
+  V%dims(1) = Nx
+  V%dims(2) = Ny
+  V%dims(3) = Nz
+  V%dimnames(1) = 'x'
+  V%dimnames(2) = 'y'
+  V%dimnames(3) = 'z'
+  V%units = Vt%units 
+  V%descrip = 'meridional wind'
+  allocate(V%vdata(V%dims(1)*V%dims(2)*V%dims(3)))
 
   ! Do the averaging - one time step at a time
   do it = 1, Nt
@@ -208,29 +188,23 @@ program gen_vt_vr
     StormX = XcoordsKm(i_storm)
     StormY = YcoordsKm(j_storm)
 
-    call rhdf5_read_variable(rh5f_u, U%vname, U%ndims, it, U%dims, rdata=U%vdata)
-    call rhdf5_read_variable(rh5f_v, V%vname, V%ndims, it, V%dims, rdata=V%vdata)
+    call rhdf5_read_variable(rh5f_vr, Vr%vname, Vr%ndims, it, Vr%dims, rdata=Vr%vdata)
+    call rhdf5_read_variable(rh5f_vt, Vt%vname, Vt%ndims, it, Vt%dims, rdata=Vt%vdata)
 
-    ! If subtracting storm motion, adjust u and v
-    if (Args%SubtractSmotion) then
-      call TranslateField(Nx, Ny, Nz, U%vdata, Ustorm%vdata(it))
-      call TranslateField(Nx, Ny, Nz, V%vdata, Vstorm%vdata(it))
-    endif
-
-    ! convert u,v to tangential,radial (last arg to ConvertHorizVelocity indicates
+    ! convert vt,vr to u,v (last arg to ConvertHorizVelocity indicates
     ! direction of conversion: 1 -> (u,v) to (vt,vr), otherwise (vt,vr) to (u,v)
     call ConvertHorizVelocity(Nx, Ny, Nz, U%vdata, V%vdata, StormX, StormY, &
-      XcoordsKm, YcoordsKm, Vt%vdata, Vr%vdata, 1)
+      XcoordsKm, YcoordsKm, Vt%vdata, Vr%vdata, 0)
 
     ! Free up variable memory
-    deallocate(U%vdata)
-    deallocate(V%vdata)
+    deallocate(Vr%vdata)
+    deallocate(Vt%vdata)
 
     ! write out the results to the output files
-    call rhdf5_write_variable(rh5f_vt, Vt%vname, Vt%ndims, it, Vt%dims, &
-      Vt%units, Vt%descrip, Vt%dimnames, rdata=Vt%vdata)
-    call rhdf5_write_variable(rh5f_vr, Vr%vname, Vr%ndims, it, Vr%dims, &
-      Vr%units, Vr%descrip, Vr%dimnames, rdata=Vr%vdata)
+    call rhdf5_write_variable(rh5f_u, U%vname, U%ndims, it, U%dims, &
+      U%units, U%descrip, U%dimnames, rdata=U%vdata)
+    call rhdf5_write_variable(rh5f_v, V%vname, V%ndims, it, V%dims, &
+      V%units, V%descrip, V%dimnames, rdata=V%vdata)
 
     ! Write out status to screen every 100 timesteps so that the user can see that a long
     ! running job is progressing okay.
@@ -238,9 +212,6 @@ program gen_vt_vr
       write (*,*) 'Working: Timestep, Time: ', it, Tcoords%vdata(it)
 
       write (*,'(a,4f15.4)') '   Storm center: lon, lat, x, y: ', Xcoords%vdata(i_storm), Ycoords%vdata(j_storm), StormX, StormY
-      if (Args%SubtractSmotion) then
-        write (*,'(a,4f15.4)') '   Storm motion: u, v: ', Ustorm%vdata(it), Vstorm%vdata(it)
-      endif
       write (*,*) ''
       flush(6)
     endif
@@ -260,31 +231,31 @@ program gen_vt_vr
   call rhdf5_close_file(rh5f_vr)
 
   ! write out the coordinate data
-  call rhdf5_write(Args%Vt%fname, Xcoords, 1)
-  call rhdf5_write(Args%Vt%fname, Ycoords, 1)
-  call rhdf5_write(Args%Vt%fname, Zcoords, 1)
-  call rhdf5_write(Args%Vt%fname, Tcoords, 1)
+  call rhdf5_write(Args%U%fname, Xcoords, 1)
+  call rhdf5_write(Args%U%fname, Ycoords, 1)
+  call rhdf5_write(Args%U%fname, Zcoords, 1)
+  call rhdf5_write(Args%U%fname, Tcoords, 1)
 
   ! write out the coordinate data
-  call rhdf5_write(Args%Vr%fname, Xcoords, 1)
-  call rhdf5_write(Args%Vr%fname, Ycoords, 1)
-  call rhdf5_write(Args%Vr%fname, Zcoords, 1)
-  call rhdf5_write(Args%Vr%fname, Tcoords, 1)
+  call rhdf5_write(Args%V%fname, Xcoords, 1)
+  call rhdf5_write(Args%V%fname, Ycoords, 1)
+  call rhdf5_write(Args%V%fname, Zcoords, 1)
+  call rhdf5_write(Args%V%fname, Tcoords, 1)
 
   ! set up four (x,y,z,t) dimensions for use by GRADS
-  call rhdf5_set_dimension(Args%Vt%fname, Xcoords, 'x')
-  call rhdf5_set_dimension(Args%Vt%fname, Ycoords, 'y')
-  call rhdf5_set_dimension(Args%Vt%fname, Zcoords, 'z')
-  call rhdf5_set_dimension(Args%Vt%fname, Tcoords, 't')
+  call rhdf5_set_dimension(Args%U%fname, Xcoords, 'x')
+  call rhdf5_set_dimension(Args%U%fname, Ycoords, 'y')
+  call rhdf5_set_dimension(Args%U%fname, Zcoords, 'z')
+  call rhdf5_set_dimension(Args%U%fname, Tcoords, 't')
 
-  call rhdf5_set_dimension(Args%Vr%fname, Xcoords, 'x')
-  call rhdf5_set_dimension(Args%Vr%fname, Ycoords, 'y')
-  call rhdf5_set_dimension(Args%Vr%fname, Zcoords, 'z')
-  call rhdf5_set_dimension(Args%Vr%fname, Tcoords, 't')
+  call rhdf5_set_dimension(Args%V%fname, Xcoords, 'x')
+  call rhdf5_set_dimension(Args%V%fname, Ycoords, 'y')
+  call rhdf5_set_dimension(Args%V%fname, Zcoords, 'z')
+  call rhdf5_set_dimension(Args%V%fname, Tcoords, 't')
 
   ! attach the dimension specs to the output variable
-  call rhdf5_attach_dimensions(Args%Vt%fname, Vt)
-  call rhdf5_attach_dimensions(Args%Vr%fname, Vr)
+  call rhdf5_attach_dimensions(Args%U%fname, U)
+  call rhdf5_attach_dimensions(Args%V%fname, V)
 
   stop
 
@@ -310,7 +281,6 @@ subroutine GetMyArgs(Args)
   integer :: Nfields
 
   ! default values
-  Args%SubtractSmotion = .false.
 
   ! initialization
   Args%Vt%fname = 'none'
@@ -334,7 +304,7 @@ subroutine GetMyArgs(Args)
   !    '.' command line argument (no option)
   BadArgs = .false.
   do
-    optval = getopt('m')
+    optval = getopt('')
 
     select case (optval)
       case ('>')  ! finished
@@ -344,9 +314,6 @@ subroutine GetMyArgs(Args)
         write(*,*) 'ERROR: unknown option: ', trim(optarg)
         write(*,*) ''
         BadArgs = .true.
-
-      case ('m')
-        Args%SubtractSmotion = .true.
 
       case ('.')
         ! file spec ->   <file_type>:<file_name>:<variable_name>
@@ -398,19 +365,17 @@ subroutine GetMyArgs(Args)
   endif
 
   if (BadArgs) then
-    write (*,*) 'USAGE: gen_vt_vr [-m] <list_of_files>'
-    write (*,*) ''
-    write (*,*) '   -m: subtract storm motion from input winds'
+    write (*,*) 'USAGE: gen_u_v [-m] <list_of_files>'
     write (*,*) ''
     write (*,*) '   <list_of_files>: supply specs for input and output files'
     write (*,*) '     <list_of_files> := <file_spec> ...'
     write (*,*) '       <file_spec> := <file_type>:<file_name>:<variable_name>'
     write (*,*) '          <file_type> is one of:'
     write (*,*) '             "storm": storm track and motion, required'
-    write (*,*) '             "u": zonal component of momentum, required'
-    write (*,*) '             "v": meridional component of momentum, required'
-    write (*,*) '             "vt": output file for Vt, required'
-    write (*,*) '             "vr": output file for Vr, required'
+    write (*,*) '             "u": zonal component, required'
+    write (*,*) '             "v": meridional component, required'
+    write (*,*) '             "vt": tangential componenet, Vt, required'
+    write (*,*) '             "vr": radial component, Vr, required'
     write (*,*) '          <file_name> is the complete path to the file'
     write (*,*) '          <variable_name> is the name of the variable inside the file'
     write (*,*) ''
@@ -420,4 +385,4 @@ subroutine GetMyArgs(Args)
   return
 end subroutine GetMyArgs
 
-end program gen_vt_vr
+end program gen_u_v
