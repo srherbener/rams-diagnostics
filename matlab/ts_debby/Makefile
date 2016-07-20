@@ -47,6 +47,7 @@ SCRIPTS = \
   $(DEST)/PlotFsFigLine.m \
   $(DEST)/ExtractSampleProfile.m \
   $(DEST)/ExtractHorizWinds.m \
+  $(DEST)/GenWindShearMeas.m \
   $(DEST)/GenReduceData.m \
   $(DEST)/GenPtrackMomentum.m \
   $(DEST)/GenPtrackAvgs.m \
