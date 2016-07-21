@@ -114,6 +114,7 @@ CONFIGS = \
   $(DIAG_DIR)/FigStrackDustGraupConfig \
   $(DIAG_DIR)/FigStrackDustHailConfig \
   $(DIAG_DIR)/FigPcprateConfig \
+  $(DIAG_DIR)/FigWindShearConfig \
   $(DIAG_DIR)/FigMaxWindConfig \
   $(DIAG_DIR)/FigVintCondConfig \
   $(DIAG_DIR)/FigHovmollerConfig \

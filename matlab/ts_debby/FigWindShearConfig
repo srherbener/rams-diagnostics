@@ -1,0 +1,50 @@
+#
+# Wind shear figures
+#
+
+######### FIGURES ###################
+Figure: WindShear 1
+  DummyCases
+  [1_1]
+  Plots/FigWindShear.jpg
+  WindShearPanel   1
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  none
+End
+
+########### PANELS ####################
+FigPanel: WindShearPanel
+  WindShearPset
+  WindShearAxes 1 1
+  none 5
+  @ 
+  NorthWest 10
+End
+
+############ PLOT SETS #################
+PlotSet: WindShearPset line 4
+  WindShearLine TSD_SAL_DUST      SD   2 black - 0
+  WindShearLine TSD_SAL_NODUST    SND  2 blue  - 0
+  WindShearLine TSD_NONSAL_DUST   NSD  2 red   - 0
+  WindShearLine TSD_NONSAL_NODUST NSND 2 green - 0
+End
+
+############ PLOT DATA #################
+PlotData: WindShearLine 2
+  # x data - sim time
+  /t_coords DIAGS/wind_shear_<CASE>.h5 @ 2.7778e-4 -42
+  # y data - 
+  /mag_shear DIAGS/wind_shear_<CASE>.h5 @ 1 0
+End
+
+############ PLOT AXES #################
+PlotAxes: WindShearAxes 2
+  16 2 [0.025_0.025]
+  # x axis - sim time, h
+  Sim@Time h 0 60 linear [_] {_}
+  # y axis - wind shear magnitude, m/s
+  Wind@Shear m@s^-^1 0 4 linear [_] {_}
+End
