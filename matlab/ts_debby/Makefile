@@ -14,6 +14,8 @@ SCRIPTS = \
   $(DEST)/PlotDpFigHovmollers.m \
   $(DEST)/PlotDpFigStormSeq.m \
   $(DEST)/PlotDpFigDustMassTseries.m \
+  $(DEST)/PlotDpFigDustMassTseries_ICCP.m \
+  $(DEST)/PlotDpFigDustMassTseries_ICCP_2.m \
   $(DEST)/PlotDpFigDustMassRateTseries.m \
   $(DEST)/PlotDpFigDustRemoval.m \
   $(DEST)/PlotDpFigDustTransport.m \
@@ -48,6 +50,7 @@ SCRIPTS = \
   $(DEST)/ExtractSampleProfile.m \
   $(DEST)/ExtractHorizWinds.m \
   $(DEST)/GenWindShearMeas.m \
+  $(DEST)/GenWindShearField.m \
   $(DEST)/GenReduceData.m \
   $(DEST)/GenPtrackMomentum.m \
   $(DEST)/GenPtrackAvgs.m \
@@ -82,6 +85,7 @@ SCRIPTS = \
   $(DEST)/ReadGridLoc.m \
   $(DEST)/ReportIntMassNumbers.m \
   $(DEST)/ReportDpMeas.m \
+  $(DEST)/ReportDpMidLevelMeas.m \
   $(DEST)/RunGenFigures.m \
   $(DEST)/LocateSal.m \
   $(DEST)/PlotAeroProfs.m \
