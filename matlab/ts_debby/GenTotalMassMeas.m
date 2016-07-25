@@ -13,6 +13,9 @@ function [ ] = GenTotalMassMeas()
   Ztop = 16500; % m, tropopause
   Zsep =  7000; % m, level that separates SAL and storm outflow
 
+  Zmid1 = 4000; % m
+  Zmid2 = 7000; % m
+
   % Description of measurements
   % third argument is scaling factor to convert to g/m2 or g/m3
   FileList = {
@@ -25,6 +28,8 @@ function [ ] = GenTotalMassMeas()
     { 'DIAGS/hda_meas_ts_aero_<CASE>.h5'   '/sal_sum_aero_mass'     1e-6  '/sal_aero_total_mass'         }  % units are ug/m3 so scale by 1e-6 to get g/m3
     { 'DIAGS/hda_meas_ts_ccn_<CASE>.h5'    '/sal_sum_ccn_mass'      1e-6  '/sal_ccn_total_mass'          }  % units are ug/m3 so scale by 1e-6 to get g/m3
     { 'DIAGS/hda_meas_ts_ra_<CASE>.h5'     '/sal_sum_ra_mass'       1e-6  '/sal_ra_total_mass'           }  % units are ug/m3 so scale by 1e-6 to get g/m3
+    { 'DIAGS/hda_meas_ts_ra_<CASE>.h5'     '/sal_sum_ra1_mass'       1e-6  '/sal_ra1_total_mass'           }  % units are ug/m3 so scale by 1e-6 to get g/m3
+    { 'DIAGS/hda_meas_ts_ra_<CASE>.h5'     '/sal_sum_ra2_mass'       1e-6  '/sal_ra2_total_mass'           }  % units are ug/m3 so scale by 1e-6 to get g/m3
 
     { 'DIAGS/hda_meas_ts_cond_<CASE>.h5'   '/sal_sum_tcond_mass'    'rho' '/sal_tcond_total_mass'        }  % units are g/kg so scale by rho (density) to get g/m3
     { 'DIAGS/hda_meas_ts_precip_<CASE>.h5' '/sal_sum_accpcp_mass'   1e3   '/sal_accpcp_total_mass'       }  % units are mm (=kg/m2, assuming density of water
@@ -185,6 +190,8 @@ function [ ] = GenTotalMassMeas()
       % HDATA is either (z,t) or (t)
       Z1 = find(Z >= Zsep, 1, 'first');
       Z2 = find(Z <= Ztop, 1, 'last');
+      ZM1 = find(Z >= Zmid1, 1, 'first');
+      ZM2 = find(Z <= Zmid2, 1, 'last');
       if ((Hsize(1) > 1) && (Hsize(2) > 1))
         % HDATA is (z,t)
         % Create a single column with delta z values
@@ -202,21 +209,25 @@ function [ ] = GenTotalMassMeas()
         MEAS = squeeze(sum(HDATA(2:Z2,:) .* DELTA_Z(2:Z2,:)))';            % transpose so dims match those of T
         MEAS_LLEV = squeeze(sum(HDATA(2:Z1-1,:) .* DELTA_Z(2:Z1-1,:)))';
         MEAS_HLEV = squeeze(sum(HDATA(Z1:Z2,:) .* DELTA_Z(Z1:Z2,:)))';
+        MEAS_MLEV = squeeze(sum(HDATA(ZM1:ZM2,:) .* DELTA_Z(ZM1:ZM2,:)))';
       else
         MEAS = HDATA;
         MEAS_LLEV = HDATA; % dummy placeholder since no z structure
         MEAS_HLEV = HDATA; % dummy placeholder since no z structure
+        MEAS_MLEV = HDATA; % dummy placeholder since no z structure
       end
 
       % Do the horizontal integration
       MEAS = MEAS .* HorizArea;
       MEAS_LLEV = MEAS_LLEV .* HorizArea;
       MEAS_HLEV = MEAS_HLEV .* HorizArea;
+      MEAS_MLEV = MEAS_MLEV .* HorizArea;
 
       % Calculate rates too, ie the change in dust mass divided by change in time
       MEAS_RATE = (MEAS(2:end) - MEAS(1:end-1)) ./ (T(2:end) - T(1:end-1));
       MEAS_LLEV_RATE = (MEAS_LLEV(2:end) - MEAS_LLEV(1:end-1)) ./ (T(2:end) - T(1:end-1));
       MEAS_HLEV_RATE = (MEAS_HLEV(2:end) - MEAS_HLEV(1:end-1)) ./ (T(2:end) - T(1:end-1));
+      MEAS_MLEV_RATE = (MEAS_MLEV(2:end)  - MEAS_MLEV(1:end-1))  ./ (T(2:end) - T(1:end-1));
 
       % If this is the first set, write out the coordinates into the output file
       % so that subsequent variables can have these coordinates attached.
@@ -269,6 +280,12 @@ function [ ] = GenTotalMassMeas()
       h5write(OutFile, Ovname, MEAS_HLEV);
       AttachDimensionsXyzt(OutFile, Ovname, DimOrder, Xname, Yname, Zname, Tname);
 
+      Ovname = sprintf('%s_mlev', OutVname);
+      fprintf('  Writing: %s (%s)\n', OutFile, Ovname);
+      h5create(OutFile, Ovname, Vsize);
+      h5write(OutFile, Ovname, MEAS_MLEV);
+      AttachDimensionsXyzt(OutFile, Ovname, DimOrder, Xname, Yname, Zname, Tname);
+
       % RATES
       Vsize = Nt-1;
 
@@ -288,6 +305,12 @@ function [ ] = GenTotalMassMeas()
       fprintf('  Writing: %s (%s)\n', OutFile, Ovname);
       h5create(OutFile, Ovname, Vsize);
       h5write(OutFile, Ovname, MEAS_HLEV_RATE);
+      AttachDimensionsXyzt(OutFile, Ovname, DimOrder, Xname, Yname, Zname, Tname);
+
+      Ovname = sprintf('%s_mlev_rate', OutVname);
+      fprintf('  Writing: %s (%s)\n', OutFile, Ovname);
+      h5create(OutFile, Ovname, Vsize);
+      h5write(OutFile, Ovname, MEAS_MLEV_RATE);
       AttachDimensionsXyzt(OutFile, Ovname, DimOrder, Xname, Yname, Zname, Tname);
 
       fprintf('\n');

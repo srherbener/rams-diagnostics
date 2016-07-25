@@ -305,7 +305,9 @@ function [ ] = GenTsdHdaMeas()
         { 'TsAveragedData/hda_spath_ra_mass_<CASE>.h5' '/ra_mass' '/spath_sum_ra_mass'  '_HZT'   ''        '' }
 
         % SAL sample region (large)
-        { 'TsAveragedData/hda_sal_ra_mass_<CASE>.h5'     '/ra_mass'     '/sal_sum_ra_mass'     '_HZT'   ''        '' }
+        { 'TsAveragedData/hda_sal_ra1_mass_<CASE>.h5'     '/ra1_mass'     '/sal_sum_ra1_mass'     '_HZT'   ''        '' }
+        { 'TsAveragedData/hda_sal_ra2_mass_<CASE>.h5'     '/ra2_mass'     '/sal_sum_ra2_mass'     '_HZT'   ''        '' }
+        { 'TsAveragedData/hda_sal_ra_mass_<CASE>.h5'      '/ra_mass'      '/sal_sum_ra_mass'      '_HZT'   ''        '' }
 
         % SAL sample region (medium)
         { 'TsAveragedData/hda_sal_ar_ra_mass_<CASE>.h5'     '/ra_mass'     '/sal_ar_sum_ra_mass'     '_HZT'   ''        '' }
