@@ -64,7 +64,7 @@ function [ ] = PlotDpFigDustMassTseries_ICCP()
 
   fprintf('\n');
 
-  %%%%%%%%%%%%%%%% Volumn integrated dust - 4 km AGL to tropopause %%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%% Volumn integrated dust - 4 km AGL to 7 km AGL %%%%%%%%%%%%%
   % Time series of mid level Mdhy
   InFile = 'DIAGS/total_mass_TSD_SAL_DUST.h5';
   InVname = '/sal_ar_dust_hydro_total_mass_mlev';

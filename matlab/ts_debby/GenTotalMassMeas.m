@@ -44,6 +44,8 @@ function [ ] = GenTotalMassMeas()
     { 'DIAGS/hda_meas_ts_aero_<CASE>.h5'   '/sal_ar_sum_aero_mass'     1e-6  '/sal_ar_aero_total_mass'         }  % units are ug/m3 so scale by 1e-6 to get g/m3
     { 'DIAGS/hda_meas_ts_ccn_<CASE>.h5'    '/sal_ar_sum_ccn_mass'      1e-6  '/sal_ar_ccn_total_mass'          }  % units are ug/m3 so scale by 1e-6 to get g/m3
     { 'DIAGS/hda_meas_ts_ra_<CASE>.h5'     '/sal_ar_sum_ra_mass'       1e-6  '/sal_ar_ra_total_mass'           }  % units are ug/m3 so scale by 1e-6 to get g/m3
+    { 'DIAGS/hda_meas_ts_ra_<CASE>.h5'     '/sal_ar_sum_ra1_mass'       1e-6  '/sal_ar_ra1_total_mass'           }  % units are ug/m3 so scale by 1e-6 to get g/m3
+    { 'DIAGS/hda_meas_ts_ra_<CASE>.h5'     '/sal_ar_sum_ra2_mass'       1e-6  '/sal_ar_ra2_total_mass'           }  % units are ug/m3 so scale by 1e-6 to get g/m3
 
  
     { 'DIAGS/hda_meas_ts_dust_<CASE>.h5'   '/spath_sum_dust_sfc'    1e-2 '/spath_dust_sfc_total_mass'   }  % units are ug/cm2 so scale by 1e-2 to get g/m2
