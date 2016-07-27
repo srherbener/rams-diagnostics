@@ -39,15 +39,6 @@ function [ ] = PlotSmapleSoundings()
   Ny = length(Y);
   Nz = length(Z);
   Nt = length(T);
-  
-  Start = [ 1 1 1 2 ]; % use time step 2 since non-SAL env is not applied
-                       % until after time step 1 file is written out.
-  Count = [ Nx Ny Nz 1 ];
-
-  SAL_T   = squeeze(h5read(SalTempFile, TempVar, Start, Count));
-  SAL_TD  = squeeze(h5read(SalDewPtFile, DewPtVar, Start, Count));
-  NSAL_T  = squeeze(h5read(NonSalTempFile, TempVar, Start, Count));
-  NSAL_TD = squeeze(h5read(NonSalDewPtFile, DewPtVar, Start, Count));
 
   % Set the z limits
   Z_KM = Z .* 1e-3;
@@ -56,12 +47,21 @@ function [ ] = PlotSmapleSoundings()
  
   Z_KM = Z_KM(Z1:Z2);
 
+  Start = [ X1 Y1 Z1 2 ]; % use time step 2 since non-SAL env is not applied
+                       % until after time step 1 file is written out.
+  Count = [ (X2-X1)+1 (Y2-Y1)+1 (Z2-Z1)+1 1 ];
+
+  SAL_T   = squeeze(h5read(SalTempFile, TempVar, Start, Count));
+  SAL_TD  = squeeze(h5read(SalDewPtFile, DewPtVar, Start, Count));
+  NSAL_T  = squeeze(h5read(NonSalTempFile, TempVar, Start, Count));
+  NSAL_TD = squeeze(h5read(NonSalDewPtFile, DewPtVar, Start, Count));
+
   % Vars are organized as: (x,y,z)
   % Construct a spatial mean to produce a single sounding
-  SAL_T_AVG   = squeeze(mean(mean(SAL_T(X1:X2,Y1:Y2,Z1:Z2), 2), 1));
-  SAL_TD_AVG  = squeeze(mean(mean(SAL_TD(X1:X2,Y1:Y2,Z1:Z2), 2), 1));
-  NSAL_T_AVG  = squeeze(mean(mean(NSAL_T(X1:X2,Y1:Y2,Z1:Z2), 2), 1));
-  NSAL_TD_AVG = squeeze(mean(mean(NSAL_TD(X1:X2,Y1:Y2,Z1:Z2), 2), 1));
+  SAL_T_AVG   = squeeze(mean(mean(SAL_T, 2), 1));
+  SAL_TD_AVG  = squeeze(mean(mean(SAL_TD, 2), 1));
+  NSAL_T_AVG  = squeeze(mean(mean(NSAL_T, 2), 1));
+  NSAL_TD_AVG = squeeze(mean(mean(NSAL_TD, 2), 1));
 
   %******************************************************************************
   % single panel plot
