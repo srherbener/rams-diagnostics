@@ -1,13 +1,6 @@
-function [ ] = PlotSmapleSoundings(ConfigFile)
+function [ ] = PlotSmapleSoundings()
 
-  [ Config ] = ReadConfig(ConfigFile);
-
-  Pdir = Config.PlotDir;
-  if (exist(Pdir, 'dir') ~= 7)
-    mkdir(Pdir);
-  end
-
-  OutFile = sprintf('%s/SampleSoundings.jpg', Pdir);
+  OutFile = 'Plots/SampleSoundings.jpg';
 
   % Sample region, in the SAL location
   X1 = 290;
@@ -19,10 +12,10 @@ function [ ] = PlotSmapleSoundings(ConfigFile)
   fprintf('****************** Creating sample soundings plot ******************\n');
 
   % ************************** Read in the SAL case ***********************************
-  SalTempFile     = 'HDF5/tempc_init-TSD_SAL_DUST-AS-2006-08-20-120000-g3.h5';
-  SalDewPtFile    = 'HDF5/dewptc_init-TSD_SAL_DUST-AS-2006-08-20-120000-g3.h5';
-  NonSalTempFile  = 'HDF5/tempc_init-TSD_NONSAL_DUST-AS-2006-08-20-120000-g3.h5';
-  NonSalDewPtFile = 'HDF5/dewptc_init-TSD_NONSAL_DUST-AS-2006-08-20-120000-g3.h5';
+  SalTempFile     = 'HDF5/TSD_SAL_DUST/HDF5/tempc-TSD_SAL_DUST-AS-2006-08-20-120000-g3.h5';
+  SalDewPtFile    = 'HDF5/TSD_SAL_DUST/HDF5/dewptc-TSD_SAL_DUST-AS-2006-08-20-120000-g3.h5';
+  NonSalTempFile  = 'HDF5/TSD_NONSAL_DUST/HDF5/tempc-TSD_NONSAL_DUST-AS-2006-08-20-120000-g3.h5';
+  NonSalDewPtFile = 'HDF5/TSD_NONSAL_DUST/HDF5/dewptc-TSD_NONSAL_DUST-AS-2006-08-20-120000-g3.h5';
 
   TempVar = '/tempc';
   DewPtVar = '/dewptc';
@@ -36,18 +29,32 @@ function [ ] = PlotSmapleSoundings(ConfigFile)
   fprintf('    Reading: %s (%s)\n', NonSalDewPtFile, DewPtVar);
   fprintf('\n');
 
-  SAL_T   = squeeze(h5read(SalTempFile, TempVar));
-  SAL_TD  = squeeze(h5read(SalDewPtFile, DewPtVar));
-  NSAL_T  = squeeze(h5read(NonSalTempFile, TempVar));
-  NSAL_TD = squeeze(h5read(NonSalDewPtFile, DewPtVar));
+  % Take the first time step
+  X = squeeze(h5read(SalTempFile, '/x_coords'));
+  Y = squeeze(h5read(SalTempFile, '/y_coords'));
+  Z = squeeze(h5read(SalTempFile, '/z_coords'));
+  T = squeeze(h5read(SalTempFile, '/t_coords'));
 
-  % Grab the z values, and set the z limits
-  Z = squeeze(h5read(SalTempFile, '/z_coords')) ./1000;  % km
+  Nx = length(X);
+  Ny = length(Y);
+  Nz = length(Z);
+  Nt = length(T);
+  
+  Start = [ 1 1 1 2 ]; % use time step 2 since non-SAL env is not applied
+                       % until after time step 1 file is written out.
+  Count = [ Nx Ny Nz 1 ];
 
-  Z1 = find(Z >= 0, 1, 'first');
-  Z2 = find(Z <= 30, 1, 'last');
+  SAL_T   = squeeze(h5read(SalTempFile, TempVar, Start, Count));
+  SAL_TD  = squeeze(h5read(SalDewPtFile, DewPtVar, Start, Count));
+  NSAL_T  = squeeze(h5read(NonSalTempFile, TempVar, Start, Count));
+  NSAL_TD = squeeze(h5read(NonSalDewPtFile, DewPtVar, Start, Count));
+
+  % Set the z limits
+  Z_KM = Z .* 1e-3;
+  Z1 = find(Z_KM >=  0, 1, 'first');
+  Z2 = find(Z_KM <= 30, 1, 'last');
  
-  Z = Z(Z1:Z2);
+  Z_KM = Z_KM(Z1:Z2);
 
   % Vars are organized as: (x,y,z)
   % Construct a spatial mean to produce a single sounding
@@ -88,11 +95,11 @@ function [ ] = PlotSmapleSoundings(ConfigFile)
   LegFsize = 15;
   LineWidth = 2;
 
-  plot(SAL_T_AVG, Z, 'LineWidth', LineWidth, 'Color', str2rgb('red'), 'LineStyle', '-');
-  hold on
-  plot(SAL_TD_AVG, Z, 'LineWidth', LineWidth, 'Color', str2rgb('green'), 'LineStyle', '-');
-  plot(NSAL_T_AVG, Z, 'LineWidth', LineWidth, 'Color', str2rgb('red'), 'LineStyle', '--');
-  plot(NSAL_TD_AVG, Z, 'LineWidth', LineWidth, 'Color', str2rgb('green'), 'LineStyle', '--');
+  hold on;
+  line(SAL_T_AVG, Z_KM, 'LineWidth', LineWidth, 'Color', str2rgb('red'), 'LineStyle', '-');
+  line(SAL_TD_AVG, Z_KM, 'LineWidth', LineWidth, 'Color', str2rgb('green'), 'LineStyle', '-');
+  line(NSAL_T_AVG, Z_KM, 'LineWidth', LineWidth, 'Color', str2rgb('red'), 'LineStyle', '--');
+  line(NSAL_TD_AVG, Z_KM, 'LineWidth', LineWidth, 'Color', str2rgb('green'), 'LineStyle', '--');
 
   set (gca, 'FontSize', Fsize);
   xlim(Xlimits);
