@@ -48,6 +48,7 @@ SCRIPTS = \
   $(DEST)/PlotFsFigImageWmap.m \
   $(DEST)/PlotFsFigLine.m \
   $(DEST)/PlotSampleSoundings.m \
+  $(DEST)/PlotSampleSoundingsNearStorm.m \
   $(DEST)/ExtractSampleProfile.m \
   $(DEST)/ExtractHorizWinds.m \
   $(DEST)/GenWindShearMeas.m \
