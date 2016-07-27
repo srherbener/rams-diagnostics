@@ -37,7 +37,7 @@ function [] = PlotDpFigTseries(Paxes, X, Y, Lcolors, Pmarker, Ptitle, Ylabel, Ys
   end
 
   if (~strcmp(LegLoc, 'none'))
-    legend(LegText, 'Location', LegLoc);
+    Leg = legend(LegText, 'Location', LegLoc);
   end
 
   hold off;

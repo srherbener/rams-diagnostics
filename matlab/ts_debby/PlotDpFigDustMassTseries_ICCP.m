@@ -51,15 +51,18 @@ function [ ] = PlotDpFigDustMassTseries_ICCP()
   TS_SAL_MDADV = squeeze(h5read(InFile, InVname)); % g
 
   % Absolute values of Md and Mdadv
-  TS_DUST_AL_MD = TS_SAL_MD .* 1e-12;  % Tg
-  LegTextAlMdMdadv = { 'M_D' };
-  LegLocAlMdMdadv  = 'NorthEastOutside';
-  LcolorsAlMdMdadv = { ColorMd };
+  % NanSeries is there to suppress plotting of the lines, while allowing the legend
+  % to take on the colors of the lines in the other panels.
+  NanSeries = TS_SAL_MD .* nan;
+  TS_DUST_AL_MD = [ TS_SAL_MD NanSeries NanSeries NanSeries NanSeries ] .* 1e-12;  % Tg
+  LegTextAlMdMdadv = { 'M_D' 'M_D_A_D_V' 'M_D_H_Y' 'M_D_R_G_N' 'M_D_S_F_C' };
+  LegLocAlMdMdadv  = 'none';
+  LcolorsAlMdMdadv = { ColorMd ColorMdadv ColorMdhy ColorMdrgn ColorMdsfc };
 
   % normalize to initial dust amount
   TS_DUST_AL = [ TS_SAL_MDADV TS_SAL_MDHY TS_SAL_MDRGN TS_SAL_MDSFC ] .* NORM_FAC;
   LegTextAl = { 'M_D_A_D_V' 'M_D_H_Y' 'M_D_R_G_N' 'M_D_S_F_C' };
-  LegLocAl = 'NorthEastOutside';
+  LegLocAl = 'none';
   LcolorsAl = { ColorMdadv ColorMdhy ColorMdrgn ColorMdsfc };
 
   fprintf('\n');
@@ -80,7 +83,7 @@ function [ ] = PlotDpFigDustMassTseries_ICCP()
   % normalize to initial dust amount, ie [ TS_SAL_MD(1) ]
   TS_DUST_ML = [ TS_SAL_MDHY TS_SAL_MDRGN ] .* NORM_FAC;
   LegTextMl = { 'M_D_H_Y' 'M_D_R_G_N' };
-  LegLocMl = 'NorthEastOutside';
+  LegLocMl = 'none';
   LcolorsMl = { ColorMdhy ColorMdrgn };
 
   fprintf('\n');
@@ -101,7 +104,7 @@ function [ ] = PlotDpFigDustMassTseries_ICCP()
   % normalize to initial dust amount, ie [ TS_SAL_MD(1) ]
   TS_DUST_UL = [ TS_SAL_MDHY TS_SAL_MDRGN ] .* NORM_FAC;
   LegTextUl = { 'M_D_H_Y' 'M_D_R_G_N' };
-  LegLocUl = 'NorthEastOutside';
+  LegLocUl = 'none';
   LcolorsUl = { ColorMdhy ColorMdrgn };
 
   fprintf('\n');
@@ -113,10 +116,8 @@ function [ ] = PlotDpFigDustMassTseries_ICCP()
 
   Paxes = subplot(4,1,1);
   % adjust size so that x-axis lines up with the other panels
-  Ploc = get(Paxes, 'Position');
-  Ploc(3) = Ploc(3) * 0.958;
-  Ploc = set(Paxes, 'Position', Ploc);
-  PlotDpFigTseries(Paxes, T, TS_DUST_AL_MD, LcolorsAlMdMdadv, 'a', 'All Levels', 'Mass (Tg)', 'linear', [ 0 2 ], Fsize, 0, 1, LegTextAlMdMdadv, LegLocAlMdMdadv);
+  PlotDpFigTseries(Paxes, T, TS_DUST_AL_MD, LcolorsAlMdMdadv, 'a', 'All Levels', 'Mass (Tg)', 'linear', [ 0 3 ], Fsize, 0, 1, LegTextAlMdMdadv, LegLocAlMdMdadv);
+  columnlegend(3, LegTextAlMdMdadv, 'Location', 'NorthEast');
 
   Paxes = subplot(4,1,2);
   PlotDpFigTseries(Paxes, T, TS_DUST_AL, LcolorsAl, 'b', 'All Levels', 'Norm. Mass', 'log', [ 1e-4 2 ], Fsize, 0, 1, LegTextAl, LegLocAl);
