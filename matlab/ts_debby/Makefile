@@ -53,6 +53,7 @@ SCRIPTS = \
   $(DEST)/ExtractHorizWinds.m \
   $(DEST)/GenWindShearMeas.m \
   $(DEST)/GenWindShearField.m \
+  $(DEST)/GenWindNoVortex.m \
   $(DEST)/GenReduceData.m \
   $(DEST)/GenPtrackMomentum.m \
   $(DEST)/GenPtrackAvgs.m \

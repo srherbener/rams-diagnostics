@@ -31,7 +31,7 @@ function [ ] = GenWindShearField()
   % NoVortex
   %   1 -> use the u,v data with the vortex subtracted out
   %   0 -> use the original u,v data
-  NoVortex = 0;
+  NoVortex = 1;
 
   % approximate heights for the measurement layers
   Z150 = 13600; % m
