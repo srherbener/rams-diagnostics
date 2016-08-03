@@ -202,6 +202,7 @@ CONFIGS = \
   $(DIAG_DIR)/FigDustHydroProfileConfig \
   $(DIAG_DIR)/FigCpoolDistConfig \
   $(DIAG_DIR)/FigTseriesConfig \
+  $(DIAG_DIR)/FigMidLevelRegenConfig \
   $(DIAG_DIR)/FigureConfig
 
 #

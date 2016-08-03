@@ -1,0 +1,256 @@
+#
+# Wind shear figures
+#
+
+######### FIGURES ###################
+Figure: MlevRegen 3
+  DummyCases
+  [1_3]
+  Plots/FigMlevRegen.jpg
+  MlevRegen1Panel           1
+  MlevRegen2Panel   2
+  MlevRegenAllPanel   3
+End 
+
+Figure: MlevEvapCond 2
+  DummyCases
+  [1_2]
+  Plots/FigMlevEvapCond.jpg
+  MlevEvapPanel           1
+  MlevCondPanel           2
+End 
+
+Figure: MlevVr 1
+  DummyCases
+  [1_1]
+  Plots/FigMlevVr.jpg
+  MlevVrPanel           1
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  none
+End
+
+########### PANELS ####################
+FigPanel: MlevRegen1Panel
+  MlevRegen1Pset
+  MlevRegen1Axes 1 1
+  none 5
+  Small@Mode
+  NorthWest 10
+End
+
+FigPanel: MlevRegen2Panel
+  MlevRegen2Pset
+  MlevRegen2Axes 1 0
+  none 5
+  Large@Mode
+  none 10
+End
+
+FigPanel: MlevRegenAllPanel
+  MlevRegenAllPset
+  MlevRegenAllAxes 1 0
+  none 5
+  All@Modes
+  none 10
+End
+
+FigPanel: MlevEvapPanel
+  MlevEvapPset
+  MlevEvapAxes 1 1
+  none 5
+  Evap
+  NorthWest 10
+End
+
+FigPanel: MlevCondPanel
+  MlevCondPset
+  MlevCondAxes 1 0
+  none 5
+  Cond
+  none 10
+End
+
+FigPanel: MlevVrPanel
+  MlevVrPset
+  MlevVrAxes 1 1
+  none 5
+  Vr
+  none 10
+End
+
+############ PLOT SETS #################
+PlotSet: MlevRegen1Pset line 2
+  MlevRegen1CloudLine  TSD_SAL_DUST CLOUD     2 black - 0
+  MlevRegen1NcloudLine TSD_SAL_DUST NO\_CLOUD 2 red   - 0
+#  MlevRegen1TcondLine  TSD_SAL_DUST ALLH      2 blue  - 0
+#  MlevRegen1NtcondLine TSD_SAL_DUST NO\_ALLH  2 green - 0
+End
+
+PlotSet: MlevRegen2Pset line 2
+  MlevRegen2CloudLine  TSD_SAL_DUST CLOUD     2 black - 0
+  MlevRegen2NcloudLine TSD_SAL_DUST NO\_CLOUD 2 red   - 0
+#  MlevRegen2TcondLine  TSD_SAL_DUST ALLH      2 blue  - 0
+#  MlevRegen2NtcondLine TSD_SAL_DUST NO\_ALLH  2 green - 0
+End
+
+PlotSet: MlevRegenAllPset line 2
+  MlevRegenAllCloudLine  TSD_SAL_DUST CLOUD     2 black - 0
+  MlevRegenAllNcloudLine TSD_SAL_DUST NO\_CLOUD 2 red   - 0
+#  MlevRegenAllTcondLine  TSD_SAL_DUST ALLH      2 blue  - 0
+#  MlevRegenAllNtcondLine TSD_SAL_DUST NO\_ALLH  2 green - 0
+End
+
+PlotSet: MlevEvapPset line 2
+  MlevEvapCloudLine  TSD_SAL_DUST CLOUD     2 black - 0
+  MlevEvapNcloudLine TSD_SAL_DUST NO\_CLOUD 2 red   - 0
+#  MlevEvapTcondLine  TSD_SAL_DUST ALLH      2 blue  - 0
+#  MlevEvapNtcondLine TSD_SAL_DUST NO\_ALLH  2 green - 0
+End
+
+PlotSet: MlevCondPset line 2
+  MlevCondCloudLine  TSD_SAL_DUST CLOUD     2 black - 0
+  MlevCondNcloudLine TSD_SAL_DUST NO\_CLOUD 2 red   - 0
+#  MlevCondTcondLine  TSD_SAL_DUST ALLH      2 blue  - 0
+#  MlevCondNtcondLine TSD_SAL_DUST NO\_ALLH  2 green - 0
+End
+
+PlotSet: MlevVrPset line 2
+  MlevVrLine     TSD_SAL_DUST CLOUD     2 red    - 0
+  MlevVrZeroLine TSD_SAL_DUST 0         2 black -- 0
+End
+
+############ PLOT DATA #################
+PlotData: MlevRegen1CloudLine 2
+  /cloud_all_whole_s_ra1_mass DIAGS/hist_meas_az_ra_<CASE>.h5 @ 1 0
+  /z_coords DIAGS/hist_meas_az_ra_<CASE>.h5 @ 1e-3 0
+End
+PlotData: MlevRegen1NcloudLine 2
+  /not_cloud_all_whole_s_ra1_mass DIAGS/hist_meas_az_ra_<CASE>.h5 @ 1 0
+  /z_coords DIAGS/hist_meas_az_ra_<CASE>.h5 @ 1e-3 0
+End
+PlotData: MlevRegen1TcondLine 2
+  /tcond_all_whole_s_ra1_mass DIAGS/hist_meas_az_ra_<CASE>.h5 @ 1 0
+  /z_coords DIAGS/hist_meas_az_ra_<CASE>.h5 @ 1e-3 0
+End
+PlotData: MlevRegen1NtcondLine 2
+  /not_tcond_all_whole_s_ra1_mass DIAGS/hist_meas_az_ra_<CASE>.h5 @ 1 0
+  /z_coords DIAGS/hist_meas_az_ra_<CASE>.h5 @ 1e-3 0
+End
+
+PlotData: MlevRegen2CloudLine 2
+  /cloud_all_whole_s_ra2_mass DIAGS/hist_meas_az_ra_<CASE>.h5 @ 1 0
+  /z_coords DIAGS/hist_meas_az_ra_<CASE>.h5 @ 1e-3 0
+End
+PlotData: MlevRegen2NcloudLine 2
+  /not_cloud_all_whole_s_ra2_mass DIAGS/hist_meas_az_ra_<CASE>.h5 @ 1 0
+  /z_coords DIAGS/hist_meas_az_ra_<CASE>.h5 @ 1e-3 0
+End
+PlotData: MlevRegen2TcondLine 2
+  /tcond_all_whole_s_ra2_mass DIAGS/hist_meas_az_ra_<CASE>.h5 @ 1 0
+  /z_coords DIAGS/hist_meas_az_ra_<CASE>.h5 @ 1e-3 0
+End
+PlotData: MlevRegen2NtcondLine 2
+  /not_tcond_all_whole_s_ra2_mass DIAGS/hist_meas_az_ra_<CASE>.h5 @ 1 0
+  /z_coords DIAGS/hist_meas_az_ra_<CASE>.h5 @ 1e-3 0
+End
+
+PlotData: MlevRegenAllCloudLine 2
+  /cloud_all_whole_s_ra_mass DIAGS/hist_meas_az_ra_<CASE>.h5 @ 1 0
+  /z_coords DIAGS/hist_meas_az_ra_<CASE>.h5 @ 1e-3 0
+End
+PlotData: MlevRegenAllNcloudLine 2
+  /not_cloud_all_whole_s_ra_mass DIAGS/hist_meas_az_ra_<CASE>.h5 @ 1 0
+  /z_coords DIAGS/hist_meas_az_ra_<CASE>.h5 @ 1e-3 0
+End
+PlotData: MlevRegenAllTcondLine 2
+  /tcond_all_whole_s_ra_mass DIAGS/hist_meas_az_ra_<CASE>.h5 @ 1 0
+  /z_coords DIAGS/hist_meas_az_ra_<CASE>.h5 @ 1e-3 0
+End
+PlotData: MlevRegenAllNtcondLine 2
+  /not_tcond_all_whole_s_ra_mass DIAGS/hist_meas_az_ra_<CASE>.h5 @ 1 0
+  /z_coords DIAGS/hist_meas_az_ra_<CASE>.h5 @ 1e-3 0
+End
+
+PlotData: MlevEvapCloudLine 2
+  /cloud_all_whole_s_liq_evap DIAGS/hist_meas_az_liq_evap_<CASE>.h5 @ 1 0
+  /z_coords DIAGS/hist_meas_az_liq_evap_<CASE>.h5 @ 1e-3 0
+End
+PlotData: MlevEvapNcloudLine 2
+  /not_cloud_all_whole_s_liq_evap DIAGS/hist_meas_az_liq_evap_<CASE>.h5 @ 1 0
+  /z_coords DIAGS/hist_meas_az_liq_evap_<CASE>.h5 @ 1e-3 0
+End
+PlotData: MlevEvapTcondLine 2
+  /tcond_all_whole_s_liq_evap DIAGS/hist_meas_az_liq_evap_<CASE>.h5 @ 1 0
+  /z_coords DIAGS/hist_meas_az_liq_evap_<CASE>.h5 @ 1e-3 0
+End
+PlotData: MlevEvapNtcondLine 2
+  /not_tcond_all_whole_s_liq_evap DIAGS/hist_meas_az_liq_evap_<CASE>.h5 @ 1 0
+  /z_coords DIAGS/hist_meas_az_liq_evap_<CASE>.h5 @ 1e-3 0
+End
+
+PlotData: MlevCondCloudLine 2
+  /cloud_all_whole_s_liq_cond DIAGS/hist_meas_az_liq_cond_<CASE>.h5 @ 1 0
+  /z_coords DIAGS/hist_meas_az_liq_cond_<CASE>.h5 @ 1e-3 0
+End
+PlotData: MlevCondNcloudLine 2
+  /not_cloud_all_whole_s_liq_cond DIAGS/hist_meas_az_liq_cond_<CASE>.h5 @ 1 0
+  /z_coords DIAGS/hist_meas_az_liq_cond_<CASE>.h5 @ 1e-3 0
+End
+PlotData: MlevCondTcondLine 2
+  /tcond_all_whole_s_liq_cond DIAGS/hist_meas_az_liq_cond_<CASE>.h5 @ 1 0
+  /z_coords DIAGS/hist_meas_az_liq_cond_<CASE>.h5 @ 1e-3 0
+End
+PlotData: MlevCondNtcondLine 2
+  /not_tcond_all_whole_s_liq_cond DIAGS/hist_meas_az_liq_cond_<CASE>.h5 @ 1 0
+  /z_coords DIAGS/hist_meas_az_liq_cond_<CASE>.h5 @ 1e-3 0
+End
+
+PlotData: MlevVrLine 2
+  /all_whole_s_speed_r DIAGS/hist_meas_az_speed_<CASE>.h5 @ 1 0
+  /z_coords DIAGS/hist_meas_az_speed_<CASE>.h5 @ 1e-3 0
+End
+
+PlotData: MlevVrZeroLine 2
+  dummy zeros(56,1) @ 1 0
+  /z_coords DIAGS/hist_meas_az_speed_<CASE>.h5 @ 1e-3 0
+End
+
+############ PLOT AXES #################
+PlotAxes: MlevRegen1Axes 2
+  16 2 [0.025_0.025]
+  M_D_R_G_N \mug@m^-^3 0 30 linear [_] {_}
+  Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: MlevRegen2Axes 2
+  16 2 [0.025_0.025]
+  M_D_R_G_N \mug@m^-^3 0 0.3 linear [_] {_}
+  Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: MlevRegenAllAxes 2
+  16 2 [0.025_0.025]
+  M_D_R_G_N \mug@m^-^3 0 30 linear [_] {_}
+  Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: MlevEvapAxes 2
+  16 2 [0.025_0.025]
+  M_e_v_a_p g@kg^-^1 -2.5 0 linear [_] {_}
+  Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: MlevCondAxes 2
+  16 2 [0.025_0.025]
+  M_c_o_n_d g@kg^-^1 0 2.5 linear [_] {_}
+  Height km 0 10 linear [_] {_}
+End
+
+PlotAxes: MlevVrAxes 2
+  16 2 [0.025_0.025]
+  V_r m@s^-^1 -3 3  linear [_] {_}
+  Height km 0 10 linear [_] {_}
+End
