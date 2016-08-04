@@ -3,38 +3,48 @@
 #
 
 ######### FIGURES ###################
-Figure: MlevRegen 3
-  DummyCases
-  [1_3]
-  Plots/FigMlevRegen.jpg
-  MlevRegen1Panel           1
-  MlevRegen2Panel   2
-  MlevRegenAllPanel   3
-End 
+#Figure: MlevRegen 3
+#  DummyCases
+#  [1_3]
+#  Plots/FigMlevRegen.jpg
+#  MlevRegen1Panel           1
+#  MlevRegen2Panel   2
+#  MlevRegenAllPanel   3
+#End 
+#
+#Figure: MlevEvapCond 2
+#  DummyCases
+#  [1_2]
+#  Plots/FigMlevEvapCond.jpg
+#  MlevEvapPanel           1
+#  MlevCondPanel           2
+#End 
+#
+#Figure: MlevVr 1
+#  DummyCases
+#  [1_1]
+#  Plots/FigMlevVr.jpg
+#  MlevVrPanel           1
+#End 
+#
+#Figure: MlevEvapCondHov 4
+#  DummyCases
+#  [4_1]
+#  Plots/FigMlevEvapCondHov.jpg
+#  MlevEvapCloudHovPanel   1
+#  MlevEvapNoCloudHovPanel 2
+#  MlevCondCloudHovPanel   3
+#  MlevCondNoCloudHovPanel 4
+#End 
 
-Figure: MlevEvapCond 2
-  DummyCases
-  [1_2]
-  Plots/FigMlevEvapCond.jpg
-  MlevEvapPanel           1
-  MlevCondPanel           2
-End 
-
-Figure: MlevVr 1
-  DummyCases
-  [1_1]
-  Plots/FigMlevVr.jpg
-  MlevVrPanel           1
-End 
-
-Figure: MlevEvapCondHov 4
+Figure: MlevHov 4
   DummyCases
   [4_1]
-  Plots/FigMlevEvapCondHov.jpg
-  MlevEvapCloudHovPanel   1
-  MlevEvapNoCloudHovPanel 2
-  MlevCondCloudHovPanel   3
-  MlevCondNoCloudHovPanel 4
+  Plots/FigMlevHov.jpg
+  MlevVrHovPanel          1
+  MlevEvapCloudHovPanel   2
+  MlevEvapNoCloudHovPanel 3
+  MlevRegen1HovPanel      4
 End 
 
 ########### CASES ####################
@@ -123,6 +133,22 @@ FigPanel: MlevCondNoCloudHovPanel
   none 10
 End
 
+FigPanel: MlevVrHovPanel
+  MlevVrHovPset
+  MlevVrHovAxes 0 1
+  none 5
+  V_r
+  none 10
+End
+
+FigPanel: MlevRegen1HovPanel
+  MlevRegen1HovPset
+  MlevRegen1HovAxes 1 1
+  none 5
+  M_D_R_G_N_1@No@Cloud
+  none 10
+End
+
 ############ PLOT SETS #################
 PlotSet: MlevRegen1Pset line 2
   MlevRegen1CloudLine  TSD_SAL_DUST CLOUD     2 black - 0
@@ -178,6 +204,14 @@ End
 
 PlotSet: MlevCondNoCloudHovPset contourf 1
   MlevCondNoCloudHovContour  TSD_SAL_DUST none 2 black - 0
+End
+
+PlotSet: MlevVrHovPset diff_contourf 1
+  MlevVrHovContour  TSD_SAL_DUST none 2 black - 0
+End
+
+PlotSet: MlevRegen1HovPset contourf 1
+  MlevRegen1HovContour  TSD_SAL_DUST none 2 black - 0
 End
 
 ############ PLOT DATA #################
@@ -301,22 +335,34 @@ PlotData: MlevCondNoCloudHovContour 3
   /not_cloud_all_whole_cld_cond_ts DIAGS/hist_meas_az_cloud_cond_<CASE>.h5 @ 1 0
 End
 
+PlotData: MlevVrHovContour 3
+  /t_coords DIAGS/hist_meas_az_speed_<CASE>.h5 @ 2.7778e-4 -42
+  /z_coords DIAGS/hist_meas_az_speed_<CASE>.h5 @      1e-3   0
+  /all_whole_speed_r DIAGS/hist_meas_az_speed_<CASE>.h5 @ 1 0
+End
+
+PlotData: MlevRegen1HovContour 3
+  /t_coords DIAGS/hist_meas_az_ra_<CASE>.h5 @ 2.7778e-4 -42
+  /z_coords DIAGS/hist_meas_az_ra_<CASE>.h5 @      1e-3   0
+  /not_cloud_all_whole_ra1_mass_ts DIAGS/hist_meas_az_ra_<CASE>.h5 @ 1 0
+End
+
 ############ PLOT AXES #################
 PlotAxes: MlevRegen1Axes 2
   16 2 [0.025_0.025]
-  M_D_R_G_N \mug@m^-^3 0 30 linear [_] {_}
+  M_D_R_G_N \mug@m^-^3 0 40 linear [_] {_}
   Height km 0 10 linear [_] {_}
 End
 
 PlotAxes: MlevRegen2Axes 2
   16 2 [0.025_0.025]
-  M_D_R_G_N \mug@m^-^3 0 0.3 linear [_] {_}
+  M_D_R_G_N \mug@m^-^3 0 0.4 linear [_] {_}
   Height km 0 10 linear [_] {_}
 End
 
 PlotAxes: MlevRegenAllAxes 2
   16 2 [0.025_0.025]
-  M_D_R_G_N \mug@m^-^3 0 30 linear [_] {_}
+  M_D_R_G_N \mug@m^-^3 0 40 linear [_] {_}
   Height km 0 10 linear [_] {_}
 End
 
@@ -364,5 +410,19 @@ PlotAxes: MlevCondNoCloudHovAxes 3
   Time @ 0 60 linear [6_18_30_42_54] {'12Z\newline22Aug'_'0Z\newline23Aug'_'12Z\newline23Aug'_'0Z\newline24Aug'_'12Z\newline24Aug'}
   Z km 0 10 linear [_] {_}
   M_c_o_n_d g@kg^-^1 0 1 linear [_] {_}
+End
+
+PlotAxes: MlevVrHovAxes 3
+  16 2 [0.025_0.025]
+  Time @ 0 60 linear [6_18_30_42_54] {'12Z\newline22Aug'_'0Z\newline23Aug'_'12Z\newline23Aug'_'0Z\newline24Aug'_'12Z\newline24Aug'}
+  Z km 0 10 linear [_] {_}
+  V_r m@s^-^1 -2 2 linear [_] {_}
+End
+
+PlotAxes: MlevRegen1HovAxes 3
+  16 2 [0.025_0.025]
+  Time @ 0 60 linear [6_18_30_42_54] {'12Z\newline22Aug'_'0Z\newline23Aug'_'12Z\newline23Aug'_'0Z\newline24Aug'_'12Z\newline24Aug'}
+  Z km 0 10 linear [_] {_}
+  M_D_R_G_N_1@No@Cloud \ug@m^-^3 0 15 linear [_] {_}
 End
 
