@@ -486,27 +486,27 @@ PlotAxes: MlevRegen1CloudHovAxes 3
   16 2 [0.025_0.025]
   Time @ 0 60 linear [6_18_30_42_54] {'12Z\newline22Aug'_'0Z\newline23Aug'_'12Z\newline23Aug'_'0Z\newline24Aug'_'12Z\newline24Aug'}
   Z km 0 10 linear [_] {_}
-  M_D_R_G_N_1@Cloud \ug@m^-^3 0 2 linear [_] {_}
+  M_D_R_G_N_1@Cloud \ug@m^-^3 1e-3 10 log [-3_-1_1] {'10^-^3'_'10^-^1'_'10'}
 End
 
 PlotAxes: MlevRegen2CloudHovAxes 3
   16 2 [0.025_0.025]
   Time @ 0 60 linear [6_18_30_42_54] {'12Z\newline22Aug'_'0Z\newline23Aug'_'12Z\newline23Aug'_'0Z\newline24Aug'_'12Z\newline24Aug'}
   Z km 0 10 linear [_] {_}
-  M_D_R_G_N_2@Cloud \ug@m^-^3 0 0.1 linear [_] {_}
+  M_D_R_G_N_2@Cloud \ug@m^-^3 1e-3 10 log [-3_-1_1] {'10^-^3'_'10^-^1'_'10'}
 End
 
 PlotAxes: MlevRegen1NoCloudHovAxes 3
   16 2 [0.025_0.025]
   Time @ 0 60 linear [6_18_30_42_54] {'12Z\newline22Aug'_'0Z\newline23Aug'_'12Z\newline23Aug'_'0Z\newline24Aug'_'12Z\newline24Aug'}
   Z km 0 10 linear [_] {_}
-  M_D_R_G_N_1@No@Cloud \ug@m^-^3 0 15 linear [_] {_}
+  M_D_R_G_N_1@No@Cloud \ug@m^-^3 1e-3 10 log [-3_-1_1] {'10^-^3'_'10^-^1'_'10'}
 End
 
 PlotAxes: MlevRegen2NoCloudHovAxes 3
   16 2 [0.025_0.025]
   Time @ 0 60 linear [6_18_30_42_54] {'12Z\newline22Aug'_'0Z\newline23Aug'_'12Z\newline23Aug'_'0Z\newline24Aug'_'12Z\newline24Aug'}
   Z km 0 10 linear [_] {_}
-  M_D_R_G_N_2@No@Cloud \ug@m^-^3 0 0.2 linear [_] {_}
+  M_D_R_G_N_2@No@Cloud \ug@m^-^3 1e-3 10 log [-3_-1_1] {'10^-^3'_'10^-^1'_'10'}
 End
 
