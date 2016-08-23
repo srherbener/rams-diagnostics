@@ -10,6 +10,7 @@ SCRIPTS = \
           $(DEST)/unfreezeColors.m \
           $(DEST)/cbfreeze.m \
           $(DEST)/cbhandle.m \
+          $(DEST)/startup.m \
           $(DEST)/test_freezeColors.m \
           $(DEST)/ReduceData.m \
           $(DEST)/SetPlotAxes.m \
