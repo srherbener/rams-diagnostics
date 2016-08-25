@@ -190,14 +190,14 @@ function [] = PlotDpFigTrack(Paxes, MapLoc, Grid3Loc, SimTrackLons, SimTrackLats
 
   % Add SAL analysis region
   linem(SalRegionLats, SalRegionLons, 'LineWidth', LineW, 'Color', 'r');
-  textm(21, -34, 'SAL\_AR', 'FontSize', 10, 'Color', 'r');
+  textm(21, -34, 'SAL\_AR', 'FontSize', 10, 'Color', 'r', 'FontWeight', 'bold');
 
   % Mark Africa
-  textm(14, -12, 'Africa', 'FontSize', 10, 'Color', 'k', 'Rotation', 90);
+  textm(14, -12, 'Africa', 'FontSize', 10, 'Color', 'k', 'Rotation', 90, 'FontWeight', 'bold');
 
   % Mark Grid3
   linem(Grid3Lats, Grid3Lons, 'LineWidth', G3linew, 'LineStyle', '-', 'Color', G3color);
-  textm( 24.1, -23, 'Grid3', 'Color', G3color, 'FontSize',  10);
+  textm( 24.1, -23, 'Grid3', 'Color', G3color, 'FontSize',  10, 'FontWeight', 'bold');
 
   legend( [ NhcTrack SimTrack' ], LegText,'Location', 'SouthWest', 'FontSize', LegendFsize);
 
@@ -263,11 +263,11 @@ function [] = PlaceSalImage(Paxes, MapLoc, Grid3Loc, SalImage, Pmarker, Ptitle, 
   plotm(Coast.lat, Coast.long, 'Color', 'k', 'LineWidth', LineW);
 
   % Mark Africa
-  textm(25, -6, 'Africa', 'FontSize', 10, 'Color', 'w');
+  textm(25, -6, 'Africa', 'FontSize', 10, 'Color', 'w', 'FontWeight', 'bold');
 
   % Mark Grid3
   linem(Grid3Lats, Grid3Lons, 'LineWidth', G3linew, 'LineStyle', '-', 'Color', G3color);
-  textm(25, -25, 'Grid3', 'Color', G3color, 'FontSize',  10);
+  textm(25, -25, 'Grid3', 'Color', G3color, 'FontSize',  10, 'FontWeight', 'bold');
 
   if (isempty(Pmarker))
     title(Ptitle);
@@ -357,9 +357,9 @@ function [] = PlotVintDust(Paxes, MapLoc, Grid3Loc, X, Y, Z, Pmarker, Ptitle, Fs
 %  caxis(Paxes, [ -2 6 ]);
 
   % Plot on linear scale
-  Clevs = [ 0:0.1:3 ];
-  Cticks = [ 0.5 5.5 10.5 15.5 20.5 25.5 30.5 ];
-  CtickLabels = { '0.0' '0.5' '1.0' '1.5' '2.0' '2.5' '3.0' };
+  Clevs = [ 0:0.3:3 ];
+  Cticks = [ 0.5 2.5 4.5 6.5 8.5 10.5 ];
+  CtickLabels = { '0.0' '0.6' '1.2' '1.8' '2.4' '3.0' };
   contourfm(double(Y), double(X), double(Z)', Clevs, 'LineStyle', 'none'); 
   caxis([ 0 3 ]);
 
@@ -394,12 +394,12 @@ pause(1)
 
 pause(1)
   % Mark Africa
-  textm(12, -7, 'Africa', 'FontSize', 10, 'Color', 'k');
+  textm(12, -7, 'Africa', 'FontSize', 10, 'Color', 'k', 'FontWeight', 'bold');
 
 pause(1)
   % Mark Grid3
   linem(Grid3Lats, Grid3Lons, 'LineWidth', G3linew, 'LineStyle', '-', 'Color', G3color);
-  textm( 4.5, -40, 'Grid3', 'Color', G3color, 'FontSize',  10);
+  textm( 4.5, -40, 'Grid3', 'Color', G3color, 'FontSize',  10, 'FontWeight', 'bold');
 
 pause(1)
   % Mark TS Debby location
