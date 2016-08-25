@@ -11,8 +11,10 @@ function [ ] = PlotDpFigGenRes()
   GlocFname = 'GridLocs.txt';
   Grid3Loc = ReadGridLoc(GlocFname, 'Grid3:');
 
-  % Map location, extend beyond grid3 boundaries
-  MapLoc = Grid3Loc + [ -2 +3 -2 +6 ];
+  % Map locations:
+  %  grid3 extended a small amount
+  MapLocSmall = Grid3Loc + [ -2 +3 -2 +6 ];
+  MapLocLarge = [ 0 40 -55 5 ];
 
   % Image and vint dust don't quite fit right within grid3 when plotted. Move grid3
   % up about 0.5 degree to make up for this. Do this after setting the map confines
@@ -56,7 +58,7 @@ function [ ] = PlotDpFigGenRes()
   SalPic = imread('IMAGES/SAL_Aug23_12Z_grid3.png');
 
   % Vertically integrated dust mass
-  VintDustFile = 'HDF5/TSD_SAL_DUST/HDF5/vint_dust-TSD_SAL_DUST-AS-2006-08-20-120000-g3.h5';
+  VintDustFile = 'HDF5/TSD_SAL_DUST/HDF5/vint_dust-TSD_SAL_DUST-AS-2006-08-20-120000-g1.h5';
   VintDustVname = '/vertint_dust';
 
   % Read in and create a snapshot of the vertically integrated dust field at Aug23, 12Z
@@ -76,28 +78,33 @@ function [ ] = PlotDpFigGenRes()
   % Map doesn't quite fit in the vertical center of the subplot region. Needs to get
   % bumped upward just a little bit.
   Paxes = subplot(2,2,1);
-  Ploc = get(Paxes, 'Position');
-  Ploc(1) = Ploc(1) - 0.05;
-  Ploc(2) = Ploc(2) + 0.03;
-  set(Paxes, 'Position', Ploc);
-  PlotDpFigTrack(Paxes, MapLoc, Grid3Loc, SimTrackLons, SimTrackLats, 'a', '', Fsize);
+  PlotDpFigTrack(Paxes, MapLocSmall, Grid3Loc, SimTrackLons, SimTrackLats, 'a', '', Fsize);
   
   % Initial dust profiles
   % Doesn't quite fit in the vertical center of the subplot region. Needs to get
   % bumped upward just a little bit.
   Paxes = subplot(2,2,2);
-  Ploc = get(Paxes, 'Position');
-  Ploc(2) = Ploc(2) + 0.03;
-  set(Paxes, 'Position', Ploc);
   PlotDpFigInitDust(Paxes, DUST_CONC, Znamma, 'b', '', Fsize);
 
   % SAL strength image
   Paxes = subplot(2,2,3);
-  PlaceSalImage(Paxes, MapLoc, Grid3Loc, SalPic, 'c', '12Z, 23Aug', Fsize);
+  Ploc = get(Paxes, 'Position');
+  Ploc(1) = Ploc(1) - 0.02;
+  Ploc(3) = Ploc(3) * 1.04;
+  Ploc(2) = Ploc(2) - 0.02;
+  Ploc(4) = Ploc(4) * 1.04;
+  set(Paxes, 'Position', Ploc);
+  PlaceSalImage(Paxes, MapLocLarge, Grid3Loc, SalPic, 'c', '12Z, 23Aug', Fsize);
 
   % Vertically integrated dust mass
   Paxes = subplot(2,2,4);
-  PlotVintDust(Paxes, MapLoc, Grid3Loc, X, Y, VINT_DUST, 'd', '12Z, 23Aug', Fsize, 1, 1);
+  Ploc = get(Paxes, 'Position');
+  Ploc(1) = Ploc(1) - 0.05;
+  Ploc(3) = Ploc(3) * 1.10;
+  Ploc(2) = Ploc(2) - 0.05;
+  Ploc(4) = Ploc(4) * 1.10;
+  set(Paxes, 'Position', Ploc);
+  PlotVintDust(Paxes, MapLocLarge, Grid3Loc, X, Y, VINT_DUST, 'd', '12Z, 23Aug', Fsize, 1, 1);
 
   OutFile = sprintf('%s/DpFig1_GenRes.jpg', Pdir);
   fprintf('Writing: %s\n', OutFile);
@@ -256,11 +263,11 @@ function [] = PlaceSalImage(Paxes, MapLoc, Grid3Loc, SalImage, Pmarker, Ptitle, 
   plotm(Coast.lat, Coast.long, 'Color', 'k', 'LineWidth', LineW);
 
   % Mark Africa
-  textm(14, -12, 'Africa', 'FontSize', 10, 'Color', 'k', 'Rotation', 90);
+  textm(12, -7, 'Africa', 'FontSize', 10, 'Color', 'k');
 
   % Mark Grid3
   linem(Grid3Lats, Grid3Lons, 'LineWidth', G3linew, 'LineStyle', '-', 'Color', G3color);
-  textm( 24.1, -23, 'Grid3', 'Color', G3color, 'FontSize',  10);
+  textm( 4.5, -40, 'Grid3', 'Color', G3color, 'FontSize',  10);
 
   if (isempty(Pmarker))
     title(Ptitle);
@@ -387,12 +394,16 @@ pause(1)
 
 pause(1)
   % Mark Africa
-  textm(14, -12, 'Africa', 'FontSize', 10, 'Color', 'k', 'Rotation', 90);
+  textm(12, -7, 'Africa', 'FontSize', 10, 'Color', 'k');
 
 pause(1)
   % Mark Grid3
   linem(Grid3Lats, Grid3Lons, 'LineWidth', G3linew, 'LineStyle', '-', 'Color', G3color);
-  textm( 24.1, -23, 'Grid3', 'Color', G3color, 'FontSize',  10);
+  textm( 4.5, -40, 'Grid3', 'Color', G3color, 'FontSize',  10);
+
+pause(1)
+  % Mark TS Debby location
+  plotm( [ 17 ], [ -30 ], 'Color', 'r', 'LineStyle', 'none', 'Marker', 'x', 'LineWidth',  LineW, 'MarkerSize', 10);
 
 pause(1)
   if (isempty(Pmarker))
