@@ -61,12 +61,14 @@ function [ ] = PlotDpFigGenRes()
 
   % Read in and create a snapshot of the vertically integrated dust field at Aug23, 12Z
   fprintf('Reading: %s (%s)\n', VintDustFile, VintDustVname);
-  DUST = squeeze(h5read(VintDustFile, VintDustVname));
   X    = squeeze(h5read(VintDustFile, '/x_coords'));
   Y    = squeeze(h5read(VintDustFile, '/y_coords'));
-
-  % DUST is (x,y,t)
-  VINT_DUST = squeeze(DUST(:,:,61)); % t = 61 corresponds to Aug23, 12Z
+  Nx = length(X);
+  Ny = length(Y);
+  % VINT_DUST is (x,y,t)
+  %   t = 61 corresponds to Aug23, 12Z
+  %   convert to g/m^2
+  VINT_DUST = squeeze(h5read(VintDustFile, VintDustVname,[ 1 1 61 ], [ Nx Ny 1 ])) .* 1e-6;
 
   % plot
   Fig = figure;
@@ -340,30 +342,59 @@ function [] = PlotVintDust(Paxes, MapLoc, Grid3Loc, X, Y, Z, Pmarker, Ptitle, Fs
   %                  
   %
   
-  Clevs = [ -2:0.5:6 ];
-  Cticks = [ 2.5 6.5 10.5 14.5 ];
-  CtickLabels = { '10^-^1' '10^1' '10^3' '10^5' };
-  contourfm(double(Y), double(X), double(log10(Z))', Clevs, 'LineStyle', 'none'); 
-  caxis(Paxes, [ -2 6 ]);
+%  % Plot on log scale
+%  Clevs = [ -2:0.5:6 ];
+%  Cticks = [ 2.5 6.5 10.5 14.5 ];
+%  CtickLabels = { '10^-^1' '10^1' '10^3' '10^5' };
+%  contourfm(double(Y), double(X), double(log10(Z))', Clevs, 'LineStyle', 'none'); 
+%  caxis(Paxes, [ -2 6 ]);
 
-  % "parula" is the default colormap
-  Cbar = contourcmap('parula', 'ColorBar', 'on', 'Location', 'horizontal' );
+  % Plot on linear scale
+  Clevs = [ 0:0.1:3 ];
+  Cticks = [ 0.5 5.5 10.5 15.5 20.5 25.5 30.5 ];
+  CtickLabels = { '0.0' '0.5' '1.0' '1.5' '2.0' '2.5' '3.0' };
+  contourfm(double(Y), double(X), double(Z)', Clevs, 'LineStyle', 'none'); 
+  caxis([ 0 3 ]);
+
+% The subsequent pause statements are placed in the code to work around an
+% issue where the colormap and tick marks on the colorbar would not get set
+% properly. For some reason, it seems to fix the problem when there are
+% pauses inbetween the graphics commands.
+
+  % Set colormap and create a colorbar
+  %   Do this before setting the tick marks on the colorbar since the colormap
+  %   call resets the tick marks to one per contour level which is too many.
+  Cbar = contourcmap('hot', 'ColorBar', 'on', 'Location', 'horizontal' );
+pause(1)
+  Cmap = colormap('hot');
+  Cmap = Cmap(end:-1:1,:); % reverse the entries
+  colormap(Paxes,Cmap);
+
+pause(1)
+  % Move the colorbar down a bit so that it won't overlap with the x-axis labels
   set(Cbar, 'Position', CbarLoc);
-  set(Cbar, 'Xtick', Cticks);
+
+pause(1)
+  % Reduce the amount of tick marks so that the labels won't overlap
+  set(Cbar, 'XTick', Cticks);
   set(Cbar, 'XTickLabel', CtickLabels);
 
+pause(1)
   % Draw the coast after the contourfm call so that coast lines will appear on top
   % of the contour plot
   Coast = load('coast');
   plotm(Coast.lat, Coast.long, 'Color', 'k', 'LineWidth', LineW);
 
+pause(1)
   % Mark Africa
   textm(14, -12, 'Africa', 'FontSize', 10, 'Color', 'k', 'Rotation', 90);
 
+pause(1)
   % Mark Grid3
   linem(Grid3Lats, Grid3Lons, 'LineWidth', G3linew, 'LineStyle', '-', 'Color', G3color);
   textm( 24.1, -23, 'Grid3', 'Color', G3color, 'FontSize',  10);
 
+pause(1)
   if (isempty(Pmarker))
     title(Ptitle);
   else
