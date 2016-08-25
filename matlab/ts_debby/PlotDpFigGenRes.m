@@ -55,7 +55,7 @@ function [ ] = PlotDpFigGenRes()
   DUST_CONC = [ InData{3} InData{4} ];
 
   % SAL strength image
-  SalPic = imread('IMAGES/SAL_Aug23_12Z_grid3.png');
+  SalPic = imread('IMAGES/SAL_Aug23_12Z_DP_Fig1.png');
 
   % Vertically integrated dust mass
   VintDustFile = 'HDF5/TSD_SAL_DUST/HDF5/vint_dust-TSD_SAL_DUST-AS-2006-08-20-120000-g1.h5';
@@ -224,7 +224,7 @@ function [] = PlaceSalImage(Paxes, MapLoc, Grid3Loc, SalImage, Pmarker, Ptitle, 
   Grid3Lats = [ Grid3Loc(1) Grid3Loc(2) Grid3Loc(2) Grid3Loc(1) Grid3Loc(1) ];
   Grid3Lons = [ Grid3Loc(3) Grid3Loc(3) Grid3Loc(4) Grid3Loc(4) Grid3Loc(3) ];
 
-  G3color = str2rgb('blue');
+  G3color = str2rgb('white');
 
   % create a gap so that image lines up with vint_dust image
   Gap = 0.05;
@@ -243,10 +243,10 @@ function [] = PlaceSalImage(Paxes, MapLoc, Grid3Loc, SalImage, Pmarker, Ptitle, 
   % Create gridded versions of the latitude and longitude value
   % that the image covers.
   [ Nlat Nlon Ncolors ] = size(SalImage);
-  Lat1 = 7.4;
-  Lat2 = 23;
-  Lon1 = -40;
-  Lon2 = -14.2;
+  Lat1 = 3.1;
+  Lat2 = 35.4;
+  Lon1 = -55;
+  Lon2 = 5;
 
   LatInc = (Lat2-Lat1)/(Nlat-1);
   LonInc = (Lon2-Lon1)/(Nlon-1);
@@ -263,11 +263,11 @@ function [] = PlaceSalImage(Paxes, MapLoc, Grid3Loc, SalImage, Pmarker, Ptitle, 
   plotm(Coast.lat, Coast.long, 'Color', 'k', 'LineWidth', LineW);
 
   % Mark Africa
-  textm(12, -7, 'Africa', 'FontSize', 10, 'Color', 'k');
+  textm(25, -6, 'Africa', 'FontSize', 10, 'Color', 'w');
 
   % Mark Grid3
   linem(Grid3Lats, Grid3Lons, 'LineWidth', G3linew, 'LineStyle', '-', 'Color', G3color);
-  textm( 4.5, -40, 'Grid3', 'Color', G3color, 'FontSize',  10);
+  textm(25, -25, 'Grid3', 'Color', G3color, 'FontSize',  10);
 
   if (isempty(Pmarker))
     title(Ptitle);
