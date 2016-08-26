@@ -54,9 +54,6 @@ function [ ] = PlotDpFigGenRes()
   Znamma   = InData{1} ./ 1000; % km
   DUST_CONC = [ InData{3} InData{4} ];
 
-  % SAL strength image
-  SalPic = imread('IMAGES/SAL_Aug23_12Z_DP_Fig1.png');
-
   % Vertically integrated dust mass
   VintDustFile = 'HDF5/TSD_SAL_DUST/HDF5/vint_dust-TSD_SAL_DUST-AS-2006-08-20-120000-g1.h5';
   VintDustVname = '/vertint_dust';
@@ -89,12 +86,14 @@ function [ ] = PlotDpFigGenRes()
   % SAL strength image
   Paxes = subplot(2,2,3);
   Ploc = get(Paxes, 'Position');
-  Ploc(1) = Ploc(1) - 0.02;
+  Ploc(1) = Ploc(1) - 0.09;
   Ploc(3) = Ploc(3) * 1.04;
   Ploc(2) = Ploc(2) - 0.02;
   Ploc(4) = Ploc(4) * 1.04;
   set(Paxes, 'Position', Ploc);
-  PlaceSalImage(Paxes, MapLocLarge, Grid3Loc, SalPic, 'c', '12Z, 23Aug', Fsize);
+%  SalPicSelect = 1;  % Use SAL strength image
+  SalPicSelect = 2;  % Use MERRA-2 dust mass image
+  PlaceSalImage(Paxes, MapLocLarge, Grid3Loc, SalPicSelect, 'c', '12Z, 23Aug', Fsize);
 
   % Vertically integrated dust mass
   Paxes = subplot(2,2,4);
@@ -211,7 +210,16 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [] = PlaceSalImage(Paxes, MapLoc, Grid3Loc, SalImage, Pmarker, Ptitle, Fsize)
+function [] = PlaceSalImage(Paxes, MapLoc, Grid3Loc, Select, Pmarker, Ptitle, Fsize)
+
+  if (Select == 1)
+    % SAL strength image
+    SalImage = imread('IMAGES/SAL_Aug23_12Z_DP_Fig1.png');
+  elseif (Select == 2)
+    % SAL dust image
+    SalImage = imread('IMAGES/MERRA2_DustMass_Aug23_12Z.png');
+    SalImageCbar = imread('IMAGES/MERRA2_DustMass_Aug23_12Z_Colorbar.png');
+  end
 
   axes(Paxes);
 
@@ -243,10 +251,19 @@ function [] = PlaceSalImage(Paxes, MapLoc, Grid3Loc, SalImage, Pmarker, Ptitle, 
   % Create gridded versions of the latitude and longitude value
   % that the image covers.
   [ Nlat Nlon Ncolors ] = size(SalImage);
-  Lat1 = 3.1;
-  Lat2 = 35.4;
-  Lon1 = -55;
-  Lon2 = 5;
+  if (Select == 1)
+  % SAL strength image
+    Lat1 = 3.1;
+    Lat2 = 35.4;
+    Lon1 = -55;
+    Lon2 = 5;
+  elseif (Select == 2)
+    % MERRA-2 dust image
+    Lat1 = 0;
+    Lat2 = 42;
+    Lon1 = -55;
+    Lon2 = 11;
+  end
 
   LatInc = (Lat2-Lat1)/(Nlat-1);
   LonInc = (Lon2-Lon1)/(Nlon-1);
@@ -257,17 +274,21 @@ function [] = PlaceSalImage(Paxes, MapLoc, Grid3Loc, SalImage, Pmarker, Ptitle, 
 
   geoshow(LatGrid, LonGrid, SalImage);
 
+
   % Draw the coast after the contourfm call so that coast lines will appear on top
   % of the contour plot
   Coast = load('coast');
   plotm(Coast.lat, Coast.long, 'Color', 'k', 'LineWidth', LineW);
 
   % Mark Africa
-  textm(25, -6, 'Africa', 'FontSize', 10, 'Color', 'w', 'FontWeight', 'bold');
+  textm(24, -6, 'Africa', 'FontSize', 10, 'Color', 'w', 'FontWeight', 'bold');
 
   % Mark Grid3
   linem(Grid3Lats, Grid3Lons, 'LineWidth', G3linew, 'LineStyle', '-', 'Color', G3color);
-  textm(25, -25, 'Grid3', 'Color', G3color, 'FontSize',  10, 'FontWeight', 'bold');
+  textm(4.5, -40, 'Grid3', 'Color', G3color, 'FontSize',  10, 'FontWeight', 'bold');
+
+  % Mark TS Debby location
+  plotm( [ 17 ], [ -31 ], 'Color', 'r', 'LineStyle', 'none', 'Marker', 'x', 'LineWidth',  LineW, 'MarkerSize', 10);
 
   if (isempty(Pmarker))
     title(Ptitle);
