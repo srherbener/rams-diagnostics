@@ -378,11 +378,19 @@ function [] = PlotVintDust(Paxes, MapLoc, Grid3Loc, X, Y, Z, Pmarker, Ptitle, Fs
 %  caxis(Paxes, [ -2 6 ]);
 
   % Plot on linear scale
+% Attempt to make this plot use the same color scheme as the MERRA-2 image
+%  Clevs = [ 0 0.111 0.222 0.333 0.444 0.556 0.667 0.778 0.889 1 ];
+%  Cticks = [ 0.5 2.5 4.5 6.5 8.5 9.5 ];
+%  CtickLabels = { '0' '0.222' '0.444' '0.667' '0.889' '1' };
+
   Clevs = [ 0:0.3:3 ];
   Cticks = [ 0.5 2.5 4.5 6.5 8.5 10.5 ];
   CtickLabels = { '0.0' '0.6' '1.2' '1.8' '2.4' '3.0' };
   contourfm(double(Y), double(X), double(Z)', Clevs, 'LineStyle', 'none'); 
   caxis([ 0 3 ]);
+
+% Attempt to make this plot use the same color scheme as the MERRA-2 image
+%  caxis([ 0 1 ]);
 
 % The subsequent pause statements are placed in the code to work around an
 % issue where the colormap and tick marks on the colorbar would not get set
@@ -392,6 +400,10 @@ function [] = PlotVintDust(Paxes, MapLoc, Grid3Loc, X, Y, Z, Pmarker, Ptitle, Fs
   % Set colormap and create a colorbar
   %   Do this before setting the tick marks on the colorbar since the colormap
   %   call resets the tick marks to one per contour level which is too many.
+
+% Attempt to make this plot use the same color scheme as the MERRA-2 image
+%  Cbar = contourcmap('jet', 'ColorBar', 'on', 'Location', 'horizontal' );
+
   Cbar = contourcmap('hot', 'ColorBar', 'on', 'Location', 'horizontal' );
 pause(1)
   Cmap = colormap('hot');
