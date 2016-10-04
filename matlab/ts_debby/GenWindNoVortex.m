@@ -43,7 +43,7 @@ function [ ] = GenWindNoVortex()
 
     UinFile = sprintf('HDF5/%s/HDF5/u_lite-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
     VinFile = sprintf('HDF5/%s/HDF5/v_lite-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
-    ScFile  = sprintf('HDF5/%s/HDF5/storm_center-%s-AS-2006-08-20-120000-g3.h5',Case,Case);
+    ScFile  = sprintf('HDF5/%s/HDF5/storm_center_lite-%s-AS-2006-08-20-120000-g3.h5',Case,Case);
 
     FinFile = sprintf('FILTERS/all_500_lite_%s.h5', Case);
 
@@ -52,6 +52,8 @@ function [ ] = GenWindNoVortex()
     Fvname = '/filter';
     SsxVname = '/storm_speed_x';
     SsyVname = '/storm_speed_y';
+    SxlocVname = '/press_cent_xloc';
+    SylocVname = '/press_cent_yloc';
 
     fprintf('  Reading: %s (%s)\n', UinFile, Uvname);
     fprintf('  Reading: %s (%s)\n', VinFile, Vvname);
@@ -76,6 +78,9 @@ function [ ] = GenWindNoVortex()
     if (Method == 2)
       StormSpeedX = squeeze(h5read(ScFile, SsxVname));
       StormSpeedY = squeeze(h5read(ScFile, SsyVname));
+
+      StormLocX = squeeze(h5read(ScFile, SxlocVname));
+      StormLocY = squeeze(h5read(ScFile, SylocVname));
     end
  
     % Create the output files and dataset so that output can be written one time step at a time.
@@ -133,15 +138,81 @@ function [ ] = GenWindNoVortex()
           end
 
         case 2
-          % Subtract the storm motion from U and V, and set the entries outside the vortex
-          % region to zero.
-          STORM_U = (U - StormSpeedX(it)) .* FILTER_3D;
-          STORM_V = (V - StormSpeedY(it)) .* FILTER_3D;
+          % Subtract the storm motion from U and V
+          %U = U - StormSpeedX(it);
+          %V = V - StormSpeedY(it);
 
-          % 
+          % Translate the cartesian grid origin to the storm center
+          %    Reverse x and y arguments so that each row is a different x value and each
+          %    column is a different y value. This keeps the size of X_GRID and Y_GRID consistent
+          %    with the 3D data in the HDF5 file.
+          StormX = X - StormLocX(it);
+          StormY = Y - StormLocY(it);
+          [ Y_GRID X_GRID ] = meshgrid(StormY, StormX);
 
-U_NV = STORM_U;
-V_NV = STORM_V;
+          % Convert the cartesian grid to cylindrical
+          %   THETA is now the angle from the positive x-axis (origin at storm center) to each grid cell
+          [ THETA RADIUS ] = cart2pol(X_GRID, Y_GRID);
+          THETA = repmat(THETA, [ 1 1 Nz ]);
+          % note that THETA is (x,y,z) while RADIUS is (x,y)
+
+          % PHI is the angle from the positive x axis to the wind vector
+          PHI = atan2(V, U);
+
+          % ALPHA is the angle to the wind vector relative to the radii from the storm center
+          ALPHA = PHI - THETA;
+
+          % Magnitude of wind vector
+          WindMag = sqrt(U.^2 + V.^2);
+
+          % tangential and radial winds
+          VR = WindMag .* cos(ALPHA);
+          VT = WindMag .* sin(ALPHA);
+
+          % Azimuthal average
+          Rstart = 0;
+          Rinc = 1;
+          Rend = 10;
+          Rbins = Rstart:Rinc:Rend;
+          Nb = length(Rbins);
+
+          % Create a 2D array that shows which radial bands
+          % each x,y location belongs to.
+          R_SELECT = int32(RADIUS ./ Rinc) + 1;
+
+figure;
+contourf(R_SELECT',[ 1:20 ]);
+colorbar;
+
+          AzavgVr = zeros([ Nb Nz ]);
+          AzavgVt = zeros([ Nb Nz ]);
+
+%          for ib = 1:Nb-1
+%            for iz = 1:Nz
+%              for iy = 1:Ny
+%                for ix = 1:Nx
+%                end
+%              end
+%            end
+%          end
+
+%          for ir = 1:Nb-1
+%            Select = (RADIUS >= Rbins(ir)) & (RADIUS < Rbins(ir+1));
+%            for iz = 1:Nz
+%              VR_SLICE = squeeze(VR(:,:,iz));
+%              VT_SLICE = squeeze(VT(:,:,iz));
+%              AzavgVr(ir,iz) = mean(VR_SLICE(Select));
+%              AzavgVt(ir,iz) = mean(VT_SLICE(Select));
+%            end
+%          end
+
+figure;
+contourf(AzavgVt',20);
+colorbar;
+
+%DEBUG
+U_NV = VR;
+V_NV = VT;
 
         otherwise
           if (it == 1)
