@@ -30,9 +30,9 @@ function [ ] = GenWindNoVortex()
   % list of simulation cases
   CaseList = {
     'TSD_SAL_DUST'
-%    'TSD_SAL_NODUST'
-%    'TSD_NONSAL_DUST'
-%    'TSD_NONSAL_NODUST'
+    'TSD_SAL_NODUST'
+    'TSD_NONSAL_DUST'
+    'TSD_NONSAL_NODUST'
     };
   Ncases = length(CaseList);
 
@@ -131,7 +131,7 @@ function [ ] = GenWindNoVortex()
     end
 
     fprintf('  Extracting vortex\n');
-    for it = 1:2 %Nt
+    for it = 1:Nt
       Start     = [ 1 1 1 it ];
       IoCount   = [ Nx Ny Nz 1 ];
       FiltCount = [ Nx Ny 1 1 ];

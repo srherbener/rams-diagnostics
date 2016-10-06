@@ -8,7 +8,7 @@ function [ ] = GenWindShearField()
 %    150 mb   13,600 m
 %    350 mb    8,120 m
 %    700 mb    3,010 m
-%    925 mb      76s m
+%    925 mb      762 m
 %
 % Create a field by taking average u,v along columns in the upper and lower layers, and
 % then calculating shear at each grid point.
@@ -48,15 +48,16 @@ function [ ] = GenWindShearField()
     fprintf('\n');
 
     if (NoVortex == 1)
-      Ufile = sprintf('HDF5/%s/HDF5/no_vortex_u_lite-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
-      Vfile = sprintf('HDF5/%s/HDF5/no_vortex_v_lite-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
+      Uvname = '/u_basic';
+      Vvname = '/v_basic';
+      Ufile = sprintf('HDF5/%s/HDF5/no_vortex_lite-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
+      Vfile = sprintf('HDF5/%s/HDF5/no_vortex_lite-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
     else
+      Uvname = '/u';
+      Vvname = '/v';
       Ufile = sprintf('HDF5/%s/HDF5/u_lite-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
       Vfile = sprintf('HDF5/%s/HDF5/v_lite-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
     end
-
-    Uvname = '/u';
-    Vvname = '/v';
 
     fprintf('  Reading: %s (%s)\n', Ufile, Uvname);
     fprintf('  Reading: %s (%s)\n', Vfile, Vvname);

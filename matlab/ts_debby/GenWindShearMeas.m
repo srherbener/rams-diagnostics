@@ -69,16 +69,8 @@ function [ ] = GenWindShearMeas()
 
       % Only want the average performed over the 500 km radius defined
       % in FILTER. FILTER has 1's within the 500 radius and 0's elsewhere,
-      % therefore:
-      %    multiply u, v by filter
-      %    change zeros to nans
-      %    use nanmean to do the average
-      MAG_SHEAR = MAG_SHEAR .* FILTER;
-      MAG_SHEAR(MAG_SHEAR == 0) = nan;
-
-      % write out average u, v values into the output file to
-      % help inspect results 
-      MAG_SHEAR_AVG(it) = nanmean(MAG_SHEAR(:));
+      % therefore can use FILTER to select out of MAG_SHEAR.
+      MAG_SHEAR_AVG(it) = mean(MAG_SHEAR(FILTER == 1));
 
       if (mod(it, 10) == 0)
         fprintf('  Completed timestep: %d\n', it);
