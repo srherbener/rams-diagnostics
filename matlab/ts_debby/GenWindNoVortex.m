@@ -21,18 +21,23 @@ function [ ] = GenWindNoVortex()
 %    1) Separate the total wind field into a basic field and
 %       disturbance field. Use the smoothing method in Kurihara
 %       et al. (1993) to do this.
-%         a) Kurihara et al. (1995) says to use sigma = 0.85 level
-%            which is rougly 1500 m elevation. Say p0 = 1000 mb, then
-%            sigma = 0.85 is 850 mb which is roughly 1500 m elevation
+%    2) Remove the vortex using a circular filter that tapers to zero at
+%       at the circle edge in order to prevent a discontinuity in the
+%       non-hurricane disturbance field when the vortex piece is removed.
+%    3) The separated field then becomes the basic (smoothed) field plus
+%       the non-hurricane piece of the disturbance field.
 
   Method = 3;
+
+  R0 = 3; % degrees lat/lon (~300 km), for method 3
+  L = R0 / 5; % for method 3
 
   % list of simulation cases
   CaseList = {
     'TSD_SAL_DUST'
-    'TSD_SAL_NODUST'
-    'TSD_NONSAL_DUST'
-    'TSD_NONSAL_NODUST'
+%    'TSD_SAL_NODUST'
+%    'TSD_NONSAL_DUST'
+%    'TSD_NONSAL_NODUST'
     };
   Ncases = length(CaseList);
 
@@ -87,13 +92,17 @@ function [ ] = GenWindNoVortex()
     Nz = length(Z);
     Nt = length(T);
 
-    % Read in the storm speed components
-    if (Method == 2)
-      StormSpeedX = squeeze(h5read(ScFile, SsxVname));
-      StormSpeedY = squeeze(h5read(ScFile, SsyVname));
+    % Read in the storm speed and location components
+    switch (Method)
+      case 2
+        StormSpeedX = squeeze(h5read(ScFile, SsxVname));
+        StormSpeedY = squeeze(h5read(ScFile, SsyVname));
 
-      StormLocX = squeeze(h5read(ScFile, SxlocVname));
-      StormLocY = squeeze(h5read(ScFile, SylocVname));
+        StormLocX = squeeze(h5read(ScFile, SxlocVname));
+        StormLocY = squeeze(h5read(ScFile, SylocVname));
+      case 3
+        StormLocX = squeeze(h5read(ScFile, SxlocVname));
+        StormLocY = squeeze(h5read(ScFile, SylocVname));
     end
  
     % Create the output file and datasets so that output can be written one time step at a time.
@@ -128,10 +137,13 @@ function [ ] = GenWindNoVortex()
   
         h5create(OutFile, UdOutVname, Vsize, 'DataType', 'single', 'ChunkSize', Csize, 'Deflate', 6, 'Shuffle', true);
         h5create(OutFile, VdOutVname, Vsize, 'DataType', 'single', 'ChunkSize', Csize, 'Deflate', 6, 'Shuffle', true);
+
+        RadOutVname = '/radius';      
+        h5create(OutFile, RadOutVname, Vsize, 'DataType', 'single', 'ChunkSize', Csize, 'Deflate', 6, 'Shuffle', true);
     end
 
     fprintf('  Extracting vortex\n');
-    for it = 1:Nt
+    for it = 1:2 %Nt
       Start     = [ 1 1 1 it ];
       IoCount   = [ Nx Ny Nz 1 ];
       FiltCount = [ Nx Ny 1 1 ];
@@ -244,6 +256,32 @@ function [ ] = GenWindNoVortex()
           h5write(OutFile, UdOutVname, U_D, Start, IoCount);
           h5write(OutFile, VdOutVname, V_D, Start, IoCount);
 
+          % Filter out the hurricane piece from the disturbance field
+          % to produce the non-hurricane piece of the disturbance field.
+
+          % Radius from storm center
+          StormX = X - StormLocX(it);
+          StormY = Y - StormLocY(it);
+          [ Y_GRID X_GRID ] = meshgrid(StormY, StormX);
+          RADIUS = sqrt(X_GRID.^2 + Y_GRID.^2);
+          RADIUS = repmat(RADIUS, [ 1 1 Nz ]);
+
+          % Eqn (3.8) in Kurihara et al. (1993)
+          E = (exp(-(R0 - RADIUS).^2./L^2) - exp(-(R0^2)/L^2)) ./ (1 - exp(-(R0^2)/L^2));
+          E(RADIUS > R0) = nan;
+
+          % hD-bar quantities as in Eqn (3.9) in Kurihara et al. (1993)
+          SELECT = (RADIUS >= R0*0.99) & (RADIUS <= R0*1.01);
+          U_D_BAR = mean(U_D(SELECT))
+          V_D_BAR = mean(V_D(SELECT))
+
+          % Eqn (3.7) in Kurihara et al. (1993)
+
+
+          h5write(OutFile, RadOutVname, E, Start, IoCount);
+
+          
+
         otherwise
           if (it == 1)
             fprintf('WARNING: do not recognize method number %d, copying U,V to output\n', Method);
@@ -288,6 +326,9 @@ function [ ] = GenWindNoVortex()
         fprintf('    %s\n', VdOutVname);
         AttachDimensionsXyzt(OutFile, UdOutVname, DimOrder, Xvname, Yvname, Zvname, Tvname);
         AttachDimensionsXyzt(OutFile, VdOutVname, DimOrder, Xvname, Yvname, Zvname, Tvname);
+
+        fprintf('    %s\n', RadOutVname);
+        AttachDimensionsXyzt(OutFile, RadOutVname, DimOrder, Xvname, Yvname, Zvname, Tvname);
     end
 
   end % cases
