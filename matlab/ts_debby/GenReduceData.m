@@ -10,15 +10,24 @@ function [ ] = GenReduceData()
   Ncases = length(CaseList);
 
   FileList = {
-    % Horizontal winds
-    { 'HDF5/<CASE>/HDF5/u-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/u_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/u' 10 10 1 1 'm/s' 'u' 't z y x' }
-    { 'HDF5/<CASE>/HDF5/v-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/v_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/v' 10 10 1 1 'm/s' 'u' 't z y x' }
+    % Temp
+    { 'HDF5/<CASE>/HDF5/tempc-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/tempc_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/tempc' 10 10 1 1 'C' 'tempc' 't z y x' }
+    { 'HDF5/<CASE>/HDF5/theta-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/theta_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/theta' 10 10 1 1 'C' 'theta' 't z y x' }
+    { 'HDF5/<CASE>/HDF5/theta_v-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/theta_v_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/theta_v' 10 10 1 1 'C' 'theta_v' 't z y x' }
 
-    % sea_pressure
-    { 'HDF5/<CASE>/HDF5/sea_press-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/sea_press_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/sea_press' 10 10 1 1 'mb' 'sea-level-pressure' 't y x' }
+    % Vapor
+    { 'HDF5/<CASE>/HDF5/vapor-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/vapor_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/vapor' 10 10 1 1 'C' 'vapor' 't z y x' }
 
-    % topography
-    { 'HDF5/<CASE>/HDF5/topo-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/topo_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/topo' 10 10 1 1 'm' 'topo' 't y x' }
+%    % Horizontal winds
+%    { 'HDF5/<CASE>/HDF5/u-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/u_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/u' 10 10 1 1 'm/s' 'u' 't z y x' }
+%    { 'HDF5/<CASE>/HDF5/v-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/v_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/v' 10 10 1 1 'm/s' 'u' 't z y x' }
+%
+%    % sea_pressure
+%    { 'HDF5/<CASE>/HDF5/sea_press-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/sea_press_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/sea_press' 10 10 1 1 'mb' 'sea-level-pressure' 't y x' }
+%
+%    % topography
+%    { 'HDF5/<CASE>/HDF5/topo-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/topo_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/topo' 10 10 1 1 'm' 'topo' 't y x' }
+
     };
 
   Nfiles = length(FileList);

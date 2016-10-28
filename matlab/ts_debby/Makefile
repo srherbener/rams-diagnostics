@@ -51,6 +51,7 @@ SCRIPTS = \
   $(DEST)/PlotSampleSoundingsNearStorm.m \
   $(DEST)/ExtractSampleProfile.m \
   $(DEST)/ExtractHorizWinds.m \
+  $(DEST)/GenStabilityMeas.m \
   $(DEST)/GenWindShearMeas.m \
   $(DEST)/GenWindShearField.m \
   $(DEST)/GenWindNoVortex.m \
