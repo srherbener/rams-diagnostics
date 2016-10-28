@@ -7,7 +7,10 @@ function [ ] = GenStabilityMeas()
 %   N^2 = (g/theta_v) * (dtheta_v/dz)
 %
 
-  g = 9.8; % m/s
+  g = 9.81; % gravity acceleration, m/s
+
+  Cp = 1005; % heat capacity of air at constant pressure, J/(kg K)
+  Lv = 2.5e6; % latent heat of vaporization for water, J/kg
 
   % list of simulation cases
   CaseList = {
@@ -32,7 +35,16 @@ function [ ] = GenStabilityMeas()
 
     ThvFile = sprintf('HDF5/%s/HDF5/theta_v_lite-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
     ThvVname = '/theta_v';
+
+    VapFile = sprintf('HDF5/%s/HDF5/vapor_lite-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
+    VapVname = '/vapor';
+
+    TempFile = sprintf('HDF5/%s/HDF5/tempc_lite-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
+    TempVname = '/tempc';
+
     fprintf('  Reading: %s (%s)\n', ThvFile, ThvVname);
+    fprintf('  Reading: %s (%s)\n', VapFile, VapVname);
+    fprintf('  Reading: %s (%s)\n', TempFile, TempVname);
     fprintf('\n');
 
     % Process one time step at a time
@@ -60,9 +72,13 @@ function [ ] = GenStabilityMeas()
     DZ = Z_KHALF(2:end) - Z_KHALF(1:end-1);
     DZ = repmat(reshape(DZ, [ 1 1 Nz ]), [ Nx Ny 1 ]);
 
+    % Need heights in 3D grid
+    Z3D = repmat(reshape(Z, [ 1 1 Nz ]), [ Nx Ny 1 ]);
+
     % Create the output file and datasets so that output can be written one time step at a time.
     OutFile = sprintf('HDF5/%s/HDF5/smeas_lite-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
     BvVname = '/brunt_vaisala_freq';
+    MseVname = '/moist_static_energy';
     if (exist(OutFile, 'file') == 2)
       delete(OutFile);
     end
@@ -76,12 +92,18 @@ function [ ] = GenStabilityMeas()
     Csize = [ Nx Ny Nz   1 ];
 
     h5create(OutFile, BvVname, Vsize, 'DataType', 'single', 'ChunkSize', Csize, 'Deflate', 6, 'Shuffle', true);
+    h5create(OutFile, MseVname, Vsize, 'DataType', 'single', 'ChunkSize', Csize, 'Deflate', 6, 'Shuffle', true);
 
-    fprintf('  Calculating Brunt-Vaisala Frequency\n');
+    fprintf('  Calculating:\n');
+    fprintf('    Brunt-Vaisala Frequency\n');
+    fprintf('    Moist Static Energy\n');
     for it = 1:Nt
       Start     = [ 1 1 1 it ];
       Count   = [ Nx Ny Nz 1 ];
 
+      %########################################################
+      % Brunt-Vaisala Frequency
+      %########################################################
       THV = squeeze(h5read(ThvFile, ThvVname, Start, Count));
 
       % Calculate the output at the k vertical locations. Create a delta THV
@@ -98,6 +120,23 @@ function [ ] = GenStabilityMeas()
 
       h5write(OutFile, BvVname, single(NSQ), Start, Count);
 
+      %########################################################
+      % Moist Static Energy
+      %########################################################
+
+      % Input vapor is in g/kg
+      %   std units are kg/kg so multiply by 1e-3
+      VAP = squeeze(h5read(VapFile, VapVname, Start, Count)) .* 1e-3;
+
+      % Input temp is in deg C
+      %   std unis are K so add 273.15
+      TEMP = squeeze(h5read(TempFile, TempVname, Start, Count)) + 273.15;
+
+      MSE = (Cp .* TEMP) + (g .* Z3D) + (Lv .* VAP); % Result is J/kg
+      MSE = MSE .* 1e-3; % convert to kJ/kg
+
+      h5write(OutFile, MseVname, single(MSE), Start, Count);
+
       if (mod(it, 10) == 0)
         fprintf('    Completed timestep: %d\n', it);
       end
@@ -110,7 +149,9 @@ function [ ] = GenStabilityMeas()
 
     DimOrder = { 'x' 'y' 'z' 't' };
     fprintf('    %s\n', BvVname);
+    fprintf('    %s\n', MseVname);
     AttachDimensionsXyzt(OutFile, BvVname, DimOrder, Xvname, Yvname, Zvname, Tvname);
+    AttachDimensionsXyzt(OutFile, MseVname, DimOrder, Xvname, Yvname, Zvname, Tvname);
 
   end % cases
 end % function
