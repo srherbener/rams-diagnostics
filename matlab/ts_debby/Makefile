@@ -33,6 +33,8 @@ SCRIPTS = \
   $(DEST)/PlotFsFigMaxWind.m \
   $(DEST)/PlotFsFigThetaeXsection.m \
   $(DEST)/PlotFsFigThetaXsection.m \
+  $(DEST)/PlotFsFigBruntVaisalaXsection.m \
+  $(DEST)/PlotFsFigMseXsection.m \
   $(DEST)/PlotFsFigVaporXsection.m \
   $(DEST)/PlotFsFigTempWindXsection.m \
   $(DEST)/PlotFsFigTempWindByDustXsection.m \

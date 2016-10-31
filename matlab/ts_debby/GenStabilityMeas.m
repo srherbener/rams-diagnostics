@@ -76,23 +76,29 @@ function [ ] = GenStabilityMeas()
     Z3D = repmat(reshape(Z, [ 1 1 Nz ]), [ Nx Ny 1 ]);
 
     % Create the output file and datasets so that output can be written one time step at a time.
-    OutFile = sprintf('HDF5/%s/HDF5/smeas_lite-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
-    BvVname = '/brunt_vaisala_freq';
+    BvfFile = sprintf('HDF5/%s/HDF5/bvf_lite-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
+    BvfVname = '/brunt_vaisala_freq';
+    if (exist(BvfFile, 'file') == 2)
+      delete(BvfFile);
+    end
+    MseFile = sprintf('HDF5/%s/HDF5/mse_lite-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
     MseVname = '/moist_static_energy';
-    if (exist(OutFile, 'file') == 2)
-      delete(OutFile);
+    if (exist(MseFile, 'file') == 2)
+      delete(MseFile);
     end
 
     % copy the dimension vars into the output file
-    CreateDimensionsXyzt(OutFile, X, Y, Z, T, Xvname, Yvname, Zvname, Tvname);
-    NotateDimensionsXyzt(OutFile, Xvname, Yvname, Zvname, Tvname);
+    CreateDimensionsXyzt(BvfFile, X, Y, Z, T, Xvname, Yvname, Zvname, Tvname);
+    NotateDimensionsXyzt(BvfFile, Xvname, Yvname, Zvname, Tvname);
+    CreateDimensionsXyzt(MseFile, X, Y, Z, T, Xvname, Yvname, Zvname, Tvname);
+    NotateDimensionsXyzt(MseFile, Xvname, Yvname, Zvname, Tvname);
 
     % create output datasets that can be written one time step at a time
     Vsize = [ Nx Ny Nz Inf ];
     Csize = [ Nx Ny Nz   1 ];
 
-    h5create(OutFile, BvVname, Vsize, 'DataType', 'single', 'ChunkSize', Csize, 'Deflate', 6, 'Shuffle', true);
-    h5create(OutFile, MseVname, Vsize, 'DataType', 'single', 'ChunkSize', Csize, 'Deflate', 6, 'Shuffle', true);
+    h5create(BvfFile, BvfVname, Vsize, 'DataType', 'single', 'ChunkSize', Csize, 'Deflate', 6, 'Shuffle', true);
+    h5create(MseFile, MseVname, Vsize, 'DataType', 'single', 'ChunkSize', Csize, 'Deflate', 6, 'Shuffle', true);
 
     fprintf('  Calculating:\n');
     fprintf('    Brunt-Vaisala Frequency\n');
@@ -118,7 +124,7 @@ function [ ] = GenStabilityMeas()
 
       NSQ = (g ./ THV) .* (DTHV ./ DZ);
 
-      h5write(OutFile, BvVname, single(NSQ), Start, Count);
+      h5write(BvfFile, BvfVname, single(NSQ), Start, Count);
 
       %########################################################
       % Moist Static Energy
@@ -135,7 +141,7 @@ function [ ] = GenStabilityMeas()
       MSE = (Cp .* TEMP) + (g .* Z3D) + (Lv .* VAP); % Result is J/kg
       MSE = MSE .* 1e-3; % convert to kJ/kg
 
-      h5write(OutFile, MseVname, single(MSE), Start, Count);
+      h5write(MseFile, MseVname, single(MSE), Start, Count);
 
       if (mod(it, 10) == 0)
         fprintf('    Completed timestep: %d\n', it);
@@ -145,13 +151,23 @@ function [ ] = GenStabilityMeas()
     fprintf('\n');
 
     % attach dimensions to output for GRADS
-    fprintf('  Writing %s\n', OutFile);
+    fprintf('  Writing %s\n', BvfFile);
+    fprintf('    %s\n', BvfVname);
+    fprintf('  Writing %s\n', MseFile);
+    fprintf('    %s\n', MseVname);
 
     DimOrder = { 'x' 'y' 'z' 't' };
-    fprintf('    %s\n', BvVname);
-    fprintf('    %s\n', MseVname);
-    AttachDimensionsXyzt(OutFile, BvVname, DimOrder, Xvname, Yvname, Zvname, Tvname);
-    AttachDimensionsXyzt(OutFile, MseVname, DimOrder, Xvname, Yvname, Zvname, Tvname);
+    DimNames = 't z y x';
+
+    Units = '1/s2';
+    LongName = 'BruntVaisalFreq';
+    AttachDimensionsXyzt(BvfFile, BvfVname, DimOrder, Xvname, Yvname, Zvname, Tvname);
+    NotateVariableXyzt(BvfFile, BvfVname, Units, LongName, DimNames);
+
+    Units = 'J/kg';
+    LongName = 'MoistStaticEnergy';
+    AttachDimensionsXyzt(MseFile, MseVname, DimOrder, Xvname, Yvname, Zvname, Tvname);
+    NotateVariableXyzt(MseFile, MseVname, Units, LongName, DimNames);
 
   end % cases
 end % function
