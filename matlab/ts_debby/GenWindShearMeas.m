@@ -29,9 +29,9 @@ function [ ] = GenWindShearMeas()
     fprintf('\n');
 
     if (NoVortex == 1)
-      InFile = sprintf('DIAGS/wind_shear_field_no_vortex_%s.h5', Case);
+      InFile = sprintf('HDF5/%s/HDF5/shear_nv_lite-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
     else
-      InFile = sprintf('DIAGS/wind_shear_field_%s.h5', Case);
+      InFile = sprintf('HDF5/%s/HDF5/shear_lite-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
     end
     FiltFile = sprintf('FILTERS/all_500_lite_%s.h5', Case);
 

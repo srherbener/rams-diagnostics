@@ -48,8 +48,8 @@ function [ ] = GenWindShearField()
     fprintf('\n');
 
     if (NoVortex == 1)
-      Uvname = '/u_basic';
-      Vvname = '/v_basic';
+      Uvname = '/u_no_vortex';
+      Vvname = '/v_no_vortex';
       Ufile = sprintf('HDF5/%s/HDF5/no_vortex_lite-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
       Vfile = sprintf('HDF5/%s/HDF5/no_vortex_lite-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
     else
@@ -89,9 +89,9 @@ function [ ] = GenWindShearField()
     % Output file, set up to be able to write output one time step at a time
     % Output will not have z-dimension, ie (x,y,t)
     if (NoVortex == 1)
-      OutFile = sprintf('DIAGS/wind_shear_field_no_vortex_%s.h5', Case);
+      OutFile = sprintf('HDF5/%s/HDF5/shear_nv_lite-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
     else
-      OutFile = sprintf('DIAGS/wind_shear_field_%s.h5', Case);
+      OutFile = sprintf('HDF5/%s/HDF5/shear_lite-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
     end
     if (exist(OutFile, 'file') == 2)
       delete(OutFile);

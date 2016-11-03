@@ -29,15 +29,15 @@ function [ ] = GenWindNoVortex()
 
   Method = 3;
 
-  R0 = 3; % degrees lat/lon (~300 km), for method 3
+  R0 = 5; % degrees lat/lon (~500 km), for method 3
   L = R0 / 5; % for method 3
 
   % list of simulation cases
   CaseList = {
     'TSD_SAL_DUST'
-%    'TSD_SAL_NODUST'
-%    'TSD_NONSAL_DUST'
-%    'TSD_NONSAL_NODUST'
+    'TSD_SAL_NODUST'
+    'TSD_NONSAL_DUST'
+    'TSD_NONSAL_NODUST'
     };
   Ncases = length(CaseList);
 
@@ -70,8 +70,8 @@ function [ ] = GenWindNoVortex()
 
     UoutVname = '/u_orig';
     VoutVname = '/v_orig';
-    UnvOutVname = '/u_nv';
-    VnvOutVname = '/v_nv';
+    UnvOutVname = '/u_no_vortex';
+    VnvOutVname = '/v_no_vortex';
 
     fprintf('  Reading: %s (%s)\n', UinFile, Uvname);
     fprintf('  Reading: %s (%s)\n', VinFile, Vvname);
@@ -140,10 +140,18 @@ function [ ] = GenWindNoVortex()
 
         RadOutVname = '/radius';      
         h5create(OutFile, RadOutVname, Vsize, 'DataType', 'single', 'ChunkSize', Csize, 'Deflate', 6, 'Shuffle', true);
+
+        AngOutVname = '/angle';      
+        h5create(OutFile, AngOutVname, Vsize, 'DataType', 'single', 'ChunkSize', Csize, 'Deflate', 6, 'Shuffle', true);
+
+        UavOutVname = '/u_vortex';      
+        VavOutVname = '/v_vortex';      
+        h5create(OutFile, UavOutVname, Vsize, 'DataType', 'single', 'ChunkSize', Csize, 'Deflate', 6, 'Shuffle', true);
+        h5create(OutFile, VavOutVname, Vsize, 'DataType', 'single', 'ChunkSize', Csize, 'Deflate', 6, 'Shuffle', true);
     end
 
     fprintf('  Extracting vortex\n');
-    for it = 1:2 %Nt
+    for it = 1:Nt
       Start     = [ 1 1 1 it ];
       IoCount   = [ Nx Ny Nz 1 ];
       FiltCount = [ Nx Ny 1 1 ];
@@ -265,22 +273,61 @@ function [ ] = GenWindNoVortex()
           [ Y_GRID X_GRID ] = meshgrid(StormY, StormX);
           RADIUS = sqrt(X_GRID.^2 + Y_GRID.^2);
           RADIUS = repmat(RADIUS, [ 1 1 Nz ]);
+          h5write(OutFile, RadOutVname, RADIUS, Start, IoCount);
+
+          % Angle from storm center, round to nearest 10 degrees
+          % Need to round angle to nearest 10 degrees to allow selection
+          % of points along the perimeter of the storm (R0) in each sector
+          ANGLE = atan2d(Y_GRID,X_GRID);
+          A_SELECT = (ANGLE < 0);
+          ANGLE(A_SELECT) = ANGLE(A_SELECT) + 360;
+          ANGLE = round(ANGLE,-1); % round to nearest 10 degrees
+          ANGLE = repmat(ANGLE, [ 1 1 Nz ]);
+          h5write(OutFile, AngOutVname, ANGLE, Start, IoCount);
 
           % Eqn (3.8) in Kurihara et al. (1993)
           E = (exp(-(R0 - RADIUS).^2./L^2) - exp(-(R0^2)/L^2)) ./ (1 - exp(-(R0^2)/L^2));
           E(RADIUS > R0) = nan;
 
-          % hD-bar quantities as in Eqn (3.9) in Kurihara et al. (1993)
-          SELECT = (RADIUS >= R0*0.99) & (RADIUS <= R0*1.01);
-          U_D_BAR = mean(U_D(SELECT))
-          V_D_BAR = mean(V_D(SELECT))
+          % hD-bar quantities [Eqn (3.9) in Kurihara et al. (1993)]
+          R_SELECT = (RADIUS >= R0*0.95) & (RADIUS <= R0*1.05);
+          U_D_BAR = mean(U_D(R_SELECT));
+          V_D_BAR = mean(V_D(R_SELECT));
 
-          % Eqn (3.7) in Kurihara et al. (1993)
+          % hD(r0,theta)
+          % Select along perimeter of storm in each 10 degree sector.
+          % Take average of these selected points and fill in the entire
+          % sector with that average value.
+          U_D_R0 = single(zeros([ Nx Ny Nz ]));
+          V_D_R0 = single(zeros([ Nx Ny Nz ]));
+          for i = 0:10:360
+            % peripheral values with angle equal to i degrees
+            R_SELECT = (ANGLE == i) & (RADIUS >= R0*0.95) & (RADIUS <= R0*1.05);
+            U_D_R0_VAL = mean(U_D(R_SELECT));
+            V_D_R0_VAL = mean(V_D(R_SELECT));
 
+            % Place the peripheral value in all locations where ANGLE == i
+            A_SELECT = (ANGLE == i);
+            U_D_R0(A_SELECT) = U_D_R0_VAL;
+            V_D_R0(A_SELECT) = V_D_R0_VAL;
+          end
 
-          h5write(OutFile, RadOutVname, E, Start, IoCount);
-
+          % Form analyzed vortex [Eqn (3.7) in Kurihara et al. (1993)]
+          % E had nans outside the vortex periphery which will get
+          % passed on to U_AV and V_AV.
+          % Replace these with zeros so that U_AV and V_AV can be
+          % subtracted from U and V.
+          U_AV = U_D - (U_D_R0.*E + U_D_BAR.*(E-1));
+          U_AV(isnan(U_AV)) = 0;
+          V_AV = V_D - (V_D_R0.*E + V_D_BAR.*(E-1));
+          V_AV(isnan(V_AV)) = 0;
+          h5write(OutFile, UavOutVname, U_AV, Start, IoCount);
+          h5write(OutFile, VavOutVname, V_AV, Start, IoCount);
           
+          % Form environmental fields, U_NV and V_NV, by subtracting
+          % the analyzed vortex from the original fields, U and V.
+          U_NV = U - U_AV;
+          V_NV = V - V_AV;
 
         otherwise
           if (it == 1)
@@ -329,6 +376,14 @@ function [ ] = GenWindNoVortex()
 
         fprintf('    %s\n', RadOutVname);
         AttachDimensionsXyzt(OutFile, RadOutVname, DimOrder, Xvname, Yvname, Zvname, Tvname);
+
+        fprintf('    %s\n', AngOutVname);
+        AttachDimensionsXyzt(OutFile, AngOutVname, DimOrder, Xvname, Yvname, Zvname, Tvname);
+
+        fprintf('    %s\n', UavOutVname);
+        fprintf('    %s\n', VavOutVname);
+        AttachDimensionsXyzt(OutFile, UavOutVname, DimOrder, Xvname, Yvname, Zvname, Tvname);
+        AttachDimensionsXyzt(OutFile, VavOutVname, DimOrder, Xvname, Yvname, Zvname, Tvname);
     end
 
   end % cases
