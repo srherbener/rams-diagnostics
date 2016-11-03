@@ -164,10 +164,27 @@ function [ ] = GenWindShearField()
 
     % attach dimensions (for GRADS)
     DimOrder = { 'x' 'y' 't' };
+    DimNames = 't y x';
+
+    Units = 'm/s';
+    LongName = 'Zonal wind shear';
     AttachDimensionsXyzt(OutFile, USvname, DimOrder, Xvname, Yvname, Zvname, Tvname);
+    NotateVariableXyzt(OutFile, USvname, Units, LongName, DimNames);
+
+    Units = 'm/s';
+    LongName = 'Meridional wind shear';
     AttachDimensionsXyzt(OutFile, VSvname, DimOrder, Xvname, Yvname, Zvname, Tvname);
+    NotateVariableXyzt(OutFile, VSvname, Units, LongName, DimNames);
+
+    Units = 'm/s';
+    LongName = 'Magnitude of wind shear';
     AttachDimensionsXyzt(OutFile, MSvname, DimOrder, Xvname, Yvname, Zvname, Tvname);
+    NotateVariableXyzt(OutFile, MSvname, Units, LongName, DimNames);
+
+    Units = 'radians';
+    LongName = 'Angle of wind shear';
     AttachDimensionsXyzt(OutFile, ASvname, DimOrder, Xvname, Yvname, Zvname, Tvname);
+    NotateVariableXyzt(OutFile, ASvname, Units, LongName, DimNames);
 
   end % cases
 end % function

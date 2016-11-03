@@ -353,37 +353,81 @@ function [ ] = GenWindNoVortex()
     fprintf('  Writing %s\n', OutFile);
 
     DimOrder = { 'x' 'y' 'z' 't' };
+    DimNames = 't z y x';
+
     fprintf('    %s\n', UoutVname);
-    fprintf('    %s\n', VoutVname);
-    fprintf('    %s\n', UnvOutVname);
-    fprintf('    %s\n', VnvOutVname);
+    Units = 'm/s';
+    LongName = 'Zonal Wind';
     AttachDimensionsXyzt(OutFile, UoutVname, DimOrder, Xvname, Yvname, Zvname, Tvname);
+    NotateVariableXyzt(OutFile, UoutVname, Units, LongName, DimNames);
+
+    fprintf('    %s\n', VoutVname);
+    Units = 'm/s';
+    LongName = 'Meridional Wind';
     AttachDimensionsXyzt(OutFile, VoutVname, DimOrder, Xvname, Yvname, Zvname, Tvname);
+    NotateVariableXyzt(OutFile, VoutVname, Units, LongName, DimNames);
+
+    fprintf('    %s\n', UnvOutVname);
+    Units = 'm/s';
+    LongName = 'Zonal Wind No Vortex';
     AttachDimensionsXyzt(OutFile, UnvOutVname, DimOrder, Xvname, Yvname, Zvname, Tvname);
+    NotateVariableXyzt(OutFile, UnvOutVname, Units, LongName, DimNames);
+
+    fprintf('    %s\n', VnvOutVname);
+    Units = 'm/s';
+    LongName = 'Meridional Wind No Vortex';
     AttachDimensionsXyzt(OutFile, VnvOutVname, DimOrder, Xvname, Yvname, Zvname, Tvname);
+    NotateVariableXyzt(OutFile, VnvOutVname, Units, LongName, DimNames);
 
     switch(Method)
       case 3
         fprintf('    %s\n', UbOutVname);
-        fprintf('    %s\n', VbOutVname);
+        Units = 'm/s';
+        LongName = 'Zonal Wind Smoothed';
         AttachDimensionsXyzt(OutFile, UbOutVname, DimOrder, Xvname, Yvname, Zvname, Tvname);
+        NotateVariableXyzt(OutFile, UbOutVname, Units, LongName, DimNames);
+
+        fprintf('    %s\n', VbOutVname);
+        Units = 'm/s';
+        LongName = 'Meridional Wind Smoothed';
         AttachDimensionsXyzt(OutFile, VbOutVname, DimOrder, Xvname, Yvname, Zvname, Tvname);
+        NotateVariableXyzt(OutFile, VbOutVname, Units, LongName, DimNames);
 
         fprintf('    %s\n', UdOutVname);
-        fprintf('    %s\n', VdOutVname);
+        Units = 'm/s';
+        LongName = 'Zonal Wind Perturbation';
         AttachDimensionsXyzt(OutFile, UdOutVname, DimOrder, Xvname, Yvname, Zvname, Tvname);
+        NotateVariableXyzt(OutFile, UdOutVname, Units, LongName, DimNames);
+
+        fprintf('    %s\n', VdOutVname);
+        Units = 'm/s';
+        LongName = 'Meridional Wind Perturbation';
         AttachDimensionsXyzt(OutFile, VdOutVname, DimOrder, Xvname, Yvname, Zvname, Tvname);
+        NotateVariableXyzt(OutFile, VdOutVname, Units, LongName, DimNames);
 
         fprintf('    %s\n', RadOutVname);
+        Units = 'm';
+        LongName = 'Radius relative to storm center';
         AttachDimensionsXyzt(OutFile, RadOutVname, DimOrder, Xvname, Yvname, Zvname, Tvname);
+        NotateVariableXyzt(OutFile, RadOutVname, Units, LongName, DimNames);
 
         fprintf('    %s\n', AngOutVname);
+        Units = 'degrees';
+        LongName = 'Angle relative to storm center';
         AttachDimensionsXyzt(OutFile, AngOutVname, DimOrder, Xvname, Yvname, Zvname, Tvname);
+        NotateVariableXyzt(OutFile, AngOutVname, Units, LongName, DimNames);
 
         fprintf('    %s\n', UavOutVname);
-        fprintf('    %s\n', VavOutVname);
+        Units = 'm/s';
+        LongName = 'Zonal Wind No Vortex';
         AttachDimensionsXyzt(OutFile, UavOutVname, DimOrder, Xvname, Yvname, Zvname, Tvname);
+        NotateVariableXyzt(OutFile, UavOutVname, Units, LongName, DimNames);
+
+        fprintf('    %s\n', VavOutVname);
+        Units = 'm/s';
+        LongName = 'Meridional Wind No Vortex';
         AttachDimensionsXyzt(OutFile, VavOutVname, DimOrder, Xvname, Yvname, Zvname, Tvname);
+        NotateVariableXyzt(OutFile, VavOutVname, Units, LongName, DimNames);
     end
 
   end % cases
