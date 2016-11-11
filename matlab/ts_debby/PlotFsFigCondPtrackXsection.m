@@ -1,4 +1,4 @@
-function [ ] = PlotFsFigCondXsection()
+function [ ] = PlotFsFigCondPtrackXsection()
 
   Pdir = 'Plots';
   if (exist(Pdir, 'dir') ~= 7)
@@ -61,7 +61,7 @@ function [ ] = PlotFsFigCondXsection()
   COND_DIFF = squeeze(COND(1,:,:,:) - COND(2,:,:,:));
 
   % Plot: 10 panels (5x2)
-  OutFile = sprintf('%s/FsFigCondXsection.jpg', Pdir);
+  OutFile = sprintf('%s/FsFigCondPtrackXsection.jpg', Pdir);
   Fig = figure;
 
   Xlim = [ 0 1800 ];

@@ -36,8 +36,10 @@ SCRIPTS = \
   $(DEST)/PlotFsFigThetaXsection.m \
   $(DEST)/PlotFsFigBruntVaisalaXsection.m \
   $(DEST)/PlotFsFigMseXsection.m \
-  $(DEST)/PlotFsFigDustXsection.m \
-  $(DEST)/PlotFsFigCondXsection.m \
+  $(DEST)/PlotFsFigDustPtrackXsection.m \
+  $(DEST)/PlotFsFigCondPtrackXsection.m \
+  $(DEST)/PlotFsFigDustStrackXsection.m \
+  $(DEST)/PlotFsFigCondStrackXsection.m \
   $(DEST)/PlotFsFigVaporXsection.m \
   $(DEST)/PlotFsFigTempWindXsection.m \
   $(DEST)/PlotFsFigTempWindByDustXsection.m \

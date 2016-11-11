@@ -1,4 +1,4 @@
-function [ ] = PlotFsFigDustXsection()
+function [ ] = PlotFsFigDustPtrackXsection()
 
   Pdir = 'Plots';
   if (exist(Pdir, 'dir') ~= 7)
@@ -59,7 +59,7 @@ function [ ] = PlotFsFigDustXsection()
   DUST_DIFF = squeeze(DUST(1,:,:,:) - DUST(2,:,:,:));
 
   % Plot: 10 panels (5x2)
-  OutFile = sprintf('%s/FsFigDustXsection.jpg', Pdir);
+  OutFile = sprintf('%s/FsFigDustPtrackXsection.jpg', Pdir);
   Fig = figure;
 
   Xlim = [ 0 1800 ];
