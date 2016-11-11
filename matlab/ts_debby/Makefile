@@ -23,6 +23,7 @@ SCRIPTS = \
   $(DEST)/PlotDpFigTseries.m \
   $(DEST)/PlotFsFigModelSetup.m \
   $(DEST)/PlotFsFigDustProfiles.m \
+  $(DEST)/PlotFsFigCfracProfiles.m \
   $(DEST)/PlotFsFigCloudRainProfiles.m \
   $(DEST)/PlotFsFigHydroThetaProfiles.m \
   $(DEST)/PlotFsFigAnalysisSetup.m \
