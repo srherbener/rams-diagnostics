@@ -1,4 +1,4 @@
-function [ ] = GenFactSep()
+function [ ] = GenFsFactors()
 
   Ddir = 'DIAGS';
 
@@ -6,34 +6,16 @@ function [ ] = GenFactSep()
   %
   %      Factor     Number    Included      Excluded
   %
-  %    "sal" air      1         SAL          NONSAL
-  %    dusty air      2         DUST         NODUST
+  %    SAL-Env        1         SAL          NONSAL
+  %    DUST           2         DUST         NODUST
   %
-  %    sal air means the existance of a mid-level dry, warm layer
+  %    SAL-Env means the existance of a mid-level dry, warm layer
   %
-  % Scheme relative to the control simulation (SD)
-  %   puts things in perspective of what happens when you remove
-  %   SAL characteristics
+  % Factor separation according to Stein and Alpert (1993). Their
+  % notation uses F0,... for simulations and F-hat0,... for factors.
+  % We'll use S0,... for simulations and F0,... for factors.
   %
-  %      Simulations  Sal Air    Dusty Air      Case
-  %
-  %          S0        Yes         Yes       TSD_SAL_DUST 
-  %          S1        No          Yes       TSD_NONSAL_DUST 
-  %          S2        Yes         No        TSD_SAL_NODUST 
-  %          S12       No          No        TSD_NONSAL_NODUST 
-  %
-  %      Factors              Descrip                     Formula
-  %
-  %          F0       Part independent of SAL chars.        F0 = S0
-  %          F1       Part due to dry air                   F1 = S1 - S0
-  %          F2       Part due to dusty air                 F2 = S2 - S0
-  %          F12      Part due to combo of dry, dusty air   F12 = S12 - (S1 + S2) + S0
-  %
-  % Scheme relative to the non-SAL, no dust simulation
-  %   puts things in perspective of what happens when you add
-  %   SAL characteristics
-  %
-  %      Simulations  Sal Air    Dusty Air      Case
+  %      Simulations  SAL-Env     Dust          Case
   %
   %          S0        No          No        TSD_NONSAL_NODUST 
   %          S1        Yes         No        TSD_SAL_NODUST 
@@ -42,10 +24,11 @@ function [ ] = GenFactSep()
   %
   %      Factors              Descrip                     Formula
   %
-  %          F0       Part independent of SAL chars.        F0 = S0
-  %          F1       Part due to dry air                   F1 = S1 - S0
-  %          F2       Part due to dusty air                 F2 = S2 - S0
-  %          F12      Part due to combo of dry, dusty air   F12 = S12 - (S1 + S2) + S0
+  %          F0       Part independent of factors           F0 = S0
+  %          F1       Part due to SAL-Env                   F1 = S1 - S0
+  %          F2       Part due to DUST                      F2 = S2 - S0
+  %          F12      Part due to interactions of           F12 = S12 - (S1 + S2) + S0
+  %                   SAL-Env and DUST
   
   
   % Cases - list these out in the factor separation order:
@@ -53,44 +36,41 @@ function [ ] = GenFactSep()
   %   S1
   %   S2
   %   S12
-  % perspective of removal of SAL characteristics
   CaseList = {
-    'TSD_SAL_DUST'
-    'TSD_NONSAL_DUST'
-    'TSD_SAL_NODUST'
     'TSD_NONSAL_NODUST'
+    'TSD_SAL_NODUST'
+    'TSD_NONSAL_DUST'
+    'TSD_SAL_DUST'
     };
-%  % perspective of addition of SAL characteristics
-%  CaseList = {
-%    'TSD_NONSAL_NODUST'
-%    'TSD_SAL_NODUST'
-%    'TSD_NONSAL_DUST'
-%    'TSD_SAL_DUST'
-%    };
-
 
   Ncases = length(CaseList);
 
   % ps_* -> Pre-SAL time period, s_* -> SAL time period
   VarList = {
     %  Avg Var           File Name                          File Var Name
-    { 'max_wind'       'DIAGS/fs_averages.h5'    '/<CASE>/avg_max_wind'     }
-    { 'min_press'      'DIAGS/fs_averages.h5'    '/<CASE>/avg_min_press'    }
-    { 'ike'            'DIAGS/fs_averages.h5'    '/<CASE>/avg_ike'          }
-    { 'rmw'            'DIAGS/fs_averages.h5'    '/<CASE>/avg_rmw'          }
-    { 'pcprate'        'DIAGS/fs_averages.h5'    '/<CASE>/avg_pcprate'      }
+    { 'max_wind'       'DIAGS/fs_averages.h5'    '/<CASE>/avg_max_wind'      }
+    { 'max_wind_t'     'DIAGS/fs_averages.h5'    '/<CASE>/avg_max_wind_t'    }
+    { 'min_press'      'DIAGS/fs_averages.h5'    '/<CASE>/avg_min_press'     }
+    { 'ike'            'DIAGS/fs_averages.h5'    '/<CASE>/avg_ike'           }
+    { 'rmw'            'DIAGS/fs_averages.h5'    '/<CASE>/avg_rmw'           }
+    { 'rmw_t'          'DIAGS/fs_averages.h5'    '/<CASE>/avg_rmw_t'         }
+    { 'pcprate'        'DIAGS/fs_averages.h5'    '/<CASE>/avg_pcprate'       }
 
-    { 'ps_max_wind'    'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_max_wind'  }
-    { 'ps_min_press'   'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_min_press' }
-    { 'ps_ike'         'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_ike'       }
-    { 'ps_rmw'         'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_rmw'       }
-    { 'ps_pcprate'     'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_pcprate'   }
+    { 'ps_max_wind'    'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_max_wind'   }
+    { 'ps_max_wind_t'  'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_max_wind_t' }
+    { 'ps_min_press'   'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_min_press'  }
+    { 'ps_ike'         'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_ike'        }
+    { 'ps_rmw'         'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_rmw'        }
+    { 'ps_rmw_t'       'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_rmw_t'      }
+    { 'ps_pcprate'     'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_pcprate'    }
 
-    { 's_max_wind'     'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_max_wind'   }
-    { 's_min_press'    'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_min_press'  }
-    { 's_ike'          'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_ike'        }
-    { 's_rmw'          'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_rmw'        }
-    { 's_pcprate'      'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_pcprate'    }
+    { 's_max_wind'     'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_max_wind'    }
+    { 's_max_wind_t'   'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_max_wind_t'  }
+    { 's_min_press'    'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_min_press'   }
+    { 's_ike'          'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_ike'         }
+    { 's_rmw'          'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_rmw'         }
+    { 's_rmw_t'        'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_rmw_t'       }
+    { 's_pcprate'      'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_pcprate'     }
     };
 
   Nvars = length(VarList);
@@ -146,8 +126,8 @@ function [ ] = GenFactSep()
     F_DATA = [ F0 F1 F2 F12 ];
 
     % Write out data for a bar plot which shows fractional changes
-    BF_DATA = [ F1  F2  (S12-S0) nan ] ./ S0;
-    BI_DATA = [ nan nan nan      F12 ] ./ S0;
+    BF_DATA = [ F1  F2  (S12-S0) nan ] ./ S12;
+    BI_DATA = [ nan nan nan      F12 ] ./ S12;
     
     OutVar = sprintf('/%s_averages', FsVar);
     fprintf('  Writing: %s (%s)\n', OutFile, OutVar)

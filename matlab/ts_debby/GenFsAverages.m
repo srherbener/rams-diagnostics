@@ -14,25 +14,33 @@ function [ ] = GenFsAverages()
 
   VarList = {
     %    Input File Name              Input Var Name     Output Var Name
-    { 'DIAGS/storm_meas_<CASE>.h5'   '/max_wind'       'avg_max_wind'     }
-    { 'DIAGS/storm_meas_<CASE>.h5'   '/ps_max_wind'    'ps_avg_max_wind'  }
-    { 'DIAGS/storm_meas_<CASE>.h5'   '/s_max_wind'     's_avg_max_wind'   }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/max_wind'       'avg_max_wind'      }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/ps_max_wind'    'ps_avg_max_wind'   }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/s_max_wind'     's_avg_max_wind'    }
 
-    { 'DIAGS/storm_meas_<CASE>.h5'   '/min_slp'        'avg_min_press'    }
-    { 'DIAGS/storm_meas_<CASE>.h5'   '/ps_min_slp'     'ps_avg_min_press' }
-    { 'DIAGS/storm_meas_<CASE>.h5'   '/s_min_slp'      's_avg_min_press'  }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/max_wind_t'     'avg_max_wind_t'    }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/ps_max_wind_t'  'ps_avg_max_wind_t' }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/s_max_wind_t'   's_avg_max_wind_t'  }
 
-    { 'DIAGS/storm_meas_<CASE>.h5'   '/ike'            'avg_ike'          }
-    { 'DIAGS/storm_meas_<CASE>.h5'   '/ps_ike'         'ps_avg_ike'       }
-    { 'DIAGS/storm_meas_<CASE>.h5'   '/s_ike'          's_avg_ike'        }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/min_slp'        'avg_min_press'     }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/ps_min_slp'     'ps_avg_min_press'  }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/s_min_slp'      's_avg_min_press'   }
+
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/ike'            'avg_ike'           }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/ps_ike'         'ps_avg_ike'        }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/s_ike'          's_avg_ike'         }
  
-    { 'DIAGS/storm_meas_<CASE>.h5'   '/rmw'            'avg_rmw'          }
-    { 'DIAGS/storm_meas_<CASE>.h5'   '/ps_rmw'         'ps_avg_rmw'       }
-    { 'DIAGS/storm_meas_<CASE>.h5'   '/s_rmw'          's_avg_rmw'        }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/rmw'            'avg_rmw'           }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/ps_rmw'         'ps_avg_rmw'        }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/s_rmw'          's_avg_rmw'         }
 
-    { 'DIAGS/storm_meas_<CASE>.h5'   '/pcprate'        'avg_pcprate'      }
-    { 'DIAGS/storm_meas_<CASE>.h5'   '/ps_pcprate'     'ps_avg_pcprate'   }
-    { 'DIAGS/storm_meas_<CASE>.h5'   '/s_pcprate'      's_avg_pcprate'    }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/rmw_t'          'avg_rmw_t'         }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/ps_rmw_t'       'ps_avg_rmw_t'      }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/s_rmw_t'        's_avg_rmw_t'       }
+
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/pcprate'        'avg_pcprate'       }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/ps_pcprate'     'ps_avg_pcprate'    }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/s_pcprate'      's_avg_pcprate'     }
     };
 
   Nvars = length(VarList);
@@ -66,7 +74,7 @@ function [ ] = GenFsAverages()
       VAR = squeeze(h5read(InFile, InVname));
  
       % calculate the time averages
-      AVG = nanmean(VAR);
+      AVG = mean(VAR);
       Vsize = 1;
 
       % save the averages (raw data for the factor separation)

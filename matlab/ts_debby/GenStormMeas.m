@@ -31,12 +31,13 @@ function [ ] = GenStormMeas()
     { 'ps_min_slp' 'DIAGS/hist_meas_az_press_<CASE>.h5' '/all_ps_press_sfc_ts' 0 250 0 1 'min' }
     { 's_min_slp'  'DIAGS/hist_meas_az_press_<CASE>.h5' '/all_s_press_sfc_ts'  0 250 0 1 'min' }
 
-    { 'max_wind'    'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_speed_maxlev_ts'    0 250 0 1 'max' }
-    { 'ps_max_wind' 'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_ps_speed_maxlev_ts' 0 250 0 1 'max' }
-    { 's_max_wind'  'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_s_speed_maxlev_ts'  0 250 0 1 'max' }
-%    { 'max_wind'    'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_speed_t_maxlev_ts'    0 250 0 1 'max' }
-%    { 'ps_max_wind' 'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_ps_speed_t_maxlev_ts' 0 250 0 1 'max' }
-%    { 's_max_wind'  'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_s_speed_t_maxlev_ts'  0 250 0 1 'max' }
+    { 'max_wind'      'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_speed_maxlev_ts'    0 250 0 1 'max' }
+    { 'ps_max_wind'   'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_ps_speed_maxlev_ts' 0 250 0 1 'max' }
+    { 's_max_wind'    'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_s_speed_maxlev_ts'  0 250 0 1 'max' }
+
+    { 'max_wind_t'    'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_speed_t_maxlev_ts'    0 250 0 1 'max' }
+    { 'ps_max_wind_t' 'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_ps_speed_t_maxlev_ts' 0 250 0 1 'max' }
+    { 's_max_wind_t'  'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_s_speed_t_maxlev_ts'  0 250 0 1 'max' }
 
     { 'ike'      'TsAveragedData/horiz_ke_<CASE>.h5' '/horiz_ke'    0 250 0 1 'na'  }
     { 'ps_ike'   'TsAveragedData/horiz_ke_<CASE>.h5' '/horiz_ke'    0 250 0 1 'na'  }
@@ -45,9 +46,10 @@ function [ ] = GenStormMeas()
     { 'rmw'         'DIAGS/hist_meas_az_speed_<CASE>.h5'   '/all_speed_maxlev_ts'    0 250 0 1 'rmw' }
     { 'ps_rmw'      'DIAGS/hist_meas_az_speed_<CASE>.h5'   '/all_ps_speed_maxlev_ts' 0 250 0 1 'rmw' }
     { 's_rmw'       'DIAGS/hist_meas_az_speed_<CASE>.h5'   '/all_s_speed_maxlev_ts'  0 250 0 1 'rmw' }
-%    { 'rmw'         'DIAGS/hist_meas_az_speed_<CASE>.h5'   '/all_speed_t_maxlev_ts'    0 250 0 1 'rmw' }
-%    { 'ps_rmw'      'DIAGS/hist_meas_az_speed_<CASE>.h5'   '/all_ps_speed_t_maxlev_ts' 0 250 0 1 'rmw' }
-%    { 's_rmw'       'DIAGS/hist_meas_az_speed_<CASE>.h5'   '/all_s_speed_t_maxlev_ts'  0 250 0 1 'rmw' }
+
+    { 'rmw_t'       'DIAGS/hist_meas_az_speed_<CASE>.h5'   '/all_speed_t_maxlev_ts'    0 250 0 1 'rmw' }
+    { 'ps_rmw_t'    'DIAGS/hist_meas_az_speed_<CASE>.h5'   '/all_ps_speed_t_maxlev_ts' 0 250 0 1 'rmw' }
+    { 's_rmw_t'     'DIAGS/hist_meas_az_speed_<CASE>.h5'   '/all_s_speed_t_maxlev_ts'  0 250 0 1 'rmw' }
 
     { 'pcprate'     'DIAGS/hist_meas_az_pcprate_<CASE>.h5' '/all_pcprate_ts'     0 250 0 1 'max' }
     { 'ps_pcprate'  'DIAGS/hist_meas_az_pcprate_<CASE>.h5' '/all_ps_pcprate_ts'  0 250 0 1 'max' }

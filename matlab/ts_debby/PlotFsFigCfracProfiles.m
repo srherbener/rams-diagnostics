@@ -27,12 +27,9 @@ function [ ] = PlotFsFigCfracProfiles()
     Label = CaseList{ic}{2};
     Color = CaseList{ic}{3};
 
-%    InFname = sprintf('TsAveragedData/hfrac_cloud_%s.h5', Case);
-%    InSalArFname = sprintf('TsAveragedData/hfrac_sal_ar_cloud_%s.h5', Case);
-%    InVname  = '/cloud';
-    InFname = sprintf('TsAveragedData/hfrac_tcond_%s.h5', Case);
-    InSalArFname = sprintf('TsAveragedData/hfrac_sal_ar_tcond_%s.h5', Case);
-    InVname  = '/tcond';
+    InFname = sprintf('TsAveragedData/hfrac_cloud_%s.h5', Case);
+    InSalArFname = sprintf('TsAveragedData/hfrac_sal_ar_cloud_%s.h5', Case);
+    InVname  = '/cloud';
     fprintf('Reading: %s (%s)\n', InFname, InVname);
     fprintf('Reading: %s (%s)\n', InSalArFname, InVname);
 
@@ -91,12 +88,10 @@ function [ ] = PlotFsFigCfracProfiles()
   Ylim = [ 0 10 ];
 
   Paxes = subplot(1,2,1);
-%  PlotFsFigLine(Paxes, CFRAC, HGHTS, 'a', 'PSAP: G3', 'Cloud Frac.', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'NorthEast', Colors);
-  PlotFsFigLine(Paxes, CFRAC, HGHTS, 'a', 'PSAP: G3', 'Cond. Frac.', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'NorthEast', Colors);
+  PlotFsFigLine(Paxes, CFRAC, HGHTS, 'a', 'PSAP: G3', 'Cloud Frac.', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'NorthEast', Colors);
 
   Paxes = subplot(1,2,2);
-%  PlotFsFigLine(Paxes, CFRAC_SAL_AR, HGHTS, 'b', 'PSAP: SAL\_AR', 'Cloud Frac.', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'none', Colors);
-  PlotFsFigLine(Paxes, CFRAC_SAL_AR, HGHTS, 'b', 'PSAP: SAL\_AR', 'Cond. Frac.', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'none', Colors);
+  PlotFsFigLine(Paxes, CFRAC_SAL_AR, HGHTS, 'b', 'PSAP: SAL\_AR', 'Cloud Frac.', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'none', Colors);
 
 
   OutFile = sprintf('%s/FsFigCfracProfiles.jpg', Pdir);

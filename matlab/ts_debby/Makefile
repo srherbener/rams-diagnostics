@@ -24,6 +24,9 @@ SCRIPTS = \
   $(DEST)/PlotFsFigModelSetup.m \
   $(DEST)/PlotFsFigDustProfiles.m \
   $(DEST)/PlotFsFigCfracProfiles.m \
+  $(DEST)/PlotFsFigIke.m \
+  $(DEST)/PlotFsFigTempPtrack.m \
+  $(DEST)/PlotFsFigWindPtrack.m \
   $(DEST)/PlotFsFigCloudRainProfiles.m \
   $(DEST)/PlotFsFigHydroThetaProfiles.m \
   $(DEST)/PlotFsFigAnalysisSetup.m \
