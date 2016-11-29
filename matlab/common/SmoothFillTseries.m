@@ -19,8 +19,14 @@ InTsNoNan = InTs(Use);
 
 % smooth with a running mean of length 'Flen'
 % run filter only on the input series with the nans removed
-% stick the nans back into the output series in the same locations that they appeared in teh input series
-TempTs = filtfilt(ones(1,FilterLen)/FilterLen,1,double(InTsNoNan));
+% stick the nans back into the output series in the same locations that they appeared in the input series
+% run the filter in both directions in order to create a zero-phase result
+Bcoeff = ones(1,FilterLen)./FilterLen;
+Acoeff = 1;
+TempTs = filter(Bcoeff,Acoeff,double(InTsNoNan));
+TempTs2 = filter(Bcoeff,Acoeff,TempTs(end:-1:1));
+TempTs = TempTs2(end:-1:1);
+
 OutTs = nan([ 1 InTsLen ]);
 OutTs(Use) = TempTs;
    
