@@ -22,6 +22,14 @@ function [ ] = GenFsAverages()
     { 'DIAGS/storm_meas_<CASE>.h5'   '/ps_max_wind_t'  'ps_avg_max_wind_t' }
     { 'DIAGS/storm_meas_<CASE>.h5'   '/s_max_wind_t'   's_avg_max_wind_t'  }
 
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/avg_wind'       'avg_wind'      }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/ps_avg_wind'    'ps_avg_wind'   }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/s_avg_wind'     's_avg_wind'    }
+
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/avg_wind_t'     'avg_wind_t'    }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/ps_avg_wind_t'  'ps_avg_wind_t' }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/s_avg_wind_t'   's_avg_wind_t'  }
+
     { 'DIAGS/storm_meas_<CASE>.h5'   '/min_slp'        'avg_min_press'     }
     { 'DIAGS/storm_meas_<CASE>.h5'   '/ps_min_slp'     'ps_avg_min_press'  }
     { 'DIAGS/storm_meas_<CASE>.h5'   '/s_min_slp'      's_avg_min_press'   }

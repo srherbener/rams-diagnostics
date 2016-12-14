@@ -39,6 +39,14 @@ function [ ] = GenStormMeas()
     { 'ps_max_wind_t' 'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_ps_speed_t_maxlev_ts' 0 250 0 1 'max' }
     { 's_max_wind_t'  'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_s_speed_t_maxlev_ts'  0 250 0 1 'max' }
 
+    { 'avg_wind'      'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_speed_ts'    0 250 0 2 'avg' }
+    { 'ps_avg_wind'   'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_ps_speed_ts' 0 250 0 2 'avg' }
+    { 's_avg_wind'    'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_s_speed_ts'  0 250 0 2 'avg' }
+
+    { 'avg_wind_t'    'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_speed_t_ts'    0 250 0 2 'avg' }
+    { 'ps_avg_wind_t' 'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_ps_speed_t_ts' 0 250 0 2 'avg' }
+    { 's_avg_wind_t'  'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_s_speed_t_ts'  0 250 0 2 'avg' }
+
     { 'ike'      'TsAveragedData/horiz_ke_<CASE>.h5' '/horiz_ke'    0 250 0 1 'na'  }
     { 'ps_ike'   'TsAveragedData/horiz_ke_<CASE>.h5' '/horiz_ke'    0 250 0 1 'na'  }
     { 's_ike'    'TsAveragedData/horiz_ke_<CASE>.h5' '/horiz_ke'    0 250 0 1 'na'  }
@@ -178,20 +186,26 @@ function [ ] = GenStormMeas()
              M_TEST = squeeze(MDATA(R1:R2,Z1:Z2,it));
           end
 
-          if (strcmp(Mmeas, 'min'))
-            Tseries(it) = min(M_TEST(:));
-          elseif (strcmp(Mmeas, 'max') || strcmp(Mmeas, 'rmw'))
-            % record the index and value of the maximum
-            % if doing rmw, use the index to look up the radius
-            %
-            [ Val Ind ] = max(M_TEST(:));
+          switch(Mmeas)
+            case { 'min' }
+              Tseries(it) = min(M_TEST(:));
 
-            if (strcmp(Mmeas, 'max'))
-              Tseries(it) = Val(1);
-            elseif (strcmp(Mmeas, 'rmw'))
-              [ Rind Zind ] = ind2sub(size(M_TEST), Ind(1));
-              Tseries(it) = R(Rind);
-            end
+            case { 'max' 'rmw' }
+              % record the index and value of the maximum
+              % if doing rmw, use the index to look up the radius
+              %
+              [ Val Ind ] = max(M_TEST(:));
+  
+              if (strcmp(Mmeas, 'max'))
+                Tseries(it) = Val(1);
+              elseif (strcmp(Mmeas, 'rmw'))
+                [ Rind Zind ] = ind2sub(size(M_TEST), Ind(1));
+                Tseries(it) = R(Rind);
+              end
+
+            case { 'avg' }
+              Tseries(it) = mean(M_TEST(:));
+
           end
         end
       else

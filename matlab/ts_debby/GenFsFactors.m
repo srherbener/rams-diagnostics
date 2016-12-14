@@ -48,6 +48,8 @@ function [ ] = GenFsFactors()
   % ps_* -> Pre-SAL time period, s_* -> SAL time period
   VarList = {
     %  Avg Var           File Name                          File Var Name
+    { 'avg_wind'       'DIAGS/fs_averages.h5'    '/<CASE>/avg_wind'          }
+    { 'avg_wind_t'     'DIAGS/fs_averages.h5'    '/<CASE>/avg_wind_t'        }
     { 'max_wind'       'DIAGS/fs_averages.h5'    '/<CASE>/avg_max_wind'      }
     { 'max_wind_t'     'DIAGS/fs_averages.h5'    '/<CASE>/avg_max_wind_t'    }
     { 'min_press'      'DIAGS/fs_averages.h5'    '/<CASE>/avg_min_press'     }
@@ -56,6 +58,8 @@ function [ ] = GenFsFactors()
     { 'rmw_t'          'DIAGS/fs_averages.h5'    '/<CASE>/avg_rmw_t'         }
     { 'pcprate'        'DIAGS/fs_averages.h5'    '/<CASE>/avg_pcprate'       }
 
+    { 'ps_avg_wind'    'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_wind'       }
+    { 'ps_avg_wind_t'  'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_wind_t'     }
     { 'ps_max_wind'    'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_max_wind'   }
     { 'ps_max_wind_t'  'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_max_wind_t' }
     { 'ps_min_press'   'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_min_press'  }
@@ -64,6 +68,8 @@ function [ ] = GenFsFactors()
     { 'ps_rmw_t'       'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_rmw_t'      }
     { 'ps_pcprate'     'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_pcprate'    }
 
+    { 's_avg_wind'     'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_wind'        }
+    { 's_avg_wind_t'   'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_wind_t'      }
     { 's_max_wind'     'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_max_wind'    }
     { 's_max_wind_t'   'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_max_wind_t'  }
     { 's_min_press'    'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_min_press'   }
