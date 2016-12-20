@@ -35,7 +35,7 @@ SCRIPTS = \
   $(DEST)/PlotFsFigVisSimStorm.m \
   $(DEST)/PlotFsFigSatSimStorm.m \
   $(DEST)/PlotFsFigObsSimDust.m \
-  $(DEST)/PlotFsFigMaxWind.m \
+  $(DEST)/PlotFsFigWind.m \
   $(DEST)/PlotFsFigThetaeXsection.m \
   $(DEST)/PlotFsFigThetaXsection.m \
   $(DEST)/PlotFsFigBruntVaisalaXsection.m \

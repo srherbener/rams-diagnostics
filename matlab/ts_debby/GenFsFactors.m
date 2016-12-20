@@ -127,13 +127,24 @@ function [ ] = GenFsFactors()
     % into a vector.
     %   Sim averages: [ S0 S1 S2 S12 ]
     %   Factors:      [ F0 F1 F2 F12 ]
+    %
+    % Create a third matrix that shows accumulation of the factors.
+    % The first row shows start values of each factor and the second
+    % row shows end values. Thus, the magnitude and sign (+/-) information
+    % is saved. The first four start/end pairs show the accumulation
+    % of the factors and the fifth pair shows the resulting sum.
 
     S_DATA = [ S0 S1 S2 S12 ];
     F_DATA = [ F0 F1 F2 F12 ];
 
-    % Write out data for a bar plot which shows fractional changes
-    BF_DATA = [ F1  F2  (S12-S0) nan ] ./ S12;
-    BI_DATA = [ nan nan nan      F12 ] ./ S12;
+    P1 = 0;
+    P2 = S0;
+    P3 = P2 + F1;
+    P4 = P3 + F2;
+    P5 = P4 + F12;
+
+    BF_DATA = [ P1 P2 P3 P4   0 ;
+                P2 P3 P4 P5 S12 ];
     
     OutVar = sprintf('/%s_averages', FsVar);
     fprintf('  Writing: %s (%s)\n', OutFile, OutVar)
@@ -145,16 +156,11 @@ function [ ] = GenFsFactors()
     h5create(OutFile, OutVar,  length(F_DATA));
     h5write( OutFile, OutVar,  F_DATA);
 
-    OutVar = sprintf('/%s_bar_frac_change', FsVar);
+    OutVar = sprintf('/%s_bar_factors', FsVar);
     fprintf('  Writing: %s (%s)\n', OutFile, OutVar)
-    h5create(OutFile, OutVar,  length(BF_DATA));
+    h5create(OutFile, OutVar,  size(BF_DATA));
     h5write( OutFile, OutVar,  BF_DATA);
 
-    OutVar = sprintf('/%s_bar_int', FsVar);
-    fprintf('  Writing: %s (%s)\n', OutFile, OutVar)
-    h5create(OutFile, OutVar,  length(BI_DATA));
-    h5write( OutFile, OutVar,  BI_DATA);
-    
     fprintf('\n');
   end
 end 

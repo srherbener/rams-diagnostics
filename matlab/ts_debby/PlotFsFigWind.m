@@ -1,4 +1,4 @@
-function [ ] = PlotFsFigMaxWind()
+function [ ] = PlotFsFigWind()
 
   Pdir = 'Plots';
   if (exist(Pdir, 'dir') ~= 7)
@@ -15,6 +15,9 @@ function [ ] = PlotFsFigMaxWind()
   
   Fsize = 13;
 
+  WmaxMeas = 'max';  % 'avg' -> use avg Vt measurement
+                     % 'max' -> use max Vt measurement
+
   % Read in the max wind time series
   for icase = 1:Ncases
     Case  = CaseList{icase}{1};
@@ -22,14 +25,14 @@ function [ ] = PlotFsFigMaxWind()
     Color = CaseList{icase}{3};
 
     InFname = sprintf('DIAGS/storm_meas_%s.h5', Case);
-    InVname = '/max_wind';
+    InVname = sprintf('/%s_wind_t', WmaxMeas);
     fprintf('Reading %s (%s)\n', InFname, InVname);
     if (icase == 1)
       T = squeeze(h5read(InFname, '/t_coords'))./3600 - 42; % convert to sim time in hours starting with zero
       Nt = length(T);
-      WMAX_TS = zeros([Nt Ncases]);
+      WIND_TS = zeros([Nt Ncases]);
     end
-    WMAX_TS(:,icase)   = squeeze(h5read(InFname, InVname));
+    WIND_TS(:,icase)   = squeeze(h5read(InFname, InVname));
     WmaxLegText{icase} = Label;
     WmaxColors{icase}  = Color;
   end
@@ -39,58 +42,37 @@ function [ ] = PlotFsFigMaxWind()
   % Read in factor separation data
   InFname = 'DIAGS/fs_factors.h5';
 
-  InVname = '/s_max_wind_bar_frac_change';
+  InVname = sprintf('/s_%s_wind_t_bar_factors', WmaxMeas);
   fprintf('Reading %s (%s)\n', InFname, InVname);
-  SAL_FS_WMAX = squeeze(h5read(InFname, InVname));
+  SAL_FS_WIND = squeeze(h5read(InFname, InVname));
 
-  InVname = '/s_max_wind_bar_int';
+  InVname = sprintf('/ps_%s_wind_t_bar_factors', WmaxMeas);
   fprintf('Reading %s (%s)\n', InFname, InVname);
-  SAL_FS_WMAX_INT = squeeze(h5read(InFname, InVname));
-
-  InVname = '/ps_max_wind_bar_frac_change';
-  fprintf('Reading %s (%s)\n', InFname, InVname);
-  PRESAL_FS_WMAX = squeeze(h5read(InFname, InVname));
-
-  InVname = '/ps_max_wind_bar_int';
-  fprintf('Reading %s (%s)\n', InFname, InVname);
-  PRESAL_FS_WMAX_INT = squeeze(h5read(InFname, InVname));
-
-  % In the fs_factors.h5 file, the four numbers of interest
-  % are split up into two vectors so that plotting results
-  % in one set of bars in which two different colors are used.
-  %
-  % This is accomplished by plotting the bars as stacked and 
-  % placing nans (which get plotted, but are not noticeable) in
-  % the appropriate places so that you don't see any stacking.
-  %
-  %     *_frac_change --> [ S1  S2  S12 nan ]  (simulation averages)
-  %     *_int         --> [ nan nan nan F12 ]  (factors)
-  %
-  % For this plot combine the two vectors and place both presal and sal data
-  % on grouped bar graph.
-
-  BDATA = [ PRESAL_FS_WMAX(1:3)' PRESAL_FS_WMAX_INT(4); SAL_FS_WMAX(1:3)' SAL_FS_WMAX_INT(4) ]' .* 100;
-  BarColors = { 'dodgerblue' 'cyan' };
-  BarLabels = { 'NS' 'ND' 'NSND' 'INT' };
-  BarLegText = { 'PSAP' 'SAP' };
-  BarLegLoc = 'NorthEastOutside';
-  fprintf('\n');
+  PRESAL_FS_WIND = squeeze(h5read(InFname, InVname));
 
   % Plot: 2 panels (2x1)
-  OutFile = sprintf('%s/FsFigMaxWind.jpg', Pdir);
   Fig = figure;
 
   % pull up the bottom of the top panel and push down the top
   % of the bottom panel in order to make room for labeling
   PlocInc = 0.01;
+  switch(WmaxMeas)
+    case 'avg'
+      OutFile = sprintf('%s/FsFigWindAvg.jpg', Pdir);
+      WmaxYlim = [ 0 15 ];
+    case 'max'
+      OutFile = sprintf('%s/FsFigWindMax.jpg', Pdir);
+      WmaxYlim = [ 0 25 ];
+  end
+  Ptitle = sprintf('V_t (%s)', WmaxMeas);
 
-  Paxes = subplot(2, 1, 1);
+  Paxes = subplot(2, 2, [ 1 2 ]);
   Ploc = get(Paxes, 'Position');
   Ploc(2) = Ploc(2) + PlocInc;
   Ploc(3) = Ploc(3) * 0.97;    % get the ends of the plots to line up
   Ploc(4) = Ploc(4) - PlocInc;
   set(Paxes, 'Position', Ploc);
-  PlotFsFigTseries(Paxes, T, WMAX_TS, WmaxColors, 'a', '', 'Speed (ms^-^1)', 'linear', [ 0 25  ], Fsize, 1, 1, WmaxLegText, WmaxLegLoc);
+  PlotFsFigTseries(Paxes, T, WIND_TS, WmaxColors, 'a', Ptitle, 'Speed (ms^-^1)', 'linear', WmaxYlim, Fsize, 1, 1, WmaxLegText, WmaxLegLoc);
 
   % Mark the PRESAL (10-30 h) and SAL (40-60 h) time periods
   line([ 10 30 ], [ 5 5 ], 'Color', 'k', 'LineWidth', 2);
@@ -103,11 +85,29 @@ function [ ] = PlotFsFigMaxWind()
   line([ 60 60 ], [ 4 6 ], 'Color', 'k', 'LineWidth', 2);
   text(48, 6.5, 'SAP', 'FontSize', Fsize);
 
-  Paxes = subplot(2, 1, 2);
+  % Bar graphs
+  BarColors = { 'dodgerblue' 'cyan' 'orange' 'yellow' 'red' };
+  BarLabels = { 'NSND' 'F1' 'F2' 'F12' 'SD' };
+  BarLegText = 'none';
+  BarLegLoc = '';
+  switch(WmaxMeas)
+    case 'avg'
+      Bylim = [ 9 11 ];
+    case 'max'
+      Bylim = [ 13 18 ];
+  end
+
+  Paxes = subplot(2, 2, 3);
   Ploc = get(Paxes, 'Position');
   Ploc(4) = Ploc(4) - PlocInc;
   set(Paxes, 'Position', Ploc);
-  PlotFsFigBgraph(Paxes, BDATA, BarColors, 'b', '', 'Factor', BarLabels, 'Difference (%)', [ -20 20 ], Fsize, 1, 1, BarLegText, BarLegLoc );
+  PlotFsFigBgraph(Paxes, PRESAL_FS_WIND, BarColors, 'b', 'PSAP', 'Factor', BarLabels, 'Magnitude', Bylim, Fsize, 1, 1, BarLegText, BarLegLoc );
+
+  Paxes = subplot(2, 2, 4);
+  Ploc = get(Paxes, 'Position');
+  Ploc(4) = Ploc(4) - PlocInc;
+  set(Paxes, 'Position', Ploc);
+  PlotFsFigBgraph(Paxes, SAL_FS_WIND, BarColors, 'c', 'SAP', 'Factor', BarLabels, 'Magnitude', Bylim, Fsize, 1, 1, BarLegText, BarLegLoc );
 
   fprintf('Writing: %s\n', OutFile);
   saveas(Fig, OutFile);
