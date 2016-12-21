@@ -101,6 +101,7 @@ SCRIPTS = \
   $(DEST)/ReportIntMassNumbers.m \
   $(DEST)/ReportDpMeas.m \
   $(DEST)/ReportDpMidLevelMeas.m \
+  $(DEST)/ReportFsMeas.m \
   $(DEST)/RunGenFigures.m \
   $(DEST)/LocateSal.m \
   $(DEST)/PlotAeroProfs.m \
