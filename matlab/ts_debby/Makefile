@@ -25,6 +25,7 @@ SCRIPTS = \
   $(DEST)/PlotFsFigDustProfiles.m \
   $(DEST)/PlotFsFigCfracProfiles.m \
   $(DEST)/PlotFsFigIke.m \
+  $(DEST)/PlotFsFigPcprate.m \
   $(DEST)/PlotFsFigTempPtrack.m \
   $(DEST)/PlotFsFigWindPtrack.m \
   $(DEST)/PlotFsFigVtFactors.m \
