@@ -6,6 +6,7 @@ DEST = $(HOME)/etc/matlab/common
 
 SCRIPTS = \
           $(DEST)/export_fig.m \
+          $(DEST)/tightfig.m \
           $(DEST)/freezeColors.m \
           $(DEST)/unfreezeColors.m \
           $(DEST)/cbfreeze.m \

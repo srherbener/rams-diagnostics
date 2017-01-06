@@ -37,6 +37,7 @@ SCRIPTS = \
   $(DEST)/PlotFsFigSatSimStorm.m \
   $(DEST)/PlotFsFigObsSimDust.m \
   $(DEST)/PlotFsFigWind.m \
+  $(DEST)/PlotFsFigWindVectors.m \
   $(DEST)/PlotFsFigThetaeXsection.m \
   $(DEST)/PlotFsFigThetaXsection.m \
   $(DEST)/PlotFsFigBruntVaisalaXsection.m \
@@ -58,6 +59,7 @@ SCRIPTS = \
   $(DEST)/PlotFsFigHwindVectors.m \
   $(DEST)/PlotFsFigDiagWmap.m \
   $(DEST)/PlotFsFigImageWmap.m \
+  $(DEST)/PlotFsFigVectorWmap.m \
   $(DEST)/PlotFsFigLine.m \
   $(DEST)/PlotSampleSoundings.m \
   $(DEST)/PlotSampleSoundingsNearStorm.m \
