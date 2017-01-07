@@ -38,6 +38,7 @@ SCRIPTS = \
   $(DEST)/PlotFsFigObsSimDust.m \
   $(DEST)/PlotFsFigWind.m \
   $(DEST)/PlotFsFigWindVectors.m \
+  $(DEST)/PlotFsFigWindTseries.m \
   $(DEST)/PlotFsFigThetaeXsection.m \
   $(DEST)/PlotFsFigThetaXsection.m \
   $(DEST)/PlotFsFigBruntVaisalaXsection.m \
@@ -84,6 +85,7 @@ SCRIPTS = \
   $(DEST)/GenTsavgHists.m \
   $(DEST)/GenFsAverages.m \
   $(DEST)/GenFsFactors.m \
+  $(DEST)/GenFsFactorTseries.m \
   $(DEST)/GenMoistDpFiles.m \
   $(DEST)/GenMoistRamsInfo.m \
   $(DEST)/GenMoistRamsInit.m \

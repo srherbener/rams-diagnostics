@@ -6,10 +6,10 @@ function [ ] = PlotFsFigVaporXsection()
   end
 
   CaseList = {
-    { 'TSD_SAL_DUST'      'SD'   }
-%    { 'TSD_SAL_NODUST'    'SND'  }
-    { 'TSD_NONSAL_DUST'   'NSD'  }
-%    { 'TSD_NONSAL_NODUST' 'NSND' }
+    { 'TSD_NONSAL_NODUST' 'NSND' }
+    { 'TSD_SAL_NODUST'    'SND'  }
+%    { 'TSD_NONSAL_DUST'   'NSD'  }
+%    { 'TSD_SAL_DUST'      'SD'   }
     };
   Ncases = length(CaseList);
 
@@ -27,7 +27,7 @@ function [ ] = PlotFsFigVaporXsection()
   %   x-z planes where x is along the x-section line
   for icase = 1:Ncases
     Case  = CaseList{icase}{1};
-    Label = CaseList{icase}{2};
+    Labels{icase} = CaseList{icase}{2};
 
     InFname = sprintf('XsectionData/strack_vapor_%s.h5', Case);
     InVname = '/vapor';
@@ -81,7 +81,8 @@ function [ ] = PlotFsFigVaporXsection()
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
   PDATA = squeeze(VAPOR(1,1,:,:))';
-  PlotFsFigXsection(Paxes, X, Z, PDATA, 'a', '06Z, 22Aug (SD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Clevs, Fsize, 0, 1);
+  Ptitle = sprintf('06Z, 22Aug (%s)', Labels{1});
+  PlotFsFigXsection(Paxes, X, Z, PDATA, 'a', Ptitle, 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Clevs, Fsize, 0, 1);
 
   Paxes = subplot(5, 3, 4);
   Ploc = get(Paxes, 'Position');
@@ -124,7 +125,8 @@ function [ ] = PlotFsFigVaporXsection()
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
   PDATA = squeeze(VAPOR(2,1,:,:))';
-  PlotFsFigXsection(Paxes, X, Z, PDATA, 'b', '06Z, 22Aug (NSD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Clevs, Fsize, 0, 0);
+  Ptitle = sprintf('06Z, 22Aug (%s)', Labels{2});
+  PlotFsFigXsection(Paxes, X, Z, PDATA, 'b', Ptitle, 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, Cmap, Clim, Clevs, Fsize, 0, 0);
 
   Paxes = subplot(5, 3, 5);
   Ploc = get(Paxes, 'Position');
@@ -167,7 +169,8 @@ function [ ] = PlotFsFigVaporXsection()
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
   PDATA = squeeze(VAPOR_DIFF(1,:,:))';
-  PlotFsFigXsection(Paxes, X, Z, PDATA, 'c', '06Z, 22Aug (SD-NSD)', 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, DiffCmap, DiffClim, DiffClevs, Fsize, 0, 0);
+  Ptitle = sprintf('06Z, 22Aug (%s-%s)', Labels{1}, Labels{2});
+  PlotFsFigXsection(Paxes, X, Z, PDATA, 'c', Ptitle, 'Linear Distance (km)', Xlim, 'Z (km)', Ylim, DiffCmap, DiffClim, DiffClevs, Fsize, 0, 0);
 
   Paxes = subplot(5, 3, 6);
   Ploc = get(Paxes, 'Position');
