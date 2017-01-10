@@ -65,6 +65,10 @@ function [] = PlotFsFigBgraph(Paxes, Y, Bcolors, Pmarker, Ptitle, Xlabel, Blabel
 
   set(Paxes, 'Xtick', Xticks);
   set(Paxes, 'XTickLabel', Blabels);
+ 
+  set(Paxes, 'FontSize', Fsize);
+  set(Paxes, 'LineWidth', 2);
+  set(Paxes, 'TickLength', [ 0.025 0.025 ]);
 
   xlabel(Xlabel);
   xlim(Xlim);
