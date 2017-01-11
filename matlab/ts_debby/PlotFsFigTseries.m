@@ -29,7 +29,7 @@ function [] = PlotFsFigTseries(Paxes, X, Y, Lcolors, Pmarker, Ptitle, Ylabel, Ys
     title(Ptitle);
   else
     T = title(sprintf('(%s) %s', Pmarker, Ptitle));
-    LeftJustTitle(T);
+    LeftJustTitle(Paxes, T);
   end
 
   if (~strcmp(LegLoc, 'none'))

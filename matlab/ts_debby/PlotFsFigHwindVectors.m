@@ -25,6 +25,6 @@ function [] = PlotFsFigHwindVectors(Paxes, X, Y, U, V, Pmarker, Ptitle, Fsize, V
     title(Ptitle);
   else
     T = title(sprintf('(%s) %s', Pmarker, Ptitle));
-    LeftJustTitle(T);
+    LeftJustTitle(Paxes, T);
   end
 end

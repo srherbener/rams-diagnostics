@@ -46,7 +46,7 @@ function [] = PlotFsFigDiagWmap(Paxes, X, Y, Z, LatBounds, LonBounds, Clevs, Cma
     title(Ptitle);
   else
     T = title(sprintf('(%s) %s', Pmarker, Ptitle));
-    LeftJustTitle(T);
+    LeftJustTitle(Paxes, T);
   end
 end
 

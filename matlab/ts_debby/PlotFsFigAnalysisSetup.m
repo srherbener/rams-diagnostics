@@ -136,7 +136,7 @@ function [] = PlotTrackXsection(Paxes, SimTrackLons, SimTrackLats, Pmarker, Ptit
     title(Ptitle);
   else
     T = title(sprintf('(%s) %s', Pmarker, Ptitle));
-    LeftJustTitle(T);
+    LeftJustTitle(Paxes, T);
   end
 end
 

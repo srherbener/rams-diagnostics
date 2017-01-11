@@ -126,8 +126,6 @@ function [ ] = PlotFsFigWindVectors()
   Paxes = subplot(2,2,4);
   PlotFsFigVectorWmap(gca, Y, X, F12_V, F12_U, LatBounds, LonBounds, 'd', 'F12', Fsize, Qscale);
 
-  tightfig(Fig);
-
   saveas(Fig,OutFile);
   close(Fig);
 end

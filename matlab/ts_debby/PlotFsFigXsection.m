@@ -36,6 +36,6 @@ function [] = PlotFsFigXsection(Paxes, X, Y, Z, Pmarker, Ptitle, Xlabel, Xlim, Y
     title(Ptitle, 'FontSize', Fsize);
   else
     T = title(sprintf('(%s) %s', Pmarker, Ptitle), 'FontSize', Fsize);
-    LeftJustTitle(T);
+    LeftJustTitle(Paxes, T);
   end
 end

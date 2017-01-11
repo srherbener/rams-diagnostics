@@ -52,6 +52,7 @@ function [ ] = PlotDpFig7kmTropTseries()
 
   % Combine all of the time series into one panel
   TS_SAL_DUST = [ TS_SAL_MD1 TS_SAL_MD2 TS_SAL_MDHY TS_SAL_MDREGEN ];
+  Pcolors = { 'red' 'blue' 'green' 'magenta' };
   LegText = { 'M_d_1' 'M_d_2' 'M_d_h_y' 'M_d_r_g' };
 
   % dust in hydrometeors
@@ -59,7 +60,7 @@ function [ ] = PlotDpFig7kmTropTseries()
   Fig = figure;
 
   Paxes = subplot(4,1,1);
-  PlotDpFigTseries(Paxes, T, TS_SAL_MDHY, 'a', 'SAL\_AR (Upper Levels)', 'M_d_h_y (10^-^3 Tg)', Fsize, 1, 1, { }, 'none');
+  PlotDpFigTseries(Paxes, T, TS_SAL_MDHY, { 'blue' }, 'a', 'SAL\_AR (Upper Levels)', 'M_d_h_y (10^-^3 Tg)', 'linear', [ 0 0.5 ], Fsize, 1, 1, { }, 'none');
 
   fprintf('Writing: %s\n', OutFile);
   saveas(Fig, OutFile);
@@ -70,7 +71,7 @@ function [ ] = PlotDpFig7kmTropTseries()
   Fig = figure;
 
   Paxes = subplot(4,1,1);
-  PlotDpFigTseries(Paxes, T, TS_SAL_MDREGEN, 'b', 'SAL\_AR (Upper Levels)', 'M_d_r_g (10^-^3 Tg)', Fsize, 1, 1, { }, 'none');
+  PlotDpFigTseries(Paxes, T, TS_SAL_MDREGEN, { 'blue' }, 'b', 'SAL\_AR (Upper Levels)', 'M_d_r_g (10^-^3 Tg)', 'linear', [ 0 2 ], Fsize, 1, 1, { }, 'none');
 
   fprintf('Writing: %s\n', OutFile);
   saveas(Fig, OutFile);
@@ -81,7 +82,7 @@ function [ ] = PlotDpFig7kmTropTseries()
   Fig = figure;
 
   Paxes = subplot(4,1,1);
-  PlotDpFigTseries(Paxes, T, TS_SAL_MDRES, 'c', 'SAL\_AR (Upper Levels)', 'M_d_a_d_v (10^-^3 Tg)', Fsize, 1, 1, { }, 'none');
+  PlotDpFigTseries(Paxes, T, TS_SAL_MDRES, { 'blue' }, 'c', 'SAL\_AR (Upper Levels)', 'M_d_a_d_v (10^-^3 Tg)', 'linear', [ 0 4 ], Fsize, 1, 1, { }, 'none');
 
   fprintf('Writing: %s\n', OutFile);
   saveas(Fig, OutFile);
@@ -92,7 +93,7 @@ function [ ] = PlotDpFig7kmTropTseries()
   Fig = figure;
 
   % Total aero mass time series
-  PlotDpFigTseries(gca, T, TS_SAL_DUST, 'e', 'SAL\_AR (Upper Levels)', 'Total Mass (10^-^3 Tg)', Fsize, 1, 1, LegText, 'NorthEast');
+  PlotDpFigTseries(gca, T, TS_SAL_DUST, Pcolors, 'e', 'SAL\_AR (Upper Levels)', 'Total Mass (10^-^3 Tg)', 'linear', [ 0 3.5 ], Fsize, 1, 1, LegText, 'NorthEast');
   
   fprintf('Writing: %s\n', OutFile);
   saveas(Fig, OutFile);

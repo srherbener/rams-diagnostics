@@ -94,7 +94,7 @@ function [] = PlaceSalImage(Paxes, ImFile, Pmarker, Ptitle, Fsize)
     title(Ptitle);
   else
     T = title(sprintf('(%s) %s', Pmarker, Ptitle));
-    LeftJustTitle(T);
+    LeftJustTitle(Paxes, T);
   end
 
 end
@@ -130,7 +130,7 @@ function [] = PlotVintDust(Paxes, X, Y, Z, Pmarker, Ptitle, Fsize, ShowX, ShowY)
     title(Ptitle);
   else
     T = title(sprintf('(%s) %s', Pmarker, Ptitle));
-    LeftJustTitle(T);
+    LeftJustTitle(Paxes, T);
   end
 
 end

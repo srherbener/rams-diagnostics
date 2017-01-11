@@ -55,7 +55,7 @@ function [ ] = PlotDpFigSfcTropTseries()
   Fig = figure;
 
   Paxes = subplot(4,1,1);
-  PlotDpFigTseries(Paxes, T, TS_SAL_MDRES, 'a', 'SAL\_AR', 'M_d_a_d_v (Tg)', Fsize, 1, 1, { }, 'none');
+  PlotDpFigTseries(Paxes, T, TS_SAL_MDRES, { 'blue' }, 'a', 'SAL\_AR', 'M_d_a_d_v (Tg)', 'linear', [ 0 2.5 ], Fsize, 1, 1, { }, 'none');
 
   fprintf('Writing: %s\n', OutFile);
   saveas(Fig, OutFile);
@@ -66,16 +66,16 @@ function [ ] = PlotDpFigSfcTropTseries()
   Fig = figure;
 
   Paxes = subplot(4,1,1);
-  PlotDpFigTseries(Paxes, T, TS_SAL_MD1, 'a', 'SAL\_AR', 'M_d_1 (10^-^3 Tg)', Fsize, 0, 1, { }, 'none');
+  PlotDpFigTseries(Paxes, T, TS_SAL_MD1, { 'blue' }, 'a', 'SAL\_AR', 'M_d_1 (10^-^3 Tg)', 'linear', [ 0 10 ], Fsize, 0, 1, { }, 'none');
 
   Paxes = subplot(4,1,2);
-  PlotDpFigTseries(Paxes, T, TS_SAL_MD2, 'b', 'SAL\_AR', 'M_d_2 (Tg)', Fsize, 0, 1, { }, 'none');
+  PlotDpFigTseries(Paxes, T, TS_SAL_MD2, { 'blue' }, 'b', 'SAL\_AR', 'M_d_2 (Tg)', 'linear', [ 0 2.5 ], Fsize, 0, 1, { }, 'none');
 
   Paxes = subplot(4,1,3);
-  PlotDpFigTseries(Paxes, T, TS_SAL_MDHY, 'c', 'SAL\_AR', 'M_d_h_y (10^-^3 Tg)', Fsize, 0, 1, { }, 'none');
+  PlotDpFigTseries(Paxes, T, TS_SAL_MDHY, { 'blue' }, 'c', 'SAL\_AR', 'M_d_h_y (10^-^3 Tg)', 'linear', [ 0 4 ], Fsize, 0, 1, { }, 'none');
 
   Paxes = subplot(4,1,4);
-  PlotDpFigTseries(Paxes, T, TS_SAL_MDREGEN, 'd', 'SAL\_AR', 'M_d_r_g (Tg)', Fsize, 1, 1, { }, 'none');
+  PlotDpFigTseries(Paxes, T, TS_SAL_MDREGEN, { 'blue' }, 'd', 'SAL\_AR', 'M_d_r_g (Tg)', 'linear', [ 0 0.2 ], Fsize, 1, 1, { }, 'none');
 
   fprintf('Writing: %s\n', OutFile);
   saveas(Fig, OutFile);

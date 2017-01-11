@@ -75,6 +75,6 @@ function [] = PlotFsFigLine(Paxes, X, Y, Pmarker, Ptitle, Xlabel, Xlim, Xscale, 
     title(Ptitle);
   else
     T = title(sprintf('(%s) %s', Pmarker, Ptitle));
-    LeftJustTitle(T);
+    LeftJustTitle(Paxes, T);
   end
 end

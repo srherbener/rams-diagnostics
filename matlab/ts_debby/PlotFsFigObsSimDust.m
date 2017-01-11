@@ -99,7 +99,7 @@ function [] = PlaceAodImage(Paxes, Image, Cmap, Pmarker, Ptitle, Fsize)
     title(Ptitle);
   else
     T = title(sprintf('(%s) %s', Pmarker, Ptitle));
-    LeftJustTitle(T);
+    LeftJustTitle(Paxes, T);
   end
 end
 
@@ -175,7 +175,7 @@ function [] = PlotVintDust(Paxes, X, Y, Z, LatBounds, LonBounds, Pmarker, Ptitle
     title(Ptitle);
   else
     T = title(sprintf('(%s) %s', Pmarker, Ptitle));
-    LeftJustTitle(T);
+    LeftJustTitle(Paxes, T);
   end
 end
 

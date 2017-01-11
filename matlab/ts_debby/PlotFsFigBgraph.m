@@ -16,7 +16,9 @@ function [] = PlotFsFigBgraph(Paxes, Y, Bcolors, Pmarker, Ptitle, Xlabel, Blabel
   % Proportion the x-axis so that the bar widths are 0.8 and
   % distances between bar centers is 1.
   Nbars = size(Y,2);
-  Xlim = [ 0 Nbars+1 ];
+  Xmin = 0;
+  Xmax = Nbars + 1;
+  Xlim = [ Xmin Xmax ];
   Xticks = [ 1:Nbars ];
 
   % Use patch to draw each bar at its specified height
@@ -80,7 +82,7 @@ function [] = PlotFsFigBgraph(Paxes, Y, Bcolors, Pmarker, Ptitle, Xlabel, Blabel
     title(Ptitle);
   else
     T = title(sprintf('(%s) %s', Pmarker, Ptitle));
-    LeftJustTitle(T);
+    LeftJustTitle(Paxes, T);
   end
 
   if (~strcmp(LegText, 'none'))

@@ -138,7 +138,7 @@ function [] = PlotDpFigTrack(Paxes, MapLoc, Grid3Loc, SimTrackLons, SimTrackLats
     title(Ptitle);
   else
     T = title(sprintf('(%s) %s', Pmarker, Ptitle));
-    LeftJustTitle(T);
+    LeftJustTitle(Paxes, T);
   end
 end
 
@@ -200,7 +200,7 @@ function [] = PlotFsFigMaxWind(Paxes, T, MaxWind, Pmarker, Ptitle, Xshow, Ylabel
     title(Ptitle);
   else
     T = title(sprintf('(%s) %s', Pmarker, Ptitle));
-    LeftJustTitle(T);
+    LeftJustTitle(Paxes, T);
   end
 end
 
@@ -260,6 +260,6 @@ function [] = PlotFsFigMinPress(Paxes, T, MinPress, Pmarker, Ptitle, Xshow, Ylab
     title(Ptitle);
   else
     T = title(sprintf('(%s) %s', Pmarker, Ptitle));
-    LeftJustTitle(T);
+    LeftJustTitle(Paxes, T);
   end
 end

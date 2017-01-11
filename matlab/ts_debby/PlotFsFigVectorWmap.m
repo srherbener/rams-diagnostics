@@ -20,7 +20,7 @@ function [] = PlotFsFigVectorWmap(Paxes, Lat, Lon, LatComp, LonComp, LatBounds, 
     title(Ptitle);
   else
     T = title(sprintf('(%s) %s', Pmarker, Ptitle));
-    LeftJustTitle(T);
+    LeftJustTitle(Paxes, T);
   end
 
 end

@@ -35,6 +35,7 @@ function [ ] = PlotDpFigDustTransport()
   TS_SAL_MDADV = squeeze(h5read(InFile, InVname)); % g
 
   TS_DUST = [ TS_SAL_MD TS_SAL_MDHY TS_SAL_MDRGN TS_SAL_MDADV ] .* 1e-9; % convert to 1e-3 Tg
+  Pcolors = { 'blue' 'orangered' 'goldenrod' 'purple' };
   LegText = { 'M_d' 'M_d_h_y' 'M_d_r_g_n' 'M_d_a_d_v' };
   LegLoc = 'NorthEast';
 
@@ -43,7 +44,7 @@ function [ ] = PlotDpFigDustTransport()
   
   Fig = figure;
 
-  PlotDpFigTseries(gca, T, TS_DUST, 'a', 'Upper Levels', 'Mass (10^-^3 Tg)', 'linear', [ -0.5 3.5 ], Fsize, 1, 1, LegText, LegLoc);
+  PlotDpFigTseries(gca, T, TS_DUST, Pcolors, 'a', 'Upper Levels', 'Mass (10^-^3 Tg)', 'linear', [ -0.5 3.5 ], Fsize, 1, 1, LegText, LegLoc);
 
   fprintf('Writing: %s\n', OutFile);
   saveas(Fig, OutFile);

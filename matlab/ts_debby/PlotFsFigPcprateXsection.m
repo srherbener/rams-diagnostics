@@ -65,7 +65,7 @@ function [ ] = PlotFsFigPcprateXsection()
   Xlim = [ 0 2150 ];
   Ylim = [ 0 11 ];
 
-  DiffYlim = [ -2 2 ];
+  DiffYlim = [ -4 4 ];
 
   Xlab = 'Distance (km)';
   Ylab = 'PR (mm h^-^1)';
@@ -81,179 +81,99 @@ function [ ] = PlotFsFigPcprateXsection()
 
   % CONTROL (NSND)
   Paxes = subplot(5, 4, 1);
-  Ploc = get(Paxes, 'Position');
-  Ploc(1) = Ploc(1) - PlocInc;
-  Ploc(3) = Ploc(3) + PlocInc;
-  set(Paxes, 'Position', Ploc);
   PDATA = squeeze(PCPRATE(1,1,:));
   Ptitle = sprintf('06Z, 22Aug (%s)', Labels{1});
   PlotFsFigLine(Paxes, X, PDATA, 'a', Ptitle, Xlab, Xlim, Xscale, 0, Ylab, Ylim, Yscale, 1, Fsize, LegText, LegLoc, Pcolors);
 
   Paxes = subplot(5, 4, 5);
-  Ploc = get(Paxes, 'Position');
-  Ploc(1) = Ploc(1) - PlocInc;
-  Ploc(3) = Ploc(3) + PlocInc;
-  set(Paxes, 'Position', Ploc);
   PDATA = squeeze(PCPRATE(1,2,:));
   PlotFsFigLine(Paxes, X, PDATA, 'e', '21Z, 22Aug', Xlab, Xlim, Xscale, 0, Ylab, Ylim, Yscale, 1, Fsize, LegText, LegLoc, Pcolors);
 
   Paxes = subplot(5, 4, 9);
-  Ploc = get(Paxes, 'Position');
-  Ploc(1) = Ploc(1) - PlocInc;
-  Ploc(3) = Ploc(3) + PlocInc;
-  set(Paxes, 'Position', Ploc);
   PDATA = squeeze(PCPRATE(1,3,:));
   PlotFsFigLine(Paxes, X, PDATA, 'i', '12Z, 23Aug', Xlab, Xlim, Xscale, 0, Ylab, Ylim, Yscale, 1, Fsize, LegText, LegLoc, Pcolors);
 
   Paxes = subplot(5, 4, 13);
-  Ploc = get(Paxes, 'Position');
-  Ploc(1) = Ploc(1) - PlocInc;
-  Ploc(3) = Ploc(3) + PlocInc;
-  set(Paxes, 'Position', Ploc);
   PDATA = squeeze(PCPRATE(1,4,:));
   PlotFsFigLine(Paxes, X, PDATA, 'm', '03Z, 24Aug', Xlab, Xlim, Xscale, 0, Ylab, Ylim, Yscale, 1, Fsize, LegText, LegLoc, Pcolors);
 
   Paxes = subplot(5, 4, 17);
-  Ploc = get(Paxes, 'Position');
-  Ploc(1) = Ploc(1) - PlocInc;
-  Ploc(3) = Ploc(3) + PlocInc;
-  set(Paxes, 'Position', Ploc);
   PDATA = squeeze(PCPRATE(1,5,:));
   PlotFsFigLine(Paxes, X, PDATA, 'q', '18Z, 24Aug', Xlab, Xlim, Xscale, 1, Ylab, Ylim, Yscale, 1, Fsize, LegText, LegLoc, Pcolors);
   text(0, -3.6, 'A', 'Color', 'r', 'FontSize', Fsize);
   text(1900, -3.6, 'B', 'Color', 'r', 'FontSize', Fsize);
 
-%%%   % F1
-%%%   Paxes = subplot(5, 4, 2);
-%%%   Ploc = get(Paxes, 'Position');
-%%%   Ploc(1) = Ploc(1) - PlocInc;
-%%%   Ploc(3) = Ploc(3) + PlocInc;
-%%%   set(Paxes, 'Position', Ploc);
-%%%   PDATA = squeeze(F1(1,:,:));
-%%%   Ptitle = '06Z, 22Aug (F1)';
-%%%   PlotFsFigXsection(Paxes, X, Z, PDATA, 'b', Ptitle, Xlab, Xlim, Ylab, Ylim, DiffCmap, DiffClim, DiffClevs, Fsize, 0, 0);
-%%% 
-%%%   Paxes = subplot(5, 4, 6);
-%%%   Ploc = get(Paxes, 'Position');
-%%%   Ploc(1) = Ploc(1) - PlocInc;
-%%%   Ploc(3) = Ploc(3) + PlocInc;
-%%%   set(Paxes, 'Position', Ploc);
-%%%   PDATA = squeeze(F1(2,:,:));
-%%%   PlotFsFigXsection(Paxes, X, Z, PDATA, 'f', '21Z, 22Aug', Xlab, Xlim, Ylab, Ylim, DiffCmap, DiffClim, DiffClevs, Fsize, 0, 0);
-%%% 
-%%%   Paxes = subplot(5, 4, 10);
-%%%   Ploc = get(Paxes, 'Position');
-%%%   Ploc(1) = Ploc(1) - PlocInc;
-%%%   Ploc(3) = Ploc(3) + PlocInc;
-%%%   set(Paxes, 'Position', Ploc);
-%%%   PDATA = squeeze(F1(3,:,:));
-%%%   PlotFsFigXsection(Paxes, X, Z, PDATA, 'j', '12Z, 23Aug', Xlab, Xlim, Ylab, Ylim, DiffCmap, DiffClim, DiffClevs, Fsize, 0, 0);
-%%% 
-%%%   Paxes = subplot(5, 4, 14);
-%%%   Ploc = get(Paxes, 'Position');
-%%%   Ploc(1) = Ploc(1) - PlocInc;
-%%%   Ploc(3) = Ploc(3) + PlocInc;
-%%%   set(Paxes, 'Position', Ploc);
-%%%   PDATA = squeeze(F1(4,:,:));
-%%%   PlotFsFigXsection(Paxes, X, Z, PDATA, 'n', '03Z, 24Aug', Xlab, Xlim, Ylab, Ylim, DiffCmap, DiffClim, DiffClevs, Fsize, 0, 0);
-%%% 
-%%%   Paxes = subplot(5, 4, 18);
-%%%   Ploc = get(Paxes, 'Position');
-%%%   Ploc(1) = Ploc(1) - PlocInc;
-%%%   Ploc(3) = Ploc(3) + PlocInc;
-%%%   set(Paxes, 'Position', Ploc);
-%%%   PDATA = squeeze(F1(5,:,:));
-%%%   PlotFsFigXsection(Paxes, X, Z, PDATA, 'r', '18Z, 24Aug', Xlab, Xlim, Ylab, Ylim, DiffCmap, DiffClim, DiffClevs, Fsize, 1, 0);
-%%%   text(0, -3.6, 'A', 'Color', 'r', 'FontSize', Fsize);
-%%%   text(1900, -3.6, 'B', 'Color', 'r', 'FontSize', Fsize);
-%%% 
-%%%   % F2
-%%%   Paxes = subplot(5, 4, 3);
-%%%   Ploc = get(Paxes, 'Position');
-%%%   Ploc(1) = Ploc(1) - PlocInc;
-%%%   Ploc(3) = Ploc(3) + PlocInc;
-%%%   set(Paxes, 'Position', Ploc);
-%%%   PDATA = squeeze(F2(1,:,:));
-%%%   Ptitle = '06Z, 22Aug (F2)';
-%%%   PlotFsFigXsection(Paxes, X, Z, PDATA, 'c', Ptitle, Xlab, Xlim, Ylab, Ylim, DiffCmap, DiffClim, DiffClevs, Fsize, 0, 0);
-%%% 
-%%%   Paxes = subplot(5, 4, 7);
-%%%   Ploc = get(Paxes, 'Position');
-%%%   Ploc(1) = Ploc(1) - PlocInc;
-%%%   Ploc(3) = Ploc(3) + PlocInc;
-%%%   set(Paxes, 'Position', Ploc);
-%%%   PDATA = squeeze(F2(2,:,:));
-%%%   PlotFsFigXsection(Paxes, X, Z, PDATA, 'g', '21Z, 22Aug', Xlab, Xlim, Ylab, Ylim, DiffCmap, DiffClim, DiffClevs, Fsize, 0, 0);
-%%% 
-%%%   Paxes = subplot(5, 4, 11);
-%%%   Ploc = get(Paxes, 'Position');
-%%%   Ploc(1) = Ploc(1) - PlocInc;
-%%%   Ploc(3) = Ploc(3) + PlocInc;
-%%%   set(Paxes, 'Position', Ploc);
-%%%   PDATA = squeeze(F2(3,:,:));
-%%%   PlotFsFigXsection(Paxes, X, Z, PDATA, 'k', '12Z, 23Aug', Xlab, Xlim, Ylab, Ylim, DiffCmap, DiffClim, DiffClevs, Fsize, 0, 0);
-%%% 
-%%%   Paxes = subplot(5, 4, 15);
-%%%   Ploc = get(Paxes, 'Position');
-%%%   Ploc(1) = Ploc(1) - PlocInc;
-%%%   Ploc(3) = Ploc(3) + PlocInc;
-%%%   set(Paxes, 'Position', Ploc);
-%%%   PDATA = squeeze(F2(4,:,:));
-%%%   PlotFsFigXsection(Paxes, X, Z, PDATA, 'o', '03Z, 24Aug', Xlab, Xlim, Ylab, Ylim, DiffCmap, DiffClim, DiffClevs, Fsize, 0, 0);
-%%% 
-%%%   Paxes = subplot(5, 4, 19);
-%%%   Ploc = get(Paxes, 'Position');
-%%%   Ploc(1) = Ploc(1) - PlocInc;
-%%%   Ploc(3) = Ploc(3) + PlocInc;
-%%%   set(Paxes, 'Position', Ploc);
-%%%   PDATA = squeeze(F2(5,:,:));
-%%%   PlotFsFigXsection(Paxes, X, Z, PDATA, 's', '18Z, 24Aug', Xlab, Xlim, Ylab, Ylim, DiffCmap, DiffClim, DiffClevs, Fsize, 1, 0);
-%%%   text(0, -3.6, 'A', 'Color', 'r', 'FontSize', Fsize);
-%%%   text(1900, -3.6, 'B', 'Color', 'r', 'FontSize', Fsize);
-%%% 
-%%%   % F12
-%%%   Paxes = subplot(5, 4, 4);
-%%%   Ploc = get(Paxes, 'Position');
-%%%   Ploc(1) = Ploc(1) - PlocInc;
-%%%   Ploc(3) = Ploc(3) + PlocInc;
-%%%   set(Paxes, 'Position', Ploc);
-%%%   PDATA = squeeze(F12(1,:,:));
-%%%   Ptitle = '06Z, 22Aug (F12)';
-%%%   PlotFsFigXsection(Paxes, X, Z, PDATA, 'd', Ptitle, Xlab, Xlim, Ylab, Ylim, DiffCmap, DiffClim, DiffClevs, Fsize, 0, 0);
-%%% 
-%%%   Paxes = subplot(5, 4, 8);
-%%%   Ploc = get(Paxes, 'Position');
-%%%   Ploc(1) = Ploc(1) - PlocInc;
-%%%   Ploc(3) = Ploc(3) + PlocInc;
-%%%   set(Paxes, 'Position', Ploc);
-%%%   PDATA = squeeze(F12(2,:,:));
-%%%   PlotFsFigXsection(Paxes, X, Z, PDATA, 'h', '21Z, 22Aug', Xlab, Xlim, Ylab, Ylim, DiffCmap, DiffClim, DiffClevs, Fsize, 0, 0);
-%%% 
-%%%   Paxes = subplot(5, 4, 12);
-%%%   Ploc = get(Paxes, 'Position');
-%%%   Ploc(1) = Ploc(1) - PlocInc;
-%%%   Ploc(3) = Ploc(3) + PlocInc;
-%%%   set(Paxes, 'Position', Ploc);
-%%%   PDATA = squeeze(F12(3,:,:));
-%%%   PlotFsFigXsection(Paxes, X, Z, PDATA, 'l', '12Z, 23Aug', Xlab, Xlim, Ylab, Ylim, DiffCmap, DiffClim, DiffClevs, Fsize, 0, 0);
-%%% 
-%%%   Paxes = subplot(5, 4, 16);
-%%%   Ploc = get(Paxes, 'Position');
-%%%   Ploc(1) = Ploc(1) - PlocInc;
-%%%   Ploc(3) = Ploc(3) + PlocInc;
-%%%   set(Paxes, 'Position', Ploc);
-%%%   PDATA = squeeze(F12(4,:,:));
-%%%   PlotFsFigXsection(Paxes, X, Z, PDATA, 'p', '03Z, 24Aug', Xlab, Xlim, Ylab, Ylim, DiffCmap, DiffClim, DiffClevs, Fsize, 0, 0);
-%%% 
-%%%   Paxes = subplot(5, 4, 20);
-%%%   Ploc = get(Paxes, 'Position');
-%%%   Ploc(1) = Ploc(1) - PlocInc;
-%%%   Ploc(3) = Ploc(3) + PlocInc;
-%%%   set(Paxes, 'Position', Ploc);
-%%%   PDATA = squeeze(F12(5,:,:));
-%%%   PlotFsFigXsection(Paxes, X, Z, PDATA, 't', '18Z, 24Aug', Xlab, Xlim, Ylab, Ylim, DiffCmap, DiffClim, DiffClevs, Fsize, 1, 0);
-%%%   text(0, -3.6, 'A', 'Color', 'r', 'FontSize', Fsize);
-%%%   text(1900, -3.6, 'B', 'Color', 'r', 'FontSize', Fsize);
+  % F1
+  Paxes = subplot(5, 4, 2);
+  PDATA = squeeze(F1(1,:))';
+  Ptitle = '06Z, 22Aug (F1)';
+  PlotFsFigLine(Paxes, X, PDATA, 'b', Ptitle, Xlab, Xlim, Xscale, 0, Ylab, DiffYlim, Yscale, 1, Fsize, LegText, LegLoc, Pcolors);
+
+  Paxes = subplot(5, 4, 6);
+  PDATA = squeeze(F1(2,:))';
+  PlotFsFigLine(Paxes, X, PDATA, 'f', '21Z, 22Aug', Xlab, Xlim, Xscale, 0, Ylab, DiffYlim, Yscale, 1, Fsize, LegText, LegLoc, Pcolors);
+
+  Paxes = subplot(5, 4, 10);
+  PDATA = squeeze(F1(3,:))';
+  PlotFsFigLine(Paxes, X, PDATA, 'j', '12Z, 23Aug', Xlab, Xlim, Xscale, 0, Ylab, DiffYlim, Yscale, 1, Fsize, LegText, LegLoc, Pcolors);
+
+  Paxes = subplot(5, 4, 14);
+  PDATA = squeeze(F1(4,:))';
+  PlotFsFigLine(Paxes, X, PDATA, 'n', '03Z, 24Aug', Xlab, Xlim, Xscale, 0, Ylab, DiffYlim, Yscale, 1, Fsize, LegText, LegLoc, Pcolors);
+
+  Paxes = subplot(5, 4, 18);
+  PDATA = squeeze(F1(5,:)');
+  PlotFsFigLine(Paxes, X, PDATA, 'r', '18Z, 24Aug', Xlab, Xlim, Xscale, 1, Ylab, DiffYlim, Yscale, 1, Fsize, LegText, LegLoc, Pcolors);
+  text(0, -3.6, 'A', 'Color', 'r', 'FontSize', Fsize);
+  text(1900, -3.6, 'B', 'Color', 'r', 'FontSize', Fsize);
+
+  % F2
+  Paxes = subplot(5, 4, 3);
+  PDATA = squeeze(F2(1,:))';
+  Ptitle = '06Z, 22Aug (F2)';
+  PlotFsFigLine(Paxes, X, PDATA, 'c', Ptitle, Xlab, Xlim, Xscale, 0, Ylab, DiffYlim, Yscale, 0, Fsize, LegText, LegLoc, Pcolors);
+
+  Paxes = subplot(5, 4, 7);
+  PDATA = squeeze(F2(2,:))';
+  PlotFsFigLine(Paxes, X, PDATA, 'g', '21Z, 22Aug', Xlab, Xlim, Xscale, 0, Ylab, DiffYlim, Yscale, 0, Fsize, LegText, LegLoc, Pcolors);
+
+  Paxes = subplot(5, 4, 11);
+  PDATA = squeeze(F2(3,:))';
+  PlotFsFigLine(Paxes, X, PDATA, 'k', '12Z, 23Aug', Xlab, Xlim, Xscale, 0, Ylab, DiffYlim, Yscale, 0, Fsize, LegText, LegLoc, Pcolors);
+
+  Paxes = subplot(5, 4, 15);
+  PDATA = squeeze(F2(4,:))';
+  PlotFsFigLine(Paxes, X, PDATA, 'o', '03Z, 24Aug', Xlab, Xlim, Xscale, 0, Ylab, DiffYlim, Yscale, 0, Fsize, LegText, LegLoc, Pcolors);
+
+  Paxes = subplot(5, 4, 19);
+  PDATA = squeeze(F2(5,:)');
+  PlotFsFigLine(Paxes, X, PDATA, 's', '18Z, 24Aug', Xlab, Xlim, Xscale, 1, Ylab, DiffYlim, Yscale, 0, Fsize, LegText, LegLoc, Pcolors);
+  text(0, -3.6, 'A', 'Color', 'r', 'FontSize', Fsize);
+  text(1900, -3.6, 'B', 'Color', 'r', 'FontSize', Fsize);
+
+  % F12
+  Paxes = subplot(5, 4, 4);
+  PDATA = squeeze(F12(1,:))';
+  Ptitle = '06Z, 22Aug (F12)';
+  PlotFsFigLine(Paxes, X, PDATA, 'd', Ptitle, Xlab, Xlim, Xscale, 0, Ylab, DiffYlim, Yscale, 0, Fsize, LegText, LegLoc, Pcolors);
+
+  Paxes = subplot(5, 4, 8);
+  PDATA = squeeze(F12(2,:))';
+  PlotFsFigLine(Paxes, X, PDATA, 'h', '21Z, 22Aug', Xlab, Xlim, Xscale, 0, Ylab, DiffYlim, Yscale, 0, Fsize, LegText, LegLoc, Pcolors);
+
+  Paxes = subplot(5, 4, 12);
+  PDATA = squeeze(F12(3,:))';
+  PlotFsFigLine(Paxes, X, PDATA, 'l', '12Z, 23Aug', Xlab, Xlim, Xscale, 0, Ylab, DiffYlim, Yscale, 0, Fsize, LegText, LegLoc, Pcolors);
+
+  Paxes = subplot(5, 4, 16);
+  PDATA = squeeze(F12(4,:))';
+  PlotFsFigLine(Paxes, X, PDATA, 'p', '03Z, 24Aug', Xlab, Xlim, Xscale, 0, Ylab, DiffYlim, Yscale, 0, Fsize, LegText, LegLoc, Pcolors);
+
+  Paxes = subplot(5, 4, 20);
+  PDATA = squeeze(F12(5,:)');
+  PlotFsFigLine(Paxes, X, PDATA, 't', '18Z, 24Aug', Xlab, Xlim, Xscale, 1, Ylab, DiffYlim, Yscale, 0, Fsize, LegText, LegLoc, Pcolors);
+  text(0, -3.6, 'A', 'Color', 'r', 'FontSize', Fsize);
+  text(1900, -3.6, 'B', 'Color', 'r', 'FontSize', Fsize);
 
 
   fprintf('Writing: %s\n', OutFile);

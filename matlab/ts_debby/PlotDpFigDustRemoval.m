@@ -46,6 +46,7 @@ function [ ] = PlotDpFigDustRemoval()
   TS_SAL_MDADV = squeeze(h5read(InFile, InVname)); % g
 
   TS_DUST = [ TS_SAL_MD TS_SAL_MDHY TS_SAL_MDRGN TS_SAL_MDADV TS_SAL_MDSFC ] .* 1e-12; % convert to Tg
+  Pcolors = { 'blue' 'orangered' 'goldenrod' 'purple' 'forestgreen' };
   LegText = { 'M_d' 'M_d_h_y' 'M_d_r_g_n' 'M_d_a_d_v' 'M_d_s_f_c' };
   LegLoc = 'NorthEast';
 
@@ -54,7 +55,7 @@ function [ ] = PlotDpFigDustRemoval()
   
   Fig = figure;
 
-  PlotDpFigTseries(gca, T, TS_DUST, 'a', '', 'Mass (Tg)', 'log', [ 1e-4 1e2 ], Fsize, 1, 1, LegText, LegLoc);
+  PlotDpFigTseries(gca, T, TS_DUST, Pcolors, 'a', '', 'Mass (Tg)', 'log', [ 1e-4 1e2 ], Fsize, 1, 1, LegText, LegLoc);
 
   fprintf('Writing: %s\n', OutFile);
   saveas(Fig, OutFile);

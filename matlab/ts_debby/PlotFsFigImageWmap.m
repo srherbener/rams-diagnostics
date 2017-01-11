@@ -37,7 +37,7 @@ function [] = PlotFsFigImageWmap(Paxes, IrImage, IrCmap, LatBounds, LonBounds, P
     title(Ptitle);
   else
     T = title(sprintf('(%s) %s', Pmarker, Ptitle));
-    LeftJustTitle(T);
+    LeftJustTitle(Paxes, T);
   end
 
 end
