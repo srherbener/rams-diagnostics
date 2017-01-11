@@ -48,6 +48,9 @@ SCRIPTS = \
   $(DEST)/PlotFsFigDustStrackXsection.m \
   $(DEST)/PlotFsFigCondStrackXsection.m \
   $(DEST)/PlotFsFigVaporXsection.m \
+  $(DEST)/PlotFsFigRelhumXsection.m \
+  $(DEST)/PlotFsFigRainXsection.m \
+  $(DEST)/PlotFsFigPcprateXsection.m \
   $(DEST)/PlotFsFigTempWindXsection.m \
   $(DEST)/PlotFsFigTempWindByDustXsection.m \
   $(DEST)/PlotFsFigEvapThetaeXsection.m \

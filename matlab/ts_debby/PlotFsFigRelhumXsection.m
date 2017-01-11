@@ -1,4 +1,4 @@
-function [ ] = PlotFsFigThetaXsection()
+function [ ] = PlotFsFigRelhumXsection()
 
   Pdir = 'Plots';
   if (exist(Pdir, 'dir') ~= 7)
@@ -23,14 +23,14 @@ function [ ] = PlotFsFigThetaXsection()
   
   Fsize = 8;
 
-  % Read in the theta slices
+  % Read in the relhum slices
   %   x-z planes where x is along the x-section line
   for icase = 1:Ncases
     Case  = CaseList{icase}{1};
     Labels{icase} = CaseList{icase}{2};
 
-    InFname = sprintf('XsectionData/strack_theta_%s.h5', Case);
-    InVname = '/theta';
+    InFname = sprintf('XsectionData/strack_relhum_%s.h5', Case);
+    InVname = '/relhum';
     fprintf('Reading %s (%s)\n', InFname, InVname);
 
     % 
@@ -50,7 +50,7 @@ function [ ] = PlotFsFigThetaXsection()
     % for each time, extract the x-z slice
     for it = 1:Nst
       T1 = find(T >= SimTimes(it), 1, 'first');
-      THETA(icase,it,:,:) = squeeze(h5read(InFname, InVname, [ 1 1 Z1 T1 ], [ Nx 1 Nz 1 ]));
+      RELHUM(icase,it,:,:) = squeeze(h5read(InFname, InVname, [ 1 1 Z1 T1 ], [ Nx 1 Nz 1 ]));
     end
   end
   fprintf('\n');
@@ -59,22 +59,22 @@ function [ ] = PlotFsFigThetaXsection()
   %   F1 = SND - NSND
   %   F2 = NSD - NSND
   %   F12 = SD - (SND+NSD) + NSND
-  F1  = squeeze(THETA(2,:,:,:) - THETA(1,:,:,:));
-  F2  = squeeze(THETA(3,:,:,:) - THETA(1,:,:,:));
-  F12 = squeeze(THETA(4,:,:,:) -(THETA(2,:,:,:)+THETA(3,:,:,:)) + THETA(1,:,:,:));
+  F1  = squeeze(RELHUM(2,:,:,:) - RELHUM(1,:,:,:));
+  F2  = squeeze(RELHUM(3,:,:,:) - RELHUM(1,:,:,:));
+  F12 = squeeze(RELHUM(4,:,:,:) -(RELHUM(2,:,:,:)+RELHUM(3,:,:,:)) + RELHUM(1,:,:,:));
 
   % Plot: 10 panels (5x2)
-  OutFile = sprintf('%s/FsFigThetaXsection.jpg', Pdir);
+  OutFile = sprintf('%s/FsFigRelhumXsection.jpg', Pdir);
   Fig = figure;
 
   Xlim = [ 0 2150 ];
   Ylim = [ 0 5.5 ];
-  Clim = [ 295 325 ];
-  Clevs = 295:6:325;
+  Clim = [ 0 100 ];
+  Clevs = 0:5:100;
   Cmap = 'parula';
 
-  DiffClim = [ -5 5 ];
-  DiffClevs = -5:1:5;
+  DiffClim  = [ -50 50 ];
+  DiffClevs = -50:10:50;
   DiffCmap = 'redblue';
 
   Xlab = 'Distance (km)';
@@ -88,7 +88,7 @@ function [ ] = PlotFsFigThetaXsection()
   Ploc(1) = Ploc(1) - PlocInc;
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
-  PDATA = squeeze(THETA(1,1,:,:))';
+  PDATA = squeeze(RELHUM(1,1,:,:))';
   Ptitle = sprintf('06Z, 22Aug (%s)', Labels{1});
   PlotFsFigXsection(Paxes, X, Z, PDATA, 'a', Ptitle, Xlab, Xlim, Ylab, Ylim, Cmap, Clim, Clevs, Fsize, 0, 1);
 
@@ -97,7 +97,7 @@ function [ ] = PlotFsFigThetaXsection()
   Ploc(1) = Ploc(1) - PlocInc;
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
-  PDATA = squeeze(THETA(1,2,:,:))';
+  PDATA = squeeze(RELHUM(1,2,:,:))';
   PlotFsFigXsection(Paxes, X, Z, PDATA, 'e', '21Z, 22Aug', Xlab, Xlim, Ylab, Ylim, Cmap, Clim, Clevs, Fsize, 0, 1);
 
   Paxes = subplot(5, 4, 9);
@@ -105,7 +105,7 @@ function [ ] = PlotFsFigThetaXsection()
   Ploc(1) = Ploc(1) - PlocInc;
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
-  PDATA = squeeze(THETA(1,3,:,:))';
+  PDATA = squeeze(RELHUM(1,3,:,:))';
   PlotFsFigXsection(Paxes, X, Z, PDATA, 'i', '12Z, 23Aug', Xlab, Xlim, Ylab, Ylim, Cmap, Clim, Clevs, Fsize, 0, 1);
 
   Paxes = subplot(5, 4, 13);
@@ -113,7 +113,7 @@ function [ ] = PlotFsFigThetaXsection()
   Ploc(1) = Ploc(1) - PlocInc;
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
-  PDATA = squeeze(THETA(1,4,:,:))';
+  PDATA = squeeze(RELHUM(1,4,:,:))';
   PlotFsFigXsection(Paxes, X, Z, PDATA, 'm', '03Z, 24Aug', Xlab, Xlim, Ylab, Ylim, Cmap, Clim, Clevs, Fsize, 0, 1);
 
   Paxes = subplot(5, 4, 17);
@@ -121,7 +121,7 @@ function [ ] = PlotFsFigThetaXsection()
   Ploc(1) = Ploc(1) - PlocInc;
   Ploc(3) = Ploc(3) + PlocInc;
   set(Paxes, 'Position', Ploc);
-  PDATA = squeeze(THETA(1,5,:,:))';
+  PDATA = squeeze(RELHUM(1,5,:,:))';
   PlotFsFigXsection(Paxes, X, Z, PDATA, 'q', '18Z, 24Aug', Xlab, Xlim, Ylab, Ylim, Cmap, Clim, Clevs, Fsize, 1, 1);
   text(0, -3.6, 'A', 'Color', 'r', 'FontSize', Fsize);
   text(1900, -3.6, 'B', 'Color', 'r', 'FontSize', Fsize);
