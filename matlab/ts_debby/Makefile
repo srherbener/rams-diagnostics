@@ -19,6 +19,7 @@ SCRIPTS = \
   $(DEST)/PlotDpFigDustMassRateTseries.m \
   $(DEST)/PlotDpFigDustRemoval.m \
   $(DEST)/PlotDpFigDustTransport.m \
+  $(DEST)/PlotDpFigDustSfcDep.m \
   $(DEST)/PlotDpFigDustHov.m \
   $(DEST)/PlotDpFigTseries.m \
   $(DEST)/PlotFsFigModelSetup.m \
