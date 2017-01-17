@@ -1,4 +1,4 @@
-function [ ] = PlotDpFigDustSfcDep()
+function [ ] = PlotDpFigPrecipRate()
 
   Pdir = 'Plots';
   if (exist(Pdir, 'dir') ~= 7)
@@ -43,8 +43,8 @@ function [ ] = PlotDpFigDustSfcDep()
   MapLoc = Grid3Loc + [ -2 +3 -2 +6 ];
 
   % Dust deposited on the surface
-  InFile = 'HDF5/TSD_SAL_DUST/HDF5/dust_sfc-TSD_SAL_DUST-AS-2006-08-20-120000-g3.h5';
-  InVname = '/accpdust';
+  InFile = 'HDF5/TSD_SAL_DUST/HDF5/pcprate-TSD_SAL_DUST-AS-2006-08-20-120000-g3.h5';
+  InVname = '/pcprate';
 
   % Read in and create snapshots of the surface deposited dust
   fprintf('Reading: %s (%s)\n', InFile, InVname);
@@ -52,55 +52,53 @@ function [ ] = PlotDpFigDustSfcDep()
   LAT    = double(squeeze(h5read(InFile, '/y_coords')));
   Nlon = length(LON);
   Nlat = length(LAT);
-  % accpdust is (x,y,t)
+  % pcprate is (x,y,t)
   %   times
   %     t =  31 -> 21Z, Aug22
   %     t =  61 -> 12Z, Aug23
   %     t =  91 -> 03Z, Aug24
   %     t = 121 -> 18Z, Aug24
-  %   units are mg/m^2
-  %   convert to kg/km^2
-  %      accpdust in mg/m^2 * 10e6 m^2/km^2 * kg/10e6 mg -> accpdust in kg/km^2
+  %   units are mm/h
   %
-  % Note transpose of data (in order to get LAT, LON, MD_SFC to line up for
+  % Note transpose of data (in order to get LAT, LON, PRATE to line up for
   % the contourfm command.
-  MD_SFC1 = double(squeeze(h5read(InFile, InVname,[ 1 1  31 ], [ Nlon Nlat 1 ])))';
-  MD_SFC2 = double(squeeze(h5read(InFile, InVname,[ 1 1  61 ], [ Nlon Nlat 1 ])))';
-  MD_SFC3 = double(squeeze(h5read(InFile, InVname,[ 1 1  91 ], [ Nlon Nlat 1 ])))';
-  MD_SFC4 = double(squeeze(h5read(InFile, InVname,[ 1 1 121 ], [ Nlon Nlat 1 ])))';
+  PRATE1 = double(squeeze(h5read(InFile, InVname,[ 1 1  31 ], [ Nlon Nlat 1 ])))';
+  PRATE2 = double(squeeze(h5read(InFile, InVname,[ 1 1  61 ], [ Nlon Nlat 1 ])))';
+  PRATE3 = double(squeeze(h5read(InFile, InVname,[ 1 1  91 ], [ Nlon Nlat 1 ])))';
+  PRATE4 = double(squeeze(h5read(InFile, InVname,[ 1 1 121 ], [ Nlon Nlat 1 ])))';
 
   % Plot
 
   % Contour levels
   Cmin = 0;
-  Cinc = 1;
-  Cmax = 10;
+  Cinc = 0.1;
+  Cmax = 1;
 
-  Cmap = 'hotrev';
+  Cmap = 'parula';
 
   % Create each panel in a separate figure since can only have one axesm per figure
-  [ F1 F1axes ] = PlotDpFigMapContour(MapLoc, LAT, LON, MD_SFC1, TSD_LOC1, 'a', Ptitle1, Cmin, Cinc, Cmax, Cmap, Fsize);
-  [ F2 F2axes ] = PlotDpFigMapContour(MapLoc, LAT, LON, MD_SFC2, TSD_LOC2, 'b', Ptitle2, Cmin, Cinc, Cmax, Cmap, Fsize);
-  [ F3 F3axes ] = PlotDpFigMapContour(MapLoc, LAT, LON, MD_SFC3, TSD_LOC3, 'c', Ptitle3, Cmin, Cinc, Cmax, Cmap, Fsize);
-  [ F4 F4axes ] = PlotDpFigMapContour(MapLoc, LAT, LON, MD_SFC4, TSD_LOC4, 'd', Ptitle4, Cmin, Cinc, Cmax, Cmap, Fsize);
+  [ F1 F1axes ] = PlotDpFigMapContour(MapLoc, LAT, LON, PRATE1, TSD_LOC1, 'a', Ptitle1, Cmin, Cinc, Cmax, Cmap, Fsize);
+  [ F2 F2axes ] = PlotDpFigMapContour(MapLoc, LAT, LON, PRATE2, TSD_LOC2, 'b', Ptitle2, Cmin, Cinc, Cmax, Cmap, Fsize);
+  [ F3 F3axes ] = PlotDpFigMapContour(MapLoc, LAT, LON, PRATE3, TSD_LOC3, 'c', Ptitle3, Cmin, Cinc, Cmax, Cmap, Fsize);
+  [ F4 F4axes ] = PlotDpFigMapContour(MapLoc, LAT, LON, PRATE4, TSD_LOC4, 'd', Ptitle4, Cmin, Cinc, Cmax, Cmap, Fsize);
 
   % Save each panel in a separate file, for now
-  OutFile = sprintf('%s/DpFigDustSfcDep1.jpg', Pdir);
+  OutFile = sprintf('%s/DpFigPrecipRate1.jpg', Pdir);
   fprintf('Writing: %s\n', OutFile);
   saveas(F1, OutFile);
   close(F1);
 
-  OutFile = sprintf('%s/DpFigDustSfcDep2.jpg', Pdir);
+  OutFile = sprintf('%s/DpFigPrecipRate2.jpg', Pdir);
   fprintf('Writing: %s\n', OutFile);
   saveas(F2, OutFile);
   close(F2);
 
-  OutFile = sprintf('%s/DpFigDustSfcDep3.jpg', Pdir);
+  OutFile = sprintf('%s/DpFigPrecipRate3.jpg', Pdir);
   fprintf('Writing: %s\n', OutFile);
   saveas(F3, OutFile);
   close(F3);
 
-  OutFile = sprintf('%s/DpFigDustSfcDep4.jpg', Pdir);
+  OutFile = sprintf('%s/DpFigPrecipRate4.jpg', Pdir);
   fprintf('Writing: %s\n', OutFile);
   saveas(F4, OutFile);
   close(F4);

@@ -20,8 +20,10 @@ SCRIPTS = \
   $(DEST)/PlotDpFigDustRemoval.m \
   $(DEST)/PlotDpFigDustTransport.m \
   $(DEST)/PlotDpFigDustSfcDep.m \
+  $(DEST)/PlotDpFigPrecipRate.m \
   $(DEST)/PlotDpFigDustHov.m \
   $(DEST)/PlotDpFigTseries.m \
+  $(DEST)/PlotDpFigMapContour.m \
   $(DEST)/PlotFsFigModelSetup.m \
   $(DEST)/PlotFsFigDustProfiles.m \
   $(DEST)/PlotFsFigCfracProfiles.m \
