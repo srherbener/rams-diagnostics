@@ -8,6 +8,10 @@ SCRIPTS = \
   $(DEST)/hello.py \
   $(DEST)/trap.py \
   $(DEST)/simp.py \
+  $(DEST)/plot_eg1.py \
+  $(DEST)/subplots.py \
+  $(DEST)/hdf5.py \
+  $(DEST)/hgts_1000mb_map.py \
   $(DEST)/int_examples.py
 
 CONFIGS = 
