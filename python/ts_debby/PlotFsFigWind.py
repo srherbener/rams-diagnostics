@@ -48,6 +48,8 @@ Fig = plt.figure()
 Paxes = Fig.add_subplot(2,1,1)
 
 Xaxis = plu.AxisConfig('x', [ T[0], T[-1] ], r'$Sim Time (h)$')
+Xaxis.ticks = [ 6, 18, 30, 42, 54 ]
+Xaxis.ticklabels = [ "12Z\n22Aug", "0Z\n23Aug", "12Z\n23Aug", "0Z\n24Aug", "12Z\n23Aug" ] 
 Yaxis = plu.AxisConfig('y', [ 0, 25 ], r'$Speed (ms^{-1})$')
 Ptitle = plu.TitleConfig('a', r'$V_t (max)$')
 

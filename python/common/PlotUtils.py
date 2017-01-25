@@ -40,6 +40,18 @@ class AxisConfig:
             elif (self.axid == 'y'):
                 Paxes.set_yscale(self.scale)
 
+        if (self.ticks != [ ]):
+            if (self.axid == 'x'):
+                Paxes.set_xticks(self.ticks)
+            if (self.axid == 'y'):
+                Paxes.set_yticks(self.ticks)
+
+        if (self.ticklabels != [ ]):
+            if (self.axid == 'x'):
+                Paxes.set_xticklabels(self.ticklabels)
+            if (self.axid == 'y'):
+                Paxes.set_yticklabels(self.ticklabels)
+
 
 class TitleConfig:
     '''Class for configuring plot title'''
