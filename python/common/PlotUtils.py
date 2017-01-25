@@ -2,7 +2,7 @@
 # Plotting utilities
 #
 import matplotlib.pyplot as plt
-import matplotlib.pylab as pylab
+import matplotlib.patches as pat
 from mpl_toolkits.basemap import Basemap
 
 # classes
@@ -21,7 +21,7 @@ class AxisConfig:
     ######################################################
     # Method to configure axis according to class variable
     # settings.
-    def config_axis(self, Paxes):
+    def config(self, Paxes):
         if (self.lim != [ ]):
             if (self.axid == 'x'):
                 Paxes.set_xlim(self.lim)
@@ -30,9 +30,9 @@ class AxisConfig:
 
         if (self.label != ""):
             if (self.axid == 'x'):
-                Paxes.set_xlabel(self.label)
+                Paxes.set_xlabel(self.label, fontsize=self.fontsize)
             elif (self.axid == 'y'):
-                Paxes.set_ylabel(self.label)
+                Paxes.set_ylabel(self.label, fontsize=self.fontsize)
 
         if (self.scale != ""):
             if (self.axid == 'x'):
@@ -52,21 +52,58 @@ class AxisConfig:
             if (self.axid == 'y'):
                 Paxes.set_yticklabels(self.ticklabels)
 
+        # Won't necessarily be explicitly setting the xtick or ytick labels
+        # so make sure the default labels have their font size set
+        if (self.fontsize > 0):
+            if (self.axid == 'x'):
+                for l in Paxes.get_xticklabels():
+                    l.set_fontsize(self.fontsize)
+            if (self.axid == 'y'):
+                for l in Paxes.get_yticklabels():
+                    l.set_fontsize(self.fontsize)
+
 
 class TitleConfig:
     '''Class for configuring plot title'''
     def __init__(self, pmarker, title):
        self.pmarker = pmarker
        self.title = title
+       self.fontsize = 14
 
     #######################################################
-    # Method to left justify title based on existence of
-    # a panel marker.
-    def leftjust(self, Paxes):
+    # Method to set title. If a panel marker does not exist,
+    # the title will be centered, otherwise it will be
+    # left justified.
+    def set(self, Paxes):
         if (self.pmarker == ''):
-            Paxes.set_title(self.title)
+            Paxes.set_title(self.title, fontsize=self.fontsize)
         else:
-            Paxes.set_title("({0:s}) {1:s}".format(self.pmarker, self.title), loc='left')
+            Paxes.set_title("({0:s}) {1:s}".format(self.pmarker, self.title), loc='left', fontsize=self.fontsize)
+
+
+class LegendConfig:
+    '''Class for configuring plot legend'''
+    def __init__(self, text, loc):
+        self.text = text
+        self.loc = loc
+        self.fontsize = 8
+        self.ncol = 1
+        self.bbox = [ ]
+
+    #######################################################
+    # Method to set the legend. If the location is 'none',
+    # then no legend is set.
+    def set(self, Paxes):
+        if (self.loc != 'none'):
+            if (self.bbox == [ ]):
+                Paxes.legend(loc=self.loc, ncol=self.ncol)
+            else:
+                Paxes.legend(bbox_to_anchor=self.bbox, loc=self.loc, ncol=self.ncol)
+            
+            if (self.fontsize > 0):
+                for i in Paxes.get_legend().get_texts():
+                    i.set_fontsize(self.fontsize)
+
 
 
 ##############################################################
@@ -74,15 +111,11 @@ class TitleConfig:
 #
 # This routine will plot a set of lines on the same axes.
 #
-def PlotLine(Paxes, X, Y, Ptitle, Xaxis, Yaxis, Fsize, LegText, LegLoc, Colors):
+def PlotLine(Paxes, X, Y, Ptitle, Xaxis, Yaxis, Legend, Colors):
 
     # X and Y need to contain line data in each column. Therefore, the length of the columns
     # (ie, the number of rows) of X and Y need to match. X needs to be a vector, Y can either
     # be a vector or an array.
-
-    TitleFsize = Fsize
-    LabelFsize = Fsize * 0.8
-    LegendFsize = Fsize * 0.6
 
     LineW = 2
 
@@ -106,119 +139,46 @@ def PlotLine(Paxes, X, Y, Ptitle, Xaxis, Yaxis, Fsize, LegText, LegLoc, Colors):
         print("")
         return
 
-    # Set the font sizes
-    FontParams = { 'legend.fontsize': LegendFsize,
-                   'axes.titlesize': TitleFsize,
-                   'axes.labelsize': LabelFsize,
-                   'xtick.labelsize': LabelFsize,
-                   'ytick.labelsize': LabelFsize }
-    pylab.rcParams.update(FontParams)
-
     # Start drawing
     if (Ynlines == 1):
-        Paxes.plot(X, Y, color=Colors[0], linewidth=LineW, label=LegText[0])
+        Paxes.plot(X, Y, color=Colors[0], linewidth=LineW, label=Legend.text[0])
     else:
         for i in range(0, Ynlines):
-            Paxes.plot(X, Y[:,i], color=Colors[i], linewidth=LineW, label=LegText[i])
+            Paxes.plot(X, Y[:,i], color=Colors[i], linewidth=LineW, label=Legend.text[i])
 
-    Ptitle.leftjust(Paxes)
-    Xaxis.config_axis(Paxes)
-    Yaxis.config_axis(Paxes)
-
-    if (LegLoc != 'none'):
-        Paxes.legend(LegText, loc=LegLoc)
+    Ptitle.set(Paxes)
+    Xaxis.config(Paxes)
+    Yaxis.config(Paxes)
+    Legend.set(Paxes)
 
 
-# ###################################
-# 
-# function [] = PlotFsFigBgraph(Paxes, Y, Bcolors, Pmarker, Ptitle, Xlabel, Blabels, Ylabel, Ylim, Fsize, ShowX, ShowY, LegText, LegLoc)
-# 
-#   axes(Paxes);
-# 
-#   % Want to show accummulation of factors using a plot like a bar graph.
-#   % Each factor is shown as a bar with it's particular height (positive
-#   % or negative) going from the running sum of the previous factors. Like
-#   % a stacked bar graph but the pieces of the bars are fanned out beside
-#   % each other so that a negative piece doesn't obstruct a neighboring
-#   % positive piece.
-# 
-#   % The Y matrix is two rows, with the starting height in the first
-#   % row and the ending height in the second row. Ie, the number of
-#   % bars we want is equal to the number of columns in Y.
-#   % 
-#   % Proportion the x-axis so that the bar widths are 0.8 and
-#   % distances between bar centers is 1.
-#   Nbars = size(Y,2);
-#   Xmin = 0;
-#   Xmax = Nbars + 1;
-#   Xlim = [ Xmin Xmax ];
-#   Xticks = [ 1:Nbars ];
-# 
-#   % Use patch to draw each bar at its specified height
-#   hold on;
-#   for i = 1:Nbars
-#     Bcolor = str2rgb(Bcolors{i});
-#     X1 = i - 0.4; 
-#     X2 = i + 0.4; 
-#     Y1 = Y(1,i);
-#     Y2 = Y(2,i);
-# 
-#     Xbar = [ X1 X1 X2 X2 ];
-#     Ybar = [ Y1 Y2 Y2 Y1 ];
-# 
-#     % Draw a bar for the factor magnitude
-#     patch(Xbar,Ybar,Bcolor);
-# 
-# %    % On just the factors F1, F2, F12, superimpose
-# %    % an arrow to denote the sign of the factor.
-# %    if ((i ~= 1) && (i ~= Nbars))
-# %      Xarrow1 = [  i  i ];
-# %      Yarrow1 = [ Y1 Y2 ];
-# %      Ainc = 0.08;
-# %      % lines for the arrowhead
-# %      if (Y1 <= Y2)
-# %        % positive value, place arrowhead on top
-# %        Xarrow2 = [  i-Ainc  i ];
-# %        Yarrow2 = [ Y2-Ainc Y2 ];
-# %
-# %        Xarrow3 = [  i+Ainc  i ];
-# %        Yarrow3 = [ Y2-Ainc Y2 ];
-# %      else
-# %        % negative value, place arrowhead on bottom
-# %        Xarrow2 = [  i-Ainc  i ];
-# %        Yarrow2 = [ Y2+Ainc Y2 ];
-# %
-# %       Xarrow3 = [  i+Ainc  i ];
-# %       Yarrow3 = [ Y2+Ainc Y2 ];
-# %     end
-# % 
-# %     line(Xarrow1, Yarrow1, 'Color', 'k');
-# %     line(Xarrow2, Yarrow2, 'Color', 'k');
-# %     line(Xarrow3, Yarrow3, 'Color', 'k');
-# %    end
-#   end
-# 
-#   set(Paxes, 'Xtick', Xticks);
-#   set(Paxes, 'XTickLabel', Blabels);
-#  
-#   set(Paxes, 'FontSize', Fsize);
-#   set(Paxes, 'LineWidth', 2);
-#   set(Paxes, 'TickLength', [ 0.025 0.025 ]);
-# 
-#   xlabel(Xlabel);
-#   xlim(Xlim);
-# 
-#   ylabel(Ylabel);
-#   ylim(Ylim);
-# 
-#   if (isempty(Pmarker))
-#     title(Ptitle);
-#   else
-#     T = title(sprintf('(%s) %s', Pmarker, Ptitle));
-#     LeftJustTitle(Paxes, T);
-#   end
-# 
-#   if (~strcmp(LegText, 'none'))
-#     legend(LegText, 'Location', LegLoc);
-#   end
-# end
+#####################################################################
+# PlotSplitBgraph()
+#
+# This routine will plot a bar graph where each entry is a separate
+# bar on the graph. One use for this would be to be able to depict
+# accumulation of factors where individual factors can be positive
+# or negative (doing this as stacked bars will cause factors to
+# overlap messing up the stack for example).
+#
+def PlotSplitBgraph(Paxes, Xbars, Ybars1, Ybars2, Ptitle, Xaxis, Yaxis, Legend, Colors):
+
+    # Y1 and Y2 contain the start and end heights of the bars, respectively.
+    Nbars = Xbars.size
+    DeltaX = (Xbars[1] - Xbars[0]) * 0.4  # assume equal spacing for now
+
+    for i in range(0, Nbars):
+        X1 = Xbars[i] - DeltaX
+        X2 = Xbars[i] + DeltaX
+        Y1 = Ybars1[i]
+        Y2 = Ybars2[i]
+
+        Width = X2 - X1
+        Height = Y2 - Y1
+        Paxes.add_patch(pat.Rectangle([ X1, Y1 ], Width, Height, color=Colors[i]))
+ 
+    Ptitle.set(Paxes)
+    Xaxis.config(Paxes)
+    Yaxis.config(Paxes)
+    Legend.set(Paxes)
+
