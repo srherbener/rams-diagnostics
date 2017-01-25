@@ -5,7 +5,7 @@
 # Targets
 #
 
-all: tutorial/Makefile
+all: tutorial/Makefile common/Makefile ts_debby/Makefile
 
 %/Makefile: .FORCE
 	$(MAKE) -C $(@D)
