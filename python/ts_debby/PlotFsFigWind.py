@@ -77,7 +77,7 @@ AxPsap = Fig.add_axes([ 0.1, 0.1, 0.3, 0.3 ])
 AxSap  = Fig.add_axes([ 0.6, 0.1, 0.3, 0.3 ])
 
 # Vt max time series, top half
-Xaxis = plu.AxisConfig('x', [ T[0], T[-1] ], '')
+Xaxis = plu.AxisConfig('x', [ 0, 62 ], '')
 Xaxis.ticks = [ 6, 18, 30, 42, 54 ]
 Xaxis.ticklabels = [ "12Z\n22Aug", "0Z\n23Aug", "12Z\n23Aug", "0Z\n24Aug", "12Z\n23Aug" ] 
 Xaxis.fontsize = 14
