@@ -5,7 +5,9 @@
 DEST = $(HOME)/etc/python/ts_debby
 
 SCRIPTS = \
+  $(DEST)/ConfigTsd.py \
   $(DEST)/PlotFsFigWind.py \
+  $(DEST)/PlotFsFigWindTseries.py
 
 #
 # Targets

@@ -3,25 +3,40 @@
 import os
 import sys
 sys.path.append("{0:s}/etc/python/common".format(os.environ['HOME']))
+sys.path.append("{0:s}/etc/python/ts_debby".format(os.environ['HOME']))
 
 import matplotlib.pyplot as plt
 import numpy as np
-import PlotUtils as plu
 import h5py
+import PlotUtils as plu
+import ConfigTsd as conf
 
-CaseList = [ [ 'TSD_SAL_DUST',      'SD',   'black'   ],
-             [ 'TSD_SAL_NODUST',    'SND',  'cyan'    ],
-             [ 'TSD_NONSAL_DUST',   'NSD',  'magenta' ],
-             [ 'TSD_NONSAL_NODUST', 'NSND', 'orange'  ] ]
+ColorScheme = conf.SetColorScheme()
+LabelScheme = conf.SetLabelScheme()
+
+CaseList = [ 
+    'TSD_NONSAL_NODUST',
+    'TSD_SAL_NODUST',
+    'TSD_NONSAL_DUST',
+    'TSD_SAL_DUST'
+    ]
 Ncases = len(CaseList)
+
+FacList = [
+    'TSD_NONSAL_NODUST',
+    'FAC_SAL',
+    'FAC_DUST',
+    'FAC_INT',
+    'TSD_SAL_DUST'
+    ]
 
 # Read in data for the Vt max time series panel
 LegText = [ ]
 Colors = [ ]
 for i in range(0, Ncases):
-    Case  = CaseList[i][0]
-    Label = CaseList[i][1]
-    Color = CaseList[i][2]
+    Case  = CaseList[i]
+    Label = LabelScheme[Case]
+    Color = ColorScheme[Case]
 
     InFname = "DIAGS/storm_meas_{0:s}.h5".format(Case)
     InVname = "/max_wind_t"
@@ -72,9 +87,9 @@ Xbars = np.arange(1, Nbars+1) # x values for bar graphs: 1 through Nbars
 
 Fig = plt.figure()
 
-AxVt   = Fig.add_axes([ 0.1, 0.6, 0.7, 0.3 ])
-AxPsap = Fig.add_axes([ 0.1, 0.1, 0.3, 0.3 ])
-AxSap  = Fig.add_axes([ 0.6, 0.1, 0.3, 0.3 ])
+AxVt   = Fig.add_axes([ 0.10, 0.60, 0.70, 0.30 ])
+AxPsap = Fig.add_axes([ 0.10, 0.10, 0.35, 0.30 ])
+AxSap  = Fig.add_axes([ 0.60, 0.10, 0.35, 0.30 ])
 
 # Vt max time series, top half
 Xaxis = plu.AxisConfig('x', [ 0, 62 ], '')
@@ -107,14 +122,19 @@ AxVt.plot([ 60, 60 ], [ 6, 8 ], color='black', linewidth=2);
 AxVt.text(48, 8.4, 'SAP', color='black', fontsize=14);
 
 # For the bar graphs
-BarColors = [ 'orange', 'cyan', 'magenta', 'lightgreen', 'black' ]
+BarColors = [ ]
+BarLegText = [ ]
+for Case in FacList:
+  BarColors.append(ColorScheme[Case])
+  BarLegText.append(LabelScheme[Case])
+
 BarYlim = [ 13, 18 ]
 BarYlabel = r'$Speed (ms^{-1})$'
 
 # PSAP bar graph
 Xaxis = plu.AxisConfig('x', [ 0, Nbars+1 ], '')
 Xaxis.ticks = range(1, Nbars+1)
-Xaxis.ticklabels = [ 'NSND', 'F1', 'F2', 'F12', 'SD' ]
+Xaxis.ticklabels = BarLegText
 Xaxis.fontsize = 14
 
 Yaxis = plu.AxisConfig('y', BarYlim, BarYlabel)
@@ -130,7 +150,7 @@ plu.PlotSplitBgraph(AxPsap, Xbars, PreSalWindH1, PreSalWindH2, Ptitle, Xaxis, Ya
 # SAP bar graph
 Xaxis = plu.AxisConfig('x', [ 0, Nbars+1 ], '')
 Xaxis.ticks = range(1, Nbars+1)
-Xaxis.ticklabels = [ 'NSND', 'F1', 'F2', 'F12', 'SD' ]
+Xaxis.ticklabels = BarLegText
 Xaxis.fontsize = 14
 
 Yaxis = plu.AxisConfig('y', BarYlim, BarYlabel)
