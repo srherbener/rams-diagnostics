@@ -198,6 +198,15 @@ function [ ] = GenStormXsections()
     { 'DIAGS/hist_meas_az_liq_cond_<CASE>.h5' '/all_ps_liq_cond' '/all_ps_liq_cond' }
     { 'DIAGS/hist_meas_az_liq_cond_<CASE>.h5' '/all_s_liq_cond'  '/all_s_liq_cond' }
 
+    { 'DIAGS/hist_meas_az_ice_dep_<CASE>.h5' '/all_ps_ice_dep' '/all_ps_ice_dep' }
+    { 'DIAGS/hist_meas_az_ice_dep_<CASE>.h5' '/all_s_ice_dep'  '/all_s_ice_dep' }
+
+    { 'DIAGS/hist_meas_az_ice_sub_<CASE>.h5' '/all_ps_ice_sub' '/all_ps_ice_sub' }
+    { 'DIAGS/hist_meas_az_ice_sub_<CASE>.h5' '/all_s_ice_sub'  '/all_s_ice_sub' }
+
+    { 'DIAGS/hist_meas_az_ice_melt_<CASE>.h5' '/all_ps_ice_melt' '/all_ps_ice_melt' }
+    { 'DIAGS/hist_meas_az_ice_melt_<CASE>.h5' '/all_s_ice_melt'  '/all_s_ice_melt' }
+
     { 'DIAGS/hist_meas_az_cloud_evap_<CASE>.h5' '/all_ps_cloud_evap' '/all_ps_cloud_evap' }
     { 'DIAGS/hist_meas_az_cloud_evap_<CASE>.h5' '/all_s_cloud_evap'  '/all_s_cloud_evap' }
 
