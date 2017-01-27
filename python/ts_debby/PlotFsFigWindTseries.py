@@ -145,6 +145,8 @@ AxSims.plot([ 40, 40 ], [ 6, 8 ], color='black', linewidth=2);
 AxSims.plot([ 60, 60 ], [ 6, 8 ], color='black', linewidth=2);
 AxSims.text(48, 8.4, 'SAP', color='black', fontsize=14);
 
+
+
 # Factor time series, bottom half
 Xaxis = plu.AxisConfig('x', [ 0, 62 ], '')
 Xaxis.ticks = [ 6, 18, 30, 42, 54 ]
@@ -164,6 +166,8 @@ Legend.ncol = 1
 
 plu.PlotLine(AxFactors, T, Factors, Ptitle, Xaxis, Yaxis, Legend, FacColors)
 
+# Add y = 0 reference
+AxFactors.axhline(y=0, color='black', linestyle='--')
 
 
 OutFile = "{0:s}/FsFigWindMaxTseries.png".format(Pdir)

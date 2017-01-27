@@ -43,13 +43,13 @@ class AxisConfig:
         if (self.ticks != [ ]):
             if (self.axid == 'x'):
                 Paxes.set_xticks(self.ticks)
-            if (self.axid == 'y'):
+            elif (self.axid == 'y'):
                 Paxes.set_yticks(self.ticks)
 
         if (self.ticklabels != [ ]):
             if (self.axid == 'x'):
                 Paxes.set_xticklabels(self.ticklabels)
-            if (self.axid == 'y'):
+            elif (self.axid == 'y'):
                 Paxes.set_yticklabels(self.ticklabels)
 
         # Won't necessarily be explicitly setting the xtick or ytick labels
@@ -58,9 +58,15 @@ class AxisConfig:
             if (self.axid == 'x'):
                 for l in Paxes.get_xticklabels():
                     l.set_fontsize(self.fontsize)
-            if (self.axid == 'y'):
+            elif (self.axid == 'y'):
                 for l in Paxes.get_yticklabels():
                     l.set_fontsize(self.fontsize)
+
+        if (self.show == 0):
+            if (self.axid == 'x'):
+                Paxes.axes.get_xaxis().set_visible(False)
+            elif (self.axid == 'y'):
+                Paxes.axes.get_yaxis().set_visible(False)
 
 
 class TitleConfig:
@@ -181,4 +187,23 @@ def PlotSplitBgraph(Paxes, Xbars, Ybars1, Ybars2, Ptitle, Xaxis, Yaxis, Legend, 
     Xaxis.config(Paxes)
     Yaxis.config(Paxes)
     Legend.set(Paxes)
+
+#####################################################################
+# PlotContour()
+#
+# This routine will plot a 2D contour plot.
+#
+def PlotContour(Paxes, X, Y, Z, Ptitle, Xaxis, Yaxis, Cmap, Clim, Clevs, Cfilled):
+
+    # Make the contour plot
+    if (Cfilled == 0):
+        cplot = Paxes.contour(X, Y, Z, levels=Clevs, cmap=Cmap, vmin=Clim[0], vmax=Clim[1])
+    else:
+        cplot = Paxes.contourf(X, Y, Z, levels=Clevs, cmap=Cmap, vmin=Clim[0], vmax=Clim[1], linestyle=None)
+
+    plt.colorbar(cplot, ax=Paxes, aspect=10)
+
+    Ptitle.set(Paxes)
+    Xaxis.config(Paxes)
+    Yaxis.config(Paxes)
 
