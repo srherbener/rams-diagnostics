@@ -145,6 +145,13 @@ FacAxSap.append(FigSap.add_axes([ AxRightLlx, AxLly[2], AxW, AxH ]))
 FacAxSap.append(FigSap.add_axes([ AxRightLlx, AxLly[1], AxW, AxH ]))
 FacAxSap.append(FigSap.add_axes([ AxRightLlx, AxLly[0], AxW, AxH ]))
 
+# for placing text in upper right (blank) space
+# create axes, turn off the axes, then place the text in that axes
+TxtAxPsap = FigPsap.add_axes([ AxRightLlx, AxLly[3], AxW, AxH ])
+TxtAxPsap.set_axis_off()
+TxtAxSap = FigSap.add_axes([ AxRightLlx, AxLly[3], AxW, AxH ])
+TxtAxSap.set_axis_off()
+
 Cfilled = 1  # 0 - no fill, 1 - fill
 
 Xaxis = plu.AxisConfig('x', [ 0, 500 ], "Radius (km)")
@@ -190,6 +197,12 @@ for i in range(0, Nfacs):
     plu.PlotContour(FacAxPsap[i], X, Z, FacPsap[:,:,i], Ptitle, Xaxis, Yaxis, Cmap, Clim, Clevs, Cfilled)
     plu.PlotContour(FacAxSap[i], X, Z, FacSap[:,:,i], Ptitle, Xaxis, Yaxis, Cmap, Clim, Clevs, Cfilled)
 
+
+# transAxes says to use the Axes coordinates which always run from 0 to 1
+TxtAxPsap.text(1, 1, 'PSAP', transform=TxtAxPsap.transAxes,
+    fontsize=20, horizontalalignment='right', verticalalignment='bottom')
+TxtAxSap.text(1, 1, 'SAP', transform=TxtAxSap.transAxes,
+    fontsize=20, horizontalalignment='right', verticalalignment='bottom')
 
 
 OutFile = "{0:s}/FsFigVtPsapFactors.png".format(Pdir)
