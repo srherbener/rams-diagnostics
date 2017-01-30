@@ -249,6 +249,12 @@ function [ ] = GenStormXsections()
     { 'DIAGS/hist_meas_az_hail_dep_<CASE>.h5' '/all_ps_hail_dep' '/all_ps_hail_dep' }
     { 'DIAGS/hist_meas_az_hail_dep_<CASE>.h5' '/all_s_hail_dep'  '/all_s_hail_dep' }
 
+    { 'DIAGS/hist_meas_az_cloud_rime_<CASE>.h5' '/all_ps_cloud_rime' '/all_ps_cloud_rime' }
+    { 'DIAGS/hist_meas_az_cloud_rime_<CASE>.h5' '/all_s_cloud_rime'  '/all_s_cloud_rime' }
+
+    { 'DIAGS/hist_meas_az_rain2ice_<CASE>.h5' '/all_ps_rain2ice' '/all_ps_rain2ice' }
+    { 'DIAGS/hist_meas_az_rain2ice_<CASE>.h5' '/all_s_rain2ice'  '/all_s_rain2ice' }
+
     };
   Nsets = length(XsectionList);
 
