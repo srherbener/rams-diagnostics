@@ -6,6 +6,7 @@ DEST = $(HOME)/etc/python/common
 
 SCRIPTS = \
   $(DEST)/PlotUtils.py \
+  $(DEST)/PlotTcXsection.py
 
 #
 # Targets
