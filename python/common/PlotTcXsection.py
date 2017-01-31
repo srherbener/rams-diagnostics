@@ -28,6 +28,8 @@ class StormXsection:
         self.FactCmap = 'bwr'
 
         self.Cfilled = 1
+        self.Ylim = [ 0, 6 ] # height, km
+        self.Yticks = [ 0, 2, 4, 6 ]
 
         self.OutFname = OutFname
 
@@ -150,8 +152,8 @@ class StormXsection:
         Xaxis = plu.AxisConfig('x', [ 0, 500 ], "Radius (km)")
         Xaxis.fontsize = 12
         
-        Yaxis = plu.AxisConfig('y', [ 0, 6 ], "Z (km)")
-        Yaxis.ticks = [ 0, 2, 4, 6 ]
+        Yaxis = plu.AxisConfig('y', self.Ylim, "Z (km)")
+        Yaxis.ticks = self.Yticks
         Yaxis.fontsize = 12
         
         # Sim cross sections
