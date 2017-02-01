@@ -32,7 +32,7 @@ cs = m.contour(x, y, z, levels = range(-180, 360, 30), colors = 'blue')
 plt.clabel(cs, fmt = '%.0f', inline = True)
 
 # show plot interactively
-plt.show()
+#plt.show()
 
 # save plot in file
 Fig.savefig("/tmp/heights_1000mb.png")
