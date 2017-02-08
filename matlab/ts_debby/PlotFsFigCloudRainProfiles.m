@@ -8,10 +8,10 @@ function [ ] = PlotFsFigCloudRainProfiles()
   Fsize = 9;
 
   CaseList = {
-    { 'TSD_SAL_DUST'       'SD'   'black' }
-    { 'TSD_NONSAL_DUST'    'NSD'  'red'   }
-    { 'TSD_SAL_NODUST'     'SND'  'blue'  }
-    { 'TSD_NONSAL_NODUST'  'NSND' 'green' }
+    { 'TSD_SAL_DUST'       'SD'   'black'      }
+    { 'TSD_NONSAL_DUST'    'NSD'  'magenta'    }
+    { 'TSD_SAL_NODUST'     'SND'  'cyan'       }
+    { 'TSD_NONSAL_NODUST'  'NSND' 'sandybrown' }
     };
   Nc = length(CaseList);
     
@@ -66,24 +66,24 @@ function [ ] = PlotFsFigCloudRainProfiles()
 
   Paxes = subplot(3,2,3);
   Xlim = [ 30 50 ];
-  PlotFsFigLine(Paxes, CloudDiam, Z, 'c', 'SAP: Rband', 'D_c (\mum)', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'none', Colors);
+  PlotFsFigLine(Paxes, CloudDiam, Z, 'c', '', 'D_c (\mum)', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'none', Colors);
 
   Paxes = subplot(3,2,5);
   Xlim = [ -2.5 0 ];
-  PlotFsFigLine(Paxes, CloudEvap, Z, 'e', 'SAP: Rband', 'Cloud Evap. (g kg^-^1)', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'none', Colors);
+  PlotFsFigLine(Paxes, CloudEvap, Z, 'e', '', 'Cloud Evap. (g kg^-^1)', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'none', Colors);
 
 
   Paxes = subplot(3,2,2);
   Xlim = [ 0 0.05 ];
-  PlotFsFigLine(Paxes, RainNum, Z, 'b', 'SAP: Rband', 'N_r (cm^-^3)', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'none', Colors);
+  PlotFsFigLine(Paxes, RainNum, Z, 'b', '', 'N_r (cm^-^3)', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'none', Colors);
 
   Paxes = subplot(3,2,4);
   Xlim = [ 0.1 0.3 ];
-  PlotFsFigLine(Paxes, RainDiam, Z, 'd', 'SAP: Rband', 'D_r (mm)', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'none', Colors);
+  PlotFsFigLine(Paxes, RainDiam, Z, 'd', '', 'D_r (mm)', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'none', Colors);
 
   Paxes = subplot(3,2,6);
   Xlim = [ -1 0 ];
-  PlotFsFigLine(Paxes, RainEvap, Z, 'f', 'SAP: Rband', 'Rain Evap. (g kg^-^1)', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'none', Colors);
+  PlotFsFigLine(Paxes, RainEvap, Z, 'f', '', 'Rain Evap. (g kg^-^1)', Xlim, 'linear', 1, 'Height (km)', Ylim, 'linear', 1, Fsize, LegText, 'none', Colors);
 
 
   OutFile = sprintf('%s/FsFigCloudRainProfiles.jpg', Pdir);
