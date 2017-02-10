@@ -19,25 +19,25 @@ InFname = 'DIAGS/storm_xsections_<CASE>.h5'
 #VtSap = ptx.StormXsection(InFname, '/all_s_speed_t', 'V_t', 'SAP', 
 #    SimCspecs, FactCspecs, 'Plots.py/FsFigVtSapFactors.png')
 #VtSap.PlotXsection()
-
-# Vr
-SimCspecs = [ -5, 5, 11 ]  # color specs: [ Cmin, Cmax, Cnum ], Cnum is number of contour levels
-FactCspecs = [ -2, 2, 21 ]
-Ylim = [ 0, 10 ]
-Yticks = [ 0, 2, 4, 6, 8, 10 ]
-VrPsap = ptx.StormXsection(InFname, '/all_ps_speed_r', 'V_r', 'PSAP', 
-    SimCspecs, FactCspecs, 'Plots.py/FsFigVrPsapFactors.png')
-VrPsap.Ylim = Ylim
-VrPsap.Yticks = Yticks
-VrPsap.Cmap = 'bwr'
-VrPsap.PlotXsection()
-VrSap = ptx.StormXsection(InFname, '/all_s_speed_r', 'V_r', 'SAP', 
-    SimCspecs, FactCspecs, 'Plots.py/FsFigVrSapFactors.png')
-VrSap.Ylim = Ylim
-VrSap.Yticks = Yticks
-VrSap.Cmap = 'bwr'
-VrSap.PlotXsection()
-
+#
+## Vr
+#SimCspecs = [ -5, 5, 11 ]  # color specs: [ Cmin, Cmax, Cnum ], Cnum is number of contour levels
+#FactCspecs = [ -2, 2, 21 ]
+#Ylim = [ 0, 10 ]
+#Yticks = [ 0, 2, 4, 6, 8, 10 ]
+#VrPsap = ptx.StormXsection(InFname, '/all_ps_speed_r', 'V_r', 'PSAP', 
+#    SimCspecs, FactCspecs, 'Plots.py/FsFigVrPsapFactors.png')
+#VrPsap.Ylim = Ylim
+#VrPsap.Yticks = Yticks
+#VrPsap.Cmap = 'bwr'
+#VrPsap.PlotXsection()
+#VrSap = ptx.StormXsection(InFname, '/all_s_speed_r', 'V_r', 'SAP', 
+#    SimCspecs, FactCspecs, 'Plots.py/FsFigVrSapFactors.png')
+#VrSap.Ylim = Ylim
+#VrSap.Yticks = Yticks
+#VrSap.Cmap = 'bwr'
+#VrSap.PlotXsection()
+#
 ## Ice deposition
 #SimCspecs = [ 0, 1.5, 16 ]
 #FactCspecs = [ -1, 1, 11 ]
@@ -87,10 +87,10 @@ VrSap.PlotXsection()
 #R2iceSap.PlotXsection()
 #
 ## Theta-E
-#SimCspecs = [ 340, 355, 11 ]
-#FactCspecs = [ -6, 6, 11 ]
-#Ylim = [ 0, 5 ]
-#Yticks =  [ 0, 1, 2, 3, 4, 5 ]
+#SimCspecs = [ 340, 360, 11 ]
+#FactCspecs = [ -8, 8, 11 ]
+#Ylim = [ 0, 8 ]
+#Yticks =  [ 0, 2, 4, 6, 8 ]
 #ThetaePsap = ptx.StormXsection(InFname, '/all_ps_theta_e', 'Theta-E', 'PSAP', 
 #    SimCspecs, FactCspecs, 'Plots.py/FsFigThetaePsapFactors.png')
 #ThetaePsap.Ylim = Ylim
@@ -165,6 +165,22 @@ VrSap.PlotXsection()
 #VaporSap.Ylim = Ylim
 #VaporSap.Yticks = Yticks
 #VaporSap.PlotXsection()
+#
+## Vapor (in lead region)
+#SimCspecs = [ 0, 20, 11 ]
+#FactCspecs = [ -2, 2, 11 ]
+#Ylim = [ 0, 8 ]
+#Yticks =  [ 0, 2, 4, 6, 8 ]
+#VaporLeadPsap = ptx.StormXsection(InFname, '/lead_ps_vapor', 'VaporLead', 'PSAP', 
+#    SimCspecs, FactCspecs, 'Plots.py/FsFigVaporLeadPsapFactors.png')
+#VaporLeadPsap.Ylim = Ylim
+#VaporLeadPsap.Yticks = Yticks
+#VaporLeadPsap.PlotXsection()
+#VaporLeadSap = ptx.StormXsection(InFname, '/lead_s_vapor', 'VaporLead', 'SAP', 
+#    SimCspecs, FactCspecs, 'Plots.py/FsFigVaporLeadSapFactors.png')
+#VaporLeadSap.Ylim = Ylim
+#VaporLeadSap.Yticks = Yticks
+#VaporLeadSap.PlotXsection()
 #
 ## Cloud
 #SimCspecs = [ 0, 0.5, 11 ]
