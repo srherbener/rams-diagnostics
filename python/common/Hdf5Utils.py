@@ -33,13 +33,14 @@ class BaseDset:
 
 class DimCoards(BaseDset):
     '''Class for creating dimension datasets in HDF5 file using COARDS convention'''
-    def __init__(self, name, ndims, dims, kind):
+    def __init__(self, name, ndims, dims, kind, tstring='0000-00-00 00:00:00 00:00'):
         BaseDset.__init__(self, name, ndims, dims)
         self.kind = kind
+        self.tstring = tstring
         self.units = { 'x': 'degrees_east',
                        'y': 'degrees_north',
                        'z': 'meters',
-                       't': 'seconds since 0000-00-00 00:00:00 00:00' }
+                       't': 'seconds since {0:s}'.format(self.tstring) }
         self.longnames = { 'x': 'longitude',
                            'y': 'latitude',
                            'z': 'sigma-z',
@@ -52,12 +53,12 @@ class DimCoards(BaseDset):
     # In order to be able to read into GRADS, 'x', 'y', 'z',
     # and 't' dimensions need to exist. These may not all
     # be used by the datasets in the file that are going to
-    # have dimensions attached to them. Normally, create_scale
-    # would be called using the dataset object from one or
-    # more of these datasets. Instead, used the dataset just created
-    # for the coordinate variable to do the create_scale call.
-    # This gets create_scale called for all coordinate variables
-    # regarless if they are ever attached to another dataset.
+    # have dimensions attached to them. create_scale
+    # will be called using the dataset object from one or
+    # more of these datasets. Call create_scale from the dataset
+    # just created for the coordinate variable so that
+    # create_scale is called at least once for each coordinate
+    # dataset.
     #
     def Create(self, Fid, Var):
         # Build dataset and write Var data into it

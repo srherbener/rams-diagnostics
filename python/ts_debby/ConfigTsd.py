@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+TimeBaseString = '2006-08-22 06:00:00 00:00'
+
 def SetColorScheme():
     ColorScheme = {
         'TSD_SAL_DUST'     : 'black',

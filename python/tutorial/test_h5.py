@@ -9,6 +9,8 @@ import numpy as np
 import Hdf5Utils as h5u
 import copy
 
+TimeBaseString = '2006-08-22 06:00:00 00:00'
+
 X = [ 1, 2, 3 ]
 Y = [ 1, 2, 3, 4 ] 
 Z = [ 1, 2, 3, 4, 5 ] 
@@ -42,7 +44,7 @@ for i in range(Nt):
 Xdim = h5u.DimCoards('/x_coords', 1, [ Nx ], 'x')
 Ydim = h5u.DimCoards('/y_coords', 1, [ Ny ], 'y')
 Zdim = h5u.DimCoards('/z_coords', 1, [ Nz ], 'z')
-Tdim = h5u.DimCoards('/t_coords', 1, [ Nt ], 't')
+Tdim = h5u.DimCoards('/t_coords', 1, [ Nt ], 't', tstring=TimeBaseString)
 
 Var1Dset = h5u.DsetCoards('/Var1', Ndims, Dims)
 Var2Dset = h5u.DsetCoards('/Var2', Ndims, RevDims)
