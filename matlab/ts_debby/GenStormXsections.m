@@ -125,6 +125,8 @@ function [ ] = GenStormXsections()
 
     { 'DIAGS/hist_meas_az_vapor_<CASE>.h5' '/all_ps_vapor' '/all_ps_vapor' }
     { 'DIAGS/hist_meas_az_vapor_<CASE>.h5' '/all_s_vapor' '/all_s_vapor' }
+    { 'DIAGS/hist_meas_az_vapor_<CASE>.h5' '/lead_ps_vapor' '/lead_ps_vapor' }
+    { 'DIAGS/hist_meas_az_vapor_<CASE>.h5' '/lead_s_vapor' '/lead_s_vapor' }
 
     { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/all_ps_d1_num'  '/all_ps_d1_num'  }
     { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/all_ps_d2_num'  '/all_ps_d2_num'  }
