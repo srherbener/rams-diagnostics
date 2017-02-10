@@ -6,6 +6,7 @@ DEST = $(HOME)/etc/python/ts_debby
 
 SCRIPTS = \
   $(DEST)/ConfigTsd.py \
+  $(DEST)/GenStormHovmollers.py \
   $(DEST)/PlotFsFigVtFactors.py \
   $(DEST)/PlotFsFigStormXsections.py \
   $(DEST)/PlotFsFigWind.py \

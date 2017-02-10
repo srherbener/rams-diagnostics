@@ -50,18 +50,30 @@ Var1Dset = h5u.DsetCoards('/Var1', Ndims, Dims)
 Var2Dset = h5u.DsetCoards('/Var2', Ndims, RevDims)
 Var3Dset = h5u.DsetCoards('/Var3', 1, [ Nt ])
 
-Fid = h5py.File("test.h5", mode='w')
+Fname = 'test.h5'
+
+Fid = h5py.File(Fname, mode='w')
 Xdim.Create(Fid, X)
 Ydim.Create(Fid, Y)
 Zdim.Create(Fid, Z)
 Tdim.Create(Fid, T)
 
-Var1Dset.Create(Fid, Xdim, Ydim, Zdim)
-Var2Dset.Create(Fid, Zdim, Ydim, Xdim)
-Var3Dset.Create(Fid, Tdim)
+Var1Dset.Create(Fid, Var1, Xdim, Ydim, Zdim)
+Var2Dset.Create(Fid, Var2, Zdim, Ydim, Xdim)
+Var3Dset.Create(Fid, Var3, Tdim)
 
-Var1Dset.Write(Fid, Var1)
-Var2Dset.Write(Fid, Var2)
-Var3Dset.Write(Fid, Var3)
+Fid.close()
+
+# try reading
+Fid = h5py.File(Fname, mode='r')
+
+Dset = Fid['/Var1']
+print('Var1:\n', Dset[...])
+
+Dset = Fid['/Var2']
+print('Var2:\n', Dset[...])
+
+Dset = Fid['/Var3']
+print('Var3:\n', Dset[...])
 
 Fid.close()

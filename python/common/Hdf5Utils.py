@@ -19,17 +19,13 @@ class BaseDset:
 
     # Build will:
     #    Build the dataset in the file
+    #    Load in the contents of Var into the dataset
     #    Return handle to dataset
-    def Build(self, Fid):
-        return Fid.create_dataset(self.name, self.dims)
-
-    # Write will:
-    #   Look up dataset in the file
-    #   Load variable data (Var) into dataset
-    def Write(self, Fid, Var):
-        Dset = Fid[self.name]
+    def Build(self, Fid, Var):
+        Dset = Fid.create_dataset(self.name, self.dims)
         Dset[...] = Var
-         
+        return Dset
+
 
 class DimCoards(BaseDset):
     '''Class for creating dimension datasets in HDF5 file using COARDS convention'''
@@ -62,14 +58,15 @@ class DimCoards(BaseDset):
     #
     def Create(self, Fid, Var):
         # Build dataset and write Var data into it
-        Dset = BaseDset.Build(self, Fid)
-        BaseDset.Write(self, Fid, Var)
+        Dset = BaseDset.Build(self, Fid, Var)
 
         # Turn into dimension scale, and attach COARDS attributes
         Dset.dims.create_scale(Dset, self.kind)
         Dset.attrs.create('axis', np.string_(self.kind))
         Dset.attrs.create('long_name', np.string_(self.longnames[self.kind]))
         Dset.attrs.create('units', np.string_(self.units[self.kind]))
+
+        return Dset
 
 
 class DsetCoards(BaseDset):
@@ -83,9 +80,9 @@ class DsetCoards(BaseDset):
     # Aruguments (*args) consist of elements which are
     # DimCoards objects.
     #
-    def Create(self, Fid, *args):
+    def Create(self, Fid, Var, *args):
         # Build dataset
-        Dset = BaseDset.Build(self, Fid)
+        Dset = BaseDset.Build(self, Fid, Var)
 
         # attach dimensions to dataset (create dimensions as needed)
         for i, arg in enumerate(args):
@@ -93,4 +90,5 @@ class DsetCoards(BaseDset):
             Dset.dims.create_scale(DimDset, arg.kind)
             Dset.dims[i].attach_scale(DimDset)
 
+        return Dset
 
