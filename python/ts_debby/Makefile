@@ -9,6 +9,7 @@ SCRIPTS = \
   $(DEST)/GenStormHovmollers.py \
   $(DEST)/FsFigContour.py \
   $(DEST)/PlotFsFigVtFactors.py \
+  $(DEST)/PlotFsFigStormHovmollers.py \
   $(DEST)/PlotFsFigStormXsections.py \
   $(DEST)/PlotFsFigWind.py \
   $(DEST)/PlotFsFigWindTseries.py

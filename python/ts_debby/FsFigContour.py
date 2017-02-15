@@ -116,7 +116,7 @@ class FsContour:
         
             InFile = h5py.File(InFname, mode='r')
         
-            # grab the coordinate values, and initialize the wind array
+            # grab the coordinate values, and initialize the input array
             if (i == 0):
                 print("Reading {0:s} ({1:s})".format(InFname, self.XcoordName))
                 X = InFile[self.XcoordName][:] * self.XcoordScale + self.XcoordOffset
@@ -280,3 +280,39 @@ class StormXsection(FsContour):
         self.FacCmin = FacCspecs[0]
         self.FacCmax = FacCspecs[1]
         self.FacCnum = FacCspecs[2]
+
+# class for doing storm hovmollers - time vs height
+class StormHovmoller(FsContour):
+    '''Class to create storm hovmoller, sim/factor figure'''
+
+    def __init__(self, InFname, InVname, OutFname, Ptitle, Tag, SimCspecs, FacCspecs):
+        FsContour.__init__(self, InFname, InVname, OutFname, Ptitle, Tag)
+
+        # x-axis is time in hours of simulation, start time is 06Z, 22Aug
+        self.XcoordName = '/t_coords'
+        self.XcoordScale = 1.0 / 3600.0
+        self.XcoordOffset = -42.0
+        self.Xlabel = ''
+        self.Xmin = 0.0
+        self.Xmax = 60.0
+        self.Xticks = [ 6.0, 18.0, 30.0, 42.0, 54.0 ]
+        self.XtickLabels = [ ' 12Z\n22Aug', ' 0Z\n23Aug', ' 12Z\n23Aug', ' 0Z\n24Aug', ' 12Z\n24Aug' ]
+
+        # y-axis is height in kilometers
+        self.YcoordName = '/z_coords'
+        self.YcoordScale = 1.0e-3
+        self.YcoordOffset = 0.0
+        self.Ylabel = 'Z (km)'
+        self.Ymin = 0.0
+        self.Ymax = 8.0
+        self.Yticks = [ 0.0, 2.0, 4.0, 6.0, 8.0 ]
+
+        # Contour specs
+        self.SimCmin = SimCspecs[0]
+        self.SimCmax = SimCspecs[1]
+        self.SimCnum = SimCspecs[2]
+
+        self.FacCmin = FacCspecs[0]
+        self.FacCmax = FacCspecs[1]
+        self.FacCnum = FacCspecs[2]
+
