@@ -5,10 +5,10 @@ import sys
 sys.path.append("{0:s}/etc/python/common".format(os.environ['HOME']))
 sys.path.append("{0:s}/etc/python/ts_debby".format(os.environ['HOME']))
 
-import PlotTcXsection as ptx
+import FsFigContour as ffc
 
 
-InFname = 'DIAGS/storm_xsections_<CASE>.h5'
+InFname = 'DIAGS/storm_xsections_<SIM>.h5'
 
 ## Max Vt
 #SimCspecs = [ 0, 20, 21 ]  # color specs: [ Cmin, Cmax, Cnum ], Cnum is number of contour levels
@@ -197,20 +197,13 @@ InFname = 'DIAGS/storm_xsections_<CASE>.h5'
 #CloudSap.Ylim = Ylim
 #CloudSap.Yticks = Yticks
 #CloudSap.PlotXsection()
-#
-## Rain
-#SimCspecs = [ 0, 0.5, 11 ]
-#FactCspecs = [ -0.1, 0.1, 11 ]
-#Ylim = [ 0, 8 ]
-#Yticks =  [ 0, 2, 4, 6, 8 ]
-#RainPsap = ptx.StormXsection(InFname, '/all_ps_rain_mass', 'Rain', 'PSAP', 
-#    SimCspecs, FactCspecs, 'Plots.py/FsFigRainPsapFactors.png')
-#RainPsap.Ylim = Ylim
-#RainPsap.Yticks = Yticks
-#RainPsap.PlotXsection()
-#RainSap = ptx.StormXsection(InFname, '/all_s_rain_mass', 'Rain', 'SAP', 
-#    SimCspecs, FactCspecs, 'Plots.py/FsFigRainSapFactors.png')
-#RainSap.Ylim = Ylim
-#RainSap.Yticks = Yticks
-#RainSap.PlotXsection()
+
+# Rain
+SimCspecs = [    0, 0.5, 11 ]
+FacCspecs = [ -0.1, 0.1, 11 ]
+RainPsap = ffc.StormXsection(InFname, '/all_ps_rain_mass', 'Plots.py/FsFigRainPsapFactors.png', 'Rain', 'PSAP', SimCspecs, FacCspecs)
+RainPsap.CreateFig()
+
+RainSap = ffc.StormXsection(InFname, '/all_s_rain_mass', 'Plots.py/FsFigRainSapFactors.png', 'Rain', 'SAP', SimCspecs, FacCspecs)
+RainSap.CreateFig()
 #

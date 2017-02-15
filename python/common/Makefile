@@ -6,8 +6,7 @@ DEST = $(HOME)/etc/python/common
 
 SCRIPTS = \
   $(DEST)/Hdf5Utils.py \
-  $(DEST)/PlotUtils.py \
-  $(DEST)/PlotTcXsection.py
+  $(DEST)/PlotUtils.py
 
 #
 # Targets

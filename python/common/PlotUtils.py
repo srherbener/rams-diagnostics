@@ -4,6 +4,8 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as pat
 from mpl_toolkits.basemap import Basemap
+import numpy as np
+import sys
 
 # classes
 class AxisConfig:
@@ -110,6 +112,23 @@ class LegendConfig:
                 for i in Paxes.get_legend().get_texts():
                     i.set_fontsize(self.fontsize)
 
+class ContourConfig:
+    '''Class for configuring contouring'''
+    def __init__(self, cmin, cmax, cnum, cmap, cfilled, ctype):
+        self.cmin    = cmin
+        self.cmax    = cmax
+        self.cnum    = cnum
+        self.cmap    = cmap
+        self.cfilled = cfilled
+        self.ctype   = ctype
+
+        if (self.ctype == 'linear'):
+            self.clevels = np.linspace(self.cmin, self.cmax, num=self.cnum)
+        elif (self.ctype == 'log'):
+            self.clevels = np.logspace(self.cmin, self.cmax, num=self.cnum)
+        else:
+            print("Error: ContourConfig: contour type (ctype) must be one of 'log', 'linear': {0:s}".format(self.ctype))
+            sys.exit(1)
 
 
 ##############################################################
@@ -193,13 +212,15 @@ def PlotSplitBgraph(Paxes, Xbars, Ybars1, Ybars2, Ptitle, Xaxis, Yaxis, Legend, 
 #
 # This routine will plot a 2D contour plot.
 #
-def PlotContour(Paxes, X, Y, Z, Ptitle, Xaxis, Yaxis, Cmap, Clim, Clevs, Cfilled):
+def PlotContour(Paxes, X, Y, Z, Ptitle, Xaxis, Yaxis, Cspecs):
 
     # Make the contour plot
-    if (Cfilled == 0):
-        cplot = Paxes.contour(X, Y, Z, levels=Clevs, cmap=Cmap, vmin=Clim[0], vmax=Clim[1])
+    if (Cspecs.cfilled):
+        cplot = Paxes.contourf(X, Y, Z, linestyle='none', extend='both', levels=Cspecs.clevels,
+            vmin=Cspecs.cmin, vmax=Cspecs.cmax, cmap=Cspecs.cmap)
     else:
-        cplot = Paxes.contourf(X, Y, Z, levels=Clevs, cmap=Cmap, vmin=Clim[0], vmax=Clim[1], linestyle=None)
+        cplot = Paxes.contour(X, Y, Z, extend='both', levels=Cspecs.clevels,
+            vmin=Cspecs.cmin, vmax=Cspecs.cmax, cmap=Cspecs.cmap)
 
     plt.colorbar(cplot, ax=Paxes, aspect=10)
 
