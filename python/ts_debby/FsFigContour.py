@@ -204,14 +204,14 @@ class FsContour:
         if self.Xticks:
              Xaxis.ticks = self.Xticks
         if self.XtickLabels:
-             Xaxis.tickLabels = self.XtickLabels
+             Xaxis.ticklabels = self.XtickLabels
         
         Yaxis = plu.AxisConfig('y', [ self.Ymin, self.Ymax ], self.Ylabel)
         Yaxis.fontsize = self.AxFsize
         if self.Yticks:
              Yaxis.ticks = self.Yticks
         if self.YtickLabels:
-             Yaxis.tickLabels = self.YtickLabels
+             Yaxis.ticklabels = self.YtickLabels
 
         SimCspecs = plu.ContourConfig(self.SimCmin, self.SimCmax, self.SimCnum, self.SimCmap, self.Cfilled, self.SimCtype)
         FacCspecs = plu.ContourConfig(self.FacCmin, self.FacCmax, self.FacCnum, self.FacCmap, self.Cfilled, self.FacCtype)
@@ -243,7 +243,7 @@ class FsContour:
         
         print("Writing: {0:s}".format(self.OutFname))
         Fig.savefig(self.OutFname)
-        
+        plt.close()
         print("")
 
 
@@ -287,6 +287,8 @@ class StormHovmoller(FsContour):
 
     def __init__(self, InFname, InVname, OutFname, Ptitle, Tag, SimCspecs, FacCspecs):
         FsContour.__init__(self, InFname, InVname, OutFname, Ptitle, Tag)
+
+        self.AxFsize = 10
 
         # x-axis is time in hours of simulation, start time is 06Z, 22Aug
         self.XcoordName = '/t_coords'

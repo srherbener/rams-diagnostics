@@ -7,6 +7,7 @@ DEST = $(HOME)/etc/python/ts_debby
 SCRIPTS = \
   $(DEST)/ConfigTsd.py \
   $(DEST)/GenStormHovmollers.py \
+  $(DEST)/GenPtrackAverages.py \
   $(DEST)/FsFigContour.py \
   $(DEST)/PlotFsFigVtFactors.py \
   $(DEST)/PlotFsFigStormHovmollers.py \

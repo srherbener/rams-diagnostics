@@ -22,11 +22,65 @@ SimList = [
 Nsims = len(SimList)
 
 HovmollerList = [
-    [ 'DIAGS/hist_meas_az_vapor_<SIM>.h5', '/all_core_vapor_ts', '/all_core_vapor' ],
-    [ 'DIAGS/hist_meas_az_vapor_<SIM>.h5', '/all_rb_vapor_ts',   '/all_rb_vapor'   ],
+    [ 'DIAGS/hist_meas_az_vapor_<SIM>.h5', '/all_core_vapor_ts',  '/all_core_vapor'  ],
+    [ 'DIAGS/hist_meas_az_vapor_<SIM>.h5', '/all_rb_vapor_ts',    '/all_rb_vapor'    ],
+    [ 'DIAGS/hist_meas_az_vapor_<SIM>.h5', '/lead_core_vapor_ts', '/lead_core_vapor' ],
+    [ 'DIAGS/hist_meas_az_vapor_<SIM>.h5', '/lead_rb_vapor_ts',   '/lead_rb_vapor'   ],
+    [ 'DIAGS/hist_meas_az_vapor_<SIM>.h5', '/lead_env_vapor_ts',  '/lead_env_vapor'  ],
 
-    [ 'DIAGS/hist_meas_az_theta_<SIM>.h5', '/all_core_theta_ts', '/all_core_theta' ],
-    [ 'DIAGS/hist_meas_az_theta_<SIM>.h5', '/all_rb_theta_ts',   '/all_rb_theta'   ],
+    [ 'DIAGS/hist_meas_az_theta_<SIM>.h5', '/all_core_theta_ts',  '/all_core_theta'  ],
+    [ 'DIAGS/hist_meas_az_theta_<SIM>.h5', '/all_rb_theta_ts',    '/all_rb_theta'    ],
+    [ 'DIAGS/hist_meas_az_theta_<SIM>.h5', '/lead_core_theta_ts', '/lead_core_theta' ],
+    [ 'DIAGS/hist_meas_az_theta_<SIM>.h5', '/lead_rb_theta_ts',   '/lead_rb_theta'   ],
+    [ 'DIAGS/hist_meas_az_theta_<SIM>.h5', '/lead_env_theta_ts',  '/lead_env_theta'  ],
+
+    [ 'DIAGS/hist_meas_az_theta_e_<SIM>.h5', '/all_core_theta_e_ts',  '/all_core_theta_e'  ],
+    [ 'DIAGS/hist_meas_az_theta_e_<SIM>.h5', '/all_rb_theta_e_ts',    '/all_rb_theta_e'    ],
+    [ 'DIAGS/hist_meas_az_theta_e_<SIM>.h5', '/lead_core_theta_e_ts', '/lead_core_theta_e' ],
+    [ 'DIAGS/hist_meas_az_theta_e_<SIM>.h5', '/lead_rb_theta_e_ts',   '/lead_rb_theta_e'   ],
+    [ 'DIAGS/hist_meas_az_theta_e_<SIM>.h5', '/lead_env_theta_e_ts',  '/lead_env_theta_e'  ],
+
+    [ 'DIAGS/hist_meas_az_cloud_<SIM>.h5', '/all_core_cloud_mass_ts',  '/all_core_cloud'  ],
+    [ 'DIAGS/hist_meas_az_cloud_<SIM>.h5', '/all_rb_cloud_mass_ts',    '/all_rb_cloud'    ],
+    [ 'DIAGS/hist_meas_az_cloud_<SIM>.h5', '/lead_core_cloud_mass_ts', '/lead_core_cloud' ],
+    [ 'DIAGS/hist_meas_az_cloud_<SIM>.h5', '/lead_rb_cloud_mass_ts',   '/lead_rb_cloud'   ],
+    [ 'DIAGS/hist_meas_az_cloud_<SIM>.h5', '/lead_env_cloud_mass_ts',  '/lead_env_cloud'  ],
+
+    [ 'DIAGS/hist_meas_az_rain_<SIM>.h5', '/all_core_rain_mass_ts',  '/all_core_rain'  ],
+    [ 'DIAGS/hist_meas_az_rain_<SIM>.h5', '/all_rb_rain_mass_ts',    '/all_rb_rain'    ],
+    [ 'DIAGS/hist_meas_az_rain_<SIM>.h5', '/lead_core_rain_mass_ts', '/lead_core_rain' ],
+    [ 'DIAGS/hist_meas_az_rain_<SIM>.h5', '/lead_rb_rain_mass_ts',   '/lead_rb_rain'   ],
+    [ 'DIAGS/hist_meas_az_rain_<SIM>.h5', '/lead_env_rain_mass_ts',  '/lead_env_rain'  ],
+
+    [ 'DIAGS/hist_meas_az_cloud_cond_<SIM>.h5', '/all_core_cloud_cond_ts',  '/all_core_cloud_cond'  ],
+    [ 'DIAGS/hist_meas_az_cloud_cond_<SIM>.h5', '/all_rb_cloud_cond_ts',    '/all_rb_cloud_cond'    ],
+    [ 'DIAGS/hist_meas_az_cloud_cond_<SIM>.h5', '/lead_core_cloud_cond_ts', '/lead_core_cloud_cond' ],
+    [ 'DIAGS/hist_meas_az_cloud_cond_<SIM>.h5', '/lead_rb_cloud_cond_ts',   '/lead_rb_cloud_cond'   ],
+    [ 'DIAGS/hist_meas_az_cloud_cond_<SIM>.h5', '/lead_env_cloud_cond_ts',  '/lead_env_cloud_cond'  ],
+
+    [ 'DIAGS/hist_meas_az_cloud_evap_<SIM>.h5', '/all_core_cloud_evap_ts',  '/all_core_cloud_evap'  ],
+    [ 'DIAGS/hist_meas_az_cloud_evap_<SIM>.h5', '/all_rb_cloud_evap_ts',    '/all_rb_cloud_evap'    ],
+    [ 'DIAGS/hist_meas_az_cloud_evap_<SIM>.h5', '/lead_core_cloud_evap_ts', '/lead_core_cloud_evap' ],
+    [ 'DIAGS/hist_meas_az_cloud_evap_<SIM>.h5', '/lead_rb_cloud_evap_ts',   '/lead_rb_cloud_evap'   ],
+    [ 'DIAGS/hist_meas_az_cloud_evap_<SIM>.h5', '/lead_env_cloud_evap_ts',  '/lead_env_cloud_evap'  ],
+
+    [ 'DIAGS/hist_meas_az_rain_cond_<SIM>.h5', '/all_core_rain_cond_ts',  '/all_core_rain_cond'  ],
+    [ 'DIAGS/hist_meas_az_rain_cond_<SIM>.h5', '/all_rb_rain_cond_ts',    '/all_rb_rain_cond'    ],
+    [ 'DIAGS/hist_meas_az_rain_cond_<SIM>.h5', '/lead_core_rain_cond_ts', '/lead_core_rain_cond' ],
+    [ 'DIAGS/hist_meas_az_rain_cond_<SIM>.h5', '/lead_rb_rain_cond_ts',   '/lead_rb_rain_cond'   ],
+    [ 'DIAGS/hist_meas_az_rain_cond_<SIM>.h5', '/lead_env_rain_cond_ts',  '/lead_env_rain_cond'  ],
+
+    [ 'DIAGS/hist_meas_az_rain_evap_<SIM>.h5', '/all_core_rain_evap_ts',  '/all_core_rain_evap'  ],
+    [ 'DIAGS/hist_meas_az_rain_evap_<SIM>.h5', '/all_rb_rain_evap_ts',    '/all_rb_rain_evap'    ],
+    [ 'DIAGS/hist_meas_az_rain_evap_<SIM>.h5', '/lead_core_rain_evap_ts', '/lead_core_rain_evap' ],
+    [ 'DIAGS/hist_meas_az_rain_evap_<SIM>.h5', '/lead_rb_rain_evap_ts',   '/lead_rb_rain_evap'   ],
+    [ 'DIAGS/hist_meas_az_rain_evap_<SIM>.h5', '/lead_env_rain_evap_ts',  '/lead_env_rain_evap'  ],
+
+    [ 'DIAGS/hist_meas_az_ice_dep_<SIM>.h5', '/all_core_ice_dep_ts', '/all_core_ice_dep' ],
+    [ 'DIAGS/hist_meas_az_ice_dep_<SIM>.h5', '/all_rb_ice_dep_ts',   '/all_rb_ice_dep'   ],
+
+    [ 'DIAGS/hist_meas_az_rain2ice_<SIM>.h5', '/all_core_rain2ice_ts', '/all_core_rain2ice' ],
+    [ 'DIAGS/hist_meas_az_rain2ice_<SIM>.h5', '/all_rb_rain2ice_ts',   '/all_rb_rain2ice'   ],
 
     [ 'DIAGS/hist_meas_az_w_<SIM>.h5', '/all_core_updraft_ts', '/all_core_updraft' ],
     [ 'DIAGS/hist_meas_az_w_<SIM>.h5', '/all_rb_updraft_ts',   '/all_rb_updraft'   ],

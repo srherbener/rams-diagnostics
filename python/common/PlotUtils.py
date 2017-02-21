@@ -66,9 +66,9 @@ class AxisConfig:
 
         if (self.show == 0):
             if (self.axid == 'x'):
-                Paxes.axes.get_xaxis().set_visible(False)
+                plt.setp(Paxes.axes.get_xticklabels(), visible=False)
             elif (self.axid == 'y'):
-                Paxes.axes.get_yaxis().set_visible(False)
+                plt.setp(Paxes.axes.get_yticklabels(), visible=False)
 
 
 class TitleConfig:
