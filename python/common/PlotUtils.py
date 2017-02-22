@@ -67,8 +67,10 @@ class AxisConfig:
         if (self.show == 0):
             if (self.axid == 'x'):
                 plt.setp(Paxes.axes.get_xticklabels(), visible=False)
+                Paxes.set_xlabel('')
             elif (self.axid == 'y'):
                 plt.setp(Paxes.axes.get_yticklabels(), visible=False)
+                Paxes.set_ylabel('')
 
 
 class TitleConfig:

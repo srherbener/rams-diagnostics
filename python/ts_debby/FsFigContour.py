@@ -240,6 +240,27 @@ class FsContour:
         if (self.Tag):
             TxtAx.text(1, 1, self.Tag, transform=TxtAx.transAxes,
                 fontsize=20, horizontalalignment='right', verticalalignment='bottom')
+
+        # If doing a track (PTRACK or STRACK), place labels on x-axis
+        if (self.tracktype):
+            if (self.tracktype == 'ptrack'):
+                SimAx[3].text(0, -0.1, 'C', transform=SimAx[3].transAxes, fontsize=14, color='blue',
+                    horizontalalignment='left', verticalalignment='top')
+                SimAx[3].text(1, -0.1, 'D', transform=SimAx[3].transAxes, fontsize=14, color='blue',
+                    horizontalalignment='right', verticalalignment='top')
+                FacAx[2].text(0, -0.1, 'C', transform=FacAx[2].transAxes, fontsize=14, color='blue',
+                    horizontalalignment='left', verticalalignment='top')
+                FacAx[2].text(1, -0.1, 'D', transform=FacAx[2].transAxes, fontsize=14, color='blue',
+                    horizontalalignment='right', verticalalignment='top')
+            elif (self.tracktype == 'strack'):
+                SimAx[3].text(0, -0.1, 'A', transform=SimAx[3].transAxes, fontsize=14, color='red',
+                    horizontalalignment='left', verticalalignment='top')
+                SimAx[3].text(1, -0.1, 'B', transform=SimAx[3].transAxes, fontsize=14, color='red',
+                    horizontalalignment='right', verticalalignment='top')
+                FacAx[2].text(0, -0.1, 'A', transform=FacAx[2].transAxes, fontsize=14, color='red',
+                    horizontalalignment='left', verticalalignment='top')
+                FacAx[2].text(1, -0.1, 'B', transform=FacAx[2].transAxes, fontsize=14, color='red',
+                    horizontalalignment='right', verticalalignment='top')
         
         print("Writing: {0:s}".format(self.OutFname))
         Fig.savefig(self.OutFname)
@@ -262,6 +283,47 @@ class StormXsection(FsContour):
         self.Xmin = 0.0
         self.Xmax = 500.0
         self.Xticks = [ 100.0, 200.0, 300.0, 400.0, 500.0 ]
+
+        # y-axis is height in kilometers
+        self.YcoordName = '/z_coords'
+        self.YcoordScale = 1.0e-3
+        self.YcoordOffset = 0.0
+        self.Ylabel = 'Z (km)'
+        self.Ymin = 0.0
+        self.Ymax = 8.0
+        self.Yticks = [ 0.0, 2.0, 4.0, 6.0, 8.0 ]
+
+        # Contour specs
+        self.SimCmin = SimCspecs[0]
+        self.SimCmax = SimCspecs[1]
+        self.SimCnum = SimCspecs[2]
+
+        self.FacCmin = FacCspecs[0]
+        self.FacCmax = FacCspecs[1]
+        self.FacCnum = FacCspecs[2]
+
+# class for doing track cross sections - length vs height
+class TrackXsection(FsContour):
+    '''Class to create track cross section, sim/factor figure'''
+
+    def __init__(self, InFname, InVname, OutFname, Ptitle, Tag, SimCspecs, FacCspecs, TrackType):
+        FsContour.__init__(self, InFname, InVname, OutFname, Ptitle, Tag)
+
+        self.tracktype = TrackType
+
+        # x-axis is linear distance in kilometers
+        self.XcoordName = '/x_coords'
+        self.XcoordScale = 1.0
+        self.XcoordOffset = 0.0
+        self.Xlabel = 'Linear Distance (km)'
+        self.Xmin = 0.0
+        if (self.tracktype == 'strack'):
+            self.Xmax = 2100.0
+        elif (self.tracktype == 'ptrack'):
+            self.Xmax = 1800.0
+        else:
+            self.Xmax = 2000.0
+        self.Xticks = [ 500.0, 1000.0, 1500.0 ]
 
         # y-axis is height in kilometers
         self.YcoordName = '/z_coords'

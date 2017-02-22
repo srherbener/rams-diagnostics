@@ -13,6 +13,7 @@ SCRIPTS = \
   $(DEST)/PlotFsFigVtFactors.py \
   $(DEST)/PlotFsFigStormHovmollers.py \
   $(DEST)/PlotFsFigStormXsections.py \
+  $(DEST)/PlotFsFigTrackXsections.py \
   $(DEST)/PlotFsFigWind.py \
   $(DEST)/PlotFsFigWindTseries.py
 
