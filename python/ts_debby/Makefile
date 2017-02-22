@@ -8,6 +8,7 @@ SCRIPTS = \
   $(DEST)/ConfigTsd.py \
   $(DEST)/GenStormHovmollers.py \
   $(DEST)/GenPtrackAverages.py \
+  $(DEST)/GenPtrackTempGrads.py \
   $(DEST)/FsFigContour.py \
   $(DEST)/PlotFsFigVtFactors.py \
   $(DEST)/PlotFsFigStormHovmollers.py \
