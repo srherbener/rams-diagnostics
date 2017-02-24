@@ -343,6 +343,47 @@ class TrackXsection(FsContour):
         self.FacCmax = FacCspecs[1]
         self.FacCnum = FacCspecs[2]
 
+# class for doing track cross sections - length vs pressure
+class TrackXsectionPress(FsContour):
+    '''Class to create track cross section, sim/factor figure'''
+
+    def __init__(self, InFname, InVname, OutFname, Ptitle, Tag, SimCspecs, FacCspecs, TrackType):
+        FsContour.__init__(self, InFname, InVname, OutFname, Ptitle, Tag)
+
+        self.tracktype = TrackType
+
+        # x-axis is linear distance in kilometers
+        self.XcoordName = '/x_coords'
+        self.XcoordScale = 1.0
+        self.XcoordOffset = 0.0
+        self.Xlabel = 'Linear Distance (km)'
+        self.Xmin = 0.0
+        if (self.tracktype == 'strack'):
+            self.Xmax = 2100.0
+        elif (self.tracktype == 'ptrack'):
+            self.Xmax = 1800.0
+        else:
+            self.Xmax = 2000.0
+        self.Xticks = [ 500.0, 1000.0, 1500.0 ]
+
+        # y-axis is pressure in millibars
+        self.YcoordName = '/p_coords'
+        self.YcoordScale = 1.0
+        self.YcoordOffset = 0.0
+        self.Ylabel = 'P (mb)'
+        self.Ymin = 1000.0
+        self.Ymax = 200.0
+        self.Yticks = [ 1000.0, 800.0, 600.0, 400.0, 200.0 ] 
+
+        # Contour specs
+        self.SimCmin = SimCspecs[0]
+        self.SimCmax = SimCspecs[1]
+        self.SimCnum = SimCspecs[2]
+
+        self.FacCmin = FacCspecs[0]
+        self.FacCmax = FacCspecs[1]
+        self.FacCnum = FacCspecs[2]
+
 # class for doing storm hovmollers - time vs height
 class StormHovmoller(FsContour):
     '''Class to create storm hovmoller, sim/factor figure'''

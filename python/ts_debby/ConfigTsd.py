@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 def SetTimeString():
-    TimeString = '2006-08-22 06:00:00 00:00'
+    # Set TimeString to the beginning of the TS Debby spin up simulation
+    TimeString = '2006-08-20 12:00:00 00:00'
     return TimeString
 
 def SetRhoAir():

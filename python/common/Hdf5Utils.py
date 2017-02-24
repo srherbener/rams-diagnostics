@@ -36,10 +36,12 @@ class DimCoards(BaseDset):
         self.units = { 'x': 'degrees_east',
                        'y': 'degrees_north',
                        'z': 'meters',
+                       'p': 'millibars',
                        't': 'seconds since {0:s}'.format(self.tstring) }
         self.longnames = { 'x': 'longitude',
                            'y': 'latitude',
                            'z': 'sigma-z',
+                           'p': 'pressure',
                            't': 'simulation time' }
 
 

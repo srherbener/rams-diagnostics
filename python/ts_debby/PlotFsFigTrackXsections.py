@@ -45,19 +45,45 @@ AvgFname = 'DIAGS/ptrack_avgs_<SIM>.h5'
 #VrSap.SimCmap = 'bwr'
 #VrSap.CreateFig()
 
-# Theta
-SimCspecs = [ 290, 340, 11 ]
+## Theta
+#SimCspecs = [ 290, 340, 11 ]
+#FactCspecs = [ -3, 3, 11 ]
+#Ylim = [ 0, 10 ]
+#Yticks = [ 0, 2, 4, 6, 8, 10 ]
+#
+#ThetaPsap = ffc.TrackXsection(AvgFname, '/ps_theta', 'Plots.py/FsFigPtrackThetaPsapFactors.png', '\\theta', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
+#ThetaPsap.Ylim = Ylim
+#ThetaPsap.Yticks = Yticks
+#ThetaPsap.CreateFig()
+#
+#ThetaSap = ffc.TrackXsection(AvgFname, '/s_theta', 'Plots.py/FsFigPtrackThetaSapFactors.png', '\\theta', 'SAP', SimCspecs, FactCspecs, 'ptrack')
+#ThetaSap.Ylim = Ylim
+#ThetaSap.Yticks = Yticks
+#ThetaSap.CreateFig()
+
+# Temp C
+SimCspecs = [ -50, 30, 11 ]
 FactCspecs = [ -3, 3, 11 ]
 Ylim = [ 0, 10 ]
 Yticks = [ 0, 2, 4, 6, 8, 10 ]
 
-ThetaPsap = ffc.TrackXsection(AvgFname, '/ps_theta', 'Plots.py/FsFigThetaPsapFactors.png', '\\theta', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
-ThetaPsap.Ylim = Ylim
-ThetaPsap.Yticks = Yticks
-ThetaPsap.CreateFig()
+TempcPsap = ffc.TrackXsection(AvgFname, '/ps_tempc', 'Plots.py/FsFigPtrackTempcPsapFactors.png', 'T,\\ ^{\\circ}C', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
+TempcPsap.Ylim = Ylim
+TempcPsap.Yticks = Yticks
+TempcPsap.CreateFig()
 
-ThetaSap = ffc.TrackXsection(AvgFname, '/s_theta', 'Plots.py/FsFigThetaSapFactors.png', '\\theta', 'SAP', SimCspecs, FactCspecs, 'ptrack')
-ThetaSap.Ylim = Ylim
-ThetaSap.Yticks = Yticks
-ThetaSap.CreateFig()
+TempcSap = ffc.TrackXsection(AvgFname, '/s_tempc', 'Plots.py/FsFigPtrackTempcSapFactors.png', 'T,\\ ^{\\circ}C', 'SAP', SimCspecs, FactCspecs, 'ptrack')
+TempcSap.Ylim = Ylim
+TempcSap.Yticks = Yticks
+TempcSap.CreateFig()
+
+# Temp C, pressure coords
+SimCspecs = [ -50, 30, 11 ]
+FactCspecs = [ -3, 3, 11 ]
+
+TempcPressPsap = ffc.TrackXsectionPress(AvgFname, '/ps_tempc_p', 'Plots.py/FsFigPtrackTempcPressPsapFactors.png', 'T,\\ ^{\\circ}C', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
+TempcPressPsap.CreateFig()
+
+TempcPressSap = ffc.TrackXsectionPress(AvgFname, '/s_tempc_p', 'Plots.py/FsFigPtrackTempcPressSapFactors.png', 'T,\\ ^{\\circ}C', 'SAP', SimCspecs, FactCspecs, 'ptrack')
+TempcPressSap.CreateFig()
 
