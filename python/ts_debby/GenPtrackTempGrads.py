@@ -83,7 +83,7 @@ for isim in range(Nsims):
             X = Ifile[Xname][...]
             Nx = len(X)
             Xdim = h5u.DimCoards(Xname, 1, [ Nx ], 'x')
-            Xdim.Create(Ofile, X)
+            Xdim.Build(Ofile, X)
 
             # Create 1D delta X, repeat the final delta-x value to get
             # the length to match X.
@@ -97,7 +97,7 @@ for isim in range(Nsims):
             Y = Ifile[Yname][...]
             Ny = len(Y)
             Ydim = h5u.DimCoards(Yname, 1, [ Ny ], 'y')
-            Ydim.Create(Ofile, Y)
+            Ydim.Build(Ofile, Y)
             NoY = False
 
         if (VcoordType == 'z'):
@@ -106,15 +106,12 @@ for isim in range(Nsims):
                 Z = Ifile[Zname][...]
                 Nz = len(Z)
                 Zdim = h5u.DimCoards(Zname, 1, [ Nz ], 'z')
-                Zdim.Create(Ofile, Z)
+                Zdim.Build(Ofile, Z)
 
                 # Select Z range
                 Select = np.where((Z >= Zbot) * (Z <= Ztop))
                 Z1 = Select[0][0]
                 Z2 = Select[0][-1]
-                print('Z Select:', Select)
-                print('Z1:', Z1)
-                print('Z2:', Z2)
 
                 NoZ = False
         elif (VcoordType == 'p'):
@@ -123,15 +120,12 @@ for isim in range(Nsims):
                 P = Ifile[Pname][...]
                 Np = len(P)
                 Pdim = h5u.DimCoards(Pname, 1, [ Np ], 'p')
-                Pdim.Create(Ofile, P)
+                Pdim.Build(Ofile, P)
 
                 # Select P range
                 Select = np.where((P <= Pbot) * (P >= Ptop))
                 P1 = Select[0][0]
                 P2 = Select[0][-1]
-                print('P Select:', Select)
-                print('P1:', P1)
-                print('P2:', P2)
 
                 NoP = False
 
@@ -140,7 +134,7 @@ for isim in range(Nsims):
             T = Ifile[Tname][...]
             Nt = len(T)
             Tdim = h5u.DimCoards(Tname, 1, [ Nt ], 't', tstring=Tstring)
-            Tdim.Create(Ofile, T)
+            Tdim.Build(Ofile, T)
             NoT = False
 
         Ifile.close()
@@ -164,12 +158,12 @@ for isim in range(Nsims):
         # Write out gradient, plus smoothed version of gradient
         print("  Writing {0:s} ({1:s})".format(OutFname, OutVname))
         VarDset = h5u.DsetCoards(OutVname, 1, [ Nx ])
-        VarDset.Create(Ofile, Var, Xdim)
+        VarDset.Build(Ofile, Var, Xdim)
 
         Vname = "{0:s}_smooth".format(OutVname)
         print("  Writing {0:s} ({1:s})".format(OutFname, Vname))
         VarDset = h5u.DsetCoards(Vname, 1, [ Nx ])
-        VarDset.Create(Ofile, VarSmooth, Xdim)
+        VarDset.Build(Ofile, VarSmooth, Xdim)
         print('')
 
     Ofile.close()

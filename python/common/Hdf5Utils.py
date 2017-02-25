@@ -17,14 +17,12 @@ class BaseDset:
         self.ndims = ndims
         self.dims = dims
 
-    # Build will:
-    #    Build the dataset in the file
-    #    Load in the contents of Var into the dataset
-    #    Return handle to dataset
-    def Build(self, Fid, Var):
+    def Create(self, Fid):
         Dset = Fid.create_dataset(self.name, self.dims)
-        Dset[...] = Var
         return Dset
+
+    def Write(self, Dset, Var):
+        Dset[...] = Var
 
 
 class DimCoards(BaseDset):
@@ -45,23 +43,11 @@ class DimCoards(BaseDset):
                            't': 'simulation time' }
 
 
-    ######################################################
-    # Create dimension
-    #
-    # In order to be able to read into GRADS, 'x', 'y', 'z',
-    # and 't' dimensions need to exist. These may not all
-    # be used by the datasets in the file that are going to
-    # have dimensions attached to them. create_scale
-    # will be called using the dataset object from one or
-    # more of these datasets. Call create_scale from the dataset
-    # just created for the coordinate variable so that
-    # create_scale is called at least once for each coordinate
-    # dataset.
-    #
-    def Create(self, Fid, Var):
-        # Build dataset and write Var data into it
-        Dset = BaseDset.Build(self, Fid, Var)
-
+    def Build(self, Fid, Var):
+        # build the dataset
+        Dset = BaseDset.Create(self, Fid)
+        BaseDset.Write(self, Dset, Var)
+ 
         # Turn into dimension scale, and attach COARDS attributes
         Dset.dims.create_scale(Dset, self.kind)
         Dset.attrs.create('axis', np.string_(self.kind))
@@ -76,21 +62,17 @@ class DsetCoards(BaseDset):
     def __init__(self, name, ndims, dims):
         BaseDset.__init__(self, name, ndims, dims)
 
-    ######################################################
-    # Create dataset with dimensions
-    #
-    # Aruguments (*args) consist of elements which are
-    # DimCoards objects.
-    #
-    def Create(self, Fid, Var, *args):
-        # Build dataset
-        Dset = BaseDset.Build(self, Fid, Var)
-
-        # attach dimensions to dataset (create dimensions as needed)
+    def AttachDims(self, Fid, Dset, *args):
         for i, arg in enumerate(args):
             DimDset = Fid[arg.name]
             Dset.dims.create_scale(DimDset, arg.kind)
             Dset.dims[i].attach_scale(DimDset)
 
-        return Dset
+    def Build(self, Fid, Var, *args):
+        # build the dataset
+        Dset = BaseDset.Create(self, Fid)
+        BaseDset.Write(self, Dset, Var)
+
+        # Attach the dimensions, given by args
+        self.AttachDims(Fid, Dset, *args)
 

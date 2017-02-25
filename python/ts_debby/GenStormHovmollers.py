@@ -133,16 +133,16 @@ for isim in range(Nsims):
             Zdim = h5u.DimCoards(Zname, 1, [ Nz ], 'z')
             Tdim = h5u.DimCoards(Tname, 1, [ Nt ], 't', tstring=Tstring)
 
-            Xdim.Create(Ofile, X)
-            Ydim.Create(Ofile, Y)
-            Zdim.Create(Ofile, Z)
-            Tdim.Create(Ofile, T)
+            Xdim.Build(Ofile, X)
+            Ydim.Build(Ofile, Y)
+            Zdim.Build(Ofile, Z)
+            Tdim.Build(Ofile, T)
 
         Ifile.close()
 
         print("  Writing {0:s} ({1:s})".format(OutFname, OutVname))
         VarDset = h5u.DsetCoards(OutVname, 2, [ Nz, Nt ])
-        VarDset.Create(Ofile, Var, Zdim, Tdim)
+        VarDset.Build(Ofile, Var, Zdim, Tdim)
         print('')
 
     Ofile.close()

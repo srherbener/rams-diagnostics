@@ -83,7 +83,7 @@ for isim in range(Nsims):
             X = Ifile[Xname][...]
             Nx = len(X)
             Xdim = h5u.DimCoards(Xname, 1, [ Nx ], 'x')
-            Xdim.Create(Ofile, X)
+            Xdim.Build(Ofile, X)
             NoX = False
 
         if (NoY):
@@ -91,7 +91,7 @@ for isim in range(Nsims):
             Y = Ifile[Yname][...]
             Ny = len(Y)
             Ydim = h5u.DimCoards(Yname, 1, [ Ny ], 'y')
-            Ydim.Create(Ofile, Y)
+            Ydim.Build(Ofile, Y)
             NoY = False
 
         if (VcoordType == 'z'):
@@ -100,7 +100,7 @@ for isim in range(Nsims):
                 Z = Ifile[Zname][...]
                 Nz = len(Z)
                 Zdim = h5u.DimCoards(Zname, 1, [ Nz ], 'z')
-                Zdim.Create(Ofile, Z)
+                Zdim.Build(Ofile, Z)
                 NoZ = False
         elif (VcoordType == 'p'):
             if (NoP):
@@ -108,7 +108,7 @@ for isim in range(Nsims):
                 P = Ifile[Zname][...]
                 Np = len(P)
                 Pdim = h5u.DimCoards(Pname, 1, [ Np ], 'p')
-                Pdim.Create(Ofile, P)
+                Pdim.Build(Ofile, P)
                 NoP = False
 
         if (NoT):
@@ -117,7 +117,7 @@ for isim in range(Nsims):
             SimT = T / 3600.0 - 42
             Nt = len(T)
             Tdim = h5u.DimCoards(Tname, 1, [ Nt ], 't', tstring=Tstring)
-            Tdim.Create(Ofile, T)
+            Tdim.Build(Ofile, T)
 
             # Find indices of PSAP and SAP time periods
             SimT = T / 3600.0 - 42
@@ -145,10 +145,10 @@ for isim in range(Nsims):
         print("  Writing {0:s} ({1:s})".format(OutFname, OutVname))
         if (VcoordType == 'z'):
             VarDset = h5u.DsetCoards(OutVname, 2, [ Nz, Nx ])
-            VarDset.Create(Ofile, AvgVar, Zdim, Xdim)
+            VarDset.Build(Ofile, AvgVar, Zdim, Xdim)
         elif (VcoordType == 'p'):
             VarDset = h5u.DsetCoards(OutVname, 2, [ Np, Nx ])
-            VarDset.Create(Ofile, AvgVar, Pdim, Xdim)
+            VarDset.Build(Ofile, AvgVar, Pdim, Xdim)
         print('')
 
     Ofile.close()
