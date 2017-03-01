@@ -41,10 +41,12 @@ function [ ] = GenPtrackMomentum()
     fprintf('***************************************\n');
     fprintf('Case: %s\n', Case);
 
-    Ufname = sprintf('XsectionData/ptrack_u_%s.h5', Case);
+    %Ufname = sprintf('XsectionData/ptrack_u_%s.h5', Case);
+    Ufname = sprintf('XsectionData/ptrack_u_p_%s.h5', Case);
     Uvname = '/u';
 
-    Vfname = sprintf('XsectionData/ptrack_v_%s.h5', Case);
+    %Vfname = sprintf('XsectionData/ptrack_v_%s.h5', Case);
+    Vfname = sprintf('XsectionData/ptrack_v_p_%s.h5', Case);
     Vvname = '/v';
 
     fprintf('  Reading: %s (%s)\n', Ufname, Uvname);
@@ -93,7 +95,8 @@ function [ ] = GenPtrackMomentum()
     S_V_PTRACK = squeeze(mean(V_PTRACK(:,:,S_T1:S_T2),3));
 
     % Output, get rid of the dummy y dimension
-    OutFname = sprintf('DIAGS/ptrack_hvelocity_%s.h5', Case);
+    %OutFname = sprintf('DIAGS/ptrack_hvelocity_%s.h5', Case);
+    OutFname = sprintf('DIAGS/ptrack_hvelocity_p_%s.h5', Case);
 
     % Remove output file if it exists so that new dataset can be written.
     if (exist(OutFname, 'file') == 2)
