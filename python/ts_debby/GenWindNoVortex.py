@@ -123,9 +123,9 @@ def KbrSmoothing(Var):
 Tstring = conf.SetTimeString()
 
 SimList = [
-#    'TSD_SAL_DUST',
-#    'TSD_SAL_NODUST',
-#    'TSD_NONSAL_DUST',
+    'TSD_SAL_DUST',
+    'TSD_SAL_NODUST',
+    'TSD_NONSAL_DUST',
     'TSD_NONSAL_NODUST'
     ]
 Nsims = len(SimList)
@@ -146,16 +146,17 @@ for isim in range(Nsims):
     print('')
 
     # input file and dataset names
-    UinFname = "HDF5/{0:s}/HDF5/u_lite-{0:s}-AS-2006-08-20-120000-g3.h5".format(Sim, Sim)
-    VinFname = "HDF5/{0:s}/HDF5/v_lite-{0:s}-AS-2006-08-20-120000-g3.h5".format(Sim, Sim)
-#    UinFname = "HDF5/{0:s}/HDF5/u-{0:s}-AS-2006-08-20-120000-g3.h5".format(Sim, Sim)
-#    VinFname = "HDF5/{0:s}/HDF5/v-{0:s}-AS-2006-08-20-120000-g3.h5".format(Sim, Sim)
+#    UinFname = "HDF5/{0:s}/HDF5/u_lite-{0:s}-AS-2006-08-20-120000-g3.h5".format(Sim, Sim)
+#    VinFname = "HDF5/{0:s}/HDF5/v_lite-{0:s}-AS-2006-08-20-120000-g3.h5".format(Sim, Sim)
+    UinFname = "HDF5/{0:s}/HDF5/u_lite-{0:s}-AP-2006-08-20-120000-g3.h5".format(Sim, Sim)
+    VinFname = "HDF5/{0:s}/HDF5/v_lite-{0:s}-AP-2006-08-20-120000-g3.h5".format(Sim, Sim)
 
     UinVname = '/u'
     VinVname = '/v'
 
     # output file and dataset names
-    OutFname = "test_no_vortex_lite_{0:s}.h5".format(Sim)
+#    OutFname = "HDF5/{0:s}/HDF5/hwinds_no_vortex_lite-{0:s}-AS-2006-08-20-120000-g3.h5".format(Sim, Sim)
+    OutFname = "HDF5/{0:s}/HDF5/hwinds_no_vortex_lite-{0:s}-AP-2006-08-20-120000-g3.h5".format(Sim, Sim)
 
     UorigVname  = '/u_orig'
     UbasicVname = '/u_basic'
