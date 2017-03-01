@@ -10,16 +10,16 @@ function [ ] = GenReduceData()
   Ncases = length(CaseList);
 
   FileList = {
-    % Dust
-    { 'HDF5/<CASE>/HDF5/dust_mass-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/dust_mass_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/dust_mass' 10 10 1 1 'C' 'dust mass' 't z y x' }
-
-    % Cloud
-    { 'HDF5/<CASE>/HDF5/cloud-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/cloud_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/cloud' 10 10 1 1 'C' 'cloud' 't z y x' }
-
-    % Total Condensate
-    { 'HDF5/<CASE>/HDF5/total_cond-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/total_cond_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/total_cond' 10 10 1 1 'C' 'total condendsate' 't z y x' }
-
-%    % Temp
+%    % Dust
+%    { 'HDF5/<CASE>/HDF5/dust_mass-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/dust_mass_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/dust_mass' 10 10 1 1 'C' 'dust mass' 't z y x' }
+%
+%    % Cloud
+%    { 'HDF5/<CASE>/HDF5/cloud-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/cloud_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/cloud' 10 10 1 1 'C' 'cloud' 't z y x' }
+%
+%    % Total Condensate
+%    { 'HDF5/<CASE>/HDF5/total_cond-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/total_cond_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/total_cond' 10 10 1 1 'C' 'total condendsate' 't z y x' }
+%
+%%    % Temp
 %    { 'HDF5/<CASE>/HDF5/tempc-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/tempc_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/tempc' 10 10 1 1 'C' 'tempc' 't z y x' }
 %    { 'HDF5/<CASE>/HDF5/theta-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/theta_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/theta' 10 10 1 1 'C' 'theta' 't z y x' }
 %    { 'HDF5/<CASE>/HDF5/theta_v-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/theta_v_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/theta_v' 10 10 1 1 'C' 'theta_v' 't z y x' }
@@ -36,6 +36,10 @@ function [ ] = GenReduceData()
 %
 %    % topography
 %    { 'HDF5/<CASE>/HDF5/topo-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/topo_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/topo' 10 10 1 1 'm' 'topo' 't y x' }
+
+    % Horizontal winds - pressure surfaces
+    { 'HDF5/<CASE>/HDF5/u-<CASE>-AP-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/u_lite-<CASE>-AP-2006-08-20-120000-g3.h5' '/u' 10 10 1 1 'm/s' 'u' 't z y x' }
+    { 'HDF5/<CASE>/HDF5/v-<CASE>-AP-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/v_lite-<CASE>-AP-2006-08-20-120000-g3.h5' '/v' 10 10 1 1 'm/s' 'u' 't z y x' }
 
     };
 
