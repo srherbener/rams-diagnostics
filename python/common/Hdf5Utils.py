@@ -78,5 +78,5 @@ class DsetCoards(BaseDset):
         Dset[...] = Var
 
         # Attach the dimensions, given by args
-        self.AttachDims(Fid, Dset, *args)
+        self.AttachDims(Fid, *args)
 
