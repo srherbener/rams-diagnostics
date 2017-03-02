@@ -18,7 +18,6 @@ sys.path.append("{0:s}/etc/python/ts_debby".format(os.environ['HOME']))
 
 import h5py
 import numpy as np
-#import scipy.interpolate as intrp
 import scipy.ndimage.interpolation as intrp
 import ConfigTsd as conf
 import Hdf5Utils as h5u

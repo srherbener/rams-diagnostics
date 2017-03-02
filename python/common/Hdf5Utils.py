@@ -25,6 +25,8 @@ class BaseDset:
         else:
             Dset = Fid.create_dataset(self.name, self.dims)
 
+        Dset.attrs['ArrayOrg'] = np.string_("row major")
+
         return Dset
 
 
@@ -53,9 +55,9 @@ class DimCoards(BaseDset):
  
         # Turn into dimension scale, and attach COARDS attributes
         Dset.dims.create_scale(Dset, self.kind)
-        Dset.attrs.create('axis', np.string_(self.kind))
-        Dset.attrs.create('long_name', np.string_(self.longnames[self.kind]))
-        Dset.attrs.create('units', np.string_(self.units[self.kind]))
+        Dset.attrs['axis'] = np.string_(self.kind)
+        Dset.attrs['long_name'] = np.string_(self.longnames[self.kind])
+        Dset.attrs['units'] = np.string_(self.units[self.kind])
 
         return Dset
 
@@ -67,6 +69,7 @@ class DsetCoards(BaseDset):
 
     def AttachDims(self, Fid, *args):
         Dset = Fid[self.name]
+
         for i, arg in enumerate(args):
             DimDset = Fid[arg.name]
             Dset.dims.create_scale(DimDset, arg.kind)
