@@ -29,7 +29,7 @@ function [ ] = GenWindNoVortex()
 
   Method = 3;
 
-  R0 = 5; % degrees lat/lon (~500 km), for method 3
+  R0 = 3; % degrees lat/lon (~300 km), for method 3
   L = R0 / 5; % for method 3
 
   % list of simulation cases
@@ -54,9 +54,12 @@ function [ ] = GenWindNoVortex()
     fprintf('  Method: %d\n', Method);
     fprintf('\n');
 
-    UinFile = sprintf('HDF5/%s/HDF5/u_lite-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
-    VinFile = sprintf('HDF5/%s/HDF5/v_lite-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
     ScFile  = sprintf('HDF5/%s/HDF5/storm_center_lite-%s-AS-2006-08-20-120000-g3.h5',Case,Case);
+
+%    UinFile = sprintf('HDF5/%s/HDF5/u_lite-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
+%    VinFile = sprintf('HDF5/%s/HDF5/v_lite-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
+    UinFile = sprintf('HDF5/%s/HDF5/u_lite-%s-AP-2006-08-20-120000-g3.h5', Case, Case);
+    VinFile = sprintf('HDF5/%s/HDF5/v_lite-%s-AP-2006-08-20-120000-g3.h5', Case, Case);
 
     FinFile = sprintf('FILTERS/all_500_lite_%s.h5', Case);
 
@@ -106,7 +109,8 @@ function [ ] = GenWindNoVortex()
     end
  
     % Create the output file and datasets so that output can be written one time step at a time.
-    OutFile = sprintf('HDF5/%s/HDF5/no_vortex_lite-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
+%    OutFile = sprintf('HDF5/%s/HDF5/no_vortex_lite-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
+    OutFile = sprintf('HDF5/%s/HDF5/no_vortex_lite-%s-AP-2006-08-20-120000-g3.h5', Case, Case);
     if (exist(OutFile, 'file') == 2)
       delete(OutFile);
     end
