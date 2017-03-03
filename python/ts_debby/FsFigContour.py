@@ -331,8 +331,8 @@ class TrackXsection(FsContour):
         self.YcoordOffset = 0.0
         self.Ylabel = 'Z (km)'
         self.Ymin = 0.0
-        self.Ymax = 8.0
-        self.Yticks = [ 0.0, 2.0, 4.0, 6.0, 8.0 ]
+        self.Ymax = 10.0
+        self.Yticks = [ 0.0, 2.0, 4.0, 6.0, 8.0, 10.0 ]
 
         # Contour specs
         self.SimCmin = SimCspecs[0]
