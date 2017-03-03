@@ -23,11 +23,12 @@ SimList = [
     ]
 Nsims = len(SimList)
 
-Xname = '/x_coords'
-Yname = '/y_coords'
-Zname = '/z_coords'
-Pname = '/p_coords'
-Tname = '/t_coords'
+Xname  = '/x_coords'
+XLname = '/xl_coords'
+Yname  = '/y_coords'
+Zname  = '/z_coords'
+Pname  = '/p_coords'
+Tname  = '/t_coords'
 
 PreSalStart = 10 # sim time in hours
 PreSalEnd   = 30
@@ -40,8 +41,11 @@ Pslope = Pdy / Pdx
 Pangle = np.arctan2(Pdy, Pdx)
 
 PtrackList = [
-    [ 'XsectionData/ptrack_u_<SIM>.h5',   '/u', 'XsectionData/ptrack_v_<SIM>.h5',   '/v', 'u',   'v',    'z' ],
-    [ 'XsectionData/ptrack_u_p_<SIM>.h5', '/u', 'XsectionData/ptrack_v_p_<SIM>.h5', '/v', 'u_p', 'v_p',  'p' ]
+    [ 'XsectionData/ptrack_u_<SIM>.h5',   '/u', 'XsectionData/ptrack_v_<SIM>.h5',   '/v', 'u',   'v',    'x', 'z' ],
+    [ 'XsectionData/ptrack_u_p_<SIM>.h5', '/u', 'XsectionData/ptrack_v_p_<SIM>.h5', '/v', 'u_p', 'v_p',  'x', 'p' ],
+
+    [ 'XsectionData/ptrack_u_nv_lite_<SIM>.h5',   '/u', 'XsectionData/ptrack_v_nv_lite_<SIM>.h5',   '/v', 'u_nv_lite',   'v_nv_lite',    'xl', 'z' ],
+    [ 'XsectionData/ptrack_u_nv_lite_p_<SIM>.h5', '/u', 'XsectionData/ptrack_v_nv_lite_p_<SIM>.h5', '/v', 'u_nv_lite_p', 'v_nv_lite_p',  'xl', 'p' ]
     ]
 Nsets = len(PtrackList)
 
@@ -57,11 +61,12 @@ for isim in range(Nsims):
     print("Simulation: {0:s}".format(Sim))
     print('')
 
-    NoX = True
-    NoY = True
-    NoZ = True
-    NoP = True
-    NoT = True
+    NoX  = True
+    NoXL = True
+    NoY  = True
+    NoZ  = True
+    NoP  = True
+    NoT  = True
     
     OutFname = "DIAGS/ptrack_hvel_{0:s}.h5".format(Sim)
     Ofile = h5py.File(OutFname, mode='w')
@@ -73,7 +78,8 @@ for isim in range(Nsims):
         InVvname   = PtrackList[iset][3]
         OutUvname  = PtrackList[iset][4]
         OutVvname  = PtrackList[iset][5]
-        VcoordType = PtrackList[iset][6]
+        XcoordType = PtrackList[iset][6]
+        VcoordType = PtrackList[iset][7]
 
         # Read input data. If this is the first set, read in the coordinates
         # and build the dimensions.
@@ -85,13 +91,22 @@ for isim in range(Nsims):
         Vfile = h5py.File(InVfname, mode='r')
         V = np.squeeze(Vfile[InVvname][...]) # V is (t,z,x)
 
-        if (NoX):
-            print("    Reading {0:s} ({1:s})".format(InUfname, Xname))
-            X = Ufile[Xname][...]
-            Nx = len(X)
-            Xdim = h5u.DimCoards(Xname, 1, [ Nx ], 'x')
-            Xdim.Build(Ofile, X)
-            NoX = False
+        if (XcoordType == 'x'):
+            if (NoX):
+                print("    Reading {0:s} ({1:s})".format(InUfname, Xname))
+                X = Ufile[Xname][...]
+                Nx = len(X)
+                Xdim = h5u.DimCoards(Xname, 1, [ Nx ], 'x')
+                Xdim.Build(Ofile, X)
+                NoX = False
+        elif (XcoordType == 'xl'):
+            if (NoXL):
+                print("    Reading {0:s} ({1:s})".format(InUfname, Xname))
+                XL = Ufile[Xname][...]
+                Nxl = len(XL)
+                XLdim = h5u.DimCoards(XLname, 1, [ Nxl ], 'x')
+                XLdim.Build(Ofile, XL)
+                NoXL = False
 
         if (NoY):
             print("    Reading {0:s} ({1:s})".format(InUfname, Yname))
@@ -159,43 +174,46 @@ for isim in range(Nsims):
         S_Vptrack = np.squeeze(np.mean(Vptrack[S_T1:S_T2,:,:], axis=0))
 
         # Write out translated u, v, and temporally averaged u, v
+        if (XcoordType == 'x'):
+            HorizDim = Xdim
+        elif (XcoordType == 'xl'):
+            HorizDim = XLdim
+
         if (VcoordType == 'z'):
             VertDim = Zdim
-            VertNum = Nz
         elif (VcoordType == 'p'):
             VertDim = Pdim
-            VertNum = Np
 
         Vname = "/{0:s}".format(OutUvname)
         print("  Writing {0:s} ({1:s})".format(OutFname, Vname))
         VarDset = h5u.DsetCoards(Vname, Uptrack.ndim, Uptrack.shape)
-        VarDset.Build(Ofile, Uptrack, Tdim, VertDim, Xdim)
+        VarDset.Build(Ofile, Uptrack, Tdim, VertDim, HorizDim)
 
         Vname = "/{0:s}".format(OutVvname)
         print("  Writing {0:s} ({1:s})".format(OutFname, Vname))
         VarDset = h5u.DsetCoards(Vname, Vptrack.ndim, Vptrack.shape)
-        VarDset.Build(Ofile, Vptrack, Tdim, VertDim, Xdim)
+        VarDset.Build(Ofile, Vptrack, Tdim, VertDim, HorizDim)
 
 
         Vname = "/ps_{0:s}".format(OutUvname)
         print("  Writing {0:s} ({1:s})".format(OutFname, Vname))
         VarDset = h5u.DsetCoards(Vname, PS_Uptrack.ndim, PS_Uptrack.shape)
-        VarDset.Build(Ofile, PS_Uptrack, VertDim, Xdim)
+        VarDset.Build(Ofile, PS_Uptrack, VertDim, HorizDim)
 
         Vname = "/ps_{0:s}".format(OutVvname)
         print("  Writing {0:s} ({1:s})".format(OutFname, Vname))
         VarDset = h5u.DsetCoards(Vname, PS_Vptrack.ndim, PS_Vptrack.shape)
-        VarDset.Build(Ofile, PS_Vptrack, VertDim, Xdim)
+        VarDset.Build(Ofile, PS_Vptrack, VertDim, HorizDim)
 
         Vname = "/s_{0:s}".format(OutUvname)
         print("  Writing {0:s} ({1:s})".format(OutFname, Vname))
         VarDset = h5u.DsetCoards(Vname, S_Uptrack.ndim, S_Uptrack.shape)
-        VarDset.Build(Ofile, S_Uptrack, VertDim, Xdim)
+        VarDset.Build(Ofile, S_Uptrack, VertDim, HorizDim)
 
         Vname = "/s_{0:s}".format(OutVvname)
         print("  Writing {0:s} ({1:s})".format(OutFname, Vname))
         VarDset = h5u.DsetCoards(Vname, S_Vptrack.ndim, S_Vptrack.shape)
-        VarDset.Build(Ofile, S_Vptrack, VertDim, Xdim)
+        VarDset.Build(Ofile, S_Vptrack, VertDim, HorizDim)
 
         print('')
 

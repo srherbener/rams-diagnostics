@@ -1,14 +1,7 @@
 #!/usr/bin/env python3
 #
-# Script to remove vortex from the horizontal wind fields. The method is based on that presented in
-# Kurihara et al. (1993, 1995).
-#   1) Separate the total wind field into a basic field and disturbance field. Use the smoothing
-#      described in Kurihara et al. (1993).
-#   2) Remove the vortex using a circular filter that tapers to zero at the circle edge in order
-#      to prevent a discontinuity in the non-hurricane disturbance field when the vortex piece
-#      is removed.
-#   3) The separated field then becomes the basic (smoothed) field plus the non-hurricane
-#      piece of the disturbance field.
+# Script to remove vortex from the horizontal wind fields. This is done by smoothing the
+# wind field in the region of the vortex.
 #
 
 import os
@@ -19,6 +12,7 @@ sys.path.append("{0:s}/etc/python/ts_debby".format(os.environ['HOME']))
 import h5py
 import numpy as np
 import scipy.ndimage.interpolation as intrp
+import scipy.ndimage.filters as filt
 import ConfigTsd as conf
 import Hdf5Utils as h5u
 
@@ -29,12 +23,10 @@ import Hdf5Utils as h5u
 ####################################################################################################
 # KbrSmoothing
 #
-# This function will apply the smoothing described in Kurihara et al. (1993)
-# applied to one field.
+# This function applies the vortex smoothing on the horizontal wind field using the method
+# outlined in Kurihara et al. (1993).
 # 
-def KbrSmoothing(Var):
-    # Var is (z,y,x)
-
+def KbrSmoothing(Var, VarSelect):
     # Use the same K coefficients as in Kurihara et al. (1993). These are in
     # terms of wavenumbers, m, which are relative to the grid spacing.
     m = np.array([ 2.0, 3.0, 4.0, 2.0, 5.0, 6.0, 7.0, 2.0, 8.0, 9.0, 2.0 ])
@@ -42,75 +34,89 @@ def KbrSmoothing(Var):
     Nk = len(K)
 
     # First, smooth in the x direction (last dimension)
-    #
-    # Smoothing in KBR is on a 1 degree grid, whereas the TS Debby "lite"
-    # data is on a 1/3 degree grid. Zoom down by 1/3 along the x and
-    # y dimensions in order to get to approx. 1 degree grid. This way,
-    # wavelengths up to 9 degrees can be filtered out.
-    #
-    # At the fine grid, in order to filter out 9 degree wavelengths, the
-    # list in m needs to be extended to add in higher wavenumbers,
-    # but doing this causes numerical issues (the K values blow up).
-    #
-    VarSmooth = intrp.zoom(Var,(1.0, 1.0/3.0, 1.0/3.0), order=3)
+    VarSmooth = np.copy(Var)
     for i in range(Nk):
-       VarIm1 = VarSmooth[:,:,:-2]
-       VarI   = VarSmooth[:,:,1:-1]
-       VarIp1 = VarSmooth[:,:,2:]
-       VarTemp = VarSmooth[:,:,1:-1] + K[i] * (VarIm1 + VarIp1 - (2.0 * VarI))
-       VarSmooth[:,:,1:-1] = VarTemp
+        VarTemp = np.copy(VarSmooth)
+
+        VarIm1 = VarTemp[:,:,:-2]
+        VarI   = VarTemp[:,:,1:-1]
+        VarIp1 = VarTemp[:,:,2:]
+        VarSmooth[:,:,1:-1] = VarI + K[i] * (VarIm1 + VarIp1 - (2.0 * VarI))
+        # Take difference and only apply difference where VarSelect has 1.0 values
+        # (VarSelect has either 0.0 or 1.0 values.)
+        VarDiff = (VarSmooth - VarTemp) * VarSelect
+        VarSmooth = VarTemp + VarDiff
+        
 
     del VarIm1
     del VarI
     del VarIp1
-
+    
     # Then, smooth in the y direction (middle dimension)
     for i in range(Nk):
-       VarJm1 = VarSmooth[:,:-2,:]
-       VarJ   = VarSmooth[:,1:-1,:]
-       VarJp1 = VarSmooth[:,2:,:]
-       VarTemp = VarSmooth[:,1:-1,:] + K[i] * (VarJm1 + VarJp1 - (2.0 * VarJ))
-       VarSmooth[:,1:-1,:] = VarTemp
+        VarTemp = np.copy(VarSmooth)
+
+        VarJm1 = VarTemp[:,:-2,:]
+        VarJ   = VarTemp[:,1:-1,:]
+        VarJp1 = VarTemp[:,2:,:]
+        VarSmooth[:,1:-1,:] = VarJ + K[i] * (VarJm1 + VarJp1 - (2.0 * VarJ))
+        # Take difference and only apply difference where VarSelect has 1.0 values
+        # (VarSelect has either 0.0 or 1.0 values.)
+        VarDiff = (VarSmooth - VarTemp) * VarSelect
+        VarSmooth = VarTemp + VarDiff
 
     del VarJm1
     del VarJ
     del VarJp1
+    
+    return VarSmooth
 
-    # Return VarSmooth to the original 1/3 degree grid.
-    VarTemp = np.copy(VarSmooth)
-    VarSmooth = intrp.zoom(VarSmooth, (1.0,3.0,3.0), order=3)
+####################################################################################################
+# UniformSmoothing
+#
+def UniformSmoothing(Var, VarSelect):
 
-    # Check to see if we got the original size in the resulting
-    # smoothed variable. If not, then repeat the end planes
-    # of the field to fill in the missing data.
+    Fsize = 5
+
+    VarSmooth = np.copy(Var)
+    for i in range(10):
+        VarTemp = np.copy(VarSmooth)
+        VarSmooth = filt.uniform_filter(VarTemp, size=Fsize, mode='constant')
+        VarDiff = (VarSmooth - VarTemp) * VarSelect
+        VarSmooth = VarTemp + VarDiff
+
+    return VarSmooth
+
+
+####################################################################################################
+# VortexSmoothing
+#
+# This function applies the vortex smoothing on the horizontal wind field.
+#
+# The 'method' argument selects the smoothing algortime.
+#   'kbr': smoothing as described in Kurihara et al. (1993)
+#   'uni': uniform 2D filter from scipy
+# 
+def VortexSmoothing(X, Y, Var, Method, MaxRadius, StormLocX, StormLocY):
+    # Var is organized as (z,y,x), and we are smoothing regions in the (x,y) planes
+    # Construct an array with same shape as Var that contains the radial lengths
+    # from the storm center. Use this to limit the smoothing to just the storm
+    # region.
     Nz, Ny, Nx = Var.shape
-    Nsz, Nsy, Nsx = VarSmooth.shape
-    Xdiff = Nx - Nsx
-    Ydiff = Ny - Nsy
+    StormX = X - StormLocX
+    StormY = Y - StormLocY
+    [ Xgrid, Ygrid ] = np.meshgrid(StormX, StormY)
+    Radius = np.sqrt(np.square(Xgrid) + np.square(Ygrid))
+    Radius = np.tile(Radius, (Nz,1,1))
 
-    if (Xdiff > 0):
-        # VarSmooth is too small, repeat the y-z plane at the end of
-        # the x-dimension.
-        for i in range(Xdiff):
-            # Note the use of Nz instead of Nsz. These two should match since the zoom
-            # factors on the z-dimension were always set to 1.0.
-            VarSmooth = np.append(VarSmooth, VarSmooth[:,:,-1].reshape((Nz,Nsy,1)), axis=2)
-    elif (Xdiff < 0):
-        # VarSmooth is too big, cut off the end of the x-dimension
-        VarSmooth = np.copy(VarSmooth[:,:,:Xdiff])
-      
-    if (Ydiff > 0):
-        # VarSmooth is too small, repeat the x-z plane at the end of
-        # the y-dimension.
-        for i in range(Ydiff):
-            # Note the use of Nx instead of Nsx in the reshape() method. This is done
-            # since the code above has already modified VarSmooth x-dimension to match
-            # that of the input Var.
-            VarSmooth = np.append(VarSmooth, VarSmooth[:,-1,:].reshape((Nz,1,Nx)), axis=1)
-    elif (Ydiff < 0):
-        # VarSmooth is too big, cut off the end of the x-dimension
-        VarSmooth = np.copy(VarSmooth[:,:,:Ydiff])
-      
+    # Create an array with zeros outside the storm, and ones inside the storm
+    VarSelect = np.zeros([ Nz, Ny, Nx])
+    VarSelect[Radius <= MaxRadius] = 1.0
+
+    if (Method == 'kbr'):
+        VarSmooth = KbrSmoothing(Var, VarSelect)
+    elif (Method == 'uni'):
+        VarSmooth = UniformSmoothing(Var, VarSelect)
 
     return VarSmooth
 
@@ -135,27 +141,56 @@ Zname = '/z_coords'  # vertical coords: height
 Pname = '/p_coords'  # vertical coords: pressure
 Tname = '/t_coords'
 
-R0 = 5 # degrees lat/lon (~500 km)
-L = R0 / 5
+ScriptName = sys.argv[0]
+Usage = "USAGE: {0:s} <smooth_method> <vert_coord_type>".format(ScriptName)
+if (len(sys.argv) != 3):
+    print("ERROR: {0:s}: Must supply two arguments".format(ScriptName))
+    print(Usage)
+    sys.exit(2)
+
+SmoothMethod = sys.argv[1]
+VcoordType   = sys.argv[2]
+
+if ((SmoothMethod != 'uni') and (SmoothMethod != 'kbr')):
+    print("ERROR: {0:s}: <smooth_method>, ({1:s}), must be one of 'uni', 'kbr'".format(ScriptName, SmoothMethod))
+    print(Usage)
+    sys.exit(3)
+
+if ((VcoordType != 'z') and (VcoordType != 'p')):
+    print("ERROR: {0:s}: <vert_coord_type>, ({1:s}), must be one of 'z', 'p'".format(ScriptName, VcoordType))
+    print(Usage)
+    sys.exit(4)
+
+if (VcoordType == 'z'):
+    FileSuffix = "-AS-2006-08-20-120000-g3.h5"
+elif (VcoordType == 'p'):
+    FileSuffix = "-AP-2006-08-20-120000-g3.h5"
+
+ScFileSuffix = "-AS-2006-08-20-120000-g3.h5" # this only depends on horizontal dimensions
+
+MaxRadius = 3 # degrees (roughly 300 km)
 
 for isim in range(Nsims):
     Sim = SimList[isim]
     print("*****************************************************************")
     print("Removing vortex from horizontal winds: {0:s}".format(Sim))
+    print("  Vortex smoothing method: {0:s}".format(SmoothMethod))
+    print("  Vertical coordinate type: {0:s}".format(VcoordType))
+    print("  Maximum radius: {0:.1f}".format(MaxRadius))
     print('')
 
     # input file and dataset names
-#    UinFname = "HDF5/{0:s}/HDF5/u_lite-{0:s}-AS-2006-08-20-120000-g3.h5".format(Sim, Sim)
-#    VinFname = "HDF5/{0:s}/HDF5/v_lite-{0:s}-AS-2006-08-20-120000-g3.h5".format(Sim, Sim)
-    UinFname = "HDF5/{0:s}/HDF5/u_lite-{0:s}-AP-2006-08-20-120000-g3.h5".format(Sim, Sim)
-    VinFname = "HDF5/{0:s}/HDF5/v_lite-{0:s}-AP-2006-08-20-120000-g3.h5".format(Sim, Sim)
+    UinFname = "HDF5/{0:s}/HDF5/u_lite-{0:s}{1:s}".format(Sim, FileSuffix)
+    VinFname = "HDF5/{0:s}/HDF5/v_lite-{0:s}{1:s}".format(Sim, FileSuffix)
+    ScFname  = "HDF5/{0:s}/HDF5/storm_center-{0:s}{1:s}".format(Sim, ScFileSuffix)
 
     UinVname = '/u'
     VinVname = '/v'
+    SxlocVname = '/press_cent_xloc'
+    SylocVname = '/press_cent_yloc'
 
     # output file and dataset names
-#    OutFname = "HDF5/{0:s}/HDF5/hwinds_no_vortex_lite-{0:s}-AS-2006-08-20-120000-g3.h5".format(Sim, Sim)
-    OutFname = "HDF5/{0:s}/HDF5/hwinds_no_vortex_lite-{0:s}-AP-2006-08-20-120000-g3.h5".format(Sim, Sim)
+    OutFname = "HDF5/{0:s}/HDF5/hwinds_no_vortex_lite-{0:s}{1:s}".format(Sim, FileSuffix)
 
     UorigVname  = '/u_orig'
     UbasicVname = '/u_basic'
@@ -167,6 +202,7 @@ for isim in range(Nsims):
 
     Ufile  = h5py.File(UinFname, mode='r')
     Vfile  = h5py.File(VinFname, mode='r')
+    ScFile = h5py.File(ScFname, mode='r')
     OutFile = h5py.File(OutFname, mode='w')
 
     # Build the coordinates
@@ -198,6 +234,12 @@ for isim in range(Nsims):
     Tdim = h5u.DimCoards(Tname, 1, [ Nt ], 't', tstring=Tstring)
     Tdim.Build(OutFile, T)
 
+    # Read the storm center values
+    print("  Reading: {0:s} ({1:s})".format(ScFname, SxlocVname))
+    print("  Reading: {0:s} ({1:s})".format(ScFname, SylocVname))
+    StormLocX = ScFile[SxlocVname][...]
+    StormLocY = ScFile[SylocVname][...]
+
     print("")
 
     # Create the output datasets
@@ -227,8 +269,8 @@ for isim in range(Nsims):
         V = Vfile[VinVname][it,:,:,:]
         
         # Basic fields (smoothed)
-        Ubasic = KbrSmoothing(U)
-        Vbasic = KbrSmoothing(V)
+        Ubasic = VortexSmoothing(X, Y, U, SmoothMethod, MaxRadius, StormLocX[it], StormLocY[it])
+        Vbasic = VortexSmoothing(X, Y, V, SmoothMethod, MaxRadius, StormLocX[it], StormLocY[it])
 
         # Disturbance field is total - basic fields
         Udist = U - Ubasic
