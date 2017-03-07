@@ -10,7 +10,7 @@ SCRIPTS = \
   $(DEST)/GenPtrackAverages.py \
   $(DEST)/GenPtrackTempGrads.py \
   $(DEST)/GenPtrackMomentum.py \
-  $(DEST)/GenWindNoVortex.py \
+  $(DEST)/GenFieldNoVortex.py \
   $(DEST)/FsFigContour.py \
   $(DEST)/PlotFsFigVtFactors.py \
   $(DEST)/PlotFsFigStormHovmollers.py \

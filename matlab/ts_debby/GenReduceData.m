@@ -37,9 +37,15 @@ function [ ] = GenReduceData()
 %    % topography
 %    { 'HDF5/<CASE>/HDF5/topo-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/topo_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/topo' 10 10 1 1 'm' 'topo' 't y x' }
 
-    % Horizontal winds - pressure surfaces
-    { 'HDF5/<CASE>/HDF5/u-<CASE>-AP-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/u_lite-<CASE>-AP-2006-08-20-120000-g3.h5' '/u' 10 10 1 1 'm/s' 'u' 't z y x' }
-    { 'HDF5/<CASE>/HDF5/v-<CASE>-AP-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/v_lite-<CASE>-AP-2006-08-20-120000-g3.h5' '/v' 10 10 1 1 'm/s' 'u' 't z y x' }
+%    % Horizontal winds - pressure surfaces
+%    { 'HDF5/<CASE>/HDF5/u-<CASE>-AP-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/u_lite-<CASE>-AP-2006-08-20-120000-g3.h5' '/u' 10 10 1 1 'm/s' 'u' 't z y x' }
+%    { 'HDF5/<CASE>/HDF5/v-<CASE>-AP-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/v_lite-<CASE>-AP-2006-08-20-120000-g3.h5' '/v' 10 10 1 1 'm/s' 'u' 't z y x' }
+
+%    % Temp - pressure surfaces
+    { 'HDF5/<CASE>/HDF5/tempc-<CASE>-AP-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/tempc_lite-<CASE>-AP-2006-08-20-120000-g3.h5' '/tempc' 10 10 1 1 'C' 'tempc' 't z y x' }
+
+    % Vapor - pressure surfaces
+    { 'HDF5/<CASE>/HDF5/vapor-<CASE>-AP-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/vapor_lite-<CASE>-AP-2006-08-20-120000-g3.h5' '/vapor' 10 10 1 1 'C' 'vapor' 't z y x' }
 
     };
 

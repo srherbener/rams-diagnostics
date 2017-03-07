@@ -11,50 +11,95 @@ import FsFigContour as ffc
 VelFname = 'DIAGS/ptrack_hvel_<SIM>.h5'
 AvgFname = 'DIAGS/ptrack_avgs_<SIM>.h5'
 
-# Ptrack Vt
-SimCspecs = [ -10, 20, 11 ]  # color specs: [ Cmin, Cmax, Cnum ], Cnum is number of contour levels
-FactCspecs = [ -4, 4, 11 ]
+## Ptrack Vt
+#SimCspecs = [ -10, 20, 11 ]  # color specs: [ Cmin, Cmax, Cnum ], Cnum is number of contour levels
+#FactCspecs = [ -4, 4, 11 ]
+#
+#VtPsap = ffc.TrackXsection(VelFname, '/ps_v', 'Plots.py/FsFigPtrackVtPsapFactors.png', 'V_{pt}', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
+#VtPsap.CreateFig()
+#
+#VtSap = ffc.TrackXsection(VelFname, '/s_v', 'Plots.py/FsFigPtrackVtSapFactors.png', 'V_{pt}', 'SAP', SimCspecs, FactCspecs, 'ptrack')
+#VtSap.CreateFig()
 
-VtPsap = ffc.TrackXsection(VelFname, '/ps_v', 'Plots.py/FsFigPtrackVtPsapFactors.png', 'V_{pt}', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
-VtPsap.CreateFig()
+## Ptrack Vr
+#SimCspecs = [ -5, 5, 11 ]  # color specs: [ Cmin, Cmax, Cnum ], Cnum is number of contour levels
+#FactCspecs = [ -2, 2, 11 ]
+#
+#VrPsap = ffc.TrackXsection(VelFname, '/ps_u', 'Plots.py/FsFigPtrackVrPsapFactors.png', 'V_{pr}', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
+#VrPsap.SimCmap = 'bwr'
+#VrPsap.CreateFig()
+#
+#VrSap = ffc.TrackXsection(VelFname, '/s_u', 'Plots.py/FsFigPtrackVrSapFactors.png', 'V_{pr}', 'SAP', SimCspecs, FactCspecs, 'ptrack')
+#VrSap.SimCmap = 'bwr'
+#VrSap.CreateFig()
 
-VtSap = ffc.TrackXsection(VelFname, '/s_v', 'Plots.py/FsFigPtrackVtSapFactors.png', 'V_{pt}', 'SAP', SimCspecs, FactCspecs, 'ptrack')
-VtSap.CreateFig()
+## Ptrack Vt, pressure coords
+#SimCspecs = [ -10, 20, 11 ]  # color specs: [ Cmin, Cmax, Cnum ], Cnum is number of contour levels
+#FactCspecs = [ -4, 4, 11 ]
+#
+#VtPressPsap = ffc.TrackXsectionPress(VelFname, '/ps_v_p', 'Plots.py/FsFigPtrackVtPressPsapFactors.png', 'V_{pt}', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
+#VtPressPsap.CreateFig()
+#
+#VtPressSap = ffc.TrackXsectionPress(VelFname, '/s_v_p', 'Plots.py/FsFigPtrackVtPressSapFactors.png', 'V_{pt}', 'SAP', SimCspecs, FactCspecs, 'ptrack')
+#VtPressSap.CreateFig()
 
-# Ptrack Vr
-SimCspecs = [ -5, 5, 11 ]  # color specs: [ Cmin, Cmax, Cnum ], Cnum is number of contour levels
-FactCspecs = [ -2, 2, 11 ]
+## Ptrack Vr, pressure coords
+#SimCspecs = [ -5, 5, 11 ]  # color specs: [ Cmin, Cmax, Cnum ], Cnum is number of contour levels
+#FactCspecs = [ -2, 2, 11 ]
+#
+#VrPressPsap = ffc.TrackXsectionPress(VelFname, '/ps_u_p', 'Plots.py/FsFigPtrackVrPressPsapFactors.png', 'V_{pr}', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
+#VrPressPsap.SimCmap = 'bwr'
+#VrPressPsap.CreateFig()
+#
+#VrPressSap = ffc.TrackXsectionPress(VelFname, '/s_u_p', 'Plots.py/FsFigPtrackVrPressSapFactors.png', 'V_{pr}', 'SAP', SimCspecs, FactCspecs, 'ptrack')
+#VrPressSap.SimCmap = 'bwr'
+#VrPressSap.CreateFig()
 
-VrPsap = ffc.TrackXsection(VelFname, '/ps_u', 'Plots.py/FsFigPtrackVrPsapFactors.png', 'V_{pr}', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
-VrPsap.SimCmap = 'bwr'
-VrPsap.CreateFig()
+## Theta
+#SimCspecs = [ 290, 340, 11 ]
+#FactCspecs = [ -3, 3, 11 ]
+#Ylim = [ 0, 10 ]
+#Yticks = [ 0, 2, 4, 6, 8, 10 ]
+#
+#ThetaPsap = ffc.TrackXsection(AvgFname, '/ps_theta', 'Plots.py/FsFigPtrackThetaPsapFactors.png', '\\theta', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
+#ThetaPsap.Ylim = Ylim
+#ThetaPsap.Yticks = Yticks
+#ThetaPsap.CreateFig()
+#
+#ThetaSap = ffc.TrackXsection(AvgFname, '/s_theta', 'Plots.py/FsFigPtrackThetaSapFactors.png', '\\theta', 'SAP', SimCspecs, FactCspecs, 'ptrack')
+#ThetaSap.Ylim = Ylim
+#ThetaSap.Yticks = Yticks
+#ThetaSap.CreateFig()
 
-VrSap = ffc.TrackXsection(VelFname, '/s_u', 'Plots.py/FsFigPtrackVrSapFactors.png', 'V_{pr}', 'SAP', SimCspecs, FactCspecs, 'ptrack')
-VrSap.SimCmap = 'bwr'
-VrSap.CreateFig()
+## Temp C
+#SimCspecs = [ -50, 30, 11 ]
+#FactCspecs = [ -3, 3, 11 ]
+#Ylim = [ 0, 10 ]
+#Yticks = [ 0, 2, 4, 6, 8, 10 ]
+#
+#TempcPsap = ffc.TrackXsection(AvgFname, '/ps_tempc', 'Plots.py/FsFigPtrackTempcPsapFactors.png', 'T,\\ ^{\\circ}C', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
+#TempcPsap.Ylim = Ylim
+#TempcPsap.Yticks = Yticks
+#TempcPsap.CreateFig()
+#
+#TempcSap = ffc.TrackXsection(AvgFname, '/s_tempc', 'Plots.py/FsFigPtrackTempcSapFactors.png', 'T,\\ ^{\\circ}C', 'SAP', SimCspecs, FactCspecs, 'ptrack')
+#TempcSap.Ylim = Ylim
+#TempcSap.Yticks = Yticks
+#TempcSap.CreateFig()
 
-# Ptrack Vt, pressure coords
-SimCspecs = [ -10, 20, 11 ]  # color specs: [ Cmin, Cmax, Cnum ], Cnum is number of contour levels
-FactCspecs = [ -4, 4, 11 ]
+## Temp C, pressure coords
+#SimCspecs = [ -50, 30, 11 ]
+#FactCspecs = [ -3, 3, 11 ]
+#
+#TempcPressPsap = ffc.TrackXsectionPress(AvgFname, '/ps_tempc_p', 'Plots.py/FsFigPtrackTempcPressPsapFactors.png', 'T,\\ ^{\\circ}C', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
+#TempcPressPsap.CreateFig()
+#
+#TempcPressSap = ffc.TrackXsectionPress(AvgFname, '/s_tempc_p', 'Plots.py/FsFigPtrackTempcPressSapFactors.png', 'T,\\ ^{\\circ}C', 'SAP', SimCspecs, FactCspecs, 'ptrack')
+#TempcPressSap.CreateFig()
 
-VtPressPsap = ffc.TrackXsectionPress(VelFname, '/ps_v_p', 'Plots.py/FsFigPtrackVtPressPsapFactors.png', 'V_{pt}', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
-VtPressPsap.CreateFig()
-
-VtPressSap = ffc.TrackXsectionPress(VelFname, '/s_v_p', 'Plots.py/FsFigPtrackVtPressSapFactors.png', 'V_{pt}', 'SAP', SimCspecs, FactCspecs, 'ptrack')
-VtPressSap.CreateFig()
-
-# Ptrack Vr, pressure coords
-SimCspecs = [ -5, 5, 11 ]  # color specs: [ Cmin, Cmax, Cnum ], Cnum is number of contour levels
-FactCspecs = [ -2, 2, 11 ]
-
-VrPressPsap = ffc.TrackXsectionPress(VelFname, '/ps_u_p', 'Plots.py/FsFigPtrackVrPressPsapFactors.png', 'V_{pr}', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
-VrPressPsap.SimCmap = 'bwr'
-VrPressPsap.CreateFig()
-
-VrPressSap = ffc.TrackXsectionPress(VelFname, '/s_u_p', 'Plots.py/FsFigPtrackVrPressSapFactors.png', 'V_{pr}', 'SAP', SimCspecs, FactCspecs, 'ptrack')
-VrPressSap.SimCmap = 'bwr'
-VrPressSap.CreateFig()
-
+######################################################################################
+# Quantities with vortex removed
+######################################################################################
 
 # Ptrack Vt, vortex removed
 SimCspecs = [ -10, 20, 11 ]  # color specs: [ Cmin, Cmax, Cnum ], Cnum is number of contour levels
@@ -110,49 +155,43 @@ VrNvPressSap.XcoordName = Xname
 VrNvPressSap.SimCmap = 'bwr'
 VrNvPressSap.CreateFig()
 
+# Temp C
+SimCspecs = [ -50, 30, 11 ]
+FactCspecs = [ -3, 3, 11 ]
 
+TempcNvPsap = ffc.TrackXsection(AvgFname, '/ps_tempc', 'Plots.py/FsFigPtrackTempcNvPsapFactors.png', 'T,\\ ^{\\circ}C', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
+TempcNvPsap.CreateFig()
 
+TempcNvSap = ffc.TrackXsection(AvgFname, '/s_tempc', 'Plots.py/FsFigPtrackTempcNvSapFactors.png', 'T,\\ ^{\\circ}C', 'SAP', SimCspecs, FactCspecs, 'ptrack')
+TempcNvSap.CreateFig()
 
+# Temp C, pressure coords
+SimCspecs = [ -50, 30, 11 ]
+FactCspecs = [ -3, 3, 11 ]
 
-## Theta
-#SimCspecs = [ 290, 340, 11 ]
-#FactCspecs = [ -3, 3, 11 ]
-#Ylim = [ 0, 10 ]
-#Yticks = [ 0, 2, 4, 6, 8, 10 ]
-#
-#ThetaPsap = ffc.TrackXsection(AvgFname, '/ps_theta', 'Plots.py/FsFigPtrackThetaPsapFactors.png', '\\theta', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
-#ThetaPsap.Ylim = Ylim
-#ThetaPsap.Yticks = Yticks
-#ThetaPsap.CreateFig()
-#
-#ThetaSap = ffc.TrackXsection(AvgFname, '/s_theta', 'Plots.py/FsFigPtrackThetaSapFactors.png', '\\theta', 'SAP', SimCspecs, FactCspecs, 'ptrack')
-#ThetaSap.Ylim = Ylim
-#ThetaSap.Yticks = Yticks
-#ThetaSap.CreateFig()
+TempcNvPressPsap = ffc.TrackXsectionPress(AvgFname, '/ps_tempc_p', 'Plots.py/FsFigPtrackTempcNvPressPsapFactors.png', 'T,\\ ^{\\circ}C', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
+TempcNvPressPsap.CreateFig()
 
-## Temp C
-#SimCspecs = [ -50, 30, 11 ]
-#FactCspecs = [ -3, 3, 11 ]
-#Ylim = [ 0, 10 ]
-#Yticks = [ 0, 2, 4, 6, 8, 10 ]
-#
-#TempcPsap = ffc.TrackXsection(AvgFname, '/ps_tempc', 'Plots.py/FsFigPtrackTempcPsapFactors.png', 'T,\\ ^{\\circ}C', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
-#TempcPsap.Ylim = Ylim
-#TempcPsap.Yticks = Yticks
-#TempcPsap.CreateFig()
-#
-#TempcSap = ffc.TrackXsection(AvgFname, '/s_tempc', 'Plots.py/FsFigPtrackTempcSapFactors.png', 'T,\\ ^{\\circ}C', 'SAP', SimCspecs, FactCspecs, 'ptrack')
-#TempcSap.Ylim = Ylim
-#TempcSap.Yticks = Yticks
-#TempcSap.CreateFig()
+TempcNvPressSap = ffc.TrackXsectionPress(AvgFname, '/s_tempc_p', 'Plots.py/FsFigPtrackTempcNvPressSapFactors.png', 'T,\\ ^{\\circ}C', 'SAP', SimCspecs, FactCspecs, 'ptrack')
+TempcNvPressSap.CreateFig()
 
-## Temp C, pressure coords
-#SimCspecs = [ -50, 30, 11 ]
-#FactCspecs = [ -3, 3, 11 ]
-#
-#TempcPressPsap = ffc.TrackXsectionPress(AvgFname, '/ps_tempc_p', 'Plots.py/FsFigPtrackTempcPressPsapFactors.png', 'T,\\ ^{\\circ}C', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
-#TempcPressPsap.CreateFig()
-#
-#TempcPressSap = ffc.TrackXsectionPress(AvgFname, '/s_tempc_p', 'Plots.py/FsFigPtrackTempcPressSapFactors.png', 'T,\\ ^{\\circ}C', 'SAP', SimCspecs, FactCspecs, 'ptrack')
-#TempcPressSap.CreateFig()
+# Vapor
+SimCspecs = [ 0, 20, 11 ]
+FactCspecs = [ -1, 1, 11 ]
+
+VaporNvPsap = ffc.TrackXsection(AvgFname, '/ps_vapor', 'Plots.py/FsFigPtrackVaporNvPsapFactors.png', 'Vapor', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
+VaporNvPsap.CreateFig()
+
+VaporNvSap = ffc.TrackXsection(AvgFname, '/s_vapor', 'Plots.py/FsFigPtrackVaporNvSapFactors.png', 'Vapor', 'SAP', SimCspecs, FactCspecs, 'ptrack')
+VaporNvSap.CreateFig()
+
+# Vapor, pressure coords
+SimCspecs = [ 0, 20, 11 ]
+FactCspecs = [ -1, 1, 11 ]
+
+VaporNvPressPsap = ffc.TrackXsectionPress(AvgFname, '/ps_vapor_p', 'Plots.py/FsFigPtrackVaporNvPressPsapFactors.png', 'Vapor', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
+VaporNvPressPsap.CreateFig()
+
+VaporNvPressSap = ffc.TrackXsectionPress(AvgFname, '/s_vapor_p', 'Plots.py/FsFigPtrackVaporNvPressSapFactors.png', 'Vapor', 'SAP', SimCspecs, FactCspecs, 'ptrack')
+VaporNvPressSap.CreateFig()
 

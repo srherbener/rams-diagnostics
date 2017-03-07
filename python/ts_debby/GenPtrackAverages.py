@@ -22,17 +22,32 @@ SimList = [
     ]
 Nsims = len(SimList)
 
+# For now, need to run either the set with full horizontal data, or the set with reduced
+# horizontal data. Can't run both at the same time.
 PtrackList = [
-    [ 'XsectionData/ptrack_theta_<SIM>.h5', '/theta',  'pre_sal', '/ps_theta', 'z' ],
-    [ 'XsectionData/ptrack_theta_<SIM>.h5', '/theta',  'sal',     '/s_theta',  'z' ],
+#    # full horizontal data
+#    [ 'XsectionData/ptrack_theta_<SIM>.h5', '/theta',  'pre_sal', '/ps_theta', 'z' ],
+#    [ 'XsectionData/ptrack_theta_<SIM>.h5', '/theta',  'sal',     '/s_theta',  'z' ],
+#
+#    [ 'XsectionData/ptrack_theta_e_<SIM>.h5', '/theta_e',  'pre_sal', '/ps_theta_e', 'z' ],
+#    [ 'XsectionData/ptrack_theta_e_<SIM>.h5', '/theta_e',  'sal',     '/s_theta_e',  'z' ],
+#
+#    [ 'XsectionData/ptrack_tempc_<SIM>.h5',   '/tempc',  'pre_sal', '/ps_tempc',   'z' ],
+#    [ 'XsectionData/ptrack_tempc_<SIM>.h5',   '/tempc',  'sal',     '/s_tempc',    'z' ],
+#    [ 'XsectionData/ptrack_tempc_p_<SIM>.h5', '/tempc',  'pre_sal', '/ps_tempc_p', 'p' ],
+#    [ 'XsectionData/ptrack_tempc_p_<SIM>.h5', '/tempc',  'sal',     '/s_tempc_p',  'p' ],
 
-    [ 'XsectionData/ptrack_theta_e_<SIM>.h5', '/theta_e',  'pre_sal', '/ps_theta_e', 'z' ],
-    [ 'XsectionData/ptrack_theta_e_<SIM>.h5', '/theta_e',  'sal',     '/s_theta_e',  'z' ],
+    # reduced (lite) horizontal data
+    [ 'XsectionData/ptrack_tempc_nv_lite_<SIM>.h5',   '/tempc',  'pre_sal', '/ps_tempc',   'z' ],
+    [ 'XsectionData/ptrack_tempc_nv_lite_<SIM>.h5',   '/tempc',  'sal',     '/s_tempc',    'z' ],
+    [ 'XsectionData/ptrack_tempc_nv_lite_p_<SIM>.h5', '/tempc',  'pre_sal', '/ps_tempc_p', 'p' ],
+    [ 'XsectionData/ptrack_tempc_nv_lite_p_<SIM>.h5', '/tempc',  'sal',     '/s_tempc_p',  'p' ],
 
-    [ 'XsectionData/ptrack_tempc_<SIM>.h5',   '/tempc',  'pre_sal', '/ps_tempc',   'z' ],
-    [ 'XsectionData/ptrack_tempc_<SIM>.h5',   '/tempc',  'sal',     '/s_tempc',    'z' ],
-    [ 'XsectionData/ptrack_tempc_p_<SIM>.h5', '/tempc',  'pre_sal', '/ps_tempc_p', 'p' ],
-    [ 'XsectionData/ptrack_tempc_p_<SIM>.h5', '/tempc',  'sal',     '/s_tempc_p',  'p' ]
+    [ 'XsectionData/ptrack_vapor_nv_lite_<SIM>.h5',   '/vapor',  'pre_sal', '/ps_vapor',   'z' ],
+    [ 'XsectionData/ptrack_vapor_nv_lite_<SIM>.h5',   '/vapor',  'sal',     '/s_vapor',    'z' ],
+    [ 'XsectionData/ptrack_vapor_nv_lite_p_<SIM>.h5', '/vapor',  'pre_sal', '/ps_vapor_p', 'p' ],
+    [ 'XsectionData/ptrack_vapor_nv_lite_p_<SIM>.h5', '/vapor',  'sal',     '/s_vapor_p',  'p' ],
+
     ]
 Nsets = len(PtrackList)
 
