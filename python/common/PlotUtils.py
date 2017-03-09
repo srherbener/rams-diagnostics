@@ -230,14 +230,3 @@ def PlotContour(Paxes, X, Y, Z, Ptitle, Xaxis, Yaxis, Cspecs):
     Xaxis.config(Paxes)
     Yaxis.config(Paxes)
 
-#####################################################################
-# SmoothLine()
-#
-# This routine will smooth a line (series) using a running average.
-# The Npts argument specifies the width of the running average window.
-#
-def SmoothLine(Line, Npts):
-    Window = np.ones(Npts) / Npts
-    Sline = np.convolve(Line, Window, mode='same')
-    return Sline
-

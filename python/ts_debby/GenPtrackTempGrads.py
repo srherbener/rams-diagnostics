@@ -7,9 +7,10 @@ sys.path.append("{0:s}/etc/python/ts_debby".format(os.environ['HOME']))
 
 import h5py
 import numpy as np
+import scipy.integrate as integ
+import scipy.ndimage.filters as filt
 import ConfigTsd as conf
 import Hdf5Utils as h5u
-import PlotUtils as pltu
 
 
 Tstring = conf.SetTimeString()
@@ -24,16 +25,10 @@ SimList = [
 Nsims = len(SimList)
 
 PtrackList = [
-    [ 'DIAGS/ptrack_avgs_<SIM>.h5', '/ps_theta', '/ps_theta_hgrad', 'z' ],
-    [ 'DIAGS/ptrack_avgs_<SIM>.h5', '/s_theta',  '/s_theta_hgrad',  'z' ],
-
-    [ 'DIAGS/ptrack_avgs_<SIM>.h5', '/ps_theta_e', '/ps_theta_e_hgrad', 'z' ],
-    [ 'DIAGS/ptrack_avgs_<SIM>.h5', '/s_theta_e',  '/s_theta_e_hgrad',  'z' ],
-
-    [ 'DIAGS/ptrack_avgs_<SIM>.h5', '/ps_tempc',   '/ps_tempc_hgrad',   'z' ],
-    [ 'DIAGS/ptrack_avgs_<SIM>.h5', '/s_tempc',    '/s_tempc_hgrad',    'z' ],
-    [ 'DIAGS/ptrack_avgs_<SIM>.h5', '/ps_tempc_p', '/ps_tempc_p_hgrad', 'p' ],
-    [ 'DIAGS/ptrack_avgs_<SIM>.h5', '/s_tempc_p',  '/s_tempc_p_hgrad',  'p' ]
+    [ 'DIAGS/ptrack_avgs_<SIM>.h5', '/ps_tempc',   'z' ],
+    [ 'DIAGS/ptrack_avgs_<SIM>.h5', '/s_tempc',    'z' ],
+    [ 'DIAGS/ptrack_avgs_<SIM>.h5', '/ps_tempc_p', 'p' ],
+    [ 'DIAGS/ptrack_avgs_<SIM>.h5', '/s_tempc_p',  'p' ],
     ]
 Nsets = len(PtrackList)
 
@@ -50,6 +45,8 @@ Ztop = 3200
 
 Pbot = 1000 # mb
 Ptop = 700
+
+FiltLen = 5
 
 for isim in range(Nsims):
     Sim = SimList[isim]
@@ -69,14 +66,13 @@ for isim in range(Nsims):
     for iset in range(Nsets):
         InFname    = PtrackList[iset][0].replace("<SIM>", Sim)
         InVname    = PtrackList[iset][1]
-        OutVname   = PtrackList[iset][2]
-        VcoordType = PtrackList[iset][3]
+        VcoordType = PtrackList[iset][2]
 
         # Read input data. If this is the first set, read in the coordinates
         # and build the dimensions.
         print("  Reading {0:s} ({1:s})".format(InFname, InVname))
         Ifile = h5py.File(InFname, mode='r')
-        Var = Ifile[InVname][...] # Var is (z,x), with the size of y-dim == 1
+        InVar = Ifile[InVname][...] # InVar is (z,x), with the size of y-dim == 1
 
         if (NoX):
             print("    Reading {0:s} ({1:s})".format(InFname, Xname))
@@ -84,12 +80,6 @@ for isim in range(Nsims):
             Nx = len(X)
             Xdim = h5u.DimCoards(Xname, 1, [ Nx ], 'x')
             Xdim.Build(Ofile, X)
-
-            # Create 1D delta X, repeat the final delta-x value to get
-            # the length to match X.
-            DeltaX = X[1:] - X[0:-1]
-            DeltaX = np.append(DeltaX, DeltaX[-1])
-
             NoX = False
 
         if (NoY):
@@ -140,30 +130,45 @@ for isim in range(Nsims):
         Ifile.close()
 
         # Do vertical average of layer between bottom and top layer
+        # Use Simpson's Rule integration to the do the averaging
         if (VcoordType == 'z'):
-            Tbot = np.squeeze(Var[Z1,:])
-            Ttop = np.squeeze(Var[Z2,:])
+            Height = Z[Z2] - Z[Z1]
+            Hselect = Z[Z1:Z2]
+            Hselect = Hselect.reshape((len(Hselect),1))
+            Hselect = np.tile(Hselect, (1, Nx))
+            Tselect = np.squeeze(InVar[Z1:Z2,:])
         elif (VcoordType == 'p'):
-            Tbot = np.squeeze(Var[P1,:])
-            Ttop = np.squeeze(Var[P2,:])
-        Tbar = (Tbot + Ttop) * 0.5
+            Height = P[P2] - P[P1]
+            Hselect = P[P1:P2]
+            Hselect = Hselect.reshape((len(Hselect),1))
+            Hselect = np.tile(Hselect, (1, Nx))
+            Tselect = np.squeeze(InVar[P1:P2,:])
+        Tbar = np.squeeze(integ.simps(Tselect, Hselect, axis=0)) / Height
 
-        # Calc gradient: DeltaT/DeltaX
-        DeltaT = Tbar[1:] - Tbar[:-1]
-        DeltaT = np.append(DeltaT, DeltaT[-1])
+        # Smooth Tbar in order to mitigate noise in the gradient
+        Tbar = filt.convolve(Tbar, np.ones(FiltLen)/float(FiltLen), mode='reflect')
 
-        Var = DeltaT / DeltaX
-        VarSmooth = pltu.SmoothLine(Var, 5)
+        # Temperature gradient
+        DeltaX = np.diff(X)
+        DeltaX = np.append(DeltaX, DeltaX[-1])
+        Tgrad = np.gradient(Tbar, DeltaX)
+        TgradSmooth = filt.convolve(Tgrad, np.ones(FiltLen)/float(FiltLen), mode='reflect')
          
-        # Write out gradient, plus smoothed version of gradient
+        # Write out Tbar, gradient, plus smoothed version of gradient
+        OutVname = "{0:s}_bar".format(InVname)
         print("  Writing {0:s} ({1:s})".format(OutFname, OutVname))
-        VarDset = h5u.DsetCoards(OutVname, 1, [ Nx ])
-        VarDset.Build(Ofile, Var, Xdim)
+        TbarDset = h5u.DsetCoards(OutVname, 1, [ Nx ])
+        TbarDset.Build(Ofile, Tbar, Xdim)
 
-        Vname = "{0:s}_smooth".format(OutVname)
-        print("  Writing {0:s} ({1:s})".format(OutFname, Vname))
-        VarDset = h5u.DsetCoards(Vname, 1, [ Nx ])
-        VarDset.Build(Ofile, VarSmooth, Xdim)
+        OutVname = "{0:s}_hgrad".format(InVname)
+        print("  Writing {0:s} ({1:s})".format(OutFname, OutVname))
+        TgradDset = h5u.DsetCoards(OutVname, 1, [ Nx ])
+        TgradDset.Build(Ofile, Tgrad, Xdim)
+
+        OutVname = "{0:s}_hgrad_smooth".format(InVname)
+        print("  Writing {0:s} ({1:s})".format(OutFname, OutVname))
+        TgradSmoothDset = h5u.DsetCoards(OutVname, 1, [ Nx ])
+        TgradSmoothDset.Build(Ofile, TgradSmooth, Xdim)
         print('')
 
     Ofile.close()
