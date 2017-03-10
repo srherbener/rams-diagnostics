@@ -140,10 +140,10 @@ Xaxis = plu.AxisConfig('x', [ 0, 1800 ], 'Linear Distance (km)')
 Xaxis.ticks = [ 500, 1000, 1500 ]
 Xaxis.fontsize = 12
 
-Yaxis = plu.AxisConfig('y', [ 0, 2 ], r'${\nabla}T\ (10^{-6}\ K\ m^{-1})$')
+Yaxis = plu.AxisConfig('y', [ 0, 2 ], r'${\nabla}\overline{T}\ (10^{-6}\ K\ m^{-1})$')
 Yaxis.fontsize = 12
 
-Ptitle = plu.TitleConfig('a', r'$PSAP: {\nabla}T: Sims$')
+Ptitle = plu.TitleConfig('a', r'$PSAP:\ {\nabla}\overline{T}:\ Sims$')
 Ptitle.fontsize = 24
 
 Legend = plu.LegendConfig(SimLegText, 'upper left')
@@ -165,10 +165,10 @@ Xaxis = plu.AxisConfig('x', [ 0, 1800 ], 'Linear Distance (km)')
 Xaxis.ticks = [ 500, 1000, 1500 ]
 Xaxis.fontsize = 12
 
-Yaxis = plu.AxisConfig('y', [ -0.5, 2 ], r'${\nabla}T\ (10^{-6}\ K\ m^{-1})$')
+Yaxis = plu.AxisConfig('y', [ -0.5, 2 ], r'${\nabla}\overline{T}\ (10^{-6}\ K\ m^{-1})$')
 Yaxis.fontsize = 12
 
-Ptitle = plu.TitleConfig('b', r'$PSAP: {\nabla}T: Factors$')
+Ptitle = plu.TitleConfig('b', r'$PSAP:\ {\nabla}\overline{T}:\ Factors$')
 Ptitle.fontsize = 24
 
 Legend = plu.LegendConfig(FacLegText, 'upper left')
