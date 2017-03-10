@@ -16,6 +16,7 @@ SCRIPTS = \
   $(DEST)/PlotFsFigStormHovmollers.py \
   $(DEST)/PlotFsFigStormXsections.py \
   $(DEST)/PlotFsFigTrackXsections.py \
+  $(DEST)/PlotFsFigPtrackTempGrad.py \
   $(DEST)/PlotFsFigWind.py \
   $(DEST)/PlotFsFigWindTseries.py
 
