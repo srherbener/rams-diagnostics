@@ -42,9 +42,9 @@ for isim in range(Nsims):
     SensFluxFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "sens_flux")
 
     SfcSwdnFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "rshort")
+    SfcSwupFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "rshortup")
     SfcLwdnFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "rlong")
     SfcLwupFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "rlongup")
-    SfcAlbFname  = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "albedt")
 
     TopSwdnFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "swdn_toa")
     TopSwupFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "swup_toa")
@@ -55,9 +55,9 @@ for isim in range(Nsims):
     SensFluxVname = "/sens_flux"
 
     SfcSwdnVname = "/rshort"
+    SfcSwupVname = "/rshortup"
     SfcLwdnVname = "/rlong"
     SfcLwupVname = "/rlongup"
-    SfcAlbVname  = "/albedt"
 
     TopSwdnVname = "/swdntop"
     TopSwupVname = "/swuptop"
@@ -68,9 +68,9 @@ for isim in range(Nsims):
     SensFluxFile = h5py.File(SensFluxFname, mode='r')
 
     SfcSwdnFile = h5py.File(SfcSwdnFname, mode='r')
+    SfcSwupFile = h5py.File(SfcSwupFname, mode='r')
     SfcLwdnFile = h5py.File(SfcLwdnFname, mode='r')
     SfcLwupFile = h5py.File(SfcLwupFname, mode='r')
-    SfcAlbFile  = h5py.File(SfcAlbFname, mode='r')
 
     TopSwdnFile = h5py.File(TopSwdnFname, mode='r')
     TopSwupFile = h5py.File(TopSwupFname, mode='r')
@@ -97,9 +97,9 @@ for isim in range(Nsims):
     print("  Reading: {0:s} ({1:s})".format(SensFluxFname, SensFluxVname))
 
     print("  Reading: {0:s} ({1:s})".format(SfcSwdnFname, SfcSwdnVname))
+    print("  Reading: {0:s} ({1:s})".format(SfcSwupFname, SfcSwupVname))
     print("  Reading: {0:s} ({1:s})".format(SfcLwdnFname, SfcLwdnVname))
     print("  Reading: {0:s} ({1:s})".format(SfcLwupFname, SfcLwupVname))
-    print("  Reading: {0:s} ({1:s})".format(SfcAlbFname, SfcAlbVname))
 
     print("  Reading: {0:s} ({1:s})".format(TopSwdnFname, TopSwdnVname))
     print("  Reading: {0:s} ({1:s})".format(TopSwupFname, TopSwupVname))
@@ -137,8 +137,6 @@ for isim in range(Nsims):
     AvgTopSwup = np.zeros(Nt)
     AvgTopLwup = np.zeros(Nt)
 
-    AvgSfcAlb = np.zeros(Nt)
-
     Thf  = np.zeros(Nt)
     Qrad = np.zeros(Nt)
 
@@ -149,16 +147,13 @@ for isim in range(Nsims):
         SfcSens = np.squeeze(SensFluxFile[SensFluxVname][i,1:-1,1:-1])
 
         SfcSwdn = np.squeeze(SfcSwdnFile[SfcSwdnVname][i,1:-1,1:-1])
+        SfcSwup = np.squeeze(SfcSwupFile[SfcSwupVname][i,1:-1,1:-1])
         SfcLwdn = np.squeeze(SfcLwdnFile[SfcLwdnVname][i,1:-1,1:-1])
         SfcLwup = np.squeeze(SfcLwupFile[SfcLwupVname][i,1:-1,1:-1])
-        SfcAlb  = np.squeeze(SfcAlbFile[SfcAlbVname][i,1:-1,1:-1])
 
         TopSwdn = np.squeeze(TopSwdnFile[TopSwdnVname][i,1:-1,1:-1])
         TopSwup = np.squeeze(TopSwupFile[TopSwupVname][i,1:-1,1:-1])
         TopLwup = np.squeeze(TopLwupFile[TopLwupVname][i,1:-1,1:-1])
-
-        # Form the SW up at the surface from the SW down and Albdedo
-        SfcSwup = SfcSwdn * SfcAlb
 
         # Form Thf and Qrad
         #  Thf is the sum of latent heat and sensible heat fluxes
@@ -181,21 +176,6 @@ for isim in range(Nsims):
         TempVar = ((TopSwup + TopLwup) - (TopSwdn)) - ((SfcSwup + SfcLwup) - (SfcSwdn + SfcLwdn))
         Qrad[i] = np.mean(TempVar.astype(np.float64))
 
-        # Form averages of the components
-        AvgSfcLat[i]  = np.mean(SfcLat.astype(np.float64))
-        AvgSfcSens[i] = np.mean(SfcSens.astype(np.float64))
-
-        AvgSfcSwdn[i] = np.mean(SfcSwdn.astype(np.float64))
-        AvgSfcSwup[i] = np.mean(SfcSwup.astype(np.float64))
-        AvgSfcLwdn[i] = np.mean(SfcLwdn.astype(np.float64))
-        AvgSfcLwup[i] = np.mean(SfcLwup.astype(np.float64))
-        
-        AvgTopSwdn[i] = np.mean(TopSwdn.astype(np.float64))
-        AvgTopSwup[i] = np.mean(TopSwup.astype(np.float64))
-        AvgTopLwup[i] = np.mean(TopLwup.astype(np.float64))
-
-        AvgSfcAlb[i] = np.mean(SfcAlb.astype(np.float64))
-
         if ((i % 10) == 0):
             print("  Processing time step: {0:d}".format(i))
 
@@ -206,9 +186,9 @@ for isim in range(Nsims):
     SensFluxFile.close()
 
     SfcSwdnFile.close()
+    SfcSwupFile.close()
     SfcLwdnFile.close()
     SfcLwupFile.close()
-    SfcAlbFile.close()
 
     TopSwdnFile.close()
     TopSwupFile.close()
@@ -217,20 +197,6 @@ for isim in range(Nsims):
     # Build the output datasets
     WriteOutputDset(OutFname, "/therm_heat_flux", Nt, Thf, Tdim);
     WriteOutputDset(OutFname, "/rad_flux_div", Nt, Qrad, Tdim);
-
-    WriteOutputDset(OutFname, "/avg_sfc_lat", Nt, AvgSfcLat, Tdim);
-    WriteOutputDset(OutFname, "/avg_sfc_sens", Nt, AvgSfcSens, Tdim);
-
-    WriteOutputDset(OutFname, "/avg_sfc_swdn", Nt, AvgSfcSwdn, Tdim);
-    WriteOutputDset(OutFname, "/avg_sfc_swup", Nt, AvgSfcSwup, Tdim);
-    WriteOutputDset(OutFname, "/avg_sfc_lwdn", Nt, AvgSfcLwdn, Tdim);
-    WriteOutputDset(OutFname, "/avg_sfc_lwup", Nt, AvgSfcLwup, Tdim);
-
-    WriteOutputDset(OutFname, "/avg_top_swdn", Nt, AvgTopSwdn, Tdim);
-    WriteOutputDset(OutFname, "/avg_top_swup", Nt, AvgTopSwup, Tdim);
-    WriteOutputDset(OutFname, "/avg_top_lwup", Nt, AvgTopLwup, Tdim);
-
-    WriteOutputDset(OutFname, "/avg_sfc_alb", Nt, AvgSfcAlb, Tdim);
 
     print("")
 
