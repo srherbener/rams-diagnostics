@@ -16,6 +16,7 @@ Tstring = conf.SetTimeString()
 SimList = [
     'RCE_S300_SQ',
     'RCE_S300_SQ_C05',
+    'RCE_S300_SQ_DEBUG',
     ]
 Nsims = len(SimList)
 
@@ -46,9 +47,9 @@ for isim in range(Nsims):
     SfcLwdnFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "rlong")
     SfcLwupFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "rlongup")
 
-    TopSwdnFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "swdn_toa")
-    TopSwupFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "swup_toa")
-    TopLwupFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "lwup_toa")
+    TopSwdnFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "swdn_tod")
+    TopSwupFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "swup_tod")
+    TopLwupFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "lwup_tod")
 
     # Corresponding input file dataset names
     LatFluxVname = "/lat_flux"
@@ -59,9 +60,9 @@ for isim in range(Nsims):
     SfcLwdnVname = "/rlong"
     SfcLwupVname = "/rlongup"
 
-    TopSwdnVname = "/swdntop"
-    TopSwupVname = "/swuptop"
-    TopLwupVname = "/olr"
+    TopSwdnVname = "/swdn"
+    TopSwupVname = "/swup"
+    TopLwupVname = "/lwup"
 
     # Open the input files
     LatFluxFile  = h5py.File(LatFluxFname, mode='r')
@@ -143,17 +144,17 @@ for isim in range(Nsims):
     for i in range(Nt):
         # Exclude the horizontal boundaries since RAMS uses those for boundary
         # conditions.
-        SfcLat = np.squeeze(LatFluxFile[LatFluxVname][i,1:-1,1:-1])
-        SfcSens = np.squeeze(SensFluxFile[SensFluxVname][i,1:-1,1:-1])
+        SfcLat = np.squeeze(LatFluxFile[LatFluxVname][...])[i,1:-1,1:-1]
+        SfcSens = np.squeeze(SensFluxFile[SensFluxVname][...])[i,1:-1,1:-1]
 
-        SfcSwdn = np.squeeze(SfcSwdnFile[SfcSwdnVname][i,1:-1,1:-1])
-        SfcSwup = np.squeeze(SfcSwupFile[SfcSwupVname][i,1:-1,1:-1])
-        SfcLwdn = np.squeeze(SfcLwdnFile[SfcLwdnVname][i,1:-1,1:-1])
-        SfcLwup = np.squeeze(SfcLwupFile[SfcLwupVname][i,1:-1,1:-1])
+        SfcSwdn = np.squeeze(SfcSwdnFile[SfcSwdnVname][...])[i,1:-1,1:-1]
+        SfcSwup = np.squeeze(SfcSwupFile[SfcSwupVname][...])[i,1:-1,1:-1]
+        SfcLwdn = np.squeeze(SfcLwdnFile[SfcLwdnVname][...])[i,1:-1,1:-1]
+        SfcLwup = np.squeeze(SfcLwupFile[SfcLwupVname][...])[i,1:-1,1:-1]
 
-        TopSwdn = np.squeeze(TopSwdnFile[TopSwdnVname][i,1:-1,1:-1])
-        TopSwup = np.squeeze(TopSwupFile[TopSwupVname][i,1:-1,1:-1])
-        TopLwup = np.squeeze(TopLwupFile[TopLwupVname][i,1:-1,1:-1])
+        TopSwdn = np.squeeze(TopSwdnFile[TopSwdnVname][...])[i,1:-1,1:-1]
+        TopSwup = np.squeeze(TopSwupFile[TopSwupVname][...])[i,1:-1,1:-1]
+        TopLwup = np.squeeze(TopLwupFile[TopLwupVname][...])[i,1:-1,1:-1]
 
         # Form Thf and Qrad
         #  Thf is the sum of latent heat and sensible heat fluxes

@@ -16,11 +16,10 @@ Tstring = conf.SetTimeString()
 SimList = [
     'RCE_S300_SQ',
     'RCE_S300_SQ_C05',
+    'RCE_S300_SQ_DEBUG',
     ]
 Nsims = len(SimList)
 
-# NOTE: when 3D vars are added, put in a parameter in the VarList that denotes
-# dimensionality. ("2D", "3D")
 VarList = [
     #  <in_file_prefix> <in_var_name> <out_var_name> <selection_criteria>
     #
@@ -38,9 +37,9 @@ VarList = [
 
     [ "albedt", "/albedt", "/avg_sfc_alb", "all" ],
 
-    [ "swdn_toa",  "/swdntop",  "/avg_top_swdn", "all" ],
-    [ "swup_toa",  "/swuptop",  "/avg_top_swup", "all" ],
-    [ "lwup_toa",  "/olr",      "/avg_top_lwup", "all" ],
+    [ "swdn_tod",  "/swdn",  "/avg_top_swdn", "all" ],
+    [ "swup_tod",  "/swup",  "/avg_top_swup", "all" ],
+    [ "lwup_tod",  "/lwup",  "/avg_top_lwup", "all" ],
 
     [ "pcprate",  "/pcprate", "/avg_pcprate", "all" ],
 
@@ -56,6 +55,22 @@ Tname = '/t_coords'
 
 InFileTemplate = "HDF5/<SIM>/HDF5/<FPREFIX>-<SIM>-AS-2012-01-01-000000-g1.h5"
 
+# Routine to calculate the average of a 2D (horizontal) field
+def CalcHorizAvg(Var, Select):
+    # Exclude the horizontal edges since RAMS uses those for boundary conditions.
+    # Selection process will return a 1D array with all of the selected values
+    Var = Var[1:-1, 1:-1]
+
+    if (Select[0] == "all"):
+        Var = Var.flatten()
+    if (Select[0] == "ge"):
+        Sval = float(Select[1])
+        Var = Var[ Var >= Sval ]
+        
+    return np.mean(Var.astype(np.float64))
+
+
+# MAIN
 for isim in range(Nsims):
     Sim = SimList[isim]
     print("************************************************************************************")
@@ -63,8 +78,13 @@ for isim in range(Nsims):
     print("")
 
     # Open the output file
-    OutFname = "DIAGS/dom_avgerage_{0:s}.h5".format(Sim)
+    OutFname = "DIAGS/dom_averages_{0:s}.h5".format(Sim)
     OutFile = h5py.File(OutFname, mode='w')
+
+    NoX = True
+    NoY = True
+    NoZ = True
+    NoT = True
 
     # Read input variables, calculate horizontal averages and write out results
     for ivar in range(Nvars):
@@ -76,51 +96,65 @@ for isim in range(Nsims):
         # Open the input file
         InFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", InFprefix)
         InFile  = h5py.File(InFname, mode='r')
+        print("  Reading: {0:s} ({1:s})".format(InFname, InVname))
 
-        # If first variable, read in the coordinates and copy to the output file
-        if (ivar == 0):
-            print("  Reading: {0:s} ({1:s})".format(InFname, Xname))
-            print("  Reading: {0:s} ({1:s})".format(InFname, Yname))
-            print("  Reading: {0:s} ({1:s})".format(InFname, Zname))
-            print("  Reading: {0:s} ({1:s})".format(InFname, Tname))
-            print("")
-
+        # Read in coordinates. Try to get Z from a 3D variable.
+        if (NoX):
+            print("    Reading: {0:s} ({1:s})".format(InFname, Xname))
             X = InFile[Xname][...]
-            Y = InFile[Yname][...]
-            Z = InFile[Zname][...]
-            T = InFile[Tname][...]
-
             Nx = len(X)
-            Ny = len(Y)
-            Nz = len(Z)
-            Nt = len(T)
-
-            # Write out the coordinate data, mark these as dimensions
             Xdim = h5u.DimCoards(Xname, 1, [ Nx ], 'x')
-            Ydim = h5u.DimCoards(Yname, 1, [ Ny ], 'y')
-            Zdim = h5u.DimCoards(Zname, 1, [ Nz ], 'z')
-            Tdim = h5u.DimCoards(Tname, 1, [ Nt ], 't', tstring=Tstring)
-
             Xdim.Build(OutFile, X)
+            NoX = False
+
+        if (NoY):
+            print("    Reading: {0:s} ({1:s})".format(InFname, Yname))
+            Y = InFile[Yname][...]
+            Ny = len(Y)
+            Ydim = h5u.DimCoards(Yname, 1, [ Ny ], 'y')
             Ydim.Build(OutFile, Y)
-            Zdim.Build(OutFile, Z)
+            NoY = False
+
+        if (NoZ):
+            print("    Reading: {0:s} ({1:s})".format(InFname, Zname))
+            Z = InFile[Zname][...]
+            Nz = len(Z)
+            # Keep grabbing Z coordinates until one cooresponding to a 3D field
+            # is obtained. If a 3D Z coordinate vector is found, write it
+            # out. If one is not found, GRADS is okay with the z coordinates
+            # missing, plus all the variables are 2D and the z coordinates
+            # are not needed.
+            if (Nz > 1):
+                Zdim = h5u.DimCoards(Zname, 1, [ Nz ], 'z')
+                Zdim.Build(OutFile, Z)
+                NoZ = False
+
+        if (NoT):
+            print("    Reading: {0:s} ({1:s})".format(InFname, Tname))
+            T = InFile[Tname][...]
+            Nt = len(T)
+            Tdim = h5u.DimCoards(Tname, 1, [ Nt ], 't', tstring=Tstring)
             Tdim.Build(OutFile, T)
+            NoT = False
 
         # Read in input variable and form the domain average
         # Do one time step at a time in order to reduce memory usage
-        print("  Reading: {0:s} ({1:s})".format(InFname, InVname))
-        VarAvg  = np.zeros(Nt)
         for i in range(Nt):
-            # Exclude the horizontal edges since RAMS uses those for boundary conditions.
-            Var = np.squeeze(InFile[InVname][i,1:-1,1:-1])
-            # Selection process will return a 1D array with all of the selected values
-            if (Select[0] == "all"):
-                Var = Var.flatten()
-            if (Select[0] == "ge"):
-                Sval = float(Select[1])
-                Var = Var[ Var >= Sval ]
-                
-            VarAvg[i] = np.mean(Var.astype(np.float64))
+            # Read in the var and determine if 2D (t,y,x) or 3D (t,z,y,x) field.
+            Var = np.squeeze(InFile[InVname][i,...])
+            Ndims = Var.ndim
+
+            if (Ndims == 2):
+                # Var is (y,x)
+                if (i == 0):
+                    VarAvg = np.zeros(Nt)
+                VarAvg[i] = CalcHorizAvg(Var, Select)
+            elif (Ndims == 3):
+                # Var is (z,y,x)
+                if (i == 0):
+                    VarAvg = np.zeros((Nt,Nz))
+                for k in range(Nz):
+                    VarAvg[i,k] = CalcHorizAvg(np.squeeze(Var[i,:,:]), Select)
 
             if ((i % 10) == 0):
                 print("    Processing time step: {0:d}".format(i))
@@ -131,8 +165,11 @@ for isim in range(Nsims):
 
         # Write out average
         print("  Writing: {0:s} ({1:s})".format(OutFname, OutVname))
-        Dset = h5u.DsetCoards(OutVname, 1, [ Nt ])
-        Dset.Build(OutFile, VarAvg, Tdim)
+        Dset = h5u.DsetCoards(OutVname, Ndims, VarAvg.shape)
+        if (Ndims == 2):
+            Dset.Build(OutFile, VarAvg, Tdim)
+        elif (Ndims == 3):
+            Dset.Build(OutFile, VarAvg, Tdim, Zdim)
 
         print("")
 
