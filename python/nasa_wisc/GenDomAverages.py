@@ -17,6 +17,8 @@ SimList = [
     'RCE_S300_SQ',
     'RCE_S300_SQ_C05',
     'RCE_S300_SQ_DEBUG',
+    'RCE_S300_SQ_E1',
+    'RCE_S300_SQ_SM',
     ]
 Nsims = len(SimList)
 

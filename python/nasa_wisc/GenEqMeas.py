@@ -17,6 +17,8 @@ SimList = [
     'RCE_S300_SQ',
     'RCE_S300_SQ_C05',
     'RCE_S300_SQ_DEBUG',
+    'RCE_S300_SQ_E1',
+    'RCE_S300_SQ_SM',
     ]
 Nsims = len(SimList)
 
@@ -144,17 +146,17 @@ for isim in range(Nsims):
     for i in range(Nt):
         # Exclude the horizontal boundaries since RAMS uses those for boundary
         # conditions.
-        SfcLat = np.squeeze(LatFluxFile[LatFluxVname][...])[i,1:-1,1:-1]
-        SfcSens = np.squeeze(SensFluxFile[SensFluxVname][...])[i,1:-1,1:-1]
+        SfcLat = np.squeeze(LatFluxFile[LatFluxVname][i,...])[1:-1,1:-1]
+        SfcSens = np.squeeze(SensFluxFile[SensFluxVname][i,...])[1:-1,1:-1]
 
-        SfcSwdn = np.squeeze(SfcSwdnFile[SfcSwdnVname][...])[i,1:-1,1:-1]
-        SfcSwup = np.squeeze(SfcSwupFile[SfcSwupVname][...])[i,1:-1,1:-1]
-        SfcLwdn = np.squeeze(SfcLwdnFile[SfcLwdnVname][...])[i,1:-1,1:-1]
-        SfcLwup = np.squeeze(SfcLwupFile[SfcLwupVname][...])[i,1:-1,1:-1]
+        SfcSwdn = np.squeeze(SfcSwdnFile[SfcSwdnVname][i,...])[1:-1,1:-1]
+        SfcSwup = np.squeeze(SfcSwupFile[SfcSwupVname][i,...])[1:-1,1:-1]
+        SfcLwdn = np.squeeze(SfcLwdnFile[SfcLwdnVname][i,...])[1:-1,1:-1]
+        SfcLwup = np.squeeze(SfcLwupFile[SfcLwupVname][i,...])[1:-1,1:-1]
 
-        TopSwdn = np.squeeze(TopSwdnFile[TopSwdnVname][...])[i,1:-1,1:-1]
-        TopSwup = np.squeeze(TopSwupFile[TopSwupVname][...])[i,1:-1,1:-1]
-        TopLwup = np.squeeze(TopLwupFile[TopLwupVname][...])[i,1:-1,1:-1]
+        TopSwdn = np.squeeze(TopSwdnFile[TopSwdnVname][i,...])[1:-1,1:-1]
+        TopSwup = np.squeeze(TopSwupFile[TopSwupVname][i,...])[1:-1,1:-1]
+        TopLwup = np.squeeze(TopLwupFile[TopLwupVname][i,...])[1:-1,1:-1]
 
         # Form Thf and Qrad
         #  Thf is the sum of latent heat and sensible heat fluxes
