@@ -2,10 +2,10 @@ function [ ] = GenReduceData()
 
   % list of simulation cases
   CaseList = {
-    'TSD_SAL_DUST'
-    'TSD_SAL_NODUST'
+%    'TSD_SAL_DUST'
+%    'TSD_SAL_NODUST'
     'TSD_NONSAL_DUST'
-    'TSD_NONSAL_NODUST'
+%    'TSD_NONSAL_NODUST'
     };
   Ncases = length(CaseList);
 
@@ -32,14 +32,14 @@ function [ ] = GenReduceData()
 %    { 'HDF5/<CASE>/HDF5/v-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/v_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/v' 10 10 1 1 'm/s' 'u' 't z y x' }
 %
 %    % sea_pressure
-%    { 'HDF5/<CASE>/HDF5/sea_press-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/sea_press_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/sea_press' 10 10 1 1 'mb' 'sea-level-pressure' 't y x' }
-%
+    { 'HDF5/<CASE>/HDF5/sea_press-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/sea_press_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/sea_press' 10 10 1 1 'mb' 'sea-level-pressure' 't y x' }
+
 %    % topography
-%    { 'HDF5/<CASE>/HDF5/topo-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/topo_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/topo' 10 10 1 1 'm' 'topo' 't y x' }
+    { 'HDF5/<CASE>/HDF5/topo-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/topo_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/topo' 10 10 1 1 'm' 'topo' 't y x' }
 
 %    % Horizontal winds - pressure surfaces
-%    { 'HDF5/<CASE>/HDF5/u-<CASE>-AP-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/u_lite-<CASE>-AP-2006-08-20-120000-g3.h5' '/u' 10 10 1 1 'm/s' 'u' 't z y x' }
-%    { 'HDF5/<CASE>/HDF5/v-<CASE>-AP-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/v_lite-<CASE>-AP-2006-08-20-120000-g3.h5' '/v' 10 10 1 1 'm/s' 'u' 't z y x' }
+    { 'HDF5/<CASE>/HDF5/u-<CASE>-AP-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/u_lite-<CASE>-AP-2006-08-20-120000-g3.h5' '/u' 10 10 1 1 'm/s' 'u' 't z y x' }
+    { 'HDF5/<CASE>/HDF5/v-<CASE>-AP-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/v_lite-<CASE>-AP-2006-08-20-120000-g3.h5' '/v' 10 10 1 1 'm/s' 'u' 't z y x' }
 
 %    % Temp - pressure surfaces
     { 'HDF5/<CASE>/HDF5/tempc-<CASE>-AP-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/tempc_lite-<CASE>-AP-2006-08-20-120000-g3.h5' '/tempc' 10 10 1 1 'C' 'tempc' 't z y x' }
