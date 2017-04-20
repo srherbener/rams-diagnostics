@@ -48,35 +48,41 @@ function [ ] = GenFsFactors()
   % ps_* -> Pre-SAL time period, s_* -> SAL time period
   VarList = {
     %  Avg Var           File Name                          File Var Name
-    { 'avg_wind'       'DIAGS/fs_averages.h5'    '/<CASE>/avg_wind'          }
+
+    % Vertical coords -> height
     { 'avg_wind_t'     'DIAGS/fs_averages.h5'    '/<CASE>/avg_wind_t'        }
-    { 'max_wind'       'DIAGS/fs_averages.h5'    '/<CASE>/avg_max_wind'      }
     { 'max_wind_t'     'DIAGS/fs_averages.h5'    '/<CASE>/avg_max_wind_t'    }
+    { 'rmw_t'          'DIAGS/fs_averages.h5'    '/<CASE>/avg_rmw_t'         }
     { 'min_press'      'DIAGS/fs_averages.h5'    '/<CASE>/avg_min_press'     }
     { 'ike'            'DIAGS/fs_averages.h5'    '/<CASE>/avg_ike'           }
-    { 'rmw'            'DIAGS/fs_averages.h5'    '/<CASE>/avg_rmw'           }
-    { 'rmw_t'          'DIAGS/fs_averages.h5'    '/<CASE>/avg_rmw_t'         }
     { 'pcprate'        'DIAGS/fs_averages.h5'    '/<CASE>/avg_pcprate'       }
 
-    { 'ps_avg_wind'    'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_wind'       }
     { 'ps_avg_wind_t'  'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_wind_t'     }
-    { 'ps_max_wind'    'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_max_wind'   }
     { 'ps_max_wind_t'  'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_max_wind_t' }
+    { 'ps_rmw_t'       'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_rmw_t'      }
     { 'ps_min_press'   'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_min_press'  }
     { 'ps_ike'         'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_ike'        }
-    { 'ps_rmw'         'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_rmw'        }
-    { 'ps_rmw_t'       'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_rmw_t'      }
     { 'ps_pcprate'     'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_pcprate'    }
 
-    { 's_avg_wind'     'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_wind'        }
     { 's_avg_wind_t'   'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_wind_t'      }
-    { 's_max_wind'     'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_max_wind'    }
     { 's_max_wind_t'   'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_max_wind_t'  }
+    { 's_rmw_t'        'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_rmw_t'       }
     { 's_min_press'    'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_min_press'   }
     { 's_ike'          'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_ike'         }
-    { 's_rmw'          'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_rmw'         }
-    { 's_rmw_t'        'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_rmw_t'       }
     { 's_pcprate'      'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_pcprate'     }
+
+    % Vertical coords -> pressure
+    { 'avg_wind_t_p'       'DIAGS/fs_averages.h5'    '/<CASE>/avg_wind_t_p'          }
+    { 'max_wind_t_p'       'DIAGS/fs_averages.h5'    '/<CASE>/avg_max_wind_t_p'      }
+    { 'rmw_t_p'            'DIAGS/fs_averages.h5'    '/<CASE>/avg_rmw_t_p'           }
+
+    { 'ps_avg_wind_t_p'    'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_wind_t_p'       }
+    { 'ps_max_wind_t_p'    'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_max_wind_t_p'   }
+    { 'ps_rmw_t_p'         'DIAGS/fs_averages.h5'    '/<CASE>/ps_avg_rmw_t_p'        }
+
+    { 's_avg_wind_t_p'     'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_wind_t_p'        }
+    { 's_max_wind_t_p'     'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_max_wind_t_p'    }
+    { 's_rmw_t_p'          'DIAGS/fs_averages.h5'    '/<CASE>/s_avg_rmw_t_p'         }
     };
 
   Nvars = length(VarList);

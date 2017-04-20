@@ -14,21 +14,19 @@ function [ ] = GenFsAverages()
 
   VarList = {
     %    Input File Name              Input Var Name     Output Var Name
-    { 'DIAGS/storm_meas_<CASE>.h5'   '/max_wind'       'avg_max_wind'      }
-    { 'DIAGS/storm_meas_<CASE>.h5'   '/ps_max_wind'    'ps_avg_max_wind'   }
-    { 'DIAGS/storm_meas_<CASE>.h5'   '/s_max_wind'     's_avg_max_wind'    }
 
+    % Vertical coords -> pressure
     { 'DIAGS/storm_meas_<CASE>.h5'   '/max_wind_t'     'avg_max_wind_t'    }
     { 'DIAGS/storm_meas_<CASE>.h5'   '/ps_max_wind_t'  'ps_avg_max_wind_t' }
     { 'DIAGS/storm_meas_<CASE>.h5'   '/s_max_wind_t'   's_avg_max_wind_t'  }
 
-    { 'DIAGS/storm_meas_<CASE>.h5'   '/avg_wind'       'avg_wind'      }
-    { 'DIAGS/storm_meas_<CASE>.h5'   '/ps_avg_wind'    'ps_avg_wind'   }
-    { 'DIAGS/storm_meas_<CASE>.h5'   '/s_avg_wind'     's_avg_wind'    }
-
     { 'DIAGS/storm_meas_<CASE>.h5'   '/avg_wind_t'     'avg_wind_t'    }
     { 'DIAGS/storm_meas_<CASE>.h5'   '/ps_avg_wind_t'  'ps_avg_wind_t' }
     { 'DIAGS/storm_meas_<CASE>.h5'   '/s_avg_wind_t'   's_avg_wind_t'  }
+
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/rmw_t'          'avg_rmw_t'         }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/ps_rmw_t'       'ps_avg_rmw_t'      }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/s_rmw_t'        's_avg_rmw_t'       }
 
     { 'DIAGS/storm_meas_<CASE>.h5'   '/min_slp'        'avg_min_press'     }
     { 'DIAGS/storm_meas_<CASE>.h5'   '/ps_min_slp'     'ps_avg_min_press'  }
@@ -38,17 +36,23 @@ function [ ] = GenFsAverages()
     { 'DIAGS/storm_meas_<CASE>.h5'   '/ps_ike'         'ps_avg_ike'        }
     { 'DIAGS/storm_meas_<CASE>.h5'   '/s_ike'          's_avg_ike'         }
  
-    { 'DIAGS/storm_meas_<CASE>.h5'   '/rmw'            'avg_rmw'           }
-    { 'DIAGS/storm_meas_<CASE>.h5'   '/ps_rmw'         'ps_avg_rmw'        }
-    { 'DIAGS/storm_meas_<CASE>.h5'   '/s_rmw'          's_avg_rmw'         }
-
-    { 'DIAGS/storm_meas_<CASE>.h5'   '/rmw_t'          'avg_rmw_t'         }
-    { 'DIAGS/storm_meas_<CASE>.h5'   '/ps_rmw_t'       'ps_avg_rmw_t'      }
-    { 'DIAGS/storm_meas_<CASE>.h5'   '/s_rmw_t'        's_avg_rmw_t'       }
-
     { 'DIAGS/storm_meas_<CASE>.h5'   '/pcprate'        'avg_pcprate'       }
     { 'DIAGS/storm_meas_<CASE>.h5'   '/ps_pcprate'     'ps_avg_pcprate'    }
     { 'DIAGS/storm_meas_<CASE>.h5'   '/s_pcprate'      's_avg_pcprate'     }
+
+    % Vertical coords -> pressure
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/max_wind_t_p'       'avg_max_wind_t_p'    }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/ps_max_wind_t_p'    'ps_avg_max_wind_t_p' }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/s_max_wind_t_p'     's_avg_max_wind_t_p'  }
+
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/avg_wind_t_p'       'avg_wind_t_p'        }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/ps_avg_wind_t_p'    'ps_avg_wind_t_p'     }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/s_avg_wind_t_p'     's_avg_wind_t_p'      }
+
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/rmw_t_p'            'avg_rmw_t_p'         }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/ps_rmw_t_p'         'ps_avg_rmw_t_p'      }
+    { 'DIAGS/storm_meas_<CASE>.h5'   '/s_rmw_t_p'          's_avg_rmw_t_p'       }
+
     };
 
   Nvars = length(VarList);

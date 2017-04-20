@@ -47,10 +47,14 @@ function [ ] = GenFsFactors()
 
   VarList = {
     %     File Name                    Var Name        
-    { 'DIAGS/storm_meas_<CASE>.h5'    '/avg_wind'          }
-    { 'DIAGS/storm_meas_<CASE>.h5'    '/avg_wind_t'        }
-    { 'DIAGS/storm_meas_<CASE>.h5'    '/max_wind'      }
-    { 'DIAGS/storm_meas_<CASE>.h5'    '/max_wind_t'    }
+
+    % Vertical coords -> height
+    { 'DIAGS/storm_meas_<CASE>.h5'    '/avg_wind_t' }
+    { 'DIAGS/storm_meas_<CASE>.h5'    '/max_wind_t' }
+
+    % Vertical coords -> pressure
+    { 'DIAGS/storm_meas_<CASE>.h5'    '/avg_wind_t_p' }
+    { 'DIAGS/storm_meas_<CASE>.h5'    '/max_wind_t_p' }
     };
 
   Nvars = length(VarList);

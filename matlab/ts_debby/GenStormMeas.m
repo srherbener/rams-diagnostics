@@ -27,41 +27,44 @@ function [ ] = GenStormMeas()
 
   % Description of measurements
   MeasList = {
-    { 'min_slp'    'DIAGS/hist_meas_az_press_<CASE>.h5' '/all_press_sfc_ts'    0 250 0 1 'min' }
-    { 'ps_min_slp' 'DIAGS/hist_meas_az_press_<CASE>.h5' '/all_ps_press_sfc_ts' 0 250 0 1 'min' }
-    { 's_min_slp'  'DIAGS/hist_meas_az_press_<CASE>.h5' '/all_s_press_sfc_ts'  0 250 0 1 'min' }
+    % vertical coord is height
+    { 'min_slp'    'DIAGS/hist_meas_az_press_<CASE>.h5' '/all_press_sfc_ts'    0 250 0 1000 'min' }
+    { 'ps_min_slp' 'DIAGS/hist_meas_az_press_<CASE>.h5' '/all_ps_press_sfc_ts' 0 250 0 1000 'min' }
+    { 's_min_slp'  'DIAGS/hist_meas_az_press_<CASE>.h5' '/all_s_press_sfc_ts'  0 250 0 1000 'min' }
 
-    { 'max_wind'      'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_speed_maxlev_ts'    0 250 0 2 'max' }
-    { 'ps_max_wind'   'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_ps_speed_maxlev_ts' 0 250 0 2 'max' }
-    { 's_max_wind'    'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_s_speed_maxlev_ts'  0 250 0 2 'max' }
+    { 'max_wind_t'    'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_speed_t_maxlev_ts'    0 250 0 2000 'max' }
+    { 'ps_max_wind_t' 'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_ps_speed_t_maxlev_ts' 0 250 0 2000 'max' }
+    { 's_max_wind_t'  'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_s_speed_t_maxlev_ts'  0 250 0 2000 'max' }
 
-    { 'max_wind_t'    'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_speed_t_maxlev_ts'    0 250 0 2 'max' }
-    { 'ps_max_wind_t' 'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_ps_speed_t_maxlev_ts' 0 250 0 2 'max' }
-    { 's_max_wind_t'  'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_s_speed_t_maxlev_ts'  0 250 0 2 'max' }
+    { 'avg_wind_t'    'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_speed_t_ts'    0 250 0 2000 'avg' }
+    { 'ps_avg_wind_t' 'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_ps_speed_t_ts' 0 250 0 2000 'avg' }
+    { 's_avg_wind_t'  'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_s_speed_t_ts'  0 250 0 2000 'avg' }
 
-    { 'avg_wind'      'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_speed_ts'    0 250 0 2 'avg' }
-    { 'ps_avg_wind'   'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_ps_speed_ts' 0 250 0 2 'avg' }
-    { 's_avg_wind'    'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_s_speed_ts'  0 250 0 2 'avg' }
+    { 'rmw_t'       'DIAGS/hist_meas_az_speed_<CASE>.h5'   '/all_speed_t_maxlev_ts'    0 250 0 2000 'rmw' }
+    { 'ps_rmw_t'    'DIAGS/hist_meas_az_speed_<CASE>.h5'   '/all_ps_speed_t_maxlev_ts' 0 250 0 2000 'rmw' }
+    { 's_rmw_t'     'DIAGS/hist_meas_az_speed_<CASE>.h5'   '/all_s_speed_t_maxlev_ts'  0 250 0 2000 'rmw' }
 
-    { 'avg_wind_t'    'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_speed_t_ts'    0 250 0 2 'avg' }
-    { 'ps_avg_wind_t' 'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_ps_speed_t_ts' 0 250 0 2 'avg' }
-    { 's_avg_wind_t'  'DIAGS/hist_meas_az_speed_<CASE>.h5' '/all_s_speed_t_ts'  0 250 0 2 'avg' }
+    { 'ike'      'TsAveragedData/horiz_ke_<CASE>.h5' '/horiz_ke'    0 250 0 2000 'na'  }
+    { 'ps_ike'   'TsAveragedData/horiz_ke_<CASE>.h5' '/horiz_ke'    0 250 0 2000 'na'  }
+    { 's_ike'    'TsAveragedData/horiz_ke_<CASE>.h5' '/horiz_ke'    0 250 0 2000 'na'  }
 
-    { 'ike'      'TsAveragedData/horiz_ke_<CASE>.h5' '/horiz_ke'    0 250 0 2 'na'  }
-    { 'ps_ike'   'TsAveragedData/horiz_ke_<CASE>.h5' '/horiz_ke'    0 250 0 2 'na'  }
-    { 's_ike'    'TsAveragedData/horiz_ke_<CASE>.h5' '/horiz_ke'    0 250 0 2 'na'  }
+    { 'pcprate'     'DIAGS/hist_meas_az_pcprate_<CASE>.h5' '/all_pcprate_ts'     0 250 0 1000 'max' }
+    { 'ps_pcprate'  'DIAGS/hist_meas_az_pcprate_<CASE>.h5' '/all_ps_pcprate_ts'  0 250 0 1000 'max' }
+    { 's_pcprate'   'DIAGS/hist_meas_az_pcprate_<CASE>.h5' '/all_s_pcprate_ts'   0 250 0 1000 'max' }
 
-    { 'rmw'         'DIAGS/hist_meas_az_speed_<CASE>.h5'   '/all_speed_maxlev_ts'    0 250 0 2 'rmw' }
-    { 'ps_rmw'      'DIAGS/hist_meas_az_speed_<CASE>.h5'   '/all_ps_speed_maxlev_ts' 0 250 0 2 'rmw' }
-    { 's_rmw'       'DIAGS/hist_meas_az_speed_<CASE>.h5'   '/all_s_speed_maxlev_ts'  0 250 0 2 'rmw' }
+    % vertical coord is pressure
+    { 'max_wind_t_p'      'DIAGS/hist_meas_az_p_speed_<CASE>.h5' '/all_speed_t_maxlev_ts'    0 250 1010 800 'max' }
+    { 'ps_max_wind_t_p'   'DIAGS/hist_meas_az_p_speed_<CASE>.h5' '/all_ps_speed_t_maxlev_ts' 0 250 1010 800 'max' }
+    { 's_max_wind_t_p'    'DIAGS/hist_meas_az_p_speed_<CASE>.h5' '/all_s_speed_t_maxlev_ts'  0 250 1010 800 'max' }
 
-    { 'rmw_t'       'DIAGS/hist_meas_az_speed_<CASE>.h5'   '/all_speed_t_maxlev_ts'    0 250 0 2 'rmw' }
-    { 'ps_rmw_t'    'DIAGS/hist_meas_az_speed_<CASE>.h5'   '/all_ps_speed_t_maxlev_ts' 0 250 0 2 'rmw' }
-    { 's_rmw_t'     'DIAGS/hist_meas_az_speed_<CASE>.h5'   '/all_s_speed_t_maxlev_ts'  0 250 0 2 'rmw' }
+    { 'avg_wind_t_p'      'DIAGS/hist_meas_az_p_speed_<CASE>.h5' '/all_speed_t_ts'    0 250 1010 800 'avg' }
+    { 'ps_avg_wind_t_p'   'DIAGS/hist_meas_az_p_speed_<CASE>.h5' '/all_ps_speed_t_ts' 0 250 1010 800 'avg' }
+    { 's_avg_wind_t_p'    'DIAGS/hist_meas_az_p_speed_<CASE>.h5' '/all_s_speed_t_ts'  0 250 1010 800 'avg' }
 
-    { 'pcprate'     'DIAGS/hist_meas_az_pcprate_<CASE>.h5' '/all_pcprate_ts'     0 250 0 1 'max' }
-    { 'ps_pcprate'  'DIAGS/hist_meas_az_pcprate_<CASE>.h5' '/all_ps_pcprate_ts'  0 250 0 1 'max' }
-    { 's_pcprate'   'DIAGS/hist_meas_az_pcprate_<CASE>.h5' '/all_s_pcprate_ts'   0 250 0 1 'max' }
+    { 'rmw_t_p'         'DIAGS/hist_meas_az_p_speed_<CASE>.h5'   '/all_speed_t_maxlev_ts'    0 250 1010 800 'rmw' }
+    { 'ps_rmw_t_p'      'DIAGS/hist_meas_az_p_speed_<CASE>.h5'   '/all_ps_speed_t_maxlev_ts' 0 250 1010 800 'rmw' }
+    { 's_rmw_t_p'       'DIAGS/hist_meas_az_p_speed_<CASE>.h5'   '/all_s_speed_t_maxlev_ts'  0 250 1010 800 'rmw' }
+
     };
 
   for icase = 1:Ncases
@@ -88,8 +91,8 @@ function [ ] = GenStormMeas()
       Mvname   = MeasList{imeas}{3};
       Rmin     = MeasList{imeas}{4} .* 1000;  % convert km to m
       Rmax     = MeasList{imeas}{5} .* 1000;  % convert km to m
-      Zmin     = MeasList{imeas}{6} .* 1000;  % convert km to m
-      Zmax     = MeasList{imeas}{7} .* 1000;  % convert km to m
+      Zbot     = MeasList{imeas}{6};
+      Ztop     = MeasList{imeas}{7};
       Mmeas    = MeasList{imeas}{8};
 
       Mfile = regexprep(Mfile, '<CASE>', Case);
@@ -98,8 +101,8 @@ function [ ] = GenStormMeas()
       fprintf('    Reading: %s (%s)\n', Mfile, Mvname);
       fprintf('    Rmin: %.2f\n', Rmin);
       fprintf('    Rmax: %.2f\n', Rmax);
-      fprintf('    Zmin: %.2f\n', Zmin);
-      fprintf('    Zmax: %.2f\n', Zmax);
+      fprintf('    Zbot: %.2f\n', Zbot);
+      fprintf('    Ztop: %.2f\n', Ztop);
       fprintf('    Measurement: %s\n', Mmeas);
       fprintf('\n');
 
@@ -120,8 +123,18 @@ function [ ] = GenStormMeas()
 
       R1 = find(R >= Rmin, 1, 'first');
       R2 = find(R <= Rmax, 1, 'last');
-      Z1 = find(Z >= Zmin, 1, 'first');
-      Z2 = find(Z <= Zmax, 1, 'last');
+
+      % Crude test to distinguish pressure and height for vertical
+      % coordinates. Pressure values decrease from bottom to top;
+      % height values increase.
+      Z1 = find(Z >= Zbot, 1, 'first');
+      Z2 = find(Z <= Ztop, 1, 'last');
+      if (Nz > 1)
+        if (Z(1) > Z(2))
+          Z1 = find(Z <= Zbot, 1, 'first');
+          Z2 = find(Z >= Ztop, 1, 'last');
+        end
+      end
 
       % If first measurement, write out coordinates for subsequent
       % variable attaching.

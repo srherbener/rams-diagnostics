@@ -4,14 +4,6 @@ function [ ] = ReportFsMeas()
   % Description of measurements
   % <blank> says to insert a blank line in the report
   MeasList = {
-    'avg_wind'
-    'ps_avg_wind'
-    's_avg_wind'
-    '<blank>'
-    'max_wind'
-    'ps_max_wind'
-    's_max_wind'
-    '<blank>'
     'avg_wind_t'
     'ps_avg_wind_t'
     's_avg_wind_t'
@@ -19,6 +11,14 @@ function [ ] = ReportFsMeas()
     'max_wind_t'
     'ps_max_wind_t'
     's_max_wind_t'
+    '<blank>'
+    'avg_wind_t_p'
+    'ps_avg_wind_t_p'
+    's_avg_wind_t_p'
+    '<blank>'
+    'max_wind_t_p'
+    'ps_max_wind_t_p'
+    's_max_wind_t_p'
     };
   Nmeas = length(MeasList);
 
