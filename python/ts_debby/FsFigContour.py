@@ -242,7 +242,7 @@ class FsContour:
                 fontsize=20, horizontalalignment='right', verticalalignment='bottom')
 
         # If doing a track (PTRACK or STRACK), place labels on x-axis
-        if (self.tracktype):
+        if (hasattr(self, "tracktype")):
             if (self.tracktype == 'ptrack'):
                 SimAx[3].text(0, -0.1, 'C', transform=SimAx[3].transAxes, fontsize=14, color='blue',
                     horizontalalignment='left', verticalalignment='top')
