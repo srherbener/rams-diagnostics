@@ -12,7 +12,6 @@ SCRIPTS = \
   $(DEST)/GenPtrackMomentum.py \
   $(DEST)/GenFieldNoVortex.py \
   $(DEST)/FsFigContour.py \
-  $(DEST)/PlotFsFigVtFactors.py \
   $(DEST)/PlotFsFigStormHovmollers.py \
   $(DEST)/PlotFsFigStormXsections.py \
   $(DEST)/PlotFsFigTrackXsections.py \
