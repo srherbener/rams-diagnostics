@@ -51,7 +51,7 @@ FacsList = [
 Nfacs = len(FacsList)
 
 InFnameTmpl = 'DIAGS/ptrack_tgrads_<SIM>.h5'
-InVname = '/ps_tempc_bar_hgrad_smooth'
+InVname = '/ps_tempc_nv_p_bar_hgrad_smooth'
 Xvname = '/x_coords'
 
 SimLegText = []
@@ -140,7 +140,7 @@ Xaxis = plu.AxisConfig('x', [ 0, 1800 ], 'Linear Distance (km)')
 Xaxis.ticks = [ 500, 1000, 1500 ]
 Xaxis.fontsize = 12
 
-Yaxis = plu.AxisConfig('y', [ 0, 2 ], r'${\nabla}\overline{T}\ (10^{-6}\ K\ m^{-1})$')
+Yaxis = plu.AxisConfig('y', [ -2.5, 1.5 ], r'${\nabla}\overline{T}\ (10^{-6}\ K\ m^{-1})$')
 Yaxis.fontsize = 12
 
 Ptitle = plu.TitleConfig('a', r'$PSAP:\ {\nabla}\overline{T}:\ Sims$')
@@ -155,8 +155,8 @@ Legend.ncol = 1
 plu.PlotLine(AxSims, X, Sims, Ptitle, Xaxis, Yaxis, Legend, SimColors)
 
 # Mark the endpoints of PTRACK
-AxSims.text(0, -0.3, 'C', color='blue', fontsize=16);
-AxSims.text(1750, -0.3, 'D', color='blue', fontsize=16);
+AxSims.text(0, -3, 'C', color='blue', fontsize=16);
+AxSims.text(1750, -3, 'D', color='blue', fontsize=16);
 
 
 
@@ -165,7 +165,7 @@ Xaxis = plu.AxisConfig('x', [ 0, 1800 ], 'Linear Distance (km)')
 Xaxis.ticks = [ 500, 1000, 1500 ]
 Xaxis.fontsize = 12
 
-Yaxis = plu.AxisConfig('y', [ -0.5, 2 ], r'${\nabla}\overline{T}\ (10^{-6}\ K\ m^{-1})$')
+Yaxis = plu.AxisConfig('y', [ -2.5, 1.5 ], r'${\nabla}\overline{T}\ (10^{-6}\ K\ m^{-1})$')
 Yaxis.fontsize = 12
 
 Ptitle = plu.TitleConfig('b', r'$PSAP:\ {\nabla}\overline{T}:\ Factors$')
@@ -179,8 +179,8 @@ Legend.ncol = 1
 plu.PlotLine(AxFactors, X, Factors, Ptitle, Xaxis, Yaxis, Legend, FacColors)
 
 # Mark the endpoints of PTRACK
-AxFactors.text(0, -0.8, 'C', color='blue', fontsize=16);
-AxFactors.text(1750, -0.8, 'D', color='blue', fontsize=16);
+AxFactors.text(0, -3, 'C', color='blue', fontsize=16);
+AxFactors.text(1750, -3, 'D', color='blue', fontsize=16);
 
 # Add y = 0 reference
 AxFactors.axhline(y=0, color='black', linestyle='--')

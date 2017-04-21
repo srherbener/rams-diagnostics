@@ -51,10 +51,10 @@ SimList = [
 Nsims = len(SimList)
 
 PtrackList = [
-    [ 'DIAGS/ptrack_avgs_<SIM>.h5', '/ps_tempc',   'z' ],
-    [ 'DIAGS/ptrack_avgs_<SIM>.h5', '/s_tempc',    'z' ],
-    [ 'DIAGS/ptrack_avgs_<SIM>.h5', '/ps_tempc_p', 'p' ],
-    [ 'DIAGS/ptrack_avgs_<SIM>.h5', '/s_tempc_p',  'p' ],
+#    [ 'DIAGS/ptrack_avgs_<SIM>.h5', '/ps_tempc',   'z' ],
+#    [ 'DIAGS/ptrack_avgs_<SIM>.h5', '/s_tempc',    'z' ],
+    [ 'DIAGS/ptrack_avgs_<SIM>.h5', '/ps_tempc_nv_p', 'p' ],
+    [ 'DIAGS/ptrack_avgs_<SIM>.h5', '/s_tempc_nv_p',  'p' ],
     ]
 Nsets = len(PtrackList)
 

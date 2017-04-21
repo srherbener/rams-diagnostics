@@ -38,15 +38,15 @@ PtrackList = [
 #    [ 'XsectionData/ptrack_tempc_p_<SIM>.h5', '/tempc',  'sal',     '/s_tempc_p',  'p' ],
 
     # reduced (lite) horizontal data
-    [ 'XsectionData/ptrack_tempc_nv_lite_<SIM>.h5',   '/tempc',  'pre_sal', '/ps_tempc',   'z' ],
-    [ 'XsectionData/ptrack_tempc_nv_lite_<SIM>.h5',   '/tempc',  'sal',     '/s_tempc',    'z' ],
-    [ 'XsectionData/ptrack_tempc_nv_lite_p_<SIM>.h5', '/tempc',  'pre_sal', '/ps_tempc_p', 'p' ],
-    [ 'XsectionData/ptrack_tempc_nv_lite_p_<SIM>.h5', '/tempc',  'sal',     '/s_tempc_p',  'p' ],
+#    [ 'XsectionData/ptrack_tempc_nv_lite_<SIM>.h5',   '/tempc',  'pre_sal', '/ps_tempc_nv',   'z' ],
+#    [ 'XsectionData/ptrack_tempc_nv_lite_<SIM>.h5',   '/tempc',  'sal',     '/s_tempc_nv',    'z' ],
+    [ 'XsectionData/ptrack_tempc_nv_lite_p_<SIM>.h5', '/tempc',  'pre_sal', '/ps_tempc_nv_p', 'p' ],
+    [ 'XsectionData/ptrack_tempc_nv_lite_p_<SIM>.h5', '/tempc',  'sal',     '/s_tempc_nv_p',  'p' ],
 
-    [ 'XsectionData/ptrack_vapor_nv_lite_<SIM>.h5',   '/vapor',  'pre_sal', '/ps_vapor',   'z' ],
-    [ 'XsectionData/ptrack_vapor_nv_lite_<SIM>.h5',   '/vapor',  'sal',     '/s_vapor',    'z' ],
-    [ 'XsectionData/ptrack_vapor_nv_lite_p_<SIM>.h5', '/vapor',  'pre_sal', '/ps_vapor_p', 'p' ],
-    [ 'XsectionData/ptrack_vapor_nv_lite_p_<SIM>.h5', '/vapor',  'sal',     '/s_vapor_p',  'p' ],
+#    [ 'XsectionData/ptrack_vapor_nv_lite_<SIM>.h5',   '/vapor',  'pre_sal', '/ps_vapor_nv',   'z' ],
+#    [ 'XsectionData/ptrack_vapor_nv_lite_<SIM>.h5',   '/vapor',  'sal',     '/s_vapor_nv',    'z' ],
+    [ 'XsectionData/ptrack_vapor_nv_lite_p_<SIM>.h5', '/vapor',  'pre_sal', '/ps_vapor_nv_p', 'p' ],
+    [ 'XsectionData/ptrack_vapor_nv_lite_p_<SIM>.h5', '/vapor',  'sal',     '/s_vapor_nv_p',  'p' ],
 
     ]
 Nsets = len(PtrackList)

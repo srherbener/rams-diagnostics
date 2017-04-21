@@ -41,10 +41,10 @@ Pslope = Pdy / Pdx
 Pangle = np.arctan2(Pdy, Pdx)
 
 PtrackList = [
-    [ 'XsectionData/ptrack_u_<SIM>.h5',   '/u', 'XsectionData/ptrack_v_<SIM>.h5',   '/v', 'u',   'v',    'x', 'z' ],
-    [ 'XsectionData/ptrack_u_p_<SIM>.h5', '/u', 'XsectionData/ptrack_v_p_<SIM>.h5', '/v', 'u_p', 'v_p',  'x', 'p' ],
+#    [ 'XsectionData/ptrack_u_<SIM>.h5',   '/u', 'XsectionData/ptrack_v_<SIM>.h5',   '/v', 'u',   'v',    'x', 'z' ],
+#    [ 'XsectionData/ptrack_u_p_<SIM>.h5', '/u', 'XsectionData/ptrack_v_p_<SIM>.h5', '/v', 'u_p', 'v_p',  'x', 'p' ],
 
-    [ 'XsectionData/ptrack_u_nv_lite_<SIM>.h5',   '/u', 'XsectionData/ptrack_v_nv_lite_<SIM>.h5',   '/v', 'u_nv_lite',   'v_nv_lite',    'xl', 'z' ],
+#    [ 'XsectionData/ptrack_u_nv_lite_<SIM>.h5',   '/u', 'XsectionData/ptrack_v_nv_lite_<SIM>.h5',   '/v', 'u_nv_lite',   'v_nv_lite',    'xl', 'z' ],
     [ 'XsectionData/ptrack_u_nv_lite_p_<SIM>.h5', '/u', 'XsectionData/ptrack_v_nv_lite_p_<SIM>.h5', '/v', 'u_nv_lite_p', 'v_nv_lite_p',  'xl', 'p' ]
     ]
 Nsets = len(PtrackList)
