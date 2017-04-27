@@ -7,7 +7,7 @@ DEST = $(HOME)/etc/python/ts_debby
 SCRIPTS = \
   $(DEST)/ConfigTsd.py \
   $(DEST)/GenStormHovmollers.py \
-  $(DEST)/GenPtrackAverages.py \
+  $(DEST)/GenTrackAverages.py \
   $(DEST)/GenPtrackTempGrads.py \
   $(DEST)/GenPtrackMomentum.py \
   $(DEST)/GenFieldNoVortex.py \
