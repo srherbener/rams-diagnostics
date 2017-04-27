@@ -13,11 +13,18 @@ print("Looking at group disk usage:")
 
 # Grab the group totals information, and load into a "soup" database
 GroupTotalsUrl = "http://salix.atmos.colostate.edu/serverStatus/sueGroup.html"
+NetworkDriveUrl = "http://salix.atmos.colostate.edu/serverStatus/networkDrives.html"
 
 print("  Reading URL: {0:s}".format(GroupTotalsUrl))
 Gtot = req.get(GroupTotalsUrl)
 
+print("  Reading URL: {0:s}".format(NetworkDriveUrl))
+Ndrive = req.get(NetworkDriveUrl)
+
 GtotSoup = BeautifulSoup(Gtot.content, "lxml")
+NdriveSoup = BeautifulSoup(Ndrive.content, "lxml")
+
+print(NdriveSoup.prettify())
 
 # All of the individual user usage data is formatted as:
 #
@@ -42,7 +49,6 @@ for tag in GtotSoup.find_all("b"):
 
     UsageList[UserName] = Amount
 
-#SortedUsageList = (sorted(UsageList.items(), key=lambda t: t[1], reverse=True))
 SortedUsageList = (sorted(UsageList.items(), key=lambda t: t[1]))
 
 # In this case, the sorted function will create a list of tuples where each tuple is
@@ -50,25 +56,37 @@ SortedUsageList = (sorted(UsageList.items(), key=lambda t: t[1]))
 # and a numpy array (values) in order to facilitate plotting.
 Nitems = len(SortedUsageList)
 
-Labels = []
+Labels = np.zeros(Nitems, dtype='<U10')
 DiskUsage = np.zeros(Nitems)
 
 for i in range(Nitems):
-    Labels.append(SortedUsageList[i][0])
+    Labels[i] = SortedUsageList[i][0]
     DiskUsage[i] = SortedUsageList[i][1]
 
 TotalUsage = DiskUsage.sum()
 
-# Create a horizontal bar plot showing the heaviest users first
-Width = 0.5
-Ind = np.arange(Nitems)
-Title = "Disk Usage by User\n(Total Usage = {0:.2f})".format(TotalUsage)
+# For the plot, chop off the small usage values. This will help de-clutter
+# the plot.
+MinUsage = 1.0 # Tb
+TopSelect = (DiskUsage > MinUsage)
+TopUsage = DiskUsage[TopSelect]
+TopLabels = Labels[TopSelect]
+N = len(TopUsage)
 
-plt.barh(Ind, DiskUsage, Width, color='c')
+# Create a horizontal bar plot showing the heaviest users first
+Width = 0.8
+Ind = np.arange(N)
+Title = "Top Disk Usage by User\n(Total Usage = {0:.2f} Tb)".format(TotalUsage)
+Color = 'skyblue'
+
+Fig = plt.figure()
+
+plt.barh(Ind, TopUsage, Width, color=Color, edgecolor=Color, align='center')
 
 plt.title(Title)
 plt.xlabel('Usage (Tb)')
-plt.yticks(Ind, Labels)
+plt.yticks(Ind, TopLabels)
 
-
-plt.show()
+OutFile = "/tmp/DiskUsageByUser.png"
+print("  Writing: {0:s}".format(OutFile))
+Fig.savefig(OutFile)
