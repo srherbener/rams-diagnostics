@@ -186,7 +186,7 @@ AxFactors.text(1750, -3, 'D', color='blue', fontsize=16);
 AxFactors.axhline(y=0, color='black', linestyle='--')
 
 
-OutFile = "{0:s}/FsFigPtrackTempGrad.png".format(Pdir)
+OutFile = "{0:s}/FsFigPtrackNvPressTempGrad.png".format(Pdir)
 print("Writing: {0:s}".format(OutFile))
 Fig.savefig(OutFile)
 
