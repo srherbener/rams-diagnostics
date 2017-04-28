@@ -56,14 +56,26 @@ TrackList = [
     # STRACK
     [   "DIAGS/strack_avgs_<SIM>.h5",
         [
-        [ 'XsectionData/strack_theta_<SIM>.h5', '/theta',  'pre_sal', '/ps_theta', 'z' ],
-        [ 'XsectionData/strack_theta_<SIM>.h5', '/theta',  'sal',     '/s_theta',  'z' ],
+        [ 'XsectionData/strack_tempc_nv_lite_<SIM>.h5',   '/tempc',  'pre_sal', '/ps_tempc_nv',   'z' ],
+        [ 'XsectionData/strack_tempc_nv_lite_<SIM>.h5',   '/tempc',  'sal',     '/s_tempc_nv',    'z' ],
+        [ 'XsectionData/strack_tempc_nv_lite_p_<SIM>.h5', '/tempc',  'pre_sal', '/ps_tempc_nv_p', 'p' ],
+        [ 'XsectionData/strack_tempc_nv_lite_p_<SIM>.h5', '/tempc',  'sal',     '/s_tempc_nv_p',  'p' ],
 
-        [ 'XsectionData/strack_theta_e_<SIM>.h5', '/theta_e',  'pre_sal', '/ps_theta_e', 'z' ],
-        [ 'XsectionData/strack_theta_e_<SIM>.h5', '/theta_e',  'sal',     '/s_theta_e',  'z' ],
+        [ 'XsectionData/strack_theta_nv_lite_<SIM>.h5',   '/theta',  'pre_sal', '/ps_theta_nv',   'z' ],
+        [ 'XsectionData/strack_theta_nv_lite_<SIM>.h5',   '/theta',  'sal',     '/s_theta_nv',    'z' ],
+        [ 'XsectionData/strack_theta_nv_lite_p_<SIM>.h5', '/theta',  'pre_sal', '/ps_theta_nv_p', 'p' ],
+        [ 'XsectionData/strack_theta_nv_lite_p_<SIM>.h5', '/theta',  'sal',     '/s_theta_nv_p',  'p' ],
 
-        [ 'XsectionData/strack_vapor_<SIM>.h5', '/vapor',  'pre_sal', '/ps_vapor', 'z' ],
-        [ 'XsectionData/strack_vapor_<SIM>.h5', '/vapor',  'sal',     '/s_vapor',  'z' ],
+        [ 'XsectionData/strack_theta_e_nv_lite_<SIM>.h5',   '/theta_e',  'pre_sal', '/ps_theta_e_nv',   'z' ],
+        [ 'XsectionData/strack_theta_e_nv_lite_<SIM>.h5',   '/theta_e',  'sal',     '/s_theta_e_nv',    'z' ],
+        [ 'XsectionData/strack_theta_e_nv_lite_p_<SIM>.h5', '/theta_e',  'pre_sal', '/ps_theta_e_nv_p', 'p' ],
+        [ 'XsectionData/strack_theta_e_nv_lite_p_<SIM>.h5', '/theta_e',  'sal',     '/s_theta_e_nv_p',  'p' ],
+
+        [ 'XsectionData/strack_vapor_nv_lite_<SIM>.h5',   '/vapor',  'pre_sal', '/ps_vapor_nv',   'z' ],
+        [ 'XsectionData/strack_vapor_nv_lite_<SIM>.h5',   '/vapor',  'sal',     '/s_vapor_nv',    'z' ],
+        [ 'XsectionData/strack_vapor_nv_lite_p_<SIM>.h5', '/vapor',  'pre_sal', '/ps_vapor_nv_p', 'p' ],
+        [ 'XsectionData/strack_vapor_nv_lite_p_<SIM>.h5', '/vapor',  'sal',     '/s_vapor_nv_p',  'p' ],
+
         ]
     ],
     ]
