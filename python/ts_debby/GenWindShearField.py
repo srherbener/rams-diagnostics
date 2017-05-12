@@ -23,6 +23,8 @@ Nsims = len(SimList)
 
 # For now, need to run either the set with full horizontal data, or the set with reduced
 # horizontal data. Can't run both at the same time.
+FilterFnameTemplate = "FILTERS/all_500_lite_<SIM>.h5"
+FilterVname = "/filter"
 
 UfnameTemplate = "HDF5/<SIM>/HDF5/u_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5"
 VfnameTemplate = "HDF5/<SIM>/HDF5/v_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5"
@@ -34,6 +36,8 @@ UshearVname = "/u_shear"
 VshearVname = "/v_shear"
 MagShearVname = "/mag_shear"
 AngShearVname = "/angle_shear"
+MagShearStormVname = "/mag_shear_storm"
+AvgMagShearStormVname = "/avg_mag_shear_storm"
 
 Xname = '/x_coords'
 Yname = '/y_coords'
@@ -50,10 +54,10 @@ Tname = '/t_coords'
 #  SFC top        925 mb          761 m
 
 ZsalBot = 700 # mb
-ZsalTop = 500 # mb
+ZsalTop = 700 # mb
 
-ZsfcBot = 1000 # mb
-ZsfcTop =  925 # mb
+ZsfcBot = 925 # mb
+ZsfcTop = 925 # mb
 
 for isim in range(Nsims):
     Sim = SimList[isim]
@@ -61,16 +65,19 @@ for isim in range(Nsims):
     print("Creating wind shear field for simulation: {0:s}".format(Sim))
     print("")
 
-    Ufname = UfnameTemplate.replace("<SIM>", Sim)
-    Vfname = VfnameTemplate.replace("<SIM>", Sim)
-    Ofname = OfnameTemplate.replace("<SIM>", Sim)
+    FilterFname = FilterFnameTemplate.replace("<SIM>", Sim)
+    Ufname      = UfnameTemplate.replace("<SIM>", Sim)
+    Vfname      = VfnameTemplate.replace("<SIM>", Sim)
+    Ofname      = OfnameTemplate.replace("<SIM>", Sim)
 
-    print("  Reading {0:s} ({1:s})".format(Ufname, Uvname))
+    print("  Reading {0:s} ({1:s})".format(FilterFname, FilterVname))
+    print("  Reading {0:s} ({1:s})".format(Vfname, Vvname))
     print("  Reading {0:s} ({1:s})".format(Vfname, Vvname))
     print("")
 
     # Read input data. If this is the first set, read in the coordinates
     # and build the dimensions.
+    Ffile = h5py.File(FilterFname, mode='r')
     Ufile = h5py.File(Ufname, mode='r')
     Vfile = h5py.File(Vfname, mode='r')
 
@@ -121,14 +128,19 @@ for isim in range(Nsims):
     VshearDset = h5u.DsetCoards(VshearVname, 3, [ Nt, Ny, Nx ], chunks=( 1, Ny, Nx ))
     MagShearDset = h5u.DsetCoards(MagShearVname, 3, [ Nt, Ny, Nx ], chunks=( 1, Ny, Nx ))
     AngShearDset = h5u.DsetCoards(AngShearVname, 3, [ Nt, Ny, Nx ], chunks=( 1, Ny, Nx ))
+    MagShearStormDset = h5u.DsetCoards(MagShearStormVname, 3, [ Nt, Ny, Nx ], chunks=( 1, Ny, Nx ))
+    AvgMagShearStormDset = h5u.DsetCoards(AvgMagShearStormVname, 1, [ Nt ])
 
     UshearDset.Create(Ofile)
     VshearDset.Create(Ofile)
     MagShearDset.Create(Ofile)
     AngShearDset.Create(Ofile)
+    MagShearStormDset.Create(Ofile)
+    AvgMagShearStormDset.Create(Ofile)
 
     # Process one time step at a time in order to mitigate large memory allocation
     for it in range(Nt):
+        FILTER = np.squeeze(Ffile[FilterVname][it,...])
         U = np.squeeze(Ufile[Uvname][it,...])
         V = np.squeeze(Vfile[Vvname][it,...])
 
@@ -149,14 +161,23 @@ for isim in range(Nsims):
         V_SHEAR = V_SAL - V_SFC
 
         # Magnitude, angle
+        # Create a storm relative magnitude shear field as well - this may be
+        # helpful for doing comparisons. Filter has 1's in the storm region and
+        # 0's otherwise.
         MAG_SHEAR = np.sqrt(np.square(U_SHEAR) + np.square(V_SHEAR))
         ANG_SHEAR = np.arctan2(V_SHEAR, U_SHEAR)
+        MAG_SHEAR_STORM = np.multiply(MAG_SHEAR, FILTER)
+
+        # Get an average shear magnitude over the storm reagion. 
+        AVG_MAG_SHEAR_STORM = np.mean(MAG_SHEAR_STORM[MAG_SHEAR_STORM > 0.0])
 
         # Write fields into output file
         Ofile[UshearVname][it,:,:] = U_SHEAR
         Ofile[VshearVname][it,:,:] = V_SHEAR
         Ofile[MagShearVname][it,:,:] = MAG_SHEAR
         Ofile[AngShearVname][it,:,:] = ANG_SHEAR
+        Ofile[MagShearStormVname][it,:,:] = MAG_SHEAR_STORM
+        Ofile[AvgMagShearStormVname][it] = AVG_MAG_SHEAR_STORM
 
     Ufile.close()
     Vfile.close()
@@ -166,11 +187,15 @@ for isim in range(Nsims):
     print("  Writing {0:s} ({1:s})".format(Ofname, VshearVname))
     print("  Writing {0:s} ({1:s})".format(Ofname, MagShearVname))
     print("  Writing {0:s} ({1:s})".format(Ofname, AngShearVname))
+    print("  Writing {0:s} ({1:s})".format(Ofname, MagShearStormVname))
+    print("  Writing {0:s} ({1:s})".format(Ofname, AvgMagShearStormVname))
 
     UshearDset.AttachDims(Ofile, Tdim, Ydim, Xdim)
     VshearDset.AttachDims(Ofile, Tdim, Ydim, Xdim)
     MagShearDset.AttachDims(Ofile, Tdim, Ydim, Xdim)
     AngShearDset.AttachDims(Ofile, Tdim, Ydim, Xdim)
+    MagShearStormDset.AttachDims(Ofile, Tdim, Ydim, Xdim)
+    AvgMagShearStormDset.AttachDims(Ofile, Tdim)
 
     Ofile.close()
     print("")
