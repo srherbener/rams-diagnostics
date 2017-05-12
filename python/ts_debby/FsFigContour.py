@@ -99,6 +99,10 @@ class FsContour:
         self.SimPmarkers = [ 'a', 'c', 'e', 'g' ]
         self.FacPmarkers = [ 'd', 'f', 'h' ]
 
+        self.Fig = 0
+        self.SimAx = []
+        self.FacAx = []
+
     def CreateFig(self):
 
         # get labels for sims and factors
@@ -173,7 +177,7 @@ class FsContour:
         # 7 panel plot
         #   Sims on the left side, 4 panels
         #   Factors on right side, 3 panels
-        Fig = plt.figure()
+        self.Fig = plt.figure()
         
         # Place axes for all panels
         AxW = 0.40
@@ -182,20 +186,18 @@ class FsContour:
         AxRightLlx = 0.53
         AxLly = [ 0.10, 0.32, 0.54, 0.76 ]
         
-        SimAx = [ ]
-        SimAx.append(Fig.add_axes([ AxLeftLlx, AxLly[3], AxW, AxH ]))
-        SimAx.append(Fig.add_axes([ AxLeftLlx, AxLly[2], AxW, AxH ]))
-        SimAx.append(Fig.add_axes([ AxLeftLlx, AxLly[1], AxW, AxH ]))
-        SimAx.append(Fig.add_axes([ AxLeftLlx, AxLly[0], AxW, AxH ]))
+        self.SimAx.append(self.Fig.add_axes([ AxLeftLlx, AxLly[3], AxW, AxH ]))
+        self.SimAx.append(self.Fig.add_axes([ AxLeftLlx, AxLly[2], AxW, AxH ]))
+        self.SimAx.append(self.Fig.add_axes([ AxLeftLlx, AxLly[1], AxW, AxH ]))
+        self.SimAx.append(self.Fig.add_axes([ AxLeftLlx, AxLly[0], AxW, AxH ]))
         
-        FacAx = [ ]
-        FacAx.append(Fig.add_axes([ AxRightLlx, AxLly[2], AxW, AxH ]))
-        FacAx.append(Fig.add_axes([ AxRightLlx, AxLly[1], AxW, AxH ]))
-        FacAx.append(Fig.add_axes([ AxRightLlx, AxLly[0], AxW, AxH ]))
+        self.FacAx.append(self.Fig.add_axes([ AxRightLlx, AxLly[2], AxW, AxH ]))
+        self.FacAx.append(self.Fig.add_axes([ AxRightLlx, AxLly[1], AxW, AxH ]))
+        self.FacAx.append(self.Fig.add_axes([ AxRightLlx, AxLly[0], AxW, AxH ]))
         
         # for placing text in upper right (blank) space
         # create axes, turn off the axes, then place the text in that axes
-        TxtAx = Fig.add_axes([ AxRightLlx, AxLly[3], AxW, AxH ])
+        TxtAx = self.Fig.add_axes([ AxRightLlx, AxLly[3], AxW, AxH ])
         TxtAx.set_axis_off()
         
         # create axes and contour specs objects
@@ -223,7 +225,7 @@ class FsContour:
         
             Xaxis.show = self.SimXshow[i]
             Yaxis.show = self.SimYshow[i]
-            plu.PlotContour(SimAx[i], X, Y, InVar[:,:,i], Ptitle, Xaxis, Yaxis, SimCspecs)
+            plu.PlotContour(self.SimAx[i], X, Y, InVar[:,:,i], Ptitle, Xaxis, Yaxis, SimCspecs)
         
         # factor cross sections
         for i in range(self.Nfacs):
@@ -232,8 +234,7 @@ class FsContour:
         
             Xaxis.show = self.FacXshow[i]
             Yaxis.show = self.FacYshow[i]
-            plu.PlotContour(FacAx[i], X, Y, FacVar[:,:,i], Ptitle, Xaxis, Yaxis, FacCspecs)
-        
+            plu.PlotContour(self.FacAx[i], X, Y, FacVar[:,:,i], Ptitle, Xaxis, Yaxis, FacCspecs)
         
         # Place a tag (text) in the empty panel if requested.
         # transAxes says to use the Axes coordinates which always run from 0 to 1
@@ -244,26 +245,26 @@ class FsContour:
         # If doing a track (PTRACK or STRACK), place labels on x-axis
         if (hasattr(self, "tracktype")):
             if (self.tracktype == 'ptrack'):
-                SimAx[3].text(0, -0.1, 'C', transform=SimAx[3].transAxes, fontsize=14, color='blue',
+                self.SimAx[3].text(0, -0.1, 'C', transform=self.SimAx[3].transAxes, fontsize=14, color='blue',
                     horizontalalignment='left', verticalalignment='top')
-                SimAx[3].text(1, -0.1, 'D', transform=SimAx[3].transAxes, fontsize=14, color='blue',
+                self.SimAx[3].text(1, -0.1, 'D', transform=self.SimAx[3].transAxes, fontsize=14, color='blue',
                     horizontalalignment='right', verticalalignment='top')
-                FacAx[2].text(0, -0.1, 'C', transform=FacAx[2].transAxes, fontsize=14, color='blue',
+                self.FacAx[2].text(0, -0.1, 'C', transform=self.FacAx[2].transAxes, fontsize=14, color='blue',
                     horizontalalignment='left', verticalalignment='top')
-                FacAx[2].text(1, -0.1, 'D', transform=FacAx[2].transAxes, fontsize=14, color='blue',
+                self.FacAx[2].text(1, -0.1, 'D', transform=self.FacAx[2].transAxes, fontsize=14, color='blue',
                     horizontalalignment='right', verticalalignment='top')
             elif (self.tracktype == 'strack'):
-                SimAx[3].text(0, -0.1, 'A', transform=SimAx[3].transAxes, fontsize=14, color='red',
+                self.SimAx[3].text(0, -0.1, 'A', transform=self.SimAx[3].transAxes, fontsize=14, color='red',
                     horizontalalignment='left', verticalalignment='top')
-                SimAx[3].text(1, -0.1, 'B', transform=SimAx[3].transAxes, fontsize=14, color='red',
+                self.SimAx[3].text(1, -0.1, 'B', transform=self.SimAx[3].transAxes, fontsize=14, color='red',
                     horizontalalignment='right', verticalalignment='top')
-                FacAx[2].text(0, -0.1, 'A', transform=FacAx[2].transAxes, fontsize=14, color='red',
+                self.FacAx[2].text(0, -0.1, 'A', transform=self.FacAx[2].transAxes, fontsize=14, color='red',
                     horizontalalignment='left', verticalalignment='top')
-                FacAx[2].text(1, -0.1, 'B', transform=FacAx[2].transAxes, fontsize=14, color='red',
+                self.FacAx[2].text(1, -0.1, 'B', transform=self.FacAx[2].transAxes, fontsize=14, color='red',
                     horizontalalignment='right', verticalalignment='top')
         
         print("Writing: {0:s}".format(self.OutFname))
-        Fig.savefig(self.OutFname)
+        self.Fig.savefig(self.OutFname)
         plt.close()
         print("")
 
@@ -411,6 +412,42 @@ class StormHovmoller(FsContour):
         self.Ymin = 0.0
         self.Ymax = 8.0
         self.Yticks = [ 0.0, 2.0, 4.0, 6.0, 8.0 ]
+
+        # Contour specs
+        self.SimCmin = SimCspecs[0]
+        self.SimCmax = SimCspecs[1]
+        self.SimCnum = SimCspecs[2]
+
+        self.FacCmin = FacCspecs[0]
+        self.FacCmax = FacCspecs[1]
+        self.FacCnum = FacCspecs[2]
+
+# class for doing plan views (lon, lat)
+class PlanView(FsContour):
+    '''Class to create plan view sim/factor figure'''
+
+    def __init__(self, InFname, InVname, OutFname, Ptitle, Tag, SimCspecs, FacCspecs):
+        FsContour.__init__(self, InFname, InVname, OutFname, Ptitle, Tag)
+
+        # x-axis is longitude in degrees
+        self.XcoordName = '/x_coords'
+        self.XcoordScale = 1.0
+        self.XcoordOffset = 0.0
+        self.Xlabel = 'Longitude'
+        self.Xmin = -39.5
+        self.Xmax = -13.5
+        self.Xticks = [ -35, -25, -15 ]
+        self.XtickLabels = [ '35W', '25W', '15W' ]
+
+        # y-axis is latitude in degrees
+        self.YcoordName = '/y_coords'
+        self.YcoordScale = 1.0
+        self.YcoordOffset = 0.0
+        self.Ylabel = 'Latitude'
+        self.Ymin =  7.5
+        self.Ymax = 23.5
+        self.Yticks = [ 10, 15, 20 ]
+        self.YtickLabels = [ '10N', '15N', '20N' ]
 
         # Contour specs
         self.SimCmin = SimCspecs[0]
