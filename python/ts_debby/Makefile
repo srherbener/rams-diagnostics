@@ -11,6 +11,7 @@ SCRIPTS = \
   $(DEST)/GenPtrackTempGrads.py \
   $(DEST)/GenPtrackMomentum.py \
   $(DEST)/GenFieldNoVortex.py \
+  $(DEST)/GenWindShearField.py \
   $(DEST)/FsFigContour.py \
   $(DEST)/PlotFsFigStormHovmollers.py \
   $(DEST)/PlotFsFigStormXsections.py \
