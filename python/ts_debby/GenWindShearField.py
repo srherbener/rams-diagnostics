@@ -10,7 +10,7 @@ import numpy as np
 import ConfigTsd as conf
 import Hdf5Utils as h5u
 
-Vcoord = 'z' # set to 'z' (height) or 'p' (pressure)
+Vcoord = 'p' # set to 'z' (height) or 'p' (pressure)
 
 Tstring = conf.SetTimeString()
 
@@ -87,11 +87,17 @@ Tname = '/t_coords'
 
 if (Vcoord == 'p'):
     # pressure coords
-    ZsalBot = 700
-    ZsalTop = 500
+#    ZsalBot = 700
+#    ZsalTop = 500
 
-    ZsfcBot = 1000
-    ZsfcTop =  925
+#    ZsfcBot = 1000
+#    ZsfcTop =  925
+
+    ZsalBot = 200
+    ZsalTop = 200
+
+    ZsfcBot = 850
+    ZsfcTop = 850
 
     Vunits = "mb"
 
@@ -182,6 +188,8 @@ for isim in range(Nsims):
 
     SAL_Z1 = Select[0][0]
     SAL_Z2 = Select[0][-1]
+
+    print(SFC_Z1, SFC_Z2, SAL_Z1, SAL_Z2)
 
     # Create the output datasets using the COARDS convention so that grads
     # can read these datasets directly (sdfopen).

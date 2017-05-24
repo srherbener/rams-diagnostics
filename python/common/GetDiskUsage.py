@@ -45,9 +45,16 @@ for tag in GtotSoup.find_all("b"):
 
     Amount = float(UserUsage[0])
     if (UserUsage[1] == "Gb"):
-        Amount = Amount * 1e-3
+        Amount = Amount / 1024.0
 
     UsageList[UserName] = Amount
+
+# Find user usage on each server
+# Servers are in sections starting with:
+#    <a name="server_name"> </a>
+#
+for tag in NdriveSoup.find_all("a"):
+    print(tag.string.replace("\n", ""))
 
 SortedUsageList = (sorted(UsageList.items(), key=lambda t: t[1]))
 
@@ -87,6 +94,6 @@ plt.title(Title)
 plt.xlabel('Usage (Tb)')
 plt.yticks(Ind, TopLabels)
 
-OutFile = "/tmp/DiskUsageByUser.png"
+OutFile = "{0:s}/tmp/DiskUsageByUser.png".format(os.environ['HOME'])
 print("  Writing: {0:s}".format(OutFile))
 Fig.savefig(OutFile)

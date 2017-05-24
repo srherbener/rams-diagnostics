@@ -6,6 +6,7 @@ DEST = $(HOME)/etc/python/ts_debby
 
 SCRIPTS = \
   $(DEST)/ConfigTsd.py \
+  $(DEST)/GenReduceData.py \
   $(DEST)/GenStormHovmollers.py \
   $(DEST)/GenTrackAverages.py \
   $(DEST)/GenPtrackTempGrads.py \
