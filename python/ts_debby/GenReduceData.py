@@ -23,7 +23,7 @@ Nsims = len(SimList)
 
 FileList = [
     # 2D vars
-#    [ 'HDF5/<SIM>/HDF5/sea_press-<SIM>-AS-2006-08-20-120000-g3.h5', '/sea_press', 'HDF5/<SIM>/HDF5/sea_press_lite-<SIM>-AS-2006-08-20-120000-g3.h5', '/sea_press'       ],
+    [ 'HDF5/<SIM>/HDF5/sea_press-<SIM>-AS-2006-08-20-120000-g3.h5', '/sea_press', 'HDF5/<SIM>/HDF5/sea_press_lite-<SIM>-AS-2006-08-20-120000-g3.h5', '/sea_press'       ],
 
     # Vertical coords = sigma-z
     [ 'HDF5/<SIM>/HDF5/u-<SIM>-AS-2006-08-20-120000-g3.h5',       '/u',       'HDF5/<SIM>/HDF5/u_lite-<SIM>-AS-2006-08-20-120000-g3.h5',       '/u'       ],
@@ -69,21 +69,34 @@ for isim in range(Nsims):
         # sizes for selecting the field that block_reduce will be run on.
         Ifile = h5py.File(Ifname, mode='r')
 
+        # Get the dimensions of the input dataset. 2D spatial variables will be (t,y,x)
+        # and 3D spatial variables will be (t,z,y,x).
+        InDset = Ifile[Ivname]
+        InDims = InDset.shape
+
+        Ndims = len(InDims)
+        if ((Ndims != 3) and (Ndims != 4)):
+            print("WARNING: Only know how to do 2D and 3D spatial fields, skipping this variable")
+            Ifile.close()
+            break
+
+        if (Ndims == 3):
+            (Nt, Ny, Nx) = InDims
+            Nz = 1
+        elif (Ndims == 4):
+            (Nt, Nz, Ny, Nx) = InDims
+
         print("  Reading {0:s} ({1:s})".format(Ifname, Xname))
         X = Ifile[Xname][...]
-        Nx = len(X)
 
         print("  Reading {0:s} ({1:s})".format(Ifname, Yname))
         Y = Ifile[Yname][...]
-        Ny = len(Y)
 
         print("  Reading {0:s} ({1:s})".format(Ifname, Zname))
         Z = Ifile[Zname][...]
-        Nz = len(Z)
 
         print("  Reading {0:s} ({1:s})".format(Ifname, Tname))
         T = Ifile[Tname][...]
-        Nt = len(T)
         print("")
 
         # Compute max size that is evenly divisible by corresponding factor.
@@ -119,43 +132,56 @@ for isim in range(Nsims):
         # Write out reduced x and y dims, plus the others.
         Ofile = h5py.File(Ofname, mode='w')
 
-        Xdim = h5u.DimCoards(Xname, 1, [ NxReduce ], 'x')
+        Xdim = h5u.DimCoards(Xname, 1, Xreduce.shape, 'x')
         Xdim.Build(Ofile, Xreduce)
-        Ydim = h5u.DimCoards(Yname, 1, [ NyReduce ], 'y')
+        Ydim = h5u.DimCoards(Yname, 1, Yreduce.shape, 'y')
         Ydim.Build(Ofile, Yreduce)
-        Zdim = h5u.DimCoards(Zname, 1, [ Nz ], 'z')
+        Zdim = h5u.DimCoards(Zname, 1, Z.shape, 'z')
         Zdim.Build(Ofile, Z)
-        Tdim = h5u.DimCoards(Tname, 1, [ Nt ], 't', tstring=Tstring)
+        Tdim = h5u.DimCoards(Tname, 1, T.shape, 't', tstring=Tstring)
         Tdim.Build(Ofile, T)
+
+        # Create the output dataset
+        if (Ndims == 3):
+            OutDims = (Nt, NyReduce, NxReduce)
+            OutChunks = (1, NyReduce, NxReduce)
+        elif (Ndims == 4):
+            OutDims = (Nt, Nz, NyReduce, NxReduce)
+            OutChunks = (1, Nz, NyReduce, NxReduce)
+
+        OutDset = h5u.DsetCoards(Ivname, Ndims, OutDims, chunks=OutChunks)
+        OutDset.Create(Ofile)
 
 
         # Do one time step at a time to help reduce memory requirements. Use block_reduce to
         # to form the coarse grid by averaging the neigboring fine grid cells.
         print("  Reading {0:s} ({1:s})".format(Ifname, Ivname))
 
-        # Create the output dataset
-        OutDset = h5u.DsetCoards(Ivname, 4, [ Nt, Nz, NyReduce, NxReduce ], chunks=( 1, Nz, NyReduce, NxReduce ))
-        OutDset.Create(Ofile)
-
         for it in range(Nt):
-            # Input field is (t,z,y,x). Select along the x, y dimensions so that
-            # their resultant sizes are evenly divisible by teh x, y reduction factors.
-            Var = Ifile[Ivname][it,:,Y1:Y2,X1:X2]
-
-            VarReduce = block_reduce(Var, block_size=(1, RfactY, RfactX), func=np.mean)
-
-            Ofile[Ovname][it,:,:,:] = VarReduce
+            # Input field is either (t,y,x) or (t,z,y,x). Select along the x, y dimensions so that
+            # their resultant sizes are evenly divisible by the x, y reduction factors.
+            if (Ndims == 3):
+                Var = InDset[it,Y1:Y2,X1:X2]
+                VarReduce = block_reduce(Var, block_size=(RfactY, RfactX), func=np.mean)
+                Ofile[Ovname][it,:,:] = VarReduce
+            elif (Ndims == 4):
+                Var = InDset[it,:,Y1:Y2,X1:X2]
+                VarReduce = block_reduce(Var, block_size=(1, RfactY, RfactX), func=np.mean)
+                Ofile[Ovname][it,:,:,:] = VarReduce
 
             if ((it % 10) == 0):
                 print("    Processing time step: {0:d}".format(it))
 
         Ifile.close()
-        print("    Finished: number of time steps processed: {0:d}".format(it))
+        print("    Finished: number of time steps processed: {0:d}".format(it+1))
         print("")
 
 
         print("  Writing {0:s} ({1:s})".format(Ofname, Ovname))
-        OutDset.AttachDims(Ofile, Tdim, Zdim, Ydim, Xdim)
+        if (Ndims == 3):
+            OutDset.AttachDims(Ofile, Tdim, Ydim, Xdim)
+        elif (Ndims == 4):
+            OutDset.AttachDims(Ofile, Tdim, Zdim, Ydim, Xdim)
         print("")
 
         Ofile.close()
