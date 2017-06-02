@@ -263,6 +263,14 @@ class FsContour:
                 self.FacAx[2].text(1, -0.1, 'B', transform=self.FacAx[2].transAxes, fontsize=14, color='red',
                     horizontalalignment='right', verticalalignment='top')
         
+        # If doing a plan view with storm location, mark the storm location with
+        # a large white 'X'.
+        if (hasattr(self, "StormX") and hasattr(self, "StormY")):
+            for i in range(4):
+                self.SimAx[i].plot(self.StormX, self.StormY, 'wo')
+            for i in range(3):
+                self.FacAx[i].plot(self.StormX, self.StormY, 'co')
+
         print("Writing: {0:s}".format(self.OutFname))
         self.Fig.savefig(self.OutFname)
         plt.close()
@@ -426,8 +434,12 @@ class StormHovmoller(FsContour):
 class PlanView(FsContour):
     '''Class to create plan view sim/factor figure'''
 
-    def __init__(self, InFname, InVname, OutFname, Ptitle, Tag, SimCspecs, FacCspecs):
+    def __init__(self, InFname, InVname, OutFname, Ptitle, Tag, SimCspecs, FacCspecs, StormLoc=[]):
         FsContour.__init__(self, InFname, InVname, OutFname, Ptitle, Tag)
+
+        if (StormLoc != []):
+            self.StormX = StormLoc[0]
+            self.StormY = StormLoc[1]
 
         # x-axis is longitude in degrees
         self.XcoordName = '/x_coords'
