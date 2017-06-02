@@ -9,6 +9,12 @@ from bs4 import BeautifulSoup
 import numpy as np
 from matplotlib import pyplot as plt
 
+ServerList = [
+    "tasman",
+    "snow-home",
+    "blizzard",
+    ]
+
 print("Looking at group disk usage:")
 
 # Grab the group totals information, and load into a "soup" database
@@ -23,8 +29,6 @@ Ndrive = req.get(NetworkDriveUrl)
 
 GtotSoup = BeautifulSoup(Gtot.content, "lxml")
 NdriveSoup = BeautifulSoup(Ndrive.content, "lxml")
-
-print(NdriveSoup.prettify())
 
 # All of the individual user usage data is formatted as:
 #
@@ -53,8 +57,10 @@ for tag in GtotSoup.find_all("b"):
 # Servers are in sections starting with:
 #    <a name="server_name"> </a>
 #
-for tag in NdriveSoup.find_all("a"):
-    print(tag.string.replace("\n", ""))
+for server in ServerList:
+    print("Checking usage on server: {0:s}".format(server))
+    svr = NdriveSoup.find("a", {"name":server})
+    print(svr)
 
 SortedUsageList = (sorted(UsageList.items(), key=lambda t: t[1]))
 
