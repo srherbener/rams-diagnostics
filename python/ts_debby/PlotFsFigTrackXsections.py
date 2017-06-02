@@ -55,64 +55,64 @@ StrackAvgFname = 'DIAGS/strack_avgs_<SIM>.h5'
 
 ######### Quantities with vortex removed ###########
 
-## Ptrack Vt, vortex removed, press coords
-#SimCspecs = [ -10, 20, 11 ]  # color specs: [ Cmin, Cmax, Cnum ], Cnum is number of contour levels
-#FactCspecs = [ -4, 4, 11 ]
-#Xname = '/xl_coords'
-#
-#VtNvPressPsap = ffc.TrackXsectionPress(PtrackVelFname, '/ps_v_nv_lite_p', 'Plots.py/FsFigPtrackVtNvPressPsapFactors.png', 'V_{ptnv}', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
-#VtNvPressPsap.XcoordName = Xname
-#VtNvPressPsap.CreateFig()
-#
-#VtNvPressSap = ffc.TrackXsectionPress(PtrackVelFname, '/s_v_nv_lite_p', 'Plots.py/FsFigPtrackVtNvPressSapFactors.png', 'V_{ptnv}', 'SAP', SimCspecs, FactCspecs, 'ptrack')
-#VtNvPressSap.XcoordName = Xname
-#VtNvPressSap.CreateFig()
+# Ptrack Vt, vortex removed, press coords
+SimCspecs = [ -10, 20, 11 ]  # color specs: [ Cmin, Cmax, Cnum ], Cnum is number of contour levels
+FactCspecs = [ -4, 4, 11 ]
+Xname = '/xl_coords'
 
-## Ptrack Vr, vortex removed
-#SimCspecs = [ -5, 5, 11 ]  # color specs: [ Cmin, Cmax, Cnum ], Cnum is number of contour levels
-#FactCspecs = [ -2, 2, 11 ]
-#
-#VrNvPressPsap = ffc.TrackXsectionPress(PtrackVelFname, '/ps_u_nv_lite_p', 'Plots.py/FsFigPtrackVrNvPressPsapFactors.png', 'V_{prnv}', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
-#VrNvPressPsap.XcoordName = Xname
-#VrNvPressPsap.SimCmap = 'bwr'
-#VrNvPressPsap.CreateFig()
-#
-#VrNvPressSap = ffc.TrackXsectionPress(PtrackVelFname, '/s_u_nv_lite_p', 'Plots.py/FsFigPtrackVrNvPressSapFactors.png', 'V_{prnv}', 'SAP', SimCspecs, FactCspecs, 'ptrack')
-#VrNvPressSap.XcoordName = Xname
-#VrNvPressSap.SimCmap = 'bwr'
-#VrNvPressSap.CreateFig()
+VtNvPressPsap = ffc.TrackXsectionPress(PtrackVelFname, '/ps_v_nv_lite_p', 'Plots.py/FsFigPtrackVtNvPressPsapFactors.png', 'V_{ptnv}', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
+VtNvPressPsap.XcoordName = Xname
+VtNvPressPsap.CreateFig()
 
-## Temp C, pressure coords
-#SimCspecs = [ -50, 30, 11 ]
-#FactCspecs = [ -3, 3, 11 ]
-#
-#TempcNvPressPsap = ffc.TrackXsectionPress(PtrackAvgFname, '/ps_tempc_nv_p', 'Plots.py/FsFigPtrackTempcNvPressPsapFactors.png', 'T,\\ ^{\\circ}C', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
-#TempcNvPressPsap.CreateFig()
-#
-#TempcNvPressSap = ffc.TrackXsectionPress(PtrackAvgFname, '/s_tempc_nv_p', 'Plots.py/FsFigPtrackTempcNvPressSapFactors.png', 'T,\\ ^{\\circ}C', 'SAP', SimCspecs, FactCspecs, 'ptrack')
-#TempcNvPressSap.CreateFig()
+VtNvPressSap = ffc.TrackXsectionPress(PtrackVelFname, '/s_v_nv_lite_p', 'Plots.py/FsFigPtrackVtNvPressSapFactors.png', 'V_{ptnv}', 'SAP', SimCspecs, FactCspecs, 'ptrack')
+VtNvPressSap.XcoordName = Xname
+VtNvPressSap.CreateFig()
 
-## Vapor, pressure coords
-#SimCspecs = [ 0, 20, 11 ]
-#FactCspecs = [ -1, 1, 11 ]
-#
-#VaporNvPressPsap = ffc.TrackXsectionPress(PtrackAvgFname, '/ps_vapor_nv_p', 'Plots.py/FsFigPtrackVaporNvPressPsapFactors.png', 'Vapor', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
-#VaporNvPressPsap.CreateFig()
-#
-#VaporNvPressSap = ffc.TrackXsectionPress(PtrackAvgFname, '/s_vapor_nv_p', 'Plots.py/FsFigPtrackVaporNvPressSapFactors.png', 'Vapor', 'SAP', SimCspecs, FactCspecs, 'ptrack')
-#VaporNvPressSap.CreateFig()
+# Ptrack Vr, vortex removed
+SimCspecs = [ -5, 5, 11 ]  # color specs: [ Cmin, Cmax, Cnum ], Cnum is number of contour levels
+FactCspecs = [ -2, 2, 11 ]
 
-## Temp C gradient, pressure coords
-#SimCspecs = [ -5, 5, 11 ]
-#FactCspecs = [ -1, 1, 11 ]
-#
-#TempcGradNvPressPsap = ffc.TrackXsectionPress(PtrackTgradFname, '/ps_tempc_nv_p_hgrad_smooth', 'Plots.py/FsFigPtrackTempcGradNvPressPsapFactors.png', '{\\nabla}T', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
-#TempcGradNvPressPsap.InScale = 1.0e3
-#TempcGradNvPressPsap.CreateFig()
-#
-#TempcGradNvPressSap = ffc.TrackXsectionPress(PtrackTgradFname, '/s_tempc_nv_p_hgrad_smooth', 'Plots.py/FsFigPtrackTempcGradNvPressSapFactors.png', '{\\nabla}T', 'SAP', SimCspecs, FactCspecs, 'ptrack')
-#TempcGradNvPressSap.InScale = 1.0e3
-#TempcGradNvPressSap.CreateFig()
+VrNvPressPsap = ffc.TrackXsectionPress(PtrackVelFname, '/ps_u_nv_lite_p', 'Plots.py/FsFigPtrackVrNvPressPsapFactors.png', 'V_{prnv}', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
+VrNvPressPsap.XcoordName = Xname
+VrNvPressPsap.SimCmap = 'bwr'
+VrNvPressPsap.CreateFig()
+
+VrNvPressSap = ffc.TrackXsectionPress(PtrackVelFname, '/s_u_nv_lite_p', 'Plots.py/FsFigPtrackVrNvPressSapFactors.png', 'V_{prnv}', 'SAP', SimCspecs, FactCspecs, 'ptrack')
+VrNvPressSap.XcoordName = Xname
+VrNvPressSap.SimCmap = 'bwr'
+VrNvPressSap.CreateFig()
+
+# Temp C, pressure coords
+SimCspecs = [ -50, 30, 11 ]
+FactCspecs = [ -3, 3, 11 ]
+
+TempcNvPressPsap = ffc.TrackXsectionPress(PtrackAvgFname, '/ps_tempc_nv_p', 'Plots.py/FsFigPtrackTempcNvPressPsapFactors.png', 'T,\\ ^{\\circ}C', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
+TempcNvPressPsap.CreateFig()
+
+TempcNvPressSap = ffc.TrackXsectionPress(PtrackAvgFname, '/s_tempc_nv_p', 'Plots.py/FsFigPtrackTempcNvPressSapFactors.png', 'T,\\ ^{\\circ}C', 'SAP', SimCspecs, FactCspecs, 'ptrack')
+TempcNvPressSap.CreateFig()
+
+# Vapor, pressure coords
+SimCspecs = [ 0, 20, 11 ]
+FactCspecs = [ -1, 1, 11 ]
+
+VaporNvPressPsap = ffc.TrackXsectionPress(PtrackAvgFname, '/ps_vapor_nv_p', 'Plots.py/FsFigPtrackVaporNvPressPsapFactors.png', 'Vapor', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
+VaporNvPressPsap.CreateFig()
+
+VaporNvPressSap = ffc.TrackXsectionPress(PtrackAvgFname, '/s_vapor_nv_p', 'Plots.py/FsFigPtrackVaporNvPressSapFactors.png', 'Vapor', 'SAP', SimCspecs, FactCspecs, 'ptrack')
+VaporNvPressSap.CreateFig()
+
+# Temp C gradient, pressure coords
+SimCspecs = [ -5, 5, 11 ]
+FactCspecs = [ -1, 1, 11 ]
+
+TempcGradNvPressPsap = ffc.TrackXsectionPress(PtrackTgradFname, '/ps_tempc_nv_p_hgrad_smooth', 'Plots.py/FsFigPtrackTempcGradNvPressPsapFactors.png', '{\\nabla}T', 'PSAP', SimCspecs, FactCspecs, 'ptrack')
+TempcGradNvPressPsap.InScale = 1.0e3
+TempcGradNvPressPsap.CreateFig()
+
+TempcGradNvPressSap = ffc.TrackXsectionPress(PtrackTgradFname, '/s_tempc_nv_p_hgrad_smooth', 'Plots.py/FsFigPtrackTempcGradNvPressSapFactors.png', '{\\nabla}T', 'SAP', SimCspecs, FactCspecs, 'ptrack')
+TempcGradNvPressSap.InScale = 1.0e3
+TempcGradNvPressSap.CreateFig()
 
 
 ######## Vertical coords -> Height ########
