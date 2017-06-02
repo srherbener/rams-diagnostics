@@ -43,6 +43,8 @@ else:
 
 Uvname = "/u_basic"
 Vvname = "/v_basic"
+#Uvname = "/u_orig"
+#Vvname = "/v_orig"
 #Uvname = "/u"
 #Vvname = "/v"
 
@@ -87,17 +89,18 @@ Tname = '/t_coords'
 
 if (Vcoord == 'p'):
     # pressure coords
-#    ZsalBot = 700
-#    ZsalTop = 500
+    ZsalBot = 700
+    ZsalTop = 700
 
-#    ZsfcBot = 1000
-#    ZsfcTop =  925
+    ZsfcBot =  925
+    ZsfcTop =  925
 
-    ZsalBot = 200
-    ZsalTop = 200
-
-    ZsfcBot = 850
-    ZsfcTop = 850
+# Dunion and Velden, 2004
+#    ZsalBot = 300
+#    ZsalTop = 150
+#
+#    ZsfcBot =  925
+#    ZsfcTop =  700
 
     Vunits = "mb"
 
@@ -188,8 +191,6 @@ for isim in range(Nsims):
 
     SAL_Z1 = Select[0][0]
     SAL_Z2 = Select[0][-1]
-
-    print(SFC_Z1, SFC_Z2, SAL_Z1, SAL_Z2)
 
     # Create the output datasets using the COARDS convention so that grads
     # can read these datasets directly (sdfopen).

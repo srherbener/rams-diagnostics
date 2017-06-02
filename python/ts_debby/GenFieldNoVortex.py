@@ -34,6 +34,8 @@ def KbrSmoothing(Var, VarSelect):
     K = 0.5 / ( 1.0 -  np.cos((2.0 * np.pi) / m))
     Nk = len(K)
 
+    print("DEBUG: VarSelect: ", VarSelect)
+
     # First, smooth in the x direction (last dimension)
     VarSmooth = np.copy(Var)
     for i in range(Nk):
@@ -150,7 +152,10 @@ def UniformSmoothing(Var, VarSelect):
     Nz, Ny, Nx = Var.shape
 
     VarSmooth = np.copy(Var)
-    for i in range(10):
+    # The number of iterations can vary. 2 to 10 appears to be reasonable range.
+    # Smoothing increases (greater attenuation of higher frequencies) as number of
+    # iterations increases. 5 iterations seems to work well.
+    for i in range(5):
         VarTemp = np.copy(VarSmooth)
         # do the smoothing only across the horizontal
         for k in range(Nz):
@@ -183,8 +188,9 @@ def VortexSmoothing(X, Y, Var, Method, MaxRadius, StormLocX, StormLocY):
     Radius = np.tile(Radius, (Nz,1,1))
 
     # Create an array with zeros outside the storm, and ones inside the storm
-    VarSelect = np.zeros([ Nz, Ny, Nx])
-    VarSelect[Radius <= MaxRadius] = 1.0
+    #VarSelect = np.zeros([ Nz, Ny, Nx])
+    #VarSelect[Radius <= MaxRadius] = 1.0
+    VarSelect = np.ones([ Nz, Ny, Nx ])
 
     if (Method == 'kbr'):
         VarSmooth = KbrSmoothing(Var, VarSelect)
@@ -203,8 +209,8 @@ def VortexSmoothing(X, Y, Var, Method, MaxRadius, StormLocX, StormLocY):
 Tstring = conf.SetTimeString()
 
 SimList = [
-#    'TSD_SAL_DUST',
-#    'TSD_SAL_NODUST',
+    'TSD_SAL_DUST',
+    'TSD_SAL_NODUST',
     'TSD_NONSAL_DUST',
     'TSD_NONSAL_NODUST'
     ]
@@ -214,20 +220,20 @@ VarList = [
     [ "HDF5/<SIM>/HDF5/u_lite-<SIM>-AS-2006-08-20-120000-g3.h5", '/u', "HDF5/<SIM>/HDF5/u_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
     [ "HDF5/<SIM>/HDF5/v_lite-<SIM>-AS-2006-08-20-120000-g3.h5", '/v', "HDF5/<SIM>/HDF5/v_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
 
-#    [ "HDF5/<SIM>/HDF5/tempc_lite-<SIM>-AS-2006-08-20-120000-g3.h5", '/tempc', "HDF5/<SIM>/HDF5/tempc_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
-#    [ "HDF5/<SIM>/HDF5/theta_lite-<SIM>-AS-2006-08-20-120000-g3.h5", '/theta', "HDF5/<SIM>/HDF5/theta_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
-#    [ "HDF5/<SIM>/HDF5/theta_e_lite-<SIM>-AS-2006-08-20-120000-g3.h5", '/theta_e', "HDF5/<SIM>/HDF5/theta_e_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+    [ "HDF5/<SIM>/HDF5/tempc_lite-<SIM>-AS-2006-08-20-120000-g3.h5", '/tempc', "HDF5/<SIM>/HDF5/tempc_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+    [ "HDF5/<SIM>/HDF5/theta_lite-<SIM>-AS-2006-08-20-120000-g3.h5", '/theta', "HDF5/<SIM>/HDF5/theta_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+    [ "HDF5/<SIM>/HDF5/theta_e_lite-<SIM>-AS-2006-08-20-120000-g3.h5", '/theta_e', "HDF5/<SIM>/HDF5/theta_e_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
 
-#    [ "HDF5/<SIM>/HDF5/vapor_lite-<SIM>-AS-2006-08-20-120000-g3.h5", '/vapor', "HDF5/<SIM>/HDF5/vapor_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+    [ "HDF5/<SIM>/HDF5/vapor_lite-<SIM>-AS-2006-08-20-120000-g3.h5", '/vapor', "HDF5/<SIM>/HDF5/vapor_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
 
-#    [ "HDF5/<SIM>/HDF5/u_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/u', "HDF5/<SIM>/HDF5/u_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
-#    [ "HDF5/<SIM>/HDF5/v_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/v', "HDF5/<SIM>/HDF5/v_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+    [ "HDF5/<SIM>/HDF5/u_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/u', "HDF5/<SIM>/HDF5/u_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+    [ "HDF5/<SIM>/HDF5/v_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/v', "HDF5/<SIM>/HDF5/v_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
 
-#    [ "HDF5/<SIM>/HDF5/tempc_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/tempc', "HDF5/<SIM>/HDF5/tempc_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
-#    [ "HDF5/<SIM>/HDF5/theta_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/theta', "HDF5/<SIM>/HDF5/theta_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
-#    [ "HDF5/<SIM>/HDF5/theta_e_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/theta_e', "HDF5/<SIM>/HDF5/theta_e_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+    [ "HDF5/<SIM>/HDF5/tempc_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/tempc', "HDF5/<SIM>/HDF5/tempc_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+    [ "HDF5/<SIM>/HDF5/theta_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/theta', "HDF5/<SIM>/HDF5/theta_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+    [ "HDF5/<SIM>/HDF5/theta_e_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/theta_e', "HDF5/<SIM>/HDF5/theta_e_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
 
-#    [ "HDF5/<SIM>/HDF5/vapor_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/vapor', "HDF5/<SIM>/HDF5/vapor_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+    [ "HDF5/<SIM>/HDF5/vapor_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/vapor', "HDF5/<SIM>/HDF5/vapor_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
     ]
 Nvars = len(VarList)
 
@@ -237,7 +243,21 @@ Zname = "/z_coords"
 Tname = "/t_coords"
 
 MaxRadius = 3 # degrees (roughly 300 km)
-# Shuman method doesn't seem to filter enough
+
+# KBR may be the best method, but only got to the smoothing part in this code. The method
+# has a step that adds back in the non-vortex related disturbance field and this part
+# is missing from this code.
+# 
+# Shuman method doesn't seem to smooth enough. For example, the wind fields still have
+# a storng vortex after smoothing.
+#
+# Uniform smoothing seems the best given that KBR only has the first step (smoothing)
+# of their method included in this code. 10 iterations gives a result that looks like
+# KBR (too much smoothing) and 5 iterations results in smoothing that lies between
+# Shuman and KBR.
+
+#SmoothMethod = "kbr"
+#SmoothMethod = "shu"
 SmoothMethod = "uni"
 
 for isim in range(Nsims):
