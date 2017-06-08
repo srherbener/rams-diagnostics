@@ -23,12 +23,20 @@ function [] = PlotFsFigXsection(Paxes, X, Y, Z, Pmarker, Ptitle, Xlabel, Xlim, Y
   else
     xlabel(Xlabel, 'FontSize', Fsize);
   end
+  if (Xlim(1) > Xlim(2))
+    set(Paxes, 'Xdir', 'reverse');
+    Xlim = [ Xlim(2) Xlim(1) ];
+  end
   xlim(Xlim);
 
   if (ShowY == 0)
     set(Paxes, 'YTickLabel', {});
   else
     ylabel(Ylabel, 'FontSize', Fsize);
+  end
+  if (Ylim(1) > Ylim(2))
+    set(Paxes, 'Ydir', 'reverse');
+    Ylim = [ Ylim(2) Ylim(1) ];
   end
   ylim(Ylim);
 

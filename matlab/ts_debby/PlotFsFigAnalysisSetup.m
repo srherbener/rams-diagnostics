@@ -25,35 +25,36 @@ function [ ] = PlotFsFigAnalysisSetup()
   SimTrackLons = squeeze(h5read(InFname, InVnameLon));
   SimTrackLats = squeeze(h5read(InFname, InVnameLat));
 
-  % PreSAL and SAL wind structure
-  for i = 1:Nc
-    Case       = CaseList{i}{1};
-    LegText{i} = CaseList{i}{2};
-    Colors{i}  = CaseList{i}{3};
-
-    InFname = sprintf('DIAGS/hist_meas_az_speed_%s.h5', Case);
-    InVname = '/all_ps_speed_maxlev';
-    fprintf('Reading: %s (%s)\n', InFname, InVname);
-    PS_MAXW(:,i) = squeeze(h5read(InFname, InVname));
-
-    if (i == 1)
-      X = squeeze(h5read(InFname, '/x_coords'))./1000; % Radius in km
-    end
-
-    InVname = '/all_s_speed_maxlev';
-    fprintf('Reading: %s (%s)\n', InFname, InVname);
-    S_MAXW(:,i) = squeeze(h5read(InFname, InVname));
-  end
+%  % PreSAL and SAL wind structure
+%  for i = 1:Nc
+%    Case       = CaseList{i}{1};
+%    LegText{i} = CaseList{i}{2};
+%    Colors{i}  = CaseList{i}{3};
+%
+%    InFname = sprintf('DIAGS/hist_meas_az_speed_%s.h5', Case);
+%    InVname = '/all_ps_speed_maxlev';
+%    fprintf('Reading: %s (%s)\n', InFname, InVname);
+%    PS_MAXW(:,i) = squeeze(h5read(InFname, InVname));
+%
+%    if (i == 1)
+%      X = squeeze(h5read(InFname, '/x_coords'))./1000; % Radius in km
+%    end
+%
+%    InVname = '/all_s_speed_maxlev';
+%    fprintf('Reading: %s (%s)\n', InFname, InVname);
+%    S_MAXW(:,i) = squeeze(h5read(InFname, InVname));
+%  end
 
   % Pre-SAL and SAL azimuthally averaged updrafts
   InFname = 'DIAGS/storm_xsections_TSD_SAL_DUST.h5';
-  InVname = '/all_ps_updraft';
+  InVname = '/all_p_ps_updraft';
   fprintf('Reading: %s (%s)\n', InFname, InVname);
   PS_WUP = squeeze(h5read(InFname, InVname));
   X = squeeze(h5read(InFname, '/x_coords'))./1000; % radius in km
-  Z = squeeze(h5read(InFname, '/z_coords'))./1000; % height in km
+%  Z = squeeze(h5read(InFname, '/z_coords'))./1000; % height in km
+  Z = squeeze(h5read(InFname, '/p_coords')); % height in mb (hPa)
 
-  InVname = '/all_s_updraft';
+  InVname = '/all_p_s_updraft';
   fprintf('Reading: %s (%s)\n', InFname, InVname);
   S_WUP = squeeze(h5read(InFname, InVname));
 
@@ -65,17 +66,17 @@ function [ ] = PlotFsFigAnalysisSetup()
 
   % Params for the updraft contour plots
   Xlim = [ 0 500 ];
-  Ylim = [ 0  15 ];
+  Ylim = [ 1000  100 ];
   Cmap = 'jet';
   Clim = [ 0 0.3 ];
   Clevs = 0:0.05:0.3;
 
   Paxes = subplot(2,2,3);
-  PlotFsFigXsection(Paxes, X, Z, PS_WUP', 'b', 'PSAP', 'Radius (km)', Xlim, 'Height (km)', Ylim, Cmap, Clim, Clevs, Fsize, 1, 1);
+  PlotFsFigXsection(Paxes, X, Z, PS_WUP', 'b', 'PSAP', 'Radius (km)', Xlim, 'Pressure (hPa)', Ylim, Cmap, Clim, Clevs, Fsize, 1, 1);
   MarkCoreRband(Paxes);
 
   Paxes = subplot(2,2,4);
-  PlotFsFigXsection(Paxes, X, Z, S_WUP', 'c', 'SAP', 'Radius (km)', Xlim, 'Height (km)', Ylim, Cmap, Clim, Clevs, Fsize, 1, 1);
+  PlotFsFigXsection(Paxes, X, Z, S_WUP', 'c', 'SAP', 'Radius (km)', Xlim, 'Pressure (hPa)', Ylim, Cmap, Clim, Clevs, Fsize, 1, 1);
   MarkCoreRband(Paxes);
 
   OutFile = sprintf('%s/FsFigAnalysisSetup.jpg', Pdir);
@@ -145,14 +146,25 @@ function [] = MarkCoreRband(Paxes)
 
   axes(Paxes);
 
-  line([   0 200 ], [ 2 2 ], 'Color', 'w', 'LineWidth', 2);
-  line([  10  10 ], [ 1.5 2.5 ], 'Color', 'w', 'LineWidth', 2);
-  line([ 200 200 ], [ 1.5 2.5 ], 'Color', 'w', 'LineWidth', 2);
-  text(60, 1, 'Core', 'Color', 'w', 'FontSize', 12, 'FontWeight', 'bold');
+%  % For height coords
+%  line([   0 200 ], [ 2 2 ], 'Color', 'w', 'LineWidth', 2);
+%  line([  10  10 ], [ 1.5 2.5 ], 'Color', 'w', 'LineWidth', 2);
+%  line([ 200 200 ], [ 1.5 2.5 ], 'Color', 'w', 'LineWidth', 2);
+%  text(60, 1, 'Core', 'Color', 'w', 'FontSize', 12, 'FontWeight', 'bold');
+%
+%  line([ 250 450 ], [ 2 2 ], 'Color', 'w', 'LineWidth', 2);
+%  line([ 250 250 ], [ 1.5 2.5 ], 'Color', 'w', 'LineWidth', 2);
+%  line([ 450 450 ], [ 1.5 2.5 ], 'Color', 'w', 'LineWidth', 2);
+%  text(290, 1, 'Rband', 'Color', 'w', 'FontSize', 12, 'FontWeight', 'bold');
 
-  line([ 250 450 ], [ 2 2 ], 'Color', 'w', 'LineWidth', 2);
-  line([ 250 250 ], [ 1.5 2.5 ], 'Color', 'w', 'LineWidth', 2);
-  line([ 450 450 ], [ 1.5 2.5 ], 'Color', 'w', 'LineWidth', 2);
-  text(290, 1, 'Rband', 'Color', 'w', 'FontSize', 12, 'FontWeight', 'bold');
+  % For pressure coords
+  line([   0 200 ], [ 800 800 ], 'Color', 'w', 'LineWidth', 2);
+  line([  10  10 ], [ 850 750 ], 'Color', 'w', 'LineWidth', 2);
+  line([ 200 200 ], [ 850 750 ], 'Color', 'w', 'LineWidth', 2);
+  text(60, 900, 'Core', 'Color', 'w', 'FontSize', 12, 'FontWeight', 'bold');
 
+  line([ 250 450 ], [ 800 800 ], 'Color', 'w', 'LineWidth', 2);
+  line([ 250 250 ], [ 850 750 ], 'Color', 'w', 'LineWidth', 2);
+  line([ 450 450 ], [ 850 750 ], 'Color', 'w', 'LineWidth', 2);
+  text(290, 900, 'Rband', 'Color', 'w', 'FontSize', 12, 'FontWeight', 'bold');
 end

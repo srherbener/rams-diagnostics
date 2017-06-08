@@ -129,6 +129,7 @@ for i in range(Nfacs):
 #    top half: Tgrad
 #    bottom half: Tgrad factors
 Pdir = 'Plots.py'
+Ylim = [ -1.0, 0.5 ]
 
 Fig = plt.figure()
 
@@ -140,7 +141,7 @@ Xaxis = plu.AxisConfig('x', [ 0, 1800 ], 'Linear Distance (km)')
 Xaxis.ticks = [ 500, 1000, 1500 ]
 Xaxis.fontsize = 12
 
-Yaxis = plu.AxisConfig('y', [ -2.5, 1.5 ], r'${\nabla}\overline{T}\ (10^{-6}\ K\ m^{-1})$')
+Yaxis = plu.AxisConfig('y', Ylim, r'${\nabla}\overline{T}\ (10^{-6}\ K\ m^{-1})$')
 Yaxis.fontsize = 12
 
 Ptitle = plu.TitleConfig('a', r'$PSAP:\ {\nabla}\overline{T}:\ Sims$')
@@ -165,7 +166,7 @@ Xaxis = plu.AxisConfig('x', [ 0, 1800 ], 'Linear Distance (km)')
 Xaxis.ticks = [ 500, 1000, 1500 ]
 Xaxis.fontsize = 12
 
-Yaxis = plu.AxisConfig('y', [ -2.5, 1.5 ], r'${\nabla}\overline{T}\ (10^{-6}\ K\ m^{-1})$')
+Yaxis = plu.AxisConfig('y', Ylim, r'${\nabla}\overline{T}\ (10^{-6}\ K\ m^{-1})$')
 Yaxis.fontsize = 12
 
 Ptitle = plu.TitleConfig('b', r'$PSAP:\ {\nabla}\overline{T}:\ Factors$')

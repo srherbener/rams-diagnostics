@@ -28,8 +28,10 @@ SCRIPTS = \
           $(DEST)/ReadPrepConfigFile.m \
           $(DEST)/WriteStringAttribute.m \
           $(DEST)/CreateDimensionsXyzt.m \
+          $(DEST)/CreateDimension.m \
           $(DEST)/AttachDimensionsXyzt.m \
           $(DEST)/NotateDimensionsXyzt.m \
+          $(DEST)/NotateDimension.m \
           $(DEST)/NotateVariableXyzt.m \
           $(DEST)/figmerge.m \
           $(DEST)/gridLegend.m \

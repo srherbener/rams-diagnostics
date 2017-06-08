@@ -10,85 +10,84 @@ import FsFigContour as ffc
 
 InFname = 'DIAGS/storm_xsections_<SIM>.h5'
 
-# Max Vt
-SimCspecs = [ 0, 20, 21 ]  # color specs: [ Cmin, Cmax, Cnum ], Cnum is number of contour levels
-FactCspecs = [ -4, 4, 21 ]
-Ylim = [ 0, 10 ]
-Yticks = [ 0, 2, 4, 6, 8, 10 ]
-
-VtPsap = ffc.StormXsection(InFname, '/all_ps_speed_t', 'Plots.py/FsFigVtPsapFactors.png', 'V_t', 'PSAP', SimCspecs, FactCspecs)
-VtPsap.Ylim = Ylim
-VtPsap.Yticks = Yticks
-VtPsap.CreateFig()
-
-VtSap = ffc.StormXsection(InFname, '/all_s_speed_t', 'Plots.py/FsFigVtSapFactors.png', 'V_t', 'SAP', SimCspecs, FactCspecs)
-VtSap.Yticks = Yticks
-VtSap.CreateFig()
-VtSap.CreateFig()
-
-# Vr
-SimCspecs = [ -5, 5, 11 ]  # color specs: [ Cmin, Cmax, Cnum ], Cnum is number of contour levels
-FactCspecs = [ -2, 2, 21 ]
-Ylim = [ 0, 10 ]
-Yticks = [ 0, 2, 4, 6, 8, 10 ]
-
-VrPsap = ffc.StormXsection(InFname, '/all_ps_speed_r', 'Plots.py/FsFigVrPsapFactors.png', 'V_r', 'PSAP', SimCspecs, FactCspecs)
-VrPsap.Ylim = Ylim
-VrPsap.Yticks = Yticks
-VrPsap.SimCmap = 'bwr'
-VrPsap.CreateFig()
-
-VrSap = ffc.StormXsection(InFname, '/all_s_speed_r', 'Plots.py/FsFigVrSapFactors.png', 'V_r', 'SAP', SimCspecs, FactCspecs)
-VrSap.Ylim = Ylim
-VrSap.Yticks = Yticks
-VrSap.SimCmap = 'bwr'
-VrSap.CreateFig()
-
-# Theta-E
-SimCspecs = [ 340, 360, 11 ]
-FactCspecs = [ -8, 8, 11 ]
-ThetaePsap = ffc.StormXsection(InFname, '/all_ps_theta_e', 'Plots.py/FsFigThetaePsapFactors.png', '\\theta_{e}', 'PSAP', SimCspecs, FactCspecs)
-ThetaePsap.CreateFig()
-ThetaeSap = ffc.StormXsection(InFname, '/all_s_theta_e', 'Plots.py/FsFigThetaeSapFactors.png', '\\theta_{e}', 'SAP', SimCspecs, FactCspecs)
-ThetaeSap.CreateFig()
-
-# Vapor
-SimCspecs = [ 0, 20, 11 ]
-FactCspecs = [ -2, 2, 11 ]
-VaporPsap = ffc.StormXsection(InFname, '/all_ps_vapor', 'Plots.py/FsFigVaporPsapFactors.png', 'Vapor', 'PSAP', SimCspecs, FactCspecs)
-VaporPsap.CreateFig()
-VaporSap = ffc.StormXsection(InFname, '/all_s_vapor', 'Plots.py/FsFigVaporSapFactors.png', 'Vapor', 'SAP', SimCspecs, FactCspecs)
-VaporSap.CreateFig()
-
-# Cloud
-SimCspecs = [ 0, 0.5, 11 ]
-FactCspecs = [ -0.1, 0.1, 11 ]
-CloudPsap = ffc.StormXsection(InFname,  '/all_ps_cloud_mass', 'Plots.py/FsFigCloudPsapFactors.png', 'Cloud', 'PSAP', SimCspecs, FactCspecs)
-CloudPsap.CreateFig()
-CloudSap = ffc.StormXsection(InFname, '/all_s_cloud_mass', 'Plots.py/FsFigCloudSapFactors.png', 'Cloud', 'SAP', SimCspecs, FactCspecs)
-CloudSap.CreateFig()
-
-# Rain
-SimCspecs = [    0, 0.5, 11 ]
-FacCspecs = [ -0.1, 0.1, 11 ]
-RainPsap = ffc.StormXsection(InFname, '/all_ps_rain_mass', 'Plots.py/FsFigRainPsapFactors.png', 'Rain', 'PSAP', SimCspecs, FacCspecs)
-RainPsap.CreateFig()
-RainSap = ffc.StormXsection(InFname, '/all_s_rain_mass', 'Plots.py/FsFigRainSapFactors.png', 'Rain', 'SAP', SimCspecs, FacCspecs)
-RainSap.CreateFig()
-
-# Ice deposition
-SimCspecs = [ 0, 1.5, 16 ]
-FactCspecs = [ -1, 1, 11 ]
-Ylim = [ 0, 15 ]
-Yticks = [ 0, 3, 6, 9, 12, 15 ]
-IceDepPsap = ffc.StormXsection(InFname, '/all_ps_ice_dep', 'Plots.py/FsFigIceDepPsapFactors.png', 'Ice Dep', 'PSAP', SimCspecs, FactCspecs)
-IceDepPsap.Ylim = Ylim
-IceDepPsap.Yticks = Yticks
-IceDepPsap.CreateFig()
-IceDepSap = ffc.StormXsection(InFname, '/all_s_ice_dep', 'Plots.py/FsFigIceDepSapFactors.png', 'Ice Dep', 'SAP', SimCspecs, FactCspecs)
-IceDepSap.Ylim = Ylim
-IceDepSap.Yticks = Yticks
-IceDepSap.CreateFig()
+## Max Vt
+#SimCspecs = [ 0, 20, 21 ]  # color specs: [ Cmin, Cmax, Cnum ], Cnum is number of contour levels
+#FactCspecs = [ -4, 4, 21 ]
+#Ylim = [ 0, 10 ]
+#Yticks = [ 0, 2, 4, 6, 8, 10 ]
+#
+#VtPsap = ffc.StormXsection(InFname, '/all_ps_speed_t', 'Plots.py/FsFigVtPsapFactors.png', 'V_t', 'PSAP', SimCspecs, FactCspecs)
+#VtPsap.Ylim = Ylim
+#VtPsap.Yticks = Yticks
+#VtPsap.CreateFig()
+#
+#VtSap = ffc.StormXsection(InFname, '/all_s_speed_t', 'Plots.py/FsFigVtSapFactors.png', 'V_t', 'SAP', SimCspecs, FactCspecs)
+#VtSap.Yticks = Yticks
+#VtSap.CreateFig()
+#
+## Vr
+#SimCspecs = [ -5, 5, 11 ]  # color specs: [ Cmin, Cmax, Cnum ], Cnum is number of contour levels
+#FactCspecs = [ -2, 2, 21 ]
+#Ylim = [ 0, 10 ]
+#Yticks = [ 0, 2, 4, 6, 8, 10 ]
+#
+#VrPsap = ffc.StormXsection(InFname, '/all_ps_speed_r', 'Plots.py/FsFigVrPsapFactors.png', 'V_r', 'PSAP', SimCspecs, FactCspecs)
+#VrPsap.Ylim = Ylim
+#VrPsap.Yticks = Yticks
+#VrPsap.SimCmap = 'bwr'
+#VrPsap.CreateFig()
+#
+#VrSap = ffc.StormXsection(InFname, '/all_s_speed_r', 'Plots.py/FsFigVrSapFactors.png', 'V_r', 'SAP', SimCspecs, FactCspecs)
+#VrSap.Ylim = Ylim
+#VrSap.Yticks = Yticks
+#VrSap.SimCmap = 'bwr'
+#VrSap.CreateFig()
+#
+## Theta-E
+#SimCspecs = [ 340, 360, 11 ]
+#FactCspecs = [ -8, 8, 11 ]
+#ThetaePsap = ffc.StormXsection(InFname, '/all_ps_theta_e', 'Plots.py/FsFigThetaePsapFactors.png', '\\theta_{e}', 'PSAP', SimCspecs, FactCspecs)
+#ThetaePsap.CreateFig()
+#ThetaeSap = ffc.StormXsection(InFname, '/all_s_theta_e', 'Plots.py/FsFigThetaeSapFactors.png', '\\theta_{e}', 'SAP', SimCspecs, FactCspecs)
+#ThetaeSap.CreateFig()
+#
+## Vapor
+#SimCspecs = [ 0, 20, 11 ]
+#FactCspecs = [ -2, 2, 11 ]
+#VaporPsap = ffc.StormXsection(InFname, '/all_ps_vapor', 'Plots.py/FsFigVaporPsapFactors.png', 'Vapor', 'PSAP', SimCspecs, FactCspecs)
+#VaporPsap.CreateFig()
+#VaporSap = ffc.StormXsection(InFname, '/all_s_vapor', 'Plots.py/FsFigVaporSapFactors.png', 'Vapor', 'SAP', SimCspecs, FactCspecs)
+#VaporSap.CreateFig()
+#
+## Cloud
+#SimCspecs = [ 0, 0.5, 11 ]
+#FactCspecs = [ -0.1, 0.1, 11 ]
+#CloudPsap = ffc.StormXsection(InFname,  '/all_ps_cloud_mass', 'Plots.py/FsFigCloudPsapFactors.png', 'Cloud', 'PSAP', SimCspecs, FactCspecs)
+#CloudPsap.CreateFig()
+#CloudSap = ffc.StormXsection(InFname, '/all_s_cloud_mass', 'Plots.py/FsFigCloudSapFactors.png', 'Cloud', 'SAP', SimCspecs, FactCspecs)
+#CloudSap.CreateFig()
+#
+## Rain
+#SimCspecs = [    0, 0.5, 11 ]
+#FacCspecs = [ -0.1, 0.1, 11 ]
+#RainPsap = ffc.StormXsection(InFname, '/all_ps_rain_mass', 'Plots.py/FsFigRainPsapFactors.png', 'Rain', 'PSAP', SimCspecs, FacCspecs)
+#RainPsap.CreateFig()
+#RainSap = ffc.StormXsection(InFname, '/all_s_rain_mass', 'Plots.py/FsFigRainSapFactors.png', 'Rain', 'SAP', SimCspecs, FacCspecs)
+#RainSap.CreateFig()
+#
+## Ice deposition
+#SimCspecs = [ 0, 1.5, 16 ]
+#FactCspecs = [ -1, 1, 11 ]
+#Ylim = [ 0, 15 ]
+#Yticks = [ 0, 3, 6, 9, 12, 15 ]
+#IceDepPsap = ffc.StormXsection(InFname, '/all_ps_ice_dep', 'Plots.py/FsFigIceDepPsapFactors.png', 'Ice Dep', 'PSAP', SimCspecs, FactCspecs)
+#IceDepPsap.Ylim = Ylim
+#IceDepPsap.Yticks = Yticks
+#IceDepPsap.CreateFig()
+#IceDepSap = ffc.StormXsection(InFname, '/all_s_ice_dep', 'Plots.py/FsFigIceDepSapFactors.png', 'Ice Dep', 'SAP', SimCspecs, FactCspecs)
+#IceDepSap.Ylim = Ylim
+#IceDepSap.Yticks = Yticks
+#IceDepSap.CreateFig()
 
 ##### rime
 ####SimCspecs = [ 0, 1, 11 ]
@@ -165,4 +164,40 @@ IceDepSap.CreateFig()
 ####VaporLeadPsap.CreateFig()
 ####VaporLeadSap = ffc.StormXsection(InFname, '/lead_s_vapor', 'Plots.py/FsFigVaporLeadSapFactors.png', 'VaporLead', 'SAP', SimCspecs, FactCspecs)
 ####VaporLeadSap.CreateFig()
+
+############################################################################################
+# Pressure coords
+############################################################################################
+
+## Max Vt
+#SimCspecs = [ 0, 20, 21 ]  # color specs: [ Cmin, Cmax, Cnum ], Cnum is number of contour levels
+#FactCspecs = [ -4, 4, 21 ]
+#
+#VtPsap = ffc.StormXsectionPress(InFname, '/all_p_ps_speed_t', 'Plots.py/FsFigVtPressPsapFactors.png', 'V_t', 'PSAP', SimCspecs, FactCspecs)
+#VtPsap.CreateFig()
+#
+#VtSap = ffc.StormXsectionPress(InFname, '/all_p_s_speed_t', 'Plots.py/FsFigVtPressSapFactors.png', 'V_t', 'SAP', SimCspecs, FactCspecs)
+#VtSap.CreateFig()
+
+## Vr
+#SimCspecs = [ -5, 5, 11 ]  # color specs: [ Cmin, Cmax, Cnum ], Cnum is number of contour levels
+#FactCspecs = [ -2, 2, 21 ]
+#
+#VrPsap = ffc.StormXsectionPress(InFname, '/all_p_ps_speed_r', 'Plots.py/FsFigVrPressPsapFactors.png', 'V_r', 'PSAP', SimCspecs, FactCspecs)
+#VrPsap.SimCmap = 'bwr'
+#VrPsap.CreateFig()
+#
+#VrSap = ffc.StormXsectionPress(InFname, '/all_p_s_speed_r', 'Plots.py/FsFigVrPressSapFactors.png', 'V_r', 'SAP', SimCspecs, FactCspecs)
+#VrSap.SimCmap = 'bwr'
+#VrSap.CreateFig()
+
+# Updrafts
+SimCspecs = [ 0, 0.3, 11 ]  # color specs: [ Cmin, Cmax, Cnum ], Cnum is number of contour levels
+FactCspecs = [ -0.1, 0.1, 21 ]
+
+UpPsap = ffc.StormXsectionPress(InFname, '/all_p_ps_updraft', 'Plots.py/FsFigUpPressPsapFactors.png', 'W_{up}', 'PSAP', SimCspecs, FactCspecs)
+UpPsap.CreateFig()
+
+UpSap = ffc.StormXsectionPress(InFname, '/all_p_s_updraft', 'Plots.py/FsFigUpPressSapFactors.png', 'W_{up}', 'SAP', SimCspecs, FactCspecs)
+UpSap.CreateFig()
 
