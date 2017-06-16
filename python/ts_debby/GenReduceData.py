@@ -23,7 +23,7 @@ Nsims = len(SimList)
 
 FileList = [
     # 2D vars
-    [ 'HDF5/<SIM>/HDF5/topo-<SIM>-AS-2006-08-20-120000-g3.h5', '/topo', 'HDF5/<SIM>/HDF5/topo_lite-<SIM>-AS-2006-08-20-120000-g3.h5', '/topo'       ],
+#    [ 'HDF5/<SIM>/HDF5/topo-<SIM>-AS-2006-08-20-120000-g3.h5', '/topo', 'HDF5/<SIM>/HDF5/topo_lite-<SIM>-AS-2006-08-20-120000-g3.h5', '/topo'       ],
 #    [ 'HDF5/<SIM>/HDF5/sea_press-<SIM>-AS-2006-08-20-120000-g3.h5', '/sea_press', 'HDF5/<SIM>/HDF5/sea_press_lite-<SIM>-AS-2006-08-20-120000-g3.h5', '/sea_press'       ],
 
     # Vertical coords = sigma-z
@@ -34,6 +34,9 @@ FileList = [
 #    [ 'HDF5/<SIM>/HDF5/theta_e-<SIM>-AS-2006-08-20-120000-g3.h5', '/theta_e', 'HDF5/<SIM>/HDF5/theta_e_lite-<SIM>-AS-2006-08-20-120000-g3.h5', '/theta_e' ],
 #    [ 'HDF5/<SIM>/HDF5/vapor-<SIM>-AS-2006-08-20-120000-g3.h5',   '/vapor',   'HDF5/<SIM>/HDF5/vapor_lite-<SIM>-AS-2006-08-20-120000-g3.h5',   '/vapor'   ],
 
+#    [ 'HDF5/<SIM>/HDF5/press-<SIM>-AS-2006-08-20-120000-g3.h5',   '/press',   'HDF5/<SIM>/HDF5/press_lite-<SIM>-AS-2006-08-20-120000-g3.h5',   '/press'   ],
+#    [ 'HDF5/<SIM>/HDF5/relhum-<SIM>-AS-2006-08-20-120000-g3.h5',   '/relhum',   'HDF5/<SIM>/HDF5/relhum_lite-<SIM>-AS-2006-08-20-120000-g3.h5',   '/relhum'   ],
+
     # Vertical coords = pressure
 #    [ 'HDF5/<SIM>/HDF5/u-<SIM>-AP-2006-08-20-120000-g3.h5',       '/u',       'HDF5/<SIM>/HDF5/u_lite-<SIM>-AP-2006-08-20-120000-g3.h5',       '/u'       ],
 #    [ 'HDF5/<SIM>/HDF5/v-<SIM>-AP-2006-08-20-120000-g3.h5',       '/v',       'HDF5/<SIM>/HDF5/v_lite-<SIM>-AP-2006-08-20-120000-g3.h5',       '/v'       ],
@@ -41,6 +44,8 @@ FileList = [
 #    [ 'HDF5/<SIM>/HDF5/theta-<SIM>-AP-2006-08-20-120000-g3.h5',   '/theta',   'HDF5/<SIM>/HDF5/theta_lite-<SIM>-AP-2006-08-20-120000-g3.h5',   '/theta'   ],
 #    [ 'HDF5/<SIM>/HDF5/theta_e-<SIM>-AP-2006-08-20-120000-g3.h5', '/theta_e', 'HDF5/<SIM>/HDF5/theta_e_lite-<SIM>-AP-2006-08-20-120000-g3.h5', '/theta_e' ],
 #    [ 'HDF5/<SIM>/HDF5/vapor-<SIM>-AP-2006-08-20-120000-g3.h5',   '/vapor',   'HDF5/<SIM>/HDF5/vapor_lite-<SIM>-AP-2006-08-20-120000-g3.h5',   '/vapor'   ],
+
+#    [ 'HDF5/<SIM>/HDF5/relhum-<SIM>-AP-2006-08-20-120000-g3.h5',   '/relhum',   'HDF5/<SIM>/HDF5/relhum_lite-<SIM>-AP-2006-08-20-120000-g3.h5',   '/relhum'   ],
     ]
 Nfiles = len(FileList)
 

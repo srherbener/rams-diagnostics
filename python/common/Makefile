@@ -7,6 +7,8 @@ DEST = $(HOME)/etc/python/common
 SCRIPTS = \
   $(DEST)/Hdf5Utils.py \
   $(DEST)/GetDiskUsage.py \
+  $(DEST)/GenThermoVars.py \
+  $(DEST)/ThermoUtils.py \
   $(DEST)/PlotUtils.py
 
 #
