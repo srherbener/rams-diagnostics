@@ -59,9 +59,22 @@ def PotTemp(Temp, Press):
     global Cp
     global P0
 
-    Theta = Temp * ((P0 / Press) ** (Rd/Cp))
+    Theta = Temp * np.power((P0/Press), (Rd/Cp))
 
     return Theta
+
+####################################################################################################
+# RelHum
+#
+# This function calculates the relative humidity for a given temperature (K),
+# pressure (Pa), and vapor mixing ratio (kg/kg).
+#
+def RelHum(Temp, Press, Rvap):
+
+    Rvapsat = SatVaporMixRatio(Temp, Press)
+    RH = 100 * (Rvap/Rvapsat)
+
+    return RH
 
 ####################################################################################################
 # EquivPotTemp

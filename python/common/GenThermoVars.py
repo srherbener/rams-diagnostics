@@ -30,12 +30,14 @@ Nsims = len(SimList)
 # and "AC" for z.
 VarList = [
     # sigma-z coords
+    [ "press_lite", "/press", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "relhum_lite", "/relhum", "AS" ],
     [ "press_lite", "/press", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "theta_lite", "/theta", "AS" ],
     [ "press_lite", "/press", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "theta_e_lite", "/theta_e", "AS" ],
     [ "press_lite", "/press", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "theta_es_lite", "/theta_es", "AS" ],
     [ "press_lite", "/press", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "entropy_lite", "/entropy", "AS" ],
     [ "press_lite", "/press", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "entropy_s_lite", "/entropy_s", "AS" ],
 
+    [ "press_lite", "/press", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "relhum_nv_lite", "/relhum", "AS" ],
     [ "press_lite", "/press", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "theta_nv_lite", "/theta", "AS" ],
     [ "press_lite", "/press", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "theta_e_nv_lite", "/theta_e", "AS" ],
     [ "press_lite", "/press", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "theta_es_nv_lite", "/theta_es", "AS" ],
@@ -44,12 +46,14 @@ VarList = [
 
     # pressure coords
     # use the tempc file and "/z_coords" for the pressure values
+    [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "relhum_lite", "/relhum", "AP" ],
     [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "theta_lite", "/theta", "AP" ],
     [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "theta_e_lite", "/theta_e", "AP" ],
     [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "theta_es_lite", "/theta_es", "AP" ],
     [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "entropy_lite", "/entropy", "AP" ],
     [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "entropy_s_lite", "/entropy_s", "AP" ],
 
+    [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "relhum_nv_lite", "/relhum", "AP" ],
     [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "theta_nv_lite", "/theta", "AP" ],
     [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "theta_e_nv_lite", "/theta_e", "AP" ],
     [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "theta_es_nv_lite", "/theta_es", "AP" ],
@@ -158,7 +162,9 @@ for isim in range(Nsims):
             T = Tfile[Tvname][it,...] + 273.15 # convert deg C to K
             V = Vfile[Vvname][it,...] * 1e-3   # convert g/kg to kg/kg
 
-            if (Ovname == "/theta"):
+            if (Ovname == "/relhum"):
+                VAR = tu.RelHum(T, P, V)
+            elif (Ovname == "/theta"):
                 VAR = tu.PotTemp(T, P)
             elif (Ovname == "/theta_e"):
                 VAR = tu.EquivPotTemp(T, P, V)
