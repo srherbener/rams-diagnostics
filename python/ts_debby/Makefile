@@ -13,7 +13,7 @@ SCRIPTS = \
   $(DEST)/GenPtrackMomentum.py \
   $(DEST)/GenFieldNoVortex.py \
   $(DEST)/GenWindShearField.py \
-  $(DEST)/GenVentIndex.py \
+  $(DEST)/GenEntropyDeficit.py \
   $(DEST)/FsFigContour.py \
   $(DEST)/PlotFsFigStormHovmollers.py \
   $(DEST)/PlotFsFigStormXsections.py \
