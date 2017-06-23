@@ -30,35 +30,39 @@ Nsims = len(SimList)
 # and "AC" for z.
 VarList = [
     # sigma-z coords
-    [ "press_lite", "/press", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "relhum_lite", "/relhum", "AS" ],
-    [ "press_lite", "/press", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "theta_lite", "/theta", "AS" ],
-    [ "press_lite", "/press", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "theta_e_lite", "/theta_e", "AS" ],
-    [ "press_lite", "/press", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "theta_es_lite", "/theta_es", "AS" ],
-    [ "press_lite", "/press", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "entropy_lite", "/entropy", "AS" ],
-    [ "press_lite", "/press", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "entropy_s_lite", "/entropy_s", "AS" ],
-
-    [ "press_lite", "/press", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "relhum_nv_lite", "/relhum", "AS" ],
-    [ "press_lite", "/press", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "theta_nv_lite", "/theta", "AS" ],
-    [ "press_lite", "/press", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "theta_e_nv_lite", "/theta_e", "AS" ],
-    [ "press_lite", "/press", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "theta_es_nv_lite", "/theta_es", "AS" ],
-    [ "press_lite", "/press", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "entropy_nv_lite", "/entropy", "AS" ],
-    [ "press_lite", "/press", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "entropy_s_nv_lite", "/entropy_s", "AS" ],
+    [ "press_lite", "/press", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "density_lite", "/density", "AS" ],
+#    [ "press_lite", "/press", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "relhum_lite", "/relhum", "AS" ],
+#    [ "press_lite", "/press", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "theta_lite", "/theta", "AS" ],
+#    [ "press_lite", "/press", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "theta_e_lite", "/theta_e", "AS" ],
+#    [ "press_lite", "/press", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "theta_es_lite", "/theta_es", "AS" ],
+#    [ "press_lite", "/press", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "entropy_lite", "/entropy", "AS" ],
+#    [ "press_lite", "/press", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "entropy_s_lite", "/entropy_s", "AS" ],
+#
+    [ "press_lite", "/press", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "density_nv_lite", "/density", "AS" ],
+#    [ "press_lite", "/press", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "relhum_nv_lite", "/relhum", "AS" ],
+#    [ "press_lite", "/press", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "theta_nv_lite", "/theta", "AS" ],
+#    [ "press_lite", "/press", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "theta_e_nv_lite", "/theta_e", "AS" ],
+#    [ "press_lite", "/press", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "theta_es_nv_lite", "/theta_es", "AS" ],
+#    [ "press_lite", "/press", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "entropy_nv_lite", "/entropy", "AS" ],
+#    [ "press_lite", "/press", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "entropy_s_nv_lite", "/entropy_s", "AS" ],
 
     # pressure coords
     # use the tempc file and "/z_coords" for the pressure values
-    [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "relhum_lite", "/relhum", "AP" ],
-    [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "theta_lite", "/theta", "AP" ],
-    [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "theta_e_lite", "/theta_e", "AP" ],
-    [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "theta_es_lite", "/theta_es", "AP" ],
-    [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "entropy_lite", "/entropy", "AP" ],
-    [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "entropy_s_lite", "/entropy_s", "AP" ],
-
-    [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "relhum_nv_lite", "/relhum", "AP" ],
-    [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "theta_nv_lite", "/theta", "AP" ],
-    [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "theta_e_nv_lite", "/theta_e", "AP" ],
-    [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "theta_es_nv_lite", "/theta_es", "AP" ],
-    [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "entropy_nv_lite", "/entropy", "AP" ],
-    [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "entropy_s_nv_lite", "/entropy_s", "AP" ],
+    [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "density_lite", "/density", "AP" ],
+#    [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "relhum_lite", "/relhum", "AP" ],
+#    [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "theta_lite", "/theta", "AP" ],
+#    [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "theta_e_lite", "/theta_e", "AP" ],
+#    [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "theta_es_lite", "/theta_es", "AP" ],
+#    [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "entropy_lite", "/entropy", "AP" ],
+#    [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "entropy_s_lite", "/entropy_s", "AP" ],
+#
+    [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "density_nv_lite", "/density", "AP" ],
+#    [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "relhum_nv_lite", "/relhum", "AP" ],
+#    [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "theta_nv_lite", "/theta", "AP" ],
+#    [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "theta_e_nv_lite", "/theta_e", "AP" ],
+#    [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "theta_es_nv_lite", "/theta_es", "AP" ],
+#    [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "entropy_nv_lite", "/entropy", "AP" ],
+#    [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "entropy_s_nv_lite", "/entropy_s", "AP" ],
     ]
 Nvars = len(VarList)
 
@@ -162,7 +166,9 @@ for isim in range(Nsims):
             T = Tfile[Tvname][it,...] + 273.15 # convert deg C to K
             V = Vfile[Vvname][it,...] * 1e-3   # convert g/kg to kg/kg
 
-            if (Ovname == "/relhum"):
+            if (Ovname == "/density"):
+                VAR = tu.DryAirDensity(T, P)
+            elif (Ovname == "/relhum"):
                 VAR = tu.RelHum(T, P, V)
             elif (Ovname == "/theta"):
                 VAR = tu.PotTemp(T, P)

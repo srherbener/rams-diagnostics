@@ -23,6 +23,19 @@ T0 = 289 # temperature at P0 in atmosphere (K)
 
 
 ####################################################################################################
+# DryAirDensity
+#
+# This function calculates the dry air density for a given temperature (K),
+# and pressure (Pa).
+# 
+def DryAirDensity(Temp, Press):
+    global Rd
+
+    Rho = Press / ( Rd * Temp)
+    
+    return Rho
+
+####################################################################################################
 # SatVaporPress
 #
 # This function calculates the saturation vapor pressure for a given temperature (K).

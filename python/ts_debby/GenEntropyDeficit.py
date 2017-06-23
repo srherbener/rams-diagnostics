@@ -33,15 +33,19 @@ RadiusVname = "/radius"
 SstFnameTemplate = "HDF5/<SIM>/HDF5/sst_lite-<SIM>-AS-2006-08-20-120000-g3.h5"
 SstVname = "/sst"
 
+SpressFnameTemplate = "HDF5/<SIM>/HDF5/sea_press_lite-<SIM>-AS-2006-08-20-120000-g3.h5"
+SpressVname = "/sea_press"
+
 RmwFnameTemplate = "DIAGS/storm_meas_<SIM>.h5"
 RmwVname = "/rmw_t_p"
 
+DensityFnameTemplate = "HDF5/<SIM>/HDF5/density_lite-<SIM>-AS-2006-08-20-120000-g3.h5"
+DensityVname = "/density"
+
 EntropyFnameTemplate = "HDF5/<SIM>/HDF5/entropy_lite-<SIM>-AP-2006-08-20-120000-g3.h5"
-EntropyNvFnameTemplate = "HDF5/<SIM>/HDF5/entropy_lite-<SIM>-AP-2006-08-20-120000-g3.h5"
 EntropyVname = "/entropy"
 
 SatEntropyFnameTemplate = "HDF5/<SIM>/HDF5/entropy_s_lite-<SIM>-AP-2006-08-20-120000-g3.h5"
-SatEntropyNvFnameTemplate = "HDF5/<SIM>/HDF5/entropy_s_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5"
 SatEntropyVname = "/entropy_s"
 
 
@@ -77,11 +81,11 @@ for isim in range(Nsims):
     Filter150_300Fname = Filter150_300FnameTemplate.replace("<SIM>", Sim)
     StormCenterFname   = StormCenterFnameTemplate.replace("<SIM>", Sim)
     SstFname           = SstFnameTemplate.replace("<SIM>", Sim)
+    SpressFname        = SpressFnameTemplate.replace("<SIM>", Sim)
     RmwFname           = RmwFnameTemplate.replace("<SIM>", Sim)
+    DensityFname       = DensityFnameTemplate.replace("<SIM>", Sim)
     EntropyFname       = EntropyFnameTemplate.replace("<SIM>", Sim)
-    EntropyNvFname     = EntropyNvFnameTemplate.replace("<SIM>", Sim)
     SatEntropyFname    = SatEntropyFnameTemplate.replace("<SIM>", Sim)
-    SatEntropyNvFname  = SatEntropyNvFnameTemplate.replace("<SIM>", Sim)
 
     OutFname           = OutFnameTemplate.replace("<SIM>", Sim)
 
@@ -90,11 +94,11 @@ for isim in range(Nsims):
     print("  Reading {0:s} ({1:s})".format(Filter150_300Fname, FilterVname))
     print("  Reading {0:s} ({1:s})".format(StormCenterFname, RadiusVname))
     print("  Reading {0:s} ({1:s})".format(SstFname, SstVname))
+    print("  Reading {0:s} ({1:s})".format(SpressFname, SpressVname))
     print("  Reading {0:s} ({1:s})".format(RmwFname, RmwVname))
+    print("  Reading {0:s} ({1:s})".format(DensityFname, DensityVname))
     print("  Reading {0:s} ({1:s})".format(EntropyFname, EntropyVname))
-    print("  Reading {0:s} ({1:s})".format(EntropyNvFname, EntropyVname))
     print("  Reading {0:s} ({1:s})".format(SatEntropyFname, SatEntropyVname))
-    print("  Reading {0:s} ({1:s})".format(SatEntropyNvFname, SatEntropyVname))
     print("")
 
     # Read coordinates and build the dimensions.
@@ -102,11 +106,11 @@ for isim in range(Nsims):
     Filter150_300File = h5py.File(Filter150_300Fname, mode='r')
     StormCenterFile   = h5py.File(StormCenterFname, mode='r')
     SstFile           = h5py.File(SstFname, mode='r')
+    SpressFile        = h5py.File(SpressFname, mode='r')
     RmwFile           = h5py.File(RmwFname, mode='r')
+    DensityFile       = h5py.File(DensityFname, mode='r')
     EntropyFile       = h5py.File(EntropyFname, mode='r')
-    EntropyNvFile     = h5py.File(EntropyNvFname, mode='r')
     SatEntropyFile    = h5py.File(SatEntropyFname, mode='r')
-    SatEntropyNvFile  = h5py.File(SatEntropyNvFname, mode='r')
 
     OutFile = h5py.File(OutFname, mode='w')
 
@@ -163,9 +167,10 @@ for isim in range(Nsims):
         # mid-level -> average 700 and 500mb levels
         S    = np.squeeze(EntropyFile[EntropyVname][it,Zmid1:Zmid2+1,...])
         Ssat = np.squeeze(SatEntropyFile[SatEntropyVname][it,Zmid1:Zmid2+1,...])
+        Dens = np.squeeze(DensityFile[DensityVname][it,Zmid1:Zmid2+1,...])
 
-        S    = np.squeeze(np.mean(S,0))
-        Ssat = np.squeeze(np.mean(Ssat,0))
+        S    = np.squeeze(np.average(S, axis=0, weights=Dens))
+        Ssat = np.squeeze(np.average(Ssat, axis=0, weights=Dens))
 
         # The filter data has 1's and 0's, so multiply by the corresponding filter and
         # select all non-zero points for the final average value.
@@ -176,16 +181,19 @@ for isim in range(Nsims):
         SmSat[it] = np.mean(Ssat[Ssat > 0.0])
 
         # boundary layer -> average 1000 to 850 mb levels
-        # use the vortex removed version of the entropy so that storm effects are ignored
-        S = np.squeeze(EntropyNvFile[EntropyVname][it,Zbl1:Zbl2+1,...])
-        S = np.squeeze(np.mean(S,0))
+        S    = np.squeeze(EntropyFile[EntropyVname][it,Zbl1:Zbl2+1,...])
+        Dens = np.squeeze(DensityFile[DensityVname][it,Zbl1:Zbl2+1,...])
+
+        S = np.squeeze(np.average(S, axis=0, weights=Dens))
 
         # Read the SST and convert this to a saturation entropy based on the pressure
         # being 1013 mb at sea level.
         # storm effects will be ignored since SST is set to a constant field (based on obs)
         Sst = np.squeeze(SstFile[SstVname][it,...])
         Sst = Sst + 273.15
-        Ssat = tu.SatEntropy(Sst, 101300.0)
+        #Spress = 101300.0
+        Spress = np.squeeze(SpressFile[SpressVname][it,...]) * 100.0 # covert to Pa
+        Ssat = tu.SatEntropy(Sst, Spress)
     
         # Read in the RMW and radius fields and use these to construct a selection vector for
         # confining the calculations to the region of the RMW.
@@ -225,102 +233,11 @@ for isim in range(Nsims):
     Filter150File.close()
     Filter150_300File.close()
     StormCenterFile.close()
+    SstFile.close()
+    SpressFile.close()
     RmwFile.close()
     EntropyFile.close()
-    EntropyNvFile.close()
     SatEntropyFile.close()
-    SatEntropyNvFile.close()
 
     OutFile.close()
 
-#    # Take the layer averages of the SAL level winds, and near surface winds,
-#    # and use these averages to caclulate the shear (vector difference).
-#
-#    # Find the indices for the top and bottom of the layers.
-#    # pressure coords 
-#
-#    # Surface Layer
-#    if (Vcoord == 'p'):
-#        Select = np.where((Z <= ZsfcBot) * (Z >= ZsfcTop))
-#    elif (Vcoord == 'z'):
-#        Select = np.where((Z >= ZsfcBot) * (Z <= ZsfcTop))
-#
-#    SFC_Z1 = Select[0][0]
-#    SFC_Z2 = Select[0][-1]
-#
-#    # SAL
-#    if (Vcoord == 'p'):
-#        Select = np.where((Z <= ZsalBot) * (Z >= ZsalTop))
-#    elif (Vcoord == 'z'):
-#        Select = np.where((Z >= ZsalBot) * (Z <= ZsalTop))
-#
-#    SAL_Z1 = Select[0][0]
-#    SAL_Z2 = Select[0][-1]
-#
-#    # Process one time step at a time in order to mitigate large memory allocation
-#    for it in range(Nt):
-#        FILTER = np.squeeze(Ffile[FilterVname][it,...])
-#        U = np.squeeze(Ufile[Uvname][it,...])
-#        V = np.squeeze(Vfile[Vvname][it,...])
-#
-#        # Python indexing Z1:Z2 stops one before Z2. We want Z2 included so  use
-#        # indexing Z1:Z2+1.
-#        #
-#        # Take mean on z-dimension (1st dimension) which will yield a layer average.
-#        #
-#        # Then take the difference between layers to get the u,v components of the shear vectors.
-#        U_SFC = np.squeeze(np.mean(U[SFC_Z1:SFC_Z2+1,...],0))
-#        U_SAL = np.squeeze(np.mean(U[SAL_Z1:SAL_Z2+1,...],0))
-#
-#        V_SFC = np.squeeze(np.mean(V[SFC_Z1:SFC_Z2+1,...],0))
-#        V_SAL = np.squeeze(np.mean(V[SAL_Z1:SAL_Z2+1,...],0))
-#
-#        # Cartesian
-#        U_SHEAR = U_SAL - U_SFC
-#        V_SHEAR = V_SAL - V_SFC
-#
-#        # Magnitude, angle
-#        # Create a storm relative magnitude shear field as well - this may be
-#        # helpful for doing comparisons. Filter has 1's in the storm region and
-#        # 0's otherwise.
-#        MAG_SHEAR = np.sqrt(np.square(U_SHEAR) + np.square(V_SHEAR))
-#        #MAG_SHEAR = np.absolute(U_SHEAR)  # zonal shear
-#        ANG_SHEAR = np.arctan2(V_SHEAR, U_SHEAR)
-#        MAG_SHEAR_STORM = np.multiply(MAG_SHEAR, FILTER)
-#
-#        # Get an average shear magnitude over the storm reagion. 
-#        AVG_MAG_SHEAR_STORM = np.mean(MAG_SHEAR_STORM[MAG_SHEAR_STORM > 0.0])
-#
-#        # Write fields into output file
-#        Ofile[UshearVname][it,:,:] = U_SHEAR
-#        Ofile[VshearVname][it,:,:] = V_SHEAR
-#        Ofile[MagShearVname][it,:,:] = MAG_SHEAR
-#        Ofile[AngShearVname][it,:,:] = ANG_SHEAR
-#        Ofile[MagShearStormVname][it,:,:] = MAG_SHEAR_STORM
-#        Ofile[AvgMagShearStormVname][it] = AVG_MAG_SHEAR_STORM
-#   
-#        # Write out the sampled shear magnitude fields. Add the [...] so
-#        # that h5py doesn't try to recreate the dataset. We want to
-#        # create the dataset so that we can attach dimensions. If you
-#        # simply say "Ofile[MagShear10Vname] = MAG_SHEAR", h5py will try
-#        # to create the dataset which throws an error since we already
-#        # created the dataset above.
-#        if (it == T10):
-#            Ofile[MagShear10Vname][...] = MAG_SHEAR
-#        elif (it == T20):
-#            Ofile[MagShear20Vname][...] = MAG_SHEAR
-#        elif (it == T30):
-#            Ofile[MagShear30Vname][...] = MAG_SHEAR
-#        elif (it == T40):
-#            Ofile[MagShear40Vname][...] = MAG_SHEAR
-#        elif (it == T50):
-#            Ofile[MagShear50Vname][...] = MAG_SHEAR
-#        elif (it == T60):
-#            Ofile[MagShear60Vname][...] = MAG_SHEAR
-#
-#    Ufile.close()
-#    Vfile.close()
-#
-#    Ofile.close()
-#    print("")
-#
