@@ -192,7 +192,7 @@ function [] = PlotGridLocs(Paxes, MapLoc, Grid1Loc, Grid2Loc, Grid3Loc, Pmarker,
 %  LegText  = { 'Grid1' 'Grid2' 'Grid3' };
 %  legend(LegLines, LegText, 'Location', 'SouthOutside', 'FontSize', LegendFsize);
   textm(-17, -68, 'Grid1', 'Color', G1color, 'FontSize', 10);
-  textm( 27, -40, 'Grid2', 'Color', G2color, 'FontSize',  8);
+  textm( 32, -50, 'Grid2', 'Color', G2color, 'FontSize',  8);
   textm( 18, -35, 'Grid3', 'Color', G3color, 'FontSize',  7);
 
   if (isempty(Pmarker))
