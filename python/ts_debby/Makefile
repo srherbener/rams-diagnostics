@@ -14,6 +14,7 @@ SCRIPTS = \
   $(DEST)/GenFieldNoVortex.py \
   $(DEST)/GenWindShearField.py \
   $(DEST)/GenEntropyDeficit.py \
+  $(DEST)/GenPotIntensity.py \
   $(DEST)/FsFigContour.py \
   $(DEST)/PlotFsFigStormHovmollers.py \
   $(DEST)/PlotFsFigStormXsections.py \

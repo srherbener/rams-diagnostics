@@ -17,9 +17,10 @@ Cp = 1004 # specific heat of dry air (J/Kg/K)
 L0 = 2.555e6 # latent heat of vaporization (J/kg)
 
 P0 = 1.0e5 # reference pressure (Pa)
+           # 1000 mb => 100000 Pa
 
-T0 = 289 # temperature at P0 in atmosphere (K)
-              # roughly 16 deg C or 60 deg F (mean surface temperature of Earth)
+T0 = 298 # temperature at P0 in atmosphere (K)
+         #  25 C (mean temp at 1000mb in my sims) => 298 K
 
 
 ####################################################################################################
