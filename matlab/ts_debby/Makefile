@@ -115,6 +115,7 @@ SCRIPTS = \
   $(DEST)/ReportFsMeas.m \
   $(DEST)/RunGenFigures.m \
   $(DEST)/LocateSal.m \
+  $(DEST)/GenSalLocs.m \
   $(DEST)/PlotAeroProfs.m \
   $(DEST)/PlotDustProfs.m \
   $(DEST)/PlotMaxWindAll.m \
