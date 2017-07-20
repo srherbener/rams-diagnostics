@@ -15,6 +15,7 @@ function [ ] = PlotTracksAll()
    'TSD_SAL_NODUST'
    'TSD_NONSAL_DUST'
    'TSD_NONSAL_NODUST'
+   'TSD_SD_1G'
    };
   
   LegText = {
@@ -34,6 +35,7 @@ function [ ] = PlotTracksAll()
    'SAL\_NODUST'
    'NONSAL\_DUST'
    'NONSAL\_NODUST'
+   'SAL\_DUST\_1G'
    };
    Nc = length(Cases);
   
@@ -48,7 +50,11 @@ function [ ] = PlotTracksAll()
   MaxNt = 0;
   for icase = 1:Nc
     Case = Cases{icase};
-    Hfile = sprintf('HDF5/%s/HDF5/storm_center-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
+    if (strcmp(Case, 'TSD_SD_1G'))
+      Hfile = sprintf('HDF5/%s/HDF5/storm_center-%s-AS-2006-08-21-180000-g1.h5', Case, Case);
+    else
+      Hfile = sprintf('HDF5/%s/HDF5/storm_center-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
+    end
     Hinfo = h5info(Hfile, '/t_coords');
     Tsize = Hinfo.Dataspace.Size;
     if (Tsize > MaxNt)
@@ -63,7 +69,11 @@ function [ ] = PlotTracksAll()
   % read in the Vt data
   for icase = 1:Nc
     Case = Cases{icase};
-    Hfile = sprintf('HDF5/%s/HDF5/storm_center-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
+    if (strcmp(Case, 'TSD_SD_1G'))
+      Hfile = sprintf('HDF5/%s/HDF5/storm_center-%s-AS-2006-08-21-180000-g1.h5', Case, Case);
+    else
+      Hfile = sprintf('HDF5/%s/HDF5/storm_center-%s-AS-2006-08-20-120000-g3.h5', Case, Case);
+    end
     HdsetLon = '/press_cent_xloc';
     HdsetLat = '/press_cent_yloc';
     fprintf('Reading: %s\n', Hfile);
