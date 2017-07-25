@@ -3,7 +3,9 @@ function [ ] = GenResidualMassMeas()
 
   % Cases
   CaseList = {
-    'TSD_SAL_DUST'
+    'TSD_SD'
+    'TSD_SD_1G'
+%    'TSD_SAL_DUST'
 %    'TSD_SAL_NODUST'
 %    'TSD_NONSAL_DUST'
 %    'TSD_NONSAL_NODUST'
@@ -12,10 +14,10 @@ function [ ] = GenResidualMassMeas()
 
   % Description of measurements
   FileList = {
-    { 'DIAGS/total_mass_<CASE>.h5' 'sal'    }
+%    { 'DIAGS/total_mass_<CASE>.h5' 'sal'    }
     { 'DIAGS/total_mass_<CASE>.h5' 'sal_ar' }
-    { 'DIAGS/total_mass_<CASE>.h5' 'spath'  }
-    { 'DIAGS/total_mass_<CASE>.h5' 'storm'  }
+%    { 'DIAGS/total_mass_<CASE>.h5' 'spath'  }
+%    { 'DIAGS/total_mass_<CASE>.h5' 'storm'  }
     };
   Nfiles = length(FileList);
 

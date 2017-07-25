@@ -4,6 +4,8 @@ function [ ] = ReportDpMeas()
   % Cases
   CaseList = {
     'TSD_SAL_DUST'
+    'TSD_SD'
+    'TSD_SD_1G'
 %    'TSD_SAL_NODUST'
 %    'TSD_NONSAL_DUST'
 %    'TSD_NONSAL_NODUST'
@@ -12,9 +14,9 @@ function [ ] = ReportDpMeas()
 
   % Description of measurements
   MeasList = {
-    { 'DIAGS/total_mass_<CASE>.h5' '/sal'    'SAL_AR_L' }
+%    { 'DIAGS/total_mass_<CASE>.h5' '/sal'    'SAL_AR_L' }
     { 'DIAGS/total_mass_<CASE>.h5' '/sal_ar' 'SAL_AR_M' }
-    { 'DIAGS/total_mass_<CASE>.h5' '/spath'  'SPATH'    }
+%    { 'DIAGS/total_mass_<CASE>.h5' '/spath'  'SPATH'    }
 
     };
   Nmeas = length(MeasList);
@@ -66,10 +68,14 @@ function [ ] = ReportDpMeas()
       %
       %   Dust removed                MDSFC(end)
       %
-      %   Dust transported            Find index of max(MDRGN) > MaxInd
-      %      to upper levels          sum of: 
-      %                                  MDHY(MaxInd)  - MDHY(2)
-      %                                  MDRGN(MaxInd) - MDRGN(2)
+      %   Dust transported            Find index of max(MDRGN) -> MaxInd
+      %      to upper levels          Formulas: 
+      %                                  Want 2nd number to be value at t = 30 min.
+      %                                  This is array element 2 for TSD_SAL_DUST
+      %                                  and linear interp. of first two elements
+      %                                  for TSD_SD and TSD_SD_1G.
+      %                                  MDHY(MaxInd)  - MDHY(t=30m)
+      %                                  MDRGN(MaxInd) - MDRGN(t=30m)
       %
       % Use max of MDRGN since this is the dust that will linger in the
       % upper levels after the storm passes. Also because MDRGN tends to
@@ -77,8 +83,17 @@ function [ ] = ReportDpMeas()
       Minit = MD(1) * 1e-12;
       Mrmvd = MDSFC(end) * 1e-12;
      
-      Mdrgn1 = MDRGN(2) * 1e-12;
-      Mdhy1  = MDHY(2) * 1e-12;
+      switch(Case)
+        case { 'TSD_SAL_DUST' }
+          Mdrgn1 = MDRGN(2);
+          Mdhy1  = MDHY(2);
+
+        case { 'TSD_SD' 'TSD_SD_1G' }
+          Mdrgn1 = (MDRGN(1) + MDRGN(2)) * 0.5;
+          Mdhy1  = (MDHY(1) + MDHY(2)) * 0.5;
+      end
+      Mdrgn1 = Mdrgn1 * 1e-12;
+      Mdhy1  = Mdhy1 * 1e-12;
 
       [ Mdrgn2 MaxInd ] = max(MDRGN);
       Mdrgn2 = Mdrgn2 * 1e-12;

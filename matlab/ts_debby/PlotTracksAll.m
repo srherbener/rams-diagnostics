@@ -15,6 +15,7 @@ function [ ] = PlotTracksAll()
    'TSD_SAL_NODUST'
    'TSD_NONSAL_DUST'
    'TSD_NONSAL_NODUST'
+   'TSD_SD'
    'TSD_SD_1G'
    };
   
@@ -35,7 +36,8 @@ function [ ] = PlotTracksAll()
    'SAL\_NODUST'
    'NONSAL\_DUST'
    'NONSAL\_NODUST'
-   'SAL\_DUST\_1G'
+   'SD'
+   'SD\_1G'
    };
    Nc = length(Cases);
   

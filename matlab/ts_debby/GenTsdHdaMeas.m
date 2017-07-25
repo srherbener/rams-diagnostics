@@ -8,10 +8,12 @@ function [ ] = GenTsdHdaMeas()
 
   % list of simulation cases
   CaseList = {
-    'TSD_SAL_DUST'
-    'TSD_SAL_NODUST'
-    'TSD_NONSAL_DUST'
-    'TSD_NONSAL_NODUST'
+    'TSD_SD'
+    'TSD_SD_1G'
+%    'TSD_SAL_DUST'
+%    'TSD_SAL_NODUST'
+%    'TSD_NONSAL_DUST'
+%    'TSD_NONSAL_NODUST'
     };
   Ncases = length(CaseList);
 
@@ -113,10 +115,10 @@ function [ ] = GenTsdHdaMeas()
 
   MeasSets = {
 
-%    % Dust
-%    {
-%      'Dust Tsavg'
-%      {
+    % Dust
+    {
+      'Dust Tsavg'
+      {
 %        % region in SAL that is in the storm path
 %        { 'TsAveragedData/hda_spath_d1_mass_<CASE>.h5' '/d1_mass' '/spath_d1_mass_ts'  '_hZT'   ''        '' }
 %        { 'TsAveragedData/hda_spath_d1_mass_<CASE>.h5' '/d1_mass' '/spath_i_d1_mass'   '_hZt'   'init'    '' }
@@ -191,10 +193,10 @@ function [ ] = GenTsdHdaMeas()
 %        % SAL sample region (medium)
 %        { 'TsAveragedData/hda_sal_ar_d1_mass_<CASE>.h5'     '/d1_mass'     '/sal_ar_sum_d1_mass'     '_HZT'   ''        '' }
 %        { 'TsAveragedData/hda_sal_ar_d2_mass_<CASE>.h5'     '/d2_mass'     '/sal_ar_sum_d2_mass'     '_HZT'   ''        '' }
-%        { 'TsAveragedData/hda_sal_ar_dust_mass_<CASE>.h5'   '/dust_mass'   '/sal_ar_sum_dust_mass'   '_HZT'   ''        '' }
-%        { 'TsAveragedData/hda_sal_ar_dust_hydro_<CASE>.h5'  '/dust_hydro'  '/sal_ar_sum_dust_hydro'  '_HZT'   ''        '' }
+        { 'TsAveragedData/hda_sal_ar_dust_mass_<CASE>.h5'   '/dust_mass'   '/sal_ar_sum_dust_mass'   '_HZT'   ''        '' }
+        { 'TsAveragedData/hda_sal_ar_dust_hydro_<CASE>.h5'  '/dust_hydro'  '/sal_ar_sum_dust_hydro'  '_HZT'   ''        '' }
 %        { 'TsAveragedData/hda_sal_ar_tracer_mass_<CASE>.h5' '/tracer_mass' '/sal_ar_sum_tracer_mass' '_HZT'   ''        '' }
-%        { 'TsAveragedData/hda_sal_ar_dust_sfc_<CASE>.h5'    '/dust_sfc'    '/sal_ar_sum_dust_sfc'    '_H_T'   ''        '' }
+        { 'TsAveragedData/hda_sal_ar_dust_sfc_<CASE>.h5'    '/dust_sfc'    '/sal_ar_sum_dust_sfc'    '_H_T'   ''        '' }
 %
 %        % region of storm
 %        { 'TsAveragedData/hda_all_d1_mass_<CASE>.h5' '/d1_mass' '/all_d1_mass_ts'  '_hZT'   ''        '' }
@@ -251,10 +253,10 @@ function [ ] = GenTsdHdaMeas()
 %        { 'TsAveragedData/hda_all_dust_hail_<CASE>.h5' '/dust_hail' '/all_i_dust_hail'   '_hZt'   'init'    '' }
 %        { 'TsAveragedData/hda_all_dust_hail_<CASE>.h5' '/dust_hail' '/all_ps_dust_hail'  '_hZt'   'pre_sal' '' }
 %        { 'TsAveragedData/hda_all_dust_hail_<CASE>.h5' '/dust_hail' '/all_s_dust_hail'   '_hZt'   'sal'     '' }
-%      }
-%      'DIAGS/hda_meas_ts_dust_<CASE>.h5'
-%    }
-%
+      }
+      'DIAGS/hda_meas_ts_dust_<CASE>.h5'
+    }
+
 %    % CCN
 %    {
 %      'CCN Tsavg'
@@ -282,10 +284,10 @@ function [ ] = GenTsdHdaMeas()
 %      'DIAGS/hda_meas_ts_ccn_<CASE>.h5'
 %    }
 %
-%    % Regen
-%    {
-%      'Regen Tsavg'
-%      {
+    % Regen
+    {
+      'Regen Tsavg'
+      {
 %        % region in SAL that is in the storm path
 %        { 'TsAveragedData/hda_spath_ra1_mass_<CASE>.h5' '/ra1_mass' '/spath_ra1_mass_ts'  '_hZT'   ''        '' }
 %        { 'TsAveragedData/hda_spath_ra1_mass_<CASE>.h5' '/ra1_mass' '/spath_i_ra1_mass'   '_hZt'   'init'    '' }
@@ -312,7 +314,7 @@ function [ ] = GenTsdHdaMeas()
 %        % SAL sample region (medium)
 %        { 'TsAveragedData/hda_sal_ar_ra1_mass_<CASE>.h5'    '/ra1_mass'    '/sal_ar_sum_ra1_mass'     '_HZT'   ''        '' }
 %        { 'TsAveragedData/hda_sal_ar_ra2_mass_<CASE>.h5'    '/ra2_mass'    '/sal_ar_sum_ra2_mass'     '_HZT'   ''        '' }
-%        { 'TsAveragedData/hda_sal_ar_ra_mass_<CASE>.h5'     '/ra_mass'     '/sal_ar_sum_ra_mass'     '_HZT'   ''        '' }
+        { 'TsAveragedData/hda_sal_ar_ra_mass_<CASE>.h5'     '/ra_mass'     '/sal_ar_sum_ra_mass'     '_HZT'   ''        '' }
 %
 %        % storm region
 %        { 'TsAveragedData/hda_all_ra1_mass_<CASE>.h5' '/ra1_mass' '/all_ra1_mass_ts'  '_hZT'   ''        '' }
@@ -329,9 +331,9 @@ function [ ] = GenTsdHdaMeas()
 %        { 'TsAveragedData/hda_all_ra_mass_<CASE>.h5' '/ra_mass' '/all_i_ra_mass'   '_hZt'   'init'    '' }
 %        { 'TsAveragedData/hda_all_ra_mass_<CASE>.h5' '/ra_mass' '/all_ps_ra_mass'  '_hZt'   'pre_sal' '' }
 %        { 'TsAveragedData/hda_all_ra_mass_<CASE>.h5' '/ra_mass' '/all_s_ra_mass'   '_hZt'   'sal'     '' }
-%      }
-%      'DIAGS/hda_meas_ts_ra_<CASE>.h5'
-%    }
+      }
+      'DIAGS/hda_meas_ts_ra_<CASE>.h5'
+    }
 %
 %    % All aerosols
 %    {
@@ -459,42 +461,42 @@ function [ ] = GenTsdHdaMeas()
 %      }
 %      'DIAGS/hda_meas_ts_precip_<CASE>.h5'
 %    }
-
-    % theta_e
-    {
-      'Theta-E Tsavg'
-      {
-        % inner and outer storm region sampling
-        { 'TsAveragedData/hda_inner_theta_e_<CASE>.h5'  '/theta_e'  '/inner_theta_e'   '_hZT'   ''   '' }
-        { 'TsAveragedData/hda_outer_theta_e_<CASE>.h5'  '/theta_e'  '/outer_theta_e'   '_hZT'   ''   '' }
-        { 'TsAveragedData/hda_inner_theta_es_<CASE>.h5' '/theta_es' '/inner_theta_es'  '_hZT'   ''   '' }
-        { 'TsAveragedData/hda_outer_theta_es_<CASE>.h5' '/theta_es' '/outer_theta_es'  '_hZT'   ''   '' }
-
-        { 'TsAveragedData/hda_inner_p_theta_e_<CASE>.h5'  '/theta_e'  '/inner_p_theta_e'   '_hZT'   ''   '' }
-        { 'TsAveragedData/hda_outer_p_theta_e_<CASE>.h5'  '/theta_e'  '/outer_p_theta_e'   '_hZT'   ''   '' }
-        { 'TsAveragedData/hda_inner_p_theta_es_<CASE>.h5' '/theta_es' '/inner_p_theta_es'  '_hZT'   ''   '' }
-        { 'TsAveragedData/hda_outer_p_theta_es_<CASE>.h5' '/theta_es' '/outer_p_theta_es'  '_hZT'   ''   '' }
-      }
-      'DIAGS/hda_meas_ts_theta_e_<CASE>.h5'
-    }
-
-    % entropy
-    {
-      'Entropy Tsavg'
-      {
-        % inner and outer storm region sampling
-        { 'TsAveragedData/hda_inner_entropy_<CASE>.h5'   '/entropy'   '/inner_entropy'    '_hZT'   ''   '' }
-        { 'TsAveragedData/hda_outer_entropy_<CASE>.h5'   '/entropy'   '/outer_entropy'    '_hZT'   ''   '' }
-        { 'TsAveragedData/hda_inner_entropy_s_<CASE>.h5' '/entropy_s' '/inner_entropy_s'  '_hZT'   ''   '' }
-        { 'TsAveragedData/hda_outer_entropy_s_<CASE>.h5' '/entropy_s' '/outer_entropy_s'  '_hZT'   ''   '' }
-
-        { 'TsAveragedData/hda_inner_p_entropy_<CASE>.h5'   '/entropy'   '/inner_p_entropy'    '_hZT'   ''   '' }
-        { 'TsAveragedData/hda_outer_p_entropy_<CASE>.h5'   '/entropy'   '/outer_p_entropy'    '_hZT'   ''   '' }
-        { 'TsAveragedData/hda_inner_p_entropy_s_<CASE>.h5' '/entropy_s' '/inner_p_entropy_s'  '_hZT'   ''   '' }
-        { 'TsAveragedData/hda_outer_p_entropy_s_<CASE>.h5' '/entropy_s' '/outer_p_entropy_s'  '_hZT'   ''   '' }
-      }
-      'DIAGS/hda_meas_ts_entropy_<CASE>.h5'
-    }
+%
+%    % theta_e
+%    {
+%      'Theta-E Tsavg'
+%      {
+%        % inner and outer storm region sampling
+%        { 'TsAveragedData/hda_inner_theta_e_<CASE>.h5'  '/theta_e'  '/inner_theta_e'   '_hZT'   ''   '' }
+%        { 'TsAveragedData/hda_outer_theta_e_<CASE>.h5'  '/theta_e'  '/outer_theta_e'   '_hZT'   ''   '' }
+%        { 'TsAveragedData/hda_inner_theta_es_<CASE>.h5' '/theta_es' '/inner_theta_es'  '_hZT'   ''   '' }
+%        { 'TsAveragedData/hda_outer_theta_es_<CASE>.h5' '/theta_es' '/outer_theta_es'  '_hZT'   ''   '' }
+%
+%        { 'TsAveragedData/hda_inner_p_theta_e_<CASE>.h5'  '/theta_e'  '/inner_p_theta_e'   '_hZT'   ''   '' }
+%        { 'TsAveragedData/hda_outer_p_theta_e_<CASE>.h5'  '/theta_e'  '/outer_p_theta_e'   '_hZT'   ''   '' }
+%        { 'TsAveragedData/hda_inner_p_theta_es_<CASE>.h5' '/theta_es' '/inner_p_theta_es'  '_hZT'   ''   '' }
+%        { 'TsAveragedData/hda_outer_p_theta_es_<CASE>.h5' '/theta_es' '/outer_p_theta_es'  '_hZT'   ''   '' }
+%      }
+%      'DIAGS/hda_meas_ts_theta_e_<CASE>.h5'
+%    }
+%
+%    % entropy
+%    {
+%      'Entropy Tsavg'
+%      {
+%        % inner and outer storm region sampling
+%        { 'TsAveragedData/hda_inner_entropy_<CASE>.h5'   '/entropy'   '/inner_entropy'    '_hZT'   ''   '' }
+%        { 'TsAveragedData/hda_outer_entropy_<CASE>.h5'   '/entropy'   '/outer_entropy'    '_hZT'   ''   '' }
+%        { 'TsAveragedData/hda_inner_entropy_s_<CASE>.h5' '/entropy_s' '/inner_entropy_s'  '_hZT'   ''   '' }
+%        { 'TsAveragedData/hda_outer_entropy_s_<CASE>.h5' '/entropy_s' '/outer_entropy_s'  '_hZT'   ''   '' }
+%
+%        { 'TsAveragedData/hda_inner_p_entropy_<CASE>.h5'   '/entropy'   '/inner_p_entropy'    '_hZT'   ''   '' }
+%        { 'TsAveragedData/hda_outer_p_entropy_<CASE>.h5'   '/entropy'   '/outer_p_entropy'    '_hZT'   ''   '' }
+%        { 'TsAveragedData/hda_inner_p_entropy_s_<CASE>.h5' '/entropy_s' '/inner_p_entropy_s'  '_hZT'   ''   '' }
+%        { 'TsAveragedData/hda_outer_p_entropy_s_<CASE>.h5' '/entropy_s' '/outer_p_entropy_s'  '_hZT'   ''   '' }
+%      }
+%      'DIAGS/hda_meas_ts_entropy_<CASE>.h5'
+%    }
 
     };
 

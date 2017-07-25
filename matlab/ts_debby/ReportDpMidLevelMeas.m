@@ -4,6 +4,8 @@ function [ ] = ReportDpMidLevelMeas()
   % Cases
   CaseList = {
     'TSD_SAL_DUST'
+    'TSD_SD'
+    'TSD_SD_1G'
 %    'TSD_SAL_NODUST'
 %    'TSD_NONSAL_DUST'
 %    'TSD_NONSAL_NODUST'
@@ -42,6 +44,7 @@ function [ ] = ReportDpMidLevelMeas()
       InVname = sprintf('%s_dust_total_mass', IvarPfx);
       fprintf('    Reading: %s (%s)\n', InFile, InVname);
       MD = squeeze(h5read(InFile, InVname));
+      Nt = length(MD);
 
       % Mdrgn mid levels
       InVname = sprintf('%s_ra_total_mass_mlev', IvarPfx);
@@ -49,14 +52,16 @@ function [ ] = ReportDpMidLevelMeas()
       MDRGN = squeeze(h5read(InFile, InVname));
 
       % Mdrgn mid levels
-      InVname = sprintf('%s_ra1_total_mass_mlev', IvarPfx);
-      fprintf('    Reading: %s (%s)\n', InFile, InVname);
-      MDRGN1 = squeeze(h5read(InFile, InVname));
+      MDRGN1 = zeros([ Nt 1 ]);
+      %InVname = sprintf('%s_ra1_total_mass_mlev', IvarPfx);
+      %fprintf('    Reading: %s (%s)\n', InFile, InVname);
+      %MDRGN1 = squeeze(h5read(InFile, InVname));
 
       % Mdrgn mid levels
-      InVname = sprintf('%s_ra2_total_mass_mlev', IvarPfx);
-      fprintf('    Reading: %s (%s)\n', InFile, InVname);
-      MDRGN2 = squeeze(h5read(InFile, InVname));
+      MDRGN2 = zeros([ Nt 1 ]);
+      %InVname = sprintf('%s_ra2_total_mass_mlev', IvarPfx);
+      %fprintf('    Reading: %s (%s)\n', InFile, InVname);
+      %MDRGN2 = squeeze(h5read(InFile, InVname));
 
       %     Quantity             How to calculate
       %
@@ -67,9 +72,20 @@ function [ ] = ReportDpMidLevelMeas()
       % be the greater of the two. Convert to Tg.
       Minit = MD(1) * 1e-12;
      
-      MdrgnStart  = MDRGN(2) * 1e-12;
-      Mdrgn1Start = MDRGN1(2) * 1e-12;
-      Mdrgn2Start = MDRGN2(2) * 1e-12;
+      switch(Case)
+        case { 'TSD_SAL_DUST' }
+          MdrgnStart  = MDRGN(2);
+          Mdrgn1Start = MDRGN1(2);
+          Mdrgn2Start = MDRGN2(2);
+
+        case { 'TSD_SD' 'TSD_SD_1G' }
+          MdrgnStart  = (MDRGN(1) + MDRGN(2)) * 0.5;
+          Mdrgn1Start = (MDRGN1(1) + MDRGN1(2)) * 0.5;
+          Mdrgn2Start = (MDRGN2(1) + MDRGN2(2)) * 0.5;
+      end
+      MdrgnStart  = MdrgnStart * 1e-12;
+      Mdrgn1Start = Mdrgn1Start * 1e-12;
+      Mdrgn2Start = Mdrgn2Start * 1e-12;
 
       [ MdrgnEnd MaxInd ] = max(MDRGN);
       MdrgnEnd = MdrgnEnd * 1e-12;
