@@ -8,8 +8,8 @@ function [ ] = GenTsdHistMeas()
 
   % list of simulation cases
   CaseList = {
-     'TSD_SD'
-     'TSD_SD_1G'
+%     'TSD_SD'
+%     'TSD_SD_1G'
 %    'TSD_SAL_DUST'
 %    'TSD_SAL_NODUST'
 %    'TSD_NONSAL_DUST'
@@ -51,6 +51,12 @@ function [ ] = GenTsdHistMeas()
 
   Psfc = 1010; % mb
   Ptop = 800;
+
+  % For converting input time values.
+  TimeScale = 1 / 3600;  % seconds to hours
+
+  TimeOffset = 42;      % time (h) at start of sim
+  %TimeOffset = 12;
 
   % Input is a histogram based upon either 2D or 3D field
   %
@@ -737,11 +743,11 @@ function [ ] = GenTsdHistMeas()
 %      }
 %      'DIAGS/hist_meas_az_w_<CASE>.h5'
 %    }
-%
-%    % dust measurements
-%    {
-%      'Dust Azavg'
-%      {
+
+    % dust measurements
+    {
+      'Dust Azavg'
+      {
 %        { 'AzAveragedData/hist_all_d1_num_<CASE>.h5' '/d1_num' 'wtmean'  0.0  '/all_d1_num_ts'         'RbZT' ''      ''        ''       'ge' 0.01 }
 %        { 'AzAveragedData/hist_all_d1_num_<CASE>.h5' '/d1_num' 'wtmean'  0.0  '/all_ps_d1_num'         'RbZt' ''      'pre_sal' ''       'ge' 0.01 }
 %        { 'AzAveragedData/hist_all_d1_num_<CASE>.h5' '/d1_num' 'wtmean'  0.0  '/all_s_d1_num'          'RbZt' ''      'sal'     ''       'ge' 0.01 }
@@ -825,15 +831,15 @@ function [ ] = GenTsdHistMeas()
 %        { 'AzAveragedData/hist_all_dust_adv_<CASE>.h5' '/dust_adv' 'wtmean'  0.0  '/all_whole_m_dust_adv'    'rbZt' ''      'mid'     ''       'ge' 0.01 }
 %        { 'AzAveragedData/hist_all_dust_adv_<CASE>.h5' '/dust_adv' 'wtmean'  0.0  '/all_whole_f_dust_adv'    'rbZt' ''      'final'   ''       'ge' 0.01 }
 %
-%        { 'AzAveragedData/hist_all_dust_mass_<CASE>.h5' '/dust_mass' 'wtmean'  0.0  '/all_dust_mass_ts'         'RbZT' ''      ''        ''       'ge' 0.01 }
-%        { 'AzAveragedData/hist_all_dust_mass_<CASE>.h5' '/dust_mass' 'wtmean'  0.0  '/all_ps_dust_mass'         'RbZt' ''      'pre_sal' ''       'ge' 0.01 }
-%        { 'AzAveragedData/hist_all_dust_mass_<CASE>.h5' '/dust_mass' 'wtmean'  0.0  '/all_s_dust_mass'          'RbZt' ''      'sal'     ''       'ge' 0.01 }
-%        { 'AzAveragedData/hist_all_dust_mass_<CASE>.h5' '/dust_mass' 'wtmean'  0.0  '/all_whole_ps_dust_mass'   'rbZt' ''      'pre_sal' ''       'ge' 0.01 }
-%        { 'AzAveragedData/hist_all_dust_mass_<CASE>.h5' '/dust_mass' 'wtmean'  0.0  '/all_whole_s_dust_mass'    'rbZt' ''      'sal'     ''       'ge' 0.01 }
-%        { 'AzAveragedData/hist_all_dust_mass_<CASE>.h5' '/dust_mass' 'wtmean'  0.0  '/all_whole_i_dust_mass'    'rbZt' ''      'init'    ''       'ge' 0.01 }
-%        { 'AzAveragedData/hist_all_dust_mass_<CASE>.h5' '/dust_mass' 'wtmean'  0.0  '/all_whole_m_dust_mass'    'rbZt' ''      'mid'     ''       'ge' 0.01 }
-%        { 'AzAveragedData/hist_all_dust_mass_<CASE>.h5' '/dust_mass' 'wtmean'  0.0  '/all_whole_f_dust_mass'    'rbZt' ''      'final'   ''       'ge' 0.01 }
-%
+        { 'AzAveragedData/hist_all_dust_mass_<CASE>.h5' '/dust_mass' 'wtmean'  0.0  '/all_dust_mass_ts'         'RbZT' ''      ''        ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_all_dust_mass_<CASE>.h5' '/dust_mass' 'wtmean'  0.0  '/all_ps_dust_mass'         'RbZt' ''      'pre_sal' ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_all_dust_mass_<CASE>.h5' '/dust_mass' 'wtmean'  0.0  '/all_s_dust_mass'          'RbZt' ''      'sal'     ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_all_dust_mass_<CASE>.h5' '/dust_mass' 'wtmean'  0.0  '/all_whole_ps_dust_mass'   'rbZt' ''      'pre_sal' ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_all_dust_mass_<CASE>.h5' '/dust_mass' 'wtmean'  0.0  '/all_whole_s_dust_mass'    'rbZt' ''      'sal'     ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_all_dust_mass_<CASE>.h5' '/dust_mass' 'wtmean'  0.0  '/all_whole_i_dust_mass'    'rbZt' ''      'init'    ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_all_dust_mass_<CASE>.h5' '/dust_mass' 'wtmean'  0.0  '/all_whole_m_dust_mass'    'rbZt' ''      'mid'     ''       'ge' 0.01 }
+        { 'AzAveragedData/hist_all_dust_mass_<CASE>.h5' '/dust_mass' 'wtmean'  0.0  '/all_whole_f_dust_mass'    'rbZt' ''      'final'   ''       'ge' 0.01 }
+
 %        { 'AzAveragedData/hist_tcond_dust_mass_<CASE>.h5' '/dust_mass' 'wtmean'  0.0  '/tcond_dust_mass_ts'         'RbZT' ''      ''        ''       'ge' 0.01 }
 %        { 'AzAveragedData/hist_tcond_dust_mass_<CASE>.h5' '/dust_mass' 'wtmean'  0.0  '/tcond_ps_dust_mass'         'RbZt' ''      'pre_sal' ''       'ge' 0.01 }
 %        { 'AzAveragedData/hist_tcond_dust_mass_<CASE>.h5' '/dust_mass' 'wtmean'  0.0  '/tcond_s_dust_mass'          'RbZt' ''      'sal'     ''       'ge' 0.01 }
@@ -856,9 +862,9 @@ function [ ] = GenTsdHistMeas()
 %
 %        { 'AzAveragedData/hist_all_dust_mass_<CASE>.h5'   '/dust_mass'   'wtmean'  0.0  '/all_whole_dust_mass_ts'     'rbZT' ''      ''        ''       'ge' 0.01 }
 %        { 'AzAveragedData/hist_all_tracer_mass_<CASE>.h5' '/tracer_mass' 'wtmean'  0.0  '/all_whole_tracer_mass_ts'   'rbZT' ''      ''        ''       'ge' 0.01 }
-%      }
-%      'DIAGS/hist_meas_az_dust_<CASE>.h5'
-%    }
+      }
+      'DIAGS/hist_meas_az_dust_<CASE>.h5'
+    }
 %
 %    % ccn measurements
 %    {
@@ -3141,10 +3147,10 @@ function [ ] = GenTsdHistMeas()
 %      'DIAGS/hist_meas_ts_cpools_<CASE>.h5'
 %    }
 %
-    % Precip rate
-    {
-      'Precip Rate Tsavg'
-      {
+%    % Precip rate
+%    {
+%      'Precip Rate Tsavg'
+%      {
 %        % sample region
 %        { 'TsAveragedData/hist_spath_pcprate_<CASE>.h5' '/pcprate' 'wtmean'  0.0  '/spath_ps_pcprate_ts'   'b__T'   ''      'pre_sal' ''       'ge' 0.001 }
 %        { 'TsAveragedData/hist_spath_pcprate_<CASE>.h5' '/pcprate' 'wtmean'  0.0  '/spath_s_pcprate_ts'    'b__T'   ''      'sal'     ''       'ge' 0.001 }
@@ -3163,7 +3169,7 @@ function [ ] = GenTsdHistMeas()
 %
 %        { 'TsAveragedData/hist_sal_pcprate_<CASE>.h5' '/pcprate' 'wtmean'  0.0  '/sal_pcprate_ts'      'b__T'   ''      ''        ''       'ge' 0.001 }
 %
-        { 'TsAveragedData/hist_sal_ar_pcprate_<CASE>.h5' '/pcprate' 'wtmean'  0.0  '/sal_ar_pcprate_ts'      'b__T'   ''      ''        ''       'ge' 0.001 }
+%        { 'TsAveragedData/hist_sal_ar_pcprate_<CASE>.h5' '/pcprate' 'wtmean'  0.0  '/sal_ar_pcprate_ts'      'b__T'   ''      ''        ''       'ge' 0.001 }
 %
 %        % lead region
 %        { 'TsAveragedData/hist_lead_pcprate_<CASE>.h5' '/pcprate' 'wtmean'  0.0  '/lead_pcprate_ts'      'b__T'   ''      ''        ''       'ge' 0.001 }
@@ -3172,9 +3178,9 @@ function [ ] = GenTsdHistMeas()
 %        { 'TsAveragedData/hist_lead_pcprate_<CASE>.h5' '/pcprate' 'wtmean'  0.0  '/hist_lead_pcprate'    'B__t'   ''      ''        ''       'ge' 0.001 }
 %        { 'TsAveragedData/hist_lead_pcprate_<CASE>.h5' '/pcprate' 'wtmean'  0.0  '/hist_lead_ps_pcprate' 'B__t'   ''      'pre_sal' ''       'ge' 0.001 }
 %        { 'TsAveragedData/hist_lead_pcprate_<CASE>.h5' '/pcprate' 'wtmean'  0.0  '/hist_lead_s_pcprate'  'B__t'   ''      'sal'     ''       'ge' 0.001 }
-      }
-      'DIAGS/hist_meas_ts_pcprate_<CASE>.h5'
-    }
+%      }
+%      'DIAGS/hist_meas_ts_pcprate_<CASE>.h5'
+%    }
 
 %    % Vapor
 %    {
@@ -3683,13 +3689,13 @@ function [ ] = GenTsdHistMeas()
           % convert to hours starting with zero
           switch(TinVar)
             case 'x'
-              ST = (X ./ 3600) - 42;
+              ST = (X .* TimeScale) - TimeOffset;
             case 'y'
-              ST = (Y ./ 3600) - 42;
+              ST = (Y .* TimeScale) - TimeOffset;
             case 'z'
-              ST = (Z ./ 3600) - 42;
+              ST = (Z .* TimeScale) - TimeOffset;
             case 't'
-              ST = (T ./ 3600) - 42;
+              ST = (T .* TimeScale) - TimeOffset;
           end
           T1 = 1;
           T2 = length(ST);

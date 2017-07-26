@@ -41,6 +41,7 @@ function [] = NotateDimension(File, Dname, Dtype);
     case 't'
       WriteStringAttribute(File, Dname, 'axis', 't');
       WriteStringAttribute(File, Dname, 'units', 'seconds since 2006-08-20 12:00:00 00:00');
+      %WriteStringAttribute(File, Dname, 'units', 'seconds since 2006-08-21 18:00:00 00:00');
       WriteStringAttribute(File, Dname, 'long_name', 'simulation time');
       WriteStringAttribute(File, Dname, 'DimNames', 't');
       WriteStringAttribute(File, Dname, 'ArrayOrg', 'row major');
