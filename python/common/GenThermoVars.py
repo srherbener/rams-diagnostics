@@ -30,7 +30,10 @@ Nsims = len(SimList)
 # and "AC" for z.
 VarList = [
     # sigma-z coords
-    [ "press_lite", "/press", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "density_lite", "/density", "AS" ],
+    [ "press_lite", "/press", "sst_lite",    "/sst",       "vapor_lite",    "/vapor",       "sst_entropy_s_lite",    "/sst_entropy_s", "AS" ],
+    [ "press_lite", "/press", "sst_nv_lite", "/sst_basic", "vapor_nv_lite", "/vapor_basic", "sst_entropy_s_nv_lite", "/sst_entropy_s", "AS" ],
+
+#    [ "press_lite", "/press", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "density_lite", "/density", "AS" ],
 #    [ "press_lite", "/press", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "relhum_lite", "/relhum", "AS" ],
 #    [ "press_lite", "/press", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "theta_lite", "/theta", "AS" ],
 #    [ "press_lite", "/press", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "theta_e_lite", "/theta_e", "AS" ],
@@ -38,7 +41,7 @@ VarList = [
 #    [ "press_lite", "/press", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "entropy_lite", "/entropy", "AS" ],
 #    [ "press_lite", "/press", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "entropy_s_lite", "/entropy_s", "AS" ],
 #
-    [ "press_lite", "/press", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "density_nv_lite", "/density", "AS" ],
+#    [ "press_lite", "/press", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "density_nv_lite", "/density", "AS" ],
 #    [ "press_lite", "/press", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "relhum_nv_lite", "/relhum", "AS" ],
 #    [ "press_lite", "/press", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "theta_nv_lite", "/theta", "AS" ],
 #    [ "press_lite", "/press", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "theta_e_nv_lite", "/theta_e", "AS" ],
@@ -49,20 +52,20 @@ VarList = [
     # pressure coords
     # use the tempc file and "/z_coords" for the pressure values
     [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "density_lite", "/density", "AP" ],
-#    [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "relhum_lite", "/relhum", "AP" ],
-#    [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "theta_lite", "/theta", "AP" ],
-#    [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "theta_e_lite", "/theta_e", "AP" ],
-#    [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "theta_es_lite", "/theta_es", "AP" ],
-#    [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "entropy_lite", "/entropy", "AP" ],
-#    [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "entropy_s_lite", "/entropy_s", "AP" ],
-#
+    [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "relhum_lite", "/relhum", "AP" ],
+    [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "theta_lite", "/theta", "AP" ],
+    [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "theta_e_lite", "/theta_e", "AP" ],
+    [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "theta_es_lite", "/theta_es", "AP" ],
+    [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "entropy_lite", "/entropy", "AP" ],
+    [ "tempc_lite", "/z_coords", "tempc_lite", "/tempc", "vapor_lite", "/vapor", "entropy_s_lite", "/entropy_s", "AP" ],
+
     [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "density_nv_lite", "/density", "AP" ],
-#    [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "relhum_nv_lite", "/relhum", "AP" ],
-#    [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "theta_nv_lite", "/theta", "AP" ],
-#    [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "theta_e_nv_lite", "/theta_e", "AP" ],
-#    [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "theta_es_nv_lite", "/theta_es", "AP" ],
-#    [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "entropy_nv_lite", "/entropy", "AP" ],
-#    [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "entropy_s_nv_lite", "/entropy_s", "AP" ],
+    [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "relhum_nv_lite", "/relhum", "AP" ],
+    [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "theta_nv_lite", "/theta", "AP" ],
+    [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "theta_e_nv_lite", "/theta_e", "AP" ],
+    [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "theta_es_nv_lite", "/theta_es", "AP" ],
+    [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "entropy_nv_lite", "/entropy", "AP" ],
+    [ "tempc_lite", "/z_coords", "tempc_nv_lite", "/tempc_basic", "vapor_nv_lite", "/vapor_basic", "entropy_s_nv_lite", "/entropy_s", "AP" ],
     ]
 Nvars = len(VarList)
 
@@ -96,7 +99,7 @@ for isim in range(Nsims):
         Ofname = FileTemplate.replace("<SIM>", Sim).replace("<VCOORD>", Vcoord).replace("<VAR>", Ofvname)
 
         # Open the files, note in the case of pressure coordinates Pfile and Tfile
-        # will both be opening teh temperature file.
+        # will both be opening the temperature file.
         Pfile = h5py.File(Pfname, mode='r')
         Tfile = h5py.File(Tfname, mode='r')
         Vfile = h5py.File(Vfname, mode='r')
@@ -104,23 +107,25 @@ for isim in range(Nsims):
         Ofile = h5py.File(Ofname, mode='w')
 
         # Build the coordinates
-        print("  Reading: {0:s} ({1:s})".format(Pfname, Xname))
+        # Use the temperature file for now. Temperature is the only variable that exists in
+        # both 2D (sst) and 3D (tempc) forms. This will get z_coords and Nz set correctly.
+        print("  Reading: {0:s} ({1:s})".format(Tfname, Xname))
         print("  Writing: {0:s} ({1:s})".format(Ofname, Xname))
-        X = Pfile[Xname][...]
+        X = Tfile[Xname][...]
         Nx = len(X)
         Xdim = h5u.DimCoards(Xname, 1, [ Nx ], 'x')
         Xdim.Build(Ofile, X)
     
-        print("  Reading: {0:s} ({1:s})".format(Pfname, Yname))
+        print("  Reading: {0:s} ({1:s})".format(Tfname, Yname))
         print("  Writing: {0:s} ({1:s})".format(Ofname, Yname))
-        Y = Pfile[Yname][...]
+        Y = Tfile[Yname][...]
         Ny = len(Y)
         Ydim = h5u.DimCoards(Yname, 1, [ Ny ], 'y')
         Ydim.Build(Ofile, Y)
     
-        print("  Reading: {0:s} ({1:s})".format(Pfname, Zname))
+        print("  Reading: {0:s} ({1:s})".format(Tfname, Zname))
         print("  Writing: {0:s} ({1:s})".format(Ofname, Zname))
-        Z = Pfile[Zname][...]
+        Z = Tfile[Zname][...]
         Nz = len(Z)
         if (Vcoord == "AP"):
             Zdim = h5u.DimCoards(Zname, 1, [ Nz ], 'p')
@@ -128,9 +133,9 @@ for isim in range(Nsims):
             Zdim = h5u.DimCoards(Zname, 1, [ Nz ], 'z')
         Zdim.Build(Ofile, Z)
     
-        print("  Reading: {0:s} ({1:s})".format(Pfname, Tname))
+        print("  Reading: {0:s} ({1:s})".format(Tfname, Tname))
         print("  Writing: {0:s} ({1:s})".format(Ofname, Tname))
-        T = Pfile[Tname][...]
+        T = Tfile[Tname][...]
         Nt = len(T)
         Tdim = h5u.DimCoards(Tname, 1, [ Nt ], 't', tstring=Tstring)
         Tdim.Build(Ofile, T)
@@ -164,6 +169,8 @@ for isim in range(Nsims):
                 P = Pfile[Pvname][it,...] * 100 # convert mb (hPa) to Pa
 
             T = Tfile[Tvname][it,...] + 273.15 # convert deg C to K
+            if (len(T.shape) == 2):
+                T = T.reshape([ 1, Ny, Nx ])
             V = Vfile[Vvname][it,...] * 1e-3   # convert g/kg to kg/kg
 
             if (Ovname == "/density"):
@@ -179,6 +186,9 @@ for isim in range(Nsims):
             elif (Ovname == "/entropy"):
                 VAR = tu.Entropy(T, P, V)
             elif (Ovname == "/entropy_s"):
+                VAR = tu.SatEntropy(T, P)
+            elif (Ovname == "/sst_entropy_s"):
+                P = np.ones(T.shape) * 101300.0 # mean sea level pressure in Pa
                 VAR = tu.SatEntropy(T, P)
             else:
                 print("WARNING: unrecognized output variable ({0:s}), filling output with zeros".format(Ovname))

@@ -26,12 +26,6 @@ Nsims = len(SimList)
 StormCenterFnameTemplate = "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5"
 RadiusVname = "/radius"
 
-SstFnameTemplate = "HDF5/<SIM>/HDF5/sst_lite-<SIM>-AS-2006-08-20-120000-g3.h5"
-SstVname = "/sst"
-
-SpressFnameTemplate = "HDF5/<SIM>/HDF5/sea_press_lite-<SIM>-AS-2006-08-20-120000-g3.h5"
-SpressVname = "/sea_press"
-
 RmwFnameTemplate = "DIAGS/storm_meas_<SIM>.h5"
 RmwVname = "/rmw_t_p"
 
@@ -46,6 +40,10 @@ EntropyVname = "/entropy"
 SatEntropyFnameTemplate = "HDF5/<SIM>/HDF5/entropy_s_lite-<SIM>-AP-2006-08-20-120000-g3.h5"
 SatEntropyNvFnameTemplate = "HDF5/<SIM>/HDF5/entropy_s_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5"
 SatEntropyVname = "/entropy_s"
+
+SstSatEntropyFnameTemplate = "HDF5/<SIM>/HDF5/sst_entropy_s_lite-<SIM>-AS-2006-08-20-120000-g3.h5"
+SstSatEntropyNvFnameTemplate = "HDF5/<SIM>/HDF5/sst_entropy_s_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5"
+SstSatEntropyVname = "/sst_entropy_s"
 
 
 OutFnameTemplate = "DIAGS/entropy_deficit_<SIM>.h5"
@@ -70,7 +68,7 @@ Zmid2 = 4
 # For boundary layer measurements, use average of 1000 to 850 mb levels
 # These are indices 0 and 2 along the z-axis
 Zbl1 = 0
-Zbl2 = 0
+Zbl2 = 1
 
 # Radius values for averaging regions
 Rin  = 150.0 # km
@@ -82,23 +80,20 @@ for isim in range(Nsims):
     print("Calculating entropy deficit for simulation: {0:s}".format(Sim))
     print("")
 
-    StormCenterFname   = StormCenterFnameTemplate.replace("<SIM>", Sim)
-    SstFname           = SstFnameTemplate.replace("<SIM>", Sim)
-    SpressFname        = SpressFnameTemplate.replace("<SIM>", Sim)
-    RmwFname           = RmwFnameTemplate.replace("<SIM>", Sim)
-    DensityFname       = DensityFnameTemplate.replace("<SIM>", Sim)
-    EntropyFname       = EntropyFnameTemplate.replace("<SIM>", Sim)
-    SatEntropyFname    = SatEntropyFnameTemplate.replace("<SIM>", Sim)
-    DensityNvFname     = DensityNvFnameTemplate.replace("<SIM>", Sim)
-    EntropyNvFname     = EntropyNvFnameTemplate.replace("<SIM>", Sim)
-    SatEntropyNvFname  = SatEntropyNvFnameTemplate.replace("<SIM>", Sim)
+    StormCenterFname      = StormCenterFnameTemplate.replace("<SIM>", Sim)
+    RmwFname              = RmwFnameTemplate.replace("<SIM>", Sim)
+    DensityFname          = DensityFnameTemplate.replace("<SIM>", Sim)
+    EntropyFname          = EntropyFnameTemplate.replace("<SIM>", Sim)
+    SatEntropyFname       = SatEntropyFnameTemplate.replace("<SIM>", Sim)
+    DensityNvFname        = DensityNvFnameTemplate.replace("<SIM>", Sim)
+    EntropyNvFname        = EntropyNvFnameTemplate.replace("<SIM>", Sim)
+    SatEntropyNvFname     = SatEntropyNvFnameTemplate.replace("<SIM>", Sim)
+    SstSatEntropyNvFname  = SstSatEntropyNvFnameTemplate.replace("<SIM>", Sim)
 
-    OutFname           = OutFnameTemplate.replace("<SIM>", Sim)
+    OutFname = OutFnameTemplate.replace("<SIM>", Sim)
 
 
     print("  Reading {0:s} ({1:s})".format(StormCenterFname, RadiusVname))
-    print("  Reading {0:s} ({1:s})".format(SstFname, SstVname))
-    print("  Reading {0:s} ({1:s})".format(SpressFname, SpressVname))
     print("  Reading {0:s} ({1:s})".format(RmwFname, RmwVname))
     print("  Reading {0:s} ({1:s})".format(DensityFname, DensityVname))
     print("  Reading {0:s} ({1:s})".format(EntropyFname, EntropyVname))
@@ -106,19 +101,19 @@ for isim in range(Nsims):
     print("  Reading {0:s} ({1:s})".format(DensityNvFname, DensityVname))
     print("  Reading {0:s} ({1:s})".format(EntropyNvFname, EntropyVname))
     print("  Reading {0:s} ({1:s})".format(SatEntropyNvFname, SatEntropyVname))
+    print("  Reading {0:s} ({1:s})".format(SstSatEntropyNvFname, SstSatEntropyVname))
     print("")
 
     # Read coordinates and build the dimensions.
-    StormCenterFile   = h5py.File(StormCenterFname, mode='r')
-    SstFile           = h5py.File(SstFname, mode='r')
-    SpressFile        = h5py.File(SpressFname, mode='r')
-    RmwFile           = h5py.File(RmwFname, mode='r')
-    DensityFile       = h5py.File(DensityFname, mode='r')
-    EntropyFile       = h5py.File(EntropyFname, mode='r')
-    SatEntropyFile    = h5py.File(SatEntropyFname, mode='r')
-    DensityNvFile     = h5py.File(DensityNvFname, mode='r')
-    EntropyNvFile     = h5py.File(EntropyNvFname, mode='r')
-    SatEntropyNvFile  = h5py.File(SatEntropyNvFname, mode='r')
+    StormCenterFile      = h5py.File(StormCenterFname, mode='r')
+    RmwFile              = h5py.File(RmwFname, mode='r')
+    DensityFile          = h5py.File(DensityFname, mode='r')
+    EntropyFile          = h5py.File(EntropyFname, mode='r')
+    SatEntropyFile       = h5py.File(SatEntropyFname, mode='r')
+    DensityNvFile        = h5py.File(DensityNvFname, mode='r')
+    EntropyNvFile        = h5py.File(EntropyNvFname, mode='r')
+    SatEntropyNvFile     = h5py.File(SatEntropyNvFname, mode='r')
+    SstSatEntropyNvFile  = h5py.File(SstSatEntropyNvFname, mode='r')
 
     OutFile = h5py.File(OutFname, mode='w')
 
@@ -152,6 +147,7 @@ for isim in range(Nsims):
     Sm      = np.zeros((Nt))
     SsSat   = np.zeros((Nt))
     Sb      = np.zeros((Nt))
+    SasDiff = np.zeros((Nt))
 
     # Entropy deficit is from Tang & Emanuel (2012)
     #
@@ -183,10 +179,8 @@ for isim in range(Nsims):
         Sblayer    = np.squeeze(EntropyNvFile[EntropyVname][it,Zbl1:Zbl2+1,...])
         DensBlayer = np.squeeze(DensityNvFile[DensityVname][it,Zbl1:Zbl2+1,...])
 
-
-        # sea surface temperature (SST) and sea level pressure
-        Sst = np.squeeze(SstFile[SstVname][it,...]) + 273.15  # convert to K
-        Spress = np.squeeze(SpressFile[SpressVname][it,...]) * 100.0 # covert to Pa
+        # saturation entropy at SST values
+        SsatSst = np.squeeze(SstSatEntropyNvFile[SstSatEntropyVname][it,...])
 
         # radius of maximum wind and radius values
         Rmw = RmwFile[RmwVname][it] / 1000.0 # convert to km
@@ -197,12 +191,7 @@ for isim in range(Nsims):
         Smidlevel    = np.squeeze(np.average(Smidlevel, axis=0, weights=DensMidlevel))
         SsatMidlevel = np.squeeze(np.average(SsatMidlevel, axis=0, weights=DensMidlevel))
 
-        #Sblayer = np.squeeze(np.average(Sblayer, axis=0, weights=DensBlayer))
-
-
-        # Calculate saturation entropy at SST and sea level pressure 
-        SsatSst = tu.SatEntropy(Sst, Spress)
-        #SsatSst = tu.SatEntropy(Sst, 101300.0)
+        Sblayer = np.squeeze(np.average(Sblayer, axis=0, weights=DensBlayer))
 
 
         # For mid-level, select across the inside radius (disk) for the saturation entropy
@@ -210,16 +199,18 @@ for isim in range(Nsims):
         Sm[it]    = np.mean(Smidlevel[(Radius >= Rin) * (Radius <= Rout)])
         SmSat[it] = np.mean(SsatMidlevel[Radius <= Rin])
 
-        # Select across the entire outside radius disk for both the surface and
-        # boundary layer entropies. 
-        Sb[it]    = np.mean(Sblayer[(Radius <= 500.0)])
-        SsSat[it] = np.mean(SsatSst[Radius <= 500.0])
-        #SsSat[it] = np.mean(SsatSfc[Radius <= 500.0])
-    
+        # For surface, select across the entire storm location from center to outside radius.
+        SbSel     = Sblayer[(Radius <= Rout)]  # yeilds a linear array with selected points
+        SstSatSel = SsatSst[(Radius <= Rout)]
+
+        Sb[it]    = np.mean(SbSel)
+        SsSat[it] = np.mean(SstSatSel)
+
+        #SasDiff[it] = np.mean(SstSatSel - SbSel)  # average of differences
 
     # Entropy deficit
     SmlDiff = SmSat - Sm
-    SasDiff = SsSat - Sb
+    SasDiff = SsSat - Sb  # difference of averages
     Sd = SmlDiff / SasDiff
 
     # Create output with COARDS convention
@@ -251,8 +242,6 @@ for isim in range(Nsims):
 
     # clean up
     StormCenterFile.close()
-    SstFile.close()
-    SpressFile.close()
     RmwFile.close()
     DensityFile.close()
     EntropyFile.close()
@@ -260,6 +249,7 @@ for isim in range(Nsims):
     DensityNvFile.close()
     EntropyNvFile.close()
     SatEntropyNvFile.close()
+    SstSatEntropyNvFile.close()
 
     OutFile.close()
 
