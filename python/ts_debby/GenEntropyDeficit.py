@@ -26,11 +26,8 @@ Nsims = len(SimList)
 StormCenterFnameTemplate = "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5"
 RadiusVname = "/radius"
 
-RmwFnameTemplate = "DIAGS/storm_meas_<SIM>.h5"
-RmwVname = "/rmw_t_p"
-
-DensityFnameTemplate = "HDF5/<SIM>/HDF5/density_lite-<SIM>-AS-2006-08-20-120000-g3.h5"
-DensityNvFnameTemplate = "HDF5/<SIM>/HDF5/density_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5"
+DensityFnameTemplate = "HDF5/<SIM>/HDF5/density_lite-<SIM>-AP-2006-08-20-120000-g3.h5"
+DensityNvFnameTemplate = "HDF5/<SIM>/HDF5/density_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5"
 DensityVname = "/density"
 
 EntropyFnameTemplate = "HDF5/<SIM>/HDF5/entropy_lite-<SIM>-AP-2006-08-20-120000-g3.h5"
@@ -68,7 +65,7 @@ Zmid2 = 4
 # For boundary layer measurements, use average of 1000 to 850 mb levels
 # These are indices 0 and 2 along the z-axis
 Zbl1 = 0
-Zbl2 = 1
+Zbl2 = 2
 
 # Radius values for averaging regions
 Rin  = 150.0 # km
@@ -81,7 +78,6 @@ for isim in range(Nsims):
     print("")
 
     StormCenterFname      = StormCenterFnameTemplate.replace("<SIM>", Sim)
-    RmwFname              = RmwFnameTemplate.replace("<SIM>", Sim)
     DensityFname          = DensityFnameTemplate.replace("<SIM>", Sim)
     EntropyFname          = EntropyFnameTemplate.replace("<SIM>", Sim)
     SatEntropyFname       = SatEntropyFnameTemplate.replace("<SIM>", Sim)
@@ -94,7 +90,6 @@ for isim in range(Nsims):
 
 
     print("  Reading {0:s} ({1:s})".format(StormCenterFname, RadiusVname))
-    print("  Reading {0:s} ({1:s})".format(RmwFname, RmwVname))
     print("  Reading {0:s} ({1:s})".format(DensityFname, DensityVname))
     print("  Reading {0:s} ({1:s})".format(EntropyFname, EntropyVname))
     print("  Reading {0:s} ({1:s})".format(SatEntropyFname, SatEntropyVname))
@@ -106,7 +101,6 @@ for isim in range(Nsims):
 
     # Read coordinates and build the dimensions.
     StormCenterFile      = h5py.File(StormCenterFname, mode='r')
-    RmwFile              = h5py.File(RmwFname, mode='r')
     DensityFile          = h5py.File(DensityFname, mode='r')
     EntropyFile          = h5py.File(EntropyFname, mode='r')
     SatEntropyFile       = h5py.File(SatEntropyFname, mode='r')
@@ -183,7 +177,6 @@ for isim in range(Nsims):
         SsatSst = np.squeeze(SstSatEntropyNvFile[SstSatEntropyVname][it,...])
 
         # radius of maximum wind and radius values
-        Rmw = RmwFile[RmwVname][it] / 1000.0 # convert to km
         Radius = np.squeeze(StormCenterFile[RadiusVname][it,...]) # already in km
 
 
@@ -242,7 +235,6 @@ for isim in range(Nsims):
 
     # clean up
     StormCenterFile.close()
-    RmwFile.close()
     DensityFile.close()
     EntropyFile.close()
     SatEntropyFile.close()
