@@ -8,32 +8,9 @@ sys.path.append("{0:s}/etc/python/ts_debby".format(os.environ['HOME']))
 import h5py
 import numpy as np
 import scipy.integrate as integ
-import pandas as pd
 import ConfigTsd as conf
 import Hdf5Utils as h5u
-
-#######################################################################################
-# Functions
-#######################################################################################
-
-#####################################
-# SmoothLine
-#
-# Remove noise from a linear data series.
-#
-def SmoothLine(Var):
-    # Use the ewma (exponentially weighted moving average) from the
-    # scipy package to smooth a data series. Apply both forward and
-    # backward in order to eliminate phase delay.
-
-    FiltCom = 10 # Center of mass spec for ewma function. alpha = 1 / ( 1 + FiltCom)
-
-    Forward  = pd.ewma(Var, com=FiltCom)
-    Backward = pd.ewma(Var[::-1], com=FiltCom)
-    VarSmooth = np.vstack((Forward, Backward[::-1]))
-    VarSmooth = np.squeeze(np.mean(VarSmooth, axis=0))
-
-    return VarSmooth
+import NumUtils as nu
 
 #######################################################################################
 # Main
@@ -71,8 +48,6 @@ Ztop = 3200
 
 Pbot = 1000 # mb
 Ptop = 700
-
-FiltLen = 5
 
 for isim in range(Nsims):
     Sim = SimList[isim]
@@ -185,7 +160,7 @@ for isim in range(Nsims):
         # Smooth the input temperature field in the horizontal.
         InVarSmooth = np.zeros((Nvert,Nx))
         for ivert in range(Nvert):
-            InVarSmooth[ivert,:] = SmoothLine(np.squeeze(InVar[ivert,:]))
+            InVarSmooth[ivert,:] = nu.SmoothLine(np.squeeze(InVar[ivert,:]))
 
         # Take the horizontal gradient of the 2D field.
         #   Create a 2D delta X array
@@ -193,7 +168,7 @@ for isim in range(Nsims):
         InVarGrad = np.gradient(InVarSmooth, DeltaX_2D, axis=1)
         InVarGradSmooth = np.zeros((Nvert,Nx))
         for ivert in range(Nvert):
-            InVarGradSmooth[ivert,:] = SmoothLine(np.squeeze(InVarGrad[ivert,:]))
+            InVarGradSmooth[ivert,:] = nu.SmoothLine(np.squeeze(InVarGrad[ivert,:]))
 
         # Do vertical average of layer between bottom and top layer
         # Use Simpson's Rule integration to the do the averaging
@@ -202,11 +177,11 @@ for isim in range(Nsims):
         Tbar = np.squeeze(integ.simps(Tselect, Hselect, axis=0)) / Height
 
         # Smooth Tbar in order to mitigate noise in the gradient
-        Tbar = SmoothLine(Tbar)
+        Tbar = nu.SmoothLine(Tbar)
 
         # Gradient of Tbar (mean temperature of layer)
         Tgrad = np.gradient(Tbar, DeltaX)
-        TgradSmooth = SmoothLine(Tgrad)
+        TgradSmooth = nu.SmoothLine(Tgrad)
          
         # Output:
         #  original field

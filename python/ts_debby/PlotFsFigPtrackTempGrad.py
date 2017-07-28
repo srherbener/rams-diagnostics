@@ -129,7 +129,7 @@ for i in range(Nfacs):
 #    top half: Tgrad
 #    bottom half: Tgrad factors
 Pdir = 'Plots.py'
-Ylim = [ -1.0, 0.5 ]
+Ylim = [ -2.0, 1.5 ]
 
 Fig = plt.figure()
 

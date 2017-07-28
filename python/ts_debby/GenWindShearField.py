@@ -53,8 +53,6 @@ UshearVname = "/u_shear"
 VshearVname = "/v_shear"
 MagShearVname = "/mag_shear"
 AngShearVname = "/angle_shear"
-MagShearStormVname = "/mag_shear_storm"
-AvgMagShearStormVname = "/avg_mag_shear_storm"
 
 # Samples of shear magnitude field at t = 10, 30, 40, 60 hrs sim time.
 # These are the beginning and end times of the PSAP and SAP.
@@ -198,8 +196,6 @@ for isim in range(Nsims):
     VshearDset = h5u.DsetCoards(VshearVname, 3, [ Nt, Ny, Nx ], chunks=( 1, Ny, Nx ))
     MagShearDset = h5u.DsetCoards(MagShearVname, 3, [ Nt, Ny, Nx ], chunks=( 1, Ny, Nx ))
     AngShearDset = h5u.DsetCoards(AngShearVname, 3, [ Nt, Ny, Nx ], chunks=( 1, Ny, Nx ))
-    MagShearStormDset = h5u.DsetCoards(MagShearStormVname, 3, [ Nt, Ny, Nx ], chunks=( 1, Ny, Nx ))
-    AvgMagShearStormDset = h5u.DsetCoards(AvgMagShearStormVname, 1, [ Nt ])
     MagShear10Dset = h5u.DsetCoards(MagShear10Vname, 2, [ Ny, Nx ])
     MagShear20Dset = h5u.DsetCoards(MagShear20Vname, 2, [ Ny, Nx ])
     MagShear30Dset = h5u.DsetCoards(MagShear30Vname, 2, [ Ny, Nx ])
@@ -211,8 +207,6 @@ for isim in range(Nsims):
     VshearDset.Create(Ofile)
     MagShearDset.Create(Ofile)
     AngShearDset.Create(Ofile)
-    MagShearStormDset.Create(Ofile)
-    AvgMagShearStormDset.Create(Ofile)
     MagShear10Dset.Create(Ofile)
     MagShear20Dset.Create(Ofile)
     MagShear30Dset.Create(Ofile)
@@ -249,18 +243,12 @@ for isim in range(Nsims):
         MAG_SHEAR = np.sqrt(np.square(U_SHEAR) + np.square(V_SHEAR))
         #MAG_SHEAR = np.absolute(U_SHEAR)  # zonal shear
         ANG_SHEAR = np.arctan2(V_SHEAR, U_SHEAR)
-        MAG_SHEAR_STORM = np.multiply(MAG_SHEAR, FILTER)
-
-        # Get an average shear magnitude over the storm reagion. 
-        AVG_MAG_SHEAR_STORM = np.mean(MAG_SHEAR_STORM[MAG_SHEAR_STORM > 0.0])
 
         # Write fields into output file
         Ofile[UshearVname][it,:,:] = U_SHEAR
         Ofile[VshearVname][it,:,:] = V_SHEAR
         Ofile[MagShearVname][it,:,:] = MAG_SHEAR
         Ofile[AngShearVname][it,:,:] = ANG_SHEAR
-        Ofile[MagShearStormVname][it,:,:] = MAG_SHEAR_STORM
-        Ofile[AvgMagShearStormVname][it] = AVG_MAG_SHEAR_STORM
    
         # Write out the sampled shear magnitude fields. Add the [...] so
         # that h5py doesn't try to recreate the dataset. We want to
@@ -289,8 +277,6 @@ for isim in range(Nsims):
     print("  Writing {0:s} ({1:s})".format(Ofname, VshearVname))
     print("  Writing {0:s} ({1:s})".format(Ofname, MagShearVname))
     print("  Writing {0:s} ({1:s})".format(Ofname, AngShearVname))
-    print("  Writing {0:s} ({1:s})".format(Ofname, MagShearStormVname))
-    print("  Writing {0:s} ({1:s})".format(Ofname, AvgMagShearStormVname))
     print("  Writing {0:s} ({1:s})".format(Ofname, MagShear10Vname))
     print("  Writing {0:s} ({1:s})".format(Ofname, MagShear20Vname))
     print("  Writing {0:s} ({1:s})".format(Ofname, MagShear30Vname))
@@ -302,8 +288,6 @@ for isim in range(Nsims):
     VshearDset.AttachDims(Ofile, Tdim, Ydim, Xdim)
     MagShearDset.AttachDims(Ofile, Tdim, Ydim, Xdim)
     AngShearDset.AttachDims(Ofile, Tdim, Ydim, Xdim)
-    MagShearStormDset.AttachDims(Ofile, Tdim, Ydim, Xdim)
-    AvgMagShearStormDset.AttachDims(Ofile, Tdim)
     MagShear10Dset.AttachDims(Ofile, Ydim, Xdim)
     MagShear20Dset.AttachDims(Ofile, Ydim, Xdim)
     MagShear30Dset.AttachDims(Ofile, Ydim, Xdim)

@@ -10,6 +10,7 @@ import numpy as np
 import ConfigTsd as conf
 import Hdf5Utils as h5u
 import ThermoUtils as tu
+import NumUtils as nu
 
 #################################################################################
 # SUBROUTINES
@@ -75,19 +76,10 @@ TempVname = "/tempc_basic"
 SstNvFnameTemplate = "HDF5/<SIM>/HDF5/sst_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5"
 SstVname = "/sst_basic"
 
-UnvFnameTemplate = "HDF5/<SIM>/HDF5/u_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5"
-Uvname = "/u_basic"
-
-VnvFnameTemplate = "HDF5/<SIM>/HDF5/v_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5"
-Vvname = "/v_basic"
-
+WshFnameTemplate = "DIAGS/wind_shear_nv_lite_<SIM>.h5"
+WshVname = "/mag_shear"
 
 OutFnameTemplate = "DIAGS/vent_index_<SIM>.h5"
-UshearVname        = "/u_shear"
-VshearVname        = "/v_shear"
-MagShearVname      = "/mag_shear"
-AngShearVname      = "/angle_shear"
-MagShearStormVname = "/mag_shear_storm"
 WindShearVname     = "/wind_shear"
 
 SmSatVname   = "/mid_level_sat_entropy"
@@ -101,6 +93,20 @@ ToVname = "/outflow_temp"
 PiVname = "/pot_intensity"
 
 ViVname = "/vent_index"
+
+WindShearSmoothVname     = "/sm_wind_shear"
+
+SmSatSmoothVname   = "/sm_mid_level_sat_entropy"
+SmSmoothVname      = "/sm_mid_level_entropy"
+SsstSatSmoothVname = "/sm_sst_sat_entropy"
+SbSmoothVname      = "/sm_bl_entropy"
+SdefSmoothVname    = "/sm_entropy_deficit"
+
+TsSmoothVname = "/sm_ocean_temp"
+ToSmoothVname = "/sm_outflow_temp"
+PiSmoothVname = "/sm_pot_intensity"
+
+ViSmoothVname = "/sm_vent_index"
 
 Xname = '/x_coords'
 Yname = '/y_coords'
@@ -121,15 +127,6 @@ Tname = '/t_coords'
 #      150           9
 #      100          10
 
-
-# For wind shear measurements:
-#    surface layer: 1000 - 925 mb
-#        SAL layer: 700 - 500 mb
-Zsfc1 = 0
-Zsfc2 = 1
-
-Zsal1 = 3
-Zsal2 = 4
 
 # For mid-level layer: 700 - 500 mb
 Zmid1 = 3
@@ -159,8 +156,7 @@ for isim in range(Nsims):
     print("Calculating entropy deficit for simulation: {0:s}".format(Sim))
     print("")
 
-    UnvFname              = UnvFnameTemplate.replace("<SIM>", Sim)
-    VnvFname              = VnvFnameTemplate.replace("<SIM>", Sim)
+    WshFname              = WshFnameTemplate.replace("<SIM>", Sim)
     EntropyFname          = EntropyFnameTemplate.replace("<SIM>", Sim)
     EntropyNvFname        = EntropyNvFnameTemplate.replace("<SIM>", Sim)
     SatEntropyFname       = SatEntropyFnameTemplate.replace("<SIM>", Sim)
@@ -174,8 +170,7 @@ for isim in range(Nsims):
     OutFname = OutFnameTemplate.replace("<SIM>", Sim)
 
 
-    print("  Reading {0:s} ({1:s})".format(UnvFname, Uvname))
-    print("  Reading {0:s} ({1:s})".format(VnvFname, Uvname))
+    print("  Reading {0:s} ({1:s})".format(WshFname, WshVname))
     print("  Reading {0:s} ({1:s})".format(EntropyFname, EntropyVname))
     print("  Reading {0:s} ({1:s})".format(EntropyNvFname, EntropyVname))
     print("  Reading {0:s} ({1:s})".format(SatEntropyFname, SatEntropyVname))
@@ -188,8 +183,7 @@ for isim in range(Nsims):
     print("")
 
     # Read coordinates and build the dimensions.
-    UnvFile              = h5py.File(UnvFname, mode='r')
-    VnvFile              = h5py.File(VnvFname, mode='r')
+    WshFile              = h5py.File(WshFname, mode='r')
     EntropyFile          = h5py.File(EntropyFname, mode='r')
     EntropyNvFile        = h5py.File(EntropyNvFname, mode='r')
     SatEntropyFile       = h5py.File(SatEntropyFname, mode='r')
@@ -228,46 +222,6 @@ for isim in range(Nsims):
 
     print("")
 
-    # Set up fields for writing output one time step at a time
-    UshearDset = h5u.DsetCoards(UshearVname, 3, [ Nt, Ny, Nx ], chunks=( 1, Ny, Nx ))
-    VshearDset = h5u.DsetCoards(VshearVname, 3, [ Nt, Ny, Nx ], chunks=( 1, Ny, Nx ))
-    MagShearDset = h5u.DsetCoards(MagShearVname, 3, [ Nt, Ny, Nx ], chunks=( 1, Ny, Nx ))
-    AngShearDset = h5u.DsetCoards(AngShearVname, 3, [ Nt, Ny, Nx ], chunks=( 1, Ny, Nx ))
-    MagShearStormDset = h5u.DsetCoards(MagShearStormVname, 3, [ Nt, Ny, Nx ], chunks=( 1, Ny, Nx ))
-    WindShearDset = h5u.DsetCoards(WindShearVname, 1, [ Nt ])
-
-    SmDset = h5u.DsetCoards(SmVname, 1, [ Nt ])
-    SmSatDset = h5u.DsetCoards(SmSatVname, 1, [ Nt ])
-    SbDset = h5u.DsetCoards(SbVname, 1, [ Nt ])
-    SsstSatDset = h5u.DsetCoards(SsstSatVname, 1, [ Nt ])
-    SdefDset = h5u.DsetCoards(SdefVname, 1, [ Nt ])
-
-    TsDset = h5u.DsetCoards(TsVname, 1, [ Nt ])
-    ToDset = h5u.DsetCoards(ToVname, 1, [ Nt ])
-    PiDset = h5u.DsetCoards(PiVname, 1, [ Nt ])
-
-    ViDset = h5u.DsetCoards(ViVname, 1, [ Nt ])
-
-
-    UshearDset.Create(OutFile)
-    VshearDset.Create(OutFile)
-    MagShearDset.Create(OutFile)
-    AngShearDset.Create(OutFile)
-    MagShearStormDset.Create(OutFile)
-    WindShearDset.Create(OutFile)
-
-    SmDset.Create(OutFile)
-    SmSatDset.Create(OutFile)
-    SbDset.Create(OutFile)
-    SsstSatDset.Create(OutFile)
-    SdefDset.Create(OutFile)
-
-    TsDset.Create(OutFile)
-    ToDset.Create(OutFile)
-    PiDset.Create(OutFile)
-
-    ViDset.Create(OutFile)
-
 
     # Create and save the three components of the ventilation index:
     #     wind shear
@@ -278,10 +232,19 @@ for isim in range(Nsims):
     #
     # Do one time step at a time to save on memory
     #
+    WindShear = np.zeros(Nt)
+
+    Sm      = np.zeros(Nt)
+    SmSat   = np.zeros(Nt)
+    Sb      = np.zeros(Nt)
+    SsstSat = np.zeros(Nt)
+
+    Ts = np.zeros(Nt)
+    To = np.zeros(Nt)
+
     for it in np.arange(Nt):
         # read in vars
-        Unv = np.squeeze(UnvFile[Uvname][it,...])
-        Vnv = np.squeeze(VnvFile[Vvname][it,...])
+        MagShear = np.squeeze(WshFile[WshVname][it,...])
 
         S         = np.squeeze(EntropyFile[EntropyVname][it,...])
         Snv       = np.squeeze(EntropyNvFile[EntropyVname][it,...])
@@ -297,11 +260,6 @@ for isim in range(Nsims):
         Radius = np.squeeze(StormCenterFile[RadiusVname][it,...])
 
         # layer averaging on vars (density weighted)
-        Usfc = LayerAverage(Unv, DensNv, Zsfc1, Zsfc2)
-        Vsfc = LayerAverage(Vnv, DensNv, Zsfc1, Zsfc2)
-        Usal = LayerAverage(Unv, DensNv, Zsal1, Zsal2)
-        Vsal = LayerAverage(Vnv, DensNv, Zsal1, Zsal2)
-
         Smidlevel    = LayerAverage(S, Dens, Zmid1, Zmid2)
         SsatMidlevel = LayerAverage(Ssat, Dens, Zmid1, Zmid2)
         Sblayer      = LayerAverage(Snv, DensNv, Zbl1, Zbl2)
@@ -309,59 +267,19 @@ for isim in range(Nsims):
         Tout = LayerAverage(Tnv, DensNv, Zout1, Zout2)
 
         ######## Wind Shear ##############
-        Ushear = Usal - Usfc
-        Vshear = Vsal - Vsfc
-
-        MagShear = np.sqrt(np.square(Ushear) + np.square(Vshear))
-        AngShear = np.arctan2(Vshear, Ushear)
-
-        # This copies MagShear where Radius <= Rout, and places zeros elsewhere
-        MagShearStorm = MagShear * (Radius <= Rout)
-
-        WindShear = np.mean(MagShear[Radius <= Rout])
-
+        WindShear[it] = np.mean(MagShear[Radius <= Rout])
 
         ########## Entropy Deficit ############
-        Sm    = np.mean(Smidlevel[(Radius >= Rin) * (Radius <= Rout)])
-        SmSat = np.mean(SsatMidlevel[Radius <= Rin])
+        Sm[it]    = np.mean(Smidlevel[(Radius >= Rin) * (Radius <= Rout)])
+        SmSat[it] = np.mean(SsatMidlevel[Radius <= Rin])
 
-        Sb      = np.mean(Sblayer[Radius <= Rout])
-        SsstSat = np.mean(SsatNvSst[Radius <= Rout])
-
-        Sdef = (SmSat - Sm) / (SsstSat - Sb)
+        Sb[it]      = np.mean(Sblayer[Radius <= Rout])
+        SsstSat[it] = np.mean(SsatNvSst[Radius <= Rout])
 
 
         ########## Potential Intensity ############
-        Ts = np.mean(TsstNv[Radius <= Rout])
-        To = np.mean(Tout[Radius <= Rout])
-
-        Pi = np.sqrt((Ts - To) * (Ts / To) * CkOverCd * (SsstSat - Sb))
-
-
-        ########## Ventilation Index ##############
-        Vi = WindShear * Sdef / Pi
-
-
-
-        # Write fields into output file
-        OutFile[UshearVname][it,...] = Ushear
-        OutFile[VshearVname][it,...] = Vshear
-        OutFile[MagShearVname][it,...] = MagShear
-        OutFile[AngShearVname][it,...] = AngShear
-        OutFile[MagShearStormVname][it,...] = MagShearStorm
-        OutFile[WindShearVname][it] = WindShear
-
-        OutFile[SmVname][it] = Sm
-        OutFile[SmSatVname][it] = SmSat
-        OutFile[SbVname][it] = Sb
-        OutFile[SsstSatVname][it] = SsstSat
-        OutFile[SdefVname][it] = Sdef
-
-        OutFile[TsVname][it] = Ts
-        OutFile[ToVname][it] = To
-        OutFile[PiVname][it] = Pi
-
-        OutFile[ViVname][it] = Vi
+        Ts[it] = np.mean(TsstNv[Radius <= Rout])
+        To[it] = np.mean(Tout[Radius <= Rout])
 
 
         if ((it % 10) == 0):
@@ -369,12 +287,39 @@ for isim in range(Nsims):
 
     print("")
 
+    # finish calculations
+    # entropy deficit
+    Sdef = (SmSat - Sm) / (SsstSat - Sb)
+
+    # potiential intensity
+    Pi = np.sqrt((Ts - To) * (Ts / To) * CkOverCd * (SsstSat - Sb))
+
+    # ventilation index
+    Vi = WindShear * Sdef / Pi
+
+    ##### Smoothed versions ####
+    # wind shear
+    WindShearSmooth = nu.SmoothLine(WindShear)
+
+    # entropy deficit
+    SmSmooth      = nu.SmoothLine(Sm)
+    SmSatSmooth   = nu.SmoothLine(SmSat)
+    SbSmooth      = nu.SmoothLine(Sb)
+    SsstSatSmooth = nu.SmoothLine(SsstSat)
+
+    SdefSmooth = (SmSatSmooth - SmSmooth) / (SsstSatSmooth - Sb)
+
+    # potential intensity
+    TsSmooth = nu.SmoothLine(Ts)
+    ToSmooth = nu.SmoothLine(To)
+
+    PiSmooth = np.sqrt((TsSmooth - ToSmooth) * (TsSmooth / ToSmooth) * CkOverCd * (SsstSatSmooth - SbSmooth))
+
+    # ventilation index
+    ViSmooth = WindShearSmooth * SdefSmooth / PiSmooth
+
+
     # Create output with COARDS convention
-    print("  Writing {0:s} ({1:s})".format(OutFname, UshearVname))
-    print("  Writing {0:s} ({1:s})".format(OutFname, VshearVname))
-    print("  Writing {0:s} ({1:s})".format(OutFname, MagShearVname))
-    print("  Writing {0:s} ({1:s})".format(OutFname, AngShearVname))
-    print("  Writing {0:s} ({1:s})".format(OutFname, MagShearStormVname))
     print("  Writing {0:s} ({1:s})".format(OutFname, WindShearVname))
     print("")
 
@@ -393,29 +338,81 @@ for isim in range(Nsims):
     print("  Writing {0:s} ({1:s})".format(OutFname, ViVname))
     print("")
 
-    UshearDset.AttachDims(OutFile, Tdim, Ydim, Xdim)
-    VshearDset.AttachDims(OutFile, Tdim, Ydim, Xdim)
-    MagShearDset.AttachDims(OutFile, Tdim, Ydim, Xdim)
-    AngShearDset.AttachDims(OutFile, Tdim, Ydim, Xdim)
-    MagShearStormDset.AttachDims(OutFile, Tdim, Ydim, Xdim)
-    WindShearDset.AttachDims(OutFile, Tdim)
+    print("  Writing {0:s} ({1:s})".format(OutFname, SmSmoothVname))
+    print("  Writing {0:s} ({1:s})".format(OutFname, SmSatSmoothVname))
+    print("  Writing {0:s} ({1:s})".format(OutFname, SbSmoothVname))
+    print("  Writing {0:s} ({1:s})".format(OutFname, SsstSatSmoothVname))
+    print("  Writing {0:s} ({1:s})".format(OutFname, SdefSmoothVname))
+    print("")
 
-    SmDset.AttachDims(OutFile, Tdim)
-    SmSatDset.AttachDims(OutFile, Tdim)
-    SbDset.AttachDims(OutFile, Tdim)
-    SsstSatDset.AttachDims(OutFile, Tdim)
-    SdefDset.AttachDims(OutFile, Tdim)
+    print("  Writing {0:s} ({1:s})".format(OutFname, TsSmoothVname))
+    print("  Writing {0:s} ({1:s})".format(OutFname, ToSmoothVname))
+    print("  Writing {0:s} ({1:s})".format(OutFname, PiSmoothVname))
+    print("")
 
-    TsDset.AttachDims(OutFile, Tdim)
-    ToDset.AttachDims(OutFile, Tdim)
-    PiDset.AttachDims(OutFile, Tdim)
+    print("  Writing {0:s} ({1:s})".format(OutFname, ViSmoothVname))
+    print("")
 
-    ViDset.AttachDims(OutFile, Tdim)
+    # Create output with COARDS convention
+    WindShearDset = h5u.DsetCoards(WindShearVname, 1, [ Nt ])
+
+    SmDset = h5u.DsetCoards(SmVname, 1, [ Nt ])
+    SmSatDset = h5u.DsetCoards(SmSatVname, 1, [ Nt ])
+    SbDset = h5u.DsetCoards(SbVname, 1, [ Nt ])
+    SsstSatDset = h5u.DsetCoards(SsstSatVname, 1, [ Nt ])
+    SdefDset = h5u.DsetCoards(SdefVname, 1, [ Nt ])
+
+    TsDset = h5u.DsetCoards(TsVname, 1, [ Nt ])
+    ToDset = h5u.DsetCoards(ToVname, 1, [ Nt ])
+    PiDset = h5u.DsetCoards(PiVname, 1, [ Nt ])
+
+    ViDset = h5u.DsetCoards(ViVname, 1, [ Nt ])
+
+    WindShearSmoothDset = h5u.DsetCoards(WindShearSmoothVname, 1, [ Nt ])
+
+    SmSmoothDset = h5u.DsetCoards(SmSmoothVname, 1, [ Nt ])
+    SmSatSmoothDset = h5u.DsetCoards(SmSatSmoothVname, 1, [ Nt ])
+    SbSmoothDset = h5u.DsetCoards(SbSmoothVname, 1, [ Nt ])
+    SsstSatSmoothDset = h5u.DsetCoards(SsstSatSmoothVname, 1, [ Nt ])
+    SdefSmoothDset = h5u.DsetCoards(SdefSmoothVname, 1, [ Nt ])
+
+    TsSmoothDset = h5u.DsetCoards(TsSmoothVname, 1, [ Nt ])
+    ToSmoothDset = h5u.DsetCoards(ToSmoothVname, 1, [ Nt ])
+    PiSmoothDset = h5u.DsetCoards(PiSmoothVname, 1, [ Nt ])
+
+    ViSmoothDset = h5u.DsetCoards(ViSmoothVname, 1, [ Nt ])
+
+
+    WindShearDset.Build(OutFile, WindShear, Tdim)
+
+    SmDset.Build(OutFile, Sm, Tdim)
+    SmSatDset.Build(OutFile, SmSat, Tdim)
+    SbDset.Build(OutFile, Sb, Tdim)
+    SsstSatDset.Build(OutFile, SsstSat, Tdim)
+    SdefDset.Build(OutFile, Sdef, Tdim)
+
+    TsDset.Build(OutFile, Ts, Tdim)
+    ToDset.Build(OutFile, To, Tdim)
+    PiDset.Build(OutFile, Pi, Tdim)
+
+    ViDset.Build(OutFile, Vi, Tdim)
+
+    WindShearSmoothDset.Build(OutFile, WindShearSmooth, Tdim)
+
+    SmSmoothDset.Build(OutFile, SmSmooth, Tdim)
+    SmSatSmoothDset.Build(OutFile, SmSatSmooth, Tdim)
+    SbSmoothDset.Build(OutFile, SbSmooth, Tdim)
+    SsstSatSmoothDset.Build(OutFile, SsstSatSmooth, Tdim)
+    SdefSmoothDset.Build(OutFile, SdefSmooth, Tdim)
+
+    TsSmoothDset.Build(OutFile, TsSmooth, Tdim)
+    ToSmoothDset.Build(OutFile, ToSmooth, Tdim)
+    PiSmoothDset.Build(OutFile, PiSmooth, Tdim)
+
+    ViSmoothDset.Build(OutFile, ViSmooth, Tdim)
 
 
     # clean up
-    UnvFile.close()
-    VnvFile.close()
     EntropyFile.close()
     EntropyNvFile.close()
     SatEntropyFile.close()
@@ -427,52 +424,3 @@ for isim in range(Nsims):
     StormCenterFile.close()
 
     OutFile.close()
-
-
-
-
-
-###         # entropy, density at midlevel
-###         Smidlevel     = np.squeeze(EntropyFile[EntropyVname][it,Zmid1:Zmid2+1,...])
-###         SsatMidlevel  = np.squeeze(SatEntropyFile[SatEntropyVname][it,Zmid1:Zmid2+1,...])
-###         DensMidlevel  = np.squeeze(DensityFile[DensityVname][it,Zmid1:Zmid2+1,...])
-### 
-###         # entropy, density at boundary layer
-###         # use the data with the vortex removed (environmental fields)
-###         SsatSfc    = np.squeeze(SatEntropyNvFile[SatEntropyVname][it,1,...])
-###         Sblayer    = np.squeeze(EntropyNvFile[EntropyVname][it,Zbl1:Zbl2+1,...])
-###         DensBlayer = np.squeeze(DensityNvFile[DensityVname][it,Zbl1:Zbl2+1,...])
-### 
-###         # saturation entropy at SST values
-###         SsatSst = np.squeeze(SstSatEntropyNvFile[SstSatEntropyVname][it,...])
-### 
-###         # radius of maximum wind and radius values
-###         Radius = np.squeeze(StormCenterFile[RadiusVname][it,...]) # already in km
-### 
-### 
-###         # density weighted column averaging
-###         Smidlevel    = np.squeeze(np.average(Smidlevel, axis=0, weights=DensMidlevel))
-###         SsatMidlevel = np.squeeze(np.average(SsatMidlevel, axis=0, weights=DensMidlevel))
-### 
-###         Sblayer = np.squeeze(np.average(Sblayer, axis=0, weights=DensBlayer))
-### 
-### 
-###         # For mid-level, select across the inside radius (disk) for the saturation entropy
-###         # and across the inside radius to outside radius (annulus) for the outer entropy.
-###         Sm[it]    = np.mean(Smidlevel[(Radius >= Rin) * (Radius <= Rout)])
-###         SmSat[it] = np.mean(SsatMidlevel[Radius <= Rin])
-### 
-###         # For surface, select across the entire storm location from center to outside radius.
-###         SbSel     = Sblayer[(Radius <= Rout)]  # yeilds a linear array with selected points
-###         SstSatSel = SsatSst[(Radius <= Rout)]
-### 
-###         Sb[it]    = np.mean(SbSel)
-###         SsstSat[it] = np.mean(SstSatSel)
-### 
-###         #SasDiff[it] = np.mean(SstSatSel - SbSel)  # average of differences
-### 
-###     # Entropy deficit
-###     SmlDiff = SmSat - Sm
-###     SasDiff = SsstSat - Sb  # difference of averages
-###     Sd = SmlDiff / SasDiff
-### 

@@ -5,6 +5,7 @@
 DEST = $(HOME)/etc/python/common
 
 SCRIPTS = \
+  $(DEST)/NumUtils.py \
   $(DEST)/Hdf5Utils.py \
   $(DEST)/GetDiskUsage.py \
   $(DEST)/GenThermoVars.py \
