@@ -42,11 +42,11 @@ SimsList = [
 Nsims = len(SimsList)
 
 FacsList = [ 
-    'TSD_NONSAL_NODUST',
+#    'TSD_NONSAL_NODUST',
     'FAC_SAL',
     'FAC_DUST',
     'FAC_INT',
-    'TSD_SAL_DUST'
+#    'TSD_SAL_DUST'
     ]
 Nfacs = len(FacsList)
 
@@ -162,8 +162,8 @@ for i in range(Nfacs):
 #    top half: Sims
 #    bottom half: Factors
 Pdir = 'Plots.py'
-YlimSims = [ 0, 8 ]
-YlimFacs = [ -2, 8 ]
+YlimSims = [ 4, 10 ]
+YlimFacs = [ -1.5, 1.5 ]
 
 Fig = plt.figure()
 
@@ -179,7 +179,7 @@ Xaxis.fontsize = 12
 Yaxis = plu.AxisConfig('y', YlimSims, r'Shear')
 Yaxis.fontsize = 12
 
-Ptitle = plu.TitleConfig('a', r'$PSAP:\ Wind\ Shear:\ Sims$')
+Ptitle = plu.TitleConfig('a', r'$Wind\ Shear:\ Sims$')
 Ptitle.fontsize = 24
 
 Legend = plu.LegendConfig(SimLegText, 'upper left')
@@ -199,7 +199,7 @@ Xaxis.fontsize = 12
 Yaxis = plu.AxisConfig('y', YlimFacs, r'Shear')
 Yaxis.fontsize = 12
 
-Ptitle = plu.TitleConfig('b', r'$PSAP:\ Wind\ Shear:\ Factors$')
+Ptitle = plu.TitleConfig('b', r'$Wind\ Shear:\ Factors$')
 Ptitle.fontsize = 24
 
 Legend = plu.LegendConfig(FacLegText, 'upper left')
@@ -223,7 +223,7 @@ plt.close()
 #    bottom half: Factors
 Pdir = 'Plots.py'
 YlimSims = [ 0, 1.8 ]
-YlimFacs = [ -0.2, 1.8 ]
+YlimFacs = [ -0.2, 0.2 ]
 
 Fig = plt.figure()
 
@@ -239,7 +239,7 @@ Xaxis.fontsize = 12
 Yaxis = plu.AxisConfig('y', YlimSims, r'ED')
 Yaxis.fontsize = 12
 
-Ptitle = plu.TitleConfig('a', r'$PSAP:\ Entropy\ Def.:\ Sims$')
+Ptitle = plu.TitleConfig('a', r'$Entropy\ Def.:\ Sims$')
 Ptitle.fontsize = 24
 
 Legend = plu.LegendConfig(SimLegText, 'upper left')
@@ -259,7 +259,7 @@ Xaxis.fontsize = 12
 Yaxis = plu.AxisConfig('y', YlimFacs, r'ED')
 Yaxis.fontsize = 12
 
-Ptitle = plu.TitleConfig('b', r'$PSAP:\ Entropy\ Def.:\ Factors$')
+Ptitle = plu.TitleConfig('b', r'$Entropy\ Def.:\ Factors$')
 Ptitle.fontsize = 24
 
 Legend = plu.LegendConfig(FacLegText, 'upper left')
@@ -282,7 +282,7 @@ plt.close()
 #    top half: Sims
 #    bottom half: Factors
 Pdir = 'Plots.py'
-YlimSims = [ 40, 60 ]
+YlimSims = [ 17, 26 ]
 YlimFacs = [ -2, 2 ]
 
 Fig = plt.figure()
@@ -299,7 +299,7 @@ Xaxis.fontsize = 12
 Yaxis = plu.AxisConfig('y', YlimSims, r'PI')
 Yaxis.fontsize = 12
 
-Ptitle = plu.TitleConfig('a', r'$PSAP:\ Pot.\ Intensity:\ Sims$')
+Ptitle = plu.TitleConfig('a', r'$Pot.\ Intensity:\ Sims$')
 Ptitle.fontsize = 24
 
 Legend = plu.LegendConfig(SimLegText, 'upper left')
@@ -319,7 +319,7 @@ Xaxis.fontsize = 12
 Yaxis = plu.AxisConfig('y', YlimFacs, r'PI')
 Yaxis.fontsize = 12
 
-Ptitle = plu.TitleConfig('b', r'$PSAP:\ Pot.\ Intensity:\ Factors$')
+Ptitle = plu.TitleConfig('b', r'$Pot.\ Intensity:\ Factors$')
 Ptitle.fontsize = 24
 
 Legend = plu.LegendConfig(FacLegText, 'upper left')
@@ -343,8 +343,8 @@ plt.close()
 #    top half: Sims
 #    bottom half: Factors
 Pdir = 'Plots.py'
-YlimSims = [ 0, 0.21 ]
-YlimFacs = [ -0.05, 0.21 ]
+YlimSims = [ 0, 0.6 ]
+YlimFacs = [ -0.07, 0.07 ]
 
 Fig = plt.figure()
 
@@ -360,7 +360,7 @@ Xaxis.fontsize = 12
 Yaxis = plu.AxisConfig('y', YlimSims, r'VI')
 Yaxis.fontsize = 12
 
-Ptitle = plu.TitleConfig('a', r'$PSAP:\ Vent.\ Index:\ Sims$')
+Ptitle = plu.TitleConfig('a', r'$Vent.\ Index:\ Sims$')
 Ptitle.fontsize = 24
 
 Legend = plu.LegendConfig(SimLegText, 'upper left')
@@ -380,7 +380,7 @@ Xaxis.fontsize = 12
 Yaxis = plu.AxisConfig('y', YlimFacs, r'VI')
 Yaxis.fontsize = 12
 
-Ptitle = plu.TitleConfig('b', r'$PSAP:\ Vent.\ Index:\ Factors$')
+Ptitle = plu.TitleConfig('b', r'$Vent.\ Index:\ Factors$')
 Ptitle.fontsize = 24
 
 Legend = plu.LegendConfig(FacLegText, 'upper left')

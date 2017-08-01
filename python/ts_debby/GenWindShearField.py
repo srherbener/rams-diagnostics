@@ -30,13 +30,17 @@ FilterVname = "/filter"
 if (Vcoord == 'p'):
   UfnameTemplate = "HDF5/<SIM>/HDF5/u_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5"
   VfnameTemplate = "HDF5/<SIM>/HDF5/v_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5"
+  DfnameTemplate = "HDF5/<SIM>/HDF5/density_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5"
   #UfnameTemplate = "HDF5/<SIM>/HDF5/u_lite-<SIM>-AP-2006-08-20-120000-g3.h5"
   #VfnameTemplate = "HDF5/<SIM>/HDF5/v_lite-<SIM>-AP-2006-08-20-120000-g3.h5"
+  #DfnameTemplate = "HDF5/<SIM>/HDF5/density_lite-<SIM>-AP-2006-08-20-120000-g3.h5"
 elif (Vcoord == 'z'):
   UfnameTemplate = "HDF5/<SIM>/HDF5/u_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5"
   VfnameTemplate = "HDF5/<SIM>/HDF5/v_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5"
+  DfnameTemplate = "HDF5/<SIM>/HDF5/density_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5"
   #UfnameTemplate = "HDF5/<SIM>/HDF5/u_lite-<SIM>-AS-2006-08-20-120000-g3.h5"
   #VfnameTemplate = "HDF5/<SIM>/HDF5/v_lite-<SIM>-AS-2006-08-20-120000-g3.h5"
+  #DfnameTemplate = "HDF5/<SIM>/HDF5/density_lite-<SIM>-AS-2006-08-20-120000-g3.h5"
 else:
   print("ERROR: must set Vcoord to either 'z' or 'p'")
   exit(1)
@@ -47,6 +51,7 @@ Vvname = "/v_basic"
 #Vvname = "/v_orig"
 #Uvname = "/u"
 #Vvname = "/v"
+Dvname = "/density"
 
 OfnameTemplate = "DIAGS/wind_shear_nv_lite_<SIM>.h5"
 UshearVname = "/u_shear"
@@ -86,19 +91,28 @@ Tname = '/t_coords'
 #  SFC top        925 mb          761 m
 
 if (Vcoord == 'p'):
+    ## Bulk environmental wind shear
+    ## pressure coords
+    #ZsalBot = 250
+    #ZsalTop = 150
+    #
+    #ZsfcBot =  925
+    #ZsfcTop =  700
+
+    # Surface and SAL
     # pressure coords
     ZsalBot = 700
     ZsalTop = 700
+    
+    ZsfcBot = 925
+    ZsfcTop = 925
 
-    ZsfcBot =  925
-    ZsfcTop =  925
-
-# Dunion and Velden, 2004
-#    ZsalBot = 300
-#    ZsalTop = 150
-#
-#    ZsfcBot =  925
-#    ZsfcTop =  700
+    ## Dunion and Velden, 2004
+    #ZsalBot = 300
+    #ZsalTop = 150
+    #
+    #ZsfcBot =  925
+    #ZsfcTop =  700
 
     Vunits = "mb"
 
@@ -125,11 +139,13 @@ for isim in range(Nsims):
     FilterFname = FilterFnameTemplate.replace("<SIM>", Sim)
     Ufname      = UfnameTemplate.replace("<SIM>", Sim)
     Vfname      = VfnameTemplate.replace("<SIM>", Sim)
+    Dfname      = DfnameTemplate.replace("<SIM>", Sim)
     Ofname      = OfnameTemplate.replace("<SIM>", Sim)
 
     print("  Reading {0:s} ({1:s})".format(FilterFname, FilterVname))
     print("  Reading {0:s} ({1:s})".format(Ufname, Uvname))
     print("  Reading {0:s} ({1:s})".format(Vfname, Vvname))
+    print("  Reading {0:s} ({1:s})".format(Dfname, Dvname))
     print("")
 
     # Read input data. If this is the first set, read in the coordinates
@@ -137,6 +153,7 @@ for isim in range(Nsims):
     Ffile = h5py.File(FilterFname, mode='r')
     Ufile = h5py.File(Ufname, mode='r')
     Vfile = h5py.File(Vfname, mode='r')
+    Dfile = h5py.File(Dfname, mode='r')
 
     Ofile = h5py.File(Ofname, mode='w')
 
@@ -219,18 +236,19 @@ for isim in range(Nsims):
         FILTER = np.squeeze(Ffile[FilterVname][it,...])
         U = np.squeeze(Ufile[Uvname][it,...])
         V = np.squeeze(Vfile[Vvname][it,...])
+        D = np.squeeze(Dfile[Dvname][it,...])
 
         # Python indexing Z1:Z2 stops one before Z2. We want Z2 included so  use
         # indexing Z1:Z2+1.
         #
-        # Take mean on z-dimension (1st dimension) which will yield a layer average.
+        # Take density weighted average along z-dimension (1st dimension).
         #
         # Then take the difference between layers to get the u,v components of the shear vectors.
-        U_SFC = np.squeeze(np.mean(U[SFC_Z1:SFC_Z2+1,...],0))
-        U_SAL = np.squeeze(np.mean(U[SAL_Z1:SAL_Z2+1,...],0))
+        U_SFC = np.squeeze(np.average(U[SFC_Z1:SFC_Z2+1,...], axis=0, weights=D[SFC_Z1:SFC_Z2+1,...]))
+        U_SAL = np.squeeze(np.average(U[SAL_Z1:SAL_Z2+1,...], axis=0, weights=D[SAL_Z1:SAL_Z2+1,...]))
 
-        V_SFC = np.squeeze(np.mean(V[SFC_Z1:SFC_Z2+1,...],0))
-        V_SAL = np.squeeze(np.mean(V[SAL_Z1:SAL_Z2+1,...],0))
+        V_SFC = np.squeeze(np.average(V[SFC_Z1:SFC_Z2+1,...], axis=0, weights=D[SFC_Z1:SFC_Z2+1,...]))
+        V_SAL = np.squeeze(np.average(V[SAL_Z1:SAL_Z2+1,...], axis=0, weights=D[SAL_Z1:SAL_Z2+1,...]))
 
         # Cartesian
         U_SHEAR = U_SAL - U_SFC

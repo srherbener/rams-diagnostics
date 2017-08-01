@@ -137,12 +137,15 @@ Zbl1 = 0
 Zbl2 = 2
 
 # For outflow layer: 300 - 200 mb
-Zout1 = 6
-Zout2 = 8
+#Zout1 = 6 # Bister and Emanuel (2002)
+#Zout2 = 8
+Zout1 = 3 # For SAL case, wind shear is calculated using
+Zout2 = 3 # surface and mid-level (SAL location) layers. Do same for PI.
 
 # Radius values for averaging regions
 Rin  = 150.0 # km
 Rout = 300.0 # km
+Renv = 2000.0 # km
 
 # Ck/Cd (ratio of enthalpy exchange coefficient to drag coefficient) value is
 # from Bell et al. (2012) and Haus et al. (2010). TS Debby was a weak storm
@@ -267,7 +270,7 @@ for isim in range(Nsims):
         Tout = LayerAverage(Tnv, DensNv, Zout1, Zout2)
 
         ######## Wind Shear ##############
-        WindShear[it] = np.mean(MagShear[Radius <= Rout])
+        WindShear[it] = np.mean(MagShear[Radius <= Renv])
 
         ########## Entropy Deficit ############
         Sm[it]    = np.mean(Smidlevel[(Radius >= Rin) * (Radius <= Rout)])
@@ -278,8 +281,8 @@ for isim in range(Nsims):
 
 
         ########## Potential Intensity ############
-        Ts[it] = np.mean(TsstNv[Radius <= Rout])
-        To[it] = np.mean(Tout[Radius <= Rout])
+        Ts[it] = np.mean(TsstNv[Radius <= Renv])
+        To[it] = np.mean(Tout[Radius <= Renv])
 
 
         if ((it % 10) == 0):
@@ -307,16 +310,16 @@ for isim in range(Nsims):
     SbSmooth      = nu.SmoothLine(Sb)
     SsstSatSmooth = nu.SmoothLine(SsstSat)
 
-    SdefSmooth = (SmSatSmooth - SmSmooth) / (SsstSatSmooth - Sb)
+    SdefSmooth = nu.SmoothLine((SmSatSmooth - SmSmooth) / (SsstSatSmooth - Sb))
 
     # potential intensity
     TsSmooth = nu.SmoothLine(Ts)
     ToSmooth = nu.SmoothLine(To)
 
-    PiSmooth = np.sqrt((TsSmooth - ToSmooth) * (TsSmooth / ToSmooth) * CkOverCd * (SsstSatSmooth - SbSmooth))
+    PiSmooth = nu.SmoothLine(np.sqrt((TsSmooth - ToSmooth) * (TsSmooth / ToSmooth) * CkOverCd * (SsstSatSmooth - SbSmooth)))
 
     # ventilation index
-    ViSmooth = WindShearSmooth * SdefSmooth / PiSmooth
+    ViSmooth = nu.SmoothLine(WindShearSmooth * SdefSmooth / PiSmooth)
 
 
     # Create output with COARDS convention
