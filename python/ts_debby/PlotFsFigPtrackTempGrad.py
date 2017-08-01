@@ -129,7 +129,8 @@ for i in range(Nfacs):
 #    top half: Tgrad
 #    bottom half: Tgrad factors
 Pdir = 'Plots.py'
-Ylim = [ -2.0, 1.5 ]
+Ylim = [ -0.8, 2.5 ]
+YmarkerPos = Ylim[0] - 0.5
 
 Fig = plt.figure()
 
@@ -156,8 +157,8 @@ Legend.ncol = 1
 plu.PlotLine(AxSims, X, Sims, Ptitle, Xaxis, Yaxis, Legend, SimColors)
 
 # Mark the endpoints of PTRACK
-AxSims.text(0, -3, 'C', color='blue', fontsize=16);
-AxSims.text(1750, -3, 'D', color='blue', fontsize=16);
+AxSims.text(0, YmarkerPos, 'C', color='blue', fontsize=16);
+AxSims.text(1750, YmarkerPos, 'D', color='blue', fontsize=16);
 
 
 
@@ -180,8 +181,8 @@ Legend.ncol = 1
 plu.PlotLine(AxFactors, X, Factors, Ptitle, Xaxis, Yaxis, Legend, FacColors)
 
 # Mark the endpoints of PTRACK
-AxFactors.text(0, -3, 'C', color='blue', fontsize=16);
-AxFactors.text(1750, -3, 'D', color='blue', fontsize=16);
+AxFactors.text(0, YmarkerPos, 'C', color='blue', fontsize=16);
+AxFactors.text(1750, YmarkerPos, 'D', color='blue', fontsize=16);
 
 # Add y = 0 reference
 AxFactors.axhline(y=0, color='black', linestyle='--')

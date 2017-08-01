@@ -19,6 +19,7 @@ SCRIPTS = \
   $(DEST)/PlotFsFigStormXsections.py \
   $(DEST)/PlotFsFigTrackXsections.py \
   $(DEST)/PlotFsFigPtrackTempGrad.py \
+  $(DEST)/PlotFsFigVentIndex.py \
   $(DEST)/PlotFsFigPlanViews.py \
   $(DEST)/PlotFsFigWind.py \
   $(DEST)/PlotFsFigWindTseries.py

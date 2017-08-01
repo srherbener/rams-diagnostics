@@ -28,10 +28,10 @@ SimList = [
 Nsims = len(SimList)
 
 PtrackList = [
-#    [ 'DIAGS/ptrack_avgs_<SIM>.h5', '/ps_tempc',   'z' ],
-#    [ 'DIAGS/ptrack_avgs_<SIM>.h5', '/s_tempc',    'z' ],
-    [ 'DIAGS/ptrack_avgs_<SIM>.h5', '/ps_tempc_nv_p', 'p' ],
-    [ 'DIAGS/ptrack_avgs_<SIM>.h5', '/s_tempc_nv_p',  'p' ],
+#    [ 'DIAGS/ptrack_avgs_<SIM>.h5', '/ps_tempc', 'ps_density', 'z' ],
+#    [ 'DIAGS/ptrack_avgs_<SIM>.h5', '/s_tempc',  's_density',  'z' ],
+    [ 'DIAGS/ptrack_avgs_<SIM>.h5', '/ps_tempc_nv_p', '/ps_density_nv_p', 'p' ],
+    [ 'DIAGS/ptrack_avgs_<SIM>.h5', '/s_tempc_nv_p',  '/s_density_nv_p',  'p' ],
     ]
 Nsets = len(PtrackList)
 
@@ -67,13 +67,17 @@ for isim in range(Nsims):
     for iset in range(Nsets):
         InFname    = PtrackList[iset][0].replace("<SIM>", Sim)
         InVname    = PtrackList[iset][1]
-        VcoordType = PtrackList[iset][2]
+        DensVname  = PtrackList[iset][2]
+        VcoordType = PtrackList[iset][3]
 
         # Read input data. If this is the first set, read in the coordinates
         # and build the dimensions.
         print("  Reading {0:s} ({1:s})".format(InFname, InVname))
         Ifile = h5py.File(InFname, mode='r')
         InVar = Ifile[InVname][...] # InVar is (z,x), with the size of y-dim == 1
+
+        print("  Reading {0:s} ({1:s})".format(InFname, DensVname))
+        DensVar = Ifile[DensVname][...] # DensVar is (z,x), with the size of y-dim == 1
 
         if (NoX):
             print("    Reading {0:s} ({1:s})".format(InFname, Xname))
@@ -141,19 +145,15 @@ for isim in range(Nsims):
         if (VcoordType == 'z'):
             Nvert = Nz
 
-            Height = Z[Z2] - Z[Z1]
-            Hselect = Z[Z1:Z2]
-
-            Tselect = np.squeeze(InVar[Z1:Z2,:])
+            Tselect = np.squeeze(InVar[Z1:Z2+1,:])
+            Dselect = np.squeeze(DensVar[Z1:Z2+1,:])
 
             VertDim = Zdim
         elif (VcoordType == 'p'):
             Nvert = Np
 
-            Height = P[P2] - P[P1]
-            Hselect = P[P1:P2]
-
-            Tselect = np.squeeze(InVar[P1:P2,:])
+            Tselect = np.squeeze(InVar[P1:P2+1,:])
+            Dselect = np.squeeze(DensVar[P1:P2+1,:])
 
             VertDim = Pdim
 
@@ -171,10 +171,8 @@ for isim in range(Nsims):
             InVarGradSmooth[ivert,:] = nu.SmoothLine(np.squeeze(InVarGrad[ivert,:]))
 
         # Do vertical average of layer between bottom and top layer
-        # Use Simpson's Rule integration to the do the averaging
-        Hselect = Hselect.reshape((len(Hselect),1))
-        Hselect = np.tile(Hselect, (1, Nx))
-        Tbar = np.squeeze(integ.simps(Tselect, Hselect, axis=0)) / Height
+        # Use density weighted averaging.
+        Tbar = np.squeeze(np.average(Tselect, axis=0, weights=Dselect))
 
         # Smooth Tbar in order to mitigate noise in the gradient
         Tbar = nu.SmoothLine(Tbar)

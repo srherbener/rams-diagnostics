@@ -41,6 +41,11 @@ TrackList = [
 #        [ 'XsectionData/ptrack_tempc_p_<SIM>.h5', '/tempc',  'sal',     '/s_tempc_p',  'p' ],
 
         # reduced (lite) horizontal data
+        [ 'XsectionData/ptrack_density_nv_lite_<SIM>.h5',   '/density',  'pre_sal', '/ps_density_nv',   'z' ],
+        [ 'XsectionData/ptrack_density_nv_lite_<SIM>.h5',   '/density',  'sal',     '/s_density_nv',    'z' ],
+        [ 'XsectionData/ptrack_density_nv_lite_p_<SIM>.h5', '/density',  'pre_sal', '/ps_density_nv_p', 'p' ],
+        [ 'XsectionData/ptrack_density_nv_lite_p_<SIM>.h5', '/density',  'sal',     '/s_density_nv_p',  'p' ],
+
         [ 'XsectionData/ptrack_tempc_nv_lite_<SIM>.h5',   '/tempc',  'pre_sal', '/ps_tempc_nv',   'z' ],
         [ 'XsectionData/ptrack_tempc_nv_lite_<SIM>.h5',   '/tempc',  'sal',     '/s_tempc_nv',    'z' ],
         [ 'XsectionData/ptrack_tempc_nv_lite_p_<SIM>.h5', '/tempc',  'pre_sal', '/ps_tempc_nv_p', 'p' ],

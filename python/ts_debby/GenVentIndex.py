@@ -338,6 +338,9 @@ for isim in range(Nsims):
     print("  Writing {0:s} ({1:s})".format(OutFname, ViVname))
     print("")
 
+    print("  Writing {0:s} ({1:s})".format(OutFname, WindShearSmoothVname))
+    print("")
+
     print("  Writing {0:s} ({1:s})".format(OutFname, SmSmoothVname))
     print("  Writing {0:s} ({1:s})".format(OutFname, SmSatSmoothVname))
     print("  Writing {0:s} ({1:s})".format(OutFname, SbSmoothVname))
