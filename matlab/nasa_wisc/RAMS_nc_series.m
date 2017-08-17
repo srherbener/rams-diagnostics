@@ -65,135 +65,154 @@ z = [      0.000000000000000000E+00 ...
   0.253982812500000000E+05 ...
   0.264381093750000000E+05 ...
 ];
+
+ SimList = {
+   { 'RCE_1km'    'RAMS 2mom'      }
+   { 'RCE_1km_SM' 'RAMS 1mom'      }
+   { 'RCE_1km_DM' 'RAMS 2mom mean' }
+   { 'RCE_1km_DP' 'RAMS 2mom base' }
+   };
+ Nsims = length(SimList);
  
  %user edits fprefix and 
-  fprefix='/longmire/aggregation/300k/RAMS_1mom/lite/RCE_3km_1mom-L-2012-';
-  ncfile = 'rams_3km_1mom_pw.nc';
-  nx = 256;  % horizontal dimension
-  nend=4200; % number of records to process
+  nx = 480;  % horizontal dimension
+  nend=1201; % number of records to process
   dz = z(2:64)-z(1:63);
   n1 = 1;  % record stride
-  sim = 'RAMS 1mom';
 
  %% do this section to start a nc file
 
- offset = 0;
- ncid = netcdf.create(ncfile,'CLOBBER');
- dimidx = netcdf.defDim(ncid,'x',256);
- dimidy = netcdf.defDim(ncid,'y',256);
- NC_UNLIMITED = netcdf.getConstant('NC_UNLIMITED');
- dimidt = netcdf.defDim(ncid,'time',NC_UNLIMITED);
- varidt = netcdf.defVar(ncid,'time','NC_DOUBLE',dimidt);
- varid = netcdf.defVar(ncid,'PW','NC_FLOAT',[dimidx dimidy dimidt]);
- varidlhf = netcdf.defVar(ncid,'LHF','NC_FLOAT',[dimidx dimidy dimidt]);
- varidshf = netcdf.defVar(ncid,'SHF','NC_FLOAT',[dimidx dimidy dimidt]);
- varidpr = netcdf.defVar(ncid,'PREC','NC_FLOAT',[dimidx dimidy dimidt]);
- varido = netcdf.defVar(ncid,'OLR','NC_FLOAT',[dimidx dimidy dimidt]);
- netcdf.endDef(ncid);
+ for isim = 1:Nsims
+   Sim = SimList{isim}{1};
+   SimLabel = SimList{isim}{2};
 
- %% do this section to continue an nc file
- offset = 2352;
- ncid = netcdf.open(ncfile,'WRITE');
- varidt = netcdf.inqVarID(ncid,'time');
- varid = netcdf.inqVarID(ncid,'PW');
- varidlhf = netcdf.inqVarID(ncid,'LHF');
- varidshf = netcdf.inqVarID(ncid,'SHF');
- varidpr = netcdf.inqVarID(ncid,'PREC');
- varido = netcdf.inqVarID(ncid,'OLR');
- 
-%% start time looping the RAMS files and create/extend nc file
-for n = n1+offset:n1:nend;
+   fprefix = sprintf('RAMS/%s/RAMS/%s-L-2012-', Sim, Sim);
+   ncfile = sprintf('%s_pw.nc', Sim);
+
+   fprintf('Simulation: %s\n', Sim);
+   fprintf('  File prefix: %s\n', fprefix);
+   fprintf('  Output file: %s\n', ncfile);
+   fprintf('\n');
+
+   offset = 0;
+   ncid = netcdf.create(ncfile,'CLOBBER');
+   dimidx = netcdf.defDim(ncid,'x',nx);
+   dimidy = netcdf.defDim(ncid,'y',nx);
+   NC_UNLIMITED = netcdf.getConstant('NC_UNLIMITED');
+   dimidt = netcdf.defDim(ncid,'time',NC_UNLIMITED);
+   varidt = netcdf.defVar(ncid,'time','NC_DOUBLE',dimidt);
+   varid = netcdf.defVar(ncid,'PW','NC_FLOAT',[dimidx dimidy dimidt]);
+   varidlhf = netcdf.defVar(ncid,'LHF','NC_FLOAT',[dimidx dimidy dimidt]);
+   varidshf = netcdf.defVar(ncid,'SHF','NC_FLOAT',[dimidx dimidy dimidt]);
+   varidpr = netcdf.defVar(ncid,'PREC','NC_FLOAT',[dimidx dimidy dimidt]);
+   varido = netcdf.defVar(ncid,'OLR','NC_FLOAT',[dimidx dimidy dimidt]);
+   netcdf.endDef(ncid);
     
-    % adjust from year mon day to record number
-    % assume start is 1 Jan 2012
-    h = mod(n,24);
-    d = 1+(n-h)/24;
-    m = 1;
-    if n > 743; 
-        d = d - 31;
-        m = m + 1;
+%     %% do this section to continue an nc file
+%     offset = 2352;
+%     ncid = netcdf.open(ncfile,'WRITE');
+%     varidt = netcdf.inqVarID(ncid,'time');
+%     varid = netcdf.inqVarID(ncid,'PW');
+%     varidlhf = netcdf.inqVarID(ncid,'LHF');
+%     varidshf = netcdf.inqVarID(ncid,'SHF');
+%     varidpr = netcdf.inqVarID(ncid,'PREC');
+%     varido = netcdf.inqVarID(ncid,'OLR');
+     
+    %% start time looping the RAMS files and create/extend nc file
+    for n = n1+offset:n1:nend;
+        
+        % adjust from year mon day to record number
+        % assume start is 1 Jan 2012
+        h = mod(n,24);
+        d = 1+(n-h)/24;
+        m = 1;
+        if n > 743; 
+            d = d - 31;
+            m = m + 1;
+        end;
+        if n > 1439; 
+            d = d - 29;  !
+            m = m + 1;
+        end;
+        if n > 2183; 
+            d = d - 31;
+            m = m + 1;
+        end;
+        if n > 2903; 
+            d = d - 30;
+            m = m + 1;
+        end;
+        if n > 3647; 
+            d = d - 31;
+            m = m + 1;
+        end;
+        hstring = num2str(h,'%2.2u');
+        dstring = num2str(d,'%2.2u');
+        mstring = num2str(m,'%2.2u');
+        datestring = strcat(mstring,'-',dstring,'-',hstring)
+       file=strcat(fprefix,datestring,'0000-g1.h5');
+       
+       %read in the data
+       x = hdf5read(file,'LWUP');
+       q = hdf5read(file,'RV');
+       rho = hdf5read(file,'DN0');
+       sfr = hdf5read(file,'SFLUX_R');
+       sft = hdf5read(file,'SFLUX_T');
+       p = hdf5read(file,'PCPRR');
+       
+       %compute precipitable water
+       y=zeros(nx,nx);
+       q = rho.*q;
+       for k=1:1:63;
+           y = y + dz(1,k)*q(:,:,k+1);
+       end;
+       
+       %get domain averages, save 2d data in nc file
+       pw(n/n1) = mean(mean(y(:,:),2),1);
+       evap(n/n1) = mean(mean(sfr(:,:),2),1)*86400;
+       fss(n/n1) = mean(mean(sft(:,:),2),1)*1004;
+       prec(n/n1) = mean(mean(p(:,:),2),1)*86400;
+       olr(n/n1) = double(mean(mean(x(:,:,64),2),1));
+       time(n/n1) = n/24;
+       netcdf.putVar(ncid,varidt,n/n1-1,1,time(n/n1));
+       netcdf.putVar(ncid,varid,[0 0 n/n1-1],[nx nx 1],y);
+       netcdf.putVar(ncid,varidlhf,[0 0 n/n1-1],[nx nx 1],sfr*86400);
+       netcdf.putVar(ncid,varidshf,[0 0 n/n1-1],[nx nx 1],sft*1004);
+       netcdf.putVar(ncid,varidpr,[0 0 n/n1-1],[nx nx 1],p*86400);
+       netcdf.putVar(ncid,varido,[0 0 n/n1-1],[nx nx 1],x(:,:,64));
+       netcdf.sync(ncid);
     end;
-    if n > 1439; 
-        d = d - 29;  !
-        m = m + 1;
-    end;
-    if n > 2183; 
-        d = d - 31;
-        m = m + 1;
-    end;
-    if n > 2903; 
-        d = d - 30;
-        m = m + 1;
-    end;
-    if n > 3647; 
-        d = d - 31;
-        m = m + 1;
-    end;
-    hstring = num2str(h,'%2.2u');
-    dstring = num2str(d,'%2.2u');
-    mstring = num2str(m,'%2.2u');
-    datestring = strcat(mstring,'-',dstring,'-',hstring)
-   file=strcat(fprefix,datestring,'0000-g1.h5');
-   
-   %read in the data
-   x = hdf5read(file,'LWUP');
-   q = hdf5read(file,'RV');
-   rho = hdf5read(file,'DN0');
-   sfr = hdf5read(file,'SFLUX_R');
-   sft = hdf5read(file,'SFLUX_T');
-   p = hdf5read(file,'PCPRR');
-   
-   %compute precipitable water
-   y=zeros(nx,nx);
-   q = rho.*q;
-   for k=1:1:63;
-       y = y + dz(1,k)*q(:,:,k+1);
-   end;
-   
-   %get domain averages, save 2d data in nc file
-   pw(n/n1) = mean(mean(y(:,:),2),1);
-   evap(n/n1) = mean(mean(sfr(:,:),2),1)*86400;
-   fss(n/n1) = mean(mean(sft(:,:),2),1)*1004;
-   prec(n/n1) = mean(mean(p(:,:),2),1)*86400;
-   olr(n/n1) = double(mean(mean(x(:,:,64),2),1));
-   time(n/n1) = n/24;
-   netcdf.putVar(ncid,varidt,n/n1-1,1,time(n/n1));
-   netcdf.putVar(ncid,varid,[0 0 n/n1-1],[nx nx 1],y);
-   netcdf.putVar(ncid,varidlhf,[0 0 n/n1-1],[nx nx 1],sfr*86400);
-   netcdf.putVar(ncid,varidshf,[0 0 n/n1-1],[nx nx 1],sft*1004);
-   netcdf.putVar(ncid,varidpr,[0 0 n/n1-1],[nx nx 1],p*86400);
-   netcdf.putVar(ncid,varido,[0 0 n/n1-1],[nx nx 1],x(:,:,64));
-   netcdf.sync(ncid);
-end;
-%% Do this section if you are not working with the RAMS h5 files
+ end
 
-time = ncread(ncfile,'time')';
-y = ncread(ncfile,'PW');
- pw(:) = mean(mean(y,2),1);
-x = ncread(ncfile,'OLR');
- olr(:) = mean(mean(x,2),1);
-p = ncread(ncfile,'PREC');
- prec(:) = mean(mean(p,2),1);
-sfr = ncread(ncfile,'LHF');
- evap(:) = mean(mean(sfr,2),1);
- 
-
-%% time series
-sizer = size(time,2);
-sizeb=2400; % time series start
-sizee = sizer ; % time series end
-figure;plot(time(sizeb:sizee),olr(sizeb:sizee));title( strcat('OLR:', sim) );ylabel('W/m^2');xlabel('time, days');
-figure;plot(time(sizeb:sizee),pw(sizeb:sizee));title( strcat('Column Water Vapor: ', sim) );ylabel('kg/m^2');xlabel('time, days');
-figure;plot(time(sizeb:sizee),prec(sizeb:sizee));title( strcat('Precipitation rate: ', sim) );ylabel('mm/day');xlabel('time, days');
-figure;plot(time(sizeb:sizee),evap(sizeb:sizee));title( strcat('SFC Evaporation rate: ', sim) );ylabel('mm/day');xlabel('time, days');
-%10 day focus
-figure;plot(time(sizee-239:sizee),prec(sizee-239:sizee));title( strcat('Precipitation rate: ', sim) );ylabel('mm/day');xlabel('time, days');
-
-%% power spectra
-sizer = size(time,2);
-sizee = sizer ; % time series end
-% work with 60 days
-powerspectraplot(prec(sizee-1440:sizee));title(strcat('Precipitation spectra: ', sim ));
-powerspectraplot(pw(sizee-1440:sizee));title(strcat('Precipitable water spectra: ', sim ));
-powerspectraplot(olr(sizee-1440:sizee));title(strcat('OLR spectra: ', sim ));
-powerspectraplot(evap(sizee-1440:sizee));title(strcat('Evaporation spectra: ', sim ));
+%%% %% Do this section if you are not working with the RAMS h5 files
+%%% 
+%%% time = ncread(ncfile,'time')';
+%%% y = ncread(ncfile,'PW');
+%%%  pw(:) = mean(mean(y,2),1);
+%%% x = ncread(ncfile,'OLR');
+%%%  olr(:) = mean(mean(x,2),1);
+%%% p = ncread(ncfile,'PREC');
+%%%  prec(:) = mean(mean(p,2),1);
+%%% sfr = ncread(ncfile,'LHF');
+%%%  evap(:) = mean(mean(sfr,2),1);
+%%%  
+%%% 
+%%% %% time series
+%%% sizer = size(time,2);
+%%% sizeb=2400; % time series start
+%%% sizee = sizer ; % time series end
+%%% figure;plot(time(sizeb:sizee),olr(sizeb:sizee));title( strcat('OLR:', SimLabel) );ylabel('W/m^2');xlabel('time, days');
+%%% figure;plot(time(sizeb:sizee),pw(sizeb:sizee));title( strcat('Column Water Vapor: ', SimLabel) );ylabel('kg/m^2');xlabel('time, days');
+%%% figure;plot(time(sizeb:sizee),prec(sizeb:sizee));title( strcat('Precipitation rate: ', SimLabel) );ylabel('mm/day');xlabel('time, days');
+%%% figure;plot(time(sizeb:sizee),evap(sizeb:sizee));title( strcat('SFC Evaporation rate: ', SimLabel) );ylabel('mm/day');xlabel('time, days');
+%%% %10 day focus
+%%% figure;plot(time(sizee-239:sizee),prec(sizee-239:sizee));title( strcat('Precipitation rate: ', SimLabel) );ylabel('mm/day');xlabel('time, days');
+%%% 
+%%% %% power spectra
+%%% sizer = size(time,2);
+%%% sizee = sizer ; % time series end
+%%% % work with 60 days
+%%% powerspectraplot(prec(sizee-1440:sizee));title(strcat('Precipitation spectra: ', SimLabel ));
+%%% powerspectraplot(pw(sizee-1440:sizee));title(strcat('Precipitable water spectra: ', SimLabel ));
+%%% powerspectraplot(olr(sizee-1440:sizee));title(strcat('OLR spectra: ', SimLabel ));
+%%% powerspectraplot(evap(sizee-1440:sizee));title(strcat('Evaporation spectra: ', SimLabel ));
