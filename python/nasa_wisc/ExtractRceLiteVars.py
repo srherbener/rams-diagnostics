@@ -43,11 +43,14 @@ VarList = [
     'total_cond',
     'precip_rate',
     'vapor',
+    'lwup',
+    'density',
+    'sflux_r',
+    'sflux_t',
     ]
 Nvars = len(VarList)
 
-#InFilePatternTemplate = "RAMS/<SIM>/RAMS/<SIM>-L-2012-*.h5"
-InFilePatternTemplate = "SIMDATA/<SIM>/RAMS/<SIM>-L-2012-01-01-0[0-4]*.h5"
+InFilePatternTemplate = "RAMS/<SIM>/RAMS/<SIM>-L-2012-*.h5"
 OutFileTemplate = "SIMDATA/<SIM>/HDF5/<VNAME>-<SIM>-AC-2012-01-01-000000-g1.h5"
 
 for isim in range(Nsims):
@@ -91,6 +94,14 @@ for isim in range(Nsims):
                 VAR = InFile['PCPRR'][...]
             elif (Vname == 'vapor'):
                 VAR = InFile['RV'][...]
+            elif (Vname == 'lwup'):
+                VAR = InFile['LWUP'][...]
+            elif (Vname == 'density'):
+                VAR = InFile['DN0'][...]
+            elif (Vname == 'sflux_r'):
+                VAR = InFile['SFLUX_R'][...]
+            elif (Vname == 'sflux_t'):
+                VAR = InFile['SFLUX_T'][...]
             else:
                 print("      Warning: undefined variable ({0:s}), skipping this variable".format(Vname))
                 continue
