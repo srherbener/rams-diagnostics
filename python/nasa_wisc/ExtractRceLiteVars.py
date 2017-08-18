@@ -30,8 +30,6 @@ NzAll = len(Zall)
 DeltaZ = []
 for iz in range(NzAll-1):
     DeltaZ.append(Zall[iz+1] - Zall[iz])
-print(Zall)
-print(DeltaZ)
 
 Xname = "/x_coords"
 Yname = "/y_coords"
