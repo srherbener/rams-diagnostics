@@ -14,6 +14,9 @@ import Hdf5Utils as h5u
 
 Tstring = conf.SetTimeString()
 
+Lv = 2.5e6
+Cp = 1004
+
 # RAMS files are lite version that do not contain the coordinates, so use the functions
 # from the config utilities.
 X = conf.SetHcoords(-2.15497, 2.15497, 480)
@@ -24,6 +27,11 @@ Ny = len(Y)
 
 Zall = conf.SetZcoords()
 NzAll = len(Zall)
+DeltaZ = []
+for iz in range(NzAll-1):
+    DeltaZ.append(Zall[iz+1] - Zall[iz])
+print(Zall)
+print(DeltaZ)
 
 Xname = "/x_coords"
 Yname = "/y_coords"
@@ -40,16 +48,15 @@ SimList = [
 Nsims = len(SimList)
 
 VarList = [
-    'total_cond',
-    'precip_rate',
-    'vapor',
-    'lwup',
-    'density',
-    'sflux_r',
-    'sflux_t',
+    'pcp_water',
+    'olr',
+    'pcp_rate',
+    'sfc_lhf',
+    'sfc_shf',
     ]
 Nvars = len(VarList)
 
+### TEST #### InFilePatternTemplate = "SIMDATA/<SIM>/RAMS/<SIM>-L-2012-01-01-0[0-2]*.h5"
 InFilePatternTemplate = "SIMDATA/<SIM>/RAMS/<SIM>-L-2012-*.h5"
 OutFileTemplate = "SIMDATA/<SIM>/HDF5/<VNAME>-<SIM>-AC-2012-01-01-000000-g1.h5"
 
@@ -86,22 +93,26 @@ for isim in range(Nsims):
             Vname = VarList[ivar]
             print("    Variable: {0:s}".format(Vname))
 
-            if (Vname == 'total_cond'):
-                RTP = InFile['RTP'][...]
-                RV  = InFile['RV'][...]
-                VAR = RTP - RV
-            elif (Vname == 'precip_rate'):
-                VAR = InFile['PCPRR'][...]
-            elif (Vname == 'vapor'):
-                VAR = InFile['RV'][...]
-            elif (Vname == 'lwup'):
-                VAR = InFile['LWUP'][...]
-            elif (Vname == 'density'):
-                VAR = InFile['DN0'][...]
-            elif (Vname == 'sflux_r'):
-                VAR = InFile['SFLUX_R'][...]
-            elif (Vname == 'sflux_t'):
-                VAR = InFile['SFLUX_T'][...]
+            if (Vname == 'pcp_water'):
+                DN0 = np.squeeze(InFile['DN0'][...])  # kg/m^3
+                RV = np.squeeze(InFile['RV'][...])    # kg/kg
+                Q = RV * DN0
+                VAR = np.zeros((Ny,Nx))   # mm
+                for iz in range(NzAll-1):
+                    VAR = VAR + (DeltaZ[iz] * Q[iz+1,...])
+
+            elif (Vname == 'olr'):
+                VAR = np.squeeze(InFile['LWUP'][-1,...])  # W/m^2
+
+            elif (Vname == 'pcp_rate'):
+                VAR = np.squeeze(InFile['PCPRR'][...]) * 86400  # mm/day (86400 seconds in a day)
+
+            elif (Vname == 'sfc_lhf'):
+                VAR = np.squeeze(InFile['SFLUX_R'][...]) * Lv  # W/m^2
+
+            elif (Vname == 'sfc_shf'):
+                VAR = np.squeeze(InFile['SFLUX_T'][...]) * Cp  # W/m^2
+
             else:
                 print("      Warning: undefined variable ({0:s}), skipping this variable".format(Vname))
                 continue
