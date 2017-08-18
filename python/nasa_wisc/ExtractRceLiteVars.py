@@ -50,7 +50,7 @@ VarList = [
     ]
 Nvars = len(VarList)
 
-InFilePatternTemplate = "RAMS/<SIM>/RAMS/<SIM>-L-2012-*.h5"
+InFilePatternTemplate = "SIMDATA/<SIM>/RAMS/<SIM>-L-2012-*.h5"
 OutFileTemplate = "SIMDATA/<SIM>/HDF5/<VNAME>-<SIM>-AC-2012-01-01-000000-g1.h5"
 
 for isim in range(Nsims):
