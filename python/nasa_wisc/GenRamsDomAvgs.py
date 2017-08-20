@@ -29,7 +29,7 @@ VarList = [
     ]
 Nvars = len(VarList)
 
-InFilePatternTemplate = "RAMS/<SIM>/RAMS/<SIM>-L-*.h5"
+InFilePatternTemplate = "SIMDATA/<SIM>/RAMS/<SIM>-L-*.h5"
 OutFileTemplate = "DIAGS/rams_dom_avgs_<SIM>.h5"
 
 for isim in range(Nsims):
