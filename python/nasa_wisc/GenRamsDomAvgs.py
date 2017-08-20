@@ -17,8 +17,8 @@ Tstring = conf.SetTimeString()
 SimList = [
     'RCE_1km',
     'RCE_1km_SM',
-#    'RCE_1km_DP',
-#    'RCE_1km_DM',
+    'RCE_1km_DP',
+    'RCE_1km_DM',
     ]
 Nsims = len(SimList)
 
