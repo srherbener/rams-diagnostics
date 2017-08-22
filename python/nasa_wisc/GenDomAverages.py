@@ -14,11 +14,19 @@ import Hdf5Utils as h5u
 Tstring = conf.SetTimeString()
 
 SimList = [
-    'RCE_S300_SQ',
-    'RCE_S300_SQ_C05',
-    'RCE_S300_SQ_DEBUG',
-    'RCE_S300_SQ_E1',
-    'RCE_S300_SQ_SM',
+#    'RCE_S300_SQ',
+#    'RCE_S300_SQ_C05',
+#    'RCE_S300_SQ_DEBUG',
+#    'RCE_S300_SQ_E1',
+#    'RCE_S300_SQ_SM',
+    'RCE_1km',
+    'RCE_1km_SM',
+    'RCE_1km_DM',
+    'RCE_1km_DP',
+    'RCE_1km_IPL2',
+    'RCE_1km_SM_IPL2',
+    'RCE_1km_DM_IPL2',
+    'RCE_1km_DP_IPL2',
     ]
 Nsims = len(SimList)
 
@@ -29,24 +37,30 @@ VarList = [
     #        "all" - use all points
     #        "ge:<val>" - use points >= to <val>
 
-    [ "lat_flux",  "/lat_flux",  "/avg_sfc_lat",  "all" ],
-    [ "sens_flux", "/sens_flux", "/avg_sfc_sens", "all" ],
+    #[ "lat_flux",  "/lat_flux",  "/avg_sfc_lat",  "all" ],
+    #[ "sens_flux", "/sens_flux", "/avg_sfc_sens", "all" ],
 
-    [ "rshort",   "/rshort",   "/avg_sfc_swdn", "all" ],
-    [ "rshortup", "/rshortup", "/avg_sfc_swup", "all" ],
-    [ "rlong",    "/rlong",    "/avg_sfc_lwdn", "all" ],
-    [ "rlongup",  "/rlongup",  "/avg_sfc_lwup", "all" ],
+    #[ "rshort",   "/rshort",   "/avg_sfc_swdn", "all" ],
+    #[ "rshortup", "/rshortup", "/avg_sfc_swup", "all" ],
+    #[ "rlong",    "/rlong",    "/avg_sfc_lwdn", "all" ],
+    #[ "rlongup",  "/rlongup",  "/avg_sfc_lwup", "all" ],
 
-    [ "albedt", "/albedt", "/avg_sfc_alb", "all" ],
+    #[ "albedt", "/albedt", "/avg_sfc_alb", "all" ],
 
-    [ "swdn_tod",  "/swdn",  "/avg_top_swdn", "all" ],
-    [ "swup_tod",  "/swup",  "/avg_top_swup", "all" ],
-    [ "lwup_tod",  "/lwup",  "/avg_top_lwup", "all" ],
+    #[ "swdn_tod",  "/swdn",  "/avg_top_swdn", "all" ],
+    #[ "swup_tod",  "/swup",  "/avg_top_swup", "all" ],
+    #[ "lwup_tod",  "/lwup",  "/avg_top_lwup", "all" ],
 
-    [ "pcprate",  "/pcprate", "/avg_pcprate", "all" ],
+    #[ "pcprate",  "/pcprate", "/avg_pcprate", "all" ],
 
-    [ "vint_cond",  "/vertint_cond",  "/avg_vint_cond",  "all" ],
-    [ "vint_vapor", "/vertint_vapor", "/avg_vint_vapor", "all" ],
+    #[ "vint_cond",  "/vertint_cond",  "/avg_vint_cond",  "all" ],
+    #[ "vint_vapor", "/vertint_vapor", "/avg_vint_vapor", "all" ],
+
+    [ "olr",       "/olr",       "/avg_olr",       "all" ],
+    [ "pcp_rate",  "/pcp_rate",  "/avg_pcp_rate",  "all" ],
+    [ "pcp_water", "/pcp_water", "/avg_pcp_water", "all" ],
+    [ "sfc_lhf",   "/sfc_lhf",   "/avg_sfc_lhf",   "all" ],
+    [ "sfc_shf",   "/sfc_shf",   "/avg_sfc_shf",   "all" ],
     ] 
 Nvars = len(VarList)
 
@@ -55,7 +69,8 @@ Yname = '/y_coords'
 Zname = '/z_coords'
 Tname = '/t_coords'
 
-InFileTemplate = "HDF5/<SIM>/HDF5/<FPREFIX>-<SIM>-AS-2012-01-01-000000-g1.h5"
+#InFileTemplate = "HDF5/<SIM>/HDF5/<FPREFIX>-<SIM>-AS-2012-01-01-000000-g1.h5"
+InFileTemplate = "SIMDATA/<SIM>/HDF5/<FPREFIX>-<SIM>-AC-2012-01-01-000000-g1.h5"
 
 # Routine to calculate the average of a 2D (horizontal) field
 def CalcHorizAvg(Var, Select):

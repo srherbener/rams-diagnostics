@@ -9,7 +9,8 @@ SCRIPTS = \
   $(DEST)/ExtractRceLiteVars.py \
   $(DEST)/GenRamsDomAvgs.py \
   $(DEST)/GenDomAverages.py \
-  $(DEST)/GenEqMeas.py
+  $(DEST)/GenEqMeas.py \
+  $(DEST)/PlotTimeSeries.py
 
 
 #

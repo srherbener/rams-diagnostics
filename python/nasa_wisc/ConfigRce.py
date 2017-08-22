@@ -8,13 +8,27 @@ def SetTimeString():
 
 def SetColorScheme():
     ColorScheme = {
-        'RCE_S300_SQ'     : 'black',
+        'RCE_1km'          : 'black',
+        'RCE_1km_SM'       : 'cyan',
+        'RCE_1km_DM'       : 'magenta',
+        'RCE_1km_DP'       : 'sandybrown',
+        'RCE_1km_IPL2'     : 'black',
+        'RCE_1km_SM_IPL2'  : 'cyan',
+        'RCE_1km_DM_IPL2'  : 'magenta',
+        'RCE_1km_DP_IPL2'  : 'sandybrown',
         }
     return ColorScheme
 
 def SetLabelScheme():
     LabelScheme = {
-        'RCE_S300_SQ'     : 'S300-SQ',
+        'RCE_1km'          : '2M',
+        'RCE_1km_SM'       : '1M',
+        'RCE_1km_DM'       : '2M, DM',
+        'RCE_1km_DP'       : '2M, DB',
+        'RCE_1km_IPL2'     : '2M',
+        'RCE_1km_SM_IPL2'  : '1M',
+        'RCE_1km_DM_IPL2'  : '2M, DM',
+        'RCE_1km_DP_IPL2'  : '2M, DB',
         }
     return LabelScheme
 
