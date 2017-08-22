@@ -38,10 +38,14 @@ Tname = "/t_coords"
 
 
 SimList = [
-    'RCE_1km',
-    'RCE_1km_SM',
-    'RCE_1km_DM',
-    'RCE_1km_DP',
+#    'RCE_1km',
+#    'RCE_1km_SM',
+#    'RCE_1km_DM',
+#    'RCE_1km_DP',
+    'RCE_1km_IPL2',
+    'RCE_1km_SM_IPL2',
+    'RCE_1km_DM_IPL2',
+    'RCE_1km_DP_IPL2',
     ]
 Nsims = len(SimList)
 

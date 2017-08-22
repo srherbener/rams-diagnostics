@@ -19,6 +19,10 @@ SimList = [
     'RCE_1km_SM',
     'RCE_1km_DP',
     'RCE_1km_DM',
+    'RCE_1km_IPL2',
+    'RCE_1km_SM_IPL2',
+    'RCE_1km_DP_IPL2',
+    'RCE_1km_DM_IPL2',
     ]
 Nsims = len(SimList)
 
@@ -26,6 +30,7 @@ VarList = [
     'total_cond',
     'precip_rate',
     'vapor',
+    'theta',
     ]
 Nvars = len(VarList)
 
@@ -65,6 +70,9 @@ for isim in range(Nsims):
 
             elif (Var == 'vapor'):
                 VAR = InFile['RV'][...]
+
+            elif (Var == 'theta'):
+                VAR = InFile['THETA'][...]
 
             else:
                 print("      Warning: undefined variable ({0:s}), skipping this variable".format(Var))
