@@ -22,15 +22,14 @@ PlotList = [
 Nplots = len(PlotList)
 
 VarList = [
-    [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_olr',       [ 150, 350 ], r'$OLR\ (W\ m^{2})$',    'Olr'    ],
-    [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_pcp_rate',  [   0,   8 ], r'$PR\ (mm\ day^{-1})$', 'Prate'  ],
-    [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_pcp_water', [  20,  60 ], r'$PW\ (mm)$',           'Pwater' ],
-    [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_sfc_lhf',   [   0, 100 ], r'$LHF\ (W\ m^{2})$',    'Lhf'    ],
-    [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_sfc_shf',   [   0,  15 ], r'$SHF\ (W\ m^{2})$',    'Shf'    ],
+    [ 'DIAGS/profiles_<SIM>.h5', 'theta_prof',       [ 290, 420 ],     r'$\theta\ (K)$',               'Theta'      ],
+    [ 'DIAGS/profiles_<SIM>.h5', 'total_cond_prof',  [ -0.001, 0.08 ], r'$Total Cond.\ (g\ kg^{-1})$', 'TotalCond'  ],
+    [ 'DIAGS/profiles_<SIM>.h5', 'vapor_prof',       [ -0.5, 20 ],     r'$Vapor\ (g\ kg^{-1})$',       'Vapor'      ],
     ]
 Nvars = len(VarList)
 
-Tvname = '/t_coords'
+Z = np.array(conf.SetZcoords()) / 1000.0 # km
+Nz = len(Z)
 
 for iplot in range(Nplots):
     SimList = PlotList[iplot][0]
@@ -41,8 +40,8 @@ for iplot in range(Nplots):
     for ivar in range(Nvars):
         InFileTemplate = VarList[ivar][0]
         Var = VarList[ivar][1]
-        Ylims = VarList[ivar][2]
-        Ylabel = VarList[ivar][3]
+        Xlims = VarList[ivar][2]
+        Xlabel = VarList[ivar][3]
         Oname = VarList[ivar][4]
 
         print("Generating plot for varialbe: {0:s}".format(Var))
@@ -61,11 +60,7 @@ for iplot in range(Nplots):
             InFile = h5py.File(InFname, mode='r')
 
             if (isim == 0):
-                print("    Reading: {0:s} ({1:s})".format(InFname, Tvname))
-                T = InFile[Tvname][...] / 86400.0 # convert sec to day
-                Nt = len(T)
-
-                VARS = np.zeros((Nsims, Nt), dtype=np.float_)
+                VARS = np.zeros((Nsims, Nz), dtype=np.float_)
 
             VARS[isim,...] = InFile[Vname][...]
 
@@ -75,8 +70,8 @@ for iplot in range(Nplots):
 
         # Make the plot
         Pdir = 'Plots.py'
-        Xlims = [ 0, 50 ] # 50 days
-        Xlabel = r'$Simulation\ Time\ (days)$'
+        Ylims = [ 0, 18 ] # km
+        Ylabel = r'$Height\ (km)$'
         
         Fig = plt.figure()
         Ax  = Fig.add_axes([ 0.1, 0.1, 0.7, 0.8 ])
@@ -95,10 +90,10 @@ for iplot in range(Nplots):
         Legend.fontsize = 12
         Legend.ncol = 1
         
-        plu.PlotLine(Ax, T, VARS.transpose(), Ptitle, Xaxis, Yaxis, Legend, SimColors)
+        plu.PlotLine(Ax, VARS.transpose(), Z, Ptitle, Xaxis, Yaxis, Legend, SimColors)
         
         
-        OutFile = "{0:s}/{1:s}TimeSeries{2:s}.png".format(Pdir, Pfprefix, Oname)
+        OutFile = "{0:s}/{1:s}Profile{2:s}.png".format(Pdir, Pfprefix, Oname)
         print("Writing: {0:s}".format(OutFile))
         Fig.savefig(OutFile)
         plt.close()

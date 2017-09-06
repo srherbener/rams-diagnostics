@@ -14,11 +14,10 @@ import Hdf5Utils as h5u
 Tstring = conf.SetTimeString()
 
 SimList = [
-    'RCE_S300_SQ',
-    'RCE_S300_SQ_C05',
-    'RCE_S300_SQ_DEBUG',
-    'RCE_S300_SQ_E1',
-    'RCE_S300_SQ_SM',
+    'RCE_3km_1mom',
+    'RCE_3km_2mom',
+    'RCE_3km_2mom_db',
+    'RCE_3km_2mom_dm',
     ]
 Nsims = len(SimList)
 
@@ -27,7 +26,7 @@ Yname = '/y_coords'
 Zname = '/z_coords'
 Tname = '/t_coords'
 
-InFileTemplate = "HDF5/<SIM>/HDF5/<FPREFIX>-<SIM>-AS-2012-01-01-000000-g1.h5"
+InFileTemplate = "HDF5/<SIM>/HDF5/<FPREFIX>-<SIM>-LS-2012-01-01-000000-g1.h5"
 
 def WriteOutputDset(OutFname, OutVname, Nt, OutVar, Tdim):
     print("  Writing: {0:s} ({1:s})".format(OutFname, OutVname))
@@ -44,21 +43,21 @@ for isim in range(Nsims):
     LatFluxFname  = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "lat_flux")
     SensFluxFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "sens_flux")
 
-    SfcSwdnFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "rshort")
-    SfcSwupFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "rshortup")
-    SfcLwdnFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "rlong")
-    SfcLwupFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "rlongup")
+    SfcSwdnFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "swdn_sfc")
+    SfcAlbFname  = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "albedt")
+    SfcLwdnFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "lwdn_sfc")
+    SfcLwupFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "lwup_sfc")
 
-    TopSwdnFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "swdn_tod")
-    TopSwupFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "swup_tod")
-    TopLwupFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "lwup_tod")
+    TopSwdnFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "swdn_toa")
+    TopSwupFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "swup_toa")
+    TopLwupFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "lwup_toa")
 
     # Corresponding input file dataset names
     LatFluxVname = "/lat_flux"
     SensFluxVname = "/sens_flux"
 
     SfcSwdnVname = "/rshort"
-    SfcSwupVname = "/rshortup"
+    SfcAlbVname  = "/albedt"
     SfcLwdnVname = "/rlong"
     SfcLwupVname = "/rlongup"
 
@@ -71,7 +70,7 @@ for isim in range(Nsims):
     SensFluxFile = h5py.File(SensFluxFname, mode='r')
 
     SfcSwdnFile = h5py.File(SfcSwdnFname, mode='r')
-    SfcSwupFile = h5py.File(SfcSwupFname, mode='r')
+    SfcAlbFile = h5py.File(SfcAlbFname, mode='r')
     SfcLwdnFile = h5py.File(SfcLwdnFname, mode='r')
     SfcLwupFile = h5py.File(SfcLwupFname, mode='r')
 
@@ -100,7 +99,7 @@ for isim in range(Nsims):
     print("  Reading: {0:s} ({1:s})".format(SensFluxFname, SensFluxVname))
 
     print("  Reading: {0:s} ({1:s})".format(SfcSwdnFname, SfcSwdnVname))
-    print("  Reading: {0:s} ({1:s})".format(SfcSwupFname, SfcSwupVname))
+    print("  Reading: {0:s} ({1:s})".format(SfcAlbFname, SfcAlbVname))
     print("  Reading: {0:s} ({1:s})".format(SfcLwdnFname, SfcLwdnVname))
     print("  Reading: {0:s} ({1:s})".format(SfcLwupFname, SfcLwupVname))
 
@@ -150,13 +149,15 @@ for isim in range(Nsims):
         SfcSens = np.squeeze(SensFluxFile[SensFluxVname][i,...])[1:-1,1:-1]
 
         SfcSwdn = np.squeeze(SfcSwdnFile[SfcSwdnVname][i,...])[1:-1,1:-1]
-        SfcSwup = np.squeeze(SfcSwupFile[SfcSwupVname][i,...])[1:-1,1:-1]
+        SfcAlb  = np.squeeze(SfcAlbFile[SfcAlbVname][i,...])[1:-1,1:-1]
         SfcLwdn = np.squeeze(SfcLwdnFile[SfcLwdnVname][i,...])[1:-1,1:-1]
         SfcLwup = np.squeeze(SfcLwupFile[SfcLwupVname][i,...])[1:-1,1:-1]
 
         TopSwdn = np.squeeze(TopSwdnFile[TopSwdnVname][i,...])[1:-1,1:-1]
         TopSwup = np.squeeze(TopSwupFile[TopSwupVname][i,...])[1:-1,1:-1]
         TopLwup = np.squeeze(TopLwupFile[TopLwupVname][i,...])[1:-1,1:-1]
+
+        SfcSwup = SfcSwdn * SfcAlb
 
         # Form Thf and Qrad
         #  Thf is the sum of latent heat and sensible heat fluxes
@@ -189,7 +190,7 @@ for isim in range(Nsims):
     SensFluxFile.close()
 
     SfcSwdnFile.close()
-    SfcSwupFile.close()
+    SfcAlbFile.close()
     SfcLwdnFile.close()
     SfcLwupFile.close()
 

@@ -10,6 +10,8 @@ SCRIPTS = \
   $(DEST)/GenRamsDomAvgs.py \
   $(DEST)/GenDomAverages.py \
   $(DEST)/GenEqMeas.py \
+  $(DEST)/GenProfiles.py \
+  $(DEST)/PlotProfiles.py \
   $(DEST)/PlotTimeSeries.py
 
 

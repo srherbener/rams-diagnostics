@@ -150,10 +150,8 @@ def PlotLine(Paxes, X, Y, Ptitle, Xaxis, Yaxis, Legend, Colors):
         Xnpts = X.size
         Xnlines = 1
     else:
-        print("ERROR: PlotLine: X needs to be a vector")
-        print("ERROR: PlotLine: skipping this plot")
-        print("")
-        return
+        ( Xnpts, Xnlines ) = X.shape
+
     if (Y.ndim == 1):
         Ynpts = Y.size
         Ynlines = 1
@@ -165,12 +163,23 @@ def PlotLine(Paxes, X, Y, Ptitle, Xaxis, Yaxis, Legend, Colors):
         print("ERROR: PlotLine: skipping this plot")
         print("")
         return
+    if ((Xnlines > 1) and (Ynlines > 1)):
+        print("ERROR: PlotLine: One of X or Y must be a vector (instead of array)")
+        print("ERROR: PlotLine: skipping this plot")
+        print("")
+        return
 
-    # Start drawing
-    if (Ynlines == 1):
+    # Start drawing. Have three cases:
+    #   X and Y are vectors -> draw plot in one shot
+    #   X is vector, Y array (multiple lines) -> loop through Ynlines
+    #   X is array, Y is vector -> loop through Xnlines
+    if ((Xnlines == 1) and (Ynlines == 1)):
         Paxes.plot(X, Y, color=Colors[0], linewidth=LineW, label=Legend.text[0])
-    else:
-        for i in range(0, Ynlines):
+    elif (Xnlines > 1):
+        for i in range(Xnlines):
+            Paxes.plot(X[:,i], Y, color=Colors[i], linewidth=LineW, label=Legend.text[i])
+    elif (Ynlines > 1):
+        for i in range(Ynlines):
             Paxes.plot(X, Y[:,i], color=Colors[i], linewidth=LineW, label=Legend.text[i])
 
     Ptitle.set(Paxes)

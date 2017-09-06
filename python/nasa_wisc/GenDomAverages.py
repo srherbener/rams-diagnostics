@@ -19,14 +19,18 @@ SimList = [
 #    'RCE_S300_SQ_DEBUG',
 #    'RCE_S300_SQ_E1',
 #    'RCE_S300_SQ_SM',
-    'RCE_1km',
-    'RCE_1km_SM',
-    'RCE_1km_DM',
-    'RCE_1km_DP',
-    'RCE_1km_IPL2',
-    'RCE_1km_SM_IPL2',
-    'RCE_1km_DM_IPL2',
-    'RCE_1km_DP_IPL2',
+#    'RCE_1km',
+#    'RCE_1km_SM',
+#    'RCE_1km_DM',
+#    'RCE_1km_DP',
+#    'RCE_1km_IPL2',
+#    'RCE_1km_SM_IPL2',
+#    'RCE_1km_DM_IPL2',
+#    'RCE_1km_DP_IPL2',
+#    'RCE_3km_1mom',
+    'RCE_3km_2mom',
+    'RCE_3km_2mom_db',
+    'RCE_3km_2mom_dm',
     ]
 Nsims = len(SimList)
 
@@ -37,30 +41,25 @@ VarList = [
     #        "all" - use all points
     #        "ge:<val>" - use points >= to <val>
 
-    #[ "lat_flux",  "/lat_flux",  "/avg_sfc_lat",  "all" ],
-    #[ "sens_flux", "/sens_flux", "/avg_sfc_sens", "all" ],
+    [ "lat_flux",  "/lat_flux",  "/avg_sfc_lat",  "all" ],
+    [ "sens_flux", "/sens_flux", "/avg_sfc_sens", "all" ],
 
-    #[ "rshort",   "/rshort",   "/avg_sfc_swdn", "all" ],
-    #[ "rshortup", "/rshortup", "/avg_sfc_swup", "all" ],
-    #[ "rlong",    "/rlong",    "/avg_sfc_lwdn", "all" ],
-    #[ "rlongup",  "/rlongup",  "/avg_sfc_lwup", "all" ],
+    [ "swdn_sfc",   "/rshort",   "/avg_sfc_swdn", "all" ],
+    [ "swdn_sfc",   "/rshort",   "/avg_sfc_swup", "all" ],
+    [ "lwdn_sfc",   "/rlong",    "/avg_sfc_lwdn", "all" ],
+    [ "lwup_sfc",   "/rlongup",  "/avg_sfc_lwup", "all" ],
 
-    #[ "albedt", "/albedt", "/avg_sfc_alb", "all" ],
+    [ "swdn_toa",  "/swdn",  "/avg_top_swdn", "all" ],
+    [ "swup_toa",  "/swup",  "/avg_top_swup", "all" ],
+    [ "lwup_toa",  "/lwup",  "/avg_top_lwup", "all" ],
 
-    #[ "swdn_tod",  "/swdn",  "/avg_top_swdn", "all" ],
-    #[ "swup_tod",  "/swup",  "/avg_top_swup", "all" ],
-    #[ "lwup_tod",  "/lwup",  "/avg_top_lwup", "all" ],
+    [ "pcprr",   "/pcprr", "/avg_pcprr", "all" ],
+    [ "vint_vapor", "/vertint_vapor", "/avg_vint_vapor", "all" ],
 
-    #[ "pcprate",  "/pcprate", "/avg_pcprate", "all" ],
+    [ "rtotal", "/rtotal_orig", "/avg_total_cond", "all" ],
+    [ "vapor",  "/vapor",       "/avg_vapor",      "all" ],
+    [ "theta",  "/theta",       "/avg_theta",      "all" ],
 
-    #[ "vint_cond",  "/vertint_cond",  "/avg_vint_cond",  "all" ],
-    #[ "vint_vapor", "/vertint_vapor", "/avg_vint_vapor", "all" ],
-
-    [ "olr",       "/olr",       "/avg_olr",       "all" ],
-    [ "pcp_rate",  "/pcp_rate",  "/avg_pcp_rate",  "all" ],
-    [ "pcp_water", "/pcp_water", "/avg_pcp_water", "all" ],
-    [ "sfc_lhf",   "/sfc_lhf",   "/avg_sfc_lhf",   "all" ],
-    [ "sfc_shf",   "/sfc_shf",   "/avg_sfc_shf",   "all" ],
     ] 
 Nvars = len(VarList)
 
@@ -70,7 +69,7 @@ Zname = '/z_coords'
 Tname = '/t_coords'
 
 #InFileTemplate = "HDF5/<SIM>/HDF5/<FPREFIX>-<SIM>-AS-2012-01-01-000000-g1.h5"
-InFileTemplate = "SIMDATA/<SIM>/HDF5/<FPREFIX>-<SIM>-AC-2012-01-01-000000-g1.h5"
+InFileTemplate = "SIMDATA/<SIM>/HDF5/<FPREFIX>-<SIM>-LS-2012-01-01-000000-g1.h5"
 
 # Routine to calculate the average of a 2D (horizontal) field
 def CalcHorizAvg(Var, Select):
@@ -115,6 +114,17 @@ for isim in range(Nsims):
         InFile  = h5py.File(InFname, mode='r')
         print("  Reading: {0:s} ({1:s})".format(InFname, InVname))
 
+        if (OutVname == "/avg_sfc_swup"):
+            AlbFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "albedt")
+            AlbFile  = h5py.File(AlbFname, mode='r')
+            AlbVname = "/albedt"
+            print("    Reading: {0:s} ({1:s})".format(AlbFname, AlbVname))
+        elif (OutVname == "/avg_total_cond"):
+            RvFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "vapor")
+            RvFile  = h5py.File(RvFname, mode='r')
+            RvVname = "/vapor"
+            print("    Reading: {0:s} ({1:s})".format(RvFname, RvVname))
+
         # Read in coordinates. Try to get Z from a 3D variable.
         if (NoX):
             print("    Reading: {0:s} ({1:s})".format(InFname, Xname))
@@ -158,7 +168,12 @@ for isim in range(Nsims):
         # Do one time step at a time in order to reduce memory usage
         for i in range(Nt):
             # Read in the var and determine if 2D (t,y,x) or 3D (t,z,y,x) field.
-            Var = np.squeeze(InFile[InVname][i,...])
+            if (OutVname == "/avg_sfc_swup"):
+                Var = np.squeeze(InFile[InVname][i,...]) * np.squeeze(AlbFile[AlbVname][i,...])
+            elif (OutVname == "/avg_total_cond"):
+                Var = np.squeeze(InFile[InVname][i,...]) - np.squeeze(RvFile[RvVname][i,...])
+            else:
+                Var = np.squeeze(InFile[InVname][i,...])
             Ndims = Var.ndim
 
             if (Ndims == 2):
@@ -171,7 +186,7 @@ for isim in range(Nsims):
                 if (i == 0):
                     VarAvg = np.zeros((Nt,Nz))
                 for k in range(Nz):
-                    VarAvg[i,k] = CalcHorizAvg(np.squeeze(Var[i,:,:]), Select)
+                    VarAvg[i,k] = CalcHorizAvg(np.squeeze(Var[k,:,:]), Select)
 
             if ((i % 10) == 0):
                 print("    Processing time step: {0:d}".format(i))
@@ -179,6 +194,10 @@ for isim in range(Nsims):
         print("")
 
         InFile.close()
+        if (OutVname == "/avg_sfc_swup"):
+            AlbFile.close()
+        elif (OutVname == "/avg_total_cond"):
+            RvFile.close()
 
         # Write out average
         print("  Writing: {0:s} ({1:s})".format(OutFname, OutVname))
