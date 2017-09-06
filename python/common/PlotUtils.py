@@ -127,7 +127,7 @@ class ContourConfig:
         if (self.ctype == 'linear'):
             self.clevels = np.linspace(self.cmin, self.cmax, num=self.cnum)
         elif (self.ctype == 'log'):
-            self.clevels = np.logspace(self.cmin, self.cmax, num=self.cnum)
+            self.clevels = np.logspace(np.log10(self.cmin), np.log10(self.cmax), num=self.cnum)
         else:
             print("Error: ContourConfig: contour type (ctype) must be one of 'log', 'linear': {0:s}".format(self.ctype))
             sys.exit(1)
