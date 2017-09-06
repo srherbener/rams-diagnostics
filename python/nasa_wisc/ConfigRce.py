@@ -16,6 +16,10 @@ def SetColorScheme():
         'RCE_1km_SM_IPL2'  : 'cyan',
         'RCE_1km_DM_IPL2'  : 'magenta',
         'RCE_1km_DP_IPL2'  : 'sandybrown',
+        'RCE_3km_1mom'     : 'black',
+        'RCE_3km_2mom'     : 'cyan',
+        'RCE_3km_2mom_dm'  : 'magenta',
+        'RCE_3km_2mom_db'  : 'sandybrown',
         }
     return ColorScheme
 
@@ -29,6 +33,10 @@ def SetLabelScheme():
         'RCE_1km_SM_IPL2'  : '1M',
         'RCE_1km_DM_IPL2'  : '2M, DM',
         'RCE_1km_DP_IPL2'  : '2M, DB',
+        'RCE_3km_1mom'     : '1M',
+        'RCE_3km_2mom'     : '2M',
+        'RCE_3km_2mom_dm'  : '2M, DM',
+        'RCE_3km_2mom_db'  : '2M, DB',
         }
     return LabelScheme
 

@@ -16,15 +16,16 @@ ColorScheme = conf.SetColorScheme()
 LabelScheme = conf.SetLabelScheme()
 
 PlotList = [ 
-    [ [ 'RCE_1km', 'RCE_1km_SM', 'RCE_1km_DM', 'RCE_1km_DP' ], r'$IPLAWS = 0$', 'RceIpl0' ],
-    [ [ 'RCE_1km_IPL2', 'RCE_1km_SM_IPL2', 'RCE_1km_DM_IPL2', 'RCE_1km_DP_IPL2' ], r'$IPLAWS = 2$', 'RceIpl2' ],
+#    [ [ 'RCE_1km', 'RCE_1km_SM', 'RCE_1km_DM', 'RCE_1km_DP' ], r'$IPLAWS = 0$', 'RceIpl0' ],
+#    [ [ 'RCE_1km_IPL2', 'RCE_1km_SM_IPL2', 'RCE_1km_DM_IPL2', 'RCE_1km_DP_IPL2' ], r'$IPLAWS = 2$', 'RceIpl2' ],
+    [ [ 'RCE_3km_1mom', 'RCE_3km_2mom', 'RCE_3km_2mom_db', 'RCE_3km_2mom_dm' ], '', 'Rce3km' ],
     ]
 Nplots = len(PlotList)
 
 VarList = [
-    [ 'DIAGS/profiles_<SIM>.h5', 'theta_prof',       [ 290, 420 ],     r'$\theta\ (K)$',               'Theta'      ],
-    [ 'DIAGS/profiles_<SIM>.h5', 'total_cond_prof',  [ -0.001, 0.08 ], r'$Total Cond.\ (g\ kg^{-1})$', 'TotalCond'  ],
-    [ 'DIAGS/profiles_<SIM>.h5', 'vapor_prof',       [ -0.5, 20 ],     r'$Vapor\ (g\ kg^{-1})$',       'Vapor'      ],
+    [ 'DIAGS/profiles_<SIM>.h5', 'avg_theta_prof',       [ 290, 420 ],     r'$\theta\ (K)$',               'Theta'      ],
+    [ 'DIAGS/profiles_<SIM>.h5', 'avg_total_cond_prof',  [ -0.001, 0.08 ], r'$Total Cond.\ (g\ kg^{-1})$', 'TotalCond'  ],
+    [ 'DIAGS/profiles_<SIM>.h5', 'avg_vapor_prof',       [ -0.5, 20 ],     r'$Vapor\ (g\ kg^{-1})$',       'Vapor'      ],
     ]
 Nvars = len(VarList)
 
@@ -44,7 +45,7 @@ for iplot in range(Nplots):
         Xlabel = VarList[ivar][3]
         Oname = VarList[ivar][4]
 
-        print("Generating plot for varialbe: {0:s}".format(Var))
+        print("Generating plot for variable: {0:s}".format(Var))
 
         Vname = "/{0:s}".format(Var)
 

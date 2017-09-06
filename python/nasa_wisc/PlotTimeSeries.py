@@ -16,34 +16,52 @@ ColorScheme = conf.SetColorScheme()
 LabelScheme = conf.SetLabelScheme()
 
 PlotList = [ 
-    [ [ 'RCE_1km', 'RCE_1km_SM', 'RCE_1km_DM', 'RCE_1km_DP' ], r'$IPLAWS = 0$', 'RceIpl0' ],
-    [ [ 'RCE_1km_IPL2', 'RCE_1km_SM_IPL2', 'RCE_1km_DM_IPL2', 'RCE_1km_DP_IPL2' ], r'$IPLAWS = 2$', 'RceIpl2' ],
+#    [ [ 'RCE_1km', 'RCE_1km_SM', 'RCE_1km_DM', 'RCE_1km_DP' ], r'$IPLAWS = 0$', 'RceIpl0', 0, 50 ],
+#    [ [ 'RCE_1km_IPL2', 'RCE_1km_SM_IPL2', 'RCE_1km_DM_IPL2', 'RCE_1km_DP_IPL2' ], r'$IPLAWS = 2$', 'RceIpl2', 0, 50 ],
+    [ [ 'RCE_3km_1mom', 'RCE_3km_2mom', 'RCE_3km_2mom_db', 'RCE_3km_2mom_dm' ], '', '3km', 0, 40 ],
     ]
 Nplots = len(PlotList)
 
 VarList = [
-    [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_olr',       [ 150, 350 ], r'$OLR\ (W\ m^{2})$',    'Olr'    ],
-    [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_pcp_rate',  [   0,   8 ], r'$PR\ (mm\ day^{-1})$', 'Prate'  ],
-    [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_pcp_water', [  20,  60 ], r'$PW\ (mm)$',           'Pwater' ],
-    [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_sfc_lhf',   [   0, 100 ], r'$LHF\ (W\ m^{2})$',    'Lhf'    ],
-    [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_sfc_shf',   [   0,  15 ], r'$SHF\ (W\ m^{2})$',    'Shf'    ],
+    [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_pcprr',      [   0,  12 ], r'$PR\ (mm\ day^{-1})$', 'Prate'  ],
+    [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_vint_vapor', [  20,  60 ], r'$PW\ (mm)$',           'Pwater' ],
+
+    [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_sfc_lat',    [   0, 100 ], r'$LHF\ (W\ m^{2})$',    'Lhf'    ],
+    [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_sfc_sens',   [   0,  15 ], r'$SHF\ (W\ m^{2})$',    'Shf'    ],
+
+    [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_top_lwup',   [ 150, 350 ], r'$OLR\ (W\ m^{2})$',    'Olr'    ],
+    [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_top_swdn',   [ 400, 420 ], r'$INSOLATION\ (W\ m^{2})$',    'Insol'    ],
+
+    [ 'DIAGS/eq_meas_<SIM>.h5', 'rad_flux_div',      [   0,  150 ], r'$QRAD\ (W\ m^{2})$',   'Qrad'   ],
+    [ 'DIAGS/eq_meas_<SIM>.h5', 'therm_heat_flux',   [   0,  150 ], r'$THF\ (W\ m^{2})$',    'Thf'    ],
     ]
 Nvars = len(VarList)
 
 Tvname = '/t_coords'
 
+# plot config
+Pdir = 'Plots.py'
+Xlabel = r'$Simulation\ Time\ (days)$'
+
 for iplot in range(Nplots):
-    SimList = PlotList[iplot][0]
+    SimList  = PlotList[iplot][0]
     Nsims = len(SimList)
-    Pname = PlotList[iplot][1]
+    Pname    = PlotList[iplot][1]
     Pfprefix = PlotList[iplot][2]
+    Tstart   = PlotList[iplot][3]
+    Tend     = PlotList[iplot][4]
+
+    # plot config
+    Xlims = [ Tstart, Tend ]
+    T1 = Tstart * 24  # time steps are in hours
+    T2 = Tend * 24
 
     for ivar in range(Nvars):
         InFileTemplate = VarList[ivar][0]
-        Var = VarList[ivar][1]
-        Ylims = VarList[ivar][2]
+        Var    = VarList[ivar][1]
+        Ylims  = VarList[ivar][2]
         Ylabel = VarList[ivar][3]
-        Oname = VarList[ivar][4]
+        Oname  = VarList[ivar][4]
 
         print("Generating plot for varialbe: {0:s}".format(Var))
 
@@ -61,23 +79,22 @@ for iplot in range(Nplots):
             InFile = h5py.File(InFname, mode='r')
 
             if (isim == 0):
-                print("    Reading: {0:s} ({1:s})".format(InFname, Tvname))
-                T = InFile[Tvname][...] / 86400.0 # convert sec to day
+                T = np.arange(T1, T2+1) / 24 # convert hours to days
                 Nt = len(T)
+                VARS = np.ones((Nsims, Nt), dtype=np.float_) * np.nan
 
-                VARS = np.zeros((Nsims, Nt), dtype=np.float_)
+            IN_VAR = InFile[Vname][...]
+            VarNt = len(IN_VAR)
+            if (Vname == "/avg_pcprr"):
+                IN_VAR = IN_VAR * 24 # convert mm/h to mm/day
 
-            VARS[isim,...] = InFile[Vname][...]
+            VARS[isim,0:VarNt] = IN_VAR
 
             InFile.close()
 
         print("")
 
         # Make the plot
-        Pdir = 'Plots.py'
-        Xlims = [ 0, 50 ] # 50 days
-        Xlabel = r'$Simulation\ Time\ (days)$'
-        
         Fig = plt.figure()
         Ax  = Fig.add_axes([ 0.1, 0.1, 0.7, 0.8 ])
         
