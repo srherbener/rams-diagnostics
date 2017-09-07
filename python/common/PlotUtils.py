@@ -3,6 +3,7 @@
 #
 import matplotlib.pyplot as plt
 import matplotlib.patches as pat
+import matplotlib.colors as colors
 from mpl_toolkits.basemap import Basemap
 import numpy as np
 import sys
@@ -225,13 +226,29 @@ def PlotSplitBgraph(Paxes, Xbars, Ybars1, Ybars2, Ptitle, Xaxis, Yaxis, Legend, 
 #
 def PlotContour(Paxes, X, Y, Z, Ptitle, Xaxis, Yaxis, Cspecs):
 
+    # Set up color to value mapping (normalization)
+    if (Cspecs.ctype == "log"):
+        Cnorm = colors.LogNorm(vmin=Z.min(), vmax=Z.max())
+    else:
+        Cnorm = colors.Normalize(vmin=Z.min(), vmax=Z.max())
+
     # Make the contour plot
     if (Cspecs.cfilled):
-        cplot = Paxes.contourf(X, Y, Z, linestyle='none', extend='both', levels=Cspecs.clevels,
-            vmin=Cspecs.cmin, vmax=Cspecs.cmax, cmap=Cspecs.cmap)
+        if (Cspecs.ctype == "log"):
+            # can't yet use extend keyword with log scale
+            cplot = Paxes.contourf(X, Y, Z, linestyle='none', levels=Cspecs.clevels,
+                vmin=Cspecs.cmin, vmax=Cspecs.cmax, cmap=Cspecs.cmap, norm=Cnorm)
+        else:
+            cplot = Paxes.contourf(X, Y, Z, linestyle='none', extend='both', levels=Cspecs.clevels,
+                vmin=Cspecs.cmin, vmax=Cspecs.cmax, cmap=Cspecs.cmap, norm=Cnorm)
     else:
-        cplot = Paxes.contour(X, Y, Z, extend='both', levels=Cspecs.clevels,
-            vmin=Cspecs.cmin, vmax=Cspecs.cmax, cmap=Cspecs.cmap)
+        if (Cspecs.ctype == "log"):
+            # can't yet use extend keyword with log scale
+            cplot = Paxes.contour(X, Y, Z, levels=Cspecs.clevels,
+                vmin=Cspecs.cmin, vmax=Cspecs.cmax, cmap=Cspecs.cmap, norm=Cnorm)
+        else:
+            cplot = Paxes.contour(X, Y, Z, extend='both', levels=Cspecs.clevels,
+                vmin=Cspecs.cmin, vmax=Cspecs.cmax, cmap=Cspecs.cmap, norm=Cnorm)
 
     plt.colorbar(cplot, ax=Paxes, aspect=10)
 
