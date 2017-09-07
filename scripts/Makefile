@@ -9,6 +9,7 @@ SCRIPTS = $(DEST)/lp1 \
           $(DEST)/make_figs_TC \
           $(DEST)/make_figs_TCWS0513 \
           $(DEST)/make_figs_TsDebby \
+          $(DEST)/make_anim_gif \
           $(DEST)/grads2vis5d \
           $(DEST)/run_g2v \
           $(DEST)/run_im \
@@ -39,6 +40,9 @@ $(DEST)/make_figs_ATEX: make_figs_ATEX
 
 $(DEST)/make_figs_TsDebby: make_figs_TsDebby
 	cp make_figs_TsDebby $(DEST)/make_figs_TsDebby
+
+$(DEST)/make_anim_gif: make_anim_gif
+	cp make_anim_gif $(DEST)/make_anim_gif
 
 $(DEST)/grads2vis5d: grads2vis5d
 	cp grads2vis5d $(DEST)/grads2vis5d
