@@ -12,5 +12,5 @@ FFMPEG_HOME="$HOME/ffmpeg/ffmpeg-3.3.3-install"
 $FFMPEG_HOME/bin/ffmpeg -y -i "${Fprefix}_%04d.png" -vf scale=720:-1:flags=lanczos,palettegen palette.png
 
 # create the output gif using the custom color palette
-$FFMPEG_HOME/bin/ffmpeg  -i "${Fprefix}_%04d.png" -i palette.png -t 60 \
+$FFMPEG_HOME/bin/ffmpeg -y -i "${Fprefix}_%04d.png" -i palette.png -t 60 \
    -filter_complex "scale=720:-1:flags=lanczos[x];[x][1:v]paletteuse" ${Fprefix}.gif
