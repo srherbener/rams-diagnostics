@@ -27,7 +27,7 @@ SimList = [
 #    'RCE_1km_SM_IPL2',
 #    'RCE_1km_DM_IPL2',
 #    'RCE_1km_DP_IPL2',
-#    'RCE_3km_1mom',
+    'RCE_3km_1mom',
     'RCE_3km_2mom',
     'RCE_3km_2mom_db',
     'RCE_3km_2mom_dm',

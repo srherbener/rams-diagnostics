@@ -18,16 +18,16 @@ LabelScheme = conf.SetLabelScheme()
 PlotList = [ 
 #    [ [ 'RCE_1km', 'RCE_1km_SM', 'RCE_1km_DM', 'RCE_1km_DP' ], r'$IPLAWS = 0$', 'RceIpl0', 0, 50 ],
 #    [ [ 'RCE_1km_IPL2', 'RCE_1km_SM_IPL2', 'RCE_1km_DM_IPL2', 'RCE_1km_DP_IPL2' ], r'$IPLAWS = 2$', 'RceIpl2', 0, 50 ],
-    [ [ 'RCE_3km_1mom', 'RCE_3km_2mom', 'RCE_3km_2mom_db', 'RCE_3km_2mom_dm' ], '', '3km', 0, 40 ],
+    [ [ 'RCE_3km_1mom', 'RCE_3km_2mom', 'RCE_3km_2mom_db', 'RCE_3km_2mom_dm' ], '', 'Rce3km', 0, 80 ],
     ]
 Nplots = len(PlotList)
 
 VarList = [
     [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_pcprr',      [   0,  12 ], r'$PR\ (mm\ day^{-1})$', 'Prate'  ],
-    [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_vint_vapor', [  20,  60 ], r'$PW\ (mm)$',           'Pwater' ],
+    [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_vint_vapor', [   0,  60 ], r'$PW\ (mm)$',           'Pwater' ],
 
-    [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_sfc_lat',    [   0, 100 ], r'$LHF\ (W\ m^{2})$',    'Lhf'    ],
-    [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_sfc_sens',   [   0,  15 ], r'$SHF\ (W\ m^{2})$',    'Shf'    ],
+    [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_sfc_lat',    [   0, 120 ], r'$LHF\ (W\ m^{2})$',    'Lhf'    ],
+    [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_sfc_sens',   [   0,  20 ], r'$SHF\ (W\ m^{2})$',    'Shf'    ],
 
     [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_top_lwup',   [ 150, 350 ], r'$OLR\ (W\ m^{2})$',    'Olr'    ],
     [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_top_swdn',   [ 400, 420 ], r'$INSOLATION\ (W\ m^{2})$',    'Insol'    ],

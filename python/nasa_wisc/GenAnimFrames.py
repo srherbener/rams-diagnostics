@@ -26,8 +26,8 @@ Nsims = len(SimList)
 VarList = [
     #  <in_file_prefix> <in_var_name> <increment_between_frames> <Cmin> <Cmax>
     #
-    [ "pcprr",      "/pcprr",        12, "Prate", 1e-3, 1e2, 11, "nipy_spectral", "log" ],
-    [ "vint_tcond", "/vertint_orig", 12, "Tcond", 1e-3, 1e2, 11, "nipy_spectral", "log" ],
+    [ "pcprr",      "/pcprr",        4, "Prate", 1e-3, 1e2, 11, "nipy_spectral", "log" ],
+    [ "vint_tcond", "/vertint_orig", 4, "Tcond", 1e-3, 1e2, 11, "nipy_spectral", "log" ],
 
     ] 
 Nvars = len(VarList)
@@ -81,7 +81,7 @@ for isim in range(Nsims):
         Count = 0
         for it in range(0,Nt,FrameInc):
             Count = Count + 1
-            SimTime = T[it] / 3600.0 # convert to hours
+            SimTime = T[it] / 86400.0 # convert to days
 
             # read in the variable, it will keep track of the frame increment
             VAR = InFile[InVname][it,...]
@@ -97,7 +97,7 @@ for isim in range(Nsims):
 
             Cspecs = plu.ContourConfig(Cmin, Cmax, Cnum, Cmap, Cfilled, Ctype)
 
-            TitleString = "{0:s}: {1:s}, Sim Time: {2:5.2f} (h)".format(Sim, OutVname, SimTime)
+            TitleString = "{0:s}: {1:s}, SimTime: {2:7.2f} (d)".format(Sim, OutVname, SimTime)
             Ptitle = plu.TitleConfig("", TitleString)
             Ptitle.fontsize = 20
 

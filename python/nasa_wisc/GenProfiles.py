@@ -30,13 +30,13 @@ SimList = [
 Nsims = len(SimList)
 
 # Start and end times are time step indexes. Each time step is one hour and
-# we want the final 10 days.
-#   T1 = -240   240 timesteps from the end (10 X 24 hours)
+# we want the final 20 days.
+#   T1 = -481   480 timesteps from the end (20 X 24 hours)
 #   T2 = -1     end
 VarList = [
-    [ "/avg_theta",      -240, -1, 1.0, 0.0 ],
-    [ "/avg_total_cond", -240, -1, 1.0, 0.0 ],
-    [ "/avg_vapor",      -240, -1, 1.0, 0.0 ],
+    [ "/avg_theta",      -481, -1, 1.0, 0.0 ],
+    [ "/avg_total_cond", -481, -1, 1.0, 0.0 ],
+    [ "/avg_vapor",      -481, -1, 1.0, 0.0 ],
     ] 
 Nvars = len(VarList)
 
