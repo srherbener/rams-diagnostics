@@ -41,24 +41,28 @@ VarList = [
     #        "all" - use all points
     #        "ge:<val>" - use points >= to <val>
 
-    [ "lat_flux",  "/lat_flux",  "/avg_sfc_lat",  "all" ],
-    [ "sens_flux", "/sens_flux", "/avg_sfc_sens", "all" ],
+    [ "lat_flux",  "/lat_flux",  "sfc_lat",  "all" ],
+    [ "sens_flux", "/sens_flux", "sfc_sens", "all" ],
 
-    [ "swdn_sfc",   "/rshort",   "/avg_sfc_swdn", "all" ],
-    [ "swdn_sfc",   "/rshort",   "/avg_sfc_swup", "all" ],
-    [ "lwdn_sfc",   "/rlong",    "/avg_sfc_lwdn", "all" ],
-    [ "lwup_sfc",   "/rlongup",  "/avg_sfc_lwup", "all" ],
+    [ "swdn_sfc",   "/rshort",   "sfc_swdn", "all" ],
+    [ "swdn_sfc",   "/rshort",   "sfc_swup", "all" ],
+    [ "lwdn_sfc",   "/rlong",    "sfc_lwdn", "all" ],
+    [ "lwup_sfc",   "/rlongup",  "sfc_lwup", "all" ],
 
-    [ "swdn_toa",  "/swdn",  "/avg_top_swdn", "all" ],
-    [ "swup_toa",  "/swup",  "/avg_top_swup", "all" ],
-    [ "lwup_toa",  "/lwup",  "/avg_top_lwup", "all" ],
+    [ "swdn_toa",  "/swdn",  "top_swdn", "all" ],
+    [ "swup_toa",  "/swup",  "top_swup", "all" ],
+    [ "lwup_toa",  "/lwup",  "top_lwup", "all" ],
 
-    [ "pcprr",   "/pcprr", "/avg_pcprr", "all" ],
-    [ "vint_vapor", "/vertint_vapor", "/avg_vint_vapor", "all" ],
+    [ "pcprr",      "/pcprr",         "pcprr",         "all"     ],
+    [ "vint_vapor", "/vertint_vapor", "vint_vapor",    "all"     ],
+    [ "vint_vapor", "/vertint_vapor", "vint_vapor_01", "ge:0.01" ],
+    [ "pi_sfc",     "/pi",            "pi_sfc",        "all" ],
 
-    [ "rtotal", "/rtotal_orig", "/avg_total_cond", "all" ],
-    [ "vapor",  "/vapor",       "/avg_vapor",      "all" ],
-    [ "theta",  "/theta",       "/avg_theta",      "all" ],
+    [ "rtotal", "/rtotal_orig", "total_cond",    "all"     ],
+    [ "vapor",  "/vapor",       "vapor",         "all"     ],
+    [ "rtotal", "/rtotal_orig", "total_cond_01", "ge:0.01" ],
+    [ "vapor",  "/vapor",       "vapor_01",      "ge:0.01" ],
+    [ "theta",  "/theta",       "theta",         "all"     ],
 
     ] 
 Nvars = len(VarList)
@@ -79,7 +83,7 @@ def CalcHorizAvg(Var, Select):
 
     if (Select[0] == "all"):
         Var = Var.flatten()
-    if (Select[0] == "ge"):
+    elif (Select[0] == "ge"):
         Sval = float(Select[1])
         Var = Var[ Var >= Sval ]
         
@@ -93,15 +97,6 @@ for isim in range(Nsims):
     print("Generating horizontal domain averages for simulation: {0:s}".format(Sim))
     print("")
 
-    # Open the output file
-    OutFname = "DIAGS/dom_averages_{0:s}.h5".format(Sim)
-    OutFile = h5py.File(OutFname, mode='w')
-
-    NoX = True
-    NoY = True
-    NoZ = True
-    NoT = True
-
     # Read input variables, calculate horizontal averages and write out results
     for ivar in range(Nvars):
         InFprefix = VarList[ivar][0]
@@ -114,63 +109,53 @@ for isim in range(Nsims):
         InFile  = h5py.File(InFname, mode='r')
         print("  Reading: {0:s} ({1:s})".format(InFname, InVname))
 
-        if (OutVname == "/avg_sfc_swup"):
+        if (OutVname == "sfc_swup"):
             AlbFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "albedt")
             AlbFile  = h5py.File(AlbFname, mode='r')
             AlbVname = "/albedt"
             print("    Reading: {0:s} ({1:s})".format(AlbFname, AlbVname))
-        elif (OutVname == "/avg_total_cond"):
+        elif (OutVname == "total_cond"):
             RvFname = InFileTemplate.replace("<SIM>", Sim).replace("<FPREFIX>", "vapor")
             RvFile  = h5py.File(RvFname, mode='r')
             RvVname = "/vapor"
             print("    Reading: {0:s} ({1:s})".format(RvFname, RvVname))
 
+        # Open the output file
+        OutFname = "DIAGS/dom_avg_{0:s}_{1:s}.h5".format(OutVname, Sim)
+        OutFile = h5py.File(OutFname, mode='w')
+
         # Read in coordinates. Try to get Z from a 3D variable.
-        if (NoX):
-            print("    Reading: {0:s} ({1:s})".format(InFname, Xname))
-            X = InFile[Xname][...]
-            Nx = len(X)
-            Xdim = h5u.DimCoards(Xname, 1, [ Nx ], 'x')
-            Xdim.Build(OutFile, X)
-            NoX = False
+        print("    Reading: {0:s} ({1:s})".format(InFname, Xname))
+        X = InFile[Xname][...]
+        Nx = len(X)
+        Xdim = h5u.DimCoards(Xname, 1, [ Nx ], 'x')
+        Xdim.Build(OutFile, X)
 
-        if (NoY):
-            print("    Reading: {0:s} ({1:s})".format(InFname, Yname))
-            Y = InFile[Yname][...]
-            Ny = len(Y)
-            Ydim = h5u.DimCoards(Yname, 1, [ Ny ], 'y')
-            Ydim.Build(OutFile, Y)
-            NoY = False
+        print("    Reading: {0:s} ({1:s})".format(InFname, Yname))
+        Y = InFile[Yname][...]
+        Ny = len(Y)
+        Ydim = h5u.DimCoards(Yname, 1, [ Ny ], 'y')
+        Ydim.Build(OutFile, Y)
 
-        if (NoZ):
-            print("    Reading: {0:s} ({1:s})".format(InFname, Zname))
-            Z = InFile[Zname][...]
-            Nz = len(Z)
-            # Keep grabbing Z coordinates until one cooresponding to a 3D field
-            # is obtained. If a 3D Z coordinate vector is found, write it
-            # out. If one is not found, GRADS is okay with the z coordinates
-            # missing, plus all the variables are 2D and the z coordinates
-            # are not needed.
-            if (Nz > 1):
-                Zdim = h5u.DimCoards(Zname, 1, [ Nz ], 'z')
-                Zdim.Build(OutFile, Z)
-                NoZ = False
+        print("    Reading: {0:s} ({1:s})".format(InFname, Zname))
+        Z = InFile[Zname][...]
+        Nz = len(Z)
+        Zdim = h5u.DimCoards(Zname, 1, [ Nz ], 'z')
+        Zdim.Build(OutFile, Z)
 
-        if (NoT):
-            print("    Reading: {0:s} ({1:s})".format(InFname, Tname))
-            T = InFile[Tname][...]
-            Nt = len(T)
-            Tdim = h5u.DimCoards(Tname, 1, [ Nt ], 't', tstring=Tstring)
-            Tdim.Build(OutFile, T)
-            NoT = False
+        print("    Reading: {0:s} ({1:s})".format(InFname, Tname))
+        T = InFile[Tname][...]
+        Nt = len(T)
+        Tdim = h5u.DimCoards(Tname, 1, [ Nt ], 't', tstring=Tstring)
+        Tdim.Build(OutFile, T)
 
         # Read in input variable and form the domain average
         # Do one time step at a time in order to reduce memory usage
         for i in range(Nt):
             # Read in the var and determine if 2D (t,y,x) or 3D (t,z,y,x) field.
-            if (OutVname == "/avg_sfc_swup"):
+            if (OutVname == "sfc_swup"):
                 Var = np.squeeze(InFile[InVname][i,...]) * np.squeeze(AlbFile[AlbVname][i,...])
-            elif (OutVname == "/avg_total_cond"):
+            elif (OutVname == "total_cond"):
                 Var = np.squeeze(InFile[InVname][i,...]) - np.squeeze(RvFile[RvVname][i,...])
             else:
                 Var = np.squeeze(InFile[InVname][i,...])
@@ -194,9 +179,9 @@ for isim in range(Nsims):
         print("")
 
         InFile.close()
-        if (OutVname == "/avg_sfc_swup"):
+        if (OutVname == "sfc_swup"):
             AlbFile.close()
-        elif (OutVname == "/avg_total_cond"):
+        elif (OutVname == "total_cond"):
             RvFile.close()
 
         # Write out average
@@ -207,6 +192,7 @@ for isim in range(Nsims):
         elif (Ndims == 3):
             Dset.Build(OutFile, VarAvg, Tdim, Zdim)
 
+        OutFile.close()
+
         print("")
 
-    OutFile.close()
