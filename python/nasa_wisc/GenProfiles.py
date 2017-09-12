@@ -34,17 +34,13 @@ Nsims = len(SimList)
 #   T1 = -481   480 timesteps from the end (20 X 24 hours)
 #   T2 = -1     end
 VarList = [
-    [ "/avg_theta",      -481, -1, 1.0, 0.0 ],
-    [ "/avg_total_cond", -481, -1, 1.0, 0.0 ],
-    [ "/avg_vapor",      -481, -1, 1.0, 0.0 ],
+    [ "dom_avg_theta",      "/theta",      -481, -1, 1.0, 0.0 ],
+    [ "dom_avg_total_cond", "/total_cond", -481, -1, 1.0, 0.0 ],
+    [ "dom_avg_vapor",      "/vapor",      -481, -1, 1.0, 0.0 ],
     ] 
 Nvars = len(VarList)
 
-Z = conf.SetZcoords()
-Nz = len(Z)
 Zname = '/z_coords'
-
-InFileTemplate = "DIAGS/dom_averages_<SIM>.h5"
 
 # MAIN
 for isim in range(Nsims):
@@ -57,21 +53,26 @@ for isim in range(Nsims):
     OutFname = "DIAGS/profiles_{0:s}.h5".format(Sim)
     OutFile = h5py.File(OutFname, mode='w')
 
-    # Open the input file
-    InFname = InFileTemplate.replace("<SIM>", Sim)
-    InFile  = h5py.File(InFname, mode='r')
-
-    # Read in Z coordinates and build the Z dimension in the output file
-    Zdim = h5u.DimCoards(Zname, 1, [ Nz ], 'z')
-    Zdim.Build(OutFile, Z)
-
     # Read input variables, calculate horizontal averages and write out results
     for ivar in range(Nvars):
-        Vname  = VarList[ivar][0]
-        T1     = VarList[ivar][1]
-        T2     = VarList[ivar][2]
-        Scale  = VarList[ivar][3]
-        Offset = VarList[ivar][4]
+        Fprefix = VarList[ivar][0]
+        Vname   = VarList[ivar][1]
+        T1      = VarList[ivar][2]
+        T2      = VarList[ivar][3]
+        Scale   = VarList[ivar][4]
+        Offset  = VarList[ivar][5]
+
+        # Open the input file
+
+        InFname = "DIAGS/{0:s}_{1:s}.h5".format(Fprefix, Sim)
+        InFile  = h5py.File(InFname, mode='r')
+
+        # Read in Z coordinates and build the Z dimension in the output file
+        if (ivar == 0):
+            Z = InFile[Zname][...]
+            Nz = len(Z)
+            Zdim = h5u.DimCoards(Zname, 1, [ Nz ], 'z')
+            Zdim.Build(OutFile, Z)
 
         # Read in input variable and form the temporal average using the
         # Tmin and Tmax values to select a range of time steps. Vars will

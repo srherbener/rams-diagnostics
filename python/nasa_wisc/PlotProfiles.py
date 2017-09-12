@@ -23,9 +23,9 @@ PlotList = [
 Nplots = len(PlotList)
 
 VarList = [
-    [ 'DIAGS/profiles_<SIM>.h5', 'avg_theta_prof',       [ 290, 420 ],     r'$\theta\ (K)$',               'Theta'      ],
-    [ 'DIAGS/profiles_<SIM>.h5', 'avg_total_cond_prof',  [ -0.001, 0.08 ], r'$Total Cond.\ (g\ kg^{-1})$', 'TotalCond'  ],
-    [ 'DIAGS/profiles_<SIM>.h5', 'avg_vapor_prof',       [ -0.5, 20 ],     r'$Vapor\ (g\ kg^{-1})$',       'Vapor'      ],
+    [ 'DIAGS/profiles_<SIM>.h5', 'theta_prof',       [ 290, 420 ],     r'$\theta\ (K)$',               'Theta'      ],
+    [ 'DIAGS/profiles_<SIM>.h5', 'total_cond_prof',  [ -0.001, 0.08 ], r'$Total Cond.\ (g\ kg^{-1})$', 'TotalCond'  ],
+    [ 'DIAGS/profiles_<SIM>.h5', 'vapor_prof',       [ -0.5, 20 ],     r'$Vapor\ (g\ kg^{-1})$',       'Vapor'      ],
     ]
 Nvars = len(VarList)
 

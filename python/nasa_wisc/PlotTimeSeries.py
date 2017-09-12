@@ -23,14 +23,14 @@ PlotList = [
 Nplots = len(PlotList)
 
 VarList = [
-    [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_pcprr',      [   0,  12 ], r'$PR\ (mm\ day^{-1})$', 'Prate'  ],
-    [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_vint_vapor', [   0,  60 ], r'$PW\ (mm)$',           'Pwater' ],
+    [ 'DIAGS/dom_avg_pcprr_<SIM>.h5',      'pcprr',      [   0,  12 ], r'$PR\ (mm\ day^{-1})$', 'Prate'  ],
+    [ 'DIAGS/dom_avg_vint_vapor_<SIM>.h5', 'vint_vapor', [   0,  60 ], r'$PW\ (mm)$',           'Pwater' ],
 
-    [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_sfc_lat',    [   0, 120 ], r'$LHF\ (W\ m^{2})$',    'Lhf'    ],
-    [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_sfc_sens',   [   0,  20 ], r'$SHF\ (W\ m^{2})$',    'Shf'    ],
+    [ 'DIAGS/dom_avg_sfc_lat_<SIM>.h5',  'sfc_lat',    [   0, 120 ], r'$LHF\ (W\ m^{2})$',    'Lhf'    ],
+    [ 'DIAGS/dom_avg_sfc_sens_<SIM>.h5', 'sfc_sens',   [   0,  20 ], r'$SHF\ (W\ m^{2})$',    'Shf'    ],
 
-    [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_top_lwup',   [ 150, 350 ], r'$OLR\ (W\ m^{2})$',    'Olr'    ],
-    [ 'DIAGS/dom_averages_<SIM>.h5', 'avg_top_swdn',   [ 400, 420 ], r'$INSOLATION\ (W\ m^{2})$',    'Insol'    ],
+    [ 'DIAGS/dom_avg_top_lwup_<SIM>.h5', 'top_lwup',   [ 150, 350 ], r'$OLR\ (W\ m^{2})$',    'Olr'    ],
+    [ 'DIAGS/dom_avg_top_swdn_<SIM>.h5', 'top_swdn',   [ 400, 420 ], r'$INSOLATION\ (W\ m^{2})$',    'Insol'    ],
 
     [ 'DIAGS/eq_meas_<SIM>.h5', 'rad_flux_div',      [   0,  150 ], r'$QRAD\ (W\ m^{2})$',   'Qrad'   ],
     [ 'DIAGS/eq_meas_<SIM>.h5', 'therm_heat_flux',   [   0,  150 ], r'$THF\ (W\ m^{2})$',    'Thf'    ],
@@ -85,7 +85,7 @@ for iplot in range(Nplots):
 
             IN_VAR = InFile[Vname][...]
             VarNt = len(IN_VAR)
-            if (Vname == "/avg_pcprr"):
+            if (Vname == "/pcprr"):
                 IN_VAR = IN_VAR * 24 # convert mm/h to mm/day
 
             VARS[isim,0:VarNt] = IN_VAR
