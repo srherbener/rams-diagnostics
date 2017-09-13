@@ -4,6 +4,8 @@ import os
 import sys
 sys.path.append("{0:s}/etc/python/common".format(os.environ['HOME']))
 
+import re
+
 import requests as req
 from bs4 import BeautifulSoup
 import numpy as np
@@ -13,6 +15,13 @@ ServerList = [
     "tasman",
     "snow-home",
     "blizzard",
+    "frost-home",
+    "dendrite-home",
+    "ccn-home",
+    "icehome",
+    "dendriteuser1",
+    "dendriteuser2",
+    "dendriteuser3",
     ]
 
 print("Looking at group disk usage:")
@@ -60,7 +69,18 @@ for tag in GtotSoup.find_all("b"):
 for server in ServerList:
     print("Checking usage on server: {0:s}".format(server))
     svr = NdriveSoup.find("a", {"name":server})
-    print(svr)
+
+    tbl = svr.find_next_sibling("table")
+
+    for tbl_item in tbl.find_all("td"):
+        user_list = tbl_item.contents
+        # skip over empty lists
+        if (user_list):
+            # split the usage info string into components
+            user_list = user_list[0].replace("\n", "").split()
+            # pull off the user name from the path in the first component
+            user_list[0] = os.path.basename(user_list[0])
+            print(user_list)
 
 SortedUsageList = (sorted(UsageList.items(), key=lambda t: t[1]))
 
