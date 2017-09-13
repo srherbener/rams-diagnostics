@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# script to create animated gif files for NASA Wisc project
+# script to create animation files for NASA Wisc project
 
 SimList="RCE_3km_1mom RCE_3km_2mom RCE_3km_2mom_db RCE_3km_2mom_dm"
 
@@ -8,7 +8,7 @@ VarList="Prate Tcond"
 
 for Sim in $SimList
 do
-  echo "************* Creating animated gif for simulation: $Sim *************"
+  echo "************* Creating animations for simulation: $Sim *************"
   echo
 
   for Var in $VarList
@@ -17,7 +17,7 @@ do
     echo
 
     Fprefix="Animations/${Sim}/${Var}/${Var}_${Sim}"
-    make_anim_gif $Fprefix
+    make_anim_file $Fprefix
     echo
   done
 done
