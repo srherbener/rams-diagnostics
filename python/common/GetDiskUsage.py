@@ -4,25 +4,32 @@ import os
 import sys
 sys.path.append("{0:s}/etc/python/common".format(os.environ['HOME']))
 
-import re
-
 import requests as req
 from bs4 import BeautifulSoup
 import numpy as np
 from matplotlib import pyplot as plt
 
-ServerList = [
-    "tasman",
-    "snow-home",
-    "blizzard",
-    "frost-home",
-    "dendrite-home",
-    "ccn-home",
-    "icehome",
-    "dendriteuser1",
-    "dendriteuser2",
-    "dendriteuser3",
+import time
+
+ServerSpecs = [
+    [ "tasman",           "magenta"    ],
+    [ "snow-home",        "blue"       ],
+    [ "blizzard",         "green"      ],
+    [ "frost-home",       "gold"       ],
+    [ "dendrite-home",    "red"        ],
+    [ "ccn-home",         "violet"     ],
+    [ "icehome",          "skyblue"    ],
+    [ "dendriteuser1",    "aquamarine" ],
+    [ "dendriteuser2",    "darkorange" ],
+    [ "dendriteuser3",    "brown"      ],
     ]
+Nservers = len(ServerSpecs)
+
+ServerList = []
+ColorList = []
+for i in range(Nservers):
+    ServerList.append(ServerSpecs[i][0])
+    ColorList.append(ServerSpecs[i][1])
 
 UserAliases = {
     "areyh" : "aryeh",
@@ -123,28 +130,57 @@ for User in UserList:
         TopUsers[User] = UserUsage
 
 SortedTopUsers = (sorted(TopUsers.items(), key=lambda t: t[1]))
-N = len(SortedTopUsers)
+Nusers = len(SortedTopUsers)
 
-TopLabels = np.zeros(N, dtype='<U10')
-TopUsage = np.zeros(N)
+PlotUsers = []
+for i in range(Nusers):
+    PlotUsers.append(SortedTopUsers[i][0])
 
-for i in range(N):
-    TopLabels[i] = SortedTopUsers[i][0]
-    TopUsage[i]  = SortedTopUsers[i][1]
+# Pull out the server level usage
+PlotUsage = np.zeros((Nusers, Nservers))
+for i in range(Nusers):
+    User = PlotUsers[i]
+    j = 0
+    for Server in ServerList:
+        PlotUsage[i,j] = UsageByUser[User][Server]
+        j = j + 1
+
+# In PlotUsage, rows are users and columns are servers. Since we've reduced the list of
+# users, it's possible that a server might have zero usage. Want to throw these cases
+# out which means eliminating a column of zeros in the PlotUsage array.
+# Record the column numbers that we want to delete, and do the deletes in PlotUsage all
+# in one call to np.delete.
+DelCols = []
+PlotServers = []
+for j in range(Nservers):
+    if(np.all(np.absolute(PlotUsage[:,j]) <= 1.0e-6)):
+        DelCols.append(j)
+    else:
+        PlotServers.append(ServerList[j])
+
+PlotUsage = np.delete(PlotUsage, DelCols, axis=1)
+NplotServers = len(PlotServers)
 
 # Create a horizontal bar plot showing the heaviest users first
-Width = 0.8
-Ind = np.arange(N)
-Title = "Top Disk Usage by User\n(Total Usage = {0:.2f} Tb)".format(GroupTotal)
-Color = 'skyblue'
+BarWidth = 0.8
+Ind = np.arange(Nusers)
+Title = "Top Disk Usage by User: {0:s}\nTotal Usage = {1:.2f} Tb".format(time.ctime(),GroupTotal)
 
 Fig = plt.figure()
 
-plt.barh(Ind, TopUsage, Width, color=Color, edgecolor=Color, align='center')
+BarAccum = np.zeros((Nusers))
+Paxes = []
+for i in range(NplotServers):
+    PlotData = np.squeeze(PlotUsage[:,i])
+    Ax = plt.barh(Ind, PlotData, BarWidth, color=ColorList[i], edgecolor=ColorList[i], align='center', left=BarAccum)
+    Paxes.append(Ax)
+    BarAccum = BarAccum + PlotData
 
 plt.title(Title)
 plt.xlabel('Usage (Tb)')
-plt.yticks(Ind, TopLabels)
+plt.yticks(Ind, PlotUsers)
+
+plt.legend(Paxes, PlotServers, loc=4) # loc = 4 specifies lower right corner of plot
 
 OutFile = "{0:s}/tmp/DiskUsageByUser.png".format(os.environ['HOME'])
 print("  Writing: {0:s}".format(OutFile))
