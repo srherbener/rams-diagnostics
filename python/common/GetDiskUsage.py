@@ -24,51 +24,38 @@ ServerList = [
     "dendriteuser3",
     ]
 
+UserAliases = {
+    "areyh" : "aryeh",
+    "adele" : "aigel",
+    "michalcl" : "clavner",
+    }
+
 print("Looking at group disk usage:")
 
 # Grab the group totals information, and load into a "soup" database
-GroupTotalsUrl = "http://salix.atmos.colostate.edu/serverStatus/sueGroup.html"
 NetworkDriveUrl = "http://salix.atmos.colostate.edu/serverStatus/networkDrives.html"
-
-print("  Reading URL: {0:s}".format(GroupTotalsUrl))
-Gtot = req.get(GroupTotalsUrl)
 
 print("  Reading URL: {0:s}".format(NetworkDriveUrl))
 Ndrive = req.get(NetworkDriveUrl)
 
-GtotSoup = BeautifulSoup(Gtot.content, "lxml")
+print("")
+
 NdriveSoup = BeautifulSoup(Ndrive.content, "lxml")
-
-# All of the individual user usage data is formatted as:
-#
-#   <b> UserName </b> Amount Units <br/>
-#
-# So, look for all the "b" tags plus their next siblings
-UsageList = {}
-for tag in GtotSoup.find_all("b"):
-    # Continue the loop until the user name is "Top Three users"
-    # (which is a summary listing the heaviest disk usage by user)
-    UserName = tag.string.replace("\n", "")
-    if (UserName == "Top Three users"):
-        break
-
-    # Grab the Amount and Units. Convert all amounts to Tb.
-    UserUsage = tag.next_sibling.replace("\n", "")
-    UserUsage = UserUsage.split()
-
-    Amount = float(UserUsage[0])
-    if (UserUsage[1] == "Gb"):
-        Amount = Amount / 1024.0
-
-    UsageList[UserName] = Amount
 
 # Find user usage on each server
 # Servers are in sections starting with:
 #    <a name="server_name"> </a>
+# The usage for each server is located in a <table></table>
+# structure following the <a></a> with the server name
 #
-for server in ServerList:
-    print("Checking usage on server: {0:s}".format(server))
-    svr = NdriveSoup.find("a", {"name":server})
+UsageByServer = {}
+UserList = []
+TotName = "TotalAmount"
+for Server in ServerList:
+    UsageByServer[Server] = {}
+
+    print("  Checking usage on server: {0:s}".format(Server))
+    svr = NdriveSoup.find("a", {"name":Server})
 
     tbl = svr.find_next_sibling("table")
 
@@ -78,38 +65,77 @@ for server in ServerList:
         if (user_list):
             # split the usage info string into components
             user_list = user_list[0].replace("\n", "").split()
-            # pull off the user name from the path in the first component
-            user_list[0] = os.path.basename(user_list[0])
-            print(user_list)
 
-SortedUsageList = (sorted(UsageList.items(), key=lambda t: t[1]))
+            # Pull off the user name from the path in the first component
+            # and amount of disk usage in the second component.
+            User = os.path.basename(user_list[0])
+            if (User in UserAliases):
+                User = UserAliases[User]
 
-# In this case, the sorted function will create a list of tuples where each tuple is
-# a key:value pair from the UsageList dictionary. Peel these off into a text list (keys)
-# and a numpy array (values) in order to facilitate plotting.
-Nitems = len(SortedUsageList)
+            Amount = float(user_list[1])
+            if (user_list[2] == "Gb"):
+                Amount = Amount / 1024.0  # convert to TB
 
-Labels = np.zeros(Nitems, dtype='<U10')
-DiskUsage = np.zeros(Nitems)
+            # Store the server, user, amount
+            UserList.append(User)
+            UsageByServer[Server][User] = Amount
 
-for i in range(Nitems):
-    Labels[i] = SortedUsageList[i][0]
-    DiskUsage[i] = SortedUsageList[i][1]
+UserList = set(UserList) # remove duplicates
+print("")
 
-TotalUsage = DiskUsage.sum()
+# Reformat the usage by server data into usage by user.
+# Sum up the total amount of each user and add that entry.
+#
+# A few users have different user names on different servers. For these
+# users, add together the usage for each server, and place into just
+# one amount under a single user name.
+UsageByUser = {}
+GroupTotal = 0.0
+for User in UserList:
+    UsageByUser[User] = {}
+    UserTotal = 0.0
 
-# For the plot, chop off the small usage values. This will help de-clutter
-# the plot.
-MinUsage = 1.0 # Tb
-TopSelect = (DiskUsage > MinUsage)
-TopUsage = DiskUsage[TopSelect]
-TopLabels = Labels[TopSelect]
-N = len(TopUsage)
+    for Server in ServerList:
+        UsageByUser[User][Server] = 0.0
+
+        if (User in UsageByServer[Server]):
+            Amount = UsageByServer[Server][User]
+            UsageByUser[User][Server] = Amount
+            UserTotal = UserTotal + Amount
+
+    UsageByUser[User][TotName] = UserTotal
+    GroupTotal = GroupTotal + UserTotal
+
+# Create a list of users for the plot.
+#   Select users consuming >= 1.0 TB of file space
+#   Sort the list of users into low to high usage
+#
+# In the sorted command:
+#    the .items() method is creating a list of tuples of the form (key, value)
+#       from the dictionary TopUsers
+#    the key= arguemnt is telling sort to use the second item in the tuple
+#       (ie, the total disk usage) to do the sorting.
+MinUsage = 1.0
+TopUsers = {}
+for User in UserList:
+    UserUsage = UsageByUser[User][TotName]
+    if (UserUsage >= MinUsage):
+        TopUsers[User] = UserUsage
+
+SortedTopUsers = (sorted(TopUsers.items(), key=lambda t: t[1]))
+N = len(SortedTopUsers)
+
+TopLabels = np.zeros(N, dtype='<U10')
+TopUsage = np.zeros(N)
+
+for i in range(N):
+    TopLabels[i] = SortedTopUsers[i][0]
+    TopUsage[i]  = SortedTopUsers[i][1]
 
 # Create a horizontal bar plot showing the heaviest users first
 Width = 0.8
 Ind = np.arange(N)
-Title = "Top Disk Usage by User\n(Total Usage = {0:.2f} Tb)".format(TotalUsage)
+Title = "Top Disk Usage by User\n(Total Usage = {0:.2f} Tb)".format(GroupTotal)
 Color = 'skyblue'
 
 Fig = plt.figure()
