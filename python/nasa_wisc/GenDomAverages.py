@@ -28,9 +28,12 @@ SimList = [
 #    'RCE_1km_DM_IPL2',
 #    'RCE_1km_DP_IPL2',
     'RCE_3km_1mom',
-    'RCE_3km_2mom',
+    'RCE_3km_1mom_db',
+    'RCE_3km_1mom_dm',
+#    'RCE_3km_2mom',
     'RCE_3km_2mom_db',
     'RCE_3km_2mom_dm',
+    'RCE_3km_2mom_dm_lrz',
     ]
 Nsims = len(SimList)
 
@@ -58,11 +61,11 @@ VarList = [
     [ "vint_vapor", "/vertint_vapor", "vint_vapor_01", "ge:0.01" ],
     [ "pi_sfc",     "/pi",            "pi_sfc",        "all" ],
 
-    [ "rtotal", "/rtotal_orig", "total_cond",    "all"     ],
-    [ "vapor",  "/vapor",       "vapor",         "all"     ],
-    [ "rtotal", "/rtotal_orig", "total_cond_01", "ge:0.01" ],
-    [ "vapor",  "/vapor",       "vapor_01",      "ge:0.01" ],
-    [ "theta",  "/theta",       "theta",         "all"     ],
+#    [ "rtotal", "/rtotal_orig", "total_cond",    "all"     ],
+#    [ "vapor",  "/vapor",       "vapor",         "all"     ],
+#    [ "rtotal", "/rtotal_orig", "total_cond_01", "ge:0.01" ],
+#    [ "vapor",  "/vapor",       "vapor_01",      "ge:0.01" ],
+#    [ "theta",  "/theta",       "theta",         "all"     ],
 
     ] 
 Nvars = len(VarList)

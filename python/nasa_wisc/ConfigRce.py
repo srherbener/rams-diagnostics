@@ -12,14 +12,20 @@ def SetColorScheme():
         'RCE_1km_SM'       : 'cyan',
         'RCE_1km_DM'       : 'magenta',
         'RCE_1km_DP'       : 'sandybrown',
+
         'RCE_1km_IPL2'     : 'black',
         'RCE_1km_SM_IPL2'  : 'cyan',
         'RCE_1km_DM_IPL2'  : 'magenta',
         'RCE_1km_DP_IPL2'  : 'sandybrown',
-        'RCE_3km_1mom'     : 'black',
-        'RCE_3km_2mom'     : 'cyan',
-        'RCE_3km_2mom_dm'  : 'magenta',
-        'RCE_3km_2mom_db'  : 'sandybrown',
+
+        'RCE_3km_1mom'        : 'black',
+        'RCE_3km_1mom_db'     : 'sandybrown',
+        'RCE_3km_1mom_dm'     : 'magenta',
+
+        'RCE_3km_2mom'        : 'cyan',
+        'RCE_3km_2mom_db'     : 'sandybrown',
+        'RCE_3km_2mom_dm'     : 'magenta',
+        'RCE_3km_2mom_dm_lrz' : 'forestgreen',
         }
     return ColorScheme
 
@@ -27,16 +33,21 @@ def SetLabelScheme():
     LabelScheme = {
         'RCE_1km'          : '2M',
         'RCE_1km_SM'       : '1M',
-        'RCE_1km_DM'       : '2M, DM',
-        'RCE_1km_DP'       : '2M, DB',
+        'RCE_1km_DM'       : '2M DM',
+        'RCE_1km_DP'       : '2M DB',
+
         'RCE_1km_IPL2'     : '2M',
         'RCE_1km_SM_IPL2'  : '1M',
-        'RCE_1km_DM_IPL2'  : '2M, DM',
-        'RCE_1km_DP_IPL2'  : '2M, DB',
-        'RCE_3km_1mom'     : '1M',
-        'RCE_3km_2mom'     : '2M',
-        'RCE_3km_2mom_dm'  : '2M, DM',
-        'RCE_3km_2mom_db'  : '2M, DB',
+        'RCE_1km_DM_IPL2'  : '2M DM',
+        'RCE_1km_DP_IPL2'  : '2M DB',
+
+        'RCE_3km_1mom'        : '1M',
+        'RCE_3km_1mom_db'     : '1M DB',
+        'RCE_3km_1mom_dm'     : '1M DM',
+        'RCE_3km_2mom'        : '2M',
+        'RCE_3km_2mom_db'     : '2M DB',
+        'RCE_3km_2mom_dm'     : '2M DM',
+        'RCE_3km_2mom_dm_lrz' : '2M DM LRZ',
         }
     return LabelScheme
 

@@ -18,7 +18,10 @@ LabelScheme = conf.SetLabelScheme()
 PlotList = [ 
 #    [ [ 'RCE_1km', 'RCE_1km_SM', 'RCE_1km_DM', 'RCE_1km_DP' ], r'$IPLAWS = 0$', 'RceIpl0' ],
 #    [ [ 'RCE_1km_IPL2', 'RCE_1km_SM_IPL2', 'RCE_1km_DM_IPL2', 'RCE_1km_DP_IPL2' ], r'$IPLAWS = 2$', 'RceIpl2' ],
-    [ [ 'RCE_3km_1mom', 'RCE_3km_2mom', 'RCE_3km_2mom_db', 'RCE_3km_2mom_dm' ], '', 'Rce3km' ],
+#    [ [ 'RCE_3km_1mom', 'RCE_3km_2mom', 'RCE_3km_2mom_db', 'RCE_3km_2mom_dm' ], '', 'Rce3km' ],
+
+    [ [ 'RCE_3km_1mom', 'RCE_3km_1mom_db', 'RCE_3km_1mom_dm' ], '', 'Rce3km1mom' ],
+    [ [ 'RCE_3km_2mom_db', 'RCE_3km_2mom_dm', 'RCE_3km_2mom_dm_lrz' ], '', 'Rce3km2mom' ],
     ]
 Nplots = len(PlotList)
 
@@ -29,8 +32,7 @@ VarList = [
     ]
 Nvars = len(VarList)
 
-Z = np.array(conf.SetZcoords()) / 1000.0 # km
-Nz = len(Z)
+Zname = "/z_coords"
 
 for iplot in range(Nplots):
     SimList = PlotList[iplot][0]
@@ -61,9 +63,17 @@ for iplot in range(Nplots):
             InFile = h5py.File(InFname, mode='r')
 
             if (isim == 0):
+                Z = InFile[Zname][...] / 1000.0 # km
+                Nz = len(Z)
                 VARS = np.zeros((Nsims, Nz), dtype=np.float_)
 
-            VARS[isim,...] = InFile[Vname][...]
+            if (Sim  == "RCE_3km_2mom_dm_lrz"):
+                # interpolate from the low resolutions heights to the high resolution heights
+                LowResVar = InFile[Vname][...]
+                LowResZ = InFile[Zname][...] / 1000.0 # km
+                VARS[isim,...] = np.interp(Z, LowResZ, LowResVar)
+            else:
+                VARS[isim,...] = InFile[Vname][...]
 
             InFile.close()
 
@@ -88,7 +98,7 @@ for iplot in range(Nplots):
         
         Legend = plu.LegendConfig(SimLegText, 'upper left')
         Legend.bbox = [ 1.02, 1.0 ]
-        Legend.fontsize = 12
+        Legend.fontsize = 9
         Legend.ncol = 1
         
         plu.PlotLine(Ax, VARS.transpose(), Z, Ptitle, Xaxis, Yaxis, Legend, SimColors)

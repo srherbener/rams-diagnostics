@@ -18,7 +18,10 @@ LabelScheme = conf.SetLabelScheme()
 PlotList = [ 
 #    [ [ 'RCE_1km', 'RCE_1km_SM', 'RCE_1km_DM', 'RCE_1km_DP' ], r'$IPLAWS = 0$', 'RceIpl0', 0, 50 ],
 #    [ [ 'RCE_1km_IPL2', 'RCE_1km_SM_IPL2', 'RCE_1km_DM_IPL2', 'RCE_1km_DP_IPL2' ], r'$IPLAWS = 2$', 'RceIpl2', 0, 50 ],
-    [ [ 'RCE_3km_1mom', 'RCE_3km_2mom', 'RCE_3km_2mom_db', 'RCE_3km_2mom_dm' ], '', 'Rce3km', 0, 80 ],
+#    [ [ 'RCE_3km_1mom', 'RCE_3km_2mom', 'RCE_3km_2mom_db', 'RCE_3km_2mom_dm' ], '', 'Rce3km', 0, 80 ],
+
+    [ [ 'RCE_3km_1mom', 'RCE_3km_1mom_db', 'RCE_3km_1mom_dm' ], '', 'Rce3km1mom', 0, 120 ],
+    [ [ 'RCE_3km_2mom_db', 'RCE_3km_2mom_dm', 'RCE_3km_2mom_dm_lrz' ], '', 'Rce3km2mom', 0, 120 ],
     ]
 Nplots = len(PlotList)
 
@@ -26,7 +29,7 @@ VarList = [
     [ 'DIAGS/dom_avg_pcprr_<SIM>.h5',      'pcprr',      [   0,  12 ], r'$PR\ (mm\ day^{-1})$', 'Prate'  ],
     [ 'DIAGS/dom_avg_vint_vapor_<SIM>.h5', 'vint_vapor', [   0,  60 ], r'$PW\ (mm)$',           'Pwater' ],
 
-    [ 'DIAGS/dom_avg_sfc_lat_<SIM>.h5',  'sfc_lat',    [   0, 120 ], r'$LHF\ (W\ m^{2})$',    'Lhf'    ],
+    [ 'DIAGS/dom_avg_sfc_lat_<SIM>.h5',  'sfc_lat',    [   0, 140 ], r'$LHF\ (W\ m^{2})$',    'Lhf'    ],
     [ 'DIAGS/dom_avg_sfc_sens_<SIM>.h5', 'sfc_sens',   [   0,  20 ], r'$SHF\ (W\ m^{2})$',    'Shf'    ],
 
     [ 'DIAGS/dom_avg_top_lwup_<SIM>.h5', 'top_lwup',   [ 150, 350 ], r'$OLR\ (W\ m^{2})$',    'Olr'    ],
@@ -83,7 +86,7 @@ for iplot in range(Nplots):
                 Nt = len(T)
                 VARS = np.ones((Nsims, Nt), dtype=np.float_) * np.nan
 
-            IN_VAR = InFile[Vname][...]
+            IN_VAR = InFile[Vname][T1:T2+1,...]
             VarNt = len(IN_VAR)
             if (Vname == "/pcprr"):
                 IN_VAR = IN_VAR * 24 # convert mm/h to mm/day
@@ -109,7 +112,7 @@ for iplot in range(Nplots):
         
         Legend = plu.LegendConfig(SimLegText, 'upper left')
         Legend.bbox = [ 1.02, 1.0 ]
-        Legend.fontsize = 12
+        Legend.fontsize = 9
         Legend.ncol = 1
         
         plu.PlotLine(Ax, T, VARS.transpose(), Ptitle, Xaxis, Yaxis, Legend, SimColors)
