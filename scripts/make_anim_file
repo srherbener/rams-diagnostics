@@ -20,6 +20,6 @@ OutFile="${Fprefix}.mp4"
 # setpts filter will scale the animation speed
 #    DelayFac < 1.0 slows down
 #    DelayFac > 1.0 speeds up 
-DelayFac=5.0
-$FFMPEG_HOME/bin/ffmpeg -y -i "${Fprefix}_%04d.png" -i ${WorkDir}/palette.png -t 60 \
+DelayFac=3.0
+$FFMPEG_HOME/bin/ffmpeg -y -i "${Fprefix}_%04d.png" -i ${WorkDir}/palette.png -t 180 \
    -filter_complex "scale=720:-1:flags=lanczos[x];[x][1:v]paletteuse, setpts=${DelayFac}*PTS" $OutFile
