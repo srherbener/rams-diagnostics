@@ -12,7 +12,9 @@ SCRIPTS = \
   $(DEST)/GenAnimFrames.py \
   $(DEST)/GenEqMeas.py \
   $(DEST)/GenProfiles.py \
+  $(DEST)/GenPowerSpectra.py \
   $(DEST)/PlotProfiles.py \
+  $(DEST)/PlotPowerSpectra.py \
   $(DEST)/PlotTimeSeries.py
 
 
