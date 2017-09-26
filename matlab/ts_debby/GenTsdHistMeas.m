@@ -745,11 +745,11 @@ function [ ] = GenTsdHistMeas()
 %      }
 %      'DIAGS/hist_meas_az_w_<CASE>.h5'
 %    }
-
-    % dust measurements
-    {
-      'Dust Azavg'
-      {
+%
+%    % dust measurements
+%    {
+%      'Dust Azavg'
+%      {
 %        { 'AzAveragedData/hist_all_d1_num_<CASE>.h5' '/d1_num' 'wtmean'  0.0  '/all_d1_num_ts'         'RbZT' ''      ''        ''       'ge' 0.01 }
 %        { 'AzAveragedData/hist_all_d1_num_<CASE>.h5' '/d1_num' 'wtmean'  0.0  '/all_ps_d1_num'         'RbZt' ''      'pre_sal' ''       'ge' 0.01 }
 %        { 'AzAveragedData/hist_all_d1_num_<CASE>.h5' '/d1_num' 'wtmean'  0.0  '/all_s_d1_num'          'RbZt' ''      'sal'     ''       'ge' 0.01 }
@@ -833,7 +833,7 @@ function [ ] = GenTsdHistMeas()
 %        { 'AzAveragedData/hist_all_dust_adv_<CASE>.h5' '/dust_adv' 'wtmean'  0.0  '/all_whole_m_dust_adv'    'rbZt' ''      'mid'     ''       'ge' 0.01 }
 %        { 'AzAveragedData/hist_all_dust_adv_<CASE>.h5' '/dust_adv' 'wtmean'  0.0  '/all_whole_f_dust_adv'    'rbZt' ''      'final'   ''       'ge' 0.01 }
 %
-        { 'AzAveragedData/hist_all_dust_mass_<CASE>.h5' '/dust_mass' 'wtmean'  0.0  '/all_dust_mass_ts'         'RbZT' ''      ''        ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_all_dust_mass_<CASE>.h5' '/dust_mass' 'wtmean'  0.0  '/all_dust_mass_ts'         'RbZT' ''      ''        ''       'ge' 0.01 }
 %        { 'AzAveragedData/hist_all_dust_mass_<CASE>.h5' '/dust_mass' 'wtmean'  0.0  '/all_ps_dust_mass'         'RbZt' ''      'pre_sal' ''       'ge' 0.01 }
 %        { 'AzAveragedData/hist_all_dust_mass_<CASE>.h5' '/dust_mass' 'wtmean'  0.0  '/all_s_dust_mass'          'RbZt' ''      'sal'     ''       'ge' 0.01 }
 %        { 'AzAveragedData/hist_all_dust_mass_<CASE>.h5' '/dust_mass' 'wtmean'  0.0  '/all_whole_ps_dust_mass'   'rbZt' ''      'pre_sal' ''       'ge' 0.01 }
@@ -864,9 +864,9 @@ function [ ] = GenTsdHistMeas()
 %
 %        { 'AzAveragedData/hist_all_dust_mass_<CASE>.h5'   '/dust_mass'   'wtmean'  0.0  '/all_whole_dust_mass_ts'     'rbZT' ''      ''        ''       'ge' 0.01 }
 %        { 'AzAveragedData/hist_all_tracer_mass_<CASE>.h5' '/tracer_mass' 'wtmean'  0.0  '/all_whole_tracer_mass_ts'   'rbZT' ''      ''        ''       'ge' 0.01 }
-      }
-      'DIAGS/hist_meas_az_dust_<CASE>.h5'
-    }
+%      }
+%      'DIAGS/hist_meas_az_dust_<CASE>.h5'
+%    }
 %
 %    % ccn measurements
 %    {
@@ -915,12 +915,12 @@ function [ ] = GenTsdHistMeas()
 %      }
 %      'DIAGS/hist_meas_az_ccn_<CASE>.h5'
 %    }
-
-    % Regenerated aerosols measurements
-    {
-      'Regen Azavg'
-      {
-        { 'AzAveragedData/hist_all_ra_mass_<CASE>.h5' '/ra_mass' 'wtmean'  0.0  '/all_ra_mass_ts'         'RbZT' ''      ''        ''       'gt' 0 }
+%
+%    % Regenerated aerosols measurements
+%    {
+%      'Regen Azavg'
+%      {
+%        { 'AzAveragedData/hist_all_ra_mass_<CASE>.h5' '/ra_mass' 'wtmean'  0.0  '/all_ra_mass_ts'         'RbZT' ''      ''        ''       'gt' 0 }
 %        { 'AzAveragedData/hist_all_ra_mass_<CASE>.h5' '/ra_mass' 'wtmean'  0.0  '/all_ps_ra_mass'         'RbZt' ''      'pre_sal' ''       'gt' 0 }
 %        { 'AzAveragedData/hist_all_ra_mass_<CASE>.h5' '/ra_mass' 'wtmean'  0.0  '/all_s_ra_mass'          'RbZt' ''      'sal'     ''       'gt' 0 }
 %        { 'AzAveragedData/hist_all_ra_mass_<CASE>.h5' '/ra_mass' 'wtmean'  0.0  '/all_whole_ps_ra_mass'   'rbZt' ''      'pre_sal' ''       'gt' 0 }
@@ -1041,10 +1041,10 @@ function [ ] = GenTsdHistMeas()
 %        { 'AzAveragedData/hist_not_tcond_all_ra2_mass_<CASE>.h5' '/ra2_mass' 'wtmean'  0.0  '/not_tcond_all_whole_ra2_mass_ts' 'rbZT' '' ''        '' 'gt' 0 }
 %        { 'AzAveragedData/hist_not_tcond_all_ra2_mass_<CASE>.h5' '/ra2_mass' 'wtmean'  0.0  '/not_tcond_all_whole_ps_ra2_mass' 'rbZt' '' 'pre_sal' '' 'gt' 0 }
 %        { 'AzAveragedData/hist_not_tcond_all_ra2_mass_<CASE>.h5' '/ra2_mass' 'wtmean'  0.0  '/not_tcond_all_whole_s_ra2_mass'  'rbZt' '' 'sal'     '' 'gt' 0 }
-      }
-      'DIAGS/hist_meas_az_ra_<CASE>.h5'
-    }
-
+%      }
+%      'DIAGS/hist_meas_az_ra_<CASE>.h5'
+%    }
+%
 %    % "aero" (dust + regen) measurements
 %    {
 %      'AERO Azavg'
@@ -3183,7 +3183,7 @@ function [ ] = GenTsdHistMeas()
 %      }
 %      'DIAGS/hist_meas_ts_pcprate_<CASE>.h5'
 %    }
-
+%
 %    % Vapor
 %    {
 %      'Vapor Tsavg'

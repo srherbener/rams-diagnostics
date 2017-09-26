@@ -345,6 +345,40 @@ class StormXsectionPress(FsContour):
         self.FacCmax = FacCspecs[1]
         self.FacCnum = FacCspecs[2]
 
+# class for doing storm cross sections, lite data - radius vs pressure
+class StormXsectionPressLite(FsContour):
+    '''Class to create storm cross section, sim/factor figure, pressure coords'''
+
+    def __init__(self, InFname, InVname, OutFname, Ptitle, Tag, SimCspecs, FacCspecs):
+        FsContour.__init__(self, InFname, InVname, OutFname, Ptitle, Tag)
+
+        # x-axis is radius in kilometers
+        self.XcoordName = '/x_coords_lite'
+        self.XcoordScale = 1.0e-3
+        self.XcoordOffset = 0.0
+        self.Xlabel = 'Radius (km)'
+        self.Xmin = 0.0
+        self.Xmax = 500.0
+        self.Xticks = [ 100.0, 200.0, 300.0, 400.0, 500.0 ]
+
+        # y-axis is pressure in millibars
+        self.YcoordName = '/p_coords'
+        self.YcoordScale = 1.0
+        self.YcoordOffset = 0.0
+        self.Ylabel = 'P (mb)'
+        self.Ymin = 1000.0
+        self.Ymax = 200.0
+        self.Yticks = [ 1000.0, 800.0, 600.0, 400.0, 200.0 ] 
+
+        # Contour specs
+        self.SimCmin = SimCspecs[0]
+        self.SimCmax = SimCspecs[1]
+        self.SimCnum = SimCspecs[2]
+
+        self.FacCmin = FacCspecs[0]
+        self.FacCmax = FacCspecs[1]
+        self.FacCnum = FacCspecs[2]
+
 # class for doing track cross sections - length vs height
 class TrackXsection(FsContour):
     '''Class to create track cross section, sim/factor figure'''

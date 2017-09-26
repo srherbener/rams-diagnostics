@@ -99,6 +99,14 @@ function [ ] = GenStormXsections()
     { 'DIAGS/hist_meas_az_theta_e_<CASE>.h5' '/all_ps_theta_e' '/all_ps_theta_e', 'z' }
     { 'DIAGS/hist_meas_az_theta_e_<CASE>.h5' '/all_s_theta_e' '/all_s_theta_e', 'z' }
 
+    { 'DIAGS/hist_meas_az_p_theta_e_<CASE>.h5' '/all_ps_theta_e' '/all_p_ps_theta_e', 'p' }
+    { 'DIAGS/hist_meas_az_p_theta_e_<CASE>.h5' '/all_s_theta_e'  '/all_p_s_theta_e',  'p' }
+
+    { 'DIAGS/hist_meas_az_p_theta_e_lite_<CASE>.h5' '/all_ps_theta_e'    '/all_p_ps_theta_e_lite',    'p' }
+    { 'DIAGS/hist_meas_az_p_theta_e_lite_<CASE>.h5' '/all_s_theta_e'     '/all_p_s_theta_e_lite',     'p' }
+    { 'DIAGS/hist_meas_az_p_theta_e_lite_<CASE>.h5' '/all_nv_ps_theta_e' '/all_p_nv_ps_theta_e_lite', 'p' }
+    { 'DIAGS/hist_meas_az_p_theta_e_lite_<CASE>.h5' '/all_nv_s_theta_e'  '/all_p_nv_s_theta_e_lite',  'p' }
+
 %    { 'DIAGS/hist_meas_az_theta_v_<CASE>.h5' '/all_ps_theta_v' '/all_ps_theta_v', 'z' }
 %    { 'DIAGS/hist_meas_az_theta_v_<CASE>.h5' '/all_s_theta_v' '/all_s_theta_v', 'z' }
 
@@ -273,6 +281,7 @@ function [ ] = GenStormXsections()
   Nsets = length(XsectionList);
 
   Xname = '/x_coords';
+  XnameLite = '/x_coords_lite';
   Yname = '/y_coords';
   Zname = '/z_coords';
   Pname = '/p_coords';
@@ -294,6 +303,7 @@ function [ ] = GenStormXsections()
     end
 
     ixcoord = 0;
+    ixlitecoord = 0;
     iycoord = 0;
     izcoord = 0;
     ipcoord = 0;
@@ -319,7 +329,11 @@ function [ ] = GenStormXsections()
       Z   = squeeze(h5read(InFile, '/z_coords'));
       T   = squeeze(h5read(InFile, '/t_coords'));
 
-      ixcoord = ixcoord + 1;
+      if (~isempty(regexp(OutVname, '_lite')))
+        ixlitecoord = ixlitecoord + 1;
+      else
+        ixcoord = ixcoord + 1;
+      end
       iycoord = iycoord + 1;
       if (VcoordType == 'z')
         izcoord = izcoord + 1;
@@ -350,6 +364,10 @@ function [ ] = GenStormXsections()
       if (ixcoord == 1)
         CreateDimension(OutFile, X, Xname, 'x');
         NotateDimension(OutFile, Xname, 'x');
+      end
+      if (ixlitecoord == 1)
+        CreateDimension(OutFile, X, XnameLite, 'x');
+        NotateDimension(OutFile, XnameLite, 'x');
       end
       if (iycoord == 1)
         CreateDimension(OutFile, Y, Yname, 'y');
@@ -398,10 +416,17 @@ function [ ] = GenStormXsections()
       h5write(OutFile, OutVname, VAR);
 
       if (VcoordType == 'z')
-        AttachDimensionsXyzt(OutFile, OutVname, DimOrder, Xname, Yname, Zname, Tname);
+        VertCoordName = Zname;
       elseif (VcoordType == 'p')
-        AttachDimensionsXyzt(OutFile, OutVname, DimOrder, Xname, Yname, Pname, Tname);
+        VertCoordName = Pname;
+
+      if (~isempty(regexp(OutVname, '_lite')))
+        XcoordName = XnameLite;
+      else
+        XcoordName = Xname;
       end
+
+      AttachDimensionsXyzt(OutFile, OutVname, DimOrder, XcoordName, Yname, VertCoordName, Tname);
 
       fprintf('\n');
     end

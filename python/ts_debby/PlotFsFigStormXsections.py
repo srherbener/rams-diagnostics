@@ -192,12 +192,28 @@ InFname = 'DIAGS/storm_xsections_<SIM>.h5'
 #VrSap.CreateFig()
 
 # Updrafts
-SimCspecs = [ 0, 0.3, 11 ]  # color specs: [ Cmin, Cmax, Cnum ], Cnum is number of contour levels
-FactCspecs = [ -0.1, 0.1, 21 ]
+#SimCspecs = [ 0, 0.3, 11 ]  # color specs: [ Cmin, Cmax, Cnum ], Cnum is number of contour levels
+#FactCspecs = [ -0.1, 0.1, 21 ]
+#
+#UpPsap = ffc.StormXsectionPress(InFname, '/all_p_ps_updraft', 'Plots.py/FsFigUpPressPsapFactors.png', 'W_{up}', 'PSAP', SimCspecs, FactCspecs)
+#UpPsap.CreateFig()
+#
+#UpSap = ffc.StormXsectionPress(InFname, '/all_p_s_updraft', 'Plots.py/FsFigUpPressSapFactors.png', 'W_{up}', 'SAP', SimCspecs, FactCspecs)
+#UpSap.CreateFig()
 
-UpPsap = ffc.StormXsectionPress(InFname, '/all_p_ps_updraft', 'Plots.py/FsFigUpPressPsapFactors.png', 'W_{up}', 'PSAP', SimCspecs, FactCspecs)
-UpPsap.CreateFig()
+# Theta-E
+SimCspecs = [ 340, 360, 11 ]
+FactCspecs = [ -8, 8, 11 ]
+ThetaePsap = ffc.StormXsectionPress(InFname, '/all_p_ps_theta_e', 'Plots.py/FsFigThetaePressPsapFactors.png', '\\theta_{e}', 'PSAP', SimCspecs, FactCspecs)
+ThetaePsap.CreateFig()
+ThetaeSap = ffc.StormXsectionPress(InFname, '/all_p_s_theta_e', 'Plots.py/FsFigThetaePressSapFactors.png', '\\theta_{e}', 'SAP', SimCspecs, FactCspecs)
+ThetaeSap.CreateFig()
 
-UpSap = ffc.StormXsectionPress(InFname, '/all_p_s_updraft', 'Plots.py/FsFigUpPressSapFactors.png', 'W_{up}', 'SAP', SimCspecs, FactCspecs)
-UpSap.CreateFig()
+# Theta-E, vortex removed
+SimCspecs = [ 340, 360, 11 ]
+FactCspecs = [ -8, 8, 11 ]
+ThetaePsap = ffc.StormXsectionPressLite(InFname, '/all_p_nv_ps_theta_e_lite', 'Plots.py/FsFigThetaeNvPressPsapFactors.png', '\\theta_{e}', 'PSAP', SimCspecs, FactCspecs)
+ThetaePsap.CreateFig()
+ThetaeSap = ffc.StormXsectionPressLite(InFname, '/all_p_nv_s_theta_e_lite', 'Plots.py/FsFigThetaeNvPressSapFactors.png', '\\theta_{e}', 'SAP', SimCspecs, FactCspecs)
+ThetaeSap.CreateFig()
 

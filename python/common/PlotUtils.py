@@ -145,7 +145,7 @@ def PlotLine(Paxes, X, Y, Ptitle, Xaxis, Yaxis, Legend, Colors):
     # (ie, the number of rows) of X and Y need to match. X needs to be a vector, Y can either
     # be a vector or an array.
 
-    LineW = 2
+    LineW = 3
 
     if (X.ndim == 1):
         Xnpts = X.size
