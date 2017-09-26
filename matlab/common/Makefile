@@ -33,6 +33,10 @@ SCRIPTS = \
           $(DEST)/NotateDimensionsXyzt.m \
           $(DEST)/NotateDimension.m \
           $(DEST)/NotateVariableXyzt.m \
+          $(DEST)/read_zlevs_hfile.m \
+          $(DEST)/smooth121.m \
+          $(DEST)/set_figsize.m \
+          $(DEST)/rsat.m \
           $(DEST)/figmerge.m \
           $(DEST)/gridLegend.m \
           $(DEST)/columnlegend.m \

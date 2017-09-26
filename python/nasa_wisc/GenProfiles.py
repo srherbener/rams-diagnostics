@@ -40,6 +40,8 @@ VarList = [
     [ "dom_avg_theta",      "/theta",      -481, -1, 1.0, 0.0 ],
     [ "dom_avg_total_cond", "/total_cond", -481, -1, 1.0, 0.0 ],
     [ "dom_avg_vapor",      "/vapor",      -481, -1, 1.0, 0.0 ],
+    [ "dom_avg_tempk",      "/tempk",      -481, -1, 1.0, 0.0 ],
+    [ "dom_avg_relhum",     "/relhum",     -481, -1, 1.0, 0.0 ],
     ] 
 Nvars = len(VarList)
 

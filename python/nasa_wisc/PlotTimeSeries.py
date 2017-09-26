@@ -26,17 +26,19 @@ PlotList = [
 Nplots = len(PlotList)
 
 VarList = [
-    [ 'DIAGS/dom_avg_pcprr_<SIM>.h5',      'pcprr',      [   0,  12 ], r'$PR\ (mm\ day^{-1})$', 'Prate'  ],
-    [ 'DIAGS/dom_avg_vint_vapor_<SIM>.h5', 'vint_vapor', [   0,  60 ], r'$PW\ (mm)$',           'Pwater' ],
+    #[ 'DIAGS/dom_avg_pcprr_<SIM>.h5',      'pcprr',      [   0,  12 ], r'$PR\ (mm\ day^{-1})$', 'Prate'  ],
+    #[ 'DIAGS/dom_avg_vint_vapor_<SIM>.h5', 'vint_vapor', [   0,  60 ], r'$PW\ (mm)$',           'Pwater' ],
 
-    [ 'DIAGS/dom_avg_sfc_lat_<SIM>.h5',  'sfc_lat',    [   0, 140 ], r'$LHF\ (W\ m^{2})$',    'Lhf'    ],
-    [ 'DIAGS/dom_avg_sfc_sens_<SIM>.h5', 'sfc_sens',   [   0,  20 ], r'$SHF\ (W\ m^{2})$',    'Shf'    ],
+    #[ 'DIAGS/dom_avg_sfc_lat_<SIM>.h5',  'sfc_lat',    [   0, 140 ], r'$LHF\ (W\ m^{2})$',    'Lhf'    ],
+    #[ 'DIAGS/dom_avg_sfc_sens_<SIM>.h5', 'sfc_sens',   [   0,  20 ], r'$SHF\ (W\ m^{2})$',    'Shf'    ],
 
-    [ 'DIAGS/dom_avg_top_lwup_<SIM>.h5', 'top_lwup',   [ 150, 350 ], r'$OLR\ (W\ m^{2})$',    'Olr'    ],
-    [ 'DIAGS/dom_avg_top_swdn_<SIM>.h5', 'top_swdn',   [ 400, 420 ], r'$INSOLATION\ (W\ m^{2})$',    'Insol'    ],
+    #[ 'DIAGS/dom_avg_top_lwup_<SIM>.h5', 'top_lwup',   [ 150, 350 ], r'$OLR\ (W\ m^{2})$',    'Olr'    ],
+    #[ 'DIAGS/dom_avg_top_swdn_<SIM>.h5', 'top_swdn',   [ 400, 420 ], r'$INSOLATION\ (W\ m^{2})$',    'Insol'    ],
 
-    [ 'DIAGS/eq_meas_<SIM>.h5', 'rad_flux_div',      [   0,  150 ], r'$QRAD\ (W\ m^{2})$',   'Qrad'   ],
-    [ 'DIAGS/eq_meas_<SIM>.h5', 'therm_heat_flux',   [   0,  150 ], r'$THF\ (W\ m^{2})$',    'Thf'    ],
+    [ 'DIAGS/dom_avg_pi_sfc_<SIM>.h5', 'pi_sfc',   [ 1000, 1020 ], r'$PI_{sfc}\ ()$',    'PiSfc'    ],
+
+    #[ 'DIAGS/eq_meas_<SIM>.h5', 'rad_flux_div',      [   0,  150 ], r'$QRAD\ (W\ m^{2})$',   'Qrad'   ],
+    #[ 'DIAGS/eq_meas_<SIM>.h5', 'therm_heat_flux',   [   0,  150 ], r'$THF\ (W\ m^{2})$',    'Thf'    ],
     ]
 Nvars = len(VarList)
 

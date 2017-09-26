@@ -16,6 +16,7 @@ SCRIPTS = \
   $(DEST)/TogaCoareToRamsSound.m \
   $(DEST)/PlotSampleProfiles.m \
   $(DEST)/PlotEqMeas.m \
+  $(DEST)/plots_RCE.m \
   $(DEST)/powerspectraplot.m \
   $(DEST)/RAMS_nc_series.m \
   $(DEST)/SetPath.m

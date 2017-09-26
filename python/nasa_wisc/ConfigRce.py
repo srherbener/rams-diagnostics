@@ -29,6 +29,18 @@ def SetColorScheme():
         }
     return ColorScheme
 
+def SetColorSchemeDb():
+    ColorScheme = {
+        'RCE_1km_DP'       : 'black',
+
+        'RCE_1km_DP_IPL2'  : 'sandybrown',
+
+        'RCE_3km_1mom_db'     : 'magenta',
+
+        'RCE_3km_2mom_db'     : 'forestgreen',
+        }
+    return ColorScheme
+
 def SetLabelScheme():
     LabelScheme = {
         'RCE_1km'          : '2M',
