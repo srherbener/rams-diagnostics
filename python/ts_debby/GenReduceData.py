@@ -25,7 +25,7 @@ FileList = [
     # 2D vars
 #    [ 'HDF5/<SIM>/HDF5/topo-<SIM>-AS-2006-08-20-120000-g3.h5', '/topo', 'HDF5/<SIM>/HDF5/topo_lite-<SIM>-AS-2006-08-20-120000-g3.h5', '/topo'       ],
 #    [ 'HDF5/<SIM>/HDF5/sea_press-<SIM>-AS-2006-08-20-120000-g3.h5', '/sea_press', 'HDF5/<SIM>/HDF5/sea_press_lite-<SIM>-AS-2006-08-20-120000-g3.h5', '/sea_press'       ],
-    [ 'HDF5/<SIM>/HDF5/sst-<SIM>-AS-2006-08-20-120000-g3.h5', '/sst', 'HDF5/<SIM>/HDF5/sst_lite-<SIM>-AS-2006-08-20-120000-g3.h5', '/sst'       ],
+#    [ 'HDF5/<SIM>/HDF5/sst-<SIM>-AS-2006-08-20-120000-g3.h5', '/sst', 'HDF5/<SIM>/HDF5/sst_lite-<SIM>-AS-2006-08-20-120000-g3.h5', '/sst'       ],
 
     # Vertical coords = sigma-z
 #    [ 'HDF5/<SIM>/HDF5/u-<SIM>-AS-2006-08-20-120000-g3.h5',       '/u',       'HDF5/<SIM>/HDF5/u_lite-<SIM>-AS-2006-08-20-120000-g3.h5',       '/u'       ],
@@ -45,8 +45,8 @@ FileList = [
 #    [ 'HDF5/<SIM>/HDF5/theta-<SIM>-AP-2006-08-20-120000-g3.h5',   '/theta',   'HDF5/<SIM>/HDF5/theta_lite-<SIM>-AP-2006-08-20-120000-g3.h5',   '/theta'   ],
 #    [ 'HDF5/<SIM>/HDF5/theta_e-<SIM>-AP-2006-08-20-120000-g3.h5', '/theta_e', 'HDF5/<SIM>/HDF5/theta_e_lite-<SIM>-AP-2006-08-20-120000-g3.h5', '/theta_e' ],
 #    [ 'HDF5/<SIM>/HDF5/vapor-<SIM>-AP-2006-08-20-120000-g3.h5',   '/vapor',   'HDF5/<SIM>/HDF5/vapor_lite-<SIM>-AP-2006-08-20-120000-g3.h5',   '/vapor'   ],
-
-#    [ 'HDF5/<SIM>/HDF5/relhum-<SIM>-AP-2006-08-20-120000-g3.h5',   '/relhum',   'HDF5/<SIM>/HDF5/relhum_lite-<SIM>-AP-2006-08-20-120000-g3.h5',   '/relhum'   ],
+#    [ 'HDF5/<SIM>/HDF5/relhum-<SIM>-AP-2006-08-20-120000-g3.h5',  '/relhum',  'HDF5/<SIM>/HDF5/relhum_lite-<SIM>-AP-2006-08-20-120000-g3.h5',  '/relhum'  ],
+    [ 'HDF5/<SIM>/HDF5/vapliqt-<SIM>-AP-2006-08-20-120000-g3.h5', '/vapliqt', 'HDF5/<SIM>/HDF5/vapliqt_lite-<SIM>-AP-2006-08-20-120000-g3.h5', '/vapliqt' ],
     ]
 Nfiles = len(FileList)
 

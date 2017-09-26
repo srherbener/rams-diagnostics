@@ -236,6 +236,16 @@ function [ ] = GenStormXsections()
     { 'DIAGS/hist_meas_az_ice_sub_<CASE>.h5' '/all_ps_ice_sub' '/all_ps_ice_sub', 'z' }
     { 'DIAGS/hist_meas_az_ice_sub_<CASE>.h5' '/all_s_ice_sub'  '/all_s_ice_sub', 'z' }
 
+    { 'DIAGS/hist_meas_az_p_liq_evap_lite_<CASE>.h5' '/all_ps_liq_evap'    '/all_p_ps_liq_evap_lite',    'p' }
+    { 'DIAGS/hist_meas_az_p_liq_evap_lite_<CASE>.h5' '/all_s_liq_evap'     '/all_p_s_liq_evap_lite',     'p' }
+    { 'DIAGS/hist_meas_az_p_liq_evap_lite_<CASE>.h5' '/all_nv_ps_liq_evap' '/all_p_nv_ps_liq_evap_lite', 'p' }
+    { 'DIAGS/hist_meas_az_p_liq_evap_lite_<CASE>.h5' '/all_nv_s_liq_evap'  '/all_p_nv_s_liq_evap_lite',  'p' }
+
+    { 'DIAGS/hist_meas_az_p_liq_cond_lite_<CASE>.h5' '/all_ps_liq_cond'    '/all_p_ps_liq_cond_lite',    'p' }
+    { 'DIAGS/hist_meas_az_p_liq_cond_lite_<CASE>.h5' '/all_s_liq_cond'     '/all_p_s_liq_cond_lite',     'p' }
+    { 'DIAGS/hist_meas_az_p_liq_cond_lite_<CASE>.h5' '/all_nv_ps_liq_cond' '/all_p_nv_ps_liq_cond_lite', 'p' }
+    { 'DIAGS/hist_meas_az_p_liq_cond_lite_<CASE>.h5' '/all_nv_s_liq_cond'  '/all_p_nv_s_liq_cond_lite',  'p' }
+
 %    { 'DIAGS/hist_meas_az_ice_melt_<CASE>.h5' '/all_ps_ice_melt' '/all_ps_ice_melt', 'z' }
 %    { 'DIAGS/hist_meas_az_ice_melt_<CASE>.h5' '/all_s_ice_melt'  '/all_s_ice_melt', 'z' }
 
