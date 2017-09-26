@@ -8,13 +8,13 @@ function [ ] = GenTsdHistMeas()
 
   % list of simulation cases
   CaseList = {
-     'TSD_SD_1KM'
+%     'TSD_SD_1KM'
 %     'TSD_SD'
 %     'TSD_SD_1G'
-%    'TSD_SAL_DUST'
-%    'TSD_SAL_NODUST'
-%    'TSD_NONSAL_DUST'
-%    'TSD_NONSAL_NODUST'
+    'TSD_SAL_DUST'
+    'TSD_SAL_NODUST'
+    'TSD_NONSAL_DUST'
+    'TSD_NONSAL_NODUST'
     };
   Ncases = length(CaseList);
 
@@ -56,9 +56,9 @@ function [ ] = GenTsdHistMeas()
   % For converting input time values.
   TimeScale = 1 / 3600;  % seconds to hours
 
-  %TimeOffset = 42;      % time (h) at start of sim
+  TimeOffset = 42;      % time (h) at start of sim
   %TimeOffset = 12;
-  TimeOffset = 0;
+  %TimeOffset = 0;
 
   % Input is a histogram based upon either 2D or 3D field
   %
@@ -164,6 +164,33 @@ function [ ] = GenTsdHistMeas()
     %%%%%% Vertical coords -> pressure %%%%%%
 
     %%%%%%% lite data %%%%%%%
+
+    % vapor
+    {
+      'Vapor Azavg'
+      {
+        { 'AzAveragedData/hist_all_p_vapor_lite_<CASE>.h5' '/vapor' 'wtmean'  0.0  '/all_vapor_ts'         'RbZT' ''      ''        ''       'ge' 0 }
+        { 'AzAveragedData/hist_all_p_vapor_lite_<CASE>.h5' '/vapor' 'wtmean'  0.0  '/all_ps_vapor'         'RbZt' ''      'pre_sal' ''       'ge' 0 }
+        { 'AzAveragedData/hist_all_p_vapor_lite_<CASE>.h5' '/vapor' 'wtmean'  0.0  '/all_s_vapor'          'RbZt' ''      'sal'     ''       'ge' 0 }
+        { 'AzAveragedData/hist_all_p_vapor_lite_<CASE>.h5' '/vapor' 'wtmean'  0.0  '/all_core_vapor_ts'    'rbZT' 'core'  ''        ''       'ge' 0 }
+        { 'AzAveragedData/hist_all_p_vapor_lite_<CASE>.h5' '/vapor' 'wtmean'  0.0  '/all_core_ps_vapor'    'rbZt' 'core'  'pre_sal' ''       'ge' 0 }
+        { 'AzAveragedData/hist_all_p_vapor_lite_<CASE>.h5' '/vapor' 'wtmean'  0.0  '/all_core_s_vapor'     'rbZt' 'core'  'sal'     ''       'ge' 0 }
+        { 'AzAveragedData/hist_all_p_vapor_lite_<CASE>.h5' '/vapor' 'wtmean'  0.0  '/all_rb_vapor_ts'      'rbZT' 'rband' ''        ''       'ge' 0 }
+        { 'AzAveragedData/hist_all_p_vapor_lite_<CASE>.h5' '/vapor' 'wtmean'  0.0  '/all_rb_ps_vapor'      'rbZt' 'rband' 'pre_sal' ''       'ge' 0 }
+        { 'AzAveragedData/hist_all_p_vapor_lite_<CASE>.h5' '/vapor' 'wtmean'  0.0  '/all_rb_s_vapor'       'rbZt' 'rband' 'sal'     ''       'ge' 0 }
+
+        { 'AzAveragedData/hist_all_p_vapor_nv_lite_<CASE>.h5' '/vapor' 'wtmean'  0.0  '/all_nv_vapor_ts'         'RbZT' ''      ''        ''       'ge' 0 }
+        { 'AzAveragedData/hist_all_p_vapor_nv_lite_<CASE>.h5' '/vapor' 'wtmean'  0.0  '/all_nv_ps_vapor'         'RbZt' ''      'pre_sal' ''       'ge' 0 }
+        { 'AzAveragedData/hist_all_p_vapor_nv_lite_<CASE>.h5' '/vapor' 'wtmean'  0.0  '/all_nv_s_vapor'          'RbZt' ''      'sal'     ''       'ge' 0 }
+        { 'AzAveragedData/hist_all_p_vapor_nv_lite_<CASE>.h5' '/vapor' 'wtmean'  0.0  '/all_nv_core_vapor_ts'    'rbZT' 'core'  ''        ''       'ge' 0 }
+        { 'AzAveragedData/hist_all_p_vapor_nv_lite_<CASE>.h5' '/vapor' 'wtmean'  0.0  '/all_nv_core_ps_vapor'    'rbZt' 'core'  'pre_sal' ''       'ge' 0 }
+        { 'AzAveragedData/hist_all_p_vapor_nv_lite_<CASE>.h5' '/vapor' 'wtmean'  0.0  '/all_nv_core_s_vapor'     'rbZt' 'core'  'sal'     ''       'ge' 0 }
+        { 'AzAveragedData/hist_all_p_vapor_nv_lite_<CASE>.h5' '/vapor' 'wtmean'  0.0  '/all_nv_rb_vapor_ts'      'rbZT' 'rband' ''        ''       'ge' 0 }
+        { 'AzAveragedData/hist_all_p_vapor_nv_lite_<CASE>.h5' '/vapor' 'wtmean'  0.0  '/all_nv_rb_ps_vapor'      'rbZt' 'rband' 'pre_sal' ''       'ge' 0 }
+        { 'AzAveragedData/hist_all_p_vapor_nv_lite_<CASE>.h5' '/vapor' 'wtmean'  0.0  '/all_nv_rb_s_vapor'       'rbZt' 'rband' 'sal'     ''       'ge' 0 }
+      }
+      'DIAGS/hist_meas_az_p_vapor_lite_<CASE>.h5'
+    }
 
 %    % theta
 %    {

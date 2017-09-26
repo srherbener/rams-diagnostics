@@ -2,10 +2,10 @@ function [ ] = GenReduceData()
 
   % list of simulation cases
   CaseList = {
-%    'TSD_SAL_DUST'
-%    'TSD_SAL_NODUST'
-    'TSD_NONSAL_DUST'
-    'TSD_NONSAL_NODUST'
+    'TSD_SAL_DUST'
+    'TSD_SAL_NODUST'
+%    'TSD_NONSAL_DUST'
+%    'TSD_NONSAL_NODUST'
     };
   Ncases = length(CaseList);
 
@@ -29,8 +29,8 @@ function [ ] = GenReduceData()
 %    { 'HDF5/<CASE>/HDF5/vapor-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/vapor_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/vapor' 10 10 1 1 'C' 'vapor' 't z y x' }
 %
 %    % Horizontal winds
-    { 'HDF5/<CASE>/HDF5/u-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/u_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/u' 10 10 1 1 'm/s' 'u' 't z y x' }
-    { 'HDF5/<CASE>/HDF5/v-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/v_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/v' 10 10 1 1 'm/s' 'u' 't z y x' }
+%    { 'HDF5/<CASE>/HDF5/u-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/u_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/u' 10 10 1 1 'm/s' 'u' 't z y x' }
+%    { 'HDF5/<CASE>/HDF5/v-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/v_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/v' 10 10 1 1 'm/s' 'u' 't z y x' }
 %
 %    % sea_pressure
 %    { 'HDF5/<CASE>/HDF5/sea_press-<CASE>-AS-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/sea_press_lite-<CASE>-AS-2006-08-20-120000-g3.h5' '/sea_press' 10 10 1 1 'mb' 'sea-level-pressure' 't y x' }
@@ -49,6 +49,9 @@ function [ ] = GenReduceData()
 %
 %    % Vapor - pressure surfaces
 %    { 'HDF5/<CASE>/HDF5/vapor-<CASE>-AP-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/vapor_lite-<CASE>-AP-2006-08-20-120000-g3.h5' '/vapor' 10 10 1 1 'C' 'vapor' 't z y x' }
+
+    % vapor diffusion, liquid - pressure surfaces
+    { 'HDF5/<CASE>/HDF5/vapliqt-<CASE>-AP-2006-08-20-120000-g3.h5' 'HDF5/<CASE>/HDF5/vapliqt_lite-<CASE>-AP-2006-08-20-120000-g3.h5' '/vapliqt' 10 10 1 1 'g/kg' 'vapor-liquid-diff' 't z y x' }
 
     };
 

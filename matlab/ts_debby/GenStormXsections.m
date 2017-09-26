@@ -107,6 +107,11 @@ function [ ] = GenStormXsections()
     { 'DIAGS/hist_meas_az_p_theta_e_lite_<CASE>.h5' '/all_nv_ps_theta_e' '/all_p_nv_ps_theta_e_lite', 'p' }
     { 'DIAGS/hist_meas_az_p_theta_e_lite_<CASE>.h5' '/all_nv_s_theta_e'  '/all_p_nv_s_theta_e_lite',  'p' }
 
+    { 'DIAGS/hist_meas_az_p_theta_lite_<CASE>.h5' '/all_ps_theta'    '/all_p_ps_theta_lite',    'p' }
+    { 'DIAGS/hist_meas_az_p_theta_lite_<CASE>.h5' '/all_s_theta'     '/all_p_s_theta_lite',     'p' }
+    { 'DIAGS/hist_meas_az_p_theta_lite_<CASE>.h5' '/all_nv_ps_theta' '/all_p_nv_ps_theta_lite', 'p' }
+    { 'DIAGS/hist_meas_az_p_theta_lite_<CASE>.h5' '/all_nv_s_theta'  '/all_p_nv_s_theta_lite',  'p' }
+
 %    { 'DIAGS/hist_meas_az_theta_v_<CASE>.h5' '/all_ps_theta_v' '/all_ps_theta_v', 'z' }
 %    { 'DIAGS/hist_meas_az_theta_v_<CASE>.h5' '/all_s_theta_v' '/all_s_theta_v', 'z' }
 
@@ -145,6 +150,11 @@ function [ ] = GenStormXsections()
     { 'DIAGS/hist_meas_az_vapor_<CASE>.h5' '/all_s_vapor' '/all_s_vapor', 'z' }
 %    { 'DIAGS/hist_meas_az_vapor_<CASE>.h5' '/lead_ps_vapor' '/lead_ps_vapor', 'z' }
 %    { 'DIAGS/hist_meas_az_vapor_<CASE>.h5' '/lead_s_vapor' '/lead_s_vapor', 'z' }
+
+    { 'DIAGS/hist_meas_az_p_vapor_lite_<CASE>.h5' '/all_ps_vapor'    '/all_p_ps_vapor_lite',    'p' }
+    { 'DIAGS/hist_meas_az_p_vapor_lite_<CASE>.h5' '/all_s_vapor'     '/all_p_s_vapor_lite',     'p' }
+    { 'DIAGS/hist_meas_az_p_vapor_lite_<CASE>.h5' '/all_nv_ps_vapor' '/all_p_nv_ps_vapor_lite', 'p' }
+    { 'DIAGS/hist_meas_az_p_vapor_lite_<CASE>.h5' '/all_nv_s_vapor'  '/all_p_nv_s_vapor_lite',  'p' }
 
 %    { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/all_ps_d1_num'  '/all_ps_d1_num' , 'z' }
 %    { 'DIAGS/hist_meas_az_dust_<CASE>.h5' '/all_ps_d2_num'  '/all_ps_d2_num' , 'z' }

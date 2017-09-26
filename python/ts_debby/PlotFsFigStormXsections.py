@@ -202,18 +202,50 @@ InFname = 'DIAGS/storm_xsections_<SIM>.h5'
 #UpSap.CreateFig()
 
 # Theta-E
-SimCspecs = [ 340, 360, 11 ]
-FactCspecs = [ -8, 8, 11 ]
+SimCspecs = [ 330, 350, 11 ]
+FactCspecs = [ -2, 2, 11 ]
 ThetaePsap = ffc.StormXsectionPress(InFname, '/all_p_ps_theta_e', 'Plots.py/FsFigThetaePressPsapFactors.png', '\\theta_{e}', 'PSAP', SimCspecs, FactCspecs)
 ThetaePsap.CreateFig()
 ThetaeSap = ffc.StormXsectionPress(InFname, '/all_p_s_theta_e', 'Plots.py/FsFigThetaePressSapFactors.png', '\\theta_{e}', 'SAP', SimCspecs, FactCspecs)
 ThetaeSap.CreateFig()
 
 # Theta-E, vortex removed
-SimCspecs = [ 340, 360, 11 ]
-FactCspecs = [ -8, 8, 11 ]
+SimCspecs = [ 330, 350, 11 ]
+FactCspecs = [ -2, 2, 11 ]
 ThetaePsap = ffc.StormXsectionPressLite(InFname, '/all_p_nv_ps_theta_e_lite', 'Plots.py/FsFigThetaeNvPressPsapFactors.png', '\\theta_{e}', 'PSAP', SimCspecs, FactCspecs)
 ThetaePsap.CreateFig()
 ThetaeSap = ffc.StormXsectionPressLite(InFname, '/all_p_nv_s_theta_e_lite', 'Plots.py/FsFigThetaeNvPressSapFactors.png', '\\theta_{e}', 'SAP', SimCspecs, FactCspecs)
 ThetaeSap.CreateFig()
+
+# Vapor
+SimCspecs = [ 0, 20, 11 ]
+FactCspecs = [ -1, 1, 11 ]
+VaporPsap = ffc.StormXsectionPressLite(InFname, '/all_p_ps_vapor_lite', 'Plots.py/FsFigVaporPressPsapFactors.png', 'R_{v}', 'PSAP', SimCspecs, FactCspecs)
+VaporPsap.CreateFig()
+VaporSap = ffc.StormXsectionPressLite(InFname, '/all_p_s_vapor_lite', 'Plots.py/FsFigVaporPressSapFactors.png', 'R_{v}', 'SAP', SimCspecs, FactCspecs)
+VaporSap.CreateFig()
+
+# Vapor, vortex removed
+SimCspecs = [ 0, 20, 11 ]
+FactCspecs = [ -1, 1, 11 ]
+VaporPsap = ffc.StormXsectionPressLite(InFname, '/all_p_nv_ps_vapor_lite', 'Plots.py/FsFigVaporNvPressPsapFactors.png', 'R_{v}', 'PSAP', SimCspecs, FactCspecs)
+VaporPsap.CreateFig()
+VaporSap = ffc.StormXsectionPressLite(InFname, '/all_p_nv_s_vapor_lite', 'Plots.py/FsFigVaporNvPressSapFactors.png', 'R_{v}', 'SAP', SimCspecs, FactCspecs)
+VaporSap.CreateFig()
+
+# Theta
+SimCspecs = [ 300, 350, 11 ]
+FactCspecs = [ -2, 2, 11 ]
+ThetaPsap = ffc.StormXsectionPressLite(InFname, '/all_p_ps_theta_lite', 'Plots.py/FsFigThetaPressPsapFactors.png', '\\theta', 'PSAP', SimCspecs, FactCspecs)
+ThetaPsap.CreateFig()
+ThetaSap = ffc.StormXsectionPressLite(InFname, '/all_p_s_theta_lite', 'Plots.py/FsFigThetaPressSapFactors.png', '\\theta', 'SAP', SimCspecs, FactCspecs)
+ThetaSap.CreateFig()
+
+# Theta, vortex removed
+SimCspecs = [ 300, 350, 11 ]
+FactCspecs = [ -2, 2, 11 ]
+ThetaPsap = ffc.StormXsectionPressLite(InFname, '/all_p_nv_ps_theta_lite', 'Plots.py/FsFigThetaNvPressPsapFactors.png', '\\theta', 'PSAP', SimCspecs, FactCspecs)
+ThetaPsap.CreateFig()
+ThetaSap = ffc.StormXsectionPressLite(InFname, '/all_p_nv_s_theta_lite', 'Plots.py/FsFigThetaNvPressSapFactors.png', '\\theta', 'SAP', SimCspecs, FactCspecs)
+ThetaSap.CreateFig()
 
