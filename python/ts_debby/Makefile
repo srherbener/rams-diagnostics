@@ -15,10 +15,12 @@ SCRIPTS = \
   $(DEST)/GenWindShearField.py \
   $(DEST)/GenVentIndex.py \
   $(DEST)/FsFigContour.py \
+  $(DEST)/FsFigLine.py \
   $(DEST)/PlotFsFigStormHovmollers.py \
   $(DEST)/PlotFsFigStormXsections.py \
   $(DEST)/PlotFsFigTrackXsections.py \
   $(DEST)/PlotFsFigPtrackTempGrad.py \
+  $(DEST)/PlotFsFigTimeSeries.py \
   $(DEST)/PlotFsFigVentIndex.py \
   $(DEST)/PlotFsFigPlanViews.py \
   $(DEST)/PlotFsFigWind.py \

@@ -26,6 +26,7 @@ FileList = [
 #    [ 'HDF5/<SIM>/HDF5/topo-<SIM>-AS-2006-08-20-120000-g3.h5', '/topo', 'HDF5/<SIM>/HDF5/topo_lite-<SIM>-AS-2006-08-20-120000-g3.h5', '/topo'       ],
 #    [ 'HDF5/<SIM>/HDF5/sea_press-<SIM>-AS-2006-08-20-120000-g3.h5', '/sea_press', 'HDF5/<SIM>/HDF5/sea_press_lite-<SIM>-AS-2006-08-20-120000-g3.h5', '/sea_press'       ],
 #    [ 'HDF5/<SIM>/HDF5/sst-<SIM>-AS-2006-08-20-120000-g3.h5', '/sst', 'HDF5/<SIM>/HDF5/sst_lite-<SIM>-AS-2006-08-20-120000-g3.h5', '/sst'       ],
+#    [ 'HDF5/<SIM>/HDF5/pcprate-<SIM>-AS-2006-08-20-120000-g3.h5', '/pcprate', 'HDF5/<SIM>/HDF5/pcprate_lite-<SIM>-AS-2006-08-20-120000-g3.h5', '/pcprate'       ],
 
     # Vertical coords = sigma-z
 #    [ 'HDF5/<SIM>/HDF5/u-<SIM>-AS-2006-08-20-120000-g3.h5',       '/u',       'HDF5/<SIM>/HDF5/u_lite-<SIM>-AS-2006-08-20-120000-g3.h5',       '/u'       ],
@@ -46,7 +47,14 @@ FileList = [
 #    [ 'HDF5/<SIM>/HDF5/theta_e-<SIM>-AP-2006-08-20-120000-g3.h5', '/theta_e', 'HDF5/<SIM>/HDF5/theta_e_lite-<SIM>-AP-2006-08-20-120000-g3.h5', '/theta_e' ],
 #    [ 'HDF5/<SIM>/HDF5/vapor-<SIM>-AP-2006-08-20-120000-g3.h5',   '/vapor',   'HDF5/<SIM>/HDF5/vapor_lite-<SIM>-AP-2006-08-20-120000-g3.h5',   '/vapor'   ],
 #    [ 'HDF5/<SIM>/HDF5/relhum-<SIM>-AP-2006-08-20-120000-g3.h5',  '/relhum',  'HDF5/<SIM>/HDF5/relhum_lite-<SIM>-AP-2006-08-20-120000-g3.h5',  '/relhum'  ],
-    [ 'HDF5/<SIM>/HDF5/vapliqt-<SIM>-AP-2006-08-20-120000-g3.h5', '/vapliqt', 'HDF5/<SIM>/HDF5/vapliqt_lite-<SIM>-AP-2006-08-20-120000-g3.h5', '/vapliqt' ],
+#    [ 'HDF5/<SIM>/HDF5/vapliqt-<SIM>-AP-2006-08-20-120000-g3.h5', '/vapliqt', 'HDF5/<SIM>/HDF5/vapliqt_lite-<SIM>-AP-2006-08-20-120000-g3.h5', '/vapliqt' ],
+    [ 'HDF5/<SIM>/HDF5/vapicet-<SIM>-AP-2006-08-20-120000-g3.h5', '/vapicet', 'HDF5/<SIM>/HDF5/vapicet_lite-<SIM>-AP-2006-08-20-120000-g3.h5', '/vapicet' ],
+
+    [ 'HDF5/<SIM>/HDF5/ice2raint-<SIM>-AP-2006-08-20-120000-g3.h5', '/ice2raint', 'HDF5/<SIM>/HDF5/ice2raint_lite-<SIM>-AP-2006-08-20-120000-g3.h5', '/ice2raint' ],
+#    [ 'HDF5/<SIM>/HDF5/melticet-<SIM>-AP-2006-08-20-120000-g3.h5',  '/melticet',  'HDF5/<SIM>/HDF5/melticet_lite-<SIM>-AP-2006-08-20-120000-g3.h5',  '/melticet'  ],
+#    [ 'HDF5/<SIM>/HDF5/rain2icet-<SIM>-AP-2006-08-20-120000-g3.h5', '/rain2icet', 'HDF5/<SIM>/HDF5/rain2icet_lite-<SIM>-AP-2006-08-20-120000-g3.h5', '/rain2icet' ],
+#    [ 'HDF5/<SIM>/HDF5/rimecldt-<SIM>-AP-2006-08-20-120000-g3.h5',  '/rimecldt',  'HDF5/<SIM>/HDF5/rimecldt_lite-<SIM>-AP-2006-08-20-120000-g3.h5',  '/rimecldt'  ],
+#    [ 'HDF5/<SIM>/HDF5/cld2raint-<SIM>-AP-2006-08-20-120000-g3.h5', '/cld2raint', 'HDF5/<SIM>/HDF5/cld2raint_lite-<SIM>-AP-2006-08-20-120000-g3.h5', '/cld2raint' ],
     ]
 Nfiles = len(FileList)
 

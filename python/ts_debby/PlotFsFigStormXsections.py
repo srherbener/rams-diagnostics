@@ -249,35 +249,83 @@ InFname = 'DIAGS/storm_xsections_<SIM>.h5'
 #ThetaSap = ffc.StormXsectionPressLite(InFname, '/all_p_nv_s_theta_lite', 'Plots.py/FsFigThetaNvPressSapFactors.png', '\\theta', 'SAP', SimCspecs, FactCspecs)
 #ThetaSap.CreateFig()
 
-# LiqEvap
-SimCspecs = [ -0.5, 0, 11 ]
-FactCspecs = [ -0.1, 0.1, 11 ]
-LiqEvapPsap = ffc.StormXsectionPressLite(InFname, '/all_p_ps_liq_evap_lite', 'Plots.py/FsFigLiqEvapPressPsapFactors.png', 'Evap', 'PSAP', SimCspecs, FactCspecs)
-LiqEvapPsap.CreateFig()
-LiqEvapSap = ffc.StormXsectionPressLite(InFname, '/all_p_s_liq_evap_lite', 'Plots.py/FsFigLiqEvapPressSapFactors.png', 'Evap', 'SAP', SimCspecs, FactCspecs)
-LiqEvapSap.CreateFig()
+## LiqEvap
+#SimCspecs = [ -0.5, 0, 11 ]
+#FactCspecs = [ -0.1, 0.1, 11 ]
+#LiqEvapPsap = ffc.StormXsectionPressLite(InFname, '/all_p_ps_liq_evap_lite', 'Plots.py/FsFigLiqEvapPressPsapFactors.png', 'Evap', 'PSAP', SimCspecs, FactCspecs)
+#LiqEvapPsap.CreateFig()
+#LiqEvapSap = ffc.StormXsectionPressLite(InFname, '/all_p_s_liq_evap_lite', 'Plots.py/FsFigLiqEvapPressSapFactors.png', 'Evap', 'SAP', SimCspecs, FactCspecs)
+#LiqEvapSap.CreateFig()
 
-# LiqEvap, vortex removed
-SimCspecs = [ -0.5, 0, 11 ]
-FactCspecs = [ -0.1, 0.1, 11 ]
-LiqEvapPsap = ffc.StormXsectionPressLite(InFname, '/all_p_nv_ps_liq_evap_lite', 'Plots.py/FsFigLiqEvapNvPressPsapFactors.png', 'Evap', 'PSAP', SimCspecs, FactCspecs)
-LiqEvapPsap.CreateFig()
-LiqEvapSap = ffc.StormXsectionPressLite(InFname, '/all_p_nv_s_liq_evap_lite', 'Plots.py/FsFigLiqEvapNvPressSapFactors.png', 'Evap', 'SAP', SimCspecs, FactCspecs)
-LiqEvapSap.CreateFig()
+## LiqEvap, vortex removed
+#SimCspecs = [ -0.5, 0, 11 ]
+#FactCspecs = [ -0.1, 0.1, 11 ]
+#LiqEvapPsap = ffc.StormXsectionPressLite(InFname, '/all_p_nv_ps_liq_evap_lite', 'Plots.py/FsFigLiqEvapNvPressPsapFactors.png', 'Evap', 'PSAP', SimCspecs, FactCspecs)
+#LiqEvapPsap.CreateFig()
+#LiqEvapSap = ffc.StormXsectionPressLite(InFname, '/all_p_nv_s_liq_evap_lite', 'Plots.py/FsFigLiqEvapNvPressSapFactors.png', 'Evap', 'SAP', SimCspecs, FactCspecs)
+#LiqEvapSap.CreateFig()
 
-# LiqCond
-SimCspecs = [ 0, 0.5, 11 ]
-FactCspecs = [ -0.05, 0.05, 11 ]
-LiqCondPsap = ffc.StormXsectionPressLite(InFname, '/all_p_ps_liq_cond_lite', 'Plots.py/FsFigLiqCondPressPsapFactors.png', 'Cond', 'PSAP', SimCspecs, FactCspecs)
-LiqCondPsap.CreateFig()
-LiqCondSap = ffc.StormXsectionPressLite(InFname, '/all_p_s_liq_cond_lite', 'Plots.py/FsFigLiqCondPressSapFactors.png', 'Cond', 'SAP', SimCspecs, FactCspecs)
-LiqCondSap.CreateFig()
+## LiqCond
+#SimCspecs = [ 0, 0.5, 11 ]
+#FactCspecs = [ -0.05, 0.05, 11 ]
+#LiqCondPsap = ffc.StormXsectionPressLite(InFname, '/all_p_ps_liq_cond_lite', 'Plots.py/FsFigLiqCondPressPsapFactors.png', 'Cond', 'PSAP', SimCspecs, FactCspecs)
+#LiqCondPsap.CreateFig()
+#LiqCondSap = ffc.StormXsectionPressLite(InFname, '/all_p_s_liq_cond_lite', 'Plots.py/FsFigLiqCondPressSapFactors.png', 'Cond', 'SAP', SimCspecs, FactCspecs)
+#LiqCondSap.CreateFig()
 
-# LiqCond, vortex removed
-SimCspecs = [ 0, 0.5, 11 ]
-FactCspecs = [ -0.05, 0.05, 11 ]
-LiqCondPsap = ffc.StormXsectionPressLite(InFname, '/all_p_nv_ps_liq_cond_lite', 'Plots.py/FsFigLiqCondNvPressPsapFactors.png', 'Cond', 'PSAP', SimCspecs, FactCspecs)
-LiqCondPsap.CreateFig()
-LiqCondSap = ffc.StormXsectionPressLite(InFname, '/all_p_nv_s_liq_cond_lite', 'Plots.py/FsFigLiqCondNvPressSapFactors.png', 'Cond', 'SAP', SimCspecs, FactCspecs)
-LiqCondSap.CreateFig()
+## LiqCond, vortex removed
+#SimCspecs = [ 0, 0.5, 11 ]
+#FactCspecs = [ -0.05, 0.05, 11 ]
+#LiqCondPsap = ffc.StormXsectionPressLite(InFname, '/all_p_nv_ps_liq_cond_lite', 'Plots.py/FsFigLiqCondNvPressPsapFactors.png', 'Cond', 'PSAP', SimCspecs, FactCspecs)
+#LiqCondPsap.CreateFig()
+#LiqCondSap = ffc.StormXsectionPressLite(InFname, '/all_p_nv_s_liq_cond_lite', 'Plots.py/FsFigLiqCondNvPressSapFactors.png', 'Cond', 'SAP', SimCspecs, FactCspecs)
+#LiqCondSap.CreateFig()
+
+## Relhum
+#SimCspecs = [ 0, 100, 11 ]
+#FactCspecs = [ -5, 5, 11 ]
+#RelhumPsap = ffc.StormXsectionPressLite(InFname, '/all_p_ps_relhum_lite', 'Plots.py/FsFigRelhumPressPsapFactors.png', 'RH', 'PSAP', SimCspecs, FactCspecs)
+#RelhumPsap.CreateFig()
+#RelhumSap = ffc.StormXsectionPressLite(InFname, '/all_p_s_relhum_lite', 'Plots.py/FsFigRelhumPressSapFactors.png', 'RH', 'SAP', SimCspecs, FactCspecs)
+#RelhumSap.CreateFig()
+
+## Relhum, vortex removed
+#SimCspecs = [ 0, 100, 11 ]
+#FactCspecs = [ -5, 5, 11 ]
+#RelhumPsap = ffc.StormXsectionPressLite(InFname, '/all_p_nv_ps_relhum_lite', 'Plots.py/FsFigRelhumNvPressPsapFactors.png', 'RH', 'PSAP', SimCspecs, FactCspecs)
+#RelhumPsap.CreateFig()
+#RelhumSap = ffc.StormXsectionPressLite(InFname, '/all_p_nv_s_relhum_lite', 'Plots.py/FsFigRelhumNvPressSapFactors.png', 'RH', 'SAP', SimCspecs, FactCspecs)
+#RelhumSap.CreateFig()
+
+# IceSub
+SimCspecs = [ -0.1, 0, 11 ]
+FactCspecs = [ -0.02, 0.02, 11 ]
+IceSubPsap = ffc.StormXsectionPressLite(InFname, '/all_p_ps_ice_sub_lite', 'Plots.py/FsFigIceSubPressPsapFactors.png', 'Sub', 'PSAP', SimCspecs, FactCspecs)
+IceSubPsap.CreateFig()
+IceSubSap = ffc.StormXsectionPressLite(InFname, '/all_p_s_ice_sub_lite', 'Plots.py/FsFigIceSubPressSapFactors.png', 'Sub', 'SAP', SimCspecs, FactCspecs)
+IceSubSap.CreateFig()
+
+# IceSub, vortex removed
+SimCspecs = [ -0.1, 0, 11 ]
+FactCspecs = [ -0.02, 0.02, 11 ]
+IceSubPsap = ffc.StormXsectionPressLite(InFname, '/all_p_nv_ps_ice_sub_lite', 'Plots.py/FsFigIceSubNvPressPsapFactors.png', 'Sub', 'PSAP', SimCspecs, FactCspecs)
+IceSubPsap.CreateFig()
+IceSubSap = ffc.StormXsectionPressLite(InFname, '/all_p_nv_s_ice_sub_lite', 'Plots.py/FsFigIceSubNvPressSapFactors.png', 'Sub', 'SAP', SimCspecs, FactCspecs)
+IceSubSap.CreateFig()
+
+# IceDep
+SimCspecs = [ 0, 0.2, 11 ]
+FactCspecs = [ -0.02, 0.02, 11 ]
+IceDepPsap = ffc.StormXsectionPressLite(InFname, '/all_p_ps_ice_dep_lite', 'Plots.py/FsFigIceDepPressPsapFactors.png', 'Dep', 'PSAP', SimCspecs, FactCspecs)
+IceDepPsap.CreateFig()
+IceDepSap = ffc.StormXsectionPressLite(InFname, '/all_p_s_ice_dep_lite', 'Plots.py/FsFigIceDepPressSapFactors.png', 'Dep', 'SAP', SimCspecs, FactCspecs)
+IceDepSap.CreateFig()
+
+# IceDep, vortex removed
+SimCspecs = [ 0, 0.2, 11 ]
+FactCspecs = [ -0.02, 0.02, 11 ]
+IceDepPsap = ffc.StormXsectionPressLite(InFname, '/all_p_nv_ps_ice_dep_lite', 'Plots.py/FsFigIceDepNvPressPsapFactors.png', 'Dep', 'PSAP', SimCspecs, FactCspecs)
+IceDepPsap.CreateFig()
+IceDepSap = ffc.StormXsectionPressLite(InFname, '/all_p_nv_s_ice_dep_lite', 'Plots.py/FsFigIceDepNvPressSapFactors.png', 'Dep', 'SAP', SimCspecs, FactCspecs)
+IceDepSap.CreateFig()
 

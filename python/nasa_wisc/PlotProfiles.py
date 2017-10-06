@@ -19,19 +19,24 @@ PlotList = [
 #    [ [ 'RCE_1km_IPL2', 'RCE_1km_SM_IPL2', 'RCE_1km_DM_IPL2', 'RCE_1km_DP_IPL2' ], r'$IPLAWS = 2$', 'RceIpl2' ],
 #    [ [ 'RCE_3km_1mom', 'RCE_3km_2mom', 'RCE_3km_2mom_db', 'RCE_3km_2mom_dm' ], '', 'Rce3km' ],
 
-#    [ [ 'RCE_3km_1mom', 'RCE_3km_1mom_db', 'RCE_3km_1mom_dm' ], '', 'Rce3km1mom' ],
-#    [ [ 'RCE_3km_2mom_db', 'RCE_3km_2mom_dm', 'RCE_3km_2mom_dm_lrz' ], '', 'Rce3km2mom' ],
+    [ [ 'RCE_3km_1mom', 'RCE_3km_1mom_db', 'RCE_3km_1mom_dm' ], '', 'Rce3km1mom' ],
+    [ [ 'RCE_3km_2mom_db', 'RCE_3km_2mom_dm', 'RCE_3km_2mom_dm_lrz' ], '', 'Rce3km2mom' ],
 
     [ [ 'RCE_3km_1mom_db', 'RCE_3km_2mom_db', ], '', 'RceDb' ],
     ]
 Nplots = len(PlotList)
 
 VarList = [
-    [ 'DIAGS/profiles_<SIM>.h5', 'theta_prof',       [ 290, 420 ],     r'$\theta\ (K)$',               'Theta'      ],
-    [ 'DIAGS/profiles_<SIM>.h5', 'total_cond_prof',  [ -0.001, 0.03 ], r'$Total Cond.\ (g\ kg^{-1})$', 'TotalCond'  ],
-    [ 'DIAGS/profiles_<SIM>.h5', 'vapor_prof',       [ -0.5, 20 ],     r'$Vapor\ (g\ kg^{-1})$',       'Vapor'      ],
-    [ 'DIAGS/profiles_<SIM>.h5', 'tempk_prof',       [ 180, 300 ],     r'$Temp\ (K)$',                 'Tempk'      ],
-    [ 'DIAGS/profiles_<SIM>.h5', 'relhum_prof',      [ -3, 100 ],      r'$RH\ (\%)$',                  'Relhum'     ],
+#    [ 'DIAGS/profiles_<SIM>.h5', 'theta_prof',       [ 290, 420 ],     [ 0, 25 ], r'$\theta\ (K)$',               r'$Height\ (km)$',            'Theta'      ],
+#    [ 'DIAGS/profiles_<SIM>.h5', 'total_cond_prof',  [ -0.001, 0.03 ], [ 0, 25 ], r'$Total Cond.\ (g\ kg^{-1})$', r'$Height\ (km)$', 'TotalCond'  ],
+#    [ 'DIAGS/profiles_<SIM>.h5', 'vapor_prof',       [ -0.5, 20 ],     [ 0, 25 ], r'$Vapor\ (g\ kg^{-1})$',       r'$Height\ (km)$', 'Vapor'      ],
+#    [ 'DIAGS/profiles_<SIM>.h5', 'tempk_prof',       [ 180, 300 ],     [ 0, 25 ], r'$Temp\ (K)$',                 r'$Height\ (km)$', 'Tempk'      ],
+#    [ 'DIAGS/profiles_<SIM>.h5', 'relhum_prof',      [ -3, 100 ],      [ 0, 25 ], r'$RH\ (\%)$',                  r'$Height\ (km)$', 'Relhum'     ],
+
+
+    [ 'DIAGS/profiles_<SIM>.h5', 'vapor_prof',   [ -0.001, 0.05 ],  [ 12, 20 ], r'$Vapor\ (g\ kg^{-1})$',       r'$Height\ (km)$', 'HlevVapor'      ],
+    [ 'DIAGS/profiles_<SIM>.h5', 'tempk_prof',   [ 180, 220 ],      [ 12, 20 ], r'$Temp\ (K)$',                 r'$Height\ (km)$', 'HlevTempk'      ],
+    [ 'DIAGS/profiles_<SIM>.h5', 'relhum_prof',  [ -1, 50 ],        [ 12, 20 ], r'$RH\ (\%)$',                  r'$Height\ (km)$', 'HlevRelhum'     ],
     ]
 Nvars = len(VarList)
 
@@ -53,8 +58,10 @@ for iplot in range(Nplots):
         InFileTemplate = VarList[ivar][0]
         Var = VarList[ivar][1]
         Xlims = VarList[ivar][2]
-        Xlabel = VarList[ivar][3]
-        Oname = VarList[ivar][4]
+        Ylims = VarList[ivar][3]
+        Xlabel = VarList[ivar][4]
+        Ylabel = VarList[ivar][5]
+        Oname = VarList[ivar][6]
 
         print("Generating plot for variable: {0:s}".format(Var))
 
@@ -90,8 +97,6 @@ for iplot in range(Nplots):
 
         # Make the plot
         Pdir = 'Plots.py'
-        Ylims = [ 0, 25 ] # km
-        Ylabel = r'$Height\ (km)$'
         
         Fig = plt.figure()
         Ax  = Fig.add_axes([ 0.1, 0.1, 0.7, 0.8 ])
@@ -114,7 +119,7 @@ for iplot in range(Nplots):
         
         
         OutFile = "{0:s}/{1:s}Profile{2:s}.png".format(Pdir, Pfprefix, Oname)
-        print("Writing: {0:s}".format(OutFile))
+        print("  Writing: {0:s}".format(OutFile))
         Fig.savefig(OutFile)
         plt.close()
 

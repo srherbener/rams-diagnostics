@@ -140,6 +140,11 @@ function [ ] = GenStormXsections()
     { 'DIAGS/hist_meas_az_relhum_<CASE>.h5' '/all_ps_relhum'  '/all_ps_relhum', 'z' }
     { 'DIAGS/hist_meas_az_relhum_<CASE>.h5' '/all_s_relhum'  '/all_s_relhum', 'z' }
 
+    { 'DIAGS/hist_meas_az_p_relhum_lite_<CASE>.h5' '/all_ps_relhum'    '/all_p_ps_relhum_lite',    'p' }
+    { 'DIAGS/hist_meas_az_p_relhum_lite_<CASE>.h5' '/all_s_relhum'     '/all_p_s_relhum_lite',     'p' }
+    { 'DIAGS/hist_meas_az_p_relhum_lite_<CASE>.h5' '/all_nv_ps_relhum' '/all_p_nv_ps_relhum_lite', 'p' }
+    { 'DIAGS/hist_meas_az_p_relhum_lite_<CASE>.h5' '/all_nv_s_relhum'  '/all_p_nv_s_relhum_lite',  'p' }
+
     { 'DIAGS/hist_meas_az_pcprate_<CASE>.h5' '/all_ps_pcprate' '/all_ps_pcprate', 'z' }
     { 'DIAGS/hist_meas_az_pcprate_<CASE>.h5' '/all_s_pcprate' '/all_s_pcprate', 'z' }
 
@@ -245,6 +250,41 @@ function [ ] = GenStormXsections()
     { 'DIAGS/hist_meas_az_p_liq_cond_lite_<CASE>.h5' '/all_s_liq_cond'     '/all_p_s_liq_cond_lite',     'p' }
     { 'DIAGS/hist_meas_az_p_liq_cond_lite_<CASE>.h5' '/all_nv_ps_liq_cond' '/all_p_nv_ps_liq_cond_lite', 'p' }
     { 'DIAGS/hist_meas_az_p_liq_cond_lite_<CASE>.h5' '/all_nv_s_liq_cond'  '/all_p_nv_s_liq_cond_lite',  'p' }
+
+    { 'DIAGS/hist_meas_az_p_ice_dep_lite_<CASE>.h5' '/all_ps_ice_dep'    '/all_p_ps_ice_dep_lite',    'p' }
+    { 'DIAGS/hist_meas_az_p_ice_dep_lite_<CASE>.h5' '/all_s_ice_dep'     '/all_p_s_ice_dep_lite',     'p' }
+    { 'DIAGS/hist_meas_az_p_ice_dep_lite_<CASE>.h5' '/all_nv_ps_ice_dep' '/all_p_nv_ps_ice_dep_lite', 'p' }
+    { 'DIAGS/hist_meas_az_p_ice_dep_lite_<CASE>.h5' '/all_nv_s_ice_dep'  '/all_p_nv_s_ice_dep_lite',  'p' }
+
+    { 'DIAGS/hist_meas_az_p_ice_sub_lite_<CASE>.h5' '/all_ps_ice_sub'    '/all_p_ps_ice_sub_lite',    'p' }
+    { 'DIAGS/hist_meas_az_p_ice_sub_lite_<CASE>.h5' '/all_s_ice_sub'     '/all_p_s_ice_sub_lite',     'p' }
+    { 'DIAGS/hist_meas_az_p_ice_sub_lite_<CASE>.h5' '/all_nv_ps_ice_sub' '/all_p_nv_ps_ice_sub_lite', 'p' }
+    { 'DIAGS/hist_meas_az_p_ice_sub_lite_<CASE>.h5' '/all_nv_s_ice_sub'  '/all_p_nv_s_ice_sub_lite',  'p' }
+
+    { 'DIAGS/hist_meas_az_p_melticet_lite_<CASE>.h5' '/all_ps_melticet'    '/all_p_ps_melticet_lite',    'p' }
+    { 'DIAGS/hist_meas_az_p_melticet_lite_<CASE>.h5' '/all_s_melticet'     '/all_p_s_melticet_lite',     'p' }
+    { 'DIAGS/hist_meas_az_p_melticet_lite_<CASE>.h5' '/all_nv_ps_melticet' '/all_p_nv_ps_melticet_lite', 'p' }
+    { 'DIAGS/hist_meas_az_p_melticet_lite_<CASE>.h5' '/all_nv_s_melticet'  '/all_p_nv_s_melticet_lite',  'p' }
+
+    { 'DIAGS/hist_meas_az_p_ice2raint_lite_<CASE>.h5' '/all_ps_ice2raint'    '/all_p_ps_ice2raint_lite',    'p' }
+    { 'DIAGS/hist_meas_az_p_ice2raint_lite_<CASE>.h5' '/all_s_ice2raint'     '/all_p_s_ice2raint_lite',     'p' }
+    { 'DIAGS/hist_meas_az_p_ice2raint_lite_<CASE>.h5' '/all_nv_ps_ice2raint' '/all_p_nv_ps_ice2raint_lite', 'p' }
+    { 'DIAGS/hist_meas_az_p_ice2raint_lite_<CASE>.h5' '/all_nv_s_ice2raint'  '/all_p_nv_s_ice2raint_lite',  'p' }
+
+    { 'DIAGS/hist_meas_az_p_rimecldt_lite_<CASE>.h5' '/all_ps_rimecldt'    '/all_p_ps_rimecldt_lite',    'p' }
+    { 'DIAGS/hist_meas_az_p_rimecldt_lite_<CASE>.h5' '/all_s_rimecldt'     '/all_p_s_rimecldt_lite',     'p' }
+    { 'DIAGS/hist_meas_az_p_rimecldt_lite_<CASE>.h5' '/all_nv_ps_rimecldt' '/all_p_nv_ps_rimecldt_lite', 'p' }
+    { 'DIAGS/hist_meas_az_p_rimecldt_lite_<CASE>.h5' '/all_nv_s_rimecldt'  '/all_p_nv_s_rimecldt_lite',  'p' }
+
+    { 'DIAGS/hist_meas_az_p_rain2icet_lite_<CASE>.h5' '/all_ps_rain2icet'    '/all_p_ps_rain2icet_lite',    'p' }
+    { 'DIAGS/hist_meas_az_p_rain2icet_lite_<CASE>.h5' '/all_s_rain2icet'     '/all_p_s_rain2icet_lite',     'p' }
+    { 'DIAGS/hist_meas_az_p_rain2icet_lite_<CASE>.h5' '/all_nv_ps_rain2icet' '/all_p_nv_ps_rain2icet_lite', 'p' }
+    { 'DIAGS/hist_meas_az_p_rain2icet_lite_<CASE>.h5' '/all_nv_s_rain2icet'  '/all_p_nv_s_rain2icet_lite',  'p' }
+
+    { 'DIAGS/hist_meas_az_p_cld2raint_lite_<CASE>.h5' '/all_ps_cld2raint'    '/all_p_ps_cld2raint_lite',    'p' }
+    { 'DIAGS/hist_meas_az_p_cld2raint_lite_<CASE>.h5' '/all_s_cld2raint'     '/all_p_s_cld2raint_lite',     'p' }
+    { 'DIAGS/hist_meas_az_p_cld2raint_lite_<CASE>.h5' '/all_nv_ps_cld2raint' '/all_p_nv_ps_cld2raint_lite', 'p' }
+    { 'DIAGS/hist_meas_az_p_cld2raint_lite_<CASE>.h5' '/all_nv_s_cld2raint'  '/all_p_nv_s_cld2raint_lite',  'p' }
 
 %    { 'DIAGS/hist_meas_az_ice_melt_<CASE>.h5' '/all_ps_ice_melt' '/all_ps_ice_melt', 'z' }
 %    { 'DIAGS/hist_meas_az_ice_melt_<CASE>.h5' '/all_s_ice_melt'  '/all_s_ice_melt', 'z' }
