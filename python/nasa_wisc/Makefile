@@ -11,6 +11,7 @@ SCRIPTS = \
   $(DEST)/GenDomAverages.py \
   $(DEST)/GenAnimFrames.py \
   $(DEST)/GenEqMeas.py \
+  $(DEST)/GenRainDropEnergy.py \
   $(DEST)/GenProfiles.py \
   $(DEST)/GenPowerSpectra.py \
   $(DEST)/PlotSkewT.py \
