@@ -26,19 +26,21 @@ PlotList = [
 Nplots = len(PlotList)
 
 VarList = [
-    #[ 'DIAGS/dom_avg_pcprr_<SIM>.h5',      'pcprr',      [   0,  12 ], r'$PR\ (mm\ day^{-1})$', 'Prate'  ],
-    #[ 'DIAGS/dom_avg_vint_vapor_<SIM>.h5', 'vint_vapor', [   0,  60 ], r'$PW\ (mm)$',           'Pwater' ],
+    #[ 'DIAGS/dom_avg_pcprr_<SIM>.h5',      'pcprr',              [   0,  12 ],   r'$PR\ (mm\ day^{-1})$',      'Prate',     24 ],
+    #[ 'DIAGS/dom_avg_vint_vapor_<SIM>.h5', 'vint_vapor',         [   0,  60 ],   r'$PW\ (mm)$',                'Pwater',    24 ],
 
-    #[ 'DIAGS/dom_avg_sfc_lat_<SIM>.h5',  'sfc_lat',    [   0, 140 ], r'$LHF\ (W\ m^{2})$',    'Lhf'    ],
-    #[ 'DIAGS/dom_avg_sfc_sens_<SIM>.h5', 'sfc_sens',   [   0,  20 ], r'$SHF\ (W\ m^{2})$',    'Shf'    ],
+    #[ 'DIAGS/dom_avg_sfc_lat_<SIM>.h5',    'sfc_lat',            [   0, 140 ],   r'$LHF\ (W\ m^{2})$',         'Lhf',       24 ],
+    #[ 'DIAGS/dom_avg_sfc_sens_<SIM>.h5',   'sfc_sens',           [   0,  20 ],   r'$SHF\ (W\ m^{2})$',         'Shf',       24 ],
 
-    #[ 'DIAGS/dom_avg_top_lwup_<SIM>.h5', 'top_lwup',   [ 150, 350 ], r'$OLR\ (W\ m^{2})$',    'Olr'    ],
-    #[ 'DIAGS/dom_avg_top_swdn_<SIM>.h5', 'top_swdn',   [ 400, 420 ], r'$INSOLATION\ (W\ m^{2})$',    'Insol'    ],
+    #[ 'DIAGS/dom_avg_top_lwup_<SIM>.h5',   'top_lwup',           [ 150, 350 ],   r'$OLR\ (W\ m^{2})$',         'Olr',       24 ],
+    #[ 'DIAGS/dom_avg_top_swdn_<SIM>.h5',   'top_swdn',           [ 400, 420 ],   r'$INSOLATION\ (W\ m^{2})$',  'Insol',     24 ],
 
-    [ 'DIAGS/dom_avg_pi_sfc_<SIM>.h5', 'pi_sfc',   [ 1000, 1020 ], r'$PI_{sfc}\ ()$',    'PiSfc'    ],
+     [ 'DIAGS/dom_avg_pi_sfc_<SIM>.h5',     'pi_sfc',             [ 1000, 1020 ], r'$PI_{sfc}\ ()$',            'PiSfc',     24 ],
 
-    #[ 'DIAGS/eq_meas_<SIM>.h5', 'rad_flux_div',      [   0,  150 ], r'$QRAD\ (W\ m^{2})$',   'Qrad'   ],
-    #[ 'DIAGS/eq_meas_<SIM>.h5', 'therm_heat_flux',   [   0,  150 ], r'$THF\ (W\ m^{2})$',    'Thf'    ],
+    #[ 'DIAGS/eq_meas_<SIM>.h5',            'rad_flux_div',       [   0,  150 ],  r'$QRAD\ (W\ m^{2})$',        'Qrad',      24 ],
+    #[ 'DIAGS/eq_meas_<SIM>.h5',            'therm_heat_flux',    [   0,  150 ],  r'$THF\ (W\ m^{2})$',         'Thf',       24 ],
+
+     [ 'DIAGS/rain_drop_energy_<SIM>.h5',   'domain_energy_flux', [ -0.5, 0 ],    r'$Rain\ Eflux\ (W\ m^{2})$', 'RainEflux',  1 ],
     ]
 Nvars = len(VarList)
 
@@ -56,21 +58,26 @@ for iplot in range(Nplots):
     Tstart   = PlotList[iplot][3]
     Tend     = PlotList[iplot][4]
 
-    # plot config
-    Xlims = [ Tstart, Tend ]
-    T1 = Tstart * 24  # time steps are in hours
-    T2 = Tend * 24
-
     for ivar in range(Nvars):
         InFileTemplate = VarList[ivar][0]
         Var    = VarList[ivar][1]
         Ylims  = VarList[ivar][2]
         Ylabel = VarList[ivar][3]
         Oname  = VarList[ivar][4]
+        Tscale = VarList[ivar][5]  # Tscale * (time represented by one time step) = 1 day
+                                   # ie, if one time step is one hour, then Tscale is 24
 
         print("Generating plot for varialbe: {0:s}".format(Var))
 
         Vname = "/{0:s}".format(Var)
+
+        # plot config
+        Xlims = [ Tstart, Tend ]
+        T1 = Tstart * Tscale
+        T2 = Tend * Tscale
+        T = np.arange(T1, T2+1) / Tscale
+        Nt = len(T)
+        VARS = np.ones((Nsims, Nt), dtype=np.float_) * np.nan
 
         SimLegText = []
         SimColors = []
@@ -82,11 +89,6 @@ for iplot in range(Nplots):
             InFname = InFileTemplate.replace("<SIM>", Sim)
             print("  Reading: {0:s} ({1:s})".format(InFname, Vname))
             InFile = h5py.File(InFname, mode='r')
-
-            if (isim == 0):
-                T = np.arange(T1, T2+1) / 24 # convert hours to days
-                Nt = len(T)
-                VARS = np.ones((Nsims, Nt), dtype=np.float_) * np.nan
 
             IN_VAR = InFile[Vname][T1:T2+1,...]
             VarNt = len(IN_VAR)
