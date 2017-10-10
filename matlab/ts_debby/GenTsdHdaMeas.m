@@ -457,6 +457,9 @@ function [ ] = GenTsdHdaMeas()
       'Accumulated Precip Tsavg'
       {
         % SAL sample region (large)
+        { 'TsAveragedData/hda_nw_totpcp_<CASE>.h5'        '/totpcp'  '/nw_accpcp_mass'         '_h_T'  ''  '' }
+        { 'TsAveragedData/hda_nw_nstorm_totpcp_<CASE>.h5' '/totpcp'  '/nw_nstorm_accpcp_mass'  '_h_T'  ''  '' }
+
         { 'TsAveragedData/hda_nw_totpcp_<CASE>.h5'        '/totpcp'  '/nw_sum_accpcp_mass'         '_H_T'  ''  '' }
         { 'TsAveragedData/hda_nw_nstorm_totpcp_<CASE>.h5' '/totpcp'  '/nw_nstorm_sum_accpcp_mass'  '_H_T'  ''  '' }
       }
@@ -470,6 +473,9 @@ function [ ] = GenTsdHdaMeas()
         % northwest corner (SAL) sampling
         { 'TsAveragedData/hda_nw_pcprate_<CASE>.h5'         '/pcprate'  '/nw_pcprate_ts'         '_h_T'  ''  '' }
         { 'TsAveragedData/hda_nw_nstorm_pcprate_<CASE>.h5'  '/pcprate'  '/nw_nstorm_pcprate_ts'  '_h_T'  ''  '' }
+
+        { 'TsAveragedData/hda_nw_pcprate_<CASE>.h5'         '/pcprate'  '/nw_sum_pcprate_ts'         '_H_T'  ''  '' }
+        { 'TsAveragedData/hda_nw_nstorm_pcprate_<CASE>.h5'  '/pcprate'  '/nw_nstorm_sum_pcprate_ts'  '_H_T'  ''  '' }
       }
       'DIAGS/hda_meas_ts_pcprate_<CASE>.h5'
     }
@@ -479,10 +485,27 @@ function [ ] = GenTsdHdaMeas()
       'Vertically Integrated Vapor'
       {
         % SAL sample region (large)
+        { 'TsAveragedData/hda_nw_vint_vapor_<CASE>.h5'        '/vint_vapor'  '/nw_vint_vapor'         '_h_T'  ''  '' }
+        { 'TsAveragedData/hda_nw_nstorm_vint_vapor_<CASE>.h5' '/vint_vapor'  '/nw_nstorm_vint_vapor'  '_h_T'  ''  '' }
+
         { 'TsAveragedData/hda_nw_vint_vapor_<CASE>.h5'        '/vint_vapor'  '/nw_sum_vint_vapor'         '_H_T'  ''  '' }
         { 'TsAveragedData/hda_nw_nstorm_vint_vapor_<CASE>.h5' '/vint_vapor'  '/nw_nstorm_sum_vint_vapor'  '_H_T'  ''  '' }
       }
       'DIAGS/hda_meas_ts_vint_vapor_<CASE>.h5'
+    }
+
+    % latent heating flux
+    {
+      'Latent Heating flux'
+      {
+        % SAL sample region (large)
+        { 'TsAveragedData/hda_nw_lat_flux_<CASE>.h5'        '/lat_flux'  '/nw_lat_flux'         '_h_T'  ''  '' }
+        { 'TsAveragedData/hda_nw_nstorm_lat_flux_<CASE>.h5' '/lat_flux'  '/nw_nstorm_lat_flux'  '_h_T'  ''  '' }
+
+        { 'TsAveragedData/hda_nw_lat_flux_<CASE>.h5'        '/lat_flux'  '/nw_sum_lat_flux'         '_H_T'  ''  '' }
+        { 'TsAveragedData/hda_nw_nstorm_lat_flux_<CASE>.h5' '/lat_flux'  '/nw_nstorm_sum_lat_flux'  '_H_T'  ''  '' }
+      }
+      'DIAGS/hda_meas_ts_lat_flux_<CASE>.h5'
     }
 
 %    % theta_e
