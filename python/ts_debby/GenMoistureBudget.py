@@ -30,16 +30,20 @@ Tname = '/t_coords'
 
 # Input file paths, dataset names
 LatFluxFtemp = "DIAGS/hda_meas_ts_lat_flux_<SIM>.h5"
-LatFluxVname = "/nw_lat_flux"
+#LatFluxVname = "/nw_lat_flux"
+LatFluxVname = "/nw_nstorm_lat_flux"
 VintVaporFtemp  = "DIAGS/hda_meas_ts_vint_vapor_<SIM>.h5"
-VintVaporVname  = "/nw_vint_vapor"
+#VintVaporVname  = "/nw_vint_vapor"
+VintVaporVname  = "/nw_nstorm_vint_vapor"
 TotPrecipFtemp = "DIAGS/hda_meas_ts_precip_<SIM>.h5"
-TotPrecipVname = "/nw_accpcp_mass"
+#TotPrecipVname = "/nw_accpcp_mass"
+TotPrecipVname = "/nw_nstorm_accpcp_mass"
 
 # Output dataset names
 SfcMoistVname = "/sfc_moisture"
-PwaterVname = "/precipitable_water"
+PwaterVname = "/pwater"
 PrecipVname = "/precip"
+AdvectVname = "adv_in_moisture"
 
 Lv = 2.5e6  # J/kg, latent heat of vaporization for water
 
@@ -112,6 +116,9 @@ for isim in range(Nsims):
     PrecipDset = h5u.DsetCoards(PrecipVname, 1, [Nt], chunks=())
     PrecipDset.Create(Ofile)
 
+    AdvectDset = h5u.DsetCoards(AdvectVname, 1, [Nt], chunks=())
+    AdvectDset.Create(Ofile)
+
     # read in the variables and construct the moisture budget
     LatFlux = np.squeeze(LatFluxFile[LatFluxVname][...])        # W/m^2
     VintVapor = np.squeeze(VintVaporFile[VintVaporVname][...])  # kg/m^2
@@ -122,24 +129,53 @@ for isim in range(Nsims):
     VintVaporFile.close()
     TotPrecipFile.close()
 
-    # The latent heat flux can be converted to a moisture flux by dividing
-    # by Lv (latent heat of vaporization, J/kg). This yields kg/m^2/s which
-    # is an instantaneous rate. There is no way of knowing what happened in
-    # between time steps so it is not strictly valid to just multiply by the
-    # time step interval to get the amount for that time step. However, this
-    # would be a good estimate if the rate is changing smoothly between
-    # time steps (ie, in a linear fashion), and there is no reason to suspect
-    # that we are missing a periodic fluctuation in the rate (such as sampling
-    # at the same time of day on a signal that fluctuates with the diurnal cycle).
-    SfcMoist = (LatFlux / Lv ) * TimeInterval
+    # The moisture budget is given by:
+    #    PW = AdvectMoistIn + SfcMoist - Precip
+    #
+    #    AdvectMoistIn can be positive (moisture coming into the region)
+    #    or negative (moisture leaving the region)
 
-    # WARNING: PLACEHOLDERS, these need to be properly assigned
+    # These go into the budget as is
     Pwater = VintVapor
     Precip = TotPrecip
+
+    # The latent heat flux can be converted to a moisture flux by dividing
+    # by Lv (latent heat of vaporization, J/kg). This yields kg/m^2/s which
+    # is an instantaneous rate (surface moisture flux). There is no way of
+    # knowing what happened in between time steps, yet we need to
+    # reconstruct the accumulation of moisture transferred from the surface
+    # into the atmosphere.
+    #
+    # Make the assumption that the surface moisture flux (rate) is smoothly
+    # changing, and the 30 minute interval between time steps is short
+    # enough that we are not missing any periodic fluctuations (such as
+    # a diurnal cycle).
+    #
+    # Then form a representative rate between two time steps that from
+    # the average rate of the instantaneous rates at the two time steps.
+    # This representative rate can be multiplied by the time interval to
+    # yeild the incremental amount of moisture that was transferred into
+    # the atmosphere. Form the starting point, from the initial values of
+    # the precipitable water and precip amounts (assume that the contribution
+    # of advection is zero at the initial point).
+    SfcMoistFlux = (LatFlux / Lv )   # kg/m^2/s
+    AvgSfcMoistFlux = (SfcMoistFlux[:-1] + SfcMoistFlux[1:]) * 0.5
+
+    SfcMoist = np.zeros([Nt])
+    SfcMoist[0] = Pwater[0] + Precip[0]
+    for i in range(1,Nt):
+        # AvgSfcMoistFlux is length Nt-1, where the n-th element is the
+        # representative rate between SfcMoist[n-1] and SfcMoist[n]. 
+        SfcMoist[i] = SfcMoist[i-1] + (AvgSfcMoistFlux[i-1] * TimeInterval)
+
+    # The advective piece is formed as a residual in the budget.
+    AdvectMoistIn = Pwater - SfcMoist + Precip
+
 
     Ofile[SfcMoistVname][...] = SfcMoist
     Ofile[PwaterVname][...] = Pwater
     Ofile[PrecipVname][...] = Precip
+    Ofile[AdvectVname][...] = AdvectMoistIn
 
     # Attach dimensions to output datasets
     print("  Writing {0:s} ({1:s})".format(OutFname, SfcMoistVname))
@@ -148,6 +184,8 @@ for isim in range(Nsims):
     PwaterDset.AttachDims(Ofile, Tdim)
     print("  Writing {0:s} ({1:s})".format(OutFname, PrecipVname))
     PrecipDset.AttachDims(Ofile, Tdim)
+    print("  Writing {0:s} ({1:s})".format(OutFname, AdvectVname))
+    AdvectDset.AttachDims(Ofile, Tdim)
 
     print("")
 
