@@ -145,9 +145,9 @@ class FsLine:
                 print("ERROR: PlotXsection: Stopping!")
                 sys.exit(1)
         
-        # 7 panel plot
-        #   Sims on the left side, 4 panels
-        #   Factors on right side, 3 panels
+        # 2 panel plot
+        #   Sims on top
+        #   Factors on bottom
         self.Fig = plt.figure()
 
         # legeng specs
@@ -213,7 +213,7 @@ class FsLine:
         print("")
 
 
-# class for doing storm cross sections - radius vs height
+# class for doing time series
 class TimeSeries(FsLine):
     '''Class to create time series, sim/factor figure'''
 

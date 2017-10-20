@@ -69,6 +69,8 @@ VarList = [
     [ "tempk",  "/tempk",       "tempk",         "all"     ],
     [ "relhum", "/relhum",      "relhum",        "all"     ],
 
+    [ "net_rad_flux", "/column_net_rad_flx",      "net_rad_flux",        "all"     ],
+
     ] 
 Nvars = len(VarList)
 

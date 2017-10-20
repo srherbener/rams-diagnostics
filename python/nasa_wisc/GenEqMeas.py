@@ -183,6 +183,18 @@ for isim in range(Nsims):
         TempVar = ((TopSwup + TopLwup) - (TopSwdn)) - ((SfcSwup + SfcLwup) - (SfcSwdn + SfcLwdn))
         Qrad[i] = np.mean(TempVar.astype(np.float64))
 
+        AvgSfcLat[i] = np.mean(SfcLat)
+        AvgSfcSens[i] = np.mean(SfcSens)
+
+        AvgSfcSwdn[i] = np.mean(SfcSwdn)
+        AvgSfcSwup[i] = np.mean(SfcSwup)
+        AvgSfcLwdn[i] = np.mean(SfcLwdn)
+        AvgSfcLwup[i] = np.mean(SfcLwup)
+
+        AvgTopSwdn[i] = np.mean(TopSwdn)
+        AvgTopSwup[i] = np.mean(TopSwup)
+        AvgTopLwup[i] = np.mean(TopLwup)
+
         if ((i % 10) == 0):
             print("  Processing time step: {0:d}".format(i))
 
@@ -204,6 +216,18 @@ for isim in range(Nsims):
     # Build the output datasets
     WriteOutputDset(OutFname, "/therm_heat_flux", Nt, Thf, Tdim);
     WriteOutputDset(OutFname, "/rad_flux_div", Nt, Qrad, Tdim);
+
+    WriteOutputDset(OutFname, "/sfc_lat", Nt, AvgSfcLat, Tdim);
+    WriteOutputDset(OutFname, "/sfc_sens", Nt, AvgSfcSens, Tdim);
+
+    WriteOutputDset(OutFname, "/sfc_swdn", Nt, AvgSfcSwdn, Tdim);
+    WriteOutputDset(OutFname, "/sfc_swup", Nt, AvgSfcSwup, Tdim);
+    WriteOutputDset(OutFname, "/sfc_lwdn", Nt, AvgSfcLwdn, Tdim);
+    WriteOutputDset(OutFname, "/sfc_lwup", Nt, AvgSfcLwup, Tdim);
+
+    WriteOutputDset(OutFname, "/top_swdn", Nt, AvgTopSwdn, Tdim);
+    WriteOutputDset(OutFname, "/top_swup", Nt, AvgTopSwup, Tdim);
+    WriteOutputDset(OutFname, "/top_lwup", Nt, AvgTopLwup, Tdim);
 
     print("")
 
