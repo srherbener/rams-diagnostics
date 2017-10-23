@@ -3,7 +3,7 @@
 #
 
 # Change RHDF5_HOME depending on where you loaded this package
-RHDF5_HOME = $(HOME)/projects/Code/rhdf5
+RHDF5_HOME = $(HOME)/projects/Code/diagnostics/rhdf5
 
 # Install directory should be set to where you want to install
 # the resulting library and module files.

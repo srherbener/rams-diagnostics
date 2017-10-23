@@ -5,7 +5,10 @@
 # Targets
 #
 
-all: fortran/Makefile grads/Makefile idl/Makefile matlab/Makefile perl/Makefile
+all: rhdf5_install fortran/Makefile grads/Makefile idl/Makefile matlab/Makefile perl/Makefile python/Makefile utils/Makefile
+
+rhdf5_install: .FORCE
+	$(MAKE) -C rhdf5/build install
 
 %/Makefile: .FORCE
 	$(MAKE) -C $(@D)
