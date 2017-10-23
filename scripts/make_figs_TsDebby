@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+#
+# script to create figures for ATEX paper
+
+Jsize="1200x900"
+
+echo "Figure: Storm Evolution"
+montage -tile 2x2 -geometry ${Jsize}+2+100 \
+ TsDebbyTracks.jpg \
+ TsDebbyPress.jpg \
+ HovVintCond.jpg \
+ FigureStormEvolution.jpg
+
+echo "Figure: Storm Winds"
+montage -tile 3x3 -geometry ${Jsize}+2+100 \
+ WindsStream_T1.jpg \
+ PrecipRate_T1.jpg \
+ WindsVt_T1.jpg \
+ WindsStream_T2.jpg \
+ PrecipRate_T2.jpg \
+ WindsVt_T2.jpg \
+ WindsStream_T3.jpg \
+ PrecipRate_T3.jpg \
+ WindsVt_T3.jpg \
+ FigureStormWinds.jpg
+

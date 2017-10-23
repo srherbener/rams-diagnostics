@@ -1,0 +1,4 @@
+# script to unpack source archive from running build_src_archive on scud
+
+tar xvzf rams.scud.tar.gz
+find bin DataSources src | xargs touch

@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+#
+# script to generate a simple index.html file that shows links to all of the files
+# and directories in the current directory
+#
+
+{
+# write out the standard header information
+echo "<html>"
+echo "<head>"
+echo "<title>${PWD}</title>"
+echo "</head>"
+echo "<body>"
+echo ""
+
+# create bulleted lists that contain one entry per directory/file
+# in the current directory with a link to each
+# use the 'find' command to separate out directories from files
+#   '--maxdepth 0' says to not recurse through the subdirectories
+
+# directories
+echo "<h1>Directories:</h1>"
+echo "<ul>"
+for file in $(find * -maxdepth 0 -type d)
+do
+  # the output from this script will get redirected into the file
+  # index.html, so skip the link to index.html
+  if [[ "$file" != "index.html" ]]
+  then
+    echo "  <li><a href=./${file}>${file}</a></li>"
+  fi
+done
+echo "</ul>"
+echo ""
+
+# files
+echo "<h1>Files:</h1>"
+echo "<ul>"
+for file in $(find * -maxdepth 0 -type f)
+do
+  # the output from this script will get redirected into the file
+  # index.html, so skip the link to index.html
+  if [[ "$file" != "index.html" ]]
+  then
+    echo "  <li><a href=./${file}>${file}</a></li>"
+  fi
+done
+echo "</ul>"
+echo ""
+
+# write out the standard trailer commands
+echo "</body>"
+echo "</html>"
+} > index.html

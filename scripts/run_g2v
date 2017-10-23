@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+#
+# This script assumes you are in a directory with GRADS and V5D subdirectories.
+#
+
+numLevels=24
+
+for gradsFile in $(/bin/ls GRADS/*.ctl)
+do
+  vis5dFile="V5D/$(basename $gradsFile)"
+  vis5dFile="${vis5dFile%%.ctl}.v5d"
+
+  gradsVar="$(basename $gradsFile)"
+  gradsVar="${gradsVar%%-*}"
+
+  echo "Converting GRADS variable: $gradsVar"
+  grads2vis5d $gradsFile $vis5dFile $numLevels
+  echo
+done

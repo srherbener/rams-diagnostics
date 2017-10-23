@@ -1,0 +1,11 @@
+# There seems to be an issue with enscript/lp/lpr printing to lion with the duplex
+# mode enabled. When duplex is enabled the job gets stuck waiting for the manual paper
+# feed (tray 1) to get loaded. When duplex mode is disabled, then the job goes to tray 2
+# and does not get stuck.
+#
+# I've tried many things to get the job to go to tray 2 but no success. The only thing
+# that seems to be paid attention to is whether or not duplex mode is enabled.
+#
+# For this reason direct the output to zebra instead.
+
+enscript --columns=2 --fancy-header --landscape -DDuplex:true --printer=Xerox_Phaser_3600__zebra_ $1

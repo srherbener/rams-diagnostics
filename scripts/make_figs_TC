@@ -1,0 +1,173 @@
+#!/usr/bin/env bash
+#
+# script to create figures for AIE - TC paper
+
+Jsize="1200x900"
+Jinc="+0+15"
+
+# Figure 1: RAMS grids
+echo "Figure 1"
+montage -tile 1x1 -geometry ${Jsize} RamsGrids.jpg Figure1.jpg
+
+# Figure 2: Control sim
+echo "Figure 2"
+montage -tile 2x2 -geometry ${Jsize}${Jinc} \
+ InitVortex.jpg \
+ AerosolLoc.jpg \
+ AerosolProfiles.jpg \
+ ControlVtSpl_s10.jpg \
+ Figure2.jpg
+
+# Figure 3: KE-Vt above RMW
+echo "Figure 3"
+montage -tile 2x2 -geometry ${Jsize}${Jinc} \
+ KeV_s10.jpg \
+ TS_rmw_s10.jpg \
+ TS_r34kt_s10.jpg \
+ TS_MinSLP.jpg \
+ Figure3.jpg
+
+# Figure 4: EOF in first column, VintCond in second column
+echo "Figure 4"
+montage -tile 2x2 -geometry ${Jsize}${Jinc} \
+ EOF1_theta_e_TCS_SD_C2000.jpg \
+ vint_cond_TCS_SD_C0100.jpg \
+ Blank.jpg \
+ vint_cond_TCS_SD_C2000.jpg \
+ Figure4.jpg
+
+## Figure 5: storm core: cloud num conc in first column, cloud mean diam in second column
+#echo "Figure 5"
+#montage -tile 2x2 -geometry ${Jsize}${Jinc} \
+# pts_cloud_cm3_SC_LC_TCS_SD_C0100.jpg \
+# pts_cloud_d_SC_LC_TCS_SD_C0100.jpg \
+# pts_cloud_cm3_SC_LC_TCS_SD_C2000.jpg \
+# pts_cloud_d_SC_LC_TCS_SD_C2000.jpg \
+# Figure5.jpg
+
+# Figure 5: storm core: cloud num conc in first column, cloud mean diam in second column
+echo "Figure 5"
+montage -tile 2x3 -geometry ${Jsize}${Jinc} \
+ pts_cloud_c0p01_diff_SC_LC_TCS_SD_C2000.jpg \
+ prof_cloud_c0p01_SC_LC.jpg \
+ pts_cloud_cm3_c0p01_diff_SC_LC_TCS_SD_C2000.jpg \
+ prof_cloud_cm3_c0p01_SC_LC.jpg \
+ pts_cloud_d_c0p01_diff_SC_LC_TCS_SD_C2000.jpg \
+ prof_cloud_d_c0p01_SC_LC.jpg \
+ Figure5.jpg
+
+# Figure 6: storm core: latent heat in first column, w in second column
+echo "Figure 6"
+montage -tile 2x3 -geometry ${Jsize}${Jinc} \
+ prs_lh_tott_diff_c0p01_SC_SS_TCS_SD_C2000.jpg \
+ prs_w_diff_c0p01_SC_SS_TCS_SD_C2000.jpg \
+ prof_lh_tott_c0p01_SC_SS.jpg \
+ prof_w_c0p01_SC_SS.jpg \
+ prof_lh_tott_diff_c0p01_SC_SS.jpg \
+ prof_w_diff_c0p01_SC_SS.jpg \
+ Figure6.jpg
+
+# Figure 7: storm core: relative vorticity
+echo "Figure 7"
+montage -tile 1x3 -geometry ${Jsize}${Jinc} \
+ prs_relvortz_rvz1em4_SC_SS_TCS_SD_C0100.jpg \
+ prs_relvortz_rvz1em4_SC_SS_TCS_SD_C2000.jpg \
+ prs_relvortz_rvz1em4_diff_SC_SS_TCS_SD_C2000.jpg \
+ Figure7.jpg
+
+# Figure 8: rainbands, profiles
+echo "Figure 8"
+montage -tile 2x3 -geometry ${Jsize}${Jinc} \
+ prof_theta_e_diff_RB_SS.jpg \
+ prof_theta_diff_RB_SS.jpg \
+ prof_vapor_diff_RB_SS.jpg \
+ prof_w_diff_RB_SS.jpg \
+ TS_DeltapAll_SC_RB.jpg \
+ Blank.jpg \
+ Figure8.jpg
+
+# Figure 9: compare core and rainbands, dynamic response
+echo "Figure 9"
+montage -tile 1x2 -geometry ${Jsize}${Jinc} \
+ pts_w_diff_SC_LC_TCS_SD_C2000.jpg \
+ pts_w_diff_RB_LC_TCS_SD_C2000.jpg \
+ Figure9.jpg
+
+# Figure 10: destructive potential
+#echo "Figure 10"
+#montage -tile 1x2 -geometry ${Jsize} \
+# R_V10m_All_SS_ext.jpg \
+# R_V10m_Peak_SS_ext.jpg \
+# Figure10.jpg
+
+# Figure 10: schematic
+echo "Figure 10"
+montage -tile 2x2 -geometry ${Jsize}${Jinc} \
+ Slide1.jpg \
+ Slide2.jpg \
+ Blank.jpg \
+ Slide3.jpg \
+ Figure10.jpg
+
+# For reviewer
+echo "Figure: Aerosol concentration"
+montage -tile 2x1 -geometry ${Jsize}${Jinc} \
+ prof_ccn_conc_SC_LC.jpg \
+ prof_ccn_conc_SC_LC_LowLevel.jpg \
+ FigureAeroConc.jpg
+
+# For danny
+echo "Figure: low-level cloud properties"
+montage -tile 1x3 -geometry ${Jsize}${Jinc} \
+ prof_cloud_c0p01_SC_LC_LowLevel.jpg \
+ prof_cloud_cm3_c0p01_SC_LC_LowLevel.jpg \
+ prof_cloud_d_c0p01_SC_LC_LowLevel.jpg \
+ FigureLowLevelCloudProps.jpg
+
+echo "Figure: Azavg Liq"
+montage -tile 2x3 -geometry ${Jsize}${Jinc} \
+ AzavgLiqMixRatio_T48_TCS_SD_C0100.jpg \
+ AzavgLiqMixRatio_T48_TCS_SD_C2000.jpg \
+ AzavgLiqMixRatio_T72_TCS_SD_C0100.jpg \
+ AzavgLiqMixRatio_T72_TCS_SD_C2000.jpg \
+ AzavgLiqMixRatio_T96_TCS_SD_C0100.jpg \
+ AzavgLiqMixRatio_T96_TCS_SD_C2000.jpg \
+ FigureAzavgLiqMixRatio.jpg
+
+echo "Figure: Azavg Ice"
+montage -tile 2x3 -geometry ${Jsize}${Jinc} \
+ AzavgIceMixRatio_T48_TCS_SD_C0100.jpg \
+ AzavgIceMixRatio_T48_TCS_SD_C2000.jpg \
+ AzavgIceMixRatio_T72_TCS_SD_C0100.jpg \
+ AzavgIceMixRatio_T72_TCS_SD_C2000.jpg \
+ AzavgIceMixRatio_T96_TCS_SD_C0100.jpg \
+ AzavgIceMixRatio_T96_TCS_SD_C2000.jpg \
+ FigureAzavgIceMixRatio.jpg
+
+echo "Figure: Radar Reflectivity"
+montage -tile 3x2 -geometry ${Jsize}${Jinc} \
+ RadarReflect_T48_TCS_SD_C0100.jpg \
+ RadarReflect_T72_TCS_SD_C0100.jpg \
+ RadarReflect_T96_TCS_SD_C0100.jpg \
+ RadarReflect_T48_TCS_SD_C2000.jpg \
+ RadarReflect_T72_TCS_SD_C2000.jpg \
+ RadarReflect_T96_TCS_SD_C2000.jpg \
+ FigureRadarReflect.jpg
+
+echo "Figure: Hurricane Radar Examples"
+montage -tile 2x2 -geometry ${Jsize}${Jinc} \
+ HugoAirborneRadar.jpg \
+ OliviaAirborneDoppler.gif \
+ EarlRadar.png \
+ RitaAirborneRadar.jpeg \
+ FigureHurricaneRadarExamples.jpg
+
+echo "Figure: Radial cross-section of CCN"
+montage -tile 3x2 -geometry ${Jsize}${Jinc} \
+ CcnConc_T48_TCS_SD_C0100.jpg \
+ CcnConc_T72_TCS_SD_C0100.jpg \
+ CcnConc_T96_TCS_SD_C0100.jpg \
+ CcnConcHigh_T48_TCS_SD_C2000.jpg \
+ CcnConcHigh_T72_TCS_SD_C2000.jpg \
+ CcnConcHigh_T96_TCS_SD_C2000.jpg \
+ FigureCcnRadialXsection.jpg

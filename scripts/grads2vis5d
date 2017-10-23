@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+#
+# script to convert a GRADS file to a vis5d file
+#
+# args
+#  1. GRADS control file
+#  2. vis5d output file
+#
+
+gradsFile=$1
+vis5dFile=$2
+numLevels=$3
+
+echo "Converting $1 (GRADS) to $2 (vis5d), number of levels: $numLevels"
+
+v5dimport -t $gradsFile <<EOF
+levels $numLevels
+make $vis5dFile
+quit
+EOF
+
