@@ -2,10 +2,9 @@
 AC_INIT([rams-diagnostics], [1.0.0], [stephen.herbener@gmail.com])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 #AC_CONFIG_SRCDIR([scripts/shell/make_anim_file])
-AC_CONFIG_HEADERS([config.h])
-
+AC_CONFIG_HEADERS([config.h]) 
 # Set the default prefix to the user's home directory
-AC_PREFIX_DEFAULT([$(HOME)])
+AC_PREFIX_DEFAULT([$HOME])
 
 # Checks for programs.
 AC_PROG_CC
@@ -34,5 +33,14 @@ AC_PROG_CC
 
 AC_CONFIG_FILES([Makefile
                  scripts/Makefile
-                 scripts/shell/Makefile])
+                 scripts/shell/Makefile
+                 scripts/perl/Makefile
+                 scripts/idl/Makefile
+                 scripts/matlab/Makefile
+                 scripts/matlab/atex/Makefile
+                 scripts/python/common/Makefile
+                 scripts/python/nasa_wisc/Makefile
+                 scripts/python/ts_debby/Makefile
+                 scripts/python/tutorial/Makefile
+                 scripts/python/Makefile])
 AC_OUTPUT
