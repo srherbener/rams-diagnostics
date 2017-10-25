@@ -32,15 +32,31 @@ AC_PROG_CC
 #AC_CHECK_FUNCS([floor gettimeofday mkdir sqrt])
 
 AC_CONFIG_FILES([Makefile
+                 lib/Makefile
+                 lib/perl/Makefile
                  scripts/Makefile
                  scripts/shell/Makefile
                  scripts/perl/Makefile
                  scripts/idl/Makefile
                  scripts/matlab/Makefile
                  scripts/matlab/atex/Makefile
+                 scripts/matlab/atex2/Makefile
+                 scripts/matlab/common/Makefile
+                 scripts/matlab/ideal_etc/Makefile
+                 scripts/matlab/m_map/Makefile
+                 scripts/matlab/metpack/Makefile
+                 scripts/matlab/nasa_wisc/Makefile
+                 scripts/matlab/nctoolbox/Makefile
+                 scripts/matlab/obj_anal/Makefile
+                 scripts/matlab/pivmat/Makefile
+                 scripts/matlab/tc_seed/Makefile
+                 scripts/matlab/tempest/Makefile
+                 scripts/matlab/ts_debby/Makefile
+                 scripts/matlab/vapor/Makefile
                  scripts/python/common/Makefile
                  scripts/python/nasa_wisc/Makefile
                  scripts/python/ts_debby/Makefile
                  scripts/python/tutorial/Makefile
                  scripts/python/Makefile])
 AC_OUTPUT
+
