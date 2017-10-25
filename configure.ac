@@ -7,21 +7,24 @@ AC_CONFIG_HEADERS([config.h])
 AC_PREFIX_DEFAULT([$HOME])
 
 # Checks for programs.
-AC_PROG_CC
+AC_PROG_CC([gcc])
+AC_PROG_FC([pgf90])
+AM_PROG_AR
+AC_PROG_RANLIB
 
 # Checks for libraries.
-#AC_CHECK_LIB([c], [_dl_start])
-#AC_CHECK_LIB([dl], [dlopen])
-#AC_CHECK_LIB([gcc_eh], [_Unwind_Backtrace])
-#AC_CHECK_LIB([hdf5], [H5open])
-#AC_CHECK_LIB([hdf5_hl], [H5DOread_chunk])
-#AC_CHECK_LIB([m], [__ieee754_log])
-#AC_CHECK_LIB([pthread], [__pthread_initialize_minimal])
-#AC_CHECK_LIB([sz], [szip_check_params])
-#AC_CHECK_LIB([z], [compress])
+AC_CHECK_LIB([c], [close], [], [AC_MSG_ERROR([Unable to find library: libc])])
+AC_CHECK_LIB([dl], [dlopen], [], [AC_MSG_ERROR([Unable to find library: libdl])])
+AC_CHECK_LIB([sz], [szip_check_params], [], [AC_MSG_ERROR([Unable to find library: libsz])])
+AC_CHECK_LIB([z], [compress], [], [AC_MSG_ERROR([Unable to find library: libz])])
+AC_CHECK_LIB([m], [cos], [], [AC_MSG_ERROR([Unable to find library: libm])])
+AC_CHECK_LIB([pthread], [pthread_create], [], [AC_MSG_ERROR([Unable to find library: libpthread])])
+AC_CHECK_LIB([hdf5], [H5open], [], [AC_MSG_ERROR([Unable to find library: libhdf5])])
+AC_CHECK_LIB([hdf5_hl], [H5LTmake_dataset_float], [], [AC_MSG_ERROR([Unable to find library: libhdf5_hl])])
 
 # Checks for header files.
-#AC_CHECK_HEADERS([string.h sys/time.h])
+AC_CHECK_HEADERS([string.h sys/time.h], [], [AC_MSG_ERROR([Unable to find include files: string.h, ssy/tim.h])])
+AC_CHECK_HEADERS([hdf5.h], [], [AC_MSG_ERROR([Unable to find include file: hdf5.h])])
 
 # Checks for typedefs, structures, and compiler characteristics.
 #AC_CHECK_HEADER_STDBOOL
@@ -33,6 +36,8 @@ AC_PROG_CC
 
 AC_CONFIG_FILES([Makefile
                  lib/Makefile
+                 lib/rhdf5/Makefile
+                 lib/diag_utils/Makefile
                  lib/perl/Makefile
                  scripts/Makefile
                  scripts/shell/Makefile
