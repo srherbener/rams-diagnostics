@@ -1,1 +1,1 @@
-SUBDIRS = lib scripts
+SUBDIRS = src

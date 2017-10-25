@@ -1,7 +1,7 @@
 matnctbdir = $(prefix)/etc/matlab
 matnctb_SCRIPTS = nctoolbox
 
-NCTB_TARFILE = nctoolbox-20130305.tar.gz
+NCTB_TARFILE = $(srcdir)/nctoolbox-20130305.tar.gz
 
 # use nctoolbox/README as a target to make sure the tar file gets unpacked
 nctoolbox: nctoolbox/README $(NCTB_TARFILE)

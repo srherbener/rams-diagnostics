@@ -1,8 +1,15 @@
 # Process this file with autoconf to produce a configure script.
 AC_INIT([rams-diagnostics], [1.0.0], [stephen.herbener@gmail.com])
+
+# Place autotools files in subdirectories (help for cleaning up later on)
+AC_CONFIG_AUX_DIR([bin])
+
+# Building a foriegn (non-GNU structure) directory structure
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
-#AC_CONFIG_SRCDIR([scripts/shell/make_anim_file])
+
+AC_CONFIG_SRCDIR([src/scripts/shell/make_anim_file])
 AC_CONFIG_HEADERS([config.h]) 
+
 # Set the default prefix to the user's home directory
 AC_PREFIX_DEFAULT([$HOME])
 
@@ -34,34 +41,37 @@ AC_CHECK_HEADERS([hdf5.h], [], [AC_MSG_ERROR([Unable to find include file: hdf5.
 #AC_FUNC_MALLOC
 #AC_CHECK_FUNCS([floor gettimeofday mkdir sqrt])
 
+#AC_CONFIG_FILES([Makefile
+#                 lib/Makefile
+#                 lib/rhdf5/Makefile
+#                 lib/diag_utils/Makefile
+#                 lib/perl/Makefile
 AC_CONFIG_FILES([Makefile
-                 lib/Makefile
-                 lib/rhdf5/Makefile
-                 lib/diag_utils/Makefile
-                 lib/perl/Makefile
-                 scripts/Makefile
-                 scripts/shell/Makefile
-                 scripts/perl/Makefile
-                 scripts/idl/Makefile
-                 scripts/matlab/Makefile
-                 scripts/matlab/atex/Makefile
-                 scripts/matlab/atex2/Makefile
-                 scripts/matlab/common/Makefile
-                 scripts/matlab/ideal_etc/Makefile
-                 scripts/matlab/m_map/Makefile
-                 scripts/matlab/metpack/Makefile
-                 scripts/matlab/nasa_wisc/Makefile
-                 scripts/matlab/nctoolbox/Makefile
-                 scripts/matlab/obj_anal/Makefile
-                 scripts/matlab/pivmat/Makefile
-                 scripts/matlab/tc_seed/Makefile
-                 scripts/matlab/tempest/Makefile
-                 scripts/matlab/ts_debby/Makefile
-                 scripts/matlab/vapor/Makefile
-                 scripts/python/common/Makefile
-                 scripts/python/nasa_wisc/Makefile
-                 scripts/python/ts_debby/Makefile
-                 scripts/python/tutorial/Makefile
-                 scripts/python/Makefile])
+                 src/Makefile
+                 src/scripts/Makefile
+                 src/scripts/perl/Makefile
+                 src/scripts/shell/Makefile
+                 src/scripts/idl/Makefile
+                 src/scripts/matlab/Makefile
+                 src/scripts/matlab/atex/Makefile
+                 src/scripts/matlab/atex2/Makefile
+                 src/scripts/matlab/common/Makefile
+                 src/scripts/matlab/ideal_etc/Makefile
+                 src/scripts/matlab/m_map/Makefile
+                 src/scripts/matlab/metpack/Makefile
+                 src/scripts/matlab/nasa_wisc/Makefile
+                 src/scripts/matlab/nctoolbox/Makefile
+                 src/scripts/matlab/obj_anal/Makefile
+                 src/scripts/matlab/pivmat/Makefile
+                 src/scripts/matlab/tc_seed/Makefile
+                 src/scripts/matlab/tempest/Makefile
+                 src/scripts/matlab/ts_debby/Makefile
+                 src/scripts/matlab/vapor/Makefile
+                 src/scripts/python/common/Makefile
+                 src/scripts/python/nasa_wisc/Makefile
+                 src/scripts/python/ts_debby/Makefile
+                 src/scripts/python/tutorial/Makefile
+                 src/scripts/python/Makefile])
+
 AC_OUTPUT
 

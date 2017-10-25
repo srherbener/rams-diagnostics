@@ -11,3 +11,7 @@ bin_SCRIPTS = \
     run_hdata_op \
     run_sub_vortex \
     run_tsavg
+
+perllibdir = $(prefix)/etc/perl
+perllib_SCRIPTS = \
+    DiagUtils.pm
