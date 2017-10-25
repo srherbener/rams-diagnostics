@@ -41,11 +41,6 @@ AC_CHECK_HEADERS([hdf5.h], [], [AC_MSG_ERROR([Unable to find include file: hdf5.
 #AC_FUNC_MALLOC
 #AC_CHECK_FUNCS([floor gettimeofday mkdir sqrt])
 
-#AC_CONFIG_FILES([Makefile
-#                 lib/Makefile
-#                 lib/rhdf5/Makefile
-#                 lib/diag_utils/Makefile
-#                 lib/perl/Makefile
 AC_CONFIG_FILES([Makefile
                  src/Makefile
                  src/scripts/Makefile
@@ -71,7 +66,12 @@ AC_CONFIG_FILES([Makefile
                  src/scripts/python/nasa_wisc/Makefile
                  src/scripts/python/ts_debby/Makefile
                  src/scripts/python/tutorial/Makefile
-                 src/scripts/python/Makefile])
+                 src/scripts/python/Makefile
+                 src/libraries/Makefile
+                 src/libraries/getoptions/Makefile
+                 src/libraries/rhdf5/Makefile
+                 src/libraries/diag_utils/Makefile])
+
 
 AC_OUTPUT
 
