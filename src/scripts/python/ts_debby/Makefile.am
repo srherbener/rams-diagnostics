@@ -1,5 +1,5 @@
 pytsdebbydir = $(prefix)/etc/python/ts_debby
-pytsdebby_SCRIPTS = \
+dist_pytsdebby_SCRIPTS = \
     ConfigTsd.py \
     FsFigContour.py \
     FsFigLine.py \

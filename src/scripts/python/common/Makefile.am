@@ -1,5 +1,5 @@
 pycommondir = $(prefix)/etc/python/common
-pycommon_SCRIPTS = \
+dist_pycommon_SCRIPTS = \
     GenThermoVars.py \
     GetDiskUsage.py \
     Hdf5Utils.py \

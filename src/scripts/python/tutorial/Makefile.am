@@ -1,5 +1,5 @@
 pytutorialdir = $(prefix)/etc/python/tutorial
-pytutorial_SCRIPTS = \
+dist_pytutorial_SCRIPTS = \
     hdf5.py \
     hello.py \
     hgts_1000mb_map.py \

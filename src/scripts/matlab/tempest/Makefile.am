@@ -1,5 +1,5 @@
 mattempestdir = $(prefix)/etc/matlab/tempest
-mattempest_SCRIPTS = \
+dist_mattempest_SCRIPTS = \
     DiagConfig \
     GenPcp2d.m \
     GenTotPcp.m \

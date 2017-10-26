@@ -20,4 +20,4 @@ case $(hostname) in
 esac
 
 # Run configure with the hints to the location of the HDF5 installation
-../configure LDFLAGS="-L$HDF5_ROOT/lib" CPPFLAGS="-I$HDF5_ROOT/include"
+./configure LDFLAGS="-L$HDF5_ROOT/lib" CPPFLAGS="-I$HDF5_ROOT/include"

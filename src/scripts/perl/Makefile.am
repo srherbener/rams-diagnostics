@@ -1,4 +1,4 @@
-bin_SCRIPTS = \
+dist_bin_SCRIPTS = \
     run_azavg \
     run_diag_filter \
     run_gen_adv \
@@ -13,5 +13,5 @@ bin_SCRIPTS = \
     run_tsavg
 
 perllibdir = $(prefix)/etc/perl
-perllib_SCRIPTS = \
+dist_perllib_SCRIPTS = \
     DiagUtils.pm

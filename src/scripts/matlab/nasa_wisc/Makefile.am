@@ -1,5 +1,5 @@
 matnasawiscdir = $(prefix)/etc/matlab/nasa_wisc
-matnasawisc_SCRIPTS =  \
+dist_matnasawisc_SCRIPTS =  \
     DiagConfig \
     ExtractSampleProfiles.m \
     FigLatHeatProfileConfig \

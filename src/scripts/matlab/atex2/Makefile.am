@@ -1,5 +1,5 @@
 matatex2dir = $(prefix)/etc/matlab/atex2
-matatex2_SCRIPTS = \
+dist_matatex2_SCRIPTS = \
     FigBarGraphs_Config \
     FigBlStats_Config \
     FigMicrophysicsS293_Config \

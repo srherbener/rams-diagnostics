@@ -1,5 +1,5 @@
 mattsdebbydir = $(prefix)/etc/matlab/ts_debby
-mattsdebby_SCRIPTS = \
+dist_mattsdebby_SCRIPTS = \
     ExtractHorizWinds.m \
     ExtractSampleProfile.m \
     FigDust1NumXsectionConfig \

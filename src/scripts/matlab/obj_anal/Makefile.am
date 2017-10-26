@@ -1,5 +1,5 @@
 matobjanaldir = $(prefix)/etc/matlab/obj_anal
-matobjanal_SCRIPTS = \
+dist_matobjanal_SCRIPTS = \
     CompositeEiTemp.m \
     CovNan.m \
     Create2dMap.m \

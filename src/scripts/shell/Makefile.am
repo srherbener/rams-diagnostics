@@ -1,4 +1,4 @@
-bin_SCRIPTS = \
+dist_bin_SCRIPTS = \
     gen_html_index \
     grads2vis5d \
     lp1 \

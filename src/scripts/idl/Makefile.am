@@ -1,5 +1,5 @@
 myidldir = $(prefix)/etc/idl
-myidl_SCRIPTS = \
+dist_myidl_SCRIPTS = \
     do_plots.pro \
     plot_h_integral.pro \
     plot_intensity.pro \
@@ -7,3 +7,4 @@ myidl_SCRIPTS = \
     plot_utils.pro \
     read_grads.pro \
     read_revu_hdf5_var.pro
+

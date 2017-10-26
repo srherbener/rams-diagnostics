@@ -1,7 +1,9 @@
+PM_TARFILE = $(srcdir)/pivmat.tar.gz
+
 matpivmatdir = $(prefix)/etc/matlab
 matpivmat_SCRIPTS = pivmat
 
-PM_TARFILE = $(srcdir)/pivmat.tar.gz
+EXTRA_DIST = $(PM_TARFILE)
 
 # use pivmat/_readmefirst_.txt as a target so that the tar file will get unpacked
 pivmat: pivmat/_readmefirst_.txt $(PM_TARFILE)

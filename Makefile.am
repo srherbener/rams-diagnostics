@@ -1,1 +1,3 @@
+EXTRA_DIST = README
+
 SUBDIRS = src

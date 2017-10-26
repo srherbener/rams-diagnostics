@@ -1,5 +1,5 @@
 pynasawiscdir = $(prefix)/etc/python/nasa_wisc
-pynasawisc_SCRIPTS = \
+dist_pynasawisc_SCRIPTS = \
     ConfigRce.py \
     ExtractRceLiteVars.py \
     GenAnimFrames.py \

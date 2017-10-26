@@ -1,5 +1,5 @@
 matmetpackdir = $(prefix)/etc/matlab/metpack
-matmetpack_SCRIPTS =  \
+dist_matmetpack_SCRIPTS =  \
     getcape.m \
     lcl.m \
     read_example_soundings.m \

@@ -1,5 +1,5 @@
 matcommondir = $(prefix)/etc/matlab/common
-matcommon_SCRIPTS = \
+dist_matcommon_SCRIPTS = \
     AdiffEofPlot.m \
     AssociateStructs.m \
     AttachDimensionsXyzt.m \

@@ -1,5 +1,5 @@
 mattcseeddir = $(prefix)/etc/matlab/tc_seed
-mattcseed_SCRIPTS = \
+dist_mattcseed_SCRIPTS = \
     AerosolAnimation.m \
     CCN_GifAnim.m \
     CWP_GifAnim.m \

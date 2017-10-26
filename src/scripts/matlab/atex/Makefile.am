@@ -1,5 +1,5 @@
 matatexdir = $(prefix)/etc/matlab/atex
-matatex_SCRIPTS = \
+dist_matatex_SCRIPTS = \
     CombineStCloudTypes.m \
     ExtractSample.m \
     GenAlbedo.m \
