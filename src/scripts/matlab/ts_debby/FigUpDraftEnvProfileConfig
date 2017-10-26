@@ -1,0 +1,144 @@
+#
+# Cross section diagrams
+#
+
+######### FIGURES ###################
+Figure: UpDraftEnvProfile 4
+  DummyCases
+  [2_2]
+  Plots/FigUpDraftEnvProfile.jpg
+  UpDraftCntlPreSalEnvPanel  1
+  UpDraftCntlSalEnvPanel     2
+  UpDraftDiffPreSalEnvPanel  3
+  UpDraftDiffSalEnvPanel     4
+End 
+
+########### CASES ####################
+CaseSet: DummyCases 1
+  Dummy
+End
+
+########### PANELS ####################
+FigPanel: UpDraftCntlPreSalEnvPanel
+  UpDraftCntlPreSalEnvPset
+  UpDraftCntlPreSalEnvAxes 1 1
+  none 5
+  Pre@SAL@Env 
+  NorthEast 12
+End
+
+FigPanel: UpDraftDiffPreSalEnvPanel
+  UpDraftDiffPreSalEnvPset
+  UpDraftDiffPreSalEnvAxes 1 1
+  none 5
+  Pre@SAL@Env@(diffs)
+  SouthWest 12
+End
+
+FigPanel: UpDraftCntlSalEnvPanel
+  UpDraftCntlSalEnvPset
+  UpDraftCntlSalEnvAxes 1 1
+  none 5
+  SAL@Env 
+  NorthEast 12
+End
+
+FigPanel: UpDraftDiffSalEnvPanel
+  UpDraftDiffSalEnvPset
+  UpDraftDiffSalEnvAxes 1 1
+  none 5
+  SAL@Env@(diffs)
+  SouthEast 12
+End
+
+############ PLOT SETS #################
+PlotSet: UpDraftCntlPreSalEnvPset line 4
+  UpDraftPreSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  UpDraftPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  UpDraftPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  UpDraftPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: UpDraftDiffPreSalEnvPset line 4
+  UpDraftDiffPreSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  UpDraftDiffPreSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  UpDraftDiffPreSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  UpDraftDiffPreSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: UpDraftCntlSalEnvPset line 4
+  UpDraftSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  UpDraftSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  UpDraftSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  UpDraftSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+PlotSet: UpDraftDiffSalEnvPset line 4
+  UpDraftDiffSalEnvLine TSD_SAL_DUST SD  2 black   - 0
+  UpDraftDiffSalEnvLine TSD_SAL_NODUST    SND  2 blue   - 0
+  UpDraftDiffSalEnvLine TSD_NONSAL_DUST   NSD  2 red    - 0
+  UpDraftDiffSalEnvLine TSD_NONSAL_NODUST NSND 2 green  - 0
+End
+
+############ PLOT DATA #################
+PlotData: UpDraftPreSalEnvLine 2
+  # x data - updraft, m/s
+  /ps_env_updraft DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: UpDraftSalEnvLine 2
+  # x data - updraft, m/s
+  /s_env_updraft DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: UpDraftDiffPreSalEnvLine 2
+  # x data - updraft, m/s
+  /ps_env_updraft_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+PlotData: UpDraftDiffSalEnvLine 2
+  # x data - updraft, m/s
+  /s_env_updraft_diff DIAGS/storm_profiles_<CASE>.h5 @ 1 0
+  # y data - height, km
+  /z_coords DIAGS/storm_profiles_<CASE>.h5 @ 1e-3 0
+End
+  
+############ PLOT AXES #################
+PlotAxes: UpDraftCntlPreSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - updraft, m/s
+  UpDraft m@s^-^1 -0.01 0.2 linear [_] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+End
+
+PlotAxes: UpDraftDiffPreSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - updraft, m/s
+  UpDraft m@s^-^1 -0.1 0.05 linear [_] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+End
+
+PlotAxes: UpDraftCntlSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - updraft, m/s
+  UpDraft m@s^-^1 -0.01 0.2 linear [_] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+End
+
+PlotAxes: UpDraftDiffSalEnvAxes 2
+  14 2 [0.025_0.025]
+  # x axis - updraft, m/s
+  UpDraft m@s^-^1 -0.05 0.1 linear [_] {_}
+  # y axis - height, km
+  Height km 0 20 linear [_] {_}
+End
+

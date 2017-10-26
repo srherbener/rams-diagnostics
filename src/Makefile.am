@@ -1,1 +1,1 @@
-SUBDIRS = scripts libraries
+SUBDIRS = scripts libraries programs

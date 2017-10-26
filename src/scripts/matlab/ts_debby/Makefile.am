@@ -2,6 +2,14 @@ mattsdebbydir = $(prefix)/etc/matlab/ts_debby
 mattsdebby_SCRIPTS = \
     ExtractHorizWinds.m \
     ExtractSampleProfile.m \
+    FigDust1NumXsectionConfig \
+    FigDust2NumXsectionConfig \
+    FigRainCoreProfileConfig \
+    FigRainEnvProfileConfig \
+    FigRainRbandProfileConfig \
+    FigUpDraftCoreProfileConfig \
+    FigUpDraftEnvProfileConfig \
+    FigUpDraftRbandProfileConfig \
     FigAggrDepXsectionConfig \
     FigAggrSubXsectionConfig \
     FigBuoyXsectionConfig \
@@ -106,6 +114,7 @@ mattsdebby_SCRIPTS = \
     FigVtXsectionConfig \
     FigWindShearConfig \
     FigureConfig \
+    FixSstFiles.m \
     GenAccumSfcDust.m \
     GenAzHistSumsCounts.m \
     GenBuoyancy.m \

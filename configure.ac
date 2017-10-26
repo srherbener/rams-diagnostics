@@ -70,7 +70,9 @@ AC_CONFIG_FILES([Makefile
                  src/libraries/Makefile
                  src/libraries/getoptions/Makefile
                  src/libraries/rhdf5/Makefile
-                 src/libraries/diag_utils/Makefile])
+                 src/libraries/diag_utils/Makefile
+                 src/programs/Makefile
+                 src/programs/azavg/Makefile])
 
 
 AC_OUTPUT

@@ -1,3 +1,6 @@
+# Need this for the substitutions in rhdf5_snames.h
+AM_CFLAGS = -DPC_LINUX1
+
 rhdf5dir = $(prefix)/etc/fortran
 rhdf5_LIBRARIES = librhdf5_utils.a
 
