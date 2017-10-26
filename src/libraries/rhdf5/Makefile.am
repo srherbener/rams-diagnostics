@@ -10,4 +10,8 @@ RHDF5_MOD_FILE = rhdf5_utils.mod
 
 # Handle the module file
 install-exec-local:
+	mkdir -p $(rhdf5dir)
 	cp $(RHDF5_MOD_FILE) $(rhdf5dir)
+
+uninstall-local:
+	rm -f $(rhdf5dir)/$(RHDF5_MOD_FILE)

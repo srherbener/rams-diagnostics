@@ -7,4 +7,8 @@ GO_MOD_FILE = getoptions.mod
 
 # Handle the module file
 install-exec-local:
+	mkdir -p $(getoptionsdir)
 	cp $(GO_MOD_FILE) $(getoptionsdir)
+
+uninstall-local:
+	rm -f $(getoptionsdir)/$(GO_MOD_FILE)

@@ -12,5 +12,8 @@ DUTILS_MOD_FILE = diag_utils.mod
 
 # Handle the module file
 install-exec-local:
+	mkdir -p $(dutilsdir)
 	cp $(DUTILS_MOD_FILE) $(dutilsdir)
 
+uninstall-local:
+	rm -f $(dutilsdir)/$(DUTILS_MOD_FILE)
