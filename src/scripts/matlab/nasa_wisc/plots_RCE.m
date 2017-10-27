@@ -35,7 +35,7 @@ ttlname2=ttlname; ttlname2(ttlname=='_')='-';
 
 %RAMSdir = ['/Volumes/avalanche/ldgrant/RCE_YS/z.',ttlname,'/NOBAK/'];
 %RAMSdir = ['/Volumes/avalanche/ldgrant/rams_RCE_20150928_dev/test/z.RCE-',ttlname,'/NOBAK/'];
-RAMSdir = ['/Volumes/avalanche/sherbener/NOBAK/projects/NasaWisc/',ttlname,'/RAMS/'];
+RAMSdir = ['./SIMDATA/',ttlname,'/RAMS/'];
 %SaveDir = ['./GROW/RCE-',ttlname,'/',ftype,'files/'];
 SaveDir = ['./RCE/',ttlname,'/',ftype,'files/'];
 

@@ -29,9 +29,13 @@ SimList = [
 #    'RCE_1km_DP_IPL2',
     'RCE_3km_1mom',
     'RCE_3km_1mom_db',
+    'RCE_3km_1mom_db_udef',
+    'RCE_3km_1mom_db_rlongup',
     'RCE_3km_1mom_dm',
 #    'RCE_3km_2mom',
     'RCE_3km_2mom_db',
+    'RCE_3km_2mom_db_udef',
+    'RCE_3km_2mom_db_rlongup',
     'RCE_3km_2mom_dm',
     'RCE_3km_2mom_dm_lrz',
     ]
@@ -44,22 +48,22 @@ VarList = [
     #        "all" - use all points
     #        "ge:<val>" - use points >= to <val>
 
-#    [ "lat_flux",  "/lat_flux",  "sfc_lat",  "all" ],
-#    [ "sens_flux", "/sens_flux", "sfc_sens", "all" ],
+    [ "lat_flux",  "/lat_flux",  "sfc_lat",  "all" ],
+    [ "sens_flux", "/sens_flux", "sfc_sens", "all" ],
 
-#    [ "swdn_sfc",   "/rshort",   "sfc_swdn", "all" ],
-#    [ "swdn_sfc",   "/rshort",   "sfc_swup", "all" ],
-#    [ "lwdn_sfc",   "/rlong",    "sfc_lwdn", "all" ],
-#    [ "lwup_sfc",   "/rlongup",  "sfc_lwup", "all" ],
+    [ "swdn_sfc",   "/rshort",   "sfc_swdn", "all" ],
+    [ "swdn_sfc",   "/rshort",   "sfc_swup", "all" ],
+    [ "lwdn_sfc",   "/rlong",    "sfc_lwdn", "all" ],
+    [ "lwup_sfc",   "/rlongup",  "sfc_lwup", "all" ],
 
-#    [ "swdn_toa",  "/swdn",  "top_swdn", "all" ],
-#    [ "swup_toa",  "/swup",  "top_swup", "all" ],
-#    [ "lwup_toa",  "/lwup",  "top_lwup", "all" ],
+    [ "swdn_toa",  "/swdn",  "top_swdn", "all" ],
+    [ "swup_toa",  "/swup",  "top_swup", "all" ],
+    [ "lwup_toa",  "/lwup",  "top_lwup", "all" ],
 
-#    [ "pcprr",      "/pcprr",         "pcprr",         "all"     ],
-#    [ "vint_vapor", "/vertint_vapor", "vint_vapor",    "all"     ],
-#    [ "vint_vapor", "/vertint_vapor", "vint_vapor_01", "ge:0.01" ],
-#    [ "pi_sfc",     "/pi",            "pi_sfc",        "all" ],
+    [ "pcprr",      "/pcprr",         "pcprr",         "all"     ],
+    [ "vint_vapor", "/vertint_vapor", "vint_vapor",    "all"     ],
+    [ "vint_vapor", "/vertint_vapor", "vint_vapor_01", "ge:0.01" ],
+    [ "pi_sfc",     "/pi",            "pi_sfc",        "all" ],
 
     [ "rtotal", "/rtotal_orig", "total_cond",    "all"     ],
     [ "vapor",  "/vapor",       "vapor",         "all"     ],

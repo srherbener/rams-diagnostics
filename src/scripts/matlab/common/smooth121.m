@@ -138,7 +138,7 @@ if ~xreps && ~any(ynan)
     weights=zeros(width,1); [cbegin,cend]=deal(zeros(nendpts,1));
     % set up symmetric weights
     weights(1:ceil(width/2)) = 1:ceil(width/2);
-    weights(ceil(width/2)+1:width) = flip(weights(1:floor(width/2)));
+    weights(ceil(width/2)+1:width) = fliplr(weights(1:floor(width/2)));
     % get filtered y using weights (where the sum of weights adds to 1)
     c = filter(weights/sum(weights),1,y);
     % filter outputs data averaged from previous values, not centered. e.g.
