@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+#
+# Script to configure (create makefiles) for different machines.
+
+# Set up paths to HDF5 libraries
+case $(hostname) in
+
+  fog.atmos.colostate.edu)
+    HDF5_ROOT="$HOME/hdf5-1.8.6-macosx64-static"
+    ;;
+
+  fog.atmos.colostate.edu)
+    HDF5_ROOT="/usr/local/hdf5-gcc"
+    ;;
+
+  *)
+    # Take a guess
+    HDF5_ROOT="/opt/hdf5/"
+    ;;
+esac
+
+# Run configure with the hints to the location of the HDF5 installation
+./configure LDFLAGS="-L$HDF5_ROOT/lib" CPPFLAGS="-I$HDF5_ROOT/include"

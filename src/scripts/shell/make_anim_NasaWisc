@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+#
+# script to create animation files for NASA Wisc project
+
+#SimList="RCE_3km_1mom RCE_3km_1mom_db RCE_3km_1mom_dm RCE_3km_2mom_db RCE_3km_2mom_dm RCE_3km_2mom_dm_lrz"
+SimList="RCE_3km_1mom_db_udef RCE_3km_1mom_db_rlongup RCE_3km_2mom_db_udef RCE_3km_2mom_db_rlongup"
+
+VarList="Prate Tcond"
+
+for Sim in $SimList
+do
+  echo "************* Creating animations for simulation: $Sim *************"
+  echo
+
+  for Var in $VarList
+  do
+    echo "Variable: $Var ===================================="
+    echo
+
+    Fprefix="Animations/${Sim}/${Var}/${Var}_${Sim}"
+    make_anim_file $Fprefix
+    echo
+  done
+done
+
