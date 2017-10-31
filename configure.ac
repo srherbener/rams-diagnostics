@@ -72,7 +72,23 @@ AC_CONFIG_FILES([Makefile
                  src/libraries/rhdf5/Makefile
                  src/libraries/diag_utils/Makefile
                  src/programs/Makefile
-                 src/programs/azavg/Makefile])
+                 src/programs/azavg/Makefile
+                 src/programs/create_bins/Makefile
+                 src/programs/diag_filter/Makefile
+                 src/programs/find_tc_center/Makefile
+                 src/programs/gen_adv/Makefile
+                 src/programs/gen_flux/Makefile
+                 src/programs/gen_moments/Makefile
+                 src/programs/gen_tc_tilt/Makefile
+                 src/programs/gen_u_v/Makefile
+                 src/programs/gen_vint_terms/Makefile
+                 src/programs/gen_vt_vr/Makefile
+                 src/programs/gen_xsection/Makefile
+                 src/programs/hdata_op/Makefile
+                 src/programs/join_hdata/Makefile
+                 src/programs/sig_proc/Makefile
+                 src/programs/sub_vortex/Makefile
+                 src/programs/tsavg/Makefile])
 
 
 AC_OUTPUT

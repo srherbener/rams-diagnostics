@@ -20,13 +20,13 @@ def SetColorScheme():
 
         'RCE_3km_1mom'             : 'black',
         'RCE_3km_1mom_db'          : 'sandybrown',
-        'RCE_3km_1mom_db_udef'     : 'goldenrod',
+        'RCE_3km_1mom_db_udef'     : 'blue',
         'RCE_3km_1mom_db_rlongup'  : 'brown',
         'RCE_3km_1mom_dm'          : 'magenta',
 
         'RCE_3km_2mom'             : 'cyan',
         'RCE_3km_2mom_db'          : 'sandybrown',
-        'RCE_3km_2mom_db_udef'     : 'goldenrod',
+        'RCE_3km_2mom_db_udef'     : 'blue',
         'RCE_3km_2mom_db_rlongup'  : 'brown',
         'RCE_3km_2mom_dm'          : 'magenta',
         'RCE_3km_2mom_dm_lrz'      : 'forestgreen',
