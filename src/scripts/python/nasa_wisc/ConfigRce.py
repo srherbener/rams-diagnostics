@@ -18,14 +18,18 @@ def SetColorScheme():
         'RCE_1km_DM_IPL2'  : 'magenta',
         'RCE_1km_DP_IPL2'  : 'sandybrown',
 
-        'RCE_3km_1mom'        : 'black',
-        'RCE_3km_1mom_db'     : 'sandybrown',
-        'RCE_3km_1mom_dm'     : 'magenta',
+        'RCE_3km_1mom'             : 'black',
+        'RCE_3km_1mom_db'          : 'sandybrown',
+        'RCE_3km_1mom_db_udef'     : 'goldenrod',
+        'RCE_3km_1mom_db_rlongup'  : 'brown',
+        'RCE_3km_1mom_dm'          : 'magenta',
 
-        'RCE_3km_2mom'        : 'cyan',
-        'RCE_3km_2mom_db'     : 'sandybrown',
-        'RCE_3km_2mom_dm'     : 'magenta',
-        'RCE_3km_2mom_dm_lrz' : 'forestgreen',
+        'RCE_3km_2mom'             : 'cyan',
+        'RCE_3km_2mom_db'          : 'sandybrown',
+        'RCE_3km_2mom_db_udef'     : 'goldenrod',
+        'RCE_3km_2mom_db_rlongup'  : 'brown',
+        'RCE_3km_2mom_dm'          : 'magenta',
+        'RCE_3km_2mom_dm_lrz'      : 'forestgreen',
         }
     return ColorScheme
 
@@ -53,13 +57,17 @@ def SetLabelScheme():
         'RCE_1km_DM_IPL2'  : '2M DM',
         'RCE_1km_DP_IPL2'  : '2M DB',
 
-        'RCE_3km_1mom'        : '1M',
-        'RCE_3km_1mom_db'     : '1M DB',
-        'RCE_3km_1mom_dm'     : '1M DM',
-        'RCE_3km_2mom'        : '2M',
-        'RCE_3km_2mom_db'     : '2M DB',
-        'RCE_3km_2mom_dm'     : '2M DM',
-        'RCE_3km_2mom_dm_lrz' : '2M DM LRZ',
+        'RCE_3km_1mom'             : '1M',
+        'RCE_3km_1mom_db'          : '1M DB',
+        'RCE_3km_1mom_db_udef'     : '1M DB U',
+        'RCE_3km_1mom_db_rlongup'  : '1M DB R',
+        'RCE_3km_1mom_dm'          : '1M DM',
+        'RCE_3km_2mom'             : '2M',
+        'RCE_3km_2mom_db'          : '2M DB',
+        'RCE_3km_2mom_db_udef'     : '2M DB U',
+        'RCE_3km_2mom_db_rlongup'  : '2M DB R',
+        'RCE_3km_2mom_dm'          : '2M DM',
+        'RCE_3km_2mom_dm_lrz'      : '2M DM LRZ',
         }
     return LabelScheme
 

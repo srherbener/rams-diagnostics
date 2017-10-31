@@ -231,11 +231,18 @@ daymean = 5;
 avgdt = ceil( daymean/min(dt) );
 avgdt = avgdt + mod(avgdt+1,2); % this makes sure avgdt is an odd number
 
+smMeanLHF = smooth121(meanLHF,avgdt);
+
+meanpcpEnergyFlux = meanpcp * 2.5e6 / (24 * 3600); % kg/m2/day*J/kg*days/s = J/m2/s=W/m2
+smMeanpcpEnergyFlux = smooth121(meanpcpEnergyFlux,avgdt);
+
+smDiffMoistureFlux = smooth121((meanLHF-meanpcpEnergyFlux),avgdt);
+
 figure; set_figsize(gcf,[15 8]);
 plot(tp,meanLHF,'color',cols(1,:)); hold all
-plot(tp,meanpcp*2.5e6/(24*3600),'color',cols(3,:)) % kg/m2/day*J/kg*days/s = J/m2/s=W/m2
-plot(tp,smooth121(meanLHF,avgdt),'linewidth',2,'color',cols(6,:))
-plot(tp,smooth121(meanpcp*2.5e6/(24*3600),avgdt),'linewidth',2,'color',cols(4,:))
+plot(tp,meanpcpEnergyFlux,'color',cols(3,:))
+plot(tp,smMeanLHF,'linewidth',2,'color',cols(6,:))
+plot(tp,smMeanpcpEnergyFlux,'linewidth',2,'color',cols(4,:))
 xlim(tp([1 end])); ylim([0 200]); grid on
 xlabel('time (days)')
 title(['Domain-mean moisture quantities (W/m^2) - ',ttlname2])
@@ -243,6 +250,16 @@ legend('LHF','Precip',['LHF ',num2str(daymean),'-day mean'],...
     ['Precip ',num2str(daymean),'-day mean'],'location','southeast')
 disp(['Writing: ', SaveDir,'equil_moisture']);
 print('-dpng',[SaveDir,'equil_moisture'])
+
+
+figure; set_figsize(gcf,[15 8]);
+plot(tp,smDiffMoistureFlux,'linewidth',2,'color',cols(4,:)); hold all;
+xlim(tp([1 end])); ylim([-50 50]); grid on;
+xlabel('time (days)');
+title(['Domain-mean moisture quantities (W/m^2) - ',ttlname2])
+legend(['(LHF-Precip), ',num2str(daymean),'-day mean'], 'location','southeast')
+disp(['Writing: ', SaveDir,'equil_moisture_diff']);
+print('-dpng',[SaveDir,'equil_moisture_diff'])
 
 % animation of precip
 if 0
@@ -403,6 +420,15 @@ legend('Sfc Fluxes','Net Rad Cooling','Sfc Fluxes (running mean)',...
     'Net Rad Cooling (running mean)','location','southeast')
 disp(['Writing: ', SaveDir,'equil_energy_net']);
 print('-dpng',[SaveDir,'equil_energy_net'])
+
+figure; set_figsize(gcf,[15 8]);
+plot(tp,smooth121((meanSFlux-meanNetRad),avgdt),'color',cols(4,:),'linewidth',2); hold all;
+xlim(tp([1 end])); ylim([-50 50]); grid on
+xlabel('time (days)'); title(['Domain-mean energy fluxes (W/m^2) - ',ttlname2])
+legend(['(Sflux-RadCool), ',num2str(daymean),'-day mean'], 'location','southeast')
+disp(['Writing: ', SaveDir,'equil_energy_net_diff']);
+print('-dpng',[SaveDir,'equil_energy_net_diff'])
+
 
 % mean net sfc flux components
 figure; set_figsize(gcf,[15 8]);
