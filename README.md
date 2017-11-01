@@ -12,7 +12,7 @@ and libraries. This is accomplished by passing in CPPFLAGS and LDFLAGS settings 
 For example, let's say you have installed the HDF5 package in the path /opt/hdf5. Then run configure
 as follows:
 
-    ./configure LDFLAGS="-L/opt/hdf5/lib" CPPFLAGS="-I/opt/path/include"
+$ ./configure LDFLAGS="-L/opt/hdf5/lib" CPPFLAGS="-I/opt/path/include"
 
 The default prefix in this package has been set to $HOME. Use --prefix=new_path to override.
 

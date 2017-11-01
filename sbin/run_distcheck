@@ -5,11 +5,11 @@
 # Set up paths to HDF5 libraries
 case $(hostname) in
 
-  fog.atmos.colostate.edu)
+  fog | fog.atmos.colostate.edu)
     HDF5_ROOT="$HOME/hdf5-1.8.6-macosx64-static"
     ;;
 
-  fog.atmos.colostate.edu)
+  frost | frost.atmos.colostate.edu)
     HDF5_ROOT="/usr/local/hdf5-gcc"
     ;;
 
