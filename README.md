@@ -1,4 +1,4 @@
-# rams-diagnostics
+# rams-diagnostics v1.0.1
 
 This repository contains Fortran programs and scripts in various languages (bash, MATLAB, Python, Perl).
 
@@ -8,7 +8,7 @@ quantities in simulated tropical cyclones.
 
 Please download and unpack the following file to get started:
 
-  ```rams-diagnostics-1.0.0.tar.gz```
+  ```rams-diagnostics-1.0.1.tar.gz```
 
 The programs use the C interface to HDF5 and thus need to be told the paths to the HDF5 include files and
 and libraries. This is accomplished by passing in CPPFLAGS and LDFLAGS settings when running configure.

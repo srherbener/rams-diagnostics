@@ -2,6 +2,7 @@ matnasawiscdir = $(prefix)/etc/matlab/nasa_wisc
 dist_matnasawisc_SCRIPTS =  \
     DiagConfig \
     ExtractSampleProfiles.m \
+    EqMeasHdf5.m \
     FigLatHeatProfileConfig \
     FigReport062415_Config \
     FigureConfig \

@@ -83,8 +83,8 @@ Yname = '/y_coords'
 Zname = '/z_coords'
 Tname = '/t_coords'
 
-#InFileTemplate = "HDF5/<SIM>/HDF5/<FPREFIX>-<SIM>-AS-2012-01-01-000000-g1.h5"
-InFileTemplate = "SIMDATA/<SIM>/HDF5/<FPREFIX>-<SIM>-LS-2012-01-01-000000-g1.h5"
+#InFileTemplate = "SIMS/<SIM>/HDF5/<FPREFIX>-<SIM>-AS-2012-01-01-000000-g1.h5"
+InFileTemplate = "SIMS/<SIM>/HDF5/<FPREFIX>-<SIM>-LS-2012-01-01-000000-g1.h5"
 
 SimSelect = sys.argv[1]
 VarSelect = sys.argv[2]

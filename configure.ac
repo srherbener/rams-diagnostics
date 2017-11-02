@@ -1,5 +1,5 @@
 # Process this file with autoconf to produce a configure script.
-AC_INIT([rams-diagnostics], [1.0.0], [stephen.herbener@gmail.com])
+AC_INIT([rams-diagnostics], [1.0.1], [stephen.herbener@gmail.com])
 
 # Place autotools files in subdirectories (help for cleaning up later on)
 AC_CONFIG_AUX_DIR([bin])

@@ -44,7 +44,7 @@ Yname = '/y_coords'
 Zname = '/z_coords'
 Tname = '/t_coords'
 
-InFileTemplate = "SIMDATA/<SIM>/HDF5/<FPREFIX>-<SIM>-LS-2012-01-01-000000-g1.h5"
+InFileTemplate = "SIMS/<SIM>/HDF5/<FPREFIX>-<SIM>-LS-2012-01-01-000000-g1.h5"
 OutDirTemplate = "Animations/<SIM>/<OUTVAR>"
 
 Cfilled = True

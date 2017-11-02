@@ -58,9 +58,9 @@ VarList = [
     ]
 Nvars = len(VarList)
 
-### TEST #### InFilePatternTemplate = "SIMDATA/<SIM>/RAMS/<SIM>-L-2012-01-01-0[0-2]*.h5"
-InFilePatternTemplate = "SIMDATA/<SIM>/RAMS/<SIM>-L-2012-*.h5"
-OutFileTemplate = "SIMDATA/<SIM>/HDF5/<VNAME>-<SIM>-AC-2012-01-01-000000-g1.h5"
+### TEST #### InFilePatternTemplate = "SIMS/<SIM>/RAMS/<SIM>-L-2012-01-01-0[0-2]*.h5"
+InFilePatternTemplate = "SIMS/<SIM>/RAMS/<SIM>-L-2012-*.h5"
+OutFileTemplate = "SIMS/<SIM>/HDF5/<VNAME>-<SIM>-AC-2012-01-01-000000-g1.h5"
 
 for isim in range(Nsims):
     Sim = SimList[isim]

@@ -33,7 +33,7 @@ Yname = '/y_coords'
 Zname = '/z_coords'
 Tname = '/t_coords'
 
-InFileTemplate = "HDF5/<SIM>/HDF5/<FPREFIX>-<SIM>-LS-2012-01-01-000000-g1.h5"
+InFileTemplate = "SIMS/<SIM>/HDF5/<FPREFIX>-<SIM>-LS-2012-01-01-000000-g1.h5"
 
 def WriteOutputDset(OutFname, OutVname, Nt, OutVar, Tdim):
     print("  Writing: {0:s} ({1:s})".format(OutFname, OutVname))

@@ -31,13 +31,13 @@ Zname = '/z_coords'
 Tname = '/t_coords'
 
 # Input file paths, dataset names
-TdiffFtemp = "HDF5/<SIM>/HDF5/rain_air_tempdif_sfc-<SIM>-AS-2012-01-01-000000-g1.h5"
+TdiffFtemp = "SIMS/<SIM>/HDF5/rain_air_tempdif_sfc-<SIM>-AS-2012-01-01-000000-g1.h5"
 TdiffVname = "/rain_air_tempdif"
-DensFtemp  = "HDF5/<SIM>/HDF5/dn0_sfc-<SIM>-AS-2012-01-01-000000-g1.h5"
+DensFtemp  = "SIMS/<SIM>/HDF5/dn0_sfc-<SIM>-AS-2012-01-01-000000-g1.h5"
 DensVname  = "/dn0"
-RmassFtemp = "HDF5/<SIM>/HDF5/rain_mass_sfc-<SIM>-AS-2012-01-01-000000-g1.h5"
+RmassFtemp = "SIMS/<SIM>/HDF5/rain_mass_sfc-<SIM>-AS-2012-01-01-000000-g1.h5"
 RmassVname = "/rain"
-RdiamFtemp = "HDF5/<SIM>/HDF5/rain_diam_sfc-<SIM>-AS-2012-01-01-000000-g1.h5"
+RdiamFtemp = "SIMS/<SIM>/HDF5/rain_diam_sfc-<SIM>-AS-2012-01-01-000000-g1.h5"
 RdiamVname = "/rain_diam"
 
 # Output dataset names
