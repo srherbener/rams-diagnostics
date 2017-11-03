@@ -4,6 +4,7 @@ dist_pynasawisc_SCRIPTS = \
     ExtractRceLiteVars.py \
     GenAnimFrames.py \
     GenDomAverages.py \
+    GenTcondXsections.py \
     GenEqMeas.py \
     GenPowerSpectra.py \
     GenProfiles.py \
