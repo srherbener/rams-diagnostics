@@ -7,6 +7,7 @@ sys.path.append("{0:s}/etc/python/nasa_wisc".format(os.environ['HOME']))
 
 import h5py
 import numpy as np
+import numpy.ma as ma
 import ConfigRce as conf
 import Hdf5Utils as h5u
 
@@ -33,6 +34,10 @@ LonSliceVname = "{0:s}_lon_slice".format(OutVnameBase)
 LatSliceVname = "{0:s}_lat_slice".format(OutVnameBase)
 LonAvgVname = "{0:s}_lon_avg".format(OutVnameBase)
 LatAvgVname = "{0:s}_lat_avg".format(OutVnameBase)
+LonAvgSelVname = "{0:s}_lon_avg_ge01".format(OutVnameBase)
+LatAvgSelVname = "{0:s}_lat_avg_ge01".format(OutVnameBase)
+
+TcondThreshold = 0.01  # 0.01 g/kg
 
 # MAIN
 print("************************************************************************************")
@@ -90,13 +95,25 @@ LonAvgDset.Create(OutFile)
 LatAvgDset = h5u.DsetCoards(LatAvgVname, 3, [ Nt, Nz, Nx ], chunks=(1, Nz, Nx))
 LatAvgDset.Create(OutFile)
 
+LonAvgSelDset = h5u.DsetCoards(LonAvgSelVname, 3, [ Nt, Nz, Ny ], chunks=(1, Nz, Ny))
+LonAvgSelDset.Create(OutFile)
+
+LatAvgSelDset = h5u.DsetCoards(LatAvgSelVname, 3, [ Nt, Nz, Nx ], chunks=(1, Nz, Nx))
+LatAvgSelDset.Create(OutFile)
+
 # Read in input variable and form the domain average
 # Do one time step at a time in order to reduce memory usage
-for i in range(2): # range(Nt):
+for i in range(Nt):
 
     # total condensate is Rtotal - Rvapor
     # var is (z,y,x)
     TCOND = np.squeeze(RtFile[RtVname][i,...]) - np.squeeze(RvFile[RvVname][i,...])
+
+    # Create a copy of TCOND as a numpy masked array, so that averaging can be
+    # done with selection of data along each axis. The masked values are the
+    # ones that will be ignored (seems backwards but that's the way it is).
+    # Helps to think of masked values being like missing values.
+    TCOND_MA = ma.masked_less_equal(TCOND, TcondThreshold).astype(float)
 
     # Take a slice along the middle in both zonal and meridional directions
     # Ditto for averages
@@ -109,12 +126,21 @@ for i in range(2): # range(Nt):
     TCOND_LON_AVG = np.squeeze(np.mean(TCOND, axis=2))
     TCOND_LAT_AVG = np.squeeze(np.mean(TCOND, axis=1))
 
+    MA_TC_AVG = ma.average(TCOND_MA, axis=2)      # take average ingnoring masked value
+    TCOND_LON_AVG_SEL = MA_TC_AVG.filled(np.nan)  # fill masked values with nans
+
+    MA_TC_AVG = ma.average(TCOND_MA, axis=1)
+    TCOND_LAT_AVG_SEL = MA_TC_AVG.filled(np.nan)
+
     # Add to output datasets
     OutFile[LonSliceVname][i,...] = TCOND_LON_SLICE
     OutFile[LatSliceVname][i,...] = TCOND_LAT_SLICE
 
     OutFile[LonAvgVname][i,...] = TCOND_LON_AVG
     OutFile[LatAvgVname][i,...] = TCOND_LAT_AVG
+
+    OutFile[LonAvgSelVname][i,...] = TCOND_LON_AVG_SEL
+    OutFile[LatAvgSelVname][i,...] = TCOND_LAT_AVG_SEL
 
     if ((i % 10) == 0):
         print("    Processing time step: {0:d}".format(i))
@@ -132,10 +158,17 @@ print("  Writing {0:s} ({1:s})".format(OutFname, LatSliceVname))
 print("  Writing {0:s} ({1:s})".format(OutFname, LonAvgVname))
 print("  Writing {0:s} ({1:s})".format(OutFname, LatAvgVname))
 
+print("  Writing {0:s} ({1:s})".format(OutFname, LonAvgSelVname))
+print("  Writing {0:s} ({1:s})".format(OutFname, LatAvgSelVname))
+
 LonSliceDset.AttachDims(OutFile, Tdim, Zdim, Ydim)
 LatSliceDset.AttachDims(OutFile, Tdim, Zdim, Xdim)
 
 LonAvgDset.AttachDims(OutFile, Tdim, Zdim, Ydim)
 LatAvgDset.AttachDims(OutFile, Tdim, Zdim, Xdim)
 
+LonAvgSelDset.AttachDims(OutFile, Tdim, Zdim, Ydim)
+LatAvgSelDset.AttachDims(OutFile, Tdim, Zdim, Xdim)
+
 OutFile.close()
+
