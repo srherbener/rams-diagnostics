@@ -107,7 +107,11 @@ for i in range(Nt):
 
     # total condensate is Rtotal - Rvapor
     # var is (z,y,x)
+    # make sure that total condensate is not negative
+    #    RTP is supposed to be = RV plus Rcondensate, but small differences that
+    #    are sometimes negative can creep in
     TCOND = np.squeeze(RtFile[RtVname][i,...]) - np.squeeze(RvFile[RvVname][i,...])
+    TCOND = TCOND.clip(min=0)
 
     # Create a copy of TCOND as a numpy masked array, so that averaging can be
     # done with selection of data along each axis. The masked values are the
