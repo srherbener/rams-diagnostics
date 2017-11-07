@@ -7,35 +7,53 @@ sys.path.append("{0:s}/etc/python/common".format(os.environ['HOME']))
 import requests as req
 from bs4 import BeautifulSoup
 import numpy as np
-from matplotlib import pyplot as plt
 
 import time
 
-ServerSpecs = [
-    [ "tasman",           "magenta"    ],
-    [ "snow-home",        "blue"       ],
-    [ "blizzard",         "green"      ],
-    [ "frost-home",       "gold"       ],
-    [ "dendrite-home",    "red"        ],
-    [ "ccn-home",         "violet"     ],
-    [ "icehome",          "skyblue"    ],
-    [ "dendriteuser1",    "aquamarine" ],
-    [ "dendriteuser2",    "darkorange" ],
-    [ "dendriteuser3",    "brown"      ],
-    ]
-Nservers = len(ServerSpecs)
-
-ServerList = []
-ColorList = []
-for i in range(Nservers):
-    ServerList.append(ServerSpecs[i][0])
-    ColorList.append(ServerSpecs[i][1])
-
-UserAliases = {
-    "areyh" : "aryeh",
-    "adele" : "aigel",
-    "michalcl" : "clavner",
+ServerList = {
+    # name : [ alias from web page, size in TB ]
+    "Tasman"           : [ "tasman", 30.0 ],
+    "Avalanche"        : [ "snow-home", 34.0 ],
+    "Blizzard"         : [ "blizzard", 33.0 ],
+    "PermaFrost"       : [ "permafrost", 18.0 ],
+    "DendriteHome"     : [ "dendrite-home", 1.8 ],
+    "Cloudseed"        : [ "ccn-home", 13.0 ],
+    "Icicle"           : [ "icicle", 28 ],
+    "DendriteUser1"    : [ "dendriteuser1", 3.6 ],
+    "DendriteUser2"    : [ "dendriteuser2", 3.6 ],
+    "DendriteUser3"    : [ "dendriteuser3", 3.6 ],
+    "vandenHeeverHome" : [ "vandenHeeverHome", 15.0 ],
     }
+
+UserList = {
+    # Name, [ list of aliases from web page ]
+    "Minnie"  : [ "jpark" ],
+    "Jennie"  : [ "jbukowski" ],
+    "Leah"    : [ "ldgrant" ],
+    "Peter"   : [ "pmarin" ],
+    "Aryeh"   : [ "aryeh", "areyh" ],
+    "Sean"    : [ "sfreeman" ],
+    "Ben"     : [ "btoms" ],
+    "Stacey"  : [ "skawecki" ],
+    "SteveS"  : [ "smsaleeb" ],
+    "SteveH"  : [ "sherbener" ],
+    "Sue"     : [ "sue" ],
+
+    "Adele"   : [ "adele", "aigel" ],
+    "Matt"    : [ "mattigel" ],
+    "Rachel"  : [ "storer" ],
+    "Clay"    : [ "cjmcgee" ],
+    "Amanda"  : [ "asheffie" ],
+
+    "Other"   : [ ],
+    }
+
+# Create a map going from each of the aliases in the UserList to the
+# primary name
+Web2UserMap = { }
+for User in UserList:
+    for Alias in UserList[User]:
+        Web2UserMap[Alias] = User
 
 print("Looking at group disk usage:")
 
@@ -56,13 +74,15 @@ NdriveSoup = BeautifulSoup(Ndrive.content, "lxml")
 # structure following the <a></a> with the server name
 #
 UsageByServer = {}
-UserList = []
-TotName = "TotalAmount"
 for Server in ServerList:
+    ServerWebName = ServerList[Server][0]
+    ServerSize    = ServerList[Server][1]
+
     UsageByServer[Server] = {}
+    ServerUsed = 0.0
 
     print("  Checking usage on server: {0:s}".format(Server))
-    svr = NdriveSoup.find("a", {"name":Server})
+    svr = NdriveSoup.find("a", {"name":ServerWebName})
 
     tbl = svr.find_next_sibling("table")
 
@@ -75,19 +95,29 @@ for Server in ServerList:
 
             # Pull off the user name from the path in the first component
             # and amount of disk usage in the second component.
-            User = os.path.basename(user_list[0])
-            if (User in UserAliases):
-                User = UserAliases[User]
+            WebUser = os.path.basename(user_list[0])
+            if (WebUser in Web2UserMap):
+                User = Web2UserMap[WebUser]
+            else:
+                User = "Other"
 
             Amount = float(user_list[1])
             if (user_list[2] == "Gb"):
                 Amount = Amount / 1024.0  # convert to TB
 
             # Store the server, user, amount
-            UserList.append(User)
-            UsageByServer[Server][User] = Amount
+            if (User in UsageByServer[Server]):
+                UsageByServer[Server][User] += Amount
+            else:
+                UsageByServer[Server][User] = Amount
 
-UserList = set(UserList) # remove duplicates
+            ServerUsed += Amount
+
+    ServerFree = np.amax([ (ServerSize - ServerUsed), 0.0 ])
+    UsageByServer[Server]['SIZE'] = ServerSize
+    UsageByServer[Server]['USED'] = ServerUsed
+    UsageByServer[Server]['FREE'] = ServerFree
+
 print("")
 
 # Reformat the usage by server data into usage by user.
@@ -97,10 +127,8 @@ print("")
 # users, add together the usage for each server, and place into just
 # one amount under a single user name.
 UsageByUser = {}
-GroupTotal = 0.0
 for User in UserList:
     UsageByUser[User] = {}
-    UserTotal = 0.0
 
     for Server in ServerList:
         UsageByUser[User][Server] = 0.0
@@ -108,80 +136,44 @@ for User in UserList:
         if (User in UsageByServer[Server]):
             Amount = UsageByServer[Server][User]
             UsageByUser[User][Server] = Amount
-            UserTotal = UserTotal + Amount
 
-    UsageByUser[User][TotName] = UserTotal
-    GroupTotal = GroupTotal + UserTotal
+# Create a timestamp
+TimeStamp = time.ctime()
 
-# Create a list of users for the plot.
-#   Select users consuming >= 1.0 TB of file space
-#   Sort the list of users into low to high usage
-#
-# In the sorted command:
-#    the .items() method is creating a list of tuples of the form (key, value)
-#       from the dictionary TopUsers
-#    the key= arguemnt is telling sort to use the second item in the tuple
-#       (ie, the total disk usage) to do the sorting.
-MinUsage = 1.0
-TopUsers = {}
-for User in UserList:
-    UserUsage = UsageByUser[User][TotName]
-    if (UserUsage >= MinUsage):
-        TopUsers[User] = UserUsage
+# Write out two files, one from the server perspective and the
+# other from the user perspective. Write in CSV style so these
+# data can be imported into Excel.
+ServerFname = "{0:s}/tmp/DiskUsageByServer.txt".format(os.environ['HOME'])
+print("  Writing: {0:s}".format(ServerFname))
 
-SortedTopUsers = (sorted(TopUsers.items(), key=lambda t: t[1]))
-Nusers = len(SortedTopUsers)
+with open(ServerFname, "w") as ServerFile:
+    ServerFile.write("{0:s}\n".format(TimeStamp))
+    ServerFile.write("\n")
 
-PlotUsers = []
-for i in range(Nusers):
-    PlotUsers.append(SortedTopUsers[i][0])
+    for Server in UsageByServer:
+        ServerFile.write("{0:s}\n".format(Server))
 
-# Pull out the server level usage
-PlotUsage = np.zeros((Nusers, Nservers))
-for i in range(Nusers):
-    User = PlotUsers[i]
-    j = 0
-    for Server in ServerList:
-        PlotUsage[i,j] = UsageByUser[User][Server]
-        j = j + 1
+        for User in UsageByServer[Server]:
+            Amount = UsageByServer[Server][User]
+            ServerFile.write("{0:s},{1:f}\n".format(User, Amount))
 
-# In PlotUsage, rows are users and columns are servers. Since we've reduced the list of
-# users, it's possible that a server might have zero usage. Want to throw these cases
-# out which means eliminating a column of zeros in the PlotUsage array.
-# Record the column numbers that we want to delete, and do the deletes in PlotUsage all
-# in one call to np.delete.
-DelCols = []
-PlotServers = []
-for j in range(Nservers):
-    if(np.all(np.absolute(PlotUsage[:,j]) <= 1.0e-6)):
-        DelCols.append(j)
-    else:
-        PlotServers.append(ServerList[j])
+        ServerFile.write("\n")
 
-PlotUsage = np.delete(PlotUsage, DelCols, axis=1)
-NplotServers = len(PlotServers)
 
-# Create a horizontal bar plot showing the heaviest users first
-BarWidth = 0.8
-Ind = np.arange(Nusers)
-Title = "Top Disk Usage by User: {0:s}\nTotal Usage = {1:.2f} Tb".format(time.ctime(),GroupTotal)
+UserFname = "{0:s}/tmp/DiskUsageByUser.txt".format(os.environ['HOME'])
+print("  Writing: {0:s}".format(UserFname))
 
-Fig = plt.figure()
+with open(UserFname, "w") as UserFile:
+    UserFile.write("{0:s}\n".format(TimeStamp))
+    UserFile.write("\n")
 
-BarAccum = np.zeros((Nusers))
-Paxes = []
-for i in range(NplotServers):
-    PlotData = np.squeeze(PlotUsage[:,i])
-    Ax = plt.barh(Ind, PlotData, BarWidth, color=ColorList[i], edgecolor=ColorList[i], align='center', left=BarAccum)
-    Paxes.append(Ax)
-    BarAccum = BarAccum + PlotData
+    for User in UsageByUser:
+        UserFile.write("{0:s}\n".format(User))
 
-plt.title(Title)
-plt.xlabel('Usage (Tb)')
-plt.yticks(Ind, PlotUsers)
+        for Server in UsageByUser[User]:
+            Amount = UsageByUser[User][Server]
+            UserFile.write("{0:s},{1:f}\n".format(Server, Amount))
 
-plt.legend(Paxes, PlotServers, loc=4) # loc = 4 specifies lower right corner of plot
+        UserFile.write("\n")
 
-OutFile = "{0:s}/tmp/DiskUsageByUser.png".format(os.environ['HOME'])
-print("  Writing: {0:s}".format(OutFile))
-Fig.savefig(OutFile)
+
