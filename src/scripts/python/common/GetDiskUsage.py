@@ -7,6 +7,7 @@ sys.path.append("{0:s}/etc/python/common".format(os.environ['HOME']))
 import requests as req
 from bs4 import BeautifulSoup
 import numpy as np
+import h5py
 
 import time
 
@@ -140,40 +141,23 @@ for User in UserList:
 # Create a timestamp
 TimeStamp = time.ctime()
 
-# Write out two files, one from the server perspective and the
-# other from the user perspective. Write in CSV style so these
-# data can be imported into Excel.
-ServerFname = "{0:s}/tmp/DiskUsageByServer.txt".format(os.environ['HOME'])
-print("  Writing: {0:s}".format(ServerFname))
+# Write out data into a single hdf5 file
+OutFname = "{0:s}/tmp/DiskUsage.h5".format(os.environ['HOME'])
+print("  Writing: {0:s}".format(OutFname))
 
-with open(ServerFname, "w") as ServerFile:
-    ServerFile.write("{0:s}\n".format(TimeStamp))
-    ServerFile.write("\n")
+OutFile = h5py.File(OutFname, mode='w')
 
-    for Server in UsageByServer:
-        ServerFile.write("{0:s}\n".format(Server))
+OutFile['TimeStamp'] = TimeStamp
+OutFile['Units'] = "TB"
 
-        for User in UsageByServer[Server]:
-            Amount = UsageByServer[Server][User]
-            ServerFile.write("{0:s},{1:f}\n".format(User, Amount))
+for Server in UsageByServer:
+    for User in UsageByServer[Server]:
+        DsetName = "/Servers/{0:s}/{1:s}".format(Server, User)
+        OutFile[DsetName] = UsageByServer[Server][User]
 
-        ServerFile.write("\n")
+for User in UsageByUser:
+    for Server in UsageByUser[User]:
+        DsetName = "/Users/{0:s}/{1:s}".format(User, Server)
+        OutFile[DsetName] = UsageByUser[User][Server]
 
-
-UserFname = "{0:s}/tmp/DiskUsageByUser.txt".format(os.environ['HOME'])
-print("  Writing: {0:s}".format(UserFname))
-
-with open(UserFname, "w") as UserFile:
-    UserFile.write("{0:s}\n".format(TimeStamp))
-    UserFile.write("\n")
-
-    for User in UsageByUser:
-        UserFile.write("{0:s}\n".format(User))
-
-        for Server in UsageByUser[User]:
-            Amount = UsageByUser[User][Server]
-            UserFile.write("{0:s},{1:f}\n".format(Server, Amount))
-
-        UserFile.write("\n")
-
-
+OutFile.close()
