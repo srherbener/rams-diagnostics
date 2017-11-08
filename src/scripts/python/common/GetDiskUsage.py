@@ -12,48 +12,49 @@ import h5py
 import time
 
 ServerList = {
-    # name : [ alias from web page, size in TB ]
-    "Tasman"           : [ "tasman", 30.0 ],
-    "Avalanche"        : [ "snow-home", 34.0 ],
-    "Blizzard"         : [ "blizzard", 33.0 ],
-    "PermaFrost"       : [ "permafrost", 18.0 ],
-    "DendriteHome"     : [ "dendrite-home", 1.8 ],
-    "Cloudseed"        : [ "ccn-home", 13.0 ],
-    "Icicle"           : [ "icicle", 28 ],
-    "DendriteUser1"    : [ "dendriteuser1", 3.6 ],
-    "DendriteUser2"    : [ "dendriteuser2", 3.6 ],
-    "DendriteUser3"    : [ "dendriteuser3", 3.6 ],
-    "vandenHeeverHome" : [ "vandenHeeverHome", 15.0 ],
+    # name : [ alias from web page, size in TB, color for plotting ]
+    "Tasman"     : [ "tasman",           30.0, "magenta"    ],
+    "Avalanche"  : [ "snow-home",        34.0, "blue"       ],
+    "Blizzard"   : [ "blizzard",         33.0, "green"      ],
+    "PermaFrost" : [ "permafrost",       18.0, "gold"       ],
+    "DendHome"   : [ "dendrite-home",     1.8, "red"        ],
+    "CloudSeed"  : [ "ccn-home",         13.0, "violet"     ],
+    "Icicle"     : [ "icicle",           28.0, "skyblue"    ],
+    "DendUser1"  : [ "dendriteuser1",     3.6, "aquamarine" ],
+    "DendUser2"  : [ "dendriteuser2",     3.6, "darkorange" ],
+    "DendeUser3" : [ "dendriteuser3",     3.6, "brown"      ],
+    "SharedHome" : [ "vandenHeeverHome", 15.0, "cyan"       ],
     }
 
 UserList = {
-    # Name, [ list of aliases from web page ]
-    "Minnie"  : [ "jpark" ],
-    "Jennie"  : [ "jbukowski" ],
-    "Leah"    : [ "ldgrant" ],
-    "Peter"   : [ "pmarin" ],
-    "Aryeh"   : [ "aryeh", "areyh" ],
-    "Sean"    : [ "sfreeman" ],
-    "Ben"     : [ "btoms" ],
-    "Stacey"  : [ "skawecki" ],
-    "SteveS"  : [ "smsaleeb" ],
-    "SteveH"  : [ "sherbener" ],
-    "Sue"     : [ "sue" ],
+    # Name, [ [ list of aliases from web page ], plot color ]
+    "Minnie"  : [ [ "jpark" ],          "magenta"     ],
+    "Jennie"  : [ [ "jbukowski" ],      "blue"        ],
+    "Leah"    : [ [ "ldgrant" ],        "green"       ],
+    "Peter"   : [ [ "pmarin" ],         "gold"        ],
+    "Aryeh"   : [ [ "aryeh", "areyh" ], "red"         ],
+    "Sean"    : [ [ "sfreeman" ],       "violet"      ],
+    "Ben"     : [ [ "btoms" ],          "skyblue"     ],
+    "Stacey"  : [ [ "skawecki" ],       "aquamarine"  ],
+    "SteveS"  : [ [ "smsaleeb" ],       "darkorange"  ],
+    "SteveH"  : [ [ "sherbener" ],      "brown"       ],
+    "Sue"     : [ [ "sue" ],            "cyan"        ],
 
-    "Adele"   : [ "adele", "aigel" ],
-    "Matt"    : [ "mattigel" ],
-    "Rachel"  : [ "storer" ],
-    "Clay"    : [ "cjmcgee" ],
-    "Amanda"  : [ "asheffie" ],
+    "Adele"   : [ [ "adele", "aigel" ], "orange"      ],
+    "Matt"    : [ [ "mattigel" ],       "forestgreen" ],
+    "Rachel"  : [ [ "storer" ],         "yellow"      ],
+    "Clay"    : [ [ "cjmcgee" ],        "purple"      ],
+    "Amanda"  : [ [ "asheffie" ],       "darkblue"    ],
 
-    "Other"   : [ ],
+    "Other"   : [ [ ],                  "black"       ],
     }
 
 # Create a map going from each of the aliases in the UserList to the
 # primary name
 Web2UserMap = { }
 for User in UserList:
-    for Alias in UserList[User]:
+    AliasList = UserList[User][0]
+    for Alias in AliasList:
         Web2UserMap[Alias] = User
 
 print("Looking at group disk usage:")
@@ -78,6 +79,7 @@ UsageByServer = {}
 for Server in ServerList:
     ServerWebName = ServerList[Server][0]
     ServerSize    = ServerList[Server][1]
+    ServerPcolor  = ServerList[Server][2]
 
     UsageByServer[Server] = {}
     ServerUsed = 0.0
@@ -118,6 +120,7 @@ for Server in ServerList:
     UsageByServer[Server]['SIZE'] = ServerSize
     UsageByServer[Server]['USED'] = ServerUsed
     UsageByServer[Server]['FREE'] = ServerFree
+    UsageByServer[Server]['PCOLOR'] = ServerPcolor
 
 print("")
 
@@ -138,6 +141,8 @@ for User in UserList:
             Amount = UsageByServer[Server][User]
             UsageByUser[User][Server] = Amount
 
+    UsageByUser[User]['PCOLOR'] = UserList[User][1]
+
 # Create a timestamp
 TimeStamp = time.ctime()
 
@@ -151,13 +156,29 @@ OutFile['TimeStamp'] = TimeStamp
 OutFile['Units'] = "TB"
 
 for Server in UsageByServer:
+    GroupName = "/Servers/{0:s}".format(Server)
+    OutFile.create_group(GroupName)
     for User in UsageByServer[Server]:
-        DsetName = "/Servers/{0:s}/{1:s}".format(Server, User)
-        OutFile[DsetName] = UsageByServer[Server][User]
+        if (User == "SIZE"):
+            OutFile[GroupName].attrs['Size'] = UsageByServer[Server][User]
+        elif (User == "USED"):
+            OutFile[GroupName].attrs['Used'] = UsageByServer[Server][User]
+        elif (User == "FREE"):
+            OutFile[GroupName].attrs['Free'] = UsageByServer[Server][User]
+        elif (User == "PCOLOR"):
+            OutFile[GroupName].attrs['Pcolor'] = UsageByServer[Server][User]
+        else:
+            DsetName = "{0:s}/{1:s}".format(GroupName, User)
+            OutFile[DsetName] = UsageByServer[Server][User]
 
 for User in UsageByUser:
+    GroupName = "/Users/{0:s}".format(User)
+    OutFile.create_group(GroupName)
     for Server in UsageByUser[User]:
-        DsetName = "/Users/{0:s}/{1:s}".format(User, Server)
-        OutFile[DsetName] = UsageByUser[User][Server]
+        if (Server == "PCOLOR"):
+            OutFile[GroupName].attrs['Pcolor'] = UsageByUser[User][Server]
+        else:
+            DsetName = "{0:s}/{1:s}".format(GroupName, Server)
+            OutFile[DsetName] = UsageByUser[User][Server]
 
 OutFile.close()
