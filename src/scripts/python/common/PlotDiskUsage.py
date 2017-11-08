@@ -65,10 +65,7 @@ for (ObjName, Object) in Group.items():
         UsageList[ObjName] = Object[...]
 
 # Check the attributes for GroupName.
-# A server will have "Size", "Used", "Free" attributes
-# A user will not have any of these attributes.
-# So, initialize the Grp* varialbes to the user case (size = 15 TB).
-GrpSize = 15.0
+GrpSize = 0.0
 GrpUsed = 0.0
 GrpFree = 0.0
 for (AttrName, AttrVal) in Group.attrs.items():
@@ -121,11 +118,11 @@ for i in range(len(Labels)):
     Labels[i] = "{0:s} ({1:.1f} {2:s}, {3:.1f} %)".format(Lab, float(Val), str(Units), float(PctVal))
 
 if (Type == "Server"):
-    Ptitle = "Disk Usage: {0:s}\nServer: {1:s} (Size = {2:.1f} {3:s})".format(
-              str(TimeStamp), str(Name), float(GrpSize), str(Units))
+    Ptitle = "Disk Usage: {0:s}\nServer: {1:s} (Used/Size = {2:.1f}/{3:.1f} {4:s})".format(
+              str(TimeStamp), str(Name), float(GrpUsed), float(GrpSize), str(Units))
 elif (Type == "User"):
-    Ptitle = "Disk Usage: {0:s}\nUser: {1:s} (Allot. = {2:.1f} {3:s})".format(
-              str(TimeStamp), str(Name), float(GrpSize), str(Units))
+    Ptitle = "Disk Usage: {0:s}\nUser: {1:s} (Used/Allot. = {2:.1f}/{3:.1f} {4:s})".format(
+              str(TimeStamp), str(Name), float(GrpUsed), float(GrpSize), str(Units))
 
 Fig = plt.figure()
 

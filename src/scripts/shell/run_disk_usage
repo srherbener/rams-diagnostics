@@ -9,8 +9,38 @@ PY_HOME="$HOME/etc/python/common"
 $PY_HOME/GetDiskUsage.py
 
 # Plot various servers and user pie charts from HDF5 file
-ServerList="Tasman Avalanche Blizzard"
-UserList="SteveH Minnie Sue Peter"
+ServerList=" \
+  Tasman \
+  Avalanche \
+  Blizzard \
+  Squall \
+  DendHome \
+  DendUser1 \
+  DendUser2 \
+  DendUser3 \
+  PermaFrost \
+  CloudSeed \
+  Icicle \
+  SharedHome"
+
+UserList=" \
+  Minnie \
+  Jennie \
+  Leah \
+  Peter \
+  Aryeh \
+  Sean \
+  Ben \
+  Stacey \
+  SteveS \
+  SteveH \
+  Sue \
+  Adele \
+  Matt \
+  Rachel \
+  Clay \
+  Amanda \
+  Other"
 
 for Server in $ServerList
 do
