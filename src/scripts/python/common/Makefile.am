@@ -3,6 +3,7 @@ dist_pycommon_SCRIPTS = \
     GenThermoVars.py \
     GetDiskUsage.py \
     PlotDiskUsage.py \
+    RamsinDiff.py \
     Hdf5Utils.py \
     NumUtils.py \
     PlotUtils.py \
