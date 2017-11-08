@@ -4,24 +4,27 @@
 # plot out various user and server usages.
 
 PY_HOME="$HOME/etc/python/common"
+WORK_DIR="$HOME/tmp"
 
 # Mine the web page, and load results into HDF5 file.
 $PY_HOME/GetDiskUsage.py
 
 # Plot various servers and user pie charts from HDF5 file
+# The order of the pie charts in the final pdf files will
+# match that in ServerList and UserList.
 ServerList=" \
   Tasman \
   Avalanche \
   Blizzard \
   Squall \
-  DendHome \
-  DendUser1 \
-  DendUser2 \
-  DendUser3 \
   PermaFrost \
   CloudSeed \
   Icicle \
-  SharedHome"
+  SharedHome \
+  DendHome \
+  DendUser1 \
+  DendUser2 \
+  DendUser3"
 
 UserList=" \
   Minnie \
@@ -42,12 +45,24 @@ UserList=" \
   Amanda \
   Other"
 
+# Create separate pie charts for each server and user
+# Build file lists for the final conversion to pdf
+ServerFileList=""
 for Server in $ServerList
 do
   $PY_HOME/PlotDiskUsage.py Server $Server
+  ServerFileList="$ServerFileList $WORK_DIR/DiskUsage_Server_${Server}.png"
 done
 
+UserFileList=""
 for User in $UserList
 do
   $PY_HOME/PlotDiskUsage.py User $User
+  UserFileList="$UserFileList $WORK_DIR/DiskUsage_User_${User}.png"
 done
+
+# Combine the server pie charts into one file, and
+# the user pie charts into another file
+echo "Consolidating png files into multi-image pdf files"
+convert $ServerFileList $WORK_DIR/DiskUsage_Servers.pdf
+convert $UserFileList $WORK_DIR/DiskUsage_Users.pdf
