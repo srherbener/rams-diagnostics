@@ -11,5 +11,6 @@ dist_bin_SCRIPTS = \
     make_figs_TsDebby \
     run_g2v \
     run_im \
+    run_disk_usage \
     run_vapor \
     unpack_src_archive

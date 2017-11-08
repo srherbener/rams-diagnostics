@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+#
+# Script to get disk usage from the network drive status web page, and then
+# plot out various user and server usages.
+
+PY_HOME="$HOME/etc/python/common"
+
+# Mine the web page, and load results into HDF5 file.
+$PY_HOME/GetDiskUsage.py
+
+# Plot various servers and user pie charts from HDF5 file
+ServerList="Tasman Avalanche Blizzard"
+UserList="SteveH Minnie Sue Peter"
+
+for Server in $ServerList
+do
+  $PY_HOME/PlotDiskUsage.py Server $Server
+done
+
+for User in $UserList
+do
+  $PY_HOME/PlotDiskUsage.py User $User
+done
