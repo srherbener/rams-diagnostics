@@ -28,7 +28,7 @@ SimList = [
     'RCE_3km_1mom_db_udef',
     'RCE_3km_1mom_db_rlongup',
     'RCE_3km_1mom_dm',
-#    'RCE_3km_2mom',
+    'RCE_3km_2mom',
     'RCE_3km_2mom_db',
     'RCE_3km_2mom_db_udef',
     'RCE_3km_2mom_db_rlongup',

@@ -21,7 +21,7 @@ PlotList = [
 #    [ [ 'RCE_3km_1mom', 'RCE_3km_2mom', 'RCE_3km_2mom_db', 'RCE_3km_2mom_dm' ], '', 'Rce3km', 0, 80 ],
 
     [ [ 'RCE_3km_1mom', 'RCE_3km_1mom_db', 'RCE_3km_1mom_db_udef', 'RCE_3km_1mom_db_rlongup', 'RCE_3km_1mom_dm' ], '', 'Rce3km1mom', [ 1.5, 300 ] ],
-    [ [ 'RCE_3km_2mom_db', 'RCE_3km_2mom_db_udef', 'RCE_3km_2mom_db_rlongup', 'RCE_3km_2mom_dm', 'RCE_3km_2mom_dm_lrz' ], '', 'Rce3km2mom', [ 1.5, 300 ] ],
+    [ [ 'RCE_3km_2mom', 'RCE_3km_2mom_db', 'RCE_3km_2mom_db_udef', 'RCE_3km_2mom_db_rlongup', 'RCE_3km_2mom_dm', 'RCE_3km_2mom_dm_lrz' ], '', 'Rce3km2mom', [ 1.5, 300 ] ],
     ]
 Nplots = len(PlotList)
 
