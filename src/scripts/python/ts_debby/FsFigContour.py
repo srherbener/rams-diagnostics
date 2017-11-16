@@ -498,6 +498,44 @@ class StormHovmoller(FsContour):
         self.FacCmax = FacCspecs[1]
         self.FacCnum = FacCspecs[2]
 
+# class for doing storm hovmollers - time vs pressure
+class StormHovmollerPress(FsContour):
+    '''Class to create storm hovmoller, sim/factor figure'''
+
+    def __init__(self, InFname, InVname, OutFname, Ptitle, Tag, SimCspecs, FacCspecs):
+        FsContour.__init__(self, InFname, InVname, OutFname, Ptitle, Tag)
+
+        self.AxFsize = 10
+
+        # x-axis is time in hours of simulation, start time is 06Z, 22Aug
+        self.XcoordName = '/t_coords'
+        self.XcoordScale = 1.0 / 3600.0
+        self.XcoordOffset = -42.0
+        self.Xlabel = ''
+        self.Xmin = 0.0
+        self.Xmax = 60.0
+        self.Xticks = [ 6.0, 18.0, 30.0, 42.0, 54.0 ]
+        self.XtickLabels = [ ' 12Z\n22Aug', ' 0Z\n23Aug', ' 12Z\n23Aug', ' 0Z\n24Aug', ' 12Z\n24Aug' ]
+
+        # y-axis is pressure in millibars
+        self.YcoordName = '/z_coords'
+        self.YcoordScale = 1.0
+        self.YcoordOffset = 0.0
+        self.Ylabel = 'P (mb)'
+        self.Ymin = 1000.0
+        self.Ymax = 200.0
+        self.Yticks = [ 1000.0, 800.0, 600.0, 400.0, 200.0 ] 
+
+
+        # Contour specs
+        self.SimCmin = SimCspecs[0]
+        self.SimCmax = SimCspecs[1]
+        self.SimCnum = SimCspecs[2]
+
+        self.FacCmin = FacCspecs[0]
+        self.FacCmax = FacCspecs[1]
+        self.FacCnum = FacCspecs[2]
+
 # class for doing plan views (lon, lat)
 class PlanView(FsContour):
     '''Class to create plan view sim/factor figure'''
