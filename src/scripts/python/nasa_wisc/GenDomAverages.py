@@ -63,6 +63,7 @@ VarList = [
     [ "pcprr",      "/pcprr",         "pcprr",         "all"     ],
     [ "vint_vapor", "/vertint_vapor", "vint_vapor",    "all"     ],
     [ "vint_vapor", "/vertint_vapor", "vint_vapor_01", "ge:0.01" ],
+    [ "vint_tcond", "/vertint_orig",  "vint_tcond",    "all"     ],
     [ "pi_sfc",     "/pi",            "pi_sfc",        "all" ],
 
     [ "rtotal", "/rtotal_orig", "total_cond",    "all"     ],

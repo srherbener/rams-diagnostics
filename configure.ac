@@ -21,11 +21,11 @@ AC_PROG_RANLIB
 
 # Checks for libraries.
 AC_CHECK_LIB([c], [close], [], [AC_MSG_ERROR([Unable to find library: libc])])
-AC_CHECK_LIB([dl], [dlopen], [], [AC_MSG_ERROR([Unable to find library: libdl])])
 AC_CHECK_LIB([sz], [szip_check_params], [], [AC_MSG_ERROR([Unable to find library: libsz])])
 AC_CHECK_LIB([z], [compress], [], [AC_MSG_ERROR([Unable to find library: libz])])
 AC_CHECK_LIB([m], [cos], [], [AC_MSG_ERROR([Unable to find library: libm])])
 AC_CHECK_LIB([pthread], [pthread_create], [], [AC_MSG_ERROR([Unable to find library: libpthread])])
+AC_CHECK_LIB([dl], [dlopen], [], [AC_MSG_ERROR([Unable to find library: libdl])])
 AC_CHECK_LIB([hdf5], [H5open], [], [AC_MSG_ERROR([Unable to find library: libhdf5])])
 AC_CHECK_LIB([hdf5_hl], [H5LTmake_dataset_float], [], [AC_MSG_ERROR([Unable to find library: libhdf5_hl])])
 

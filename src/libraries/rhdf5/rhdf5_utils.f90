@@ -877,7 +877,7 @@ subroutine rhdf5_read_variable_init(id, vname, ndims, itstep, dims, units, descr
   call rhdf5_read_dim_name_string(ndims, dimnames, dnstring)
 
   ! If arrayorg is "row major" then reverse the dimensions
-  if (trim(arrayorg) .eq. 'row major') then
+  if (arrayorg(1:9) .eq. 'row major') then
     call rhdf5_reverse_dims(ndims, dims, dimnames)
   endif
 

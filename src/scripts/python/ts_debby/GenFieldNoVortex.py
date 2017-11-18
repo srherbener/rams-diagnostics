@@ -217,43 +217,51 @@ SimList = [
 Nsims = len(SimList)
 
 VarList = [
-#    [ "HDF5/<SIM>/HDF5/sst_lite-<SIM>-AS-2006-08-20-120000-g3.h5", '/sst', "HDF5/<SIM>/HDF5/sst_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+#    [ "SIMS/<SIM>/HDF5/sst_lite-<SIM>-AS-2006-08-20-120000-g3.h5", '/sst', "SIMS/<SIM>/HDF5/sst_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
 
-#    [ "HDF5/<SIM>/HDF5/pcprate_lite-<SIM>-AS-2006-08-20-120000-g3.h5", '/pcprate', "HDF5/<SIM>/HDF5/pcprate_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+#    [ "SIMS/<SIM>/HDF5/pcprate_lite-<SIM>-AS-2006-08-20-120000-g3.h5", '/pcprate', "SIMS/<SIM>/HDF5/pcprate_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
 
-#    [ "HDF5/<SIM>/HDF5/u_lite-<SIM>-AS-2006-08-20-120000-g3.h5", '/u', "HDF5/<SIM>/HDF5/u_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
-#    [ "HDF5/<SIM>/HDF5/v_lite-<SIM>-AS-2006-08-20-120000-g3.h5", '/v', "HDF5/<SIM>/HDF5/v_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+#    [ "SIMS/<SIM>/HDF5/u_lite-<SIM>-AS-2006-08-20-120000-g3.h5", '/u', "SIMS/<SIM>/HDF5/u_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+#    [ "SIMS/<SIM>/HDF5/v_lite-<SIM>-AS-2006-08-20-120000-g3.h5", '/v', "SIMS/<SIM>/HDF5/v_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
 #
-#    [ "HDF5/<SIM>/HDF5/tempc_lite-<SIM>-AS-2006-08-20-120000-g3.h5", '/tempc', "HDF5/<SIM>/HDF5/tempc_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
-#    [ "HDF5/<SIM>/HDF5/theta_lite-<SIM>-AS-2006-08-20-120000-g3.h5", '/theta', "HDF5/<SIM>/HDF5/theta_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
-#    [ "HDF5/<SIM>/HDF5/theta_e_lite-<SIM>-AS-2006-08-20-120000-g3.h5", '/theta_e', "HDF5/<SIM>/HDF5/theta_e_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+#    [ "SIMS/<SIM>/HDF5/tempc_lite-<SIM>-AS-2006-08-20-120000-g3.h5", '/tempc', "SIMS/<SIM>/HDF5/tempc_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+#    [ "SIMS/<SIM>/HDF5/theta_lite-<SIM>-AS-2006-08-20-120000-g3.h5", '/theta', "SIMS/<SIM>/HDF5/theta_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+#    [ "SIMS/<SIM>/HDF5/theta_e_lite-<SIM>-AS-2006-08-20-120000-g3.h5", '/theta_e', "SIMS/<SIM>/HDF5/theta_e_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
 #
-#    [ "HDF5/<SIM>/HDF5/vapor_lite-<SIM>-AS-2006-08-20-120000-g3.h5", '/vapor', "HDF5/<SIM>/HDF5/vapor_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+#    [ "SIMS/<SIM>/HDF5/vapor_lite-<SIM>-AS-2006-08-20-120000-g3.h5", '/vapor', "SIMS/<SIM>/HDF5/vapor_nv_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
 #
-#    [ "HDF5/<SIM>/HDF5/u_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/u', "HDF5/<SIM>/HDF5/u_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
-#    [ "HDF5/<SIM>/HDF5/v_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/v', "HDF5/<SIM>/HDF5/v_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+#    [ "SIMS/<SIM>/HDF5/u_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/u', "SIMS/<SIM>/HDF5/u_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+#    [ "SIMS/<SIM>/HDF5/v_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/v', "SIMS/<SIM>/HDF5/v_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
 #
-#    [ "HDF5/<SIM>/HDF5/tempc_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/tempc', "HDF5/<SIM>/HDF5/tempc_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
-#    [ "HDF5/<SIM>/HDF5/theta_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/theta', "HDF5/<SIM>/HDF5/theta_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
-#    [ "HDF5/<SIM>/HDF5/theta_e_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/theta_e', "HDF5/<SIM>/HDF5/theta_e_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+#    [ "SIMS/<SIM>/HDF5/tempc_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/tempc', "SIMS/<SIM>/HDF5/tempc_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+#    [ "SIMS/<SIM>/HDF5/theta_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/theta', "SIMS/<SIM>/HDF5/theta_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+#    [ "SIMS/<SIM>/HDF5/theta_e_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/theta_e', "SIMS/<SIM>/HDF5/theta_e_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
 #
-#    [ "HDF5/<SIM>/HDF5/vapor_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/vapor', "HDF5/<SIM>/HDF5/vapor_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+#    [ "SIMS/<SIM>/HDF5/vapor_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/vapor', "SIMS/<SIM>/HDF5/vapor_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
 
-#    [ "HDF5/<SIM>/HDF5/vapliqt_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/vapliqt', "HDF5/<SIM>/HDF5/vapliqt_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+#    [ "SIMS/<SIM>/HDF5/vapliqt_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/vapliqt', "SIMS/<SIM>/HDF5/vapliqt_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
 
-#    [ "HDF5/<SIM>/HDF5/liq_cond_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/liq_cond', "HDF5/<SIM>/HDF5/liq_cond_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
-#    [ "HDF5/<SIM>/HDF5/liq_evap_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/liq_evap', "HDF5/<SIM>/HDF5/liq_evap_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+#    [ "SIMS/<SIM>/HDF5/liq_cond_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/liq_cond', "SIMS/<SIM>/HDF5/liq_cond_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+#    [ "SIMS/<SIM>/HDF5/liq_evap_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/liq_evap', "SIMS/<SIM>/HDF5/liq_evap_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
 
-    [ "HDF5/<SIM>/HDF5/relhum_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/relhum', "HDF5/<SIM>/HDF5/relhum_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+#    [ "SIMS/<SIM>/HDF5/relhum_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/relhum', "SIMS/<SIM>/HDF5/relhum_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
 
-    [ "HDF5/<SIM>/HDF5/ice_dep_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/ice_dep', "HDF5/<SIM>/HDF5/ice_dep_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
-    [ "HDF5/<SIM>/HDF5/ice_sub_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/ice_sub', "HDF5/<SIM>/HDF5/ice_sub_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+#    [ "SIMS/<SIM>/HDF5/ice_dep_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/ice_dep', "SIMS/<SIM>/HDF5/ice_dep_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+#    [ "SIMS/<SIM>/HDF5/ice_sub_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/ice_sub', "SIMS/<SIM>/HDF5/ice_sub_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
 
-    [ "HDF5/<SIM>/HDF5/ice2raint_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/ice2raint', "HDF5/<SIM>/HDF5/ice2raint_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
-    [ "HDF5/<SIM>/HDF5/melticet_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/melticet', "HDF5/<SIM>/HDF5/melticet_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
-    [ "HDF5/<SIM>/HDF5/rain2icet_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/rain2icet', "HDF5/<SIM>/HDF5/rain2icet_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
-    [ "HDF5/<SIM>/HDF5/rimecldt_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/rimecldt', "HDF5/<SIM>/HDF5/rimecldt_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
-    [ "HDF5/<SIM>/HDF5/cld2raint_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/cld2raint', "HDF5/<SIM>/HDF5/cld2raint_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "HDF5/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+#    [ "SIMS/<SIM>/HDF5/ice2raint_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/ice2raint', "SIMS/<SIM>/HDF5/ice2raint_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+#    [ "SIMS/<SIM>/HDF5/melticet_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/melticet', "SIMS/<SIM>/HDF5/melticet_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+#    [ "SIMS/<SIM>/HDF5/rain2icet_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/rain2icet', "SIMS/<SIM>/HDF5/rain2icet_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+#    [ "SIMS/<SIM>/HDF5/rimecldt_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/rimecldt', "SIMS/<SIM>/HDF5/rimecldt_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+#    [ "SIMS/<SIM>/HDF5/cld2raint_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/cld2raint', "SIMS/<SIM>/HDF5/cld2raint_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+
+    [ "SIMS/<SIM>/HDF5/cloud_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/cloud', "SIMS/<SIM>/HDF5/cloud_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+    [ "SIMS/<SIM>/HDF5/cloud_num_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/cloud_num', "SIMS/<SIM>/HDF5/cloud_num_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+    [ "SIMS/<SIM>/HDF5/cloud_diam_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/cloud_diam', "SIMS/<SIM>/HDF5/cloud_diam_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+
+    [ "SIMS/<SIM>/HDF5/rain_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/rain', "SIMS/<SIM>/HDF5/rain_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+    [ "SIMS/<SIM>/HDF5/rain_num_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/rain_num', "SIMS/<SIM>/HDF5/rain_num_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
+    [ "SIMS/<SIM>/HDF5/rain_diam_lite-<SIM>-AP-2006-08-20-120000-g3.h5", '/rain_diam', "SIMS/<SIM>/HDF5/rain_diam_nv_lite-<SIM>-AP-2006-08-20-120000-g3.h5", "SIMS/<SIM>/HDF5/storm_center_lite-<SIM>-AS-2006-08-20-120000-g3.h5", "/press_cent_xloc", "/press_cent_yloc" ],
     ]
 Nvars = len(VarList)
 

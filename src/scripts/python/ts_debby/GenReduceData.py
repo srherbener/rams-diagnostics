@@ -23,38 +23,47 @@ Nsims = len(SimList)
 
 FileList = [
     # 2D vars
-#    [ 'HDF5/<SIM>/HDF5/topo-<SIM>-AS-2006-08-20-120000-g3.h5', '/topo', 'HDF5/<SIM>/HDF5/topo_lite-<SIM>-AS-2006-08-20-120000-g3.h5', '/topo'       ],
-#    [ 'HDF5/<SIM>/HDF5/sea_press-<SIM>-AS-2006-08-20-120000-g3.h5', '/sea_press', 'HDF5/<SIM>/HDF5/sea_press_lite-<SIM>-AS-2006-08-20-120000-g3.h5', '/sea_press'       ],
-#    [ 'HDF5/<SIM>/HDF5/sst-<SIM>-AS-2006-08-20-120000-g3.h5', '/sst', 'HDF5/<SIM>/HDF5/sst_lite-<SIM>-AS-2006-08-20-120000-g3.h5', '/sst'       ],
-#    [ 'HDF5/<SIM>/HDF5/pcprate-<SIM>-AS-2006-08-20-120000-g3.h5', '/pcprate', 'HDF5/<SIM>/HDF5/pcprate_lite-<SIM>-AS-2006-08-20-120000-g3.h5', '/pcprate'       ],
+#    [ 'SIMS/<SIM>/HDF5/topo-<SIM>-AS-2006-08-20-120000-g3.h5', '/topo', 'SIMS/<SIM>/HDF5/topo_lite-<SIM>-AS-2006-08-20-120000-g3.h5', '/topo'       ],
+#    [ 'SIMS/<SIM>/HDF5/sea_press-<SIM>-AS-2006-08-20-120000-g3.h5', '/sea_press', 'SIMS/<SIM>/HDF5/sea_press_lite-<SIM>-AS-2006-08-20-120000-g3.h5', '/sea_press'       ],
+#    [ 'SIMS/<SIM>/HDF5/sst-<SIM>-AS-2006-08-20-120000-g3.h5', '/sst', 'SIMS/<SIM>/HDF5/sst_lite-<SIM>-AS-2006-08-20-120000-g3.h5', '/sst'       ],
+#    [ 'SIMS/<SIM>/HDF5/pcprate-<SIM>-AS-2006-08-20-120000-g3.h5', '/pcprate', 'SIMS/<SIM>/HDF5/pcprate_lite-<SIM>-AS-2006-08-20-120000-g3.h5', '/pcprate'       ],
 
     # Vertical coords = sigma-z
-#    [ 'HDF5/<SIM>/HDF5/u-<SIM>-AS-2006-08-20-120000-g3.h5',       '/u',       'HDF5/<SIM>/HDF5/u_lite-<SIM>-AS-2006-08-20-120000-g3.h5',       '/u'       ],
-#    [ 'HDF5/<SIM>/HDF5/v-<SIM>-AS-2006-08-20-120000-g3.h5',       '/v',       'HDF5/<SIM>/HDF5/v_lite-<SIM>-AS-2006-08-20-120000-g3.h5',       '/v'       ],
-#    [ 'HDF5/<SIM>/HDF5/tempc-<SIM>-AS-2006-08-20-120000-g3.h5',   '/tempc',   'HDF5/<SIM>/HDF5/tempc_lite-<SIM>-AS-2006-08-20-120000-g3.h5',   '/tempc'   ],
-#    [ 'HDF5/<SIM>/HDF5/theta-<SIM>-AS-2006-08-20-120000-g3.h5',   '/theta',   'HDF5/<SIM>/HDF5/theta_lite-<SIM>-AS-2006-08-20-120000-g3.h5',   '/theta'   ],
-#    [ 'HDF5/<SIM>/HDF5/theta_e-<SIM>-AS-2006-08-20-120000-g3.h5', '/theta_e', 'HDF5/<SIM>/HDF5/theta_e_lite-<SIM>-AS-2006-08-20-120000-g3.h5', '/theta_e' ],
-#    [ 'HDF5/<SIM>/HDF5/vapor-<SIM>-AS-2006-08-20-120000-g3.h5',   '/vapor',   'HDF5/<SIM>/HDF5/vapor_lite-<SIM>-AS-2006-08-20-120000-g3.h5',   '/vapor'   ],
+#    [ 'SIMS/<SIM>/HDF5/u-<SIM>-AS-2006-08-20-120000-g3.h5',       '/u',       'SIMS/<SIM>/HDF5/u_lite-<SIM>-AS-2006-08-20-120000-g3.h5',       '/u'       ],
+#    [ 'SIMS/<SIM>/HDF5/v-<SIM>-AS-2006-08-20-120000-g3.h5',       '/v',       'SIMS/<SIM>/HDF5/v_lite-<SIM>-AS-2006-08-20-120000-g3.h5',       '/v'       ],
+#    [ 'SIMS/<SIM>/HDF5/tempc-<SIM>-AS-2006-08-20-120000-g3.h5',   '/tempc',   'SIMS/<SIM>/HDF5/tempc_lite-<SIM>-AS-2006-08-20-120000-g3.h5',   '/tempc'   ],
+#    [ 'SIMS/<SIM>/HDF5/theta-<SIM>-AS-2006-08-20-120000-g3.h5',   '/theta',   'SIMS/<SIM>/HDF5/theta_lite-<SIM>-AS-2006-08-20-120000-g3.h5',   '/theta'   ],
+#    [ 'SIMS/<SIM>/HDF5/theta_e-<SIM>-AS-2006-08-20-120000-g3.h5', '/theta_e', 'SIMS/<SIM>/HDF5/theta_e_lite-<SIM>-AS-2006-08-20-120000-g3.h5', '/theta_e' ],
+#    [ 'SIMS/<SIM>/HDF5/vapor-<SIM>-AS-2006-08-20-120000-g3.h5',   '/vapor',   'SIMS/<SIM>/HDF5/vapor_lite-<SIM>-AS-2006-08-20-120000-g3.h5',   '/vapor'   ],
 
-#    [ 'HDF5/<SIM>/HDF5/press-<SIM>-AS-2006-08-20-120000-g3.h5',   '/press',   'HDF5/<SIM>/HDF5/press_lite-<SIM>-AS-2006-08-20-120000-g3.h5',   '/press'   ],
-#    [ 'HDF5/<SIM>/HDF5/relhum-<SIM>-AS-2006-08-20-120000-g3.h5',   '/relhum',   'HDF5/<SIM>/HDF5/relhum_lite-<SIM>-AS-2006-08-20-120000-g3.h5',   '/relhum'   ],
+#    [ 'SIMS/<SIM>/HDF5/press-<SIM>-AS-2006-08-20-120000-g3.h5',   '/press',   'SIMS/<SIM>/HDF5/press_lite-<SIM>-AS-2006-08-20-120000-g3.h5',   '/press'   ],
+#    [ 'SIMS/<SIM>/HDF5/relhum-<SIM>-AS-2006-08-20-120000-g3.h5',   '/relhum',   'SIMS/<SIM>/HDF5/relhum_lite-<SIM>-AS-2006-08-20-120000-g3.h5',   '/relhum'   ],
 
     # Vertical coords = pressure
-#    [ 'HDF5/<SIM>/HDF5/u-<SIM>-AP-2006-08-20-120000-g3.h5',       '/u',       'HDF5/<SIM>/HDF5/u_lite-<SIM>-AP-2006-08-20-120000-g3.h5',       '/u'       ],
-#    [ 'HDF5/<SIM>/HDF5/v-<SIM>-AP-2006-08-20-120000-g3.h5',       '/v',       'HDF5/<SIM>/HDF5/v_lite-<SIM>-AP-2006-08-20-120000-g3.h5',       '/v'       ],
-#    [ 'HDF5/<SIM>/HDF5/tempc-<SIM>-AP-2006-08-20-120000-g3.h5',   '/tempc',   'HDF5/<SIM>/HDF5/tempc_lite-<SIM>-AP-2006-08-20-120000-g3.h5',   '/tempc'   ],
-#    [ 'HDF5/<SIM>/HDF5/theta-<SIM>-AP-2006-08-20-120000-g3.h5',   '/theta',   'HDF5/<SIM>/HDF5/theta_lite-<SIM>-AP-2006-08-20-120000-g3.h5',   '/theta'   ],
-#    [ 'HDF5/<SIM>/HDF5/theta_e-<SIM>-AP-2006-08-20-120000-g3.h5', '/theta_e', 'HDF5/<SIM>/HDF5/theta_e_lite-<SIM>-AP-2006-08-20-120000-g3.h5', '/theta_e' ],
-#    [ 'HDF5/<SIM>/HDF5/vapor-<SIM>-AP-2006-08-20-120000-g3.h5',   '/vapor',   'HDF5/<SIM>/HDF5/vapor_lite-<SIM>-AP-2006-08-20-120000-g3.h5',   '/vapor'   ],
-#    [ 'HDF5/<SIM>/HDF5/relhum-<SIM>-AP-2006-08-20-120000-g3.h5',  '/relhum',  'HDF5/<SIM>/HDF5/relhum_lite-<SIM>-AP-2006-08-20-120000-g3.h5',  '/relhum'  ],
-#    [ 'HDF5/<SIM>/HDF5/vapliqt-<SIM>-AP-2006-08-20-120000-g3.h5', '/vapliqt', 'HDF5/<SIM>/HDF5/vapliqt_lite-<SIM>-AP-2006-08-20-120000-g3.h5', '/vapliqt' ],
-    [ 'HDF5/<SIM>/HDF5/vapicet-<SIM>-AP-2006-08-20-120000-g3.h5', '/vapicet', 'HDF5/<SIM>/HDF5/vapicet_lite-<SIM>-AP-2006-08-20-120000-g3.h5', '/vapicet' ],
+#    [ 'SIMS/<SIM>/HDF5/u-<SIM>-AP-2006-08-20-120000-g3.h5',       '/u',       'SIMS/<SIM>/HDF5/u_lite-<SIM>-AP-2006-08-20-120000-g3.h5',       '/u'       ],
+#    [ 'SIMS/<SIM>/HDF5/v-<SIM>-AP-2006-08-20-120000-g3.h5',       '/v',       'SIMS/<SIM>/HDF5/v_lite-<SIM>-AP-2006-08-20-120000-g3.h5',       '/v'       ],
+#    [ 'SIMS/<SIM>/HDF5/tempc-<SIM>-AP-2006-08-20-120000-g3.h5',   '/tempc',   'SIMS/<SIM>/HDF5/tempc_lite-<SIM>-AP-2006-08-20-120000-g3.h5',   '/tempc'   ],
+#    [ 'SIMS/<SIM>/HDF5/theta-<SIM>-AP-2006-08-20-120000-g3.h5',   '/theta',   'SIMS/<SIM>/HDF5/theta_lite-<SIM>-AP-2006-08-20-120000-g3.h5',   '/theta'   ],
+#    [ 'SIMS/<SIM>/HDF5/theta_e-<SIM>-AP-2006-08-20-120000-g3.h5', '/theta_e', 'SIMS/<SIM>/HDF5/theta_e_lite-<SIM>-AP-2006-08-20-120000-g3.h5', '/theta_e' ],
+#    [ 'SIMS/<SIM>/HDF5/vapor-<SIM>-AP-2006-08-20-120000-g3.h5',   '/vapor',   'SIMS/<SIM>/HDF5/vapor_lite-<SIM>-AP-2006-08-20-120000-g3.h5',   '/vapor'   ],
+#    [ 'SIMS/<SIM>/HDF5/relhum-<SIM>-AP-2006-08-20-120000-g3.h5',  '/relhum',  'SIMS/<SIM>/HDF5/relhum_lite-<SIM>-AP-2006-08-20-120000-g3.h5',  '/relhum'  ],
+#    [ 'SIMS/<SIM>/HDF5/vapliqt-<SIM>-AP-2006-08-20-120000-g3.h5', '/vapliqt', 'SIMS/<SIM>/HDF5/vapliqt_lite-<SIM>-AP-2006-08-20-120000-g3.h5', '/vapliqt' ],
+#    [ 'SIMS/<SIM>/HDF5/vapicet-<SIM>-AP-2006-08-20-120000-g3.h5', '/vapicet', 'SIMS/<SIM>/HDF5/vapicet_lite-<SIM>-AP-2006-08-20-120000-g3.h5', '/vapicet' ],
 
-    [ 'HDF5/<SIM>/HDF5/ice2raint-<SIM>-AP-2006-08-20-120000-g3.h5', '/ice2raint', 'HDF5/<SIM>/HDF5/ice2raint_lite-<SIM>-AP-2006-08-20-120000-g3.h5', '/ice2raint' ],
-#    [ 'HDF5/<SIM>/HDF5/melticet-<SIM>-AP-2006-08-20-120000-g3.h5',  '/melticet',  'HDF5/<SIM>/HDF5/melticet_lite-<SIM>-AP-2006-08-20-120000-g3.h5',  '/melticet'  ],
-#    [ 'HDF5/<SIM>/HDF5/rain2icet-<SIM>-AP-2006-08-20-120000-g3.h5', '/rain2icet', 'HDF5/<SIM>/HDF5/rain2icet_lite-<SIM>-AP-2006-08-20-120000-g3.h5', '/rain2icet' ],
-#    [ 'HDF5/<SIM>/HDF5/rimecldt-<SIM>-AP-2006-08-20-120000-g3.h5',  '/rimecldt',  'HDF5/<SIM>/HDF5/rimecldt_lite-<SIM>-AP-2006-08-20-120000-g3.h5',  '/rimecldt'  ],
-#    [ 'HDF5/<SIM>/HDF5/cld2raint-<SIM>-AP-2006-08-20-120000-g3.h5', '/cld2raint', 'HDF5/<SIM>/HDF5/cld2raint_lite-<SIM>-AP-2006-08-20-120000-g3.h5', '/cld2raint' ],
+#    [ 'SIMS/<SIM>/HDF5/ice2raint-<SIM>-AP-2006-08-20-120000-g3.h5', '/ice2raint', 'SIMS/<SIM>/HDF5/ice2raint_lite-<SIM>-AP-2006-08-20-120000-g3.h5', '/ice2raint' ],
+#    [ 'SIMS/<SIM>/HDF5/melticet-<SIM>-AP-2006-08-20-120000-g3.h5',  '/melticet',  'SIMS/<SIM>/HDF5/melticet_lite-<SIM>-AP-2006-08-20-120000-g3.h5',  '/melticet'  ],
+#    [ 'SIMS/<SIM>/HDF5/rain2icet-<SIM>-AP-2006-08-20-120000-g3.h5', '/rain2icet', 'SIMS/<SIM>/HDF5/rain2icet_lite-<SIM>-AP-2006-08-20-120000-g3.h5', '/rain2icet' ],
+#    [ 'SIMS/<SIM>/HDF5/rimecldt-<SIM>-AP-2006-08-20-120000-g3.h5',  '/rimecldt',  'SIMS/<SIM>/HDF5/rimecldt_lite-<SIM>-AP-2006-08-20-120000-g3.h5',  '/rimecldt'  ],
+#    [ 'SIMS/<SIM>/HDF5/cld2raint-<SIM>-AP-2006-08-20-120000-g3.h5', '/cld2raint', 'SIMS/<SIM>/HDF5/cld2raint_lite-<SIM>-AP-2006-08-20-120000-g3.h5', '/cld2raint' ],
+
+    [ 'SIMS/<SIM>/HDF5/cloud-<SIM>-AP-2006-08-20-120000-g3.h5',      '/cloud',           'SIMS/<SIM>/HDF5/cloud_lite-<SIM>-AP-2006-08-20-120000-g3.h5',      '/cloud'      ],
+    [ 'SIMS/<SIM>/HDF5/cloud_diam-<SIM>-AP-2006-08-20-120000-g3.h5', '/cloud_diam',      'SIMS/<SIM>/HDF5/cloud_diam_lite-<SIM>-AP-2006-08-20-120000-g3.h5', '/cloud_diam' ],
+    [ 'SIMS/<SIM>/HDF5/cloud_num-<SIM>-AP-2006-08-20-120000-g3.h5',  '/cloud_concen_kg', 'SIMS/<SIM>/HDF5/cloud_num_lite-<SIM>-AP-2006-08-20-120000-g3.h5',       '/cloud_num'  ],
+
+    [ 'SIMS/<SIM>/HDF5/rain-<SIM>-AP-2006-08-20-120000-g3.h5',      '/rain',           'SIMS/<SIM>/HDF5/rain_lite-<SIM>-AP-2006-08-20-120000-g3.h5',      '/rain'      ],
+    [ 'SIMS/<SIM>/HDF5/rain_diam-<SIM>-AP-2006-08-20-120000-g3.h5', '/rain_diam',      'SIMS/<SIM>/HDF5/rain_diam_lite-<SIM>-AP-2006-08-20-120000-g3.h5', '/rain_diam' ],
+    [ 'SIMS/<SIM>/HDF5/rain_num-<SIM>-AP-2006-08-20-120000-g3.h5',  '/rain_concen_kg', 'SIMS/<SIM>/HDF5/rain_num_lite-<SIM>-AP-2006-08-20-120000-g3.h5',       '/rain_num'  ],
+
     ]
 Nfiles = len(FileList)
 
@@ -164,7 +173,7 @@ for isim in range(Nsims):
             OutDims = (Nt, Nz, NyReduce, NxReduce)
             OutChunks = (1, Nz, NyReduce, NxReduce)
 
-        OutDset = h5u.DsetCoards(Ivname, Ndims, OutDims, chunks=OutChunks)
+        OutDset = h5u.DsetCoards(Ovname, Ndims, OutDims, chunks=OutChunks)
         OutDset.Create(Ofile)
 
 
