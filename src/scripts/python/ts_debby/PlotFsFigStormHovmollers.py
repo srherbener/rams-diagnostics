@@ -346,22 +346,84 @@ InFname = 'DIAGS/storm_hovs_<SIM>.h5'
 ### 
 ### FsHov = ffc.StormHovmollerPress(InFname, '/all_p_nv_rb_melticet_lite', 'Plots.py/FsFigNvPressMeltIceRbandFactors.png', 'Ice Melt', 'RBAND', SimCspecs, FactCspecs)
 ### FsHov.CreateFig()
+### 
+### # Rain to ice
+### SimCspecs = [ 0, 0.05, 11 ]
+### FactCspecs = [ -0.005, 0.005, 11 ]
+### FsHov = ffc.StormHovmollerPress(InFname, '/all_p_nv_core_rain2icet_lite', 'Plots.py/FsFigNvPressRain2IceCoreFactors.png', 'R2I', 'CORE', SimCspecs, FactCspecs)
+### FsHov.CreateFig()
+### 
+### FsHov = ffc.StormHovmollerPress(InFname, '/all_p_nv_rb_rain2icet_lite', 'Plots.py/FsFigNvPressRain2IceRbandFactors.png', 'R2I', 'RBAND', SimCspecs, FactCspecs)
+### FsHov.CreateFig()
+### 
+### # Riming of cloud
+### SimCspecs = [ 0, 0.1, 11 ]
+### FactCspecs = [ -0.01, 0.01, 11 ]
+### FsHov = ffc.StormHovmollerPress(InFname, '/all_p_nv_core_rimecldt_lite', 'Plots.py/FsFigNvPressRimeCloudCoreFactors.png', 'Rime Cloud', 'CORE', SimCspecs, FactCspecs)
+### FsHov.CreateFig()
+### 
+### FsHov = ffc.StormHovmollerPress(InFname, '/all_p_nv_rb_rimecldt_lite', 'Plots.py/FsFigNvPressRimeCloudRbandFactors.png', 'Rime Cloud', 'RBAND', SimCspecs, FactCspecs)
+### FsHov.CreateFig()
+### 
+### # Cloud mass
+### SimCspecs = [ 0.0001, 1, 11 ]
+### FactCspecs = [ -0.01, 0.01, 11 ]
+### FsHov = ffc.StormHovmollerPress(InFname, '/all_p_nv_core_cloud_lite', 'Plots.py/FsFigNvPressCloudMassCoreFactors.png', 'Cloud Mass', 'CORE', SimCspecs, FactCspecs)
+### FsHov.SimCtype = 'log'
+### FsHov.CreateFig()
+### 
+### FsHov = ffc.StormHovmollerPress(InFname, '/all_p_nv_rb_cloud_lite', 'Plots.py/FsFigNvPressCloudMassRbandFactors.png', 'Cloud Mass', 'RBAND', SimCspecs, FactCspecs)
+### FsHov.SimCtype = 'log'
+### FsHov.CreateFig()
+###
+### # Cloud number
+### SimCspecs = [ 1e4, 1e7, 11 ]
+### FactCspecs = [ -1e5, 1e5, 11 ]
+### FsHov = ffc.StormHovmollerPress(InFname, '/all_p_nv_core_cloud_num_lite', 'Plots.py/FsFigNvPressCloudNumCoreFactors.png', 'Cloud Num.', 'CORE', SimCspecs, FactCspecs)
+### FsHov.SimCtype = 'log'
+### FsHov.CreateFig()
+### 
+### FsHov = ffc.StormHovmollerPress(InFname, '/all_p_nv_rb_cloud_num_lite', 'Plots.py/FsFigNvPressCloudNumRbandFactors.png', 'Cloud Num.', 'RBAND', SimCspecs, FactCspecs)
+### FsHov.SimCtype = 'log'
+### FsHov.CreateFig()
+### 
+### # Cloud diameter
+### SimCspecs = [ 0, 60, 11 ]
+### FactCspecs = [ -5, 5, 11 ]
+### FsHov = ffc.StormHovmollerPress(InFname, '/all_p_nv_core_cloud_diam_lite', 'Plots.py/FsFigNvPressCloudDiamCoreFactors.png', 'Cloud Diam.', 'CORE', SimCspecs, FactCspecs)
+### FsHov.CreateFig()
+### 
+### FsHov = ffc.StormHovmollerPress(InFname, '/all_p_nv_rb_cloud_diam_lite', 'Plots.py/FsFigNvPressCloudDiamRbandFactors.png', 'Cloud Diam.', 'RBAND', SimCspecs, FactCspecs)
+### FsHov.CreateFig()
 
-# Rain to ice
-SimCspecs = [ 0, 0.05, 11 ]
-FactCspecs = [ -0.005, 0.005, 11 ]
-FsHov = ffc.StormHovmollerPress(InFname, '/all_p_nv_core_rain2icet_lite', 'Plots.py/FsFigNvPressRain2IceCoreFactors.png', 'R2I', 'CORE', SimCspecs, FactCspecs)
-FsHov.CreateFig()
-
-FsHov = ffc.StormHovmollerPress(InFname, '/all_p_nv_rb_rain2icet_lite', 'Plots.py/FsFigNvPressRain2IceRbandFactors.png', 'R2I', 'RBAND', SimCspecs, FactCspecs)
-FsHov.CreateFig()
-
-# Riming of cloud
-SimCspecs = [ 0, 0.1, 11 ]
+# Rain mass
+SimCspecs = [ 0.001, 1, 11 ]
 FactCspecs = [ -0.01, 0.01, 11 ]
-FsHov = ffc.StormHovmollerPress(InFname, '/all_p_nv_core_rimecldt_lite', 'Plots.py/FsFigNvPressRimeCloudCoreFactors.png', 'Rime Cloud', 'CORE', SimCspecs, FactCspecs)
+FsHov = ffc.StormHovmollerPress(InFname, '/all_p_nv_core_rain_lite', 'Plots.py/FsFigNvPressRainMassCoreFactors.png', 'Rain Mass', 'CORE', SimCspecs, FactCspecs)
+FsHov.SimCtype = 'log'
 FsHov.CreateFig()
 
-FsHov = ffc.StormHovmollerPress(InFname, '/all_p_nv_rb_rimecldt_lite', 'Plots.py/FsFigNvPressRimeCloudRbandFactors.png', 'Rime Cloud', 'RBAND', SimCspecs, FactCspecs)
+FsHov = ffc.StormHovmollerPress(InFname, '/all_p_nv_rb_rain_lite', 'Plots.py/FsFigNvPressRainMassRbandFactors.png', 'Rain Mass', 'RBAND', SimCspecs, FactCspecs)
+FsHov.SimCtype = 'log'
+FsHov.CreateFig()
+###
+# Rain number
+SimCspecs = [ 1e2, 1e5, 11 ]
+FactCspecs = [ -1e3, 1e3, 11 ]
+FsHov = ffc.StormHovmollerPress(InFname, '/all_p_nv_core_rain_num_lite', 'Plots.py/FsFigNvPressRainNumCoreFactors.png', 'Rain Num.', 'CORE', SimCspecs, FactCspecs)
+FsHov.SimCtype = 'log'
+FsHov.CreateFig()
+
+FsHov = ffc.StormHovmollerPress(InFname, '/all_p_nv_rb_rain_num_lite', 'Plots.py/FsFigNvPressRainNumRbandFactors.png', 'Rain Num.', 'RBAND', SimCspecs, FactCspecs)
+FsHov.SimCtype = 'log'
+FsHov.CreateFig()
+
+# Rain diameter
+SimCspecs = [ 0, 0.5, 11 ]
+FactCspecs = [ -0.1, 0.1, 11 ]
+FsHov = ffc.StormHovmollerPress(InFname, '/all_p_nv_core_rain_diam_lite', 'Plots.py/FsFigNvPressRainDiamCoreFactors.png', 'Rain Diam.', 'CORE', SimCspecs, FactCspecs)
+FsHov.CreateFig()
+
+FsHov = ffc.StormHovmollerPress(InFname, '/all_p_nv_rb_rain_diam_lite', 'Plots.py/FsFigNvPressRainDiamRbandFactors.png', 'Rain Diam.', 'RBAND', SimCspecs, FactCspecs)
 FsHov.CreateFig()
 

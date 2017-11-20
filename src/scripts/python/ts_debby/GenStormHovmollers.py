@@ -157,6 +157,36 @@ HovmollerList = [
     [ 'DIAGS/hist_meas_az_p_rimecldt_lite_<SIM>.h5', '/all_nv_core_rimecldt_ts',   '/all_p_nv_core_rimecldt_lite'   ],
     [ 'DIAGS/hist_meas_az_p_rimecldt_lite_<SIM>.h5', '/all_nv_rb_rimecldt_ts',     '/all_p_nv_rb_rimecldt_lite'     ],
 
+    [ 'DIAGS/hist_meas_az_p_cloud_lite_<SIM>.h5', '/all_core_cloud_ts',      '/all_p_core_cloud_lite'      ],
+    [ 'DIAGS/hist_meas_az_p_cloud_lite_<SIM>.h5', '/all_rb_cloud_ts',        '/all_p_rb_cloud_lite'        ],
+    [ 'DIAGS/hist_meas_az_p_cloud_lite_<SIM>.h5', '/all_nv_core_cloud_ts',   '/all_p_nv_core_cloud_lite'   ],
+    [ 'DIAGS/hist_meas_az_p_cloud_lite_<SIM>.h5', '/all_nv_rb_cloud_ts',     '/all_p_nv_rb_cloud_lite'     ],
+
+    [ 'DIAGS/hist_meas_az_p_cloud_num_lite_<SIM>.h5', '/all_core_cloud_num_ts',      '/all_p_core_cloud_num_lite'      ],
+    [ 'DIAGS/hist_meas_az_p_cloud_num_lite_<SIM>.h5', '/all_rb_cloud_num_ts',        '/all_p_rb_cloud_num_lite'        ],
+    [ 'DIAGS/hist_meas_az_p_cloud_num_lite_<SIM>.h5', '/all_nv_core_cloud_num_ts',   '/all_p_nv_core_cloud_num_lite'   ],
+    [ 'DIAGS/hist_meas_az_p_cloud_num_lite_<SIM>.h5', '/all_nv_rb_cloud_num_ts',     '/all_p_nv_rb_cloud_num_lite'     ],
+
+    [ 'DIAGS/hist_meas_az_p_cloud_diam_lite_<SIM>.h5', '/all_core_cloud_diam_ts',      '/all_p_core_cloud_diam_lite'      ],
+    [ 'DIAGS/hist_meas_az_p_cloud_diam_lite_<SIM>.h5', '/all_rb_cloud_diam_ts',        '/all_p_rb_cloud_diam_lite'        ],
+    [ 'DIAGS/hist_meas_az_p_cloud_diam_lite_<SIM>.h5', '/all_nv_core_cloud_diam_ts',   '/all_p_nv_core_cloud_diam_lite'   ],
+    [ 'DIAGS/hist_meas_az_p_cloud_diam_lite_<SIM>.h5', '/all_nv_rb_cloud_diam_ts',     '/all_p_nv_rb_cloud_diam_lite'     ],
+
+    [ 'DIAGS/hist_meas_az_p_rain_lite_<SIM>.h5', '/all_core_rain_ts',      '/all_p_core_rain_lite'      ],
+    [ 'DIAGS/hist_meas_az_p_rain_lite_<SIM>.h5', '/all_rb_rain_ts',        '/all_p_rb_rain_lite'        ],
+    [ 'DIAGS/hist_meas_az_p_rain_lite_<SIM>.h5', '/all_nv_core_rain_ts',   '/all_p_nv_core_rain_lite'   ],
+    [ 'DIAGS/hist_meas_az_p_rain_lite_<SIM>.h5', '/all_nv_rb_rain_ts',     '/all_p_nv_rb_rain_lite'     ],
+
+    [ 'DIAGS/hist_meas_az_p_rain_num_lite_<SIM>.h5', '/all_core_rain_num_ts',      '/all_p_core_rain_num_lite'      ],
+    [ 'DIAGS/hist_meas_az_p_rain_num_lite_<SIM>.h5', '/all_rb_rain_num_ts',        '/all_p_rb_rain_num_lite'        ],
+    [ 'DIAGS/hist_meas_az_p_rain_num_lite_<SIM>.h5', '/all_nv_core_rain_num_ts',   '/all_p_nv_core_rain_num_lite'   ],
+    [ 'DIAGS/hist_meas_az_p_rain_num_lite_<SIM>.h5', '/all_nv_rb_rain_num_ts',     '/all_p_nv_rb_rain_num_lite'     ],
+
+    [ 'DIAGS/hist_meas_az_p_rain_diam_lite_<SIM>.h5', '/all_core_rain_diam_ts',      '/all_p_core_rain_diam_lite'      ],
+    [ 'DIAGS/hist_meas_az_p_rain_diam_lite_<SIM>.h5', '/all_rb_rain_diam_ts',        '/all_p_rb_rain_diam_lite'        ],
+    [ 'DIAGS/hist_meas_az_p_rain_diam_lite_<SIM>.h5', '/all_nv_core_rain_diam_ts',   '/all_p_nv_core_rain_diam_lite'   ],
+    [ 'DIAGS/hist_meas_az_p_rain_diam_lite_<SIM>.h5', '/all_nv_rb_rain_diam_ts',     '/all_p_nv_rb_rain_diam_lite'     ],
+
     ]
 Nsets = len(HovmollerList)
 
