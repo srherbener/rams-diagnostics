@@ -17,6 +17,7 @@ dist_pytsdebby_SCRIPTS = \
     PlotFsFigStormHovmollers.py \
     PlotFsFigStormXsections.py \
     PlotFsFigTimeSeries.py \
+    PlotFsFigRadial.py \
     PlotFsFigTrackXsections.py \
     PlotFsFigVentIndex.py \
     PlotFsFigWind.py \

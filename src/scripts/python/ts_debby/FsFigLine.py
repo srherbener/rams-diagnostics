@@ -229,7 +229,31 @@ class TimeSeries(FsLine):
         self.Xticks = [ 6.0, 18.0, 30.0, 42.0, 54.0 ]
         self.XtickLabels = [ "12Z\n22Aug", "0Z\n23Aug", "12Z\n23Aug", "0Z\n24Aug", "12Z\n24Aug" ]
 
-        # y-axis is height in kilometers
+        # y-axis is data
+        self.Yscale = InScale
+        self.Yoffset = InOffset
+        self.Ylabel = InLabel
+
+        self.SimLimits = SimLimits
+        self.FacLimits = FacLimits
+
+# class for doing radial
+class Radial(FsLine):
+    '''Class to create radial plot, sim/factor figure'''
+
+    def __init__(self, InFname, InVname, InScale, InOffset, InLabel, SimLimits, FacLimits, OutFname, Ptitle):
+        FsLine.__init__(self, InFname, "/x_coords", InVname, OutFname, Ptitle)
+
+        # x-axis is radius in km
+        self.Xscale = 1.0e-3
+        self.Xoffset = 0.0
+        self.Xlabel = ''
+        self.Xmin = 0.0
+        self.Xmax = 500.0
+        self.Xticks = [ ]
+        self.XtickLabels = [ ]
+
+        # y-axis is data
         self.Yscale = InScale
         self.Yoffset = InOffset
         self.Ylabel = InLabel

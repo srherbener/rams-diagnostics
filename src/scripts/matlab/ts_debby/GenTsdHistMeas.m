@@ -669,86 +669,140 @@ function [ ] = GenTsdHistMeas()
 %      }
 %      'DIAGS/hist_meas_az_p_cloud_diam_lite_<CASE>.h5'
 %    }
+%
+%    % Rain mass
+%    {
+%      'Rain Mass'
+%      {
+%        { 'AzAveragedData/hist_all_p_rain_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_rain_ts'         'RbZT' ''      ''        ''       'ge' 0.0001 }
+%        { 'AzAveragedData/hist_all_p_rain_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_ps_rain'         'RbZt' ''      'pre_sal' ''       'ge' 0.0001 }
+%        { 'AzAveragedData/hist_all_p_rain_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_s_rain'          'RbZt' ''      'sal'     ''       'ge' 0.0001 }
+%        { 'AzAveragedData/hist_all_p_rain_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_core_rain_ts'    'rbZT' 'core'  ''        ''       'ge' 0.0001 }
+%        { 'AzAveragedData/hist_all_p_rain_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_core_ps_rain'    'rbZt' 'core'  'pre_sal' ''       'ge' 0.0001 }
+%        { 'AzAveragedData/hist_all_p_rain_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_core_s_rain'     'rbZt' 'core'  'sal'     ''       'ge' 0.0001 }
+%        { 'AzAveragedData/hist_all_p_rain_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_rb_rain_ts'      'rbZT' 'rband' ''        ''       'ge' 0.0001 }
+%        { 'AzAveragedData/hist_all_p_rain_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_rb_ps_rain'      'rbZt' 'rband' 'pre_sal' ''       'ge' 0.0001 }
+%        { 'AzAveragedData/hist_all_p_rain_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_rb_s_rain'       'rbZt' 'rband' 'sal'     ''       'ge' 0.0001 }
+%
+%        { 'AzAveragedData/hist_all_p_rain_nv_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_nv_rain_ts'         'RbZT' ''      ''        ''       'ge' 0.0001 }
+%        { 'AzAveragedData/hist_all_p_rain_nv_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_nv_ps_rain'         'RbZt' ''      'pre_sal' ''       'ge' 0.0001 }
+%        { 'AzAveragedData/hist_all_p_rain_nv_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_nv_s_rain'          'RbZt' ''      'sal'     ''       'ge' 0.0001 }
+%        { 'AzAveragedData/hist_all_p_rain_nv_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_nv_core_rain_ts'    'rbZT' 'core'  ''        ''       'ge' 0.0001 }
+%        { 'AzAveragedData/hist_all_p_rain_nv_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_nv_core_ps_rain'    'rbZt' 'core'  'pre_sal' ''       'ge' 0.0001 }
+%        { 'AzAveragedData/hist_all_p_rain_nv_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_nv_core_s_rain'     'rbZt' 'core'  'sal'     ''       'ge' 0.0001 }
+%        { 'AzAveragedData/hist_all_p_rain_nv_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_nv_rb_rain_ts'      'rbZT' 'rband' ''        ''       'ge' 0.0001 }
+%        { 'AzAveragedData/hist_all_p_rain_nv_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_nv_rb_ps_rain'      'rbZt' 'rband' 'pre_sal' ''       'ge' 0.0001 }
+%        { 'AzAveragedData/hist_all_p_rain_nv_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_nv_rb_s_rain'       'rbZt' 'rband' 'sal'     ''       'ge' 0.0001 }
+%      }
+%      'DIAGS/hist_meas_az_p_rain_lite_<CASE>.h5'
+%    }
+%
+%    % Rain number
+%    {
+%      'Rain Number'
+%      {
+%        { 'AzAveragedData/hist_all_p_rain_num_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_rain_num_ts'         'RbZT' ''      ''        ''       'ge' 10 }
+%        { 'AzAveragedData/hist_all_p_rain_num_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_ps_rain_num'         'RbZt' ''      'pre_sal' ''       'ge' 10 }
+%        { 'AzAveragedData/hist_all_p_rain_num_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_s_rain_num'          'RbZt' ''      'sal'     ''       'ge' 10 }
+%        { 'AzAveragedData/hist_all_p_rain_num_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_core_rain_num_ts'    'rbZT' 'core'  ''        ''       'ge' 10 }
+%        { 'AzAveragedData/hist_all_p_rain_num_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_core_ps_rain_num'    'rbZt' 'core'  'pre_sal' ''       'ge' 10 }
+%        { 'AzAveragedData/hist_all_p_rain_num_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_core_s_rain_num'     'rbZt' 'core'  'sal'     ''       'ge' 10 }
+%        { 'AzAveragedData/hist_all_p_rain_num_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_rb_rain_num_ts'      'rbZT' 'rband' ''        ''       'ge' 10 }
+%        { 'AzAveragedData/hist_all_p_rain_num_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_rb_ps_rain_num'      'rbZt' 'rband' 'pre_sal' ''       'ge' 10 }
+%        { 'AzAveragedData/hist_all_p_rain_num_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_rb_s_rain_num'       'rbZt' 'rband' 'sal'     ''       'ge' 10 }
+%
+%        { 'AzAveragedData/hist_all_p_rain_num_nv_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_nv_rain_num_ts'         'RbZT' ''      ''        ''       'ge' 10 }
+%        { 'AzAveragedData/hist_all_p_rain_num_nv_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_nv_ps_rain_num'         'RbZt' ''      'pre_sal' ''       'ge' 10 }
+%        { 'AzAveragedData/hist_all_p_rain_num_nv_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_nv_s_rain_num'          'RbZt' ''      'sal'     ''       'ge' 10 }
+%        { 'AzAveragedData/hist_all_p_rain_num_nv_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_nv_core_rain_num_ts'    'rbZT' 'core'  ''        ''       'ge' 10 }
+%        { 'AzAveragedData/hist_all_p_rain_num_nv_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_nv_core_ps_rain_num'    'rbZt' 'core'  'pre_sal' ''       'ge' 10 }
+%        { 'AzAveragedData/hist_all_p_rain_num_nv_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_nv_core_s_rain_num'     'rbZt' 'core'  'sal'     ''       'ge' 10 }
+%        { 'AzAveragedData/hist_all_p_rain_num_nv_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_nv_rb_rain_num_ts'      'rbZT' 'rband' ''        ''       'ge' 10 }
+%        { 'AzAveragedData/hist_all_p_rain_num_nv_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_nv_rb_ps_rain_num'      'rbZt' 'rband' 'pre_sal' ''       'ge' 10 }
+%        { 'AzAveragedData/hist_all_p_rain_num_nv_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_nv_rb_s_rain_num'       'rbZt' 'rband' 'sal'     ''       'ge' 10 }
+%      }
+%      'DIAGS/hist_meas_az_p_rain_num_lite_<CASE>.h5'
+%    }
+%
+%    % Rain diam
+%    {
+%      'Rain Diameter'
+%      {
+%        { 'AzAveragedData/hist_all_p_rain_diam_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_rain_diam_ts'         'RbZT' ''      ''        ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_all_p_rain_diam_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_ps_rain_diam'         'RbZt' ''      'pre_sal' ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_all_p_rain_diam_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_s_rain_diam'          'RbZt' ''      'sal'     ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_all_p_rain_diam_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_core_rain_diam_ts'    'rbZT' 'core'  ''        ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_all_p_rain_diam_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_core_ps_rain_diam'    'rbZt' 'core'  'pre_sal' ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_all_p_rain_diam_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_core_s_rain_diam'     'rbZt' 'core'  'sal'     ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_all_p_rain_diam_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_rb_rain_diam_ts'      'rbZT' 'rband' ''        ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_all_p_rain_diam_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_rb_ps_rain_diam'      'rbZt' 'rband' 'pre_sal' ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_all_p_rain_diam_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_rb_s_rain_diam'       'rbZt' 'rband' 'sal'     ''       'ge' 0.01 }
+%
+%        { 'AzAveragedData/hist_all_p_rain_diam_nv_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_nv_rain_diam_ts'         'RbZT' ''      ''        ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_all_p_rain_diam_nv_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_nv_ps_rain_diam'         'RbZt' ''      'pre_sal' ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_all_p_rain_diam_nv_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_nv_s_rain_diam'          'RbZt' ''      'sal'     ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_all_p_rain_diam_nv_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_nv_core_rain_diam_ts'    'rbZT' 'core'  ''        ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_all_p_rain_diam_nv_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_nv_core_ps_rain_diam'    'rbZt' 'core'  'pre_sal' ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_all_p_rain_diam_nv_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_nv_core_s_rain_diam'     'rbZt' 'core'  'sal'     ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_all_p_rain_diam_nv_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_nv_rb_rain_diam_ts'      'rbZT' 'rband' ''        ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_all_p_rain_diam_nv_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_nv_rb_ps_rain_diam'      'rbZt' 'rband' 'pre_sal' ''       'ge' 0.01 }
+%        { 'AzAveragedData/hist_all_p_rain_diam_nv_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_nv_rb_s_rain_diam'       'rbZt' 'rband' 'sal'     ''       'ge' 0.01 }
+%      }
+%      'DIAGS/hist_meas_az_p_rain_diam_lite_<CASE>.h5'
+%    }
 
-    % Rain mass
+    % storm speed measurements
     {
-      'Rain Mass'
+      'Speed'
       {
-        { 'AzAveragedData/hist_all_p_rain_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_rain_ts'         'RbZT' ''      ''        ''       'ge' 0.0001 }
-        { 'AzAveragedData/hist_all_p_rain_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_ps_rain'         'RbZt' ''      'pre_sal' ''       'ge' 0.0001 }
-        { 'AzAveragedData/hist_all_p_rain_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_s_rain'          'RbZt' ''      'sal'     ''       'ge' 0.0001 }
-        { 'AzAveragedData/hist_all_p_rain_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_core_rain_ts'    'rbZT' 'core'  ''        ''       'ge' 0.0001 }
-        { 'AzAveragedData/hist_all_p_rain_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_core_ps_rain'    'rbZt' 'core'  'pre_sal' ''       'ge' 0.0001 }
-        { 'AzAveragedData/hist_all_p_rain_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_core_s_rain'     'rbZt' 'core'  'sal'     ''       'ge' 0.0001 }
-        { 'AzAveragedData/hist_all_p_rain_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_rb_rain_ts'      'rbZT' 'rband' ''        ''       'ge' 0.0001 }
-        { 'AzAveragedData/hist_all_p_rain_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_rb_ps_rain'      'rbZt' 'rband' 'pre_sal' ''       'ge' 0.0001 }
-        { 'AzAveragedData/hist_all_p_rain_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_rb_s_rain'       'rbZt' 'rband' 'sal'     ''       'ge' 0.0001 }
+        { 'AzAveragedData/hist_all_p_speed_t_lite_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/all_speed_t_ts'           'RbZT' ''      ''        ''       'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_t_lite_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/all_ps_speed_t_ts'        'RbZT' ''      'pre_sal' ''       'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_t_lite_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/all_s_speed_t_ts'         'RbZT' ''      'sal'     ''       'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_t_lite_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/all_ps_speed_t'           'RbZt' ''      'pre_sal' ''       'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_t_lite_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/all_s_speed_t'            'RbZt' ''      'sal'     ''       'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_t_lite_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/all_whole_speed_t'        'rbZT' ''      ''        ''       'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_t_lite_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/all_whole_ps_speed_t'     'rbZt' ''      'pre_sal' ''       'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_t_lite_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/all_whole_s_speed_t'      'rbZt' ''      'sal'     ''       'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_t_lite_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/all_core_ps_speed_t'      'rbZt' 'core'  'pre_sal' ''       'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_t_lite_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/all_core_s_speed_t'       'rbZt' 'core'  'sal'     ''       'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_t_lite_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/all_rb_ps_speed_t'        'rbZt' 'rband' 'pre_sal' ''       'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_t_lite_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/all_rb_s_speed_t'         'rbZt' 'rband' 'sal'     ''       'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_t_lite_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/all_ps_speed_t_sfc'       'Rbzt' ''      'pre_sal' 'sfc'    'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_t_lite_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/all_s_speed_t_sfc'        'Rbzt' ''      'sal'     'sfc'    'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_t_lite_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/all_ps_speed_t_maxlev'    'Rbzt' ''      'pre_sal' 'maxlev' 'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_t_lite_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/all_s_speed_t_maxlev'     'Rbzt' ''      'sal'     'maxlev' 'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_t_lite_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/all_speed_t_sfc_ts'       'RbzT' ''      ''        'sfc'    'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_t_lite_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/all_speed_t_maxlev_ts'    'RbzT' ''      ''        'maxlev' 'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_t_lite_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/all_ps_speed_t_sfc_ts'    'RbzT' ''      'pre_sal' 'sfc'    'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_t_lite_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/all_ps_speed_t_maxlev_ts' 'RbzT' ''      'pre_sal' 'maxlev' 'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_t_lite_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/all_s_speed_t_sfc_ts'     'RbzT' ''      'sal'     'sfc'    'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_t_lite_<CASE>.h5' '/speed_t' 'wtmean'  0.0  '/all_s_speed_t_maxlev_ts'  'RbzT' ''      'sal'     'maxlev' 'ge' -100 }
 
-        { 'AzAveragedData/hist_all_p_rain_nv_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_nv_rain_ts'         'RbZT' ''      ''        ''       'ge' 0.0001 }
-        { 'AzAveragedData/hist_all_p_rain_nv_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_nv_ps_rain'         'RbZt' ''      'pre_sal' ''       'ge' 0.0001 }
-        { 'AzAveragedData/hist_all_p_rain_nv_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_nv_s_rain'          'RbZt' ''      'sal'     ''       'ge' 0.0001 }
-        { 'AzAveragedData/hist_all_p_rain_nv_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_nv_core_rain_ts'    'rbZT' 'core'  ''        ''       'ge' 0.0001 }
-        { 'AzAveragedData/hist_all_p_rain_nv_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_nv_core_ps_rain'    'rbZt' 'core'  'pre_sal' ''       'ge' 0.0001 }
-        { 'AzAveragedData/hist_all_p_rain_nv_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_nv_core_s_rain'     'rbZt' 'core'  'sal'     ''       'ge' 0.0001 }
-        { 'AzAveragedData/hist_all_p_rain_nv_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_nv_rb_rain_ts'      'rbZT' 'rband' ''        ''       'ge' 0.0001 }
-        { 'AzAveragedData/hist_all_p_rain_nv_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_nv_rb_ps_rain'      'rbZt' 'rband' 'pre_sal' ''       'ge' 0.0001 }
-        { 'AzAveragedData/hist_all_p_rain_nv_lite_<CASE>.h5' '/rain' 'wtmean'  0.0  '/all_nv_rb_s_rain'       'rbZt' 'rband' 'sal'     ''       'ge' 0.0001 }
+        { 'AzAveragedData/hist_all_p_speed_r_lite_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/all_speed_r_ts'           'RbZT' ''      ''        ''       'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_r_lite_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/all_ps_speed_r_ts'        'RbZT' ''      'pre_sal' ''       'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_r_lite_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/all_s_speed_r_ts'         'RbZT' ''      'sal'     ''       'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_r_lite_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/all_ps_speed_r'           'RbZt' ''      'pre_sal' ''       'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_r_lite_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/all_s_speed_r'            'RbZt' ''      'sal'     ''       'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_r_lite_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/all_whole_speed_r'        'rbZT' ''      ''        ''       'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_r_lite_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/all_whole_ps_speed_r'     'rbZt' ''      'pre_sal' ''       'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_r_lite_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/all_whole_s_speed_r'      'rbZt' ''      'sal'     ''       'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_r_lite_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/all_core_ps_speed_r'      'rbZt' 'core'  'pre_sal' ''       'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_r_lite_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/all_core_s_speed_r'       'rbZt' 'core'  'sal'     ''       'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_r_lite_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/all_rb_ps_speed_r'        'rbZt' 'rband' 'pre_sal' ''       'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_r_lite_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/all_rb_s_speed_r'         'rbZt' 'rband' 'sal'     ''       'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_r_lite_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/all_ps_speed_r_sfc'       'Rbzt' ''      'pre_sal' 'sfc'    'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_r_lite_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/all_s_speed_r_sfc'        'Rbzt' ''      'sal'     'sfc'    'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_r_lite_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/all_ps_speed_r_minlev'    'Rbzt' ''      'pre_sal' 'minlev' 'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_r_lite_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/all_s_speed_r_minlev'     'Rbzt' ''      'sal'     'minlev' 'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_r_lite_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/all_speed_r_sfc_ts'       'RbzT' ''      ''        'sfc'    'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_r_lite_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/all_speed_r_minlev_ts'    'RbzT' ''      ''        'minlev' 'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_r_lite_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/all_ps_speed_r_sfc_ts'    'RbzT' ''      'pre_sal' 'sfc'    'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_r_lite_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/all_ps_speed_r_maxlev_ts' 'RbzT' ''      'pre_sal' 'maxlev' 'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_r_lite_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/all_s_speed_r_sfc_ts'     'RbzT' ''      'sal'     'sfc'    'ge' -100 }
+        { 'AzAveragedData/hist_all_p_speed_r_lite_<CASE>.h5' '/speed_r' 'wtmean'  0.0  '/all_s_speed_r_maxlev_ts'  'RbzT' ''      'sal'     'maxlev' 'ge' -100 }
+
       }
-      'DIAGS/hist_meas_az_p_rain_lite_<CASE>.h5'
-    }
-
-    % Rain number
-    {
-      'Rain Number'
-      {
-        { 'AzAveragedData/hist_all_p_rain_num_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_rain_num_ts'         'RbZT' ''      ''        ''       'ge' 10 }
-        { 'AzAveragedData/hist_all_p_rain_num_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_ps_rain_num'         'RbZt' ''      'pre_sal' ''       'ge' 10 }
-        { 'AzAveragedData/hist_all_p_rain_num_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_s_rain_num'          'RbZt' ''      'sal'     ''       'ge' 10 }
-        { 'AzAveragedData/hist_all_p_rain_num_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_core_rain_num_ts'    'rbZT' 'core'  ''        ''       'ge' 10 }
-        { 'AzAveragedData/hist_all_p_rain_num_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_core_ps_rain_num'    'rbZt' 'core'  'pre_sal' ''       'ge' 10 }
-        { 'AzAveragedData/hist_all_p_rain_num_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_core_s_rain_num'     'rbZt' 'core'  'sal'     ''       'ge' 10 }
-        { 'AzAveragedData/hist_all_p_rain_num_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_rb_rain_num_ts'      'rbZT' 'rband' ''        ''       'ge' 10 }
-        { 'AzAveragedData/hist_all_p_rain_num_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_rb_ps_rain_num'      'rbZt' 'rband' 'pre_sal' ''       'ge' 10 }
-        { 'AzAveragedData/hist_all_p_rain_num_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_rb_s_rain_num'       'rbZt' 'rband' 'sal'     ''       'ge' 10 }
-
-        { 'AzAveragedData/hist_all_p_rain_num_nv_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_nv_rain_num_ts'         'RbZT' ''      ''        ''       'ge' 10 }
-        { 'AzAveragedData/hist_all_p_rain_num_nv_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_nv_ps_rain_num'         'RbZt' ''      'pre_sal' ''       'ge' 10 }
-        { 'AzAveragedData/hist_all_p_rain_num_nv_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_nv_s_rain_num'          'RbZt' ''      'sal'     ''       'ge' 10 }
-        { 'AzAveragedData/hist_all_p_rain_num_nv_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_nv_core_rain_num_ts'    'rbZT' 'core'  ''        ''       'ge' 10 }
-        { 'AzAveragedData/hist_all_p_rain_num_nv_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_nv_core_ps_rain_num'    'rbZt' 'core'  'pre_sal' ''       'ge' 10 }
-        { 'AzAveragedData/hist_all_p_rain_num_nv_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_nv_core_s_rain_num'     'rbZt' 'core'  'sal'     ''       'ge' 10 }
-        { 'AzAveragedData/hist_all_p_rain_num_nv_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_nv_rb_rain_num_ts'      'rbZT' 'rband' ''        ''       'ge' 10 }
-        { 'AzAveragedData/hist_all_p_rain_num_nv_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_nv_rb_ps_rain_num'      'rbZt' 'rband' 'pre_sal' ''       'ge' 10 }
-        { 'AzAveragedData/hist_all_p_rain_num_nv_lite_<CASE>.h5' '/rain_num' 'wtmean'  0.0  '/all_nv_rb_s_rain_num'       'rbZt' 'rband' 'sal'     ''       'ge' 10 }
-      }
-      'DIAGS/hist_meas_az_p_rain_num_lite_<CASE>.h5'
-    }
-
-    % Rain diam
-    {
-      'Rain Diameter'
-      {
-        { 'AzAveragedData/hist_all_p_rain_diam_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_rain_diam_ts'         'RbZT' ''      ''        ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_all_p_rain_diam_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_ps_rain_diam'         'RbZt' ''      'pre_sal' ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_all_p_rain_diam_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_s_rain_diam'          'RbZt' ''      'sal'     ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_all_p_rain_diam_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_core_rain_diam_ts'    'rbZT' 'core'  ''        ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_all_p_rain_diam_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_core_ps_rain_diam'    'rbZt' 'core'  'pre_sal' ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_all_p_rain_diam_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_core_s_rain_diam'     'rbZt' 'core'  'sal'     ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_all_p_rain_diam_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_rb_rain_diam_ts'      'rbZT' 'rband' ''        ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_all_p_rain_diam_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_rb_ps_rain_diam'      'rbZt' 'rband' 'pre_sal' ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_all_p_rain_diam_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_rb_s_rain_diam'       'rbZt' 'rband' 'sal'     ''       'ge' 0.01 }
-
-        { 'AzAveragedData/hist_all_p_rain_diam_nv_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_nv_rain_diam_ts'         'RbZT' ''      ''        ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_all_p_rain_diam_nv_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_nv_ps_rain_diam'         'RbZt' ''      'pre_sal' ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_all_p_rain_diam_nv_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_nv_s_rain_diam'          'RbZt' ''      'sal'     ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_all_p_rain_diam_nv_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_nv_core_rain_diam_ts'    'rbZT' 'core'  ''        ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_all_p_rain_diam_nv_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_nv_core_ps_rain_diam'    'rbZt' 'core'  'pre_sal' ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_all_p_rain_diam_nv_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_nv_core_s_rain_diam'     'rbZt' 'core'  'sal'     ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_all_p_rain_diam_nv_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_nv_rb_rain_diam_ts'      'rbZT' 'rband' ''        ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_all_p_rain_diam_nv_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_nv_rb_ps_rain_diam'      'rbZt' 'rband' 'pre_sal' ''       'ge' 0.01 }
-        { 'AzAveragedData/hist_all_p_rain_diam_nv_lite_<CASE>.h5' '/rain_diam' 'wtmean'  0.0  '/all_nv_rb_s_rain_diam'       'rbZt' 'rband' 'sal'     ''       'ge' 0.01 }
-      }
-      'DIAGS/hist_meas_az_p_rain_diam_lite_<CASE>.h5'
+      'DIAGS/hist_meas_az_p_speed_lite_<CASE>.h5'
     }
 
 %    %%%%%%% full resolution data %%%%%%%
