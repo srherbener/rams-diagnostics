@@ -44,9 +44,8 @@ GoogleDrivePathBase='~/Google Drive/work/RCE plots/';
 GoogleDrivePath=[GoogleDrivePathBase,ttlname,'/'];
 
 % grid setup
-dx = 3.; % horiz grid spacing in km
-%nx = 64; ny = 64; % # horizontal grid points
-nx = 256; ny = 256; % # horizontal grid points
+dx = 1.; % horiz grid spacing in km
+nx = 3000; ny = 200; % # horizontal grid points
 
 % grid point indices for reading and plotting
 % x=1 and x=2 are the same; x=end-1 and x=end are the same, and same
@@ -96,7 +95,8 @@ if iread;
     n=0;
     for t=1:tskip:nt; n=n+1;
         theta = h5read( [RAMSdir,files(t).name],'/THETA', [x1 y1 z1], [nxp nyp nzp] );
-        exner = h5read( [RAMSdir,files(t).name], '/PI', [x1 y1 z1], [nxp nyp nzp] ); % full exner * cp
+        exner = (h5read( [RAMSdir,files(t).name], '/PI0', [x1 y1 z1], [nxp nyp nzp] ) + ...
+                 h5read( [RAMSdir,files(t).name], '/PP', [x1 y1 z1], [nxp nyp nzp] )); % full exner * cp
         meantheta(:,n) = mean(mean(theta,2),1);
         theta = theta.*exner/1004.; % now this is temp(K)
         meantemp(:,n) = mean(mean(theta,2),1);
@@ -342,10 +342,12 @@ if iread;
         % to theta but that made < 1% difference and anyway isn't in the code)
         RadHtRate = h5read( fn, '/FTHRD', [x1 y1 2], [nxp nyp nz-2] ); % read from 2:nz-1
         % modify RadHtRate so instead of d(thetail)/dt it is d(temp)/dt
-        exner = h5read( fn, '/PI', [x1 y1 2], [nxp nyp nz-2] )/cp; % non-dimensional exner
+        exner = (h5read( fn, '/PI0', [x1 y1 2], [nxp nyp nz-2] ) + ...
+                 h5read( fn, '/PP', [x1 y1 2], [nxp nyp nz-2] ))/cp; % non-dimensional exner
         RadHtRate = RadHtRate.*exner;
         % get base state density
-        exner0 = h5read( fn0,'/PI', [x1 y1 2], [nxp nyp nz-2] )/cp;
+        exner0 = (h5read( fn0,'/PI0', [x1 y1 2], [nxp nyp nz-2] ) + ...
+                  h5read( fn0,'/PP', [x1 y1 2], [nxp nyp nz-2] ))/cp;
         press0 = 100000.*exner0.^(cp/Rd); % pressure (Pa)
         Tvirt0 = ( exner0 .* h5read( fn0,'/THETA',[x1 y1 2],[nxp nyp nz-2] ) ) ...
             .* ( 1.+0.61*h5read( fn0,'/RV',[x1 y1 2],[nxp nyp nz-2] ) );
@@ -501,7 +503,8 @@ if 0
     
     w = h5read( [RAMSdir,files(t).name],'/WP' );
     u = h5read( [RAMSdir,files(t).name],'/UP' );
-    press = h5read( [RAMSdir,files(t).name],'/PI' )/1004; % dimensionless
+    press = (h5read( [RAMSdir,files(t).name],'/PI0' ) + ...
+             h5read( [RAMSdir,files(t).name],'/PP' ))/1004; % dimensionless
     tempK = theta.*press; % K [here press is still pi]
     press = 1000.*press.^(1004/287); % mb 
     RH = rsat( tempK, press, rv, 'var','rhw' ); % pct
@@ -577,7 +580,8 @@ if iread;
         if t==1
             % get base state density from level 2 to top-1
             cp=1004; Rd=287; fn0 = [RAMSdir,files(1).name]; % file name
-            exner0 = h5read( fn0,'/PI', [x1 y1 2], [nxp nyp nz-2] )/cp; % read from 2:nz-1
+            exner0 = (h5read( fn0,'/PI0', [x1 y1 2], [nxp nyp nz-2] ) + ...
+                      h5read( fn0,'/PP', [x1 y1 2], [nxp nyp nz-2] ))/cp; % read from 2:nz-1
             press0 = 100000.*exner0.^(cp/Rd); % pressure (Pa)
             Tvirt0 = ( exner0 .* h5read( fn0,'/THETA',[x1 y1 2],[nxp nyp nz-2] ) ) ...
                 .* ( 1.+0.61*h5read( fn0,'/RV',[x1 y1 2],[nxp nyp nz-2] ) );
@@ -811,7 +815,8 @@ if nx>5*ny % only do this section for channel domain...
             tempK = h5read( [RAMSdir,files(t).name],'/THETA', [x1 y1 z1], [nxp nyp nzp] ); % potential temp K
             rv = h5read( [RAMSdir,files(t).name],'/RV', [x1 y1 z1], [nxp nyp nzp] )*1000.; % g/kg
             rvxc(:,:,n) = mean(rv,2);
-            press = h5read( [RAMSdir,files(t).name],'/PI', [x1 y1 z1], [nxp nyp nzp] )/1004; % pi dimensionless
+            press = (h5read( [RAMSdir,files(t).name],'/PI0', [x1 y1 z1], [nxp nyp nzp] ) + ...
+                     h5read( [RAMSdir,files(t).name],'/PP', [x1 y1 z1], [nxp nyp nzp] ))/1004; % pi dimensionless
             tempK = tempK.*press; % (K) [here press is still pi]
             press = 1000.*press.^(1004/287); % mb
             RH = rsat( tempK, press, rv, 'var','rhw' ); % pct
