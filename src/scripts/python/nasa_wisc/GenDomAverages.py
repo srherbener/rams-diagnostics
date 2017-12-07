@@ -38,6 +38,7 @@ SimList = [
     'RCE_3km_2mom_db_rlongup',
     'RCE_3km_2mom_dm',
     'RCE_3km_2mom_dm_lrz',
+    'RCE_CHAN_S300',
     ]
 Nsims = len(SimList)
 

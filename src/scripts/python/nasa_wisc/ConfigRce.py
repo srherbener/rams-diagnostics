@@ -30,6 +30,8 @@ def SetColorScheme():
         'RCE_3km_2mom_db_rlongup'  : 'brown',
         'RCE_3km_2mom_dm'          : 'magenta',
         'RCE_3km_2mom_dm_lrz'      : 'forestgreen',
+
+        'RCE_CHAN_S300'   : 'blue',
         }
     return ColorScheme
 
@@ -68,6 +70,8 @@ def SetLabelScheme():
         'RCE_3km_2mom_db_rlongup'  : '2M DB R',
         'RCE_3km_2mom_dm'          : '2M DM',
         'RCE_3km_2mom_dm_lrz'      : '2M DM LRZ',
+
+        'RCE_CHAN_S300'      : 'CHAN-S300',
         }
     return LabelScheme
 

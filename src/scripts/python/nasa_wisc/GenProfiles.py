@@ -22,17 +22,20 @@ SimList = [
 #    'RCE_1km_SM_IPL2',
 #    'RCE_1km_DM_IPL2',
 #    'RCE_1km_DP_IPL2',
-    'RCE_3km_1mom',
-    'RCE_3km_1mom_db',
-    'RCE_3km_1mom_db_udef',
-    'RCE_3km_1mom_db_rlongup',
-    'RCE_3km_1mom_dm',
-    'RCE_3km_2mom',
-    'RCE_3km_2mom_db',
-    'RCE_3km_2mom_db_udef',
-    'RCE_3km_2mom_db_rlongup',
-    'RCE_3km_2mom_dm',
-    'RCE_3km_2mom_dm_lrz',
+
+#    'RCE_3km_1mom',
+#    'RCE_3km_1mom_db',
+#    'RCE_3km_1mom_db_udef',
+#    'RCE_3km_1mom_db_rlongup',
+#    'RCE_3km_1mom_dm',
+#    'RCE_3km_2mom',
+#    'RCE_3km_2mom_db',
+#    'RCE_3km_2mom_db_udef',
+#    'RCE_3km_2mom_db_rlongup',
+#    'RCE_3km_2mom_dm',
+#    'RCE_3km_2mom_dm_lrz',
+
+    'RCE_CHAN_S300',
     ]
 Nsims = len(SimList)
 
