@@ -23,5 +23,5 @@ OutFile="${Fprefix}.mpeg"
 #    DelayFac > 1.0 speeds up 
 #DelayFac=3.0  # 120 days, each frame 4 hours, 1:30 play time
 DelayFac=2.5
-$FFMPEG_HOME/bin/ffmpeg -y -i "${Fprefix}_%04d.png" -i ${WorkDir}/palette.png -t 180 \
+$FFMPEG_HOME/bin/ffmpeg -y -i "${Fprefix}_%04d.png" -i ${WorkDir}/palette.png -t 180 -maxrate 4M -bufsize 1M \
    -filter_complex "scale=720:-1:flags=lanczos[x];[x][1:v]paletteuse, setpts=${DelayFac}*PTS" $OutFile

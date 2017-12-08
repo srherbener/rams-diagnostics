@@ -21,12 +21,14 @@ SimList = [
 #    'RCE_3km_1mom_db_udef',
 #    'RCE_3km_1mom_db_rlongup',
 #    'RCE_3km_1mom_dm',
-    'RCE_3km_2mom',
+#    'RCE_3km_2mom',
 #    'RCE_3km_2mom_db',
 #    'RCE_3km_2mom_db_udef',
 #    'RCE_3km_2mom_db_rlongup',
 #    'RCE_3km_2mom_dm',
 #    'RCE_3km_2mom_dm_lrz',
+
+    'RCE_CHAN_S300',
     ]
 Nsims = len(SimList)
 
@@ -109,6 +111,9 @@ for isim in range(Nsims):
             Ptitle.fontsize = 20
 
             plu.PlotContour(Fig.gca(), X, Y, VAR, Ptitle, Xaxis, Yaxis, Cspecs)
+
+            # For the channel RCE sims
+            Fig.gca().set_aspect(4.0)
 
             Fig.savefig(OutFname)
             plt.close()
