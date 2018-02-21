@@ -1,0 +1,96 @@
+#!/usr/bin/env perl
+#
+# This script will create an input file for REVU, run revu, and then clean up the
+# input file.
+#
+
+use strict;
+use File::Temp;
+
+#####################################################################################
+#SUBROUTINES
+#####################################################################################
+
+#####################################################################################
+#MAIN
+#####################################################################################
+my $Case;
+my $Var;
+my $AnPref;
+my $RevPref;
+my $AnaType;
+my $Igrid;
+my $Iztran;
+my $Cformat;
+my $RevuVar;
+my $Xvar;
+my $Yvar;
+my $Zvar;
+my $Tvar;
+
+my $RfileName;
+my $Rfile;
+my @SysArgs;
+
+$Case     = $ARGV[0];
+$Var      = $ARGV[1];
+$AnPref   = $ARGV[2];
+$RevPref  = $ARGV[3];
+$AnaType  = $ARGV[4];
+$Igrid    = $ARGV[5];
+$Iztran   = $ARGV[6];
+$Cformat  = $ARGV[7];
+$RevuVar  = $ARGV[8];
+$Xvar     = $ARGV[9];
+$Yvar     = $ARGV[10];
+$Zvar     = $ARGV[11];
+$Tvar     = $ARGV[12];
+
+print("##################################################################\n");
+print("Running REVU:\n");
+print("\n");
+print("Case: $Case\n");
+print("Variable: $Var\n");
+print("Control Format: $Cformat\n");
+print("\n");
+
+# Create a temporary file that has a unique name, thus preventing
+# collisions from the other process.
+($Rfile, $RfileName) = mkstemp("/tmp/REVUIN.XXXXXXXXXX");
+
+print $Rfile "\$CONTROL\n";
+print $Rfile "  ANPREF     = '$AnPref',\n";
+print $Rfile "  REVPREF    = '$RevPref',\n";
+print $Rfile "  ANATYPE    = '$AnaType',\n";
+if ($Cformat eq "new")
+  {
+  print $Rfile "  IGRID      = $Igrid,\n";
+  print $Rfile "  IZTRAN     = $Iztran,\n";
+  print $Rfile "  XVAR       = '/$Xvar/',\n";
+  print $Rfile "  YVAR       = '/$Yvar/',\n";
+  print $Rfile "  ZVAR       = '/$Zvar/',\n";
+  print $Rfile "  TVAR       = '/$Tvar/',\n";
+  print $Rfile "  REVUVAR(1) = '/$RevuVar/',\n";
+  }
+elsif ($Cformat eq "old")
+  {
+  print $Rfile "  IGRID(1)    = $Igrid,\n";
+  print $Rfile "  IZTRAN(1)   = $Iztran,\n";
+  print $Rfile "  XVAR(1)     = '/H/$Xvar/',\n";
+  print $Rfile "  YVAR(1)     = '/V/$Yvar/',\n";
+  print $Rfile "  ZVAR(1)     = '/F/$Zvar/',\n";
+  print $Rfile "  TVAR(1)     = '/F/$Tvar/',\n";
+  print $Rfile "  CFRAME_A(1) = '/$RevuVar/',\n";
+  }
+print $Rfile "\$END\n";
+
+# Run revu
+@SysArgs = ("revu", "-f", $RfileName);
+print("Running command: ", join(" ", @SysArgs), "\n");  
+system(@SysArgs);
+
+# Clean up temp file.
+unlink $RfileName;
+print("\n");
+
+exit 0;
