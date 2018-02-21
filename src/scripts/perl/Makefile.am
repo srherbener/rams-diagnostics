@@ -9,6 +9,8 @@ dist_bin_SCRIPTS = \
     run_gen_vt_vr \
     run_gen_xsection \
     run_hdata_op \
+    run_revu \
+    RunRevuJob \
     run_sub_vortex \
     run_tsavg
 
