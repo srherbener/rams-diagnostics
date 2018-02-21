@@ -1,0 +1,126 @@
+#!/usr/bin/env perl
+#
+# This script will run revu on the variables and cases specified in the config file.
+#
+# There is one argument which is the RevuConfigFile
+#
+# The format of the RevuConfigFile is:
+
+BEGIN { push(@INC, "$ENV{HOME}/etc/perl"); }
+
+use strict;
+use DiagUtils;
+use File::Temp;
+
+#####################################################################################
+# SUBROUTINES
+#####################################################################################
+
+#####################################################################################
+# MAIN
+#####################################################################################
+
+my $ConfigFile;
+my $Nprocs;
+
+my $Config;
+
+my $AnPrefTemplate;
+my $RevPrefTemplate;
+my $Igrid;
+my $Iztran;
+my %Cases;
+my %Vars;
+
+my $Case;
+my $AnPref;
+my $RevPref;
+my $AnaType;
+my $Cformat;
+my $Var;
+my $RevuVar;
+my $Xvar;
+my $Yvar;
+my $Zvar;
+my $Tvar;
+
+my @RevuCmds;
+my $icmd;
+
+my @SysArgs;
+my $iarg;
+
+if ($#ARGV != 1)
+  {
+  print "ERROR: must supply exactly two arguments\n";
+  print "\n";
+  print "USAGE: run_revu <ConfigFile> <NumberProcesses>\n";
+  exit -1;
+  }
+
+$ConfigFile = $ARGV[0];
+$Nprocs     = $ARGV[1];
+
+# Read in info from the config file.
+($Config) = &DiagUtils::ReadRevuConfigFile($ConfigFile);
+$AnPrefTemplate  = $$Config{ANPREF};
+$RevPrefTemplate = $$Config{REVPREF};
+$AnaType         = $$Config{ANATYPE};
+$Cformat         = $$Config{CFORMAT};
+$Igrid           = $$Config{IGRID};
+$Iztran          = $$Config{IZTRAN};
+%Cases           = %{ $$Config{CASES} };
+%Vars            = %{ $$Config{VARS} };
+
+print "Run REVU jobs\n";
+print "  Configuration file: $ConfigFile\n";
+print "  Number of processes: $Nprocs\n";
+print "\n";
+
+$icmd = 0;
+foreach $Case (sort(keys(%Cases)))
+  {
+  foreach $Var (sort(keys(%Vars)))
+    {
+    $RevuVar = $Vars{$Var}{REVU_VAR};
+    $Xvar    = $Vars{$Var}{XVAR};
+    $Yvar    = $Vars{$Var}{YVAR};
+    $Zvar    = $Vars{$Var}{ZVAR};
+    $Tvar    = $Vars{$Var}{TVAR};
+
+    # create the analysis and revu prefixes
+    $AnPref = $AnPrefTemplate;
+    $AnPref =~ s/<CASE>/$Case/g;
+    $AnPref =~ s/<VAR>/$Var/g;
+
+    $RevPref = $RevPrefTemplate;
+    $RevPref =~ s/<CASE>/$Case/g;
+    $RevPref =~ s/<VAR>/$Var/g;
+
+    # build commands in @SysArgs then attach @SysArgs into the list of commands (@RevuCmds)
+    $iarg = 0;
+    undef(@SysArgs);
+    
+    $SysArgs[$iarg++] = "RunRevuJob";
+    $SysArgs[$iarg++] = $Case;
+    $SysArgs[$iarg++] = $Var;
+    $SysArgs[$iarg++] = $AnPref;
+    $SysArgs[$iarg++] = $RevPref;
+    $SysArgs[$iarg++] = $AnaType;
+    $SysArgs[$iarg++] = $Igrid;
+    $SysArgs[$iarg++] = $Iztran;
+    $SysArgs[$iarg++] = $Cformat;
+    $SysArgs[$iarg++] = $RevuVar;
+    $SysArgs[$iarg++] = $Xvar;
+    $SysArgs[$iarg++] = $Yvar;
+    $SysArgs[$iarg++] = $Zvar;
+    $SysArgs[$iarg++] = $Tvar;
+    
+    $RevuCmds[$icmd++] = [ @SysArgs ];
+    }
+  }
+
+# submit the jobs
+&DiagUtils::SubmitParallelJobs(\@RevuCmds, $Nprocs, "revu");
+
+exit 0;
